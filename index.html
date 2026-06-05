@@ -171,6 +171,9 @@
   .btn:hover{color:var(--ink); box-shadow:none; opacity:.7; transform:translateY(-1px)}
   .btn.solid{background:var(--ink); color:#FBEFDD; border:1px solid var(--ink); font-weight:600}
   .btn.solid:hover{background:#46301F; color:#FBEFDD; opacity:1; transform:translateY(-1px)}
+  /* ---- uniform buttons (no brown fill; all identical quiet glass) ---- */
+  .btn.solid{background:rgba(255,255,255,.42); color:var(--ink); border:1px solid var(--ink-faint); font-weight:600; text-shadow:none; -webkit-backdrop-filter:saturate(140%) blur(10px); backdrop-filter:saturate(140%) blur(10px); box-shadow:none}
+  .btn.solid:hover{background:rgba(255,255,255,.62); color:var(--ink); opacity:.85; transform:translateY(-1px); box-shadow:none}
 </style>
 </head>
 <body>
