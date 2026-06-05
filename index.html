@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zain Dana Harper — Systems Engineer</title>
+<meta name="description" content="Self-taught systems engineer: compilers, real-time graphics, color science, and multi-agent LLM systems. Public releases on crates.io and the VS Code Marketplace.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#231A16; --bg-elev:#30231D; --bg-deep:#1A120F;
+    --orange:#D58452; --orange-light:#E7A574; --orange-deep:#A85A33;
+    --cream:#F3E8D4; --cream-muted:rgba(243,232,212,.74); --cream-faint:rgba(243,232,212,.48);
+    --glass:rgba(243,232,212,.05); --border:rgba(243,232,212,.12); --border-hi:rgba(213,132,82,.55);
+    --glow:rgba(213,132,82,.35);
+    --display:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --mono:"JetBrains Mono","Courier New",monospace;
+    --max:1180px; --r:16px; --r-lg:24px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg); color:var(--cream-muted); font-family:var(--body); font-size:clamp(1rem,.96rem+.2vw,1.08rem); line-height:1.7; -webkit-font-smoothing:antialiased; overflow-x:hidden}
+  body::before{content:""; position:fixed; inset:0; z-index:-2; pointer-events:none; background:radial-gradient(60% 50% at 80% -5%, rgba(213,132,82,.20), transparent 60%), radial-gradient(50% 45% at 8% 8%, rgba(231,165,116,.10), transparent 55%), radial-gradient(80% 60% at 50% 120%, rgba(168,90,51,.16), transparent 60%)}
+  a{color:var(--orange-light); text-decoration:none}
+  a:hover{color:var(--cream)}
+  code{font-family:var(--mono); font-size:.9em; color:var(--orange-light)}
+  h1,h2,h3{font-family:var(--display); color:var(--cream); line-height:1.1; letter-spacing:-.02em; font-weight:700}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 clamp(1.25rem,4vw,2.5rem)}
+  section{padding:clamp(3.5rem,6vw,7rem) 0}
+  .eyebrow{font-family:var(--mono); font-size:.78rem; letter-spacing:.18em; text-transform:uppercase; color:var(--orange); margin-bottom:1rem}
+  nav{position:sticky; top:0; z-index:100; backdrop-filter:blur(10px); background:rgba(35,26,22,.7); border-bottom:1px solid var(--border)}
+  .nav-in{max-width:var(--max); margin:0 auto; padding:.9rem clamp(1.25rem,4vw,2.5rem); display:flex; align-items:center; justify-content:space-between; gap:1rem}
+  .brand{font-family:var(--display); font-weight:700; color:var(--cream); letter-spacing:-.02em}
+  .brand b{color:var(--orange)}
+  .nav-links{display:flex; gap:1.4rem; font-size:.9rem}
+  .nav-links a{color:var(--cream-muted)}
+  .nav-links a:hover{color:var(--orange-light)}
+  @media(max-width:620px){.nav-links{display:none}}
+  .hero{padding-top:clamp(3.5rem,8vw,7rem)}
+  .hero h1{font-size:clamp(2.4rem,1.4rem+4.5vw,5rem); margin:.4rem 0 1.2rem}
+  .hero h1 .grad{background:linear-gradient(100deg,var(--cream) 10%,var(--orange-light) 55%,var(--orange) 90%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent}
+  .lead{font-size:clamp(1.05rem,.95rem+.6vw,1.3rem); max-width:60ch; color:var(--cream-muted)}
+  .lead b{color:var(--cream); font-weight:600}
+  .cta{display:flex; flex-wrap:wrap; gap:.8rem; margin-top:2rem}
+  .btn{font-family:var(--mono); font-size:.9rem; padding:.7rem 1.3rem; border-radius:100px; border:1px solid var(--border-hi); color:var(--cream); transition:.25s}
+  .btn.solid{background:var(--orange); color:var(--bg-deep); border-color:var(--orange); font-weight:700}
+  .btn:hover{transform:translateY(-2px); box-shadow:0 8px 24px var(--glow)}
+  .btn.solid:hover{background:var(--orange-light)}
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; margin-top:3rem}
+  .stat{background:var(--bg-elev); padding:1.3rem 1rem; text-align:center}
+  .stat .n{font-family:var(--display); font-size:clamp(1.4rem,1rem+1.6vw,2.1rem); color:var(--orange-light); font-weight:700; line-height:1}
+  .stat .l{font-size:.74rem; letter-spacing:.08em; text-transform:uppercase; color:var(--cream-faint); margin-top:.5rem}
+  @media(max-width:620px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:1.1rem; margin-top:2.4rem}
+  .card{background:var(--glass); border:1px solid var(--border); border-radius:var(--r-lg); padding:1.6rem; transition:transform .25s, border-color .25s, box-shadow .25s}
+  .card:hover{transform:translateY(-5px); border-color:var(--border-hi); box-shadow:0 16px 40px rgba(0,0,0,.35), 0 0 0 1px var(--glow)}
+  .card.feat{grid-column:span 2}
+  @media(max-width:680px){.card.feat{grid-column:span 1}}
+  .card h3{font-size:1.3rem; margin-bottom:.5rem}
+  .card .role{font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; color:var(--orange); text-transform:uppercase; margin-bottom:.7rem}
+  .card p{font-size:.96rem; color:var(--cream-muted)}
+  .chips{display:flex; flex-wrap:wrap; gap:.45rem; margin-top:1rem}
+  .chip{font-family:var(--mono); font-size:.72rem; padding:.28rem .6rem; border-radius:100px; background:rgba(213,132,82,.13); color:var(--orange-light); border:1px solid rgba(213,132,82,.2)}
+  .tags{margin-top:1rem; font-size:.78rem; color:var(--cream-faint)}
+  .links{margin-top:1.1rem; display:flex; flex-wrap:wrap; gap:1rem; font-family:var(--mono); font-size:.82rem}
+  .prose p{max-width:68ch; margin-bottom:1.1rem}
+  .prose b{color:var(--cream); font-weight:600}
+  .pull{font-family:var(--display); font-size:clamp(1.3rem,1rem+1.4vw,1.9rem); color:var(--cream); line-height:1.35; max-width:26ch; border-left:3px solid var(--orange); padding-left:1.2rem; margin:2rem 0}
+  .xp{border-top:1px solid var(--border); padding:1.4rem 0; display:grid; grid-template-columns:200px 1fr; gap:1.5rem}
+  .xp .when{font-family:var(--mono); font-size:.82rem; color:var(--orange)}
+  .xp h3{font-size:1.1rem; margin-bottom:.3rem}
+  .xp p{font-size:.92rem}
+  @media(max-width:620px){.xp{grid-template-columns:1fr; gap:.4rem}}
+  .skills{display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.6rem}
+  .skills span{font-family:var(--mono); font-size:.82rem; padding:.4rem .8rem; border-radius:8px; background:var(--bg-elev); border:1px solid var(--border); color:var(--cream-muted)}
+  footer{border-top:1px solid var(--border); padding:3rem 0; text-align:center}
+  footer .big{font-family:var(--display); font-size:clamp(1.6rem,1.2rem+2vw,2.6rem); color:var(--cream); margin-bottom:1.2rem}
+  .muted{color:var(--cream-faint); font-size:.82rem; margin-top:2rem}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important; scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<nav><div class="nav-in"><span class="brand">Zain Dana Harper <b>·</b></span><div class="nav-links"><a href="#work">Work</a><a href="#approach">Approach</a><a href="#experience">Experience</a><a href="https://github.com/HarperZ9">GitHub ↗</a></div></div></nav>
+
+<header class="hero wrap">
+  <p class="eyebrow">Systems Engineer · Compilers · Real-Time Graphics · Multi-Agent AI</p>
+  <h1>From <span class="grad">organic to analog to digital.</span></h1>
+  <p class="lead">Self-taught engineer (no CS degree) shipping production software across compilers, real-time graphics, color science, and multi-agent LLM systems. I work as an <b>architect-orchestrator</b> — directing agentic AI coding tools across the full lifecycle, then verifying and owning every line. <b>Arborist by trade, engineer by obsession.</b></p>
+  <div class="cta">
+    <a class="btn solid" href="#work">See the work</a>
+    <a class="btn" href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
+    <a class="btn" href="https://github.com/HarperZ9">github.com/HarperZ9</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="n">883K+</div><div class="l">Mod downloads</div></div>
+    <div class="stat"><div class="n">8</div><div class="l">Compiler backends</div></div>
+    <div class="stat"><div class="n">~600</div><div class="l">Compiler tests</div></div>
+    <div class="stat"><div class="n">8</div><div class="l">Languages shipped</div></div>
+  </div>
+</header>
+
+<main>
+<section id="work" class="wrap">
+  <p class="eyebrow">Selected Work</p>
+  <h2>Things I built and shipped.</h2>
+  <div class="grid">
+    <article class="card feat">
+      <div class="role">Real-time graphics · HLSL / Python</div>
+      <h3>ELDER.ENB</h3>
+      <p>A real-time shader post-processing framework for Skyrim: 155+ shader overlays, a color-graded preset system, and Python tooling. It was my first public graphics release.</p>
+      <div class="chips"><span class="chip">883K+ downloads</span><span class="chip">148K unique</span><span class="chip">2,377 endorsements</span></div>
+      <div class="tags">HLSL · color grading · shader pipelines · Python automation · April 2024</div>
+      <div class="links"><a href="https://www.nexusmods.com/skyrimspecialedition/mods/117327">Nexus Mods ↗</a><a href="https://www.youtube.com/watch?v=C_-tpAy5ZcA&amp;t=50s">Demo video ↗</a></div>
+    </article>
+    <article class="card feat">
+      <div class="role">Compilers · Rust · public, MIT</div>
+      <h3>QuantaLang</h3>
+      <p>A programming language built from scratch. A Rust compiler with a full lexer-to-codegen pipeline, ownership semantics, algebraic effects, and embedded DSLs, emitting to eight backends.</p>
+      <div class="chips"><span class="chip">8 backends</span><span class="chip">~600 tests</span><span class="chip">crates.io</span><span class="chip">VS Code Marketplace</span></div>
+      <div class="tags">x86-64 · ARM64 · SPIR-V · HLSL · GLSL · WASM · C99 · LLVM</div>
+      <div class="links"><a href="https://github.com/HarperZ9/quantalang">github.com/HarperZ9/quantalang ↗</a></div>
+    </article>
+    <article class="card">
+      <div class="role">Graphics · C++23 / HLSL</div>
+      <h3>APEX</h3>
+      <p>A standalone Direct3D 11 post-processing injector (proxy <code>d3d11.dll</code> via VTable hooking): physically-based tonemapping, TAA, SSR, volumetrics, bokeh DoF, shipped as a single self-contained DLL.</p>
+      <div class="chips"><span class="chip">18+ effects</span><span class="chip">86 HLSL shaders</span><span class="chip">~45K LOC</span></div>
+      <div class="tags">C++23 · Direct3D 11 · ACES / AgX · ImGui</div>
+    </article>
+    <article class="card">
+      <div class="role">Color science · Python · public, MIT</div>
+      <h3>Calibrate Pro</h3>
+      <p>Sensorless display calibration: no colorimeter required. Generates ICC v4.4 profiles and 3D LUTs with DDC/CI hardware control.</p>
+      <div class="chips"><span class="chip">ΔE 0.65 (below JND)</span><span class="chip">ICC v4.4</span><span class="chip">3D LUT</span></div>
+      <div class="tags">Python · CIE color · DDC/CI</div>
+      <div class="links"><a href="https://github.com/HarperZ9/calibrate-pro">github.com/HarperZ9/calibrate-pro ↗</a></div>
+    </article>
+    <article class="card">
+      <div class="role">Systems · QuantaLang · public, MIT</div>
+      <h3>Quanta Universe</h3>
+      <p>A 40+ module software ecosystem (an OS kernel, renderers, a quant-trading engine, and ML frameworks) all written <em>in</em> QuantaLang, with 64+ Unix utilities ported to native binaries via the C backend.</p>
+      <div class="chips"><span class="chip">40+ modules</span><span class="chip">OS kernel</span><span class="chip">64+ ported utils</span></div>
+      <div class="tags">QuantaLang · systems programming · self-hosting</div>
+      <div class="links"><a href="https://github.com/HarperZ9/quanta-universe">github.com/HarperZ9/quanta-universe ↗</a></div>
+    </article>
+    <article class="card">
+      <div class="role">Color science · Python · public, MIT</div>
+      <h3>Quanta Color</h3>
+      <p>A professional color-science library: 15+ color spaces, 12 tone mappers, CIEDE2000/Oklab difference metrics, CAT16 chromatic adaptation, color-vision-deficiency simulation, and ICC profile generation.</p>
+      <div class="chips"><span class="chip">15+ color spaces</span><span class="chip">12 tone mappers</span></div>
+      <div class="tags">Python · CIECAM · Oklab · spectral</div>
+    </article>
+    <article class="card">
+      <div class="role">Tooling · Lua / TypeScript / DSL</div>
+      <h3>Aurora</h3>
+      <p>A combat-scripting SDK with a custom indentation-sensitive DSL compiler; 69 modules and 48 production rotations across 13 classes and 47 specs, with a unit and simulation test harness.</p>
+      <div class="chips"><span class="chip">~312K LOC</span><span class="chip">custom DSL compiler</span><span class="chip">48 rotations</span></div>
+      <div class="tags">Lua · TypeScript · TSTL · DSL design</div>
+    </article>
+    <article class="card">
+      <div class="role">AI systems · Python</div>
+      <h3>Multi-Agent LLM Orchestration</h3>
+      <p>A director-pattern platform that classifies tasks and routes them to specialist agents, with meta-agents for decomposition, coordination, validation, and synthesis, over a multi-provider model abstraction and Model Context Protocol (MCP) servers.</p>
+      <div class="chips"><span class="chip">MCP servers</span><span class="chip">multi-provider</span><span class="chip">director pattern</span></div>
+      <div class="tags">Anthropic · OpenAI · Gemini · Bedrock · Ollama</div>
+    </article>
+  </div>
+</section>
+<section id="research" class="wrap">
+  <p class="eyebrow">AI-Safety Research</p>
+  <h2>Defensive work at the LLM frontier.</h2>
+  <p class="prose" style="max-width:68ch;margin-top:1rem">I author defensive security writeups on <b>authorization-laundering / vocabulary-calibration</b>, a jailbreak pattern against LLM coding assistants, paired with a detection and governance playbook mapped to <b>MITRE ATLAS</b> and the <b>OWASP LLM Top&nbsp;10</b>. Structural analysis for trust-and-safety teams and enterprise deployers; operational detail withheld by design.</p>
+</section>
+
+<section id="approach" class="wrap">
+  <p class="eyebrow">Approach</p>
+  <h2>How the work gets made.</h2>
+  <div class="prose">
+    <p>I spent eleven years as a commercial arborist in a father-son business. Somewhere between the climbing rope and the chainsaw, I taught myself to write software, and never stopped.</p>
+    <p class="pull">One thread runs through all of it: how things cross from organic to analog to digital, across language and media.</p>
+    <p>Light into color profiles. Reality into real-time renders. Human intent into running code. I am <b>neurodivergent</b>, and rather than fight it, I built my whole workflow around it: directing agentic AI coding tools across design, build, test, and integration, then verifying and owning every line. Less prompt-and-pray, more conducting an orchestra where every player is a model. Pattern-finding and relentless iteration in place of credentials, and it ships real software.</p>
+  </div>
+</section>
+
+<section id="experience" class="wrap">
+  <p class="eyebrow">Experience</p>
+  <h2>Where it has taken me.</h2>
+  <div class="xp"><div class="when">2023 — Present<br>Remote</div><div><h3>Independent Software Engineer &amp; AI-Safety Researcher</h3><p>Compilers, real-time graphics, color science, and multi-agent LLM systems, shipped to crates.io and the VS Code Marketplace, plus a Skyrim shader mod (ELDER.ENB) past 880K downloads. Defensive AI-safety research on jailbreak patterns against LLM coding assistants.</p></div></div>
+  <div class="xp"><div class="when">2015 — Present</div><div><h3>Commercial Arborist · family business</h3><p>Operations, site assessments, safety procedures, and written client proposals across 11 years.</p></div></div>
+  <div class="xp"><div class="when">2013 — 2014<br>Redmond, WA</div><div><h3>Technical Networking Support, Xbox Division · Microsoft</h3><p>Diagnosed TCP/IP, DNS, NAT, and firewall issues for Xbox Live networking; contributed to internal knowledge-base documentation.</p></div></div>
+</section>
+
+<section id="skills" class="wrap">
+  <p class="eyebrow">Toolkit</p>
+  <h2>What I work in.</h2>
+  <div class="skills"><span>Python</span><span>Rust</span><span>C++</span><span>TypeScript</span><span>Lua</span><span>HLSL</span><span>C#</span><span>Bash</span><span>Compiler design</span><span>Direct3D 11</span><span>Real-time rendering</span><span>GPU programming</span><span>Color science (CIE / ICC / 3D-LUT)</span><span>LLM orchestration</span><span>MCP servers</span><span>CMake</span><span>CI/CD</span></div>
+</section>
+</main>
+
+<footer class="wrap">
+  <div class="big">Let us build something.</div>
+  <a class="btn solid" href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
+  <a class="btn" href="https://github.com/HarperZ9" style="margin-left:.6rem">github.com/HarperZ9</a>
+  <p class="muted">The work is the credential. · Remote.</p>
+</footer>
+</body>
+</html>
