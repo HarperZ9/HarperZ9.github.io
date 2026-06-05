@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Zain Dana Harper — Systems Engineer</title>
 <meta name="description" content="Self-taught systems engineer: compilers, real-time graphics, color science, and multi-agent LLM systems. Public releases on crates.io and the VS Code Marketplace.">
-<meta name="theme-color" content="#FFF1E0">
+<meta name="theme-color" content="#ffffff">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -174,6 +174,32 @@
   /* ---- uniform buttons (no brown fill; all identical quiet glass) ---- */
   .btn.solid{background:rgba(255,255,255,.42); color:var(--ink); border:1px solid var(--ink-faint); font-weight:600; text-shadow:none; -webkit-backdrop-filter:saturate(140%) blur(10px); backdrop-filter:saturate(140%) blur(10px); box-shadow:none}
   .btn.solid:hover{background:rgba(255,255,255,.62); color:var(--ink); opacity:.85; transform:translateY(-1px); box-shadow:none}
+  /* ---- function-forward: neutral palette, no orange/cream, minimal chrome ---- */
+  :root{
+    --bg-top:#ffffff; --bg-mid:#ffffff; --bg-bottom:#ffffff;
+    --ink:#1d1d1f; --ink-muted:#565656; --ink-faint:#8a8a8a;
+    --rule:#e3e3e3; --border:#e3e3e3;
+    --orange:#1d1d1f; --orange-bright:#1d1d1f; --orange-deep:#1d1d1f; --creamsicle:#1d1d1f; --gold:#1d1d1f; --glow:transparent;
+    --glass-shadow:none; --glass-shadow-hi:none;
+  }
+  body{background:#ffffff}
+  .bg,.sun,.grain,.bloom{display:none !important}
+  .glass{background:#ffffff; -webkit-backdrop-filter:none; backdrop-filter:none; box-shadow:none; border:1px solid var(--rule); border-radius:6px}
+  .glass::after{display:none}
+  .glass.sheen::before{display:none}
+  .feat.a,.feat.b{border-radius:6px}
+  .feat:hover,.card:hover,.stat:hover{box-shadow:none; transform:none}
+  .stat{border-radius:6px; background:#ffffff; border:1px solid var(--rule)}
+  .feat .idx{color:#ececec}
+  nav{background:#ffffff; -webkit-backdrop-filter:none; backdrop-filter:none; border-bottom:1px solid var(--rule); box-shadow:none}
+  .btn,.btn.solid{background:#ffffff; color:var(--ink); border:1px solid var(--rule); box-shadow:none; -webkit-backdrop-filter:none; backdrop-filter:none}
+  .btn:hover,.btn.solid:hover{background:#f4f4f4; color:var(--ink); opacity:1; transform:none}
+  .chip{background:#f4f4f4; color:var(--ink-muted); border:1px solid var(--rule); box-shadow:none}
+  .skills span{background:#ffffff; -webkit-backdrop-filter:none; backdrop-filter:none; border:1px solid var(--rule); box-shadow:none}
+  .band{background:#f6f6f6; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)}
+  .wrow:hover{background:#f6f6f6}
+  .kicker::before{background:var(--ink-faint); opacity:.5}
+  .approach .pull{border-left-color:var(--rule)}
 </style>
 </head>
 <body>
