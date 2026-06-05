@@ -144,6 +144,33 @@
   .foot-cta{display:flex; flex-wrap:wrap; gap:.8rem}
   .muted{color:var(--ink-faint); font-size:.82rem; margin-top:3rem; font-family:var(--mono); letter-spacing:.04em}
   @media(prefers-reduced-motion:reduce){*{transition:none!important; scroll-behavior:auto} .orb,.sun{animation:none!important} .glass.sheen::before{display:none}}
+  /* ---- uniformity pass: one text colour, no per-word emphasis, content-first (humble / navigable) ---- */
+  .lead,.feat p,.wrow .wd,.xp p,.band .res-b,.approach .body p{color:var(--ink)}
+  b,strong,.lead b,.approach .body b,.band b,.prose b{font-weight:400}
+  a{color:var(--ink); text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px; font-weight:400; transition:opacity .2s var(--ease)}
+  a:hover{color:var(--ink); opacity:.6}
+  .btn{text-decoration:none; font-family:var(--body)}
+  .nav-links{font-family:var(--body)}
+  .nav-links a{text-decoration:none; color:var(--ink)}
+  .nav-links a:hover{text-decoration:underline; opacity:1}
+  h1,h2,h3,.foot-big{color:var(--ink); font-weight:600}
+  .hero h1{font-size:clamp(2.3rem,1.5rem+3.2vw,4rem); letter-spacing:-.012em}
+  .hero h1 .grad{background:none; -webkit-text-fill-color:currentColor; color:var(--ink); text-shadow:none; filter:none}
+  .kicker{font-family:var(--body); color:var(--ink-muted); font-weight:600; letter-spacing:.01em; text-transform:none; font-size:.85rem}
+  .kicker::before{background:var(--ink-faint); opacity:.4}
+  .feat .role,.wrow .role{font-family:var(--body); color:var(--ink-muted); text-transform:none; letter-spacing:0; font-weight:600}
+  .wrow .idx,.lk{font-family:var(--body); color:var(--ink-muted)}
+  .feat .idx{color:var(--ink-faint); font-weight:600; font-size:clamp(1.6rem,3vw,2.4rem)}
+  .stat .n{background:none; -webkit-text-fill-color:currentColor; color:var(--ink)}
+  .stat .l,.tags,.muted{font-family:var(--body); color:var(--ink-muted)}
+  .chip{font-family:var(--body); background:rgba(255,255,255,.45); color:var(--ink-muted); border:1px solid var(--rule); box-shadow:none}
+  code{color:var(--ink); font-family:var(--mono)}
+  .approach .pull{font-family:var(--body); font-size:clamp(1.2rem,1rem+1vw,1.65rem); font-weight:500; border-left-color:var(--ink-faint); letter-spacing:0}
+  /* ---- calm CTAs (no orange, understated) ---- */
+  .btn{border:1px solid var(--ink-faint); box-shadow:none; color:var(--ink); background:rgba(255,255,255,.42); -webkit-backdrop-filter:saturate(140%) blur(10px); backdrop-filter:saturate(140%) blur(10px); text-shadow:none}
+  .btn:hover{color:var(--ink); box-shadow:none; opacity:.7; transform:translateY(-1px)}
+  .btn.solid{background:var(--ink); color:#FBEFDD; border:1px solid var(--ink); font-weight:600}
+  .btn.solid:hover{background:#46301F; color:#FBEFDD; opacity:1; transform:translateY(-1px)}
 </style>
 </head>
 <body>
