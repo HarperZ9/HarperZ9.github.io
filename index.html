@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Zain Dana Harper — Systems Engineer</title>
-<meta name="description" content="Self-taught systems engineer: compilers, real-time graphics, color science, and multi-agent LLM systems. Public releases on crates.io and the VS Code Marketplace.">
+<meta name="description" content="Self-taught systems engineer: compilers, real-time graphics, color science, multi-agent LLM systems, and AI-safety tooling. Public releases on crates.io, the VS Code Marketplace, and GitHub.">
 <meta name="theme-color" content="#ffffff">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -223,13 +223,13 @@
     <div class="stat glass"><div class="n">883K+</div><div class="l">Mod downloads</div></div>
     <div class="stat glass"><div class="n">8</div><div class="l">Compiler backends</div></div>
     <div class="stat glass"><div class="n">~600</div><div class="l">Compiler tests</div></div>
-    <div class="stat glass"><div class="n">8</div><div class="l">Languages shipped</div></div>
+    <div class="stat glass"><div class="n">8</div><div class="l">Languages used</div></div>
   </div>
 </header>
 
 <main>
 <section id="work" class="shell">
-  <div class="sec-head"><p class="kicker">Selected work — eight projects</p><h2>A few things I've made.</h2></div>
+  <div class="sec-head"><p class="kicker">Selected work — nine projects</p><h2>A few things I've made.</h2></div>
   <div class="feats g12">
     <article class="feat a glass sheen" data-glow>
       <span class="idx">01</span>
@@ -245,9 +245,9 @@
       <div class="role">Compilers · Rust · public, MIT</div>
       <h3>QuantaLang</h3>
       <p>My attempt at a programming language, built from scratch in Rust — a full lexer-to-codegen pipeline with ownership semantics, algebraic effects, and embedded DSLs, emitting to eight backends. Still rough in places, but it compiles.</p>
-      <div class="chips"><span class="chip">8 backends</span><span class="chip">~600 tests</span><span class="chip">crates.io</span></div>
+      <div class="chips"><span class="chip">8 backends</span><span class="chip">600+ tests</span><span class="chip">crates.io v1.0.0</span></div>
       <div class="tags">x86-64 · ARM64 · SPIR-V · HLSL · GLSL · WASM · C99 · LLVM</div>
-      <div class="links"><a href="https://github.com/HarperZ9/quantalang">github.com/HarperZ9/quantalang ↗</a></div>
+      <div class="links"><a href="https://github.com/HarperZ9/quantalang">github.com/HarperZ9/quantalang ↗</a><a href="https://marketplace.visualstudio.com/items?itemName=HarperZ9.quantalang">VS Code Marketplace ↗</a></div>
     </article>
   </div>
   <div class="worklist">
@@ -278,14 +278,20 @@
     <article class="wrow">
       <div class="idx">07</div>
       <div class="wt"><h3>Aurora</h3><div class="role">Tooling · Lua / TypeScript / DSL</div></div>
-      <div class="wd">A combat-scripting SDK with a custom indentation-sensitive DSL compiler; 69 modules and 48 production rotations across 13 classes and 47 specs, with a unit and simulation test harness.<div class="tags">~312K LOC · custom DSL compiler · TSTL</div></div>
+      <div class="wd">A combat-scripting SDK with a custom indentation-sensitive DSL compiler; 67 SDK modules and production rotations covering all 39 specs across 13 classes, with a unit and simulation test harness.<div class="tags">custom 4-stage DSL compiler · TSTL · 39 specs / 13 classes · v1.0.0</div></div>
       <div class="lk"><span>SDK</span></div>
     </article>
     <article class="wrow">
       <div class="idx">08</div>
       <div class="wt"><h3>Multi-Agent LLM Orchestration</h3><div class="role">AI systems · Python</div></div>
-      <div class="wd">A director-pattern platform that classifies tasks and routes them to specialist agents, with meta-agents for decomposition, coordination, validation, and synthesis, over a multi-provider model abstraction and Model Context Protocol (MCP) servers.<div class="tags">MCP servers · multi-provider · Anthropic · OpenAI · Gemini · Bedrock</div></div>
+      <div class="wd">A director-pattern platform that classifies tasks and routes them to 88 specialist agents, with meta-agents for decomposition, coordination, validation, and synthesis, over a multi-provider model abstraction and 9 Model Context Protocol (MCP) servers.<div class="tags">director pattern · 88 agents · 9 MCP servers · multi-provider (Anthropic · OpenAI · Gemini · Bedrock)</div></div>
       <div class="lk"><span>platform</span></div>
+    </article>
+    <article class="wrow">
+      <div class="idx">09</div>
+      <div class="wt"><h3>EMET</h3><div class="role">AI safety · Python / Rust / Node.js · MPL-2.0</div></div>
+      <div class="wd">A re-derivability-based integrity verifier for AI oversight: it checks that the bytes reaching a model match their source, and flags a system vouching for itself in-band, a presented view that differs from its source, and a monitor reading a different file than the one that runs. Verdicts are <code>MATCH</code> / <code>DRIFT</code> / <code>UNVERIFIABLE</code> — there is no <code>TRUSTED</code>.<div class="tags">3 implementations · shared conformance suite in CI · draft spec · STRIDE threat model</div></div>
+      <div class="lk"><a href="https://github.com/HarperZ9/emet">GitHub ↗</a></div>
     </article>
   </div>
 </section>
@@ -293,7 +299,7 @@
 <section id="research" class="band"><div class="shell g12">
   <p class="kicker" style="grid-column:1/-1;margin-bottom:1.4rem">AI-Safety Research</p>
   <p class="res-q">A few defensive notes from the LLM frontier.</p>
-  <p class="res-b">I author defensive security writeups on <b>authorization-laundering / vocabulary-calibration</b>, a safety-assessment probe pattern against LLM coding assistants, paired with a detection and governance playbook mapped to <b>MITRE ATLAS</b> and the <b>OWASP LLM Top&nbsp;10</b>. Structural analysis for trust-and-safety teams and enterprise deployers; operational detail withheld by design.</p>
+  <p class="res-b">I author defensive writeups on <b>authorization-laundering / vocabulary-calibration</b> — a safety-assessment probe pattern against LLM coding assistants — paired with detection and governance mapped to <b>MITRE ATLAS</b> and the <b>OWASP LLM Top&nbsp;10</b>. The defensive primitive ships in the open: <a href="https://github.com/HarperZ9/emet">EMET</a>, a re-derivability-based integrity verifier (verdicts <code>MATCH</code> / <code>DRIFT</code> / <code>UNVERIFIABLE</code>, never <code>TRUSTED</code>). The offensive operational detail stays withheld by design — structural analysis for trust-and-safety teams and enterprise deployers.</p>
 </div></section>
 
 <section id="approach" class="shell approach">
@@ -309,14 +315,14 @@
 
 <section id="experience" class="shell">
   <div class="sec-head"><p class="kicker">Experience</p><h2>Where it has taken me.</h2></div>
-  <div class="xp"><div class="when">2023 — Present<br>Remote</div><div><h3>Independent Software Engineer &amp; AI-Safety Researcher</h3><p>Compilers, real-time graphics, color science, and multi-agent LLM systems, shipped to crates.io and the VS Code Marketplace, plus a Skyrim shader mod (ELDER.ENB) past 880K downloads. Defensive AI-safety research on safety-assessment probe patterns against LLM coding assistants.</p></div></div>
+  <div class="xp"><div class="when">2023 — Present<br>Remote</div><div><h3>Independent Software Engineer &amp; AI-Safety Researcher</h3><p>Compilers, real-time graphics, color science, and multi-agent LLM systems, shipped to crates.io and the VS Code Marketplace, plus a Skyrim shader mod (ELDER.ENB) past 883K downloads. Defensive AI-safety research on safety-assessment probe patterns against LLM coding assistants.</p></div></div>
   <div class="xp"><div class="when">2015 — Present</div><div><h3>Commercial Arborist · Legendary Tree (family business)</h3><p>Operations, site assessments, safety procedures, and written client proposals across 11 years.</p></div></div>
   <div class="xp"><div class="when">2013 — 2014<br>Redmond, WA</div><div><h3>Technical Networking Support, Xbox Division · contract via Convergys/Stream</h3><p>Diagnosed TCP/IP, DNS, NAT, and firewall issues for Xbox Live networking on a vendor contract; contributed to internal knowledge-base documentation.</p></div></div>
 </section>
 
 <section id="skills" class="shell">
   <div class="sec-head"><p class="kicker">Toolkit</p><h2>What I work in.</h2></div>
-  <div class="skills"><span>Python</span><span>Rust</span><span>C++</span><span>TypeScript</span><span>Lua</span><span>HLSL</span><span>C#</span><span>Bash</span><span>Compiler design</span><span>Direct3D 11</span><span>Real-time rendering</span><span>GPU programming</span><span>Color science (CIE / ICC / 3D-LUT)</span><span>LLM orchestration</span><span>MCP servers</span><span>CMake</span><span>CI/CD</span></div>
+  <div class="skills"><span>Python</span><span>Rust</span><span>C++</span><span>TypeScript</span><span>Lua</span><span>HLSL</span><span>C#</span><span>Bash</span><span>Compiler design</span><span>Direct3D 11</span><span>Real-time rendering</span><span>GPU programming</span><span>Color science (CIE / ICC / 3D-LUT)</span><span>Desktop GUI (PyQt6)</span><span>Reverse engineering</span><span>LLM orchestration</span><span>MCP servers</span><span>Provenance &amp; integrity</span><span>CMake</span><span>CI/CD</span></div>
 </section>
 </main>
 
