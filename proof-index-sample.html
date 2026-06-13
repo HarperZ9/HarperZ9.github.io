@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sample Proof-Surface Report - repo-proof-index</title>
+  <meta name="description" content="Sample proof-surface report for repo-proof-index: contract indexing, evidence handoff, boundaries, and release-readiness posture.">
+  <style>
+    :root {
+      --ink: #17130f;
+      --paper: #f6ecd8;
+      --olive: #54633c;
+      --brick: #a75537;
+      --amber: #b98a3a;
+      --line: rgba(23, 19, 15, 0.18);
+      --panel: rgba(255, 255, 255, 0.44);
+      --shadow: 0 26px 88px rgba(35, 24, 14, 0.2);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at 18% 6%, rgba(185, 138, 58, 0.34), transparent 28rem),
+        radial-gradient(circle at 86% 16%, rgba(84, 99, 60, 0.2), transparent 26rem),
+        linear-gradient(135deg, #fbf2de 0%, #ebdac0 52%, #d9bf99 100%);
+      line-height: 1.55;
+    }
+
+    a {
+      color: var(--brick);
+      text-decoration-thickness: 0.08em;
+      text-underline-offset: 0.22em;
+    }
+
+    .shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header { padding: 28px 0 18px; }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.72fr);
+      gap: 28px;
+      padding: 54px 0 28px;
+      align-items: stretch;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      padding: clamp(24px, 4vw, 46px);
+    }
+
+    .kicker {
+      margin: 0 0 14px;
+      color: var(--olive);
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 11ch;
+      font-size: clamp(2.65rem, 8vw, 6.8rem);
+      line-height: 0.88;
+      letter-spacing: -0.075em;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: clamp(1.65rem, 3vw, 2.45rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .lead {
+      margin: 24px 0 0;
+      max-width: 68ch;
+      font-size: clamp(1.05rem, 2vw, 1.32rem);
+    }
+
+    .pill {
+      display: inline-flex;
+      width: fit-content;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.38);
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .summary {
+      display: grid;
+      gap: 14px;
+    }
+
+    .chain {
+      display: grid;
+      gap: 10px;
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+    }
+
+    .step {
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.34);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      padding: 20px 0 52px;
+    }
+
+    .wide { grid-column: 1 / -1; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      font-size: 0.92rem;
+    }
+
+    th,
+    td {
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--olive);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    ul,
+    ol { padding-left: 1.25rem; }
+    li + li { margin-top: 0.45rem; }
+
+    code,
+    pre { font-family: "Courier New", monospace; }
+
+    pre {
+      overflow-x: auto;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(23, 19, 15, 0.86);
+      color: #fff7ea;
+    }
+
+    footer {
+      padding: 28px 0 42px;
+      color: rgba(23, 19, 15, 0.72);
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      font-size: 0.82rem;
+    }
+
+    @media (max-width: 760px) {
+      .hero,
+      .grid { grid-template-columns: 1fr; }
+      nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .card { border-radius: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="shell">
+    <nav>
+      <a href="./">Zain Dana Harper</a>
+      <a href="./emet-sample.html">EMET witness sample</a>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="card">
+        <p class="kicker">Sample report · repo-proof-index · evidence handoff</p>
+        <h1>Scattered proof needs an index.</h1>
+        <p class="lead">
+          `repo-proof-index` is the handoff point in the proof-surface stack.
+          It turns contracts, receipts, and capability descriptors into a
+          compact table or JSON surface a reviewer can actually inspect.
+        </p>
+      </div>
+
+      <aside class="card summary" aria-label="Pipeline summary">
+        <span class="pill">Not evidence sufficiency</span>
+        <h2>Pipeline role</h2>
+        <div class="chain">
+          <div class="step">contracts and receipts</div>
+          <div class="step">proof index</div>
+          <div class="step">report</div>
+          <div class="step">reviewer handoff</div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="grid" aria-label="repo-proof-index proof surface report">
+      <article class="card">
+        <h2>Surface</h2>
+        <table>
+          <tr><th>Field</th><th>Value</th></tr>
+          <tr><td>Repo</td><td><code>HarperZ9/repo-proof-index</code></td></tr>
+          <tr><td>Surface class</td><td><code>S:proof-index-tool</code></td></tr>
+          <tr><td>Review mode</td><td>Public README, package manifest, and CLI behavior</td></tr>
+          <tr><td>Access</td><td>No credentials, private files, or protected payloads</td></tr>
+        </table>
+      </article>
+
+      <article class="card">
+        <h2>Output fields</h2>
+        <ul>
+          <li><code>kind</code>: best-effort contract type.</li>
+          <li><code>surface</code>: product, language, witness, root, or name.</li>
+          <li><code>status</code>: status, maturity, verdict, or fallback.</li>
+          <li><code>evidence</code>: short evidence summary.</li>
+          <li><code>path</code>: source JSON path in JSON mode.</li>
+        </ul>
+      </article>
+
+      <article class="card wide">
+        <h2>Evidence present</h2>
+        <table>
+          <tr><th>Evidence</th><th>Status</th></tr>
+          <tr><td>Public README</td><td>Present and tightened with examples, non-goals, and pipeline role</td></tr>
+          <tr><td>Install command</td><td>Present</td></tr>
+          <tr><td>CLI entry point</td><td><code>repo-proof-index</code></td></tr>
+          <tr><td>JSON output mode</td><td><code>--json</code></td></tr>
+          <tr><td>Workspace discovery mode</td><td><code>--root .</code></td></tr>
+          <tr><td>Custom contracts directory</td><td><code>--contracts-dir project-docs/contracts</code></td></tr>
+          <tr><td>Bundled examples</td><td>Sample product, backend capability, witness receipt, and malformed input</td></tr>
+          <tr><td>Runtime dependencies</td><td>None listed</td></tr>
+        </table>
+      </article>
+
+      <article class="card">
+        <h2>Recognized shapes</h2>
+        <ul>
+          <li>Product use-case manifests.</li>
+          <li>Backend capability descriptors.</li>
+          <li>Witness receipts.</li>
+          <li>Generic JSON contracts with common claim/status fields.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>What it does not do</h2>
+        <ul>
+          <li>It does not validate a JSON Schema.</li>
+          <li>It does not decide whether evidence is sufficient.</li>
+          <li>It does not decide whether a claim is true.</li>
+          <li>It does not read private payloads referenced by a contract.</li>
+          <li>It does not replace tests, audits, or release review.</li>
+        </ul>
+      </article>
+
+      <article class="card wide">
+        <h2>Proof-surface verdict</h2>
+        <table>
+          <tr><th>Category</th><th>Status</th></tr>
+          <tr><td>Legibility</td><td>Good after README tightening</td></tr>
+          <tr><td>Bounded claim</td><td>Good</td></tr>
+          <tr><td>Evidence visibility</td><td>Good foundation with sample contracts and malformed input fixture</td></tr>
+          <tr><td>Buyer usefulness</td><td>High for proof packet assembly and diligence handoff</td></tr>
+          <tr><td>Overclaim risk</td><td>Low if schema validation and certification stay out of scope</td></tr>
+          <tr><td>Next action</td><td>Add installed-package smoke evidence and CI pointer</td></tr>
+        </table>
+      </article>
+    </section>
+  </main>
+
+  <footer class="shell">
+    Sample proof-surface report. Evidence assembly, boundaries, and handoff before trust language.
+  </footer>
+</body>
+</html>
