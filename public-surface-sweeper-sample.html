@@ -4,276 +4,69 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sample Release Hygiene Report - Public Surface Sweeper</title>
-  <meta name="description" content="Sample public release hygiene report showing how public-surface-sweeper turns repository presentation gaps into concrete action items." />
+  <meta name="description" content="Sample public release hygiene report for repository presentation, release readiness, and action-item clarity." />
   <style>
     :root {
-      --ink: #13201c;
-      --muted: #5d6b63;
-      --paper: #fbf7ef;
-      --panel: rgba(255, 252, 244, 0.84);
-      --line: rgba(19, 32, 28, 0.14);
-      --cedar: #24594f;
-      --gold: #c48f32;
-      --rust: #a9542f;
-      --shadow: 0 28px 80px rgba(29, 45, 39, 0.18);
+      --ink: #13201c; --muted: #5d6b63; --paper: #fbf7ef; --panel: rgba(255,252,244,.86);
+      --line: rgba(19,32,28,.14); --cedar: #24594f; --gold: #c48f32; --rust: #a9542f;
+      --shadow: 0 28px 80px rgba(29,45,39,.18);
     }
-
     * { box-sizing: border-box; }
-
     body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Georgia, "Times New Roman", serif;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 18% 18%, rgba(196, 143, 50, 0.22), transparent 30%),
-        radial-gradient(circle at 82% 8%, rgba(108, 143, 84, 0.24), transparent 28%),
+      margin: 0; min-height: 100vh; font-family: Georgia, "Times New Roman", serif; color: var(--ink);
+      background: radial-gradient(circle at 18% 18%, rgba(196,143,50,.22), transparent 30%),
+        radial-gradient(circle at 82% 8%, rgba(108,143,84,.24), transparent 28%),
         linear-gradient(135deg, #f8efe0 0%, #f4f0e7 48%, #e8efe5 100%);
     }
-
     a { color: inherit; }
-
-    .wrap {
-      width: min(1120px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 36px 0 56px;
-    }
-
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: center;
-      margin-bottom: 56px;
-      font-family: "Trebuchet MS", Verdana, sans-serif;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--muted);
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 28px;
-      align-items: stretch;
-      margin-bottom: 28px;
-    }
-
-    .card {
-      border: 1px solid var(--line);
-      background: var(--panel);
-      box-shadow: var(--shadow);
-      border-radius: 28px;
-      padding: 30px;
-      backdrop-filter: blur(14px);
-    }
-
-    .eyebrow {
-      margin: 0 0 18px;
-      font-family: "Trebuchet MS", Verdana, sans-serif;
-      font-size: 0.76rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--rust);
-    }
-
-    h1 {
-      margin: 0;
-      max-width: 740px;
-      font-size: clamp(3rem, 8vw, 7.4rem);
-      line-height: 0.83;
-      letter-spacing: -0.08em;
-    }
-
-    h2 {
-      margin: 0 0 14px;
-      font-size: clamp(1.55rem, 3vw, 2.25rem);
-      line-height: 1;
-      letter-spacing: -0.04em;
-    }
-
-    p {
-      color: var(--muted);
-      line-height: 1.65;
-      font-size: 1.02rem;
-    }
-
-    .lead {
-      margin-top: 24px;
-      max-width: 780px;
-      font-size: 1.18rem;
-    }
-
-    .score {
-      min-height: 100%;
-      display: grid;
-      align-content: center;
-      gap: 18px;
-      text-align: center;
-    }
-
-    .score strong {
-      display: block;
-      color: var(--cedar);
-      font-family: "Trebuchet MS", Verdana, sans-serif;
-      font-size: clamp(4rem, 11vw, 8rem);
-      line-height: 0.8;
-      letter-spacing: -0.08em;
-    }
-
-    .score span {
-      color: var(--muted);
-      font-family: "Trebuchet MS", Verdana, sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-size: 0.78rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-top: 18px;
-    }
-
+    .wrap { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 36px 0 56px; }
+    .nav, .tag, .btn, footer { font-family: "Trebuchet MS", Verdana, sans-serif; text-transform: uppercase; letter-spacing: .13em; }
+    .nav { display: flex; justify-content: space-between; gap: 18px; margin-bottom: 56px; font-size: .78rem; color: var(--muted); }
+    .hero, .wide { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; align-items: stretch; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 18px; }
+    .card { border: 1px solid var(--line); background: var(--panel); box-shadow: var(--shadow); border-radius: 28px; padding: 30px; backdrop-filter: blur(14px); }
+    .eyebrow { margin: 0 0 18px; font: .76rem/1 "Trebuchet MS", Verdana, sans-serif; text-transform: uppercase; letter-spacing: .18em; color: var(--rust); }
+    h1 { margin: 0; max-width: 740px; font-size: clamp(3rem, 8vw, 7.4rem); line-height: .83; letter-spacing: -.08em; }
+    h2 { margin: 0 0 14px; font-size: clamp(1.55rem, 3vw, 2.25rem); line-height: 1; letter-spacing: -.04em; }
+    p, li { color: var(--muted); line-height: 1.65; font-size: 1.02rem; }
+    ul { margin: 16px 0 0; padding-left: 20px; }
+    .lead { margin-top: 24px; max-width: 780px; font-size: 1.18rem; }
+    .score { display: grid; align-content: center; gap: 18px; text-align: center; }
+    .score strong { display: block; color: var(--cedar); font: 700 clamp(4rem, 11vw, 8rem)/.8 "Trebuchet MS", Verdana, sans-serif; letter-spacing: -.08em; }
+    .score span { color: var(--muted); font: .78rem/1.4 "Trebuchet MS", Verdana, sans-serif; text-transform: uppercase; letter-spacing: .16em; }
     .finding { border-left: 5px solid var(--cedar); }
     .finding.warn { border-left-color: var(--gold); }
     .finding.stop { border-left-color: var(--rust); }
-
-    .tag {
-      display: inline-block;
-      margin-bottom: 16px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(36, 89, 79, 0.1);
-      color: var(--cedar);
-      font-family: "Trebuchet MS", Verdana, sans-serif;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.13em;
-    }
-
-    ul {
-      margin: 16px 0 0;
-      padding-left: 20px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .wide {
-      margin-top: 18px;
-      display: grid;
-      grid-template-columns: 0.85fr 1.15fr;
-      gap: 18px;
-    }
-
-    .code {
-      margin: 0;
-      padding: 22px;
-      border-radius: 20px;
-      background: #14201d;
-      color: #eef5ea;
-      overflow-x: auto;
-      font-family: Consolas, "Liberation Mono", monospace;
-      font-size: 0.88rem;
-      line-height: 1.55;
-      white-space: pre-wrap;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 24px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 44px;
-      padding: 0 18px;
-      border-radius: 999px;
-      border: 1px solid var(--ink);
-      background: var(--ink);
-      color: var(--paper);
-      text-decoration: none;
-      font-family: "Trebuchet MS", Verdana, sans-serif;
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-    }
-
-    .btn.secondary {
-      background: transparent;
-      color: var(--ink);
-    }
-
-    footer {
-      margin-top: 34px;
-      color: var(--muted);
-      font-family: "Trebuchet MS", Verdana, sans-serif;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.13em;
-    }
-
-    @media (max-width: 820px) {
-      .hero,
-      .grid,
-      .wide {
-        grid-template-columns: 1fr;
-      }
-
-      .card { padding: 24px; }
-    }
+    .tag { display: inline-block; margin-bottom: 16px; padding: 7px 10px; border-radius: 999px; background: rgba(36,89,79,.1); color: var(--cedar); font-size: .72rem; }
+    .wide { grid-template-columns: .85fr 1.15fr; margin-top: 18px; }
+    .code { margin: 0; padding: 22px; border-radius: 20px; background: #14201d; color: #eef5ea; overflow-x: auto; font: .88rem/1.55 Consolas, "Liberation Mono", monospace; white-space: pre-wrap; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); text-decoration: none; font-size: .78rem; font-weight: 700; }
+    .btn.secondary { background: transparent; color: var(--ink); }
+    footer { margin-top: 34px; color: var(--muted); font-size: .75rem; }
+    @media (max-width: 820px) { .hero, .grid, .wide { grid-template-columns: 1fr; } .card { padding: 24px; } }
   </style>
 </head>
 <body>
   <main class="wrap">
-    <nav class="nav">
-      <a href="index.html">HarperZ9</a>
-      <span>Proof-surface sample</span>
-    </nav>
-
+    <nav class="nav"><a href="index.html">HarperZ9</a><span>Proof-surface sample</span></nav>
     <section class="hero">
       <article class="card">
         <p class="eyebrow">Public surface sweeper</p>
         <h1>Release hygiene made visible.</h1>
-        <p class="lead">This sample shows the product shape: scan the public edge of a repository, identify presentation blockers, and turn them into practical action items before a client, employer, or evaluator sees the project.</p>
+        <p class="lead">This sample shows the product shape: scan a repository's public edge, identify presentation blockers, and turn them into concrete action items before a client, employer, or evaluator sees the project.</p>
         <div class="actions">
           <a class="btn" href="https://github.com/HarperZ9/public-surface-sweeper">View repository</a>
           <a class="btn secondary" href="proof-surface-sample.html">Pilot overview</a>
         </div>
       </article>
-
-      <aside class="card score">
-        <span>Readiness score</span>
-        <strong>72</strong>
-        <span>Useful but not yet launch-clean</span>
-      </aside>
+      <aside class="card score"><span>Readiness score</span><strong>72</strong><span>Useful but not launch-clean</span></aside>
     </section>
 
     <section class="grid">
-      <article class="card finding stop">
-        <span class="tag">Blocker</span>
-        <h2>Missing public contract</h2>
-        <p>The repository has code value, but the visitor cannot quickly identify who it serves, what the first command does, and what outcome proves the tool worked.</p>
-      </article>
-
-      <article class="card finding warn">
-        <span class="tag">Action</span>
-        <h2>Show one clean path</h2>
-        <p>Add a minimal fixture, a command example, expected output, and a clear non-goals section. The fastest buyer path is one honest run, not a broad claim.</p>
-      </article>
-
-      <article class="card finding">
-        <span class="tag">Strength</span>
-        <h2>Native market signal</h2>
-        <p>The tool converts release polish into evidence: README quality, licensing, contribution posture, examples, and handoff clarity become scored surfaces.</p>
-      </article>
+      <article class="card finding stop"><span class="tag">Blocker</span><h2>Missing public contract</h2><p>The visitor cannot quickly identify who the tool serves, what the first command does, and what outcome proves it worked.</p></article>
+      <article class="card finding warn"><span class="tag">Action</span><h2>Show one clean path</h2><p>Add a minimal fixture, command example, expected output, and non-goals section. The fastest buyer path is one honest run.</p></article>
+      <article class="card finding"><span class="tag">Strength</span><h2>Native market signal</h2><p>The tool converts README quality, licensing, contribution posture, examples, and handoff clarity into scored evidence.</p></article>
     </section>
 
     <section class="wide">
@@ -281,13 +74,12 @@
         <span class="tag">What it checks</span>
         <h2>Repository presentation surface</h2>
         <ul>
-          <li>README presence, command path, and outcome language.</li>
+          <li>README command path and outcome language.</li>
           <li>License, contribution, authorship, and governance files.</li>
-          <li>Example fixtures that make the first evaluation concrete.</li>
+          <li>Example fixtures that make evaluation concrete.</li>
           <li>Public release language that avoids overclaiming capability.</li>
         </ul>
       </article>
-
       <article class="card">
         <span class="tag">Sample output</span>
         <pre class="code">{
@@ -308,17 +100,8 @@
     </section>
 
     <section class="wide">
-      <article class="card">
-        <span class="tag">Commercial use</span>
-        <h2>Small utility, direct value</h2>
-        <p>For employers, this shows disciplined release thinking. For clients, it can become a pre-release cleanup check before publishing internal tools, open-source utilities, or AI-assisted code drops.</p>
-      </article>
-
-      <article class="card">
-        <span class="tag">Mission fit</span>
-        <h2>AI output needs a public edge check</h2>
-        <p>AI can produce code faster than teams can assess the surrounding evidence. This tool focuses on the edge where code becomes a claim: documentation, examples, boundaries, and proof that the release is safe to evaluate.</p>
-      </article>
+      <article class="card"><span class="tag">Commercial use</span><h2>Small utility, direct value</h2><p>For employers, this shows disciplined release thinking. For clients, it becomes a pre-release cleanup check before publishing internal tools, open-source utilities, or AI-assisted code drops.</p></article>
+      <article class="card"><span class="tag">Mission fit</span><h2>AI output needs an edge check</h2><p>AI can produce code faster than teams can assess the surrounding evidence. This tool focuses where code becomes a claim: documentation, examples, boundaries, and proof that the release is safe to evaluate.</p></article>
     </section>
 
     <footer>HarperZ9 release-readiness surface - concise public sample</footer>
