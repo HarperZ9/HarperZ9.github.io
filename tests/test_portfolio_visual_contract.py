@@ -45,6 +45,17 @@ def test_work_rows_receive_glass_treatment() -> None:
     assert ".wrow.glass" in source
 
 
+def test_live_frontend_surfaces_are_listed() -> None:
+    source = page_source()
+
+    assert "Harper Advocates" in source
+    assert "Harper Compliance" in source
+    assert "https://harperadvocates.com" in source
+    assert "https://harpercompliance.llc" in source
+    assert "Live frontend surfaces" in source
+    assert "private GitHub repos" in source
+
+
 def test_pastel_olive_depth_layer_is_present() -> None:
     source = page_source()
 
