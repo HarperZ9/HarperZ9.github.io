@@ -60,9 +60,22 @@ def test_accessible_navigation_and_page_landmarks() -> None:
     source = page_source()
 
     assert 'class="skip-link" href="#main"' in source
+    assert ".skip-link{position:fixed" in source
+    assert "clip-path:inset(50%)" in source
+    assert ".skip-link:focus,.skip-link:focus-visible" in source
     assert '<nav aria-label="Primary">' in source
     assert '<main id="main">' in source
     assert 'aria-label="656 passing compiler tests"' in source
+
+
+def test_nav_brand_is_clean_and_public_copy_has_no_mojibake() -> None:
+    source = page_source()
+
+    assert '<a class="brand" href="#top">Zain Dana Harper</a>' in source
+    assert "Zain Dana Harper <span>portfolio</span>" not in source
+    assert "Â" not in source
+    assert "·" not in source
+    assert "&middot;" in source
 
 
 def test_portfolio_uses_receipts_not_sales_posture() -> None:
@@ -90,6 +103,9 @@ def test_typography_matches_refined_quanta_system() -> None:
     assert "Manrope" in source
     assert "JetBrains Mono" in source
     assert "--shell:1160px" in source
+    assert "body{background:#ffffff; color:var(--ink); font-family:var(--body); font-size:1.0625rem" in source
+    assert ".lead{font-size:1.22rem" in source
+    assert ".btn{font-family:var(--mono); font-size:.9rem" in source
     assert "font-size:clamp" not in source
     assert "letter-spacing:-" not in source
 
@@ -97,9 +113,9 @@ def test_typography_matches_refined_quanta_system() -> None:
 def test_pastel_orange_depth_layer_is_present() -> None:
     source = page_source()
 
-    assert "--orange-wash:#f3c49f" in source
-    assert "--orange-mist:#fff0e4" in source
-    assert "rgba(243,196,159" in source
+    assert "--orange-wash:#f0aa72" in source
+    assert "--orange-mist:#ffe8d8" in source
+    assert "rgba(240,170,114" in source
     assert "--olive-" not in source
     assert "rgba(201,214,163" not in source
     assert "rgba(238,243,218" not in source

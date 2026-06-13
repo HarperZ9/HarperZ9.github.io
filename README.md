@@ -1,10 +1,12 @@
 # HarperZ9.github.io
 
-Static portfolio and product-surface site for Zain Dana Harper.
+Static portfolio and product-surface site for Zain Dana Harper: a clean public
+front door for compiler work, proof-surface utilities, EMET witness material,
+QuantaLang, live frontend surfaces, and labeled research artifacts.
 
-The site presents public release-readiness tools, proof-surface samples, EMET
-witness material, QuantaLang work, and related engineering surfaces. It is a
-plain static site intended for GitHub Pages.
+The site is deliberately static and inspectable. It should make public claims
+small enough to check, keep maturity labels visible, and point readers toward
+the repo or sample artifact that supports each claim.
 
 ## Files
 
