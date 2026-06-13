@@ -9,199 +9,8 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231d1d1f'/%3E%3Cpath d='M14 34h36M20 22h24M20 46h24' stroke='%23fff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg-top:#FFF7EC; --bg-mid:#FFF1E0; --bg-bottom:#FBE3C6;
-    --ink:#34221A; --ink-muted:#6E5644; --ink-faint:rgba(52,34,26,.55);
-    --orange:#E8651C; --orange-bright:#FF8A2E; --orange-deep:#B84A12; --creamsicle:#FFB36B; --gold:#E8932C;
-    --glass-base:linear-gradient(150deg, rgba(255,255,255,.66), rgba(255,246,235,.34) 46%, rgba(255,231,206,.5));
-    --gloss:linear-gradient(177deg, rgba(255,255,255,.62), rgba(255,255,255,0) 46%);
-    --glass-blur:saturate(185%) brightness(1.05) blur(24px);
-    --glass-shadow:0 2px 1px rgba(255,255,255,.95) inset, 0 1px 0 rgba(255,255,255,.7) inset, 0 0 0 1px rgba(232,120,40,.10) inset, 0 14px 30px -12px rgba(214,108,40,.28), 0 34px 64px -28px rgba(150,70,25,.22);
-    --glass-shadow-hi:0 2px 1px rgba(255,255,255,1) inset, 0 0 0 1px rgba(232,120,40,.16) inset, 0 22px 48px -14px rgba(214,108,40,.36), 0 46px 92px -32px rgba(150,70,25,.30), 0 0 60px -8px rgba(255,140,50,.45);
-    --border:rgba(52,34,26,.14); --rule:rgba(52,34,26,.12);
-    --display:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    --body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    --mono:"JetBrains Mono","Courier New",monospace;
-    --shell:1280px; --r:18px; --r-lg:22px; --ease:cubic-bezier(.22,.61,.36,1);
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg-mid); color:var(--ink); font-family:var(--body); font-size:clamp(1rem,.96rem+.2vw,1.08rem); line-height:1.72; -webkit-font-smoothing:antialiased; overflow-x:hidden; position:relative}
-  .bg{position:fixed; inset:0; z-index:-3; pointer-events:none; overflow:hidden; background:radial-gradient(120% 95% at 70% -12%, #FFFFFF 0%, #FFF6EC 38%, #FFE7CC 100%)}
-  .orb{position:absolute; border-radius:50%; filter:blur(80px); opacity:.6; mix-blend-mode:multiply; will-change:transform}
-  .orb.a{width:60vw; height:60vw; left:-16vw; top:-16vw; background:radial-gradient(circle at 30% 30%, rgba(255,122,26,.42), transparent 62%); animation:drift1 34s var(--ease) infinite alternate}
-  .orb.b{width:50vw; height:50vw; right:-14vw; top:4vh; background:radial-gradient(circle at 60% 40%, rgba(232,92,18,.36), transparent 60%); animation:drift2 46s var(--ease) infinite alternate}
-  .orb.c{width:48vw; height:48vw; left:10vw; bottom:-22vw; background:radial-gradient(circle at 50% 50%, rgba(255,179,107,.5), transparent 60%); animation:drift3 52s var(--ease) infinite alternate}
-  .orb.d{width:34vw; height:34vw; right:8vw; bottom:2vh; background:radial-gradient(circle at 50% 50%, rgba(232,146,44,.32), transparent 62%); animation:drift1 40s var(--ease) infinite alternate-reverse}
-  .orb.e{width:26vw; height:26vw; left:46vw; top:30vh; background:radial-gradient(circle at 50% 50%, rgba(255,200,140,.46), transparent 64%); animation:drift2 58s var(--ease) infinite alternate}
-  @keyframes drift1{from{transform:translate3d(0,0,0) scale(1)} to{transform:translate3d(6vw,5vh,0) scale(1.12)}}
-  @keyframes drift2{from{transform:translate3d(0,0,0) scale(1)} to{transform:translate3d(-7vw,4vh,0) scale(1.08)}}
-  @keyframes drift3{from{transform:translate3d(0,0,0) scale(1)} to{transform:translate3d(5vw,-6vh,0) scale(1.15)}}
-  .sun{position:fixed; width:58vw; height:58vw; left:0; top:0; z-index:-2; pointer-events:none; border-radius:50%; filter:blur(40px); mix-blend-mode:soft-light; opacity:.85; background:radial-gradient(circle at 50% 50%, rgba(255,248,226,.95), rgba(255,176,92,.4) 42%, transparent 70%); animation:sunsweep 30s linear infinite}
-  @keyframes sunsweep{0%{transform:translate(-30vw,-10vh)} 25%{transform:translate(60vw,20vh)} 50%{transform:translate(80vw,70vh)} 75%{transform:translate(10vw,90vh)} 100%{transform:translate(-30vw,-10vh)}}
-  .grain{position:fixed; inset:0; z-index:-2; pointer-events:none; opacity:.05; mix-blend-mode:multiply; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-  .bloom{position:fixed; inset:0; z-index:-2; pointer-events:none; mix-blend-mode:screen; background:radial-gradient(120% 90% at 30% 24%, transparent 46%, rgba(255,255,255,.5))}
-  a{color:var(--orange-deep); text-decoration:none; transition:color .2s var(--ease); font-weight:500}
-  a:hover{color:var(--orange)}
-  code{font-family:var(--mono); font-size:.9em; color:var(--orange-deep)}
-  h1,h2,h3{font-family:var(--display); color:var(--ink); line-height:1.05; letter-spacing:-.024em; font-weight:700}
-  em{font-style:italic}
-  :focus-visible{outline:2px solid var(--orange); outline-offset:3px; border-radius:6px}
-  .shell{max-width:var(--shell); margin:0 auto; padding-inline:clamp(1.4rem,5vw,4.5rem)}
-  .g12{display:grid; grid-template-columns:repeat(12,1fr); column-gap:clamp(1rem,2.2vw,1.8rem)}
-  section{padding:clamp(4rem,8vw,9rem) 0; position:relative}
-  .kicker{font-family:var(--mono); font-size:.76rem; letter-spacing:.24em; text-transform:uppercase; color:var(--orange-deep); font-weight:700; display:flex; align-items:center; gap:.8rem}
-  .kicker::before{content:""; width:clamp(1.4rem,4vw,3rem); height:1px; background:var(--orange-deep); opacity:.5}
-  /* ---- glass primitive ---- */
-  .glass{position:relative; background:var(--gloss), var(--glass-base); border-radius:var(--r-lg); -webkit-backdrop-filter:var(--glass-blur); backdrop-filter:var(--glass-blur); box-shadow:var(--glass-shadow); border:1px solid transparent; background-clip:padding-box}
-  .glass::after{content:""; position:absolute; inset:0; border-radius:inherit; padding:1.5px; pointer-events:none; background:linear-gradient(140deg, rgba(255,255,255,.98), rgba(255,158,77,.6) 30%, rgba(255,255,255,.25) 56%, rgba(255,179,107,.65)); -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude}
-  .glass.sheen::before{content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; opacity:0; transition:opacity .4s var(--ease); background:radial-gradient(260px circle at var(--mx,50%) var(--my,12%), rgba(255,255,255,.6), transparent 60%)}
-  .glass.sheen:hover::before{opacity:1}
-  /* ---- nav ---- */
-  nav{position:sticky; top:0; z-index:100; -webkit-backdrop-filter:saturate(175%) blur(18px) brightness(1.05); backdrop-filter:saturate(175%) blur(18px) brightness(1.05); background:linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,247,238,.5)); border-bottom:1px solid rgba(232,120,40,.2)}
-  .nav-in{max-width:var(--shell); margin:0 auto; padding:.9rem clamp(1.4rem,5vw,4.5rem); display:flex; align-items:center; justify-content:space-between; gap:1rem}
-  .brand{font-family:var(--display); font-weight:700; color:var(--ink); letter-spacing:-.02em}
-  .brand b{color:var(--orange)}
-  .nav-links{display:flex; gap:1.6rem; font-size:.86rem; font-family:var(--mono)}
-  .nav-links a{color:var(--ink-muted)}
-  .nav-links a:hover{color:var(--orange-deep)}
-  @media(max-width:640px){.nav-links{display:none}}
-  /* ---- hero (asymmetric) ---- */
-  .hero{padding-top:clamp(4rem,10vw,9.5rem); padding-bottom:clamp(2.5rem,6vw,5rem); row-gap:clamp(1.6rem,3vw,2.6rem); align-items:end}
-  .hero .kicker{grid-column:1/-1}
-  .hero h1{grid-column:1/12; font-size:clamp(2.9rem,1.4rem+7vw,7.2rem); line-height:.96; letter-spacing:-.04em; margin:.1rem 0 0}
-  .hero h1 .grad{background:linear-gradient(100deg,#C8521E 4%,#E8651C 36%,#FF8A2E 68%,#FFB36B 98%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; text-shadow:0 1px 0 rgba(255,255,255,.4); filter:drop-shadow(0 4px 18px rgba(232,92,18,.22))}
-  .lead-wrap{grid-column:1/7; align-self:start}
-  .lead{font-size:clamp(1.05rem,.95rem+.55vw,1.28rem); color:var(--ink-muted); max-width:48ch}
-  .lead b{color:var(--ink); font-weight:600}
-  .cta{display:flex; flex-wrap:wrap; gap:.8rem; margin-top:1.8rem}
-  .stats{grid-column:8/13; align-self:start; display:grid; grid-template-columns:1fr 1fr; gap:.7rem; margin-top:.4rem}
-  @media(max-width:900px){.hero h1{grid-column:1/-1} .lead-wrap{grid-column:1/-1} .stats{grid-column:1/-1; margin-top:1.2rem}}
-  .stat{padding:1.3rem 1.4rem; border-radius:3px 16px 3px 16px}
-  .stat .n{font-family:var(--display); font-size:clamp(1.5rem,1rem+1.7vw,2.3rem); background:linear-gradient(180deg,#E8651C,#B84A12); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; font-weight:700; line-height:1}
-  .stat .l{font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); margin-top:.5rem}
-  /* ---- buttons ---- */
-  .btn{position:relative; font-family:var(--mono); font-size:.88rem; font-weight:500; padding:.74rem 1.4rem; border-radius:100px; color:var(--ink); transition:transform .3s var(--ease), box-shadow .3s var(--ease); background:var(--gloss), var(--glass-base); -webkit-backdrop-filter:var(--glass-blur); backdrop-filter:var(--glass-blur); border:1px solid rgba(232,120,40,.25); box-shadow:var(--glass-shadow)}
-  .btn:hover{transform:translateY(-2px); box-shadow:var(--glass-shadow-hi); color:var(--orange-deep)}
-  .btn.solid{background:linear-gradient(135deg,#F0913F 0%,#E8651C 50%,#B84A12 100%); color:#fff; border:1px solid rgba(255,210,170,.6); font-weight:700; text-shadow:0 1px 1px rgba(120,50,15,.45); box-shadow:0 1px 0 rgba(255,255,255,.4) inset, 0 10px 24px -8px rgba(200,82,30,.55), 0 2px 6px rgba(184,74,18,.4)}
-  .btn.solid:hover{background:linear-gradient(135deg,#FF9E4D 0%,#E8651C 55%,#B84A12 100%); color:#fff}
-  /* ---- section head ---- */
-  .sec-head{margin-bottom:clamp(2rem,4.5vw,3.8rem)}
-  .sec-head h2{font-size:clamp(2rem,1.2rem+2.8vw,3.4rem); margin-top:.8rem; max-width:18ch}
-  .chips{display:flex; flex-wrap:wrap; gap:.45rem; margin-top:1rem}
-  .chip{font-family:var(--mono); font-size:.72rem; font-weight:500; padding:.32rem .68rem; border-radius:100px; background:linear-gradient(135deg,rgba(255,255,255,.7),rgba(255,179,107,.32)); color:var(--orange-deep); border:1px solid rgba(232,120,40,.3); box-shadow:0 1px 0 rgba(255,255,255,.8) inset}
-  .tags{margin-top:1rem; font-size:.78rem; color:var(--ink-faint)}
-  .links{margin-top:1.2rem; display:flex; flex-wrap:wrap; gap:1.2rem; font-family:var(--mono); font-size:.82rem; position:relative; z-index:1}
-  /* ---- feature panels (asymmetric, grid-breaking) ---- */
-  .feats{align-items:start; margin-bottom:clamp(1rem,3vw,2.5rem)}
-  .feat{padding:clamp(1.7rem,2.6vw,2.6rem); position:relative; overflow:hidden; transition:transform .35s var(--ease), box-shadow .35s var(--ease)}
-  .feat:hover{transform:translateY(-7px); box-shadow:var(--glass-shadow-hi)}
-  .feat.a{grid-column:1/8; border-radius:4px 30px 4px 30px}
-  .feat.b{grid-column:8/13; margin-top:clamp(3rem,9vw,7rem); border-radius:30px 4px 30px 4px}
-  @media(max-width:900px){.feat.a,.feat.b{grid-column:1/-1; margin-top:0}}
-  .feat .idx{position:absolute; top:.7rem; right:1.2rem; font-family:var(--display); font-weight:700; font-size:clamp(3rem,7vw,5.5rem); line-height:1; color:rgba(232,101,28,.15)}
-  .feat .role{font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; color:var(--orange-deep); text-transform:uppercase; font-weight:700; margin-bottom:.7rem}
-  .feat h3{font-size:clamp(1.6rem,1.1rem+1.7vw,2.3rem); margin-bottom:1rem; padding-bottom:1rem; border-bottom:1px solid var(--rule)}
-  .feat p{color:var(--ink-muted); max-width:46ch}
-  /* ---- editorial work index ---- */
-  .worklist{border-bottom:1px solid var(--rule); margin-top:clamp(1.5rem,4vw,3rem)}
-  .wrow{display:grid; grid-template-columns:3.5rem minmax(0,2.6fr) minmax(0,4.4fr) auto; column-gap:clamp(1.1rem,2.4vw,2.4rem); align-items:baseline; padding:clamp(1.5rem,2.6vw,2.1rem) .8rem; border-top:1px solid var(--rule); transition:background .35s var(--ease), padding-left .35s var(--ease)}
-  .wrow:hover{background:linear-gradient(90deg, rgba(255,179,107,.2), rgba(255,179,107,0) 78%); padding-left:1.6rem}
-  .wrow .idx{font-family:var(--mono); font-weight:700; font-size:.9rem; color:var(--orange-deep)}
-  .wrow .wt h3{font-size:1.35rem; letter-spacing:-.02em}
-  .wrow .wt .role{font-family:var(--mono); font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); margin-top:.35rem}
-  .wrow .wd{color:var(--ink-muted); font-size:.95rem}
-  .wrow .wd .tags{margin-top:.55rem}
-  .wrow .lk{font-family:var(--mono); font-size:.78rem; white-space:nowrap; align-self:center}
-  .wrow .lk span{color:var(--ink-faint)}
-  @media(max-width:820px){.wrow{grid-template-columns:2.4rem 1fr; row-gap:.55rem; padding-left:0} .wrow:hover{padding-left:.6rem} .wrow .wd,.wrow .lk{grid-column:2}}
-  /* ---- band (full-bleed) ---- */
-  .band{background:linear-gradient(180deg, rgba(255,179,107,.2), rgba(255,138,46,.07)); border-top:1px solid rgba(232,120,40,.2); border-bottom:1px solid rgba(232,120,40,.2)}
-  .band .res-q{grid-column:1/9; font-family:var(--display); font-weight:600; font-size:clamp(1.5rem,1rem+2vw,2.6rem); line-height:1.18; color:var(--ink); letter-spacing:-.02em}
-  .band .res-b{grid-column:1/8; margin-top:1.4rem; color:var(--ink-muted)}
-  @media(max-width:900px){.band .res-q,.band .res-b{grid-column:1/-1}}
-  /* ---- approach ---- */
-  .approach .body{grid-column:1/7}
-  .approach .pull{grid-column:8/13; align-self:center; font-family:var(--display); font-weight:600; font-size:clamp(1.5rem,1rem+2.2vw,2.7rem); line-height:1.2; color:var(--ink); letter-spacing:-.02em; padding-left:clamp(1.2rem,3vw,2.4rem); border-left:3px solid var(--orange); margin-top:clamp(1.5rem,4vw,0)}
-  .approach .body p{max-width:54ch; margin-bottom:1.1rem; color:var(--ink-muted)}
-  .approach .body b{color:var(--ink); font-weight:600}
-  @media(max-width:900px){.approach .body,.approach .pull{grid-column:1/-1} .approach .pull{border-left:3px solid var(--orange); margin-top:2rem}}
-  /* ---- experience ---- */
-  .xp{display:grid; grid-template-columns:clamp(7rem,12vw,11rem) 1fr; gap:clamp(1rem,3vw,3rem); padding:clamp(1.5rem,3vw,2.2rem) 0; border-top:1px solid var(--rule); max-width:1000px}
-  .xp:last-of-type{border-bottom:1px solid var(--rule)}
-  .xp .when{font-family:var(--mono); font-size:.8rem; color:var(--orange-deep); font-weight:500; line-height:1.5}
-  .xp h3{font-size:1.25rem; margin-bottom:.35rem; letter-spacing:-.01em}
-  .xp p{font-size:.94rem; color:var(--ink-muted); max-width:60ch}
-  @media(max-width:640px){.xp{grid-template-columns:1fr; gap:.5rem}}
-  /* ---- skills ---- */
-  .skills{display:flex; flex-wrap:wrap; gap:.55rem; margin-top:1.6rem; max-width:980px}
-  .skills span{font-family:var(--mono); font-size:.82rem; padding:.48rem .9rem; border-radius:12px; background:var(--gloss), var(--glass-base); -webkit-backdrop-filter:saturate(160%) blur(10px); backdrop-filter:saturate(160%) blur(10px); border:1px solid rgba(232,120,40,.2); color:var(--ink-muted); box-shadow:0 1px 0 rgba(255,255,255,.7) inset, 0 6px 14px -8px rgba(184,74,18,.25); transition:transform .25s var(--ease), color .25s var(--ease)}
-  .skills span:hover{transform:translateY(-2px); color:var(--orange-deep)}
-  /* ---- footer (left-anchored) ---- */
-  footer{padding:clamp(4rem,9vw,8rem) 0 clamp(3rem,6vw,5rem)}
-  .foot-big{font-family:var(--display); font-weight:700; font-size:clamp(2.1rem,1.3rem+3.4vw,4.4rem); color:var(--ink); letter-spacing:-.03em; line-height:1; max-width:16ch; margin-bottom:2.2rem}
-  .foot-cta{display:flex; flex-wrap:wrap; gap:.8rem}
-  .muted{color:var(--ink-faint); font-size:.82rem; margin-top:3rem; font-family:var(--mono); letter-spacing:.04em}
-  @media(prefers-reduced-motion:reduce){*{transition:none!important; scroll-behavior:auto} .orb,.sun{animation:none!important} .glass.sheen::before{display:none}}
-  /* ---- uniformity pass: one text colour, no per-word emphasis, content-first (humble / navigable) ---- */
-  .lead,.feat p,.wrow .wd,.xp p,.band .res-b,.approach .body p{color:var(--ink)}
-  b,strong,.lead b,.approach .body b,.band b,.prose b{font-weight:400}
-  a{color:var(--ink); text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px; font-weight:400; transition:opacity .2s var(--ease)}
-  a:hover{color:var(--ink); opacity:.6}
-  .btn{text-decoration:none; font-family:var(--body)}
-  .nav-links{font-family:var(--body)}
-  .nav-links a{text-decoration:none; color:var(--ink)}
-  .nav-links a:hover{text-decoration:underline; opacity:1}
-  h1,h2,h3,.foot-big{color:var(--ink); font-weight:600}
-  .hero h1{font-size:clamp(2.3rem,1.5rem+3.2vw,4rem); letter-spacing:-.012em}
-  .hero h1 .grad{background:none; -webkit-text-fill-color:currentColor; color:var(--ink); text-shadow:none; filter:none}
-  .kicker{font-family:var(--body); color:var(--ink-muted); font-weight:600; letter-spacing:.01em; text-transform:none; font-size:.85rem}
-  .kicker::before{background:var(--ink-faint); opacity:.4}
-  .feat .role,.wrow .role{font-family:var(--body); color:var(--ink-muted); text-transform:none; letter-spacing:0; font-weight:600}
-  .wrow .idx,.lk{font-family:var(--body); color:var(--ink-muted)}
-  .feat .idx{color:var(--ink-faint); font-weight:600; font-size:clamp(1.6rem,3vw,2.4rem)}
-  .stat .n{background:none; -webkit-text-fill-color:currentColor; color:var(--ink)}
-  .stat .l,.tags,.muted{font-family:var(--body); color:var(--ink-muted)}
-  .chip{font-family:var(--body); background:rgba(255,255,255,.45); color:var(--ink-muted); border:1px solid var(--rule); box-shadow:none}
-  code{color:var(--ink); font-family:var(--mono)}
-  .approach .pull{font-family:var(--body); font-size:clamp(1.2rem,1rem+1vw,1.65rem); font-weight:500; border-left-color:var(--ink-faint); letter-spacing:0}
-  /* ---- calm CTAs (no orange, understated) ---- */
-  .btn{border:1px solid var(--ink-faint); box-shadow:none; color:var(--ink); background:rgba(255,255,255,.42); -webkit-backdrop-filter:saturate(140%) blur(10px); backdrop-filter:saturate(140%) blur(10px); text-shadow:none}
-  .btn:hover{color:var(--ink); box-shadow:none; opacity:.7; transform:translateY(-1px)}
-  .btn.solid{background:var(--ink); color:#FBEFDD; border:1px solid var(--ink); font-weight:600}
-  .btn.solid:hover{background:#46301F; color:#FBEFDD; opacity:1; transform:translateY(-1px)}
-  /* ---- uniform buttons (no brown fill; all identical quiet glass) ---- */
-  .btn.solid{background:rgba(255,255,255,.42); color:var(--ink); border:1px solid var(--ink-faint); font-weight:600; text-shadow:none; -webkit-backdrop-filter:saturate(140%) blur(10px); backdrop-filter:saturate(140%) blur(10px); box-shadow:none}
-  .btn.solid:hover{background:rgba(255,255,255,.62); color:var(--ink); opacity:.85; transform:translateY(-1px); box-shadow:none}
-  /* ---- function-forward: neutral palette, no orange/cream, minimal chrome ---- */
-  :root{
-    --bg-top:#ffffff; --bg-mid:#ffffff; --bg-bottom:#ffffff;
-    --ink:#1d1d1f; --ink-muted:#565656; --ink-faint:#8a8a8a;
-    --rule:#e3e3e3; --border:#e3e3e3;
-    --orange:#1d1d1f; --orange-bright:#1d1d1f; --orange-deep:#1d1d1f; --creamsicle:#1d1d1f; --gold:#1d1d1f; --glow:transparent;
-    --glass-shadow:none; --glass-shadow-hi:none;
-  }
-  body{background:#ffffff}
-  .bg,.sun,.grain,.bloom{display:none !important}
-  .glass{background:#ffffff; -webkit-backdrop-filter:none; backdrop-filter:none; box-shadow:none; border:1px solid var(--rule); border-radius:6px}
-  .glass::after{display:none}
-  .glass.sheen::before{display:none}
-  .feat.a,.feat.b{border-radius:6px}
-  .feat:hover,.card:hover,.stat:hover{box-shadow:none; transform:none}
-  .stat{border-radius:6px; background:#ffffff; border:1px solid var(--rule)}
-  .feat .idx{color:#ececec}
-  nav{background:#ffffff; -webkit-backdrop-filter:none; backdrop-filter:none; border-bottom:1px solid var(--rule); box-shadow:none}
-  .btn,.btn.solid{background:#ffffff; color:var(--ink); border:1px solid var(--rule); box-shadow:none; -webkit-backdrop-filter:none; backdrop-filter:none}
-  .btn:hover,.btn.solid:hover{background:#f4f4f4; color:var(--ink); opacity:1; transform:none}
-  .chip{background:#f4f4f4; color:var(--ink-muted); border:1px solid var(--rule); box-shadow:none}
-  .skills span{background:#ffffff; -webkit-backdrop-filter:none; backdrop-filter:none; border:1px solid var(--rule); box-shadow:none}
-  .band{background:#f6f6f6; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)}
-  .wrow:hover{background:#f6f6f6}
-  .kicker::before{background:var(--ink-faint); opacity:.5}
-  .approach .pull{border-left-color:var(--rule)}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="bg"><span class="orb a"></span><span class="orb b"></span><span class="orb c"></span><span class="orb d"></span><span class="orb e"></span></div>
@@ -213,7 +22,7 @@
 <header class="hero shell g12">
   <p class="kicker">Proof surfaces · compilers · witness tooling · color science</p>
   <h1>Proof before <span class="grad">public trust.</span></h1>
-  <div class="lead-wrap">
+  <div class="lead-wrap glass">
     <p class="lead">I build small, inspectable tools for AI-era software releases: public-surface checks, model provenance envelopes, repo proof indexes, WARDEN-style reports, and external witness primitives. The point is simple: when a repo, workflow, or claim asks for trust, the evidence should already be visible.</p>
     <div class="cta">
       <a class="btn solid" href="#pilot">Proof-surface pilot</a>
@@ -256,31 +65,31 @@
     </article>
   </div>
   <div class="worklist">
-    <article class="wrow">
+    <article class="wrow glass">
       <div class="idx">01</div>
       <div class="wt"><h3>public-surface-sweeper</h3><div class="role">Release hygiene point</div></div>
       <div class="wd">Checks what a repo says before the internet, customers, or reviewers see it: public claims, release hygiene, secret-shaped values, docs gaps, and presentation risk.<div class="tags">P: public repo surface | O: pre-release gate | D: findings + fixes</div></div>
       <div class="lk"><a href="https://github.com/HarperZ9/public-surface-sweeper">GitHub ↗</a></div>
     </article>
-    <article class="wrow">
+    <article class="wrow glass">
       <div class="idx">02</div>
       <div class="wt"><h3>model-provenance-validator</h3><div class="role">Provenance envelope point</div></div>
       <div class="wd">Validates compact model provenance records so model/workflow claims do not become governance theater.<div class="tags">P: model record | O: release review | D: pass/fail + gap notes</div></div>
       <div class="lk"><a href="https://github.com/HarperZ9/model-provenance-validator">GitHub ↗</a></div>
     </article>
-    <article class="wrow">
+    <article class="wrow glass">
       <div class="idx">03</div>
       <div class="wt"><h3>repo-proof-index</h3><div class="role">Evidence assembly point</div></div>
       <div class="wd">Turns scattered receipts, schemas, tests, and release artifacts into one proof index that a human can inspect quickly.<div class="tags">P: proof artifacts | O: audit packet | D: index / markdown / JSON</div></div>
       <div class="lk"><a href="https://github.com/HarperZ9/repo-proof-index">GitHub ↗</a></div>
     </article>
-    <article class="wrow">
+    <article class="wrow glass">
       <div class="idx">04</div>
       <div class="wt"><h3>warden-reporting</h3><div class="role">Human handoff point</div></div>
       <div class="wd">Structured evidence chains, finding correlation, and risk-scored reports from sanitized WARDEN tooling.<div class="tags">P: evidence + findings | O: client / reviewer handoff | D: report</div></div>
       <div class="lk"><a href="https://github.com/HarperZ9/warden-reporting">GitHub ↗</a></div>
     </article>
-    <article class="wrow">
+    <article class="wrow glass">
       <div class="idx">05</div>
       <div class="wt"><h3>EMET</h3><div class="role">Witness point</div></div>
       <div class="wd">External source/view consistency checks. EMET says <code>MATCH</code>, <code>DRIFT</code>, or <code>UNVERIFIABLE</code>; it does not say <code>TRUSTED</code>.<div class="tags">P: source/view pair | O: model-facing boundary | D: witness receipt</div></div>
@@ -312,43 +121,43 @@
     </article>
   </div>
   <div class="worklist">
-    <article class="wrow">
+    <article class="wrow glass">
       <div class="idx">03</div>
       <div class="wt"><h3>RAW <span style="font-family:var(--mono);font-weight:500;font-size:.58em;letter-spacing:0;color:var(--ink-faint)">(Rendering Advancement Workshop)</span></h3><div class="role">Real-time graphics · D3D11 / C++23</div></div>
       <div class="wd">A standalone Direct3D 11 post-processing injector (proxy <code>d3d11.dll</code> via VTable hooking): physically-based tonemapping, TAA, SSR, volumetrics, bokeh DoF, in a single self-contained DLL.<div class="tags">18+ effects · 86 HLSL shaders · ~45K LOC · ACES / AgX · ImGui</div></div>
       <div class="lk"><span>private</span></div>
     </article>
-    <article class="wrow">
+    <article class="wrow glass">
       <div class="idx">04</div>
       <div class="wt"><h3>Calibrate Pro</h3><div class="role">Color science · Python · MIT</div></div>
       <div class="wd">Sensorless display calibration - no colorimeter required. Generates ICC v4.4 profiles and 3D LUTs with DDC/CI hardware control.<div class="tags">ΔE 0.65 (below JND) · ICC v4.4 · 3D LUT · DDC/CI</div></div>
       <div class="lk"><a href="https://github.com/HarperZ9/calibrate-pro">GitHub ↗</a></div>
     </article>
-    <article class="wrow">
+    <article class="wrow glass">
       <div class="idx">05</div>
       <div class="wt"><h3>Quanta Universe</h3><div class="role">Systems · QuantaLang · MIT</div></div>
       <div class="wd">A 23-core-module software ecosystem (plus infra) - an OS kernel, renderers, a quant-trading engine, and ML frameworks - all written <em>in</em> QuantaLang, with 64+ Unix utilities ported to native binaries via the C backend.<div class="tags">23 core modules · OS kernel · 64+ ported utils · self-hosting</div></div>
       <div class="lk"><a href="https://github.com/HarperZ9/quanta-universe">GitHub ↗</a></div>
     </article>
-    <article class="wrow">
+    <article class="wrow glass">
       <div class="idx">06</div>
       <div class="wt"><h3>Quanta Color</h3><div class="role">Color science · Python · MIT</div></div>
       <div class="wd">A color-science library: 15+ color spaces, 12 tone mappers, CIEDE2000/Oklab difference metrics, CAT16 chromatic adaptation, colour-vision-deficiency simulation, and ICC profile generation.<div class="tags">CIECAM · Oklab · spectral</div></div>
       <div class="lk"><span>library</span></div>
     </article>
-    <article class="wrow">
+    <article class="wrow glass">
       <div class="idx">07</div>
       <div class="wt"><h3>Aurora</h3><div class="role">Tooling · Lua / TypeScript / DSL</div></div>
       <div class="wd">A combat-scripting SDK with a custom indentation-sensitive DSL compiler; 67 SDK modules and production rotations covering all 39 specs across 13 classes, with a unit and simulation test harness.<div class="tags">custom 4-stage DSL compiler · TSTL · 39 specs / 13 classes · v1.0.0</div></div>
       <div class="lk"><span>SDK</span></div>
     </article>
-    <article class="wrow">
+    <article class="wrow glass">
       <div class="idx">08</div>
       <div class="wt"><h3>Multi-Agent LLM Orchestration</h3><div class="role">AI systems · Python</div></div>
       <div class="wd">A director-pattern platform that classifies tasks and routes them to 89 specialist agents, with meta-agents for decomposition, coordination, validation, and synthesis, over a multi-provider model abstraction and 9 Model Context Protocol (MCP) servers.<div class="tags">director pattern · 89 agents · 9 MCP servers · multi-provider (Anthropic · OpenAI · Gemini · Bedrock)</div></div>
       <div class="lk"><span>platform</span></div>
     </article>
-    <article class="wrow">
+    <article class="wrow glass">
       <div class="idx">09</div>
       <div class="wt"><h3>EMET</h3><div class="role">AI safety · Python / Rust / Node.js · MPL-2.0</div></div>
       <div class="wd">A re-derivability-based integrity verifier for AI oversight: it checks that the bytes reaching a model match their source, and flags a system vouching for itself in-band, a presented view that differs from its source, and a monitor reading a different file than the one that runs. Verdicts are <code>MATCH</code> / <code>DRIFT</code> / <code>UNVERIFIABLE</code> - there is no <code>TRUSTED</code>.<div class="tags">3 implementations · shared conformance suite in CI · draft spec · STRIDE threat model</div></div>
@@ -366,19 +175,19 @@
 <section id="approach" class="shell approach">
   <div class="sec-head"><p class="kicker">Approach</p><h2>How the work gets made.</h2></div>
   <div class="g12">
-    <div class="body">
+    <div class="body glass">
       <p>I spent eleven years as a commercial arborist in a father-son business. Somewhere between the climbing rope and the chainsaw, I taught myself to write software, and never stopped.</p>
       <p>Light into color profiles. Reality into real-time renders. Human intent into running code. I am <b>neurodivergent</b>, and rather than fight it, I built my whole workflow around it: directing agentic AI coding tools across design, build, test, and integration, then verifying and owning every line. Less prompt-and-pray, more conducting an orchestra where every player is a model. Pattern-finding and stubborn iteration in place of credentials - and somehow it ships real software.</p>
     </div>
-    <p class="pull">One thread runs through all of it: how things cross from organic to analog to digital, across language and media.</p>
+    <p class="pull glass">One thread runs through all of it: how things cross from organic to analog to digital, across language and media.</p>
   </div>
 </section>
 
 <section id="experience" class="shell">
   <div class="sec-head"><p class="kicker">Experience</p><h2>Where it has taken me.</h2></div>
-  <div class="xp"><div class="when">2023 - Present<br>Remote</div><div><h3>Independent Software Engineer &amp; AI-Safety Researcher</h3><p>Compilers, real-time graphics, color science, and multi-agent LLM systems, shipped to crates.io and the VS Code Marketplace, plus a Skyrim shader mod (ELDER.ENB) past 887K downloads. Defensive AI-safety research on safety-assessment probe patterns against LLM coding assistants.</p></div></div>
-  <div class="xp"><div class="when">2015 - Present</div><div><h3>Commercial Arborist · Legendary Tree (family business)</h3><p>Operations, site assessments, safety procedures, and written client proposals across 11 years.</p></div></div>
-  <div class="xp"><div class="when">2013 - 2014<br>Redmond, WA</div><div><h3>Technical Networking Support, Xbox Division · contract via Convergys/Stream</h3><p>Diagnosed TCP/IP, DNS, NAT, and firewall issues for Xbox Live networking on a vendor contract; contributed to internal knowledge-base documentation.</p></div></div>
+  <div class="xp glass"><div class="when">2023 - Present<br>Remote</div><div><h3>Independent Software Engineer &amp; AI-Safety Researcher</h3><p>Compilers, real-time graphics, color science, and multi-agent LLM systems, shipped to crates.io and the VS Code Marketplace, plus a Skyrim shader mod (ELDER.ENB) past 887K downloads. Defensive AI-safety research on safety-assessment probe patterns against LLM coding assistants.</p></div></div>
+  <div class="xp glass"><div class="when">2015 - Present</div><div><h3>Commercial Arborist · Legendary Tree (family business)</h3><p>Operations, site assessments, safety procedures, and written client proposals across 11 years.</p></div></div>
+  <div class="xp glass"><div class="when">2013 - 2014<br>Redmond, WA</div><div><h3>Technical Networking Support, Xbox Division · contract via Convergys/Stream</h3><p>Diagnosed TCP/IP, DNS, NAT, and firewall issues for Xbox Live networking on a vendor contract; contributed to internal knowledge-base documentation.</p></div></div>
 </section>
 
 <section id="skills" class="shell">
