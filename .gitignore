@@ -1,0 +1,9 @@
+.env
+.env.*
+.warden-safe-cache/
+.playwright/
+node_modules/
+dist/
+build/
+*.log
+*.tmp
