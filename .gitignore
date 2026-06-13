@@ -2,6 +2,8 @@
 .env.*
 .warden-safe-cache/
 .playwright/
+.pytest_cache/
+__pycache__/
 node_modules/
 dist/
 build/
