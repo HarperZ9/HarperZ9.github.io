@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sample Proof-Surface Report - EMET</title>
+  <meta name="description" content="Sample proof-surface report for EMET: witness verdicts, evidence, boundaries, and release-readiness posture.">
+  <style>
+    :root {
+      --ink: #17130f;
+      --paper: #f5ecd9;
+      --sage: #4c6345;
+      --rust: #a64f32;
+      --gold: #b6863a;
+      --line: rgba(23, 19, 15, 0.18);
+      --panel: rgba(255, 255, 255, 0.44);
+      --shadow: 0 26px 88px rgba(37, 25, 14, 0.2);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at 10% 8%, rgba(182, 134, 58, 0.32), transparent 28rem),
+        radial-gradient(circle at 88% 20%, rgba(76, 99, 69, 0.22), transparent 26rem),
+        linear-gradient(140deg, #fbf2df 0%, #ecdbc1 52%, #d8c19e 100%);
+      line-height: 1.55;
+    }
+
+    a {
+      color: var(--rust);
+      text-decoration-thickness: 0.08em;
+      text-underline-offset: 0.22em;
+    }
+
+    .shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header { padding: 28px 0 18px; }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.7fr);
+      gap: 28px;
+      padding: 54px 0 28px;
+      align-items: stretch;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      padding: clamp(24px, 4vw, 46px);
+    }
+
+    .kicker {
+      margin: 0 0 14px;
+      color: var(--sage);
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 10ch;
+      font-size: clamp(2.7rem, 8vw, 7rem);
+      line-height: 0.88;
+      letter-spacing: -0.075em;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: clamp(1.65rem, 3vw, 2.45rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .lead {
+      margin: 24px 0 0;
+      max-width: 68ch;
+      font-size: clamp(1.05rem, 2vw, 1.32rem);
+    }
+
+    .pill {
+      display: inline-flex;
+      width: fit-content;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.38);
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .summary {
+      display: grid;
+      gap: 14px;
+    }
+
+    .verdicts {
+      display: grid;
+      gap: 10px;
+    }
+
+    .verdict {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.34);
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      padding: 20px 0 52px;
+    }
+
+    .wide { grid-column: 1 / -1; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      font-size: 0.92rem;
+    }
+
+    th,
+    td {
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--sage);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    ul,
+    ol { padding-left: 1.25rem; }
+    li + li { margin-top: 0.45rem; }
+
+    code,
+    pre { font-family: "Courier New", monospace; }
+
+    pre {
+      overflow-x: auto;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(23, 19, 15, 0.86);
+      color: #fff7ea;
+    }
+
+    footer {
+      padding: 28px 0 42px;
+      color: rgba(23, 19, 15, 0.72);
+      font-family: "Trebuchet MS", Verdana, sans-serif;
+      font-size: 0.82rem;
+    }
+
+    @media (max-width: 760px) {
+      .hero,
+      .grid { grid-template-columns: 1fr; }
+      nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .card { border-radius: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="shell">
+    <nav>
+      <a href="./">Zain Dana Harper</a>
+      <a href="./proof-surface-sample.html">Release sample</a>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="card">
+        <p class="kicker">Sample report · EMET · witness surface</p>
+        <h1>A witness is not an authority.</h1>
+        <p class="lead">
+          EMET is the witness anchor in the proof-surface stack. It checks
+          whether bytes and presented views still match what they claim to
+          represent, then emits a restrained verdict instead of asking for
+          trust.
+        </p>
+      </div>
+
+      <aside class="card summary" aria-label="Verdict summary">
+        <span class="pill">No TRUSTED verdict</span>
+        <h2>Verdicts</h2>
+        <div class="verdicts">
+          <div class="verdict"><strong>MATCH</strong><span>comparison holds</span></div>
+          <div class="verdict"><strong>DRIFT</strong><span>bytes or view changed</span></div>
+          <div class="verdict"><strong>UNVERIFIABLE</strong><span>witness cannot compare</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="grid" aria-label="EMET proof surface report">
+      <article class="card">
+        <h2>Surface</h2>
+        <table>
+          <tr><th>Field</th><th>Value</th></tr>
+          <tr><td>Repo</td><td><code>HarperZ9/emet</code></td></tr>
+          <tr><td>Surface class</td><td><code>S:witness-tool</code></td></tr>
+          <tr><td>Review mode</td><td>Public README and repo presentation surface</td></tr>
+          <tr><td>Access</td><td>No credentials, private files, or protected payloads</td></tr>
+        </table>
+      </article>
+
+      <article class="card">
+        <h2>Role</h2>
+        <p>EMET is the witness point in the release-readiness stack:</p>
+        <pre><code>source bytes -> presented view -> witness verdict -> reviewer handoff</code></pre>
+        <p>It records a comparison. It does not become the authority.</p>
+      </article>
+
+      <article class="card wide">
+        <h2>Evidence present</h2>
+        <table>
+          <tr><th>Evidence</th><th>Status</th></tr>
+          <tr><td>Public README</td><td>Present</td></tr>
+          <tr><td>Conformance badge</td><td>Present</td></tr>
+          <tr><td>Python reference implementation</td><td>Present</td></tr>
+          <tr><td>Rust second implementation</td><td>Present</td></tr>
+          <tr><td>Node.js third implementation</td><td>Present</td></tr>
+          <tr><td>Language-agnostic conformance suite</td><td>Present</td></tr>
+          <tr><td>Threat model, spec, security docs</td><td>Present</td></tr>
+          <tr><td>Claim boundary</td><td>Strong: independent different-author implementation is not yet met</td></tr>
+        </table>
+      </article>
+
+      <article class="card">
+        <h2>What should stay prominent</h2>
+        <ul>
+          <li>EMET reports facts.</li>
+          <li>EMET does not say <code>TRUSTED</code>.</li>
+          <li>EMET does not decide whether a model is safe.</li>
+          <li>EMET does not edit, sign, or block anything.</li>
+          <li>EMET runs outside what it audits.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Gap before stronger claims</h2>
+        <p>
+          The public repo already has same-author Python, Rust, and Node.js
+          implementations agreeing on public conformance vectors. The stronger
+          gate is still independent different-author re-derivability.
+        </p>
+      </article>
+
+      <article class="card wide">
+        <h2>Proof-surface verdict</h2>
+        <table>
+          <tr><th>Category</th><th>Status</th></tr>
+          <tr><td>Legibility</td><td>Strong for technical reviewers</td></tr>
+          <tr><td>Bounded claim</td><td>Strong</td></tr>
+          <tr><td>Evidence visibility</td><td>Strong</td></tr>
+          <tr><td>Buyer usefulness</td><td>High for diligence, AI oversight, and release-readiness narrative</td></tr>
+          <tr><td>Overclaim risk</td><td>Low if the no-TRUSTED boundary remains prominent</td></tr>
+          <tr><td>Next action</td><td>Recruit or record an independent implementation</td></tr>
+        </table>
+      </article>
+    </section>
+  </main>
+
+  <footer class="shell">
+    Sample proof-surface report. Witness posture, evidence, and boundaries before trust language.
+  </footer>
+</body>
+</html>
