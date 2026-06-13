@@ -43,3 +43,21 @@ def test_work_rows_receive_glass_treatment() -> None:
 
     assert '<article class="wrow glass">' in source
     assert ".wrow.glass" in source
+
+
+def test_pastel_olive_depth_layer_is_present() -> None:
+    source = page_source()
+
+    assert "--olive-wash:#c9d6a3" in source
+    assert "--olive-mist:#eef3da" in source
+    assert "rgba(201,214,163" in source
+    assert ".bg{display:block" in source
+
+
+def test_glass_material_is_more_pronounced() -> None:
+    source = page_source()
+
+    assert "--glass-blur:saturate(170%) blur(30px)" in source
+    assert "--glass-edge:" in source
+    assert "--glass-depth:" in source
+    assert "box-shadow:var(--glass-shadow), var(--glass-depth)" in source
