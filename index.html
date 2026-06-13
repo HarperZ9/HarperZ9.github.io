@@ -4,8 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Zain Dana Harper - Systems Engineer</title>
-<meta name="description" content="Self-taught systems engineer: compilers, real-time graphics, color science, multi-agent LLM systems, and AI-safety tooling. Public releases on crates.io, the VS Code Marketplace, and GitHub.">
+<meta name="description" content="Zain Dana Harper builds proof-surface and release-readiness tools for AI-era software: public-surface checks, provenance envelopes, proof indexes, witness tooling, compilers, and color science.">
 <meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231d1d1f'/%3E%3Cpath d='M14 34h36M20 22h24M20 46h24' stroke='%23fff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -207,29 +208,86 @@
 <div class="sun"></div>
 <div class="grain"></div>
 <div class="bloom"></div>
-<nav><div class="nav-in"><span class="brand">Zain Dana Harper <b>·</b></span><div class="nav-links"><a href="#work">Work</a><a href="#approach">Approach</a><a href="#experience">Experience</a><a href="https://github.com/HarperZ9">GitHub ↗</a></div></div></nav>
+<nav><div class="nav-in"><span class="brand">Zain Dana Harper <b>·</b></span><div class="nav-links"><a href="#pilot">Pilot</a><a href="#work">Work</a><a href="#approach">Approach</a><a href="#experience">Experience</a><a href="https://github.com/HarperZ9">GitHub ↗</a></div></div></nav>
 
 <header class="hero shell g12">
-  <p class="kicker">Compilers · Real-Time Graphics · Color Science · Multi-Agent AI</p>
-  <h1>From <span class="grad">organic to analog to digital.</span></h1>
+  <p class="kicker">Proof surfaces · compilers · witness tooling · color science</p>
+  <h1>Proof before <span class="grad">public trust.</span></h1>
   <div class="lead-wrap">
-    <p class="lead">I'm a self-taught engineer - no CS degree, still very much learning in the open. I build across compilers, real-time graphics, color science, and multi-agent LLM systems, mostly by directing AI coding tools and then checking and owning every line myself. <b>Arborist by trade; I just never managed to stop tinkering.</b></p>
+    <p class="lead">I build small, inspectable tools for AI-era software releases: public-surface checks, model provenance envelopes, repo proof indexes, WARDEN-style reports, and external witness primitives. The point is simple: when a repo, workflow, or claim asks for trust, the evidence should already be visible.</p>
     <div class="cta">
-      <a class="btn solid" href="#work">See the work</a>
+      <a class="btn solid" href="#pilot">Proof-surface pilot</a>
+      <a class="btn" href="proof-surface-sample.html">Sample report</a>
+      <a class="btn" href="#work">See the work</a>
       <a class="btn" href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
     </div>
   </div>
   <div class="stats">
-    <div class="stat glass"><div class="n">887K+</div><div class="l">Mod downloads</div></div>
-    <div class="stat glass"><div class="n">8</div><div class="l">Compiler backends</div></div>
-    <div class="stat glass"><div class="n">~600</div><div class="l">Compiler tests</div></div>
-    <div class="stat glass"><div class="n">8</div><div class="l">Languages used</div></div>
+    <div class="stat glass"><div class="n">21</div><div class="l">Public GitHub repos</div></div>
+    <div class="stat glass"><div class="n">6</div><div class="l">High-leverage tools</div></div>
+    <div class="stat glass"><div class="n">3</div><div class="l">Pilot slots</div></div>
+    <div class="stat glass"><div class="n">7</div><div class="l">Day delivery</div></div>
   </div>
 </header>
 
 <main>
+<section id="pilot" class="shell">
+  <div class="sec-head"><p class="kicker">Current paid wedge</p><h2>WARDEN Trust &amp; Release Stack.</h2></div>
+  <div class="feats g12">
+    <article class="feat a glass sheen" data-glow>
+      <span class="idx">P</span>
+      <div class="role">Proof-surface pilot</div>
+      <h3>Public claims should arrive with evidence.</h3>
+      <p>A 7-day review for one repo, repo cluster, AI workflow, or public release surface. I map what the surface claims, what proof exists, what is missing, and what should change before launch, customer review, investor diligence, or governance handoff.</p>
+      <div class="chips"><span class="chip">$2,500 pilot</span><span class="chip">3 slots</span><span class="chip">public or supplied surfaces only</span></div>
+      <div class="tags">Not exploit testing. Not certification. No credentials. No production access.</div>
+      <div class="links"><a href="mailto:zaindharper@gmail.com">Request a pilot ↗</a><a href="https://www.reddit.com/r/Entrepreneurs/comments/1u4ebtp/proofsurface_pilot_for_ai_repo_release_readiness/">Current Reddit post ↗</a></div>
+    </article>
+    <article class="feat b glass sheen" data-glow>
+      <span class="idx">M</span>
+      <div class="role">Pipeline map</div>
+      <h3>Surface -&gt; envelope -&gt; proof -&gt; report -&gt; witness.</h3>
+      <p>The stack is intentionally narrow. Each tool places one point in the release pipeline: inspect the public face, validate provenance records, index evidence, assemble a report, and keep EMET as a witness rather than an authority.</p>
+      <div class="chips"><span class="chip">inspect</span><span class="chip">validate</span><span class="chip">index</span><span class="chip">report</span><span class="chip">witness</span></div>
+      <div class="links"><a href="https://github.com/HarperZ9/public-surface-sweeper">public-surface-sweeper</a><a href="https://github.com/HarperZ9/model-provenance-validator">model-provenance-validator</a><a href="https://github.com/HarperZ9/repo-proof-index">repo-proof-index</a><a href="https://github.com/HarperZ9/warden-reporting">warden-reporting</a><a href="https://github.com/HarperZ9/emet">EMET</a></div>
+    </article>
+  </div>
+  <div class="worklist">
+    <article class="wrow">
+      <div class="idx">01</div>
+      <div class="wt"><h3>public-surface-sweeper</h3><div class="role">Release hygiene point</div></div>
+      <div class="wd">Checks what a repo says before the internet, customers, or reviewers see it: public claims, release hygiene, secret-shaped values, docs gaps, and presentation risk.<div class="tags">P: public repo surface | O: pre-release gate | D: findings + fixes</div></div>
+      <div class="lk"><a href="https://github.com/HarperZ9/public-surface-sweeper">GitHub ↗</a></div>
+    </article>
+    <article class="wrow">
+      <div class="idx">02</div>
+      <div class="wt"><h3>model-provenance-validator</h3><div class="role">Provenance envelope point</div></div>
+      <div class="wd">Validates compact model provenance records so model/workflow claims do not become governance theater.<div class="tags">P: model record | O: release review | D: pass/fail + gap notes</div></div>
+      <div class="lk"><a href="https://github.com/HarperZ9/model-provenance-validator">GitHub ↗</a></div>
+    </article>
+    <article class="wrow">
+      <div class="idx">03</div>
+      <div class="wt"><h3>repo-proof-index</h3><div class="role">Evidence assembly point</div></div>
+      <div class="wd">Turns scattered receipts, schemas, tests, and release artifacts into one proof index that a human can inspect quickly.<div class="tags">P: proof artifacts | O: audit packet | D: index / markdown / JSON</div></div>
+      <div class="lk"><a href="https://github.com/HarperZ9/repo-proof-index">GitHub ↗</a></div>
+    </article>
+    <article class="wrow">
+      <div class="idx">04</div>
+      <div class="wt"><h3>warden-reporting</h3><div class="role">Human handoff point</div></div>
+      <div class="wd">Structured evidence chains, finding correlation, and risk-scored reports from sanitized WARDEN tooling.<div class="tags">P: evidence + findings | O: client / reviewer handoff | D: report</div></div>
+      <div class="lk"><a href="https://github.com/HarperZ9/warden-reporting">GitHub ↗</a></div>
+    </article>
+    <article class="wrow">
+      <div class="idx">05</div>
+      <div class="wt"><h3>EMET</h3><div class="role">Witness point</div></div>
+      <div class="wd">External source/view consistency checks. EMET says <code>MATCH</code>, <code>DRIFT</code>, or <code>UNVERIFIABLE</code>; it does not say <code>TRUSTED</code>.<div class="tags">P: source/view pair | O: model-facing boundary | D: witness receipt</div></div>
+      <div class="lk"><a href="https://github.com/HarperZ9/emet">GitHub ↗</a></div>
+    </article>
+  </div>
+</section>
+
 <section id="work" class="shell">
-  <div class="sec-head"><p class="kicker">Selected work - nine projects</p><h2>A few things I've made.</h2></div>
+  <div class="sec-head"><p class="kicker">Depth signals</p><h2>The deeper work behind the wedge.</h2></div>
   <div class="feats g12">
     <article class="feat a glass sheen" data-glow>
       <span class="idx">01</span>
