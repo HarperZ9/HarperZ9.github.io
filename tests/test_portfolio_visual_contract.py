@@ -56,12 +56,53 @@ def test_live_frontend_surfaces_are_listed() -> None:
     assert "private GitHub repos" in source
 
 
-def test_pastel_olive_depth_layer_is_present() -> None:
+def test_accessible_navigation_and_page_landmarks() -> None:
     source = page_source()
 
-    assert "--olive-wash:#c9d6a3" in source
-    assert "--olive-mist:#eef3da" in source
-    assert "rgba(201,214,163" in source
+    assert 'class="skip-link" href="#main"' in source
+    assert '<nav aria-label="Primary">' in source
+    assert '<main id="main">' in source
+    assert 'aria-label="656 passing compiler tests"' in source
+
+
+def test_portfolio_uses_receipts_not_sales_posture() -> None:
+    source = page_source()
+
+    assert "Working systems with receipts" in source
+    assert "Current state" in source
+    assert "label maturity honestly" in source
+    assert "Small proof-surface review" in source
+    for stale_phrase in [
+        "Current paid wedge",
+        "behind the wedge",
+        "High-leverage tools",
+        "Day delivery",
+        "prompt-and-pray",
+        "conducting an orchestra",
+    ]:
+        assert stale_phrase not in source
+
+
+def test_typography_matches_refined_quanta_system() -> None:
+    source = page_source()
+
+    assert "Archivo" in source
+    assert "Manrope" in source
+    assert "JetBrains Mono" in source
+    assert "--shell:1160px" in source
+    assert "font-size:clamp" not in source
+    assert "letter-spacing:-" not in source
+
+
+def test_pastel_orange_depth_layer_is_present() -> None:
+    source = page_source()
+
+    assert "--orange-wash:#f3c49f" in source
+    assert "--orange-mist:#fff0e4" in source
+    assert "rgba(243,196,159" in source
+    assert "--olive-" not in source
+    assert "rgba(201,214,163" not in source
+    assert "rgba(238,243,218" not in source
     assert ".bg{display:block" in source
 
 
