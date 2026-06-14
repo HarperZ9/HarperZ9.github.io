@@ -65,7 +65,7 @@ def test_accessible_navigation_and_page_landmarks() -> None:
     assert ".skip-link:focus,.skip-link:focus-visible" in source
     assert '<nav aria-label="Primary">' in source
     assert '<main id="main">' in source
-    assert 'aria-label="656 passing compiler tests"' in source
+    assert 'aria-label="655 passing compiler tests"' in source
 
 
 def test_nav_brand_is_clean_and_public_copy_has_no_mojibake() -> None:
@@ -94,6 +94,19 @@ def test_portfolio_uses_receipts_not_sales_posture() -> None:
         "conducting an orchestra",
     ]:
         assert stale_phrase not in source
+
+
+def test_public_lineup_table_is_present() -> None:
+    source = page_source()
+
+    assert 'id="lineup"' in source
+    assert "Public lineup" in source
+    assert "Developer workflow utilities" in source
+    assert "Proof and provenance" in source
+    assert "Quanta and editor support" in source
+    assert "Color and calibration" in source
+    assert "Next release candidates" in source
+    assert "Artifact-backed" in source
 
 
 def test_typography_matches_refined_quanta_system() -> None:

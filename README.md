@@ -17,6 +17,16 @@ the repo or sample artifact that supports each claim.
 - `emet-sample.html` - sample EMET witness surface.
 - `AUTHORS.md` - authorship and release ownership note.
 
+## Public Lineup
+
+| Group | Public signal | Current state |
+| --- | --- | --- |
+| Developer workflow utilities | `agent-hook-pack`, `agent-routing-kit`, `agent-template-pack`, `context-curator-lite`, `safe-io-lite`, `workflow-harness-lite`, `workspace-repo-map` | Artifact-backed `v0.1.x` releases. |
+| Proof and provenance | `public-surface-sweeper`, `model-provenance-validator`, `repo-proof-index`, `gpu-trace-validator` | Release-surface tools with package artifacts and proof-packet conventions. |
+| Quanta and editor support | `quantalang`, `quantalang-vscode`, `quantalang-tmLanguage`, `quanta-universe` | Compiler and editor surfaces with explicit maturity labels. |
+| Color and calibration | `calibrate-pro`, `quanta-color` | Public color/calibration products; Quanta Color has package artifacts. |
+| Next candidates | `EMET`, `warden-reporting`, `warden-algorithms`, `warden-anomaly` | Public candidates pending stricter release gates. |
+
 ## Local Verification
 
 Open `index.html` directly in a browser or serve this directory locally:
