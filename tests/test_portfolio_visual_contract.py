@@ -113,15 +113,20 @@ def test_public_directions_are_outward_facing() -> None:
     source = page_source()
 
     assert 'id="directions"' in source
-    assert "Where the work is already useful" in source
-    assert "Evidence and release-readiness systems" in source
-    assert "Language and systems research" in source
-    assert "Graphics, color, and calibration" in source
-    assert "Agent workflow infrastructure" in source
-    assert "Private product and platform work" in source
+    assert "Useful lanes" in source
+    assert "Evidence systems" in source
+    assert "Quanta research" in source
+    assert "Graphics and color" in source
+    assert "Agent workflow" in source
+    assert "Private platforms" in source
     for inward_facing_phrase in [
         "Splash",
         "front door next",
+        "Where the work is already useful",
+        "Tools for teams that need",
+        "governance conversation",
+        "QuantaLang is the runnable compiler surface",
+        "shown safely: live surfaces",
         "landing candidate",
         "Marketable service lane",
         "deserves a page",
