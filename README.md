@@ -36,7 +36,8 @@ the repo or sample artifact that supports each claim.
 - Quanta research - compiler, editor support, and labeled experiments.
 - Graphics and color - rendering, calibration, tone mapping, color science.
 - Agent workflow - routing, templates, safe IO, context, workflow harnesses.
-- Private platforms - live products and private systems at the public boundary.
+- Private platforms - live products and private systems shown without private
+  internals.
 
 ## Local Verification
 
