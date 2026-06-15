@@ -1,7 +1,7 @@
 # HarperZ9.github.io
 
 Static portfolio and product-surface site for Zain Dana Harper: a clean public
-front door for compiler work, proof-surface utilities, agent workflow kits,
+entry point for compiler work, proof-surface utilities, agent workflow kits,
 EMET witness material, QuantaLang, live frontend surfaces, and labeled research
 artifacts.
 
@@ -27,22 +27,21 @@ the repo or sample artifact that supports each claim.
 | Quanta and editor support | `quantalang`, `quantalang-vscode`, `quantalang-tmLanguage`, `quanta-universe` | Compiler and editor surfaces with explicit maturity labels. |
 | Graphics, color, and calibration | `calibrate-pro`, `quanta-color`, ELDER.ENB, RAW | Public color/calibration products plus private graphics prototypes and a large public shader/mod release. |
 | WARDEN public packages | `warden-reporting`, `warden-algorithms`, `warden-anomaly` | Sanitized public pieces from a larger private tooling system: reports, algorithms, and anomaly primitives. |
-| Support surfaces and forks | `wol-pi`, `linguist`, `CL4R1T4S-CR0SS0VER` | Useful supporting repos and research surfaces; not every repo needs to become a front-page product. |
+| Support surfaces and forks | `wol-pi`, `linguist`, `CL4R1T4S-CR0SS0VER` | Useful supporting repos and research surfaces with narrower scopes. |
 | Private product and platform work | Harper Advocates, Harper Compliance, WARDEN, APPS, Aurora, Quanta internals | Public-safe descriptions only: live sites, orchestration tooling, DSL/compiler work, and domain-specific systems. |
 
-## Splash-Page Candidates
+## Public Directions
 
-- WARDEN proof and reporting suite - best investor/research/freelance landing
-  candidate because the public packages already show evidence chains, reporting,
-  algorithms, and anomaly primitives.
-- Proof-surface toolkit - marketable service lane around release readiness,
-  provenance, proof packets, and model-context integrity.
-- Quanta Universe - broader language and systems story once examples are curated
-  into a cleaner tour.
-- Color and graphics lab - most visual proof page: ELDER.ENB, RAW, Calibrate
-  Pro, and Quanta Color together.
-- Agent workflow kits - developer-tooling lane for teams trying to make
-  agentic coding workflows less messy.
+- Evidence and release-readiness systems - public claims, provenance, proof
+  packets, model-context integrity, and reviewer handoffs.
+- Language and systems research - QuantaLang, Quanta Universe, editor support,
+  compiler work, and labeled experimental surfaces.
+- Graphics, color, and calibration - ELDER.ENB, RAW, Calibrate Pro, and Quanta
+  Color as one applied rendering and color-science thread.
+- Agent workflow infrastructure - hook, routing, template, safe-IO, context,
+  workflow, and repo-map packages for repeatable agentic coding workflows.
+- Private product and platform work - public-safe descriptions of live sites,
+  orchestration tooling, DSL/compiler work, and domain-specific systems.
 
 ## Local Verification
 
