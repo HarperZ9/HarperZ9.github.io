@@ -118,12 +118,13 @@ def test_public_directions_are_outward_facing() -> None:
     source = page_source()
 
     assert 'id="directions"' in source
-    assert "Useful lanes" in source
+    assert "Where it fits" in source
     assert "Evidence systems" in source
     assert "Quanta research" in source
     assert "Graphics and color" in source
     assert "Agent workflow" in source
     assert "Private platforms" in source
+    assert "shown without private internals" in source
     for inward_facing_phrase in [
         "Splash",
         "front door next",
