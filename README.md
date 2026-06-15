@@ -32,16 +32,11 @@ the repo or sample artifact that supports each claim.
 
 ## Public Directions
 
-- Evidence and release-readiness systems - public claims, provenance, proof
-  packets, model-context integrity, and reviewer handoffs.
-- Language and systems research - QuantaLang, Quanta Universe, editor support,
-  compiler work, and labeled experimental surfaces.
-- Graphics, color, and calibration - ELDER.ENB, RAW, Calibrate Pro, and Quanta
-  Color as one applied rendering and color-science thread.
-- Agent workflow infrastructure - hook, routing, template, safe-IO, context,
-  workflow, and repo-map packages for repeatable agentic coding workflows.
-- Private product and platform work - public-safe descriptions of live sites,
-  orchestration tooling, DSL/compiler work, and domain-specific systems.
+- Evidence systems - claims, provenance, proof packets, reviewer handoffs.
+- Quanta research - compiler, editor support, and labeled experiments.
+- Graphics and color - rendering, calibration, tone mapping, color science.
+- Agent workflow - routing, templates, safe IO, context, workflow harnesses.
+- Private platforms - live products and private systems at the public boundary.
 
 ## Local Verification
 
