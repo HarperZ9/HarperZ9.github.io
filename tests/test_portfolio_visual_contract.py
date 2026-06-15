@@ -65,7 +65,7 @@ def test_accessible_navigation_and_page_landmarks() -> None:
     assert ".skip-link:focus,.skip-link:focus-visible" in source
     assert '<nav aria-label="Primary">' in source
     assert '<main id="main">' in source
-    assert 'aria-label="655 passing compiler tests"' in source
+    assert 'aria-label="868 passing compiler tests"' in source
 
 
 def test_nav_brand_is_clean_and_public_copy_has_no_mojibake() -> None:
@@ -84,7 +84,7 @@ def test_portfolio_uses_receipts_not_sales_posture() -> None:
     assert "Working systems with receipts" in source
     assert "Current state" in source
     assert "label maturity honestly" in source
-    assert "Small proof-surface review" in source
+    assert "Public claims, backed by evidence" in source
     for stale_phrase in [
         "Current paid wedge",
         "behind the wedge",
@@ -102,11 +102,23 @@ def test_public_lineup_table_is_present() -> None:
     assert 'id="lineup"' in source
     assert "Public lineup" in source
     assert "Developer workflow utilities" in source
-    assert "Proof and provenance" in source
+    assert "Proof, provenance, and AI safety" in source
     assert "Quanta and editor support" in source
-    assert "Color and calibration" in source
-    assert "Next release candidates" in source
+    assert "Graphics, color, and calibration" in source
+    assert "WARDEN public packages" in source
     assert "Artifact-backed" in source
+
+
+def test_splash_page_candidates_are_present() -> None:
+    source = page_source()
+
+    assert 'id="splash"' in source
+    assert "Splash-page candidates" in source
+    assert "WARDEN proof and reporting suite" in source
+    assert "Proof-surface toolkit" in source
+    assert "Quanta Universe" in source
+    assert "Color and graphics lab" in source
+    assert "Agent workflow kits" in source
 
 
 def test_typography_matches_refined_quanta_system() -> None:
