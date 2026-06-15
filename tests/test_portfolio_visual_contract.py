@@ -109,16 +109,25 @@ def test_public_lineup_table_is_present() -> None:
     assert "Artifact-backed" in source
 
 
-def test_splash_page_candidates_are_present() -> None:
+def test_public_directions_are_outward_facing() -> None:
     source = page_source()
 
-    assert 'id="splash"' in source
-    assert "Splash-page candidates" in source
-    assert "WARDEN proof and reporting suite" in source
-    assert "Proof-surface toolkit" in source
-    assert "Quanta Universe" in source
-    assert "Color and graphics lab" in source
-    assert "Agent workflow kits" in source
+    assert 'id="directions"' in source
+    assert "Where the work is already useful" in source
+    assert "Evidence and release-readiness systems" in source
+    assert "Language and systems research" in source
+    assert "Graphics, color, and calibration" in source
+    assert "Agent workflow infrastructure" in source
+    assert "Private product and platform work" in source
+    for inward_facing_phrase in [
+        "Splash",
+        "front door next",
+        "landing candidate",
+        "Marketable service lane",
+        "deserves a page",
+        "dedicated page",
+    ]:
+        assert inward_facing_phrase not in source
 
 
 def test_typography_matches_refined_quanta_system() -> None:
