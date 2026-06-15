@@ -66,6 +66,7 @@ def test_accessible_navigation_and_page_landmarks() -> None:
     assert '<nav aria-label="Primary">' in source
     assert '<main id="main">' in source
     assert 'aria-label="868 passing compiler tests"' in source
+    assert "scroll-margin-top:5rem" in source
 
 
 def test_nav_brand_is_clean_and_public_copy_has_no_mojibake() -> None:
@@ -83,7 +84,7 @@ def test_portfolio_uses_receipts_not_sales_posture() -> None:
 
     assert "Working systems with receipts" in source
     assert "Current state" in source
-    assert "label maturity honestly" in source
+    assert "label maturity" in source
     assert "Public claims, backed by evidence" in source
     for stale_phrase in [
         "Current paid wedge",
@@ -92,6 +93,10 @@ def test_portfolio_uses_receipts_not_sales_posture() -> None:
         "Day delivery",
         "prompt-and-pray",
         "conducting an orchestra",
+        "I like ambitious systems",
+        "I map what the surface claims",
+        "Operational exploit detail",
+        "a lot still to learn",
     ]:
         assert stale_phrase not in source
 

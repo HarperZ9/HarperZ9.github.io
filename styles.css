@@ -33,7 +33,7 @@ em{font-style:italic}
 .bloom{position:fixed; inset:0; z-index:-2; opacity:.95; mix-blend-mode:screen; background:linear-gradient(118deg,rgba(255,255,255,0) 0 27%,rgba(240,170,114,.48) 39%,rgba(255,214,186,.4) 48%,rgba(215,232,255,.22) 60%,rgba(255,255,255,0) 74%),linear-gradient(8deg,rgba(255,255,255,0) 0 60%,rgba(255,232,216,.62) 100%)}
 .shell{max-width:var(--shell); margin:0 auto; padding-inline:clamp(1.25rem,5vw,4.5rem)}
 .g12{display:grid; grid-template-columns:repeat(12,1fr); column-gap:clamp(1rem,2.2vw,1.8rem)}
-section{padding:clamp(3.5rem,7vw,6rem) 0; position:relative}
+section{padding:clamp(3.5rem,7vw,6rem) 0; position:relative; scroll-margin-top:5rem}
 .glass{position:relative; background:var(--gloss), var(--glass-base); -webkit-backdrop-filter:var(--glass-blur); backdrop-filter:var(--glass-blur); box-shadow:var(--glass-shadow), var(--glass-depth); border:1px solid var(--glass-edge); border-radius:var(--r)}
 .glass::after{content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit; padding:1.35px; background:linear-gradient(138deg,rgba(255,255,255,.95),rgba(240,170,114,.58) 25%,rgba(168,95,45,.22) 46%,rgba(148,173,210,.2) 68%,rgba(255,255,255,.62)); -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude}
 .glass.sheen::before{content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; opacity:0; transition:opacity .35s var(--ease); background:radial-gradient(260px circle at var(--mx,50%) var(--my,12%), rgba(255,255,255,.6), transparent 60%)}
