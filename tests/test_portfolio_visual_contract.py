@@ -106,6 +106,7 @@ def test_portfolio_explains_what_and_how_plainly() -> None:
 
     assert "Code first. Claims second" in source
     assert "The strongest public evidence is a Rust compiler with a C execution path" in source
+    assert "WARDEN Sensorium for live-state and provenance receipts" in source
     assert "this page starts with what can be opened, built, and checked" in source
     assert "Public release review means checking whether a repo, page, demo, or tool makes claims it can support." in source
     assert "inspect a public surface, check source and provenance, collect evidence, write a report, and preserve a review trail" in source
@@ -152,6 +153,7 @@ def test_public_lineup_table_is_present() -> None:
     assert "Public lineup" in source
     assert "Developer workflow utilities" in source
     assert "Proof, provenance, and AI safety" in source
+    assert "warden-sensorium" in source
     assert "Quanta and editor support" in source
     assert "Graphics, color, and calibration" in source
     assert "WARDEN public packages" in source
@@ -165,6 +167,7 @@ def test_public_directions_are_outward_facing() -> None:
     assert 'id="directions"' in source
     assert "Where the work points" in source
     assert "Evidence systems" in source
+    assert "The tools check live state, claims, provenance, witness state, proof packets, and handoff reports." in source
     assert "Quanta research" in source
     assert "Graphics and color" in source
     assert "Agent workflow" in source
@@ -227,11 +230,12 @@ def test_warden_flagship_page_exists_and_has_thesis() -> None:
 
     assert "A review layer for AI-assisted work" in source
     assert "WARDEN is the private accountability system behind the public proof and review tools." in source
-    assert "The inspectable surface is narrower: C++ reporting, anomaly scoring, analytics primitives, provenance/release CLIs, proof indexing, and EMET witness checks." in source
+    assert "The inspectable surface is narrower: Sensorium live-state receipts, C++ reporting, anomaly scoring, analytics primitives, provenance/release CLIs, proof indexing, and EMET witness checks." in source
     assert "What the public surface shows" in source
     assert "Public leaves, private core, one theme." in source
     assert "they do not ask the reader to accept the private core on faith" in source
     for loop_step in [
+        "Sense live state",
         "State the claim",
         "Attach evidence",
         "Check provenance",
@@ -272,6 +276,7 @@ def test_warden_links_public_accountability_repos() -> None:
     source = warden_source()
 
     for repo in [
+        "https://github.com/HarperZ9/warden-sensorium",
         "https://github.com/HarperZ9/warden-reporting",
         "https://github.com/HarperZ9/warden-algorithms",
         "https://github.com/HarperZ9/warden-anomaly",
