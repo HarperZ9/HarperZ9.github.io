@@ -66,6 +66,7 @@ def test_accessible_navigation_and_page_landmarks() -> None:
     assert '<nav aria-label="Primary">' in source
     assert '<main id="main">' in source
     assert 'aria-label="868 passing compiler tests"' in source
+    assert 'aria-label="2,380 ELDER ENB Nexus endorsements"' in source
     assert "scroll-margin-top:5rem" in source
 
 
@@ -124,7 +125,7 @@ def test_public_directions_are_outward_facing() -> None:
     assert "Graphics and color" in source
     assert "Agent workflow" in source
     assert "Private platforms" in source
-    assert "shown without private internals" in source
+    assert "shown without internals" in source
     for inward_facing_phrase in [
         "Splash",
         "front door next",

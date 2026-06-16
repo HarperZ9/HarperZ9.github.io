@@ -2,8 +2,7 @@
 
 Static portfolio and product-surface site for Zain Dana Harper: a clean public
 entry point for compiler work, proof-surface utilities, agent workflow kits,
-EMET witness material, QuantaLang, live frontend surfaces, and labeled research
-artifacts.
+EMET witness material, QuantaLang, live product surfaces, and labeled research.
 
 The site is deliberately static and inspectable. It should make public claims
 small enough to check, keep maturity labels visible, and point readers toward
@@ -23,12 +22,12 @@ the repo or sample artifact that supports each claim.
 | Group | Public signal | Current state |
 | --- | --- | --- |
 | Developer workflow utilities | `agent-hook-pack`, `agent-routing-kit`, `agent-template-pack`, `context-curator-lite`, `safe-io-lite`, `workflow-harness-lite`, `workspace-repo-map` | Artifact-backed `v0.1.x` releases. |
-| Proof, provenance, and AI safety | `public-surface-sweeper`, `model-provenance-validator`, `repo-proof-index`, `gpu-trace-validator`, `EMET`, `ai-safety-guardrail-manager`, `ai-safety-prefire` | Release-surface, provenance, and model-context integrity tools with public proof-packet conventions. |
+| Proof, provenance, and AI safety | `public-surface-sweeper`, `model-provenance-validator`, `repo-proof-index`, `gpu-trace-validator`, `EMET`, `ai-safety-guardrail-manager`, `ai-safety-prefire` | Release-surface, provenance, and model-context integrity tools. |
 | Quanta and editor support | `quantalang`, `quantalang-vscode`, `quantalang-tmLanguage`, `quanta-universe` | Compiler and editor surfaces with explicit maturity labels. |
-| Graphics, color, and calibration | `calibrate-pro`, `quanta-color`, ELDER.ENB, RAW | Public color/calibration products plus private graphics prototypes and a large public shader/mod release. |
-| WARDEN public packages | `warden-reporting`, `warden-algorithms`, `warden-anomaly` | Sanitized public pieces from a larger private tooling system: reports, algorithms, and anomaly primitives. |
+| Graphics, color, and calibration | `calibrate-pro`, `quanta-color`, ELDER.ENB, RAW | Color/calibration products, graphics prototypes, and a public shader/mod release. |
+| WARDEN public packages | `warden-reporting`, `warden-algorithms`, `warden-anomaly` | Public reporting, algorithm, and anomaly primitives from private tooling. |
 | Support surfaces and forks | `wol-pi`, `linguist`, `CL4R1T4S-CR0SS0VER` | Useful supporting repos and research surfaces with narrower scopes. |
-| Private product and platform work | Harper Advocates, Harper Compliance, WARDEN, APPS, Aurora, Quanta internals | Public-safe descriptions only: live sites, orchestration tooling, DSL/compiler work, and domain-specific systems. |
+| Private product and platform work | Harper Advocates, Harper Compliance, WARDEN, APPS, Aurora, Quanta internals | Live sites, orchestration tooling, DSL/compiler work, and domain systems. |
 
 ## Public Directions
 
@@ -36,8 +35,7 @@ the repo or sample artifact that supports each claim.
 - Quanta research - compiler, editor support, and labeled experiments.
 - Graphics and color - rendering, calibration, tone mapping, color science.
 - Agent workflow - routing, templates, safe IO, context, workflow harnesses.
-- Private platforms - live products and private systems shown without private
-  internals.
+- Private platforms - live products and private systems shown without internals.
 
 ## Local Verification
 
