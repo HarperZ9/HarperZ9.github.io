@@ -105,16 +105,15 @@ def test_portfolio_explains_what_and_how_plainly() -> None:
     source = page_source()
 
     assert "Software that makes technical work understandable" in source
-    assert "I build compilers, graphics tools, accountability systems, and live web products." in source
-    assert "turning ambiguous technical ideas into working software with tests, examples, and public artifacts" in source
+    assert "I build software where the proof is close enough to touch" in source
+    assert "The public work shows how I think, ship, and verify." in source
     assert "Public release review means checking whether a repo, page, demo, or tool makes claims it can support." in source
     assert "inspect a public surface, check source and provenance, collect evidence, write a report, and preserve a review trail" in source
-    assert "Why people use this work now" in source
-    assert (
-        "Use the portfolio to understand what exists today: public repos, live sites, tests, sample reports, and maturity labels"
-        in source
-    )
-    assert "Immediate value as of June 15, 2026" in source
+    assert "What you can judge today" in source
+    assert "The public surfaces are inspectable." in source
+    assert "Run the compiler path. Open the live sites. Read the proof samples. Check the repos." in source
+    assert "The bigger systems stay bounded." in source
+    assert "Claims stop where the evidence stops." in source
     for lane in [
         "language and compiler work",
         "accountability and evidence tools",
@@ -136,6 +135,9 @@ def test_portfolio_explains_what_and_how_plainly() -> None:
         "a lot still to learn",
         "Working systems with receipts",
         "Public claims, backed by evidence",
+        "Immediate value as of June 15, 2026",
+        "Who uses it:",
+        "What it does not claim:",
     ]:
         assert stale_phrase not in source
 
@@ -222,8 +224,10 @@ def test_warden_flagship_page_exists_and_has_thesis() -> None:
     assert "WARDEN is a system for checking AI-assisted work." in source
     assert (
         "It records what was claimed, what evidence supports it, where the work came from, "
-        "what changed, and what a human reviewer should look at."
+        "what changed, and what a human reviewer should look at before trust moves forward."
     ) in source
+    assert "The immediate value is a shorter path from output to accountable review." in source
+    assert "The theme is accountability: claims, evidence, provenance, anomalies, and human ownership in one line of sight." in source
     for loop_step in [
         "State the claim",
         "Attach evidence",
@@ -291,34 +295,23 @@ def test_sample_pages_explain_immediate_user_value_and_limits() -> None:
     for page in SAMPLE_PAGES:
         source = page.read_text(encoding="utf-8")
 
-        assert "Immediate value as of June 15, 2026" in source
-        assert "Who uses it" in source
-        assert "What it does not claim" in source
+        assert "Boundary:" in source
+        assert "Immediate value as of June 15, 2026" not in source
+        assert "Who uses it:" not in source
+        assert "What it does not claim:" not in source
 
     proof_surface = (ROOT / "proof-surface-sample.html").read_text(encoding="utf-8")
-    assert (
-        "Use this when a repo, demo, or AI-assisted tool needs a public-readiness check before someone else evaluates it."
-        in proof_surface
-    )
-    assert "It is a review packet, not certification, approval, or exploit testing." in proof_surface
+    assert "Use it for the moment before someone else judges the work" in proof_surface
+    assert "Boundary: review packet, not certification, approval, or exploit testing." in proof_surface
 
     proof_index = (ROOT / "proof-index-sample.html").read_text(encoding="utf-8")
-    assert (
-        "Use this when evidence exists but is scattered across contracts, witness receipts, backend descriptors, and JSON artifacts."
-        in proof_index
-    )
-    assert "It indexes proof artifacts; it does not decide whether the evidence is sufficient." in proof_index
+    assert "Use it when evidence is real but scattered" in proof_index
+    assert "Boundary: it indexes proof artifacts; it does not decide whether the evidence is enough." in proof_index
 
     sweeper = (ROOT / "public-surface-sweeper-sample.html").read_text(encoding="utf-8")
-    assert (
-        "Use this before a public repository asks a user, customer, reviewer, investor, or future maintainer to trust what it says."
-        in sweeper
-    )
-    assert "It is a release-hygiene gate, not a security certification or full vulnerability scanner." in sweeper
+    assert "Use it before a public repository asks someone to trust what it says" in sweeper
+    assert "Boundary: release hygiene, not security certification or a full vulnerability scanner." in sweeper
 
     emet = (ROOT / "emet-sample.html").read_text(encoding="utf-8")
-    assert (
-        "Use this when a repo, report, prompt, or generated view needs an external source/view consistency check."
-        in emet
-    )
-    assert "It reports a comparison; it does not decide whether a system is safe or trustworthy." in emet
+    assert "Use it when a source and a generated view need a witness" in emet
+    assert "Boundary: it reports a comparison; it does not decide whether a system is safe or trustworthy." in emet
