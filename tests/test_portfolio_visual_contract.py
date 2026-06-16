@@ -86,6 +86,7 @@ def test_accessible_navigation_and_page_landmarks() -> None:
     assert ".skip-link:focus,.skip-link:focus-visible" in source
     assert '<nav aria-label="Primary">' in source
     assert '<main id="main">' in source
+    assert 'aria-label="37 public GitHub repositories verified via GitHub"' in source
     assert 'aria-label="868 documented compiler tests"' in source
     assert 'aria-label="19 EMET conformance vectors"' in source
     assert "scroll-margin-top:5rem" in source
@@ -108,6 +109,7 @@ def test_portfolio_explains_what_and_how_plainly() -> None:
     assert "The strongest public evidence is a Rust compiler with a C execution path" in source
     assert "WARDEN Sensorium for live-state receipts" in source
     assert "WARDEN Agent Audit for intent/action review" in source
+    assert "WARDEN Release Assurance for public-release gates" in source
     assert "this page starts with what can be opened, built, and checked" in source
     assert "Public release review means checking whether a repo, page, demo, or tool makes claims it can support." in source
     assert "inspect a public surface, check source and provenance, collect evidence, write a report, and preserve a review trail" in source
@@ -119,6 +121,7 @@ def test_portfolio_explains_what_and_how_plainly() -> None:
     for lane in [
         "compiler work",
         "proof and review tools",
+        "release assurance",
         "color systems",
         "agent utilities",
         "private platforms",
@@ -156,6 +159,7 @@ def test_public_lineup_table_is_present() -> None:
     assert "Proof, provenance, and AI safety" in source
     assert "warden-sensorium" in source
     assert "warden-agent-audit" in source
+    assert "warden-release-assurance" in source
     assert "Quanta and editor support" in source
     assert "Graphics, color, and calibration" in source
     assert "WARDEN public packages" in source
@@ -169,7 +173,7 @@ def test_public_directions_are_outward_facing() -> None:
     assert 'id="directions"' in source
     assert "Where the work points" in source
     assert "Evidence systems" in source
-    assert "The tools check live state, agent actions, claims, provenance, witness state, proof packets, and handoff reports." in source
+    assert "The tools check live state, agent actions, release gates, claims, provenance, witness state, proof packets, and handoff reports." in source
     assert "Quanta research" in source
     assert "Graphics and color" in source
     assert "Agent workflow" in source
@@ -232,7 +236,7 @@ def test_warden_flagship_page_exists_and_has_thesis() -> None:
 
     assert "A review layer for AI-assisted work" in source
     assert "WARDEN is the private accountability system behind the public proof and review tools." in source
-    assert "The inspectable surface is narrower: Sensorium live-state receipts, Agent Audit intent/action review, C++ reporting, anomaly scoring, analytics primitives, provenance/release CLIs, proof indexing, and EMET witness checks." in source
+    assert "The inspectable surface is narrower: Sensorium live-state receipts, Agent Audit intent/action review, Release Assurance public gates, C++ reporting, anomaly scoring, analytics primitives, provenance/release CLIs, proof indexing, and EMET witness checks." in source
     assert "What the public surface shows" in source
     assert "Public leaves, private core, one theme." in source
     assert "they do not ask the reader to accept the private core on faith" in source
@@ -242,6 +246,7 @@ def test_warden_flagship_page_exists_and_has_thesis() -> None:
         "Audit agent behavior",
         "Attach evidence",
         "Check provenance",
+        "Gate the release",
         "Review anomalies",
         "Write a handoff report",
         "Keep human ownership visible",
@@ -281,6 +286,7 @@ def test_warden_links_public_accountability_repos() -> None:
     for repo in [
         "https://github.com/HarperZ9/warden-sensorium",
         "https://github.com/HarperZ9/warden-agent-audit",
+        "https://github.com/HarperZ9/warden-release-assurance",
         "https://github.com/HarperZ9/warden-reporting",
         "https://github.com/HarperZ9/warden-algorithms",
         "https://github.com/HarperZ9/warden-anomaly",
