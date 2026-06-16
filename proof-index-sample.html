@@ -69,6 +69,7 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
       padding: clamp(24px, 4vw, 46px);
+      min-width: 0;
     }
 
     .kicker {
@@ -144,6 +145,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
+      table-layout: fixed;
       font-family: "Trebuchet MS", Verdana, sans-serif;
       font-size: 0.92rem;
     }
@@ -154,6 +156,7 @@
       border-bottom: 1px solid var(--line);
       text-align: left;
       vertical-align: top;
+      overflow-wrap: anywhere;
     }
 
     th {
@@ -172,6 +175,7 @@
 
     pre {
       overflow-x: auto;
+      max-width: 100%;
       padding: 18px;
       border-radius: 18px;
       background: rgba(23, 19, 15, 0.86);
@@ -207,7 +211,7 @@
   <main class="shell">
     <section class="hero">
       <div class="card">
-        <p class="kicker">Sample report · repo-proof-index · evidence handoff</p>
+        <p class="kicker">Sample report &middot; repo-proof-index &middot; evidence handoff</p>
         <h1>Scattered proof needs an index.</h1>
         <p class="lead">
           `repo-proof-index` is the handoff point in the proof-surface stack.
@@ -218,7 +222,10 @@
 
       <aside class="card summary" aria-label="Pipeline summary">
         <span class="pill">Not evidence sufficiency</span>
-        <h2>Pipeline role</h2>
+        <h2>Immediate value as of June 15, 2026</h2>
+        <p><strong>Who uses it:</strong> maintainers, auditors, release reviewers, and technical buyers who need a compact map of what evidence exists.</p>
+        <p>Use this when evidence exists but is scattered across contracts, witness receipts, backend descriptors, and JSON artifacts.</p>
+        <p><strong>What it does not claim:</strong> It indexes proof artifacts; it does not decide whether the evidence is sufficient.</p>
         <div class="chain">
           <div class="step">contracts and receipts</div>
           <div class="step">proof index</div>

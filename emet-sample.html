@@ -69,6 +69,7 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
       padding: clamp(24px, 4vw, 46px);
+      min-width: 0;
     }
 
     .kicker {
@@ -156,6 +157,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
+      table-layout: fixed;
       font-family: "Trebuchet MS", Verdana, sans-serif;
       font-size: 0.92rem;
     }
@@ -166,6 +168,7 @@
       border-bottom: 1px solid var(--line);
       text-align: left;
       vertical-align: top;
+      overflow-wrap: anywhere;
     }
 
     th {
@@ -184,6 +187,7 @@
 
     pre {
       overflow-x: auto;
+      max-width: 100%;
       padding: 18px;
       border-radius: 18px;
       background: rgba(23, 19, 15, 0.86);
@@ -219,7 +223,7 @@
   <main class="shell">
     <section class="hero">
       <div class="card">
-        <p class="kicker">Sample report · EMET · witness surface</p>
+        <p class="kicker">Sample report &middot; EMET &middot; witness surface</p>
         <h1>A witness is not an authority.</h1>
         <p class="lead">
           EMET is the witness anchor in the proof-surface stack. It checks
@@ -231,7 +235,10 @@
 
       <aside class="card summary" aria-label="Verdict summary">
         <span class="pill">No TRUSTED verdict</span>
-        <h2>Verdicts</h2>
+        <h2>Immediate value as of June 15, 2026</h2>
+        <p><strong>Who uses it:</strong> reviewers, AI workflow builders, maintainers, and diligence teams who need a small external check on source/view consistency.</p>
+        <p>Use this when a repo, report, prompt, or generated view needs an external source/view consistency check.</p>
+        <p><strong>What it does not claim:</strong> It reports a comparison; it does not decide whether a system is safe or trustworthy.</p>
         <div class="verdicts">
           <div class="verdict"><strong>MATCH</strong><span>comparison holds</span></div>
           <div class="verdict"><strong>DRIFT</strong><span>bytes or view changed</span></div>

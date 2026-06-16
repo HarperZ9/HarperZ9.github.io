@@ -8,6 +8,12 @@ ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
 STYLES = ROOT / "styles.css"
 WARDEN = ROOT / "warden.html"
+SAMPLE_PAGES = [
+    ROOT / "proof-surface-sample.html",
+    ROOT / "proof-index-sample.html",
+    ROOT / "public-surface-sweeper-sample.html",
+    ROOT / "emet-sample.html",
+]
 
 
 def page_source() -> str:
@@ -21,6 +27,11 @@ def index_source() -> str:
 def warden_source() -> str:
     assert WARDEN.exists(), "warden.html must exist"
     return WARDEN.read_text(encoding="utf-8") + "\n" + STYLES.read_text(encoding="utf-8")
+
+
+def public_html_sources() -> str:
+    paths = [INDEX, WARDEN, *SAMPLE_PAGES]
+    return "\n".join(path.read_text(encoding="utf-8") for path in paths)
 
 
 def test_portfolio_keeps_clean_white_backdrop() -> None:
@@ -81,7 +92,7 @@ def test_accessible_navigation_and_page_landmarks() -> None:
 
 
 def test_nav_brand_is_clean_and_public_copy_has_no_mojibake() -> None:
-    source = page_source()
+    source = public_html_sources()
 
     assert '<a class="brand" href="#top">Zain Dana Harper</a>' in source
     assert "Zain Dana Harper <span>portfolio</span>" not in source
@@ -98,6 +109,12 @@ def test_portfolio_explains_what_and_how_plainly() -> None:
     assert "turning ambiguous technical ideas into working software with tests, examples, and public artifacts" in source
     assert "Public release review means checking whether a repo, page, demo, or tool makes claims it can support." in source
     assert "inspect a public surface, check source and provenance, collect evidence, write a report, and preserve a review trail" in source
+    assert "Why people use this work now" in source
+    assert (
+        "Use the portfolio to understand what exists today: public repos, live sites, tests, sample reports, and maturity labels"
+        in source
+    )
+    assert "Immediate value as of June 15, 2026" in source
     for lane in [
         "language and compiler work",
         "accountability and evidence tools",
@@ -268,3 +285,40 @@ def test_portfolio_links_to_warden_flagship() -> None:
     assert 'href="warden.html"' in source
     assert "WARDEN overview" in source
     assert "Accountability engine" in source
+
+
+def test_sample_pages_explain_immediate_user_value_and_limits() -> None:
+    for page in SAMPLE_PAGES:
+        source = page.read_text(encoding="utf-8")
+
+        assert "Immediate value as of June 15, 2026" in source
+        assert "Who uses it" in source
+        assert "What it does not claim" in source
+
+    proof_surface = (ROOT / "proof-surface-sample.html").read_text(encoding="utf-8")
+    assert (
+        "Use this when a repo, demo, or AI-assisted tool needs a public-readiness check before someone else evaluates it."
+        in proof_surface
+    )
+    assert "It is a review packet, not certification, approval, or exploit testing." in proof_surface
+
+    proof_index = (ROOT / "proof-index-sample.html").read_text(encoding="utf-8")
+    assert (
+        "Use this when evidence exists but is scattered across contracts, witness receipts, backend descriptors, and JSON artifacts."
+        in proof_index
+    )
+    assert "It indexes proof artifacts; it does not decide whether the evidence is sufficient." in proof_index
+
+    sweeper = (ROOT / "public-surface-sweeper-sample.html").read_text(encoding="utf-8")
+    assert (
+        "Use this before a public repository asks a user, customer, reviewer, investor, or future maintainer to trust what it says."
+        in sweeper
+    )
+    assert "It is a release-hygiene gate, not a security certification or full vulnerability scanner." in sweeper
+
+    emet = (ROOT / "emet-sample.html").read_text(encoding="utf-8")
+    assert (
+        "Use this when a repo, report, prompt, or generated view needs an external source/view consistency check."
+        in emet
+    )
+    assert "It reports a comparison; it does not decide whether a system is safe or trustworthy." in emet
