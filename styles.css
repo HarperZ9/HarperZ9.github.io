@@ -40,9 +40,9 @@ section{padding:clamp(3.5rem,7vw,6rem) 0; position:relative; scroll-margin-top:5
 .glass.sheen:hover::before{opacity:1}
 nav{position:sticky; top:0; z-index:100; background:rgba(255,255,255,.72); -webkit-backdrop-filter:saturate(160%) blur(18px); backdrop-filter:saturate(160%) blur(18px); border-bottom:1px solid var(--rule)}
 .nav-in{max-width:var(--shell); margin:0 auto; padding:.9rem clamp(1.25rem,5vw,4.5rem); display:flex; align-items:center; justify-content:space-between; gap:1rem}
-.brand{font-family:var(--display); font-weight:800; color:var(--ink); text-decoration:none; display:inline-flex; align-items:center; gap:.45rem}
+.brand{font-family:var(--display); font-weight:800; color:var(--ink); text-decoration:none; display:inline-flex; align-items:center; gap:.45rem; white-space:nowrap; flex:0 0 auto}
 .brand::after{content:""; width:.52rem; height:.52rem; border-radius:999px; background:radial-gradient(circle at 35% 30%,#fff 0 11%,var(--orange-bright) 25%,var(--orange-shadow) 100%); box-shadow:0 0 26px rgba(240,170,114,.62)}
-.nav-links{display:flex; gap:1.25rem; font-size:.95rem; color:var(--ink-muted)}
+.nav-links{display:flex; gap:1.25rem; font-size:.95rem; color:var(--ink-muted); flex-wrap:wrap; justify-content:flex-end}
 .nav-links a{text-decoration:none}
 .nav-links a:hover{color:var(--ink); opacity:1}
 .hero{padding-top:clamp(3rem,5vw,5rem); padding-bottom:clamp(1.75rem,4vw,3rem); row-gap:clamp(1.25rem,2.5vw,2rem); align-items:start}

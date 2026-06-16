@@ -86,8 +86,8 @@ def test_accessible_navigation_and_page_landmarks() -> None:
     assert ".skip-link:focus,.skip-link:focus-visible" in source
     assert '<nav aria-label="Primary">' in source
     assert '<main id="main">' in source
-    assert 'aria-label="868 passing compiler tests"' in source
-    assert 'aria-label="2,380 ELDER ENB Nexus endorsements"' in source
+    assert 'aria-label="868 documented compiler tests"' in source
+    assert 'aria-label="19 EMET conformance vectors"' in source
     assert "scroll-margin-top:5rem" in source
 
 
@@ -104,22 +104,22 @@ def test_nav_brand_is_clean_and_public_copy_has_no_mojibake() -> None:
 def test_portfolio_explains_what_and_how_plainly() -> None:
     source = page_source()
 
-    assert "Software that makes technical work understandable" in source
-    assert "I build software where the proof is close enough to touch" in source
-    assert "The public work shows how I think, ship, and verify." in source
+    assert "Code first. Claims second" in source
+    assert "The strongest public evidence is a Rust compiler with a C execution path" in source
+    assert "this page starts with what can be opened, built, and checked" in source
     assert "Public release review means checking whether a repo, page, demo, or tool makes claims it can support." in source
     assert "inspect a public surface, check source and provenance, collect evidence, write a report, and preserve a review trail" in source
-    assert "What you can judge today" in source
-    assert "The public surfaces are inspectable." in source
-    assert "Run the compiler path. Open the live sites. Read the proof samples. Check the repos." in source
-    assert "The bigger systems stay bounded." in source
-    assert "Claims stop where the evidence stops." in source
+    assert "Start with what is built" in source
+    assert "QuantaLang is the main engineering artifact." in source
+    assert "836 tracked <code>.quanta</code> files" in source
+    assert "Most utilities are narrow on purpose." in source
+    assert "Their value is reviewability, not size." in source
     for lane in [
-        "language and compiler work",
-        "accountability and evidence tools",
-        "graphics and color systems",
-        "live web products",
-        "agent workflow tooling",
+        "compiler work",
+        "proof and review tools",
+        "color systems",
+        "agent utilities",
+        "private platforms",
     ]:
         assert lane in source
     for stale_phrase in [
@@ -138,6 +138,9 @@ def test_portfolio_explains_what_and_how_plainly() -> None:
         "Immediate value as of June 15, 2026",
         "Who uses it:",
         "What it does not claim:",
+        "What you can judge today",
+        "The public surfaces are inspectable.",
+        "Claims stop where the evidence stops.",
     ]:
         assert stale_phrase not in source
 
@@ -152,20 +155,22 @@ def test_public_lineup_table_is_present() -> None:
     assert "Quanta and editor support" in source
     assert "Graphics, color, and calibration" in source
     assert "WARDEN public packages" in source
-    assert "Artifact-backed" in source
+    assert "QuantaLang is the heavy repo" in source
+    assert "The private core is not published." in source
 
 
 def test_public_directions_are_outward_facing() -> None:
     source = page_source()
 
     assert 'id="directions"' in source
-    assert "What the work is for" in source
+    assert "Where the work points" in source
     assert "Evidence systems" in source
     assert "Quanta research" in source
     assert "Graphics and color" in source
     assert "Agent workflow" in source
     assert "Private platforms" in source
-    assert "shown through public screenshots, pages, and outcome descriptions rather than internal code" in source
+    assert "The solid public path is lexer/parser/type checker/MIR to C" in source
+    assert "Private systems are portfolio context, not inspectable products here." in source
     for inward_facing_phrase in [
         "Splash",
         "front door next",
@@ -220,14 +225,12 @@ def test_glass_material_is_more_pronounced() -> None:
 def test_warden_flagship_page_exists_and_has_thesis() -> None:
     source = warden_source()
 
-    assert "Check AI-assisted work. Keep the trail" in source
-    assert "WARDEN is a system for checking AI-assisted work." in source
-    assert (
-        "It records what was claimed, what evidence supports it, where the work came from, "
-        "what changed, and what a human reviewer should look at before trust moves forward."
-    ) in source
-    assert "The immediate value is a shorter path from output to accountable review." in source
-    assert "The theme is accountability: claims, evidence, provenance, anomalies, and human ownership in one line of sight." in source
+    assert "A review layer for AI-assisted work" in source
+    assert "WARDEN is the private accountability system behind the public proof and review tools." in source
+    assert "The inspectable surface is narrower: C++ reporting, anomaly scoring, analytics primitives, provenance/release CLIs, proof indexing, and EMET witness checks." in source
+    assert "What the public surface shows" in source
+    assert "Public leaves, private core, one theme." in source
+    assert "they do not ask the reader to accept the private core on faith" in source
     for loop_step in [
         "State the claim",
         "Attach evidence",
@@ -237,9 +240,7 @@ def test_warden_flagship_page_exists_and_has_thesis() -> None:
         "Keep human ownership visible",
     ]:
         assert loop_step in source
-    assert "What WARDEN does" in source
     assert "The public parts of the system" in source
-    assert "Accountability engine" in source
     assert '<body class="warden-page">' in source
     assert "font-size:clamp" not in source
     assert "letter-spacing:-" not in source
@@ -251,7 +252,7 @@ def test_warden_public_private_boundary_is_explicit() -> None:
     assert "Public surface" in source
     assert "Private core" in source
     assert (
-        "The public page can explain the pattern and link to public tools. It does not publish private internals, credentials, client data, operational details, or sensitive workflows."
+        "The public page shows the leaves that can be inspected. It does not publish private internals, credentials, client data, operational details, or sensitive workflows."
         in source
     )
     positive_overclaim_patterns = [
@@ -288,7 +289,7 @@ def test_portfolio_links_to_warden_flagship() -> None:
 
     assert 'href="warden.html"' in source
     assert "WARDEN overview" in source
-    assert "Accountability engine" in source
+    assert "WARDEN page" in source
 
 
 def test_sample_pages_explain_immediate_user_value_and_limits() -> None:
