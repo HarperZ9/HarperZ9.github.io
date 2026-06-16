@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WARDEN - AI Work Review System</title>
-<meta name="description" content="WARDEN is the accountability layer behind public review tools, reporting leaves, anomaly scoring, provenance checks, proof indexing, and EMET witness receipts.">
+<meta name="description" content="WARDEN is the accountability layer behind Sensorium live-state awareness, public review tools, reporting leaves, anomaly scoring, provenance checks, proof indexing, and EMET witness receipts.">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%231d1d1f'/%3E%3Cpath d='M14 34h36M20 22h24M20 46h24' stroke='%23fff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,11 +34,12 @@
 
 <header id="top" class="warden-hero shell g12">
   <div class="warden-hero-copy">
-    <p class="kicker">public leaves &middot; private core &middot; reviewer handoff</p>
+    <p class="kicker">sensor organs &middot; public leaves &middot; private core &middot; reviewer handoff</p>
     <h1>A review layer for AI-assisted work<span class="grad">.</span></h1>
-    <p class="lead warden-lead">WARDEN is the private accountability system behind the public proof and review tools. The inspectable surface is narrower: C++ reporting, anomaly scoring, analytics primitives, provenance/release CLIs, proof indexing, and EMET witness checks.</p>
+    <p class="lead warden-lead">WARDEN is the private accountability system behind the public proof and review tools. The inspectable surface is narrower: Sensorium live-state receipts, C++ reporting, anomaly scoring, analytics primitives, provenance/release CLIs, proof indexing, and EMET witness checks.</p>
     <div class="cta">
       <a class="btn solid" href="#accountability">See the workflow</a>
+      <a class="btn" href="https://github.com/HarperZ9/warden-sensorium">Sensorium</a>
       <a class="btn" href="#boundary">Public and private boundary</a>
       <a class="btn" href="index.html">Portfolio</a>
     </div>
@@ -49,17 +50,18 @@
       <strong>Human-owned</strong>
     </div>
     <ol>
-      <li><span>01</span><strong>State the claim</strong><em>write the thing being asserted</em></li>
-      <li><span>02</span><strong>Attach evidence</strong><em>link tests, samples, artifacts, or reports</em></li>
-      <li><span>03</span><strong>Check provenance</strong><em>validate source, model, or release records</em></li>
-      <li><span>04</span><strong>Review anomalies</strong><em>separate drift from noise</em></li>
-      <li><span>05</span><strong>Write a handoff report</strong><em>make findings reviewable</em></li>
-      <li><span>06</span><strong>Keep human ownership visible</strong><em>keep decisions accountable</em></li>
+      <li><span>01</span><strong>Sense live state</strong><em>observe files, git, claims, fixtures, and secret-shaped values</em></li>
+      <li><span>02</span><strong>State the claim</strong><em>write the thing being asserted</em></li>
+      <li><span>03</span><strong>Attach evidence</strong><em>link tests, samples, artifacts, or reports</em></li>
+      <li><span>04</span><strong>Check provenance</strong><em>validate source, model, or release records</em></li>
+      <li><span>05</span><strong>Review anomalies</strong><em>separate drift from noise</em></li>
+      <li><span>06</span><strong>Write a handoff report</strong><em>make findings reviewable</em></li>
+      <li><span>07</span><strong>Keep human ownership visible</strong><em>keep decisions accountable</em></li>
     </ol>
   </aside>
   <div class="warden-stats">
-    <div class="stat glass" aria-label="Five accountability lanes"><div class="n">5</div><div class="l">Accountability lanes</div></div>
-    <div class="stat glass" aria-label="Three public WARDEN packages"><div class="n">3</div><div class="l">WARDEN packages</div></div>
+    <div class="stat glass" aria-label="Six accountability lanes"><div class="n">6</div><div class="l">Accountability lanes</div></div>
+    <div class="stat glass" aria-label="Four public WARDEN packages"><div class="n">4</div><div class="l">WARDEN packages</div></div>
     <div class="stat glass" aria-label="One EMET witness primitive"><div class="n">EMET</div><div class="l">Witness primitive</div></div>
     <div class="stat glass" aria-label="Private core is protected"><div class="n">Core</div><div class="l">Private by design</div></div>
   </div>
@@ -73,15 +75,15 @@
       <span class="idx">01</span>
       <div class="role">Claim review</div>
       <h3>It makes claims reviewable.</h3>
-      <p>The public tools turn a statement into something a reviewer can inspect: the claim, the evidence behind it, the source records, witness status, and the open gaps.</p>
-      <div class="chips"><span class="chip">claims</span><span class="chip">evidence</span><span class="chip">maturity labels</span></div>
+      <p>The public tools turn a statement into something a reviewer can inspect: observed state, the claim, the evidence behind it, the source records, witness status, and the open gaps.</p>
+      <div class="chips"><span class="chip">observations</span><span class="chip">claims</span><span class="chip">evidence</span><span class="chip">maturity labels</span></div>
     </article>
     <article class="feat b glass sheen" data-glow>
       <span class="idx">02</span>
       <div class="role">Reviewer handoff</div>
       <h3>It turns agent output into a handoff.</h3>
-      <p>The public path moves from surface inspection to provenance checks, evidence indexing, anomaly review, and Markdown reporting. It creates a handoff record instead of asking people to trust memory.</p>
-      <div class="chips"><span class="chip">surface</span><span class="chip">provenance</span><span class="chip">proof</span><span class="chip">report</span></div>
+      <p>The public path moves from live-state sensing to surface inspection, provenance checks, evidence indexing, anomaly review, and Markdown reporting. It creates a handoff record instead of asking people to trust memory.</p>
+      <div class="chips"><span class="chip">sensorium</span><span class="chip">surface</span><span class="chip">provenance</span><span class="chip">proof</span><span class="chip">report</span></div>
     </article>
   </div>
 </section>
@@ -89,11 +91,12 @@
 <section id="lanes" class="shell" aria-labelledby="lanes-heading">
   <div class="sec-head"><p class="kicker">Public parts</p><h2 id="lanes-heading">The public parts of the system.</h2></div>
   <div class="warden-lanes">
-    <article class="lane glass"><span>01</span><h3>Evidence</h3><p>Gather claims, artifacts, release notes, samples, and test signals into a reviewable packet.</p></article>
-    <article class="lane glass"><span>02</span><h3>Provenance</h3><p>Check model, release, and workflow records before they become public proof.</p></article>
-    <article class="lane glass"><span>03</span><h3>Reporting</h3><p>Generate C++/Python handoff reports without publishing private operations.</p></article>
-    <article class="lane glass"><span>04</span><h3>Anomaly review</h3><p>Use statistical baselines, scoring, and correlation as public analytics leaves.</p></article>
-    <article class="lane glass"><span>05</span><h3>Agent workflow</h3><p>Keep agent-assisted work tied to scope, tests, artifacts, and human review.</p></article>
+    <article class="lane glass"><span>01</span><h3>Live-state awareness</h3><p>Capture filesystem, git, claim, fixture, and secret-shape observations as provenance receipts.</p></article>
+    <article class="lane glass"><span>02</span><h3>Evidence</h3><p>Gather claims, artifacts, release notes, samples, and test signals into a reviewable packet.</p></article>
+    <article class="lane glass"><span>03</span><h3>Provenance</h3><p>Check model, release, and workflow records before they become public proof.</p></article>
+    <article class="lane glass"><span>04</span><h3>Reporting</h3><p>Generate C++/Python handoff reports without publishing private operations.</p></article>
+    <article class="lane glass"><span>05</span><h3>Anomaly review</h3><p>Use statistical baselines, scoring, and correlation as public analytics leaves.</p></article>
+    <article class="lane glass"><span>06</span><h3>Agent workflow</h3><p>Keep agent-assisted work tied to scope, tests, artifacts, and human review.</p></article>
   </div>
 </section>
 
@@ -114,6 +117,7 @@
 <section id="surface" class="shell" aria-labelledby="surface-heading">
   <div class="sec-head"><p class="kicker">Repository surface</p><h2 id="surface-heading">The inspectable edge of WARDEN.</h2></div>
   <div class="repo-grid">
+    <a class="repo-pill glass" href="https://github.com/HarperZ9/warden-sensorium"><span>Sensorium</span><strong>warden-sensorium</strong><em>live-state awareness and provenance receipts</em></a>
     <a class="repo-pill glass" href="https://github.com/HarperZ9/warden-reporting"><span>WARDEN</span><strong>warden-reporting</strong><em>evidence chains and reviewer handoff</em></a>
     <a class="repo-pill glass" href="https://github.com/HarperZ9/warden-algorithms"><span>WARDEN</span><strong>warden-algorithms</strong><em>public algorithms and scoring primitives</em></a>
     <a class="repo-pill glass" href="https://github.com/HarperZ9/warden-anomaly"><span>WARDEN</span><strong>warden-anomaly</strong><em>anomaly review primitives</em></a>
@@ -128,7 +132,7 @@
 <section class="shell warden-close" aria-labelledby="close-heading">
   <p class="kicker">Position</p>
   <h2 id="close-heading">Public leaves, private core, one theme.</h2>
-  <p>WARDEN is useful when AI-assisted work needs a review trail: claims, evidence, provenance, anomalies, witness receipts, and human ownership in one line of sight. The public repos show pieces of that pattern; they do not ask the reader to accept the private core on faith.</p>
+  <p>WARDEN is useful when AI-assisted work needs a review trail: live-state observations, claims, evidence, provenance, anomalies, witness receipts, and human ownership in one line of sight. The public repos show pieces of that pattern; they do not ask the reader to accept the private core on faith.</p>
   <div class="cta">
     <a class="btn solid" href="mailto:zaindharper@gmail.com">Discuss WARDEN</a>
     <a class="btn" href="index.html">Back to portfolio</a>
