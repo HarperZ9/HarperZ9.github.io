@@ -11,6 +11,7 @@ the repo or sample artifact that supports each claim.
 ## Files
 
 - `index.html` - primary portfolio page.
+- `warden.html` - WARDEN accountability flagship page.
 - `proof-surface-sample.html` - sample proof-surface report.
 - `proof-index-sample.html` - sample proof index.
 - `public-surface-sweeper-sample.html` - sample public-surface sweep.
@@ -25,7 +26,7 @@ the repo or sample artifact that supports each claim.
 | Proof, provenance, and AI safety | `public-surface-sweeper`, `model-provenance-validator`, `repo-proof-index`, `gpu-trace-validator`, `EMET`, `ai-safety-guardrail-manager`, `ai-safety-prefire` | Release-surface, provenance, and model-context integrity tools. |
 | Quanta and editor support | `quantalang`, `quantalang-vscode`, `quantalang-tmLanguage`, `quanta-universe` | Compiler and editor surfaces with explicit maturity labels. |
 | Graphics, color, and calibration | `calibrate-pro`, `quanta-color`, ELDER.ENB, RAW | Color/calibration products, graphics prototypes, and a public shader/mod release. |
-| WARDEN public packages | `warden-reporting`, `warden-algorithms`, `warden-anomaly` | Public reporting, algorithm, and anomaly primitives from private tooling. |
+| WARDEN public packages | `warden.html`, `warden-reporting`, `warden-algorithms`, `warden-anomaly` | Accountability engine page plus public reporting, algorithm, and anomaly primitives from private tooling. |
 | Support surfaces and forks | `wol-pi`, `linguist`, `CL4R1T4S-CR0SS0VER` | Useful supporting repos and research surfaces with narrower scopes. |
 | Private product and platform work | Harper Advocates, Harper Compliance, WARDEN, APPS, Aurora, Quanta internals | Live sites, orchestration tooling, DSL/compiler work, and domain systems. |
 
@@ -50,7 +51,7 @@ Then visit `http://127.0.0.1:8765/`.
 Before publishing, verify:
 
 - The first viewport identifies the portfolio and current offer.
-- Local sample links resolve.
+- Local sample links and `warden.html` resolve.
 - External GitHub links point at intended public repositories.
 - The page remains legible at desktop and mobile widths.
 - No local secrets, generated logs, or private artifacts are staged.

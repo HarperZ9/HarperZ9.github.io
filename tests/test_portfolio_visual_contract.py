@@ -7,10 +7,20 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
 STYLES = ROOT / "styles.css"
+WARDEN = ROOT / "warden.html"
 
 
 def page_source() -> str:
     return INDEX.read_text(encoding="utf-8") + "\n" + STYLES.read_text(encoding="utf-8")
+
+
+def index_source() -> str:
+    return INDEX.read_text(encoding="utf-8")
+
+
+def warden_source() -> str:
+    assert WARDEN.exists(), "warden.html must exist"
+    return WARDEN.read_text(encoding="utf-8") + "\n" + STYLES.read_text(encoding="utf-8")
 
 
 def test_portfolio_keeps_clean_white_backdrop() -> None:
@@ -175,3 +185,60 @@ def test_glass_material_is_more_pronounced() -> None:
     assert "--glass-edge:" in source
     assert "--glass-depth:" in source
     assert "box-shadow:var(--glass-shadow), var(--glass-depth)" in source
+
+
+def test_warden_flagship_page_exists_and_has_thesis() -> None:
+    source = warden_source()
+
+    assert "Claims should leave a trail" in source
+    assert "accountability engine for agent-assisted work" in source
+    assert "Accountability is the product" in source
+    assert '<body class="warden-page">' in source
+    assert "font-size:clamp" not in source
+    assert "letter-spacing:-" not in source
+
+
+def test_warden_public_private_boundary_is_explicit() -> None:
+    source = warden_source()
+
+    assert "Public surface" in source
+    assert "Private core" in source
+    assert (
+        "Private internals, credentials, client data, operational details, and sensitive workflows are not exposed."
+        in source
+    )
+    positive_overclaim_patterns = [
+        r"(?<!not )\bWARDEN is externally certified\b",
+        r"(?<!not )\bWARDEN is regulator approved\b",
+        r"\bWARDEN holds external certification\b",
+        r"\bWARDEN has regulatory approval\b",
+        r"\bregulators approved WARDEN\b",
+        r"\bcustomer deployment verified for WARDEN\b",
+        r"\bproduction trust status granted to WARDEN\b",
+    ]
+    for pattern in positive_overclaim_patterns:
+        assert not re.search(pattern, source, re.IGNORECASE)
+
+
+def test_warden_links_public_accountability_repos() -> None:
+    source = warden_source()
+
+    for repo in [
+        "https://github.com/HarperZ9/warden-reporting",
+        "https://github.com/HarperZ9/warden-algorithms",
+        "https://github.com/HarperZ9/warden-anomaly",
+        "https://github.com/HarperZ9/public-surface-sweeper",
+        "https://github.com/HarperZ9/model-provenance-validator",
+        "https://github.com/HarperZ9/repo-proof-index",
+        "https://github.com/HarperZ9/gpu-trace-validator",
+        "https://github.com/HarperZ9/emet",
+    ]:
+        assert f'href="{repo}"' in source
+
+
+def test_portfolio_links_to_warden_flagship() -> None:
+    source = index_source()
+
+    assert 'href="warden.html"' in source
+    assert "WARDEN overview" in source
+    assert "Accountability engine" in source
