@@ -73,6 +73,7 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
       padding: clamp(24px, 4vw, 46px);
+      min-width: 0;
     }
 
     .kicker {
@@ -145,6 +146,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
+      table-layout: fixed;
       font-family: "Trebuchet MS", Verdana, sans-serif;
       font-size: 0.92rem;
     }
@@ -155,6 +157,7 @@
       border-bottom: 1px solid var(--line);
       text-align: left;
       vertical-align: top;
+      overflow-wrap: anywhere;
     }
 
     th {
@@ -180,6 +183,7 @@
 
     pre {
       overflow-x: auto;
+      max-width: 100%;
       padding: 18px;
       border-radius: 18px;
       background: rgba(23, 19, 15, 0.86);
@@ -221,7 +225,7 @@
   <main class="shell">
     <section class="hero">
       <div class="card">
-        <p class="kicker">Sample report · release readiness · proof surface</p>
+        <p class="kicker">Sample report &middot; release readiness &middot; proof surface</p>
         <h1>What is visible before trust is requested?</h1>
         <p class="lead">
           This sample report shows the shape of a proof-surface review for
@@ -233,9 +237,10 @@
 
       <aside class="card summary" aria-label="Report summary">
         <span class="pill">Not a certification</span>
-        <h2>Boundary</h2>
-        <p>No exploit testing. No credential handling. No production access. No trust verdict.</p>
-        <p>This is a public-surface release-readiness example.</p>
+        <h2>Immediate value as of June 15, 2026</h2>
+        <p><strong>Who uses it:</strong> maintainers, founders, reviewers, hiring teams, and technical buyers who need to see whether a public artifact is ready to be judged.</p>
+        <p>Use this when a repo, demo, or AI-assisted tool needs a public-readiness check before someone else evaluates it.</p>
+        <p><strong>What it does not claim:</strong> It is a review packet, not certification, approval, or exploit testing.</p>
       </aside>
     </section>
 
