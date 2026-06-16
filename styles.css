@@ -113,11 +113,49 @@ footer{padding:clamp(4rem,9vw,7rem) 0 clamp(3rem,6vw,5rem)}
 .foot-big{font-family:var(--display); font-weight:800; font-size:3.7rem; color:var(--ink); line-height:1; max-width:14ch; margin-bottom:2rem}
 .foot-cta{display:flex; flex-wrap:wrap; gap:.8rem}
 .muted{color:var(--ink-faint); font-size:.9rem; margin-top:2.6rem; font-family:var(--mono); letter-spacing:0}
+.warden-page .brand::after{background:radial-gradient(circle at 35% 30%,#fff 0 11%,#dce9ff 25%,#714226 100%); box-shadow:0 0 26px rgba(148,173,210,.58)}
+.warden-hero{padding-top:clamp(3rem,5vw,5rem); padding-bottom:clamp(2.5rem,5vw,4.5rem); row-gap:1.15rem; align-items:start}
+.warden-hero-copy{grid-column:1/7; padding-top:.4rem}
+.warden-hero h1{font-size:4.55rem; max-width:10.5ch; margin:.2rem 0 .8rem}
+.warden-lead{max-width:50ch}
+.accountability-loop{grid-column:8/13; padding:1.05rem; overflow:hidden}
+.loop-head{display:flex; justify-content:space-between; gap:1rem; align-items:center; padding:.25rem .2rem .85rem; border-bottom:1px solid var(--rule); font-family:var(--mono); font-size:.76rem; color:var(--ink-muted)}
+.loop-head strong{color:var(--orange-deep); font-weight:700}
+.accountability-loop ol{list-style:none; display:grid; gap:.48rem; margin-top:.85rem}
+.accountability-loop li{display:grid; grid-template-columns:2.1rem 1fr; column-gap:.75rem; padding:.72rem .68rem; border-radius:var(--r); background:rgba(255,255,255,.58); border:1px solid rgba(23,24,28,.09)}
+.accountability-loop li span{grid-row:1/3; font-family:var(--mono); font-size:.76rem; font-weight:700; color:var(--orange-deep)}
+.accountability-loop li strong{font-family:var(--display); font-size:1rem; line-height:1.1}
+.accountability-loop li em{font-family:var(--body); font-style:normal; color:var(--ink-muted); font-size:.88rem; line-height:1.35}
+.warden-stats{grid-column:1/-1; display:grid; grid-template-columns:repeat(4,1fr); gap:.85rem; margin-top:.8rem}
+.warden-lanes{display:grid; grid-template-columns:repeat(5,1fr); gap:.85rem}
+.lane{padding:1.15rem; min-height:14rem}
+.lane span,.repo-pill span{font-family:var(--mono); font-size:.75rem; font-weight:700; color:var(--orange-deep)}
+.lane h3{font-size:1.35rem; margin:.75rem 0 .7rem}
+.lane p{color:var(--ink-muted); font-size:.98rem; line-height:1.55}
+.warden-boundary .shell{align-items:center; row-gap:1.4rem}
+.boundary-copy{grid-column:1/7}
+.boundary-copy h2{font-size:3.05rem; max-width:11ch; margin:.7rem 0 1rem}
+.boundary-copy p:last-child{color:var(--ink-muted); max-width:52ch}
+.boundary-panel{grid-column:8/13; padding:1.1rem; display:grid; gap:.75rem}
+.boundary-panel div{padding:1rem; background:rgba(255,255,255,.6); border:1px solid rgba(23,24,28,.09); border-radius:var(--r)}
+.boundary-panel span{font-family:var(--mono); font-size:.76rem; font-weight:700; color:var(--orange-deep); text-transform:uppercase}
+.boundary-panel p{color:var(--ink-muted); margin-top:.45rem; line-height:1.55}
+.repo-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:.85rem}
+.repo-pill{display:flex; min-height:11rem; flex-direction:column; gap:.55rem; padding:1.05rem; text-decoration:none; transition:transform .3s var(--ease), box-shadow .3s var(--ease)}
+.repo-pill:hover{transform:translateY(-3px); box-shadow:var(--glass-shadow-hi); opacity:1}
+.repo-pill strong{font-family:var(--display); font-size:1.1rem; line-height:1.15}
+.repo-pill em{font-style:normal; color:var(--ink-muted); font-size:.9rem; line-height:1.45}
+.warden-close h2{font-size:3.2rem; max-width:12ch; margin:.7rem 0 1rem}
+.warden-close p:not(.kicker){color:var(--ink-muted); max-width:58ch}
 @media(max-width:940px){
   .hero h1{grid-column:1/-1; font-size:3.55rem; max-width:11ch}
   .lead-wrap,.stats{grid-column:1/-1}
   .feat.a,.feat.b,.band .res-q,.band .res-b,.approach .body,.approach .pull{grid-column:1/-1; margin-top:0}
   .stats{grid-template-columns:repeat(2,1fr)}
+  .warden-hero-copy,.accountability-loop,.boundary-copy,.boundary-panel{grid-column:1/-1}
+  .warden-hero h1{font-size:3.45rem}
+  .warden-stats{grid-template-columns:repeat(2,1fr)}
+  .warden-lanes,.repo-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:820px){
   .wrow{grid-template-columns:2.4rem 1fr; row-gap:.55rem; padding:1.25rem}
@@ -140,5 +178,12 @@ footer{padding:clamp(4rem,9vw,7rem) 0 clamp(3rem,6vw,5rem)}
   .band .res-q,.approach .pull{font-size:1.55rem}
   .xp{grid-template-columns:1fr; gap:.5rem; padding:1.25rem}
   .foot-big{font-size:2.55rem}
+  .warden-hero{padding-top:1.35rem}
+  .warden-hero h1{font-size:2.36rem}
+  .accountability-loop{padding:.85rem}
+  .accountability-loop li{grid-template-columns:1.8rem 1fr; padding:.62rem}
+  .warden-stats,.warden-lanes,.repo-grid{grid-template-columns:1fr}
+  .lane{min-height:auto}
+  .boundary-copy h2,.warden-close h2{font-size:2.15rem}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important; scroll-behavior:auto!important}.glass.sheen::before{display:none!important}}
