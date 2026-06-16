@@ -90,13 +90,22 @@ def test_nav_brand_is_clean_and_public_copy_has_no_mojibake() -> None:
     assert "&middot;" in source
 
 
-def test_portfolio_uses_receipts_not_sales_posture() -> None:
+def test_portfolio_explains_what_and_how_plainly() -> None:
     source = page_source()
 
-    assert "Working systems with receipts" in source
-    assert "Current state" in source
-    assert "label maturity" in source
-    assert "Public claims, backed by evidence" in source
+    assert "Software that makes technical work understandable" in source
+    assert "I build compilers, graphics tools, accountability systems, and live web products." in source
+    assert "turning ambiguous technical ideas into working software with tests, examples, and public artifacts" in source
+    assert "Public release review means checking whether a repo, page, demo, or tool makes claims it can support." in source
+    assert "inspect a public surface, check source and provenance, collect evidence, write a report, and preserve a review trail" in source
+    for lane in [
+        "language and compiler work",
+        "accountability and evidence tools",
+        "graphics and color systems",
+        "live web products",
+        "agent workflow tooling",
+    ]:
+        assert lane in source
     for stale_phrase in [
         "Current paid wedge",
         "behind the wedge",
@@ -108,6 +117,8 @@ def test_portfolio_uses_receipts_not_sales_posture() -> None:
         "I map what the surface claims",
         "Operational exploit detail",
         "a lot still to learn",
+        "Working systems with receipts",
+        "Public claims, backed by evidence",
     ]:
         assert stale_phrase not in source
 
@@ -129,13 +140,13 @@ def test_public_directions_are_outward_facing() -> None:
     source = page_source()
 
     assert 'id="directions"' in source
-    assert "Where it fits" in source
+    assert "What the work is for" in source
     assert "Evidence systems" in source
     assert "Quanta research" in source
     assert "Graphics and color" in source
     assert "Agent workflow" in source
     assert "Private platforms" in source
-    assert "shown without internals" in source
+    assert "shown through public screenshots, pages, and outcome descriptions rather than internal code" in source
     for inward_facing_phrase in [
         "Splash",
         "front door next",
@@ -190,9 +201,24 @@ def test_glass_material_is_more_pronounced() -> None:
 def test_warden_flagship_page_exists_and_has_thesis() -> None:
     source = warden_source()
 
-    assert "Claims should leave a trail" in source
-    assert "accountability engine for agent-assisted work" in source
-    assert "Accountability is the product" in source
+    assert "Check AI-assisted work. Keep the trail" in source
+    assert "WARDEN is a system for checking AI-assisted work." in source
+    assert (
+        "It records what was claimed, what evidence supports it, where the work came from, "
+        "what changed, and what a human reviewer should look at."
+    ) in source
+    for loop_step in [
+        "State the claim",
+        "Attach evidence",
+        "Check provenance",
+        "Review anomalies",
+        "Write a handoff report",
+        "Keep human ownership visible",
+    ]:
+        assert loop_step in source
+    assert "What WARDEN does" in source
+    assert "The public parts of the system" in source
+    assert "Accountability engine" in source
     assert '<body class="warden-page">' in source
     assert "font-size:clamp" not in source
     assert "letter-spacing:-" not in source
@@ -204,7 +230,7 @@ def test_warden_public_private_boundary_is_explicit() -> None:
     assert "Public surface" in source
     assert "Private core" in source
     assert (
-        "Private internals, credentials, client data, operational details, and sensitive workflows are not exposed."
+        "The public page can explain the pattern and link to public tools. It does not publish private internals, credentials, client data, operational details, or sensitive workflows."
         in source
     )
     positive_overclaim_patterns = [
