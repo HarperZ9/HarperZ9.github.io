@@ -120,6 +120,9 @@ def test_portfolio_explains_what_and_how_plainly() -> None:
     assert "QuantaLang is the effects-language side of the same live-state thesis" in source
     assert "today it has a verified C path, working HLSL/GLSL shader output, typed effect receipts, policy gates, and semantic-corpus checks" in source
     assert "long term it points toward one source shape that can coordinate CPU and GPU outputs while WARDEN-style tooling inspects what the code touched and emitted" in source
+    assert "Safety, transparency, and creativity should evolve on the same surface." in source
+    assert "The same gap that makes AI dangerous also makes it feel limited: models infer state from assertions, memory, and context instead of sensing the world natively." in source
+    assert "programmatic sensory organs, effects, receipts, and membrane layers where people and machines can make work inspectable" in source
     assert "the pattern is the same: turn messy work into something inspectable" in source
     assert "WARDEN Sensorium" in source
     assert "WARDEN Agent Audit" in source
@@ -315,6 +318,24 @@ def test_warden_names_confidential_research_scope_and_public_context() -> None:
     assert "https://openai.com/index/openai-frontier-governance-framework/" in source
     assert "https://www.anthropic.com/news/responsible-scaling-policy-v3" in source
     assert "https://www.anthropic.com/news/fable-mythos-access" in source
+
+
+def test_warden_connects_safety_transparency_and_creativity() -> None:
+    source = warden_source()
+
+    assert "Safety, transparency, and creativity can evolve on the same surface." in source
+    assert "Many creative people are hesitant to use AI tools, and some reject them outright." in source
+    assert "That hesitation belongs in the architecture." in source
+    assert "The problem underneath is state" in source
+    assert "A model can infer, summarize, and remember, but it usually receives claims about the world rather than native contact with the world." in source
+    assert "programmatic sensory organs" in source
+    assert "The same surface that makes machine creativity safer to trust is also the surface that keeps it accountable as capabilities grow." in source
+    for overclaim in [
+        "models now know ground truth",
+        "WARDEN makes AI creativity automatically safe",
+        "creatives should stop resisting AI",
+    ]:
+        assert overclaim not in source
 
 
 def test_warden_links_public_accountability_repos() -> None:
