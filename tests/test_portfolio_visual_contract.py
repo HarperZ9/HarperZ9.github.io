@@ -156,7 +156,7 @@ def test_portfolio_accountability_architecture_section() -> None:
     # Status badges
     assert "Shipped" in source
     assert "In development" in source
-    assert "Partial" in source
+    assert "proof-surface" in source  # shipped layers cite the proof-surface contract family
     # Why now line
     assert "NIST" in source
     assert "in-toto/SLSA/SPIFFE" in source
