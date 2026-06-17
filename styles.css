@@ -47,12 +47,19 @@ nav{position:sticky; top:0; z-index:100; background:rgba(255,255,255,.72); -webk
 .nav-links a:hover{color:var(--ink); opacity:1}
 .hero{padding-top:clamp(3rem,5vw,5rem); padding-bottom:clamp(1.75rem,4vw,3rem); row-gap:clamp(1.25rem,2.5vw,2rem); align-items:start}
 .hero .kicker{grid-column:1/-1}
-.hero h1{grid-column:1/12; font-size:4.95rem; max-width:10.8ch; margin:.2rem 0 .2rem}
+.hero h1{grid-column:1/12; font-size:4.35rem; max-width:13ch; margin:.2rem 0 .2rem}
 .hero h1 .grad{background:linear-gradient(92deg,#17181c 0%,#714226 48%,#b86a3d 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent}
 .lead-wrap{grid-column:1/8; padding:1.25rem; align-self:start}
 .lead{font-size:1.22rem; color:var(--ink-muted); max-width:54ch}
+.plain-note{margin-top:.85rem; color:var(--ink-muted); font-size:1rem; line-height:1.58}
+.orientation{grid-column:8/13; padding:1.1rem; align-self:start}
+.orientation-label{font-family:var(--mono); font-size:.76rem; font-weight:700; color:var(--orange-deep); text-transform:uppercase; margin-bottom:.8rem}
+.orientation ul{list-style:none; display:grid; gap:.65rem}
+.orientation li{padding:.85rem; border-radius:var(--r); background:rgba(255,255,255,.6); border:1px solid rgba(23,24,28,.09)}
+.orientation strong{display:block; font-family:var(--display); line-height:1.1; color:var(--ink); margin-bottom:.35rem}
+.orientation span{display:block; color:var(--ink-muted); font-size:.94rem; line-height:1.45}
 .cta{display:flex; flex-wrap:wrap; gap:.55rem; margin-top:1.2rem}
-.stats{grid-column:8/13; display:grid; grid-template-columns:1fr 1fr; gap:.85rem; margin-top:.2rem}
+.stats{grid-column:1/-1; display:grid; grid-template-columns:repeat(4,1fr); gap:.85rem; margin-top:.6rem}
 .stat{padding:1.05rem 1.15rem}
 .stat .n{font-family:var(--display); font-size:1.8rem; color:var(--ink); font-weight:700; line-height:1}
 .stat .l{font-family:var(--mono); font-size:.72rem; color:var(--ink-muted); margin-top:.5rem; text-transform:uppercase; letter-spacing:0}
@@ -126,6 +133,8 @@ footer{padding:clamp(4rem,9vw,7rem) 0 clamp(3rem,6vw,5rem)}
 .accountability-loop li span{grid-row:1/3; font-family:var(--mono); font-size:.76rem; font-weight:700; color:var(--orange-deep)}
 .accountability-loop li strong{font-family:var(--display); font-size:1rem; line-height:1.1}
 .accountability-loop li em{font-family:var(--body); font-style:normal; color:var(--ink-muted); font-size:.88rem; line-height:1.35}
+.workflow-loop{margin-top:2.3rem}
+.workflow-loop ol{grid-template-columns:repeat(2,minmax(0,1fr))}
 .warden-stats{grid-column:1/-1; display:grid; grid-template-columns:repeat(4,1fr); gap:.85rem; margin-top:.8rem}
 .context-strip{margin-top:.4rem; padding:1.1rem 1.25rem; max-width:980px}
 .context-strip p{color:var(--ink-muted); margin:0; font-size:.98rem; line-height:1.62}
@@ -152,11 +161,12 @@ footer{padding:clamp(4rem,9vw,7rem) 0 clamp(3rem,6vw,5rem)}
 .warden-close p:not(.kicker){color:var(--ink-muted); max-width:58ch}
 @media(max-width:940px){
   .hero h1{grid-column:1/-1; font-size:3.55rem; max-width:11ch}
-  .lead-wrap,.stats{grid-column:1/-1}
+  .lead-wrap,.orientation,.stats{grid-column:1/-1}
   .feat.a,.feat.b,.band .res-q,.band .res-b,.approach .body,.approach .pull{grid-column:1/-1; margin-top:0}
   .stats{grid-template-columns:repeat(2,1fr)}
   .warden-hero-copy,.accountability-loop,.boundary-copy,.boundary-panel{grid-column:1/-1}
   .warden-hero h1{font-size:3.45rem}
+  .workflow-loop ol{grid-template-columns:1fr}
   .warden-stats{grid-template-columns:repeat(2,1fr)}
   .warden-lanes,.repo-grid{grid-template-columns:repeat(2,1fr)}
 }
@@ -170,6 +180,10 @@ footer{padding:clamp(4rem,9vw,7rem) 0 clamp(3rem,6vw,5rem)}
   .hero h1{font-size:2.42rem}
   .lead-wrap{padding:.9rem}
   .lead{font-size:1.05rem}
+  .plain-note{font-size:.95rem}
+  .orientation{padding:.9rem}
+  .orientation li{padding:.72rem}
+  .orientation span{font-size:.9rem}
   .stats{grid-template-columns:repeat(2,1fr); gap:.55rem}
   .stat{padding:.58rem .55rem}
   .stat .n{font-size:1.35rem}
@@ -184,7 +198,6 @@ footer{padding:clamp(4rem,9vw,7rem) 0 clamp(3rem,6vw,5rem)}
   .warden-hero{padding-top:1.35rem}
   .warden-hero h1{font-size:2.36rem}
   .accountability-loop{padding:.85rem}
-  .accountability-loop ol{display:none}
   .accountability-loop .loop-head{border-bottom:0; padding:.15rem .1rem}
   .accountability-loop li{grid-template-columns:1.8rem 1fr; padding:.62rem}
   .warden-stats{display:none}
