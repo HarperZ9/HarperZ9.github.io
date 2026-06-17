@@ -105,8 +105,19 @@ def test_nav_brand_is_clean_and_public_copy_has_no_mojibake() -> None:
 def test_portfolio_explains_what_and_how_plainly() -> None:
     source = page_source()
 
-    assert "Make hard claims answerable" in source
-    assert "turning ambiguous AI-era work into inspectable tools, tests, reports, and interfaces" in source
+    assert "Portfolio and consulting surface" in source
+    assert "AI accountability engineering, backed by proof." in source
+    assert "This is Zain Dana Harper's public portfolio and consulting page." in source
+    assert "Start here if you are evaluating me for consulting, hiring, or research collaboration in AI safety, accountability, confidential research provenance, compiler research, or agent workflows." in source
+    assert "At a glance" in source
+    assert "What this site is" in source
+    assert "A portfolio, consulting surface, and map of public engineering artifacts." in source
+    assert "Best fit" in source
+    assert "Teams evaluating AI-assisted work, confidential research workflows, compiler research, or agent tooling." in source
+    assert "Where to go next" in source
+    assert "Open WARDEN for the accountability architecture, QuantaLang for the compiler, or the lineup for the repo map." in source
+    assert "Public work" in source
+    assert "Contact" in source
     assert "confidential research provenance" in source
     assert "AI accountability and release review" in source
     assert "Turn ambitious claims into reviewable evidence." in source
@@ -130,8 +141,8 @@ def test_portfolio_explains_what_and_how_plainly() -> None:
     for lane in [
         "AI accountability",
         "compilers",
-        "agent orchestration",
-        "graphics/color",
+        "agent workflows",
+        "graphics",
         "public proof",
     ]:
         assert lane in source
@@ -253,9 +264,17 @@ def test_glass_material_is_more_pronounced() -> None:
 def test_warden_flagship_page_exists_and_has_thesis() -> None:
     source = warden_source()
 
-    assert "Keep AI work accountable" in source
-    assert "WARDEN is a bidirectional provenance membrane for AI-assisted work in high-stakes authorized environments." in source
-    assert "Scope, approvals, evidence, and constraints flow inward so the model can see what kind of work it is being asked to perform; edits, actions, claims, and receipts flow outward so the operator and reviewer can hold the work accountable." in source
+    assert "WARDEN overview" in source
+    assert "A review layer for AI-assisted work." in source
+    assert "WARDEN is a provenance and review system for authorized AI-assisted work." in source
+    assert "It carries scope, approvals, evidence, and constraints into the workflow, then carries actions, claims, receipts, and reviewer notes back out." in source
+    assert "Plain-English summary" in source
+    assert "What WARDEN is" in source
+    assert "A bidirectional record layer between human authorization and model-assisted work." in source
+    assert "Who it helps" in source
+    assert "Teams working with AI output that needs scope, evidence, approvals, exceptions, and review trails kept together." in source
+    assert "What is public here" in source
+    assert "Inspectable tooling leaves, sample patterns, and the accountability architecture; not the private core." in source
     assert "What the public surface is trying to make visible" in source
     assert "A way to keep capability from outrunning authorization." in source
     assert "they do not ask the reader to accept the private core on faith" in source

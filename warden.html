@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20260617e">
+<link rel="stylesheet" href="styles.css?v=20260617f">
 </head>
 <body class="warden-page">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -22,47 +22,37 @@
   <div class="nav-in">
     <a class="brand" href="index.html">WARDEN</a>
     <div class="nav-links">
-      <a href="#accountability">What It Does</a>
-      <a href="#lanes">Public Parts</a>
+      <a href="#summary">Start here</a>
+      <a href="#accountability">Workflow</a>
+      <a href="#lanes">Public tools</a>
       <a href="#boundary">Boundary</a>
       <a href="#surface">Surface</a>
       <a href="index.html">Portfolio</a>
-      <a href="https://github.com/HarperZ9">GitHub</a>
+      <a href="mailto:zaindharper@gmail.com">Contact</a>
     </div>
   </div>
 </nav>
 
 <header id="top" class="warden-hero shell g12">
   <div class="warden-hero-copy">
-    <p class="kicker">scope in &middot; receipts out &middot; confidential research &middot; human review</p>
-    <h1>Keep AI work accountable<span class="grad">.</span></h1>
-    <p class="lead warden-lead">WARDEN is a bidirectional provenance membrane for AI-assisted work in high-stakes authorized environments. Scope, approvals, evidence, and constraints flow inward so the model can see what kind of work it is being asked to perform; edits, actions, claims, and receipts flow outward so the operator and reviewer can hold the work accountable. The public surface is narrower than the private core: Sensorium live-state receipts, Agent Audit intent/action review, Release Assurance public gates, C++ reporting, anomaly scoring, analytics primitives, provenance/release CLIs, proof indexing, and EMET witness checks.</p>
+    <p class="kicker">WARDEN overview</p>
+    <h1>A review layer for AI-assisted work.</h1>
+    <p class="lead warden-lead">WARDEN is a provenance and review system for authorized AI-assisted work. It carries scope, approvals, evidence, and constraints into the workflow, then carries actions, claims, receipts, and reviewer notes back out.</p>
     <div class="cta">
-      <a class="btn solid" href="#accountability">See the workflow</a>
-      <a class="btn" href="https://github.com/HarperZ9/warden-sensorium">Sensorium</a>
-      <a class="btn" href="https://github.com/HarperZ9/warden-agent-audit">Agent Audit</a>
-      <a class="btn" href="https://github.com/HarperZ9/warden-release-assurance">Release Assurance</a>
+      <a class="btn solid" href="#summary">Start with the summary</a>
+      <a class="btn" href="#accountability">See the workflow</a>
+      <a class="btn" href="#lanes">Public tools</a>
       <a class="btn" href="#boundary">Public and private boundary</a>
       <a class="btn" href="index.html">Portfolio</a>
     </div>
   </div>
-  <aside class="accountability-loop glass" aria-label="WARDEN accountability loop">
-    <div class="loop-head">
-      <span>WARDEN loop</span>
-      <strong>Human-owned</strong>
-    </div>
-    <ol>
-      <li><span>01</span><strong>Declare engagement scope</strong><em>name the work environment, domain, and authorized task</em></li>
-      <li><span>02</span><strong>Attach authority and constraints</strong><em>carry approvals, scope documents, evidence, and limits inward</em></li>
-      <li><span>03</span><strong>Sense live state</strong><em>observe files, git, claims, fixtures, and secret-shaped values</em></li>
-      <li><span>04</span><strong>Audit agent behavior</strong><em>compare intent, action ledger, scope policy, and claimed history</em></li>
-      <li><span>05</span><strong>Attach evidence</strong><em>link tests, samples, artifacts, or reports</em></li>
-      <li><span>06</span><strong>Check provenance</strong><em>validate source, model, or release records</em></li>
-      <li><span>07</span><strong>Gate exceptions</strong><em>check required files, scope labels, approvals, hashes, and proof indexes</em></li>
-      <li><span>08</span><strong>Review anomalies</strong><em>separate drift from noise</em></li>
-      <li><span>09</span><strong>Write a handoff report</strong><em>make findings reviewable</em></li>
-      <li><span>10</span><strong>Keep both sides accountable</strong><em>operator owns scope; model workflow owns recorded work</em></li>
-    </ol>
+  <aside id="summary" class="orientation glass warden-summary" aria-label="WARDEN plain-English summary">
+    <p class="orientation-label">Plain-English summary</p>
+    <ul>
+      <li><strong>What WARDEN is</strong><span>A bidirectional record layer between human authorization and model-assisted work.</span></li>
+      <li><strong>Who it helps</strong><span>Teams working with AI output that needs scope, evidence, approvals, exceptions, and review trails kept together.</span></li>
+      <li><strong>What is public here</strong><span>Inspectable tooling leaves, sample patterns, and the accountability architecture; not the private core.</span></li>
+    </ul>
   </aside>
   <div class="warden-stats">
     <div class="stat glass" aria-label="Six accountability lanes"><div class="n">6</div><div class="l">Accountability lanes</div></div>
@@ -90,6 +80,24 @@
       <p>The public path moves from scope declaration to live-state sensing, agent behavior audit, surface inspection, release assurance, provenance checks, evidence indexing, anomaly review, and Markdown reporting. It creates a handoff record instead of asking people to trust memory, charisma, or a model transcript.</p>
       <div class="chips"><span class="chip">scope</span><span class="chip">sensorium</span><span class="chip">agent audit</span><span class="chip">release assurance</span><span class="chip">provenance</span><span class="chip">report</span></div>
     </article>
+  </div>
+  <div class="accountability-loop glass workflow-loop" aria-label="WARDEN accountability loop">
+    <div class="loop-head">
+      <span>WARDEN loop</span>
+      <strong>Human-owned</strong>
+    </div>
+    <ol>
+      <li><span>01</span><strong>Declare engagement scope</strong><em>name the work environment, domain, and authorized task</em></li>
+      <li><span>02</span><strong>Attach authority and constraints</strong><em>carry approvals, scope documents, evidence, and limits inward</em></li>
+      <li><span>03</span><strong>Sense live state</strong><em>observe files, git, claims, fixtures, and secret-shaped values</em></li>
+      <li><span>04</span><strong>Audit agent behavior</strong><em>compare intent, action ledger, scope policy, and claimed history</em></li>
+      <li><span>05</span><strong>Attach evidence</strong><em>link tests, samples, artifacts, or reports</em></li>
+      <li><span>06</span><strong>Check provenance</strong><em>validate source, model, or release records</em></li>
+      <li><span>07</span><strong>Gate exceptions</strong><em>check required files, scope labels, approvals, hashes, and proof indexes</em></li>
+      <li><span>08</span><strong>Review anomalies</strong><em>separate drift from noise</em></li>
+      <li><span>09</span><strong>Write a handoff report</strong><em>make findings reviewable</em></li>
+      <li><span>10</span><strong>Keep both sides accountable</strong><em>operator owns scope; model workflow owns recorded work</em></li>
+    </ol>
   </div>
 </section>
 
