@@ -107,10 +107,13 @@ def test_portfolio_explains_what_and_how_plainly() -> None:
 
     assert "Make hard claims answerable" in source
     assert "turning ambiguous AI-era work into inspectable tools, tests, reports, and interfaces" in source
+    assert "confidential research provenance" in source
     assert "AI accountability and release review" in source
     assert "Turn ambitious claims into reviewable evidence." in source
     assert "Programmatic exception layers" in source
     assert "live-state receipts, agent-intent review, release gates" in source
+    assert "high-stakes authorized research environments" in source
+    assert "long-term red-team work, biological research, government-supervised defense or weapons-adjacent engineering" in source
     assert "Proof before public trust" in source
     assert "QuantaLang makes the ambition concrete." in source
     assert "836 tracked <code>.quanta</code> files" in source
@@ -177,7 +180,9 @@ def test_public_directions_are_outward_facing() -> None:
     assert "Where this work can be useful" in source
     assert "AI safety and accountability" in source
     assert "Compiler and language research" in source
-    assert "The tools check live state, agent actions, release gates, claims, provenance, witness state, proof packets, and handoff reports." in source
+    assert "The tools check live state, agent actions, release gates, claims, authorization context, provenance, witness state, proof packets, and handoff reports." in source
+    assert "Confidential and government-supervised research" in source
+    assert "Long-running red-team contracts, biological research programs, defense or weapons-adjacent engineering, and sensitive internal R&amp;D need a membrane that can show what scope was authorized before the work and what the model or workflow actually did afterward." in source
     assert "Graphics and color" in source
     assert "Agent workflow and orchestration" in source
     assert "Compliance and product infrastructure" in source
@@ -239,21 +244,22 @@ def test_warden_flagship_page_exists_and_has_thesis() -> None:
     source = warden_source()
 
     assert "Keep AI work accountable" in source
-    assert "WARDEN is the accountability system I built around AI-assisted work because speed is not enough." in source
-    assert "The public surface is narrower than the private core: Sensorium live-state receipts, Agent Audit intent/action review, Release Assurance public gates, C++ reporting, anomaly scoring, analytics primitives, provenance/release CLIs, proof indexing, and EMET witness checks." in source
+    assert "WARDEN is a bidirectional provenance membrane for AI-assisted work in high-stakes authorized environments." in source
+    assert "Scope, approvals, evidence, and constraints flow inward so the model can see what kind of work it is being asked to perform; edits, actions, claims, and receipts flow outward so the operator and reviewer can hold the work accountable." in source
     assert "What the public surface is trying to make visible" in source
-    assert "A way to keep speed from outrunning judgment." in source
+    assert "A way to keep capability from outrunning authorization." in source
     assert "they do not ask the reader to accept the private core on faith" in source
     for loop_step in [
+        "Declare engagement scope",
+        "Attach authority and constraints",
         "Sense live state",
-        "State the claim",
         "Audit agent behavior",
         "Attach evidence",
         "Check provenance",
-        "Gate the release",
+        "Gate exceptions",
         "Review anomalies",
         "Write a handoff report",
-        "Keep human ownership visible",
+        "Keep both sides accountable",
     ]:
         assert loop_step in source
     assert "The parts another person can inspect" in source
@@ -279,9 +285,29 @@ def test_warden_public_private_boundary_is_explicit() -> None:
         r"\bregulators approved WARDEN\b",
         r"\bcustomer deployment verified for WARDEN\b",
         r"\bproduction trust status granted to WARDEN\b",
+        r"\bWARDEN grants authorization\b",
+        r"\bWARDEN bypasses safeguards\b",
     ]
     for pattern in positive_overclaim_patterns:
         assert not re.search(pattern, source, re.IGNORECASE)
+
+
+def test_warden_names_confidential_research_scope_and_public_context() -> None:
+    source = warden_source()
+
+    assert 'id="research-membrane"' in source
+    assert "Confidential research membrane" in source
+    assert "long-term red-team contracts" in source
+    assert "biological research" in source
+    assert "government-supervised defense or weapons-adjacent engineering" in source
+    assert "programmatic assertion and provenance layer" in source
+    assert "WARDEN does not grant authority by itself" in source
+    assert "OpenAI Frontier Governance Framework" in source
+    assert "Anthropic Responsible Scaling Policy" in source
+    assert "Fable 5 and Mythos 5" in source
+    assert "https://openai.com/index/openai-frontier-governance-framework/" in source
+    assert "https://www.anthropic.com/news/responsible-scaling-policy-v3" in source
+    assert "https://www.anthropic.com/news/fable-mythos-access" in source
 
 
 def test_warden_links_public_accountability_repos() -> None:
