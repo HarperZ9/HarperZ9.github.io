@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WARDEN - Human Accountability for AI-Assisted Work</title>
-<meta name="description" content="WARDEN is Zain Dana Harper's accountability layer for AI-assisted work: Sensorium live-state awareness, Agent Audit behavior review, Release Assurance gates, claims, evidence, provenance, anomalies, witness receipts, and human review.">
+<meta name="description" content="WARDEN is Zain Dana Harper's bidirectional provenance membrane for authorized AI-assisted work: scope and constraints inward, model actions and receipts outward, with public leaves for Sensorium, Agent Audit, Release Assurance, evidence, provenance, anomalies, witness receipts, and human review.">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%231d1d1f'/%3E%3Cpath d='M14 34h36M20 22h24M20 46h24' stroke='%23fff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20260617b">
+<link rel="stylesheet" href="styles.css?v=20260617c">
 </head>
 <body class="warden-page">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -34,9 +34,9 @@
 
 <header id="top" class="warden-hero shell g12">
   <div class="warden-hero-copy">
-    <p class="kicker">public leaves &middot; private core &middot; human review &middot; evidence handoff</p>
+    <p class="kicker">scope in &middot; receipts out &middot; confidential research &middot; human review</p>
     <h1>Keep AI work accountable<span class="grad">.</span></h1>
-    <p class="lead warden-lead">WARDEN is the accountability system I built around AI-assisted work because speed is not enough. The public surface is narrower than the private core: Sensorium live-state receipts, Agent Audit intent/action review, Release Assurance public gates, C++ reporting, anomaly scoring, analytics primitives, provenance/release CLIs, proof indexing, and EMET witness checks.</p>
+    <p class="lead warden-lead">WARDEN is a bidirectional provenance membrane for AI-assisted work in high-stakes authorized environments. Scope, approvals, evidence, and constraints flow inward so the model can see what kind of work it is being asked to perform; edits, actions, claims, and receipts flow outward so the operator and reviewer can hold the work accountable. The public surface is narrower than the private core: Sensorium live-state receipts, Agent Audit intent/action review, Release Assurance public gates, C++ reporting, anomaly scoring, analytics primitives, provenance/release CLIs, proof indexing, and EMET witness checks.</p>
     <div class="cta">
       <a class="btn solid" href="#accountability">See the workflow</a>
       <a class="btn" href="https://github.com/HarperZ9/warden-sensorium">Sensorium</a>
@@ -52,15 +52,16 @@
       <strong>Human-owned</strong>
     </div>
     <ol>
-      <li><span>01</span><strong>Sense live state</strong><em>observe files, git, claims, fixtures, and secret-shaped values</em></li>
-      <li><span>02</span><strong>State the claim</strong><em>write the thing being asserted</em></li>
-      <li><span>03</span><strong>Audit agent behavior</strong><em>compare intent, action ledger, scope policy, and claimed history</em></li>
-      <li><span>04</span><strong>Attach evidence</strong><em>link tests, samples, artifacts, or reports</em></li>
-      <li><span>05</span><strong>Check provenance</strong><em>validate source, model, or release records</em></li>
-      <li><span>06</span><strong>Gate the release</strong><em>check required files, secret-shaped text, hashes, and proof indexes</em></li>
-      <li><span>07</span><strong>Review anomalies</strong><em>separate drift from noise</em></li>
-      <li><span>08</span><strong>Write a handoff report</strong><em>make findings reviewable</em></li>
-      <li><span>09</span><strong>Keep human ownership visible</strong><em>keep decisions accountable</em></li>
+      <li><span>01</span><strong>Declare engagement scope</strong><em>name the work environment, domain, and authorized task</em></li>
+      <li><span>02</span><strong>Attach authority and constraints</strong><em>carry approvals, scope documents, evidence, and limits inward</em></li>
+      <li><span>03</span><strong>Sense live state</strong><em>observe files, git, claims, fixtures, and secret-shaped values</em></li>
+      <li><span>04</span><strong>Audit agent behavior</strong><em>compare intent, action ledger, scope policy, and claimed history</em></li>
+      <li><span>05</span><strong>Attach evidence</strong><em>link tests, samples, artifacts, or reports</em></li>
+      <li><span>06</span><strong>Check provenance</strong><em>validate source, model, or release records</em></li>
+      <li><span>07</span><strong>Gate exceptions</strong><em>check required files, scope labels, approvals, hashes, and proof indexes</em></li>
+      <li><span>08</span><strong>Review anomalies</strong><em>separate drift from noise</em></li>
+      <li><span>09</span><strong>Write a handoff report</strong><em>make findings reviewable</em></li>
+      <li><span>10</span><strong>Keep both sides accountable</strong><em>operator owns scope; model workflow owns recorded work</em></li>
     </ol>
   </aside>
   <div class="warden-stats">
@@ -79,25 +80,48 @@
       <span class="idx">01</span>
       <div class="role">Claim review</div>
       <h3>It makes claims answerable.</h3>
-      <p>The public tools turn a statement into something a reviewer can inspect: observed state, agent intent, action ledger, the claim, release-gate status, the evidence behind it, the source records, witness status, and the open gaps. That matters when AI output arrives faster than ordinary review habits can absorb.</p>
-      <div class="chips"><span class="chip">observations</span><span class="chip">intent</span><span class="chip">actions</span><span class="chip">claims</span><span class="chip">release gates</span><span class="chip">evidence</span></div>
+      <p>The public tools turn a statement into something a reviewer can inspect: observed state, engagement scope, authorization context, agent intent, action ledger, the claim, release-gate status, the evidence behind it, the source records, witness status, and the open gaps. That matters when AI output arrives faster than ordinary review habits can absorb.</p>
+      <div class="chips"><span class="chip">observations</span><span class="chip">scope</span><span class="chip">authorization context</span><span class="chip">intent</span><span class="chip">actions</span><span class="chip">evidence</span></div>
     </article>
     <article class="feat b glass sheen" data-glow>
       <span class="idx">02</span>
       <div class="role">Reviewer handoff</div>
       <h3>It turns agent output into a handoff.</h3>
-      <p>The public path moves from live-state sensing to agent behavior audit, surface inspection, release assurance, provenance checks, evidence indexing, anomaly review, and Markdown reporting. It creates a handoff record instead of asking people to trust memory, charisma, or a model transcript.</p>
-      <div class="chips"><span class="chip">sensorium</span><span class="chip">agent audit</span><span class="chip">release assurance</span><span class="chip">surface</span><span class="chip">provenance</span><span class="chip">report</span></div>
+      <p>The public path moves from scope declaration to live-state sensing, agent behavior audit, surface inspection, release assurance, provenance checks, evidence indexing, anomaly review, and Markdown reporting. It creates a handoff record instead of asking people to trust memory, charisma, or a model transcript.</p>
+      <div class="chips"><span class="chip">scope</span><span class="chip">sensorium</span><span class="chip">agent audit</span><span class="chip">release assurance</span><span class="chip">provenance</span><span class="chip">report</span></div>
     </article>
+  </div>
+</section>
+
+<section id="research-membrane" class="shell" aria-labelledby="research-membrane-heading">
+  <div class="sec-head"><p class="kicker">Confidential research membrane</p><h2 id="research-membrane-heading">Proof and permission belong at the work boundary.</h2></div>
+  <div class="feats g12">
+    <article class="feat a glass sheen" data-glow>
+      <span class="idx">01</span>
+      <div class="role">Scope into the model</div>
+      <h3>WARDEN carries the authorization context inward.</h3>
+      <p>For long-term red-team contracts, biological research, government-supervised defense or weapons-adjacent engineering, confidential product review, and sensitive internal R&amp;D, WARDEN acts as a programmatic assertion and provenance layer: engagement scope, approvals, constraints, source documents, and exception notes are made visible where the model is asked to work.</p>
+      <div class="chips"><span class="chip">engagement scope</span><span class="chip">approval record</span><span class="chip">constraints</span><span class="chip">exception notes</span></div>
+    </article>
+    <article class="feat b glass sheen" data-glow>
+      <span class="idx">02</span>
+      <div class="role">Receipts back to the operator</div>
+      <h3>WARDEN carries the work record outward.</h3>
+      <p>WARDEN does not grant authority by itself. It preserves the operator-owned proof, scope, and documentation, then records model edits, actions, claims, release gates, provenance checks, anomalies, and reviewer handoff notes so authorized work can be inspected after the fact.</p>
+      <div class="chips"><span class="chip">model edits</span><span class="chip">action ledger</span><span class="chip">provenance checks</span><span class="chip">review trail</span></div>
+    </article>
+  </div>
+  <div class="context-strip glass">
+    <p><strong>Public context:</strong> the <a href="https://openai.com/index/openai-frontier-governance-framework/">OpenAI Frontier Governance Framework</a> names cyber, CBRN, manipulation, loss-of-control, incident-response, and external-review concerns; the <a href="https://www.anthropic.com/news/responsible-scaling-policy-v3">Anthropic Responsible Scaling Policy</a> discusses catastrophic-risk governance, biological science capabilities, and automated R&amp;D; and Anthropic's June 12, 2026 statement says a U.S. export-control directive led it to disable <a href="https://www.anthropic.com/news/fable-mythos-access">Fable 5 and Mythos 5</a>. WARDEN is my architecture for the layer those events point toward: explicit scope, visible authorization context, accountable model work, and reviewable receipts.</p>
   </div>
 </section>
 
 <section id="lanes" class="shell" aria-labelledby="lanes-heading">
   <div class="sec-head"><p class="kicker">Public parts</p><h2 id="lanes-heading">The parts another person can inspect.</h2></div>
   <div class="warden-lanes">
-    <article class="lane glass"><span>01</span><h3>Live-state awareness</h3><p>Capture filesystem, git, claim, fixture, and secret-shape observations as provenance receipts.</p></article>
+    <article class="lane glass"><span>01</span><h3>Live-state awareness</h3><p>Capture filesystem, git, claim, fixture, scope, and secret-shape observations as provenance receipts.</p></article>
     <article class="lane glass"><span>02</span><h3>Release assurance</h3><p>Check required files, secret-shaped values, release notes, reports, hashes, and test signals before promotion.</p></article>
-    <article class="lane glass"><span>03</span><h3>Provenance</h3><p>Check model, release, and workflow records before they become public proof.</p></article>
+    <article class="lane glass"><span>03</span><h3>Provenance</h3><p>Check model, release, authorization, and workflow records before they become public proof.</p></article>
     <article class="lane glass"><span>04</span><h3>Reporting</h3><p>Generate C++/Python handoff reports without publishing private operations.</p></article>
     <article class="lane glass"><span>05</span><h3>Anomaly review</h3><p>Use statistical baselines, scoring, and correlation as public analytics leaves.</p></article>
     <article class="lane glass"><span>06</span><h3>Agent workflow</h3><p>Keep agent-assisted work tied to declared intent, scope policy, tests, artifacts, and human decisions that stay visible.</p></article>
@@ -109,7 +133,7 @@
     <div class="boundary-copy">
       <p class="kicker band-kicker">Public/private boundary</p>
       <h2 id="boundary-heading">Show the method. Protect the core.</h2>
-      <p>WARDEN has a larger private body of work. The public page shows the leaves that can be inspected and the human accountability pattern behind them. It does not publish private internals, credentials, client data, operational details, or sensitive workflows.</p>
+      <p>WARDEN has a larger private body of work. The public page shows the leaves that can be inspected and the human accountability pattern behind them. It does not publish private internals, credentials, client data, operational details, or sensitive workflows. It names the scope honestly because confidential work still needs provenance.</p>
     </div>
     <div class="boundary-panel glass">
       <div><span>Public surface</span><p>Repos, sample artifacts, release gates, evidence patterns, reports, and maturity labels.</p></div>
@@ -137,8 +161,8 @@
 
 <section class="shell warden-close" aria-labelledby="close-heading">
   <p class="kicker">Position</p>
-  <h2 id="close-heading">A way to keep speed from outrunning judgment.</h2>
-  <p>WARDEN is useful when AI-assisted work needs a review trail: live-state observations, agent intent, action ledgers, claims, release gates, evidence, provenance, anomalies, witness receipts, controlled exceptions, and human ownership in one line of sight. The public repos show pieces of that pattern; they do not ask the reader to accept the private core on faith.</p>
+  <h2 id="close-heading">A way to keep capability from outrunning authorization.</h2>
+  <p>WARDEN is useful when AI-assisted work needs a review trail: engagement scope, authorization context, live-state observations, agent intent, action ledgers, claims, release gates, evidence, provenance, anomalies, witness receipts, controlled exceptions, and human ownership in one line of sight. The public repos show pieces of that pattern; they do not ask the reader to accept the private core on faith.</p>
   <div class="cta">
     <a class="btn solid" href="mailto:zaindharper@gmail.com">Discuss WARDEN</a>
     <a class="btn" href="index.html">Back to portfolio</a>

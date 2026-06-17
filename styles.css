@@ -127,6 +127,9 @@ footer{padding:clamp(4rem,9vw,7rem) 0 clamp(3rem,6vw,5rem)}
 .accountability-loop li strong{font-family:var(--display); font-size:1rem; line-height:1.1}
 .accountability-loop li em{font-family:var(--body); font-style:normal; color:var(--ink-muted); font-size:.88rem; line-height:1.35}
 .warden-stats{grid-column:1/-1; display:grid; grid-template-columns:repeat(4,1fr); gap:.85rem; margin-top:.8rem}
+.context-strip{margin-top:.4rem; padding:1.1rem 1.25rem; max-width:980px}
+.context-strip p{color:var(--ink-muted); margin:0; font-size:.98rem; line-height:1.62}
+.context-strip strong{font-family:var(--mono); color:var(--orange-deep); font-size:.82rem; text-transform:uppercase}
 .warden-lanes{display:grid; grid-template-columns:repeat(3,1fr); gap:.85rem}
 .lane{padding:1.15rem; min-height:14rem}
 .lane span,.repo-pill span{font-family:var(--mono); font-size:.75rem; font-weight:700; color:var(--orange-deep)}
