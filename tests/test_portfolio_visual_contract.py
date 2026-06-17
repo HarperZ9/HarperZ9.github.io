@@ -153,9 +153,10 @@ def test_portfolio_accountability_architecture_section() -> None:
     assert "Identity &amp; scoped authority" in source
     assert "signed delegation" in source
     assert "Resource gates in-loop" in source
-    # Status badges
+    # Status badges — all seven architecture layers are now shipped
     assert "Shipped" in source
-    assert "In development" in source
+    assert "In development" not in source  # Identity (signed delegation) shipped; no layer left in-development
+    assert "delegation chain" in source  # the Identity layer cites the proof-surface delegation chain
     assert "proof-surface" in source  # shipped layers cite the proof-surface contract family
     # Why now line
     assert "NIST" in source
