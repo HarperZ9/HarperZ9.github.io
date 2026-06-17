@@ -205,4 +205,55 @@ footer{padding:clamp(4rem,9vw,7rem) 0 clamp(3rem,6vw,5rem)}
   .lane{min-height:auto}
   .boundary-copy h2,.warden-close h2{font-size:2.15rem}
 }
+/* ── Hero anchor (redesigned splash hero layout) ─────────────────────────── */
+.hero-anchor{grid-column:1/-1; display:flex; flex-direction:column; gap:1.1rem; margin-bottom:.4rem}
+.hero-anchor .hi{font-family:var(--mono); font-size:.92rem; color:var(--orange-deep); font-weight:500}
+.hero-anchor h1{font-size:3.5rem; max-width:20ch; margin:0; line-height:1.08}
+.hero-anchor .anchor-quote{font-family:var(--display); font-weight:700; font-size:1.35rem; color:var(--ink-muted); max-width:52ch; line-height:1.4; border-left:3px solid var(--orange-wash); padding-left:1.1rem; margin:.2rem 0 0}
+.hero-anchor .anchor-sub{color:var(--ink-muted); font-size:1.05rem; max-width:52ch; line-height:1.6}
+.reach-note{font-family:var(--mono); font-size:.84rem; color:var(--ink-faint); margin-top:.6rem}
+
+/* ── Outreach band ───────────────────────────────────────────────────────── */
+.outreach-band{background:linear-gradient(180deg, rgba(255,255,255,.82), rgba(220,233,255,.54), rgba(248,250,255,.76)); border-top:1px solid rgba(100,140,220,.18); border-bottom:1px solid rgba(100,140,220,.18); -webkit-backdrop-filter:saturate(130%) blur(10px); backdrop-filter:saturate(130%) blur(10px)}
+.outreach-band .shell{padding-top:clamp(3rem,6vw,5rem); padding-bottom:clamp(3rem,6vw,5rem)}
+.outreach-inner{display:grid; grid-template-columns:1fr 1fr 1fr; gap:clamp(1rem,2.4vw,2rem); margin-top:2rem}
+.outreach-card{padding:1.5rem; display:flex; flex-direction:column; gap:.75rem}
+.outreach-card .oc-label{font-family:var(--mono); font-size:.76rem; font-weight:700; color:var(--orange-deep); text-transform:uppercase}
+.outreach-card h3{font-size:1.35rem; margin:0}
+.outreach-card p{color:var(--ink-muted); font-size:.98rem; line-height:1.58; flex:1}
+.outreach-card .oc-cta{margin-top:.5rem}
+.outreach-note{margin-top:2rem; font-family:var(--mono); font-size:.86rem; color:var(--ink-faint); max-width:68ch}
+
+/* ── Story band ──────────────────────────────────────────────────────────── */
+.story-band{background:rgba(255,248,242,.72); border-top:1px solid rgba(168,95,45,.12); border-bottom:1px solid rgba(168,95,45,.12)}
+.story-band .shell{padding-top:clamp(2.5rem,5vw,4rem); padding-bottom:clamp(2.5rem,5vw,4rem); display:grid; grid-template-columns:1fr 1fr; gap:clamp(1.5rem,4vw,4rem); align-items:center}
+.story-left p{color:var(--ink-muted); font-size:1.08rem; line-height:1.68; max-width:52ch; margin-bottom:1rem}
+.story-left p:last-child{margin-bottom:0}
+.story-pull{font-family:var(--display); font-weight:700; font-size:2rem; color:var(--ink); line-height:1.2; max-width:16ch}
+.thesis-intro{grid-column:1/-1; max-width:72ch; color:var(--ink-muted); font-size:1.06rem; line-height:1.68; margin-top:.6rem}
+
+/* ── EMET page hero intro block ──────────────────────────────────────────── */
+.emet-intro-block{grid-column:1/-1; display:flex; flex-direction:column; gap:1rem; margin-bottom:.5rem}
+.emet-intro-block .hi{font-family:var(--mono); font-size:.9rem; color:var(--orange-deep); font-weight:500}
+.emet-intro-block h1{font-size:3.8rem; max-width:18ch; margin:0; line-height:1.07}
+.emet-intro-block .emet-why{font-size:1.15rem; color:var(--ink-muted); max-width:54ch; line-height:1.62}
+.emet-honest{font-family:var(--mono); font-size:.86rem; color:var(--ink-faint); max-width:56ch; line-height:1.55; border-left:2px solid var(--orange-wash); padding-left:.9rem; margin-top:.2rem}
+.try-note{font-family:var(--mono); font-size:.84rem; color:var(--ink-faint); margin-top:.6rem}
+.context-strip strong.friendly{font-family:var(--body); font-size:.98rem; font-weight:600; text-transform:none; color:var(--ink)}
+.emet-close-outreach{margin-top:2.2rem; padding:1.5rem; max-width:680px}
+.emet-close-outreach p{color:var(--ink-muted); font-size:1rem; line-height:1.62; margin-bottom:1rem}
+.emet-close-outreach p:last-of-type{margin-bottom:0}
+
+/* ── Responsive overrides for new components ─────────────────────────────── */
+@media(max-width:820px){
+  .outreach-inner{grid-template-columns:1fr}
+  .story-band .shell{grid-template-columns:1fr}
+  .story-pull{font-size:1.55rem}
+}
+@media(max-width:640px){
+  .hero-anchor h1{font-size:2.3rem}
+  .hero-anchor .anchor-quote{font-size:1.1rem}
+  .emet-intro-block h1{font-size:2.3rem}
+}
+
 @media(prefers-reduced-motion:reduce){*{transition:none!important; scroll-behavior:auto!important}.glass.sheen::before{display:none!important}}

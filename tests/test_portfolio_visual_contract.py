@@ -111,11 +111,12 @@ def test_nav_brand_is_clean_and_public_copy_has_no_mojibake() -> None:
 def test_portfolio_hero_accountability_framing() -> None:
     source = page_source()
 
-    assert "AI accountability engineering" in source
-    assert "Accountability is moving from documents to runtime evidence." in source
-    assert "As execution gets cheaper, the bottleneck becomes verification" in source
-    assert "proving who authorized what, which evidence backed which claim" in source
-    assert "I build the tools that produce that evidence, anchored on EMET, an external byte-witness." in source
+    # New hero copy — accountability framing via the redesigned hero-anchor layout
+    assert "I build tools that make AI-assisted work prove itself." in source
+    assert "I'm Zain" in source or "I’m Zain" in source or "Hi — I'm Zain." in source or "Hi &mdash; I'm Zain." in source
+    assert "check what it did" in source
+    assert "starting with EMET" in source
+    # Orientation panel content (unchanged)
     assert "At a glance" in source
     assert "What this site is" in source
     assert "A portfolio, consulting surface, and map of public engineering artifacts." in source
@@ -126,6 +127,12 @@ def test_portfolio_hero_accountability_framing() -> None:
     assert "Open EMET for the accountability spine" in source
     assert "Public work" in source
     assert "Contact" in source
+    # Outreach band presence and its three CTAs
+    assert "Three ways to work together" in source
+    assert "outreach-band" in source
+    assert "Freelance &amp; consulting" in source
+    assert "Open source" in source
+    assert "Research collaboration" in source
 
 
 def test_portfolio_accountability_architecture_section() -> None:
