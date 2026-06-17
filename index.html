@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20260617c">
+<link rel="stylesheet" href="styles.css?v=20260617d">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -134,8 +134,8 @@
       <span class="idx">01</span>
       <div class="role">Main public engineering artifact</div>
       <h3>QuantaLang makes the ambition concrete.</h3>
-      <p>The repo contains a Rust compiler, 836 tracked <code>.quanta</code> files, 93 Rust files, STATUS and TEST_RESULTS docs, quickstart commands, a C execution path, and shader output. It is not just a concept; it is something a reviewer can build and run.</p>
-      <div class="chips"><span class="chip">Rust compiler</span><span class="chip">C path</span><span class="chip">shader output</span><span class="chip">status docs</span></div>
+      <p>The repo contains a Rust compiler, 836 tracked <code>.quanta</code> files, 93 Rust files, STATUS and TEST_RESULTS docs, quickstart commands, a C execution path, shader output, and policy/receipt machinery. QuantaLang is the effects-language side of the same live-state thesis: today it has a verified C path, working HLSL/GLSL shader output, typed effect receipts, policy gates, and semantic-corpus checks; long term it points toward one source shape that can coordinate CPU and GPU outputs while WARDEN-style tooling inspects what the code touched and emitted.</p>
+      <div class="chips"><span class="chip">Rust compiler</span><span class="chip">C path</span><span class="chip">shader output</span><span class="chip">effect receipts</span><span class="chip">status docs</span></div>
     </article>
     <article class="feat b glass sheen" data-glow>
       <span class="idx">02</span>
@@ -168,7 +168,7 @@
         <tr>
           <td>Quanta and editor support</td>
           <td><a href="https://github.com/HarperZ9/quantalang">quantalang</a>, <a href="https://github.com/HarperZ9/quantalang-vscode">quantalang-vscode</a>, <a href="https://github.com/HarperZ9/quantalang-tmLanguage">quantalang-tmLanguage</a>, <a href="https://github.com/HarperZ9/quanta-universe">quanta-universe</a></td>
-          <td>QuantaLang is the heavy repo; editor packages are support surfaces; Quanta Universe is an alpha/showcase repo with a maturity ledger.</td>
+          <td>QuantaLang is the heavy repo: current compiler evidence plus a long-term live-state language substrate direction. Editor packages are support surfaces; Quanta Universe is an alpha/showcase repo with a maturity ledger.</td>
         </tr>
         <tr>
           <td>Graphics, color, and calibration</td>
@@ -213,7 +213,7 @@
     <article class="wrow glass">
       <div class="idx">03</div>
       <div class="wt"><h3>Compiler and language research</h3><div class="role">Concrete prototypes</div></div>
-      <div class="wd">A language-research lane with working artifacts, not just taste. The solid public path is lexer/parser/type checker/MIR to C, plus shader output and explicit backend limits.<div class="tags">QuantaLang &middot; Quanta Universe &middot; editor support &middot; C backend &middot; shader output</div></div>
+      <div class="wd">A language-research lane with working artifacts, not just taste. The solid public path is lexer/parser/type checker/MIR to C, plus shader output and explicit backend limits. Current progress: verified C execution, working shader-source output, policy/receipt checks, and SourceId-backed provenance. Aspiration: live-state-aware code that can declare machine boundaries, coordinate CPU/GPU surfaces, and give models and reviewers a ground-truth receipt instead of a remembered representation.<div class="tags">QuantaLang &middot; Quanta Universe &middot; editor support &middot; C backend &middot; shader output &middot; effects/provenance</div></div>
       <div class="lk"><a href="https://github.com/HarperZ9/quantalang">GitHub</a></div>
     </article>
     <article class="wrow glass">
@@ -253,8 +253,8 @@
       <span class="idx">02</span>
       <div class="role">Compilers &middot; Rust &middot; public, MIT</div>
       <h3>QuantaLang</h3>
-      <p>Rust compiler for <code>.quanta</code>: lexer, parser, type checker, MIR, C99 output, quickstart examples, corpus verification, and HLSL/GLSL shader output. Other backends are research surfaces.</p>
-      <div class="chips"><span class="chip">868 documented tests</span><span class="chip">C path</span><span class="chip">HLSL / GLSL output</span></div>
+      <p>Rust compiler for <code>.quanta</code>: lexer, parser, type checker, MIR, C99 output, quickstart examples, corpus verification, HLSL/GLSL shader output, and effects receipts. It is runnable today, and it is also the clearest language-side path toward live-state-aware CPU/GPU work.</p>
+      <div class="chips"><span class="chip">868 documented tests</span><span class="chip">C path</span><span class="chip">HLSL / GLSL output</span><span class="chip">effect receipts</span></div>
       <div class="tags">effects language &middot; C99 &middot; corpus/test evidence &middot; crates.io v1.0.0</div>
       <div class="links"><a href="https://harperz9.github.io/quantalang/">Landing page</a><a href="https://github.com/HarperZ9/quantalang">GitHub</a><a href="https://marketplace.visualstudio.com/items?itemName=HarperZ9.quantalang">VS Code Marketplace</a></div>
     </article>
@@ -320,7 +320,7 @@
 <section id="research" class="band"><div class="shell g12">
   <p class="kicker band-kicker">Research thesis</p>
   <p class="res-q">AI systems should keep receipts where humans can actually read them.</p>
-  <p class="res-b">That thesis shows up in <a href="https://github.com/HarperZ9/warden-sensorium">WARDEN Sensorium</a> for live-state receipts, <a href="https://github.com/HarperZ9/warden-agent-audit">WARDEN Agent Audit</a> for intent/action review, <a href="https://github.com/HarperZ9/warden-release-assurance">WARDEN Release Assurance</a> for public-release gates, and <a href="https://github.com/HarperZ9/emet">EMET</a> for source/view comparison. No trust verdict, no magic authority, just a bidirectional membrane where scope and proof travel inward and receipts travel back out.</p>
+  <p class="res-b">That thesis shows up in <a href="https://github.com/HarperZ9/warden-sensorium">WARDEN Sensorium</a> for live-state receipts, <a href="https://github.com/HarperZ9/warden-agent-audit">WARDEN Agent Audit</a> for intent/action review, <a href="https://github.com/HarperZ9/warden-release-assurance">WARDEN Release Assurance</a> for public-release gates, <a href="https://github.com/HarperZ9/quantalang">QuantaLang</a> for typed effects and CPU/GPU language research, and <a href="https://github.com/HarperZ9/emet">EMET</a> for source/view comparison. No trust verdict, no magic authority, just a bidirectional membrane where scope and proof travel inward and receipts travel back out.</p>
 </div></section>
 
 <section id="approach" class="shell approach" aria-labelledby="approach-heading">

@@ -117,6 +117,9 @@ def test_portfolio_explains_what_and_how_plainly() -> None:
     assert "Proof before public trust" in source
     assert "QuantaLang makes the ambition concrete." in source
     assert "836 tracked <code>.quanta</code> files" in source
+    assert "QuantaLang is the effects-language side of the same live-state thesis" in source
+    assert "today it has a verified C path, working HLSL/GLSL shader output, typed effect receipts, policy gates, and semantic-corpus checks" in source
+    assert "long term it points toward one source shape that can coordinate CPU and GPU outputs while WARDEN-style tooling inspects what the code touched and emitted" in source
     assert "the pattern is the same: turn messy work into something inspectable" in source
     assert "WARDEN Sensorium" in source
     assert "WARDEN Agent Audit" in source
@@ -187,6 +190,8 @@ def test_public_directions_are_outward_facing() -> None:
     assert "Agent workflow and orchestration" in source
     assert "Compliance and product infrastructure" in source
     assert "The solid public path is lexer/parser/type checker/MIR to C" in source
+    assert "Current progress: verified C execution, working shader-source output, policy/receipt checks, and SourceId-backed provenance." in source
+    assert "Aspiration: live-state-aware code that can declare machine boundaries, coordinate CPU/GPU surfaces, and give models and reviewers a ground-truth receipt instead of a remembered representation." in source
     assert "Private systems are portfolio context, not inspectable products here." in source
     assert "steering models without letting their output outrun verification" in source
     for inward_facing_phrase in [
@@ -201,6 +206,8 @@ def test_public_directions_are_outward_facing() -> None:
         "Marketable service lane",
         "deserves a page",
         "dedicated page",
+        "simultaneous CPU/GPU orchestration is production-ready",
+        "WARDEN-integrated CPU/GPU emission is complete",
     ]:
         assert inward_facing_phrase not in source
 
