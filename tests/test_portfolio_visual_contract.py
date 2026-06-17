@@ -107,7 +107,7 @@ def test_portfolio_explains_what_and_how_plainly() -> None:
 
     assert "Portfolio and consulting surface" in source
     assert "AI accountability engineering, backed by proof." in source
-    assert "This is Zain Dana Harper's public portfolio and consulting page." in source
+    assert "I am Zain Dana Harper. This is my public portfolio and consulting surface." in source
     assert "Start here if you are evaluating me for consulting, hiring, or research collaboration in AI safety, accountability, confidential research provenance, compiler research, or agent workflows." in source
     assert "At a glance" in source
     assert "What this site is" in source
@@ -155,6 +155,7 @@ def test_portfolio_explains_what_and_how_plainly() -> None:
         "conducting an orchestra",
         "I like ambitious systems",
         "I map what the surface claims",
+        "This is Zain Dana Harper's public portfolio and consulting page. I build",
         "Operational exploit detail",
         "a lot still to learn",
         "Working systems with receipts",
@@ -334,6 +335,8 @@ def test_warden_names_confidential_research_scope_and_public_context() -> None:
     assert "OpenAI Frontier Governance Framework" in source
     assert "Anthropic Responsible Scaling Policy" in source
     assert "Fable 5 and Mythos 5" in source
+    assert "WARDEN is the architecture this project is building toward" in source
+    assert "WARDEN is my architecture" not in source
     assert "https://openai.com/index/openai-frontier-governance-framework/" in source
     assert "https://www.anthropic.com/news/responsible-scaling-policy-v3" in source
     assert "https://www.anthropic.com/news/fable-mythos-access" in source
