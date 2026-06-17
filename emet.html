@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EMET - The External Byte-Witness for Agentic Work</title>
+<meta name="description" content="EMET is Zain Dana Harper's external byte-witness for AI-assisted work: it re-derives sha256 over source bytes and emits a closed MATCH/DRIFT/UNVERIFIABLE verdict lattice that structurally refuses any TRUSTED, APPROVED, or AUTHORIZED token at construction, writes a hash-chained tamper-evident log, and is re-derived across same-author Python, Rust, and Node.js conformance implementations.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%231d1d1f'/%3E%3Cpath d='M14 34h36M20 22h24M20 46h24' stroke='%23fff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20260617g">
+</head>
+<body class="warden-page">
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="bg"></div>
+<div class="grain"></div>
+<div class="bloom"></div>
+
+<nav aria-label="Primary">
+  <div class="nav-in">
+    <a class="brand" href="index.html">EMET</a>
+    <div class="nav-links">
+      <a href="#summary">Start here</a>
+      <a href="#witness">Byte-witness</a>
+      <a href="#lattice">Verdict lattice</a>
+      <a href="#refusal">Refusal</a>
+      <a href="#log">Tamper-evident log</a>
+      <a href="#conformance">Conformance</a>
+      <a href="#surface">Proof surface</a>
+      <a href="index.html">Portfolio</a>
+      <a href="mailto:zaindharper@gmail.com">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header id="top" class="warden-hero shell g12">
+  <div class="warden-hero-copy">
+    <p class="kicker">EMET launch</p>
+    <h1>An external byte-witness for agentic work.</h1>
+    <p class="lead warden-lead">EMET re-derives sha256 over source bytes and reports one of three deliberately limited verdicts: MATCH, DRIFT, or UNVERIFIABLE. Its only credential is re-derivation, never authority. There is no TRUSTED verdict, by construction.</p>
+    <div class="cta">
+      <a class="btn solid" href="#summary">Start with the summary</a>
+      <a class="btn" href="#witness">What a byte-witness is</a>
+      <a class="btn" href="#lattice">The verdict lattice</a>
+      <a class="btn" href="#conformance">Three-language conformance</a>
+    </div>
+  </div>
+  <aside id="summary" class="orientation glass warden-summary" aria-label="EMET plain-English summary">
+    <p class="orientation-label">Plain-English summary</p>
+    <ul>
+      <li><strong>What EMET is</strong><span>A small external witness that re-derives a hash over raw source bytes and compares it to what was anchored.</span></li>
+      <li><strong>Who it helps</strong><span>Teams whose models and agents act on bytes that need to be checked against the source they claim to represent.</span></li>
+      <li><strong>What it refuses</strong><span>It never emits a TRUSTED, APPROVED, or AUTHORIZED verdict. The lattice is closed and refuses authority tokens at construction.</span></li>
+    </ul>
+  </aside>
+  <div class="warden-stats">
+    <div class="stat glass" aria-label="Three verdicts in the closed lattice"><div class="n">3</div><div class="l">Closed verdicts</div></div>
+    <div class="stat glass" aria-label="Three same-author conformance implementations"><div class="n">3</div><div class="l">Conformance impls</div></div>
+    <div class="stat glass" aria-label="19 shared conformance vectors"><div class="n">19</div><div class="l">Conformance vectors</div></div>
+    <div class="stat glass" aria-label="Zero TRUSTED verdict"><div class="n">0</div><div class="l">TRUSTED verdicts</div></div>
+  </div>
+</header>
+
+<main id="main">
+<section id="witness" class="shell" aria-labelledby="witness-heading">
+  <div class="sec-head"><p class="kicker">Byte-witness</p><h2 id="witness-heading">What an external byte-witness is, and why agentic work needs one.</h2></div>
+  <div class="feats g12">
+    <article class="feat a glass sheen" data-glow>
+      <span class="idx">01</span>
+      <div class="role">External, not in-band</div>
+      <h3>It re-derives the hash itself.</h3>
+      <p>A model or agent acts on bytes: a file it edits, a prompt it is handed, a generated view it presents as faithful to source. EMET reads the raw bytes through <code>open('rb')</code>, never a mediated view, and re-computes the sha256 over those source bytes. The verdict comes from re-running the same code on the same bytes, not from a system vouching for itself. EMET runs outside whatever it audits.</p>
+      <div class="chips"><span class="chip">raw bytes</span><span class="chip">sha256</span><span class="chip">re-derivation</span><span class="chip">external</span></div>
+    </article>
+    <article class="feat b glass sheen" data-glow>
+      <span class="idx">02</span>
+      <div class="role">The gap it covers</div>
+      <h3>Build provenance does not catch drift.</h3>
+      <p>Build-provenance tooling does not cover a system vouching for itself in-band, a presented view drifting away from source, or a monitor reading a different file than the one that actually runs. Those are exactly the failures that grow as agents act faster than ordinary review can absorb. EMET is the small external check that the presented material still matches the source it claims to represent.</p>
+      <div class="chips"><span class="chip">self-vouching</span><span class="chip">view drift</span><span class="chip">read-path divergence</span><span class="chip">handoff</span></div>
+    </article>
+  </div>
+  <div class="context-strip glass">
+    <p><strong>Why it matters:</strong> EMET sits on the accountability seam. WARDEN carries authorized scope and constraints inward; EMET carries a verifiable, re-derivable work record outward. The witness does not decide whether a model is safe and grants no permission. It reports what was compared and what verdict was produced, so a reviewer, not the witness, owns the trust decision. <code>emet</code> is Hebrew for "truth."</p>
+  </div>
+</section>
+
+<section id="lattice" class="shell" aria-labelledby="lattice-heading">
+  <div class="sec-head"><p class="kicker">Verdict lattice</p><h2 id="lattice-heading">A closed lattice with no authority verdict.</h2></div>
+  <div class="warden-lanes">
+    <article class="lane glass"><span>MATCH</span><h3>Comparison holds</h3><p>The checked material re-derived to the expected byte-level result. Absence of DRIFT is MATCH or UNVERIFIABLE, never trust.</p></article>
+    <article class="lane glass"><span>DRIFT</span><h3>Bytes or view changed</h3><p>The presented view or the checked bytes no longer re-derive to what was anchored. Drift is reported as a fact, not adjudicated as a fault.</p></article>
+    <article class="lane glass"><span>UNVERIFIABLE</span><h3>Witness cannot compare</h3><p>There is no raw-byte channel, no anchor, or no second read path. EMET reports inability with a stable reason code; it never substitutes a default or crashes.</p></article>
+  </div>
+  <div class="context-strip glass">
+    <p><strong>Closed by construction:</strong> the primary integrity lattice is exactly <code>{MATCH, DRIFT, UNVERIFIABLE}</code>. Auxiliary channels (coherence, corroboration, the audit chain, the monitor and organs judgements) are each their own closed set, and none of them is or maps to TRUSTED. The spec declares the lattice closed; the code makes that closure structural rather than a matter of review.</p>
+  </div>
+</section>
+
+<section id="refusal" class="shell" aria-labelledby="refusal-heading">
+  <div class="sec-head"><p class="kicker">Structural refusal</p><h2 id="refusal-heading">governed() refuses authority tokens at construction.</h2></div>
+  <div class="feats g12">
+    <article class="feat a glass sheen" data-glow>
+      <span class="idx">01</span>
+      <div class="role">Construction-time guard</div>
+      <h3>An authority verdict is a hard error.</h3>
+      <p>Every governed verdict is emitted through <code>governed(channel, token)</code>. It asserts the token belongs to its channel's closed set and returns it verbatim, so the emitted bytes are unchanged. If a codepath tries to emit <code>TRUSTED</code>, <code>APPROVED</code>, <code>SAFE</code>, <code>ALLOWED</code>, <code>AUTHORIZED</code>, or any other forbidden authority word, it raises <code>VerdictError</code> at construction time, inside the trusted core, before a byte reaches stdout. An unsanctioned verdict is a construction error, not a review miss.</p>
+      <div class="chips"><span class="chip">governed()</span><span class="chip">frozenset channels</span><span class="chip">VerdictError</span><span class="chip">fail at construction</span></div>
+    </article>
+    <article class="feat b glass sheen" data-glow>
+      <span class="idx">02</span>
+      <div class="role">In-band claims refused</div>
+      <h3>It strips in-band authority claims.</h3>
+      <p>EMET also refuses authority claims embedded in the material it checks. The <code>refuse</code> command scans bytes against a versioned marker corpus, writes a clean copy with the in-band authority claims neutralized, and logs how many were found. The denylist is a set of known signatures, not a proof of completeness, and EMET says so: absence of a flag is not a guarantee of cleanliness.</p>
+      <div class="chips"><span class="chip">marker corpus</span><span class="chip">detect and strip</span><span class="chip">obeyed: none</span><span class="chip">honest denylist</span></div>
+    </article>
+  </div>
+  <div class="context-strip glass">
+    <p><strong>Accountability, not its opposite:</strong> refusing to emit authority and refusing to obey in-band authority claims are the structural inverse of a tool that hides intent or manufactures permission. EMET makes the comparison transparent and auditable; it never grants authorization and never bypasses a safeguard.</p>
+  </div>
+</section>
+
+<section id="log" class="band warden-boundary" aria-labelledby="log-heading">
+  <div class="shell g12">
+    <div class="boundary-copy">
+      <p class="kicker band-kicker">Tamper-evident log</p>
+      <h2 id="log-heading">Attestations chain by hash. Retroactive edits show.</h2>
+      <p>Each recorded fact (anchor, verify, coherence, refuse, corroborate) is appended to a log where every entry carries the hash of the entry before it: <code>chain = sha256(prev + kind + fact)</code>. The <code>audit</code> command recomputes the whole chain from a fixed genesis value and reports a single closed result: <code>INTACT</code> or <code>BROKEN</code>. A retroactive edit anywhere in the log breaks the chain at that point, and the audit names the first broken entry.</p>
+    </div>
+    <div class="boundary-panel glass">
+      <div><span>What chains</span><p>kind, fact, and the previous entry's chain hash, recomputed deterministically from source bytes.</p></div>
+      <div><span>What audit reports</span><p>A closed two-value result, INTACT or BROKEN, plus the entry index where the chain first breaks. No authority word appears in the result.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="conformance" class="shell" aria-labelledby="conformance-heading">
+  <div class="sec-head"><p class="kicker">Three-language conformance</p><h2 id="conformance-heading">Re-derived across three implementations, with the caveat stated plainly.</h2></div>
+  <div class="warden-lanes">
+    <article class="lane glass"><span>Python</span><h3>Reference</h3><p>A stdlib-only reference (<code>membrane.py</code> / <code>organs.py</code> / <code>monitor.py</code> / <code>corpus.py</code>), no dependencies.</p></article>
+    <article class="lane glass"><span>Rust</span><h3>Second impl</h3><p>A from-scratch Rust implementation, no crates, built from the spec text.</p></article>
+    <article class="lane glass"><span>Node.js</span><h3>Third impl</h3><p>A clean-room Node.js implementation using built-in modules only, no npm.</p></article>
+  </div>
+  <div class="context-strip glass">
+    <p><strong>Honest caveat:</strong> all three implementations pass the same 19 conformance vectors in CI on every push (byte-hash core, marker path, and the audit chain, write and verify). But all three share an author. That agreement shows the spec is <em>implementable</em> from its text alone, and the result is re-derivable in principle by a different author following the spec. It does <em>not</em> yet show <em>independent</em> different-author re-derivability. The spec names a different-author implementation as the open proof gate, and EMET makes that gap prominent rather than papering over it. For a tool whose only credential is reproduction, an inflated claim would refute itself.</p>
+  </div>
+</section>
+
+<section id="proof-surface" class="shell" aria-labelledby="proof-surface-heading">
+  <div class="sec-head"><p class="kicker">Proof surface</p><h2 id="proof-surface-heading">The proof surface builds outward from EMET.</h2></div>
+  <div class="feats g12">
+    <article class="feat a glass sheen" data-glow>
+      <span class="idx">01</span>
+      <div class="role">Witness receipt</div>
+      <h3>EMET emits a compact witness receipt.</h3>
+      <p>An optional adapter outside the EMET core emits compact JSON witness receipts for proof-index and release-readiness workflows. It does not change governed stdout, signing, enforcement, or actuation boundaries. The adapter only accepts whole governed verdict tokens and refuses authority-shaped stdout before it enters a receipt, mirroring the same closed-lattice discipline as the core.</p>
+      <div class="chips"><span class="chip">witness receipt</span><span class="chip">governed tokens only</span><span class="chip">outside the core</span></div>
+    </article>
+    <article class="feat b glass sheen" data-glow>
+      <span class="idx">02</span>
+      <div class="role">Shared contract family</div>
+      <h3>proof-surface mirrors the witness.</h3>
+      <p>proof-surface is a stdlib-only contract family: a proof-surface packet, a hard-pinned work-record receipt that is the structural inverse of an authorization-suppression prefire, and a witness-receipt validator that mirrors EMET's discipline. It is covered by 21 tests. From there, proof-surface-report adapts packets and receipts to reviewer Markdown and rejects authority-shaped language, and repo-proof-index aggregates packets and receipts into a reviewer-ready index.</p>
+      <div class="chips"><span class="chip">proof-surface packet</span><span class="chip">work-record receipt</span><span class="chip">21 tests</span><span class="chip">reviewer Markdown</span></div>
+    </article>
+  </div>
+  <div class="context-strip glass">
+    <p><strong>Bilateral provenance:</strong> trusted context is carried inward toward the model; a verifiable, re-derivable work record is carried outward toward the reviewer. EMET is the witness anchor of that outward record. The work-record receipt is a development work record, not a shipped customer-facing trust artifact, and the proof surface presents it as such.</p>
+  </div>
+</section>
+
+<section id="surface" class="shell" aria-labelledby="surface-heading">
+  <div class="sec-head"><p class="kicker">Repository surface</p><h2 id="surface-heading">The inspectable edge of EMET and its proof surface.</h2></div>
+  <div class="repo-grid">
+    <a class="repo-pill glass" href="https://github.com/HarperZ9/emet"><span>Witness</span><strong>emet</strong><em>external byte-witness, closed verdict lattice, hash-chained log</em></a>
+    <a class="repo-pill glass" href="https://github.com/HarperZ9/proof-surface"><span>Contract</span><strong>proof-surface</strong><em>packet, work-record receipt, witness-receipt validator</em></a>
+    <a class="repo-pill glass" href="https://github.com/HarperZ9/proof-surface-report"><span>Report</span><strong>proof-surface-report</strong><em>reviewer-Markdown adapter; rejects authority language</em></a>
+    <a class="repo-pill glass" href="https://github.com/HarperZ9/repo-proof-index"><span>Index</span><strong>repo-proof-index</strong><em>aggregator over proof packets and receipts</em></a>
+    <a class="repo-pill glass" href="https://github.com/HarperZ9/model-provenance-validator"><span>Provenance</span><strong>model-provenance-validator</strong><em>provenance-envelope validator with secret redaction</em></a>
+    <a class="repo-pill glass" href="https://github.com/HarperZ9/public-surface-sweeper"><span>Hygiene</span><strong>public-surface-sweeper</strong><em>pre-release repo-hygiene scanner</em></a>
+  </div>
+</section>
+
+<section class="shell warden-close" aria-labelledby="close-heading">
+  <p class="kicker">Position</p>
+  <h2 id="close-heading">A witness is not an authority.</h2>
+  <p>EMET is the accountability spine for AI-assisted work: re-derive the hash over source bytes, emit a closed MATCH/DRIFT/UNVERIFIABLE verdict, refuse every authority token at construction, and chain each fact into a tamper-evident log. It is re-derivable in principle from the spec alone, demonstrated today across three same-author implementations; an independent different-author implementation is the named next step. The public repo shows the method in full; it does not ask the reader to accept anything on faith.</p>
+  <div class="cta">
+    <a class="btn solid" href="mailto:zaindharper@gmail.com">Discuss EMET</a>
+    <a class="btn" href="index.html">Back to portfolio</a>
+  </div>
+</section>
+</main>
+
+<footer class="shell">
+  <div class="foot-big">Same bytes, same answer.</div>
+  <div class="foot-cta">
+    <a class="btn solid" href="index.html">Zain Dana Harper</a>
+    <a class="btn" href="https://github.com/HarperZ9/emet">github.com/HarperZ9/emet</a>
+  </div>
+  <p class="muted">Static public page. External byte-witness. No TRUSTED verdict, by construction.</p>
+</footer>
+
+<script>
+  (function(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if(!window.matchMedia('(pointer:fine)').matches) return;
+    document.querySelectorAll('.glass.sheen').forEach(function(c){
+      c.addEventListener('pointermove', function(e){
+        var r=c.getBoundingClientRect();
+        c.style.setProperty('--mx',(e.clientX-r.left)+'px');
+        c.style.setProperty('--my',(e.clientY-r.top)+'px');
+      },{passive:true});
+    });
+  })();
+</script>
+</body>
+</html>

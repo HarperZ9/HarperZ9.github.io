@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
 STYLES = ROOT / "styles.css"
 WARDEN = ROOT / "warden.html"
+EMET = ROOT / "emet.html"
 SAMPLE_PAGES = [
     ROOT / "proof-surface-sample.html",
     ROOT / "proof-index-sample.html",
@@ -29,8 +30,13 @@ def warden_source() -> str:
     return WARDEN.read_text(encoding="utf-8") + "\n" + STYLES.read_text(encoding="utf-8")
 
 
+def emet_source() -> str:
+    assert EMET.exists(), "emet.html must exist"
+    return EMET.read_text(encoding="utf-8")
+
+
 def public_html_sources() -> str:
-    paths = [INDEX, WARDEN, *SAMPLE_PAGES]
+    paths = [INDEX, WARDEN, EMET, *SAMPLE_PAGES]
     return "\n".join(path.read_text(encoding="utf-8") for path in paths)
 
 
@@ -86,7 +92,7 @@ def test_accessible_navigation_and_page_landmarks() -> None:
     assert ".skip-link:focus,.skip-link:focus-visible" in source
     assert '<nav aria-label="Primary">' in source
     assert '<main id="main">' in source
-    assert 'aria-label="37 public GitHub repositories verified via GitHub"' in source
+    assert 'aria-label="34 public GitHub repositories verified via GitHub"' in source
     assert 'aria-label="868 documented compiler tests"' in source
     assert 'aria-label="19 EMET conformance vectors"' in source
     assert "scroll-margin-top:5rem" in source
@@ -102,50 +108,73 @@ def test_nav_brand_is_clean_and_public_copy_has_no_mojibake() -> None:
     assert "&middot;" in source
 
 
-def test_portfolio_explains_what_and_how_plainly() -> None:
+def test_portfolio_hero_accountability_framing() -> None:
     source = page_source()
 
-    assert "Portfolio and consulting surface" in source
-    assert "AI accountability engineering, backed by proof." in source
-    assert "I am Zain Dana Harper. This is my public portfolio and consulting surface." in source
-    assert "Start here if you are evaluating me for consulting, hiring, or research collaboration in AI safety, accountability, confidential research provenance, compiler research, or agent workflows." in source
+    assert "AI accountability engineering" in source
+    assert "Accountability is moving from documents to runtime evidence." in source
+    assert "As execution gets cheaper, the bottleneck becomes verification" in source
+    assert "proving who authorized what, which evidence backed which claim" in source
+    assert "I build the tools that produce that evidence, anchored on EMET, an external byte-witness." in source
     assert "At a glance" in source
     assert "What this site is" in source
     assert "A portfolio, consulting surface, and map of public engineering artifacts." in source
     assert "Best fit" in source
-    assert "Teams evaluating AI-assisted work, confidential research workflows, compiler research, or agent tooling." in source
+    assert "bilateral provenance" in source
+    assert "live-state organs" in source
     assert "Where to go next" in source
-    assert "Open WARDEN for the accountability architecture, QuantaLang for the compiler, or the lineup for the repo map." in source
+    assert "Open EMET for the accountability spine" in source
     assert "Public work" in source
     assert "Contact" in source
-    assert "confidential research provenance" in source
+
+
+def test_portfolio_accountability_architecture_section() -> None:
+    source = page_source()
+
+    assert "Accountability architecture" in source
+    assert "Seven layers the newest agentic-accountability research converges on." in source
+    assert "a tool whose pitch is verifiability cannot overclaim its own stack" in source
+    # Layer names
+    assert "Reviewability artifacts" in source
+    assert "Cryptographic attestation" in source
+    assert "in-toto / SLSA / Sigstore lineage" in source
+    assert "Bilateral provenance" in source
+    assert "Live-state verification" in source
+    assert "Evaluation as a contract" in source
+    assert "Traceable memory" in source
+    assert "calibrated uncertainty" in source
+    assert "Identity &amp; scoped authority" in source
+    assert "signed delegation" in source
+    assert "Resource gates in-loop" in source
+    # Status badges
+    assert "Shipped" in source
+    assert "In development" in source
+    assert "Partial" in source
+    # Why now line
+    assert "NIST" in source
+    assert "in-toto/SLSA/SPIFFE" in source
+    assert "C2PA" in source
+    assert "Auditable Agents" in source
+    assert "ProvenanceGuard" in source
+    assert "Green SARC" in source
+
+
+def test_portfolio_consulting_lanes_present() -> None:
+    source = page_source()
+
     assert "AI accountability and release review" in source
     assert "Turn ambitious claims into reviewable evidence." in source
-    assert "Programmatic exception layers" in source
-    assert "live-state receipts, agent-intent review, release gates" in source
+    assert "Bilateral provenance layers" in source
     assert "high-stakes authorized research environments" in source
     assert "long-term red-team work, biological research, government-supervised defense or weapons-adjacent engineering" in source
     assert "Proof before public trust" in source
     assert "QuantaLang makes the ambition concrete." in source
     assert "836 tracked <code>.quanta</code> files" in source
     assert "QuantaLang is the effects-language side of the same live-state thesis" in source
-    assert "today it has a verified C path, working HLSL/GLSL shader output, typed effect receipts, policy gates, and semantic-corpus checks" in source
-    assert "long term it points toward one source shape that can coordinate CPU and GPU outputs while WARDEN-style tooling inspects what the code touched and emitted" in source
     assert "Safety, transparency, and creativity should evolve on the same surface." in source
     assert "The same gap that makes AI dangerous also makes it feel limited: models infer state from assertions, memory, and context instead of sensing the world natively." in source
-    assert "programmatic sensory organs, effects, receipts, and membrane layers where people and machines can make work inspectable" in source
+    assert "bilateral provenance, programmatic live-state organs, byte-level witnesses" in source
     assert "the pattern is the same: turn messy work into something inspectable" in source
-    assert "WARDEN Sensorium" in source
-    assert "WARDEN Agent Audit" in source
-    assert "WARDEN Release Assurance" in source
-    for lane in [
-        "AI accountability",
-        "compilers",
-        "agent workflows",
-        "graphics",
-        "public proof",
-    ]:
-        assert lane in source
     for stale_phrase in [
         "Current paid wedge",
         "behind the wedge",
@@ -180,13 +209,15 @@ def test_public_lineup_table_is_present() -> None:
     assert 'id="lineup"' in source
     assert "Public lineup" in source
     assert "Developer workflow utilities" in source
-    assert "Proof, provenance, and AI safety" in source
-    assert "warden-sensorium" in source
-    assert "warden-agent-audit" in source
-    assert "warden-release-assurance" in source
+    assert "Accountability and bilateral provenance" in source
+    assert "Signal and anomaly kernels" in source
+    assert "provenance-sensorium" in source
+    assert "agent-audit" in source
+    assert "release-surface-scanner" in source
+    assert "signal-kernels" in source
+    assert "anomaly-kernels" in source
     assert "Quanta and editor support" in source
     assert "Graphics, color, and calibration" in source
-    assert "WARDEN public packages" in source
     assert "QuantaLang is the heavy repo" in source
     assert "The private core is not published." in source
 
@@ -196,16 +227,14 @@ def test_public_directions_are_outward_facing() -> None:
 
     assert 'id="directions"' in source
     assert "Where this work can be useful" in source
-    assert "AI safety and accountability" in source
+    assert "AI accountability and bilateral provenance" in source
     assert "Compiler and language research" in source
-    assert "The tools check live state, agent actions, release gates, claims, authorization context, provenance, witness state, proof packets, and handoff reports." in source
     assert "Confidential and government-supervised research" in source
     assert "Long-running red-team contracts, biological research programs, defense or weapons-adjacent engineering, and sensitive internal R&amp;D need a membrane that can show what scope was authorized before the work and what the model or workflow actually did afterward." in source
-    assert "Graphics and color" in source
+    assert "Signal, anomaly, and color" in source
     assert "Agent workflow and orchestration" in source
     assert "Compliance and product infrastructure" in source
     assert "The solid public path is lexer/parser/type checker/MIR to C" in source
-    assert "Current progress: verified C execution, working shader-source output, policy/receipt checks, and SourceId-backed provenance." in source
     assert "Aspiration: live-state-aware code that can declare machine boundaries, coordinate CPU/GPU surfaces, and give models and reviewers a ground-truth receipt instead of a remembered representation." in source
     assert "Private systems are portfolio context, not inspectable products here." in source
     assert "steering models without letting their output outrun verification" in source
@@ -364,12 +393,11 @@ def test_warden_links_public_accountability_repos() -> None:
     source = warden_source()
 
     for repo in [
-        "https://github.com/HarperZ9/warden-sensorium",
-        "https://github.com/HarperZ9/warden-agent-audit",
-        "https://github.com/HarperZ9/warden-release-assurance",
-        "https://github.com/HarperZ9/warden-reporting",
-        "https://github.com/HarperZ9/warden-algorithms",
-        "https://github.com/HarperZ9/warden-anomaly",
+        "https://github.com/HarperZ9/provenance-sensorium",
+        "https://github.com/HarperZ9/agent-audit",
+        "https://github.com/HarperZ9/release-surface-scanner",
+        "https://github.com/HarperZ9/signal-kernels",
+        "https://github.com/HarperZ9/anomaly-kernels",
         "https://github.com/HarperZ9/public-surface-sweeper",
         "https://github.com/HarperZ9/model-provenance-validator",
         "https://github.com/HarperZ9/repo-proof-index",
@@ -378,13 +406,70 @@ def test_warden_links_public_accountability_repos() -> None:
     ]:
         assert f'href="{repo}"' in source
 
+    # Excluded repos must not appear
+    for excluded_repo in [
+        "warden-reporting",
+        "warden-algorithms",
+        "warden-anomaly",
+        "warden-sensorium",
+        "warden-agent-audit",
+        "warden-release-assurance",
+    ]:
+        assert f"HarperZ9/{excluded_repo}" not in source
 
-def test_portfolio_links_to_warden_flagship() -> None:
+
+def test_portfolio_links_to_emet_page() -> None:
     source = index_source()
 
-    assert 'href="warden.html"' in source
-    assert "WARDEN overview" in source
-    assert "WARDEN page" in source
+    assert 'href="emet.html"' in source
+    assert "EMET launch page" in source
+    # No links to old emet-sample in nav or CTA
+    assert '<a href="emet-sample.html">EMET</a>' not in source
+
+
+def test_emet_page_exists_and_has_key_content() -> None:
+    source = emet_source()
+
+    assert "external byte-witness" in source
+    assert "MATCH" in source
+    assert "DRIFT" in source
+    assert "UNVERIFIABLE" in source
+    assert "by construction" in source
+    assert "EMET launch" in source
+    assert "An external byte-witness for agentic work." in source
+    assert "There is no TRUSTED verdict, by construction." in source
+    assert "Three same-author implementations" in source or "three same-author" in source.lower()
+    # Honest same-author caveat must be present
+    assert "same-author" in source
+    assert "independent" in source
+
+
+def test_emet_page_no_excluded_repos() -> None:
+    source = emet_source()
+
+    for excluded in [
+        "warden-reporting",
+        "ai-safety-prefire",
+        "ai-safety-guardrail-manager",
+        "CL4R1T4S-CR0SS0VER",
+        "safe-io-lite",
+        "agent-template-pack",
+    ]:
+        assert excluded not in source
+
+
+def test_index_no_excluded_repos() -> None:
+    source = index_source()
+
+    for excluded in [
+        "warden-reporting",
+        "ai-safety-prefire",
+        "ai-safety-guardrail-manager",
+        "CL4R1T4S-CR0SS0VER",
+        "safe-io-lite",
+        "agent-template-pack",
+    ]:
+        assert excluded not in source
 
 
 def test_sample_pages_explain_immediate_user_value_and_limits() -> None:
