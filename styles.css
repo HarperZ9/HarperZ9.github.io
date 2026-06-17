@@ -49,7 +49,7 @@ nav{position:sticky; top:0; z-index:100; background:rgba(255,255,255,.72); -webk
 .hero .kicker{grid-column:1/-1}
 .hero h1{grid-column:1/12; font-size:4.95rem; max-width:10.8ch; margin:.2rem 0 .2rem}
 .hero h1 .grad{background:linear-gradient(92deg,#17181c 0%,#714226 48%,#b86a3d 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent}
-.lead-wrap{grid-column:1/7; padding:1.25rem; align-self:start}
+.lead-wrap{grid-column:1/8; padding:1.25rem; align-self:start}
 .lead{font-size:1.22rem; color:var(--ink-muted); max-width:54ch}
 .cta{display:flex; flex-wrap:wrap; gap:.55rem; margin-top:1.2rem}
 .stats{grid-column:8/13; display:grid; grid-template-columns:1fr 1fr; gap:.85rem; margin-top:.2rem}
@@ -168,9 +168,9 @@ footer{padding:clamp(4rem,9vw,7rem) 0 clamp(3rem,6vw,5rem)}
   .lead-wrap{padding:.9rem}
   .lead{font-size:1.05rem}
   .stats{grid-template-columns:repeat(2,1fr); gap:.55rem}
-  .stat{padding:.72rem}
-  .stat .n{font-size:1.55rem}
-  .stat .l{font-size:.64rem}
+  .stat{padding:.58rem .55rem}
+  .stat .n{font-size:1.35rem}
+  .stat .l{font-size:.58rem; line-height:1.25}
   .cta{display:grid; grid-template-columns:1fr 1fr; gap:.5rem}
   .btn{font-size:.82rem; padding:.58rem .5rem; text-align:center}
   .sec-head h2{font-size:2.25rem}
@@ -181,7 +181,10 @@ footer{padding:clamp(4rem,9vw,7rem) 0 clamp(3rem,6vw,5rem)}
   .warden-hero{padding-top:1.35rem}
   .warden-hero h1{font-size:2.36rem}
   .accountability-loop{padding:.85rem}
+  .accountability-loop ol{display:none}
+  .accountability-loop .loop-head{border-bottom:0; padding:.15rem .1rem}
   .accountability-loop li{grid-template-columns:1.8rem 1fr; padding:.62rem}
+  .warden-stats{display:none}
   .warden-stats,.warden-lanes,.repo-grid{grid-template-columns:1fr}
   .lane{min-height:auto}
   .boundary-copy h2,.warden-close h2{font-size:2.15rem}

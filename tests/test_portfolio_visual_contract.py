@@ -73,7 +73,7 @@ def test_live_frontend_surfaces_are_listed() -> None:
     assert "Harper Compliance" in source
     assert "https://harperadvocates.com" in source
     assert "https://harpercompliance.llc" in source
-    assert "Live frontend surfaces" in source
+    assert "Live service surfaces" in source
     assert "private GitHub repos" in source
 
 
@@ -105,26 +105,25 @@ def test_nav_brand_is_clean_and_public_copy_has_no_mojibake() -> None:
 def test_portfolio_explains_what_and_how_plainly() -> None:
     source = page_source()
 
-    assert "Code first. Claims second" in source
-    assert "The strongest public evidence is a Rust compiler with a C execution path" in source
-    assert "WARDEN Sensorium for live-state receipts" in source
-    assert "WARDEN Agent Audit for intent/action review" in source
-    assert "WARDEN Release Assurance for public-release gates" in source
-    assert "this page starts with what can be opened, built, and checked" in source
-    assert "Public release review means checking whether a repo, page, demo, or tool makes claims it can support." in source
-    assert "inspect a public surface, check source and provenance, collect evidence, write a report, and preserve a review trail" in source
-    assert "Start with what is built" in source
-    assert "QuantaLang is the main engineering artifact." in source
+    assert "Make hard claims answerable" in source
+    assert "turning ambiguous AI-era work into inspectable tools, tests, reports, and interfaces" in source
+    assert "AI accountability and release review" in source
+    assert "Turn ambitious claims into reviewable evidence." in source
+    assert "Programmatic exception layers" in source
+    assert "live-state receipts, agent-intent review, release gates" in source
+    assert "Proof before public trust" in source
+    assert "QuantaLang makes the ambition concrete." in source
     assert "836 tracked <code>.quanta</code> files" in source
-    assert "Most utilities are narrow on purpose." in source
-    assert "Their value is reviewability, not size." in source
+    assert "the pattern is the same: turn messy work into something inspectable" in source
+    assert "WARDEN Sensorium" in source
+    assert "WARDEN Agent Audit" in source
+    assert "WARDEN Release Assurance" in source
     for lane in [
-        "compiler work",
-        "proof and review tools",
-        "release assurance",
-        "color systems",
-        "agent utilities",
-        "private platforms",
+        "AI accountability",
+        "compilers",
+        "agent orchestration",
+        "graphics/color",
+        "public proof",
     ]:
         assert lane in source
     for stale_phrase in [
@@ -141,6 +140,10 @@ def test_portfolio_explains_what_and_how_plainly() -> None:
         "Working systems with receipts",
         "Public claims, backed by evidence",
         "Immediate value as of June 15, 2026",
+        "Code first. Claims second",
+        "Start with what is built",
+        "QuantaLang is the main engineering artifact.",
+        "Most utilities are narrow on purpose.",
         "Who uses it:",
         "What it does not claim:",
         "What you can judge today",
@@ -171,15 +174,16 @@ def test_public_directions_are_outward_facing() -> None:
     source = page_source()
 
     assert 'id="directions"' in source
-    assert "Where the work points" in source
-    assert "Evidence systems" in source
+    assert "Where this work can be useful" in source
+    assert "AI safety and accountability" in source
+    assert "Compiler and language research" in source
     assert "The tools check live state, agent actions, release gates, claims, provenance, witness state, proof packets, and handoff reports." in source
-    assert "Quanta research" in source
     assert "Graphics and color" in source
-    assert "Agent workflow" in source
-    assert "Private platforms" in source
+    assert "Agent workflow and orchestration" in source
+    assert "Compliance and product infrastructure" in source
     assert "The solid public path is lexer/parser/type checker/MIR to C" in source
     assert "Private systems are portfolio context, not inspectable products here." in source
+    assert "steering models without letting their output outrun verification" in source
     for inward_facing_phrase in [
         "Splash",
         "front door next",
@@ -234,11 +238,11 @@ def test_glass_material_is_more_pronounced() -> None:
 def test_warden_flagship_page_exists_and_has_thesis() -> None:
     source = warden_source()
 
-    assert "A review layer for AI-assisted work" in source
-    assert "WARDEN is the private accountability system behind the public proof and review tools." in source
-    assert "The inspectable surface is narrower: Sensorium live-state receipts, Agent Audit intent/action review, Release Assurance public gates, C++ reporting, anomaly scoring, analytics primitives, provenance/release CLIs, proof indexing, and EMET witness checks." in source
-    assert "What the public surface shows" in source
-    assert "Public leaves, private core, one theme." in source
+    assert "Keep AI work accountable" in source
+    assert "WARDEN is the accountability system I built around AI-assisted work because speed is not enough." in source
+    assert "The public surface is narrower than the private core: Sensorium live-state receipts, Agent Audit intent/action review, Release Assurance public gates, C++ reporting, anomaly scoring, analytics primitives, provenance/release CLIs, proof indexing, and EMET witness checks." in source
+    assert "What the public surface is trying to make visible" in source
+    assert "A way to keep speed from outrunning judgment." in source
     assert "they do not ask the reader to accept the private core on faith" in source
     for loop_step in [
         "Sense live state",
@@ -252,7 +256,7 @@ def test_warden_flagship_page_exists_and_has_thesis() -> None:
         "Keep human ownership visible",
     ]:
         assert loop_step in source
-    assert "The public parts of the system" in source
+    assert "The parts another person can inspect" in source
     assert '<body class="warden-page">' in source
     assert "font-size:clamp" not in source
     assert "letter-spacing:-" not in source
@@ -264,7 +268,7 @@ def test_warden_public_private_boundary_is_explicit() -> None:
     assert "Public surface" in source
     assert "Private core" in source
     assert (
-        "The public page shows the leaves that can be inspected. It does not publish private internals, credentials, client data, operational details, or sensitive workflows."
+        "The public page shows the leaves that can be inspected and the human accountability pattern behind them. It does not publish private internals, credentials, client data, operational details, or sensitive workflows."
         in source
     )
     positive_overclaim_patterns = [
