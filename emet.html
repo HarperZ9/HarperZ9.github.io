@@ -3,15 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EMET - The External Byte-Witness for Agentic Work</title>
-<meta name="description" content="EMET is Zain Dana Harper's external byte-witness for AI-assisted work: it re-derives sha256 over source bytes and emits a closed MATCH/DRIFT/UNVERIFIABLE verdict lattice that structurally refuses any TRUSTED, APPROVED, or AUTHORIZED token at construction, writes a hash-chained tamper-evident log, and is re-derived across same-author Python, Rust, and Node.js conformance implementations.">
+<title>EMET - An external byte-witness for AI-assisted work</title>
+<meta name="description" content="EMET is a small, open-source, tested tool that re-derives sha256 over source bytes and reports MATCH, DRIFT, or UNVERIFIABLE. No TRUSTED verdict, by construction. Written by Zain Dana Harper in Seattle.">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%231d1d1f'/%3E%3Cpath d='M14 34h36M20 22h24M20 46h24' stroke='%23fff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20260617g">
-</head>
+<link rel="stylesheet" href="styles.css?v=20260617i"></head>
 <body class="warden-page">
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="bg"></div>
@@ -22,7 +21,7 @@
   <div class="nav-in">
     <a class="brand" href="index.html">EMET</a>
     <div class="nav-links">
-      <a href="#summary">Start here</a>
+      <a href="#what-it-is">What it is</a>
       <a href="#witness">Byte-witness</a>
       <a href="#lattice">Verdict lattice</a>
       <a href="#refusal">Refusal</a>
@@ -36,17 +35,20 @@
 </nav>
 
 <header id="top" class="warden-hero shell g12">
-  <div class="warden-hero-copy">
-    <p class="kicker">EMET launch</p>
-    <h1>An external byte-witness for agentic work.</h1>
-    <p class="lead warden-lead">EMET re-derives sha256 over source bytes and reports one of three deliberately limited verdicts: MATCH, DRIFT, or UNVERIFIABLE. Its only credential is re-derivation, never authority. There is no TRUSTED verdict, by construction.</p>
+  <div class="emet-intro-block">
+    <p class="hi">EMET &mdash; the external byte-witness</p>
+    <h1>If an agent touched it, you should be able to check what it did.</h1>
+    <p class="emet-why">EMET re-derives sha256 over source bytes and reports one of three verdicts: <code>MATCH</code>, <code>DRIFT</code>, or <code>UNVERIFIABLE</code>. There is no <code>TRUSTED</code> verdict, by construction. It runs outside whatever it audits, uses raw bytes, and never vouches for anything on behalf of the system it is checking.</p>
+    <p class="emet-honest">Honest caveat: all three implementations (Python, Rust, Node.js) share an author. That means the spec is implementable and the result is re-derivable from the text alone &mdash; but independent different-author re-derivability is the named next step, not yet done. I'd rather state the limit plainly than paper over it.</p>
     <div class="cta">
-      <a class="btn solid" href="#summary">Start with the summary</a>
-      <a class="btn" href="#witness">What a byte-witness is</a>
-      <a class="btn" href="#lattice">The verdict lattice</a>
+      <a class="btn solid" href="https://github.com/HarperZ9/emet">Try EMET on GitHub</a>
+      <a class="btn" href="#what-it-is">What it does</a>
       <a class="btn" href="#conformance">Three-language conformance</a>
+      <a class="btn" href="mailto:zaindharper@gmail.com">Discuss EMET</a>
     </div>
+    <p class="try-note">Open source, tested, stdlib-only. Clone it, run it on real work, open an issue if something doesn't hold.</p>
   </div>
+
   <aside id="summary" class="orientation glass warden-summary" aria-label="EMET plain-English summary">
     <p class="orientation-label">Plain-English summary</p>
     <ul>
@@ -55,6 +57,7 @@
       <li><strong>What it refuses</strong><span>It never emits a TRUSTED, APPROVED, or AUTHORIZED verdict. The lattice is closed and refuses authority tokens at construction.</span></li>
     </ul>
   </aside>
+
   <div class="warden-stats">
     <div class="stat glass" aria-label="Three verdicts in the closed lattice"><div class="n">3</div><div class="l">Closed verdicts</div></div>
     <div class="stat glass" aria-label="Three same-author conformance implementations"><div class="n">3</div><div class="l">Conformance impls</div></div>
@@ -64,8 +67,24 @@
 </header>
 
 <main id="main">
+
+<!-- WHAT IT IS -->
+<section id="what-it-is" class="shell" aria-labelledby="what-it-is-heading">
+  <div class="sec-head">
+    <p class="kicker">EMET launch</p>
+    <h2 id="what-it-is-heading">An external byte-witness for agentic work.</h2>
+  </div>
+  <div class="context-strip glass">
+    <p><strong class="friendly">The short version:</strong> a model or agent acts on a file. EMET reads that file's raw bytes through <code>open('rb')</code> &mdash; never a summarized or mediated view &mdash; recomputes the sha256, and compares it to a previously anchored hash. If they match, you get MATCH. If they don't, you get DRIFT. If there's no raw-byte channel or no anchor to compare against, you get UNVERIFIABLE. That's the whole lattice. The reviewer &mdash; a person &mdash; owns the trust decision from there. <code>emet</code> is Hebrew for "truth."</p>
+  </div>
+</section>
+
+<!-- BYTE-WITNESS -->
 <section id="witness" class="shell" aria-labelledby="witness-heading">
-  <div class="sec-head"><p class="kicker">Byte-witness</p><h2 id="witness-heading">What an external byte-witness is, and why agentic work needs one.</h2></div>
+  <div class="sec-head">
+    <p class="kicker">Byte-witness</p>
+    <h2 id="witness-heading">What an external byte-witness is, and why agentic work needs one.</h2>
+  </div>
   <div class="feats g12">
     <article class="feat a glass sheen" data-glow>
       <span class="idx">01</span>
@@ -87,8 +106,12 @@
   </div>
 </section>
 
+<!-- VERDICT LATTICE -->
 <section id="lattice" class="shell" aria-labelledby="lattice-heading">
-  <div class="sec-head"><p class="kicker">Verdict lattice</p><h2 id="lattice-heading">A closed lattice with no authority verdict.</h2></div>
+  <div class="sec-head">
+    <p class="kicker">Verdict lattice</p>
+    <h2 id="lattice-heading">A closed lattice with no authority verdict.</h2>
+  </div>
   <div class="warden-lanes">
     <article class="lane glass"><span>MATCH</span><h3>Comparison holds</h3><p>The checked material re-derived to the expected byte-level result. Absence of DRIFT is MATCH or UNVERIFIABLE, never trust.</p></article>
     <article class="lane glass"><span>DRIFT</span><h3>Bytes or view changed</h3><p>The presented view or the checked bytes no longer re-derive to what was anchored. Drift is reported as a fact, not adjudicated as a fault.</p></article>
@@ -99,8 +122,12 @@
   </div>
 </section>
 
+<!-- STRUCTURAL REFUSAL -->
 <section id="refusal" class="shell" aria-labelledby="refusal-heading">
-  <div class="sec-head"><p class="kicker">Structural refusal</p><h2 id="refusal-heading">governed() refuses authority tokens at construction.</h2></div>
+  <div class="sec-head">
+    <p class="kicker">Structural refusal</p>
+    <h2 id="refusal-heading">governed() refuses authority tokens at construction.</h2>
+  </div>
   <div class="feats g12">
     <article class="feat a glass sheen" data-glow>
       <span class="idx">01</span>
@@ -122,6 +149,7 @@
   </div>
 </section>
 
+<!-- TAMPER-EVIDENT LOG -->
 <section id="log" class="band warden-boundary" aria-labelledby="log-heading">
   <div class="shell g12">
     <div class="boundary-copy">
@@ -136,8 +164,12 @@
   </div>
 </section>
 
+<!-- THREE-LANGUAGE CONFORMANCE -->
 <section id="conformance" class="shell" aria-labelledby="conformance-heading">
-  <div class="sec-head"><p class="kicker">Three-language conformance</p><h2 id="conformance-heading">Re-derived across three implementations, with the caveat stated plainly.</h2></div>
+  <div class="sec-head">
+    <p class="kicker">Three-language conformance</p>
+    <h2 id="conformance-heading">Re-derived across three implementations, with the caveat stated plainly.</h2>
+  </div>
   <div class="warden-lanes">
     <article class="lane glass"><span>Python</span><h3>Reference</h3><p>A stdlib-only reference (<code>membrane.py</code> / <code>organs.py</code> / <code>monitor.py</code> / <code>corpus.py</code>), no dependencies.</p></article>
     <article class="lane glass"><span>Rust</span><h3>Second impl</h3><p>A from-scratch Rust implementation, no crates, built from the spec text.</p></article>
@@ -148,8 +180,12 @@
   </div>
 </section>
 
+<!-- PROOF SURFACE -->
 <section id="proof-surface" class="shell" aria-labelledby="proof-surface-heading">
-  <div class="sec-head"><p class="kicker">Proof surface</p><h2 id="proof-surface-heading">The proof surface builds outward from EMET.</h2></div>
+  <div class="sec-head">
+    <p class="kicker">Proof surface</p>
+    <h2 id="proof-surface-heading">The proof surface builds outward from EMET.</h2>
+  </div>
   <div class="feats g12">
     <article class="feat a glass sheen" data-glow>
       <span class="idx">01</span>
@@ -171,8 +207,12 @@
   </div>
 </section>
 
+<!-- REPOSITORY SURFACE -->
 <section id="surface" class="shell" aria-labelledby="surface-heading">
-  <div class="sec-head"><p class="kicker">Repository surface</p><h2 id="surface-heading">The inspectable edge of EMET and its proof surface.</h2></div>
+  <div class="sec-head">
+    <p class="kicker">Repository surface</p>
+    <h2 id="surface-heading">The inspectable edge of EMET and its proof surface.</h2>
+  </div>
   <div class="repo-grid">
     <a class="repo-pill glass" href="https://github.com/HarperZ9/emet"><span>Witness</span><strong>emet</strong><em>external byte-witness, closed verdict lattice, hash-chained log</em></a>
     <a class="repo-pill glass" href="https://github.com/HarperZ9/proof-surface"><span>Contract</span><strong>proof-surface</strong><em>packet, work-record receipt, witness-receipt validator</em></a>
@@ -183,15 +223,24 @@
   </div>
 </section>
 
+<!-- CLOSE / POSITION -->
 <section class="shell warden-close" aria-labelledby="close-heading">
   <p class="kicker">Position</p>
   <h2 id="close-heading">A witness is not an authority.</h2>
-  <p>EMET is the accountability spine for AI-assisted work: re-derive the hash over source bytes, emit a closed MATCH/DRIFT/UNVERIFIABLE verdict, refuse every authority token at construction, and chain each fact into a tamper-evident log. It is re-derivable in principle from the spec alone, demonstrated today across three same-author implementations; an independent different-author implementation is the named next step. The public repo shows the method in full; it does not ask the reader to accept anything on faith.</p>
-  <div class="cta">
-    <a class="btn solid" href="mailto:zaindharper@gmail.com">Discuss EMET</a>
+  <p>EMET is the accountability spine for AI-assisted work: re-derive the hash over source bytes, emit a closed MATCH/DRIFT/UNVERIFIABLE verdict, refuse every authority token at construction, and chain each fact into a tamper-evident log. There is no TRUSTED verdict, by construction. It is re-derivable in principle from the spec alone, demonstrated today across three same-author implementations; an independent different-author implementation is the named next step. The public repo shows the method in full; it does not ask the reader to accept anything on faith.</p>
+
+  <article class="emet-close-outreach glass">
+    <p>I'm Zain Dana Harper. I built EMET because the tools I wanted for AI accountability review didn't exist yet. It's open, tested, and narrow by design. If you want to use it on real work, or you disagree with the design decisions, or you just want to compare notes on the problem, I'm reachable.</p>
+    <p>Seattle, WA &mdash; remote-ideal. I read and reply to every real message.</p>
+  </article>
+
+  <div class="cta" style="margin-top:1.6rem;">
+    <a class="btn solid" href="https://github.com/HarperZ9/emet">Try EMET on GitHub</a>
+    <a class="btn" href="mailto:zaindharper@gmail.com">Discuss EMET</a>
     <a class="btn" href="index.html">Back to portfolio</a>
   </div>
 </section>
+
 </main>
 
 <footer class="shell">
