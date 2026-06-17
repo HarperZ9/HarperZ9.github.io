@@ -10,3 +10,5 @@ build/
 *.log
 *.tmp
 .worktrees/
+
+_drafts/
