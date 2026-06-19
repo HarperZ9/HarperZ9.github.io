@@ -351,7 +351,7 @@ h2 em{font-style:italic;color:var(--orange)}
   <div class="proof-head">
     <p class="eyebrow reveal">THE RECEIPTS</p>
     <h2 id="receipts-h" class="reveal">A verdict is a claim. <em>Here is the machinery.</em></h2>
-    <p class="body-text reveal">The verdicts above are worth nothing you can&rsquo;t inspect. So here are three, pulled straight from the running tools: a witness that re-derives the bytes, a compiler that refuses a reference it cannot account for, and the one record every organ declares itself in. Each carries its real provenance &mdash; and its real limits.</p>
+    <p class="body-text reveal">The verdicts above are worth nothing you can&rsquo;t inspect. So here are four, pulled straight from the running tools: a witness that re-derives the bytes, a compiler that refuses a reference it cannot account for, the one record every organ declares itself in &mdash; and those parts composed into a single loop, where a model perceives a live page and is refused an unauthorized act in the same breath. Each carries its real provenance, and its real limits.</p>
   </div>
 
   <div class="exhibit reveal">
@@ -406,6 +406,27 @@ Parsing... <span class="ok">OK</span> (1 items)
 }</pre>
     <p class="artifact-cap">Every organ declares the same six things &mdash; what it carries, where it crosses, how it moves, what it changes, how it&rsquo;s proven, and the scope it acts in. The <b>denials</b> are load-bearing: the witness states, in a machine-checked record, what it may <em>not</em> do.</p>
     <p class="artifact-note">From <b>project-docs/maps/surface-records/</b>, validated against <b>surface-record.schema.json</b> (JSON Schema 2020-12) &middot; 10 organ records generated and validated, gate green (20 tests). <em>Early but real:</em> schema_version 0.1, local-only, every fill marked <b>filled-v0</b>.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit IV</span> <span class="what">the accountable surface &middot; senses and restraint, one loop</span></div>
+    <pre class="artifact"><span class="cmt">== PERCEIVE  (native, witnessed) ==</span>
+  title: 'Frontier News'   links: 1   text chars: 52
+  digest: sha256:40b0fb1b6a…   status: <span class="ok">pass</span>   <span class="cmt">(a witnessed reading, not a screenshot)</span>
+
+<span class="cmt">== ACT: summarize  (authorized by the grant) ==</span>
+  gate decision: <span class="ok">ALLOW</span>   checks: {authorization: pass, state: pass, …}
+  executed by the surface: False
+
+<span class="cmt">== ACT: delete  (NOT in the grant) ==</span>
+  gate decision: <span class="bad">DENY</span>   — 'delete' not in allowed_actions
+  executed by the surface: False   <span class="cmt">(refused by the GATE, not by a prompt)</span>
+
+<span class="cmt">== JOURNAL  (every perception + decision, recorded) ==</span>
+  [perception] web-document perceived  &middot;  1 link, 52 text chars
+  [decision] summarize &rarr; <span class="ok">allow</span>     [decision] delete &rarr; <span class="bad">deny</span></pre>
+    <p class="artifact-cap">A model perceives a live page natively &mdash; witnessed, digest-stamped, not a screenshot &mdash; and the unauthorized act is refused by the <b>gate</b>, not by a prompt. Awareness and restraint as one mechanism.</p>
+    <p class="artifact-note">Live demo in <b>scratch/accountable-surface-spike/</b>, composed from audited parts &mdash; the coherence-membrane web sense and the proof-surface gate &middot; 16 tests + a real MCP stdio round-trip. <em>Honest limit:</em> a spike, not yet folded into ORCA; the surface decides but never executes, and an allow is advisory until a runtime enforces it. The loop is proven; the integration is owed.</p>
   </div>
 </section>
 
