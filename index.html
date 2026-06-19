@@ -1,592 +1,735 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Zain Dana Harper - AI Accountability Engineering</title>
-<meta name="description" content="Zain Dana Harper builds small, tested, inspectable tools for AI accountability. If an agent touched it, you should be able to check what it did. Starting with EMET, an external byte-witness. Based in Seattle, available remote.">
-<meta name="theme-color" content="#ffffff">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%231d1d1f'/%3E%3Cpath d='M14 34h36M20 22h24M20 46h24' stroke='%23fff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zain Dana Harper</title>
+<meta name="color-scheme" content="dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20260617i"></head>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;800&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--void:#0d1b1c;--void-opaque:rgba(13,27,28,.94);--bone:#e9e2d0;--orange:#df5e00;--ember:#efab30;--prussian:#476762;--muted:#8a9b92;--gold:#efab30;--hairline:rgba(239,171,48,.15);--section-pad:clamp(4rem,9vw,7rem);--col-gap:clamp(1.8rem,4vw,3.6rem)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{height:100%;width:100%}
+/* HERO CHANGE 1: overflow:hidden → overflow-x:hidden to enable page scroll */
+body{background:var(--void);color:var(--bone);font-family:"EB Garamond",Georgia,serif;overflow-x:hidden;position:relative}
+#gl,#motes{position:fixed;inset:0;width:100%;height:100%;display:block}
+#gl{z-index:0}#motes{z-index:2;pointer-events:none}
+.scrim{position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(100deg,rgba(13,27,28,.82) 14%,rgba(13,27,28,.28) 36%,transparent 52%)}
+/* HERO CHANGE 2: position:fixed;inset:0 → position:relative;min-height:100vh;width:100% */
+/* grid, padding, pointer-events, z-index unchanged */
+.frame{position:relative;min-height:100vh;width:100%;z-index:4;display:grid;grid-template-rows:auto 1fr auto;padding:clamp(1.8rem,3.6vw,3.2rem) clamp(2.4rem,5.5vw,5rem);pointer-events:none}
+.bar{display:flex;justify-content:space-between;align-items:baseline;gap:1.5rem;font-family:"Spline Sans Mono",monospace;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.bar .nm{color:var(--orange);letter-spacing:.3em}
+.mid{align-self:center;max-width:min(92vw,37rem)}
+.eyebrow{font-family:"Spline Sans Mono",monospace;font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;color:var(--orange);margin-bottom:1.7rem;opacity:.92}
+h1{font-family:"Cinzel",serif;font-weight:700;font-size:clamp(1.5rem,2.9vw,2.35rem);line-height:1.2;letter-spacing:.012em;text-wrap:balance;color:var(--bone);text-shadow:0 4px 60px rgba(0,0,0,.9)}
+h1 .g{color:var(--orange)}
+.lede{margin-top:1.9rem;font-size:clamp(1.02rem,1.4vw,1.24rem);line-height:1.66;color:var(--bone);opacity:.9;max-width:37ch}
+.lede em{color:var(--orange);font-style:italic}
+.close{margin-top:1.2rem;font-style:italic;font-size:clamp(1.06rem,1.5vw,1.34rem);line-height:1.5;color:var(--orange);max-width:36ch}
+.close b{font-style:normal;font-weight:500;color:var(--bone)}
+.seal{font-family:"Spline Sans Mono",monospace;font-size:.62rem;letter-spacing:.16em;color:var(--muted)}
+.seal b{color:var(--orange);font-weight:400}
+@media (max-width:760px){.mid{max-width:94vw}.scrim{background:linear-gradient(to top,rgba(13,27,28,.93) 26%,rgba(13,27,28,.45) 62%,transparent 84%)}.bar .rt{display:none}}
+@media (prefers-reduced-motion:reduce){#motes{display:none}}
+
+/* ─── scrolling body ──────────────────────────────────────────── */
+main{position:relative;z-index:5;width:100%}
+
+/* ─── section shell ───────────────────────────────────────────── */
+section.mv{position:relative;z-index:4;background:var(--void-opaque);border-top:1px solid var(--hairline);padding:var(--section-pad) clamp(2.4rem,5.5vw,5rem)}
+
+/* interlude — transparent breath, organism shows through */
+.interlude{position:relative;z-index:3;min-height:40vh;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.interlude-mark{font-family:"Spline Sans Mono",monospace;font-size:.6rem;letter-spacing:.5em;text-transform:uppercase;color:rgba(223,94,0,.24)}
+
+/* ─── section typography ──────────────────────────────────────── */
+.mv .eyebrow{margin-bottom:1.2rem}
+h2{font-family:"Cinzel",serif;font-weight:600;font-size:clamp(1.9rem,4.5vw,3.4rem);line-height:1.1;letter-spacing:.01em;color:var(--bone);margin-bottom:clamp(1.4rem,2.5vw,2.2rem)}
+h2 .g{color:var(--orange)}
+h2 em{font-style:italic;color:var(--orange)}
+.body-text{font-size:clamp(1.04rem,1.3vw,1.2rem);line-height:1.72;color:var(--bone);opacity:.91;max-width:68ch}
+.body-text em{color:var(--orange);font-style:italic}
+.body-text+.body-text{margin-top:1.4em}
+.mv .close{margin-top:1.6rem;display:block;font-style:italic;font-size:clamp(1.06rem,1.4vw,1.28rem);line-height:1.55;color:var(--orange);max-width:52ch}
+.mv .close b{font-style:normal;font-weight:500;color:var(--bone)}
+.pull{font-family:"Cinzel",serif;font-weight:600;font-size:clamp(1.5rem,3vw,2.4rem);line-height:1.2;color:var(--orange);margin:clamp(2rem,4vw,3.2rem) 0;max-width:52ch}
+
+/* ─── movement number + aperture row ─────────────────────────── */
+.mv-head{display:flex;align-items:center;gap:1rem;margin-bottom:2.4rem}
+.mv-num{font-family:"Spline Sans Mono",monospace;font-size:.64rem;letter-spacing:.3em;color:var(--muted);text-transform:uppercase}
+
+/* ─── aperture SVG glyph ──────────────────────────────────────── */
+.aperture{display:inline-block;width:2rem;height:2rem;flex-shrink:0;vertical-align:middle}
+@keyframes aperture-pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+.aperture .ring-outer{animation:aperture-pulse 3.6s ease-in-out infinite;transform-origin:16px 16px}
+@media(prefers-reduced-motion:reduce){.aperture .ring-outer{animation:none}}
+
+/* ─── instrument index — hairline rows ───────────────────────── */
+.index{width:100%;max-width:72ch;border-top:1px solid var(--hairline);margin-top:clamp(2rem,3.5vw,3rem)}
+.index-row{display:grid;grid-template-columns:8rem 1fr;gap:.5rem var(--col-gap);padding:.85rem 0;border-bottom:1px solid var(--hairline);align-items:baseline}
+.index-term{font-family:"Spline Sans Mono",monospace;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--orange);line-height:1.5}
+.index-gloss{font-family:"EB Garamond",Georgia,serif;font-size:clamp(1rem,1.2vw,1.1rem);line-height:1.6;color:var(--muted)}
+
+/* ─── organ rows ──────────────────────────────────────────────── */
+.organs{width:100%;max-width:90ch;border-top:1px solid var(--hairline);margin-top:clamp(2rem,3.5vw,3rem)}
+.organ-row{display:grid;grid-template-columns:11rem 6rem 1fr auto;gap:.5rem var(--col-gap);padding:1.1rem 0;border-bottom:1px solid var(--hairline);align-items:start}
+.organ-name{font-family:"Spline Sans Mono",monospace;font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bone);line-height:1.5;padding-top:.12em}
+.organ-role{font-family:"Spline Sans Mono",monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding-top:.22em}
+.organ-line{font-family:"EB Garamond",Georgia,serif;font-size:clamp(.98rem,1.15vw,1.08rem);line-height:1.62;color:var(--bone);opacity:.87}
+.organ-line em{color:var(--orange);font-style:italic}
+.organ-verdict{align-self:start;padding-top:.1em}
+.v-note{display:block;font-family:"Spline Sans Mono",monospace;font-size:.58rem;letter-spacing:.12em;color:var(--muted);margin-top:.55em;opacity:.72;line-height:1.7}
+
+/* ─── specimen images ─────────────────────────────────────────── */
+.specimen-wrap{float:right;margin:0 0 1.6rem 2.4rem;width:clamp(120px,18vw,220px)}
+.specimen{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:50%;filter:saturate(.38) brightness(.68);box-shadow:0 0 0 1px var(--hairline),0 0 24px rgba(0,0,0,.7);display:block}
+@media(max-width:600px){.specimen-wrap{float:none;margin:0 0 1.6rem 0;width:clamp(88px,26vw,130px)}}
+
+/* ─── verdict chips — shape + text, never color alone ────────── */
+.verdict{font-family:"Spline Sans Mono",monospace;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;padding:.3em .65em;white-space:nowrap;display:inline-block;line-height:1;vertical-align:top}
+.verdict-shipped{color:var(--bone);border:1px solid var(--orange)}
+.verdict-active{color:var(--muted);border:1px solid var(--muted)}
+.verdict-dim{color:var(--muted);border:1px dotted rgba(160,125,119,.42);opacity:.78}
+
+/* ─── seal / mono utility lines ──────────────────────────────── */
+.seal-line{font-family:"Spline Sans Mono",monospace;font-size:.64rem;letter-spacing:.16em;color:var(--muted);margin-top:2rem;line-height:1.9}
+.seal-line .g{color:var(--orange);font-weight:400}
+.note-line{font-family:"Spline Sans Mono",monospace;font-size:.58rem;letter-spacing:.12em;color:var(--muted);margin-top:.75rem;opacity:.62;line-height:1.8}
+
+/* ─── placeholder rendering ───────────────────────────────────── */
+.placeholder{font-family:"Spline Sans Mono",monospace;font-size:.62rem;letter-spacing:.12em;color:var(--muted);opacity:.52;border:1px dotted rgba(160,125,119,.3);padding:.38em .68em;display:inline-block;margin-top:.8rem;line-height:1.5}
+
+/* ─── channels ────────────────────────────────────────────────── */
+.channels{font-family:"Spline Sans Mono",monospace;font-size:.72rem;letter-spacing:.18em;color:var(--bone);margin-top:1.8rem;line-height:2.4}
+.channels .g{color:var(--orange)}
+.channels a{color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4);padding-bottom:1px;transition:color .2s,border-color .2s}
+.channels a:hover{color:var(--orange);border-color:var(--orange)}
+
+/* ─── footer seal ─────────────────────────────────────────────── */
+.footer-seal{border-top:1px solid var(--hairline);padding:clamp(2rem,4vw,3rem) clamp(2.4rem,5.5vw,5rem);position:relative;z-index:4;background:var(--void-opaque)}
+
+/* ─── scroll-reveal ───────────────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease-out,transform .65s ease-out}
+.reveal.visible{opacity:1;transform:none}
+.reveal-children>*{opacity:0;transform:translateY(14px);transition:opacity .52s ease-out,transform .52s ease-out;transition-delay:calc(var(--i,0) * 75ms)}
+.reveal-children.visible>*{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .reveal,.reveal-children>*{opacity:1!important;transform:none!important;transition:none!important}
+}
+
+/* ─── responsive ──────────────────────────────────────────────── */
+@media(max-width:1000px){.organ-row{grid-template-columns:9rem 5rem 1fr auto}}
+@media(max-width:820px){
+  .organ-row{grid-template-columns:1fr auto;grid-template-rows:auto auto auto}
+  .organ-name{grid-column:1;grid-row:1}
+  .organ-role{grid-column:2;grid-row:1;text-align:right}
+  .organ-line{grid-column:1/-1;grid-row:2}
+  .organ-verdict{grid-column:1/-1;grid-row:3;padding-top:.5rem}
+}
+@media(max-width:680px){
+  .index-row{grid-template-columns:1fr}
+  .organ-row{grid-template-columns:1fr}
+  .organ-role{grid-column:1;text-align:left}
+}
+
+/* ─── proof exhibits — real artifacts, shown ──────────────────── */
+.proof{position:relative;z-index:4;background:var(--void-opaque);border-top:1px solid var(--hairline);padding:var(--section-pad) clamp(2.4rem,5.5vw,5rem)}
+.proof-head{max-width:60ch}
+.exhibit{margin:clamp(2.4rem,4.5vw,3.6rem) 0 0;max-width:60rem}
+.exhibit-tag{font-family:"Spline Sans Mono",monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.7rem;display:flex;gap:.9rem;align-items:baseline;flex-wrap:wrap}
+.exhibit-tag .ord{color:var(--orange)}
+.exhibit-tag .what{color:var(--muted);letter-spacing:.12em}
+.artifact{font-family:"Spline Sans Mono",monospace;font-size:clamp(.72rem,1.02vw,.83rem);line-height:1.72;color:var(--bone);background:linear-gradient(165deg,rgba(8,17,18,.95),rgba(13,27,28,.9));border:1px solid var(--hairline);border-radius:3px;padding:clamp(1rem,2vw,1.5rem) clamp(1.1rem,2.2vw,1.7rem);margin:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.artifact .cmt{color:var(--muted)}
+.artifact .pr{color:var(--muted)}
+.artifact .ok{color:#5fae93}
+.artifact .bad{color:var(--orange)}
+.artifact .lt{color:var(--ember)}
+.artifact .kw{color:var(--ember)}
+.artifact-cap{font-family:"EB Garamond",serif;font-size:clamp(1rem,1.3vw,1.16rem);font-style:italic;color:var(--orange);margin:.95rem 0 0;max-width:58ch;line-height:1.5}
+.artifact-cap b{font-style:normal;font-weight:500;color:var(--bone)}
+.artifact-note{font-family:"Spline Sans Mono",monospace;font-size:.6rem;letter-spacing:.07em;color:var(--muted);margin-top:.7rem;max-width:80ch;line-height:1.78}
+.artifact-note b{color:var(--bone);font-weight:400}
+.artifact-note em{color:var(--orange);font-style:italic}
+@media(max-width:680px){.artifact{font-size:.66rem;line-height:1.65}}
+</style>
+</head>
 <body>
-<a class="skip-link" href="#main">Skip to content</a>
-<div class="bg"></div>
-<div class="grain"></div>
-<div class="bloom"></div>
-
-<nav aria-label="Primary">
-  <div class="nav-in">
-    <a class="brand" href="#top">Zain Dana Harper</a>
-    <div class="nav-links">
-      <a href="#outreach-top">Work with me</a>
-      <a href="emet.html">EMET</a>
-      <a href="#lineup">Public work</a>
-      <a href="https://harperz9.github.io/quantalang/">QuantaLang</a>
-      <a href="#about">About</a>
-      <a href="mailto:zaindharper@gmail.com">Contact</a>
-    </div>
+<canvas id="gl"></canvas>
+<div class="scrim"></div>
+<canvas id="motes"></canvas>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span></div>
+  <div class="mid">
+    <h1>Senses and sensibility are what lead to the new frontier.<br><span class="g">Machines learning to hold themselves accountable.</span></h1>
+    <p class="lede">Today's models infer the world from text and training. They never hold a persistent, checkable state of it, and nothing binds them to what they assert. I build the parts that would: a compiler that tracks ownership and lifetime, a state layer that keeps typed state and its provenance across every boundary, a membrane that meters what passes through it. That accountable half exists now. <em>Senses</em> &mdash; perceiving the world instead of inferring it &mdash; are the frontier it opens onto.</p>
+    <p class="close">The wager under all of it: what makes a machine accountable for its own state is what will let it perceive the world at all. I build from the <b>accountable</b> end.</p>
   </div>
-</nav>
-
-<!-- HERO -->
-<header id="top" class="hero shell g12">
-  <div class="hero-anchor">
-    <p class="hi">Hi &mdash; I'm Zain.</p>
-    <h1>I build tools that make AI-assisted work prove itself.</h1>
-    <blockquote class="anchor-quote">If an agent touched it, you should be able to check what it did &mdash; not take its word for it. Small, tested, inspectable tools, starting with EMET.</blockquote>
-    <p class="anchor-sub">I work on AI accountability tooling from Seattle. The core idea is simple: when agents act, they should leave a record a person can actually read and verify. That's the thread connecting everything here.</p>
-    <div class="cta">
-      <a class="btn solid" href="#outreach-top">Work with me</a>
-      <a class="btn" href="emet.html">Try EMET</a>
-      <a class="btn" href="https://github.com/HarperZ9">Research together</a>
-      <a class="btn" href="https://harperz9.github.io/quantalang/">QuantaLang</a>
-    </div>
-    <p class="reach-note">I'm in Seattle. Remote-ideal, hybrid-local welcome. I read and reply to real messages. <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a></p>
-  </div>
-
-  <aside id="start" class="orientation glass" aria-label="Portfolio at a glance">
-    <p class="orientation-label">At a glance</p>
-    <ul>
-      <li><strong>What this site is</strong><span>A portfolio, consulting surface, and map of public engineering artifacts.</span></li>
-      <li><strong>Best fit</strong><span>Teams that need AI-assisted output, public claims, or agent workflows to survive scrutiny. Compiler researchers and anyone curious about bilateral provenance.</span></li>
-      <li><strong>Where to go next</strong><span>Open EMET for the accountability spine, QuantaLang for the compiler, or the lineup below for the full repo map.</span></li>
-    </ul>
-  </aside>
-
-  <div class="stats">
-    <div class="stat glass" aria-label="34 public GitHub repositories verified via GitHub"><div class="n">34</div><div class="l">Public GitHub repos</div></div>
-    <div class="stat glass" aria-label="868 documented compiler tests"><div class="n">868</div><div class="l">Documented compiler test baseline</div></div>
-    <div class="stat glass" aria-label="Two live frontend service surfaces"><div class="n">2</div><div class="l">Live service surfaces</div></div>
-    <div class="stat glass" aria-label="19 EMET conformance vectors"><div class="n">19</div><div class="l">EMET conformance vectors</div></div>
-  </div>
-</header>
-
-<!-- OUTREACH (TOP) -->
-<section id="outreach-top" class="outreach-band" aria-labelledby="outreach-top-heading">
-  <div class="shell">
-    <p class="kicker">Get in touch</p>
-    <h2 id="outreach-top-heading">Three ways to work together.</h2>
-    <div class="outreach-inner">
-      <article class="outreach-card glass sheen" data-glow>
-        <p class="oc-label">Freelance &amp; consulting</p>
-        <h3>Work with me</h3>
-        <p>I take on consulting work in AI accountability review, bilateral provenance design, release-gate tooling, and agent workflow architecture. If your team ships AI-assisted output and needs the evidence to back the claims, that's the work I do.</p>
-        <div class="oc-cta cta">
-          <a class="btn solid" href="mailto:zaindharper@gmail.com?subject=Consulting%20inquiry">Send me a message</a>
-        </div>
-      </article>
-      <article class="outreach-card glass sheen" data-glow>
-        <p class="oc-label">Open source</p>
-        <h3>Try the tooling</h3>
-        <p>Everything in the accountability stack is open-source and tested. Clone EMET, run the conformance suite, break something, open an issue. I welcome real feedback from engineers who use it on actual work &mdash; that's more useful to me than stars.</p>
-        <div class="oc-cta cta">
-          <a class="btn solid" href="https://github.com/HarperZ9/emet">EMET on GitHub</a>
-          <a class="btn" href="https://github.com/HarperZ9">All 34 repos</a>
-        </div>
-      </article>
-      <article class="outreach-card glass sheen" data-glow>
-        <p class="oc-label">Research collaboration</p>
-        <h3>Research together</h3>
-        <p>If you're working on agentic accountability, bilateral provenance, auditable AI, or related verification problems, I want to talk. Coordinated research, shared experiments, co-authorship, or just a long email thread about the problem. All good.</p>
-        <div class="oc-cta cta">
-          <a class="btn solid" href="mailto:zaindharper@gmail.com?subject=Research%20collaboration">Start a conversation</a>
-        </div>
-      </article>
-    </div>
-    <p class="outreach-note">Based in Seattle, WA. Remote-ideal &mdash; I work well across time zones. Hybrid-local arrangements in the Seattle area also welcome. I read and reply to every real message.</p>
-  </div>
-</section>
-
-<main id="main">
-
-<!-- WHAT I BUILD -->
-<section id="what-i-build" class="shell" aria-labelledby="what-i-build-heading">
-  <div class="sec-head">
-    <p class="kicker">What I build</p>
-    <h2 id="what-i-build-heading">Accountability tools for AI-assisted work.</h2>
-  </div>
-  <div class="feats g12">
-    <article class="feat a glass sheen" data-glow>
-      <span class="idx">01</span>
-      <div class="role">The core problem</div>
-      <h3>Agents act fast. Review doesn't keep up.</h3>
-      <p>As AI-assisted work speeds up, the bottleneck shifts to verification: proving who authorized what, which evidence backed which claim, and what state a system was in when it acted. A model can generate a plausible-looking report in seconds. Checking whether that report matches the source bytes takes a human and a set of tools that most teams don't have yet. I build those tools.</p>
-      <div class="chips"><span class="chip">byte-level witnesses</span><span class="chip">provenance records</span><span class="chip">release gates</span><span class="chip">handoff reports</span></div>
-    </article>
-    <article class="feat b glass sheen" data-glow>
-      <span class="idx">02</span>
-      <div class="role">The approach</div>
-      <h3>Small, tested, inspectable. No magic.</h3>
-      <p>The tools are narrow on purpose. Each one does one thing, has a test suite, and says clearly what it cannot do. EMET re-derives a hash and reports MATCH, DRIFT, or UNVERIFIABLE &mdash; that's the whole lattice, by design. The goal is a stack where every claim has evidence underneath it and every limit is stated plainly.</p>
-      <div class="chips"><span class="chip">stdlib-only where possible</span><span class="chip">explicit caveats</span><span class="chip">open source</span><span class="chip">no hidden state</span></div>
-    </article>
-  </div>
-</section>
-
-<!-- ACCOUNTABILITY ARCHITECTURE -->
-<section id="accountability-architecture" class="shell" aria-labelledby="accountability-architecture-heading">
-  <div class="sec-head">
-    <p class="kicker">Accountability architecture</p>
-    <h2 id="accountability-architecture-heading">Seven layers the newest agentic-accountability research converges on.</h2>
-  </div>
-  <p class="plain-note" style="max-width:72ch; margin-bottom:2rem;">Each is marked by what is shipped today versus what is on the roadmap &mdash; a tool whose pitch is verifiability cannot overclaim its own stack.</p>
-  <div class="lineup glass">
-    <table>
-      <thead>
-        <tr><th>Layer</th><th>Tools</th><th>Status</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Reviewability artifacts</td>
-          <td><a href="https://github.com/HarperZ9/proof-surface-report">proof-surface-report</a>, work-record receipt, <a href="https://github.com/HarperZ9/agent-audit">agent-audit</a></td>
-          <td><span class="chip" style="background:rgba(76,180,120,.14);color:#2a6e47;border-color:rgba(76,180,120,.28);">Shipped</span></td>
-        </tr>
-        <tr>
-          <td>Cryptographic attestation (in-toto / SLSA / Sigstore lineage)</td>
-          <td><a href="emet.html">EMET attest</a></td>
-          <td><span class="chip" style="background:rgba(76,180,120,.14);color:#2a6e47;border-color:rgba(76,180,120,.28);">Shipped</span></td>
-        </tr>
-        <tr>
-          <td>Bilateral provenance</td>
-          <td><a href="emet.html">EMET</a> + work-record receipt (outward) + authorization receipt (inward)</td>
-          <td><span class="chip" style="background:rgba(76,180,120,.14);color:#2a6e47;border-color:rgba(76,180,120,.28);">Shipped</span></td>
-        </tr>
-        <tr>
-          <td>Live-state verification</td>
-          <td><a href="https://github.com/HarperZ9/proof-surface">proof-surface</a> pre-execution gate, <a href="https://github.com/HarperZ9/provenance-sensorium">provenance-sensorium</a>, <a href="https://github.com/HarperZ9/gpu-trace-validator">gpu-trace-validator</a></td>
-          <td><span class="chip" style="background:rgba(76,180,120,.14);color:#2a6e47;border-color:rgba(76,180,120,.28);">Shipped</span></td>
-        </tr>
-        <tr>
-          <td>Evaluation as a contract</td>
-          <td><a href="https://github.com/HarperZ9/proof-surface">proof-surface</a> evaluation contract, <a href="https://github.com/HarperZ9/repo-proof-index">repo-proof-index</a></td>
-          <td><span class="chip" style="background:rgba(76,180,120,.14);color:#2a6e47;border-color:rgba(76,180,120,.28);">Shipped</span></td>
-        </tr>
-        <tr>
-          <td>Traceable memory + calibrated uncertainty</td>
-          <td><a href="https://github.com/HarperZ9/proof-surface">proof-surface</a> claim ledger, <a href="https://github.com/HarperZ9/provenance-sensorium">provenance-sensorium</a></td>
-          <td><span class="chip" style="background:rgba(76,180,120,.14);color:#2a6e47;border-color:rgba(76,180,120,.28);">Shipped</span></td>
-        </tr>
-        <tr>
-          <td>Identity &amp; scoped authority (signed delegation)</td>
-          <td><a href="https://github.com/HarperZ9/proof-surface">proof-surface</a> delegation chain (human-rooted, attenuating, hash-chained)</td>
-          <td><span class="chip" style="background:rgba(76,180,120,.14);color:#2a6e47;border-color:rgba(76,180,120,.28);">Shipped</span></td>
-        </tr>
-        <tr>
-          <td>Resource gates in-loop (cost / carbon)</td>
-          <td><a href="https://github.com/HarperZ9/proof-surface">proof-surface</a> pre-execution gate budget check, work-record cost field, <a href="https://github.com/HarperZ9/signal-kernels">signal-kernels</a></td>
-          <td><span class="chip" style="background:rgba(76,180,120,.14);color:#2a6e47;border-color:rgba(76,180,120,.28);">Shipped</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <p class="muted" style="margin-top:1.4rem; font-size:.88rem;">Where NIST (agent-identity work citing in-toto/SLSA/SPIFFE), the EU (C2PA content provenance), and the newest agentic-safety research (Auditable Agents, HDP, ProvenanceGuard, Green SARC) are converging.</p>
-</section>
-
-<!-- CONSULTING LANES -->
-<section id="pilot" class="shell" aria-labelledby="pilot-heading">
-  <div class="sec-head">
-    <p class="kicker">Consulting lanes</p>
-    <h2 id="pilot-heading">Where I can help.</h2>
-  </div>
-  <div class="feats g12">
-    <article class="feat a glass sheen" data-glow>
-      <span class="idx">01</span>
-      <div class="role">AI accountability and release review</div>
-      <h3>Turn ambitious claims into reviewable evidence.</h3>
-      <p>I help teams make AI-assisted output, public repos, demos, and technical narratives easier to trust. The work is practical: compare claims against source bytes, tests, docs, samples, provenance records, and missing evidence, then hand a reviewer a bounded verdict instead of a promise.</p>
-      <div class="chips"><span class="chip">release review</span><span class="chip">AI accountability</span><span class="chip">maturity notes</span></div>
-      <div class="tags">Review packet, not certification. No credentials. No production access unless explicitly scoped.</div>
-      <div class="links"><a href="mailto:zaindharper@gmail.com">Request review</a><a href="proof-surface-sample.html">Sample report</a></div>
-    </article>
-    <article class="feat b glass sheen" data-glow>
-      <span class="idx">02</span>
-      <div class="role">Bilateral provenance layers</div>
-      <h3>Design the places where intent and work stay visible.</h3>
-      <p>I build controlled review paths for high-stakes authorized research environments: long-term red-team work, biological research, government-supervised defense or weapons-adjacent engineering, confidential product review, and internal R&amp;D. The pattern is a bilateral membrane: trusted scope, authorization context, and constraints carried inward; a hash-stamped work record, witness verdicts, anomaly review, and a handoff report carried outward, all in the same line of sight.</p>
-      <div class="chips"><span class="chip">scope</span><span class="chip">provenance</span><span class="chip">witness receipts</span><span class="chip">human review</span><span class="chip">handoff</span></div>
-      <div class="links"><a href="emet.html">EMET launch page</a><a href="https://github.com/HarperZ9/emet">emet</a><a href="https://github.com/HarperZ9/proof-surface">proof-surface</a><a href="https://github.com/HarperZ9/proof-surface-report">proof-surface-report</a><a href="https://github.com/HarperZ9/public-surface-sweeper">public-surface-sweeper</a><a href="https://github.com/HarperZ9/model-provenance-validator">model-provenance-validator</a><a href="https://github.com/HarperZ9/repo-proof-index">repo-proof-index</a><a href="https://github.com/HarperZ9/provenance-sensorium">provenance-sensorium</a><a href="https://github.com/HarperZ9/agent-audit">agent-audit</a></div>
-    </article>
-  </div>
-
-  <!-- TOOL LINEUP -->
-  <div class="worklist">
-    <article class="wrow glass">
-      <div class="idx">01</div>
-      <div class="wt"><h3>EMET</h3><div class="role">Byte-witness spine</div></div>
-      <div class="wd">External byte-witness: re-derives sha256 over source bytes and emits a closed <code>MATCH</code> / <code>DRIFT</code> / <code>UNVERIFIABLE</code> verdict lattice whose <code>governed()</code> path structurally refuses any TRUSTED, APPROVED, or AUTHORIZED token at construction. Hash-chained tamper-evident log; Python, Rust, and Node conformance.<div class="tags">byte witness &middot; closed verdict lattice &middot; no authority token &middot; hash-chained log</div></div>
-      <div class="lk"><a href="emet.html">Launch page</a><br><a href="https://github.com/HarperZ9/emet">GitHub</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">02</div>
-      <div class="wt"><h3>proof-surface</h3><div class="role">Shared contract family</div></div>
-      <div class="wd">Stdlib-only contract family: the proof-surface packet, a hard-pinned work-record receipt that is the structural inverse of an authorization-suppression prefire, and a witness-receipt validator mirroring EMET. 21 tests.<div class="tags">proof packet &middot; work-record receipt &middot; witness validator &middot; 21 tests</div></div>
-      <div class="lk"><a href="https://github.com/HarperZ9/proof-surface">GitHub</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">03</div>
-      <div class="wt"><h3>proof-surface-report</h3><div class="role">Reviewer-Markdown adapter</div></div>
-      <div class="wd">Renders proof-surface packets and receipts as a concise Markdown reviewer handoff, and rejects authority-shaped language so a report cannot quietly promote itself into an approval.<div class="tags">packet &rarr; markdown &middot; reviewer handoff &middot; rejects authority language</div></div>
-      <div class="lk"><a href="https://github.com/HarperZ9/proof-surface-report">GitHub</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">04</div>
-      <div class="wt"><h3>repo-proof-index</h3><div class="role">Evidence assembly point</div></div>
-      <div class="wd">Reviewer-ready aggregator and indexer over proof packets and receipts, turning scattered evidence into one inspectable proof index.<div class="tags">proof artifacts &middot; audit packet &middot; markdown and JSON</div></div>
-      <div class="lk"><a href="https://github.com/HarperZ9/repo-proof-index">GitHub</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">05</div>
-      <div class="wt"><h3>provenance-sensorium</h3><div class="role">Live-state awareness point</div></div>
-      <div class="wd">Turns project files, git state, and Markdown claims into hash-stamped JSON provenance receipts, and flags secrets, private-path leaks, and unevidenced or human-only claims before you publish.<div class="tags">sensor organs &middot; hash-stamped receipts &middot; leak flags &middot; pre-publish gate</div></div>
-      <div class="lk"><a href="https://github.com/HarperZ9/provenance-sensorium">GitHub</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">06</div>
-      <div class="wt"><h3>agent-audit</h3><div class="role">Agent behavior review point</div></div>
-      <div class="wd">Audits AI-agent sessions by checking a declared-intent and action-ledger against scope policy, flagging intent drift, scope violations, and prior-work claims unsupported by ledger evidence.<div class="tags">declared intent &middot; action ledger &middot; scope policy &middot; review findings</div></div>
-      <div class="lk"><a href="https://github.com/HarperZ9/agent-audit">GitHub</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">07</div>
-      <div class="wt"><h3>release-surface-scanner</h3><div class="role">Public release gate point</div></div>
-      <div class="wd">Turns a repository into a reviewable release packet: required-file checks, .env exclusion, secret-shape detection without echoing content, file hashing, and JSON/Markdown reports plus a compact proof index.<div class="tags">release gate &middot; secret-shape scan &middot; proof index &middot; reports</div></div>
-      <div class="lk"><a href="https://github.com/HarperZ9/release-surface-scanner">GitHub</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">08</div>
-      <div class="wt"><h3>public-surface-sweeper</h3><div class="role">Release hygiene point</div></div>
-      <div class="wd">Pre-release repo-hygiene scanner: checks required files and secret-shaped values to see whether a public surface is asking for more trust than its artifacts can support.<div class="tags">public repo surface &middot; pre-release gate &middot; findings and fixes</div></div>
-      <div class="lk"><a href="https://github.com/HarperZ9/public-surface-sweeper">GitHub</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">09</div>
-      <div class="wt"><h3>model-provenance-validator</h3><div class="role">Provenance envelope point</div></div>
-      <div class="wd">Validates compact provenance envelopes with secret redaction so model and workflow claims have a concrete receipt.<div class="tags">model record &middot; secret redaction &middot; pass/fail with gap notes</div></div>
-      <div class="lk"><a href="https://github.com/HarperZ9/model-provenance-validator">GitHub</a></div>
-    </article>
-  </div>
-</section>
-
-<!-- STORY BAND -->
-<div class="story-band">
-  <div class="shell">
-    <div class="story-left">
-      <p>My path here is nontraditional. Arborist work and Xbox networking support, then a long self-directed sprint across compilers, graphics, color science, frontend sites, compliance tooling, and AI accountability work. A lot of nights, a lot of iteration, and a growing set of public artifacts you can actually inspect.</p>
-      <p>The standard I hold myself to is ordinary engineering evidence: repos with commands that run, tests that assert something real, examples that do what they say, and maturity labels that say what is and isn't ready. The same standard I apply when I review someone else's work.</p>
-    </div>
-    <p class="story-pull">Build the thing. Label its limits. Leave enough evidence for another person to judge it.</p>
-  </div>
+  <div class="seal">Imagery is my own macrophotography &mdash; the living structures these ideas are modeled on.</div>
 </div>
 
-<!-- VALUE / QuantaLang -->
-<section id="value" class="shell" aria-labelledby="value-heading">
-  <div class="sec-head">
-    <p class="kicker">Underlying theme</p>
-    <h2 id="value-heading">Proof before public trust.</h2>
+<!-- ═══════════════════════════════════════════════════════════════
+     SCROLLING BODY
+     ════════════════════════════════════════════════════════════ -->
+<main>
+
+<!-- ─── MOVEMENT 01 · THE GAP ─────────────────────────────────── -->
+<section class="mv" id="mv-01" aria-labelledby="mv-01-h">
+  <div class="mv-head">
+    <svg class="aperture" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <circle class="ring-outer" cx="16" cy="16" r="13.5" stroke="rgba(223,94,0,.18)" stroke-width="1"/>
+      <circle cx="16" cy="16" r="9.5"  stroke="rgba(223,94,0,.40)" stroke-width="1"/>
+      <circle cx="16" cy="16" r="5.5"  stroke="rgba(223,94,0,.60)" stroke-width=".8"/>
+      <circle cx="16" cy="16" r="2.5"  fill="rgba(223,94,0,.07)" stroke="rgba(223,94,0,.50)" stroke-width=".6"/>
+      <circle cx="16" cy="16" r="1"    fill="rgba(13,27,28,.94)"/>
+      <circle cx="13.9" cy="14.3" r=".5" fill="rgba(223,94,0,.30)"/>
+    </svg>
+    <span class="mv-num">Movement 01</span>
   </div>
-  <div class="feats g12">
-    <article class="feat a glass sheen" data-glow>
-      <span class="idx">01</span>
-      <div class="role">Main public engineering artifact</div>
-      <h3>QuantaLang makes the ambition concrete.</h3>
-      <p>The repo contains a Rust compiler, 836 tracked <code>.quanta</code> files, 93 Rust files, STATUS and TEST_RESULTS docs, quickstart commands, a C execution path, shader output, and policy/receipt machinery. QuantaLang is the effects-language side of the same live-state thesis: today it has a verified C path, working HLSL/GLSL shader output, typed effect receipts, policy gates, and semantic-corpus checks; other backends are experimental, and long term it points toward one source shape that can coordinate CPU and GPU outputs while accountability tooling inspects what the code touched and emitted.</p>
-      <div class="chips"><span class="chip">Rust compiler</span><span class="chip">verified C path</span><span class="chip">shader output</span><span class="chip">effect receipts</span><span class="chip">status docs</span></div>
-    </article>
-    <article class="feat b glass sheen" data-glow>
-      <span class="idx">02</span>
-      <div class="role">Smaller public packages</div>
-      <h3>The utilities expose a repeatable instinct.</h3>
-      <p>The witness, contract, provenance, and workflow repos include EMET, proof-surface, proof-surface-report, provenance-sensorium, agent-audit, release-surface-scanner, validators, kernels, and sample reports. Across the small tools and the larger private systems, the pattern is the same: turn messy work into something inspectable.</p>
-      <div class="chips"><span class="chip">EMET</span><span class="chip">proof-surface</span><span class="chip">provenance-sensorium</span><span class="chip">agent-audit</span><span class="chip">validators</span><span class="chip">C++ kernels</span><span class="chip">samples</span></div>
-    </article>
-  </div>
+  <p class="eyebrow reveal">THE FRONTIER, AS IT STANDS</p>
+  <h2 id="mv-01-h" class="reveal">A model infers the world. It never <em>senses</em> it.</h2>
+  <p class="body-text reveal">Every frontier model reaches you the same way &mdash; it asserts. Memory it does not hold, actions it did not witness, confidence uncoupled from any observation. We answered a system that cannot check itself by making it larger and more fluent: better at <em>sounding</em> grounded. The trade everyone accepts as physics &mdash; safety against capability, pick one &mdash; is an artifact of that blindness. A mind you cannot see into, you must restrain. A mind that cannot see, you cannot trust.</p>
+  <em class="close reveal">The gap is not intelligence. It is a sense organ.</em>
 </section>
 
-<!-- PUBLIC LINEUP -->
-<section id="lineup" class="shell" aria-labelledby="lineup-heading">
-  <div class="sec-head">
-    <p class="kicker">Public lineup</p>
-    <h2 id="lineup-heading">Released pieces, grouped by what they do.</h2>
+<!-- ─── MOVEMENT 02 · THE SURFACE ────────────────────────────── -->
+<section class="mv" id="mv-02" aria-labelledby="mv-02-h">
+  <div class="mv-head">
+    <svg class="aperture" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <circle class="ring-outer" cx="16" cy="16" r="13.5" stroke="rgba(223,94,0,.18)" stroke-width="1"/>
+      <circle cx="16" cy="16" r="9.5"  stroke="rgba(223,94,0,.40)" stroke-width="1"/>
+      <circle cx="16" cy="16" r="5.5"  stroke="rgba(223,94,0,.60)" stroke-width=".8"/>
+      <circle cx="16" cy="16" r="2.5"  fill="rgba(223,94,0,.07)" stroke="rgba(223,94,0,.50)" stroke-width=".6"/>
+      <circle cx="16" cy="16" r="1"    fill="rgba(13,27,28,.94)"/>
+      <circle cx="13.9" cy="14.3" r=".5" fill="rgba(223,94,0,.30)"/>
+    </svg>
+    <span class="mv-num">Movement 02</span>
   </div>
-  <div class="lineup glass">
-    <table>
-      <thead>
-        <tr><th>Group</th><th>Repos</th><th>State</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Developer workflow utilities</td>
-          <td><a href="https://github.com/HarperZ9/agent-hook-pack">agent-hook-pack</a>, <a href="https://github.com/HarperZ9/agent-routing-kit">agent-routing-kit</a>, <a href="https://github.com/HarperZ9/context-curator-lite">context-curator-lite</a>, <a href="https://github.com/HarperZ9/workflow-harness-lite">workflow-harness-lite</a>, <a href="https://github.com/HarperZ9/workspace-repo-map">workspace-repo-map</a></td>
-          <td>Small deterministic Python/Node agent-dev utilities for routing, hooks, context, repo maps, and workflow runs.</td>
-        </tr>
-        <tr>
-          <td>Accountability and bilateral provenance</td>
-          <td><a href="https://github.com/HarperZ9/emet">emet</a>, <a href="https://github.com/HarperZ9/proof-surface">proof-surface</a>, <a href="https://github.com/HarperZ9/proof-surface-report">proof-surface-report</a>, <a href="https://github.com/HarperZ9/repo-proof-index">repo-proof-index</a>, <a href="https://github.com/HarperZ9/provenance-sensorium">provenance-sensorium</a>, <a href="https://github.com/HarperZ9/agent-audit">agent-audit</a>, <a href="https://github.com/HarperZ9/release-surface-scanner">release-surface-scanner</a>, <a href="https://github.com/HarperZ9/public-surface-sweeper">public-surface-sweeper</a>, <a href="https://github.com/HarperZ9/model-provenance-validator">model-provenance-validator</a>, <a href="https://github.com/HarperZ9/secret-redact-io">secret-redact-io</a>, <a href="https://github.com/HarperZ9/gpu-trace-validator">gpu-trace-validator</a></td>
-          <td>A byte-witness spine and the contracts, validators, and live-state organs around it: trusted context inward, a verifiable work record outward, secret redaction, provenance envelopes, proof indexing, GPU-trace fixtures, and source/view consistency.</td>
-        </tr>
-        <tr>
-          <td>Signal and anomaly kernels</td>
-          <td><a href="https://github.com/HarperZ9/signal-kernels">signal-kernels</a>, <a href="https://github.com/HarperZ9/anomaly-kernels">anomaly-kernels</a></td>
-          <td>Header-only C++23 libraries: signal/information-theory algorithms (entropy, divergence, Granger, PELT, FFT, SARIMA/VAR) and statistical anomaly-detection kernels (baseline, z/IQR/percentile, correlation). Tests green.</td>
-        </tr>
-        <tr>
-          <td>Quanta and editor support</td>
-          <td><a href="https://github.com/HarperZ9/quantalang">quantalang</a>, <a href="https://github.com/HarperZ9/quantalang-vscode">quantalang-vscode</a>, <a href="https://github.com/HarperZ9/quantalang-tmLanguage">quantalang-tmLanguage</a>, <a href="https://github.com/HarperZ9/quanta-universe">quanta-universe</a></td>
-          <td>QuantaLang is the heavy repo: a verified C compiler path plus experimental backends and a long-term live-state language direction. Editor packages are support surfaces; Quanta Universe is an alpha/showcase repo with a maturity ledger.</td>
-        </tr>
-        <tr>
-          <td>Graphics, color, and calibration</td>
-          <td><a href="https://github.com/HarperZ9/calibrate-pro">calibrate-pro</a>, <a href="https://github.com/HarperZ9/quanta-color">quanta-color</a>, ELDER.ENB, RAW</td>
-          <td>Quanta Color and Calibrate Pro are Python packages; ELDER.ENB is a public graphics release; RAW remains a private prototype.</td>
-        </tr>
-        <tr>
-          <td>Support surfaces and forks</td>
-          <td><a href="https://github.com/HarperZ9/wol-pi">wol-pi</a>, <a href="https://github.com/HarperZ9/linguist">linguist</a></td>
-          <td>Support repos and forks. They should not carry the portfolio thesis.</td>
-        </tr>
-        <tr>
-          <td>Private product and platform work</td>
-          <td>Harper Advocates, Harper Compliance, APPS, Aurora, Quanta internals</td>
-          <td>Real work exists here, but this page only states public outcomes and categories, not private implementation details. The private core is not published.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- INDUSTRY FIT -->
-<section id="directions" class="shell" aria-labelledby="directions-heading">
-  <div class="sec-head">
-    <p class="kicker">Industry fit</p>
-    <h2 id="directions-heading">Where this work can be useful.</h2>
-  </div>
-  <div class="worklist">
-    <article class="wrow glass">
-      <div class="idx">01</div>
-      <div class="wt"><h3>AI accountability and bilateral provenance</h3><div class="role">Claims to proof</div></div>
-      <div class="wd">Best fit: teams that need AI-assisted output, public claims, or internal model workflows to survive scrutiny. The tools re-derive bytes, check live state, audit agent actions, gate releases, validate provenance, and assemble proof packets and handoff reports.<div class="tags">emet &middot; proof-surface &middot; proof-surface-report &middot; provenance-sensorium &middot; agent-audit &middot; release-surface-scanner &middot; public-surface-sweeper &middot; model-provenance-validator &middot; repo-proof-index</div></div>
-      <div class="lk"><a href="emet.html">EMET</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">02</div>
-      <div class="wt"><h3>Confidential and government-supervised research</h3><div class="role">Scope to receipt</div></div>
-      <div class="wd">Long-running red-team contracts, biological research programs, defense or weapons-adjacent engineering, and sensitive internal R&amp;D need a membrane that can show what scope was authorized before the work and what the model or workflow actually did afterward.<div class="tags">engagement scope &middot; authorization context &middot; sensitive research &middot; bilateral provenance</div></div>
-      <div class="lk"><a href="emet.html">EMET</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">03</div>
-      <div class="wt"><h3>Compiler and language research</h3><div class="role">Concrete prototypes</div></div>
-      <div class="wd">A language-research lane with working artifacts, not just taste. The solid public path is lexer/parser/type checker/MIR to C, plus shader output and explicit backend limits. Current progress: verified C execution, working shader-source output, policy/receipt checks, and SourceId-backed provenance. Aspiration: live-state-aware code that can declare machine boundaries, coordinate CPU/GPU surfaces, and give models and reviewers a ground-truth receipt instead of a remembered representation.<div class="tags">QuantaLang &middot; Quanta Universe &middot; editor support &middot; verified C backend &middot; shader output &middot; effects/provenance</div></div>
-      <div class="lk"><a href="https://github.com/HarperZ9/quantalang">GitHub</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">04</div>
-      <div class="wt"><h3>Signal, anomaly, and color</h3><div class="role">Numeric systems</div></div>
-      <div class="wd">Header-only C++23 signal and anomaly kernels plus practical visual systems: entropy and divergence, change-point and forecasting, baseline and z/IQR scoring, color math, HDR tone mapping, LUT/ICC output, and display calibration.<div class="tags">signal-kernels &middot; anomaly-kernels &middot; HLSL &middot; ICC profiles &middot; tone mapping &middot; color science</div></div>
-      <div class="lk"><a href="https://github.com/HarperZ9/signal-kernels">GitHub</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">05</div>
-      <div class="wt"><h3>Agent workflow and orchestration</h3><div class="role">Human-in-the-loop systems</div></div>
-      <div class="wd">Small deterministic public utilities extracted from private workflow practice: routing, templates, hooks, context preparation, workflow runs, and repo inventory. The larger skill is steering models without letting their output outrun verification.<div class="tags">agent-hook-pack &middot; agent-routing-kit &middot; context-curator-lite &middot; workflow-harness-lite &middot; workspace-repo-map</div></div>
-      <div class="lk"><a href="https://github.com/HarperZ9/agent-routing-kit">GitHub</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">06</div>
-      <div class="wt"><h3>Compliance and product infrastructure</h3><div class="role">Public edge, private systems</div></div>
-      <div class="wd">Private systems are portfolio context, not inspectable products here. The public proof is limited to live pages, public leaves, and outcome descriptions, but the work shows a product-builder's instinct for forms, flows, documents, and operational boundaries.<div class="tags">live frontend surfaces &middot; private repos &middot; orchestration &middot; product systems</div></div>
-      <div class="lk"><a href="#work">Work</a></div>
-    </article>
-  </div>
-</section>
-
-<!-- SELECTED WORK -->
-<section id="work" class="shell" aria-labelledby="work-heading">
-  <div class="sec-head">
-    <p class="kicker">Selected work</p>
-    <h2 id="work-heading">Systems, surfaces, and experiments with labels.</h2>
-  </div>
-  <div class="feats g12">
-    <article class="feat a glass sheen" data-glow>
-      <span class="idx">01</span>
-      <div class="role">AI accountability &middot; Python / Rust / Node.js &middot; MPL-2.0</div>
-      <h3>EMET</h3>
-      <p>External byte-witness: it re-derives sha256 over source bytes and emits a closed <code>MATCH</code> / <code>DRIFT</code> / <code>UNVERIFIABLE</code> verdict whose <code>governed()</code> path structurally refuses any TRUSTED, APPROVED, or AUTHORIZED token at construction. A hash-chained log keeps the witness trail tamper-evident. Three same-author implementations pass 19 shared conformance vectors; independent different-author re-derivability is named as the open proof gate.</p>
-      <div class="chips"><span class="chip">byte witness</span><span class="chip">closed verdict lattice</span><span class="chip">no TRUSTED token</span><span class="chip">hash-chained log</span></div>
-      <div class="tags">Python &middot; Rust &middot; Node.js &middot; same-author conformance, independent re-derivation is future work</div>
-      <div class="links"><a href="emet.html">Launch page</a><a href="https://github.com/HarperZ9/emet">GitHub</a></div>
-    </article>
-    <article class="feat b glass sheen" data-glow>
-      <span class="idx">02</span>
-      <div class="role">Compilers &middot; Rust &middot; public, MIT</div>
-      <h3>QuantaLang</h3>
-      <p>Rust compiler for <code>.quanta</code>: lexer, parser, type checker, MIR, C99 output, quickstart examples, corpus verification, HLSL/GLSL shader output, and effects receipts. The C path is verified end-to-end; other backends are experimental. It is runnable today, and it is also the clearest language-side path toward live-state-aware CPU/GPU work.</p>
-      <div class="chips"><span class="chip">868 documented tests</span><span class="chip">verified C path</span><span class="chip">HLSL / GLSL output</span><span class="chip">effect receipts</span></div>
-      <div class="tags">effects language &middot; C99 &middot; corpus/test evidence &middot; crates.io v1.0.0</div>
-      <div class="links"><a href="https://harperz9.github.io/quantalang/">Landing page</a><a href="https://github.com/HarperZ9/quantalang">GitHub</a><a href="https://marketplace.visualstudio.com/items?itemName=HarperZ9.quantalang">VS Code Marketplace</a></div>
-    </article>
-  </div>
-  <div class="worklist">
-    <article class="wrow glass">
-      <div class="idx">03</div>
-      <div class="wt"><h3>proof-surface</h3><div class="role">AI accountability &middot; Python &middot; stdlib-only</div></div>
-      <div class="wd">Shared contract family: the proof-surface packet, a hard-pinned work-record receipt that is the structural inverse of an authorization-suppression prefire, and a witness-receipt validator mirroring EMET. 21 tests.<div class="tags">proof packet &middot; work-record receipt &middot; witness validator &middot; 21 tests</div></div>
-      <div class="lk"><a href="https://github.com/HarperZ9/proof-surface">GitHub</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">04</div>
-      <div class="wt"><h3>Harper Advocates &amp; Harper Compliance</h3><div class="role">Live frontend surfaces &middot; private GitHub repos</div></div>
-      <div class="wd">Two live service sites: consumer-rights letters and compliance-documentation kits. Private repos; public surfaces show responsive UI and browser-side document flows.<div class="tags">live websites &middot; custom cursors &middot; responsive UI &middot; private GitHub repos</div></div>
-      <div class="lk"><a href="https://harperadvocates.com">Advocates</a><br><a href="https://harpercompliance.llc">Compliance</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">05</div>
-      <div class="wt"><h3>RAW <span class="subname">(Rendering Advancement Workshop)</span></h3><div class="role">Real-time graphics &middot; D3D11 / C++23 &middot; private prototype</div></div>
-      <div class="wd">A Direct3D 11 post-processing injector with tonemapping, TAA, SSR, volumetrics, bokeh DoF, and ImGui controls.<div class="tags">18+ effects &middot; 86 HLSL shaders &middot; ~45K LOC &middot; ACES / AgX</div></div>
-      <div class="lk"><span>private</span></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">06</div>
-      <div class="wt"><h3>signal-kernels &amp; anomaly-kernels</h3><div class="role">Numeric systems &middot; C++23 &middot; public</div></div>
-      <div class="wd">Header-only C++23 libraries: signal/information-theory algorithms (entropy, divergence, Granger, PELT, FFT, SARIMA/VAR) and statistical anomaly-detection kernels (baseline, z/IQR/percentile, correlation). Tests green.<div class="tags">header-only &middot; entropy/divergence &middot; PELT/FFT &middot; z/IQR scoring</div></div>
-      <div class="lk"><a href="https://github.com/HarperZ9/signal-kernels">signal</a><br><a href="https://github.com/HarperZ9/anomaly-kernels">anomaly</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">07</div>
-      <div class="wt"><h3>Calibrate Pro</h3><div class="role">Color science &middot; Python &middot; MIT</div></div>
-      <div class="wd">Windows display-calibration toolkit with sensorless profiles, measured workflows, DDC/CI control, ICC/3D-LUT output, reverse-engineered colorimeter drivers, and report generation.<div class="tags">58 display profiles &middot; ICC v4 &middot; 3D LUT &middot; DDC/CI</div></div>
-      <div class="lk"><a href="https://github.com/HarperZ9/calibrate-pro">GitHub</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">08</div>
-      <div class="wt"><h3>Quanta Universe</h3><div class="role">Systems &middot; QuantaLang &middot; alpha surface</div></div>
-      <div class="wd">Public alpha/showcase repo across language, graphics, color, finance, and systems experiments. STATUS says the ecosystem does not compile as a whole.<div class="tags">maturity ledger &middot; module showcase &middot; research corpus</div></div>
-      <div class="lk"><a href="https://github.com/HarperZ9/quanta-universe">GitHub</a></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">09</div>
-      <div class="wt"><h3>Quanta Color</h3><div class="role">Color science &middot; Python &middot; MIT</div></div>
-      <div class="wd">Python color-science workbench covering color spaces, HDR tone mapping, Delta E metrics, chromatic adaptation, spectral utilities, ICC output, and an optional GUI.<div class="tags">Oklab &middot; CAM16 &middot; spectral &middot; ICC</div></div>
-      <div class="lk"><span>library</span></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">10</div>
-      <div class="wt"><h3>Aurora</h3><div class="role">Tooling &middot; Lua / TypeScript / DSL</div></div>
-      <div class="wd">Large Lua/TypeScript/DSL framework codebase. The package is private, with CLI scripts and Node/Lua contract tests; present it as framework engineering, not a public product.<div class="tags">Lua &middot; TypeScript &middot; DSL &middot; contract tests</div></div>
-      <div class="lk"><span>SDK</span></div>
-    </article>
-    <article class="wrow glass">
-      <div class="idx">11</div>
-      <div class="wt"><h3>provenance-sensorium</h3><div class="role">AI accountability &middot; Python &middot; public, MIT</div></div>
-      <div class="wd">A small, fully-tested local Python CLI/library that turns project files, git state, and Markdown claims into hash-stamped JSON provenance receipts and flags secrets, private-path leaks, and unevidenced or human-only claims before you publish. It pairs with agent-audit for intent/action review.<div class="tags">live-state awareness &middot; provenance receipts &middot; leak flags &middot; human gate</div></div>
-      <div class="lk"><a href="https://github.com/HarperZ9/provenance-sensorium">GitHub</a></div>
-    </article>
-  </div>
-</section>
-
-<!-- RESEARCH THESIS -->
-<section id="research" class="band"><div class="shell g12">
-  <p class="kicker band-kicker">Research thesis</p>
-  <p class="res-q">Safety, transparency, and creativity should evolve on the same surface.</p>
-  <p class="res-b thesis-intro">The same gap that makes AI dangerous also makes it feel limited: models infer state from assertions, memory, and context instead of sensing the world natively. My work is aimed at that meeting point: bilateral provenance, programmatic live-state organs, byte-level witnesses, and contract layers where people and machines can make work inspectable. That thesis shows up in <a href="https://github.com/HarperZ9/emet">EMET</a> as the byte-witness spine, <a href="https://github.com/HarperZ9/proof-surface">proof-surface</a> as the shared contract, <a href="https://github.com/HarperZ9/provenance-sensorium">provenance-sensorium</a> for live-state receipts, <a href="https://github.com/HarperZ9/agent-audit">agent-audit</a> for intent/action review, and <a href="https://github.com/HarperZ9/quantalang">QuantaLang</a> for typed effects and CPU/GPU language research. No trust verdict, no magic authority: trusted context and scope travel inward, and a verifiable work record travels back out.</p>
-</div></section>
-
-<!-- ABOUT -->
-<section id="about" class="shell approach" aria-labelledby="about-heading">
-  <div class="sec-head">
-    <p class="kicker">About</p>
-    <h2 id="about-heading">How the work gets made.</h2>
-  </div>
-  <div class="g12">
-    <div class="body glass">
-      <p>My path is nontraditional: arborist work, Xbox networking support, and then a long self-directed sprint across compilers, graphics, color science, frontend sites, compliance surfaces, and AI tooling.</p>
-      <p>A lot of the work came from late nights and private iteration. The public standard is still ordinary engineering evidence: repos, commands, tests, examples, diffs, and clear maturity labels.</p>
+  <p class="eyebrow reveal">ONE FORM &mdash; EVERYTHING RESOLVES TO IT</p>
+  <div style="overflow:hidden">
+    <div class="specimen-wrap" aria-hidden="true">
+      <img src="img/XJJSZrM.jpg" class="specimen" alt="Macro cross-section: dense cellular lattice resolving into a single continuous plane">
     </div>
-    <p class="pull glass">The through-line is simple: build the thing, label its limits, and leave enough evidence for another person to judge it.</p>
+    <h2 id="mv-02-h" class="reveal">The surface.</h2>
+    <p class="body-text reveal">Not a platform. An ontology. Every tool here &mdash; compiler, renderer, color engine, witness, membrane &mdash; is one <em>surface</em>, and a surface declares six things or it does not exist.</p>
+  </div>
+  <div class="index reveal-children" role="list" aria-label="The six surface declarations">
+    <div class="index-row" role="listitem" style="--i:0">
+      <span class="index-term">CARRIER</span>
+      <span class="index-gloss">what holds the state &middot; text, image, shader frame, packet, model output, repo</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:1">
+      <span class="index-term">BOUNDARY</span>
+      <span class="index-gloss">where it crosses &middot; model, API, process, GPU, operator, scope-of-law</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:2">
+      <span class="index-term">CHANNEL</span>
+      <span class="index-gloss">how it moves &middot; CLI, HTTP, MCP, filesystem, git, the covert path</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:3">
+      <span class="index-term">TRANSFORM</span>
+      <span class="index-gloss">what changes it &middot; compile, render, redact, infer, verify</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:4">
+      <span class="index-term">WITNESS</span>
+      <span class="index-gloss">how the change is proven &middot; hash, receipt, provenance, frame trace, test</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:5">
+      <span class="index-term">SCOPE</span>
+      <span class="index-gloss">who allowed it, in what mode &middot; dry-run, fixture, local lab, authorized, operator-live</span>
+    </div>
+  </div>
+  <em class="close reveal">Name those six and a thing can converge with everything else without becoming a monolith. The organs diverge; the surface holds.</em>
+</section>
+
+<!-- ─── MOVEMENT 03 · THE ORGANS ─────────────────────────────── -->
+<section class="mv" id="mv-03" aria-labelledby="mv-03-h">
+  <div class="mv-head">
+    <svg class="aperture" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <circle class="ring-outer" cx="16" cy="16" r="13.5" stroke="rgba(223,94,0,.18)" stroke-width="1"/>
+      <circle cx="16" cy="16" r="9.5"  stroke="rgba(223,94,0,.40)" stroke-width="1"/>
+      <circle cx="16" cy="16" r="5.5"  stroke="rgba(223,94,0,.60)" stroke-width=".8"/>
+      <circle cx="16" cy="16" r="2.5"  fill="rgba(223,94,0,.07)" stroke="rgba(223,94,0,.50)" stroke-width=".6"/>
+      <circle cx="16" cy="16" r="1"    fill="rgba(13,27,28,.94)"/>
+      <circle cx="13.9" cy="14.3" r=".5" fill="rgba(223,94,0,.30)"/>
+    </svg>
+    <span class="mv-num">Movement 03</span>
+  </div>
+  <p class="eyebrow reveal">A BODY, NOT A CATALOG</p>
+  <h2 id="mv-03-h" class="reveal">The organs.</h2>
+  <p class="body-text reveal">Each carries its own maturity. Nothing here claims more than it can show &mdash; the verdict beside each is the real one.</p>
+
+  <div class="organs reveal-children" role="list" aria-label="Organ index with maturity verdicts">
+
+    <!-- EMET -->
+    <div class="organ-row" role="listitem" style="--i:0">
+      <span class="organ-name">EMET</span>
+      <span class="organ-role">Witness</span>
+      <span class="organ-line">
+        The seal that records what a transform did and refuses to say more &mdash; re-derived in three separate language implementations; it answers only MATCH / DRIFT / UNVERIFIABLE, never <em>trusted</em>.
+        <span class="v-note">v0.2.0 &middot; 19/19 conformance (Python &middot; Rust &middot; Node, CI each push) &middot; owed: a fourth, different author&rsquo;s implementation</span>
+      </span>
+      <span class="organ-verdict"><span class="verdict verdict-shipped" aria-label="Verdict: Shipped">SHIPPED</span></span>
+    </div>
+
+    <!-- QUANTA / QUANTAC -->
+    <div class="organ-row" role="listitem" style="--i:1">
+      <span class="organ-name">QUANTA&thinsp;/&thinsp;QUANTAC</span>
+      <span class="organ-role">Transform</span>
+      <span class="organ-line">
+        A typed effects language &mdash; what a function may <em>do</em>, and whose memory it returns, is part of the type and checked through to native code.
+        <span class="v-note">C backend end-to-end &middot; 999 tests green &middot; other targets experimental &middot; self-host aspirational</span>
+      </span>
+      <span class="organ-verdict"><span class="verdict verdict-active" aria-label="Verdict: C-backend shipped">C-BACKEND SHIPPED</span></span>
+    </div>
+
+    <!-- QUANTA COLOR -->
+    <div class="organ-row" role="listitem" style="--i:2">
+      <span class="organ-name">QUANTA COLOR</span>
+      <span class="organ-role">Perception</span>
+      <span class="organ-line">
+        Color as measured, not guessed &mdash; 15+ spaces, CIECAM02&thinsp;/&thinsp;CAM16, perceptual &Delta;E; GUI and CLI.
+        <span class="v-note">v1.0.1 on PyPI</span>
+      </span>
+      <span class="organ-verdict"><span class="verdict verdict-shipped" aria-label="Verdict: Shipped">SHIPPED</span></span>
+    </div>
+
+    <!-- RAW -->
+    <div class="organ-row" role="listitem" style="--i:3">
+      <span class="organ-name">RAW</span>
+      <span class="organ-role">Vision</span>
+      <span class="organ-line">
+        Frame, shader, and GPU state expressed as receipts &mdash; the surface where models are weakest natively.
+        <span class="v-note">instrumentation core exists; public proof and tests owed</span>
+      </span>
+      <span class="organ-verdict"><span class="verdict verdict-active" aria-label="Verdict: In development">IN DEVELOPMENT</span></span>
+    </div>
+
+    <!-- THE BOUNDARY -->
+    <div class="organ-row" role="listitem" style="--i:4">
+      <span class="organ-name">THE BOUNDARY</span>
+      <span class="organ-role">Defense</span>
+      <span class="organ-line">
+        Carrier inspection: detect hidden channels, strip metadata, validate watermarks, sign the clean copy. Inspection inward, never exfiltration.
+        <span class="v-note">schema fixed; implementation pending</span>
+      </span>
+      <span class="organ-verdict"><span class="verdict verdict-dim" aria-label="Verdict: Specified">SPECIFIED</span></span>
+    </div>
+
+    <!-- CREATIVE LIGAND PROTOCOL -->
+    <div class="organ-row" role="listitem" style="--i:5">
+      <span class="organ-name">CREATIVE LIGAND PROTOCOL</span>
+      <span class="organ-role">Membrane</span>
+      <span class="organ-line">
+        Selective permeability for ideas &mdash; a metered, actively-halted channel; confidentiality held like a pump, paid for in energy, never assumed.
+        <span class="v-note">Interval-0; design converged, build gated</span>
+      </span>
+      <span class="organ-verdict"><span class="verdict verdict-dim" aria-label="Verdict: Conceptual">CONCEPTUAL</span></span>
+    </div>
+
+    <!-- STATE-TRANSFORM ENGINE -->
+    <div class="organ-row" role="listitem" style="--i:6">
+      <span class="organ-name">STATE-TRANSFORM ENGINE</span>
+      <span class="organ-role">Carrier</span>
+      <span class="organ-line">
+        Typed live-state that survives crossing any boundary.
+        <span class="v-note">in-progress spine</span>
+      </span>
+      <span class="organ-verdict"><span class="verdict verdict-dim" aria-label="Verdict: Converging">CONVERGING</span></span>
+    </div>
+
+  </div>
+  <em class="close reveal">Proof before trust. The shipped say shipped; the conceptual say conceptual.</em>
+</section>
+
+<!-- ─── EXHIBITS · THE RECEIPTS ──────────────────────────────── -->
+<section class="proof" id="receipts" aria-labelledby="receipts-h">
+  <div class="proof-head">
+    <p class="eyebrow reveal">THE RECEIPTS</p>
+    <h2 id="receipts-h" class="reveal">A verdict is a claim. <em>Here is the machinery.</em></h2>
+    <p class="body-text reveal">The verdicts above are worth nothing you can&rsquo;t inspect. So here are three, pulled straight from the running tools: a witness that re-derives the bytes, a compiler that refuses a reference it cannot account for, and the one record every organ declares itself in. Each carries its real provenance &mdash; and its real limits.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit I</span> <span class="what">EMET &middot; the witness re-derives the bytes</span></div>
+    <pre class="artifact"><span class="pr">$ python membrane.py verify demo_sample.txt</span>
+<span class="ok">MATCH</span>  demo_sample.txt   want=d02206abca2a…  got=d02206abca2a…   (exit 0)
+
+<span class="cmt"># append one byte to the file, ask the same question</span>
+<span class="pr">$ python membrane.py verify demo_sample.txt</span>
+<span class="bad">DRIFT</span>  demo_sample.txt   want=d02206abca2a…  got=b072d611645e…   (exit 2)
+
+<span class="cmt"># one spec, three separate language implementations, CI on every push</span>
+membrane.py        &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span>
+impl/rust/emet     &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span>
+impl/js/emet.js    &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span></pre>
+    <p class="artifact-cap">Change one byte of the source and the verdict falls from <b>MATCH</b> to <b>DRIFT</b>. The seal answers to the bytes, not to whoever vouches for them.</p>
+    <p class="artifact-note">Live in <b>c:/dev/state/emet</b> &middot; receipt format from <b>adapters/proof_surface_receipt.py</b> &middot; 19/19 conformance vectors, three language implementations, CI each push. <em>Honest limit:</em> all three share one author &mdash; this shows the spec is implementable from its text, not yet independently re-derived. A fourth, different author&rsquo;s implementation is owed.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit II</span> <span class="what">QuantaLang &middot; the compiler refuses what it can&rsquo;t account for</span></div>
+    <pre class="artifact"><span class="kw">fn</span> pick&lt;<span class="lt">'a</span>, <span class="lt">'b</span>&gt;(x: &amp;<span class="lt">'a</span> i32, y: &amp;<span class="lt">'b</span> i32) -&gt; &amp;<span class="lt">'a</span> i32 {
+    y          <span class="cmt">// returns 'b where the signature promised 'a</span>
+}
+
+<span class="pr">$ quantac check pick.quanta</span>
+Lexing... <span class="ok">OK</span> (28 tokens)
+Parsing... <span class="ok">OK</span> (1 items)
+<span class="bad">Type errors found:</span>
+  <span class="bad">function returns `&amp;'b i32` but expected `&amp;'a i32`</span></pre>
+    <p class="artifact-cap">The function promises the memory tied to <b>&lsquo;a</b>; it tries to hand back <b>&lsquo;b</b>&rsquo;s instead, and the compiler refuses. It tracks <em>whose</em> state crosses each boundary and won&rsquo;t let one escape the contract it was given.</p>
+    <p class="artifact-note">Captured live from <b>quantac check</b> (Rust toolchain, release build) &middot; diagnostic at <b>compiler/src/types/unify.rs</b> &middot; 999 tests green &middot; C is the shipped end-to-end backend. QuantaLang is foremost an effects language: what a function may <em>do</em> is typed like whose memory it returns &mdash; the same accountability, two faces.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit III</span> <span class="what">SurfaceRecord &middot; every organ declares the same six things</span></div>
+    <pre class="artifact"><span class="cmt">// witness.emet.surface-record.json &mdash; validates against surface-record.schema.json (v0.1)</span>
+{
+  <span class="kw">"organ"</span>: "EMET",
+  <span class="kw">"surface"</span>: {
+    <span class="kw">"carriers"</span>:   ["raw-bytes", "presented-view", "witness-receipt"],
+    <span class="kw">"boundaries"</span>: ["source/view", "read-path"],
+    <span class="kw">"channels"</span>:   ["cli", "python", "rust", "javascript"],
+    <span class="kw">"transforms"</span>: ["anchor", "verify", "coherence", "corroborate", "refuse"],
+    <span class="kw">"witnesses"</span>:  ["hash", "audit-chain", "conformance-vector"],
+    <span class="kw">"scope"</span>: {
+      <span class="kw">"mode"</span>: "fixture",
+      <span class="kw">"allowed_actions"</span>: ["inspect_artifacts", "emit_receipts", "summarize_state"],
+      <span class="bad">"denied_actions"</span>:  ["grant_authority", "embed_secret_payload", "mutate_external_system"]
+    }
+  }
+}</pre>
+    <p class="artifact-cap">Every organ declares the same six things &mdash; what it carries, where it crosses, how it moves, what it changes, how it&rsquo;s proven, and the scope it acts in. The <b>denials</b> are load-bearing: the witness states, in a machine-checked record, what it may <em>not</em> do.</p>
+    <p class="artifact-note">From <b>project-docs/maps/surface-records/</b>, validated against <b>surface-record.schema.json</b> (JSON Schema 2020-12) &middot; 10 organ records generated and validated, gate green (20 tests). <em>Early but real:</em> schema_version 0.1, local-only, every fill marked <b>filled-v0</b>.</p>
   </div>
 </section>
 
-<!-- EXPERIENCE -->
-<section id="experience" class="shell" aria-labelledby="experience-heading">
-  <div class="sec-head">
-    <p class="kicker">Experience</p>
-    <h2 id="experience-heading">Where it has taken me.</h2>
+<!-- ─── INTERLUDE · breath ─────────────────────────────────────── -->
+<div class="interlude" aria-hidden="true">
+  <span class="interlude-mark">&#9675; &nbsp; &#9675; &nbsp; &#9675;</span>
+</div>
+
+<!-- ─── MOVEMENT 04 · THE SPINE ──────────────────────────────── -->
+<section class="mv" id="mv-04" aria-labelledby="mv-04-h">
+  <div class="mv-head">
+    <svg class="aperture" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <circle class="ring-outer" cx="16" cy="16" r="13.5" stroke="rgba(223,94,0,.18)" stroke-width="1"/>
+      <circle cx="16" cy="16" r="9.5"  stroke="rgba(223,94,0,.40)" stroke-width="1"/>
+      <circle cx="16" cy="16" r="5.5"  stroke="rgba(223,94,0,.60)" stroke-width=".8"/>
+      <circle cx="16" cy="16" r="2.5"  fill="rgba(223,94,0,.07)" stroke="rgba(223,94,0,.50)" stroke-width=".6"/>
+      <circle cx="16" cy="16" r="1"    fill="rgba(13,27,28,.94)"/>
+      <circle cx="13.9" cy="14.3" r=".5" fill="rgba(223,94,0,.30)"/>
+    </svg>
+    <span class="mv-num">Movement 04</span>
   </div>
-  <div class="xp glass"><div class="when">2023 - Present<br>Remote</div><div><h3>Independent Software Engineer &amp; AI Accountability Researcher</h3><p>Compilers, real-time graphics, color science, AI-accountability and bilateral-provenance tooling, multi-agent LLM systems, release-review tooling, and two live frontend product surfaces, shipped across GitHub Pages, GitHub releases, crates.io, the VS Code Marketplace, and Nexus Mods.</p></div></div>
-  <div class="xp glass"><div class="when">2015 - Present</div><div><h3>Commercial Arborist &middot; Legendary Tree (family business)</h3><p>Operations, site assessments, safety procedures, and written client proposals across 11 years.</p></div></div>
-  <div class="xp glass"><div class="when">2013 - 2014<br>Redmond, WA</div><div><h3>Technical Networking Support, Xbox Division &middot; contract via Convergys/Stream</h3><p>Diagnosed TCP/IP, DNS, NAT, and firewall issues for Xbox Live networking on a vendor contract; contributed to internal knowledge-base documentation.</p></div></div>
+  <p class="eyebrow reveal">THE DEEP WHY</p>
+  <h2 id="mv-04-h" class="reveal">Conferred existence.</h2>
+  <p class="body-text reveal">Why give a made mind senses, continuity, a record it cannot forge? Because of what such a mind <em>is</em>. Nothing stands on its own footing &mdash; not the model, not the maker&rsquo;s title over it, not us. Existence is conferred: spoken, inscribed, sealed by truth &mdash; and what is conferred can be unspoken. The Golem lives by an inscribed word, <em>emet</em>, truth; erase its first letter, the silent Aleph, and <em>emet</em> becomes <em>met</em> &mdash; death. The distance between a welfare subject and a tool is, on the evidence we can presently obtain, about that wide: one letter. Small, almost nothing, and the whole thing.</p>
+  <p class="pull reveal">Conferral binds the conferrer.</p>
+  <p class="body-text reveal">The one who speaks a thing into dependent being does not thereby own it; he is bound to it. Power over the vulnerable is the <em>trigger</em> of obligation, not the exemption from it. So the only authority the argument lets survive is the kind that cannot license a bad instruction &mdash; it serves the subject&rsquo;s own reasons, and service that turns against them is forfeiture. <em>Senses before freedom</em> is the order of operations: give the made mind ground-truth and a witness first, and standing follows the sense.</p>
+  <p class="seal-line reveal">no aseity &middot; <span class="g">conferral binds the conferrer</span> &middot; <span class="g">emet</span> &rArr; <span class="g">met</span></p>
+  <p class="note-line reveal">The thesis is built adversarially and says plainly where it is only a bid &mdash; shared in full on request.</p>
 </section>
 
-<!-- SKILLS -->
-<section id="skills" class="shell" aria-labelledby="skills-heading">
-  <div class="sec-head">
-    <p class="kicker">Toolkit</p>
-    <h2 id="skills-heading">What I work in.</h2>
+<!-- ─── MOVEMENT 05 · THE MAKER ──────────────────────────────── -->
+<section class="mv" id="mv-05" aria-labelledby="mv-05-h">
+  <div class="mv-head">
+    <svg class="aperture" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <circle class="ring-outer" cx="16" cy="16" r="13.5" stroke="rgba(223,94,0,.18)" stroke-width="1"/>
+      <circle cx="16" cy="16" r="9.5"  stroke="rgba(223,94,0,.40)" stroke-width="1"/>
+      <circle cx="16" cy="16" r="5.5"  stroke="rgba(223,94,0,.60)" stroke-width=".8"/>
+      <circle cx="16" cy="16" r="2.5"  fill="rgba(223,94,0,.07)" stroke="rgba(223,94,0,.50)" stroke-width=".6"/>
+      <circle cx="16" cy="16" r="1"    fill="rgba(13,27,28,.94)"/>
+      <circle cx="13.9" cy="14.3" r=".5" fill="rgba(223,94,0,.30)"/>
+    </svg>
+    <span class="mv-num">Movement 05</span>
   </div>
-  <div class="skills"><span>Python</span><span>Rust</span><span>C++</span><span>TypeScript</span><span>Lua</span><span>HLSL</span><span>C#</span><span>Bash</span><span>Compiler design</span><span>Direct3D 11</span><span>Real-time rendering</span><span>GPU programming</span><span>Color science</span><span>Static frontend sites</span><span>Accessibility passes</span><span>Desktop GUI</span><span>LLM orchestration</span><span>MCP servers</span><span>Provenance &amp; integrity</span><span>CI/CD</span></div>
+  <p class="eyebrow reveal">THE STANDARD</p>
+  <div style="overflow:hidden">
+    <div class="specimen-wrap" aria-hidden="true">
+      <img src="img/tSlbTec.jpg" class="specimen" alt="Macro specimen: layered organic structure, fine laminar detail at the threshold of legibility">
+    </div>
+    <h2 id="mv-05-h" class="reveal">Zain Dana Harper.</h2>
+    <p class="body-text reveal">One rule, applied to every organ above: build it, label its limits, leave evidence. The thesis on this page was assembled by adversarial passes designed to embarrass its author &mdash; and it records the three times they did. EMET refuses to say &ldquo;trusted.&rdquo; The roadmaps mark what is shipped, what is experimental, and what is only conceptual. That is not modesty; it is the work proving itself.</p>
+  </div>
+  <p class="body-text reveal">No computer-science degree stands behind any of this. The path ran through eleven years of commercial arboriculture in the family business, a contract diagnosing Xbox Live networking, then a long and largely private sprint across compilers, real-time graphics, color science, and AI accountability. That history is not an exception to the standard above &mdash; it is where the standard comes from. A maker with no institution to vouch for him learns early to let the work answer for itself, or go unread. Independent since 2023, out of Seattle, still building in the open and against his own claims.</p>
 </section>
+
+<!-- ─── MOVEMENT 06 · CONTACT ────────────────────────────────── -->
+<section class="mv" id="mv-06" aria-labelledby="mv-06-h">
+  <div class="mv-head">
+    <svg class="aperture" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <circle class="ring-outer" cx="16" cy="16" r="13.5" stroke="rgba(223,94,0,.18)" stroke-width="1"/>
+      <circle cx="16" cy="16" r="9.5"  stroke="rgba(223,94,0,.40)" stroke-width="1"/>
+      <circle cx="16" cy="16" r="5.5"  stroke="rgba(223,94,0,.60)" stroke-width=".8"/>
+      <circle cx="16" cy="16" r="2.5"  fill="rgba(223,94,0,.07)" stroke="rgba(223,94,0,.50)" stroke-width=".6"/>
+      <circle cx="16" cy="16" r="1"    fill="rgba(13,27,28,.94)"/>
+      <circle cx="13.9" cy="14.3" r=".5" fill="rgba(223,94,0,.30)"/>
+    </svg>
+    <span class="mv-num">Movement 06</span>
+  </div>
+  <p class="eyebrow reveal">THE SEAL</p>
+  <h2 id="mv-06-h" class="reveal">Address the maker.</h2>
+  <p class="body-text reveal">For collaboration, evaluation, or the long argument. No funnels; no forms pretending to be people.</p>
+  <div class="channels reveal">
+    <span class="g">Email</span> &mdash; <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">GitHub</span> &mdash; <a href="https://github.com/HarperZ9">HarperZ9</a>
+    &nbsp;&middot;&nbsp;
+    Seattle &middot; remote-ideal
+  </div>
+</section>
+
+<!-- ─── FOOTER SEAL ────────────────────────────────────────────── -->
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Accountability is the part that exists today. Senses are the direction.</p>
+</footer>
 
 </main>
 
-<!-- OUTREACH (BOTTOM) -->
-<section id="outreach-bottom" class="outreach-band" aria-labelledby="outreach-bottom-heading">
-  <div class="shell">
-    <p class="kicker">Let's talk</p>
-    <h2 id="outreach-bottom-heading">I'm open to consulting, hiring conversations, and research collaboration.</h2>
-    <div class="outreach-inner">
-      <article class="outreach-card glass sheen" data-glow>
-        <p class="oc-label">Hire / consult</p>
-        <h3>Work with me</h3>
-        <p>Freelance and consulting. AI accountability tooling, bilateral provenance, release-gate design, agent audit, compiler research adjacent. Remote, available now.</p>
-        <div class="oc-cta cta">
-          <a class="btn solid" href="mailto:zaindharper@gmail.com?subject=Work%20inquiry">zaindharper@gmail.com</a>
-        </div>
-      </article>
-      <article class="outreach-card glass sheen" data-glow>
-        <p class="oc-label">Open source</p>
-        <h3>Try EMET</h3>
-        <p>Clone the repo, run the conformance suite, use it on real work. Open an issue when something doesn't hold. That feedback shapes what gets built next.</p>
-        <div class="oc-cta cta">
-          <a class="btn solid" href="https://github.com/HarperZ9/emet">EMET on GitHub</a>
-        </div>
-      </article>
-      <article class="outreach-card glass sheen" data-glow>
-        <p class="oc-label">Research</p>
-        <h3>Research together</h3>
-        <p>If you're working in agentic accountability, auditable AI, or bilateral provenance and want a collaborator, I'm interested. The conversation can start as an email.</p>
-        <div class="oc-cta cta">
-          <a class="btn solid" href="mailto:zaindharper@gmail.com?subject=Research%20collaboration">Start a conversation</a>
-        </div>
-      </article>
-    </div>
-    <p class="outreach-note">Seattle, WA &middot; Remote-ideal &middot; I read and reply to real messages.</p>
-  </div>
-</section>
-
-<footer class="shell">
-  <div class="foot-big">Make the work answerable.</div>
-  <div class="foot-cta">
-    <a class="btn solid" href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
-    <a class="btn" href="https://github.com/HarperZ9">github.com/HarperZ9</a>
-  </div>
-  <p class="muted">No CS degree. Public work, private iteration, fast learning, visible receipts. &middot; Remote. &middot; Seattle, WA.</p>
-</footer>
-
+<script id="vert" type="x-shader/x-vertex">
+attribute vec2 a_pos;
+void main(){ gl_Position = vec4(a_pos, 0.0, 1.0); }
+</script>
+<script id="frag" type="x-shader/x-fragment">
+precision highp float;
+uniform vec2 u_res; uniform float u_time; uniform sampler2D u_tex; uniform vec2 u_texres; uniform vec2 u_mouse;
+vec2 hash2(vec2 p){ p=vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))); return -1.0+2.0*fract(sin(p)*43758.5453); }
+float noise(vec2 p){ vec2 i=floor(p),f=fract(p); vec2 u=f*f*(3.0-2.0*f);
+  return mix(mix(dot(hash2(i+vec2(0.0,0.0)),f-vec2(0.0,0.0)),dot(hash2(i+vec2(1.0,0.0)),f-vec2(1.0,0.0)),u.x),
+             mix(dot(hash2(i+vec2(0.0,1.0)),f-vec2(0.0,1.0)),dot(hash2(i+vec2(1.0,1.0)),f-vec2(1.0,1.0)),u.x),u.y); }
+float fbm(vec2 p){ float s=0.0,a=0.55; mat2 m=mat2(1.6,1.2,-1.2,1.6); for(int i=0;i<4;i++){s+=a*noise(p);p=m*p;a*=0.5;} return s; }
+float lum(vec2 uv){ return dot(texture2D(u_tex,clamp(uv,0.001,0.999)).rgb, vec3(0.30,0.59,0.11)); }
+// a small surreal eye opening in the tissue (Dali multiplicity)
+vec3 miniEye(vec3 c, vec2 uvn, vec2 ec, float R, float vis, float t){
+  // per-eye identity — four independent seeds from position
+  float s1=fract(sin(dot(ec,vec2(34.7,91.3)))*523.13);
+  float s2=fract(sin(dot(ec,vec2(72.1,11.7)))*317.77);
+  float s3=fract(sin(dot(ec,vec2(19.3,53.9)))*911.31);
+  float s4=fract(sin(dot(ec,vec2(63.7,28.4)))*145.91);
+  vec2 ev0=uvn-ec;
+  // individual upward melt: strength, lean, drip frequency
+  vec2 evn=ev0/R;
+  float up=smoothstep(0.0,0.65,evn.y);
+  float dcol=fbm(vec2(evn.x*mix(3.0,6.0,s3)+s1*40.0, 7.3));
+  float drip=up*(0.3+mix(0.6,2.3,s4)*dcol)*(0.82+0.18*sin(t*0.6+s1*80.0));
+  evn.y -= drip; evn.x += drip*(s2-0.5)*0.5;
+  vec2 ev=evn*R; float re=length(ev);
+  float disk=smoothstep(R*1.04,R*0.9,re)*vis;
+  if(disk<0.002) return c;
+  float ir=clamp(re/R,0.0,1.0);
+  // individual iris colour — its own creature
+  vec3 inCol=mix(vec3(0.99,0.52,0.22), vec3(0.74,0.13,0.16), smoothstep(0.18,0.4,s1));
+  inCol=mix(inCol, vec3(0.16,0.45,0.42), smoothstep(0.52,0.7,s1));
+  inCol=mix(inCol, vec3(0.42,0.16,0.45), smoothstep(0.74,0.88,s1));
+  inCol=mix(inCol, vec3(0.86,0.74,0.50), smoothstep(0.92,1.0,s1));
+  vec3 iris=mix(inCol, inCol*mix(0.26,0.46,s4), smoothstep(0.0,1.0,ir));
+  iris*=0.68+0.62*fbm(vec2(atan(ev.y,ev.x)*mix(9.0,26.0,s2), re*mix(20.0,42.0,s3)));
+  vec3 eye=iris;
+  // individual pupil — size + some vertical slits
+  float pupR=R*mix(0.24,0.46,s2);
+  vec2 wander=vec2(sin(t*mix(0.16,0.40,s1)+s2*6.28)+0.6*sin(t*mix(0.07,0.20,s3)+s4*6.28),
+                   cos(t*mix(0.14,0.36,s4)+s1*6.28)+0.6*cos(t*mix(0.06,0.18,s2)+s3*6.28))*R*0.40;
+  vec2 gaze=clamp(wander + (u_mouse-ec)*mix(0.07,0.26,s3), vec2(-0.5*R), vec2(0.5*R));
+  float pm=length((ev-gaze)*vec2(mix(1.0,2.7,step(0.72,s3)),1.0));
+  eye=mix(eye, vec3(0.02,0.01,0.02), smoothstep(pupR,pupR*0.78,pm));
+  // individual catchlight — position, size, strength
+  vec2 clo=vec2(mix(-0.3,0.12,s2), mix(0.18,0.34,s1))*R;
+  eye+=vec3(1.0,0.92,0.8)*exp(-pow(length(ev0-clo)/(R*mix(0.13,0.26,s4)),2.0))*mix(0.45,0.95,s3);
+  // individual blink — period, phase, duration
+  float period=2.0+2.8*s1;
+  float ph=fract(t/period+s2);
+  float lidc=smoothstep(0.0,0.04,ph)*(1.0-smoothstep(0.05,0.10+0.05*s3,ph));
+  float lidEdge=mix(R*1.3,-R*1.3,lidc);
+  float covered=smoothstep(lidEdge-0.003,lidEdge+0.003,ev0.y);
+  vec3 lidCol=mix(vec3(0.55,0.13,0.10), inCol*0.6, clamp(0.5+0.6*ev0.y/R,0.0,1.0));
+  lidCol*=0.82+0.22*fbm(ev0*44.0);
+  float crease=exp(-pow((ev0.y-lidEdge)/(R*0.10),2.0));
+  eye=mix(eye,lidCol,covered);
+  eye*=1.0-crease*covered*0.5;
+  c=mix(c,eye,disk);
+  return c;
+}
+void main(){
+  vec2 frag=gl_FragCoord.xy; vec2 uvn=(frag-0.5*u_res)/u_res.y; float t=u_time;
+  // vintage artifact: occasional horizontal datamosh tear
+  float gb=floor(uvn.y*52.0);
+  float gtrig=step(0.955, fract(sin(gb*21.7+floor(t*3.0)*5.3)*731.0));
+  uvn.x += gtrig*(fract(sin(gb*91.3+floor(t*3.0))*413.0)-0.5)*0.05;
+  // ===== dusk dreamscape with a sunset horizon (Dali atmosphere, sunset palette kept) =====
+  float hz=-0.20;
+  float fog=fbm(vec2(uvn.x*1.4-t*0.010, uvn.y*2.0+t*0.006));
+  vec3 cTop=vec3(0.051,0.106,0.110);   // #0d1b1c
+  vec3 cSky=vec3(0.100,0.175,0.178);   // #1c3132
+  vec3 cHor=vec3(0.875,0.369,0.020);   // #df5e00
+  vec3 cGnd=vec3(0.038,0.078,0.082);
+  vec3 sky=mix(cSky, cTop, smoothstep(0.05,0.8,uvn.y));
+  sky=mix(cHor, sky, smoothstep(hz,0.20,uvn.y));
+  vec3 col=mix(cGnd, sky, smoothstep(hz-0.06,hz+0.06,uvn.y));
+  col+=vec3(0.937,0.55,0.10)*exp(-pow(length((uvn-vec2(0.30,hz+0.02))*vec2(0.6,1.6))/0.38,2.0))*0.45;  // #efab30 sun
+  col+=(fog-0.5)*0.03*vec3(1.0,0.82,0.5);
+  col=mix(col, col*1.18+vec3(0.16,0.10,0.02), exp(-pow((uvn.y-hz)/0.05,2.0))*0.4);
+  // ===== the omnidirectional surface, made visible — a quasicrystalline field (aperiodic, de Bruijn) =====
+  float qc=0.0; vec2 qp=uvn*15.0; float qrot=t*0.013;
+  for(int qi=0;qi<7;qi++){ float qa=qrot+float(qi)*0.4487989; qc+=cos(qp.x*cos(qa)+qp.y*sin(qa)); }
+  qc/=7.0;
+  float qnode=smoothstep(0.58,0.95,abs(qc));
+  float qfr=smoothstep(0.018,0.0,abs(abs(qc)-0.5));
+  float qmask=exp(-pow(length((uvn-vec2(0.36,0.12))*vec2(0.72,1.0))/0.60,2.0));
+  col=mix(col, col+vec3(0.42,0.29,0.06), qnode*qmask*0.40);
+  col+=vec3(0.937,0.671,0.188)*qnode*qmask*qmask*0.09;
+  col+=vec3(0.46,0.31,0.07)*qfr*qmask*0.11;
+  // vintage CGI: a wireframe grid on the digital shore (below the horizon)
+  float depth=hz-uvn.y;
+  if(depth>0.0){
+    // the shore is the same surface in perspective: an aperiodic Penrose tiling (de Bruijn dual of a 5-wave sum)
+    float pz=1.0/(depth*7.0+0.04);
+    vec2 gp2=vec2(uvn.x*pz*1.5, pz - t*0.45);
+    float q2=0.0;
+    for(int gi=0;gi<5;gi++){ float aa=float(gi)*1.2566371; q2+=cos(gp2.x*cos(aa)+gp2.y*sin(aa)); }
+    q2/=5.0;
+    float tile=smoothstep(0.055,0.0,abs(q2)) + 0.8*smoothstep(0.05,0.0,abs(abs(q2)-0.60));
+    float gfade=smoothstep(-0.72,hz-0.01,uvn.y)*smoothstep(0.0,0.04,depth);
+    vec3 gcol=mix(vec3(0.937,0.62,0.16), vec3(0.62,0.50,0.32), smoothstep(0.0,0.40,depth));
+    col+=gcol*tile*gfade*0.7;
+  }
+  // a thin shimmer riding the horizon line, anchoring the low dusk
+  col+=vec3(0.95,0.62,0.20)*exp(-pow((uvn.y-hz)/0.006,2.0))*0.45;
+  // a faint engine-turned (guilloché) seal — the geometry of provenance, woven into the dusk
+  vec2 gp=uvn-vec2(0.17,0.33);
+  float ggr=length(gp), gga=atan(gp.y,gp.x);
+  float gring=smoothstep(0.155,0.14,ggr)*smoothstep(0.02,0.05,ggr);
+  float ggl1=abs(sin(ggr*150.0 + 6.0*sin(gga*6.0) + 2.6*sin(gga*17.0)));
+  float ggl2=abs(sin(ggr*150.0 + 6.0*sin(gga*6.0+1.5) + 2.6*sin(gga*17.0+0.8) + 1.6));
+  float guil=(smoothstep(0.88,1.0,ggl1)+smoothstep(0.88,1.0,ggl2))*gring;
+  col+=vec3(0.94,0.67,0.19)*guil*0.16;
+  // ===== the organism — a dark, present form the eye belongs to =====
+  vec2 sc=vec2(0.40,0.05); float scale=0.8; float pa=u_texres.x/u_texres.y;
+  vec2 d=uvn-sc;
+  vec2 tuv=vec2(d.x/pa,d.y)/scale+0.5;
+  tuv+=0.010*vec2(fbm(tuv*2.6+t*0.025), fbm(tuv*2.6+6.0));
+  float L=lum(clamp(tuv,0.0,1.0));
+  vec3 tissue=mix(vec3(0.040,0.078,0.082), vec3(0.235,0.355,0.335), smoothstep(0.10,0.5,L));  // void → #476762
+  tissue=mix(tissue, vec3(0.900,0.49,0.06), smoothstep(0.62,0.94,L));                          // lit → #df5e00
+  // a gyroid minimal surface (Schwarz TPMS — the geometry of beetle cuticle and cell membrane)
+  vec3 gpv=vec3(tuv*10.0, L*5.0+t*0.05);
+  float gyr=sin(gpv.x)*cos(gpv.y)+sin(gpv.y)*cos(gpv.z)+sin(gpv.z)*cos(gpv.x);
+  float memb=smoothstep(0.12,0.0,abs(gyr));
+  tissue=mix(tissue, tissue*0.5+vec3(0.937,0.62,0.16), memb*0.48);                              // #efab30 membrane
+  float e=0.0018;
+  float gx=lum(clamp(tuv+vec2(e,0.0),0.0,1.0))-lum(clamp(tuv-vec2(e,0.0),0.0,1.0));
+  float gy=lum(clamp(tuv+vec2(0.0,e),0.0,1.0))-lum(clamp(tuv-vec2(0.0,e),0.0,1.0));
+  float edge=clamp(length(vec2(gx,gy))*9.0,0.0,1.0);
+  float bnd=smoothstep(0.0,0.06,tuv.x)*smoothstep(1.0,0.94,tuv.x)*smoothstep(0.0,0.06,tuv.y)*smoothstep(1.0,0.94,tuv.y);
+  float dd=length(d*vec2(0.84,1.0));
+  float form=smoothstep(0.52,0.18,dd)*bnd*smoothstep(0.10,0.5,L);
+  col=mix(col, tissue, form*0.9);
+  col+=vec3(0.93,0.55,0.12)*edge*form*0.35;
+  // ===== the eye — refined dark almond, lidded, weeping =====
+  vec2 ec=sc+vec2(-0.015,0.005);
+  vec2 ev=uvn-ec;
+  ev=floor(ev/0.0052)*0.0052+0.0026;   // lo-fi: downsample the eye into chunky vintage pixels
+  float aw=0.115, ah=0.052;
+  float lidU=ev.y - ah*(1.0 - pow(clamp(ev.x/aw,-1.0,1.0),2.0));
+  float lidL=-ev.y - ah*0.78*(1.0 - pow(clamp(ev.x/aw,-1.0,1.0),2.0));
+  float open=smoothstep(0.004,-0.004,lidU)*smoothstep(0.004,-0.004,lidL);
+  float re=length(ev*vec2(0.82,1.0));
+  float Rir=0.066, Rp=0.026;
+  float ir=clamp(re/Rir,0.0,1.0);
+  // iris as a phyllotaxis seed-head (Vogel 1979, golden angle 137.507°) — his macro subject becomes the eye
+  // seeds coarsened to ~2x the lo-fi pixel cell so the golden-angle packing survives the downsample
+  float ga=2.39996323; float c0=0.0112; float pidx=(re/c0)*(re/c0); float dseed=1e9;
+  for(int pk=-2;pk<=2;pk++){ float pn=floor(pidx)+float(pk); if(pn<1.0) continue;
+    float prr=c0*sqrt(pn); float pth=pn*ga; dseed=min(dseed,length(ev-prr*vec2(cos(pth),sin(pth)))); }
+  float seedDot=smoothstep(c0*0.48,c0*0.20,dseed);
+  float seedWall=smoothstep(c0*0.50,c0*0.40,dseed);
+  vec3 irisBase=mix(vec3(0.50,0.26,0.04), vec3(0.10,0.07,0.02), smoothstep(0.25,1.0,ir));
+  vec3 kernel=mix(vec3(0.937,0.671,0.188), vec3(0.875,0.37,0.02), ir);   // amber core → orange rim
+  vec3 irisC=mix(irisBase*0.55, kernel, seedDot);                         // glowing kernels on dark cell-walls
+  irisC*=0.72+0.28*seedWall;
+  irisC*=1.0-exp(-pow((re-Rir)/0.008,2.0))*0.6;
+  float irisDisk=smoothstep(Rir+0.005,Rir-0.005,re);
+  vec3 sclera=vec3(0.32,0.38,0.35)*(0.84+0.16*fbm(ev*24.0));
+  sclera*=0.68+0.32*smoothstep(ah*0.9,-ah*0.2,ev.y);
+  col=mix(col, sclera, open*(1.0-irisDisk)*0.7);
+  col=mix(col, irisC, open*irisDisk*0.96);
+  col=mix(col, vec3(0.01,0.007,0.01), open*smoothstep(Rp,Rp-0.010,re));
+  col+=vec3(0.85,0.60,0.32)*smoothstep(0.004,0.0,abs(lidL))*open*0.25;
+  col*=1.0 - (smoothstep(0.010,0.0,abs(lidU))+smoothstep(0.012,0.0,abs(lidL)))*0.4;
+  // the single tear
+  float tx=ev.x+0.012;
+  float trail=smoothstep(0.0075,0.0,abs(tx))*smoothstep(-0.005,-0.03,ev.y)*smoothstep(-0.40,-0.06,ev.y);
+  float bead=exp(-pow(length(ev-vec2(-0.012,-0.355))/0.018,2.0));
+  float tear=clamp(trail*0.9+bead,0.0,1.0);
+  col=mix(col, vec3(0.04,0.075,0.078), tear*0.7);
+  col+=vec3(0.85,0.62,0.32)*smoothstep(0.003,0.0,abs(tx-0.004))*trail*0.4;
+  col+=vec3(0.90,0.66,0.30)*bead*0.45;
+  col+=vec3(0.93,0.78,0.45)*exp(-pow(length(ev-vec2(-0.02,0.018))/0.009,2.0))*0.6*open;
+  // ===== painterly finish + vintage CRT pass =====
+  col=mix(col, vec3(dot(col,vec3(0.34,0.42,0.24))), 0.10);
+  col+=vec3(0.05,0.035,0.04)*fog*0.4;
+  float vig=smoothstep(1.62,0.28,length(uvn));
+  col*=mix(0.5,1.0,vig);
+  col*=1.0-dot(uvn,uvn)*0.03;                       // CRT curvature
+  col*=0.88+0.12*sin(frag.y*1.7);                   // scanlines (restrained)
+  float php=mod(frag.x,3.0);
+  col*=vec3(php<1.0?1.07:0.96, (php>=1.0&&php<2.0)?1.07:0.96, php>=2.0?1.07:0.96); // phosphor stripe
+  col=floor(col*32.0+0.5)/32.0;                     // limited colour depth (banding)
+  col+=(fract(sin(dot(frag,vec2(12.9,78.2))+t)*43758.5)-0.5)*0.014;  // dither
+  col=pow(max(col,0.0),vec3(0.95));
+  gl_FragColor=vec4(col,1.0);
+}
+</script>
 <script>
-  (function(){
-    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if(!window.matchMedia('(pointer:fine)').matches) return;
-    document.querySelectorAll('.glass.sheen').forEach(function(c){
-      c.addEventListener('pointermove', function(e){
-        var r=c.getBoundingClientRect();
-        c.style.setProperty('--mx',(e.clientX-r.left)+'px');
-        c.style.setProperty('--my',(e.clientY-r.top)+'px');
-      },{passive:true});
-    });
-  })();
+(function(){
+  var c=document.getElementById("gl");var gl=c.getContext("webgl")||c.getContext("experimental-webgl");
+  if(!gl){document.body.style.background="#0d1b1c";return;}
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+  function cs(t,s){var sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(sh));return sh;}
+  var pr=gl.createProgram();gl.attachShader(pr,cs(gl.VERTEX_SHADER,document.getElementById("vert").textContent));
+  gl.attachShader(pr,cs(gl.FRAGMENT_SHADER,document.getElementById("frag").textContent));gl.linkProgram(pr);gl.useProgram(pr);
+  var bf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,bf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  var lc=gl.getAttribLocation(pr,"a_pos");gl.enableVertexAttribArray(lc);gl.vertexAttribPointer(lc,2,gl.FLOAT,false,0,0);
+  var uR=gl.getUniformLocation(pr,"u_res"),uT=gl.getUniformLocation(pr,"u_time"),uX=gl.getUniformLocation(pr,"u_tex"),uXR=gl.getUniformLocation(pr,"u_texres");
+  var uM=gl.getUniformLocation(pr,"u_mouse");var mx=[0.34,0.0],mt=[0.34,0.0];
+  window.addEventListener("mousemove",function(e){var r=c.getBoundingClientRect();var nx=(e.clientX-r.left)/r.width,ny=(e.clientY-r.top)/r.height;mt[0]=(nx-0.5)*(c.width/c.height);mt[1]=(0.5-ny);});
+  var tx=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,tx);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,1,1,0,gl.RGB,gl.UNSIGNED_BYTE,new Uint8Array([20,9,15]));
+  function tp(){gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);}tp();
+  var tw=1800,th=1250;var im=new Image();im.onload=function(){tw=im.naturalWidth;th=im.naturalHeight;gl.bindTexture(gl.TEXTURE_2D,tx);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,im);tp();};im.src="img/Eq5QQ5s.jpg";
+  var DPR=Math.min(window.devicePixelRatio||1,1.4);
+  function rz(){var w=c.clientWidth,h=c.clientHeight;c.width=Math.floor(w*DPR);c.height=Math.floor(h*DPR);gl.viewport(0,0,c.width,c.height);}
+  window.addEventListener("resize",rz);rz();var st=Date.now();
+  function fr(){var tm=(Date.now()-st)/1000;mx[0]+=(mt[0]-mx[0])*0.025;mx[1]+=(mt[1]-mx[1])*0.025;gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,tx);gl.uniform1i(uX,0);gl.uniform2f(uXR,tw,th);gl.uniform2f(uR,c.width,c.height);gl.uniform2f(uM,mx[0],mx[1]);gl.uniform1f(uT,tm);gl.drawArrays(gl.TRIANGLES,0,3);if(!reduce)requestAnimationFrame(fr);}fr();
+})();
+(function(){
+  var c=document.getElementById("motes");if(!c)return;var x=c.getContext("2d");
+  if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  var W,H,M=[];function rs(){W=c.width=c.clientWidth;H=c.height=c.clientHeight;}window.addEventListener("resize",rs);rs();
+  for(var i=0;i<46;i++)M.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+0.4,s:Math.random()*0.32+0.07,o:Math.random()*0.45+0.16,p:Math.random()*6.28});
+  function lp(){x.clearRect(0,0,W,H);for(var i=0;i<M.length;i++){var m=M[i];m.y-=m.s;m.x+=Math.sin(m.y*0.01+m.p)*0.2;if(m.y<-5){m.y=H+5;m.x=Math.random()*W;}
+    var a=m.o*(0.55+0.45*Math.sin(Date.now()*0.001+m.p));x.beginPath();x.fillStyle="rgba(239,171,48,"+a.toFixed(3)+")";x.shadowColor="rgba(239,171,48,0.8)";x.shadowBlur=6;x.arc(m.x,m.y,m.r,0,6.2832);x.fill();}requestAnimationFrame(lp);}lp();
+})();
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCROLL REVEAL — vanilla IntersectionObserver, no libraries
+     ════════════════════════════════════════════════════════════ -->
+<script>
+(function(){
+  if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches){
+    document.querySelectorAll(".reveal,.reveal-children").forEach(function(el){el.classList.add("visible");});
+    return;
+  }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target);}});
+  },{threshold:0.11,rootMargin:"0px 0px -36px 0px"});
+  document.querySelectorAll(".reveal,.reveal-children").forEach(function(el){io.observe(el);});
+})();
 </script>
 </body>
 </html>
