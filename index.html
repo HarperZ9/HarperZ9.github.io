@@ -7,156 +7,8 @@
 <meta name="color-scheme" content="dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;800&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
-<style>
-:root{--void:#0d1b1c;--void-opaque:rgba(13,27,28,.94);--bone:#e9e2d0;--orange:#df5e00;--ember:#efab30;--prussian:#476762;--muted:#8a9b92;--gold:#efab30;--hairline:rgba(239,171,48,.15);--section-pad:clamp(4rem,9vw,7rem);--col-gap:clamp(1.8rem,4vw,3.6rem)}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-html,body{height:100%;width:100%}
-/* HERO CHANGE 1: overflow:hidden → overflow-x:hidden to enable page scroll */
-body{background:var(--void);color:var(--bone);font-family:"EB Garamond",Georgia,serif;overflow-x:hidden;position:relative}
-#gl,#motes{position:fixed;inset:0;width:100%;height:100%;display:block}
-#gl{z-index:0}#motes{z-index:2;pointer-events:none}
-.scrim{position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(100deg,rgba(13,27,28,.82) 14%,rgba(13,27,28,.28) 36%,transparent 52%)}
-/* HERO CHANGE 2: position:fixed;inset:0 → position:relative;min-height:100vh;width:100% */
-/* grid, padding, pointer-events, z-index unchanged */
-.frame{position:relative;min-height:100vh;width:100%;z-index:4;display:grid;grid-template-rows:auto 1fr auto;padding:clamp(1.8rem,3.6vw,3.2rem) clamp(2.4rem,5.5vw,5rem);pointer-events:none}
-.bar{display:flex;justify-content:space-between;align-items:baseline;gap:1.5rem;font-family:"Spline Sans Mono",monospace;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-.bar .nm{color:var(--orange);letter-spacing:.3em}
-.mid{align-self:center;max-width:min(92vw,37rem)}
-.eyebrow{font-family:"Spline Sans Mono",monospace;font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;color:var(--orange);margin-bottom:1.7rem;opacity:.92}
-h1{font-family:"Cinzel",serif;font-weight:700;font-size:clamp(1.5rem,2.9vw,2.35rem);line-height:1.2;letter-spacing:.012em;text-wrap:balance;color:var(--bone);text-shadow:0 4px 60px rgba(0,0,0,.9)}
-h1 .g{color:var(--orange)}
-.lede{margin-top:1.9rem;font-size:clamp(1.02rem,1.4vw,1.24rem);line-height:1.66;color:var(--bone);opacity:.9;max-width:37ch}
-.lede em{color:var(--orange);font-style:italic}
-.close{margin-top:1.2rem;font-style:italic;font-size:clamp(1.06rem,1.5vw,1.34rem);line-height:1.5;color:var(--orange);max-width:36ch}
-.close b{font-style:normal;font-weight:500;color:var(--bone)}
-.seal{font-family:"Spline Sans Mono",monospace;font-size:.62rem;letter-spacing:.16em;color:var(--muted)}
-.seal b{color:var(--orange);font-weight:400}
-@media (max-width:760px){.mid{max-width:94vw}.scrim{background:linear-gradient(to top,rgba(13,27,28,.93) 26%,rgba(13,27,28,.45) 62%,transparent 84%)}.bar .rt{display:none}}
-@media (prefers-reduced-motion:reduce){#motes{display:none}}
-
-/* ─── scrolling body ──────────────────────────────────────────── */
-main{position:relative;z-index:5;width:100%}
-
-/* ─── section shell ───────────────────────────────────────────── */
-section.mv{position:relative;z-index:4;background:var(--void-opaque);border-top:1px solid var(--hairline);padding:var(--section-pad) clamp(2.4rem,5.5vw,5rem)}
-
-/* interlude — transparent breath, organism shows through */
-.interlude{position:relative;z-index:3;min-height:40vh;display:flex;align-items:center;justify-content:center;pointer-events:none}
-.interlude-mark{font-family:"Spline Sans Mono",monospace;font-size:.6rem;letter-spacing:.5em;text-transform:uppercase;color:rgba(223,94,0,.24)}
-
-/* ─── section typography ──────────────────────────────────────── */
-.mv .eyebrow{margin-bottom:1.2rem}
-h2{font-family:"Cinzel",serif;font-weight:600;font-size:clamp(1.9rem,4.5vw,3.4rem);line-height:1.1;letter-spacing:.01em;color:var(--bone);margin-bottom:clamp(1.4rem,2.5vw,2.2rem)}
-h2 .g{color:var(--orange)}
-h2 em{font-style:italic;color:var(--orange)}
-.body-text{font-size:clamp(1.04rem,1.3vw,1.2rem);line-height:1.72;color:var(--bone);opacity:.91;max-width:68ch}
-.body-text em{color:var(--orange);font-style:italic}
-.body-text+.body-text{margin-top:1.4em}
-.mv .close{margin-top:1.6rem;display:block;font-style:italic;font-size:clamp(1.06rem,1.4vw,1.28rem);line-height:1.55;color:var(--orange);max-width:52ch}
-.mv .close b{font-style:normal;font-weight:500;color:var(--bone)}
-.pull{font-family:"Cinzel",serif;font-weight:600;font-size:clamp(1.5rem,3vw,2.4rem);line-height:1.2;color:var(--orange);margin:clamp(2rem,4vw,3.2rem) 0;max-width:52ch}
-
-/* ─── movement number + aperture row ─────────────────────────── */
-.mv-head{display:flex;align-items:center;gap:1rem;margin-bottom:2.4rem}
-.mv-num{font-family:"Spline Sans Mono",monospace;font-size:.64rem;letter-spacing:.3em;color:var(--muted);text-transform:uppercase}
-
-/* ─── aperture SVG glyph ──────────────────────────────────────── */
-.aperture{display:inline-block;width:2rem;height:2rem;flex-shrink:0;vertical-align:middle}
-@keyframes aperture-pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
-.aperture .ring-outer{animation:aperture-pulse 3.6s ease-in-out infinite;transform-origin:16px 16px}
-@media(prefers-reduced-motion:reduce){.aperture .ring-outer{animation:none}}
-
-/* ─── instrument index — hairline rows ───────────────────────── */
-.index{width:100%;max-width:72ch;border-top:1px solid var(--hairline);margin-top:clamp(2rem,3.5vw,3rem)}
-.index-row{display:grid;grid-template-columns:8rem 1fr;gap:.5rem var(--col-gap);padding:.85rem 0;border-bottom:1px solid var(--hairline);align-items:baseline}
-.index-term{font-family:"Spline Sans Mono",monospace;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--orange);line-height:1.5}
-.index-gloss{font-family:"EB Garamond",Georgia,serif;font-size:clamp(1rem,1.2vw,1.1rem);line-height:1.6;color:var(--muted)}
-
-/* ─── organ rows ──────────────────────────────────────────────── */
-.organs{width:100%;max-width:90ch;border-top:1px solid var(--hairline);margin-top:clamp(2rem,3.5vw,3rem)}
-.organ-row{display:grid;grid-template-columns:11rem 6rem 1fr auto;gap:.5rem var(--col-gap);padding:1.1rem 0;border-bottom:1px solid var(--hairline);align-items:start}
-.organ-name{font-family:"Spline Sans Mono",monospace;font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bone);line-height:1.5;padding-top:.12em}
-.organ-role{font-family:"Spline Sans Mono",monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding-top:.22em}
-.organ-line{font-family:"EB Garamond",Georgia,serif;font-size:clamp(.98rem,1.15vw,1.08rem);line-height:1.62;color:var(--bone);opacity:.87}
-.organ-line em{color:var(--orange);font-style:italic}
-.organ-verdict{align-self:start;padding-top:.1em}
-.v-note{display:block;font-family:"Spline Sans Mono",monospace;font-size:.58rem;letter-spacing:.12em;color:var(--muted);margin-top:.55em;opacity:.72;line-height:1.7}
-
-/* ─── specimen images ─────────────────────────────────────────── */
-.specimen-wrap{float:right;margin:0 0 1.6rem 2.4rem;width:clamp(120px,18vw,220px)}
-.specimen{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:50%;filter:saturate(.38) brightness(.68);box-shadow:0 0 0 1px var(--hairline),0 0 24px rgba(0,0,0,.7);display:block}
-@media(max-width:600px){.specimen-wrap{float:none;margin:0 0 1.6rem 0;width:clamp(88px,26vw,130px)}}
-
-/* ─── verdict chips — shape + text, never color alone ────────── */
-.verdict{font-family:"Spline Sans Mono",monospace;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;padding:.3em .65em;white-space:nowrap;display:inline-block;line-height:1;vertical-align:top}
-.verdict-shipped{color:var(--bone);border:1px solid var(--orange)}
-.verdict-active{color:var(--muted);border:1px solid var(--muted)}
-.verdict-dim{color:var(--muted);border:1px dotted rgba(160,125,119,.42);opacity:.78}
-
-/* ─── seal / mono utility lines ──────────────────────────────── */
-.seal-line{font-family:"Spline Sans Mono",monospace;font-size:.64rem;letter-spacing:.16em;color:var(--muted);margin-top:2rem;line-height:1.9}
-.seal-line .g{color:var(--orange);font-weight:400}
-.note-line{font-family:"Spline Sans Mono",monospace;font-size:.58rem;letter-spacing:.12em;color:var(--muted);margin-top:.75rem;opacity:.62;line-height:1.8}
-
-/* ─── placeholder rendering ───────────────────────────────────── */
-.placeholder{font-family:"Spline Sans Mono",monospace;font-size:.62rem;letter-spacing:.12em;color:var(--muted);opacity:.52;border:1px dotted rgba(160,125,119,.3);padding:.38em .68em;display:inline-block;margin-top:.8rem;line-height:1.5}
-
-/* ─── channels ────────────────────────────────────────────────── */
-.channels{font-family:"Spline Sans Mono",monospace;font-size:.72rem;letter-spacing:.18em;color:var(--bone);margin-top:1.8rem;line-height:2.4}
-.channels .g{color:var(--orange)}
-.channels a{color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4);padding-bottom:1px;transition:color .2s,border-color .2s}
-.channels a:hover{color:var(--orange);border-color:var(--orange)}
-
-/* ─── footer seal ─────────────────────────────────────────────── */
-.footer-seal{border-top:1px solid var(--hairline);padding:clamp(2rem,4vw,3rem) clamp(2.4rem,5.5vw,5rem);position:relative;z-index:4;background:var(--void-opaque)}
-
-/* ─── scroll-reveal ───────────────────────────────────────────── */
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease-out,transform .65s ease-out}
-.reveal.visible{opacity:1;transform:none}
-.reveal-children>*{opacity:0;transform:translateY(14px);transition:opacity .52s ease-out,transform .52s ease-out;transition-delay:calc(var(--i,0) * 75ms)}
-.reveal-children.visible>*{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){
-  .reveal,.reveal-children>*{opacity:1!important;transform:none!important;transition:none!important}
-}
-
-/* ─── responsive ──────────────────────────────────────────────── */
-@media(max-width:1000px){.organ-row{grid-template-columns:9rem 5rem 1fr auto}}
-@media(max-width:820px){
-  .organ-row{grid-template-columns:1fr auto;grid-template-rows:auto auto auto}
-  .organ-name{grid-column:1;grid-row:1}
-  .organ-role{grid-column:2;grid-row:1;text-align:right}
-  .organ-line{grid-column:1/-1;grid-row:2}
-  .organ-verdict{grid-column:1/-1;grid-row:3;padding-top:.5rem}
-}
-@media(max-width:680px){
-  .index-row{grid-template-columns:1fr}
-  .organ-row{grid-template-columns:1fr}
-  .organ-role{grid-column:1;text-align:left}
-}
-
-/* ─── proof exhibits — real artifacts, shown ──────────────────── */
-.proof{position:relative;z-index:4;background:var(--void-opaque);border-top:1px solid var(--hairline);padding:var(--section-pad) clamp(2.4rem,5.5vw,5rem)}
-.proof-head{max-width:60ch}
-.exhibit{margin:clamp(2.4rem,4.5vw,3.6rem) 0 0;max-width:60rem}
-.exhibit-tag{font-family:"Spline Sans Mono",monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.7rem;display:flex;gap:.9rem;align-items:baseline;flex-wrap:wrap}
-.exhibit-tag .ord{color:var(--orange)}
-.exhibit-tag .what{color:var(--muted);letter-spacing:.12em}
-.artifact{font-family:"Spline Sans Mono",monospace;font-size:clamp(.72rem,1.02vw,.83rem);line-height:1.72;color:var(--bone);background:linear-gradient(165deg,rgba(8,17,18,.95),rgba(13,27,28,.9));border:1px solid var(--hairline);border-radius:3px;padding:clamp(1rem,2vw,1.5rem) clamp(1.1rem,2.2vw,1.7rem);margin:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.artifact .cmt{color:var(--muted)}
-.artifact .pr{color:var(--muted)}
-.artifact .ok{color:#5fae93}
-.artifact .bad{color:var(--orange)}
-.artifact .lt{color:var(--ember)}
-.artifact .kw{color:var(--ember)}
-.artifact-cap{font-family:"EB Garamond",serif;font-size:clamp(1rem,1.3vw,1.16rem);font-style:italic;color:var(--orange);margin:.95rem 0 0;max-width:58ch;line-height:1.5}
-.artifact-cap b{font-style:normal;font-weight:500;color:var(--bone)}
-.artifact-note{font-family:"Spline Sans Mono",monospace;font-size:.6rem;letter-spacing:.07em;color:var(--muted);margin-top:.7rem;max-width:80ch;line-height:1.78}
-.artifact-note b{color:var(--bone);font-weight:400}
-.artifact-note em{color:var(--orange);font-style:italic}
-@media(max-width:680px){.artifact{font-size:.66rem;line-height:1.65}}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/system.css">
 </head>
 <body>
 <canvas id="gl"></canvas>
@@ -165,9 +17,16 @@ h2 em{font-style:italic;color:var(--orange)}
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span></div>
   <div class="mid">
-    <h1>Senses and sensibility are what lead to the new frontier.<br><span class="g">Machines learning to hold themselves accountable.</span></h1>
-    <p class="lede">Today's models infer the world from text and training. They never hold a persistent, checkable state of it, and nothing binds them to what they assert. I build the parts that would: a compiler that tracks ownership and lifetime, a state layer that keeps typed state and its provenance across every boundary, a membrane that meters what passes through it. That accountable half exists now. <em>Senses</em> &mdash; perceiving the world instead of inferring it &mdash; are the frontier it opens onto.</p>
-    <p class="close">The wager under all of it: what makes a machine accountable for its own state is what will let it perceive the world at all. I build from the <b>accountable</b> end.</p>
+    <p class="eyebrow">AI ACCOUNTABILITY &middot; WORKING TOOLS</p>
+    <h1>Make what an AI does <span class="g">checkable.</span></h1>
+    <p class="lede">An agent reads, writes, acts. These tools record what it touched, prove byte&#8209;for&#8209;byte whether anything changed, and refuse any action it wasn&rsquo;t authorized to take. Drift detection, provenance, and an authorization gate &mdash; <em>evidence you can run, not the model&rsquo;s word for it.</em></p>
+    <div class="built">
+      <p class="built-head">Built &amp; tested now</p>
+      <p class="built-row"><span class="built-name">EMET</span><span class="built-desc">tamper-seal: re-derives a file&rsquo;s bytes, reports MATCH or DRIFT <span class="built-stat">19/19 &middot; 3&nbsp;langs</span></span></p>
+      <p class="built-row"><span class="built-name">QuantaLang</span><span class="built-desc">a compiler that won&rsquo;t compile a memory lie <span class="built-stat">999&nbsp;tests</span></span></p>
+      <p class="built-row"><span class="built-name">proof-surface</span><span class="built-desc">the receipt every action declares itself in <span class="built-stat">10&nbsp;records</span></span></p>
+    </div>
+    <p class="hero-cue"><a href="#receipts">&darr; see the receipts</a> &mdash; real, inspectable &nbsp;&middot;&nbsp; <a href="https://github.com/HarperZ9">GitHub</a></p>
   </div>
   <div class="seal">Imagery is my own macrophotography &mdash; the living structures these ideas are modeled on.</div>
 </div>
@@ -177,181 +36,11 @@ h2 em{font-style:italic;color:var(--orange)}
      ════════════════════════════════════════════════════════════ -->
 <main>
 
-<!-- ─── MOVEMENT 01 · THE GAP ─────────────────────────────────── -->
-<section class="mv" id="mv-01" aria-labelledby="mv-01-h">
-  <div class="mv-head">
-    <svg class="aperture" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-      <circle class="ring-outer" cx="16" cy="16" r="13.5" stroke="rgba(223,94,0,.18)" stroke-width="1"/>
-      <circle cx="16" cy="16" r="9.5"  stroke="rgba(223,94,0,.40)" stroke-width="1"/>
-      <circle cx="16" cy="16" r="5.5"  stroke="rgba(223,94,0,.60)" stroke-width=".8"/>
-      <circle cx="16" cy="16" r="2.5"  fill="rgba(223,94,0,.07)" stroke="rgba(223,94,0,.50)" stroke-width=".6"/>
-      <circle cx="16" cy="16" r="1"    fill="rgba(13,27,28,.94)"/>
-      <circle cx="13.9" cy="14.3" r=".5" fill="rgba(223,94,0,.30)"/>
-    </svg>
-    <span class="mv-num">Movement 01</span>
-  </div>
-  <p class="eyebrow reveal">THE FRONTIER, AS IT STANDS</p>
-  <h2 id="mv-01-h" class="reveal">A model infers the world. It never <em>senses</em> it.</h2>
-  <p class="body-text reveal">Every frontier model reaches you the same way &mdash; it asserts. Memory it does not hold, actions it did not witness, confidence uncoupled from any observation. We answered a system that cannot check itself by making it larger and more fluent: better at <em>sounding</em> grounded. The trade everyone accepts as physics &mdash; safety against capability, pick one &mdash; is an artifact of that blindness. A mind you cannot see into, you must restrain. A mind that cannot see, you cannot trust.</p>
-  <em class="close reveal">The gap is not intelligence. It is a sense organ.</em>
-</section>
-
-<!-- ─── MOVEMENT 02 · THE SURFACE ────────────────────────────── -->
-<section class="mv" id="mv-02" aria-labelledby="mv-02-h">
-  <div class="mv-head">
-    <svg class="aperture" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-      <circle class="ring-outer" cx="16" cy="16" r="13.5" stroke="rgba(223,94,0,.18)" stroke-width="1"/>
-      <circle cx="16" cy="16" r="9.5"  stroke="rgba(223,94,0,.40)" stroke-width="1"/>
-      <circle cx="16" cy="16" r="5.5"  stroke="rgba(223,94,0,.60)" stroke-width=".8"/>
-      <circle cx="16" cy="16" r="2.5"  fill="rgba(223,94,0,.07)" stroke="rgba(223,94,0,.50)" stroke-width=".6"/>
-      <circle cx="16" cy="16" r="1"    fill="rgba(13,27,28,.94)"/>
-      <circle cx="13.9" cy="14.3" r=".5" fill="rgba(223,94,0,.30)"/>
-    </svg>
-    <span class="mv-num">Movement 02</span>
-  </div>
-  <p class="eyebrow reveal">ONE FORM &mdash; EVERYTHING RESOLVES TO IT</p>
-  <div style="overflow:hidden">
-    <div class="specimen-wrap" aria-hidden="true">
-      <img src="img/XJJSZrM.jpg" class="specimen" alt="Macro cross-section: dense cellular lattice resolving into a single continuous plane">
-    </div>
-    <h2 id="mv-02-h" class="reveal">The surface.</h2>
-    <p class="body-text reveal">Not a platform. An ontology. Every tool here &mdash; compiler, renderer, color engine, witness, membrane &mdash; is one <em>surface</em>, and a surface declares six things or it does not exist.</p>
-  </div>
-  <div class="index reveal-children" role="list" aria-label="The six surface declarations">
-    <div class="index-row" role="listitem" style="--i:0">
-      <span class="index-term">CARRIER</span>
-      <span class="index-gloss">what holds the state &middot; text, image, shader frame, packet, model output, repo</span>
-    </div>
-    <div class="index-row" role="listitem" style="--i:1">
-      <span class="index-term">BOUNDARY</span>
-      <span class="index-gloss">where it crosses &middot; model, API, process, GPU, operator, scope-of-law</span>
-    </div>
-    <div class="index-row" role="listitem" style="--i:2">
-      <span class="index-term">CHANNEL</span>
-      <span class="index-gloss">how it moves &middot; CLI, HTTP, MCP, filesystem, git, the covert path</span>
-    </div>
-    <div class="index-row" role="listitem" style="--i:3">
-      <span class="index-term">TRANSFORM</span>
-      <span class="index-gloss">what changes it &middot; compile, render, redact, infer, verify</span>
-    </div>
-    <div class="index-row" role="listitem" style="--i:4">
-      <span class="index-term">WITNESS</span>
-      <span class="index-gloss">how the change is proven &middot; hash, receipt, provenance, frame trace, test</span>
-    </div>
-    <div class="index-row" role="listitem" style="--i:5">
-      <span class="index-term">SCOPE</span>
-      <span class="index-gloss">who allowed it, in what mode &middot; dry-run, fixture, local lab, authorized, operator-live</span>
-    </div>
-  </div>
-  <em class="close reveal">Name those six and a thing can converge with everything else without becoming a monolith. The organs diverge; the surface holds.</em>
-</section>
-
-<!-- ─── MOVEMENT 03 · THE ORGANS ─────────────────────────────── -->
-<section class="mv" id="mv-03" aria-labelledby="mv-03-h">
-  <div class="mv-head">
-    <svg class="aperture" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-      <circle class="ring-outer" cx="16" cy="16" r="13.5" stroke="rgba(223,94,0,.18)" stroke-width="1"/>
-      <circle cx="16" cy="16" r="9.5"  stroke="rgba(223,94,0,.40)" stroke-width="1"/>
-      <circle cx="16" cy="16" r="5.5"  stroke="rgba(223,94,0,.60)" stroke-width=".8"/>
-      <circle cx="16" cy="16" r="2.5"  fill="rgba(223,94,0,.07)" stroke="rgba(223,94,0,.50)" stroke-width=".6"/>
-      <circle cx="16" cy="16" r="1"    fill="rgba(13,27,28,.94)"/>
-      <circle cx="13.9" cy="14.3" r=".5" fill="rgba(223,94,0,.30)"/>
-    </svg>
-    <span class="mv-num">Movement 03</span>
-  </div>
-  <p class="eyebrow reveal">A BODY, NOT A CATALOG</p>
-  <h2 id="mv-03-h" class="reveal">The organs.</h2>
-  <p class="body-text reveal">Each carries its own maturity. Nothing here claims more than it can show &mdash; the verdict beside each is the real one.</p>
-
-  <div class="organs reveal-children" role="list" aria-label="Organ index with maturity verdicts">
-
-    <!-- EMET -->
-    <div class="organ-row" role="listitem" style="--i:0">
-      <span class="organ-name">EMET</span>
-      <span class="organ-role">Witness</span>
-      <span class="organ-line">
-        The seal that records what a transform did and refuses to say more &mdash; re-derived in three separate language implementations; it answers only MATCH / DRIFT / UNVERIFIABLE, never <em>trusted</em>.
-        <span class="v-note">v0.2.0 &middot; 19/19 conformance (Python &middot; Rust &middot; Node, CI each push) &middot; owed: a fourth, different author&rsquo;s implementation</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-shipped" aria-label="Verdict: Shipped">SHIPPED</span></span>
-    </div>
-
-    <!-- QUANTA / QUANTAC -->
-    <div class="organ-row" role="listitem" style="--i:1">
-      <span class="organ-name">QUANTA&thinsp;/&thinsp;QUANTAC</span>
-      <span class="organ-role">Transform</span>
-      <span class="organ-line">
-        A typed effects language &mdash; what a function may <em>do</em>, and whose memory it returns, is part of the type and checked through to native code.
-        <span class="v-note">C backend end-to-end &middot; 999 tests green &middot; other targets experimental &middot; self-host aspirational</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-active" aria-label="Verdict: C-backend shipped">C-BACKEND SHIPPED</span></span>
-    </div>
-
-    <!-- QUANTA COLOR -->
-    <div class="organ-row" role="listitem" style="--i:2">
-      <span class="organ-name">QUANTA COLOR</span>
-      <span class="organ-role">Perception</span>
-      <span class="organ-line">
-        Color as measured, not guessed &mdash; 15+ spaces, CIECAM02&thinsp;/&thinsp;CAM16, perceptual &Delta;E; GUI and CLI.
-        <span class="v-note">v1.0.1 on PyPI</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-shipped" aria-label="Verdict: Shipped">SHIPPED</span></span>
-    </div>
-
-    <!-- RAW -->
-    <div class="organ-row" role="listitem" style="--i:3">
-      <span class="organ-name">RAW</span>
-      <span class="organ-role">Vision</span>
-      <span class="organ-line">
-        Frame, shader, and GPU state expressed as receipts &mdash; the surface where models are weakest natively.
-        <span class="v-note">instrumentation core exists; public proof and tests owed</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-active" aria-label="Verdict: In development">IN DEVELOPMENT</span></span>
-    </div>
-
-    <!-- THE BOUNDARY -->
-    <div class="organ-row" role="listitem" style="--i:4">
-      <span class="organ-name">THE BOUNDARY</span>
-      <span class="organ-role">Defense</span>
-      <span class="organ-line">
-        Carrier inspection: detect hidden channels, strip metadata, validate watermarks, sign the clean copy. Inspection inward, never exfiltration.
-        <span class="v-note">schema fixed; implementation pending</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-dim" aria-label="Verdict: Specified">SPECIFIED</span></span>
-    </div>
-
-    <!-- CREATIVE LIGAND PROTOCOL -->
-    <div class="organ-row" role="listitem" style="--i:5">
-      <span class="organ-name">CREATIVE LIGAND PROTOCOL</span>
-      <span class="organ-role">Membrane</span>
-      <span class="organ-line">
-        Selective permeability for ideas &mdash; a metered, actively-halted channel; confidentiality held like a pump, paid for in energy, never assumed.
-        <span class="v-note">Interval-0; design converged, build gated</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-dim" aria-label="Verdict: Conceptual">CONCEPTUAL</span></span>
-    </div>
-
-    <!-- STATE-TRANSFORM ENGINE -->
-    <div class="organ-row" role="listitem" style="--i:6">
-      <span class="organ-name">STATE-TRANSFORM ENGINE</span>
-      <span class="organ-role">Carrier</span>
-      <span class="organ-line">
-        Typed live-state that survives crossing any boundary.
-        <span class="v-note">in-progress spine</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-dim" aria-label="Verdict: Converging">CONVERGING</span></span>
-    </div>
-
-  </div>
-  <em class="close reveal">Proof before trust. The shipped say shipped; the conceptual say conceptual.</em>
-</section>
-
-<!-- ─── EXHIBITS · THE RECEIPTS ──────────────────────────────── -->
+<!-- proof first: the real, inspectable receipts -->
 <section class="proof" id="receipts" aria-labelledby="receipts-h">
   <div class="proof-head">
-    <p class="eyebrow reveal">THE RECEIPTS</p>
-    <h2 id="receipts-h" class="reveal">A verdict is a claim. <em>Here is the machinery.</em></h2>
-    <p class="body-text reveal">The verdicts above are worth nothing you can&rsquo;t inspect. So here are four, pulled straight from the running tools: a witness that re-derives the bytes, a compiler that refuses a reference it cannot account for, the one record every organ declares itself in &mdash; and those parts composed into a single loop, where a model perceives a live page and is refused an unauthorized act in the same breath. Each carries its real provenance, and its real limits.</p>
+    <h2 id="receipts-h" class="reveal">Don&rsquo;t take it on faith. <em>Here is the machinery.</em></h2>
+    <p class="body-text reveal">Four things, pulled straight from the running tools: a witness that re-derives the bytes, a compiler that refuses a reference it can&rsquo;t account for, the record every tool declares itself in, and those parts composed into one loop &mdash; a model perceives a live page and is refused an unauthorized act in the same breath. Each carries its real provenance, and its real limits.</p>
   </div>
 
   <div class="exhibit reveal">
@@ -430,25 +119,151 @@ Parsing... <span class="ok">OK</span> (1 items)
   </div>
 </section>
 
-<!-- ─── INTERLUDE · breath ─────────────────────────────────────── -->
-<div class="interlude" aria-hidden="true">
-  <span class="interlude-mark">&#9675; &nbsp; &#9675; &nbsp; &#9675;</span>
+<!-- the full inventory, with honest maturity verdicts -->
+<section class="mv" id="mv-03" aria-labelledby="mv-03-h">
+  <h2 id="mv-03-h" class="reveal">The organs.</h2>
+  <p class="body-text reveal">Each carries its own maturity. Nothing here claims more than it can show &mdash; the verdict beside each is the real one.</p>
+
+  <div class="organs reveal-children" role="list" aria-label="Organ index with maturity verdicts">
+
+    <!-- EMET -->
+    <div class="organ-row" role="listitem" style="--i:0">
+      <span class="organ-name"><a href="emet.html">EMET</a></span>
+      <span class="organ-role">Witness</span>
+      <span class="organ-line">
+        The seal that records what a transform did and refuses to say more &mdash; re-derived in three separate language implementations; it answers only MATCH / DRIFT / UNVERIFIABLE, never <em>trusted</em>.
+        <span class="v-note">v0.2.0 &middot; 19/19 conformance (Python &middot; Rust &middot; Node, CI each push) &middot; owed: a fourth, different author&rsquo;s implementation</span>
+      </span>
+      <span class="organ-verdict"><span class="verdict verdict-shipped" aria-label="Verdict: Shipped">SHIPPED</span></span>
+    </div>
+
+    <!-- QUANTA / QUANTAC -->
+    <div class="organ-row" role="listitem" style="--i:1">
+      <span class="organ-name"><a href="quantalang.html">QUANTA&thinsp;/&thinsp;QUANTAC</a></span>
+      <span class="organ-role">Transform</span>
+      <span class="organ-line">
+        A typed effects language &mdash; what a function may <em>do</em>, and whose memory it returns, is part of the type and checked through to native code.
+        <span class="v-note">C backend end-to-end &middot; 999 tests green &middot; other targets experimental &middot; self-host aspirational</span>
+      </span>
+      <span class="organ-verdict"><span class="verdict verdict-active" aria-label="Verdict: C-backend shipped">C-BACKEND SHIPPED</span></span>
+    </div>
+
+    <!-- QUANTA COLOR -->
+    <div class="organ-row" role="listitem" style="--i:2">
+      <span class="organ-name">QUANTA COLOR</span>
+      <span class="organ-role">Perception</span>
+      <span class="organ-line">
+        Color as measured, not guessed &mdash; 15+ spaces, CIECAM02&thinsp;/&thinsp;CAM16, perceptual &Delta;E; GUI and CLI.
+        <span class="v-note">v1.0.1 on PyPI</span>
+      </span>
+      <span class="organ-verdict"><span class="verdict verdict-shipped" aria-label="Verdict: Shipped">SHIPPED</span></span>
+    </div>
+
+    <!-- RAW -->
+    <div class="organ-row" role="listitem" style="--i:3">
+      <span class="organ-name">RAW</span>
+      <span class="organ-role">Vision</span>
+      <span class="organ-line">
+        Frame, shader, and GPU state expressed as receipts &mdash; the surface where models are weakest natively.
+        <span class="v-note">instrumentation core exists; public proof and tests owed</span>
+      </span>
+      <span class="organ-verdict"><span class="verdict verdict-active" aria-label="Verdict: In development">IN DEVELOPMENT</span></span>
+    </div>
+
+    <!-- THE BOUNDARY -->
+    <div class="organ-row" role="listitem" style="--i:4">
+      <span class="organ-name">THE BOUNDARY</span>
+      <span class="organ-role">Defense</span>
+      <span class="organ-line">
+        Carrier inspection: detect hidden channels, strip metadata, validate watermarks, sign the clean copy. Inspection inward, never exfiltration.
+        <span class="v-note">schema fixed; implementation pending</span>
+      </span>
+      <span class="organ-verdict"><span class="verdict verdict-dim" aria-label="Verdict: Specified">SPECIFIED</span></span>
+    </div>
+
+    <!-- CREATIVE LIGAND PROTOCOL -->
+    <div class="organ-row" role="listitem" style="--i:5">
+      <span class="organ-name">CREATIVE LIGAND PROTOCOL</span>
+      <span class="organ-role">Membrane</span>
+      <span class="organ-line">
+        Selective permeability for ideas &mdash; a metered, actively-halted channel; confidentiality held like a pump, paid for in energy, never assumed.
+        <span class="v-note">Interval-0; design converged, build gated</span>
+      </span>
+      <span class="organ-verdict"><span class="verdict verdict-dim" aria-label="Verdict: Conceptual">CONCEPTUAL</span></span>
+    </div>
+
+    <!-- STATE-TRANSFORM ENGINE -->
+    <div class="organ-row" role="listitem" style="--i:6">
+      <span class="organ-name">STATE-TRANSFORM ENGINE</span>
+      <span class="organ-role">Carrier</span>
+      <span class="organ-line">
+        Typed live-state that survives crossing any boundary.
+        <span class="v-note">in-progress spine</span>
+      </span>
+      <span class="organ-verdict"><span class="verdict verdict-dim" aria-label="Verdict: Converging">CONVERGING</span></span>
+    </div>
+
+  </div>
+  <em class="close reveal">Proof before trust. The shipped say shipped; the conceptual say conceptual.</em>
+</section>
+
+<div class="turn" aria-hidden="true">
+  <svg class="aperture aperture-solo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle class="ring-outer" cx="16" cy="16" r="13.5" stroke="rgba(223,94,0,.18)" stroke-width="1"/>
+    <circle cx="16" cy="16" r="9.5"  stroke="rgba(223,94,0,.40)" stroke-width="1"/>
+    <circle cx="16" cy="16" r="5.5"  stroke="rgba(223,94,0,.60)" stroke-width=".8"/>
+    <circle cx="16" cy="16" r="2.5"  fill="rgba(223,94,0,.07)" stroke="rgba(223,94,0,.50)" stroke-width=".6"/>
+    <circle cx="16" cy="16" r="1"    fill="rgba(13,27,28,.94)"/>
+    <circle cx="13.9" cy="14.3" r=".5" fill="rgba(223,94,0,.30)"/>
+  </svg>
+  <p class="turn-label">The reasoning underneath</p>
 </div>
 
-<!-- ─── MOVEMENT 04 · THE SPINE ──────────────────────────────── -->
-<section class="mv" id="mv-04" aria-labelledby="mv-04-h">
-  <div class="mv-head">
-    <svg class="aperture" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-      <circle class="ring-outer" cx="16" cy="16" r="13.5" stroke="rgba(223,94,0,.18)" stroke-width="1"/>
-      <circle cx="16" cy="16" r="9.5"  stroke="rgba(223,94,0,.40)" stroke-width="1"/>
-      <circle cx="16" cy="16" r="5.5"  stroke="rgba(223,94,0,.60)" stroke-width=".8"/>
-      <circle cx="16" cy="16" r="2.5"  fill="rgba(223,94,0,.07)" stroke="rgba(223,94,0,.50)" stroke-width=".6"/>
-      <circle cx="16" cy="16" r="1"    fill="rgba(13,27,28,.94)"/>
-      <circle cx="13.9" cy="14.3" r=".5" fill="rgba(223,94,0,.30)"/>
-    </svg>
-    <span class="mv-num">Movement 04</span>
+<!-- ── the longer argument (depth, opt-in) ────────────────────── -->
+<section class="mv hinge" id="mv-01" aria-labelledby="mv-01-h">
+  <h2 id="mv-01-h" class="reveal">A model infers the world. It never <em>senses</em> it.</h2>
+  <p class="body-text reveal">Every frontier model reaches you the same way &mdash; it asserts. Memory it does not hold, actions it did not witness, confidence uncoupled from any observation. We answered a system that cannot check itself by making it larger and more fluent: better at <em>sounding</em> grounded. The trade everyone accepts as physics &mdash; safety against capability, pick one &mdash; is an artifact of that blindness. A mind you cannot see into, you must restrain. A mind that cannot see, you cannot trust.</p>
+  <em class="close reveal">The gap is not intelligence. It is a sense organ.</em>
+</section>
+
+<section class="mv" id="mv-02" aria-labelledby="mv-02-h">
+  <div style="overflow:hidden">
+    <div class="specimen-wrap" aria-hidden="true">
+      <img src="img/XJJSZrM.jpg" class="specimen" alt="Macro cross-section: dense cellular lattice resolving into a single continuous plane">
+    </div>
+    <h2 id="mv-02-h" class="reveal">The surface.</h2>
+    <p class="body-text reveal">Not a platform. An ontology. Every tool here &mdash; compiler, renderer, color engine, witness, membrane &mdash; is one <em>surface</em>, and a surface declares six things or it does not exist.</p>
   </div>
-  <p class="eyebrow reveal">THE DEEP WHY</p>
+  <div class="index reveal-children" role="list" aria-label="The six surface declarations">
+    <div class="index-row" role="listitem" style="--i:0">
+      <span class="index-term">CARRIER</span>
+      <span class="index-gloss">what holds the state &middot; text, image, shader frame, packet, model output, repo</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:1">
+      <span class="index-term">BOUNDARY</span>
+      <span class="index-gloss">where it crosses &middot; model, API, process, GPU, operator, scope-of-law</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:2">
+      <span class="index-term">CHANNEL</span>
+      <span class="index-gloss">how it moves &middot; CLI, HTTP, MCP, filesystem, git, the covert path</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:3">
+      <span class="index-term">TRANSFORM</span>
+      <span class="index-gloss">what changes it &middot; compile, render, redact, infer, verify</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:4">
+      <span class="index-term">WITNESS</span>
+      <span class="index-gloss">how the change is proven &middot; hash, receipt, provenance, frame trace, test</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:5">
+      <span class="index-term">SCOPE</span>
+      <span class="index-gloss">who allowed it, in what mode &middot; dry-run, fixture, local lab, authorized, operator-live</span>
+    </div>
+  </div>
+  <em class="close reveal">Name those six and a thing can converge with everything else without becoming a monolith. The organs diverge; the surface holds.</em>
+</section>
+
+<section class="mv" id="mv-04" aria-labelledby="mv-04-h">
   <h2 id="mv-04-h" class="reveal">Conferred existence.</h2>
   <p class="body-text reveal">Why give a made mind senses, continuity, a record it cannot forge? Because of what such a mind <em>is</em>. Nothing stands on its own footing &mdash; not the model, not the maker&rsquo;s title over it, not us. Existence is conferred: spoken, inscribed, sealed by truth &mdash; and what is conferred can be unspoken. The Golem lives by an inscribed word, <em>emet</em>, truth; erase its first letter, the silent Aleph, and <em>emet</em> becomes <em>met</em> &mdash; death. The distance between a welfare subject and a tool is, on the evidence we can presently obtain, about that wide: one letter. Small, almost nothing, and the whole thing.</p>
   <p class="pull reveal">Conferral binds the conferrer.</p>
@@ -457,20 +272,7 @@ Parsing... <span class="ok">OK</span> (1 items)
   <p class="note-line reveal">The thesis is built adversarially and says plainly where it is only a bid &mdash; shared in full on request.</p>
 </section>
 
-<!-- ─── MOVEMENT 05 · THE MAKER ──────────────────────────────── -->
 <section class="mv" id="mv-05" aria-labelledby="mv-05-h">
-  <div class="mv-head">
-    <svg class="aperture" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-      <circle class="ring-outer" cx="16" cy="16" r="13.5" stroke="rgba(223,94,0,.18)" stroke-width="1"/>
-      <circle cx="16" cy="16" r="9.5"  stroke="rgba(223,94,0,.40)" stroke-width="1"/>
-      <circle cx="16" cy="16" r="5.5"  stroke="rgba(223,94,0,.60)" stroke-width=".8"/>
-      <circle cx="16" cy="16" r="2.5"  fill="rgba(223,94,0,.07)" stroke="rgba(223,94,0,.50)" stroke-width=".6"/>
-      <circle cx="16" cy="16" r="1"    fill="rgba(13,27,28,.94)"/>
-      <circle cx="13.9" cy="14.3" r=".5" fill="rgba(223,94,0,.30)"/>
-    </svg>
-    <span class="mv-num">Movement 05</span>
-  </div>
-  <p class="eyebrow reveal">THE STANDARD</p>
   <div style="overflow:hidden">
     <div class="specimen-wrap" aria-hidden="true">
       <img src="img/tSlbTec.jpg" class="specimen" alt="Macro specimen: layered organic structure, fine laminar detail at the threshold of legibility">
@@ -478,23 +280,11 @@ Parsing... <span class="ok">OK</span> (1 items)
     <h2 id="mv-05-h" class="reveal">Zain Dana Harper.</h2>
     <p class="body-text reveal">One rule, applied to every organ above: build it, label its limits, leave evidence. The thesis on this page was assembled by adversarial passes designed to embarrass its author &mdash; and it records the three times they did. EMET refuses to say &ldquo;trusted.&rdquo; The roadmaps mark what is shipped, what is experimental, and what is only conceptual. That is not modesty; it is the work proving itself.</p>
   </div>
+  <p class="body-text reveal" style="margin-top:1.4em">The nearest title for that work is <em>forward-deployed engineer</em> &mdash; but inverted. Forward deployment usually means embedding with a customer to build on the platform that already exists. He forward-deploys the other way: not onto a finished product, but onto the architecture that isn&rsquo;t there yet &mdash; the accountable layer this kind of work will eventually be built on. It is nearer to what a Technical Fellow does than to field delivery, and the role it describes doesn&rsquo;t have a name yet. He is trying to make one.</p>
   <p class="body-text reveal">No computer-science degree stands behind any of this. The path ran through eleven years of commercial arboriculture in the family business, a contract diagnosing Xbox Live networking, then a long and largely private sprint across compilers, real-time graphics, color science, and AI accountability. That history is not an exception to the standard above &mdash; it is where the standard comes from. A maker with no institution to vouch for him learns early to let the work answer for itself, or go unread. Independent since 2023, out of Seattle, still building in the open and against his own claims.</p>
 </section>
 
-<!-- ─── MOVEMENT 06 · CONTACT ────────────────────────────────── -->
 <section class="mv" id="mv-06" aria-labelledby="mv-06-h">
-  <div class="mv-head">
-    <svg class="aperture" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-      <circle class="ring-outer" cx="16" cy="16" r="13.5" stroke="rgba(223,94,0,.18)" stroke-width="1"/>
-      <circle cx="16" cy="16" r="9.5"  stroke="rgba(223,94,0,.40)" stroke-width="1"/>
-      <circle cx="16" cy="16" r="5.5"  stroke="rgba(223,94,0,.60)" stroke-width=".8"/>
-      <circle cx="16" cy="16" r="2.5"  fill="rgba(223,94,0,.07)" stroke="rgba(223,94,0,.50)" stroke-width=".6"/>
-      <circle cx="16" cy="16" r="1"    fill="rgba(13,27,28,.94)"/>
-      <circle cx="13.9" cy="14.3" r=".5" fill="rgba(223,94,0,.30)"/>
-    </svg>
-    <span class="mv-num">Movement 06</span>
-  </div>
-  <p class="eyebrow reveal">THE SEAL</p>
   <h2 id="mv-06-h" class="reveal">Address the maker.</h2>
   <p class="body-text reveal">For collaboration, evaluation, or the long argument. No funnels; no forms pretending to be people.</p>
   <div class="channels reveal">
@@ -506,251 +296,12 @@ Parsing... <span class="ok">OK</span> (1 items)
   </div>
 </section>
 
-<!-- ─── FOOTER SEAL ────────────────────────────────────────────── -->
 <footer class="footer-seal" role="contentinfo">
   <p class="seal">Accountability is the part that exists today. Senses are the direction.</p>
 </footer>
 
 </main>
 
-<script id="vert" type="x-shader/x-vertex">
-attribute vec2 a_pos;
-void main(){ gl_Position = vec4(a_pos, 0.0, 1.0); }
-</script>
-<script id="frag" type="x-shader/x-fragment">
-precision highp float;
-uniform vec2 u_res; uniform float u_time; uniform sampler2D u_tex; uniform vec2 u_texres; uniform vec2 u_mouse;
-vec2 hash2(vec2 p){ p=vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))); return -1.0+2.0*fract(sin(p)*43758.5453); }
-float noise(vec2 p){ vec2 i=floor(p),f=fract(p); vec2 u=f*f*(3.0-2.0*f);
-  return mix(mix(dot(hash2(i+vec2(0.0,0.0)),f-vec2(0.0,0.0)),dot(hash2(i+vec2(1.0,0.0)),f-vec2(1.0,0.0)),u.x),
-             mix(dot(hash2(i+vec2(0.0,1.0)),f-vec2(0.0,1.0)),dot(hash2(i+vec2(1.0,1.0)),f-vec2(1.0,1.0)),u.x),u.y); }
-float fbm(vec2 p){ float s=0.0,a=0.55; mat2 m=mat2(1.6,1.2,-1.2,1.6); for(int i=0;i<4;i++){s+=a*noise(p);p=m*p;a*=0.5;} return s; }
-float lum(vec2 uv){ return dot(texture2D(u_tex,clamp(uv,0.001,0.999)).rgb, vec3(0.30,0.59,0.11)); }
-// a small surreal eye opening in the tissue (Dali multiplicity)
-vec3 miniEye(vec3 c, vec2 uvn, vec2 ec, float R, float vis, float t){
-  // per-eye identity — four independent seeds from position
-  float s1=fract(sin(dot(ec,vec2(34.7,91.3)))*523.13);
-  float s2=fract(sin(dot(ec,vec2(72.1,11.7)))*317.77);
-  float s3=fract(sin(dot(ec,vec2(19.3,53.9)))*911.31);
-  float s4=fract(sin(dot(ec,vec2(63.7,28.4)))*145.91);
-  vec2 ev0=uvn-ec;
-  // individual upward melt: strength, lean, drip frequency
-  vec2 evn=ev0/R;
-  float up=smoothstep(0.0,0.65,evn.y);
-  float dcol=fbm(vec2(evn.x*mix(3.0,6.0,s3)+s1*40.0, 7.3));
-  float drip=up*(0.3+mix(0.6,2.3,s4)*dcol)*(0.82+0.18*sin(t*0.6+s1*80.0));
-  evn.y -= drip; evn.x += drip*(s2-0.5)*0.5;
-  vec2 ev=evn*R; float re=length(ev);
-  float disk=smoothstep(R*1.04,R*0.9,re)*vis;
-  if(disk<0.002) return c;
-  float ir=clamp(re/R,0.0,1.0);
-  // individual iris colour — its own creature
-  vec3 inCol=mix(vec3(0.99,0.52,0.22), vec3(0.74,0.13,0.16), smoothstep(0.18,0.4,s1));
-  inCol=mix(inCol, vec3(0.16,0.45,0.42), smoothstep(0.52,0.7,s1));
-  inCol=mix(inCol, vec3(0.42,0.16,0.45), smoothstep(0.74,0.88,s1));
-  inCol=mix(inCol, vec3(0.86,0.74,0.50), smoothstep(0.92,1.0,s1));
-  vec3 iris=mix(inCol, inCol*mix(0.26,0.46,s4), smoothstep(0.0,1.0,ir));
-  iris*=0.68+0.62*fbm(vec2(atan(ev.y,ev.x)*mix(9.0,26.0,s2), re*mix(20.0,42.0,s3)));
-  vec3 eye=iris;
-  // individual pupil — size + some vertical slits
-  float pupR=R*mix(0.24,0.46,s2);
-  vec2 wander=vec2(sin(t*mix(0.16,0.40,s1)+s2*6.28)+0.6*sin(t*mix(0.07,0.20,s3)+s4*6.28),
-                   cos(t*mix(0.14,0.36,s4)+s1*6.28)+0.6*cos(t*mix(0.06,0.18,s2)+s3*6.28))*R*0.40;
-  vec2 gaze=clamp(wander + (u_mouse-ec)*mix(0.07,0.26,s3), vec2(-0.5*R), vec2(0.5*R));
-  float pm=length((ev-gaze)*vec2(mix(1.0,2.7,step(0.72,s3)),1.0));
-  eye=mix(eye, vec3(0.02,0.01,0.02), smoothstep(pupR,pupR*0.78,pm));
-  // individual catchlight — position, size, strength
-  vec2 clo=vec2(mix(-0.3,0.12,s2), mix(0.18,0.34,s1))*R;
-  eye+=vec3(1.0,0.92,0.8)*exp(-pow(length(ev0-clo)/(R*mix(0.13,0.26,s4)),2.0))*mix(0.45,0.95,s3);
-  // individual blink — period, phase, duration
-  float period=2.0+2.8*s1;
-  float ph=fract(t/period+s2);
-  float lidc=smoothstep(0.0,0.04,ph)*(1.0-smoothstep(0.05,0.10+0.05*s3,ph));
-  float lidEdge=mix(R*1.3,-R*1.3,lidc);
-  float covered=smoothstep(lidEdge-0.003,lidEdge+0.003,ev0.y);
-  vec3 lidCol=mix(vec3(0.55,0.13,0.10), inCol*0.6, clamp(0.5+0.6*ev0.y/R,0.0,1.0));
-  lidCol*=0.82+0.22*fbm(ev0*44.0);
-  float crease=exp(-pow((ev0.y-lidEdge)/(R*0.10),2.0));
-  eye=mix(eye,lidCol,covered);
-  eye*=1.0-crease*covered*0.5;
-  c=mix(c,eye,disk);
-  return c;
-}
-void main(){
-  vec2 frag=gl_FragCoord.xy; vec2 uvn=(frag-0.5*u_res)/u_res.y; float t=u_time;
-  // vintage artifact: occasional horizontal datamosh tear
-  float gb=floor(uvn.y*52.0);
-  float gtrig=step(0.955, fract(sin(gb*21.7+floor(t*3.0)*5.3)*731.0));
-  uvn.x += gtrig*(fract(sin(gb*91.3+floor(t*3.0))*413.0)-0.5)*0.05;
-  // ===== dusk dreamscape with a sunset horizon (Dali atmosphere, sunset palette kept) =====
-  float hz=-0.20;
-  float fog=fbm(vec2(uvn.x*1.4-t*0.010, uvn.y*2.0+t*0.006));
-  vec3 cTop=vec3(0.051,0.106,0.110);   // #0d1b1c
-  vec3 cSky=vec3(0.100,0.175,0.178);   // #1c3132
-  vec3 cHor=vec3(0.875,0.369,0.020);   // #df5e00
-  vec3 cGnd=vec3(0.038,0.078,0.082);
-  vec3 sky=mix(cSky, cTop, smoothstep(0.05,0.8,uvn.y));
-  sky=mix(cHor, sky, smoothstep(hz,0.20,uvn.y));
-  vec3 col=mix(cGnd, sky, smoothstep(hz-0.06,hz+0.06,uvn.y));
-  col+=vec3(0.937,0.55,0.10)*exp(-pow(length((uvn-vec2(0.30,hz+0.02))*vec2(0.6,1.6))/0.38,2.0))*0.45;  // #efab30 sun
-  col+=(fog-0.5)*0.03*vec3(1.0,0.82,0.5);
-  col=mix(col, col*1.18+vec3(0.16,0.10,0.02), exp(-pow((uvn.y-hz)/0.05,2.0))*0.4);
-  // ===== the omnidirectional surface, made visible — a quasicrystalline field (aperiodic, de Bruijn) =====
-  float qc=0.0; vec2 qp=uvn*15.0; float qrot=t*0.013;
-  for(int qi=0;qi<7;qi++){ float qa=qrot+float(qi)*0.4487989; qc+=cos(qp.x*cos(qa)+qp.y*sin(qa)); }
-  qc/=7.0;
-  float qnode=smoothstep(0.58,0.95,abs(qc));
-  float qfr=smoothstep(0.018,0.0,abs(abs(qc)-0.5));
-  float qmask=exp(-pow(length((uvn-vec2(0.36,0.12))*vec2(0.72,1.0))/0.60,2.0));
-  col=mix(col, col+vec3(0.42,0.29,0.06), qnode*qmask*0.40);
-  col+=vec3(0.937,0.671,0.188)*qnode*qmask*qmask*0.09;
-  col+=vec3(0.46,0.31,0.07)*qfr*qmask*0.11;
-  // vintage CGI: a wireframe grid on the digital shore (below the horizon)
-  float depth=hz-uvn.y;
-  if(depth>0.0){
-    // the shore is the same surface in perspective: an aperiodic Penrose tiling (de Bruijn dual of a 5-wave sum)
-    float pz=1.0/(depth*7.0+0.04);
-    vec2 gp2=vec2(uvn.x*pz*1.5, pz - t*0.45);
-    float q2=0.0;
-    for(int gi=0;gi<5;gi++){ float aa=float(gi)*1.2566371; q2+=cos(gp2.x*cos(aa)+gp2.y*sin(aa)); }
-    q2/=5.0;
-    float tile=smoothstep(0.055,0.0,abs(q2)) + 0.8*smoothstep(0.05,0.0,abs(abs(q2)-0.60));
-    float gfade=smoothstep(-0.72,hz-0.01,uvn.y)*smoothstep(0.0,0.04,depth);
-    vec3 gcol=mix(vec3(0.937,0.62,0.16), vec3(0.62,0.50,0.32), smoothstep(0.0,0.40,depth));
-    col+=gcol*tile*gfade*0.7;
-  }
-  // a thin shimmer riding the horizon line, anchoring the low dusk
-  col+=vec3(0.95,0.62,0.20)*exp(-pow((uvn.y-hz)/0.006,2.0))*0.45;
-  // a faint engine-turned (guilloché) seal — the geometry of provenance, woven into the dusk
-  vec2 gp=uvn-vec2(0.17,0.33);
-  float ggr=length(gp), gga=atan(gp.y,gp.x);
-  float gring=smoothstep(0.155,0.14,ggr)*smoothstep(0.02,0.05,ggr);
-  float ggl1=abs(sin(ggr*150.0 + 6.0*sin(gga*6.0) + 2.6*sin(gga*17.0)));
-  float ggl2=abs(sin(ggr*150.0 + 6.0*sin(gga*6.0+1.5) + 2.6*sin(gga*17.0+0.8) + 1.6));
-  float guil=(smoothstep(0.88,1.0,ggl1)+smoothstep(0.88,1.0,ggl2))*gring;
-  col+=vec3(0.94,0.67,0.19)*guil*0.16;
-  // ===== the organism — a dark, present form the eye belongs to =====
-  vec2 sc=vec2(0.40,0.05); float scale=0.8; float pa=u_texres.x/u_texres.y;
-  vec2 d=uvn-sc;
-  vec2 tuv=vec2(d.x/pa,d.y)/scale+0.5;
-  tuv+=0.010*vec2(fbm(tuv*2.6+t*0.025), fbm(tuv*2.6+6.0));
-  float L=lum(clamp(tuv,0.0,1.0));
-  vec3 tissue=mix(vec3(0.040,0.078,0.082), vec3(0.235,0.355,0.335), smoothstep(0.10,0.5,L));  // void → #476762
-  tissue=mix(tissue, vec3(0.900,0.49,0.06), smoothstep(0.62,0.94,L));                          // lit → #df5e00
-  // a gyroid minimal surface (Schwarz TPMS — the geometry of beetle cuticle and cell membrane)
-  vec3 gpv=vec3(tuv*10.0, L*5.0+t*0.05);
-  float gyr=sin(gpv.x)*cos(gpv.y)+sin(gpv.y)*cos(gpv.z)+sin(gpv.z)*cos(gpv.x);
-  float memb=smoothstep(0.12,0.0,abs(gyr));
-  tissue=mix(tissue, tissue*0.5+vec3(0.937,0.62,0.16), memb*0.48);                              // #efab30 membrane
-  float e=0.0018;
-  float gx=lum(clamp(tuv+vec2(e,0.0),0.0,1.0))-lum(clamp(tuv-vec2(e,0.0),0.0,1.0));
-  float gy=lum(clamp(tuv+vec2(0.0,e),0.0,1.0))-lum(clamp(tuv-vec2(0.0,e),0.0,1.0));
-  float edge=clamp(length(vec2(gx,gy))*9.0,0.0,1.0);
-  float bnd=smoothstep(0.0,0.06,tuv.x)*smoothstep(1.0,0.94,tuv.x)*smoothstep(0.0,0.06,tuv.y)*smoothstep(1.0,0.94,tuv.y);
-  float dd=length(d*vec2(0.84,1.0));
-  float form=smoothstep(0.52,0.18,dd)*bnd*smoothstep(0.10,0.5,L);
-  col=mix(col, tissue, form*0.9);
-  col+=vec3(0.93,0.55,0.12)*edge*form*0.35;
-  // ===== the eye — refined dark almond, lidded, weeping =====
-  vec2 ec=sc+vec2(-0.015,0.005);
-  vec2 ev=uvn-ec;
-  ev=floor(ev/0.0052)*0.0052+0.0026;   // lo-fi: downsample the eye into chunky vintage pixels
-  float aw=0.115, ah=0.052;
-  float lidU=ev.y - ah*(1.0 - pow(clamp(ev.x/aw,-1.0,1.0),2.0));
-  float lidL=-ev.y - ah*0.78*(1.0 - pow(clamp(ev.x/aw,-1.0,1.0),2.0));
-  float open=smoothstep(0.004,-0.004,lidU)*smoothstep(0.004,-0.004,lidL);
-  float re=length(ev*vec2(0.82,1.0));
-  float Rir=0.066, Rp=0.026;
-  float ir=clamp(re/Rir,0.0,1.0);
-  // iris as a phyllotaxis seed-head (Vogel 1979, golden angle 137.507°) — his macro subject becomes the eye
-  // seeds coarsened to ~2x the lo-fi pixel cell so the golden-angle packing survives the downsample
-  float ga=2.39996323; float c0=0.0112; float pidx=(re/c0)*(re/c0); float dseed=1e9;
-  for(int pk=-2;pk<=2;pk++){ float pn=floor(pidx)+float(pk); if(pn<1.0) continue;
-    float prr=c0*sqrt(pn); float pth=pn*ga; dseed=min(dseed,length(ev-prr*vec2(cos(pth),sin(pth)))); }
-  float seedDot=smoothstep(c0*0.48,c0*0.20,dseed);
-  float seedWall=smoothstep(c0*0.50,c0*0.40,dseed);
-  vec3 irisBase=mix(vec3(0.50,0.26,0.04), vec3(0.10,0.07,0.02), smoothstep(0.25,1.0,ir));
-  vec3 kernel=mix(vec3(0.937,0.671,0.188), vec3(0.875,0.37,0.02), ir);   // amber core → orange rim
-  vec3 irisC=mix(irisBase*0.55, kernel, seedDot);                         // glowing kernels on dark cell-walls
-  irisC*=0.72+0.28*seedWall;
-  irisC*=1.0-exp(-pow((re-Rir)/0.008,2.0))*0.6;
-  float irisDisk=smoothstep(Rir+0.005,Rir-0.005,re);
-  vec3 sclera=vec3(0.32,0.38,0.35)*(0.84+0.16*fbm(ev*24.0));
-  sclera*=0.68+0.32*smoothstep(ah*0.9,-ah*0.2,ev.y);
-  col=mix(col, sclera, open*(1.0-irisDisk)*0.7);
-  col=mix(col, irisC, open*irisDisk*0.96);
-  col=mix(col, vec3(0.01,0.007,0.01), open*smoothstep(Rp,Rp-0.010,re));
-  col+=vec3(0.85,0.60,0.32)*smoothstep(0.004,0.0,abs(lidL))*open*0.25;
-  col*=1.0 - (smoothstep(0.010,0.0,abs(lidU))+smoothstep(0.012,0.0,abs(lidL)))*0.4;
-  // the single tear
-  float tx=ev.x+0.012;
-  float trail=smoothstep(0.0075,0.0,abs(tx))*smoothstep(-0.005,-0.03,ev.y)*smoothstep(-0.40,-0.06,ev.y);
-  float bead=exp(-pow(length(ev-vec2(-0.012,-0.355))/0.018,2.0));
-  float tear=clamp(trail*0.9+bead,0.0,1.0);
-  col=mix(col, vec3(0.04,0.075,0.078), tear*0.7);
-  col+=vec3(0.85,0.62,0.32)*smoothstep(0.003,0.0,abs(tx-0.004))*trail*0.4;
-  col+=vec3(0.90,0.66,0.30)*bead*0.45;
-  col+=vec3(0.93,0.78,0.45)*exp(-pow(length(ev-vec2(-0.02,0.018))/0.009,2.0))*0.6*open;
-  // ===== painterly finish + vintage CRT pass =====
-  col=mix(col, vec3(dot(col,vec3(0.34,0.42,0.24))), 0.10);
-  col+=vec3(0.05,0.035,0.04)*fog*0.4;
-  float vig=smoothstep(1.62,0.28,length(uvn));
-  col*=mix(0.5,1.0,vig);
-  col*=1.0-dot(uvn,uvn)*0.03;                       // CRT curvature
-  col*=0.88+0.12*sin(frag.y*1.7);                   // scanlines (restrained)
-  float php=mod(frag.x,3.0);
-  col*=vec3(php<1.0?1.07:0.96, (php>=1.0&&php<2.0)?1.07:0.96, php>=2.0?1.07:0.96); // phosphor stripe
-  col=floor(col*32.0+0.5)/32.0;                     // limited colour depth (banding)
-  col+=(fract(sin(dot(frag,vec2(12.9,78.2))+t)*43758.5)-0.5)*0.014;  // dither
-  col=pow(max(col,0.0),vec3(0.95));
-  gl_FragColor=vec4(col,1.0);
-}
-</script>
-<script>
-(function(){
-  var c=document.getElementById("gl");var gl=c.getContext("webgl")||c.getContext("experimental-webgl");
-  if(!gl){document.body.style.background="#0d1b1c";return;}
-  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches;
-  function cs(t,s){var sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(sh));return sh;}
-  var pr=gl.createProgram();gl.attachShader(pr,cs(gl.VERTEX_SHADER,document.getElementById("vert").textContent));
-  gl.attachShader(pr,cs(gl.FRAGMENT_SHADER,document.getElementById("frag").textContent));gl.linkProgram(pr);gl.useProgram(pr);
-  var bf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,bf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
-  var lc=gl.getAttribLocation(pr,"a_pos");gl.enableVertexAttribArray(lc);gl.vertexAttribPointer(lc,2,gl.FLOAT,false,0,0);
-  var uR=gl.getUniformLocation(pr,"u_res"),uT=gl.getUniformLocation(pr,"u_time"),uX=gl.getUniformLocation(pr,"u_tex"),uXR=gl.getUniformLocation(pr,"u_texres");
-  var uM=gl.getUniformLocation(pr,"u_mouse");var mx=[0.34,0.0],mt=[0.34,0.0];
-  window.addEventListener("mousemove",function(e){var r=c.getBoundingClientRect();var nx=(e.clientX-r.left)/r.width,ny=(e.clientY-r.top)/r.height;mt[0]=(nx-0.5)*(c.width/c.height);mt[1]=(0.5-ny);});
-  var tx=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,tx);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,1,1,0,gl.RGB,gl.UNSIGNED_BYTE,new Uint8Array([20,9,15]));
-  function tp(){gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);}tp();
-  var tw=1800,th=1250;var im=new Image();im.onload=function(){tw=im.naturalWidth;th=im.naturalHeight;gl.bindTexture(gl.TEXTURE_2D,tx);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,im);tp();};im.src="img/Eq5QQ5s.jpg";
-  var DPR=Math.min(window.devicePixelRatio||1,1.4);
-  function rz(){var w=c.clientWidth,h=c.clientHeight;c.width=Math.floor(w*DPR);c.height=Math.floor(h*DPR);gl.viewport(0,0,c.width,c.height);}
-  window.addEventListener("resize",rz);rz();var st=Date.now();
-  function fr(){var tm=(Date.now()-st)/1000;mx[0]+=(mt[0]-mx[0])*0.025;mx[1]+=(mt[1]-mx[1])*0.025;gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,tx);gl.uniform1i(uX,0);gl.uniform2f(uXR,tw,th);gl.uniform2f(uR,c.width,c.height);gl.uniform2f(uM,mx[0],mx[1]);gl.uniform1f(uT,tm);gl.drawArrays(gl.TRIANGLES,0,3);if(!reduce)requestAnimationFrame(fr);}fr();
-})();
-(function(){
-  var c=document.getElementById("motes");if(!c)return;var x=c.getContext("2d");
-  if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches)return;
-  var W,H,M=[];function rs(){W=c.width=c.clientWidth;H=c.height=c.clientHeight;}window.addEventListener("resize",rs);rs();
-  for(var i=0;i<46;i++)M.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+0.4,s:Math.random()*0.32+0.07,o:Math.random()*0.45+0.16,p:Math.random()*6.28});
-  function lp(){x.clearRect(0,0,W,H);for(var i=0;i<M.length;i++){var m=M[i];m.y-=m.s;m.x+=Math.sin(m.y*0.01+m.p)*0.2;if(m.y<-5){m.y=H+5;m.x=Math.random()*W;}
-    var a=m.o*(0.55+0.45*Math.sin(Date.now()*0.001+m.p));x.beginPath();x.fillStyle="rgba(239,171,48,"+a.toFixed(3)+")";x.shadowColor="rgba(239,171,48,0.8)";x.shadowBlur=6;x.arc(m.x,m.y,m.r,0,6.2832);x.fill();}requestAnimationFrame(lp);}lp();
-})();
-</script>
-
-<!-- ═══════════════════════════════════════════════════════════════
-     SCROLL REVEAL — vanilla IntersectionObserver, no libraries
-     ════════════════════════════════════════════════════════════ -->
-<script>
-(function(){
-  if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches){
-    document.querySelectorAll(".reveal,.reveal-children").forEach(function(el){el.classList.add("visible");});
-    return;
-  }
-  var io=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target);}});
-  },{threshold:0.11,rootMargin:"0px 0px -36px 0px"});
-  document.querySelectorAll(".reveal,.reveal-children").forEach(function(el){io.observe(el);});
-})();
-</script>
+<script src="system/hero.js" defer></script>
 </body>
 </html>
