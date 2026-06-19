@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QuantaLang — a typed-effects language</title>
+<meta name="description" content="QuantaLang is a Rust-built compiler for a typed-effects language: a function declares the effects it may perform and the lifetimes of the references it returns, and the compiler checks both and lowers the program to native code through a C backend. 999 passing tests. By Zain Dana Harper.">
+<link rel="canonical" href="https://harperz9.github.io/quantalang.html">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/system.css">
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div class="scrim"></div>
+<canvas id="motes"></canvas>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">QuantaLang &middot; the effects language</span></div>
+  <div class="mid">
+    <h1>What a function may do belongs <span class="g">in its type.</span></h1>
+    <p class="lede">QuantaLang is a typed-effects language. A function&rsquo;s signature names the effects it may perform &mdash; reach the filesystem, the console, the network &mdash; and the lifetimes of the references it returns. The compiler checks both, and lowers the program to native code through a C backend. Perform an effect you never declared, and it does not compile.</p>
+    <p class="close">Tested where it counts, honest about its edges &mdash; and the discipline inside it runs underneath the rest of the work here.</p>
+  </div>
+  <div class="seal">quantac 1.0.0 &middot; a Rust-built compiler &middot; effects and lifetimes, in the type</div>
+</div>
+
+<main>
+
+<!-- what it is -->
+<section class="mv" id="what" aria-labelledby="what-h">
+  <h2 id="what-h" class="reveal">The signature stops being a suggestion.</h2>
+  <p class="body-text reveal">Most languages let a function reach out and touch the world &mdash; open a file, a socket &mdash; with nothing in its signature to say so. QuantaLang puts it in the type. A function carries the set of effects it may perform; call something that performs one it never declared, and the program is refused &mdash; with the exact call that gave it away named in the error. Memory works the same way: which reference comes back, and how long it lives, is checked, not assumed.</p>
+  <em class="close reveal">Two questions a type ought to answer &mdash; what may this do, and whose memory does it return &mdash; answered by the compiler, not the comment.</em>
+</section>
+
+<!-- the proof -->
+<section class="proof" id="proof" aria-labelledby="proof-h">
+  <div class="proof-head">
+    <h2 id="proof-h" class="reveal">Don&rsquo;t take the type. <em>Watch it refuse.</em></h2>
+    <p class="body-text reveal">Each of these is a real file checked by the real binary &mdash; quantac 1.0.0, release build. The output is verbatim.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit I</span> <span class="what">QuantaLang &middot; effects are part of the signature</span></div>
+    <pre class="artifact"><span class="kw">fn</span> load_config() {
+    read_file(<span class="lt">"ops.toml"</span>);        <span class="cmt">// reaches the filesystem</span>
+}
+
+<span class="pr">$ quantac check missing_effect.quanta</span>
+<span class="bad">function `load_config` performs effect `FileSystem` but does not declare it</span>
+  help: add <span class="kw">~ FileSystem</span> to the signature
+  note: capability `FileSystem` was triggered by ambient call(s): read_file
+
+<span class="cmt"># declare the effect, and the same check passes — and writes a receipt</span>
+<span class="kw">fn</span> load_config() <span class="kw">~ FileSystem</span> { read_file(<span class="lt">"ops.toml"</span>); }
+
+<span class="pr">$ quantac check load_config.quanta --receipt receipt.json</span>
+Type checking... <span class="ok">OK</span>
+  <span class="kw">"declared_effects"</span>:      { "load_config": ["FileSystem"] }
+  <span class="kw">"observed_capabilities"</span>: { "load_config": { "FileSystem": ["read_file"] } }</pre>
+    <p class="artifact-cap">Reach the filesystem without saying so and it won&rsquo;t compile &mdash; the error names the call that gave it away. <b>Declare</b> the effect and it passes, and the compiler writes down what you claimed beside what it observed.</p>
+    <p class="artifact-note">Captured live from <b>quantac check</b> (Rust toolchain, release build) &middot; the effect is part of the function&rsquo;s type, checked at every call. <em>The receipt is an evidence contract</em> &mdash; what was declared vs. what was observed &mdash; not a claim that any backend is production.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit II</span> <span class="what">QuantaLang &middot; memory has an owner, and the type tracks it</span></div>
+    <pre class="artifact"><span class="kw">fn</span> pick&lt;<span class="lt">'a</span>, <span class="lt">'b</span>&gt;(x: &amp;<span class="lt">'a</span> i32, y: &amp;<span class="lt">'b</span> i32) -&gt; &amp;<span class="lt">'a</span> i32 {
+    y          <span class="cmt">// returns 'b where the signature promised 'a</span>
+}
+
+<span class="pr">$ quantac check pick.quanta</span>
+Lexing... <span class="ok">OK</span> (28 tokens)
+Parsing... <span class="ok">OK</span> (1 items)
+<span class="bad">Type errors found:</span>
+  <span class="bad">function returns `&amp;'b i32` but expected `&amp;'a i32`</span></pre>
+    <p class="artifact-cap">The signature promises the reference tied to <b>&lsquo;a</b>; the body hands back <b>&lsquo;b</b>&rsquo;s. Refused. The lifetime is part of the contract, and the contract is enforced.</p>
+    <p class="artifact-note">Diagnostic from <b>compiler/src/types/error.rs</b>, surfaced through the lifetime unification in <b>unify.rs</b>. <em>Honest limit:</em> borrow and lifetime checking is early &mdash; interprocedural, Phase 1; full caller-side borrow proofs are not yet claimed complete.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit III</span> <span class="what">QuantaLang &middot; checked, then compiled to native</span></div>
+    <pre class="artifact"><span class="cmt"># an algebraic effect with a handler — parsed, effect-checked,</span>
+<span class="cmt"># lowered to C, compiled, and run:</span>
+<span class="pr">$ quantac run examples/quickstart/effects_greeting.quanta</span>
+<span class="ok">Hello, teammate!</span></pre>
+    <p class="artifact-cap">The same effect discipline rides all the way down &mdash; parse, type-check the effects, lower to C, run. One backend takes a program to a real native executable.</p>
+    <p class="artifact-note">C is the shipped end-to-end backend; the test suite verifies it. The other targets &mdash; LLVM, WASM, SPIR-V, x86-64, ARM64, a Rust source lane &mdash; emit code but are experimental. Said plainly, not implied.</p>
+  </div>
+</section>
+
+<!-- maturity -->
+<section class="mv" id="maturity" aria-labelledby="maturity-h">
+  <h2 id="maturity-h" class="reveal">999 tests, and a short list of what doesn&rsquo;t ship.</h2>
+  <p class="body-text reveal">Built in Rust, with 999 passing tests run on every change and none failing &mdash; grown from the 868 the docs recorded on 2026-06-15. One backend, C, takes a program all the way to a native executable, and it is the path the suite proves end to end. That is the whole of what is claimed.</p>
+  <p class="pull reveal">It isn&rsquo;t winding down. It is holding still &mdash; because the rest is built on it.</p>
+  <p class="body-text reveal">QuantaLang&rsquo;s core is shipped and stable: effects and lifetimes in the type, checked to native C, are a foundation the rest of the work here is built on &mdash; not a product still chasing features. Several pieces are honestly partial: the self-hosted compiler is architecture, not yet a working build; async, garbage collection, and FFI are designed but not yet linked into compiled output; the experimental backends emit code but aren&rsquo;t production. One author. Those are the named edges of a foundation &mdash; not the closing of a project.</p>
+</section>
+
+<!-- run it -->
+<section class="mv" id="run" aria-labelledby="run-h">
+  <h2 id="run-h" class="reveal">Build it. Then make it reject something.</h2>
+  <p class="body-text reveal">Rust 1.70 or newer and a C compiler on the path. Clone, build, and <b>quantac doctor</b> confirms the C backend is ready. Point it at the examples &mdash; or write a function that lies about its effects, and watch it refuse.</p>
+  <pre class="artifact"><span class="pr">$ git clone https://github.com/HarperZ9/quantalang &amp;&amp; cd quantalang/compiler</span>
+<span class="pr">$ cargo build --release</span>
+<span class="pr">$ quantac doctor</span>                       <span class="cmt"># toolchain + C-backend readiness</span>
+C backend: <span class="ok">ready</span>
+
+<span class="pr">$ quantac run examples/quickstart/effects_greeting.quanta</span>
+<span class="ok">Hello, teammate!</span></pre>
+  <div class="channels reveal">
+    <span class="g">GitHub</span> &mdash; <a href="https://github.com/HarperZ9/quantalang">HarperZ9/quantalang</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">Email</span> &mdash; <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
+    &nbsp;&middot;&nbsp;
+    <a href="./">&larr; the index</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Effects and lifetimes, in the type &mdash; checked to native, and built on.</p>
+</footer>
+
+<script src="system/hero.js" defer></script>
+</body>
+</html>
