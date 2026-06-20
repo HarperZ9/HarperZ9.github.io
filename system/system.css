@@ -176,3 +176,202 @@ h2 em{font-style:normal;color:var(--orange)}
 .hinge h2{max-width:22ch;margin-left:auto;margin-right:auto}
 .hinge .body-text{max-width:58ch;margin-left:auto;margin-right:auto;text-align:left}
 .hinge .close{margin-left:auto;margin-right:auto;max-width:44ch;font-size:clamp(1.2rem,1.9vw,1.58rem)}
+
+/* ============================================================================
+   WORLDS HERO ENGINE — appended by hero refactor 2026-06-19
+   These rules NEVER override existing system.css rules above; they extend.
+
+   REVEAL FIX:
+     Resting state is opacity:1 (content always visible — headless, no-JS, FOUC).
+     .visible adds a translateY settle (the entrance). The prior opacity:0 rest
+     on lines 113/115 is superseded by the later-cascade rules below.
+     The @media prefers-reduced-motion block in the existing rules (line 117-119)
+     already covers the no-transition path; these new rules are compatible.
+
+   WORLD TEXT ADAPTATION:
+     body.world-0 (ENGRAVING — bone/off-white ground)  → dark ink copy
+     body.world-1 (SPECTRUM  — vivid psychedelic ground) → dark ink copy
+     body.world-2 (NEGATIVE  — near-black ground)       → existing light copy
+     Default (no class, first paint)                    → same as world-2 (dark ground)
+     Transition: 0.5s ease on color/text-shadow so the swap is smooth.
+
+   INJECTED UI:
+     #world-switcher, #hud, #osc-canvas, #boot-overlay all injected by hero.js.
+     Styles here so they work whether JS runs or the body class is set.
+   ============================================================================ */
+
+/* ── REVEAL FIX — resting visible, entrance on .visible ─────────────────── */
+/* Later cascade wins over the opacity:0 rest set earlier. */
+.reveal{opacity:1;transform:translateY(8px)}
+.reveal.visible{opacity:1;transform:none}
+.reveal-children>*{opacity:1;transform:translateY(6px)}
+.reveal-children.visible>*{opacity:1;transform:none}
+
+/* ── WORLD SWITCHER ─────────────────────────────────────────────────────── */
+#world-switcher{
+  position:fixed;top:clamp(1.8rem,3.6vw,3.2rem);right:clamp(2.4rem,5.5vw,5rem);
+  z-index:8;display:flex;gap:.5rem;align-items:center;pointer-events:auto
+}
+#world-switcher button{
+  font-family:"Spline Sans Mono","Courier New",monospace;
+  font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;
+  padding:.38em .72em;border:1px solid;background:transparent;cursor:pointer;
+  transition:background .25s ease,color .25s ease,border-color .25s ease
+}
+#world-switcher button:focus-visible{outline:2px solid #256660;outline-offset:3px}
+
+/* W2 / default (dark ground) — light button style */
+#world-switcher button{
+  color:#9ab8b5;border-color:rgba(108,223,214,.25);background:rgba(8,10,9,.72)
+}
+#world-switcher button[aria-pressed="true"]{
+  color:#0a0c0b;border-color:#6cdfd6;background:#6cdfd6
+}
+#world-switcher button:hover:not([aria-pressed="true"]){
+  background:rgba(108,223,214,.12);border-color:rgba(108,223,214,.50)
+}
+
+/* W0 / W1 (light ground) — dark button style */
+body.world-0 #world-switcher button,
+body.world-1 #world-switcher button{
+  color:#3a4840;border-color:rgba(28,68,66,.30);background:rgba(237,232,223,.72)
+}
+body.world-0 #world-switcher button[aria-pressed="true"],
+body.world-1 #world-switcher button[aria-pressed="true"]{
+  color:#ede8df;border-color:#1c4442;background:#1c4442
+}
+body.world-0 #world-switcher button:hover:not([aria-pressed="true"]),
+body.world-1 #world-switcher button:hover:not([aria-pressed="true"]){
+  background:rgba(28,68,66,.10);border-color:rgba(28,68,66,.55)
+}
+
+/* ── HUD ─────────────────────────────────────────────────────────────────── */
+#hud{
+  position:fixed;bottom:clamp(1.8rem,3.6vw,3.2rem);right:clamp(2.4rem,5.5vw,5rem);
+  z-index:6;display:flex;flex-direction:column;align-items:flex-end;gap:.28rem;
+  pointer-events:none;opacity:0;transition:opacity .8s ease
+}
+#hud.visible{opacity:1}
+#hud-label{font-family:"Spline Sans Mono","Courier New",monospace;font-size:.56rem;letter-spacing:.30em;text-transform:uppercase}
+#hud-sha  {font-family:"Spline Sans Mono","Courier New",monospace;font-size:.52rem;letter-spacing:.10em}
+#hud-status{font-family:"Spline Sans Mono","Courier New",monospace;font-size:.50rem;letter-spacing:.22em;text-transform:uppercase}
+/* W2 / default */
+#hud-label {color:#6cdfd6}
+#hud-sha   {color:#3a8c88}
+#hud-status{color:#9ab8b5}
+body.world-0 #hud-label,body.world-1 #hud-label{color:#1c4442}
+body.world-0 #hud-sha,  body.world-1 #hud-sha  {color:#256660}
+body.world-0 #hud-status,body.world-1 #hud-status{color:#3a4840}
+
+/* ── OSCILLOSCOPE CANVAS ─────────────────────────────────────────────────── */
+#osc-canvas{
+  position:fixed;bottom:clamp(1.8rem,3.6vw,3.2rem);right:clamp(2.4rem,5.5vw,5rem);
+  width:120px;height:38px;z-index:6;pointer-events:none;
+  opacity:0;transition:opacity .6s ease
+}
+#osc-canvas.visible{opacity:.62}
+
+/* ── BOOT OVERLAY ────────────────────────────────────────────────────────── */
+#boot-overlay{
+  position:fixed;inset:0;z-index:20;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:1.4rem;pointer-events:none;opacity:1;transition:opacity .5s ease
+}
+#boot-overlay.done{opacity:0}
+#boot-iris{position:relative;width:90px;height:90px;display:flex;align-items:center;justify-content:center}
+#boot-iris svg{width:90px;height:90px;overflow:visible}
+#boot-corona{position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 0 rgba(28,68,66,0)}
+#boot-corona.pulse{animation:heroCoronaPulse .7s ease-out forwards}
+@keyframes heroCoronaPulse{
+  0%  {box-shadow:0 0 0 0 rgba(28,68,66,0.85)}
+  100%{box-shadow:0 0 0 38px rgba(28,68,66,0)}
+}
+#boot-readout{
+  font-family:"Spline Sans Mono","Courier New",monospace;
+  font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;
+  color:#3a4840;text-align:center;line-height:1.9;
+  display:flex;flex-direction:column;gap:.15rem
+}
+#boot-sha   {font-family:"Spline Sans Mono","Courier New",monospace;font-size:.6rem;letter-spacing:.1em;color:#1c4442}
+#boot-status{font-family:"Spline Sans Mono","Courier New",monospace;font-size:.64rem;letter-spacing:.28em;text-transform:uppercase;color:#256660}
+
+/* ── WORLD-DRIVEN BODY BACKGROUND ───────────────────────────────────────── */
+/* Default (no class / world-2): near-black — already set by existing --void token */
+body.world-0{background:#ede8df}
+body.world-1{background:#0d0814}
+
+/* ── WORLD-DRIVEN HERO SCRIM ─────────────────────────────────────────────── */
+/* Existing .scrim in system.css has a dark-on-dark gradient. Override for W0/W1. */
+body.world-0 .scrim,
+body.world-1 .scrim{
+  background:linear-gradient(
+    100deg,
+    rgba(237,232,223,.92) 8%,
+    rgba(237,232,223,.58) 34%,
+    rgba(237,232,223,.16) 56%,
+    transparent 70%
+  )
+}
+
+/* ── PER-WORLD HERO TEXT ADAPTATION ─────────────────────────────────────── */
+/* Targets: .bar .nm, .bar .rt, .eyebrow, .mid h1, h1 .g, .lede, .close, .seal, .seal b */
+/* Transition so colour swaps feel smooth */
+
+/* Default + world-2 — existing light-on-dark. No override needed.
+   Kept as explicit world-2 block so adding body.world-2 class changes nothing. */
+body.world-2 .bar,
+.bar{color:var(--muted);transition:color .5s ease}
+
+body.world-2 .bar .nm,
+.bar .nm{color:var(--orange);transition:color .5s ease}
+
+/* World 0 + 1 — dark ink copy on light/vivid ground */
+/* Deep oxide teal: readable on bone (#ede8df) at 4.5:1+ and on vivid W1 ground */
+body.world-0 .bar,
+body.world-1 .bar{color:#2d3c38}
+
+body.world-0 .bar .nm,
+body.world-1 .bar .nm{color:#1c4442}
+
+/* .rt (right-hand bar tag) */
+body.world-2 .bar .rt{color:var(--muted)}
+body.world-0 .bar .rt,
+body.world-1 .bar .rt{color:#3a4840}
+
+/* eyebrow */
+body.world-2 .eyebrow{color:var(--orange)}
+body.world-0 .eyebrow,
+body.world-1 .eyebrow{color:#1c4442;transition:color .5s ease}
+
+/* h1 */
+body.world-2 h1{color:var(--bone);text-shadow:0 4px 60px rgba(0,0,0,.9)}
+body.world-0 h1,
+body.world-1 h1{
+  color:#0e1210;
+  text-shadow:0 2px 22px rgba(237,232,223,.72),0 0 40px rgba(237,232,223,.45);
+  transition:color .5s ease,text-shadow .5s ease
+}
+
+/* h1 .g accent */
+body.world-2 h1 .g{color:var(--orange)}
+body.world-0 h1 .g,
+body.world-1 h1 .g{color:#1c4442;transition:color .5s ease}
+
+/* lede */
+body.world-2 .lede{color:var(--bone)}
+body.world-0 .lede,
+body.world-1 .lede{color:#1a1e1c;transition:color .5s ease}
+
+/* .close */
+body.world-2 .close{color:var(--orange)}
+body.world-0 .close,
+body.world-1 .close{color:#1c4442;transition:color .5s ease}
+
+/* .seal */
+body.world-2 .seal{color:var(--muted)}
+body.world-0 .seal,
+body.world-1 .seal{color:#3a4840;transition:color .5s ease}
+
+body.world-2 .seal b{color:var(--orange)}
+body.world-0 .seal b,
+body.world-1 .seal b{color:#1c4442;font-weight:400;transition:color .5s ease}
