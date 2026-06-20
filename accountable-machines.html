@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Accountable Machines — senses and sensibility</title>
+<meta name="description" content="A machine is accountable only if its accountability is intrinsic — a property of what each part is — and bilateral: the same standard of evidence that binds the machine binds the operator. A theory with a working proof-of-concept (accountable-surface, 129 tests), honest that it is pre-proof. By Zain Dana Harper.">
+<link rel="canonical" href="https://harperz9.github.io/accountable-machines.html">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/system.css">
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div class="scrim"></div>
+<canvas id="motes"></canvas>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Accountable Machines &middot; the idea as a whole</span></div>
+  <div class="mid">
+    <p class="eyebrow">SENSES AND SENSIBILITY &middot; ACCOUNTABLE MACHINES</p>
+    <h1>A machine should answer for <span class="g">what it does.</span></h1>
+    <p class="lede">An agent that perceives through channels no one verified, governed by rules bolted on after the fact, is not accountable &mdash; it is <em>supervised</em>, and supervision does not scale. The alternative is to make accountability <b>intrinsic</b> &mdash; a property of what each part <em>is</em> &mdash; and <b>bilateral</b>: the same standard of evidence that binds the machine binds the operator.</p>
+    <p class="close">Senses, and the sensibility to be checked.</p>
+  </div>
+  <div class="seal">A theory with a working proof-of-concept &mdash; pre-proof, and honest about it.</div>
+</div>
+
+<main>
+
+<!-- the claim -->
+<section class="mv" id="claim" aria-labelledby="claim-h">
+  <h2 id="claim-h" class="reveal">Supervision is not accountability.</h2>
+  <p class="body-text reveal">Guardrails bolted on after the fact catch a bad action &mdash; sometimes. They do not make the system answer for what it perceived, decided, and did. Accountability that lives <em>outside</em> the system is supervision, and it does not scale. Accountability that binds only the machine and not its maker is <em>abdication</em> &mdash; the way conferred power escapes its duty of care. So the claim is exact: a system is accountable <b>only if</b> its accountability is intrinsic <em>and</em> bilateral.</p>
+  <em class="close reveal">Intrinsic &mdash; built into what each part is, not a layer added afterward. Bilateral &mdash; the maker is inside the loop, not above it.</em>
+</section>
+
+<!-- four principles -->
+<section class="mv" id="principles" aria-labelledby="principles-h">
+  <h2 id="principles-h" class="reveal">Four principles, and a machine you can check.</h2>
+  <p class="body-text reveal"><b>Awareness is not authority.</b> A system can authenticate what is real; it cannot authorize action. Perception and authorization are separated by construction &mdash; absent a human grant, the default is deny.</p>
+  <p class="body-text reveal"><b>Proof before trust.</b> A claim is worth what its receipt is worth. Every perception carries provenance and a self-test that can fail; every action leaves an inspectable record.</p>
+  <p class="body-text reveal"><b>Intrinsic over extrinsic.</b> A screenshot laid beside a page proves nothing about the page. Build the system so an un-witnessed reading cannot even be expressed.</p>
+  <p class="body-text reveal"><b>Construction over detection.</b> Don&rsquo;t catch the wrong action after the fact &mdash; construct the system so it cannot be authorized. The gate refuses; it does not merely report.</p>
+</section>
+
+<!-- the mechanism -->
+<section class="mv" id="loop" aria-labelledby="loop-h">
+  <h2 id="loop-h" class="reveal">One loop for the machine. One critic for the maker.</h2>
+  <p class="body-text reveal">The machine runs a single loop &mdash; <b>perceive &rarr; gate &rarr; act &rarr; verify &rarr; witness</b>. It perceives only through witnessed organs, each reading carrying provenance and a self-test that can fail, never a screenshot. Every proposed action is checked against a human grant <em>before</em> it happens: allow, deny, or needs-human &mdash; the model authorizes nothing. It acts only on an allow, bounded and reversible, re-perceives to confirm the effect, and writes every step to an append-only, content-addressed journal.</p>
+  <p class="body-text reveal">The same standard turns on the builder &mdash; the equalizer. Pointed <em>inward</em>, it renders depersonalized verdicts on the work, so the work can be wrong without the person being worthless. Pointed <em>outward</em>, it asks the operator: why are you sure, what authorizes it, is it in scope. Evidence is the measure, not feeling.</p>
+  <p class="pull reveal">The gate judges the action, never the worth of whoever took it &mdash; for the machine, and for the hand that builds it.</p>
+</section>
+
+<!-- the proof -->
+<section class="proof" id="proof" aria-labelledby="proof-h">
+  <div class="proof-head">
+    <h2 id="proof-h" class="reveal">Don&rsquo;t take the claim. <em>Watch it refuse itself.</em></h2>
+    <p class="body-text reveal">The strongest test of a construction is to attack it. The accountable surface ships an integrity suite that forges its own guarantees &mdash; a stolen grant, a faked digest, a tampered journal, an out-of-bounds target &mdash; and confirms each is refused. The output is verbatim.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit</span> <span class="what">the accountable surface &middot; the system attacks its own constructions</span></div>
+    <pre class="artifact"><span class="cmt"># forge an allow-receipt for an action that was never granted</span>
+<span class="pr">&gt;&gt;&gt; effector.act(plan, forged_allow)</span>
+<span class="bad">RefusedActuation: no gate allow — the effector will not act</span>
+
+<span class="cmt"># forge a provenance digest, then re-perceive the actual bytes</span>
+  forged:      sha256:deadbeef0000…
+  re-derived:  sha256:40b0fb1b6a2c…     <span class="bad">MISMATCH — the witness rejects it</span>
+
+<span class="cmt"># tamper one line of the append-only journal, then replay</span>
+<span class="pr">&gt;&gt;&gt; surface.replay().replay_errors</span>
+  <span class="ok">1</span>     <span class="cmt"># corruption is signalled, never silently dropped</span>
+
+<span class="cmt"># escape the effector's bound — with a valid allow receipt</span>
+<span class="pr">&gt;&gt;&gt; effector.act(plan(target="../escape.txt"), allow)</span>
+<span class="bad">RefusedActuation: target is outside the effector's bound</span>
+
+<span class="pr">$ pytest tests/test_integrity_redteam.py</span>
+<span class="ok">39 passed in 0.13s</span></pre>
+    <p class="artifact-cap">A stolen grant, a faked digest, a tampered record, a target outside the fence &mdash; each <b>refused by construction</b>, not by a prompt. The system holds when its own guarantees are turned against it.</p>
+    <p class="artifact-note">The four cases are the suite&rsquo;s own assertions, shown in the surface&rsquo;s verbatim refusal messages; the result is captured live from <b>pytest</b> &mdash; 39 passed, inside a zero-dependency core of <b>129 passed</b> (3.25s). From <b>github.com/HarperZ9/accountable-surface &middot; test_integrity_redteam.py</b>. <em>Honest limit:</em> the suite is self-authored &mdash; it shows the constructions hold against their author, not yet against an independent adversary. That red-team is owed.</p>
+  </div>
+</section>
+
+<!-- honest status -->
+<section class="mv" id="status" aria-labelledby="status-h">
+  <h2 id="status-h" class="reveal">A theory, with a working proof-of-concept. Not a law.</h2>
+  <p class="body-text reveal">The loop is real &mdash; zero-dependency code, 129 tests, running end to end. The foundation is rigorous: authentication is not authorization, and the bridge between them is <em>unmeasurable</em>, so better signal can never supply it; holding-responsible is irreducibly two-place, which is <em>why</em> the maker is in the loop; to exist is to be conferred, which makes authority stewardship, not ownership. It terminates in a named impossibility &mdash; a candidate law, on the way to a theorem.</p>
+  <p class="body-text reveal">Said plainly, because the thesis demands it: one author, one instantiation; the integrity suite is self-authored; the gate is advisory, not yet enforced in a production runtime; no outside validation. A claim about accountability that overstated its own standing would refute itself &mdash; so this one states exactly where it stands. What raises it to a law is what one author cannot supply alone: an independent red-team that tries to break it and fails, the terminus formalized into a theorem, and a second author who rebuilds the loop and gets the same behavior.</p>
+  <div class="channels reveal">
+    <span class="g">GitHub</span> &mdash; <a href="https://github.com/HarperZ9/accountable-surface">HarperZ9/accountable-surface</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">Email</span> &mdash; <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
+    &nbsp;&middot;&nbsp;
+    <a href="./">&larr; the index</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Awareness is not authority &mdash; the seam is a witness, not a foundation. Make a machine&rsquo;s perception and action answer to evidence, and hold the maker to the same standard.</p>
+</footer>
+
+<script src="system/hero.js" defer></script>
+</body>
+</html>
