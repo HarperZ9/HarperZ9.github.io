@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zain Dana Harper — Curriculum Vitae</title>
+<meta name="description" content="Curriculum vitae of Zain Dana Harper — systems engineer across AI accountability, compilers, real-time graphics, color science, and security. Everything proves itself.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Schibsted+Grotesk:wght@500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/doc.css">
+</head>
+<body class="doc">
+
+<nav class="docnav" aria-label="Document">
+  <a href="index.html">← Portfolio</a>
+  <span class="switch"><a href="resume.html">Résumé</a> <span class="where">CV</span> <a href="research.html">Research</a> <a href="cv.md">.md</a></span>
+</nav>
+
+<article class="sheet">
+
+  <header class="mast">
+    <h1>Zain Dana Harper</h1>
+    <p class="role">Systems engineer · AI accountability · compilers · real-time graphics · security</p>
+    <p class="contact">
+      <span>Independent · Seattle · since 2023</span><span class="sep">/</span>
+      <a href="https://harperz9.github.io">harperz9.github.io</a><span class="sep">/</span>
+      <a href="https://github.com/HarperZ9">github.com/HarperZ9</a><span class="sep">/</span>
+      <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
+    </p>
+  </header>
+
+  <section>
+    <h2>Profile</h2>
+    <p class="lead">A self-taught systems engineer working across an unusually wide stack — compiler
+    internals, real-time graphics, color science, AI accountability, and offensive/defensive
+    security — held together by a single discipline: <b>everything proves itself.</b> No claim ships
+    without a test, a witnessed byte, or an inspectable artifact beside it; maturity is labeled,
+    never inflated.</p>
+    <p class="lead" style="margin-top:.7rem">The current work is the accountability layer the agentic era requires: making a
+    machine's perception and action <em>answerable to evidence</em> instead of asserted. It is built
+    on years of the opposite discipline — understanding how systems are attacked and evaded,
+    red-teamed to where they break — because you build an honest system best when you know every way
+    one lies. That arc, adversary to accountability, is the through-line.</p>
+  </section>
+
+  <section>
+    <h2>Areas of expertise</h2>
+    <dl class="kv">
+      <dt>Accountability</dt>
+      <dd>Witnessed perception · default-deny authorization gates · bilateral provenance · cryptographic witnessing · content-addressed state</dd>
+      <dt>Compilers</dt>
+      <dd>Lexing · parsing · type &amp; effect systems · interprocedural lifetime analysis · native codegen</dd>
+      <dt>Graphics</dt>
+      <dd>Rendering pipelines · GPU state capture · GLSL / WebGL shader engineering</dd>
+      <dt>Color science</dt>
+      <dd>Perceptual color spaces · CIECAM02 / CAM16 · ΔE · ICC · HDR tone mapping</dd>
+      <dt>Security</dt>
+      <dd>Systems-level integrity / anti-cheat · binary reverse-engineering · instrumentation · red-team research (build-and-break, in service of defense)</dd>
+      <dt>Agent systems</dt>
+      <dd>Scoped / expiring authority · witnessed action · capability platforms · orchestration</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>The body of work</h2>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">The accountability spine <span class="org">— flagship</span></span>
+        <span class="entry-meta">public · tested</span>
+      </div>
+      <p class="entry-note">A composable stack that instantiates one loop — perceive → gate → act → verify → witness.</p>
+      <ul class="bul">
+        <li><b>EMET</b> — the witness. Re-derives a file's bytes and answers MATCH / DRIFT / UNVERIFIABLE, never <em>trusted</em>. <span class="num">19/19</span> conformance across three independent language implementations (Python · Rust · Node).</li>
+        <li><b>coherence-membrane</b> — the read-gate. Turns a model's state-blindness into witnessed, re-derivable observations across an organ family (visual · raw · region · structured · audio · caption). Zero dependencies; <span class="num">312</span> tests; PyPI.</li>
+        <li><b>proof-surface</b> — the write-gate. A default-deny, fail-closed authorization contract: expiring least-privilege grants, work-record receipts, delegation chains rooted in a real human with monotonic scope attenuation. Stdlib-only; <span class="num">258</span> tests; PyPI.</li>
+        <li><b>accountable-surface</b> — the loop. A model perceives natively, acts only on an <em>allow</em>, and re-perceives to confirm. MCP server + filesystem/web/command effectors, inert until authorized; <span class="num">129</span> tests, including a <span class="num">39</span>-test adversarial integrity suite (forge a digest, manufacture a grant, escape a bound — each refused).</li>
+        <li><b>accountable-engine</b> — the bilateral critic: the same evidentiary standard turned on the operator, not only the machine.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">Compilers &amp; languages</span></div>
+      <ul class="bul">
+        <li><b>QuantaLang / quantac</b> — a typed-effects language. A function's signature names the effects it may perform and the lifetimes of the references it returns; the compiler checks both and lowers to native code through a C backend. <span class="num">999</span> tests; C backend end-to-end, other targets experimental.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">Systems &amp; graphics</span></div>
+      <ul class="bul">
+        <li><b>signal-kernels</b> — header-only C++23: entropy, mutual information, divergences, Granger causality, PELT changepoint, FFT.</li>
+        <li><b>anomaly-kernels</b> — C++23 anomaly detection: baselines, z-score/IQR, temporal correlation.</li>
+        <li><b>RAW</b> — a real-time rendering pipeline expressing frame/shader/GPU state as receipts; D3D11 today, a native dependency-minimal capture path next. Public leaf: <b>gpu-trace-validator</b>.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">Color science</span></div>
+      <ul class="bul">
+        <li><b>quanta-color</b> — 15+ color spaces, CIECAM02/CAM16, perceptual ΔE, ICC, HDR tone mapping; GUI and CLI; PyPI v1.0.1.</li>
+        <li><b>calibrate-pro</b> — Windows display calibration; DDC/CI, ICC / 3D-LUT output.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">Release &amp; agent toolkit <span class="org">— shipping discipline</span></span></div>
+      <ul class="bul">
+        <li><b>19 packages on PyPI</b>, each tested and released — secret-redact-io, release-surface-scanner, public-surface-sweeper, repo-proof-index, model-provenance-validator, provenance-sensorium, proof-surface-report, agent-audit, agent-hook-pack, agent-routing-kit, context-curator-lite, workflow-harness-lite, workspace-repo-map, and more.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">Security &amp; platform <span class="org">— private; by capability</span></span></div>
+      <ul class="bul">
+        <li>A C++23 <b>integrity / anti-cheat framework</b> (~3,000 tests across ~59 modules) — detecting tampering, evasion, and manipulation by understanding exactly how they are done.</li>
+        <li>An <b>agent-orchestration / capability platform</b> — scoped, expiring, witnessed authority at scale; the production substrate the public accountability organs were extracted from.</li>
+        <li>Binary reverse-engineering, instrumentation, and red-team research across the stack — repurposed inward, to make the accountability platform self-accountable by adversarial construction.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Research &amp; writing</h2>
+    <ul class="bul">
+      <li><b>The Accountability Conjecture</b> — a falsifiable theory of intrinsic, bilateral accountability, with a working proof-of-concept; states its own epistemic status (pre-proof) and the path to a law. MIT, dated, authored.</li>
+      <li><b>Senses and Sensibility</b> — the concise statement of the four principles and the accountable loop.</li>
+      <li><em>Conferred Existence</em> — a long-form philosophical corpus (no-aseity, the membrane, the arity gap, the forcing argument) from which the accountability thesis is extracted; publication staged. <a class="inline" href="research.html">See the research page →</a></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Selected receipts</h2>
+    <div class="receipts">
+      <span class="r"><b>19/19</b> EMET conformance</span>
+      <span class="r"><b>312</b> coherence-membrane</span>
+      <span class="r"><b>258</b> proof-surface</span>
+      <span class="r"><b>129</b> accountable-surface <span style="color:var(--tag)">(39 adversarial)</span></span>
+      <span class="r"><b>999</b> QuantaLang</span>
+      <span class="r"><b>~3,000</b> integrity framework</span>
+      <span class="r"><b>19</b> PyPI releases</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Approach</h2>
+    <p class="lead">Curious to a fault — ideas from biology, geometry, and color perception routinely end
+    up in the software (the portfolio's own imagery is real mathematics rendered from original macro
+    photography). Honest about limits, in public, with receipts. Build, <em>and</em> break — every
+    guarantee tested against the attack it claims to survive.</p>
+  </section>
+
+  <p class="note">No computer-science degree. Independent since 2023. The work is the credential, and
+  it is all inspectable. · Updated 2026-06-20.</p>
+
+</article>
+</body>
+</html>
