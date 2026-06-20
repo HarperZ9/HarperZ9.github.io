@@ -1,0 +1,23 @@
+# GitHub Pages config for harperz9.github.io
+#
+# This is a hand-authored static site. Jekyll is used here for one purpose:
+# to keep internal scaffolding OUT of the published surface. Every page is
+# served verbatim; nothing below is rendered or templated.
+#
+# Excluded files stay tracked in the repository (the harness and the design
+# tooling read them) but are not built into the public site at harperz9.github.io.
+# This is accountable deprecation of the public exposure, not deletion.
+
+exclude:
+  - AGENTS.md          # agent/harness project instructions — internal
+  - DESIGN.md          # design-system notes — internal
+  - PRODUCT.md         # product context — internal
+  - _HANDOFF.md        # session handoff — internal
+  - docs/              # dev plans/specs — internal
+  - tests/             # contract tests — internal
+  - "*.py"             # test/util scripts — internal
+  - .repomap.toml      # repo-map tool config — internal
+  - README.md          # repo context (visible on GitHub; not a site page)
+
+# Served verbatim: index.html, the organ pages, *-sample.html, resume.md,
+# cv.md, AUTHORS.md, CONTRIBUTING.md, system/ (css+js), img/.
