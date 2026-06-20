@@ -183,7 +183,7 @@ Parsing... <span class="ok">OK</span> (1 items)
 
     <!-- QUANTA COLOR -->
     <div class="organ-row" role="listitem" style="--i:5">
-      <span class="organ-name">QUANTA COLOR</span>
+      <span class="organ-name"><a href="quanta-color.html">QUANTA COLOR</a></span>
       <span class="organ-role">Color</span>
       <span class="organ-line">
         Color as measured, not guessed &mdash; 15+ spaces, CIECAM02&thinsp;/&thinsp;CAM16, perceptual &Delta;E; GUI and CLI.
@@ -194,11 +194,11 @@ Parsing... <span class="ok">OK</span> (1 items)
 
     <!-- RAW -->
     <div class="organ-row" role="listitem" style="--i:6">
-      <span class="organ-name">RAW</span>
+      <span class="organ-name"><a href="raw.html">RAW</a></span>
       <span class="organ-role">Vision</span>
       <span class="organ-line">
-        Frame, shader, and GPU state expressed as receipts &mdash; the surface where models are weakest natively. Today a D3D11 rendering pipeline carries it; the direction is native &mdash; no graphics API in the loop, and as few dependencies as possible.
-        <span class="v-note">rendering pipeline private/closed &middot; the public <em>gpu-trace-validator</em> checks trace JSON, not frames &middot; next: a native, dependency-minimal capture path (no DirectX)</span>
+        A real-time D3D11 rendering platform &mdash; a proxy DLL owning the pipeline, dispatching screen-space GI, AO, and reflections mid-frame. The reverse-engineering and graphics origin; the direction is the substrate&rsquo;s spatial, live-state sense.
+        <span class="v-note">public &middot; GTAO&thinsp;/&thinsp;SSGI&thinsp;/&thinsp;SSR live, two in repair &middot; maturing toward models perceiving spatial + live rendered state</span>
       </span>
       <span class="organ-verdict"><span class="verdict verdict-active" aria-label="Verdict: In development">IN DEVELOPMENT</span></span>
     </div>

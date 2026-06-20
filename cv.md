@@ -25,10 +25,15 @@ accountability, is the through-line.
   bilateral provenance, cryptographic witnessing, content-addressed state.
 - **Compilers & languages** — lexing, parsing, type systems, effect systems, interprocedural
   lifetime analysis, native codegen.
-- **Real-time graphics** — rendering pipelines, GPU state capture, GLSL/WebGL shader engineering.
+- **Real-time graphics** — D3D11 rendering, screen-space GI/AO/reflections (GTAO, SSGI, SSR),
+  HLSL/GLSL shader engineering, HDR tone mapping, proxy-DLL pipeline injection, GPU state capture.
 - **Color science** — perceptual color spaces, CIECAM02/CAM16, ΔE, ICC, HDR tone mapping.
-- **Security** — systems-level integrity / anti-cheat, binary reverse-engineering, instrumentation,
-  red-team research (build-and-break, in service of defense).
+- **Reverse engineering & security** — binary analysis & decompilation, proxy-DLL interception,
+  live memory/state re-derivation, instrumentation, anti-cheat & proprietary-engine RE, systems-level
+  integrity (build-and-break, in service of defense).
+- **Native & systems** — native driver development (DDC/CI display control, standalone of ArgyllCMS),
+  signal & information theory (entropy, mutual information, Granger, PELT, FFT), CMake/C++ build,
+  SKSE/plugin architecture.
 - **Agent systems & orchestration** — scoped/expiring authority, witnessed action, capability platforms.
 
 ## The body of work
@@ -64,8 +69,11 @@ A composable stack that instantiates one loop — **perceive → gate → act �
 - **signal-kernels** — header-only C++23: entropy, mutual information, divergences, Granger
   causality, PELT changepoint, FFT.
 - **anomaly-kernels** — C++23 anomaly detection: baselines, z-score/IQR, temporal correlation.
-- **RAW** — a real-time rendering pipeline expressing frame/shader/GPU state as receipts; D3D11
-  today, a native dependency-minimal capture path next. Public leaf: **gpu-trace-validator**.
+- **RAW** (Rendering Advancement Workshop) — a public real-time D3D11 rendering platform: a proxy
+  DLL owning the pipeline with mid-frame dispatch of screen-space GI, AO, and reflections (GTAO,
+  SSGI, SSR, skylighting). Reverse-engineering/graphics origin, maturing toward the substrate's
+  spatial, live-state visual engine.
+- **gpu-trace-validator** — a focused public tool: validate GPU-trace JSON against a schema, emit bounded receipts.
 
 ### Color science
 
