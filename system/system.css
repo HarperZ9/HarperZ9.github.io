@@ -162,6 +162,10 @@ h2 em{font-style:normal;color:var(--orange)}
 .hero-cue{margin-top:1.6rem;font-family:"Spline Sans Mono",monospace;font-size:.66rem;letter-spacing:.13em;color:var(--muted);text-shadow:0 1px 12px rgba(6,14,15,.9),0 0 3px rgba(6,14,15,.8)}
 .hero-cue a{color:var(--orange);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4);padding-bottom:1px;transition:color .2s,border-color .2s}
 .hero-cue a:hover{color:var(--ember);border-color:var(--ember)}
+/* .frame is pointer-events:none so the canvas behind stays interactive — but that
+   makes the hero's own links unclickable. Re-enable pointer events on the links
+   themselves (résumé/CV/research/GitHub/receipts + the name), nothing else. */
+.frame a{pointer-events:auto}
 @media(max-width:600px){
   .built-row{grid-template-columns:1fr;gap:.05rem}
 }
