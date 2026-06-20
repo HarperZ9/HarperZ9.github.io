@@ -42,7 +42,8 @@ next); color science (CIECAM02/CAM16, perceptual ΔE, ICC, HDR) shipped on PyPI.
 
 Python · Rust · C++23 · WebGL / GLSL · TypeScript · compiler internals & type systems · real-time
 graphics · color science · AI accountability & cryptographic provenance · agent orchestration ·
-offensive/defensive security & reverse-engineering · disciplined release engineering.
+offensive/defensive security & reverse-engineering · AI development tooling (Claude Code · MCP
+servers · eval / red-team harnesses) · disciplined release engineering.
 
 ## Highlights
 
@@ -53,4 +54,4 @@ offensive/defensive security & reverse-engineering · disciplined release engine
 ---
 
 *Independent since 2023, out of Seattle. The breadth is one mind seen from many angles; the
-through-line is proof.*
+through-line is proof.* · Updated 2026-06-20.

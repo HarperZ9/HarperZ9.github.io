@@ -115,4 +115,4 @@ the attack it claims to survive.
 ## Note
 
 No computer-science degree. Independent since 2023. The work is the credential, and it is all
-inspectable.
+inspectable. · Updated 2026-06-20.
