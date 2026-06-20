@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coherence Membrane — the read-gate</title>
+<meta name="description" content="Coherence Membrane is an inert, stdlib-only perception library that replaces a model's state-blind guess with a witnessed, re-derivable Observation. A zero-dependency organ family — visual, raw, region, structured, audio, caption. Drift verdicts in a closed lattice: MATCH / DRIFT / UNVERIFIABLE. 312 passing tests. By Zain Dana Harper.">
+<link rel="canonical" href="https://harperz9.github.io/coherence-membrane.html">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/system.css">
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div class="scrim"></div>
+<canvas id="motes"></canvas>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Coherence Membrane &middot; the read-gate</span></div>
+  <div class="mid">
+    <p class="eyebrow">ACCOUNTABILITY INFRASTRUCTURE &middot; COHERENCE MEMBRANE</p>
+    <h1>A guess about runtime state is <span class="g">not a perception.</span></h1>
+    <p class="lede">A model&rsquo;s one structural disability is state-blindness: it reasons on its prior and on source text, not on what actually happened. When it says &ldquo;this frame renders correctly&rdquo; or &ldquo;this file contains X,&rdquo; that is a guess dressed as a fact. The membrane replaces the guess with a witnessed, re-derivable Observation &mdash; full-width SHA-256, dimensions, perceptual hash &mdash; that the model can ground on. Inert by construction: it reads, never writes.</p>
+    <p class="close">Drift verdicts in a closed lattice &mdash; MATCH / DRIFT / UNVERIFIABLE &mdash; never a silent match on a difference.</p>
+  </div>
+  <div class="seal">v0.1.0 &middot; zero dependencies &middot; 300+ tests &middot; organ family: visual &middot; raw &middot; region &middot; structured &middot; audio &middot; caption</div>
+</div>
+
+<main>
+
+<!-- what it is -->
+<section class="mv" id="what" aria-labelledby="what-h">
+  <h2 id="what-h" class="reveal">State-blindness is structural, not a bug to patch.</h2>
+  <p class="body-text reveal">The disability is not incidental &mdash; a model without a perception layer has no channel to runtime state. It simulates the world in its head. The membrane does not patch the model; it gives it a channel. Each organ reads an artifact &mdash; a PNG, a raw frame, a JSON document, a WAV, a caption &mdash; and returns an Observation carrying the bytes it witnessed: exact identity hash, organ-specific measurements, a perceptual fingerprint where the organ can derive one. The Observation is the evidence; the model grounds on the Observation, not on a simulation.</p>
+  <p class="body-text reveal">The safety and the capability are the same thing. A model that perceives true, re-derivable state cannot act on a hallucination about what is there (safety) and can close the make&nbsp;&rarr;&nbsp;look&nbsp;&rarr;&nbsp;compare&nbsp;&rarr;&nbsp;adjust loop it was always blind in (capability).</p>
+  <em class="close reveal">Inert organs: they read and report. They never mutate the artifact, the process that produced it, or anything else.</em>
+</section>
+
+<!-- the organ family -->
+<section class="mv" id="organs" aria-labelledby="organs-h">
+  <h2 id="organs-h" class="reveal">The organ family.</h2>
+  <p class="body-text reveal"><b>VisualArtifactOrgan</b> &mdash; perceives a PNG into a full-width SHA-256, witnessed width and height, and a 64-bit dHash of the decoded pixels. The perceptual hash is the membrane&rsquo;s drift signal: a cheap Hamming distance between two hashes measures how far the image moved, not just whether the bytes changed.</p>
+  <p class="body-text reveal"><b>RawScreenCaptureSource / RawFrameOrgan</b> &mdash; native screen capture via the OS&rsquo;s own compositing API (GDI on Windows via <code>ctypes</code>, no third-party package). The raw fast path skips PNG encoding entirely: identity hash on the raw BGRA bytes every tick, perceptual hash only on a real change. Bit-identical to the PNG path, proven by selftest &mdash; same answer, lower cost.</p>
+  <p class="body-text reveal"><b>RegionArtifactOrgan</b> &mdash; the same whole-image facts plus a row-major grid of per-tile dHashes. <code>compare_region_drift</code> localises a change to the tiles that actually moved &mdash; &ldquo;tile 5 changed&rdquo; rather than &ldquo;the whole screen changed.&rdquo;</p>
+  <p class="body-text reveal"><b>StructuredDataOrgan</b> &mdash; perceives a JSON document into a raw-byte identity and a canonical identity (the digest of the document re-serialised in sorted-key, normalised-whitespace form). Baseline memory checks on a three-rung ladder: byte identity &rarr; canonical identity &rarr; perceptual distance. A reformatted-but-equivalent document is a MATCH; a changed value is a real DRIFT.</p>
+  <p class="body-text reveal"><b>AudioArtifactOrgan</b> &mdash; perceives a WAV (stdlib <code>wave</code>, no third-party audio stack) into identity, format, and a 64-bit perceptual fingerprint of the loudness envelope. Fails closed to identity-only on anything it cannot decode.</p>
+  <p class="body-text reveal"><b>CaptionOrgan</b> &mdash; perceives a subtitle or transcript line into a raw-byte identity and a canonical text identity (Unicode NFC and collapsed whitespace). A whitespace-different-but-same caption is a MATCH. Composed per-timestamp with a frame organ, the membrane witnesses what was on screen and what was said as one instant.</p>
+</section>
+
+<!-- the two gates -->
+<section class="mv" id="gates" aria-labelledby="gates-h">
+  <h2 id="gates-h" class="reveal">Two gates, deliberately separate.</h2>
+  <p class="body-text reveal">The read-gate (this library) answers: <em>what is actually there?</em> It perceives real artifacts into witnessed Observations. The write-gate (<b>proof-surface</b>, <code>pre_execution_gate</code>) answers: <em>may this action proceed, given that state?</em> Default-deny, fail-closed, advisory.</p>
+  <p class="body-text reveal">They are separate repositories by design: a read-gate is useful to specifications that never act; a write-gate is useful to agents with no eyes. They compose through the shared observation and receipt JSON shape, not through a code dependency. A <code>DriftVerdict</code>&rsquo;s MATCH / DRIFT / UNVERIFIABLE is the gate&rsquo;s <code>witness_verdict</code> lattice, so perceived visual drift flows straight into the gate&rsquo;s state check with no translation layer.</p>
+  <em class="close reveal">The membrane never grants authority and removes no check &mdash; every guarantee lives in the parts it composes.</em>
+</section>
+
+<!-- the proof -->
+<section class="proof" id="proof" aria-labelledby="proof-h">
+  <div class="proof-head">
+    <h2 id="proof-h" class="reveal">Don&rsquo;t take the observation. <em>Watch it refuse to guess.</em></h2>
+    <p class="body-text reveal">The membrane&rsquo;s failure mode matters as much as its success mode. These cases show what happens when it cannot verify &mdash; and what happens when two implementations derive the same answer independently.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit I</span> <span class="what">Coherence Membrane &middot; drift as a closed lattice</span></div>
+    <pre class="artifact"><span class="cmt"># perceive a frame — witnessed identity, dimensions, perceptual hash</span>
+<span class="pr">>>> snap = perceive(["frame.png"])</span>
+<span class="pr">>>> obs = snap.observations[0]</span>
+<span class="ok">obs.data["identity_sha256"]   # full-width, re-derivable</span>
+<span class="ok">obs.data["width"], obs.data["height"]</span>
+<span class="ok">obs.data["perceptual_hash"]   # 64-bit dHash</span>
+
+<span class="cmt"># drift check — closed lattice, never a silent match on difference</span>
+<span class="pr">>>> compare_drift(baseline_sha, current_sha, baseline_phash, current_phash)</span>
+<span class="ok">DriftVerdict(verdict="MATCH")</span>    <span class="cmt"># byte-identical</span>
+
+<span class="pr">>>> compare_drift(baseline_sha, changed_sha, baseline_phash, changed_phash)</span>
+<span class="bad">DriftVerdict(verdict="DRIFT", distance=12)</span>
+
+<span class="cmt"># no pinned anchor — honest refusal, never a fabricated VALID</span>
+<span class="pr">>>> verify_receipt(receipt)</span>
+<span class="bad">ReceiptVerdict(verdict="UNVERIFIABLE", reason="no pinned anchor")</span>
+
+<span class="pr">$ pytest</span>
+<span class="ok">312 passed in current suite</span></pre>
+    <p class="artifact-cap">The membrane reads, then reports. A match is a witnessed match. A missing anchor is UNVERIFIABLE, not a silent pass. The lattice is closed: no verdict outside MATCH / DRIFT / UNVERIFIABLE can be emitted.</p>
+    <p class="artifact-note">Captured live from <b>pytest</b> &mdash; 312 passed (current suite, includes the live web-perception increment); stdlib-only, zero dependencies, <b>github.com/HarperZ9/coherence-membrane</b>. Formal lattice verification in <b>lattice.py</b> proves closure, fail-closed reachability, and monotonic attenuation by exhaustive enumeration &mdash; run on every pytest. <em>Honest limit:</em> organs are inert; a drift verdict is only as strong as the baseline it compares against. UNVERIFIABLE is returned rather than a guessed match. The perceptual hash is a coarse 64-bit fingerprint &mdash; advisory evidence, not semantic understanding.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit II</span> <span class="what">Coherence Membrane &middot; re-derivability demonstrated in two languages</span></div>
+    <pre class="artifact"><span class="cmt"># Python reference — re-derives every case in the frozen conformance corpus</span>
+<span class="pr">$ python conformance/run.py</span>
+<span class="ok">all cases pass   # corpus hash pinned</span>
+
+<span class="cmt"># JavaScript implementation — shares no code with the Python reference</span>
+<span class="cmt"># re-derives SHA-256, PNG-decode + dHash, drift lattice, canonical-JSON,</span>
+<span class="cmt"># region drift, and receipt anchor — value-for-value</span>
+<span class="pr">$ node impl/js/run.js</span>
+<span class="ok">{"impl":"js","cases":16,"passed":16,"failed":0}</span>
+
+<span class="cmt"># every organ proves itself — an unverified membrane is worse than none</span>
+<span class="pr">$ PYTHONPATH=src python -m coherence_membrane selftest</span>
+<span class="ok">{"passed": true, "results": [ ...6 organs, every check ok... ]}</span></pre>
+    <p class="artifact-cap">Two implementations sharing no code, deriving the same values over the frozen contract corpus &mdash; re-derivability demonstrated, not asserted. A selftest that can fail, run before trust is extended.</p>
+    <p class="artifact-note">JavaScript implementation in <b>impl/js/membrane.js</b> (Node built-ins only &mdash; <code>crypto</code>, <code>zlib</code>); conformance corpus in <b>conformance/vectors.json</b>, hash-pinned; JSON Schemas for the Observation and DriftVerdict wire shapes in <b>schemas/</b>. <em>Honest limit:</em> the demonstration is over the corpus, not a proof of total equivalence. JS <code>canonical()</code> throws on non-safe-integer numbers rather than silently diverging &mdash; a fail-loud boundary, stated in the README. macOS and Linux capture backends are implemented to the OS APIs but unvalidated on those platforms; the author has Windows only.</p>
+  </div>
+</section>
+
+<!-- honest limits -->
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h" class="reveal">What it is, and what it is not.</h2>
+  <p class="body-text reveal">The membrane is inert perception infrastructure &mdash; stdlib Python, zero external dependencies, 300+ tests, organ selftests that can fail. It replaces a guess with a witness; it does not replace a gate. The write-gate (<b>proof-surface</b>) is where enforcement lives. The membrane reports; the operator adjudicates.</p>
+  <p class="body-text reveal">Screen capture reads the composited display output the operator can already see, via the OS&rsquo;s own screen API through <code>ctypes</code>. It does not inject into, hook, or read another process&rsquo;s memory. It must be used only on surfaces the operator owns or has authorised. That is not a disclaimer &mdash; it is the design.</p>
+  <p class="pull reveal">The default is never affirmative &mdash; proven against the real functions, not asserted in a comment.</p>
+  <p class="body-text reveal">The formal lattice verification in <b>lattice.py</b> is machine-checked by exhaustive enumeration over the three-element verdict sets. The abstract laws are trivial for a three-element chain &mdash; deliberately. The work is the binding: executable proofs that the implementations land in, refine, and aggregate exactly as the lattice structures require.</p>
+  <div class="channels reveal">
+    <span class="g">GitHub</span> &mdash; <a href="https://github.com/HarperZ9/coherence-membrane">HarperZ9/coherence-membrane</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">Email</span> &mdash; <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
+    &nbsp;&middot;&nbsp;
+    <a href="./">&larr; the index</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">A guess about runtime state is not a perception &mdash; witnessed, re-derivable, inert.</p>
+</footer>
+
+<script src="system/hero.js" defer></script>
+</body>
+</html>
