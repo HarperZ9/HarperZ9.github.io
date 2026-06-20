@@ -105,7 +105,8 @@ workflow-harness-lite, workspace-repo-map, and more.
 - **Senses and Sensibility** (*THESIS.md*) — the concise statement of the four principles and the
   accountable loop.
 - ***Conferred Existence*** — a long-form philosophical corpus (no-aseity, the membrane, the arity
-  gap, the forcing argument) from which the accountability thesis is extracted; publication staged.
+  gap, the forcing argument) from which the accountability thesis is extracted; **published** at
+  [senses-and-sensibility](https://github.com/HarperZ9/senses-and-sensibility) (MIT, dated).
 
 ## Selected receipts
 
