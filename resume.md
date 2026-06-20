@@ -40,10 +40,11 @@ next); color science (CIECAM02/CAM16, perceptual ΔE, ICC, HDR) shipped on PyPI.
 
 ## Skills
 
-Python · Rust · C++23 · WebGL / GLSL · TypeScript · compiler internals & type systems · real-time
-graphics · color science · AI accountability & cryptographic provenance · agent orchestration ·
-offensive/defensive security & reverse-engineering · AI development tooling (Claude Code · MCP
-servers · eval / red-team harnesses) · disciplined release engineering.
+Python · Rust · C++23 · HLSL · WebGL / GLSL · TypeScript · reverse engineering & binary analysis ·
+real-time D3D11 / HLSL rendering (screen-space GI / AO / reflections) · native driver dev (DDC/CI) ·
+compiler internals & type systems · color science · signal / information theory · AI accountability &
+cryptographic provenance · agent orchestration · AI development tooling (Claude Code · MCP servers ·
+eval / red-team harnesses) · disciplined release engineering.
 
 ## Highlights
 

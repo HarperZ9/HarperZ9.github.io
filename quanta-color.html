@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quanta Color — a color-science workbench</title>
+<meta name="description" content="Quanta Color is a Python color-science workbench: 15+ color spaces, 12 HDR tone-mapping operators, perceptual ΔE metrics, color-appearance models, chromatic adaptation, and ICC profile generation. MIT, on PyPI. By Zain Dana Harper.">
+<link rel="canonical" href="https://harperz9.github.io/quanta-color.html">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/system.css?v=20260620b">
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div class="scrim"></div>
+<canvas id="motes"></canvas>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Quanta Color &middot; the color workbench</span></div>
+  <div class="mid">
+    <h1>Color, past the <span class="g">hex code.</span></h1>
+    <p class="lede">Quanta Color is a Python color-science workbench for people who need more than hex conversion &mdash; perceptual spaces, HDR tone mapping, color-appearance models, &Delta;E metrics, chromatic adaptation, spectral utilities, and ICC profile generation, in a GUI and a CLI.</p>
+    <p class="close">Real color science, measured and inspectable &mdash; the same instinct as the rest of the work here, pointed at light.</p>
+  </div>
+  <div class="seal">quanta-color 1.0.1 &middot; MIT &middot; on PyPI &middot; 15+ spaces &middot; 12 tone operators</div>
+</div>
+
+<main>
+
+<section class="mv" id="what" aria-labelledby="what-h">
+  <h2 id="what-h" class="reveal">Hex is a storage format, not a perception.</h2>
+  <p class="body-text reveal">Two colors can sit a hair apart in <em>#rrggbb</em> and be obviously different to the eye, or be far apart in the file and look identical. Quanta Color works in the spaces that match how seeing actually behaves &mdash; CIELAB and the Oklab family for perceptual uniformity, CIECAM-style appearance for context, JzAzBz and ICtCp for HDR &mdash; and it measures difference with the metrics color scientists actually cite, not euclidean distance in the wrong space.</p>
+  <em class="close reveal">The question is never &ldquo;what are the bytes&rdquo; &mdash; it is &ldquo;what will a person see,&rdquo; and that is a measurement.</em>
+</section>
+
+<section class="proof" id="proof" aria-labelledby="proof-h">
+  <div class="proof-head">
+    <h2 id="proof-h" class="reveal">Don&rsquo;t take the color. <em>Measure it.</em></h2>
+    <p class="body-text reveal">Each of these is verbatim output from the real CLI &mdash; <b>quanta-color</b> 1.0.1, run live.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit I</span> <span class="what">Quanta Color &middot; one color, every space that matters</span></div>
+    <pre class="artifact"><span class="pr">$ quanta-color info ff6030</span>
+Color: <span class="lt">#ff6030</span>
+
+  sRGB:       (1.0000, 0.3765, 0.1882)
+  XYZ:        (0.4596, 0.2985, 0.0614)
+  Lab (D65):  (61.52, 58.31, 56.98)
+  <span class="ok">Oklab:      (0.6128, 0.8175, 0.0611)</span>
+  Oklch:      (0.6128, 0.8198, 4.3)
+  Luminance:  0.2984
+  Dominant wavelength: 775 nm
+  Contrast vs white: 3.01:1   vs black: 6.97:1</pre>
+    <p class="artifact-cap">One input, resolved into the spaces that describe what the eye does &mdash; perceptual lightness, chroma, hue, luminance, even the dominant wavelength and WCAG contrast, in one call.</p>
+    <p class="artifact-note">Captured live from <b>quanta-color info</b> &middot; sRGB &rarr; XYZ &rarr; CIELAB / Oklab / Oklch with a D65 white point. <em>The contrast figures are the same WCAG math the accessibility work on this site runs on.</em></p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit II</span> <span class="what">Quanta Color &middot; &ldquo;how different&rdquo; has more than one right answer</span></div>
+    <pre class="artifact"><span class="pr">$ quanta-color difference ff0000 00ff00 --metric all</span>
+Color 1: <span class="lt">#ff0000</span>      Color 2: <span class="lt">#00ff00</span>
+
+  CIE76         170.1404
+  CIE94          74.8681
+  <span class="ok">CIEDE2000      87.6784</span>
+  CMC(2:1)      104.2193
+  HyAB          201.1010</pre>
+    <p class="artifact-cap">Red versus green, scored by five different &Delta;E formulas at once &mdash; because &ldquo;perceptual difference&rdquo; depends on which model you trust, and the honest answer is to show all of them.</p>
+    <p class="artifact-note">CIE76 / CIE94 / CIEDE2000 / CMC / HyAB &middot; the spread between them is the point: a single distance number hides the disagreement between the models.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit III</span> <span class="what">Quanta Color &middot; harmony computed in a perceptual space</span></div>
+    <pre class="artifact"><span class="pr">$ quanta-color harmony ff6030 --scheme triadic</span>
+Base: <span class="lt">#ff6030</span>   Scheme: triadic
+
+  1. <span class="lt">#ff6030</span>  (1.000, 0.376, 0.188)
+  2. <span class="ok">#588a00</span>  (0.349, 0.543, 0.000)
+  3. <span class="ok">#fe51ff</span>  (0.999, 0.320, 1.000)</pre>
+    <p class="artifact-cap">A triad rotated in a hue space that respects perception &mdash; so the three read as evenly spaced to the eye, not just evenly spaced in a number.</p>
+    <p class="artifact-note">Also: <b>convert</b> between any pair of 15+ spaces, <b>spectrum</b> from a color temperature, <b>icc</b> to write a display profile, and a GUI &mdash; <code>quanta-color</code> with no arguments.</p>
+  </div>
+</section>
+
+<section class="mv" id="depth" aria-labelledby="depth-h">
+  <h2 id="depth-h" class="reveal">15+ spaces, 12 tone-mappers, the metrics by name.</h2>
+  <p class="body-text reveal">Spaces: sRGB, Linear RGB, XYZ, xyY, CIELAB, LCH, <em>Oklab, Oklch, JzAzBz, JzCzhz, ICtCp</em>, HSV, Display&nbsp;P3, BT.2020, Adobe&nbsp;RGB, ACEScg. HDR tone mapping with twelve operators &mdash; ACES (Narkowicz + Hill), <em>AgX</em> (neutral / punchy / golden), Reinhard, Hable/Uncharted&nbsp;2, Lottes, Uchimura/Gran&nbsp;Turismo, PBR Neutral (Khronos glTF), BT.2390 EETF, BT.2446 Method&nbsp;A, and a custom knee. Difference by CIE76, CIE94, CIEDE2000, CMC, HyAB; chromatic adaptation, color-blindness simulation, gamut mapping, color naming, 3D-LUT I/O.</p>
+  <p class="pull reveal">Color is where this whole portfolio&rsquo;s habit started: trust the measurement, not the swatch.</p>
+  <p class="body-text reveal">Shipped: <b>quanta-color 1.0.1</b>, MIT, on PyPI, Python 3.10+, with a test suite across spaces, adaptation, difference, gamut, harmony, naming, color-blindness, and LUT I/O. Honest edge: it is a workbench and a library, not a calibrated measurement instrument &mdash; pair it with <b>calibrate-pro</b> for the display side.</p>
+</section>
+
+<section class="mv" id="run" aria-labelledby="run-h">
+  <h2 id="run-h" class="reveal">Install it. Then ask it what you&rsquo;re really seeing.</h2>
+  <p class="body-text reveal">Python 3.10 or newer.</p>
+  <pre class="artifact"><span class="pr">$ pip install quanta-color</span>
+<span class="pr">$ quanta-color info ff6030</span>            <span class="cmt"># every space for one color</span>
+<span class="pr">$ quanta-color convert ff6030 --to oklab</span>
+<span class="pr">$ quanta-color difference ff0000 00ff00 --metric all</span>
+<span class="pr">$ quanta-color</span>                         <span class="cmt"># or launch the GUI</span></pre>
+  <div class="channels reveal">
+    <span class="g">GitHub</span> &mdash; <a href="https://github.com/HarperZ9/quanta-color">HarperZ9/quanta-color</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">PyPI</span> &mdash; <a href="https://pypi.org/project/quanta-color/">quanta-color</a>
+    &nbsp;&middot;&nbsp;
+    <a href="./">&larr; the index</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Perceptual spaces, HDR tone mapping, &Delta;E by name &mdash; color measured, not guessed.</p>
+</footer>
+
+<script src="system/hero.js" defer></script>
+</body>
+</html>
