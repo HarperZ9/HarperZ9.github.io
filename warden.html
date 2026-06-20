@@ -3,224 +3,44 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WARDEN - Human Accountability for AI-Assisted Work</title>
-<meta name="description" content="WARDEN is Zain Dana Harper's bidirectional provenance membrane for authorized AI-assisted work: scope and constraints inward, model actions and receipts outward, with public leaves for Sensorium, Agent Audit, Release Assurance, evidence, provenance, anomalies, witness receipts, and human review.">
-<meta name="theme-color" content="#ffffff">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%231d1d1f'/%3E%3Cpath d='M14 34h36M20 22h24M20 46h24' stroke='%23fff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20260617g">
+<title>Renamed — this work is now Proof Surface</title>
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="proof-surface.html">
+<meta http-equiv="refresh" content="4; url=proof-surface.html">
+<style>
+  :root{--void:#0d1b1c;--bone:#e9e2d0;--orange:#df5e00;--ember:#efab30;--muted:#8a9b92;--hairline:rgba(239,171,48,.18)}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:var(--void);color:var(--bone);font-family:"EB Garamond",Georgia,serif;
+       display:flex;align-items:center;justify-content:center;padding:2rem;line-height:1.6}
+  main{max-width:46ch;text-align:left}
+  .tag{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.62rem;letter-spacing:.28em;
+       text-transform:uppercase;color:var(--ember);margin-bottom:1.4rem}
+  h1{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:600;font-size:clamp(1.6rem,5vw,2.4rem);
+     line-height:1.15;letter-spacing:-.02em;margin:0 0 1.1rem}
+  h1 a{color:var(--orange);text-decoration:none;border-bottom:2px solid rgba(223,94,0,.4)}
+  p{margin:0 0 1rem;color:var(--bone)}
+  em{color:var(--ember);font-style:italic}
+  .note{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.66rem;letter-spacing:.04em;
+        color:var(--muted);border-top:1px solid var(--hairline);padding-top:1rem;margin-top:1.6rem;line-height:1.8}
+  .go{display:inline-block;margin-top:.4rem;font-family:"Spline Sans Mono",ui-monospace,monospace;
+      font-size:.72rem;letter-spacing:.12em;color:var(--orange);text-decoration:none}
+  .go:hover{color:var(--ember)}
+</style>
 </head>
-<body class="warden-page">
-<a class="skip-link" href="#main">Skip to content</a>
-<div class="bg"></div>
-<div class="grain"></div>
-<div class="bloom"></div>
-
-<nav aria-label="Primary">
-  <div class="nav-in">
-    <a class="brand" href="index.html">WARDEN</a>
-    <div class="nav-links">
-      <a href="#summary">Start here</a>
-      <a href="#accountability">Workflow</a>
-      <a href="#lanes">Public tools</a>
-      <a href="#boundary">Boundary</a>
-      <a href="#surface">Surface</a>
-      <a href="index.html">Portfolio</a>
-      <a href="mailto:zaindharper@gmail.com">Contact</a>
-    </div>
-  </div>
-</nav>
-
-<header id="top" class="warden-hero shell g12">
-  <div class="warden-hero-copy">
-    <p class="kicker">WARDEN overview</p>
-    <h1>A review layer for AI-assisted work.</h1>
-    <p class="lead warden-lead">WARDEN is a provenance and review system for authorized AI-assisted work. It carries scope, approvals, evidence, and constraints into the workflow, then carries actions, claims, receipts, and reviewer notes back out.</p>
-    <div class="cta">
-      <a class="btn solid" href="#summary">Start with the summary</a>
-      <a class="btn" href="#accountability">See the workflow</a>
-      <a class="btn" href="#lanes">Public tools</a>
-      <a class="btn" href="#boundary">Public and private boundary</a>
-      <a class="btn" href="index.html">Portfolio</a>
-    </div>
-  </div>
-  <aside id="summary" class="orientation glass warden-summary" aria-label="WARDEN plain-English summary">
-    <p class="orientation-label">Plain-English summary</p>
-    <ul>
-      <li><strong>What WARDEN is</strong><span>A bidirectional record layer between human authorization and model-assisted work.</span></li>
-      <li><strong>Who it helps</strong><span>Teams working with AI output that needs scope, evidence, approvals, exceptions, and review trails kept together.</span></li>
-      <li><strong>What is public here</strong><span>Inspectable tooling leaves, sample patterns, and the accountability architecture; not the private core.</span></li>
-    </ul>
-  </aside>
-  <div class="warden-stats">
-    <div class="stat glass" aria-label="Six accountability lanes"><div class="n">6</div><div class="l">Accountability lanes</div></div>
-    <div class="stat glass" aria-label="Ten public accountability packages"><div class="n">10</div><div class="l">Public packages</div></div>
-    <div class="stat glass" aria-label="One EMET witness primitive"><div class="n">EMET</div><div class="l">Witness primitive</div></div>
-    <div class="stat glass" aria-label="Private core is protected"><div class="n">Core</div><div class="l">Private by design</div></div>
-  </div>
-</header>
-
-<main id="main">
-<section id="accountability" class="shell" aria-labelledby="accountability-heading">
-  <div class="sec-head"><p class="kicker">Workflow</p><h2 id="accountability-heading">What the public surface is trying to make visible.</h2></div>
-  <div class="feats g12">
-    <article class="feat a glass sheen" data-glow>
-      <span class="idx">01</span>
-      <div class="role">Claim review</div>
-      <h3>It makes claims answerable.</h3>
-      <p>The public tools turn a statement into something a reviewer can inspect: observed state, engagement scope, authorization context, agent intent, action ledger, the claim, release-gate status, the evidence behind it, the source records, witness status, and the open gaps. That matters when AI output arrives faster than ordinary review habits can absorb.</p>
-      <div class="chips"><span class="chip">observations</span><span class="chip">scope</span><span class="chip">authorization context</span><span class="chip">intent</span><span class="chip">actions</span><span class="chip">evidence</span></div>
-    </article>
-    <article class="feat b glass sheen" data-glow>
-      <span class="idx">02</span>
-      <div class="role">Reviewer handoff</div>
-      <h3>It turns agent output into a handoff.</h3>
-      <p>The public path moves from scope declaration to live-state sensing, agent behavior audit, surface inspection, release scanning, provenance checks, evidence indexing, anomaly review, and proof-surface reporting. It creates a handoff record instead of asking people to trust memory, charisma, or a model transcript.</p>
-      <div class="chips"><span class="chip">scope</span><span class="chip">provenance-sensorium</span><span class="chip">agent-audit</span><span class="chip">release-surface-scanner</span><span class="chip">provenance</span><span class="chip">report</span></div>
-    </article>
-  </div>
-  <div class="accountability-loop glass workflow-loop" aria-label="WARDEN accountability loop">
-    <div class="loop-head">
-      <span>WARDEN loop</span>
-      <strong>Human-owned</strong>
-    </div>
-    <ol>
-      <li><span>01</span><strong>Declare engagement scope</strong><em>name the work environment, domain, and authorized task</em></li>
-      <li><span>02</span><strong>Attach authority and constraints</strong><em>carry approvals, scope documents, evidence, and limits inward</em></li>
-      <li><span>03</span><strong>Sense live state</strong><em>observe files, git, claims, fixtures, and secret-shaped values</em></li>
-      <li><span>04</span><strong>Audit agent behavior</strong><em>compare intent, action ledger, scope policy, and claimed history</em></li>
-      <li><span>05</span><strong>Attach evidence</strong><em>link tests, samples, artifacts, or reports</em></li>
-      <li><span>06</span><strong>Check provenance</strong><em>validate source, model, or release records</em></li>
-      <li><span>07</span><strong>Gate exceptions</strong><em>check required files, scope labels, approvals, hashes, and proof indexes</em></li>
-      <li><span>08</span><strong>Review anomalies</strong><em>separate drift from noise</em></li>
-      <li><span>09</span><strong>Write a handoff report</strong><em>make findings reviewable</em></li>
-      <li><span>10</span><strong>Keep both sides accountable</strong><em>operator owns scope; model workflow owns recorded work</em></li>
-    </ol>
-  </div>
-</section>
-
-<section id="research-membrane" class="shell" aria-labelledby="research-membrane-heading">
-  <div class="sec-head"><p class="kicker">Confidential research membrane</p><h2 id="research-membrane-heading">Proof and permission belong at the work boundary.</h2></div>
-  <div class="feats g12">
-    <article class="feat a glass sheen" data-glow>
-      <span class="idx">01</span>
-      <div class="role">Scope into the model</div>
-      <h3>WARDEN carries the authorization context inward.</h3>
-      <p>For long-term red-team contracts, biological research, government-supervised defense or weapons-adjacent engineering, confidential product review, and sensitive internal R&amp;D, WARDEN acts as a programmatic assertion and provenance layer: engagement scope, approvals, constraints, source documents, and exception notes are made visible where the model is asked to work.</p>
-      <div class="chips"><span class="chip">engagement scope</span><span class="chip">approval record</span><span class="chip">constraints</span><span class="chip">exception notes</span></div>
-    </article>
-    <article class="feat b glass sheen" data-glow>
-      <span class="idx">02</span>
-      <div class="role">Receipts back to the operator</div>
-      <h3>WARDEN carries the work record outward.</h3>
-      <p>WARDEN does not grant authority by itself. It preserves the operator-owned proof, scope, and documentation, then records model edits, actions, claims, release gates, provenance checks, anomalies, and reviewer handoff notes so authorized work can be inspected after the fact.</p>
-      <div class="chips"><span class="chip">model edits</span><span class="chip">action ledger</span><span class="chip">provenance checks</span><span class="chip">review trail</span></div>
-    </article>
-  </div>
-  <div class="context-strip glass">
-    <p><strong>Public context:</strong> the <a href="https://openai.com/index/openai-frontier-governance-framework/">OpenAI Frontier Governance Framework</a> names cyber, CBRN, manipulation, loss-of-control, incident-response, and external-review concerns; the <a href="https://www.anthropic.com/news/responsible-scaling-policy-v3">Anthropic Responsible Scaling Policy</a> discusses catastrophic-risk governance, biological science capabilities, and automated R&amp;D; and Anthropic's June 12, 2026 statement says a U.S. export-control directive led it to disable <a href="https://www.anthropic.com/news/fable-mythos-access">Fable 5 and Mythos 5</a>. WARDEN is the architecture this project is building toward: explicit scope, visible authorization context, accountable model work, and reviewable receipts.</p>
-  </div>
-</section>
-
-<section id="creative-trust" class="shell" aria-labelledby="creative-trust-heading">
-  <div class="sec-head"><p class="kicker">Creative trust</p><h2 id="creative-trust-heading">Safety, transparency, and creativity can evolve on the same surface.</h2></div>
-  <div class="feats g12">
-    <article class="feat a glass sheen" data-glow>
-      <span class="idx">01</span>
-      <div class="role">Creative hesitation</div>
-      <h3>That hesitation belongs in the architecture.</h3>
-      <p>Many creative people are hesitant to use AI tools, and some reject them outright. That hesitation belongs in the architecture. AI touches authorship, labor, consent, attribution, taste, safety, and control at the same time; pretending otherwise makes the tools harder to trust.</p>
-      <div class="chips"><span class="chip">authorship</span><span class="chip">consent</span><span class="chip">attribution</span><span class="chip">control</span></div>
-    </article>
-    <article class="feat b glass sheen" data-glow>
-      <span class="idx">02</span>
-      <div class="role">Machine sensing</div>
-      <h3>The problem underneath is state.</h3>
-      <p>The problem underneath is state. A model can infer, summarize, and remember, but it usually receives claims about the world rather than native contact with the world. WARDEN-style programmatic sensory organs give models a safer surface to observe, act, and leave receipts.</p>
-      <div class="chips"><span class="chip">live state</span><span class="chip">programmatic sensory organs</span><span class="chip">receipts</span><span class="chip">human review</span></div>
-    </article>
-  </div>
-  <div class="context-strip glass">
-    <p>The same surface that makes machine creativity safer to trust is also the surface that keeps it accountable as capabilities grow. WARDEN is not an argument that models already know ground truth; it is a way to put scope, state, proof, and review closer to the place where people and machines meet.</p>
-  </div>
-</section>
-
-<section id="lanes" class="shell" aria-labelledby="lanes-heading">
-  <div class="sec-head"><p class="kicker">Public parts</p><h2 id="lanes-heading">The parts another person can inspect.</h2></div>
-  <div class="warden-lanes">
-    <article class="lane glass"><span>01</span><h3>Live-state awareness</h3><p>Capture filesystem, git, claim, fixture, scope, and secret-shape observations as provenance receipts.</p></article>
-    <article class="lane glass"><span>02</span><h3>Release assurance</h3><p>Check required files, secret-shaped values, release notes, reports, hashes, and test signals before promotion.</p></article>
-    <article class="lane glass"><span>03</span><h3>Provenance</h3><p>Check model, release, authorization, and workflow records before they become public proof.</p></article>
-    <article class="lane glass"><span>04</span><h3>Reporting</h3><p>Generate C++/Python handoff reports without publishing private operations.</p></article>
-    <article class="lane glass"><span>05</span><h3>Anomaly review</h3><p>Use statistical baselines, scoring, and correlation as public analytics leaves.</p></article>
-    <article class="lane glass"><span>06</span><h3>Agent workflow</h3><p>Keep agent-assisted work tied to declared intent, scope policy, tests, artifacts, and human decisions that stay visible.</p></article>
-  </div>
-</section>
-
-<section id="boundary" class="band warden-boundary" aria-labelledby="boundary-heading">
-  <div class="shell g12">
-    <div class="boundary-copy">
-      <p class="kicker band-kicker">Public/private boundary</p>
-      <h2 id="boundary-heading">Show the method. Protect the core.</h2>
-      <p>WARDEN has a larger private body of work. The public page shows the leaves that can be inspected and the human accountability pattern behind them. It does not publish private internals, credentials, client data, operational details, or sensitive workflows. It names the scope honestly because confidential work still needs provenance.</p>
-    </div>
-    <div class="boundary-panel glass">
-      <div><span>Public surface</span><p>Repos, sample artifacts, release gates, evidence patterns, reports, and maturity labels.</p></div>
-      <div><span>Private core</span><p>Private implementation details stay private while the public artifacts show how claims, evidence, exceptions, and reviewer handoff fit together.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="surface" class="shell" aria-labelledby="surface-heading">
-  <div class="sec-head"><p class="kicker">Repository surface</p><h2 id="surface-heading">The inspectable edge of WARDEN.</h2></div>
-  <div class="repo-grid">
-    <a class="repo-pill glass" href="https://github.com/HarperZ9/provenance-sensorium"><span>Sensorium</span><strong>provenance-sensorium</strong><em>live-state awareness and provenance receipts</em></a>
-    <a class="repo-pill glass" href="https://github.com/HarperZ9/agent-audit"><span>Agent Audit</span><strong>agent-audit</strong><em>intent, action ledger, scope policy, and findings</em></a>
-    <a class="repo-pill glass" href="https://github.com/HarperZ9/release-surface-scanner"><span>Release Scanner</span><strong>release-surface-scanner</strong><em>public-release gates, reports, hashes, and proof indexes</em></a>
-    <a class="repo-pill glass" href="https://github.com/HarperZ9/signal-kernels"><span>Signals</span><strong>signal-kernels</strong><em>public algorithms and scoring primitives</em></a>
-    <a class="repo-pill glass" href="https://github.com/HarperZ9/anomaly-kernels"><span>Anomaly</span><strong>anomaly-kernels</strong><em>anomaly review primitives</em></a>
-    <a class="repo-pill glass" href="https://github.com/HarperZ9/public-surface-sweeper"><span>Surface</span><strong>public-surface-sweeper</strong><em>claim and release-surface checks</em></a>
-    <a class="repo-pill glass" href="https://github.com/HarperZ9/model-provenance-validator"><span>Provenance</span><strong>model-provenance-validator</strong><em>model record validation</em></a>
-    <a class="repo-pill glass" href="https://github.com/HarperZ9/repo-proof-index"><span>Proof</span><strong>repo-proof-index</strong><em>artifact and receipt indexing</em></a>
-    <a class="repo-pill glass" href="https://github.com/HarperZ9/gpu-trace-validator"><span>Trace</span><strong>gpu-trace-validator</strong><em>GPU trace evidence checks</em></a>
-    <a class="repo-pill glass" href="https://github.com/HarperZ9/emet"><span>Witness</span><strong>EMET</strong><em>source/view integrity primitive</em></a>
-  </div>
-</section>
-
-<section class="shell warden-close" aria-labelledby="close-heading">
-  <p class="kicker">Position</p>
-  <h2 id="close-heading">A way to keep capability from outrunning authorization.</h2>
-  <p>WARDEN is useful when AI-assisted work needs a review trail: engagement scope, authorization context, live-state observations, agent intent, action ledgers, claims, release gates, evidence, provenance, anomalies, witness receipts, controlled exceptions, and human ownership in one line of sight. The public repos show pieces of that pattern; they do not ask the reader to accept the private core on faith.</p>
-  <div class="cta">
-    <a class="btn solid" href="mailto:zaindharper@gmail.com">Discuss WARDEN</a>
-    <a class="btn" href="index.html">Back to portfolio</a>
-  </div>
-</section>
+<body>
+<main>
+  <p class="tag">Renamed · kept on the record</p>
+  <h1>The “WARDEN” page matured into <a href="proof-surface.html">Proof&nbsp;Surface</a>.</h1>
+  <p>The accountability work once staged here under the working name <em>WARDEN</em>
+     is now its mature organ: <b>proof-surface</b> — the write-gate that turns observed
+     state into <span style="color:var(--orange)">allow / deny / needs-human</span> under
+     explicit human delegation.</p>
+  <p>The name changed; the thesis did not. Taking you there now.</p>
+  <a class="go" href="proof-surface.html">→ Continue to Proof Surface</a>
+  <p class="note">This stub is kept deliberately — a renamed surface that still resolves
+     rather than a broken link. The prior page is preserved in version history.
+     Proof before trust, including about our own naming.</p>
 </main>
-
-<footer class="shell">
-  <div class="foot-big">Receipts before trust.</div>
-  <div class="foot-cta">
-    <a class="btn solid" href="index.html">Zain Dana Harper</a>
-    <a class="btn" href="https://github.com/HarperZ9">github.com/HarperZ9</a>
-  </div>
-  <p class="muted">Static public page. Human accountability pattern. Private internals stay private.</p>
-</footer>
-
-<script>
-  (function(){
-    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if(!window.matchMedia('(pointer:fine)').matches) return;
-    document.querySelectorAll('.glass.sheen').forEach(function(c){
-      c.addEventListener('pointermove', function(e){
-        var r=c.getBoundingClientRect();
-        c.style.setProperty('--mx',(e.clientX-r.left)+'px');
-        c.style.setProperty('--my',(e.clientY-r.top)+'px');
-      },{passive:true});
-    });
-  })();
-</script>
 </body>
 </html>
