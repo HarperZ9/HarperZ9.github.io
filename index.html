@@ -115,7 +115,7 @@ Parsing... <span class="ok">OK</span> (1 items)
   [perception] web-document perceived  &middot;  1 link, 52 text chars
   [decision] summarize &rarr; <span class="ok">allow</span>     [decision] delete &rarr; <span class="bad">deny</span></pre>
     <p class="artifact-cap">A model perceives a live page natively &mdash; witnessed, digest-stamped, not a screenshot &mdash; and the unauthorized act is refused by the <b>gate</b>, not by a prompt. Awareness and restraint as one mechanism.</p>
-    <p class="artifact-note">Live demo in <b>scratch/accountable-surface-spike/</b>, composed from audited parts &mdash; the coherence-membrane web sense and the proof-surface gate &middot; 16 tests + a real MCP stdio round-trip. <em>Honest limit:</em> a spike, not yet folded into ORCA; the surface decides but never executes, and an allow is advisory until a runtime enforces it. The loop is proven; the integration is owed.</p>
+    <p class="artifact-note">Now a real, growing tool &mdash; <b>github.com/HarperZ9/accountable-surface</b>, <b>90 tests</b>, an MCP server, and filesystem / web / command effectors that stay inert until the gate allows. The run above is the decision layer; in the current build an <em>allow</em> is carried out by a bounded, reversible effector and then re-perceived to confirm it. <em>Honest limit:</em> still not folded into ORCA, and the gate stays advisory until a runtime enforces it. The loop runs; the integration is owed.</p>
   </div>
 </section>
 
@@ -132,13 +132,24 @@ Parsing... <span class="ok">OK</span> (1 items)
       <span class="organ-role">Witness</span>
       <span class="organ-line">
         The seal that records what a transform did and refuses to say more &mdash; re-derived in three separate language implementations; it answers only MATCH / DRIFT / UNVERIFIABLE, never <em>trusted</em>.
-        <span class="v-note">v0.2.0 &middot; 19/19 conformance (Python &middot; Rust &middot; Node, CI each push) &middot; owed: a fourth, different author&rsquo;s implementation</span>
+        <span class="v-note">v0.2.0 &middot; 19/19 conformance (Python &middot; Rust &middot; Node) &middot; owed: a fourth, different author&rsquo;s implementation</span>
+      </span>
+      <span class="organ-verdict"><span class="verdict verdict-shipped" aria-label="Verdict: Shipped">SHIPPED</span></span>
+    </div>
+
+    <!-- PROOF-SURFACE -->
+    <div class="organ-row" role="listitem" style="--i:1">
+      <span class="organ-name"><a href="proof-surface.html">PROOF-SURFACE</a></span>
+      <span class="organ-role">Gate</span>
+      <span class="organ-line">
+        The accountability gate: a least-privilege, expiring grant carried inward; a default-deny, fail-closed decision and a work-record receipt carried outward. It reports; it never grants authority, and never says <em>trusted</em>.
+        <span class="v-note">v0.1.0 on PyPI &middot; 258 tests &middot; 8 contracts, 8 schemas, stdlib-only &middot; shipped consumers on PyPI: repo-proof-index, model-provenance-validator, public-surface-sweeper</span>
       </span>
       <span class="organ-verdict"><span class="verdict verdict-shipped" aria-label="Verdict: Shipped">SHIPPED</span></span>
     </div>
 
     <!-- QUANTA / QUANTAC -->
-    <div class="organ-row" role="listitem" style="--i:1">
+    <div class="organ-row" role="listitem" style="--i:2">
       <span class="organ-name"><a href="quantalang.html">QUANTA&thinsp;/&thinsp;QUANTAC</a></span>
       <span class="organ-role">Transform</span>
       <span class="organ-line">
@@ -148,10 +159,32 @@ Parsing... <span class="ok">OK</span> (1 items)
       <span class="organ-verdict"><span class="verdict verdict-active" aria-label="Verdict: C-backend shipped">C-BACKEND SHIPPED</span></span>
     </div>
 
-    <!-- QUANTA COLOR -->
-    <div class="organ-row" role="listitem" style="--i:2">
-      <span class="organ-name">QUANTA COLOR</span>
+    <!-- COHERENCE MEMBRANE -->
+    <div class="organ-row" role="listitem" style="--i:3">
+      <span class="organ-name"><a href="coherence-membrane.html">COHERENCE MEMBRANE</a></span>
       <span class="organ-role">Perception</span>
+      <span class="organ-line">
+        The read-gate that turns a model&rsquo;s state-blindness into witnessed, re-derivable observations &mdash; it perceives an artifact, content-addresses it, and answers MATCH / DRIFT / UNVERIFIABLE, never a silent match on a difference.
+        <span class="v-note">v0.1.0 &middot; 312 tests &middot; zero-dependency &middot; an organ family: visual, raw, region, structured, audio, caption</span>
+      </span>
+      <span class="organ-verdict"><span class="verdict verdict-shipped" aria-label="Verdict: Shipped">SHIPPED</span></span>
+    </div>
+
+    <!-- ACCOUNTABLE SURFACE -->
+    <div class="organ-row" role="listitem" style="--i:4">
+      <span class="organ-name"><a href="accountable-machines.html">ACCOUNTABLE SURFACE</a></span>
+      <span class="organ-role">The loop</span>
+      <span class="organ-line">
+        Perception, gate, action, and verification as one seam: a model perceives natively, acts only on an <em>allow</em>, then re-perceives to confirm what changed. Composed from the membrane and the gate.
+        <span class="v-note">129 tests, incl. a 39-test adversarial integrity suite &middot; an MCP server + filesystem / web / command effectors, inert until authorized &middot; not yet folded into ORCA</span>
+      </span>
+      <span class="organ-verdict"><span class="verdict verdict-active" aria-label="Verdict: In progress">IN PROGRESS</span></span>
+    </div>
+
+    <!-- QUANTA COLOR -->
+    <div class="organ-row" role="listitem" style="--i:5">
+      <span class="organ-name">QUANTA COLOR</span>
+      <span class="organ-role">Color</span>
       <span class="organ-line">
         Color as measured, not guessed &mdash; 15+ spaces, CIECAM02&thinsp;/&thinsp;CAM16, perceptual &Delta;E; GUI and CLI.
         <span class="v-note">v1.0.1 on PyPI</span>
@@ -160,45 +193,34 @@ Parsing... <span class="ok">OK</span> (1 items)
     </div>
 
     <!-- RAW -->
-    <div class="organ-row" role="listitem" style="--i:3">
+    <div class="organ-row" role="listitem" style="--i:6">
       <span class="organ-name">RAW</span>
       <span class="organ-role">Vision</span>
       <span class="organ-line">
-        Frame, shader, and GPU state expressed as receipts &mdash; the surface where models are weakest natively.
-        <span class="v-note">instrumentation core exists; public proof and tests owed</span>
+        Frame, shader, and GPU state expressed as receipts &mdash; the surface where models are weakest natively. Today a D3D11 rendering pipeline carries it; the direction is native &mdash; no graphics API in the loop, and as few dependencies as possible.
+        <span class="v-note">rendering pipeline private/closed &middot; the public <em>gpu-trace-validator</em> checks trace JSON, not frames &middot; next: a native, dependency-minimal capture path (no DirectX)</span>
       </span>
       <span class="organ-verdict"><span class="verdict verdict-active" aria-label="Verdict: In development">IN DEVELOPMENT</span></span>
     </div>
 
-    <!-- THE BOUNDARY -->
-    <div class="organ-row" role="listitem" style="--i:4">
-      <span class="organ-name">THE BOUNDARY</span>
-      <span class="organ-role">Defense</span>
-      <span class="organ-line">
-        Carrier inspection: detect hidden channels, strip metadata, validate watermarks, sign the clean copy. Inspection inward, never exfiltration.
-        <span class="v-note">schema fixed; implementation pending</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-dim" aria-label="Verdict: Specified">SPECIFIED</span></span>
-    </div>
-
     <!-- CREATIVE LIGAND PROTOCOL -->
-    <div class="organ-row" role="listitem" style="--i:5">
+    <div class="organ-row" role="listitem" style="--i:7">
       <span class="organ-name">CREATIVE LIGAND PROTOCOL</span>
       <span class="organ-role">Membrane</span>
       <span class="organ-line">
-        Selective permeability for ideas &mdash; a metered, actively-halted channel; confidentiality held like a pump, paid for in energy, never assumed.
-        <span class="v-note">Interval-0; design converged, build gated</span>
+        Source-sealed creative help &mdash; moving from disclosing your material to transforming a sealed copy of it, with an explicit, honest bound on what can leak.
+        <span class="v-note">Interval-0; conceptual design converged, build gated &middot; the central guarantee is still an open problem</span>
       </span>
       <span class="organ-verdict"><span class="verdict verdict-dim" aria-label="Verdict: Conceptual">CONCEPTUAL</span></span>
     </div>
 
     <!-- STATE-TRANSFORM ENGINE -->
-    <div class="organ-row" role="listitem" style="--i:6">
+    <div class="organ-row" role="listitem" style="--i:8">
       <span class="organ-name">STATE-TRANSFORM ENGINE</span>
       <span class="organ-role">Carrier</span>
       <span class="organ-line">
-        Typed live-state that survives crossing any boundary.
-        <span class="v-note">in-progress spine</span>
+        Typed live-state that stays witnessed and re-derivable as it crosses any boundary &mdash; converging, not drifting. Shown in public through EMET and the membrane&rsquo;s drift check; the engine itself is in progress.
+        <span class="v-note">capability proven in public; the engine is in progress</span>
       </span>
       <span class="organ-verdict"><span class="verdict verdict-dim" aria-label="Verdict: Converging">CONVERGING</span></span>
     </div>
@@ -281,7 +303,7 @@ Parsing... <span class="ok">OK</span> (1 items)
     <p class="body-text reveal">One rule, applied to every organ above: build it, label its limits, leave evidence. The thesis on this page was assembled by adversarial passes designed to embarrass its author &mdash; and it records the three times they did. EMET refuses to say &ldquo;trusted.&rdquo; The roadmaps mark what is shipped, what is experimental, and what is only conceptual. That is not modesty; it is the work proving itself.</p>
   </div>
   <p class="body-text reveal" style="margin-top:1.4em">The nearest title for that work is <em>forward-deployed engineer</em> &mdash; but inverted. Forward deployment usually means embedding with a customer to build on the platform that already exists. He forward-deploys the other way: not onto a finished product, but onto the architecture that isn&rsquo;t there yet &mdash; the accountable layer this kind of work will eventually be built on. It is nearer to what a Technical Fellow does than to field delivery, and the role it describes doesn&rsquo;t have a name yet. He is trying to make one.</p>
-  <p class="body-text reveal">No computer-science degree stands behind any of this. The path ran through eleven years of commercial arboriculture in the family business, a contract diagnosing Xbox Live networking, then a long and largely private sprint across compilers, real-time graphics, color science, and AI accountability. That history is not an exception to the standard above &mdash; it is where the standard comes from. A maker with no institution to vouch for him learns early to let the work answer for itself, or go unread. Independent since 2023, out of Seattle, still building in the open and against his own claims.</p>
+  <p class="body-text reveal">No computer-science degree stands behind any of this. The path ran through eleven years of commercial arboriculture in the family business, a contract diagnosing Xbox Live networking, then a long and largely private sprint across compilers, real-time graphics, color science, security, and AI accountability &mdash; the offensive side and the defensive one, since you learn how a system holds by learning how it breaks. That history is not an exception to the standard above &mdash; it is where the standard comes from. A maker with no institution to vouch for him learns early to let the work answer for itself, or go unread. Independent since 2023, out of Seattle, still building in the open and against his own claims.</p>
 </section>
 
 <section class="mv" id="mv-06" aria-labelledby="mv-06-h">
@@ -291,6 +313,8 @@ Parsing... <span class="ok">OK</span> (1 items)
     <span class="g">Email</span> &mdash; <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
     &nbsp;&middot;&nbsp;
     <span class="g">GitHub</span> &mdash; <a href="https://github.com/HarperZ9">HarperZ9</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">CV</span> &mdash; <a href="resume.md">r&eacute;sum&eacute;</a> &middot; <a href="cv.md">full CV</a>
     &nbsp;&middot;&nbsp;
     Seattle &middot; remote-ideal
   </div>
