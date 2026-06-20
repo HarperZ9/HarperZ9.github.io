@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proof Surface — the accountability contract</title>
+<meta name="description" content="Proof Surface is a stdlib-only Python library that makes accountability structural: evidence packets, work-record receipts, authorization receipts, a default-deny pre-execution gate, evaluation contracts, a claim ledger, and delegation chains — all in closed verdict lattices. 258 passing tests. By Zain Dana Harper.">
+<link rel="canonical" href="https://harperz9.github.io/proof-surface.html">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/system.css">
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div class="scrim"></div>
+<canvas id="motes"></canvas>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Proof Surface &middot; the accountability contract</span></div>
+  <div class="mid">
+    <p class="eyebrow">ACCOUNTABILITY INFRASTRUCTURE &middot; PROOF SURFACE</p>
+    <h1>A grant of authority should <span class="g">expire, be traced, and say no.</span></h1>
+    <p class="lede">Proof Surface is a stdlib-only accountability contract: an evidence packet with provenance, a work-record receipt that flows outward for review, an authorization receipt that records a real grant from a real human, and a pre-execution gate that is default-deny and fail-closed. A delegation chain where every hop attenuates its parent&rsquo;s scope &mdash; widening is the shape of privilege escalation, and it is refused. Verdicts live in closed lattices; nothing here emits <em>TRUSTED</em> or <em>APPROVED</em>.</p>
+    <p class="close">Advisory by design &mdash; a recommendation the runtime enforces, not an authority the library grants.</p>
+  </div>
+  <div class="seal">v0.1.0 &middot; stdlib-only &middot; zero dependencies &middot; 258 tests</div>
+</div>
+
+<main>
+
+<!-- what it is -->
+<section class="mv" id="what" aria-labelledby="what-h">
+  <h2 id="what-h" class="reveal">Accountability made structural, not aspirational.</h2>
+  <p class="body-text reveal">A claim about accountability that grants itself authority would refute itself. Proof Surface takes the opposite position: every validator rejects authority-shaped content; every verdict is a closed enumeration the caller can check; every decision helper returns a structured result &mdash; allow, deny, needs-human, deploy, block &mdash; and leaves enforcement to the runtime or the operator. The library is the evidence record. The library is not the enforcer.</p>
+  <p class="body-text reveal">Two receipts, deliberately separate. The <b>work-record receipt</b> flows outward &mdash; a verifiable record of what an agent did, for review. The <b>authorization receipt</b> flows inward &mdash; a real grant from a real human principal, hard-requiring an expiry and an explicit allowlist of permitted actions. Empty allowed-actions authorizes nothing. Authority must be stated, scoped, and timed. The same forbidden-field guard runs recursively at every object level of every contract.</p>
+  <em class="close reveal">The gate withholds approval unless authorization, budget, and observed state each positively pass &mdash; default-deny, fail-closed, advisory.</em>
+</section>
+
+<!-- the contract family -->
+<section class="mv" id="contracts" aria-labelledby="contracts-h">
+  <h2 id="contracts-h" class="reveal">The contract family.</h2>
+  <p class="body-text reveal"><b>Proof-surface packet</b> &mdash; a neutral evidence and index packet that producers emit and a proof-index consumes; the structural spine the other contracts attach to.</p>
+  <p class="body-text reveal"><b>Work-record receipt</b> &mdash; a verifiable record of agent work that flows outward for review. Direction is fixed to output-only; a work record is emitted, never read back as inbound model or session state.</p>
+  <p class="body-text reveal"><b>Authorization receipt</b> &mdash; a verifiable record of a real, explicit, least-privilege, expiring, revocable grant of authority from a human principal to an agent. Verifier input only &mdash; never re-injected as model context. <code>check_action</code> confirms a specific action against a receipt; it does not inject trusted state into a model.</p>
+  <p class="body-text reveal"><b>Pre-execution gate</b> &mdash; a default-deny, fail-closed, advisory mediation layer. Given a planned action, its authorization receipt, a budget, and optional observed state, it returns a <code>GateDecision</code> (allow / deny / needs-human) with per-dimension check results. Allow is the rarest outcome. Any dimension that cannot be positively confirmed escalates to needs-human rather than auto-allowing.</p>
+  <p class="body-text reveal"><b>Evaluation contract</b> &mdash; evaluation as a deploy gate, not a vanity score. Criteria carry thresholds and a required flag; <code>evaluate</code> returns deploy / block / needs-human and accounts for uncertainty. A result whose interval straddles its threshold escalates to needs-human; a required criterion with no result is missing &mdash; needs-human. Never deploys on uncertainty.</p>
+  <p class="body-text reveal"><b>Claim ledger</b> &mdash; traceable multi-agent memory. Each claim carries a source-provided confidence and explicit depends-on and conflicts-with links, with referential integrity enforced. The ledger surfaces low-confidence claims, declared conflicts, and the transitive set contaminated by a given claim. It reports provenance and uncertainty; it does not adjudicate truth.</p>
+  <p class="body-text reveal"><b>Delegation chain</b> &mdash; a chain of delegation hops rooted in a real human. The root hop&rsquo;s <code>from</code> must be a human &mdash; authority cannot originate with an agent. Each hop&rsquo;s scope monotonically attenuates its parent&rsquo;s; a delegate widening its own actions or targets is the literal shape of privilege escalation and is DENIED. Each hop is hash-chained (SHA-256) and the whole chain is committed into one <code>chain_binding</code> so truncation and extension are caught. <code>verify_delegation</code> returns a closed VALID / DENIED / UNVERIFIABLE verdict; <code>effective_scope</code> is populated only on VALID.</p>
+</section>
+
+<!-- the proof -->
+<section class="proof" id="proof" aria-labelledby="proof-h">
+  <div class="proof-head">
+    <h2 id="proof-h" class="reveal">Don&rsquo;t take the contract. <em>Watch it refuse.</em></h2>
+    <p class="body-text reveal">The gate and the delegation chain are the two places authority is checked. These cases are drawn from the real validators &mdash; inputs that should be refused, and the verdicts they receive.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit I</span> <span class="what">Proof Surface &middot; the gate is default-deny and fail-closed</span></div>
+    <pre class="artifact"><span class="cmt"># a gate request (dict) whose authorization receipt is absent</span>
+<span class="pr">>>> evaluate_gate(request)</span>
+<span class="bad">GateDecision(decision="deny")</span>
+<span class="bad">  authorization: no receipt — deny</span>
+<span class="bad">  budget:        unknown — needs-human</span>
+<span class="bad">  state:         no observation — needs-human</span>
+
+<span class="cmt"># an authorization receipt whose allowed_actions list is empty</span>
+<span class="pr">>>> check_action(receipt, "write_file")</span>
+<span class="bad">False   # empty allowlist authorizes nothing</span>
+
+<span class="cmt"># a receipt dict missing expires_at — validation rejects it</span>
+<span class="pr">>>> validate_authorization_receipt({"allowed_actions": ["write_file"]})</span>
+<span class="bad">invalid: "expires_at" required — authority must expire</span>
+
+<span class="pr">$ pytest</span>
+<span class="ok">258 passed in 0.26s</span></pre>
+    <p class="artifact-cap">No receipt means deny. Empty allowlist means deny. No expiry means the receipt is invalid before the gate ever sees it. Allow is earned by passing every check &mdash; not by the absence of a refusal.</p>
+    <p class="artifact-note">The gate ships in <b>proof_surface/pre_execution_gate.py</b>, the authorization contract in <b>proof_surface/authorization_receipt.py</b>. Captured live from <b>pytest</b> &mdash; 258 passed in 0.26s &mdash; stdlib-only, zero dependencies, <b>github.com/HarperZ9/proof-surface</b>. <em>Honest limit:</em> the gate is advisory &mdash; a structured recommendation; the runtime or operator is the enforcement point. The keyless hash-chain in the delegation contract is self-consistent integrity, NOT tamper-evidence against an adversary who recomputes it; real anti-forgery needs an external anchor (pin <code>chain_binding</code> out-of-band, or verify an asymmetric signature). Demanding signature assurance with no verifier returns UNVERIFIABLE, never a fabricated pass.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit II</span> <span class="what">Proof Surface &middot; delegation chain refuses privilege escalation</span></div>
+    <pre class="artifact"><span class="cmt"># root hop: human grants agent-A a scope of ["read_log"]</span>
+<span class="cmt"># second hop: agent-A tries to delegate ["read_log", "write_config"] — wider</span>
+<span class="pr">>>> verify_delegation(chain)</span>
+<span class="bad">DENIED   # hop 1 scope is not a subset of hop 0 — privilege escalation</span>
+
+<span class="cmt"># a chain whose root from-field is an agent, not a human</span>
+<span class="pr">>>> verify_delegation(chain_rooted_in_agent)</span>
+<span class="bad">DENIED   # root hop must be a human — authority cannot originate with an agent</span>
+
+<span class="cmt"># a valid chain: human → agent-A ["read_log"] → agent-B ["read_log"]</span>
+<span class="pr">>>> verify_delegation(valid_chain)</span>
+<span class="ok">VALID    effective_scope = ["read_log"]</span></pre>
+    <p class="artifact-cap">A delegate cannot widen its own authority. The root must be a human. <code>effective_scope</code> is returned only on VALID &mdash; a DENIED or UNVERIFIABLE result carries no scope.</p>
+    <p class="artifact-note">Delegation logic ships in <b>proof_surface/delegation_chain.py</b> with <code>additionalProperties: false</code> enforced at every level. Action and target matching is exact and case-sensitive because real resource identifiers are. <em>Honest limit:</em> as above &mdash; keyless binding gives self-consistent integrity, not non-repudiable identity. 258 passed in 0.26s &mdash; the full proof-surface suite.</p>
+  </div>
+</section>
+
+<!-- honest limits -->
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h" class="reveal">What it is, and what it is not.</h2>
+  <p class="body-text reveal">Proof Surface is a set of validators and decision helpers &mdash; stdlib Python, zero external dependencies, 258 passing tests. Every contract is a closed lattice; no verdict is fabricated; no validator grants authority. The forbidden-field guard runs recursively so authority-shaped content cannot slip through a nested object that the top-level schema misses.</p>
+  <p class="body-text reveal">Said plainly: the gate is advisory. The library recommends; the runtime enforces. A gate that declared itself the enforcer and ran in the same process as the thing it was gating would not be a gate. The library is the contract and the evidence record &mdash; enforcement belongs in the caller&rsquo;s hands, where it can be inspected and replaced.</p>
+  <p class="pull reveal">One author, one implementation, stdlib-only &mdash; the named edges of a first working contract, not a complete production enforcement layer.</p>
+  <p class="body-text reveal">The claim ledger keeps confidence honest: a 0.0 confidence claim is logged, not dropped or adjusted. The evaluation contract does not deploy on uncertainty: a result whose measured interval straddles its threshold escalates, never passes. The delegation chain&rsquo;s keyless binding detects partial corruption and naive truncation or extension; it does not resist an adversary who rewrites content and recomputes every binding &mdash; that boundary is stated, not glossed.</p>
+  <div class="channels reveal">
+    <span class="g">GitHub</span> &mdash; <a href="https://github.com/HarperZ9/proof-surface">HarperZ9/proof-surface</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">Email</span> &mdash; <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
+    &nbsp;&middot;&nbsp;
+    <a href="./">&larr; the index</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Default-deny &middot; fail-closed &middot; advisory &mdash; verdicts in closed lattices, authority in the operator&rsquo;s hands.</p>
+</footer>
+
+<script src="system/hero.js" defer></script>
+</body>
+</html>
