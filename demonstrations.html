@@ -64,7 +64,7 @@
   <div class="mid">
     <p class="eyebrow">DEMONSTRATIONS &middot; RUN IT YOURSELF</p>
     <h1>Don&rsquo;t take the claim. <span class="g">Run it.</span></h1>
-    <p class="lede">Two of the load-bearing pieces, live in this page. The witness re-derives a <em>real</em> SHA-256 in your browser and reports MATCH, DRIFT, or UNVERIFIABLE. The gate runs the actual default-deny logic and refuses what it cannot positively confirm. Change the inputs; watch the verdict change.</p>
+    <p class="lede">Two of the load-bearing pieces, live in this page. The witness re-derives a <em>real</em> SHA-256 in your browser and reports MATCH, DRIFT, or UNVERIFIABLE. The gate runs the actual default-deny logic and refuses what it cannot positively confirm. Change the inputs; watch the verdict change. I would rather you check than take my word for it &mdash; I don&rsquo;t take my own.</p>
     <p class="close">Faithful reproductions of the shipped tools &mdash; the tested implementations are linked under each.</p>
   </div>
   <div class="seal">Real SHA-256 &middot; the real verdict logic &middot; nothing here emits <b>trusted</b></div>
@@ -75,7 +75,7 @@
 <!-- the witness -->
 <section class="mv" id="witness" aria-labelledby="w-h">
   <h2 id="w-h" class="reveal">The witness &mdash; <em>re-derive, don&rsquo;t trust.</em></h2>
-  <p class="body-text reveal">Type something. Seal it &mdash; the witness computes its SHA-256 and remembers it. Now change one character and witness again: the re-derived digest no longer matches, so the verdict is <b>DRIFT</b>. Clear the seal and there is nothing to check against &mdash; the verdict is <b>UNVERIFIABLE</b>, not a pass and not a fail. This is the whole move: the witness re-derives the bytes itself and reports what it found.</p>
+  <p class="body-text reveal">Type something. Seal it &mdash; the witness computes its SHA-256 and remembers it. Now change one character and witness again: the re-derived digest no longer matches, so the verdict is <b>DRIFT</b>. Clear the seal and there is nothing to check against &mdash; the verdict is <b>UNVERIFIABLE</b>, not a pass and not a fail. This is the whole move, and it is a small one: the witness re-derives the bytes itself rather than trust that they held, and it tells you plainly what it found.</p>
 
   <div class="demo reveal" id="witness-demo">
     <label class="demo-lab" for="w-content">Content</label>
@@ -127,8 +127,8 @@
 <!-- the loop -->
 <section class="mv" id="loop" aria-labelledby="l-h">
   <h2 id="l-h" class="reveal">Both, in one loop.</h2>
-  <p class="body-text reveal">The witness and the gate are two stations of one cycle &mdash; <b>perceive &rarr; gate &rarr; act &rarr; verify &rarr; witness</b>. Perception is witnessed or it fails its self-test; action passes the gate or it is refused; and after acting, the result is re-perceived and verified against intent, with a rollback when it drifts. No step trusts the previous one&rsquo;s word for it; each re-derives. That whole organism is <a href="accountable-machines.html" class="organ-name" style="display:inline;border:none;padding:0"><span style="border-bottom:1px solid rgba(239,171,48,.45)">accountable-surface</span></a>.</p>
-  <p class="pull reveal">A claim about accountability that granted itself authority would refute itself. So nothing here does.</p>
+  <p class="body-text reveal">The witness and the gate are two stations of one cycle &mdash; <b>perceive &rarr; gate &rarr; act &rarr; verify &rarr; witness</b>. Perception is witnessed or it fails its self-test; action passes the gate or it is refused; and after acting, the result is re-perceived and verified against intent, with a rollback when it drifts. No step trusts the previous one&rsquo;s word for it; each re-derives. I built it this way because I needed it for my own thinking first &mdash; I couldn&rsquo;t trust my own ideas to stay honest without something that made every step show its work. That whole organism is <a href="accountable-machines.html" class="organ-name" style="display:inline;border:none;padding:0"><span style="border-bottom:1px solid rgba(239,171,48,.45)">accountable-surface</span></a>.</p>
+  <p class="pull reveal">A claim about accountability that granted itself authority would refute itself, so nothing here does. Could you show your work, the same way, if someone asked?</p>
   <div class="channels reveal">
     <span class="g">Start here</span> &mdash; <a href="overview.html">the map</a>
     &nbsp;&middot;&nbsp;

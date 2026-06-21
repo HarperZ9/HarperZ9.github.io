@@ -22,7 +22,7 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">EMET &middot; external witness</span></div>
   <div class="mid">
     <h1>If an agent touched it, you should be able to <span class="g">check what it did.</span></h1>
-    <p class="lede">EMET re-derives the bytes itself: it reads raw source, recomputes the hash, and reports one of three verdicts &mdash; MATCH, DRIFT, or UNVERIFIABLE. There is no <em>trusted</em>, by construction. It runs outside whatever it audits and vouches for nothing on the system&rsquo;s behalf.</p>
+    <p class="lede">I couldn&rsquo;t take an agent&rsquo;s word on what it changed, so I built something that re-derives the bytes itself: it reads raw source, recomputes the hash, and reports one of three verdicts &mdash; MATCH, DRIFT, or UNVERIFIABLE. There is no <em>trusted</em>, by construction. It runs outside whatever it audits and vouches for nothing on the system&rsquo;s behalf.</p>
     <p class="close">A witness is not an authority. It states what was compared; the reviewer, not the tool, owns the trust.</p>
   </div>
   <div class="seal">emet &mdash; Hebrew for truth &middot; erase one letter and it reads <b>met</b></div>
@@ -87,13 +87,13 @@ impl/js/emet.js    &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span
   <h2 id="conf-h" class="reveal">One spec, three languages.</h2>
   <p class="body-text reveal">The spec was implemented three times from its text: a stdlib-only Python reference, a from-scratch Rust build with no crates, and a clean-room Node.js implementation using built-ins only. All three pass the same nineteen conformance vectors on every push.</p>
   <p class="pull reveal">Three implementations agreeing is not three people agreeing.</p>
-  <p class="body-text reveal">They share one author. That earns exactly one claim and no more &mdash; the spec is implementable from its text. Independent re-derivation, a fourth implementation by a different hand, is owed; the roadmap says so plainly rather than letting the number imply it.</p>
+  <p class="body-text reveal">They share one author &mdash; me. That earns exactly one claim and no more: the spec is implementable from its text. Independent re-derivation, a fourth implementation by a different hand, is the thing I still owe here; the roadmap says so plainly rather than letting the number imply it.</p>
 </section>
 
 <!-- ─── RUN IT ─────────────────────────────────────────────────── -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Clone it. Run the conformance. Use it on real work.</h2>
-  <p class="body-text reveal">Small, open-source, dependency-light. Clone the repository, run the suite, point it at something that matters &mdash; and open an issue the moment it doesn&rsquo;t hold. That feedback decides what gets built next.</p>
+  <p class="body-text reveal">Small, open-source, dependency-light. Clone the repository, run the suite, point it at something that matters &mdash; and open an issue the moment it doesn&rsquo;t hold. I would rather hear where it breaks than be told it&rsquo;s fine; that feedback is what decides what I build next.</p>
   <pre class="artifact"><span class="pr">$ git clone https://github.com/HarperZ9/emet &amp;&amp; cd emet</span>
 <span class="pr">$ python conformance/run.py membrane.py</span>
 <span class="ok">CONFORMANCE 19/19 vectors pass</span></pre>
