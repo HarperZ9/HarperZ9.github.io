@@ -464,3 +464,92 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ember);outline-offs
 .v-note{opacity:.95}
 .note-line{opacity:.9}
 .placeholder{opacity:.85}
+
+/* ============================================================================
+   CHROME (world-3) HERO READABILITY (2026-06-21)
+   Chrome was added as the 4th world but never received the per-world copy
+   adaptation that the light-ground worlds (0/1) got. It is the BRIGHTEST,
+   highest-variance ground, yet its copy fell through to the world-2 (dark)
+   styling: bone text, a .lede with NO text-shadow, and muted grey cue/seal —
+   all washing out over the metal highlights (verified against the live DOM).
+   Fix, scoped to body.world-3 only (world-2 cold-load default untouched):
+   a denser/wider dark hero scrim to seat the copy column, tight dark
+   text-shadow halos that survive bright reflections, and a lift of the two
+   genuinely-failing muted micro-rows (.hero-cue, .seal) toward bone. The
+   light-on-dark aesthetic and the orange/ember brand accents are preserved.
+   ============================================================================ */
+
+/* denser, wider dark scrim under the copy column — the default .scrim fades to
+   transparent by 52%, leaving bright metal under the lede + mini-index. This
+   darkens the left ~64% and keeps the dramatic chrome on the right ~24%. */
+body.world-3 .scrim{
+  background:linear-gradient(100deg,
+    rgba(9,18,19,.93) 8%,
+    rgba(9,18,19,.78) 30%,
+    rgba(9,18,19,.46) 48%,
+    rgba(9,18,19,.12) 64%,
+    transparent 78%)
+}
+
+/* headline — swap the soft 60px glow for a crisp dark halo that holds on metal */
+body.world-3 h1{color:var(--bone);
+  text-shadow:0 1px 2px rgba(6,12,13,.95),0 2px 16px rgba(6,12,13,.8),0 0 44px rgba(6,12,13,.55)}
+body.world-3 h1 .g{color:var(--orange)}
+
+/* eyebrow + lede (the lede carried text-shadow:none) */
+body.world-3 .eyebrow{color:var(--orange);text-shadow:0 1px 8px rgba(6,12,13,.85)}
+body.world-3 .lede{color:var(--bone);opacity:.96;
+  text-shadow:0 1px 2px rgba(6,12,13,.92),0 1px 11px rgba(6,12,13,.78)}
+body.world-3 .lede em{color:var(--orange)}
+
+/* inner-page heroes carry a `.close` thesis line over the metal (the landing
+   does not). Scope to `.frame` so the body's `.mv .close` in the dark sections
+   is never touched — that exact leak was logged in the 2026-06-20 a11y note. */
+body.world-3 .frame .close{color:var(--orange);
+  text-shadow:0 1px 2px rgba(6,12,13,.9),0 1px 10px rgba(6,12,13,.75)}
+
+/* built & tested mini-index — bone needs a halo on metal; accents kept */
+body.world-3 .built-head{color:var(--bone);opacity:.9;text-shadow:0 1px 7px rgba(6,12,13,.85)}
+body.world-3 .built-name{color:var(--orange);text-shadow:0 1px 7px rgba(6,12,13,.8)}
+body.world-3 .built-desc{color:var(--bone);opacity:1;
+  text-shadow:0 1px 2px rgba(6,12,13,.92),0 1px 10px rgba(6,12,13,.78)}
+body.world-3 .built-stat{color:var(--ember);text-shadow:0 1px 7px rgba(6,12,13,.82)}
+
+/* hero-cue + seal were MUTED grey (#8a9b92) — the lowest-contrast copy on the
+   brightest world. Lift to bone with a halo; keep the orange links. */
+body.world-3 .hero-cue{color:var(--bone);
+  text-shadow:0 1px 2px rgba(6,12,13,.9),0 1px 10px rgba(6,12,13,.76)}
+body.world-3 .hero-cue a{color:var(--orange);border-color:rgba(239,171,48,.5)}
+body.world-3 .seal{color:var(--bone);opacity:.82;text-shadow:0 1px 7px rgba(6,12,13,.85)}
+body.world-3 .seal b{color:var(--ember)}
+/* top bar: .nm sits top-left on the dark scrim, but inner pages also carry a
+   .rt tag top-right over the brightest metal (the landing has none) — lift the
+   row + halo so .rt clears contrast; .rt is display:none under 760px. */
+body.world-3 .bar{color:#cdd6cf;text-shadow:0 1px 8px rgba(6,12,13,.82)}
+body.world-3 .bar .nm{color:var(--ember)}
+body.world-3 .bar .rt{color:#cdd6cf}
+
+/* mobile: copy spans full width, so the left-anchored scrim above is wrong here.
+   Match the base mobile scrim's bottom-up vertical orientation, but denser, so
+   the lower two-thirds (lede + mini-index + cue) seats on a dark base. */
+@media (max-width:760px){
+  body.world-3 .scrim{
+    background:linear-gradient(to top,
+      rgba(9,18,19,.95) 28%,
+      rgba(9,18,19,.7) 58%,
+      rgba(9,18,19,.34) 80%,
+      transparent 93%)
+  }
+}
+
+/* ============================================================================
+   BAR TAG / WORLD-SWITCHER COLLISION (2026-06-21) — general, not world-scoped.
+   Inner pages carry a right-aligned `.bar .rt` tag (e.g. "Proof Surface · the
+   accountability contract"). The fixed #world-switcher occupies the same
+   top-right corner with a higher z-index and a constant ~328px width, so the
+   tag has only ever shown a ~45px sliver — clipped behind the buttons at every
+   desktop width since the switcher was added. The eyebrow + h1 already name
+   each page, so retire the redundant, perpetually-truncated tag rather than
+   ship a clipped label. The landing has no `.rt`; it is unaffected. (Reversible:
+   to restore the tag instead, relocate it out of the switcher's corner.) */
+.bar .rt{display:none}
