@@ -65,6 +65,25 @@
   .at-blurb .sp{color:var(--ember)}
   .nojs{font-family:"Spline Sans Mono",monospace;font-size:.62rem;color:var(--ember);
     letter-spacing:.06em;margin-top:1rem}
+  /* verify — re-derive a drawing from its own seed */
+  .at-verify{margin-top:clamp(1.4rem,3vw,2rem);display:grid;gap:1rem;max-width:62rem}
+  @media(min-width:760px){.at-verify{grid-template-columns:1fr 1fr;align-items:stretch}}
+  .at-drop{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:.45rem;
+    min-height:9.5rem;border:1px dashed rgba(239,171,48,.34);border-radius:3px;cursor:pointer;
+    background:rgba(8,17,18,.5);text-align:center;padding:1.4rem;transition:border-color .2s,background .2s}
+  .at-drop:hover,.at-drop.drag{border-color:var(--orange);background:rgba(223,94,0,.09)}
+  .at-drop:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+  .at-drop-main{font-family:"Spline Sans Mono",monospace;font-size:.8rem;letter-spacing:.05em;color:var(--bone)}
+  .at-drop-main b{color:var(--orange);font-weight:500}
+  .at-drop-sub{font-family:"Spline Sans Mono",monospace;font-size:.62rem;letter-spacing:.05em;color:var(--muted)}
+  .at-verdict{border:1px solid var(--hairline);border-radius:3px;padding:1.2rem 1.3rem;
+    background:linear-gradient(165deg,rgba(8,17,18,.92),rgba(13,27,28,.86));display:flex;flex-direction:column;justify-content:center}
+  .at-verdict .verdict-big{font-family:"Spline Sans Mono",monospace;font-size:clamp(1.2rem,2.6vw,1.7rem);
+    letter-spacing:.16em;font-weight:400;margin-bottom:.45rem;display:inline-block}
+  .v-match{color:#5fae93}.v-drift{color:var(--orange)}.v-unver{color:var(--ember)}
+  .vd-detail{font-family:"Spline Sans Mono",monospace;font-size:.66rem;letter-spacing:.03em;line-height:1.85;color:var(--muted)}
+  .vd-detail b{color:var(--bone);font-weight:400}
+  .vd-detail .mono{color:var(--ember);word-break:break-all}
   /* the five-algorithm key */
   .studies{width:100%;max-width:60rem;border-top:1px solid var(--hairline);margin-top:clamp(1.6rem,3vw,2.4rem)}
   .study-row{display:grid;grid-template-columns:11rem 1fr;gap:.4rem var(--col-gap);padding:1.15rem 0;
@@ -138,6 +157,23 @@
   </div>
   <p class="nojs" id="at-nojs" hidden>This instrument needs JavaScript &mdash; it generates every line at runtime. The algorithms are plain, dependency-free code in <b>system/atelier.js</b>.</p>
   <p class="artifact-note reveal">No libraries, no saved frames &mdash; a small seeded random-number generator, the five algorithms, a canvas, and a plot optimiser that stitches and orders the lines for a real pen. <em>Why it belongs here:</em> a drawing that is deterministic from a stated seed, and carries a witness of its own geometry, is one you can <b>re-derive</b> instead of trust &mdash; the same move the rest of this work makes, in a form you can hang on a wall.</p>
+</section>
+
+<section class="mv" id="verify" aria-labelledby="vf-h">
+  <h2 id="vf-h" class="reveal">Verify &mdash; <em>re-derive it, don&rsquo;t trust it.</em></h2>
+  <p class="body-text reveal">Every exported file carries its seed and a witness of its own geometry. Drop one back here: the instrument rebuilds the drawing from scratch, recomputes the witness, and reports <b>MATCH</b> if the file is exactly what its seed produces, <b>DRIFT</b> if a single coordinate was changed, or <b>UNVERIFIABLE</b> if it can&rsquo;t read a seed to check against. The same move <a href="demonstrations.html" style="color:var(--bone);border-bottom:1px solid rgba(239,171,48,.45);text-decoration:none">the witness</a> makes on a file&rsquo;s bytes &mdash; here, on a drawing.</p>
+  <div class="at-verify reveal" id="at-verify">
+    <label class="at-drop" id="at-drop" for="at-file" tabindex="0">
+      <input type="file" id="at-file" accept=".svg,image/svg+xml" hidden>
+      <span class="at-drop-main">Drop an exported <b>.svg</b> here</span>
+      <span class="at-drop-sub">or click to choose &mdash; nothing leaves your browser</span>
+    </label>
+    <div class="at-verdict" id="at-verdict" aria-live="polite">
+      <span class="verdict-big v-unver">AWAITING</span>
+      <div class="vd-detail">Drop a drawing exported from this page to re-derive and check it.</div>
+    </div>
+  </div>
+  <p class="artifact-note reveal">The re-derivation is the proof: same seed, same algorithm, same photograph &rarr; the same geometry and the same witness, every time. A <b>DRIFT</b> means the file on disk is no longer what the seed makes &mdash; edited, re-encoded, or produced by a different build. Nothing here trusts the file&rsquo;s own say-so; it rebuilds, and checks.</p>
 </section>
 
 <section class="mv" id="algorithms" aria-labelledby="alg-h">
