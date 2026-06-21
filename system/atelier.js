@@ -196,7 +196,11 @@
     hilbert: { params: [
         { k: "order", label: "Order", min: 4, max: 7, step: 1, def: 5 },
         { k: "chamfer", label: "Corner bevel", min: 0, max: 0.45, step: 0.05, def: 0 }],
-      presets: [{ label: "Weave", p: { chamfer: 0.3 } }, { label: "Dense", p: { order: 7 } }] }
+      presets: [{ label: "Weave", p: { chamfer: 0.3 } }, { label: "Dense", p: { order: 7 } }] },
+    binomial: { params: [
+        { k: "rows", label: "Rows", min: 16, max: 128, step: 16, def: 64 },
+        { k: "mod", label: "Modulus", min: 2, max: 9, step: 1, def: 2 }],
+      presets: [{ label: "Gasket", p: { mod: 2 } }, { label: "Mod 3", p: { mod: 3, rows: 96 } }, { label: "Mod 5", p: { mod: 5, rows: 128 } }] }
   };
   function studyParams(id) { return (STUDY_PARAMS[id] && STUDY_PARAMS[id].params) || []; }
   function studyPresets(id) { return (STUDY_PARAMS[id] && STUDY_PARAMS[id].presets) || []; }
@@ -858,6 +862,38 @@
     return { live: false, strokes: strokes };
   }
 
+  // 10 ── BINOMIAL — Pascal's triangle mod m; the Sierpiński gasket (binomial thm)
+  //  C(i,j) = C(i-1,j-1) + C(i-1,j), computed entirely MOD m (pure integer). The
+  //  non-zero cells, marked as small triangles, are a self-similar fractal: mod 2
+  //  is the Sierpiński gasket, every modulus its own nesting. No trigonometry on
+  //  the geometry, so it re-derives BIT-FOR-BIT on any machine. The photograph
+  //  tints the cells (colour only); pure-math colours by value / depth.
+  function buildBinomial(rng, P, field) {
+    var pal = P.palette;
+    var N = Math.round(clamp(pget(P, "rows", 64), 16, 128)) | 0;
+    var m = Math.round(clamp(pget(P, "mod", 2), 2, 9)) | 0;
+    var margin = 0.07, span = 1 - 2 * margin;
+    var dx = span / (N - 1), dy = dx * 0.8660254;          // equilateral row spacing (rational, no trig)
+    var triH = (N - 1) * dy, y0 = margin + (span - triH) / 2, s = dx * 0.46;
+    var strokes = [], prev = new Int32Array(1); prev[0] = 1 % m;
+    for (var i = 0; i < N; i++) {
+      var yy = y0 + i * dy;
+      for (var j = 0; j <= i; j++) {
+        var val = prev[j];
+        if (val === 0) continue;                            // mod 2: skip the even cells (the holes)
+        var xx = 0.5 + (j - i * 0.5) * dx;
+        var t = clamp(field ? field.lum(xx, yy) : (m > 2 ? (val - 1) / (m - 1) : i / (N - 1)), 0, 1);
+        strokes.push({ pts: [[xx, yy - dy * 0.5], [xx - s, yy + dy * 0.4], [xx + s, yy + dy * 0.4]], col: pal.sample(t), w: 0.7, op: 0.35 + 0.5 * t, close: true });
+      }
+      if (i < N - 1) {
+        var nxt = new Int32Array(i + 2); nxt[0] = 1 % m; nxt[i + 1] = 1 % m;
+        for (var k = 1; k <= i; k++) nxt[k] = (prev[k - 1] + prev[k]) % m;
+        prev = nxt;
+      }
+    }
+    return { live: false, strokes: strokes };
+  }
+
   var STUDIES = [
     { id: "phyllotaxis", label: "Phyllotaxis", build: buildPhyllotaxis,
       blurb: "Vogel&rsquo;s spiral &mdash; a seed every <b>golden angle</b>, radius as &radic;index. The Fibonacci arms you see are emergent, never drawn. <span class='sp'>The snail</span> lights which arms are bright." },
@@ -877,6 +913,8 @@
       blurb: "The hydrogen atom solved exactly &mdash; <b>Schr&ouml;dinger&rsquo;s</b> 1926 wave equation, &psi;<sub>n,l</sub> = R<sub>nl</sub>(r)&middot;Y<sub>l0</sub>(&theta;). The squared wavefunction |&psi;|&sup2; is the electron&rsquo;s probability cloud, drawn as iso-probability contours through the nucleus. The dark gaps are real <b>nodes</b> &mdash; n&minus;l&minus;1 radial, l angular &mdash; where the electron is never found. <span class='sp'>The defaults</span> draw 3d<sub>z&sup2;</sub>, the atom&rsquo;s own geometry. <i>After Kavan (kevkev-70).</i>" },
     { id: "hilbert", label: "Hilbert", build: buildHilbert,
       blurb: "Hilbert&rsquo;s space-filling curve (1891): one continuous pen stroke that visits <b>every cell</b> of the plane exactly once. The whole path is pure integer arithmetic &mdash; no trigonometry, no roots &mdash; so it re-derives <b>bit-for-bit on any machine</b>: that exactness is the point. The specimen is rendered <i>as</i> the single stroke, runs tinted by the photograph&rsquo;s light." },
+    { id: "binomial", label: "Pascal", build: buildBinomial,
+      blurb: "The binomial theorem made visible: <b>Pascal&rsquo;s triangle</b>, C(i,j) = C(i&minus;1,j&minus;1) + C(i&minus;1,j), computed entirely <b>mod m</b>. The non-zero cells form a self-similar fractal &mdash; mod 2 is the <b>Sierpi&#324;ski gasket</b>, every modulus its own nesting. Pure integer arithmetic, so it re-derives <b>bit-for-bit on any machine</b>. The photograph tints the cells; the structure is the coefficients&rsquo; own." },
     { id: "live", label: "Live &middot; camera", build: null,
       blurb: "The camera as a real organ &mdash; particles stream along the edges it senses, live." }
   ];
