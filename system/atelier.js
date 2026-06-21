@@ -167,8 +167,9 @@
   var STUDY_PARAMS = {
     phyllotaxis: { params: [
         { k: "spread", label: "Spread", min: 0.28, max: 0.49, step: 0.01, def: 0.46 },
-        { k: "dot", label: "Seed size", min: 0.001, max: 0.008, step: 0.0002, def: 0.0046 }],
-      presets: [{ label: "Tight", p: { spread: 0.32 } }, { label: "Open", p: { spread: 0.49, dot: 0.006 } }] },
+        { k: "dot", label: "Seed size", min: 0.001, max: 0.008, step: 0.0002, def: 0.0046 },
+        { k: "warp", label: "Warp", min: 0, max: 0.7, step: 0.02, def: 0 }],
+      presets: [{ label: "Tight", p: { spread: 0.32 } }, { label: "Open", p: { spread: 0.49, dot: 0.006 } }, { label: "Wild", p: { warp: 0.46, spread: 0.49 } }] },
     flow: { params: [
         { k: "len", label: "Stroke length", min: 60, max: 198, step: 6, def: 132 },
         { k: "reach", label: "Step reach", min: 0.002, max: 0.008, step: 0.0002, def: 0.0046 }],
@@ -183,8 +184,9 @@
       presets: [{ label: "Fine", p: { step: 0.005, reach: 0.11 } }, { label: "Bold", p: { reach: 0.21 } }] },
     reaction: { params: [
         { k: "diffuse", label: "V diffusion", min: 0.05, max: 0.1, step: 0.002, def: 0.08 },
-        { k: "bands", label: "Contour bands", min: 2, max: 5, step: 1, def: 3 }],
-      presets: [{ label: "Spots", p: { diffuse: 0.062 } }, { label: "Maze", p: { diffuse: 0.088, bands: 4 } }] },
+        { k: "bands", label: "Contour bands", min: 2, max: 5, step: 1, def: 3 },
+        { k: "mask", label: "Bloom on specimen", min: 0, max: 1, step: 0.05, def: 0 }],
+      presets: [{ label: "Spots", p: { diffuse: 0.062 } }, { label: "Maze", p: { diffuse: 0.088, bands: 4 } }, { label: "Bloom", p: { mask: 0.82, bands: 4 } }] },
     physarum: { params: [
         { k: "sense", label: "Sensor angle", min: 0.2, max: 0.8, step: 0.02, def: 0.4 },
         { k: "decay", label: "Trail decay", min: 0.82, max: 0.95, step: 0.01, def: 0.9 }],
@@ -275,9 +277,21 @@
     var N = Math.round(lerp(460, 2000, P.complexity));
     var cx = 0.5, cy = 0.5, maxR = pget(P, "spread", 0.46), c = maxR / Math.sqrt(N);
     var pal = P.palette, pts = [];
+    // Warp (default 0 → byte-identical to before): a seeded domain-warp that grows
+    // OUTWARD, so the core stays a tight Vogel spiral and the arms wander like real
+    // growth, then bend along the photograph's own gradient so the specimen surfaces
+    // in the distortion instead of sitting under a mechanical lattice.
+    var warp = pget(P, "warp", 0), wn = warp > 0 ? makeNoise(rng) : null;
     for (var i = 0; i < N; i++) {
       var r = c * Math.sqrt(i + 0.5), th = i * GOLDEN + (rng() - 0.5) * 0.012;
       var x = cx + r * Math.cos(th), y = cy + r * Math.sin(th);
+      if (wn) {
+        var amp = warp * r * (0.5 + 0.85 * r / maxR);              // displacement scales with radius → wild tips, calm core
+        var nx = wn.fbm(x * 2.15 + 13.1, y * 2.15 + 4.7) - 0.5, ny = wn.fbm(x * 2.15 + 71.3, y * 2.15 + 39.2) - 0.5;
+        var gg = field ? field.grad(x, y) : [0, 0];                // bend perpendicular to the gradient → flow ALONG the specimen's edges (bounded so a bright centre can't knot)
+        var gx = clamp(gg[1], -0.32, 0.32), gy = clamp(gg[0], -0.32, 0.32);
+        x += amp * (1.55 * nx - 0.95 * gx); y += amp * (1.55 * ny + 0.95 * gy);
+      }
       var l = field ? field.lum(x, y) : (1 - r / maxR);
       pts.push({ x: x, y: y, r: r, lum: clamp(l, 0, 1) });
     }
@@ -562,6 +576,7 @@
     }
     function step() { batch(10); return iter >= target; }
     function strokes() {
+      var mask = pget(P, "mask", 0); // 0 → byte-identical; >0 → bloom only on the specimen, cull the toroidal frame fill
       var nb = pget(P, "bands", 3) | 0, levels;
       if (nb === 3) { levels = [0.22, 0.34, 0.46]; }   // default: exact literals, so a default reaction re-derives byte-identically
       else { levels = []; for (var lb = 0; lb < nb; lb++) levels.push(nb > 1 ? 0.22 + 0.24 * lb / (nb - 1) : 0.34); }
@@ -577,7 +592,15 @@
             var p0 = edgePt(segs[si2][0], x, y, a, b, c, d, lev, inv);
             var p1 = edgePt(segs[si2][1], x, y, a, b, c, d, lev, inv);
             var lc = field ? field.lum((p0[0] + p1[0]) / 2, (p0[1] + p1[1]) / 2) : (li / (levels.length - 1));
-            out.push({ pts: [p0, p1], col: pal.sample(clamp(lc, 0, 1)), w: 0.6 + li * 0.22, op: 0.28 + 0.55 * (field ? clamp(lc, 0, 1) : 0.7) });
+            var op = 0.28 + 0.55 * (field ? clamp(lc, 0, 1) : 0.7);
+            if (mask > 0 && field) {
+              var mx = (p0[0] + p1[0]) / 2, my = (p0[1] + p1[1]) / 2;
+              var dr = Math.sqrt((mx - 0.5) * (mx - 0.5) + (my - 0.5) * (my - 0.5)) * 1.414; // 0 centre → 1 corner
+              var keep = clamp((clamp(lc, 0, 1) - (1 - mask) * 0.42) / 0.45, 0, 1) * (1 - smoothstep(0.66, 1.04, dr) * mask);
+              if (keep < 0.05) continue;            // de-box: drop the contour where the photo is dark or near the frame
+              op *= 0.32 + 0.68 * keep;
+            }
+            out.push({ pts: [p0, p1], col: pal.sample(clamp(lc, 0, 1)), w: 0.6 + li * 0.22, op: op });
           }
         }
       }
