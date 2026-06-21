@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="system/system.css?v=20260620b">
+<link rel="stylesheet" href="system/system.css?v=20260621">
 <style>
   /* interactive demo controls — built from system tokens, mono register */
   .demo{max-width:60rem;margin-top:clamp(1.8rem,3.5vw,2.6rem);
@@ -55,6 +55,7 @@
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 <canvas id="gl"></canvas>
 <div class="scrim"></div>
 <canvas id="motes"></canvas>
@@ -69,7 +70,7 @@
   <div class="seal">Real SHA-256 &middot; the real verdict logic &middot; nothing here emits <b>trusted</b></div>
 </div>
 
-<main>
+<main id="main">
 
 <!-- the witness -->
 <section class="mv" id="witness" aria-labelledby="w-h">
@@ -225,6 +226,6 @@
   // initial render reflects the default (all checked → allow) already in markup.
 })();
 </script>
-<script src="system/hero.js" defer></script>
+<script src="system/hero.js?v=20260621" defer></script>
 </body>
 </html>

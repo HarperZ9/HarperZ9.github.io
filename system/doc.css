@@ -140,3 +140,15 @@ a.inline:hover{border-color:var(--teal-soft)}
   .kv dt{padding-top:.5rem}
   .entry-meta{white-space:normal}
 }
+
+/* ── FOUNDATION (2026-06-21): skip-link, keyboard focus, touch targets ────── */
+.skip-link{position:absolute;left:.5rem;top:-3.5rem;z-index:30;
+  font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.66rem;letter-spacing:.14em;
+  text-transform:uppercase;color:#fff;background:var(--teal);padding:.55rem .9rem;
+  border-radius:3px;text-decoration:none;transition:top .18s ease}
+.skip-link:focus{top:.6rem;outline:2px solid var(--ember);outline-offset:2px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--teal-soft);outline-offset:2px;border-radius:1px}
+@media (pointer:coarse){
+  .docnav a{display:inline-block;padding:.3em 0}
+  .mast .contact a{padding:.18em 0}
+}

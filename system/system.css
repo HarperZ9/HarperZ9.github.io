@@ -425,3 +425,42 @@ body.world-0 main .close,
 body.world-1 main .close{color:var(--orange)}
 body.world-0 main .seal,
 body.world-1 main .seal{color:var(--muted)}
+
+/* ============================================================================
+   FOUNDATION PASS (2026-06-21) — site-wide a11y + mobile, additive only.
+   Global keyboard focus, a skip-link, ≥44px-feel touch targets, small-screen
+   reposition of the fixed hero widgets, and a readability bump for the
+   load-bearing micro-labels. Later cascade; overrides above only where intended.
+   ============================================================================ */
+
+/* skip-link — first focusable element on every page; off-screen until focused */
+.skip-link{position:absolute;left:.5rem;top:-3.5rem;z-index:30;
+  font-family:"Spline Sans Mono","Courier New",monospace;font-size:.7rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--void);background:var(--ember);
+  padding:.6rem .95rem;border-radius:3px;text-decoration:none;transition:top .18s ease}
+.skip-link:focus{top:.6rem;outline:2px solid var(--void);outline-offset:2px}
+
+/* global keyboard focus ring — every link/button (was only #world-switcher) */
+a:focus-visible,button:focus-visible{outline:2px solid var(--ember);outline-offset:2px;border-radius:1px}
+
+/* bigger tap targets on touch devices — chips and the small mono link rows.
+   (Inline prose links are WCAG-exempt; these are discrete controls.) */
+@media (pointer:coarse){
+  .verdict{padding:.5em .85em}
+  .channels a,.hero-cue a,.organ-name a{padding:.28em .1em}
+  #world-switcher button{padding:.5em .78em}
+}
+
+/* the fixed hero widgets crowd content on phones — tuck them away, keep the
+   world-switcher reachable bottom-left so it doesn't sit over body copy */
+@media (max-width:600px){
+  #hud,#osc-canvas{display:none}
+  #world-switcher{top:auto;bottom:.85rem;right:auto;left:.85rem;gap:.4rem}
+}
+
+/* readability — the honest-limit micro-labels were the least legible thing on
+   the page (muted at .52–.72 opacity, ~9px mono). The meaning shouldn't be the
+   hardest text to read. Bring them up; contrast now clears AA. */
+.v-note{opacity:.95}
+.note-line{opacity:.9}
+.placeholder{opacity:.85}
