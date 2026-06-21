@@ -64,8 +64,8 @@
   <div class="mid">
     <p class="eyebrow">DEMONSTRATIONS &middot; RUN IT YOURSELF</p>
     <h1>Don&rsquo;t take the claim. <span class="g">Run it.</span></h1>
-    <p class="lede">Two of the load-bearing pieces, live in this page. The witness re-derives a <em>real</em> SHA-256 in your browser and reports MATCH, DRIFT, or UNVERIFIABLE. The gate runs the actual default-deny logic and refuses what it cannot positively confirm. Change the inputs; watch the verdict change. I would rather you check than take my word for it &mdash; I don&rsquo;t take my own.</p>
-    <p class="close">Faithful reproductions of the shipped tools &mdash; the tested implementations are linked under each.</p>
+    <p class="lede">Two of the most important pieces are running right here on this page, so you can try them yourself. The <b>witness</b> takes a fingerprint of whatever you type &mdash; a real SHA-256, computed in your own browser &mdash; and tells you one of three things: MATCH (nothing changed), DRIFT (something changed), or UNVERIFIABLE (nothing to compare against yet). The <b>gate</b> runs the real decision logic and turns away anything it can&rsquo;t be sure about. Change what you give them and watch the answer change. I would rather you check than take my word &mdash; I don&rsquo;t take my own.</p>
+    <p class="close">These are honest copies of the real, tested tools &mdash; the originals are linked under each one.</p>
   </div>
   <div class="seal">Real SHA-256 &middot; the real verdict logic &middot; nothing here emits <b>trusted</b></div>
 </div>
@@ -75,7 +75,7 @@
 <!-- the witness -->
 <section class="mv" id="witness" aria-labelledby="w-h">
   <h2 id="w-h" class="reveal">The witness &mdash; <em>re-derive, don&rsquo;t trust.</em></h2>
-  <p class="body-text reveal">Type something. Seal it &mdash; the witness computes its SHA-256 and remembers it. Now change one character and witness again: the re-derived digest no longer matches, so the verdict is <b>DRIFT</b>. Clear the seal and there is nothing to check against &mdash; the verdict is <b>UNVERIFIABLE</b>, not a pass and not a fail. This is the whole move, and it is a small one: the witness re-derives the bytes itself rather than trust that they held, and it tells you plainly what it found.</p>
+  <p class="body-text reveal">Try it. Type something, then seal it &mdash; the witness takes a fingerprint of those exact words and remembers it. (A fingerprint here just means a short code that any change, even a single character, would scramble.) Now change one letter and witness again: the fresh fingerprint no longer matches the one it kept, so the answer is <b>DRIFT</b> &mdash; something changed. Clear the seal and there is nothing to compare against, so the answer is <b>UNVERIFIABLE</b> &mdash; not a pass, not a fail, just honestly unknown. That is the whole idea, and it is a small one: rather than trust that the words held, the witness checks for itself, and tells you plainly what it found.</p>
 
   <div class="demo reveal" id="witness-demo">
     <label class="demo-lab" for="w-content">Content</label>
@@ -91,13 +91,13 @@
     </div>
     <p class="nojs" id="w-nojs" hidden>This demo needs JavaScript and the Web Crypto API. The real witness ships in EMET, linked below.</p>
   </div>
-  <p class="artifact-note reveal">The hashing is genuine &mdash; <b>crypto.subtle.digest("SHA-256")</b>, the browser&rsquo;s own primitive, computed on your input and never sent anywhere. EMET does the same across files in three languages &mdash; <b>19/19 tests</b>, <b>github.com/HarperZ9</b>. <em>Honest limit:</em> a keyless seal is self-consistent integrity, not anti-forgery against an adversary who recomputes it &mdash; for that the seal must be anchored out-of-band, and the verdict says UNVERIFIABLE rather than fake a pass.</p>
+  <p class="artifact-note reveal">The fingerprinting is the real thing &mdash; <b>crypto.subtle.digest("SHA-256")</b>, a tool built right into your browser, run on what you typed and never sent anywhere. EMET does the same across whole files in three languages &mdash; <b>19/19 tests</b>, <b>github.com/HarperZ9</b>. <em>Honest limit:</em> a plain seal like this proves the words weren&rsquo;t changed by accident; it cannot stop a determined faker who simply makes a fresh fingerprint to match their new version. For that, the seal has to be kept somewhere separate &mdash; and when it can&rsquo;t be sure, it says UNVERIFIABLE rather than fake a pass.</p>
 </section>
 
 <!-- the gate -->
 <section class="mv" id="gate" aria-labelledby="g-h">
   <h2 id="g-h" class="reveal">The gate &mdash; <em>allow is earned, not assumed.</em></h2>
-  <p class="body-text reveal">A planned action arrives at the gate. The gate is default-deny and fail-closed: a missing authorization is a deny; anything it cannot positively confirm escalates to needs-human; <b>allow</b> is returned only when every dimension passes. Toggle the conditions and watch the decision. Try to get an allow &mdash; notice how much has to be true at once.</p>
+  <p class="body-text reveal">An action shows up at the gate, hoping to go ahead. The gate says no by default, and when anything is unclear it still says no: no permission slip means deny; anything it can&rsquo;t be sure about becomes needs-human (stop and ask a person); and <b>allow</b> comes back only when every single thing checks out. Flip the conditions below and watch the answer move. Try to earn an allow &mdash; and notice just how much has to be true at the same time.</p>
 
   <div class="demo reveal" id="gate-demo">
     <span class="demo-lab">The request&rsquo;s conditions</span>
@@ -121,14 +121,14 @@
       <div class="demo-detail">Every check passes &mdash; authority is stated, scoped, timed, budgeted, and grounded in observed state.</div>
     </div>
   </div>
-  <p class="artifact-note reveal">This is the real verdict logic: any deny dominates; any unknown escalates to needs-human; allow requires a clean sweep. The tested implementation ships in <b>proof-surface</b> &mdash; stdlib-only, zero dependencies, <b>258 passing tests</b>, <b>github.com/HarperZ9/proof-surface</b>. <em>Honest limit:</em> the gate is advisory &mdash; a structured recommendation the runtime enforces, not an authority the page grants.</p>
+  <p class="artifact-note reveal">This is the real decision logic: a single no settles it; anything unknown becomes needs-human; and an allow needs a clean sweep, everything passing at once. The tested original lives in <b>proof-surface</b> &mdash; plain Python, nothing extra to install, <b>258 passing tests</b>, <b>github.com/HarperZ9/proof-surface</b>. <em>Honest limit:</em> the gate only gives a recommendation &mdash; the program around it does the enforcing. This page can never grant a yes on its own.</p>
 </section>
 
 <!-- the loop -->
 <section class="mv" id="loop" aria-labelledby="l-h">
   <h2 id="l-h" class="reveal">Both, in one loop.</h2>
-  <p class="body-text reveal">The witness and the gate are two stations of one cycle &mdash; <b>perceive &rarr; gate &rarr; act &rarr; verify &rarr; witness</b>. Perception is witnessed or it fails its self-test; action passes the gate or it is refused; and after acting, the result is re-perceived and verified against intent, with a rollback when it drifts. No step trusts the previous one&rsquo;s word for it; each re-derives. I built it this way because I needed it for my own thinking first &mdash; I couldn&rsquo;t trust my own ideas to stay honest without something that made every step show its work. That whole organism is <a href="accountable-machines.html" class="organ-name" style="display:inline;border:none;padding:0"><span style="border-bottom:1px solid rgba(239,171,48,.45)">accountable-surface</span></a>.</p>
-  <p class="pull reveal">A claim about accountability that granted itself authority would refute itself, so nothing here does. Could you show your work, the same way, if someone asked?</p>
+  <p class="body-text reveal">The witness and the gate are two stops on one loop &mdash; <b>perceive &rarr; gate &rarr; act &rarr; verify &rarr; witness</b>. In plain terms: first it looks, and what it sees has to pass its own honesty check or it stops. Then an action has to clear the gate, or it&rsquo;s turned away. Then, after acting, it looks again and checks whether what happened matches what it meant to do &mdash; and if things drifted, it undoes them. No step just takes the step before it at its word; each one checks for itself. I built it this way because I needed it for my own thinking first &mdash; I couldn&rsquo;t trust my own ideas to stay honest without something that made every step show its work. That whole living thing is <a href="accountable-machines.html" class="organ-name" style="display:inline;border:none;padding:0"><span style="border-bottom:1px solid rgba(239,171,48,.45)">accountable-surface</span></a>.</p>
+  <p class="pull reveal">A tool that claims to keep things accountable, while quietly handing itself power, has already broken its own promise &mdash; so nothing here does. Could you show your work, the same way, if someone asked?</p>
   <div class="channels reveal">
     <span class="g">Start here</span> &mdash; <a href="overview.html">the map</a>
     &nbsp;&middot;&nbsp;

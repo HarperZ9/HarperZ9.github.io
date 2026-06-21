@@ -22,8 +22,8 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">QuantaLang &middot; the effects language</span></div>
   <div class="mid">
     <h1>What a function may do belongs <span class="g">in its type.</span></h1>
-    <p class="lede">QuantaLang is a typed-effects language. A function&rsquo;s signature names the effects it may perform &mdash; reach the filesystem, the console, the network &mdash; and the lifetimes of the references it returns. The compiler checks both, and lowers the program to native code through a C backend. Perform an effect you never declared, and it does not compile.</p>
-    <p class="close">I built it to make the compiler answer a question I couldn&rsquo;t answer by hand &mdash; what is this function actually allowed to do? It&rsquo;s tested where it counts, honest about its edges, and the discipline inside it runs underneath the rest of the work here.</p>
+    <p class="lede">QuantaLang is a small programming language with one stubborn idea. Every function has to say, right at the top, what it&rsquo;s allowed to reach out and touch &mdash; your files, the screen, the network. Those reach-outs are called <em>effects</em>. The function also has to be clear about which piece of memory it hands back, and how long that memory is allowed to stay alive &mdash; the part people call <em>lifetimes</em>. The compiler &mdash; the program that turns your code into something the machine can run &mdash; checks both, then turns it into fast native code. Reach for something you never declared, and it simply won&rsquo;t build.</p>
+    <p class="close">I built it so the compiler could answer a question I kept getting wrong on my own: what is this function actually allowed to do? It&rsquo;s tested where it counts, honest about its rough edges, and the careful habit at the heart of it &mdash; say what you&rsquo;ll touch, then be held to it &mdash; runs quietly under everything else here.</p>
   </div>
   <div class="seal">quantac 1.0.0 &middot; a Rust-built compiler &middot; effects and lifetimes, in the type</div>
 </div>
@@ -33,8 +33,8 @@
 <!-- what it is -->
 <section class="mv" id="what" aria-labelledby="what-h">
   <h2 id="what-h" class="reveal">The signature stops being a suggestion.</h2>
-  <p class="body-text reveal">Most languages let a function reach out and touch the world &mdash; open a file, a socket &mdash; with nothing in its signature to say so. QuantaLang puts it in the type. A function carries the set of effects it may perform; call something that performs one it never declared, and the program is refused &mdash; with the exact call that gave it away named in the error. Memory works the same way: which reference comes back, and how long it lives, is checked, not assumed.</p>
-  <em class="close reveal">Two questions a type ought to answer &mdash; what may this do, and whose memory does it return &mdash; answered by the compiler, not the comment.</em>
+  <p class="body-text reveal">In most languages, a function can quietly open a file or call out over the network, and nothing in its description warns you it does. QuantaLang asks each function to declare it out loud. A function lists exactly what it&rsquo;s allowed to touch; if it ends up reaching for something it never put on that list, the program is turned away &mdash; and the error points right at the line that broke the promise. Memory is treated the same gentle way: which piece of memory comes back to you, and how long it&rsquo;s allowed to live, is checked rather than hoped for.</p>
+  <em class="close reveal">Two honest questions every function should answer &mdash; what am I allowed to touch, and whose memory am I handing you &mdash; answered by the compiler that runs the code, not by a comment that hopes you read it.</em>
 </section>
 
 <!-- the proof -->
@@ -62,8 +62,8 @@
 Type checking... <span class="ok">OK</span>
   <span class="kw">"declared_effects"</span>:      { "load_config": ["FileSystem"] }
   <span class="kw">"observed_capabilities"</span>: { "load_config": { "FileSystem": ["read_file"] } }</pre>
-    <p class="artifact-cap">Reach the filesystem without saying so and it won&rsquo;t compile &mdash; the error names the call that gave it away. <b>Declare</b> the effect and it passes, and the compiler writes down what you claimed beside what it observed.</p>
-    <p class="artifact-note">Captured live from <b>quantac check</b> (Rust toolchain, release build) &middot; the effect is part of the function&rsquo;s type, checked at every call. <em>The receipt is an evidence contract</em> &mdash; what was declared vs. what was observed &mdash; not a claim that any backend is production.</p>
+    <p class="artifact-cap">Touch your files without saying so, and it won&rsquo;t build &mdash; the error points at the exact line that did it. <b>Declare</b> it instead, and it passes &mdash; and the compiler writes down what you promised, right next to what it actually saw you do.</p>
+    <p class="artifact-note">Captured live from <b>quantac check</b> (Rust toolchain, release build) &middot; the effect is baked into the function and checked every time it&rsquo;s called. <em>That little receipt is the heart of it</em> &mdash; what you promised, side by side with what really happened &mdash; and it&rsquo;s honest that this is the foundation, not a finished, ship-it-tomorrow product.</p>
   </div>
 
   <div class="exhibit reveal">
@@ -77,8 +77,8 @@ Lexing... <span class="ok">OK</span> (28 tokens)
 Parsing... <span class="ok">OK</span> (1 items)
 <span class="bad">Type errors found:</span>
   <span class="bad">function returns `&amp;'b i32` but expected `&amp;'a i32`</span></pre>
-    <p class="artifact-cap">The signature promises the reference tied to <b>&lsquo;a</b>; the body hands back <b>&lsquo;b</b>&rsquo;s. Refused. The lifetime is part of the contract, and the contract is enforced.</p>
-    <p class="artifact-note">Diagnostic from <b>compiler/src/types/error.rs</b>, surfaced through the lifetime unification in <b>unify.rs</b>. <em>Honest limit:</em> borrow and lifetime checking is early &mdash; interprocedural, Phase 1; full caller-side borrow proofs are not yet claimed complete.</p>
+    <p class="artifact-cap">Here&rsquo;s what&rsquo;s happening: the function promised to hand back one specific piece of memory, then tried to hand back a different one that might disappear sooner. The compiler catches the swap and says no. How long memory is allowed to live is a promise too &mdash; and it&rsquo;s kept.</p>
+    <p class="artifact-note">Diagnostic from <b>compiler/src/types/error.rs</b>, surfaced through the lifetime matching in <b>unify.rs</b>. <em>An honest limit, said plainly:</em> this memory-lifetime checking is still young. It already follows memory as it passes between functions (that&rsquo;s the Phase 1 work), but I haven&rsquo;t finished proving every case at the caller&rsquo;s side &mdash; so I won&rsquo;t claim it&rsquo;s complete.</p>
   </div>
 
   <div class="exhibit reveal">
@@ -87,23 +87,23 @@ Parsing... <span class="ok">OK</span> (1 items)
 <span class="cmt"># lowered to C, compiled, and run:</span>
 <span class="pr">$ quantac run examples/quickstart/effects_greeting.quanta</span>
 <span class="ok">Hello, teammate!</span></pre>
-    <p class="artifact-cap">The same effect discipline rides all the way down &mdash; parse, type-check the effects, lower to C, run. One backend takes a program to a real native executable.</p>
-    <p class="artifact-note">C is the shipped end-to-end backend; the test suite verifies it. The other targets &mdash; LLVM, WASM, SPIR-V, x86-64, ARM64, a Rust source lane &mdash; emit code but are experimental. Said plainly, not implied.</p>
+    <p class="artifact-cap">That same promise-keeping follows the program the whole way down &mdash; read it, check what it&rsquo;s allowed to touch, translate it into the C language, and run it. From there, one path turns it into a real program your machine can run on its own.</p>
+    <p class="artifact-note">The C path is the one that works start to finish, and the tests prove it. The others &mdash; LLVM, WASM, SPIR-V, x86-64, ARM64, and a route that writes Rust &mdash; can produce code, but they&rsquo;re still experiments. I&rsquo;d rather just tell you that than let you assume otherwise.</p>
   </div>
 </section>
 
 <!-- maturity -->
 <section class="mv" id="maturity" aria-labelledby="maturity-h">
   <h2 id="maturity-h" class="reveal">999 tests, and a short list of what doesn&rsquo;t ship.</h2>
-  <p class="body-text reveal">Built in Rust, with 999 passing tests run on every change and none failing &mdash; grown from the 868 the docs recorded on 2026-06-15. One backend, C, takes a program all the way to a native executable, and it is the path the suite proves end to end. That is the whole of what I claim &mdash; no more than the tests will stand behind.</p>
+  <p class="body-text reveal">Built in Rust, with 999 tests that all pass and run on every single change &mdash; up from the 868 the notes recorded on 2026-06-15. The C path carries a program all the way to something your machine can run on its own, and it&rsquo;s the route the tests check from one end to the other. That&rsquo;s the whole of what I&rsquo;ll claim &mdash; nothing the tests won&rsquo;t back up.</p>
   <p class="pull reveal">It isn&rsquo;t winding down. It&rsquo;s holding still &mdash; because the rest is built on it.</p>
-  <p class="body-text reveal">The core is shipped and stable: effects and lifetimes in the type, checked to native C, are a foundation the rest of the work here stands on &mdash; not a product still chasing features. Several pieces are honestly partial, and I&rsquo;d rather you hear that from me than find it: the self-hosted compiler is architecture, not yet a working build; async, garbage collection, and FFI are designed but not yet linked into compiled output; the experimental backends emit code but aren&rsquo;t production. I built this alone. Those are the edges I know are there &mdash; the named limits of a foundation, not the closing of a project.</p>
+  <p class="body-text reveal">The core is shipped and steady: say what you&rsquo;ll touch, be clear about your memory, checked the whole way down to native code. That&rsquo;s solid ground the rest of my work stands on &mdash; not a product still chasing the next feature. Some pieces are honestly only half-built, and I&rsquo;d rather you hear it from me than stumble on it. The compiler that&rsquo;s meant to one day build itself is drawn up but doesn&rsquo;t run yet. A few features &mdash; doing many things at once, automatic memory cleanup, and talking to code written in other languages &mdash; are designed but not yet wired into the programs it produces. And the experimental paths can make code but aren&rsquo;t ready for real use. I built this on my own. Those are the rough edges I already know about &mdash; the named limits of a foundation, not a project quietly closing its doors.</p>
 </section>
 
 <!-- run it -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Build it. Then make it reject something.</h2>
-  <p class="body-text reveal">Rust 1.70 or newer and a C compiler on the path. Clone, build, and <b>quantac doctor</b> confirms the C backend is ready. Point it at the examples &mdash; or write a function that lies about its effects, and watch it refuse.</p>
+  <p class="body-text reveal">You&rsquo;ll need Rust 1.70 or newer and a C compiler installed where the system can find it. Copy the project down, build it, and <b>quantac doctor</b> tells you the C path is good to go. Point it at the examples &mdash; or, better, write a function that fibs about what it touches, and watch it gently refuse.</p>
   <pre class="artifact"><span class="pr">$ git clone https://github.com/HarperZ9/quantalang &amp;&amp; cd quantalang/compiler</span>
 <span class="pr">$ cargo build --release</span>
 <span class="pr">$ quantac doctor</span>                       <span class="cmt"># toolchain + C-backend readiness</span>
