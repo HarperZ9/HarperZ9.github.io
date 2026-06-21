@@ -5,7 +5,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Coherence Membrane — the read-gate</title>
-<meta name="description" content="Coherence Membrane is an inert, stdlib-only perception library that replaces a model's state-blind guess with a witnessed, re-derivable Observation. A zero-dependency organ family — visual, raw, region, structured, audio, caption. Drift verdicts in a closed lattice: MATCH / DRIFT / UNVERIFIABLE. 312 passing tests. By Zain Dana Harper.">
+<meta name="description" content="Coherence Membrane is an inert, stdlib-only perception library that replaces a model's state-blind guess with a witnessed, re-derivable Observation. A zero-dependency organ family — visual, raw, region, structured, audio, caption. Drift verdicts in a closed lattice: MATCH / DRIFT / UNVERIFIABLE. 868 passing tests. By Zain Dana Harper.">
 <link rel="canonical" href="https://harperz9.github.io/coherence-membrane.html">
 <meta name="color-scheme" content="dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +23,7 @@
     <p class="lede">A model has one deep blind spot: it can&rsquo;t actually see what happened. It works from what it read and what it expected, not from the real result. So when it says &ldquo;this frame looks right&rdquo; or &ldquo;this file contains X,&rdquo; that&rsquo;s really a guess wearing the clothes of a fact &mdash; and I kept getting burned believing it. So I gave it a way to look. Instead of a guess, the membrane hands it an Observation: a written-down record of what it actually saw &mdash; the file&rsquo;s exact fingerprint (its SHA-256), its width and height, and a perceptual hash (a second fingerprint that captures roughly how a picture looks, so a small change shows up as a small difference). The model can lean on that instead of guessing. And it only ever reads &mdash; it can never change the thing it&rsquo;s looking at.</p>
     <p class="close">When it compares two things, it gives one of three answers &mdash; MATCH / DRIFT / UNVERIFIABLE &mdash; and it will never quietly call two different things the same.</p>
   </div>
-  <div class="seal">v0.1.0 &middot; zero dependencies &middot; 300+ tests &middot; organ family: visual &middot; raw &middot; region &middot; structured &middot; audio &middot; caption</div>
+  <div class="seal">v0.1.0 &middot; zero dependencies &middot; 868 tests &middot; organ family: visual &middot; raw &middot; region &middot; structured &middot; audio &middot; caption</div>
 </div>
 
 <main id="main">
@@ -83,9 +83,9 @@
 <span class="bad">ReceiptVerdict(verdict="UNVERIFIABLE", reason="no pinned anchor")</span>
 
 <span class="pr">$ pytest</span>
-<span class="ok">312 passed in current suite</span></pre>
+<span class="ok">868 passed in current suite</span></pre>
     <p class="artifact-cap">The membrane looks, then tells you. A match is a match it actually saw. With nothing saved to compare against, it says UNVERIFIABLE &mdash; it never quietly waves the check through. And the set of answers is sealed: nothing outside MATCH / DRIFT / UNVERIFIABLE can ever come out.</p>
-    <p class="artifact-note">Captured live from <b>pytest</b> &mdash; 312 passed (current suite, includes the live web-perception increment); stdlib-only, zero dependencies, <b>github.com/HarperZ9/coherence-membrane</b>. A separate check in <b>lattice.py</b> walks through every possible combination by hand and confirms three things hold without exception: only those three answers can appear, an unclear case always lands on the safe &ldquo;can&rsquo;t tell,&rdquo; and combining results can only ever make confidence weaker, never stronger &mdash; and it reruns on every test pass. <em>Honest limit:</em> the organs only look, never act, and a drift answer is only as trustworthy as the saved version it&rsquo;s measured against. When in doubt it returns UNVERIFIABLE instead of guessing a match. That &ldquo;how it looks&rdquo; fingerprint is deliberately rough &mdash; a helpful hint, not real understanding of what the thing means.</p>
+    <p class="artifact-note">Captured live from <b>pytest</b> &mdash; 868 passed (current suite, includes the graph plane and Hasse-guard increment); stdlib-only, zero dependencies, <b>github.com/HarperZ9/coherence-membrane</b>. A separate check in <b>lattice.py</b> walks through every possible combination by hand and confirms three things hold without exception: only those three answers can appear, an unclear case always lands on the safe &ldquo;can&rsquo;t tell,&rdquo; and combining results can only ever make confidence weaker, never stronger &mdash; and it reruns on every test pass. <em>Honest limit:</em> the organs only look, never act, and a drift answer is only as trustworthy as the saved version it&rsquo;s measured against. When in doubt it returns UNVERIFIABLE instead of guessing a match. That &ldquo;how it looks&rdquo; fingerprint is deliberately rough &mdash; a helpful hint, not real understanding of what the thing means.</p>
   </div>
 
   <div class="exhibit reveal">
@@ -111,7 +111,7 @@
 <!-- honest limits -->
 <section class="mv" id="limits" aria-labelledby="limits-h">
   <h2 id="limits-h" class="reveal">What it is, and what it isn&rsquo;t.</h2>
-  <p class="body-text reveal">Here is exactly where the line sits, so you never have to guess at it. The membrane only looks &mdash; it&rsquo;s built from plain Python, leans on nothing outside it, carries 300+ tests, and each organ checks itself in ways that are allowed to fail. It swaps a guess for a real look; it does not swap in for a gate. Stopping or allowing things happens at the write-gate (<b>proof-surface</b>). The membrane reports what it saw; the person in charge decides what to do about it.</p>
+  <p class="body-text reveal">Here is exactly where the line sits, so you never have to guess at it. The membrane only looks &mdash; it&rsquo;s built from plain Python, leans on nothing outside it, carries 868 tests, and each organ checks itself in ways that are allowed to fail. It swaps a guess for a real look; it does not swap in for a gate. Stopping or allowing things happens at the write-gate (<b>proof-surface</b>). The membrane reports what it saw; the person in charge decides what to do about it.</p>
   <p class="body-text reveal">Taking a picture of the screen only reads what&rsquo;s already shown on the display in front of you, using the operating system&rsquo;s own screen tools through <code>ctypes</code>. It does not reach inside, latch onto, or read the private memory of another program. It&rsquo;s meant to be used only on things you own or have been given permission to watch. That isn&rsquo;t fine print &mdash; it&rsquo;s how the thing was built on purpose.</p>
   <p class="pull reveal">Left to itself, the answer is never &ldquo;yes&rdquo; &mdash; and that&rsquo;s checked against the real code, not just promised in a comment.</p>
   <p class="body-text reveal">The check in <b>lattice.py</b> is done by computer, walking through every single possibility one by one. For only three answers, the underlying rules are easy to state &mdash; and that&rsquo;s on purpose. The real work isn&rsquo;t the rules; it&rsquo;s tying the actual code to them, with runnable proofs that the real functions behave exactly the way those rules demand &mdash; landing on the right answer, and combining answers in the right way.</p>
