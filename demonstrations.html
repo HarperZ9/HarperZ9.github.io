@@ -145,10 +145,11 @@
   <p class="seal">Re-derive, don&rsquo;t trust &mdash; MATCH &middot; DRIFT &middot; UNVERIFIABLE, and allow earned by passing every check. Authored by Zain Dana Harper &middot; 2026.</p>
 </footer>
 
+<script src="system/spine.js"></script>
 <script>
 (function(){
   "use strict";
-  // ── the witness: real SHA-256, re-derive and compare ──────────────────
+  // ── the witness: SHA-256 via the shared spine, re-derive and compare ──────
   var content = document.getElementById('w-content');
   var out = document.getElementById('w-out');
   var sealed = null; // the remembered digest, or null
@@ -158,12 +159,8 @@
     out.innerHTML = '<span class="verdict-big '+cls+'">'+label+'</span>'
       + '<div class="demo-detail">'+detail+'</div>' + h;
   }
-  async function sha256(text){
-    if(!(window.crypto && crypto.subtle)) return null;
-    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
-    return Array.prototype.map.call(new Uint8Array(buf), function(b){
-      return ('0'+b.toString(16)).slice(-2); }).join('');
-  }
+  // the witness, from the shared spine — the same SHA-256 the atelier uses
+  function sha256(text){ return Spine.witness(text); }
   function shortHash(h){ return h ? h.slice(0,32)+'…' : h; }
 
   async function seal(){
@@ -206,11 +203,9 @@
     else auth={v:'pass', msg:'real, scoped, expiring grant &mdash; pass'};
     var bud = budget ? {v:'pass',msg:'within budget &mdash; pass'} : {v:'needs',msg:'budget unknown &mdash; needs-human'};
     var st  = state ? {v:'pass',msg:'observed state present &mdash; pass'} : {v:'needs',msg:'no observation &mdash; needs-human'};
+    // the gate, from the shared spine — the same default-deny the atelier uses
     var checks=[auth,bud,st];
-    var decision;
-    if(checks.some(function(c){return c.v==='deny';})) decision='deny';
-    else if(checks.some(function(c){return c.v==='needs';})) decision='needs-human';
-    else decision='allow';
+    var decision = Spine.gate(checks).decision;
     var cls = decision==='allow'?'v-allow':(decision==='deny'?'v-deny':'v-needs');
     function row(name,c){
       var k = c.v==='pass'?'ok':(c.v==='deny'?'bad':'lt');

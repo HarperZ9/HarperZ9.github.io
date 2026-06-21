@@ -84,6 +84,11 @@
   .vd-detail{font-family:"Spline Sans Mono",monospace;font-size:.66rem;letter-spacing:.03em;line-height:1.85;color:var(--muted)}
   .vd-detail b{color:var(--bone);font-weight:400}
   .vd-detail .mono{color:var(--ember);word-break:break-all}
+  .vd-gate{border-top:1px solid var(--hairline);margin-top:.7rem;padding-top:.7rem;font-family:"Spline Sans Mono",monospace;font-size:.6rem;letter-spacing:.03em;line-height:2;color:var(--muted)}
+  .vd-checks{margin-bottom:.15rem}
+  .vd-gate .ok{color:#5fae93;font-weight:400}.vd-gate .bad{color:var(--orange);font-weight:400}.vd-gate .lt{color:var(--ember);font-weight:400}
+  .g-allow{color:#5fae93}.g-deny{color:var(--orange)}.g-needs{color:var(--ember)}
+  .vd-gsub{color:var(--muted);opacity:.66}
   /* the five-algorithm key */
   .studies{width:100%;max-width:60rem;border-top:1px solid var(--hairline);margin-top:clamp(1.6rem,3vw,2.4rem)}
   .study-row{display:grid;grid-template-columns:11rem 1fr;gap:.4rem var(--col-gap);padding:1.15rem 0;
@@ -161,7 +166,7 @@
 
 <section class="mv" id="verify" aria-labelledby="vf-h">
   <h2 id="vf-h" class="reveal">Verify &mdash; <em>re-derive it, don&rsquo;t trust it.</em></h2>
-  <p class="body-text reveal">Every exported file carries its seed and a witness of its own geometry. Drop one back here: the instrument rebuilds the drawing from scratch, recomputes the witness, and reports <b>MATCH</b> if the file is exactly what its seed produces, <b>DRIFT</b> if a single coordinate was changed, or <b>UNVERIFIABLE</b> if it can&rsquo;t read a seed to check against. The same move <a href="demonstrations.html" style="color:var(--bone);border-bottom:1px solid rgba(239,171,48,.45);text-decoration:none">the witness</a> makes on a file&rsquo;s bytes &mdash; here, on a drawing.</p>
+  <p class="body-text reveal">Every exported file carries its seed and a <b>SHA-256</b> witness of its own geometry. Drop one back here and two of the organs run on it: <a href="demonstrations.html" style="color:var(--bone);border-bottom:1px solid rgba(239,171,48,.45);text-decoration:none">the witness</a> rebuilds the drawing from the seed and recomputes the digest with the browser&rsquo;s own crypto &mdash; the same move it makes on a file&rsquo;s bytes &mdash; and the default-deny <a href="demonstrations.html#gate" style="color:var(--bone);border-bottom:1px solid rgba(239,171,48,.45);text-decoration:none">gate</a> decides whether to accept it. <b>MATCH</b> and the gate <em>allows</em>; a single changed coordinate or an altered witness is <b>DRIFT</b> and it <em>denies</em>; no seed to check is <b>UNVERIFIABLE</b> and it escalates to a <em>human</em>.</p>
   <div class="at-verify reveal" id="at-verify">
     <label class="at-drop" id="at-drop" for="at-file" tabindex="0">
       <input type="file" id="at-file" accept=".svg,image/svg+xml" hidden>
@@ -173,7 +178,7 @@
       <div class="vd-detail">Drop a drawing exported from this page to re-derive and check it.</div>
     </div>
   </div>
-  <p class="artifact-note reveal">The re-derivation is the proof: same seed, same algorithm, same photograph &rarr; the same geometry and the same witness, every time. A <b>DRIFT</b> means the file on disk is no longer what the seed makes &mdash; edited, re-encoded, or produced by a different build. Nothing here trusts the file&rsquo;s own say-so; it rebuilds, and checks.</p>
+  <p class="artifact-note reveal">The witness and the gate here are not lookalikes &mdash; they are the same code those organs ship, lifted into one shared <b>spine</b> the tools compose with. EMET&rsquo;s SHA-256 digests the drawing; proof-surface&rsquo;s default-deny gate rules on the result. <em>Why it matters:</em> the tools no longer only check themselves &mdash; they check each other&rsquo;s output, which is the move the whole body of work is built on.</p>
 </section>
 
 <section class="mv" id="algorithms" aria-labelledby="alg-h">
@@ -216,6 +221,7 @@
   <p class="seal">Every drawing here is generated at runtime and deterministic from its seed &mdash; re-derivable, not asserted. Photographs and algorithms by Zain Dana Harper &middot; 2026.</p>
 </footer>
 
+<script src="system/spine.js" defer></script>
 <script src="system/atelier.js" defer></script>
 <script src="system/hero.js" defer></script>
 </body>
