@@ -392,6 +392,81 @@
     return { live: false, strokes: strokes };
   }
 
+  // 5 ── REACTION–DIFFUSION — Gray–Scott Turing patterns, drawn as iso-contours (the katydids)
+  // marching-squares case table: corners a=1,b=2,c=4,d=8; edges 0=top(a-b) 1=right(b-c) 2=bottom(d-c) 3=left(a-d)
+  var MS_TABLE = [[], [[0, 3]], [[0, 1]], [[1, 3]], [[1, 2]], [[0, 3], [1, 2]], [[0, 2]], [[2, 3]],
+    [[2, 3]], [[0, 2]], [[0, 1], [2, 3]], [[1, 2]], [[1, 3]], [[0, 1]], [[0, 3]], []];
+  function edgePt(e, x, y, a, b, c, d, lev, inv) {
+    var t, den;
+    if (e === 0) { den = b - a; t = den ? (lev - a) / den : 0.5; return [(x + t) * inv, y * inv]; }
+    if (e === 1) { den = c - b; t = den ? (lev - b) / den : 0.5; return [(x + 1) * inv, (y + t) * inv]; }
+    if (e === 2) { den = c - d; t = den ? (lev - d) / den : 0.5; return [(x + t) * inv, (y + 1) * inv]; }
+    den = d - a; t = den ? (lev - a) / den : 0.5; return [x * inv, (y + t) * inv];
+  }
+  function buildReaction(rng, P, field) {
+    var G = 120, NN = G * G;
+    var u = new Float32Array(NN), v = new Float32Array(NN), u2 = new Float32Array(NN), v2 = new Float32Array(NN);
+    for (var i = 0; i < NN; i++) { u[i] = 1; }
+    // seed V — from the photo's edges if present, else scattered drops; the pattern nucleates there
+    var seeds = Math.round(lerp(16, 52, P.complexity));
+    for (var s = 0; s < seeds; s++) {
+      var sx, sy;
+      if (field) { var sp = field.sampleEdge(rng); sx = sp[0]; sy = sp[1]; }
+      else { sx = rng(); sy = rng(); }
+      var cgx = (sx * G) | 0, cgy = (sy * G) | 0, R = 2 + (rng() * 3 | 0);
+      for (var dy = -R; dy <= R; dy++) for (var dx = -R; dx <= R; dx++) {
+        var px = cgx + dx, py = cgy + dy; if (px < 0 || px >= G || py < 0 || py >= G) continue;
+        var si = py * G + px; u[si] = 0.5; v[si] = 0.27;
+      }
+    }
+    // per-cell feed/kill from luminance → different Turing regimes (spots ↔ stripes ↔ coral) surface the photo
+    var Fc = new Float32Array(NN), Kc = new Float32Array(NN);
+    for (var yy = 0; yy < G; yy++) for (var xx = 0; xx < G; xx++) {
+      var l = field ? field.lum((xx + 0.5) / G, (yy + 0.5) / G) : 0.5;
+      Fc[yy * G + xx] = lerp(0.024, 0.054, l); Kc[yy * G + xx] = lerp(0.0595, 0.062, l);
+    }
+    var XM = new Int32Array(G), XP = new Int32Array(G);
+    for (var k = 0; k < G; k++) { XM[k] = (k - 1 + G) % G; XP[k] = (k + 1) % G; }
+    var Du = 0.16, Dv = 0.08, iter = 0, target = Math.round(lerp(1500, 3000, P.complexity)), pal = P.palette;
+    function batch(n) {
+      for (var it = 0; it < n; it++) {
+        for (var y = 0; y < G; y++) {
+          var ym = (y - 1 + G) % G, yp = (y + 1) % G, ry = y * G, rym = ym * G, ryp = yp * G;
+          for (var x = 0; x < G; x++) {
+            var xm = XM[x], xp = XP[x], idx = ry + x, uu = u[idx], vv = v[idx];
+            var Lu = (u[ry + xm] + u[ry + xp] + u[rym + x] + u[ryp + x]) * 0.2 + (u[rym + xm] + u[rym + xp] + u[ryp + xm] + u[ryp + xp]) * 0.05 - uu;
+            var Lv = (v[ry + xm] + v[ry + xp] + v[rym + x] + v[ryp + x]) * 0.2 + (v[rym + xm] + v[rym + xp] + v[ryp + xm] + v[ryp + xp]) * 0.05 - vv;
+            var uvv = uu * vv * vv;
+            u2[idx] = uu + (Du * Lu - uvv + Fc[idx] * (1 - uu));
+            v2[idx] = vv + (Dv * Lv + uvv - (Fc[idx] + Kc[idx]) * vv);
+          }
+        }
+        var t = u; u = u2; u2 = t; var t2 = v; v = v2; v2 = t2; iter++;
+      }
+    }
+    function step() { batch(10); return iter >= target; }
+    function strokes() {
+      var levels = [0.22, 0.34, 0.46], inv = 1 / (G - 1), out = [];
+      for (var li = 0; li < levels.length; li++) {
+        var lev = levels[li];
+        for (var y = 0; y < G - 1; y++) for (var x = 0; x < G - 1; x++) {
+          var a = v[y * G + x], b = v[y * G + x + 1], c = v[(y + 1) * G + x + 1], d = v[(y + 1) * G + x];
+          var code = (a > lev ? 1 : 0) | (b > lev ? 2 : 0) | (c > lev ? 4 : 0) | (d > lev ? 8 : 0);
+          if (code === 0 || code === 15) continue;
+          var segs = MS_TABLE[code];
+          for (var si2 = 0; si2 < segs.length; si2++) {
+            var p0 = edgePt(segs[si2][0], x, y, a, b, c, d, lev, inv);
+            var p1 = edgePt(segs[si2][1], x, y, a, b, c, d, lev, inv);
+            var lc = field ? field.lum((p0[0] + p1[0]) / 2, (p0[1] + p1[1]) / 2) : (li / (levels.length - 1));
+            out.push({ pts: [p0, p1], col: pal.sample(clamp(lc, 0, 1)), w: 0.6 + li * 0.22, op: 0.28 + 0.55 * (field ? clamp(lc, 0, 1) : 0.7) });
+          }
+        }
+      }
+      return out;
+    }
+    return { live: true, step: step, strokes: strokes, count: function () { return iter; } };
+  }
+
   var STUDIES = [
     { id: "phyllotaxis", label: "Phyllotaxis", build: buildPhyllotaxis,
       blurb: "Vogel&rsquo;s spiral &mdash; a seed every <b>golden angle</b>, radius as &radic;index. The Fibonacci arms you see are emergent, never drawn. <span class='sp'>The snail</span> lights which arms are bright." },
@@ -400,7 +475,9 @@
     { id: "growth", label: "Differential growth", build: buildGrowth,
       blurb: "A closed curve that repels itself and lengthens, folding as it goes &mdash; the buckling that curls a drying seedhead. <span class='sp'>Watch it</span> draw in real time." },
     { id: "venation", label: "Venation", build: buildVenation,
-      blurb: "Veins grow from the centre toward scattered sources, thickening with their load &mdash; the model botanists use for real leaf-veins. <span class='sp'>The mallow</span> places the sources." }
+      blurb: "Veins grow from the centre toward scattered sources, thickening with their load &mdash; the model botanists use for real leaf-veins. <span class='sp'>The mallow</span> places the sources." },
+    { id: "reaction", label: "Reaction&ndash;diffusion", build: buildReaction,
+      blurb: "Gray&ndash;Scott: two chemicals feed, react and decay until <b>Turing patterns</b> set &mdash; spots, mazes, coral &mdash; drawn here as contour lines. The photograph&rsquo;s light decides which pattern forms where. <span class='sp'>Watch it</span> react. <span class='sp'>The katydids&rsquo;</span> speckle, as mathematics." }
   ];
   var SPECIMENS = [
     { id: "none", label: "Pure math", src: null },
@@ -554,7 +631,9 @@
             if (nowt - liveStart > 9000) { var g = 0; while (!piece.step() && g++ < 2000) { } done = true; } // throttle safety: never animate forever
             else { for (var s = 0; s < 5; s++) { if (piece.step()) { done = true; break; } } }
             var cur = piece.strokes(); drawStrokes(ctx, W, H, cur, 1);
-            status(done ? (cur.length + " strokes · settled") : ("growing… " + (piece.count ? piece.count() + " nodes" : "")));
+            var verb = state.study === "reaction" ? "reacting" : "growing";
+            var unit = state.study === "reaction" ? " steps" : " nodes";
+            status(done ? (cur.length + " strokes · settled") : (verb + "… " + (piece.count ? piece.count() + unit : "")));
             if (!done) rafId = requestAnimationFrame(liveTick);
             else finalStrokes = cur;
           };
