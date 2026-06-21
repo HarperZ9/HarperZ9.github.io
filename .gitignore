@@ -12,3 +12,12 @@ build/
 .worktrees/
 
 _drafts/
+
+# internal design drafts & handoffs — never ship to the public Pages repo
+_redesign/
+_preview/
+DESIGN.md
+PRODUCT.md
+_HANDOFF.md
+CLAUDE.local.md
+*.local.md
