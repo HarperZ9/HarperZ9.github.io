@@ -593,3 +593,17 @@ body.world-3 .bar .rt{color:#cdd6cf}
     background:linear-gradient(to top, rgba(7,15,16,.93) 0%, rgba(7,15,16,.7) 42%, rgba(7,15,16,.34) 72%, rgba(7,15,16,.52) 100%)
   }
 }
+
+/* ============================================================================
+   INNER-PAGE CLEAN HERO (2026-06-21) — the CGI worlds hero is retired on the
+   inner pages too (canvases + hero.js gone; reveal.js handles the entrance).
+   The full-screen splash becomes a calm, content-led header on the warm void,
+   with a faint warm glow for life. Scoped to body.inner-clean.
+   ============================================================================ */
+.inner-clean .frame{
+  min-height:auto; display:block; pointer-events:auto;
+  padding-bottom:clamp(2.4rem,5vw,3.8rem);
+  background:radial-gradient(135% 95% at 12% -14%, rgba(223,94,0,.08), transparent 56%)
+}
+.inner-clean .mid{align-self:auto; margin-top:clamp(1.3rem,3vw,2.2rem)}
+.inner-clean .seal{margin-top:clamp(1.5rem,3vw,2.2rem)}
