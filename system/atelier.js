@@ -796,26 +796,29 @@
     }
     function exportSVG() {
       if (!finalStrokes.length) { status("nothing to export yet"); return; }
-      var snapped = snapToPalette(finalStrokes, state.palette);
-      // the plot-optimisation pass: stitch → simplify → order, then account + witness
-      var opt = optimizeForPlot(snapped, { tol: 0.0007 });
-      var witness = hashOpt(opt), st = opt.stats;
-      var cut = st.travelBefore > 0 ? Math.round((1 - st.travelAfter / st.travelBefore) * 100) : 0;
-      var meta = "atelier plot drawing\n" +
-        "study=" + state.study + " specimen=" + state.specimen + " seed=" + state.seed +
-        " complexity=" + Math.round(state.complexity * 100) + " palette=" + state.palette + "\n" +
-        "optimised: " + st.segIn + " segments to " + st.pathsOut + " continuous paths; " +
-        st.ptsIn + " to " + st.ptsOut + " points; pen-up travel reduced " + cut + " percent\n" +
-        "pens=" + opt.pens.length + " witness=" + witness + " (FNV-1a of geometry)\n" +
-        "re-derivable: the same seed redraws this exact file. github.com/HarperZ9";
-      var svg = plotSVG(opt, meta);
-      var blob = new Blob([svg], { type: "image/svg+xml" });
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement("a");
-      a.href = url; a.download = "drawing-" + state.study + "-" + state.seed + "-" + witness + ".svg";
-      document.body.appendChild(a); a.click(); document.body.removeChild(a);
-      setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
-      status(st.pathsOut + " paths · −" + cut + "% pen travel · witness " + witness);
+      // the plot-optimisation pass: stitch → simplify → order
+      var opt = optimizeForPlot(snapToPalette(finalStrokes, state.palette), { tol: 0.0007 });
+      var st = opt.stats, cut = st.travelBefore > 0 ? Math.round((1 - st.travelAfter / st.travelBefore) * 100) : 0;
+      // EMET's move, via the shared spine: SHA-256 the geometry — the same digest the witness ships
+      Spine.witness(geomBody(plotSVG(opt, ""))).then(function (witness) {
+        witness = witness || "unavailable";
+        var shortW = witness.slice(0, 12);
+        var meta = "atelier plot drawing\n" +
+          "study=" + state.study + " specimen=" + state.specimen + " seed=" + state.seed +
+          " complexity=" + Math.round(state.complexity * 100) + " palette=" + state.palette + "\n" +
+          "optimised: " + st.segIn + " segments to " + st.pathsOut + " continuous paths; " +
+          st.ptsIn + " to " + st.ptsOut + " points; pen-up travel reduced " + cut + " percent\n" +
+          "pens=" + opt.pens.length + " witness=" + witness + " (SHA-256 of geometry, via EMET)\n" +
+          "re-derivable: the same seed redraws this exact file. github.com/HarperZ9";
+        var svg = plotSVG(opt, meta);
+        var blob = new Blob([svg], { type: "image/svg+xml" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url; a.download = "drawing-" + state.study + "-" + state.seed + "-" + shortW + ".svg";
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
+        status(st.pathsOut + " paths · −" + cut + "% pen travel · witness " + shortW + "…");
+      });
     }
 
     // ── verify: re-derive a drawing from its own seed and witness it ───────────
@@ -824,6 +827,19 @@
     var verdictEl = document.getElementById("at-verdict");
     function showVerdict(cls, label, detail) {
       if (verdictEl) verdictEl.innerHTML = '<span class="verdict-big ' + cls + '">' + label + '</span><div class="vd-detail">' + detail + '</div>';
+    }
+    // render the witness verdict AND the proof-surface gate composing on its checks
+    function gClass(d) { return d === "allow" ? "g-allow" : (d === "deny" ? "g-deny" : "g-needs"); }
+    function gLabel(d) { return d === "allow" ? "ALLOW" : (d === "deny" ? "DENY" : "NEEDS-HUMAN"); }
+    function gSub(d) { return d === "allow" ? "accept as authentic seeded work" : (d === "deny" ? "reject — provenance failed" : "manual review — nothing to check"); }
+    function checkClass(v) { return v === "pass" ? "ok" : (v === "deny" ? "bad" : "lt"); }
+    function renderVerdict(cls, label, detail, checks, gate) {
+      if (!verdictEl) return;
+      var rows = checks.map(function (c) { return c.k + ' <b class="' + checkClass(c.v) + '">' + (c.v === "pass" ? "pass" : (c.v === "deny" ? "deny" : "unknown")) + "</b>"; }).join(" &middot; ");
+      verdictEl.innerHTML = '<span class="verdict-big ' + cls + '">' + label + "</span>"
+        + '<div class="vd-detail">' + detail + "</div>"
+        + '<div class="vd-gate"><div class="vd-checks">' + rows + "</div>"
+        + '<div>proof-surface gate &rarr; <b class="' + gClass(gate.decision) + '">' + gLabel(gate.decision) + "</b> <span class=\"vd-gsub\">" + gSub(gate.decision) + "</span></div></div>";
     }
     function syncChipGroup(id, activeId) {
       var box = document.getElementById(id); if (!box) return;
@@ -846,14 +862,15 @@
     function geomBody(svg) { var i = svg.indexOf('<g fill="none"'), j = svg.lastIndexOf("</svg>"); return (i >= 0 && j > i) ? svg.slice(i, j) : null; }
     function verifyFile(text) {
       var meta = parsePlotMeta(text);
+      var noProv = [{ k: "provenance", v: "unknown", msg: "no seed and witness to check against" }];
       if (!meta.study || !meta.seed || !meta.complexity || !meta.palette || !meta.witness) {
-        showVerdict("v-unver", "UNVERIFIABLE", "No re-derivable seed and witness in this file &mdash; not a pass, not a fail. Export a drawing from this page to get one."); return;
+        renderVerdict("v-unver", "UNVERIFIABLE", "No re-derivable seed and witness in this file &mdash; not a pass, not a fail. Export a drawing from this page to get one.", noProv, Spine.gate(noProv)); return;
       }
       var st = studyById(meta.study);
-      if (st.id !== meta.study) { showVerdict("v-unver", "UNVERIFIABLE", "This file names an algorithm this build does not have (" + meta.study + ")."); return; }
+      if (st.id !== meta.study) { renderVerdict("v-unver", "UNVERIFIABLE", "This file names an algorithm this build does not have (" + meta.study + ").", noProv, Spine.gate(noProv)); return; }
       var pid = PALETTES[meta.palette] ? meta.palette : "spectrum";
       var sid = specimenById(meta.specimen || "none").id;
-      showVerdict("v-unver", "RE-DERIVING…", "Rebuilding <b>" + meta.study + "</b> from seed <b>" + meta.seed + "</b> and recomputing its witness&hellip;");
+      showVerdict("v-unver", "RE-DERIVING…", "Rebuilding <b>" + meta.study + "</b> from seed <b>" + meta.seed + "</b>, re-witnessing, and asking the gate&hellip;");
       function finish(field) {
         var rng = makeRng(meta.seed + "|" + meta.study + "|" + sid + "|" + meta.complexity + "|" + meta.palette);
         var P = { complexity: clamp(parseInt(meta.complexity, 10) / 100, 0, 1), palette: makePalette(PALETTES[pid]), reduced: true };
@@ -861,17 +878,26 @@
         if (piece.live) { var guard = 0; while (!piece.step() && guard++ < 2000) { } }
         var strokes = piece.live ? piece.strokes() : piece.strokes;
         var seedOpt = optimizeForPlot(snapToPalette(strokes, pid), { tol: 0.0007 });
-        var recomputed = hashOpt(seedOpt);
-        var fileBody = geomBody(text), seedBody = geomBody(plotSVG(seedOpt, ""));
-        var geomOk = (fileBody !== null && seedBody !== null) ? (fileBody === seedBody) : (recomputed === meta.witness);
-        var witnessOk = recomputed === meta.witness;
-        if (geomOk && witnessOk) {
-          showVerdict("v-match", "MATCH", "Re-derived from seed <b>" + meta.seed + "</b>, the drawing is byte-for-byte what this file contains &mdash; exactly what its seed produces. <span class=\"mono\">" + recomputed + "</span>");
-        } else if (!geomOk) {
-          showVerdict("v-drift", "DRIFT", "The file&rsquo;s paths are not what seed <b>" + meta.seed + "</b> produces &mdash; edited, re-encoded, or a different build. The seed re-derives to <span class=\"mono\">" + recomputed + "</span>.");
-        } else {
-          showVerdict("v-drift", "DRIFT", "The paths match the seed, but the file&rsquo;s stated witness <span class=\"mono\">" + meta.witness + "</span> was altered &mdash; the seed re-derives to <span class=\"mono\">" + recomputed + "</span>.");
-        }
+        var fileBody = geomBody(text);
+        // EMET witnesses both the re-derivation and the file; proof-surface gates the result
+        Promise.all([Spine.witness(geomBody(plotSVG(seedOpt, ""))), fileBody ? Spine.witness(fileBody) : Promise.resolve(null)]).then(function (hs) {
+          var reHash = hs[0], fileHash = hs[1];
+          var untampered = !!(fileHash && fileHash === meta.witness);
+          var authentic = !!(reHash && reHash === meta.witness);
+          var checks = [
+            { k: "provenance", v: "pass", msg: "seed and witness present" },
+            { k: "untampered", v: untampered ? "pass" : "deny", msg: untampered ? "geometry matches its witness" : "geometry no longer hashes to the stated witness" },
+            { k: "re-derives", v: authentic ? "pass" : "deny", msg: authentic ? "the seed reproduces the witness" : "the seed does not reproduce the witness" }
+          ];
+          var gate = Spine.gate(checks), short = (meta.witness || "").slice(0, 12);
+          if (untampered && authentic) {
+            renderVerdict("v-match", "MATCH", "Re-derived from seed <b>" + meta.seed + "</b>; the SHA-256 of the geometry matches the file. <span class=\"mono\">" + short + "&hellip;</span>", checks, gate);
+          } else if (!authentic) {
+            renderVerdict("v-drift", "DRIFT", "The seed does not reproduce this drawing &mdash; a different build, or the paths were edited. Re-derives to <span class=\"mono\">" + (reHash || "").slice(0, 12) + "&hellip;</span>, file states <span class=\"mono\">" + short + "&hellip;</span>.", checks, gate);
+          } else {
+            renderVerdict("v-drift", "DRIFT", "The file&rsquo;s paths no longer hash to its stated witness &mdash; it was altered after export.", checks, gate);
+          }
+        });
         state.study = meta.study; state.specimen = sid; state.seed = meta.seed; state.complexity = P.complexity; state.palette = pid;
         syncControls(); render();
       }
