@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aleph — break your model on purpose, and keep the evidence</title>
+<meta name="description" content="Aleph is an adversarial-evaluation platform for teams hardening their own AI models: sustained, bounded, witnessed self-red-teaming that surfaces failure modes and turns them into re-derivable evidence and training signal. Offered as a capability, by inquiry. By Zain Dana Harper.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://harperz9.github.io/aleph.html">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/system.css?v=20260621d">
+</head>
+<body class="inner-clean">
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Aleph &middot; adversarial evaluation</span></div>
+  <div class="mid">
+    <p class="eyebrow">ADVERSARIAL EVALUATION &middot; ALEPH</p>
+    <h1>Break your model on purpose &mdash; <span class="g">and keep the evidence.</span></h1>
+    <p class="lede">Before a model ships, someone has to find what it does wrong: the prompt that slips the guardrail, the case it fails quietly, the behaviour no one thought to test. Most teams do that by hand, once, and can&rsquo;t run it again. Aleph is the other way &mdash; a platform that holds a model under sustained, bounded adversarial pressure, a <b>self-red-team</b>, and records exactly what broke and how. What you get back isn&rsquo;t a screenshot and a hunch; it&rsquo;s <b>re-derivable evidence</b> and the <b>training signal</b> to close the gap. It is the same accountability spine the rest of this site is built on, turned into an instrument for hardening models before the world gets to them.</p>
+    <p class="close">The red-team is held to the same standard as the model under it: bounded, witnessed, re-derivable. An evaluation you can&rsquo;t re-run isn&rsquo;t one.</p>
+  </div>
+  <div class="seal">a private platform &middot; offered as a capability, by inquiry &middot; the one page here I can&rsquo;t hand you the receipts for</div>
+</div>
+
+<main id="main">
+
+<!-- the honest part, first -->
+<section class="mv" id="honest" aria-labelledby="honest-h">
+  <h2 id="honest-h" class="reveal">The honest part, before anything else.</h2>
+  <p class="body-text reveal">Everything else on this site, you can run yourself &mdash; that is the entire point of it. This page is the exception, and I would rather say so plainly than dress it up. Aleph is private. I can&rsquo;t drop you a repository or a test log here, because <em>what it does and how it does it don&rsquo;t belong in public</em>. So read this as a capability and a claim, not a proof. On every other page I ask you to check me instead of trust me; on this one I can&rsquo;t, yet &mdash; so I&rsquo;m asking for a conversation instead, where I can actually show you, under terms that fit what it is.</p>
+  <em class="close reveal">If &ldquo;proof before trust&rdquo; is the rule, then the honest thing to do with the one tool I can&rsquo;t prove in public is to tell you that, not hide it.</em>
+</section>
+
+<!-- the problem -->
+<section class="mv" id="why" aria-labelledby="why-h">
+  <h2 id="why-h" class="reveal">A safety result you can&rsquo;t reproduce isn&rsquo;t a result.</h2>
+  <p class="body-text reveal">Every capable model ships carrying failure modes no one has mapped &mdash; not because teams are careless, but because the space of ways a model can go wrong is enormous and a person can only poke at so much of it by hand. So red-teaming happens in bursts: clever, valuable, and almost impossible to run the same way twice. A finding lives in a chat log; a fix is checked against a vibe; the next model regresses on the thing the last one fixed, and no one notices until a user does.</p>
+  <p class="body-text reveal">That is the same blindness this whole project exists to answer, in a higher-stakes place. You should not have to trust that a model was evaluated &mdash; you should be able to re-run the evaluation and watch it land in the same place. Aleph is built so that adversarial pressure is sustained instead of sporadic, broad instead of hand-sized, and &mdash; the part that matters &mdash; <em>recorded</em> instead of remembered.</p>
+  <em class="close reveal">The point isn&rsquo;t only to find the failure. It&rsquo;s to find it again tomorrow, on purpose, and prove you closed it.</em>
+</section>
+
+<!-- what it does -->
+<section class="mv" id="what" aria-labelledby="what-h">
+  <h2 id="what-h" class="reveal">An adversary that is itself accountable.</h2>
+  <p class="body-text reveal">Aleph runs an autonomous adversarial loop against a model you own: it applies pressure from many angles, watches what the model actually does, and keeps the cases where it broke &mdash; turned into evidence you can re-derive and, where you want it, signal you can train against so the next version is hard where this one was soft. That much, a number of tools attempt. What makes this one mine is the part underneath: <b>the red-team is bounded and witnessed like everything else on this site.</b></p>
+  <p class="body-text reveal"><b>Bounded</b> &mdash; it operates inside an authorization it cannot widen; the same default-deny gate that runs everywhere else here decides what it may and may not touch, and an empty grant does nothing. <b>Witnessed</b> &mdash; every finding carries a re-derivable record of what was done and what happened, so a safety team audits evidence, not anecdotes, and can hand that evidence to someone else who can check it cold. An evaluation harness that is itself a black box just moves the trust problem one step back. This one doesn&rsquo;t move it; it closes it.</p>
+  <em class="close reveal">Adversarial pressure that is sustained, broad, and on the record &mdash; and that can&rsquo;t do anything it wasn&rsquo;t authorised to do.</em>
+</section>
+
+<!-- the boundary -->
+<section class="mv" id="boundary" aria-labelledby="boundary-h">
+  <h2 id="boundary-h" class="reveal">What it is for, and what it is built to refuse.</h2>
+  <p class="body-text reveal">A tool that finds how a model fails is dual-use by nature, and I won&rsquo;t pretend otherwise &mdash; pretending is how these things go wrong. So it is built in one direction on purpose. It is pointed at <b>hardening your own models</b>: the output is the evidence a team needs to make a system safer, under an authorization that names what is in scope. It is bounded by a grant it cannot widen, and witnessed so that nothing it does is off the record &mdash; including, deliberately, to hold <em>me</em> to that line as much as anyone using it.</p>
+  <p class="pull reveal">Built to be used well, and architected to resist the opposite &mdash; the incorruptible core, in the one place it matters most.</p>
+  <p class="body-text reveal">That is the same line the rest of this site draws, drawn hardest here because here it counts most. The depth that lets it find a failure is real; it is contained by construction, kept to the defensive use it was made for, and I would walk it away from anything else before I let it become the thing it was built to guard against.</p>
+</section>
+
+<!-- for whom -->
+<section class="mv" id="who" aria-labelledby="who-h">
+  <h2 id="who-h" class="reveal">Who it&rsquo;s for &mdash; and the next step.</h2>
+  <p class="body-text reveal">Aleph is for teams hardening their own models: labs and organisations that need adversarial evaluation they can actually audit, re-run, and trust &mdash; and that would rather catch a failure in a harness than in the wild. It is offered as a capability, through a conversation, not as a public download; what it does is too sharp to leave lying around, and the honest way to share it is under terms, with a real person on the other side.</p>
+  <p class="body-text reveal">If that is you &mdash; or if you just want to understand it before deciding it&rsquo;s real &mdash; the next step is a conversation, and I&rsquo;ll show you what a page can&rsquo;t.</p>
+  <div class="channels reveal">
+    <span class="g">Inquiries</span> &mdash; <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
+    &nbsp;&middot;&nbsp;
+    <a href="overview.html">&larr; the map</a> &nbsp;&middot;&nbsp; <a href="./">the index</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Sustained, bounded, witnessed adversarial evaluation &middot; for hardening your own models &middot; offered by conversation &mdash; the one tool here I ask you to take as a claim, because I&rsquo;d rather say that than fake the proof.</p>
+</footer>
+
+<script src="system/reveal.js?v=20260621d" defer></script>
+</body>
+</html>
