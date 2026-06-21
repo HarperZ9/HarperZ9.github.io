@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="system/system.css?v=20260620b">
+<link rel="stylesheet" href="system/system.css?v=20260621">
 <style>
   /* atelier — the algorithmic drawing instrument. Scoped; built from system tokens. */
   .atelier{margin-top:clamp(1.6rem,3vw,2.4rem);display:grid;gap:clamp(1rem,2.4vw,1.8rem);
@@ -109,6 +109,7 @@
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 <canvas id="gl"></canvas>
 <div class="scrim"></div>
 <canvas id="motes"></canvas>
@@ -123,7 +124,7 @@
   <div class="seal">In-browser &middot; zero dependencies &middot; deterministic from seed &middot; export to a witnessed, plot-optimised <b>SVG</b></div>
 </div>
 
-<main>
+<main id="main">
 
 <section class="mv" id="instrument" aria-labelledby="at-h">
   <h2 id="at-h" class="reveal">The instrument.</h2>
@@ -239,6 +240,6 @@
 
 <script src="system/spine.js" defer></script>
 <script src="system/atelier.js" defer></script>
-<script src="system/hero.js" defer></script>
+<script src="system/hero.js?v=20260621" defer></script>
 </body>
 </html>

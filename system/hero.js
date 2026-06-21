@@ -922,7 +922,11 @@ function heroLinkProgram(gl, vsh, fsh) {
     return "#1c4442";
   }
 
+  var oscAlive = false;
+  function oscOnScreen() { return !document.hidden && window.scrollY < window.innerHeight * 1.4; }
+  function oscKick() { if (!oscAlive && oscOnScreen()) { oscAlive = true; requestAnimationFrame(oscFrame); } }
   function oscFrame() {
+    if (!oscOnScreen()) { oscAlive = false; return; }
     var oscW = osc.offsetWidth  || 120;
     var oscH = osc.offsetHeight || 38;
     osc.width  = oscW;
@@ -953,6 +957,9 @@ function heroLinkProgram(gl, vsh, fsh) {
     oscPhase += 0.055;
     requestAnimationFrame(oscFrame);
   }
+  window.addEventListener("scroll", oscKick, { passive: true });
+  document.addEventListener("visibilitychange", oscKick);
+  oscAlive = true;
   oscFrame();
 }());
 
@@ -1132,20 +1139,27 @@ function heroLinkProgram(gl, vsh, fsh) {
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
 
+  // pause the shader when the hero is scrolled away or the tab is hidden — the
+  // fragment loop shouldn't keep running behind a screenful of content (cf. hero-art.js)
+  var heroAlive = false;
+  function heroOnScreen() { return !document.hidden && window.scrollY < window.innerHeight * 1.4; }
   function frame() {
+    if (HERO_REDUCED || !heroOnScreen()) { heroAlive = false; return; }
     mx[0] += (mt[0] - mx[0]) * 0.025;
     mx[1] += (mt[1] - mx[1]) * 0.025;
-    var elapsed = HERO_REDUCED
-      ? 0.0
-      : (Date.now() - startTime) / 1000 * HERO_KNOBS.TIME_SCALE;
+    var elapsed = (Date.now() - startTime) / 1000 * HERO_KNOBS.TIME_SCALE;
     drawFrame(elapsed);
-    if (!HERO_REDUCED) requestAnimationFrame(frame);
+    requestAnimationFrame(frame);
   }
+  function heroKick() { if (!HERO_REDUCED && !heroAlive && heroOnScreen()) { heroAlive = true; requestAnimationFrame(frame); } }
 
   if (HERO_REDUCED) {
     worldCurrent = worldTarget;
     drawFrame(0.0);
   } else {
+    window.addEventListener("scroll", heroKick, { passive: true });
+    document.addEventListener("visibilitychange", heroKick);
+    heroAlive = true;
     frame();
   }
 }());
@@ -1182,7 +1196,11 @@ function heroLinkProgram(gl, vsh, fsh) {
   var mStart = Date.now();
   function mLerp(ma, mb, mtt) { return ma + (mb - ma) * mtt; }
 
+  var mAlive = false;
+  function mOnScreen() { return !document.hidden && window.scrollY < window.innerHeight * 1.4; }
+  function mKick() { if (!mAlive && mOnScreen()) { mAlive = true; requestAnimationFrame(mLoop); } }
   function mLoop() {
+    if (!mOnScreen()) { mAlive = false; return; }
     mctx.clearRect(0, 0, mW, mH);
     var msec  = (Date.now() - mStart) / 1000;
     var wSnap = Math.round(worldCurrent);
@@ -1233,6 +1251,9 @@ function heroLinkProgram(gl, vsh, fsh) {
     }
     requestAnimationFrame(mLoop);
   }
+  window.addEventListener("scroll", mKick, { passive: true });
+  document.addEventListener("visibilitychange", mKick);
+  mAlive = true;
   mLoop();
 }());
 
