@@ -780,12 +780,10 @@
       else go(null);
     }
 
-    // export — snap every stroke to the palette's anchor pens so the file plots as
-    // ≤N pen layers, not hundreds of near-identical colours.
+    // snap stroke colours to the palette's anchor pens → ≤N pen layers, not hundreds of near-identical colours
     function parseRgb(s) { var m = /rgb\((\d+),\s*(\d+),\s*(\d+)\)/.exec(s); return m ? [+m[1], +m[2], +m[3]] : [233, 226, 208]; }
-    function exportSVG() {
-      if (!finalStrokes.length) return;
-      var anchors = (PALETTES[state.palette] || PALETTES.spectrum).map(hexToRgb);
+    function snapToPalette(strokes, paletteId) {
+      var anchors = (PALETTES[paletteId] || PALETTES.spectrum).map(hexToRgb);
       function snap(colStr) {
         var c = parseRgb(colStr), bi = 0, bd = 1e9;
         for (var i = 0; i < anchors.length; i++) {
@@ -794,7 +792,11 @@
         }
         return rgbCss(anchors[bi]);
       }
-      var snapped = finalStrokes.map(function (s) { return { pts: s.pts, col: snap(s.col), w: s.w }; });
+      return strokes.map(function (s) { return { pts: s.pts, col: snap(s.col), w: s.w }; });
+    }
+    function exportSVG() {
+      if (!finalStrokes.length) { status("nothing to export yet"); return; }
+      var snapped = snapToPalette(finalStrokes, state.palette);
       // the plot-optimisation pass: stitch → simplify → order, then account + witness
       var opt = optimizeForPlot(snapped, { tol: 0.0007 });
       var witness = hashOpt(opt), st = opt.stats;
@@ -814,6 +816,75 @@
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
       setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
       status(st.pathsOut + " paths · −" + cut + "% pen travel · witness " + witness);
+    }
+
+    // ── verify: re-derive a drawing from its own seed and witness it ───────────
+    // The witnessing move, closed on the art's own artifacts: rebuild from the
+    // stated seed, recompute the witness, and report MATCH / DRIFT / UNVERIFIABLE.
+    var verdictEl = document.getElementById("at-verdict");
+    function showVerdict(cls, label, detail) {
+      if (verdictEl) verdictEl.innerHTML = '<span class="verdict-big ' + cls + '">' + label + '</span><div class="vd-detail">' + detail + '</div>';
+    }
+    function syncChipGroup(id, activeId) {
+      var box = document.getElementById(id); if (!box) return;
+      Array.prototype.forEach.call(box.children, function (c) { c.setAttribute("aria-pressed", String(c.getAttribute("data-id") === activeId)); });
+    }
+    function syncControls() {
+      syncChipGroup("at-studies", state.study); syncChipGroup("at-specimens", state.specimen); syncChipGroup("at-palettes", state.palette);
+      if (slider) slider.value = String(Math.round(state.complexity * 100));
+      if (seedInput) seedInput.value = state.seed;
+    }
+    function parsePlotMeta(text) {
+      var m = /<metadata>([\s\S]*?)<\/metadata>/.exec(text), body = m ? m[1] : text;
+      function grab(re) { var x = re.exec(body); return x ? x[1] : null; }
+      return {
+        study: grab(/study=([A-Za-z]+)/), specimen: grab(/specimen=([A-Za-z]+)/),
+        seed: grab(/seed=(\S+)/), complexity: grab(/complexity=(\d+)/),
+        palette: grab(/palette=([A-Za-z]+)/), witness: grab(/witness=([0-9a-f]+)/)
+      };
+    }
+    function geomBody(svg) { var i = svg.indexOf('<g fill="none"'), j = svg.lastIndexOf("</svg>"); return (i >= 0 && j > i) ? svg.slice(i, j) : null; }
+    function verifyFile(text) {
+      var meta = parsePlotMeta(text);
+      if (!meta.study || !meta.seed || !meta.complexity || !meta.palette || !meta.witness) {
+        showVerdict("v-unver", "UNVERIFIABLE", "No re-derivable seed and witness in this file &mdash; not a pass, not a fail. Export a drawing from this page to get one."); return;
+      }
+      var st = studyById(meta.study);
+      if (st.id !== meta.study) { showVerdict("v-unver", "UNVERIFIABLE", "This file names an algorithm this build does not have (" + meta.study + ")."); return; }
+      var pid = PALETTES[meta.palette] ? meta.palette : "spectrum";
+      var sid = specimenById(meta.specimen || "none").id;
+      showVerdict("v-unver", "RE-DERIVING…", "Rebuilding <b>" + meta.study + "</b> from seed <b>" + meta.seed + "</b> and recomputing its witness&hellip;");
+      function finish(field) {
+        var rng = makeRng(meta.seed + "|" + meta.study + "|" + sid + "|" + meta.complexity + "|" + meta.palette);
+        var P = { complexity: clamp(parseInt(meta.complexity, 10) / 100, 0, 1), palette: makePalette(PALETTES[pid]), reduced: true };
+        var piece = st.build(rng, P, field);
+        if (piece.live) { var guard = 0; while (!piece.step() && guard++ < 2000) { } }
+        var strokes = piece.live ? piece.strokes() : piece.strokes;
+        var seedOpt = optimizeForPlot(snapToPalette(strokes, pid), { tol: 0.0007 });
+        var recomputed = hashOpt(seedOpt);
+        var fileBody = geomBody(text), seedBody = geomBody(plotSVG(seedOpt, ""));
+        var geomOk = (fileBody !== null && seedBody !== null) ? (fileBody === seedBody) : (recomputed === meta.witness);
+        var witnessOk = recomputed === meta.witness;
+        if (geomOk && witnessOk) {
+          showVerdict("v-match", "MATCH", "Re-derived from seed <b>" + meta.seed + "</b>, the drawing is byte-for-byte what this file contains &mdash; exactly what its seed produces. <span class=\"mono\">" + recomputed + "</span>");
+        } else if (!geomOk) {
+          showVerdict("v-drift", "DRIFT", "The file&rsquo;s paths are not what seed <b>" + meta.seed + "</b> produces &mdash; edited, re-encoded, or a different build. The seed re-derives to <span class=\"mono\">" + recomputed + "</span>.");
+        } else {
+          showVerdict("v-drift", "DRIFT", "The paths match the seed, but the file&rsquo;s stated witness <span class=\"mono\">" + meta.witness + "</span> was altered &mdash; the seed re-derives to <span class=\"mono\">" + recomputed + "</span>.");
+        }
+        state.study = meta.study; state.specimen = sid; state.seed = meta.seed; state.complexity = P.complexity; state.palette = pid;
+        syncControls(); render();
+      }
+      var src = specimenById(sid).src;
+      if (src) loadField(src, function (f) { setTimeout(function () { finish(f); }, 20); });
+      else setTimeout(function () { finish(null); }, 20);
+    }
+    function handleFile(file) {
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function () { verifyFile(String(reader.result)); };
+      reader.onerror = function () { showVerdict("v-unver", "UNVERIFIABLE", "Could not read that file."); };
+      reader.readAsText(file);
     }
 
     // wire UI
@@ -843,6 +914,15 @@
     if (drawBtn) drawBtn.addEventListener("click", function () { state.seed = randomSeed(); if (seedInput) seedInput.value = state.seed; render(); });
     var exportBtn = document.getElementById("at-export");
     if (exportBtn) exportBtn.addEventListener("click", exportSVG);
+
+    var fileInput = document.getElementById("at-file"), dropZone = document.getElementById("at-drop");
+    if (fileInput) fileInput.addEventListener("change", function () { if (fileInput.files && fileInput.files[0]) handleFile(fileInput.files[0]); });
+    if (dropZone) {
+      dropZone.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (fileInput) fileInput.click(); } });
+      ["dragenter", "dragover"].forEach(function (ev) { dropZone.addEventListener(ev, function (e) { e.preventDefault(); dropZone.classList.add("drag"); }); });
+      ["dragleave", "drop"].forEach(function (ev) { dropZone.addEventListener(ev, function (e) { e.preventDefault(); dropZone.classList.remove("drag"); }); });
+      dropZone.addEventListener("drop", function (e) { var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; if (f) handleFile(f); });
+    }
 
     var resizeTimer = 0;
     window.addEventListener("resize", function () {
