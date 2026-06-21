@@ -27,7 +27,7 @@ var worldCurrent = 2.0;
   var raw = localStorage.getItem("ha-world");
   if (raw !== null) {
     var saved = parseInt(raw, 10);
-    if (saved >= 0 && saved <= 2) {
+    if (saved >= 0 && saved <= 3) {
       worldTarget  = saved;
       worldCurrent = saved; // start fully settled — no flash
     }
@@ -37,7 +37,7 @@ var worldCurrent = 2.0;
 }());
 
 function heroApplyWorldClass(idx) {
-  document.body.classList.remove("world-0", "world-1", "world-2");
+  document.body.classList.remove("world-0", "world-1", "world-2", "world-3");
   document.body.classList.add("world-" + idx);
 }
 
@@ -73,6 +73,7 @@ function heroSwitchWorld(idx) {
     { idx: 0, label: "ENGRAVING" },
     { idx: 1, label: "SPECTRUM"  },
     { idx: 2, label: "NEGATIVE"  },
+    { idx: 3, label: "CHROME"    },
   ];
   for (var wi = 0; wi < worlds.length; wi++) {
     var btn = document.createElement("button");
@@ -155,6 +156,7 @@ window.addEventListener("keydown", function (e) {
   if (e.key === "1") heroSwitchWorld(0);
   else if (e.key === "2") heroSwitchWorld(1);
   else if (e.key === "3") heroSwitchWorld(2);
+  else if (e.key === "4") heroSwitchWorld(3);
 });
 
 // =============================================================================
@@ -325,6 +327,41 @@ var HERO_FRAG = [
 "  vec2 wf_qa=vec2(vfbm4(p),vfbm4(p+vec2(4.0,2.2)));",
 "  vec2 wf_ra=vec2(vfbm4(p+ws*wf_qa+vec2(1.7,9.2)),vfbm4(p+ws*wf_qa+vec2(8.3,2.8)));",
 "  return vfbm4(p+ws*wf_ra);",
+"}",
+
+// ── WORLD 3 — LIQUID CHROME (vintage-CGI molten metal; reuses fbm above) ──────
+"vec3 lc_env(float y){",
+"  float s1=0.5+0.5*sin(y*3.0+0.3);",
+"  float s2=0.5+0.5*sin(y*6.7+1.4);",
+"  float band=clamp(pow(s1,3.0)+0.42*pow(s2,6.0),0.0,1.25);",   // narrow bright streaks on dark
+"  vec3 c=vec3(0.022,0.030,0.044);",
+"  c+=band*vec3(0.90,0.93,1.0);",
+"  c=mix(c,vec3(0.96,0.55,0.12),smoothstep(0.80,1.18,band)*0.5);",                          // amber in the hot streaks
+"  c=mix(c,vec3(0.30,0.64,0.55),smoothstep(0.18,0.34,band)*(1.0-smoothstep(0.34,0.5,band))*0.30);", // teal mids
+"  return c;",
+"}",
+"float lc_surf(vec2 p, float lt){",                              // domain-warped liquid height field
+"  vec2 a=vec2(fbm(p+vec2(0.0,lt*0.05)),fbm(p+vec2(5.2,1.3)-lt*0.04));",
+"  vec2 b=vec2(fbm(p+2.2*a+vec2(1.7,9.2)),fbm(p+2.2*a+vec2(8.3,2.8)));",
+"  return fbm(p+2.6*b);",
+"}",
+"vec3 liquidChrome(vec2 uv, float lt){",
+"  float asp=u_res.x/u_res.y;",
+"  vec2 p=vec2(uv.x*asp,uv.y)*1.25;",
+"  float e=2.0/u_res.y;",
+"  float hX=lc_surf(p+vec2(e,0.0),lt)-lc_surf(p-vec2(e,0.0),lt);",
+"  float hY=lc_surf(p+vec2(0.0,e),lt)-lc_surf(p-vec2(0.0,e),lt);",
+"  vec3 N=normalize(vec3(-hX,-hY,0.045));",
+"  vec3 R=reflect(vec3(0.0,0.0,-1.0),N);",
+"  float ry=R.y*1.6+R.x*0.5;",
+"  float d=0.05;",
+"  vec3 col=vec3(lc_env(ry+d).r,lc_env(ry).g,lc_env(ry-d).b);", // chromatic dispersion = iridescence
+"  float fres=pow(1.0-clamp(N.z,0.0,1.0),3.0);",
+"  col+=fres*vec3(0.12,0.13,0.18);",
+"  float slope=clamp(length(vec2(hX,hY))*55.0,0.0,1.0);",
+"  col+=pow(slope,1.3)*vec3(0.85,0.88,0.98)*0.72;",             // bright crests on the folds
+"  vec2 vg=uv-0.5; col*=1.0-dot(vg,vg)*0.62;",                  // vignette
+"  return clamp(pow(max(col,0.0),vec3(0.92)),0.0,1.0);",
 "}",
 
 "float lumA(vec2 uv){ return dot(texture2D(u_tex0,clamp(uv,0.001,0.999)).rgb,vec3(0.30,0.59,0.11)); }",
@@ -785,6 +822,8 @@ var HERO_FRAG = [
 "  col.b -= caW * u_ca_strength * 3.0  * (invB - baseLum) * caGate;",
 
 "  col = clamp(col, 0.0, 1.0);",
+// WORLD 3 — blend in liquid chrome at the final stage (gated; worlds 0-2 skip it entirely)
+"  if (u_world > 2.001) { col = mix(col, liquidChrome(frag/u_res, t), clamp(u_world-2.0,0.0,1.0)); }",
 "  gl_FragColor = vec4(col, 1.0);",
 "}"
 ].join("\n");
