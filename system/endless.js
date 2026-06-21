@@ -55,7 +55,7 @@
 
   // ── state ──
   var state = { study: "phyllotaxis", specimen: "snail", palette: "biolume", seed: "nautilus", wild: 0.55, density: 0.62, auto: true };
-  var drawToken = 0, rafId = 0, holdTimer = 0, idleTimer = 0;
+  var drawToken = 0, rafId = 0, holdTimer = 0, idleTimer = 0, transTimer = 0;
   var finalStrokes = [], curField = null, W = 0, H = 0, dpr = 1, settled = false;
 
   // particle field
@@ -202,7 +202,8 @@
   function transition(then) {
     if (reduced) { then(); return; }
     canvas.style.opacity = "0.06";
-    setTimeout(function () { then(); canvas.style.opacity = "1"; }, 460);
+    clearTimeout(transTimer);
+    transTimer = setTimeout(function () { then(); canvas.style.opacity = "1"; }, 460);
   }
   function advance() {
     state.study = choose(AUTO_POOL); state.specimen = choose(AUTO_SPEC);
@@ -339,7 +340,7 @@
     new IntersectionObserver(function (ents) {
       ents.forEach(function (en) {
         if (en.isIntersecting) { if (settled) startParticles(); if (state.auto) advanceSoon(800); }
-        else { stopParticles(); clearTimeout(holdTimer); if (rafId) { cancelAnimationFrame(rafId); rafId = 0; } }
+        else { stopParticles(); clearTimeout(holdTimer); clearTimeout(transTimer); if (rafId) { cancelAnimationFrame(rafId); rafId = 0; } }
       });
     }, { threshold: 0.1 }).observe(canvas);
   }

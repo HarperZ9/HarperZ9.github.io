@@ -34,7 +34,7 @@
     if (!window.fetch) { fallback(); return; }
     var done = false, guard = setTimeout(function () { if (!done) fallback(); }, 8000);
     fetch(API, { headers: { "Accept": "application/json" } })
-      .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+      .then(function (r) { if (!r.ok) throw new Error("bsky " + r.status); return r.json(); })
       .then(function (d) {
         done = true; clearTimeout(guard);
         var feed = (d && d.feed) || [], items = [], seen = {};
