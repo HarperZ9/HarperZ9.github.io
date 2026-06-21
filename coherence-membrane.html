@@ -23,7 +23,7 @@
   <div class="mid">
     <p class="eyebrow">ACCOUNTABILITY INFRASTRUCTURE &middot; COHERENCE MEMBRANE</p>
     <h1>A guess about runtime state is <span class="g">not a perception.</span></h1>
-    <p class="lede">A model&rsquo;s one structural disability is state-blindness: it reasons on its prior and on source text, not on what actually happened. When it says &ldquo;this frame renders correctly&rdquo; or &ldquo;this file contains X,&rdquo; that is a guess dressed as a fact. The membrane replaces the guess with a witnessed, re-derivable Observation &mdash; full-width SHA-256, dimensions, perceptual hash &mdash; that the model can ground on. Inert by construction: it reads, never writes.</p>
+    <p class="lede">A model&rsquo;s one structural disability is state-blindness: it reasons on its prior and on source text, not on what actually happened. When it says &ldquo;this frame renders correctly&rdquo; or &ldquo;this file contains X,&rdquo; that is a guess dressed as a fact &mdash; and I kept getting burned trusting it. So I gave it a way to look. The membrane replaces the guess with a witnessed, re-derivable Observation &mdash; full-width SHA-256, dimensions, perceptual hash &mdash; that the model can ground on. Inert by construction: it reads, never writes.</p>
     <p class="close">Drift verdicts in a closed lattice &mdash; MATCH / DRIFT / UNVERIFIABLE &mdash; never a silent match on a difference.</p>
   </div>
   <div class="seal">v0.1.0 &middot; zero dependencies &middot; 300+ tests &middot; organ family: visual &middot; raw &middot; region &middot; structured &middot; audio &middot; caption</div>
@@ -62,7 +62,7 @@
 <section class="proof" id="proof" aria-labelledby="proof-h">
   <div class="proof-head">
     <h2 id="proof-h" class="reveal">Don&rsquo;t take the observation. <em>Watch it refuse to guess.</em></h2>
-    <p class="body-text reveal">The membrane&rsquo;s failure mode matters as much as its success mode. These cases show what happens when it cannot verify &mdash; and what happens when two implementations derive the same answer independently.</p>
+    <p class="body-text reveal">I care about the failure mode at least as much as the success mode &mdash; the moment it cannot verify is the moment it has to stay honest. These cases show what happens when it cannot verify, and what happens when two implementations derive the same answer independently.</p>
   </div>
 
   <div class="exhibit reveal">
@@ -114,10 +114,11 @@
 <!-- honest limits -->
 <section class="mv" id="limits" aria-labelledby="limits-h">
   <h2 id="limits-h" class="reveal">What it is, and what it is not.</h2>
-  <p class="body-text reveal">The membrane is inert perception infrastructure &mdash; stdlib Python, zero external dependencies, 300+ tests, organ selftests that can fail. It replaces a guess with a witness; it does not replace a gate. The write-gate (<b>proof-surface</b>) is where enforcement lives. The membrane reports; the operator adjudicates.</p>
+  <p class="body-text reveal">Here is exactly where the line falls, so you don&rsquo;t have to guess at it. The membrane is inert perception infrastructure &mdash; stdlib Python, zero external dependencies, 300+ tests, organ selftests that can fail. It replaces a guess with a witness; it does not replace a gate. The write-gate (<b>proof-surface</b>) is where enforcement lives. The membrane reports; the operator adjudicates.</p>
   <p class="body-text reveal">Screen capture reads the composited display output the operator can already see, via the OS&rsquo;s own screen API through <code>ctypes</code>. It does not inject into, hook, or read another process&rsquo;s memory. It must be used only on surfaces the operator owns or has authorised. That is not a disclaimer &mdash; it is the design.</p>
   <p class="pull reveal">The default is never affirmative &mdash; proven against the real functions, not asserted in a comment.</p>
   <p class="body-text reveal">The formal lattice verification in <b>lattice.py</b> is machine-checked by exhaustive enumeration over the three-element verdict sets. The abstract laws are trivial for a three-element chain &mdash; deliberately. The work is the binding: executable proofs that the implementations land in, refine, and aggregate exactly as the lattice structures require.</p>
+  <p class="body-text reveal">I did not set out to build a perception library. I set out to stop trusting my own read of what was in front of me &mdash; the file I thought I&rsquo;d changed, the frame I thought had rendered &mdash; and a model turned out to have the same blindness, only worse, and louder. So the discipline came first and the organ came after. If any of this earns the right to turn the question around: when you say a thing is there, could you show that it is, if someone asked?</p>
   <div class="channels reveal">
     <span class="g">GitHub</span> &mdash; <a href="https://github.com/HarperZ9/coherence-membrane">HarperZ9/coherence-membrane</a>
     &nbsp;&middot;&nbsp;

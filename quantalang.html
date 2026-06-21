@@ -23,7 +23,7 @@
   <div class="mid">
     <h1>What a function may do belongs <span class="g">in its type.</span></h1>
     <p class="lede">QuantaLang is a typed-effects language. A function&rsquo;s signature names the effects it may perform &mdash; reach the filesystem, the console, the network &mdash; and the lifetimes of the references it returns. The compiler checks both, and lowers the program to native code through a C backend. Perform an effect you never declared, and it does not compile.</p>
-    <p class="close">Tested where it counts, honest about its edges &mdash; and the discipline inside it runs underneath the rest of the work here.</p>
+    <p class="close">I built it to make the compiler answer a question I couldn&rsquo;t answer by hand &mdash; what is this function actually allowed to do? It&rsquo;s tested where it counts, honest about its edges, and the discipline inside it runs underneath the rest of the work here.</p>
   </div>
   <div class="seal">quantac 1.0.0 &middot; a Rust-built compiler &middot; effects and lifetimes, in the type</div>
 </div>
@@ -95,9 +95,9 @@ Parsing... <span class="ok">OK</span> (1 items)
 <!-- maturity -->
 <section class="mv" id="maturity" aria-labelledby="maturity-h">
   <h2 id="maturity-h" class="reveal">999 tests, and a short list of what doesn&rsquo;t ship.</h2>
-  <p class="body-text reveal">Built in Rust, with 999 passing tests run on every change and none failing &mdash; grown from the 868 the docs recorded on 2026-06-15. One backend, C, takes a program all the way to a native executable, and it is the path the suite proves end to end. That is the whole of what is claimed.</p>
-  <p class="pull reveal">It isn&rsquo;t winding down. It is holding still &mdash; because the rest is built on it.</p>
-  <p class="body-text reveal">QuantaLang&rsquo;s core is shipped and stable: effects and lifetimes in the type, checked to native C, are a foundation the rest of the work here is built on &mdash; not a product still chasing features. Several pieces are honestly partial: the self-hosted compiler is architecture, not yet a working build; async, garbage collection, and FFI are designed but not yet linked into compiled output; the experimental backends emit code but aren&rsquo;t production. One author. Those are the named edges of a foundation &mdash; not the closing of a project.</p>
+  <p class="body-text reveal">Built in Rust, with 999 passing tests run on every change and none failing &mdash; grown from the 868 the docs recorded on 2026-06-15. One backend, C, takes a program all the way to a native executable, and it is the path the suite proves end to end. That is the whole of what I claim &mdash; no more than the tests will stand behind.</p>
+  <p class="pull reveal">It isn&rsquo;t winding down. It&rsquo;s holding still &mdash; because the rest is built on it.</p>
+  <p class="body-text reveal">The core is shipped and stable: effects and lifetimes in the type, checked to native C, are a foundation the rest of the work here stands on &mdash; not a product still chasing features. Several pieces are honestly partial, and I&rsquo;d rather you hear that from me than find it: the self-hosted compiler is architecture, not yet a working build; async, garbage collection, and FFI are designed but not yet linked into compiled output; the experimental backends emit code but aren&rsquo;t production. I built this alone. Those are the edges I know are there &mdash; the named limits of a foundation, not the closing of a project.</p>
 </section>
 
 <!-- run it -->
