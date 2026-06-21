@@ -63,7 +63,16 @@
   .etool-specs .etool-chip:hover{color:var(--ember)}
   .etool-specs .etool-chip[aria-pressed="true"]{color:var(--void);background:var(--prussian);border-color:var(--prussian)}
   .etool-organs{max-width:880px;margin-left:auto;margin-right:auto}
-  @media(max-width:560px){ .g-cols{columns:1} .etool-ctrls{flex-direction:column;gap:.7rem} .el-lede{text-align:left} }
+  .g-bsky{border-top:1px solid var(--hairline);padding:var(--section-pad) clamp(2.4rem,5.5vw,5rem)}
+  .g-bsky h2{max-width:20ch}
+  .g-bsky .body-text{max-width:60ch;margin-bottom:1.6rem}
+  .bsky-grid{columns:4 200px;column-gap:.6rem}
+  .bsky-item{display:block;break-inside:avoid;margin:0 0 .6rem;border-radius:4px;overflow:hidden;background:#0c1a1b;border:1px solid var(--hairline)}
+  .bsky-item img{width:100%;display:block;transition:transform .5s ease,opacity .4s ease;opacity:.92}
+  .bsky-item:hover img{transform:scale(1.045);opacity:1}
+  .bsky-fallback{font-family:"EB Garamond",Georgia,serif;color:var(--muted);font-style:italic}
+  .bsky-fallback a{color:var(--orange);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4)}
+  @media(max-width:560px){ .g-cols{columns:1} .etool-ctrls{flex-direction:column;gap:.7rem} .el-lede{text-align:left} .bsky-grid{columns:2 140px} }
 </style>
 </head>
 <body>
@@ -174,6 +183,13 @@
     <p class="channels"><span class="g">Go further</span> &mdash; <a href="atelier.html">open the full atelier</a> &nbsp;&middot;&nbsp; <a href="index.html">back to the start</a></p>
   </section>
 
+  <section class="g-bsky" id="g-bsky" aria-labelledby="g-bsky-h">
+    <h2 id="g-bsky-h">Straight from her Bluesky.</h2>
+    <p class="body-text">The seven up top are the ones the engine learned to read &mdash; but she hasn&rsquo;t stopped looking. Here is her work as it lands, pulled live from her feed; every frame links back to her own post.</p>
+    <div class="bsky-grid" id="bsky-feed"><p class="bsky-fallback">Loading her latest from Bluesky&hellip;</p></div>
+    <p class="channels"><span class="g">Follow her</span> &mdash; <a href="https://bsky.app/profile/iambeta.bsky.social" target="_blank" rel="noopener">@iambeta.bsky.social</a></p>
+  </section>
+
   <footer class="footer-seal" role="contentinfo">
     <p class="seal">Every photograph here is iamBeTa&rsquo;s &mdash; the living structures this whole project is modeled on. The drawings are mine, made from them in the atelier. With thanks, and with love.</p>
   </footer>
@@ -183,5 +199,6 @@
 <script src="system/spine.js" defer></script>
 <script src="system/atelier.js?v=20260621t" defer></script>
 <script src="system/endless.js?v=20260621u" defer></script>
+<script src="system/bsky-feed.js?v=20260621a" defer></script>
 </body>
 </html>
