@@ -469,6 +469,94 @@
     return { live: true, step: step, strokes: strokes, count: function () { return iter; } };
   }
 
+  // 6 ── PHYSARUM — agent-based slime-mould transport network (after Jones 2010) ─
+  //  Thousands of agents each lay a pheromone trail and steer toward where the
+  //  trail — and the photograph's light — runs strongest; the field diffuses and
+  //  decays behind them. Reinforced routes thicken into a transport network the
+  //  same way Physarum polycephalum reticulates toward food. The drawn lines are
+  //  the agents' own paths; the network is emergent, never authored.
+  function buildPhysarum(rng, P, field) {
+    var G = 180, NN = G * G;
+    var T = new Float32Array(NN), T2 = new Float32Array(NN);
+    var N = Math.round(lerp(900, 2500, P.complexity));
+    var SA = 0.40, RA = 0.46, SO = 7.5, SS = 1.35;      // sense angle, turn, sensor offset & step (grid px)
+    var decay = 0.90, wPhoto = field ? 1.9 : 0;         // photo light as a static attractant atop the trail
+    var pal = P.palette;
+    var ax = new Float32Array(N), ay = new Float32Array(N), ah = new Float32Array(N);
+    for (var i = 0; i < N; i++) {
+      var sx, sy;
+      if (field) { var sp = field.sampleEdge(rng); sx = sp[0] * G; sy = sp[1] * G; }     // start on the specimen's structure
+      else { var rr = 0.4 * G * Math.sqrt(rng()), aa = rng() * TAU; sx = G * 0.5 + rr * Math.cos(aa); sy = G * 0.5 + rr * Math.sin(aa); }
+      ax[i] = sx; ay[i] = sy; ah[i] = rng() * TAU;
+    }
+    // a subset leave an inked path; the rest only sculpt the shared trail field
+    var inkN = clamp(Math.round(N * 0.30), 90, 540) | 0;
+    var iter = 0, target = Math.round(lerp(560, 1180, P.complexity)), cap = target + 6;
+    var pbuf = [], pn = new Int32Array(inkN), spawnT = new Float32Array(inkN);
+    for (var k = 0; k < inkN; k++) { var fb = new Float32Array(cap * 2); fb[0] = ax[k] / G; fb[1] = ay[k] / G; pbuf.push(fb); pn[k] = 1; spawnT[k] = field ? field.lum(ax[k] / G, ay[k] / G) : 0; }
+
+    function sampleT(x, y) {                              // bilinear trail read, clamped to the grid
+      if (x < 0) x = 0; else if (x > G - 1.001) x = G - 1.001;
+      if (y < 0) y = 0; else if (y > G - 1.001) y = G - 1.001;
+      var x0 = x | 0, y0 = y | 0, tx = x - x0, ty = y - y0, r0 = y0 * G;
+      var a = T[r0 + x0], b = T[r0 + x0 + 1], c = T[r0 + G + x0], d = T[r0 + G + x0 + 1];
+      return (a * (1 - tx) + b * tx) * (1 - ty) + (c * (1 - tx) + d * tx) * ty;
+    }
+    function sense(x, y, h) {
+      var sx = x + Math.cos(h) * SO, sy = y + Math.sin(h) * SO, s = sampleT(sx, sy);
+      if (wPhoto) s += wPhoto * field.lum(clamp(sx / G, 0, 1), clamp(sy / G, 0, 1));
+      return s;
+    }
+    function oneStep() {
+      for (var i = 0; i < N; i++) {
+        var x = ax[i], y = ay[i], h = ah[i];
+        var F = sense(x, y, h), L = sense(x, y, h - SA), R = sense(x, y, h + SA);
+        if (F >= L && F >= R) { } else if (F < L && F < R) { h += (rng() < 0.5 ? -RA : RA); } else if (L > R) { h -= RA; } else { h += RA; }
+        var nx = x + Math.cos(h) * SS, ny = y + Math.sin(h) * SS;
+        if (nx < 1) { nx = 1; h = Math.PI - h; } else if (nx > G - 2) { nx = G - 2; h = Math.PI - h; }   // reflect at the frame
+        if (ny < 1) { ny = 1; h = -h; } else if (ny > G - 2) { ny = G - 2; h = -h; }
+        ax[i] = nx; ay[i] = ny; ah[i] = h;
+        T[(ny | 0) * G + (nx | 0)] += 1;
+        if (i < inkN) { var c = pn[i]; if (c < cap) { var b = pbuf[i]; b[c * 2] = nx / G; b[c * 2 + 1] = ny / G; pn[i] = c + 1; } }
+      }
+      for (var y2 = 0; y2 < G; y2++) {                    // diffuse (5-tap) + decay → coalescence into veins
+        var r = y2 * G, up = y2 > 0 ? r - G : r, dn = y2 < G - 1 ? r + G : r;
+        for (var x2 = 0; x2 < G; x2++) {
+          var xl = x2 > 0 ? x2 - 1 : x2, xr = x2 < G - 1 ? x2 + 1 : x2;
+          T2[r + x2] = (T[r + x2] * 0.6 + (T[r + xl] + T[r + xr] + T[up + x2] + T[dn + x2]) * 0.1) * decay;
+        }
+      }
+      var tmp = T; T = T2; T2 = tmp; iter++;
+    }
+    function step() { oneStep(); oneStep(); return iter >= target; }
+    // colour by the forager's ORIGIN luminance — the routes carry where they set out from,
+    // so the bright core stays multi-hued instead of collapsing to one band (pure-math: by density)
+    function colT(k, dn2) { return field ? clamp(spawnT[k] * 1.06 + 0.02, 0, 1) : clamp(0.16 + dn2 * 0.6, 0, 1); }
+    function strokes() {
+      var out = [], k;
+      if (iter >= target) {
+        for (k = 0; k < inkN; k++) {                      // final: each agent's full journey, trunk routes bolder
+          var n = pn[k]; if (n < 6) continue; var b = pbuf[k], pts = [];
+          for (var j = 0; j < n; j += 3) pts.push([b[j * 2], b[j * 2 + 1]]);
+          if (pts.length < 3) continue;
+          var hx = b[(n - 1) * 2], hy = b[(n - 1) * 2 + 1];
+          var dens = sampleT(hx * G, hy * G), dn2 = clamp(dens / (5 + dens), 0, 1);
+          out.push({ pts: pts, col: pal.sample(colT(k, dn2)), w: 0.45 + 1.05 * dn2, op: 0.09 + 0.5 * dn2 });
+        }
+      } else {
+        var TAIL = 40;
+        for (k = 0; k < inkN; k++) {                      // live: the active foraging tails
+          var n2 = pn[k]; if (n2 < 2) continue; var b2 = pbuf[k];
+          var s0 = n2 > TAIL ? n2 - TAIL : 0, tail = [];
+          for (var j2 = s0; j2 < n2; j2++) tail.push([b2[j2 * 2], b2[j2 * 2 + 1]]);
+          out.push({ pts: tail, col: pal.sample(colT(k, 0.4)), w: 0.7, op: 0.16 });
+        }
+      }
+      return out;
+    }
+    return { live: true, step: step, strokes: strokes, count: function () { return iter; } };
+  }
+
   var STUDIES = [
     { id: "phyllotaxis", label: "Phyllotaxis", build: buildPhyllotaxis,
       blurb: "Vogel&rsquo;s spiral &mdash; a seed every <b>golden angle</b>, radius as &radic;index. The Fibonacci arms you see are emergent, never drawn. <span class='sp'>The snail</span> lights which arms are bright." },
@@ -480,6 +568,8 @@
       blurb: "Veins grow from the centre toward scattered sources, thickening with their load &mdash; the model botanists use for real leaf-veins. <span class='sp'>The mallow</span> places the sources." },
     { id: "reaction", label: "Reaction&ndash;diffusion", build: buildReaction,
       blurb: "Gray&ndash;Scott: two chemicals feed, react and decay until <b>Turing patterns</b> set &mdash; spots, mazes, coral &mdash; drawn here as contour lines. The photograph&rsquo;s light decides which pattern forms where. <span class='sp'>Watch it</span> react. <span class='sp'>The katydids&rsquo;</span> speckle, as mathematics." },
+    { id: "physarum", label: "Slime mould", build: buildPhysarum,
+      blurb: "Thousands of agents lay a trail and turn toward where it &mdash; and the photograph&rsquo;s light &mdash; runs strongest; the trail diffuses and decays behind them. Reinforced paths thicken into a transport network, the way <i>Physarum</i> slime mould finds the shortest route through a maze. The brightest tissue becomes the busiest road. <span class='sp'>Watch it</span> forage." },
     { id: "live", label: "Live &middot; camera", build: null,
       blurb: "The camera as a real organ &mdash; particles stream along the edges it senses, live." }
   ];
@@ -766,8 +856,8 @@
             if (nowt - liveStart > 9000) { var g = 0; while (!piece.step() && g++ < 2000) { } done = true; } // throttle safety: never animate forever
             else { for (var s = 0; s < 5; s++) { if (piece.step()) { done = true; break; } } }
             var cur = piece.strokes(); drawStrokes(ctx, W, H, cur, 1);
-            var verb = state.study === "reaction" ? "reacting" : "growing";
-            var unit = state.study === "reaction" ? " steps" : " nodes";
+            var verb = state.study === "reaction" ? "reacting" : state.study === "physarum" ? "foraging" : "growing";
+            var unit = state.study === "reaction" || state.study === "physarum" ? " steps" : " nodes";
             status(done ? (cur.length + " strokes · settled") : (verb + "… " + (piece.count ? piece.count() + unit : "")));
             if (!done) rafId = requestAnimationFrame(liveTick);
             else { finalStrokes = cur; settled = true; }
