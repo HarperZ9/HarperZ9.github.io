@@ -543,6 +543,127 @@
     return out.join("\n");
   }
 
+  // ── plot optimisation: segment soup → clean, ordered, continuous pen paths ───
+  // The thesis applied to the tool's own output: don't ship "good enough" line
+  // soup — stitch shared endpoints into continuous strokes, simplify, order to
+  // minimise pen-up travel, and account for exactly what changed.
+  function ptKey(p) { return (Math.round(p[0] * 1e5)) + "," + (Math.round(p[1] * 1e5)); }
+  function stitch(polys) {
+    var n = polys.length, used = new Uint8Array(n), ends = {};
+    for (var i = 0; i < n; i++) {
+      var pp = polys[i], k0 = ptKey(pp[0]), k1 = ptKey(pp[pp.length - 1]);
+      (ends[k0] || (ends[k0] = [])).push(i); (ends[k1] || (ends[k1] = [])).push(i);
+    }
+    function match(key) { var l = ends[key]; if (!l) return -1; for (var k = 0; k < l.length; k++) if (!used[l[k]]) return l[k]; return -1; }
+    var chains = [];
+    for (var s = 0; s < n; s++) {
+      if (used[s]) continue; used[s] = 1;
+      var chain = polys[s].slice();
+      for (; ;) { // extend tail
+        var tk = ptKey(chain[chain.length - 1]), j = match(tk); if (j < 0) break; used[j] = 1;
+        var add = polys[j], seq = (ptKey(add[0]) === tk) ? add.slice(1) : add.slice(0, add.length - 1).reverse();
+        for (var a = 0; a < seq.length; a++) chain.push(seq[a]);
+      }
+      for (; ;) { // extend head
+        var hk = ptKey(chain[0]), j2 = match(hk); if (j2 < 0) break; used[j2] = 1;
+        var ad = polys[j2], pre = (ptKey(ad[ad.length - 1]) === hk) ? ad.slice(0, ad.length - 1) : ad.slice(1).reverse();
+        chain = pre.concat(chain);
+      }
+      chains.push(chain);
+    }
+    return chains;
+  }
+  function rdp(pts, eps) { // Douglas–Peucker
+    if (pts.length < 3) return pts;
+    var keep = new Uint8Array(pts.length); keep[0] = 1; keep[pts.length - 1] = 1;
+    var stack = [[0, pts.length - 1]], e2 = eps * eps;
+    while (stack.length) {
+      var seg = stack.pop(), a = seg[0], b = seg[1];
+      var ax = pts[a][0], ay = pts[a][1], dx = pts[b][0] - ax, dy = pts[b][1] - ay, L = dx * dx + dy * dy;
+      var maxD = -1, maxI = -1;
+      for (var i = a + 1; i < b; i++) {
+        var t = L > 0 ? ((pts[i][0] - ax) * dx + (pts[i][1] - ay) * dy) / L : 0; t = t < 0 ? 0 : t > 1 ? 1 : t;
+        var qx = pts[i][0] - (ax + t * dx), qy = pts[i][1] - (ay + t * dy), d = qx * qx + qy * qy;
+        if (d > maxD) { maxD = d; maxI = i; }
+      }
+      if (maxD > e2 && maxI > 0) { keep[maxI] = 1; stack.push([a, maxI]); stack.push([maxI, b]); }
+    }
+    var o = []; for (var k = 0; k < pts.length; k++) if (keep[k]) o.push(pts[k]); return o;
+  }
+  function orderPaths(paths) { // greedy nearest-neighbour, flip as needed → least pen-up travel
+    var n = paths.length; if (n < 2) return paths;
+    var used = new Uint8Array(n), out = [], cur = [0, 0];
+    for (var k = 0; k < n; k++) {
+      var best = -1, rev = false, bd = Infinity;
+      for (var i = 0; i < n; i++) {
+        if (used[i]) continue;
+        var h = paths[i][0], t = paths[i][paths[i].length - 1];
+        var dh = (h[0] - cur[0]) * (h[0] - cur[0]) + (h[1] - cur[1]) * (h[1] - cur[1]);
+        var dt = (t[0] - cur[0]) * (t[0] - cur[0]) + (t[1] - cur[1]) * (t[1] - cur[1]);
+        if (dh < bd) { bd = dh; best = i; rev = false; } if (dt < bd) { bd = dt; best = i; rev = true; }
+      }
+      used[best] = 1; var pth = rev ? paths[best].slice().reverse() : paths[best];
+      out.push(pth); cur = pth[pth.length - 1];
+    }
+    return out;
+  }
+  function optimizeForPlot(strokes, opts) {
+    opts = opts || {}; var tol = opts.tol == null ? 0.0007 : opts.tol;
+    var byCol = {}, wByCol = {}, segIn = 0, ptsIn = 0, travelBefore = 0, prev = null;
+    for (var i = 0; i < strokes.length; i++) {
+      var s = strokes[i]; if (!s.pts || s.pts.length < 2) continue; segIn++; ptsIn += s.pts.length;
+      (byCol[s.col] || (byCol[s.col] = [])).push(s.pts); (wByCol[s.col] || (wByCol[s.col] = [])).push(s.w || 1);
+      if (prev) travelBefore += Math.hypot(s.pts[0][0] - prev[0], s.pts[0][1] - prev[1]); prev = s.pts[s.pts.length - 1];
+    }
+    var pens = [], pathsOut = 0, ptsOut = 0, travelAfter = 0;
+    for (var col in byCol) {
+      var chains = stitch(byCol[col]);
+      for (var c = 0; c < chains.length; c++) chains[c] = rdp(chains[c], tol);
+      chains = orderPaths(chains);
+      var pe = null;
+      for (var c2 = 0; c2 < chains.length; c2++) { var ch = chains[c2]; if (pe) travelAfter += Math.hypot(ch[0][0] - pe[0], ch[0][1] - pe[1]); pe = ch[ch.length - 1]; ptsOut += ch.length; pathsOut++; }
+      var ws = wByCol[col], wsum = 0; for (var wi = 0; wi < ws.length; wi++) wsum += ws[wi];
+      pens.push({ col: col, width: wsum / ws.length, paths: chains });
+    }
+    return { pens: pens, stats: { segIn: segIn, pathsOut: pathsOut, ptsIn: ptsIn, ptsOut: ptsOut, travelBefore: travelBefore, travelAfter: travelAfter } };
+  }
+  function hashOpt(opt) { // FNV-1a over quantised geometry + pens → reproducible witness
+    var h = 2166136261;
+    for (var p = 0; p < opt.pens.length; p++) {
+      var pen = opt.pens[p];
+      for (var ci = 0; ci < pen.col.length; ci++) { h ^= pen.col.charCodeAt(ci); h = Math.imul(h, 16777619); }
+      for (var i = 0; i < pen.paths.length; i++) {
+        var pa = pen.paths[i];
+        for (var j = 0; j < pa.length; j++) { h ^= (pa[j][0] * 1000) | 0; h = Math.imul(h, 16777619); h ^= (pa[j][1] * 1000) | 0; h = Math.imul(h, 16777619); }
+      }
+    }
+    return ("0000000" + (h >>> 0).toString(16)).slice(-8);
+  }
+  function plotSVG(opt, meta) {
+    var S = 1000, inner = S * (1 - 2 * MARGIN), off = S * MARGIN;
+    function X(x) { return (off + x * inner).toFixed(1); }
+    function Y(y) { return (off + y * inner).toFixed(1); }
+    var out = ['<?xml version="1.0" encoding="UTF-8"?>',
+      '<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000">',
+      '<metadata>' + meta + '</metadata>',
+      '<rect width="1000" height="1000" fill="#0d1b1c"/>',
+      '<g fill="none" stroke-linecap="round" stroke-linejoin="round">'];
+    for (var p = 0; p < opt.pens.length; p++) {
+      var pen = opt.pens[p];
+      out.push('<g stroke="' + pen.col + '" stroke-width="' + (pen.width || 1).toFixed(2) + '" stroke-opacity="0.92">');
+      for (var i = 0; i < pen.paths.length; i++) {
+        var pa = pen.paths[i]; if (pa.length < 2) continue;
+        var d = "M" + X(pa[0][0]) + " " + Y(pa[0][1]);
+        for (var j = 1; j < pa.length; j++) d += " L" + X(pa[j][0]) + " " + Y(pa[j][1]);
+        if (pa.length > 3 && Math.abs(pa[0][0] - pa[pa.length - 1][0]) < 1e-4 && Math.abs(pa[0][1] - pa[pa.length - 1][1]) < 1e-4) d += " Z";
+        out.push('<path d="' + d + '"/>');
+      }
+      out.push("</g>");
+    }
+    out.push("</g></svg>");
+    return out.join("\n");
+  }
+
   // ============================================================================
   // CONTROLLER
   // ============================================================================
@@ -673,17 +794,26 @@
         }
         return rgbCss(anchors[bi]);
       }
-      var snapped = finalStrokes.map(function (s) { return { pts: s.pts, col: snap(s.col), w: s.w, op: s.op, close: s.close }; });
-      var meta = "atelier · " + state.study + " · specimen=" + state.specimen + " · seed=" + state.seed +
-        " · complexity=" + Math.round(state.complexity * 100) + " · " + state.palette + " · " + anchors.length + " pens" +
-        " · github.com/HarperZ9 · deterministic from seed";
-      var svg = toSVG(snapped, meta);
+      var snapped = finalStrokes.map(function (s) { return { pts: s.pts, col: snap(s.col), w: s.w }; });
+      // the plot-optimisation pass: stitch → simplify → order, then account + witness
+      var opt = optimizeForPlot(snapped, { tol: 0.0007 });
+      var witness = hashOpt(opt), st = opt.stats;
+      var cut = st.travelBefore > 0 ? Math.round((1 - st.travelAfter / st.travelBefore) * 100) : 0;
+      var meta = "atelier plot drawing\n" +
+        "study=" + state.study + " specimen=" + state.specimen + " seed=" + state.seed +
+        " complexity=" + Math.round(state.complexity * 100) + " palette=" + state.palette + "\n" +
+        "optimised: " + st.segIn + " segments to " + st.pathsOut + " continuous paths; " +
+        st.ptsIn + " to " + st.ptsOut + " points; pen-up travel reduced " + cut + " percent\n" +
+        "pens=" + opt.pens.length + " witness=" + witness + " (FNV-1a of geometry)\n" +
+        "re-derivable: the same seed redraws this exact file. github.com/HarperZ9";
+      var svg = plotSVG(opt, meta);
       var blob = new Blob([svg], { type: "image/svg+xml" });
       var url = URL.createObjectURL(blob);
       var a = document.createElement("a");
-      a.href = url; a.download = "drawing-" + state.study + "-" + state.seed + ".svg";
+      a.href = url; a.download = "drawing-" + state.study + "-" + state.seed + "-" + witness + ".svg";
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
       setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
+      status(st.pathsOut + " paths · −" + cut + "% pen travel · witness " + witness);
     }
 
     // wire UI
@@ -724,7 +854,7 @@
   }
 
   // expose for reuse (e.g. the deck title card) and self-boot
-  window.Atelier = { STUDIES: STUDIES, SPECIMENS: SPECIMENS, PALETTES: PALETTES, makeRng: makeRng, makePalette: makePalette, loadField: loadField, drawStrokes: drawStrokes, toSVG: toSVG };
+  window.Atelier = { STUDIES: STUDIES, SPECIMENS: SPECIMENS, PALETTES: PALETTES, makeRng: makeRng, makePalette: makePalette, loadField: loadField, drawStrokes: drawStrokes, toSVG: toSVG, optimizeForPlot: optimizeForPlot, plotSVG: plotSVG, hashOpt: hashOpt };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 })();
