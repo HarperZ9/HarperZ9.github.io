@@ -22,7 +22,7 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">RAW &middot; the rendering branch</span></div>
   <div class="mid">
     <h1>Take the pipeline. <span class="g">Render the frame yourself.</span></h1>
-    <p class="lede">RAW &mdash; Rendering Advancement Workshop &mdash; is a real-time D3D11 rendering platform: a proxy DLL that takes ownership of the graphics pipeline and dispatches its own effects <em>mid-frame</em> &mdash; screen-space global illumination, ambient occlusion, reflections, skylighting. It is the deepest reverse-engineering and graphics work I&rsquo;ve done, and the branch that becomes the substrate&rsquo;s spatial sense.</p>
+    <p class="lede">RAW &mdash; Rendering Advancement Workshop &mdash; is a real-time D3D11 rendering platform. In plain terms: a small piece of code slips in between a game and the graphics card and takes the wheel, then adds its own light and shadow while the picture is still being drawn &mdash; bounced light filling the scene (screen-space global illumination), soft shadows where surfaces meet (ambient occlusion), reflections, and a gentle sky-glow. It is the deepest take-it-apart-to-learn-how-it-works graphics work I&rsquo;ve done, and the branch that grows into the spatial sense of the larger work &mdash; the part that can see depth and space.</p>
     <p class="close">I learned this owning a frame that wasn&rsquo;t mine. I&rsquo;m turning it toward a visual engine that is.</p>
   </div>
   <div class="seal">RAW 1.0.0 &middot; C++23 &middot; HLSL &middot; D3D11 proxy + mid-frame dispatch</div>
@@ -32,14 +32,14 @@
 
 <section class="mv" id="what" aria-labelledby="what-h">
   <h2 id="what-h" class="reveal">You don&rsquo;t get the pipeline. So you take it.</h2>
-  <p class="body-text reveal">A closed real-time renderer hands you no seam to work in. RAW makes one: a <b>d3d11.dll proxy</b> wraps the Device, Context, and SwapChain, a <em>DSV-unbind heuristic</em> classifies the frame into nine render phases as it happens, and RAW injects its own work at <b>PostGeometry</b> &mdash; inside the live frame, not bolted on after it. That is the whole feat: ownership of a pipeline you were never given the source to, earned by reverse-engineering how it draws.</p>
-  <em class="close reveal">Phase detection, mid-frame dispatch, a depth pyramid rebuilt from the host&rsquo;s buffers &mdash; this is where I learned the reverse-engineering and memory discipline that runs under the rest of the work.</em>
+  <p class="body-text reveal">A closed game gives you no opening to work in &mdash; no door left ajar. So RAW makes one. A small stand-in file (a <b>d3d11.dll proxy</b>) wraps the three pieces a game uses to talk to the graphics card and quietly relays every message, so RAW can listen in. By watching for one tell-tale moment in how the picture gets built (a <em>DSV-unbind heuristic</em> &mdash; the instant the game lets go of the depth buffer), it sorts the work of a single frame into nine stages as they happen, and steps in right after the shapes are laid down but before the lighting is finished (<b>PostGeometry</b>) &mdash; inside the live picture, not painted over it afterward. That is the whole feat: taking the wheel of something you were never handed the keys to, earned by patiently figuring out how it draws.</p>
+  <em class="close reveal">Knowing which stage you&rsquo;re in, stepping in at the right instant, and rebuilding the game&rsquo;s own sense of depth from the numbers it left in memory &mdash; this is where I learned the take-it-apart care and the memory discipline that quietly runs under the rest of the work.</em>
 </section>
 
 <section class="proof" id="proof" aria-labelledby="proof-h">
   <div class="proof-head">
     <h2 id="proof-h" class="reveal">Real effects, real algorithms &mdash; <em>and the honest status of each.</em></h2>
-    <p class="body-text reveal">From the live engine. Named by the paper they implement, labeled by exactly how far along they are &mdash; functional, tuning, or still fighting artifacts.</p>
+    <p class="body-text reveal">Straight from the running engine. Each one is named after the research paper it comes from, and labeled by exactly how far along it is &mdash; working, still being tuned, or still fighting glitches I haven&rsquo;t solved yet.</p>
   </div>
 
   <div class="exhibit reveal">
@@ -51,22 +51,22 @@ Skylighting     screen-space hemisphere visibility     <span class="ok">function
 SSR             McGuire &amp; Mara 2014 Hi-Z march         <span class="bad">visible artifacts</span> &mdash; needs work
 SSGI            voxel cone tracing                     <span class="bad">green-tint issue</span> &mdash; rework
 Scene Compositor multi-effect blend + multi-bounce AO  <span class="ok">functional</span></pre>
-    <p class="artifact-cap">Screen-space GI, AO, reflections and skylighting, each implementing a named technique from the literature &mdash; and each carrying its real state, including the two that don&rsquo;t look right yet. <b>Proof before trust applies to my own renderer.</b></p>
-    <p class="artifact-note">Architecture: a <b>HiZ pyramid</b> (standard-to-reversed-Z with a mip chain), a <b>9-category weather system</b> that auto-modulates effect intensity, and a post chain (Karis+Jiménez bloom, an AgX color pipeline, auto-exposure) currently <em>in build, untested</em>. 17 further renderers &mdash; DoF, volumetrics, SSS, clouds, SDSM &mdash; are written and source-preserved but removed from the build pending individual polish. Stated plainly, not implied.</p>
+    <p class="artifact-cap">Bounced light, soft contact shadows, reflections and sky-glow &mdash; each one a named technique from the research, and each carrying its honest state, including the two that don&rsquo;t look right yet. <b>Show, don&rsquo;t ask to be trusted &mdash; that holds for my own renderer too.</b></p>
+    <p class="artifact-note">Under the hood: a <b>HiZ pyramid</b> &mdash; the same depth picture kept at many sizes, so the effects can ask &ldquo;what&rsquo;s in front of what?&rdquo; quickly &mdash; a <b>9-category weather system</b> that auto-modulates effect intensity (rain, fog, and the rest each turn the dials on their own), and a finishing pass over the image (Karis+Jiménez bloom, an AgX color pipeline, auto-exposure) currently <em>in build, untested</em>. 17 further renderers &mdash; DoF, volumetrics, SSS, clouds, SDSM &mdash; are written and source-preserved but removed from the build pending individual polish. I&rsquo;d rather tell you that plainly than let it be assumed.</p>
   </div>
 </section>
 
 <section class="mv" id="lineage" aria-labelledby="lineage-h">
   <h2 id="lineage-h" class="reveal">Two shapes: where it came from, where it&rsquo;s going.</h2>
-  <p class="body-text reveal"><b>The origin</b> was a full rendering platform &mdash; and where I forged a specific set of skills: reverse-engineering a closed pipeline, reading and re-deriving GPU memory and buffer state mid-frame, and the discipline of making an injected effect behave inside a frame it doesn&rsquo;t own. Those are the same instincts the witness and provenance work elsewhere here is built on; RAW is where I learned them the hard way.</p>
+  <p class="body-text reveal"><b>Where it came from</b> was a full rendering platform &mdash; and where I earned a particular set of skills the hard way: taking a closed game apart to learn how it draws, reading and rebuilding what the graphics card is holding in memory while the picture is still being made, and the patience it takes to make an effect you&rsquo;ve added behave nicely inside a picture it doesn&rsquo;t own. Those are the same instincts the witness and provenance work elsewhere on this site stands on. A witness here just means a small fingerprint of a thing &mdash; check it later and you know nothing was changed; provenance means you can always trace where something came from. RAW is where those instincts were forged.</p>
   <p class="pull reveal">I learned this owning a frame that wasn&rsquo;t mine. I&rsquo;m turning it toward a visual engine that is.</p>
-  <p class="body-text reveal"><b>The direction</b> is the substrate&rsquo;s spatial sense. Agentic tools are still mostly blind to live, spatial, rendered state &mdash; they reason over text and screenshots, not over the frame as it is being drawn. RAW is the branch I am pointing at that gap: native, real-time integration that lets a model perceive and reason about <em>spatial and live rendered state</em> the way the accountability organs let it perceive files and the web. The same lineage, given a new shape and a new purpose &mdash; and possibly its own line as it matures into the visual engine of the larger work.</p>
-  <p class="body-text reveal"><em>Status, honestly:</em> the rendering platform is in active development &mdash; core effects functional, two in repair, the post chain untested. The spatial-engine direction is frontier roadmap, not a shipped claim.</p>
+  <p class="body-text reveal"><b>Where it&rsquo;s going</b> is to become the spatial sense of the larger work &mdash; its feel for depth and space. Right now, AI tools that take actions on their own are mostly blind to a live 3D scene: they reason over words and flat screenshots, not over a picture as it&rsquo;s being drawn. RAW is the branch I&rsquo;m pointing straight at that blind spot &mdash; a way for an AI to actually see and reason about <em>a live, three-dimensional scene</em>, the same way the rest of my tools let it read files and the web. The same roots, given a new shape and a new purpose &mdash; and maybe, as it grows up, a life of its own as the eyes of the whole project.</p>
+  <p class="body-text reveal"><em>Where it honestly stands:</em> the rendering platform is still being built &mdash; the core effects work, two are in repair, the finishing pass is untested. The seeing-in-3D direction is a road I&rsquo;m on, not a thing I&rsquo;m claiming is done.</p>
 </section>
 
 <section class="mv" id="repo" aria-labelledby="repo-h">
   <h2 id="repo-h" class="reveal">It&rsquo;s public. Read the renderer.</h2>
-  <p class="body-text reveal">C++23 and HLSL, MIT-licensed. Proxy-DLL architecture, the phase detector, the effect set, and every shader on disk &mdash; the real source, with its real edges.</p>
+  <p class="body-text reveal">Written in C++23 and HLSL, free for anyone to use (MIT-licensed). The stand-in file that takes the wheel, the part that knows which stage of the picture it&rsquo;s in, the whole set of effects, and every shader sitting on disk &mdash; the real source, rough edges and all.</p>
   <div class="channels reveal">
     <span class="g">GitHub</span> &mdash; <a href="https://github.com/HarperZ9/raw">HarperZ9/raw</a>
     &nbsp;&middot;&nbsp;
@@ -79,7 +79,7 @@ Scene Compositor multi-effect blend + multi-bounce AO  <span class="ok">function
 </main>
 
 <footer class="footer-seal" role="contentinfo">
-  <p class="seal">Pipeline ownership, mid-frame &mdash; the reverse-engineering origin, and the substrate&rsquo;s spatial sense to come.</p>
+  <p class="seal">Taking the wheel mid-picture &mdash; where the take-it-apart skills were forged, and the project&rsquo;s feel for depth and space, still to come.</p>
 </footer>
 
 <script src="system/hero.js?v=20260622" defer></script>
