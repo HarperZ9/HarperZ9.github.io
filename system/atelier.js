@@ -2383,7 +2383,7 @@
   }
 
   // expose for reuse (e.g. the deck title card) and self-boot
-  window.Atelier = { STUDIES: STUDIES, SPECIMENS: SPECIMENS, PALETTES: PALETTES, makeRng: makeRng, makePalette: makePalette, loadField: loadField, buildField: buildField, lumFromSource: lumFromSource, drawStrokes: drawStrokes, toSVG: toSVG, optimizeForPlot: optimizeForPlot, plotSVG: plotSVG, hashOpt: hashOpt };
+  window.Atelier = { STUDIES: STUDIES, SPECIMENS: SPECIMENS, PALETTES: PALETTES, makeRng: makeRng, makePalette: makePalette, loadField: loadField, buildField: buildField, lumFromSource: lumFromSource, drawStrokes: drawStrokes, paintRich: paintRich, defParams: defParams, studyParams: studyParams, parseParamStr: parseParamStr, toSVG: toSVG, optimizeForPlot: optimizeForPlot, plotSVG: plotSVG, hashOpt: hashOpt };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 })();

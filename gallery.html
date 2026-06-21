@@ -35,7 +35,30 @@
   .g-engine{border-top:1px solid var(--hairline);background:var(--void-opaque);padding:var(--section-pad) clamp(2.4rem,5.5vw,5rem)}
   .g-engine h2{max-width:18ch}
   .g-engine .body-text{max-width:60ch}
-  @media(max-width:560px){ .g-cols{columns:1} }
+  /* the live engine */
+  .engine-live{max-width:1000px;margin:0 auto clamp(2.6rem,6vw,4.5rem);padding:0 clamp(1.4rem,4vw,3rem)}
+  .el-h{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:600;font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.12;letter-spacing:-.01em;color:var(--bone);text-align:center;text-wrap:balance;margin-bottom:1rem}
+  .el-lede{font-size:clamp(1.02rem,1.3vw,1.18rem);line-height:1.62;color:var(--bone);opacity:.9;max-width:60ch;margin:0 auto 1.6rem;text-align:center}
+  .el-lede b{color:var(--ember);font-weight:500}
+  #endless-canvas{display:block;width:100%;aspect-ratio:1/1;max-height:76vh;margin:0 auto;border-radius:7px;background:#070f0e;border:1px solid var(--hairline);transition:opacity .5s ease,transform .25s ease;cursor:crosshair;touch-action:none;will-change:transform}
+  .engine-readout{font-family:"Spline Sans Mono",monospace;font-size:.72rem;letter-spacing:.04em;color:var(--muted);margin:1rem .2rem .2rem;text-align:center}
+  .engine-readout b{color:var(--ember);font-weight:400} .engine-readout .es{color:var(--orange)}
+  .engine-tools{margin:.5rem auto 0;max-width:780px}
+  .etool-row{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;justify-content:center;margin:.55rem 0}
+  .etool-chip,.etool-btn{font-family:"Spline Sans Mono",monospace;font-size:.63rem;letter-spacing:.07em;color:var(--bone);background:rgba(13,27,28,.55);border:1px solid var(--hairline);border-radius:3px;padding:.34rem .62rem;cursor:pointer;transition:color .18s,border-color .18s,background .18s}
+  .etool-chip:hover,.etool-btn:hover{color:var(--orange);border-color:var(--orange)}
+  .etool-chip[aria-pressed="true"]{color:var(--void);background:var(--ember);border-color:var(--ember)}
+  .etool-ctrls{gap:1rem}
+  .etool-pals{display:flex;gap:.32rem}
+  .etool-sw{width:1.45rem;height:1.45rem;border-radius:50%;border:1px solid var(--hairline);cursor:pointer;padding:0;transition:transform .15s,box-shadow .15s,border-color .15s}
+  .etool-sw:hover{transform:scale(1.15)} .etool-sw.on{border-color:var(--bone);box-shadow:0 0 0 2px var(--ember)}
+  .etool-wild{display:flex;align-items:center;gap:.45rem;font-family:"Spline Sans Mono",monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .etool-range{accent-color:var(--orange);width:88px;cursor:pointer}
+  .etool-actions{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center}
+  .etool-auto{min-width:5.7rem}
+  .engine-witness{font-family:"Spline Sans Mono",monospace;font-size:.66rem;letter-spacing:.03em;color:var(--muted);text-align:center;margin:.9rem .2rem 0;min-height:1.3em}
+  .engine-witness .ew{color:var(--ember)} .engine-witness .es{color:var(--orange)}
+  @media(max-width:560px){ .g-cols{columns:1} .etool-ctrls{flex-direction:column;gap:.7rem} .el-lede{text-align:left} }
 </style>
 </head>
 <body>
@@ -49,8 +72,19 @@
     </p>
     <p class="eyebrow">PHOTOGRAPHY BY IAMBETA</p>
     <h1>The living world, up close.</h1>
-    <p class="lede">Every algorithm in the atelier is modeled on something real &mdash; a spiral, a vein, the way a seed packs itself in. These are the originals: macro photographs by <a href="https://bsky.app/profile/iambeta.bsky.social">iamBeTa</a>, whose eye on the small living world is where all of this started. Look closely &mdash; then, on the ones the engine knows, let it read the photograph back to you as a drawing.</p>
+    <p class="lede">Every algorithm in the atelier is modeled on something real &mdash; a spiral, a vein, the way a seed packs itself in. These are the originals: macro photographs by <a href="https://bsky.app/profile/iambeta.bsky.social">iamBeTa</a>, whose eye on the small living world is where all of this started. Look closely &mdash; then watch the engine just below read them back to you, live, as drawings that never settle the same way twice.</p>
   </header>
+
+  <section class="engine-live" id="engine-live" aria-label="The engine, live and endless">
+    <p class="eyebrow" style="text-align:center;margin-bottom:1rem">THE ENGINE &middot; LIVE &amp; ENDLESS</p>
+    <h2 class="el-h">It doesn&rsquo;t sit still. <span style="color:var(--orange)">Watch it draw.</span></h2>
+    <p class="el-lede">The same engine the rest of the site is about, plugged straight in &mdash; reading her photographs and drawing them through one organ after another, never the same way twice. Leave it be and it drifts on its own; or take the little tools below and steer it &mdash; pick an organ, swap the palette, turn it wild. And because it&rsquo;s <em>our</em> engine, every drawing it makes can be <b>witnessed</b> (fingerprinted, re-derivable) and pulled down as a pen-plot.</p>
+    <canvas id="endless-canvas" width="900" height="900" aria-label="A live algorithmic drawing that redraws itself endlessly"></canvas>
+    <div class="engine-readout" id="engine-readout"></div>
+    <div class="engine-tools" id="engine-tools"></div>
+    <div class="engine-witness" id="engine-witness">◉ witness &mdash; fingerprint this exact drawing, re-derivable from its seed</div>
+    <noscript><p class="el-lede" style="text-align:center">The engine runs live in your browser &mdash; it needs JavaScript on. The frames below are held from the same engine.</p></noscript>
+  </section>
 
   <section class="g-wrap" id="gallery" aria-label="Macro photographs by iamBeTa">
     <div class="g-cols">
@@ -130,9 +164,9 @@
   </section>
 
   <section class="g-engine" aria-labelledby="g-engine-h">
-    <h2 id="g-engine-h">And the engine on top.</h2>
-    <p class="body-text">On four of these, you can watch the atelier read the photograph the way a person learns to look &mdash; it sees the light, the edges, the way the structure flows &mdash; and then draws something new along those lines. Her photograph becomes the field; the algorithm becomes the pen. Nothing is guessed: the drawing is deterministic from a stated seed, and it carries a witness of its own geometry, so you can re-derive it instead of trust it.</p>
-    <p class="channels"><span class="g">Go further</span> &mdash; <a href="atelier.html">open the atelier</a> &nbsp;&middot;&nbsp; <a href="index.html">back to the start</a></p>
+    <h2 id="g-engine-h">The engine up at the top is the live one.</h2>
+    <p class="body-text">It reads these photographs the way a person learns to look &mdash; the light, the edges, the way the structure flows &mdash; and draws something new along those lines, organ after organ, never settling the same way twice. Her photograph becomes the field; the algorithm becomes the pen. Nothing is guessed: each drawing is deterministic from a stated seed and carries a witness of its own geometry, so you can re-derive it instead of trusting it &mdash; press <b>witness</b> and watch it prove itself. The four pairs above are just frames held still from the same engine.</p>
+    <p class="channels"><span class="g">Go further</span> &mdash; <a href="atelier.html">open the full atelier</a> &nbsp;&middot;&nbsp; <a href="index.html">back to the start</a></p>
   </section>
 
   <footer class="footer-seal" role="contentinfo">
@@ -140,5 +174,9 @@
   </footer>
 
 </main>
+
+<script src="system/spine.js" defer></script>
+<script src="system/atelier.js?v=20260621t" defer></script>
+<script src="system/endless.js?v=20260621t" defer></script>
 </body>
 </html>
