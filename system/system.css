@@ -553,3 +553,8 @@ body.world-3 .bar .rt{color:#cdd6cf}
    ship a clipped label. The landing has no `.rt`; it is unaffected. (Reversible:
    to restore the tag instead, relocate it out of the switcher's corner.) */
 .bar .rt{display:none}
+
+/* the footer closing wraps wide now; reserve the bottom-right column so it never
+   runs under the fixed #hud witness glyph. HUD is a roughly constant ~120px and
+   is hidden under 601px, so a desktop-only right-pad clears it robustly. */
+@media (min-width:601px){ .footer-seal .seal{ padding-right:8.5rem } }
