@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The argument — a presentation · Zain Dana Harper</title>
-<meta name="description" content="The whole argument in seven steps, as a linear deck for live meetings: the seam, the evidence, the move, the system, the convergence, and the standing invitation. Nothing carries its own warrant.">
+<meta name="description" content="The whole argument in six steps, as a linear deck for live meetings: the seam, the evidence, the move, the system, the convergence, and the standing invitation. Nothing carries its own warrant.">
 <link rel="canonical" href="https://harperz9.github.io/presentation.html">
 <meta name="color-scheme" content="dark">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -70,6 +71,23 @@
   #deck-hint{position:fixed;bottom:clamp(1.4rem,3vw,2.4rem);left:clamp(1.8rem,4vw,3rem);z-index:30;
     font-family:"Spline Sans Mono",monospace;font-size:.6rem;letter-spacing:.14em;color:var(--muted);opacity:.6}
   @media(max-width:680px){#deck-hint{display:none}}
+  /* intentional build-in: each slide's content settles when it becomes active.
+     Content is fully visible by default; the effect is added only when JS arms it
+     (body.deck-armed) and motion is allowed, so it can never ship a blank slide. */
+  @media(prefers-reduced-motion:no-preference){
+    body.deck-armed .slide>*{opacity:0;transform:translateY(22px);
+      transition:opacity .72s cubic-bezier(.22,.61,.18,1),transform .72s cubic-bezier(.22,.61,.18,1)}
+    body.deck-armed .slide.in>*{opacity:1;transform:none}
+    body.deck-armed .slide.in>*:nth-child(2){transition-delay:.07s}
+    body.deck-armed .slide.in>*:nth-child(3){transition-delay:.14s}
+    body.deck-armed .slide.in>*:nth-child(4){transition-delay:.21s}
+    body.deck-armed .slide.in>*:nth-child(5){transition-delay:.28s}
+    body.deck-armed .slide.in>*:nth-child(6){transition-delay:.35s}
+  }
+  /* keyboard focus — visible ring only for keyboard users */
+  .slide .links a:focus-visible{outline:2px solid var(--orange);outline-offset:3px;border-radius:2px;color:var(--orange)}
+  #deck-exit:focus-visible{outline:2px solid var(--orange);outline-offset:4px;color:var(--orange)}
+  .deck-scroll:focus,.deck-scroll:focus-visible{outline:none}
   @media(prefers-reduced-motion:reduce){.deck-scroll{scroll-behavior:auto}#deck-bar{transition:none}}
 </style>
 </head>
@@ -82,7 +100,7 @@
 <div class="deck-scroll" id="scroll" tabindex="0">
 
   <section class="slide title" aria-label="Title">
-    <p class="title-mark">A presentation &middot; the argument in seven steps</p>
+    <p class="title-mark">A presentation &middot; the argument in six steps</p>
     <h2>Nothing carries its own <span class="g">warrant.</span></h2>
     <p class="sub">Verified is not the same as trustworthy. A philosophy, five sector investigations, a verdict algebra, and a working tool &mdash; all converging on one seam.</p>
     <p class="title-foot"><span class="g">Zain Dana Harper</span> &middot; Seattle &middot; 2026<br>Use &larr; &rarr; or space to move through the argument.</p>
@@ -165,19 +183,27 @@
     } else if(e.key==='Home'){ e.preventDefault(); go(0); }
     else if(e.key==='End'){ e.preventDefault(); go(slides.length-1); }
   });
-  // keep idx in sync with manual scroll / swipe
+  // intentional build-in: arm only when motion is allowed; content stays visible otherwise
+  var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  if(!reduce){ document.body.classList.add('deck-armed'); }
+  // keep idx in sync with manual scroll / swipe, and settle each slide as it lands
   if('IntersectionObserver' in window){
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(en){
         if(en.isIntersecting){
+          en.target.classList.add('in');
           var i = slides.indexOf(en.target);
           if(i>=0){ idx = i; setProgress(); }
         }
       });
     }, {threshold:0.55});
     slides.forEach(function(s){ io.observe(s); });
+  } else {
+    slides.forEach(function(s){ s.classList.add('in'); });
   }
-  scroller.focus();
+  // prime the cover so it builds in on first paint
+  if(!reduce){ requestAnimationFrame(function(){ slides[0].classList.add('in'); }); }
+  scroller.focus({preventScroll:true});
   setProgress();
 })();
 </script>
