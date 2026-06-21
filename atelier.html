@@ -26,6 +26,9 @@
   .at-seedtag{position:absolute;right:.65rem;top:.6rem;font-family:"Spline Sans Mono",monospace;
     font-size:.55rem;letter-spacing:.1em;color:var(--ember);background:rgba(6,14,13,.55);
     padding:.32em .56em;border-radius:2px;pointer-events:none}
+  .at-sense{position:absolute;right:.6rem;bottom:2.15rem;width:30%;max-width:148px;aspect-ratio:144/108;
+    border:1px solid rgba(239,171,48,.42);border-radius:2px;display:none;image-rendering:pixelated;
+    background:#060f0e;box-shadow:0 0 16px rgba(0,0,0,.6)}
   .at-panel{display:flex;flex-direction:column;gap:1.05rem}
   .at-glab{font-family:"Spline Sans Mono",monospace;font-size:.55rem;letter-spacing:.2em;
     text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;display:block}
@@ -125,10 +128,12 @@
 <section class="mv" id="instrument" aria-labelledby="at-h">
   <h2 id="at-h" class="reveal">The instrument.</h2>
   <p class="body-text reveal">Pick an algorithm and a specimen. The photograph is read as a field of light &mdash; the algorithm bends to it, so the snail&rsquo;s whorl or the mallow&rsquo;s veins surface in the strokes. Drag the complexity, draw a new seed, change the pens. When you find one you like, export it. It comes out as a clean plot file &mdash; touching strokes stitched into continuous pen paths, ordered to lift the pen as little as possible and grouped by pen, then stamped with a witness hash: the exact file re-derives from its seed, and says in its own metadata what it optimised. And export isn&rsquo;t a download button &mdash; it&rsquo;s the <em>act</em> in a loop: a default-deny gate confirms the drawing has settled before it lets the file be written, then the witness stamps it. <b>Perceive &rarr; gate &rarr; act &rarr; witness</b>, on the instrument&rsquo;s own output.</p>
+  <p class="body-text reveal">Or open the input entirely: <b>&uarr; Upload</b> your own photograph, or pick <b>Live &middot; camera</b> and the instrument senses through your webcam in real time &mdash; measured luminance, Sobel edges, and motion, <em>no model, nothing inferred</em> &mdash; particles streaming along what it sees. Live perception isn&rsquo;t reproducible, so <b>Capture</b> freezes the sensed field into a deterministic, witnessed specimen you can draw and export. <b>Field</b> shows the raw field the organ perceives, beside the art &mdash; ground-truth, not a black box.</p>
 
   <div class="atelier reveal" id="atelier">
     <div class="at-stage">
       <canvas id="at-canvas" role="img" aria-label="Generated algorithmic drawing"></canvas>
+      <canvas id="at-sense" class="at-sense" aria-hidden="true"></canvas>
       <div class="at-seedtag" id="at-seedtag">seed &middot; &mdash;</div>
       <div class="at-status" id="at-status">initialising&hellip;</div>
     </div>
@@ -159,7 +164,10 @@
       <div class="at-actions">
         <button class="btn" id="at-draw" type="button">Draw</button>
         <button class="btn ghost" id="at-export" type="button">Export SVG</button>
+        <button class="btn ghost" id="at-capture" type="button">Capture</button>
+        <button class="at-mini" id="at-overlay" type="button" aria-pressed="false" title="Show the field the camera senses">Field</button>
       </div>
+      <input type="file" id="at-img" accept="image/*" hidden>
       <div class="at-gate" id="at-gate" aria-live="polite"></div>
       <p class="at-blurb" id="at-blurb"></p>
     </div>

@@ -95,51 +95,53 @@
     return { vnoise: vnoise, fbm: fbm };
   }
 
-  // ── photo field: luminance + gradient + edge-importance sampling ────────────
+  // ── field builder: luminance + gradient + edge-importance sampling ──────────
+  // Shared by photo-load, user-upload, and live-camera capture — any luminance
+  // grid becomes the same field interface the algorithms consume.
+  function buildField(lum, S) {
+    var cdf = new Float32Array(S * S), acc = 0;
+    for (var y = 0; y < S; y++) for (var x = 0; x < S; x++) {
+      var xl = x > 0 ? x - 1 : 0, xr = x < S - 1 ? x + 1 : S - 1;
+      var yt = y > 0 ? y - 1 : 0, yb = y < S - 1 ? y + 1 : S - 1;
+      var gx = lum[y * S + xr] - lum[y * S + xl], gy = lum[yb * S + x] - lum[yt * S + x];
+      acc += Math.sqrt(gx * gx + gy * gy) + 0.0025; cdf[y * S + x] = acc;
+    }
+    var total = acc;
+    function bil(map, x, y) {
+      var fx = clamp(x, 0, 0.999999) * (S - 1), fy = clamp(y, 0, 0.999999) * (S - 1);
+      var x0 = Math.floor(fx), y0 = Math.floor(fy), x1 = Math.min(S - 1, x0 + 1), y1 = Math.min(S - 1, y0 + 1);
+      var tx = fx - x0, ty = fy - y0;
+      var a = map[y0 * S + x0], b = map[y0 * S + x1], cc = map[y1 * S + x0], d = map[y1 * S + x1];
+      return (a * (1 - tx) + b * tx) * (1 - ty) + (cc * (1 - tx) + d * tx) * ty;
+    }
+    function sIdx(u) { var lo = 0, hi = S * S - 1, target = u * total; while (lo < hi) { var mid = (lo + hi) >> 1; if (cdf[mid] < target) lo = mid + 1; else hi = mid; } return lo; }
+    return {
+      size: S,
+      lum: function (x, y) { return bil(lum, x, y); },
+      grad: function (x, y) { var e = 1.5 / S; return [bil(lum, x + e, y) - bil(lum, x - e, y), bil(lum, x, y + e) - bil(lum, x, y - e)]; },
+      sampleEdge: function (rng) { var idx = sIdx(rng()); return [((idx % S) + rng()) / S, (((idx / S) | 0) + rng()) / S]; }
+    };
+  }
+  // luminance grid from any drawable source (Image / video / canvas), cover-fit into SxS
+  function lumFromSource(src, iw, ih, S) {
+    var c = document.createElement("canvas"); c.width = S; c.height = S;
+    var g = c.getContext("2d", { willReadFrequently: true });
+    var sc = Math.max(S / iw, S / ih), dw = iw * sc, dh = ih * sc;
+    g.drawImage(src, (S - dw) / 2, (S - dh) / 2, dw, dh);
+    var data;
+    try { data = g.getImageData(0, 0, S, S).data; } catch (e) { return null; }
+    var lum = new Float32Array(S * S);
+    for (var i = 0; i < S * S; i++) lum[i] = (0.299 * data[i * 4] + 0.587 * data[i * 4 + 1] + 0.114 * data[i * 4 + 2]) / 255;
+    return lum;
+  }
   var FIELD_CACHE = {};
   function loadField(src, cb) {
     if (FIELD_CACHE[src]) { cb(FIELD_CACHE[src]); return; }
     var img = new Image();
     img.onload = function () {
-      var S = 220;
-      var c = document.createElement("canvas"); c.width = S; c.height = S;
-      var g = c.getContext("2d", { willReadFrequently: true });
-      var iw = img.naturalWidth, ih = img.naturalHeight;
-      var sc = Math.max(S / iw, S / ih), dw = iw * sc, dh = ih * sc;
-      g.drawImage(img, (S - dw) / 2, (S - dh) / 2, dw, dh);
-      var data;
-      try { data = g.getImageData(0, 0, S, S).data; } catch (e) { cb(null); return; }
-      var lum = new Float32Array(S * S);
-      for (var i = 0; i < S * S; i++) {
-        lum[i] = (0.299 * data[i * 4] + 0.587 * data[i * 4 + 1] + 0.114 * data[i * 4 + 2]) / 255;
-      }
-      var cdf = new Float32Array(S * S), acc = 0;
-      for (var y = 0; y < S; y++) for (var x = 0; x < S; x++) {
-        var xl = x > 0 ? x - 1 : 0, xr = x < S - 1 ? x + 1 : S - 1;
-        var yt = y > 0 ? y - 1 : 0, yb = y < S - 1 ? y + 1 : S - 1;
-        var gx = lum[y * S + xr] - lum[y * S + xl], gy = lum[yb * S + x] - lum[yt * S + x];
-        acc += Math.sqrt(gx * gx + gy * gy) + 0.0025; // +eps: flat regions still draw a few
-        cdf[y * S + x] = acc;
-      }
-      var total = acc;
-      function bil(map, x, y) {
-        var fx = clamp(x, 0, 0.999999) * (S - 1), fy = clamp(y, 0, 0.999999) * (S - 1);
-        var x0 = Math.floor(fx), y0 = Math.floor(fy), x1 = Math.min(S - 1, x0 + 1), y1 = Math.min(S - 1, y0 + 1);
-        var tx = fx - x0, ty = fy - y0;
-        var a = map[y0 * S + x0], b = map[y0 * S + x1], cc = map[y1 * S + x0], d = map[y1 * S + x1];
-        return (a * (1 - tx) + b * tx) * (1 - ty) + (cc * (1 - tx) + d * tx) * ty;
-      }
-      function sIdx(u) {
-        var lo = 0, hi = S * S - 1, target = u * total;
-        while (lo < hi) { var mid = (lo + hi) >> 1; if (cdf[mid] < target) lo = mid + 1; else hi = mid; }
-        return lo;
-      }
-      var field = {
-        size: S,
-        lum: function (x, y) { return bil(lum, x, y); },
-        grad: function (x, y) { var e = 1.5 / S; return [bil(lum, x + e, y) - bil(lum, x - e, y), bil(lum, x, y + e) - bil(lum, x, y - e)]; },
-        sampleEdge: function (rng) { var idx = sIdx(rng()); return [((idx % S) + rng()) / S, (((idx / S) | 0) + rng()) / S]; }
-      };
+      var lum = lumFromSource(img, img.naturalWidth, img.naturalHeight, 220);
+      if (!lum) { cb(null); return; }
+      var field = buildField(lum, 220);
       FIELD_CACHE[src] = field;
       cb(field);
     };
@@ -477,7 +479,9 @@
     { id: "venation", label: "Venation", build: buildVenation,
       blurb: "Veins grow from the centre toward scattered sources, thickening with their load &mdash; the model botanists use for real leaf-veins. <span class='sp'>The mallow</span> places the sources." },
     { id: "reaction", label: "Reaction&ndash;diffusion", build: buildReaction,
-      blurb: "Gray&ndash;Scott: two chemicals feed, react and decay until <b>Turing patterns</b> set &mdash; spots, mazes, coral &mdash; drawn here as contour lines. The photograph&rsquo;s light decides which pattern forms where. <span class='sp'>Watch it</span> react. <span class='sp'>The katydids&rsquo;</span> speckle, as mathematics." }
+      blurb: "Gray&ndash;Scott: two chemicals feed, react and decay until <b>Turing patterns</b> set &mdash; spots, mazes, coral &mdash; drawn here as contour lines. The photograph&rsquo;s light decides which pattern forms where. <span class='sp'>Watch it</span> react. <span class='sp'>The katydids&rsquo;</span> speckle, as mathematics." },
+    { id: "live", label: "Live &middot; camera", build: null,
+      blurb: "The camera as a real organ &mdash; particles stream along the edges it senses, live." }
   ];
   var SPECIMENS = [
     { id: "none", label: "Pure math", src: null },
@@ -705,12 +709,12 @@
       box.innerHTML = "";
       items.forEach(function (it) {
         var b = document.createElement("button");
-        b.type = "button"; b.className = "at-chip"; b.textContent = it.label;
+        b.type = "button"; b.className = "at-chip"; b.innerHTML = it.label;
         b.setAttribute("data-id", it.id);
         b.setAttribute("aria-pressed", String(getActive() === it.id));
         b.addEventListener("click", function () {
           onPick(it.id);
-          Array.prototype.forEach.call(box.children, function (c) { c.setAttribute("aria-pressed", String(c.getAttribute("data-id") === it.id)); });
+          Array.prototype.forEach.call(box.children, function (c) { c.setAttribute("aria-pressed", String(c.getAttribute("data-id") === getActive())); });
         });
         box.appendChild(b);
       });
@@ -728,6 +732,9 @@
     function render() {
       drawToken++; var myToken = drawToken; settled = false;
       if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+      if (state.study === "live") { startLive(); return; } // the senses organ: live camera, its own loop
+      stopLive();
+      if (gateEl) gateEl.innerHTML = ""; // the export-gate readout is about the last export, not this fresh drawing
       var dims = sizeCanvas(), W = dims[0], H = dims[1];
       var st = studyById(state.study);
       var pal = makePalette(PALETTES[state.palette] || PALETTES.spectrum);
@@ -783,7 +790,8 @@
         }
       }
 
-      if (spec.src) { status("reading specimen…"); loadField(spec.src, function (field) { if (myToken === drawToken) go(field); }); }
+      if (dynamicFields[state.specimen]) { go(dynamicFields[state.specimen]); }
+      else if (spec.src) { status("reading specimen…"); loadField(spec.src, function (field) { if (myToken === drawToken) go(field); }); }
       else go(null);
     }
 
@@ -931,9 +939,134 @@
       reader.readAsText(file);
     }
 
+    // ── SENSES: live camera perception — measured ground-truth, no models ──────
+    // Each frame is read as luminance + Sobel edges + motion; particles stream
+    // ALONG what the camera sees. Live perception is not reproducible (the world
+    // isn't), so "Capture" freezes the sensed field into a deterministic,
+    // witnessed specimen — bridging real sensing to the accountable pipeline.
+    var dynamicFields = {}; // upload / captured fields, drawn like any specimen
+    var SW = 144, SH = 108;
+    var live = { tok: 0, active: false, stream: null, video: null, dg: null, raf: 0, lum: null, prev: null, edge: null, eang: null, motion: null, parts: null, overlay: false, energy: 0 };
+    var senseCv = null, senseCtx = null;
+
+    function stopLive() {
+      live.active = false; live.tok++;
+      if (live.raf) { cancelAnimationFrame(live.raf); live.raf = 0; }
+      if (live.stream) { live.stream.getTracks().forEach(function (t) { try { t.stop(); } catch (e) { } }); live.stream = null; }
+      live.video = null;
+      if (senseCv) senseCv.style.display = "none";
+    }
+    function startLive() {
+      if (live.active) return; // palette/specimen changes shouldn't restart the camera
+      live.active = true; var myTok = ++live.tok;
+      var dims = sizeCanvas(), W = dims[0], H = dims[1];
+      ctx.clearRect(0, 0, W, H);
+      if (seedtagEl) seedtagEl.innerHTML = "live &middot; camera";
+      status("waking the camera…");
+      gateMsg("needs-human", "live perception &mdash; capture a frame to make it accountable");
+      if (blurbEl) blurbEl.innerHTML = "<b>The senses.</b> The camera is a real organ: each frame is read as luminance and Sobel edges, and particles stream <span class='sp'>along</span> what it sees &mdash; measured ground-truth, no model, nothing inferred. Move, and the drawing moves. Hit <b>Capture</b> to freeze the sensed field into a deterministic, witnessed specimen.";
+      var n = SW * SH;
+      live.lum = new Float32Array(n); live.prev = new Float32Array(n); live.edge = new Float32Array(n); live.eang = new Float32Array(n); live.motion = new Float32Array(n);
+      var dc = document.createElement("canvas"); dc.width = SW; dc.height = SH;
+      live.dg = dc.getContext("2d", { willReadFrequently: true });
+      var PN = 1700; live.parts = new Float32Array(PN * 4);
+      for (var i = 0; i < PN; i++) { live.parts[i * 4] = Math.random(); live.parts[i * 4 + 1] = Math.random(); live.parts[i * 4 + 2] = Math.random() * 60; live.parts[i * 4 + 3] = Math.random(); }
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { status("no camera API here"); gateMsg("deny", "this browser has no camera API"); return; }
+      var v = document.createElement("video"); v.muted = true; v.setAttribute("playsinline", ""); live.video = v;
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: 640, height: 480 }, audio: false }).then(function (stream) {
+        if (myTok !== live.tok) { stream.getTracks().forEach(function (t) { t.stop(); }); return; }
+        live.stream = stream; v.srcObject = stream; var pp = v.play(); if (pp && pp.catch) pp.catch(function () { });
+        status("sensing · live");
+        function frame() {
+          if (myTok !== live.tok) return;
+          if (v.videoWidth) { sense(v); advectDraw(W, H); if (live.overlay) drawOverlay(); }
+          live.raf = requestAnimationFrame(frame);
+        }
+        live.raf = requestAnimationFrame(frame);
+      }).catch(function (err) {
+        status("camera blocked: " + (err && err.name ? err.name : "error"));
+        gateMsg("deny", "no camera access &mdash; sensing needs permission");
+      });
+    }
+    function sense(v) {
+      var dg = live.dg, lum = live.lum, prev = live.prev, edge = live.edge, eang = live.eang, motion = live.motion, n = SW * SH;
+      dg.save(); dg.translate(SW, 0); dg.scale(-1, 1); // mirror, selfie-style
+      var vr = v.videoWidth / v.videoHeight, gr = SW / SH, dw, dh, dx, dy;
+      if (vr > gr) { dh = SH; dw = dh * vr; dx = (SW - dw) / 2; dy = 0; } else { dw = SW; dh = dw / vr; dx = 0; dy = (SH - dh) / 2; }
+      dg.drawImage(v, dx, dy, dw, dh); dg.restore();
+      var d; try { d = dg.getImageData(0, 0, SW, SH).data; } catch (e) { return; }
+      var en = 0;
+      for (var i = 0; i < n; i++) { prev[i] = lum[i]; lum[i] = (0.299 * d[i * 4] + 0.587 * d[i * 4 + 1] + 0.114 * d[i * 4 + 2]) / 255; }
+      for (var y = 0; y < SH; y++) for (var x = 0; x < SW; x++) {
+        var i2 = y * SW + x, xm = x > 0 ? x - 1 : x, xp = x < SW - 1 ? x + 1 : x, ym = y > 0 ? y - 1 : y, yp = y < SH - 1 ? y + 1 : y;
+        var gx = lum[y * SW + xp] - lum[y * SW + xm], gy = lum[yp * SW + x] - lum[ym * SW + x];
+        edge[i2] = Math.min(1, Math.hypot(gx, gy) * 2.2); eang[i2] = Math.atan2(gy, gx);
+        var m = Math.abs(lum[i2] - prev[i2]); motion[i2] = Math.min(1, m * 7); en += m;
+      }
+      live.energy = en / n;
+    }
+    function sAng(fx, fy) { var gx = clamp(fx, 0, 0.999) * (SW - 1), gy = clamp(fy, 0, 0.999) * (SH - 1); return live.eang[(gy | 0) * SW + (gx | 0)] + Math.PI / 2; }
+    function sEdge(fx, fy) { var gx = clamp(fx, 0, 0.999) * (SW - 1), gy = clamp(fy, 0, 0.999) * (SH - 1); return live.edge[(gy | 0) * SW + (gx | 0)]; }
+    function advectDraw(W, H) {
+      var pal = makePalette(PALETTES[state.palette] || PALETTES.spectrum);
+      ctx.globalAlpha = 1; ctx.fillStyle = "rgba(8,18,17,0.15)"; ctx.fillRect(0, 0, W, H); // gentle fade
+      var parts = live.parts, PN = parts.length / 4, step = (0.0040 + live.energy * 0.03) * (W / 600);
+      ctx.lineCap = "round"; ctx.lineWidth = Math.max(0.6, W / 720);
+      for (var i = 0; i < PN; i++) {
+        var x = parts[i * 4], y = parts[i * 4 + 1], life = parts[i * 4 + 2] - 1;
+        var e = sEdge(x, y), a = sAng(x, y);
+        var nx = x + Math.cos(a) * step * (0.35 + e), ny = y + Math.sin(a) * step * (0.35 + e);
+        if (life <= 0 || nx < 0 || nx > 1 || ny < 0 || ny > 1) { nx = Math.random(); ny = Math.random(); life = 40 + Math.random() * 55; }
+        else {
+          ctx.strokeStyle = pal.sample(clamp(e * 1.4, 0, 1)); ctx.globalAlpha = 0.1 + 0.6 * e;
+          ctx.beginPath(); ctx.moveTo(x * W, y * H); ctx.lineTo(nx * W, ny * H); ctx.stroke();
+        }
+        parts[i * 4] = nx; parts[i * 4 + 1] = ny; parts[i * 4 + 2] = life;
+      }
+      ctx.globalAlpha = 1;
+    }
+    function drawOverlay() {
+      if (!senseCv) return; senseCv.style.display = "block";
+      if (senseCv.width !== SW) { senseCv.width = SW; senseCv.height = SH; }
+      var img = senseCtx.createImageData(SW, SH), dd = img.data;
+      for (var i = 0; i < SW * SH; i++) { var e = live.edge[i], m = live.motion[i]; dd[i * 4] = 255 * e; dd[i * 4 + 1] = 200 * e; dd[i * 4 + 2] = 255 * m; dd[i * 4 + 3] = 235; }
+      senseCtx.putImageData(img, 0, 0);
+    }
+    function captureFrame() {
+      if (!live.active || !live.lum) { status("start the camera first"); return; }
+      var FS = 132, lum = new Float32Array(FS * FS);
+      for (var y = 0; y < FS; y++) for (var x = 0; x < FS; x++) { var sx = (x / (FS - 1)) * (SW - 1), sy = (y / (FS - 1)) * (SH - 1); lum[y * FS + x] = live.lum[(sy | 0) * SW + (sx | 0)]; }
+      dynamicFields["captured"] = buildField(lum, FS);
+      var h = 2166136261; for (var k = 0; k < lum.length; k++) { h ^= (lum[k] * 255) | 0; h = Math.imul(h, 16777619); }
+      var seed = ("0000000" + (h >>> 0).toString(16)).slice(-6);
+      stopLive();
+      state.study = "flow"; state.specimen = "captured"; state.seed = seed;
+      syncControls(); render();
+      status("captured · frozen to a witnessed specimen");
+    }
+    function handleUpload(file) {
+      if (!file || !/^image\//.test(file.type)) { status("choose an image file"); return; }
+      var url = URL.createObjectURL(file), img = new Image();
+      img.onload = function () {
+        var lum = lumFromSource(img, img.naturalWidth, img.naturalHeight, 220);
+        URL.revokeObjectURL(url);
+        if (!lum) { status("couldn't read that image"); return; }
+        dynamicFields["upload"] = buildField(lum, 220);
+        if (state.study === "live") state.study = "flow";
+        state.specimen = "upload"; syncControls(); render();
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); status("couldn't load that image"); };
+      img.src = url;
+    }
+
     // wire UI
     makeChips("at-studies", STUDIES, function () { return state.study; }, function (id) { state.study = id; render(); });
-    makeChips("at-specimens", SPECIMENS, function () { return state.specimen; }, function (id) { state.specimen = id; render(); });
+    var SPECIMEN_CHIPS = SPECIMENS.concat([{ id: "upload", label: "&uarr; Upload" }, { id: "captured", label: "Captured" }]);
+    makeChips("at-specimens", SPECIMEN_CHIPS, function () { return state.specimen; }, function (id) {
+      if (id === "upload") { var fi = document.getElementById("at-img"); if (fi) fi.click(); return; }
+      if (id === "captured" && !dynamicFields.captured) { status("capture a frame from Live · camera first"); return; }
+      state.specimen = id; render();
+    });
     makeChips("at-palettes", PALETTE_CHIPS, function () { return state.palette; }, function (id) { state.palette = id; render(); });
 
     var slider = document.getElementById("at-complexity");
@@ -968,6 +1101,15 @@
       dropZone.addEventListener("drop", function (e) { var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; if (f) handleFile(f); });
     }
 
+    // senses: upload input, capture, perception overlay
+    senseCv = document.getElementById("at-sense"); if (senseCv) senseCtx = senseCv.getContext("2d");
+    var imgInput = document.getElementById("at-img");
+    if (imgInput) imgInput.addEventListener("change", function () { if (imgInput.files && imgInput.files[0]) { handleUpload(imgInput.files[0]); imgInput.value = ""; } });
+    var capBtn = document.getElementById("at-capture");
+    if (capBtn) capBtn.addEventListener("click", captureFrame);
+    var ovBtn = document.getElementById("at-overlay");
+    if (ovBtn) ovBtn.addEventListener("click", function () { live.overlay = !live.overlay; ovBtn.setAttribute("aria-pressed", String(live.overlay)); if (!live.overlay && senseCv) senseCv.style.display = "none"; });
+
     var resizeTimer = 0;
     window.addEventListener("resize", function () {
       if (resizeTimer) clearTimeout(resizeTimer);
@@ -978,7 +1120,7 @@
   }
 
   // expose for reuse (e.g. the deck title card) and self-boot
-  window.Atelier = { STUDIES: STUDIES, SPECIMENS: SPECIMENS, PALETTES: PALETTES, makeRng: makeRng, makePalette: makePalette, loadField: loadField, drawStrokes: drawStrokes, toSVG: toSVG, optimizeForPlot: optimizeForPlot, plotSVG: plotSVG, hashOpt: hashOpt };
+  window.Atelier = { STUDIES: STUDIES, SPECIMENS: SPECIMENS, PALETTES: PALETTES, makeRng: makeRng, makePalette: makePalette, loadField: loadField, buildField: buildField, lumFromSource: lumFromSource, drawStrokes: drawStrokes, toSVG: toSVG, optimizeForPlot: optimizeForPlot, plotSVG: plotSVG, hashOpt: hashOpt };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 })();
