@@ -65,7 +65,7 @@
   .at-blurb .sp{color:var(--ember)}
   .nojs{font-family:"Spline Sans Mono",monospace;font-size:.62rem;color:var(--ember);
     letter-spacing:.06em;margin-top:1rem}
-  /* the four-algorithm key */
+  /* the five-algorithm key */
   .studies{width:100%;max-width:60rem;border-top:1px solid var(--hairline);margin-top:clamp(1.6rem,3vw,2.4rem)}
   .study-row{display:grid;grid-template-columns:11rem 1fr;gap:.4rem var(--col-gap);padding:1.15rem 0;
     border-bottom:1px solid var(--hairline);align-items:baseline}
@@ -90,14 +90,14 @@
     <p class="lede">I photograph small living things &mdash; a snail&rsquo;s logarithmic shell, the curl of a spent seedhead, the veins of a mallow. Here those forms seed algorithms that <em>draw</em>: phyllotaxis, flow fields, differential growth, venation, reaction&ndash;diffusion. Every line is generated <em>live in your browser</em> &mdash; nothing on this page is a saved image.</p>
     <p class="close">The same seed always draws the same thing. Run it, steer it with a photograph, export the vector &mdash; <b>the drawing carries its own provenance.</b></p>
   </div>
-  <div class="seal">In-browser &middot; zero dependencies &middot; deterministic from seed &middot; export to plotter-ready <b>SVG</b></div>
+  <div class="seal">In-browser &middot; zero dependencies &middot; deterministic from seed &middot; export to a witnessed, plot-optimised <b>SVG</b></div>
 </div>
 
 <main>
 
 <section class="mv" id="instrument" aria-labelledby="at-h">
   <h2 id="at-h" class="reveal">The instrument.</h2>
-  <p class="body-text reveal">Pick an algorithm and a specimen. The photograph is read as a field of light &mdash; the algorithm bends to it, so the snail&rsquo;s whorl or the mallow&rsquo;s veins surface in the strokes. Drag the complexity, draw a new seed, change the pens. When you find one you like, export it: the file is single-stroke vector paths a pen plotter can draw, and the seed travels in the name so anyone can re-derive it.</p>
+  <p class="body-text reveal">Pick an algorithm and a specimen. The photograph is read as a field of light &mdash; the algorithm bends to it, so the snail&rsquo;s whorl or the mallow&rsquo;s veins surface in the strokes. Drag the complexity, draw a new seed, change the pens. When you find one you like, export it. It comes out as a clean plot file &mdash; touching strokes stitched into continuous pen paths, ordered to lift the pen as little as possible and grouped by pen, then stamped with a witness hash: the exact file re-derives from its seed, and says in its own metadata what it optimised.</p>
 
   <div class="atelier reveal" id="atelier">
     <div class="at-stage">
@@ -137,7 +137,7 @@
     </div>
   </div>
   <p class="nojs" id="at-nojs" hidden>This instrument needs JavaScript &mdash; it generates every line at runtime. The algorithms are plain, dependency-free code in <b>system/atelier.js</b>.</p>
-  <p class="artifact-note reveal">No libraries, no saved frames &mdash; a small seeded random-number generator, the four algorithms, and a canvas. <em>Why it belongs here:</em> a drawing that is deterministic from a stated seed is a drawing you can <b>re-derive</b> instead of trust &mdash; the same move the rest of this work makes, in a form you can hang on a wall.</p>
+  <p class="artifact-note reveal">No libraries, no saved frames &mdash; a small seeded random-number generator, the five algorithms, a canvas, and a plot optimiser that stitches and orders the lines for a real pen. <em>Why it belongs here:</em> a drawing that is deterministic from a stated seed, and carries a witness of its own geometry, is one you can <b>re-derive</b> instead of trust &mdash; the same move the rest of this work makes, in a form you can hang on a wall.</p>
 </section>
 
 <section class="mv" id="algorithms" aria-labelledby="alg-h">
