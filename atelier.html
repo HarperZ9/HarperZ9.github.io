@@ -44,6 +44,11 @@
   .at-slider{width:100%;accent-color:var(--orange);cursor:pointer;height:1.1rem}
   .at-slider:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
   .at-seedrow{display:flex;gap:.4rem;align-items:stretch}
+  .at-params{display:flex;flex-direction:column;gap:.5rem;margin:.1rem 0 .3rem}
+  .at-prow{display:grid;grid-template-columns:7.2rem 1fr;align-items:center;gap:.6rem}
+  .at-pname{font-family:"Spline Sans Mono",monospace;font-size:.6rem;letter-spacing:.04em;color:var(--muted);text-transform:uppercase}
+  .at-pslider{width:100%}
+  #at-presets{margin-top:.1rem}
   .at-seed{flex:1;min-width:0;font-family:"Spline Sans Mono",monospace;font-size:.74rem;color:var(--bone);
     background:rgba(6,14,15,.7);border:1px solid var(--hairline);border-radius:2px;padding:.5em .7em;
     letter-spacing:.12em;transition:border-color .2s}
@@ -155,6 +160,11 @@
         <span class="at-glab">Complexity</span>
         <input type="range" class="at-slider" id="at-complexity" min="0" max="100" value="58" aria-label="Complexity">
       </div>
+      <div class="at-group" id="at-params-group">
+        <span class="at-glab">Parameters <span class="hint">&mdash; the algorithm&rsquo;s own knobs, folded into the seed</span></span>
+        <div class="at-params" id="at-params"></div>
+        <div class="at-chips" id="at-presets" role="group" aria-label="Parameter presets"></div>
+      </div>
       <div class="at-group">
         <span class="at-glab">Pens</span>
         <div class="at-chips" id="at-palettes" role="group" aria-label="Palette"></div>
@@ -244,7 +254,7 @@
 </footer>
 
 <script src="system/spine.js" defer></script>
-<script src="system/atelier.js?v=20260621" defer></script>
+<script src="system/atelier.js?v=20260621b" defer></script>
 <script src="system/hero.js?v=20260621" defer></script>
 </body>
 </html>

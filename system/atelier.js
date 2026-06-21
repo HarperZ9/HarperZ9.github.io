@@ -156,10 +156,60 @@
   //   { live:true, step():bool-done, strokes():[…] }
   // ============================================================================
 
+  // ── per-study parameters — the algorithm's own knobs, exposed and WITNESSED ──
+  // Each maps to a fixed constant in the build; default = today's value, so a
+  // drawing left at defaults is byte-identical to before (old files still verify).
+  // Non-default values append to the seed-key, the URL and the SVG metadata.
+  var STUDY_PARAMS = {
+    phyllotaxis: { params: [
+        { k: "spread", label: "Spread", min: 0.28, max: 0.49, step: 0.01, def: 0.46 },
+        { k: "dot", label: "Seed size", min: 0.001, max: 0.008, step: 0.0002, def: 0.0046 }],
+      presets: [{ label: "Tight", p: { spread: 0.32 } }, { label: "Open", p: { spread: 0.49, dot: 0.006 } }] },
+    flow: { params: [
+        { k: "len", label: "Stroke length", min: 60, max: 198, step: 6, def: 132 },
+        { k: "reach", label: "Step reach", min: 0.002, max: 0.008, step: 0.0002, def: 0.0046 }],
+      presets: [{ label: "Calm", p: { len: 90 } }, { label: "Storm", p: { len: 186, reach: 0.006 } }] },
+    growth: { params: [
+        { k: "repel", label: "Repulsion", min: 0.014, max: 0.045, step: 0.001, def: 0.027 },
+        { k: "rate", label: "Growth rate", min: 0.0005, max: 0.002, step: 0.0001, def: 0.0011 }],
+      presets: [{ label: "Coral", p: { repel: 0.038, rate: 0.0014 } }, { label: "Wiry", p: { repel: 0.018 } }] },
+    venation: { params: [
+        { k: "reach", label: "Vein reach", min: 0.07, max: 0.24, step: 0.005, def: 0.15 },
+        { k: "step", label: "Step", min: 0.004, max: 0.012, step: 0.0002, def: 0.0072 }],
+      presets: [{ label: "Fine", p: { step: 0.005, reach: 0.11 } }, { label: "Bold", p: { reach: 0.21 } }] },
+    reaction: { params: [
+        { k: "diffuse", label: "V diffusion", min: 0.05, max: 0.1, step: 0.002, def: 0.08 },
+        { k: "bands", label: "Contour bands", min: 2, max: 5, step: 1, def: 3 }],
+      presets: [{ label: "Spots", p: { diffuse: 0.062 } }, { label: "Maze", p: { diffuse: 0.088, bands: 4 } }] },
+    physarum: { params: [
+        { k: "sense", label: "Sensor angle", min: 0.2, max: 0.8, step: 0.02, def: 0.4 },
+        { k: "decay", label: "Trail decay", min: 0.82, max: 0.95, step: 0.01, def: 0.9 }],
+      presets: [{ label: "Tendril", p: { sense: 0.28, decay: 0.93 } }, { label: "Web", p: { sense: 0.6, decay: 0.86 } }] }
+  };
+  function studyParams(id) { return (STUDY_PARAMS[id] && STUDY_PARAMS[id].params) || []; }
+  function studyPresets(id) { return (STUDY_PARAMS[id] && STUDY_PARAMS[id].presets) || []; }
+  function pget(P, k, def) { var v = P && P.params ? P.params[k] : null; return (v == null || isNaN(v)) ? def : v; }
+  function pcanon(v) { return Math.round((+v) * 1e4) / 1e4; }
+  function defParams(id) { var sc = studyParams(id), o = {}; for (var i = 0; i < sc.length; i++) o[sc[i].k] = pcanon(sc[i].def); return o; }
+  function paramStr(id, params) {
+    var sc = studyParams(id), out = [];
+    for (var i = 0; i < sc.length; i++) {
+      var k = sc[i].k, v = pcanon(params && params[k] != null ? params[k] : sc[i].def);
+      if (v !== pcanon(sc[i].def)) out.push(k + ":" + v);
+    }
+    return out.join(",");
+  }
+  function pkey(id, params) { var s = paramStr(id, params); return s ? "|" + s : ""; }
+  function parseParamStr(id, s) {
+    var sc = studyParams(id), valid = {}, o = {}; for (var i = 0; i < sc.length; i++) valid[sc[i].k] = sc[i];
+    if (s) s.split(",").forEach(function (pair) { var kv = pair.split(":"), k = kv[0], v = parseFloat(kv[1]); if (valid[k] && !isNaN(v)) o[k] = pcanon(clamp(v, valid[k].min, valid[k].max)); });
+    return o;
+  }
+
   // 1 ── PHYLLOTAXIS — Vogel's spiral, Fibonacci parastichy arms (the snail) ────
   function buildPhyllotaxis(rng, P, field) {
     var N = Math.round(lerp(460, 2000, P.complexity));
-    var cx = 0.5, cy = 0.5, maxR = 0.46, c = maxR / Math.sqrt(N);
+    var cx = 0.5, cy = 0.5, maxR = pget(P, "spread", 0.46), c = maxR / Math.sqrt(N);
     var pal = P.palette, pts = [];
     for (var i = 0; i < N; i++) {
       var r = c * Math.sqrt(i + 0.5), th = i * GOLDEN + (rng() - 0.5) * 0.012;
@@ -199,7 +249,7 @@
     var dotStep = N > 1300 ? 2 : 1;
     for (var d = 0; d < N; d += dotStep) {
       var p = pts[d]; if (p.lum < 0.16) continue;
-      var rad = 0.0014 + 0.0046 * p.lum, ring = [];
+      var rad = 0.0014 + pget(P, "dot", 0.0046) * p.lum, ring = [];
       for (var a = 0; a <= 8; a++) { var an = a / 8 * TAU; ring.push([p.x + rad * Math.cos(an), p.y + rad * Math.sin(an)]); }
       strokes.push({ pts: ring, col: pal.sample(clamp(p.lum * 0.92 + 0.16, 0, 1)), w: 0.6, op: 0.18 + 0.62 * p.lum, close: true });
     }
@@ -210,7 +260,7 @@
   function buildFlow(rng, P, field) {
     var noise = makeNoise(rng);
     var M = Math.round(lerp(620, 2500, P.complexity));
-    var steps = 132, stepLen = 0.0046;
+    var steps = pget(P, "len", 132) | 0, stepLen = pget(P, "reach", 0.0046);
     var freq = 2.1 + 1.6 * rng(), warp = 0.55 + 0.4 * rng();
     var cx = 0.5, cy = 0.5, radial = field ? 0.18 : 0.34;
     var pal = P.palette, strokes = [];
@@ -251,8 +301,8 @@
     for (var i = 0; i < n0; i++) { var a = i / n0 * TAU; nodes.push([cx + R0 * Math.cos(a), cy + R0 * Math.sin(a)]); }
     var maxNodes = Math.round(lerp(820, 2100, P.complexity));
     var stepsTarget = Math.round(lerp(120, 185, P.complexity));
-    var repR = 0.027, maxLen = 0.012;
-    var repW = 0.018, atW = 0.45, grW = 0.0011, noiseW = 0.0006;
+    var repR = pget(P, "repel", 0.027), maxLen = 0.012;
+    var repW = 0.018, atW = 0.45, grW = pget(P, "rate", 0.0011), noiseW = 0.0006;
     var noise = makeNoise(rng), pal = P.palette, done = 0;
 
     function repulsion() {
@@ -340,7 +390,7 @@
       } while (Math.hypot(x - cx, y - cy) > 0.475 && tries < 6);
       sources.push([x, y, true]);
     }
-    var attractD = 0.15, killD = 0.016, seg = 0.0072;
+    var attractD = pget(P, "reach", 0.15), killD = 0.016, seg = pget(P, "step", 0.0072);
     var nodes = [[cx, cy]], parent = [-1], depth = [0];
     var maxNodes = Math.round(lerp(1400, 3400, P.complexity)), iter = 0;
     var cell = attractD;
@@ -429,7 +479,7 @@
     }
     var XM = new Int32Array(G), XP = new Int32Array(G);
     for (var k = 0; k < G; k++) { XM[k] = (k - 1 + G) % G; XP[k] = (k + 1) % G; }
-    var Du = 0.16, Dv = 0.08, iter = 0, target = Math.round(lerp(1500, 3000, P.complexity)), pal = P.palette;
+    var Du = 0.16, Dv = pget(P, "diffuse", 0.08), iter = 0, target = Math.round(lerp(1500, 3000, P.complexity)), pal = P.palette;
     function batch(n) {
       for (var it = 0; it < n; it++) {
         for (var y = 0; y < G; y++) {
@@ -448,7 +498,10 @@
     }
     function step() { batch(10); return iter >= target; }
     function strokes() {
-      var levels = [0.22, 0.34, 0.46], inv = 1 / (G - 1), out = [];
+      var nb = pget(P, "bands", 3) | 0, levels;
+      if (nb === 3) { levels = [0.22, 0.34, 0.46]; }   // default: exact literals, so a default reaction re-derives byte-identically
+      else { levels = []; for (var lb = 0; lb < nb; lb++) levels.push(nb > 1 ? 0.22 + 0.24 * lb / (nb - 1) : 0.34); }
+      var inv = 1 / (G - 1), out = [];
       for (var li = 0; li < levels.length; li++) {
         var lev = levels[li];
         for (var y = 0; y < G - 1; y++) for (var x = 0; x < G - 1; x++) {
@@ -479,8 +532,8 @@
     var G = 180, NN = G * G;
     var T = new Float32Array(NN), T2 = new Float32Array(NN);
     var N = Math.round(lerp(900, 2500, P.complexity));
-    var SA = 0.40, RA = 0.46, SO = 7.5, SS = 1.35;      // sense angle, turn, sensor offset & step (grid px)
-    var decay = 0.90, wPhoto = field ? 1.9 : 0;         // photo light as a static attractant atop the trail
+    var SA = pget(P, "sense", 0.40), RA = 0.46, SO = 7.5, SS = 1.35;      // sense angle, turn, sensor offset & step (grid px)
+    var decay = pget(P, "decay", 0.90), wPhoto = field ? 1.9 : 0;         // photo light as a static attractant atop the trail
     var pal = P.palette;
     var ax = new Float32Array(N), ay = new Float32Array(N), ah = new Float32Array(N);
     for (var i = 0; i < N; i++) {
@@ -773,7 +826,7 @@
 
     var state = {
       study: "flow", specimen: "snail", palette: "spectrum",
-      complexity: 0.58, seed: randomSeed()
+      complexity: 0.58, seed: randomSeed(), params: defParams("flow")
     };
     hydrateFromURL(); // a shared link reproduces the exact drawing
     var finalStrokes = [], settled = false, drawToken = 0, rafId = 0; // settled = the geometry is final (gate's observed-state check)
@@ -830,7 +883,7 @@
       var dims = sizeCanvas(), W = dims[0], H = dims[1];
       var st = studyById(state.study);
       var pal = makePalette(PALETTES[state.palette] || PALETTES.spectrum);
-      var P = { complexity: state.complexity, palette: pal, reduced: reduced };
+      var P = { complexity: state.complexity, palette: pal, reduced: reduced, params: state.params };
       if (seedtagEl) seedtagEl.textContent = "seed · " + state.seed;
       if (blurbEl) blurbEl.innerHTML = st.blurb;
       status("drawing…");
@@ -838,7 +891,7 @@
       var spec = specimenById(state.specimen);
       function go(field) {
         if (myToken !== drawToken) return;
-        var rng = makeRng(state.seed + "|" + state.study + "|" + state.specimen + "|" + Math.round(state.complexity * 100) + "|" + state.palette);
+        var rng = makeRng(state.seed + "|" + state.study + "|" + state.specimen + "|" + Math.round(state.complexity * 100) + "|" + state.palette + pkey(state.study, state.params));
         var piece;
         try { piece = st.build(rng, P, field); }
         catch (e) { status("error"); if (window.console) console.error("[atelier]", e); return; }
@@ -920,9 +973,10 @@
       Spine.witness(geomBody(plotSVG(opt, ""))).then(function (witness) {
         witness = witness || "unavailable";
         var shortW = witness.slice(0, 12);
+        var psOut = paramStr(state.study, state.params);
         var meta = "atelier plot drawing\n" +
           "study=" + state.study + " specimen=" + state.specimen + " seed=" + state.seed +
-          " complexity=" + Math.round(state.complexity * 100) + " palette=" + state.palette + "\n" +
+          " complexity=" + Math.round(state.complexity * 100) + " palette=" + state.palette + (psOut ? " params=" + psOut : "") + "\n" +
           "optimised: " + st.segIn + " segments to " + st.pathsOut + " continuous paths; " +
           st.ptsIn + " to " + st.ptsOut + " points; pen-up travel reduced " + cut + " percent\n" +
           "pens=" + opt.pens.length + " witness=" + witness + " (SHA-256 of geometry, via EMET)\n" +
@@ -977,11 +1031,13 @@
     function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
     function sanitizeSeed(s) { return String(s == null ? "" : s).replace(/[^A-Za-z0-9_-]/g, "").slice(0, 48); }
     function stateToParams() {
+      var ps = paramStr(state.study, state.params);
       return "study=" + encodeURIComponent(state.study) +
         "&specimen=" + encodeURIComponent(state.specimen) +
         "&seed=" + encodeURIComponent(state.seed) +
         "&cx=" + Math.round(state.complexity * 100) +
-        "&palette=" + encodeURIComponent(state.palette);
+        "&palette=" + encodeURIComponent(state.palette) +
+        (ps ? "&params=" + encodeURIComponent(ps) : "");
     }
     function writeURL() {
       try { window.history.replaceState(null, "", window.location.pathname + "?" + stateToParams()); } catch (e) { }
@@ -994,6 +1050,8 @@
       var sd = p.get("seed"); if (sd) { var cs = sanitizeSeed(sd); if (cs) state.seed = cs; }
       var cx = p.get("cx"); if (cx !== null && /^\d{1,3}$/.test(cx)) state.complexity = clamp(parseInt(cx, 10) / 100, 0, 1);
       var pl = p.get("palette"); if (pl && PALETTES[pl]) state.palette = pl;
+      state.params = defParams(state.study);
+      var pm = p.get("params"); if (pm) { var pp = parseParamStr(state.study, pm); for (var pk in pp) state.params[pk] = pp[pk]; }
     }
     // a curated strip spanning every study, specimen and pen-set — a quick start
     // and an honest showcase of range; each is itself a shareable, witnessed recipe
@@ -1008,7 +1066,8 @@
     function applyPreset(g) {
       state.study = g.study; state.specimen = g.specimen; state.palette = g.palette;
       state.seed = sanitizeSeed(g.seed) || randomSeed(); state.complexity = clamp(g.cx / 100, 0, 1);
-      syncControls(); render();
+      state.params = defParams(g.study);
+      syncControls(); renderParams(); render();
     }
 
     function parsePlotMeta(text) {
@@ -1017,7 +1076,7 @@
       return {
         study: grab(/study=([A-Za-z]+)/), specimen: grab(/specimen=([A-Za-z]+)/),
         seed: grab(/seed=(\S+)/), complexity: grab(/complexity=(\d+)/),
-        palette: grab(/palette=([A-Za-z]+)/), witness: grab(/witness=([0-9a-f]+)/)
+        palette: grab(/palette=([A-Za-z]+)/), params: grab(/params=(\S+)/), witness: grab(/witness=([0-9a-f]+)/)
       };
     }
     function geomBody(svg) { var i = svg.indexOf('<g fill="none"'), j = svg.lastIndexOf("</svg>"); return (i >= 0 && j > i) ? svg.slice(i, j) : null; }
@@ -1033,8 +1092,9 @@
       var sid = specimenById(meta.specimen || "none").id;
       showVerdict("v-unver", "RE-DERIVING…", "Rebuilding <b>" + meta.study + "</b> from seed <b>" + esc(meta.seed) + "</b>, re-witnessing, and asking the gate&hellip;");
       function finish(field) {
-        var rng = makeRng(meta.seed + "|" + meta.study + "|" + sid + "|" + meta.complexity + "|" + meta.palette);
-        var P = { complexity: clamp(parseInt(meta.complexity, 10) / 100, 0, 1), palette: makePalette(PALETTES[pid]), reduced: true };
+        var vparams = parseParamStr(meta.study, meta.params);
+        var rng = makeRng(meta.seed + "|" + meta.study + "|" + sid + "|" + meta.complexity + "|" + meta.palette + pkey(meta.study, vparams));
+        var P = { complexity: clamp(parseInt(meta.complexity, 10) / 100, 0, 1), palette: makePalette(PALETTES[pid]), reduced: true, params: vparams };
         var piece = st.build(rng, P, field);
         if (piece.live) { var guard = 0; while (!piece.step() && guard++ < 2000) { } }
         var strokes = piece.live ? piece.strokes() : piece.strokes;
@@ -1194,8 +1254,43 @@
       img.src = url;
     }
 
+    function renderParams() {
+      var box = document.getElementById("at-params"), pbox = document.getElementById("at-presets");
+      if (box) {
+        box.innerHTML = "";
+        var sc = studyParams(state.study);
+        sc.forEach(function (pr) {
+          var row = document.createElement("label"); row.className = "at-prow";
+          var nm = document.createElement("span"); nm.className = "at-pname"; nm.textContent = pr.label;
+          var inp = document.createElement("input");
+          inp.type = "range"; inp.className = "at-pslider"; inp.min = pr.min; inp.max = pr.max; inp.step = pr.step;
+          inp.value = state.params[pr.k] != null ? state.params[pr.k] : pr.def;
+          inp.setAttribute("aria-label", pr.label);
+          var pTimer = 0;
+          inp.addEventListener("input", function () {
+            state.params[pr.k] = pcanon(parseFloat(inp.value));
+            if (pTimer) clearTimeout(pTimer); pTimer = setTimeout(render, 130);
+          });
+          row.appendChild(nm); row.appendChild(inp); box.appendChild(row);
+        });
+      }
+      if (pbox) {
+        pbox.innerHTML = "";
+        studyPresets(state.study).forEach(function (ps) {
+          var b = document.createElement("button");
+          b.type = "button"; b.className = "at-chip"; b.textContent = ps.label;
+          b.addEventListener("click", function () {
+            state.params = defParams(state.study);
+            for (var pk in ps.p) state.params[pk] = pcanon(ps.p[pk]);
+            renderParams(); render();
+          });
+          pbox.appendChild(b);
+        });
+      }
+    }
+
     // wire UI
-    makeChips("at-studies", STUDIES, function () { return state.study; }, function (id) { state.study = id; render(); });
+    makeChips("at-studies", STUDIES, function () { return state.study; }, function (id) { state.study = id; state.params = defParams(id); renderParams(); render(); });
     var SPECIMEN_CHIPS = SPECIMENS.concat([{ id: "upload", label: "&uarr; Upload" }, { id: "captured", label: "Captured" }]);
     makeChips("at-specimens", SPECIMEN_CHIPS, function () { return state.specimen; }, function (id) {
       if (id === "upload") { var fi = document.getElementById("at-img"); if (fi) fi.click(); return; }
@@ -1269,6 +1364,7 @@
       resizeTimer = setTimeout(function () { drawStrokes(ctx, sizeCanvas()[0], sizeCanvas()[1], finalStrokes, 1); }, 200);
     });
 
+    renderParams();
     render();
   }
 
