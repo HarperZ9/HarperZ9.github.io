@@ -78,6 +78,10 @@
     spectrum: ["#4fa98e", "#3f857a", "#efab30", "#df5e00", "#ecdcc0"],
     ember: ["#7c3100", "#df5e00", "#efab30", "#f6cf8f"],
     cool: ["#2c4a47", "#476762", "#5fae93", "#cfe0d2"],
+    chitin: ["#1c1a0f", "#46451d", "#897a2b", "#bb9c3c", "#e6dca0"],   // carapace: umber → olive-gold → chitin
+    marrow: ["#22131a", "#5c2622", "#9c4f38", "#c99a78", "#efe3cf"],   // anatomical: iron → oxblood → rust → bone
+    verdigris: ["#15190f", "#39401e", "#6e6a2c", "#4f9c72", "#cfe6c2"],// patina: bronze → olive → oxidised copper-green
+    biolume: ["#0a0e1a", "#163150", "#1f7e90", "#43d2b2", "#dafff2"],  // deep-sea: indigo → teal → electric cyan glow
     mono: ["#e9e2d0"]
   };
 
@@ -200,7 +204,51 @@
     binomial: { params: [
         { k: "rows", label: "Rows", min: 16, max: 128, step: 16, def: 64 },
         { k: "mod", label: "Modulus", min: 2, max: 9, step: 1, def: 2 }],
-      presets: [{ label: "Gasket", p: { mod: 2 } }, { label: "Mod 3", p: { mod: 3, rows: 96 } }, { label: "Mod 5", p: { mod: 5, rows: 128 } }] }
+      presets: [{ label: "Gasket", p: { mod: 2 } }, { label: "Mod 3", p: { mod: 3, rows: 96 } }, { label: "Mod 5", p: { mod: 5, rows: 128 } }] },
+    harmonograph: { params: [
+        { k: "detune", label: "Detune", min: 0.08, max: 0.9, step: 0.02, def: 0.42 },
+        { k: "decay", label: "Damping", min: 0.05, max: 0.6, step: 0.01, def: 0.26 }],
+      presets: [{ label: "Lissajous", p: { detune: 0.1, decay: 0.07 } }, { label: "Unwound", p: { detune: 0.74, decay: 0.42 } }] },
+    gosper: { params: [
+        { k: "iters", label: "Iterations", min: 2, max: 5, step: 1, def: 4 },
+        { k: "twist", label: "Hex turn", min: 0, max: 5, step: 1, def: 0 }],
+      presets: [{ label: "Island", p: { iters: 3 } }, { label: "Coastline", p: { iters: 5 } }] },
+    lsystem: { params: [
+        { k: "angle", label: "Branch angle", min: 0.18, max: 0.62, step: 0.02, def: 0.42 },
+        { k: "depth", label: "Recursion depth", min: 3, max: 6, step: 1, def: 5 }],
+      presets: [{ label: "Fern", p: { angle: 0.3, depth: 6 } }, { label: "Bramble", p: { angle: 0.58, depth: 5 } }] },
+    voronoi: { params: [
+        { k: "sites", label: "Seeds", min: 40, max: 220, step: 20, def: 120 },
+        { k: "relax", label: "Lloyd relax", min: 0, max: 3, step: 1, def: 1 }],
+      presets: [{ label: "Foam", p: { sites: 80, relax: 2 } }, { label: "Dense", p: { sites: 220, relax: 1 } }] },
+    dragon: { params: [
+        { k: "iters", label: "Folds", min: 8, max: 14, step: 1, def: 12 },
+        { k: "twist", label: "Quarter-turn", min: 0, max: 3, step: 1, def: 0 }],
+      presets: [{ label: "Classic", p: { iters: 12 } }, { label: "Dense", p: { iters: 14, twist: 1 } }] },
+    koch: { params: [
+        { k: "depth", label: "Depth", min: 2, max: 5, step: 1, def: 4 },
+        { k: "sides", label: "Sides", min: 3, max: 6, step: 1, def: 3 }],
+      presets: [{ label: "Snowflake", p: { depth: 4, sides: 3 } }, { label: "Hexagon", p: { depth: 3, sides: 6 } }] },
+    dla: { params: [
+        { k: "stick", label: "Stickiness", min: 0.2, max: 1.0, step: 0.1, def: 1.0 },
+        { k: "spawn", label: "Spawn slack", min: 2, max: 12, step: 1, def: 5 }],
+      presets: [{ label: "Dense", p: { stick: 0.3, spawn: 3 } }, { label: "Open", p: { spawn: 10 } }] },
+    penrose: { params: [
+        { k: "iters", label: "Deflations", min: 3, max: 6, step: 1, def: 5 },
+        { k: "twist", label: "Fifth-turn", min: 0, max: 4, step: 1, def: 0 }],
+      presets: [{ label: "Sun", p: { iters: 4 } }, { label: "Quasicrystal", p: { iters: 6, twist: 2 } }] },
+    lightning: { params: [
+        { k: "branch", label: "Fork chance", min: 0.1, max: 0.7, step: 0.05, def: 0.35 },
+        { k: "jitter", label: "Displacement", min: 0.08, max: 0.4, step: 0.02, def: 0.22 }],
+      presets: [{ label: "Bolt", p: { branch: 0.15, jitter: 0.16 } }, { label: "Lichtenberg", p: { branch: 0.6, jitter: 0.34 } }] },
+    maurer: { params: [
+        { k: "n", label: "Petals", min: 2, max: 13, step: 1, def: 6 },
+        { k: "d", label: "Walk step", min: 11, max: 359, step: 2, def: 71 }],
+      presets: [{ label: "Cobweb", p: { n: 5, d: 97 } }, { label: "Star web", p: { n: 7, d: 131 } }] },
+    clifford: { params: [
+        { k: "a", label: "Coeff a", min: -2.2, max: 2.2, step: 0.1, def: 1.7 },
+        { k: "b", label: "Coeff b", min: -2.2, max: 2.2, step: 0.1, def: -1.8 }],
+      presets: [{ label: "Mantle", p: { a: -1.7, b: 1.8 } }, { label: "Wings", p: { a: -1.4, b: 1.6 } }] }
   };
   function studyParams(id) { return (STUDY_PARAMS[id] && STUDY_PARAMS[id].params) || []; }
   function studyPresets(id) { return (STUDY_PARAMS[id] && STUDY_PARAMS[id].presets) || []; }
@@ -894,6 +942,506 @@
     return { live: false, strokes: strokes };
   }
 
+  // 11 ── HARMONOGRAPH — two damped pendulums per axis (a real drawing machine) ──
+  //  x and y are each driven by a pair of sine pendulums whose amplitude decays;
+  //  near-integer frequency ratios make the figure slowly precess into a dense
+  //  organic weave. Deterministic from the seed; trig-class (sin/exp share the JS
+  //  engine) — re-derivable on the same engine, not claimed bit-exact.
+  function buildHarmonograph(rng, P, field) {
+    var pal = P.palette;
+    var detune = pget(P, "detune", 0.42);   // how far each pendulum pair pulls apart in frequency → precession
+    var decay = pget(P, "decay", 0.26);      // swing damping
+    function pend() {
+      var base = 2 + (rng() < 0.5 ? 0 : 1);                       // base ratio 2 or 3
+      return { f: base + (rng() - 0.5) * detune, p: rng() * TAU,
+        a: 0.5 * (0.7 + 0.3 * rng()), d: decay * 0.01 * (0.5 + rng()) };
+    }
+    var ax1 = pend(), ax2 = pend(), ay1 = pend(), ay2 = pend();
+    var N = Math.round(lerp(3200, 9600, P.complexity)), dt = 0.0125, cx = 0.5, cy = 0.5, sc = 0.3, pts = [];
+    for (var i = 0; i < N; i++) {
+      var t = i * dt;
+      var x = ax1.a * Math.sin(ax1.f * t + ax1.p) * Math.exp(-ax1.d * t) + ax2.a * Math.sin(ax2.f * t + ax2.p) * Math.exp(-ax2.d * t);
+      var y = ay1.a * Math.sin(ay1.f * t + ay1.p) * Math.exp(-ay1.d * t) + ay2.a * Math.sin(ay2.f * t + ay2.p) * Math.exp(-ay2.d * t);
+      pts.push([cx + x * sc, cy + y * sc]);
+    }
+    var strokes = [], run = 36, L = pts.length;
+    for (var s = 0; s < L - 1; s += run) {
+      var end = Math.min(L - 1, s + run), seg = pts.slice(s, end + 1);
+      if (seg.length < 2) continue;
+      var mid = seg[seg.length >> 1];
+      var tt = field ? clamp(field.lum(clamp(mid[0], 0, 1), clamp(mid[1], 0, 1)), 0, 1) : (s / L);
+      strokes.push({ pts: seg, col: pal.sample(tt), w: 0.8, op: field ? (0.2 + 0.62 * (0.3 + 0.7 * tt)) : 0.5 });
+    }
+    return { live: false, strokes: strokes };
+  }
+
+  // 12 ── GOSPER — the flowsnake, a space-filling fractal curve (Lindenmayer) ────
+  //  One continuous stroke that tiles the plane in hexagons: a fractal coastline
+  //  that never crosses itself. Rewrite A→A-B--B+A++AA+B-, B→+A-BB--B-A++A+B at 60°.
+  //  The six hex directions use only ±1/2 and ±√3/2 (sqrt is IEEE-754 exact) — no
+  //  transcendental on the geometry, so it re-derives BIT-FOR-BIT on any machine.
+  function buildGosper(rng, P, field) {
+    var pal = P.palette;
+    var iters = Math.round(clamp(pget(P, "iters", 4), 2, 5)) | 0;
+    var twist = Math.round(clamp(pget(P, "twist", 0), 0, 5)) | 0;
+    var s = "A";
+    for (var k = 0; k < iters; k++) {
+      var o = "";
+      for (var c = 0; c < s.length; c++) { var ch = s.charAt(c); o += ch === "A" ? "A-B--B+A++AA+B-" : ch === "B" ? "+A-BB--B-A++A+B" : ch; }
+      s = o;
+    }
+    var R3 = Math.sqrt(3) / 2;
+    var DIR = [[1, 0], [0.5, -R3], [-0.5, -R3], [-1, 0], [-0.5, R3], [0.5, R3]]; // 0..5 × 60°
+    var dir = twist % 6, x = 0, y = 0, raw = [[0, 0]], minX = 0, minY = 0, maxX = 0, maxY = 0;
+    for (var i = 0; i < s.length; i++) {
+      var g = s.charAt(i);
+      if (g === "A" || g === "B") {
+        x += DIR[dir][0]; y += DIR[dir][1]; raw.push([x, y]);
+        if (x < minX) minX = x; if (y < minY) minY = y; if (x > maxX) maxX = x; if (y > maxY) maxY = y;
+      } else if (g === "+") dir = (dir + 1) % 6;
+      else if (g === "-") dir = (dir + 5) % 6;
+    }
+    var margin = 0.07, span = 1 - 2 * margin;
+    var w = Math.max(1e-6, maxX - minX), h = Math.max(1e-6, maxY - minY), scl = span / Math.max(w, h);
+    var ox = margin + (span - w * scl) / 2, oy = margin + (span - h * scl) / 2;
+    function map(p) { return [ox + (p[0] - minX) * scl, oy + (p[1] - minY) * scl]; }
+    var strokes = [], rn = 24, L = raw.length;
+    for (var a = 0; a < L - 1; a += rn) {
+      var end = Math.min(L - 1, a + rn), seg = [];
+      for (var j = a; j <= end; j++) seg.push(map(raw[j]));
+      if (seg.length < 2) continue;
+      var mid = seg[seg.length >> 1], t = field ? clamp(field.lum(clamp(mid[0], 0, 1), clamp(mid[1], 0, 1)), 0, 1) : (a / L);
+      var lc = t * t * (3 - 2 * t);
+      strokes.push({ pts: seg, col: pal.sample(t), w: 0.95, op: field ? (0.18 + 0.74 * lc) : (0.34 + 0.5 * lc) });
+    }
+    return { live: false, strokes: strokes };
+  }
+
+  // 13 ── L-SYSTEM PLANT — a stochastic Lindenmayer system, drawn with a turtle ──
+  //  Axiom X rewritten depth times by X→F+[[X]-X]-F[-FX]+X and F→FF — the classic
+  //  bracketed plant. A turtle walks the string: F draws a branch, +/- rotate by
+  //  `angle` (with rng jitter so each seed differs), [ ] push/pop state. Grows up
+  //  from the base, then fits to art space. Trig-class (rotation via sin/cos).
+  function buildLSystem(rng, P, field) {
+    var pal = P.palette;
+    var angle = pget(P, "angle", 0.42);
+    var depth = Math.round(clamp(pget(P, "depth", 5), 3, 6)) | 0;
+    var SEG_CAP = 5200, rulesX = "F+[[X]-X]-F[-FX]+X", rulesF = "FF", s = "X";
+    for (var it = 0; it < depth; it++) {
+      var o = "";
+      for (var c = 0; c < s.length; c++) { var ch = s.charAt(c); o += ch === "X" ? rulesX : ch === "F" ? rulesF : ch; }
+      s = o;
+    }
+    var stepLen = 1.0, px = 0, py = 0, heading = -Math.PI / 2, bd = 0, stack = [], raw = [];
+    var minX = 0, maxX = 0, minY = 0, maxY = 0, drawn = 0, maxBD = 1;
+    for (var i = 0; i < s.length && drawn < SEG_CAP; i++) {
+      var g = s.charAt(i);
+      if (g === "F") {
+        var wob = (rng() - 0.5) * angle * 0.30, hh = heading + wob, ln = stepLen * (0.86 + 0.28 * rng());
+        var nx = px + Math.cos(hh) * ln, ny = py + Math.sin(hh) * ln;
+        raw.push([px, py, nx, ny, bd]); if (bd > maxBD) maxBD = bd; drawn++; px = nx; py = ny;
+        if (px < minX) minX = px; if (px > maxX) maxX = px; if (py < minY) minY = py; if (py > maxY) maxY = py;
+      } else if (g === "+") heading += angle * (0.82 + 0.36 * rng());
+      else if (g === "-") heading -= angle * (0.82 + 0.36 * rng());
+      else if (g === "[") { stack.push([px, py, heading, bd]); bd++; }
+      else if (g === "]") { var stp = stack.pop(); if (stp) { px = stp[0]; py = stp[1]; heading = stp[2]; bd = stp[3]; } }
+    }
+    if (raw.length < 1) return { live: false, strokes: [{ pts: [[0.5, 0.92], [0.5, 0.6]], col: pal.sample(0.5), w: 1.0, op: 0.6 }] };
+    var lo = 0.06, hi = 0.94, span = hi - lo;
+    var w = Math.max(1e-6, maxX - minX), h = Math.max(1e-6, maxY - minY), scl = span / Math.max(w, h);
+    var ox = lo + (span - w * scl) / 2 - minX * scl, oyBase = hi - (maxY - minY) * scl;
+    function MX(x) { return clamp(ox + x * scl, 0.04, 0.96); }
+    function MY(y) { return clamp(oyBase + (y - minY) * scl, 0.04, 0.96); }
+    var strokes = [];
+    for (var r = 0; r < raw.length; r++) {
+      var seg = raw[r], x0 = MX(seg[0]), y0 = MY(seg[1]), x1 = MX(seg[2]), y1 = MY(seg[3]), dpt = seg[4];
+      var dt = maxBD > 0 ? clamp(dpt / maxBD, 0, 1) : 0, taper = lerp(1.18, 0.5, dt), tipOp = lerp(0.92, 0.34, dt * dt);
+      var t = field ? clamp(field.lum((x0 + x1) * 0.5, (y0 + y1) * 0.5), 0, 1) : clamp(1 - dt, 0, 1);
+      var lc = t * t * (3 - 2 * t);
+      strokes.push({ pts: [[x0, y0], [x1, y1]], col: pal.sample(t), w: clamp(taper, 0.5, 1.2),
+        op: clamp(field ? (0.2 + 0.72 * lc) * (0.55 + 0.45 * tipOp) : tipOp * (0.45 + 0.5 * lc), 0, 1) });
+    }
+    return { live: false, strokes: strokes };
+  }
+
+  // 14 ── VORONOI — cellular tessellation by exact half-plane clipping ───────────
+  //  K seeds; each cell is the points nearest its seed, found by Sutherland–Hodgman
+  //  clipping the bounded plane against every neighbour's perpendicular bisector —
+  //  only +,-,*,/ on the geometry. Lloyd relaxation evens the cells into a foam.
+  //  The photograph places the seeds (sampleEdge) and tints each wall.
+  function buildVoronoi(rng, P, field) {
+    var pal = P.palette;
+    var K = Math.round(clamp(pget(P, "sites", 120), 40, 220)) | 0;
+    var relax = Math.round(clamp(pget(P, "relax", 1), 0, 3)) | 0;
+    var BX0 = 0.06, BX1 = 0.94, BY0 = 0.06, BY1 = 0.94;
+    var sx = new Float64Array(K), sy = new Float64Array(K);
+    for (var i = 0; i < K; i++) {
+      var x, y;
+      if (field) { var sp = field.sampleEdge(rng); x = clamp(sp[0], BX0, BX1); y = clamp(sp[1], BY0, BY1); }
+      else { x = BX0 + (BX1 - BX0) * rng(); y = BY0 + (BY1 - BY0) * rng(); }
+      sx[i] = x; sy[i] = y;
+    }
+    function clipBisector(poly, ax, ay, bx, by) {
+      var nx = bx - ax, ny = by - ay, mx = (ax + bx) * 0.5, my = (ay + by) * 0.5, off = nx * mx + ny * my, out = [], n = poly.length >> 1;
+      for (var k = 0; k < n; k++) {
+        var px = poly[k * 2], py = poly[k * 2 + 1], qx = poly[((k + 1) % n) * 2], qy = poly[((k + 1) % n) * 2 + 1];
+        var fp = nx * px + ny * py - off, fq = nx * qx + ny * qy - off, pin = fp <= 0, qin = fq <= 0;
+        if (pin) out.push(px, py);
+        if (pin !== qin) { var d = fp - fq, t = d !== 0 ? fp / d : 0; out.push(px + (qx - px) * t, py + (qy - py) * t); }
+      }
+      return out;
+    }
+    function cellOf(idx) {
+      var poly = [BX0, BY0, BX1, BY0, BX1, BY1, BX0, BY1], ax = sx[idx], ay = sy[idx];
+      for (var j = 0; j < K; j++) { if (j === idx) continue; poly = clipBisector(poly, ax, ay, sx[j], sy[j]); if (poly.length < 6) return null; }
+      return poly;
+    }
+    for (var rel = 0; rel < relax; rel++) {
+      var nxv = new Float64Array(K), nyv = new Float64Array(K);
+      for (var sI = 0; sI < K; sI++) {
+        var poly = cellOf(sI), m = poly ? (poly.length >> 1) : 0;
+        if (m < 3) { nxv[sI] = sx[sI]; nyv[sI] = sy[sI]; continue; }
+        var A = 0, Cx = 0, Cy = 0;
+        for (var k2 = 0; k2 < m; k2++) {
+          var x0 = poly[k2 * 2], y0 = poly[k2 * 2 + 1], x1 = poly[((k2 + 1) % m) * 2], y1 = poly[((k2 + 1) % m) * 2 + 1], cross = x0 * y1 - x1 * y0;
+          A += cross; Cx += (x0 + x1) * cross; Cy += (y0 + y1) * cross;
+        }
+        if (Math.abs(A) < 1e-12) { nxv[sI] = sx[sI]; nyv[sI] = sy[sI]; continue; }
+        Cx /= (3 * A); Cy /= (3 * A); nxv[sI] = clamp(Cx, BX0, BX1); nyv[sI] = clamp(Cy, BY0, BY1);
+      }
+      sx = nxv; sy = nyv;
+    }
+    var strokes = [];
+    for (var c = 0; c < K; c++) {
+      var cp = cellOf(c), mm = cp ? (cp.length >> 1) : 0; if (mm < 3) continue;
+      var pts = []; for (var k3 = 0; k3 < mm; k3++) pts.push([cp[k3 * 2], cp[k3 * 2 + 1]]);
+      var t;
+      if (field) t = clamp(field.lum(sx[c], sy[c]), 0, 1);
+      else { var dx = sx[c] - 0.5, dy = sy[c] - 0.5; t = clamp(Math.sqrt(dx * dx + dy * dy) / 0.62, 0, 1); }
+      var lc = t * t * (3 - 2 * t);
+      strokes.push({ pts: pts, col: pal.sample(t), w: 0.5 + 0.5 * lc, op: field ? (0.22 + 0.6 * lc) : (0.34 + 0.46 * lc), close: true });
+    }
+    return { live: false, strokes: strokes };
+  }
+
+  // 15 ── HEIGHWAY DRAGON — a self-similar fractal curve via paper-folding ───────
+  //  Fold a strip in half n times, unfold every crease to a right angle, and the
+  //  dragon emerges: tiles the plane, never self-crosses. The i-th turn comes from
+  //  the paper-folding sequence by a bit trick; the turtle walks INTEGER 90° dirs
+  //  (swap/negate — no trigonometry), so it re-derives bit-for-bit on any machine.
+  function buildDragon(rng, P, field) {
+    var pal = P.palette;
+    var iters = Math.round(clamp(pget(P, "iters", 12), 8, 14)) | 0;
+    var twist = Math.round(clamp(pget(P, "twist", 0), 0, 3)) | 0;
+    var n = 1 << iters, DIR = [[1, 0], [0, 1], [-1, 0], [0, -1]], dir = twist & 3;
+    var x = 0, y = 0, raw = new Array(n + 1); raw[0] = [0, 0];
+    var minX = 0, minY = 0, maxX = 0, maxY = 0;
+    for (var i = 1; i <= n; i++) {
+      x += DIR[dir][0]; y += DIR[dir][1]; raw[i] = [x, y];
+      if (x < minX) minX = x; else if (x > maxX) maxX = x;
+      if (y < minY) minY = y; else if (y > maxY) maxY = y;
+      if (i < n) { var left = (((i & -i) << 1) & i) === 0; dir = left ? (dir + 1) & 3 : (dir + 3) & 3; }
+    }
+    var margin = 0.06, span = 1 - 2 * margin;
+    var w = Math.max(1, maxX - minX), h = Math.max(1, maxY - minY), scl = span / Math.max(w, h);
+    var ox = margin + (span - w * scl) / 2, oy = margin + (span - h * scl) / 2;
+    function map(p) { return [ox + (p[0] - minX) * scl, oy + (p[1] - minY) * scl]; }
+    var strokes = [], rn = 28, L = raw.length;
+    for (var a = 0; a < L - 1; a += rn) {
+      var end = Math.min(L - 1, a + rn), seg = [];
+      for (var j = a; j <= end; j++) seg.push(map(raw[j]));
+      if (seg.length < 2) continue;
+      var mid = seg[seg.length >> 1], t = field ? clamp(field.lum(clamp(mid[0], 0, 1), clamp(mid[1], 0, 1)), 0, 1) : (a / L), lc = t * t * (3 - 2 * t);
+      strokes.push({ pts: seg, col: pal.sample(t), w: 0.9, op: field ? (0.18 + 0.74 * lc) : (0.34 + 0.5 * lc) });
+    }
+    return { live: false, strokes: strokes };
+  }
+
+  // 16 ── KOCH SNOWFLAKE — replace each edge's middle third with an outward bump ─
+  //  Von Koch (1904), the first published fractal: finite area, unbounded length.
+  //  Its only constants are ½ and √3/2 (no sin/cos calls), so it re-derives
+  //  bit-for-bit on any machine. Starts from a regular polygon (sides), recursed
+  //  depth times. The photograph tints the rime.
+  function buildKoch(rng, P, field) {
+    var pal = P.palette;
+    var depth = clamp(Math.round(pget(P, "depth", 4)), 2, 5) | 0;
+    var sides = clamp(Math.round(pget(P, "sides", 3)), 3, 6) | 0;
+    var SIN60 = Math.sqrt(3) / 2, COS60 = 0.5;
+    var pts = [];
+    for (var i = 0; i < sides; i++) { var ang = -Math.PI / 2 + (TAU * i) / sides; pts.push([Math.cos(ang), Math.sin(ang)]); }
+    function rot(vx, vy, cc, ss) { return [vx * cc - vy * ss, vx * ss + vy * cc]; }
+    for (var d = 0; d < depth; d++) {
+      var next = [], n = pts.length;
+      for (var k = 0; k < n; k++) {
+        var A = pts[k], B = pts[(k + 1) % n], dx = B[0] - A[0], dy = B[1] - A[1];
+        var P1 = [A[0] + dx / 3, A[1] + dy / 3], P2 = [A[0] + 2 * dx / 3, A[1] + 2 * dy / 3];
+        var rr = rot(P2[0] - P1[0], P2[1] - P1[1], COS60, -SIN60), Peak = [P1[0] + rr[0], P1[1] + rr[1]];
+        next.push(A, P1, Peak, P2);
+      }
+      pts = next;
+    }
+    var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for (var pI = 0; pI < pts.length; pI++) { var pp = pts[pI]; if (pp[0] < minX) minX = pp[0]; if (pp[1] < minY) minY = pp[1]; if (pp[0] > maxX) maxX = pp[0]; if (pp[1] > maxY) maxY = pp[1]; }
+    var LO = 0.08, HI = 0.92, span = HI - LO, wd = (maxX - minX) || 1e-9, ht = (maxY - minY) || 1e-9;
+    var scale = span / Math.max(wd, ht), ox = LO + (span - wd * scale) / 2, oy = LO + (span - ht * scale) / 2, ring = [];
+    for (var rp = 0; rp < pts.length; rp++) ring.push([clamp(ox + (pts[rp][0] - minX) * scale, 0, 1), clamp(oy + (pts[rp][1] - minY) * scale, 0, 1)]);
+    var N = ring.length, RUN = 24, strokes = [], idx = 0, baseW = 0.9, baseOp = 0.95; // NOT reduced-dependent — stroke-width is witnessed, so verify (reduced) must match export
+    while (idx < N) {
+      var end = Math.min(idx + RUN, N), run = [];
+      for (var q = idx; q <= end; q++) run.push(ring[q % N]);
+      var mid = ring[Math.min(idx + ((end - idx) >> 1), N - 1)], prog = N > 1 ? idx / N : 0;
+      var t = field ? clamp(field.lum(mid[0], mid[1]), 0, 1) : prog;
+      strokes.push({ pts: run, col: pal.sample(t), w: baseW, op: baseOp, close: false });
+      idx += RUN;
+    }
+    return { live: false, strokes: strokes };
+  }
+
+  // 17 ── DLA — diffusion-limited aggregation (coral · frost · mineral dendrite) ─
+  //  Witten–Sander: random walkers spawn on a ring outside the cluster and step one
+  //  grid cell at a time until they touch an occupied cell, where they STICK. Growth
+  //  starves the interior and races the tips. Geometry lives on an integer grid
+  //  (occupancy + per-cell owner) so the aggregate re-derives bit-for-bit.
+  function buildDLA(rng, P, field) {
+    var pal = P.palette;
+    var G = Math.round(lerp(170, 260, P.complexity)) | 0;
+    if ((G & 1) === 0) G += 1;
+    var N = Math.round(lerp(1400, 5200, P.complexity)) | 0;
+    var stick = pget(P, "stick", 1.0);
+    var spawn = pget(P, "spawn", 5) | 0;
+    var occ = new Uint8Array(G * G), owner = new Int32Array(G * G);
+    for (var z = 0; z < owner.length; z++) owner[z] = -1;
+    var parent = new Int32Array(N), px = new Int32Array(N), py = new Int32Array(N);
+    var cx = (G / 2) | 0, cy = (G / 2) | 0;
+    occ[cy * G + cx] = 1; owner[cy * G + cx] = 0; px[0] = cx; py[0] = cy; parent[0] = -1;
+    var stuck = 1, maxR = 1, Rcap = (G * 0.5 - 3) * 0.92;
+    var OX = [1, -1, 0, 0, 1, 1, -1, -1], OY = [0, 0, 1, -1, 1, -1, 1, -1], budget = N * 2600;
+    while (stuck < N && maxR < Rcap && budget > 0) {
+      var spawnR = maxR + spawn + 2, ringLim = Rcap + spawn + 2;
+      if (spawnR > ringLim) spawnR = ringLim;
+      var killR = spawnR + spawn + 8, killR2 = killR * killR;
+      var a = rng() * TAU, wx = (cx + Math.cos(a) * spawnR) | 0, wy = (cy + Math.sin(a) * spawnR) | 0;
+      var maxSteps = killR * 8 + 64, landed = -1, hits = 0, contactParent = -1;
+      for (var s = 0; s < maxSteps && budget > 0; s++) {
+        budget--;
+        hits = 0; contactParent = -1;
+        for (var k = 0; k < 8; k++) {
+          var nxk = wx + OX[k], nyk = wy + OY[k];
+          if (nxk < 0 || nxk >= G || nyk < 0 || nyk >= G) continue;
+          if (occ[nyk * G + nxk]) { hits++; if (contactParent < 0) contactParent = nyk * G + nxk; }
+        }
+        if (hits >= 1 && occ[wy * G + wx] === 0) { if (stick >= 1 || rng() < stick) { landed = 1; break; } }
+        var dd = (rng() * 8) | 0; if (dd > 7) dd = 7; wx += OX[dd]; wy += OY[dd];
+        var ddx = wx - cx, ddy = wy - cy;
+        if (ddx * ddx + ddy * ddy > killR2) { var ra = rng() * TAU; wx = (cx + Math.cos(ra) * spawnR) | 0; wy = (cy + Math.sin(ra) * spawnR) | 0; }
+        if (wx < 1) wx = 1; else if (wx > G - 2) wx = G - 2;
+        if (wy < 1) wy = 1; else if (wy > G - 2) wy = G - 2;
+      }
+      if (landed === 1 && contactParent >= 0) {
+        var cell = wy * G + wx; occ[cell] = 1; owner[cell] = stuck;
+        parent[stuck] = owner[contactParent]; px[stuck] = wx; py[stuck] = wy;
+        var rdx = wx - cx, rdy = wy - cy, rr = Math.sqrt(rdx * rdx + rdy * rdy); if (rr > maxR) maxR = rr;
+        stuck++;
+      }
+    }
+    // fit the aggregate's bounding box into art space so it fills the frame at any growth
+    var bminX = G, bminY = G, bmaxX = 0, bmaxY = 0;
+    for (var b = 0; b < stuck; b++) { if (px[b] < bminX) bminX = px[b]; if (px[b] > bmaxX) bmaxX = px[b]; if (py[b] < bminY) bminY = py[b]; if (py[b] > bmaxY) bmaxY = py[b]; }
+    var lo = 0.07, span = 0.86, bw = Math.max(1, bmaxX - bminX), bh = Math.max(1, bmaxY - bminY), scl = span / Math.max(bw, bh);
+    var oxx = lo + (span - bw * scl) / 2, oyy = lo + (span - bh * scl) / 2;
+    function MD(gx, gy) { return [oxx + (gx - bminX) * scl, oyy + (gy - bminY) * scl]; }
+    var strokes = [], denomR = maxR > 0 ? maxR : 1;
+    for (var i = 1; i < stuck; i++) {
+      var pi = parent[i], pa = MD(px[pi], py[pi]), pb = MD(px[i], py[i]), bx = pb[0], by = pb[1];
+      var t;
+      if (field) t = clamp(field.lum(clamp(bx, 0, 1), clamp(by, 0, 1)), 0, 1);
+      else { var cdx = px[i] - cx, cdy = py[i] - cy; t = clamp(1 - Math.sqrt(cdx * cdx + cdy * cdy) / denomR, 0, 1); }
+      strokes.push({ pts: [[pa[0], pa[1]], [bx, by]], col: pal.sample(t), w: 0.55 + 0.45 * t, op: 0.35 + 0.55 * t });
+    }
+    return { live: false, strokes: strokes };
+  }
+
+  // 18 ── PENROSE P3 — aperiodic rhombus tiling by Robinson-triangle deflation ────
+  //  A "sun" of 10 Robinson triangles, deflated `iters` times in the golden ratio φ:
+  //  acute and obtuse triangles each split into smaller ones. The drawn edges are
+  //  the two equal legs of every final triangle, deduped so shared rhombus edges
+  //  aren't doubled. φ and the deflation are exact; the seed circle uses cos/sin
+  //  (trig-class), so deterministic but not claimed bit-for-bit.
+  function buildPenrose(rng, P, field) {
+    var pal = P.palette, phi = (1 + Math.sqrt(5)) / 2;
+    var iters = Math.round(clamp(pget(P, "iters", 5), 3, 6)) | 0;
+    var twist = Math.round(clamp(pget(P, "twist", 0), 0, 4)) | 0, rot = twist * (Math.PI / 5), tris = [];
+    for (var i = 0; i < 10; i++) {
+      var a1 = (2 * i - 1) * Math.PI / 5 + rot, a2 = (2 * i + 1) * Math.PI / 5 + rot;
+      var bx = Math.cos(a1), by = Math.sin(a1), cx = Math.cos(a2), cy = Math.sin(a2);
+      if (i % 2 === 0) { var tx = bx; bx = cx; cx = tx; var ty = by; by = cy; cy = ty; }
+      tris.push([0, 0, 0, bx, by, cx, cy]);
+    }
+    for (var it = 0; it < iters; it++) {
+      var next = [];
+      for (var t2 = 0; t2 < tris.length; t2++) {
+        var T = tris[t2], col = T[0], ax = T[1], ay = T[2], bx2 = T[3], by2 = T[4], cx2 = T[5], cy2 = T[6];
+        if (col === 0) {
+          var px = ax + (bx2 - ax) / phi, py = ay + (by2 - ay) / phi;
+          next.push([0, cx2, cy2, px, py, bx2, by2]); next.push([1, px, py, cx2, cy2, ax, ay]);
+        } else {
+          var qx = bx2 + (ax - bx2) / phi, qy = by2 + (ay - by2) / phi, rx = bx2 + (cx2 - bx2) / phi, ry = by2 + (cy2 - by2) / phi;
+          next.push([1, rx, ry, cx2, cy2, ax, ay]); next.push([1, qx, qy, rx, ry, bx2, by2]); next.push([0, rx, ry, qx, qy, ax, ay]);
+        }
+      }
+      tris = next;
+    }
+    var edgeMap = {}, minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    function pkey(x0, y0, x1, y1) {
+      var k0 = Math.round(x0 * 1e5) + "," + Math.round(y0 * 1e5), k1 = Math.round(x1 * 1e5) + "," + Math.round(y1 * 1e5);
+      return k0 < k1 ? k0 + "|" + k1 : k1 + "|" + k0;
+    }
+    function emap(x0, y0, x1, y1) {
+      var kk = pkey(x0, y0, x1, y1); if (edgeMap[kk]) return;
+      edgeMap[kk] = { x0: x0, y0: y0, x1: x1, y1: y1 };
+      if (x0 < minX) minX = x0; if (x0 > maxX) maxX = x0; if (x1 < minX) minX = x1; if (x1 > maxX) maxX = x1;
+      if (y0 < minY) minY = y0; if (y0 > maxY) maxY = y0; if (y1 < minY) minY = y1; if (y1 > maxY) maxY = y1;
+    }
+    // the full Robinson-triangle tiling — every unique edge of every deflated triangle
+    for (var e = 0; e < tris.length; e++) {
+      var E = tris[e];
+      emap(E[1], E[2], E[3], E[4]); emap(E[3], E[4], E[5], E[6]); emap(E[5], E[6], E[1], E[2]);
+    }
+    var edges = [];
+    for (var ek in edgeMap) edges.push(edgeMap[ek]);
+    if (!edges.length) return { live: false, strokes: [{ pts: [[0.5, 0.45], [0.5, 0.55]], col: pal.sample(0.5), w: 0.9, op: 0.6 }] };
+    var lo = 0.06, hi = 0.94, span = hi - lo, bw = Math.max(1e-6, maxX - minX), bh = Math.max(1e-6, maxY - minY), scl = span / Math.max(bw, bh);
+    var ox = lo + (span - bw * scl) / 2 - minX * scl, oy = lo + (span - bh * scl) / 2 - minY * scl;
+    function MX(x) { return clamp(ox + x * scl, 0.04, 0.96); }
+    function MY(y) { return clamp(oy + y * scl, 0.04, 0.96); }
+    var strokes = [];
+    for (var s = 0; s < edges.length; s++) {
+      var ed = edges[s], x0 = MX(ed.x0), y0 = MY(ed.y0), x1 = MX(ed.x1), y1 = MY(ed.y1), mx = (x0 + x1) * 0.5, my = (y0 + y1) * 0.5, t;
+      if (field) t = clamp(field.lum(mx, my), 0, 1);
+      else { var ddx = mx - 0.5, ddy = my - 0.5; t = clamp(Math.sqrt(ddx * ddx + ddy * ddy) / 0.62, 0, 1); }
+      var lc = t * t * (3 - 2 * t);
+      strokes.push({ pts: [[x0, y0], [x1, y1]], col: pal.sample(t), w: 0.6 + 0.3 * lc, op: field ? (0.24 + 0.62 * lc) : (0.34 + 0.46 * lc) });
+    }
+    return { live: false, strokes: strokes };
+  }
+
+  // 19 ── LIGHTNING / LICHTENBERG — recursive midpoint-displacement discharge ─────
+  //  A channel seeks ground through a dielectric: each segment splits at its midpoint,
+  //  the midpoint kicked along the perpendicular by a seeded amount, each half
+  //  recursing; with probability `branch` a fork peels off, dimmer and thinner. The
+  //  lone sin/cos is the fork rotation. A global segment cap bounds high branch/depth.
+  function buildLightning(rng, P, field) {
+    var pal = P.palette, jitter = pget(P, "jitter", 0.22), branch = pget(P, "branch", 0.35);
+    var depth0 = Math.round(lerp(7, 10, P.complexity)), SEG_CAP = 9000, segs = [];
+    function bolt(ax, ay, bx, by, displace, depth, intensity) {
+      if (segs.length >= SEG_CAP) return;
+      if (depth <= 0) { segs.push({ a: [ax, ay], b: [bx, by], it: intensity }); return; }
+      var midx = (ax + bx) * 0.5, midy = (ay + by) * 0.5, dx = bx - ax, dy = by - ay, len = Math.sqrt(dx * dx + dy * dy) || 1e-6;
+      var px = -dy / len, py = dx / len, off = (rng() - 0.5) * displace;
+      midx += px * off; midy += py * off;
+      bolt(ax, ay, midx, midy, displace * 0.5, depth - 1, intensity);
+      if (branch > 0 && depth > 1 && segs.length < SEG_CAP) {
+        if (rng() < branch) {
+          var ddx = midx - ax, ddy = midy - ay, dl = Math.sqrt(ddx * ddx + ddy * ddy) || 1e-6, ux = ddx / dl, uy = ddy / dl;
+          var sign = rng() < 0.5 ? -1 : 1, ang = sign * lerp(0.3, 0.8, rng()), ca = Math.cos(ang), sa = Math.sin(ang);
+          var fx = ux * ca - uy * sa, fy = ux * sa + uy * ca, flen = dl * lerp(0.5, 0.8, rng());
+          bolt(midx, midy, midx + fx * flen, midy + fy * flen, displace * 0.5, depth - 1, intensity * 0.62);
+        }
+      }
+      bolt(midx, midy, bx, by, displace * 0.5, depth - 1, intensity);
+    }
+    var startX = 0.5 + (rng() - 0.5) * 0.18, endX = clamp(startX + (rng() - 0.5) * 0.5, 0.12, 0.88);
+    bolt(startX, 0.07, endX, 0.92, jitter, depth0, 1.0);
+    var extra = 1 + (rng() < 0.5 ? 1 : 0);
+    for (var ex = 0; ex < extra && segs.length < SEG_CAP; ex++) {
+      var sx = 0.5 + (rng() - 0.5) * 0.22, ex2 = clamp(sx + (rng() - 0.5) * 0.5, 0.12, 0.88);
+      bolt(sx, 0.07, ex2, 0.92, jitter * lerp(0.7, 1.0, rng()), depth0 - 1, lerp(0.55, 0.8, rng()));
+    }
+    var strokes = [];
+    for (var i = 0; i < segs.length; i++) {
+      var s = segs[i], itv = s.it, falloff = clamp(itv, 0, 1);
+      var mx = clamp((s.a[0] + s.b[0]) * 0.5, 0, 1), my = clamp((s.a[1] + s.b[1]) * 0.5, 0, 1);
+      var tint = field ? clamp(field.lum(mx, my), 0, 1) : clamp(0.25 + 0.75 * itv, 0, 1);
+      strokes.push({ pts: [[clamp(s.a[0], 0.04, 0.96), clamp(s.a[1], 0.04, 0.96)], [clamp(s.b[0], 0.04, 0.96), clamp(s.b[1], 0.04, 0.96)]],
+        col: pal.sample(tint), w: lerp(0.5, 1.15, itv), op: clamp(0.25 + 0.7 * itv * falloff, 0, 1) });
+    }
+    return { live: false, strokes: strokes };
+  }
+
+  // 20 ── MAURER ROSE — a rhodonea walked at fixed integer-degree strides ─────────
+  //  r = sin(n·theta) sampled by a straight-line walk every d degrees: the chords
+  //  between the 360 sample points weave the Maurer lattice the smooth petals only
+  //  hint at. r stays signed. A faint fine-sampled rose is laid underneath. Trig-class.
+  function buildMaurer(rng, P, field) {
+    var pal = P.palette, n = clamp(Math.round(pget(P, "n", 6)), 2, 13) | 0, d = clamp(Math.round(pget(P, "d", 71)), 11, 359) | 0;
+    var DEG = Math.PI / 180, web = [];
+    for (var k = 0; k <= 360; k++) { var th = k * d * DEG, r = Math.sin(n * th); web.push([r * Math.cos(th), r * Math.sin(th)]); }
+    var SM = Math.round(lerp(720, 1440, clamp(P.complexity, 0, 1))) | 0, smooth = [];
+    for (var sm0 = 0; sm0 <= SM; sm0++) { var ts = (sm0 / SM) * TAU, rs = Math.sin(n * ts); smooth.push([rs * Math.cos(ts), rs * Math.sin(ts)]); }
+    var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    function bbox(arr) { for (var i = 0; i < arr.length; i++) { var p = arr[i]; if (p[0] < minX) minX = p[0]; if (p[0] > maxX) maxX = p[0]; if (p[1] < minY) minY = p[1]; if (p[1] > maxY) maxY = p[1]; } }
+    bbox(web); bbox(smooth);
+    var lo = 0.07, hi = 0.93, span = hi - lo, bw = Math.max(1e-6, maxX - minX), bh = Math.max(1e-6, maxY - minY), scl = span / Math.max(bw, bh);
+    var ox = lo + (span - bw * scl) / 2 - minX * scl, oy = lo + (span - bh * scl) / 2 - minY * scl;
+    function MX(x) { return clamp(ox + x * scl, 0.04, 0.96); }
+    function MY(y) { return clamp(oy + y * scl, 0.04, 0.96); }
+    var strokes = [], RUN = 24, NS = smooth.length, si = 0;
+    while (si < NS - 1) {
+      var se = Math.min(si + RUN, NS - 1), srun = [];
+      for (var q = si; q <= se; q++) srun.push([MX(smooth[q][0]), MY(smooth[q][1])]);
+      if (srun.length >= 2) { var smid = srun[srun.length >> 1], sprog = NS > 1 ? si / NS : 0, stt = field ? clamp(field.lum(smid[0], smid[1]), 0, 1) : sprog;
+        strokes.push({ pts: srun, col: pal.sample(stt), w: 0.5, op: 0.12 }); }
+      si += RUN;
+    }
+    var NW = web.length, wi = 0;
+    while (wi < NW - 1) {
+      var we = Math.min(wi + RUN, NW - 1), wrun = [];
+      for (var w = wi; w <= we; w++) wrun.push([MX(web[w][0]), MY(web[w][1])]);
+      if (wrun.length >= 2) { var wmid = wrun[wrun.length >> 1], wprog = NW > 1 ? wi / NW : 0, t = field ? clamp(field.lum(wmid[0], wmid[1]), 0, 1) : wprog, lc = t * t * (3 - 2 * t);
+        strokes.push({ pts: wrun, col: pal.sample(t), w: 0.6 + 0.4 * lc, op: field ? (0.3 + 0.55 * lc) : (0.4 + 0.45 * lc) }); }
+      wi += RUN;
+    }
+    return { live: false, strokes: strokes };
+  }
+
+  // 21 ── CLIFFORD ATTRACTOR — deterministic chaos folding a plane ────────────────
+  //  Iterate x'=sin(ay)+c·cos(ax), y'=sin(bx)+d·cos(by); the orbit never repeats yet
+  //  never escapes. a,b are witnessed knobs; c,d are bent by the seed. Skip the
+  //  transient, fit the bbox, draw as low-opacity runs so density builds the web.
+  function buildClifford(rng, P, field) {
+    var pal = P.palette, a = clamp(pget(P, "a", 1.7), -2.2, 2.2), b = clamp(pget(P, "b", -1.8), -2.2, 2.2);
+    var c = lerp(-1.6, 1.6, rng()), d = lerp(-1.6, 1.6, rng()), TRANSIENT = 600, COLLECT = Math.round(lerp(9000, 16000, clamp(P.complexity, 0, 1))) | 0;
+    var x = (rng() - 0.5) * 0.01, y = (rng() - 0.5) * 0.01, xs = new Float64Array(COLLECT), ys = new Float64Array(COLLECT);
+    var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity, sumX = 0, sumY = 0, got = 0, total = TRANSIENT + COLLECT;
+    for (var i = 0; i < total; i++) {
+      var nx = Math.sin(a * y) + c * Math.cos(a * x), ny = Math.sin(b * x) + d * Math.cos(b * y);
+      if (!isFinite(nx) || !isFinite(ny)) { x = 0; y = 0; continue; }
+      x = nx; y = ny; if (i < TRANSIENT) continue;
+      xs[got] = x; ys[got] = y;
+      if (x < minX) minX = x; if (x > maxX) maxX = x; if (y < minY) minY = y; if (y > maxY) maxY = y;
+      sumX += x; sumY += y; got++;
+    }
+    if (got < 2) return { live: false, strokes: [{ pts: [[0.5, 0.45], [0.5, 0.55]], col: pal.sample(0.5), w: 0.9, op: 0.6 }] };
+    var lo = 0.06, hi = 0.94, span = hi - lo, bw = Math.max(1e-4, maxX - minX), bh = Math.max(1e-4, maxY - minY), scl = span / Math.max(bw, bh);
+    var ox = lo + (span - bw * scl) / 2 - minX * scl, oy = lo + (span - bh * scl) / 2 - minY * scl;
+    var cenX = (sumX / got) * scl + ox, cenY = (sumY / got) * scl + oy;
+    function MX(v) { return clamp(ox + v * scl, 0.04, 0.96); }
+    function MY(v) { return clamp(oy + v * scl, 0.04, 0.96); }
+    var RUN = 60, strokes = [];
+    for (var s = 0; s < got; s += RUN) {
+      var end = Math.min(got, s + RUN), pts = [];
+      for (var j = s; j < end; j++) pts.push([MX(xs[j]), MY(ys[j])]);
+      if (pts.length < 2) continue;
+      var mid = (s + end - 1) >> 1, mxx = MX(xs[mid]), myy = MY(ys[mid]), t;
+      if (field) t = clamp(field.lum(mxx, myy), 0, 1);
+      else { var ddx = mxx - cenX, ddy = myy - cenY; t = clamp(Math.sqrt(ddx * ddx + ddy * ddy) / 0.62, 0, 1); }
+      var lc = t * t * (3 - 2 * t);
+      strokes.push({ pts: pts, col: pal.sample(t), w: 0.6 + 0.3 * lc, op: 0.06 + 0.1 * (field ? (0.35 + 0.65 * t) : (0.4 + 0.6 * lc)) });
+    }
+    if (!strokes.length) return { live: false, strokes: [{ pts: [[MX(xs[0]), MY(ys[0])], [MX(xs[got - 1]), MY(ys[got - 1])]], col: pal.sample(0.5), w: 0.9, op: 0.14 }] };
+    return { live: false, strokes: strokes };
+  }
+
   var STUDIES = [
     { id: "phyllotaxis", label: "Phyllotaxis", build: buildPhyllotaxis,
       blurb: "Vogel&rsquo;s spiral &mdash; a seed every <b>golden angle</b>, radius as &radic;index. The Fibonacci arms you see are emergent, never drawn. <span class='sp'>The snail</span> lights which arms are bright." },
@@ -909,12 +1457,34 @@
       blurb: "Thousands of agents lay a trail and turn toward where it &mdash; and the photograph&rsquo;s light &mdash; runs strongest; the trail diffuses and decays behind them. Reinforced paths thicken into a transport network, the way <i>Physarum</i> slime mould finds the shortest route through a maze. The brightest tissue becomes the busiest road. <span class='sp'>Watch it</span> forage." },
     { id: "boids", label: "Boids", build: buildBoids,
       blurb: "Reynolds&rsquo; flock: each agent steers by three local rules &mdash; <b>separation</b>, <b>alignment</b>, <b>cohesion</b> &mdash; over the neighbours inside its vision, found through a grid hash. No leader, no path; the murmuration is emergent. The photograph&rsquo;s light pulls the flock toward the bright tissue. <span class='sp'>Watch it</span> school. After Reynolds, SIGGRAPH 1987." },
-    { id: "orbital", label: "Orbitals", build: buildOrbital,
+    { id: "orbital", label: "Orbitals", build: buildOrbital, ghost: false,
       blurb: "The hydrogen atom solved exactly &mdash; <b>Schr&ouml;dinger&rsquo;s</b> 1926 wave equation, &psi;<sub>n,l</sub> = R<sub>nl</sub>(r)&middot;Y<sub>l0</sub>(&theta;). The squared wavefunction |&psi;|&sup2; is the electron&rsquo;s probability cloud, drawn as iso-probability contours through the nucleus. The dark gaps are real <b>nodes</b> &mdash; n&minus;l&minus;1 radial, l angular &mdash; where the electron is never found. <span class='sp'>The defaults</span> draw 3d<sub>z&sup2;</sub>, the atom&rsquo;s own geometry. <i>After Kavan (kevkev-70).</i>" },
     { id: "hilbert", label: "Hilbert", build: buildHilbert,
       blurb: "Hilbert&rsquo;s space-filling curve (1891): one continuous pen stroke that visits <b>every cell</b> of the plane exactly once. The whole path is pure integer arithmetic &mdash; no trigonometry, no roots &mdash; so it re-derives <b>bit-for-bit on any machine</b>: that exactness is the point. The specimen is rendered <i>as</i> the single stroke, runs tinted by the photograph&rsquo;s light." },
     { id: "binomial", label: "Pascal", build: buildBinomial,
       blurb: "The binomial theorem made visible: <b>Pascal&rsquo;s triangle</b>, C(i,j) = C(i&minus;1,j&minus;1) + C(i&minus;1,j), computed entirely <b>mod m</b>. The non-zero cells form a self-similar fractal &mdash; mod 2 is the <b>Sierpi&#324;ski gasket</b>, every modulus its own nesting. Pure integer arithmetic, so it re-derives <b>bit-for-bit on any machine</b>. The photograph tints the cells; the structure is the coefficients&rsquo; own." },
+    { id: "harmonograph", label: "Harmonograph", build: buildHarmonograph,
+      blurb: "Two damped pendulums per axis &mdash; a real 19th-century drawing machine. Near-integer frequency ratios make the figure precess into a dense weave as the swing decays; no two seeds wind the same way. <span class='sp'>The specimen</span> colours the curve as it passes." },
+    { id: "gosper", label: "Gosper", build: buildGosper,
+      blurb: "The flowsnake: one continuous stroke that tiles the plane in hexagons &mdash; a fractal coastline that never crosses itself. Rewriting <b>A&rarr;A-B--B+A++AA+B-</b> at 60&deg;, its six directions use only &frac12; and &radic;3/2, so it re-derives <b>bit-for-bit on any machine</b>. <span class='sp'>The specimen</span> tints each run." },
+    { id: "lsystem", label: "L&#8209;system", build: buildLSystem,
+      blurb: "A Lindenmayer system: one rewrite rule, applied to itself, grows a branching plant &mdash; the same recursive self-similarity a real fern or tree builds by. The turtle reads the rewritten string, turning by <b>sin/cos</b> at each fork; each seed jitters the branch angles, so no two plants are alike. <span class='sp'>The specimen</span> lights the canopy." },
+    { id: "voronoi", label: "Voronoi", build: buildVoronoi,
+      blurb: "A Voronoi tessellation: every point of the plane joins its nearest seed, and the borders are the cell walls &mdash; the partition a foam, a leaf&rsquo;s areoles, or a sheet of cells settles into. Built by clipping each cell against its neighbours&rsquo; bisectors, exact arithmetic. <span class='sp'>The specimen</span> places the seeds and tints the cells." },
+    { id: "dragon", label: "Dragon", build: buildDragon,
+      blurb: "The Heighway dragon: fold a strip in half the same way over and over, unfold to right angles, and a self-similar curve that tiles the plane without crossing emerges. Pure 90&deg; integer turns &mdash; no trigonometry &mdash; so it re-derives <b>bit-for-bit on any machine</b>. <span class='sp'>The specimen</span> tints the fold." },
+    { id: "koch", label: "Koch", build: buildKoch,
+      blurb: "Von Koch&rsquo;s snowflake: replace the middle third of every edge with an outward equilateral bump, recursively &mdash; a curve of finite area but unbounded length, the first published fractal (1904). Its only constants are &frac12; and &radic;3/2, so it re-derives <b>bit-for-bit on any machine</b>. <span class='sp'>The specimen</span> tints the rime." },
+    { id: "dla", label: "DLA", build: buildDLA,
+      blurb: "Witten&ndash;Sander aggregation: random walkers stick where they first touch the cluster, so growth starves the interior and races the tips &mdash; the branching of coral, frost, and mineral dendrites. Held on an integer grid, so it re-derives <b>bit-for-bit</b>. <span class='sp'>The specimen</span> tints each branch." },
+    { id: "penrose", label: "Penrose", build: buildPenrose,
+      blurb: "A Penrose tiling: Robinson triangles deflated in the golden ratio &phi; cover the plane with five-fold symmetry but <em>never</em> repeat &mdash; the aperiodic order later found in real quasicrystals. The seed sun uses sin/cos, so it is deterministic, not bit-for-bit. <span class='sp'>The specimen</span> tints the tiling." },
+    { id: "lightning", label: "Lightning", build: buildLightning,
+      blurb: "Recursive midpoint displacement: a channel forks and jitters at every halving, the way a Lichtenberg figure or a lightning stroke seeks ground through a dielectric. The geometry is perpendicular offset and arithmetic &mdash; the only <b>sin/cos</b> is the angle each fork peels off at. <span class='sp'>The specimen</span> tints the discharge." },
+    { id: "maurer", label: "Maurer rose", build: buildMaurer,
+      blurb: "A Maurer rose: walk the rhodonea r = sin(n&theta;) in fixed-degree strides and the straight chords weave a lattice the smooth petals only hint at &mdash; order from a deliberately coarse sampling, on a curve of pure <b>sin/cos</b>. Different <em>n</em> and step give wildly different webs. <span class='sp'>The specimen</span> tints the weave." },
+    { id: "clifford", label: "Attractor", build: buildClifford,
+      blurb: "A Clifford attractor: iterate x&prime;=sin(ay)+c&middot;cos(ax), y&prime;=sin(bx)+d&middot;cos(by) and the orbit never repeats yet never escapes &mdash; deterministic chaos folding a plane into a strange attractor. <b>a</b> and <b>b</b> are yours; each seed bends <em>c,d</em> into a new creature. <span class='sp'>The specimen</span> tints the cloud." },
     { id: "live", label: "Live &middot; camera", build: null,
       blurb: "The camera as a real organ &mdash; particles stream along the edges it senses, live." }
   ];
@@ -927,7 +1497,9 @@
   ];
   var PALETTE_CHIPS = [
     { id: "spectrum", label: "Spectrum" }, { id: "ember", label: "Ember" },
-    { id: "cool", label: "Cool" }, { id: "mono", label: "Monoline" }
+    { id: "cool", label: "Cool" }, { id: "chitin", label: "Chitin" },
+    { id: "marrow", label: "Marrow" }, { id: "verdigris", label: "Verdigris" },
+    { id: "biolume", label: "Biolume" }, { id: "mono", label: "Monoline" }
   ];
 
   // ── renderer ────────────────────────────────────────────────────────────────
@@ -956,6 +1528,66 @@
       ctx.stroke();
     }
     ctx.globalAlpha = 1;
+  }
+
+  // ── advanced studio render: the same witnessed lines, rendered with depth ─────
+  // paintRich draws ONLY to the screen canvas. It never touches finalStrokes,
+  // optimizeForPlot, hashOpt or plotSVG — so the exported plot and its SHA-256
+  // witness are byte-identical to before. Screen = an inked, luminous reading of
+  // the plot; the plot itself stays the clean single-stroke pen file.
+  var GHOST_CACHE = {}, GHOST_GID = 0;
+  function fieldGhost(field, palId) {
+    if (!field || !field.lum) return null;
+    if (field._gid == null) field._gid = ++GHOST_GID;
+    var key = field._gid + "|" + palId;
+    if (GHOST_CACHE[key]) return GHOST_CACHE[key];
+    var G = 168, off = document.createElement("canvas"); off.width = G; off.height = G;
+    var g = off.getContext("2d"), img = g.createImageData(G, G), d = img.data;
+    var pal = PALETTES[palId] || PALETTES.spectrum;
+    var lo = hexToRgb(pal[0]), hi = hexToRgb(pal[pal.length - 1]);
+    for (var y = 0; y < G; y++) for (var x = 0; x < G; x++) {
+      var l = clamp(field.lum((x + 0.5) / G, (y + 0.5) / G), 0, 1);
+      var sh = l * l * (3 - 2 * l); // smoothstep — let highlights carry the form
+      var i = (y * G + x) * 4;
+      d[i] = lerp(lo[0], hi[0], sh); d[i + 1] = lerp(lo[1], hi[1], sh);
+      d[i + 2] = lerp(lo[2], hi[2], sh); d[i + 3] = Math.round(255 * (0.15 + 0.85 * sh));
+    }
+    g.putImageData(img, 0, 0);
+    GHOST_CACHE[key] = off; return off;
+  }
+  function paintRich(ctx, W, H, strokes, field, palId) {
+    ctx.clearRect(0, 0, W, H);
+    var inner = Math.min(W, H) * (1 - 2 * MARGIN), offx = (W - inner) / 2, offy = (H - inner) / 2;
+    var wScale = inner / 1000;
+    // 1 — perceived-field ghost: the specimen the algorithm actually read, faint behind the art
+    var ghost = fieldGhost(field, palId);
+    if (ghost) {
+      ctx.save();
+      ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = 0.27;
+      try { ctx.filter = "blur(2px)"; } catch (e) {}
+      ctx.imageSmoothingEnabled = true;
+      ctx.drawImage(ghost, offx, offy, inner, inner);
+      ctx.restore();
+    }
+    // 2 — the lines, twice: a wide additive bloom for luminous depth, then crisp ink on top
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
+    function pass(widthMul, alphaMul, comp) {
+      ctx.globalCompositeOperation = comp;
+      for (var i = 0; i < strokes.length; i++) {
+        var s = strokes[i], pts = s.pts, np = pts.length; if (np < 2) continue;
+        ctx.globalAlpha = clamp((s.op == null ? 1 : s.op) * alphaMul, 0, 1);
+        ctx.strokeStyle = s.col;
+        ctx.lineWidth = Math.max(0.35, (s.w || 1) * wScale * widthMul);
+        ctx.beginPath();
+        ctx.moveTo(offx + pts[0][0] * inner, offy + pts[0][1] * inner);
+        for (var j = 1; j < np; j++) ctx.lineTo(offx + pts[j][0] * inner, offy + pts[j][1] * inner);
+        if (s.close) ctx.closePath();
+        ctx.stroke();
+      }
+    }
+    pass(3.6, 0.16, "lighter");    // halo — overlaps build warmth, the organic glow
+    pass(1.0, 1.0, "source-over"); // crisp pen line
+    ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
   }
 
   // ── SVG export (plotter-ready: single-stroke paths, grouped by pen colour) ───
@@ -1116,6 +1748,74 @@
     var ctx = canvas.getContext("2d");
     var reduced = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
+    // ── pointer-reactive play: a live cursor-perturbed particle flow over the art ─
+    // Screen-only — never touches finalStrokes or the export. The settled drawing is
+    // cached into playBuf; particles advect along curl-noise and are dragged/repelled
+    // by the cursor, leaving luminous additive trails over the cached art, then it
+    // restores clean. Off under reduced-motion and on coarse (touch) pointers.
+    var playBuf = null, playRaf = 0, playDpr = 1, playReady = false, playW = 0, playH = 0;
+    var playFine = !!(window.matchMedia && window.matchMedia("(pointer: fine)").matches);
+    var playP = null, NP = 720, playActive = false, playFade = 0, playCur = { x: -999, y: -999, vx: 0, vy: 0 };
+    var playNoise = makeNoise(makeRng("atelier-play-flow"));
+    function capturePlay() {
+      if (reduced || !playFine) { playReady = false; return; }
+      if (!playBuf) playBuf = document.createElement("canvas");
+      if (playBuf.width !== canvas.width || playBuf.height !== canvas.height) { playBuf.width = canvas.width; playBuf.height = canvas.height; playP = null; }
+      var pb = playBuf.getContext("2d");
+      pb.setTransform(1, 0, 0, 1, 0, 0); pb.clearRect(0, 0, playBuf.width, playBuf.height); pb.drawImage(canvas, 0, 0);
+      var rect = canvas.getBoundingClientRect();
+      playDpr = canvas.width / Math.max(1, rect.width); playW = rect.width; playH = rect.height; playReady = true;
+    }
+    function finalPaint(W, H, strokes, fld) { paintRich(ctx, W, H, strokes, fld, state.palette); capturePlay(); }
+    function blitBase() { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.drawImage(playBuf, 0, 0); }
+    function playReset() { playActive = false; playFade = 0; playP = null; playReady = false; if (playRaf) { cancelAnimationFrame(playRaf); playRaf = 0; } }
+    function playInit() { playP = new Float32Array(NP * 3); for (var i = 0; i < NP; i++) { var b = i * 3; playP[b] = Math.random() * playW; playP[b + 1] = Math.random() * playH; playP[b + 2] = Math.random(); } }
+    function playFrame() {
+      if (!playBuf || !playReady) { playRaf = 0; return; }
+      if (!playActive && playFade <= 0) { playRaf = 0; blitBase(); return; }
+      if (!playP) playInit();
+      blitBase();
+      var amp = playActive ? 1 : playFade;
+      var ink = makePalette(PALETTES[state.palette] || PALETTES.spectrum).sample(0.74), m = /rgb\((\d+),\s*(\d+),\s*(\d+)\)/.exec(ink);
+      var R = m ? +m[1] : 240, Gc = m ? +m[2] : 220, Bc = m ? +m[3] : 180;
+      playCur.vx *= 0.88; playCur.vy *= 0.88;
+      ctx.setTransform(playDpr, 0, 0, playDpr, 0, 0);
+      ctx.globalCompositeOperation = "lighter"; ctx.lineCap = "round"; ctx.lineWidth = 1.05;
+      var sc = 0.006, spd = 1.5, Rr = 130, Rr2 = Rr * Rr;
+      for (var i = 0; i < NP; i++) {
+        var b = i * 3, x = playP[b], y = playP[b + 1], life = playP[b + 2];
+        var ang = playNoise.fbm(x * sc, y * sc) * TAU * 2.2, vx = Math.cos(ang) * spd, vy = Math.sin(ang) * spd;
+        var dx = x - playCur.x, dy = y - playCur.y, d2 = dx * dx + dy * dy;
+        if (d2 < Rr2) { var d = Math.sqrt(d2) + 0.01, f = 1 - d / Rr; vx += playCur.vx * f * 0.9 + (dx / d) * f * 2.2; vy += playCur.vy * f * 0.9 + (dy / d) * f * 2.2; }
+        var nx = x + vx, ny = y + vy;
+        life -= 0.011;
+        if (life <= 0 || nx < 0 || nx > playW || ny < 0 || ny > playH) {
+          // respawn — jump without drawing the long connecting streak
+          if (playActive && Math.random() < 0.5) { nx = playCur.x + (Math.random() - 0.5) * 90; ny = playCur.y + (Math.random() - 0.5) * 90; }
+          else { nx = Math.random() * playW; ny = Math.random() * playH; }
+          playP[b] = nx; playP[b + 1] = ny; playP[b + 2] = 0.4 + Math.random() * 0.6;
+          continue;
+        }
+        var al = clamp(0.42 * amp * (0.25 + 0.75 * life), 0, 1);
+        ctx.strokeStyle = "rgba(" + R + "," + Gc + "," + Bc + "," + al + ")";
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(nx, ny); ctx.stroke();
+        playP[b] = nx; playP[b + 1] = ny; playP[b + 2] = life;
+      }
+      ctx.globalCompositeOperation = "source-over"; ctx.globalAlpha = 1; ctx.setTransform(1, 0, 0, 1, 0, 0);
+      if (!playActive) playFade -= 0.018;
+      if (playActive || playFade > 0) playRaf = requestAnimationFrame(playFrame); else { playRaf = 0; blitBase(); }
+    }
+    if (playFine) {
+      canvas.addEventListener("pointermove", function (ev) {
+        if (!playReady || ev.pointerType === "touch") return;
+        var rect = canvas.getBoundingClientRect(), x = ev.clientX - rect.left, y = ev.clientY - rect.top;
+        if (playCur.x > -900) { playCur.vx = 0.6 * playCur.vx + 0.4 * (x - playCur.x); playCur.vy = 0.6 * playCur.vy + 0.4 * (y - playCur.y); }
+        playCur.x = x; playCur.y = y; playActive = true; playFade = 1;
+        if (!playRaf) playRaf = requestAnimationFrame(playFrame);
+      });
+      canvas.addEventListener("pointerleave", function () { playActive = false; });
+    }
+
     var state = {
       study: "flow", specimen: "snail", palette: "spectrum",
       complexity: 0.58, seed: randomSeed(), params: defParams("flow")
@@ -1166,7 +1866,7 @@
     }
 
     function render() {
-      drawToken++; var myToken = drawToken; settled = false;
+      drawToken++; var myToken = drawToken; settled = false; playReset();
       writeURL(); // keep the address bar equal to the current recipe (shareable)
       if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
       if (state.study === "live") { startLive(); return; } // the senses organ: live camera, its own loop
@@ -1183,6 +1883,7 @@
       var spec = specimenById(state.specimen);
       function go(field) {
         if (myToken !== drawToken) return;
+        var ghostF = (st.ghost === false) ? null : field; // the ghost shows what the organ READ; skip it where the field is unused
         var rng = makeRng(state.seed + "|" + state.study + "|" + state.specimen + "|" + Math.round(state.complexity * 100) + "|" + state.palette + pkey(state.study, state.params));
         var piece;
         try { piece = st.build(rng, P, field); }
@@ -1191,7 +1892,7 @@
         if (piece.live) {
           if (reduced) {
             var guard = 0; while (!piece.step() && guard++ < 600) { }
-            finalStrokes = piece.strokes(); settled = true; drawStrokes(ctx, W, H, finalStrokes, 1);
+            finalStrokes = piece.strokes(); settled = true; finalPaint(W, H, finalStrokes, ghostF);
             status(finalStrokes.length + " strokes · settled");
             return;
           }
@@ -1207,21 +1908,19 @@
             var unit = state.study === "reaction" || state.study === "physarum" ? " steps" : " nodes";
             status(done ? (cur.length + " strokes · settled") : (verb + "… " + (piece.count ? piece.count() + unit : "")));
             if (!done) rafId = requestAnimationFrame(liveTick);
-            else { finalStrokes = cur; settled = true; }
+            else { finalStrokes = cur; settled = true; finalPaint(W, H, finalStrokes, ghostF); }
           };
           rafId = requestAnimationFrame(liveTick);
         } else {
           finalStrokes = piece.strokes; settled = true;
-          if (reduced) { drawStrokes(ctx, W, H, finalStrokes, 1); status(finalStrokes.length + " strokes · drawn"); return; }
+          if (reduced) { finalPaint(W, H, finalStrokes, ghostF); status(finalStrokes.length + " strokes · drawn"); return; }
           var t0 = (window.performance && performance.now) ? performance.now() : Date.now(), dur = 1050;
           var revealTick = function (now) {
             if (myToken !== drawToken) return;
             var nowMs = now || ((window.performance && performance.now) ? performance.now() : Date.now());
             var p = clamp((nowMs - t0) / dur, 0, 1), e = easeOutCubic(p);
-            drawStrokes(ctx, W, H, finalStrokes, e);
-            status("drawing… " + Math.round(p * 100) + "%");
-            if (p < 1) rafId = requestAnimationFrame(revealTick);
-            else status(finalStrokes.length + " strokes · drawn");
+            if (p < 1) { drawStrokes(ctx, W, H, finalStrokes, e); status("drawing… " + Math.round(p * 100) + "%"); rafId = requestAnimationFrame(revealTick); }
+            else { finalPaint(W, H, finalStrokes, ghostF); status(finalStrokes.length + " strokes · drawn"); }
           };
           rafId = requestAnimationFrame(revealTick);
         }

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Atelier — algorithmic drawings · Zain Dana Harper</title>
-<meta name="description" content="Macro photographs by iamBeTa — a snail's logarithmic shell, a seedhead's curl, a mallow's veins — become the seed for ten real generative algorithms: phyllotaxis, flow fields, differential growth, venation, reaction-diffusion, slime-mould networks, flocking, hydrogen orbitals, space-filling curves, and Pascal's triangle. Generated live in the browser, deterministic from a visible seed, exportable as plotter-ready SVG.">
+<meta name="description" content="Macro photographs by iamBeTa — a snail's logarithmic shell, a seedhead's curl, a mallow's veins — become the seed for twenty-one real generative algorithms: phyllotaxis, flow fields, differential growth, venation, reaction-diffusion, slime-mould networks, flocking, hydrogen orbitals, space-filling curves, Pascal's triangle, the harmonograph, Gosper and dragon and Koch fractal curves, diffusion-limited aggregation, Voronoi tessellation, L-system plants, Penrose tilings, Lichtenberg lightning, Maurer roses, and Clifford attractors. Generated live in the browser, deterministic from a visible seed, exportable as plotter-ready SVG.">
 <link rel="canonical" href="https://harperz9.github.io/atelier.html">
 <meta name="color-scheme" content="dark">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -189,7 +189,7 @@
     </div>
   </div>
   <p class="nojs" id="at-nojs" hidden>This instrument needs JavaScript &mdash; it generates every line at runtime. The algorithms are plain, dependency-free code in <b>system/atelier.js</b>.</p>
-  <p class="artifact-note reveal">No libraries, no saved frames &mdash; a small seeded random-number generator, the five algorithms, a canvas, and a plot optimiser that stitches and orders the lines for a real pen. <em>Why it belongs here:</em> a drawing that is deterministic from a stated seed, and carries a witness of its own geometry, is one you can <b>re-derive</b> instead of trust &mdash; the same move the rest of this work makes, in a form you can hang on a wall.</p>
+  <p class="artifact-note reveal">No libraries, no saved frames &mdash; a small seeded random-number generator, the algorithms, a canvas, and a plot optimiser that stitches and orders the lines for a real pen. <em>Why it belongs here:</em> a drawing that is deterministic from a stated seed, and carries a witness of its own geometry, is one you can <b>re-derive</b> instead of trust &mdash; the same move the rest of this work makes, in a form you can hang on a wall.</p>
 </section>
 
 <section class="mv" id="verify" aria-labelledby="vf-h">
@@ -210,7 +210,7 @@
 </section>
 
 <section class="mv" id="algorithms" aria-labelledby="alg-h">
-  <h2 id="alg-h" class="reveal">Ten algorithms, four photographs.</h2>
+  <h2 id="alg-h" class="reveal">Twenty-one algorithms, four photographs.</h2>
   <p class="body-text reveal">Each is a real generative method with a long lineage in mathematics and plotter art &mdash; chosen because a specimen in the work already embodies it.</p>
   <div class="studies reveal">
     <div class="study-row">
@@ -253,6 +253,50 @@
       <span class="study-name">Pascal<span class="from">the binomial theorem</span></span>
       <span class="study-gloss">The binomial coefficients C(i,j) = C(i&minus;1,j&minus;1) + C(i&minus;1,j) &mdash; Pascal&rsquo;s triangle &mdash; taken <em>mod m</em>: the non-zero cells are a self-similar fractal, and mod 2 is the <em>Sierpi&#324;ski gasket</em>. Pure integer arithmetic, so the drawing re-derives <em>bit-for-bit on any machine</em>; the photograph only tints the structure the coefficients already hold.</span>
     </div>
+    <div class="study-row">
+      <span class="study-name">Harmonograph<span class="from">a drawing machine</span></span>
+      <span class="study-gloss">Two damped pendulums per axis &mdash; the 19th-century harmonograph. Each axis sums a pair of sine swings whose amplitude decays, and near-integer frequency ratios make the figure slowly <em>precess</em> into a dense Lissajous weave. A real mechanical phenomenon, drawn as one continuous line; the specimen colours it as it passes.</span>
+    </div>
+    <div class="study-row">
+      <span class="study-name">Gosper<span class="from">the flowsnake</span></span>
+      <span class="study-gloss">A space-filling fractal curve: <em>one continuous stroke</em> that tiles the plane in hexagons, a coastline that never crosses itself. Built by the Lindenmayer rewrite A&rarr;A-B--B+A++AA+B- at 60&deg;; its six directions use only &frac12; and &radic;3/2, so &mdash; like Hilbert &mdash; it re-derives <em>bit-for-bit on any machine</em>. The hexagonal sibling to the square Hilbert fill.</span>
+    </div>
+    <div class="study-row">
+      <span class="study-name">Dragon<span class="from">a folded curve</span></span>
+      <span class="study-gloss">The Heighway dragon: fold a strip in half the same way <em>n</em> times, unfold every crease to a right angle, and a self-similar curve that tiles the plane without ever crossing itself appears. Pure 90&deg; integer turns &mdash; no trigonometry &mdash; so it re-derives <em>bit-for-bit on any machine</em>.</span>
+    </div>
+    <div class="study-row">
+      <span class="study-name">Koch<span class="from">the snowflake</span></span>
+      <span class="study-gloss">Von Koch&rsquo;s 1904 construction: replace the middle third of every edge with an outward equilateral bump, forever &mdash; the first published curve of finite area but unbounded length. Its only constants are &frac12; and &radic;3/2, so it too re-derives <em>bit-for-bit on any machine</em>.</span>
+    </div>
+    <div class="study-row">
+      <span class="study-name">DLA<span class="from">coral &amp; frost</span></span>
+      <span class="study-gloss">Diffusion-limited aggregation (Witten&ndash;Sander, 1981): random walkers drift until they touch the cluster and freeze where they land, so the tips shadow the interior and the form keeps branching &mdash; the geometry of coral, frost ferns, mineral dendrites, and electrodeposition. Held on an integer grid, so it re-derives <em>bit-for-bit</em>.</span>
+    </div>
+    <div class="study-row">
+      <span class="study-name">Voronoi<span class="from">the cell walls</span></span>
+      <span class="study-gloss">A Voronoi tessellation: every point of the plane joins its nearest seed, and the borders are the walls between territories &mdash; the partition a foam, a dragonfly&rsquo;s wing, or a sheet of cells settles into. Each cell is found by exact half-plane clipping; Lloyd relaxation evens them. The specimen places the seeds.</span>
+    </div>
+    <div class="study-row">
+      <span class="study-name">L&#8209;system<span class="from">the plant grammar</span></span>
+      <span class="study-gloss">A Lindenmayer system: a single rewrite rule applied to its own output, then walked by a turtle &mdash; the grammar Lindenmayer wrote in 1968 to model how a plant elaborates itself. Brackets push and pop the branch; the seed jitters every fork, so no two plants repeat.</span>
+    </div>
+    <div class="study-row">
+      <span class="study-name">Penrose<span class="from">a quasicrystal</span></span>
+      <span class="study-gloss">A Penrose tiling: Robinson triangles deflated in the golden ratio &phi; cover the plane with five-fold symmetry but <em>never</em> repeat &mdash; the aperiodic order long thought impossible, then found in real quasicrystals. The seed star uses sin/cos, so it re-derives deterministically rather than bit-for-bit.</span>
+    </div>
+    <div class="study-row">
+      <span class="study-name">Lightning<span class="from">a discharge</span></span>
+      <span class="study-gloss">Recursive midpoint displacement: a channel splits, kicks sideways, and forks at every halving &mdash; the branched path a Lichtenberg figure or a lightning stroke takes to ground through a dielectric. The geometry is perpendicular offset and arithmetic; only the fork angle calls a trig function.</span>
+    </div>
+    <div class="study-row">
+      <span class="study-name">Maurer rose<span class="from">a rhodonea</span></span>
+      <span class="study-gloss">A Maurer rose: walk the rose curve r = sin(n&theta;) in fixed integer-degree strides, and the straight chords between samples weave a lattice the smooth petals only imply &mdash; intricate order surfacing from a deliberately coarse sampling. After Peter Maurer, 1987.</span>
+    </div>
+    <div class="study-row">
+      <span class="study-name">Attractor<span class="from">deterministic chaos</span></span>
+      <span class="study-gloss">A Clifford attractor: iterate x&prime; = sin(ay) + c&middot;cos(ax), y&prime; = sin(bx) + d&middot;cos(by), and the orbit never repeats yet never escapes &mdash; a strange attractor, deterministic chaos folding a plane into a cloud. Every seed bends the constants c, d into a new creature.</span>
+    </div>
   </div>
   <div class="channels reveal">
     <span class="g">Start here</span> &mdash; <a href="overview.html">the map</a>
@@ -270,7 +314,7 @@
 </footer>
 
 <script src="system/spine.js" defer></script>
-<script src="system/atelier.js?v=20260621d" defer></script>
+<script src="system/atelier.js?v=20260621r" defer></script>
 <script src="system/hero.js?v=20260622" defer></script>
 </body>
 </html>
