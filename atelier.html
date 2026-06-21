@@ -128,7 +128,7 @@
 
 <section class="mv" id="instrument" aria-labelledby="at-h">
   <h2 id="at-h" class="reveal">The instrument.</h2>
-  <p class="body-text reveal">Pick an algorithm and a specimen. The photograph is read as a field of light &mdash; the algorithm bends to it, so the snail&rsquo;s whorl or the mallow&rsquo;s veins surface in the strokes. Drag the complexity, draw a new seed, change the pens. When you find one you like, export it. It comes out as a clean plot file &mdash; touching strokes stitched into continuous pen paths, ordered to lift the pen as little as possible and grouped by pen, then stamped with a witness hash: the exact file re-derives from its seed, and says in its own metadata what it optimised. And export isn&rsquo;t a download button &mdash; it&rsquo;s the <em>act</em> in a loop: a default-deny gate confirms the drawing has settled before it lets the file be written, then the witness stamps it. <b>Perceive &rarr; gate &rarr; act &rarr; witness</b>, on the instrument&rsquo;s own output.</p>
+  <p class="body-text reveal">Pick an algorithm and a specimen. The photograph is read as a field of light &mdash; the algorithm bends to it, so the snail&rsquo;s whorl or the mallow&rsquo;s veins surface in the strokes. Drag the complexity, draw a new seed, change the pens. When you find one you like, export it. It comes out as a clean plot file &mdash; touching strokes stitched into continuous pen paths, ordered to lift the pen as little as possible and grouped by pen, then stamped with a witness hash: the exact file re-derives from its seed, and says in its own metadata what it optimised. The address bar carries that same recipe &mdash; hit <b>Copy link</b> and whoever opens it re-derives your exact drawing, no file to trust. And export isn&rsquo;t a download button &mdash; it&rsquo;s the <em>act</em> in a loop: a default-deny gate confirms the drawing has settled before it lets the file be written, then the witness stamps it. <b>Perceive &rarr; gate &rarr; act &rarr; witness</b>, on the instrument&rsquo;s own output.</p>
   <p class="body-text reveal">Or open the input entirely: <b>&uarr; Upload</b> your own photograph, or pick <b>Live &middot; camera</b> and the instrument senses through your webcam in real time &mdash; measured luminance, Sobel edges, and motion, <em>no model, nothing inferred</em> &mdash; particles streaming along what it sees. Live perception isn&rsquo;t reproducible, so <b>Capture</b> freezes the sensed field into a deterministic, witnessed specimen you can draw and export. <b>Field</b> shows the raw field the organ perceives, beside the art &mdash; ground-truth, not a black box.</p>
 
   <div class="atelier reveal" id="atelier">
@@ -139,6 +139,10 @@
       <div class="at-status" id="at-status">initialising&hellip;</div>
     </div>
     <div class="at-panel">
+      <div class="at-group">
+        <span class="at-glab">Start from <span class="hint">&mdash; a gallery of seeds; or build your own below</span></span>
+        <div class="at-chips" id="at-gallery" role="group" aria-label="Gallery presets"></div>
+      </div>
       <div class="at-group">
         <span class="at-glab">Algorithm</span>
         <div class="at-chips" id="at-studies" role="group" aria-label="Algorithm"></div>
@@ -165,6 +169,7 @@
       <div class="at-actions">
         <button class="btn" id="at-draw" type="button">Draw</button>
         <button class="btn ghost" id="at-export" type="button">Export SVG</button>
+        <button class="btn ghost" id="at-share" type="button">Copy link</button>
         <button class="btn ghost" id="at-capture" type="button">Capture</button>
         <button class="at-mini" id="at-overlay" type="button" aria-pressed="false" title="Show the field the camera senses">Field</button>
       </div>
@@ -239,7 +244,7 @@
 </footer>
 
 <script src="system/spine.js" defer></script>
-<script src="system/atelier.js" defer></script>
+<script src="system/atelier.js?v=20260621" defer></script>
 <script src="system/hero.js?v=20260621" defer></script>
 </body>
 </html>

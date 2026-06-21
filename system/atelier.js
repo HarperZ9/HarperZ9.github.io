@@ -775,6 +775,7 @@
       study: "flow", specimen: "snail", palette: "spectrum",
       complexity: 0.58, seed: randomSeed()
     };
+    hydrateFromURL(); // a shared link reproduces the exact drawing
     var finalStrokes = [], settled = false, drawToken = 0, rafId = 0; // settled = the geometry is final (gate's observed-state check)
 
     var statusEl = document.getElementById("at-status");
@@ -821,6 +822,7 @@
 
     function render() {
       drawToken++; var myToken = drawToken; settled = false;
+      writeURL(); // keep the address bar equal to the current recipe (shareable)
       if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
       if (state.study === "live") { startLive(); return; } // the senses organ: live camera, its own loop
       stopLive();
@@ -829,7 +831,7 @@
       var st = studyById(state.study);
       var pal = makePalette(PALETTES[state.palette] || PALETTES.spectrum);
       var P = { complexity: state.complexity, palette: pal, reduced: reduced };
-      if (seedtagEl) seedtagEl.innerHTML = "seed &middot; " + state.seed;
+      if (seedtagEl) seedtagEl.textContent = "seed · " + state.seed;
       if (blurbEl) blurbEl.innerHTML = st.blurb;
       status("drawing…");
 
@@ -966,6 +968,49 @@
       if (slider) slider.value = String(Math.round(state.complexity * 100));
       if (seedInput) seedInput.value = state.seed;
     }
+
+    // ── share-by-URL: the witnessed recipe lives in the link ──────────────────
+    // The full state (study·specimen·seed·complexity·palette) is the same tuple
+    // that keys makeRng, so a shared URL reproduces the exact drawing. Seeds are
+    // restricted to a URL/filename/SVG-safe charset, so nothing link- or
+    // user-supplied can inject markup downstream.
+    function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+    function sanitizeSeed(s) { return String(s == null ? "" : s).replace(/[^A-Za-z0-9_-]/g, "").slice(0, 48); }
+    function stateToParams() {
+      return "study=" + encodeURIComponent(state.study) +
+        "&specimen=" + encodeURIComponent(state.specimen) +
+        "&seed=" + encodeURIComponent(state.seed) +
+        "&cx=" + Math.round(state.complexity * 100) +
+        "&palette=" + encodeURIComponent(state.palette);
+    }
+    function writeURL() {
+      try { window.history.replaceState(null, "", window.location.pathname + "?" + stateToParams()); } catch (e) { }
+    }
+    function hydrateFromURL() {
+      var qs = window.location.search; if (!qs || qs.length < 2 || typeof URLSearchParams === "undefined") return;
+      var p; try { p = new URLSearchParams(qs); } catch (e) { return; }
+      var st = p.get("study"); if (st && studyById(st).id === st) state.study = st;
+      var sp = p.get("specimen"); if (sp && specimenById(sp).id === sp) state.specimen = sp;   // upload/captured don't validate → ignored
+      var sd = p.get("seed"); if (sd) { var cs = sanitizeSeed(sd); if (cs) state.seed = cs; }
+      var cx = p.get("cx"); if (cx !== null && /^\d{1,3}$/.test(cx)) state.complexity = clamp(parseInt(cx, 10) / 100, 0, 1);
+      var pl = p.get("palette"); if (pl && PALETTES[pl]) state.palette = pl;
+    }
+    // a curated strip spanning every study, specimen and pen-set — a quick start
+    // and an honest showcase of range; each is itself a shareable, witnessed recipe
+    var GALLERY = [
+      { label: "Whorl", study: "phyllotaxis", specimen: "snail", palette: "spectrum", seed: "nautilus", cx: 62 },
+      { label: "Current", study: "flow", specimen: "seedhead", palette: "ember", seed: "drift", cx: 70 },
+      { label: "Veins", study: "venation", specimen: "mallow", palette: "cool", seed: "xylem", cx: 66 },
+      { label: "Turing", study: "reaction", specimen: "dandelion", palette: "spectrum", seed: "reactor", cx: 60 },
+      { label: "Forage", study: "physarum", specimen: "seedhead", palette: "spectrum", seed: "myxo", cx: 64 },
+      { label: "Buckle", study: "growth", specimen: "seedhead", palette: "mono", seed: "fold", cx: 56 }
+    ];
+    function applyPreset(g) {
+      state.study = g.study; state.specimen = g.specimen; state.palette = g.palette;
+      state.seed = sanitizeSeed(g.seed) || randomSeed(); state.complexity = clamp(g.cx / 100, 0, 1);
+      syncControls(); render();
+    }
+
     function parsePlotMeta(text) {
       var m = /<metadata>([\s\S]*?)<\/metadata>/.exec(text), body = m ? m[1] : text;
       function grab(re) { var x = re.exec(body); return x ? x[1] : null; }
@@ -986,7 +1031,7 @@
       if (st.id !== meta.study) { renderVerdict("v-unver", "UNVERIFIABLE", "This file names an algorithm this build does not have (" + meta.study + ").", noProv, Spine.gate(noProv)); return; }
       var pid = PALETTES[meta.palette] ? meta.palette : "spectrum";
       var sid = specimenById(meta.specimen || "none").id;
-      showVerdict("v-unver", "RE-DERIVING…", "Rebuilding <b>" + meta.study + "</b> from seed <b>" + meta.seed + "</b>, re-witnessing, and asking the gate&hellip;");
+      showVerdict("v-unver", "RE-DERIVING…", "Rebuilding <b>" + meta.study + "</b> from seed <b>" + esc(meta.seed) + "</b>, re-witnessing, and asking the gate&hellip;");
       function finish(field) {
         var rng = makeRng(meta.seed + "|" + meta.study + "|" + sid + "|" + meta.complexity + "|" + meta.palette);
         var P = { complexity: clamp(parseInt(meta.complexity, 10) / 100, 0, 1), palette: makePalette(PALETTES[pid]), reduced: true };
@@ -1007,7 +1052,7 @@
           ];
           var gate = Spine.gate(checks), short = (meta.witness || "").slice(0, 12);
           if (untampered && authentic) {
-            renderVerdict("v-match", "MATCH", "Re-derived from seed <b>" + meta.seed + "</b>; the SHA-256 of the geometry matches the file. <span class=\"mono\">" + short + "&hellip;</span>", checks, gate);
+            renderVerdict("v-match", "MATCH", "Re-derived from seed <b>" + esc(meta.seed) + "</b>; the SHA-256 of the geometry matches the file. <span class=\"mono\">" + short + "&hellip;</span>", checks, gate);
           } else if (!authentic) {
             renderVerdict("v-drift", "DRIFT", "The seed does not reproduce this drawing &mdash; a different build, or the paths were edited. Re-derives to <span class=\"mono\">" + (reHash || "").slice(0, 12) + "&hellip;</span>, file states <span class=\"mono\">" + short + "&hellip;</span>.", checks, gate);
           } else {
@@ -1051,7 +1096,7 @@
       live.active = true; var myTok = ++live.tok;
       var dims = sizeCanvas(), W = dims[0], H = dims[1];
       ctx.clearRect(0, 0, W, H);
-      if (seedtagEl) seedtagEl.innerHTML = "live &middot; camera";
+      if (seedtagEl) seedtagEl.textContent = "live · camera";
       status("waking the camera…");
       gateMsg("needs-human", "live perception &mdash; capture a frame to make it accountable");
       if (blurbEl) blurbEl.innerHTML = "<b>The senses.</b> The camera is a real organ: each frame is read as luminance and Sobel edges, and particles stream <span class='sp'>along</span> what it sees &mdash; measured ground-truth, no model, nothing inferred. Move, and the drawing moves. Hit <b>Capture</b> to freeze the sensed field into a deterministic, witnessed specimen.";
@@ -1172,7 +1217,7 @@
     if (seedInput) {
       seedInput.value = state.seed;
       seedInput.addEventListener("change", function () {
-        var v = seedInput.value.trim(); if (v) { state.seed = v; render(); }
+        var v = sanitizeSeed(seedInput.value); if (v) { state.seed = v; seedInput.value = v; render(); }
       });
     }
     var newBtn = document.getElementById("at-newseed");
@@ -1181,6 +1226,24 @@
     if (drawBtn) drawBtn.addEventListener("click", function () { state.seed = randomSeed(); if (seedInput) seedInput.value = state.seed; render(); });
     var exportBtn = document.getElementById("at-export");
     if (exportBtn) exportBtn.addEventListener("click", exportSVG);
+    var shareBtn = document.getElementById("at-share");
+    if (shareBtn) shareBtn.addEventListener("click", function () {
+      writeURL();
+      var url = window.location.href, label = shareBtn.textContent;
+      function done() { shareBtn.textContent = "Link copied ✓"; setTimeout(function () { shareBtn.textContent = label; }, 1500); }
+      if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(url).then(done, function () { window.prompt("Copy this link:", url); }); }
+      else { window.prompt("Copy this link:", url); }
+    });
+    var galBox = document.getElementById("at-gallery");
+    if (galBox) {
+      GALLERY.forEach(function (g) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "at-chip"; b.textContent = g.label;
+        b.title = g.study + " · " + g.specimen + " · " + g.palette;
+        b.addEventListener("click", function () { applyPreset(g); });
+        galBox.appendChild(b);
+      });
+    }
 
     var fileInput = document.getElementById("at-file"), dropZone = document.getElementById("at-drop");
     if (fileInput) fileInput.addEventListener("change", function () { if (fileInput.files && fileInput.files[0]) handleFile(fileInput.files[0]); });
