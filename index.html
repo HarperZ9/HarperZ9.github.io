@@ -9,13 +9,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="system/system.css?v=20260621c">
+<link rel="stylesheet" href="system/system.css?v=20260621d">
 </head>
-<body>
+<body class="home-photo">
 <a class="skip-link" href="#main">Skip to content</a>
-<canvas id="gl"></canvas>
+<div class="hero-bg" aria-hidden="true"></div>
 <div class="scrim"></div>
-<canvas id="motes"></canvas>
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span></div>
   <div class="mid">
@@ -344,6 +343,19 @@ Parsing... <span class="ok">OK</span> (1 items)
 
 </main>
 
-<script src="system/hero.js?v=20260622" defer></script>
+<script>
+/* lightweight scroll-reveal — replaces the retired worlds engine on the home page.
+   Resting state is already visible in CSS, so no-JS / reduced-motion shows everything. */
+(function(){
+  var els=document.querySelectorAll('.reveal,.reveal-children');
+  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches){
+    els.forEach(function(e){e.classList.add('visible')});return;
+  }
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){
+    if(en.isIntersecting){en.target.classList.add('visible');io.unobserve(en.target);}
+  })},{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
 </body>
 </html>
