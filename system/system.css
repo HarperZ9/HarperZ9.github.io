@@ -558,3 +558,38 @@ body.world-3 .bar .rt{color:#cdd6cf}
    runs under the fixed #hud witness glyph. HUD is a roughly constant ~120px and
    is hidden under 601px, so a desktop-only right-pad clears it robustly. */
 @media (min-width:601px){ .footer-seal .seal{ padding-right:8.5rem } }
+
+/* ============================================================================
+   HOME PHOTOGRAPHIC HERO (2026-06-21) — the CGI worlds hero is retired on the
+   landing; lead with a living macro photograph (the snail's logarithmic spiral
+   reaching toward a bud — the kind of structure the work is modeled on, shot by
+   iamBeTa). Scoped to body.home-photo, so the other pages are untouched.
+   ============================================================================ */
+.home-photo .hero-bg{
+  position:fixed; inset:0; z-index:0;
+  background:#0d1b1c url("../img/snail.jpg") 62% 42% / cover no-repeat;
+  filter:saturate(1.03) contrast(1.03) brightness(.95)
+}
+/* warm veil: dark where the words sit (left), lifting toward the snail on the
+   right, with a soft floor so the lower copy holds. */
+.home-photo .scrim{
+  background:
+    linear-gradient(104deg, rgba(7,15,16,.93) 0%, rgba(7,15,16,.72) 34%, rgba(7,15,16,.34) 58%, rgba(24,14,5,.22) 100%),
+    linear-gradient(to top, rgba(7,15,16,.66) 0%, rgba(7,15,16,.12) 24%, transparent 46%)
+}
+/* legibility halos over the photo (no per-world classes apply now) */
+.home-photo h1{text-shadow:0 1px 2px rgba(5,11,12,.92),0 2px 20px rgba(5,11,12,.66)}
+.home-photo h1 .g{color:var(--ember)}
+.home-photo .lede{text-shadow:0 1px 2px rgba(5,11,12,.88),0 1px 13px rgba(5,11,12,.66)}
+.home-photo .lede em{color:var(--ember)}
+.home-photo .eyebrow{text-shadow:0 1px 10px rgba(5,11,12,.82)}
+.home-photo .built-head,.home-photo .built-desc,.home-photo .hero-cue,.home-photo .seal{
+  text-shadow:0 1px 2px rgba(5,11,12,.86),0 1px 10px rgba(5,11,12,.66)
+}
+.home-photo .built{text-shadow:none}
+@media (max-width:760px){
+  .home-photo .hero-bg{background-position:58% 40%}
+  .home-photo .scrim{
+    background:linear-gradient(to top, rgba(7,15,16,.93) 0%, rgba(7,15,16,.7) 42%, rgba(7,15,16,.34) 72%, rgba(7,15,16,.52) 100%)
+  }
+}
