@@ -681,7 +681,7 @@
       study: "flow", specimen: "snail", palette: "spectrum",
       complexity: 0.58, seed: randomSeed()
     };
-    var finalStrokes = [], drawToken = 0, rafId = 0;
+    var finalStrokes = [], settled = false, drawToken = 0, rafId = 0; // settled = the geometry is final (gate's observed-state check)
 
     var statusEl = document.getElementById("at-status");
     var seedtagEl = document.getElementById("at-seedtag");
@@ -689,6 +689,13 @@
     var blurbEl = document.getElementById("at-blurb");
 
     function status(t) { if (statusEl) statusEl.textContent = t; }
+    var gateEl = document.getElementById("at-gate"); // persistent home for the export gate's decision
+    function gateMsg(decision, text) {
+      if (!gateEl) return;
+      var cls = decision === "allow" ? "g-allow" : (decision === "deny" ? "g-deny" : "g-needs");
+      var label = decision === "allow" ? "ALLOW" : (decision === "deny" ? "DENY" : "NEEDS-HUMAN");
+      gateEl.innerHTML = '<b class="' + cls + '">gate &middot; ' + label + "</b> &mdash; " + text;
+    }
     function studyById(id) { for (var i = 0; i < STUDIES.length; i++) if (STUDIES[i].id === id) return STUDIES[i]; return STUDIES[0]; }
     function specimenById(id) { for (var i = 0; i < SPECIMENS.length; i++) if (SPECIMENS[i].id === id) return SPECIMENS[i]; return SPECIMENS[0]; }
 
@@ -719,7 +726,7 @@
     }
 
     function render() {
-      drawToken++; var myToken = drawToken;
+      drawToken++; var myToken = drawToken; settled = false;
       if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
       var dims = sizeCanvas(), W = dims[0], H = dims[1];
       var st = studyById(state.study);
@@ -740,7 +747,7 @@
         if (piece.live) {
           if (reduced) {
             var guard = 0; while (!piece.step() && guard++ < 600) { }
-            finalStrokes = piece.strokes(); drawStrokes(ctx, W, H, finalStrokes, 1);
+            finalStrokes = piece.strokes(); settled = true; drawStrokes(ctx, W, H, finalStrokes, 1);
             status(finalStrokes.length + " strokes · settled");
             return;
           }
@@ -756,11 +763,11 @@
             var unit = state.study === "reaction" ? " steps" : " nodes";
             status(done ? (cur.length + " strokes · settled") : (verb + "… " + (piece.count ? piece.count() + unit : "")));
             if (!done) rafId = requestAnimationFrame(liveTick);
-            else finalStrokes = cur;
+            else { finalStrokes = cur; settled = true; }
           };
           rafId = requestAnimationFrame(liveTick);
         } else {
-          finalStrokes = piece.strokes;
+          finalStrokes = piece.strokes; settled = true;
           if (reduced) { drawStrokes(ctx, W, H, finalStrokes, 1); status(finalStrokes.length + " strokes · drawn"); return; }
           var t0 = (window.performance && performance.now) ? performance.now() : Date.now(), dur = 1050;
           var revealTick = function (now) {
@@ -795,8 +802,18 @@
       return strokes.map(function (s) { return { pts: s.pts, col: snap(s.col), w: s.w }; });
     }
     function exportSVG() {
-      if (!finalStrokes.length) { status("nothing to export yet"); return; }
-      // the plot-optimisation pass: stitch → simplify → order
+      // proof-surface's gate, on the ACT: the same default-deny that authorises an action elsewhere,
+      // here refusing to write an artifact out of incomplete state. perceive → gate → act → witness.
+      var gate = Spine.gate([
+        { k: "observed-state", v: settled ? "pass" : "needs", msg: settled ? "the drawing has settled" : "the drawing is still being generated" },
+        { k: "witnessable", v: finalStrokes.length ? "pass" : "deny", msg: finalStrokes.length ? "geometry present to witness" : "nothing to witness yet" },
+        { k: "action-in-scope", v: "pass", msg: "export is an allowed action" }
+      ]);
+      if (gate.decision !== "allow") {
+        gateMsg(gate.decision, finalStrokes.length ? "the drawing hasn&rsquo;t settled &mdash; let it finish, then export" : "draw something first");
+        return; // the act is earned, not assumed
+      }
+      // gate allowed → act: optimise, then witness (EMET) and write
       var opt = optimizeForPlot(snapToPalette(finalStrokes, state.palette), { tol: 0.0007 });
       var st = opt.stats, cut = st.travelBefore > 0 ? Math.round((1 - st.travelAfter / st.travelBefore) * 100) : 0;
       // EMET's move, via the shared spine: SHA-256 the geometry — the same digest the witness ships
@@ -818,6 +835,7 @@
         document.body.appendChild(a); a.click(); document.body.removeChild(a);
         setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
         status(st.pathsOut + " paths · −" + cut + "% pen travel · witness " + shortW + "…");
+        gateMsg("allow", "settled, witnessed, and written &mdash; <span class=\"gmono\">" + shortW + "&hellip;</span>");
       });
     }
 

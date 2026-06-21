@@ -59,6 +59,9 @@
   .btn:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
   .btn.ghost{border-color:var(--muted);color:var(--muted)}
   .btn.ghost:hover{background:var(--muted);color:var(--void)}
+  .at-gate{font-family:"Spline Sans Mono",monospace;font-size:.6rem;letter-spacing:.04em;line-height:1.7;color:var(--muted);min-height:1.1em}
+  .at-gate .g-allow{color:#5fae93}.at-gate .g-deny{color:var(--orange)}.at-gate .g-needs{color:var(--ember)}
+  .at-gate .gmono{color:var(--ember);word-break:break-all}
   .at-blurb{font-family:"EB Garamond",Georgia,serif;font-size:.98rem;line-height:1.62;color:var(--muted);
     border-top:1px solid var(--hairline);padding-top:.95rem;margin-top:.1rem;min-height:4.6rem}
   .at-blurb b{color:var(--bone);font-weight:500}
@@ -121,7 +124,7 @@
 
 <section class="mv" id="instrument" aria-labelledby="at-h">
   <h2 id="at-h" class="reveal">The instrument.</h2>
-  <p class="body-text reveal">Pick an algorithm and a specimen. The photograph is read as a field of light &mdash; the algorithm bends to it, so the snail&rsquo;s whorl or the mallow&rsquo;s veins surface in the strokes. Drag the complexity, draw a new seed, change the pens. When you find one you like, export it. It comes out as a clean plot file &mdash; touching strokes stitched into continuous pen paths, ordered to lift the pen as little as possible and grouped by pen, then stamped with a witness hash: the exact file re-derives from its seed, and says in its own metadata what it optimised.</p>
+  <p class="body-text reveal">Pick an algorithm and a specimen. The photograph is read as a field of light &mdash; the algorithm bends to it, so the snail&rsquo;s whorl or the mallow&rsquo;s veins surface in the strokes. Drag the complexity, draw a new seed, change the pens. When you find one you like, export it. It comes out as a clean plot file &mdash; touching strokes stitched into continuous pen paths, ordered to lift the pen as little as possible and grouped by pen, then stamped with a witness hash: the exact file re-derives from its seed, and says in its own metadata what it optimised. And export isn&rsquo;t a download button &mdash; it&rsquo;s the <em>act</em> in a loop: a default-deny gate confirms the drawing has settled before it lets the file be written, then the witness stamps it. <b>Perceive &rarr; gate &rarr; act &rarr; witness</b>, on the instrument&rsquo;s own output.</p>
 
   <div class="atelier reveal" id="atelier">
     <div class="at-stage">
@@ -157,6 +160,7 @@
         <button class="btn" id="at-draw" type="button">Draw</button>
         <button class="btn ghost" id="at-export" type="button">Export SVG</button>
       </div>
+      <div class="at-gate" id="at-gate" aria-live="polite"></div>
       <p class="at-blurb" id="at-blurb"></p>
     </div>
   </div>
