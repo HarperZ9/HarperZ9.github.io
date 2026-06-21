@@ -343,19 +343,6 @@ Parsing... <span class="ok">OK</span> (1 items)
 
 </main>
 
-<script>
-/* lightweight scroll-reveal — replaces the retired worlds engine on the home page.
-   Resting state is already visible in CSS, so no-JS / reduced-motion shows everything. */
-(function(){
-  var els=document.querySelectorAll('.reveal,.reveal-children');
-  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches){
-    els.forEach(function(e){e.classList.add('visible')});return;
-  }
-  var io=new IntersectionObserver(function(es){es.forEach(function(en){
-    if(en.isIntersecting){en.target.classList.add('visible');io.unobserve(en.target);}
-  })},{rootMargin:'0px 0px -8% 0px'});
-  els.forEach(function(e){io.observe(e)});
-})();
-</script>
+<script src="system/reveal.js?v=20260621d" defer></script>
 </body>
 </html>
