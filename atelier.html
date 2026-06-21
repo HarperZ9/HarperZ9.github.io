@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Atelier — algorithmic drawings · Zain Dana Harper</title>
-<meta name="description" content="Macro photographs of living structure — a snail's logarithmic shell, a seedhead's curl, a mallow's veins — become the seed for six real generative algorithms: phyllotaxis, flow fields, differential growth, venation, reaction-diffusion, and slime-mould networks. Generated live in the browser, deterministic from a visible seed, exportable as plotter-ready SVG.">
+<meta name="description" content="Macro photographs of living structure — a snail's logarithmic shell, a seedhead's curl, a mallow's veins — become the seed for nine real generative algorithms: phyllotaxis, flow fields, differential growth, venation, reaction-diffusion, slime-mould networks, flocking, hydrogen orbitals, and space-filling curves. Generated live in the browser, deterministic from a visible seed, exportable as plotter-ready SVG.">
 <link rel="canonical" href="https://harperz9.github.io/atelier.html">
 <meta name="color-scheme" content="dark">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -123,7 +123,7 @@
   <div class="mid">
     <p class="eyebrow">ATELIER &middot; ALGORITHMIC DRAWINGS</p>
     <h1>Living structure, <span class="g">drawn by algorithm.</span></h1>
-    <p class="lede">I photograph small living things &mdash; a snail&rsquo;s logarithmic shell, the curl of a spent seedhead, the veins of a mallow. Here those forms seed algorithms that <em>draw</em>: phyllotaxis, flow fields, differential growth, venation, reaction&ndash;diffusion, slime mould. Every line is generated <em>live in your browser</em> &mdash; nothing on this page is a saved image.</p>
+    <p class="lede">I photograph small living things &mdash; a snail&rsquo;s logarithmic shell, the curl of a spent seedhead, the veins of a mallow. Here those forms seed algorithms that <em>draw</em>: phyllotaxis, flow fields, differential growth, venation, reaction&ndash;diffusion, slime mould, flocking, hydrogen orbitals, space-filling curves. Every line is generated <em>live in your browser</em> &mdash; nothing on this page is a saved image.</p>
     <p class="close">The same seed always draws the same thing. Run it, steer it with a photograph, export the vector &mdash; <b>the drawing carries its own provenance.</b></p>
   </div>
   <div class="seal">In-browser &middot; zero dependencies &middot; deterministic from seed &middot; export to a witnessed, plot-optimised <b>SVG</b></div>
@@ -237,6 +237,18 @@
       <span class="study-name">Slime mould<span class="from">from the seedhead</span></span>
       <span class="study-gloss">Thousands of agents each lay a trail and steer toward where it &mdash; and the photograph&rsquo;s light &mdash; runs strongest, reinforcing the busiest routes until a transport network sets. The way a <em>Physarum</em> slime mould reticulates between food, and solves a maze on the way. The lines are the foragers&rsquo; own paths; the network is emergent, never drawn.</span>
     </div>
+    <div class="study-row">
+      <span class="study-name">Boids<span class="from">from the flock</span></span>
+      <span class="study-gloss">Reynolds&rsquo; three rules &mdash; <em>separation, alignment, cohesion</em> &mdash; summed over the neighbours inside each agent&rsquo;s vision, found through a grid hash. No leader and no drawn path: the murmuration is emergent, and the photograph&rsquo;s light pulls the flock toward the bright tissue. After Reynolds, SIGGRAPH 1987.</span>
+    </div>
+    <div class="study-row">
+      <span class="study-name">Orbitals<span class="from">from Schr&ouml;dinger, 1926</span></span>
+      <span class="study-gloss">The exact quantum solution for hydrogen: the wavefunction <em>&psi;<sub>n,l</sub> = R<sub>nl</sub>(r)&middot;Y<sub>l0</sub>(&theta;)</em>, an associated-Laguerre radial part times a real spherical harmonic. We plot the probability density |&psi;|&sup2; as iso-probability contour rings &mdash; the gaps are the orbital&rsquo;s <em>nodes</em>, n&minus;l&minus;1 radial and l angular, the surfaces where the electron is never found. The default 3d<sub>z&sup2;</sub> is the atom&rsquo;s own geometry. Visualization after Kavan (kevkev&#8209;70).</span>
+    </div>
+    <div class="study-row">
+      <span class="study-name">Hilbert<span class="from">a continuous fill</span></span>
+      <span class="study-gloss">Hilbert&rsquo;s 1891 space-filling curve: <em>one continuous stroke</em> that passes through every cell of the plane exactly once, the specimen rendered as that single path. The geometry is pure integer arithmetic &mdash; no sines, no roots &mdash; so the drawing re-derives <em>bit-for-bit on any machine</em>. The strongest provenance the instrument can offer.</span>
+    </div>
   </div>
   <div class="channels reveal">
     <span class="g">Start here</span> &mdash; <a href="overview.html">the map</a>
@@ -254,7 +266,7 @@
 </footer>
 
 <script src="system/spine.js" defer></script>
-<script src="system/atelier.js?v=20260621b" defer></script>
+<script src="system/atelier.js?v=20260621c" defer></script>
 <script src="system/hero.js?v=20260621" defer></script>
 </body>
 </html>

@@ -184,7 +184,19 @@
     physarum: { params: [
         { k: "sense", label: "Sensor angle", min: 0.2, max: 0.8, step: 0.02, def: 0.4 },
         { k: "decay", label: "Trail decay", min: 0.82, max: 0.95, step: 0.01, def: 0.9 }],
-      presets: [{ label: "Tendril", p: { sense: 0.28, decay: 0.93 } }, { label: "Web", p: { sense: 0.6, decay: 0.86 } }] }
+      presets: [{ label: "Tendril", p: { sense: 0.28, decay: 0.93 } }, { label: "Web", p: { sense: 0.6, decay: 0.86 } }] },
+    boids: { params: [
+        { k: "cohesion", label: "Cohesion", min: 0.2, max: 1.8, step: 0.05, def: 0.9 },
+        { k: "separate", label: "Separation", min: 0.6, max: 3.0, step: 0.05, def: 1.6 }],
+      presets: [{ label: "Murmuration", p: { cohesion: 1.3, separate: 1.1 } }, { label: "Scatter", p: { cohesion: 0.4, separate: 2.6 } }] },
+    orbital: { params: [
+        { k: "n", label: "Principal n", min: 1, max: 4, step: 1, def: 3 },
+        { k: "l", label: "Azimuthal l", min: 0, max: 3, step: 1, def: 2 }],
+      presets: [{ label: "2p", p: { n: 2, l: 1 } }, { label: "3d", p: { n: 3, l: 2 } }, { label: "4f", p: { n: 4, l: 3 } }] },
+    hilbert: { params: [
+        { k: "order", label: "Order", min: 4, max: 7, step: 1, def: 5 },
+        { k: "chamfer", label: "Corner bevel", min: 0, max: 0.45, step: 0.05, def: 0 }],
+      presets: [{ label: "Weave", p: { chamfer: 0.3 } }, { label: "Dense", p: { order: 7 } }] }
   };
   function studyParams(id) { return (STUDY_PARAMS[id] && STUDY_PARAMS[id].params) || []; }
   function studyPresets(id) { return (STUDY_PARAMS[id] && STUDY_PARAMS[id].presets) || []; }
@@ -610,6 +622,242 @@
     return { live: true, step: step, strokes: strokes, count: function () { return iter; } };
   }
 
+  // 7 ── BOIDS — distributed flocking; murmuration trails (after Reynolds 1987) ──
+  //  N agents, each a position+velocity, steered every iter by three rules summed
+  //  over neighbours inside a vision radius: SEPARATION (away from the too-close),
+  //  ALIGNMENT (match the local mean heading), COHESION (toward the local centroid).
+  //  Neighbours are found in O(N) through a grid hash rebuilt each iter, not O(N^2).
+  function buildBoids(rng, P, field) {
+    var N = Math.round(lerp(500, 1400, P.complexity));
+    var cohW = pget(P, "cohesion", 0.9);   // toward neighbour centroid
+    var sepW = pget(P, "separate", 1.6);   // away from too-close
+    var aliW = 1.0;                          // match neighbour heading (fixed)
+    var vision = 0.045, sepR = 0.018;        // neighbour radius / personal space (normalised)
+    var maxSpd = 0.0065, minSpd = 0.0030;    // speed clamp keeps the flock coherent
+    var photoW = field ? 0.9 : 0;            // up-gradient pull toward the bright mass
+    var pal = P.palette;
+
+    var px = new Float32Array(N), py = new Float32Array(N);
+    var vx = new Float32Array(N), vy = new Float32Array(N);
+    for (var i = 0; i < N; i++) {
+      var sx, sy;
+      if (field) { var sp = field.sampleEdge(rng); sx = sp[0]; sy = sp[1]; }   // launch off the specimen's structure
+      else { var rr = 0.42 * Math.sqrt(rng()), aa = rng() * TAU; sx = 0.5 + rr * Math.cos(aa); sy = 0.5 + rr * Math.sin(aa); }
+      px[i] = clamp(sx, 0.02, 0.98); py[i] = clamp(sy, 0.02, 0.98);
+      var h0 = rng() * TAU, s0 = lerp(minSpd, maxSpd, rng());
+      vx[i] = Math.cos(h0) * s0; vy[i] = Math.sin(h0) * s0;
+    }
+
+    var inkN = clamp(Math.round(N * 0.45), 120, 480) | 0;   // a capped subset leave inked trails
+    var iter = 0, target = Math.round(lerp(160, 300, P.complexity)), cap = target + 2;
+    var tbuf = [], tn = new Int32Array(inkN), tcol = new Float32Array(inkN);
+    for (var k = 0; k < inkN; k++) {
+      var fb = new Float32Array(cap * 2); fb[0] = px[k]; fb[1] = py[k];
+      tbuf.push(fb); tn[k] = 1;
+      tcol[k] = field ? clamp(field.lum(px[k], py[k]), 0, 1) : 0;   // origin light carried by the trail
+    }
+
+    var cell = vision, GC = Math.ceil(1 / cell) + 2;          // grid hash: O(N) neighbour queries
+    var gridHead = new Int32Array(GC * GC), gridNext = new Int32Array(N);
+    function rebuildGrid() {
+      for (var c = 0; c < gridHead.length; c++) gridHead[c] = -1;
+      for (var a = 0; a < N; a++) {
+        var cxi = (px[a] / cell) | 0, cyi = (py[a] / cell) | 0;
+        if (cxi < 0) cxi = 0; else if (cxi >= GC) cxi = GC - 1;
+        if (cyi < 0) cyi = 0; else if (cyi >= GC) cyi = GC - 1;
+        var ci = cyi * GC + cxi;
+        gridNext[a] = gridHead[ci]; gridHead[ci] = a;
+      }
+    }
+
+    var vis2 = vision * vision, sep2 = sepR * sepR;
+    function oneStep() {
+      rebuildGrid();
+      for (var a = 0; a < N; a++) {
+        var ax = px[a], ay = py[a];
+        var cxi = (ax / cell) | 0, cyi = (ay / cell) | 0;
+        if (cxi < 0) cxi = 0; else if (cxi >= GC) cxi = GC - 1;
+        if (cyi < 0) cyi = 0; else if (cyi >= GC) cyi = GC - 1;
+        var sumvx = 0, sumvy = 0, cenx = 0, ceny = 0, sepx = 0, sepy = 0, nn = 0;
+        for (var ox = -1; ox <= 1; ox++) {
+          var gx = cxi + ox; if (gx < 0 || gx >= GC) continue;
+          for (var oy = -1; oy <= 1; oy++) {
+            var gy = cyi + oy; if (gy < 0 || gy >= GC) continue;
+            for (var b = gridHead[gy * GC + gx]; b !== -1; b = gridNext[b]) {
+              if (b === a) continue;
+              var dx = px[b] - ax, dy = py[b] - ay, d2 = dx * dx + dy * dy;
+              if (d2 > vis2 || d2 < 1e-12) continue;
+              nn++;
+              sumvx += vx[b]; sumvy += vy[b];
+              cenx += px[b]; ceny += py[b];
+              if (d2 < sep2) { var inv = 1 / Math.sqrt(d2); sepx -= dx * inv; sepy -= dy * inv; }
+            }
+          }
+        }
+        var fxs = 0, fys = 0;
+        if (nn > 0) {
+          var mvx = sumvx / nn, mvy = sumvy / nn, ml = Math.sqrt(mvx * mvx + mvy * mvy);
+          if (ml > 1e-9) { fxs += (mvx / ml) * aliW; fys += (mvy / ml) * aliW; }
+          var toc_x = cenx / nn - ax, toc_y = ceny / nn - ay, cl = Math.sqrt(toc_x * toc_x + toc_y * toc_y);
+          if (cl > 1e-9) { fxs += (toc_x / cl) * cohW; fys += (toc_y / cl) * cohW; }
+          var sl = Math.sqrt(sepx * sepx + sepy * sepy);
+          if (sl > 1e-9) { fxs += (sepx / sl) * sepW; fys += (sepy / sl) * sepW; }
+        }
+        if (photoW) {
+          var g = field.grad(ax, ay), gm = Math.sqrt(g[0] * g[0] + g[1] * g[1]);
+          if (gm > 1e-4) { fxs += (g[0] / gm) * photoW; fys += (g[1] / gm) * photoW; }
+        }
+        var marg = 0.06;
+        if (ax < marg) fxs += (marg - ax) * 6; else if (ax > 1 - marg) fxs -= (ax - (1 - marg)) * 6;
+        if (ay < marg) fys += (marg - ay) * 6; else if (ay > 1 - marg) fys -= (ay - (1 - marg)) * 6;
+        var nvx = vx[a] + fxs * 0.00018, nvy = vy[a] + fys * 0.00018;
+        var sp2 = nvx * nvx + nvy * nvy, spd = Math.sqrt(sp2);
+        if (spd > maxSpd) { nvx = nvx / spd * maxSpd; nvy = nvy / spd * maxSpd; }
+        else if (spd < minSpd && spd > 1e-9) { nvx = nvx / spd * minSpd; nvy = nvy / spd * minSpd; }
+        else if (spd <= 1e-9) { var hh = rng() * TAU; nvx = Math.cos(hh) * minSpd; nvy = Math.sin(hh) * minSpd; }
+        vx[a] = nvx; vy[a] = nvy;
+        var nx = ax + nvx, ny = ay + nvy;
+        if (nx < 0.012) { nx = 0.012; vx[a] = Math.abs(vx[a]); } else if (nx > 0.988) { nx = 0.988; vx[a] = -Math.abs(vx[a]); }
+        if (ny < 0.012) { ny = 0.012; vy[a] = Math.abs(vy[a]); } else if (ny > 0.988) { ny = 0.988; vy[a] = -Math.abs(vy[a]); }
+        px[a] = nx; py[a] = ny;
+        if (a < inkN) { var c2 = tn[a]; if (c2 < cap) { var tb = tbuf[a]; tb[c2 * 2] = nx; tb[c2 * 2 + 1] = ny; tn[a] = c2 + 1; } }
+      }
+      iter++;
+    }
+    function step() { oneStep(); oneStep(); return iter >= target; }
+    function headHue(a) { return clamp((Math.atan2(vy[a], vx[a]) + Math.PI) / TAU, 0, 1); }
+    function strokes() {
+      var out = [], k;
+      if (iter >= target) {
+        var stepd = cap > 360 ? 3 : 2;
+        for (k = 0; k < inkN; k++) {
+          var n = tn[k]; if (n < 4) continue;
+          var b = tbuf[k], pts = [];
+          for (var j = 0; j < n; j += stepd) pts.push([b[j * 2], b[j * 2 + 1]]);
+          if ((n - 1) % stepd !== 0) pts.push([b[(n - 1) * 2], b[(n - 1) * 2 + 1]]);
+          if (pts.length < 3) continue;
+          var t = field ? tcol[k] : headHue(k);
+          out.push({ pts: pts, col: pal.sample(t), w: 0.7, op: 0.18 + 0.34 * (field ? (0.4 + 0.6 * tcol[k]) : 0.6) });
+        }
+      } else {
+        var TAIL = 40;
+        for (k = 0; k < inkN; k++) {
+          var n2 = tn[k]; if (n2 < 2) continue;
+          var b2 = tbuf[k], s0 = n2 > TAIL ? n2 - TAIL : 0, tail = [];
+          for (var j2 = s0; j2 < n2; j2++) tail.push([b2[j2 * 2], b2[j2 * 2 + 1]]);
+          out.push({ pts: tail, col: pal.sample(field ? tcol[k] : headHue(k)), w: 0.7, op: 0.22 });
+        }
+      }
+      return out;
+    }
+    return { live: true, step: step, strokes: strokes, count: function () { return iter; } };
+  }
+
+  // 8 ── HYDROGEN ORBITAL — |psi_{n,l,0}|^2 as iso-probability contours (Schrödinger 1926)
+  //  psi = R_nl(r)·Y_l0(theta) on the x-z plane (phi=0); atomic units a0=1. Radials verified
+  //  vs ChemLibreTexts closed forms, angular vs the spherical-harmonic table. Node structure
+  //  exact: radial nodes = n-l-1, angular = l. Vis. inspiration: Kavan (kevkev-70).
+  function buildOrbital(rng, P, field) {
+    var n = Math.round(clamp(pget(P, "n", 3), 1, 4));
+    var l = Math.round(clamp(pget(P, "l", 2), 0, 3));
+    if (l > n - 1) l = n - 1;
+    function fact(k) { var f = 1, i; for (i = 2; i <= k; i++) f *= i; return f; }
+    function laguerre(k, a, x) {
+      if (k <= 0) return 1;
+      var Lm2 = 1, Lm1 = (1 + a) - x, Lk = Lm1, i;
+      for (i = 2; i <= k; i++) { Lk = (((2 * i - 1 + a - x) * Lm1) - ((i - 1 + a) * Lm2)) / i; Lm2 = Lm1; Lm1 = Lk; }
+      return Lk;
+    }
+    var kdeg = n - l - 1;
+    var Cnl = (2 / (n * n)) * Math.sqrt(fact(kdeg) / fact(n + l));
+    function Rnl(r) { var rho = 2 * r / n; return Cnl * Math.pow(rho, l) * Math.exp(-r / n) * laguerre(kdeg, 2 * l + 1, rho); }
+    var IP = 1 / Math.PI;
+    function Yl0(u) {
+      if (l === 0) return 0.5 * Math.sqrt(IP);
+      if (l === 1) return 0.5 * Math.sqrt(3 * IP) * u;
+      if (l === 2) return 0.25 * Math.sqrt(5 * IP) * (3 * u * u - 1);
+      return 0.25 * Math.sqrt(7 * IP) * (5 * u * u * u - 3 * u);
+    }
+    function psi2(x, z) {
+      var r = Math.sqrt(x * x + z * z);
+      if (r < 1e-9) { if (l !== 0) return 0; var a0 = Rnl(0) * Yl0(1); return a0 * a0; }
+      var a = Rnl(r) * Yl0(z / r); return a * a;
+    }
+    var W = (n * n) * 1.7 + 4, G = 200;
+    function coord(i) { return lerp(-W, W, i / (G - 1)); }
+    var grid = new Float64Array(G * G), maxv = 0, i, j, v;
+    for (j = 0; j < G; j++) { var zz = coord(j); for (i = 0; i < G; i++) { v = psi2(coord(i), zz); grid[j * G + i] = v; if (v > maxv) maxv = v; } }
+    if (maxv <= 0) maxv = 1;
+    var nLev = 7;   // fixed (NOT reduced-dependent) so render and witness re-derivation agree
+    var levels = [];
+    for (i = 0; i < nLev; i++) levels.push(Math.pow(0.62, nLev - i) * maxv);
+    var inv = 1 / (G - 1), strokes = [], Li, lev, tc, col, w, op, x, y, code, segs, s, p0, p1, a, b, c, d;
+    for (Li = 0; Li < levels.length; Li++) {
+      lev = levels[Li];
+      tc = levels.length > 1 ? Li / (levels.length - 1) : 0.5;
+      col = P.palette.sample(tc);
+      w = lerp(0.45, 1.5, tc); op = lerp(0.30, 0.92, tc);
+      for (y = 0; y < G - 1; y++) for (x = 0; x < G - 1; x++) {
+        a = grid[y * G + x]; b = grid[y * G + x + 1]; c = grid[(y + 1) * G + x + 1]; d = grid[(y + 1) * G + x];
+        code = (a > lev ? 1 : 0) | (b > lev ? 2 : 0) | (c > lev ? 4 : 0) | (d > lev ? 8 : 0);
+        if (code === 0 || code === 15) continue;
+        segs = MS_TABLE[code];
+        for (s = 0; s < segs.length; s++) {
+          p0 = edgePt(segs[s][0], x, y, a, b, c, d, lev, inv);
+          p1 = edgePt(segs[s][1], x, y, a, b, c, d, lev, inv);
+          strokes.push({ pts: [p0, p1], col: col, w: w, op: op });
+        }
+      }
+    }
+    return { live: false, strokes: strokes };
+  }
+
+  // 9 ── HILBERT — one continuous stroke that fills the plane (Hilbert 1891) ─────
+  //  d2xy bit-rotation mapping in PURE INTEGER arithmetic — no sin/cos/sqrt on the
+  //  path — so the drawing re-derives BIT-FOR-BIT on any machine (strongest witness).
+  //  The photograph colours it (colour only): the one curve is cut into short runs
+  //  that SHARE endpoints (still one pen path), each tinted by the local luminance.
+  function buildHilbert(rng, P, field) {
+    var pal = P.palette;
+    var order = Math.round(pget(P, "order", 5));   // fallback == param default (witness-consistent)
+    order = clamp(order | 0, 4, 7);
+    var chamfer = clamp(pget(P, "chamfer", 0), 0, 0.45);
+    var side = 1 << order, nCells = side * side;
+    var margin = 0.06, span = 1 - 2 * margin, cellW = span / side;
+    function d2xy(nn, d) {
+      var rx, ry, t = d, x = 0, y = 0;
+      for (var s = 1; s < nn; s <<= 1) {
+        rx = 1 & (t >> 1); ry = 1 & (t ^ rx);
+        if (ry === 0) { if (rx === 1) { x = s - 1 - x; y = s - 1 - y; } var tmp = x; x = y; y = tmp; }
+        x += s * rx; y += s * ry; t >>= 2;
+      }
+      return [x, y];
+    }
+    function centre(gx, gy) { return [margin + (gx + 0.5) * cellW, margin + (gy + 0.5) * cellW]; }
+    var full = [], prev = null, cur = centre.apply(null, d2xy(side, 0)); full.push(cur);
+    for (var d = 1; d < nCells; d++) {
+      var next = centre.apply(null, d2xy(side, d));
+      if (chamfer > 0 && prev) {
+        full.pop();
+        full.push([cur[0] + (prev[0] - cur[0]) * chamfer, cur[1] + (prev[1] - cur[1]) * chamfer]);
+        full.push([cur[0] + (next[0] - cur[0]) * chamfer, cur[1] + (next[1] - cur[1]) * chamfer]);
+      }
+      full.push(next); prev = cur; cur = next;
+    }
+    var runLen = clamp(4 + order * 2, 6, 32) | 0, strokes = [], L = full.length;
+    for (var i = 0; i < L - 1; i += runLen) {
+      var end = Math.min(L - 1, i + runLen), run = [];
+      for (var jj = i; jj <= end; jj++) run.push(full[jj]);
+      if (run.length < 2) continue;
+      var t;
+      if (field) { var mid = run[(run.length >> 1)]; t = clamp(field.lum(mid[0], mid[1]), 0, 1); }
+      else { t = clamp((i + end) / 2 / (L - 1), 0, 1); }
+      var lc = t * t * (3 - 2 * t);
+      strokes.push({ pts: run, col: pal.sample(t), w: 0.9, op: field ? (0.16 + 0.74 * lc) : (0.32 + 0.5 * lc) });
+    }
+    return { live: false, strokes: strokes };
+  }
+
   var STUDIES = [
     { id: "phyllotaxis", label: "Phyllotaxis", build: buildPhyllotaxis,
       blurb: "Vogel&rsquo;s spiral &mdash; a seed every <b>golden angle</b>, radius as &radic;index. The Fibonacci arms you see are emergent, never drawn. <span class='sp'>The snail</span> lights which arms are bright." },
@@ -623,6 +871,12 @@
       blurb: "Gray&ndash;Scott: two chemicals feed, react and decay until <b>Turing patterns</b> set &mdash; spots, mazes, coral &mdash; drawn here as contour lines. The photograph&rsquo;s light decides which pattern forms where. <span class='sp'>Watch it</span> react. <span class='sp'>The katydids&rsquo;</span> speckle, as mathematics." },
     { id: "physarum", label: "Slime mould", build: buildPhysarum,
       blurb: "Thousands of agents lay a trail and turn toward where it &mdash; and the photograph&rsquo;s light &mdash; runs strongest; the trail diffuses and decays behind them. Reinforced paths thicken into a transport network, the way <i>Physarum</i> slime mould finds the shortest route through a maze. The brightest tissue becomes the busiest road. <span class='sp'>Watch it</span> forage." },
+    { id: "boids", label: "Boids", build: buildBoids,
+      blurb: "Reynolds&rsquo; flock: each agent steers by three local rules &mdash; <b>separation</b>, <b>alignment</b>, <b>cohesion</b> &mdash; over the neighbours inside its vision, found through a grid hash. No leader, no path; the murmuration is emergent. The photograph&rsquo;s light pulls the flock toward the bright tissue. <span class='sp'>Watch it</span> school. After Reynolds, SIGGRAPH 1987." },
+    { id: "orbital", label: "Orbitals", build: buildOrbital,
+      blurb: "The hydrogen atom solved exactly &mdash; <b>Schr&ouml;dinger&rsquo;s</b> 1926 wave equation, &psi;<sub>n,l</sub> = R<sub>nl</sub>(r)&middot;Y<sub>l0</sub>(&theta;). The squared wavefunction |&psi;|&sup2; is the electron&rsquo;s probability cloud, drawn as iso-probability contours through the nucleus. The dark gaps are real <b>nodes</b> &mdash; n&minus;l&minus;1 radial, l angular &mdash; where the electron is never found. <span class='sp'>The defaults</span> draw 3d<sub>z&sup2;</sub>, the atom&rsquo;s own geometry. <i>After Kavan (kevkev-70).</i>" },
+    { id: "hilbert", label: "Hilbert", build: buildHilbert,
+      blurb: "Hilbert&rsquo;s space-filling curve (1891): one continuous pen stroke that visits <b>every cell</b> of the plane exactly once. The whole path is pure integer arithmetic &mdash; no trigonometry, no roots &mdash; so it re-derives <b>bit-for-bit on any machine</b>: that exactness is the point. The specimen is rendered <i>as</i> the single stroke, runs tinted by the photograph&rsquo;s light." },
     { id: "live", label: "Live &middot; camera", build: null,
       blurb: "The camera as a real organ &mdash; particles stream along the edges it senses, live." }
   ];
