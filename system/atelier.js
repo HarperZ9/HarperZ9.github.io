@@ -250,7 +250,36 @@
     clifford: { params: [
         { k: "a", label: "Coeff a", min: -2.2, max: 2.2, step: 0.1, def: 1.7 },
         { k: "b", label: "Coeff b", min: -2.2, max: 2.2, step: 0.1, def: -1.8 }],
-      presets: [{ label: "Mantle", p: { a: -1.7, b: 1.8 } }, { label: "Wings", p: { a: -1.4, b: 1.6 } }] }
+      presets: [{ label: "Mantle", p: { a: -1.7, b: 1.8 } }, { label: "Wings", p: { a: -1.4, b: 1.6 } }] },
+    gyroid: { params: [
+        { k: "freq", label: "Frequency", min: 2, max: 12, step: 0.5, def: 7 },
+        { k: "z", label: "Z-slice", min: 0, max: 1, step: 0.05, def: 0.3 }],
+      presets: [{ label: "Clean", p: { freq: 8 } }, { label: "Detuned", p: { freq: 6.5 } }] },
+    quasicrystal: { params: [
+        { k: "waves", label: "Plane waves", min: 3, max: 9, step: 1, def: 5 },
+        { k: "scale", label: "Scale", min: 4, max: 12, step: 0.5, def: 8 }],
+      presets: [{ label: "Five-fold", p: { waves: 5 } }, { label: "Seven", p: { waves: 7 } }] },
+    rings: { params: [
+        { k: "freq", label: "Frequency", min: 3, max: 16, step: 0.5, def: 8 }],
+      presets: [{ label: "Wide", p: { freq: 5 } }, { label: "Fine", p: { freq: 13 } }] },
+    moire: { params: [
+        { k: "freq", label: "Frequency", min: 6, max: 22, step: 1, def: 12 },
+        { k: "angle", label: "Angle", min: 0.1, max: 1.4, step: 0.05, def: 0.4 }],
+      presets: [{ label: "Loose", p: { angle: 0.2 } }, { label: "Beat", p: { angle: 0.9 } }] },
+    flowfield: { params: [
+        { k: "scale", label: "Scale", min: 2, max: 9, step: 0.5, def: 4.5 },
+        { k: "warp", label: "Warp", min: 0, max: 3, step: 0.1, def: 1.2 }],
+      presets: [{ label: "Calm", p: { warp: 0.4 } }, { label: "Swirl", p: { warp: 2.4 } }] },
+    turbulence: { params: [
+        { k: "freq", label: "Base freq", min: 1.5, max: 6, step: 0.5, def: 3 },
+        { k: "octaves", label: "Octaves", min: 2, max: 6, step: 1, def: 4 },
+        { k: "gain", label: "Gain", min: 0.35, max: 0.7, step: 0.05, def: 0.55 }],
+      presets: [{ label: "Soft", p: { octaves: 2 } }, { label: "Rough", p: { octaves: 6, gain: 0.65 } }] },
+    metaballs: { params: [
+        { k: "count", label: "Charges", min: 3, max: 9, step: 1, def: 5 },
+        { k: "spread", label: "Radius", min: 0.15, max: 0.5, step: 0.01, def: 0.34 },
+        { k: "bands", label: "Bands", min: 3, max: 10, step: 1, def: 7 }],
+      presets: [{ label: "Few", p: { count: 3, bands: 5 } }, { label: "Swarm", p: { count: 9, spread: 0.26, bands: 8 } }] }
   };
   function studyParams(id) { return (STUDY_PARAMS[id] && STUDY_PARAMS[id].params) || []; }
   function studyPresets(id) { return (STUDY_PARAMS[id] && STUDY_PARAMS[id].presets) || []; }
@@ -1465,6 +1494,79 @@
     return { live: false, strokes: strokes };
   }
 
+  // ── FIELD STUDIES — implicit scalar fields drawn as marching-squares iso-contours ──
+  // studio-engine's substrate, native to the plotter: a closed-form field f(u,v) over
+  // [-1,1]^2 is sampled + contoured into strokes, so it flows through the same
+  // optimise → witness → verify → SVG pipeline as every study, and is reconcile-scored.
+  function fieldContours(P, fieldFn, bands) {
+    var G = Math.round(lerp(96, 168, P.complexity)), N = bands || 5;
+    var vals = new Float32Array(G * G), lo = Infinity, hi = -Infinity;
+    for (var gy = 0; gy < G; gy++) for (var gx = 0; gx < G; gx++) {
+      var val = fieldFn((gx / (G - 1)) * 2 - 1, (gy / (G - 1)) * 2 - 1);
+      vals[gy * G + gx] = val; if (val < lo) lo = val; if (val > hi) hi = val;
+    }
+    var span = (hi - lo) || 1e-6, pal = P.palette, inv = 1 / (G - 1), strokes = [];
+    for (var li = 0; li < N; li++) {
+      var lev = lo + span * (li + 0.5) / N;
+      for (var y = 0; y < G - 1; y++) for (var x = 0; x < G - 1; x++) {
+        var a = vals[y * G + x], b = vals[y * G + x + 1], c = vals[(y + 1) * G + x + 1], d = vals[(y + 1) * G + x];
+        var code = (a > lev ? 1 : 0) | (b > lev ? 2 : 0) | (c > lev ? 4 : 0) | (d > lev ? 8 : 0);
+        if (code === 0 || code === 15) continue;
+        var segs = MS_TABLE[code];
+        for (var si = 0; si < segs.length; si++) {
+          strokes.push({
+            pts: [edgePt(segs[si][0], x, y, a, b, c, d, lev, inv), edgePt(segs[si][1], x, y, a, b, c, d, lev, inv)],
+            col: pal.sample(clamp((a - lo) / span, 0, 1)), w: 0.6 + li * 0.12, op: 0.55
+          });
+        }
+      }
+    }
+    return { live: false, strokes: strokes };
+  }
+  function buildGyroid(rng, P) {
+    var f = pget(P, "freq", 7) * Math.PI, zz = pget(P, "z", 0.3) * TAU;
+    return fieldContours(P, function (u, v) {
+      return Math.sin(u * f) * Math.cos(v * f) + Math.sin(v * f) * Math.cos(zz) + Math.sin(zz) * Math.cos(u * f);
+    }, 6);
+  }
+  function buildQuasicrystal(rng, P) {
+    var w = Math.round(pget(P, "waves", 5)), s = pget(P, "scale", 8), dirs = [];
+    for (var k = 0; k < w; k++) { var ang = TAU * k / w; dirs.push([Math.cos(ang), Math.sin(ang)]); }
+    return fieldContours(P, function (u, v) {
+      var sum = 0; for (var k = 0; k < dirs.length; k++) sum += Math.cos((dirs[k][0] * u + dirs[k][1] * v) * s); return sum;
+    }, 6);
+  }
+  function buildRings(rng, P) {
+    var f = pget(P, "freq", 8) * Math.PI;
+    return fieldContours(P, function (u, v) { return Math.sin(Math.sqrt(u * u + v * v) * f); }, 7);
+  }
+  function buildMoire(rng, P) {
+    var f = pget(P, "freq", 12), a = pget(P, "angle", 0.4), ca = Math.cos(a), sa = Math.sin(a);
+    return fieldContours(P, function (u, v) { return Math.sin(f * u) * Math.sin(f * (u * ca + v * sa)); }, 6);
+  }
+  function buildFlowfield(rng, P) {
+    var s = pget(P, "scale", 4.5), w = pget(P, "warp", 1.2);
+    return fieldContours(P, function (u, v) {
+      return Math.sin(s * u + w * Math.sin(s * v)) * Math.cos(s * v + w * Math.cos(s * u));
+    }, 6);
+  }
+  function buildTurbulence(rng, P) {
+    var f0 = pget(P, "freq", 3), oct = Math.round(pget(P, "octaves", 4)), g = pget(P, "gain", 0.55);
+    return fieldContours(P, function (u, v) {
+      var acc = 0, amp = 0;
+      for (var o = 0; o < oct; o++) { var fr = f0 * Math.pow(2, o), a = Math.pow(g, o); acc += a * Math.sin(fr * u + Math.sin(fr * v)) * Math.cos(fr * v); amp += a; }
+      return amp ? acc / amp : 0;
+    }, 6);
+  }
+  function buildMetaballs(rng, P) {
+    var count = Math.round(pget(P, "count", 5)), spread = pget(P, "spread", 0.34), bands = Math.round(pget(P, "bands", 7)), balls = [];
+    for (var i = 0; i < count; i++) balls.push([(rng() * 2 - 1) * 0.7, (rng() * 2 - 1) * 0.7, spread * (0.75 + 0.5 * rng())]);
+    return fieldContours(P, function (u, v) {
+      var t = 0; for (var i = 0; i < balls.length; i++) { var dx = u - balls[i][0], dy = v - balls[i][1], r = balls[i][2]; t += r * r / (dx * dx + dy * dy + 1e-3); }
+      return Math.sqrt(t); // compress the peaked potential so contour levels spread into the blob bodies
+    }, bands);
+  }
+
   var STUDIES = [
     { id: "phyllotaxis", label: "Phyllotaxis", build: buildPhyllotaxis,
       blurb: "Vogel&rsquo;s spiral &mdash; a seed every <b>golden angle</b>, radius as &radic;index. The Fibonacci arms you see are emergent, never drawn. <span class='sp'>The snail</span> lights which arms are bright." },
@@ -1508,6 +1610,20 @@
       blurb: "A Maurer rose: walk the rhodonea r = sin(n&theta;) in fixed-degree strides and the straight chords weave a lattice the smooth petals only hint at &mdash; order from a deliberately coarse sampling, on a curve of pure <b>sin/cos</b>. Different <em>n</em> and step give wildly different webs. <span class='sp'>The specimen</span> tints the weave." },
     { id: "clifford", label: "Attractor", build: buildClifford,
       blurb: "A Clifford attractor: iterate x&prime;=sin(ay)+c&middot;cos(ax), y&prime;=sin(bx)+d&middot;cos(by) and the orbit never repeats yet never escapes &mdash; deterministic chaos folding a plane into a strange attractor. <b>a</b> and <b>b</b> are yours; each seed bends <em>c,d</em> into a new creature. <span class='sp'>The specimen</span> tints the cloud." },
+    { id: "gyroid", label: "Gyroid", build: buildGyroid, ghost: false,
+      blurb: "A triply-periodic minimal surface, sliced and drawn as iso-contours &mdash; the same field a <b>studio-engine</b> generator emits, here as plottable lines. <b>Clean tiling</b> is judged against integer frequency, a property the field didn&rsquo;t choose. <span class='sp'>Pure math.</span>" },
+    { id: "quasicrystal", label: "Quasicrystal", build: buildQuasicrystal, ghost: false,
+      blurb: "Plane waves at evenly spaced angles interfere into an aperiodic pattern &mdash; <b>five-fold</b> order that never repeats, drawn as contours. The reconcile judges it against the five-fold ideal it didn&rsquo;t author. <span class='sp'>Pure math.</span>" },
+    { id: "rings", label: "Rings", build: buildRings, ghost: false,
+      blurb: "Concentric interference rings &mdash; sin of the radius, the simplest field, contoured. Judged for balance, coverage, contrast and complexity it didn&rsquo;t set. <span class='sp'>Pure math.</span>" },
+    { id: "moire", label: "Moir&eacute;", build: buildMoire, ghost: false,
+      blurb: "Two rotated gratings multiplied &mdash; the beat pattern where they cross, drawn as contours. <span class='sp'>Pure math.</span>" },
+    { id: "flowfield", label: "Curl field", build: buildFlowfield, ghost: false,
+      blurb: "A domain-warped potential &mdash; each axis bent by a sinusoid of the other &mdash; drawn as the iso-contours of its flow. The closed-form sibling of the particle Flow field. <span class='sp'>Pure math.</span>" },
+    { id: "turbulence", label: "Turbulence", build: buildTurbulence, ghost: false,
+      blurb: "Fractal Brownian motion: octaves of a sinusoidal basis summed at doubling frequency and halving amplitude &mdash; the self-similar roughness of smoke and cloud, drawn as contours. <span class='sp'>Pure math.</span>" },
+    { id: "metaballs", label: "Metaballs", build: buildMetaballs, ghost: false,
+      blurb: "Inverse-square charges summed into a smooth potential; the iso-contours are the classic blobby threshold where the fields merge. Each seed re-places the charges. <span class='sp'>Pure math.</span>" },
     { id: "live", label: "Live &middot; camera", build: null,
       blurb: "The camera as a real organ &mdash; particles stream along the edges it senses, live." }
   ];
@@ -1789,7 +1905,16 @@
       var rect = canvas.getBoundingClientRect();
       playDpr = canvas.width / Math.max(1, rect.width); playW = rect.width; playH = rect.height; playReady = true;
     }
-    function finalPaint(W, H, strokes, fld) { paintRich(ctx, W, H, strokes, fld, state.palette); capturePlay(); }
+    function finalPaint(W, H, strokes, fld) {
+      paintRich(ctx, W, H, strokes, fld, state.palette); capturePlay();
+      // reconcile: judge the settled drawing against criteria it did not author (+ novelty)
+      if (window.Reconcile) {
+        try {
+          lastVerdict = window.Reconcile.reconcile(state.study, state.params, strokes);
+          window.Reconcile.renderInto(scoresEl, lastVerdict);
+        } catch (e) { if (window.console) console.warn("[reconcile]", e); }
+      }
+    }
     function blitBase() { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.drawImage(playBuf, 0, 0); }
     function playReset() { playActive = false; playFade = 0; playP = null; playReady = false; if (playRaf) { cancelAnimationFrame(playRaf); playRaf = 0; } }
     function playInit() { playP = new Float32Array(NP * 3); for (var i = 0; i < NP; i++) { var b = i * 3; playP[b] = Math.random() * playW; playP[b + 1] = Math.random() * playH; playP[b + 2] = Math.random(); } }
@@ -1844,12 +1969,13 @@
       complexity: 0.58, seed: randomSeed(), params: defParams("flow")
     };
     hydrateFromURL(); // a shared link reproduces the exact drawing
-    var finalStrokes = [], settled = false, drawToken = 0, rafId = 0; // settled = the geometry is final (gate's observed-state check)
+    var finalStrokes = [], settled = false, drawToken = 0, rafId = 0, lastVerdict = null; // settled = the geometry is final (gate's observed-state check)
 
     var statusEl = document.getElementById("at-status");
     var seedtagEl = document.getElementById("at-seedtag");
     var seedInput = document.getElementById("at-seed");
     var blurbEl = document.getElementById("at-blurb");
+    var scoresEl = document.getElementById("at-scores"); // the reconcile readout (criteria → cohesion → novelty → verdict)
 
     function status(t) { if (statusEl) statusEl.textContent = t; }
     var gateEl = document.getElementById("at-gate"); // persistent home for the export gate's decision
@@ -1994,6 +2120,9 @@
           "optimised: " + st.segIn + " segments to " + st.pathsOut + " continuous paths; " +
           st.ptsIn + " to " + st.ptsOut + " points; pen-up travel reduced " + cut + " percent\n" +
           "pens=" + opt.pens.length + " witness=" + witness + " (SHA-256 of geometry, via EMET)\n" +
+          (lastVerdict ? "verdict=" + lastVerdict.tag + " cohesion=" + lastVerdict.cohesion.toFixed(4) +
+            " novelty=" + (lastVerdict.margins.novelty || 0).toFixed(4) +
+            " (judged against criteria it did not author, via Reconcile)\n" : "") +
           "re-derivable: the same seed redraws this exact file. github.com/HarperZ9";
         var svg = plotSVG(opt, meta);
         var blob = new Blob([svg], { type: "image/svg+xml" });
@@ -2004,6 +2133,7 @@
         setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
         status(st.pathsOut + " paths · −" + cut + "% pen travel · witness " + shortW + "…");
         gateMsg("allow", "settled, witnessed, and written &mdash; <span class=\"gmono\">" + shortW + "&hellip;</span>");
+        if (window.Reconcile && lastVerdict) Reconcile.remember(lastVerdict.features); // the saved work grounds future novelty
       });
     }
 

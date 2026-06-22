@@ -60,7 +60,7 @@ Type checking... <span class="ok">OK</span>
   <span class="kw">"declared_effects"</span>:      { "load_config": ["FileSystem"] }
   <span class="kw">"observed_capabilities"</span>: { "load_config": { "FileSystem": ["read_file"] } }</pre>
     <p class="artifact-cap">Touch your files without saying so, and it won&rsquo;t build &mdash; the error points at the exact line that did it. <b>Declare</b> it instead, and it passes &mdash; and the compiler writes down what you promised, right next to what it actually saw you do.</p>
-    <p class="artifact-note">Captured live from <b>quantac check</b> (Rust toolchain, release build) &middot; the effect is baked into the function and checked every time it&rsquo;s called. <em>That little receipt is the heart of it</em> &mdash; what you promised, side by side with what really happened &mdash; and it&rsquo;s honest that this is the foundation, not a finished, ship-it-tomorrow product.</p>
+    <p class="artifact-note">Captured live from <b>quantac check</b> (Rust toolchain, release build) &middot; the effect is built into the function and checked every time it&rsquo;s called. <em>That little receipt is the heart of it</em> &mdash; what you promised, side by side with what really happened &mdash; and it&rsquo;s honest that this is the foundation, not a finished, ship-it-tomorrow product.</p>
   </div>
 
   <div class="exhibit reveal">
@@ -75,7 +75,7 @@ Parsing... <span class="ok">OK</span> (1 items)
 <span class="bad">Type errors found:</span>
   <span class="bad">function returns `&amp;'b i32` but expected `&amp;'a i32`</span></pre>
     <p class="artifact-cap">Here&rsquo;s what&rsquo;s happening: the function promised to hand back one specific piece of memory, then tried to hand back a different one that might disappear sooner. The compiler catches the swap and says no. How long memory is allowed to live is a promise too &mdash; and it&rsquo;s kept.</p>
-    <p class="artifact-note">Diagnostic from <b>compiler/src/types/error.rs</b>, surfaced through the lifetime matching in <b>unify.rs</b>. <em>An honest limit, said plainly:</em> this memory-lifetime checking is still young. It already follows memory as it passes between functions (that&rsquo;s the Phase 1 work), but I haven&rsquo;t finished proving every case at the caller&rsquo;s side &mdash; so I won&rsquo;t claim it&rsquo;s complete.</p>
+    <p class="artifact-note">Diagnostic from <b>compiler/src/types/error.rs</b>, surfaced through the lifetime matching in <b>unify.rs</b>. <em>An honest limit, said plainly:</em> this memory-lifetime checking is not yet complete. It already follows memory as it passes between functions (that&rsquo;s the Phase 1 work), but I haven&rsquo;t finished proving every case at the caller&rsquo;s side &mdash; so I won&rsquo;t claim it&rsquo;s complete.</p>
   </div>
 
   <div class="exhibit reveal">

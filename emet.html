@@ -19,7 +19,7 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">EMET &middot; external witness</span></div>
   <div class="mid">
     <h1>If an agent touched it, you should be able to <span class="g">check what it did.</span></h1>
-    <p class="lede">I couldn&rsquo;t take an agent&rsquo;s word for what it changed, so I built something that checks for itself. It reads the file straight off the disk and runs it through a hash &mdash; a short fingerprint where, if even one character moves, the whole fingerprint changes. Then it compares that to the fingerprint it saved earlier and tells you one of three things: MATCH (nothing moved), DRIFT (something moved), or UNVERIFIABLE (it couldn&rsquo;t check, and says so plainly). There is no fourth answer that just means <em>trust me</em> &mdash; the code was built so that answer can&rsquo;t exist. It stands outside the thing it&rsquo;s checking, and it never speaks for that thing.</p>
+    <p class="lede">I couldn&rsquo;t take an agent&rsquo;s word for what it changed, so I built something that checks for itself. It reads the file straight off the disk and works out a fingerprint &mdash; a short code that is unique to those exact bytes. Move even one character and the whole fingerprint changes. Then it compares that to the fingerprint it saved earlier and tells you one of three things: MATCH (nothing moved), DRIFT (something moved), or UNVERIFIABLE (it couldn&rsquo;t check, and says so plainly). There is no fourth answer that just means <em>trust me</em> &mdash; the code was built so that answer can&rsquo;t exist. It stands outside the thing it&rsquo;s checking, and it never speaks for that thing.</p>
     <p class="close">A witness isn&rsquo;t a judge. All it does is say what it compared. Whether to trust the result is yours, not the tool&rsquo;s.</p>
   </div>
   <div class="seal">emet &mdash; Hebrew for truth &middot; erase one letter and it reads <b>met</b></div>
@@ -30,8 +30,8 @@
 <!-- ─── WHAT IT IS ─────────────────────────────────────────────── -->
 <section class="mv" id="what" aria-labelledby="what-h">
   <h2 id="what-h" class="reveal">It works out the fingerprint itself.</h2>
-  <p class="body-text reveal">A model is always handling files &mdash; one it edits, a prompt it&rsquo;s given, a view it shows you and calls a true copy of the original. EMET opens those files directly and computes their fingerprint again from scratch, using SHA-256 (a standard, widely trusted recipe for turning any file into one short, unique fingerprint). Then it lines that up against the fingerprint it saved before. The answer comes only from running the same recipe over the same file &mdash; never from the system telling you it&rsquo;s fine. It stands <em>outside</em> the thing it&rsquo;s checking.</p>
-  <em class="close reveal">Knowing where a file came from is one thing. It still doesn&rsquo;t tell you the version in front of the model right now is unchanged. That&rsquo;s the gap this closes.</em>
+  <p class="body-text reveal">An AI model is always handling files &mdash; one it edits, a prompt it&rsquo;s given, a view it shows you and calls a true copy of the original. EMET opens those files directly and works out the fingerprint again from scratch, using SHA-256 (a standard, widely trusted recipe for turning any file into one short, unique fingerprint). Then it compares that to the fingerprint it saved before. The answer comes only from running the same recipe over the same file &mdash; never from the system telling you it&rsquo;s fine. It stands <em>outside</em> the thing it&rsquo;s checking.</p>
+  <em class="close reveal">Knowing where a file came from is one thing. It still doesn&rsquo;t tell you whether the copy the model is looking at right now is unchanged. That&rsquo;s the gap this closes.</em>
 </section>
 
 <!-- ─── THE VERDICTS ───────────────────────────────────────────── -->
@@ -74,7 +74,7 @@
 membrane.py        &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span>
 impl/rust/emet     &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span>
 impl/js/emet.js    &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span></pre>
-    <p class="artifact-cap">Change a single character in the file and the answer drops from <b>MATCH</b> to <b>DRIFT</b>. The seal listens to the file itself, not to anyone who promises it&rsquo;s fine.</p>
+    <p class="artifact-cap">Change a single character in the file and the answer drops from <b>MATCH</b> to <b>DRIFT</b>. It reads the file itself, not anyone who promises it&rsquo;s fine.</p>
     <p class="artifact-note">Live in <b>c:/dev/state/emet</b> &middot; receipt format from <b>adapters/proof_surface_receipt.py</b> &middot; 19/19 conformance vectors, three language implementations, CI each push. <em>Honest limit:</em> I wrote all three versions myself, so they can only earn one honest claim &mdash; that the written rules are clear enough to build from. They haven&rsquo;t yet been rebuilt by someone with no connection to me, and that fourth version, by a different hand, is something I still owe.</p>
   </div>
 </section>
