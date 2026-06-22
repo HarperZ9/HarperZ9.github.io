@@ -1789,7 +1789,16 @@
       var rect = canvas.getBoundingClientRect();
       playDpr = canvas.width / Math.max(1, rect.width); playW = rect.width; playH = rect.height; playReady = true;
     }
-    function finalPaint(W, H, strokes, fld) { paintRich(ctx, W, H, strokes, fld, state.palette); capturePlay(); }
+    function finalPaint(W, H, strokes, fld) {
+      paintRich(ctx, W, H, strokes, fld, state.palette); capturePlay();
+      // reconcile: judge the settled drawing against criteria it did not author (+ novelty)
+      if (window.Reconcile) {
+        try {
+          lastVerdict = window.Reconcile.reconcile(state.study, state.params, strokes);
+          window.Reconcile.renderInto(scoresEl, lastVerdict);
+        } catch (e) { if (window.console) console.warn("[reconcile]", e); }
+      }
+    }
     function blitBase() { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.drawImage(playBuf, 0, 0); }
     function playReset() { playActive = false; playFade = 0; playP = null; playReady = false; if (playRaf) { cancelAnimationFrame(playRaf); playRaf = 0; } }
     function playInit() { playP = new Float32Array(NP * 3); for (var i = 0; i < NP; i++) { var b = i * 3; playP[b] = Math.random() * playW; playP[b + 1] = Math.random() * playH; playP[b + 2] = Math.random(); } }
@@ -1844,12 +1853,13 @@
       complexity: 0.58, seed: randomSeed(), params: defParams("flow")
     };
     hydrateFromURL(); // a shared link reproduces the exact drawing
-    var finalStrokes = [], settled = false, drawToken = 0, rafId = 0; // settled = the geometry is final (gate's observed-state check)
+    var finalStrokes = [], settled = false, drawToken = 0, rafId = 0, lastVerdict = null; // settled = the geometry is final (gate's observed-state check)
 
     var statusEl = document.getElementById("at-status");
     var seedtagEl = document.getElementById("at-seedtag");
     var seedInput = document.getElementById("at-seed");
     var blurbEl = document.getElementById("at-blurb");
+    var scoresEl = document.getElementById("at-scores"); // the reconcile readout (criteria → cohesion → novelty → verdict)
 
     function status(t) { if (statusEl) statusEl.textContent = t; }
     var gateEl = document.getElementById("at-gate"); // persistent home for the export gate's decision
@@ -1994,6 +2004,9 @@
           "optimised: " + st.segIn + " segments to " + st.pathsOut + " continuous paths; " +
           st.ptsIn + " to " + st.ptsOut + " points; pen-up travel reduced " + cut + " percent\n" +
           "pens=" + opt.pens.length + " witness=" + witness + " (SHA-256 of geometry, via EMET)\n" +
+          (lastVerdict ? "verdict=" + lastVerdict.tag + " cohesion=" + lastVerdict.cohesion.toFixed(4) +
+            " novelty=" + (lastVerdict.margins.novelty || 0).toFixed(4) +
+            " (judged against criteria it did not author, via Reconcile)\n" : "") +
           "re-derivable: the same seed redraws this exact file. github.com/HarperZ9";
         var svg = plotSVG(opt, meta);
         var blob = new Blob([svg], { type: "image/svg+xml" });
@@ -2004,6 +2017,7 @@
         setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
         status(st.pathsOut + " paths · −" + cut + "% pen travel · witness " + shortW + "…");
         gateMsg("allow", "settled, witnessed, and written &mdash; <span class=\"gmono\">" + shortW + "&hellip;</span>");
+        if (window.Reconcile && lastVerdict) Reconcile.remember(lastVerdict.features); // the saved work grounds future novelty
       });
     }
 
