@@ -14,6 +14,21 @@
 <link rel="stylesheet" href="system/system.css?v=20260621d">
 <style>
   /* atelier — the algorithmic drawing instrument. Scoped; built from system tokens. */
+  /* reconcile readout — criteria → cohesion → novelty → verdict (the judgment half) */
+  .at-scores{margin-top:.5rem;font:12px/1.5 var(--mono,'Spline Sans Mono',monospace);color:var(--dim,#9aa6ab)}
+  .rc-head{display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem}
+  .rc-head b{color:var(--bone,#e9e2d0)}
+  .rc-tag{padding:1px 7px;border-radius:4px;font-size:11px;font-weight:600}
+  .rc-verified{background:#0c3b2e;color:#5cebbd}
+  .rc-unverifiable{background:#403a12;color:#f2d35a}
+  .rc-refuted{background:#43161f;color:#ff8aa0}
+  .rc-axis{display:flex;align-items:center;gap:.5rem;margin:2px 0}
+  .rc-name{width:6.5rem;opacity:.82}
+  .rc-bar{flex:1;height:6px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden}
+  .rc-fill{display:block;height:100%;background:linear-gradient(90deg,#3f857a,#efab30)}
+  .rc-weak .rc-fill{background:linear-gradient(90deg,#df5e00,#efab30)}
+  .rc-weak .rc-name{color:#efab30;opacity:1}
+  .rc-val{width:3rem;text-align:right;opacity:.7}
   .atelier{margin-top:clamp(1.6rem,3vw,2.4rem);display:grid;gap:clamp(1rem,2.4vw,1.8rem);
     grid-template-columns:1fr;max-width:66rem}
   @media(min-width:920px){.atelier{grid-template-columns:1.52fr 1fr;align-items:start}}
@@ -182,6 +197,7 @@
       </div>
       <input type="file" id="at-img" accept="image/*" hidden>
       <div class="at-gate" id="at-gate" aria-live="polite"></div>
+      <div class="at-scores" id="at-scores" aria-live="polite" aria-label="Reconcile readout — criteria, cohesion, novelty, verdict"></div>
       <p class="at-blurb" id="at-blurb"></p>
     </div>
   </div>
@@ -311,7 +327,8 @@
 </footer>
 
 <script src="system/spine.js" defer></script>
-<script src="system/atelier.js?v=20260621t" defer></script>
+<script src="system/reconcile.js?v=20260622a" defer></script>
+<script src="system/atelier.js?v=20260622t" defer></script>
 <script src="system/reveal.js?v=20260621d" defer></script>
 </body>
 </html>
