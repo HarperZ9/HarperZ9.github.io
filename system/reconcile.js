@@ -48,11 +48,15 @@
     fivefold: function (f, p) { var w = (p && p.waves != null) ? Math.round(p.waves) : 5; return clamp(1 - Math.abs(w - 5) * 0.2, 0, 1); }
   };
 
-  // axes per study — universal aesthetic four by default; field studies add a structural axis.
+  // axes per study. Point/line studies use the density-contrast axis (it's meaningful when mass
+  // varies); dense even contour-fields don't (they're uniform by nature), so field studies are
+  // judged on coverage/complexity/balance + their own structural axis instead.
   var AXES = {
     _default: ["balance", "coverage", "contrast", "complexity"],
-    gyroid: ["clean_freq", "contrast", "complexity"],
-    quasicrystal: ["fivefold", "contrast", "complexity"]
+    gyroid: ["clean_freq", "coverage", "complexity"],
+    quasicrystal: ["fivefold", "coverage", "complexity"],
+    rings: ["coverage", "complexity", "balance"],
+    moire: ["coverage", "complexity", "balance"]
   };
   function axesFor(study) { return AXES[study] || AXES._default; }
 
