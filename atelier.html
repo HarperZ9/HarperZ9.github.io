@@ -14,6 +14,21 @@
 <link rel="stylesheet" href="system/system.css?v=20260621d">
 <style>
   /* atelier — the algorithmic drawing instrument. Scoped; built from system tokens. */
+  /* reconcile readout — criteria → cohesion → novelty → verdict (the judgment half) */
+  .at-scores{margin-top:.5rem;font:12px/1.5 var(--mono,'Spline Sans Mono',monospace);color:var(--dim,#9aa6ab)}
+  .rc-head{display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem}
+  .rc-head b{color:var(--bone,#e9e2d0)}
+  .rc-tag{padding:1px 7px;border-radius:4px;font-size:11px;font-weight:600}
+  .rc-verified{background:#0c3b2e;color:#5cebbd}
+  .rc-unverifiable{background:#403a12;color:#f2d35a}
+  .rc-refuted{background:#43161f;color:#ff8aa0}
+  .rc-axis{display:flex;align-items:center;gap:.5rem;margin:2px 0}
+  .rc-name{width:6.5rem;opacity:.82}
+  .rc-bar{flex:1;height:6px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden}
+  .rc-fill{display:block;height:100%;background:linear-gradient(90deg,#3f857a,#efab30)}
+  .rc-weak .rc-fill{background:linear-gradient(90deg,#df5e00,#efab30)}
+  .rc-weak .rc-name{color:#efab30;opacity:1}
+  .rc-val{width:3rem;text-align:right;opacity:.7}
   .atelier{margin-top:clamp(1.6rem,3vw,2.4rem);display:grid;gap:clamp(1rem,2.4vw,1.8rem);
     grid-template-columns:1fr;max-width:66rem}
   @media(min-width:920px){.atelier{grid-template-columns:1.52fr 1fr;align-items:start}}
@@ -121,7 +136,7 @@
     <p class="eyebrow">ATELIER &middot; ALGORITHMIC DRAWINGS</p>
     <h1>Living structure, <span class="g">drawn by algorithm.</span></h1>
     <p class="lede"><a href="https://bsky.app/profile/iambeta.bsky.social" style="color:inherit;border-bottom:1px solid rgba(239,171,48,.5)">iamBeTa</a> photographs small living things up close &mdash; the spiral of a snail&rsquo;s shell, the curl of a spent seedhead, the veins of a mallow flower. Here, each of those shapes becomes the starting point for a small program that <em>draws</em>: how leaves spiral around a stem, how fluid swirls, how a leaf grows its veins, how patterns ripple across a surface. Every line you see is drawn fresh <em>right here in your browser</em> &mdash; nothing on this page is a saved picture.</p>
-    <p class="close">The seed is just a short starting code, and the same seed always draws the exact same thing. I didn&rsquo;t want art you have to take on my word, so I built it to answer for itself: run it, steer it with a photograph, save the drawing &mdash; and <b>it carries proof of where it came from, right inside the file.</b></p>
+    <p class="close">The seed is just a short starting number. The same seed always draws the exact same thing &mdash; like a music box that plays the very same tune, note for note, each time you turn it, because the tune is read off the pins, not performed by someone who might waver. I didn&rsquo;t want art you have to take on my word, so I built it to answer for itself: run it, steer it with a photograph, save the drawing &mdash; and <b>it carries proof of where it came from, right inside the file.</b></p>
   </div>
   <div class="seal">In-browser &middot; zero dependencies &middot; deterministic from seed &middot; export to a witnessed, plot-optimised <b>SVG</b></div>
 </div>
@@ -130,7 +145,7 @@
 
 <section class="mv" id="instrument" aria-labelledby="at-h">
   <h2 id="at-h" class="reveal">The instrument.</h2>
-  <p class="body-text reveal">Pick a drawing style and a photograph. The program reads the photo as a map of light and dark, and bends to follow it &mdash; so the snail&rsquo;s spiral or the mallow&rsquo;s veins start to show up in the strokes. Slide the complexity up or down, roll a new seed, swap the pens. When you find one you love, save it. It comes out as a clean file made for a drawing machine &mdash; a pen plotter &mdash; with strokes that touch joined into smooth, continuous lines, ordered so the pen lifts off the paper as little as possible, and sorted by pen color. Then it&rsquo;s stamped with a witness &mdash; think of it as a tamper-proof fingerprint of the exact drawing. Anyone can re-run the file from its seed and get the identical drawing, and the file even notes, in its own fine print, what it tidied up. The web address holds that same recipe too &mdash; press <b>Copy link</b> and whoever opens it re-draws your exact picture, with no file to take on trust. And saving isn&rsquo;t just a download button &mdash; it&rsquo;s the <em>action</em> in a careful little loop. A gate (a checkpoint that says no by default) first makes sure the drawing has fully settled before it allows the file to be written, and only then does the witness stamp it. <b>Look &rarr; check &rarr; act &rarr; sign</b> &mdash; the same care, turned on the instrument&rsquo;s own work.</p>
+  <p class="body-text reveal">Pick a drawing style and a photograph. The program reads the photo as a map of light and dark, and bends to follow it &mdash; so the snail&rsquo;s spiral or the mallow&rsquo;s veins start to show up in the strokes. Slide the complexity up or down, roll a new seed, swap the pens. When you find one you love, save it. It comes out as a clean file made for a drawing machine &mdash; a pen plotter &mdash; with strokes that touch joined into smooth, continuous lines, ordered so the pen lifts off the paper as little as possible, and sorted by pen color. Then it&rsquo;s stamped with a witness &mdash; a fingerprint of the exact drawing. Anyone can re-run the file from its seed and get the identical drawing, and the file even notes, in its own fine print, what it tidied up. The web address holds that same recipe too &mdash; press <b>Copy link</b> and whoever opens it re-draws your exact picture, with no file to take on trust. And saving isn&rsquo;t just a download button &mdash; it&rsquo;s the <em>action</em> in a careful little loop. A gate &mdash; a checkpoint that says no until it&rsquo;s sure &mdash; first makes sure the drawing has fully settled before it allows the file to be written, and only then does the witness stamp it. <b>Look &rarr; check &rarr; act &rarr; sign</b> &mdash; the same care, turned on the instrument&rsquo;s own work.</p>
   <p class="body-text reveal">Or bring your own picture entirely: press <b>&uarr; Upload</b> to load a photograph, or pick <b>Live &middot; camera</b> and the instrument sees through your webcam in real time &mdash; just what it actually measures: brightness, the edges between light and dark, and movement, <em>no AI, nothing guessed</em> &mdash; with tiny particles streaming along whatever it sees. A live camera can never be re-run exactly, so <b>Capture</b> freezes one moment of what it&rsquo;s seeing into a fixed, signed snapshot you can draw and save. <b>Field</b> shows you that raw map of light, right next to the art &mdash; the honest truth of what it sees, never a black box.</p>
 
   <div class="atelier reveal" id="atelier">
@@ -182,16 +197,17 @@
       </div>
       <input type="file" id="at-img" accept="image/*" hidden>
       <div class="at-gate" id="at-gate" aria-live="polite"></div>
+      <div class="at-scores" id="at-scores" aria-live="polite" aria-label="Reconcile readout — criteria, cohesion, novelty, verdict"></div>
       <p class="at-blurb" id="at-blurb"></p>
     </div>
   </div>
   <p class="nojs" id="at-nojs" hidden>This instrument needs JavaScript &mdash; it generates every line at runtime. The algorithms are plain, dependency-free code in <b>system/atelier.js</b>.</p>
-  <p class="artifact-note reveal">No outside code, no saved pictures &mdash; just a tiny random-number maker that starts from the seed, the drawing programs themselves, a canvas, and a tidier that stitches and orders the lines for a real pen. <em>Why it belongs here:</em> a drawing that always comes out the same from a stated seed, and carries that fingerprint of its own shape, is one you can <b>re-run for yourself</b> instead of taking on trust &mdash; the same standard I hold the rest of my work to, in a form you can hang on a wall.</p>
+  <p class="artifact-note reveal">No outside code, no saved pictures &mdash; just a tiny random-number maker that starts from the seed, the drawing programs themselves, a canvas, and a tidier that stitches and orders the lines for a real pen. <em>Why it belongs here:</em> a drawing that always comes out the same from a stated seed, and carries that fingerprint of its own shape, is one you can <b>re-run for yourself</b> instead of taking it on trust &mdash; the same standard I hold the rest of my work to, in a form you can hang on a wall.</p>
 </section>
 
 <section class="mv" id="verify" aria-labelledby="vf-h">
   <h2 id="vf-h" class="reveal">Verify &mdash; <em>re-derive it, don&rsquo;t trust it.</em></h2>
-  <p class="body-text reveal">Every saved file carries its seed and a <b>SHA-256</b> witness of its own shape &mdash; SHA-256 is just a standard way to turn the exact drawing into a short, unique fingerprint, so the tiniest change shows up. Drop a file back here and two of the tools go to work on it. <a href="demonstrations.html" style="color:var(--bone);border-bottom:1px solid rgba(239,171,48,.45);text-decoration:none">The witness</a> rebuilds the drawing from the seed and works out the fingerprint again, using the browser&rsquo;s own math &mdash; the very same move it makes on any file &mdash; and the <a href="demonstrations.html#gate" style="color:var(--bone);border-bottom:1px solid rgba(239,171,48,.45);text-decoration:none">gate</a>, the checkpoint that says no until it&rsquo;s sure, decides whether to accept it. If the fingerprints line up, that&rsquo;s a <b>MATCH</b> and the gate <em>lets it through</em>. If even one point moved or the fingerprint was touched, that&rsquo;s <b>DRIFT</b> and it <em>turns it away</em>. And if there&rsquo;s no seed to check against, it&rsquo;s <b>UNVERIFIABLE</b> &mdash; it won&rsquo;t pretend, so it hands the decision to a <em>person</em>.</p>
+  <p class="body-text reveal">Every saved file carries its seed and a <b>SHA-256</b> witness of its own shape. SHA-256 is a standard way to turn the exact drawing into a short, unique fingerprint: the tiniest change shows up. Drop a file back here and two of the tools go to work on it. <a href="demonstrations.html" style="color:var(--bone);border-bottom:1px solid rgba(239,171,48,.45);text-decoration:none">The witness</a> rebuilds the drawing from the seed and works out the fingerprint again, using the browser&rsquo;s own math &mdash; the very same move it makes on any file. The <a href="demonstrations.html#gate" style="color:var(--bone);border-bottom:1px solid rgba(239,171,48,.45);text-decoration:none">gate</a> &mdash; the checkpoint that says no until it&rsquo;s sure &mdash; then decides whether to accept it. If the fingerprints line up, that&rsquo;s a <b>MATCH</b> and the gate <em>lets it through</em>. If even one point moved or the fingerprint was touched, that&rsquo;s <b>DRIFT</b> and it <em>turns it away</em>. And if there&rsquo;s no seed to check against, it&rsquo;s <b>UNVERIFIABLE</b> &mdash; it won&rsquo;t pretend, so it hands the decision to a <em>person</em>.</p>
   <div class="at-verify reveal" id="at-verify">
     <label class="at-drop" id="at-drop" for="at-file" tabindex="0">
       <input type="file" id="at-file" accept=".svg,image/svg+xml" hidden>
@@ -203,12 +219,12 @@
       <div class="vd-detail">Drop a drawing exported from this page to re-derive and check it.</div>
     </div>
   </div>
-  <p class="artifact-note reveal">The witness and the gate here aren&rsquo;t imitations made to look the part &mdash; they are the very same code those tools run, pulled out into one shared <b>backbone</b> that the tools all build on. One tool, EMET, takes the fingerprint of the drawing; another, proof-surface, is the checkpoint that rules on the result. <em>Why it matters:</em> the tools no longer just check themselves &mdash; they check each other&rsquo;s work, and that mutual checking is the idea the whole project is built on.</p>
+  <p class="artifact-note reveal">The witness and the gate here aren&rsquo;t imitations made to look the part &mdash; they are the very same code those tools run, pulled out into one shared <b>backbone</b> that all the tools build on. One tool, EMET, takes the fingerprint of the drawing; another, proof-surface, is the checkpoint that rules on the result. <em>Why it matters:</em> the tools no longer just check themselves &mdash; they check each other&rsquo;s work, and that mutual checking is the idea the whole project is built on.</p>
 </section>
 
 <section class="mv" id="algorithms" aria-labelledby="alg-h">
   <h2 id="alg-h" class="reveal">Twenty-one algorithms, four photographs.</h2>
-  <p class="body-text reveal">Each one is a real method for growing a pattern, with a long history in mathematics and in pen-plotter art &mdash; and each was chosen because one of the photographs already wears that exact shape in real life.</p>
+  <p class="body-text reveal">Each one is a real method for growing a pattern, with a long history in mathematics and in pen-plotter art. Each was chosen because one of the photographs already wears that exact shape in real life.</p>
   <div class="studies reveal">
     <div class="study-row">
       <span class="study-name">Phyllotaxis<span class="from">from the snail</span></span>
@@ -244,7 +260,7 @@
     </div>
     <div class="study-row">
       <span class="study-name">Hilbert<span class="from">a continuous fill</span></span>
-      <span class="study-gloss">Hilbert&rsquo;s 1891 space-filling curve: <em>one continuous stroke</em> that passes through every cell of the plane exactly once, the specimen rendered as that single path. The geometry is pure integer arithmetic &mdash; no sines, no roots &mdash; so the drawing re-derives <em>bit-for-bit on any machine</em>. The strongest provenance the instrument can offer.</span>
+      <span class="study-gloss">Hilbert&rsquo;s 1891 space-filling curve: <em>one continuous stroke</em> that passes through every cell of the plane exactly once, the specimen drawn as that single path. The geometry is pure integer arithmetic &mdash; no sines, no roots &mdash; so the drawing re-derives <em>bit-for-bit on any machine</em>. The clearest record of where it came from that this instrument can offer.</span>
     </div>
     <div class="study-row">
       <span class="study-name">Pascal<span class="from">the binomial theorem</span></span>
@@ -280,7 +296,7 @@
     </div>
     <div class="study-row">
       <span class="study-name">Penrose<span class="from">a quasicrystal</span></span>
-      <span class="study-gloss">A Penrose tiling: Robinson triangles deflated in the golden ratio &phi; cover the plane with five-fold symmetry but <em>never</em> repeat &mdash; the aperiodic order long thought impossible, then found in real quasicrystals. The seed star uses sin/cos, so it re-derives deterministically rather than bit-for-bit.</span>
+      <span class="study-gloss">A Penrose tiling: Robinson triangles deflated in the golden ratio &phi; cover the plane with five-fold symmetry but <em>never</em> repeat &mdash; the aperiodic order long thought impossible, then found in real quasicrystals. The seed star uses sin/cos, so it re-derives the same result every time, though not bit-for-bit across every machine.</span>
     </div>
     <div class="study-row">
       <span class="study-name">Lightning<span class="from">a discharge</span></span>
@@ -311,7 +327,8 @@
 </footer>
 
 <script src="system/spine.js" defer></script>
-<script src="system/atelier.js?v=20260621t" defer></script>
+<script src="system/reconcile.js?v=20260622c" defer></script>
+<script src="system/atelier.js?v=20260622v" defer></script>
 <script src="system/reveal.js?v=20260621d" defer></script>
 </body>
 </html>
