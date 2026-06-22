@@ -265,7 +265,21 @@
     moire: { params: [
         { k: "freq", label: "Frequency", min: 6, max: 22, step: 1, def: 12 },
         { k: "angle", label: "Angle", min: 0.1, max: 1.4, step: 0.05, def: 0.4 }],
-      presets: [{ label: "Loose", p: { angle: 0.2 } }, { label: "Beat", p: { angle: 0.9 } }] }
+      presets: [{ label: "Loose", p: { angle: 0.2 } }, { label: "Beat", p: { angle: 0.9 } }] },
+    flowfield: { params: [
+        { k: "scale", label: "Scale", min: 2, max: 9, step: 0.5, def: 4.5 },
+        { k: "warp", label: "Warp", min: 0, max: 3, step: 0.1, def: 1.2 }],
+      presets: [{ label: "Calm", p: { warp: 0.4 } }, { label: "Swirl", p: { warp: 2.4 } }] },
+    turbulence: { params: [
+        { k: "freq", label: "Base freq", min: 1.5, max: 6, step: 0.5, def: 3 },
+        { k: "octaves", label: "Octaves", min: 2, max: 6, step: 1, def: 4 },
+        { k: "gain", label: "Gain", min: 0.35, max: 0.7, step: 0.05, def: 0.55 }],
+      presets: [{ label: "Soft", p: { octaves: 2 } }, { label: "Rough", p: { octaves: 6, gain: 0.65 } }] },
+    metaballs: { params: [
+        { k: "count", label: "Charges", min: 3, max: 9, step: 1, def: 5 },
+        { k: "spread", label: "Radius", min: 0.15, max: 0.5, step: 0.01, def: 0.34 },
+        { k: "bands", label: "Bands", min: 3, max: 10, step: 1, def: 7 }],
+      presets: [{ label: "Few", p: { count: 3, bands: 5 } }, { label: "Swarm", p: { count: 9, spread: 0.26, bands: 8 } }] }
   };
   function studyParams(id) { return (STUDY_PARAMS[id] && STUDY_PARAMS[id].params) || []; }
   function studyPresets(id) { return (STUDY_PARAMS[id] && STUDY_PARAMS[id].presets) || []; }
@@ -1530,6 +1544,28 @@
     var f = pget(P, "freq", 12), a = pget(P, "angle", 0.4), ca = Math.cos(a), sa = Math.sin(a);
     return fieldContours(P, function (u, v) { return Math.sin(f * u) * Math.sin(f * (u * ca + v * sa)); }, 6);
   }
+  function buildFlowfield(rng, P) {
+    var s = pget(P, "scale", 4.5), w = pget(P, "warp", 1.2);
+    return fieldContours(P, function (u, v) {
+      return Math.sin(s * u + w * Math.sin(s * v)) * Math.cos(s * v + w * Math.cos(s * u));
+    }, 6);
+  }
+  function buildTurbulence(rng, P) {
+    var f0 = pget(P, "freq", 3), oct = Math.round(pget(P, "octaves", 4)), g = pget(P, "gain", 0.55);
+    return fieldContours(P, function (u, v) {
+      var acc = 0, amp = 0;
+      for (var o = 0; o < oct; o++) { var fr = f0 * Math.pow(2, o), a = Math.pow(g, o); acc += a * Math.sin(fr * u + Math.sin(fr * v)) * Math.cos(fr * v); amp += a; }
+      return amp ? acc / amp : 0;
+    }, 6);
+  }
+  function buildMetaballs(rng, P) {
+    var count = Math.round(pget(P, "count", 5)), spread = pget(P, "spread", 0.34), bands = Math.round(pget(P, "bands", 7)), balls = [];
+    for (var i = 0; i < count; i++) balls.push([(rng() * 2 - 1) * 0.7, (rng() * 2 - 1) * 0.7, spread * (0.75 + 0.5 * rng())]);
+    return fieldContours(P, function (u, v) {
+      var t = 0; for (var i = 0; i < balls.length; i++) { var dx = u - balls[i][0], dy = v - balls[i][1], r = balls[i][2]; t += r * r / (dx * dx + dy * dy + 1e-3); }
+      return Math.sqrt(t); // compress the peaked potential so contour levels spread into the blob bodies
+    }, bands);
+  }
 
   var STUDIES = [
     { id: "phyllotaxis", label: "Phyllotaxis", build: buildPhyllotaxis,
@@ -1582,6 +1618,12 @@
       blurb: "Concentric interference rings &mdash; sin of the radius, the simplest field, contoured. Judged for balance, coverage, contrast and complexity it didn&rsquo;t set. <span class='sp'>Pure math.</span>" },
     { id: "moire", label: "Moir&eacute;", build: buildMoire, ghost: false,
       blurb: "Two rotated gratings multiplied &mdash; the beat pattern where they cross, drawn as contours. <span class='sp'>Pure math.</span>" },
+    { id: "flowfield", label: "Curl field", build: buildFlowfield, ghost: false,
+      blurb: "A domain-warped potential &mdash; each axis bent by a sinusoid of the other &mdash; drawn as the iso-contours of its flow. The closed-form sibling of the particle Flow field. <span class='sp'>Pure math.</span>" },
+    { id: "turbulence", label: "Turbulence", build: buildTurbulence, ghost: false,
+      blurb: "Fractal Brownian motion: octaves of a sinusoidal basis summed at doubling frequency and halving amplitude &mdash; the self-similar roughness of smoke and cloud, drawn as contours. <span class='sp'>Pure math.</span>" },
+    { id: "metaballs", label: "Metaballs", build: buildMetaballs, ghost: false,
+      blurb: "Inverse-square charges summed into a smooth potential; the iso-contours are the classic blobby threshold where the fields merge. Each seed re-places the charges. <span class='sp'>Pure math.</span>" },
     { id: "live", label: "Live &middot; camera", build: null,
       blurb: "The camera as a real organ &mdash; particles stream along the edges it senses, live." }
   ];
