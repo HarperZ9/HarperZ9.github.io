@@ -56,7 +56,10 @@
     gyroid: ["clean_freq", "coverage", "complexity"],
     quasicrystal: ["fivefold", "coverage", "complexity"],
     rings: ["coverage", "complexity", "balance"],
-    moire: ["coverage", "complexity", "balance"]
+    moire: ["coverage", "complexity", "balance"],
+    flowfield: ["coverage", "complexity", "balance"],
+    turbulence: ["coverage", "complexity", "balance"],
+    metaballs: ["coverage", "complexity", "balance"]
   };
   function axesFor(study) { return AXES[study] || AXES._default; }
 
