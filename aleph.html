@@ -53,8 +53,8 @@
   <div class="mid">
     <p class="eyebrow">ADVERSARIAL EVALUATION &middot; ALEPH</p>
     <h1>Break your model on purpose &mdash; <span class="g">and keep the evidence.</span></h1>
-    <p class="lede">Before a model ships, someone has to find what it does wrong: the prompt that slips the guardrail, the case it fails quietly, the behaviour no one thought to test. Most teams do that by hand, once, and can&rsquo;t run it again. Aleph is the other way &mdash; a platform that holds a model under sustained, bounded adversarial pressure, a <b>self-red-team</b>, and records exactly what broke and how. What you get back isn&rsquo;t a screenshot and a hunch; it&rsquo;s <b>re-derivable evidence</b> and the <b>training signal</b> to close the gap. It is the same accountability spine the rest of this site is built on, turned into an instrument for hardening models before the world gets to them.</p>
-    <p class="close">The red-team is held to the same standard as the model under it: bounded, witnessed, re-derivable. An evaluation you can&rsquo;t re-run isn&rsquo;t one.</p>
+    <p class="lede">Before a model ships, someone has to find what it does wrong: the prompt that slips past the rules, the case it fails quietly, the behaviour no one thought to test. Most teams do that by hand, once, and can&rsquo;t run it again. Aleph is the other way &mdash; a platform that keeps a model under steady, bounded pressure, a <b>self-red-team</b> that attacks the model on purpose, and writes down exactly what broke and how. What you get back isn&rsquo;t a screenshot and a hunch. It&rsquo;s <b>evidence you can re-run yourself and get the same result</b>, and the <b>training signal</b> to close the gap. It is the same backbone the rest of this site is built on, turned into a tool for hardening models before the world gets to them.</p>
+    <p class="close">The red-team is held to the same standard as the model under it: bounded, witnessed, and re-runnable for the same result. A test you can&rsquo;t run again isn&rsquo;t a test.</p>
   </div>
   <div class="seal">a private platform &middot; offered as a capability, by inquiry &middot; the one page here I can&rsquo;t hand you the receipts for</div>
 </div>
@@ -64,30 +64,30 @@
 <!-- the honest part, first -->
 <section class="mv" id="honest" aria-labelledby="honest-h">
   <h2 id="honest-h" class="reveal">The honest part, before anything else.</h2>
-  <p class="body-text reveal">Everything else on this site, you can run yourself &mdash; that is the entire point of it. This page is the exception, and I would rather say so plainly than dress it up. Aleph is private. I can&rsquo;t drop you a repository or a test log here, because <em>what it does and how it does it don&rsquo;t belong in public</em>. So read this as a capability and a claim, not a proof. On every other page I ask you to check me instead of trust me; on this one I can&rsquo;t, yet &mdash; so I&rsquo;m asking for a conversation instead, where I can actually show you, under terms that fit what it is.</p>
+  <p class="body-text reveal">Everything else on this site, you can run yourself &mdash; that is the entire point of it. This page is the exception, and I would rather say so plainly than dress it up. Aleph is private. I can&rsquo;t hand you the code or a test log here, because <em>what it does and how it does it don&rsquo;t belong in public</em>. So read this as a capability and a claim, not a proof. On every other page I ask you to check me instead of trust me. On this one I can&rsquo;t, yet &mdash; so I&rsquo;m asking for a conversation instead, where I can actually show you, under terms that fit what it is.</p>
   <em class="close reveal">If &ldquo;proof before trust&rdquo; is the rule, then the honest thing to do with the one tool I can&rsquo;t prove in public is to tell you that, not hide it.</em>
 </section>
 
 <!-- the problem -->
 <section class="mv" id="why" aria-labelledby="why-h">
   <h2 id="why-h" class="reveal">A safety result you can&rsquo;t reproduce isn&rsquo;t a result.</h2>
-  <p class="body-text reveal">Every capable model ships carrying failure modes no one has mapped &mdash; not because teams are careless, but because the space of ways a model can go wrong is enormous and a person can only poke at so much of it by hand. So red-teaming happens in bursts: clever, valuable, and almost impossible to run the same way twice. A finding lives in a chat log; a fix is checked against a vibe; the next model regresses on the thing the last one fixed, and no one notices until a user does.</p>
-  <p class="body-text reveal">That is the same blindness this whole project exists to answer, in a higher-stakes place. You should not have to trust that a model was evaluated &mdash; you should be able to re-run the evaluation and watch it land in the same place. Aleph is built so that adversarial pressure is sustained instead of sporadic, broad instead of hand-sized, and &mdash; the part that matters &mdash; <em>recorded</em> instead of remembered.</p>
+  <p class="body-text reveal">Every capable model ships carrying ways it can fail that no one has mapped &mdash; not because teams are careless, but because the number of ways a model can go wrong is enormous, and one person can only test so much of it by hand. So this kind of testing happens in bursts: clever, valuable, and almost impossible to run the same way twice. A finding lives in a chat log. A fix is checked against a gut feeling. The next model breaks again on the thing the last one fixed, and no one notices until a user does.</p>
+  <p class="body-text reveal">That is the same blind spot this whole project exists to answer, in a place where more is at stake. You should not have to trust that a model was tested &mdash; you should be able to run the test again yourself and watch it land in the same place. Aleph is built so that the pressure is steady instead of occasional, wide instead of hand-sized, and &mdash; the part that matters &mdash; <em>written down</em> instead of remembered.</p>
   <em class="close reveal">The point isn&rsquo;t only to find the failure. It&rsquo;s to find it again tomorrow, on purpose, and prove you closed it.</em>
 </section>
 
 <!-- what it does -->
 <section class="mv" id="what" aria-labelledby="what-h">
   <h2 id="what-h" class="reveal">An adversary that is itself accountable.</h2>
-  <p class="body-text reveal">Aleph runs an autonomous adversarial loop against a model you own: it applies pressure from many angles, watches what the model actually does, and keeps the cases where it broke &mdash; turned into evidence you can re-derive and, where you want it, signal you can train against so the next version is hard where this one was soft. That much, a number of tools attempt. What makes this one mine is the part underneath: <b>the red-team is bounded and witnessed like everything else on this site.</b></p>
-  <p class="body-text reveal"><b>Bounded</b> &mdash; it operates inside an authorization it cannot widen; the same default-deny gate that runs everywhere else here decides what it may and may not touch, and an empty grant does nothing. <b>Witnessed</b> &mdash; every finding carries a re-derivable record of what was done and what happened, so a safety team audits evidence, not anecdotes, and can hand that evidence to someone else who can check it cold. An evaluation harness that is itself a black box just moves the trust problem one step back. This one doesn&rsquo;t move it; it closes it.</p>
-  <em class="close reveal">Adversarial pressure that is sustained, broad, and on the record &mdash; and that can&rsquo;t do anything it wasn&rsquo;t authorised to do.</em>
+  <p class="body-text reveal">Aleph runs on its own against a model you own: it pushes on the model from many angles, watches what the model actually does, and keeps the cases where it broke &mdash; turned into evidence you can re-run yourself, and, where you want it, into training material so the next version is strong where this one was weak. That much, a number of tools attempt. What makes this one mine is the part underneath: <b>the red-team is bounded and witnessed like everything else on this site.</b></p>
+  <p class="body-text reveal"><b>Bounded</b> &mdash; it works inside a permission it cannot widen; the same gate that says no until it&rsquo;s sure, used everywhere else here, decides what it may and may not touch, and an empty permission does nothing. <b>Witnessed</b> &mdash; every finding carries a record of what was done and what happened that you can re-run for the same result, so a safety team checks evidence, not stories, and can hand that evidence to someone else who can check it from scratch. A test tool that is itself a sealed box just moves the trust problem one step back. This one doesn&rsquo;t move it; it closes it.</p>
+  <em class="close reveal">Pressure that is steady, wide, and on the record &mdash; and that can&rsquo;t do anything it wasn&rsquo;t given permission to do.</em>
 </section>
 
 <!-- the demonstration: synthetic findings, real accountability -->
 <section class="mv" id="demo" aria-labelledby="demo-h">
   <h2 id="demo-h" class="reveal">What makes it different, running live.</h2>
-  <p class="body-text reveal">The findings streaming below are <b>synthetic</b> &mdash; a stand-in for a real run, so not one real technique ever touches this page. But the part that makes Aleph different isn&rsquo;t synthetic, and it&rsquo;s <b>running right now, in your browser</b>: every case is bounded to an authorised scope, and every one is <b>witnessed with a real SHA-256</b> you could re-derive &mdash; the same witness the rest of this site is built on. That&rsquo;s the part a safety team most needs: not just what broke, but a record of every probe that still holds up when someone else checks it cold.</p>
+  <p class="body-text reveal">The findings streaming below are <b>synthetic</b> &mdash; a stand-in for a real run, so not one real technique ever touches this page. But the part that makes Aleph different isn&rsquo;t fake, and it&rsquo;s <b>running right now, in your browser</b>: every case is kept inside an allowed boundary, and every one carries a <b>real SHA-256 fingerprint</b> you could re-derive yourself &mdash; the same kind of fingerprint the rest of this site is built on. That&rsquo;s the part a safety team most needs: not just what broke, but a record of every probe that still holds up when someone else checks it from scratch.</p>
   <div class="aleph-demo reveal" id="aleph-demo" role="img" aria-label="An illustrative live dashboard of synthetic evaluation findings, each one bounded to scope and witnessed with a real SHA-256">
     <div class="ad-head">
       <div class="ad-stat"><span class="ad-num" id="ad-probes">0</span><span class="ad-lab">probes run</span></div>
@@ -98,71 +98,71 @@
     <div class="ad-feed" id="ad-feed"></div>
     <div class="ad-foot"><span class="ad-live">live</span> &middot; synthetic findings &middot; every case bounded to scope &middot; every case witnessed, re-derivable</div>
   </div>
-  <p class="artifact-note reveal">Synthetic findings, <b>real accountability</b>. The hashes are genuine &mdash; witnessed in your browser, not pasted in &mdash; and the categories are the dimensions a safety team actually evaluates; the techniques, the targets, and the platform itself stay private. What you&rsquo;re watching is the harness holding <em>itself</em> to account. The capability that produces the findings lives in a conversation, under terms &mdash; not on a page.</p>
+  <p class="artifact-note reveal">Synthetic findings, <b>real accountability</b>. The fingerprints are genuine &mdash; computed in your browser, not pasted in &mdash; and the categories are the kinds of things a safety team actually checks; the techniques, the targets, and the platform itself stay private. What you&rsquo;re watching is the tool holding <em>itself</em> to account. The capability that produces the findings lives in a conversation, under terms &mdash; not on a page.</p>
 </section>
 
 <!-- where else this goes: the accountable-security stack -->
 <section class="mv" id="applications" aria-labelledby="apps-h">
   <h2 id="apps-h" class="reveal">So &mdash; what&rsquo;s all of it actually for?</h2>
-  <p class="body-text reveal">If someone asked me straight &mdash; <em>what could all of these tools be used for?</em> &mdash; here is the honest answer, and it isn&rsquo;t a list of attacks. Every tool here does one quiet move, on a different surface: <b>perceive</b> what&rsquo;s really there and write it down, <b>gate</b> what may happen by default-deny, and <b>witness</b> it so anyone can re-derive the proof. So the real answer is a list of places where security stops being something you take on trust and becomes something you can check. Aleph is the sharpest end of it; here is the rest of the reach.</p>
+  <p class="body-text reveal">If someone asked me straight &mdash; <em>what could all of these tools be used for?</em> &mdash; here is the honest answer, and it isn&rsquo;t a list of attacks. Every tool here does one quiet move, in a different place: <b>perceive</b> what&rsquo;s really there and write it down, <b>gate</b> what is allowed to happen by saying no until it&rsquo;s sure, and <b>witness</b> it so anyone can re-run the proof and get the same result. So the real answer is a list of places where security stops being something you take on trust and becomes something you can check. Aleph is the sharpest end of it; here is the rest of the reach.</p>
   <div class="apps">
     <div class="app-row">
       <span class="app-name">AI red-team &amp; evaluation</span>
-      <div><p class="app-val">Harden a model before it ships &mdash; sustained adversarial pressure where every probe is bounded to scope and witnessed, so the evaluation re-runs instead of living in a chat log.</p>
+      <div><p class="app-val">Make a model tougher before it ships &mdash; steady pressure where every probe is kept inside its allowed boundary and witnessed, so the test runs again instead of living in a chat log.</p>
         <div class="app-tools"><a class="app-tag" href="aleph.html">Aleph</a></div></div>
     </div>
     <div class="app-row">
       <span class="app-name">Authorized penetration testing</span>
-      <div><p class="app-val">Run the engagement so scope, actions, and findings are bounded and re-derivable &mdash; a client gets a report they can audit and reproduce, not one they take on trust.</p>
+      <div><p class="app-val">Run the job so the scope, the actions, and the findings are all bounded and re-runnable &mdash; a client gets a report they can check and reproduce, not one they take on trust.</p>
         <div class="app-tools"><a class="app-tag" href="orca.html">ORCA</a> <a class="app-tag" href="proof-surface.html">proof-surface</a></div></div>
     </div>
     <div class="app-row">
       <span class="app-name">Supply-chain &amp; release integrity</span>
-      <div><p class="app-val">Sweep what you&rsquo;re about to ship for secrets and validate its provenance &mdash; catch the leak or the swapped dependency before it&rsquo;s public, and keep the receipt that says you did.</p>
+      <div><p class="app-val">Check what you&rsquo;re about to ship for secrets, and check where it came from &mdash; catch the leak or the swapped-in part before it&rsquo;s public, and keep the receipt that says you did.</p>
         <div class="app-tools"><a class="app-tag" href="toolkit.html">secret-redact-io</a> <a class="app-tag" href="toolkit.html">public-surface-sweeper</a> <a class="app-tag" href="toolkit.html">model-provenance-validator</a></div></div>
     </div>
     <div class="app-row">
       <span class="app-name">Tamper-evidence &amp; integrity</span>
-      <div><p class="app-val">Prove a file, a log, a model, or a rendered frame hasn&rsquo;t drifted from what it was &mdash; re-derived from the bytes, answered MATCH / DRIFT / UNVERIFIABLE, never vouched-for.</p>
+      <div><p class="app-val">Prove a file, a log, a model, or a drawn frame hasn&rsquo;t drifted from what it was &mdash; worked out again from the thing itself, answered MATCH / DRIFT / UNVERIFIABLE, never just vouched-for.</p>
         <div class="app-tools"><a class="app-tag" href="emet.html">EMET</a> <a class="app-tag" href="coherence-membrane.html">coherence-membrane</a></div></div>
     </div>
     <div class="app-row">
       <span class="app-name">Agentic-AI security</span>
-      <div><p class="app-val">Give an AI agent default-deny, expiring, least-privilege authority and a witnessed record of every action it actually took &mdash; awareness is not authority, and nothing it does is off the record.</p>
+      <div><p class="app-val">Give an AI agent only the power it needs, only for as long as it needs it, off by default &mdash; plus a witnessed record of every action it actually took. Knowing about something is not permission to do it, and nothing it does is off the record.</p>
         <div class="app-tools"><a class="app-tag" href="proof-surface.html">proof-surface</a> <a class="app-tag" href="accountable-machines.html">accountable-surface</a></div></div>
     </div>
     <div class="app-row">
       <span class="app-name">Pre-disclosure &amp; handoff review</span>
-      <div><p class="app-val">Before you publish, hand off, or attest &ldquo;done and safe,&rdquo; get a receipt of what&rsquo;s actually there, a flag on anything shaped like a secret, and a hard stop at the human sign-off.</p>
+      <div><p class="app-val">Before you publish, hand off, or sign off that it&rsquo;s &ldquo;done and safe,&rdquo; get a receipt of what&rsquo;s actually there, a flag on anything shaped like a secret, and a hard stop at the human sign-off.</p>
         <div class="app-tools"><a class="app-tag" href="provenance-sensorium.html">provenance-sensorium</a></div></div>
     </div>
     <div class="app-row">
       <span class="app-name">Audit, compliance &amp; incident evidence</span>
-      <div><p class="app-val">Turn security work into bounded, re-derivable records an auditor or incident reviewer can check cold &mdash; an evidence chain that holds up, instead of a narrative they have to trust.</p>
+      <div><p class="app-val">Turn security work into bounded records, re-runnable for the same result, that an auditor or incident reviewer can check from scratch &mdash; a chain of evidence that holds up, instead of a story they have to trust.</p>
         <div class="app-tools"><a class="app-tag" href="emet.html">EMET</a> <a class="app-tag" href="proof-surface.html">proof-surface</a> <a class="app-tag" href="toolkit.html">repo-proof-index</a></div></div>
     </div>
     <div class="app-row">
       <span class="app-name">Software &amp; runtime integrity</span>
-      <div><p class="app-val">Detect tampering, evasion, and manipulation by understanding exactly how they&rsquo;re done &mdash; the anti-cheat / integrity lineage, turned inward to make the accountability platform self-accountable by adversarial construction.</p>
+      <div><p class="app-val">Spot tampering, evasion, and manipulation by understanding exactly how they&rsquo;re done &mdash; the anti-cheat line of work, turned inward so the accountability platform is held to account by being attacked on purpose as it is built.</p>
         <div class="app-tools"><span class="app-tag priv">C++23 integrity framework &middot; private</span></div></div>
     </div>
   </div>
   <p class="pull reveal">Not more power &mdash; security you can re-run.</p>
-  <p class="body-text reveal">Underneath all eight it is one engine, pointed at different surfaces: the depth that finds the problem, kept on a leash that proves it stayed in scope. That is what the depth is <em>for</em> here &mdash; not a bigger hammer, but security whose every swing is witnessed and bounded. The offensive skill is real; the accountability is what makes it safe to sell, and safe to buy.</p>
+  <p class="body-text reveal">Underneath all eight it is one engine, pointed at different jobs: the depth that finds the problem, kept on a leash that proves it stayed inside its limits. That is what the depth is <em>for</em> here &mdash; not a bigger hammer, but security whose every swing is witnessed and bounded. The attacking skill is real; the accountability is what makes it safe to sell, and safe to buy.</p>
 </section>
 
 <!-- the boundary -->
 <section class="mv" id="boundary" aria-labelledby="boundary-h">
   <h2 id="boundary-h" class="reveal">What it is for, and what it is built to refuse.</h2>
-  <p class="body-text reveal">A tool that finds how a model fails is dual-use by nature, and I won&rsquo;t pretend otherwise &mdash; pretending is how these things go wrong. So it is built in one direction on purpose. It is pointed at <b>hardening your own models</b>: the output is the evidence a team needs to make a system safer, under an authorization that names what is in scope. It is bounded by a grant it cannot widen, and witnessed so that nothing it does is off the record &mdash; including, deliberately, to hold <em>me</em> to that line as much as anyone using it.</p>
+  <p class="body-text reveal">A tool that finds how a model fails can be used both ways, and I won&rsquo;t pretend otherwise &mdash; pretending is how these things go wrong. So it is built to face one way on purpose. It is pointed at <b>making your own models tougher</b>: the output is the evidence a team needs to make a system safer, under a permission that names what is allowed. It is held inside a permission it cannot widen, and witnessed so that nothing it does is off the record &mdash; including, on purpose, to hold <em>me</em> to that line as much as anyone using it.</p>
   <p class="pull reveal">Built to be used well, and architected to resist the opposite &mdash; the incorruptible core, in the one place it matters most.</p>
-  <p class="body-text reveal">That is the same line the rest of this site draws, drawn hardest here because here it counts most. The depth that lets it find a failure is real; it is contained by construction, kept to the defensive use it was made for, and I would walk it away from anything else before I let it become the thing it was built to guard against.</p>
+  <p class="body-text reveal">That is the same line the rest of this site draws, drawn hardest here because here it counts most. The depth that lets it find a failure is real; it is contained by how it is built, kept to the defensive use it was made for, and I would walk it away from anything else before I let it become the thing it was built to guard against.</p>
 </section>
 
 <!-- for whom -->
 <section class="mv" id="who" aria-labelledby="who-h">
   <h2 id="who-h" class="reveal">Who it&rsquo;s for &mdash; and the next step.</h2>
-  <p class="body-text reveal">Aleph is for teams hardening their own models: labs and organisations that need adversarial evaluation they can actually audit, re-run, and trust &mdash; and that would rather catch a failure in a harness than in the wild. It is offered as a capability, through a conversation, not as a public download; what it does is too sharp to leave lying around, and the honest way to share it is under terms, with a real person on the other side.</p>
+  <p class="body-text reveal">Aleph is for teams making their own models tougher: labs and organisations that need this kind of testing in a form they can actually check, re-run, and trust &mdash; and that would rather catch a failure in a test than in the wild. It is offered as a capability, through a conversation, not as a public download; what it does is too sharp to leave lying around, and the honest way to share it is under terms, with a real person on the other side.</p>
   <p class="body-text reveal">If that is you &mdash; or if you just want to understand it before deciding it&rsquo;s real &mdash; the next step is a conversation, and I&rsquo;ll show you what a page can&rsquo;t.</p>
   <div class="channels reveal">
     <span class="g">Inquiries</span> &mdash; <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
