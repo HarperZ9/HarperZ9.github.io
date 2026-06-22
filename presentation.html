@@ -24,16 +24,16 @@
     max-width:74rem;margin:0 auto}
   .slide-num{font-family:"Spline Sans Mono",monospace;font-size:.66rem;letter-spacing:.34em;
     text-transform:uppercase;color:var(--orange);margin-bottom:clamp(1.4rem,3vw,2.4rem);opacity:.92}
-  .slide h2{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:600;
+  .slide h2,.slide h1{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:600;
     font-size:clamp(2rem,5.2vw,3.9rem);line-height:1.08;letter-spacing:-.016em;color:var(--bone);
     text-wrap:balance;margin:0;max-width:20ch}
-  .slide h2 .g{color:var(--orange)}
+  .slide h2 .g,.slide h1 .g{color:var(--orange)}
   .slide .sub{margin-top:clamp(1.5rem,3vw,2.4rem);font-size:clamp(1.06rem,1.55vw,1.4rem);
     line-height:1.6;color:var(--bone);opacity:.9;max-width:46ch}
   .slide .sub em{color:var(--orange);font-style:italic}
   .slide .sub b{color:var(--bone);font-weight:500}
   /* title slide */
-  .slide.title h2{font-size:clamp(2.5rem,7vw,5rem);max-width:16ch}
+  .slide.title h1{font-size:clamp(2.5rem,7vw,5rem);max-width:16ch}
   .title-mark{font-family:"Spline Sans Mono",monospace;font-size:.66rem;letter-spacing:.3em;
     text-transform:uppercase;color:var(--muted);margin-bottom:clamp(1.6rem,3vw,2.6rem)}
   .title-foot{font-family:"Spline Sans Mono",monospace;font-size:.66rem;letter-spacing:.14em;
@@ -92,16 +92,17 @@
 </style>
 </head>
 <body class="deck">
+<a class="skip-link" href="#scroll">Skip to content</a>
 <div id="deck-bar" aria-hidden="true"></div>
 <a id="deck-exit" href="overview.html">Exit &times;</a>
 <nav id="deck-count" aria-hidden="true"><b id="dc-now">01</b> / <span id="dc-tot">07</span></nav>
 <div id="deck-hint">&larr; &rarr; or space to advance</div>
 
-<div class="deck-scroll" id="scroll" tabindex="0">
+<main class="deck-scroll" id="scroll" tabindex="0">
 
   <section class="slide title" aria-label="Title">
     <p class="title-mark">A presentation &middot; the argument in six steps</p>
-    <h2>Nothing carries its own <span class="g">warrant.</span></h2>
+    <h1>Nothing carries its own <span class="g">warrant.</span></h1>
     <p class="sub">Verified is not the same as trustworthy. A philosophy, five sector investigations, a verdict algebra, and a working tool &mdash; all converging on one seam.</p>
     <p class="title-foot"><span class="g">Zain Dana Harper</span> &middot; Seattle &middot; 2026<br>Use &larr; &rarr; or space to move through the argument.</p>
   </section>
@@ -154,7 +155,7 @@
     <p class="links"><a href="overview.html">The map</a><span class="sep">&middot;</span><a href="research.html">Research</a><span class="sep">&middot;</span><a href="demonstrations.html">Demonstrations</a><span class="sep">&middot;</span><a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a></p>
   </section>
 
-</div>
+</main>
 
 <script>
 (function(){
