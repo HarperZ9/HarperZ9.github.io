@@ -19,7 +19,7 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Quanta Color &middot; the color workbench</span></div>
   <div class="mid">
     <h1>Color, past the <span class="g">hex code.</span></h1>
-    <p class="lede">Quanta Color is a Python workbench for anyone who needs to know more about a color than its hex code. It works in color spaces &mdash; different ways of describing a color with numbers &mdash; that are built to match what your eye actually sees, not just the raw bytes in the file. It squeezes bright, high-range light down so a normal screen can show it (that&rsquo;s <em>tone mapping</em>), it measures how different two colors really look to a person, it adjusts for the light a scene was lit by, and it can even write the little profile a display uses to show color correctly. There&rsquo;s a window you click through and a command line you type into.</p>
+    <p class="lede">Quanta Color is a Python workbench for anyone who needs to know more about a color than its hex code. It works in color spaces &mdash; different ways of describing a color with numbers &mdash; that are built to match what your eye actually sees, not just the raw numbers in the file. It squeezes bright, high-range light down so a normal screen can show it (that&rsquo;s <em>tone mapping</em>: fitting a wide range of brightness into a smaller one), it measures how different two colors really look to a person, it adjusts for the color of light a scene was lit by, and it can even write the small profile a display uses to show color faithfully. There&rsquo;s a window you click through and a command line you type into.</p>
     <p class="close">Real color science you can measure and check for yourself &mdash; the same instinct as the rest of my work, just pointed at light instead. I didn&rsquo;t want to trust a color swatch I couldn&rsquo;t verify, so I built the thing that verifies it.</p>
   </div>
   <div class="seal">quanta-color 1.0.1 &middot; MIT &middot; on PyPI &middot; 15+ spaces &middot; 12 tone operators</div>
@@ -29,7 +29,7 @@
 
 <section class="mv" id="what" aria-labelledby="what-h">
   <h2 id="what-h" class="reveal">Hex is a storage format, not a perception.</h2>
-  <p class="body-text reveal">Two colors can look almost the same in their hex codes yet clearly differ to your eye &mdash; or look far apart in the file and turn out identical to look at. The reason is that hex just stores the raw numbers; it doesn&rsquo;t know anything about seeing. So Quanta Color works in spaces designed to track how vision actually behaves. Here&rsquo;s what that buys you: CIELAB and the Oklab family are laid out so that equal steps in the numbers feel like equal steps to the eye; CIECAM-style models account for the fact that the same color looks different depending on what surrounds it; and JzAzBz and ICtCp are built for very bright, high-range images. When it asks &ldquo;how different are these two colors,&rdquo; it uses the measuring sticks color scientists actually trust &mdash; not a plain ruler laid across the wrong kind of map.</p>
+  <p class="body-text reveal">Two colors can look almost the same in their hex codes yet clearly differ to your eye &mdash; or look far apart in the file and turn out identical to look at. The reason is that hex just stores the raw numbers; it doesn&rsquo;t know anything about seeing. So Quanta Color works in spaces designed to track how vision actually behaves. Here&rsquo;s what that buys you: CIELAB and the Oklab family are spaced so equal steps in the numbers look equally different to the eye; CIECAM-style models &mdash; which account for the fact that the same color can look different depending on what surrounds it &mdash; are included too; and JzAzBz and ICtCp are built for very bright, high-range images. When it asks &ldquo;how different are these two colors,&rdquo; it uses the measuring sticks color scientists actually trust &mdash; not a plain ruler laid across the wrong kind of map.</p>
   <em class="close reveal">The real question was never &ldquo;what numbers are in the file.&rdquo; It&rsquo;s &ldquo;what will a person actually see&rdquo; &mdash; and that turns out to be something you can measure.</em>
 </section>
 
@@ -52,8 +52,8 @@ Color: <span class="lt">#ff6030</span>
   Luminance:  0.2984
   Dominant wavelength: 775 nm
   Contrast vs white: 3.01:1   vs black: 6.97:1</pre>
-    <p class="artifact-cap">One color in, and you get back every way of describing what the eye does with it &mdash; how light it looks, how vivid, what hue, how bright, even which single wavelength of light it leans toward, and how readable it would be as text. All from one command.</p>
-    <p class="artifact-note">Captured live from <b>quanta-color info</b> &middot; it walks the color through several of those spaces in turn, anchored to standard daylight as the reference white. <em>The readability numbers use the very same math the accessibility work elsewhere on this site relies on.</em></p>
+    <p class="artifact-cap">One color in, and you get back every way of describing what the eye does with it &mdash; how light it looks, how vivid, what hue, how bright, even which single wavelength of light it leans toward, and how readable it would be as text on a page. All from one command.</p>
+    <p class="artifact-note">Captured live from <b>quanta-color info</b> &middot; it walks the color through several of those spaces in turn, anchored to standard daylight as the reference white (the neutral &ldquo;white&rdquo; the math is calibrated against). <em>The readability numbers use the very same math the accessibility work elsewhere on this site relies on.</em></p>
   </div>
 
   <div class="exhibit reveal">
@@ -67,7 +67,7 @@ Color 1: <span class="lt">#ff0000</span>      Color 2: <span class="lt">#00ff00<
   CMC(2:1)      104.2193
   HyAB          201.1010</pre>
     <p class="artifact-cap">Red against green, measured five different ways at once. There&rsquo;s no single &ldquo;how different do these look&rdquo; number everyone agrees on &mdash; it depends on which method you trust &mdash; so the honest thing is to lay them all on the table.</p>
-    <p class="artifact-note">Five accepted ways of measuring color difference &mdash; CIE76, CIE94, CIEDE2000, CMC, and HyAB. The gap between their answers is exactly the point: report just one number and you quietly hide the fact that the experts don&rsquo;t fully agree.</p>
+    <p class="artifact-note">Five accepted ways of measuring color difference &mdash; CIE76, CIE94, CIEDE2000, CMC, and HyAB. Each was developed by color scientists to better match how people actually see. The gap between their answers is exactly the point: report just one number and you quietly hide the fact that the experts don&rsquo;t fully agree.</p>
   </div>
 
   <div class="exhibit reveal">
@@ -79,7 +79,7 @@ Base: <span class="lt">#ff6030</span>   Scheme: triadic
   2. <span class="ok">#588a00</span>  (0.349, 0.543, 0.000)
   3. <span class="ok">#fe51ff</span>  (0.999, 0.320, 1.000)</pre>
     <p class="artifact-cap">Three colors spaced evenly around the color wheel &mdash; but spaced in a way that tracks how the eye sees, so they look evenly apart to you, not just evenly apart on paper.</p>
-    <p class="artifact-note">There&rsquo;s more: <b>convert</b> a color between any two of the 15+ spaces, <b>spectrum</b> to build one from a light&rsquo;s warmth or coolness, <b>icc</b> to write that little profile a display uses to show color faithfully, and a clickable window &mdash; just run <code>quanta-color</code> with nothing after it.</p>
+    <p class="artifact-note">There&rsquo;s more: <b>convert</b> a color between any two of the 15+ spaces, <b>spectrum</b> to build a color from a light&rsquo;s warmth or coolness (its color temperature), <b>icc</b> to write that small profile a display uses to show color faithfully, and a clickable window &mdash; just run <code>quanta-color</code> with nothing after it.</p>
   </div>
 </section>
 
@@ -87,7 +87,7 @@ Base: <span class="lt">#ff6030</span>   Scheme: triadic
   <h2 id="depth-h" class="reveal">15+ spaces, 12 tone-mappers, the metrics by name.</h2>
   <p class="body-text reveal">Spaces: sRGB, Linear RGB, XYZ, xyY, CIELAB, LCH, <em>Oklab, Oklch, JzAzBz, JzCzhz, ICtCp</em>, HSV, Display&nbsp;P3, BT.2020, Adobe&nbsp;RGB, ACEScg. HDR tone mapping with twelve operators &mdash; ACES (Narkowicz + Hill), <em>AgX</em> (neutral / punchy / golden), Reinhard, Hable/Uncharted&nbsp;2, Lottes, Uchimura/Gran&nbsp;Turismo, PBR Neutral (Khronos glTF), BT.2390 EETF, BT.2446 Method&nbsp;A, and a custom knee. Difference by CIE76, CIE94, CIEDE2000, CMC, HyAB; chromatic adaptation, color-blindness simulation, gamut mapping, color naming, 3D-LUT I/O.</p>
   <p class="pull reveal">Color is where this whole habit started, for me: trust what you can measure, not the swatch &mdash; and be ready to show the number when someone asks.</p>
-  <p class="body-text reveal">Shipped: <b>quanta-color 1.0.1</b>, free to use under the MIT license, installable from PyPI, and it runs on Python 3.10 or newer. Its tests cover the color spaces, light adjustment, difference, the range of colors a device can show, harmony, naming colors, color-blindness simulation, and reading and writing color lookup tables. And here&rsquo;s the limit I want to name before you bump into it: this is a workbench and a toolkit for working with color, not a calibrated instrument for measuring a physical screen. For the display side of things, pair it with <b>calibrate-pro</b>.</p>
+  <p class="body-text reveal">Shipped: <b>quanta-color 1.0.1</b>, free to use under the MIT license, installable from PyPI, and it runs on Python 3.10 or newer. Its tests cover the color spaces, light adjustment, difference, the range of colors a device can show (its gamut), harmony, naming colors, color-blindness simulation, and reading and writing color lookup tables. And here&rsquo;s the limit I want to name before you bump into it: this is a workbench and a toolkit for working with color, not a calibrated instrument for measuring a physical screen. For the display side of things, pair it with <b>calibrate-pro</b>.</p>
 </section>
 
 <section class="mv" id="run" aria-labelledby="run-h">
