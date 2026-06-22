@@ -250,7 +250,22 @@
     clifford: { params: [
         { k: "a", label: "Coeff a", min: -2.2, max: 2.2, step: 0.1, def: 1.7 },
         { k: "b", label: "Coeff b", min: -2.2, max: 2.2, step: 0.1, def: -1.8 }],
-      presets: [{ label: "Mantle", p: { a: -1.7, b: 1.8 } }, { label: "Wings", p: { a: -1.4, b: 1.6 } }] }
+      presets: [{ label: "Mantle", p: { a: -1.7, b: 1.8 } }, { label: "Wings", p: { a: -1.4, b: 1.6 } }] },
+    gyroid: { params: [
+        { k: "freq", label: "Frequency", min: 2, max: 12, step: 0.5, def: 7 },
+        { k: "z", label: "Z-slice", min: 0, max: 1, step: 0.05, def: 0.3 }],
+      presets: [{ label: "Clean", p: { freq: 8 } }, { label: "Detuned", p: { freq: 6.5 } }] },
+    quasicrystal: { params: [
+        { k: "waves", label: "Plane waves", min: 3, max: 9, step: 1, def: 5 },
+        { k: "scale", label: "Scale", min: 4, max: 12, step: 0.5, def: 8 }],
+      presets: [{ label: "Five-fold", p: { waves: 5 } }, { label: "Seven", p: { waves: 7 } }] },
+    rings: { params: [
+        { k: "freq", label: "Frequency", min: 3, max: 16, step: 0.5, def: 8 }],
+      presets: [{ label: "Wide", p: { freq: 5 } }, { label: "Fine", p: { freq: 13 } }] },
+    moire: { params: [
+        { k: "freq", label: "Frequency", min: 6, max: 22, step: 1, def: 12 },
+        { k: "angle", label: "Angle", min: 0.1, max: 1.4, step: 0.05, def: 0.4 }],
+      presets: [{ label: "Loose", p: { angle: 0.2 } }, { label: "Beat", p: { angle: 0.9 } }] }
   };
   function studyParams(id) { return (STUDY_PARAMS[id] && STUDY_PARAMS[id].params) || []; }
   function studyPresets(id) { return (STUDY_PARAMS[id] && STUDY_PARAMS[id].presets) || []; }
@@ -1465,6 +1480,57 @@
     return { live: false, strokes: strokes };
   }
 
+  // ── FIELD STUDIES — implicit scalar fields drawn as marching-squares iso-contours ──
+  // studio-engine's substrate, native to the plotter: a closed-form field f(u,v) over
+  // [-1,1]^2 is sampled + contoured into strokes, so it flows through the same
+  // optimise → witness → verify → SVG pipeline as every study, and is reconcile-scored.
+  function fieldContours(P, fieldFn, bands) {
+    var G = Math.round(lerp(96, 168, P.complexity)), N = bands || 5;
+    var vals = new Float32Array(G * G), lo = Infinity, hi = -Infinity;
+    for (var gy = 0; gy < G; gy++) for (var gx = 0; gx < G; gx++) {
+      var val = fieldFn((gx / (G - 1)) * 2 - 1, (gy / (G - 1)) * 2 - 1);
+      vals[gy * G + gx] = val; if (val < lo) lo = val; if (val > hi) hi = val;
+    }
+    var span = (hi - lo) || 1e-6, pal = P.palette, inv = 1 / (G - 1), strokes = [];
+    for (var li = 0; li < N; li++) {
+      var lev = lo + span * (li + 0.5) / N;
+      for (var y = 0; y < G - 1; y++) for (var x = 0; x < G - 1; x++) {
+        var a = vals[y * G + x], b = vals[y * G + x + 1], c = vals[(y + 1) * G + x + 1], d = vals[(y + 1) * G + x];
+        var code = (a > lev ? 1 : 0) | (b > lev ? 2 : 0) | (c > lev ? 4 : 0) | (d > lev ? 8 : 0);
+        if (code === 0 || code === 15) continue;
+        var segs = MS_TABLE[code];
+        for (var si = 0; si < segs.length; si++) {
+          strokes.push({
+            pts: [edgePt(segs[si][0], x, y, a, b, c, d, lev, inv), edgePt(segs[si][1], x, y, a, b, c, d, lev, inv)],
+            col: pal.sample(clamp((a - lo) / span, 0, 1)), w: 0.6 + li * 0.12, op: 0.55
+          });
+        }
+      }
+    }
+    return { live: false, strokes: strokes };
+  }
+  function buildGyroid(rng, P) {
+    var f = pget(P, "freq", 7) * Math.PI, zz = pget(P, "z", 0.3) * TAU;
+    return fieldContours(P, function (u, v) {
+      return Math.sin(u * f) * Math.cos(v * f) + Math.sin(v * f) * Math.cos(zz) + Math.sin(zz) * Math.cos(u * f);
+    }, 6);
+  }
+  function buildQuasicrystal(rng, P) {
+    var w = Math.round(pget(P, "waves", 5)), s = pget(P, "scale", 8), dirs = [];
+    for (var k = 0; k < w; k++) { var ang = TAU * k / w; dirs.push([Math.cos(ang), Math.sin(ang)]); }
+    return fieldContours(P, function (u, v) {
+      var sum = 0; for (var k = 0; k < dirs.length; k++) sum += Math.cos((dirs[k][0] * u + dirs[k][1] * v) * s); return sum;
+    }, 6);
+  }
+  function buildRings(rng, P) {
+    var f = pget(P, "freq", 8) * Math.PI;
+    return fieldContours(P, function (u, v) { return Math.sin(Math.sqrt(u * u + v * v) * f); }, 7);
+  }
+  function buildMoire(rng, P) {
+    var f = pget(P, "freq", 12), a = pget(P, "angle", 0.4), ca = Math.cos(a), sa = Math.sin(a);
+    return fieldContours(P, function (u, v) { return Math.sin(f * u) * Math.sin(f * (u * ca + v * sa)); }, 6);
+  }
+
   var STUDIES = [
     { id: "phyllotaxis", label: "Phyllotaxis", build: buildPhyllotaxis,
       blurb: "Vogel&rsquo;s spiral &mdash; a seed every <b>golden angle</b>, radius as &radic;index. The Fibonacci arms you see are emergent, never drawn. <span class='sp'>The snail</span> lights which arms are bright." },
@@ -1508,6 +1574,14 @@
       blurb: "A Maurer rose: walk the rhodonea r = sin(n&theta;) in fixed-degree strides and the straight chords weave a lattice the smooth petals only hint at &mdash; order from a deliberately coarse sampling, on a curve of pure <b>sin/cos</b>. Different <em>n</em> and step give wildly different webs. <span class='sp'>The specimen</span> tints the weave." },
     { id: "clifford", label: "Attractor", build: buildClifford,
       blurb: "A Clifford attractor: iterate x&prime;=sin(ay)+c&middot;cos(ax), y&prime;=sin(bx)+d&middot;cos(by) and the orbit never repeats yet never escapes &mdash; deterministic chaos folding a plane into a strange attractor. <b>a</b> and <b>b</b> are yours; each seed bends <em>c,d</em> into a new creature. <span class='sp'>The specimen</span> tints the cloud." },
+    { id: "gyroid", label: "Gyroid", build: buildGyroid, ghost: false,
+      blurb: "A triply-periodic minimal surface, sliced and drawn as iso-contours &mdash; the same field a <b>studio-engine</b> generator emits, here as plottable lines. <b>Clean tiling</b> is judged against integer frequency, a property the field didn&rsquo;t choose. <span class='sp'>Pure math.</span>" },
+    { id: "quasicrystal", label: "Quasicrystal", build: buildQuasicrystal, ghost: false,
+      blurb: "Plane waves at evenly spaced angles interfere into an aperiodic pattern &mdash; <b>five-fold</b> order that never repeats, drawn as contours. The reconcile judges it against the five-fold ideal it didn&rsquo;t author. <span class='sp'>Pure math.</span>" },
+    { id: "rings", label: "Rings", build: buildRings, ghost: false,
+      blurb: "Concentric interference rings &mdash; sin of the radius, the simplest field, contoured. Judged for balance, coverage, contrast and complexity it didn&rsquo;t set. <span class='sp'>Pure math.</span>" },
+    { id: "moire", label: "Moir&eacute;", build: buildMoire, ghost: false,
+      blurb: "Two rotated gratings multiplied &mdash; the beat pattern where they cross, drawn as contours. <span class='sp'>Pure math.</span>" },
     { id: "live", label: "Live &middot; camera", build: null,
       blurb: "The camera as a real organ &mdash; particles stream along the edges it senses, live." }
   ];
