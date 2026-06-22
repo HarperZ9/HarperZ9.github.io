@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /_drafts/
+Disallow: /_preview/
+Disallow: /_redesign/
+Disallow: /quantalang/
+
+Sitemap: https://harperz9.github.io/sitemap.xml
