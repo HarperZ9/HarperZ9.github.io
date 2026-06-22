@@ -7,6 +7,17 @@
 <title>ORCA — the accountable way to run an assessment</title>
 <meta name="description" content="ORCA is a local-first command-line tool for authorized, local-lab security assessments: a local engagement workspace, metadata-only checks, Markdown reports and portable bundles — and it cannot reach the thing it assesses. No network, no exploitation. Every release ships checksums and a provenance receipt. v1.0.0, 361 tests. By Zain Dana Harper.">
 <link rel="canonical" href="https://harperz9.github.io/orca.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="ORCA — the accountable way to run an assessment">
+<meta property="og:description" content="ORCA is a local-first command-line tool for authorized, local-lab security assessments: a local engagement workspace, metadata-only checks, Markdown reports and portable bundles — and it cannot reach the thing it assesses. No network, no exploitation. Every release ships checksums and a provenance receipt. v1.0.0, 361 tests. By Zain Dana Harper.">
+<meta property="og:url" content="https://harperz9.github.io/orca.html">
+<meta property="og:image" content="https://harperz9.github.io/img/snail.jpg">
+<meta property="og:image:alt" content="Macro photograph of a snail's shell — the living structures the work is modeled on.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ORCA — the accountable way to run an assessment">
+<meta name="twitter:description" content="ORCA is a local-first command-line tool for authorized, local-lab security assessments: a local engagement workspace, metadata-only checks, Markdown reports and portable bundles — and it cannot reach the thing it assesses. No network, no exploitation. Every release ships checksums and a provenance receipt. v1.0.0, 361 tests. By Zain Dana Harper.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/snail.jpg">
 <meta name="color-scheme" content="dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +34,7 @@
     <p class="lede">When you do authorized security work &mdash; hired, permitted attacking of a system to find its weak spots before a real attacker does &mdash; the easy part to get wrong is the <em>discipline around it</em>: what was in the agreed boundary of what may be touched, what you actually ran, what you found, and whether the report you hand over matches the work you did. ORCA is the command-line workbench I run that part from. You open a local <b>engagement workspace</b>, write down the in-scope assets and the findings as plain records, run a set of <b>checks that give the same answer every time</b> over that workspace, and it produces a Markdown report and a portable bundle of the results. The line it will not cross is the important one: everything it does is <b>local and metadata-only</b> (it reads descriptions of things, not the things themselves). It does not scan, probe, resolve, connect to, or attack anything &mdash; there is no network or exploitation capability in it at all.</p>
     <p class="close">It runs the bookkeeping of an assessment, accountably. It is not a scanner, and it cannot reach the thing being assessed.</p>
   </div>
-  <div class="seal">v1.0.0 &middot; 361 tests &middot; public release &middot; local-first &middot; metadata-only</div>
+  <div class="seal">v1.0.0 &middot; 361 tests &middot; private operator tool &middot; local-first &middot; metadata-only</div>
 </div>
 
 <main id="main">
@@ -66,20 +77,18 @@ check: modules   <span class="ok">ok</span>   descriptors=5
 check: state_dir <span class="ok">ok</span>   .orca/state
 check: artifact_dir <span class="ok">ok</span> .orca/artifacts</pre>
     <p class="artifact-cap">It tells you what it is before you ask it to do anything: a known version, a fixed set of capabilities, and a local place it keeps its state. No surprises, and nothing reaching off your machine.</p>
-    <p class="artifact-note">Real output from <b>python -m orca doctor</b> on a clean install &mdash; Python 3.11+, public release at <b>github.com/HarperZ9/orca</b>, 361 tests, CI green on 3.11 and 3.12. The everyday flow is <code>engagement</code> (open a workspace) &rarr; <code>assess</code> (run the local checks) &rarr; <code>report</code> (write the Markdown report) &rarr; <code>bundle</code> (a portable ZIP) &mdash; and <code>orca demo create</code> builds a whole worked example in one command. <em>Honest limit:</em> the assessment checks are deliberately small and local &mdash; seven metadata-only checks and three local module types. This is the accountable <em>runner</em> for an engagement, not a vulnerability scanner, and it is by design unable to be one.</p>
+    <p class="artifact-note">Real output from <b>python -m orca doctor</b> on a clean install &mdash; Python 3.11+, v1.0.0, 361 tests, CI green on 3.11 and 3.12. The everyday flow is <code>engagement</code> (open a workspace) &rarr; <code>assess</code> (run the local checks) &rarr; <code>report</code> (write the Markdown report) &rarr; <code>bundle</code> (a portable ZIP) &mdash; and <code>orca demo create</code> builds a whole worked example in one command. <em>Honest limit:</em> the assessment checks are deliberately small and local &mdash; seven metadata-only checks and three local module types. This is the accountable <em>runner</em> for an engagement, not a vulnerability scanner, and it is by design unable to be one.</p>
   </div>
 </section>
 
 <!-- honest limits -->
 <section class="mv" id="limits" aria-labelledby="limits-h">
   <h2 id="limits-h" class="reveal">What it is, and what it is not.</h2>
-  <p class="body-text reveal">ORCA is a local-first command-line runner for authorized assessment work &mdash; v1.0.0, 361 tests, a verifiable public release. Its whole safety model is one sentence: it is local and metadata-only (it reads descriptions of things, not the things themselves), and it has no way to reach a target. It does not scan, probe, resolve, connect to, or attack anything; the records you keep are notes about the work, not connections to the systems they name; and it refuses to run a capability in a mode that capability does not declare.</p>
+  <p class="body-text reveal">ORCA is a local-first command-line runner for authorized assessment work &mdash; v1.0.0, 361 tests, with checksums and a provenance receipt on every build. Its whole safety model is one sentence: it is local and metadata-only (it reads descriptions of things, not the things themselves), and it has no way to reach a target. It does not scan, probe, resolve, connect to, or attack anything; the records you keep are notes about the work, not connections to the systems they name; and it refuses to run a capability in a mode that capability does not declare.</p>
   <p class="pull reveal">It cannot touch the target. That isn&rsquo;t a setting &mdash; there is no capability in it that reaches off your disk.</p>
-  <p class="body-text reveal">The honest edges: the set of built-in checks is small on purpose &mdash; this is the discipline-and-bookkeeping layer of an engagement, not the part that finds the vulnerabilities. The release is under a <b>proprietary licence</b> (the source is published, the rights are not open), and it needs Python 3.11 or newer. It is the workbench I actually run my own engagements from, shipped the way I&rsquo;d want any tool I depend on to be shipped: bounded, witnessed, and able to tell you what it is.</p>
+  <p class="body-text reveal">The honest edges: the set of built-in checks is small on purpose &mdash; this is the discipline-and-bookkeeping layer of an engagement, not the part that finds the vulnerabilities. It is <b>proprietary and kept private</b> &mdash; an internal operator tool I run, not a public release &mdash; and it needs Python 3.11 or newer. It is the workbench I actually run my own engagements from, shipped the way I&rsquo;d want any tool I depend on to be shipped: bounded, witnessed, and able to tell you what it is.</p>
   <div class="channels reveal">
-    <span class="g">Release</span> &mdash; <a href="https://github.com/HarperZ9/orca/releases/tag/v1.0.0">orca v1.0.0</a>
-    &nbsp;&middot;&nbsp;
-    <span class="g">GitHub</span> &mdash; <a href="https://github.com/HarperZ9/orca">HarperZ9/orca</a>
+    <span class="g">Status</span> &mdash; private operator tooling, not publicly released
     &nbsp;&middot;&nbsp;
     <a href="overview.html">&larr; the map</a> &nbsp;&middot;&nbsp; <a href="./">the index</a>
   </div>
