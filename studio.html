@@ -90,6 +90,27 @@
         <p class="at-blurb" id="at-blurb"></p>
       </div>
     </div>
+    <!-- Fractal engine (Task 7b): 2D escape-time generator — Mandelbrot, Julia, Burning Ship.
+         Renders into the shared #studio-canvas then calls perceive() + model greeting. -->
+    <div class="fractal-source" id="fractal-source">
+      <div class="at-panel">
+        <div class="at-group">
+          <span class="at-glab">Fractal type</span>
+          <div class="at-chips" role="group" aria-label="Fractal type">
+            <button type="button" class="chip active" data-ftype="mandelbrot">Mandelbrot</button>
+            <button type="button" class="chip" data-ftype="julia">Julia</button>
+            <button type="button" class="chip" data-ftype="burningship">Burning Ship</button>
+          </div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Preset <span class="hint">&mdash; named deep-zoom targets from the research</span></span>
+          <select class="at-seed" id="fractal-preset" aria-label="Fractal preset"></select>
+        </div>
+        <div class="at-actions">
+          <button class="btn" id="fractal-render" type="button">Render</button>
+        </div>
+      </div>
+    </div>
   </div>
   <div id="studio-byo" hidden><!-- media drop + canvas (Task 8) --></div>
   <section id="studio-frame">
