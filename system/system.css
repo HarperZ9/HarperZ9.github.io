@@ -4,7 +4,7 @@
    (sections, instrument index, organ rows, verdict chips, proof exhibits,
    scroll-reveal). Shared by every page; edit here, not per-page.
    ============================================================================ */
-:root{--void:#0d1b1c;--void-opaque:rgba(11,23,24,.98);--bone:#e9e2d0;--orange:#df5e00;--ember:#efab30;--prussian:#476762;--muted:#8a9b92;--gold:#efab30;--hairline:rgba(239,171,48,.15);--section-pad:clamp(4rem,9vw,7rem);--col-gap:clamp(1.8rem,4vw,3.6rem)}
+:root{--void:#0d1b1c;--void-opaque:rgba(11,23,24,.98);--bone:#e9e2d0;--orange:#df5e00;--ember:#efab30;--prussian:#476762;--muted:#8a9b92;--gold:#efab30;--verified:#5fae93;--hairline:rgba(239,171,48,.15);--section-pad:clamp(4rem,9vw,7rem);--col-gap:clamp(1.8rem,4vw,3.6rem)}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 html,body{height:100%;width:100%}
@@ -688,3 +688,17 @@ body.world-3 .bar .rt{color:#cdd6cf}
   border-radius:999px;padding:.42em .8em;transition:background .15s,border-color .15s}
 .chip:hover,.chip:focus-visible{background:rgba(239,171,48,.12);border-color:var(--ember);outline:none}
 @media (max-width:700px){.frame-row{grid-template-columns:1fr}}
+
+/* ─── domain scenarios: with vs without, across fields ──────────────── */
+.scenarios{display:grid;gap:1rem;margin:1.4rem 0}
+.scenario{border:1px solid var(--hairline);border-radius:12px;padding:1rem 1.1rem;background:rgba(15,33,34,.4)}
+.scenario h3{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-size:.95rem;color:var(--bone);margin:0 0 .3rem}
+.scenario .setting{color:var(--muted);font-style:italic;margin:0 0 .6rem}
+.scenario .without,.scenario .with{font-size:.95rem;line-height:1.5;padding:.5rem .7rem;border-radius:8px;margin:.35rem 0}
+.scenario .without{border-left:3px solid var(--orange);background:rgba(223,94,0,.06)}
+.scenario .with{border-left:3px solid var(--verified);background:rgba(127,207,155,.06)}
+.scenario .lbl{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase}
+.scenario .without .lbl{color:var(--orange)} .scenario .with .lbl{color:var(--verified)}
+
+/* scenarios-lite — compact version for Home */
+.scenarios-lite{position:relative;z-index:4;background:var(--void-opaque);border-top:1px solid var(--hairline);padding:var(--section-pad) clamp(2.4rem,5.5vw,5rem)}
