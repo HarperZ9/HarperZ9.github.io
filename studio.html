@@ -40,7 +40,19 @@
   </header>
   <div id="studio-generate"><!-- atelier controls + #studio-canvas mount (Task 7) --></div>
   <div id="studio-byo" hidden><!-- media drop + canvas (Task 8) --></div>
-  <section id="studio-frame"><!-- two-witness layout + dialogue (Task 6) --></section>
+  <section id="studio-frame">
+    <div class="frame-row">
+      <section class="panel"><h2>The frame</h2><div class="stage"><canvas id="studio-canvas" width="360" height="360"></canvas></div></section>
+      <section class="panel"><h2>What the model sees</h2>
+        <div class="row"><span class="rk">perceptual hash</span><span class="rv" id="sc-phash">—</span></div>
+        <div class="row"><span class="rk">size</span><span class="rv" id="sc-size">—</span></div>
+        <div class="grounds" id="sc-feats"></div>
+        <div class="mc-drift" id="sc-drift" hidden></div>
+      </section>
+    </div>
+    <div class="chat-log" id="studio-log" role="log" aria-live="polite"></div>
+    <div class="chat-chips" id="studio-chips"></div>
+  </section>
 </main>
 
 <script type="module" src="system/nav.js"></script>
