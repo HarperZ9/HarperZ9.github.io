@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Studio — see &amp; make, together</title>
+<meta name="description" content="Make something with a model. Generate with the Atelier's algorithms or bring your own image — then look at it together, talk about it, and reshape it.">
+<link rel="canonical" href="https://harperz9.github.io/studio.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="The Studio — see &amp; make, together">
+<meta property="og:description" content="Make something with a model. Generate with the Atelier's algorithms or bring your own image — then look at it together, talk about it, and reshape it.">
+<meta property="og:url" content="https://harperz9.github.io/studio.html">
+<meta property="og:image" content="https://harperz9.github.io/img/snail.jpg">
+<meta property="og:image:alt" content="Macro photograph of a snail's shell — the living structures the work is modeled on.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Studio — see &amp; make, together">
+<meta name="twitter:description" content="Make something with a model. Generate with the Atelier's algorithms or bring your own image — then look at it together, talk about it, and reshape it.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/snail.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Schibsted+Grotesk:wght@500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/system.css?v=20260623">
+</head>
+<body class="studio-page">
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="index.html">Home</a> <a href="studio.html">The Studio</a> <a href="overview.html">The Work</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+
+<main class="studio wrap">
+  <header class="studio-top">
+    <h1>The Studio</h1>
+    <p class="lede">Make something with a model. Bring your own photo, gif, or video — or generate one
+      with the Atelier's algorithms — then look at it together, talk about it, and reshape it, taking turns.</p>
+    <div class="seg" id="studio-mode" role="group" aria-label="How to start">
+      <button type="button" data-mode="generate" aria-pressed="true">Generate</button>
+      <button type="button" data-mode="byo" aria-pressed="false">Bring your own</button>
+    </div>
+  </header>
+  <div id="studio-generate"><!-- atelier controls + #studio-canvas mount (Task 7) --></div>
+  <div id="studio-byo" hidden><!-- media drop + canvas (Task 8) --></div>
+  <section id="studio-frame"><!-- two-witness layout + dialogue (Task 6) --></section>
+</main>
+
+<script type="module" src="system/nav.js"></script>
+<script type="module" src="system/studio.js"></script>
+</body>
+</html>
