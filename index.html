@@ -40,7 +40,7 @@
     <div class="built">
       <p class="built-head">Built &amp; tested now</p>
       <p class="built-row"><span class="built-name">EMET</span><span class="built-desc">tamper-seal: re-derives a file&rsquo;s bytes, reports MATCH or DRIFT <span class="built-stat">19/19 &middot; 3&nbsp;langs</span></span></p>
-      <p class="built-row"><span class="built-name">QuantaLang</span><span class="built-desc">a compiler that won&rsquo;t compile a memory lie <span class="built-stat">999&nbsp;tests</span></span></p>
+      <p class="built-row"><span class="built-name">QuantaLang</span><span class="built-desc">a compiler that won&rsquo;t compile a memory lie <span class="built-stat">1002&nbsp;passed</span></span></p>
       <p class="built-row"><span class="built-name">proof-surface</span><span class="built-desc">the receipt every action declares itself in <span class="built-stat">10&nbsp;records</span></span></p>
     </div>
     <p class="hero-cue"><a href="overview.html">Overview</a> &middot; <a href="resume.html">Résumé</a> &middot; <a href="cv.html">CV</a> &middot; <a href="research.html">Research</a> &middot; <a href="writing.html">Writing</a> &middot; <a href="atelier.html">Atelier</a> &middot; <a href="gallery.html">Gallery</a> &nbsp;&middot;&nbsp; <a href="https://github.com/HarperZ9">GitHub</a> &mdash; <a href="#receipts">&darr; the receipts</a></p>
@@ -90,7 +90,7 @@ Parsing... <span class="ok">OK</span> (1 items)
 <span class="bad">Type errors found:</span>
   <span class="bad">function returns `&amp;'b i32` but expected `&amp;'a i32`</span></pre>
     <p class="artifact-cap">The function promises the memory tied to <b>&lsquo;a</b>; it tries to hand back <b>&lsquo;b</b>&rsquo;s instead, and the compiler refuses. It tracks <em>whose</em> state crosses each boundary and won&rsquo;t let one escape the contract it was given.</p>
-    <p class="artifact-note">Captured live from <b>quantac check</b> (Rust toolchain, release build) &middot; diagnostic at <b>compiler/src/types/unify.rs</b> &middot; 999 tests green &middot; C is the shipped end-to-end backend. QuantaLang is foremost an effects language: what a function may <em>do</em> is typed like whose memory it returns &mdash; the same accountability, two faces.</p>
+    <p class="artifact-note">Captured live from <b>quantac check</b> (Rust toolchain, release build) &middot; diagnostic at <b>compiler/src/types/unify.rs</b> &middot; current Cargo baseline: 1002 passed / 0 failed / 11 ignored &middot; C is the shipped end-to-end backend. QuantaLang is foremost an effects language: what a function may <em>do</em> is typed like whose memory it returns &mdash; the same accountability, two faces.</p>
   </div>
 
   <div class="exhibit reveal">
@@ -180,7 +180,7 @@ Parsing... <span class="ok">OK</span> (1 items)
       <span class="organ-role">Transform</span>
       <span class="organ-line">
         A typed effects language &mdash; what a function may <em>do</em>, and whose memory it returns, is part of the type and checked through to native code.
-        <span class="v-note">C backend end-to-end &middot; 999 tests green &middot; other targets experimental &middot; self-host aspirational</span>
+        <span class="v-note">C backend end-to-end &middot; 1002 passed / 11 ignored &middot; other targets experimental &middot; self-host aspirational</span>
       </span>
       <span class="organ-verdict"><span class="verdict verdict-active" aria-label="Verdict: C-backend shipped">C-BACKEND SHIPPED</span></span>
     </div>

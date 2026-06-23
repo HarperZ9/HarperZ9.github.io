@@ -28,7 +28,7 @@ an **intrinsic, bilateral** systems property). Public, tested, dated.
 
 **Compilers.** *QuantaLang / quantac* — a typed-effects language where the effects a function may
 perform and the lifetimes of the references it returns are part of the type and checked through to
-native code. Rust-built compiler, C backend end-to-end; **999 tests**.
+native code. Rust-built compiler, C backend end-to-end; **1002 passed / 11 ignored**.
 
 **Systems & graphics.** Header-only C++23 signal/anomaly kernels (entropy, mutual information,
 Granger, PELT, FFT); a real-time rendering pipeline (D3D11 today, native zero-graphics-API capture
