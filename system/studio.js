@@ -54,6 +54,7 @@ window.__studioPerceive = perceive; window.__studioSay = say;   // used by the b
 // Populate the preset dropdown from PRESETS (all types), filtered by the selected type chip.
 const fractalPresetEl = $("fractal-preset");
 let activeFType = "mandelbrot";
+let fractalView = null; // Transient zoom state: a shallow copy of the selected preset, never a reference into PRESETS.
 
 function buildPresetMenu(ftype) {
   fractalPresetEl.innerHTML = "";
@@ -73,21 +74,23 @@ function renderPreset() {
   const idx = parseInt(fractalPresetEl.value, 10);
   const preset = filtered[isNaN(idx) ? 0 : idx];
   if (!preset) return;
+  // Reset fractalView to a fresh shallow copy of the canonical preset (decouples zoom from PRESETS).
+  fractalView = { ...preset };
   const canvas = $("studio-canvas");
   canvas.width = 360;
   canvas.height = 360;
-  renderFractal(canvas, preset);
+  renderFractal(canvas, fractalView);
   const obs = perceive(canvas);
-  const typeLabel = { mandelbrot: "Mandelbrot set", julia: "Julia set", burningship: "Burning Ship" }[preset.type] || preset.type;
+  const typeLabel = { mandelbrot: "Mandelbrot set", julia: "Julia set", burningship: "Burning Ship" }[fractalView.type] || fractalView.type;
   const detail = obs.features.entropy > 0.8
     ? "dense filament detail — the boundary is alive here"
     : obs.features.entropy < 0.45
       ? "clean, spacious regions with a calm centre"
       : "a mix of open field and fine boundary structure";
   say("model",
-    `${preset.name} — a ${typeLabel} at scale ${preset.scale}. `
+    `${fractalView.name} — a ${typeLabel} at scale ${fractalView.scale}. `
     + `I fingerprinted it at ${obs.phash}; it reads as ${detail}. `
-    + `Max iterations: ${preset.maxIter}. Want to zoom into a point, swap the palette, or hand it back to the Atelier?`
+    + `Max iterations: ${fractalView.maxIter}. Want to zoom into a point, swap the palette, or hand it back to the Atelier?`
   );
 }
 
@@ -105,25 +108,21 @@ document.querySelectorAll("[data-ftype]").forEach(btn => {
 $("studio-canvas").addEventListener("click", e => {
   const canvas = $("studio-canvas");
   const rect = canvas.getBoundingClientRect();
-  const ftype = activeFType;
-  const filtered = PRESETS.filter(p => p.type === ftype);
-  const idx = parseInt(fractalPresetEl.value, 10);
-  const base = filtered[isNaN(idx) ? 0 : idx];
-  if (!base) return;
+  if (!fractalView) return; // No preset selected yet.
   // Map click pixel → complex plane coordinate
   const px = e.clientX - rect.left, py = e.clientY - rect.top;
   const W = canvas.width, H = canvas.height;
   const aspect = H / W;
-  const flipY = base.type === "burningship" ? -1 : 1;
-  const newCx = base.cx + (px / W - 0.5) * base.scale;
-  const newCy = base.cy + flipY * (py / H - 0.5) * base.scale * aspect;
-  const newScale = base.scale * 0.5;
-  // Re-render with zoomed-in view (update the base preset values in place for chained zooms)
-  filtered[isNaN(idx) ? 0 : idx].cx = newCx;
-  filtered[isNaN(idx) ? 0 : idx].cy = newCy;
-  filtered[isNaN(idx) ? 0 : idx].scale = newScale;
+  const flipY = fractalView.type === "burningship" ? -1 : 1;
+  const newCx = fractalView.cx + (px / W - 0.5) * fractalView.scale;
+  const newCy = fractalView.cy + flipY * (py / H - 0.5) * fractalView.scale * aspect;
+  const newScale = fractalView.scale * 0.5;
+  // Mutate the transient fractalView, never the canonical PRESETS.
+  fractalView.cx = newCx;
+  fractalView.cy = newCy;
+  fractalView.scale = newScale;
   canvas.width = 360; canvas.height = 360;
-  renderFractal(canvas, filtered[isNaN(idx) ? 0 : idx]);
+  renderFractal(canvas, fractalView);
   const obs = perceive(canvas);
   say("model",
     `Zoomed in — now at (${newCx.toFixed(8)}, ${newCy.toFixed(8)}), scale ${newScale.toExponential(2)}. `
