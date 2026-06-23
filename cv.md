@@ -110,7 +110,7 @@ workflow-harness-lite, workspace-repo-map, and more.
 
 ## Selected receipts
 
-19/19 EMET conformance · 312 coherence-membrane tests · 258 proof-surface tests · 201
+19/19 EMET conformance · 868 coherence-membrane tests · 258 proof-surface tests · 201
 accountable-surface tests (39 adversarial) · 1002 QuantaLang passed (11 ignored) · ~3,000 integrity-framework
 tests · 19 PyPI releases · a live, inspectable, proof-first portfolio.
 
