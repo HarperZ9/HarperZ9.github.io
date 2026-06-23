@@ -836,3 +836,198 @@ body.world-3 .bar .rt{color:#cdd6cf}
 
 /* scenarios-lite — compact version for Home */
 .scenarios-lite{position:relative;z-index:4;background:var(--void-opaque);border-top:1px solid var(--hairline);padding:var(--section-pad) clamp(2.4rem,5.5vw,5rem)}
+
+/* ============================================================================
+   THE STUDIO — single-viewport app shell (Task 8f)
+   Desktop (≥900px): the page is a fixed-height CSS grid — site-nav on top, then
+   rail · canvas · panel — and the PAGE never scrolls (body: 100dvh; overflow:hidden).
+   Each region that can overflow (rail, right panel, chat log) scrolls inside itself.
+   Below 900px the grid collapses to a single column and normal page scroll returns.
+   ============================================================================ */
+.studio-page{overflow-x:hidden}
+/* Desktop: body is a fixed-height flex column (nav auto, app fills the rest) so nothing on the page
+   ever overflows the viewport — the app, not the page, owns its scroll. No magic nav-height number. */
+@media (min-width:900px){
+  .studio-page{height:100dvh;overflow:hidden;display:flex;flex-direction:column}
+  .studio-page .site-nav{flex:0 0 auto}
+  .studio-page > .studio-app{flex:1 1 auto;min-height:0}
+}
+
+/* the app grid: rail | viewport | panel, filling the height the flex column gives it */
+.studio-app{display:block}
+@media (min-width:900px){
+  .studio-app{
+    display:grid;
+    grid-template-columns:minmax(280px,22rem) minmax(0,1fr) minmax(310px,25rem);
+    grid-template-areas:"rail viewport panel";
+    height:100%;gap:0;align-items:stretch;overflow:hidden
+  }
+}
+/* compact the shared nav on the studio app (one tight line) */
+.studio-page .site-nav{padding-top:.55rem;padding-bottom:.55rem}
+
+/* ── LEFT RAIL ───────────────────────────────────────────────────────────── */
+.studio-rail{grid-area:rail;display:flex;flex-direction:column;min-height:0;
+  border-right:1px solid var(--hairline);background:rgba(10,21,22,.5)}
+@media (min-width:900px){.studio-rail{overflow:hidden}}
+.rail-head{padding:clamp(.9rem,1.6vw,1.3rem) clamp(1rem,1.8vw,1.4rem) .4rem}
+.rail-head h1{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:700;
+  font-size:clamp(1.25rem,1.7vw,1.55rem);line-height:1.1;letter-spacing:-.01em;color:var(--bone);margin:0}
+.rail-lede{font-family:"EB Garamond",Georgia,serif;font-size:.92rem;line-height:1.45;
+  color:var(--muted);margin:.35rem 0 0}
+.rail-own{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.56rem;letter-spacing:.04em;
+  line-height:1.7;color:var(--prussian);margin:.5rem clamp(1rem,1.8vw,1.4rem) .2rem}
+.rail-own b{color:var(--ember);font-weight:400}
+
+/* the source menu — segmented tabs (wraps to a tidy grid so all five fit the narrow rail) */
+.source-menu{display:grid;grid-template-columns:1fr 1fr;gap:.35rem;
+  padding:.55rem clamp(1rem,1.8vw,1.4rem) 0}
+.source-menu button{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.6rem;
+  letter-spacing:.02em;color:var(--muted);background:rgba(15,33,34,.55);border:1px solid var(--hairline);
+  border-radius:8px;padding:.6em .5em;cursor:pointer;transition:background .15s,color .15s,border-color .15s;
+  white-space:nowrap;text-align:center}
+.source-menu button:hover{color:var(--bone);border-color:rgba(239,171,48,.4)}
+.source-menu button[aria-selected="true"]{color:var(--void);background:var(--ember);border-color:var(--ember);font-weight:500}
+.source-menu button:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+.source-menu button:last-child:nth-child(odd){grid-column:1/-1}
+
+/* the scrolling region of the rail — control blocks live here; only the active one is shown */
+.rail-scroll{flex:1;min-height:0;padding:.5rem clamp(1rem,1.8vw,1.4rem) 1.4rem}
+@media (min-width:900px){.rail-scroll{overflow-y:auto;overflow-x:hidden}}
+.src-block[hidden]{display:none}
+
+/* collapsible control groups (native <details>) */
+.rail-group{border:1px solid var(--hairline);border-radius:10px;background:rgba(15,33,34,.4);
+  margin:.55rem 0;overflow:hidden}
+.rail-group>summary{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.58rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ember);cursor:pointer;
+  padding:.65rem .8rem;list-style:none;user-select:none;display:flex;align-items:center;gap:.5rem}
+.rail-group>summary::-webkit-details-marker{display:none}
+.rail-group>summary::before{content:"▸";color:var(--prussian);font-size:.7em;transition:transform .15s}
+.rail-group[open]>summary::before{transform:rotate(90deg)}
+.rail-group>summary:hover{color:var(--bone)}
+.rail-group>summary:focus-visible{outline:2px solid var(--ember);outline-offset:-2px}
+.rail-group>*:not(summary){margin-left:.8rem;margin-right:.8rem}
+.rail-group>*:not(summary):last-child{margin-bottom:.8rem}
+.rail-group .at-group{margin-top:.7rem}
+.rail-about{margin-top:1rem}
+.rail-about p{font-family:"EB Garamond",Georgia,serif;font-size:.9rem;line-height:1.55;color:var(--muted)}
+.rail-about em{color:var(--ember);font-style:italic}
+.src-hint{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.56rem;letter-spacing:.03em;
+  color:var(--prussian);margin:.7rem 0 0;line-height:1.6}
+
+/* the mounted Atelier panel needs no max-width inside the rail */
+.studio-rail .studio-atelier .at-panel{max-width:none;gap:.7rem}
+.studio-rail .studio-atelier{margin:0}
+.studio-rail .studio-byo-ctrl{margin-bottom:0}
+.studio-rail .studio-watch-ctrl{margin-top:0;border-top:0;padding-top:0}
+
+/* ── CENTRE VIEWPORT (the hero) ──────────────────────────────────────────── */
+.studio-viewport{grid-area:viewport;display:flex;flex-direction:column;min-height:0;
+  align-items:center;justify-content:center;gap:.7rem;
+  padding:clamp(1rem,2vw,1.8rem);background:
+    radial-gradient(120% 100% at 50% 0%,rgba(223,94,0,.05),transparent 60%),rgba(8,17,18,.4)}
+.viewport-stage{position:relative;flex:0 1 auto;display:flex;align-items:center;justify-content:center;
+  max-width:100%;max-height:100%;border-radius:12px;overflow:hidden;background:#000;
+  border:1px solid rgba(0,0,0,.5);box-shadow:0 10px 50px rgba(0,0,0,.5);line-height:0}
+.viewport-stage canvas{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+@media (min-width:900px){
+  /* the flex/grid cell already bounds the height; cap the stage to it (minus the toolbar row) so the
+     toolbar always stays in view and the page never scrolls. min-height:0 lets it shrink. */
+  .studio-viewport{min-height:0}
+  .viewport-stage{min-height:0;max-height:100%}
+}
+
+/* the render toolbar — slim, real-software viewport controls */
+.render-toolbar{display:flex;align-items:center;gap:.45rem;flex-wrap:wrap;width:100%;
+  max-width:min(100%,640px);justify-content:center}
+.render-toolbar .rt-spacer{flex:1;min-width:0}
+.rt-btn{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.6rem;letter-spacing:.06em;
+  color:var(--bone);background:rgba(15,33,34,.7);border:1px solid var(--hairline);border-radius:8px;
+  padding:.5em .8em;cursor:pointer;display:inline-flex;align-items:center;gap:.4em;
+  transition:background .15s,border-color .15s,color .15s}
+.rt-btn:hover:not([disabled]){background:rgba(239,171,48,.12);border-color:rgba(239,171,48,.5)}
+.rt-btn:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+.rt-btn[disabled]{opacity:.4;cursor:not-allowed}
+.rt-btn[aria-pressed="true"]{background:var(--ember);border-color:var(--ember);color:var(--void)}
+.rt-ico{font-size:.95em;line-height:1}
+.rt-quality{color:var(--muted)}
+/* fullscreen: the viewport fills the screen — centre the canvas on black */
+.studio-viewport:fullscreen{background:#000;justify-content:center}
+.studio-viewport:fullscreen .viewport-stage{max-height:88vh}
+.studio-viewport:fullscreen .viewport-stage canvas{max-height:88vh}
+
+/* ── RIGHT PANEL (what the model sees + chat) ────────────────────────────── */
+.studio-panel{grid-area:panel;display:flex;flex-direction:column;min-height:0;
+  border-left:1px solid var(--hairline);background:rgba(10,21,22,.5)}
+.panel-scroll{flex:1;min-height:0;padding:clamp(.8rem,1.5vw,1.2rem);display:flex;flex-direction:column;gap:.9rem}
+@media (min-width:900px){.panel-scroll{overflow-y:auto;overflow-x:hidden}}
+.studio-panel .panel{margin:0}
+.studio-panel .measurimeter{margin:0}
+/* tighten the measurimeter grid for the narrow panel */
+.studio-panel .mm-grid{grid-template-columns:1fr;gap:.9rem}
+
+/* the chat dock — pinned at the bottom of the panel, minimizable */
+.chat-dock{flex:0 0 auto;display:flex;flex-direction:column;min-height:0;
+  border-top:1px solid var(--hairline);background:rgba(8,17,18,.6)}
+@media (min-width:900px){.chat-dock{max-height:46%}}
+.chat-dock-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;
+  padding:.55rem clamp(.8rem,1.5vw,1.2rem)}
+.chat-dock-head h2{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:600;font-size:.78rem;
+  letter-spacing:.02em;margin:0;color:var(--bone)}
+.chat-min{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:1rem;line-height:1;
+  color:var(--muted);background:transparent;border:1px solid var(--hairline);border-radius:6px;
+  width:1.7rem;height:1.7rem;cursor:pointer;transition:color .15s,border-color .15s}
+.chat-min:hover{color:var(--bone);border-color:rgba(239,171,48,.5)}
+.chat-min:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+.chat-dock-body{display:flex;flex-direction:column;min-height:0;flex:1;
+  padding:0 clamp(.8rem,1.5vw,1.2rem) clamp(.7rem,1.4vw,1rem)}
+.chat-dock.minimized .chat-dock-body{display:none}
+.studio-panel .chat-log{flex:1;min-height:0;max-height:none;overflow-y:auto;margin-bottom:.5rem}
+.chat-dock .chat-chips{margin:.2rem 0 .5rem}
+/* the free-text input row */
+.chat-input{display:flex;gap:.45rem;align-items:stretch}
+.chat-input input{flex:1;min-width:0;font-family:"EB Garamond",Georgia,serif;font-size:.95rem;
+  color:var(--bone);background:rgba(6,14,15,.7);border:1px solid var(--hairline);border-radius:8px;
+  padding:.5em .7em;transition:border-color .15s}
+.chat-input input::placeholder{color:var(--prussian)}
+.chat-input input:focus{outline:none;border-color:rgba(239,171,48,.55)}
+.chat-input .btn{flex:0 0 auto;font-size:.62rem;padding:.5em .9em}
+
+/* ── CUSTOM DROPDOWN (replaces every raw <select>) ───────────────────────── */
+.dropdown{position:relative;width:100%;margin-top:.1rem}
+.dd-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:.5rem;
+  font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.72rem;letter-spacing:.04em;
+  color:var(--bone);background:rgba(6,14,15,.7);border:1px solid var(--hairline);border-radius:6px;
+  padding:.52em .7em;cursor:pointer;transition:border-color .15s,background .15s;text-align:left}
+.dd-btn:hover{border-color:rgba(239,171,48,.45)}
+.dd-btn:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+.dd-arrow{color:var(--ember);font-size:.7em;flex:0 0 auto}
+.dd-list{position:absolute;left:0;right:0;top:calc(100% + 3px);z-index:30;max-height:240px;overflow-y:auto;
+  background:#0c1c1d;border:1px solid rgba(239,171,48,.35);border-radius:6px;
+  box-shadow:0 12px 38px rgba(0,0,0,.6);padding:.25rem}
+.dd-opt{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.7rem;letter-spacing:.03em;
+  color:var(--muted);padding:.48em .6em;border-radius:4px;cursor:pointer;transition:background .12s,color .12s}
+.dd-opt:hover,.dd-opt:focus-visible{background:rgba(239,171,48,.12);color:var(--bone);outline:none}
+.dd-opt[aria-selected="true"]{color:var(--void);background:var(--ember)}
+
+/* the topography label rows hold a dropdown now — keep them stacked + readable */
+.studio-topo-ctrl{display:flex;flex-direction:column;gap:.7rem;margin-top:.4rem}
+.studio-topo-ctrl label{display:flex;flex-direction:column;gap:.3rem;font-family:"Spline Sans Mono",ui-monospace,monospace;
+  font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.studio-topo-ctrl input[type=range]{width:100%;accent-color:var(--orange);cursor:pointer}
+
+/* ── RESPONSIVE: below 900px → single column, restore normal page scroll ──── */
+@media (max-width:899.98px){
+  .studio-app{display:block;height:auto;overflow:visible}
+  .studio-rail,.studio-viewport,.studio-panel{border:0;overflow:visible;min-height:0}
+  .studio-rail{border-bottom:1px solid var(--hairline)}
+  .studio-panel{border-top:1px solid var(--hairline)}
+  .rail-scroll,.panel-scroll{overflow:visible}
+  .source-menu{grid-template-columns:1fr 1fr 1fr}
+  .source-menu button:last-child:nth-child(odd){grid-column:auto}
+  .viewport-stage{width:100%;max-width:min(560px,92vw)}
+  .chat-dock{max-height:none}
+  .studio-panel .chat-log{max-height:50vh}
+  .chat-dock-body{padding-bottom:1rem}
+}

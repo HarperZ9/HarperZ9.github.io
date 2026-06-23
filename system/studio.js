@@ -9,20 +9,55 @@ const fmt = (v,n=3)=>typeof v==="number"?(Number.isInteger(v)?String(v):v.toFixe
 // drift is per-canvas (Task 6 review carry-in): keyed by the canvas instance, so switching
 // modes / sources doesn't compare against an unrelated frame and show a misleading drift.
 const lastHashByCanvas = new WeakMap();
+// `mode` is kept as a coarse label the measurimeter's source line reads ("your media" vs
+// "the Atelier / 2D"). The five-way source menu (Task 8f) drives it via setSource().
 let mode = "generate";
+let activeSource = "atelier";
 
-function setMode(next) {
-  mode = next;
-  $("studio-generate").hidden = next !== "generate";
-  $("studio-byo").hidden = next !== "byo";
-  document.querySelectorAll("#studio-mode button").forEach(b =>
-    b.setAttribute("aria-pressed", String(b.dataset.mode === next)));
+// The five sources and the rail block each shows. Selecting one shows ONLY that block and folds in
+// every cleanup the old top-level mode switch used to do (stop the 3D orbit, release any capture /
+// played video, idle the meter loop) so leaving a source never leaves a loop running. This subsumes
+// the old setMode + the leave3D-on-mode-click wiring.
+const SOURCES = {
+  atelier:   { block: "src-atelier",   mode: "generate" },
+  fractal:   { block: "src-fractal",   mode: "generate" },
+  fractal3d: { block: "src-fractal3d", mode: "generate" },
+  byo:       { block: "src-byo",       mode: "byo" },
+  watch:     { block: "src-watch",     mode: "byo" },
+};
+
+function setSource(next) {
+  if (!SOURCES[next]) return;
+  // Leaving the current source: stop anything it had running. Guard the calls — some are defined
+  // later in the module (hoisted function declarations), so they're safe to call from here.
+  if (next !== activeSource) {
+    leave3D();          // restore the 2D canvas if a WebGL orbit was mounted
+    stopWatch();        // release any screen/camera capture
+    stopByoVideo();     // pause + release any played BYO video
+    stopMeterLoop();    // idle the live meter loop until the new source restarts it
+  }
+  activeSource = next;
+  mode = SOURCES[next].mode;
+  for (const [name, cfg] of Object.entries(SOURCES)) {
+    const el = $(cfg.block); if (el) el.hidden = name !== next;
+  }
+  document.querySelectorAll("#studio-source button").forEach(b =>
+    b.setAttribute("aria-selected", String(b.dataset.source === next)));
+  syncToolbarForSource();
 }
 
-$("studio-mode").addEventListener("click", e => {
-  const b = e.target.closest("button[data-mode]"); if (b) setMode(b.dataset.mode);
+$("studio-source").addEventListener("click", e => {
+  const b = e.target.closest("button[data-source]"); if (b) setSource(b.dataset.source);
 });
-setMode("generate");
+// Arrow-key navigation across the source tabs (roving, accessible).
+$("studio-source").addEventListener("keydown", e => {
+  if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+  const tabs = [...document.querySelectorAll("#studio-source button")];
+  const i = tabs.indexOf(document.activeElement); if (i < 0) return;
+  e.preventDefault();
+  const j = (i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length;
+  tabs[j].focus(); setSource(tabs[j].dataset.source);
+});
 
 // A 2D canvas can only ever yield a 2D context, and a WebGL canvas only WebGL — a canvas binds
 // permanently to its first context type. The 3D-fractal source paints #studio-canvas via WebGL,
@@ -272,8 +307,7 @@ f3("f3-render").addEventListener("click", () => render3DInto(read3DOpts()));
 // so the original 2D canvas is remounted before fractal.js / the Atelier query getContext("2d").
 $("fractal-render").addEventListener("click", leave3D, true);
 if ($("at-draw")) $("at-draw").addEventListener("click", leave3D, true);
-// Switching the top-level Generate/BYO mode also stops the orbit and restores the 2D canvas.
-$("studio-mode").addEventListener("click", leave3D);
+// (Switching sources also stops the orbit + restores the 2D canvas — folded into setSource() above.)
 
 // canvas→eye bridge (Task 7): when the Atelier finishes a drawing, perceive the shared
 // canvas and let the model greet, in plain words, exactly what it measured.
@@ -635,8 +669,8 @@ if ($("watch-stop")) {
   $("watch-stop").addEventListener("click", stopWatch);
 }
 
-// When switching modes, release the capture stream + any played video and stop streaming.
-$("studio-mode").addEventListener("click", () => { stopWatch(); stopByoVideo(); stopMeterLoop(); });
+// (Switching sources releases the capture stream + any played video and stops streaming — folded
+//  into setSource() above, so it fires for every source change, not just the old 2-way mode switch.)
 
 // Expose for tests
 window.__studioStopWatch = stopWatch;
@@ -938,8 +972,245 @@ function pollAudio() {
 window.__studioAttachAudio = attachAudio;
 window.__studioDetachAudio = detachAudio;
 
+// ══ Custom dropdowns (Task 8f) ═══════════════════════════════════════════════
+// No bare browser <select> on the page. Each raw select is replaced by an accessible button+listbox.
+// To keep every existing binding intact, the element studio.js already targets by id (#fractal-preset,
+// #topo-mode) stays a hidden STATE node that still holds <option> children — we only add a `.value`
+// getter/setter and make it emit "change", exactly like a select. The visible listbox lives in the
+// sibling [data-dropdown="<id>"]. A MutationObserver rebuilds the listbox when the options change
+// (e.g. buildPresetMenu repopulates #fractal-preset on a type switch), so that code is untouched.
+function upgradeDropdown(stateId) {
+  const state = $(stateId);
+  const host = document.querySelector(`[data-dropdown="${stateId}"]`);
+  if (!state || !host) return;
+  let selectedValue = null;
+  const opts = () => [...state.querySelectorAll("option")];
+  const labelFor = v => { const o = opts().find(o => o.value === v); return o ? o.textContent : ""; };
+
+  // .value get/set on the state node — mirrors a <select>. Default to the [selected] option or first.
+  Object.defineProperty(state, "value", {
+    configurable: true,
+    get() { return selectedValue; },
+    set(v) { if (opts().some(o => o.value === String(v))) { selectedValue = String(v); render(); } },
+  });
+
+  // The visible control: a button that opens a listbox.
+  host.innerHTML = "";
+  const btn = document.createElement("button");
+  btn.type = "button"; btn.className = "dd-btn";
+  btn.setAttribute("aria-haspopup", "listbox"); btn.setAttribute("aria-expanded", "false");
+  const lab = document.createElement("span"); lab.className = "dd-label";
+  const arr = document.createElement("span"); arr.className = "dd-arrow"; arr.setAttribute("aria-hidden", "true"); arr.textContent = "▾";
+  btn.appendChild(lab); btn.appendChild(arr);
+  const list = document.createElement("div"); list.className = "dd-list"; list.setAttribute("role", "listbox"); list.hidden = true;
+  host.appendChild(btn); host.appendChild(list);
+
+  function close() { list.hidden = true; btn.setAttribute("aria-expanded", "false"); }
+  function open() {
+    list.hidden = false; btn.setAttribute("aria-expanded", "true");
+    const cur = list.querySelector('[aria-selected="true"]'); if (cur) cur.focus();
+  }
+  function choose(v, emit = true) {
+    selectedValue = String(v); render();
+    if (emit) state.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+  function render() {
+    const list_opts = opts();
+    if (!list_opts.some(o => o.value === selectedValue)) {
+      const sel = list_opts.find(o => o.hasAttribute("selected")) || list_opts[0];
+      selectedValue = sel ? sel.value : null;
+    }
+    lab.textContent = labelFor(selectedValue) || "—";
+    list.innerHTML = "";
+    for (const o of list_opts) {
+      const item = document.createElement("div");
+      item.className = "dd-opt"; item.setAttribute("role", "option"); item.tabIndex = -1;
+      item.dataset.value = o.value; item.textContent = o.textContent;
+      item.setAttribute("aria-selected", String(o.value === selectedValue));
+      item.addEventListener("click", () => { choose(o.value); close(); btn.focus(); });
+      list.appendChild(item);
+    }
+  }
+
+  btn.addEventListener("click", () => (list.hidden ? open() : close()));
+  btn.addEventListener("keydown", e => {
+    if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
+  });
+  list.addEventListener("keydown", e => {
+    const items = [...list.querySelectorAll(".dd-opt")];
+    const i = items.indexOf(document.activeElement);
+    if (e.key === "Escape") { e.preventDefault(); close(); btn.focus(); }
+    else if (e.key === "ArrowDown") { e.preventDefault(); (items[Math.min(items.length - 1, i + 1)] || items[0]).focus(); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); (items[Math.max(0, i - 1)] || items[0]).focus(); }
+    else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (i >= 0) { choose(items[i].dataset.value); close(); btn.focus(); } }
+  });
+  document.addEventListener("click", e => { if (!host.contains(e.target)) close(); });
+
+  // Rebuild the listbox whenever the option set changes (keeps buildPresetMenu untouched).
+  new MutationObserver(() => render()).observe(state, { childList: true });
+  render();
+}
+upgradeDropdown("fractal-preset");
+upgradeDropdown("topo-mode");
+
+// ══ The chat dock (Task 8f) ══════════════════════════════════════════════════
+// The talk-to-the-model chat is first-class again: question chips you can tap AND a free-text box you
+// can type into. Answers are GROUNDED — they report only what the current readout licenses (the live
+// #sc-* features, the rich measure bundle via describeFrame), never canned prose. Same say() as the
+// rest of the Studio (role + text via .textContent — no markup injection).
+
+// Read the current witnessed state straight off the panel + the last rich bundle. Nothing invented.
+function readout() {
+  const phash = ($("sc-phash").textContent || "—").trim();
+  const size = ($("sc-size").textContent || "—").trim();
+  const grab = sel => { const el = $("sc-feats").querySelector(sel); return el ? el.textContent.trim() : null; };
+  const feats = [...$("sc-feats").querySelectorAll(".ground")].map(g => g.textContent.trim());
+  const has = phash !== "—" && phash !== "";
+  return { phash, size, feats, has, rich: lastRich, source: currentSourceLabel() };
+}
+function num(label) { // pull a named feature value (contrast / structure / balance) off the chips
+  const g = [...$("sc-feats").querySelectorAll(".ground")].find(e => e.textContent.toLowerCase().includes(label));
+  if (!g) return null; const m = g.textContent.match(/([\d.]+)/); return m ? parseFloat(m[1]) : null;
+}
+
+// Map a free-text question (or a chip id) to a grounded answer over the current frame.
+function groundedAnswer(input) {
+  const r = readout();
+  if (!r.has) return "Nothing's loaded yet — pick a source on the left and generate or drop a frame, then ask me what I see.";
+  const s = (input || "").toLowerCase();
+  const desc = r.rich ? describeFrame(r.rich) : "";
+  const colours = (r.rich && r.rich.dominantColors || []).slice(0, 3).join(", ");
+  const con = num("contrast"), str = num("structure"), bal = num("balance");
+  const hueBit = (r.rich && r.rich.hueName) ? `, mostly ${r.rich.hueName}${colours ? ` (${colours})` : ""}` : "";
+  const ask = (...k) => k.some(w => s.includes(w));
+
+  if (ask("colour", "color", "hue", "palette"))
+    return colours ? `The dominant colours are ${colours}${r.rich && r.rich.hueName ? ` — it reads as ${r.rich.hueName}` : ""}.`
+                   : "I'm not reading a strong dominant colour on this frame.";
+  if (ask("contrast", "light", "dark"))
+    return con != null ? `Contrast is ${fmt(con, 2)} — ${con > 0.66 ? "high, the structure is very legible" : con < 0.4 ? "low, it's soft and even" : "moderate"}.` : "I don't have a contrast reading yet.";
+  if (ask("structure", "detail", "busy", "complex", "texture"))
+    return str != null ? `Structure (entropy) is ${fmt(str, 2)} — ${str > 0.8 ? "richly textured, lots going on" : str < 0.45 ? "clean and simple" : "moderately detailed"}.` : "No structure reading yet.";
+  if (ask("balance", "centre", "center", "symmet"))
+    return bal != null ? `Balance is ${fmt(bal, 2)} — how evenly the mass sits around the centre.` : "No balance reading yet.";
+  if (ask("hash", "fingerprint", "id", "same", "change", "drift")) {
+    const d = $("sc-drift"); const dn = (d && !d.hidden) ? ` ${d.textContent}.` : "";
+    return `My fingerprint of this frame is ${r.phash}.${dn} If it changes, the hash moves with it — that's how I know something happened.`;
+  }
+  if (ask("size", "big", "dimension", "resolution"))
+    return `The frame is ${r.size}. I downsample it to a small faithful grid — that grid is what I actually read, shown top-right.`;
+  if (ask("how", "know", "trust", "honest", "prove", "real", "see what"))
+    return `Everything I say is a number you can re-derive: I read this ${r.source} frame at ${r.phash}, ${desc} Nothing's invented — the meters on the right are exactly what I'm given.`;
+  if (ask("what", "see", "look", "describe", "this"))
+    return `I'm looking at a ${r.size} ${r.source} frame${hueBit}. ${desc} Fingerprint ${r.phash}.`;
+  if (ask("try", "next", "do", "idea", "make", "could", "suggest")) {
+    let weak = "structure"; let lo = Infinity;
+    for (const [k, v] of [["contrast", con], ["structure", str], ["balance", bal]]) if (v != null && v < lo) { lo = v; weak = k; }
+    return `We could push it further — ${weak} is where there's most room (${lo === Infinity ? "—" : fmt(lo, 2)}). Try a transform, swap the source, or hand it to me for a turn.`;
+  }
+  // friendly grounded fallback
+  return `Here's what I can say for sure: a ${r.size} ${r.source} frame${hueBit}, fingerprint ${r.phash}. ${desc} Ask me about its colour, contrast, structure, or what to try next.`;
+}
+
+// Question chips — tap to ask. Studio-local (grounded over the live readout, not the Atelier World).
+const CHAT_CHIPS = [
+  ["What do you see?", "what do you see"],
+  ["What colours?", "colour"],
+  ["How's the contrast?", "contrast"],
+  ["How detailed is it?", "structure"],
+  ["How do you know?", "how do you know"],
+  ["What could we try?", "what could we try"],
+];
+function buildChatChips() {
+  const host = $("studio-chips"); if (!host || host.childElementCount) return;
+  for (const [label, query] of CHAT_CHIPS) {
+    const b = document.createElement("button"); b.type = "button"; b.className = "chip";
+    b.textContent = label;
+    b.addEventListener("click", () => { say("you", label); say("model", groundedAnswer(query)); });
+    host.appendChild(b);
+  }
+}
+buildChatChips();
+
+// Free-text input → grounded answer.
+const chatForm = $("chat-input"), chatText = $("chat-text");
+if (chatForm && chatText) {
+  chatForm.addEventListener("submit", e => {
+    e.preventDefault();
+    const v = chatText.value.trim(); if (!v) return;
+    say("you", v); say("model", groundedAnswer(v));
+    chatText.value = "";
+  });
+}
+
+// Minimize / restore the whole chat dock (a header toggle that shrinks it to a bar).
+const chatMin = $("chat-min"), chatDock = $("chat-dock");
+if (chatMin && chatDock) {
+  chatMin.addEventListener("click", () => {
+    const min = chatDock.classList.toggle("minimized");
+    chatMin.setAttribute("aria-expanded", String(!min));
+    chatMin.textContent = min ? "+" : "−";
+    chatMin.title = min ? "Expand the chat" : "Minimize the chat";
+  });
+}
+
+// ══ The render toolbar (Task 8f) ═════════════════════════════════════════════
+// Real-software viewport controls under the canvas: fullscreen (Fullscreen API on the viewport),
+// snapshot (freeze the current frame + the model responds to it), play/pause (for animated sources:
+// the 3D orbit + the watch/video loop), and a Quality placeholder (Task 8g wires it).
+const viewport = $("studio-viewport");
+
+// Fullscreen the viewport so the canvas fills the screen.
+$("rt-fullscreen").addEventListener("click", () => {
+  const el = viewport;
+  if (document.fullscreenElement) { document.exitFullscreen && document.exitFullscreen(); return; }
+  (el.requestFullscreen || el.webkitRequestFullscreen || (() => {})).call(el);
+});
+
+// Snapshot: re-perceive the frame exactly as it stands and have the model respond to THIS moment.
+$("rt-snapshot").addEventListener("click", () => {
+  const canvas = $("studio-canvas"); if (!canvas || !canvas.width) { say("model", "Nothing to snapshot yet — load or generate a frame first."); return; }
+  const obs = perceive(canvas);
+  const desc = obs.rich ? describeFrame(obs.rich) : "";
+  say("model", `Snapshot taken — I froze this frame and read it at ${obs.phash}. ${desc} Ask me anything about it.`);
+});
+
+// Play/pause animated sources. The 3D orbit + capture/video loops drive the live meter loop; pausing
+// stops them, resuming re-renders / re-streams. Disabled (greyed) for static sources.
+let paused = false;
+function toolbarAnimates() { return canvasIsGL || !!watchStream || (byoVideo && !byoVideo.paused); }
+function syncToolbarForSource() {
+  const pp = $("rt-playpause"); if (!pp) return;
+  const animates = activeSource === "fractal3d" || activeSource === "watch" || (activeSource === "byo" && byoVideo);
+  pp.disabled = !animates;
+  paused = false;
+  $("rt-playpause-label").textContent = "Pause";
+  pp.setAttribute("aria-pressed", "false");
+  pp.querySelector(".rt-ico").textContent = "⏸";
+}
+$("rt-playpause").addEventListener("click", () => {
+  paused = !paused;
+  const pp = $("rt-playpause");
+  pp.setAttribute("aria-pressed", String(paused));
+  $("rt-playpause-label").textContent = paused ? "Play" : "Pause";
+  pp.querySelector(".rt-ico").textContent = paused ? "▶" : "⏸";
+  if (paused) {
+    if (byoVideo && !byoVideo.paused) { try { byoVideo.pause(); } catch (e) {} }
+    if (watchVideo && !watchVideo.paused) { try { watchVideo.pause(); } catch (e) {} }
+    if (stop3d) { stop3d(); stop3d = null; }   // freeze the orbit (canvas stays mounted as GL)
+    stopMeterLoop();
+  } else {
+    if (byoVideo && byoVideo.paused) { byoVideo.play().catch(() => {}); }
+    if (watchVideo && watchVideo.srcObject && watchVideo.paused) { watchVideo.play().catch(() => {}); }
+    if (canvasIsGL && !stop3d) { try { stop3d = render3D($("studio-canvas"), read3DOpts()).stop; } catch (e) {} }
+    startMeterLoop();
+  }
+});
+
 // ── wire the loop into the source lifecycle ──────────────────────────────────
 // Animated sources start the loop; static ones run it briefly (it self-idles via STATIC_STOP).
 // Initialise the idle audio meters + an empty mosaic at boot so the panel reads honestly from t=0.
 audioMetersIdle();
 buildMeters();
+// Boot the source menu — Atelier active by default (mirrors the old setMode("generate")).
+setSource("atelier");
