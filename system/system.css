@@ -629,3 +629,8 @@ body.world-3 .bar .rt{color:#cdd6cf}
 .btn:hover,.btn:focus-visible{background:var(--orange);border-color:var(--orange);color:var(--bone);outline:none}
 .btn.ghost{color:var(--ember);background:transparent}
 .btn.ghost:hover,.btn.ghost:focus-visible{background:rgba(239,171,48,.1);color:var(--bone)}
+
+/* ─── work-group catalog (Task 4 — overview.html grouped sections) ── */
+.work-group{margin:2.2rem 0}
+.work-group > h2{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-size:1rem;color:var(--ember);
+  letter-spacing:.02em;margin:0 0 .8rem;padding-bottom:.3rem;border-bottom:1px solid rgba(239,171,48,.15)}
