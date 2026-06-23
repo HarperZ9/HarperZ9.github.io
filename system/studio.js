@@ -4,6 +4,7 @@ import { perceptualHash, features, hamming } from "../shared-frame/eye.js";
 import { representation, richFeatures, describeFrame, rmsFromBytes, spectrumBands, dominantPitchHz } from "./sense.js";
 import { renderFractal, PRESETS } from "./fractal.js";
 import { render3D } from "./fractal3d.js";
+import { sizeToDisplay } from "./canvas-scale.js";
 const $ = id => document.getElementById(id);
 const fmt = (v,n=3)=>typeof v==="number"?(Number.isInteger(v)?String(v):v.toFixed(n)):String(v);
 // drift is per-canvas (Task 6 review carry-in): keyed by the canvas instance, so switching
@@ -13,6 +14,39 @@ const lastHashByCanvas = new WeakMap();
 // "the Atelier / 2D"). The five-way source menu (Task 8f) drives it via setSource().
 let mode = "generate";
 let activeSource = "atelier";
+
+// ── Quality state (Task 8g) ───────────────────────────────────────────────────
+// Standard: maxBacking=1600 (crisp on typical 1-2× displays, fast for per-pixel fractals).
+// High:     maxBacking=2400 (sharper on large/3× displays, slower — user opt-in).
+const QUALITY_LEVELS = {
+  standard: { label: "Standard", maxBacking: 1600, iterMult: 1 },
+  high:     { label: "High",     maxBacking: 2400, iterMult: 1.5 },
+};
+let qualityKey = "standard";
+function currentQuality() { return QUALITY_LEVELS[qualityKey]; }
+// Shared helper: size the canvas to the current quality level and return backing dims.
+// The canvas CSS size is determined by its container (.viewport-stage, max-width:100%), NOT by the
+// canvas.width attribute itself — so we read the parent's bounding rect to get the true display size.
+function sizeCanvas(canvas) {
+  // Prefer the parent's layout size (the constraining container), falling back to the canvas rect.
+  const parent = canvas.parentElement;
+  const ref = parent ? parent.getBoundingClientRect() : canvas.getBoundingClientRect();
+  const cssW = Math.max(1, ref.width  || 1);
+  const cssH = Math.max(1, ref.height || ref.width || 1);   // square stage: use width for both axes
+  const dpr = window.devicePixelRatio || 1;
+  const mb = currentQuality().maxBacking;
+  let rawW = Math.round(cssW * dpr);
+  let rawH = Math.round(cssH * dpr);
+  const longer = Math.max(rawW, rawH);
+  if (longer > mb) {
+    const s = mb / longer;
+    rawW = Math.max(1, Math.round(rawW * s));
+    rawH = Math.max(1, Math.round(rawH * s));
+  }
+  canvas.width  = rawW;
+  canvas.height = rawH;
+  return { w: rawW, h: rawH };
+}
 
 // The five sources and the rail block each shows. Selecting one shows ONLY that block and folds in
 // every cleanup the old top-level mode switch used to do (stop the 3D orbit, release any capture /
@@ -133,9 +167,10 @@ function renderPreset() {
   // Reset fractalView to a fresh shallow copy of the canonical preset (decouples zoom from PRESETS).
   fractalView = { ...preset };
   const canvas = $("studio-canvas");
-  canvas.width = 360;
-  canvas.height = 360;
-  renderFractal(canvas, fractalView);
+  sizeCanvas(canvas);
+  // High quality: scale up maxIter by iterMult so per-pixel detail keeps up with resolution.
+  const qOpts = { ...fractalView, maxIter: Math.round(fractalView.maxIter * currentQuality().iterMult) };
+  renderFractal(canvas, qOpts);
   const obs = perceive(canvas);
   const typeLabel = { mandelbrot: "Mandelbrot set", julia: "Julia set", burningship: "Burning Ship" }[fractalView.type] || fractalView.type;
   const detail = obs.features.entropy > 0.8
@@ -183,8 +218,9 @@ $("studio-canvas").closest(".stage").addEventListener("click", e => {
   fractalView.cx = newCx;
   fractalView.cy = newCy;
   fractalView.scale = newScale;
-  canvas.width = 360; canvas.height = 360;
-  renderFractal(canvas, fractalView);
+  sizeCanvas(canvas);
+  const qOptsZ = { ...fractalView, maxIter: Math.round(fractalView.maxIter * currentQuality().iterMult) };
+  renderFractal(canvas, qOptsZ);
   const obs = perceive(canvas);
   say("model",
     `Zoomed in — now at (${newCx.toFixed(8)}, ${newCy.toFixed(8)}), scale ${newScale.toExponential(2)}. `
@@ -216,6 +252,8 @@ function mountGLCanvas() {
   const cur = $("studio-canvas");
   const gl = document.createElement("canvas");
   gl.id = "studio-canvas";
+  // CSS size mirrors the original canvas's layout size; backing set by sizeCanvas() in render3DInto.
+  gl.style.width = "100%"; gl.style.height = "100%";
   gl.width = 512; gl.height = 512;
   cur.replaceWith(gl);
   return gl;
@@ -237,7 +275,8 @@ function render3DInto(opts) {
   if (stop3d) { stop3d(); stop3d = null; }   // cancel the previous orbit before starting a new one
   // Mount a fresh GL canvas (idempotent: if one is already mounted we reuse the mounted node).
   let c = canvasIsGL ? $("studio-canvas") : mountGLCanvas();
-  c.width = 512; c.height = 512;
+  // Size the GL canvas to the hi-DPI backing resolution (the raymarcher reads canvas.width/height).
+  sizeCanvas(c);
   try {
     stop3d = render3D(c, opts).stop;
     canvasIsGL = true;
@@ -339,10 +378,23 @@ function stopByoVideo() {
 }
 window.__studioStopByoVideo = stopByoVideo;
 
-// Scale src (HTMLImageElement or HTMLVideoElement) to fit within MAX, draw onto the shared canvas.
+// Scale src (HTMLImageElement or HTMLVideoElement) to the hi-DPI backing size, then draw.
+// The canvas CSS layout size is preserved by sizeCanvas(); we draw the source stretched to fill it.
 function drawSource(src, sw, sh) {
-  const MAX = 360, s = Math.min(1, MAX / Math.max(sw, sh));
-  const c = byoCanvas(); c.width = Math.round(sw * s); c.height = Math.round(sh * s);
+  const c = byoCanvas();
+  // Size the canvas backing to hi-DPI resolution; the CSS layout size already constrains the display.
+  // If the canvas has no CSS size yet (before layout), fall back to fitting within maxBacking.
+  const rect = c.getBoundingClientRect ? c.getBoundingClientRect() : null;
+  const hasCss = rect && rect.width > 0 && rect.height > 0;
+  if (hasCss) {
+    sizeCanvas(c);
+  } else {
+    // Pre-layout fallback: fit the source within maxBacking, preserving aspect.
+    const mb = currentQuality().maxBacking;
+    const s = Math.min(1, mb / Math.max(sw, sh));
+    c.width = Math.max(1, Math.round(sw * s));
+    c.height = Math.max(1, Math.round(sh * s));
+  }
   byoCtx().drawImage(src, 0, 0, c.width, c.height);
 }
 
@@ -1205,6 +1257,60 @@ $("rt-playpause").addEventListener("click", () => {
     if (canvasIsGL && !stop3d) { try { stop3d = render3D($("studio-canvas"), read3DOpts()).stop; } catch (e) {} }
     startMeterLoop();
   }
+});
+
+// ── Quality toolbar button (Task 8g) ──────────────────────────────────────────
+// Cycles Standard → High → Standard. Standard: maxBacking=1600, fast.
+// High: maxBacking=2400, higher iter count — a slower but sharper render on demand.
+// Re-renders the current source at the new quality level.
+function applyQualityAndRerender() {
+  const valEl = $("rt-quality-val"); if (valEl) valEl.textContent = currentQuality().label;
+  // Re-render the currently active source at the new quality level.
+  if (activeSource === "fractal" && fractalView) {
+    const canvas = $("studio-canvas");
+    sizeCanvas(canvas);
+    const qOpts = { ...fractalView, maxIter: Math.round(fractalView.maxIter * currentQuality().iterMult) };
+    renderFractal(canvas, qOpts);
+    perceive(canvas);
+    startMeterLoop();
+  } else if (activeSource === "fractal3d" && canvasIsGL) {
+    // Re-launch the 3D orbit at the new backing size.
+    const opts = read3DOpts();
+    render3DInto(opts);
+  }
+  // BYO/watch: sizeCanvas is called per-frame in drawSource, so the next draw picks it up.
+  // Atelier: sizeCanvas is called at render time in atelier.js's own sizeCanvas().
+}
+
+const qualityBtn = $("rt-quality");
+if (qualityBtn) {
+  qualityBtn.disabled = false;
+  qualityBtn.title = "Cycle render quality: Standard / High";
+  qualityBtn.addEventListener("click", () => {
+    qualityKey = qualityKey === "standard" ? "high" : "standard";
+    applyQualityAndRerender();
+  });
+  // Initialise label.
+  const valEl = $("rt-quality-val"); if (valEl) valEl.textContent = currentQuality().label;
+}
+
+// ── Debounced resize: re-render the active static source at the new layout size ──────────────
+let resizeTimer = 0;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    // Only re-render sources that paint a fixed image (not the 3D orbit loop, which reads
+    // canvas.width/height on every RAF frame already — it self-adjusts on the next frame).
+    if (activeSource === "fractal" && fractalView) {
+      const canvas = $("studio-canvas");
+      sizeCanvas(canvas);
+      const qOpts = { ...fractalView, maxIter: Math.round(fractalView.maxIter * currentQuality().iterMult) };
+      renderFractal(canvas, qOpts);
+      perceive(canvas);
+    }
+    // BYO still image: the drawSource path reads sizeCanvas() at draw time; re-draw the last source.
+    // (Video/watch loop re-calls drawSource each tick — no action needed.)
+  }, 200);
 });
 
 // ── wire the loop into the source lifecycle ──────────────────────────────────
