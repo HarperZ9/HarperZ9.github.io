@@ -111,6 +111,35 @@
         </div>
       </div>
     </div>
+    <!-- 3D fractal engine (Task 7c): WebGL1 distance-estimated raymarcher — Mandelbox & Mandelbulb.
+         Raymarches into the shared #studio-canvas (mounting a WebGL canvas), then perceive() + greeting.
+         DEs from project-docs/research/fractal-studio/fractal-3d-and-tools.md. -->
+    <div class="fractal-source" id="fractal3d-source">
+      <div class="at-panel">
+        <div class="at-group">
+          <span class="at-glab">3D fractal <span class="hint">&mdash; high-fidelity, raymarched in WebGL</span></span>
+          <div class="at-chips" role="group" aria-label="3D fractal type">
+            <button type="button" class="chip active" data-f3type="mandelbox">Mandelbox</button>
+            <button type="button" class="chip" data-f3type="mandelbulb">Mandelbulb</button>
+          </div>
+        </div>
+        <div class="at-group" id="f3-scale-row">
+          <span class="at-glab">Scale <span class="hint">&mdash; the box fold strength (<span id="f3-scale-val">-2.00</span>)</span></span>
+          <input type="range" class="at-slider" id="f3-scale" min="-3" max="-1.5" step="0.05" value="-2" aria-label="Mandelbox scale">
+        </div>
+        <div class="at-group" id="f3-power-row" hidden>
+          <span class="at-glab">Power <span class="hint">&mdash; the bulb exponent (<span id="f3-power-val">8.0</span>)</span></span>
+          <input type="range" class="at-slider" id="f3-power" min="2" max="12" step="0.5" value="8" aria-label="Mandelbulb power">
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Iterations <span class="hint">&mdash; depth of detail (<span id="f3-iterations-val">12</span>)</span></span>
+          <input type="range" class="at-slider" id="f3-iterations" min="4" max="20" step="1" value="12" aria-label="Iterations">
+        </div>
+        <div class="at-actions">
+          <button class="btn" id="f3-render" type="button">Render</button>
+        </div>
+      </div>
+    </div>
   </div>
   <div id="studio-byo" hidden><!-- media drop + canvas (Task 8) --></div>
   <section id="studio-frame">
