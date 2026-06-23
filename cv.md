@@ -53,7 +53,7 @@ A composable stack that instantiates one loop — **perceive → gate → act �
   monotonic scope attenuation. Stdlib-only; **258 tests**; PyPI.
 - **accountable-surface** — the loop. A model perceives natively, acts only on an *allow*, and
   re-perceives to confirm. MCP server + filesystem/web/command effectors, inert until authorized;
-  **129 tests**, including a 39-test adversarial integrity suite (forge a digest, manufacture a
+  **201 tests**, including a 39-test adversarial integrity suite (forge a digest, manufacture a
   grant, escape a bound — each refused).
 - **accountable-engine** — the bilateral critic: the same evidentiary standard turned on the
   operator, not only the machine.
@@ -110,7 +110,7 @@ workflow-harness-lite, workspace-repo-map, and more.
 
 ## Selected receipts
 
-19/19 EMET conformance · 312 coherence-membrane tests · 258 proof-surface tests · 129
+19/19 EMET conformance · 312 coherence-membrane tests · 258 proof-surface tests · 201
 accountable-surface tests (39 adversarial) · 999 QuantaLang tests · ~3,000 integrity-framework
 tests · 19 PyPI releases · a live, inspectable, proof-first portfolio.
 
