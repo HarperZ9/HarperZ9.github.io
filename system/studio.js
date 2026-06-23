@@ -272,3 +272,104 @@ document.addEventListener("atelier:drawn", e => {
     + `${obs.features.entropy>0.8?"richly textured":obs.features.entropy<0.45?"clean and simple":"moderately detailed"}, `
     + `${obs.features.contrast>0.66?"high-contrast":"soft"}. My fingerprint of it is ${obs.phash}. Where shall we take it?`);
 });
+
+// ── BYO mode (Task 8) ─────────────────────────────────────────────────────
+// "Bring your own" — upload a photo/gif/video onto the shared #studio-canvas,
+// then transform it taking turns with the model. Reuses perceive() and say()
+// from the orchestrator above (same module scope — no duplication).
+
+function byoCanvas() { return $("studio-canvas"); }
+function byoCtx() { return byoCanvas().getContext("2d", { willReadFrequently: true }); }
+
+// Scale src (HTMLImageElement or HTMLVideoElement) to fit within MAX, draw onto the shared canvas.
+function drawSource(src, sw, sh) {
+  const MAX = 360, s = Math.min(1, MAX / Math.max(sw, sh));
+  const c = byoCanvas(); c.width = Math.round(sw * s); c.height = Math.round(sh * s);
+  byoCtx().drawImage(src, 0, 0, c.width, c.height);
+}
+
+// Load a File, draw its first frame onto #studio-canvas, then perceive + greet.
+// Calls leave3D() first so a previous WebGL canvas is remounted as 2D before we draw.
+function loadFile(file) {
+  leave3D();
+  const url = URL.createObjectURL(file);
+  if (file.type.startsWith("video")) {
+    const v = document.createElement("video"); v.muted = true; v.src = url;
+    v.addEventListener("loadeddata", () => {
+      drawSource(v, v.videoWidth, v.videoHeight);
+      perceive(byoCanvas());
+      say("model", "Loaded a video frame — I'll tell you what I see as it changes.");
+    }, { once: true });
+    return;
+  }
+  const img = new Image();
+  img.onload = () => {
+    drawSource(img, img.naturalWidth, img.naturalHeight);
+    const obs = perceive(byoCanvas());
+    say("model", `I see your image — ${obs.width}×${obs.height}, fingerprint ${obs.phash}. Let's reshape it together.`);
+    URL.revokeObjectURL(url);
+  };
+  img.src = url;
+}
+
+// Pixel-level transforms operating on ImageData from the shared canvas.
+// "mirror" and "edges" require slightly different handling and are added below.
+const TF = {
+  grayscale: d => { for (let i = 0; i < d.length; i += 4) { const g = (d[i]*299 + d[i+1]*587 + d[i+2]*114) / 1000; d[i] = d[i+1] = d[i+2] = g; } },
+  invert:    d => { for (let i = 0; i < d.length; i += 4) { d[i] = 255-d[i]; d[i+1] = 255-d[i+1]; d[i+2] = 255-d[i+2]; } },
+  threshold: d => { for (let i = 0; i < d.length; i += 4) { const g = (d[i]*299 + d[i+1]*587 + d[i+2]*114) / 1000 > 127 ? 255 : 0; d[i] = d[i+1] = d[i+2] = g; } },
+  posterize: d => { const q = v => Math.round(v / 85) * 85; for (let i = 0; i < d.length; i += 4) { d[i] = q(d[i]); d[i+1] = q(d[i+1]); d[i+2] = q(d[i+2]); } },
+};
+
+// Mirror is a geometry transform (horizontal flip via canvas scale trick).
+function applyMirror() {
+  const c = byoCanvas(), ctx = byoCtx();
+  const img = ctx.getImageData(0, 0, c.width, c.height);
+  const off = document.createElement("canvas"); off.width = c.width; off.height = c.height;
+  const octx = off.getContext("2d"); octx.putImageData(img, 0, 0);
+  ctx.save(); ctx.translate(c.width, 0); ctx.scale(-1, 1); ctx.drawImage(off, 0, 0); ctx.restore();
+}
+
+// Sobel edge detection (standard 3x3 gx/gy kernels).
+function applyEdges() {
+  const c = byoCanvas(), ctx = byoCtx();
+  const src = ctx.getImageData(0, 0, c.width, c.height);
+  const w = c.width, h = c.height, d = src.data;
+  const out = ctx.createImageData(w, h);
+  for (let y = 1; y < h - 1; y++) {
+    for (let x = 1; x < w - 1; x++) {
+      const luma = (r, g, b) => (r*299 + g*587 + b*114) / 1000;
+      const px = (dx, dy) => { const i = ((y+dy)*w + (x+dx)) * 4; return luma(d[i], d[i+1], d[i+2]); };
+      const sx = -px(-1,-1) - 2*px(-1,0) - px(-1,1) + px(1,-1) + 2*px(1,0) + px(1,1);
+      const sy = -px(-1,-1) - 2*px(0,-1) - px(1,-1) + px(-1,1) + 2*px(0,1) + px(1,1);
+      const m = Math.min(255, Math.hypot(sx, sy));
+      const i = (y*w + x) * 4; out.data[i] = out.data[i+1] = out.data[i+2] = m; out.data[i+3] = 255;
+    }
+  }
+  ctx.putImageData(out, 0, 0);
+}
+
+// Apply a named transform, re-perceive, say what changed, flip the turn indicator.
+function applyTransform(key, who) {
+  if (key === "mirror") { applyMirror(); }
+  else if (key === "edges") { applyEdges(); }
+  else { const img = byoCtx().getImageData(0, 0, byoCanvas().width, byoCanvas().height); TF[key](img.data); byoCtx().putImageData(img, 0, 0); }
+  const obs = perceive(byoCanvas());
+  say(who, `${who === "you" ? "You" : "I"} ran ${key}. Now ${obs.phash}.`);
+  $("studio-turn").textContent = who === "you" ? "the model's turn" : "your turn";
+}
+
+// Wire the drop zone, file input, and transform buttons.
+$("studio-drop").addEventListener("click", () => $("studio-file").click());
+$("studio-drop").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); $("studio-file").click(); } });
+$("studio-drop").addEventListener("dragover", e => { e.preventDefault(); $("studio-drop").classList.add("over"); });
+$("studio-drop").addEventListener("dragleave", () => $("studio-drop").classList.remove("over"));
+$("studio-drop").addEventListener("drop", e => { e.preventDefault(); $("studio-drop").classList.remove("over"); if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]); });
+$("studio-file").addEventListener("change", e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
+
+// Build transform buttons from TF keys + the two geometry transforms.
+["grayscale", "invert", "threshold", "posterize", "mirror", "edges"].forEach(k => {
+  const b = document.createElement("button"); b.className = "chip"; b.type = "button"; b.textContent = k;
+  b.addEventListener("click", () => applyTransform(k, "you"));
+  $("studio-transforms").appendChild(b);
+});

@@ -739,6 +739,23 @@ body.world-3 .bar .rt{color:#cdd6cf}
   color:var(--muted);border-top:1px solid var(--hairline);padding-top:.95rem;margin-top:.1rem;min-height:2.4rem}
 .studio-atelier .at-blurb b{color:var(--bone);font-weight:500}.studio-atelier .at-blurb .sp{color:var(--ember)}
 
+/* ─── studio · BYO mode (Task 8) ──────────────────────────────────────
+   Drop zone + transform palette + turn indicator. Lives inside #studio-byo
+   which is shown/hidden by setMode(). Uses the shared .chat-chips/.chip
+   classes for the transform buttons. */
+.studio-drop{border:1.5px dashed rgba(239,171,48,.4);border-radius:14px;background:rgba(15,33,34,.4);
+  min-height:200px;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  overflow:hidden;transition:border-color .15s,background .15s;margin-bottom:1.1rem}
+.studio-drop:hover,.studio-drop:focus-visible,.studio-drop.over{border-color:var(--ember);background:rgba(239,171,48,.06);outline:none}
+.studio-drop-empty{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.72rem;
+  letter-spacing:.1em;color:var(--muted);text-align:center;line-height:2;pointer-events:none}
+.studio-drop-empty span{font-size:.6rem;color:var(--prussian)}
+.studio-byo-ctrl{margin-bottom:clamp(1.4rem,3vw,2.2rem)}
+.studio-ctrl-label{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.58rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ember);margin-bottom:.5rem}
+.studio-turn{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.62rem;
+  color:var(--muted);margin:.6rem 0;min-height:1.4em}
+
 /* ─── domain scenarios: with vs without, across fields ──────────────── */
 .scenarios{display:grid;gap:1rem;margin:1.4rem 0}
 .scenario{border:1px solid var(--hairline);border-radius:12px;padding:1rem 1.1rem;background:rgba(15,33,34,.4)}
