@@ -38,7 +38,59 @@
       <button type="button" data-mode="byo" aria-pressed="false">Bring your own</button>
     </div>
   </header>
-  <div id="studio-generate"><!-- atelier controls + #studio-canvas mount (Task 7) --></div>
+  <div id="studio-generate">
+    <!-- Atelier controls (Task 7). The Atelier's boot() finds #atelier (this wrapper) and,
+         since there is no #at-canvas here, draws into the shared #studio-canvas in #studio-frame
+         below. These are the exact control ids atelier.js boot() binds; the canvas/stage and the
+         Verify section stay on atelier.html. -->
+    <div class="atelier studio-atelier" id="atelier">
+      <div class="at-panel">
+        <div class="at-group">
+          <span class="at-glab">Start from <span class="hint">&mdash; a gallery of seeds; or build your own below</span></span>
+          <div class="at-chips" id="at-gallery" role="group" aria-label="Gallery presets"></div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Algorithm</span>
+          <div class="at-chips" id="at-studies" role="group" aria-label="Algorithm"></div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Specimen <span class="hint">&mdash; the photograph that steers it</span></span>
+          <div class="at-chips" id="at-specimens" role="group" aria-label="Specimen"></div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Complexity</span>
+          <input type="range" class="at-slider" id="at-complexity" min="0" max="100" value="58" aria-label="Complexity">
+        </div>
+        <div class="at-group" id="at-params-group">
+          <span class="at-glab">Parameters <span class="hint">&mdash; the algorithm&rsquo;s own knobs, folded into the seed</span></span>
+          <div class="at-params" id="at-params"></div>
+          <div class="at-chips" id="at-presets" role="group" aria-label="Parameter presets"></div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Pens</span>
+          <div class="at-chips" id="at-palettes" role="group" aria-label="Palette"></div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Seed <span class="hint">&mdash; editable; the same seed redraws the same thing</span></span>
+          <div class="at-seedrow">
+            <input type="text" class="at-seed" id="at-seed" spellcheck="false" autocomplete="off" aria-label="Seed">
+            <button class="at-mini" id="at-newseed" type="button" title="New seed" aria-label="New seed">&#10227;</button>
+          </div>
+        </div>
+        <div class="at-actions">
+          <button class="btn" id="at-draw" type="button">Draw</button>
+          <button class="btn ghost" id="at-export" type="button">Export SVG</button>
+          <button class="btn ghost" id="at-share" type="button">Copy link</button>
+          <button class="btn ghost" id="at-capture" type="button">Capture</button>
+          <button class="at-mini" id="at-overlay" type="button" aria-pressed="false" title="Show the field the camera senses">Field</button>
+        </div>
+        <input type="file" id="at-img" accept="image/*" hidden>
+        <div class="at-gate" id="at-gate" aria-live="polite"></div>
+        <div class="at-scores" id="at-scores" aria-live="polite" aria-label="Reconcile readout — criteria, cohesion, novelty, verdict"></div>
+        <p class="at-blurb" id="at-blurb"></p>
+      </div>
+    </div>
+  </div>
   <div id="studio-byo" hidden><!-- media drop + canvas (Task 8) --></div>
   <section id="studio-frame">
     <div class="frame-row">
@@ -56,6 +108,12 @@
 </main>
 
 <script type="module" src="system/nav.js"></script>
+<!-- Atelier engine (Task 7): classic IIFE, self-boots on DOM ready, binds the controls above and
+     draws into #studio-canvas. Loaded before the Studio module so window.Atelier + the shared
+     spine/reconcile readouts are present. -->
+<script src="system/spine.js?v=20260623" defer></script>
+<script src="system/reconcile.js?v=20260623" defer></script>
+<script src="system/atelier.js?v=20260623" defer></script>
 <script type="module" src="system/studio.js"></script>
 </body>
 </html>

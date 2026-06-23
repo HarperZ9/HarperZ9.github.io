@@ -689,6 +689,56 @@ body.world-3 .bar .rt{color:#cdd6cf}
 .chip:hover,.chip:focus-visible{background:rgba(239,171,48,.12);border-color:var(--ember);outline:none}
 @media (max-width:700px){.frame-row{grid-template-columns:1fr}}
 
+/* ─── studio · mounted Atelier controls (Task 7) ─────────────────────
+   The Atelier markup is mounted into #studio-generate; its own control styles live in
+   atelier.html's scoped <style>, so bring the control-relevant subset here, scoped to the
+   Studio so it never collides. No stage column — the shared #studio-canvas is the stage. */
+.studio-atelier{display:block;max-width:none;margin:0 0 clamp(1.4rem,3vw,2.2rem)}
+.studio-atelier .at-panel{display:flex;flex-direction:column;gap:1.05rem;max-width:46rem}
+.studio-atelier .at-glab{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.55rem;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;display:block}
+.studio-atelier .at-glab .hint{color:rgba(138,155,146,.6);letter-spacing:.04em;text-transform:none}
+.studio-atelier .at-chips{display:flex;flex-wrap:wrap;gap:.4rem}
+.studio-atelier .at-chip{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.6rem;
+  letter-spacing:.1em;text-transform:uppercase;padding:.52em .82em;border:1px solid var(--hairline);
+  background:transparent;color:var(--muted);cursor:pointer;border-radius:2px;
+  transition:border-color .18s,color .18s,background .18s}
+.studio-atelier .at-chip:hover{border-color:rgba(239,171,48,.5);color:var(--bone)}
+.studio-atelier .at-chip[aria-pressed=true]{border-color:var(--orange);color:var(--bone);background:rgba(223,94,0,.13)}
+.studio-atelier .at-chip:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.studio-atelier .at-chip[disabled]{opacity:.4;cursor:not-allowed}
+.studio-atelier .at-slider,.studio-atelier .at-pslider{width:100%;accent-color:var(--orange);cursor:pointer;height:1.1rem}
+.studio-atelier .at-slider:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+.studio-atelier .at-params{display:flex;flex-direction:column;gap:.5rem;margin:.1rem 0 .3rem}
+.studio-atelier .at-prow{display:grid;grid-template-columns:7.2rem 1fr;align-items:center;gap:.6rem}
+.studio-atelier .at-pname{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.6rem;
+  letter-spacing:.04em;color:var(--muted);text-transform:uppercase}
+.studio-atelier .at-seedrow{display:flex;gap:.4rem;align-items:stretch}
+.studio-atelier .at-seed{flex:1;min-width:0;font-family:"Spline Sans Mono",ui-monospace,monospace;
+  font-size:.74rem;color:var(--bone);background:rgba(6,14,15,.7);border:1px solid var(--hairline);
+  border-radius:2px;padding:.5em .7em;letter-spacing:.12em;transition:border-color .2s}
+.studio-atelier .at-seed:focus{outline:none;border-color:rgba(239,171,48,.5)}
+.studio-atelier .at-mini{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.74rem;
+  color:var(--muted);border:1px solid var(--hairline);background:transparent;border-radius:2px;
+  cursor:pointer;padding:0 .7em;transition:border-color .18s,color .18s}
+.studio-atelier .at-mini:hover{border-color:rgba(239,171,48,.5);color:var(--bone)}
+.studio-atelier .at-mini:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.studio-atelier .at-actions{display:flex;flex-wrap:wrap;gap:.55rem}
+.studio-atelier .btn{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.62rem;
+  letter-spacing:.16em;text-transform:uppercase;padding:.64em 1.05em;border:1px solid var(--orange);
+  background:transparent;color:var(--bone);cursor:pointer;border-radius:2px;transition:background .2s,color .2s}
+.studio-atelier .btn:hover{background:var(--orange);color:var(--void)}
+.studio-atelier .btn:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+.studio-atelier .btn.ghost{border-color:var(--muted);color:var(--muted)}
+.studio-atelier .btn.ghost:hover{background:var(--muted);color:var(--void)}
+.studio-atelier .at-gate{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.6rem;
+  letter-spacing:.04em;line-height:1.7;color:var(--muted);min-height:1.1em}
+.studio-atelier .at-gate .g-allow{color:#5fae93}.studio-atelier .at-gate .g-deny{color:var(--orange)}
+.studio-atelier .at-gate .g-needs{color:var(--ember)}.studio-atelier .at-gate .gmono{color:var(--ember);word-break:break-all}
+.studio-atelier .at-blurb{font-family:"EB Garamond",Georgia,serif;font-size:.98rem;line-height:1.62;
+  color:var(--muted);border-top:1px solid var(--hairline);padding-top:.95rem;margin-top:.1rem;min-height:2.4rem}
+.studio-atelier .at-blurb b{color:var(--bone);font-weight:500}.studio-atelier .at-blurb .sp{color:var(--ember)}
+
 /* ─── domain scenarios: with vs without, across fields ──────────────── */
 .scenarios{display:grid;gap:1rem;margin:1.4rem 0}
 .scenario{border:1px solid var(--hairline);border-radius:12px;padding:1rem 1.1rem;background:rgba(15,33,34,.4)}
