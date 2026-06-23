@@ -47,7 +47,7 @@ A composable stack that instantiates one loop — **perceive → gate → act �
   (Python · Rust · Node).
 - **coherence-membrane** — the read-gate. Turns a model's state-blindness into witnessed,
   re-derivable observations across an organ family (visual, raw, region, structured, audio,
-  caption). Zero dependencies; **312 tests**; PyPI.
+  caption). Zero dependencies; **868 tests**; PyPI.
 - **proof-surface** — the write-gate. A default-deny, fail-closed authorization contract: expiring
   least-privilege grants, work-record receipts, delegation chains rooted in a real human with
   monotonic scope attenuation. Stdlib-only; **258 tests**; PyPI.
@@ -62,7 +62,7 @@ A composable stack that instantiates one loop — **perceive → gate → act �
 
 - **QuantaLang / quantac** — a typed-effects language. A function's signature names the effects it
   may perform and the lifetimes of the references it returns; the compiler checks both and lowers
-  to native code through a C backend. **1002 passed / 11 ignored**; C backend end-to-end; other targets experimental.
+  to native code through a C backend. **1002 passed / 0 failed / 11 ignored**; C backend end-to-end; other targets experimental.
 
 ### Systems & graphics
 
@@ -111,8 +111,8 @@ workflow-harness-lite, workspace-repo-map, and more.
 ## Selected receipts
 
 19/19 EMET conformance · 868 coherence-membrane tests · 258 proof-surface tests · 201
-accountable-surface tests (39 adversarial) · 1002 QuantaLang passed (11 ignored) · ~3,000 integrity-framework
-tests · 19 PyPI releases · a live, inspectable, proof-first portfolio.
+accountable-surface tests (39 adversarial) · 1002 QuantaLang passed (0 failed, 11 ignored) · ~3,000 integrity-framework
+tests · 6 PyPI packages plus public GitHub work · a live, inspectable, proof-first portfolio.
 
 ## Approach
 
@@ -124,4 +124,4 @@ the attack it claims to survive.
 ## Note
 
 No computer-science degree. Independent since 2023. The work is the credential, and it is all
-inspectable. · Updated 2026-06-20.
+inspectable. · Updated 2026-06-23.

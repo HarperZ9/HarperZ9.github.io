@@ -23,12 +23,12 @@ an **intrinsic, bilateral** systems property). Public, tested, dated.
 
 - **EMET** — external byte/provenance witness; answers MATCH / DRIFT / UNVERIFIABLE, never *trusted*; 19/19 conformance across Python · Rust · Node.
 - **proof-surface** — stdlib-only authorization gate + delegation chains; default-deny, fail-closed; **258 tests**; on PyPI.
-- **coherence-membrane** — zero-dependency perception organs (visual, raw, region, structured, audio, caption); **312 tests**; on PyPI.
+- **coherence-membrane** — zero-dependency perception organs (visual, raw, region, structured, audio, caption); **868 tests**; on PyPI.
 - **accountable-surface** — the live loop; an MCP server + filesystem/web/command effectors, inert until authorized; **201 tests**, including a 39-test adversarial integrity suite that attacks its own constructions and confirms they hold.
 
 **Compilers.** *QuantaLang / quantac* — a typed-effects language where the effects a function may
 perform and the lifetimes of the references it returns are part of the type and checked through to
-native code. Rust-built compiler, C backend end-to-end; **1002 passed / 11 ignored**.
+native code. Rust-built compiler, C backend end-to-end; **1002 passed / 0 failed / 11 ignored**.
 
 **Systems & graphics.** Header-only C++23 signal/anomaly kernels (entropy, mutual information,
 Granger, PELT, FFT); a real-time rendering pipeline (D3D11 today, native zero-graphics-API capture
@@ -48,11 +48,11 @@ eval / red-team harnesses) · disciplined release engineering.
 
 ## Highlights
 
-- **19 packages shipped on PyPI**, each tested and released — a paper trail of shipping discipline.
+- **6 packages shipped on PyPI**, with more public on GitHub — a paper trail of shipping discipline.
 - *The Accountability Conjecture* (theory) and *Senses and Sensibility* (thesis) — dated, MIT, authored.
 - A live, proof-first portfolio where every claim sits beside its receipt — and labels its own limits.
 
 ---
 
 *Independent since 2023, out of Seattle. The breadth is one mind seen from many angles; the
-through-line is proof.* · Updated 2026-06-20.
+through-line is proof.* · Updated 2026-06-23.
