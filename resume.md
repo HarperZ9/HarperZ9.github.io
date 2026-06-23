@@ -24,7 +24,7 @@ an **intrinsic, bilateral** systems property). Public, tested, dated.
 - **EMET** — external byte/provenance witness; answers MATCH / DRIFT / UNVERIFIABLE, never *trusted*; 19/19 conformance across Python · Rust · Node.
 - **proof-surface** — stdlib-only authorization gate + delegation chains; default-deny, fail-closed; **258 tests**; on PyPI.
 - **coherence-membrane** — zero-dependency perception organs (visual, raw, region, structured, audio, caption); **312 tests**; on PyPI.
-- **accountable-surface** — the live loop; an MCP server + filesystem/web/command effectors, inert until authorized; **129 tests**, including a 39-test adversarial integrity suite that attacks its own constructions and confirms they hold.
+- **accountable-surface** — the live loop; an MCP server + filesystem/web/command effectors, inert until authorized; **201 tests**, including a 39-test adversarial integrity suite that attacks its own constructions and confirms they hold.
 
 **Compilers.** *QuantaLang / quantac* — a typed-effects language where the effects a function may
 perform and the lifetimes of the references it returns are part of the type and checked through to
