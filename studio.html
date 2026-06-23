@@ -192,13 +192,40 @@
   <section id="studio-frame">
     <div class="frame-row">
       <section class="panel"><h2>The frame</h2><div class="stage"><canvas id="studio-canvas" width="360" height="360"></canvas></div></section>
-      <section class="panel"><h2>What the model sees</h2>
+      <section class="panel"><h2>What the model sees
+          <span class="mm-live" id="mm-live" hidden><span class="mm-dot"></span>live</span></h2>
         <div class="row"><span class="rk">perceptual hash</span><span class="rv" id="sc-phash">—</span></div>
         <div class="row"><span class="rk">size</span><span class="rv" id="sc-size">—</span></div>
         <div class="grounds" id="sc-feats"></div>
+        <p class="mm-describe" id="mm-describe"></p>
         <div class="mc-drift" id="sc-drift" hidden></div>
       </section>
     </div>
+    <!-- The MEASURIMETER (Task 8d): a live instrument panel of every channel the tooling feeds the
+         model — the faithful n×n representation, per-channel meters, a motion sparkline, dominant-colour
+         swatches, and (when the source has sound) audio level / spectrum / pitch. The meters STREAM via
+         a throttled rAF loop while a source animates; the model's chat stays tied to a snapshot. -->
+    <section class="panel measurimeter" id="sc-meters" aria-label="The measurimeter — everything the model senses now">
+      <h2>The measurimeter <span class="mm-sub">— everything fed to the model, live</span></h2>
+      <div class="mm-grid">
+        <div class="mm-col mm-col-repr">
+          <div class="mm-clab">representation <span class="mm-hint">— the real frame, box-averaged</span></div>
+          <canvas id="mm-mosaic" class="mm-mosaic" width="160" height="160" aria-label="The n×n downsampled frame the model receives"></canvas>
+          <div class="mm-clab" style="margin-top:.7rem">dominant colours</div>
+          <div class="mm-swatches" id="mm-swatches" aria-label="Dominant colour swatches"></div>
+          <div class="mm-clab" style="margin-top:.7rem">motion <span class="mm-hint">— frame-to-frame Δ</span></div>
+          <canvas id="mm-motion" class="mm-motion" width="220" height="40" aria-label="Frame-to-frame motion over time"></canvas>
+        </div>
+        <div class="mm-col mm-col-meters">
+          <div class="mm-clab">visual channels</div>
+          <div class="mm-meters" id="mm-visual"></div>
+          <div class="mm-clab" style="margin-top:.8rem">audio channels <span class="mm-hint">— when the source has sound</span></div>
+          <div class="mm-meters" id="mm-audio"></div>
+          <div class="mm-clab" style="margin-top:.8rem">source</div>
+          <div class="mm-meters mm-meta" id="mm-meta"></div>
+        </div>
+      </div>
+    </section>
     <div class="chat-log" id="studio-log" role="log" aria-live="polite"></div>
     <div class="chat-chips" id="studio-chips"></div>
   </section>
