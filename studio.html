@@ -141,7 +141,18 @@
       </div>
     </div>
   </div>
-  <div id="studio-byo" hidden><!-- media drop + canvas (Task 8) --></div>
+  <div id="studio-byo" hidden>
+    <!-- BYO: drop zone + file input + transform palette + turn indicator (Task 8) -->
+    <div id="studio-drop" class="studio-drop" tabindex="0" role="button" aria-label="Drop or choose a photo, gif, or video">
+      <div class="studio-drop-empty">drop a photo &middot; gif &middot; video<br><span>or click to choose</span></div>
+    </div>
+    <input type="file" id="studio-file" accept="image/*,video/*" hidden>
+    <div class="studio-byo-ctrl">
+      <div class="studio-ctrl-label">Transform it &mdash; take turns</div>
+      <div id="studio-transforms" class="chat-chips"></div>
+      <div id="studio-turn" class="studio-turn"></div>
+    </div>
+  </div>
   <section id="studio-frame">
     <div class="frame-row">
       <section class="panel"><h2>The frame</h2><div class="stage"><canvas id="studio-canvas" width="360" height="360"></canvas></div></section>
