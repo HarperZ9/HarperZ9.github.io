@@ -171,6 +171,23 @@
         </label>
       </div>
     </div>
+    <div id="studio-watch" class="studio-watch-ctrl">
+      <div class="studio-ctrl-label">Watch with me &mdash; the model sees your screen or camera</div>
+      <div class="studio-watch-btns">
+        <button class="btn ghost" id="watch-screen" type="button">Share screen</button>
+        <button class="btn ghost" id="watch-camera" type="button">Camera</button>
+      </div>
+      <p class="studio-watch-note">It perceives only the frames you share, on your machine, with your permission. Nothing is uploaded.</p>
+      <video id="watch-video" autoplay muted playsinline hidden aria-hidden="true"></video>
+      <div class="studio-watch-live" id="studio-watch-live" hidden>
+        <div class="studio-watch-status" id="watch-status"></div>
+        <div class="studio-watch-actions">
+          <button class="btn" id="watch-toggle" type="button" aria-pressed="false">Watch together</button>
+          <button class="btn ghost" id="watch-snap" type="button">See this moment</button>
+          <button class="btn ghost" id="watch-stop" type="button">Stop</button>
+        </div>
+      </div>
+    </div>
   </div>
   <section id="studio-frame">
     <div class="frame-row">

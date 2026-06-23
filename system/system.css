@@ -756,6 +756,26 @@ body.world-3 .bar .rt{color:#cdd6cf}
 .studio-turn{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.62rem;
   color:var(--muted);margin:.6rem 0;min-height:1.4em}
 
+/* ─── studio · Watch with me (Task 8c) ─────────────────────────────────
+   Live screen / camera capture → sample loop → perceive(). Scoped inside
+   .studio-watch-ctrl so button styles don't bleed into the rest of the page. */
+.studio-watch-ctrl{margin-top:clamp(1.2rem,2.5vw,1.8rem);border-top:1px solid var(--hairline);padding-top:clamp(1rem,2vw,1.4rem)}
+.studio-watch-btns{display:flex;flex-wrap:wrap;gap:.55rem;margin:.55rem 0}
+.studio-watch-ctrl .btn{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.62rem;
+  letter-spacing:.16em;text-transform:uppercase;padding:.64em 1.05em;border:1px solid var(--orange);
+  background:transparent;color:var(--bone);cursor:pointer;border-radius:2px;transition:background .2s,color .2s}
+.studio-watch-ctrl .btn:hover{background:var(--orange);color:var(--void)}
+.studio-watch-ctrl .btn:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+.studio-watch-ctrl .btn.ghost{border-color:var(--muted);color:var(--muted)}
+.studio-watch-ctrl .btn.ghost:hover{background:var(--muted);color:var(--void)}
+.studio-watch-ctrl .btn[aria-pressed=true]{background:var(--ember);border-color:var(--ember);color:var(--void)}
+.studio-watch-note{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.58rem;
+  letter-spacing:.04em;color:var(--prussian);line-height:1.7;margin:.5rem 0}
+.studio-watch-live{margin-top:.8rem;display:flex;flex-direction:column;gap:.55rem}
+.studio-watch-status{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.6rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--verified)}
+.studio-watch-actions{display:flex;flex-wrap:wrap;gap:.45rem}
+
 /* ─── domain scenarios: with vs without, across fields ──────────────── */
 .scenarios{display:grid;gap:1rem;margin:1.4rem 0}
 .scenario{border:1px solid var(--hairline);border-radius:12px;padding:1rem 1.1rem;background:rgba(15,33,34,.4)}
