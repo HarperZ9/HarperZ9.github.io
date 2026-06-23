@@ -62,7 +62,7 @@ A composable stack that instantiates one loop — **perceive → gate → act �
 
 - **QuantaLang / quantac** — a typed-effects language. A function's signature names the effects it
   may perform and the lifetimes of the references it returns; the compiler checks both and lowers
-  to native code through a C backend. **999 tests**; C backend end-to-end; other targets experimental.
+  to native code through a C backend. **1002 passed / 11 ignored**; C backend end-to-end; other targets experimental.
 
 ### Systems & graphics
 
@@ -111,7 +111,7 @@ workflow-harness-lite, workspace-repo-map, and more.
 ## Selected receipts
 
 19/19 EMET conformance · 312 coherence-membrane tests · 258 proof-surface tests · 201
-accountable-surface tests (39 adversarial) · 999 QuantaLang tests · ~3,000 integrity-framework
+accountable-surface tests (39 adversarial) · 1002 QuantaLang passed (11 ignored) · ~3,000 integrity-framework
 tests · 19 PyPI releases · a live, inspectable, proof-first portfolio.
 
 ## Approach
