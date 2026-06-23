@@ -474,3 +474,122 @@ $("topo-interval").addEventListener("input", () => {
 $("topo-mode").addEventListener("change", () => {
   if (topoHasCanvas()) { applyTopography(); const obs = perceive(byoCanvas()); say("model", "Mode switched to " + $("topo-mode").value + ". Now " + obs.phash + "."); }
 });
+
+// ── Watch with me (Task 8c) ──────────────────────────────────────────────
+// Screen-share or camera → hidden <video> → sample loop → canvas → perceive()
+// Nothing leaves the browser. The model sees only what you explicitly share.
+
+let watchStream = null;
+let watchInterval = null;
+let watchActive = false;
+
+const watchVideo = $("watch-video");
+
+function stopWatch() {
+  if (watchInterval) { clearInterval(watchInterval); watchInterval = null; }
+  watchActive = false;
+  const toggleBtn = $("watch-toggle");
+  if (toggleBtn) { toggleBtn.textContent = "Watch together"; toggleBtn.setAttribute("aria-pressed", "false"); }
+  if (watchStream) {
+    watchStream.getTracks().forEach(t => t.stop());
+    watchStream = null;
+  }
+  watchVideo.srcObject = null;
+  watchVideo.hidden = true;
+  const live = $("studio-watch-live");
+  if (live) live.hidden = true;
+  const status = $("watch-status");
+  if (status) status.textContent = "";
+}
+
+function sampleFrame() {
+  if (!watchStream || !watchVideo.videoWidth) return;
+  leave3D();
+  const c = byoCanvas();
+  drawSource(watchVideo, watchVideo.videoWidth, watchVideo.videoHeight);
+  const obs = perceive(c);
+  const driftEl = $("sc-drift");
+  let driftNote;
+  if (!driftEl || driftEl.hidden) {
+    driftNote = "first frame";
+  } else {
+    const driftText = driftEl.textContent || "";
+    if (driftText.includes("unchanged")) {
+      driftNote = "nearly the same";
+    } else {
+      const m = driftText.match(/moved\s+(\d+)\/64/);
+      const d = m ? parseInt(m[1], 10) : 0;
+      if (d > 20) driftNote = "the scene moved a lot";
+      else if (d > 8) driftNote = "the scene moved";
+      else driftNote = "nearly the same";
+    }
+  }
+  say("model", driftNote + " — fingerprint " + obs.phash + ", contrast " + fmt(obs.features.contrast) + ", structure " + fmt(obs.features.entropy) + ".");
+}
+
+async function startCapture(mode) {
+  stopWatch(); // clean up any previous session
+  try {
+    const stream = mode === "screen"
+      ? await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false })
+      : await navigator.mediaDevices.getUserMedia({ video: true });
+    watchStream = stream;
+    watchVideo.srcObject = stream;
+    watchVideo.hidden = false;
+    const live = $("studio-watch-live");
+    if (live) live.hidden = false;
+    const status = $("watch-status");
+    if (status) status.textContent = mode === "screen" ? "screen shared" : "camera live";
+    // If the user closes the stream from the browser's native UI, stop cleanly.
+    stream.getTracks().forEach(t => { t.addEventListener("ended", stopWatch); });
+    say("model", mode === "screen"
+      ? "I can see your screen now. Hit 'Watch together' for a live feed, or 'See this moment' for a single frame."
+      : "Camera is live. Hit 'Watch together' to start sampling, or 'See this moment' for one frame.");
+  } catch (err) {
+    const msg = err && err.name === "NotAllowedError"
+      ? "your browser blocked it — you can still upload a file in the drop zone above."
+      : err && err.name === "NotSupportedError"
+        ? "screen / camera capture isn't supported in this browser — you can still upload a file."
+        : "couldn't start the capture (" + (err && err.message ? err.message : String(err)) + ") — try uploading a file instead.";
+    say("model", msg);
+  }
+}
+
+if ($("watch-screen")) {
+  $("watch-screen").addEventListener("click", () => startCapture("screen"));
+}
+if ($("watch-camera")) {
+  $("watch-camera").addEventListener("click", () => startCapture("camera"));
+}
+if ($("watch-snap")) {
+  $("watch-snap").addEventListener("click", () => {
+    if (!watchStream) { say("model", "No active capture — share your screen or camera first."); return; }
+    sampleFrame();
+  });
+}
+if ($("watch-toggle")) {
+  $("watch-toggle").addEventListener("click", () => {
+    if (!watchStream) { say("model", "No active capture — share your screen or camera first."); return; }
+    watchActive = !watchActive;
+    $("watch-toggle").setAttribute("aria-pressed", String(watchActive));
+    if (watchActive) {
+      $("watch-toggle").textContent = "Stop watching";
+      sampleFrame(); // immediate first sample
+      watchInterval = setInterval(sampleFrame, 1200);
+    } else {
+      $("watch-toggle").textContent = "Watch together";
+      if (watchInterval) { clearInterval(watchInterval); watchInterval = null; }
+    }
+  });
+}
+if ($("watch-stop")) {
+  $("watch-stop").addEventListener("click", stopWatch);
+}
+
+// When switching modes, release the capture stream.
+$("studio-mode").addEventListener("click", stopWatch);
+
+// Expose for tests
+window.__studioStopWatch = stopWatch;
+window.__studioStartCapture = startCapture;
+window.__studioSampleFrame = sampleFrame;
