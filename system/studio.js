@@ -2,6 +2,7 @@
 // then perceive/discuss/transform/refine with the model. Bridges the Atelier's canvas to the eye.
 import { perceptualHash, features, hamming } from "../shared-frame/eye.js";
 import { renderFractal, PRESETS } from "./fractal.js";
+import { render3D } from "./fractal3d.js";
 const $ = id => document.getElementById(id);
 const fmt = (v,n=3)=>typeof v==="number"?(Number.isInteger(v)?String(v):v.toFixed(n)):String(v);
 // drift is per-canvas (Task 6 review carry-in): keyed by the canvas instance, so switching
@@ -22,10 +23,26 @@ $("studio-mode").addEventListener("click", e => {
 });
 setMode("generate");
 
+// A 2D canvas can only ever yield a 2D context, and a WebGL canvas only WebGL — a canvas binds
+// permanently to its first context type. The 3D-fractal source paints #studio-canvas via WebGL,
+// so getContext("2d") on it would return null. readPixelData() reads RGBA either way: directly
+// for a 2D canvas, or by blitting the (WebGL) canvas through a 2D scratch canvas with drawImage
+// (which accepts any source canvas regardless of its backing context). Keeps perceive() reusable.
+const _scratch = document.createElement("canvas");
+function readPixelData(canvas, w, h) {
+  const ctx2d = canvas.getContext("2d", { willReadFrequently: true });
+  if (ctx2d) return ctx2d.getImageData(0, 0, w, h).data;
+  // WebGL-backed (or otherwise non-2D) canvas: mirror it into a 2D scratch and read that.
+  _scratch.width = w; _scratch.height = h;
+  const sctx = _scratch.getContext("2d", { willReadFrequently: true });
+  sctx.clearRect(0, 0, w, h);
+  sctx.drawImage(canvas, 0, 0, w, h);
+  return sctx.getImageData(0, 0, w, h).data;
+}
+
 function perceive(canvas) {
-  const ctx = canvas.getContext("2d", { willReadFrequently: true });
   const { width:w, height:h } = canvas;
-  const px = ctx.getImageData(0,0,w,h).data;
+  const px = readPixelData(canvas, w, h);
   const phash = perceptualHash(px,w,h,4), f = features(px,w,h,4);
   $("sc-phash").textContent = phash;
   $("sc-size").textContent = `${w}×${h}`;
@@ -105,10 +122,13 @@ document.querySelectorAll("[data-ftype]").forEach(btn => {
 
 // Click-to-zoom on the canvas: re-center on the clicked point and halve the scale.
 // Research "make it special" move #4: "Write a UI that lets the user click into secondary bulbs."
-$("studio-canvas").addEventListener("click", e => {
+// Delegated on the stable .stage container (not the canvas node) because the 3D source swaps the
+// #studio-canvas element for a fresh one — a listener bound to the node would be lost on swap.
+$("studio-canvas").closest(".stage").addEventListener("click", e => {
+  if (!e.target.closest("#studio-canvas")) return;
   const canvas = $("studio-canvas");
   const rect = canvas.getBoundingClientRect();
-  if (!fractalView) return; // No preset selected yet.
+  if (!fractalView) return; // No preset selected yet (e.g. a 3D frame is showing).
   // Map click pixel → complex plane coordinate
   const px = e.clientX - rect.left, py = e.clientY - rect.top;
   const W = canvas.width, H = canvas.height;
@@ -134,6 +154,114 @@ $("fractal-render").addEventListener("click", renderPreset);
 
 // Build initial menu on page load
 buildPresetMenu(activeFType);
+
+// ── 3D fractal source (Task 7c) ─────────────────────────────────────────────
+// A WebGL1 raymarcher (system/fractal3d.js) paints the shared canvas, then the eye perceives one
+// settled frame. A canvas binds permanently to its FIRST context type — and the Atelier (atelier.js)
+// already claimed a 2D context on #studio-canvas at boot and cached it in a closure. So WebGL can't
+// bind to that element. The fix: keep the original Atelier-owned canvas aside; when entering 3D,
+// detach it and mount a fresh GL canvas in its place; when leaving 3D, REMOUNT the original node
+// (its 2D context + the Atelier's cached reference are intact). The 2D-fractal source re-queries
+// #studio-canvas by id each render, so it works with whichever canvas is currently mounted.
+let stop3d = null;
+let canvasIsGL = false;
+const originalCanvas = $("studio-canvas");   // the Atelier-bound 2D node — never destroyed
+
+// Mount a fresh GL-capable canvas in place of whatever #studio-canvas currently is. Returns it.
+// The original node is only detached (kept in originalCanvas), never discarded.
+function mountGLCanvas() {
+  const cur = $("studio-canvas");
+  const gl = document.createElement("canvas");
+  gl.id = "studio-canvas";
+  gl.width = 512; gl.height = 512;
+  cur.replaceWith(gl);
+  return gl;
+}
+
+// Stop any running orbit and, if a GL canvas is mounted, restore the original 2D Atelier canvas
+// so getContext("2d") (perceive, Atelier, fractal.js) never returns null. Idempotent.
+function leave3D() {
+  if (stop3d) { stop3d(); stop3d = null; }
+  if (canvasIsGL) {
+    $("studio-canvas").replaceWith(originalCanvas);   // remount the intact 2D node
+    canvasIsGL = false;
+  }
+}
+window.__studioLeave3D = leave3D;  // tests / source-menu (Task 8f) hook
+
+function render3DInto(opts) {
+  if (stop3d) { stop3d(); stop3d = null; }   // cancel the previous orbit before starting a new one
+  // Mount a fresh GL canvas (idempotent: if one is already mounted we reuse the mounted node).
+  let c = canvasIsGL ? $("studio-canvas") : mountGLCanvas();
+  c.width = 512; c.height = 512;
+  try {
+    stop3d = render3D(c, opts).stop;
+    canvasIsGL = true;
+  } catch (e) {
+    // WebGL unavailable: restore the 2D canvas and show the friendly fallback.
+    leave3D();
+    say("model", "3D fractals need WebGL in your browser — try the 2D fractals or the Atelier.");
+    return;
+  }
+  // Perceive one frame once the first paint has settled (~200ms): a couple of orbit frames in.
+  setTimeout(() => {
+    if (!canvasIsGL) return;   // left 3D before the timer fired
+    const obs = perceive($("studio-canvas"));
+    const relief = obs.features.contrast > 0.6 ? "deep relief and strong light" : "soft, diffuse form";
+    const label = opts.type === "mandelbulb" ? "Mandelbulb" : "Mandelbox";
+    say("model",
+      `A raymarched ${label}, lit in 3D and slowly orbiting. I read it at ${obs.phash} — ${relief}. `
+      + `Nudge the ${opts.type === "mandelbulb" ? "power" : "scale"} or iterations and re-render, or I can take a turn.`);
+  }, 200);
+}
+
+// Wire the 3D control block: type chips + sliders + Render.
+let active3DType = "mandelbox";
+document.querySelectorAll("[data-f3type]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    active3DType = btn.dataset.f3type;
+    document.querySelectorAll("[data-f3type]").forEach(b => b.classList.toggle("active", b === btn));
+    // Show the relevant slider (scale for the box, power for the bulb).
+    const isBulb = active3DType === "mandelbulb";
+    $("f3-scale-row").hidden = isBulb;
+    $("f3-power-row").hidden = !isBulb;
+  });
+});
+
+const f3 = id => $(id);
+function read3DOpts() {
+  return {
+    type: active3DType,
+    scale: parseFloat(f3("f3-scale").value),
+    power: parseFloat(f3("f3-power").value),
+    iterations: parseInt(f3("f3-iterations").value, 10),
+  };
+}
+// Live-label the sliders.
+function syncLabel(slider, out, fmtFn) {
+  const el = f3(out); const s = f3(slider);
+  if (el && s) el.textContent = fmtFn(s.value);
+}
+["f3-scale", "f3-power", "f3-iterations"].forEach(id => {
+  const s = f3(id); if (!s) return;
+  s.addEventListener("input", () => {
+    if (id === "f3-scale") syncLabel("f3-scale", "f3-scale-val", v => (+v).toFixed(2));
+    if (id === "f3-power") syncLabel("f3-power", "f3-power-val", v => (+v).toFixed(1));
+    if (id === "f3-iterations") syncLabel("f3-iterations", "f3-iterations-val", v => String(v));
+  });
+});
+syncLabel("f3-scale", "f3-scale-val", v => (+v).toFixed(2));
+syncLabel("f3-power", "f3-power-val", v => (+v).toFixed(1));
+syncLabel("f3-iterations", "f3-iterations-val", v => String(v));
+
+f3("f3-render").addEventListener("click", () => render3DInto(read3DOpts()));
+
+// When a 2D source renders, leave 3D FIRST (capture phase, before the source's own click handler)
+// so the original 2D canvas is remounted before fractal.js / the Atelier query getContext("2d").
+$("fractal-render").addEventListener("click", leave3D, true);
+if ($("at-draw")) $("at-draw").addEventListener("click", leave3D, true);
+// Switching the top-level Generate/BYO mode also stops the orbit and restores the 2D canvas.
+$("studio-mode").addEventListener("click", leave3D);
 
 // canvas→eye bridge (Task 7): when the Atelier finishes a drawing, perceive the shared
 // canvas and let the model greet, in plain words, exactly what it measured.
