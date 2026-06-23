@@ -151,6 +151,25 @@
       <div class="studio-ctrl-label">Transform it &mdash; take turns</div>
       <div id="studio-transforms" class="chat-chips"></div>
       <div id="studio-turn" class="studio-turn"></div>
+      <div class="studio-ctrl-label" style="margin-top:1rem">Topography</div>
+      <div class="studio-topo-ctrl">
+        <label>Mode
+          <select id="topo-mode">
+            <option value="hillshade" selected>hillshade</option>
+            <option value="contours">contours</option>
+            <option value="oblique">oblique</option>
+          </select>
+        </label>
+        <label>Azimuth <span id="topo-az-val">315</span>&deg;
+          <input type="range" id="topo-azimuth" min="0" max="360" value="315" step="1">
+        </label>
+        <label>Exaggeration <span id="topo-ex-val">2</span>&times;
+          <input type="range" id="topo-exaggeration" min="1" max="8" value="2" step="0.5">
+        </label>
+        <label>Contour interval <span id="topo-iv-val">12</span>
+          <input type="range" id="topo-interval" min="4" max="24" value="12" step="1">
+        </label>
+      </div>
     </div>
   </div>
   <section id="studio-frame">
