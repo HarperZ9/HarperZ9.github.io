@@ -620,3 +620,12 @@ body.world-3 .bar .rt{color:#cdd6cf}
 .site-nav .sn-links a:hover,.site-nav .sn-links a:focus-visible{color:var(--bone);outline:none}
 .site-nav .sn-links a[aria-current="page"]{color:var(--ember);border-color:var(--ember)}
 @media (max-width:560px){ .site-nav{justify-content:center} .site-nav .sn-home{width:100%;text-align:center} }
+
+/* ─── hero launchpad doors (Task 3 — index.html front door) ──── */
+.hero-doors{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.4rem}
+.btn{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.7rem;letter-spacing:.04em;
+  color:var(--void);background:var(--ember);border:1px solid var(--ember);border-radius:9px;
+  padding:.7em 1.2em;text-decoration:none;transition:background .15s,color .15s}
+.btn:hover,.btn:focus-visible{background:var(--orange);border-color:var(--orange);color:var(--bone);outline:none}
+.btn.ghost{color:var(--ember);background:transparent}
+.btn.ghost:hover,.btn.ghost:focus-visible{background:rgba(239,171,48,.1);color:var(--bone)}

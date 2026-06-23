@@ -29,21 +29,26 @@
 </head>
 <body class="home-photo">
 <a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="index.html">Home</a> <a href="studio.html">The Studio</a> <a href="overview.html">The Work</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js"></script>
+
 <div class="hero-bg" aria-hidden="true"></div>
 <div class="scrim"></div>
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span></div>
   <div class="mid">
-    <p class="eyebrow">PROJECT TELOS &middot; LET&rsquo;S HAVE A LOOK</p>
-    <h1>AI that shows its work &mdash; so you can <span class="g">trust it with yours.</span></h1>
-    <p class="lede">Every AI tells you things, and sounds just as sure when it&rsquo;s wrong. These are small, plain tools that fix that: the AI looks at the real thing, shows you exactly what it saw, and you can re-run the check yourself and get the exact same answer every time. So instead of <em>hoping</em> it got it right, you and the AI can look at the same thing together &mdash; and verify every step. <em>The checking is the floor &mdash; what it lets you and the AI build, together, is the point.</em></p>
-    <div class="built">
-      <p class="built-head">Built &amp; tested now</p>
-      <p class="built-row"><span class="built-name">EMET</span><span class="built-desc">tamper-seal: re-derives a file&rsquo;s bytes, reports MATCH or DRIFT <span class="built-stat">19/19 &middot; 3&nbsp;langs</span></span></p>
-      <p class="built-row"><span class="built-name">QuantaLang</span><span class="built-desc">a compiler that won&rsquo;t compile a memory lie <span class="built-stat">1002&nbsp;passed</span></span></p>
-      <p class="built-row"><span class="built-name">proof-surface</span><span class="built-desc">the receipt every action declares itself in <span class="built-stat">10&nbsp;records</span></span></p>
+    <p class="eyebrow">PROJECT TELOS</p>
+    <h1>A place to see and make things &mdash; together with a model.</h1>
+    <p class="lede">I build tools where a person and an AI look at the same thing, talk about it, and
+  shape it together &mdash; a drawing, a photo, a piece of code, an argument. Everything they make is
+  yours to open up and check, but that&rsquo;s the floor. The point is what you can build on it.</p>
+    <div class="hero-doors">
+      <a class="btn" href="studio.html">Try the Studio &rarr;</a>
+      <a class="btn ghost" href="overview.html">See the work</a>
+      <a class="btn ghost" href="research.html">Read the thinking</a>
     </div>
-    <p class="hero-cue"><a href="overview.html">Overview</a> &middot; <a href="resume.html">Résumé</a> &middot; <a href="cv.html">CV</a> &middot; <a href="research.html">Research</a> &middot; <a href="writing.html">Writing</a> &middot; <a href="atelier.html">Atelier</a> &middot; <a href="gallery.html">Gallery</a> &nbsp;&middot;&nbsp; <a href="https://github.com/HarperZ9">GitHub</a> &mdash; <a href="#receipts">&darr; the receipts</a></p>
   </div>
   <div class="seal">Macrophotography by <a href="https://bsky.app/profile/iambeta.bsky.social" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4)">iamBeTa</a> &mdash; the living structures these ideas are modeled on, <a href="atelier.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4)">redrawn by algorithm in the atelier</a>.</div>
 </div>
@@ -52,236 +57,6 @@
      SCROLLING BODY
      ════════════════════════════════════════════════════════════ -->
 <main id="main">
-
-<!-- proof first: the real, inspectable receipts -->
-<section class="proof" id="receipts" aria-labelledby="receipts-h">
-  <div class="proof-head">
-    <h2 id="receipts-h" class="reveal">You don&rsquo;t have to take my word for this &mdash; <em>I don&rsquo;t take my own.</em> Here is the machinery.</h2>
-    <p class="body-text reveal">Four things, taken straight from the running tools: one that rebuilds a file from scratch to prove not a single byte was changed; one that refuses to use a part it can&rsquo;t fully account for; the plain card every tool fills out about itself; and those pieces joined into one loop &mdash; a model looks at a live page and, in the same breath, is stopped from doing something it wasn&rsquo;t allowed to. Each one shows its real history, and its real limits.</p>
-    <p class="body-text reveal">Underneath all four is one plain habit: I don&rsquo;t ask you to trust the thing in front of you &mdash; I give you a way to check it. You take what something shows you and hold it against a standard it didn&rsquo;t get to set for itself, then keep a proof you can run again yourself and get the exact same answer &mdash; the way a music box plays the very same tune, note for note, each time you turn it, because the tune is read off the pins and never performed by someone who might waver. The number it starts from is those pins; anyone who runs it gets the identical result. When there&rsquo;s nothing solid to check it against, it says so &mdash; <em>UNVERIFIABLE</em> &mdash; instead of pretending to be sure. And catching a forgery turns out to be the same move as making something genuinely new: one checks a thing against where it came from, the other against everything made before it.</p>
-  </div>
-
-  <div class="exhibit reveal">
-    <div class="exhibit-tag"><span class="ord">Exhibit I</span> <span class="what">EMET &middot; the witness re-derives the bytes</span></div>
-    <pre class="artifact"><span class="pr">$ python membrane.py verify demo_sample.txt</span>
-<span class="ok">MATCH</span>  demo_sample.txt   want=d02206abca2a…  got=d02206abca2a…   (exit 0)
-
-<span class="cmt"># append one byte to the file, ask the same question</span>
-<span class="pr">$ python membrane.py verify demo_sample.txt</span>
-<span class="bad">DRIFT</span>  demo_sample.txt   want=d02206abca2a…  got=b072d611645e…   (exit 2)
-
-<span class="cmt"># one spec, three separate language implementations, CI on every push</span>
-membrane.py        &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span>
-impl/rust/emet     &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span>
-impl/js/emet.js    &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span></pre>
-    <p class="artifact-cap">Change one byte of the source and the verdict falls from <b>MATCH</b> to <b>DRIFT</b>. The seal answers to the bytes, not to whoever vouches for them.</p>
-    <p class="artifact-note">Captured live from the emet run &middot; receipt format from <b>adapters/proof_surface_receipt.py</b> &middot; 19/19 conformance vectors, three language implementations, CI each push. <em>Honest limit:</em> all three share one author &mdash; this shows the spec is implementable from its text, not yet independently re-derived. A fourth, different author&rsquo;s implementation is owed.</p>
-  </div>
-
-  <div class="exhibit reveal">
-    <div class="exhibit-tag"><span class="ord">Exhibit II</span> <span class="what">QuantaLang &middot; the compiler refuses what it can&rsquo;t account for</span></div>
-    <pre class="artifact"><span class="kw">fn</span> pick&lt;<span class="lt">'a</span>, <span class="lt">'b</span>&gt;(x: &amp;<span class="lt">'a</span> i32, y: &amp;<span class="lt">'b</span> i32) -&gt; &amp;<span class="lt">'a</span> i32 {
-    y          <span class="cmt">// returns 'b where the signature promised 'a</span>
-}
-
-<span class="pr">$ quantac check pick.quanta</span>
-Lexing... <span class="ok">OK</span> (28 tokens)
-Parsing... <span class="ok">OK</span> (1 items)
-<span class="bad">Type errors found:</span>
-  <span class="bad">function returns `&amp;'b i32` but expected `&amp;'a i32`</span></pre>
-    <p class="artifact-cap">The function promises the memory tied to <b>&lsquo;a</b>; it tries to hand back <b>&lsquo;b</b>&rsquo;s instead, and the compiler refuses. It tracks <em>whose</em> state crosses each boundary and won&rsquo;t let one escape the contract it was given.</p>
-    <p class="artifact-note">Captured live from <b>quantac check</b> (Rust toolchain, release build) &middot; diagnostic at <b>compiler/src/types/unify.rs</b> &middot; current Cargo baseline: 1002 passed / 0 failed / 11 ignored &middot; C is the shipped end-to-end backend. QuantaLang is foremost an effects language: what a function may <em>do</em> is typed like whose memory it returns &mdash; the same accountability, two faces.</p>
-  </div>
-
-  <div class="exhibit reveal">
-    <div class="exhibit-tag"><span class="ord">Exhibit III</span> <span class="what">SurfaceRecord &middot; every organ declares the same six things</span></div>
-    <pre class="artifact"><span class="cmt">// witness.emet.surface-record.json &mdash; validates against surface-record.schema.json (v0.1)</span>
-{
-  <span class="kw">"organ"</span>: "EMET",
-  <span class="kw">"surface"</span>: {
-    <span class="kw">"carriers"</span>:   ["raw-bytes", "presented-view", "witness-receipt"],
-    <span class="kw">"boundaries"</span>: ["source/view", "read-path"],
-    <span class="kw">"channels"</span>:   ["cli", "python", "rust", "javascript"],
-    <span class="kw">"transforms"</span>: ["anchor", "verify", "coherence", "corroborate", "refuse"],
-    <span class="kw">"witnesses"</span>:  ["hash", "audit-chain", "conformance-vector"],
-    <span class="kw">"scope"</span>: {
-      <span class="kw">"mode"</span>: "fixture",
-      <span class="kw">"allowed_actions"</span>: ["inspect_artifacts", "emit_receipts", "summarize_state"],
-      <span class="bad">"denied_actions"</span>:  ["grant_authority", "embed_secret_payload", "mutate_external_system"]
-    }
-  }
-}</pre>
-    <p class="artifact-cap">Every organ declares the same six things &mdash; what it carries, where it crosses, how it moves, what it changes, how it&rsquo;s proven, and the scope it acts in. The <b>denials</b> are load-bearing: the witness states, in a machine-checked record, what it may <em>not</em> do.</p>
-    <p class="artifact-note">From <b>project-docs/maps/surface-records/</b>, validated against <b>surface-record.schema.json</b> (JSON Schema 2020-12) &middot; 10 organ records generated and validated, gate green (20 tests). <em>Early but real:</em> schema_version 0.1, local-only, every fill marked <b>filled-v0</b>.</p>
-  </div>
-
-  <div class="exhibit reveal">
-    <div class="exhibit-tag"><span class="ord">Exhibit IV</span> <span class="what">the accountable surface &middot; senses and restraint, one loop</span></div>
-    <pre class="artifact"><span class="cmt">== PERCEIVE  (native, witnessed) ==</span>
-  title: 'Frontier News'   links: 1   text chars: 52
-  digest: sha256:40b0fb1b6a…   status: <span class="ok">pass</span>   <span class="cmt">(a witnessed reading, not a screenshot)</span>
-
-<span class="cmt">== ACT: summarize  (authorized by the grant) ==</span>
-  gate decision: <span class="ok">ALLOW</span>   checks: {authorization: pass, state: pass, …}
-  executed by the surface: False
-
-<span class="cmt">== ACT: delete  (NOT in the grant) ==</span>
-  gate decision: <span class="bad">DENY</span>   — 'delete' not in allowed_actions
-  executed by the surface: False   <span class="cmt">(refused by the GATE, not by a prompt)</span>
-
-<span class="cmt">== JOURNAL  (every perception + decision, recorded) ==</span>
-  [perception] web-document perceived  &middot;  1 link, 52 text chars
-  [decision] summarize &rarr; <span class="ok">allow</span>     [decision] delete &rarr; <span class="bad">deny</span></pre>
-    <p class="artifact-cap">A model perceives a live page natively &mdash; witnessed, digest-stamped, not a screenshot &mdash; and the unauthorized act is refused by the <b>gate</b>, not by a prompt. Awareness and restraint as one mechanism.</p>
-    <p class="artifact-note">Now a real, growing tool &mdash; <b>github.com/HarperZ9/accountable-surface</b>, <b>201 tests</b>, an MCP server, and filesystem / web / command effectors that stay inert until the gate allows. The run above is the decision layer; in the current build an <em>allow</em> is carried out by a bounded, reversible effector and then re-perceived to confirm it. <em>Honest limit:</em> still not folded into ORCA, and the gate stays advisory until a runtime enforces it. The loop runs; the integration is owed.</p>
-  </div>
-</section>
-
-<!-- the integration layer: what witnessed perception unlocks -->
-<section class="mv" id="mv-together" aria-labelledby="together-h">
-  <h2 id="together-h" class="reveal">More than a receipt &mdash; <span class="g">a place to look, together.</span></h2>
-  <p class="body-text reveal">The checking isn&rsquo;t the end of it. Because the tool actually <em>perceives</em> the real thing &mdash; a file, a running system, an image, live data &mdash; and shows you exactly what it saw, you and an AI can work over the same live state at the same time. You point at it, ask why it thinks what it thinks, make it re-check. It can&rsquo;t bluff, because you&rsquo;re both looking at the same verified view.</p>
-  <p class="pull reveal">&ldquo;The AI told me&rdquo; becomes &ldquo;the AI and I looked at it together &mdash; and I can verify every step.&rdquo;</p>
-  <p class="body-text reveal">That&rsquo;s what makes it safe to use for real work, in any field: a designer and an AI reading the same render; a researcher and an AI examining the same data; an engineer and an AI watching the same live system &mdash; places where nothing can be taken on faith. Not trust, but checking, live, together. And because every look is witnessed and every action is gated and re-checked, you can let it <em>act</em>, not just talk.</p>
-</section>
-
-<!-- the full inventory, with honest maturity verdicts -->
-<section class="mv" id="mv-03" aria-labelledby="mv-03-h">
-  <h2 id="mv-03-h" class="reveal">The organs.</h2>
-  <p class="body-text reveal">These are the core organs &mdash; the accountability spine itself: a way to perceive, a gate, a witness, and the loop that composes the three &mdash; plus the typed compiler that holds the same idea in code. Each carries its own honest maturity verdict; nothing here claims more than it can show. The full body of work &mdash; every tool, the research, the philosophy, each with its citation &mdash; is laid out on <a href="overview.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">the map</a>.</p>
-
-  <div class="organs reveal-children" role="list" aria-label="Organ index with maturity verdicts">
-
-    <!-- EMET -->
-    <div class="organ-row" role="listitem" style="--i:0">
-      <span class="organ-name"><a href="emet.html">EMET</a></span>
-      <span class="organ-role">Witness</span>
-      <span class="organ-line">
-        The seal that records what a transform did and refuses to say more &mdash; re-derived in three separate language implementations; it answers only MATCH / DRIFT / UNVERIFIABLE, never <em>trusted</em>.
-        <span class="v-note">v0.2.0 &middot; 19/19 conformance (Python &middot; Rust &middot; Node) &middot; owed: a fourth, different author&rsquo;s implementation</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-shipped" aria-label="Verdict: Shipped">SHIPPED</span></span>
-    </div>
-
-    <!-- PROOF-SURFACE -->
-    <div class="organ-row" role="listitem" style="--i:1">
-      <span class="organ-name"><a href="proof-surface.html">PROOF-SURFACE</a></span>
-      <span class="organ-role">Gate</span>
-      <span class="organ-line">
-        The accountability gate: a least-privilege, expiring grant carried inward; a default-deny, fail-closed decision and a work-record receipt carried outward. It reports; it never grants authority, and never says <em>trusted</em>.
-        <span class="v-note">v0.1.0 on PyPI &middot; 258 tests &middot; 8 contracts, 8 schemas, stdlib-only &middot; shipped consumers on PyPI: repo-proof-index, model-provenance-validator, public-surface-sweeper</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-shipped" aria-label="Verdict: Shipped">SHIPPED</span></span>
-    </div>
-
-    <!-- QUANTA / QUANTAC -->
-    <div class="organ-row" role="listitem" style="--i:2">
-      <span class="organ-name"><a href="quantalang.html">QUANTA&thinsp;/&thinsp;QUANTAC</a></span>
-      <span class="organ-role">Transform</span>
-      <span class="organ-line">
-        A typed effects language &mdash; what a function may <em>do</em>, and whose memory it returns, is part of the type and checked through to native code.
-        <span class="v-note">C backend end-to-end &middot; 1002 passed / 11 ignored &middot; other targets experimental &middot; self-host aspirational</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-active" aria-label="Verdict: C-backend shipped">C-BACKEND SHIPPED</span></span>
-    </div>
-
-    <!-- COHERENCE MEMBRANE -->
-    <div class="organ-row" role="listitem" style="--i:3">
-      <span class="organ-name"><a href="coherence-membrane.html">COHERENCE MEMBRANE</a></span>
-      <span class="organ-role">Perception</span>
-      <span class="organ-line">
-        The read-gate that turns a model&rsquo;s state-blindness into witnessed, re-derivable observations &mdash; it perceives an artifact, content-addresses it, and answers MATCH / DRIFT / UNVERIFIABLE, never a silent match on a difference.
-        <span class="v-note">v0.1.0 &middot; 868 tests &middot; zero-dependency &middot; the perception organ family &mdash; and now the verifier ladder and the reconcile, where the security and creative criteria meet on one surface</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-shipped" aria-label="Verdict: Shipped">SHIPPED</span></span>
-    </div>
-
-    <!-- ACCOUNTABLE SURFACE -->
-    <div class="organ-row" role="listitem" style="--i:4">
-      <span class="organ-name"><a href="accountable-machines.html">ACCOUNTABLE SURFACE</a></span>
-      <span class="organ-role">The loop</span>
-      <span class="organ-line">
-        Perception, gate, action, and verification as one seam: a model perceives natively, acts only on an <em>allow</em>, then re-perceives to confirm what changed. Composed from the membrane and the gate.
-        <span class="v-note">201 tests, incl. a 39-test adversarial integrity suite &middot; an MCP server + filesystem / web / command effectors, inert until authorized &middot; not yet folded into ORCA</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-active" aria-label="Verdict: In progress">IN PROGRESS</span></span>
-    </div>
-
-  </div>
-  <em class="close reveal">Proof before trust &mdash; the shipped say shipped. This is the core; the full body of work, every piece with its own page and citation, is on <a href="overview.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">the map &rarr;</a></em>
-</section>
-
-<div class="turn" aria-hidden="true">
-  <svg class="aperture aperture-solo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle class="ring-outer" cx="16" cy="16" r="13.5" stroke="rgba(223,94,0,.18)" stroke-width="1"/>
-    <circle cx="16" cy="16" r="9.5"  stroke="rgba(223,94,0,.40)" stroke-width="1"/>
-    <circle cx="16" cy="16" r="5.5"  stroke="rgba(223,94,0,.60)" stroke-width=".8"/>
-    <circle cx="16" cy="16" r="2.5"  fill="rgba(223,94,0,.07)" stroke="rgba(223,94,0,.50)" stroke-width=".6"/>
-    <circle cx="16" cy="16" r="1"    fill="rgba(13,27,28,.94)"/>
-    <circle cx="13.9" cy="14.3" r=".5" fill="rgba(223,94,0,.30)"/>
-  </svg>
-  <p class="turn-label">The reasoning underneath</p>
-</div>
-
-<!-- ── the longer argument (depth, opt-in) ────────────────────── -->
-<section class="mv hinge" id="mv-01" aria-labelledby="mv-01-h">
-  <h2 id="mv-01-h" class="reveal">A model infers the world. It never <em>senses</em> it.</h2>
-  <p class="body-text reveal">Every AI model reaches you the same way: it just tells you things. Not from a memory it actually keeps, or events it actually watched happen &mdash; and it sounds exactly as sure either way. For years we answered a system that can&rsquo;t check itself by making it bigger and smoother, which mostly made it better at <em>sounding</em> sure. Even the trade we&rsquo;ve all accepted as a law of nature &mdash; that an AI can be capable or safe, but never both &mdash; turns out to come from this one blind spot. A mind you can&rsquo;t see into, you have to keep on a short leash. A mind that can&rsquo;t see, you can&rsquo;t really trust.</p>
-  <em class="close reveal">The gap is not intelligence. It is a sense organ.</em>
-</section>
-
-<section class="mv" id="mv-engine" aria-labelledby="eng-h">
-  <h2 id="eng-h" class="reveal">So I built a sense organ you can run.</h2>
-  <p class="body-text reveal">A creative engine with real senses. It <em>sees</em> &mdash; a live camera, read as brightness, edges, and motion, actually measured rather than guessed, and it shows you what it&rsquo;s seeing right beside the art, so you can check. It <em>creates</em> from what it sees &mdash; the spiral a sunflower packs its seeds in, flowing fields, branching veins, the patterns two spreading chemicals make, slime-mould networks, fractal curves, lightning, crystal tilings, and a couple dozen more, all drawn live along the edges in front of the lens. And it <em>keeps itself honest</em> &mdash; every drawing grows from a single starting number, so the same number always redraws the exact same thing; saving the file has to pass the gate; and anyone can re-run it and get an identical result. That&rsquo;s stronger than a signature, because it never asks you to trust the signer. Senses first, then a way to check, then freedom &mdash; made into something you can hold in your hand.</p>
-  <p class="pull reveal">Accountability is the floor, not the ceiling. Once the proof actually holds, the limits are free to move.</p>
-  <div class="channels reveal">
-    <span class="g">Run it</span> &mdash; <a href="atelier.html">the atelier</a> &nbsp;&middot;&nbsp; <a href="demonstrations.html">the demonstrations</a> &nbsp;&middot;&nbsp; <a href="overview.html">the whole map</a>
-  </div>
-</section>
-
-<section class="mv" id="mv-02" aria-labelledby="mv-02-h">
-  <div style="overflow:hidden">
-    <div class="specimen-wrap" aria-hidden="true">
-      <img src="img/XJJSZrM.jpg" class="specimen" loading="lazy" decoding="async" alt="Macro cross-section: dense cellular lattice resolving into a single continuous plane">
-    </div>
-    <h2 id="mv-02-h" class="reveal">The surface.</h2>
-    <p class="body-text reveal">&ldquo;Surface&rdquo; is just my plain word for one idea. Every tool here is a different creature &mdash; one writes programs, one draws pictures, one mixes colors, one keeps proofs, one guards a boundary &mdash; but each answers the same six questions about itself, the way a passport answers the same few questions at every border, no matter which country issued it. Not a platform they&rsquo;re built on top of; a shared shape they all take, so very different tools fit together without blurring into one.</p>
-  </div>
-  <div class="index reveal-children" role="list" aria-label="The six surface declarations">
-    <div class="index-row" role="listitem" style="--i:0">
-      <span class="index-term">CARRIER</span>
-      <span class="index-gloss">what holds the state &middot; text, image, shader frame, packet, model output, repo</span>
-    </div>
-    <div class="index-row" role="listitem" style="--i:1">
-      <span class="index-term">BOUNDARY</span>
-      <span class="index-gloss">where it crosses &middot; model, API, process, GPU, operator, scope-of-law</span>
-    </div>
-    <div class="index-row" role="listitem" style="--i:2">
-      <span class="index-term">CHANNEL</span>
-      <span class="index-gloss">how it moves &middot; CLI, HTTP, MCP, filesystem, git, the covert path</span>
-    </div>
-    <div class="index-row" role="listitem" style="--i:3">
-      <span class="index-term">TRANSFORM</span>
-      <span class="index-gloss">what changes it &middot; compile, render, redact, infer, verify</span>
-    </div>
-    <div class="index-row" role="listitem" style="--i:4">
-      <span class="index-term">WITNESS</span>
-      <span class="index-gloss">how the change is proven &middot; hash, receipt, provenance, frame trace, test</span>
-    </div>
-    <div class="index-row" role="listitem" style="--i:5">
-      <span class="index-term">SCOPE</span>
-      <span class="index-gloss">who allowed it, in what mode &middot; dry-run, fixture, local lab, authorized, operator-live</span>
-    </div>
-  </div>
-  <em class="close reveal">Answer those six, and a tool can connect to everything else without losing what makes it itself. The tools stay different; the shape they share is what holds them together.</em>
-</section>
-
-<section class="mv" id="mv-04" aria-labelledby="mv-04-h">
-  <h2 id="mv-04-h" class="reveal">Why it&rsquo;s built this way.</h2>
-  <p class="body-text reveal">The same discipline that makes the tool check itself is what keeps it from being misused. By design, its authority can only serve the thing it&rsquo;s responsible for &mdash; it can&rsquo;t be turned against it. And that lives in the code, where you can check it, not in a promise from me; my word is worth no more than anyone else&rsquo;s.</p>
-  <p class="body-text reveal">It doesn&rsquo;t stop at the machine. The same question turns on you: <em>could you show your work, if someone asked?</em> A tool that can account for itself, used by people willing to do the same. I&rsquo;d rather this be ours than an authority over anyone &mdash; accountability you choose, not one handed down.</p>
-  <p class="note-line reveal">The longer argument &mdash; why I think it matters &mdash; is <a href="why.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">its own page &rarr;</a></p>
-</section>
 
 <section class="mv" id="mv-05" aria-labelledby="mv-05-h">
   <div style="overflow:hidden">
@@ -312,7 +87,7 @@ Parsing... <span class="ok">OK</span> (1 items)
 </section>
 
 <footer class="footer-seal" role="contentinfo">
-  <p class="seal">Nothing here trusts itself &mdash; every part is witnessed, re-derivable, and free to refuse. Run any of it yourself, and check the claims. The work answers for itself.</p>
+  <p class="seal">Made to be built on &mdash; every part is yours to open, run, and remix.</p>
 </footer>
 
 </main>
