@@ -92,6 +92,94 @@
   <p class="body-text reveal">And the same move fixes it everywhere. Don&rsquo;t just take the thing&rsquo;s word for itself; go back to the original evidence and work out the answer again from scratch; be honest about what you checked and what you didn&rsquo;t; and then give one of three answers &mdash; <b>MATCH</b> (it holds up), <b>DRIFT</b> (it changed), or <b>UNVERIFIABLE</b> (there&rsquo;s no way to tell) &mdash; never the word <em>trusted</em>, and never a guess dressed up as an answer. The philosophy argues for it; the five investigations show it happening; a small set of rules pins it down; and a working tool actually runs it in code. Four separate roads, none of them borrowing from the others, all arriving at the same place &mdash; that&rsquo;s about the strongest evidence you can have, short of an outright proof.</p>
 </section>
 
+<!-- where it fits — scenarios across fields -->
+<section class="mv" id="where-it-fits" aria-labelledby="wif-h">
+  <h2 id="wif-h" class="reveal">Where it fits.</h2>
+  <p class="body-text reveal">Wherever someone hands work to a model — or hands a model's work to someone else — the same gap opens: you can't see what it saw, and you can't check what it claims. The same gap, in a clinic, a courtroom, a newsroom, an audit, a repo. Here is what closing it looks like.</p>
+
+  <div class="scenarios reveal">
+    <div class="scenario">
+      <h3>Radiology.</h3>
+      <p class="setting">a model assists a CT read and flags a nodule "likely benign."</p>
+      <div class="without">
+        <span class="lbl">Without</span>
+        <p>the radiologist sees a label, not what the model saw — was it the right patient's study, re-compressed, keyed on what? The read is over-trusted or waved off, and a mislabeled or altered image rides through. → <em>Trust by reputation; the error surfaces downstream, if ever.</em></p>
+      </div>
+      <div class="with">
+        <span class="lbl">With</span>
+        <p>clinician and model stand before the same witnessed frame; an identity hash proves it's the unaltered, correct study; the model's call is grounded in measured features the clinician re-derives on the spot. → <em>A second read you can actually interrogate — and a record of exactly what was seen.</em></p>
+      </div>
+    </div>
+
+    <div class="scenario">
+      <h3>eDiscovery.</h3>
+      <p class="setting">a model summarizes 80,000 documents for a filing.</p>
+      <div class="without">
+        <span class="lbl">Without</span>
+        <p>a confident summary cites a subtly altered exhibit, or a quote that doesn't exist; neither side can reproduce the chain. → <em>A sanctions risk and a summary no one can stand behind.</em></p>
+      </div>
+      <div class="with">
+        <span class="lbl">With</span>
+        <p>every exhibit carries a provenance receipt (identity + drift); each claim is grounded and re-checkable against the source. → <em>A filing that survives scrutiny because it was built to be checked.</em></p>
+      </div>
+    </div>
+
+    <div class="scenario">
+      <h3>Audit.</h3>
+      <p class="setting">an AI agent reconciles two ledgers and reports "balanced."</p>
+      <div class="without">
+        <span class="lbl">Without</span>
+        <p>a silent data swap or an unstated assumption passes as a clean result; the auditor signs on trust. → <em>An attestation resting on a black box.</em></p>
+      </div>
+      <div class="with">
+        <span class="lbl">With</span>
+        <p>the gate refuses anything it can't verify; each figure carries a re-derivable receipt; "unverifiable" is reported as unverifiable, not passed. → <em>The auditor checks instead of trusting — and can show their work.</em></p>
+      </div>
+    </div>
+
+    <div class="scenario">
+      <h3>Newsroom.</h3>
+      <p class="setting">a desk receives a dramatic clip and an AI-enhanced still on deadline.</p>
+      <div class="without">
+        <span class="lbl">Without</span>
+        <p>the clip is a re-encode of something older; the still is partly synthetic; both publish as authentic and the correction comes after it spreads. → <em>A retraction, and eroded trust.</em></p>
+      </div>
+      <div class="with">
+        <span class="lbl">With</span>
+        <p>origin is witnessed (content + perceptual); drift between "what we received" and "what we publish" is flagged before it ships. → <em>You publish what you can vouch for.</em></p>
+      </div>
+    </div>
+
+    <div class="scenario">
+      <h3>Your codebase.</h3>
+      <p class="setting">an autonomous agent edits a repo and reports "done, tests pass."</p>
+      <div class="without">
+        <span class="lbl">Without</span>
+        <p>a silent overwrite, an unrun test, a fabricated green check — you find it in production. → <em>Debugging a failure the agent said couldn't happen.</em></p>
+      </div>
+      <div class="with">
+        <span class="lbl">With</span>
+        <p>the work is fingerprinted before and after; the gate blocks any action it can't verify; you see exactly what changed and why, re-derivable. → <em>You hand a model real work and still hold the receipts.</em></p>
+      </div>
+    </div>
+
+    <div class="scenario">
+      <h3>The design desk.</h3>
+      <p class="setting">a model generates a brand asset.</p>
+      <div class="without">
+        <span class="lbl">Without</span>
+        <p>is it novel or derivative, on-brief or off? Taste is asserted and defended in a meeting. → <em>Opinion versus opinion.</em></p>
+      </div>
+      <div class="with">
+        <span class="lbl">With</span>
+        <p>human and model shape it on one surface (the Studio); novelty and fit are measured and checkable. → <em>A decision grounded in more than the loudest voice.</em></p>
+      </div>
+    </div>
+  </div>
+
+  <p class="body-text reveal" style="margin-top:2rem">Different fields, one shape: a person, a model, a shared thing between them, and a way to check it. That is the floor — and the launchpad for everything above it.</p>
+</section>
+
 <!-- the body of work map — grouped catalog -->
 <section class="mv" id="map" aria-labelledby="map-h">
   <h2 id="map-h" class="reveal">The body of work.</h2>
