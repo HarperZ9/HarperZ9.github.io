@@ -349,10 +349,92 @@ function applyEdges() {
   ctx.putImageData(out, 0, 0);
 }
 
+// Topography transform: hillshade, contours, or oblique 2.5D terrain.
+function applyTopography() {
+  leave3D();
+  const c = byoCanvas(), ctx = byoCtx();
+  const w = c.width, h = c.height;
+  const src = ctx.getImageData(0, 0, w, h);
+  const d = src.data;
+  const out = ctx.createImageData(w, h);
+  const od = out.data;
+
+  const mode = $("topo-mode").value;
+  const azimuth = parseFloat($("topo-azimuth").value);
+  const exaggeration = parseFloat($("topo-exaggeration").value);
+  const interval = parseInt($("topo-interval").value, 10);
+
+  // Helper: get luma at (x, y), clamping to edge (mirror border).
+  const luma = (x, y) => {
+    const cx = Math.max(0, Math.min(w - 1, x));
+    const cy = Math.max(0, Math.min(h - 1, y));
+    const i = (cy * w + cx) * 4;
+    return (d[i] * 299 + d[i + 1] * 587 + d[i + 2] * 114) / 1000;
+  };
+
+  // Hillshade: compute shaded-relief shade value (0-1) for pixel (x, y).
+  const hillshadeShade = (x, y) => {
+    const dzdx = (luma(x + 1, y) - luma(x - 1, y)) * exaggeration;
+    const dzdy = (luma(x, y + 1) - luma(x, y - 1)) * exaggeration;
+    const nx = -dzdx, ny = -dzdy, nz = 1;
+    const len = Math.sqrt(nx * nx + ny * ny + nz * nz);
+    const nnx = nx / len, nny = ny / len, nnz = nz / len;
+    const az_rad = (azimuth - 90) * Math.PI / 180;
+    const alt_rad = 45 * Math.PI / 180;
+    const lx = Math.cos(alt_rad) * Math.cos(az_rad);
+    const ly = Math.cos(alt_rad) * Math.sin(az_rad);
+    const lz = Math.sin(alt_rad);
+    return Math.max(0, Math.min(1, nnx * lx + nny * ly + nnz * lz));
+  };
+
+  if (mode === "hillshade") {
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        const shade = hillshadeShade(x, y);
+        const v = Math.round(shade * 255);
+        const i = (y * w + x) * 4;
+        od[i] = od[i + 1] = od[i + 2] = v; od[i + 3] = 255;
+      }
+    }
+  } else if (mode === "contours") {
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        const b = Math.floor(luma(x, y) / 256 * interval);
+        const br = Math.floor(luma(x + 1, y) / 256 * interval);
+        const bd = Math.floor(luma(x, y + 1) / 256 * interval);
+        const isEdge = (b !== br) || (b !== bd);
+        const v = isEdge ? 40 : 240;
+        const i = (y * w + x) * 4;
+        od[i] = od[i + 1] = od[i + 2] = v; od[i + 3] = 255;
+      }
+    }
+  } else {
+    // Oblique: 2.5D painter's algorithm, back-to-front (top row = back).
+    // Fill with light background first.
+    for (let i = 0; i < od.length; i += 4) { od[i] = od[i + 1] = od[i + 2] = 220; od[i + 3] = 255; }
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        const lval = luma(x, y);
+        const shade = hillshadeShade(x, y);
+        const vert_offset = Math.round((lval / 255) * exaggeration * h * 0.12);
+        const oy = y - vert_offset;
+        if (oy >= 0 && oy < h) {
+          const v = Math.round(shade * 255);
+          const i = (oy * w + x) * 4;
+          od[i] = od[i + 1] = od[i + 2] = v; od[i + 3] = 255;
+        }
+      }
+    }
+  }
+
+  ctx.putImageData(out, 0, 0);
+}
+
 // Apply a named transform, re-perceive, say what changed, flip the turn indicator.
 function applyTransform(key, who) {
   if (key === "mirror") { applyMirror(); }
   else if (key === "edges") { applyEdges(); }
+  else if (key === "topography") { applyTopography(); }
   else { const img = byoCtx().getImageData(0, 0, byoCanvas().width, byoCanvas().height); TF[key](img.data); byoCtx().putImageData(img, 0, 0); }
   const obs = perceive(byoCanvas());
   say(who, `${who === "you" ? "You" : "I"} ran ${key}. Now ${obs.phash}.`);
@@ -367,9 +449,28 @@ $("studio-drop").addEventListener("dragleave", () => $("studio-drop").classList.
 $("studio-drop").addEventListener("drop", e => { e.preventDefault(); $("studio-drop").classList.remove("over"); if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]); });
 $("studio-file").addEventListener("change", e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
 
-// Build transform buttons from TF keys + the two geometry transforms.
-["grayscale", "invert", "threshold", "posterize", "mirror", "edges"].forEach(k => {
+// Build transform buttons from TF keys + the geometry + topography transforms.
+["grayscale", "invert", "threshold", "posterize", "mirror", "edges", "topography"].forEach(k => {
   const b = document.createElement("button"); b.className = "chip"; b.type = "button"; b.textContent = k;
   b.addEventListener("click", () => applyTransform(k, "you"));
   $("studio-transforms").appendChild(b);
+});
+
+// Topography controls: update display spans and re-run if canvas is loaded.
+function topoHasCanvas() { return $("sc-phash").textContent !== "—"; }
+
+$("topo-azimuth").addEventListener("input", () => {
+  $("topo-az-val").textContent = $("topo-azimuth").value;
+  if (topoHasCanvas()) { applyTopography(); const obs = perceive(byoCanvas()); say("model", "Azimuth updated. Now " + obs.phash + "."); }
+});
+$("topo-exaggeration").addEventListener("input", () => {
+  $("topo-ex-val").textContent = $("topo-exaggeration").value;
+  if (topoHasCanvas()) { applyTopography(); const obs = perceive(byoCanvas()); say("model", "Exaggeration updated. Now " + obs.phash + "."); }
+});
+$("topo-interval").addEventListener("input", () => {
+  $("topo-iv-val").textContent = $("topo-interval").value;
+  if (topoHasCanvas()) { applyTopography(); const obs = perceive(byoCanvas()); say("model", "Contour interval updated. Now " + obs.phash + "."); }
+});
+$("topo-mode").addEventListener("change", () => {
+  if (topoHasCanvas()) { applyTopography(); const obs = perceive(byoCanvas()); say("model", "Mode switched to " + $("topo-mode").value + ". Now " + obs.phash + "."); }
 });
