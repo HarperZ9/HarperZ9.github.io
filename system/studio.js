@@ -1,6 +1,7 @@
 // studio.js — the unified Studio: one canvas, two ways in (Generate via the Atelier, or Bring your own),
 // then perceive/discuss/transform/refine with the model. Bridges the Atelier's canvas to the eye.
 import { perceptualHash, features, hamming } from "../shared-frame/eye.js";
+import { representation, richFeatures, describeFrame, rmsFromBytes, spectrumBands, dominantPitchHz } from "./sense.js";
 import { renderFractal, PRESETS } from "./fractal.js";
 import { render3D } from "./fractal3d.js";
 const $ = id => document.getElementById(id);
@@ -52,7 +53,10 @@ function perceive(canvas) {
   if (prev != null) { const d = hamming(prev, phash);
     const el=$("sc-drift"); el.hidden=false; el.textContent = d===0?"unchanged":`moved ${d}/64 from the last frame`; }
   lastHashByCanvas.set(canvas, phash);
-  return { phash, features:f, width:w, height:h };
+  // The measurimeter: the richer, additive readout (faithful mosaic + dominant colours + edges +
+  // regions). Reuses the px we already read; eye.js's gated dHash/features above are untouched.
+  const rich = measure(px, w, h, phash);
+  return { phash, features:f, rich, width:w, height:h };
 }
 
 function say(role, text) {
@@ -104,11 +108,14 @@ function renderPreset() {
     : obs.features.entropy < 0.45
       ? "clean, spacious regions with a calm centre"
       : "a mix of open field and fine boundary structure";
+  const fcol = (obs.rich && obs.rich.dominantColors || []).slice(0, 3).join(", ");
   say("model",
     `${fractalView.name} — a ${typeLabel} at scale ${fractalView.scale}. `
-    + `I fingerprinted it at ${obs.phash}; it reads as ${detail}. `
+    + `I fingerprinted it at ${obs.phash}; it reads as ${detail}`
+    + (fcol ? `, dominated by ${obs.rich.hueName} (${fcol})` : ``) + `. `
     + `Max iterations: ${fractalView.maxIter}. Want to zoom into a point, swap the palette, or hand it back to the Atelier?`
   );
+  startMeterLoop();   // static fractal — refresh the measurimeter, then self-idle
 }
 
 // Wire type chips — filter presets by type when chip is clicked
@@ -148,6 +155,7 @@ $("studio-canvas").closest(".stage").addEventListener("click", e => {
     `Zoomed in — now at (${newCx.toFixed(8)}, ${newCy.toFixed(8)}), scale ${newScale.toExponential(2)}. `
     + `Fingerprint: ${obs.phash}. Click again to keep diving.`
   );
+  startMeterLoop();
 });
 
 $("fractal-render").addEventListener("click", renderPreset);
@@ -183,6 +191,7 @@ function mountGLCanvas() {
 function leave3D() {
   if (stop3d) { stop3d(); stop3d = null; }
   if (canvasIsGL) {
+    stopMeterLoop();   // the orbit is gone — stop streaming
     $("studio-canvas").replaceWith(originalCanvas);   // remount the intact 2D node
     canvasIsGL = false;
   }
@@ -197,6 +206,7 @@ function render3DInto(opts) {
   try {
     stop3d = render3D(c, opts).stop;
     canvasIsGL = true;
+    startMeterLoop();   // the orbit animates — stream the meters so the hash changes as it turns
   } catch (e) {
     // WebGL unavailable: restore the 2D canvas and show the friendly fallback.
     leave3D();
@@ -209,8 +219,10 @@ function render3DInto(opts) {
     const obs = perceive($("studio-canvas"));
     const relief = obs.features.contrast > 0.6 ? "deep relief and strong light" : "soft, diffuse form";
     const label = opts.type === "mandelbulb" ? "Mandelbulb" : "Mandelbox";
+    const col3 = (obs.rich && obs.rich.dominantColors || []).slice(0, 3).join(", ");
     say("model",
-      `A raymarched ${label}, lit in 3D and slowly orbiting. I read it at ${obs.phash} — ${relief}. `
+      `A raymarched ${label}, lit in 3D and slowly orbiting. I read it at ${obs.phash} — ${relief}`
+      + (col3 ? `, in ${obs.rich.hueName} (${col3})` : ``) + `. The measurimeter is live — watch the hash move as it turns. `
       + `Nudge the ${opts.type === "mandelbulb" ? "power" : "scale"} or iterations and re-render, or I can take a turn.`);
   }, 200);
 }
@@ -268,9 +280,13 @@ $("studio-mode").addEventListener("click", leave3D);
 document.addEventListener("atelier:drawn", e => {
   const canvas = e.detail && e.detail.canvas; if (!canvas) return;
   const obs = perceive(canvas);
+  const acol = (obs.rich && obs.rich.dominantColors || []).slice(0, 3).join(", ");
   say("model", `Here's what I see in what you generated: a ${obs.width}×${obs.height} frame, `
     + `${obs.features.entropy>0.8?"richly textured":obs.features.entropy<0.45?"clean and simple":"moderately detailed"}, `
-    + `${obs.features.contrast>0.66?"high-contrast":"soft"}. My fingerprint of it is ${obs.phash}. Where shall we take it?`);
+    + `${obs.features.contrast>0.66?"high-contrast":"soft"}`
+    + (acol ? `, dominated by ${obs.rich.hueName} (${acol})` : ``)
+    + `. My fingerprint of it is ${obs.phash}. Where shall we take it?`);
+  startMeterLoop();   // a static generated frame — the loop runs briefly then self-idles
 });
 
 // ── BYO mode (Task 8) ─────────────────────────────────────────────────────
@@ -280,6 +296,14 @@ document.addEventListener("atelier:drawn", e => {
 
 function byoCanvas() { return $("studio-canvas"); }
 function byoCtx() { return byoCanvas().getContext("2d", { willReadFrequently: true }); }
+let byoVideo = null;   // a played <video> from a dropped file; the live loop blits its frames
+
+// Stop + release a played BYO video (file change / mode switch / leaving). Detaches its audio.
+function stopByoVideo() {
+  if (byoVideo) { try { byoVideo.pause(); } catch (e) {} if (byoVideo.src) { try { URL.revokeObjectURL(byoVideo.src); } catch (e) {} } byoVideo = null; }
+  detachAudio();
+}
+window.__studioStopByoVideo = stopByoVideo;
 
 // Scale src (HTMLImageElement or HTMLVideoElement) to fit within MAX, draw onto the shared canvas.
 function drawSource(src, sw, sh) {
@@ -292,13 +316,25 @@ function drawSource(src, sw, sh) {
 // Calls leave3D() first so a previous WebGL canvas is remounted as 2D before we draw.
 function loadFile(file) {
   leave3D();
+  stopByoVideo();   // release any previously played video first
   const url = URL.createObjectURL(file);
   if (file.type.startsWith("video")) {
-    const v = document.createElement("video"); v.muted = true; v.src = url;
-    v.addEventListener("loadeddata", () => {
-      drawSource(v, v.videoWidth, v.videoHeight);
-      perceive(byoCanvas());
-      say("model", "Loaded a video frame — I'll tell you what I see as it changes.");
+    // Keep a reference so the live loop can copy each played frame onto the shared canvas.
+    byoVideo = document.createElement("video"); byoVideo.src = url;
+    byoVideo.loop = true; byoVideo.playsInline = true;
+    byoVideo.addEventListener("loadeddata", () => {
+      drawSource(byoVideo, byoVideo.videoWidth, byoVideo.videoHeight);
+      const obs = perceive(byoCanvas());
+      // Play it (unmuted so its audio feeds the audio meters) and stream the meters frame-by-frame.
+      byoVideo.muted = false;
+      byoVideo.play().then(() => { attachAudio(byoVideo); }).catch(() => {
+        // autoplay-with-sound blocked: fall back to muted playback (visual meters still stream)
+        byoVideo.muted = true; byoVideo.play().catch(() => {});
+      });
+      startMeterLoop();
+      const sw = (obs.rich && obs.rich.dominantColors || []).slice(0, 3).join(", ");
+      say("model", "Loaded a video — " + describeFrame(obs.rich) + (sw ? " Dominant: " + sw + "." : "")
+        + " The meters stream as it plays.");
     }, { once: true });
     return;
   }
@@ -306,7 +342,10 @@ function loadFile(file) {
   img.onload = () => {
     drawSource(img, img.naturalWidth, img.naturalHeight);
     const obs = perceive(byoCanvas());
-    say("model", `I see your image — ${obs.width}×${obs.height}, fingerprint ${obs.phash}. Let's reshape it together.`);
+    const sw = (obs.rich && obs.rich.dominantColors || []).slice(0, 3).join(", ");
+    say("model", `I see your image — ${obs.width}×${obs.height}. ${describeFrame(obs.rich)}`
+      + (sw ? ` Dominant: ${sw}.` : ``) + ` Fingerprint ${obs.phash}. Let's reshape it together.`);
+    startMeterLoop();   // a still image — the loop runs briefly then self-idles
     URL.revokeObjectURL(url);
   };
   img.src = url;
@@ -500,6 +539,8 @@ function stopWatch() {
   if (live) live.hidden = true;
   const status = $("watch-status");
   if (status) status.textContent = "";
+  detachAudio();      // drop the audio tap + idle the audio meters
+  stopMeterLoop();    // stop streaming when the capture ends
 }
 
 function sampleFrame() {
@@ -530,9 +571,11 @@ function sampleFrame() {
 async function startCapture(mode) {
   stopWatch(); // clean up any previous session
   try {
+    // Request audio too — tab/system audio on screen share, the mic on camera — so the audio meters
+    // have a real source when the user opts to share it. The browser still gates each with a prompt.
     const stream = mode === "screen"
-      ? await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false })
-      : await navigator.mediaDevices.getUserMedia({ video: true });
+      ? await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true })
+      : await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
     watchStream = stream;
     watchVideo.srcObject = stream;
     watchVideo.hidden = false;
@@ -542,9 +585,15 @@ async function startCapture(mode) {
     if (status) status.textContent = mode === "screen" ? "screen shared" : "camera live";
     // If the user closes the stream from the browser's native UI, stop cleanly.
     stream.getTracks().forEach(t => { t.addEventListener("ended", stopWatch); });
-    say("model", mode === "screen"
-      ? "I can see your screen now. Hit 'Watch together' for a live feed, or 'See this moment' for a single frame."
-      : "Camera is live. Hit 'Watch together' to start sampling, or 'See this moment' for one frame.");
+    // Stream the meters live off the capture, and tap its audio if it carries any.
+    startMeterLoop();
+    const hasAudio = stream.getAudioTracks && stream.getAudioTracks().length > 0;
+    if (hasAudio) attachAudio(stream);
+    say("model", (mode === "screen"
+      ? "I can see your screen now."
+      : "Camera is live.")
+      + (hasAudio ? " I can hear it too — the audio meters are live." : "")
+      + " The measurimeter is streaming. Hit 'See this moment' for a snapshot reading.");
   } catch (err) {
     const msg = err && err.name === "NotAllowedError"
       ? "your browser blocked it — you can still upload a file in the drop zone above."
@@ -586,10 +635,311 @@ if ($("watch-stop")) {
   $("watch-stop").addEventListener("click", stopWatch);
 }
 
-// When switching modes, release the capture stream.
-$("studio-mode").addEventListener("click", stopWatch);
+// When switching modes, release the capture stream + any played video and stop streaming.
+$("studio-mode").addEventListener("click", () => { stopWatch(); stopByoVideo(); stopMeterLoop(); });
 
 // Expose for tests
 window.__studioStopWatch = stopWatch;
 window.__studioStartCapture = startCapture;
 window.__studioSampleFrame = sampleFrame;
+
+// ══ The MEASURIMETER (Task 8d) ═══════════════════════════════════════════════
+// A live instrument panel of every channel the tooling feeds the model — the faithful n×n
+// representation, per-channel meters, dominant-colour swatches, a frame-to-frame motion sparkline,
+// and (when the source has sound) audio level / spectrum / pitch. The numbers shown ARE the numbers
+// the model is given; the panel is the honest "this is everything it senses right now". The visual
+// readout STREAMS via one throttled rAF loop while a source animates, so the hash changes as the
+// model "moves"; the model's CHAT stays tied to a snapshot (the existing say() greetings).
+
+const MOSAIC_N = 32;                  // faithful downsample resolution (modest, per the brief)
+const MOTION_LEN = 96;               // sparkline history length
+const motionHist = new Array(MOTION_LEN).fill(0);
+let lastRich = null;                 // last richFeatures bundle (for greetings)
+
+// ── visual meters: build the rows once, then update values cheaply each tick ──
+const VISUAL_CHANNELS = [
+  ["contrast", "contrast", false],
+  ["structure", "structure", false],
+  ["balance", "balance", false],
+  ["coverage", "coverage", false],
+  ["edge density", "edge", true],
+  ["light", "light", false],
+  ["dark", "dark", true],
+  ["motion", "motion", true],
+];
+const meterEls = {};
+function buildMeters() {
+  const host = $("mm-visual"); if (!host || host.childElementCount) return;
+  for (const [label, key, warm] of VISUAL_CHANNELS) {
+    const row = document.createElement("div"); row.className = "mm-meter";
+    const name = document.createElement("span"); name.className = "mm-mname"; name.textContent = label;
+    const track = document.createElement("span"); track.className = "mm-track";
+    const fill = document.createElement("span"); fill.className = "mm-fill" + (warm ? " mm-warm" : "");
+    track.appendChild(fill);
+    const val = document.createElement("span"); val.className = "mm-mval"; val.textContent = "—";
+    row.appendChild(name); row.appendChild(track); row.appendChild(val);
+    host.appendChild(row);
+    meterEls[key] = { fill, val };
+  }
+}
+function setMeter(key, frac, text) {
+  const m = meterEls[key]; if (!m) return;
+  m.fill.style.width = Math.max(0, Math.min(1, frac)) * 100 + "%";
+  m.val.textContent = text;
+}
+
+// ── the faithful representation mosaic: box-average → n×n, painted enlarged ──
+function paintMosaic(px, w, h) {
+  const c = $("mm-mosaic"); if (!c) return;
+  const { grid } = representation({ data: px, width: w, height: h }, MOSAIC_N);
+  const ctx = c.getContext("2d"); if (!ctx) return;
+  // paint into an n×n offscreen then scale up with nearest-neighbour (image-rendering:pixelated).
+  const n = MOSAIC_N, img = ctx.createImageData(n, n);
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+    const [r, g, b] = grid[y][x], i = (y * n + x) * 4;
+    img.data[i] = r; img.data[i + 1] = g; img.data[i + 2] = b; img.data[i + 3] = 255;
+  }
+  if (c.width !== n) { c.width = n; c.height = n; }   // back the canvas at native n×n; CSS scales it up
+  ctx.putImageData(img, 0, 0);
+}
+
+// ── dominant-colour swatches ─────────────────────────────────────────────────
+function paintSwatches(rich) {
+  const host = $("mm-swatches"); if (!host) return;
+  const sw = rich.dominantSwatches || [];
+  if (!sw.length) { host.className = "mm-swatches mm-empty"; host.innerHTML = ""; return; }
+  host.className = "mm-swatches";
+  host.innerHTML = "";
+  for (const s of sw) {
+    const el = document.createElement("span"); el.className = "mm-sw";
+    el.style.background = s.hex; el.title = `${s.hex} · ${(s.frac * 100).toFixed(0)}%`;
+    const f = document.createElement("span"); f.className = "mm-swf"; f.textContent = (s.frac * 100).toFixed(0) + "%";
+    el.appendChild(f); host.appendChild(el);
+  }
+}
+
+// ── motion sparkline: push the latest frame-to-frame Δ (hamming/64), draw the history ──
+function pushMotion(deltaFrac) {
+  motionHist.push(deltaFrac); motionHist.shift();
+  const c = $("mm-motion"); if (!c) return;
+  const ctx = c.getContext("2d"); if (!ctx) return;
+  const W = c.width, H = c.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.strokeStyle = "rgba(95,174,147,.85)"; ctx.lineWidth = 1.5; ctx.beginPath();
+  for (let i = 0; i < motionHist.length; i++) {
+    const x = i / (motionHist.length - 1) * W;
+    const y = H - Math.max(0, Math.min(1, motionHist[i])) * (H - 3) - 1.5;
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+}
+
+// ── measure(): the rich readout for a frame already read into `px`. Called from perceive() and the
+// live loop. Updates the mosaic, meters, swatches, describe line, motion sparkline. Returns the
+// rich-features bundle so greetings can name a dominant colour + texture. NEVER calls say().
+let lastMeterPhash = null;
+function measure(px, w, h, phash) {
+  const rich = richFeatures(px, w, h, 4);
+  const f = features(px, w, h, 4);   // re-derive the gated advisory metrics for the meter bars
+  lastRich = rich;
+  buildMeters();
+  paintMosaic(px, w, h);
+  paintSwatches(rich);
+  setMeter("contrast", f.contrast, fmt(f.contrast, 2));
+  setMeter("structure", f.entropy, fmt(f.entropy, 2));
+  setMeter("balance", f.balance, fmt(f.balance, 2));
+  setMeter("coverage", f.coverage, fmt(f.coverage, 2));
+  setMeter("edge", rich.edgeDensity, fmt(rich.edgeDensity, 2));
+  setMeter("light", rich.lightRegions, fmt(rich.lightRegions, 2));
+  setMeter("dark", rich.darkRegions, fmt(rich.darkRegions, 2));
+  // motion: Δ vs the previous measured frame (perceptual distance / 64)
+  let deltaFrac = 0;
+  if (lastMeterPhash != null && phash) deltaFrac = hamming(lastMeterPhash, phash) / 64;
+  lastMeterPhash = phash;
+  pushMotion(deltaFrac);
+  setMeter("motion", deltaFrac, Math.round(deltaFrac * 64) + "/64");
+  const desc = $("mm-describe"); if (desc) desc.textContent = describeFrame(rich);
+  // metadata channels (dimensions, orientation, source kind, fps)
+  paintMeta(w, h, rich);
+  return rich;
+}
+
+// ── metadata / structured channels ───────────────────────────────────────────
+let liveFps = 0;
+function paintMeta(w, h, rich) {
+  const host = $("mm-meta"); if (!host) return;
+  const rows = [
+    ["dimensions", `${w}×${h}`],
+    ["orientation", `${rich.orientation} (${rich.aspect.toFixed(2)}:1)`],
+    ["source", currentSourceLabel()],
+    ["fps", liveLoopRunning ? (liveFps ? liveFps.toFixed(0) : "…") : "static"],
+  ];
+  host.innerHTML = "";
+  for (const [k, v] of rows) {
+    const row = document.createElement("div"); row.className = "mm-meter";
+    const name = document.createElement("span"); name.className = "mm-mname"; name.textContent = k;
+    const val = document.createElement("span"); val.className = "mm-mval"; val.textContent = v;
+    row.appendChild(name); row.appendChild(val); host.appendChild(row);
+  }
+}
+function currentSourceLabel() {
+  if (watchStream) return "screen/camera";
+  if (canvasIsGL) return "3D fractal";
+  if (mode === "byo") return "your media";
+  return "the Atelier / 2D";
+}
+
+// ── the live loop: ONE throttled rAF, cancellable, never stacked. Re-perceives the active canvas
+// while a source animates (3D orbit / playing video / capture). Pauses (stops) when the frame goes
+// static so we don't spin the CPU on a still frame; restarts on the next source change. The model's
+// chat is untouched — this only streams the meters + #sc-phash/#sc-feats. ───────────────────────
+let liveRaf = null;
+let liveLoopRunning = false;
+const LIVE_HZ = 12, LIVE_MS = 1000 / LIVE_HZ;
+let lastTickTs = 0, lastLoopPhash = null, staticTicks = 0, fpsAcc = 0, fpsCount = 0, fpsTs = 0;
+const STATIC_STOP = 18;   // ~1.5s of an unchanging frame → idle the loop
+
+function liveTick(ts) {
+  if (!liveLoopRunning) return;
+  liveRaf = requestAnimationFrame(liveTick);
+  if (ts - lastTickTs < LIVE_MS) return;          // throttle to ~LIVE_HZ
+  lastTickTs = ts;
+  const canvas = $("studio-canvas"); if (!canvas || !canvas.width) return;
+  // A played video / live capture updates the canvas only if we blit each frame onto it here.
+  // (The 3D orbit paints the canvas itself; an image is static.)
+  const liveVid = (watchStream && watchVideo && watchVideo.videoWidth) ? watchVideo
+    : (byoVideo && !byoVideo.paused && byoVideo.videoWidth) ? byoVideo : null;
+  if (liveVid && !canvasIsGL) {
+    try { drawSource(liveVid, liveVid.videoWidth, liveVid.videoHeight); } catch (e) {}
+  }
+  let px, phash;
+  try {
+    const w = canvas.width, h = canvas.height;
+    px = readPixelData(canvas, w, h);
+    phash = perceptualHash(px, w, h, 4);
+    // stream the cheap line + the full measurimeter (no say(), no drift mutation)
+    $("sc-phash").textContent = phash;
+    measure(px, w, h, phash);
+    pollAudio();
+  } catch (e) { /* a transient unreadable frame (e.g. canvas swap mid-tick) — skip this tick */ return; }
+  // fps estimate over a 0.5s window
+  fpsCount++; if (!fpsTs) fpsTs = ts; if (ts - fpsTs >= 500) { liveFps = fpsCount * 1000 / (ts - fpsTs); fpsCount = 0; fpsTs = ts; }
+  // static detection: stop the loop after a stretch of identical frames
+  if (phash === lastLoopPhash) { if (++staticTicks >= STATIC_STOP) { stopMeterLoop(); return; } }
+  else { staticTicks = 0; lastLoopPhash = phash; }
+}
+function startMeterLoop() {
+  if (liveLoopRunning) return;                    // never stack
+  if (typeof requestAnimationFrame !== "function") return;  // node / no-rAF env
+  liveLoopRunning = true; staticTicks = 0; lastLoopPhash = null; lastTickTs = 0; fpsTs = 0; fpsCount = 0;
+  const live = $("mm-live"); if (live) live.hidden = false;
+  liveRaf = requestAnimationFrame(liveTick);
+}
+function stopMeterLoop() {
+  liveLoopRunning = false;
+  if (liveRaf != null) { cancelAnimationFrame(liveRaf); liveRaf = null; }
+  liveFps = 0;
+  const live = $("mm-live"); if (live) live.hidden = true;
+}
+window.__studioStartMeterLoop = startMeterLoop;
+window.__studioStopMeterLoop = stopMeterLoop;
+window.__studioMeasure = measure;
+window.__studioLiveState = () => ({ running: liveLoopRunning, staticTicks, fps: liveFps });
+
+// ══ Audio channels (Task 8d step 3) ══════════════════════════════════════════
+// Tap a media element or stream with the Web Audio API → AnalyserNode → live level (RMS), a few
+// frequency bands, and a rough pitch. No audio source → the meters read "—" honestly (not faked).
+let audioCtx = null, analyser = null, audioSrcNode = null, audioTimeBuf = null, audioFreqBuf = null;
+let audioAttached = false;
+
+function buildAudioMeters() {
+  const host = $("mm-audio"); if (!host || host.childElementCount) return;
+  // level
+  const lvl = document.createElement("div"); lvl.className = "mm-meter";
+  const ln = document.createElement("span"); ln.className = "mm-mname"; ln.textContent = "level";
+  const lt = document.createElement("span"); lt.className = "mm-track";
+  const lf = document.createElement("span"); lf.className = "mm-fill mm-warm"; lf.id = "mm-au-level";
+  lt.appendChild(lf);
+  const lv = document.createElement("span"); lv.className = "mm-mval"; lv.id = "mm-au-level-v"; lv.textContent = "—";
+  lvl.appendChild(ln); lvl.appendChild(lt); lvl.appendChild(lv); host.appendChild(lvl);
+  // spectrum
+  const sp = document.createElement("div"); sp.className = "mm-meter";
+  const sn = document.createElement("span"); sn.className = "mm-mname"; sn.textContent = "spectrum";
+  const sb = document.createElement("span"); sb.className = "mm-spectrum"; sb.id = "mm-au-spectrum";
+  for (let i = 0; i < 12; i++) { const b = document.createElement("span"); b.className = "mm-bar"; sb.appendChild(b); }
+  const sv = document.createElement("span"); sv.className = "mm-mval"; sv.textContent = "";
+  sp.appendChild(sn); sp.appendChild(sb); sp.appendChild(sv); host.appendChild(sp);
+  // pitch
+  const pt = document.createElement("div"); pt.className = "mm-meter";
+  const pn = document.createElement("span"); pn.className = "mm-mname"; pn.textContent = "pitch";
+  const pp = document.createElement("span"); pp.className = "mm-track";
+  const pf = document.createElement("span"); pf.className = "mm-fill"; pf.id = "mm-au-pitch"; pp.appendChild(pf);
+  const pv = document.createElement("span"); pv.className = "mm-mval"; pv.id = "mm-au-pitch-v"; pv.textContent = "—";
+  pt.appendChild(pn); pt.appendChild(pp); pt.appendChild(pv); host.appendChild(pt);
+}
+function audioMetersIdle() {
+  buildAudioMeters();
+  const lf = $("mm-au-level"), lv = $("mm-au-level-v"), pf = $("mm-au-pitch"), pv = $("mm-au-pitch-v");
+  if (lf) lf.style.width = "0%"; if (lv) lv.textContent = "—";
+  if (pf) pf.style.width = "0%"; if (pv) pv.textContent = "—";
+  const sp = $("mm-au-spectrum"); if (sp) sp.querySelectorAll(".mm-bar").forEach(b => b.style.height = "2%");
+}
+
+// Attach audio from an <audio>/<video> element OR a MediaStream (with audio tracks). Idempotent-ish:
+// detaches a prior source first. Returns true if an analyser is now wired.
+function attachAudio(source) {
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return false;
+    detachAudio();
+    audioCtx = audioCtx || new AC();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    if (source instanceof MediaStream) {
+      if (!source.getAudioTracks || source.getAudioTracks().length === 0) return false;
+      audioSrcNode = audioCtx.createMediaStreamSource(source);
+    } else if (source && source.tagName) {  // a media element
+      audioSrcNode = audioCtx.createMediaElementSource(source);
+      audioSrcNode.connect(audioCtx.destination);   // keep it audible
+    } else return false;
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 2048; analyser.smoothingTimeConstant = 0.8;
+    audioSrcNode.connect(analyser);
+    audioTimeBuf = new Uint8Array(analyser.fftSize);
+    audioFreqBuf = new Uint8Array(analyser.frequencyBinCount);
+    audioAttached = true;
+    buildAudioMeters();
+    startMeterLoop();   // ensure the loop is running so the audio meters animate
+    return true;
+  } catch (e) { audioAttached = false; return false; }
+}
+function detachAudio() {
+  try { if (audioSrcNode) audioSrcNode.disconnect(); } catch (e) {}
+  try { if (analyser) analyser.disconnect(); } catch (e) {}
+  audioSrcNode = null; analyser = null; audioAttached = false;
+  audioMetersIdle();
+}
+// Read the analyser once (called each live tick). Updates level / spectrum / pitch, or idles.
+function pollAudio() {
+  if (!audioAttached || !analyser) return;
+  analyser.getByteTimeDomainData(audioTimeBuf);
+  analyser.getByteFrequencyData(audioFreqBuf);
+  const level = rmsFromBytes(audioTimeBuf);
+  const lf = $("mm-au-level"), lv = $("mm-au-level-v");
+  if (lf) lf.style.width = Math.min(1, level * 2.2) * 100 + "%";
+  if (lv) lv.textContent = level < 0.005 ? "—" : level.toFixed(3);
+  const bars = spectrumBands(audioFreqBuf, 12);
+  const sp = $("mm-au-spectrum");
+  if (sp) { const els = sp.querySelectorAll(".mm-bar"); bars.forEach((b, i) => { if (els[i]) els[i].style.height = Math.max(2, b * 100) + "%"; }); }
+  const hz = dominantPitchHz(audioFreqBuf, audioCtx.sampleRate, analyser.fftSize);
+  const pf = $("mm-au-pitch"), pv = $("mm-au-pitch-v");
+  if (pf) pf.style.width = Math.min(1, hz / 4000) * 100 + "%";
+  if (pv) pv.textContent = hz ? hz + " Hz" : "—";
+}
+window.__studioAttachAudio = attachAudio;
+window.__studioDetachAudio = detachAudio;
+
+// ── wire the loop into the source lifecycle ──────────────────────────────────
+// Animated sources start the loop; static ones run it briefly (it self-idles via STATIC_STOP).
+// Initialise the idle audio meters + an empty mosaic at boot so the panel reads honestly from t=0.
+audioMetersIdle();
+buildMeters();
