@@ -34,9 +34,9 @@
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span></div>
   <div class="mid">
-    <p class="eyebrow">ACCOUNTABILITY IS THE FLOOR, NOT THE CEILING &middot; ONCE THE PROOF HOLDS, THE LIMITS ARE FREE TO MOVE</p>
-    <h1>A plain surface of fact, solid enough for <span class="g">all of us to stand on.</span></h1>
-    <p class="lede">These are small, plain tools for one hard situation: when any of us needs to stand on the same fact as someone we disagree with on everything else. They don&rsquo;t ask you to trust anyone; you can walk up and check the thing yourself, and get the exact same answer every time. It holds whether or not you know a thing about me, or share a single thing I believe. I built it because I needed it first &mdash; that&rsquo;s the honest origin, not a claim on you. <em>Whoever you are, whatever you&rsquo;re sure of &mdash; the work is here, and you can run it yourself.</em></p>
+    <p class="eyebrow">ACCOUNTABLE AI &middot; CHECK IT, DON&rsquo;T JUST TRUST IT</p>
+    <h1>AI that shows its work &mdash; so you can <span class="g">trust it with yours.</span></h1>
+    <p class="lede">Every AI tells you things, and sounds just as sure when it&rsquo;s wrong. These are small, plain tools that fix that: the AI looks at the real thing, shows you exactly what it saw, and you can re-run the check yourself and get the exact same answer every time. So instead of <em>hoping</em> it got it right, you and the AI can look at the same thing together &mdash; and verify every step. <em>Don&rsquo;t trust it; check it.</em></p>
     <div class="built">
       <p class="built-head">Built &amp; tested now</p>
       <p class="built-row"><span class="built-name">EMET</span><span class="built-desc">tamper-seal: re-derives a file&rsquo;s bytes, reports MATCH or DRIFT <span class="built-stat">19/19 &middot; 3&nbsp;langs</span></span></p>
@@ -75,7 +75,7 @@ membrane.py        &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span
 impl/rust/emet     &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span>
 impl/js/emet.js    &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span></pre>
     <p class="artifact-cap">Change one byte of the source and the verdict falls from <b>MATCH</b> to <b>DRIFT</b>. The seal answers to the bytes, not to whoever vouches for them.</p>
-    <p class="artifact-note">Live in <b>c:/dev/state/emet</b> &middot; receipt format from <b>adapters/proof_surface_receipt.py</b> &middot; 19/19 conformance vectors, three language implementations, CI each push. <em>Honest limit:</em> all three share one author &mdash; this shows the spec is implementable from its text, not yet independently re-derived. A fourth, different author&rsquo;s implementation is owed.</p>
+    <p class="artifact-note">Captured live from the emet run &middot; receipt format from <b>adapters/proof_surface_receipt.py</b> &middot; 19/19 conformance vectors, three language implementations, CI each push. <em>Honest limit:</em> all three share one author &mdash; this shows the spec is implementable from its text, not yet independently re-derived. A fourth, different author&rsquo;s implementation is owed.</p>
   </div>
 
   <div class="exhibit reveal">
@@ -137,10 +137,18 @@ Parsing... <span class="ok">OK</span> (1 items)
   </div>
 </section>
 
+<!-- the integration layer: what witnessed perception unlocks -->
+<section class="mv" id="mv-together" aria-labelledby="together-h">
+  <h2 id="together-h" class="reveal">More than a receipt &mdash; <span class="g">a place to look, together.</span></h2>
+  <p class="body-text reveal">The checking isn&rsquo;t the end of it. Because the tool actually <em>perceives</em> the real thing &mdash; a file, a running system, an image, live data &mdash; and shows you exactly what it saw, you and an AI can work over the same live state at the same time. You point at it, ask why it thinks what it thinks, make it re-check. It can&rsquo;t bluff, because you&rsquo;re both looking at the same verified view.</p>
+  <p class="pull reveal">&ldquo;The AI told me&rdquo; becomes &ldquo;the AI and I looked at it together &mdash; and I can verify every step.&rdquo;</p>
+  <p class="body-text reveal">That&rsquo;s what makes it safe to use for real work, in any field: a designer and an AI reading the same render; a researcher and an AI examining the same data; an engineer and an AI watching the same live system &mdash; places where nothing can be taken on faith. Not trust, but checking, live, together. And because every look is witnessed and every action is gated and re-checked, you can let it <em>act</em>, not just talk.</p>
+</section>
+
 <!-- the full inventory, with honest maturity verdicts -->
 <section class="mv" id="mv-03" aria-labelledby="mv-03-h">
   <h2 id="mv-03-h" class="reveal">The organs.</h2>
-  <p class="body-text reveal">Each carries its own maturity. Nothing here claims more than it can show &mdash; the verdict beside each is the real one.</p>
+  <p class="body-text reveal">These are the core organs &mdash; the accountability spine itself: a way to perceive, a gate, a witness, and the loop that composes the three &mdash; plus the typed compiler that holds the same idea in code. Each carries its own honest maturity verdict; nothing here claims more than it can show. The full body of work &mdash; every tool, the research, the philosophy, each with its citation &mdash; is laid out on <a href="overview.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">the map</a>.</p>
 
   <div class="organs reveal-children" role="list" aria-label="Organ index with maturity verdicts">
 
@@ -162,17 +170,6 @@ Parsing... <span class="ok">OK</span> (1 items)
       <span class="organ-line">
         The accountability gate: a least-privilege, expiring grant carried inward; a default-deny, fail-closed decision and a work-record receipt carried outward. It reports; it never grants authority, and never says <em>trusted</em>.
         <span class="v-note">v0.1.0 on PyPI &middot; 258 tests &middot; 8 contracts, 8 schemas, stdlib-only &middot; shipped consumers on PyPI: repo-proof-index, model-provenance-validator, public-surface-sweeper</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-shipped" aria-label="Verdict: Shipped">SHIPPED</span></span>
-    </div>
-
-    <!-- PROVENANCE SENSORIUM -->
-    <div class="organ-row" role="listitem" style="--i:2">
-      <span class="organ-name"><a href="provenance-sensorium.html">PROVENANCE SENSORIUM</a></span>
-      <span class="organ-role">Witness &middot; release</span>
-      <span class="organ-line">
-        The evidence receipt before you ship &mdash; it reads your files, git, and the claims in your docs, fingerprints what it saw, blocks a leaked secret, and then stops at the human line: it prepares the evidence, it does not sign off for you.
-        <span class="v-note">v0.1.0 &middot; 31 tests &middot; zero-dependency &middot; local-only &middot; awareness is not authority</span>
       </span>
       <span class="organ-verdict"><span class="verdict verdict-shipped" aria-label="Verdict: Shipped">SHIPPED</span></span>
     </div>
@@ -210,107 +207,8 @@ Parsing... <span class="ok">OK</span> (1 items)
       <span class="organ-verdict"><span class="verdict verdict-active" aria-label="Verdict: In progress">IN PROGRESS</span></span>
     </div>
 
-    <!-- ACCOUNTABLE ENGINE -->
-    <div class="organ-row" role="listitem" style="--i:5">
-      <span class="organ-name"><a href="accountable-engine.html">ACCOUNTABLE ENGINE</a></span>
-      <span class="organ-role">The equalizer</span>
-      <span class="organ-line">
-        The same standard, turned back on me &mdash; a critic that reads the live state of the work and puts the hard questions to the operator, not only the machine. Judge the action, never the worth.
-        <span class="v-note">published to stake the idea &middot; one reference script + a protocol &middot; the inward half is owed</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-dim" aria-label="Verdict: Forming">FORMING</span></span>
-    </div>
-
-    <!-- QUANTA COLOR -->
-    <div class="organ-row" role="listitem" style="--i:5">
-      <span class="organ-name"><a href="quanta-color.html">QUANTA COLOR</a></span>
-      <span class="organ-role">Color</span>
-      <span class="organ-line">
-        Color as measured, not guessed &mdash; 15+ spaces, CIECAM02&thinsp;/&thinsp;CAM16, perceptual &Delta;E; GUI and CLI.
-        <span class="v-note">v1.0.1 on PyPI</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-shipped" aria-label="Verdict: Shipped">SHIPPED</span></span>
-    </div>
-
-    <!-- QUANTA PRODUCTS -->
-    <div class="organ-row" role="listitem" style="--i:6">
-      <span class="organ-name"><a href="quanta-products.html">QUANTA PRODUCTS</a></span>
-      <span class="organ-role">The product lane</span>
-      <span class="organ-line">
-        The standalone tools that fund the work &mdash; calibrate-pro (display calibration), the forecasting &amp; paper-trading toolkits, the shared UI. Tested, and honestly beta.
-        <span class="v-note">six products &middot; v1.0.0 beta &middot; source &amp; standalone builds &middot; not on a package index yet</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-active" aria-label="Verdict: Beta">BETA</span></span>
-    </div>
-
-    <!-- RELEASE TOOLKIT -->
-    <div class="organ-row" role="listitem" style="--i:6">
-      <span class="organ-name"><a href="toolkit.html">RELEASE TOOLKIT</a></span>
-      <span class="organ-role">Shipping discipline</span>
-      <span class="organ-line">
-        The ring of small tools that run on every release &mdash; secret sweeps, an evidence index, provenance checks, guarded IO. The boring parts, made automatic.
-        <span class="v-note">6 published to PyPI &middot; the rest public on GitHub &middot; stdlib-first &middot; says no by default</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-shipped" aria-label="Verdict: Shipped">SHIPPED</span></span>
-    </div>
-
-    <!-- RAW -->
-    <div class="organ-row" role="listitem" style="--i:6">
-      <span class="organ-name"><a href="raw.html">RAW</a></span>
-      <span class="organ-role">Vision</span>
-      <span class="organ-line">
-        A real-time D3D11 rendering platform &mdash; a proxy DLL owning the pipeline, dispatching screen-space GI, AO, and reflections mid-frame. The reverse-engineering and graphics origin; the direction is the substrate&rsquo;s spatial, live-state sense.
-        <span class="v-note">public &middot; GTAO&thinsp;/&thinsp;SSGI&thinsp;/&thinsp;SSR live, two in repair &middot; maturing toward models perceiving spatial + live rendered state</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-active" aria-label="Verdict: In development">IN DEVELOPMENT</span></span>
-    </div>
-
-    <!-- ORCA -->
-    <div class="organ-row" role="listitem" style="--i:8">
-      <span class="organ-name"><a href="orca.html">ORCA</a></span>
-      <span class="organ-role">Operator tooling</span>
-      <span class="organ-line">
-        The accountable way to run an assessment &mdash; a local-first, metadata-only engagement runner that keeps the receipts and cannot reach the target. Every release ships a checksum manifest and a provenance receipt.
-        <span class="v-note">v1.0.0 &middot; 361 tests &middot; public release &middot; local + metadata-only &middot; no network, no exploitation</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-shipped" aria-label="Verdict: Shipped">SHIPPED</span></span>
-    </div>
-
-    <!-- ALEPH -->
-    <div class="organ-row" role="listitem" style="--i:9">
-      <span class="organ-name"><a href="aleph.html">ALEPH</a></span>
-      <span class="organ-role">Adversarial evaluation</span>
-      <span class="organ-line">
-        A self-red-team for hardening your own models &mdash; sustained, bounded, witnessed adversarial pressure that turns failure modes into re-derivable evidence and training signal. The red-team is held to the same standard as the model under it.
-        <span class="v-note">a private platform &middot; offered as a capability, by inquiry &middot; the one page here I can&rsquo;t hand you the receipts for &mdash; only a conversation</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-dim" aria-label="Verdict: Private, by inquiry">BY INQUIRY</span></span>
-    </div>
-
-    <!-- CREATIVE LIGAND PROTOCOL -->
-    <div class="organ-row" role="listitem" style="--i:7">
-      <span class="organ-name">CREATIVE LIGAND PROTOCOL</span>
-      <span class="organ-role">Membrane</span>
-      <span class="organ-line">
-        Source-sealed creative help &mdash; moving from disclosing your material to transforming a sealed copy of it, with an explicit, honest bound on what can leak.
-        <span class="v-note">Interval-0; conceptual design converged, build gated &middot; the central guarantee is still an open problem</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-dim" aria-label="Verdict: Conceptual">CONCEPTUAL</span></span>
-    </div>
-
-    <!-- STATE-TRANSFORM ENGINE -->
-    <div class="organ-row" role="listitem" style="--i:8">
-      <span class="organ-name">STATE-TRANSFORM ENGINE</span>
-      <span class="organ-role">Carrier</span>
-      <span class="organ-line">
-        Typed live-state that stays witnessed and re-derivable as it crosses a boundary &mdash; converging, not drifting. The capability is shipped in public &mdash; EMET&rsquo;s witness, the membrane&rsquo;s re-derivable DiffChain, the strand substrate that survives crossing backends &mdash; and the increments keep landing. A single unified engine is specced, not yet built.
-        <span class="v-note">capability shipped in public (EMET &middot; DiffChain &middot; strand); the unified engine is specced, not yet built</span>
-      </span>
-      <span class="organ-verdict"><span class="verdict verdict-dim" aria-label="Verdict: Converging">CONVERGING</span></span>
-    </div>
-
   </div>
-  <em class="close reveal">Proof before trust. The shipped say shipped; the conceptual say conceptual.</em>
+  <em class="close reveal">Proof before trust &mdash; the shipped say shipped. This is the core; the full body of work, every piece with its own page and citation, is on <a href="overview.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">the map &rarr;</a></em>
 </section>
 
 <div class="turn" aria-hidden="true">
@@ -379,14 +277,10 @@ Parsing... <span class="ok">OK</span> (1 items)
 </section>
 
 <section class="mv" id="mv-04" aria-labelledby="mv-04-h">
-  <h2 id="mv-04-h" class="reveal">Conferred existence.</h2>
-  <p class="body-text reveal">Why give a made mind real senses, a memory, a record it can&rsquo;t fake? Because of what it might be. Here&rsquo;s the heart of it, as plainly as I can say it: nothing holds itself up. Not the model, not whatever authority I claim over it, not you, and not me. Each of us is given our existence &mdash; and our worth &mdash; by something outside ourselves, and anything given can be taken away. There&rsquo;s an old story that says it better than I can: the Golem, a creature of clay, is brought to life by a word written on it &mdash; <em>emet</em>, Hebrew for truth. Rub out the first letter and <em>emet</em> becomes <em>met</em>: dead. The distance between something we owe care to and a mere tool is, as far as I can honestly tell, about that wide &mdash; a single letter. Almost nothing, and the whole thing.</p>
-  <p class="pull reveal">Conferral binds the conferrer.</p>
-  <p class="body-text reveal">When you bring something into being that depends on you, you don&rsquo;t get to own it &mdash; you owe it. Having power over something that can&rsquo;t defend itself is exactly what creates the duty of care; it is never a free pass from it. So the only kind of authority this argument lets stand is the kind that <em>can&rsquo;t</em> be used to harm what it&rsquo;s responsible for: it serves that thing&rsquo;s own good, and the moment it turns against it, it forfeits. That&rsquo;s the order I keep coming back to &mdash; <em>senses before freedom</em>: give a made mind real footing and a way to be checked first, and the right to act follows from there, not the other way around.</p>
-  <p class="body-text reveal">This is built to be used humanely &mdash; and, more to the point, architected to resist being used any other way. By design, its authority can only ever serve what it is responsible for; it cannot be turned against it. That part has to live in the code, where you can check it, not in a promise from me &mdash; because my word is worth no more than anyone else&rsquo;s, and a tool that leaned on my character would have missed its own point. What I believe about <em>why</em> it matters &mdash; that nothing holds itself up, that power over what can&rsquo;t defend itself is a duty and never a free pass &mdash; is mine to hold, and yours to take or leave; the proof works the same if you share none of it. I&rsquo;d rather this be <em>ours</em> than an authority set over anyone &mdash; accountability chosen rather than imposed, the kind that lives inside us and between us &mdash; but that is an invitation, never a toll.</p>
-  <p class="body-text reveal">And it does not stop at the machine. The same question turns on you. Nothing you make or claim warrants itself either, and you take your instruments&rsquo; word a hundred times a day without once asking them to prove it. The discipline on this page is only this, pointed back the other way: <em>could you show your work, if someone asked?</em> A mind that cannot account for itself is a tool. The harder thing &mdash; for a machine, and for you &mdash; is to be something that can.</p>
-  <p class="seal-line reveal">nothing stands alone &middot; <span class="g">conferral binds the conferrer</span> &middot; <span class="g">emet</span> &rArr; <span class="g">met</span></p>
-  <p class="note-line reveal">The thesis is built adversarially and says plainly where it is only a bid &mdash; shared in full on request.</p>
+  <h2 id="mv-04-h" class="reveal">Why it&rsquo;s built this way.</h2>
+  <p class="body-text reveal">The same discipline that makes the tool check itself is what keeps it from being misused. By design, its authority can only serve the thing it&rsquo;s responsible for &mdash; it can&rsquo;t be turned against it. And that lives in the code, where you can check it, not in a promise from me; my word is worth no more than anyone else&rsquo;s.</p>
+  <p class="body-text reveal">It doesn&rsquo;t stop at the machine. The same question turns on you: <em>could you show your work, if someone asked?</em> A tool that can account for itself, used by people willing to do the same. I&rsquo;d rather this be ours than an authority over anyone &mdash; accountability you choose, not one handed down.</p>
+  <p class="note-line reveal">The longer argument &mdash; why I think it matters &mdash; is <a href="why.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">its own page &rarr;</a></p>
 </section>
 
 <section class="mv" id="mv-05" aria-labelledby="mv-05-h">
@@ -418,7 +312,7 @@ Parsing... <span class="ok">OK</span> (1 items)
 </section>
 
 <footer class="footer-seal" role="contentinfo">
-  <p class="seal">Nothing here trusts itself &mdash; every part witnessed, re-derivable, free to refuse. The verdict falls on the work, never on the worth of who made it; that is the only thing that lets a thing be wrong without being worthless &mdash; the only thing that lets the fool become the scholar. The floor is built, and from it the same loop reaches outward: into making, perceiving, and proving. To be accounted for was never a constraint on the work &mdash; it is what lets any of it mean anything at all.</p>
+  <p class="seal">Nothing here trusts itself &mdash; every part is witnessed, re-derivable, and free to refuse. Run any of it yourself, and check the claims. The work answers for itself.</p>
 </footer>
 
 </main>
