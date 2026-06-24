@@ -333,8 +333,12 @@
             <label class="mc-label" for="mc-endpoint">Endpoint URL
               <input class="mc-input" type="url" id="mc-endpoint" placeholder="https://api.openai.com/v1/chat/completions" autocomplete="off">
             </label>
-            <label class="mc-label" for="mc-key">API key
-              <input class="mc-input" type="password" id="mc-key" placeholder="sk-…" autocomplete="off" aria-describedby="mc-note">
+            <p class="mc-hint">Self-host a model and connect it — your frames stay between your browser and that endpoint.<br>
+              Ollama: <code>http://localhost:11434/v1/chat/completions</code><br>
+              LM Studio: <code>http://localhost:1234/v1/chat/completions</code>
+            </p>
+            <label class="mc-label" for="mc-key">API key <span class="mc-key-optional">(optional — local models need none)</span>
+              <input class="mc-input" type="password" id="mc-key" placeholder="sk-… (leave blank for local endpoints)" autocomplete="off" aria-describedby="mc-note">
             </label>
             <label class="mc-label" for="mc-model">Model name (optional)
               <input class="mc-input" type="text" id="mc-model" placeholder="gpt-4o" autocomplete="off">

@@ -7,6 +7,7 @@ import { renderFractal, PRESETS } from "./fractal.js";
 import { renderFractalGL, isFractalGLAvailable } from "./fractal-gl.js";
 import { render3D } from "./fractal3d.js";
 import { sizeToDisplay } from "./canvas-scale.js";
+import { buildModelHeaders } from "./studio-model.js";
 const $ = id => (window.__overlayDoc && window.__overlayDoc.getElementById(id)) || document.getElementById(id);
 const fmt = (v,n=3)=>typeof v==="number"?(Number.isInteger(v)?String(v):v.toFixed(n)):String(v);
 // drift is per-canvas (Task 6 review carry-in): keyed by the canvas instance, so switching
@@ -1921,9 +1922,14 @@ window.addEventListener("resize", () => {
 // Initialise the idle audio meters + an empty mosaic at boot so the panel reads honestly from t=0.
 audioMetersIdle();
 buildMeters();
-// ── Advanced model-connect panel (Task 8m) ───────────────────────────────────
+// ── Advanced model-connect panel (Task 8m / 8n-seed) ────────────────────────
 // Builds a fetch-based fn over any OpenAI-compatible endpoint and wires it to Studio.connectModel.
 // Key stored in memory + sessionStorage only — never localStorage, never committed.
+//
+// DEFAULT_MODEL — operator can seed a shared self-hosted endpoint here.
+// Ships empty; NEVER commit a real key or endpoint in this file.
+const DEFAULT_MODEL = { endpoint: "", key: "", model: "" };
+
 let _storedKey = sessionStorage.getItem("studio_model_key") || "";
 if (_storedKey) {
   const keyEl = $("mc-key");
@@ -1971,10 +1977,7 @@ function makeModelFn(endpoint, key, modelName) {
     };
     const resp = await fetch(endpoint, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + key,
-      },
+      headers: buildModelHeaders(key),
       body: JSON.stringify(body),
     });
     if (!resp.ok) throw new Error("HTTP " + resp.status);
@@ -1998,18 +2001,19 @@ if (mcConnect) {
       if (mcStatus) { mcStatus.textContent = "Enter an endpoint URL first."; }
       return;
     }
-    // Accept masked placeholder as "use stored key"
+    // Accept masked placeholder as "use stored key"; key is OPTIONAL (local models need none).
     const key = rawKey === "••••••••" ? _storedKey : rawKey;
-    if (!key) {
-      if (mcStatus) { mcStatus.textContent = "Enter your API key."; }
-      return;
+    if (key) {
+      _storedKey = key;
+      try { sessionStorage.setItem("studio_model_key", key); } catch (_) {}
     }
-    _storedKey = key;
-    try { sessionStorage.setItem("studio_model_key", key); } catch (_) {}
     window.Studio.connectModel(makeModelFn(endpoint, key, model));
     mcConnect.disabled = true;
     if (mcDisconnect) mcDisconnect.disabled = false;
-    if (mcStatus) mcStatus.textContent = "Connected — free-text questions now route through your model.";
+    const statusMsg = key
+      ? "Connected — free-text questions now route through your model."
+      : "Connected (no key — local endpoint) — free-text questions route to your local model.";
+    if (mcStatus) mcStatus.textContent = statusMsg;
     say("model", "Connected to your model endpoint. Ask me anything — I’ll use it for open-ended reasoning, and fall back to the grounded responder if it’s unreachable.");
   });
 }
@@ -2026,6 +2030,39 @@ if (mcDisconnect) {
     say("model", "Disconnected from the model endpoint. Back to the grounded perception layer.");
   });
 }
+
+// ── DEFAULT_MODEL auto-connect (operator-seeded shared endpoint) ─────────────
+// If DEFAULT_MODEL.endpoint is set, attempt a guarded connect on load. On success: wire the model
+// and post a one-line disclosure note in chat. On failure: stay silent on the grounded responder.
+// NEVER commit a real endpoint or key — DEFAULT_MODEL ships empty.
+(async function tryDefaultModel() {
+  if (!DEFAULT_MODEL.endpoint) return;
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 6000);
+    const testBody = JSON.stringify({
+      model: DEFAULT_MODEL.model || "gpt-4o",
+      messages: [{ role: "user", content: "ping" }],
+      max_tokens: 1,
+    });
+    const resp = await fetch(DEFAULT_MODEL.endpoint, {
+      method: "POST",
+      headers: buildModelHeaders(DEFAULT_MODEL.key),
+      body: testBody,
+      signal: ctrl.signal,
+    });
+    clearTimeout(timer);
+    if (!resp.ok) return; // silent fail — stay on grounded responder
+    window.Studio.connectModel(makeModelFn(DEFAULT_MODEL.endpoint, DEFAULT_MODEL.key, DEFAULT_MODEL.model));
+    // Update the connect UI to reflect the seeded connection
+    if (mcConnect)    mcConnect.disabled = true;
+    if (mcDisconnect) mcDisconnect.disabled = false;
+    if (mcStatus) mcStatus.textContent = "Connected (site default) — operator-hosted model active.";
+    say("model", "Open-ended replies are coming from a model the site operator is hosting — your frame and message are sent to it. (It falls back to the on-page reading if that’s offline.)");
+  } catch (_) {
+    // Timeout, network error, or abort: silently stay on grounded responder.
+  }
+})();
 
 // Boot the source menu — Atelier active by default (mirrors the old setMode("generate")).
 setSource("atelier");
