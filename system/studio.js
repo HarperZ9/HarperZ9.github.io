@@ -9,6 +9,7 @@ import { render3D } from "./fractal3d.js";
 import { sizeToDisplay } from "./canvas-scale.js";
 import { buildModelHeaders } from "./studio-model.js";
 import { renderScene } from "./ndim.js";
+import { drawSceneGL } from "./lib/render-nd/backends/webgl.mjs";
 const $ = id => (window.__overlayDoc && window.__overlayDoc.getElementById(id)) || document.getElementById(id);
 const fmt = (v,n=3)=>typeof v==="number"?(Number.isInteger(v)?String(v):v.toFixed(n)):String(v);
 // drift is per-canvas (Task 6 review carry-in): keyed by the canvas instance, so switching
@@ -623,6 +624,17 @@ let _ndimStartTime = null;       // animation start timestamp (for t parameter)
 let _activeNDimKind = "cube";        // current polytope kind (chip selection)
 let _activeNDimProjection = "perspective"; // current projection mode (chip selection)
 
+// Lazy offscreen WebGL canvas for the nD renderer (GL-primary, 2D fallback).
+let _ndGLCanvas = null, _ndGL = null, _ndGLTried = false;
+function ndGL() {
+  if (_ndGLTried) return _ndGL;
+  _ndGLTried = true;
+  _ndGLCanvas = document.createElement("canvas");
+  const opts = { preserveDrawingBuffer: true, antialias: true, alpha: false };
+  _ndGL = _ndGLCanvas.getContext("webgl", opts) || _ndGLCanvas.getContext("experimental-webgl", opts) || null;
+  return _ndGL;
+}
+
 // Stop any running n-dim animation RAF. Idempotent.
 function stopNDim() {
   if (_ndimRaf != null) { cancelAnimationFrame(_ndimRaf); _ndimRaf = null; }
@@ -666,31 +678,39 @@ function drawNDimFrame(canvas, n, t, speed, kind, projection) {
   const halfW = w / 2, halfH = h / 2;
   const lineW = Math.max(0.4, 1.2 - n * 0.06);
 
-  ctx.save();
-  ctx.lineWidth = lineW;
+  const gl = ndGL();
+  if (gl) {
+    _ndGLCanvas.width = w; _ndGLCanvas.height = h;
+    drawSceneGL(gl, scene, { width: w, height: h });
+    ctx.drawImage(_ndGLCanvas, 0, 0, w, h);
+  } else {
+    // 2D fallback (no WebGL): draw edges and vertices via the 2D context.
+    ctx.save();
+    ctx.lineWidth = lineW;
 
-  // Draw edges — color + opacity from depth cue provided by renderScene.
-  for (const seg of scene.segments) {
-    const [r, g, b] = seg.color;
-    ctx.strokeStyle = `rgba(${r},${g},${b},${seg.opacity.toFixed(3)})`;
-    ctx.beginPath();
-    ctx.moveTo(halfW + seg.x1 * halfW, halfH - seg.y1 * halfH);
-    ctx.lineTo(halfW + seg.x2 * halfW, halfH - seg.y2 * halfH);
-    ctx.stroke();
+    // Draw edges — color + opacity from depth cue provided by renderScene.
+    for (const seg of scene.segments) {
+      const [r, g, b] = seg.color;
+      ctx.strokeStyle = `rgba(${r},${g},${b},${seg.opacity.toFixed(3)})`;
+      ctx.beginPath();
+      ctx.moveTo(halfW + seg.x1 * halfW, halfH - seg.y1 * halfH);
+      ctx.lineTo(halfW + seg.x2 * halfW, halfH - seg.y2 * halfH);
+      ctx.stroke();
+    }
+
+    // Draw vertices as filled arcs — size + color from depth cue.
+    for (const pt of scene.points) {
+      const [r, g, b] = pt.color;
+      ctx.fillStyle = `rgba(${r},${g},${b},${pt.opacity.toFixed(3)})`;
+      const sx = halfW + pt.x * halfW;
+      const sy = halfH - pt.y * halfH;
+      ctx.beginPath();
+      ctx.arc(sx, sy, pt.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.restore();
   }
-
-  // Draw vertices as filled arcs — size + color from depth cue.
-  for (const pt of scene.points) {
-    const [r, g, b] = pt.color;
-    ctx.fillStyle = `rgba(${r},${g},${b},${pt.opacity.toFixed(3)})`;
-    const sx = halfW + pt.x * halfW;
-    const sy = halfH - pt.y * halfH;
-    ctx.beginPath();
-    ctx.arc(sx, sy, pt.size, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  ctx.restore();
   return scene.meta;
 }
 
