@@ -1278,9 +1278,14 @@ if (chatForm && chatText) {
   const sendMessage = async () => {
     const v = chatText.value.trim(); if (!v) return;
     chatText.value = "";
+    // Disable input during async model call to prevent double-send race.
+    const sendBtn = $("chat-send");
+    if (sendBtn) sendBtn.disabled = true;
+    if (chatText) chatText.disabled = true;
     say("you", v);
     const ctx = buildCtx();
     const hist = getHistory();
+    try {
     if (_connectedModelFn) {
       // Route through connected model with 8s timeout + fallback
       let reply;
@@ -1294,13 +1299,17 @@ if (chatForm && chatText) {
       say("model", reply);
       pushHistory(v, reply, ctx.phash);
     } else {
-      // One-time note about model seam (only if history is empty = first message in session)
+      // first exchange just completed — chatHistory.length is now 1
       const reply = respond(v, ctx, hist);
       say("model", reply);
       pushHistory(v, reply, ctx.phash);
       if (chatHistory.length === 1) {
         say("model", "Open-ended reasoning (jokes, stories, explanations) runs when a real model is connected — use the Advanced panel below, or open the native app.");
       }
+    }
+    } finally {
+      if (sendBtn) sendBtn.disabled = false;
+      if (chatText) chatText.disabled = false;
     }
   };
   chatForm.addEventListener("submit", e => { e.preventDefault(); sendMessage(); });
