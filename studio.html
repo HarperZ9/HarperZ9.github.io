@@ -182,12 +182,32 @@
         </div>
       </section>
 
-      <!-- SOURCE: Dimensions (Task 8p) — animated n-dimensional hypercube renderer, 1D–10D.
+      <!-- SOURCE: Dimensions (Task 8p) — animated n-dimensional polytope renderer, 1D–10D.
            Draws lines into the shared #studio-canvas (a normal 2D context — no WebGL swap needed).
-           Controls: dimension slider (1–10), speed slider, Render button. -->
+           Controls: kind chips, projection chips, dimension slider (1–10), speed slider, Render button. -->
       <section class="src-block" id="src-ndim" role="tabpanel" aria-label="Dimensions controls" hidden>
         <div class="fractal-source" id="ndim-source">
           <div class="at-panel">
+            <details class="rail-group" open>
+              <summary>Polytope &amp; projection</summary>
+              <div class="at-group">
+                <span class="at-glab">Kind</span>
+                <div class="at-chips" role="group" aria-label="Polytope kind" id="ndim-kind">
+                  <button type="button" class="chip active" data-ndim-kind="cube">Hypercube</button>
+                  <button type="button" class="chip" data-ndim-kind="simplex">Simplex</button>
+                  <button type="button" class="chip" data-ndim-kind="orthoplex">Cross-polytope</button>
+                  <button type="button" class="chip" data-ndim-kind="24cell">24-cell</button>
+                </div>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Projection</span>
+                <div class="at-chips" role="group" aria-label="Projection mode" id="ndim-projection">
+                  <button type="button" class="chip active" data-ndim-proj="perspective">Perspective</button>
+                  <button type="button" class="chip" data-ndim-proj="orthographic">Orthographic</button>
+                  <button type="button" class="chip" data-ndim-proj="stereographic">Stereographic</button>
+                </div>
+              </div>
+            </details>
             <details class="rail-group" open>
               <summary>Dimension &amp; speed</summary>
               <div class="at-group">
