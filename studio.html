@@ -46,6 +46,7 @@
       <button type="button" role="tab" data-source="atelier"  aria-selected="true"  aria-controls="src-atelier">Atelier</button>
       <button type="button" role="tab" data-source="fractal"   aria-selected="false" aria-controls="src-fractal">2D Fractal</button>
       <button type="button" role="tab" data-source="fractal3d" aria-selected="false" aria-controls="src-fractal3d">3D Fractal</button>
+      <button type="button" role="tab" data-source="ndim"      aria-selected="false" aria-controls="src-ndim">Dimensions</button>
       <button type="button" role="tab" data-source="byo"       aria-selected="false" aria-controls="src-byo">Bring your own</button>
       <button type="button" role="tab" data-source="watch"     aria-selected="false" aria-controls="src-watch">Watch with me</button>
     </div>
@@ -177,6 +178,34 @@
             <div class="at-actions">
               <button class="btn" id="f3-render" type="button">Render</button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SOURCE: Dimensions (Task 8p) — animated n-dimensional hypercube renderer, 1D–10D.
+           Draws lines into the shared #studio-canvas (a normal 2D context — no WebGL swap needed).
+           Controls: dimension slider (1–10), speed slider, Render button. -->
+      <section class="src-block" id="src-ndim" role="tabpanel" aria-label="Dimensions controls" hidden>
+        <div class="fractal-source" id="ndim-source">
+          <div class="at-panel">
+            <details class="rail-group" open>
+              <summary>Dimension &amp; speed</summary>
+              <div class="at-group">
+                <span class="at-glab">Dimensions <span class="hint">&mdash; n=4 is the tesseract; n=10 has 1024 vertices</span></span>
+                <div class="at-seedrow">
+                  <input type="range" class="at-slider" id="ndim-n" min="1" max="10" value="4" aria-label="Number of dimensions">
+                  <span class="at-seed" id="ndim-n-val" style="width:2.2rem;text-align:center">4</span>
+                </div>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Speed <span class="hint">&mdash; rotation rate (<span id="ndim-speed-val">1.0</span>&times;)</span></span>
+                <input type="range" class="at-slider" id="ndim-speed" min="0.1" max="3" step="0.1" value="1" aria-label="Rotation speed">
+              </div>
+            </details>
+            <div class="at-actions">
+              <button class="btn" id="ndim-render" type="button">Render</button>
+            </div>
+            <p class="src-hint">The eye perceives each frame as it rotates through dimensions you can't quite hold.</p>
           </div>
         </div>
       </section>
