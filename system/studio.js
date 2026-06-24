@@ -6,7 +6,7 @@ import { respond } from "./respond.js";
 import { renderFractal, PRESETS } from "./fractal.js";
 import { render3D } from "./fractal3d.js";
 import { sizeToDisplay } from "./canvas-scale.js";
-const $ = id => document.getElementById(id);
+const $ = id => (window.__overlayDoc && window.__overlayDoc.getElementById(id)) || document.getElementById(id);
 const fmt = (v,n=3)=>typeof v==="number"?(Number.isInteger(v)?String(v):v.toFixed(n)):String(v);
 // drift is per-canvas (Task 6 review carry-in): keyed by the canvas instance, so switching
 // modes / sources doesn't compare against an unrelated frame and show a misleading drift.
@@ -1356,6 +1356,182 @@ if (qualityBtn) {
   // Initialise label.
   const valEl = $("rt-quality-val"); if (valEl) valEl.textContent = currentQuality().label;
 }
+
+// ══ Overlay / Pop-out mode (Task 8h) ═════════════════════════════════════════
+// Floats the live measurimeter readout so it stays visible outside the Studio page.
+// Path A — Document Picture-in-Picture: move the panel-scroll node into an always-on-top
+//   browser window; restore on pagehide. Requires documentPictureInPicture API (Chrome 116+).
+// Path B — Fallback: a draggable in-page panel (position:fixed) holding the same node.
+//
+// The live loop uses $() which now checks window.__overlayDoc first (see $ helper), so all
+// id lookups resolve to whichever document the node currently lives in — no loop changes needed.
+
+let overlayOpen = false;
+let overlayFallbackEl = null;   // the in-page floating panel DOM node (fallback path)
+let overlayOrigParent = null;   // #panel-scroll's original parent (.studio-panel aside)
+let pipWin = null;              // the PiP window (path A)
+
+function closeOverlay() {
+  if (!overlayOpen) return;
+  const panelScroll = overlayOrigParent;
+  const studioPanel = document.getElementById("studio-panel");
+
+  if (pipWin) {
+    window.__overlayDoc = null;
+    // Restore panel-scroll to the Studio aside before the PiP window closes
+    if (studioPanel && panelScroll && panelScroll.parentNode !== studioPanel) {
+      const chatDock = studioPanel.querySelector(".chat-dock");
+      studioPanel.insertBefore(panelScroll, chatDock || null);
+    }
+    try { pipWin.close(); } catch (_) {}
+    pipWin = null;
+  }
+
+  if (overlayFallbackEl) {
+    if (studioPanel && panelScroll && panelScroll.parentNode !== studioPanel) {
+      const chatDock = studioPanel.querySelector(".chat-dock");
+      studioPanel.insertBefore(panelScroll, chatDock || null);
+    }
+    if (overlayFallbackEl.parentNode) overlayFallbackEl.parentNode.removeChild(overlayFallbackEl);
+    overlayFallbackEl = null;
+  }
+
+  overlayOpen = false;
+  overlayOrigParent = null;
+  const btn = document.getElementById("rt-overlay");
+  if (btn) { btn.setAttribute("aria-pressed", "false"); btn.disabled = false; }
+}
+
+async function openOverlay() {
+  if (overlayOpen) return;
+  const panelScroll = document.getElementById("panel-scroll");
+  if (!panelScroll) return;
+  overlayOrigParent = panelScroll;
+
+  const btn = document.getElementById("rt-overlay");
+  if (btn) { btn.setAttribute("aria-pressed", "true"); btn.disabled = true; }
+
+  // Path A: Document Picture-in-Picture
+  if (window.documentPictureInPicture && window.documentPictureInPicture.requestWindow) {
+    try {
+      pipWin = await window.documentPictureInPicture.requestWindow({ width: 360, height: 520 });
+      window.__overlayDoc = pipWin.document;
+
+      // Copy stylesheets into the PiP document so the readout is styled
+      [...document.styleSheets].forEach(ss => {
+        try {
+          if (ss.href) {
+            const link = pipWin.document.createElement("link");
+            link.rel = "stylesheet"; link.href = ss.href;
+            pipWin.document.head.appendChild(link);
+          } else if (ss.ownerNode && ss.ownerNode.tagName === "STYLE") {
+            const style = pipWin.document.createElement("style");
+            style.textContent = ss.ownerNode.textContent;
+            pipWin.document.head.appendChild(style);
+          }
+        } catch (_) {}
+      });
+      // Dark background baseline
+      const bg = pipWin.document.createElement("style");
+      bg.textContent = "body{margin:0;padding:.6rem;background:#0b1718;color:#e9e2d0;box-sizing:border-box;overflow-y:auto;font-family:'EB Garamond',Georgia,serif}";
+      pipWin.document.head.appendChild(bg);
+
+      // Scope note
+      const note = pipWin.document.createElement("div");
+      note.className = "studio-overlay-note";
+      note.textContent = "Perceives only what you share via screen capture, in your browser. Continuous OS-level perception is the native application’s job.";
+      pipWin.document.body.appendChild(note);
+
+      // Move panel-scroll into the PiP window
+      pipWin.document.body.appendChild(panelScroll);
+
+      overlayOpen = true;
+
+      // Restore on PiP window close
+      pipWin.addEventListener("pagehide", () => {
+        window.__overlayDoc = null;
+        closeOverlay();
+      });
+      return;
+    } catch (_) {
+      // PiP rejected or unsupported — fall through to in-page fallback
+      pipWin = null;
+      window.__overlayDoc = null;
+      if (btn) { btn.setAttribute("aria-pressed", "false"); btn.disabled = false; }
+    }
+  }
+
+  // Path B: draggable in-page fallback panel
+  const studioPanel = document.getElementById("studio-panel");
+  if (!studioPanel) { if (btn) { btn.setAttribute("aria-pressed","false"); btn.disabled=false; } return; }
+
+  const wrap = document.createElement("div");
+  wrap.className = "studio-overlay-panel";
+  wrap.id = "studio-overlay-panel";
+
+  // Header with drag handle + close button
+  const head = document.createElement("div");
+  head.className = "studio-overlay-head";
+  const headLabel = document.createElement("span");
+  headLabel.className = "studio-overlay-head-label";
+  headLabel.textContent = "Live readout";
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "studio-overlay-close";
+  closeBtn.type = "button";
+  closeBtn.textContent = "Close";
+  closeBtn.addEventListener("click", closeOverlay);
+  head.appendChild(headLabel);
+  head.appendChild(closeBtn);
+
+  // Body holds the moved panel-scroll
+  const body = document.createElement("div");
+  body.className = "studio-overlay-body";
+  body.appendChild(panelScroll);
+
+  // Scope note
+  const note = document.createElement("div");
+  note.className = "studio-overlay-note";
+  note.textContent = "Overlay mode: floating in this tab. Perceives only what you share (screen capture) in your browser. Continuous OS-level perception is the native application’s job.";
+
+  wrap.appendChild(head);
+  wrap.appendChild(body);
+  wrap.appendChild(note);
+  document.body.appendChild(wrap);
+  overlayFallbackEl = wrap;
+  overlayOpen = true;
+
+  // Draggable: pointer events on the header drag the panel
+  let dragStartX = 0, dragStartY = 0, panelStartL = 0, panelStartT = 0;
+  head.addEventListener("pointerdown", e => {
+    e.preventDefault();
+    head.setPointerCapture(e.pointerId);
+    const rect = wrap.getBoundingClientRect();
+    // Switch from right-anchored to left-anchored positioning
+    wrap.style.right = "auto";
+    wrap.style.left = rect.left + "px";
+    wrap.style.top  = rect.top  + "px";
+    dragStartX = e.clientX; dragStartY = e.clientY;
+    panelStartL = rect.left; panelStartT = rect.top;
+  });
+  head.addEventListener("pointermove", e => {
+    if (!head.hasPointerCapture(e.pointerId)) return;
+    wrap.style.left = (panelStartL + (e.clientX - dragStartX)) + "px";
+    wrap.style.top  = (panelStartT + (e.clientY - dragStartY)) + "px";
+  });
+}
+
+// Wire the toolbar button
+const overlayBtn = document.getElementById("rt-overlay");
+if (overlayBtn) {
+  overlayBtn.addEventListener("click", () => {
+    if (overlayOpen) { closeOverlay(); } else { openOverlay(); }
+  });
+}
+
+// Test hooks
+window.__studioOverlayOpen  = openOverlay;
+window.__studioOverlayClose = closeOverlay;
+window.__studioOverlayState = () => ({ open: overlayOpen, pip: !!pipWin, fallback: !!overlayFallbackEl });
 
 // ── Debounced resize: re-render the active static source at the new layout size ──────────────
 let resizeTimer = 0;
