@@ -1565,9 +1565,6 @@ if (chatForm && chatText) {
       const reply = respond(v, ctx, hist);
       say("model", reply);
       pushHistory(v, reply, ctx.phash);
-      if (chatHistory.length === 1) {
-        say("model", "Open-ended reasoning (jokes, stories, explanations) runs when a real model is connected — use the Advanced panel below, or open the native app.");
-      }
     }
     } finally {
       if (sendBtn) sendBtn.disabled = false;
