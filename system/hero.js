@@ -1126,9 +1126,9 @@ function heroLinkProgram(gl, vsh, fsh) {
   var tex0 = makeTexture(0, [20, 9, 15]);
   var tex1 = makeTexture(1, [12, 20, 19]);
   var tex2 = makeTexture(2, [18, 14, 8]);
-  loadTex(0, tex0, "/img/Eq5QQ5s.jpg", function (img) { tw = img.naturalWidth; th = img.naturalHeight; });
-  loadTex(1, tex1, "/img/tSlbTec.jpg", null);
-  loadTex(2, tex2, "/img/XJJSZrM.jpg", null);
+  loadTex(0, tex0, "/img/hero-engine.png", function (img) { tw = img.naturalWidth; th = img.naturalHeight; });
+  loadTex(1, tex1, "/img/hero-engine.png", null);
+  loadTex(2, tex2, "/img/hero-engine.png", null);
 
   // ── Resize ──
   var glW = 0, glH = 0;

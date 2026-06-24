@@ -1628,11 +1628,7 @@
       blurb: "The camera as a real organ &mdash; particles stream along the edges it senses, live." }
   ];
   var SPECIMENS = [
-    { id: "none", label: "Pure math", src: null },
-    { id: "snail", label: "Snail", src: "img/snail.jpg" },
-    { id: "mallow", label: "Mallow", src: "img/mallow.jpg" },
-    { id: "seedhead", label: "Seedhead", src: "img/spider-seedhead.jpg" },
-    { id: "dandelion", label: "Dandelion", src: "img/grasshoppers.jpg" }
+    { id: "none", label: "Pure math", src: null }
   ];
   var PALETTE_CHIPS = [
     { id: "spectrum", label: "Spectrum" }, { id: "ember", label: "Ember" },
@@ -1976,7 +1972,7 @@
     }
 
     var state = {
-      study: "flow", specimen: "snail", palette: "spectrum",
+      study: "flow", specimen: "none", palette: "spectrum",
       complexity: 0.58, seed: randomSeed(), params: defParams("flow")
     };
     hydrateFromURL(); // a shared link reproduces the exact drawing
@@ -2211,12 +2207,12 @@
     // a curated strip spanning every study, specimen and pen-set — a quick start
     // and an honest showcase of range; each is itself a shareable, witnessed recipe
     var GALLERY = [
-      { label: "Whorl", study: "phyllotaxis", specimen: "snail", palette: "spectrum", seed: "nautilus", cx: 62 },
-      { label: "Current", study: "flow", specimen: "seedhead", palette: "ember", seed: "drift", cx: 70 },
-      { label: "Veins", study: "venation", specimen: "mallow", palette: "cool", seed: "xylem", cx: 66 },
-      { label: "Turing", study: "reaction", specimen: "dandelion", palette: "spectrum", seed: "reactor", cx: 60 },
-      { label: "Forage", study: "physarum", specimen: "seedhead", palette: "spectrum", seed: "myxo", cx: 64 },
-      { label: "Buckle", study: "growth", specimen: "seedhead", palette: "mono", seed: "fold", cx: 56 }
+      { label: "Whorl", study: "phyllotaxis", specimen: "none", palette: "spectrum", seed: "nautilus", cx: 62 },
+      { label: "Current", study: "flow", specimen: "none", palette: "ember", seed: "drift", cx: 70 },
+      { label: "Veins", study: "venation", specimen: "none", palette: "cool", seed: "xylem", cx: 66 },
+      { label: "Turing", study: "reaction", specimen: "none", palette: "spectrum", seed: "reactor", cx: 60 },
+      { label: "Forage", study: "physarum", specimen: "none", palette: "spectrum", seed: "myxo", cx: 64 },
+      { label: "Buckle", study: "growth", specimen: "none", palette: "mono", seed: "fold", cx: 56 }
     ];
     function applyPreset(g) {
       state.study = g.study; state.specimen = g.specimen; state.palette = g.palette;

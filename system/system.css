@@ -10,6 +10,8 @@ html{scroll-behavior:smooth}
 html,body{height:100%;width:100%}
 /* HERO CHANGE 1: overflow:hidden → overflow-x:hidden to enable page scroll */
 body{background:var(--void);color:var(--bone);font-family:"EB Garamond",Georgia,serif;overflow-x:hidden;position:relative}
+/* accessibility: visible keyboard focus on every interactive element (2026-06-24) */
+a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}
 #gl,#motes{position:fixed;inset:0;width:100%;height:100%;display:block}
 #gl{z-index:0}#motes{z-index:2;pointer-events:none}
 .scrim{position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(100deg,rgba(13,27,28,.82) 14%,rgba(13,27,28,.28) 36%,transparent 52%)}
@@ -46,7 +48,7 @@ section.mv{position:relative;z-index:4;background:var(--void-opaque);border-top:
 h2{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:600;font-size:clamp(1.7rem,3.1vw,2.6rem);line-height:1.13;letter-spacing:-.012em;color:var(--bone);margin-bottom:clamp(1.4rem,2.5vw,2.2rem);text-wrap:balance}
 h2 .g{color:var(--orange)}
 h2 em{font-style:normal;color:var(--orange)}
-.body-text{font-size:clamp(1.04rem,1.3vw,1.2rem);line-height:1.72;color:var(--bone);opacity:.91;max-width:68ch}
+.body-text{font-size:clamp(1.12rem,1.4vw,1.26rem);line-height:1.75;color:var(--bone);opacity:.97;max-width:66ch}
 .body-text em{color:var(--orange);font-style:italic}
 .body-text+.body-text{margin-top:1.4em}
 .mv .close{margin-top:1.6rem;display:block;font-style:italic;font-size:clamp(1.06rem,1.4vw,1.28rem);line-height:1.55;color:var(--orange);max-width:52ch}
@@ -575,17 +577,17 @@ body.world-3 .bar .rt{color:#cdd6cf}
 @media (min-width:601px){ .footer-seal .seal{ padding-right:8.5rem } }
 
 /* ============================================================================
-   HOME PHOTOGRAPHIC HERO (2026-06-21) — the CGI worlds hero is retired on the
-   landing; lead with a living macro photograph (the snail's logarithmic spiral
-   reaching toward a bud — the kind of structure the work is modeled on, shot by
-   iamBeTa). Scoped to body.home-photo, so the other pages are untouched.
+   HOME ENGINE HERO (2026-06-24) — the landing leads with a still from the engine
+   itself (a Julia set rendered in the site's palette — real mathematics, our own
+   output). Interim face; Phase 2 swaps in the live engine hero. Scoped to
+   body.home-photo, so the other pages are untouched.
    ============================================================================ */
 .home-photo .hero-bg{
   position:fixed; inset:0; z-index:0;
-  background:#0d1b1c url("../img/snail.jpg") 62% 42% / cover no-repeat;
+  background:#0d1b1c url("../img/hero-engine.png") 62% 42% / cover no-repeat;
   filter:saturate(1.03) contrast(1.03) brightness(.95)
 }
-/* warm veil: dark where the words sit (left), lifting toward the snail on the
+/* warm veil: dark where the words sit (left), lifting toward the brighter side on the
    right, with a soft floor so the lower copy holds. */
 .home-photo .scrim{
   background:
