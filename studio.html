@@ -324,6 +324,26 @@
             spellcheck="false" autocomplete="off">
           <button class="btn" id="chat-send" type="submit">Send</button>
         </form>
+        <details class="model-connect" id="model-connect">
+          <summary>Advanced — connect a model</summary>
+          <div class="mc-body">
+            <p class="mc-note" id="mc-note">Your key stays in your browser, is sent only to the endpoint you choose, and is never committed or uploaded.</p>
+            <label class="mc-label" for="mc-endpoint">Endpoint URL
+              <input class="mc-input" type="url" id="mc-endpoint" placeholder="https://api.openai.com/v1/chat/completions" autocomplete="off">
+            </label>
+            <label class="mc-label" for="mc-key">API key
+              <input class="mc-input" type="password" id="mc-key" placeholder="sk-…" autocomplete="off" aria-describedby="mc-note">
+            </label>
+            <label class="mc-label" for="mc-model">Model name (optional)
+              <input class="mc-input" type="text" id="mc-model" placeholder="gpt-4o" autocomplete="off">
+            </label>
+            <div class="mc-actions">
+              <button class="btn" id="mc-connect" type="button">Connect</button>
+              <button class="btn btn-ghost" id="mc-disconnect" type="button" disabled>Disconnect</button>
+            </div>
+            <p class="mc-status" id="mc-status" aria-live="polite"></p>
+          </div>
+        </details>
       </div>
     </section>
   </aside>

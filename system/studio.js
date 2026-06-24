@@ -1609,5 +1609,111 @@ window.addEventListener("resize", () => {
 // Initialise the idle audio meters + an empty mosaic at boot so the panel reads honestly from t=0.
 audioMetersIdle();
 buildMeters();
+// ── Advanced model-connect panel (Task 8m) ───────────────────────────────────
+// Builds a fetch-based fn over any OpenAI-compatible endpoint and wires it to Studio.connectModel.
+// Key stored in memory + sessionStorage only — never localStorage, never committed.
+let _storedKey = sessionStorage.getItem("studio_model_key") || "";
+if (_storedKey) {
+  const keyEl = $("mc-key");
+  if (keyEl) keyEl.value = "••••••••";   // mask stored key visually
+  // Don't auto-reconnect on load — user must press Connect again for safety.
+}
+
+function buildSystemPrompt(ctx) {
+  const colors = (ctx.dominantColors || []).join(", ");
+  const motion = typeof ctx.motion === "number" ? Math.round(ctx.motion * 64) + "/64" : "—";
+  const con = ctx.features && typeof ctx.features.contrast === "number" ? ctx.features.contrast.toFixed(2) : "—";
+  const str = ctx.features && typeof ctx.features.entropy  === "number" ? ctx.features.entropy.toFixed(2)  : "—";
+  return [
+    "You are a grounded visual reasoning assistant connected to the Studio's perception layer.",
+    "The perception layer has measured the current frame:",
+    "  source: " + (ctx.sourceName || "unknown"),
+    "  size: " + (ctx.width || 0) + "\xD7" + (ctx.height || 0),
+    "  perceptual hash: " + (ctx.phash || "—"),
+    "  dominant colours: " + (colors || "none") + " (hue: " + (ctx.hueName || "unknown") + ")",
+    "  contrast: " + con + ", structure/entropy: " + str,
+    "  motion (Δ/64): " + motion,
+    "Reason over what the perception layer has measured. Be concise and grounded. Do not invent measurements.",
+  ].join("\n");
+}
+
+function buildHistoryMessages(history) {
+  return (history || []).flatMap(function(h) {
+    return [
+      { role: "user",      content: h.q },
+      { role: "assistant", content: h.a },
+    ];
+  });
+}
+
+function makeModelFn(endpoint, key, modelName) {
+  return async function(message, ctx, history) {
+    const systemPrompt = buildSystemPrompt(ctx);
+    const body = {
+      model: modelName || "gpt-4o",
+      messages: [
+        { role: "system", content: systemPrompt },
+        ...buildHistoryMessages(history),
+        { role: "user",   content: message },
+      ],
+    };
+    const resp = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + key,
+      },
+      body: JSON.stringify(body),
+    });
+    if (!resp.ok) throw new Error("HTTP " + resp.status);
+    const data = await resp.json();
+    const text = data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
+    if (!text) throw new Error("No content in response");
+    return text;
+  };
+}
+
+const mcConnect    = $("mc-connect");
+const mcDisconnect = $("mc-disconnect");
+const mcStatus     = $("mc-status");
+
+if (mcConnect) {
+  mcConnect.addEventListener("click", function() {
+    const endpoint = ($("mc-endpoint") && $("mc-endpoint").value.trim()) || "";
+    const rawKey   = ($("mc-key")      && $("mc-key").value.trim())      || "";
+    const model    = ($("mc-model")    && $("mc-model").value.trim())    || "";
+    if (!endpoint) {
+      if (mcStatus) { mcStatus.textContent = "Enter an endpoint URL first."; }
+      return;
+    }
+    // Accept masked placeholder as "use stored key"
+    const key = rawKey === "••••••••" ? _storedKey : rawKey;
+    if (!key) {
+      if (mcStatus) { mcStatus.textContent = "Enter your API key."; }
+      return;
+    }
+    _storedKey = key;
+    try { sessionStorage.setItem("studio_model_key", key); } catch (_) {}
+    window.Studio.connectModel(makeModelFn(endpoint, key, model));
+    mcConnect.disabled = true;
+    if (mcDisconnect) mcDisconnect.disabled = false;
+    if (mcStatus) mcStatus.textContent = "Connected — free-text questions now route through your model.";
+    say("model", "Connected to your model endpoint. Ask me anything — I’ll use it for open-ended reasoning, and fall back to the grounded responder if it’s unreachable.");
+  });
+}
+
+if (mcDisconnect) {
+  mcDisconnect.addEventListener("click", function() {
+    window.Studio.disconnectModel();
+    _storedKey = "";
+    try { sessionStorage.removeItem("studio_model_key"); } catch (_) {}
+    const keyEl = $("mc-key"); if (keyEl) keyEl.value = "";
+    if (mcConnect) mcConnect.disabled = false;
+    mcDisconnect.disabled = true;
+    if (mcStatus) mcStatus.textContent = "Disconnected. Using grounded responder.";
+    say("model", "Disconnected from the model endpoint. Back to the grounded perception layer.");
+  });
+}
+
 // Boot the source menu — Atelier active by default (mirrors the old setMode("generate")).
 setSource("atelier");
