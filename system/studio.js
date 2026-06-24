@@ -2058,7 +2058,7 @@ if (mcDisconnect) {
     if (mcConnect)    mcConnect.disabled = true;
     if (mcDisconnect) mcDisconnect.disabled = false;
     if (mcStatus) mcStatus.textContent = "Connected (site default) — operator-hosted model active.";
-    say("model", "Open-ended replies are coming from a model the site operator is hosting — your frame and message are sent to it. (It falls back to the on-page reading if that’s offline.)");
+    say("model", "Open-ended replies are coming from a model the site operator is hosting. Your message is sent to it to be computed and is not stored — inference only. (Falls back to the on-page reading if offline.)");
   } catch (_) {
     // Timeout, network error, or abort: silently stay on grounded responder.
   }
