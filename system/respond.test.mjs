@@ -168,3 +168,88 @@ test("respond with empty phash returns the not-loaded message", () => {
   const r = respond("colour?", { phash: "—", features: {}, dominantColors: [], hueName: "" });
   assert.ok(r.includes("Nothing") || r.includes("loaded"), `Expected 'Nothing/loaded' in: ${r}`);
 });
+
+// ── Task 8m: honest declines ──────────────────────────────────────────────────
+
+test("joke request returns an honest decline that offers what it can do", () => {
+  const ctx = mkCtx();
+  const r = respond("tell me a joke", ctx, []);
+  // Must NOT be the generic frame-describe fallback (which mentions the hash first)
+  // Must mention what it cannot do AND offer something it can
+  assert.ok(
+    r.toLowerCase().includes("can't") || r.toLowerCase().includes("cannot") ||
+    r.toLowerCase().includes("not a language model") || r.toLowerCase().includes("perception"),
+    `Expected decline language in: ${r}`
+  );
+  // Must still offer something concrete
+  assert.ok(
+    r.toLowerCase().includes("colour") || r.toLowerCase().includes("color") ||
+    r.toLowerCase().includes("motion") || r.toLowerCase().includes("contrast") ||
+    r.toLowerCase().includes("see") || r.toLowerCase().includes("frame"),
+    `Expected offer of what it CAN do in: ${r}`
+  );
+});
+
+test("story request returns an honest decline that offers what it can do", () => {
+  const ctx = mkCtx();
+  const r = respond("tell me a story", ctx, []);
+  assert.ok(
+    r.toLowerCase().includes("can't") || r.toLowerCase().includes("cannot") ||
+    r.toLowerCase().includes("not a language model") || r.toLowerCase().includes("perception"),
+    `Expected decline language in: ${r}`
+  );
+});
+
+test("weather request returns an honest decline", () => {
+  const ctx = mkCtx();
+  const r = respond("what is the weather like?", ctx, []);
+  assert.ok(
+    r.toLowerCase().includes("can't") || r.toLowerCase().includes("cannot") ||
+    r.toLowerCase().includes("outside") || r.toLowerCase().includes("perception") ||
+    r.toLowerCase().includes("not a language model"),
+    `Expected decline for weather in: ${r}`
+  );
+});
+
+// ── Task 8m: conversation memory influences reply ────────────────────────────
+
+test("history with a different past phash produces a change-note in the reply", () => {
+  const ctx = mkCtx({ phash: "newphash1234abcd" });
+  const history = [
+    { q: "what do you see?", a: "frame at oldphash9999ffff", phash: "oldphash9999ffff" }
+  ];
+  const r = respond("what do you see now?", ctx, history);
+  // Should mention something about change or the current hash
+  assert.ok(
+    r.includes("newphash1234abcd") || r.toLowerCase().includes("changed") || r.toLowerCase().includes("shifted") || r.toLowerCase().includes("different"),
+    `Expected change note or new hash in: ${r}`
+  );
+});
+
+test("motion question leads with motion data, not generic describe", () => {
+  const ctx = mkCtx({ motion: 0.3 }); // Δ19/64
+  const r = respond("is it moving?", ctx, []);
+  // First 60 chars should mention motion/moving/still/delta — not colour or hash first
+  const lead = r.slice(0, 80).toLowerCase();
+  assert.ok(
+    lead.includes("moving") || lead.includes("motion") || lead.includes("still") || lead.includes("δ") || lead.includes("Δ") || lead.includes("/64"),
+    `Expected motion-led response, got: ${r}`
+  );
+});
+
+test("colour question leads with colour data", () => {
+  const ctx = mkCtx();
+  const r = respond("what colours do you see?", ctx, []);
+  const lead = r.slice(0, 80).toLowerCase();
+  assert.ok(
+    lead.includes("colour") || lead.includes("color") || lead.includes("dominant") || lead.includes("teal") || lead.includes("#"),
+    `Expected colour-led response, got: ${r}`
+  );
+});
+
+test("respond is backwards-compatible — no history arg still works", () => {
+  const ctx = mkCtx();
+  const r = respond("what do you see?", ctx);
+  assert.ok(r.length > 0, "Should work without history argument");
+  assert.ok(r.includes("1024") || r.includes("2D fractal"), `Expected content in: ${r}`);
+});
