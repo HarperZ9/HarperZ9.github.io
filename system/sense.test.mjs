@@ -6,6 +6,7 @@ import {
   boxAverage, representation, richFeatures, describeFrame,
   hueName, dominantColors, edgeDensity, regionSplit,
   rms, rmsFromBytes, spectrumBands, dominantPitchHz,
+  multiScaleGrids, assembleFullPerception,
 } from "./sense.js";
 
 // Build an RGBA buffer of w×h from a (x,y)->[r,g,b] function.
@@ -122,4 +123,78 @@ test("dominantPitchHz maps the peak bin to Hz; silence -> 0", () => {
   // 48000 Hz, fftSize 2048 -> bin width 23.4375 Hz -> ~234 Hz
   assert.equal(dominantPitchHz(freq, 48000, 2048), Math.round(10 * 48000 / 2048));
   assert.equal(dominantPitchHz(new Uint8Array(1024), 48000, 2048), 0);
+});
+
+test("multiScaleGrids returns 8/16/32 colour pyramids of the real pixels", () => {
+  // 32×32 frame: left half red, right half blue — every grid must preserve that split.
+  const W = 32, H = 32;
+  const px = mkRGBA(W, H, x => (x < 16 ? [255, 0, 0] : [0, 0, 255]));
+  const g = multiScaleGrids(px, W, H, 4);
+  for (const [key, n] of [["grid8", 8], ["grid16", 16], ["grid32", 32]]) {
+    assert.ok(g[key], `${key} present`);
+    assert.equal(g[key].length, n, `${key} has n rows`);
+    assert.equal(g[key][0].length, n, `${key} has n cols`);
+    // a left cell reads red, a right cell reads blue (the split survives every resolution)
+    assert.deepEqual(g[key][0][0], [255, 0, 0], `${key} left cell is red`);
+    assert.deepEqual(g[key][0][n - 1], [0, 0, 255], `${key} right cell is blue`);
+  }
+});
+
+test("assembleFullPerception: complete shape — dimensions, multiScale, colours w/ fractions, scalars", () => {
+  // 32×32 teal-majority frame so dominant colours + hue are well-defined.
+  const W = 32, H = 24;
+  const px = mkRGBA(W, H, x => (x < 24 ? [0, 160, 160] : [240, 170, 40]));
+  const pre = { phash: "abc123", contrast: 0.5, structure: 0.7, balance: 0.9, coverage: 0.3, motion: 0.125, audio: null, source: "2D fractal" };
+  const fp = assembleFullPerception(px, W, H, 4, pre);
+
+  // dimensions block
+  assert.equal(fp.dimensions.w, W);
+  assert.equal(fp.dimensions.h, H);
+  assert.equal(fp.dimensions.orientation, "wide");          // 32/24 ≈ 1.33 → wide
+  assert.ok(Math.abs(fp.dimensions.aspect - W / H) < 1e-9);
+
+  // multi-scale pyramid present at all three resolutions
+  assert.ok(fp.multiScale && fp.multiScale.grid8 && fp.multiScale.grid16 && fp.multiScale.grid32);
+  assert.equal(fp.multiScale.grid8.length, 8);
+  assert.equal(fp.multiScale.grid16.length, 16);
+  assert.equal(fp.multiScale.grid32.length, 32);
+
+  // dominant colours: array of {hex, fraction}, fractions are numbers in (0,1]
+  assert.ok(Array.isArray(fp.dominantColours) && fp.dominantColours.length >= 1);
+  for (const c of fp.dominantColours) {
+    assert.match(c.hex, /^#[0-9a-f]{6}$/);
+    assert.equal(typeof c.fraction, "number");
+    assert.ok(c.fraction > 0 && c.fraction <= 1);
+  }
+
+  // core scalars are carried through / measured
+  assert.equal(fp.phash, "abc123");
+  assert.equal(fp.contrast, 0.5);
+  assert.equal(fp.structure, 0.7);
+  assert.equal(fp.balance, 0.9);
+  assert.equal(fp.coverage, 0.3);
+  assert.equal(fp.motion, 0.125);
+  assert.equal(typeof fp.edgeDensity, "number");
+  assert.equal(typeof fp.light, "number");
+  assert.equal(typeof fp.dark, "number");
+  assert.equal(typeof fp.meanLuma, "number");
+  assert.equal(typeof fp.hueName, "string");
+  assert.equal(fp.source, "2D fractal");
+  assert.equal(fp.audio, null);
+});
+
+test("assembleFullPerception: missing advisory scalars read as null (honest), not faked", () => {
+  const W = 8, H = 8;
+  const px = mkRGBA(W, H, () => [128, 128, 128]);
+  const fp = assembleFullPerception(px, W, H, 4, {});   // no `pre`
+  assert.equal(fp.phash, null);
+  assert.equal(fp.contrast, null);
+  assert.equal(fp.structure, null);
+  assert.equal(fp.balance, null);
+  assert.equal(fp.coverage, null);
+  assert.equal(fp.motion, null);
+  assert.equal(fp.source, "unknown");
+  // but the pixel-derived truth is still complete
+  assert.ok(fp.multiScale.grid8 && fp.multiScale.grid16 && fp.multiScale.grid32);
+  assert.equal(typeof fp.edgeDensity, "number");
 });
