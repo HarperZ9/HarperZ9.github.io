@@ -2,6 +2,7 @@
 // then perceive/discuss/transform/refine with the model. Bridges the Atelier's canvas to the eye.
 import { perceptualHash, features, hamming } from "../shared-frame/eye.js";
 import { representation, richFeatures, describeFrame, rmsFromBytes, spectrumBands, dominantPitchHz } from "./sense.js";
+import { respond } from "./respond.js";
 import { renderFractal, PRESETS } from "./fractal.js";
 import { render3D } from "./fractal3d.js";
 import { sizeToDisplay } from "./canvas-scale.js";
@@ -1111,6 +1112,61 @@ upgradeDropdown("topo-mode");
 // #sc-* features, the rich measure bundle via describeFrame), never canned prose. Same say() as the
 // rest of the Studio (role + text via .textContent — no markup injection).
 
+// buildCtx() — snapshot the LIVE measurements at call time for respond().
+// Reads directly from lastRich + the last meter tick + audio analyser state (if attached).
+// No DOM scraping for the numeric values — they come from the same variables measure() wrote.
+function buildCtx() {
+  const r   = lastRich;
+  const phash = ($("sc-phash").textContent || "—").trim();
+  const szEl  = $("sc-size").textContent || "";
+  const wh    = szEl.match(/(\d+)×(\d+)/);
+  const w     = wh ? parseInt(wh[1], 10) : 0;
+  const h     = wh ? parseInt(wh[2], 10) : 0;
+
+  // gated advisory features off the panel readout
+  const feats = {};
+  if ($("sc-feats")) {
+    for (const g of $("sc-feats").querySelectorAll(".ground")) {
+      const t = g.textContent.toLowerCase();
+      const m = g.textContent.match(/([\d.]+)/);
+      const v = m ? parseFloat(m[0]) : null;
+      if (v !== null) {
+        if (t.includes("contrast")) feats.contrast = v;
+        else if (t.includes("structure")) feats.entropy = v;
+        else if (t.includes("balance")) feats.balance = v;
+      }
+    }
+  }
+
+  // latest motion: last value in motionHist
+  const motion = motionHist[motionHist.length - 1] || 0;
+
+  // audio: sample the analyser right now if attached
+  let audio = null;
+  if (audioAttached && analyser && audioTimeBuf && audioFreqBuf) {
+    try {
+      analyser.getByteTimeDomainData(audioTimeBuf);
+      analyser.getByteFrequencyData(audioFreqBuf);
+      const level = rmsFromBytes(audioTimeBuf);
+      const pitch = dominantPitchHz(audioFreqBuf, audioCtx.sampleRate, analyser.fftSize);
+      audio = { level, pitch };
+    } catch (_) { audio = null; }
+  }
+
+  return {
+    phash,
+    features: feats,
+    dominantColors: (r && r.dominantColors) ? r.dominantColors : [],
+    hueName:        (r && r.hueName)        ? r.hueName        : "unknown",
+    edgeDensity:    (r && typeof r.edgeDensity === "number") ? r.edgeDensity : null,
+    motion,
+    audio,
+    sourceName: currentSourceLabel(),
+    width:  w,
+    height: h,
+  };
+}
+
 // Read the current witnessed state straight off the panel + the last rich bundle. Nothing invented.
 function readout() {
   const phash = ($("sc-phash").textContent || "—").trim();
@@ -1184,14 +1240,21 @@ function buildChatChips() {
 }
 buildChatChips();
 
-// Free-text input → grounded answer.
+// Free-text input → genuinely responsive grounded answer via respond().
+// respond(message, ctx) reads the LIVE measurements at send time (not a static snapshot),
+// so the reply reflects whatever is on the canvas right now.
 const chatForm = $("chat-input"), chatText = $("chat-text");
 if (chatForm && chatText) {
-  chatForm.addEventListener("submit", e => {
-    e.preventDefault();
+  const sendMessage = () => {
     const v = chatText.value.trim(); if (!v) return;
-    say("you", v); say("model", groundedAnswer(v));
     chatText.value = "";
+    say("you", v);
+    say("model", respond(v, buildCtx()));
+  };
+  chatForm.addEventListener("submit", e => { e.preventDefault(); sendMessage(); });
+  // Enter key in the textarea (without Shift) also sends.
+  chatText.addEventListener("keydown", e => {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
   });
 }
 
