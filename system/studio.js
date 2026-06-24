@@ -4,6 +4,7 @@ import { perceptualHash, features, hamming } from "../shared-frame/eye.js";
 import { representation, richFeatures, describeFrame, rmsFromBytes, spectrumBands, dominantPitchHz } from "./sense.js";
 import { respond } from "./respond.js";
 import { renderFractal, PRESETS } from "./fractal.js";
+import { renderFractalGL, isFractalGLAvailable } from "./fractal-gl.js";
 import { render3D } from "./fractal3d.js";
 import { sizeToDisplay } from "./canvas-scale.js";
 const $ = id => (window.__overlayDoc && window.__overlayDoc.getElementById(id)) || document.getElementById(id);
@@ -78,6 +79,9 @@ function setSource(next) {
   }
   document.querySelectorAll("#studio-source button").forEach(b =>
     b.setAttribute("aria-selected", String(b.dataset.source === next)));
+  // Mark the stage interactive (grab cursor + drag affordance) for the camera-driven sources.
+  const stageEl = document.getElementById("viewport-stage");
+  if (stageEl) stageEl.classList.toggle("cam-interactive", next === "fractal" || next === "fractal3d");
   syncToolbarForSource();
 }
 
@@ -141,11 +145,16 @@ function say(role, text) {
 }
 window.__studioPerceive = perceive; window.__studioSay = say;   // used by the bridge (Task 7) + tests
 
-// ── Fractal source (Task 7b) ──────────────────────────────────────────────
+// ── Fractal source (Task 7b; GPU + interactive camera, Task 8n) ────────────────
 // Populate the preset dropdown from PRESETS (all types), filtered by the selected type chip.
 const fractalPresetEl = $("fractal-preset");
 let activeFType = "mandelbrot";
 let fractalView = null; // Transient zoom state: a shallow copy of the selected preset, never a reference into PRESETS.
+
+// GPU path available? Decided once. When true, 2D fractals render on the GPU (fractal-gl.js) for
+// near-instant frames + real-time pan/zoom; the CPU renderFractal (fractal.js, the gated reference)
+// is the fallback. The fallback also serves environments without WebGL.
+const GL_AVAILABLE = isFractalGLAvailable();
 
 function buildPresetMenu(ftype) {
   fractalPresetEl.innerHTML = "";
@@ -159,6 +168,59 @@ function buildPresetMenu(ftype) {
   });
 }
 
+// Default starting framing for the active fractal view — used by Reset view.
+let fractalDefault = null;
+
+// Paint the current fractalView into #studio-canvas. GPU when available (mounting a fresh GL canvas
+// the first time, mirroring the 3D source's canvas swap), else CPU (progressive coarse→refine on the
+// original 2D node). Does NOT perceive or chat — callers decide whether to perceive (interaction
+// frames perceive via the live meter loop; settle frames perceive once). Returns the canvas drawn.
+let _cpuRefineRaf = 0;
+function paintFractal(opts) {
+  const maxIter = Math.round(opts.maxIter * currentQuality().iterMult);
+  if (GL_AVAILABLE) {
+    // Mount a GL canvas if one isn't already up (or if a 3D orbit's node is mounted, reuse it).
+    let c = canvasIsGL ? $("studio-canvas") : mountGLCanvas();
+    if (!canvasIsGL) { canvasIsGL = true; }
+    glFractal2D = true;
+    fractal3dHandle = null;   // not a 3D orbit
+    if (stop3d) { stop3d(); stop3d = null; }   // ensure no 3D orbit RAF lingers on this node
+    sizeCanvas(c);
+    try {
+      renderFractalGL(c, { ...opts, maxIter });
+      return c;
+    } catch (e) {
+      // GPU failed at runtime — fall back to CPU on the original 2D canvas.
+      leave3D();
+    }
+  }
+  // CPU path (fallback / no WebGL): progressive render so the UI never blocks (Task 8n perf).
+  const c = $("studio-canvas");
+  sizeCanvas(c);
+  cpuFractalProgressive(c, { ...opts, maxIter });
+  return c;
+}
+
+// Progressive CPU fractal: a coarse pass first (downscaled backing → fast, scaled up by CSS), then a
+// rAF-deferred full-resolution pass. Keeps the main thread responsive instead of one long blocking
+// putImageData. Cancels any in-flight refine when a new render starts.
+function cpuFractalProgressive(canvas, opts) {
+  if (_cpuRefineRaf) { cancelAnimationFrame(_cpuRefineRaf); _cpuRefineRaf = 0; }
+  const fullW = canvas.width, fullH = canvas.height;
+  // Coarse pass: quarter-res backing (1/4 the pixels) for an instant preview.
+  const cw = Math.max(1, Math.round(fullW / 4)), ch = Math.max(1, Math.round(fullH / 4));
+  canvas.width = cw; canvas.height = ch;
+  renderFractal(canvas, opts);
+  // Refine to full res on the next frame (or immediately in a no-rAF env).
+  const refine = () => {
+    _cpuRefineRaf = 0;
+    canvas.width = fullW; canvas.height = fullH;
+    renderFractal(canvas, opts);
+  };
+  if (typeof requestAnimationFrame === "function") _cpuRefineRaf = requestAnimationFrame(refine);
+  else refine();
+}
+
 function renderPreset() {
   const ftype = activeFType;
   const filtered = PRESETS.filter(p => p.type === ftype);
@@ -167,11 +229,8 @@ function renderPreset() {
   if (!preset) return;
   // Reset fractalView to a fresh shallow copy of the canonical preset (decouples zoom from PRESETS).
   fractalView = { ...preset };
-  const canvas = $("studio-canvas");
-  sizeCanvas(canvas);
-  // High quality: scale up maxIter by iterMult so per-pixel detail keeps up with resolution.
-  const qOpts = { ...fractalView, maxIter: Math.round(fractalView.maxIter * currentQuality().iterMult) };
-  renderFractal(canvas, qOpts);
+  fractalDefault = { ...preset };   // remember the default framing for Reset view
+  const canvas = paintFractal(fractalView);
   const obs = perceive(canvas);
   const typeLabel = { mandelbrot: "Mandelbrot set", julia: "Julia set", burningship: "Burning Ship" }[fractalView.type] || fractalView.type;
   const detail = obs.features.entropy > 0.8
@@ -184,9 +243,11 @@ function renderPreset() {
     `${fractalView.name} — a ${typeLabel} at scale ${fractalView.scale}. `
     + `I fingerprinted it at ${obs.phash}; it reads as ${detail}`
     + (fcol ? `, dominated by ${obs.rich.hueName} (${fcol})` : ``) + `. `
-    + `Max iterations: ${fractalView.maxIter}. Want to zoom into a point, swap the palette, or hand it back to the Atelier?`
+    + `Max iterations: ${fractalView.maxIter}. `
+    + (GL_AVAILABLE ? `Scroll to zoom toward the cursor, drag to pan` : `Click to zoom toward a point`)
+    + `, swap the palette, or hand it back to the Atelier.`
   );
-  startMeterLoop();   // static fractal — refresh the measurimeter, then self-idle
+  startMeterLoop();   // refresh the measurimeter, then self-idle (static fractal)
 }
 
 // Wire type chips — filter presets by type when chip is clicked
@@ -198,37 +259,159 @@ document.querySelectorAll("[data-ftype]").forEach(btn => {
   });
 });
 
-// Click-to-zoom on the canvas: re-center on the clicked point and halve the scale.
-// Research "make it special" move #4: "Write a UI that lets the user click into secondary bulbs."
-// Delegated on the stable .stage container (not the canvas node) because the 3D source swaps the
-// #studio-canvas element for a fresh one — a listener bound to the node would be lost on swap.
-$("studio-canvas").closest(".stage").addEventListener("click", e => {
+// ── Interactive 2D camera (Task 8n): wheel-zoom-toward-cursor + drag-pan, rAF-throttled, GPU-fast.
+// Re-renders the transient fractalView in real time (never PRESETS). Touch: pinch-zoom + drag.
+// Bound on the stable .stage container (delegated) because the GL/CPU canvas node is swapped on
+// source/mode changes — a listener on the node would be lost.
+const fStage = $("studio-canvas").closest(".stage");
+let _fractalRaf = 0, _fractalDirty = false;
+
+// Convert a client-space point on the canvas to its complex-plane coordinate under the current view.
+function fractalPointToComplex(clientX, clientY, canvas, rect) {
+  const fx = (clientX - rect.left) / rect.width;   // 0..1 across the displayed canvas
+  const fy = (clientY - rect.top) / rect.height;
+  const aspect = canvas.height / canvas.width;
+  const flipY = fractalView.type === "burningship" ? -1 : 1;
+  return {
+    re: fractalView.cx + (fx - 0.5) * fractalView.scale,
+    im: fractalView.cy + flipY * (fy - 0.5) * fractalView.scale * aspect,
+  };
+}
+
+// Schedule a throttled re-render of the current fractalView (coalesces rapid wheel/drag events to
+// one paint per animation frame). Perception streams via the live meter loop, so we don't perceive
+// here every frame — we ensure the loop is running so #sc-phash + the meters keep updating.
+function scheduleFractalRender() {
+  _fractalDirty = true;
+  if (_fractalRaf) return;
+  const tick = () => {
+    _fractalRaf = 0;
+    if (!_fractalDirty) return;
+    _fractalDirty = false;
+    if (!fractalView) return;
+    paintFractal(fractalView);
+    // perceive once per frame so #sc-phash changes immediately (the meter loop also streams it).
+    try { perceive($("studio-canvas")); } catch (_) {}
+  };
+  if (typeof requestAnimationFrame === "function") _fractalRaf = requestAnimationFrame(tick);
+  else tick();
+}
+
+// Is a 2D fractal the active, interactable source right now?
+function fractalInteractive() { return activeSource === "fractal" && fractalView && !fractal3dHandle; }
+
+// Wheel: zoom toward the cursor. Recompute cx/cy so the complex point under the pointer stays fixed.
+fStage.addEventListener("wheel", e => {
+  if (!fractalInteractive()) return;
+  e.preventDefault();
+  const canvas = $("studio-canvas");
+  const rect = canvas.getBoundingClientRect();
+  const before = fractalPointToComplex(e.clientX, e.clientY, canvas, rect);
+  const factor = Math.exp((e.deltaY > 0 ? 1 : -1) * 0.18);   // smooth multiplicative zoom
+  fractalView.scale *= factor;
+  // Keep the point under the cursor fixed: shift center by how much that point moved.
+  const after = fractalPointToComplex(e.clientX, e.clientY, canvas, rect);
+  fractalView.cx += before.re - after.re;
+  fractalView.cy += before.im - after.im;
+  startMeterLoop();
+  scheduleFractalRender();
+}, { passive: false });
+
+// Drag to pan (mouse). Track pointer; translate the delta into a complex-plane shift.
+let _fdrag = null;
+fStage.addEventListener("pointerdown", e => {
+  if (!fractalInteractive() || e.pointerType === "touch") return;   // touch handled separately
+  const canvas = $("studio-canvas");
+  const rect = canvas.getBoundingClientRect();
+  _fdrag = { x: e.clientX, y: e.clientY, rect, w: rect.width, h: rect.height, moved: false };
+  try { fStage.setPointerCapture(e.pointerId); } catch (_) {}
+});
+fStage.addEventListener("pointermove", e => {
+  if (!_fdrag) return;
+  const canvas = $("studio-canvas");
+  const dx = e.clientX - _fdrag.x, dy = e.clientY - _fdrag.y;
+  if (Math.abs(dx) + Math.abs(dy) > 2) _fdrag.moved = true;
+  _fdrag.x = e.clientX; _fdrag.y = e.clientY;
+  const aspect = canvas.height / canvas.width;
+  const flipY = fractalView.type === "burningship" ? -1 : 1;
+  fractalView.cx -= (dx / _fdrag.w) * fractalView.scale;
+  fractalView.cy -= flipY * (dy / _fdrag.h) * fractalView.scale * aspect;
+  startMeterLoop();
+  scheduleFractalRender();
+});
+function endFractalDrag(e) {
+  if (!_fdrag) return;
+  try { fStage.releasePointerCapture(e.pointerId); } catch (_) {}
+  _fdrag = null;
+}
+fStage.addEventListener("pointerup", endFractalDrag);
+fStage.addEventListener("pointercancel", endFractalDrag);
+
+// Click-to-zoom (kept as a convenience, esp. for the CPU fallback): a click that didn't drag zooms
+// 2× toward the point. Wheel is the primary gesture when GPU is on.
+fStage.addEventListener("click", e => {
+  if (!fractalInteractive()) return;
+  if (_fdrag && _fdrag.moved) return;   // was a drag, not a click
   if (!e.target.closest("#studio-canvas")) return;
   const canvas = $("studio-canvas");
   const rect = canvas.getBoundingClientRect();
-  if (!fractalView) return; // No preset selected yet (e.g. a 3D frame is showing).
-  // Map click pixel → complex plane coordinate
-  const px = e.clientX - rect.left, py = e.clientY - rect.top;
-  const W = canvas.width, H = canvas.height;
-  const aspect = H / W;
-  const flipY = fractalView.type === "burningship" ? -1 : 1;
-  const newCx = fractalView.cx + (px / W - 0.5) * fractalView.scale;
-  const newCy = fractalView.cy + flipY * (py / H - 0.5) * fractalView.scale * aspect;
-  const newScale = fractalView.scale * 0.5;
-  // Mutate the transient fractalView, never the canonical PRESETS.
-  fractalView.cx = newCx;
-  fractalView.cy = newCy;
-  fractalView.scale = newScale;
-  sizeCanvas(canvas);
-  const qOptsZ = { ...fractalView, maxIter: Math.round(fractalView.maxIter * currentQuality().iterMult) };
-  renderFractal(canvas, qOptsZ);
+  const at = fractalPointToComplex(e.clientX, e.clientY, canvas, rect);
+  fractalView.cx = at.re; fractalView.cy = at.im; fractalView.scale *= 0.5;
+  paintFractal(fractalView);
   const obs = perceive(canvas);
   say("model",
-    `Zoomed in — now at (${newCx.toFixed(8)}, ${newCy.toFixed(8)}), scale ${newScale.toExponential(2)}. `
-    + `Fingerprint: ${obs.phash}. Click again to keep diving.`
+    `Zoomed in — now at (${fractalView.cx.toFixed(8)}, ${fractalView.cy.toFixed(8)}), scale ${fractalView.scale.toExponential(2)}. `
+    + `Fingerprint: ${obs.phash}. Scroll or click to keep diving.`
   );
   startMeterLoop();
 });
+
+// Touch: pinch-zoom + one-finger drag-pan for 2D fractals.
+const _ftouch = { pts: new Map(), pinchDist: 0, panX: 0, panY: 0 };
+fStage.addEventListener("touchstart", e => {
+  if (!fractalInteractive()) return;
+  for (const t of e.changedTouches) _ftouch.pts.set(t.identifier, { x: t.clientX, y: t.clientY });
+  if (_ftouch.pts.size === 2) {
+    const [a, b] = [..._ftouch.pts.values()];
+    _ftouch.pinchDist = Math.hypot(a.x - b.x, a.y - b.y);
+  } else if (_ftouch.pts.size === 1) {
+    const p = [..._ftouch.pts.values()][0]; _ftouch.panX = p.x; _ftouch.panY = p.y;
+  }
+}, { passive: true });
+fStage.addEventListener("touchmove", e => {
+  if (!fractalInteractive() || _ftouch.pts.size === 0) return;
+  e.preventDefault();
+  const canvas = $("studio-canvas");
+  const rect = canvas.getBoundingClientRect();
+  for (const t of e.changedTouches) if (_ftouch.pts.has(t.identifier)) _ftouch.pts.set(t.identifier, { x: t.clientX, y: t.clientY });
+  if (_ftouch.pts.size >= 2) {
+    const [a, b] = [..._ftouch.pts.values()];
+    const mid = { clientX: (a.x + b.x) / 2, clientY: (a.y + b.y) / 2 };
+    const dist = Math.hypot(a.x - b.x, a.y - b.y) || 1;
+    const before = fractalPointToComplex(mid.clientX, mid.clientY, canvas, rect);
+    const factor = _ftouch.pinchDist / dist;   // fingers apart → zoom in
+    fractalView.scale *= factor;
+    const after = fractalPointToComplex(mid.clientX, mid.clientY, canvas, rect);
+    fractalView.cx += before.re - after.re;
+    fractalView.cy += before.im - after.im;
+    _ftouch.pinchDist = dist;
+  } else {
+    const p = [..._ftouch.pts.values()][0];
+    const dx = p.x - _ftouch.panX, dy = p.y - _ftouch.panY;
+    _ftouch.panX = p.x; _ftouch.panY = p.y;
+    const aspect = canvas.height / canvas.width;
+    const flipY = fractalView.type === "burningship" ? -1 : 1;
+    fractalView.cx -= (dx / rect.width) * fractalView.scale;
+    fractalView.cy -= flipY * (dy / rect.height) * fractalView.scale * aspect;
+  }
+  startMeterLoop();
+  scheduleFractalRender();
+}, { passive: false });
+function endFractalTouch(e) {
+  for (const t of e.changedTouches) _ftouch.pts.delete(t.identifier);
+}
+fStage.addEventListener("touchend", endFractalTouch, { passive: true });
+fStage.addEventListener("touchcancel", endFractalTouch, { passive: true });
 
 $("fractal-render").addEventListener("click", renderPreset);
 
@@ -243,8 +426,10 @@ buildPresetMenu(activeFType);
 // detach it and mount a fresh GL canvas in its place; when leaving 3D, REMOUNT the original node
 // (its 2D context + the Atelier's cached reference are intact). The 2D-fractal source re-queries
 // #studio-canvas by id each render, so it works with whichever canvas is currently mounted.
-let stop3d = null;
-let canvasIsGL = false;
+let stop3d = null;              // the 3D orbit's .stop (legacy name kept; set from fractal3dHandle)
+let fractal3dHandle = null;     // the FULL render3D handle (camera controls + stop), Task 8n
+let canvasIsGL = false;         // a fresh GL canvas is mounted (3D orbit OR 2D GPU fractal), not the 2D node
+let glFractal2D = false;        // the mounted GL canvas is showing a 2D GPU fractal (Task 8n)
 const originalCanvas = $("studio-canvas");   // the Atelier-bound 2D node — never destroyed
 
 // Mount a fresh GL-capable canvas in place of whatever #studio-canvas currently is. Returns it.
@@ -253,21 +438,24 @@ function mountGLCanvas() {
   const cur = $("studio-canvas");
   const gl = document.createElement("canvas");
   gl.id = "studio-canvas";
-  // CSS size mirrors the original canvas's layout size; backing set by sizeCanvas() in render3DInto.
+  // CSS size mirrors the original canvas's layout size; backing set by sizeCanvas() at render time.
   gl.style.width = "100%"; gl.style.height = "100%";
   gl.width = 512; gl.height = 512;
   cur.replaceWith(gl);
   return gl;
 }
 
-// Stop any running orbit and, if a GL canvas is mounted, restore the original 2D Atelier canvas
-// so getContext("2d") (perceive, Atelier, fractal.js) never returns null. Idempotent.
+// Stop any running orbit / GPU-fractal canvas and, if a GL canvas is mounted, restore the original
+// 2D Atelier canvas so getContext("2d") (perceive, Atelier, fractal.js) never returns null.
+// Idempotent. Named leave3D for all existing callers; Task 8n widened it to also drop the 2D-GL path.
 function leave3D() {
   if (stop3d) { stop3d(); stop3d = null; }
+  fractal3dHandle = null;
   if (canvasIsGL) {
-    stopMeterLoop();   // the orbit is gone — stop streaming
+    stopMeterLoop();   // the orbit/stream is gone — stop streaming
     $("studio-canvas").replaceWith(originalCanvas);   // remount the intact 2D node
     canvasIsGL = false;
+    glFractal2D = false;
   }
 }
 window.__studioLeave3D = leave3D;  // tests / source-menu (Task 8f) hook
@@ -276,10 +464,13 @@ function render3DInto(opts) {
   if (stop3d) { stop3d(); stop3d = null; }   // cancel the previous orbit before starting a new one
   // Mount a fresh GL canvas (idempotent: if one is already mounted we reuse the mounted node).
   let c = canvasIsGL ? $("studio-canvas") : mountGLCanvas();
+  // Leaving any 2D-GL fractal: drop its cached context state (the node is being reused for 3D).
+  glFractal2D = false;
   // Size the GL canvas to the hi-DPI backing resolution (the raymarcher reads canvas.width/height).
   sizeCanvas(c);
   try {
-    stop3d = render3D(c, opts).stop;
+    fractal3dHandle = render3D(c, opts);
+    stop3d = fractal3dHandle.stop;
     canvasIsGL = true;
     startMeterLoop();   // the orbit animates — stream the meters so the hash changes as it turns
   } catch (e) {
@@ -342,6 +533,69 @@ syncLabel("f3-power", "f3-power-val", v => (+v).toFixed(1));
 syncLabel("f3-iterations", "f3-iterations-val", v => String(v));
 
 f3("f3-render").addEventListener("click", () => render3DInto(read3DOpts()));
+
+// ── Interactive 3D camera (Task 8n): drag to orbit, wheel to dolly. Feeds the pointer delta into
+// the camera angle uniforms in fractal3d.js via the handle's orbit()/dolly(); a gentle idle
+// auto-orbit resumes ~1.4s after the user lets go (handled in render3D). Touch supported.
+// Bound on the same stable .stage container; guarded so it only acts when a 3D orbit is mounted.
+function fractal3dInteractive() { return activeSource === "fractal3d" && !!fractal3dHandle; }
+let _3drag = null;
+fStage.addEventListener("pointerdown", e => {
+  if (!fractal3dInteractive() || e.pointerType === "touch") return;
+  _3drag = { x: e.clientX, y: e.clientY };
+  if (fractal3dHandle.beginInteract) fractal3dHandle.beginInteract();
+  try { fStage.setPointerCapture(e.pointerId); } catch (_) {}
+});
+fStage.addEventListener("pointermove", e => {
+  if (!_3drag || !fractal3dHandle) return;
+  const dx = e.clientX - _3drag.x, dy = e.clientY - _3drag.y;
+  _3drag.x = e.clientX; _3drag.y = e.clientY;
+  if (fractal3dHandle.orbit) fractal3dHandle.orbit(dx, dy);
+});
+function end3dDrag(e) {
+  if (!_3drag) return;
+  _3drag = null;
+  if (fractal3dHandle && fractal3dHandle.endInteract) fractal3dHandle.endInteract();
+  try { fStage.releasePointerCapture(e.pointerId); } catch (_) {}
+}
+fStage.addEventListener("pointerup", end3dDrag);
+fStage.addEventListener("pointercancel", end3dDrag);
+fStage.addEventListener("wheel", e => {
+  if (!fractal3dInteractive()) return;
+  e.preventDefault();
+  // wheel up (deltaY<0) dollies in (smaller distance), down dollies out.
+  if (fractal3dHandle.dolly) fractal3dHandle.dolly(e.deltaY > 0 ? 1.08 : 1 / 1.08);
+}, { passive: false });
+// Touch orbit/dolly for 3D.
+const _3touch = { pts: new Map(), pinch: 0, x: 0, y: 0 };
+fStage.addEventListener("touchstart", e => {
+  if (!fractal3dInteractive()) return;
+  if (fractal3dHandle.beginInteract) fractal3dHandle.beginInteract();
+  for (const t of e.changedTouches) _3touch.pts.set(t.identifier, { x: t.clientX, y: t.clientY });
+  if (_3touch.pts.size === 2) { const [a, b] = [..._3touch.pts.values()]; _3touch.pinch = Math.hypot(a.x - b.x, a.y - b.y); }
+  else if (_3touch.pts.size === 1) { const p = [..._3touch.pts.values()][0]; _3touch.x = p.x; _3touch.y = p.y; }
+}, { passive: true });
+fStage.addEventListener("touchmove", e => {
+  if (!fractal3dInteractive() || _3touch.pts.size === 0) return;
+  e.preventDefault();
+  for (const t of e.changedTouches) if (_3touch.pts.has(t.identifier)) _3touch.pts.set(t.identifier, { x: t.clientX, y: t.clientY });
+  if (_3touch.pts.size >= 2) {
+    const [a, b] = [..._3touch.pts.values()];
+    const dist = Math.hypot(a.x - b.x, a.y - b.y) || 1;
+    if (fractal3dHandle.dolly && _3touch.pinch) fractal3dHandle.dolly(_3touch.pinch / dist);
+    _3touch.pinch = dist;
+  } else {
+    const p = [..._3touch.pts.values()][0];
+    const dx = p.x - _3touch.x, dy = p.y - _3touch.y; _3touch.x = p.x; _3touch.y = p.y;
+    if (fractal3dHandle.orbit) fractal3dHandle.orbit(dx, dy);
+  }
+}, { passive: false });
+function end3dTouch(e) {
+  for (const t of e.changedTouches) _3touch.pts.delete(t.identifier);
+  if (_3touch.pts.size === 0 && fractal3dHandle && fractal3dHandle.endInteract) fractal3dHandle.endInteract();
+}
+fStage.addEventListener("touchend", end3dTouch, { passive: true });
+fStage.addEventListener("touchcancel", end3dTouch, { passive: true });
 
 // When a 2D source renders, leave 3D FIRST (capture phase, before the source's own click handler)
 // so the original 2D canvas is remounted before fractal.js / the Atelier query getContext("2d").
@@ -871,7 +1125,8 @@ function paintMeta(w, h, rich) {
 }
 function currentSourceLabel() {
   if (watchStream) return "screen/camera";
-  if (canvasIsGL) return "3D fractal";
+  if (canvasIsGL && !glFractal2D) return "3D fractal";
+  if (activeSource === "fractal") return "2D fractal";
   if (mode === "byo") return "your media";
   return "the Atelier / 2D";
 }
@@ -1336,11 +1591,63 @@ if (chatMin && chatDock) {
 // the 3D orbit + the watch/video loop), and a Quality placeholder (Task 8g wires it).
 const viewport = $("studio-viewport");
 
-// Fullscreen the viewport so the canvas fills the screen.
+// ── Immersive fullscreen (Task 8n) ───────────────────────────────────────────
+// Fullscreen API on the viewport stage: the canvas fills the screen, the toolbar collapses to a
+// slim auto-hiding overlay (revealed on mouse move / touch), Escape exits. Sleek + modern.
+let _fsHideTimer = 0;
+function revealFsControls() {
+  if (!document.fullscreenElement) return;
+  viewport.classList.remove("fs-idle");
+  clearTimeout(_fsHideTimer);
+  _fsHideTimer = setTimeout(() => {
+    if (document.fullscreenElement) viewport.classList.add("fs-idle");
+  }, 2200);
+}
+function onFsChange() {
+  const inFs = !!document.fullscreenElement;
+  viewport.classList.toggle("is-fullscreen", inFs);
+  const btn = $("rt-fullscreen");
+  if (btn) btn.setAttribute("aria-pressed", String(inFs));
+  if (inFs) {
+    revealFsControls();
+    viewport.addEventListener("mousemove", revealFsControls);
+    viewport.addEventListener("touchstart", revealFsControls, { passive: true });
+    viewport.addEventListener("pointerdown", revealFsControls);
+  } else {
+    viewport.classList.remove("fs-idle");
+    clearTimeout(_fsHideTimer);
+    viewport.removeEventListener("mousemove", revealFsControls);
+    viewport.removeEventListener("touchstart", revealFsControls);
+    viewport.removeEventListener("pointerdown", revealFsControls);
+    // Re-render the active static 2D fractal at the restored layout size.
+    if (activeSource === "fractal" && fractalView) { const c = paintFractal(fractalView); try { perceive(c); } catch (_) {} }
+  }
+}
+document.addEventListener("fullscreenchange", onFsChange);
+document.addEventListener("webkitfullscreenchange", onFsChange);
+
 $("rt-fullscreen").addEventListener("click", () => {
   const el = viewport;
-  if (document.fullscreenElement) { document.exitFullscreen && document.exitFullscreen(); return; }
+  if (document.fullscreenElement) { (document.exitFullscreen || document.webkitExitFullscreen || (() => {})).call(document); return; }
   (el.requestFullscreen || el.webkitRequestFullscreen || (() => {})).call(el);
+});
+
+// ── Reset view (Task 8n) ──────────────────────────────────────────────────────
+// Restore the active source's default framing: 2D fractal → the preset's cx/cy/scale; 3D → the
+// default camera (yaw/pitch/dist). Other sources have no camera to reset (no-op + a note).
+$("rt-reset").addEventListener("click", () => {
+  if (activeSource === "fractal" && fractalDefault) {
+    fractalView = { ...fractalDefault };
+    const c = paintFractal(fractalView);
+    const obs = perceive(c);
+    say("model", `View reset to ${fractalView.name} — back at scale ${fractalView.scale}. Fingerprint ${obs.phash}.`);
+    startMeterLoop();
+  } else if (activeSource === "fractal3d" && fractal3dHandle && fractal3dHandle.reset) {
+    fractal3dHandle.reset();
+    say("model", "Camera reset — back to the default orbit.");
+  } else {
+    say("model", "Nothing to reset on this source — pick a fractal to use the camera.");
+  }
 });
 
 // Snapshot: re-perceive the frame exactly as it stands and have the model respond to THIS moment.
@@ -1378,7 +1685,9 @@ $("rt-playpause").addEventListener("click", () => {
   } else {
     if (byoVideo && byoVideo.paused) { byoVideo.play().catch(() => {}); }
     if (watchVideo && watchVideo.srcObject && watchVideo.paused) { watchVideo.play().catch(() => {}); }
-    if (canvasIsGL && !stop3d) { try { stop3d = render3D($("studio-canvas"), read3DOpts()).stop; } catch (e) {} }
+    if (canvasIsGL && !glFractal2D && !stop3d) {
+      try { fractal3dHandle = render3D($("studio-canvas"), read3DOpts()); stop3d = fractal3dHandle.stop; } catch (e) {}
+    }
     startMeterLoop();
   }
 });
@@ -1391,10 +1700,7 @@ function applyQualityAndRerender() {
   const valEl = $("rt-quality-val"); if (valEl) valEl.textContent = currentQuality().label;
   // Re-render the currently active source at the new quality level.
   if (activeSource === "fractal" && fractalView) {
-    const canvas = $("studio-canvas");
-    sizeCanvas(canvas);
-    const qOpts = { ...fractalView, maxIter: Math.round(fractalView.maxIter * currentQuality().iterMult) };
-    renderFractal(canvas, qOpts);
+    const canvas = paintFractal(fractalView);
     perceive(canvas);
     startMeterLoop();
   } else if (activeSource === "fractal3d" && canvasIsGL) {
@@ -1602,10 +1908,7 @@ window.addEventListener("resize", () => {
     // Only re-render sources that paint a fixed image (not the 3D orbit loop, which reads
     // canvas.width/height on every RAF frame already — it self-adjusts on the next frame).
     if (activeSource === "fractal" && fractalView) {
-      const canvas = $("studio-canvas");
-      sizeCanvas(canvas);
-      const qOpts = { ...fractalView, maxIter: Math.round(fractalView.maxIter * currentQuality().iterMult) };
-      renderFractal(canvas, qOpts);
+      const canvas = paintFractal(fractalView);
       perceive(canvas);
     }
     // BYO still image: the drawSource path reads sizeCanvas() at draw time; re-draw the last source.

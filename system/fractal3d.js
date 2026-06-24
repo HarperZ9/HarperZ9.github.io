@@ -108,6 +108,9 @@ uniform float u_time;
 uniform float u_scale;       // Mandelbox scale (ignored by the bulb)
 uniform float u_power;       // Mandelbulb power (ignored by the box)
 uniform int   u_iterations;  // DE iteration count (<= MAX_ITERS)
+uniform float u_yaw;         // camera azimuth offset (user drag, radians)
+uniform float u_pitch;       // camera elevation (user drag, radians; clamped JS-side)
+uniform float u_dist;        // camera distance multiplier (user wheel-dolly)
 
 const int   MAX_ITERS = 20;          // compile-time DE loop ceiling
 const int   MAX_STEPS = ${maxSteps}; // sphere-trace step ceiling
@@ -165,11 +168,18 @@ void main() {
     // NDC with correct aspect (research §3).
     vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution) / u_resolution.y;
 
-    // Slow camera orbit on u_time (research §"Adopt This" #6/#9). Radius tuned per fractal so the
-    // whole form frames (sitting too close fills the view with fog and flattens the read).
-    float ang = u_time * 0.25;
-    float rad = ${type === "mandelbulb" ? "3.4" : "9.0"};
-    vec3 ro = vec3(sin(ang) * rad, ${type === "mandelbulb" ? "1.0" : "3.0"}, cos(ang) * rad);
+    // Camera orbit: a gentle idle auto-orbit on u_time PLUS the user's drag yaw/pitch and wheel
+    // dolly (research §"Adopt This" #6/#9 for the idle motion; drag/dolly added for Task 8n
+    // interaction). Radius tuned per fractal so the whole form frames (too close = fog + flat read).
+    float ang = u_time * 0.25 + u_yaw;
+    float baseRad = ${type === "mandelbulb" ? "3.4" : "9.0"};
+    float rad = clamp(baseRad * u_dist, baseRad * 0.35, baseRad * 2.4);
+    float pitch = clamp(u_pitch, -1.2, 1.2);
+    float baseH = ${type === "mandelbulb" ? "1.0" : "3.0"};
+    // Spherical: yaw rotates around Y, pitch lifts the eye. Keep baseH as a floor so the default
+    // framing matches the pre-interaction look when pitch is 0.
+    float ch = cos(pitch);
+    vec3 ro = vec3(sin(ang) * rad * ch, baseH + sin(pitch) * rad, cos(ang) * rad * ch);
     vec3 ta = vec3(0.0);
     mat3 cam = makeCam(ro, ta);
     vec3 rd  = cam * normalize(vec3(uv, 1.8));  // ~focal length 1.8
@@ -289,18 +299,35 @@ export function render3D(canvas, opts = {}) {
   gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
   const U = n => gl.getUniformLocation(prog, n);
+  const uTime = U("u_time"), uRes = U("u_resolution");
+  const uYaw = U("u_yaw"), uPitch = U("u_pitch"), uDist = U("u_dist");
   gl.uniform1f(U("u_scale"), scale);
   gl.uniform1f(U("u_power"), power);
   gl.uniform1i(U("u_iterations"), iterations);
 
-  let raf = 0, stopped = false, t0 = 0;
+  // Interactive-camera state (Task 8n). yaw/pitch are user drag offsets; dist is the wheel-dolly
+  // multiplier (1 = default framing). `idle` controls the gentle auto-orbit: when the user is
+  // interacting we freeze the clock (the form holds still under the drag), then resume from where
+  // it left off so the orbit never jumps. `userActive` resumes the idle drift after a short pause.
+  const cam = { yaw: 0, pitch: 0, dist: 1 };
+  let raf = 0, stopped = false, t0 = 0, clock = 0, lastTs = 0, idleHold = false, holdUntil = 0;
+
   function draw(ts) {
     if (stopped) return;
     if (!t0) t0 = ts;
+    if (!lastTs) lastTs = ts;
+    const dt = (ts - lastTs) / 1000;
+    lastTs = ts;
+    // Advance the idle-orbit clock only when not actively held; resume after the hold window.
+    const holding = idleHold || ts < holdUntil;
+    if (!holding) clock += dt;
     const w = canvas.width, h = canvas.height;
     gl.viewport(0, 0, w, h);
-    gl.uniform2f(U("u_resolution"), w, h);
-    gl.uniform1f(U("u_time"), (ts - t0) / 1000);
+    gl.uniform2f(uRes, w, h);
+    gl.uniform1f(uTime, clock);
+    gl.uniform1f(uYaw, cam.yaw);
+    gl.uniform1f(uPitch, cam.pitch);
+    gl.uniform1f(uDist, cam.dist);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     raf = requestAnimationFrame(draw);
   }
@@ -313,7 +340,16 @@ export function render3D(canvas, opts = {}) {
       raf = 0;
       // free the GL objects so a re-entry on a fresh canvas starts clean
       try { gl.deleteBuffer(buf); gl.deleteProgram(prog); } catch (e) { /* context may be gone */ }
-    }
+    },
+    // ── interactive camera handle (Task 8n) ──
+    // orbit(dx, dy): feed a pointer delta (px) into yaw/pitch. dolly(f): multiply distance.
+    // beginInteract()/endInteract(): freeze the idle drift while dragging, resume ~1.4s after.
+    orbit: (dx, dy) => { cam.yaw -= dx * 0.006; cam.pitch += dy * 0.006; },
+    dolly: (factor) => { cam.dist = Math.max(0.35, Math.min(2.4, cam.dist * factor)); },
+    beginInteract: () => { idleHold = true; },
+    endInteract: () => { idleHold = false; holdUntil = (typeof performance !== "undefined" ? performance.now() : Date.now()) + 1400; },
+    reset: () => { cam.yaw = 0; cam.pitch = 0; cam.dist = 1; clock = 0; },
+    state: () => ({ yaw: cam.yaw, pitch: cam.pitch, dist: cam.dist }),
   };
 }
 
