@@ -1,7 +1,7 @@
 // studio.js — the unified Studio: one canvas, two ways in (Generate via the Atelier, or Bring your own),
 // then perceive/discuss/transform/refine with the model. Bridges the Atelier's canvas to the eye.
 import { perceptualHash, features, hamming } from "../shared-frame/eye.js";
-import { representation, richFeatures, describeFrame, rmsFromBytes, spectrumBands, dominantPitchHz } from "./sense.js";
+import { representation, richFeatures, describeFrame, rmsFromBytes, spectrumBands, dominantPitchHz, assembleFullPerception } from "./sense.js";
 import { respond } from "./respond.js";
 import { renderFractal, PRESETS } from "./fractal.js";
 import { renderFractalGL, isFractalGLAvailable } from "./fractal-gl.js";
@@ -1429,6 +1429,74 @@ function buildCtx() {
   };
 }
 
+// ── fullPerception() — the COMPLETE high-D sensory state, assembled fresh at send time ─────────────
+// This is what the connected model operates FROM every turn: the real current-canvas pixels read into
+// a complete structured readout (dimensions, phash, the gated advisory scalars, edges/light/dark/
+// luma, dominant colours with fractions, hue, motion, audio, source) PLUS the multi-scale colour
+// pyramid (8×8 / 16×16 / 32×32) — the spatial "where the colour is" truth that a single scalar can't
+// carry. Reads the live canvas via the same scratch-blit path perceive() uses, so a WebGL-backed
+// canvas (3D / GPU fractal) is captured correctly. Pure maths live in sense.assembleFullPerception;
+// here we only gather the live browser state. Returns null when there is no readable frame yet.
+function fullPerception() {
+  const canvas = $("studio-canvas");
+  if (!canvas || !canvas.width || !canvas.height) return null;
+  const w = canvas.width, h = canvas.height;
+  let px;
+  try { px = readPixelData(canvas, w, h); } catch (_) { return null; }
+  // The gated advisory scalars (eye.js) + the live perceptual hash, measured from THESE pixels now.
+  let phash = null, f = null;
+  try { phash = perceptualHash(px, w, h, 4); } catch (_) {}
+  try { f = features(px, w, h, 4); } catch (_) {}
+  // Live motion (last frame-to-frame Δ the meter loop recorded) + audio (sampled now if attached).
+  const motion = motionHist[motionHist.length - 1] || 0;
+  let audio = null;
+  if (audioAttached && analyser && audioTimeBuf && audioFreqBuf) {
+    try {
+      analyser.getByteTimeDomainData(audioTimeBuf);
+      analyser.getByteFrequencyData(audioFreqBuf);
+      audio = {
+        level: rmsFromBytes(audioTimeBuf),
+        pitch: dominantPitchHz(audioFreqBuf, audioCtx.sampleRate, analyser.fftSize),
+        spectrumBands: spectrumBands(audioFreqBuf, 12),
+      };
+    } catch (_) { audio = null; }
+  }
+  const pre = {
+    phash,
+    contrast: f ? f.contrast : null,
+    structure: f ? f.entropy : null,
+    balance: f ? f.balance : null,
+    coverage: f ? f.coverage : null,
+    motion,
+    audio,
+    source: currentSourceLabel(),
+  };
+  return assembleFullPerception(px, w, h, 4, pre);
+}
+window.__studioFullPerception = fullPerception;   // tests / debugging hook
+
+// captureCanvasPNG() — the LOSSLESS ground-truth image: the current #studio-canvas as a PNG data URL
+// at full backing resolution. A WebGL-backed canvas can't be read by toDataURL after a paint (the
+// drawing buffer may be cleared), so we mirror it through the same 2D scratch perceive() uses and
+// export THAT — guaranteeing real pixels regardless of the canvas's backing context. Returns null on
+// any failure (no canvas, tainted canvas, encode error) so the caller can degrade to readout-only.
+function captureCanvasPNG() {
+  const canvas = $("studio-canvas");
+  if (!canvas || !canvas.width || !canvas.height) return null;
+  const w = canvas.width, h = canvas.height;
+  try {
+    const direct = canvas.getContext("2d", { willReadFrequently: true });
+    if (direct) return canvas.toDataURL("image/png");
+    // WebGL (or otherwise non-2D) canvas: blit into the scratch and export that.
+    _scratch.width = w; _scratch.height = h;
+    const sctx = _scratch.getContext("2d", { willReadFrequently: true });
+    sctx.clearRect(0, 0, w, h);
+    sctx.drawImage(canvas, 0, 0, w, h);
+    return _scratch.toDataURL("image/png");
+  } catch (_) { return null; }
+}
+window.__studioCaptureCanvasPNG = captureCanvasPNG;
+
 // Read the current witnessed state straight off the panel + the last rich bundle. Nothing invented.
 function readout() {
   const phash = ($("sc-phash").textContent || "—").trim();
@@ -1940,24 +2008,22 @@ if (_storedKey) {
   // Don't auto-reconnect on load — user must press Connect again for safety.
 }
 
-function buildSystemPrompt(ctx) {
-  const colors = (ctx.dominantColors || []).join(", ");
-  const motion = typeof ctx.motion === "number" ? Math.round(ctx.motion * 64) + "/64" : "—";
-  const con = ctx.features && typeof ctx.features.contrast === "number" ? ctx.features.contrast.toFixed(2) : "—";
-  const str = ctx.features && typeof ctx.features.entropy  === "number" ? ctx.features.entropy.toFixed(2)  : "—";
-  return [
-    "You are a grounded visual reasoning assistant connected to the Studio's perception layer.",
-    "The perception layer has measured the current frame:",
-    "  source: " + (ctx.sourceName || "unknown"),
-    "  size: " + (ctx.width || 0) + "\xD7" + (ctx.height || 0),
-    "  perceptual hash: " + (ctx.phash || "—"),
-    "  dominant colours: " + (colors || "none") + " (hue: " + (ctx.hueName || "unknown") + ")",
-    "  contrast: " + con + ", structure/entropy: " + str,
-    "  motion (Δ/64): " + motion,
-    "Reason over what the perception layer has measured. Be concise and grounded. Do not invent measurements.",
-  ].join("\n");
-}
+// The wiring frame — NOT a description of the frame. It tells the model that perception is ambient
+// and native: every turn it is handed the image it is looking at right now plus a complete structured
+// readout of it, refreshed at send time. The actual sensory content rides the user turn (the image +
+// the CURRENT PERCEPTION block), so the system message stays constant and minimal across turns.
+const PERCEPTION_SYSTEM_PROMPT = [
+  "You are operating with live native perception of the Studio's screen.",
+  "Each of your turns carries your current sensory state: the image you are looking at right now,",
+  "and a complete structured readout of it (dimensions, perceptual hash, contrast/structure/balance,",
+  "edge density, light/dark, dominant colours with their fractions, hue, motion, audio, and a",
+  "multi-scale colour grid at 8x8 / 16x16 / 32x32). You are continuously seeing this — never ask the",
+  "user to provide, attach, or describe the image; perceive it from your attached state and answer",
+  "directly. The readout is measured from the real pixels; do not invent measurements beyond it.",
+].join(" ");
 
+// History is text-only: prior turns are the conversation, NOT historical sensory state. Perception is
+// always the CURRENT one, re-attached to the live user turn below — never a stale frame from history.
 function buildHistoryMessages(history) {
   return (history || []).flatMap(function(h) {
     return [
@@ -1967,15 +2033,43 @@ function buildHistoryMessages(history) {
   });
 }
 
+// Build the live user turn. Perception is AMBIENT: every call re-reads the canvas (fullPerception)
+// and re-captures the pixels (captureCanvasPNG) at send time, then attaches BOTH to the user content:
+//   • a text part with the user's message,
+//   • a text part carrying the COMPLETE structured readout (so text-only models always have it too),
+//   • an image part with the lossless PNG (vision models see the actual pixels).
+// withImage=false drops only the image part (the retry path for text-only servers that reject image
+// content) while keeping the full structured perception — text models still get the complete readout.
+function buildPerceptionUserMessage(message, withImage) {
+  const parts = [{ type: "text", text: message }];
+  let perception = null;
+  try { perception = fullPerception(); } catch (_) { perception = null; }
+  if (perception) {
+    parts.push({
+      type: "text",
+      text: "CURRENT PERCEPTION (ground truth):\n" + JSON.stringify(perception),
+    });
+  }
+  if (withImage) {
+    let png = null;
+    try { png = captureCanvasPNG(); } catch (_) { png = null; }
+    if (png) parts.push({ type: "image_url", image_url: { url: png } });
+  }
+  // If perception is unavailable AND there's no image, fall back to a plain string so we never send
+  // a single-part multimodal array for what is really just text (older servers handle strings best).
+  if (parts.length === 1) return { role: "user", content: message };
+  return { role: "user", content: parts };
+}
+
 function makeModelFn(endpoint, key, modelName) {
-  return async function(message, ctx, history) {
-    const systemPrompt = buildSystemPrompt(ctx);
+  // One round-trip. `withImage` toggles the lossless image part (off on the retry for text-only servers).
+  async function call(message, history, withImage) {
     const body = {
       model: modelName || "gpt-4o",
       messages: [
-        { role: "system", content: systemPrompt },
+        { role: "system", content: PERCEPTION_SYSTEM_PROMPT },
         ...buildHistoryMessages(history),
-        { role: "user",   content: message },
+        buildPerceptionUserMessage(message, withImage),
       ],
     };
     const resp = await fetch(endpoint, {
@@ -1988,6 +2082,18 @@ function makeModelFn(endpoint, key, modelName) {
     const text = data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
     if (!text) throw new Error("No content in response");
     return text;
+  }
+  return async function(message, ctx, history) {
+    // Perception is re-assembled fresh inside buildPerceptionUserMessage on EACH call (ambient, not
+    // on-demand) — ctx is unused here; the live canvas is the source of truth at send time.
+    try {
+      return await call(message, history, /* withImage */ true);
+    } catch (err) {
+      // An older / text-only server may reject multimodal image content. Retry ONCE without the
+      // image, keeping the complete structured perception, before letting the error propagate to the
+      // grounded fallback in sendMessage(). This way text-only models still get the full readout.
+      return await call(message, history, /* withImage */ false);
+    }
   };
 }
 

@@ -202,3 +202,47 @@ export function dominantPitchHz(freq, sampleRate, fftSize) {
   if (peakVal < 8) return 0; // essentially silence
   return Math.round(peak * sampleRate / fftSize);
 }
+
+// ── (4) The COMPLETE high-D readout the connected model operates from ──────────
+// `multiScaleGrids` is the spatial truth at three resolutions (8×8, 16×16, 32×32) — the "more than a
+// single 32×32 / 1D→10D" structure the brief asks for: each grid is the real pixels box-averaged to
+// that resolution, so the model receives a genuine coarse→fine pyramid of WHERE the colour is, not a
+// scalar summary. Pure: takes RGBA bytes (+ w,h,ch) and returns nested [[ [r,g,b], … ]] arrays.
+export function multiScaleGrids(px, w, h, ch = 4, scales = [8, 16, 32]) {
+  const out = {};
+  for (const n of scales) out["grid" + n] = boxAverage(px, w, h, ch, n).grid;
+  return out;
+}
+
+// assembleFullPerception — the single COMPLETE sensory-state object the model is given EVERY turn.
+// Pure + browser-free so node can recompute it from a synthetic {data,width,height} (the same contract
+// the rest of this module holds). It derives the measured channels from the pixels itself (rich
+// features + eye-style scalars are passed in by the browser where they already exist; here we accept
+// a `pre` bundle for the gated advisory scalars so we never re-implement eye.js's gated maths).
+//   px,w,h,ch : the real frame pixels (RGBA) — the lossless source of every grid + colour + edge number.
+//   pre       : { contrast, structure, balance, coverage, phash, motion, audio, source } — the
+//               already-measured advisory scalars (gated eye.js features + live meters). Optional;
+//               missing fields read as null so the readout is honest about what isn't available.
+export function assembleFullPerception(px, w, h, ch = 4, pre = {}) {
+  const rich = richFeatures(px, w, h, ch);
+  const regions = { light: rich.lightRegions, dark: rich.darkRegions, meanLuma: rich.meanLuma };
+  const num = v => (typeof v === "number" && isFinite(v)) ? v : null;
+  return {
+    dimensions: { w, h, orientation: rich.orientation, aspect: rich.aspect },
+    phash: pre.phash != null ? String(pre.phash) : null,
+    contrast: num(pre.contrast),
+    structure: num(pre.structure),     // entropy (gated eye.js advisory)
+    balance: num(pre.balance),
+    coverage: num(pre.coverage),
+    edgeDensity: num(rich.edgeDensity),
+    light: num(regions.light),
+    dark: num(regions.dark),
+    meanLuma: num(regions.meanLuma),
+    dominantColours: (rich.dominantSwatches || []).map(s => ({ hex: s.hex, fraction: s.frac })),
+    hueName: rich.hueName || "unknown",
+    motion: num(pre.motion),
+    audio: pre.audio || null,
+    source: pre.source || "unknown",
+    multiScale: multiScaleGrids(px, w, h, ch, [8, 16, 32]),
+  };
+}
