@@ -21,11 +21,11 @@
 }
 
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;font-size:112.5%}/* 18px base, scales with the reader's own setting */
 body.doc{
   margin:0;background:var(--backdrop);color:var(--ink);
   font-family:"EB Garamond",Georgia,"Times New Roman",serif;
-  font-size:17px;line-height:1.58;
+  font-size:1rem;line-height:1.62;
   -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
   padding:clamp(1.2rem,4vw,3.5rem) 1rem;
 }
