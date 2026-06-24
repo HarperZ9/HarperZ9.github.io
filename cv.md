@@ -86,7 +86,7 @@ A composable stack that instantiates one loop — **perceive → gate → act �
 **19 packages on PyPI**, each tested and released — secret-redact-io, release-surface-scanner,
 public-surface-sweeper, repo-proof-index, model-provenance-validator, provenance-sensorium,
 proof-surface-report, agent-audit, agent-hook-pack, agent-routing-kit, context-curator-lite,
-workflow-harness-lite, workspace-repo-map, and more.
+workflow-harness-lite, index, and more.
 
 ### Security & platform *(private; by capability)*
 
