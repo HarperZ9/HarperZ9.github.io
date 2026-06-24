@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Studio — see &amp; make, together</title>
+<meta name="description" content="Make something with a model. Generate with the Atelier's algorithms or bring your own image — then look at it together, talk about it, and reshape it.">
+<link rel="canonical" href="https://harperz9.github.io/studio.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="The Studio — see &amp; make, together">
+<meta property="og:description" content="Make something with a model. Generate with the Atelier's algorithms or bring your own image — then look at it together, talk about it, and reshape it.">
+<meta property="og:url" content="https://harperz9.github.io/studio.html">
+<meta property="og:image" content="https://harperz9.github.io/img/snail.jpg">
+<meta property="og:image:alt" content="Macro photograph of a snail's shell — the living structures the work is modeled on.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Studio — see &amp; make, together">
+<meta name="twitter:description" content="Make something with a model. Generate with the Atelier's algorithms or bring your own image — then look at it together, talk about it, and reshape it.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/snail.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Schibsted+Grotesk:wght@500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/system.css?v=20260623">
+</head>
+<body class="studio-page">
+
+<a class="skip-link" href="#studio-viewport">Skip to the canvas</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="index.html">Home</a> <a href="studio.html">The Studio</a> <a href="overview.html">The Work</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+
+<!-- The Studio app shell: one viewport, menu-driven. On desktop (≥900px) this is a fixed-height
+     CSS grid — rail · canvas · panel — and the PAGE never scrolls; each region scrolls inside itself.
+     Below 900px it collapses to a single column and normal page scroll returns. -->
+<main class="studio-app" aria-label="The Studio">
+
+  <!-- ── LEFT RAIL: source menu + the active source's controls ───────────────────────── -->
+  <aside class="studio-rail" id="studio-rail" aria-label="Source &amp; controls">
+    <div class="rail-head">
+      <h1>The Studio</h1>
+      <p class="rail-lede">Make something with a model — then look at it together and reshape it, taking turns.</p>
+    </div>
+
+    <!-- The source menu: pick what the model looks at. setSource(name) shows ONLY that block. -->
+    <div class="source-menu" id="studio-source" role="tablist" aria-label="Choose a source">
+      <button type="button" role="tab" data-source="atelier"  aria-selected="true"  aria-controls="src-atelier">Atelier</button>
+      <button type="button" role="tab" data-source="fractal"   aria-selected="false" aria-controls="src-fractal">2D Fractal</button>
+      <button type="button" role="tab" data-source="fractal3d" aria-selected="false" aria-controls="src-fractal3d">3D Fractal</button>
+      <button type="button" role="tab" data-source="byo"       aria-selected="false" aria-controls="src-byo">Bring your own</button>
+      <button type="button" role="tab" data-source="watch"     aria-selected="false" aria-controls="src-watch">Watch with me</button>
+    </div>
+    <p class="rail-own">Bring your own image or video — in <b>Bring your own</b> (drop a file) or feed one to the Atelier as a specimen.</p>
+
+    <div class="rail-scroll">
+      <!-- SOURCE: Atelier (Task 7). boot() finds #atelier and, since there is no #at-canvas here,
+           draws into the shared #studio-canvas in the viewport. These are the exact control ids
+           atelier.js boot() binds. Groups wrapped in <details> so the rail never overflows. -->
+      <section class="src-block" id="src-atelier" role="tabpanel" aria-label="Atelier controls">
+        <div class="atelier studio-atelier" id="atelier">
+          <div class="at-panel">
+            <details class="rail-group" open>
+              <summary>Start &amp; algorithm</summary>
+              <div class="at-group">
+                <span class="at-glab">Start from <span class="hint">&mdash; a gallery of seeds; or build your own below</span></span>
+                <div class="at-chips" id="at-gallery" role="group" aria-label="Gallery presets"></div>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Algorithm</span>
+                <div class="at-chips" id="at-studies" role="group" aria-label="Algorithm"></div>
+              </div>
+            </details>
+            <details class="rail-group">
+              <summary>Specimen &amp; pens</summary>
+              <div class="at-group">
+                <span class="at-glab">Specimen <span class="hint">&mdash; the photograph that steers it (or upload your own)</span></span>
+                <div class="at-chips" id="at-specimens" role="group" aria-label="Specimen"></div>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Pens</span>
+                <div class="at-chips" id="at-palettes" role="group" aria-label="Palette"></div>
+              </div>
+            </details>
+            <details class="rail-group">
+              <summary>Parameters</summary>
+              <div class="at-group">
+                <span class="at-glab">Complexity</span>
+                <input type="range" class="at-slider" id="at-complexity" min="0" max="100" value="58" aria-label="Complexity">
+              </div>
+              <div class="at-group" id="at-params-group">
+                <span class="at-glab">Parameters <span class="hint">&mdash; the algorithm&rsquo;s own knobs, folded into the seed</span></span>
+                <div class="at-params" id="at-params"></div>
+                <div class="at-chips" id="at-presets" role="group" aria-label="Parameter presets"></div>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Seed <span class="hint">&mdash; editable; the same seed redraws the same thing</span></span>
+                <div class="at-seedrow">
+                  <input type="text" class="at-seed" id="at-seed" spellcheck="false" autocomplete="off" aria-label="Seed">
+                  <button class="at-mini" id="at-newseed" type="button" title="New seed" aria-label="New seed">&#10227;</button>
+                </div>
+              </div>
+            </details>
+            <div class="at-actions">
+              <button class="btn" id="at-draw" type="button">Draw</button>
+              <button class="btn ghost" id="at-export" type="button">Export SVG</button>
+              <button class="btn ghost" id="at-share" type="button">Copy link</button>
+              <button class="btn ghost" id="at-capture" type="button">Capture</button>
+              <button class="at-mini" id="at-overlay" type="button" aria-pressed="false" title="Show the field the camera senses">Field</button>
+            </div>
+            <input type="file" id="at-img" accept="image/*" hidden>
+            <div class="at-gate" id="at-gate" aria-live="polite"></div>
+            <div class="at-scores" id="at-scores" aria-live="polite" aria-label="Reconcile readout — criteria, cohesion, novelty, verdict"></div>
+            <p class="at-blurb" id="at-blurb"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SOURCE: 2D fractal engine (Task 7b) — Mandelbrot, Julia, Burning Ship. Renders into the
+           shared #studio-canvas then perceive() + greeting. -->
+      <section class="src-block" id="src-fractal" role="tabpanel" aria-label="2D fractal controls" hidden>
+        <div class="fractal-source" id="fractal-source">
+          <div class="at-panel">
+            <details class="rail-group" open>
+              <summary>Type &amp; preset</summary>
+              <div class="at-group">
+                <span class="at-glab">Fractal type</span>
+                <div class="at-chips" role="group" aria-label="Fractal type">
+                  <button type="button" class="chip active" data-ftype="mandelbrot">Mandelbrot</button>
+                  <button type="button" class="chip" data-ftype="julia">Julia</button>
+                  <button type="button" class="chip" data-ftype="burningship">Burning Ship</button>
+                </div>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Preset <span class="hint">&mdash; named deep-zoom targets from the research</span></span>
+                <div class="dropdown" data-dropdown="fractal-preset"></div>
+                <!-- The dropdown's hidden state element keeps the id studio.js binds (set/get .value,
+                     .innerHTML of <option>s, and a "change" event), now a custom listbox, not a raw select. -->
+                <div id="fractal-preset" hidden></div>
+              </div>
+            </details>
+            <div class="at-actions">
+              <button class="btn" id="fractal-render" type="button">Render</button>
+            </div>
+            <p class="src-hint">Tip: click into the frame to zoom toward a point.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SOURCE: 3D fractal engine (Task 7c) — WebGL1 raymarcher, Mandelbox &amp; Mandelbulb. -->
+      <section class="src-block" id="src-fractal3d" role="tabpanel" aria-label="3D fractal controls" hidden>
+        <div class="fractal-source" id="fractal3d-source">
+          <div class="at-panel">
+            <details class="rail-group" open>
+              <summary>Type</summary>
+              <div class="at-group">
+                <span class="at-glab">3D fractal <span class="hint">&mdash; high-fidelity, raymarched in WebGL</span></span>
+                <div class="at-chips" role="group" aria-label="3D fractal type">
+                  <button type="button" class="chip active" data-f3type="mandelbox">Mandelbox</button>
+                  <button type="button" class="chip" data-f3type="mandelbulb">Mandelbulb</button>
+                </div>
+              </div>
+            </details>
+            <details class="rail-group" open>
+              <summary>Parameters</summary>
+              <div class="at-group" id="f3-scale-row">
+                <span class="at-glab">Scale <span class="hint">&mdash; the box fold strength (<span id="f3-scale-val">-2.00</span>)</span></span>
+                <input type="range" class="at-slider" id="f3-scale" min="-3" max="-1.5" step="0.05" value="-2" aria-label="Mandelbox scale">
+              </div>
+              <div class="at-group" id="f3-power-row" hidden>
+                <span class="at-glab">Power <span class="hint">&mdash; the bulb exponent (<span id="f3-power-val">8.0</span>)</span></span>
+                <input type="range" class="at-slider" id="f3-power" min="2" max="12" step="0.5" value="8" aria-label="Mandelbulb power">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Iterations <span class="hint">&mdash; depth of detail (<span id="f3-iterations-val">12</span>)</span></span>
+                <input type="range" class="at-slider" id="f3-iterations" min="4" max="20" step="1" value="12" aria-label="Iterations">
+              </div>
+            </details>
+            <div class="at-actions">
+              <button class="btn" id="f3-render" type="button">Render</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SOURCE: Bring your own (Task 8) — drop zone + transform palette + turn indicator + topography. -->
+      <section class="src-block" id="src-byo" role="tabpanel" aria-label="Bring your own controls" hidden>
+        <div id="studio-drop" class="studio-drop" tabindex="0" role="button" aria-label="Drop or choose a photo, gif, or video">
+          <div class="studio-drop-empty">drop a photo &middot; gif &middot; video<br><span>or click to choose</span></div>
+        </div>
+        <input type="file" id="studio-file" accept="image/*,video/*" hidden>
+        <div class="studio-byo-ctrl">
+          <details class="rail-group" open>
+            <summary>Transform it — take turns</summary>
+            <div id="studio-transforms" class="chat-chips"></div>
+            <div id="studio-turn" class="studio-turn"></div>
+          </details>
+          <details class="rail-group">
+            <summary>Topography</summary>
+            <div class="studio-topo-ctrl">
+              <label>Mode
+                <div class="dropdown" data-dropdown="topo-mode"></div>
+                <div id="topo-mode" hidden>
+                  <option value="hillshade" selected>hillshade</option>
+                  <option value="contours">contours</option>
+                  <option value="oblique">oblique</option>
+                </div>
+              </label>
+              <label>Azimuth <span id="topo-az-val">315</span>&deg;
+                <input type="range" id="topo-azimuth" min="0" max="360" value="315" step="1">
+              </label>
+              <label>Exaggeration <span id="topo-ex-val">2</span>&times;
+                <input type="range" id="topo-exaggeration" min="1" max="8" value="2" step="0.5">
+              </label>
+              <label>Contour interval <span id="topo-iv-val">12</span>
+                <input type="range" id="topo-interval" min="4" max="24" value="12" step="1">
+              </label>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- SOURCE: Watch with me (Task 8c) — screen / camera capture → the model sees your frames. -->
+      <section class="src-block" id="src-watch" role="tabpanel" aria-label="Watch with me controls" hidden>
+        <div id="studio-watch" class="studio-watch-ctrl">
+          <div class="studio-ctrl-label">Watch with me &mdash; the model sees your screen or camera</div>
+          <div class="studio-watch-btns">
+            <button class="btn ghost" id="watch-screen" type="button">Share screen</button>
+            <button class="btn ghost" id="watch-camera" type="button">Camera</button>
+          </div>
+          <p class="studio-watch-note">It perceives only the frames you share, on your machine, with your permission. Nothing is uploaded.</p>
+          <video id="watch-video" autoplay muted playsinline hidden aria-hidden="true"></video>
+          <div class="studio-watch-live" id="studio-watch-live" hidden>
+            <div class="studio-watch-status" id="watch-status"></div>
+            <div class="studio-watch-actions">
+              <button class="btn" id="watch-toggle" type="button" aria-pressed="false">Watch together</button>
+              <button class="btn ghost" id="watch-snap" type="button">See this moment</button>
+              <button class="btn ghost" id="watch-stop" type="button">Stop</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <details class="rail-group rail-about">
+        <summary>About the Studio</summary>
+        <p>This is a place to make something <em>with</em> a model instead of just asking it for one. Bring your own
+          photo, gif, or video — or generate one with the Atelier's algorithms or the fractal engines — then look at
+          it together. The right panel shows exactly what the model is given: the faithful frame, its fingerprint,
+          dominant colours, and per-channel meters. Talk to it about what it sees, and reshape it, taking turns.</p>
+      </details>
+    </div>
+  </aside>
+
+  <!-- ── CENTRE: the canvas viewport (the hero) + a slim render toolbar ───────────────── -->
+  <section class="studio-viewport" id="studio-viewport" aria-label="The frame">
+    <div class="viewport-stage stage" id="viewport-stage">
+      <canvas id="studio-canvas" width="360" height="360"></canvas>
+    </div>
+    <div class="render-toolbar" id="render-toolbar" role="toolbar" aria-label="Render controls">
+      <button class="rt-btn" id="rt-snapshot" type="button" title="Freeze this frame and ask the model">
+        <span class="rt-ico" aria-hidden="true">◉</span> Snapshot</button>
+      <button class="rt-btn" id="rt-playpause" type="button" aria-pressed="false" title="Pause or resume animated sources" disabled>
+        <span class="rt-ico" aria-hidden="true">⏸</span> <span id="rt-playpause-label">Pause</span></button>
+      <button class="rt-btn" id="rt-reset" type="button" title="Restore the source's default framing">
+        <span class="rt-ico" aria-hidden="true">⟲</span> Reset view</button>
+      <button class="rt-btn" id="rt-fullscreen" type="button" title="Fill the screen with the canvas">
+        <span class="rt-ico" aria-hidden="true">⤢</span> Fullscreen</button>
+      <button class="rt-btn" id="rt-overlay" type="button" aria-pressed="false" title="Pop the readout into a floating overlay — stays visible while you use other tabs">
+        <span class="rt-ico" aria-hidden="true">⧉</span> Overlay</button>
+      <span class="rt-spacer"></span>
+      <button class="rt-btn rt-quality" id="rt-quality" type="button" title="Render quality (coming soon)" disabled>
+        Quality: <span id="rt-quality-val">Auto</span></button>
+    </div>
+  </section>
+
+  <!-- ── RIGHT PANEL: what the model sees (top) + the chat (fills the rest, scrolls inside) ─ -->
+  <aside class="studio-panel" id="studio-panel" aria-label="What the model sees, and the chat">
+    <div class="panel-scroll">
+      <section class="panel" id="studio-frame">
+        <h2>What the model sees
+          <span class="mm-live" id="mm-live" hidden><span class="mm-dot"></span>live</span></h2>
+        <div class="row"><span class="rk">perceptual hash</span><span class="rv" id="sc-phash">—</span></div>
+        <div class="row"><span class="rk">size</span><span class="rv" id="sc-size">—</span></div>
+        <div class="grounds" id="sc-feats"></div>
+        <p class="mm-describe" id="mm-describe"></p>
+        <div class="mc-drift" id="sc-drift" hidden></div>
+      </section>
+
+      <!-- The MEASURIMETER (Task 8d): every channel the tooling feeds the model — the faithful n×n
+           representation, per-channel meters, a motion sparkline, dominant-colour swatches, and (when
+           the source has sound) audio level / spectrum / pitch. Streams via a throttled rAF loop. -->
+      <section class="panel measurimeter" id="sc-meters" aria-label="The measurimeter — everything the model senses now">
+        <h2>The measurimeter <span class="mm-sub">— everything fed to the model, live</span></h2>
+        <div class="mm-grid">
+          <div class="mm-col mm-col-repr">
+            <div class="mm-clab">representation <span class="mm-hint">— the real frame, box-averaged</span></div>
+            <canvas id="mm-mosaic" class="mm-mosaic" width="160" height="160" aria-label="The n×n downsampled frame the model receives"></canvas>
+            <div class="mm-clab" style="margin-top:.7rem">dominant colours</div>
+            <div class="mm-swatches" id="mm-swatches" aria-label="Dominant colour swatches"></div>
+            <div class="mm-clab" style="margin-top:.7rem">motion <span class="mm-hint">— frame-to-frame Δ</span></div>
+            <canvas id="mm-motion" class="mm-motion" width="220" height="40" aria-label="Frame-to-frame motion over time"></canvas>
+          </div>
+          <div class="mm-col mm-col-meters">
+            <div class="mm-clab">visual channels</div>
+            <div class="mm-meters" id="mm-visual"></div>
+            <div class="mm-clab" style="margin-top:.8rem">audio channels <span class="mm-hint">— when the source has sound</span></div>
+            <div class="mm-meters" id="mm-audio"></div>
+            <div class="mm-clab" style="margin-top:.8rem">source</div>
+            <div class="mm-meters mm-meta" id="mm-meta"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- The chat dock: first-class, minimizable. #studio-log scrolls inside its own box; the chips +
+         the free-text input let you actually talk to the model. -->
+    <section class="chat-dock" id="chat-dock" aria-label="Talk to the model">
+      <div class="chat-dock-head">
+        <h2>Talk to the model</h2>
+        <button class="chat-min" id="chat-min" type="button" aria-expanded="true" aria-controls="chat-body"
+          title="Minimize the chat">&minus;</button>
+      </div>
+      <div class="chat-dock-body" id="chat-body">
+        <div class="chat-log" id="studio-log" role="log" aria-live="polite"></div>
+        <div class="chat-chips" id="studio-chips"></div>
+        <form class="chat-input" id="chat-input" autocomplete="off">
+          <input type="text" id="chat-text" placeholder="Ask the model what it sees…" aria-label="Ask the model"
+            spellcheck="false" autocomplete="off">
+          <button class="btn" id="chat-send" type="submit">Send</button>
+        </form>
+        <details class="model-connect" id="model-connect">
+          <summary>Advanced — connect a model</summary>
+          <div class="mc-body">
+            <p class="mc-note" id="mc-note">Your key stays in your browser and is sent only to the endpoint you choose. When a model is hosted by the operator, your message is sent to it to be computed and is not stored.</p>
+            <label class="mc-label" for="mc-endpoint">Endpoint URL
+              <input class="mc-input" type="url" id="mc-endpoint" placeholder="https://api.openai.com/v1/chat/completions" autocomplete="off">
+            </label>
+            <p class="mc-hint">Self-host a model and connect it — your frames stay between your browser and that endpoint.<br>
+              Ollama: <code>http://localhost:11434/v1/chat/completions</code><br>
+              LM Studio: <code>http://localhost:1234/v1/chat/completions</code>
+            </p>
+            <label class="mc-label" for="mc-key">API key <span class="mc-key-optional">(optional — local models need none)</span>
+              <input class="mc-input" type="password" id="mc-key" placeholder="sk-… (leave blank for local endpoints)" autocomplete="off" aria-describedby="mc-note">
+            </label>
+            <label class="mc-label" for="mc-model">Model name (optional)
+              <input class="mc-input" type="text" id="mc-model" placeholder="gpt-4o" autocomplete="off">
+            </label>
+            <div class="mc-actions">
+              <button class="btn" id="mc-connect" type="button">Connect</button>
+              <button class="btn btn-ghost" id="mc-disconnect" type="button" disabled>Disconnect</button>
+            </div>
+            <p class="mc-status" id="mc-status" aria-live="polite"></p>
+          </div>
+        </details>
+      </div>
+    </section>
+  </aside>
+
+</main>
+
+<script type="module" src="system/nav.js"></script>
+<!-- Atelier engine (Task 7): classic IIFE, self-boots on DOM ready, binds the controls above and
+     draws into #studio-canvas. Loaded before the Studio module so window.Atelier + the shared
+     spine/reconcile readouts are present. -->
+<script src="system/spine.js?v=20260623" defer></script>
+<script src="system/reconcile.js?v=20260623" defer></script>
+<script src="system/atelier.js?v=20260623" defer></script>
+<script type="module" src="system/studio.js"></script>
+</body>
+</html>

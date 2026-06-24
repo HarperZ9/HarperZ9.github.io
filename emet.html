@@ -26,6 +26,11 @@
 </head>
 <body class="inner-clean">
 <a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="index.html">Home</a> <a href="studio.html">The Studio</a> <a href="overview.html">The Work</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js"></script>
+
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">EMET &middot; external witness</span></div>
   <div class="mid">
@@ -86,7 +91,7 @@ membrane.py        &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span
 impl/rust/emet     &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span>
 impl/js/emet.js    &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span></pre>
     <p class="artifact-cap">Change a single character in the file and the answer drops from <b>MATCH</b> to <b>DRIFT</b>. It reads the file itself, not anyone who promises it&rsquo;s fine.</p>
-    <p class="artifact-note">Captured live from the emet run &middot; receipt format from <b>adapters/proof_surface_receipt.py</b> &middot; 19/19 conformance vectors, three language implementations, CI each push. <em>Honest limit:</em> I wrote all three versions myself, so they can only earn one honest claim &mdash; that the written rules are clear enough to build from. They haven&rsquo;t yet been rebuilt by someone with no connection to me, and that fourth version, by a different hand, is something I still owe.</p>
+    <p class="artifact-note">Captured live from the emet run &middot; receipt format from <b>adapters/proof_surface_receipt.py</b> &middot; 19/19 conformance vectors, three language implementations, CI each push. <em>Honest limit:</em> I wrote all three versions myself, so they can only earn one honest claim &mdash; that the written rules are clear enough to build from. They haven&rsquo;t yet been rebuilt by someone with no connection to me, and that fourth version, by a different hand, is something I still owe. <a href="emet-sample.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">See a sample proof-surface report →</a></p>
   </div>
 </section>
 
