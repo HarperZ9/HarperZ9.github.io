@@ -8,6 +8,8 @@
 
 | SHA | Message |
 |-----|---------|
+| `892a8bc` | fix(studio): disable send during async model call to prevent double-send race |
+| `587e912` | docs(sdd): task-8m report |
 | `6ecc72c` | feat(studio): bring-your-own-model panel + fetch seam wired to Studio.connectModel |
 | `fcb58aa` | feat(studio): connectModel seam + conversation history ring-buffer |
 | `025a246` | feat(studio): mature respond — history, honest declines, motion-first routing |
