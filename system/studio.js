@@ -454,7 +454,13 @@ function leave3D() {
   fractal3dHandle = null;
   if (canvasIsGL) {
     stopMeterLoop();   // the orbit/stream is gone — stop streaming
-    $("studio-canvas").replaceWith(originalCanvas);   // remount the intact 2D node
+    const glCanvas = $("studio-canvas");   // the GL canvas being discarded
+    glCanvas.replaceWith(originalCanvas);   // remount the intact 2D node
+    // Release the WebGL context to prevent resource leaks when cycling sources (browsers cap ~16 contexts).
+    try {
+      const _gl = glCanvas.getContext("webgl") || glCanvas.getContext("experimental-webgl");
+      _gl && _gl.getExtension("WEBGL_lose_context") && _gl.getExtension("WEBGL_lose_context").loseContext();
+    } catch (e) { /* non-fatal */ }
     canvasIsGL = false;
     glFractal2D = false;
   }
