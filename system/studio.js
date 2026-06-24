@@ -8,6 +8,7 @@ import { renderFractalGL, isFractalGLAvailable } from "./fractal-gl.js";
 import { render3D } from "./fractal3d.js";
 import { sizeToDisplay } from "./canvas-scale.js";
 import { buildModelHeaders } from "./studio-model.js";
+import { nCubeVertices, nCubeEdges, rotateND, projectTo2D } from "./ndim.js";
 const $ = id => (window.__overlayDoc && window.__overlayDoc.getElementById(id)) || document.getElementById(id);
 const fmt = (v,n=3)=>typeof v==="number"?(Number.isInteger(v)?String(v):v.toFixed(n)):String(v);
 // drift is per-canvas (Task 6 review carry-in): keyed by the canvas instance, so switching
@@ -59,6 +60,7 @@ const SOURCES = {
   atelier:   { block: "src-atelier",   mode: "generate" },
   fractal:   { block: "src-fractal",   mode: "generate" },
   fractal3d: { block: "src-fractal3d", mode: "generate" },
+  ndim:      { block: "src-ndim",      mode: "generate" },
   byo:       { block: "src-byo",       mode: "byo" },
   watch:     { block: "src-watch",     mode: "byo" },
 };
@@ -69,6 +71,7 @@ function setSource(next) {
   // later in the module (hoisted function declarations), so they're safe to call from here.
   if (next !== activeSource) {
     leave3D();          // restore the 2D canvas if a WebGL orbit was mounted
+    stopNDim();         // stop the n-dim animation RAF if one is running
     stopWatch();        // release any screen/camera capture
     stopByoVideo();     // pause + release any played BYO video
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
@@ -610,6 +613,184 @@ $("fractal-render").addEventListener("click", leave3D, true);
 if ($("at-draw")) $("at-draw").addEventListener("click", leave3D, true);
 // (Switching sources also stops the orbit + restores the 2D canvas — folded into setSource() above.)
 
+// ── Dimensions source (Task 8p) — animated n-dimensional hypercube renderer ──
+// Renders 1D–10D hypercubes into the shared #studio-canvas (plain 2D context, no WebGL swap).
+// Each frame: build vertices, apply time-varying Givens rotations on multiple planes, project to 2D,
+// draw edges with depth-based opacity. The live meter loop streams the perceptual readout.
+
+let _ndimRaf = null;             // the running rAF handle (null = stopped)
+let _ndimStartTime = null;       // animation start timestamp (for t parameter)
+
+// Stop any running n-dim animation RAF. Idempotent.
+function stopNDim() {
+  if (_ndimRaf != null) { cancelAnimationFrame(_ndimRaf); _ndimRaf = null; }
+  _ndimStartTime = null;
+}
+window.__studioStopNDim = stopNDim;
+
+// Read the current control values.
+function readNDimOpts() {
+  const nEl = $("ndim-n"), spEl = $("ndim-speed");
+  return {
+    n:     Math.max(1, Math.min(10, parseInt(nEl  ? nEl.value  : "4", 10))),
+    speed: Math.max(0.1, parseFloat(spEl ? spEl.value : "1")),
+  };
+}
+
+// Draw one frame of the n-dim hypercube animation. t is elapsed seconds.
+function drawNDimFrame(canvas, n, t, speed) {
+  // Restore 2D canvas if a WebGL orbit has been mounted (shouldn't happen here, but guard).
+  leave3D();
+  sizeCanvas(canvas);
+  const w = canvas.width, h = canvas.height;
+  const ctx = canvas.getContext("2d"); if (!ctx) return;
+
+  // Background: match Studio's --void palette token (#0d1b1c).
+  ctx.fillStyle = "#0d1b1c";
+  ctx.fillRect(0, 0, w, h);
+
+  // Build + rotate the hypercube.
+  const verts = nCubeVertices(n);
+  const edges = nCubeEdges(n);
+
+  // Time-varying Givens planes: several planes with slightly different rates so each dimension
+  // turns at its own speed — makes the projection feel genuinely n-dimensional.
+  const s = t * speed;
+  const planes = [];
+  if (n >= 2) planes.push({ a: 0, b: 1, angle: s * 0.71 });
+  if (n >= 3) planes.push({ a: 0, b: 2, angle: s * 0.53 });
+  if (n >= 4) planes.push({ a: 2, b: 3, angle: s * 0.37 });
+  if (n >= 5) planes.push({ a: 1, b: 4, angle: s * 0.61 });
+  if (n >= 6) planes.push({ a: 0, b: 5, angle: s * 0.47 });
+  if (n >= 7) planes.push({ a: 3, b: 6, angle: s * 0.29 });
+  if (n >= 8) planes.push({ a: 1, b: 7, angle: s * 0.83 });
+  if (n >= 9) planes.push({ a: 4, b: 8, angle: s * 0.59 });
+  if (n >= 10) planes.push({ a: 2, b: 9, angle: s * 0.41 });
+
+  const rotated = planes.length ? rotateND(verts, planes) : verts;
+
+  // Project each vertex to 2D. dist=3 gives comfortable perspective for n-cubes in [-1,+1]^n.
+  const DIST = 3.0;
+  const projected = rotated.map(v => projectTo2D(v, DIST));
+
+  // Determine the depth range for normalising depth to an opacity/colour factor.
+  let minD = Infinity, maxD = -Infinity;
+  for (const p of projected) { if (p.depth < minD) minD = p.depth; if (p.depth > maxD) maxD = p.depth; }
+  const depthRange = maxD - minD || 1;
+
+  // Scale projected coords to canvas. coords ∈ roughly [-scale, +scale] after perspective.
+  // Empirically the perspective factor keeps things within ~±(n-1) range; we use a generous fit.
+  const spread = Math.max(1, n > 2 ? DIST / (DIST - 1) * 1.1 : 1.2);
+  const halfW = w / 2, halfH = h / 2;
+  const scale = Math.min(halfW, halfH) / spread * 0.85;
+
+  function toScreen(p) {
+    return [halfW + p.x * scale, halfH - p.y * scale];
+  }
+
+  // Draw edges: thin for n ≥ 8 (5120 edges at n=10 would be dense).
+  const baseAlpha = n >= 8 ? 0.45 : n >= 6 ? 0.62 : 0.82;
+  const lineW = n >= 8 ? 0.4 : n >= 6 ? 0.7 : 1.0;
+
+  ctx.save();
+  ctx.lineWidth = lineW;
+  // Each edge coloured by mean depth: shallow (closer) = ember (#efab30), deeper = prussian (#476762).
+  for (const [i, j] of edges) {
+    const pi = projected[i], pj = projected[j];
+    const meanDepth = (pi.depth + pj.depth) / 2;
+    const t01 = (meanDepth - minD) / depthRange;   // 0 = far, 1 = close
+    // Lerp ember↔prussian in RGB
+    const r = Math.round(0x47 + (0xef - 0x47) * t01);
+    const g = Math.round(0x67 + (0xab - 0x67) * t01);
+    const b = Math.round(0x62 + (0x30 - 0x62) * t01);
+    const alpha = baseAlpha * (0.35 + 0.65 * t01);   // farther edges fade out
+    ctx.strokeStyle = `rgba(${r},${g},${b},${alpha.toFixed(3)})`;
+    ctx.beginPath();
+    const [sx, sy] = toScreen(pi);
+    const [ex, ey] = toScreen(pj);
+    ctx.moveTo(sx, sy);
+    ctx.lineTo(ex, ey);
+    ctx.stroke();
+  }
+  // Draw vertices as dots — small glowing circles, depth-shaded.
+  for (const p of projected) {
+    const t01 = (p.depth - minD) / depthRange;
+    const r = Math.round(0x47 + (0xef - 0x47) * t01);
+    const g = Math.round(0x67 + (0xab - 0x67) * t01);
+    const b2 = Math.round(0x62 + (0x30 - 0x62) * t01);
+    const alpha = 0.6 + 0.4 * t01;
+    ctx.fillStyle = `rgba(${r},${g},${b2},${alpha.toFixed(3)})`;
+    const [sx, sy] = toScreen(p);
+    const dotR = Math.max(1.2, lineW * 2);
+    ctx.beginPath();
+    ctx.arc(sx, sy, dotR, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+// Start the n-dim animation. Stops any running animation first.
+function startNDimAnimation() {
+  stopNDim();
+  leave3D();   // restore 2D canvas if a WebGL orbit was mounted
+  const canvas = $("studio-canvas");
+  const { n, speed } = readNDimOpts();
+  _ndimStartTime = null;
+  let firstFrameDone = false;
+
+  function tick(ts) {
+    if (!_ndimRaf) return;   // stopped externally
+    if (_ndimStartTime === null) _ndimStartTime = ts;
+    const t = (ts - _ndimStartTime) / 1000;   // seconds since start
+
+    drawNDimFrame(canvas, n, t, speed);
+
+    // After the first frame, fire perception + greeting once, then start the meter loop.
+    if (!firstFrameDone) {
+      firstFrameDone = true;
+      const edgeCount = nCubeEdges(n).length;
+      const vertCount = nCubeVertices(n).length;
+      const obs = perceive(canvas);
+      const dimLabel = n === 1 ? "1D line segment" : n === 2 ? "2D square" : n === 3 ? "3D cube" :
+                       n === 4 ? "4D tesseract" : `${n}D hypercube`;
+      say("model",
+        `A rotating ${dimLabel} — ${vertCount} vertices and ${edgeCount} edges, `
+        + `projected down to the screen; watch it turn through dimensions you can't quite hold. `
+        + `Fingerprint: ${obs.phash}.`
+      );
+      startMeterLoop();
+    }
+
+    _ndimRaf = requestAnimationFrame(tick);
+  }
+  _ndimRaf = requestAnimationFrame(tick);
+}
+
+// Wire the slider labels.
+const ndimNEl    = $("ndim-n");
+const ndimNVal   = $("ndim-n-val");
+const ndimSpdEl  = $("ndim-speed");
+const ndimSpdVal = $("ndim-speed-val");
+if (ndimNEl && ndimNVal) {
+  ndimNEl.addEventListener("input", () => { ndimNVal.textContent = ndimNEl.value; });
+}
+if (ndimSpdEl && ndimSpdVal) {
+  ndimSpdEl.addEventListener("input", () => { ndimSpdVal.textContent = (+ndimSpdEl.value).toFixed(1); });
+}
+
+// Wire the Render button.
+const ndimRenderBtn = $("ndim-render");
+if (ndimRenderBtn) {
+  ndimRenderBtn.addEventListener("click", () => {
+    leave3D();   // ensure the 2D canvas is live before drawing
+    startNDimAnimation();
+  });
+}
+
+// Expose for tests / toolbar play-pause.
+window.__studioStartNDim = startNDimAnimation;
+window.__studioNDimRunning = () => _ndimRaf != null;
+
 // canvas→eye bridge (Task 7): when the Atelier finishes a drawing, perceive the shared
 // canvas and let the model greet, in plain words, exactly what it measured.
 document.addEventListener("atelier:drawn", e => {
@@ -1134,6 +1315,7 @@ function currentSourceLabel() {
   if (watchStream) return "screen/camera";
   if (canvasIsGL && !glFractal2D) return "3D fractal";
   if (activeSource === "fractal") return "2D fractal";
+  if (activeSource === "ndim") return "n-dim hypercube";
   if (mode === "byo") return "your media";
   return "the Atelier / 2D";
 }
@@ -1733,10 +1915,10 @@ $("rt-snapshot").addEventListener("click", () => {
 // Play/pause animated sources. The 3D orbit + capture/video loops drive the live meter loop; pausing
 // stops them, resuming re-renders / re-streams. Disabled (greyed) for static sources.
 let paused = false;
-function toolbarAnimates() { return canvasIsGL || !!watchStream || (byoVideo && !byoVideo.paused); }
+function toolbarAnimates() { return canvasIsGL || !!watchStream || (byoVideo && !byoVideo.paused) || _ndimRaf != null; }
 function syncToolbarForSource() {
   const pp = $("rt-playpause"); if (!pp) return;
-  const animates = activeSource === "fractal3d" || activeSource === "watch" || (activeSource === "byo" && byoVideo);
+  const animates = activeSource === "fractal3d" || activeSource === "watch" || (activeSource === "byo" && byoVideo) || activeSource === "ndim";
   pp.disabled = !animates;
   paused = false;
   $("rt-playpause-label").textContent = "Pause";
@@ -1753,6 +1935,7 @@ $("rt-playpause").addEventListener("click", () => {
     if (byoVideo && !byoVideo.paused) { try { byoVideo.pause(); } catch (e) {} }
     if (watchVideo && !watchVideo.paused) { try { watchVideo.pause(); } catch (e) {} }
     if (stop3d) { stop3d(); stop3d = null; }   // freeze the orbit (canvas stays mounted as GL)
+    stopNDim();          // freeze the n-dim animation
     stopMeterLoop();
   } else {
     if (byoVideo && byoVideo.paused) { byoVideo.play().catch(() => {}); }
@@ -1760,6 +1943,7 @@ $("rt-playpause").addEventListener("click", () => {
     if (canvasIsGL && !glFractal2D && !stop3d) {
       try { fractal3dHandle = render3D($("studio-canvas"), read3DOpts()); stop3d = fractal3dHandle.stop; } catch (e) {}
     }
+    if (activeSource === "ndim") startNDimAnimation();   // resume the n-dim animation
     startMeterLoop();
   }
 });
