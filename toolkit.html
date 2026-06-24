@@ -51,7 +51,7 @@
   <p class="body-text reveal"><b>public-surface-sweeper</b> <span class="built-stat">v0.1.1</span> &mdash; the check you run before a release goes out: confirms required files are present and sweeps for passwords, keys, or tokens that must not leak, so nothing slips public that shouldn&rsquo;t. Built on proof-surface.</p>
   <p class="body-text reveal"><b>repo-proof-index</b> <span class="built-stat">v0.1.1</span> &mdash; an index over the evidence records and receipts a project produces, laid out so a reviewer can actually check them. It collects and organizes the evidence; it never certifies it &mdash; that stays a human&rsquo;s job.</p>
   <p class="body-text reveal"><b>model-provenance-validator</b> <span class="built-stat">v0.1.1</span> &mdash; checks a model or release&rsquo;s honest record of where it came from against what it claims, and blacks out any passwords, keys, or tokens from its own output while doing it.</p>
-  <p class="body-text reveal"><b>workspace-repo-map</b> <span class="built-stat">v0.2.0</span> &mdash; a compact JSON inventory of every git repo in a multi-repo workspace: the tool that lets the whole system know its own shape at a glance. <a href="quanta-color.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">quanta-color</a> is the sixth on PyPI &mdash; a product, with its own page.</p>
+  <p class="body-text reveal"><b>index</b> <span class="built-stat">v1.0.0</span> &mdash; a compact JSON inventory of every git repo in a multi-repo workspace: the tool that lets the whole system know its own shape at a glance. <a href="quanta-color.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">quanta-color</a> is the sixth on PyPI &mdash; a product, with its own page.</p>
 </section>
 
 <!-- on github -->
@@ -71,16 +71,16 @@
   <div class="exhibit reveal">
     <div class="exhibit-tag"><span class="ord">Exhibit I</span> <span class="what">The release toolkit &middot; a published tool, and the honest tally</span></div>
     <pre class="artifact"><span class="cmt"># installed straight from PyPI — a real published package</span>
-<span class="pr">$ pip install workspace-repo-map &amp;&amp; workspace-repo-map --help</span>
-<span class="ok">usage: workspace-repo-map [-h] [--root ROOT] [--output OUTPUT] [--json] ...</span>
-Compact JSON repository inventory maps for multi-repo workspaces.
+<span class="pr">$ pip install index-graph &amp;&amp; index --help</span>
+<span class="ok">usage: index [-h] [--version] {map,graph,context,viz} ...</span>
+Repository inventory maps + dependency graph + context packs.
 
 <span class="cmt"># the honest accounting of what is actually ON PyPI:</span>
 <span class="ok">proof-surface             0.1.0</span>
 <span class="ok">public-surface-sweeper    0.1.1</span>
 <span class="ok">repo-proof-index          0.1.1</span>
 <span class="ok">model-provenance-validator 0.1.1</span>
-<span class="ok">workspace-repo-map        0.2.0</span>
+<span class="ok">index-graph               1.0.0</span>
 <span class="ok">quanta-color              1.0.1</span>
 <span class="lt"># = 6 on PyPI. The rest are public on GitHub — counted separately, on purpose.</span></pre>
     <p class="artifact-cap">Six packages, verified against the package index by author. The other tools are real and public &mdash; they&rsquo;re just on GitHub, and saying so is cheaper than being caught rounding up.</p>
