@@ -8,7 +8,8 @@ import { renderFractalGL, isFractalGLAvailable } from "./fractal-gl.js";
 import { render3D } from "./fractal3d.js";
 import { sizeToDisplay } from "./canvas-scale.js";
 import { buildModelHeaders } from "./studio-model.js";
-import { nCubeVertices, nCubeEdges, rotateND, projectTo2D } from "./ndim.js";
+import { renderScene } from "./ndim.js";
+import { drawSceneGL } from "./lib/render-nd/backends/webgl.mjs";
 const $ = id => (window.__overlayDoc && window.__overlayDoc.getElementById(id)) || document.getElementById(id);
 const fmt = (v,n=3)=>typeof v==="number"?(Number.isInteger(v)?String(v):v.toFixed(n)):String(v);
 // drift is per-canvas (Task 6 review carry-in): keyed by the canvas instance, so switching
@@ -620,6 +621,19 @@ if ($("at-draw")) $("at-draw").addEventListener("click", leave3D, true);
 
 let _ndimRaf = null;             // the running rAF handle (null = stopped)
 let _ndimStartTime = null;       // animation start timestamp (for t parameter)
+let _activeNDimKind = "cube";        // current polytope kind (chip selection)
+let _activeNDimProjection = "perspective"; // current projection mode (chip selection)
+
+// Lazy offscreen WebGL canvas for the nD renderer (GL-primary, 2D fallback).
+let _ndGLCanvas = null, _ndGL = null, _ndGLTried = false;
+function ndGL() {
+  if (_ndGLTried) return _ndGL;
+  _ndGLTried = true;
+  _ndGLCanvas = document.createElement("canvas");
+  const opts = { preserveDrawingBuffer: true, antialias: true, alpha: false };
+  _ndGL = _ndGLCanvas.getContext("webgl", opts) || _ndGLCanvas.getContext("experimental-webgl", opts) || null;
+  return _ndGL;
+}
 
 // Stop any running n-dim animation RAF. Idempotent.
 function stopNDim() {
@@ -632,101 +646,72 @@ window.__studioStopNDim = stopNDim;
 function readNDimOpts() {
   const nEl = $("ndim-n"), spEl = $("ndim-speed");
   return {
-    n:     Math.max(1, Math.min(10, parseInt(nEl  ? nEl.value  : "4", 10))),
-    speed: Math.max(0.1, parseFloat(spEl ? spEl.value : "1")),
+    n:          Math.max(1, Math.min(10, parseInt(nEl  ? nEl.value  : "4", 10))),
+    speed:      Math.max(0.1, parseFloat(spEl ? spEl.value : "1")),
+    kind:       _activeNDimKind,
+    projection: _activeNDimProjection,
   };
 }
 
-// Draw one frame of the n-dim hypercube animation. t is elapsed seconds.
-function drawNDimFrame(canvas, n, t, speed) {
+// Draw one frame of the n-dim animation via renderScene. t is elapsed seconds.
+// Returns the scene.meta object so callers can read real vertex/edge counts.
+function drawNDimFrame(canvas, n, t, speed, kind, projection) {
   // Restore 2D canvas if a WebGL orbit has been mounted (shouldn't happen here, but guard).
   leave3D();
   sizeCanvas(canvas);
   const w = canvas.width, h = canvas.height;
-  const ctx = canvas.getContext("2d"); if (!ctx) return;
+  const ctx = canvas.getContext("2d"); if (!ctx) return null;
 
   // Background: match Studio's --void palette token (#0d1b1c).
   ctx.fillStyle = "#0d1b1c";
   ctx.fillRect(0, 0, w, h);
 
-  // Build + rotate the hypercube.
-  const verts = nCubeVertices(n);
-  const edges = nCubeEdges(n);
+  const scene = renderScene({
+    kind,
+    n: kind === "24cell" ? 4 : n,
+    t: t * speed,
+    rotation: "all",
+    projection: { mode: projection, dist: 3 },
+    scale: 0.85,
+  });
 
-  // Time-varying Givens planes: several planes with slightly different rates so each dimension
-  // turns at its own speed — makes the projection feel genuinely n-dimensional.
-  const s = t * speed;
-  const planes = [];
-  if (n >= 2) planes.push({ a: 0, b: 1, angle: s * 0.71 });
-  if (n >= 3) planes.push({ a: 0, b: 2, angle: s * 0.53 });
-  if (n >= 4) planes.push({ a: 2, b: 3, angle: s * 0.37 });
-  if (n >= 5) planes.push({ a: 1, b: 4, angle: s * 0.61 });
-  if (n >= 6) planes.push({ a: 0, b: 5, angle: s * 0.47 });
-  if (n >= 7) planes.push({ a: 3, b: 6, angle: s * 0.29 });
-  if (n >= 8) planes.push({ a: 1, b: 7, angle: s * 0.83 });
-  if (n >= 9) planes.push({ a: 4, b: 8, angle: s * 0.59 });
-  if (n >= 10) planes.push({ a: 2, b: 9, angle: s * 0.41 });
-
-  const rotated = planes.length ? rotateND(verts, planes) : verts;
-
-  // Project each vertex to 2D. dist=3 gives comfortable perspective for n-cubes in [-1,+1]^n.
-  const DIST = 3.0;
-  const projected = rotated.map(v => projectTo2D(v, DIST));
-
-  // Determine the depth range for normalising depth to an opacity/colour factor.
-  let minD = Infinity, maxD = -Infinity;
-  for (const p of projected) { if (p.depth < minD) minD = p.depth; if (p.depth > maxD) maxD = p.depth; }
-  const depthRange = maxD - minD || 1;
-
-  // Scale projected coords to canvas. coords ∈ roughly [-scale, +scale] after perspective.
-  // Empirically the perspective factor keeps things within ~±(n-1) range; we use a generous fit.
-  const spread = Math.max(1, n > 2 ? DIST / (DIST - 1) * 1.1 : 1.2);
   const halfW = w / 2, halfH = h / 2;
-  const scale = Math.min(halfW, halfH) / spread * 0.85;
+  const lineW = Math.max(0.4, 1.2 - n * 0.06);
 
-  function toScreen(p) {
-    return [halfW + p.x * scale, halfH - p.y * scale];
-  }
+  const gl = ndGL();
+  if (gl) {
+    _ndGLCanvas.width = w; _ndGLCanvas.height = h;
+    drawSceneGL(gl, scene, { width: w, height: h });
+    ctx.drawImage(_ndGLCanvas, 0, 0, w, h);
+  } else {
+    // 2D fallback (no WebGL): draw edges and vertices via the 2D context.
+    ctx.save();
+    ctx.lineWidth = lineW;
 
-  // Draw edges: thin for n ≥ 8 (5120 edges at n=10 would be dense).
-  const baseAlpha = n >= 8 ? 0.45 : n >= 6 ? 0.62 : 0.82;
-  const lineW = n >= 8 ? 0.4 : n >= 6 ? 0.7 : 1.0;
+    // Draw edges — color + opacity from depth cue provided by renderScene.
+    for (const seg of scene.segments) {
+      const [r, g, b] = seg.color;
+      ctx.strokeStyle = `rgba(${r},${g},${b},${seg.opacity.toFixed(3)})`;
+      ctx.beginPath();
+      ctx.moveTo(halfW + seg.x1 * halfW, halfH - seg.y1 * halfH);
+      ctx.lineTo(halfW + seg.x2 * halfW, halfH - seg.y2 * halfH);
+      ctx.stroke();
+    }
 
-  ctx.save();
-  ctx.lineWidth = lineW;
-  // Each edge coloured by mean depth: shallow (closer) = ember (#efab30), deeper = prussian (#476762).
-  for (const [i, j] of edges) {
-    const pi = projected[i], pj = projected[j];
-    const meanDepth = (pi.depth + pj.depth) / 2;
-    const t01 = (meanDepth - minD) / depthRange;   // 0 = far, 1 = close
-    // Lerp ember↔prussian in RGB
-    const r = Math.round(0x47 + (0xef - 0x47) * t01);
-    const g = Math.round(0x67 + (0xab - 0x67) * t01);
-    const b = Math.round(0x62 + (0x30 - 0x62) * t01);
-    const alpha = baseAlpha * (0.35 + 0.65 * t01);   // farther edges fade out
-    ctx.strokeStyle = `rgba(${r},${g},${b},${alpha.toFixed(3)})`;
-    ctx.beginPath();
-    const [sx, sy] = toScreen(pi);
-    const [ex, ey] = toScreen(pj);
-    ctx.moveTo(sx, sy);
-    ctx.lineTo(ex, ey);
-    ctx.stroke();
+    // Draw vertices as filled arcs — size + color from depth cue.
+    for (const pt of scene.points) {
+      const [r, g, b] = pt.color;
+      ctx.fillStyle = `rgba(${r},${g},${b},${pt.opacity.toFixed(3)})`;
+      const sx = halfW + pt.x * halfW;
+      const sy = halfH - pt.y * halfH;
+      ctx.beginPath();
+      ctx.arc(sx, sy, pt.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.restore();
   }
-  // Draw vertices as dots — small glowing circles, depth-shaded.
-  for (const p of projected) {
-    const t01 = (p.depth - minD) / depthRange;
-    const r = Math.round(0x47 + (0xef - 0x47) * t01);
-    const g = Math.round(0x67 + (0xab - 0x67) * t01);
-    const b2 = Math.round(0x62 + (0x30 - 0x62) * t01);
-    const alpha = 0.6 + 0.4 * t01;
-    ctx.fillStyle = `rgba(${r},${g},${b2},${alpha.toFixed(3)})`;
-    const [sx, sy] = toScreen(p);
-    const dotR = Math.max(1.2, lineW * 2);
-    ctx.beginPath();
-    ctx.arc(sx, sy, dotR, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  ctx.restore();
+  return scene.meta;
 }
 
 // Start the n-dim animation. Stops any running animation first.
@@ -734,7 +719,7 @@ function startNDimAnimation() {
   stopNDim();
   leave3D();   // restore 2D canvas if a WebGL orbit was mounted
   const canvas = $("studio-canvas");
-  const { n, speed } = readNDimOpts();
+  const { n, speed, kind, projection } = readNDimOpts();
   _ndimStartTime = null;
   let firstFrameDone = false;
 
@@ -743,19 +728,24 @@ function startNDimAnimation() {
     if (_ndimStartTime === null) _ndimStartTime = ts;
     const t = (ts - _ndimStartTime) / 1000;   // seconds since start
 
-    drawNDimFrame(canvas, n, t, speed);
+    const meta = drawNDimFrame(canvas, n, t, speed, kind, projection);
 
     // After the first frame, fire perception + greeting once, then start the meter loop.
     if (!firstFrameDone) {
       firstFrameDone = true;
-      const edgeCount = nCubeEdges(n).length;
-      const vertCount = nCubeVertices(n).length;
       const obs = perceive(canvas);
-      const dimLabel = n === 1 ? "1D line segment" : n === 2 ? "2D square" : n === 3 ? "3D cube" :
-                       n === 4 ? "4D tesseract" : `${n}D hypercube`;
+      const effectiveN = kind === "24cell" ? 4 : n;
+      const kindLabel = kind === "cube"
+        ? (effectiveN >= 4 ? "hypercube" : "cube")
+        : kind === "simplex"    ? "simplex"
+        : kind === "orthoplex"  ? "cross-polytope"
+        : kind === "24cell"     ? "24-cell"
+        : kind;
+      const vertices = meta ? meta.vertices : "?";
+      const edges    = meta ? meta.edges    : "?";
       say("model",
-        `A rotating ${dimLabel} — ${vertCount} vertices and ${edgeCount} edges, `
-        + `projected down to the screen; watch it turn through dimensions you can't quite hold. `
+        `A rotating ${effectiveN}D ${kindLabel} — ${vertices} vertices and ${edges} edges, `
+        + `projected through ${/^[aeiou]/i.test(projection) ? "an" : "a"} ${projection} lens. `
         + `Fingerprint: ${obs.phash}.`
       );
       startMeterLoop();
@@ -786,6 +776,24 @@ if (ndimRenderBtn) {
     startNDimAnimation();
   });
 }
+
+// Wire kind chips (#ndim-kind-* data-ndim-kind).
+document.querySelectorAll("[data-ndim-kind]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    _activeNDimKind = btn.dataset.ndimKind;
+    document.querySelectorAll("[data-ndim-kind]").forEach(b => b.classList.toggle("active", b === btn));
+    startNDimAnimation();
+  });
+});
+
+// Wire projection chips (#ndim-proj-* data-ndim-proj).
+document.querySelectorAll("[data-ndim-proj]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    _activeNDimProjection = btn.dataset.ndimProj;
+    document.querySelectorAll("[data-ndim-proj]").forEach(b => b.classList.toggle("active", b === btn));
+    startNDimAnimation();
+  });
+});
 
 // Expose for tests / toolbar play-pause.
 window.__studioStartNDim = startNDimAnimation;
