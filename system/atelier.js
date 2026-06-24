@@ -1880,7 +1880,10 @@
   function boot() {
     var root = document.getElementById("atelier");
     if (!root) return;
-    var canvas = document.getElementById("at-canvas");
+    // canvas lookup (option a): prefer the Atelier's own canvas; on the unified Studio
+    // page there is no #at-canvas, so fall back to the shared subject canvas #studio-canvas
+    // — so the Atelier draws into the one canvas the eye perceives. Minimal, non-destructive.
+    var canvas = document.getElementById("at-canvas") || document.getElementById("studio-canvas");
     if (!canvas || !canvas.getContext) {
       var nj = document.getElementById("at-nojs"); if (nj) nj.hidden = false; return;
     }
@@ -1914,6 +1917,14 @@
           window.Reconcile.renderInto(scoresEl, lastVerdict);
         } catch (e) { if (window.console) console.warn("[reconcile]", e); }
       }
+      // canvas→eye bridge (Task 7): announce the settled, fully-painted canvas so the
+      // Studio's eye can perceive it. finalPaint is render()'s true paint chokepoint —
+      // every settled path (reduced-motion, the reveal RAF, and live-algorithm settle)
+      // funnels through here after the canvas is actually drawn, unlike render()'s text
+      // end which returns before the async reveal paints. Wrapped: CustomEvent unsupported
+      // or no listener must never break a drawing.
+      try { document.dispatchEvent(new CustomEvent("atelier:drawn", { detail: { canvas: canvas } })); }
+      catch (e) { /* CustomEvent unsupported — non-fatal */ }
     }
     function blitBase() { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.drawImage(playBuf, 0, 0); }
     function playReset() { playActive = false; playFade = 0; playP = null; playReady = false; if (playRaf) { cancelAnimationFrame(playRaf); playRaf = 0; } }
