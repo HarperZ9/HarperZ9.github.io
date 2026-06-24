@@ -1404,7 +1404,7 @@ function closeOverlay() {
 
 async function openOverlay() {
   if (overlayOpen) return;
-  const panelScroll = document.getElementById("panel-scroll");
+  const panelScroll = document.querySelector(".panel-scroll");
   if (!panelScroll) return;
   overlayOrigParent = panelScroll;
 
