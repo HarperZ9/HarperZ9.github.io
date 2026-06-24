@@ -71,11 +71,37 @@ function createProgram(gl, vertSrc, fragSrc) {
   return prog;
 }
 
-function uploadBuffer(gl, data) {
-  const buf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, data, gl.STREAM_DRAW);
-  return buf;
+// --- Per-context cache: compile programs and allocate buffers ONCE per gl context ---
+
+const _cache = new WeakMap();
+
+function ctx(gl) {
+  if (_cache.has(gl)) return _cache.get(gl);
+
+  const lineProg = createProgram(gl, LINE_VERT, LINE_FRAG);
+  const pointProg = createProgram(gl, POINT_VERT, POINT_FRAG);
+
+  const lineBuf = gl.createBuffer();
+  const pointBuf = gl.createBuffer();
+
+  const entry = {
+    lineProg,
+    pointProg,
+    lineBuf,
+    pointBuf,
+    lineLocs: {
+      aPos:   gl.getAttribLocation(lineProg, "aPos"),
+      aColor: gl.getAttribLocation(lineProg, "aColor"),
+    },
+    pointLocs: {
+      aPos:   gl.getAttribLocation(pointProg, "aPos"),
+      aColor: gl.getAttribLocation(pointProg, "aColor"),
+      aSize:  gl.getAttribLocation(pointProg, "aSize"),
+    },
+  };
+
+  _cache.set(gl, entry);
+  return entry;
 }
 
 // --- Main export ---
@@ -84,6 +110,7 @@ function uploadBuffer(gl, data) {
  * drawSceneGL(gl, scene, { width, height })
  * Renders scene.segments (gl.LINES) and scene.points (gl.POINTS) into the given WebGL1 context.
  * Colors are premultiplied (color/255 * opacity) for additive blending.
+ * Programs and buffers are compiled/created once per gl context and reused across calls.
  */
 export function drawSceneGL(gl, scene, { width, height }) {
   gl.viewport(0, 0, width, height);
@@ -93,10 +120,11 @@ export function drawSceneGL(gl, scene, { width, height }) {
   gl.enable(gl.BLEND);
   gl.blendFunc(gl.SRC_ALPHA, gl.ONE); // additive glow
 
+  const { lineProg, pointProg, lineBuf, pointBuf, lineLocs, pointLocs } = ctx(gl);
+
   // --- Draw segments as LINES ---
   if (scene.segments && scene.segments.length > 0) {
-    const prog = createProgram(gl, LINE_VERT, LINE_FRAG);
-    gl.useProgram(prog);
+    gl.useProgram(lineProg);
 
     // Interleaved: x, y, r, g, b, a — 2 vertices per segment
     const stride = 6; // floats per vertex
@@ -111,24 +139,21 @@ export function drawSceneGL(gl, scene, { width, height }) {
       verts[vi++] = seg.x2; verts[vi++] = seg.y2; verts[vi++] = r; verts[vi++] = g; verts[vi++] = b; verts[vi++] = a;
     }
 
-    const buf = uploadBuffer(gl, verts);
+    gl.bindBuffer(gl.ARRAY_BUFFER, lineBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, verts, gl.STREAM_DRAW);
+
     const byteStride = stride * 4;
-    const aPos = gl.getAttribLocation(prog, "aPos");
-    const aColor = gl.getAttribLocation(prog, "aColor");
-    gl.enableVertexAttribArray(aPos);
-    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, byteStride, 0);
-    gl.enableVertexAttribArray(aColor);
-    gl.vertexAttribPointer(aColor, 4, gl.FLOAT, false, byteStride, 2 * 4);
+    gl.enableVertexAttribArray(lineLocs.aPos);
+    gl.vertexAttribPointer(lineLocs.aPos, 2, gl.FLOAT, false, byteStride, 0);
+    gl.enableVertexAttribArray(lineLocs.aColor);
+    gl.vertexAttribPointer(lineLocs.aColor, 4, gl.FLOAT, false, byteStride, 2 * 4);
 
     gl.drawArrays(gl.LINES, 0, scene.segments.length * 2);
-    gl.deleteBuffer(buf);
-    gl.deleteProgram(prog);
   }
 
   // --- Draw points as POINTS ---
   if (scene.points && scene.points.length > 0) {
-    const prog = createProgram(gl, POINT_VERT, POINT_FRAG);
-    gl.useProgram(prog);
+    gl.useProgram(pointProg);
 
     // Interleaved: x, y, r, g, b, a, size — 1 vertex per point
     const stride = 7;
@@ -144,20 +169,17 @@ export function drawSceneGL(gl, scene, { width, height }) {
       verts[vi++] = pt.size;
     }
 
-    const buf = uploadBuffer(gl, verts);
+    gl.bindBuffer(gl.ARRAY_BUFFER, pointBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, verts, gl.STREAM_DRAW);
+
     const byteStride = stride * 4;
-    const aPos = gl.getAttribLocation(prog, "aPos");
-    const aColor = gl.getAttribLocation(prog, "aColor");
-    const aSize = gl.getAttribLocation(prog, "aSize");
-    gl.enableVertexAttribArray(aPos);
-    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, byteStride, 0);
-    gl.enableVertexAttribArray(aColor);
-    gl.vertexAttribPointer(aColor, 4, gl.FLOAT, false, byteStride, 2 * 4);
-    gl.enableVertexAttribArray(aSize);
-    gl.vertexAttribPointer(aSize, 1, gl.FLOAT, false, byteStride, 6 * 4);
+    gl.enableVertexAttribArray(pointLocs.aPos);
+    gl.vertexAttribPointer(pointLocs.aPos, 2, gl.FLOAT, false, byteStride, 0);
+    gl.enableVertexAttribArray(pointLocs.aColor);
+    gl.vertexAttribPointer(pointLocs.aColor, 4, gl.FLOAT, false, byteStride, 2 * 4);
+    gl.enableVertexAttribArray(pointLocs.aSize);
+    gl.vertexAttribPointer(pointLocs.aSize, 1, gl.FLOAT, false, byteStride, 6 * 4);
 
     gl.drawArrays(gl.POINTS, 0, scene.points.length);
-    gl.deleteBuffer(buf);
-    gl.deleteProgram(prog);
   }
 }
