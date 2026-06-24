@@ -961,10 +961,32 @@ body.world-3 .bar .rt{color:#cdd6cf}
 .studio-overlay-body{flex:1;min-height:0;overflow-y:auto;padding:.7rem .8rem}
 .studio-overlay-note{font-family:"EB Garamond",Georgia,serif;font-size:.82rem;line-height:1.5;color:var(--muted);margin:.6rem 0 0;padding:.5rem .6rem;border-top:1px solid var(--hairline)}
 .rt-quality{color:var(--muted)}
-/* fullscreen: the viewport fills the screen — centre the canvas on black */
-.studio-viewport:fullscreen{background:#000;justify-content:center}
-.studio-viewport:fullscreen .viewport-stage{max-height:88vh}
-.studio-viewport:fullscreen .viewport-stage canvas{max-height:88vh}
+/* ── Immersive fullscreen (Task 8n): the canvas fills the screen; the toolbar becomes a slim,
+   auto-hiding overlay that reveals on mouse move (.fs-idle hides it). Sleek + modern. ── */
+.studio-viewport:fullscreen{background:#000;justify-content:center;padding:0;gap:0;position:relative}
+.studio-viewport:fullscreen .viewport-stage{max-width:100vw;max-height:100vh;width:100vw;height:100vh;
+  border-radius:0;border:0;box-shadow:none;background:#000}
+.studio-viewport:fullscreen .viewport-stage canvas{max-width:100vw;max-height:100vh;
+  width:auto;height:auto;object-fit:contain}
+/* the toolbar floats as a translucent pill, bottom-centre, over the canvas */
+.studio-viewport:fullscreen .render-toolbar{position:fixed;left:50%;bottom:1.4rem;transform:translateX(-50%);
+  width:auto;max-width:94vw;z-index:50;background:rgba(8,17,18,.72);backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);border:1px solid var(--hairline);border-radius:14px;
+  padding:.5rem .7rem;box-shadow:0 8px 40px rgba(0,0,0,.6);opacity:1;
+  transition:opacity .4s ease,transform .4s ease}
+/* idle: slide the pill down and fade it out (pointer-events off so it doesn't catch stray clicks) */
+.studio-viewport:fullscreen.fs-idle .render-toolbar{opacity:0;transform:translateX(-50%) translateY(140%);
+  pointer-events:none}
+.studio-viewport:fullscreen.is-fullscreen{cursor:default}
+.studio-viewport:fullscreen.fs-idle{cursor:none}
+/* webkit-prefixed fullscreen mirror (Safari) */
+.studio-viewport:-webkit-full-screen{background:#000;justify-content:center;padding:0;gap:0}
+.studio-viewport:-webkit-full-screen .viewport-stage{max-width:100vw;max-height:100vh;width:100vw;height:100vh;border-radius:0;border:0}
+.studio-viewport:-webkit-full-screen .render-toolbar{position:fixed;left:50%;bottom:1.4rem;transform:translateX(-50%);
+  width:auto;z-index:50;background:rgba(8,17,18,.72);border:1px solid var(--hairline);border-radius:14px;padding:.5rem .7rem}
+/* the interactive canvas wants a grab cursor when a camera-driven fractal source is live */
+.viewport-stage.cam-interactive{cursor:grab;touch-action:none}
+.viewport-stage.cam-interactive:active{cursor:grabbing}
 
 /* ── RIGHT PANEL (what the model sees + chat) ────────────────────────────── */
 .studio-panel{grid-area:panel;display:flex;flex-direction:column;min-height:0;
