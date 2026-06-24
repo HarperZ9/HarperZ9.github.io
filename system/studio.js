@@ -1234,22 +1234,74 @@ function buildChatChips() {
   for (const [label, query] of CHAT_CHIPS) {
     const b = document.createElement("button"); b.type = "button"; b.className = "chip";
     b.textContent = label;
-    b.addEventListener("click", () => { say("you", label); say("model", groundedAnswer(query)); });
+    b.addEventListener("click", () => {
+      say("you", label);
+      const ctx = buildCtx();
+      const reply = respond(query, ctx, getHistory());
+      say("model", reply);
+      pushHistory(query, reply, ctx.phash);
+    });
     host.appendChild(b);
   }
 }
 buildChatChips();
+
+// ── Conversation history ring-buffer (Task 8m) ───────────────────────────────
+// Stores last 5 exchanges as { q, a, phash } for respond()'s history param.
+const HISTORY_MAX = 5;
+const chatHistory = [];
+function pushHistory(q, a, phash) {
+  chatHistory.push({ q, a, phash: phash || null });
+  if (chatHistory.length > HISTORY_MAX) chatHistory.shift();
+}
+function getHistory() { return chatHistory.slice(); }
+
+// ── Connected model seam (Task 8m) ───────────────────────────────────────────
+// fn: async (message, ctx, history) => string
+// When set, free-text routes through fn; on error/timeout falls back to respond().
+let _connectedModelFn = null;
+
+window.Studio = window.Studio || {};
+window.Studio.connectModel = function(fn) {
+  if (typeof fn !== "function") throw new TypeError("connectModel: fn must be a function");
+  _connectedModelFn = fn;
+};
+window.Studio.disconnectModel = function() {
+  _connectedModelFn = null;
+};
 
 // Free-text input → genuinely responsive grounded answer via respond().
 // respond(message, ctx) reads the LIVE measurements at send time (not a static snapshot),
 // so the reply reflects whatever is on the canvas right now.
 const chatForm = $("chat-input"), chatText = $("chat-text");
 if (chatForm && chatText) {
-  const sendMessage = () => {
+  const sendMessage = async () => {
     const v = chatText.value.trim(); if (!v) return;
     chatText.value = "";
     say("you", v);
-    say("model", respond(v, buildCtx()));
+    const ctx = buildCtx();
+    const hist = getHistory();
+    if (_connectedModelFn) {
+      // Route through connected model with 8s timeout + fallback
+      let reply;
+      try {
+        const timeoutPromise = new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), 8000));
+        reply = await Promise.race([_connectedModelFn(v, ctx, hist), timeoutPromise]);
+        if (typeof reply !== "string" || !reply.trim()) throw new Error("empty reply");
+      } catch (_err) {
+        reply = respond(v, ctx, hist) + " (model unreachable — grounded reading)";
+      }
+      say("model", reply);
+      pushHistory(v, reply, ctx.phash);
+    } else {
+      // One-time note about model seam (only if history is empty = first message in session)
+      const reply = respond(v, ctx, hist);
+      say("model", reply);
+      pushHistory(v, reply, ctx.phash);
+      if (chatHistory.length === 1) {
+        say("model", "Open-ended reasoning (jokes, stories, explanations) runs when a real model is connected — use the Advanced panel below, or open the native app.");
+      }
+    }
   };
   chatForm.addEventListener("submit", e => { e.preventDefault(); sendMessage(); });
   // Enter key in the textarea (without Shift) also sends.
