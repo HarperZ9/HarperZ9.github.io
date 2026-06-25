@@ -1919,7 +1919,9 @@
       // funnels through here after the canvas is actually drawn, unlike render()'s text
       // end which returns before the async reveal paints. Wrapped: CustomEvent unsupported
       // or no listener must never break a drawing.
-      try { document.dispatchEvent(new CustomEvent("atelier:drawn", { detail: { canvas: canvas } })); }
+      // The settled reconcile verdict (criteria/cohesion/weakest) rides the detail so the Studio
+      // can build a real witnessed certificate from it; null when Reconcile is absent (never faked).
+      try { document.dispatchEvent(new CustomEvent("atelier:drawn", { detail: { canvas: canvas, verdict: lastVerdict } })); }
       catch (e) { /* CustomEvent unsupported, non-fatal */ }
     }
     function blitBase() { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.drawImage(playBuf, 0, 0); }

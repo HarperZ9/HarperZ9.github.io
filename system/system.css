@@ -1081,3 +1081,101 @@ body.world-3 .bar .rt{color:#cdd6cf}
   .studio-panel .chat-log{max-height:50vh}
   .chat-dock-body{padding-bottom:1rem}
 }
+
+/* ─── studio · the WITNESSED CERTIFICATE panel (verdict-diff) ───────────────────
+   The trust surface: the named criterion, the verdict as a state chip, and the re-checkable
+   evidence, rendered ABOVE the model's prose. Built on the same .panel idiom. The five states
+   are visually separable; UNVERIFIABLE and DISPUTED ([data-loud]) are the most distinct, never a
+   quiet gray that reads like a pass. The verify action is one click; recheck reproduces it live. */
+.cert-panel{margin:0}
+.cert-empty{font-family:"EB Garamond",Georgia,serif;font-size:.9rem;color:var(--muted);margin:.2rem 0 0;line-height:1.5}
+.cert-head{display:flex;justify-content:space-between;align-items:flex-start;gap:.7rem;flex-wrap:wrap}
+.cert-criterion{display:flex;flex-direction:column;gap:.15rem;min-width:0;flex:1}
+.cert-crit-k{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.5rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted)}
+.cert-crit-v{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.74rem;color:var(--bone);
+  word-break:break-word;line-height:1.35}
+/* the verdict state chip. Shape + text always carry the state, never colour alone */
+.cert-chip{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.6rem;letter-spacing:.16em;
+  text-transform:uppercase;padding:.4em .7em;line-height:1;white-space:nowrap;border-radius:3px;
+  border:1px solid var(--muted);color:var(--muted);background:transparent;display:inline-block;flex:none}
+.cert-chip-sm{font-size:.52rem;padding:.32em .6em}
+/* verified: calm green, the quiet floor */
+.cert-chip[data-verdict="verified"]{color:var(--void);background:var(--verified);border-color:var(--verified);font-weight:600}
+/* refuted: solid orange, a clear fail, not a maybe */
+.cert-chip[data-verdict="refuted"]{color:var(--bone);background:var(--orange);border-color:var(--orange);font-weight:600}
+/* superseded: was true, now stale. Dotted ring + strike, distinct from unverifiable */
+.cert-chip[data-verdict="superseded"]{color:var(--muted);border-style:dashed;border-color:rgba(138,155,146,.6);
+  text-decoration:line-through;text-decoration-thickness:1px}
+/* unverifiable: LOUD amber, double-ring. Needs no interpretation, reads as "no proof", not "pass" */
+.cert-chip[data-verdict="unverifiable"]{color:var(--ember);background:rgba(239,171,48,.1);
+  border:2px solid var(--ember);box-shadow:0 0 0 1px rgba(239,171,48,.25)}
+/* disputed: LOUDEST, split orange/amber stripe, the oracle and model disagree */
+.cert-chip[data-verdict="disputed"]{color:var(--void);font-weight:700;border:2px solid var(--ember);
+  background:repeating-linear-gradient(135deg,var(--ember) 0,var(--ember) 6px,var(--orange) 6px,var(--orange) 12px)}
+.cert-gloss{font-family:"EB Garamond",Georgia,serif;font-size:.88rem;line-height:1.45;color:#ded7c4;margin:.55rem 0 .2rem}
+.cert-gloss[data-verdict="unverifiable"],.cert-gloss[data-verdict="disputed"]{color:var(--ember)}
+/* a left rule that re-states the loud states for the whole header region */
+.cert-gloss[data-verdict="unverifiable"]{border-left:2px solid var(--ember);padding-left:.6rem}
+.cert-gloss[data-verdict="disputed"]{border-left:2px solid var(--orange);padding-left:.6rem}
+.cert-facts{display:flex;flex-wrap:wrap;gap:.35rem;margin:.35rem 0 .2rem}
+.cert-fact{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.52rem;color:var(--muted);
+  background:rgba(0,0,0,.25);border:1px solid var(--hairline);border-radius:999px;padding:.18em .6em;display:inline-flex;gap:.4em}
+.cert-fact-k{color:var(--prussian);letter-spacing:.06em}
+.cert-fact-v{color:var(--bone)}
+.cert-ev-label{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.5rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);margin:.85rem 0 .4rem}
+.cert-evidence{display:flex;flex-direction:column;background:rgba(6,14,15,.5);border:1px solid var(--hairline);
+  border-radius:8px;padding:.3rem .55rem;max-height:13rem;overflow-y:auto}
+.cert-ev{display:flex;justify-content:space-between;align-items:baseline;gap:.7rem;
+  font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.56rem;padding:.26rem 0;
+  border-bottom:1px dotted rgba(138,155,146,.14)}
+.cert-ev:last-child{border-bottom:0}
+.cert-ek{color:var(--prussian);letter-spacing:.04em;flex:none}
+.cert-ev-v{color:var(--bone);text-align:right;word-break:break-all}
+/* one-click operator actions: accept / reject / dispute */
+.cert-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.95rem}
+.cert-act{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.6rem;letter-spacing:.1em;
+  text-transform:uppercase;padding:.5em .9em;border:1px solid var(--hairline);background:transparent;
+  color:var(--muted);cursor:pointer;border-radius:3px;transition:border-color .18s,color .18s,background .18s}
+.cert-act:hover{border-color:rgba(239,171,48,.5);color:var(--bone)}
+.cert-act:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.cert-act[data-action="accepted"]:hover{border-color:var(--verified);color:var(--verified)}
+.cert-act[data-action="rejected"]:hover{border-color:var(--orange);color:var(--orange)}
+.cert-act[data-action="disputed"]:hover{border-color:var(--ember);color:var(--ember)}
+.cert-stamp{margin-top:.6rem;display:flex;gap:.45em;align-items:center;
+  font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.58rem}
+.cert-stamp-k{color:var(--prussian);letter-spacing:.16em;text-transform:uppercase}
+.cert-stamp-v{letter-spacing:.08em;text-transform:uppercase;padding:.16em .55em;border-radius:3px;border:1px solid}
+.cert-stamp-accepted{color:var(--verified);border-color:var(--verified)}
+.cert-stamp-rejected{color:var(--orange);border-color:var(--orange)}
+.cert-stamp-disputed{color:var(--ember);border-color:var(--ember)}
+/* recheck affordance: reproduce the verdict live */
+.cert-recheck{margin-top:.85rem}
+.cert-recheck-btn{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.6rem;letter-spacing:.02em;
+  color:var(--ember);cursor:pointer;background:transparent;border:1px solid rgba(239,171,48,.35);
+  border-radius:999px;padding:.42em .85em;transition:background .15s,border-color .15s}
+.cert-recheck-btn:hover,.cert-recheck-btn:focus-visible{background:rgba(239,171,48,.12);border-color:var(--ember);outline:none}
+.cert-rc-out{margin-top:.6rem;font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.6rem;
+  border-top:1px solid rgba(239,171,48,.12);padding-top:.55rem}
+.cert-rc-line{display:flex;align-items:center;gap:.5em;flex-wrap:wrap}
+.cert-rc-k{color:var(--muted);letter-spacing:.04em}
+.cert-rc-match{margin-top:.4rem;line-height:1.4}
+.cert-rc-match.ok{color:var(--verified)}
+.cert-rc-match.bad{color:var(--orange)}
+.cert-rc-match.ok::before{content:"\2713 ";font-weight:700}
+.cert-rc-match.bad::before{content:"\2717 ";font-weight:700}
+/* the audit trail: append-only, most recent first in the list */
+.cert-audit{margin-top:1.1rem;border-top:1px solid var(--hairline);padding-top:.8rem}
+.cert-audit-head{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.5rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;display:flex;justify-content:space-between;gap:.6rem}
+.cert-audit-count{color:var(--prussian)}
+.cert-audit-list{display:flex;flex-direction:column;gap:.4rem;max-height:14rem;overflow-y:auto}
+.cert-audit-row{display:grid;grid-template-columns:auto 1fr auto;gap:.55rem;align-items:center;
+  font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.54rem;color:var(--muted);
+  background:rgba(6,14,15,.4);border:1px solid var(--hairline);border-radius:6px;padding:.34em .55em}
+.cert-audit-ts{color:var(--prussian);white-space:nowrap}
+.cert-audit-crit{color:var(--bone);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cert-audit-act{letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.cert-audit-empty{font-family:"EB Garamond",Georgia,serif;font-size:.84rem;color:var(--muted);margin:0}
+.cert-note{font-family:"EB Garamond",Georgia,serif;font-size:.78rem;color:var(--muted);line-height:1.5;margin:.7rem 0 0}

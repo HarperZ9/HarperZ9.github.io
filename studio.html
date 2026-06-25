@@ -366,6 +366,23 @@
           </div>
         </div>
       </section>
+
+      <!-- The WITNESSED CERTIFICATE (verdict-diff): the named criterion, the verdict as a state chip,
+           and the re-checkable evidence, rendered BEFORE the model's prose. Accept / reject / dispute
+           is one click; UNVERIFIABLE and DISPUTED are the most visually distinct states; recheck
+           reproduces the verdict live from the certificate's own evidence. Below it, the append-only
+           audit trail (IndexedDB) replays every certificate issued and every operator action stamped.
+           studio.js builds a real certificate (certificate.js) from the live reconcile and renders it
+           here via certificate-panel.js; nothing is faked. -->
+      <section class="panel cert-panel" id="sc-certificate" aria-label="The witnessed certificate: criterion, verdict, and re-checkable evidence">
+        <h2>The witnessed certificate <span class="mm-sub">criterion, verdict, evidence, before the prose</span></h2>
+        <div id="cert-render"></div>
+        <div class="cert-audit" id="cert-audit">
+          <div class="cert-audit-head"><span>audit trail <span class="mm-hint">append-only, newest first</span></span><span class="cert-audit-count" id="cert-audit-count"></span></div>
+          <div class="cert-audit-list" id="cert-audit-list"></div>
+        </div>
+        <p class="cert-note" id="cert-note"></p>
+      </section>
     </div>
 
     <!-- The chat dock: first-class, minimizable. #studio-log scrolls inside its own box; the chips +
