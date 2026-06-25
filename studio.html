@@ -37,8 +37,8 @@
   <!-- ── LEFT RAIL: source menu + the active source's controls ───────────────────────── -->
   <aside class="studio-rail" id="studio-rail" aria-label="Source &amp; controls">
     <div class="rail-head">
-      <h1>The Studio</h1>
-      <p class="rail-lede">Project Telos, the engine. A person and a model perceive the same thing, generate, and verify it together, step by step. The <a href="https://github.com/HarperZ9/telos" style="color:inherit;border-bottom:1px solid rgba(239,171,48,.4);text-decoration:none">published telos repo</a> is the small runnable demo of the same loop. This is the engine running live.</p>
+      <h1 translate="no">The Studio</h1>
+      <p class="rail-lede"><span translate="no">Project Telos</span>, the engine. A person and a model perceive the same thing, generate, and verify it together, step by step. The <a href="https://github.com/HarperZ9/telos" style="color:inherit;border-bottom:1px solid rgba(239,171,48,.4);text-decoration:none">published <span translate="no">telos</span> repo</a> is the small runnable demo of the same loop. This is the engine running live.</p>
     </div>
 
     <!-- The source menu: pick what the model looks at. setSource(name) shows ONLY that block. -->
@@ -184,9 +184,9 @@
         </div>
       </section>
 
-      <!-- SOURCE: Dimensions (Task 8p). Animated n-dimensional polytope renderer, 1D–10D.
+      <!-- SOURCE: Dimensions (Task 8p). Animated n-dimensional polytope renderer, 1D to 10D.
            Draws lines into the shared #studio-canvas (a normal 2D context, no WebGL swap needed).
-           Controls: kind chips, projection chips, dimension slider (1–10), speed slider, Render button. -->
+           Controls: kind chips, projection chips, dimension slider (1 to 10), speed slider, Render button. -->
       <section class="src-block" id="src-ndim" role="tabpanel" aria-label="Dimensions controls" hidden>
         <div class="fractal-source" id="ndim-source">
           <div class="at-panel">
@@ -430,8 +430,8 @@
       </section>
 
       <details class="rail-group rail-about">
-        <summary>About the Studio and Project Telos</summary>
-        <p>This is the live surface of Project Telos, the engine. Telos is the thesis made tangible: a person and a model stand before the same witnessed frame, generate from it, and verify every step together. Bring your own photo, gif, or video, or generate one with the Atelier's algorithms or the fractal engines. The right panel shows exactly what the model is given: the faithful frame, its fingerprint, dominant colours, and per-channel meters. Talk to it about what it sees, and reshape it, taking turns. The <a href="https://github.com/HarperZ9/telos" style="color:inherit;border-bottom:1px solid rgba(239,171,48,.4);text-decoration:none">published telos repo</a> is the small runnable demo of the same loop. This site is its testbench.</p>
+        <summary>About the <span translate="no">Studio</span> and <span translate="no">Project Telos</span></summary>
+        <p>This is the live surface of <span translate="no">Project Telos</span>, the engine. <span translate="no">Telos</span> is the thesis made tangible: a person and a model stand before the same witnessed frame, generate from it, and verify every step together. Bring your own photo, gif, or video, or generate one with the Atelier's algorithms or the fractal engines. The right panel shows exactly what the model is given: the faithful frame, its fingerprint, dominant colours, and per-channel meters. Talk to it about what it sees, and reshape it, taking turns. The <a href="https://github.com/HarperZ9/telos" style="color:inherit;border-bottom:1px solid rgba(239,171,48,.4);text-decoration:none">published <span translate="no">telos</span> repo</a> is the small runnable demo of the same loop. This site is its testbench.</p>
       </details>
     </div>
   </aside>
@@ -591,8 +591,8 @@
               <input class="mc-input" type="url" id="mc-endpoint" placeholder="https://api.openai.com/v1/chat/completions" autocomplete="off">
             </label>
             <p class="mc-hint">Self-host a model and connect it. Your frames stay between your browser and that endpoint.<br>
-              Ollama: <code>http://localhost:11434/v1/chat/completions</code><br>
-              LM Studio: <code>http://localhost:1234/v1/chat/completions</code>
+              Ollama: <code translate="no">http://localhost:11434/v1/chat/completions</code><br>
+              LM Studio: <code translate="no">http://localhost:1234/v1/chat/completions</code>
             </p>
             <label class="mc-label" for="mc-key">API key <span class="mc-key-optional">(optional, local models need none)</span>
               <input class="mc-input" type="password" id="mc-key" placeholder="sk-… (leave blank for local endpoints)" autocomplete="off" aria-describedby="mc-note">

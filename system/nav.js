@@ -9,9 +9,9 @@ const DEST = [
   ["About", "cv.html", "about"],
 ];
 
-// Map any page to one of the sections. Flagships are the three peers; everything
+// Map any page to one of the sections. Flagship pages live under Flagships; everything
 // heavier-than-a-brick down to the utilities lives under the catalog.
-const FLAGSHIPS = new Set(["overview","index-graph","forum","studio"]);
+const FLAGSHIPS = new Set(["overview","index-graph","forum","studio","gather","crucible"]);
 const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","accountable-machines",
   "accountable-engine","quantalang","raw","quanta-color","quanta-products","toolkit",
   "provenance-sensorium","orca","aleph","warden","presentation","atelier","gallery","demonstrations"]);

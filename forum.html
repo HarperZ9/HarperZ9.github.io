@@ -32,13 +32,13 @@
 <script type="module" src="system/nav.js?v=20260625a"></script>
 
 <div class="frame">
-  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">forum &middot; accountable orchestrator</span></div>
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">forum</span> &middot; accountable orchestrator</span></div>
   <div class="mid">
     <h1>Run a team of agents. <span class="g">Witness every step.</span></h1>
-    <p class="lede">Most orchestrators tell you an agent completed a task. forum writes down what actually happened: which lane the task went to, what plan was formed, what the result was, and whether validation passed or failed. All of that lands in a causal hash-chain ledger you can replay and verify yourself. A failed task is recorded as <code>ok=false</code>, not quietly blessed and passed along.</p>
+    <p class="lede">Most orchestrators tell you an agent completed a task. <span translate="no">forum</span> writes down what actually happened: which lane the task went to, what plan was formed, what the result was, and whether validation passed or failed. All of that lands in a causal hash-chain ledger you can replay and verify yourself. A failed task is recorded as <code translate="no">ok=false</code>, not quietly blessed and passed along.</p>
     <p class="close">The trust comes from re-deriving the chain, not from the engine asserting it ran cleanly.</p>
   </div>
-  <div class="seal">forum &middot; v1.12.0 &middot; witnessed ledger &middot; fair-source &middot; pip install forum-engine</div>
+  <div class="seal"><span translate="no">forum</span> &middot; v1.12.0 &middot; witnessed ledger &middot; fair-source &middot; <span translate="no">pip install forum-engine</span></div>
 </div>
 
 <main id="main">
@@ -46,7 +46,7 @@
 <!-- WHAT IT IS -->
 <section class="mv" id="what" aria-labelledby="what-h">
   <h2 id="what-h" class="reveal">It routes the work, runs it, and records every move.</h2>
-  <p class="body-text reveal">forum is a daemon-hostable engine that coordinates a team of AI agents and records each step in a ledger you can verify. You give it a task. It picks the right specialist lane, turns the request into a validated plan, runs the work under witness, judges each result against its instruction, and combines everything into one answer. Every one of those steps is written to the ledger with a hash that chains to the one before it.</p>
+  <p class="body-text reveal"><span translate="no">forum</span> is a daemon-hostable engine that coordinates a team of AI agents and records each step in a ledger you can verify. You give it a task. It picks the right specialist lane, turns the request into a validated plan, runs the work under witness, judges each result against its instruction, and combines everything into one answer. Every one of those steps is written to the ledger with a hash that chains to the one before it.</p>
   <p class="body-text reveal">Around that core sit the parts that make a run trustworthy and lean: a bounded budget that stops a runaway loop, witnessed escalation up a ladder of stronger models, a check on whether the answer still covers the request, a delivery pass that tightens a verbose answer without dropping its terms, and clean seams for a peer brain to supply context and an outside verifier to check the work. Each is opt-in, each is witnessed, none is trusted on its word.</p>
   <em class="close reveal">None of those roles communicate by convention or trust. Each receives a witnessed input, produces a witnessed output, and hands it forward. There is no back-channel.</em>
 </section>
@@ -54,7 +54,7 @@
 <!-- THE PAINS IT ANSWERS -->
 <section class="mv" id="pains" aria-labelledby="pains-h">
   <h2 id="pains-h" class="reveal">The pains it answers.</h2>
-  <p class="body-text reveal">These are real complaints from people running agent fleets. Each one drove a feature, and each maps to something forum does and witnesses.</p>
+  <p class="body-text reveal">These are real complaints from people running agent fleets. Each one drove a feature, and each maps to something <span translate="no">forum</span> does and witnesses.</p>
   <div class="index reveal-children" role="list" aria-label="Pain points and how forum answers them">
     <div class="index-row" role="listitem" style="--i:0">
       <span class="index-term">a dollar becomes a hundred</span>
@@ -62,7 +62,7 @@
     </div>
     <div class="index-row" role="listitem" style="--i:1">
       <span class="index-term">it drifts for hours</span>
-      <span class="index-gloss">after the answer is formed, forum checks how much of the request it still covers and escalates to a model judge when that floor flags, so drift lands on the record, not at hour three</span>
+      <span class="index-gloss">after the answer is formed, <span translate="no">forum</span> checks how much of the request it still covers and escalates to a model judge when that floor flags, so drift lands on the record, not at hour three</span>
     </div>
     <div class="index-row" role="listitem" style="--i:2">
       <span class="index-term">which model even ran?</span>
@@ -86,7 +86,7 @@
     </div>
     <div class="index-row" role="listitem" style="--i:7">
       <span class="index-term">stale memory poisons the work</span>
-      <span class="index-gloss">forum plans and runs on organized context pulled from a brain through a clean seam; building and pruning that graph is a peer flagship's job, and forum consumes it, witnessed</span>
+      <span class="index-gloss"><span translate="no">forum</span> plans and runs on organized context pulled from a brain through a clean seam; building and pruning that graph is a peer flagship's job, and <span translate="no">forum</span> consumes it, witnessed</span>
     </div>
   </div>
 </section>
@@ -94,9 +94,9 @@
 <!-- THE DIFFERENTIATOR -->
 <section class="mv" id="ledger" aria-labelledby="ledger-h">
   <h2 id="ledger-h" class="reveal">The ledger is the differentiator.</h2>
-  <p class="body-text reveal">A hash-chain ledger means each entry carries the hash of the entry before it. Alter any past record and every hash from that point forward no longer matches. You can replay the chain, recompute the hashes, and check the whole sequence yourself without asking forum whether it ran honestly. The bulky parts, prompts and outputs, are stored by the hash of their own bytes, so you can redact a sensitive body to its fingerprint and the chain still verifies; when the bodies are present, a deep check re-hashes each one and catches a swapped result.</p>
+  <p class="body-text reveal">A hash-chain ledger means each entry carries the hash of the entry before it. Alter any past record and every hash from that point forward no longer matches. You can replay the chain, recompute the hashes, and check the whole sequence yourself without asking <span translate="no">forum</span> whether it ran honestly. The bulky parts, prompts and outputs, are stored by the hash of their own bytes, so you can redact a sensitive body to its fingerprint and the chain still verifies; when the bodies are present, a deep check re-hashes each one and catches a swapped result.</p>
   <p class="pull reveal">A witnessed failure is more useful than an unwitnessed success.</p>
-  <p class="body-text reveal">When a task fails validation, the ledger records <code>ok=false</code> with the reason. Nothing is silently retried or promoted. The same record holds the budget stop, the escalation, the intent check, and the delivery revision, each chained to what it acted on, so a postmortem follows the causal links back to why a thing happened. A run that crashed picks up from that record, reusing what already succeeded.</p>
+  <p class="body-text reveal">When a task fails validation, the ledger records <code translate="no">ok=false</code> with the reason. Nothing is silently retried or promoted. The same record holds the budget stop, the escalation, the intent check, and the delivery revision, each chained to what it acted on, so a postmortem follows the causal links back to why a thing happened. A run that crashed picks up from that record, reusing what already succeeded.</p>
 </section>
 
 <!-- ARCHITECTURE -->
@@ -126,16 +126,16 @@
 <!-- PROOF AND RUN IT -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Current state. How to run it.</h2>
-  <p class="body-text reveal">Version 1.12.0, on PyPI as <code>forum-engine</code>. The full engine is here: durable ledger, routing, the control loop, model-agnostic executors, an HTTP and MCP daemon, the <code>forum</code> CLI, witnessed budgets and escalation, the intent and delivery ladders, typed data-flow between tasks, resumable runs, and the context and verification seams. 249 tests plus two gated real-model tests, ruff and mypy clean, no third-party runtime dependency. The license is fair-source: source-available, rights reserved to fund the research; the smaller utility tools that came out of this work stay permissive.</p>
-  <pre class="artifact"><span class="pr">$ pip install forum-engine</span>
+  <p class="body-text reveal">Version 1.12.0, on PyPI as <code translate="no">forum-engine</code>. The full engine is here: durable ledger, routing, the control loop, model-agnostic executors, an HTTP and MCP daemon, the <code translate="no">forum</code> CLI, witnessed budgets and escalation, the intent and delivery ladders, typed data-flow between tasks, resumable runs, and the context and verification seams. 249 tests plus two gated real-model tests, ruff and mypy clean, no third-party runtime dependency. The license is fair-source: source-available, rights reserved to fund the research; the smaller utility tools that came out of this work stay permissive.</p>
+  <pre class="artifact" translate="no"><span class="pr">$ pip install forum-engine</span>
 <span class="pr">$ python examples/demo.py</span>   <span class="ok"># routes, plans, witnesses, then tamper-checks the ledger</span>
 <span class="pr">$ python -m pytest</span>
 <span class="ok">249 passed</span></pre>
-  <p class="body-text reveal">Python, standard library only. Install it, run the demo, route a real task through it. Each example under <code>examples/</code> is a short offline demonstration of one capability: the intent ladder, the delivery pass, a resumed run, an A/B of two runs. If something breaks or the ledger produces a result you cannot verify, that is exactly the kind of report I want.</p>
+  <p class="body-text reveal">Python, standard library only. Install it, run the demo, route a real task through it. Each example under <code translate="no">examples/</code> is a short offline demonstration of one capability: the intent ladder, the delivery pass, a resumed run, an A/B of two runs. If something breaks or the ledger produces a result you cannot verify, that is exactly the kind of report I want.</p>
   <div class="channels reveal">
-    <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/forum">HarperZ9/forum</a>
+    <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/forum" translate="no">HarperZ9/forum</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/forum-engine/">forum-engine</a>
+    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/forum-engine/" translate="no">forum-engine</a>
     &nbsp;&middot;&nbsp;
     <a href="overview.html">&larr; all flagships</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the index</a>
   </div>
@@ -144,7 +144,7 @@
 </main>
 
 <footer class="footer-seal" role="contentinfo">
-  <p class="seal">forum records every step in a witnessed hash-chain ledger. Replay it. Recompute the hashes. The answer comes from the chain, not from a promise.</p>
+  <p class="seal"><span translate="no">forum</span> records every step in a witnessed hash-chain ledger. Replay it. Recompute the hashes. The answer comes from the chain, not from a promise.</p>
 </footer>
 
 <script src="system/reveal.js?v=20260625a" defer></script>

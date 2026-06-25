@@ -32,13 +32,13 @@
 <script type="module" src="system/nav.js?v=20260625a"></script>
 
 <div class="frame">
-  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">EMET &middot; external witness</span></div>
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">EMET</span> &middot; external witness</span></div>
   <div class="mid">
     <h1>If an agent touched it, you should be able to <span class="g">check what it did.</span></h1>
     <p class="lede">I couldn&rsquo;t take an agent&rsquo;s word for what it changed, so I built something that checks for itself. It reads the file straight off the disk and works out a fingerprint, a short code that is unique to those exact bytes. Move even one character and the whole fingerprint changes. Then it compares that to the fingerprint it saved earlier and tells you one of three things: MATCH (nothing moved), DRIFT (something moved), or UNVERIFIABLE (it couldn&rsquo;t check, and says so plainly). There is no fourth answer that just means <em>trust me</em>. The code was built so that answer can&rsquo;t exist. It stands outside the thing it&rsquo;s checking, and it never speaks for that thing.</p>
     <p class="close">A witness isn&rsquo;t a judge. All it does is say what it compared. Whether to trust the result is yours, not the tool&rsquo;s.</p>
   </div>
-  <div class="seal">emet, Hebrew for truth &middot; 19/19 conformance &middot; three languages</div>
+  <div class="seal"><span translate="no">emet</span>, Hebrew for truth &middot; 19/19 conformance &middot; three languages</div>
 </div>
 
 <main id="main">
@@ -46,7 +46,7 @@
 <!-- ─── WHAT IT IS ─────────────────────────────────────────────── -->
 <section class="mv" id="what" aria-labelledby="what-h">
   <h2 id="what-h" class="reveal">It works out the fingerprint itself.</h2>
-  <p class="body-text reveal">An AI model is always handling files: one it edits, a prompt it&rsquo;s given, a view it shows you and calls a true copy of the original. EMET opens those files directly and works out the fingerprint again from scratch, using SHA-256 (a standard, widely trusted recipe for turning any file into one short, unique fingerprint). Then it compares that to the fingerprint it saved before. The answer comes only from running the same recipe over the same file, never from the system telling you it&rsquo;s fine. It stands <em>outside</em> the thing it&rsquo;s checking.</p>
+  <p class="body-text reveal">An AI model is always handling files: one it edits, a prompt it&rsquo;s given, a view it shows you and calls a true copy of the original. <span translate="no">EMET</span> opens those files directly and works out the fingerprint again from scratch, using SHA-256 (a standard, widely trusted recipe for turning any file into one short, unique fingerprint). Then it compares that to the fingerprint it saved before. The answer comes only from running the same recipe over the same file, never from the system telling you it&rsquo;s fine. It stands <em>outside</em> the thing it&rsquo;s checking.</p>
   <em class="close reveal">Knowing where a file came from is one thing. It still doesn&rsquo;t tell you whether the copy the model is looking at right now is unchanged. That&rsquo;s the gap this closes.</em>
 </section>
 
@@ -56,15 +56,15 @@
   <p class="body-text reveal">There are exactly three answers it can give (MATCH, DRIFT, UNVERIFIABLE), and there will only ever be three. That&rsquo;s not a promise written in a comment somewhere; the code is shaped so a fourth answer simply has nowhere to come from. It can never tell you to trust something, because it was never given any trust to hand out.</p>
   <div class="index reveal-children" role="list" aria-label="The closed verdict lattice">
     <div class="index-row" role="listitem" style="--i:0">
-      <span class="index-term">MATCH</span>
+      <span class="index-term" translate="no">MATCH</span>
       <span class="index-gloss">the file&rsquo;s fingerprint still matches the one saved earlier &middot; it means nothing has moved, not that the file is good</span>
     </div>
     <div class="index-row" role="listitem" style="--i:1">
-      <span class="index-term">DRIFT</span>
+      <span class="index-term" translate="no">DRIFT</span>
       <span class="index-gloss">the file, or the view shown to you, no longer matches its saved fingerprint &middot; it just reports that something changed, and doesn&rsquo;t decide whose fault that is</span>
     </div>
     <div class="index-row" role="listitem" style="--i:2">
-      <span class="index-term">UNVERIFIABLE</span>
+      <span class="index-term" translate="no">UNVERIFIABLE</span>
       <span class="index-gloss">it couldn&rsquo;t read the file, or had no saved fingerprint to compare against &middot; so it says &ldquo;I can&rsquo;t tell&rdquo; out loud, with a clear reason. It never guesses, and never just crashes</span>
     </div>
   </div>
@@ -79,7 +79,7 @@
   </div>
   <div class="exhibit reveal">
     <div class="exhibit-tag"><span class="ord">Live</span> <span class="what">the verdict depends on the bytes, nothing else</span></div>
-    <pre class="artifact"><span class="pr">$ python membrane.py verify demo_sample.txt</span>
+    <pre class="artifact" translate="no"><span class="pr">$ python membrane.py verify demo_sample.txt</span>
 <span class="ok">MATCH</span>  demo_sample.txt   want=d02206abca2a…  got=d02206abca2a…   (exit 0)
 
 <span class="cmt"># append one byte to the file, ask the same question</span>
@@ -90,8 +90,8 @@
 membrane.py        &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span>
 impl/rust/emet     &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span>
 impl/js/emet.js    &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span></pre>
-    <p class="artifact-cap">Change a single character in the file and the answer drops from <b>MATCH</b> to <b>DRIFT</b>. It reads the file itself, not anyone who promises it&rsquo;s fine.</p>
-    <p class="artifact-note">Captured live from the emet run &middot; receipt format from <b>adapters/proof_surface_receipt.py</b> &middot; 19/19 conformance vectors, three language implementations, CI each push. <em>Honest limit:</em> I wrote all three versions myself, so they can only earn one honest claim: that the written rules are clear enough to build from. They haven&rsquo;t yet been rebuilt by someone with no connection to me, and that fourth version, by a different hand, is something I still owe. <a href="emet-sample.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">See a sample proof-surface report →</a></p>
+    <p class="artifact-cap">Change a single character in the file and the answer drops from <b translate="no">MATCH</b> to <b translate="no">DRIFT</b>. It reads the file itself, not anyone who promises it&rsquo;s fine.</p>
+    <p class="artifact-note">Captured live from the <span translate="no">emet</span> run &middot; receipt format from <b translate="no">adapters/proof_surface_receipt.py</b> &middot; 19/19 conformance vectors, three language implementations, CI each push. <em>Honest limit:</em> I wrote all three versions myself, so they can only earn one honest claim: that the written rules are clear enough to build from. They haven&rsquo;t yet been rebuilt by someone with no connection to me, and that fourth version, by a different hand, is something I still owe. <a href="emet-sample.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">See a sample proof-surface report →</a></p>
   </div>
 </section>
 
@@ -107,11 +107,11 @@ impl/js/emet.js    &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Copy it. Run the tests. Try it on real work.</h2>
   <p class="body-text reveal">It&rsquo;s small, it&rsquo;s open for anyone to read, and it leans on almost nothing else. Copy it onto your own machine, run the tests, point it at something you actually care about. And the moment it lets you down, tell me. I would honestly rather hear where it breaks than be told it&rsquo;s fine. That&rsquo;s what shows me what to build next.</p>
-  <pre class="artifact"><span class="pr">$ git clone https://github.com/HarperZ9/emet &amp;&amp; cd emet</span>
+  <pre class="artifact" translate="no"><span class="pr">$ git clone https://github.com/HarperZ9/emet &amp;&amp; cd emet</span>
 <span class="pr">$ python conformance/run.py membrane.py</span>
 <span class="ok">CONFORMANCE 19/19 vectors pass</span></pre>
   <div class="channels reveal">
-    <span class="g">GitHub</span>: <a href="https://github.com/HarperZ9/emet">HarperZ9/emet</a>
+    <span class="g">GitHub</span>: <a href="https://github.com/HarperZ9/emet" translate="no">HarperZ9/emet</a>
     &nbsp;&middot;&nbsp;
     <span class="g">Email</span>: <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
     &nbsp;&middot;&nbsp;
@@ -122,7 +122,7 @@ impl/js/emet.js    &rarr;  <span class="ok">CONFORMANCE 19/19 vectors pass</span
 </main>
 
 <footer class="footer-seal" role="contentinfo">
-  <p class="seal">A witness is not an authority. It re-derives the bytes itself and reports MATCH, DRIFT, or UNVERIFIABLE, never <b>trusted</b>. Run it yourself and check.</p>
+  <p class="seal">A witness is not an authority. It re-derives the bytes itself and reports MATCH, DRIFT, or UNVERIFIABLE, never <b translate="no">trusted</b>. Run it yourself and check.</p>
 </footer>
 
 <script src="system/reveal.js?v=20260625a" defer></script>

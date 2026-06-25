@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>crucible, an accountable judgment organ</title>
+<meta name="description" content="crucible registers a thesis, steelmans its claims, measures them against a substrate, refines the weakest axis, and emits re-checkable MATCH, DRIFT, or UNVERIFIABLE verdicts. By Zain Dana Harper.">
+<link rel="canonical" href="https://harperz9.github.io/crucible.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="crucible, an accountable judgment organ">
+<meta property="og:description" content="Test a thesis against measurements, refine the weakest axis, and witness the verdict instead of trusting a judge's say-so.">
+<meta property="og:url" content="https://harperz9.github.io/crucible.html">
+<meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta property="og:image:alt" content="A still from the engine: a Julia set rendered in the site's palette, real mathematics drawn by our own code.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="crucible, an accountable judgment organ">
+<meta name="twitter:description" content="A thesis gets measured, refined, and witnessed. MATCH, DRIFT, or UNVERIFIABLE, grounded in a record.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/system.css?v=20260625a">
+</head>
+<body class="inner-clean">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260625a"></script>
+
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">crucible</span> &middot; accountable judgment</span></div>
+  <div class="mid">
+    <h1>Test the thesis. <span class="g">Witness the verdict.</span></h1>
+    <p class="lede">Ideas get repeated until they sound true. <span translate="no">crucible</span> makes a thesis carry its claims, the observations that would refute them, the measurements that decide them, and the record that lets the verdict be checked again. The answer is not a judge's confidence. It is <span translate="no">MATCH</span>, <span translate="no">DRIFT</span>, or <span translate="no">UNVERIFIABLE</span>, grounded in a measurement.</p>
+    <p class="close">Steelman proposes what would settle the claim. Measurement decides. The verdict recomputes from the record.</p>
+  </div>
+  <div class="seal"><span translate="no">crucible</span> &middot; v0.4.0 release candidate &middot; refine loop &middot; fair-source &middot; zero core dependencies</div>
+</div>
+
+<main id="main">
+
+<section class="mv" id="what" aria-labelledby="what-h">
+  <h2 id="what-h" class="reveal">It turns a thesis into claims that can be checked.</h2>
+  <p class="body-text reveal"><span translate="no">crucible</span> is the cognition organ of the constellation. Where <span translate="no">gather</span> brings evidence in and records how it was obtained, <span translate="no">crucible</span> tests what that evidence supports. A thesis is registered as claims, each with its falsification condition and a content hash. The registry stores those bodies content-addressed, so tampering is caught by re-hashing the exact claim.</p>
+  <p class="body-text reveal">A witnessed assessment folds every per-claim verdict into a seal. Re-checking an assessment does not ask the engine whether it was honest; it re-derives the verdicts from the thesis and the measurements on disk. A confident assertion cannot fake the shape.</p>
+  <em class="close reveal">The output is a standing, not a vibe: what matched, what drifted, and what could not be measured.</em>
+</section>
+
+<section class="mv" id="loop" aria-labelledby="loop-h">
+  <h2 id="loop-h" class="reveal">The loop is register, steelman, measure, refine, witness.</h2>
+  <div class="index reveal-children" role="list" aria-label="The crucible loop">
+    <div class="index-row" role="listitem" style="--i:0"><span class="index-term">register</span><span class="index-gloss">bind the thesis to exact claims and falsification conditions, each with a sha256 receipt</span></div>
+    <div class="index-row" role="listitem" style="--i:1"><span class="index-term">steelman</span><span class="index-gloss">an adversarial seam proposes the strongest refutation and the test that would settle it</span></div>
+    <div class="index-row" role="listitem" style="--i:2"><span class="index-term">measure</span><span class="index-gloss">a sound oracle records deviation from what the claim predicts; the default oracle measures nothing and fails closed</span></div>
+    <div class="index-row" role="listitem" style="--i:3"><span class="index-term">refine</span><span class="index-gloss">grade each claim's margin, compute harmonic-mean cohesion, reflect the weakest axis, and re-iterate</span></div>
+    <div class="index-row" role="listitem" style="--i:4"><span class="index-term">witness</span><span class="index-gloss">persist the verdicts and measurements so anyone can re-derive <span translate="no">MATCH</span>, <span translate="no">DRIFT</span>, or <span translate="no">UNVERIFIABLE</span></span></div>
+  </div>
+</section>
+
+<section class="mv" id="diff" aria-labelledby="diff-h">
+  <h2 id="diff-h" class="reveal">The verdict has no model in the deciding step.</h2>
+  <p class="body-text reveal">A model can propose a refutation later, or an oracle can measure a substrate later, but the verdict step is a pure function. It receives a claim and a measurement. If the measurement is absent, mismatched, non-numeric, negative, or outside a positive tolerance, the result cannot silently become trust. It is <span translate="no">UNVERIFIABLE</span> or <span translate="no">DRIFT</span>.</p>
+  <p class="pull reveal">A claim that cannot be measured is never read as holding.</p>
+  <p class="body-text reveal">That is why the refine loop matters. A short thesis does not get blessed. <span translate="no">crucible</span> reports the weakest claim and the cohesion trajectory, then gives the next round a precise place to improve: strengthen the substrate, sharpen the measurement, or amend the thesis.</p>
+</section>
+
+<section class="mv" id="arch" aria-labelledby="arch-h">
+  <h2 id="arch-h" class="reveal">Standard library at the core. Impure edges behind seams.</h2>
+  <p class="body-text reveal">The 0.4.0 line ships the claim and thesis receipts, the content-addressed registry, witnessed assessments, the Steelman seam, the Measure seam, and the refine adapter over a thesis. The core has no third-party runtime dependency. Clocks are injected, JSON is canonical, and Null defaults keep the organ standing alone when a model, browser, or proof oracle is absent.</p>
+  <pre class="artifact" translate="no"><span class="pr">$ crucible register examples/thesis-binary-search.json --registry .crucible</span>
+<span class="ok">registered thesis ...</span>
+
+<span class="pr">$ crucible measure examples/thesis-binary-search.json --substrate examples/substrate-binary-search.json</span>
+<span class="ok">MATCH 1  DRIFT 1  UNVERIFIABLE 1</span>
+
+<span class="pr">$ crucible refine examples/refine-discovery-loop.json</span>
+<span class="ok">refined thesis "Discovery loop margins" over 2 round(s): correct</span></pre>
+</section>
+
+<section class="mv" id="state" aria-labelledby="state-h">
+  <h2 id="state-h" class="reveal">Current state. What is honest to claim.</h2>
+  <p class="body-text reveal">Version 0.4.0 is complete locally as a release candidate: refine loop, thesis adapter, CLI command, README, architecture note, changelog, and regression tests. It is not being called published until the source and package are deliberately pushed through the publication gate. The next increments are drift tracking across rounds, the publication gate, registry operations, model-backed edges, and the 1.0 whole-system review.</p>
+  <div class="channels reveal">
+    <span class="g">Local package</span> &rarr; <span translate="no">c:/dev/public/crucible</span>
+    &nbsp;&middot;&nbsp;
+    <span class="g">Version</span> &rarr; <span translate="no">0.4.0 release candidate</span>
+    &nbsp;&middot;&nbsp;
+    <a href="overview.html">&larr; all flagships</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the catalog</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal"><span translate="no">crucible</span> judges claims by measurement and records the verdict. Recompute it. If the measure is missing, the claim does not pass.</p>
+</footer>
+
+<script src="system/reveal.js?v=20260625a" defer></script>
+</body>
+</html>

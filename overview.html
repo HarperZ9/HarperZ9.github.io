@@ -5,18 +5,18 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Flagships &middot; Zain Dana Harper</title>
-<meta name="description" content="Three flagship engines and the research they rest on. Telos: a person and a model perceive, generate, and verify together. Index: a repository-inventory and dependency-graph engine. Forum: an accountable multi-agent orchestrator with a witnessed ledger. Authored, dated, and open for anyone to check.">
+<meta name="description" content="Five flagship engines and the research they rest on. Telos: a person and a model perceive, generate, and verify together. Index maps workspaces. Forum orchestrates agents. Gather records research intake. Crucible judges theses against measurements. Authored, dated, and open for anyone to check.">
 <link rel="canonical" href="https://harperz9.github.io/overview.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Flagships &middot; Zain Dana Harper">
-<meta property="og:description" content="Three flagship engines and the research they rest on. Telos: a person and a model perceive, generate, and verify together. Index: a repository-inventory and dependency-graph engine. Forum: an accountable multi-agent orchestrator with a witnessed ledger.">
+<meta property="og:description" content="Five flagship engines and the research they rest on. Telos, index, forum, gather, and crucible: peers built to compose around re-checkable evidence.">
 <meta property="og:url" content="https://harperz9.github.io/overview.html">
 <meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
 <meta property="og:image:alt" content="A still from the engine: a Julia set rendered in the site's palette, real mathematics drawn by our own code.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Flagships &middot; Zain Dana Harper">
-<meta name="twitter:description" content="Three flagship engines and the research they rest on. Telos: a person and a model perceive, generate, and verify together. Index: a repository-inventory and dependency-graph engine. Forum: an accountable multi-agent orchestrator with a witnessed ledger.">
+<meta name="twitter:description" content="Five flagship engines and the research they rest on. Telos, index, forum, gather, and crucible: peers built to compose around re-checkable evidence.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
 <meta name="color-scheme" content="dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,44 +24,44 @@
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="system/system.css?v=20260625a">
 <style>
-  /* interactive demo controls: built from system tokens, mono register */
+  /* interactive demo controls: ceramic re-skin, mono register, AA on white */
   .demo{max-width:60rem;margin-top:clamp(1.8rem,3.5vw,2.6rem);
-    border:1px solid var(--hairline);border-radius:3px;
-    background:linear-gradient(165deg,rgba(8,17,18,.92),rgba(13,27,28,.86));
+    border:1px solid var(--line);border-radius:3px;
+    background:linear-gradient(165deg,#ffffff,#f1efe9);
     padding:clamp(1.2rem,2.4vw,1.8rem)}
-  .demo-lab{font-family:"Spline Sans Mono",monospace;font-size:.58rem;letter-spacing:.2em;
-    text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;display:block}
-  .demo textarea,.demo input[type=text]{width:100%;font-family:"Spline Sans Mono",monospace;
-    font-size:.82rem;line-height:1.6;color:var(--bone);background:rgba(6,14,15,.7);
-    border:1px solid var(--hairline);border-radius:2px;padding:.7em .8em;resize:vertical;
+  .demo-lab{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--ink-muted);margin-bottom:.5rem;display:block}
+  .demo textarea,.demo input[type=text]{width:100%;font-family:var(--mono);
+    font-size:.82rem;line-height:1.6;color:var(--ink);background:#ffffff;
+    border:1px solid var(--line);border-radius:2px;padding:.7em .8em;resize:vertical;
     transition:border-color .2s}
   .demo textarea{min-height:4.5rem}
-  .demo textarea:focus,.demo input[type=text]:focus{outline:none;border-color:rgba(239,171,48,.5)}
+  .demo textarea:focus,.demo input[type=text]:focus{outline:none;border-color:var(--iris)}
   .demo-controls{display:flex;flex-wrap:wrap;gap:.65rem;align-items:center;margin-top:.95rem}
-  .demo-btn{font-family:"Spline Sans Mono",monospace;font-size:.62rem;letter-spacing:.18em;
-    text-transform:uppercase;padding:.62em 1.05em;border:1px solid var(--orange);
-    background:transparent;color:var(--bone);cursor:pointer;border-radius:2px;
+  .demo-btn{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;
+    text-transform:uppercase;padding:.62em 1.05em;border:1px solid var(--iris);
+    background:transparent;color:var(--ink);cursor:pointer;border-radius:2px;
     transition:background .2s,color .2s}
-  .demo-btn:hover{background:var(--orange);color:var(--void)}
-  .demo-btn.ghost{border-color:var(--muted);color:var(--muted)}
-  .demo-btn.ghost:hover{background:var(--muted);color:var(--void)}
+  .demo-btn:hover{background:var(--iris);color:#fff}
+  .demo-btn.ghost{border-color:var(--ink-muted);color:var(--ink-muted)}
+  .demo-btn.ghost:hover{background:var(--ink-muted);color:#fff}
   .toggles{display:grid;grid-template-columns:1fr;gap:.55rem;margin-top:.4rem}
   @media(min-width:620px){.toggles{grid-template-columns:1fr 1fr}}
-  .tog{display:flex;align-items:flex-start;gap:.6rem;font-family:"Spline Sans Mono",monospace;
-    font-size:.72rem;color:var(--bone);opacity:.92;cursor:pointer;line-height:1.5;
-    padding:.5em .2em;border-bottom:1px solid rgba(239,171,48,.08)}
-  .tog input{margin-top:.15em;accent-color:var(--orange);width:.95rem;height:.95rem;flex-shrink:0;cursor:pointer}
-  .tog .sub{display:block;color:var(--muted);font-size:.62rem;letter-spacing:.04em;margin-top:.2em;opacity:.8}
-  .demo-out{margin-top:1.1rem;border-top:1px solid var(--hairline);padding-top:1rem;
-    font-family:"Spline Sans Mono",monospace;font-size:.74rem;line-height:1.85}
-  .verdict-big{font-family:"Spline Sans Mono",monospace;font-size:clamp(1.1rem,2.4vw,1.5rem);
-    letter-spacing:.16em;font-weight:400;display:inline-block;padding:.2em 0;margin-bottom:.35rem}
-  .v-match{color:#5fae93}.v-drift{color:var(--orange)}.v-unver{color:var(--ember)}.v-deny{color:var(--orange)}
-  .v-allow{color:#5fae93}.v-needs{color:var(--ember)}
-  .demo-detail{color:var(--muted);font-size:.68rem;letter-spacing:.04em;line-height:1.9;margin-top:.35rem}
-  .demo-detail .ok{color:#5fae93}.demo-detail .bad{color:var(--orange)}.demo-detail .lt{color:var(--ember)}
-  .demo-hash{color:var(--muted);font-size:.64rem;word-break:break-all;opacity:.78;margin-top:.4rem}
-  .nojs{font-family:"Spline Sans Mono",monospace;font-size:.62rem;color:var(--ember);
+  .tog{display:flex;align-items:flex-start;gap:.6rem;font-family:var(--mono);
+    font-size:.72rem;color:var(--ink);cursor:pointer;line-height:1.5;
+    padding:.5em .2em;border-bottom:1px solid var(--line-soft)}
+  .tog input{margin-top:.15em;accent-color:var(--iris);width:.95rem;height:.95rem;flex-shrink:0;cursor:pointer}
+  .tog .sub{display:block;color:var(--ink-muted);font-size:.62rem;letter-spacing:.04em;margin-top:.2em}
+  .demo-out{margin-top:1.1rem;border-top:1px solid var(--line);padding-top:1rem;
+    font-family:var(--mono);font-size:.74rem;line-height:1.85}
+  .verdict-big{font-family:var(--mono);font-size:clamp(1.1rem,2.4vw,1.5rem);
+    letter-spacing:.16em;font-weight:500;display:inline-block;padding:.2em 0;margin-bottom:.35rem}
+  .v-match{color:#1f7a52}.v-drift{color:#b8480a}.v-unver{color:#7a5a00}.v-deny{color:#b8480a}
+  .v-allow{color:#1f7a52}.v-needs{color:#7a5a00}
+  .demo-detail{color:var(--ink-muted);font-size:.68rem;letter-spacing:.04em;line-height:1.9;margin-top:.35rem}
+  .demo-detail .ok{color:#1f7a52}.demo-detail .bad{color:#b8480a}.demo-detail .lt{color:#7a5a00}
+  .demo-hash{color:var(--ink-muted);font-size:.64rem;word-break:break-all;margin-top:.4rem}
+  .nojs{font-family:var(--mono);font-size:.62rem;color:var(--iris);
     letter-spacing:.06em;margin-top:.8rem}
 </style>
 </head>
@@ -75,7 +75,7 @@
   <div class="mid">
     <p class="eyebrow">FLAGSHIPS &middot; START HERE</p>
     <h1>Looking verified isn&rsquo;t the same as <span class="g">being trustworthy.</span></h1>
-    <p class="lede">Three flagship engines and the research they rest on. All built on one finding: something that <em>looks</em> verified is not the same as the thing it&rsquo;s meant to guarantee. Proving who you are isn&rsquo;t permission to act. A practice run on old data isn&rsquo;t money earned. A certificate on the wall isn&rsquo;t safety. The fix is the same everywhere. Work the answer out yourself, from outside the thing making the claim. This page maps all of it.</p>
+    <p class="lede">Five flagship engines and the research they rest on. All built on one finding: something that <em>looks</em> verified is not the same as the thing it&rsquo;s meant to guarantee. Proving who you are isn&rsquo;t permission to act. A practice run on old data isn&rsquo;t money earned. A certificate on the wall isn&rsquo;t safety. The fix is the same everywhere. Work the answer out yourself, from outside the thing making the claim. This page maps all of it.</p>
     <p class="close">It started as a way to catch an AI in a confident lie. The same gap turned out to be everywhere, and the same fix works everywhere. Built to be inspected, dated, and open for anyone to break.</p>
   </div>
   <div class="seal">Authored &middot; dated &middot; citable &middot; CC&#8209;BY&#8209;4.0 &middot; MIT &middot; two DOIs</div>
@@ -172,7 +172,7 @@
       </div>
       <div class="with">
         <span class="lbl">With</span>
-        <p>human and model shape it on one surface (the Studio); novelty and fit are measured and checkable. → <em>A decision grounded in more than the loudest voice.</em></p>
+        <p>human and model shape it on one surface (the <span translate="no">Studio</span>); novelty and fit are measured and checkable. → <em>A decision grounded in more than the loudest voice.</em></p>
       </div>
     </div>
   </div>
@@ -183,29 +183,41 @@
 <!-- the body of work map: grouped catalog -->
 <section class="mv" id="map" aria-labelledby="map-h">
   <h2 id="map-h" class="reveal">Flagships.</h2>
-  <p class="body-text reveal">Everything below has my name on it and a date, and is either published with a citable DOI or shipped as tested, public code. The three flagships are peers, each doing a distinct job. Below them sit the substrates they plug into, and the smaller bricks. Every page links straight to its own source, so you never have to take my word for any of it.</p>
+  <p class="body-text reveal">Everything below has my name on it and a date, and is either published with a citable DOI or shipped as tested, public code. The five flagships are peers, each doing a distinct job. Below them sit the substrates they plug into, and the smaller bricks. Every page links straight to its own source, so you never have to take my word for any of it.</p>
 
   <!-- tier 0: flagships -->
   <section class="work-group reveal">
     <h2>Flagships</h2>
     <div class="organs">
       <div class="organ-row">
-        <span class="organ-name"><a href="studio.html">telos</a></span>
+        <span class="organ-name"><a href="studio.html" translate="no">telos</a></span>
         <span class="organ-role">the engine</span>
-        <span class="organ-line">A person and a model perceive the same thing, shape it, and verify every step. Demonstrated live in the Studio.</span>
+        <span class="organ-line">A person and a model perceive the same thing, shape it, and verify every step. Demonstrated live in the <span translate="no">Studio</span>.</span>
         <span class="organ-verdict"><span class="verdict verdict-shipped">Live</span></span>
       </div>
       <div class="organ-row">
-        <span class="organ-name"><a href="index-graph.html">index</a></span>
+        <span class="organ-name"><a href="index-graph.html" translate="no">index</a></span>
         <span class="organ-role">the map</span>
-        <span class="organ-line">A repository-inventory and dependency-graph engine for many-repo workspaces. Public, PyPI index-graph 2.8.0.</span>
+        <span class="organ-line">A repository-inventory and dependency-graph engine for many-repo workspaces. Public, PyPI <span translate="no">index-graph</span> 2.8.0.</span>
         <span class="organ-verdict"><span class="verdict verdict-shipped">Shipped</span></span>
       </div>
       <div class="organ-row">
-        <span class="organ-name"><a href="forum.html">forum</a></span>
+        <span class="organ-name"><a href="forum.html" translate="no">forum</a></span>
         <span class="organ-role">the orchestrator</span>
-        <span class="organ-line">Runs a team of agents and records every step in a witnessed ledger you can verify. v0.4.0, fair-source.</span>
+        <span class="organ-line">Runs a team of agents and records every step in a witnessed ledger you can verify. v1.12.0, fair-source.</span>
         <span class="organ-verdict"><span class="verdict verdict-shipped">Shipped</span></span>
+      </div>
+      <div class="organ-row">
+        <span class="organ-name"><a href="gather.html" translate="no">gather</a></span>
+        <span class="organ-role">the intake</span>
+        <span class="organ-line">Reaches information from anywhere, gated APIs, JavaScript-walled pages, scans, audio, and papers, and records how each item was obtained. Public, PyPI <span translate="no">gather-engine</span> 1.5.0.</span>
+        <span class="organ-verdict"><span class="verdict verdict-shipped">Shipped</span></span>
+      </div>
+      <div class="organ-row">
+        <span class="organ-name"><a href="crucible.html" translate="no">crucible</a></span>
+        <span class="organ-role">the judgment</span>
+        <span class="organ-line">Registers a thesis, steelmans its claims, measures them against a substrate, and refines the weakest axis until the verdict is earned. Local 0.4.0 release candidate.</span>
+        <span class="organ-verdict"><span class="verdict verdict-active">RC</span></span>
       </div>
     </div>
   </section>
@@ -215,55 +227,55 @@
     <h2>Secondary substrates</h2>
     <div class="organs">
       <div class="organ-row">
-        <span class="organ-name"><a href="emet.html">EMET</a></span>
+        <span class="organ-name"><a href="emet.html" translate="no">EMET</a></span>
         <span class="organ-role">the witness</span>
-        <span class="organ-line">Re-derives a file&rsquo;s bytes from scratch and reports MATCH, DRIFT, or UNVERIFIABLE. Never <em>trusted</em>. The witnessing move, in three languages.</span>
+        <span class="organ-line">Re-derives a file&rsquo;s bytes from scratch and reports <span translate="no">MATCH</span>, <span translate="no">DRIFT</span>, or <span translate="no">UNVERIFIABLE</span>. Never <em>trusted</em>. The witnessing move, in three languages.</span>
         <span class="organ-verdict"><span class="verdict verdict-shipped">Shipped</span></span>
       </div>
       <div class="organ-row">
-        <span class="organ-name"><a href="proof-surface.html">proof-surface</a></span>
+        <span class="organ-name"><a href="proof-surface.html" translate="no">proof-surface</a></span>
         <span class="organ-role">the gate</span>
         <span class="organ-line">A checkpoint that says no until it&rsquo;s sure, and stays shut if anything goes wrong; when permission is passed down a chain, trying to grant yourself more than you were given is refused outright. <em>258 tests, zero dependencies.</em></span>
         <span class="organ-verdict"><span class="verdict verdict-shipped">Shipped</span></span>
       </div>
       <div class="organ-row">
-        <span class="organ-name"><a href="coherence-membrane.html">coherence-membrane</a></span>
+        <span class="organ-name"><a href="coherence-membrane.html" translate="no">coherence-membrane</a></span>
         <span class="organ-role">the organs</span>
         <span class="organ-line">Witnessed perception that carries its own honest record of where it came from, plus a self-test built to be proven wrong. An observation that carries its own warrant, or fails.</span>
         <span class="organ-verdict"><span class="verdict verdict-shipped">Shipped</span></span>
       </div>
       <div class="organ-row">
-        <span class="organ-name"><a href="accountable-machines.html">accountable-surface</a></span>
+        <span class="organ-name"><a href="accountable-machines.html" translate="no">accountable-surface</a></span>
         <span class="organ-role">the live loop</span>
         <span class="organ-line">The full organism: witnessed perception, a default-deny gate, append-only memory, native actuation, a grounding cortex. <em>The theory, made real.</em></span>
         <span class="organ-verdict"><span class="verdict verdict-shipped">Shipped</span></span>
       </div>
       <div class="organ-row">
-        <span class="organ-name"><a href="accountable-engine.html">accountable-engine</a></span>
+        <span class="organ-name"><a href="accountable-engine.html" translate="no">accountable-engine</a></span>
         <span class="organ-role">the equalizer</span>
         <span class="organ-line">The same standard, turned back on the operator. A critic that reads the live state of the work and asks the hard questions of the human, not only the machine. <em>Published to stake the idea; the inward half is owed.</em></span>
         <span class="organ-verdict"><span class="verdict verdict-dim">Forming</span></span>
       </div>
       <div class="organ-row">
-        <span class="organ-name"><a href="quantalang.html">QuantaLang</a></span>
+        <span class="organ-name"><a href="quantalang.html" translate="no">QuantaLang</a></span>
         <span class="organ-role">the compiler</span>
         <span class="organ-line">A compiler (the part that turns written instructions into a running program) that refuses to build a memory lie; its lifetime and effect checks fail closed. <em>1002 passed / 11 ignored; C backend end-to-end, other targets experimental.</em></span>
         <span class="organ-verdict"><span class="verdict verdict-shipped">Shipped</span></span>
       </div>
       <div class="organ-row">
-        <span class="organ-name"><a href="raw.html">RAW</a></span>
+        <span class="organ-name"><a href="raw.html" translate="no">RAW</a></span>
         <span class="organ-role">rendering</span>
         <span class="organ-line">GPU drawing code, grown out of a game-engine stand-in into a witnessed, inert source of frames. The drawing branch of the shared foundation the perception work sits on.</span>
         <span class="organ-verdict"><span class="verdict verdict-active">Evolving</span></span>
       </div>
       <div class="organ-row">
-        <span class="organ-name"><a href="studio.html">The Studio</a></span>
+        <span class="organ-name"><a href="studio.html" translate="no">The Studio</a></span>
         <span class="organ-role">the composition</span>
-        <span class="organ-line">Five photo-steered drawing algorithms (run one again from the same starting number and you get the exact same drawing), and the one place the organs <em>work together</em>: it checks its own output with EMET&rsquo;s fingerprint and gates it with proof-surface&rsquo;s default-deny, on a shared backbone. <em>The thesis, put to work.</em></span>
+        <span class="organ-line">Five photo-steered drawing algorithms (run one again from the same starting number and you get the exact same drawing), and the one place the organs <em>work together</em>: it checks its own output with <span translate="no">EMET</span>&rsquo;s fingerprint and gates it with <span translate="no">proof-surface</span>&rsquo;s default-deny, on a shared backbone. <em>The thesis, put to work.</em></span>
         <span class="organ-verdict"><span class="verdict verdict-shipped">Live</span></span>
       </div>
       <div class="organ-row">
-        <span class="organ-name"><a href="quanta-color.html">quanta-color</a></span>
+        <span class="organ-name"><a href="quanta-color.html" translate="no">quanta-color</a></span>
         <span class="organ-role">color science</span>
         <span class="organ-line">Perceptually-uniform color quantization with fidelity verdicts. A precise instrument for a precise domain, and a shared foundation the perception work reuses.</span>
         <span class="organ-verdict"><span class="verdict verdict-shipped">Shipped</span></span>
@@ -282,7 +294,7 @@
         <span class="organ-verdict"><span class="verdict verdict-shipped">Shipped</span></span>
       </div>
       <div class="organ-row">
-        <span class="organ-name"><a href="provenance-sensorium.html">provenance-sensorium</a></span>
+        <span class="organ-name"><a href="provenance-sensorium.html" translate="no">provenance-sensorium</a></span>
         <span class="organ-role">witness &middot; release</span>
         <span class="organ-line">The evidence receipt before you ship. It fingerprints what it saw, blocks a leaked secret, and holds the human line: it prepares evidence, it doesn&rsquo;t sign off for you. <em>31 tests, zero-dependency, local-only.</em></span>
         <span class="organ-verdict"><span class="verdict verdict-shipped">Shipped</span></span>
@@ -294,13 +306,13 @@
         <span class="organ-verdict"><span class="verdict verdict-active">Beta</span></span>
       </div>
       <div class="organ-row">
-        <span class="organ-name"><a href="orca.html">ORCA</a></span>
+        <span class="organ-name"><a href="orca.html" translate="no">ORCA</a></span>
         <span class="organ-role">operator tooling</span>
         <span class="organ-line">A local-first, metadata-only assessment runner that keeps the receipts and cannot reach the target. Every build carries a checksum manifest and a provenance receipt. <em>v1.0.0, 361 tests &middot; private &middot; by inquiry.</em></span>
         <span class="organ-verdict"><span class="verdict verdict-dim">By inquiry</span></span>
       </div>
       <div class="organ-row">
-        <span class="organ-name"><a href="aleph.html">Aleph</a></span>
+        <span class="organ-name"><a href="aleph.html" translate="no">Aleph</a></span>
         <span class="organ-role">adversarial evaluation</span>
         <span class="organ-line">A way to attack your own models on purpose, to toughen them. Steady, bounded, witnessed pressure, turned into evidence anyone can work out again for themselves and into training signal. The one capability here offered by conversation, not download. <em>Private &middot; by inquiry.</em></span>
         <span class="organ-verdict"><span class="verdict verdict-dim">By inquiry</span></span>
@@ -326,7 +338,7 @@
     </div>
   </section>
 
-  <p class="seal-line reveal"><span class="g">Also on the site:</span> <a href="catalog.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4)">the home and its receipts</a>, the <a href="resume.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4)">résumé</a>, and the <a href="cv.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4)">CV</a>. <span class="g">WARDEN</span> matured into proof-surface.</p>
+  <p class="seal-line reveal"><span class="g">Also on the site:</span> <a href="catalog.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4)">the home and its receipts</a>, the <a href="resume.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4)">résumé</a>, and the <a href="cv.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4)">CV</a>. <span class="g" translate="no">WARDEN</span> matured into <span translate="no">proof-surface</span>.</p>
 </section>
 
 <!-- the demonstration -->
@@ -337,8 +349,8 @@
   </div>
 
   <div class="exhibit reveal">
-    <div class="exhibit-tag"><span class="ord">Exhibit I</span> <span class="what">EMET &middot; the witness re-derives, and reports MATCH / DRIFT / UNVERIFIABLE</span></div>
-    <pre class="artifact"><span class="cmt"># re-derive a file's bytes from scratch and compare to the seal</span>
+    <div class="exhibit-tag"><span class="ord">Exhibit I</span> <span class="what"><span translate="no">EMET</span> &middot; the witness re-derives, and reports <span translate="no">MATCH</span> / <span translate="no">DRIFT</span> / <span translate="no">UNVERIFIABLE</span></span></div>
+    <pre class="artifact" translate="no"><span class="cmt"># re-derive a file's bytes from scratch and compare to the seal</span>
 <span class="pr">&gt;&gt;&gt; witness(path, seal)</span>
 <span class="ok">MATCH     sha256 re-derived, identical to the sealed digest</span>
 
@@ -350,12 +362,12 @@
 <span class="pr">&gt;&gt;&gt; witness(path, seal=None)</span>
 <span class="lt">UNVERIFIABLE   no seal to check against, not a pass, not a fail</span></pre>
     <p class="artifact-cap">The witness never says <b>trusted</b>. It works the file out byte by byte itself and tells you what it actually found. When there&rsquo;s nothing to check it against, it says exactly that, instead of guessing.</p>
-    <p class="artifact-note">EMET ships a tamper-seal that rebuilds a file&rsquo;s bytes from scratch and reports MATCH or DRIFT, across <b>19/19 tests, three languages</b>. That third answer, UNVERIFIABLE, is the one most systems quietly leave out, and it&rsquo;s exactly where most failures end up hiding. <em>Honest limit:</em> a seal with no secret key can tell you a file hasn&rsquo;t drifted from itself, but it can&rsquo;t stop a determined forger who simply recomputes the seal too. Stopping that needs an anchor from outside, and until there is one, the verdict honestly says UNVERIFIABLE rather than fake a pass.</p>
+    <p class="artifact-note"><span translate="no">EMET</span> ships a tamper-seal that rebuilds a file&rsquo;s bytes from scratch and reports <span translate="no">MATCH</span> or <span translate="no">DRIFT</span>, across <b>19/19 tests, three languages</b>. That third answer, <span translate="no">UNVERIFIABLE</span>, is the one most systems quietly leave out, and it&rsquo;s exactly where most failures end up hiding. <em>Honest limit:</em> a seal with no secret key can tell you a file hasn&rsquo;t drifted from itself, but it can&rsquo;t stop a determined forger who simply recomputes the seal too. Stopping that needs an anchor from outside, and until there is one, the verdict honestly says <span translate="no">UNVERIFIABLE</span> rather than fake a pass.</p>
   </div>
 
   <div class="exhibit reveal">
-    <div class="exhibit-tag"><span class="ord">Exhibit II</span> <span class="what">proof-surface &middot; the gate is default-deny. Authority must be stated, scoped, and timed.</span></div>
-    <pre class="artifact"><span class="cmt"># a gate request whose authorization receipt is absent</span>
+    <div class="exhibit-tag"><span class="ord">Exhibit II</span> <span class="what"><span translate="no">proof-surface</span> &middot; the gate is default-deny. Authority must be stated, scoped, and timed.</span></div>
+    <pre class="artifact" translate="no"><span class="cmt"># a gate request whose authorization receipt is absent</span>
 <span class="pr">&gt;&gt;&gt; evaluate_gate(request)</span>
 <span class="bad">GateDecision(decision="deny")</span>
 <span class="bad">  authorization: no receipt, deny</span>
@@ -368,10 +380,10 @@
 <span class="pr">$ pytest</span>
 <span class="ok">258 passed in 0.26s</span></pre>
     <p class="artifact-cap">Knowing isn&rsquo;t allowing. No receipt means no; an empty permission list lets nothing through; and something acting on your behalf can never quietly hand itself more power than you gave it. A yes has to be <b>earned by passing every single check</b>. It&rsquo;s never just what&rsquo;s left over when nothing said no.</p>
-    <p class="artifact-note">The gate ships in <b>proof-surface</b>: standard-library only, zero dependencies, 258 passing tests, <b>github.com/HarperZ9/proof-surface</b>. <em>Honest limit:</em> the gate gives advice, a careful recommendation the real system still has to carry out. The library itself doesn&rsquo;t hold the power to force it.</p>
+    <p class="artifact-note">The gate ships in <b translate="no">proof-surface</b>: standard-library only, zero dependencies, 258 passing tests, <b translate="no">github.com/HarperZ9/proof-surface</b>. <em>Honest limit:</em> the gate gives advice, a careful recommendation the real system still has to carry out. The library itself doesn&rsquo;t hold the power to force it.</p>
   </div>
-  <p class="body-text reveal" style="max-width:72ch;margin-top:clamp(1.6rem,3vw,2.4rem)">And these two aren&rsquo;t separate party tricks anymore. The witness and the gate are built on one shared backbone (<b>system/spine.js</b>) that all the pieces run on: EMET&rsquo;s SHA-256 fingerprinting and proof-surface&rsquo;s default-deny, pulled out once and reused everywhere a thing has to be re-checked or an action has to be earned. The <a href="studio.html#verify" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4)">studio</a> is where the two finally shake hands: it signs every drawing it makes, and when you drop one back in, the gate decides whether it&rsquo;s allowed in. <b>MATCH</b> lets it through, <b>DRIFT</b> turns it away, <b>UNVERIFIABLE</b> hands the call to a person. One tool checking another tool&rsquo;s work, using the very same machinery that earns any action anywhere else.</p>
-  <p class="seal-line reveal"><span class="g">Run it yourself</span>: the witness and gate run live, with real SHA-256 and the real default-deny logic. <a href="demonstrations.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4)">Flip the inputs &rarr;</a> &nbsp;&middot;&nbsp; <a href="studio.html#verify" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4)">watch the studio verify its own art &rarr;</a></p>
+  <p class="body-text reveal" style="max-width:72ch;margin-top:clamp(1.6rem,3vw,2.4rem)">And these two aren&rsquo;t separate party tricks anymore. The witness and the gate are built on one shared backbone (<b translate="no">system/spine.js</b>) that all the pieces run on: <span translate="no">EMET</span>&rsquo;s SHA-256 fingerprinting and <span translate="no">proof-surface</span>&rsquo;s default-deny, pulled out once and reused everywhere a thing has to be re-checked or an action has to be earned. The <a href="studio.html#verify" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4)" translate="no">studio</a> is where the two finally shake hands: it signs every drawing it makes, and when you drop one back in, the gate decides whether it&rsquo;s allowed in. <b translate="no">MATCH</b> lets it through, <b translate="no">DRIFT</b> turns it away, <b translate="no">UNVERIFIABLE</b> hands the call to a person. One tool checking another tool&rsquo;s work, using the very same machinery that earns any action anywhere else.</p>
+  <p class="seal-line reveal"><span class="g">Run it yourself</span>: the witness and gate run live, with real SHA-256 and the real default-deny logic. <a href="demonstrations.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4)">Flip the inputs &rarr;</a> &nbsp;&middot;&nbsp; <a href="studio.html#verify" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.4)">watch the <span translate="no">studio</span> verify its own art &rarr;</a></p>
 </section>
 
 <!-- how it checks itself: live demos folded in from demonstrations.html -->
@@ -382,7 +394,7 @@
   <!-- the witness -->
   <section class="mv" id="witness" aria-labelledby="w-h" style="background:none;border-top:none;padding:clamp(2rem,4vw,3.2rem) 0 0">
     <h2 id="w-h" class="reveal" style="font-size:clamp(1.3rem,2.2vw,1.9rem)">The witness. <em>Derive it from the bytes themselves.</em></h2>
-    <p class="body-text reveal">Try it. Type something, then seal it. The witness takes a fingerprint of those exact words and remembers it. A fingerprint here is a short code that any change, even one character, would scramble into something completely different. Now change one letter and witness again: the fresh fingerprint no longer matches the one it kept, so the answer is <b>DRIFT</b> (something changed). Clear the seal and there is nothing to compare against, so the answer is <b>UNVERIFIABLE</b>: not a pass, not a fail, just honestly unknown. That is the whole idea, and it is a small one. Rather than trust that the words held, the witness checks for itself, and tells you plainly what it found.</p>
+    <p class="body-text reveal">Try it. Type something, then seal it. The witness takes a fingerprint of those exact words and remembers it. A fingerprint here is a short code that any change, even one character, would scramble into something completely different. Now change one letter and witness again: the fresh fingerprint no longer matches the one it kept, so the answer is <b translate="no">DRIFT</b> (something changed). Clear the seal and there is nothing to compare against, so the answer is <b translate="no">UNVERIFIABLE</b>: not a pass, not a fail, just honestly unknown. That is the whole idea, and it is a small one. Rather than trust that the words held, the witness checks for itself, and tells you plainly what it found.</p>
 
     <div class="demo reveal" id="witness-demo">
       <label class="demo-lab" for="w-content">Content</label>
@@ -393,12 +405,12 @@
         <button class="demo-btn ghost" id="w-clear" type="button">Clear seal</button>
       </div>
       <div class="demo-out" id="w-out" aria-live="polite">
-        <span class="verdict-big v-unver">UNVERIFIABLE</span>
+        <span class="verdict-big v-unver" translate="no">UNVERIFIABLE</span>
         <div class="demo-detail">No seal yet. Seal the content to give the witness something to re-derive against.</div>
       </div>
-      <p class="nojs" id="w-nojs" hidden>This demo needs JavaScript and the Web Crypto API. The real witness ships in EMET, linked below.</p>
+      <p class="nojs" id="w-nojs" hidden>This demo needs JavaScript and the Web Crypto API. The real witness ships in <span translate="no">EMET</span>, linked below.</p>
     </div>
-    <p class="artifact-note reveal">The fingerprinting is the real thing: <b>crypto.subtle.digest("SHA-256")</b>, a tool built right into your browser, run on what you typed and never sent anywhere. EMET does the same across whole files in three languages. <b>19/19 tests</b>, <b>github.com/HarperZ9</b>. <em>Honest limit:</em> a plain seal like this proves the words weren&rsquo;t changed by accident; it cannot stop a determined faker who simply computes a fresh fingerprint to match their new version. For that, the fingerprint has to be kept somewhere separate from the thing it describes. When the witness can&rsquo;t be sure, it says UNVERIFIABLE rather than fake a pass.</p>
+    <p class="artifact-note reveal">The fingerprinting is the real thing: <b translate="no">crypto.subtle.digest("SHA-256")</b>, a tool built right into your browser, run on what you typed and never sent anywhere. <span translate="no">EMET</span> does the same across whole files in three languages. <b>19/19 tests</b>, <b translate="no">github.com/HarperZ9</b>. <em>Honest limit:</em> a plain seal like this proves the words weren&rsquo;t changed by accident; it cannot stop a determined faker who simply computes a fresh fingerprint to match their new version. For that, the fingerprint has to be kept somewhere separate from the thing it describes. When the witness can&rsquo;t be sure, it says <span translate="no">UNVERIFIABLE</span> rather than fake a pass.</p>
   </section>
 
   <!-- the gate -->
@@ -428,7 +440,7 @@
         <div class="demo-detail">Every check passes: authority is stated, scoped, timed, budgeted, and grounded in observed state.</div>
       </div>
     </div>
-    <p class="artifact-note reveal">This is the real decision logic: a single no settles it; anything unknown becomes needs-human; and an allow needs every check to pass at once. The tested original lives in <b>proof-surface</b>: plain Python, nothing extra to install, <b>258 passing tests</b>, <b>github.com/HarperZ9/proof-surface</b>. <em>Honest limit:</em> the gate only gives a recommendation; the program around it does the enforcing. This page can never grant a yes on its own.</p>
+    <p class="artifact-note reveal">This is the real decision logic: a single no settles it; anything unknown becomes needs-human; and an allow needs every check to pass at once. The tested original lives in <b translate="no">proof-surface</b>: plain Python, nothing extra to install, <b>258 passing tests</b>, <b translate="no">github.com/HarperZ9/proof-surface</b>. <em>Honest limit:</em> the gate only gives a recommendation; the program around it does the enforcing. This page can never grant a yes on its own.</p>
   </section>
 </section>
 
@@ -439,11 +451,11 @@
   <p class="body-text reveal">And none of it is trying to talk you into anything. I&rsquo;ve laid the idea and the work out as plainly as I know how; what it&rsquo;s worth to you, whether you&rsquo;re a researcher, a builder, or just curious, is yours to judge from the substance itself, not from how well I sold it.</p>
   <p class="close reveal">If you can break it, that is the most useful thing you could do. <b>And exactly what I built it to invite.</b></p>
   <div class="channels reveal">
-    <span class="g">Run it</span>: <a href="demonstrations.html">demonstrations</a> &middot; <a href="studio.html">the studio</a> &middot; <a href="presentation.html">the deck</a>
+    <span class="g">Run it</span>: <a href="demonstrations.html">demonstrations</a> &middot; <a href="studio.html">the <span translate="no">studio</span></a> &middot; <a href="presentation.html">the deck</a>
     &nbsp;&middot;&nbsp;
     <span class="g">Research</span>: <a href="research.html">the program</a> &middot; <a href="writing.html">essays</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">Code</span>: <a href="https://github.com/HarperZ9">github.com/HarperZ9</a>
+    <span class="g">Code</span>: <a href="https://github.com/HarperZ9" translate="no">github.com/HarperZ9</a>
     &nbsp;&middot;&nbsp;
     <span class="g">Contact</span>: <a href="mailto:zaindharper@gmail.com">email</a>
   </div>
@@ -452,7 +464,7 @@
 </main>
 
 <footer class="footer-seal" role="contentinfo">
-  <p class="seal">Everything here is yours to run and check: derive the answer from the bytes, be honest about what you found, and answer MATCH &middot; DRIFT &middot; UNVERIFIABLE, never just &ldquo;trusted.&rdquo; Authored by Zain Dana Harper &middot; Seattle &middot; 2026.</p>
+  <p class="seal">Everything here is yours to run and check: derive the answer from the bytes, be honest about what you found, and answer <span translate="no">MATCH</span> &middot; <span translate="no">DRIFT</span> &middot; <span translate="no">UNVERIFIABLE</span>, never just &ldquo;trusted.&rdquo; Authored by Zain Dana Harper &middot; Seattle &middot; 2026.</p>
 </footer>
 
 <script src="system/spine.js?v=20260625a"></script>

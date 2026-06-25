@@ -1,32 +1,50 @@
 /* ============================================================================
-   doc.css — pristine document system for résumé · CV · research
+   doc.css - pristine document system for résumé · CV · research
    A print-grade, screen-refined typesetting layer shared by the document pages.
    Light "page" floating on a cool neutral backdrop; the portfolio's own type
-   (EB Garamond body · Spline Sans Mono labels · Schibsted Grotesk display) and
-   its deep oxide-teal ink, tuned for legibility and printing — not the hero's
+   (Conso body · JetBrains Mono labels · Kilon display) and
+   its deep oxide-teal ink, tuned for legibility and printing - not the hero's
    visceral register. Every text/background pair clears WCAG AA.
    ============================================================================ */
 
+/* ---- licensed faces, self-hosted: Kilon (display) + Conso (text), cascaded
+       from the white home so the document pages share one type voice. ---- */
+@font-face{font-family:"Kilon"; src:url("fonts/kilon.woff2") format("woff2"),url("fonts/kilon.woff") format("woff"); font-weight:100 900; font-style:normal; font-display:swap}
+@font-face{font-family:"Conso"; src:url("fonts/conso-regular.woff2") format("woff2"),url("fonts/conso-regular.woff") format("woff"); font-weight:400; font-style:normal; font-display:swap}
+@font-face{font-family:"Conso"; src:url("fonts/conso-regularitalic.woff2") format("woff2"),url("fonts/conso-regularitalic.woff") format("woff"); font-weight:400; font-style:italic; font-display:swap}
+@font-face{font-family:"Conso"; src:url("fonts/conso-medium.woff2") format("woff2"),url("fonts/conso-medium.woff") format("woff"); font-weight:500; font-style:normal; font-display:swap}
+@font-face{font-family:"Conso"; src:url("fonts/conso-semibold.woff2") format("woff2"),url("fonts/conso-semibold.woff") format("woff"); font-weight:600; font-style:normal; font-display:swap}
+@font-face{font-family:"Conso"; src:url("fonts/conso-bold.woff2") format("woff2"),url("fonts/conso-bold.woff") format("woff"); font-weight:700; font-style:normal; font-display:swap}
+
 :root{
-  --page:#ffffff;
-  --backdrop:#e8eaec;          /* cool neutral, NOT cream — the floating-page ground */
-  --ink:#181c1b;               /* near-black, faint teal warmth — body */
-  --ink-soft:#4c534f;          /* secondary text — 7.4:1 on white */
-  --teal:#1a4140;              /* deep oxide teal — headings + rules (9.0:1 on white) */
-  --teal-soft:#2c5d59;         /* link/accent teal (6.2:1 on white) */
-  --ember:#b8480a;             /* sparingly — dates/marks (5.2:1 on white) */
-  --rule:#dcdad2;              /* hairlines */
-  --rule-strong:#b7b3a8;
-  --tag:#6a716c;               /* mono micro-labels (4.8:1 on white) */
+  /* ceramic sheet floating on a deeper ceramic ground (cascaded from the home) */
+  --page:#fcfbf8;              /* warm near-white sheet */
+  --backdrop:#e9e7e1;          /* deeper ceramic ground, so the sheet floats */
+  --ink:#0b0c0e;               /* primary text (19:1 on the sheet) */
+  --ink-soft:#2f3238;          /* secondary text, AA */
+  --ink-muted:#585c64;         /* captions, AA */
+  --iris:#4636e8;              /* the one restrained accent */
+  /* legacy names remapped so every existing rule re-skins through the cascade */
+  --teal:#0b0c0e;              /* headings + masthead rule -> ink */
+  --teal-soft:#4636e8;         /* links + org names -> iris */
+  --ember:#4636e8;             /* dates + numerals -> iris (one accent) */
+  --rule:rgba(11,12,14,.12);   /* hairlines */
+  --rule-strong:rgba(11,12,14,.24);
+  --tag:#585c64;               /* mono micro-labels, AA */
+  /* type */
+  --display:"Kilon",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --body:"Conso",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono","SFMono-Regular","Courier New",monospace;
 }
 
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;font-size:112.5%}/* 18px base, scales with the reader's own setting */
 body.doc{
   margin:0;background:var(--backdrop);color:var(--ink);
-  font-family:"EB Garamond",Georgia,"Times New Roman",serif;
+  font-family:"Conso",Georgia,"Times New Roman",serif;
   font-size:1rem;line-height:1.62;
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;
+  font-feature-settings:"kern" 1,"liga" 1;
   padding:clamp(1.2rem,4vw,3.5rem) 1rem;
 }
 
@@ -42,7 +60,7 @@ body.doc{
 /* ── return-to-portfolio chip (screen only) ───────────────────────────── */
 .docnav{max-width:50rem;margin:0 auto clamp(1rem,2.5vw,1.6rem);display:flex;
   justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap}
-.docnav a{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.62rem;
+.docnav a{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.62rem;
   letter-spacing:.22em;text-transform:uppercase;color:var(--teal-soft);
   text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
 .docnav a:hover{border-color:var(--teal-soft)}
@@ -51,29 +69,29 @@ body.doc{
 
 /* ── masthead ──────────────────────────────────────────────────────────── */
 .mast{border-bottom:2px solid var(--teal);padding-bottom:1.15rem;margin-bottom:1.6rem}
-.mast h1{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:600;
-  font-size:clamp(1.9rem,5vw,2.7rem);line-height:1.02;letter-spacing:-.022em;
-  margin:0 0 .5rem;color:var(--ink)}
-.mast .role{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.7rem;
+.mast h1{font-family:"Kilon",system-ui,sans-serif;font-weight:700;
+  font-size:clamp(2.2rem,1.4rem + 3vw,3.4rem);line-height:1.0;letter-spacing:-.025em;
+  margin:0 0 .55rem;color:var(--ink)}
+.mast .role{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.7rem;
   letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin:0 0 .85rem;
   line-height:1.6}
-.mast .contact{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.72rem;
+.mast .contact{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.72rem;
   letter-spacing:.02em;color:var(--ink-soft);line-height:1.9;margin:0;
   display:flex;flex-wrap:wrap;gap:.2rem 1.05rem}
 .mast .contact a{color:var(--teal-soft);text-decoration:none;
-  border-bottom:1px solid rgba(44,93,89,.32);padding-bottom:1px}
+  border-bottom:1px solid rgba(70,54,232,.32);padding-bottom:1px}
 .mast .contact a:hover{border-color:var(--teal-soft)}
 .mast .contact .sep{color:var(--rule-strong)}
 
 /* ── sections ──────────────────────────────────────────────────────────── */
 section{margin:1.7rem 0 0}
-h2{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.66rem;
+h2{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.66rem;
   font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--teal);
   margin:0 0 .95rem;padding-bottom:.45rem;border-bottom:1px solid var(--rule);
   display:flex;align-items:baseline;gap:.6rem}
 h2::after{content:"";flex:1 1 auto}
 
-.lead{font-size:1.05rem;line-height:1.62;color:var(--ink);margin:0 0 .2rem;max-width:64ch}
+.lead{font-size:clamp(1.08rem,1rem + .5vw,1.34rem);line-height:1.56;color:var(--ink);margin:0 0 .2rem;max-width:64ch}
 .lead b,.lead strong{color:var(--teal);font-weight:600}
 
 /* entries: role/title + meta on the right, then bullets */
@@ -81,12 +99,12 @@ h2::after{content:"";flex:1 1 auto}
 .entry:last-child{margin-bottom:.2rem}
 .entry-head{display:flex;justify-content:space-between;align-items:baseline;
   gap:1rem;flex-wrap:wrap;margin-bottom:.15rem}
-.entry-title{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:600;
-  font-size:1.02rem;letter-spacing:-.005em;color:var(--ink)}
+.entry-title{font-family:"Kilon",system-ui,sans-serif;font-weight:600;
+  font-size:1.12rem;letter-spacing:-.01em;color:var(--ink)}
 .entry-title .org{color:var(--teal-soft);font-weight:500}
-.entry-meta{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.64rem;
+.entry-meta{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.64rem;
   letter-spacing:.08em;text-transform:uppercase;color:var(--ember);white-space:nowrap}
-.entry-note{font-family:"EB Garamond",serif;font-style:italic;color:var(--ink-soft);
+.entry-note{font-family:"Conso",serif;font-style:italic;color:var(--ink-soft);
   font-size:.96rem;margin:.1rem 0 .4rem}
 
 ul.bul{list-style:none;margin:.35rem 0 0;padding:0}
@@ -95,29 +113,29 @@ ul.bul li{position:relative;padding-left:1.15rem;margin:0 0 .4rem;line-height:1.
 ul.bul li::before{content:"";position:absolute;left:.05rem;top:.62em;
   width:.34rem;height:.34rem;background:var(--teal);border-radius:50%}
 ul.bul li b{color:var(--teal);font-weight:600}
-ul.bul .num{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.92em;
+ul.bul .num{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.92em;
   color:var(--ember);font-weight:600}
 
 /* skills / two-column key-value grid */
 .kv{display:grid;grid-template-columns:minmax(8rem,11rem) 1fr;gap:.55rem 1.4rem;margin:.2rem 0 0}
-.kv dt{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.62rem;
+.kv dt{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.62rem;
   letter-spacing:.14em;text-transform:uppercase;color:var(--tag);padding-top:.18em}
 .kv dd{margin:0;line-height:1.5}
-.kv dd .t{display:inline-block;font-family:"Spline Sans Mono",ui-monospace,monospace;
+.kv dd .t{display:inline-block;font-family:"JetBrains Mono",ui-monospace,monospace;
   font-size:.78rem;color:var(--ink);background:#f3f4f0;border:1px solid var(--rule);
   border-radius:3px;padding:.08em .5em;margin:0 .25rem .3rem 0}
 
 /* receipts strip */
 .receipts{display:flex;flex-wrap:wrap;gap:.5rem .7rem;margin:.3rem 0 0}
-.receipts .r{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.7rem;
+.receipts .r{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.7rem;
   letter-spacing:.02em;color:var(--ink);background:#f4f5f1;border:1px solid var(--rule);
   border-radius:3px;padding:.32em .6em}
 .receipts .r b{color:var(--teal);font-weight:600}
 
-.note{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.63rem;
+.note{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.63rem;
   letter-spacing:.05em;color:var(--tag);line-height:1.8;margin:1.4rem 0 0;
   padding-top:.9rem;border-top:1px solid var(--rule)}
-a.inline{color:var(--teal-soft);text-decoration:none;border-bottom:1px solid rgba(44,93,89,.34)}
+a.inline{color:var(--teal-soft);text-decoration:none;border-bottom:1px solid rgba(70,54,232,.34)}
 a.inline:hover{border-color:var(--teal-soft)}
 
 /* ── print ─────────────────────────────────────────────────────────────── */
@@ -143,7 +161,7 @@ a.inline:hover{border-color:var(--teal-soft)}
 
 /* ── FOUNDATION (2026-06-21): skip-link, keyboard focus, touch targets ────── */
 .skip-link{position:absolute;left:.5rem;top:-3.5rem;z-index:30;
-  font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.66rem;letter-spacing:.14em;
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.66rem;letter-spacing:.14em;
   text-transform:uppercase;color:#fff;background:var(--teal);padding:.55rem .9rem;
   border-radius:3px;text-decoration:none;transition:top .18s ease}
 .skip-link:focus{top:.6rem;outline:2px solid var(--ember);outline-offset:2px}

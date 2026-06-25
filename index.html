@@ -5,250 +5,191 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Project Telos</title>
-<meta name="description" content="Project Telos is the integration layer of a new era: a line of engines for working with AI you can verify. An accountable surface where every step is provable from outside the thing making the claim. Three flagships, each standing on its own. Built by Zain Dana Harper.">
+<meta name="description" content="Project Telos is a line of engines for the new era of working alongside AI: an accountable surface where you perceive what the model does, shape it together, and prove every step from outside the thing making the claim. Five flagships, each standing on its own. By Zain Dana Harper.">
 <link rel="canonical" href="https://harperz9.github.io/">
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#06080d">
-
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f4f3ef">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Project Telos">
 <meta property="og:title" content="Project Telos">
-<meta property="og:description" content="The integration layer of a new era. A line of engines for working with AI you can verify, where every step is provable from outside the thing making the claim. Three flagships, each standing on its own.">
+<meta property="og:description" content="A line of engines for working alongside AI and taking nothing on faith. An accountable surface where every step is provable from outside the thing making the claim.">
 <meta property="og:url" content="https://harperz9.github.io/">
 <meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
-
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Project Telos">
-<meta name="twitter:description" content="The integration layer of a new era. A line of engines for working with AI you can verify, where every step is provable from outside the thing making the claim.">
+<meta name="twitter:description" content="A line of engines for working alongside AI and taking nothing on faith. Every step provable from outside the claim.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="system/telos.css?v=20260625c">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/home.css?v=20260625w12">
 </head>
 <body>
-<!-- live liquid-metal background; first in body per contract. The CSS fallback in
-     telos.css covers a blank canvas if WebGL fails. All three are non-focusable. -->
-<canvas id="metal-canvas" aria-hidden="true"></canvas>
-<div class="veil" aria-hidden="true"></div>
+<div class="loader" aria-hidden="true"><div class="loader-inner"><span class="loader-mark">Project Telos</span><span class="loader-bar"><span class="loader-fill"></span></span></div></div>
+<canvas id="ribbon-canvas" aria-hidden="true"></canvas>
 <div class="grain" aria-hidden="true"></div>
 
 <a class="skip-link" href="#main">Skip to content</a>
 
-<!-- nav injected by nav.js; noscript fallback below -->
 <div id="site-nav" class="site-nav"></div>
-<noscript>
-  <nav class="site-nav" aria-label="Primary">
-    <a class="sn-home" href="index.html">Project Telos</a>
-    <nav class="sn-links">
-      <a href="overview.html">Flagships</a>
-      <a href="catalog.html">Catalog</a>
-      <a href="research.html">Research</a>
-      <a href="writing.html">Writing</a>
-      <a href="cv.html">About</a>
-    </nav>
-  </nav>
-</noscript>
+<noscript><nav class="site-nav" aria-label="Primary"><a class="sn-home" href="index.html">Project Telos</a><nav class="sn-links"><a href="overview.html">Flagships</a> <a href="catalog.html">Catalog</a> <a href="research.html">Research</a> <a href="writing.html">Writing</a> <a href="cv.html">About</a></nav></nav></noscript>
 <script type="module" src="system/nav.js?v=20260625a"></script>
+
+<!-- the scroll-synced section index -->
+<nav class="dex" aria-label="Sections">
+  <a href="#top" data-dex="top" class="active"><span class="tick" aria-hidden="true"></span>Perceive</a>
+  <a href="#engines" data-dex="engines"><span class="tick" aria-hidden="true"></span>Build</a>
+  <a href="#floor" data-dex="floor"><span class="tick" aria-hidden="true"></span>Verify</a>
+</nav>
 
 <main id="main">
 
-<!-- ============================== HERO ============================== -->
-<header class="shell hero g12" aria-labelledby="hero-title">
-  <p class="kicker">Project Telos</p>
-  <h1 id="hero-title">The integration layer<br>of a new era,<br><span class="grad">proven from outside.</span></h1>
-  <div class="hero-lead-wrap">
-    <p class="lead">
-      A line of engines for working with AI you can verify. Not a dashboard that
-      reports its own health, an <b>accountable surface</b> where every step is
-      provable from outside the thing making the claim. You do not take the answer
-      on faith. You re-run the proof.
-    </p>
-    <div class="cta">
-      <a class="btn solid" href="overview.html">See the three flagships <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
-      <a class="btn glass sheen" href="catalog.html">Browse the catalog</a>
+<!-- HERO -->
+<header id="top" class="hero" aria-labelledby="hero-title">
+  <p class="edgemark" aria-hidden="true" translate="no">TELOS</p>
+  <div class="shell hero-shell">
+  <div class="hero-inner">
+    <p class="kicker reveal in">Project Telos</p>
+    <h1 id="hero-title" class="reveal in d1">Build with a model.<span class="l2">Take nothing on faith.</span></h1>
+    <p class="lead reveal in d2">A line of engines for the new era of working alongside AI. An accountable surface: you perceive what the model perceives, shape it together, and prove every step <b>from outside the thing making the claim</b>. Five flagships rest on that floor, and each one stands on its own.</p>
+    <div class="cta reveal in d3">
+      <a class="btn solid" href="overview.html">See the flagships <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
+      <a class="btn" href="catalog.html">Browse the catalog</a>
     </div>
   </div>
-  <div class="hero-meta">
-    <span><span class="dot" aria-hidden="true"></span><b>Three flagships</b>, each standing alone</span>
+  <div class="hero-meta reveal in d3">
+    <span><span class="dot" aria-hidden="true"></span>Five flagships, each standing alone</span>
     <span><span class="dot" aria-hidden="true"></span>Verification is the floor, not the pitch</span>
     <span><span class="dot" aria-hidden="true"></span>Every page links to its own source</span>
   </div>
+  </div>
+  <p class="scroll-cue" aria-hidden="true">Scroll</p>
 </header>
 
-<!-- ========================== FLAGSHIPS ========================== -->
-<section class="shell" aria-labelledby="flagships-title">
-  <div class="sec-head">
-    <p class="kicker">The flagships</p>
-    <h2 id="flagships-title">Three engines, equal standing.</h2>
-    <p>
-      Each one stands on its own and earns its place the same way: it shows its work
-      and lets you check it. Together they are the surface a person and a model can
-      build on without anyone having to be trusted.
-    </p>
+<!-- THE FLAGSHIPS, as instrument rows -->
+<section id="engines" class="shell" aria-labelledby="flagships-title">
+  <div class="sec-head reveal">
+    <p class="kicker">The line</p>
+    <h2 id="flagships-title">Five engines, equal standing.</h2>
+    <p>Each one earns its place the same way: it shows its work and lets you check it. Together they are the surface a person and a model build on without anyone having to be trusted.</p>
   </div>
 
   <div class="flagships">
-
-    <!-- index -->
-    <article class="flag glass sheen" aria-labelledby="flag-index">
-      <div class="flag-top">
-        <span class="role">Map and verify</span>
-        <span class="num">01</span>
+    <article class="flag reveal" aria-labelledby="flag-gather">
+      <div class="flag-id">
+        <h3 id="flag-gather" translate="no">gather</h3>
+        <span class="role">intake and witness</span>
+        <span class="verdict-chip shipped">shipped &middot; PyPI</span>
       </div>
-      <h3 id="flag-index">index<span class="pkg">public on PyPI as index-graph</span></h3>
-      <p>
-        Draws your whole multi-repo workspace from evidence, then checks it against
-        the architecture you meant. You get back a <b>MATCH, DRIFT, or UNVERIFIABLE</b>
-        certificate you re-run instead of trust. Nine ecosystems, fully offline, zero
-        dependencies.
-      </p>
-      <div class="verdict" aria-hidden="true">
-        <span class="pill match">MATCH</span>
-        <span class="pill">DRIFT</span>
-        <span class="pill">UNVERIFIABLE</span>
-      </div>
-      <div class="links">
-        <a href="index-graph.html">Read more <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
-        <a href="https://pypi.org/project/index-graph/" rel="noopener">PyPI &nearr;</a>
+      <p class="flag-desc">The research-intake organ. It reaches information anywhere, including the hard places: gated APIs, paywalls, JavaScript-walled pages, scanned PDFs, audio, facts scattered across fragments. Every item carries a <em>provenance receipt</em>, and a run emits a witnessed digest the other engines consume. Fair source, zero core dependencies.</p>
+      <div class="flag-go">
+        <a href="gather.html">Open <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
+        <a href="https://pypi.org/project/gather-engine/" rel="noopener">PyPI</a>
       </div>
     </article>
 
-    <!-- forum -->
-    <article class="flag glass sheen" aria-labelledby="flag-forum">
-      <div class="flag-top">
-        <span class="role">Orchestrate accountably</span>
-        <span class="num">02</span>
+    <article class="flag reveal" aria-labelledby="flag-index">
+      <div class="flag-id">
+        <h3 id="flag-index" translate="no">index</h3>
+        <span class="role">map and verify</span>
+        <span class="verdict-chip shipped">shipped &middot; PyPI</span>
       </div>
-      <h3 id="flag-forum">forum<span class="pkg">accountable multi-agent orchestration</span></h3>
-      <p>
-        Runs many agents and keeps a <b>witnessed causal ledger</b> of who did what
-        and why. A multi-agent run stops being an opaque black box and becomes a record
-        you can read back, step by step, and hold to account.
-      </p>
-      <div class="verdict" aria-hidden="true">
-        <span class="pill match">WHO</span>
-        <span class="pill">WHAT</span>
-        <span class="pill">WHY</span>
-      </div>
-      <div class="links">
-        <a href="forum.html">Read more <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
+      <p class="flag-desc">Draws your whole multi-repo workspace from evidence and checks it against the architecture you meant. You get back a <em>MATCH, DRIFT, or UNVERIFIABLE</em> certificate you re-run instead of trust. Nine ecosystems, fully offline, zero dependencies.</p>
+      <div class="flag-go">
+        <a href="index-graph.html">Open <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
+        <a href="https://pypi.org/project/index-graph/" rel="noopener">PyPI</a>
       </div>
     </article>
 
-    <!-- the telos engine -->
-    <article class="flag glass sheen" aria-labelledby="flag-engine">
-      <div class="flag-top">
-        <span class="role">Perceive and prove</span>
-        <span class="num">03</span>
+    <article class="flag reveal d1" aria-labelledby="flag-forum">
+      <div class="flag-id">
+        <h3 id="flag-forum" translate="no">forum</h3>
+        <span class="role">orchestrate</span>
+        <span class="verdict-chip">active</span>
       </div>
-      <h3 id="flag-engine">the telos engine<span class="pkg">the engine the line is named for</span></h3>
-      <p>
-        The shared surface where a person and a model <b>perceive the same thing</b>,
-        shape it, and check every step. It is the first flagship, the engine this whole
-        line takes its name from, and the place the others plug into.
-      </p>
-      <div class="verdict" aria-hidden="true">
-        <span class="pill match">PERCEIVE</span>
-        <span class="pill">SHAPE</span>
-        <span class="pill">CHECK</span>
-      </div>
-      <p class="first-mark">The first flagship</p>
-      <div class="links">
-        <a href="studio.html">Read more <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
+      <p class="flag-desc">Runs many agents and keeps a <em>witnessed causal ledger</em> of who did what and why. A multi-agent run becomes a record you read back, step by step, instead of an opaque box.</p>
+      <div class="flag-go">
+        <a href="forum.html">Open <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
       </div>
     </article>
 
+    <article class="flag reveal d2" aria-labelledby="flag-crucible">
+      <div class="flag-id">
+        <h3 id="flag-crucible" translate="no">crucible</h3>
+        <span class="role">judge</span>
+        <span class="verdict-chip">0.4.0 &middot; release candidate</span>
+      </div>
+      <p class="flag-desc">The cognition organ. It registers a thesis, steelmans each claim, measures what holds against a substrate, and refines the weakest axis until the verdict is earned. <em>MATCH, DRIFT, or UNVERIFIABLE</em>, grounded in a measurement rather than a judge's say-so.</p>
+      <div class="flag-go">
+        <a href="crucible.html">Open <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
+      </div>
+    </article>
+
+    <article class="flag reveal d2" aria-labelledby="flag-engine">
+      <div class="flag-id">
+        <h3 id="flag-engine" translate="no">the telos engine</h3>
+        <span class="role">perceive and make</span>
+        <span class="verdict-chip">active &middot; first flagship</span>
+      </div>
+      <p class="flag-desc">The shared surface where a person and a model <em>perceive the same thing</em>, shape it, and check every step. The first flagship, the engine this whole line is named for.</p>
+      <div class="flag-go">
+        <a href="studio.html">Enter <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
+      </div>
+    </article>
   </div>
 </section>
 
-<!-- ============================ THE FLOOR ============================ -->
-<section class="shell floor g12" aria-labelledby="floor-title">
-  <div class="floor-head">
+<!-- THE FLOOR -->
+<section id="floor" class="shell floor g12" aria-labelledby="floor-title">
+  <div class="floor-head reveal">
+    <h2 id="floor-title" class="visually-hidden">The floor</h2>
     <p class="kicker">The floor</p>
-    <h2 id="floor-title" class="pull">Looking verified is not the same as <span class="grad">being verifiable.</span></h2>
+    <p class="pull">Looking verified is not the same as being verifiable.</p>
   </div>
-  <div class="floor-body glass plate">
-    <p>
-      Most software asks you to trust its own report. The system grades its own
-      homework and shows you the grade. That can look airtight and still be wrong,
-      because the claim and the check come from the same place.
-    </p>
-    <p>
-      The fix is plain: <b>work the answer out yourself, from outside the thing
-      making the claim.</b> Re-derive it, re-run it, compare. If it holds, you have a
-      proof you can keep. If it cannot be checked, the honest answer is to say so.
-    </p>
-    <p>
-      That is the accountable surface everything here stands on. Not a feature bolted
-      on at the end, the floor the whole line is built on.
-    </p>
+  <div class="floor-body plate reveal d1">
+    <p>It started as a way to catch an AI in a confident lie. The same gap turned out to be everywhere: proving who you are is not permission to act, a practice run on old data is not money earned, a certificate on the wall is not safety. Something that looks verified, mistaken for the thing it is meant to guarantee.</p>
+    <p>Every engine here runs the same move. Go back to the evidence, work the answer out again, stay honest about what you could not check, and give one of three verdicts: <b>MATCH</b>, <b>DRIFT</b>, or <b>UNVERIFIABLE</b>. Never the word trusted, never a guess dressed as an answer. <b>index</b> is live now: <a href="https://pypi.org/project/index-graph/" rel="noopener" translate="no">pip install index-graph</a>, the whole map and certificate in one command.</p>
   </div>
 </section>
 
 </main>
 
-<!-- ============================== FOOTER ============================== -->
-<footer class="shell site-foot" aria-labelledby="foot-title">
-  <p class="kicker">Build on what you can check</p>
-  <p class="foot-big" id="foot-title">Trust is optional. The proof is not.</p>
-  <div class="foot-cta">
-    <a class="btn solid" href="overview.html">See the three flagships <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
-    <a class="btn glass sheen" href="research.html">Read the research</a>
+<footer class="site-foot shell">
+  <p class="foot-big reveal">Build it to be checked, or do not ship it.</p>
+  <div class="foot-cta reveal d1">
+    <a class="btn solid" href="overview.html">See the flagships <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
+    <a class="btn" href="https://github.com/HarperZ9" rel="noopener">GitHub</a>
   </div>
-
   <div class="foot-cols">
     <div class="foot-col">
-      <h4>Start here</h4>
-      <a href="index.html" aria-current="page">Home</a>
+      <h4>The work</h4>
       <a href="overview.html">Flagships</a>
       <a href="catalog.html">Catalog</a>
-    </div>
-    <div class="foot-col">
-      <h4>The flagships</h4>
       <a href="index-graph.html">index</a>
       <a href="forum.html">forum</a>
+      <a href="crucible.html">crucible</a>
+      <a href="gather.html">gather</a>
       <a href="studio.html">the telos engine</a>
     </div>
     <div class="foot-col">
-      <h4>Deeper</h4>
+      <h4>Read</h4>
       <a href="research.html">Research</a>
       <a href="writing.html">Writing</a>
-      <a href="cv.html">About</a>
     </div>
     <div class="foot-col">
       <h4>Source</h4>
-      <a href="https://pypi.org/project/index-graph/" rel="noopener">index-graph on PyPI &nearr;</a>
-      <a href="https://github.com/HarperZ9" rel="noopener">GitHub &nearr;</a>
+      <a href="https://github.com/HarperZ9" rel="noopener">GitHub</a>
+      <a href="https://pypi.org/project/index-graph/" rel="noopener">PyPI</a>
+    </div>
+    <div class="foot-col">
+      <h4>Who</h4>
+      <a href="cv.html">About</a>
     </div>
   </div>
-
-  <p class="muted">
-    Project Telos, built by Zain Dana Harper in Seattle. A line of engines for working
-    with AI you can verify. Every page links to its own source, so you can check the
-    thing instead of taking the claim.
-  </p>
+  <p class="muted">Project Telos, built by Zain Dana Harper in Seattle. Every page links to its own source, so you never have to take a word here on trust.</p>
 </footer>
 
-<!-- liquid-metal shader, loaded last; the page is complete without it -->
-<script src="system/liquid-metal.js?v=20260625c" defer></script>
-
-<!-- cursor-follow sheen for .glass.sheen panels; pure enhancement, reduced-motion safe -->
-<script>
-(function(){
-  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  var panels = document.querySelectorAll(".glass.sheen");
-  if (!panels.length) return;
-  panels.forEach(function(el){
-    el.addEventListener("pointermove", function(ev){
-      var r = el.getBoundingClientRect();
-      el.style.setProperty("--mx", ((ev.clientX - r.left) / r.width * 100) + "%");
-      el.style.setProperty("--my", ((ev.clientY - r.top) / r.height * 100) + "%");
-    }, { passive: true });
-  });
-})();
-</script>
-
+<script src="system/ribbon-field.js?v=20260625w15" defer></script>
+<script src="system/home-scroll.js?v=20260625w6" defer></script>
 </body>
 </html>

@@ -338,13 +338,9 @@ section{position:relative; padding:clamp(4.5rem,9vw,9.5rem) 0}
   margin:.25rem 0 0;
   text-wrap:balance;
 }
-/* the cool gradient text-clip: silver into cyan into blue, the signature mark */
-.grad{
-  background:linear-gradient(96deg, var(--silver) 0%, #eaf3ff 22%, var(--cyan) 58%, var(--blue) 100%);
-  -webkit-background-clip:text; background-clip:text;
-  -webkit-text-fill-color:transparent; color:transparent;
-  filter:drop-shadow(0 6px 26px rgba(95,160,235,.28));
-}
+/* the second line of the headline, set in a single cool accent (no gradient text).
+   Emphasis comes from color and the line break, not a clip. */
+.grad{color:var(--silver)}
 .hero-lead-wrap{grid-column:1 / 8}
 .lead{
   font-size:clamp(1.08rem,.98rem+.6vw,1.34rem);
@@ -390,73 +386,49 @@ section{position:relative; padding:clamp(4.5rem,9vw,9.5rem) 0}
   font-size:clamp(1rem,.96rem+.3vw,1.15rem);
 }
 
-/* ---- flagship cards (three equal peers) ----------------------------------- */
-.flagships{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:clamp(1rem,2vw,1.6rem);
-  align-items:stretch;
-}
-@media(max-width:920px){.flagships{grid-template-columns:1fr}}
+/* ---- the flagships, as wide glass instrument rows (three equal peers) ------ */
+/* Not a card grid: full-width glass plates stacked, each a horizontal row of
+   identity / description / destination. Equal standing, distinct from the SaaS
+   3-up. The metal field shows through and between them. */
+.flagships{display:flex; flex-direction:column; gap:clamp(.85rem,1.7vw,1.4rem)}
 .flag{
-  display:flex; flex-direction:column;
-  padding:clamp(1.7rem,2.6vw,2.4rem);
-  min-height:100%;
+  display:grid;
+  grid-template-columns:minmax(11rem,1fr) minmax(0,2.4fr) auto;
+  gap:clamp(1.2rem,3.4vw,3rem);
+  align-items:center;
+  padding:clamp(1.5rem,2.6vw,2.1rem) clamp(1.6rem,3vw,2.4rem);
   transition:transform var(--t) var(--ease), box-shadow var(--t) var(--ease);
 }
-.flag:hover{transform:translateY(-6px); box-shadow:var(--glass-shadow-hi)}
-.flag .flag-top{
-  display:flex; align-items:baseline; justify-content:space-between; gap:1rem;
-  margin-bottom:1.2rem;
+.flag:hover{transform:translateY(-3px); box-shadow:var(--glass-shadow-hi)}
+.flag-id h3{
+  font-family:var(--mono); font-weight:500;
+  font-size:clamp(1.4rem,1.1rem+1vw,1.85rem);
+  letter-spacing:-.01em; color:var(--ink);
 }
-.flag .role{
-  font-family:var(--mono); font-size:.72rem; letter-spacing:.14em;
-  text-transform:uppercase; color:var(--cyan); font-weight:500;
+.flag-id .role{
+  display:block; font-family:var(--mono);
+  font-size:.7rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--cyan); margin-top:.55rem;
 }
-.flag .num{
-  font-family:var(--mono); font-size:.78rem; color:var(--ink-faint);
-  letter-spacing:.06em;
+.flag-id .verdict-chip{
+  display:inline-block; margin-top:.85rem;
+  font-family:var(--mono); font-size:.62rem; letter-spacing:.12em;
+  text-transform:uppercase; padding:.32em .62em;
+  border:1px solid var(--border); color:var(--ink-muted);
 }
-.flag h3{
-  font-family:var(--mono);
-  font-size:clamp(1.45rem,1.1rem+1.2vw,1.85rem);
-  font-weight:500;
-  letter-spacing:-.01em;
-  color:var(--ink);
-  margin-bottom:.4rem;
+.flag-id .verdict-chip.shipped{color:var(--cyan); border-color:rgba(95,208,230,.4)}
+.flag-desc{color:var(--ink-soft); font-size:1rem; line-height:1.66; max-width:54ch}
+.flag-desc em{color:var(--ink); font-style:italic}
+.flag-go{
+  display:flex; flex-direction:column; gap:.55rem;
+  font-family:var(--mono); font-size:.82rem;
+  text-align:right; white-space:nowrap;
 }
-.flag h3 .pkg{
-  display:block; font-size:.74rem; letter-spacing:.04em;
-  color:var(--ink-faint); margin-top:.45rem; font-weight:400;
-}
-.flag p{
-  color:var(--ink-soft);
-  font-size:.97rem; line-height:1.66;
-  margin-top:.2rem;
-}
-.flag .verdict{
-  display:flex; flex-wrap:wrap; gap:.4rem;
-  margin-top:1.3rem;
-}
-.flag .pill{
-  font-family:var(--mono); font-size:.68rem; letter-spacing:.06em;
-  padding:.3rem .62rem; border-radius:var(--r-pill);
-  border:1px solid var(--border);
-  color:var(--ink-muted);
-  background:rgba(150,175,220,.05);
-}
-.flag .pill.match{color:var(--cyan); border-color:rgba(95,208,230,.35)}
-.flag .links{
-  margin-top:auto; padding-top:1.4rem;
-  display:flex; flex-wrap:wrap; gap:1.1rem;
-  font-family:var(--mono); font-size:.8rem;
-  border-top:1px solid var(--rule);
-}
-.flag .links a{display:inline-flex; align-items:center; gap:.4rem}
-.flag .first-mark{
-  font-family:var(--mono); font-size:.7rem; letter-spacing:.1em;
-  text-transform:uppercase; color:var(--blue);
-  margin-top:1.1rem;
+.flag-go a{display:inline-flex; align-items:center; gap:.4rem; justify-content:flex-end}
+@media(max-width:860px){
+  .flag{grid-template-columns:1fr; gap:1rem; align-items:start; row-gap:1.1rem}
+  .flag-go{flex-direction:row; gap:1.4rem; text-align:left}
+  .flag-go a{justify-content:flex-start}
 }
 
 /* ---- the floor (thesis section) ------------------------------------------- */

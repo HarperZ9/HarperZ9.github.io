@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>gather, an accountable research-intake organ</title>
+<meta name="description" content="gather reaches information from anywhere, including gated APIs, JavaScript-walled pages, scanned PDFs, audio, and arXiv papers, and records how each item was obtained. Every item carries a provenance receipt, and a run emits a witnessed digest you can re-check. By Zain Dana Harper.">
+<link rel="canonical" href="https://harperz9.github.io/gather.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="gather, an accountable research-intake organ">
+<meta property="og:description" content="gather reaches information from anywhere, including gated APIs, JavaScript-walled pages, scanned PDFs, audio, and arXiv papers, and records how each item was obtained. Every item carries a provenance receipt, and a run emits a witnessed digest you can re-check. By Zain Dana Harper.">
+<meta property="og:url" content="https://harperz9.github.io/gather.html">
+<meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta property="og:image:alt" content="A still from the engine: a Julia set rendered in the site's palette, real mathematics drawn by our own code.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="gather, an accountable research-intake organ">
+<meta name="twitter:description" content="gather reaches information from anywhere, including gated APIs, JavaScript-walled pages, scanned PDFs, audio, and arXiv papers, and records how each item was obtained. Every item carries a provenance receipt, and a run emits a witnessed digest you can re-check. By Zain Dana Harper.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/system.css?v=20260625a">
+</head>
+<body class="inner-clean">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260625a"></script>
+
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">gather</span> &middot; accountable research-intake</span></div>
+  <div class="mid">
+    <h1>Reach it anywhere. <span class="g">Record how you got it.</span></h1>
+    <p class="lede">Research lives behind awkward access. Captions and comments on a video, a paper behind an arXiv gate, a page that renders only under JavaScript, a scanned PDF, an audio file, an API behind a credential wall, and a fact that exists only across scattered fragments and has to be put together. Most tools handle one of those and break on the rest, and when they do reach something, you cannot tell later whether a line was pulled straight from the source or pieced together along the way. <span translate="no">gather</span> handles all of it, and writes down how.</p>
+    <p class="close">Every item carries a receipt recording how it was obtained, so a quote is never confused with an inference, and what was hard to get is never dressed up as if it were lying in the open.</p>
+  </div>
+  <div class="seal"><span translate="no">gather</span> &middot; v1.5.0 &middot; provenance receipts &middot; fair-source &middot; <span translate="no">pip install gather-engine</span></div>
+</div>
+
+<main id="main">
+
+<!-- WHAT IT IS -->
+<section class="mv" id="what" aria-labelledby="what-h">
+  <h2 id="what-h" class="reveal">It brings information in, from anywhere, and records how.</h2>
+  <p class="body-text reveal"><span translate="no">gather</span> is the research-intake organ of the constellation. It reaches information from scattered, often awkward sources and returns it as items, each carrying a provenance receipt. It is the one place where network access, third-party tools, and credentials are allowed to live, isolated behind source adapters, so the rest of the constellation stays clean, offline, and deterministic. A run scope-filters what it gathered, folds the receipts into one witnessed digest, and hands that digest downstream to index, refine, and the crucible.</p>
+  <p class="body-text reveal">Every kind of intake is one small adapter behind a single shape: one string in, a list of receipted items out. The adapter can use the network, a tool, a credential, a headless browser, whatever the source demands; nothing else in <span translate="no">gather</span> imports any of that. Awkward access is an adapter problem, not a system problem, and the core stays pure standard library because of it.</p>
+  <em class="close reveal">The receipt is the rule. Each item records how it was obtained, so a transcript read from captions, text recognized from a scan, and a fact synthesized from fragments are all valid items, but they are not equal, and they are never confused.</em>
+</section>
+
+<!-- REACH ANYWHERE, AND SAY HOW -->
+<section class="mv" id="reach" aria-labelledby="reach-h">
+  <h2 id="reach-h" class="reveal">Reach anywhere. Then say exactly how.</h2>
+  <p class="body-text reveal"><span translate="no">gather</span> ships a source adapter for each kind of intake, all behind the one shape. The cheap, local sources are pure standard library; the harder ones shell out to their own external tool, never a Python dependency. Each adapter records the method it used, so the accountability is in place before the harder reach is trusted. The <code translate="no">method</code> on every item is the load-bearing field: it keeps a direct read and a derived inference from ever being read as the same thing.</p>
+  <div class="index reveal-children" role="list" aria-label="The source adapters and how each one records its reach">
+    <div class="index-row" role="listitem" style="--i:0">
+      <span class="index-term">video</span>
+      <span class="index-gloss">captions, metadata, and comments via <code translate="no">yt-dlp</code>; pure parsing behind an impure shell, each item receipted</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:1">
+      <span class="index-term">web</span>
+      <span class="index-gloss">the static HTML a server returns, no JavaScript; a client-rendered page yields only its shell, and the receipt says <code translate="no">http-get</code>, exactly that</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:2">
+      <span class="index-term">feed &middot; docs</span>
+      <span class="index-gloss">RSS or Atom feeds, and local files or a directory of them; both pure standard library, the filesystem the only impure edge</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:3">
+      <span class="index-term">arxiv</span>
+      <span class="index-gloss">papers from the arXiv API by id or query; a pure parser, the item carrying the abstract and metadata</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:4">
+      <span class="index-term">pdf &middot; ocr</span>
+      <span class="index-gloss">text from a local PDF via <code translate="no">pdftotext</code>, and from a scanned image via <code translate="no">tesseract</code>; a best-effort machine reading, labelled <code translate="no">ocr</code>, never dressed up as clean text</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:5">
+      <span class="index-term">transcribe</span>
+      <span class="index-gloss">a transcript from audio via a Whisper-style CLI; a machine transcription, labelled <code translate="no">transcribe</code> so a listener knows it was machine-made</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:6">
+      <span class="index-term">api</span>
+      <span class="index-gloss">an authenticated JSON API; the token is read from the environment, sent as a header, and never written to a receipt, a URL, or the disk</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:7">
+      <span class="index-term">browser</span>
+      <span class="index-gloss">JavaScript-rendered pages via a real headless browser; the receipt records <code translate="no">browser-extract</code>, so you know JS ran. The most exposed edge, see the limit below</span>
+    </div>
+  </div>
+  <p class="body-text reveal">The honesty matters most exactly where the reach is widest. The <code translate="no">web</code> adapter runs no JavaScript, so it is honest that a client-rendered page gives back only its shell. The <code translate="no">browser</code> adapter runs a real headless browser, and it is the most exposed organ in the system: its host guard covers only the first navigation, and the rendered page then follows its own redirects and sub-requests unguarded. So do not point it at untrusted URLs in an environment where internal services are reachable. The <code translate="no">browser-extract</code> method is honest that JavaScript ran, but it cannot make the fetch safe. The threat model says so plainly, in the open, rather than hide it.</p>
+</section>
+
+<!-- THE DIFFERENTIATOR -->
+<section class="mv" id="receipt" aria-labelledby="receipt-h">
+  <h2 id="receipt-h" class="reveal">The receipt is the differentiator.</h2>
+  <p class="body-text reveal">A provenance receipt rides on every item: the source, the reference, the method, the time, and a sha256 of the item&rsquo;s own content. Re-hash the content and you can confirm it is what was obtained, unaltered. The method keeps the harder distinction on the record, <code translate="no">yt-dlp</code>, <code translate="no">browser-extract</code>, <code translate="no">ocr</code>, <code translate="no">transcribe</code>, <code translate="no">synthesized</code>, so a quote pulled straight from a source and an inference pieced together from fragments are both valid items, but they are never equally direct, and the receipt never lets one be read as the other.</p>
+  <p class="pull reveal">A fact pieced together is not a fact pulled straight from the source. The receipt keeps them apart.</p>
+  <p class="body-text reveal">A derived item, one assembled or inferred from other items rather than fetched, is the sharp case, and the receipt is built for it. Its sha256 fingerprints the inference itself, not its sources, because it is a new statement that can only witness itself; a <code translate="no">derived_from</code> field records the content hash of each input, a re-checkable pointer back to the exact source content. The honesty is mechanical where it can be: the <code translate="no">synthesized</code> label is reachable only through one seam, and the bare builder refuses to stamp it and defaults to <code translate="no">compiled</code>, so a plain call can never forge a synthesis. With no model wired in, the default compiles the inputs verbatim and invents nothing. The digest seal folds in the method and the inputs alongside the hash, so relabelling an inference as a direct fetch, or quietly rewriting what it was built from, breaks the seal exactly as altering the content does.</p>
+</section>
+
+<!-- ARCHITECTURE -->
+<section class="mv" id="arch" aria-labelledby="arch-h">
+  <h2 id="arch-h" class="reveal">Standard library at the core. The impurity is fenced at the edge.</h2>
+  <p class="body-text reveal">The core runs on Python&rsquo;s standard library with no third-party runtime dependency. An adapter may pull in whatever its source demands, a browser binary, an OCR engine, a transcription CLI, but only behind the <code translate="no">Source</code> shape and only at the impure edge. Clocks are injected everywhere a time is recorded, so given the same fetched items a run is deterministic and replayable, and verification stays trustworthy. The four stages below are the spine of a run, each one re-checkable from disk.</p>
+  <div class="index reveal-children" role="list" aria-label="The four stages of a witnessed run">
+    <div class="index-row" role="listitem" style="--i:0">
+      <span class="index-term">fetch</span>
+      <span class="index-gloss">each adapter returns receipted items behind the one <code translate="no">Source</code> shape, the only place the network, a tool, or a credential is allowed</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:1">
+      <span class="index-term">scope</span>
+      <span class="index-gloss">a deterministic, order-preserving filter keeps what serves the work, drops the rest, and records how many it dropped</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:2">
+      <span class="index-term">digest</span>
+      <span class="index-gloss">the items&rsquo; receipts fold into one re-checkable seal, order-independent across items but covering every field of each receipt</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:3">
+      <span class="index-term">store</span>
+      <span class="index-gloss">an optional content-addressed corpus dedups bodies by hash, keeps every distinct receipt, and <code translate="no">corpus verify</code> re-hashes every stored body</span>
+    </div>
+  </div>
+  <p class="body-text reveal">A full <code translate="no">gather run</code> folds fetch, scope, optional synthesis, digest, and store into one re-checkable <code translate="no">RunRecord</code> with its own seal over what it did. Recall queries a stored corpus and re-verifies every body it returns, so a missing or corrupt item is reported, never handed back as if intact. The scope filter, the synthesizer, the store, and the external provenance verdict are all seams that default to a Null, so <span translate="no">gather</span> stands alone and a peer organ plugs in without the core ever importing it.</p>
+</section>
+
+<!-- PROOF AND RUN IT -->
+<section class="mv" id="run" aria-labelledby="run-h">
+  <h2 id="run-h" class="reveal">Current state. How to run it.</h2>
+  <p class="body-text reveal">Version 1.5.0, on PyPI as <code translate="no">gather-engine</code>. It installs the <code translate="no">gather</code> command and the <code translate="no">gather</code> package. The core is pure standard library; a few adapters call an external tool (<code translate="no">yt-dlp</code>, <code translate="no">pdftotext</code>, a headless <code translate="no">chromium</code>, <code translate="no">tesseract</code>, a Whisper-style CLI), which you install only if you use that adapter. <span translate="no">gather</span> reached its organic completion at 1.5.0: every planned source and seam is shipped, and the accountability claims hold end to end across a final whole-system review. The license is fair-source: source-available, rights reserved to fund the research; the smaller utility tools that came out of this work stay permissive.</p>
+  <pre class="artifact" translate="no"><span class="pr">$ pip install gather-engine</span>
+<span class="pr">$ python examples/demo.py</span>       <span class="cmt"># one video parsed, scoped, digested, then a receipt catches tampering</span>
+parsed 3 items from one video, each with a receipt
+<span class="ok">witnessed digest: 3 receipts, verified True</span>
+<span class="bad">after tampering one receipt, digest verifies: False   &lt;- caught</span>
+<span class="pr">$ python examples/pipeline.py</span>   <span class="cmt"># the whole organ: run, store, verify, recall, offline</span></pre>
+  <p class="body-text reveal">Python, standard library only. Install it, run the demo offline, then point an adapter at a real source. Each example under <code translate="no">examples/</code> is a short demonstration of one capability: the receipt that catches tampering, the corpus that re-hashes every body, the recall that re-verifies what it returns. If an adapter reaches something it should not, or a digest produces a result you cannot verify, that is exactly the kind of report I want.</p>
+  <div class="channels reveal">
+    <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/gather" translate="no">HarperZ9/gather</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/gather-engine/" translate="no">gather-engine</a>
+    &nbsp;&middot;&nbsp;
+    <a href="overview.html">&larr; all flagships</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the index</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal"><span translate="no">gather</span> records how every item was obtained and folds the receipts into one witnessed seal. Re-hash the content. Recompute the seal. The provenance comes from the receipt, not from a promise.</p>
+</footer>
+
+<script src="system/reveal.js?v=20260625a" defer></script>
+</body>
+</html>
