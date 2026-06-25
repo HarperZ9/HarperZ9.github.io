@@ -1,6 +1,6 @@
-// canvas-scale.js — hi-DPI backing store helper for the Studio.
+// canvas-scale.js, hi-DPI backing store helper for the Studio.
 // Zero dependencies. Exported as ES module; node-testable (no DOM required beyond what's
-// passed in — tests stub the canvas object with {width, height, getBoundingClientRect}).
+// passed in, so tests stub the canvas object with {width, height, getBoundingClientRect}).
 //
 // sizeToDisplay(canvas, opts) → { w, h }
 //   Sets canvas.width / canvas.height to the device-pixel backing resolution,

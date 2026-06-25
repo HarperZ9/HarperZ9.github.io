@@ -4,40 +4,40 @@
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The release toolkit — the shipping discipline</title>
-<meta name="description" content="The small tools that carry the shipping discipline: release-safety gates, guarded IO, and agent tooling. Six are published to PyPI; the rest are public on GitHub — and this page says exactly which, because the proof-before-trust rule applies to my own claims too. By Zain Dana Harper.">
+<title>The release toolkit: the shipping discipline</title>
+<meta name="description" content="The small tools that carry the shipping discipline: release-safety gates, guarded IO, and agent tooling. Six are published to PyPI; the rest are public on GitHub. This page says exactly which, because the proof-before-trust rule applies to my own claims too. By Zain Dana Harper.">
 <link rel="canonical" href="https://harperz9.github.io/toolkit.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="The release toolkit — the shipping discipline">
-<meta property="og:description" content="The small tools that carry the shipping discipline: release-safety gates, guarded IO, and agent tooling. Six are published to PyPI; the rest are public on GitHub — and this page says exactly which, because the proof-before-trust rule applies to my own claims too. By Zain Dana Harper.">
+<meta property="og:title" content="The release toolkit: the shipping discipline">
+<meta property="og:description" content="The small tools that carry the shipping discipline: release-safety gates, guarded IO, and agent tooling. Six are published to PyPI; the rest are public on GitHub. This page says exactly which, because the proof-before-trust rule applies to my own claims too. By Zain Dana Harper.">
 <meta property="og:url" content="https://harperz9.github.io/toolkit.html">
 <meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
 <meta property="og:image:alt" content="A still from the engine: a Julia set rendered in the site's palette, real mathematics drawn by our own code.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The release toolkit — the shipping discipline">
-<meta name="twitter:description" content="The small tools that carry the shipping discipline: release-safety gates, guarded IO, and agent tooling. Six are published to PyPI; the rest are public on GitHub — and this page says exactly which, because the proof-before-trust rule applies to my own claims too. By Zain Dana Harper.">
+<meta name="twitter:title" content="The release toolkit: the shipping discipline">
+<meta name="twitter:description" content="The small tools that carry the shipping discipline: release-safety gates, guarded IO, and agent tooling. Six are published to PyPI; the rest are public on GitHub. This page says exactly which, because the proof-before-trust rule applies to my own claims too. By Zain Dana Harper.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
 <meta name="color-scheme" content="dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="system/system.css?v=20260624a">
+<link rel="stylesheet" href="system/system.css?v=20260625a">
 </head>
 <body class="inner-clean">
 <a class="skip-link" href="#main">Skip to content</a>
 
 <div id="site-nav" class="site-nav"></div>
-<noscript><nav class="site-nav"><a href="index.html">Home</a> <a href="studio.html">The Studio</a> <a href="overview.html">The Work</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js"></script>
+<noscript><nav class="site-nav"><a href="index.html">Atlas</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260625a"></script>
 
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">The release toolkit &middot; the shipping discipline</span></div>
   <div class="mid">
     <p class="eyebrow">RELEASE-SAFETY &amp; AGENT TOOLKIT</p>
     <h1>Small tools, so that <span class="g">shipping is a discipline, not a hope.</span></h1>
-    <p class="lede">Around the bigger working parts is a ring of small, single-purpose tools &mdash; the ones that run every time I put something out. They sweep a repository for passwords, keys, and tokens that must not leak, and check that required files are present before anything goes public. They index the evidence so a reviewer can actually check it, confirm that a release&rsquo;s honest record of where it came from matches what it claims, guard the file reads, file writes, and shell calls a process makes, and keep a live map of every repo I&rsquo;m working across. None of them are glamorous. That&rsquo;s the point: the discipline is in the boring parts being automatic.</p>
-    <p class="close">And because the rule here is proof before trust, this page does the thing the rule demands &mdash; it tells you exactly which of these are on PyPI and which are only on GitHub, instead of rounding up.</p>
+    <p class="lede">Around the bigger working parts is a ring of small, single-purpose tools, the ones that run every time I put something out. They sweep a repository for passwords, keys, and tokens that must not leak, and check that required files are present before anything goes public. They index the evidence so a reviewer can actually check it, confirm that a release&rsquo;s honest record of where it came from matches what it claims, guard the file reads, file writes, and shell calls a process makes, and keep a live map of every repo I&rsquo;m working across. None of them are glamorous. That&rsquo;s the point: the discipline is in the boring parts being automatic.</p>
+    <p class="close">And because the rule here is proof before trust, this page does the thing the rule demands: it tells you exactly which of these are on PyPI and which are only on GitHub, instead of rounding up.</p>
   </div>
   <div class="seal">6 published to PyPI &middot; the rest public on GitHub &middot; stdlib-first</div>
 </div>
@@ -46,19 +46,19 @@
 
 <!-- on pypi -->
 <section class="mv" id="pypi" aria-labelledby="pypi-h">
-  <h2 id="pypi-h" class="reveal">On PyPI &mdash; you can <code>pip install</code> these today.</h2>
-  <p class="body-text reveal"><b>proof-surface</b> <span class="built-stat">v0.1.0</span> &mdash; the accountability contract: a checkpoint that says no until it&rsquo;s sure, records of work done and permission given, and chains of who delegated what. The shared foundation the release-safety tools clip onto. <a href="proof-surface.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">its own page &rarr;</a></p>
-  <p class="body-text reveal"><b>public-surface-sweeper</b> <span class="built-stat">v0.1.1</span> &mdash; the check you run before a release goes out: confirms required files are present and sweeps for passwords, keys, or tokens that must not leak, so nothing slips public that shouldn&rsquo;t. Built on proof-surface.</p>
-  <p class="body-text reveal"><b>repo-proof-index</b> <span class="built-stat">v0.1.1</span> &mdash; an index over the evidence records and receipts a project produces, laid out so a reviewer can actually check them. It collects and organizes the evidence; it never certifies it &mdash; that stays a human&rsquo;s job.</p>
-  <p class="body-text reveal"><b>model-provenance-validator</b> <span class="built-stat">v0.1.1</span> &mdash; checks a model or release&rsquo;s honest record of where it came from against what it claims, and blacks out any passwords, keys, or tokens from its own output while doing it.</p>
-  <p class="body-text reveal"><b>index</b> <span class="built-stat">v1.0.0</span> &mdash; a compact JSON inventory of every git repo in a multi-repo workspace: the tool that lets the whole system know its own shape at a glance. <a href="quanta-color.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">quanta-color</a> is the sixth on PyPI &mdash; a product, with its own page.</p>
+  <h2 id="pypi-h" class="reveal">On PyPI: you can <code>pip install</code> these today.</h2>
+  <p class="body-text reveal"><b>proof-surface</b> <span class="built-stat">v0.1.0</span>: the accountability contract, a checkpoint that says no until it&rsquo;s sure, records of work done and permission given, and chains of who delegated what. The shared foundation the release-safety tools clip onto. <a href="proof-surface.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">its own page &rarr;</a></p>
+  <p class="body-text reveal"><b>public-surface-sweeper</b> <span class="built-stat">v0.1.1</span>: the check you run before a release goes out. It confirms required files are present and sweeps for passwords, keys, or tokens that must not leak, so nothing slips public that shouldn&rsquo;t. Built on proof-surface.</p>
+  <p class="body-text reveal"><b>repo-proof-index</b> <span class="built-stat">v0.1.1</span>: an index over the evidence records and receipts a project produces, laid out so a reviewer can actually check them. It collects and organizes the evidence; it never certifies it, and that stays a human&rsquo;s job.</p>
+  <p class="body-text reveal"><b>model-provenance-validator</b> <span class="built-stat">v0.1.1</span>: checks a model or release&rsquo;s honest record of where it came from against what it claims, and blacks out any passwords, keys, or tokens from its own output while doing it.</p>
+  <p class="body-text reveal"><b>index</b> <span class="built-stat">v1.0.0</span>: a compact JSON inventory of every git repo in a multi-repo workspace, the tool that lets the whole system know its own shape at a glance. <a href="quanta-color.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">quanta-color</a> is the sixth on PyPI, a product with its own page.</p>
 </section>
 
 <!-- on github -->
 <section class="mv" id="github" aria-labelledby="github-h">
-  <h2 id="github-h" class="reveal">Public on GitHub &mdash; built and open, not yet on a package index.</h2>
-  <p class="body-text reveal">The rest are real and public, just not published to PyPI &mdash; so I list them here as what they are. <b>secret-redact-io</b> &mdash; wraps file reads, web fetches, and shell calls so that passwords, keys, or tokens are blacked out before they leave, and keeps a fingerprint-only record for auditing. <b>provenance-sensorium</b> &mdash; the evidence receipt you produce before shipping (<a href="provenance-sensorium.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">its own page</a>). <b>release-surface-scanner</b> and <b>proof-surface-report</b> &mdash; release-packet scanning and review reporting. And a small set of agent-workflow tools &mdash; <b>agent-routing-kit</b>, <b>context-curator-lite</b>, <b>agent-hook-pack</b>, <b>workflow-harness-lite</b> &mdash; plus <b>gpu-trace-validator</b>, which checks GPU-trace JSON against a schema and emits bounded receipts.</p>
-  <em class="close reveal">&ldquo;Public&rdquo; here means the source is on GitHub and open to read. It does not mean &ldquo;on PyPI&rdquo; &mdash; and I&rsquo;ll keep those two words apart.</em>
+  <h2 id="github-h" class="reveal">Public on GitHub: built and open, not yet on a package index.</h2>
+  <p class="body-text reveal">The rest are real and public, just not published to PyPI, so I list them here as what they are. <b>secret-redact-io</b> wraps file reads, web fetches, and shell calls so that passwords, keys, or tokens are blacked out before they leave, and keeps a fingerprint-only record for auditing. <b>provenance-sensorium</b> is the evidence receipt you produce before shipping (<a href="provenance-sensorium.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">its own page</a>). <b>release-surface-scanner</b> and <b>proof-surface-report</b> handle release-packet scanning and review reporting. And a small set of agent-workflow tools (<b>agent-routing-kit</b>, <b>context-curator-lite</b>, <b>agent-hook-pack</b>, <b>workflow-harness-lite</b>), plus <b>gpu-trace-validator</b>, which checks GPU-trace JSON against a schema and emits bounded receipts.</p>
+  <em class="close reveal">&ldquo;Public&rdquo; here means the source is on GitHub and open to read. It does not mean &ldquo;on PyPI,&rdquo; and I&rsquo;ll keep those two words apart.</em>
 </section>
 
 <!-- the proof -->
@@ -70,7 +70,7 @@
 
   <div class="exhibit reveal">
     <div class="exhibit-tag"><span class="ord">Exhibit I</span> <span class="what">The release toolkit &middot; a published tool, and the honest tally</span></div>
-    <pre class="artifact"><span class="cmt"># installed straight from PyPI — a real published package</span>
+    <pre class="artifact"><span class="cmt"># installed straight from PyPI, a real published package</span>
 <span class="pr">$ pip install index-graph &amp;&amp; index --help</span>
 <span class="ok">usage: index [-h] [--version] {map,graph,context,viz} ...</span>
 Repository inventory maps + dependency graph + context packs.
@@ -82,21 +82,21 @@ Repository inventory maps + dependency graph + context packs.
 <span class="ok">model-provenance-validator 0.1.1</span>
 <span class="ok">index-graph               1.0.0</span>
 <span class="ok">quanta-color              1.0.1</span>
-<span class="lt"># = 6 on PyPI. The rest are public on GitHub — counted separately, on purpose.</span></pre>
-    <p class="artifact-cap">Six packages, verified against the package index by author. The other tools are real and public &mdash; they&rsquo;re just on GitHub, and saying so is cheaper than being caught rounding up.</p>
-    <p class="artifact-note">Verified against the live PyPI index, 2026-06-21. <em>Honest limit / correction:</em> the old &ldquo;19 on PyPI&rdquo; figure conflated three different things &mdash; published packages, public-on-GitHub repos, and packages only installed locally from source. One of the names I&rsquo;d listed (<code>agent-audit</code>) turned out to be a different author&rsquo;s package entirely, so it&rsquo;s dropped from any claim. This is exactly the kind of quiet over-count the whole project exists to catch &mdash; including when I&rsquo;m the one who made it. <a href="public-surface-sweeper-sample.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">See a sample release hygiene report →</a></p>
+<span class="lt"># = 6 on PyPI. The rest are public on GitHub, counted separately, on purpose.</span></pre>
+    <p class="artifact-cap">Six packages, verified against the package index by author. The other tools are real and public; they&rsquo;re just on GitHub, and saying so is cheaper than being caught rounding up.</p>
+    <p class="artifact-note">Verified against the live PyPI index, 2026-06-21. <em>Honest limit / correction:</em> the old &ldquo;19 on PyPI&rdquo; figure conflated three different things: published packages, public-on-GitHub repos, and packages only installed locally from source. One of the names I&rsquo;d listed (<code>agent-audit</code>) turned out to be a different author&rsquo;s package entirely, so it&rsquo;s dropped from any claim. This is exactly the kind of quiet over-count the whole project exists to catch, including when I&rsquo;m the one who made it. <a href="public-surface-sweeper-sample.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">See a sample release hygiene report →</a></p>
   </div>
 </section>
 
 <!-- honest -->
 <section class="mv" id="limits" aria-labelledby="limits-h">
   <h2 id="limits-h" class="reveal">Why a ring of tiny tools.</h2>
-  <p class="body-text reveal">A discipline you have to remember isn&rsquo;t one. The reason these exist as separate, boring, single-purpose tools is that the moment release-safety depends on me being careful at the end of a long day, it&rsquo;s already failed. So the sweep, the index, the check of where a release came from, the guarded file and shell calls &mdash; each is small enough to run every time and trust, and each says no by default and refuses to round up. They&rsquo;re the connective discipline that lets the bigger working parts ship without me crossing my fingers.</p>
-  <p class="pull reveal">Six on PyPI, the rest on GitHub &mdash; and I&rsquo;d rather state the smaller true number than the bigger comfortable one.</p>
+  <p class="body-text reveal">A discipline you have to remember isn&rsquo;t one. The reason these exist as separate, boring, single-purpose tools is that the moment release-safety depends on me being careful at the end of a long day, it&rsquo;s already failed. So the sweep, the index, the check of where a release came from, the guarded file and shell calls: each is small enough to run every time and trust, and each says no by default and refuses to round up. They&rsquo;re the connective discipline that lets the bigger working parts ship without me crossing my fingers.</p>
+  <p class="pull reveal">Six on PyPI, the rest on GitHub, and I&rsquo;d rather state the smaller true number than the bigger comfortable one.</p>
   <div class="channels reveal">
-    <span class="g">GitHub</span> &mdash; <a href="https://github.com/HarperZ9">HarperZ9</a>
+    <span class="g">GitHub</span>: <a href="https://github.com/HarperZ9">HarperZ9</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">Email</span> &mdash; <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
+    <span class="g">Email</span>: <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
     &nbsp;&middot;&nbsp;
     <a href="overview.html">&larr; the map</a> &nbsp;&middot;&nbsp; <a href="./">the index</a>
   </div>
@@ -105,9 +105,9 @@ Repository inventory maps + dependency graph + context packs.
 </main>
 
 <footer class="footer-seal" role="contentinfo">
-  <p class="seal">The boring parts, automatic &middot; says no by default &middot; six on PyPI and honest about it &mdash; the discipline that lets the rest ship without crossed fingers.</p>
+  <p class="seal">The boring parts, automatic &middot; says no by default &middot; six on PyPI and honest about it: the discipline that lets the rest ship without crossed fingers.</p>
 </footer>
 
-<script src="system/reveal.js?v=20260621d" defer></script>
+<script src="system/reveal.js?v=20260625a" defer></script>
 </body>
 </html>

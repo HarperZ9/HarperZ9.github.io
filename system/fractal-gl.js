@@ -1,4 +1,4 @@
-// fractal-gl.js — GPU 2D escape-time fractals for the Studio (the perf + interactivity win).
+// fractal-gl.js: GPU 2D escape-time fractals for the Studio (the perf + interactivity win).
 //
 // A WebGL1 fragment-shader Mandelbrot / Julia / Burning Ship: per-pixel escape iteration on the
 // GPU instead of the CPU loop in fractal.js, so a full frame is near-instant and pan/zoom stay
@@ -8,13 +8,13 @@
 // palette ramp cycled at mu/8.
 //
 // Built EXACTLY like fractal3d.js / shared-frame/render.js renderField: a full-screen-triangle
-// vertex shader, compile()/linkProgram(), a single drawArrays of 3 vertices. No RAF here — a 2D
+// vertex shader, compile()/linkProgram(), a single drawArrays of 3 vertices. No RAF here, since a 2D
 // fractal is a still image; the Studio re-invokes renderFractalGL() per interaction frame (the
 // program is rebuilt cheaply, or reused via the cached handle below).
 //
 // renderFractalGL(canvas, { type, cx, cy, scale, maxIter, palette, jx, jy }) draws one frame and
-// returns true. Throws a clear Error if WebGL is unavailable or the program fails to compile/link —
-// the Studio catches that and falls back to the CPU renderFractal().
+// returns true. Throws a clear Error if WebGL is unavailable or the program fails to compile/link,
+// and the Studio catches that and falls back to the CPU renderFractal().
 
 import { PALETTES } from "./fractal.js";
 
@@ -25,7 +25,7 @@ const VERT = "attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}";
 // deepest CPU preset (Seahorse Deep / Period-2 Minibrot) so GPU detail keeps up at depth.
 const MAX_ITERS = 2000;
 
-// Bailout R=256 (R^2=65536) — same as fractal.js BAILOUT, required for the smooth-coloring formula.
+// Bailout R=256 (R^2=65536), same as fractal.js BAILOUT, required for the smooth-coloring formula.
 const BAILOUT2 = 65536.0;
 
 // The fragment shader. The fractal `type` is a compile-time branch (#define) so each program is a
@@ -192,13 +192,13 @@ function getGL(canvas) {
   if (canvas.__fractalGLContext) return canvas.__fractalGLContext;
   const gl = canvas.getContext("webgl", { preserveDrawingBuffer: true, antialias: false })
     || canvas.getContext("experimental-webgl", { preserveDrawingBuffer: true, antialias: false });
-  if (!gl) throw new Error("2D GPU fractals need WebGL — this browser/context has none.");
+  if (!gl) throw new Error("2D GPU fractals need WebGL. This browser/context has none.");
   canvas.__fractalGLContext = gl;
   return gl;
 }
 
 /**
- * renderFractalGL(canvas, opts) — draw one Mandelbrot/Julia/Burning Ship frame into `canvas` on the
+ * renderFractalGL(canvas, opts): draw one Mandelbrot/Julia/Burning Ship frame into `canvas` on the
  * GPU. opts: { type, cx, cy, scale, maxIter, palette, jx, jy }. Returns true on success; throws a
  * clear Error if WebGL is unavailable or the shader fails (the Studio catches and falls back to CPU).
  */

@@ -1,4 +1,4 @@
-// fractal3d.js — high-fidelity 3D fractals via a WebGL1 fragment-shader raymarcher.
+// fractal3d.js: high-fidelity 3D fractals via a WebGL1 fragment-shader raymarcher.
 //
 // Mandelbox & Mandelbulb distance estimators, sphere-traced per pixel. The GL program is
 // built EXACTLY like shared-frame/render.js renderField: a full-screen-triangle vertex shader,
@@ -14,13 +14,13 @@
 //   - u_resolution uniform (no textureSize)
 //   - atan(y,x) two-arg form is available
 
-// Full-screen triangle — same vertex shader render.js uses.
+// Full-screen triangle, the same vertex shader render.js uses.
 const VERT = "attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}";
 
 // ── The two distance estimators (research file §1 and §2) ───────────────────
 // Each is dropped verbatim into the fragment as the `de(vec3 p)` selected at build time.
 // Both also write a running orbit-trap minimum into the global `g_trap` (distance-to-origin
-// trap) for coloring — research file §"Orbit Trap Coloring".
+// trap) for coloring, research file §"Orbit Trap Coloring".
 
 const MANDELBOX_DE = `
 // --- Mandelbox DE --- (research §1; Hvidtfeldt/Syntopia Part VI 2011, Buddhi scalar DE)
@@ -49,7 +49,7 @@ float de(vec3 pos) {
             z  *= k;
             dr *= k;
         }
-        // Scale and translate (the + 1.0 is the additive c term — NOT abs(scale))
+        // Scale and translate (the + 1.0 is the additive c term, NOT abs(scale))
         z  = u_scale * z + pos;
         dr = dr * abs(u_scale) + 1.0;
         g_trap = min(g_trap, length(z));       // distance-to-origin orbit trap
@@ -98,7 +98,7 @@ function buildFragment(type) {
   // Mandelbulb needs a tighter far plane (research §3 table: 8.0 vs 20.0) and fewer steps.
   const maxSteps = type === "mandelbulb" ? 96 : 110;
   const maxDist = type === "mandelbulb" ? "8.0" : "20.0";
-  // Surface base color per fractal — warm for the box, cooler for the bulb (just an aesthetic seed).
+  // Surface base color per fractal: warm for the box, cooler for the bulb (just an aesthetic seed).
   const baseCol = type === "mandelbulb" ? "vec3(0.55, 0.45, 0.6)" : "vec3(0.6, 0.5, 0.4)";
 
   return `precision highp float;
@@ -121,7 +121,7 @@ float g_trap;   // running orbit-trap minimum, written by de()
 
 ${de}
 
-// Surface normal via DE gradient — Quilez tetrahedron trick (research §3, 4 DE evals).
+// Surface normal via DE gradient, Quilez tetrahedron trick (research §3, 4 DE evals).
 vec3 calcNormal(vec3 p) {
     const float h = 0.0006;
     const vec2  k = vec2(1.0, -1.0);
@@ -133,7 +133,7 @@ vec3 calcNormal(vec3 p) {
     );
 }
 
-// Soft shadow — Quilez k*h/t march (research §3, iquilezles.org/articles/rmshadows).
+// Soft shadow, Quilez k*h/t march (research §3, iquilezles.org/articles/rmshadows).
 float softShadow(vec3 ro, vec3 rd, float mint, float maxt, float k) {
     float res = 1.0;
     float t   = mint;
@@ -186,7 +186,7 @@ void main() {
 
     // Sphere-tracing march, tracking the step count for AO and a thin glow accumulator.
     // glow only accumulates very close to the surface (small exp window) so it stays a rim
-    // halo, not whole-frame haze — the washout failure mode if the window is too wide.
+    // halo, not whole-frame haze, which is the washout failure mode if the window is too wide.
     float t     = 0.001;
     int   steps = 0;
     float glow  = 0.0;
@@ -213,7 +213,7 @@ void main() {
         vec3 n = calcNormal(p);
 
         // Step-count AO: fewer steps = more open space (research §"Step-count AO"). As a
-        // MULTIPLIER on lighting (occlusion darkens crevices) — adding it as light is what
+        // MULTIPLIER on lighting (occlusion darkens crevices); adding it as light is what
         // flattens the image, so it modulates rather than lifts.
         float ao = clamp(1.0 - float(steps) / float(MAX_STEPS), 0.0, 1.0);
         ao = pow(ao, 1.5);
@@ -226,7 +226,7 @@ void main() {
         vec3  V     = -rd;
         vec3  H     = normalize(L + V);
         float spec  = pow(max(dot(n, H), 0.0), 24.0) * shad;
-        // Sky fill from above (hemisphere ambient) — small, tinted, so it doesn't gray out blacks.
+        // Sky fill from above (hemisphere ambient): small, tinted, so it doesn't gray out blacks.
         float sky   = clamp(0.5 + 0.5 * n.y, 0.0, 1.0);
 
         // Orbit-trap glow tints the base surface color (research §"Orbit Trap Coloring").
@@ -237,7 +237,7 @@ void main() {
         col *= (0.25 + 0.75 * ao);                       // AO darkens crevices (multiplier)
         col += vec3(1.0) * spec * 0.5;                   // sharp relief highlights
         col += vec3(0.18, 0.30, 0.55) * glow * 0.012;    // thin silhouette rim glow
-        // distance fog toward the sky color — light, only at the far plane
+        // distance fog toward the sky color, light, only at the far plane
         col = mix(col, vec3(0.06, 0.08, 0.14), clamp(t / MAX_DIST, 0.0, 1.0) * 0.35);
     }
 
@@ -248,7 +248,7 @@ void main() {
 }`;
 }
 
-// ── GL program build — exactly the render.js pattern ────────────────────────
+// ── GL program build, exactly the render.js pattern ────────────────────────
 
 function compile(gl, type, src) {
   const sh = gl.createShader(type);
@@ -263,17 +263,17 @@ function compile(gl, type, src) {
 }
 
 /**
- * render3D(canvas, opts) — raymarch a Mandelbox or Mandelbulb into `canvas`.
+ * render3D(canvas, opts): raymarch a Mandelbox or Mandelbulb into `canvas`.
  *
  * opts: { type: "mandelbox"|"mandelbulb", scale?: number, power?: number, iterations?: number }
- * Returns { stop } — cancels the camera-orbit RAF. Throws a clear Error when WebGL is unavailable
+ * Returns { stop } to cancel the camera-orbit RAF. Throws a clear Error when WebGL is unavailable
  * or the program fails to compile/link (the Studio catches and shows a friendly fallback).
  */
 export function render3D(canvas, opts = {}) {
   const type = opts.type === "mandelbulb" ? "mandelbulb" : "mandelbox";
   const gl = canvas.getContext("webgl", { preserveDrawingBuffer: true })
     || canvas.getContext("experimental-webgl", { preserveDrawingBuffer: true });
-  if (!gl) throw new Error("3D fractals need WebGL — this browser/context has none.");
+  if (!gl) throw new Error("3D fractals need WebGL. This browser/context has none.");
 
   // Clamp params to the budgets the shader was built for (real-time at ~512px).
   const scale = clampNum(opts.scale, -3.0, 3.0, -2.0);

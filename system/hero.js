@@ -1,4 +1,4 @@
-/* system/hero.js — shared hero engine for every page of harperz9.github.io
+/* system/hero.js: shared hero engine for every page of harperz9.github.io
    Public contract (unchanged):
      - WebGL shader on canvas#gl
      - 2D motes on canvas#motes
@@ -13,12 +13,12 @@
 */
 
 // =============================================================================
-// GLOBAL STATE (top-level vars — shared across all IIFEs below)
+// GLOBAL STATE (top-level vars, shared across all IIFEs below)
 // =============================================================================
 var HERO_REDUCED = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
-// worldTarget  — the integer world the user selected (0/1/2)
-// worldCurrent — animated float lerping toward worldTarget (drives u_world uniform)
+// worldTarget  is the integer world the user selected (0/1/2)
+// worldCurrent is the animated float lerping toward worldTarget (drives u_world uniform)
 var worldTarget  = 2.0;
 var worldCurrent = 2.0;
 
@@ -29,7 +29,7 @@ var worldCurrent = 2.0;
     var saved = parseInt(raw, 10);
     if (saved >= 0 && saved <= 3) {
       worldTarget  = saved;
-      worldCurrent = saved; // start fully settled — no flash
+      worldCurrent = saved; // start fully settled, no flash
     }
   }
   // Apply body class immediately so CSS text adaptation fires on first paint
@@ -146,7 +146,7 @@ function heroSwitchWorld(idx) {
     '</div>' +
     '<div id="boot-readout">' +
       '<div id="boot-sha">sha256: &hellip;</div>' +
-      '<div id="boot-status">SENSING &mdash;</div>' +
+      '<div id="boot-status">SENSING&hellip;</div>' +
     '</div>';
   document.body.appendChild(boot);
 }());
@@ -206,11 +206,11 @@ var HERO_VERT = "attribute vec2 a_pos;\nvoid main(){ gl_Position=vec4(a_pos,0.0,
 //
 // (b) SWIZZLE SAFETY.
 //     .x/.y/.r/.g/.b accessed only on vec2 or vec3 values.
-//     wg_w0col, wg_w1col, wg_w2col — vec3. All swizzles valid.
-//     sp_h, sp_s, sp_v, sp_hh, sp_i, sp_f, sp_p, sp_q, sp_t, sp_m — float.
+//     wg_w0col, wg_w1col, wg_w2col are vec3. All swizzles valid.
+//     sp_h, sp_s, sp_v, sp_hh, sp_i, sp_f, sp_p, sp_q, sp_t, sp_m are float.
 //     No swizzle attempted on floats.
-//     gd_lensC, gd_lv, gd_uv, gd_fu — vec2. .x/.y valid.
-//     All gd_ scalars (gd_ld, gd_lPull, etc.) — float. Never swizzled.
+//     gd_lensC, gd_lv, gd_uv, gd_fu are vec2. .x/.y valid.
+//     All gd_ scalars (gd_ld, gd_lPull, etc.) are float. Never swizzled.
 //
 // (c) CONSTANT INTEGER LOOP BOUNDS.
 //     fb_i<4, f6_i<6, v4_i<4, v6_i<6, gr_gi<18, ve_j<3, ve_i<3,
@@ -329,7 +329,7 @@ var HERO_FRAG = [
 "  return vfbm4(p+ws*wf_ra);",
 "}",
 
-// ── WORLD 3 — LIQUID CHROME (vintage-CGI molten metal; reuses fbm above) ──────
+// ── WORLD 3: LIQUID CHROME (vintage-CGI molten metal; reuses fbm above) ──────
 "vec3 lc_env(float y){",
 "  float s1=0.5+0.5*sin(y*3.0+0.3);",
 "  float s2=0.5+0.5*sin(y*6.7+1.4);",
@@ -476,7 +476,7 @@ var HERO_FRAG = [
 "  float dmTrig = step(0.972, fract(sin(dmGb*21.7 + floor(t*3.0)*5.3)*731.0));",
 "  uvn.x += dmTrig * (fract(sin(dmGb*91.3 + floor(t*3.0))*413.0) - 0.5) * 0.032;",
 
-// ── LAYER 1 — BASE DUSK DREAMSCAPE ──
+// ── LAYER 1: BASE DUSK DREAMSCAPE ──
 "  float lhz = -0.20;",
 "  float lfog = fbm(vec2(uvn.x*1.4 - t*0.010, uvn.y*2.0 + t*0.006));",
 "  vec3 lTop = vec3(0.038, 0.082, 0.088);",
@@ -492,7 +492,7 @@ var HERO_FRAG = [
 "  col  = mix(col, col*1.18+vec3(0.16,0.10,0.02), exp(-pow((uvn.y-lhz)/0.05,2.0))*0.4);",
 "  col += vec3(0.97, 0.64, 0.22) * exp(-pow((uvn.y-lhz)/0.006, 2.0)) * 0.55;",
 
-// ── LAYER 2 — BIOMECHANICAL GEOMETRY ──
+// ── LAYER 2: BIOMECHANICAL GEOMETRY ──
 "  vec2 gsc    = vec2(0.38, 0.04);",
 "  float gscale = 0.85;",
 "  vec2 tUV0 = (uvn - gsc) / gscale + 0.5;",
@@ -557,7 +557,7 @@ var HERO_FRAG = [
 "                  smoothstep(u_line_sharp*0.035, 0.0, 1.0-ctN);",
 "  ctLine *= smoothstep(0.03, 0.32, pA + pB*0.5) * 0.50 + 0.50;",
 
-// ── LAYER 2e — WARPED WIREFRAME GRID (MELTED) ──
+// ── LAYER 2e: WARPED WIREFRAME GRID (MELTED) ──
 "  vec2 gd_uv = uvn;",
 
 // STEP 1: PERSPECTIVE RECESSION
@@ -618,7 +618,7 @@ var HERO_FRAG = [
 "  geoAlpha *= (1.0 - u_geo_photo * 0.24);",
 "  col = mix(col, geoCol, geoAlpha * 0.95);",
 
-// ── LAYER 3 — GUILLOCHÉ SEAL ──
+// ── LAYER 3: GUILLOCHÉ SEAL ──
 "  vec2 gsPos = uvn - vec2(0.17, 0.33);",
 "  float gsR = length(gsPos);",
 "  float gsA = atan(gsPos.y, gsPos.x);",
@@ -628,7 +628,7 @@ var HERO_FRAG = [
 "  float gsGuil = (smoothstep(0.88, 1.0, gsL1) + smoothstep(0.88, 1.0, gsL2)) * gsRing;",
 "  col += cAmber * gsGuil * 0.22;",
 
-// ── LAYER 4 — INDUSTRIAL HAZE ──
+// ── LAYER 4: INDUSTRIAL HAZE ──
 "  vec2 mShift = u_mouse * u_mouse_influence * 0.18;",
 "  vec2 hzPos  = uvn * 2.8 - mShift + vec2(t*0.055, t*0.022);",
 "  float hzVal = warpedFbm(hzPos, u_haze_strength);",
@@ -657,7 +657,7 @@ var HERO_FRAG = [
 "  float hzVertW = smoothstep(0.60, -0.50, uvn.y) * 0.55 + 0.45;",
 "  col = mix(col, hazeCol, u_haze_mix * hzVertW);",
 
-// ── LAYER 5 — ORGANISM / MACRO TISSUE ──
+// ── LAYER 5: ORGANISM / MACRO TISSUE ──
 "  float tAspect = u_texres.x / u_texres.y;",
 "  vec2 tDelta   = uvn - gsc;",
 "  vec2 tUV      = vec2(tDelta.x/tAspect, tDelta.y)/gscale + 0.5;",
@@ -683,7 +683,7 @@ var HERO_FRAG = [
 "  col = mix(col, tissue, tForm * tOp);",
 "  col += vec3(0.95, 0.58, 0.14) * tEdge * tForm * 0.42;",
 
-// ── LAYER 6 — THE WEEPING EYE ──
+// ── LAYER 6: THE WEEPING EYE ──
 "  vec2 eyeC = gsc + vec2(-0.015, 0.005);",
 "  vec2 eyeV = uvn - eyeC;",
 "  eyeV = floor(eyeV/0.0052)*0.0052 + 0.0026;",
@@ -725,18 +725,18 @@ var HERO_FRAG = [
 "  col += vec3(0.92,0.68,0.32)*eBead*0.48;",
 "  col += vec3(0.95,0.80,0.48)*exp(-pow(length(eyeV-vec2(-0.02,0.018))/0.009,2.0))*0.65*eOpen;",
 
-// ── LAYER 7 — GOD-RAYS ──
+// ── LAYER 7: GOD-RAYS ──
 "  float eyeRays = godRays(uvn, eyeC, t);",
 "  float sunRays = godRays(uvn, sunPos, t) * 0.60;",
 "  col += mix(cOrange, cAmber, 0.45) * eyeRays * (0.45+0.55*eOpen) * u_godray_opacity;",
 "  col += mix(cOrange, vec3(0.97,0.57,0.12), 0.3) * sunRays * u_godray_opacity * 0.75;",
 
-// ── LAYER 8 — MINI-EYES ──
+// ── LAYER 8: MINI-EYES ──
 "  col = miniEye(col, uvn, vec2(0.28, 0.18), 0.038, 0.55, t);",
 "  col = miniEye(col, uvn, vec2(0.55, 0.08), 0.028, 0.42, t);",
 "  col = miniEye(col, uvn, vec2(0.19, 0.01), 0.022, 0.34, t);",
 
-// ── LAYER 9 — VINTAGE CRT ──
+// ── LAYER 9: VINTAGE CRT ──
 "  col = mix(col, vec3(dot(col,vec3(0.34,0.42,0.24))), 0.08);",
 "  col += vec3(0.05,0.035,0.04)*lfog*0.4;",
 
@@ -759,11 +759,11 @@ var HERO_FRAG = [
 "  col  = col*0.93 + vec3(0.006,0.008,0.008);",
 "  col  = pow(max(col,0.0), vec3(0.95));",
 
-// ── LAYER 10 — WORLD GRADE ──
+// ── LAYER 10: WORLD GRADE ──
 "  float wg_wt01 = clamp(u_world, 0.0, 1.0);",
 "  float wg_wt12 = clamp(u_world - 1.0, 0.0, 1.0);",
 
-// WORLD 0 — ENGRAVING
+// WORLD 0: ENGRAVING
 "  float wg_bLum = dot(col, vec3(0.299,0.587,0.114));",
 "  vec3 wg_monoCol = mix(col, vec3(wg_bLum), 0.90);",
 "  vec3 wg_inverted = 1.0 - wg_monoCol;",
@@ -773,7 +773,7 @@ var HERO_FRAG = [
 "  float wg_inkLum = dot(wg_w0col, vec3(0.299,0.587,0.114));",
 "  wg_w0col = mix(wg_w0col, vec3(wg_inkLum), 0.86);",
 
-// WORLD 1 — SPECTRUM
+// WORLD 1: SPECTRUM
 "  float wg_preLum = dot(col, vec3(0.299, 0.587, 0.114));",
 "  float wg_specHue = fract(wg_preLum * 0.50 + pA * 0.30 + uvn.x * 0.12 + uvn.y * 0.08 + t * 0.018);",
 "  float wg_specVal = clamp(wg_preLum * 2.4 + 0.15, 0.0, 1.0);",
@@ -784,7 +784,7 @@ var HERO_FRAG = [
 "  vec3 wg_w1col = mix(col * 0.18, wg_specRgb, 0.88);",
 "  wg_w1col = clamp(wg_w1col * 1.22 + 0.04, 0.0, 1.0);",
 
-// WORLD 2 — NEGATIVE
+// WORLD 2: NEGATIVE
 "  float wg_w2Lum = dot(wg_w0col, vec3(0.299, 0.587, 0.114));",
 "  vec3 wg_w2inv = 1.0 - wg_w0col;",
 "  wg_w2inv = mix(wg_w2inv, wg_w0col, smoothstep(0.55, 0.85, wg_w2Lum));",
@@ -797,7 +797,7 @@ var HERO_FRAG = [
 "  wg_outCol = mix(wg_outCol, wg_w2col, wg_wt12);",
 "  col = wg_outCol;",
 
-// ── LAYER 11 — ANAMORPHIC CHROMATIC ABERRATION (W0 only) ──
+// ── LAYER 11: ANAMORPHIC CHROMATIC ABERRATION (W0 only) ──
 "  float caGate = 1.0 - smoothstep(0.0, 0.8, u_world);",
 "  float tAspCA  = u_res.x / u_res.y;",
 "  float caRad   = length(uvn * vec2(tAspCA, 1.0));",
@@ -822,7 +822,7 @@ var HERO_FRAG = [
 "  col.b -= caW * u_ca_strength * 3.0  * (invB - baseLum) * caGate;",
 
 "  col = clamp(col, 0.0, 1.0);",
-// WORLD 3 — blend in liquid chrome at the final stage (gated; worlds 0-2 skip it entirely)
+// WORLD 3: blend in liquid chrome at the final stage (gated; worlds 0-2 skip it entirely)
 "  if (u_world > 2.001) { col = mix(col, liquidChrome(frag/u_res, t), clamp(u_world-2.0,0.0,1.0)); }",
 "  gl_FragColor = vec4(col, 1.0);",
 "}"
@@ -902,8 +902,8 @@ function heroLinkProgram(gl, vsh, fsh) {
   var BOOT_DUR  = 1600;
   var shaInterval = setInterval(function () { shaEl.textContent = "sha256: " + randHex(16); }, 40);
   var bootPhases = [
-    { tp: 0,    label: "SENSING —",   color: "#3a4840" },
-    { tp: 0.55, label: "VERIFYING —", color: "#1c4442" },
+    { tp: 0,    label: "SENSING…",    color: "#3a4840" },
+    { tp: 0.55, label: "VERIFYING…",  color: "#1c4442" },
     { tp: 0.88, label: "VERIFIED",    color: "#256660" },
   ];
   var bootPhaseIdx = 0;
@@ -945,7 +945,7 @@ function heroLinkProgram(gl, vsh, fsh) {
 }());
 
 // =============================================================================
-// OSCILLOSCOPE HUD — color adapts per world
+// OSCILLOSCOPE HUD: color adapts per world
 // =============================================================================
 (function () {
   if (HERO_REDUCED) return;
@@ -1003,7 +1003,7 @@ function heroLinkProgram(gl, vsh, fsh) {
 }());
 
 // =============================================================================
-// MAIN GL BOOTSTRAP — canvas#gl (shared contract for every page)
+// MAIN GL BOOTSTRAP: canvas#gl (shared contract for every page)
 // =============================================================================
 (function () {
   var canvas = document.getElementById("gl");
@@ -1169,7 +1169,7 @@ function heroLinkProgram(gl, vsh, fsh) {
     gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, tex1); gl.uniform1i(uTex1, 1);
     gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tex2); gl.uniform1i(uTex2, 2);
     setKnobs();
-    // Lerp worldCurrent toward worldTarget — ~280ms snappy crossfade
+    // Lerp worldCurrent toward worldTarget, ~280ms snappy crossfade
     worldCurrent += (worldTarget - worldCurrent) * 0.06;
     gl.uniform1f(uHeroWorld, worldCurrent);
     gl.bindBuffer(gl.ARRAY_BUFFER, quadBuf);
@@ -1178,7 +1178,7 @@ function heroLinkProgram(gl, vsh, fsh) {
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
 
-  // pause the shader when the hero is scrolled away or the tab is hidden — the
+  // pause the shader when the hero is scrolled away or the tab is hidden, since the
   // fragment loop shouldn't keep running behind a screenful of content (cf. hero-art.js)
   var heroAlive = false;
   function heroOnScreen() { return !document.hidden && window.scrollY < window.innerHeight * 1.4; }
@@ -1204,7 +1204,7 @@ function heroLinkProgram(gl, vsh, fsh) {
 }());
 
 // =============================================================================
-// MOTES — 2D canvas on #motes, color adapts per world
+// MOTES: 2D canvas on #motes, color adapts per world
 // =============================================================================
 (function () {
   var mc = document.getElementById("motes");
@@ -1297,7 +1297,7 @@ function heroLinkProgram(gl, vsh, fsh) {
 }());
 
 // =============================================================================
-// REVEAL — IntersectionObserver adds .visible to .reveal / .reveal-children
+// REVEAL: IntersectionObserver adds .visible to .reveal / .reveal-children
 // Content is fully visible at rest (opacity:1 in CSS). .visible adds a
 // translateY settle for elements that are in the viewport; headless / no-JS
 // contexts are unaffected because the CSS resting state is already visible.

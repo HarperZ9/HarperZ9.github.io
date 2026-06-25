@@ -1,4 +1,4 @@
-/* system/atelier.js — the algorithmic drawing instrument for harperz9.github.io
+/* system/atelier.js: the algorithmic drawing instrument for harperz9.github.io
    Zero dependencies. Every line is generated at runtime and deterministic from a
    stated seed: same (algorithm, specimen, complexity, palette, seed) → identical
    drawing. Four studies, each rooted in one of the macro photographs:
@@ -16,7 +16,7 @@
   "use strict";
 
   var TAU = Math.PI * 2;
-  var GOLDEN = Math.PI * (3 - Math.sqrt(5)); // ≈ 2.39996 rad — the golden angle
+  var GOLDEN = Math.PI * (3 - Math.sqrt(5)); // ≈ 2.39996 rad, the golden angle
 
   // ── small math ──────────────────────────────────────────────────────────────
   function clamp(v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v); }
@@ -100,7 +100,7 @@
   }
 
   // ── field builder: luminance + gradient + edge-importance sampling ──────────
-  // Shared by photo-load, user-upload, and live-camera capture — any luminance
+  // Shared by photo-load, user-upload, and live-camera capture. Any luminance
   // grid becomes the same field interface the algorithms consume.
   function buildField(lum, S) {
     var cdf = new Float32Array(S * S), acc = 0;
@@ -154,13 +154,13 @@
   }
 
   // ============================================================================
-  // STUDIES — each build(rng, P, field) returns either
+  // STUDIES: each build(rng, P, field) returns either
   //   { live:false, strokes:[ {pts:[[x,y]…], col, w, op, close?} … ] }
   // or a live simulation
   //   { live:true, step():bool-done, strokes():[…] }
   // ============================================================================
 
-  // ── per-study parameters — the algorithm's own knobs, exposed and WITNESSED ──
+  // ── per-study parameters: the algorithm's own knobs, exposed and WITNESSED ──
   // Each maps to a fixed constant in the build; default = today's value, so a
   // drawing left at defaults is byte-identical to before (old files still verify).
   // Non-default values append to the seed-key, the URL and the SVG metadata.
@@ -301,7 +301,7 @@
     return o;
   }
 
-  // 1 ── PHYLLOTAXIS — Vogel's spiral, Fibonacci parastichy arms (the snail) ────
+  // 1 ── PHYLLOTAXIS: Vogel's spiral, Fibonacci parastichy arms (the snail) ────
   function buildPhyllotaxis(rng, P, field) {
     var N = Math.round(lerp(460, 2000, P.complexity));
     var cx = 0.5, cy = 0.5, maxR = pget(P, "spread", 0.46), c = maxR / Math.sqrt(N);
@@ -352,7 +352,7 @@
         }
       }
     }
-    // seed packing — tiny octagon dots, brightness from the photo
+    // seed packing: tiny octagon dots, brightness from the photo
     var dotStep = N > 1300 ? 2 : 1;
     for (var d = 0; d < N; d += dotStep) {
       var p = pts[d]; if (p.lum < 0.16) continue;
@@ -363,7 +363,7 @@
     return { live: false, strokes: strokes };
   }
 
-  // 2 ── FLOW FIELD — particles through warped noise, bent to the photo (dandelion)
+  // 2 ── FLOW FIELD: particles through warped noise, bent to the photo (dandelion)
   function buildFlow(rng, P, field) {
     var noise = makeNoise(rng);
     var M = Math.round(lerp(620, 2500, P.complexity));
@@ -401,7 +401,7 @@
     return { live: false, strokes: strokes };
   }
 
-  // 3 ── DIFFERENTIAL GROWTH — a self-repelling closed curve (the seedhead) ─────
+  // 3 ── DIFFERENTIAL GROWTH: a self-repelling closed curve (the seedhead) ─────
   function buildGrowth(rng, P, field) {
     var cx = 0.5, cy = 0.5, n0 = 48, R0 = 0.05;
     var nodes = [];
@@ -448,7 +448,7 @@
         var ox = p[0] - cx, oy = p[1] - cy, od = Math.hypot(ox, oy) || 1;
         var dxm = ax + F[i][0] * repW + Math.cos(ang) * noiseW * gm + ox / od * grW * gm;
         var dym = ay + F[i][1] * repW + Math.sin(ang) * noiseW * gm + oy / od * grW * gm;
-        var ml = Math.hypot(dxm, dym); if (ml > 0.005) { dxm *= 0.005 / ml; dym *= 0.005 / ml; } // stability cap — no explosion
+        var ml = Math.hypot(dxm, dym); if (ml > 0.005) { dxm *= 0.005 / ml; dym *= 0.005 / ml; } // stability cap, no explosion
         var nx = p[0] + dxm, ny = p[1] + dym;
         var rdx = nx - cx, rdy = ny - cy, rd = Math.hypot(rdx, rdy); // soft disc containment
         if (rd > 0.47) { var pl = (rd - 0.47) * 0.6; nx -= rdx / rd * pl; ny -= rdy / rd * pl; }
@@ -483,7 +483,7 @@
     return { live: true, step: step, strokes: strokes, count: function () { return nodes.length; } };
   }
 
-  // 4 ── VENATION — space colonisation toward auxin sources (the mallow) ────────
+  // 4 ── VENATION: space colonisation toward auxin sources (the mallow) ────────
   function buildVenation(rng, P, field) {
     var cx = 0.5, cy = 0.5;
     var nSrc = Math.round(lerp(520, 2200, P.complexity));
@@ -551,7 +551,7 @@
     return { live: false, strokes: strokes };
   }
 
-  // 5 ── REACTION–DIFFUSION — Gray–Scott Turing patterns, drawn as iso-contours (the katydids)
+  // 5 ── REACTION–DIFFUSION: Gray–Scott Turing patterns, drawn as iso-contours (the katydids)
   // marching-squares case table: corners a=1,b=2,c=4,d=8; edges 0=top(a-b) 1=right(b-c) 2=bottom(d-c) 3=left(a-d)
   var MS_TABLE = [[], [[0, 3]], [[0, 1]], [[1, 3]], [[1, 2]], [[0, 3], [1, 2]], [[0, 2]], [[2, 3]],
     [[2, 3]], [[0, 2]], [[0, 1], [2, 3]], [[1, 2]], [[1, 3]], [[0, 1]], [[0, 3]], []];
@@ -566,7 +566,7 @@
     var G = 120, NN = G * G;
     var u = new Float32Array(NN), v = new Float32Array(NN), u2 = new Float32Array(NN), v2 = new Float32Array(NN);
     for (var i = 0; i < NN; i++) { u[i] = 1; }
-    // seed V — from the photo's edges if present, else scattered drops; the pattern nucleates there
+    // seed V from the photo's edges if present, else scattered drops; the pattern nucleates there
     var seeds = Math.round(lerp(16, 52, P.complexity));
     for (var s = 0; s < seeds; s++) {
       var sx, sy;
@@ -638,9 +638,9 @@
     return { live: true, step: step, strokes: strokes, count: function () { return iter; } };
   }
 
-  // 6 ── PHYSARUM — agent-based slime-mould transport network (after Jones 2010) ─
+  // 6 ── PHYSARUM: agent-based slime-mould transport network (after Jones 2010) ─
   //  Thousands of agents each lay a pheromone trail and steer toward where the
-  //  trail — and the photograph's light — runs strongest; the field diffuses and
+  //  trail, and the photograph's light, runs strongest; the field diffuses and
   //  decays behind them. Reinforced routes thicken into a transport network the
   //  same way Physarum polycephalum reticulates toward food. The drawn lines are
   //  the agents' own paths; the network is emergent, never authored.
@@ -698,7 +698,7 @@
       var tmp = T; T = T2; T2 = tmp; iter++;
     }
     function step() { oneStep(); oneStep(); return iter >= target; }
-    // colour by the forager's ORIGIN luminance — the routes carry where they set out from,
+    // colour by the forager's ORIGIN luminance, so the routes carry where they set out from,
     // so the bright core stays multi-hued instead of collapsing to one band (pure-math: by density)
     function colT(k, dn2) { return field ? clamp(spawnT[k] * 1.06 + 0.02, 0, 1) : clamp(0.16 + dn2 * 0.6, 0, 1); }
     function strokes() {
@@ -726,7 +726,7 @@
     return { live: true, step: step, strokes: strokes, count: function () { return iter; } };
   }
 
-  // 7 ── BOIDS — distributed flocking; murmuration trails (after Reynolds 1987) ──
+  // 7 ── BOIDS: distributed flocking; murmuration trails (after Reynolds 1987) ──
   //  N agents, each a position+velocity, steered every iter by three rules summed
   //  over neighbours inside a vision radius: SEPARATION (away from the too-close),
   //  ALIGNMENT (match the local mean heading), COHESION (toward the local centroid).
@@ -857,7 +857,7 @@
     return { live: true, step: step, strokes: strokes, count: function () { return iter; } };
   }
 
-  // 8 ── HYDROGEN ORBITAL — |psi_{n,l,0}|^2 as iso-probability contours (Schrödinger 1926)
+  // 8 ── HYDROGEN ORBITAL: |psi_{n,l,0}|^2 as iso-probability contours (Schrödinger 1926)
   //  psi = R_nl(r)·Y_l0(theta) on the x-z plane (phi=0); atomic units a0=1. Radials verified
   //  vs ChemLibreTexts closed forms, angular vs the spherical-harmonic table. Node structure
   //  exact: radial nodes = n-l-1, angular = l. Vis. inspiration: Kavan (kevkev-70).
@@ -916,9 +916,9 @@
     return { live: false, strokes: strokes };
   }
 
-  // 9 ── HILBERT — one continuous stroke that fills the plane (Hilbert 1891) ─────
-  //  d2xy bit-rotation mapping in PURE INTEGER arithmetic — no sin/cos/sqrt on the
-  //  path — so the drawing re-derives BIT-FOR-BIT on any machine (strongest witness).
+  // 9 ── HILBERT: one continuous stroke that fills the plane (Hilbert 1891) ─────
+  //  d2xy bit-rotation mapping in PURE INTEGER arithmetic, no sin/cos/sqrt on the
+  //  path, so the drawing re-derives BIT-FOR-BIT on any machine (strongest witness).
   //  The photograph colours it (colour only): the one curve is cut into short runs
   //  that SHARE endpoints (still one pen path), each tinted by the local luminance.
   function buildHilbert(rng, P, field) {
@@ -962,7 +962,7 @@
     return { live: false, strokes: strokes };
   }
 
-  // 10 ── BINOMIAL — Pascal's triangle mod m; the Sierpiński gasket (binomial thm)
+  // 10 ── BINOMIAL: Pascal's triangle mod m; the Sierpiński gasket (binomial thm)
   //  C(i,j) = C(i-1,j-1) + C(i-1,j), computed entirely MOD m (pure integer). The
   //  non-zero cells, marked as small triangles, are a self-similar fractal: mod 2
   //  is the Sierpiński gasket, every modulus its own nesting. No trigonometry on
@@ -994,11 +994,11 @@
     return { live: false, strokes: strokes };
   }
 
-  // 11 ── HARMONOGRAPH — two damped pendulums per axis (a real drawing machine) ──
+  // 11 ── HARMONOGRAPH: two damped pendulums per axis (a real drawing machine) ──
   //  x and y are each driven by a pair of sine pendulums whose amplitude decays;
   //  near-integer frequency ratios make the figure slowly precess into a dense
   //  organic weave. Deterministic from the seed; trig-class (sin/exp share the JS
-  //  engine) — re-derivable on the same engine, not claimed bit-exact.
+  //  engine), re-derivable on the same engine, not claimed bit-exact.
   function buildHarmonograph(rng, P, field) {
     var pal = P.palette;
     var detune = pget(P, "detune", 0.42);   // how far each pendulum pair pulls apart in frequency → precession
@@ -1027,10 +1027,10 @@
     return { live: false, strokes: strokes };
   }
 
-  // 12 ── GOSPER — the flowsnake, a space-filling fractal curve (Lindenmayer) ────
+  // 12 ── GOSPER: the flowsnake, a space-filling fractal curve (Lindenmayer) ────
   //  One continuous stroke that tiles the plane in hexagons: a fractal coastline
   //  that never crosses itself. Rewrite A→A-B--B+A++AA+B-, B→+A-BB--B-A++A+B at 60°.
-  //  The six hex directions use only ±1/2 and ±√3/2 (sqrt is IEEE-754 exact) — no
+  //  The six hex directions use only ±1/2 and ±√3/2 (sqrt is IEEE-754 exact), no
   //  transcendental on the geometry, so it re-derives BIT-FOR-BIT on any machine.
   function buildGosper(rng, P, field) {
     var pal = P.palette;
@@ -1069,8 +1069,8 @@
     return { live: false, strokes: strokes };
   }
 
-  // 13 ── L-SYSTEM PLANT — a stochastic Lindenmayer system, drawn with a turtle ──
-  //  Axiom X rewritten depth times by X→F+[[X]-X]-F[-FX]+X and F→FF — the classic
+  // 13 ── L-SYSTEM PLANT: a stochastic Lindenmayer system, drawn with a turtle ──
+  //  Axiom X rewritten depth times by X→F+[[X]-X]-F[-FX]+X and F→FF, the classic
   //  bracketed plant. A turtle walks the string: F draws a branch, +/- rotate by
   //  `angle` (with rng jitter so each seed differs), [ ] push/pop state. Grows up
   //  from the base, then fits to art space. Trig-class (rotation via sin/cos).
@@ -1116,9 +1116,9 @@
     return { live: false, strokes: strokes };
   }
 
-  // 14 ── VORONOI — cellular tessellation by exact half-plane clipping ───────────
+  // 14 ── VORONOI: cellular tessellation by exact half-plane clipping ───────────
   //  K seeds; each cell is the points nearest its seed, found by Sutherland–Hodgman
-  //  clipping the bounded plane against every neighbour's perpendicular bisector —
+  //  clipping the bounded plane against every neighbour's perpendicular bisector,
   //  only +,-,*,/ on the geometry. Lloyd relaxation evens the cells into a foam.
   //  The photograph places the seeds (sampleEdge) and tints each wall.
   function buildVoronoi(rng, P, field) {
@@ -1176,11 +1176,11 @@
     return { live: false, strokes: strokes };
   }
 
-  // 15 ── HEIGHWAY DRAGON — a self-similar fractal curve via paper-folding ───────
+  // 15 ── HEIGHWAY DRAGON: a self-similar fractal curve via paper-folding ───────
   //  Fold a strip in half n times, unfold every crease to a right angle, and the
   //  dragon emerges: tiles the plane, never self-crosses. The i-th turn comes from
   //  the paper-folding sequence by a bit trick; the turtle walks INTEGER 90° dirs
-  //  (swap/negate — no trigonometry), so it re-derives bit-for-bit on any machine.
+  //  (swap/negate, no trigonometry), so it re-derives bit-for-bit on any machine.
   function buildDragon(rng, P, field) {
     var pal = P.palette;
     var iters = Math.round(clamp(pget(P, "iters", 12), 8, 14)) | 0;
@@ -1209,7 +1209,7 @@
     return { live: false, strokes: strokes };
   }
 
-  // 16 ── KOCH SNOWFLAKE — replace each edge's middle third with an outward bump ─
+  // 16 ── KOCH SNOWFLAKE: replace each edge's middle third with an outward bump ─
   //  Von Koch (1904), the first published fractal: finite area, unbounded length.
   //  Its only constants are ½ and √3/2 (no sin/cos calls), so it re-derives
   //  bit-for-bit on any machine. Starts from a regular polygon (sides), recursed
@@ -1237,7 +1237,7 @@
     var LO = 0.08, HI = 0.92, span = HI - LO, wd = (maxX - minX) || 1e-9, ht = (maxY - minY) || 1e-9;
     var scale = span / Math.max(wd, ht), ox = LO + (span - wd * scale) / 2, oy = LO + (span - ht * scale) / 2, ring = [];
     for (var rp = 0; rp < pts.length; rp++) ring.push([clamp(ox + (pts[rp][0] - minX) * scale, 0, 1), clamp(oy + (pts[rp][1] - minY) * scale, 0, 1)]);
-    var N = ring.length, RUN = 24, strokes = [], idx = 0, baseW = 0.9, baseOp = 0.95; // NOT reduced-dependent — stroke-width is witnessed, so verify (reduced) must match export
+    var N = ring.length, RUN = 24, strokes = [], idx = 0, baseW = 0.9, baseOp = 0.95; // NOT reduced-dependent: stroke-width is witnessed, so verify (reduced) must match export
     while (idx < N) {
       var end = Math.min(idx + RUN, N), run = [];
       for (var q = idx; q <= end; q++) run.push(ring[q % N]);
@@ -1249,7 +1249,7 @@
     return { live: false, strokes: strokes };
   }
 
-  // 17 ── DLA — diffusion-limited aggregation (coral · frost · mineral dendrite) ─
+  // 17 ── DLA: diffusion-limited aggregation (coral · frost · mineral dendrite) ─
   //  Witten–Sander: random walkers spawn on a ring outside the cluster and step one
   //  grid cell at a time until they touch an occupied cell, where they STICK. Growth
   //  starves the interior and races the tips. Geometry lives on an integer grid
@@ -1313,7 +1313,7 @@
     return { live: false, strokes: strokes };
   }
 
-  // 18 ── PENROSE P3 — aperiodic rhombus tiling by Robinson-triangle deflation ────
+  // 18 ── PENROSE P3: aperiodic rhombus tiling by Robinson-triangle deflation ────
   //  A "sun" of 10 Robinson triangles, deflated `iters` times in the golden ratio φ:
   //  acute and obtuse triangles each split into smaller ones. The drawn edges are
   //  the two equal legs of every final triangle, deduped so shared rhombus edges
@@ -1354,7 +1354,7 @@
       if (x0 < minX) minX = x0; if (x0 > maxX) maxX = x0; if (x1 < minX) minX = x1; if (x1 > maxX) maxX = x1;
       if (y0 < minY) minY = y0; if (y0 > maxY) maxY = y0; if (y1 < minY) minY = y1; if (y1 > maxY) maxY = y1;
     }
-    // the full Robinson-triangle tiling — every unique edge of every deflated triangle
+    // the full Robinson-triangle tiling: every unique edge of every deflated triangle
     for (var e = 0; e < tris.length; e++) {
       var E = tris[e];
       emap(E[1], E[2], E[3], E[4]); emap(E[3], E[4], E[5], E[6]); emap(E[5], E[6], E[1], E[2]);
@@ -1377,7 +1377,7 @@
     return { live: false, strokes: strokes };
   }
 
-  // 19 ── LIGHTNING / LICHTENBERG — recursive midpoint-displacement discharge ─────
+  // 19 ── LIGHTNING / LICHTENBERG: recursive midpoint-displacement discharge ─────
   //  A channel seeks ground through a dielectric: each segment splits at its midpoint,
   //  the midpoint kicked along the perpendicular by a seeded amount, each half
   //  recursing; with probability `branch` a fork peels off, dimmer and thinner. The
@@ -1420,7 +1420,7 @@
     return { live: false, strokes: strokes };
   }
 
-  // 20 ── MAURER ROSE — a rhodonea walked at fixed integer-degree strides ─────────
+  // 20 ── MAURER ROSE: a rhodonea walked at fixed integer-degree strides ─────────
   //  r = sin(n·theta) sampled by a straight-line walk every d degrees: the chords
   //  between the 360 sample points weave the Maurer lattice the smooth petals only
   //  hint at. r stays signed. A faint fine-sampled rose is laid underneath. Trig-class.
@@ -1456,7 +1456,7 @@
     return { live: false, strokes: strokes };
   }
 
-  // 21 ── CLIFFORD ATTRACTOR — deterministic chaos folding a plane ────────────────
+  // 21 ── CLIFFORD ATTRACTOR: deterministic chaos folding a plane ────────────────
   //  Iterate x'=sin(ay)+c·cos(ax), y'=sin(bx)+d·cos(by); the orbit never repeats yet
   //  never escapes. a,b are witnessed knobs; c,d are bent by the seed. Skip the
   //  transient, fit the bbox, draw as low-opacity runs so density builds the web.
@@ -1494,7 +1494,7 @@
     return { live: false, strokes: strokes };
   }
 
-  // ── FIELD STUDIES — implicit scalar fields drawn as marching-squares iso-contours ──
+  // ── FIELD STUDIES: implicit scalar fields drawn as marching-squares iso-contours ──
   // studio-engine's substrate, native to the plotter: a closed-form field f(u,v) over
   // [-1,1]^2 is sampled + contoured into strokes, so it flows through the same
   // optimise → witness → verify → SVG pipeline as every study, and is reconcile-scored.
@@ -1569,63 +1569,63 @@
 
   var STUDIES = [
     { id: "phyllotaxis", label: "Phyllotaxis", build: buildPhyllotaxis,
-      blurb: "Vogel&rsquo;s spiral &mdash; a seed every <b>golden angle</b>, radius as &radic;index. The Fibonacci arms you see are emergent, never drawn. <span class='sp'>The snail</span> lights which arms are bright." },
+      blurb: "Vogel&rsquo;s spiral: a seed every <b>golden angle</b>, radius as &radic;index. The Fibonacci arms you see are emergent, never drawn. <span class='sp'>The snail</span> lights which arms are bright." },
     { id: "flow", label: "Flow field", build: buildFlow,
       blurb: "Thousands of particles traced through warped noise and bent along the photograph&rsquo;s contours, so the specimen surfaces in the current. <span class='sp'>Every seed</span> is a different weather." },
     { id: "growth", label: "Differential growth", build: buildGrowth,
-      blurb: "A closed curve that repels itself and lengthens, folding as it goes &mdash; the buckling that curls a drying seedhead. <span class='sp'>Watch it</span> draw in real time." },
+      blurb: "A closed curve that repels itself and lengthens, folding as it goes, the buckling that curls a drying seedhead. <span class='sp'>Watch it</span> draw in real time." },
     { id: "venation", label: "Venation", build: buildVenation,
-      blurb: "Veins grow from the centre toward scattered sources, thickening with their load &mdash; the model botanists use for real leaf-veins. <span class='sp'>The mallow</span> places the sources." },
+      blurb: "Veins grow from the centre toward scattered sources, thickening with their load, the model botanists use for real leaf-veins. <span class='sp'>The mallow</span> places the sources." },
     { id: "reaction", label: "Reaction&ndash;diffusion", build: buildReaction,
-      blurb: "Gray&ndash;Scott: two chemicals feed, react and decay until <b>Turing patterns</b> set &mdash; spots, mazes, coral &mdash; drawn here as contour lines. The photograph&rsquo;s light decides which pattern forms where. <span class='sp'>Watch it</span> react. <span class='sp'>The katydids&rsquo;</span> speckle, as mathematics." },
+      blurb: "Gray&ndash;Scott: two chemicals feed, react and decay until <b>Turing patterns</b> set (spots, mazes, coral), drawn here as contour lines. The photograph&rsquo;s light decides which pattern forms where. <span class='sp'>Watch it</span> react. <span class='sp'>The katydids&rsquo;</span> speckle, as mathematics." },
     { id: "physarum", label: "Slime mould", build: buildPhysarum,
-      blurb: "Thousands of agents lay a trail and turn toward where it &mdash; and the photograph&rsquo;s light &mdash; runs strongest; the trail diffuses and decays behind them. Reinforced paths thicken into a transport network, the way <i>Physarum</i> slime mould finds the shortest route through a maze. The brightest tissue becomes the busiest road. <span class='sp'>Watch it</span> forage." },
+      blurb: "Thousands of agents lay a trail and turn toward where it (and the photograph&rsquo;s light) runs strongest; the trail diffuses and decays behind them. Reinforced paths thicken into a transport network, the way <i>Physarum</i> slime mould finds the shortest route through a maze. The brightest tissue becomes the busiest road. <span class='sp'>Watch it</span> forage." },
     { id: "boids", label: "Boids", build: buildBoids,
-      blurb: "Reynolds&rsquo; flock: each agent steers by three local rules &mdash; <b>separation</b>, <b>alignment</b>, <b>cohesion</b> &mdash; over the neighbours inside its vision, found through a grid hash. No leader, no path; the murmuration is emergent. The photograph&rsquo;s light pulls the flock toward the bright tissue. <span class='sp'>Watch it</span> school. After Reynolds, SIGGRAPH 1987." },
+      blurb: "Reynolds&rsquo; flock: each agent steers by three local rules (<b>separation</b>, <b>alignment</b>, <b>cohesion</b>) over the neighbours inside its vision, found through a grid hash. No leader, no path; the murmuration is emergent. The photograph&rsquo;s light pulls the flock toward the bright tissue. <span class='sp'>Watch it</span> school. After Reynolds, SIGGRAPH 1987." },
     { id: "orbital", label: "Orbitals", build: buildOrbital, ghost: false,
-      blurb: "The hydrogen atom solved exactly &mdash; <b>Schr&ouml;dinger&rsquo;s</b> 1926 wave equation, &psi;<sub>n,l</sub> = R<sub>nl</sub>(r)&middot;Y<sub>l0</sub>(&theta;). The squared wavefunction |&psi;|&sup2; is the electron&rsquo;s probability cloud, drawn as iso-probability contours through the nucleus. The dark gaps are real <b>nodes</b> &mdash; n&minus;l&minus;1 radial, l angular &mdash; where the electron is never found. <span class='sp'>The defaults</span> draw 3d<sub>z&sup2;</sub>, the atom&rsquo;s own geometry. <i>After Kavan (kevkev-70).</i>" },
+      blurb: "The hydrogen atom solved exactly: <b>Schr&ouml;dinger&rsquo;s</b> 1926 wave equation, &psi;<sub>n,l</sub> = R<sub>nl</sub>(r)&middot;Y<sub>l0</sub>(&theta;). The squared wavefunction |&psi;|&sup2; is the electron&rsquo;s probability cloud, drawn as iso-probability contours through the nucleus. The dark gaps are real <b>nodes</b> (n&minus;l&minus;1 radial, l angular) where the electron is never found. <span class='sp'>The defaults</span> draw 3d<sub>z&sup2;</sub>, the atom&rsquo;s own geometry. <i>After Kavan (kevkev-70).</i>" },
     { id: "hilbert", label: "Hilbert", build: buildHilbert,
-      blurb: "Hilbert&rsquo;s space-filling curve (1891): one continuous pen stroke that visits <b>every cell</b> of the plane exactly once. The whole path is pure integer arithmetic &mdash; no trigonometry, no roots &mdash; so it re-derives <b>bit-for-bit on any machine</b>: that exactness is the point. The specimen is rendered <i>as</i> the single stroke, runs tinted by the photograph&rsquo;s light." },
+      blurb: "Hilbert&rsquo;s space-filling curve (1891): one continuous pen stroke that visits <b>every cell</b> of the plane exactly once. The whole path is pure integer arithmetic (no trigonometry, no roots) so it re-derives <b>bit-for-bit on any machine</b>: that exactness is the point. The specimen is rendered <i>as</i> the single stroke, runs tinted by the photograph&rsquo;s light." },
     { id: "binomial", label: "Pascal", build: buildBinomial,
-      blurb: "The binomial theorem made visible: <b>Pascal&rsquo;s triangle</b>, C(i,j) = C(i&minus;1,j&minus;1) + C(i&minus;1,j), computed entirely <b>mod m</b>. The non-zero cells form a self-similar fractal &mdash; mod 2 is the <b>Sierpi&#324;ski gasket</b>, every modulus its own nesting. Pure integer arithmetic, so it re-derives <b>bit-for-bit on any machine</b>. The photograph tints the cells; the structure is the coefficients&rsquo; own." },
+      blurb: "The binomial theorem made visible: <b>Pascal&rsquo;s triangle</b>, C(i,j) = C(i&minus;1,j&minus;1) + C(i&minus;1,j), computed entirely <b>mod m</b>. The non-zero cells form a self-similar fractal: mod 2 is the <b>Sierpi&#324;ski gasket</b>, every modulus its own nesting. Pure integer arithmetic, so it re-derives <b>bit-for-bit on any machine</b>. The photograph tints the cells; the structure is the coefficients&rsquo; own." },
     { id: "harmonograph", label: "Harmonograph", build: buildHarmonograph,
-      blurb: "Two damped pendulums per axis &mdash; a real 19th-century drawing machine. Near-integer frequency ratios make the figure precess into a dense weave as the swing decays; no two seeds wind the same way. <span class='sp'>The specimen</span> colours the curve as it passes." },
+      blurb: "Two damped pendulums per axis, a real 19th-century drawing machine. Near-integer frequency ratios make the figure precess into a dense weave as the swing decays; no two seeds wind the same way. <span class='sp'>The specimen</span> colours the curve as it passes." },
     { id: "gosper", label: "Gosper", build: buildGosper,
-      blurb: "The flowsnake: one continuous stroke that tiles the plane in hexagons &mdash; a fractal coastline that never crosses itself. Rewriting <b>A&rarr;A-B--B+A++AA+B-</b> at 60&deg;, its six directions use only &frac12; and &radic;3/2, so it re-derives <b>bit-for-bit on any machine</b>. <span class='sp'>The specimen</span> tints each run." },
+      blurb: "The flowsnake: one continuous stroke that tiles the plane in hexagons, a fractal coastline that never crosses itself. Rewriting <b>A&rarr;A-B--B+A++AA+B-</b> at 60&deg;, its six directions use only &frac12; and &radic;3/2, so it re-derives <b>bit-for-bit on any machine</b>. <span class='sp'>The specimen</span> tints each run." },
     { id: "lsystem", label: "L&#8209;system", build: buildLSystem,
-      blurb: "A Lindenmayer system: one rewrite rule, applied to itself, grows a branching plant &mdash; the same recursive self-similarity a real fern or tree builds by. The turtle reads the rewritten string, turning by <b>sin/cos</b> at each fork; each seed jitters the branch angles, so no two plants are alike. <span class='sp'>The specimen</span> lights the canopy." },
+      blurb: "A Lindenmayer system: one rewrite rule, applied to itself, grows a branching plant, the same recursive self-similarity a real fern or tree builds by. The turtle reads the rewritten string, turning by <b>sin/cos</b> at each fork; each seed jitters the branch angles, so no two plants are alike. <span class='sp'>The specimen</span> lights the canopy." },
     { id: "voronoi", label: "Voronoi", build: buildVoronoi,
-      blurb: "A Voronoi tessellation: every point of the plane joins its nearest seed, and the borders are the cell walls &mdash; the partition a foam, a leaf&rsquo;s areoles, or a sheet of cells settles into. Built by clipping each cell against its neighbours&rsquo; bisectors, exact arithmetic. <span class='sp'>The specimen</span> places the seeds and tints the cells." },
+      blurb: "A Voronoi tessellation: every point of the plane joins its nearest seed, and the borders are the cell walls, the partition a foam, a leaf&rsquo;s areoles, or a sheet of cells settles into. Built by clipping each cell against its neighbours&rsquo; bisectors, exact arithmetic. <span class='sp'>The specimen</span> places the seeds and tints the cells." },
     { id: "dragon", label: "Dragon", build: buildDragon,
-      blurb: "The Heighway dragon: fold a strip in half the same way over and over, unfold to right angles, and a self-similar curve that tiles the plane without crossing emerges. Pure 90&deg; integer turns &mdash; no trigonometry &mdash; so it re-derives <b>bit-for-bit on any machine</b>. <span class='sp'>The specimen</span> tints the fold." },
+      blurb: "The Heighway dragon: fold a strip in half the same way over and over, unfold to right angles, and a self-similar curve that tiles the plane without crossing emerges. Pure 90&deg; integer turns (no trigonometry) so it re-derives <b>bit-for-bit on any machine</b>. <span class='sp'>The specimen</span> tints the fold." },
     { id: "koch", label: "Koch", build: buildKoch,
-      blurb: "Von Koch&rsquo;s snowflake: replace the middle third of every edge with an outward equilateral bump, recursively &mdash; a curve of finite area but unbounded length, the first published fractal (1904). Its only constants are &frac12; and &radic;3/2, so it re-derives <b>bit-for-bit on any machine</b>. <span class='sp'>The specimen</span> tints the rime." },
+      blurb: "Von Koch&rsquo;s snowflake: replace the middle third of every edge with an outward equilateral bump, recursively, into a curve of finite area but unbounded length, the first published fractal (1904). Its only constants are &frac12; and &radic;3/2, so it re-derives <b>bit-for-bit on any machine</b>. <span class='sp'>The specimen</span> tints the rime." },
     { id: "dla", label: "DLA", build: buildDLA,
-      blurb: "Witten&ndash;Sander aggregation: random walkers stick where they first touch the cluster, so growth starves the interior and races the tips &mdash; the branching of coral, frost, and mineral dendrites. Held on an integer grid, so it re-derives <b>bit-for-bit</b>. <span class='sp'>The specimen</span> tints each branch." },
+      blurb: "Witten&ndash;Sander aggregation: random walkers stick where they first touch the cluster, so growth starves the interior and races the tips, the branching of coral, frost, and mineral dendrites. Held on an integer grid, so it re-derives <b>bit-for-bit</b>. <span class='sp'>The specimen</span> tints each branch." },
     { id: "penrose", label: "Penrose", build: buildPenrose,
-      blurb: "A Penrose tiling: Robinson triangles deflated in the golden ratio &phi; cover the plane with five-fold symmetry but <em>never</em> repeat &mdash; the aperiodic order later found in real quasicrystals. The seed sun uses sin/cos, so it is deterministic, not bit-for-bit. <span class='sp'>The specimen</span> tints the tiling." },
+      blurb: "A Penrose tiling: Robinson triangles deflated in the golden ratio &phi; cover the plane with five-fold symmetry but <em>never</em> repeat, the aperiodic order later found in real quasicrystals. The seed sun uses sin/cos, so it is deterministic, not bit-for-bit. <span class='sp'>The specimen</span> tints the tiling." },
     { id: "lightning", label: "Lightning", build: buildLightning,
-      blurb: "Recursive midpoint displacement: a channel forks and jitters at every halving, the way a Lichtenberg figure or a lightning stroke seeks ground through a dielectric. The geometry is perpendicular offset and arithmetic &mdash; the only <b>sin/cos</b> is the angle each fork peels off at. <span class='sp'>The specimen</span> tints the discharge." },
+      blurb: "Recursive midpoint displacement: a channel forks and jitters at every halving, the way a Lichtenberg figure or a lightning stroke seeks ground through a dielectric. The geometry is perpendicular offset and arithmetic; the only <b>sin/cos</b> is the angle each fork peels off at. <span class='sp'>The specimen</span> tints the discharge." },
     { id: "maurer", label: "Maurer rose", build: buildMaurer,
-      blurb: "A Maurer rose: walk the rhodonea r = sin(n&theta;) in fixed-degree strides and the straight chords weave a lattice the smooth petals only hint at &mdash; order from a deliberately coarse sampling, on a curve of pure <b>sin/cos</b>. Different <em>n</em> and step give wildly different webs. <span class='sp'>The specimen</span> tints the weave." },
+      blurb: "A Maurer rose: walk the rhodonea r = sin(n&theta;) in fixed-degree strides and the straight chords weave a lattice the smooth petals only hint at, order from a deliberately coarse sampling, on a curve of pure <b>sin/cos</b>. Different <em>n</em> and step give wildly different webs. <span class='sp'>The specimen</span> tints the weave." },
     { id: "clifford", label: "Attractor", build: buildClifford,
-      blurb: "A Clifford attractor: iterate x&prime;=sin(ay)+c&middot;cos(ax), y&prime;=sin(bx)+d&middot;cos(by) and the orbit never repeats yet never escapes &mdash; deterministic chaos folding a plane into a strange attractor. <b>a</b> and <b>b</b> are yours; each seed bends <em>c,d</em> into a new creature. <span class='sp'>The specimen</span> tints the cloud." },
+      blurb: "A Clifford attractor: iterate x&prime;=sin(ay)+c&middot;cos(ax), y&prime;=sin(bx)+d&middot;cos(by) and the orbit never repeats yet never escapes: deterministic chaos folding a plane into a strange attractor. <b>a</b> and <b>b</b> are yours; each seed bends <em>c,d</em> into a new creature. <span class='sp'>The specimen</span> tints the cloud." },
     { id: "gyroid", label: "Gyroid", build: buildGyroid, ghost: false,
-      blurb: "A triply-periodic minimal surface, sliced and drawn as iso-contours &mdash; the same field a <b>studio-engine</b> generator emits, here as plottable lines. <b>Clean tiling</b> is judged against integer frequency, a property the field didn&rsquo;t choose. <span class='sp'>Pure math.</span>" },
+      blurb: "A triply-periodic minimal surface, sliced and drawn as iso-contours: the same field a <b>studio-engine</b> generator emits, here as plottable lines. <b>Clean tiling</b> is judged against integer frequency, a property the field didn&rsquo;t choose. <span class='sp'>Pure math.</span>" },
     { id: "quasicrystal", label: "Quasicrystal", build: buildQuasicrystal, ghost: false,
-      blurb: "Plane waves at evenly spaced angles interfere into an aperiodic pattern &mdash; <b>five-fold</b> order that never repeats, drawn as contours. The reconcile judges it against the five-fold ideal it didn&rsquo;t author. <span class='sp'>Pure math.</span>" },
+      blurb: "Plane waves at evenly spaced angles interfere into an aperiodic pattern: <b>five-fold</b> order that never repeats, drawn as contours. The reconcile judges it against the five-fold ideal it didn&rsquo;t author. <span class='sp'>Pure math.</span>" },
     { id: "rings", label: "Rings", build: buildRings, ghost: false,
-      blurb: "Concentric interference rings &mdash; sin of the radius, the simplest field, contoured. Judged for balance, coverage, contrast and complexity it didn&rsquo;t set. <span class='sp'>Pure math.</span>" },
+      blurb: "Concentric interference rings: sin of the radius, the simplest field, contoured. Judged for balance, coverage, contrast and complexity it didn&rsquo;t set. <span class='sp'>Pure math.</span>" },
     { id: "moire", label: "Moir&eacute;", build: buildMoire, ghost: false,
-      blurb: "Two rotated gratings multiplied &mdash; the beat pattern where they cross, drawn as contours. <span class='sp'>Pure math.</span>" },
+      blurb: "Two rotated gratings multiplied: the beat pattern where they cross, drawn as contours. <span class='sp'>Pure math.</span>" },
     { id: "flowfield", label: "Curl field", build: buildFlowfield, ghost: false,
-      blurb: "A domain-warped potential &mdash; each axis bent by a sinusoid of the other &mdash; drawn as the iso-contours of its flow. The closed-form sibling of the particle Flow field. <span class='sp'>Pure math.</span>" },
+      blurb: "A domain-warped potential (each axis bent by a sinusoid of the other) drawn as the iso-contours of its flow. The closed-form sibling of the particle Flow field. <span class='sp'>Pure math.</span>" },
     { id: "turbulence", label: "Turbulence", build: buildTurbulence, ghost: false,
-      blurb: "Fractal Brownian motion: octaves of a sinusoidal basis summed at doubling frequency and halving amplitude &mdash; the self-similar roughness of smoke and cloud, drawn as contours. <span class='sp'>Pure math.</span>" },
+      blurb: "Fractal Brownian motion: octaves of a sinusoidal basis summed at doubling frequency and halving amplitude, the self-similar roughness of smoke and cloud, drawn as contours. <span class='sp'>Pure math.</span>" },
     { id: "metaballs", label: "Metaballs", build: buildMetaballs, ghost: false,
       blurb: "Inverse-square charges summed into a smooth potential; the iso-contours are the classic blobby threshold where the fields merge. Each seed re-places the charges. <span class='sp'>Pure math.</span>" },
     { id: "live", label: "Live &middot; camera", build: null,
-      blurb: "The camera as a real organ &mdash; particles stream along the edges it senses, live." }
+      blurb: "The camera as a real organ: particles stream along the edges it senses, live." }
   ];
   var SPECIMENS = [
     { id: "none", label: "Pure math", src: null }
@@ -1667,7 +1667,7 @@
 
   // ── advanced studio render: the same witnessed lines, rendered with depth ─────
   // paintRich draws ONLY to the screen canvas. It never touches finalStrokes,
-  // optimizeForPlot, hashOpt or plotSVG — so the exported plot and its SHA-256
+  // optimizeForPlot, hashOpt or plotSVG, so the exported plot and its SHA-256
   // witness are byte-identical to before. Screen = an inked, luminous reading of
   // the plot; the plot itself stays the clean single-stroke pen file.
   var GHOST_CACHE = {}, GHOST_GID = 0;
@@ -1682,7 +1682,7 @@
     var lo = hexToRgb(pal[0]), hi = hexToRgb(pal[pal.length - 1]);
     for (var y = 0; y < G; y++) for (var x = 0; x < G; x++) {
       var l = clamp(field.lum((x + 0.5) / G, (y + 0.5) / G), 0, 1);
-      var sh = l * l * (3 - 2 * l); // smoothstep — let highlights carry the form
+      var sh = l * l * (3 - 2 * l); // smoothstep, let highlights carry the form
       var i = (y * G + x) * 4;
       d[i] = lerp(lo[0], hi[0], sh); d[i + 1] = lerp(lo[1], hi[1], sh);
       d[i + 2] = lerp(lo[2], hi[2], sh); d[i + 3] = Math.round(255 * (0.15 + 0.85 * sh));
@@ -1694,7 +1694,7 @@
     ctx.clearRect(0, 0, W, H);
     var inner = Math.min(W, H) * (1 - 2 * MARGIN), offx = (W - inner) / 2, offy = (H - inner) / 2;
     var wScale = inner / 1000;
-    // 1 — perceived-field ghost: the specimen the algorithm actually read, faint behind the art
+    // 1. perceived-field ghost: the specimen the algorithm actually read, faint behind the art
     var ghost = fieldGhost(field, palId);
     if (ghost) {
       ctx.save();
@@ -1704,7 +1704,7 @@
       ctx.drawImage(ghost, offx, offy, inner, inner);
       ctx.restore();
     }
-    // 2 — the lines, twice: a wide additive bloom for luminous depth, then crisp ink on top
+    // 2. the lines, twice: a wide additive bloom for luminous depth, then crisp ink on top
     ctx.lineCap = "round"; ctx.lineJoin = "round";
     function pass(widthMul, alphaMul, comp) {
       ctx.globalCompositeOperation = comp;
@@ -1720,7 +1720,7 @@
         ctx.stroke();
       }
     }
-    pass(3.6, 0.16, "lighter");    // halo — overlaps build warmth, the organic glow
+    pass(3.6, 0.16, "lighter");    // halo: overlaps build warmth, the organic glow
     pass(1.0, 1.0, "source-over"); // crisp pen line
     ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
   }
@@ -1751,7 +1751,7 @@
 
   // ── plot optimisation: segment soup → clean, ordered, continuous pen paths ───
   // The thesis applied to the tool's own output: don't ship "good enough" line
-  // soup — stitch shared endpoints into continuous strokes, simplify, order to
+  // soup. Stitch shared endpoints into continuous strokes, simplify, order to
   // minimise pen-up travel, and account for exactly what changed.
   function ptKey(p) { return (Math.round(p[0] * 1e5)) + "," + (Math.round(p[1] * 1e5)); }
   function stitch(polys) {
@@ -1877,8 +1877,8 @@
     var root = document.getElementById("atelier");
     if (!root) return;
     // canvas lookup (option a): prefer the Atelier's own canvas; on the unified Studio
-    // page there is no #at-canvas, so fall back to the shared subject canvas #studio-canvas
-    // — so the Atelier draws into the one canvas the eye perceives. Minimal, non-destructive.
+    // page there is no #at-canvas, so fall back to the shared subject canvas #studio-canvas,
+    // so the Atelier draws into the one canvas the eye perceives. Minimal, non-destructive.
     var canvas = document.getElementById("at-canvas") || document.getElementById("studio-canvas");
     if (!canvas || !canvas.getContext) {
       var nj = document.getElementById("at-nojs"); if (nj) nj.hidden = false; return;
@@ -1887,7 +1887,7 @@
     var reduced = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
     // ── pointer-reactive play: a live cursor-perturbed particle flow over the art ─
-    // Screen-only — never touches finalStrokes or the export. The settled drawing is
+    // Screen-only: never touches finalStrokes or the export. The settled drawing is
     // cached into playBuf; particles advect along curl-noise and are dragged/repelled
     // by the cursor, leaving luminous additive trails over the cached art, then it
     // restores clean. Off under reduced-motion and on coarse (touch) pointers.
@@ -1914,13 +1914,13 @@
         } catch (e) { if (window.console) console.warn("[reconcile]", e); }
       }
       // canvas→eye bridge (Task 7): announce the settled, fully-painted canvas so the
-      // Studio's eye can perceive it. finalPaint is render()'s true paint chokepoint —
+      // Studio's eye can perceive it. finalPaint is render()'s true paint chokepoint:
       // every settled path (reduced-motion, the reveal RAF, and live-algorithm settle)
       // funnels through here after the canvas is actually drawn, unlike render()'s text
       // end which returns before the async reveal paints. Wrapped: CustomEvent unsupported
       // or no listener must never break a drawing.
       try { document.dispatchEvent(new CustomEvent("atelier:drawn", { detail: { canvas: canvas } })); }
-      catch (e) { /* CustomEvent unsupported — non-fatal */ }
+      catch (e) { /* CustomEvent unsupported, non-fatal */ }
     }
     function blitBase() { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.drawImage(playBuf, 0, 0); }
     function playReset() { playActive = false; playFade = 0; playP = null; playReady = false; if (playRaf) { cancelAnimationFrame(playRaf); playRaf = 0; } }
@@ -1945,7 +1945,7 @@
         var nx = x + vx, ny = y + vy;
         life -= 0.011;
         if (life <= 0 || nx < 0 || nx > playW || ny < 0 || ny > playH) {
-          // respawn — jump without drawing the long connecting streak
+          // respawn: jump without drawing the long connecting streak
           if (playActive && Math.random() < 0.5) { nx = playCur.x + (Math.random() - 0.5) * 90; ny = playCur.y + (Math.random() - 0.5) * 90; }
           else { nx = Math.random() * playW; ny = Math.random() * playH; }
           playP[b] = nx; playP[b + 1] = ny; playP[b + 2] = 0.4 + Math.random() * 0.6;
@@ -1990,7 +1990,7 @@
       if (!gateEl) return;
       var cls = decision === "allow" ? "g-allow" : (decision === "deny" ? "g-deny" : "g-needs");
       var label = decision === "allow" ? "ALLOW" : (decision === "deny" ? "DENY" : "NEEDS-HUMAN");
-      gateEl.innerHTML = '<b class="' + cls + '">gate &middot; ' + label + "</b> &mdash; " + text;
+      gateEl.innerHTML = '<b class="' + cls + '">gate &middot; ' + label + "</b>: " + text;
     }
     function studyById(id) { for (var i = 0; i < STUDIES.length; i++) if (STUDIES[i].id === id) return STUDIES[i]; return STUDIES[0]; }
     function specimenById(id) { for (var i = 0; i < SPECIMENS.length; i++) if (SPECIMENS[i].id === id) return SPECIMENS[i]; return SPECIMENS[0]; }
@@ -2110,13 +2110,13 @@
         { k: "action-in-scope", v: "pass", msg: "export is an allowed action" }
       ]);
       if (gate.decision !== "allow") {
-        gateMsg(gate.decision, finalStrokes.length ? "the drawing hasn&rsquo;t settled &mdash; let it finish, then export" : "draw something first");
+        gateMsg(gate.decision, finalStrokes.length ? "the drawing hasn&rsquo;t settled, so let it finish, then export" : "draw something first");
         return; // the act is earned, not assumed
       }
       // gate allowed → act: optimise, then witness (EMET) and write
       var opt = optimizeForPlot(snapToPalette(finalStrokes, state.palette), { tol: 0.0007 });
       var st = opt.stats, cut = st.travelBefore > 0 ? Math.round((1 - st.travelAfter / st.travelBefore) * 100) : 0;
-      // EMET's move, via the shared spine: SHA-256 the geometry — the same digest the witness ships
+      // EMET's move, via the shared spine: SHA-256 the geometry, the same digest the witness ships
       Spine.witness(geomBody(plotSVG(opt, ""))).then(function (witness) {
         witness = witness || "unavailable";
         var shortW = witness.slice(0, 12);
@@ -2139,7 +2139,7 @@
         document.body.appendChild(a); a.click(); document.body.removeChild(a);
         setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
         status(st.pathsOut + " paths · −" + cut + "% pen travel · witness " + shortW + "…");
-        gateMsg("allow", "settled, witnessed, and written &mdash; <span class=\"gmono\">" + shortW + "&hellip;</span>");
+        gateMsg("allow", "settled, witnessed, and written: <span class=\"gmono\">" + shortW + "&hellip;</span>");
         if (window.Reconcile && lastVerdict) Reconcile.remember(lastVerdict.features); // the saved work grounds future novelty
       });
     }
@@ -2154,7 +2154,7 @@
     // render the witness verdict AND the proof-surface gate composing on its checks
     function gClass(d) { return d === "allow" ? "g-allow" : (d === "deny" ? "g-deny" : "g-needs"); }
     function gLabel(d) { return d === "allow" ? "ALLOW" : (d === "deny" ? "DENY" : "NEEDS-HUMAN"); }
-    function gSub(d) { return d === "allow" ? "accept as authentic seeded work" : (d === "deny" ? "reject — provenance failed" : "manual review — nothing to check"); }
+    function gSub(d) { return d === "allow" ? "accept as authentic seeded work" : (d === "deny" ? "reject: provenance failed" : "manual review: nothing to check"); }
     function checkClass(v) { return v === "pass" ? "ok" : (v === "deny" ? "bad" : "lt"); }
     function renderVerdict(cls, label, detail, checks, gate) {
       if (!verdictEl) return;
@@ -2204,7 +2204,7 @@
       state.params = defParams(state.study);
       var pm = p.get("params"); if (pm) { var pp = parseParamStr(state.study, pm); for (var pk in pp) state.params[pk] = pp[pk]; }
     }
-    // a curated strip spanning every study, specimen and pen-set — a quick start
+    // a curated strip spanning every study, specimen and pen-set: a quick start
     // and an honest showcase of range; each is itself a shareable, witnessed recipe
     var GALLERY = [
       { label: "Whorl", study: "phyllotaxis", specimen: "none", palette: "spectrum", seed: "nautilus", cx: 62 },
@@ -2235,7 +2235,7 @@
       var meta = parsePlotMeta(text);
       var noProv = [{ k: "provenance", v: "unknown", msg: "no seed and witness to check against" }];
       if (!meta.study || !meta.seed || !meta.complexity || !meta.palette || !meta.witness) {
-        renderVerdict("v-unver", "UNVERIFIABLE", "No re-derivable seed and witness in this file &mdash; not a pass, not a fail. Export a drawing from this page to get one.", noProv, Spine.gate(noProv)); return;
+        renderVerdict("v-unver", "UNVERIFIABLE", "No re-derivable seed and witness in this file, so it is not a pass, not a fail. Export a drawing from this page to get one.", noProv, Spine.gate(noProv)); return;
       }
       var st = studyById(meta.study);
       if (st.id !== meta.study) { renderVerdict("v-unver", "UNVERIFIABLE", "This file names an algorithm this build does not have (" + meta.study + ").", noProv, Spine.gate(noProv)); return; }
@@ -2265,9 +2265,9 @@
           if (untampered && authentic) {
             renderVerdict("v-match", "MATCH", "Re-derived from seed <b>" + esc(meta.seed) + "</b>; the SHA-256 of the geometry matches the file. <span class=\"mono\">" + short + "&hellip;</span>", checks, gate);
           } else if (!authentic) {
-            renderVerdict("v-drift", "DRIFT", "The seed does not reproduce this drawing &mdash; a different build, or the paths were edited. Re-derives to <span class=\"mono\">" + (reHash || "").slice(0, 12) + "&hellip;</span>, file states <span class=\"mono\">" + short + "&hellip;</span>.", checks, gate);
+            renderVerdict("v-drift", "DRIFT", "The seed does not reproduce this drawing, so it is a different build, or the paths were edited. Re-derives to <span class=\"mono\">" + (reHash || "").slice(0, 12) + "&hellip;</span>, file states <span class=\"mono\">" + short + "&hellip;</span>.", checks, gate);
           } else {
-            renderVerdict("v-drift", "DRIFT", "The file&rsquo;s paths no longer hash to its stated witness &mdash; it was altered after export.", checks, gate);
+            renderVerdict("v-drift", "DRIFT", "The file&rsquo;s paths no longer hash to its stated witness; it was altered after export.", checks, gate);
           }
         });
         state.study = meta.study; state.specimen = sid; state.seed = meta.seed; state.complexity = P.complexity; state.palette = pid;
@@ -2285,11 +2285,11 @@
       reader.readAsText(file);
     }
 
-    // ── SENSES: live camera perception — measured ground-truth, no models ──────
+    // ── SENSES: live camera perception, measured ground-truth, no models ──────
     // Each frame is read as luminance + Sobel edges + motion; particles stream
     // ALONG what the camera sees. Live perception is not reproducible (the world
     // isn't), so "Capture" freezes the sensed field into a deterministic,
-    // witnessed specimen — bridging real sensing to the accountable pipeline.
+    // witnessed specimen, bridging real sensing to the accountable pipeline.
     var dynamicFields = {}; // upload / captured fields, drawn like any specimen
     var SW = 144, SH = 108;
     var live = { tok: 0, active: false, stream: null, video: null, dg: null, raf: 0, lum: null, prev: null, edge: null, eang: null, motion: null, parts: null, overlay: false, energy: 0 };
@@ -2309,8 +2309,8 @@
       ctx.clearRect(0, 0, W, H);
       if (seedtagEl) seedtagEl.textContent = "live · camera";
       status("waking the camera…");
-      gateMsg("needs-human", "live perception &mdash; capture a frame to make it accountable");
-      if (blurbEl) blurbEl.innerHTML = "<b>The senses.</b> The camera is a real organ: each frame is read as luminance and Sobel edges, and particles stream <span class='sp'>along</span> what it sees &mdash; measured ground-truth, no model, nothing inferred. Move, and the drawing moves. Hit <b>Capture</b> to freeze the sensed field into a deterministic, witnessed specimen.";
+      gateMsg("needs-human", "live perception: capture a frame to make it accountable");
+      if (blurbEl) blurbEl.innerHTML = "<b>The senses.</b> The camera is a real organ: each frame is read as luminance and Sobel edges, and particles stream <span class='sp'>along</span> what it sees, measured ground-truth, no model, nothing inferred. Move, and the drawing moves. Hit <b>Capture</b> to freeze the sensed field into a deterministic, witnessed specimen.";
       var n = SW * SH;
       live.lum = new Float32Array(n); live.prev = new Float32Array(n); live.edge = new Float32Array(n); live.eang = new Float32Array(n); live.motion = new Float32Array(n);
       var dc = document.createElement("canvas"); dc.width = SW; dc.height = SH;
@@ -2331,7 +2331,7 @@
         live.raf = requestAnimationFrame(frame);
       }).catch(function (err) {
         status("camera blocked: " + (err && err.name ? err.name : "error"));
-        gateMsg("deny", "no camera access &mdash; sensing needs permission");
+        gateMsg("deny", "no camera access; sensing needs permission");
       });
     }
     function sense(v) {

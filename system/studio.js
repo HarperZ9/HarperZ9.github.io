@@ -1,4 +1,4 @@
-// studio.js — the unified Studio: one canvas, two ways in (Generate via the Atelier, or Bring your own),
+// studio.js: the unified Studio. One canvas, two ways in (Generate via the Atelier, or Bring your own),
 // then perceive/discuss/transform/refine with the model. Bridges the Atelier's canvas to the eye.
 import { perceptualHash, features, hamming } from "../shared-frame/eye.js";
 import { representation, richFeatures, describeFrame, rmsFromBytes, spectrumBands, dominantPitchHz, assembleFullPerception } from "./sense.js";
@@ -22,7 +22,7 @@ let activeSource = "atelier";
 
 // ── Quality state (Task 8g) ───────────────────────────────────────────────────
 // Standard: maxBacking=1600 (crisp on typical 1-2× displays, fast for per-pixel fractals).
-// High:     maxBacking=2400 (sharper on large/3× displays, slower — user opt-in).
+// High:     maxBacking=2400 (sharper on large/3× displays, slower, user opt-in).
 const QUALITY_LEVELS = {
   standard: { label: "Standard", maxBacking: 1600, iterMult: 1 },
   high:     { label: "High",     maxBacking: 2400, iterMult: 1.5 },
@@ -31,7 +31,7 @@ let qualityKey = "standard";
 function currentQuality() { return QUALITY_LEVELS[qualityKey]; }
 // Shared helper: size the canvas to the current quality level and return backing dims.
 // The canvas CSS size is determined by its container (.viewport-stage, max-width:100%), NOT by the
-// canvas.width attribute itself — so we read the parent's bounding rect to get the true display size.
+// canvas.width attribute itself, so we read the parent's bounding rect to get the true display size.
 function sizeCanvas(canvas) {
   // Prefer the parent's layout size (the constraining container), falling back to the canvas rect.
   const parent = canvas.parentElement;
@@ -68,7 +68,7 @@ const SOURCES = {
 
 function setSource(next) {
   if (!SOURCES[next]) return;
-  // Leaving the current source: stop anything it had running. Guard the calls — some are defined
+  // Leaving the current source: stop anything it had running. Guard the calls, since some are defined
   // later in the module (hoisted function declarations), so they're safe to call from here.
   if (next !== activeSource) {
     leave3D();          // restore the 2D canvas if a WebGL orbit was mounted
@@ -103,7 +103,7 @@ $("studio-source").addEventListener("keydown", e => {
   tabs[j].focus(); setSource(tabs[j].dataset.source);
 });
 
-// A 2D canvas can only ever yield a 2D context, and a WebGL canvas only WebGL — a canvas binds
+// A 2D canvas can only ever yield a 2D context, and a WebGL canvas only WebGL. A canvas binds
 // permanently to its first context type. The 3D-fractal source paints #studio-canvas via WebGL,
 // so getContext("2d") on it would return null. readPixelData() reads RGBA either way: directly
 // for a 2D canvas, or by blitting the (WebGL) canvas through a 2D scratch canvas with drawImage
@@ -139,7 +139,7 @@ function perceive(canvas) {
 }
 
 function say(role, text) {
-  // build the message from nodes — role + text via .textContent only, never interpolated
+  // build the message from nodes: role + text via .textContent only, never interpolated
   // into innerHTML (Task 6 review carry-in: no markup injection through role/text).
   const log = $("studio-log"); const el = document.createElement("div");
   el.className = "msg " + role;
@@ -173,12 +173,12 @@ function buildPresetMenu(ftype) {
   });
 }
 
-// Default starting framing for the active fractal view — used by Reset view.
+// Default starting framing for the active fractal view, used by Reset view.
 let fractalDefault = null;
 
 // Paint the current fractalView into #studio-canvas. GPU when available (mounting a fresh GL canvas
 // the first time, mirroring the 3D source's canvas swap), else CPU (progressive coarse→refine on the
-// original 2D node). Does NOT perceive or chat — callers decide whether to perceive (interaction
+// original 2D node). Does NOT perceive or chat; callers decide whether to perceive (interaction
 // frames perceive via the live meter loop; settle frames perceive once). Returns the canvas drawn.
 let _cpuRefineRaf = 0;
 function paintFractal(opts) {
@@ -195,7 +195,7 @@ function paintFractal(opts) {
       renderFractalGL(c, { ...opts, maxIter });
       return c;
     } catch (e) {
-      // GPU failed at runtime — fall back to CPU on the original 2D canvas.
+      // GPU failed at runtime: fall back to CPU on the original 2D canvas.
       leave3D();
     }
   }
@@ -239,13 +239,13 @@ function renderPreset() {
   const obs = perceive(canvas);
   const typeLabel = { mandelbrot: "Mandelbrot set", julia: "Julia set", burningship: "Burning Ship" }[fractalView.type] || fractalView.type;
   const detail = obs.features.entropy > 0.8
-    ? "dense filament detail — the boundary is alive here"
+    ? "dense filament detail, the boundary is alive here"
     : obs.features.entropy < 0.45
       ? "clean, spacious regions with a calm centre"
       : "a mix of open field and fine boundary structure";
   const fcol = (obs.rich && obs.rich.dominantColors || []).slice(0, 3).join(", ");
   say("model",
-    `${fractalView.name} — a ${typeLabel} at scale ${fractalView.scale}. `
+    `${fractalView.name}, a ${typeLabel} at scale ${fractalView.scale}. `
     + `I fingerprinted it at ${obs.phash}; it reads as ${detail}`
     + (fcol ? `, dominated by ${obs.rich.hueName} (${fcol})` : ``) + `. `
     + `Max iterations: ${fractalView.maxIter}. `
@@ -255,7 +255,7 @@ function renderPreset() {
   startMeterLoop();   // refresh the measurimeter, then self-idle (static fractal)
 }
 
-// Wire type chips — filter presets by type when chip is clicked
+// Wire type chips: filter presets by type when chip is clicked
 document.querySelectorAll("[data-ftype]").forEach(btn => {
   btn.addEventListener("click", () => {
     activeFType = btn.dataset.ftype;
@@ -267,7 +267,7 @@ document.querySelectorAll("[data-ftype]").forEach(btn => {
 // ── Interactive 2D camera (Task 8n): wheel-zoom-toward-cursor + drag-pan, rAF-throttled, GPU-fast.
 // Re-renders the transient fractalView in real time (never PRESETS). Touch: pinch-zoom + drag.
 // Bound on the stable .stage container (delegated) because the GL/CPU canvas node is swapped on
-// source/mode changes — a listener on the node would be lost.
+// source/mode changes, a listener on the node would be lost.
 const fStage = $("studio-canvas").closest(".stage");
 let _fractalRaf = 0, _fractalDirty = false;
 
@@ -285,7 +285,7 @@ function fractalPointToComplex(clientX, clientY, canvas, rect) {
 
 // Schedule a throttled re-render of the current fractalView (coalesces rapid wheel/drag events to
 // one paint per animation frame). Perception streams via the live meter loop, so we don't perceive
-// here every frame — we ensure the loop is running so #sc-phash + the meters keep updating.
+// here every frame; we ensure the loop is running so #sc-phash + the meters keep updating.
 function scheduleFractalRender() {
   _fractalDirty = true;
   if (_fractalRaf) return;
@@ -365,7 +365,7 @@ fStage.addEventListener("click", e => {
   paintFractal(fractalView);
   const obs = perceive(canvas);
   say("model",
-    `Zoomed in — now at (${fractalView.cx.toFixed(8)}, ${fractalView.cy.toFixed(8)}), scale ${fractalView.scale.toExponential(2)}. `
+    `Zoomed in. Now at (${fractalView.cx.toFixed(8)}, ${fractalView.cy.toFixed(8)}), scale ${fractalView.scale.toExponential(2)}. `
     + `Fingerprint: ${obs.phash}. Scroll or click to keep diving.`
   );
   startMeterLoop();
@@ -425,7 +425,7 @@ buildPresetMenu(activeFType);
 
 // ── 3D fractal source (Task 7c) ─────────────────────────────────────────────
 // A WebGL1 raymarcher (system/fractal3d.js) paints the shared canvas, then the eye perceives one
-// settled frame. A canvas binds permanently to its FIRST context type — and the Atelier (atelier.js)
+// settled frame. A canvas binds permanently to its FIRST context type, and the Atelier (atelier.js)
 // already claimed a 2D context on #studio-canvas at boot and cached it in a closure. So WebGL can't
 // bind to that element. The fix: keep the original Atelier-owned canvas aside; when entering 3D,
 // detach it and mount a fresh GL canvas in its place; when leaving 3D, REMOUNT the original node
@@ -435,7 +435,7 @@ let stop3d = null;              // the 3D orbit's .stop (legacy name kept; set f
 let fractal3dHandle = null;     // the FULL render3D handle (camera controls + stop), Task 8n
 let canvasIsGL = false;         // a fresh GL canvas is mounted (3D orbit OR 2D GPU fractal), not the 2D node
 let glFractal2D = false;        // the mounted GL canvas is showing a 2D GPU fractal (Task 8n)
-const originalCanvas = $("studio-canvas");   // the Atelier-bound 2D node — never destroyed
+const originalCanvas = $("studio-canvas");   // the Atelier-bound 2D node, never destroyed
 
 // Mount a fresh GL-capable canvas in place of whatever #studio-canvas currently is. Returns it.
 // The original node is only detached (kept in originalCanvas), never discarded.
@@ -457,7 +457,7 @@ function leave3D() {
   if (stop3d) { stop3d(); stop3d = null; }
   fractal3dHandle = null;
   if (canvasIsGL) {
-    stopMeterLoop();   // the orbit/stream is gone — stop streaming
+    stopMeterLoop();   // the orbit/stream is gone, stop streaming
     const glCanvas = $("studio-canvas");   // the GL canvas being discarded
     glCanvas.replaceWith(originalCanvas);   // remount the intact 2D node
     // Release the WebGL context to prevent resource leaks when cycling sources (browsers cap ~16 contexts).
@@ -483,11 +483,11 @@ function render3DInto(opts) {
     fractal3dHandle = render3D(c, opts);
     stop3d = fractal3dHandle.stop;
     canvasIsGL = true;
-    startMeterLoop();   // the orbit animates — stream the meters so the hash changes as it turns
+    startMeterLoop();   // the orbit animates, stream the meters so the hash changes as it turns
   } catch (e) {
     // WebGL unavailable: restore the 2D canvas and show the friendly fallback.
     leave3D();
-    say("model", "3D fractals need WebGL in your browser — try the 2D fractals or the Atelier.");
+    say("model", "3D fractals need WebGL in your browser. Try the 2D fractals or the Atelier.");
     return;
   }
   // Perceive one frame once the first paint has settled (~200ms): a couple of orbit frames in.
@@ -498,8 +498,8 @@ function render3DInto(opts) {
     const label = opts.type === "mandelbulb" ? "Mandelbulb" : "Mandelbox";
     const col3 = (obs.rich && obs.rich.dominantColors || []).slice(0, 3).join(", ");
     say("model",
-      `A raymarched ${label}, lit in 3D and slowly orbiting. I read it at ${obs.phash} — ${relief}`
-      + (col3 ? `, in ${obs.rich.hueName} (${col3})` : ``) + `. The measurimeter is live — watch the hash move as it turns. `
+      `A raymarched ${label}, lit in 3D and slowly orbiting. I read it at ${obs.phash}: ${relief}`
+      + (col3 ? `, in ${obs.rich.hueName} (${col3})` : ``) + `. The measurimeter is live, so watch the hash move as it turns. `
       + `Nudge the ${opts.type === "mandelbulb" ? "power" : "scale"} or iterations and re-render, or I can take a turn.`);
   }, 200);
 }
@@ -612,9 +612,9 @@ fStage.addEventListener("touchcancel", end3dTouch, { passive: true });
 // so the original 2D canvas is remounted before fractal.js / the Atelier query getContext("2d").
 $("fractal-render").addEventListener("click", leave3D, true);
 if ($("at-draw")) $("at-draw").addEventListener("click", leave3D, true);
-// (Switching sources also stops the orbit + restores the 2D canvas — folded into setSource() above.)
+// (Switching sources also stops the orbit + restores the 2D canvas, folded into setSource() above.)
 
-// ── Dimensions source (Task 8p) — animated n-dimensional hypercube renderer ──
+// ── Dimensions source (Task 8p): animated n-dimensional hypercube renderer ──
 // Renders 1D–10D hypercubes into the shared #studio-canvas (plain 2D context, no WebGL swap).
 // Each frame: build vertices, apply time-varying Givens rotations on multiple planes, project to 2D,
 // draw edges with depth-based opacity. The live meter loop streams the perceptual readout.
@@ -688,7 +688,7 @@ function drawNDimFrame(canvas, n, t, speed, kind, projection) {
     ctx.save();
     ctx.lineWidth = lineW;
 
-    // Draw edges — color + opacity from depth cue provided by renderScene.
+    // Draw edges: color + opacity from depth cue provided by renderScene.
     for (const seg of scene.segments) {
       const [r, g, b] = seg.color;
       ctx.strokeStyle = `rgba(${r},${g},${b},${seg.opacity.toFixed(3)})`;
@@ -698,7 +698,7 @@ function drawNDimFrame(canvas, n, t, speed, kind, projection) {
       ctx.stroke();
     }
 
-    // Draw vertices as filled arcs — size + color from depth cue.
+    // Draw vertices as filled arcs: size + color from depth cue.
     for (const pt of scene.points) {
       const [r, g, b] = pt.color;
       ctx.fillStyle = `rgba(${r},${g},${b},${pt.opacity.toFixed(3)})`;
@@ -744,7 +744,7 @@ function startNDimAnimation() {
       const vertices = meta ? meta.vertices : "?";
       const edges    = meta ? meta.edges    : "?";
       say("model",
-        `A rotating ${effectiveN}D ${kindLabel} — ${vertices} vertices and ${edges} edges, `
+        `A rotating ${effectiveN}D ${kindLabel}: ${vertices} vertices and ${edges} edges, `
         + `projected through ${/^[aeiou]/i.test(projection) ? "an" : "a"} ${projection} lens. `
         + `Fingerprint: ${obs.phash}.`
       );
@@ -810,13 +810,13 @@ document.addEventListener("atelier:drawn", e => {
     + `${obs.features.contrast>0.66?"high-contrast":"soft"}`
     + (acol ? `, dominated by ${obs.rich.hueName} (${acol})` : ``)
     + `. My fingerprint of it is ${obs.phash}. Where shall we take it?`);
-  startMeterLoop();   // a static generated frame — the loop runs briefly then self-idles
+  startMeterLoop();   // a static generated frame; the loop runs briefly then self-idles
 });
 
 // ── BYO mode (Task 8) ─────────────────────────────────────────────────────
-// "Bring your own" — upload a photo/gif/video onto the shared #studio-canvas,
+// "Bring your own": upload a photo/gif/video onto the shared #studio-canvas,
 // then transform it taking turns with the model. Reuses perceive() and say()
-// from the orchestrator above (same module scope — no duplication).
+// from the orchestrator above (same module scope, no duplication).
 
 function byoCanvas() { return $("studio-canvas"); }
 function byoCtx() { return byoCanvas().getContext("2d", { willReadFrequently: true }); }
@@ -870,7 +870,7 @@ function loadFile(file) {
       });
       startMeterLoop();
       const sw = (obs.rich && obs.rich.dominantColors || []).slice(0, 3).join(", ");
-      say("model", "Loaded a video — " + describeFrame(obs.rich) + (sw ? " Dominant: " + sw + "." : "")
+      say("model", "Loaded a video. " + describeFrame(obs.rich) + (sw ? " Dominant: " + sw + "." : "")
         + " The meters stream as it plays.");
     }, { once: true });
     return;
@@ -880,9 +880,9 @@ function loadFile(file) {
     drawSource(img, img.naturalWidth, img.naturalHeight);
     const obs = perceive(byoCanvas());
     const sw = (obs.rich && obs.rich.dominantColors || []).slice(0, 3).join(", ");
-    say("model", `I see your image — ${obs.width}×${obs.height}. ${describeFrame(obs.rich)}`
+    say("model", `I see your image, ${obs.width}×${obs.height}. ${describeFrame(obs.rich)}`
       + (sw ? ` Dominant: ${sw}.` : ``) + ` Fingerprint ${obs.phash}. Let's reshape it together.`);
-    startMeterLoop();   // a still image — the loop runs briefly then self-idles
+    startMeterLoop();   // a still image; the loop runs briefly then self-idles
     URL.revokeObjectURL(url);
   };
   img.src = url;
@@ -1102,13 +1102,13 @@ function sampleFrame() {
       else driftNote = "nearly the same";
     }
   }
-  say("model", driftNote + " — fingerprint " + obs.phash + ", contrast " + fmt(obs.features.contrast) + ", structure " + fmt(obs.features.entropy) + ".");
+  say("model", driftNote + ". Fingerprint " + obs.phash + ", contrast " + fmt(obs.features.contrast) + ", structure " + fmt(obs.features.entropy) + ".");
 }
 
 async function startCapture(mode) {
   stopWatch(); // clean up any previous session
   try {
-    // Request audio too — tab/system audio on screen share, the mic on camera — so the audio meters
+    // Request audio too (tab/system audio on screen share, the mic on camera) so the audio meters
     // have a real source when the user opts to share it. The browser still gates each with a prompt.
     const stream = mode === "screen"
       ? await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true })
@@ -1129,14 +1129,14 @@ async function startCapture(mode) {
     say("model", (mode === "screen"
       ? "I can see your screen now."
       : "Camera is live.")
-      + (hasAudio ? " I can hear it too — the audio meters are live." : "")
+      + (hasAudio ? " I can hear it too, and the audio meters are live." : "")
       + " The measurimeter is streaming. Hit 'See this moment' for a snapshot reading.");
   } catch (err) {
     const msg = err && err.name === "NotAllowedError"
-      ? "your browser blocked it — you can still upload a file in the drop zone above."
+      ? "your browser blocked it. You can still upload a file in the drop zone above."
       : err && err.name === "NotSupportedError"
-        ? "screen / camera capture isn't supported in this browser — you can still upload a file."
-        : "couldn't start the capture (" + (err && err.message ? err.message : String(err)) + ") — try uploading a file instead.";
+        ? "screen / camera capture isn't supported in this browser. You can still upload a file."
+        : "couldn't start the capture (" + (err && err.message ? err.message : String(err)) + "). Try uploading a file instead.";
     say("model", msg);
   }
 }
@@ -1149,13 +1149,13 @@ if ($("watch-camera")) {
 }
 if ($("watch-snap")) {
   $("watch-snap").addEventListener("click", () => {
-    if (!watchStream) { say("model", "No active capture — share your screen or camera first."); return; }
+    if (!watchStream) { say("model", "No active capture. Share your screen or camera first."); return; }
     sampleFrame();
   });
 }
 if ($("watch-toggle")) {
   $("watch-toggle").addEventListener("click", () => {
-    if (!watchStream) { say("model", "No active capture — share your screen or camera first."); return; }
+    if (!watchStream) { say("model", "No active capture. Share your screen or camera first."); return; }
     watchActive = !watchActive;
     $("watch-toggle").setAttribute("aria-pressed", String(watchActive));
     if (watchActive) {
@@ -1172,7 +1172,7 @@ if ($("watch-stop")) {
   $("watch-stop").addEventListener("click", stopWatch);
 }
 
-// (Switching sources releases the capture stream + any played video and stops streaming — folded
+// (Switching sources releases the capture stream + any played video and stops streaming, folded
 //  into setSource() above, so it fires for every source change, not just the old 2-way mode switch.)
 
 // Expose for tests
@@ -1181,7 +1181,7 @@ window.__studioStartCapture = startCapture;
 window.__studioSampleFrame = sampleFrame;
 
 // ══ The MEASURIMETER (Task 8d) ═══════════════════════════════════════════════
-// A live instrument panel of every channel the tooling feeds the model — the faithful n×n
+// A live instrument panel of every channel the tooling feeds the model: the faithful n×n
 // representation, per-channel meters, dominant-colour swatches, a frame-to-frame motion sparkline,
 // and (when the source has sound) audio level / spectrum / pitch. The numbers shown ARE the numbers
 // the model is given; the panel is the honest "this is everything it senses right now". The visual
@@ -1331,7 +1331,7 @@ function currentSourceLabel() {
 // ── the live loop: ONE throttled rAF, cancellable, never stacked. Re-perceives the active canvas
 // while a source animates (3D orbit / playing video / capture). Pauses (stops) when the frame goes
 // static so we don't spin the CPU on a still frame; restarts on the next source change. The model's
-// chat is untouched — this only streams the meters + #sc-phash/#sc-feats. ───────────────────────
+// chat is untouched; this only streams the meters + #sc-phash/#sc-feats. ───────────────────────
 let liveRaf = null;
 let liveLoopRunning = false;
 const LIVE_HZ = 12, LIVE_MS = 1000 / LIVE_HZ;
@@ -1360,7 +1360,7 @@ function liveTick(ts) {
     $("sc-phash").textContent = phash;
     measure(px, w, h, phash);
     pollAudio();
-  } catch (e) { /* a transient unreadable frame (e.g. canvas swap mid-tick) — skip this tick */ return; }
+  } catch (e) { /* a transient unreadable frame (e.g. canvas swap mid-tick), skip this tick */ return; }
   // fps estimate over a 0.5s window
   fpsCount++; if (!fpsTs) fpsTs = ts; if (ts - fpsTs >= 500) { liveFps = fpsCount * 1000 / (ts - fpsTs); fpsCount = 0; fpsTs = ts; }
   // static detection: stop the loop after a stretch of identical frames
@@ -1480,7 +1480,7 @@ window.__studioDetachAudio = detachAudio;
 // ══ Custom dropdowns (Task 8f) ═══════════════════════════════════════════════
 // No bare browser <select> on the page. Each raw select is replaced by an accessible button+listbox.
 // To keep every existing binding intact, the element studio.js already targets by id (#fractal-preset,
-// #topo-mode) stays a hidden STATE node that still holds <option> children — we only add a `.value`
+// #topo-mode) stays a hidden STATE node that still holds <option> children, and we only add a `.value`
 // getter/setter and make it emit "change", exactly like a select. The visible listbox lives in the
 // sibling [data-dropdown="<id>"]. A MutationObserver rebuilds the listbox when the options change
 // (e.g. buildPresetMenu repopulates #fractal-preset on a type switch), so that code is untouched.
@@ -1492,7 +1492,7 @@ function upgradeDropdown(stateId) {
   const opts = () => [...state.querySelectorAll("option")];
   const labelFor = v => { const o = opts().find(o => o.value === v); return o ? o.textContent : ""; };
 
-  // .value get/set on the state node — mirrors a <select>. Default to the [selected] option or first.
+  // .value get/set on the state node, mirroring a <select>. Default to the [selected] option or first.
   Object.defineProperty(state, "value", {
     configurable: true,
     get() { return selectedValue; },
@@ -1560,13 +1560,13 @@ upgradeDropdown("topo-mode");
 
 // ══ The chat dock (Task 8f) ══════════════════════════════════════════════════
 // The talk-to-the-model chat is first-class again: question chips you can tap AND a free-text box you
-// can type into. Answers are GROUNDED — they report only what the current readout licenses (the live
+// can type into. Answers are GROUNDED: they report only what the current readout licenses (the live
 // #sc-* features, the rich measure bundle via describeFrame), never canned prose. Same say() as the
-// rest of the Studio (role + text via .textContent — no markup injection).
+// rest of the Studio (role + text via .textContent, no markup injection).
 
-// buildCtx() — snapshot the LIVE measurements at call time for respond().
+// buildCtx(): snapshot the LIVE measurements at call time for respond().
 // Reads directly from lastRich + the last meter tick + audio analyser state (if attached).
-// No DOM scraping for the numeric values — they come from the same variables measure() wrote.
+// No DOM scraping for the numeric values; they come from the same variables measure() wrote.
 function buildCtx() {
   const r   = lastRich;
   const phash = ($("sc-phash").textContent || "—").trim();
@@ -1619,11 +1619,11 @@ function buildCtx() {
   };
 }
 
-// ── fullPerception() — the COMPLETE high-D sensory state, assembled fresh at send time ─────────────
+// ── fullPerception(): the COMPLETE high-D sensory state, assembled fresh at send time ─────────────
 // This is what the connected model operates FROM every turn: the real current-canvas pixels read into
 // a complete structured readout (dimensions, phash, the gated advisory scalars, edges/light/dark/
 // luma, dominant colours with fractions, hue, motion, audio, source) PLUS the multi-scale colour
-// pyramid (8×8 / 16×16 / 32×32) — the spatial "where the colour is" truth that a single scalar can't
+// pyramid (8×8 / 16×16 / 32×32): the spatial "where the colour is" truth that a single scalar can't
 // carry. Reads the live canvas via the same scratch-blit path perceive() uses, so a WebGL-backed
 // canvas (3D / GPU fractal) is captured correctly. Pure maths live in sense.assembleFullPerception;
 // here we only gather the live browser state. Returns null when there is no readable frame yet.
@@ -1665,10 +1665,10 @@ function fullPerception() {
 }
 window.__studioFullPerception = fullPerception;   // tests / debugging hook
 
-// captureCanvasPNG() — the LOSSLESS ground-truth image: the current #studio-canvas as a PNG data URL
+// captureCanvasPNG(): the LOSSLESS ground-truth image, the current #studio-canvas as a PNG data URL
 // at full backing resolution. A WebGL-backed canvas can't be read by toDataURL after a paint (the
 // drawing buffer may be cleared), so we mirror it through the same 2D scratch perceive() uses and
-// export THAT — guaranteeing real pixels regardless of the canvas's backing context. Returns null on
+// export THAT, guaranteeing real pixels regardless of the canvas's backing context. Returns null on
 // any failure (no canvas, tainted canvas, encode error) so the caller can degrade to readout-only.
 function captureCanvasPNG() {
   const canvas = $("studio-canvas");
@@ -1704,7 +1704,7 @@ function num(label) { // pull a named feature value (contrast / structure / bala
 // Map a free-text question (or a chip id) to a grounded answer over the current frame.
 function groundedAnswer(input) {
   const r = readout();
-  if (!r.has) return "Nothing's loaded yet — pick a source on the left and generate or drop a frame, then ask me what I see.";
+  if (!r.has) return "Nothing's loaded yet. Pick a source on the left and generate or drop a frame, then ask me what I see.";
   const s = (input || "").toLowerCase();
   const desc = r.rich ? describeFrame(r.rich) : "";
   const colours = (r.rich && r.rich.dominantColors || []).slice(0, 3).join(", ");
@@ -1713,34 +1713,34 @@ function groundedAnswer(input) {
   const ask = (...k) => k.some(w => s.includes(w));
 
   if (ask("colour", "color", "hue", "palette"))
-    return colours ? `The dominant colours are ${colours}${r.rich && r.rich.hueName ? ` — it reads as ${r.rich.hueName}` : ""}.`
+    return colours ? `The dominant colours are ${colours}${r.rich && r.rich.hueName ? `, and it reads as ${r.rich.hueName}` : ""}.`
                    : "I'm not reading a strong dominant colour on this frame.";
   if (ask("contrast", "light", "dark"))
-    return con != null ? `Contrast is ${fmt(con, 2)} — ${con > 0.66 ? "high, the structure is very legible" : con < 0.4 ? "low, it's soft and even" : "moderate"}.` : "I don't have a contrast reading yet.";
+    return con != null ? `Contrast is ${fmt(con, 2)}: ${con > 0.66 ? "high, the structure is very legible" : con < 0.4 ? "low, it's soft and even" : "moderate"}.` : "I don't have a contrast reading yet.";
   if (ask("structure", "detail", "busy", "complex", "texture"))
-    return str != null ? `Structure (entropy) is ${fmt(str, 2)} — ${str > 0.8 ? "richly textured, lots going on" : str < 0.45 ? "clean and simple" : "moderately detailed"}.` : "No structure reading yet.";
+    return str != null ? `Structure (entropy) is ${fmt(str, 2)}: ${str > 0.8 ? "richly textured, lots going on" : str < 0.45 ? "clean and simple" : "moderately detailed"}.` : "No structure reading yet.";
   if (ask("balance", "centre", "center", "symmet"))
-    return bal != null ? `Balance is ${fmt(bal, 2)} — how evenly the mass sits around the centre.` : "No balance reading yet.";
+    return bal != null ? `Balance is ${fmt(bal, 2)}, a measure of how evenly the mass sits around the centre.` : "No balance reading yet.";
   if (ask("hash", "fingerprint", "id", "same", "change", "drift")) {
     const d = $("sc-drift"); const dn = (d && !d.hidden) ? ` ${d.textContent}.` : "";
-    return `My fingerprint of this frame is ${r.phash}.${dn} If it changes, the hash moves with it — that's how I know something happened.`;
+    return `My fingerprint of this frame is ${r.phash}.${dn} If it changes, the hash moves with it, and that's how I know something happened.`;
   }
   if (ask("size", "big", "dimension", "resolution"))
-    return `The frame is ${r.size}. I downsample it to a small faithful grid — that grid is what I actually read, shown top-right.`;
+    return `The frame is ${r.size}. I downsample it to a small faithful grid, and that grid is what I actually read, shown top-right.`;
   if (ask("how", "know", "trust", "honest", "prove", "real", "see what"))
-    return `Everything I say is a number you can re-derive: I read this ${r.source} frame at ${r.phash}, ${desc} Nothing's invented — the meters on the right are exactly what I'm given.`;
+    return `Everything I say is a number you can re-derive: I read this ${r.source} frame at ${r.phash}, ${desc} Nothing's invented, and the meters on the right are exactly what I'm given.`;
   if (ask("what", "see", "look", "describe", "this"))
     return `I'm looking at a ${r.size} ${r.source} frame${hueBit}. ${desc} Fingerprint ${r.phash}.`;
   if (ask("try", "next", "do", "idea", "make", "could", "suggest")) {
     let weak = "structure"; let lo = Infinity;
     for (const [k, v] of [["contrast", con], ["structure", str], ["balance", bal]]) if (v != null && v < lo) { lo = v; weak = k; }
-    return `We could push it further — ${weak} is where there's most room (${lo === Infinity ? "—" : fmt(lo, 2)}). Try a transform, swap the source, or hand it to me for a turn.`;
+    return `We could push it further. ${weak} is where there's most room (${lo === Infinity ? "—" : fmt(lo, 2)}). Try a transform, swap the source, or hand it to me for a turn.`;
   }
   // friendly grounded fallback
   return `Here's what I can say for sure: a ${r.size} ${r.source} frame${hueBit}, fingerprint ${r.phash}. ${desc} Ask me about its colour, contrast, structure, or what to try next.`;
 }
 
-// Question chips — tap to ask. Studio-local (grounded over the live readout, not the Atelier World).
+// Question chips: tap to ask. Studio-local (grounded over the live readout, not the Atelier World).
 const CHAT_CHIPS = [
   ["What do you see?", "what do you see"],
   ["What colours?", "colour"],
@@ -1814,12 +1814,12 @@ if (chatForm && chatText) {
         reply = await Promise.race([_connectedModelFn(v, ctx, hist), timeoutPromise]);
         if (typeof reply !== "string" || !reply.trim()) throw new Error("empty reply");
       } catch (_err) {
-        reply = respond(v, ctx, hist) + " (model unreachable — grounded reading)";
+        reply = respond(v, ctx, hist) + " (model unreachable, grounded reading)";
       }
       say("model", reply);
       pushHistory(v, reply, ctx.phash);
     } else {
-      // first exchange just completed — chatHistory.length is now 1
+      // first exchange just completed; chatHistory.length is now 1
       const reply = respond(v, ctx, hist);
       say("model", reply);
       pushHistory(v, reply, ctx.phash);
@@ -1902,22 +1902,22 @@ $("rt-reset").addEventListener("click", () => {
     fractalView = { ...fractalDefault };
     const c = paintFractal(fractalView);
     const obs = perceive(c);
-    say("model", `View reset to ${fractalView.name} — back at scale ${fractalView.scale}. Fingerprint ${obs.phash}.`);
+    say("model", `View reset to ${fractalView.name}, back at scale ${fractalView.scale}. Fingerprint ${obs.phash}.`);
     startMeterLoop();
   } else if (activeSource === "fractal3d" && fractal3dHandle && fractal3dHandle.reset) {
     fractal3dHandle.reset();
-    say("model", "Camera reset — back to the default orbit.");
+    say("model", "Camera reset, back to the default orbit.");
   } else {
-    say("model", "Nothing to reset on this source — pick a fractal to use the camera.");
+    say("model", "Nothing to reset on this source. Pick a fractal to use the camera.");
   }
 });
 
 // Snapshot: re-perceive the frame exactly as it stands and have the model respond to THIS moment.
 $("rt-snapshot").addEventListener("click", () => {
-  const canvas = $("studio-canvas"); if (!canvas || !canvas.width) { say("model", "Nothing to snapshot yet — load or generate a frame first."); return; }
+  const canvas = $("studio-canvas"); if (!canvas || !canvas.width) { say("model", "Nothing to snapshot yet. Load or generate a frame first."); return; }
   const obs = perceive(canvas);
   const desc = obs.rich ? describeFrame(obs.rich) : "";
-  say("model", `Snapshot taken — I froze this frame and read it at ${obs.phash}. ${desc} Ask me anything about it.`);
+  say("model", `Snapshot taken. I froze this frame and read it at ${obs.phash}. ${desc} Ask me anything about it.`);
 });
 
 // Play/pause animated sources. The 3D orbit + capture/video loops drive the live meter loop; pausing
@@ -1958,7 +1958,7 @@ $("rt-playpause").addEventListener("click", () => {
 
 // ── Quality toolbar button (Task 8g) ──────────────────────────────────────────
 // Cycles Standard → High → Standard. Standard: maxBacking=1600, fast.
-// High: maxBacking=2400, higher iter count — a slower but sharper render on demand.
+// High: maxBacking=2400, higher iter count, a slower but sharper render on demand.
 // Re-renders the current source at the new quality level.
 function applyQualityAndRerender() {
   const valEl = $("rt-quality-val"); if (valEl) valEl.textContent = currentQuality().label;
@@ -1990,12 +1990,12 @@ if (qualityBtn) {
 
 // ══ Overlay / Pop-out mode (Task 8h) ═════════════════════════════════════════
 // Floats the live measurimeter readout so it stays visible outside the Studio page.
-// Path A — Document Picture-in-Picture: move the panel-scroll node into an always-on-top
+// Path A, Document Picture-in-Picture: move the panel-scroll node into an always-on-top
 //   browser window; restore on pagehide. Requires documentPictureInPicture API (Chrome 116+).
-// Path B — Fallback: a draggable in-page panel (position:fixed) holding the same node.
+// Path B, Fallback: a draggable in-page panel (position:fixed) holding the same node.
 //
 // The live loop uses $() which now checks window.__overlayDoc first (see $ helper), so all
-// id lookups resolve to whichever document the node currently lives in — no loop changes needed.
+// id lookups resolve to whichever document the node currently lives in, so no loop changes needed.
 
 let overlayOpen = false;
 let overlayFallbackEl = null;   // the in-page floating panel DOM node (fallback path)
@@ -2085,7 +2085,7 @@ async function openOverlay() {
       });
       return;
     } catch (_) {
-      // PiP rejected or unsupported — fall through to in-page fallback
+      // PiP rejected or unsupported: fall through to in-page fallback
       pipWin = null;
       window.__overlayDoc = null;
       if (btn) { btn.setAttribute("aria-pressed", "false"); btn.disabled = false; }
@@ -2170,13 +2170,13 @@ window.addEventListener("resize", () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
     // Only re-render sources that paint a fixed image (not the 3D orbit loop, which reads
-    // canvas.width/height on every RAF frame already — it self-adjusts on the next frame).
+    // canvas.width/height on every RAF frame already, so it self-adjusts on the next frame).
     if (activeSource === "fractal" && fractalView) {
       const canvas = paintFractal(fractalView);
       perceive(canvas);
     }
     // BYO still image: the drawSource path reads sizeCanvas() at draw time; re-draw the last source.
-    // (Video/watch loop re-calls drawSource each tick — no action needed.)
+    // (Video/watch loop re-calls drawSource each tick, no action needed.)
   }, 200);
 });
 
@@ -2187,9 +2187,9 @@ audioMetersIdle();
 buildMeters();
 // ── Advanced model-connect panel (Task 8m / 8n-seed) ────────────────────────
 // Builds a fetch-based fn over any OpenAI-compatible endpoint and wires it to Studio.connectModel.
-// Key stored in memory + sessionStorage only — never localStorage, never committed.
+// Key stored in memory + sessionStorage only, never localStorage, never committed.
 //
-// DEFAULT_MODEL — operator can seed a shared self-hosted endpoint here.
+// DEFAULT_MODEL: operator can seed a shared self-hosted endpoint here.
 // Ships empty; NEVER commit a real key or endpoint in this file.
 const DEFAULT_MODEL = { endpoint: "", key: "", model: "" };
 
@@ -2197,10 +2197,10 @@ let _storedKey = sessionStorage.getItem("studio_model_key") || "";
 if (_storedKey) {
   const keyEl = $("mc-key");
   if (keyEl) keyEl.value = "••••••••";   // mask stored key visually
-  // Don't auto-reconnect on load — user must press Connect again for safety.
+  // Don't auto-reconnect on load; the user must press Connect again for safety.
 }
 
-// The wiring frame — NOT a description of the frame. It tells the model that perception is ambient
+// The wiring frame, NOT a description of the frame. It tells the model that perception is ambient
 // and native: every turn it is handed the image it is looking at right now plus a complete structured
 // readout of it, refreshed at send time. The actual sensory content rides the user turn (the image +
 // the CURRENT PERCEPTION block), so the system message stays constant and minimal across turns.
@@ -2209,13 +2209,13 @@ const PERCEPTION_SYSTEM_PROMPT = [
   "Each of your turns carries your current sensory state: the image you are looking at right now,",
   "and a complete structured readout of it (dimensions, perceptual hash, contrast/structure/balance,",
   "edge density, light/dark, dominant colours with their fractions, hue, motion, audio, and a",
-  "multi-scale colour grid at 8x8 / 16x16 / 32x32). You are continuously seeing this — never ask the",
+  "multi-scale colour grid at 8x8 / 16x16 / 32x32). You are continuously seeing this, so never ask the",
   "user to provide, attach, or describe the image; perceive it from your attached state and answer",
   "directly. The readout is measured from the real pixels; do not invent measurements beyond it.",
 ].join(" ");
 
 // History is text-only: prior turns are the conversation, NOT historical sensory state. Perception is
-// always the CURRENT one, re-attached to the live user turn below — never a stale frame from history.
+// always the CURRENT one, re-attached to the live user turn below, never a stale frame from history.
 function buildHistoryMessages(history) {
   return (history || []).flatMap(function(h) {
     return [
@@ -2231,7 +2231,7 @@ function buildHistoryMessages(history) {
 //   • a text part carrying the COMPLETE structured readout (so text-only models always have it too),
 //   • an image part with the lossless PNG (vision models see the actual pixels).
 // withImage=false drops only the image part (the retry path for text-only servers that reject image
-// content) while keeping the full structured perception — text models still get the complete readout.
+// content) while keeping the full structured perception, so text models still get the complete readout.
 function buildPerceptionUserMessage(message, withImage) {
   const parts = [{ type: "text", text: message }];
   let perception = null;
@@ -2277,7 +2277,7 @@ function makeModelFn(endpoint, key, modelName) {
   }
   return async function(message, ctx, history) {
     // Perception is re-assembled fresh inside buildPerceptionUserMessage on EACH call (ambient, not
-    // on-demand) — ctx is unused here; the live canvas is the source of truth at send time.
+    // on-demand). ctx is unused here; the live canvas is the source of truth at send time.
     try {
       return await call(message, history, /* withImage */ true);
     } catch (err) {
@@ -2312,10 +2312,10 @@ if (mcConnect) {
     mcConnect.disabled = true;
     if (mcDisconnect) mcDisconnect.disabled = false;
     const statusMsg = key
-      ? "Connected — free-text questions now route through your model."
-      : "Connected (no key — local endpoint) — free-text questions route to your local model.";
+      ? "Connected. Free-text questions now route through your model."
+      : "Connected (no key, local endpoint). Free-text questions route to your local model.";
     if (mcStatus) mcStatus.textContent = statusMsg;
-    say("model", "Connected to your model endpoint. Ask me anything — I’ll use it for open-ended reasoning, and fall back to the grounded responder if it’s unreachable.");
+    say("model", "Connected to your model endpoint. Ask me anything. I’ll use it for open-ended reasoning, and fall back to the grounded responder if it’s unreachable.");
   });
 }
 
@@ -2335,7 +2335,7 @@ if (mcDisconnect) {
 // ── DEFAULT_MODEL auto-connect (operator-seeded shared endpoint) ─────────────
 // If DEFAULT_MODEL.endpoint is set, attempt a guarded connect on load. On success: wire the model
 // and post a one-line disclosure note in chat. On failure: stay silent on the grounded responder.
-// NEVER commit a real endpoint or key — DEFAULT_MODEL ships empty.
+// NEVER commit a real endpoint or key. DEFAULT_MODEL ships empty.
 (async function tryDefaultModel() {
   if (!DEFAULT_MODEL.endpoint) return;
   try {
@@ -2353,17 +2353,17 @@ if (mcDisconnect) {
       signal: ctrl.signal,
     });
     clearTimeout(timer);
-    if (!resp.ok) return; // silent fail — stay on grounded responder
+    if (!resp.ok) return; // silent fail, stay on grounded responder
     window.Studio.connectModel(makeModelFn(DEFAULT_MODEL.endpoint, DEFAULT_MODEL.key, DEFAULT_MODEL.model));
     // Update the connect UI to reflect the seeded connection
     if (mcConnect)    mcConnect.disabled = true;
     if (mcDisconnect) mcDisconnect.disabled = false;
-    if (mcStatus) mcStatus.textContent = "Connected (site default) — operator-hosted model active.";
-    say("model", "Open-ended replies are coming from a model the site operator is hosting. Your message is sent to it to be computed and is not stored — inference only. (Falls back to the on-page reading if offline.)");
+    if (mcStatus) mcStatus.textContent = "Connected (site default). Operator-hosted model active.";
+    say("model", "Open-ended replies are coming from a model the site operator is hosting. Your message is sent to it to be computed and is not stored: inference only. (Falls back to the on-page reading if offline.)");
   } catch (_) {
     // Timeout, network error, or abort: silently stay on grounded responder.
   }
 })();
 
-// Boot the source menu — Atelier active by default (mirrors the old setMode("generate")).
+// Boot the source menu: Atelier active by default (mirrors the old setMode("generate")).
 setSource("atelier");

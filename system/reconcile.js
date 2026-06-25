@@ -1,12 +1,12 @@
-/* system/reconcile.js — the grounding the atelier lacked.
+/* system/reconcile.js: the grounding the atelier lacked.
 
    The atelier already WITNESSES provenance (does a plotted file re-derive from its seed,
-   via system/spine.js). This adds the other half: JUDGMENT — score a drawing's OUTPUT against
+   via system/spine.js). This adds the other half, JUDGMENT: score a drawing's OUTPUT against
    criteria it did NOT author (balance / coverage / contrast / complexity), plus NOVELTY against
-   a living localStorage corpus, combined by COHESION (harmonic mean — one weak axis tanks it).
+   a living localStorage corpus, combined by COHESION (harmonic mean, where one weak axis tanks it).
    Ported from studio-engine's verification spine. Zero dependencies; attaches to window.Reconcile.
 
-   A drawing is no longer just "what its seed says" — it now carries a re-checkable verdict
+   A drawing is no longer just "what its seed says". It now carries a re-checkable verdict
    against properties it didn't choose. Provenance + judgment = the full reconcile, in the browser. */
 (function () {
   "use strict";
