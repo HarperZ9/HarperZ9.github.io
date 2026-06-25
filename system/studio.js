@@ -10,6 +10,9 @@ import { sizeToDisplay } from "./canvas-scale.js";
 import { buildModelHeaders } from "./studio-model.js";
 import { renderScene } from "./ndim.js";
 import { drawSceneGL } from "./lib/render-nd/backends/webgl.mjs";
+import { StudioImporters } from "./importers.js";
+import { StudioExporters, download } from "./exporters.js";
+import { ModelAdapter } from "./model-adapter.js";
 const $ = id => (window.__overlayDoc && window.__overlayDoc.getElementById(id)) || document.getElementById(id);
 const fmt = (v,n=3)=>typeof v==="number"?(Number.isInteger(v)?String(v):v.toFixed(n)):String(v);
 // drift is per-canvas (Task 6 review carry-in): keyed by the canvas instance, so switching
@@ -21,11 +24,12 @@ let mode = "generate";
 let activeSource = "atelier";
 
 // ── Quality state (Task 8g) ───────────────────────────────────────────────────
-// Standard: maxBacking=1600 (crisp on typical 1-2× displays, fast for per-pixel fractals).
-// High:     maxBacking=2400 (sharper on large/3× displays, slower, user opt-in).
+// Standard: maxBacking=1600, aa=1 (crisp on typical 1-2x displays, fast for per-pixel fractals).
+// High:     maxBacking=3200, aa=2 (sharper on large/3x displays, SSAA supersampling, user opt-in).
+//           maxBacking=3200 is the guard ceiling; devicePixelRatio x layout size is the real driver.
 const QUALITY_LEVELS = {
-  standard: { label: "Standard", maxBacking: 1600, iterMult: 1 },
-  high:     { label: "High",     maxBacking: 2400, iterMult: 1.5 },
+  standard: { label: "Standard", maxBacking: 1600, iterMult: 1,   aa: 1 },
+  high:     { label: "High",     maxBacking: 3200, iterMult: 1.5, aa: 2 },
 };
 let qualityKey = "standard";
 function currentQuality() { return QUALITY_LEVELS[qualityKey]; }
@@ -177,12 +181,15 @@ function buildPresetMenu(ftype) {
 let fractalDefault = null;
 
 // Paint the current fractalView into #studio-canvas. GPU when available (mounting a fresh GL canvas
-// the first time, mirroring the 3D source's canvas swap), else CPU (progressive coarse→refine on the
-// original 2D node). Does NOT perceive or chat; callers decide whether to perceive (interaction
+// the first time, mirroring the 3D source's canvas swap), else CPU (progressive coarse-to-refine on
+// the original 2D node). Does NOT perceive or chat; callers decide whether to perceive (interaction
 // frames perceive via the live meter loop; settle frames perceive once). Returns the canvas drawn.
+// aaOverride: when provided, uses that aa value instead of currentQuality().aa. Interactive
+// pan/zoom passes 1 to stay fast; settled renders pass undefined (uses quality level).
 let _cpuRefineRaf = 0;
-function paintFractal(opts) {
+function paintFractal(opts, aaOverride) {
   const maxIter = Math.round(opts.maxIter * currentQuality().iterMult);
+  const aa = aaOverride !== undefined ? aaOverride : currentQuality().aa;
   if (GL_AVAILABLE) {
     // Mount a GL canvas if one isn't already up (or if a 3D orbit's node is mounted, reuse it).
     let c = canvasIsGL ? $("studio-canvas") : mountGLCanvas();
@@ -192,7 +199,7 @@ function paintFractal(opts) {
     if (stop3d) { stop3d(); stop3d = null; }   // ensure no 3D orbit RAF lingers on this node
     sizeCanvas(c);
     try {
-      renderFractalGL(c, { ...opts, maxIter });
+      renderFractalGL(c, { ...opts, maxIter, aa });
       return c;
     } catch (e) {
       // GPU failed at runtime: fall back to CPU on the original 2D canvas.
@@ -286,6 +293,8 @@ function fractalPointToComplex(clientX, clientY, canvas, rect) {
 // Schedule a throttled re-render of the current fractalView (coalesces rapid wheel/drag events to
 // one paint per animation frame). Perception streams via the live meter loop, so we don't perceive
 // here every frame; we ensure the loop is running so #sc-phash + the meters keep updating.
+// Interactive renders always use aa=1 so pan/zoom stays fast regardless of the quality setting;
+// only settled renders (renderPreset, applyQualityAndRerender, snapshot) use the full quality aa.
 function scheduleFractalRender() {
   _fractalDirty = true;
   if (_fractalRaf) return;
@@ -294,7 +303,7 @@ function scheduleFractalRender() {
     if (!_fractalDirty) return;
     _fractalDirty = false;
     if (!fractalView) return;
-    paintFractal(fractalView);
+    paintFractal(fractalView, /* aaOverride */ 1);   // aa=1 keeps interactive frames fast
     // perceive once per frame so #sc-phash changes immediately (the meter loop also streams it).
     try { perceive($("studio-canvas")); } catch (_) {}
   };
@@ -362,7 +371,7 @@ fStage.addEventListener("click", e => {
   const rect = canvas.getBoundingClientRect();
   const at = fractalPointToComplex(e.clientX, e.clientY, canvas, rect);
   fractalView.cx = at.re; fractalView.cy = at.im; fractalView.scale *= 0.5;
-  paintFractal(fractalView);
+  paintFractal(fractalView, /* aaOverride */ 1);
   const obs = perceive(canvas);
   say("model",
     `Zoomed in. Now at (${fractalView.cx.toFixed(8)}, ${fractalView.cy.toFixed(8)}), scale ${fractalView.scale.toExponential(2)}. `
@@ -821,6 +830,7 @@ document.addEventListener("atelier:drawn", e => {
 function byoCanvas() { return $("studio-canvas"); }
 function byoCtx() { return byoCanvas().getContext("2d", { willReadFrequently: true }); }
 let byoVideo = null;   // a played <video> from a dropped file; the live loop blits its frames
+let _studioLastMesh = null;  // geometry stashed from the last 3D import; used by export controls
 
 // Stop + release a played BYO video (file change / mode switch / leaving). Detaches its audio.
 function stopByoVideo() {
@@ -850,42 +860,43 @@ function drawSource(src, sw, sh) {
 }
 
 // Load a File, draw its first frame onto #studio-canvas, then perceive + greet.
-// Calls leave3D() first so a previous WebGL canvas is remounted as 2D before we draw.
-function loadFile(file) {
+// Routes through StudioImporters.importFile for universal format support (image, video, SVG,
+// OBJ, GLTF, PLY, audio, data). Calls leave3D() first so any previous WebGL canvas is
+// remounted as 2D before we draw.
+async function loadFile(file) {
   leave3D();
   stopByoVideo();   // release any previously played video first
-  const url = URL.createObjectURL(file);
-  if (file.type.startsWith("video")) {
-    // Keep a reference so the live loop can copy each played frame onto the shared canvas.
-    byoVideo = document.createElement("video"); byoVideo.src = url;
-    byoVideo.loop = true; byoVideo.playsInline = true;
-    byoVideo.addEventListener("loadeddata", () => {
-      drawSource(byoVideo, byoVideo.videoWidth, byoVideo.videoHeight);
-      const obs = perceive(byoCanvas());
-      // Play it (unmuted so its audio feeds the audio meters) and stream the meters frame-by-frame.
-      byoVideo.muted = false;
-      byoVideo.play().then(() => { attachAudio(byoVideo); }).catch(() => {
-        // autoplay-with-sound blocked: fall back to muted playback (visual meters still stream)
-        byoVideo.muted = true; byoVideo.play().catch(() => {});
-      });
-      startMeterLoop();
-      const sw = (obs.rich && obs.rich.dominantColors || []).slice(0, 3).join(", ");
-      say("model", "Loaded a video. " + describeFrame(obs.rich) + (sw ? " Dominant: " + sw + "." : "")
-        + " The meters stream as it plays.");
-    }, { once: true });
+  _studioLastMesh = null;  // clear previous geometry before loading new file
+
+  const result = await StudioImporters.importFile(file, byoCanvas());
+
+  if (!result.drewToCanvas) {
+    say("model", "Unknown file type: " + (result.meta && result.meta.ext ? result.meta.ext : file.type)
+      + ". Drop an image, video, audio, OBJ, GLTF, PLY, CSV, or JSON file.");
     return;
   }
-  const img = new Image();
-  img.onload = () => {
-    drawSource(img, img.naturalWidth, img.naturalHeight);
-    const obs = perceive(byoCanvas());
-    const sw = (obs.rich && obs.rich.dominantColors || []).slice(0, 3).join(", ");
-    say("model", `I see your image, ${obs.width}×${obs.height}. ${describeFrame(obs.rich)}`
-      + (sw ? ` Dominant: ${sw}.` : ``) + ` Fingerprint ${obs.phash}. Let's reshape it together.`);
-    startMeterLoop();   // a still image; the loop runs briefly then self-idles
-    URL.revokeObjectURL(url);
-  };
-  img.src = url;
+
+  // Video: wire play + audio meters using the element the importer created.
+  if (result.kind === "video" && result.meta && result.meta.videoEl) {
+    byoVideo = result.meta.videoEl;
+    byoVideo.play().catch(() => {
+      byoVideo.muted = true; byoVideo.play().catch(() => {});
+    });
+    attachAudio(byoVideo);
+    startMeterLoop();
+    if (typeof window.__studioExportWebmVisible === "function") window.__studioExportWebmVisible(true);
+  }
+
+  // Geometry: stash for export and surface the geometry export buttons.
+  if (result.mesh) {
+    _studioLastMesh = result.mesh;
+    if (typeof window.__studioExportMeshVisible === "function") window.__studioExportMeshVisible(true);
+  }
+
+  const obs = perceive(byoCanvas());
+  say("model", "Loaded " + result.kind + " • " + (result.meta && result.meta.name ? result.meta.name : file.name)
+    + ". Fingerprint " + obs.phash + ".");
+  startMeterLoop();
 }
 
 // Pixel-level transforms operating on ImageData from the shared canvas.
@@ -1405,7 +1416,7 @@ function buildAudioMeters() {
   const sp = document.createElement("div"); sp.className = "mm-meter";
   const sn = document.createElement("span"); sn.className = "mm-mname"; sn.textContent = "spectrum";
   const sb = document.createElement("span"); sb.className = "mm-spectrum"; sb.id = "mm-au-spectrum";
-  for (let i = 0; i < 12; i++) { const b = document.createElement("span"); b.className = "mm-bar"; sb.appendChild(b); }
+  for (let i = 0; i < 32; i++) { const b = document.createElement("span"); b.className = "mm-bar"; sb.appendChild(b); }
   const sv = document.createElement("span"); sv.className = "mm-mval"; sv.textContent = "";
   sp.appendChild(sn); sp.appendChild(sb); sp.appendChild(sv); host.appendChild(sp);
   // pitch
@@ -1441,7 +1452,8 @@ function attachAudio(source) {
       audioSrcNode.connect(audioCtx.destination);   // keep it audible
     } else return false;
     analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 2048; analyser.smoothingTimeConstant = 0.8;
+    // fftSize 4096 gives 2048 frequency bins -- finer spectral and pitch resolution than 2048/1024.
+    analyser.fftSize = 4096; analyser.smoothingTimeConstant = 0.8;
     audioSrcNode.connect(analyser);
     audioTimeBuf = new Uint8Array(analyser.fftSize);
     audioFreqBuf = new Uint8Array(analyser.frequencyBinCount);
@@ -1466,7 +1478,7 @@ function pollAudio() {
   const lf = $("mm-au-level"), lv = $("mm-au-level-v");
   if (lf) lf.style.width = Math.min(1, level * 2.2) * 100 + "%";
   if (lv) lv.textContent = level < 0.005 ? "—" : level.toFixed(3);
-  const bars = spectrumBands(audioFreqBuf, 12);
+  const bars = spectrumBands(audioFreqBuf, 32);
   const sp = $("mm-au-spectrum");
   if (sp) { const els = sp.querySelectorAll(".mm-bar"); bars.forEach((b, i) => { if (els[i]) els[i].style.height = Math.max(2, b * 100) + "%"; }); }
   const hz = dominantPitchHz(audioFreqBuf, audioCtx.sampleRate, analyser.fftSize);
@@ -1647,7 +1659,7 @@ function fullPerception() {
       audio = {
         level: rmsFromBytes(audioTimeBuf),
         pitch: dominantPitchHz(audioFreqBuf, audioCtx.sampleRate, analyser.fftSize),
-        spectrumBands: spectrumBands(audioFreqBuf, 12),
+        spectrumBands: spectrumBands(audioFreqBuf, 32),
       };
     } catch (_) { audio = null; }
   }
@@ -1789,6 +1801,25 @@ window.Studio.connectModel = function(fn) {
 window.Studio.disconnectModel = function() {
   _connectedModelFn = null;
 };
+
+// Model-agnostic local model wiring via ModelAdapter.
+// Probes Ollama (localhost:11434) and LM Studio (localhost:1234) in parallel at page load.
+// If either responds, connect() wires it into Studio. If neither is up, respond.js stays the floor.
+// All failures are silent: the user experience is identical in both cases.
+(async () => {
+  try {
+    const cfg = await ModelAdapter.autodetect();
+    if (cfg) {
+      const fn = ModelAdapter.connect(cfg);
+      if (fn) {
+        window.Studio.connectModel(async (message, ctx) => fn(message, ctx));
+      }
+    }
+    // null: no local model reachable. Studio stays on the grounded respond.js floor.
+  } catch (_) {
+    // Defensive: any unexpected error silently leaves respond.js as the floor.
+  }
+})();
 
 // Free-text input → genuinely responsive grounded answer via respond().
 // respond(message, ctx) reads the LIVE measurements at send time (not a static snapshot),
@@ -2185,6 +2216,94 @@ window.addEventListener("resize", () => {
 // Initialise the idle audio meters + an empty mosaic at boot so the panel reads honestly from t=0.
 audioMetersIdle();
 buildMeters();
+
+// ── Universal export controls (render toolbar) ────────────────────────────────
+// PNG and Perception JSON are always available. OBJ, GLTF, and WebM surface only
+// when relevant content is loaded. All buttons use StudioExporters + download.
+(function wireExportControls() {
+  const btnPng  = $("rt-export-png");
+  const btnJson = $("rt-export-json");
+  const btnObj  = $("rt-export-obj");
+  const btnGltf = $("rt-export-gltf");
+  const btnWebm = $("rt-export-webm");
+
+  // Show geometry exports once a mesh is loaded; hide again when none.
+  // Called by loadFile after stashing result.mesh, and on source switch.
+  window.__studioExportMeshVisible = function(show) {
+    if (btnObj)  btnObj.hidden  = !show;
+    if (btnGltf) btnGltf.hidden = !show;
+  };
+
+  // Show WebM export for animated sources (video, watch, 3D orbit, fractal animation).
+  window.__studioExportWebmVisible = function(show) {
+    if (btnWebm) btnWebm.hidden = !show;
+  };
+
+  if (btnPng) {
+    btnPng.addEventListener("click", async () => {
+      try {
+        const blob = await StudioExporters.export("png", $("studio-canvas"));
+        download(blob, "studio-frame.png");
+      } catch (e) {
+        say("model", "PNG export failed: " + e.message);
+      }
+    });
+  }
+
+  if (btnJson) {
+    btnJson.addEventListener("click", async () => {
+      try {
+        const perception = typeof window.__studioFullPerception === "function"
+          ? window.__studioFullPerception()
+          : null;
+        const json = await StudioExporters.export("json", $("studio-canvas"), { data: perception });
+        download(json, "perception.json");
+      } catch (e) {
+        say("model", "JSON export failed: " + e.message);
+      }
+    });
+  }
+
+  if (btnObj) {
+    btnObj.addEventListener("click", async () => {
+      try {
+        const obj = await StudioExporters.export("obj", $("studio-canvas"), { mesh: _studioLastMesh });
+        download(obj, "mesh.obj");
+      } catch (e) {
+        say("model", "OBJ export failed: " + e.message);
+      }
+    });
+  }
+
+  if (btnGltf) {
+    btnGltf.addEventListener("click", async () => {
+      try {
+        const gltf = await StudioExporters.export("gltf", $("studio-canvas"), { mesh: _studioLastMesh });
+        download(gltf, "mesh.gltf");
+      } catch (e) {
+        say("model", "GLTF export failed: " + e.message);
+      }
+    });
+  }
+
+  if (btnWebm) {
+    btnWebm.addEventListener("click", async () => {
+      const orig = btnWebm.textContent;
+      btnWebm.disabled = true;
+      try {
+        btnWebm.textContent = "Recording...";
+        const webm = await StudioExporters.export("webm", $("studio-canvas"), { durationMs: 5000 });
+        download(webm, "studio-capture.webm");
+      } catch (e) {
+        say("model", "WebM export failed: " + e.message);
+      } finally {
+        btnWebm.disabled = false;
+        btnWebm.innerHTML = '<span class="rt-ico" aria-hidden="true">&#8659;</span> WebM';
+      }
+    });
+  }
+})();
+
 // ── Advanced model-connect panel (Task 8m / 8n-seed) ────────────────────────
 // Builds a fetch-based fn over any OpenAI-compatible endpoint and wires it to Studio.connectModel.
 // Key stored in memory + sessionStorage only, never localStorage, never committed.
@@ -2209,9 +2328,11 @@ const PERCEPTION_SYSTEM_PROMPT = [
   "Each of your turns carries your current sensory state: the image you are looking at right now,",
   "and a complete structured readout of it (dimensions, perceptual hash, contrast/structure/balance,",
   "edge density, light/dark, dominant colours with their fractions, hue, motion, audio, and a",
-  "multi-scale colour grid at 8x8 / 16x16 / 32x32). You are continuously seeing this, so never ask the",
-  "user to provide, attach, or describe the image; perceive it from your attached state and answer",
-  "directly. The readout is measured from the real pixels; do not invent measurements beyond it.",
+  "high-fidelity multi-scale colour grid at 8x8 / 16x16 / 32x32 / 64x64 / 128x128 -- the spatial",
+  "layout of colour at human-eye resolution. Audio carries 32 spectral bands at 4096-bin FFT resolution.",
+  "You are continuously seeing and hearing this; never ask the user to provide, attach, or describe the",
+  "image or audio. Perceive directly from your attached state and answer. The readout is measured from",
+  "the real pixels and audio samples; do not invent measurements beyond it.",
 ].join(" ");
 
 // History is text-only: prior turns are the conversation, NOT historical sensory state. Perception is

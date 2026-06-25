@@ -235,7 +235,7 @@
         <div id="studio-drop" class="studio-drop" tabindex="0" role="button" aria-label="Drop or choose a photo, gif, or video">
           <div class="studio-drop-empty">drop a photo &middot; gif &middot; video<br><span>or click to choose</span></div>
         </div>
-        <input type="file" id="studio-file" accept="image/*,video/*" hidden>
+        <input type="file" id="studio-file" accept="image/*,video/*,audio/*,.obj,.gltf,.glb,.ply,.csv,.json" hidden>
         <div class="studio-byo-ctrl">
           <details class="rail-group" open>
             <summary>Transform it, take turns</summary>
@@ -311,9 +311,21 @@
         <span class="rt-ico" aria-hidden="true">⤢</span> Fullscreen</button>
       <button class="rt-btn" id="rt-overlay" type="button" aria-pressed="false" title="Pop the readout into a floating overlay that stays visible while you use other tabs">
         <span class="rt-ico" aria-hidden="true">⧉</span> Overlay</button>
+      <!-- Export group: wired by studio.js. OBJ/GLTF shown only when a mesh is loaded;
+           WebM shown only for animated sources. PNG and JSON are always available. -->
+      <button class="rt-btn" id="rt-export-png"  type="button" title="Save the current frame as a PNG image">
+        <span class="rt-ico" aria-hidden="true">&#8659;</span> PNG</button>
+      <button class="rt-btn" id="rt-export-json" type="button" title="Save the witnessed perception certificate as JSON">
+        <span class="rt-ico" aria-hidden="true">&#8659;</span> Perception JSON</button>
+      <button class="rt-btn" id="rt-export-obj"  type="button" title="Save the loaded geometry as OBJ" hidden>
+        <span class="rt-ico" aria-hidden="true">&#8659;</span> OBJ</button>
+      <button class="rt-btn" id="rt-export-gltf" type="button" title="Save the loaded geometry as GLTF" hidden>
+        <span class="rt-ico" aria-hidden="true">&#8659;</span> GLTF</button>
+      <button class="rt-btn" id="rt-export-webm" type="button" title="Record 5 seconds of the canvas as WebM video" hidden>
+        <span class="rt-ico" aria-hidden="true">&#8659;</span> WebM</button>
       <span class="rt-spacer"></span>
-      <button class="rt-btn rt-quality" id="rt-quality" type="button" title="Render quality (coming soon)" disabled>
-        Quality: <span id="rt-quality-val">Auto</span></button>
+      <button class="rt-btn rt-quality" id="rt-quality" type="button" title="Cycle render quality: Standard (fast, aa=1) / High (3200px max, aa=2 supersampling)" disabled>
+        Quality: <span id="rt-quality-val">Standard</span></button>
     </div>
   </section>
 
