@@ -43,13 +43,13 @@
 
     <!-- The source menu: pick what the model looks at. setSource(name) shows ONLY that block. -->
     <div class="source-menu" id="studio-source" role="tablist" aria-label="Choose a source">
-      <button type="button" role="tab" data-source="atelier"  aria-selected="true"  aria-controls="src-atelier">Atelier</button>
-      <button type="button" role="tab" data-source="fractal"   aria-selected="false" aria-controls="src-fractal">2D Fractal</button>
-      <button type="button" role="tab" data-source="fractal3d" aria-selected="false" aria-controls="src-fractal3d">3D Fractal</button>
-      <button type="button" role="tab" data-source="ndim"      aria-selected="false" aria-controls="src-ndim">Dimensions</button>
-      <button type="button" role="tab" data-source="byo"       aria-selected="false" aria-controls="src-byo">Bring your own</button>
-      <button type="button" role="tab" data-source="watch"     aria-selected="false" aria-controls="src-watch">Watch with me</button>
-      <button type="button" role="tab" data-source="music"     aria-selected="false" aria-controls="src-music">Music</button>
+      <button type="button" role="tab" data-source="atelier"  aria-selected="true"  aria-controls="src-atelier"   tabindex="0">Atelier</button>
+      <button type="button" role="tab" data-source="fractal"   aria-selected="false" aria-controls="src-fractal"   tabindex="-1">2D Fractal</button>
+      <button type="button" role="tab" data-source="fractal3d" aria-selected="false" aria-controls="src-fractal3d" tabindex="-1">3D Fractal</button>
+      <button type="button" role="tab" data-source="ndim"      aria-selected="false" aria-controls="src-ndim"      tabindex="-1">Dimensions</button>
+      <button type="button" role="tab" data-source="byo"       aria-selected="false" aria-controls="src-byo"       tabindex="-1">Bring your own</button>
+      <button type="button" role="tab" data-source="watch"     aria-selected="false" aria-controls="src-watch"     tabindex="-1">Watch with me</button>
+      <button type="button" role="tab" data-source="music"     aria-selected="false" aria-controls="src-music"     tabindex="-1">Music</button>
     </div>
     <p class="rail-own">Bring your own image or video. Open <b>Bring your own</b> (drop a file) or feed one to the Atelier as a specimen.</p>
 
@@ -378,41 +378,60 @@
   <!-- ── CENTRE: the canvas viewport (the hero) + a slim render toolbar ───────────────── -->
   <section class="studio-viewport" id="studio-viewport" aria-label="The frame">
     <div class="viewport-stage stage" id="viewport-stage">
-      <canvas id="studio-canvas" width="360" height="360"></canvas>
+      <canvas id="studio-canvas" width="360" height="360"
+        role="img" aria-label="The live render canvas. The measurimeter panel on the right describes what the model currently perceives."
+        aria-live="off"></canvas>
     </div>
     <div class="render-toolbar" id="render-toolbar" role="toolbar" aria-label="Render controls">
-      <button class="rt-btn" id="rt-snapshot" type="button" title="Freeze this frame and ask the model">
-        <span class="rt-ico" aria-hidden="true">◉</span> Snapshot</button>
-      <button class="rt-btn" id="rt-playpause" type="button" aria-pressed="false" title="Pause or resume animated sources" disabled>
-        <span class="rt-ico" aria-hidden="true">⏸</span> <span id="rt-playpause-label">Pause</span></button>
-      <button class="rt-btn" id="rt-reset" type="button" title="Restore the source's default framing">
-        <span class="rt-ico" aria-hidden="true">⟲</span> Reset view</button>
-      <button class="rt-btn" id="rt-fullscreen" type="button" title="Fill the screen with the canvas">
-        <span class="rt-ico" aria-hidden="true">⤢</span> Fullscreen</button>
-      <button class="rt-btn" id="rt-overlay" type="button" aria-pressed="false" title="Pop the readout into a floating overlay that stays visible while you use other tabs">
+      <button class="rt-btn" id="rt-snapshot" type="button" title="Freeze this frame and ask the model"
+        aria-label="Snapshot: freeze this frame and ask the model">
+        <span class="rt-ico" aria-hidden="true">&#9677;</span> Snapshot</button>
+      <button class="rt-btn" id="rt-playpause" type="button" aria-pressed="false"
+        title="Pause or resume animated sources" aria-label="Pause animated source" disabled>
+        <span class="rt-ico" aria-hidden="true">&#9208;</span> <span id="rt-playpause-label">Pause</span></button>
+      <button class="rt-btn" id="rt-reset" type="button" title="Restore the source's default framing"
+        aria-label="Reset view to default framing">
+        <span class="rt-ico" aria-hidden="true">&#10226;</span> Reset view</button>
+      <button class="rt-btn" id="rt-fullscreen" type="button" title="Fill the screen with the canvas"
+        aria-label="Enter fullscreen" aria-pressed="false">
+        <span class="rt-ico" aria-hidden="true">&#10548;</span> Fullscreen</button>
+      <button class="rt-btn" id="rt-overlay" type="button" aria-pressed="false"
+        title="Pop the readout into a floating overlay"
+        aria-label="Open readout overlay panel">
         <span class="rt-ico" aria-hidden="true">&#9645;</span> Overlay</button>
       <!-- Fit/Fill: toggle canvas between object-fit contain (Fit) and cover (Fill).
            Default is Fit. Wired by studio-surface.js via wireToolbarButtons(). -->
-      <button class="rt-btn" id="rt-fit-fill" type="button" aria-pressed="false" title="Toggle canvas between Fit (letterboxed, default) and Fill (cover, may clip)">
+      <button class="rt-btn" id="rt-fit-fill" type="button" aria-pressed="false"
+        title="Toggle canvas between Fit (letterboxed) and Fill (cover)"
+        aria-label="Toggle Fit or Fill canvas scaling">
         <span class="rt-ico" aria-hidden="true">&#9974;</span> <span id="rt-fit-fill-label">Fit</span></button>
       <!-- Cinema: collapse both side rails so the canvas spans full width.
            Distinct from OS fullscreen. Wired by studio-surface.js via wireToolbarButtons(). -->
-      <button class="rt-btn" id="rt-cinema" type="button" aria-pressed="false" title="Cinema mode: collapse the side panels so the canvas spans full width">
+      <button class="rt-btn" id="rt-cinema" type="button" aria-pressed="false"
+        title="Cinema mode: collapse the side panels"
+        aria-label="Toggle cinema mode: collapse side panels">
         <span class="rt-ico" aria-hidden="true">&#9724;</span> Cinema</button>
       <!-- Export group: wired by studio.js. OBJ/GLTF shown only when a mesh is loaded;
            WebM shown only for animated sources. PNG and JSON are always available. -->
-      <button class="rt-btn" id="rt-export-png"  type="button" title="Save the current frame as a PNG image">
+      <button class="rt-btn" id="rt-export-png"  type="button" title="Save the current frame as a PNG image"
+        aria-label="Export PNG image">
         <span class="rt-ico" aria-hidden="true">&#8659;</span> PNG</button>
-      <button class="rt-btn" id="rt-export-json" type="button" title="Save the witnessed perception certificate as JSON">
+      <button class="rt-btn" id="rt-export-json" type="button" title="Save the witnessed perception certificate as JSON"
+        aria-label="Export perception JSON">
         <span class="rt-ico" aria-hidden="true">&#8659;</span> Perception JSON</button>
-      <button class="rt-btn" id="rt-export-obj"  type="button" title="Save the loaded geometry as OBJ" hidden>
+      <button class="rt-btn" id="rt-export-obj"  type="button" title="Save the loaded geometry as OBJ"
+        aria-label="Export OBJ geometry" hidden>
         <span class="rt-ico" aria-hidden="true">&#8659;</span> OBJ</button>
-      <button class="rt-btn" id="rt-export-gltf" type="button" title="Save the loaded geometry as GLTF" hidden>
+      <button class="rt-btn" id="rt-export-gltf" type="button" title="Save the loaded geometry as GLTF"
+        aria-label="Export GLTF geometry" hidden>
         <span class="rt-ico" aria-hidden="true">&#8659;</span> GLTF</button>
-      <button class="rt-btn" id="rt-export-webm" type="button" title="Record 5 seconds of the canvas as WebM video" hidden>
+      <button class="rt-btn" id="rt-export-webm" type="button" title="Record 5 seconds of the canvas as WebM video"
+        aria-label="Record WebM video" hidden>
         <span class="rt-ico" aria-hidden="true">&#8659;</span> WebM</button>
       <span class="rt-spacer"></span>
-      <button class="rt-btn rt-quality" id="rt-quality" type="button" title="Cycle render quality: Standard (fast, aa=1) / High (3200px max, aa=2 supersampling)" disabled>
+      <button class="rt-btn rt-quality" id="rt-quality" type="button"
+        title="Cycle render quality: Standard / High"
+        aria-label="Cycle render quality" disabled>
         Quality: <span id="rt-quality-val">Standard</span></button>
     </div>
   </section>
@@ -420,14 +439,14 @@
   <!-- ── RIGHT PANEL: what the model sees (top) + the chat (fills the rest, scrolls inside) ─ -->
   <aside class="studio-panel" id="studio-panel" aria-label="What the model sees, and the chat">
     <div class="panel-scroll">
-      <section class="panel" id="studio-frame">
+      <section class="panel" id="studio-frame" aria-label="What the model sees">
         <h2>What the model sees
-          <span class="mm-live" id="mm-live" hidden><span class="mm-dot"></span>live</span></h2>
-        <div class="row"><span class="rk">perceptual hash</span><span class="rv" id="sc-phash">—</span></div>
-        <div class="row"><span class="rk">size</span><span class="rv" id="sc-size">—</span></div>
-        <div class="grounds" id="sc-feats"></div>
-        <p class="mm-describe" id="mm-describe"></p>
-        <div class="mc-drift" id="sc-drift" hidden></div>
+          <span class="mm-live" id="mm-live" hidden aria-hidden="true"><span class="mm-dot"></span>live</span></h2>
+        <div class="row"><span class="rk">perceptual hash</span><span class="rv" id="sc-phash" aria-live="polite" aria-label="Perceptual hash">-</span></div>
+        <div class="row"><span class="rk">size</span><span class="rv" id="sc-size">-</span></div>
+        <div class="grounds" id="sc-feats" aria-label="Visual feature readings"></div>
+        <p class="mm-describe" id="mm-describe" aria-live="polite"></p>
+        <div class="mc-drift" id="sc-drift" hidden aria-live="polite" aria-atomic="true"></div>
       </section>
 
       <!-- The MEASURIMETER (Task 8d): every channel the tooling feeds the model. The faithful n×n
@@ -437,20 +456,27 @@
         <h2>The measurimeter <span class="mm-sub">everything fed to the model, live</span></h2>
         <div class="mm-grid">
           <div class="mm-col mm-col-repr">
-            <div class="mm-clab">representation <span class="mm-hint">the real frame, box-averaged</span></div>
-            <canvas id="mm-mosaic" class="mm-mosaic" width="160" height="160" aria-label="The n×n downsampled frame the model receives"></canvas>
-            <div class="mm-clab" style="margin-top:.7rem">dominant colours</div>
-            <div class="mm-swatches" id="mm-swatches" aria-label="Dominant colour swatches"></div>
-            <div class="mm-clab" style="margin-top:.7rem">motion <span class="mm-hint">frame-to-frame Δ</span></div>
-            <canvas id="mm-motion" class="mm-motion" width="220" height="40" aria-label="Frame-to-frame motion over time"></canvas>
+            <div class="mm-clab" id="mm-lab-mosaic">colour grid <span class="mm-hint">box-averaged, faithful downscale</span></div>
+            <canvas id="mm-mosaic" class="mm-mosaic" width="160" height="160"
+              role="img" aria-labelledby="mm-lab-mosaic"
+              aria-label="The n-by-n box-averaged colour grid: a spatial map of the colours the model receives."></canvas>
+            <div class="mm-clab" style="margin-top:.75rem">dominant colours</div>
+            <div class="mm-swatches" id="mm-swatches" role="list" aria-label="Dominant colour swatches"></div>
+            <div class="mm-clab" style="margin-top:.75rem">motion <span class="mm-hint">frame-to-frame delta</span></div>
+            <canvas id="mm-motion" class="mm-motion" width="220" height="40"
+              role="img" aria-label="Sparkline showing frame-to-frame perceptual motion over time"></canvas>
           </div>
           <div class="mm-col mm-col-meters">
             <div class="mm-clab">visual channels</div>
-            <div class="mm-meters" id="mm-visual"></div>
-            <div class="mm-clab" style="margin-top:.8rem">audio channels <span class="mm-hint">when the source has sound</span></div>
-            <div class="mm-meters" id="mm-audio"></div>
-            <div class="mm-clab" style="margin-top:.8rem">source</div>
-            <div class="mm-meters mm-meta" id="mm-meta"></div>
+            <div class="mm-meters" id="mm-visual" role="list" aria-label="Visual channel readings"></div>
+            <div class="mm-section">
+              <div class="mm-clab">audio channels <span class="mm-hint">when the source has sound</span></div>
+              <div class="mm-meters" id="mm-audio" role="list" aria-label="Audio channel readings" aria-live="polite" aria-atomic="false"></div>
+            </div>
+            <div class="mm-section">
+              <div class="mm-clab">source</div>
+              <div class="mm-meters mm-meta" id="mm-meta" role="list" aria-label="Source metadata"></div>
+            </div>
           </div>
         </div>
       </section>

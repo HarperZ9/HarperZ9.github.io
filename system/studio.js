@@ -117,6 +117,8 @@ function setSource(next) {
   }
   document.querySelectorAll("#studio-source button").forEach(b =>
     b.setAttribute("aria-selected", String(b.dataset.source === next)));
+  // Roving tabindex: active tab is 0, all others -1 (ARIA tablist pattern).
+  syncTabindex(next);
   // Mark the stage interactive (grab cursor + drag affordance) for the camera-driven sources.
   const stageEl = document.getElementById("viewport-stage");
   if (stageEl) stageEl.classList.toggle("cam-interactive", next === "fractal" || next === "fractal3d");
@@ -140,15 +142,27 @@ function setSource(next) {
 $("studio-source").addEventListener("click", e => {
   const b = e.target.closest("button[data-source]"); if (b) setSource(b.dataset.source);
 });
-// Arrow-key navigation across the source tabs (roving, accessible).
+// Arrow-key navigation across the source tabs (roving tabindex, accessible).
+// Roving: the active tab has tabindex=0, all others tabindex=-1. Arrow keys move focus + activate.
+// Home/End jump to first/last tab (ARIA tablist pattern).
 $("studio-source").addEventListener("keydown", e => {
-  if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
   const tabs = [...document.querySelectorAll("#studio-source button")];
   const i = tabs.indexOf(document.activeElement); if (i < 0) return;
-  e.preventDefault();
-  const j = (i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length;
+  let j = -1;
+  if (e.key === "ArrowRight") { e.preventDefault(); j = (i + 1) % tabs.length; }
+  else if (e.key === "ArrowLeft") { e.preventDefault(); j = (i + tabs.length - 1) % tabs.length; }
+  else if (e.key === "Home") { e.preventDefault(); j = 0; }
+  else if (e.key === "End") { e.preventDefault(); j = tabs.length - 1; }
+  if (j < 0) return;
   tabs[j].focus(); setSource(tabs[j].dataset.source);
 });
+
+// Sync roving tabindex whenever setSource changes the active tab.
+function syncTabindex(activeKey) {
+  document.querySelectorAll("#studio-source button").forEach(b => {
+    b.tabIndex = b.dataset.source === activeKey ? 0 : -1;
+  });
+}
 
 // A 2D canvas can only ever yield a 2D context, and a WebGL canvas only WebGL. A canvas binds
 // permanently to its first context type. The 3D-fractal source paints #studio-canvas via WebGL,
@@ -1401,20 +1415,33 @@ function buildMeters() {
   const host = $("mm-visual"); if (!host || host.childElementCount) return;
   for (const [label, key, warm] of VISUAL_CHANNELS) {
     const row = document.createElement("div"); row.className = "mm-meter";
+    row.setAttribute("role", "listitem");
     const name = document.createElement("span"); name.className = "mm-mname"; name.textContent = label;
-    const track = document.createElement("span"); track.className = "mm-track";
+    const trackId = "mm-track-" + key;
+    const track = document.createElement("span"); track.className = "mm-track"; track.id = trackId;
+    // The track acts as a visual meter bar; expose with progressbar role for AT
+    track.setAttribute("role", "meter");
+    track.setAttribute("aria-label", label);
+    track.setAttribute("aria-valuemin", "0");
+    track.setAttribute("aria-valuemax", "100");
+    track.setAttribute("aria-valuenow", "0");
     const fill = document.createElement("span"); fill.className = "mm-fill" + (warm ? " mm-warm" : "");
+    fill.setAttribute("aria-hidden", "true");
     track.appendChild(fill);
-    const val = document.createElement("span"); val.className = "mm-mval"; val.textContent = "—";
+    const val = document.createElement("span"); val.className = "mm-mval"; val.textContent = "-";
+    val.setAttribute("aria-hidden", "true");   // value is on the track's aria-valuenow
     row.appendChild(name); row.appendChild(track); row.appendChild(val);
     host.appendChild(row);
-    meterEls[key] = { fill, val };
+    meterEls[key] = { fill, val, track };
   }
 }
 function setMeter(key, frac, text) {
   const m = meterEls[key]; if (!m) return;
-  m.fill.style.width = Math.max(0, Math.min(1, frac)) * 100 + "%";
+  const pct = Math.max(0, Math.min(1, frac)) * 100;
+  m.fill.style.width = pct + "%";
   m.val.textContent = text;
+  // Keep aria-valuenow in sync so screen readers report the value correctly
+  if (m.track) m.track.setAttribute("aria-valuenow", Math.round(pct).toString());
 }
 
 // ── the faithful representation mosaic: box-average → n×n, painted enlarged ──
@@ -1433,6 +1460,10 @@ function paintMosaic(px, w, h) {
 }
 
 // ── dominant-colour swatches ─────────────────────────────────────────────────
+// Each swatch is a .mm-sw-wrap (flex column) containing a .mm-sw colour block
+// and a .mm-swf label below it. The label is a sibling, not a child positioned
+// absolute, so it never overflows or clips. The wrap has role="listitem" since
+// the container carries role="list".
 function paintSwatches(rich) {
   const host = $("mm-swatches"); if (!host) return;
   const sw = rich.dominantSwatches || [];
@@ -1440,10 +1471,14 @@ function paintSwatches(rich) {
   host.className = "mm-swatches";
   host.innerHTML = "";
   for (const s of sw) {
+    const pct = (s.frac * 100).toFixed(0) + "%";
+    const wrap = document.createElement("span"); wrap.className = "mm-sw-wrap"; wrap.setAttribute("role", "listitem");
     const el = document.createElement("span"); el.className = "mm-sw";
-    el.style.background = s.hex; el.title = `${s.hex} · ${(s.frac * 100).toFixed(0)}%`;
-    const f = document.createElement("span"); f.className = "mm-swf"; f.textContent = (s.frac * 100).toFixed(0) + "%";
-    el.appendChild(f); host.appendChild(el);
+    el.style.background = s.hex;
+    el.setAttribute("aria-label", `Colour ${s.hex}, ${pct} of the frame`);
+    el.title = `${s.hex} · ${pct}`;
+    const f = document.createElement("span"); f.className = "mm-swf"; f.textContent = pct;
+    wrap.appendChild(el); wrap.appendChild(f); host.appendChild(wrap);
   }
 }
 

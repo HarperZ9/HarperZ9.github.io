@@ -820,27 +820,45 @@ body.world-3 .bar .rt{color:#cdd6cf}
 .mm-mosaic{display:block;width:100%;max-width:160px;height:auto;aspect-ratio:1;border-radius:8px;
   border:1px solid var(--hairline);background:#000;image-rendering:pixelated}
 .mm-motion{display:block;width:100%;height:40px;border-radius:6px;border:1px solid var(--hairline);background:rgba(0,0,0,.35)}
-.mm-swatches{display:flex;gap:.3rem;flex-wrap:wrap}
-.mm-sw{width:1.5rem;height:1.5rem;border-radius:5px;border:1px solid rgba(0,0,0,.5);position:relative;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
-.mm-sw .mm-swf{position:absolute;left:0;right:0;bottom:-0.78rem;font-family:"Spline Sans Mono",ui-monospace,monospace;
-  font-size:.42rem;text-align:center;color:var(--muted)}
-.mm-swatches.mm-empty::after{content:"—";color:var(--muted);font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.7rem}
-.mm-meters{display:flex;flex-direction:column;gap:.34rem}
-.mm-meter{display:grid;grid-template-columns:5.4rem 1fr 3.1rem;align-items:center;gap:.5rem}
-.mm-mname{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.54rem;letter-spacing:.04em;
-  color:var(--muted);text-transform:uppercase}
-.mm-track{height:.5rem;border-radius:999px;background:rgba(0,0,0,.4);border:1px solid rgba(138,155,146,.16);overflow:hidden}
+.mm-swatches.mm-empty::after{content:"\2014";color:var(--muted);font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.7rem}
+.mm-meters{display:flex;flex-direction:column;gap:.38rem}
+.mm-meter{display:grid;grid-template-columns:5.4rem 1fr 3.4rem;align-items:center;gap:.5rem}
+/* audio spectrum: a real bar chart with legible height */
+.mm-spectrum{display:flex;align-items:flex-end;gap:1.5px;height:3.2rem;background:rgba(0,0,0,.28);
+  border:1px solid rgba(138,155,146,.16);border-radius:4px;padding:2px 3px;overflow:hidden}
+.mm-bar{flex:1;min-width:2px;background:linear-gradient(180deg,var(--ember) 0%,var(--prussian) 80%);
+  border-radius:1px 1px 0 0;height:2%;transition:height .06s linear}
+
+/* enlarged dominant-colour swatches with inline percentage label */
+.mm-sw{width:2.2rem;height:2.2rem;border-radius:6px;border:1px solid rgba(0,0,0,.5);
+  position:relative;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);flex-shrink:0}
+.mm-swf{display:block;margin-top:.18rem;font-family:"Spline Sans Mono",ui-monospace,monospace;
+  font-size:.46rem;text-align:center;color:var(--muted);letter-spacing:.01em}
+/* swatch + label stacked vertically inside a wrapper */
+.mm-sw-wrap{display:flex;flex-direction:column;align-items:center;gap:0}
+.mm-swatches{display:flex;gap:.55rem;flex-wrap:wrap;align-items:flex-start}
+
+/* measurimeter scalar rows: slightly taller name column so labels are readable */
+.mm-mname{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.56rem;letter-spacing:.04em;
+  color:var(--muted);text-transform:uppercase;line-height:1.3}
+.mm-mval{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.58rem;color:var(--bone);
+  text-align:right;word-break:break-all;font-variant-numeric:tabular-nums}
+
+/* track fill: slightly taller for legibility */
+.mm-track{height:.6rem;border-radius:999px;background:rgba(0,0,0,.4);border:1px solid rgba(138,155,146,.16);overflow:hidden}
 .mm-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--prussian),var(--ember));border-radius:999px;
   transition:width .12s linear}
 .mm-fill.mm-warm{background:linear-gradient(90deg,var(--prussian),var(--orange))}
-.mm-mval{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.56rem;color:var(--bone);
-  text-align:right;word-break:break-all}
+/* meta rows: no bar track, just label + value */
 .mm-meta .mm-meter{grid-template-columns:5.4rem 1fr;gap:.5rem}
 .mm-meta .mm-mval{grid-column:2;text-align:left;color:var(--muted)}
-/* tiny inline frequency-spectrum bars (audio) */
-.mm-spectrum{display:flex;align-items:flex-end;gap:2px;height:.9rem}
-.mm-bar{flex:1;min-width:2px;background:linear-gradient(180deg,var(--ember),var(--prussian));border-radius:1px 1px 0 0;height:2%}
+
+/* section dividers inside the measurimeter */
+.mm-section{margin-top:.9rem;padding-top:.7rem;border-top:1px solid rgba(138,155,146,.1)}
+
+/* canvas aria live region - screen readers get a text summary */
+#studio-canvas-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);
+  white-space:nowrap;pointer-events:none}
 
 /* ─── domain scenarios: with vs without, across fields ──────────────── */
 .scenarios{display:grid;gap:1rem;margin:1.4rem 0}
