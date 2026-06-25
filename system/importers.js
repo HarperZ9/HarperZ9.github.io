@@ -54,6 +54,8 @@
  *     mesh:         object|null,   // {vertices,faces,normals?} when the format has geometry
  *     drewToCanvas: boolean,       // false only for "unknown" or on unrecoverable parse error
  *     pluginPoint:  string|null,   // hint string present on "unknown" kind
+ *     receipt:      object|null,   // witnessed import receipt (see importReceipt below):
+ *                                  //   { inputFormat, sizeBytes, originHash, hashAlgo, hashScope }
  *   }
  */
 
@@ -80,6 +82,104 @@ function readAsText(file) {
     r.onerror = () => reject(r.error);
     r.readAsText(file);
   });
+}
+
+// ---- provenance hashing (SHA-256 via Web Crypto, honest FNV-1a fallback) -----
+//
+// Mirrors exporters.js's hashing primitive. Kept as a local copy (not an import)
+// so importers.js stays an independent, side-effect-free browser ES module: it
+// can be loaded on its own without dragging in the exporter registry. The block
+// is small and the contract (sha-256 when crypto.subtle exists, else a flagged
+// FNV-1a fallback) is identical, so the two stay honest in the same way.
+
+const HASH_SHA256 = "sha-256";
+const HASH_FNV1A  = "fnv1a-fallback";
+
+function _utf8(str) {
+  if (typeof TextEncoder !== "undefined") return new TextEncoder().encode(str);
+  const out = [];
+  for (let i = 0; i < str.length; i++) {
+    let c = str.charCodeAt(i);
+    if (c < 0x80) out.push(c);
+    else if (c < 0x800) { out.push(0xc0 | (c >> 6), 0x80 | (c & 0x3f)); }
+    else { out.push(0xe0 | (c >> 12), 0x80 | ((c >> 6) & 0x3f), 0x80 | (c & 0x3f)); }
+  }
+  return new Uint8Array(out);
+}
+
+function _toHex(bytes) {
+  let hex = "";
+  for (let i = 0; i < bytes.length; i++) hex += bytes[i].toString(16).padStart(2, "0");
+  return hex;
+}
+
+/** FNV-1a 32-bit content hash. NOT cryptographic; the honest file:// fallback. */
+function fnv1a(bytes) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < bytes.length; i++) {
+    h ^= bytes[i];
+    h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
+  }
+  return ("00000000" + h.toString(16)).slice(-8);
+}
+
+/**
+ * hashBytes(bytes, opts) -> Promise<{ hash, hashAlgo }>
+ * SHA-256 via Web Crypto when available; otherwise FNV-1a, flagged honestly.
+ * opts.subtle === null forces the fallback (file:// path and the fallback test).
+ */
+async function hashBytes(bytes, opts) {
+  const u8 = bytes instanceof Uint8Array ? bytes : _utf8(String(bytes));
+  const hasOverride = opts && Object.prototype.hasOwnProperty.call(opts, "subtle");
+  const subtle = hasOverride
+    ? opts.subtle
+    : ((typeof crypto !== "undefined" && crypto.subtle) ? crypto.subtle : null);
+  if (subtle) {
+    try {
+      const buf = u8.byteOffset === 0 && u8.byteLength === u8.buffer.byteLength
+        ? u8.buffer
+        : u8.slice().buffer;
+      const digest = await subtle.digest("SHA-256", buf);
+      return { hash: _toHex(new Uint8Array(digest)), hashAlgo: HASH_SHA256 };
+    } catch (_) { /* fall through */ }
+  }
+  return { hash: fnv1a(u8), hashAlgo: HASH_FNV1A };
+}
+
+/**
+ * importReceipt(file, opts) -> Promise<{ inputFormat, sizeBytes, originHash, hashAlgo, hashScope }>
+ *
+ * Witnesses one import. originHash is the SHA-256 of the file's NATIVE bytes when
+ * they can be read (the two-stream detail buffer, read via file.arrayBuffer with
+ * no tokenization), so the model and a verifier share one provenance anchor.
+ *
+ * hashScope is honest about what was hashed:
+ *   "content"    -- the real file bytes were read and hashed
+ *   "descriptor" -- bytes were not readable here (e.g. a non-File stub); a stable
+ *                   name|type|size descriptor was hashed instead. Never claims to
+ *                   have hashed content it did not see.
+ *
+ * Reading bytes here does NOT eagerly tokenize: it reads the raw ArrayBuffer only;
+ * the importer keeps its own native float/AudioBuffer/mesh buffers intact.
+ */
+async function importReceipt(file, opts) {
+  const inputFormat = ext(file) || (file && file.type) || "unknown";
+  const sizeBytes = (file && typeof file.size === "number") ? file.size : 0;
+  let bytes = null;
+  let hashScope = "descriptor";
+  if (file && typeof file.arrayBuffer === "function") {
+    try {
+      bytes = new Uint8Array(await file.arrayBuffer());
+      hashScope = "content";
+    } catch (_) { bytes = null; }
+  }
+  if (bytes == null) {
+    const name = (file && file.name) || "";
+    const type = (file && file.type) || "";
+    bytes = _utf8("file-descriptor:" + name + "|" + type + "|" + sizeBytes);
+  }
+  const { hash, hashAlgo } = await hashBytes(bytes, opts);
+  return { inputFormat, sizeBytes, originHash: hash, hashAlgo, hashScope };
 }
 
 /**
@@ -902,12 +1002,21 @@ export const StudioImporters = (() => {
     registry.push({ match: normalizeMatcher(matcher), fn: importFn });
   }
 
-  async function importFile(file, canvas) {
+  async function importFile(file, canvas, opts) {
+    // The witnessed receipt is built once per call from the file's native bytes
+    // and attached to EVERY return path (success, unknown, error) so provenance
+    // is never silently dropped. It is best-effort: if hashing itself throws, the
+    // import still resolves with a null receipt rather than failing the load.
+    let receipt = null;
+    try { receipt = await importReceipt(file, opts); } catch (_) { receipt = null; }
+
     // Walk in reverse order so the last-registered handler takes precedence.
     for (let i = registry.length - 1; i >= 0; i--) {
       if (registry[i].match(file)) {
         try {
-          return await registry[i].fn(file, canvas);
+          const result = await registry[i].fn(file, canvas);
+          result.receipt = receipt;
+          return result;
         } catch (err) {
           // Handler failed. Report honestly instead of silently returning unknown.
           return {
@@ -916,11 +1025,14 @@ export const StudioImporters = (() => {
             mesh: null,
             drewToCanvas: false,
             pluginPoint: "Parser error: " + String(err),
+            receipt,
           };
         }
       }
     }
-    return importUnknown(file);
+    const unknown = importUnknown(file);
+    unknown.receipt = receipt;
+    return unknown;
   }
 
   return { register, importFile };
@@ -1104,3 +1216,15 @@ export function _selftest() {
   }
   return { passed, total, results };
 }
+
+// ---- receipt internals (exported for node:test coverage) --------------------
+// The node-safe pieces of the import-receipt system: the receipt builder, the
+// hashing primitive (sha-256 and the forced fnv1a fallback), and the algo tags.
+
+export {
+  importReceipt,
+  hashBytes,
+  fnv1a,
+  HASH_SHA256,
+  HASH_FNV1A,
+};
