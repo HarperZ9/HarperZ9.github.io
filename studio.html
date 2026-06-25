@@ -50,6 +50,7 @@
       <button type="button" role="tab" data-source="byo"       aria-selected="false" aria-controls="src-byo"       tabindex="-1">Bring your own</button>
       <button type="button" role="tab" data-source="watch"     aria-selected="false" aria-controls="src-watch"     tabindex="-1">Watch with me</button>
       <button type="button" role="tab" data-source="music"     aria-selected="false" aria-controls="src-music"     tabindex="-1">Music</button>
+      <button type="button" role="tab" data-source="discovery" aria-selected="false" aria-controls="src-discovery" tabindex="-1">Physics</button>
     </div>
     <p class="rail-own">Bring your own image or video. Open <b>Bring your own</b> (drop a file) or feed one to the Atelier as a specimen.</p>
 
@@ -395,6 +396,39 @@
         </div>
       </section>
 
+      <!-- SOURCE: Physics. The discovery engine: a governed system evolves in the canvas (the
+           measurimeter perceives it); the model proposes which terms a conserved quantity is built
+           from; a tool fits the weights; a sound verifier certifies it. Wired by discovery/studio-discovery.js. -->
+      <section class="src-block" id="src-discovery" role="tabpanel" aria-label="Physics discovery controls" hidden>
+        <div class="fractal-source" id="discovery-source">
+          <div class="at-panel">
+            <details class="rail-group" open>
+              <summary>System</summary>
+              <div class="at-group">
+                <span class="at-glab">Physical system <span class="hint">the model sees only its measured state, never the equations</span></span>
+                <div class="at-chips" role="group" aria-label="Physical system" id="disc-systems"></div>
+              </div>
+            </details>
+            <details class="rail-group" open>
+              <summary>Discover a conserved quantity</summary>
+              <div class="at-group">
+                <span class="at-glab">Candidate terms <span class="hint">which terms the law is built from</span></span>
+                <input type="text" class="at-seed" id="disc-terms" spellcheck="false" autocomplete="off" placeholder="e.g. x^2, v^2" style="width:100%">
+              </div>
+              <div class="at-actions">
+                <button class="btn" id="disc-fit" type="button">Discover &amp; verify</button>
+                <button class="btn ghost" id="disc-model" type="button" title="Run the connected model to discover the law live (connect one in the chat dock)">Let the model discover</button>
+                <button class="btn ghost" id="disc-export" type="button" title="Export the verified law as a witnessed artifact other flagships can re-verify">Export artifact</button>
+              </div>
+              <div id="disc-result" style="white-space:pre-wrap;color:#8a8a96;font-size:.78rem;margin-top:.5rem;min-height:2.4em"></div>
+              <div id="disc-cert" style="font-size:.78rem;margin-top:.4rem;line-height:1.5"></div>
+            </details>
+            <div id="disc-live" style="font-size:.8rem;margin-top:.3rem"></div>
+            <p class="src-hint">The system evolves in the canvas and the measurimeter perceives it. The model proposes which terms a conserved quantity is built from; a tool fits the weights; a sound verifier certifies it across independent initial conditions. The conserved value stays fixed (tiny drift) as the system moves.</p>
+          </div>
+        </div>
+      </section>
+
       <details class="rail-group rail-about">
         <summary>About the Studio and Project Telos</summary>
         <p>This is the live surface of Project Telos, the engine. Telos is the thesis made tangible: a person and a model stand before the same witnessed frame, generate from it, and verify every step together. Bring your own photo, gif, or video, or generate one with the Atelier's algorithms or the fractal engines. The right panel shows exactly what the model is given: the faithful frame, its fingerprint, dominant colours, and per-channel meters. Talk to it about what it sees, and reshape it, taking turns. The <a href="https://github.com/HarperZ9/telos" style="color:inherit;border-bottom:1px solid rgba(239,171,48,.4);text-decoration:none">published telos repo</a> is the small runnable demo of the same loop. This site is its testbench.</p>
@@ -590,7 +624,7 @@
      panzoom (anvaka) v9.4.3: UMD, sets window.createPanzoom.
      Tweakpane v4.0.5: ESM named exports, imported directly by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js"></script>
-<script type="module" src="system/studio.js?v=20260625b"></script>
+<script type="module" src="system/studio.js?v=20260626a"></script>
 <!-- Music reactive engine: zero-dependency WebAudio + Canvas visual system. -->
 <script type="module" src="system/reactive.js?v=20260625b"></script>
 <script type="module" src="system/reactive-music-ui.js?v=20260625b"></script>
