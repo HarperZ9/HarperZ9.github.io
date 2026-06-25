@@ -77,7 +77,7 @@
 
   <div class="exhibit reveal">
     <div class="exhibit-tag"><span class="ord">Exhibit</span> <span class="what">the accountable surface &middot; the system attacks its own constructions</span></div>
-    <pre class="artifact"><span class="cmt"># forge an allow-receipt for an action that was never granted</span>
+    <pre class="artifact" translate="no"><span class="cmt"># forge an allow-receipt for an action that was never granted</span>
 <span class="pr">&gt;&gt;&gt; effector.act(plan, forged_allow)</span>
 <span class="bad">RefusedActuation: no gate allow, the effector will not act</span>
 
@@ -96,7 +96,7 @@
 <span class="pr">$ pytest tests/test_integrity_redteam.py</span>
 <span class="ok">39 passed in 0.13s</span></pre>
     <p class="artifact-cap">A stolen permission, a faked fingerprint, a doctored record, a target past the fence: each one <b>refused because of how it&rsquo;s built</b>, not because somebody asked it nicely. The system holds even when its own promises are turned against it.</p>
-    <p class="artifact-note">Those four cases are the test suite&rsquo;s own checks, shown in the tool&rsquo;s real refusal messages; the result is captured live from <b>pytest</b>, 39 passed, part of a full run of <b>201 passed</b> (3.67s) with no outside libraries. From <b>github.com/HarperZ9/accountable-surface &middot; test_integrity_redteam.py</b>. <em>Honest limit:</em> I wrote these tests myself. So they show the thing holds against its own author. Not yet against a stranger trying hard to break it. That outside attempt is a debt I still owe.</p>
+    <p class="artifact-note">Those four cases are the test suite&rsquo;s own checks, shown in the tool&rsquo;s real refusal messages; the result is captured live from <b translate="no">pytest</b>, 39 passed, part of a full run of <b>201 passed</b> (3.67s) with no outside libraries. From <b translate="no">github.com/HarperZ9/accountable-surface &middot; test_integrity_redteam.py</b>. <em>Honest limit:</em> I wrote these tests myself. So they show the thing holds against its own author. Not yet against a stranger trying hard to break it. That outside attempt is a debt I still owe.</p>
   </div>
 </section>
 
@@ -106,7 +106,7 @@
   <p class="body-text reveal">The loop is real: code with no outside libraries, 201 tests, running start to finish. And underneath it sits an idea I think is solid. Here is the heart of it, as plainly as I can say it. Knowing what something <em>is</em> never tells you what it&rsquo;s <em>allowed to do</em>. And the gap between those two can&rsquo;t be measured, so no amount of better sensing will ever close it for you; somebody has to decide. You also can&rsquo;t hold something accountable in a vacuum. It always takes a second party for it to answer to, which is the whole reason the person who built the thing has to stand inside the loop. And nothing holds itself up: everything that exists was given its existence by something outside itself, which means any authority you have over a thing is something you look after, not something you own. Follow that all the way down and it ends at a wall: something that simply can&rsquo;t be done. Right now that&rsquo;s my best guess at a rule; it isn&rsquo;t yet a proven one.</p>
   <p class="body-text reveal">And let me be just as plain about where this falls short, because a thesis about honesty doesn&rsquo;t get to fudge its own. One person built it. One version of it exists. I wrote its tests myself. The gate gives advice; a real system would still have to enforce it. No one on the outside has checked any of it yet. A claim about accountability that bragged past what it had earned would break its own rule. So I would rather tell you exactly where this stands than where I wish it stood. Three things would lift it from a hopeful idea to a real one, and not one of them is something I can do alone: a stranger who tries hard to break it and can&rsquo;t, the wall at the bottom turned into an actual proof, and a second person who rebuilds the whole loop from scratch and watches it behave the same way.</p>
   <div class="channels reveal">
-    <span class="g">GitHub</span>: <a href="https://github.com/HarperZ9/accountable-surface">HarperZ9/accountable-surface</a>
+    <span class="g">GitHub</span>: <a href="https://github.com/HarperZ9/accountable-surface" translate="no">HarperZ9/accountable-surface</a>
     &nbsp;&middot;&nbsp;
     <span class="g">Email</span>: <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
     &nbsp;&middot;&nbsp;

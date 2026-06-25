@@ -32,20 +32,20 @@
 <script type="module" src="system/nav.js?v=20260625a"></script>
 
 <div class="frame">
-  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">RAW &middot; the rendering branch</span></div>
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">RAW</span> &middot; the rendering branch</span></div>
   <div class="mid">
     <h1>Take the pipeline. <span class="g">Render the frame yourself.</span></h1>
-    <p class="lede">RAW (Rendering Advancement Workshop) is a real-time D3D11 rendering platform. In plain terms: a small piece of code slips in between a game and the graphics card and takes the wheel. Then it adds its own light and shadow while the picture is still being drawn: bounced light filling the scene (screen-space global illumination), soft shadows where surfaces meet (ambient occlusion), reflections, and a gentle sky-glow. It is the deepest take-it-apart-to-learn-how-it-works graphics work I&rsquo;ve done. It is also the branch that grows into the spatial sense of the larger work, the part that can see depth and space.</p>
+    <p class="lede"><span translate="no">RAW</span> (Rendering Advancement Workshop) is a real-time D3D11 rendering platform. In plain terms: a small piece of code slips in between a game and the graphics card and takes the wheel. Then it adds its own light and shadow while the picture is still being drawn: bounced light filling the scene (screen-space global illumination), soft shadows where surfaces meet (ambient occlusion), reflections, and a gentle sky-glow. It is the deepest take-it-apart-to-learn-how-it-works graphics work I&rsquo;ve done. It is also the branch that grows into the spatial sense of the larger work, the part that can see depth and space.</p>
     <p class="close">I learned this owning a frame that wasn&rsquo;t mine. I&rsquo;m turning it toward a visual engine that is.</p>
   </div>
-  <div class="seal">RAW 1.0.0 &middot; C++23 &middot; HLSL &middot; D3D11 proxy + mid-frame dispatch</div>
+  <div class="seal"><span translate="no">RAW</span> 1.0.0 &middot; C++23 &middot; HLSL &middot; D3D11 proxy + mid-frame dispatch</div>
 </div>
 
 <main id="main">
 
 <section class="mv" id="what" aria-labelledby="what-h">
   <h2 id="what-h" class="reveal">You don&rsquo;t get the pipeline. So you take it.</h2>
-  <p class="body-text reveal">A closed game gives you no opening to work in, no door left ajar. So RAW makes one. A small stand-in file (a <b>d3d11.dll proxy</b>) wraps the three pieces a game uses to talk to the graphics card and quietly relays every message, so RAW can listen in. It watches for one tell-tale moment in how the picture gets built (a <em>DSV-unbind heuristic</em>: the instant the game lets go of the depth buffer). Using that moment, it sorts the work of a single frame into nine stages as they happen. Then it steps in right after the shapes are laid down but before the lighting is finished (<b>PostGeometry</b>), inside the live picture, not painted over it afterward. That is the whole feat: taking the wheel of something you were never handed the keys to, earned by patiently figuring out how it draws.</p>
+  <p class="body-text reveal">A closed game gives you no opening to work in, no door left ajar. So <span translate="no">RAW</span> makes one. A small stand-in file (a <b>d3d11.dll proxy</b>) wraps the three pieces a game uses to talk to the graphics card and quietly relays every message, so <span translate="no">RAW</span> can listen in. It watches for one tell-tale moment in how the picture gets built (a <em>DSV-unbind heuristic</em>: the instant the game lets go of the depth buffer). Using that moment, it sorts the work of a single frame into nine stages as they happen. Then it steps in right after the shapes are laid down but before the lighting is finished (<b>PostGeometry</b>), inside the live picture, not painted over it afterward. That is the whole feat: taking the wheel of something you were never handed the keys to, earned by patiently figuring out how it draws.</p>
   <em class="close reveal">Knowing which stage you&rsquo;re in, stepping in at the right instant, and rebuilding the game&rsquo;s own sense of depth from the numbers it left in memory: this is where I learned the take-it-apart care and the memory discipline that quietly runs under the rest of the work.</em>
 </section>
 
@@ -56,8 +56,8 @@
   </div>
 
   <div class="exhibit reveal">
-    <div class="exhibit-tag"><span class="ord">Exhibit I</span> <span class="what">RAW &middot; the active effect set, by algorithm and honest status</span></div>
-    <pre class="artifact"><span class="cmt"># renderers running in-frame (RendererBase, external HLSL, F12 hot-reload)</span>
+    <div class="exhibit-tag"><span class="ord">Exhibit I</span> <span class="what"><span translate="no">RAW</span> &middot; the active effect set, by algorithm and honest status</span></div>
+    <pre class="artifact" translate="no"><span class="cmt"># renderers running in-frame (RendererBase, external HLSL, F12 hot-reload)</span>
 GTAO            Jimenez 2019 visibility bitmask       <span class="ok">functional, verified in-game</span>
 Contact Shadows screen-space directional ray march    <span class="ok">functional</span>, needs tuning
 Skylighting     screen-space hemisphere visibility     <span class="ok">functional</span>, denoising WIP
@@ -71,9 +71,9 @@ Scene Compositor multi-effect blend + multi-bounce AO  <span class="ok">function
 
 <section class="mv" id="lineage" aria-labelledby="lineage-h">
   <h2 id="lineage-h" class="reveal">Two shapes: where it came from, where it&rsquo;s going.</h2>
-  <p class="body-text reveal"><b>Where it came from</b> was a full rendering platform. It is also where I earned a particular set of skills the hard way: taking a closed game apart to learn how it draws, reading and rebuilding what the graphics card is holding in memory while the picture is still being made, and the patience it takes to make an effect you&rsquo;ve added behave nicely inside a picture it doesn&rsquo;t own. Those are the same instincts the witness and provenance work elsewhere on this site stands on. A witness here just means a small fingerprint of a thing: check it later and you know nothing was changed. Provenance means you can always trace where something came from. RAW is where those instincts were forged.</p>
+  <p class="body-text reveal"><b>Where it came from</b> was a full rendering platform. It is also where I earned a particular set of skills the hard way: taking a closed game apart to learn how it draws, reading and rebuilding what the graphics card is holding in memory while the picture is still being made, and the patience it takes to make an effect you&rsquo;ve added behave nicely inside a picture it doesn&rsquo;t own. Those are the same instincts the witness and provenance work elsewhere on this site stands on. A witness here just means a small fingerprint of a thing: check it later and you know nothing was changed. Provenance means you can always trace where something came from. <span translate="no">RAW</span> is where those instincts were forged.</p>
   <p class="pull reveal">I learned this owning a frame that wasn&rsquo;t mine. I&rsquo;m turning it toward a visual engine that is.</p>
-  <p class="body-text reveal"><b>Where it&rsquo;s going</b> is to become the spatial sense of the larger work, its feel for depth and space. Right now, AI tools that take actions on their own are mostly blind to a live 3D scene. They reason over words and flat screenshots, not over a picture as it&rsquo;s being drawn. RAW is the branch I&rsquo;m pointing straight at that blind spot: a way for an AI to actually see and reason about <em>a live, three-dimensional scene</em>, the same way the rest of my tools let it read files and the web. The same roots, given a new shape and a new purpose, and maybe, as it grows up, a life of its own as the eyes of the whole project.</p>
+  <p class="body-text reveal"><b>Where it&rsquo;s going</b> is to become the spatial sense of the larger work, its feel for depth and space. Right now, AI tools that take actions on their own are mostly blind to a live 3D scene. They reason over words and flat screenshots, not over a picture as it&rsquo;s being drawn. <span translate="no">RAW</span> is the branch I&rsquo;m pointing straight at that blind spot: a way for an AI to actually see and reason about <em>a live, three-dimensional scene</em>, the same way the rest of my tools let it read files and the web. The same roots, given a new shape and a new purpose, and maybe, as it grows up, a life of its own as the eyes of the whole project.</p>
   <p class="body-text reveal"><em>Where it honestly stands:</em> the rendering platform is still being built. The core effects work, two are in repair, the finishing pass is untested. The seeing-in-3D direction is a road I&rsquo;m on, not a thing I&rsquo;m claiming is done.</p>
 </section>
 
@@ -81,9 +81,9 @@ Scene Compositor multi-effect blend + multi-bounce AO  <span class="ok">function
   <h2 id="repo-h" class="reveal">It&rsquo;s public. Read the renderer.</h2>
   <p class="body-text reveal">Written in C++23 and HLSL, free for anyone to use (MIT-licensed). The stand-in file that takes the wheel, the part that knows which stage of the picture it&rsquo;s in, the whole set of effects, and every shader sitting on disk: the real source, rough edges and all.</p>
   <div class="channels reveal">
-    <span class="g">GitHub</span>: <a href="https://github.com/HarperZ9/raw">HarperZ9/raw</a>
+    <span class="g">GitHub</span>: <a href="https://github.com/HarperZ9/raw" translate="no">HarperZ9/raw</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">Adjacent</span>: <a href="https://github.com/HarperZ9/gpu-trace-validator">gpu-trace-validator</a> (GPU-trace receipts)
+    <span class="g">Adjacent</span>: <a href="https://github.com/HarperZ9/gpu-trace-validator" translate="no">gpu-trace-validator</a> (GPU-trace receipts)
     &nbsp;&middot;&nbsp;
     <a href="overview.html">&larr; the map</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the index</a>
   </div>

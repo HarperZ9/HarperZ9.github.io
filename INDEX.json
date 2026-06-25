@@ -1,0 +1,484 @@
+{
+  "schema_version": 1,
+  "tool_version": "2.5.0",
+  "generated_at": "2026-06-25T05:35:17-07:00",
+  "root_sha256_prefix": "a558880a98415de9",
+  "absolute_paths_included": false,
+  "repo_count": 1,
+  "dirty_count": 3,
+  "class_counts": {
+    "public": 1
+  },
+  "top_level": [
+    {
+      "name": ".gitignore",
+      "kind": "file",
+      "class": "hidden",
+      "bytes": 315,
+      "modified": "2026-06-20T18:56:18-07:00"
+    },
+    {
+      "name": ".pytest_cache",
+      "kind": "directory",
+      "class": "hidden",
+      "bytes": null,
+      "modified": "2026-06-15T18:44:32-07:00"
+    },
+    {
+      "name": ".ruff_cache",
+      "kind": "directory",
+      "class": "hidden",
+      "bytes": null,
+      "modified": "2026-06-20T22:30:17-07:00"
+    },
+    {
+      "name": ".superpowers",
+      "kind": "directory",
+      "class": "hidden",
+      "bytes": null,
+      "modified": "2026-06-23T14:19:11-07:00"
+    },
+    {
+      "name": ".warden-safe-cache",
+      "kind": "directory",
+      "class": "hidden",
+      "bytes": null,
+      "modified": "2026-06-15T18:49:54-07:00"
+    },
+    {
+      "name": ".worktrees",
+      "kind": "directory",
+      "class": "hidden",
+      "bytes": null,
+      "modified": "2026-06-13T11:06:05-07:00"
+    },
+    {
+      "name": "_config.yml",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 1196,
+      "modified": "2026-06-20T00:59:47-07:00"
+    },
+    {
+      "name": "_drafts",
+      "kind": "directory",
+      "class": "entry",
+      "bytes": null,
+      "modified": "2026-06-21T01:20:08-07:00"
+    },
+    {
+      "name": "_HANDOFF.md",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 11495,
+      "modified": "2026-06-19T14:59:53-07:00"
+    },
+    {
+      "name": "_preview",
+      "kind": "directory",
+      "class": "entry",
+      "bytes": null,
+      "modified": "2026-06-21T04:32:49-07:00"
+    },
+    {
+      "name": "_redesign",
+      "kind": "directory",
+      "class": "entry",
+      "bytes": null,
+      "modified": "2026-06-19T04:43:49-07:00"
+    },
+    {
+      "name": "accountable-engine.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 12505,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "accountable-machines.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 14249,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "AGENTS.md",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 1789,
+      "modified": "2026-06-13T09:33:23-07:00"
+    },
+    {
+      "name": "aleph.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 22512,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "atelier.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 604,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "AUTHORS.md",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 209,
+      "modified": "2026-06-11T23:28:46-07:00"
+    },
+    {
+      "name": "catalog.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 18926,
+      "modified": "2026-06-25T03:45:27-07:00"
+    },
+    {
+      "name": "coherence-membrane.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 20274,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "CONTRIBUTING.md",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 425,
+      "modified": "2026-06-13T12:49:26-07:00"
+    },
+    {
+      "name": "cv.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 16822,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "cv.md",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 7554,
+      "modified": "2026-06-24T16:55:21-07:00"
+    },
+    {
+      "name": "demonstrations.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 604,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "DESIGN.md",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 3858,
+      "modified": "2026-06-18T23:55:43-07:00"
+    },
+    {
+      "name": "emet-sample.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 11809,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "emet.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 12484,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "favicon.svg",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 394,
+      "modified": "2026-06-20T18:56:18-07:00"
+    },
+    {
+      "name": "forum.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 13248,
+      "modified": "2026-06-25T03:16:57-07:00"
+    },
+    {
+      "name": "gallery.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 604,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "img",
+      "kind": "directory",
+      "class": "entry",
+      "bytes": null,
+      "modified": "2026-06-24T16:55:21-07:00"
+    },
+    {
+      "name": "index-graph.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 12877,
+      "modified": "2026-06-25T03:45:27-07:00"
+    },
+    {
+      "name": "index.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 9372,
+      "modified": "2026-06-25T05:22:56-07:00"
+    },
+    {
+      "name": "LICENSE",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 517,
+      "modified": "2026-06-18T05:46:29-07:00"
+    },
+    {
+      "name": "media",
+      "kind": "directory",
+      "class": "entry",
+      "bytes": null,
+      "modified": "2026-06-22T22:24:15-07:00"
+    },
+    {
+      "name": "orca.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 11789,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "overview.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 44118,
+      "modified": "2026-06-25T03:45:27-07:00"
+    },
+    {
+      "name": "person.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 6683,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "pitch-deck.pdf",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 701168,
+      "modified": "2026-06-22T20:37:05-07:00"
+    },
+    {
+      "name": "presentation.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 16829,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "PRODUCT.md",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 3706,
+      "modified": "2026-06-18T23:45:31-07:00"
+    },
+    {
+      "name": "proof-index-sample.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 11904,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "proof-surface-sample.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 11515,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "proof-surface.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 18187,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "provenance-sensorium.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 15114,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "public-surface-sweeper-sample.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 9614,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "quanta-color.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 12276,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "quanta-products.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 11575,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "quantalang",
+      "kind": "directory",
+      "class": "entry",
+      "bytes": null,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "quantalang.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 13625,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "raw.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 11234,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "README.md",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 3215,
+      "modified": "2026-06-24T16:55:21-07:00"
+    },
+    {
+      "name": "research.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 14879,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "resume.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 13072,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "resume.md",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 3638,
+      "modified": "2026-06-22T23:09:22-07:00"
+    },
+    {
+      "name": "robots.txt",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 166,
+      "modified": "2026-06-22T10:13:35-07:00"
+    },
+    {
+      "name": "shared-frame",
+      "kind": "directory",
+      "class": "entry",
+      "bytes": null,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "sitemap.xml",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 1777,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "studio.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 41655,
+      "modified": "2026-06-25T03:53:08-07:00"
+    },
+    {
+      "name": "styles.css",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 24310,
+      "modified": "2026-06-17T12:58:56-07:00"
+    },
+    {
+      "name": "system",
+      "kind": "directory",
+      "class": "entry",
+      "bytes": null,
+      "modified": "2026-06-25T05:31:04-07:00"
+    },
+    {
+      "name": "tests",
+      "kind": "directory",
+      "class": "entry",
+      "bytes": null,
+      "modified": "2026-06-23T18:49:21-07:00"
+    },
+    {
+      "name": "toolkit.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 11785,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "warden.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 3103,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "why.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 6598,
+      "modified": "2026-06-25T01:31:01-07:00"
+    },
+    {
+      "name": "writing.html",
+      "kind": "file",
+      "class": "entry",
+      "bytes": 19165,
+      "modified": "2026-06-25T01:31:01-07:00"
+    }
+  ],
+  "repositories": [
+    {
+      "path": ".",
+      "class": "public",
+      "branch": "feat/site-redesign",
+      "head": "fd34578",
+      "origin": "https://github.com/HarperZ9/HarperZ9.github.io",
+      "dirty_count": 3,
+      "untracked_count": 2,
+      "markers": [
+        "README.md",
+        "AGENTS.md"
+      ]
+    }
+  ]
+}

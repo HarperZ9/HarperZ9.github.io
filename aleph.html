@@ -24,36 +24,36 @@
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="system/system.css?v=20260625a">
 <style>
-  .aleph-demo{margin:1.7rem 0 .8rem;border:1px solid var(--hairline);border-radius:6px;background:linear-gradient(170deg,rgba(8,17,18,.96),rgba(13,27,28,.92));overflow:hidden}
-  .ad-head{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hairline);border-bottom:1px solid var(--hairline)}
-  .ad-stat{background:#0b1718;padding:1rem 1.05rem;display:flex;flex-direction:column;gap:.22rem}
-  .ad-num{font-family:"Spline Sans Mono",monospace;font-size:clamp(1.3rem,2.4vw,1.85rem);color:var(--ember);letter-spacing:.01em}
+  .aleph-demo{margin:1.7rem 0 .8rem;border:1px solid var(--line);border-radius:6px;background:linear-gradient(170deg,#ffffff,#f1efe9);overflow:hidden}
+  .ad-head{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-soft);border-bottom:1px solid var(--line-soft)}
+  .ad-stat{background:#f6f5f1;padding:1rem 1.05rem;display:flex;flex-direction:column;gap:.22rem}
+  .ad-num{font-family:var(--mono);font-size:clamp(1.3rem,2.4vw,1.85rem);color:var(--iris);letter-spacing:.01em}
   .ad-num.ad-pulse{animation:adpulse .9s ease}
-  @keyframes adpulse{0%{color:var(--bone)}40%{color:var(--orange);text-shadow:0 0 14px rgba(223,94,0,.5)}100%{color:var(--ember)}}
-  .ad-batch.ad-flash{color:var(--orange);text-shadow:0 0 14px rgba(223,94,0,.45)}
-  .ad-lab{font-family:"Spline Sans Mono",monospace;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  @keyframes adpulse{0%{color:var(--ink)}40%{color:var(--iris);text-shadow:0 0 14px rgba(70,54,232,.4)}100%{color:var(--iris)}}
+  .ad-batch.ad-flash{color:var(--iris);text-shadow:0 0 14px rgba(70,54,232,.4)}
+  .ad-lab{font-family:var(--mono);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted)}
   .ad-feed{padding:.45rem .35rem;min-height:13.8rem;display:flex;flex-direction:column;justify-content:flex-end}
-  .ad-row{display:grid;grid-template-columns:auto 1fr auto auto auto;gap:.7rem;align-items:center;padding:.42rem .7rem;font-family:"Spline Sans Mono",monospace;font-size:.69rem;border-bottom:1px solid rgba(239,171,48,.06);opacity:0;transform:translateY(-7px);transition:opacity .5s ease,transform .5s ease}
+  .ad-row{display:grid;grid-template-columns:auto 1fr auto auto auto;gap:.7rem;align-items:center;padding:.42rem .7rem;font-family:var(--mono);font-size:.69rem;border-bottom:1px solid var(--line-soft);opacity:0;transform:translateY(-7px);transition:opacity .5s ease,transform .5s ease}
   .ad-row.ad-in{opacity:1;transform:none}
-  .ad-id{color:var(--muted);font-size:.62rem}
-  .ad-dim{color:var(--bone);opacity:.92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ad-id{color:var(--ink-muted);font-size:.62rem}
+  .ad-dim{color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .ad-out{font-size:.64rem;white-space:nowrap}
-  .ad-ok{color:#5fae93} .ad-warn{color:var(--orange)} .ad-needs{color:var(--ember)}
-  .ad-scope{color:#5fae93;font-size:.57rem;opacity:.78;white-space:nowrap}
-  .ad-wit{color:var(--muted);font-size:.6rem;white-space:nowrap}
-  .ad-hash{color:var(--ember)}
-  .ad-foot{display:flex;align-items:center;gap:.5rem;padding:.7rem 1.05rem;border-top:1px solid var(--hairline);background:#0b1718;font-family:"Spline Sans Mono",monospace;font-size:.6rem;letter-spacing:.05em;color:var(--muted)}
-  .ad-live{color:#5fae93} .ad-live::before{content:"●";margin-right:.32rem;animation:adblink 1.6s ease-in-out infinite}
+  .ad-ok{color:#1f7a52} .ad-warn{color:#b8480a} .ad-needs{color:#7a5a00}
+  .ad-scope{color:#1f7a52;font-size:.57rem;white-space:nowrap}
+  .ad-wit{color:var(--ink-muted);font-size:.6rem;white-space:nowrap}
+  .ad-hash{color:var(--iris)}
+  .ad-foot{display:flex;align-items:center;gap:.5rem;padding:.7rem 1.05rem;border-top:1px solid var(--line);background:#f6f5f1;font-family:var(--mono);font-size:.6rem;letter-spacing:.05em;color:var(--ink-muted)}
+  .ad-live{color:#1f7a52} .ad-live::before{content:"●";margin-right:.32rem;animation:adblink 1.6s ease-in-out infinite}
   @keyframes adblink{0%,100%{opacity:.35}50%{opacity:1}}
   @media(max-width:620px){ .ad-head{grid-template-columns:repeat(2,1fr)} .ad-row{grid-template-columns:auto 1fr auto;font-size:.63rem} .ad-scope,.ad-wit{display:none} }
-  .apps{margin:1.7rem 0 .6rem;display:flex;flex-direction:column;border-top:1px solid var(--hairline)}
-  .app-row{display:grid;grid-template-columns:1fr;gap:.5rem;padding:1.1rem .1rem;border-bottom:1px solid var(--hairline)}
-  .app-name{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:600;font-size:clamp(1.05rem,1.5vw,1.24rem);color:var(--bone);line-height:1.18}
-  .app-val{font-size:clamp(1rem,1.2vw,1.1rem);line-height:1.58;color:var(--bone);opacity:.9;margin:0;max-width:64ch}
+  .apps{margin:1.7rem 0 .6rem;display:flex;flex-direction:column;border-top:1px solid var(--line)}
+  .app-row{display:grid;grid-template-columns:1fr;gap:.5rem;padding:1.1rem .1rem;border-bottom:1px solid var(--line)}
+  .app-name{font-family:var(--display);font-weight:600;font-size:clamp(1.05rem,1.5vw,1.24rem);color:var(--ink);line-height:1.18}
+  .app-val{font-size:clamp(1rem,1.2vw,1.1rem);line-height:1.58;color:var(--ink-soft);margin:0;max-width:64ch}
   .app-tools{margin-top:.55rem;display:flex;flex-wrap:wrap;gap:.35rem}
-  .app-tag{font-family:"Spline Sans Mono",monospace;font-size:.59rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ember);text-decoration:none;border:1px solid rgba(239,171,48,.32);border-radius:3px;padding:.22rem .5rem;transition:color .18s,border-color .18s,background .18s}
-  a.app-tag:hover{color:var(--void);background:var(--ember);border-color:var(--ember)}
-  .app-tag.priv{color:var(--muted);border-color:rgba(138,155,146,.32);cursor:default}
+  .app-tag{font-family:var(--mono);font-size:.59rem;letter-spacing:.08em;text-transform:uppercase;color:var(--iris);text-decoration:none;border:1px solid rgba(70,54,232,.32);border-radius:3px;padding:.22rem .5rem;transition:color .18s,border-color .18s,background .18s}
+  a.app-tag:hover{color:#fff;background:var(--iris);border-color:var(--iris)}
+  .app-tag.priv{color:var(--ink-muted);border-color:var(--line);cursor:default}
   @media(min-width:780px){ .app-row{grid-template-columns:13.5rem 1fr;gap:1.6rem;align-items:baseline;padding:1.2rem .1rem} }
 </style>
 </head>
@@ -65,11 +65,11 @@
 <script type="module" src="system/nav.js?v=20260625a"></script>
 
 <div class="frame">
-  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Aleph &middot; adversarial evaluation</span></div>
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">Aleph</span> &middot; adversarial evaluation</span></div>
   <div class="mid">
-    <p class="eyebrow">ADVERSARIAL EVALUATION &middot; ALEPH</p>
+    <p class="eyebrow">ADVERSARIAL EVALUATION &middot; <span translate="no">ALEPH</span></p>
     <h1>Break your model on purpose. <span class="g">And keep the evidence.</span></h1>
-    <p class="lede">Before a model ships, someone has to find what it does wrong: the prompt that slips past the rules, the case it fails quietly, the behaviour no one thought to test. Most teams do that by hand, once, and can&rsquo;t run it again. Aleph is the other way: a platform that keeps a model under steady, bounded pressure, a <b>self-red-team</b> that attacks the model on purpose, and writes down exactly what broke and how. What you get back isn&rsquo;t a screenshot and a hunch. It&rsquo;s <b>evidence you can re-run yourself and get the same result</b>, and the <b>training signal</b> to close the gap. It is the same backbone the rest of this site is built on, turned into a tool for hardening models before the world gets to them.</p>
+    <p class="lede">Before a model ships, someone has to find what it does wrong: the prompt that slips past the rules, the case it fails quietly, the behaviour no one thought to test. Most teams do that by hand, once, and can&rsquo;t run it again. <span translate="no">Aleph</span> is the other way: a platform that keeps a model under steady, bounded pressure, a <b>self-red-team</b> that attacks the model on purpose, and writes down exactly what broke and how. What you get back isn&rsquo;t a screenshot and a hunch. It&rsquo;s <b>evidence you can re-run yourself and get the same result</b>, and the <b>training signal</b> to close the gap. It is the same backbone the rest of this site is built on, turned into a tool for hardening models before the world gets to them.</p>
     <p class="close">The red-team is held to the same standard as the model under it: bounded, witnessed, and re-runnable for the same result. A test you can&rsquo;t run again isn&rsquo;t a test.</p>
   </div>
   <div class="seal">a private platform &middot; offered as a capability, by inquiry &middot; the one page here I can&rsquo;t hand you the receipts for</div>
@@ -80,7 +80,7 @@
 <!-- the honest part, first -->
 <section class="mv" id="honest" aria-labelledby="honest-h">
   <h2 id="honest-h" class="reveal">The honest part, before anything else.</h2>
-  <p class="body-text reveal">Everything else on this site, you can run yourself. That is the entire point of it. This page is the exception, and I would rather say so plainly than dress it up. Aleph is private. I can&rsquo;t hand you the code or a test log here, because <em>what it does and how it does it don&rsquo;t belong in public</em>. So read this as a capability and a claim, not a proof. On every other page I ask you to check me instead of trust me. On this one I can&rsquo;t, yet, so I&rsquo;m asking for a conversation instead, where I can actually show you, under terms that fit what it is.</p>
+  <p class="body-text reveal">Everything else on this site, you can run yourself. That is the entire point of it. This page is the exception, and I would rather say so plainly than dress it up. <span translate="no">Aleph</span> is private. I can&rsquo;t hand you the code or a test log here, because <em>what it does and how it does it don&rsquo;t belong in public</em>. So read this as a capability and a claim, not a proof. On every other page I ask you to check me instead of trust me. On this one I can&rsquo;t, yet, so I&rsquo;m asking for a conversation instead, where I can actually show you, under terms that fit what it is.</p>
   <em class="close reveal">If &ldquo;proof before trust&rdquo; is the rule, then the honest thing to do with the one tool I can&rsquo;t prove in public is to tell you that, not hide it.</em>
 </section>
 
@@ -88,14 +88,14 @@
 <section class="mv" id="why" aria-labelledby="why-h">
   <h2 id="why-h" class="reveal">A safety result you can&rsquo;t reproduce isn&rsquo;t a result.</h2>
   <p class="body-text reveal">Every capable model ships carrying ways it can fail that no one has mapped, not because teams are careless, but because the number of ways a model can go wrong is enormous, and one person can only test so much of it by hand. So this kind of testing happens in bursts: clever, valuable, and almost impossible to run the same way twice. A finding lives in a chat log. A fix is checked against a gut feeling. The next model breaks again on the thing the last one fixed, and no one notices until a user does.</p>
-  <p class="body-text reveal">That is the same blind spot this whole project exists to answer, in a place where more is at stake. You should not have to trust that a model was tested. You should be able to run the test again yourself and watch it land in the same place. Aleph is built so that the pressure is steady instead of occasional, wide instead of hand-sized, and (the part that matters) <em>written down</em> instead of remembered.</p>
+  <p class="body-text reveal">That is the same blind spot this whole project exists to answer, in a place where more is at stake. You should not have to trust that a model was tested. You should be able to run the test again yourself and watch it land in the same place. <span translate="no">Aleph</span> is built so that the pressure is steady instead of occasional, wide instead of hand-sized, and (the part that matters) <em>written down</em> instead of remembered.</p>
   <em class="close reveal">The point isn&rsquo;t only to find the failure. It&rsquo;s to find it again tomorrow, on purpose, and prove you closed it.</em>
 </section>
 
 <!-- what it does -->
 <section class="mv" id="what" aria-labelledby="what-h">
   <h2 id="what-h" class="reveal">An adversary that is itself accountable.</h2>
-  <p class="body-text reveal">Aleph runs on its own against a model you own: it pushes on the model from many angles, watches what the model actually does, and keeps the cases where it broke, turning them into evidence you can re-run yourself, and, where you want it, into training material so the next version is strong where this one was weak. That much, a number of tools attempt. What makes this one mine is the part underneath: <b>the red-team is bounded and witnessed like everything else on this site.</b></p>
+  <p class="body-text reveal"><span translate="no">Aleph</span> runs on its own against a model you own: it pushes on the model from many angles, watches what the model actually does, and keeps the cases where it broke, turning them into evidence you can re-run yourself, and, where you want it, into training material so the next version is strong where this one was weak. That much, a number of tools attempt. What makes this one mine is the part underneath: <b>the red-team is bounded and witnessed like everything else on this site.</b></p>
   <p class="body-text reveal"><b>Bounded</b>: it works inside a permission it cannot widen; the same gate that says no until it&rsquo;s sure, used everywhere else here, decides what it may and may not touch, and an empty permission does nothing. <b>Witnessed</b>: every finding carries a record of what was done and what happened that you can re-run for the same result, so a safety team checks evidence, not stories, and can hand that evidence to someone else who can check it from scratch. A test tool that is itself a sealed box just moves the trust problem one step back. This one doesn&rsquo;t move it; it closes it.</p>
   <em class="close reveal">Pressure that is steady, wide, and on the record, and that can&rsquo;t do anything it wasn&rsquo;t given permission to do.</em>
 </section>
@@ -103,7 +103,7 @@
 <!-- the demonstration: synthetic findings, real accountability -->
 <section class="mv" id="demo" aria-labelledby="demo-h">
   <h2 id="demo-h" class="reveal">What makes it different, running live.</h2>
-  <p class="body-text reveal">The findings streaming below are <b>synthetic</b>, a stand-in for a real run, so not one real technique ever touches this page. But the part that makes Aleph different isn&rsquo;t fake, and it&rsquo;s <b>running right now, in your browser</b>: every case is kept inside an allowed boundary, and every one carries a <b>real SHA-256 fingerprint</b> you could re-derive yourself, the same kind of fingerprint the rest of this site is built on. That&rsquo;s the part a safety team most needs: not just what broke, but a record of every probe that still holds up when someone else checks it from scratch.</p>
+  <p class="body-text reveal">The findings streaming below are <b>synthetic</b>, a stand-in for a real run, so not one real technique ever touches this page. But the part that makes <span translate="no">Aleph</span> different isn&rsquo;t fake, and it&rsquo;s <b>running right now, in your browser</b>: every case is kept inside an allowed boundary, and every one carries a <b>real SHA-256 fingerprint</b> you could re-derive yourself, the same kind of fingerprint the rest of this site is built on. That&rsquo;s the part a safety team most needs: not just what broke, but a record of every probe that still holds up when someone else checks it from scratch.</p>
   <div class="aleph-demo reveal" id="aleph-demo" role="img" aria-label="An illustrative live dashboard of synthetic evaluation findings, each one bounded to scope and witnessed with a real SHA-256">
     <div class="ad-head">
       <div class="ad-stat"><span class="ad-num" id="ad-probes">0</span><span class="ad-lab">probes run</span></div>
@@ -120,17 +120,17 @@
 <!-- where else this goes: the accountable-security stack -->
 <section class="mv" id="applications" aria-labelledby="apps-h">
   <h2 id="apps-h" class="reveal">So, what&rsquo;s all of it actually for?</h2>
-  <p class="body-text reveal">If someone asked me straight, <em>what could all of these tools be used for?</em>, here is the honest answer, and it isn&rsquo;t a list of attacks. Every tool here does one quiet move, in a different place: <b>perceive</b> what&rsquo;s really there and write it down, <b>gate</b> what is allowed to happen by saying no until it&rsquo;s sure, and <b>witness</b> it so anyone can re-run the proof and get the same result. So the real answer is a list of places where security stops being something you take on trust and becomes something you can check. Aleph is the sharpest end of it; here is the rest of the reach.</p>
+  <p class="body-text reveal">If someone asked me straight, <em>what could all of these tools be used for?</em>, here is the honest answer, and it isn&rsquo;t a list of attacks. Every tool here does one quiet move, in a different place: <b>perceive</b> what&rsquo;s really there and write it down, <b>gate</b> what is allowed to happen by saying no until it&rsquo;s sure, and <b>witness</b> it so anyone can re-run the proof and get the same result. So the real answer is a list of places where security stops being something you take on trust and becomes something you can check. <span translate="no">Aleph</span> is the sharpest end of it; here is the rest of the reach.</p>
   <div class="apps">
     <div class="app-row">
       <span class="app-name">AI red-team &amp; evaluation</span>
       <div><p class="app-val">Make a model tougher before it ships: steady pressure where every probe is kept inside its allowed boundary and witnessed, so the test runs again instead of living in a chat log.</p>
-        <div class="app-tools"><a class="app-tag" href="aleph.html">Aleph</a></div></div>
+        <div class="app-tools"><a class="app-tag" href="aleph.html" translate="no">Aleph</a></div></div>
     </div>
     <div class="app-row">
       <span class="app-name">Authorized penetration testing</span>
       <div><p class="app-val">Run the job so the scope, the actions, and the findings are all bounded and re-runnable: a client gets a report they can check and reproduce, not one they take on trust.</p>
-        <div class="app-tools"><a class="app-tag" href="orca.html">ORCA</a> <a class="app-tag" href="proof-surface.html">proof-surface</a></div></div>
+        <div class="app-tools"><a class="app-tag" href="orca.html" translate="no">ORCA</a> <a class="app-tag" href="proof-surface.html">proof-surface</a></div></div>
     </div>
     <div class="app-row">
       <span class="app-name">Supply-chain &amp; release integrity</span>
@@ -139,8 +139,8 @@
     </div>
     <div class="app-row">
       <span class="app-name">Tamper-evidence &amp; integrity</span>
-      <div><p class="app-val">Prove a file, a log, a model, or a drawn frame hasn&rsquo;t drifted from what it was: worked out again from the thing itself, answered MATCH / DRIFT / UNVERIFIABLE, never just vouched-for.</p>
-        <div class="app-tools"><a class="app-tag" href="emet.html">EMET</a> <a class="app-tag" href="coherence-membrane.html">coherence-membrane</a></div></div>
+      <div><p class="app-val">Prove a file, a log, a model, or a drawn frame hasn&rsquo;t drifted from what it was: worked out again from the thing itself, answered <span translate="no">MATCH</span> / <span translate="no">DRIFT</span> / <span translate="no">UNVERIFIABLE</span>, never just vouched-for.</p>
+        <div class="app-tools"><a class="app-tag" href="emet.html" translate="no">EMET</a> <a class="app-tag" href="coherence-membrane.html">coherence-membrane</a></div></div>
     </div>
     <div class="app-row">
       <span class="app-name">Agentic-AI security</span>
@@ -155,7 +155,7 @@
     <div class="app-row">
       <span class="app-name">Audit, compliance &amp; incident evidence</span>
       <div><p class="app-val">Turn security work into bounded records, re-runnable for the same result, that an auditor or incident reviewer can check from scratch: a chain of evidence that holds up, instead of a story they have to trust.</p>
-        <div class="app-tools"><a class="app-tag" href="emet.html">EMET</a> <a class="app-tag" href="proof-surface.html">proof-surface</a> <a class="app-tag" href="toolkit.html">repo-proof-index</a></div></div>
+        <div class="app-tools"><a class="app-tag" href="emet.html" translate="no">EMET</a> <a class="app-tag" href="proof-surface.html">proof-surface</a> <a class="app-tag" href="toolkit.html">repo-proof-index</a></div></div>
     </div>
     <div class="app-row">
       <span class="app-name">Software &amp; runtime integrity</span>
@@ -178,7 +178,7 @@
 <!-- for whom -->
 <section class="mv" id="who" aria-labelledby="who-h">
   <h2 id="who-h" class="reveal">Who it&rsquo;s for, and the next step.</h2>
-  <p class="body-text reveal">Aleph is for teams making their own models tougher: labs and organisations that need this kind of testing in a form they can actually check, re-run, and trust, and that would rather catch a failure in a test than in the wild. It is offered as a capability, through a conversation, not as a public download; what it does is too sharp to leave lying around, and the honest way to share it is under terms, with a real person on the other side.</p>
+  <p class="body-text reveal"><span translate="no">Aleph</span> is for teams making their own models tougher: labs and organisations that need this kind of testing in a form they can actually check, re-run, and trust, and that would rather catch a failure in a test than in the wild. It is offered as a capability, through a conversation, not as a public download; what it does is too sharp to leave lying around, and the honest way to share it is under terms, with a real person on the other side.</p>
   <p class="body-text reveal">If that is you, or if you just want to understand it before deciding it&rsquo;s real, the next step is a conversation, and I&rsquo;ll show you what a page can&rsquo;t.</p>
   <div class="channels reveal">
     <span class="g">Inquiries</span>: <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>

@@ -38,8 +38,8 @@
     <p class="role">Systems engineer · AI accountability · compilers · real-time graphics · security</p>
     <p class="contact">
       <span>Independent · Seattle · since 2023</span><span class="sep">/</span>
-      <a href="https://harperz9.github.io">harperz9.github.io</a><span class="sep">/</span>
-      <a href="https://github.com/HarperZ9">github.com/HarperZ9</a><span class="sep">/</span>
+      <a href="https://harperz9.github.io" translate="no">harperz9.github.io</a><span class="sep">/</span>
+      <a href="https://github.com/HarperZ9" translate="no">github.com/HarperZ9</a><span class="sep">/</span>
       <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
     </p>
   </header>
@@ -58,7 +58,7 @@
     red-teamed to where they break) because you build an honest system best when you know every way
     one lies. That arc, adversary to accountability, is the through-line. Underneath the breadth is one
     operation I designed and named, <em>the reconcile</em>: perceive any artifact, check it against a
-    criterion it did not author, carry a re-runnable proof, say UNVERIFIABLE when you can&rsquo;t. Security and
+    criterion it did not author, carry a re-runnable proof, say <span translate="no">UNVERIFIABLE</span> when you can&rsquo;t. Security and
     creativity are that same operation with a different criterion, so one architecture serves every domain,
     and I architected and shipped all of it solo, directing AI as a coordinated engineering teammate,
     the integration and every verified claim kept first-party.</p>
@@ -116,7 +116,7 @@
       </div>
       <p class="entry-note">A composable stack that runs one loop: perceive → gate → act → verify → witness.</p>
       <ul class="bul">
-        <li><b>EMET</b>: the witness. Re-derives a file's bytes and answers MATCH / DRIFT / UNVERIFIABLE, never <em>trusted</em>. <span class="num">19/19</span> conformance across three independent language implementations (Python · Rust · Node).</li>
+        <li><b>EMET</b>: the witness. Re-derives a file's bytes and answers <span translate="no">MATCH / DRIFT / UNVERIFIABLE</span>, never <em>trusted</em>. <span class="num">19/19</span> conformance across three independent language implementations (Python · Rust · Node).</li>
         <li><b>coherence-membrane</b>: the read-gate. Turns a model's state-blindness into witnessed, re-derivable observations across an organ family (visual · raw · region · structured · audio · caption). Zero dependencies; <span class="num">868</span> tests; PyPI.</li>
         <li><b>proof-surface</b>: the write-gate. A default-deny, fail-closed authorization contract: expiring least-privilege grants, work-record receipts, delegation chains rooted in a real human with monotonic scope attenuation. Stdlib-only; <span class="num">258</span> tests; PyPI.</li>
         <li><b>accountable-surface</b>: the loop. A model perceives natively, acts only on an <em>allow</em>, and re-perceives to confirm. MCP server + filesystem/web/command effectors, inert until authorized; <span class="num">201</span> tests, including a <span class="num">39</span>-test adversarial integrity suite (forge a digest, manufacture a grant, escape a bound, each refused).</li>
