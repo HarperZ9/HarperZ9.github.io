@@ -390,7 +390,15 @@
       <button class="rt-btn" id="rt-fullscreen" type="button" title="Fill the screen with the canvas">
         <span class="rt-ico" aria-hidden="true">⤢</span> Fullscreen</button>
       <button class="rt-btn" id="rt-overlay" type="button" aria-pressed="false" title="Pop the readout into a floating overlay that stays visible while you use other tabs">
-        <span class="rt-ico" aria-hidden="true">⧉</span> Overlay</button>
+        <span class="rt-ico" aria-hidden="true">&#9645;</span> Overlay</button>
+      <!-- Fit/Fill: toggle canvas between object-fit contain (Fit) and cover (Fill).
+           Default is Fit. Wired by studio-surface.js via wireToolbarButtons(). -->
+      <button class="rt-btn" id="rt-fit-fill" type="button" aria-pressed="false" title="Toggle canvas between Fit (letterboxed, default) and Fill (cover, may clip)">
+        <span class="rt-ico" aria-hidden="true">&#9974;</span> <span id="rt-fit-fill-label">Fit</span></button>
+      <!-- Cinema: collapse both side rails so the canvas spans full width.
+           Distinct from OS fullscreen. Wired by studio-surface.js via wireToolbarButtons(). -->
+      <button class="rt-btn" id="rt-cinema" type="button" aria-pressed="false" title="Cinema mode: collapse the side panels so the canvas spans full width">
+        <span class="rt-ico" aria-hidden="true">&#9724;</span> Cinema</button>
       <!-- Export group: wired by studio.js. OBJ/GLTF shown only when a mesh is loaded;
            WebM shown only for animated sources. PNG and JSON are always available. -->
       <button class="rt-btn" id="rt-export-png"  type="button" title="Save the current frame as a PNG image">
@@ -518,7 +526,11 @@
 <script src="system/spine.js?v=20260625a" defer></script>
 <script src="system/reconcile.js?v=20260625a" defer></script>
 <script src="system/atelier.js?v=20260625a" defer></script>
-<script type="module" src="system/studio.js?v=20260625a"></script>
+<!-- Vendored interactive libraries (P1). Single prebuilt files, no runtime CDN fetch.
+     panzoom (anvaka) v9.4.3: UMD, sets window.createPanzoom.
+     Tweakpane v4.0.5: ESM named exports, imported directly by studio-surface.js. -->
+<script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js"></script>
+<script type="module" src="system/studio.js?v=20260625b"></script>
 <!-- Music reactive engine: zero-dependency WebAudio + Canvas visual system. -->
 <script type="module" src="system/reactive.js?v=20260625b"></script>
 <script type="module" src="system/reactive-music-ui.js?v=20260625b"></script>

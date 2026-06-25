@@ -1082,6 +1082,45 @@ body.world-3 .bar .rt{color:#cdd6cf}
   .chat-dock-body{padding-bottom:1rem}
 }
 
+/* ── Cinema mode: collapse both side rails so the canvas spans full viewport width ──
+   Toggled by adding .cinema to .studio-app (distinct from OS fullscreen).
+   The side rails are hidden via display:none on the grid areas. The viewport
+   expands to fill the now-empty grid columns. Does not affect the right panel
+   (it is folded with the rail); chat remains accessible via keyboard focus. */
+@media (min-width:900px){
+  .studio-app.cinema{
+    grid-template-columns:0 minmax(0,1fr) 0;
+  }
+  .studio-app.cinema .studio-rail,
+  .studio-app.cinema .studio-panel{
+    display:none;
+  }
+}
+
+/* ── Tweakpane host container: sits inside the render-toolbar as a compact slot ── */
+.tp-pane-container{position:relative;max-width:260px;flex:0 0 auto}
+/* Override Tweakpane's default light theme to match the Studio palette */
+.tp-pane-container .tp-dfwv{
+  --tp-base-background-color:rgba(11,23,24,.97);
+  --tp-base-shadow-color:rgba(0,0,0,.6);
+  --tp-blade-value-width:6rem;
+  --tp-container-unit-size:22px;
+  --tp-container-unit-spacing:4px;
+  --tp-input-background-color:rgba(15,33,34,.9);
+  --tp-input-background-color-active:rgba(239,171,48,.18);
+  --tp-input-guide-color:rgba(239,171,48,.28);
+  --tp-label-foreground-color:var(--muted);
+  --tp-monitor-background-color:rgba(6,14,15,.7);
+  width:240px;
+  border:1px solid var(--hairline);
+  border-radius:8px;
+  overflow:hidden;
+  z-index:40;
+  position:absolute;
+  bottom:calc(100% + 6px);
+  right:0;
+}
+
 /* ─── studio · the WITNESSED CERTIFICATE panel (verdict-diff) ───────────────────
    The trust surface: the named criterion, the verdict as a state chip, and the re-checkable
    evidence, rendered ABOVE the model's prose. Built on the same .panel idiom. The five states

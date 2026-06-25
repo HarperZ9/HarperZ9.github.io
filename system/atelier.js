@@ -1964,6 +1964,12 @@
     }
     if (playFine) {
       canvas.addEventListener("pointermove", function (ev) {
+        // Gate: only activate the interactive particle layer when the Atelier is the
+        // active Studio source. Without this guard, mousing over the canvas while the
+        // Music (or any other) source is painting would trigger the Atelier's overlay
+        // on top of the reactive visuals, wiping the music particles.
+        // window.__studioActiveSource is set by studio.js on every setSource() call.
+        if (window.__studioActiveSource && window.__studioActiveSource !== "atelier") return;
         if (!playReady || ev.pointerType === "touch") return;
         var rect = canvas.getBoundingClientRect(), x = ev.clientX - rect.left, y = ev.clientY - rect.top;
         if (playCur.x > -900) { playCur.vx = 0.6 * playCur.vx + 0.4 * (x - playCur.x); playCur.vy = 0.6 * playCur.vy + 0.4 * (y - playCur.y); }
