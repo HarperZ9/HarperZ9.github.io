@@ -1,11 +1,11 @@
-// fractal.js — zero-dep escape-time fractals for the Studio.
+// fractal.js: zero-dep escape-time fractals for the Studio.
 // Mandelbrot (smooth + orbit-trap glow), Julia, Burning Ship.
 // Renders into a canvas via a typed-array + putImageData (single call).
 // Deep-zoom presets from project-docs/research/fractal-studio/fractal-math.md
 // Palettes from project-docs/research/fractal-studio/aesthetics-digest.md
 
 const LOG2 = Math.log(2);
-// Bailout R=256 (R^2=65536) — needed for the smooth-coloring formula to be accurate.
+// Bailout R=256 (R^2=65536), needed for the smooth-coloring formula to be accurate.
 const BAILOUT = 256;
 const BAILOUT2 = BAILOUT * BAILOUT;
 
@@ -25,7 +25,7 @@ export function escapeTime(cre, cim, maxIter, bailout = 4) {
   return { n, zr, zi };
 }
 
-// Smooth (normalized) iteration count — eliminates integer banding.
+// Smooth (normalized) iteration count, which eliminates integer banding.
 // Formula: n + 1 - log(log|z|) / log2  (Quilez / van Nieuwpoort).
 // Returns n unchanged if |z| <= 1 or non-finite (interior / edge cases).
 export function smoothMu(n, zr, zi) {
@@ -50,7 +50,7 @@ function iterMandelbrot(cre, cim, maxIter) {
     const t = zr * zr - zi * zi + cre;
     zi = 2 * zr * zi + cim;
     zr = t;
-    // Cross orbit trap (aesthetics-digest §4 — "single highest-leverage technique")
+    // Cross orbit trap (aesthetics-digest §4, "single highest-leverage technique")
     const t2 = Math.min(Math.abs(zr), Math.abs(zi));
     if (t2 < trap) trap = t2;
     n++;
@@ -88,33 +88,33 @@ function iterBurningShip(cre, cim, maxIter) {
 }
 
 // ── Palettes ────────────────────────────────────────────────────────────────
-// From aesthetics-digest.md — all 4+ ramps as [r,g,b] stop arrays.
+// From aesthetics-digest.md, all 4+ ramps as [r,g,b] stop arrays.
 
-// Ramp 1 — Ember (deep zoom fractals, high contrast)
+// Ramp 1, Ember (deep zoom fractals, high contrast)
 const PAL_EMBER = [
   [0x0d,0x02,0x08], [0x3b,0x0a,0x1f], [0x8b,0x1a,0x2e],
   [0xe0,0x5a,0x1a], [0xf7,0xc5,0x50], [0xff,0xfb,0xe8],
 ];
 
-// Ramp 2 — Ocean Trench (deep zoom, calm + structural; best for minibrots)
+// Ramp 2, Ocean Trench (deep zoom, calm + structural; best for minibrots)
 const PAL_OCEAN = [
   [0x00,0x08,0x10], [0x00,0x22,0x44], [0x00,0x44,0x88],
   [0x00,0x77,0xb6], [0x00,0xb4,0xd8], [0xca,0xf0,0xf8],
 ];
 
-// Ramp 4 — Dusk Plasma (versatile; fractal boundary sings in violet-magenta zone)
+// Ramp 4, Dusk Plasma (versatile; fractal boundary sings in violet-magenta zone)
 const PAL_DUSK = [
   [0x0b,0x00,0x26], [0x2d,0x00,0x4e], [0x7b,0x00,0x80],
   [0xc7,0x32,0x80], [0xf7,0x8c,0x40], [0xff,0xfa,0xaa],
 ];
 
-// Ramp 6 — Bone & Rust (poster, vintage; good for Burning Ship)
+// Ramp 6, Bone & Rust (poster, vintage; good for Burning Ship)
 const PAL_BONE = [
   [0x1a,0x10,0x08], [0x3d,0x20,0x10], [0x8b,0x45,0x20],
   [0xc0,0x70,0x40], [0xe8,0xc0,0x90], [0xf5,0xea,0xd8],
 ];
 
-// Ramp 7 — Terminal Green (retro; strong for Julia dendrites)
+// Ramp 7, Terminal Green (retro; strong for Julia dendrites)
 const PAL_TERMINAL = [
   [0x00,0x00,0x00], [0x00,0x18,0x00], [0x00,0x38,0x00],
   [0x00,0x60,0x00], [0x00,0xaa,0x00], [0x88,0xff,0x88],
@@ -229,9 +229,9 @@ export const PRESETS = [
     maxIter: 1500,
     palette: "dusk",
   },
-  // Julia sets — c values from fractal-math.md §5 (MathWorld + Wikibooks)
+  // Julia sets: c values from fractal-math.md §5 (MathWorld + Wikibooks)
   {
-    name: "Julia — Douady Rabbit",
+    name: "Julia: Douady Rabbit",
     type: "julia",
     cx: 0, cy: 0,
     scale: 4.0,
@@ -240,7 +240,7 @@ export const PRESETS = [
     palette: "dusk",
   },
   {
-    name: "Julia — San Marco",
+    name: "Julia: San Marco",
     type: "julia",
     cx: 0, cy: 0,
     scale: 4.0,
@@ -249,7 +249,7 @@ export const PRESETS = [
     palette: "ocean",
   },
   {
-    name: "Julia — Basilica",
+    name: "Julia: Basilica",
     type: "julia",
     cx: 0, cy: 0,
     scale: 4.0,
@@ -258,7 +258,7 @@ export const PRESETS = [
     palette: "ember",
   },
   {
-    name: "Julia — Airplane",
+    name: "Julia: Airplane",
     type: "julia",
     cx: 0, cy: 0,
     scale: 4.0,
@@ -267,7 +267,7 @@ export const PRESETS = [
     palette: "ocean",
   },
   {
-    name: "Julia — Siegel Disk",
+    name: "Julia: Siegel Disk",
     type: "julia",
     cx: 0, cy: 0,
     scale: 4.0,
@@ -276,7 +276,7 @@ export const PRESETS = [
     palette: "dusk",
   },
   {
-    name: "Julia — Dendrite",
+    name: "Julia: Dendrite",
     type: "julia",
     cx: 0, cy: 0,
     scale: 4.0,
@@ -284,9 +284,9 @@ export const PRESETS = [
     jx: 0.0, jy: 1.0,
     palette: "terminal",
   },
-  // Burning Ship — fractal-math.md §6
+  // Burning Ship: fractal-math.md §6
   {
-    name: "Burning Ship — Hull",
+    name: "Burning Ship: Hull",
     type: "burningship",
     cx: -0.5, cy: -0.5,
     scale: 0.5,
@@ -294,7 +294,7 @@ export const PRESETS = [
     palette: "bone",
   },
   {
-    name: "Burning Ship — Sails",
+    name: "Burning Ship: Sails",
     type: "burningship",
     cx: -1.762, cy: -0.028,
     scale: 0.002,

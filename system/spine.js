@@ -1,4 +1,4 @@
-/* system/spine.js — the shared accountable spine the organs compose with.
+/* system/spine.js, the shared accountable spine the organs compose with.
    Two moves, lifted out of the individual tools so every organ runs the SAME
    code, not a lookalike:
 

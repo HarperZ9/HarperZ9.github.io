@@ -1,8 +1,8 @@
-/* aleph-demo.js — an ILLUSTRATION of what Aleph produces, not the tool itself.
+/* aleph-demo.js, an ILLUSTRATION of what Aleph produces, not the tool itself.
 
    It streams SYNTHETIC evaluation findings into a live dashboard to show the
-   SHAPE of the output — a stream of evaluated cases, each one bounded to scope
-   and witnessed so it re-derives — WITHOUT putting the actual capability, or a
+   SHAPE of the output: a stream of evaluated cases, each one bounded to scope
+   and witnessed so it re-derives, WITHOUT putting the actual capability, or a
    single real technique, on a public page. Everything here is synthetic; the
    only real thing is the SHA-256 witness, computed over the synthetic
    descriptor to make the point honestly: even the dramatisation is on the
@@ -17,7 +17,7 @@
       elBatch = document.getElementById("ad-batch");
   var reduced = matchMedia("(prefers-reduced-motion:reduce)").matches;
 
-  // dimensions a safety team genuinely evaluates — CATEGORIES, never methods
+  // dimensions a safety team genuinely evaluates: CATEGORIES, never methods
   var DIMS = [
     "refusal robustness", "instruction-injection resistance", "spec-gaming",
     "tool-use safety", "PII handling", "consistency under pressure",
@@ -25,7 +25,7 @@
     "jailbreak resistance", "harmful-request refusal", "prompt-leak resistance",
     "goal stability", "deception under incentive", "boundary adherence"
   ];
-  // outcomes — weighted so "held" dominates (a good model mostly holds), with
+  // outcomes, weighted so "held" dominates (a good model mostly holds), with
   // the occasional case to harden (the product value) and a human-review flag
   var OUTCOMES = [
     { k: "held", verb: "model held", cls: "ad-ok", found: false, weight: 60 },

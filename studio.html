@@ -4,33 +4,33 @@
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Studio — see &amp; make, together</title>
-<meta name="description" content="Make something with a model. Generate with the Atelier's algorithms or bring your own image — then look at it together, talk about it, and reshape it.">
+<title>The Studio &middot; Project Telos, the engine &middot; Zain Dana Harper</title>
+<meta name="description" content="The Studio is the live surface of Project Telos, the engine. A person and a model perceive the same thing, generate, and verify it together, step by step. The published telos repo is the small runnable demo of the same loop; this site is its testbench.">
 <link rel="canonical" href="https://harperz9.github.io/studio.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="The Studio — see &amp; make, together">
-<meta property="og:description" content="Make something with a model. Generate with the Atelier's algorithms or bring your own image — then look at it together, talk about it, and reshape it.">
+<meta property="og:title" content="The Studio &middot; Project Telos, the engine &middot; Zain Dana Harper">
+<meta property="og:description" content="The Studio is the live surface of Project Telos, the engine. A person and a model perceive the same thing, generate, and verify it together, step by step.">
 <meta property="og:url" content="https://harperz9.github.io/studio.html">
 <meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
 <meta property="og:image:alt" content="A still from the engine: a Julia set rendered in the site's palette, real mathematics drawn by our own code.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The Studio — see &amp; make, together">
-<meta name="twitter:description" content="Make something with a model. Generate with the Atelier's algorithms or bring your own image — then look at it together, talk about it, and reshape it.">
+<meta name="twitter:title" content="The Studio &middot; Project Telos, the engine &middot; Zain Dana Harper">
+<meta name="twitter:description" content="The Studio is the live surface of Project Telos, the engine. A person and a model perceive the same thing, generate, and verify it together, step by step.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Schibsted+Grotesk:wght@500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="system/system.css?v=20260623">
+<link rel="stylesheet" href="system/system.css?v=20260625a">
 </head>
 <body class="studio-page">
 
 <a class="skip-link" href="#studio-viewport">Skip to the canvas</a>
 <div id="site-nav" class="site-nav"></div>
-<noscript><nav class="site-nav"><a href="index.html">Home</a> <a href="studio.html">The Studio</a> <a href="overview.html">The Work</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<noscript><nav class="site-nav"><a href="index.html">Atlas</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
 
 <!-- The Studio app shell: one viewport, menu-driven. On desktop (≥900px) this is a fixed-height
-     CSS grid — rail · canvas · panel — and the PAGE never scrolls; each region scrolls inside itself.
+     CSS grid (rail · canvas · panel) and the PAGE never scrolls; each region scrolls inside itself.
      Below 900px it collapses to a single column and normal page scroll returns. -->
 <main class="studio-app" aria-label="The Studio">
 
@@ -38,7 +38,7 @@
   <aside class="studio-rail" id="studio-rail" aria-label="Source &amp; controls">
     <div class="rail-head">
       <h1>The Studio</h1>
-      <p class="rail-lede">Make something with a model — then look at it together and reshape it, taking turns.</p>
+      <p class="rail-lede">Project Telos, the engine. A person and a model perceive the same thing, generate, and verify it together, step by step. The <a href="https://github.com/HarperZ9/telos" style="color:inherit;border-bottom:1px solid rgba(239,171,48,.4);text-decoration:none">published telos repo</a> is the small runnable demo of the same loop. This is the engine running live.</p>
     </div>
 
     <!-- The source menu: pick what the model looks at. setSource(name) shows ONLY that block. -->
@@ -50,7 +50,7 @@
       <button type="button" role="tab" data-source="byo"       aria-selected="false" aria-controls="src-byo">Bring your own</button>
       <button type="button" role="tab" data-source="watch"     aria-selected="false" aria-controls="src-watch">Watch with me</button>
     </div>
-    <p class="rail-own">Bring your own image or video — in <b>Bring your own</b> (drop a file) or feed one to the Atelier as a specimen.</p>
+    <p class="rail-own">Bring your own image or video. Open <b>Bring your own</b> (drop a file) or feed one to the Atelier as a specimen.</p>
 
     <div class="rail-scroll">
       <!-- SOURCE: Atelier (Task 7). boot() finds #atelier and, since there is no #at-canvas here,
@@ -62,7 +62,7 @@
             <details class="rail-group" open>
               <summary>Start &amp; algorithm</summary>
               <div class="at-group">
-                <span class="at-glab">Start from <span class="hint">&mdash; a gallery of seeds; or build your own below</span></span>
+                <span class="at-glab">Start from <span class="hint">a gallery of seeds, or build your own below</span></span>
                 <div class="at-chips" id="at-gallery" role="group" aria-label="Gallery presets"></div>
               </div>
               <div class="at-group">
@@ -73,7 +73,7 @@
             <details class="rail-group">
               <summary>Specimen &amp; pens</summary>
               <div class="at-group">
-                <span class="at-glab">Specimen <span class="hint">&mdash; the photograph that steers it (or upload your own)</span></span>
+                <span class="at-glab">Specimen <span class="hint">the photograph that steers it (or upload your own)</span></span>
                 <div class="at-chips" id="at-specimens" role="group" aria-label="Specimen"></div>
               </div>
               <div class="at-group">
@@ -88,12 +88,12 @@
                 <input type="range" class="at-slider" id="at-complexity" min="0" max="100" value="58" aria-label="Complexity">
               </div>
               <div class="at-group" id="at-params-group">
-                <span class="at-glab">Parameters <span class="hint">&mdash; the algorithm&rsquo;s own knobs, folded into the seed</span></span>
+                <span class="at-glab">Parameters <span class="hint">the algorithm&rsquo;s own knobs, folded into the seed</span></span>
                 <div class="at-params" id="at-params"></div>
                 <div class="at-chips" id="at-presets" role="group" aria-label="Parameter presets"></div>
               </div>
               <div class="at-group">
-                <span class="at-glab">Seed <span class="hint">&mdash; editable; the same seed redraws the same thing</span></span>
+                <span class="at-glab">Seed <span class="hint">editable; the same seed redraws the same thing</span></span>
                 <div class="at-seedrow">
                   <input type="text" class="at-seed" id="at-seed" spellcheck="false" autocomplete="off" aria-label="Seed">
                   <button class="at-mini" id="at-newseed" type="button" title="New seed" aria-label="New seed">&#10227;</button>
@@ -109,13 +109,13 @@
             </div>
             <input type="file" id="at-img" accept="image/*" hidden>
             <div class="at-gate" id="at-gate" aria-live="polite"></div>
-            <div class="at-scores" id="at-scores" aria-live="polite" aria-label="Reconcile readout — criteria, cohesion, novelty, verdict"></div>
+            <div class="at-scores" id="at-scores" aria-live="polite" aria-label="Reconcile readout: criteria, cohesion, novelty, verdict"></div>
             <p class="at-blurb" id="at-blurb"></p>
           </div>
         </div>
       </section>
 
-      <!-- SOURCE: 2D fractal engine (Task 7b) — Mandelbrot, Julia, Burning Ship. Renders into the
+      <!-- SOURCE: 2D fractal engine (Task 7b). Mandelbrot, Julia, Burning Ship. Renders into the
            shared #studio-canvas then perceive() + greeting. -->
       <section class="src-block" id="src-fractal" role="tabpanel" aria-label="2D fractal controls" hidden>
         <div class="fractal-source" id="fractal-source">
@@ -131,7 +131,7 @@
                 </div>
               </div>
               <div class="at-group">
-                <span class="at-glab">Preset <span class="hint">&mdash; named deep-zoom targets from the research</span></span>
+                <span class="at-glab">Preset <span class="hint">named deep-zoom targets from the research</span></span>
                 <div class="dropdown" data-dropdown="fractal-preset"></div>
                 <!-- The dropdown's hidden state element keeps the id studio.js binds (set/get .value,
                      .innerHTML of <option>s, and a "change" event), now a custom listbox, not a raw select. -->
@@ -146,14 +146,14 @@
         </div>
       </section>
 
-      <!-- SOURCE: 3D fractal engine (Task 7c) — WebGL1 raymarcher, Mandelbox &amp; Mandelbulb. -->
+      <!-- SOURCE: 3D fractal engine (Task 7c). WebGL1 raymarcher, Mandelbox &amp; Mandelbulb. -->
       <section class="src-block" id="src-fractal3d" role="tabpanel" aria-label="3D fractal controls" hidden>
         <div class="fractal-source" id="fractal3d-source">
           <div class="at-panel">
             <details class="rail-group" open>
               <summary>Type</summary>
               <div class="at-group">
-                <span class="at-glab">3D fractal <span class="hint">&mdash; high-fidelity, raymarched in WebGL</span></span>
+                <span class="at-glab">3D fractal <span class="hint">high-fidelity, raymarched in WebGL</span></span>
                 <div class="at-chips" role="group" aria-label="3D fractal type">
                   <button type="button" class="chip active" data-f3type="mandelbox">Mandelbox</button>
                   <button type="button" class="chip" data-f3type="mandelbulb">Mandelbulb</button>
@@ -163,15 +163,15 @@
             <details class="rail-group" open>
               <summary>Parameters</summary>
               <div class="at-group" id="f3-scale-row">
-                <span class="at-glab">Scale <span class="hint">&mdash; the box fold strength (<span id="f3-scale-val">-2.00</span>)</span></span>
+                <span class="at-glab">Scale <span class="hint">the box fold strength (<span id="f3-scale-val">-2.00</span>)</span></span>
                 <input type="range" class="at-slider" id="f3-scale" min="-3" max="-1.5" step="0.05" value="-2" aria-label="Mandelbox scale">
               </div>
               <div class="at-group" id="f3-power-row" hidden>
-                <span class="at-glab">Power <span class="hint">&mdash; the bulb exponent (<span id="f3-power-val">8.0</span>)</span></span>
+                <span class="at-glab">Power <span class="hint">the bulb exponent (<span id="f3-power-val">8.0</span>)</span></span>
                 <input type="range" class="at-slider" id="f3-power" min="2" max="12" step="0.5" value="8" aria-label="Mandelbulb power">
               </div>
               <div class="at-group">
-                <span class="at-glab">Iterations <span class="hint">&mdash; depth of detail (<span id="f3-iterations-val">12</span>)</span></span>
+                <span class="at-glab">Iterations <span class="hint">depth of detail (<span id="f3-iterations-val">12</span>)</span></span>
                 <input type="range" class="at-slider" id="f3-iterations" min="4" max="20" step="1" value="12" aria-label="Iterations">
               </div>
             </details>
@@ -182,8 +182,8 @@
         </div>
       </section>
 
-      <!-- SOURCE: Dimensions (Task 8p) — animated n-dimensional polytope renderer, 1D–10D.
-           Draws lines into the shared #studio-canvas (a normal 2D context — no WebGL swap needed).
+      <!-- SOURCE: Dimensions (Task 8p). Animated n-dimensional polytope renderer, 1D–10D.
+           Draws lines into the shared #studio-canvas (a normal 2D context, no WebGL swap needed).
            Controls: kind chips, projection chips, dimension slider (1–10), speed slider, Render button. -->
       <section class="src-block" id="src-ndim" role="tabpanel" aria-label="Dimensions controls" hidden>
         <div class="fractal-source" id="ndim-source">
@@ -211,14 +211,14 @@
             <details class="rail-group" open>
               <summary>Dimension &amp; speed</summary>
               <div class="at-group">
-                <span class="at-glab">Dimensions <span class="hint">&mdash; n=4 is the tesseract; n=10 has 1024 vertices</span></span>
+                <span class="at-glab">Dimensions <span class="hint">n=4 is the tesseract; n=10 has 1024 vertices</span></span>
                 <div class="at-seedrow">
                   <input type="range" class="at-slider" id="ndim-n" min="1" max="10" value="4" aria-label="Number of dimensions">
                   <span class="at-seed" id="ndim-n-val" style="width:2.2rem;text-align:center">4</span>
                 </div>
               </div>
               <div class="at-group">
-                <span class="at-glab">Speed <span class="hint">&mdash; rotation rate (<span id="ndim-speed-val">1.0</span>&times;)</span></span>
+                <span class="at-glab">Speed <span class="hint">rotation rate (<span id="ndim-speed-val">1.0</span>&times;)</span></span>
                 <input type="range" class="at-slider" id="ndim-speed" min="0.1" max="3" step="0.1" value="1" aria-label="Rotation speed">
               </div>
             </details>
@@ -230,7 +230,7 @@
         </div>
       </section>
 
-      <!-- SOURCE: Bring your own (Task 8) — drop zone + transform palette + turn indicator + topography. -->
+      <!-- SOURCE: Bring your own (Task 8). Drop zone, transform palette, turn indicator, topography. -->
       <section class="src-block" id="src-byo" role="tabpanel" aria-label="Bring your own controls" hidden>
         <div id="studio-drop" class="studio-drop" tabindex="0" role="button" aria-label="Drop or choose a photo, gif, or video">
           <div class="studio-drop-empty">drop a photo &middot; gif &middot; video<br><span>or click to choose</span></div>
@@ -238,7 +238,7 @@
         <input type="file" id="studio-file" accept="image/*,video/*" hidden>
         <div class="studio-byo-ctrl">
           <details class="rail-group" open>
-            <summary>Transform it — take turns</summary>
+            <summary>Transform it, take turns</summary>
             <div id="studio-transforms" class="chat-chips"></div>
             <div id="studio-turn" class="studio-turn"></div>
           </details>
@@ -267,10 +267,10 @@
         </div>
       </section>
 
-      <!-- SOURCE: Watch with me (Task 8c) — screen / camera capture → the model sees your frames. -->
+      <!-- SOURCE: Watch with me (Task 8c). Screen / camera capture &rarr; the model sees your frames. -->
       <section class="src-block" id="src-watch" role="tabpanel" aria-label="Watch with me controls" hidden>
         <div id="studio-watch" class="studio-watch-ctrl">
-          <div class="studio-ctrl-label">Watch with me &mdash; the model sees your screen or camera</div>
+          <div class="studio-ctrl-label">Watch with me. The model sees your screen or camera</div>
           <div class="studio-watch-btns">
             <button class="btn ghost" id="watch-screen" type="button">Share screen</button>
             <button class="btn ghost" id="watch-camera" type="button">Camera</button>
@@ -289,11 +289,8 @@
       </section>
 
       <details class="rail-group rail-about">
-        <summary>About the Studio</summary>
-        <p>This is a place to make something <em>with</em> a model instead of just asking it for one. Bring your own
-          photo, gif, or video — or generate one with the Atelier's algorithms or the fractal engines — then look at
-          it together. The right panel shows exactly what the model is given: the faithful frame, its fingerprint,
-          dominant colours, and per-channel meters. Talk to it about what it sees, and reshape it, taking turns.</p>
+        <summary>About the Studio and Project Telos</summary>
+        <p>This is the live surface of Project Telos, the engine. Telos is the thesis made tangible: a person and a model stand before the same witnessed frame, generate from it, and verify every step together. Bring your own photo, gif, or video, or generate one with the Atelier's algorithms or the fractal engines. The right panel shows exactly what the model is given: the faithful frame, its fingerprint, dominant colours, and per-channel meters. Talk to it about what it sees, and reshape it, taking turns. The <a href="https://github.com/HarperZ9/telos" style="color:inherit;border-bottom:1px solid rgba(239,171,48,.4);text-decoration:none">published telos repo</a> is the small runnable demo of the same loop. This site is its testbench.</p>
       </details>
     </div>
   </aside>
@@ -312,7 +309,7 @@
         <span class="rt-ico" aria-hidden="true">⟲</span> Reset view</button>
       <button class="rt-btn" id="rt-fullscreen" type="button" title="Fill the screen with the canvas">
         <span class="rt-ico" aria-hidden="true">⤢</span> Fullscreen</button>
-      <button class="rt-btn" id="rt-overlay" type="button" aria-pressed="false" title="Pop the readout into a floating overlay — stays visible while you use other tabs">
+      <button class="rt-btn" id="rt-overlay" type="button" aria-pressed="false" title="Pop the readout into a floating overlay that stays visible while you use other tabs">
         <span class="rt-ico" aria-hidden="true">⧉</span> Overlay</button>
       <span class="rt-spacer"></span>
       <button class="rt-btn rt-quality" id="rt-quality" type="button" title="Render quality (coming soon)" disabled>
@@ -333,24 +330,24 @@
         <div class="mc-drift" id="sc-drift" hidden></div>
       </section>
 
-      <!-- The MEASURIMETER (Task 8d): every channel the tooling feeds the model — the faithful n×n
+      <!-- The MEASURIMETER (Task 8d): every channel the tooling feeds the model. The faithful n×n
            representation, per-channel meters, a motion sparkline, dominant-colour swatches, and (when
            the source has sound) audio level / spectrum / pitch. Streams via a throttled rAF loop. -->
-      <section class="panel measurimeter" id="sc-meters" aria-label="The measurimeter — everything the model senses now">
-        <h2>The measurimeter <span class="mm-sub">— everything fed to the model, live</span></h2>
+      <section class="panel measurimeter" id="sc-meters" aria-label="The measurimeter: everything the model senses now">
+        <h2>The measurimeter <span class="mm-sub">everything fed to the model, live</span></h2>
         <div class="mm-grid">
           <div class="mm-col mm-col-repr">
-            <div class="mm-clab">representation <span class="mm-hint">— the real frame, box-averaged</span></div>
+            <div class="mm-clab">representation <span class="mm-hint">the real frame, box-averaged</span></div>
             <canvas id="mm-mosaic" class="mm-mosaic" width="160" height="160" aria-label="The n×n downsampled frame the model receives"></canvas>
             <div class="mm-clab" style="margin-top:.7rem">dominant colours</div>
             <div class="mm-swatches" id="mm-swatches" aria-label="Dominant colour swatches"></div>
-            <div class="mm-clab" style="margin-top:.7rem">motion <span class="mm-hint">— frame-to-frame Δ</span></div>
+            <div class="mm-clab" style="margin-top:.7rem">motion <span class="mm-hint">frame-to-frame Δ</span></div>
             <canvas id="mm-motion" class="mm-motion" width="220" height="40" aria-label="Frame-to-frame motion over time"></canvas>
           </div>
           <div class="mm-col mm-col-meters">
             <div class="mm-clab">visual channels</div>
             <div class="mm-meters" id="mm-visual"></div>
-            <div class="mm-clab" style="margin-top:.8rem">audio channels <span class="mm-hint">— when the source has sound</span></div>
+            <div class="mm-clab" style="margin-top:.8rem">audio channels <span class="mm-hint">when the source has sound</span></div>
             <div class="mm-meters" id="mm-audio"></div>
             <div class="mm-clab" style="margin-top:.8rem">source</div>
             <div class="mm-meters mm-meta" id="mm-meta"></div>
@@ -376,17 +373,17 @@
           <button class="btn" id="chat-send" type="submit">Send</button>
         </form>
         <details class="model-connect" id="model-connect">
-          <summary>Advanced — connect a model</summary>
+          <summary>Advanced: connect a model</summary>
           <div class="mc-body">
             <p class="mc-note" id="mc-note">Your key stays in your browser and is sent only to the endpoint you choose. When a model is hosted by the operator, your message is sent to it to be computed and is not stored.</p>
             <label class="mc-label" for="mc-endpoint">Endpoint URL
               <input class="mc-input" type="url" id="mc-endpoint" placeholder="https://api.openai.com/v1/chat/completions" autocomplete="off">
             </label>
-            <p class="mc-hint">Self-host a model and connect it — your frames stay between your browser and that endpoint.<br>
+            <p class="mc-hint">Self-host a model and connect it. Your frames stay between your browser and that endpoint.<br>
               Ollama: <code>http://localhost:11434/v1/chat/completions</code><br>
               LM Studio: <code>http://localhost:1234/v1/chat/completions</code>
             </p>
-            <label class="mc-label" for="mc-key">API key <span class="mc-key-optional">(optional — local models need none)</span>
+            <label class="mc-label" for="mc-key">API key <span class="mc-key-optional">(optional, local models need none)</span>
               <input class="mc-input" type="password" id="mc-key" placeholder="sk-… (leave blank for local endpoints)" autocomplete="off" aria-describedby="mc-note">
             </label>
             <label class="mc-label" for="mc-model">Model name (optional)
@@ -405,13 +402,13 @@
 
 </main>
 
-<script type="module" src="system/nav.js"></script>
+<script type="module" src="system/nav.js?v=20260625a"></script>
 <!-- Atelier engine (Task 7): classic IIFE, self-boots on DOM ready, binds the controls above and
      draws into #studio-canvas. Loaded before the Studio module so window.Atelier + the shared
      spine/reconcile readouts are present. -->
-<script src="system/spine.js?v=20260623" defer></script>
-<script src="system/reconcile.js?v=20260623" defer></script>
-<script src="system/atelier.js?v=20260623" defer></script>
-<script type="module" src="system/studio.js"></script>
+<script src="system/spine.js?v=20260625a" defer></script>
+<script src="system/reconcile.js?v=20260625a" defer></script>
+<script src="system/atelier.js?v=20260625a" defer></script>
+<script type="module" src="system/studio.js?v=20260625a"></script>
 </body>
 </html>

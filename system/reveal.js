@@ -1,4 +1,4 @@
-/* reveal.js — lightweight scroll-reveal, shared across the site now that the
+/* reveal.js, lightweight scroll-reveal, shared across the site now that the
    worlds engine (hero.js) is retired. Resting state is already visible in CSS,
    so no-JS and prefers-reduced-motion show everything; this only adds the
    gentle entrance as sections scroll in. */

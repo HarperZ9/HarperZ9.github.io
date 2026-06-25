@@ -1,10 +1,10 @@
-/* endless.js — the live, endless, interactive creativity engine.
+/* endless.js: the live, endless, interactive creativity engine.
 
-   It drives the SAME witnessed algorithms the atelier runs (via window.Atelier
-   — nothing is duplicated): left alone it draws itself, organ after organ,
+   It drives the SAME witnessed algorithms the atelier runs (via window.Atelier,
+   so nothing is duplicated): left alone it draws itself, organ after organ,
    never the same twice; touched, it hands the viewer the engine's powers as a
    row of little tools, and three capabilities that make the point of the whole
-   site — it can WITNESS the live drawing's geometry (SHA-256, re-derivable),
+   site. It can WITNESS the live drawing's geometry (SHA-256, re-derivable),
    hand it back as a pen-plot SVG, or save the luminous frame as a PNG.
 
    Once a drawing settles it doesn't freeze: a live particle field streams along
@@ -264,10 +264,10 @@
     ctrl.appendChild(slider("dense", state.density, function (v) { state.density = v; draw(); }));
 
     var actions = document.createElement("div"); actions.className = "etool-actions";
-    actions.appendChild(mkBtn("↻", "Reseed — a fresh draw of the same recipe", function () { userTouched(); state.seed = newSeed(); transition(function () { draw(); setReadout(); }); }));
+    actions.appendChild(mkBtn("↻", "Reseed: a fresh draw of the same recipe", function () { userTouched(); state.seed = newSeed(); transition(function () { draw(); setReadout(); }); }));
     autoBtn = mkBtn("❚❚ playing", "Play / pause the endless drift", function () { state.auto = !state.auto; setAutoBtn(); if (state.auto) { clearTimeout(idleTimer); advanceSoon(400); } else clearTimeout(holdTimer); }, "etool-auto");
     actions.appendChild(autoBtn);
-    actions.appendChild(mkBtn("◉ witness", "Witness this drawing's geometry (SHA-256) — re-derivable, never trusted", doWitness));
+    actions.appendChild(mkBtn("◉ witness", "Witness this drawing's geometry (SHA-256), re-derivable, never trusted", doWitness));
     actions.appendChild(mkBtn("↓ plot", "Download as a re-derivable pen-plot SVG", doSVG));
     actions.appendChild(mkBtn("↓ png", "Save the luminous frame as a PNG", doPNG));
     ctrl.appendChild(actions);
@@ -313,7 +313,7 @@
     var opt = plotOpt(); if (!opt) return;
     var meta = "endless engine drawing\nstudy=" + state.study + " specimen=" + state.specimen + " palette=" + state.palette +
       " seed=" + state.seed + " wild=" + Math.round(state.wild * 100) + " density=" + Math.round(state.density * 100) + "\n" +
-      "drawn live at harperz9.github.io — the engine the atelier witnesses. github.com/HarperZ9";
+      "drawn live at harperz9.github.io, the engine the atelier witnesses. github.com/HarperZ9";
     save(new Blob([A.plotSVG(opt, meta)], { type: "image/svg+xml" }), "endless-" + state.study + "-" + state.seed + ".svg");
   }
   function doPNG() {

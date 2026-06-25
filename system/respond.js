@@ -1,24 +1,24 @@
-// respond.js — pure, zero-dep, node-testable.
+// respond.js: pure, zero-dep, node-testable.
 // respond(message, ctx, history?) -> string
 //
 // ctx shape:
-//   phash          string — 64-bit perceptual hash hex
-//   features       { contrast, entropy, balance } — gated scalar metrics 0-1
-//   dominantColors [hex, ...]  — up to 3 dominant colour hex strings
-//   hueName        string — plain colour name ("teal", "red", "grey", ...)
-//   edgeDensity    number 0-1 — fraction of interior pixels with strong edges
-//   motion         number — Hamming distance / 64 for latest frame-to-frame Δ (0 = still)
-//   audio          { level, pitch } | null — RMS level 0-1, pitch Hz; null = no audio
-//   sourceName     string — "Atelier", "2D fractal", "3D fractal", "your media", "screen/camera"
+//   phash          string, 64-bit perceptual hash hex
+//   features       { contrast, entropy, balance }, gated scalar metrics 0-1
+//   dominantColors [hex, ...], up to 3 dominant colour hex strings
+//   hueName        string, plain colour name ("teal", "red", "grey", ...)
+//   edgeDensity    number 0-1, fraction of interior pixels with strong edges
+//   motion         number, Hamming distance / 64 for latest frame-to-frame Δ (0 = still)
+//   audio          { level, pitch } | null, RMS level 0-1, pitch Hz; null = no audio
+//   sourceName     string, one of "Atelier", "2D fractal", "3D fractal", "your media", "screen/camera"
 //   width          number
 //   height         number
 //
-// history shape: Array<{ q: string, a: string, phash?: string }> — last few exchanges
+// history shape: Array<{ q: string, a: string, phash?: string }>, last few exchanges
 //
 // Pure: no DOM reads, no side effects.
 // NEVER puts `message` into HTML; callers use .textContent.
 
-// Intents the grounded responder cannot fulfil — declines honestly.
+// Intents the grounded responder cannot fulfil; declines honestly.
 const DECLINE_INTENTS = [
   /\bjoke\b/,
   /\bstory\b/,
@@ -33,7 +33,7 @@ const DECLINE_INTENTS = [
 export function respond(message, ctx, history = []) {
   // Safety: always return a non-empty string even with a degenerate ctx.
   if (!ctx || !ctx.phash || ctx.phash === "—") {
-    return "Nothing loaded yet — pick a source and generate or drop a frame, then ask me what I see.";
+    return "Nothing loaded yet. Pick a source and generate or drop a frame, then ask me what I see.";
   }
 
   const s = (message || "").toLowerCase();
@@ -102,30 +102,30 @@ export function respond(message, ctx, history = []) {
   // ── honest declines for things this layer cannot do ───────────────────────
   // Check BEFORE routing so "tell me a joke about colours" doesn't slip through to colour intent.
   if (DECLINE_INTENTS.some(re => re.test(s))) {
-    return `I can't do that — I'm the perception layer here, not a language model. `
+    return `I can't do that. I'm the perception layer here, not a language model. `
       + `But I can tell you exactly what I'm seeing right now: ${colorLine()}, ${motionLine()}, hash ${phash}. `
-      + `Ask me about colours, contrast, motion, or structure — or connect a real model for open-ended reasoning.`;
+      + `Ask me about colours, contrast, motion, or structure, or connect a real model for open-ended reasoning.`;
   }
 
   // ── intent classification + grounded response ────────────────────────────
 
-  // colour / hue / palette — leads with colour
+  // colour / hue / palette: leads with colour
   if (ask("colour", "color", "hue", "palette", "tint", "shade")) {
     const cStr = colors.join(", ");
-    if (!cStr) return `${changePrefix}I'm not reading a strong colour cluster right now — the frame is mostly ${hue}. Fingerprint: ${phash}.`;
+    if (!cStr) return `${changePrefix}I'm not reading a strong colour cluster right now; the frame is mostly ${hue}. Fingerprint: ${phash}.`;
     const conText = con !== null
       ? ` The contrast is ${contrastWord(con)} (${f2(con)}), so the palette ${con > 0.6 ? "has strong separation" : "blends together"}.`
       : "";
-    return `${changePrefix}Dominant colours: ${cStr} — it reads as ${hue}-dominant.${conText} Fingerprint: ${phash}.`;
+    return `${changePrefix}Dominant colours: ${cStr}. It reads as ${hue}-dominant.${conText} Fingerprint: ${phash}.`;
   }
 
-  // motion / movement — leads with motion
+  // motion / movement: leads with motion
   if (ask("motion", "move", "moving", "still", "static", "animate", "change")) {
     const delta = Math.round(motion * 64);
     if (delta === 0) {
-      return `${changePrefix}Completely still — zero frame-to-frame change (Δ0/64). The hash is locked at ${phash}. Source: ${src}.`;
+      return `${changePrefix}Completely still: zero frame-to-frame change (Δ0/64). The hash is locked at ${phash}. Source: ${src}.`;
     }
-    return `${changePrefix}It's moving: Δ${delta}/64 since the last measured frame — ${motionLine()}. Current hash ${phash} on a ${colorLine()} frame.`;
+    return `${changePrefix}It's moving: Δ${delta}/64 since the last measured frame, ${motionLine()}. Current hash ${phash} on a ${colorLine()} frame.`;
   }
 
   // structure / detail / busy / texture / complexity
@@ -133,7 +133,7 @@ export function respond(message, ctx, history = []) {
     const sw = structureWord(str);
     const ew = edge !== null ? `, with ${edgeWord(edge)} (${f2(edge)})` : "";
     const mv = motionLine();
-    return `${changePrefix}Structure (entropy): ${f2(str)} — ${sw}${ew}. Right now it's ${mv}. Source: ${src} at ${w}×${h}.`;
+    return `${changePrefix}Structure (entropy): ${f2(str)}, ${sw}${ew}. Right now it's ${mv}. Source: ${src} at ${w}×${h}.`;
   }
 
   // contrast / light / dark / bright
@@ -142,13 +142,13 @@ export function respond(message, ctx, history = []) {
     const luma = typeof ctx.features?.balance === "number"
       ? ` The tonal balance is ${f2(bal)}.`
       : "";
-    return `${changePrefix}Contrast is ${f2(con)} — ${cw}.${luma} It's ${colorLine()}, ${motionLine()}. Hash: ${phash}.`;
+    return `${changePrefix}Contrast is ${f2(con)}, ${cw}.${luma} It's ${colorLine()}, ${motionLine()}. Hash: ${phash}.`;
   }
 
   // audio / sound / loud / quiet / music / pitch
   if (ask("audio", "sound", "loud", "quiet", "music", "pitch", "hear", "listen")) {
     if (!audio) {
-      return `No audio channel is attached right now — I only have the visual signal. Visually: ${snapSummary()}. Fingerprint: ${phash}.`;
+      return `No audio channel is attached right now; I only have the visual signal. Visually: ${snapSummary()}. Fingerprint: ${phash}.`;
     }
     const lvl = audio.level;
     const hz  = audio.pitch;
@@ -157,9 +157,9 @@ export function respond(message, ctx, history = []) {
     return `Audio level: ${lvl.toFixed(3)} (${loudWord}), dominant pitch ~${Math.round(hz)} Hz (${pitchWord}). Visual context: ${colorLine()}, ${contrastWord(con)} contrast. Fingerprint: ${phash}.`;
   }
 
-  // why / how do you know / trust / prove / honest / evidence — grounding explanation
+  // why / how do you know / trust / prove / honest / evidence: grounding explanation
   if (ask("why", "how do you know", "trust", "prove", "honest", "evidence", "grounded")) {
-    return `Every word I say is a number you can re-derive. I read the ${src} frame pixel-by-pixel: hash ${phash}, ${snapSummary()}. The meters on the measurimeter are exactly what I'm given — nothing invented.`;
+    return `Every word I say is a number you can re-derive. I read the ${src} frame pixel-by-pixel: hash ${phash}, ${snapSummary()}. The meters on the measurimeter are exactly what I'm given, nothing invented.`;
   }
 
   // "what is this" / "about" / "describe" / "what do you see" / "look at" / "see"
@@ -167,9 +167,9 @@ export function respond(message, ctx, history = []) {
     const sw = str !== null ? `, ${structureWord(str)} in structure` : "";
     // Reference prior exchange if frame changed
     const historyNote = phashChanged
-      ? ` (the hash moved from ${prevPhash} to ${phash} — something changed)`
+      ? ` (the hash moved from ${prevPhash} to ${phash}, so something changed)`
       : history.length > 0 ? " (same frame as before)" : "";
-    return `${changePrefix}I'm looking at a ${w}×${h} ${src} frame — ${colorLine()}${sw}, ${edgeWord(edge)}, ${motionLine()}. Contrast: ${f2(con)}. Fingerprint: ${phash}${historyNote}.`;
+    return `${changePrefix}I'm looking at a ${w}×${h} ${src} frame: ${colorLine()}${sw}, ${edgeWord(edge)}, ${motionLine()}. Contrast: ${f2(con)}. Fingerprint: ${phash}${historyNote}.`;
   }
 
   // balance / symmetry / centred
@@ -183,13 +183,13 @@ export function respond(message, ctx, history = []) {
   if (ask("hash", "fingerprint", "id", "drift", "same", "differ")) {
     const delta = Math.round(motion * 64);
     const driftLine = delta > 0 ? ` Last frame-to-frame shift: Δ${delta}/64.` : " No frame-to-frame shift detected.";
-    return `Perceptual fingerprint: ${phash}.${driftLine} If anything changes on the canvas, the hash moves — that's how I know something happened. Source: ${src}.`;
+    return `Perceptual fingerprint: ${phash}.${driftLine} If anything changes on the canvas, the hash moves, and that's how I know something happened. Source: ${src}.`;
   }
 
   // size / dimensions / resolution
   if (ask("size", "dimension", "resolution", "pixel", "big", "small", "wide", "tall")) {
     const orient = w > h ? "landscape" : w < h ? "portrait" : "square";
-    return `The frame is ${w}×${h} — ${orient}. I downsample it to a faithful mosaic for measurement. Source: ${src}. Hash: ${phash}.`;
+    return `The frame is ${w}×${h}, ${orient}. I downsample it to a faithful mosaic for measurement. Source: ${src}. Hash: ${phash}.`;
   }
 
   // what can we try / next / suggest / idea / make / could / explore
@@ -202,7 +202,7 @@ export function respond(message, ctx, history = []) {
     let weak = "contrast", lo = Infinity;
     for (const [k, v] of axes) if (v < lo) { lo = v; weak = k; }
     const loStr = lo < Infinity ? f2(lo) : "—";
-    return `The readout shows ${snapSummary()}. ${weak} (${loStr}) has the most headroom — try a transform to push it. Or swap the source, change the palette, and watch what the hash does.`;
+    return `The readout shows ${snapSummary()}. ${weak} (${loStr}) has the most headroom, so try a transform to push it. Or swap the source, change the palette, and watch what the hash does.`;
   }
 
   // ── honest grounded fallback for ANY unmatched/off-topic input ─────────────
@@ -213,7 +213,7 @@ export function respond(message, ctx, history = []) {
     : "";
   const alt = Array.isArray(history) && history.length % 2 === 1;
   if (alt) {
-    return `${changePrefix}Right now I'm reading — ${snapSummary()}.${audioNote} What would you like to know: colour, contrast, structure, motion${audio ? ", audio" : ""}, or what we could try? Hash: ${phash}.`;
+    return `${changePrefix}Right now I'm reading ${snapSummary()}.${audioNote} What would you like to know: colour, contrast, structure, motion${audio ? ", audio" : ""}, or what we could try? Hash: ${phash}.`;
   }
-  return `${changePrefix}I can only speak to what I'm measuring right now — ${snapSummary()}.${audioNote} Ask me about its colour, contrast, structure, motion${audio ? ", audio" : ""}, or what we could try with it. Hash: ${phash}.`;
+  return `${changePrefix}I can only speak to what I'm measuring right now: ${snapSummary()}.${audioNote} Ask me about its colour, contrast, structure, motion${audio ? ", audio" : ""}, or what we could try with it. Hash: ${phash}.`;
 }

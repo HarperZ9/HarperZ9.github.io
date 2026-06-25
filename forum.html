@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>forum, an accountable orchestrator for AI agents</title>
+<meta name="description" content="forum runs a team of AI agents and records every step in a ledger you can verify. Every decision, every result, every failure is witnessed in a causal hash-chain you can replay. By Zain Dana Harper.">
+<link rel="canonical" href="https://harperz9.github.io/forum.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="forum, an accountable orchestrator for AI agents">
+<meta property="og:description" content="forum runs a team of AI agents and records every step in a ledger you can verify. Every decision, every result, every failure is witnessed in a causal hash-chain you can replay. By Zain Dana Harper.">
+<meta property="og:url" content="https://harperz9.github.io/forum.html">
+<meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta property="og:image:alt" content="A still from the engine: a Julia set rendered in the site's palette, real mathematics drawn by our own code.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="forum, an accountable orchestrator for AI agents">
+<meta name="twitter:description" content="forum runs a team of AI agents and records every step in a ledger you can verify. Every decision, every result, every failure is witnessed in a causal hash-chain you can replay. By Zain Dana Harper.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/system.css?v=20260625a">
+</head>
+<body class="inner-clean">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="index.html">Atlas</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260625a"></script>
+
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">forum &middot; accountable orchestrator</span></div>
+  <div class="mid">
+    <h1>Run a team of agents. <span class="g">Witness every step.</span></h1>
+    <p class="lede">Most orchestrators tell you an agent completed a task. forum writes down what actually happened: which lane the task went to, what plan was formed, what the result was, and whether validation passed or failed. All of that lands in a causal hash-chain ledger you can replay and verify yourself. A failed task is recorded as <code>ok=false</code>, not quietly blessed and passed along.</p>
+    <p class="close">The trust comes from re-deriving the chain, not from the engine asserting it ran cleanly.</p>
+  </div>
+  <div class="seal">forum &middot; v0.4.0 &middot; witnessed ledger &middot; fair-source</div>
+</div>
+
+<main id="main">
+
+<!-- WHAT IT IS -->
+<section class="mv" id="what" aria-labelledby="what-h">
+  <h2 id="what-h" class="reveal">It routes the work, runs it, and records every move.</h2>
+  <p class="body-text reveal">forum is a daemon-hostable engine that coordinates a team of AI agents and records each step in a ledger you can verify. You give it a task. It picks the right specialist lane (Classifier), turns the request into a validated plan (Coordinator), runs the work under witness (the executor), judges the result against the original instruction (Validator), and combines everything into one answer (Synthesizer). Every one of those steps is written to the ledger with a hash that chains to the one before it.</p>
+  <em class="close reveal">None of those roles communicate by convention or trust. Each one receives a witnessed input, produces a witnessed output, and hands it forward. There is no back-channel.</em>
+</section>
+
+<!-- THE DIFFERENTIATOR -->
+<section class="mv" id="ledger" aria-labelledby="ledger-h">
+  <h2 id="ledger-h" class="reveal">The ledger is the differentiator.</h2>
+  <p class="body-text reveal">A hash-chain ledger means each entry carries the hash of the entry before it. Alter any past record and every hash from that point forward no longer matches. You can replay the chain, recompute the hashes, and check the whole sequence yourself without asking forum whether it ran honestly. The engine also supports a live intent-drift and scope audit over the chain, so you can see not just what happened but whether the work stayed inside the original bounds of the request.</p>
+  <p class="pull reveal">A witnessed failure is more useful than an unwitnessed success.</p>
+  <p class="body-text reveal">When a task fails validation, the ledger records <code>ok=false</code> with the reason. Nothing is silently retried or promoted. You see exactly where it stopped and why. That record is as verifiable as any passing result.</p>
+</section>
+
+<!-- ARCHITECTURE -->
+<section class="mv" id="arch" aria-labelledby="arch-h">
+  <h2 id="arch-h" class="reveal">Standard library only. Zero external dependencies.</h2>
+  <p class="body-text reveal">The engine is a supervision tree of actors built on Python&rsquo;s asyncio, using nothing outside the standard library. The four model-backed control actors (Classifier, Coordinator, Validator, Synthesizer) sit above a layer of pluggable executors. An executor can drive a real model CLI, call an API, or run a local stub for testing. Small agent tools attach as peers. The whole thing can run as a daemon or be called directly.</p>
+  <div class="index reveal-children" role="list" aria-label="The four control actors">
+    <div class="index-row" role="listitem" style="--i:0">
+      <span class="index-term">Classifier</span>
+      <span class="index-gloss">reads the incoming task and picks the specialist lane that handles it</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:1">
+      <span class="index-term">Coordinator</span>
+      <span class="index-gloss">turns the routed request into a validated plan before any work starts</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:2">
+      <span class="index-term">Validator</span>
+      <span class="index-gloss">judges each output against the original instruction and records the verdict</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:3">
+      <span class="index-term">Synthesizer</span>
+      <span class="index-gloss">combines all witnessed results into one answer for the caller</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF AND RUN IT -->
+<section class="mv" id="run" aria-labelledby="run-h">
+  <h2 id="run-h" class="reveal">Current state. How to run it.</h2>
+  <p class="body-text reveal">Version 0.4.0. The model-backed control loop (Plan 3b) is merged to main. There are 59 tests. An example task routes end to end: it is classified, planned, dispatched under witness, and the ledger is verified deeply at the end. The license is fair-source (source-available, rights reserved to fund the research; the smaller utility tools that came out of this work stay permissive).</p>
+  <pre class="artifact"><span class="pr">$ git clone https://github.com/HarperZ9/forum</span>
+<span class="pr">$ cd forum</span>
+<span class="pr">$ python -m pytest</span>
+<span class="ok">59 passed</span></pre>
+  <p class="body-text reveal">Python, standard library only. Clone it, run the tests, try routing a real task through it. If something breaks or the ledger produces a result you cannot verify, that is exactly the kind of report I want.</p>
+  <div class="channels reveal">
+    <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/forum">HarperZ9/forum</a>
+    &nbsp;&middot;&nbsp;
+    <a href="overview.html">&larr; all flagships</a> &nbsp;&middot;&nbsp; <a href="./">the index</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">forum records every step in a witnessed hash-chain ledger. Replay it. Recompute the hashes. The answer comes from the chain, not from a promise.</p>
+</footer>
+
+<script src="system/reveal.js?v=20260625a" defer></script>
+</body>
+</html>
