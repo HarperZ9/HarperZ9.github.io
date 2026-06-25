@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>index, a map of your whole multi-repo workspace</title>
+<meta name="description" content="index scans a multi-repo workspace and builds a dependency graph from evidence: each repo is a node, every edge carries the file and line that proves it, and each node gets a structural role. It also checks the architecture you meant and returns a re-checkable MATCH, DRIFT, or UNVERIFIABLE certificate. Nine ecosystems, fully offline, zero dependencies. By Zain Dana Harper.">
+<link rel="canonical" href="https://harperz9.github.io/index-graph.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="index, a map of your whole multi-repo workspace">
+<meta property="og:description" content="index scans a multi-repo workspace and builds a dependency graph from evidence: each repo is a node, every edge carries the file and line that proves it, and each node gets a structural role. It also checks the architecture you meant and returns a re-checkable MATCH, DRIFT, or UNVERIFIABLE certificate. Nine ecosystems, fully offline, zero dependencies. By Zain Dana Harper.">
+<meta property="og:url" content="https://harperz9.github.io/index-graph.html">
+<meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta property="og:image:alt" content="A still from the engine: a Julia set rendered in the site's palette, real mathematics drawn by our own code.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="index, a map of your whole multi-repo workspace">
+<meta name="twitter:description" content="index scans a multi-repo workspace and builds a dependency graph from evidence: each repo is a node, every edge carries the file and line that proves it, and each node gets a structural role. It also checks the architecture you meant and returns a re-checkable MATCH, DRIFT, or UNVERIFIABLE certificate. Nine ecosystems, fully offline, zero dependencies. By Zain Dana Harper.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/system.css?v=20260625a">
+</head>
+<body class="inner-clean">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260625a"></script>
+
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">index &middot; verified workspace map</span></div>
+  <div class="mid">
+    <h1>A workspace with dozens of repos deserves <span class="g">a real map.</span></h1>
+    <p class="lede">index scans a multi-repo workspace and builds a graph from evidence. Each repository is a node. The edges are real dependencies, and each one carries the file and line that proves it, so you can see why it was drawn. Every node gets a structural role from its place in the graph. Then index goes further: it measures the architecture you meant against the one you have, and hands back a verdict you re-run instead of trust. Nine ecosystems, fully offline, zero dependencies.</p>
+    <p class="close">Done, tested, and public on PyPI. The two-layer atlas, the re-checkable certificate, and nine languages all ship today.</p>
+  </div>
+  <div class="seal">index &middot; public &middot; PyPI index-graph 2.8.0 &middot; zero dependencies &middot; offline</div>
+</div>
+
+<main id="main">
+
+<!-- WHAT IT IS -->
+<section class="mv" id="what" aria-labelledby="what-h">
+  <h2 id="what-h" class="reveal">It builds the graph from what is actually there.</h2>
+  <p class="body-text reveal">index walks the workspace, reads each repository, and derives edges from real evidence (imports, manifests, references) rather than from hand-written declarations you have to maintain. Each edge carries the evidence that produced it, so you can inspect why any two repos are connected. Each node gets a structural role based on its position in the graph: a root, a leaf, a hub, a bridge. Nothing is inferred that cannot be shown.</p>
+  <em class="close reveal">A label that comes from the graph topology is more trustworthy than a label someone wrote in a config file and forgot to update.</em>
+</section>
+
+<!-- THE ATLAS -->
+<section class="mv" id="atlas" aria-labelledby="atlas-h">
+  <h2 id="atlas-h" class="reveal">An atlas of code and knowledge.</h2>
+  <p class="body-text reveal">The deeper idea behind index is a two-layer map: repos and docs as linked nodes, navigable the way a wiki is navigable. This site is, in that sense, a small atlas of the work. Each flagship page is a node; the connections between the projects are the edges. index makes that structure explicit and machine-readable for a whole workspace, not just a website.</p>
+  <p class="pull reveal">Run it over the actual workspace and a drift signal emerges: places where the real dependencies no longer match the stated ones.</p>
+  <p class="body-text reveal">When index was run over the author&rsquo;s own workspace it found around 80 repos and 32 edges, and it surfaced drift: dependencies that had shifted since the manifests were last written. That is the kind of signal that is invisible when you have to count it by hand but obvious the moment you have a graph.</p>
+</section>
+
+<!-- THE VERIFIED BRAIN -->
+<section class="mv" id="verified" aria-labelledby="verified-h">
+  <h2 id="verified-h" class="reveal">It does not just draw the map. It checks it.</h2>
+  <p class="body-text reveal">A map tells you the shape. The next questions are whether it is the shape you meant, and whether it is still that shape today. You write the rules a healthy codebase keeps into a small <code>.index.toml</code>: which layers may depend on which, edges that must never exist, a ceiling on cycles. <code>index check</code> measures the real graph against them and returns a certificate.</p>
+  <p class="pull reveal">The verdict is one of three words, MATCH, DRIFT, or UNVERIFIABLE, and never a fourth. There is no TRUSTED.</p>
+  <p class="body-text reveal">You believe a certificate by re-running its own <code>recheck</code> command and recomputing its hashes, not because it told you to. It states its own coverage as well: the files it could not parse, the dynamic imports it could not follow, so a MATCH never claims more than it proved. <code>index snapshot</code> and <code>index drift</code> do the same across time. <code>index freshness</code> answers whether the ground truth has moved since a certificate was minted. <code>index verify</code> grounds a single claim, does A depend on B, against the real graph, so a model confirms a dependency instead of trusting its memory.</p>
+  <em class="close reveal">Every answer is re-checkable by anyone holding only the artifact and the evidence. No model sits in the checking step.</em>
+</section>
+
+<!-- PAIN -> SOLUTION -->
+<section class="mv" id="pain" aria-labelledby="pain-h">
+  <h2 id="pain-h" class="reveal">Built from what practitioners keep asking for.</h2>
+  <p class="body-text reveal">These are real comments from developers talking about agent memory and code agents, each next to what index does about it.</p>
+  <p class="pull reveal">&ldquo;Claude can make a wrong assumption and that issue will compound for hours until I check.&rdquo;</p>
+  <p class="body-text reveal">The MATCH / DRIFT / UNVERIFIABLE certificate is the mid-loop check that re-grounds an agent against the real structure each turn, instead of letting a wrong assumption ride.</p>
+  <p class="pull reveal">&ldquo;A brain that only ever adds slowly poisons itself with stale facts.&rdquo;</p>
+  <p class="body-text reveal">index marks a superseded dependency as DRIFT, non-destructively, with the trail kept, rather than letting a stale claim compete with the truth.</p>
+  <p class="pull reveal">&ldquo;I am done with online AI. Double down on offline AI.&rdquo;</p>
+  <p class="body-text reveal">index makes no model call and no network call at all. The same repo gives the same graph and the same certificate regardless of which model ran, so it is the deterministic fixed point in a stochastic stack.</p>
+  <p class="pull reveal">&ldquo;90,948 tokens to produce a 3,408-token answer.&rdquo;</p>
+  <p class="body-text reveal">index precomputes the map once and hands an agent a compact pack instead of making each sub-agent re-read the code. <code>index bench</code> measures the saving on your own workspace: on a 47-repo, 50 MB workspace the structural pack came back about 70 times smaller than the source it distills.</p>
+</section>
+
+<!-- DEMONSTRATIONS -->
+<section class="mv" id="demo" aria-labelledby="demo-h">
+  <h2 id="demo-h" class="reveal">See it run.</h2>
+  <p class="body-text reveal">One dependency edge, with the evidence that drew it. One certificate, with the verdict you re-run. One number, the token economy on your own code.</p>
+  <pre class="artifact"><span class="pr">$ index graph --root . --json</span>
+<span class="cmt"># every edge carries the file and line that witnesses it</span>
+{"from": "cli", "to": "core", "confidence": "high",
+ "evidence": "cli/main.py:12 import + pyproject.toml:8 manifest"}
+
+<span class="pr">$ index check --root .</span>
+<span class="ok">verdict=MATCH findings=0</span>
+<span class="cmt"># re-run the recheck command and confirm the hashes yourself</span>
+
+<span class="pr">$ index bench --root .</span>
+<span class="cmt"># the structural pack vs the source it reads</span>
+<span class="ok">source read  49,880,045 bytes   index pack  716,288 bytes   69.6x smaller</span></pre>
+  <em class="close reveal">Run any of these over your own workspace and the output is the same shape, with your repos in it.</em>
+</section>
+
+<!-- HONEST STATE -->
+<section class="mv" id="state" aria-labelledby="state-h">
+  <h2 id="state-h" class="reveal">What is done. What is next.</h2>
+  <p class="body-text reveal">Done and public on PyPI as <code>index-graph</code> (the name <code>index</code> was already taken): the two-layer atlas, the dependency graph across nine ecosystems, the intra-repo module graph, the architecture certificate with snapshot, drift, and freshness, the claim oracle, the router for a CLAUDE.md or AGENTS.md, the MCP protocol face, and the token-economy benchmark. All of it offline, with zero dependencies. Next: typed edges that say how A connects to B (defines, re-exports, replaces), a budget-sized per-turn context pack, and the same verified-compression discipline turned on prose.</p>
+  <p class="body-text reveal">Saying what is not done yet is part of the design. A map that overstates its coverage is worse than no map at all.</p>
+</section>
+
+<!-- RUN IT -->
+<section class="mv" id="run" aria-labelledby="run-h">
+  <h2 id="run-h" class="reveal">Install it. Point it at the workspace.</h2>
+  <p class="body-text reveal">One command to install, one command to run. If you find repos it missed, edges it drew wrong, or roles it assigned incorrectly, those are exactly the reports that sharpen the engine.</p>
+  <pre class="artifact"><span class="pr">$ pip install index-graph</span>
+<span class="ok">Successfully installed index-graph-2.8.0</span>
+
+<span class="pr">$ index atlas --root . --format html --out atlas.html</span>
+<span class="cmt"># the two-layer code-and-knowledge map, one self-contained offline file</span></pre>
+  <div class="channels reveal">
+    <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/index">HarperZ9/index</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/index-graph/">index-graph 2.8.0</a>
+    &nbsp;&middot;&nbsp;
+    <a href="overview.html">&larr; all flagships</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the catalog</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">index maps what is actually there: repos, edges with evidence, structural roles. Run it over your own workspace and see what the graph knows that you forgot.</p>
+</footer>
+
+<script src="system/reveal.js?v=20260625a" defer></script>
+</body>
+</html>
