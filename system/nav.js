@@ -37,7 +37,7 @@ export function renderNav(doc = document) {
   if (!mount) return;
   const active = navActive(doc.location ? doc.location.pathname : location.pathname);
   mount.innerHTML =
-    `<a class="sn-home" href="index.html" aria-label="Home, Zain Dana Harper">Zain Dana Harper</a>`
+    `<a class="sn-home" href="index.html" aria-label="Home, Project Telos">Project Telos</a>`
     + `<nav class="sn-links" aria-label="Primary">`
     + DEST.map(([label, href, key]) =>
         `<a href="${href}"${key === active ? ' aria-current="page"' : ''}>${label}</a>`).join("")
