@@ -81,6 +81,48 @@ export function oklabToOklch(L, a, b) {
   return [L, C, h];
 }
 
+// ---- inverse path: OKLCh -> OKLab -> linear sRGB -> sRGB bytes ----------------
+// The reverse Ottosson transform, for generating a perceptually-spaced PALETTE (move colour into
+// the editor as OKLCH swatches, render them as real sRGB). M2_INV (Lab -> l'm's'), cube, then
+// M1_INV (LMS -> lin-sRGB). Coefficients are Ottosson's published inverses (bottosson.github.io/oklab).
+const M2_INV_OKLAB_TO_LMS = [
+  [1.0, 0.3963377774, 0.2158037573],
+  [1.0, -0.1055613458, -0.0638541728],
+  [1.0, -0.0894841775, -1.2914855480],
+];
+const M1_INV_LMS_TO_LSRGB = [
+  [4.0767416621, -3.3077115913, 0.2309699292],
+  [-1.2684380046, 2.6097574011, -0.3413193965],
+  [-0.0041960863, -0.7034186147, 1.7076147010],
+];
+
+// OKLCh (L in [0,1], C >= 0, h in degrees) -> OKLab.
+export function oklchToOklab(L, C, h) {
+  const hr = h * Math.PI / 180;
+  return [L, C * Math.cos(hr), C * Math.sin(hr)];
+}
+
+export function oklabToLinearRgb(L, a, b) {
+  const m2 = M2_INV_OKLAB_TO_LMS;
+  const l_ = m2[0][0] * L + m2[0][1] * a + m2[0][2] * b;
+  const m_ = m2[1][0] * L + m2[1][1] * a + m2[1][2] * b;
+  const s_ = m2[2][0] * L + m2[2][1] * a + m2[2][2] * b;
+  const l = l_ * l_ * l_, m = m_ * m_ * m_, s = s_ * s_ * s_;
+  const m1 = M1_INV_LMS_TO_LSRGB;
+  return [
+    m1[0][0] * l + m1[0][1] * m + m1[0][2] * s,
+    m1[1][0] * l + m1[1][1] * m + m1[1][2] * s,
+    m1[2][0] * l + m1[2][1] * m + m1[2][2] * s,
+  ];
+}
+
+// OKLCh -> sRGB byte triple [0..255], gamut-clamped (channels clipped to [0,1] before encoding).
+export function oklchToSrgbByte(L, C, h) {
+  const [lr, lg, lb] = oklabToLinearRgb(...oklchToOklab(L, C, h));
+  const enc = (c) => Math.max(0, Math.min(255, Math.round(linearToSrgb(Math.max(0, Math.min(1, c))) * 255)));
+  return [enc(lr), enc(lg), enc(lb)];
+}
+
 // ── (4) CIE XYZ (D65) -> CIELAB ──────────────────────────────────────────────
 // The CIELAB path used by CIEDE2000. D65 reference white (CIE 1931 2-degree):
 // Xn=0.9505, Yn=1.0, Zn=1.0891 (per the spec's stated white). delta = 6/29.

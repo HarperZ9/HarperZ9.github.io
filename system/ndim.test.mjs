@@ -1,6 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { nCubeVertices, nCubeEdges, rotateND, projectTo2D } from "./ndim.js";
+import {
+  nCubeVertices, nCubeEdges, rotateND, projectTo2D,
+  renderScene, renderSceneVolumetric, createPaintState, paintElement,
+} from "./ndim.js";
 
 // ── vertex counts ─────────────────────────────────────────────────────────────
 
@@ -144,4 +147,97 @@ test("projectTo2D: depth increases when vertex is closer along the projection ax
   const far   = projectTo2D(new Float64Array([0, 0, -0.9]), 3);
   // closer z → larger f = dist/(dist-z) → larger depth product
   assert.ok(close.depth > far.depth, `close.depth=${close.depth} should > far.depth=${far.depth}`);
+});
+
+// ── renderSceneVolumetric (the TRUE 3D path, P2 directive b) ────────────────────
+
+test("renderSceneVolumetric: produces faces, edges, points and world verts (a volume, not a flat plane)", () => {
+  const scene = renderSceneVolumetric(
+    { kind: "cube", n: 4, t: 0.0, rotation: "all" },
+    { yaw: 0.6, pitch: 0.5, dist: 3.2 },
+    { aspect: 1 },
+  );
+  assert.ok(scene.faces.length > 0, "has triangulated faces (solid volume)");
+  assert.ok(scene.segments.length > 0, "has edges");
+  assert.ok(scene.points.length > 0, "has vertices");
+  assert.equal(scene.world.length, 16, "tesseract has 16 world-space vertices");
+  assert.equal(scene.meta.projection, "perspective3d");
+  assert.equal(scene.meta.faceCount, 48, "tesseract: 48 triangles");
+});
+
+test("renderSceneVolumetric: every vertex carries a normalized depth in [0,1] (real depth axis)", () => {
+  const scene = renderSceneVolumetric({ kind: "cube", n: 3, t: 0.3 }, { yaw: 0.3, pitch: 0.2, dist: 3 }, { aspect: 1 });
+  let sawNear = false, sawFar = false;
+  for (const p of scene.points) {
+    assert.ok(p.depth >= 0 && p.depth <= 1, `depth in [0,1], got ${p.depth}`);
+    if (p.depth < 0.5) sawNear = true;
+    if (p.depth > 0.5) sawFar = true;
+  }
+  // A 3D cube under perspective must span a depth range (not all at one plane).
+  assert.ok(sawNear && sawFar, "geometry spans a depth range (volume, not flat)");
+});
+
+test("renderSceneVolumetric: faces are painter-sorted far->near", () => {
+  const scene = renderSceneVolumetric({ kind: "cube", n: 4, t: 0.1 }, { yaw: 0.5, pitch: 0.4, dist: 3.2 }, { aspect: 1 });
+  for (let i = 1; i < scene.faces.length; i++) {
+    assert.ok(scene.faces[i - 1].depth >= scene.faces[i].depth - 1e-9,
+      `face ${i - 1} depth ${scene.faces[i - 1].depth} >= face ${i} depth ${scene.faces[i].depth}`);
+  }
+});
+
+test("renderSceneVolumetric: orbiting the camera (yaw) changes the projected positions", () => {
+  const base = { kind: "cube", n: 4, t: 0.0 };
+  const a = renderSceneVolumetric(base, { yaw: 0.0, pitch: 0.3, dist: 3.2 }, { aspect: 1 });
+  const b = renderSceneVolumetric(base, { yaw: 1.2, pitch: 0.3, dist: 3.2 }, { aspect: 1 });
+  let moved = 0;
+  for (let i = 0; i < a.proj.length; i++) {
+    if (Math.abs(a.proj[i].x - b.proj[i].x) > 1e-3 || Math.abs(a.proj[i].y - b.proj[i].y) > 1e-3) moved++;
+  }
+  assert.ok(moved > a.proj.length / 2, "orbit moves most vertices on screen");
+});
+
+test("renderSceneVolumetric: dollying in (smaller dist) enlarges the on-screen extent", () => {
+  const base = { kind: "cube", n: 3, t: 0.0 };
+  const far = renderSceneVolumetric(base, { yaw: 0.4, pitch: 0.3, dist: 6 }, { aspect: 1 });
+  const near = renderSceneVolumetric(base, { yaw: 0.4, pitch: 0.3, dist: 2.2 }, { aspect: 1 });
+  const extent = (s) => {
+    let r = 0; for (const p of s.proj) { if (!p.behind) r = Math.max(r, Math.hypot(p.x, p.y)); } return r;
+  };
+  assert.ok(extent(near) > extent(far), `dolly-in enlarges: ${extent(near)} vs ${extent(far)}`);
+});
+
+test("renderSceneVolumetric: a painted face override colour shows in the face draw list", () => {
+  const paint = createPaintState();
+  paintElement(paint, "face", 0, [123, 45, 67]);
+  const scene = renderSceneVolumetric({ kind: "cube", n: 3, t: 0.0 }, { yaw: 0.5, pitch: 0.4, dist: 3.2 }, { aspect: 1, paint });
+  const painted = scene.faces.find(f => f.faceIndex === 0);
+  // the painted face's colour is the override * shade; verify the hue ratio is preserved (R dominant
+  // here vs the depth-cue teal/amber default) and opacity is the denser painted value.
+  assert.ok(painted, "face 0 is in the draw list");
+  assert.ok(painted.opacity > 0.5, "painted faces draw denser");
+  assert.ok(painted.color[0] >= painted.color[1] && painted.color[0] >= painted.color[2],
+    `override (R-dominant) preserved through shading, got ${painted.color}`);
+});
+
+test("renderSceneVolumetric: wireframe paint-state drops faces but keeps edges", () => {
+  const paint = createPaintState({ wireframe: true });
+  const scene = renderSceneVolumetric({ kind: "cube", n: 3, t: 0.0 }, { yaw: 0.5, pitch: 0.4, dist: 3.2 }, { aspect: 1, paint });
+  assert.equal(scene.faces.length, 0, "wireframe hides faces");
+  assert.ok(scene.segments.length > 0, "wireframe keeps edges");
+});
+
+test("renderSceneVolumetric: hiding vertices/edges empties those draw lists", () => {
+  const paint = createPaintState({ showVertices: false, showEdges: false });
+  const scene = renderSceneVolumetric({ kind: "cube", n: 3, t: 0.0 }, { yaw: 0.5, pitch: 0.4, dist: 3.2 }, { aspect: 1, paint });
+  assert.equal(scene.points.length, 0, "vertices hidden");
+  assert.equal(scene.segments.length, 0, "edges hidden");
+  assert.ok(scene.faces.length > 0, "faces still shown");
+});
+
+test("renderScene (flat path) is unchanged: still returns flat points/segments without faces", () => {
+  // Regression guard: the original flat renderScene must keep its shape (P0/P1 not broken).
+  const flat = renderScene({ kind: "cube", n: 4, t: 0.2 });
+  assert.ok(Array.isArray(flat.points) && Array.isArray(flat.segments));
+  assert.equal(flat.faces, undefined, "flat path has no faces key");
+  assert.equal(flat.meta.projection, "perspective");
 });

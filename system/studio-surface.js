@@ -20,10 +20,15 @@ import { Pane as TweakpanePaneCtor } from "./lib/vendor/tweakpane-4.0.5.min.js";
 // Section 1: pan/zoom
 // ============================================================================
 
-// Sources that have a native camera (GPU/CPU pan+zoom) and must NOT get the
-// CSS pan/zoom layer. For these sources, pointer events already drive the
-// fractal camera; adding panzoom on top would double-intercept them.
-const NATIVE_CAMERA_SOURCES = new Set(["fractal", "fractal3d"]);
+// Sources that have a native CAMERA (the wheel/drag drive a real camera into a 3D render, or a
+// GPU/CPU pan+zoom of the complex plane) and must NOT get the flat CSS pan/zoom layer. For these,
+// pointer events already drive the source's own camera; adding panzoom on top would double-intercept
+// and (worse) scale a flat image instead of moving the camera through the volume.
+//   - fractal / fractal3d: native complex-plane / raymarch camera (unchanged).
+//   - ndim (P2 directive a): the volumetric nD renderer dollies the camera INTO the volume on wheel
+//     and orbits on drag, so CSS panzoom is wrong for it. Reclassified here from the flat set.
+// CSS panzoom stays ONLY for genuinely flat content: atelier drawing, BYO still image, music, watch.
+const NATIVE_CAMERA_SOURCES = new Set(["fractal", "fractal3d", "ndim"]);
 
 // The panzoom instance currently attached to the canvas stage element.
 let _pzInstance = null;

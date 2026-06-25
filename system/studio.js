@@ -9,8 +9,13 @@ import { render3D } from "./fractal3d.js";
 import { sizeToDisplay } from "./canvas-scale.js";
 import { sourceIsAnimated, shouldHaltOnStatic, fullscreenMaxBacking } from "./studio-loop.js";
 import { buildModelHeaders } from "./studio-model.js";
-import { renderScene } from "./ndim.js";
-import { drawSceneGL } from "./lib/render-nd/backends/webgl.mjs";
+import { renderScene, renderSceneVolumetric } from "./ndim.js";
+import { drawSceneGL, drawSceneGL3D } from "./lib/render-nd/backends/webgl.mjs";
+import {
+  createPaintState, setBrush, setPaintTarget, paintAtTarget, toggle as togglePaint, clearPaint,
+} from "./lib/render-nd/core/paint-state.mjs";
+import { screenRay, pickFace, nearestVertex, nearestEdge } from "./lib/render-nd/core/pick.mjs";
+import { oklchToSrgbByte } from "./lib/sense-core/colour-perceptual.mjs";
 import { StudioImporters } from "./importers.js";
 import { StudioExporters, download } from "./exporters.js";
 import { ModelAdapter } from "./model-adapter.js";
@@ -120,8 +125,9 @@ function setSource(next) {
   // Roving tabindex: active tab is 0, all others -1 (ARIA tablist pattern).
   syncTabindex(next);
   // Mark the stage interactive (grab cursor + drag affordance) for the camera-driven sources.
+  // ndim is now a camera source too (P2 directive a): wheel dollies the camera into the volume.
   const stageEl = document.getElementById("viewport-stage");
-  if (stageEl) stageEl.classList.toggle("cam-interactive", next === "fractal" || next === "fractal3d");
+  if (stageEl) stageEl.classList.toggle("cam-interactive", next === "fractal" || next === "fractal3d" || next === "ndim");
   // Music is an animated source: the reactive engine (or its idle loop) paints the canvas every
   // frame, so the perception loop must be reading it. Other sources arm their own loop from their
   // entry/play path; music has no settle-frame, so arm it here. The loop self-idles only for static
@@ -690,6 +696,20 @@ let _ndimStartTime = null;       // animation start timestamp (for t parameter)
 let _activeNDimKind = "cube";        // current polytope kind (chip selection)
 let _activeNDimProjection = "perspective"; // current projection mode (chip selection)
 
+// ── nD volumetric camera + paint state (P2 rendering directives a/b/c) ──────────
+// The nD source is now a real 3D volume: wheel dollies the CAMERA into it, drag orbits, and a click
+// picks + paints a face/vertex/edge. _ndCam is the orbit camera; _ndPaint is the pure paint-state.
+// _ndLastVolScene holds the most recent volumetric scene (world verts + projection) so the picker
+// can ray-cast against exactly what is on screen.
+const _ndCam = { yaw: 0.6, pitch: 0.5, dist: 3.2 };
+const _ndCamDefault = { yaw: 0.6, pitch: 0.5, dist: 3.2 };
+let _ndPaint = createPaintState();
+let _ndLastVolScene = null;
+let _ndLastAspect = 1;
+// expose for tests / debugging (read-only views)
+window.__studioNDimCamera = () => ({ ..._ndCam });
+window.__studioNDimPaint = () => _ndPaint;
+
 // Lazy offscreen WebGL canvas for the nD renderer (GL-primary, 2D fallback).
 let _ndGLCanvas = null, _ndGL = null, _ndGLTried = false;
 function ndGL() {
@@ -719,65 +739,80 @@ function readNDimOpts() {
   };
 }
 
-// Draw one frame of the n-dim animation via renderScene. t is elapsed seconds.
-// Returns the scene.meta object so callers can read real vertex/edge counts.
+// Draw one frame of the n-dim animation as a TRUE 3D volume (P2 directive b). t is elapsed seconds.
+// nD rotation -> 3D embedding -> orbit camera -> perspective projection with depth (renderSceneVolumetric),
+// drawn via the depth-tested WebGL path (drawSceneGL3D), 2D fallback otherwise. The last volumetric
+// scene is stashed for the picker. Returns scene.meta so callers can read real vertex/edge counts.
 function drawNDimFrame(canvas, n, t, speed, kind, projection) {
   // Restore 2D canvas if a WebGL orbit has been mounted (shouldn't happen here, but guard).
   leave3D();
   sizeCanvas(canvas);
   const w = canvas.width, h = canvas.height;
   const ctx = canvas.getContext("2d"); if (!ctx) return null;
+  const aspect = w / Math.max(1, h);
+  _ndLastAspect = aspect;
 
   // Background: match Studio's --void palette token (#0d1b1c).
   ctx.fillStyle = "#0d1b1c";
   ctx.fillRect(0, 0, w, h);
 
-  const scene = renderScene({
-    kind,
-    n: kind === "24cell" ? 4 : n,
-    t: t * speed,
-    rotation: "all",
-    projection: { mode: projection, dist: 3 },
-    scale: 0.85,
-  });
+  const scene = renderSceneVolumetric(
+    { kind, n: kind === "24cell" ? 4 : n, t: t * speed, rotation: "all" },
+    _ndCam,
+    { aspect, scale: 1.0, focal: 2.0, paint: _ndPaint },
+  );
+  _ndLastVolScene = scene;   // for the picker
 
-  const halfW = w / 2, halfH = h / 2;
-  const lineW = Math.max(0.4, 1.2 - n * 0.06);
+  const lineW = Math.max(0.5, 1.4 - n * 0.05);
 
   const gl = ndGL();
   if (gl) {
     _ndGLCanvas.width = w; _ndGLCanvas.height = h;
-    drawSceneGL(gl, scene, { width: w, height: h });
+    drawSceneGL3D(gl, scene, { width: w, height: h });
     ctx.drawImage(_ndGLCanvas, 0, 0, w, h);
   } else {
-    // 2D fallback (no WebGL): draw edges and vertices via the 2D context.
-    ctx.save();
-    ctx.lineWidth = lineW;
-
-    // Draw edges: color + opacity from depth cue provided by renderScene.
-    for (const seg of scene.segments) {
-      const [r, g, b] = seg.color;
-      ctx.strokeStyle = `rgba(${r},${g},${b},${seg.opacity.toFixed(3)})`;
-      ctx.beginPath();
-      ctx.moveTo(halfW + seg.x1 * halfW, halfH - seg.y1 * halfH);
-      ctx.lineTo(halfW + seg.x2 * halfW, halfH - seg.y2 * halfH);
-      ctx.stroke();
-    }
-
-    // Draw vertices as filled arcs: size + color from depth cue.
-    for (const pt of scene.points) {
-      const [r, g, b] = pt.color;
-      ctx.fillStyle = `rgba(${r},${g},${b},${pt.opacity.toFixed(3)})`;
-      const sx = halfW + pt.x * halfW;
-      const sy = halfH - pt.y * halfH;
-      ctx.beginPath();
-      ctx.arc(sx, sy, pt.size, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    ctx.restore();
+    draw3DSceneTo2D(ctx, scene, w, h, lineW);
   }
   return scene.meta;
+}
+
+// 2D-canvas fallback for the volumetric scene: painter-sorted translucent faces, then edges, then
+// vertices. NDC (x,y, y up) maps to pixels (y down). Used only when WebGL is unavailable.
+function draw3DSceneTo2D(ctx, scene, w, h, lineW) {
+  const halfW = w / 2, halfH = h / 2;
+  const X = (x) => halfW + x * halfW;
+  const Y = (y) => halfH - y * halfH;
+  ctx.save();
+  // faces (already far->near sorted by the builder)
+  for (const f of scene.faces) {
+    const [r, g, b] = f.color;
+    ctx.fillStyle = `rgba(${r},${g},${b},${f.opacity.toFixed(3)})`;
+    ctx.beginPath();
+    ctx.moveTo(X(f.x1), Y(f.y1));
+    ctx.lineTo(X(f.x2), Y(f.y2));
+    ctx.lineTo(X(f.x3), Y(f.y3));
+    ctx.closePath();
+    ctx.fill();
+  }
+  // edges
+  ctx.lineWidth = lineW;
+  for (const seg of scene.segments) {
+    const [r, g, b] = seg.color;
+    ctx.strokeStyle = `rgba(${r},${g},${b},${seg.opacity.toFixed(3)})`;
+    ctx.beginPath();
+    ctx.moveTo(X(seg.x1), Y(seg.y1));
+    ctx.lineTo(X(seg.x2), Y(seg.y2));
+    ctx.stroke();
+  }
+  // vertices
+  for (const pt of scene.points) {
+    const [r, g, b] = pt.color;
+    ctx.fillStyle = `rgba(${r},${g},${b},${pt.opacity.toFixed(3)})`;
+    ctx.beginPath();
+    ctx.arc(X(pt.x), Y(pt.y), pt.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
 }
 
 // Start the n-dim animation. Stops any running animation first.
@@ -809,9 +844,11 @@ function startNDimAnimation() {
         : kind;
       const vertices = meta ? meta.vertices : "?";
       const edges    = meta ? meta.edges    : "?";
+      const faceCount = meta ? meta.faceCount : "?";
       say("model",
-        `A rotating ${effectiveN}D ${kindLabel}: ${vertices} vertices and ${edges} edges, `
-        + `projected through ${/^[aeiou]/i.test(projection) ? "an" : "a"} ${projection} lens. `
+        `A rotating ${effectiveN}D ${kindLabel}: ${vertices} vertices, ${edges} edges, ${faceCount} faces, `
+        + `embedded in 3D and seen through a real perspective camera with depth. `
+        + `Scroll to dolly the camera into the volume, drag to orbit, click a face or vertex to paint it. `
         + `Fingerprint: ${obs.phash}.`
       );
       startMeterLoop();
@@ -861,9 +898,215 @@ document.querySelectorAll("[data-ndim-proj]").forEach(btn => {
   });
 });
 
+// ── nD paint palette + target + mesh toggles (P2 directive c) ─────────────────────────────────
+// Palette swatches are PERCEPTUALLY spaced via OKLCH (colour-perceptual.oklchToSrgbByte): equal
+// lightness/chroma, hues stepped around the wheel, plus light/dark anchors. Reuses the science-
+// grounded colour module rather than ad-hoc hex so the brush colours are perceptually even.
+const NDIM_PALETTE_OKLCH = [
+  [0.72, 0.16, 40],    // amber
+  [0.74, 0.15, 150],   // teal-green
+  [0.70, 0.16, 250],   // blue
+  [0.68, 0.20, 20],    // red-orange
+  [0.78, 0.17, 110],   // chartreuse
+  [0.72, 0.18, 320],   // magenta
+  [0.92, 0.02, 0],     // near-white
+  [0.40, 0.02, 0],     // graphite
+];
+function ndimBuildPalette() {
+  const host = $("ndim-palette"); if (!host || host.childElementCount) return;
+  NDIM_PALETTE_OKLCH.forEach(([L, C, h], i) => {
+    const rgb = oklchToSrgbByte(L, C, h);
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "chip ndim-swatch" + (i === 0 ? " active" : "");
+    b.setAttribute("aria-label", `Brush rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`);
+    b.style.background = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+    b.style.minWidth = "1.6rem"; b.style.color = "transparent";
+    b.dataset.rgb = rgb.join(",");
+    b.textContent = ".";   // keep a glyph so the chip has height; colour hidden
+    b.addEventListener("click", () => {
+      setBrush(_ndPaint, rgb);
+      host.querySelectorAll(".ndim-swatch").forEach(s => s.classList.toggle("active", s === b));
+    });
+    host.appendChild(b);
+  });
+  // Seed the brush from the first swatch.
+  setBrush(_ndPaint, oklchToSrgbByte(...NDIM_PALETTE_OKLCH[0]));
+}
+ndimBuildPalette();
+
+// Paint-target chips (face / vertex / edge).
+document.querySelectorAll("[data-ndim-paint]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    setPaintTarget(_ndPaint, btn.dataset.ndimPaint);
+    document.querySelectorAll("[data-ndim-paint]").forEach(b => b.classList.toggle("active", b === btn));
+  });
+});
+
+// Mesh-element toggles (faces / edges / vertices / wireframe). Repaint immediately so the change
+// shows even when the animation is paused.
+document.querySelectorAll("[data-ndim-toggle]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const flag = btn.dataset.ndimToggle;
+    const now = togglePaint(_ndPaint, flag);
+    if (now != null) {
+      btn.classList.toggle("active", now);
+      btn.setAttribute("aria-pressed", String(now));
+    }
+    if (activeSource === "ndim") ndimRepaintNow();
+  });
+});
+
+// Clear all painted overrides (keeps toggles + brush).
+const ndimClearBtn = $("ndim-clear-paint");
+if (ndimClearBtn) {
+  ndimClearBtn.addEventListener("click", () => {
+    clearPaint(_ndPaint);
+    if (activeSource === "ndim") ndimRepaintNow();
+    say("model", "Cleared the paint. The volume reads its depth-cued colours again.");
+  });
+}
+
 // Expose for tests / toolbar play-pause.
 window.__studioStartNDim = startNDimAnimation;
 window.__studioNDimRunning = () => _ndimRaf != null;
+
+// ── nD camera + painting interaction (P2 directives a + c) ───────────────────────────────────
+// (a) ZOOM-SEMANTICS FIX: for the VOLUMETRIC nD source, wheel drives the CAMERA into the render
+// (dolly through the volume), drag orbits. ndim is reclassified OUT of the CSS pan/zoom set (see
+// studio-surface.js) so it gets a real camera, not a flat image scale. (c) PAINTING: a click
+// picks a face/vertex/edge by ray and paints it with the current brush. All gated to the live nD
+// source, bound on the stable .stage container (the canvas node is swapped per source).
+function ndimInteractive() { return activeSource === "ndim" && !!_ndLastVolScene; }
+
+// Convert a client point on the canvas to normalized device coords (NDC, y up, [-1,1]).
+function ndimClientToNDC(clientX, clientY, canvas, rect) {
+  const fx = (clientX - rect.left) / rect.width;    // 0..1 across the displayed canvas
+  const fy = (clientY - rect.top) / rect.height;
+  return { nx: fx * 2 - 1, ny: -(fy * 2 - 1) };     // y flipped (screen down -> NDC up)
+}
+
+// Repaint the current nD frame immediately at the current camera/paint state (no time advance).
+// Used by interaction so a drag/zoom/paint shows without waiting for the rAF tick, and so a paint
+// persists even when the animation is paused.
+function ndimRepaintNow() {
+  const canvas = $("studio-canvas");
+  if (!canvas || activeSource !== "ndim") return;
+  const { n, speed, kind, projection } = readNDimOpts();
+  // reuse the last animation clock if running; else t=0 (a still pose to paint on).
+  const t = (_ndimStartTime != null && typeof performance !== "undefined")
+    ? (performance.now() - _ndimStartTime) / 1000 : 0;
+  drawNDimFrame(canvas, n, t, speed, kind, projection);
+  try { perceive(canvas); } catch (_) {}
+}
+window.__studioNDimRepaint = ndimRepaintNow;
+
+// Wheel: dolly the camera toward/into the volume (smaller dist = deeper in). Multiplicative.
+fStage.addEventListener("wheel", e => {
+  if (!ndimInteractive()) return;
+  e.preventDefault();
+  const factor = e.deltaY > 0 ? 1.08 : 1 / 1.08;
+  _ndCam.dist = Math.max(0.45, Math.min(9.0, _ndCam.dist * factor));
+  if (_ndimRaf == null) ndimRepaintNow();   // paused: repaint at the new camera; running: next tick shows it
+  startMeterLoop();
+}, { passive: false });
+
+// Drag to orbit (mouse): pointer delta feeds yaw/pitch.
+let _nddrag = null;
+fStage.addEventListener("pointerdown", e => {
+  if (!ndimInteractive() || e.pointerType === "touch") return;
+  _nddrag = { x: e.clientX, y: e.clientY, moved: false };
+  try { fStage.setPointerCapture(e.pointerId); } catch (_) {}
+});
+fStage.addEventListener("pointermove", e => {
+  if (!_nddrag) return;
+  const dx = e.clientX - _nddrag.x, dy = e.clientY - _nddrag.y;
+  if (Math.abs(dx) + Math.abs(dy) > 2) _nddrag.moved = true;
+  _nddrag.x = e.clientX; _nddrag.y = e.clientY;
+  _ndCam.yaw -= dx * 0.007;
+  _ndCam.pitch += dy * 0.007;
+  if (_ndimRaf == null) ndimRepaintNow();
+  startMeterLoop();
+});
+function endNDimDrag(e) {
+  if (!_nddrag) return;
+  try { fStage.releasePointerCapture(e.pointerId); } catch (_) {}
+  const wasDrag = _nddrag.moved;
+  _nddrag = null;
+  return wasDrag;
+}
+fStage.addEventListener("pointerup", e => {
+  const wasDrag = endNDimDrag(e);
+  // A click that did not drag = a paint pick.
+  if (ndimInteractive() && wasDrag === false && e.target.closest("#studio-canvas")) {
+    ndimPaintAt(e.clientX, e.clientY);
+  }
+});
+fStage.addEventListener("pointercancel", endNDimDrag);
+
+// Pick + paint the element under the cursor with the current brush, honoring the paint target.
+// Faces use a 3D ray (Moller-Trumbore); vertices/edges use screen-space proximity. After painting,
+// repaint so the colour shows immediately.
+function ndimPaintAt(clientX, clientY) {
+  const scene = _ndLastVolScene;
+  if (!scene) return;
+  const canvas = $("studio-canvas");
+  const rect = canvas.getBoundingClientRect();
+  const { nx, ny } = ndimClientToNDC(clientX, clientY, canvas, rect);
+  const target = _ndPaint.paintTarget;
+  let painted = null;
+  if (target === "vertex") {
+    const hit = nearestVertex(scene.proj, nx, ny, 0.07);
+    if (hit) { paintAtTarget(_ndPaint, hit.vertexIndex); painted = `vertex ${hit.vertexIndex}`; }
+  } else if (target === "edge") {
+    const hit = nearestEdge(scene.proj, scene.edges, nx, ny, 0.05);
+    if (hit) { paintAtTarget(_ndPaint, hit.edgeIndex); painted = `edge ${hit.edgeIndex}`; }
+  } else {
+    // face: cast a world-space ray and Moller-Trumbore against the triangles.
+    const ray = screenRay(scene.cam, nx, ny, { aspect: _ndLastAspect, focal: 2.0 });
+    const hit = pickFace(ray.origin, ray.dir, scene.faceIndices, scene.world);
+    if (hit) { paintAtTarget(_ndPaint, hit.faceIndex); painted = `face ${hit.faceIndex}`; }
+    else {
+      // fall back to nearest vertex if no face was under the cursor (e.g. wireframe gaps)
+      const vh = nearestVertex(scene.proj, nx, ny, 0.07);
+      if (vh) { paintAtTarget(_ndPaint, vh.vertexIndex); painted = `vertex ${vh.vertexIndex}`; }
+    }
+  }
+  if (painted) {
+    ndimRepaintNow();
+    const [r, g, b] = _ndPaint.brush;
+    say("model", `Painted ${painted} with rgb(${r}, ${g}, ${b}). The geometry holds the colour as it rotates.`);
+  }
+}
+window.__studioNDimPaintAt = ndimPaintAt;
+
+// Touch: one-finger orbit, two-finger pinch-dolly for the nD volume.
+const _ndtouch = { pts: new Map(), pinch: 0, x: 0, y: 0 };
+fStage.addEventListener("touchstart", e => {
+  if (!ndimInteractive()) return;
+  for (const tch of e.changedTouches) _ndtouch.pts.set(tch.identifier, { x: tch.clientX, y: tch.clientY });
+  if (_ndtouch.pts.size === 2) { const [a, b] = [..._ndtouch.pts.values()]; _ndtouch.pinch = Math.hypot(a.x - b.x, a.y - b.y); }
+  else if (_ndtouch.pts.size === 1) { const p = [..._ndtouch.pts.values()][0]; _ndtouch.x = p.x; _ndtouch.y = p.y; }
+}, { passive: true });
+fStage.addEventListener("touchmove", e => {
+  if (!ndimInteractive() || _ndtouch.pts.size === 0) return;
+  e.preventDefault();
+  for (const tch of e.changedTouches) if (_ndtouch.pts.has(tch.identifier)) _ndtouch.pts.set(tch.identifier, { x: tch.clientX, y: tch.clientY });
+  if (_ndtouch.pts.size >= 2) {
+    const [a, b] = [..._ndtouch.pts.values()];
+    const dist = Math.hypot(a.x - b.x, a.y - b.y) || 1;
+    if (_ndtouch.pinch) { const f = _ndtouch.pinch / dist; _ndCam.dist = Math.max(0.45, Math.min(9.0, _ndCam.dist * f)); }
+    _ndtouch.pinch = dist;
+  } else {
+    const p = [..._ndtouch.pts.values()][0];
+    const dx = p.x - _ndtouch.x, dy = p.y - _ndtouch.y; _ndtouch.x = p.x; _ndtouch.y = p.y;
+    _ndCam.yaw -= dx * 0.007; _ndCam.pitch += dy * 0.007;
+  }
+  if (_ndimRaf == null) ndimRepaintNow();
+  startMeterLoop();
+}, { passive: false });
+function endNDimTouch(e) { for (const tch of e.changedTouches) _ndtouch.pts.delete(tch.identifier); }
+fStage.addEventListener("touchend", endNDimTouch, { passive: true });
+fStage.addEventListener("touchcancel", endNDimTouch, { passive: true });
 
 // canvas→eye bridge (Task 7): when the Atelier finishes a drawing, perceive the shared
 // canvas and let the model greet, in plain words, exactly what it measured.
@@ -2297,6 +2540,12 @@ $("rt-reset").addEventListener("click", () => {
   } else if (activeSource === "fractal3d" && fractal3dHandle && fractal3dHandle.reset) {
     fractal3dHandle.reset();
     say("model", "Camera reset, back to the default orbit.");
+  } else if (activeSource === "ndim") {
+    // Reset the nD orbit camera to its default framing (paint overrides are kept; clear them
+    // separately via the palette's Clear button).
+    _ndCam.yaw = _ndCamDefault.yaw; _ndCam.pitch = _ndCamDefault.pitch; _ndCam.dist = _ndCamDefault.dist;
+    ndimRepaintNow();
+    say("model", "Camera reset to the default orbit on the volume.");
   } else {
     // For non-camera sources: clear the CSS pan/zoom transform.
     try { resetViewTransform(); } catch (_) {}

@@ -9,6 +9,7 @@ import {
   srgbToLinear, linearToSrgb,
   linearRgbToXyz,
   linearRgbToOklab, oklabToOklch,
+  oklchToOklab, oklabToLinearRgb, oklchToSrgbByte,
   xyzToLab, srgbByteToLab,
   ciede2000,
   dominantColoursOklab,
@@ -235,4 +236,44 @@ test("colourVolumeTag: defaults sRGB/SDR, clamps unknown values", () => {
     colourVolumeTag({ gamut: "cmyk", transfer: "log", peakNits: -5 }),
     { gamut: "srgb", transfer: "srgb", peakNits: 80 }
   );
+});
+
+// ── inverse OKLCh -> sRGB path (the palette generator) ────────────────────────
+test("oklchToOklab: cylindrical -> rectangular is the inverse of oklabToOklch", () => {
+  // Pick an OKLab colour, go to OKLCh and back; should round-trip.
+  const Lab = [0.7, 0.1, -0.05];
+  const [L, C, h] = oklabToOklch(...Lab);
+  const back = oklchToOklab(L, C, h);
+  for (let i = 0; i < 3; i++) assert.ok(Math.abs(back[i] - Lab[i]) < 1e-12, `coord ${i}`);
+});
+
+test("oklabToLinearRgb: inverts linearRgbToOklab (round-trip in linear sRGB)", () => {
+  // A few in-gamut linear-sRGB colours: forward to OKLab, back, compare.
+  const samples = [[0.2, 0.5, 0.8], [0.9, 0.1, 0.3], [0.05, 0.05, 0.05], [0.6, 0.6, 0.6]];
+  for (const lin of samples) {
+    const lab = linearRgbToOklab(...lin);
+    const back = oklabToLinearRgb(...lab);
+    for (let i = 0; i < 3; i++) assert.ok(Math.abs(back[i] - lin[i]) < 1e-6, `${lin} ch ${i} -> ${back[i]}`);
+  }
+});
+
+test("oklchToSrgbByte: returns in-range bytes and is hue-sensible", () => {
+  for (let h = 0; h < 360; h += 30) {
+    const rgb = oklchToSrgbByte(0.72, 0.15, h);
+    assert.equal(rgb.length, 3);
+    for (const c of rgb) assert.ok(Number.isInteger(c) && c >= 0 && c <= 255, `byte in range, got ${c}`);
+  }
+  // A high-lightness, near-zero-chroma colour is near-grey (R~G~B).
+  const grey = oklchToSrgbByte(0.92, 0.01, 0);
+  assert.ok(Math.max(...grey) - Math.min(...grey) < 12, `near-grey, got ${grey}`);
+  // A pure red-ish hue (~29 deg in OKLCh) has R as the dominant channel.
+  const red = oklchToSrgbByte(0.62, 0.20, 29);
+  assert.ok(red[0] > red[1] && red[0] > red[2], `red-dominant, got ${red}`);
+});
+
+test("oklchToSrgbByte: black and white anchors", () => {
+  const black = oklchToSrgbByte(0, 0, 0);
+  assert.deepEqual(black, [0, 0, 0]);
+  const white = oklchToSrgbByte(1, 0, 0);
+  for (const c of white) assert.ok(c >= 254, `white ~255, got ${white}`);
 });
