@@ -198,3 +198,131 @@ test("assembleFullPerception: missing advisory scalars read as null (honest), no
   assert.ok(fp.multiScale.grid8 && fp.multiScale.grid16 && fp.multiScale.grid32);
   assert.equal(typeof fp.edgeDensity, "number");
 });
+
+// ── Tier-2 science-grounded perception channels (ADDITIVE; the originals above must still pass) ──
+
+test("Tier-2 colour: OKLCH dominant colours with spatial centroids sit beside the original sRGB list", () => {
+  const W = 32, H = 24;
+  const px = mkRGBA(W, H, x => (x < 24 ? [0, 160, 160] : [240, 170, 40]));
+  const fp = assembleFullPerception(px, W, H, 4, { source: "x" });
+  // the ORIGINAL naive-sRGB dominant colours are untouched.
+  assert.ok(Array.isArray(fp.dominantColours) && fp.dominantColours.length >= 1);
+  assert.match(fp.dominantColours[0].hex, /^#[0-9a-f]{6}$/);
+  // the NEW OKLCH list: each entry is {oklch:{L,C,h}, areaFraction, centroidX, centroidY}.
+  assert.ok(Array.isArray(fp.dominantColoursOklab) && fp.dominantColoursOklab.length >= 1);
+  for (const c of fp.dominantColoursOklab) {
+    assert.equal(typeof c.oklch.L, "number");
+    assert.equal(typeof c.oklch.C, "number");
+    assert.equal(typeof c.oklch.h, "number");
+    assert.ok(c.oklch.h >= 0 && c.oklch.h < 360);
+    assert.ok(c.areaFraction > 0 && c.areaFraction <= 1);
+    // spatial centroids are normalized fractions (w/h were given), never null here.
+    assert.ok(c.centroidX >= 0 && c.centroidX <= 1);
+    assert.ok(c.centroidY >= 0 && c.centroidY <= 1);
+  }
+  // the colour-volume tag is the honest passthrough descriptor.
+  assert.deepEqual(fp.colourVolumeTag, { gamut: "srgb", transfer: "srgb", peakNits: 80 });
+});
+
+test("Tier-2 fidelity: wpre + wpir are numbers given pixels; pbe is null when there is no audio", () => {
+  const W = 32, H = 32;
+  const px = mkRGBA(W, H, (x, y) => [(x * 8) & 255, (y * 8) & 255, ((x ^ y) * 8) & 255]);
+  const fp = assembleFullPerception(px, W, H, 4, { source: "x", audio: null });
+  assert.ok(fp.fidelity && typeof fp.fidelity === "object");
+  assert.equal(typeof fp.fidelity.wpre, "number");
+  assert.ok(fp.fidelity.wpre >= 0);
+  assert.equal(typeof fp.fidelity.wpir, "number");
+  assert.ok(fp.fidelity.wpir >= 0 && fp.fidelity.wpir <= 1);
+  // no audio source -> pbe is honest null (never a fabricated band error).
+  assert.equal(fp.fidelity.pbe, null);
+  assert.equal(fp.audioPerceptual, null);
+  assert.equal(fp.audio, null);
+});
+
+test("Tier-2 audio: perceptual fields are null without a source, populated with real buffers", () => {
+  const W = 8, H = 8;
+  const px = mkRGBA(W, H, () => [100, 100, 100]);
+
+  // no audio -> audioPerceptual null, fidelity.pbe null (honest absence).
+  const noAudio = assembleFullPerception(px, W, H, 4, {});
+  assert.equal(noAudio.audioPerceptual, null);
+  assert.equal(noAudio.fidelity.pbe, null);
+
+  // with synthetic analyser buffers: a 440 Hz tone the time-domain YIN should recover.
+  const fftSize = 2048, bins = fftSize / 2 + 1, sampleRate = 48000;
+  const binHz = sampleRate / fftSize, peak = Math.round(440 / binHz);
+  const freqBytes = new Uint8Array(bins);
+  for (let k = 0; k < bins; k++) freqBytes[k] = Math.max(0, 220 - Math.abs(k - peak) * 8);
+  const timeBytes = new Uint8Array(fftSize);
+  for (let i = 0; i < fftSize; i++) timeBytes[i] = Math.round(128 + 90 * Math.sin(2 * Math.PI * 440 * i / sampleRate));
+  const audio = { level: 0.5, pitch: 440, spectrumBands: [1, 2], freqBytes, timeBytes, sampleRate, fftSize, minDb: -100, maxDb: -30 };
+  const fp = assembleFullPerception(px, W, H, 4, { audio, source: "audio" });
+
+  // the ORIGINAL scalar audio bundle is preserved verbatim (level/pitch/spectrumBands), no raw arrays.
+  assert.equal(fp.audio.level, 0.5);
+  assert.equal(fp.audio.pitch, 440);
+  assert.deepEqual(fp.audio.spectrumBands, [1, 2]);
+  assert.equal(fp.audio.freqBytes, undefined);   // raw typed arrays are stripped from the scalar key
+
+  // the NEW perceptual axis: ERB bands, ISO-226 loudness, YIN pitch, spectral shape, chroma, PBE.
+  const a = fp.audioPerceptual;
+  assert.equal(a.erbBands.length, 36);
+  assert.equal(a.chroma12.length, 12);
+  assert.equal(typeof a.spectralCentroidHz, "number");
+  assert.equal(typeof a.spectralRolloffHz, "number");
+  assert.ok(typeof a.iso226.phon === "number" && typeof a.iso226.sone === "number");
+  // YIN resolves the fundamental near 440 Hz (it works on the time-domain difference function).
+  assert.ok(Math.abs(a.yinPitch.f0 - 440) < 5, `f0 ${a.yinPitch.f0} ~ 440`);
+  // PBE is now a real bounded band error, and fidelity.pbe mirrors its mean.
+  assert.equal(typeof a.pbe.mean, "number");
+  assert.equal(fp.fidelity.pbe, a.pbe.mean);
+});
+
+test("Tier-2 vision: multiScale carries the biomimetic extension AND keeps every original grid", () => {
+  const W = 48, H = 36;   // wide frame -> aspect-native cell grid (cols > rows), never padded square.
+  const px = mkRGBA(W, H, (x, y) => [(x * 4) & 255, (y * 6) & 255, 80]);
+  const fp = assembleFullPerception(px, W, H, 4, { source: "x" });
+  const ms = fp.multiScale;
+  // EVERY original box-average grid is still present (additive, not replaced).
+  for (const n of [4, 8, 16, 32, 64, 128]) {
+    assert.ok(ms["grid" + n], "grid" + n + " present");
+    assert.equal(ms["grid" + n].length, n);
+  }
+  // new fields.
+  assert.equal(typeof ms.contrastLowFreq, "number");
+  assert.equal(typeof ms.contrastHighFreq, "number");
+  assert.ok(Array.isArray(ms.saliencyCells));
+  assert.ok(Array.isArray(ms.redundantCells));
+  assert.equal(ms.saliencyCells.length, ms.redundantCells.length);
+  assert.ok(Array.isArray(ms.perCellCoords) && ms.perCellCoords.length === ms.saliencyCells.length);
+  for (const c of ms.perCellCoords) {
+    assert.ok(c.xFrac >= 0 && c.xFrac < 1 && c.yFrac >= 0 && c.yFrac < 1);
+    assert.ok(c.wFrac > 0 && c.hFrac > 0);
+  }
+  assert.deepEqual(ms.gridRoles, { coarse: "global_context", fine: "local_detail" });
+  assert.equal(ms.aspectNative, true);
+  // aspect-native: wider than tall -> more columns than rows.
+  assert.ok(fp.dimensions.cells.cols > fp.dimensions.cells.rows);
+  // canvas dims echoed on every payload (spec C).
+  assert.equal(fp.dimensions.canvasWidthPx, W);
+  assert.equal(fp.dimensions.canvasHeightPx, H);
+  // redundancy is honest booleans; saliency is finite 0..1-ish numbers.
+  for (const r of ms.redundantCells) assert.equal(typeof r, "boolean");
+  for (const s of ms.saliencyCells) assert.ok(typeof s === "number" && isFinite(s));
+});
+
+test("Tier-2: all ORIGINAL assembleFullPerception keys remain present (additive, nothing removed)", () => {
+  const W = 16, H = 16;
+  const px = mkRGBA(W, H, x => (x < 8 ? [200, 30, 30] : [30, 30, 200]));
+  const pre = { phash: "abc", contrast: 0.5, structure: 0.6, balance: 0.7, coverage: 0.4, motion: 0.1, audio: null, source: "orig" };
+  const fp = assembleFullPerception(px, W, H, 4, pre);
+  for (const k of ["dimensions", "phash", "contrast", "structure", "balance", "coverage",
+    "edgeDensity", "light", "dark", "meanLuma", "dominantColours", "hueName",
+    "distributions", "motion", "audio", "source", "multiScale"]) {
+    assert.ok(k in fp, "original key present: " + k);
+  }
+  assert.equal(fp.phash, "abc");
+  assert.equal(fp.contrast, 0.5);
+  assert.equal(fp.source, "orig");
+  assert.ok(fp.distributions.luma && fp.distributions.hue);
+});

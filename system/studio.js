@@ -16,6 +16,7 @@ import { ModelAdapter } from "./model-adapter.js";
 import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-frame/certificate.js";
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
+import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
 const $ = id => (window.__overlayDoc && window.__overlayDoc.getElementById(id)) || document.getElementById(id);
 const fmt = (v,n=3)=>typeof v==="number"?(Number.isInteger(v)?String(v):v.toFixed(n)):String(v);
 // drift is per-canvas (Task 6 review carry-in): keyed by the canvas instance, so switching
@@ -1797,10 +1798,19 @@ function fullPerception() {
     try {
       analyser.getByteTimeDomainData(audioTimeBuf);
       analyser.getByteFrequencyData(audioFreqBuf);
+      // Original scalar bundle (preserved) PLUS the raw analyser buffers + params the Tier-2 perceptual
+      // path (ERB/ISO-226/YIN/chroma/PBE) consumes. The heavy audio math runs in assembleFullPerception,
+      // which is send-time only. No source -> audio stays null and every perceptual audio field is null.
       audio = {
         level: rmsFromBytes(audioTimeBuf),
         pitch: dominantPitchHz(audioFreqBuf, audioCtx.sampleRate, analyser.fftSize),
         spectrumBands: spectrumBands(audioFreqBuf, 32),
+        freqBytes: audioFreqBuf,
+        timeBytes: audioTimeBuf,
+        sampleRate: audioCtx.sampleRate,
+        fftSize: analyser.fftSize,
+        minDb: analyser.minDecibels,
+        maxDb: analyser.maxDecibels,
       };
     } catch (_) { audio = null; }
   }
@@ -1814,9 +1824,37 @@ function fullPerception() {
     audio,
     source: currentSourceLabel(),
   };
-  return assembleFullPerception(px, w, h, 4, pre);
+  const perception = assembleFullPerception(px, w, h, 4, pre);
+  // Self-improvement: append this perception's fidelity record (wpre/pbe/wpir) to the append-only
+  // perception-fidelity ledger. Guarded + fire-and-forget so it never blocks or breaks the payload.
+  try { recordFidelity(perception); } catch (_) {}
+  return perception;
 }
 window.__studioFullPerception = fullPerception;   // tests / debugging hook
+
+// ── perception-fidelity ledger (append-only, the self-improvement storage) ────────────────────────
+// Mirrors the certificate audit trail: open once (browser only), append each perception's three
+// fidelity metrics with a caller-supplied timestamp. Failure is non-fatal (private-mode IndexedDB
+// block, node env): the payload still carries `fidelity`, the ledger just no-ops.
+let _fidelityLog = null;
+async function ensureFidelityLog() {
+  if (_fidelityLog) return _fidelityLog;
+  try { _fidelityLog = await openFidelityLog(); } catch (_) { _fidelityLog = null; }
+  return _fidelityLog;
+}
+async function recordFidelity(perception) {
+  const fdl = perception && perception.fidelity;
+  if (!fdl) return;
+  const entry = { wpre: fdl.wpre, pbe: fdl.pbe, wpir: fdl.wpir, source: perception.source, timestamp: Date.now() };
+  const log = await ensureFidelityLog();
+  if (log) { try { await log.append(entry); } catch (_) {} }
+}
+// Test / Playwright hook: read the fidelity ledger trail.
+window.__studioFidelityList = async () => {
+  const log = await ensureFidelityLog();
+  if (log) { try { return await log.replay(); } catch (_) { return []; } }
+  return [];
+};
 
 // captureCanvasPNG(): the LOSSLESS ground-truth image, the current #studio-canvas as a PNG data URL
 // at full backing resolution. A WebGL-backed canvas can't be read by toDataURL after a paint (the
