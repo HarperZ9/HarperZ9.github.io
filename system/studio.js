@@ -18,6 +18,15 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
+import {
+  onSourceChange as surfaceOnSourceChange,
+  resetViewTransform,
+  wireToolbarButtons,
+  registerMusicCallbacks,
+  registerFractalCallbacks,
+  startMonitorLoop,
+  stopMonitorLoop,
+} from "./studio-surface.js";
 const $ = id => (window.__overlayDoc && window.__overlayDoc.getElementById(id)) || document.getElementById(id);
 const fmt = (v,n=3)=>typeof v==="number"?(Number.isInteger(v)?String(v):v.toFixed(n)):String(v);
 // drift is per-canvas (Task 6 review carry-in): keyed by the canvas instance, so switching
@@ -98,6 +107,10 @@ function setSource(next) {
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
+  // Publish activeSource so atelier.js (and any other non-module script) can gate
+  // their canvas pointer handlers. Without this the Atelier's particle overlay fires
+  // on every source, wiping music particles when the mouse crosses the canvas.
+  window.__studioActiveSource = next;
   mode = SOURCES[next].mode;
   for (const [name, cfg] of Object.entries(SOURCES)) {
     const el = $(cfg.block); if (el) el.hidden = name !== next;
@@ -113,6 +126,15 @@ function setSource(next) {
   // sources via the sourceIsAnimated() guard in liveTick, so music will not freeze.
   if (next === "music") startMeterLoop();
   syncToolbarForSource();
+  // Notify the surface layer so panzoom attaches/detaches per the source change.
+  // Pass the current canvas (may be a fresh GL canvas if fractal3d swapped it).
+  try { surfaceOnSourceChange(next, $("studio-canvas")); } catch (_) {}
+  // Start Tweakpane monitor loop for animated sources; stop it for static ones.
+  if (next === "music" || next === "ndim" || next === "fractal3d") {
+    try { startMonitorLoop(); } catch (_) {}
+  } else {
+    try { stopMonitorLoop(); } catch (_) {}
+  }
 }
 
 $("studio-source").addEventListener("click", e => {
@@ -2241,7 +2263,9 @@ $("rt-reset").addEventListener("click", () => {
     fractal3dHandle.reset();
     say("model", "Camera reset, back to the default orbit.");
   } else {
-    say("model", "Nothing to reset on this source. Pick a fractal to use the camera.");
+    // For non-camera sources: clear the CSS pan/zoom transform.
+    try { resetViewTransform(); } catch (_) {}
+    say("model", "View transform cleared.");
   }
 });
 
@@ -2794,6 +2818,57 @@ if (mcDisconnect) {
     // Timeout, network error, or abort: silently stay on grounded responder.
   }
 })();
+
+// ── Surface controls (P1): Tweakpane callbacks + toolbar buttons ─────────────
+// Register live callbacks into the surface module so Tweakpane bindings drive
+// the real MusicExperience / fractal state. Guarded: these are best-effort; any
+// missing DOM or API leaves existing controls fully functional.
+registerMusicCallbacks({
+  getFeatures: () => {
+    const ME = window.MusicExperience;
+    return ME && typeof ME.getFeatures === "function" ? ME.getFeatures() : null;
+  },
+  setMode: name => {
+    const ME = window.MusicExperience; if (ME && ME.setMode) ME.setMode(name);
+  },
+  setPreset: name => {
+    const ME = window.MusicExperience; if (ME && ME.setMapping) ME.setMapping(name);
+  },
+  setSensitivity: val => {
+    const ME = window.MusicExperience;
+    if (!ME) return;
+    const preset = (ME.PRESETS && ME.PRESETS["default"]) || {};
+    ME.setMapping(Object.assign({}, preset, { sensitivity: val }));
+  },
+  setSoundEnabled: on => {
+    const ME = window.MusicExperience; if (ME && ME.setSoundEnabled) ME.setSoundEnabled(on);
+  },
+  setSoundLevel: val => {
+    const ME = window.MusicExperience; if (ME && ME.setSoundLevel) ME.setSoundLevel(val);
+  },
+  setAttractorType: type => {
+    const ME = window.MusicExperience; if (ME && ME.setAttractorType) ME.setAttractorType(type);
+  },
+});
+
+registerFractalCallbacks({
+  getView: () => fractalView,
+  getActiveFType: () => activeFType,
+  setActiveFType: t => {
+    activeFType = t;
+    buildPresetMenu(activeFType);
+  },
+  rebuildPresetMenu: t => buildPresetMenu(t),
+  setMaxIter: val => {
+    if (fractalView) {
+      fractalView.maxIter = Math.round(val);
+      scheduleFractalRender();
+    }
+  },
+});
+
+// Wire Fit/Fill + Cinema toolbar buttons + build the Tweakpane pane.
+wireToolbarButtons();
 
 // Boot the source menu: Atelier active by default (mirrors the old setMode("generate")).
 setSource("atelier");
