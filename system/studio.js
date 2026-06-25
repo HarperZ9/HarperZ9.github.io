@@ -13,6 +13,9 @@ import { drawSceneGL } from "./lib/render-nd/backends/webgl.mjs";
 import { StudioImporters } from "./importers.js";
 import { StudioExporters, download } from "./exporters.js";
 import { ModelAdapter } from "./model-adapter.js";
+import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-frame/certificate.js";
+import { renderCertificate } from "../shared-frame/certificate-panel.js";
+import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 const $ = id => (window.__overlayDoc && window.__overlayDoc.getElementById(id)) || document.getElementById(id);
 const fmt = (v,n=3)=>typeof v==="number"?(Number.isInteger(v)?String(v):v.toFixed(n)):String(v);
 // drift is per-canvas (Task 6 review carry-in): keyed by the canvas instance, so switching
@@ -821,6 +824,144 @@ document.addEventListener("atelier:drawn", e => {
     + `. My fingerprint of it is ${obs.phash}. Where shall we take it?`);
   startMeterLoop();   // a static generated frame; the loop runs briefly then self-idles
 });
+
+// ══ The witnessed certificate (verdict-diff) + append-only audit trail ════════════════════════════
+// Surfaces certificate.js as a one-click, scannable verdict ABOVE the prose, and appends every issued
+// certificate and operator action to an IndexedDB append-only log (audit-log.js). The certificate is
+// built from the REAL Atelier reconcile verdict via the deterministic structuralOracle (never faked):
+// the named criterion is "every reconcile axis clears its structural floor"; the artifact is the live
+// per-axis margins; the reconcile's own pass/refine tag rides along as the advisory model surrogate.
+
+const CERT_FLOOR = 0.45;   // the per-axis structural floor each reconcile margin must clear to verify.
+let _certLog = null;       // the opened append-only audit log handle (null until openLog resolves).
+let _lastCert = null;      // the certificate currently rendered (the one operator actions stamp).
+
+// Map a reconcile verdict { margins, cohesion, weakest, tag, axes } to a real certificate.js certificate.
+// structuralOracle is the deterministic, certifying oracle: it refutes naming exactly which axis fell
+// below the floor, so the failure is itself inspectable. The reconcile tag is advisory-only (surrogate).
+function certificateFromReconcile(v) {
+  if (!v || !v.margins) return null;
+  const axes = Array.isArray(v.axes) ? v.axes : Object.keys(v.margins);
+  const ranges = {};
+  for (const a of axes) ranges[a] = [CERT_FLOOR, 1];
+  const oracle = structuralOracle(v.margins, { required: axes, ranges });
+  // The reconcile's coarse tag ("pass"/"refine"/...) is a model-side read: carry it as a surrogate
+  // (oracle=model, never certified) so an oracle-vs-surrogate split surfaces as "disputed", not hidden.
+  const surrogateVerdict = v.tag === "pass" ? "verified" : v.tag === "refine" ? "refuted" : null;
+  const surrogate = surrogateVerdict
+    ? cognitiveOracle(surrogateVerdict, `reconcile tag=${v.tag}, cohesion=${(+v.cohesion).toFixed(3)}`)
+    : null;
+  return buildCertificate({
+    criterion: `every reconcile axis clears the structural floor (>= ${CERT_FLOOR})`,
+    claim: `structurally coherent across ${axes.length} axes; cohesion ${(+v.cohesion).toFixed(3)}`,
+    oracleVerdict: oracle,
+    surrogateVerdict: surrogate,
+    haltReason: v.weakest ? `weakest-axis:${v.weakest}` : null,
+    evidence: [["cohesion", (+v.cohesion).toFixed(4)], ["weakest_axis", String(v.weakest || "none")]],
+  });
+}
+
+// Open the append-only audit log once (browser only). Failure is non-fatal: the certificate still
+// renders, the trail just notes it is unavailable (e.g. private-mode IndexedDB block).
+async function ensureCertLog() {
+  if (_certLog) return _certLog;
+  try { _certLog = await openLog(); } catch (e) { _certLog = null; }
+  return _certLog;
+}
+
+// Append an entry to the audit trail (issue or operator action) with a caller-supplied timestamp, then
+// refresh the rendered list. Appends never overwrite (audit-log is add-only). All guarded; never throws.
+async function appendAudit(cert, operatorAction) {
+  const entry = { certificate: cert, timestamp: Date.now(), operatorAction: operatorAction || "" };
+  const log = await ensureCertLog();
+  if (log) { try { await log.append(entry); } catch (_) {} }
+  else { _localAudit.push(normaliseEntry(entry)); }   // in-memory fallback so the trail still shows
+  await refreshAuditList();
+}
+
+// An in-memory mirror used only when IndexedDB is unavailable, so the panel can still replay the trail.
+const _localAudit = [];
+
+// Render the audit trail list, newest first. Reads the persisted log when present, else the mirror.
+async function refreshAuditList() {
+  const listEl = $("cert-audit-list"), countEl = $("cert-audit-count");
+  if (!listEl) return;
+  let entries = [];
+  const log = await ensureCertLog();
+  if (log) { try { entries = await log.replay(); } catch (_) { entries = []; } }
+  else entries = orderEntries(_localAudit);
+  listEl.textContent = "";
+  if (countEl) countEl.textContent = entries.length ? `${entries.length} stamped` : "";
+  if (!entries.length) {
+    const empty = document.createElement("p");
+    empty.className = "cert-audit-empty";
+    empty.textContent = "No certificates issued yet.";
+    listEl.appendChild(empty);
+    return;
+  }
+  // newest first for reading; the store itself stays append-only oldest-to-newest.
+  for (const en of entries.slice().reverse()) listEl.appendChild(auditRow(en));
+}
+
+// One audit row: timestamp, criterion, verdict chip, and the operator action (if any). Nodes only.
+function auditRow(en) {
+  const row = document.createElement("div");
+  row.className = "cert-audit-row";
+  const ts = document.createElement("span");
+  ts.className = "cert-audit-ts";
+  ts.textContent = typeof en.timestamp === "number" ? new Date(en.timestamp).toLocaleTimeString() : String(en.timestamp || "?");
+  const crit = document.createElement("span");
+  crit.className = "cert-audit-crit";
+  crit.textContent = (en.verdict || "unverifiable") + (en.criterion ? " · " + en.criterion : "");
+  crit.title = en.criterion || "";
+  const act = document.createElement("span");
+  act.className = "cert-audit-act";
+  act.dataset.verdict = en.verdict || "unverifiable";
+  act.textContent = en.operatorAction ? en.operatorAction : "issued";
+  row.appendChild(ts); row.appendChild(crit); row.appendChild(act);
+  return row;
+}
+
+// Issue + render a certificate, and append the issuance to the audit trail. The verdict-diff renders
+// in #cert-render; operator accept/reject/dispute appends a stamped entry. announce() routes to #status
+// if present, else the chat is the live region the user already watches.
+function issueCertificate(cert) {
+  const container = $("cert-render");
+  if (!container || !cert) return;
+  _lastCert = cert;
+  renderCertificate(container, cert, {
+    onAction: (actionKey, c) => { appendAudit(c, actionKey); },
+    announce: msg => { const s = $("status"); if (s) s.textContent = msg; },
+  });
+  const note = $("cert-note");
+  if (note) note.textContent = cert.certified
+    ? "This verdict was driven by a deterministic check, not the model. Re-derive it above to reproduce it yourself."
+    : "Unverifiable or advisory: no deterministic check certified this. The model's read is carried, never mistaken for proof.";
+  appendAudit(cert, "");   // stamp the issuance itself (operatorAction empty) onto the append-only trail
+}
+
+// When the Atelier settles a drawing, issue a certificate from its real reconcile verdict.
+document.addEventListener("atelier:drawn", e => {
+  const v = e.detail && e.detail.verdict;
+  const cert = certificateFromReconcile(v);
+  if (cert) issueCertificate(cert);
+});
+
+// Initialise the panel at boot: an honest empty state + the (possibly empty) audit trail.
+(function initCertificatePanel() {
+  const container = $("cert-render");
+  if (container) renderCertificate(container, null);
+  refreshAuditList();
+})();
+
+// Test / Playwright hooks: drive the panel without a full Atelier draw, and read the trail.
+window.__studioIssueCert = issueCertificate;
+window.__studioCertFromReconcile = certificateFromReconcile;
+window.__studioAuditList = async () => {
+  const log = await ensureCertLog();
+  if (log) { try { return await log.replay(); } catch (_) { return []; } }
+  return orderEntries(_localAudit);
+};
 
 // ── BYO mode (Task 8) ─────────────────────────────────────────────────────
 // "Bring your own": upload a photo/gif/video onto the shared #studio-canvas,
