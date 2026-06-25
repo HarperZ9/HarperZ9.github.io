@@ -2324,6 +2324,9 @@ function syncToolbarForSource() {
   $("rt-playpause-label").textContent = "Pause";
   pp.setAttribute("aria-pressed", "false");
   pp.querySelector(".rt-ico").textContent = "⏸";
+  // Stage 1: the engine tier override is only meaningful for the Music source (the particles engine).
+  const tb = $("rt-tier");
+  if (tb) { tb.hidden = activeSource !== "music"; if (typeof updateTierButtonTitle === "function") try { updateTierButtonTitle(); } catch (_) {} }
 }
 $("rt-playpause").addEventListener("click", () => {
   paused = !paused;
@@ -2904,6 +2907,73 @@ registerFractalCallbacks({
 
 // Wire Fit/Fill + Cinema toolbar buttons + build the Tweakpane pane.
 wireToolbarButtons();
+
+// ── Stage 1: scalable-engine capability probe + tier override ─────────────────────────────────
+// Probe the device once at boot and hand the capability record to the music particles engine so it
+// can pick the WebGPU / WebGL2 / CPU rung. The probe never throws; absence is honest. The Auto/Low/
+// Mid/High/Max override lives next to rt-quality and applies live (re-inits the particles engine).
+// This is additive: if the engine module or the probe is unavailable, the music particles keep
+// running on the existing Canvas2D path (graceful degradation), and the button stays hidden.
+const TIER_ORDER = ["auto", "low", "mid", "high", "max"];
+const TIER_LABEL = { auto: "Auto", low: "Low", mid: "Mid", high: "High", max: "Max" };
+let engineTierOverride = "auto";
+try {
+  const stored = localStorage.getItem("studio.engineTier");
+  if (stored && TIER_ORDER.includes(stored)) engineTierOverride = stored;
+} catch (_) {}
+
+(async function bootScalableEngine() {
+  let capability = null;
+  try {
+    const cap = await import("./engine/capability.js");
+    capability = await cap.probeCapability();
+    window.__studioCapability = capability;   // honest, inspectable
+  } catch (_) { capability = null; }
+  // Feed the music visuals engine (reactive-visuals exposes setCapability/setTierOverride). It may
+  // not be loaded yet when this runs; retry on the window load tick and also poll briefly.
+  function feed() {
+    const RV = window.ReactiveVisuals;
+    if (RV && RV.setCapability) {
+      try { RV.setCapability(capability); RV.setTierOverride(engineTierOverride); } catch (_) {}
+      return true;
+    }
+    return false;
+  }
+  if (!feed()) {
+    let tries = 0;
+    const iv = setInterval(() => { if (feed() || ++tries > 40) clearInterval(iv); }, 100);
+  }
+})();
+
+// Tier override button: cycle Auto -> Low -> Mid -> High -> Max. Reflects the live backend in the
+// title once the engine reports ready. Shown only for the Music source (the Stage-1 proof surface).
+const tierBtn = $("rt-tier");
+function syncTierButtonLabel() {
+  const valEl = $("rt-tier-val");
+  if (valEl) valEl.textContent = TIER_LABEL[engineTierOverride] || "Auto";
+}
+function updateTierButtonTitle() {
+  if (!tierBtn) return;
+  const st = window.__gpuParticlesStatus;
+  if (st && st.backend) {
+    tierBtn.title = `Engine tier: Auto / Low / Mid / High / Max. Running: ${st.backend.toUpperCase()} (${st.mode}), tier ${st.tier}, ${st.count} particles.`;
+  } else {
+    tierBtn.title = "Engine tier: Auto / Low / Mid / High / Max";
+  }
+}
+if (tierBtn) {
+  syncTierButtonLabel();
+  tierBtn.addEventListener("click", () => {
+    const i = TIER_ORDER.indexOf(engineTierOverride);
+    engineTierOverride = TIER_ORDER[(i + 1) % TIER_ORDER.length];
+    try { localStorage.setItem("studio.engineTier", engineTierOverride); } catch (_) {}
+    syncTierButtonLabel();
+    const RV = window.ReactiveVisuals;
+    if (RV && RV.setTierOverride) { try { RV.setTierOverride(engineTierOverride); } catch (_) {} }
+  });
+  // Keep the title fresh when the engine reports a backend.
+  window.addEventListener("gpu-particles-ready", updateTierButtonTitle);
+}
 
 // Boot the source menu: Atelier active by default (mirrors the old setMode("generate")).
 setSource("atelier");
