@@ -1,4 +1,4 @@
-// assemble.mjs — the single COMPLETE layered readout (0-D scalars → 1-D distributions → 2-D pyramid).
+// assemble.mjs: the single COMPLETE layered readout (0-D scalars → 1-D distributions → 2-D pyramid).
 import { richFeatures } from "./features.mjs";
 import { pyramid } from "./pyramid.mjs";
 import { lumaHistogram, hueHistogram } from "./distributions.mjs";
@@ -15,6 +15,6 @@ export function assembleFullPerception(px, w, h, ch = 4, pre = {}) {
     hueName: rich.hueName || "unknown",
     distributions: { luma: lumaHistogram(px, w, h, ch, 16), hue: hueHistogram(px, w, h, ch, 12) },
     motion: num(pre.motion), audio: pre.audio || null, source: pre.source || "unknown",
-    multiScale: pyramid(px, w, h, ch, [4, 8, 16, 32, 64]),
+    multiScale: pyramid(px, w, h, ch, [4, 8, 16, 32, 64, 128]),
   };
 }

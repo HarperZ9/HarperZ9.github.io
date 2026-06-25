@@ -60,6 +60,7 @@ uniform int   u_maxIter;
 uniform vec2  u_julia;      // jx, jy (Julia only)
 uniform float u_flipY;      // +1, or -1 for Burning Ship (matches fractal.js vertical reflection)
 uniform vec3  u_pal[6];     // palette stops, 0..1
+uniform int   u_aa;         // supersampling samples per axis (1..4); SSAA for maximum-fidelity signal
 
 const int   MAX_ITERS = ${MAX_ITERS};
 const float BAILOUT2  = ${BAILOUT2.toFixed(1)};
@@ -83,15 +84,9 @@ vec3 ramp(float t) {
   return mix(a, b, f);
 }
 
-void main() {
-  float aspect = u_resolution.y / u_resolution.x;
-  // pixel -> complex plane. (px/W - 0.5)*scale on x; same on y with aspect + the flip for Ship.
-  vec2 ndc = gl_FragCoord.xy / u_resolution - 0.5;
-  vec2 uv = vec2(
-    u_center.x + ndc.x * u_scale,
-    u_center.y + u_flipY * ndc.y * u_scale * aspect
-  );
-
+// Per-sample fractal color at one complex coordinate. Extracted so main() can average several
+// sub-pixel samples for supersampled anti-aliasing (the cleanest signal for the eye to perceive).
+vec3 fractalColor(vec2 uv) {
   ${zInit}
   ${cExpr}
   int n = 0;
@@ -103,21 +98,38 @@ void main() {
     trap = min(trap, min(abs(z.x), abs(z.y)));
     n++;
   }
+  if (n >= u_maxIter) return vec3(0.0);   // interior: black (matches fractal.js)
+  // Smooth coloring: mu = n - log( log|z| / ln2 ) / ln2  (fractal.js uses the same form).
+  float r2 = dot(z, z);
+  float log_r = 0.5 * log(r2);
+  float mu = float(n) - log(log_r / LOG2) / LOG2;
+  vec3 base = ramp(mu / 8.0);              // same cycle density as the CPU path
+  // Orbit-trap cross glow, exp(-trap*4) at 30% toward the lightest stop (u_pal[5]).
+  float glow = exp(-trap * 4.0) * 0.30;
+  return mix(base, u_pal[5], glow);
+}
 
-  vec3 col;
-  if (n >= u_maxIter) {
-    col = vec3(0.0);          // interior: black (matches fractal.js)
-  } else {
-    // Smooth coloring: mu = n - log( log|z| / ln2 ) / ln2  (fractal.js uses the same form).
-    float r2 = dot(z, z);
-    float log_r = 0.5 * log(r2);
-    float mu = float(n) - log(log_r / LOG2) / LOG2;
-    vec3 base = ramp(mu / 8.0);                 // same cycle density as the CPU path
-    // Orbit-trap cross glow, exp(-trap*4) at 30% toward the lightest stop (u_pal[5]).
-    float glow = exp(-trap * 4.0) * 0.30;
-    col = mix(base, u_pal[5], glow);
+void main() {
+  float aspect = u_resolution.y / u_resolution.x;
+  int aa = u_aa < 1 ? 1 : (u_aa > 4 ? 4 : u_aa);
+  float inv = 1.0 / float(aa);
+  vec3 acc = vec3(0.0);
+  // Average aa x aa evenly-spaced sub-pixel samples (ordered grid SSAA). Constant loop bounds for
+  // WebGL1; the inner break trims to the actual aa. aa=1 reproduces the original single sample.
+  for (int sy = 0; sy < 4; sy++) {
+    if (sy >= aa) break;
+    for (int sx = 0; sx < 4; sx++) {
+      if (sx >= aa) break;
+      vec2 sub = (vec2(float(sx), float(sy)) + 0.5) * inv - 0.5;   // sub-pixel offset in [-0.5, 0.5)
+      vec2 ndc = (gl_FragCoord.xy + sub) / u_resolution - 0.5;
+      vec2 uv = vec2(
+        u_center.x + ndc.x * u_scale,
+        u_center.y + u_flipY * ndc.y * u_scale * aspect
+      );
+      acc += fractalColor(uv);
+    }
   }
-  gl_FragColor = vec4(col, 1.0);
+  gl_FragColor = vec4(acc * (inv * inv), 1.0);
 }`;
 }
 
@@ -179,7 +191,7 @@ function getProgram(gl, canvas, type) {
     prog, buf, loc,
     u: {
       resolution: U("u_resolution"), center: U("u_center"), scale: U("u_scale"),
-      maxIter: U("u_maxIter"), julia: U("u_julia"), flipY: U("u_flipY"), pal: U("u_pal[0]"),
+      maxIter: U("u_maxIter"), julia: U("u_julia"), flipY: U("u_flipY"), pal: U("u_pal[0]"), aa: U("u_aa"),
     },
   };
   cache.byType[type] = entry;
@@ -210,6 +222,7 @@ export function renderFractalGL(canvas, opts) {
     maxIter = 300,
     palette = "ocean",
     jx = -0.8, jy = 0.156,
+    aa = 1,
   } = opts || {};
   const ftype = (type === "julia" || type === "burningship") ? type : "mandelbrot";
 
@@ -230,6 +243,7 @@ export function renderFractalGL(canvas, opts) {
   gl.uniform2f(P.u.julia, jx, jy);
   gl.uniform1f(P.u.flipY, ftype === "burningship" ? -1 : 1);
   gl.uniform3fv(P.u.pal, palToFloats(palette));
+  gl.uniform1i(P.u.aa, Math.max(1, Math.min(4, Math.round(aa))));
 
   gl.drawArrays(gl.TRIANGLES, 0, 3);
   return true;
