@@ -7,6 +7,7 @@ import { renderFractal, PRESETS } from "./fractal.js";
 import { renderFractalGL, isFractalGLAvailable } from "./fractal-gl.js";
 import { render3D } from "./fractal3d.js";
 import { sizeToDisplay } from "./canvas-scale.js";
+import { sourceIsAnimated, shouldHaltOnStatic, fullscreenMaxBacking } from "./studio-loop.js";
 import { buildModelHeaders } from "./studio-model.js";
 import { renderScene } from "./ndim.js";
 import { drawSceneGL } from "./lib/render-nd/backends/webgl.mjs";
@@ -47,7 +48,17 @@ function sizeCanvas(canvas) {
   const cssW = Math.max(1, ref.width  || 1);
   const cssH = Math.max(1, ref.height || ref.width || 1);   // square stage: use width for both axes
   const dpr = window.devicePixelRatio || 1;
-  const mb = currentQuality().maxBacking;
+  // Backing ceiling. Windowed: the quality level's flat maxBacking. Fullscreen / large display: the
+  // flat ceiling is too low for a hi-DPI screen, so raise it toward (longer screen edge * dpr),
+  // capped at a GPU-safe limit. CPU per-pixel fractals stay modest to avoid jank; GPU / blit / music
+  // paths get the full 4096. (fullscreenMaxBacking is node-tested in studio-loop.js.)
+  let mb = currentQuality().maxBacking;
+  if (typeof document !== "undefined" && document.fullscreenElement) {
+    const cpuFractal = activeSource === "fractal" && !canvasIsGL;
+    const hardCap = cpuFractal ? Math.max(mb, 2048) : 4096;
+    const scr = (typeof screen !== "undefined" && screen) || { width: cssW, height: cssH };
+    mb = fullscreenMaxBacking(scr.width, scr.height, dpr, { hardCap, floor: mb });
+  }
   let rawW = Math.round(cssW * dpr);
   let rawH = Math.round(cssH * dpr);
   const longer = Math.max(rawW, rawH);
@@ -70,6 +81,7 @@ const SOURCES = {
   fractal:   { block: "src-fractal",   mode: "generate" },
   fractal3d: { block: "src-fractal3d", mode: "generate" },
   ndim:      { block: "src-ndim",      mode: "generate" },
+  music:     { block: "src-music",     mode: "generate" },
   byo:       { block: "src-byo",       mode: "byo" },
   watch:     { block: "src-watch",     mode: "byo" },
 };
@@ -95,6 +107,11 @@ function setSource(next) {
   // Mark the stage interactive (grab cursor + drag affordance) for the camera-driven sources.
   const stageEl = document.getElementById("viewport-stage");
   if (stageEl) stageEl.classList.toggle("cam-interactive", next === "fractal" || next === "fractal3d");
+  // Music is an animated source: the reactive engine (or its idle loop) paints the canvas every
+  // frame, so the perception loop must be reading it. Other sources arm their own loop from their
+  // entry/play path; music has no settle-frame, so arm it here. The loop self-idles only for static
+  // sources via the sourceIsAnimated() guard in liveTick, so music will not freeze.
+  if (next === "music") startMeterLoop();
   syncToolbarForSource();
 }
 
@@ -1477,6 +1494,7 @@ function currentSourceLabel() {
   if (canvasIsGL && !glFractal2D) return "3D fractal";
   if (activeSource === "fractal") return "2D fractal";
   if (activeSource === "ndim") return "n-dim hypercube";
+  if (activeSource === "music") return "music reactive";
   if (mode === "byo") return "your media";
   return "the Atelier / 2D";
 }
@@ -1516,8 +1534,17 @@ function liveTick(ts) {
   } catch (e) { /* a transient unreadable frame (e.g. canvas swap mid-tick), skip this tick */ return; }
   // fps estimate over a 0.5s window
   fpsCount++; if (!fpsTs) fpsTs = ts; if (ts - fpsTs >= 500) { liveFps = fpsCount * 1000 / (ts - fpsTs); fpsCount = 0; fpsTs = ts; }
-  // static detection: stop the loop after a stretch of identical frames
-  if (phash === lastLoopPhash) { if (++staticTicks >= STATIC_STOP) { stopMeterLoop(); return; } }
+  // static detection: idle the loop after a stretch of identical frames, but ONLY for static
+  // sources. An animated source (3D orbit / n-dim / music / capture / playing video) can briefly
+  // repeat a hash; halting there freezes the readout. sourceIsAnimated() is the invariant that
+  // stops that whole recurring class. (studio-loop.js, node-tested.)
+  if (phash === lastLoopPhash) {
+    if (++staticTicks >= STATIC_STOP) {
+      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused) });
+      if (shouldHaltOnStatic(true, animated)) { stopMeterLoop(); return; }
+      staticTicks = 0;   // animated: do not halt, but reset so we re-arm the window cleanly
+    }
+  }
   else { staticTicks = 0; lastLoopPhash = phash; }
 }
 function startMeterLoop() {
@@ -1630,6 +1657,59 @@ function pollAudio() {
 }
 window.__studioAttachAudio = attachAudio;
 window.__studioDetachAudio = detachAudio;
+
+// ── Music bridge (BUG 1 step 4) ──────────────────────────────────────────────
+// The Music tab runs its own AudioContext inside reactive.js, not the Studio's attachAudio() path,
+// so pollAudio() (which reads the Studio analyser) stays idle and the audio row would read "—".
+// reactive.js publishes its real per-frame features and calls this hook each animation frame:
+//   features = { level, flux, bass, mid, treble, centroid, chroma[12], tempo }  (all 0..1)
+// We push those real values into the SAME audio-meter DOM the analyser path uses, so the row shows
+// live music features. No fabricated numbers: every value below comes straight from the features.
+// Build 32 spectrum bars from the real 3 bands + 12-class chroma (a faithful low-res envelope, not
+// invented bins): the band sets the floor for its third of the strip; chroma adds fine structure.
+function _musicSpectrumBars(features, n) {
+  const bands = [features.bass || 0, features.mid || 0, features.treble || 0];
+  const chroma = features.chroma || [];
+  const out = new Array(n);
+  for (let i = 0; i < n; i++) {
+    const band = bands[Math.min(2, Math.floor((i / n) * 3))];
+    const c = chroma.length ? (chroma[Math.floor((i / n) * chroma.length)] || 0) : 0;
+    out[i] = Math.max(0, Math.min(1, band * 0.7 + c * 0.3));
+  }
+  return out;
+}
+function studioReactiveAudioBridge(features) {
+  if (!features) return;
+  buildAudioMeters();
+  // level (real RMS-derived loudness)
+  const level = Math.max(0, Math.min(1, features.level || 0));
+  const lf = $("mm-au-level"), lv = $("mm-au-level-v");
+  if (lf) lf.style.width = level * 100 + "%";
+  if (lv) lv.textContent = level < 0.005 ? "—" : level.toFixed(3);
+  // spectrum (faithful 3-band + chroma envelope)
+  const sp = $("mm-au-spectrum");
+  if (sp) {
+    const els = sp.querySelectorAll(".mm-bar");
+    const bars = _musicSpectrumBars(features, els.length || 32);
+    bars.forEach((b, i) => { if (els[i]) els[i].style.height = Math.max(2, b * 100) + "%"; });
+  }
+  // pitch: the dominant chroma class mapped to its frequency in a mid octave (A4=440 reference).
+  // This reports the detected dominant pitch class, derived from the real chroma vector.
+  const pf = $("mm-au-pitch"), pv = $("mm-au-pitch-v");
+  const chroma = features.chroma || [];
+  let domI = -1, domV = 0;
+  for (let i = 0; i < chroma.length; i++) { if (chroma[i] > domV) { domV = chroma[i]; domI = i; } }
+  if (domI >= 0 && domV > 0.05) {
+    // chroma[0] = C; semitones above C, placed in the octave starting at C4 (~261.63 Hz).
+    const hz = Math.round(261.63 * Math.pow(2, domI / 12));
+    if (pf) pf.style.width = Math.min(1, hz / 4000) * 100 + "%";
+    if (pv) pv.textContent = hz + " Hz";
+  } else {
+    if (pf) pf.style.width = "0%";
+    if (pv) pv.textContent = "—";
+  }
+}
+window.__studioReactiveAudioBridge = studioReactiveAudioBridge;
 
 // ══ Custom dropdowns (Task 8f) ═══════════════════════════════════════════════
 // No bare browser <select> on the page. Each raw select is replaced by an accessible button+listbox.
@@ -2075,6 +2155,46 @@ function revealFsControls() {
     if (document.fullscreenElement) viewport.classList.add("fs-idle");
   }, 2200);
 }
+// ── resizeActiveSurface (BUG 2): the ONE authority that re-fits the canvas backing to the current
+// layout and repaints the active source at that size, then re-arms perception so the meters track
+// the new resolution. Called on fullscreen enter/exit and from the .viewport-stage ResizeObserver.
+// Per-source repaint, keyed by activeSource:
+//   fractal   → re-paint the 2D fractal at the new backing (GPU or CPU path), perceive once
+//   fractal3d → sizeCanvas only; the orbit re-reads canvas.width/height + resets gl.viewport each
+//               frame, so the next frame self-sharpens
+//   ndim      → restart the animation (drawNDimFrame calls sizeCanvas; a clean restart re-fits)
+//   music     → sizeCanvas only; the reactive loop reads canvas.width/height each frame
+//   byo       → sizeCanvas; a playing video re-blits via drawSource on the next live tick. A still
+//               image has no retained source to redraw, so we leave it (matches prior resize behavior)
+//   atelier   → atelier.js owns this canvas and redraws its strokes on its own "resize" listener;
+//               dispatch a resize so it re-fits (we do NOT call our sizeCanvas, to not fight its sizing)
+//   watch     → the capture loop re-blits each tick; nothing to repaint here
+function resizeActiveSurface() {
+  const canvas = $("studio-canvas"); if (!canvas) return;
+  switch (activeSource) {
+    case "atelier":
+      // Let the Atelier re-fit + redraw via its own resize path (it manages this canvas).
+      try { window.dispatchEvent(new Event("resize")); } catch (_) {}
+      return;   // atelier.js re-arms its own draw; nothing else to do here
+    case "fractal":
+      if (fractalView) { const c = paintFractal(fractalView); try { perceive(c); } catch (_) {} }
+      break;
+    case "ndim":
+      if (_ndimRaf != null) startNDimAnimation();   // a running animation: restart at the new size
+      else sizeCanvas(canvas);                      // paused: just re-fit the backing
+      break;
+    case "fractal3d":
+    case "music":
+    case "byo":
+      sizeCanvas(canvas);   // these sources read canvas.width/height on their own loop tick
+      break;
+    default:
+      sizeCanvas(canvas);   // watch + any other: re-fit; the source's own loop repaints
+  }
+  startMeterLoop();   // perception tracks the new size
+}
+window.__studioResizeActiveSurface = resizeActiveSurface;
+
 function onFsChange() {
   const inFs = !!document.fullscreenElement;
   viewport.classList.toggle("is-fullscreen", inFs);
@@ -2085,14 +2205,17 @@ function onFsChange() {
     viewport.addEventListener("mousemove", revealFsControls);
     viewport.addEventListener("touchstart", revealFsControls, { passive: true });
     viewport.addEventListener("pointerdown", revealFsControls);
+    // Re-fit the backing to the (now full-screen) layout. Defer one frame so the fullscreen layout
+    // has settled and the parent rect reflects the real screen size before we read it.
+    requestAnimationFrame(() => { try { resizeActiveSurface(); } catch (_) {} });
   } else {
     viewport.classList.remove("fs-idle");
     clearTimeout(_fsHideTimer);
     viewport.removeEventListener("mousemove", revealFsControls);
     viewport.removeEventListener("touchstart", revealFsControls);
     viewport.removeEventListener("pointerdown", revealFsControls);
-    // Re-render the active static 2D fractal at the restored layout size.
-    if (activeSource === "fractal" && fractalView) { const c = paintFractal(fractalView); try { perceive(c); } catch (_) {} }
+    // Re-fit the backing to the restored windowed layout.
+    requestAnimationFrame(() => { try { resizeActiveSurface(); } catch (_) {} });
   }
 }
 document.addEventListener("fullscreenchange", onFsChange);
@@ -2374,21 +2497,28 @@ window.__studioOverlayOpen  = openOverlay;
 window.__studioOverlayClose = closeOverlay;
 window.__studioOverlayState = () => ({ open: overlayOpen, pip: !!pipWin, fallback: !!overlayFallbackEl });
 
-// ── Debounced resize: re-render the active static source at the new layout size ──────────────
+// ── Resize authority: re-fit the active source whenever its display box changes size ──────────
+// A ResizeObserver on the .viewport-stage is the single trigger (it fires on window resizes AND on
+// fullscreen enter/exit, since both change the stage's box), routed through the one
+// resizeActiveSurface() authority. Debounced so a burst of layout ticks coalesces into one repaint.
+// (For the atelier source, resizeActiveSurface dispatches a "resize" event that atelier.js's own
+// listener redraws on; dispatching does not change layout, so it never re-triggers this observer.)
 let resizeTimer = 0;
-window.addEventListener("resize", () => {
+function onStageResize() {
   clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => {
-    // Only re-render sources that paint a fixed image (not the 3D orbit loop, which reads
-    // canvas.width/height on every RAF frame already, so it self-adjusts on the next frame).
-    if (activeSource === "fractal" && fractalView) {
-      const canvas = paintFractal(fractalView);
-      perceive(canvas);
-    }
-    // BYO still image: the drawSource path reads sizeCanvas() at draw time; re-draw the last source.
-    // (Video/watch loop re-calls drawSource each tick, no action needed.)
-  }, 200);
-});
+  resizeTimer = setTimeout(() => { try { resizeActiveSurface(); } catch (_) {} }, 200);
+}
+const _viewportStage = document.getElementById("viewport-stage");
+if (_viewportStage && typeof ResizeObserver === "function") {
+  // Skip the initial observe fire (it reports the boot size, which the source already painted at);
+  // only react to genuine subsequent size changes (window resize, fullscreen enter/exit).
+  let _roPrimed = false;
+  const _stageRO = new ResizeObserver(() => { if (!_roPrimed) { _roPrimed = true; return; } onStageResize(); });
+  _stageRO.observe(_viewportStage);
+} else {
+  // Fallback for environments without ResizeObserver: the debounced window resize.
+  window.addEventListener("resize", onStageResize);
+}
 
 // ── wire the loop into the source lifecycle ──────────────────────────────────
 // Animated sources start the loop; static ones run it briefly (it self-idles via STATIC_STOP).

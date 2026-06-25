@@ -93,17 +93,20 @@
         if (ME.running) return;
         const spec = buildSourceSpec();
         if (!spec) return;
-        // Leave the current visual source running while in music mode.
-        // The reactive engine will draw over whatever is on the canvas.
-        // Stop other animated loops that would compete (n-dim, 3D orbit).
+        // The reactive engine draws over the canvas; stop other animated loops that own the canvas
+        // (n-dim RAF, the 3D orbit). Do NOT stop the meter loop: for music the loop only READS the
+        // canvas pixels (it never clears or draws), so it does not compete with the reactive engine.
+        // Stopping it was the freeze bug. We (re-)arm it below so the measurimeter tracks the visuals.
         if (typeof window.__studioStopNDim === "function") window.__studioStopNDim();
         if (typeof window.__studioLeave3D === "function") window.__studioLeave3D();
-        if (typeof window.__studioStopMeterLoop === "function") window.__studioStopMeterLoop();
         // Play the audio element if file-mode and paused
         if (spec.kind === "element" && audioEl) {
           audioEl.play().catch(() => {});
         }
         ME.start(spec);
+        // Re-arm the Studio perception loop so the measurimeter reads the live music visuals. The
+        // loop's sourceIsAnimated() guard keeps it from self-idling on a static hash in music mode.
+        if (typeof window.__studioStartMeterLoop === "function") window.__studioStartMeterLoop();
         setPlayState(true);
         setStatus(activeSource === "synth" ? "Built-in synth running." : activeSource === "mic" ? "Listening via microphone..." : "Playing track.");
         // Register a beat callback that pings the perception channel
@@ -200,9 +203,11 @@
     }
 
     // ── Integrate into the Studio source lifecycle ────────────────────────
-    // When the user switches away from the Music tab, stop the reactive engine.
-    // The setSource() in studio.js fires a "studio:source-change" custom event
-    // OR we can hook into the source-menu click directly.
+    // Music is now a first-class entry in studio.js's SOURCES map, so setSource("music") performs
+    // the show/hide + aria-selected exactly like every other tab (no manual tab-switch hack here).
+    // The one music-specific concern setSource does NOT own is the reactive ENGINE: when the user
+    // leaves the Music tab we must stop ME. The Studio's own setSource() handles the meter loop for
+    // the new source, so we only stop the engine + reset the music controls here.
     const sourceMenu = document.getElementById("studio-source");
     if (sourceMenu) {
       sourceMenu.addEventListener("click", e => {
@@ -212,42 +217,9 @@
           ME.stop();
           setPlayState(false);
           setStatus("");
-          // Restart the meter loop for the new source
-          if (typeof window.__studioStartMeterLoop === "function") window.__studioStartMeterLoop();
         }
       });
     }
-
-    // ── Register the Music source with the Studio's SOURCES map ──────────
-    // The Studio's setSource() controls which src-block is shown. We need
-    // the music source registered so tab switching works correctly. Because
-    // studio.js's SOURCES const is local, we hook into the tab selection by
-    // observing aria-selected changes on the Music tab button.
-    // The simpler path: the Music tab shows/hides its block via the same
-    // data-source attribute mechanism. studio.js already wires all [data-source]
-    // buttons. We just need SOURCES["music"] to exist. Since we cannot modify
-    // the studio.js const at load time, we patch the Studio's setSource shim:
-    (function patchSetSource() {
-      // studio.js exposes no public setSource, but it reads SOURCES by name and
-      // shows/hides src-blocks. Adding a src-block with id "src-music" is enough
-      // for the show/hide to work, BECAUSE the studio.js setSource() iterates
-      // SOURCES entries and hides blocks not matching the next source.
-      // Since "music" is NOT in SOURCES, setSource("music") won't show it.
-      // We solve this by listening for clicks on the Music tab button directly.
-      const musicTab = document.querySelector('#studio-source button[data-source="music"]');
-      const musicBlock = document.getElementById("src-music");
-      if (!musicTab || !musicBlock) return;
-
-      musicTab.addEventListener("click", () => {
-        // Hide all other src-blocks (mirror what setSource does)
-        const allBlocks = document.querySelectorAll(".src-block");
-        allBlocks.forEach(b => { b.hidden = b !== musicBlock; });
-        // Mark tabs
-        document.querySelectorAll("#studio-source button[data-source]").forEach(b => {
-          b.setAttribute("aria-selected", String(b === musicTab));
-        });
-      });
-    })();
 
     // ── Idle frame when music mode is active but stopped ──────────────────
     let _idleRaf = null;
@@ -276,12 +248,10 @@
     }
 
     // ── Bridge live features into the Studio measurimeter ────────────────
-    // When the reactive engine is running, bridge its audio feature into the
-    // existing pollAudio() path by publishing a compatible object on a shared key.
-    // studio.js's pollAudio reads the analyser directly; we don't replace that.
-    // Instead we bridge via __studioReactiveAudioBridge if the measurimeter defines it.
-    // (studio.js is free to attach to this hook; we define it here as a no-op unless
-    //  wired from the outside.) The live features are always on window.__reactiveCurrentFeatures.
+    // reactive.js calls window.__studioReactiveAudioBridge(features) every animation frame; studio.js
+    // registers that receiver and pushes the real music features (level / chroma-derived pitch /
+    // 3-band+chroma spectrum) into the audio-meter row. The live features are also always mirrored on
+    // window.__reactiveCurrentFeatures for any other consumer. Nothing to wire from here.
 
     setPlayState(false);
     setStatus("");
