@@ -38,7 +38,7 @@
     <p class="lede">Most orchestrators tell you an agent completed a task. forum writes down what actually happened: which lane the task went to, what plan was formed, what the result was, and whether validation passed or failed. All of that lands in a causal hash-chain ledger you can replay and verify yourself. A failed task is recorded as <code>ok=false</code>, not quietly blessed and passed along.</p>
     <p class="close">The trust comes from re-deriving the chain, not from the engine asserting it ran cleanly.</p>
   </div>
-  <div class="seal">forum &middot; v0.4.0 &middot; witnessed ledger &middot; fair-source</div>
+  <div class="seal">forum &middot; v1.12.0 &middot; witnessed ledger &middot; fair-source &middot; pip install forum-engine</div>
 </div>
 
 <main id="main">
@@ -46,23 +46,64 @@
 <!-- WHAT IT IS -->
 <section class="mv" id="what" aria-labelledby="what-h">
   <h2 id="what-h" class="reveal">It routes the work, runs it, and records every move.</h2>
-  <p class="body-text reveal">forum is a daemon-hostable engine that coordinates a team of AI agents and records each step in a ledger you can verify. You give it a task. It picks the right specialist lane (Classifier), turns the request into a validated plan (Coordinator), runs the work under witness (the executor), judges the result against the original instruction (Validator), and combines everything into one answer (Synthesizer). Every one of those steps is written to the ledger with a hash that chains to the one before it.</p>
-  <em class="close reveal">None of those roles communicate by convention or trust. Each one receives a witnessed input, produces a witnessed output, and hands it forward. There is no back-channel.</em>
+  <p class="body-text reveal">forum is a daemon-hostable engine that coordinates a team of AI agents and records each step in a ledger you can verify. You give it a task. It picks the right specialist lane, turns the request into a validated plan, runs the work under witness, judges each result against its instruction, and combines everything into one answer. Every one of those steps is written to the ledger with a hash that chains to the one before it.</p>
+  <p class="body-text reveal">Around that core sit the parts that make a run trustworthy and lean: a bounded budget that stops a runaway loop, witnessed escalation up a ladder of stronger models, a check on whether the answer still covers the request, a delivery pass that tightens a verbose answer without dropping its terms, and clean seams for a peer brain to supply context and an outside verifier to check the work. Each is opt-in, each is witnessed, none is trusted on its word.</p>
+  <em class="close reveal">None of those roles communicate by convention or trust. Each receives a witnessed input, produces a witnessed output, and hands it forward. There is no back-channel.</em>
+</section>
+
+<!-- THE PAINS IT ANSWERS -->
+<section class="mv" id="pains" aria-labelledby="pains-h">
+  <h2 id="pains-h" class="reveal">The pains it answers.</h2>
+  <p class="body-text reveal">These are real complaints from people running agent fleets. Each one drove a feature, and each maps to something forum does and witnesses.</p>
+  <div class="index reveal-children" role="list" aria-label="Pain points and how forum answers them">
+    <div class="index-row" role="listitem" style="--i:0">
+      <span class="index-term">a dollar becomes a hundred</span>
+      <span class="index-gloss">a RunBudget caps the run by model calls and wall-clock, stops it gracefully, and witnesses where it stopped</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:1">
+      <span class="index-term">it drifts for hours</span>
+      <span class="index-gloss">after the answer is formed, forum checks how much of the request it still covers and escalates to a model judge when that floor flags, so drift lands on the record, not at hour three</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:2">
+      <span class="index-term">which model even ran?</span>
+      <span class="index-gloss">every result records the model that produced it, and a failed task escalates up a ladder of stronger models on the auditable verdict</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:3">
+      <span class="index-term">not another SaaS</span>
+      <span class="index-gloss">zero-dependency and self-hosted, model-agnostic across any command, any OpenAI-compatible server, or the Anthropic API; the daemon runs on your box</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:4">
+      <span class="index-term">the loop has no contract</span>
+      <span class="index-gloss">a run carries a witnessed contract, organized context in and a bounded budget, and the ledger is the standing record of what was agreed and what happened</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:5">
+      <span class="index-term">long loops blow the context window</span>
+      <span class="index-gloss">a run checkpoints at wave boundaries and resumes from the ledger, reusing what already succeeded, and injected context is bounded and pulled fresh per task</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:6">
+      <span class="index-term">output is a wall of words</span>
+      <span class="index-gloss">a deterministic floor flags a verbose answer and an opt-in reviser tightens it, accepted only if the shorter version still covers the request</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:7">
+      <span class="index-term">stale memory poisons the work</span>
+      <span class="index-gloss">forum plans and runs on organized context pulled from a brain through a clean seam; building and pruning that graph is a peer flagship's job, and forum consumes it, witnessed</span>
+    </div>
+  </div>
 </section>
 
 <!-- THE DIFFERENTIATOR -->
 <section class="mv" id="ledger" aria-labelledby="ledger-h">
   <h2 id="ledger-h" class="reveal">The ledger is the differentiator.</h2>
-  <p class="body-text reveal">A hash-chain ledger means each entry carries the hash of the entry before it. Alter any past record and every hash from that point forward no longer matches. You can replay the chain, recompute the hashes, and check the whole sequence yourself without asking forum whether it ran honestly. The engine also supports a live intent-drift and scope audit over the chain, so you can see not just what happened but whether the work stayed inside the original bounds of the request.</p>
+  <p class="body-text reveal">A hash-chain ledger means each entry carries the hash of the entry before it. Alter any past record and every hash from that point forward no longer matches. You can replay the chain, recompute the hashes, and check the whole sequence yourself without asking forum whether it ran honestly. The bulky parts, prompts and outputs, are stored by the hash of their own bytes, so you can redact a sensitive body to its fingerprint and the chain still verifies; when the bodies are present, a deep check re-hashes each one and catches a swapped result.</p>
   <p class="pull reveal">A witnessed failure is more useful than an unwitnessed success.</p>
-  <p class="body-text reveal">When a task fails validation, the ledger records <code>ok=false</code> with the reason. Nothing is silently retried or promoted. You see exactly where it stopped and why. That record is as verifiable as any passing result.</p>
+  <p class="body-text reveal">When a task fails validation, the ledger records <code>ok=false</code> with the reason. Nothing is silently retried or promoted. The same record holds the budget stop, the escalation, the intent check, and the delivery revision, each chained to what it acted on, so a postmortem follows the causal links back to why a thing happened. A run that crashed picks up from that record, reusing what already succeeded.</p>
 </section>
 
 <!-- ARCHITECTURE -->
 <section class="mv" id="arch" aria-labelledby="arch-h">
   <h2 id="arch-h" class="reveal">Standard library only. Zero external dependencies.</h2>
-  <p class="body-text reveal">The engine is a supervision tree of actors built on Python&rsquo;s asyncio, using nothing outside the standard library. The four model-backed control actors (Classifier, Coordinator, Validator, Synthesizer) sit above a layer of pluggable executors. An executor can drive a real model CLI, call an API, or run a local stub for testing. Small agent tools attach as peers. The whole thing can run as a daemon or be called directly.</p>
-  <div class="index reveal-children" role="list" aria-label="The four control actors">
+  <p class="body-text reveal">The engine runs on Python&rsquo;s asyncio using nothing outside the standard library. Four model-backed control roles sit above a layer of pluggable, model-agnostic executors; an executor can drive a model CLI, call an API, talk to a local OpenAI-compatible server, or run a stub for testing. The cheap, deterministic checks run first and the model is spent only when one of them earns it, the same discipline in routing, escalation, the intent check, and delivery.</p>
+  <div class="index reveal-children" role="list" aria-label="The four control roles">
     <div class="index-row" role="listitem" style="--i:0">
       <span class="index-term">Classifier</span>
       <span class="index-gloss">reads the incoming task and picks the specialist lane that handles it</span>
@@ -85,14 +126,16 @@
 <!-- PROOF AND RUN IT -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Current state. How to run it.</h2>
-  <p class="body-text reveal">Version 0.4.0. The model-backed control loop (Plan 3b) is merged to main. There are 59 tests. An example task routes end to end: it is classified, planned, dispatched under witness, and the ledger is verified deeply at the end. The license is fair-source (source-available, rights reserved to fund the research; the smaller utility tools that came out of this work stay permissive).</p>
-  <pre class="artifact"><span class="pr">$ git clone https://github.com/HarperZ9/forum</span>
-<span class="pr">$ cd forum</span>
+  <p class="body-text reveal">Version 1.12.0, on PyPI as <code>forum-engine</code>. The full engine is here: durable ledger, routing, the control loop, model-agnostic executors, an HTTP and MCP daemon, the <code>forum</code> CLI, witnessed budgets and escalation, the intent and delivery ladders, typed data-flow between tasks, resumable runs, and the context and verification seams. 249 tests plus two gated real-model tests, ruff and mypy clean, no third-party runtime dependency. The license is fair-source: source-available, rights reserved to fund the research; the smaller utility tools that came out of this work stay permissive.</p>
+  <pre class="artifact"><span class="pr">$ pip install forum-engine</span>
+<span class="pr">$ python examples/demo.py</span>   <span class="ok"># routes, plans, witnesses, then tamper-checks the ledger</span>
 <span class="pr">$ python -m pytest</span>
-<span class="ok">59 passed</span></pre>
-  <p class="body-text reveal">Python, standard library only. Clone it, run the tests, try routing a real task through it. If something breaks or the ledger produces a result you cannot verify, that is exactly the kind of report I want.</p>
+<span class="ok">249 passed</span></pre>
+  <p class="body-text reveal">Python, standard library only. Install it, run the demo, route a real task through it. Each example under <code>examples/</code> is a short offline demonstration of one capability: the intent ladder, the delivery pass, a resumed run, an A/B of two runs. If something breaks or the ledger produces a result you cannot verify, that is exactly the kind of report I want.</p>
   <div class="channels reveal">
     <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/forum">HarperZ9/forum</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/forum-engine/">forum-engine</a>
     &nbsp;&middot;&nbsp;
     <a href="overview.html">&larr; all flagships</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the index</a>
   </div>
