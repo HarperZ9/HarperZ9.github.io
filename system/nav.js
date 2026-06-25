@@ -1,30 +1,34 @@
 // nav.js, one source of truth for the site navigation. Injected into #site-nav on every page;
 // active state derived from the path. No framework; <noscript> fallback lives in the page markup.
 const DEST = [
-  ["Catalog", "catalog.html", "home"],
-  ["The Studio", "studio.html", "studio"],
-  ["Flagships", "overview.html", "work"],
+  ["Home", "index.html", "home"],
+  ["Flagships", "overview.html", "flagships"],
+  ["Catalog", "catalog.html", "catalog"],
   ["Research", "research.html", "research"],
+  ["Writing", "writing.html", "writing"],
   ["About", "cv.html", "about"],
 ];
 
-// Map any page to one of the five sections.
-const WORK = new Set(["overview","index","forum","emet","proof-surface","coherence-membrane","accountable-machines",
+// Map any page to one of the sections. Flagships are the three peers; everything
+// heavier-than-a-brick down to the utilities lives under the catalog.
+const FLAGSHIPS = new Set(["overview","index-graph","forum","studio"]);
+const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","accountable-machines",
   "accountable-engine","quantalang","raw","quanta-color","quanta-products","toolkit",
-  "provenance-sensorium","orca","aleph","warden","presentation"]);
-const STUDIO = new Set(["studio","atelier","gallery","demonstrations"]);
-const RESEARCH = new Set(["research","writing","why"]);
+  "provenance-sensorium","orca","aleph","warden","presentation","atelier","gallery","demonstrations"]);
+const RESEARCH = new Set(["research","why"]);
+const WRITING = new Set(["writing"]);
 const ABOUT = new Set(["cv","resume","person"]);
 
 export function navActive(pathname) {
   let f = (pathname || "").split("/").pop() || "index.html";
-  if (f === "" ) f = "index.html";
+  if (f === "") f = "index.html";
   const stem = f.replace(/\.html$/, "") || "index";
-  if (stem === "catalog") return "home";
-  if (STUDIO.has(stem)) return "studio";
+  if (stem === "index") return "home";
+  if (FLAGSHIPS.has(stem)) return "flagships";
+  if (CATALOG.has(stem)) return "catalog";
+  if (WRITING.has(stem)) return "writing";
   if (RESEARCH.has(stem)) return "research";
   if (ABOUT.has(stem)) return "about";
-  if (WORK.has(stem)) return "work";
   return "";
 }
 
@@ -33,7 +37,7 @@ export function renderNav(doc = document) {
   if (!mount) return;
   const active = navActive(doc.location ? doc.location.pathname : location.pathname);
   mount.innerHTML =
-    `<a class="sn-home" href="catalog.html" aria-label="Home, Zain Dana Harper">Zain Dana Harper</a>`
+    `<a class="sn-home" href="index.html" aria-label="Home, Zain Dana Harper">Zain Dana Harper</a>`
     + `<nav class="sn-links" aria-label="Primary">`
     + DEST.map(([label, href, key]) =>
         `<a href="${href}"${key === active ? ' aria-current="page"' : ''}>${label}</a>`).join("")
