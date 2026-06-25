@@ -429,6 +429,13 @@
         aria-label="Record WebM video" hidden>
         <span class="rt-ico" aria-hidden="true">&#8659;</span> WebM</button>
       <span class="rt-spacer"></span>
+      <!-- Engine tier override (Stage 1 scalable engine): Auto picks low/mid/high/max from the device
+           capability probe; the user can force a tier. Shown for the Music source (particles engine);
+           the live backend (WebGPU/WebGL2/CPU) is reflected in the title. -->
+      <button class="rt-btn rt-tier" id="rt-tier" type="button"
+        title="Engine tier: Auto / Low / Mid / High / Max"
+        aria-label="Cycle engine tier" hidden>
+        Engine: <span id="rt-tier-val">Auto</span></button>
       <button class="rt-btn rt-quality" id="rt-quality" type="button"
         title="Cycle render quality: Standard / High"
         aria-label="Cycle render quality" disabled>
