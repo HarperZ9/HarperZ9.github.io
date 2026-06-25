@@ -6,7 +6,7 @@ import { sourceIsAnimated, shouldHaltOnStatic, fullscreenMaxBacking } from "./st
 
 // ── sourceIsAnimated ──────────────────────────────────────────────────────────
 test("animated sources are reported animated regardless of state", () => {
-  for (const s of ["fractal3d", "ndim", "music", "watch"]) {
+  for (const s of ["fractal3d", "ndim", "music", "watch", "discovery"]) {
     assert.equal(sourceIsAnimated(s, {}), true, `${s} should be animated`);
     assert.equal(sourceIsAnimated(s, undefined), true, `${s} animated with no state`);
   }

@@ -24,6 +24,7 @@ export function sourceIsAnimated(activeSource, state) {
     case "ndim":
     case "music":
     case "watch":
+    case "discovery":   // the physics renderer evolves the system every frame
       return true;
     case "byo":
       return !!s.byoPlaying;   // a still image is static; a playing video is animated

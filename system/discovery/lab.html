@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Telos Discovery Lab</title>
+<style>
+  :root { --void:#0c0c10; --bone:#e8e6df; --orange:#e8a33d; --ember:#d6603d; --teal:#3dd6c4; --mute:#8a8a96; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--void); color:var(--bone); font:15px/1.5 "Spline Sans Mono", ui-monospace, monospace; padding:24px; }
+  h1 { font-size:20px; font-weight:600; margin:0 0 4px; }
+  .sub { color:var(--mute); margin:0 0 20px; max-width:70ch; }
+  .row { display:flex; gap:20px; flex-wrap:wrap; }
+  .panel { background:#131319; border:1px solid #24242e; border-radius:10px; padding:16px; }
+  .panel h2 { font-size:13px; text-transform:uppercase; letter-spacing:.08em; color:var(--mute); margin:0 0 10px; }
+  label { color:var(--mute); margin-right:6px; }
+  select, input, button { font:inherit; background:#0c0c10; color:var(--bone); border:1px solid #2c2c38; border-radius:6px; padding:7px 10px; }
+  button { cursor:pointer; border-color:var(--orange); color:var(--orange); }
+  button:hover { background:#1a1410; }
+  #scope { width:520px; height:200px; border-radius:8px; display:block; max-width:100%; }
+  #world { width:760px; height:260px; border-radius:8px; display:block; max-width:100%; }
+  #live { margin-top:10px; color:var(--bone); font-size:13px; }
+  #live .k { color:var(--mute); }
+  #live b { color:var(--teal); }
+  #ranges { color:var(--mute); font-size:13px; margin-top:10px; }
+  #ranges b { color:var(--teal); }
+  .controls { margin:14px 0; }
+  #terms { width:320px; max-width:100%; }
+  #result { white-space:pre-wrap; color:var(--mute); margin-top:12px; min-height:2.6em; }
+  #cert { margin-top:8px; }
+  #cert .k { color:var(--mute); display:inline-block; min-width:74px; }
+  .ok { color:#7ad13d; font-weight:600; letter-spacing:.04em; }
+  .no { color:var(--ember); font-weight:600; }
+  .legend { color:var(--mute); font-size:12px; margin-top:6px; }
+</style>
+</head>
+<body>
+  <h1>Telos Discovery Lab</h1>
+  <p class="sub">A cheap model is given only the measured state of a system over time (below), never its
+  equations. It proposes which terms a conserved quantity is built from; a tool fits the weights; a sound
+  verifier certifies it across independent initial conditions. Here you drive that loop directly.</p>
+
+  <div class="row">
+    <div class="panel">
+      <h2>Perception (the measurimeter: physical state, not pixels)</h2>
+      <div class="controls"><label for="system">system</label><select id="system" autocomplete="off"></select>
+        <button id="perturb" title="new initial condition, re-perceive, re-verify">perturb + re-verify</button></div>
+      <canvas id="scope" width="520" height="200"></canvas>
+      <div class="legend">each trace is one measured observable over time, scaled to fit</div>
+      <div id="ranges"></div>
+    </div>
+
+    <div class="panel" style="flex:1; min-width:300px;">
+      <h2>Discover a conserved quantity</h2>
+      <div class="controls">
+        <label for="terms">candidate terms</label>
+        <input id="terms" placeholder="e.g. x^2, v^2" autocomplete="off" />
+        <button id="fit">fit + verify</button>
+      </div>
+      <div id="result"></div>
+      <div id="cert"></div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:20px;">
+    <div class="panel" style="flex:1;">
+      <h2>The system, evolving (renderer + simulator)</h2>
+      <div class="controls"><button id="play">play</button>
+        <span style="color:var(--mute); font-size:13px;">watch the configuration move while the discovered quantity stays fixed</span></div>
+      <canvas id="world" width="760" height="260"></canvas>
+      <div id="live"></div>
+    </div>
+  </div>
+
+  <script type="module" src="./lab.js"></script>
+</body>
+</html>

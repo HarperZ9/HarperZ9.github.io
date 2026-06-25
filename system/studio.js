@@ -11,6 +11,7 @@ import { sourceIsAnimated, shouldHaltOnStatic, fullscreenMaxBacking } from "./st
 import { buildModelHeaders } from "./studio-model.js";
 import { renderScene, renderSceneVolumetric } from "./ndim.js";
 import { drawSceneGL, drawSceneGL3D } from "./lib/render-nd/backends/webgl.mjs";
+import { startDiscovery, stopDiscovery } from "./discovery/studio-discovery.js";
 import {
   createPaintState, setBrush, setPaintTarget, paintAtTarget, toggle as togglePaint, clearPaint,
 } from "./lib/render-nd/core/paint-state.mjs";
@@ -98,6 +99,7 @@ const SOURCES = {
   music:     { block: "src-music",     mode: "generate" },
   byo:       { block: "src-byo",       mode: "byo" },
   watch:     { block: "src-watch",     mode: "byo" },
+  discovery: { block: "src-discovery", mode: "generate" },
 };
 
 function setSource(next) {
@@ -109,6 +111,7 @@ function setSource(next) {
     stopNDim();         // stop the n-dim animation RAF if one is running
     stopWatch();        // release any screen/camera capture
     stopByoVideo();     // pause + release any played BYO video
+    try { stopDiscovery(); } catch (_) {}  // stop the physics renderer RAF if it was running
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
@@ -133,6 +136,9 @@ function setSource(next) {
   // entry/play path; music has no settle-frame, so arm it here. The loop self-idles only for static
   // sources via the sourceIsAnimated() guard in liveTick, so music will not freeze.
   if (next === "music") startMeterLoop();
+  // Physics (discovery engine): render the evolving system into the shared canvas, then arm the
+  // meter loop so the measurimeter perceives it (marked animated in studio-loop, so it will not idle).
+  if (next === "discovery") { try { startDiscovery($("studio-canvas")); } catch (_) {} startMeterLoop(); }
   syncToolbarForSource();
   // Notify the surface layer so panzoom attaches/detaches per the source change.
   // Pass the current canvas (may be a fresh GL canvas if fractal3d swapped it).
