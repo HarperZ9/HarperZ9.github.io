@@ -24,7 +24,15 @@
 
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { StudioImporters, _selftest } from "./importers.js";
+import {
+  StudioImporters,
+  _selftest,
+  importReceipt,
+  hashBytes,
+  fnv1a,
+  HASH_SHA256,
+  HASH_FNV1A,
+} from "./importers.js";
 
 // ---------------------------------------------------------------------------
 // Minimal duck-typed File-like stub.
@@ -426,4 +434,130 @@ describe("importFile() browser-only paths (skipped in Node)", () => {
   it("importData -- requires FileReader and canvas.getContext (absent in Node)", {
     skip: "browser-only: FileReader and canvas.getContext not available in Node",
   }, async () => {});
+});
+
+// ===========================================================================
+// IMPORT RECEIPTS -- witnessed provenance on every import (spec section B)
+// ===========================================================================
+
+// ---------------------------------------------------------------------------
+// hashBytes() + fnv1a() -- the import-side hashing primitive, both paths
+// ---------------------------------------------------------------------------
+describe("import hashBytes() -- SHA-256 path and FNV-1a fallback", () => {
+  it("should report sha-256 with a 64-hex digest when crypto.subtle is present", async () => {
+    const { hash, hashAlgo } = await hashBytes(new Uint8Array([1, 2, 3]));
+    assert.equal(hashAlgo, HASH_SHA256);
+    assert.match(hash, /^[0-9a-f]{64}$/);
+  });
+
+  it("should match the FIPS SHA-256 vector for 'abc'", async () => {
+    const { hash } = await hashBytes(new TextEncoder().encode("abc"));
+    assert.equal(hash, "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");
+  });
+
+  it("should fall back to FNV-1a (flagged honestly) when subtle is forced null", async () => {
+    const { hash, hashAlgo } = await hashBytes(new Uint8Array([1, 2, 3]), { subtle: null });
+    assert.equal(hashAlgo, HASH_FNV1A, "forced no-subtle must report the fnv1a fallback");
+    assert.notEqual(hashAlgo, HASH_SHA256, "must never claim sha-256 when it used the fallback");
+    assert.match(hash, /^[0-9a-f]{8}$/);
+  });
+
+  it("fnv1a() should be deterministic", () => {
+    assert.equal(fnv1a(new Uint8Array([9, 9, 9])), fnv1a(new Uint8Array([9, 9, 9])));
+  });
+});
+
+// ---------------------------------------------------------------------------
+// importReceipt() -- the receipt builder directly
+// ---------------------------------------------------------------------------
+describe("importReceipt() -- field shape and honesty", () => {
+  it("should carry inputFormat, sizeBytes, originHash, hashAlgo (+ hashScope)", async () => {
+    const stub = { name: "thing.bin", type: "application/octet-stream", size: 256 };
+    const receipt = await importReceipt(stub);
+    assert.equal(typeof receipt.inputFormat, "string");
+    assert.equal(receipt.inputFormat, "bin", "inputFormat should be the extension");
+    assert.equal(receipt.sizeBytes, 256, "sizeBytes must reflect file.size");
+    assert.equal(typeof receipt.originHash, "string");
+    assert.ok(receipt.originHash.length > 0, "originHash must be non-empty");
+    assert.ok(receipt.hashAlgo === HASH_SHA256 || receipt.hashAlgo === HASH_FNV1A);
+  });
+
+  it("should hash REAL bytes (hashScope=content) when the file exposes arrayBuffer()", async () => {
+    const blob = new Blob([new Uint8Array([10, 20, 30, 40, 50])], { type: "application/octet-stream" });
+    blob.name = "payload.bin";
+    const receipt = await importReceipt(blob);
+    assert.equal(receipt.hashScope, "content", "a readable File/Blob must be hashed by content");
+    assert.equal(receipt.sizeBytes, 5, "sizeBytes must equal the byte length");
+    // The hash must equal the hash of those exact bytes.
+    const direct = await hashBytes(new Uint8Array([10, 20, 30, 40, 50]));
+    assert.equal(receipt.originHash, direct.hash, "content hash must match the raw bytes' hash");
+  });
+
+  it("should honestly mark hashScope=descriptor when bytes are not readable (plain stub)", async () => {
+    const stub = { name: "ghost.dat", type: "application/dat", size: 999 };
+    const receipt = await importReceipt(stub);
+    assert.equal(receipt.hashScope, "descriptor", "a non-File stub cannot be content-hashed; must say so");
+    assert.equal(receipt.sizeBytes, 999, "sizeBytes is still reported truthfully from file.size");
+  });
+
+  it("should use the forced FNV-1a fallback end-to-end and flag it", async () => {
+    const blob = new Blob([new Uint8Array([1, 1, 1])]);
+    blob.name = "x.bin";
+    const receipt = await importReceipt(blob, { subtle: null });
+    assert.equal(receipt.hashAlgo, HASH_FNV1A);
+    assert.match(receipt.originHash, /^[0-9a-f]{8}$/);
+  });
+
+  it("should be deterministic for the same input", async () => {
+    const stub = { name: "same.bin", type: "application/octet-stream", size: 4 };
+    const a = await importReceipt(stub);
+    const b = await importReceipt(stub);
+    assert.equal(a.originHash, b.originHash);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// importFile() -- the receipt is attached on every path
+// ---------------------------------------------------------------------------
+describe("importFile() -- receipt is attached on every return path", () => {
+  it("should attach a receipt on the unknown path", async () => {
+    const result = await StudioImporters.importFile(fakeFile("mystery.zz9-receipt-unknown", "application/zz9", 77), null);
+    assert.equal(result.kind, "unknown", "precondition: this is the unknown path");
+    assert.ok(result.receipt && typeof result.receipt === "object", "unknown result must carry a receipt");
+    assert.equal(result.receipt.inputFormat, "zz9-receipt-unknown");
+    assert.equal(result.receipt.sizeBytes, 77);
+    assert.equal(typeof result.receipt.originHash, "string");
+  });
+
+  it("should attach a receipt on the error path (handler throws)", async () => {
+    StudioImporters.register(
+      f => f.name.endsWith(".zz9-receipt-throw"),
+      async () => { throw new Error("boom"); }
+    );
+    const result = await StudioImporters.importFile(fakeFile("broken.zz9-receipt-throw", "application/octet-stream", 12), null);
+    assert.equal(result.kind, "error", "precondition: this is the error path");
+    assert.ok(result.receipt && typeof result.receipt === "object", "error result must still carry a receipt");
+    assert.equal(result.receipt.sizeBytes, 12);
+  });
+
+  it("should attach a receipt on a successful handler path", async () => {
+    StudioImporters.register(
+      f => f.name.endsWith(".zz9-receipt-ok"),
+      async (file) => ({ kind: "spy-ok", meta: { name: file.name }, mesh: null, drewToCanvas: true, pluginPoint: null })
+    );
+    const result = await StudioImporters.importFile(fakeFile("good.zz9-receipt-ok", "application/octet-stream", 33), null);
+    assert.equal(result.kind, "spy-ok");
+    assert.ok(result.receipt && typeof result.receipt === "object", "successful result must carry a receipt");
+    assert.equal(result.receipt.inputFormat, "zz9-receipt-ok");
+    assert.equal(result.receipt.sizeBytes, 33);
+  });
+
+  it("should forward the subtle override so importFile receipts can use the fallback", async () => {
+    const result = await StudioImporters.importFile(
+      fakeFile("fb.zz9-receipt-fallback", "application/octet-stream", 5),
+      null,
+      { subtle: null }
+    );
+    assert.equal(result.receipt.hashAlgo, HASH_FNV1A, "forced no-subtle path must propagate to the receipt");
+  });
 });

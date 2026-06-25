@@ -90,6 +90,259 @@ function bytesToBase64(bytes) {
   return btoa(binary);
 }
 
+// ---- provenance hashing (SHA-256 via Web Crypto, honest FNV-1a fallback) -----
+//
+// crypto.subtle.digest("SHA-256", ...) exists in Node 20+ (globalThis.crypto)
+// and in browsers ON A SECURE CONTEXT (https / localhost), but NOT on file://.
+// When it is unavailable we fall back to a fast non-crypto content hash and we
+// say so: the receipt carries hashAlgo so it is HONEST about which ran. We never
+// label an FNV-1a digest "sha-256". This implements the provenance chain in the
+// spec (originHash -> transforms -> commitHash) with zero external dependencies.
+
+const HASH_SHA256 = "sha-256";
+const HASH_FNV1A  = "fnv1a-fallback";
+
+/**
+ * Coerce any supported export input into a Uint8Array of bytes to hash.
+ * Strings are UTF-8 encoded. ArrayBuffer / typed arrays / DataView are read as
+ * their underlying bytes. Plain objects are hashed over their deterministic JSON
+ * (stable key order) so the same logical value always yields the same hash.
+ * Numbers / booleans / null fall through to their JSON form. Returns bytes.
+ */
+function toBytes(value) {
+  if (value == null) return _utf8("null");
+  if (typeof value === "string") return _utf8(value);
+  if (value instanceof Uint8Array) return value;
+  if (value instanceof ArrayBuffer) return new Uint8Array(value);
+  if (ArrayBuffer.isView(value)) {
+    return new Uint8Array(value.buffer, value.byteOffset, value.byteLength);
+  }
+  if (typeof Blob !== "undefined" && value instanceof Blob) {
+    // Blobs are async to read; the caller hashes Blob bytes explicitly via
+    // hashBytesOf. Reaching here means a Blob was passed as a plain value, so
+    // we hash a stable descriptor rather than block. Honest, deterministic.
+    return _utf8("blob:" + value.size + ":" + (value.type || ""));
+  }
+  if (typeof value === "object") return _utf8(_stableJSON(value));
+  return _utf8(String(value));
+}
+
+function _utf8(str) {
+  if (typeof TextEncoder !== "undefined") return new TextEncoder().encode(str);
+  // Minimal UTF-8 fallback (no TextEncoder in some old workers).
+  const out = [];
+  for (let i = 0; i < str.length; i++) {
+    let c = str.charCodeAt(i);
+    if (c < 0x80) out.push(c);
+    else if (c < 0x800) { out.push(0xc0 | (c >> 6), 0x80 | (c & 0x3f)); }
+    else { out.push(0xe0 | (c >> 12), 0x80 | ((c >> 6) & 0x3f), 0x80 | (c & 0x3f)); }
+  }
+  return new Uint8Array(out);
+}
+
+/** Deterministic JSON: object keys sorted recursively so hashing is stable. */
+function _stableJSON(value) {
+  return JSON.stringify(value, (_k, v) => {
+    if (v && typeof v === "object" && !Array.isArray(v)) {
+      const sorted = {};
+      for (const k of Object.keys(v).sort()) sorted[k] = v[k];
+      return sorted;
+    }
+    return v;
+  });
+}
+
+/** Lowercase hex string from a byte array. */
+function _toHex(bytes) {
+  let hex = "";
+  for (let i = 0; i < bytes.length; i++) hex += bytes[i].toString(16).padStart(2, "0");
+  return hex;
+}
+
+/**
+ * FNV-1a 32-bit content hash. NOT cryptographic: a fast, deterministic fallback
+ * used only where crypto.subtle is absent (file://). Returned as 8 hex chars so
+ * it is visibly shorter than a sha-256 digest and never mistaken for one.
+ */
+function fnv1a(bytes) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < bytes.length; i++) {
+    h ^= bytes[i];
+    h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
+  }
+  return ("00000000" + h.toString(16)).slice(-8);
+}
+
+/**
+ * hashBytesOf(value, opts) -> Promise<{ hash, hashAlgo }>
+ * Uses SHA-256 via Web Crypto when available; otherwise FNV-1a, flagged honestly.
+ * A Blob is read to bytes first so canvas/binary exports hash their real content.
+ *
+ * opts.subtle: an explicit crypto.subtle source. Pass `null` to FORCE the FNV-1a
+ * fallback (this is how the file:// path and the fallback test are exercised
+ * without monkey-patching the global crypto object). When omitted, the ambient
+ * globalThis.crypto.subtle is used if present.
+ */
+async function hashBytesOf(value, opts) {
+  let bytes;
+  if (typeof Blob !== "undefined" && value instanceof Blob) {
+    bytes = new Uint8Array(await value.arrayBuffer());
+  } else {
+    bytes = toBytes(value);
+  }
+  const hasOverride = opts && Object.prototype.hasOwnProperty.call(opts, "subtle");
+  const subtle = hasOverride
+    ? opts.subtle
+    : ((typeof crypto !== "undefined" && crypto.subtle) ? crypto.subtle : null);
+  if (subtle) {
+    try {
+      // digest needs a real ArrayBuffer view; slice to a tight copy.
+      const buf = bytes.byteOffset === 0 && bytes.byteLength === bytes.buffer.byteLength
+        ? bytes.buffer
+        : bytes.slice().buffer;
+      const digest = await subtle.digest("SHA-256", buf);
+      return { hash: _toHex(new Uint8Array(digest)), hashAlgo: HASH_SHA256 };
+    } catch (_) {
+      // Fall through to the honest non-crypto path.
+    }
+  }
+  return { hash: fnv1a(bytes), hashAlgo: HASH_FNV1A };
+}
+
+// ---- structural discriminators (deterministic, structural-before-pixel) ------
+//
+// Each discriminator is a deterministic STRUCTURAL test of the exported artifact
+// (the spec's "structural oracle" / structural-before-pixel rule). It returns a
+// boolean. No pixel diffing, no model, no floating-point faithfulness score:
+// a named, re-runnable check with a yes/no verdict.
+
+/**
+ * OBJ / GLTF mesh structural check: vertex and face counts present, geometry is
+ * indexed, and EVERY face index is in range [0, vertexCount). Out-of-range index
+ * -> false (this is what catches a malformed mesh).
+ */
+function discriminateMesh(vertexCount, faces) {
+  if (!Number.isInteger(vertexCount) || vertexCount < 0) return false;
+  if (!Array.isArray(faces)) return false;
+  if (vertexCount === 0 && faces.length === 0) return true; // empty mesh is well-formed
+  for (const f of faces) {
+    if (!Array.isArray(f) || f.length < 3) return false;
+    for (const idx of f) {
+      if (!Number.isInteger(idx) || idx < 0 || idx >= vertexCount) return false;
+    }
+  }
+  return true;
+}
+
+/**
+ * OBJ text structural check: re-parse the emitted text and confirm every face
+ * line's 1-based indices resolve to a declared vertex. Verifies the SERIALIZED
+ * artifact, not just the source mesh.
+ */
+function discriminateOBJText(objText) {
+  if (typeof objText !== "string" || objText.length === 0) return false;
+  let vCount = 0;
+  const faces = [];
+  for (const raw of objText.split("\n")) {
+    const line = raw.trim();
+    if (line.startsWith("v ")) vCount++;
+    else if (line.startsWith("f ")) {
+      const idx = line.slice(2).trim().split(/\s+/).map(t => parseInt(t.split("/")[0], 10) - 1);
+      faces.push(idx);
+    }
+  }
+  return discriminateMesh(vCount, faces);
+}
+
+/**
+ * SVG structural check: well-formed-enough for our zero-dep purpose -- a single
+ * root <svg ...> with a matching </svg>, balanced angle brackets, no obviously
+ * broken tag. When DOMParser exists (browser) we additionally reject a parser
+ * error. Command-validity for path data is checked when a <path d="..."> exists.
+ */
+function discriminateSVG(svgText) {
+  if (typeof svgText !== "string" || svgText.length === 0) return false;
+  if (!/<svg[\s>]/i.test(svgText) || !/<\/svg>/i.test(svgText)) return false;
+  // Balanced angle brackets (cheap well-formedness signal).
+  const opens = (svgText.match(/</g) || []).length;
+  const closes = (svgText.match(/>/g) || []).length;
+  if (opens !== closes) return false;
+  // Path command validity: every d="..." must start with a move command and use
+  // only valid SVG path command letters.
+  const pathMatches = svgText.match(/\bd\s*=\s*"([^"]*)"/gi) || [];
+  for (const m of pathMatches) {
+    const d = m.replace(/.*?"([^"]*)".*/, "$1").trim();
+    if (d.length === 0) continue;
+    if (!/^[Mm]/.test(d)) return false;
+    if (/[^MmLlHhVvCcSsQqTtAaZz0-9eE\s,.\-+]/.test(d)) return false;
+  }
+  // Browser DOMParser secondary check (skipped in Node where DOMParser is absent).
+  if (typeof DOMParser !== "undefined") {
+    try {
+      const doc = new DOMParser().parseFromString(svgText, "image/svg+xml");
+      if (doc.getElementsByTagName("parsererror").length > 0) return false;
+    } catch (_) { /* parser unavailable; the textual checks above stand */ }
+  }
+  return true;
+}
+
+/** JSON structural check: the emitted string round-trips through JSON.parse. */
+function discriminateJSON(jsonText) {
+  if (typeof jsonText !== "string" || jsonText.length === 0) return false;
+  try { JSON.parse(jsonText); return true; }
+  catch (_) { return false; }
+}
+
+/** GLTF structural check: valid JSON AND mesh topology in range. */
+function discriminateGLTF(gltfText) {
+  if (!discriminateJSON(gltfText)) return false;
+  let g;
+  try { g = JSON.parse(gltfText); } catch (_) { return false; }
+  if (!g.asset || !g.meshes || !g.accessors) return false;
+  // Resolve the POSITION accessor count and the index accessor, confirm in range.
+  const prim = g.meshes[0] && g.meshes[0].primitives && g.meshes[0].primitives[0];
+  if (!prim) return false;
+  const posIdx = prim.attributes && prim.attributes.POSITION;
+  if (posIdx == null || !g.accessors[posIdx]) return false;
+  const vertexCount = g.accessors[posIdx].count;
+  if (prim.indices == null) return Number.isInteger(vertexCount) && vertexCount >= 0;
+  const idxAcc = g.accessors[prim.indices];
+  if (!idxAcc) return false;
+  // The index buffer lives in a data URI; decode and range-check every index.
+  const faces = _decodeGltfIndices(g, prim.indices);
+  if (faces == null) {
+    // Cannot decode (non-data-uri): fall back to count sanity only.
+    return Number.isInteger(idxAcc.count) && idxAcc.count % 3 === 0;
+  }
+  return discriminateMesh(vertexCount, faces);
+}
+
+/** Decode an index accessor from an embedded base64 data-URI buffer. */
+function _decodeGltfIndices(gltf, accIdx) {
+  try {
+    const acc = gltf.accessors[accIdx];
+    const bv = gltf.bufferViews[acc.bufferView];
+    const buf = gltf.buffers[bv.buffer];
+    if (!buf || typeof buf.uri !== "string" || !buf.uri.startsWith("data:")) return null;
+    const b64 = buf.uri.slice(buf.uri.indexOf(",") + 1);
+    const raw = atob(b64);
+    const u8 = new Uint8Array(raw.length);
+    for (let i = 0; i < raw.length; i++) u8[i] = raw.charCodeAt(i);
+    const byteOffset = (bv.byteOffset || 0) + (acc.byteOffset || 0);
+    const CT = { 5121: Uint8Array, 5123: Uint16Array, 5125: Uint32Array };
+    const TA = CT[acc.componentType] || Uint32Array;
+    const flat = new TA(u8.buffer, byteOffset, acc.count);
+    const faces = [];
+    for (let i = 0; i + 2 < flat.length; i += 3) faces.push([flat[i], flat[i + 1], flat[i + 2]]);
+    return faces;
+  } catch (_) { return null; }
+}
+
+/** PNG structural check: a non-empty Blob (the spec's stated PNG rule). */
+function discriminatePNG(blob) {
+  return !!(blob && typeof blob.size === "number" && blob.size > 0);
+}
+
 /**
  * Read pixels from any canvas (2D or WebGL-backed) via a 2D scratch blit.
  * Returns the same canvas when it already has a 2D context.
@@ -384,6 +637,180 @@ function _snapshotCanvasMeta(canvas) {
   };
 }
 
+// ---- named-criterion export receipts ----------------------------------------
+//
+// A receipt witnesses ONE export transform. Schema (every field truthful):
+//   criterion           string   -- the named, fixed property the export aims to conserve
+//   conserved           string[] -- irredundant-core features that survived into the output
+//   dropped             string[] -- features deliberately discarded by this format/path
+//   discriminatorPassed boolean  -- result of the deterministic structural check for the format
+//   originHash          string   -- hash of the INPUT (mesh / data / canvas bytes)
+//   commitHash          string   -- hash of the OUTPUT (the emitted bytes / string)
+//   transformsApplied   [{step, criterion}] -- the directed provenance chain of steps
+//   commitHash          (above)  -- terminal node of originHash -> [steps] -> commitHash
+//   hashAlgo            "sha-256" | "fnv1a-fallback" -- which digest actually ran (honest)
+//   format              string   -- the exporter name, for the audit trail
+//
+// NO floating-point faithfulness score: the verdict is the boolean discriminator
+// plus the named criterion, per the spec's hard rule.
+
+/**
+ * Describe the named criterion + conserved/dropped core for a given format and
+ * input. Pure and deterministic; no hashing, no canvas reads beyond dimensions.
+ * Returns { criterion, conserved, dropped }.
+ */
+function _criterionFor(name, extra) {
+  const e = extra || {};
+  switch (name) {
+    case "obj": {
+      if (e.mesh) {
+        const hasNormals = Array.isArray(e.mesh.normals) && e.mesh.normals.length > 0;
+        const conserved = ["positions", "faces"];
+        if (hasNormals) conserved.push("normals");
+        // OBJ from this exporter writes v / vn / f only.
+        const dropped = ["materials", "uvs", "texture-coordinates", "vertex-colors"];
+        if (!hasNormals) dropped.push("normals");
+        return { criterion: "mesh-topology-preserved", conserved, dropped };
+      }
+      return {
+        criterion: "canvas-luma-heightfield",
+        conserved: ["positions", "faces"],
+        dropped: ["color", "materials", "normals"],
+      };
+    }
+    case "gltf": {
+      if (e.mesh) {
+        const hasNormals = Array.isArray(e.mesh.normals) && e.mesh.normals.length === (e.mesh.vertices || []).length;
+        const conserved = ["positions", "faces"];
+        if (hasNormals) conserved.push("normals");
+        const dropped = ["materials", "uvs", "texture-coordinates", "animations", "skins"];
+        if (!hasNormals) dropped.push("normals");
+        return { criterion: "mesh-topology-preserved", conserved, dropped };
+      }
+      return {
+        criterion: "canvas-luma-heightfield",
+        conserved: ["positions", "faces"],
+        dropped: ["color", "materials", "normals"],
+      };
+    }
+    case "svg": {
+      if (e.vector && typeof e.vector === "string" && e.vector.trim().startsWith("<")) {
+        return {
+          criterion: "vector-commands-preserved",
+          conserved: ["paths", "shapes", "vector-geometry"],
+          dropped: [],
+        };
+      }
+      return {
+        criterion: "pixel-snapshot-embedded",
+        conserved: ["pixels", "dimensions"],
+        dropped: ["vector-geometry", "editability"],
+      };
+    }
+    case "json": {
+      return {
+        criterion: "json-roundtrip-exact",
+        conserved: ["all-enumerable-fields"],
+        dropped: ["functions", "undefined-values", "prototype-chain"],
+      };
+    }
+    case "png": {
+      return {
+        criterion: "lossless-raster-nonempty",
+        conserved: ["pixels", "dimensions", "alpha"],
+        dropped: ["vector-geometry", "layers", "scene-graph"],
+      };
+    }
+    case "webm": {
+      return {
+        criterion: "temporal-raster-stream",
+        conserved: ["frames", "dimensions", "motion"],
+        dropped: ["lossless-detail", "alpha", "scene-graph"],
+      };
+    }
+    default:
+      return { criterion: "custom-export", conserved: [], dropped: [] };
+  }
+}
+
+/**
+ * Select the bytes/string that represent the INPUT for originHash, per format.
+ * For meshes it is the geometry; for json it is the data; for raster formats it
+ * is the canvas pixels (read when available, else canvas dimensions). Returns a
+ * value that hashBytesOf can consume. Never throws on a stub canvas.
+ */
+async function _originValueFor(name, canvas, extra) {
+  const e = extra || {};
+  if ((name === "obj" || name === "gltf") && e.mesh) {
+    return _stableJSON({ vertices: e.mesh.vertices || [], faces: e.mesh.faces || [], normals: e.mesh.normals || [] });
+  }
+  if (name === "svg" && e.vector && typeof e.vector === "string") return e.vector;
+  if (name === "json") return (e.data !== undefined) ? e.data : _snapshotCanvasMeta(canvas);
+  // Raster / canvas-derived inputs: hash real pixels when the canvas can produce
+  // them, else fall back to a dimensions descriptor (honest, deterministic).
+  if (canvas && typeof canvas.getContext === "function") {
+    try {
+      const src = readableCanvas(canvas);
+      const ctx = src.getContext("2d", { willReadFrequently: true });
+      if (ctx && typeof ctx.getImageData === "function") {
+        const px = ctx.getImageData(0, 0, src.width, src.height).data;
+        return new Uint8Array(px.buffer.slice(0));
+      }
+    } catch (_) { /* fall through to descriptor */ }
+  }
+  const w = (canvas && canvas.width) || 0, h = (canvas && canvas.height) || 0;
+  return "canvas:" + w + "x" + h;
+}
+
+/**
+ * Run the deterministic structural discriminator for a format against the OUTPUT.
+ * Returns a boolean. Unknown formats: null (no structural test defined), which
+ * the receipt records honestly rather than asserting a pass.
+ */
+function _discriminate(name, output, extra) {
+  const e = extra || {};
+  switch (name) {
+    case "obj":  return discriminateOBJText(output);
+    case "gltf": return discriminateGLTF(output);
+    case "svg":  return discriminateSVG(typeof output === "string" ? output : null);
+    case "json": return discriminateJSON(output);
+    case "png":  return discriminatePNG(output);
+    case "webm": return discriminatePNG(output); // non-empty Blob is the available structural signal
+    default:     return null;
+  }
+}
+
+/**
+ * buildReceipt(name, canvas, extra, output) -> Promise<receipt>
+ * Assembles the witnessed receipt for one export. originHash from the input,
+ * commitHash from the output, the structural discriminator verdict, and the
+ * named criterion + conserved/dropped core. The two hashes share one hashAlgo
+ * (the same digest path runs for both); reported honestly.
+ */
+async function buildReceipt(name, canvas, extra, output, opts) {
+  const { criterion, conserved, dropped } = _criterionFor(name, extra);
+  const originValue = await _originValueFor(name, canvas, extra);
+  const originRes = await hashBytesOf(originValue, opts);
+  const commitRes = await hashBytesOf(output, opts);
+  const discriminatorPassed = _discriminate(name, output, extra);
+  const transformsApplied = [
+    { step: "encode:" + name, criterion },
+    { step: "discriminate:" + name, criterion: discriminatorPassed === null ? "no-structural-test" : "structural-check" },
+  ];
+  return {
+    format: name,
+    criterion,
+    conserved,
+    dropped,
+    discriminatorPassed,
+    originHash: originRes.hash,
+    commitHash: commitRes.hash,
+    transformsApplied,
+    // Both digests run on the same platform path, so one algo label is accurate.
+    hashAlgo: originRes.hashAlgo,
+  };
+}
+
 // ---- registry ---------------------------------------------------------------
 
 /**
@@ -396,6 +823,11 @@ function _snapshotCanvasMeta(canvas) {
  * export(name, canvas, extra)
  *   Calls the named exporter. Throws if the name is not registered.
  *   Returns a Blob or a string. Both can be passed to download().
+ *
+ * exportWithReceipt(name, canvas, extra)
+ *   Calls the named exporter AND builds the witnessed receipt for the transform.
+ *   Returns { blobOrString, receipt }. The blobOrString is byte-identical to what
+ *   export() returns, so current callers are unaffected; this is the additive path.
  */
 export const StudioExporters = (() => {
   const registry = new Map();
@@ -412,7 +844,16 @@ export const StudioExporters = (() => {
     return fn(canvas, extra || {});
   }
 
-  return { register, export: exportAs };
+  async function exportWithReceipt(name, canvas, extra, opts) {
+    const fn = registry.get(name);
+    if (!fn) throw new Error("StudioExporters: no exporter registered for \"" + name + "\"");
+    const ex = extra || {};
+    const blobOrString = await fn(canvas, ex);
+    const receipt = await buildReceipt(name, canvas, ex, blobOrString, opts);
+    return { blobOrString, receipt };
+  }
+
+  return { register, export: exportAs, exportWithReceipt };
 })();
 
 // ---- register all defaults --------------------------------------------------
@@ -555,3 +996,22 @@ export function _selftest() {
   if (failed.length) console.error("[exporters selftest] FAILED:", failed.map(r => r.label));
   return { passed, total, skipped, results };
 }
+
+// ---- receipt internals (exported for node:test coverage) --------------------
+// These are the deterministic, node-safe pieces of the receipt system. Exporting
+// them lets the test suite assert the discriminators, the hashing path (sha-256
+// and the forced fnv1a fallback), and the receipt builder without a browser.
+
+export {
+  hashBytesOf,
+  fnv1a,
+  buildReceipt,
+  discriminateMesh,
+  discriminateOBJText,
+  discriminateGLTF,
+  discriminateSVG,
+  discriminateJSON,
+  discriminatePNG,
+  HASH_SHA256,
+  HASH_FNV1A,
+};
