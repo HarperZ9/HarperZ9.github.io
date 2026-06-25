@@ -49,6 +49,7 @@
       <button type="button" role="tab" data-source="ndim"      aria-selected="false" aria-controls="src-ndim">Dimensions</button>
       <button type="button" role="tab" data-source="byo"       aria-selected="false" aria-controls="src-byo">Bring your own</button>
       <button type="button" role="tab" data-source="watch"     aria-selected="false" aria-controls="src-watch">Watch with me</button>
+      <button type="button" role="tab" data-source="music"     aria-selected="false" aria-controls="src-music">Music</button>
     </div>
     <p class="rail-own">Bring your own image or video. Open <b>Bring your own</b> (drop a file) or feed one to the Atelier as a specimen.</p>
 
@@ -288,6 +289,85 @@
         </div>
       </section>
 
+      <!-- SOURCE: Music reactive mode. Zero-dependency WebAudio + Canvas visual engine.
+           Controls: audio source (file / mic / built-in synth), play/stop, visual mode chips,
+           mapping preset chips, sound toggle, sensitivity slider. -->
+      <section class="src-block" id="src-music" role="tabpanel" aria-label="Music reactive controls" hidden>
+        <div class="fractal-source" id="music-source">
+          <div class="at-panel">
+            <details class="rail-group" open>
+              <summary>Audio source</summary>
+              <div class="at-group">
+                <span class="at-glab">Source</span>
+                <div class="at-chips" role="group" aria-label="Audio source">
+                  <button type="button" class="chip active" id="music-src-synth">Built-in synth</button>
+                  <button type="button" class="chip" id="music-src-mic">Microphone</button>
+                  <button type="button" class="chip" id="music-src-file">Load track</button>
+                </div>
+              </div>
+              <div class="at-group" id="music-file-row" hidden>
+                <span class="at-glab">Track file <span class="hint">MP3, WAV, OGG, FLAC</span></span>
+                <div class="at-seedrow">
+                  <input type="file" id="music-file" accept="audio/*" hidden>
+                  <button class="btn ghost" id="music-file-choose" type="button">Choose file</button>
+                  <span class="at-seed" id="music-file-name" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
+                </div>
+                <audio id="music-audio-el" controls style="width:100%;margin-top:.5rem" hidden></audio>
+              </div>
+              <div class="at-actions">
+                <button class="btn" id="music-play" type="button">Play</button>
+                <button class="btn ghost" id="music-stop" type="button" disabled>Stop</button>
+              </div>
+              <div class="at-gate" id="music-status" aria-live="polite"></div>
+            </details>
+            <details class="rail-group" open>
+              <summary>Visual mode</summary>
+              <div class="at-group">
+                <span class="at-glab">Mode</span>
+                <div class="at-chips" role="group" aria-label="Visual mode" id="music-modes">
+                  <button type="button" class="chip active" data-music-mode="particles">Particles</button>
+                  <button type="button" class="chip" data-music-mode="attractor">Attractor</button>
+                  <button type="button" class="chip" data-music-mode="harmonograph">Harmonograph</button>
+                  <button type="button" class="chip" data-music-mode="flowfield">Flow field</button>
+                  <button type="button" class="chip" data-music-mode="spectrum">Spectrum</button>
+                </div>
+              </div>
+              <div class="at-group" id="music-attractor-row">
+                <span class="at-glab">Attractor type</span>
+                <div class="at-chips" role="group" aria-label="Attractor type" id="music-attractor-types">
+                  <button type="button" class="chip active" data-attr-type="clifford">Clifford</button>
+                  <button type="button" class="chip" data-attr-type="dejong">de Jong</button>
+                  <button type="button" class="chip" data-attr-type="lorenz2d">Lorenz</button>
+                </div>
+              </div>
+            </details>
+            <details class="rail-group" open>
+              <summary>Mapping &amp; sound</summary>
+              <div class="at-group">
+                <span class="at-glab">Preset</span>
+                <div class="at-chips" role="group" aria-label="Mapping preset" id="music-presets">
+                  <button type="button" class="chip active" data-music-preset="default">Default</button>
+                  <button type="button" class="chip" data-music-preset="pulse">Pulse</button>
+                  <button type="button" class="chip" data-music-preset="ambient">Ambient</button>
+                  <button type="button" class="chip" data-music-preset="bass">Bass</button>
+                  <button type="button" class="chip" data-music-preset="bright">Bright</button>
+                </div>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Sensitivity <span class="hint">(<span id="music-sens-val">1.0</span>x)</span></span>
+                <input type="range" class="at-slider" id="music-sensitivity" min="0.2" max="3" step="0.1" value="1" aria-label="Sensitivity">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Reactive sound <span class="hint">soft pad following the music</span></span>
+                <button class="at-mini" id="music-sound-toggle" type="button" aria-pressed="false">Sound off</button>
+                <input type="range" class="at-slider" id="music-sound-level" min="0" max="1" step="0.01" value="0.07" aria-label="Sound level" style="margin-top:.4rem">
+              </div>
+            </details>
+            <p class="src-hint">The visuals react to the live audio analysis: beat spawns shapes, bass drives force, chroma sets color. Quiescent when stopped.</p>
+          </div>
+        </div>
+      </section>
+
       <details class="rail-group rail-about">
         <summary>About the Studio and Project Telos</summary>
         <p>This is the live surface of Project Telos, the engine. Telos is the thesis made tangible: a person and a model stand before the same witnessed frame, generate from it, and verify every step together. Bring your own photo, gif, or video, or generate one with the Atelier's algorithms or the fractal engines. The right panel shows exactly what the model is given: the faithful frame, its fingerprint, dominant colours, and per-channel meters. Talk to it about what it sees, and reshape it, taking turns. The <a href="https://github.com/HarperZ9/telos" style="color:inherit;border-bottom:1px solid rgba(239,171,48,.4);text-decoration:none">published telos repo</a> is the small runnable demo of the same loop. This site is its testbench.</p>
@@ -439,5 +519,8 @@
 <script src="system/reconcile.js?v=20260625a" defer></script>
 <script src="system/atelier.js?v=20260625a" defer></script>
 <script type="module" src="system/studio.js?v=20260625a"></script>
+<!-- Music reactive engine: zero-dependency WebAudio + Canvas visual system. -->
+<script type="module" src="system/reactive.js?v=20260625b"></script>
+<script type="module" src="system/reactive-music-ui.js?v=20260625b"></script>
 </body>
 </html>
