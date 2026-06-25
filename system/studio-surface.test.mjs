@@ -9,19 +9,22 @@ import assert from "node:assert/strict";
 // We replicate the set logic here rather than importing the browser module,
 // because studio-surface.js uses document / window which are not available in Node.
 
-const NATIVE_CAMERA_SOURCES = new Set(["fractal", "fractal3d"]);
+// P2 directive a: ndim is reclassified into the native-camera set (the volumetric renderer dollies
+// the camera INTO the volume on wheel + orbits on drag), so it must NOT get the flat CSS panzoom.
+const NATIVE_CAMERA_SOURCES = new Set(["fractal", "fractal3d", "ndim"]);
 
 function needsNativeCamera(source) {
   return NATIVE_CAMERA_SOURCES.has(source);
 }
 
-test("fractal and fractal3d are native-camera sources (no panzoom layer)", () => {
+test("fractal, fractal3d, and ndim are native-camera sources (no flat panzoom layer)", () => {
   assert.equal(needsNativeCamera("fractal"), true);
   assert.equal(needsNativeCamera("fractal3d"), true);
+  assert.equal(needsNativeCamera("ndim"), true);   // P2: volumetric camera, not a flat image scale
 });
 
-test("other sources get the universal panzoom layer", () => {
-  for (const s of ["atelier", "ndim", "music", "byo", "watch", "unknown"]) {
+test("genuinely flat sources still get the universal CSS panzoom layer", () => {
+  for (const s of ["atelier", "music", "byo", "watch", "unknown"]) {
     assert.equal(needsNativeCamera(s), false, `${s} should not be a native-camera source`);
   }
 });
@@ -130,8 +133,8 @@ test("panzoom attaches for music", () => {
   assert.equal(panzoomShouldAttach("music"), true);
 });
 
-test("panzoom attaches for ndim", () => {
-  assert.equal(panzoomShouldAttach("ndim"), true);
+test("panzoom does NOT attach for ndim (P2: native volumetric camera)", () => {
+  assert.equal(panzoomShouldAttach("ndim"), false);
 });
 
 test("panzoom attaches for atelier", () => {
