@@ -639,6 +639,87 @@ function drawFlowField(ctx, w, h, features, params, opts, t) {
 }
 
 // ---------------------------------------------------------------------------
+// Scalable GPU-particles backend (Stage 1 of the Telos scalable engine).
+// The "particles" mode delegates body simulation+rendering to the tiered GPU engine
+// (system/engine/gpu-particles.js) when the device can run a WebGPU/WebGL2 rung, off the main
+// thread when OffscreenCanvas + workers are available. When the engine cannot run a GPU rung it
+// falls all the way down to the EXISTING drawParticles() Canvas2D loop below, byte-for-byte today's
+// behavior. The fade-trail and beat-flash overlays stay here (the art layer); only the particle
+// bodies move to the engine on capable devices. The engine is loaded lazily and asynchronously so a
+// no-engine / engine-load-failure path simply keeps using drawParticles (graceful degradation).
+// ---------------------------------------------------------------------------
+let _gpuParticles = null;        // the operator handle once initialized
+let _gpuStatus = null;           // last status() from the engine ({ tier, backend, mode, count, ... })
+let _gpuInitState = "idle";      // "idle" | "loading" | "active" | "cpu" | "disabled"
+let _gpuCapability = null;       // probed capability record (set by ReactiveVisuals.setCapability)
+let _gpuOverride = "auto";       // tier override from the toolbar
+let _gpuLastW = 0, _gpuLastH = 0; // last size synced to the engine (resize only on change)
+
+// Kick off (once) the async load + init of the GPU engine for the particles mode. Non-blocking:
+// returns immediately; the first frames run on drawParticles until the engine reports ready, then
+// the particles case switches to it. Any failure pins _gpuInitState to "cpu" so we never retry-thrash.
+function ensureGpuParticles(canvas, w, h) {
+  if (_gpuInitState !== "idle") return;
+  if (typeof window === "undefined") { _gpuInitState = "disabled"; return; }
+  _gpuInitState = "loading";
+  import("./engine/gpu-particles.js")
+    .then(async (mod) => {
+      const op = mod.createGpuParticles();
+      const res = await op.init({
+        capability: _gpuCapability,
+        canvas,
+        width: w,
+        height: h,
+        override: _gpuOverride,
+      });
+      _gpuParticles = op;
+      _gpuStatus = op.status();
+      // If the engine fell to the CPU floor, drop the engine and use the existing drawParticles path
+      // (identical to today). The engine only adds value on a GPU rung.
+      if (res && (res.mode === "worker" || res.mode === "main-gpu")) {
+        _gpuInitState = "active";
+      } else {
+        try { op.dispose(); } catch (_) {}
+        _gpuParticles = null;
+        _gpuInitState = "cpu";
+      }
+      if (typeof window !== "undefined") {
+        window.__gpuParticlesStatus = _gpuStatus;
+        try { window.dispatchEvent(new CustomEvent("gpu-particles-ready", { detail: _gpuStatus })); } catch (_) {}
+      }
+    })
+    .catch(() => { _gpuInitState = "cpu"; _gpuParticles = null; });
+}
+
+// Draw the particles mode through the GPU engine: keep the fade-trail + beat-flash art here, drive
+// the bodies via the engine (which composites onto the same canvas). Beats spawn FORCES (pulse) that
+// the engine reads; the CPU-mode burst-spawn is replaced by the engine's continuous force model on
+// the GPU rungs (the visual reads equivalently: a beat kicks all particles, see the backends).
+function drawParticlesGpu(ctx, w, h, features, params, t) {
+  // Fade trail (same recipe as drawParticles).
+  fillVoid(ctx, w, h, 0.05 + params.pulse * 0.08);
+  // Engine steps + renders the bodies and composites onto this canvas.
+  if (_gpuParticles) {
+    // Resize only on an actual dimension change (avoid posting a resize to the worker every frame).
+    if (_gpuParticles.resize && (w !== _gpuLastW || h !== _gpuLastH)) {
+      _gpuParticles.resize(w, h);
+      _gpuLastW = w; _gpuLastH = h;
+    }
+    _gpuParticles.drawFrame(features, params, t);
+    _gpuStatus = _gpuParticles.status();
+    if (typeof window !== "undefined") window.__gpuParticlesStatus = _gpuStatus;
+  }
+  // Beat flash (same recipe as drawParticles).
+  if (params.pulse > 0.65) {
+    ctx.save();
+    ctx.globalAlpha = (params.pulse - 0.65) * 0.2;
+    ctx.fillStyle = oklchToRgba(0.85, 0.12, params.hue, 1);
+    ctx.fillRect(0, 0, w, h);
+    ctx.restore();
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Public API: ReactiveVisuals
 // ---------------------------------------------------------------------------
 
@@ -660,10 +741,35 @@ const ReactiveVisuals = {
   setMode(name) {
     if (!MODES.includes(name)) return;
     if (name !== _activeMode) {
+      // Leaving particles: release the GPU engine (the leave3D/dispose discipline) so workers and
+      // GPU resources are freed and a later re-entry re-probes cleanly.
+      if (_activeMode === "particles" && _gpuParticles) {
+        try { _gpuParticles.dispose(); } catch (_) {}
+        _gpuParticles = null;
+        _gpuInitState = "idle";
+        _gpuLastW = 0; _gpuLastH = 0;
+      }
       _activeMode = name;
       _needsReinit = true;
     }
   },
+
+  // Stage 1 hooks: studio.js passes the probed capability record and the tier override so the
+  // particles mode can pick the right backend. Setting these before particles activates lets the
+  // first init use them; changing the override after re-inits the engine on the next mode entry.
+  setCapability(cap) { _gpuCapability = cap || null; },
+  setTierOverride(override) {
+    const next = override || "auto";
+    if (next === _gpuOverride) return;
+    _gpuOverride = next;
+    // Force a clean re-init so the new tier takes effect (dispose any live engine).
+    if (_gpuParticles) { try { _gpuParticles.dispose(); } catch (_) {} _gpuParticles = null; }
+    _gpuInitState = "idle";
+    _gpuLastW = 0; _gpuLastH = 0;
+  },
+  // Honest status for the toolbar / model readout: which backend, tier, and live count are running,
+  // or null when the particles engine is not active (CPU fallback path).
+  getGpuStatus() { return _gpuStatus; },
 
   setAttractorType(type) {
     _attractorType = type;
@@ -700,7 +806,14 @@ const ReactiveVisuals = {
 
     switch (_activeMode) {
       case "particles":
-        drawParticles(ctx, w, h, features, params, opts, t);
+        // Stage 1: route the bodies through the tiered GPU engine when it is active; otherwise the
+        // existing Canvas2D drawParticles loop (byte-identical to today) is the guaranteed fallback.
+        ensureGpuParticles(canvas, w, h);
+        if (_gpuInitState === "active" && _gpuParticles) {
+          drawParticlesGpu(ctx, w, h, features, params, t);
+        } else {
+          drawParticles(ctx, w, h, features, params, opts, t);
+        }
         break;
       case "attractor":
         drawAttractor(ctx, w, h, features, params, opts, t);
