@@ -132,8 +132,10 @@ def svg_tspans(value: str, x: int, y: int, line_height: int, limit: int) -> tupl
     lines = wrap_words(value, limit)
     spans = []
     for index, line in enumerate(lines):
-        dy = 0 if index == 0 else line_height
-        spans.append(f'<tspan x="{x}" dy="{dy}">{esc(line)}</tspan>')
+        if index == 0:
+            spans.append(f'<tspan x="{x}" y="{y}">{esc(line)}</tspan>')
+        else:
+            spans.append(f'<tspan x="{x}" dy="{line_height}">{esc(line)}</tspan>')
     return "\n    ".join(spans), y + line_height * max(0, len(lines) - 1)
 
 
@@ -248,7 +250,7 @@ def render_demo(identity: RepoIdentity) -> str:
 @font-face{{font-family:Kilon;src:url("https://harperz9.github.io/system/fonts/kilon.woff2") format("woff2");font-display:swap}}
 @font-face{{font-family:Conso;src:url("https://harperz9.github.io/system/fonts/conso-regular.woff2") format("woff2");font-display:swap}}
 :root{{--paper:#f4f3ef;--ink:#0b0c0e;--soft:#2f3238;--muted:#585c64;--iris:#4636e8;--line:rgba(11,12,14,.14)}}
-*{{box-sizing:border-box}}body{{margin:0;background:var(--paper);color:var(--ink);font-family:Conso,Arial,sans-serif;line-height:1.6}}a{{color:var(--ink)}}a:focus-visible,button:focus-visible{{outline:2px solid var(--iris);outline-offset:4px}}.skip{{position:absolute;left:1rem;top:1rem;transform:translateY(-140%);background:var(--paper);border:1px solid var(--line);padding:.6rem 1rem}}.skip:focus{{transform:none}}main{{min-height:100vh;padding:clamp(1.2rem,4vw,4rem)}}.rail,.label{{font-family:ui-monospace,Consolas,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-size:.72rem}}h1{{font-family:Kilon,Arial Black,sans-serif;font-size:clamp(4rem,18vw,13rem);line-height:.78;letter-spacing:-.05em;margin:4rem 0 1rem}}.promise{{font-size:clamp(1.25rem,2.2vw,2.2rem);max-width:34ch;color:var(--soft)}}.market{{max-width:62ch;color:var(--muted);margin-top:1.1rem}}.specimen,.proof{{margin-top:clamp(2rem,5vw,4rem);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}}.row{{display:grid;grid-template-columns:minmax(8rem,14rem) 1fr;gap:1rem;padding:1rem 0;border-top:1px solid var(--line)}}.row:first-child{{border-top:0}}.row span{{font-family:ui-monospace,Consolas,monospace;text-transform:uppercase;letter-spacing:.16em;color:var(--iris);font-size:.76rem}}.row p{{margin:0;max-width:58ch}}.proof{{padding:1rem 0}}pre{{margin:.8rem 0 0;white-space:pre-wrap;overflow-wrap:anywhere;font-family:ui-monospace,Consolas,monospace;font-size:.92rem}}.note{{max-width:58ch;color:var(--muted)}}.actions{{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}}.pill{{border:1px solid var(--ink);border-radius:999px;padding:.72rem 1rem;text-decoration:none}}.pill.primary{{background:var(--ink);color:var(--paper)}}@media(max-width:620px){{.row{{grid-template-columns:1fr}}h1{{font-size:clamp(3.4rem,24vw,7rem)}}}}@media(prefers-reduced-motion:reduce){{*{{scroll-behavior:auto;transition:none!important;animation:none!important}}}}
+*{{box-sizing:border-box}}body{{margin:0;background:var(--paper);color:var(--ink);font-family:Conso,Arial,sans-serif;line-height:1.6}}a{{color:var(--ink)}}a:focus-visible,button:focus-visible{{outline:2px solid var(--iris);outline-offset:4px}}.skip{{position:absolute;left:1rem;top:1rem;transform:translateY(-140%);background:var(--paper);border:1px solid var(--line);padding:.6rem 1rem}}.skip:focus{{transform:none}}main{{min-height:100vh;padding:clamp(1.2rem,4vw,4rem)}}.rail,.label{{font-family:ui-monospace,Consolas,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-size:.72rem}}h1{{font-family:Kilon,Arial Black,sans-serif;font-size:clamp(4rem,18vw,13rem);line-height:.78;letter-spacing:-.05em;margin:4rem 0 1rem}}h2.label{{margin:0;padding:1rem 0 0}}.promise{{font-size:clamp(1.25rem,2.2vw,2.2rem);max-width:34ch;color:var(--soft)}}.market{{max-width:62ch;color:var(--muted);margin-top:1.1rem}}.specimen,.proof{{margin-top:clamp(2rem,5vw,4rem);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}}.row{{display:grid;grid-template-columns:minmax(8rem,14rem) 1fr;gap:1rem;padding:1rem 0;border-top:1px solid var(--line)}}.row:first-child{{border-top:0}}.row span{{font-family:ui-monospace,Consolas,monospace;text-transform:uppercase;letter-spacing:.16em;color:var(--iris);font-size:.76rem}}.row p{{margin:0;max-width:58ch}}.proof{{padding:1rem 0}}pre{{margin:.8rem 0 0;white-space:pre-wrap;overflow-wrap:anywhere;font-family:ui-monospace,Consolas,monospace;font-size:.92rem}}.note{{max-width:58ch;color:var(--muted)}}.actions{{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}}.pill{{border:1px solid var(--ink);border-radius:999px;padding:.72rem 1rem;text-decoration:none}}.pill.primary{{background:var(--ink);color:var(--paper)}}@media(max-width:620px){{.row{{grid-template-columns:1fr}}h1{{font-size:clamp(3.4rem,24vw,7rem)}}}}@media(prefers-reduced-motion:reduce){{*{{scroll-behavior:auto;transition:none!important;animation:none!important}}}}
 </style>
 </head>
 <body>
@@ -258,11 +260,12 @@ def render_demo(identity: RepoIdentity) -> str:
   <h1>{esc(identity.key)}</h1>
   <p class="promise">{esc(identity.promise)}</p>
   <p class="market">{esc(identity.market_position)}</p>
-  <section class="specimen" aria-label="{esc(identity.key)} proof sequence">
+  <section class="specimen" aria-labelledby="proof-sequence">
+    <h2 class="label" id="proof-sequence">Proof sequence</h2>
     {demo_rows(identity)}
   </section>
-  <section class="proof" aria-label="Run the proof">
-    <p class="label">run it</p>
+  <section class="proof" aria-labelledby="run-proof">
+    <h2 class="label" id="run-proof">Run the proof</h2>
     <pre><code>{esc(identity.install_command)}
 {esc(identity.run_command)}</code></pre>
     <p class="note">Inspect the artifact, try it against a real workflow, then bring the evidence into a pilot, sponsorship, or research conversation.</p>
