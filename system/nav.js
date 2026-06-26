@@ -15,6 +15,7 @@ const FLAGSHIPS = new Set(["overview","index-graph","forum","studio","gather","c
 const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","accountable-machines",
   "accountable-engine","quantalang","raw","quanta-color","quanta-products","toolkit",
   "provenance-sensorium","orca","aleph","warden","presentation","atelier","gallery","demonstrations"]);
+CATALOG.add("field-guide");
 const RESEARCH = new Set(["research","why"]);
 const WRITING = new Set(["writing"]);
 const ABOUT = new Set(["cv","resume","person"]);
