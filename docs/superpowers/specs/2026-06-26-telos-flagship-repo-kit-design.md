@@ -1,7 +1,7 @@
 # Project Telos flagship repo kit design
 
 Date: 2026-06-26
-Status: approved direction, awaiting operator review of written spec
+Status: approved direction, amended with proof-led marketing voice
 Approved approach: Unified Repo Kit
 Scope: `gather`, `crucible`, `index`, `forum`, and `telos`
 
@@ -19,6 +19,7 @@ The outcome should make a visitor understand three things quickly:
 - what the flagship does;
 - why it exists as a distinct organ in Project Telos;
 - how to run or inspect the demonstration without needing private context.
+- why the work is worth adopting, funding, testing, or helping into maturity.
 
 ## Current-state basis
 
@@ -62,6 +63,42 @@ like the same family as the homepage, not a separate open source template.
 - Punctuation and source hygiene: ASCII punctuation in committed source. Avoid
   em dashes.
 
+## Voice and demand posture
+
+The copy should integrate the current technical narrative with a modern,
+subtle, honest marketing voice. The goal is not to hide intent or manipulate the
+reader. The goal is to avoid sounding like a pitch while making the work feel
+desirable, credible, and worth backing.
+
+Principles:
+
+- Lead with the pain the reader already recognizes, then show the artifact as
+  relief. Do not start with internal architecture unless architecture is the
+  proof.
+- Keep the sales surface invisible by making the value argument useful on its
+  own: a visitor should learn something even if they never install the tool.
+- Use proof-led desire: receipts, demos, tests, versions, and failure modes are
+  the persuasion. The marketing posture is "you can check this," not "believe
+  me."
+- Make each repo feel fundable by showing a live research/product frontier:
+  what it proves today, what it unlocks next, and what a serious user or funder
+  could accelerate.
+- Preserve the operator voice: precise, calm, editorial, technically fluent,
+  allergic to hype, confident enough not to shout.
+- Avoid dark patterns, fake scarcity, inflated claims, or hidden sponsorship
+  asks. Do not imply adoption, revenue, institutional validation, or user counts
+  that are not evidenced.
+- Replace explicit "please fund this" language in the first viewport with
+  invitations that feel natural: inspect the demo, test it on a real workflow,
+  sponsor the research, fund a pilot, or open a serious conversation.
+
+The practical pattern is:
+
+1. Name the costly failure.
+2. Show the flagship's specific mechanism.
+3. Prove it with a runnable artifact.
+4. Invite the reader into the next step without sounding needy.
+
 ## Unified repo kit
 
 Each flagship repo receives the same structural kit, adapted to its identity.
@@ -84,9 +121,13 @@ Each flagship repo receives the same structural kit, adapted to its identity.
      proof-oriented summary.
    - Keeps badges, install instructions, and the existing evidence-rich
      narrative, but moves them under a cleaner hierarchy.
+   - Adds a proof-led value paragraph: the user pain, the mechanism, and why it
+     is worth inspecting or piloting.
    - Adds a small "Project Telos flagships" navigation row linking all five
      peers and the live homepage.
    - Adds a "Try it" section near the top with the shortest verified command.
+   - Adds a quiet "Work with it" or "Back the research" invitation near the
+     first proof section, not as a loud CTA.
 
 4. Description metadata
    - `pyproject.toml` description is tuned where present.
@@ -114,6 +155,10 @@ signaling perception, constraint, and verified passage.
 README hero promise: "Give a stateless model durable, verified contact with
 state and range."
 
+Market posture: Telos is for people who already feel the cost of trusting a
+confident model without a shared record. The copy should make the membrane feel
+like the missing floor for serious AI work.
+
 Demo surface: add a polished `demo/index.html` that explains and runs alongside
 the existing `node demo/run.mjs` certificate loop. The page should present the
 two runs as a ceramic instrument: honest render -> CERTIFIED, broken render ->
@@ -130,6 +175,10 @@ line.
 README hero promise: "Bring difficult sources in, and keep how they arrived on
 the record."
 
+Market posture: Gather is for researchers, editors, operators, and teams whose
+AI workflows are only as trustworthy as the source trail. The copy should make
+provenance feel like an advantage, not a compliance chore.
+
 Demo surface: create a static or generated provenance digest page from
 `examples/demo.py` or `examples/pipeline.py`. The surface should show source
 items, method labels, content hashes, scope filtering, digest seal, and the
@@ -143,6 +192,10 @@ Mark: atlas graph. A sparse node map with one emphasized doc-to-code edge,
 drawn with hairlines and a restrained iris node.
 
 README hero promise: "Map a workspace from evidence, not memory."
+
+Market posture: index is for teams whose codebase shape has outgrown memory.
+The copy should make the atlas feel like the first hour of sane onboarding,
+agent routing, diligence, or technical recovery.
 
 Demo surface: restyle `examples/atlas-demo.html` and the embedded atlas CSS in
 `src/index_graph/viz/atlas_assets.py` to the white-sculptural Telos system.
@@ -159,6 +212,10 @@ small task points and a visible verification tick.
 README hero promise: "Route agent work through a ledger you can replay and
 verify."
 
+Market posture: Forum is for anyone who wants agent fleets to feel operable
+rather than magical. The copy should make the ledger feel like the operational
+surface that turns model work into accountable work.
+
 Demo surface: create a static or generated ledger replay page from
 `examples/demo.py` or `examples/run.py`. It should show routing, planning waves,
 result records, quick verify, deep verify, and the intentional tamper contrast.
@@ -171,6 +228,10 @@ Mark: verdict axis. A measured line passes through a furnace/aperture into three
 visible verdict states: MATCH, DRIFT, UNVERIFIABLE.
 
 README hero promise: "Turn claims into verdicts grounded in measurement."
+
+Market posture: crucible is for teams drowning in plausible claims. The copy
+should make measured verdicts feel like a calmer way to decide what survives
+contact with evidence.
 
 Demo surface: create a static or generated cleanroom verdict page from
 `examples/demo.py` and the run/review bundle flow. It should show thesis,
@@ -185,12 +246,14 @@ deviate.
 1. Hero SVG.
 2. Text heading and one-line fallback summary.
 3. Badges.
-4. "What it does" in two to three short paragraphs.
-5. "Try it" with install and shortest demo command.
-6. "What to look for" as proof-oriented bullets.
-7. "Project Telos flagships" navigation.
-8. Existing deeper explanation, architecture, and examples.
-9. License and contribution/review invitation.
+4. "Try it" with install and shortest demo command.
+5. "Why it matters" as one proof-led value paragraph.
+6. "Work with it" as a quiet research, pilot, sponsor, or feedback invitation.
+7. "What it does" in two to three short paragraphs.
+8. "What to look for" as proof-oriented bullets.
+9. "Project Telos flagships" navigation if it is not already in the hero row.
+10. Existing deeper explanation, architecture, and examples.
+11. License and contribution/review invitation.
 
 The first viewport should not bury the command to try the tool. The repo should
 feel like a usable product artifact, not only a long manifesto.
@@ -232,6 +295,8 @@ Implementation is not complete until these checks pass:
 
 - For each repo, README references every new brand asset with valid relative
   paths.
+- For each repo, README includes a "Why it matters" value paragraph and a quiet
+  "Work with it" invitation without unsupported claims.
 - For each repo, the demo surface exists and can be opened or generated from the
   documented command.
 - For `index`, existing atlas tests still pass after restyling embedded assets.
@@ -250,8 +315,10 @@ Implementation is not complete until these checks pass:
 - Do not move all five tools into one monorepo.
 - Do not make GitHub README rendering depend on JavaScript, remote fonts, or
   remote images.
-- Do not replace the current technical narrative with marketing copy. The
-  design should make the evidence easier to read, not hide it.
+- Do not replace the current technical narrative with empty marketing copy. The
+  design should make the evidence desirable and easier to buy into, not hide it.
+- Do not use deceptive sales framing, fake urgency, fake social proof, or claims
+  that cannot be checked from public artifacts.
 - Do not publish secrets, generated logs, or private artifacts.
 
 ## Open implementation choices
