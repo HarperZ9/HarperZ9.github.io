@@ -212,7 +212,7 @@ def demo_rows(identity: RepoIdentity) -> str:
             ("thesis", "claim plus falsification condition"),
             ("measure", "substrate oracle records deviation"),
             ("verdict", "MATCH, DRIFT, or UNVERIFIABLE"),
-            ("review", "verifier receives spec and artifact only"),
+            ("review", "verifier receives original spec and artifact only"),
         ],
         "index": [
             ("scan", "repos and docs enter the atlas"),
