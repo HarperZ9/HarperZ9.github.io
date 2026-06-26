@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Project Telos field guide: where to test checkable AI work</title>
+<meta name="description" content="A practical field guide for testing Project Telos in clinics, studios, newsrooms, agent-routing runs, and reasoning workflows. Includes public repos, main site links, and the ask for verification, testing, traction, and grassroots research funding.">
+<link rel="canonical" href="https://harperz9.github.io/field-guide.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project Telos">
+<meta property="og:title" content="Project Telos field guide">
+<meta property="og:description" content="Where to test checkable AI work now: doctor/admin, artist/studio, media/newsroom, token economy/routing, and reasoning workflows.">
+<meta property="og:url" content="https://harperz9.github.io/field-guide.html">
+<meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Project Telos field guide">
+<meta name="twitter:description" content="Concrete places to test Project Telos: clinics, studios, newsrooms, routing ledgers, and reasoning workflows.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/system.css?v=20260625a">
+<style>
+.field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:clamp(1.6rem,3vw,2.4rem);max-width:84rem}
+.field-card{border:1px solid var(--hairline);border-radius:14px;background:rgba(255,255,255,.055);padding:clamp(1rem,2vw,1.35rem)}
+.field-card h3{font-family:"Kilon",system-ui,sans-serif;font-size:clamp(1.25rem,2vw,1.75rem);line-height:1.08;margin:0 0 .45rem;color:var(--bone)}
+.field-card .tag{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:.75rem}
+.field-card p{font-family:"Conso",Georgia,serif;font-size:clamp(.98rem,1.2vw,1.08rem);line-height:1.62;color:var(--muted);margin:.55rem 0}
+.field-card b{color:var(--bone);font-weight:500}
+.field-card ul{margin:.75rem 0 0;padding:0;list-style:none;border-top:1px solid var(--hairline)}
+.field-card li{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.62rem;letter-spacing:.05em;line-height:1.6;color:var(--muted);padding:.58rem 0;border-bottom:1px solid var(--hairline)}
+.field-card li span{color:var(--orange)}
+.field-card a{color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(70,54,232,.45)}
+.field-card a:hover{color:var(--orange);border-bottom-color:var(--orange)}
+.field-card.wide{grid-column:1/-1;background:linear-gradient(145deg,rgba(239,171,48,.11),rgba(255,255,255,.035))}
+.call-band{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(18rem,.7fr);gap:clamp(1rem,3vw,2rem);align-items:start;max-width:84rem}
+.repo-list{display:grid;gap:.5rem;margin-top:.4rem}
+.repo-list a{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bone);text-decoration:none;border:1px solid var(--hairline);border-radius:999px;padding:.65rem .85rem;background:rgba(255,255,255,.05)}
+.repo-list a:hover{color:var(--orange);border-color:rgba(239,171,48,.45)}
+@media(max-width:760px){.field-grid,.call-band{grid-template-columns:1fr}.field-card.wide{grid-column:auto}}
+</style>
+</head>
+<body class="inner-clean">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="index.html">Home</a> <a href="overview.html">Flagships</a> <a href="catalog.html">Catalog</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260625a"></script>
+
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Project Telos &middot; field guide</span></div>
+  <div class="mid">
+    <h1>Bring it real work. <span class="g">Then try to re-check it.</span></h1>
+    <p class="lede">Project Telos is easiest to judge in the field: a clinic, a studio, a newsroom, a routing ledger, an argument under pressure. The question is always the same. Could a person inspect what the model saw, what changed, what stayed uncertain, and what proof survived after the answer left the chat?</p>
+    <p class="close">This is the share target for people who can test it now: verify it, break it, run it against real workflows, and tell me where the receipt is not enough.</p>
+  </div>
+  <div class="seal">Main site &middot; public repos &middot; verification, testing, traction, grassroots research funding</div>
+</div>
+
+<main id="main">
+
+<section class="mv" id="start" aria-labelledby="start-h">
+  <h2 id="start-h" class="reveal">Start with the public surfaces.</h2>
+  <div class="call-band reveal">
+    <div>
+      <p class="body-text">The whole body of work is public enough to test without a meeting. The useful first reader is not someone who applauds the thesis. It is someone who runs one piece on a workflow they understand and reports where the evidence chain breaks.</p>
+      <p class="body-text">The ask is practical: verification, testing against real workflows, early traction from people willing to inspect receipts, and possibly modest grassroots research funding or pointers so the work can keep hardening before it looks like a normal company.</p>
+    </div>
+    <div class="repo-list" aria-label="Project Telos public links">
+      <a href="https://harperz9.github.io">Main site</a>
+      <a href="https://github.com/HarperZ9">GitHub profile</a>
+      <a href="https://github.com/HarperZ9/gather">gather</a>
+      <a href="https://github.com/HarperZ9/index">index</a>
+      <a href="https://github.com/HarperZ9/forum">forum</a>
+      <a href="https://github.com/HarperZ9/crucible">crucible</a>
+      <a href="https://github.com/HarperZ9/telos">the telos engine</a>
+    </div>
+  </div>
+</section>
+
+<section class="mv" id="fields" aria-labelledby="fields-h">
+  <h2 id="fields-h" class="reveal">Five places to test it.</h2>
+  <p class="body-text reveal">Use de-identified or synthetic material first. Do not upload private records, patient data, credentials, or source material you cannot share. The point is to test the shape of the receipt, not to make the first run high-risk.</p>
+
+  <div class="field-grid reveal">
+    <article class="field-card">
+      <span class="tag">Doctor / clinical admin</span>
+      <h3>Can a summary keep its uncertainty attached?</h3>
+      <p><b>Demo:</b> take a de-identified intake note, a clinic policy excerpt, and a reviewer note. Use <a href="https://github.com/HarperZ9/gather">gather</a> to preserve source fragments and receipts, then use <a href="https://github.com/HarperZ9/forum">forum</a> to route the review steps into a causal ledger.</p>
+      <p><b>Proof to inspect:</b> every sentence in the summary should point back to an intake fragment, policy line, reviewer/tool handoff, or an explicit <span translate="no">UNVERIFIABLE</span> limit.</p>
+      <ul>
+        <li><span>Break test:</span> remove one source fragment and see whether the digest or ledger still catches the missing support.</li>
+        <li><span>Do not claim:</span> clinical validation, diagnosis, or care advice.</li>
+      </ul>
+    </article>
+
+    <article class="field-card">
+      <span class="tag">Artist / studio</span>
+      <h3>Can a creative branch stay inspectable?</h3>
+      <p><b>Demo:</b> start in the <a href="studio.html">studio</a> with a public or self-owned source image. Keep the source asset, prompt, seed, transform branch, critique note, and export gate together instead of treating the final render as a detached image.</p>
+      <p><b>Proof to inspect:</b> a later viewer should be able to tell what was made, what was transformed, what was selected, and why the export was allowed.</p>
+      <ul>
+        <li><span>Break test:</span> change the source or seed and check whether the artifact still falsely reads as the same work.</li>
+        <li><span>Best fit:</span> artists, creative technologists, provenance researchers, gallery/workflow people.</li>
+      </ul>
+    </article>
+
+    <article class="field-card">
+      <span class="tag">Media / newsroom</span>
+      <h3>Can every public sentence find its source?</h3>
+      <p><b>Demo:</b> gather a small public-source packet for a story: original article, transcript, image source, correction, and conflict note. Then use a ledgered review pass to decide which public claims survive.</p>
+      <p><b>Proof to inspect:</b> each published sentence should map to a witnessed source, a conflict note, an editorial decision, or <span translate="no">UNVERIFIABLE</span>. The model should not be the only witness to its own source check.</p>
+      <ul>
+        <li><span>Break test:</span> swap one quote or image source after the review and see whether the check catches drift.</li>
+        <li><span>Repos:</span> <a href="https://github.com/HarperZ9/gather">gather</a>, <a href="https://github.com/HarperZ9/forum">forum</a>, and <a href="https://github.com/HarperZ9/crucible">crucible</a>.</li>
+      </ul>
+    </article>
+
+    <article class="field-card">
+      <span class="tag">Token economy / routing</span>
+      <h3>Can the ledger show where model calls bought evidence?</h3>
+      <p><b>Demo:</b> route a multi-step agent task through <a href="https://github.com/HarperZ9/forum">forum</a>. Keep the deterministic routing, budget stop, escalation, and delivery pass in the ledger. Use <a href="https://github.com/HarperZ9/index">index</a> to map the workspace before asking a stronger model to reason over it.</p>
+      <p><b>Proof to inspect:</b> expensive model calls should have a reason: evidence coverage, route uncertainty, intent verification, or a specific unresolved question. Confident prose without a ledger reason is waste.</p>
+      <ul>
+        <li><span>Break test:</span> force a cheap route where escalation is needed, or escalate every step, then compare ledger quality and token spend.</li>
+        <li><span>Useful report:</span> the first place where the ledger is too bulky, too thin, or too hard to replay.</li>
+      </ul>
+    </article>
+
+    <article class="field-card wide">
+      <span class="tag">Reasoning / public claims</span>
+      <h3>Can the final authority live outside the model?</h3>
+      <p><b>Demo:</b> write a thesis with measurable claims, falsification conditions, and source substrate. Use <a href="https://github.com/HarperZ9/crucible">crucible</a> as the release-candidate/dev-parallel judgment organ: steelman the claim, measure what holds, report <span translate="no">MATCH</span>, <span translate="no">DRIFT</span>, or <span translate="no">UNVERIFIABLE</span>, then refine the weakest axis.</p>
+      <p><b>Proof to inspect:</b> the answer should not be "the model thinks this is right." The answer should be a record a person can inspect: what claim was tested, what evidence supported it, what refuted it, what drifted, and what remained unverified.</p>
+      <ul>
+        <li><span>Break test:</span> make one claim too vague to measure and require the system to say <span translate="no">UNVERIFIABLE</span> rather than rescue it.</li>
+        <li><span>Public state:</span> crucible is public, lowercase, release-candidate/dev-parallel, and not claimed stable or PyPI-published from this page.</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<section class="mv" id="report" aria-labelledby="report-h">
+  <h2 id="report-h" class="reveal">What to send back.</h2>
+  <p class="body-text reveal">A useful field report is small and concrete: the workflow you tried, which repo you used, what evidence the receipt preserved, what it failed to preserve, and whether the result was easier to inspect than a normal model answer. Screenshots are less useful than the exact receipt, ledger, command, or missing link.</p>
+  <pre class="artifact reveal" translate="no"><span class="pr">field:</span> newsroom claim review
+<span class="pr">repos:</span> gather + forum
+<span class="pr">worked:</span> source fragments and editorial handoff stayed visible
+<span class="bad">broke:</span> conflict note was not tied tightly enough to the final sentence
+<span class="ok">ask:</span> make the unresolved/conflict state easier to inspect before publish</pre>
+  <div class="channels reveal">
+    <span class="g">Contact</span> &rarr; <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9">github.com/HarperZ9</a>
+    &nbsp;&middot;&nbsp;
+    <a href="overview.html">all flagships</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Project Telos needs field testers more than spectators. Bring it a real workflow, keep the data safe, and report the first place the proof breaks.</p>
+</footer>
+
+<script src="system/reveal.js?v=20260625a" defer></script>
+</body>
+</html>
