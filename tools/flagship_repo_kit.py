@@ -1,9 +1,10 @@
-from __future__ import annotations
-from pathlib import Path
 import argparse
 import html
 import sys
+from dataclasses import dataclass
+from pathlib import Path
 from zipfile import ZipFile
+
 TOKENS = {
     "paper": "#f4f3ef",
     "paper2": "#eceae4",
@@ -24,6 +25,9 @@ WEB_FONTS = [
     PORTFOLIO / "system" / "fonts" / "conso-semibold.woff2",
     PORTFOLIO / "system" / "fonts" / "conso-bold.woff2",
 ]
+
+
+@dataclass(frozen=True)
 class RepoIdentity:
     key: str
     root: Path
@@ -36,31 +40,8 @@ class RepoIdentity:
     install_command: str
     run_command: str
     description: str
-    def __init__(
-        self,
-        key: str,
-        root: Path,
-        package_name: str,
-        role: str,
-        promise: str,
-        market_position: str,
-        status_labels: tuple[str, ...],
-        demo_path: Path,
-        install_command: str,
-        run_command: str,
-        description: str,
-    ):
-        self.key = key
-        self.root = root
-        self.package_name = package_name
-        self.role = role
-        self.promise = promise
-        self.market_position = market_position
-        self.status_labels = status_labels
-        self.demo_path = demo_path
-        self.install_command = install_command
-        self.run_command = run_command
-        self.description = description
+
+
 IDENTITIES = {
     "gather": RepoIdentity(
         key="gather",
@@ -130,6 +111,8 @@ IDENTITIES = {
 }
 def esc(value: str) -> str:
     return html.escape(value, quote=True)
+
+
 def check_fonts() -> None:
     missing = [str(path) for path in FONT_ARCHIVES + WEB_FONTS if not path.exists()]
     if missing:
@@ -141,6 +124,8 @@ def check_fonts() -> None:
             raise SystemExit("Kilon archive missing kilon webfont")
         if archive.name.startswith("Conso") and "Web Fonts/conso-regular-webfont.woff2" not in names:
             raise SystemExit("Conso archive missing regular webfont")
+
+
 def mark_paths(key: str) -> str:
     if key == "telos":
         return '<path d="M115 60 C180 10 292 10 365 86 C438 162 434 278 352 348 C270 418 151 394 96 306 C42 218 50 114 115 60 Z" fill="none" stroke="#0b0c0e" stroke-width="14"/><path d="M142 296 C202 188 272 123 354 88" fill="none" stroke="#4636e8" stroke-width="18" stroke-linecap="round"/>'
@@ -153,23 +138,27 @@ def mark_paths(key: str) -> str:
     if key == "crucible":
         return '<path d="M94 350 H386 M150 350 L214 98 H306 L370 350" fill="none" stroke="#0b0c0e" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M164 232 H356" stroke="#4636e8" stroke-width="14" stroke-linecap="round"/><circle cx="260" cy="232" r="42" fill="none" stroke="#0b0c0e" stroke-width="12"/>'
     raise KeyError(key)
+
+
 def render_mark(identity: RepoIdentity) -> str:
     title = f"{identity.key} mark"
     desc = f"Project Telos mark for {identity.key}, {identity.role}."
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 440" role="img">
-  <title>{esc(title)}</title>
-  <desc>{esc(desc)}</desc>
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 440" role="img" aria-labelledby="title desc">
+  <title id="title">{esc(title)}</title>
+  <desc id="desc">{esc(desc)}</desc>
   <rect width="520" height="440" rx="44" fill="{TOKENS["paper"]}"/>
   {mark_paths(identity.key)}
 </svg>
 '''
+
+
 def render_hero(identity: RepoIdentity) -> str:
     labels = " / ".join(identity.status_labels)
     title = identity.key
     desc = f"{identity.key} README hero for Project Telos."
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 520" role="img">
-  <title>{esc(title)} Project Telos hero</title>
-  <desc>{esc(desc)} {esc(identity.promise)}</desc>
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 520" role="img" aria-labelledby="title desc">
+  <title id="title">{esc(title)} Project Telos hero</title>
+  <desc id="desc">{esc(desc)} {esc(identity.promise)}</desc>
   <rect width="1280" height="520" rx="34" fill="{TOKENS["paper"]}"/>
   <path d="M80 96 H1200 M80 424 H1200" stroke="#0b0c0e" stroke-opacity=".14"/>
   <text x="80" y="86" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" letter-spacing="6" fill="{TOKENS["muted"]}">PROJECT TELOS / {esc(identity.role.upper())}</text>
@@ -179,6 +168,8 @@ def render_hero(identity: RepoIdentity) -> str:
   <g transform="translate(850 68) scale(.78)">{mark_paths(identity.key)}</g>
 </svg>
 '''
+
+
 def demo_rows(identity: RepoIdentity) -> str:
     rows = {
         "gather": [
@@ -216,6 +207,8 @@ def demo_rows(identity: RepoIdentity) -> str:
         f'<div class="row"><span>{esc(label)}</span><p>{esc(text)}</p></div>'
         for label, text in rows
     )
+
+
 def render_demo(identity: RepoIdentity) -> str:
     return f'''<!doctype html>
 <html lang="en">
@@ -248,10 +241,14 @@ def render_demo(identity: RepoIdentity) -> str:
 </body>
 </html>
 '''
+
+
 def write_text(path: Path, content: str) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8", newline="\n")
     return path
+
+
 def render_repo(identity: RepoIdentity) -> list[Path]:
     brand = identity.root / "docs" / "brand"
     written = [
@@ -260,6 +257,8 @@ def render_repo(identity: RepoIdentity) -> list[Path]:
         write_text(identity.root / identity.demo_path, render_demo(identity)),
     ]
     return written
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo", choices=sorted(IDENTITIES))
@@ -276,5 +275,7 @@ def main(argv: list[str] | None = None) -> int:
         for path in render_repo(IDENTITIES[key]):
             print(f"wrote {path}")
     return 0
+
+
 if __name__ == "__main__":
     raise SystemExit(main(sys.argv[1:]))
