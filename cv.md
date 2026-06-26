@@ -1,127 +1,131 @@
-# Zain Dana Harper — Curriculum Vitae
+# Zain Dana Harper - Curriculum Vitae
 
-**Systems engineer · AI accountability · compilers · real-time graphics · security**
-Independent · Seattle · since 2023
-[harperz9.github.io](https://harperz9.github.io) · [github.com/HarperZ9](https://github.com/HarperZ9) · zaindharper@gmail.com
+**Cross-domain systems builder / systems engineer - AI accountability, agent orchestration, compilers, graphics, research infrastructure, operations, and documentation.**
+Seattle, WA - open to onsite, hybrid, remote, flexible, travel/field-facing, contract, full-time, part-time, and project-based roles.
+[harperz9.github.io](https://harperz9.github.io) - [github.com/HarperZ9](https://github.com/HarperZ9) - zaindharper@gmail.com
 
 ---
 
 ## Profile
 
-A self-taught systems engineer working across an unusually wide stack — compiler internals,
-real-time graphics, color science, AI accountability, and offensive/defensive security — held
-together by a single discipline: **everything proves itself.** No claim ships without a test, a
-witnessed byte, or an inspectable artifact beside it; maturity is labeled, never inflated.
+Self-taught systems engineer and generalist builder with roughly 13 years of programming experience overall, including hobby, self-directed, and exploratory development, and a serious non-hobby engineering arc from 2023-present. The work spans software systems, AI accountability, compilers, real-time graphics, color science, security, technical writing, compliance documentation, customer support, and commercial field operations. The through-line is practical accountability: make the work observable, make the claim checkable, and make the artifact useful to someone outside the build process.
 
-The current work is the accountability layer the agentic era requires: making a machine's
-perception and action *answerable to evidence* instead of asserted. It is built on years of the
-opposite discipline — understanding how systems are attacked and evaded, red-teamed to where they break — because
-you build an honest system best when you know every way one lies. That arc, adversary to
-accountability, is the through-line.
+My current flagship work is Project Telos, a product ecosystem for AI-era engineering: shared state and perception, repository intelligence, multi-agent orchestration, evidence intake, and clean claim evaluation. It is not only research; it is a set of public tools, repos, demos, docs, CLIs, ledgers, and release candidates that can be inspected.
 
-## Areas of expertise
+I am intentionally open across domains and work modes. The strongest fit is any environment that needs someone who can enter ambiguity, map the moving parts, learn the domain fast, build a reliable artifact or workflow, and communicate it to technical and nontechnical people.
 
-- **AI accountability & provenance** — witnessed perception, default-deny authorization gates,
-  bilateral provenance, cryptographic witnessing, content-addressed state.
-- **Compilers & languages** — lexing, parsing, type systems, effect systems, interprocedural
-  lifetime analysis, native codegen.
-- **Real-time graphics** — D3D11 rendering, screen-space GI/AO/reflections (GTAO, SSGI, SSR),
-  HLSL/GLSL shader engineering, HDR tone mapping, proxy-DLL pipeline injection, GPU state capture.
-- **Color science** — perceptual color spaces, CIECAM02/CAM16, ΔE, ICC, HDR tone mapping.
-- **Reverse engineering & security** — binary analysis & decompilation, proxy-DLL interception,
-  live memory/state re-derivation, instrumentation, anti-cheat & proprietary-engine RE, systems-level
-  integrity (build-and-break, in service of defense).
-- **Native & systems** — native driver development (DDC/CI display control, standalone of ArgyllCMS),
-  signal & information theory (entropy, mutual information, Granger, PELT, FFT), CMake/C++ build,
-  SKSE/plugin architecture.
-- **Agent systems & orchestration** — scoped/expiring authority, witnessed action, capability platforms.
+## Programming and engineering timeline
 
-## The body of work
+- **Overall programming experience:** roughly 13 years, starting with self-directed/hobby development and expanding into systems programming, graphics, tooling, scripting, automation, security-adjacent work, and product surfaces.
+- **Serious non-hobby engineering:** 2023-present, when the work became public, release-driven, product-oriented, and organized around evidence-backed artifacts, test suites, package releases, ledgers, docs, and portfolio pages.
+- **Pre-2023 foundation:** technical support, documentation, compliance/GRC writing, customer-facing communication, and commercial field operations; these domains now inform how the software is built, explained, verified, and operationalized.
 
-### The accountability spine *(flagship)*
+## Current product ecosystem
 
-A composable stack that instantiates one loop — **perceive → gate → act → verify → witness**:
+### Project Telos - flagship line
 
-- **EMET** — the witness. Re-derives a file's bytes and answers MATCH / DRIFT / UNVERIFIABLE,
-  never *trusted*. 19/19 conformance across three independent language implementations
-  (Python · Rust · Node).
-- **coherence-membrane** — the read-gate. Turns a model's state-blindness into witnessed,
-  re-derivable observations across an organ family (visual, raw, region, structured, audio,
-  caption). Zero dependencies; **868 tests**; PyPI.
-- **proof-surface** — the write-gate. A default-deny, fail-closed authorization contract: expiring
-  least-privilege grants, work-record receipts, delegation chains rooted in a real human with
-  monotonic scope attenuation. Stdlib-only; **258 tests**; PyPI.
-- **accountable-surface** — the loop. A model perceives natively, acts only on an *allow*, and
-  re-perceives to confirm. MCP server + filesystem/web/command effectors, inert until authorized;
-  **201 tests**, including a 39-test adversarial integrity suite (forge a digest, manufacture a
-  grant, escape a bound — each refused).
-- **accountable-engine** — the bilateral critic: the same evidentiary standard turned on the
-  operator, not only the machine.
+A live public ecosystem whose central promise is simple: a person and a model should be able to perceive the same state, act through explicit authority, and check the result. Current authenticated GitHub account footprint: **73 owned repositories total**, **47 public**, **26 private**, **72 source repos**, and **1 fork**. A direct `index` run over the local public workspace on 2026-06-26 mapped **49 repositories**, **45 public**, with the flagship line below.
 
-### Compilers & languages
+- **telos** - shared perception/state engine. Gives a stateless model durable, verified contact with state and range through a perception/action/memory/clock membrane.
+- **index** - `index-graph` 2.8.0. Repository inventory, dependency graph, docs atlas, context packs, snapshots, drift checks, route hints, and MCP surface. Used to map the ecosystem itself.
+- **forum** - `forum-engine` 1.12.0. Model-agnostic orchestration for agents. Records routing decisions, plans, task results, verdicts, and checkpoints in a verifiable ledger. Direct runs showed deep verification passing on intact ledgers and failing after intentional tampering.
+- **gather** - `gather-engine` 1.5.0. Accountable research intake for awkward sources: web, feeds, documents, PDFs, arXiv, browser/OCR/audio paths, and authenticated JSON APIs, with provenance receipts and digest seals.
+- **crucible** - `crucible-bench` 1.1.0 release candidate. A judgment organ for evaluating theses against measurements, refining weak axes, rechecking verdicts, and preserving a clean verifier boundary: the verifier sees the original spec and the artifact, not the worker's private context.
 
-- **QuantaLang / quantac** — a typed-effects language. A function's signature names the effects it
-  may perform and the lifetimes of the references it returns; the compiler checks both and lowers
-  to native code through a C backend. **1002 passed / 0 failed / 11 ignored**; C backend end-to-end; other targets experimental.
+### Supporting public systems
 
-### Systems & graphics
+- **proof-surface** - default-deny authorization contracts, scoped grants, receipts, and delegation chains.
+- **accountable-surface** - live perceive -> authorize -> act -> verify loop with filesystem/web/command effectors.
+- **coherence-membrane** - perception organs and re-derivable observations for model-visible state.
+- **accountable-engine** - bilateral critic and accountability substrate.
+- **reconcile** - creative-verification engine: compare artifact to criterion and carry the proof of that comparison.
+- **studio-engine / portfolio-site** - browser-native product surface and design system for showing the work as inspectable artifacts, not marketing copy.
+- **release/provenance/tooling ring** - secret redaction, public-surface sweeping, release-surface scanning, repo-proof indexing, model-provenance validation, provenance sensorium, agent audit, agent routing, context curation, and workflow harnesses.
+- **native/graphics/math ring** - C++23 signal kernels, anomaly kernels, GPU trace validation, real-time rendering work, color-science tooling, and display calibration.
 
-- **signal-kernels** — header-only C++23: entropy, mutual information, divergences, Granger
-  causality, PELT changepoint, FFT.
-- **anomaly-kernels** — C++23 anomaly detection: baselines, z-score/IQR, temporal correlation.
-- **RAW** (Rendering Advancement Workshop) — a public real-time D3D11 rendering platform: a proxy
-  DLL owning the pipeline with mid-frame dispatch of screen-space GI, AO, and reflections (GTAO,
-  SSGI, SSR, skylighting). Reverse-engineering/graphics origin, maturing toward the substrate's
-  spatial, live-state visual engine.
-- **gpu-trace-validator** — a focused public tool: validate GPU-trace JSON against a schema, emit bounded receipts.
+## Selected technical body of work
 
-### Color science
+### Compilers and languages
 
-- **quanta-color** — 15+ color spaces, CIECAM02/CAM16, perceptual ΔE, ICC, HDR tone mapping; GUI
-  and CLI; PyPI v1.0.1.
-- **calibrate-pro** — Windows display calibration; DDC/CI, ICC / 3D-LUT output.
+- **QuantaLang / quantac** - Rust-built typed-effects compiler. Functions declare the effects they may perform and the lifetimes of the references they return; the compiler checks those contracts and lowers through a verified C path. The public portfolio records the compiler, editor-support line, and live `quantac` examples.
 
-### Release & agent toolkit *(shipping discipline)*
+### Graphics, color, and native systems
 
-**19 packages on PyPI**, each tested and released — secret-redact-io, release-surface-scanner,
-public-surface-sweeper, repo-proof-index, model-provenance-validator, provenance-sensorium,
-proof-surface-report, agent-audit, agent-hook-pack, agent-routing-kit, context-curator-lite,
-workflow-harness-lite, index, and more.
+- **RAW (Rendering Advancement Workshop)** - real-time D3D11/HLSL rendering platform. Proxy-DLL interception, pipeline ownership, mid-frame dispatch, screen-space global illumination, ambient occlusion, reflections, skylighting, GPU-trace receipts, and live-state graphics reasoning.
+- **quanta-color** - PyPI color-science workbench, v1.0.1 on the site: 15+ color spaces, color appearance models, tone mapping, perceptual difference, ICC/LUT workflows, harmony tools, GUI/CLI surfaces, and display-calibration adjacency.
+- **signal-kernels / anomaly-kernels** - header-only C++23 libraries for signal, information-theory, and anomaly-detection work.
+- **gpu-trace-validator** - validates GPU trace JSON against schema and emits bounded receipts.
 
-### Security & platform *(private; by capability)*
+### Security, release, and provenance
 
-- A C++23 **integrity / anti-cheat framework** (~3,000 tests across ~59 modules) — detecting
-  tampering, evasion, and manipulation by understanding exactly how they are done.
-- An **agent-orchestration / capability platform** — scoped, expiring, witnessed authority at
-  scale; the production substrate the public accountability organs were extracted from.
-- Binary reverse-engineering, instrumentation, and red-team research across the stack — repurposed
-  inward, to make the accountability platform self-accountable by adversarial construction.
+- Reverse-engineering-informed defensive design, binary analysis, instrumentation, tamper/evasion thinking, adversarial verification, and red-team/evaluation habits used to harden the public accountability work.
+- Private C++23 integrity / anti-cheat line documented by capability on the portfolio; used as a build-and-break substrate for software/runtime integrity.
+- Release and provenance ring: secret-redact-io, release-surface-scanner, public-surface-sweeper, repo-proof-index, model-provenance-validator, provenance-sensorium, proof-surface-report, agent-audit, agent-routing-kit, context-curator-lite, and workflow-harness-lite.
 
-## Research & writing
+## Experience
 
-- **The Accountability Conjecture** (*THEORY.md*) — a falsifiable theory of intrinsic, bilateral
-  accountability, with a working proof-of-concept; states its own epistemic status (pre-proof) and
-  the path to a law. MIT, dated, authored.
-- **Senses and Sensibility** (*THESIS.md*) — the concise statement of the four principles and the
-  accountable loop.
-- ***Conferred Existence*** — a long-form philosophical corpus (no-aseity, the membrane, the arity
-  gap, the forcing argument) from which the accountability thesis is extracted; **published** at
-  [senses-and-sensibility](https://github.com/HarperZ9/senses-and-sensibility) (MIT, dated).
+### Independent Systems Engineer / Founder-Builder
+**Project Telos and HarperZ9 public ecosystem - Seattle, WA - 2023-present**
 
-## Selected receipts
+- Converted a long self-directed programming background into a serious public engineering practice, building a coherent flagship line across AI accountability, agent orchestration, research intake, repository intelligence, and claim evaluation.
+- Designed tools with checkable boundaries: content hashes, receipts, ledgers, replays, verifier seams, drift checks, release checks, and explicit maturity labels.
+- Wrote Python CLIs and libraries, JavaScript/Node demos, static frontends, WebGL/Canvas surfaces, C++23 kernels, release tooling, documentation systems, and public portfolio pages.
+- Used AI as a coordinated engineering teammate: parallel discovery, review, implementation, and verification sessions, with the architecture, integration, and public claims kept under first-party control.
+- Built the public website as a product surface: editorial design, flagship pages, docs, artifact links, and live engine surfaces.
+- Maintained a proof-first workflow: if the result cannot be checked from the artifact and the original spec, the spec needs work.
 
-19/19 EMET conformance · 868 coherence-membrane tests · 258 proof-surface tests · 201
-accountable-surface tests (39 adversarial) · 1002 QuantaLang passed (0 failed, 11 ignored) · ~3,000 integrity-framework
-tests · 6 PyPI packages plus public GitHub work · a live, inspectable, proof-first portfolio.
+### Technical Writer / GRC Documentation / Product Operations
+**Freelance and independent project work - 2017-present**
 
-## Approach
+- Produced compliance and technical documentation across System Security Plans, risk assessments, incident response materials, policies, control mappings, API docs, implementation guides, proposals, RFP responses, grant materials, release notes, and support documentation.
+- Worked with NIST 800-171, CMMC readiness, SOC 2, ISO 27001, DFARS, incident response, audit-support evidence, OSCAL concepts, and governance language.
+- Translated technical implementation detail into documents that operators, customers, executives, auditors, and engineers could all use.
 
-Curious to a fault — ideas from biology, geometry, and color perception routinely end up in the
-software (the portfolio's own imagery is real mathematics rendered from original macro photography).
-Honest about limits, in public, with receipts. Build, *and* break — every guarantee tested against
-the attack it claims to survive.
+### Commercial Arborist / Operations Lead
+**Family business / field operations - Seattle area - 2015-present**
 
-## Note
+- Led practical operations involving client intake, estimates, site assessment, scheduling, safety judgment, crew coordination, equipment/vendor coordination, written proposals, and client communication.
+- Developed strong real-world operating habits: assess risk quickly, communicate under uncertainty, coordinate tools and people, adapt to changing conditions, and complete work safely.
+- Brought field-tested pragmatism into software work: build the thing that survives contact with the job, not only the diagram.
 
-No computer-science degree. Independent since 2023. The work is the credential, and it is all
-inspectable. · Updated 2026-06-23.
+### Technical Networking Support, Xbox Division
+**Microsoft - Redmond, WA - 2013-2014**
+
+- Diagnosed Xbox Live networking issues involving TCP/IP, DNS, NAT, firewall/router configuration, home-network constraints, and account-adjacent support paths.
+- Handled high-volume customer support, documented repeatable resolutions, and translated technical fixes into clear user-facing guidance.
+
+## Domain map
+
+**AI accountability and agent systems:** worker/verifier separation, evidence intake, model-agnostic execution seams, multi-agent orchestration, tamper-evident ledgers, proof-carrying claims, provenance receipts, evaluation/recheck loops, MCP tools.
+
+**Compilers and languages:** lexing, parsing, type systems, typed effects, lifetime analysis, compiler architecture, C/Rust-oriented implementation work, codegen concepts.
+
+**Graphics, color, and native systems:** D3D11/HLSL/WebGL/GLSL, rendering pipelines, GPU trace validation, color spaces, CIECAM/CAM16 concepts, perceptual color difference, HDR/tone mapping, DDC/CI display control, C++23 math/signal kernels.
+
+**Security and verification:** reverse-engineering-informed defensive design, integrity checks, tamper detection, red-team/evaluation habits, release-surface hygiene, secret redaction, provenance validation, adversarial testing.
+
+**Documentation, compliance, and operations:** GRC documentation, technical writing, support docs, proposals, RFP/grant writing, policy/process artifacts, evidence mapping, operational playbooks, field operations, customer support, implementation support.
+
+## Selected receipts and current status
+
+- Authenticated GitHub account count: 73 owned repositories total, 47 public, 26 private, 72 sources, 1 fork.
+- `index` source version run: 2.8.0.
+- `forum-engine` package metadata: 1.12.0; direct examples generated verifiable ledgers and caught tampering under deep verification.
+- `gather-engine` package metadata: 1.5.0.
+- `crucible-bench` package metadata: 1.1.0 release candidate; includes clean verifier-boundary discipline.
+- Current local public workspace map: 49 repositories, 45 public repos, 5 flagship organs.
+- Public portfolio: `HarperZ9.github.io`, with flagship pages for telos, index, forum, gather, and crucible.
+
+## Role and industry fit
+
+Technology, SaaS, AI/ML, research operations, security, public sector, education, healthcare operations, manufacturing, logistics, utilities, construction/field services, compliance, nonprofits, customer support, product operations, technical writing, implementation, QA, and general business operations.
+
+Work modes: onsite, hybrid, remote, flexible, travel/field-facing, contract, full-time, part-time, and project-based.
+
+## Education
+
+No computer-science degree. Independent, evidence-first technical development since 2023, built on earlier field operations, customer support, writing, and self-directed systems study.
+
+---
+
+Updated 2026-06-26.
