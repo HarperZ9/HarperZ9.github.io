@@ -39,7 +39,12 @@
 .repo-list{display:grid;gap:.5rem;margin-top:.4rem}
 .repo-list a{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bone);text-decoration:none;border:1px solid var(--hairline);border-radius:999px;padding:.65rem .85rem;background:rgba(255,255,255,.05)}
 .repo-list a:hover{color:var(--orange);border-color:rgba(239,171,48,.45)}
+.thread-list{display:grid;gap:.5rem;grid-template-columns:repeat(5,minmax(0,1fr));margin-top:1.25rem;max-width:84rem}
+.thread-list a{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bone);text-decoration:none;border:1px solid var(--hairline);border-radius:12px;padding:.75rem .85rem;background:rgba(239,171,48,.08)}
+.thread-list a:hover{color:var(--orange);border-color:rgba(239,171,48,.45)}
 @media(max-width:760px){.field-grid,.call-band{grid-template-columns:1fr}.field-card.wide{grid-column:auto}}
+@media(max-width:980px){.thread-list{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.thread-list{grid-template-columns:1fr}}
 </style>
 </head>
 <body class="inner-clean">
@@ -77,6 +82,13 @@
       <a href="https://github.com/HarperZ9/crucible">crucible</a>
       <a href="https://github.com/HarperZ9/telos">the telos engine</a>
     </div>
+  </div>
+  <div class="thread-list reveal" aria-label="Project Telos tester threads">
+    <a href="https://github.com/HarperZ9/gather/issues/1">Test gather intake</a>
+    <a href="https://github.com/HarperZ9/index/issues/13">Test index maps</a>
+    <a href="https://github.com/HarperZ9/forum/issues/1">Test forum ledgers</a>
+    <a href="https://github.com/HarperZ9/crucible/issues/1">Test crucible checks</a>
+    <a href="https://github.com/HarperZ9/telos/issues/2">Test the telos surface</a>
   </div>
 </section>
 
