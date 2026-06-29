@@ -1,5 +1,40 @@
 # HarperZ9.github.io
 
+![HarperZ9.github.io hero](docs/brand/portfolio-site-hero.png)
+
+> Static public site for the Project Telos portfolio, demos, repos, and evidence.
+
+HarperZ9.github.io is the public site surface for Project Telos. It links the
+portfolio, flagship tools, sample reports, creative demos, proof surfaces, and
+developer entry points a visitor can open and inspect.
+
+## Why it matters
+
+The website has to serve both public readers and developers. Public readers need
+plain claims and visible status; developers need local verification, repo links,
+and a path from the page to the code or receipt behind it.
+
+## Try it
+
+```powershell
+git clone https://github.com/HarperZ9/HarperZ9.github.io.git
+cd HarperZ9.github.io
+python -m http.server 8765
+```
+
+## What to test first
+
+- Open `http://127.0.0.1:8765/`.
+- Check the first viewport for plain product and evidence language.
+- Verify public repo links, sample pages, and mobile/desktop readability.
+
+## Current status
+
+Static public portfolio and product-surface site. It should stay inspectable,
+accessible, and honest about maturity; private systems stay bounded off-page.
+
+## Existing technical notes
+
 The portfolio and product-surface site for **Zain Dana Harper** — an evidence-first
 entry point for the accountability work, the compiler work, the graphics/color tools,
 and the public research.
