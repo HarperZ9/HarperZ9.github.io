@@ -91,3 +91,11 @@ Then visit `http://127.0.0.1:8765/`. Before publishing, verify:
 - External GitHub links point at intended public repositories.
 - The page stays legible at desktop and mobile widths.
 - No secrets, generated logs, or private artifacts are staged.
+
+## For developers
+
+Keep the public README, examples, and repository metadata aligned with current behavior. Before opening a PR or publishing a release, verify the working tree and any documented commands for this repo.
+
+```bash
+git status --short
+```
