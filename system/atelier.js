@@ -1883,7 +1883,7 @@
     if (!canvas || !canvas.getContext) {
       var nj = document.getElementById("at-nojs"); if (nj) nj.hidden = false; return;
     }
-    var ctx = canvas.getContext("2d");
+    var ctx = canvas.getContext("2d", { willReadFrequently: true });
     var reduced = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
     // ── pointer-reactive play: a live cursor-perturbed particle flow over the art ─
@@ -1899,7 +1899,7 @@
       if (reduced || !playFine) { playReady = false; return; }
       if (!playBuf) playBuf = document.createElement("canvas");
       if (playBuf.width !== canvas.width || playBuf.height !== canvas.height) { playBuf.width = canvas.width; playBuf.height = canvas.height; playP = null; }
-      var pb = playBuf.getContext("2d");
+      var pb = playBuf.getContext("2d", { willReadFrequently: true });
       pb.setTransform(1, 0, 0, 1, 0, 0); pb.clearRect(0, 0, playBuf.width, playBuf.height); pb.drawImage(canvas, 0, 0);
       var rect = canvas.getBoundingClientRect();
       playDpr = canvas.width / Math.max(1, rect.width); playW = rect.width; playH = rect.height; playReady = true;

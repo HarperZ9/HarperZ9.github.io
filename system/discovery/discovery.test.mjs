@@ -3,7 +3,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { SYSTEMS, sho, pendulum, kepler, oscillator2d, rng } from "./systems.js";
+import { SYSTEMS, sho, pendulum, kepler, oscillator2d, coupledOscillators, rng } from "./systems.js";
 import { simulate, trajectory } from "./integrator.js";
 import { makeFn, variation, toRPN } from "./expr.js";
 import { conservedSubspace } from "./reference.js";
@@ -36,6 +36,13 @@ test("kepler also conserves angular momentum", () => {
   const states = simulate(kepler, kepler.sampleState(r), CONS.kepler);
   const L = states.map((s) => kepler.knownAngularMomentum(s));
   assert.ok(relVar(L) < 1e-6, `angular momentum relVar ${relVar(L)} should be ~0`);
+});
+
+test("coupled oscillators conserve total spring energy", () => {
+  const r = rng(13);
+  const states = simulate(coupledOscillators, coupledOscillators.sampleState(r), { dt: 0.01, n: 2200 });
+  const energy = states.map((s) => coupledOscillators.knownInvariant(s));
+  assert.ok(relVar(energy) < 4e-3, `coupled energy relVar ${relVar(energy)} should stay small`);
 });
 
 test("a damped system does NOT conserve energy (negative control)", () => {
@@ -207,6 +214,12 @@ test("a single system can carry MULTIPLE laws: the 2D oscillator has energy AND 
   const t = makeTools(oscillator2d, opts);
   assert.equal(t.fit(["x^2", "y^2", "vx^2", "vy^2"]).verdict, "verified"); // an energy-type invariant
   assert.equal(t.fit(["x*vy", "y*vx"]).verdict, "verified");               // angular momentum L_z
+});
+
+test("fit recovers the coupled-oscillator energy basis", () => {
+  const t = makeTools(coupledOscillators, { dt: 0.01, n: 1600, trials: 6, tol: 0.02 });
+  const r = t.fit(["x1^2", "x2^2", "v1^2", "v2^2", "x1*x2"]);
+  assert.equal(r.verdict, "verified", JSON.stringify(r));
 });
 
 test("conserved-subspace discovery: the 2D oscillator has 3 independent quadratic laws", () => {

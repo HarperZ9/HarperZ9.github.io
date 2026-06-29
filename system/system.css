@@ -956,9 +956,14 @@ body.world-3 .bar .rt{color:#cdd6cf}
   line-height:1.7;color:var(--prussian);margin:.5rem clamp(1rem,1.8vw,1.4rem) .2rem}
 .rail-own b{color:var(--ember);font-weight:400}
 
-/* the source menu - segmented tabs (wraps to a tidy grid so all five fit the narrow rail) */
-.source-menu{display:grid;grid-template-columns:1fr 1fr;gap:.35rem;
+/* the source menu - grouped tabs for Create / Observe / Verify */
+.source-menu{display:flex;flex-direction:column;gap:.5rem;
   padding:.55rem clamp(1rem,1.8vw,1.4rem) 0}
+.source-group{display:grid;grid-template-columns:1fr 1fr;gap:.35rem;align-items:stretch}
+.source-group-single{grid-template-columns:1fr}
+.source-group-label{grid-column:1/-1;font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--prussian);
+  padding:.05rem .05rem 0}
 .source-menu button{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.6rem;
   letter-spacing:.02em;color:var(--muted);background:rgba(255,255,255,.62);border:1px solid var(--hairline);
   border-radius:8px;padding:.6em .5em;cursor:pointer;transition:background .15s,color .15s,border-color .15s;
@@ -966,7 +971,6 @@ body.world-3 .bar .rt{color:#cdd6cf}
 .source-menu button:hover{color:var(--bone);border-color:rgba(70,54,232,.4)}
 .source-menu button[aria-selected="true"]{color:var(--void);background:var(--ember);border-color:var(--ember);font-weight:500}
 .source-menu button:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
-.source-menu button:last-child:nth-child(odd){grid-column:1/-1}
 
 /* the scrolling region of the rail - control blocks live here; only the active one is shown */
 .rail-scroll{flex:1;min-height:0;padding:.5rem clamp(1rem,1.8vw,1.4rem) 1.4rem}
@@ -992,6 +996,20 @@ body.world-3 .bar .rt{color:#cdd6cf}
 .rail-about em{color:var(--ember);font-style:italic}
 .src-hint{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.56rem;letter-spacing:.03em;
   color:var(--prussian);margin:.7rem 0 0;line-height:1.6}
+
+.transform-group{border-top:1px solid rgba(138,155,146,.14);padding-top:.55rem;margin-top:.55rem}
+.transform-group:first-child{border-top:0;padding-top:0;margin-top:.2rem}
+.transform-label{display:block;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.48rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--prussian);margin-bottom:.35rem}
+.transform-row{display:flex;flex-wrap:wrap;gap:.35rem}
+.transform-note{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.56rem;line-height:1.55;
+  color:var(--prussian);margin:.15rem 0 .65rem}
+.transform-grid{display:grid;grid-template-columns:1fr;gap:.62rem;margin:.55rem 0}
+.transform-grid label{display:flex;flex-direction:column;gap:.3rem;font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.toggle-line{display:flex;align-items:center;gap:.45rem;font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.58rem;letter-spacing:.04em;color:var(--muted);text-transform:none}
+.toggle-line input{accent-color:var(--orange)}
 
 /* the mounted Atelier panel needs no max-width inside the rail */
 .studio-rail .studio-atelier .at-panel{max-width:none;gap:.7rem}
@@ -1028,6 +1046,12 @@ body.world-3 .bar .rt{color:#cdd6cf}
 .rt-btn[disabled]{opacity:.4;cursor:not-allowed}
 .rt-btn[aria-pressed="true"]{background:var(--ember);border-color:var(--ember);color:var(--void)}
 .rt-ico{font-size:.95em;line-height:1}
+.engine-statusbar{display:flex;align-items:center;justify-content:center;gap:.45rem .85rem;flex-wrap:wrap;
+  width:100%;max-width:min(100%,760px);font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.56rem;letter-spacing:.06em;color:var(--muted);line-height:1.6}
+.engine-statusbar span{display:inline-flex;align-items:baseline;gap:.35em;white-space:nowrap}
+.engine-statusbar b{font-weight:500;color:var(--bone);text-transform:uppercase;letter-spacing:.12em}
+.engine-statusbar [id^="engine-status-"]{color:var(--orange)}
 /* ── Overlay fallback: floating draggable in-page panel (Task 8h) ── */
 .studio-overlay-panel{position:fixed;top:4.5rem;right:1.2rem;width:340px;max-height:80vh;z-index:9000;display:flex;flex-direction:column;background:rgba(248,247,244,.98);border:1px solid var(--hairline);border-radius:14px;box-shadow:0 8px 48px rgba(0,0,0,.72);overflow:hidden;resize:both;min-width:240px;min-height:200px}
 .studio-overlay-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.55rem .8rem;background:rgba(248,247,244,.92);border-bottom:1px solid var(--hairline);cursor:move;flex-shrink:0;user-select:none}
@@ -1054,6 +1078,9 @@ body.world-3 .bar .rt{color:#cdd6cf}
 /* idle: slide the pill down and fade it out (pointer-events off so it doesn't catch stray clicks) */
 .studio-viewport:fullscreen.fs-idle .render-toolbar{opacity:0;transform:translateX(-50%) translateY(140%);
   pointer-events:none}
+.studio-viewport:fullscreen .engine-statusbar{position:fixed;left:50%;top:1rem;transform:translateX(-50%);
+  width:auto;max-width:94vw;z-index:50;background:rgba(244,243,239,.86);border:1px solid var(--hairline);
+  border-radius:12px;padding:.35rem .6rem}
 .studio-viewport:fullscreen.is-fullscreen{cursor:default}
 .studio-viewport:fullscreen.fs-idle{cursor:none}
 /* webkit-prefixed fullscreen mirror (Safari) */
@@ -1074,6 +1101,22 @@ body.world-3 .bar .rt{color:#cdd6cf}
 .studio-panel .measurimeter{margin:0}
 /* tighten the measurimeter grid for the narrow panel */
 .studio-panel .mm-grid{grid-template-columns:1fr;gap:.9rem}
+.feature-intro{font-family:"Conso",Georgia,serif;font-size:.86rem;line-height:1.5;color:var(--muted);
+  margin:.1rem 0 .85rem}
+.feature-stack-grid{display:grid;grid-template-columns:1fr;gap:.55rem}
+.feature-stack-grid article{border:1px solid rgba(138,155,146,.16);border-radius:8px;
+  background:rgba(255,255,255,.42);padding:.7rem .75rem}
+.feature-stack-grid h3{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.56rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ember);margin:0 0 .32rem}
+.feature-stack-grid p{font-family:"Conso",Georgia,serif;font-size:.82rem;line-height:1.46;color:var(--muted);margin:0}
+.feature-stack-grid b{color:var(--bone);font-weight:500}
+.feature-stack-grid code{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.7em;color:var(--prussian);
+  word-break:break-word}
+.feature-links{display:flex;flex-wrap:wrap;gap:.38rem;margin-top:.75rem}
+.feature-links a{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.54rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ember);text-decoration:none;border:1px solid rgba(70,54,232,.32);
+  border-radius:999px;padding:.38em .66em;background:rgba(255,255,255,.4)}
+.feature-links a:hover,.feature-links a:focus-visible{color:var(--void);background:var(--ember);border-color:var(--ember);outline:none}
 
 /* the chat dock - pinned at the bottom of the panel, minimizable */
 .chat-dock{flex:0 0 auto;display:flex;flex-direction:column;min-height:0;
@@ -1132,8 +1175,9 @@ body.world-3 .bar .rt{color:#cdd6cf}
   .studio-rail{border-bottom:1px solid var(--hairline)}
   .studio-panel{border-top:1px solid var(--hairline)}
   .rail-scroll,.panel-scroll{overflow:visible}
-  .source-menu{grid-template-columns:1fr 1fr 1fr}
-  .source-menu button:last-child:nth-child(odd){grid-column:auto}
+  .source-menu{display:grid;grid-template-columns:1fr;gap:.55rem}
+  .source-group{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .source-group-single{grid-template-columns:1fr}
   .viewport-stage{width:100%;max-width:min(560px,92vw)}
   .chat-dock{max-height:none}
   .studio-panel .chat-log{max-height:50vh}

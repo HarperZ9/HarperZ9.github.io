@@ -132,4 +132,29 @@ export const twoBody = {
   knownMomentum(s) { return s.v1 + s.v2; },
 };
 
-export const SYSTEMS = { sho, pendulum, kepler, oscillator2d, twoBody };
+// Two coupled oscillators fixed to springs and coupled to each other. This is a clean normal-mode
+// example: energy is conserved, while motion transfers between the two masses.
+export const coupledOscillators = {
+  name: "coupledOscillators",
+  coords: ["x1", "x2"],
+  vels: ["v1", "v2"],
+  vars: ["x1", "x2", "v1", "v2"],
+  params: { k: 1.0, c: 0.65 },
+  sampleState(r) {
+    return { x1: uniform(r, -1.2, 1.2), x2: uniform(r, -1.2, 1.2), v1: uniform(r, -0.9, 0.9), v2: uniform(r, -0.9, 0.9) };
+  },
+  accel(s, p = this.params) {
+    const coupling = p.c * (s.x1 - s.x2);
+    return {
+      x1: -p.k * s.x1 - coupling,
+      x2: -p.k * s.x2 + coupling,
+    };
+  },
+  knownInvariant(s, p = this.params) {
+    return 0.5 * (s.v1 * s.v1 + s.v2 * s.v2)
+      + 0.5 * p.k * (s.x1 * s.x1 + s.x2 * s.x2)
+      + 0.5 * p.c * (s.x1 - s.x2) * (s.x1 - s.x2);
+  },
+};
+
+export const SYSTEMS = { sho, pendulum, kepler, oscillator2d, twoBody, coupledOscillators };

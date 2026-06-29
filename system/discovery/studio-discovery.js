@@ -22,14 +22,17 @@ const OPTS = {
   kepler: { seed: 1, dt: 0.004, n: 2000, trials: 6, tol: 0.05 },
   oscillator2d: { seed: 1, dt: 0.01, n: 1500, trials: 6, tol: 0.02 },
   twoBody: { seed: 1, dt: 0.01, n: 1500, trials: 6, tol: 0.02 },
+  coupledOscillators: { seed: 1, dt: 0.01, n: 1600, trials: 6, tol: 0.02 },
   qho: { seed: 1, dt: 0.01, n: 400, trials: 5, tol: 0.05 },
   free: { seed: 1, dt: 0.02, n: 200, trials: 5, tol: 0.05 },
 };
 const HINTS = {
   sho: "x^2, v^2", pendulum: "w^2, cos(theta), theta^2", kepler: "x*vy, y*vx",
-  oscillator2d: "x^2, y^2, vx^2, vy^2, x*vy, y*vx", twoBody: "v1, v2", qho: "x, x2, p, p2", free: "x, x2, p, p2",
+  oscillator2d: "x^2, y^2, vx^2, vy^2, x*vy, y*vx", twoBody: "v1, v2",
+  coupledOscillators: "x1^2, x2^2, v1^2, v2^2, x1*x2",
+  qho: "x, x2, p, p2", free: "x, x2, p, p2",
 };
-const SYSLIST = ["sho", "pendulum", "kepler", "oscillator2d", "twoBody", "qho", "free"];
+const SYSLIST = ["sho", "pendulum", "kepler", "oscillator2d", "twoBody", "coupledOscillators", "qho", "free"];
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
@@ -99,11 +102,15 @@ function drawConfig(ctx, W, H, name, s) {
     trail.forEach((p, i) => (i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]))); ctx.stroke(); ctx.globalAlpha = 1;
     if (name === "kepler") dot(ctx, cx, cy, 7, "#d6603d");
     const last = trail[trail.length - 1]; dot(ctx, last[0], last[1], 8);
-  } else if (name === "twoBody") {
+  } else if (name === "twoBody" || name === "coupledOscillators") {
     const y = H / 2, sc = W * 0.22, cx = W / 2;
     ctx.strokeStyle = "#444"; ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
     const ax = cx + s.x1 * sc, bx = cx + s.x2 * sc;
     ctx.strokeStyle = "#3dd6c4"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(ax, y); ctx.lineTo(bx, y); ctx.stroke();
+    if (name === "coupledOscillators") {
+      ctx.strokeStyle = "rgba(232,163,61,.35)";
+      ctx.beginPath(); ctx.moveTo(cx - W * 0.35, y); ctx.lineTo(ax, y); ctx.moveTo(bx, y); ctx.lineTo(cx + W * 0.35, y); ctx.stroke();
+    }
     dot(ctx, ax, y, 9, "#e8a33d"); dot(ctx, bx, y, 9, "#9b8cff");
   } else {
     ctx.fillStyle = "#8a8a96"; ctx.font = "14px monospace"; ctx.fillText("(no real-space view)", 14, H / 2);
