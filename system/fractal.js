@@ -317,7 +317,7 @@ export function renderFractal(canvas, opts) {
 
   const pal = PALETTES[palette] || PAL_OCEAN;
   const W = canvas.width, H = canvas.height;
-  const g = canvas.getContext("2d");
+  const g = canvas.getContext("2d", { willReadFrequently: true });
   const aspect = H / W;
 
   // Use Uint32Array for single 4-byte write per pixel (ABGR little-endian).

@@ -3,7 +3,7 @@
 import { perceptualHash, features, hamming } from "../shared-frame/eye.js";
 import { representation, richFeatures, describeFrame, rmsFromBytes, spectrumBands, dominantPitchHz, assembleFullPerception } from "./sense.js";
 import { respond } from "./respond.js";
-import { renderFractal, PRESETS } from "./fractal.js";
+import { renderFractal, PRESETS, PALETTES as FRACTAL_PALETTES } from "./fractal.js?v=20260628a";
 import { renderFractalGL, isFractalGLAvailable } from "./fractal-gl.js";
 import { render3D } from "./fractal3d.js";
 import { sizeToDisplay } from "./canvas-scale.js";
@@ -17,8 +17,16 @@ import {
 } from "./lib/render-nd/core/paint-state.mjs";
 import { screenRay, pickFace, nearestVertex, nearestEdge } from "./lib/render-nd/core/pick.mjs";
 import { oklchToSrgbByte } from "./lib/sense-core/colour-perceptual.mjs";
+import { probeCapability } from "./engine/capability.js";
+import { makeHardwareRenderPlan } from "./engine/render-plan.js";
+import { IR_SCHEMA, CANONICAL_MEDIA_KINDS } from "./media/ir.js";
+import { createStudioMediaAdapters } from "./media/studio-adapters.js";
+import { createMediaNodeRegistry } from "./graph/nodes/media-nodes.js";
+import { GRAPH_PACKAGE_SCHEMA, createGraphPackage, validateGraphPackage } from "./graph/package.js";
 import { StudioImporters } from "./importers.js";
 import { StudioExporters, download } from "./exporters.js";
+import { TRANSFORM_GROUPS, applyCanvasEffect } from "./studio-effects.js";
+import { cloneMesh, drawMeshPreview, meshStats, normalizeMesh, transformMesh } from "./mesh-transform.js";
 import { ModelAdapter } from "./model-adapter.js";
 import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-frame/certificate.js";
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
@@ -35,6 +43,45 @@ import {
 } from "./studio-surface.js";
 const $ = id => (window.__overlayDoc && window.__overlayDoc.getElementById(id)) || document.getElementById(id);
 const fmt = (v,n=3)=>typeof v==="number"?(Number.isInteger(v)?String(v):v.toFixed(n)):String(v);
+const STUDIO_MEDIA_ADAPTERS = createStudioMediaAdapters();
+const STUDIO_MEDIA_NODE_REGISTRY = createMediaNodeRegistry();
+window.__studioMediaAdapters = STUDIO_MEDIA_ADAPTERS;
+window.__studioMediaNodeRegistry = STUDIO_MEDIA_NODE_REGISTRY;
+window.__studioCreateGraphPackage = createGraphPackage;
+window.__studioValidateGraphPackage = validateGraphPackage;
+
+async function bootEngineStatus() {
+  const set = (id, text) => { const el = $(id); if (el) el.textContent = text; };
+  try {
+    const canvas = $("studio-canvas");
+    const cap = await probeCapability();
+    const plan = makeHardwareRenderPlan(cap, {
+      width: canvas ? canvas.width : window.innerWidth,
+      height: canvas ? canvas.height : window.innerHeight,
+      dpr: window.devicePixelRatio || 1,
+    });
+    window.__studioHardwareRenderPlan = plan;
+    set("engine-status-graph", "runtime/v1 / " + Object.keys(STUDIO_MEDIA_NODE_REGISTRY).length + " nodes / " + GRAPH_PACKAGE_SCHEMA.split("/").pop());
+    set("engine-status-backend", plan.backend);
+    set("engine-status-tier", plan.tier);
+    set("engine-status-particles", String(plan.particleBudget));
+    set("engine-status-splats", String(plan.splatBudget));
+    set("engine-status-media", IR_SCHEMA.split("/").pop() + " / " + CANONICAL_MEDIA_KINDS.length + " kinds / " + STUDIO_MEDIA_ADAPTERS.length + " adapters");
+    set("engine-status-readback", "1/" + plan.readbackEveryNFrames);
+  } catch (_) {
+    const plan = makeHardwareRenderPlan(null, {});
+    window.__studioHardwareRenderPlan = plan;
+    set("engine-status-graph", "runtime/v1 / " + Object.keys(STUDIO_MEDIA_NODE_REGISTRY).length + " nodes / " + GRAPH_PACKAGE_SCHEMA.split("/").pop());
+    set("engine-status-backend", plan.backend);
+    set("engine-status-tier", plan.tier);
+    set("engine-status-particles", String(plan.particleBudget));
+    set("engine-status-splats", String(plan.splatBudget));
+    set("engine-status-media", IR_SCHEMA.split("/").pop() + " / " + CANONICAL_MEDIA_KINDS.length + " kinds / " + STUDIO_MEDIA_ADAPTERS.length + " adapters");
+    set("engine-status-readback", "1/" + plan.readbackEveryNFrames);
+  }
+}
+bootEngineStatus();
+
 // drift is per-canvas (Task 6 review carry-in): keyed by the canvas instance, so switching
 // modes / sources doesn't compare against an unrelated frame and show a misleading drift.
 const lastHashByCanvas = new WeakMap();
@@ -227,6 +274,9 @@ window.__studioPerceive = perceive; window.__studioSay = say;   // used by the b
 // Populate the preset dropdown from PRESETS (all types), filtered by the selected type chip.
 const fractalPresetEl = $("fractal-preset");
 let activeFType = "mandelbrot";
+let activeFractalPalette = null; // null = use the selected preset's native palette
+let fractalBaseMaxIter = 0;
+let fractalBasePalette = "ocean";
 let fractalView = null; // Transient zoom state: a shallow copy of the selected preset, never a reference into PRESETS.
 
 // GPU path available? Decided once. When true, 2D fractals render on the GPU (fractal-gl.js) for
@@ -248,6 +298,48 @@ function buildPresetMenu(ftype) {
 
 // Default starting framing for the active fractal view, used by Reset view.
 let fractalDefault = null;
+
+function readFractalDetail() {
+  const el = $("fractal-detail");
+  const v = el ? parseFloat(el.value) : 1;
+  return Number.isFinite(v) ? Math.max(0.5, Math.min(2.5, v)) : 1;
+}
+
+function applyFractalRenderControls(view) {
+  const detail = readFractalDetail();
+  const maxBase = fractalBaseMaxIter || view.maxIter || 500;
+  const paletteBase = fractalBasePalette || view.palette || "ocean";
+  return {
+    ...view,
+    maxIter: Math.max(32, Math.round(maxBase * detail)),
+    palette: activeFractalPalette || paletteBase,
+  };
+}
+
+function buildFractalPalettes() {
+  const host = $("fractal-palettes");
+  if (!host || host.childElementCount) return;
+  const items = [["", "Preset"]].concat(Object.keys(FRACTAL_PALETTES).map(k => [k, k]));
+  for (const [key, label] of items) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip" + (key === "" ? " active" : "");
+    b.textContent = label;
+    b.dataset.fractalPalette = key;
+    b.addEventListener("click", () => {
+      activeFractalPalette = key || null;
+      host.querySelectorAll("[data-fractal-palette]").forEach(btn => btn.classList.toggle("active", btn === b));
+      if (fractalView) {
+        fractalView = applyFractalRenderControls(fractalView);
+        const c = paintFractal(fractalView);
+        try { perceive(c); } catch (_) {}
+        startMeterLoop();
+      }
+    });
+    host.appendChild(b);
+  }
+}
+buildFractalPalettes();
 
 // Paint the current fractalView into #studio-canvas. GPU when available (mounting a fresh GL canvas
 // the first time, mirroring the 3D source's canvas swap), else CPU (progressive coarse-to-refine on
@@ -309,8 +401,10 @@ function renderPreset() {
   const preset = filtered[isNaN(idx) ? 0 : idx];
   if (!preset) return;
   // Reset fractalView to a fresh shallow copy of the canonical preset (decouples zoom from PRESETS).
-  fractalView = { ...preset };
-  fractalDefault = { ...preset };   // remember the default framing for Reset view
+  fractalBaseMaxIter = preset.maxIter || 500;
+  fractalBasePalette = preset.palette || "ocean";
+  fractalView = applyFractalRenderControls({ ...preset });
+  fractalDefault = { ...fractalView };   // remember the default framing for Reset view
   const canvas = paintFractal(fractalView);
   const obs = perceive(canvas);
   const typeLabel = { mandelbrot: "Mandelbrot set", julia: "Julia set", burningship: "Burning Ship" }[fractalView.type] || fractalView.type;
@@ -339,6 +433,19 @@ document.querySelectorAll("[data-ftype]").forEach(btn => {
     buildPresetMenu(activeFType);
   });
 });
+
+if ($("fractal-detail")) {
+  $("fractal-detail").addEventListener("input", () => {
+    const val = $("fractal-detail-val");
+    if (val) val.textContent = readFractalDetail().toFixed(1);
+    if (!fractalView) return;
+    fractalView = applyFractalRenderControls(fractalView);
+    if (fractalDefault) fractalDefault = applyFractalRenderControls(fractalDefault);
+    const c = paintFractal(fractalView);
+    try { perceive(c); } catch (_) {}
+    startMeterLoop();
+  });
+}
 
 // ── Interactive 2D camera (Task 8n): wheel-zoom-toward-cursor + drag-pan, rAF-throttled, GPU-fast.
 // Re-renders the transient fractalView in real time (never PRESETS). Touch: pinch-zoom + drag.
@@ -701,6 +808,7 @@ let _ndimRaf = null;             // the running rAF handle (null = stopped)
 let _ndimStartTime = null;       // animation start timestamp (for t parameter)
 let _activeNDimKind = "cube";        // current polytope kind (chip selection)
 let _activeNDimProjection = "perspective"; // current projection mode (chip selection)
+let _activeNDimRotation = "all";     // all-plane rotor or 4D isoclinic rotor
 
 // ── nD volumetric camera + paint state (P2 rendering directives a/b/c) ──────────
 // The nD source is now a real 3D volume: wheel dollies the CAMERA into it, drag orbits, and a click
@@ -737,11 +845,14 @@ window.__studioStopNDim = stopNDim;
 // Read the current control values.
 function readNDimOpts() {
   const nEl = $("ndim-n"), spEl = $("ndim-speed");
+  const n = Math.max(1, Math.min(10, parseInt(nEl  ? nEl.value  : "4", 10)));
+  const effectiveN = _activeNDimKind === "24cell" ? 4 : n;
   return {
-    n:          Math.max(1, Math.min(10, parseInt(nEl  ? nEl.value  : "4", 10))),
+    n,
     speed:      Math.max(0.1, parseFloat(spEl ? spEl.value : "1")),
     kind:       _activeNDimKind,
     projection: _activeNDimProjection,
+    rotation:   _activeNDimRotation === "isoclinic" && effectiveN < 4 ? "all" : _activeNDimRotation,
   };
 }
 
@@ -749,12 +860,12 @@ function readNDimOpts() {
 // nD rotation -> 3D embedding -> orbit camera -> perspective projection with depth (renderSceneVolumetric),
 // drawn via the depth-tested WebGL path (drawSceneGL3D), 2D fallback otherwise. The last volumetric
 // scene is stashed for the picker. Returns scene.meta so callers can read real vertex/edge counts.
-function drawNDimFrame(canvas, n, t, speed, kind, projection) {
+function drawNDimFrame(canvas, n, t, speed, kind, projection, rotation) {
   // Restore 2D canvas if a WebGL orbit has been mounted (shouldn't happen here, but guard).
   leave3D();
   sizeCanvas(canvas);
   const w = canvas.width, h = canvas.height;
-  const ctx = canvas.getContext("2d"); if (!ctx) return null;
+  const ctx = canvas.getContext("2d", { willReadFrequently: true }); if (!ctx) return null;
   const aspect = w / Math.max(1, h);
   _ndLastAspect = aspect;
 
@@ -763,7 +874,7 @@ function drawNDimFrame(canvas, n, t, speed, kind, projection) {
   ctx.fillRect(0, 0, w, h);
 
   const scene = renderSceneVolumetric(
-    { kind, n: kind === "24cell" ? 4 : n, t: t * speed, rotation: "all" },
+    { kind, n: kind === "24cell" ? 4 : n, t: t * speed, rotation },
     _ndCam,
     { aspect, scale: 1.0, focal: 2.0, paint: _ndPaint },
   );
@@ -826,7 +937,7 @@ function startNDimAnimation() {
   stopNDim();
   leave3D();   // restore 2D canvas if a WebGL orbit was mounted
   const canvas = $("studio-canvas");
-  const { n, speed, kind, projection } = readNDimOpts();
+  const { n, speed, kind, projection, rotation } = readNDimOpts();
   _ndimStartTime = null;
   let firstFrameDone = false;
 
@@ -835,7 +946,7 @@ function startNDimAnimation() {
     if (_ndimStartTime === null) _ndimStartTime = ts;
     const t = (ts - _ndimStartTime) / 1000;   // seconds since start
 
-    const meta = drawNDimFrame(canvas, n, t, speed, kind, projection);
+    const meta = drawNDimFrame(canvas, n, t, speed, kind, projection, rotation);
 
     // After the first frame, fire perception + greeting once, then start the meter loop.
     if (!firstFrameDone) {
@@ -900,6 +1011,15 @@ document.querySelectorAll("[data-ndim-proj]").forEach(btn => {
   btn.addEventListener("click", () => {
     _activeNDimProjection = btn.dataset.ndimProj;
     document.querySelectorAll("[data-ndim-proj]").forEach(b => b.classList.toggle("active", b === btn));
+    startNDimAnimation();
+  });
+});
+
+// Wire rotation chips: all-plane rotor or isoclinic 4D double rotation.
+document.querySelectorAll("[data-ndim-rot]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    _activeNDimRotation = btn.dataset.ndimRot;
+    document.querySelectorAll("[data-ndim-rot]").forEach(b => b.classList.toggle("active", b === btn));
     startNDimAnimation();
   });
 });
@@ -997,11 +1117,11 @@ function ndimClientToNDC(clientX, clientY, canvas, rect) {
 function ndimRepaintNow() {
   const canvas = $("studio-canvas");
   if (!canvas || activeSource !== "ndim") return;
-  const { n, speed, kind, projection } = readNDimOpts();
+  const { n, speed, kind, projection, rotation } = readNDimOpts();
   // reuse the last animation clock if running; else t=0 (a still pose to paint on).
   const t = (_ndimStartTime != null && typeof performance !== "undefined")
     ? (performance.now() - _ndimStartTime) / 1000 : 0;
-  drawNDimFrame(canvas, n, t, speed, kind, projection);
+  drawNDimFrame(canvas, n, t, speed, kind, projection, rotation);
   try { perceive(canvas); } catch (_) {}
 }
 window.__studioNDimRepaint = ndimRepaintNow;
@@ -1275,6 +1395,8 @@ function byoCanvas() { return $("studio-canvas"); }
 function byoCtx() { return byoCanvas().getContext("2d", { willReadFrequently: true }); }
 let byoVideo = null;   // a played <video> from a dropped file; the live loop blits its frames
 let _studioLastMesh = null;  // geometry stashed from the last 3D import; used by export controls
+let _studioSourceMesh = null; // untouched imported mesh; transforms derive from this
+let _meshControlsWired = false;
 
 // Stop + release a played BYO video (file change / mode switch / leaving). Detaches its audio.
 function stopByoVideo() {
@@ -1303,6 +1425,106 @@ function drawSource(src, sw, sh) {
   byoCtx().drawImage(src, 0, 0, c.width, c.height);
 }
 
+function meshTransformValues() {
+  const read = (id, fallback) => {
+    const el = $(id);
+    const n = el ? Number(el.value) : NaN;
+    return Number.isFinite(n) ? n : fallback;
+  };
+  return {
+    normalize: !!($("model-normalize") && $("model-normalize").checked),
+    scale: read("model-scale", 1),
+    rotateX: read("model-rx", 0),
+    rotateY: read("model-ry", 0),
+    rotateZ: read("model-rz", 0),
+    translateX: read("model-tx", 0),
+    translateY: read("model-ty", 0),
+    translateZ: read("model-tz", 0),
+  };
+}
+
+function syncMeshValueLabels() {
+  const pairs = [
+    ["model-scale", "model-scale-val", (v) => Number(v).toFixed(2)],
+    ["model-rx", "model-rx-val", (v) => String(Math.round(Number(v)))],
+    ["model-ry", "model-ry-val", (v) => String(Math.round(Number(v)))],
+    ["model-rz", "model-rz-val", (v) => String(Math.round(Number(v)))],
+    ["model-tx", "model-tx-val", (v) => Number(v).toFixed(2)],
+    ["model-ty", "model-ty-val", (v) => Number(v).toFixed(2)],
+    ["model-tz", "model-tz-val", (v) => Number(v).toFixed(2)],
+  ];
+  for (const [inputId, outId, fmt] of pairs) {
+    const input = $(inputId), out = $(outId);
+    if (input && out) out.textContent = fmt(input.value);
+  }
+}
+
+function updateMeshPanel() {
+  const panel = $("model-transform-panel");
+  if (panel) panel.hidden = !_studioSourceMesh;
+  const status = $("model-transform-status");
+  if (!status) return;
+  if (!_studioSourceMesh) {
+    status.textContent = "Load OBJ, GLTF, GLB, or PLY to enable model transforms.";
+    return;
+  }
+  const stats = meshStats(_studioLastMesh || _studioSourceMesh);
+  status.textContent =
+    `${stats.vertices} vertices, ${stats.faces} faces, radius ${stats.radius.toFixed(3)}. Export uses this transformed mesh.`;
+}
+
+function renderMeshTransform({ announce = false } = {}) {
+  if (!_studioSourceMesh) { updateMeshPanel(); return; }
+  syncMeshValueLabels();
+  _studioLastMesh = transformMesh(_studioSourceMesh, meshTransformValues());
+  drawMeshPreview(byoCanvas(), _studioLastMesh, { maxBacking: currentQuality().maxBacking });
+  const obs = perceive(byoCanvas());
+  updateMeshPanel();
+  startMeterLoop();
+  if (announce) say("model", `Model transform applied. Preview fingerprint ${obs.phash}; OBJ and GLTF export now use the transformed mesh.`);
+}
+
+function resetMeshTransform() {
+  const defaults = {
+    "model-scale": "1",
+    "model-rx": "0",
+    "model-ry": "0",
+    "model-rz": "0",
+    "model-tx": "0",
+    "model-ty": "0",
+    "model-tz": "0",
+  };
+  for (const [id, value] of Object.entries(defaults)) {
+    const el = $(id);
+    if (el) el.value = value;
+  }
+  if ($("model-normalize")) $("model-normalize").checked = false;
+  renderMeshTransform({ announce: true });
+}
+
+function normalizeSourceMesh() {
+  if (!_studioSourceMesh) return;
+  _studioSourceMesh = normalizeMesh(_studioSourceMesh);
+  if ($("model-normalize")) $("model-normalize").checked = false;
+  resetMeshTransform();
+}
+
+function wireMeshControls() {
+  if (_meshControlsWired) return;
+  _meshControlsWired = true;
+  ["model-scale", "model-rx", "model-ry", "model-rz", "model-tx", "model-ty", "model-tz"].forEach(id => {
+    const el = $(id);
+    if (el) el.addEventListener("input", () => renderMeshTransform());
+  });
+  if ($("model-normalize")) $("model-normalize").addEventListener("change", () => renderMeshTransform({ announce: true }));
+  if ($("model-reset")) $("model-reset").addEventListener("click", resetMeshTransform);
+  if ($("model-fit-origin")) $("model-fit-origin").addEventListener("click", normalizeSourceMesh);
+  syncMeshValueLabels();
+  updateMeshPanel();
+}
+wireMeshControls();
+window.__studioRenderMeshTransform = renderMeshTransform;
+
 // Load a File, draw its first frame onto #studio-canvas, then perceive + greet.
 // Routes through StudioImporters.importFile for universal format support (image, video, SVG,
 // OBJ, GLTF, PLY, audio, data). Calls leave3D() first so any previous WebGL canvas is
@@ -1311,6 +1533,8 @@ async function loadFile(file) {
   leave3D();
   stopByoVideo();   // release any previously played video first
   _studioLastMesh = null;  // clear previous geometry before loading new file
+  _studioSourceMesh = null;
+  updateMeshPanel();
 
   const result = await StudioImporters.importFile(file, byoCanvas());
 
@@ -1333,7 +1557,9 @@ async function loadFile(file) {
 
   // Geometry: stash for export and surface the geometry export buttons.
   if (result.mesh) {
-    _studioLastMesh = result.mesh;
+    _studioSourceMesh = cloneMesh(result.mesh);
+    _studioLastMesh = cloneMesh(result.mesh);
+    renderMeshTransform();
     if (typeof window.__studioExportMeshVisible === "function") window.__studioExportMeshVisible(true);
   }
 
@@ -1343,42 +1569,8 @@ async function loadFile(file) {
   startMeterLoop();
 }
 
-// Pixel-level transforms operating on ImageData from the shared canvas.
-// "mirror" and "edges" require slightly different handling and are added below.
-const TF = {
-  grayscale: d => { for (let i = 0; i < d.length; i += 4) { const g = (d[i]*299 + d[i+1]*587 + d[i+2]*114) / 1000; d[i] = d[i+1] = d[i+2] = g; } },
-  invert:    d => { for (let i = 0; i < d.length; i += 4) { d[i] = 255-d[i]; d[i+1] = 255-d[i+1]; d[i+2] = 255-d[i+2]; } },
-  threshold: d => { for (let i = 0; i < d.length; i += 4) { const g = (d[i]*299 + d[i+1]*587 + d[i+2]*114) / 1000 > 127 ? 255 : 0; d[i] = d[i+1] = d[i+2] = g; } },
-  posterize: d => { const q = v => Math.round(v / 85) * 85; for (let i = 0; i < d.length; i += 4) { d[i] = q(d[i]); d[i+1] = q(d[i+1]); d[i+2] = q(d[i+2]); } },
-};
-
-// Mirror is a geometry transform (horizontal flip via canvas scale trick).
-function applyMirror() {
-  const c = byoCanvas(), ctx = byoCtx();
-  const img = ctx.getImageData(0, 0, c.width, c.height);
-  const off = document.createElement("canvas"); off.width = c.width; off.height = c.height;
-  const octx = off.getContext("2d"); octx.putImageData(img, 0, 0);
-  ctx.save(); ctx.translate(c.width, 0); ctx.scale(-1, 1); ctx.drawImage(off, 0, 0); ctx.restore();
-}
-
-// Sobel edge detection (standard 3x3 gx/gy kernels).
-function applyEdges() {
-  const c = byoCanvas(), ctx = byoCtx();
-  const src = ctx.getImageData(0, 0, c.width, c.height);
-  const w = c.width, h = c.height, d = src.data;
-  const out = ctx.createImageData(w, h);
-  for (let y = 1; y < h - 1; y++) {
-    for (let x = 1; x < w - 1; x++) {
-      const luma = (r, g, b) => (r*299 + g*587 + b*114) / 1000;
-      const px = (dx, dy) => { const i = ((y+dy)*w + (x+dx)) * 4; return luma(d[i], d[i+1], d[i+2]); };
-      const sx = -px(-1,-1) - 2*px(-1,0) - px(-1,1) + px(1,-1) + 2*px(1,0) + px(1,1);
-      const sy = -px(-1,-1) - 2*px(0,-1) - px(1,-1) + px(-1,1) + 2*px(0,1) + px(1,1);
-      const m = Math.min(255, Math.hypot(sx, sy));
-      const i = (y*w + x) * 4; out.data[i] = out.data[i+1] = out.data[i+2] = m; out.data[i+3] = 255;
-    }
-  }
-  ctx.putImageData(out, 0, 0);
-}
+// Pixel-level media effects live in studio-effects.js so the Studio orchestrator stays readable.
+// Topography remains local because it is parameterized by the rail controls below.
 
 // Topography transform: hillshade, contours, or oblique 2.5D terrain.
 function applyTopography() {
@@ -1463,10 +1655,11 @@ function applyTopography() {
 
 // Apply a named transform, re-perceive, say what changed, flip the turn indicator.
 function applyTransform(key, who) {
-  if (key === "mirror") { applyMirror(); }
-  else if (key === "edges") { applyEdges(); }
-  else if (key === "topography") { applyTopography(); }
-  else { const img = byoCtx().getImageData(0, 0, byoCanvas().width, byoCanvas().height); TF[key](img.data); byoCtx().putImageData(img, 0, 0); }
+  if (key === "topography") applyTopography();
+  else if (!applyCanvasEffect(byoCtx(), byoCanvas(), key)) {
+    say("model", "I do not have that effect wired yet: " + key + ".");
+    return;
+  }
   const obs = perceive(byoCanvas());
   say(who, `${who === "you" ? "You" : "I"} ran ${key}. Now ${obs.phash}.`);
   $("studio-turn").textContent = who === "you" ? "the model's turn" : "your turn";
@@ -1480,12 +1673,34 @@ $("studio-drop").addEventListener("dragleave", () => $("studio-drop").classList.
 $("studio-drop").addEventListener("drop", e => { e.preventDefault(); $("studio-drop").classList.remove("over"); if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]); });
 $("studio-file").addEventListener("change", e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
 
-// Build transform buttons from TF keys + the geometry + topography transforms.
-["grayscale", "invert", "threshold", "posterize", "mirror", "edges", "topography"].forEach(k => {
-  const b = document.createElement("button"); b.className = "chip"; b.type = "button"; b.textContent = k;
-  b.addEventListener("click", () => applyTransform(k, "you"));
-  $("studio-transforms").appendChild(b);
-});
+// Build transform buttons as compact capability clusters instead of one long undifferentiated row.
+function buildTransformMenu() {
+  const host = $("studio-transforms");
+  if (!host || host.childElementCount) return;
+  const groups = TRANSFORM_GROUPS.concat([{ label: "Terrain", items: [["topography", "topography"]] }]);
+  for (const group of groups) {
+    const wrap = document.createElement("div");
+    wrap.className = "transform-group";
+    const lab = document.createElement("span");
+    lab.className = "transform-label";
+    lab.textContent = group.label;
+    wrap.appendChild(lab);
+    const row = document.createElement("div");
+    row.className = "transform-row";
+    for (const [key, label] of group.items) {
+      const b = document.createElement("button");
+      b.className = "chip";
+      b.type = "button";
+      b.textContent = label;
+      b.dataset.transform = key;
+      b.addEventListener("click", () => applyTransform(key, "you"));
+      row.appendChild(b);
+    }
+    wrap.appendChild(row);
+    host.appendChild(wrap);
+  }
+}
+buildTransformMenu();
 
 // Topography controls: update display spans and re-run if canvas is loaded.
 function topoHasCanvas() { return $("sc-phash").textContent !== "—"; }
@@ -1697,7 +1912,7 @@ function setMeter(key, frac, text) {
 function paintMosaic(px, w, h) {
   const c = $("mm-mosaic"); if (!c) return;
   const { grid } = representation({ data: px, width: w, height: h }, MOSAIC_N);
-  const ctx = c.getContext("2d"); if (!ctx) return;
+  const ctx = c.getContext("2d", { willReadFrequently: true }); if (!ctx) return;
   // paint into an n×n offscreen then scale up with nearest-neighbour (image-rendering:pixelated).
   const n = MOSAIC_N, img = ctx.createImageData(n, n);
   for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
@@ -1735,7 +1950,7 @@ function paintSwatches(rich) {
 function pushMotion(deltaFrac) {
   motionHist.push(deltaFrac); motionHist.shift();
   const c = $("mm-motion"); if (!c) return;
-  const ctx = c.getContext("2d"); if (!ctx) return;
+  const ctx = c.getContext("2d", { willReadFrequently: true }); if (!ctx) return;
   const W = c.width, H = c.height;
   ctx.clearRect(0, 0, W, H);
   ctx.strokeStyle = "rgba(95,174,147,.85)"; ctx.lineWidth = 1.5; ctx.beginPath();
@@ -2368,18 +2583,30 @@ window.Studio.disconnectModel = function() {
 };
 
 // Model-agnostic local model wiring via ModelAdapter.
-// Probes Ollama (localhost:11434) and LM Studio (localhost:1234) in parallel at page load.
-// If either responds, connect() wires it into Studio. If neither is up, respond.js stays the floor.
-// All failures are silent: the user experience is identical in both cases.
-(async () => {
+// Local autodetect is opt-in so the public showcase does not emit noisy localhost
+// connection errors when Ollama or LM Studio are not running. Add ?autodetect=1
+// for workstation demos that should connect automatically.
+async function connectDetectedLocalModel() {
   try {
     const cfg = await ModelAdapter.autodetect();
     if (cfg) {
       const fn = ModelAdapter.connect(cfg);
       if (fn) {
         window.Studio.connectModel(async (message, ctx) => fn(message, ctx));
+        return cfg;
       }
     }
+    return null;
+  } catch (_) {
+    return null;
+  }
+}
+
+(async () => {
+  try {
+    const params = new URLSearchParams(window.location.search || "");
+    if (params.get("autodetect") !== "1") return;
+    await connectDetectedLocalModel();
     // null: no local model reachable. Studio stays on the grounded respond.js floor.
   } catch (_) {
     // Defensive: any unexpected error silently leaves respond.js as the floor.
@@ -3038,7 +3265,39 @@ function makeModelFn(endpoint, key, modelName) {
 
 const mcConnect    = $("mc-connect");
 const mcDisconnect = $("mc-disconnect");
+const mcDetect     = $("mc-detect");
 const mcStatus     = $("mc-status");
+const mcForm       = $("mc-form");
+
+if (mcForm) {
+  mcForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+    if (mcConnect && !mcConnect.disabled) mcConnect.click();
+  });
+}
+
+if (mcDetect) {
+  mcDetect.addEventListener("click", async function() {
+    mcDetect.disabled = true;
+    if (mcStatus) mcStatus.textContent = "Looking for Ollama or LM Studio on this machine...";
+    const cfg = await connectDetectedLocalModel();
+    if (cfg) {
+      if (mcConnect) mcConnect.disabled = true;
+      if (mcDisconnect) mcDisconnect.disabled = false;
+      if ($("mc-endpoint")) {
+        $("mc-endpoint").value = cfg.mode === "local-ollama"
+          ? "http://localhost:11434/v1/chat/completions"
+          : "http://localhost:1234/v1/chat/completions";
+      }
+      if ($("mc-model")) $("mc-model").value = cfg.model || "";
+      if (mcStatus) mcStatus.textContent = "Connected to local model.";
+      say("model", "Connected to the local model. Free-text questions now route through it, with the grounded reader as fallback.");
+    } else {
+      mcDetect.disabled = false;
+      if (mcStatus) mcStatus.textContent = "No local model found. Enter an endpoint URL manually.";
+    }
+  });
+}
 
 if (mcConnect) {
   mcConnect.addEventListener("click", function() {
