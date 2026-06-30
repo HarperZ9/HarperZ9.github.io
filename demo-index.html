@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo: a repository map (index)</title>
+<meta name="description" content="A readable example of what index produces: a small dependency map of a handful of repositories drawn as a graph. Each repo is a node, each edge is a real dependency, and every edge carries the file and line that proves it plus a confidence label. The same edges appear in a plain text table. index runs offline over real repos; this page shows an example of its output.">
+<link rel="canonical" href="https://harperz9.github.io/demo-index.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Demo: a repository map (index)">
+<meta property="og:description" content="A readable example of what index produces: a small dependency map of a handful of repositories. Each repo is a node, each edge carries the file and line that proves it, and a confidence label. The same edges appear as a plain text table. index runs offline over real repos.">
+<meta property="og:url" content="https://harperz9.github.io/demo-index.html">
+<meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Demo: a repository map (index)">
+<meta name="twitter:description" content="A readable example of what index produces: a small dependency map of a handful of repositories, with every edge carrying the file and line that proves it. index runs offline over real repos.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Schibsted+Grotesk:wght@500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/doc.css?v=20260624a">
+<style>
+  /* ---- demo surface: scoped, on-brand, built only from doc.css tokens ---- */
+  .example-flag{display:inline-flex;align-items:center;gap:.55rem;
+    font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.6rem;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);
+    background:#f3f4f0;border:1px solid var(--rule-strong);border-radius:4px;
+    padding:.4em .7em;margin:.2rem 0 0}
+  .example-flag::before{content:"";width:.45rem;height:.45rem;border-radius:50%;
+    background:var(--iris)}
+
+  /* the map: an SVG graph in a framed panel, with a hint and a readout below */
+  .mapwrap{margin:.5rem 0 0}
+  .mapframe{border:1px solid var(--rule);border-radius:5px;background:#fbfbf7;
+    padding:.5rem;overflow:hidden}
+  .mapframe svg{display:block;width:100%;height:auto}
+
+  /* graph node + edge styling, driven only from the cascade's tokens */
+  .gnode{cursor:pointer}
+  .gnode .nbox{fill:#f3f4f0;stroke:var(--rule-strong);stroke-width:1.4}
+  .gnode .nlabel{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;
+    fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+  .gnode .nrole{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:8px;
+    letter-spacing:.08em;fill:var(--ink-muted);text-anchor:middle;dominant-baseline:central}
+  .gnode.is-hub .nbox{fill:#eceee8;stroke:var(--iris);stroke-width:2}
+  .gnode.is-active .nbox{stroke:var(--iris);stroke-width:2.4}
+  .gnode:focus{outline:none}
+  .gnode:focus .nbox{stroke:var(--iris);stroke-width:2.6}
+
+  .gedge{cursor:pointer;fill:none;stroke:var(--ink-muted);stroke-width:1.6}
+  .gedge.conf-high{stroke:#1d7a4d}
+  .gedge.conf-moderate{stroke:#9a7a17}
+  .gedge.in-cycle{stroke:#a6322a;stroke-dasharray:5 4}
+  .gedge.is-active{stroke-width:3.2}
+  .gedge-hit{fill:none;stroke:transparent;stroke-width:14;cursor:pointer}
+  .garrow-high{fill:#1d7a4d}
+  .garrow-moderate{fill:#9a7a17}
+  .garrow-cycle{fill:#a6322a}
+
+  /* legend under the map */
+  .glegend{display:flex;flex-wrap:wrap;gap:.5rem .95rem;margin:.75rem 0 0;
+    font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.62rem;
+    letter-spacing:.04em;color:var(--ink-soft)}
+  .glegend .lk{display:inline-flex;align-items:center;gap:.4rem}
+  .glegend .sw{width:1.6rem;height:0;border-top-width:3px;border-top-style:solid}
+  .glegend .sw.high{border-top-color:#1d7a4d}
+  .glegend .sw.moderate{border-top-color:#9a7a17}
+  .glegend .sw.cycle{border-top-color:#a6322a;border-top-style:dashed}
+  .glegend .sw.hub{width:.7rem;height:.7rem;border:2px solid var(--iris);
+    border-radius:3px;background:#eceee8}
+
+  /* the evidence readout: what an edge carries when you select it */
+  .evidence{margin:1.3rem 0 0;border:1px solid var(--rule);border-radius:5px;overflow:hidden}
+  .evidence-head{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;
+    padding:.9rem .95rem;background:#f6f7f3;border-bottom:1px solid var(--rule)}
+  .evidence-head .what{font-family:"Kilon",system-ui,sans-serif;font-weight:600;
+    font-size:1.04rem;color:var(--ink)}
+  .evidence-head .what .arr{color:var(--ink-muted);margin:0 .35em}
+  .conf{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.64rem;
+    font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;
+    background:var(--ink-muted);border-radius:4px;padding:.35em .7em;white-space:nowrap}
+  .conf.is-high{background:#1d7a4d}
+  .conf.is-moderate{background:#9a7a17}
+  .conf.is-cycle{background:#a6322a}
+  .evidence-body{padding:.2rem 0}
+  .evidence-row{display:grid;grid-template-columns:minmax(7rem,8.5rem) 1fr;gap:.4rem 1.2rem;
+    padding:.62rem .95rem;border-bottom:1px solid var(--rule);align-items:baseline}
+  .evidence-row:last-child{border-bottom:none}
+  .evidence-row dt{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.6rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--tag);margin:0}
+  .evidence-row dd{margin:0;font-family:"JetBrains Mono",ui-monospace,monospace;
+    font-size:.8rem;color:var(--ink);line-height:1.55;word-break:break-word}
+  .evidence-row dd.empty{color:var(--ink-muted)}
+  .sig{display:block;margin:0 0 .3rem}
+  .sig:last-child{margin-bottom:0}
+  .sig .loc{color:var(--iris)}
+  .sig .kind{color:var(--ink-muted)}
+
+  /* the plain text table fallback: same edges, no graph needed */
+  .edgetable{width:100%;border-collapse:collapse;margin:.4rem 0 0;
+    font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.74rem}
+  .edgetable caption{text-align:left;font-family:"JetBrains Mono",ui-monospace,monospace;
+    font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tag);
+    margin:0 0 .55rem}
+  .edgetable th,.edgetable td{text-align:left;vertical-align:top;padding:.5rem .7rem;
+    border-bottom:1px solid var(--rule);line-height:1.5}
+  .edgetable thead th{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--tag);border-bottom:1px solid var(--rule-strong)}
+  .edgetable td.from,.edgetable td.to{color:var(--ink);white-space:nowrap}
+  .edgetable td.ev{color:var(--ink-soft)}
+  .edgetable td.ev .loc{color:var(--iris)}
+  .edgetable td.cf{white-space:nowrap}
+  .edgetable .pill{display:inline-block;font-size:.58rem;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;color:#fff;border-radius:3px;
+    padding:.2em .5em}
+  .edgetable .pill.high{background:#1d7a4d}
+  .edgetable .pill.moderate{background:#9a7a17}
+  .edgetable .pill.cycle{background:#a6322a}
+
+  /* inline code chips used in prose */
+  code.k{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.82em;
+    color:var(--ink);background:#f3f4f0;border:1px solid var(--rule);border-radius:3px;
+    padding:.06em .4em}
+
+  @media (max-width:560px){
+    .evidence-row{grid-template-columns:1fr;gap:.15rem}
+    .edgetable th:nth-child(3),.edgetable td.cf{display:none}
+  }
+</style>
+</head>
+<body class="doc">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="resume.html">Resume</a> <a href="portfolio.html">Portfolio</a> <a href="cover-letter.html">Cover Letter</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260625a"></script>
+
+<div class="docnav">
+  <span class="where">Demo &middot; a repository map</span>
+  <span class="switch"><a href="index-graph.html">About index</a><a href="demo-index.html" aria-current="page">Map demo</a><a href="proof-index-sample.html">Sample report</a><a href="research.html">Research</a></span>
+</div>
+
+<main id="main">
+<article class="sheet">
+  <header class="mast">
+    <h1>A repository map</h1>
+    <p class="role">An example of what index draws &middot; repos as nodes, dependencies as edges, every edge carrying its proof.</p>
+    <p class="contact">index runs offline over real repos <span class="sep">/</span> this page shows an example of its output <span class="sep">/</span> <a href="index-graph.html">read about index</a> <span class="sep">/</span> <a href="https://github.com/HarperZ9/index" translate="no">github.com/HarperZ9/index</a></p>
+  </header>
+
+  <section>
+    <h2>What this shows</h2>
+    <p class="lead">index scans a workspace of many repositories and builds a dependency graph from real evidence: imports, package manifests, and references it actually finds in the code. Each repository becomes a node. Each edge is a real dependency, and it carries the file and line that drew it, so you can see why any two repos are connected. index makes no model call and no network call. It runs on your machine, over your repos.</p>
+    <p class="lead">Below is a small, real example: a cluster of eight repositories from the author's own workspace, drawn the way index draws it. Select any edge or node to see the exact evidence index recorded, including a confidence label. The same edges are listed in a plain text table further down, so nothing here depends on seeing the picture.</p>
+    <p class="example-flag" translate="no">Example output &middot; 8 repos, 8 edges &middot; from a real index run</p>
+  </section>
+
+  <section aria-labelledby="map-h">
+    <h2 id="map-h">The map</h2>
+    <p class="lead">Boxes are repositories. Arrows point from a repo to something it depends on. Color shows how strong the evidence is, and a dashed red arrow marks a dependency cycle (two repos that import each other). Click a node or an arrow, or move focus to it with the keyboard and press Enter, to read the evidence index recorded for it.</p>
+
+    <div class="mapwrap">
+      <div class="mapframe">
+        <svg viewBox="0 0 720 440" role="img" aria-labelledby="map-title map-desc" id="map-svg">
+          <title id="map-title">Dependency map of eight repositories</title>
+          <desc id="map-desc">A graph of eight repository nodes connected by eight directed dependency edges. The repository named proof-surface is a hub that four repositories depend on. The repositories coherence-membrane and studio-engine import each other, forming a cycle. The same edges and their evidence are listed in the text table below this graph.</desc>
+
+          <defs>
+            <marker id="arr-high" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" class="garrow-high"></path>
+            </marker>
+            <marker id="arr-moderate" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" class="garrow-moderate"></path>
+            </marker>
+            <marker id="arr-cycle" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" class="garrow-cycle"></path>
+            </marker>
+          </defs>
+
+          <!-- edges are drawn first so nodes sit on top; each has a fat invisible hit-line for easy clicking -->
+          <g id="edges" aria-hidden="true"></g>
+          <!-- nodes injected by script from the same data the table uses -->
+          <g id="nodes" aria-hidden="true"></g>
+        </svg>
+      </div>
+
+      <div class="glegend" aria-hidden="true">
+        <span class="lk"><span class="sw high"></span> high confidence</span>
+        <span class="lk"><span class="sw moderate"></span> moderate confidence</span>
+        <span class="lk"><span class="sw cycle"></span> in a cycle</span>
+        <span class="lk"><span class="sw hub"></span> hub (most depended on)</span>
+      </div>
+
+      <div class="evidence" role="group" aria-label="Evidence for the selected edge or node" aria-live="polite">
+        <div class="evidence-head">
+          <span class="what" id="ev-what">Nothing selected yet</span>
+          <span class="conf" id="ev-conf" translate="no">SELECT AN EDGE</span>
+        </div>
+        <dl class="evidence-body" style="margin:0">
+          <div class="evidence-row">
+            <dt>Relation</dt>
+            <dd id="ev-relation" class="empty">Click an arrow to see the dependency it stands for.</dd>
+          </div>
+          <div class="evidence-row">
+            <dt>Evidence</dt>
+            <dd id="ev-signals" class="empty">The file and line that drew the edge appear here.</dd>
+          </div>
+          <div class="evidence-row">
+            <dt>Note</dt>
+            <dd id="ev-note" class="empty">A confidence label, and whether the edge sits in a cycle.</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="table-h">
+    <h2 id="table-h">The same edges, as text</h2>
+    <p class="lead">This table is the graph in words. It lists every edge in the example with the evidence index recorded and the confidence it assigned. If the picture above does not render, or you are reading with a screen reader, this is the whole map. It is built from the exact same data, so the two can never disagree.</p>
+    <table class="edgetable" id="edge-table">
+      <caption>Eight dependency edges across eight repositories (example output)</caption>
+      <thead>
+        <tr><th scope="col">Depends on</th><th scope="col">Evidence (file : line, kind)</th><th scope="col">Confidence</th></tr>
+      </thead>
+      <tbody><!-- rows injected by script from the shared data; a static set is written here too so the table works without JavaScript -->
+        <tr><td class="from"><b>proof-surface-report</b> &rarr; <span class="to">proof-surface</span></td><td class="ev"><span class="loc">pyproject.toml:13</span> manifest, plus <span class="loc">src/proof_surface_report/core.py:17</span> import (4 signals)</td><td class="cf"><span class="pill high">high</span></td></tr>
+        <tr><td class="from"><b>public-surface-sweeper</b> &rarr; <span class="to">proof-surface</span></td><td class="ev"><span class="loc">pyproject.toml:22</span> manifest, plus <span class="loc">src/public_surface_sweeper/cli.py:9</span> import (3 signals)</td><td class="cf"><span class="pill high">high</span></td></tr>
+        <tr><td class="from"><b>repo-proof-index</b> &rarr; <span class="to">proof-surface</span></td><td class="ev"><span class="loc">pyproject.toml:22</span> manifest, plus <span class="loc">scripts/check_proof_surface_conformance.py:14</span> import (5 signals)</td><td class="cf"><span class="pill high">high</span></td></tr>
+        <tr><td class="from"><b>model-provenance-validator</b> &rarr; <span class="to">proof-surface</span></td><td class="ev"><span class="loc">pyproject.toml:22</span> manifest, plus <span class="loc">src/model_provenance_validator/packet.py:15</span> import (2 signals)</td><td class="cf"><span class="pill high">high</span></td></tr>
+        <tr><td class="from"><b>coherence-membrane</b> &rarr; <span class="to">proof-surface</span></td><td class="ev"><span class="loc">src/coherence_membrane/membrane.py:81</span> import (1 signal)</td><td class="cf"><span class="pill moderate">moderate</span></td></tr>
+        <tr><td class="from"><b>accountable-surface</b> &rarr; <span class="to">coherence-membrane</span></td><td class="ev"><span class="loc">src/accountable_surface/certify.py:17</span> import, and 26 more (27 signals)</td><td class="cf"><span class="pill moderate">moderate</span></td></tr>
+        <tr><td class="from"><b>coherence-membrane</b> &rarr; <span class="to">studio-engine</span></td><td class="ev"><span class="loc">src/coherence_membrane/center/atelier.py:20</span> import, and 4 more (5 signals)</td><td class="cf"><span class="pill cycle">moderate, in cycle</span></td></tr>
+        <tr><td class="from"><b>studio-engine</b> &rarr; <span class="to">coherence-membrane</span></td><td class="ev"><span class="loc">studio_engine/certify.py:12</span> import, and 2 more (3 signals)</td><td class="cf"><span class="pill cycle">moderate, in cycle</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>How to read it</h2>
+    <ul class="bul">
+      <li><b>A node is a repository.</b> Its role comes from its place in the graph, not from a label someone wrote. Here <code class="k" translate="no">proof-surface</code> is the hub: four repositories depend on it, nothing in this slice depends the other way, so index marks it the structural center.</li>
+      <li><b>An edge is a real dependency,</b> and it carries the evidence that drew it. A manifest signal (a line in <code class="k" translate="no">pyproject.toml</code>) plus matching import lines is stronger than a single import, so those edges are labeled <b>high</b> confidence and the rest <b>moderate</b>.</li>
+      <li><b>A cycle is flagged, not hidden.</b> <code class="k" translate="no">coherence-membrane</code> and <code class="k" translate="no">studio-engine</code> import each other, so index draws both arrows in dashed red and records that each sits in a cycle. That is a signal worth seeing, not an error to bury.</li>
+      <li><b>Confidence is a claim about evidence, not about correctness.</b> A high-confidence edge means index found strong, multiple signals for the dependency. It does not mean the dependency is a good idea. index reports what is there and leaves the judgment to you.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>From a map to a checked map</h2>
+    <p class="lead">Drawing the graph is the first half. The second half is checking it. You write the rules a healthy codebase keeps into a small <code class="k" translate="no">.index.toml</code> (which layers may depend on which, edges that must never exist, a ceiling on cycles), and <code class="k" translate="no">index check</code> measures the real graph against them. It returns one of three words and never a fourth: <b>MATCH</b> when the real shape matches the rules, <b>DRIFT</b> when it has moved away from them, or <b>UNVERIFIABLE</b> when it could not parse enough to decide. There is no TRUSTED.</p>
+    <p class="lead">In this example, a rule that said <em>no dependency cycles</em> would come back as DRIFT, and it would point straight at the <code class="k" translate="no">coherence-membrane</code> and <code class="k" translate="no">studio-engine</code> pair as the reason. You believe that verdict by re-running its own recheck command and recomputing its hashes, not because it asked to be trusted.</p>
+  </section>
+
+  <section>
+    <h2>Honest limits</h2>
+    <ul class="bul">
+      <li>This is example output, not a live scan. The eight repos, eight edges, and every file and line shown here come from one real index run over the author's workspace, captured and displayed as a fixed picture. The page does not read your filesystem and does not run index in your browser. To map your own repos you run the tool yourself.</li>
+      <li>The full workspace is larger. The real run found roughly 80 repositories and many more edges, most of them dependencies on third-party libraries. This page shows a small, internal-only slice on purpose, so the picture stays readable.</li>
+      <li>Confidence labels describe the strength of the evidence index found, nothing more. A <b>high</b> edge is well-witnessed; it is not a verdict that the dependency is correct or wise. index reports structure and leaves judgment to a person.</li>
+      <li>Coverage is stated, not assumed. A real index certificate names the files it could not parse and the dynamic imports it could not follow, so a result never claims more than it proved. Anything it cannot establish it labels UNVERIFIABLE rather than guessing.</li>
+      <li>The tool is public. index ships on PyPI as <a class="inline" href="https://pypi.org/project/index-graph/" translate="no">index-graph</a> (the name <code class="k" translate="no">index</code> was taken) with the source at <a class="inline" href="https://github.com/HarperZ9/index" translate="no">github.com/HarperZ9/index</a>. If you find repos it missed, edges it drew wrong, or roles it assigned incorrectly, those reports are what sharpen it.</li>
+    </ul>
+    <p class="note">This page is an example of index output, captured from one real offline run. No data leaves your machine and nothing is scanned here. The graph and the text table are built from the same data, so they cannot disagree. Updated 2026-06-30.</p>
+  </section>
+</article>
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---- the one source of truth: the edges from a real index run -------------
+  // Repo-to-repo (internal) dependencies only, captured offline. Each edge keeps
+  // the real evidence signals index recorded (file, line, kind). Both the SVG
+  // graph and the prose readout are built from this; the static <table> above
+  // mirrors it so the page still works with JavaScript off.
+  var NODES = {
+    "proof-surface":              { x: 360, y: 90,  role: "hub" },
+    "proof-surface-report":       { x: 130, y: 215, role: "leaf" },
+    "public-surface-sweeper":     { x: 305, y: 215, role: "leaf" },
+    "repo-proof-index":           { x: 470, y: 215, role: "leaf" },
+    "model-provenance-validator": { x: 615, y: 150, role: "leaf" },
+    "coherence-membrane":         { x: 180, y: 360, role: "bridge" },
+    "studio-engine":              { x: 420, y: 360, role: "node" },
+    "accountable-surface":        { x: 615, y: 330, role: "node" }
+  };
+
+  var EDGES = [
+    { from: "proof-surface-report", to: "proof-surface", confidence: "high", inCycle: false, count: 4,
+      signals: [
+        { file: "pyproject.toml", line: 13, kind: "manifest", raw: "proof-surface>=0.1" },
+        { file: "src/proof_surface_report/core.py", line: 17, kind: "import", raw: "from proof_surface import ..." }
+      ] },
+    { from: "public-surface-sweeper", to: "proof-surface", confidence: "high", inCycle: false, count: 3,
+      signals: [
+        { file: "pyproject.toml", line: 22, kind: "manifest", raw: "proof-surface>=0.1" },
+        { file: "src/public_surface_sweeper/cli.py", line: 9, kind: "import", raw: "from proof_surface.packet import ..." }
+      ] },
+    { from: "repo-proof-index", to: "proof-surface", confidence: "high", inCycle: false, count: 5,
+      signals: [
+        { file: "pyproject.toml", line: 22, kind: "manifest", raw: "proof-surface>=0.1" },
+        { file: "scripts/check_proof_surface_conformance.py", line: 14, kind: "import", raw: "from proof_surface.packet import ..." }
+      ] },
+    { from: "model-provenance-validator", to: "proof-surface", confidence: "high", inCycle: false, count: 2,
+      signals: [
+        { file: "pyproject.toml", line: 22, kind: "manifest", raw: "proof-surface>=0.1" },
+        { file: "src/model_provenance_validator/packet.py", line: 15, kind: "import", raw: "from proof_surface.packet import ..." }
+      ] },
+    { from: "coherence-membrane", to: "proof-surface", confidence: "moderate", inCycle: false, count: 1,
+      signals: [
+        { file: "src/coherence_membrane/membrane.py", line: 81, kind: "import", raw: "from proof_surface import ..." }
+      ] },
+    { from: "accountable-surface", to: "coherence-membrane", confidence: "moderate", inCycle: false, count: 27,
+      signals: [
+        { file: "src/accountable_surface/certify.py", line: 17, kind: "import", raw: "from coherence_membrane.certificate import ..." },
+        { file: "src/accountable_surface/effector.py", line: 18, kind: "import", raw: "from coherence_membrane.observation import ..." }
+      ] },
+    { from: "coherence-membrane", to: "studio-engine", confidence: "moderate", inCycle: true, count: 5,
+      signals: [
+        { file: "src/coherence_membrane/center/atelier.py", line: 20, kind: "import", raw: "import studio_engine" },
+        { file: "src/coherence_membrane/center/composite.py", line: 59, kind: "import", raw: "from studio_engine.strand import ..." }
+      ] },
+    { from: "studio-engine", to: "coherence-membrane", confidence: "moderate", inCycle: true, count: 3,
+      signals: [
+        { file: "studio_engine/certify.py", line: 12, kind: "import", raw: "from coherence_membrane.certificate import ..." },
+        { file: "tests/test_certify.py", line: 8, kind: "import", raw: "from coherence_membrane.certificate import ..." }
+      ] },
+    // node-level pseudo-edge so clicking the hub explains its role
+    null
+  ];
+
+  var SVGNS = "http://www.w3.org/2000/svg";
+  var svg = document.getElementById("map-svg");
+  if (!svg) { return; }
+
+  var gEdges = document.getElementById("edges");
+  var gNodes = document.getElementById("nodes");
+
+  var evWhat = document.getElementById("ev-what");
+  var evConf = document.getElementById("ev-conf");
+  var evRelation = document.getElementById("ev-relation");
+  var evSignals = document.getElementById("ev-signals");
+  var evNote = document.getElementById("ev-note");
+
+  var NODE_W = 132, NODE_H = 40;
+
+  function el(name, attrs) {
+    var node = document.createElementNS(SVGNS, name);
+    if (attrs) { for (var k in attrs) { if (attrs.hasOwnProperty(k)) { node.setAttribute(k, attrs[k]); } } }
+    return node;
+  }
+
+  // edge geometry: a straight line from the source box toward the target box.
+  // Endpoints are inset from each node center so the line meets the box edge
+  // instead of running under a label. For the two cycle edges we bow them
+  // apart so both arrows stay visible.
+  function edgeGeometry(e, bow) {
+    var a = NODES[e.from], b = NODES[e.to];
+    var dx = b.x - a.x, dy = b.y - a.y;
+    var len = Math.sqrt(dx * dx + dy * dy) || 1;
+    var ux = dx / len, uy = dy / len;
+    // inset = how far along the line to stop, scaled per axis so the endpoint
+    // lands near the box boundary whatever the edge's slope is.
+    var insetX = NODE_W / 2 + 8, insetY = NODE_H / 2 + 8;
+    var inset = Math.min(insetX / (Math.abs(ux) || 1e-6), insetY / (Math.abs(uy) || 1e-6));
+    var x1 = a.x + ux * inset, y1 = a.y + uy * inset;
+    var x2 = b.x - ux * inset, y2 = b.y - uy * inset;
+    if (bow) {
+      // perpendicular offset for the curved cycle edges
+      var mx = (x1 + x2) / 2 + (-uy) * bow;
+      var my = (y1 + y2) / 2 + (ux) * bow;
+      return "M" + x1 + "," + y1 + " Q" + mx + "," + my + " " + x2 + "," + y2;
+    }
+    return "M" + x1 + "," + y1 + " L" + x2 + "," + y2;
+  }
+
+  var realEdges = EDGES.filter(function (e) { return e !== null; });
+
+  function confClass(e) {
+    if (e.inCycle) { return "in-cycle"; }
+    return "conf-" + e.confidence;
+  }
+  function arrowFor(e) {
+    if (e.inCycle) { return "url(#arr-cycle)"; }
+    return e.confidence === "high" ? "url(#arr-high)" : "url(#arr-moderate)";
+  }
+
+  function clearActive() {
+    var i, set;
+    set = gEdges.querySelectorAll(".gedge");
+    for (i = 0; i < set.length; i++) { set[i].classList.remove("is-active"); }
+    set = gNodes.querySelectorAll(".gnode");
+    for (i = 0; i < set.length; i++) { set[i].classList.remove("is-active"); }
+  }
+
+  function fmtSignals(e) {
+    evSignals.classList.remove("empty");
+    evSignals.innerHTML = "";
+    e.signals.forEach(function (s) {
+      var line = document.createElement("span");
+      line.className = "sig";
+      var loc = document.createElement("span");
+      loc.className = "loc";
+      loc.textContent = s.file + ":" + s.line;
+      var kind = document.createElement("span");
+      kind.className = "kind";
+      kind.textContent = "  (" + s.kind + ")  " + s.raw;
+      line.appendChild(loc);
+      line.appendChild(kind);
+      evSignals.appendChild(line);
+    });
+    if (e.count > e.signals.length) {
+      var more = document.createElement("span");
+      more.className = "sig kind";
+      more.textContent = "and " + (e.count - e.signals.length) + " more, for " + e.count + " signals in total.";
+      evSignals.appendChild(more);
+    }
+  }
+
+  function showEdge(e, edgeEl) {
+    clearActive();
+    if (edgeEl) { edgeEl.classList.add("is-active"); }
+    evWhat.innerHTML = "";
+    var fromS = document.createTextNode(e.from);
+    var arr = document.createElement("span");
+    arr.className = "arr";
+    arr.textContent = "depends on";
+    var toS = document.createTextNode(e.to);
+    evWhat.appendChild(fromS);
+    evWhat.appendChild(arr);
+    evWhat.appendChild(toS);
+
+    evConf.className = "conf is-" + (e.inCycle ? "cycle" : e.confidence);
+    evConf.textContent = e.inCycle ? "IN A CYCLE" : e.confidence.toUpperCase();
+
+    evRelation.classList.remove("empty");
+    evRelation.textContent = e.from + " imports or declares " + e.to + ", drawn from " + e.count + " evidence signal" + (e.count === 1 ? "" : "s") + ".";
+
+    fmtSignals(e);
+
+    evNote.classList.remove("empty");
+    if (e.inCycle) {
+      evNote.textContent = "Moderate confidence, and this edge is one half of a cycle: " + e.from + " and " + e.to + " import each other. index flags the cycle rather than hiding it.";
+    } else if (e.confidence === "high") {
+      evNote.textContent = "High confidence: a package manifest entry plus matching import lines. Strong, multiple signals, not a single mention.";
+    } else {
+      evNote.textContent = "Moderate confidence: drawn from import lines without a manifest entry to corroborate. Real, but witnessed by fewer signals.";
+    }
+  }
+
+  function showNode(name, nodeEl) {
+    clearActive();
+    if (nodeEl) { nodeEl.classList.add("is-active"); }
+    var role = NODES[name].role;
+    var inbound = realEdges.filter(function (e) { return e.to === name; }).length;
+    var outbound = realEdges.filter(function (e) { return e.from === name; }).length;
+
+    evWhat.textContent = name;
+    evConf.className = "conf is-moderate";
+    evConf.textContent = "ROLE: " + role.toUpperCase();
+
+    evRelation.classList.remove("empty");
+    evRelation.textContent = inbound + " repo" + (inbound === 1 ? "" : "s") + " in this slice depend on it, and it depends on " + outbound + ".";
+
+    evSignals.classList.add("empty");
+    evSignals.textContent = "Select an arrow to read the file-and-line evidence for a dependency.";
+
+    evNote.classList.remove("empty");
+    if (role === "hub") {
+      evNote.textContent = "index marks this the hub: it has the most inbound dependencies in the slice and depends on nothing here. The role comes from the graph, not from a hand-written label.";
+    } else {
+      evNote.textContent = "A structural role index assigns from the node's position in the graph: how many repos point to it and how many it points to.";
+    }
+  }
+
+  // ---- build edges ----------------------------------------------------------
+  realEdges.forEach(function (e, idx) {
+    // bow the two cycle edges in opposite directions so both are readable
+    var bow = 0;
+    if (e.inCycle) { bow = (e.from === "coherence-membrane") ? -26 : 26; }
+    var d = edgeGeometry(e, bow);
+
+    var path = el("path", { d: d, class: "gedge " + confClass(e), "marker-end": arrowFor(e) });
+    var hit = el("path", { d: d, class: "gedge-hit", tabindex: "0", role: "button" });
+    hit.setAttribute("aria-label", e.from + " depends on " + e.to + ", " + (e.inCycle ? "in a cycle, " : "") + e.confidence + " confidence, " + e.count + " signals");
+
+    function activate() { showEdge(e, path); }
+    hit.addEventListener("click", activate);
+    hit.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); activate(); }
+    });
+
+    gEdges.appendChild(path);
+    gEdges.appendChild(hit);
+  });
+
+  // ---- build nodes ----------------------------------------------------------
+  Object.keys(NODES).forEach(function (name) {
+    var n = NODES[name];
+    var g = el("g", { class: "gnode" + (n.role === "hub" ? " is-hub" : ""), tabindex: "0", role: "button" });
+    g.setAttribute("aria-label", "Repository " + name + ", role " + n.role);
+
+    var box = el("rect", {
+      class: "nbox", x: n.x - NODE_W / 2, y: n.y - NODE_H / 2,
+      width: NODE_W, height: NODE_H, rx: 5
+    });
+    var label = el("text", { class: "nlabel", x: n.x, y: n.y - 4 });
+    label.textContent = name;
+    var role = el("text", { class: "nrole", x: n.x, y: n.y + 11 });
+    role.textContent = (n.role === "hub" ? "hub" : n.role).toUpperCase();
+
+    g.appendChild(box);
+    g.appendChild(label);
+    g.appendChild(role);
+
+    function activate() { showNode(name, g); }
+    g.addEventListener("click", activate);
+    g.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); activate(); }
+    });
+
+    gNodes.appendChild(g);
+  });
+
+  // start with the hub explained, so the readout is never blank
+  var hubEl = gNodes.querySelector(".is-hub");
+  showNode("proof-surface", hubEl);
+})();
+</script>
+
+<noscript>
+  <div class="docnav" style="margin-top:1rem">
+    <span class="where">The interactive graph needs JavaScript. With it off, the full map is the text table above: every edge, its evidence, and its confidence. Read about the tool at <a href="index-graph.html">index</a>.</span>
+  </div>
+</noscript>
+</body>
+</html>
