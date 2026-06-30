@@ -13,7 +13,7 @@ build/
 
 _drafts/
 
-# internal design drafts & handoffs — never ship to the public Pages repo
+# internal design drafts & handoffs -- never ship to the public Pages repo
 _redesign/
 _preview/
 DESIGN.md
