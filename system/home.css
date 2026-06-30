@@ -29,9 +29,9 @@
   --paper:#f4f3ef;          /* warm near-white ceramic, not sterile #fff */
   --paper-2:#eceae4;        /* slightly deeper panel ceramic */
   --ink:#0b0c0e;            /* near-black primary text */
-  --ink-soft:#2f3238;       /* body text, AA on ceramic */
-  --ink-muted:#585c64;      /* secondary, captions, AA-compliant */
-  --ink-faint:#8b8f98;      /* faint labels, rules (decorative) */
+  --ink-soft:#26292e;       /* body text, AA on ceramic */
+  --ink-muted:#474b53;      /* secondary, captions, AA-compliant */
+  --ink-faint:#6c707a;      /* faint labels, rules (decorative) */
 
   /* ---- one restrained accent, an iris that nods to the object edge ---- */
   --iris:#4636e8;
