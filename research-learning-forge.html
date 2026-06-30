@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Learning Forge</title>
+<meta name="description" content="The Learning Forge turns 16 sealed frontier AI papers and talks into falsifiable learning-object claim cards. Each card carries its own evidence and a hashed source. Six cards are fully grounded; the rest are honestly marked as not yet covered.">
+<link rel="canonical" href="https://harperz9.github.io/research-learning-forge.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="The Learning Forge">
+<meta property="og:description" content="The Learning Forge turns 16 sealed frontier AI papers and talks into falsifiable learning-object claim cards, each carrying its own hashed evidence, with grounded and ungrounded modules accounted for honestly.">
+<meta property="og:url" content="https://harperz9.github.io/research-learning-forge.html">
+<meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Learning Forge">
+<meta name="twitter:description" content="Frontier AI papers and talks turned into falsifiable claim cards, each carrying its own hashed evidence, with grounded and ungrounded modules accounted for honestly.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Schibsted+Grotesk:wght@500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/doc.css?v=20260624a">
+</head>
+<body class="doc">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="resume.html">Resume</a> <a href="portfolio.html">Portfolio</a> <a href="cover-letter.html">Cover Letter</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260625a"></script>
+
+<div class="docnav">
+  <span class="where">Research &middot; the Learning Forge</span>
+  <span class="switch"><a href="research.html">Research</a><a href="research-learning-forge.html" aria-current="page">Learning Forge</a></span>
+</div>
+
+<main id="main">
+<article class="sheet">
+  <header class="mast">
+    <h1>The Learning Forge</h1>
+    <p class="role">Frontier AI papers and talks turned into falsifiable claim cards, each carrying its own hashed evidence.</p>
+    <p class="contact">v0 &middot; 2026-06-30 &middot; grounded in a sealed 16-item corpus <span class="sep">/</span> some cards fully grounded, the rest marked ungrounded on purpose</p>
+  </header>
+
+  <section>
+    <h2>What this is</h2>
+    <p class="lead">The Learning Forge turns frontier AI talks and papers into verified learning objects. A learning object is not a summary. It is a small unit that carries its own evidence: a concept, the source it came from with a hash, a plain-language intuition, a minimal demo, an honest failure case, a matched current source, and a falsifiable claim with a verdict slot that a separate judge can later fill MATCH, DRIFT, or UNVERIFIABLE.</p>
+    <p class="lead">An earlier research map proposed this Forge and its ten modules, but that map was built without the sources. It could not fetch the papers and talks, so its claim cards rested on memory rather than evidence. This version grounds that map. The sources are now gathered, hashed, and sealed, so each claim card cites a real item that anyone can re-verify against the corpus. The honest result: six cards are fully grounded, five of ten modules are solidly evidence-backed, and the gaps are named rather than papered over.</p>
+  </section>
+
+  <section>
+    <h2>The corpus, sealed</h2>
+    <p class="lead">Twenty items were gathered, four were dropped, and sixteen were kept, digested, and stored in a content-addressed object store. Each item lives under its own sha256, so the hash printed on a card is also the key that retrieves the item. The two seals below let any reader re-derive the full inventory and confirm nothing was swapped after the fact.</p>
+    <dl class="kv">
+      <dt>Corpus</dt><dd>a content-addressed object store of 16 frontier AI sources (10 arXiv papers, 5 talks; one talk carries both a metadata and a transcript object)</dd>
+      <dt>Digest seal</dt><dd><span translate="no">0f364c2173e27ee1848ffa87eb2c99ac232f9bfcc144f2d7feec6af37cd33399</span></dd>
+      <dt>Run seal</dt><dd><span translate="no">e1ba77514c2f6b3f714ff23c537c2db614f3c580af5f0cabea25b8c19a3d45b4</span></dd>
+      <dt>Counts</dt><dd>gathered 20, dropped 4, kept and digested 16, stored 16</dd>
+      <dt>Scope tags</dt><dd>reasoning, agents, evaluation, reproducibility, interpretability, test-time, coding, benchmark, verifier, world-model, ai-for-science</dd>
+    </dl>
+    <p class="note">Each item is stored under <span translate="no">objects/&lt;first-2-hex&gt;/&lt;rest-of-sha256&gt;</span>, so the hash in a card is the retrieval key. The seals above are the re-verification handle, not a claim of correctness. Gathering and citing a source is not the same as adjudicating its claim.</p>
+  </section>
+
+  <section>
+    <h2>The shape of a claim card</h2>
+    <p class="lead">Every learning object follows the same schema. Each field does one job: name the concept, point at the hashed source, explain it without jargon, show the smallest thing that demonstrates it, state where it breaks, match it to a more recent source, reduce it to one falsifiable sentence, and leave an empty slot for a separate judge. The two fields that keep the card honest are <b>failure_case</b> and <b>limits</b>: they say out loud what the card does not establish.</p>
+    <dl class="kv">
+      <dt>id</dt><dd>short slug</dd>
+      <dt>concept</dt><dd>one sentence, the thing being taught</dd>
+      <dt>source_ref</dt><dd>corpus item id plus sha256 (the retrieval key)</dd>
+      <dt>plain_language</dt><dd>intuition with no jargon</dd>
+      <dt>minimal_demo</dt><dd>the smallest hand-checkable thing that shows it</dd>
+      <dt>failure_case</dt><dd>where it breaks, stated honestly</dd>
+      <dt>matched_current</dt><dd>a more recent source that extends or limits it</dd>
+      <dt>claim</dt><dd>a falsifiable sentence</dd>
+      <dt>crucible_verdict</dt><dd>a slot for a separate judge: status MATCH, DRIFT, or UNVERIFIABLE, plus by and when (empty in this version)</dd>
+      <dt>module</dt><dd>one of the 10 modules</dd>
+      <dt>limits</dt><dd>what this card does NOT establish</dd>
+    </dl>
+    <p class="lead">The verdict slot is deliberately empty in this version. Grounding a claim in a hashed source is not the same as adjudicating it. The Forge gathers and cites; a separate judgment organ (Crucible) judges, in a separate step. Leaving the slot empty is the honest state, not an oversight.</p>
+  </section>
+
+  <section>
+    <h2>One card, in full</h2>
+    <p class="lead">Here is a single learning object as it stands in this version, with every field filled except the verdict, which is empty by design.</p>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">C1 &middot; Test-time compute can improve reasoning, within scope</span><span class="entry-meta">module 4 &middot; reasoning + test-time compute</span></div>
+      <dl class="kv">
+        <dt>concept</dt><dd>Spending more compute at inference (search against a verifier, or letting reinforcement learning incentivize longer reasoning) can lift accuracy on verifiable tasks without a bigger model, but the gain is bounded by problem difficulty and by rising cost.</dd>
+        <dt>source_ref</dt><dd>2408.03314v1 <span translate="no">11884e3b...</span> (compute-optimal test-time scaling) and 2501.12948v2 <span translate="no">d10f13ca...</span> (DeepSeek-R1, reinforcement-learning-incentivized reasoning).</dd>
+        <dt>plain_language</dt><dd>Let the model think harder on a hard question and it often does better, but only if you spend the extra thinking where it actually helps, and the help runs out.</dd>
+        <dt>minimal_demo</dt><dd>On a problem set, compare one-shot accuracy to best-of-N and to verifier-guided search at matched compute, then plot accuracy per token.</dd>
+        <dt>failure_case</dt><dd>2408.03314 states that the effectiveness of each scaling method varies critically with prompt difficulty, and that compute-optimal allocation only beats best-of-N (about 4x more efficient) when difficulty is matched. DeepSeek-R1's gains are on verifiable tasks (math, coding, STEM); a longer chain of thought does not make it faithful.</dd>
+        <dt>matched_current</dt><dd>2509.19681v1 <span translate="no">041e5150...</span> (Calibrated Reasoning) argues test-time strategies are capped by the models' poor self-evaluation and adds a calibrated explanatory verifier; 2504.13171v1 <span translate="no">f732d910...</span> (Sleep-time Compute) moves some cost offline (about 5x less test-time compute for equal accuracy when the query is predictable).</dd>
+        <dt>claim</dt><dd>More inference compute raises accuracy on verifiable problems, but the marginal accuracy per token falls and depends on difficulty; it is not a free or unbounded lever.</dd>
+        <dt>crucible_verdict</dt><dd><span translate="no">{ status: UNVERIFIABLE, by: -, when: - }</span> &middot; not yet adjudicated</dd>
+        <dt>limits</dt><dd>Does not establish gains on non-verifiable or open-ended tasks; does not establish faithful reasoning, only better answers.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section>
+    <h2>The other grounded cards</h2>
+    <p class="lead">Five more cards follow the same schema, each tied to a specific hashed item. The summaries below give the concept, the claim, and the limit each card refuses to overstep.</p>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">C2 &middot; Coding-benchmark success can be inflated</span><span class="entry-meta">module 6 &middot; coding agents + SWE benchmarks</span></div>
+      <ul class="bul">
+        <li><b>Claim.</b> A benchmark score is evidence of capability only after contamination, retrieval, and the coding-versus-engineering distinction are controlled for.</li>
+        <li><b>Grounding.</b> SWE-bench (2310.06770v3) reports that at release the best model resolved only 1.96% of 2,294 real issues, so early "coding is solved" framings were not grounded; the Jeremy Howard talk argues current models are weak at software engineering and produce near-copies of existing work.</li>
+        <li><b>Limits.</b> Does not claim all coding-agent results are contaminated; claims the default reading of a raw score overstates capability.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">C3 &middot; Evaluation is a scientific object, not a leaderboard number</span><span class="entry-meta">module 7 &middot; evaluation + reproducibility</span></div>
+      <ul class="bul">
+        <li><b>Claim.</b> A model evaluation reports a distribution and a reliability level against a defined task distribution; a single accuracy number without those is not a scientific result.</li>
+        <li><b>Grounding.</b> The Beth Barnes and David Rein talk on time-horizon measurement: the dominant uncertainty is generalization to the real world, not the standard error, and a regularization bug shifted a reported 50% horizon by about 35%.</li>
+        <li><b>Limits.</b> Does not provide a single correct reliability threshold; the right threshold depends on the question being asked.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">C4 &middot; AI-for-science needs measurement-first claim cards</span><span class="entry-meta">module 10 &middot; AI-for-science</span></div>
+      <ul class="bul">
+        <li><b>Claim.</b> An AI-for-science result is credible when it names the experiment it predicts, reports validity against that experiment, and bounds its scope.</li>
+        <li><b>Grounding.</b> The John Jumper talk is explicit that AlphaFold predicts one narrow category of measurement rather than modeling the cell; the Robert Lange talk shows autonomous discovery often stalls without a reframed surrogate problem.</li>
+        <li><b>Limits.</b> Does not claim AlphaFold-level validity generalizes to messier biology; Jumper himself says most of biology is still unknown.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">C5 &middot; Interpretability gives explanations, not proofs</span><span class="entry-meta">module 8 &middot; interpretability</span></div>
+      <ul class="bul">
+        <li><b>Claim.</b> Interpretability output is an explanation with stated coverage, not a proof of behavior; treat it as evidence, not a verdict.</li>
+        <li><b>Grounding.</b> 2402.03855v2 argues most mechanistic-interpretability work so far studies trivial, token-aligned behaviors and that established methods are insufficient for hidden representations; later tooling (Equivariant SAEs, Prisma) extends the field while showing its own assumptions still move.</li>
+        <li><b>Limits.</b> Does not claim interpretability is unusable; claims it is partial and must be labeled as such.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">C6 &middot; A model builds abstractions but extrapolates poorly</span><span class="entry-meta">modules 2 and 3 &middot; what a model / an LLM is</span></div>
+      <ul class="bul">
+        <li><b>Claim.</b> Pretraining yields useful internal abstractions and strong interpolation; it does not yield reliable out-of-distribution extrapolation.</li>
+        <li><b>Grounding.</b> The Howard talk frames pretraining as compression into a hierarchy of abstractions that interpolates well but degrades sharply outside the data; the Michael Jordan talk pushes back on the word "understanding" and frames intelligence as collective. Both are cited and the tension is left standing.</li>
+        <li><b>Limits.</b> The interpolation surface is vast and its true limits are unknown; this card states a direction, not a hard boundary.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Grounded versus ungrounded, counted honestly</h2>
+    <p class="lead">The earlier map's ten modules are kept exactly as-is, so the grounding is auditable against the original. Five of ten modules are solidly evidence-backed by at least one specific, on-point item in the sealed corpus. Two are partial: covered only through a single talk, still wanting a primary reference. Three have nothing on-point and are marked as needing sources gathered next. Naming the empty modules is the point, not a footnote.</p>
+    <dl class="kv">
+      <dt>Grounded (5)</dt><dd>(4) reasoning and test-time compute &middot; (6) coding agents and SWE benchmarks &middot; (7) evaluation and reproducibility &middot; (8) interpretability &middot; (10) AI-for-science</dd>
+      <dt>Partial (2)</dt><dd>(2) what a model is &middot; (3) what an LLM is. Both grounded only through the Howard talk's compression-to-abstractions argument; each would benefit from a primary architecture or pretraining paper.</dd>
+      <dt>Not covered (3)</dt><dd>(1) programming-as-evidence &middot; (5) agents, tools, and MCP &middot; (9) efficient and alternative compute. The corpus has little or nothing on-point; these are the next things to gather.</dd>
+    </dl>
+    <p class="note">Net: 5 of 10 modules are solidly evidence-backed, 2 are partial, and 3 need gathering. Six claim cards are grounded; none are adjudicated. Every verdict slot reads UNVERIFIABLE because judging is a separate organ and a separate step that has not run yet.</p>
+  </section>
+
+  <section>
+    <h2>First three labs</h2>
+    <p class="lead">Each lab is tied to a gathered, hashed source and produces an artifact a judge can later mark MATCH, DRIFT, or UNVERIFIABLE. The success criterion is explicit in every case: "it runs" is never the bar, and a result that contradicts the card is itself a recorded outcome.</p>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">L1 &middot; Accuracy-per-token test-time-compute lab</span><span class="entry-meta">ties to C1</span></div>
+      <ul class="bul">
+        <li>On a small verifiable task set, run one-shot, best-of-N, and a simple verifier-guided selection, then plot accuracy versus tokens spent.</li>
+        <li><b>Success criterion.</b> The curve shows diminishing accuracy per token, and verifier-guided selection beats best-of-N at a matched token budget on the harder slice. If it does not, the C1 claim drifts.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">L2 &middot; Benchmark-contamination coding lab</span><span class="entry-meta">ties to C2</span></div>
+      <ul class="bul">
+        <li>Split coding tasks by likely-seen versus likely-unseen relative to a training cutoff, measure resolution rate on each, and inspect solutions for copied structure.</li>
+        <li><b>Success criterion.</b> A measurable gap between seen and unseen resolution rates, with at least one concrete example of retrieval rather than engineering. A zero gap is itself a recorded result against C2.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">L3 &middot; Explanation-is-not-proof interpretability lab</span><span class="entry-meta">ties to C5</span></div>
+      <ul class="bul">
+        <li>Surface an apparently interpretable feature, then construct an input where that feature's reading fails to predict the model's behavior.</li>
+        <li><b>Success criterion.</b> At least one feature that looks interpretable and at least one case where it mispredicts behavior, both logged. This demonstrates C5 rather than asserting it.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>On honesty and method</h2>
+    <p class="lead">Every claim card cites a sha256 that resolves to a real object in the sealed corpus, and the two seals let any reader re-derive the inventory. Verdict slots are empty on purpose: gathering and citing is done, judging is a separate organ and a separate step. The earlier map's ten modules are kept as-is so the grounding is auditable against it, and the accounting states plainly which modules the evidence does and does not reach. No card asserts more than its read source supports, and where two sources disagree, both are cited and the tension is left standing rather than resolved. That is the whole discipline: carry a re-checkable proof, never ask to be trusted.</p>
+    <p class="entry-note">Updated 2026-06-30. v0, grounded in a now-verified corpus.</p>
+  </section>
+  <p class="note">Public showcase. No secrets, no private repository internals, and no claim beyond what the read sources support. The corpus seals and per-item hashes are the re-verification handle.</p>
+</article>
+</main>
+</body>
+</html>
