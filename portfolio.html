@@ -73,6 +73,19 @@
   </section>
 
   <section>
+    <h2>Graphics engines and reverse engineering</h2>
+    <p class="lead">Native, from-scratch graphics work and the reverse-engineering practice it grew out of. Elder ENB seeded a line of D3D11/HLSL engines, and that game-systems work is where the binary-analysis and instrumentation skills came from.</p>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">Native graphics engine lineage</span><span class="entry-meta">Bridge &middot; JOJO &middot; Playground &middot; RAW</span></div>
+      <p class="entry-note">A progression of from-scratch D3D11/HLSL frameworks that take ownership of a game&#x27;s render pipeline through proxy-DLL interception and mid-frame compute dispatch: tens of effects and dozens of HLSL shaders (ACES and AgX, TAA, SSR, SSGI, GTAO, SDSM, volumetrics), an ImGui interface, CMake and vcpkg packaging, and a companion engine that bridges live game state to the GPU over read-only shared-memory IPC. This line was the primary vehicle for hands-on reverse engineering: binary analysis, runtime instrumentation, call-flow and memory mapping, and live game-state extraction.</p>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">Game-systems reverse engineering and automation</span><span class="entry-meta">World of Warcraft &middot; CS2 &middot; private</span></div>
+      <p class="entry-note">Reverse-engineered live game state and built real-time scripting and automation frameworks across several titles. Aurora is a multi-language combat-scripting framework (Lua, a custom DSL, and TypeScript-to-Lua) with dozens of SDK modules and production rotations. Its defensive counterpart, Warden, is a C++23 integrity and capability-assessment engine used as a build-and-break substrate for runtime integrity and anti-cheat research. Described by capability; the repositories are private.</p>
+    </div>
+  </section>
+
+  <section>
     <h2>Technical writing</h2>
     <p class="lead">Clear documentation for technical readers: setup guides, script references, and admin runbooks.</p>
     <div class="entry">
