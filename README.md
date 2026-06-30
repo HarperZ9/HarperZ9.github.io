@@ -35,7 +35,7 @@ accessible, and honest about maturity; private systems stay bounded off-page.
 
 ## Existing technical notes
 
-The portfolio and product-surface site for **Zain Dana Harper** — an evidence-first
+The portfolio and product-surface site for **Zain Dana Harper** -- an evidence-first
 entry point for the accountability work, the compiler work, the graphics/color tools,
 and the public research.
 
@@ -54,20 +54,20 @@ forward-facing presentation of the same idea.
 
 ## Pages
 
-- `index.html` — primary portfolio and work index.
-- `proof-surface.html` — the write-gate organ (allow / deny / needs-human).
-- `coherence-membrane.html` — the witnessed perception organs.
-- `accountable-machines.html` — the live perceive → gate → act → verify loop.
-- `emet.html` · `quantalang.html` — the byte witness, and the typed-effects compiler.
-- `*-sample.html` — scrubbed public sample reports and witness surfaces.
-- `resume.md` · `cv.md` — text-bodied résumé and CV.
-- `AUTHORS.md` — authorship and release ownership.
+- `index.html` -- primary portfolio and work index.
+- `proof-surface.html` -- the write-gate organ (allow / deny / needs-human).
+- `coherence-membrane.html` -- the witnessed perception organs.
+- `accountable-machines.html` -- the live perceive -> gate -> act -> verify loop.
+- `emet.html` | `quantalang.html` -- the byte witness, and the typed-effects compiler.
+- `*-sample.html` -- scrubbed public sample reports and witness surfaces.
+- `resume.md` | `cv.md` -- text-bodied resume and CV.
+- `AUTHORS.md` -- authorship and release ownership.
 
 ## Public lineup
 
 | Group | Public repos | State |
 | --- | --- | --- |
-| Accountability spine | `accountable-surface`, `proof-surface`, `coherence-membrane`, `emet`, `accountable-engine`, `repo-proof-index` | The perceive → gate → act → verify organs. Tested; on PyPI / public. |
+| Accountability spine | `accountable-surface`, `proof-surface`, `coherence-membrane`, `emet`, `accountable-engine`, `repo-proof-index` | The perceive -> gate -> act -> verify organs. Tested; on PyPI / public. |
 | Provenance & release | `provenance-sensorium`, `model-provenance-validator`, `public-surface-sweeper`, `release-surface-scanner`, `secret-redact-io` | Witness, provenance, and release-surface CLIs. |
 | Agent workflow | `agent-audit`, `agent-hook-pack`, `agent-routing-kit`, `context-curator-lite`, `workflow-harness-lite`, `index` | Small, low-/zero-dependency utilities and plugin extractions. |
 | Compilers & QuantaLang | `quantalang`, `quantalang-vscode`, `quantalang-tmLanguage`, `quanta-universe` | A typed-effects language (the heavy repo) plus editor support and an alpha showcase. |
