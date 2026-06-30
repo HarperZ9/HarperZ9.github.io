@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C3: a thermodynamic SDE recovers a matrix inverse · Zain Dana Harper</title>
+<meta name="description" content="A witnessed experiment from the Telos Discovery Forge: a simulated Ornstein-Uhlenbeck stochastic differential equation, run as many chains over many steps, recovers the inverse of a matrix and the solution of a linear system. The simulate leg returns crucible MATCH at about 0.99 percent mean error against a 5 percent bar; the physical-chip render leg stays UNVERIFIABLE. Every number is re-checkable.">
+<link rel="canonical" href="https://harperz9.github.io/research-c3-thermodynamic.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="C3: a thermodynamic SDE recovers a matrix inverse · Zain Dana Harper">
+<meta property="og:description" content="A witnessed experiment from the Telos Discovery Forge: a simulated Ornstein-Uhlenbeck SDE recovers a matrix inverse and a linear solve. Simulate leg is a crucible MATCH at about 0.99 percent error; the physical-chip render leg stays UNVERIFIABLE. Re-checkable in code.">
+<meta property="og:url" content="https://harperz9.github.io/research-c3-thermodynamic.html">
+<meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta property="og:image:alt" content="A still from the engine: a Julia set rendered in the site's palette, real mathematics drawn by our own code.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="C3: a thermodynamic SDE recovers a matrix inverse · Zain Dana Harper">
+<meta name="twitter:description" content="A witnessed experiment: a simulated Ornstein-Uhlenbeck SDE recovers a matrix inverse. Simulate leg is a crucible MATCH at about 0.99 percent error; the physical-chip render leg stays UNVERIFIABLE.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Schibsted+Grotesk:wght@500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/doc.css?v=20260624a">
+</head>
+<body class="doc">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260625a"></script>
+
+<main id="main">
+<article class="sheet">
+
+  <header class="mast">
+    <p class="role" style="margin-bottom:.55rem">Discovery Forge &middot; experiment C3</p>
+    <h1>A thermodynamic SDE recovers a matrix inverse</h1>
+    <p class="role" style="color:var(--ink-soft);text-transform:none;letter-spacing:.01em;font-size:.92rem;margin:.55rem 0 .85rem">
+      A claim from a research talk, turned into a simulation that checks itself against linear algebra. The math leg returns a witnessed MATCH. The physical-chip leg stays unproven, and the page says so.</p>
+    <p class="contact">
+      <span>Zain Dana Harper</span><span class="sep">/</span>
+      <span>Seattle &middot; 2026-06-30</span><span class="sep">/</span>
+      <span>simulate leg: MATCH</span><span class="sep">/</span>
+      <span>render leg: UNVERIFIABLE</span>
+    </p>
+  </header>
+
+  <section>
+    <h2>The question</h2>
+    <p class="lead">A recent talk described a thermodynamic computing chip as being, in effect, a stochastic
+    differential equation. Instead of forcing transistors to settle at zero or one, you let the chip's own
+    noise do a biased random walk and settle into place. The striking claim: once it settles, the chip
+    behaves according to the <b>inverse of a matrix</b> you built into it.</p>
+    <p class="lead">That is a strong claim, and it is the kind that usually gets asserted and waved past. The
+    honest version of it is testable. If the chip is really running that kind of equation, then a faithful
+    software simulation of the same equation must land on the same answer that a standard matrix solver
+    gives. So the question for this experiment is narrow and answerable: <b>does the simulated process
+    actually recover the matrix inverse, and by how much does it miss?</b></p>
+  </section>
+
+  <section>
+    <h2>The method</h2>
+    <p class="lead">I simulate an Ornstein-Uhlenbeck process, a noisy pull toward a target, written as
+    <span translate="no">dx = -(A x - b) dt + sqrt(2) dW</span>. Here <span translate="no">A</span> is a
+    symmetric positive-definite matrix, <span translate="no">b</span> is a vector, and
+    <span translate="no">dW</span> is the random kick at each step. Left alone, this process does not wander
+    forever. It settles into a steady cloud of points whose shape is fixed by <span translate="no">A</span>
+    and <span translate="no">b</span>.</p>
+    <p class="lead">The mathematics says exactly where that cloud sits. Its center (the stationary mean) should
+    equal <span translate="no">A&#8315;&sup1; b</span>, which is the solution of the linear system
+    <span translate="no">A x = b</span>. Its spread (the stationary covariance) should equal
+    <span translate="no">A&#8315;&sup1;</span>, the matrix inverse itself. So if I run enough independent
+    chains for enough steps and then measure the center and the spread of where they end up, those two
+    measurements should reproduce the linear solve and the inverse, with no matrix inversion ever written
+    into the simulation. The noise does the algebra.</p>
+    <p class="lead">The criterion is not something the simulation gets to author. The center and spread it
+    produces are checked against <span translate="no">A&#8315;&sup1; b</span> and
+    <span translate="no">A&#8315;&sup1;</span> computed directly by a standard solver
+    (<span translate="no">numpy.linalg.solve</span> and <span translate="no">numpy.linalg.inv</span>). Linear
+    algebra holds the answer key. The SDE is the thing under test.</p>
+    <p class="entry-note" style="margin-top:.7rem">Run parameters, fixed and re-runnable:</p>
+    <dl class="kv">
+      <dt>Matrix</dt><dd>symmetric positive-definite, size 4 by 4, condition number 2.33 (well-conditioned, so the steady state is reachable without numerical strain)</dd>
+      <dt>Chains</dt><dd>6,000 independent walkers, averaged at the end</dd>
+      <dt>Steps</dt><dd>40,000 per chain, step size 0.005, Euler-Maruyama integration</dd>
+      <dt>Seed</dt><dd>fixed, so the same run reproduces the same deviations</dd>
+      <dt>Reference</dt><dd>direct linear solve and direct matrix inverse from a standard library</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>The measured outcome</h2>
+    <p class="lead">Both targets land inside the 5 percent bar that was set <em>before</em> the run, so both
+    return a crucible MATCH. The bar is a deliberate, stated tolerance for a stochastic estimate, not a
+    number tuned after the fact to make the result pass.</p>
+    <div class="entry" style="margin-top:.6rem">
+      <div class="entry-head"><span class="entry-title">Center vs the linear solve</span><span class="entry-meta">MATCH &middot; margin 0.80</span></div>
+      <ul class="bul">
+        <li>The stationary mean of the 6,000 chains, compared against <span translate="no">A&#8315;&sup1; b</span>, missed by <b>0.99 percent</b> relative error (<span class="num">0.0099</span> against a <span class="num">0.05</span> bar). The simulated random walk reproduced the answer to the linear system.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">Spread vs the matrix inverse</span><span class="entry-meta">MATCH &middot; margin 0.34</span></div>
+      <ul class="bul">
+        <li>The stationary covariance, compared against <span translate="no">A&#8315;&sup1;</span>, missed by <b>3.3 percent</b> relative error (<span class="num">0.033</span> against the same <span class="num">0.05</span> bar). The shape of the settled cloud reproduced the full matrix inverse. The covariance is a noisier thing to estimate than the mean, which is why its error is larger while still clearing the bar.</li>
+      </ul>
+    </div>
+    <p class="lead" style="margin-top:.5rem">Read plainly: a process that only ever adds biased noise, with no
+    inversion step anywhere in it, recovered both the solution of a linear system and the inverse of the
+    matrix. That is the SDE-settles-to-the-inverse claim, confirmed in code against an answer key it did not
+    write.</p>
+    <div class="receipts">
+      <span class="r"><b>mean err</b> 0.0099</span>
+      <span class="r"><b>cov err</b> 0.033</span>
+      <span class="r"><b>bar</b> 0.05</span>
+      <span class="r"><b>cond(A)</b> 2.33</span>
+      <span class="r"><b>thesis</b> 8a78ee06</span>
+      <span class="r"><b>verdicts</b> 170cce85</span>
+      <span class="r"><b>measurements</b> bae0d420</span>
+      <span class="r"><b>run</b> 825cc0d1</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>What is re-checkable</h2>
+    <p class="lead">Nothing here asks to be trusted. The whole experiment is meant to be re-run by anyone who
+    doubts it, with no special data and no outside party.</p>
+    <ul class="bul">
+      <li><b>The simulation.</b> The script <span translate="no">discovery-forge-c3/c3_sim.py</span> is seed-fixed. Run it and it prints the same two errors fed to the verdict, plus the condition number of the matrix it built.</li>
+      <li><b>The verdict.</b> The thesis (the two claims and their named falsifiers), the measurements, and the MATCH or DRIFT verdicts are sealed as JSON: <span translate="no">c3-thesis.json</span>, <span translate="no">c3-measurements.json</span>, <span translate="no">c3-sim-result.json</span>. Each claim states what would have refuted it: a relative error above 5 percent. Neither did.</li>
+      <li><b>The seals.</b> thesis <span translate="no">8a78ee06</span>, verdicts <span translate="no">170cce85</span>, measurements <span translate="no">bae0d420</span>, run <span translate="no">825cc0d1</span>. They fingerprint the exact inputs and outputs, so a later run that drifts from these can be caught.</li>
+    </ul>
+    <p class="lead" style="margin-top:.45rem">The discipline is the point. A result is allowed to claim MATCH
+    only if it was derived or simulated and then checked against a criterion it did not author. This one was.
+    The criterion is linear algebra, held by a standard solver, outside the process under test.</p>
+  </section>
+
+  <section>
+    <h2>The honest boundary</h2>
+    <p class="lead">This confirms one leg, and only one. The mathematical claim, that an Ornstein-Uhlenbeck SDE
+    settles to the matrix inverse, is now a re-checkable MATCH. That is the <b>simulate</b> leg.</p>
+    <p class="lead">Whether a physical thermodynamic chip actually realizes this, inside its real noise floor,
+    its device mismatch, and its analog limits, is a different question. That is the <b>render</b> leg, and I
+    have not measured it. There is no chip on my bench and no measurement of one in hand. So the render leg
+    stays <span translate="no">UNVERIFIABLE</span> here, stated plainly rather than quietly folded into the
+    win. A simulation matching linear algebra is genuine evidence for the mechanism; it is not evidence that
+    any particular hardware hits these numbers.</p>
+    <p class="lead">This is how the forge is meant to move: one leg at a time, each one named, and the
+    unproven leg left labeled unproven instead of borrowed against. Calling the math result a MATCH and the
+    hardware result UNVERIFIABLE in the same breath is the whole accountability discipline working as
+    designed.</p>
+  </section>
+
+  <section>
+    <h2>Where this sits</h2>
+    <p class="lead">C3 is one card in a v0 Discovery Forge: a small assembly line that takes a claim from a
+    research source, attaches an explicit falsifier, runs a check, and returns a verdict of MATCH, DRIFT, or
+    UNVERIFIABLE. Most cards in the set are still proposed, dated to outside data, or out of current reach,
+    and they are marked that way. C3 is the one that could flip to a real verdict with only local code, and
+    it did. It is shown here as a worked example of the method, not as a sweeping claim about thermodynamic
+    computing.</p>
+  </section>
+
+  <p class="note">Source record: <span translate="no">C:/dev/project-docs/records/2026-06-30-telos-discovery-forge-v0.md</span> (section "C3: First witnessed result"), with artifacts under <span translate="no">discovery-forge-c3/</span>. Simulate leg: crucible MATCH. Render leg (a physical chip): UNVERIFIABLE. Every number above is reproducible from the seed-fixed script. &middot; Updated 2026-06-30.</p>
+
+</article>
+</main>
+</body>
+</html>

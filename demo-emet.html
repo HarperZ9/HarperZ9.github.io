@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo: the byte witness (emet)</title>
+<meta name="description" content="A live, in-browser demo of the move emet makes: paste text or pick a small file, and the page re-derives its real SHA-256 fingerprint with window.crypto.subtle and reports MATCH, DRIFT, or UNVERIFIABLE against a stored target. Nothing is sent anywhere, nothing is hardcoded, and the verdict is never TRUSTED.">
+<link rel="canonical" href="https://harperz9.github.io/demo-emet.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Demo: the byte witness (emet)">
+<meta property="og:description" content="A live, in-browser demo of the move emet makes: re-derive a file's real SHA-256 fingerprint and report MATCH, DRIFT, or UNVERIFIABLE against a stored target, never TRUSTED. Runs entirely on your machine.">
+<meta property="og:url" content="https://harperz9.github.io/demo-emet.html">
+<meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Demo: the byte witness (emet)">
+<meta name="twitter:description" content="A live, in-browser demo of the move emet makes: re-derive a file's real SHA-256 fingerprint and report MATCH, DRIFT, or UNVERIFIABLE against a stored target, never TRUSTED.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Schibsted+Grotesk:wght@500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/doc.css?v=20260624a">
+<style>
+  /* ---- demo controls: scoped, on-brand, built only from doc.css tokens ---- */
+  .witness{margin:.4rem 0 0}
+  .field{margin:0 0 1.15rem}
+  .field > label,.field-label{display:block;font-family:"JetBrains Mono",ui-monospace,monospace;
+    font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tag);
+    margin:0 0 .45rem}
+  .field .hint{font-family:"Conso",serif;font-style:italic;color:var(--ink-soft);
+    font-size:.94rem;margin:.4rem 0 0;line-height:1.5}
+  textarea.input{width:100%;min-height:8.5rem;resize:vertical;
+    font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.86rem;line-height:1.6;
+    color:var(--ink);background:#fbfbf7;border:1px solid var(--rule-strong);border-radius:4px;
+    padding:.8rem .9rem}
+  textarea.input:focus-visible{outline:2px solid var(--iris);outline-offset:2px;
+    border-color:var(--iris)}
+  input[type="file"].input{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.78rem;
+    color:var(--ink-soft);max-width:100%}
+  .controls{display:flex;flex-wrap:wrap;gap:.7rem;margin:.2rem 0 0}
+  button.btn{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.66rem;
+    font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;
+    color:#fff;background:var(--iris);border:1px solid var(--iris);border-radius:4px;
+    padding:.62rem 1.05rem;transition:filter .18s ease}
+  button.btn:hover{filter:brightness(1.1)}
+  button.btn.ghost{color:var(--iris);background:transparent}
+  button.btn.ghost:hover{background:rgba(70,54,232,.07);filter:none}
+  button.btn:disabled{opacity:.45;cursor:not-allowed;filter:none}
+  /* the digest + verdict readout */
+  .readout{margin:1.5rem 0 0;border:1px solid var(--rule);border-radius:5px;overflow:hidden}
+  .readout-row{display:grid;grid-template-columns:minmax(7rem,9rem) 1fr;gap:.4rem 1.2rem;
+    padding:.7rem .95rem;border-bottom:1px solid var(--rule);align-items:baseline}
+  .readout-row:last-child{border-bottom:none}
+  .readout-row dt{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.6rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--tag);margin:0}
+  .readout-row dd{margin:0;font-family:"JetBrains Mono",ui-monospace,monospace;
+    font-size:.82rem;color:var(--ink);word-break:break-all;line-height:1.55}
+  .readout-row dd.empty{color:var(--ink-muted);font-style:normal}
+  /* the verdict pill: color is set by the computed result, not by markup alone */
+  .verdict{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;
+    padding:.95rem .95rem;background:#f6f7f3}
+  .verdict .tag{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.72rem;
+    font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#fff;
+    background:var(--ink-muted);border-radius:4px;padding:.4em .85em;white-space:nowrap}
+  .verdict.is-match .tag{background:#1d7a4d}
+  .verdict.is-drift .tag{background:#a6322a}
+  .verdict.is-unverifiable .tag{background:var(--ink-muted)}
+  .verdict .say{font-family:"Conso",serif;font-size:1rem;color:var(--ink);line-height:1.45}
+  .verdict.is-match .say b{color:#1d7a4d}
+  .verdict.is-drift .say b{color:#a6322a}
+  /* the little inline code chips used in prose */
+  code.k{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.82em;
+    color:var(--ink);background:#f3f4f0;border:1px solid var(--rule);border-radius:3px;
+    padding:.06em .4em}
+  @media (max-width:560px){
+    .readout-row{grid-template-columns:1fr;gap:.15rem}
+  }
+</style>
+</head>
+<body class="doc">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="resume.html">Resume</a> <a href="portfolio.html">Portfolio</a> <a href="cover-letter.html">Cover Letter</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260625a"></script>
+
+<div class="docnav">
+  <span class="where">Demo &middot; the byte witness</span>
+  <span class="switch"><a href="emet.html">About emet</a><a href="demo-emet.html" aria-current="page">Live demo</a><a href="emet-sample.html">Sample report</a><a href="research.html">Research</a></span>
+</div>
+
+<main id="main">
+<article class="sheet">
+  <header class="mast">
+    <h1>The byte witness</h1>
+    <p class="role">A live demo of the one move emet makes &middot; re-derive the bytes, compare, never say trusted.</p>
+    <p class="contact">Runs entirely in your browser <span class="sep">/</span> nothing is uploaded or sent anywhere <span class="sep">/</span> <a href="emet.html">read about emet</a> <span class="sep">/</span> <a href="https://github.com/HarperZ9/emet" translate="no">github.com/HarperZ9/emet</a></p>
+  </header>
+
+  <section>
+    <h2>What this demo does</h2>
+    <p class="lead">emet checks a file by re-deriving its fingerprint and comparing that to a fingerprint it saved earlier. This page does the real version of that move, right here, with no server in the loop. You give it some text or a small file. It computes the actual SHA-256 of those exact bytes using your browser's own cryptography (<code class="k">window.crypto.subtle.digest</code>), then compares the result to a stored target. It reports one of three honest answers and nothing else.</p>
+    <p class="lead">The fingerprint is a SHA-256 digest: a short code that is unique to those exact bytes. Move a single character and the whole code changes. There is no fourth answer that just means trust me. The verdict you see below is driven entirely by the hash this page actually computed, never by anything written into the markup.</p>
+  </section>
+
+  <section>
+    <h2>The three answers</h2>
+    <ul class="bul">
+      <li><b>MATCH.</b> The fingerprint of your input equals the stored target. It means nothing moved, not that the input is good or safe.</li>
+      <li><b>DRIFT.</b> The fingerprint differs from the target. Something changed. The tool reports that and does not decide whose fault it is.</li>
+      <li><b>UNVERIFIABLE.</b> There is nothing to check yet, or your browser cannot run the cryptography (for example on an insecure origin where <code class="k">crypto.subtle</code> is unavailable). It says so plainly, with a reason, rather than guessing.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="try-h">
+    <h2 id="try-h">Try it</h2>
+    <p class="lead">Type or paste below, or pick a small file. Set what you have as the target, then change a single character and witness again. The verdict will flip from MATCH to DRIFT, because it follows the bytes and nothing else.</p>
+
+    <div class="witness">
+      <div class="field">
+        <label for="text-in">Your input (text)</label>
+        <textarea id="text-in" class="input" spellcheck="false" placeholder="Paste or type some text here, then press Witness."></textarea>
+        <p class="hint">Whatever you type here is hashed exactly as written. A file, if you choose one below, takes the place of this text.</p>
+      </div>
+
+      <div class="field">
+        <label for="file-in">Or a small file (optional)</label>
+        <input type="file" id="file-in" class="input">
+        <p class="hint">Read locally and hashed in your browser. Nothing is uploaded. Keep it small, since the whole file is held in memory to hash it.</p>
+      </div>
+
+      <div class="controls">
+        <button type="button" id="btn-witness" class="btn">Witness</button>
+        <button type="button" id="btn-settarget" class="btn ghost">Set this as the target</button>
+        <button type="button" id="btn-clear" class="btn ghost">Clear</button>
+      </div>
+
+      <div class="readout" role="group" aria-label="Witness readout">
+        <dl style="margin:0">
+          <div class="readout-row">
+            <dt>Source</dt>
+            <dd id="out-source" class="empty">no input yet</dd>
+          </div>
+          <div class="readout-row">
+            <dt>Computed</dt>
+            <dd id="out-computed" class="empty">SHA-256 of your input appears here</dd>
+          </div>
+          <div class="readout-row">
+            <dt>Target</dt>
+            <dd id="out-target" class="empty">no target set yet</dd>
+          </div>
+        </dl>
+        <div id="verdict" class="verdict is-unverifiable" aria-live="polite" aria-atomic="true">
+          <span class="tag" id="verdict-tag" translate="no">UNVERIFIABLE</span>
+          <span class="say" id="verdict-say">No input yet. Type or pick a file, then press Witness.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why this is the real move</h2>
+    <p class="lead">A witness is not a judge. It re-derives the bytes itself and tells you what it compared. It never speaks for the thing it is checking, and it never hands out a verdict of trusted, because it was never given any trust to pass along. That is the whole discipline, in your browser, with no backend to take on faith.</p>
+    <p class="lead">The stored target here is just a number you choose by pressing set the target. In the real tool, that saved fingerprint comes from an earlier known-good state, and the file is read straight off the disk. The shape of the check is the same: compute the fingerprint again from scratch, compare, and report MATCH, DRIFT, or UNVERIFIABLE.</p>
+  </section>
+
+  <section>
+    <h2>Honest limits</h2>
+    <ul class="bul">
+      <li>This page proves the move, not the product. It witnesses input you give it in the browser. It does not read your filesystem on its own, and it keeps no history.</li>
+      <li>SHA-256 detects change. It does not tell you whether a change was intended or whether the content is correct. MATCH means unchanged, never approved.</li>
+      <li>If your browser does not expose <code class="k">crypto.subtle</code> (some insecure origins withhold it), the demo reports UNVERIFIABLE rather than faking a result. That is the honest answer when it cannot check.</li>
+      <li>The full tool lives at <a class="inline" href="https://github.com/HarperZ9/emet" translate="no">github.com/HarperZ9/emet</a>: one spec, three independent language implementations, run yourself and checked on every push. The one claim it still owes is a fourth implementation built by a hand with no tie to mine.</li>
+    </ul>
+    <p class="note">No data leaves your machine. The verdict is computed from the actual SHA-256 of your input and compared to a target you set; it is never hardcoded. Updated 2026-06-30.</p>
+  </section>
+</article>
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  var textIn  = document.getElementById("text-in");
+  var fileIn  = document.getElementById("file-in");
+  var btnWitness  = document.getElementById("btn-witness");
+  var btnSetTarget = document.getElementById("btn-settarget");
+  var btnClear = document.getElementById("btn-clear");
+
+  var outSource   = document.getElementById("out-source");
+  var outComputed = document.getElementById("out-computed");
+  var outTarget   = document.getElementById("out-target");
+  var verdict     = document.getElementById("verdict");
+  var verdictTag  = document.getElementById("verdict-tag");
+  var verdictSay  = document.getElementById("verdict-say");
+
+  // The one stored fingerprint the user chooses to witness against.
+  var targetHex = null;
+
+  // Is real SHA-256 available? crypto.subtle is withheld on insecure origins.
+  var subtleOk = !!(window.crypto && window.crypto.subtle && window.crypto.subtle.digest);
+
+  function setDd(el, text, isEmpty) {
+    el.textContent = text;
+    if (isEmpty) { el.classList.add("empty"); }
+    else { el.classList.remove("empty"); }
+  }
+
+  function setVerdict(kind, tag, say) {
+    verdict.classList.remove("is-match", "is-drift", "is-unverifiable");
+    verdict.classList.add("is-" + kind);
+    verdictTag.textContent = tag;
+    verdictSay.textContent = say;
+  }
+
+  // Bytes -> lowercase hex string.
+  function toHex(buffer) {
+    var view = new Uint8Array(buffer);
+    var out = "";
+    for (var i = 0; i < view.length; i++) {
+      var h = view[i].toString(16);
+      if (h.length < 2) { h = "0" + h; }
+      out += h;
+    }
+    return out;
+  }
+
+  // Read the current input as raw bytes. Returns a Promise resolving to
+  // { bytes: ArrayBuffer, source: string } or null if there is no input.
+  function readInput() {
+    var file = fileIn.files && fileIn.files[0];
+    if (file) {
+      return file.arrayBuffer().then(function (buf) {
+        return { bytes: buf, source: 'file "' + file.name + '" (' + file.size + ' bytes)' };
+      });
+    }
+    var text = textIn.value;
+    if (text.length === 0) {
+      return Promise.resolve(null);
+    }
+    var encoded = new TextEncoder().encode(text); // UTF-8 bytes, exactly as typed
+    return Promise.resolve({
+      bytes: encoded.buffer,
+      source: "typed text (" + encoded.length + " bytes, UTF-8)"
+    });
+  }
+
+  // Compute the real SHA-256 of the current input.
+  // Resolves to { hex, source } or null (no input). Rejects only on a true error.
+  function computeDigest() {
+    return readInput().then(function (input) {
+      if (!input) { return null; }
+      return window.crypto.subtle.digest("SHA-256", input.bytes).then(function (digest) {
+        return { hex: toHex(digest), source: input.source };
+      });
+    });
+  }
+
+  function unverifiableNoCrypto() {
+    setDd(outComputed, "unavailable: crypto.subtle not exposed here", false);
+    setVerdict(
+      "unverifiable",
+      "UNVERIFIABLE",
+      "This browser does not expose crypto.subtle (common on an insecure origin). The demo will not fake a result, so it says UNVERIFIABLE."
+    );
+  }
+
+  // Run a witness: compute the digest, then report a verdict driven only by it.
+  function witness() {
+    if (!subtleOk) {
+      setDd(outSource, "input present, but cannot be hashed here", false);
+      unverifiableNoCrypto();
+      return;
+    }
+    computeDigest().then(function (result) {
+      if (!result) {
+        setDd(outSource, "no input yet", true);
+        setDd(outComputed, "SHA-256 of your input appears here", true);
+        setVerdict("unverifiable", "UNVERIFIABLE", "No input yet. Type or pick a file, then press Witness.");
+        return;
+      }
+      setDd(outSource, result.source, false);
+      setDd(outComputed, result.hex, false);
+
+      if (targetHex === null) {
+        setVerdict(
+          "unverifiable",
+          "UNVERIFIABLE",
+          "Computed the fingerprint, but no target is set to compare against. Press “Set this as the target” to witness against it."
+        );
+        return;
+      }
+
+      // The verdict comes from comparing the two real hashes, nothing else.
+      if (result.hex === targetHex) {
+        setVerdict("match", "MATCH", "The fingerprint equals the stored target. Nothing moved. (This means unchanged, not approved.)");
+      } else {
+        setVerdict("drift", "DRIFT", "The fingerprint differs from the stored target. Something in the bytes changed.");
+      }
+    }).catch(function (err) {
+      setDd(outComputed, "could not hash this input", false);
+      setVerdict(
+        "unverifiable",
+        "UNVERIFIABLE",
+        "Could not read or hash the input (" + (err && err.message ? err.message : "unknown error") + "). It says so plainly rather than guessing."
+      );
+    });
+  }
+
+  // Set the current input's real digest as the target, then re-witness.
+  function setTarget() {
+    if (!subtleOk) {
+      setDd(outSource, "input present, but cannot be hashed here", false);
+      unverifiableNoCrypto();
+      return;
+    }
+    computeDigest().then(function (result) {
+      if (!result) {
+        setVerdict("unverifiable", "UNVERIFIABLE", "There is no input to set as a target yet. Type or pick a file first.");
+        return;
+      }
+      targetHex = result.hex;
+      setDd(outTarget, targetHex, false);
+      witness(); // should now read MATCH, because the target is this exact input
+    }).catch(function () {
+      setVerdict("unverifiable", "UNVERIFIABLE", "Could not hash the input to set as a target. It says so plainly rather than guessing.");
+    });
+  }
+
+  function clearAll() {
+    textIn.value = "";
+    fileIn.value = "";
+    targetHex = null;
+    setDd(outSource, "no input yet", true);
+    setDd(outComputed, "SHA-256 of your input appears here", true);
+    setDd(outTarget, "no target set yet", true);
+    setVerdict("unverifiable", "UNVERIFIABLE", "Cleared. Type or pick a file, then press Witness.");
+  }
+
+  btnWitness.addEventListener("click", witness);
+  btnSetTarget.addEventListener("click", setTarget);
+  btnClear.addEventListener("click", clearAll);
+  // Picking a file is itself a witnessable event.
+  fileIn.addEventListener("change", witness);
+
+  // Honest initial state: if crypto.subtle is missing, say so up front.
+  if (!subtleOk) {
+    btnWitness.disabled = false; // still let them press it to see the honest reason
+    setVerdict(
+      "unverifiable",
+      "UNVERIFIABLE",
+      "This browser does not expose crypto.subtle here, so the demo cannot compute a real fingerprint. It reports UNVERIFIABLE instead of faking one."
+    );
+  }
+})();
+</script>
+
+<noscript>
+  <div class="docnav" style="margin-top:1rem">
+    <span class="where">This demo needs JavaScript to compute SHA-256 in your browser. With it off, there is nothing to fake, so it stays UNVERIFIABLE. Read about the tool at <a href="emet.html">emet</a>.</span>
+  </div>
+</noscript>
+</body>
+</html>
