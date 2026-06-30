@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Build products: standalone tools you can run today</title>
+<meta name="description" content="The Build suite: standalone, tested products that ride alongside the accountability research. They are calibrate-pro (display calibration), build-finance, build-oracle, build-engine (forecasting & paper-trading), build-ui, and build-color. v1.0.0 beta; source and standalone builds. By Zain Dana Harper.">
+<link rel="canonical" href="https://harperz9.github.io/build-products.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="The Build products: standalone tools you can run today">
+<meta property="og:description" content="The Build suite: standalone, tested products that ride alongside the accountability research. They are calibrate-pro (display calibration), build-finance, build-oracle, build-engine (forecasting & paper-trading), build-ui, and build-color. v1.0.0 beta; source and standalone builds. By Zain Dana Harper.">
+<meta property="og:url" content="https://harperz9.github.io/build-products.html">
+<meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta property="og:image:alt" content="A still from the engine: a Julia set rendered in the site's palette, real mathematics drawn by our own code.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Build products: standalone tools you can run today">
+<meta name="twitter:description" content="The Build suite: standalone, tested products that ride alongside the accountability research. They are calibrate-pro (display calibration), build-finance, build-oracle, build-engine (forecasting & paper-trading), build-ui, and build-color. v1.0.0 beta; source and standalone builds. By Zain Dana Harper.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="system/system.css?v=20260625a">
+</head>
+<body class="inner-clean">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260625a"></script>
+
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">The Build products</span></div>
+  <div class="mid">
+    <p class="eyebrow">PRODUCTS &middot; THE QUANTA SUITE</p>
+    <h1>Standalone tools you can <span class="g">actually run today.</span></h1>
+    <p class="lede">A suite of practical software, separate from the accountability research: a professional display-calibration app, a set of forecasting and paper-trading toolkits, and a shared interface layer that ties them together. Each one is a real tool with real tests, built to the same habit of saying plainly what it does and what it doesn&rsquo;t. They don&rsquo;t depend on the research. They stand on their own, and they help fund the slower work.</p>
+    <p class="close">Honest up front: these are v1.0.0 <em>beta</em>, distributed as source (and, for calibrate-pro, a standalone Windows build), not yet on a package index. Tested and usable; still maturing.</p>
+  </div>
+  <div class="seal">six products &middot; v1.0.0 beta &middot; ~830 tests across the suite &middot; source &amp; standalone builds</div>
+</div>
+
+<main id="main">
+
+<!-- calibrate-pro -->
+<section class="mv" id="calibrate" aria-labelledby="calibrate-h">
+  <h2 id="calibrate-h" class="reveal">calibrate-pro, the most finished of them.</h2>
+  <p class="body-text reveal">A professional display-calibration suite for Windows, with both a graphical interface and a command line. It detects your monitors, matches the panel against a database, and applies real corrections through the hardware: DDC/CI control (sending commands directly to the monitor over a standard cable) and 3D-LUT output (a color-correction table loaded into the display), ICC v4 profiles, HDR-aware. It has a <b>sensorless</b> mode that predicts a good profile from a database of 58 characterized panels (predicted &Delta;E under 1.0), and a <b>native i1Display3 driver</b> that talks to the colorimeter directly over USB, no third-party color stack required. This is the genuinely shippable one: 297 tests, ~26 working CLI subcommands, and a standalone <code translate="no">.exe</code> so you don&rsquo;t need Python at all.</p>
+  <em class="close reveal">The color-science origin: years of film LUT pipelines and display work, packaged into a tool a person can actually run.</em>
+</section>
+
+<!-- the quant trio -->
+<section class="mv" id="quant" aria-labelledby="quant-h">
+  <h2 id="quant-h" class="reveal">The forecasting &amp; trading toolkits, paper-first by design.</h2>
+  <p class="body-text reveal"><b>build-oracle</b> is a toolkit for predicting trends in data over time and spotting unusual breaks or jumps: ARIMA with automatic order selection, structural-break (changepoint) detection by information criterion (a score that picks the simplest explanation that still fits the data), and feature engineering, which builds extra signals like recent averages, lag values, and Fourier terms to help the model see patterns. 187 tests. The honest forecasting layer the others build on.</p>
+  <p class="body-text reveal"><b>build-finance</b> is a rule-based trading toolkit for stocks and crypto: backtesting (running a strategy against old data to see what would have happened), portfolio optimization using named methods (Markowitz, Black&ndash;Litterman, Hierarchical Risk Parity, Risk Parity), and strategies like an EMA-crossover momentum filter. 142 tests. It runs the analysis and the backtest; it doesn&rsquo;t pretend a backtest is a promise.</p>
+  <p class="body-text reveal"><b>build-engine</b> is the self-adjusting loop on top: it trains forecasters, turns forecasts into signals, paper-trades or backtests them, and feeds the results back to adjust its own internal settings (the numbers that determine how the model behaves). 178 tests. It is <b>paper-trading by default</b>, and live brokerage is deliberately hard to switch on. It refuses to run live unless you set an explicit risk-acknowledgement in the environment. The guardrail is the feature.</p>
+  <em class="close reveal">These are real toolkits, honestly beta. Nothing here is financial advice, and the design assumes you&rsquo;ll paper-trade first; it makes that the path of least resistance on purpose.</em>
+</section>
+
+<!-- the glue + the proof -->
+<section class="proof" id="proof" aria-labelledby="proof-h">
+  <div class="proof-head">
+    <h2 id="proof-h" class="reveal">The suite, and one tool reporting itself.</h2>
+    <p class="body-text reveal"><b>build-ui</b> is the shared visual style and controls (a PyQt6 theme and widget set) the GUI apps are built from, so the suite looks like one thing. <b>build-ecosystem</b> is the single package that installs the whole set in one command, and <a href="build-color.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)" translate="no">build-color</a> is the color-science member, with its own page. Here is the most mature member confirming what it is.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit I</span> <span class="what">calibrate-pro &middot; the CLI surface is real, not aspirational</span></div>
+    <pre class="artifact" translate="no"><span class="pr">$ python -m calibrate_pro --version</span>
+<span class="ok">Calibrate Pro v1.0.0</span>
+
+<span class="pr">$ python -m calibrate_pro --help</span>
+<span class="ok">Calibrate Pro - Professional Display Calibration Suite</span>
+positional arguments:
+  {detect, calibrate, verify, list-panels, list-targets, match, refine,
+   ddc-calibrate, ddc-info, native-calibrate, hdr, uniformity,
+   export-panel, import-panel, generate-profiles, gui, status, ...}
+    detect            Detect connected displays
+    native-calibrate  Calibrate using the native i1Display3 driver (no ArgyllCMS)
+    ddc-info          Show DDC/CI capabilities for connected monitors
+    verify            Verify calibration accuracy</pre>
+    <p class="artifact-cap">The breadth is real: detection, hardware DDC/CI control, a native colorimeter driver, verification reports. Not a wrapper around someone else&rsquo;s tool; the driver and the panel database are the work.</p>
+    <p class="artifact-note">Real output from <b>calibrate-pro</b> v1.0.0 (297 tests). Suite test counts: calibrate-pro 297 &middot; build-oracle 187 &middot; build-engine 178 &middot; build-finance 142 &middot; build-ui 17 &middot; build-ecosystem 10. <em>Honest limit:</em> every member is marked <b>beta</b> and is currently installed from source (calibrate-pro also ships a standalone Windows build); they are packaged for a public index but not published to one yet, so I won&rsquo;t claim &ldquo;available on PyPI.&rdquo; calibrate-pro is the one I&rsquo;d call genuinely product-grade today; the quant tools are substantive but still beta.</p>
+  </div>
+</section>
+
+<!-- honest -->
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h" class="reveal">Where they really are.</h2>
+  <p class="body-text reveal">These are real, tested software you can use today, a product line that also funds the slower accountability and language work and gives it somewhere practical to land. <b>calibrate-pro</b> is the most finished, a tool I&rsquo;d hand to a colorist today. <b>build-oracle</b>, <b>build-finance</b>, and <b>build-engine</b> are substantive beta toolkits with named, tested methods, built paper-first with their risk gates on by default. <b>build-ui</b> and <b>build-ecosystem</b> are exactly what they sound like, the shared look and the one-command installer: small glue, not headline products.</p>
+  <p class="pull reveal">Tested and usable, honestly beta, and not on a package index yet. I&rsquo;d rather you know that than find out.</p>
+  <div class="channels reveal">
+    <span class="g">GitHub</span>: <a href="https://github.com/HarperZ9" translate="no">HarperZ9</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">Color member</span>: <a href="build-color.html" translate="no">build-color &rarr;</a>
+    &nbsp;&middot;&nbsp;
+    <a href="overview.html">&larr; the map</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the index</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Standalone, useful tools &middot; tested, honestly beta &middot; calibrate-pro the most finished: paper-first where it counts, and never claiming a shelf it isn&rsquo;t on.</p>
+</footer>
+
+<script src="system/reveal.js?v=20260625a" defer></script>
+</body>
+</html>

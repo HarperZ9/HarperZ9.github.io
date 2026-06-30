@@ -51,7 +51,7 @@
   <p class="body-text reveal"><b>public-surface-sweeper</b> <span class="built-stat">v0.1.1</span>: the check you run before a release goes out. It confirms required files are present and sweeps for passwords, keys, or tokens that must not leak, so nothing slips public that shouldn&rsquo;t. Built on proof-surface.</p>
   <p class="body-text reveal"><b>repo-proof-index</b> <span class="built-stat">v0.1.1</span>: an index over the evidence records and receipts a project produces, laid out so a reviewer can actually check them. It collects and organizes the evidence; it never certifies it, and that stays a human&rsquo;s job.</p>
   <p class="body-text reveal"><b>model-provenance-validator</b> <span class="built-stat">v0.1.1</span>: checks a model or release&rsquo;s honest record of where it came from against what it claims, and blacks out any passwords, keys, or tokens from its own output while doing it.</p>
-  <p class="body-text reveal"><b translate="no">index</b> <span class="built-stat">v1.0.0</span>: a compact JSON inventory of every git repo in a multi-repo workspace, the tool that lets the whole system know its own shape at a glance. <a href="quanta-color.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)" translate="no">quanta-color</a> is the sixth on PyPI, a product with its own page.</p>
+  <p class="body-text reveal"><b translate="no">index</b> <span class="built-stat">v1.0.0</span>: a compact JSON inventory of every git repo in a multi-repo workspace, the tool that lets the whole system know its own shape at a glance. <a href="build-color.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)" translate="no">build-color</a> is the sixth on PyPI, a product with its own page.</p>
 </section>
 
 <!-- on github -->
@@ -81,7 +81,7 @@ Repository inventory maps + dependency graph + context packs.
 <span class="ok">repo-proof-index          0.1.1</span>
 <span class="ok">model-provenance-validator 0.1.1</span>
 <span class="ok">index-graph               1.0.0</span>
-<span class="ok">quanta-color              1.0.1</span>
+<span class="ok">build-color              1.0.1</span>
 <span class="lt"># = 6 on PyPI. The rest are public on GitHub, counted separately, on purpose.</span></pre>
     <p class="artifact-cap">Six packages, verified against the package index by author. The other tools are real and public; they&rsquo;re just on GitHub, and saying so is cheaper than being caught rounding up.</p>
     <p class="artifact-note">Verified against the live PyPI index, 2026-06-21. <em>Honest limit / correction:</em> the old &ldquo;19 on PyPI&rdquo; figure conflated three different things: published packages, public-on-GitHub repos, and packages only installed locally from source. One of the names I&rsquo;d listed (<code translate="no">agent-audit</code>) turned out to be a different author&rsquo;s package entirely, so it&rsquo;s dropped from any claim. This is exactly the kind of quiet over-count the whole project exists to catch, including when I&rsquo;m the one who made it. <a href="public-surface-sweeper-sample.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">See a sample release hygiene report →</a></p>
