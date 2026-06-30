@@ -92,10 +92,17 @@
       </ul>
     </div>
     <div class="entry">
-      <div class="entry-head"><span class="entry-title">Standalone D3D11 graphics injector</span><span class="entry-meta">C++ / HLSL &middot; shipped</span></div>
+      <div class="entry-head"><span class="entry-title">Native graphics engine lineage &middot; Bridge, JOJO, Playground, RAW</span><span class="entry-meta">C++ / HLSL &middot; D3D11</span></div>
       <ul class="bul">
-        <li>A self-contained proxy-DLL post-processing layer built from first principles: tens of effects and dozens of HLSL shaders (ACES and AgX, TAA, SSR, volumetrics, bokeh depth of field), an ImGui interface, packaged with CMake and vcpkg.</li>
-        <li>A companion engine bridges game state to a GPU pipeline (data trackers and shader systems including GTAO, SSR, SSGI, SDSM, volumetric clouds) over read-only shared-memory IPC.</li>
+        <li>A progression of from-scratch D3D11/HLSL graphics frameworks, seeded by the Elder ENB work, that take ownership of a game&#x27;s render pipeline through proxy-DLL interception and mid-frame compute dispatch: tens of effects and dozens of HLSL shaders (ACES and AgX, TAA, SSR, SSGI, GTAO, SDSM, volumetrics, bokeh depth of field), an ImGui interface, packaged with CMake and vcpkg.</li>
+        <li>A companion engine bridges live game state to the GPU pipeline over read-only shared-memory IPC. This line was also the primary vehicle for hands-on reverse engineering: binary analysis, runtime instrumentation, call-flow and memory mapping, and live game-state extraction.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">Game-systems reverse engineering and automation</span><span class="entry-meta">C++ / Lua / TypeScript &middot; private</span></div>
+      <ul class="bul">
+        <li>Reverse-engineered live game state and built real-time scripting and automation frameworks across titles including World of Warcraft and CS2. Aurora is a multi-language combat-scripting framework (Lua, a custom DSL, and TypeScript-to-Lua) with dozens of SDK modules and production rotations.</li>
+        <li>The defensive counterpart is Warden, a C++23 integrity and capability-assessment engine used as a build-and-break substrate for runtime integrity and anti-cheat research. This work is the foundation of the reverse-engineering, instrumentation, and adversarial-testing skills that now harden the accountability tooling.</li>
       </ul>
     </div>
     <div class="entry">
