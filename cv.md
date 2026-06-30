@@ -31,6 +31,8 @@ A live public ecosystem whose central promise is simple: a person and a model sh
 - **forum** - `forum-engine` 1.12.0. Model-agnostic orchestration for agents. Records routing decisions, plans, task results, verdicts, and checkpoints in a verifiable ledger. Direct runs showed deep verification passing on intact ledgers and failing after intentional tampering.
 - **gather** - `gather-engine` 1.5.0. Accountable research intake for awkward sources: web, feeds, documents, PDFs, arXiv, browser/OCR/audio paths, and authenticated JSON APIs, with provenance receipts and digest seals.
 - **crucible** - `crucible-bench` 1.1.0 release candidate. A judgment organ for evaluating theses against measurements, refining weak axes, rechecking verdicts, and preserving a clean verifier boundary: the verifier sees the original spec and the artifact, not the worker's private context.
+- **emet** - byte-level witness, v0.2.0. Re-derives a file's bytes from scratch and reports MATCH, DRIFT, or UNVERIFIABLE. Never "trusted." The witnessing move, in three languages.
+- **buildlang** - typed-effects language compiler, v1.0.0. Functions declare the effects they may perform and the lifetimes of the references they return, checked by the compiler and lowered through a verified C path.
 
 ### Supporting public systems
 
@@ -47,7 +49,7 @@ A live public ecosystem whose central promise is simple: a person and a model sh
 
 ### Compilers and languages
 
-- **QuantaLang / quantac** - Rust-built typed-effects compiler. Functions declare the effects they may perform and the lifetimes of the references they return; the compiler checks those contracts and lowers through a verified C path. The public portfolio records the compiler, editor-support line, and live `quantac` examples.
+- **BuildLang / buildc** - Rust-built typed-effects compiler, v1.0.0. Functions declare the effects they may perform and the lifetimes of the references they return; the compiler checks those contracts and lowers through a verified C path. The public portfolio records the compiler, editor-support line, and live `buildc` examples.
 
 ### Graphics, color, and native systems
 
@@ -114,7 +116,7 @@ A live public ecosystem whose central promise is simple: a person and a model sh
 - `gather-engine` package metadata: 1.5.0.
 - `crucible-bench` package metadata: 1.1.0 release candidate; includes clean verifier-boundary discipline.
 - Current local public workspace map: 49 repositories, 45 public repos, 5 flagship organs.
-- Public portfolio: `HarperZ9.github.io`, with flagship pages for telos, index, forum, gather, and crucible.
+- Public portfolio: `HarperZ9.github.io`, with flagship pages for telos, index, forum, gather, crucible, emet, and buildlang.
 
 ## Role and industry fit
 

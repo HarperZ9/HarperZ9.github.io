@@ -13,7 +13,7 @@ const DEST = [
 // heavier-than-a-brick down to the utilities lives under the catalog.
 const FLAGSHIPS = new Set(["overview","index-graph","forum","studio","gather","crucible"]);
 const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","accountable-machines",
-  "accountable-engine","quantalang","raw","quanta-color","quanta-products","toolkit",
+  "accountable-engine","buildlang","raw","build-color","build-products","toolkit",
   "provenance-sensorium","orca","aleph","warden","presentation","atelier","gallery","demonstrations"]);
 CATALOG.add("field-guide");
 const RESEARCH = new Set(["research","why"]);

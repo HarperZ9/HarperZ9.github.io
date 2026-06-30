@@ -326,28 +326,28 @@
       "modified": "2026-06-25T01:31:01-07:00"
     },
     {
-      "name": "quanta-color.html",
+      "name": "build-color.html",
       "kind": "file",
       "class": "entry",
       "bytes": 12276,
       "modified": "2026-06-25T01:31:01-07:00"
     },
     {
-      "name": "quanta-products.html",
+      "name": "build-products.html",
       "kind": "file",
       "class": "entry",
       "bytes": 11575,
       "modified": "2026-06-25T01:31:01-07:00"
     },
     {
-      "name": "quantalang",
+      "name": "buildlang",
       "kind": "directory",
       "class": "entry",
       "bytes": null,
       "modified": "2026-06-25T01:31:01-07:00"
     },
     {
-      "name": "quantalang.html",
+      "name": "buildlang.html",
       "kind": "file",
       "class": "entry",
       "bytes": 13625,
