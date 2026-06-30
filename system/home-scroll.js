@@ -36,7 +36,7 @@
       var y = window.pageYOffset || 0;
       if (canvas) {
         var t = Math.min(1, Math.max(0, (y - h * 0.45) / (h * 0.85)));
-        canvas.style.opacity = (1 - t * 0.5).toFixed(3);
+        canvas.style.opacity = (1 - t * 0.82).toFixed(3);
       }
       // gentle wordmark parallax: the foreground drifts against the object
       if (edge && !reduced) {
