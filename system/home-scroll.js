@@ -92,7 +92,7 @@
       if (best && best.target.id && byId[best.target.id]) setActive(best.target.id);
     }, { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.01, 0.2, 0.5] });
 
-    ["top", "engines", "floor"].forEach(function (id) {
+    ["top", "engines", "range", "work", "floor"].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) sObs.observe(el);
     });
