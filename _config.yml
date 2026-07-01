@@ -19,6 +19,7 @@ exclude:
   - .repomap.toml      # repo-map tool config — internal
   - README.md          # repo context (visible on GitHub; not a site page)
   - img/og/_card.html  # OG-card generator (renders the flagship social cards) — internal
+  - img/og/cards-data.js  # OG-card data table (37 repo cards) — generator input, internal
 
 # Served verbatim: index.html, the organ pages, *-sample.html, resume.md,
 # cv.md, AUTHORS.md, CONTRIBUTING.md, system/ (css+js), img/.
