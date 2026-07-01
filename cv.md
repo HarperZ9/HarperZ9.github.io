@@ -31,7 +31,7 @@ A live public ecosystem whose central promise is simple: a person and a model sh
 - **forum** - `forum-engine` 1.12.0. Model-agnostic orchestration for agents. Records routing decisions, plans, task results, verdicts, and checkpoints in a verifiable ledger. Direct runs showed deep verification passing on intact ledgers and failing after intentional tampering.
 - **gather** - `gather-engine` 1.5.0. Accountable research intake for awkward sources: web, feeds, documents, PDFs, arXiv, browser/OCR/audio paths, and authenticated JSON APIs, with provenance receipts and digest seals.
 - **crucible** - `crucible-bench` 1.1.0 release candidate. A judgment organ for evaluating theses against measurements, refining weak axes, rechecking verdicts, and preserving a clean verifier boundary: the verifier sees the original spec and the artifact, not the worker's private context.
-- **emet** - byte-level witness, v0.2.0. Re-derives a file's bytes from scratch and reports MATCH, DRIFT, or UNVERIFIABLE. Never "trusted." The witnessing move, in three languages.
+- **emet** - byte-level witness, v1.0.0 (on PyPI: pip install emet). Re-derives a file's bytes from scratch and reports MATCH, DRIFT, or UNVERIFIABLE. Never "trusted." The witnessing move, in four languages.
 - **buildlang** - typed-effects language compiler, v1.0.0. Functions declare the effects they may perform and the lifetimes of the references they return, checked by the compiler and lowered through a verified C path.
 
 ### Supporting public systems
