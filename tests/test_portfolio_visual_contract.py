@@ -27,7 +27,10 @@ HOME_CSS = ROOT / "system" / "home.css"
 RIBBON = ROOT / "system" / "ribbon-field.js"
 SCROLL = ROOT / "system" / "home-scroll.js"
 ALEPH = ROOT / "aleph.html"
+ORCA = ROOT / "orca.html"
 ALEPH_HERO = ROOT / "img" / "private-line" / "aleph-hero.svg"
+OVERVIEW = ROOT / "overview.html"
+CATALOG = ROOT / "catalog.html"
 
 EM_DASH = "—"
 EN_DASH = "–"
@@ -113,7 +116,7 @@ def test_home_thesis_and_messaging_preserved() -> None:
         assert verdict in src
 
 
-def test_five_flagships_equal_standing() -> None:
+def test_eight_public_engines_equal_standing() -> None:
     src = index_source()
     # robust to extra attributes (e.g. translate="no" on brand names)
     for fid, name in (
@@ -122,12 +125,23 @@ def test_five_flagships_equal_standing() -> None:
         ("flag-forum", ">forum<"),
         ("flag-crucible", ">crucible<"),
         ("flag-engine", ">the telos engine<"),
+        ("flag-emet", ">emet<"),
+        ("flag-buildlang", ">buildlang<"),
         ("flag-learn", ">learn<"),
     ):
         assert f'id="{fid}"' in src
         assert name in src
     # links to each flagship page
-    for href in ("gather.html", "index-graph.html", "forum.html", "crucible.html", "studio.html", "learn.html"):
+    for href in (
+        "gather.html",
+        "index-graph.html",
+        "forum.html",
+        "crucible.html",
+        "studio.html",
+        "emet.html",
+        "buildlang.html",
+        "learn.html",
+    ):
         assert f'href="{href}"' in src
 
 
@@ -143,7 +157,10 @@ def test_public_safe_private_line_is_listed_on_home() -> None:
 
 def test_aleph_page_presents_private_line_platform_contract() -> None:
     src = ALEPH.read_text(encoding="utf-8")
+    hero = ALEPH_HERO.read_text(encoding="utf-8")
     assert ALEPH_HERO.is_file()
+    assert "<title>Gate: private-line release gate for Project Telos</title>" in src
+    assert 'content="Gate: private-line release gate for Project Telos"' in src
     assert "Project Telos private-line platform" in src
     assert "One release gate. Six working tools." in src
     assert "img/private-line/aleph-hero.svg" in src
@@ -154,6 +171,38 @@ def test_aleph_page_presents_private_line_platform_contract() -> None:
     assert "Public now: Gate, Runtime, Vault, and Boundary" in src
     assert "Private until split: Lab (Seed) and Ledger (Sofer)" in src
     assert "Break your model on purpose" not in src
+    assert "Gate Project Telos hero" in hero
+    assert ">GATE<" in hero
+    assert ">ALEPH<" not in hero
+
+
+def test_runtime_page_presents_runtime_as_product_name() -> None:
+    src = ORCA.read_text(encoding="utf-8")
+    assert "<title>Runtime: the accountable way to run an assessment</title>" in src
+    assert 'content="Runtime: the accountable way to run an assessment"' in src
+    assert 'name="color-scheme" content="light"' in src
+    assert 'name="theme-color" content="#f4f3ef"' in src
+    assert "Runtime is the Project Telos local-first operator runtime housed in ORCA" in src
+    assert '<span translate="no">Runtime</span> &middot; the accountable assessment runner' in src
+    assert '<span translate="no">Runtime</span> / ORCA' in src
+    for proof in ("v1.0.0", "361", "local-only", "metadata-only", "5 files"):
+        assert proof in src
+    assert "Status</span>: public repo for release-safe docs and runtime contract; private operator material stays local" in src
+
+
+def test_overview_and_catalog_use_product_names_before_repo_aliases() -> None:
+    overview = OVERVIEW.read_text(encoding="utf-8")
+    catalog = CATALOG.read_text(encoding="utf-8")
+    for src in (overview, catalog):
+        assert 'name="color-scheme" content="light"' in src
+        assert 'name="theme-color" content="#f4f3ef"' in src
+        assert "Eight public engines" in src
+        for term in ("Gate", "Runtime", "Vault", "Boundary", "Lab", "Ledger"):
+            assert term in src
+    assert "Gate, Runtime, Vault, and Boundary" in overview
+    assert "Gate, Runtime, Vault, and Boundary" in catalog
+    assert "Aleph, ORCA, Kun, and behavior-transform" not in overview
+    assert "Aleph, ORCA, Kun, and behavior-transform" not in catalog
 
 
 def test_no_em_or_en_dashes_in_home_and_system() -> None:
