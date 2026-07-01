@@ -104,7 +104,7 @@ def test_home_thesis_and_messaging_preserved() -> None:
     assert "Build with a model." in src
     assert "Take nothing on faith." in src
     assert "from outside the thing making the claim" in src
-    assert "Seven engines, equal standing." in src
+    assert "Eight engines, equal standing." in src
     assert "Looking verified is not the same as being verifiable." in src
     assert "Build it to be checked, or do not ship it." in src
     for verdict in ("MATCH", "DRIFT", "UNVERIFIABLE"):
@@ -120,11 +120,12 @@ def test_five_flagships_equal_standing() -> None:
         ("flag-forum", ">forum<"),
         ("flag-crucible", ">crucible<"),
         ("flag-engine", ">the telos engine<"),
+        ("flag-learn", ">learn<"),
     ):
         assert f'id="{fid}"' in src
         assert name in src
     # links to each flagship page
-    for href in ("gather.html", "index-graph.html", "forum.html", "crucible.html", "studio.html"):
+    for href in ("gather.html", "index-graph.html", "forum.html", "crucible.html", "studio.html", "learn.html"):
         assert f'href="{href}"' in src
 
 
