@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Aleph: private-line release gate for Project Telos">
-<meta property="og:description" content="One release gate for Aleph, Sofer, Seed, Kun, ORCA, and behavior-transform. Public contract, private internals, evidence-first delivery.">
+<meta property="og:description" content="One release gate for Aleph, Sofer, Seed, Kun, ORCA, and behavior-transform. Public where safe, private where required, evidence-first delivery.">
 <meta property="og:url" content="https://harperz9.github.io/aleph.html">
 <meta property="og:image" content="https://harperz9.github.io/img/private-line/aleph-hero.svg">
 <meta property="og:image:alt" content="Aleph Project Telos private-line platform hero graphic.">
@@ -66,7 +66,7 @@
     <p class="eyebrow">PROJECT TELOS PRIVATE-LINE PLATFORM</p>
     <h1>One release gate. Six working tools.</h1>
     <p class="lede"><span translate="no">Aleph</span> is the public contract for the Project Telos private line: <span translate="no">Aleph</span>, <span translate="no">Sofer</span>, <span translate="no">Seed</span>, <span translate="no">Kun</span>, <span translate="no">ORCA</span>, and <span translate="no">behavior-transform</span>. It verifies presentation, package shape, MCP readiness, CLI contracts, provenance receipts, and release state before anything is described as ready.</p>
-    <p class="close">Public page, private internals, checkable delivery.</p>
+    <p class="close">Public where safe, private where required, checkable delivery.</p>
     <div class="rail" aria-label="Project Telos private-line navigation">
       <a href="overview.html">Project Telos</a>
       <a href="catalog.html">Catalog</a>
@@ -87,7 +87,7 @@
 <section class="mv" id="contract" aria-labelledby="contract-h">
   <p class="eyebrow">WHAT IT IS</p>
   <h2 id="contract-h" class="reveal">A release gate for tools that have to be usable alone or inside a larger surface.</h2>
-  <p class="body-text reveal">The live public flagships now use a simple pattern: direct purpose, visible artifact, installation path, reason it matters, and current status. <span translate="no">Aleph</span> brings the same standard to the private line. The page does not expose sensitive internals; it exposes the product contract a buyer, collaborator, or future maintainer can evaluate.</p>
+  <p class="body-text reveal">The live public flagships now use a simple pattern: direct purpose, visible artifact, installation path, reason it matters, and current status. <span translate="no">Aleph</span> brings the same standard to the private line. Four repos are public now: <span translate="no">Aleph</span>, <span translate="no">ORCA</span>, <span translate="no">Kun</span>, and <span translate="no">behavior-transform</span>. <span translate="no">Seed</span> and <span translate="no">Sofer</span> remain private until their public-safe splits are complete.</p>
   <p class="body-text reveal">The private-line standard is concrete: command surfaces must be inspectable, package metadata must agree with the docs, MCP or host-neutral integration must be declared, graphics must match the Project Telos presentation language, and every readiness claim must resolve to a receipt.</p>
 </section>
 
@@ -95,12 +95,12 @@
   <p class="eyebrow">THE SIX UNITS</p>
   <h2 id="tools-h" class="reveal">Each tool has a clear job.</h2>
   <div class="tool-grid reveal">
-    <div class="tool-card"><span class="tool-k" translate="no">Aleph</span><p>Release gate and product shell for the private line: docs, package contracts, MCP declarations, CI state, and receipt checks.</p></div>
-    <div class="tool-card"><span class="tool-k" translate="no">Sofer</span><p>Routes model and agent work through intent, admission, execution, and verification records so a run can be resumed and audited.</p></div>
-    <div class="tool-card"><span class="tool-k" translate="no">Seed</span><p>Controlled native assessment labs with synthetic fixtures, deterministic outputs, and JSON receipts for local evaluation workflows.</p></div>
-    <div class="tool-card"><span class="tool-k" translate="no">Kun</span><p>Local access-recovery and operator vault surface that records path-only, read-only receipts instead of exposing sensitive material.</p></div>
-    <div class="tool-card"><span class="tool-k" translate="no">ORCA</span><p>Local runtime modules, run state, artifact layout, and release provenance for operator-owned workflows.</p></div>
-    <div class="tool-card"><span class="tool-k" translate="no">behavior-transform</span><p>Host boundary wrapper for read, write, exec, fetch, and input receipts across CLI, MCP, plugin, and embedded contexts.</p></div>
+    <div class="tool-card"><span class="tool-k" translate="no">Gate</span><p>Aleph. Product shell for the private line: docs, package contracts, MCP declarations, CI state, and receipt checks. Public repo.</p></div>
+    <div class="tool-card"><span class="tool-k" translate="no">Ledger</span><p>Sofer. Agent workflow routing through intent, admission, execution, evidence references, replay, and verification records. Private/proprietary until the public-safe split removes credential-pattern corpora and internal WARDEN material.</p></div>
+    <div class="tool-card"><span class="tool-k" translate="no">Lab</span><p>Seed. Controlled native assessment labs with synthetic fixtures, scenario packs, detection engineering, and deterministic outputs. Private/proprietary until the public-safe split removes internal modules and token-shaped corpora.</p></div>
+    <div class="tool-card"><span class="tool-k" translate="no">Vault</span><p>Kun. Local access-recovery and operator vault surface that records path-only, read-only receipts instead of exposing sensitive material. Public repo.</p></div>
+    <div class="tool-card"><span class="tool-k" translate="no">Runtime</span><p>ORCA. Local runtime modules, run state, artifact layout, and release provenance for operator-owned workflows. Public repo.</p></div>
+    <div class="tool-card"><span class="tool-k" translate="no">Boundary</span><p>behavior-transform. Host boundary wrapper for read, write, exec, fetch, input, and model-boundary receipts. Public repo.</p></div>
   </div>
 </section>
 
@@ -117,6 +117,7 @@
   </div>
   <div class="status-list reveal">
     <div class="status-row"><b>Presentation</b><span>All six private-line repos carry the live Project Telos visual language: off-white hero, pale wordmark, direct purpose, and shared docs/brand asset layout.</span></div>
+    <div class="status-row"><b>Visibility</b><span>Public now: Gate, Runtime, Vault, and Boundary. Private until split: Lab (Seed) and Ledger (Sofer).</span></div>
     <div class="status-row"><b>Release</b><span>The local release gate checks the docs and package surfaces before a readiness claim is allowed to stand.</span></div>
     <div class="status-row"><b>Integration</b><span>CLI, MCP, plugin, IDE/TUI, and app-host boundaries are documented as host-neutral contracts rather than single-surface demos.</span></div>
     <div class="status-row"><b>Privacy</b><span>The public surface explains what the line does without publishing secrets, credentials, private logs, or high-risk internals.</span></div>
@@ -126,7 +127,7 @@
 <section class="mv" id="access" aria-labelledby="access-h">
   <p class="eyebrow">WORK WITH IT</p>
   <h2 id="access-h" class="reveal">Private by inquiry, not cryptic by default.</h2>
-  <p class="body-text reveal">A private tool can still be readable. The public promise is deliberately plain: <span translate="no">Aleph</span> makes the private line shippable by forcing each tool to say what it is, how it is operated, which receipts support the claim, and which boundary keeps sensitive behavior out of public documentation.</p>
+  <p class="body-text reveal">A private-line tool can still be readable. The public promise is deliberately plain: <span translate="no">Aleph</span> makes the private line shippable by forcing each tool to say what it is, how it is operated, which receipts support the claim, and which boundary keeps sensitive behavior out of public documentation.</p>
   <div class="channels reveal">
     <span class="g">Inquiries</span>: <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
     &nbsp;&middot;&nbsp;
