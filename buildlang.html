@@ -100,6 +100,30 @@ Parsing... <span class="ok">OK</span> (1 items)
     <p class="artifact-cap">That same promise-keeping follows the program the whole way down: read it, check what it&rsquo;s allowed to touch, translate it into the C language, and run it. From there, one path turns it into a real program your machine can run on its own.</p>
     <p class="artifact-note">The C path is the one that works start to finish, and the tests prove it. The others (LLVM, WASM, SPIR-V, x86-64, ARM64, and a route that writes Rust) can produce code, but they&rsquo;re still experiments. I&rsquo;d rather just tell you that than let you assume otherwise.</p>
   </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit IV</span> <span class="what"><span translate="no">BuildLang</span> &middot; it speaks C, both ways</span></div>
+    <pre class="artifact" translate="no"><span class="cmt"># name a C library by its header and link flag, then call straight in:</span>
+<span class="kw">extern</span> <span class="lt">"C"</span> <span class="kw">link</span> <span class="lt">"sqlite3"</span> <span class="kw">header</span> <span class="lt">"&lt;sqlite3.h&gt;"</span> {
+    <span class="kw">fn</span> sqlite3_libversion() -&gt; &amp;str;      <span class="cmt">// the header stays authoritative</span>
+}
+<span class="kw">fn</span> main() <span class="kw">~ Foreign</span> { <span class="kw">let</span> v = sqlite3_libversion(); }
+
+<span class="pr">$ buildc build examples/ffi --emit c</span>
+[4/4] Code generation (c)... <span class="ok">OK</span> (53517 bytes)
+
+<span class="cmt"># in the emitted C, verbatim:</span>
+#include <span class="lt">&lt;sqlite3.h&gt;</span>          <span class="cmt">// your header, included as-is</span>
+// buildc-link: sqlite3       <span class="cmt">// recorded, so `buildc build` links it</span>
+_1 = sqlite3_libversion();    <span class="cmt">// the real call into the C library</span>
+
+<span class="cmt"># the reverse is `extern "C" fn` (C calls BuildLang). and a live run</span>
+<span class="cmt"># straight through a C variadic:</span>
+<span class="pr">$ buildc run examples/variadic/main.bld</span>
+<span class="ok">the answer is 1 and 2</span></pre>
+    <p class="artifact-cap">Name a C library by its header and link flag, and <span translate="no">BuildLang</span> includes the header, records the link, and calls straight in. <b><span translate="no">extern "C" fn</span></b> goes the other way, so C can call back. A foreign call is still an effect: <b>main declares <span translate="no">~ Foreign</span></b>, so reaching into C sits behind the same gate as touching a file.</p>
+    <p class="artifact-note">Captured live from <b translate="no">buildc build --emit c</b> and <b translate="no">buildc run</b> (release build). <span translate="no">buildc</span> emits the include, the link directive, and the call, checked end to end through the build; the final native link against <span translate="no">sqlite3</span> is your own C toolchain&rsquo;s job, not something the test suite claims for you.</p>
+  </div>
 </section>
 
 <!-- maturity -->
