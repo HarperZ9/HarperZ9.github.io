@@ -11,6 +11,11 @@ sites, set by the operator on 2026-06-25:
 Build from these references in motion, not from memory. The only way to know how a
 reference behaves is to drive it (scroll, hover) and watch it move.
 
+**Flagship identity + hero artwork:** see [`BRAND.md`](BRAND.md). Every flagship, repo, and
+private-line tool uses one shared **flagship card** as its hero (ceramic card, one iris accent,
+`PROJECT TELOS / {ROLE}` eyebrow, sans headline, pipeline line, ghost wordmark, one glyph). Heroes
+are generated from `img/og/_card.html` + `img/og/cards-data.js`, never hand-authored per repo.
+
 ## 1. One protagonist, evolving through states
 
 There is a single 3D sculptural object that is the protagonist of the page. It
