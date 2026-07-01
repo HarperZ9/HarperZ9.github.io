@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- OG card generator for the Project Telos flagship line.
+     Renders one 1200x630 social card matching the site's ceramic + iris design.
+     Usage: _card.html?f=buildlang  (rendered to PNG by headless Chrome). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=block" rel="stylesheet">
+<style>
+  @font-face{font-family:"Hanken Grotesk"; src:url("../../system/fonts/hanken-grotesk.woff2") format("woff2"); font-weight:100 900; font-style:normal; font-display:block}
+  @font-face{font-family:"Kilon"; src:url("../../system/fonts/kilon.woff2") format("woff2"); font-weight:100 900; font-style:normal; font-display:block}
+  :root{
+    --mat:#15161b;               /* dark frame mat */
+    --page:#f1f0ec;              /* ceramic card */
+    --ink:#0b0c0e; --ink-soft:#24272c; --muted:#5a5f68; --faint:#9a9089;
+    --iris:#4636e8;              /* the one vivid accent, the object edge */
+    --line:rgba(11,12,14,.16);
+    --mono:"JetBrains Mono","SFMono-Regular",ui-monospace,monospace;
+    --sans:"Hanken Grotesk",-apple-system,"Segoe UI",sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1200px;height:630px;background:var(--mat)}
+  .card{
+    position:absolute; inset:26px; background:var(--page);
+    border:1px solid #e4e0d6; border-radius:24px; overflow:hidden;
+    box-shadow:0 2px 6px rgba(0,0,0,.28),0 24px 60px -20px rgba(0,0,0,.5);
+  }
+  .pad{position:absolute; inset:0; padding:62px 68px; display:flex; flex-direction:column}
+  /* ghost wordmark, huge and faint, behind everything */
+  .ghost{
+    position:absolute; left:56px; bottom:22px; z-index:0;
+    font-family:var(--sans); font-weight:800; font-size:250px; line-height:.8;
+    letter-spacing:-.03em; color:rgba(11,12,14,.045); white-space:nowrap;
+    text-transform:uppercase;
+  }
+  .eyebrow{
+    position:relative; z-index:2; font-family:var(--mono); font-weight:500;
+    font-size:16px; letter-spacing:.30em; text-transform:uppercase; color:var(--muted);
+    display:flex; align-items:center; gap:16px;
+  }
+  .eyebrow .sep{color:var(--iris)}
+  .rule{height:1px; background:var(--line); margin:22px 0 0; position:relative; z-index:2}
+  .headline{
+    position:relative; z-index:2; font-family:var(--sans); font-weight:700;
+    color:var(--ink); font-size:53px; line-height:1.14; letter-spacing:-.018em;
+    max-width:62%; margin-top:58px; text-wrap:balance;
+  }
+  .pipeline{
+    position:relative; z-index:2; font-family:var(--mono); font-weight:500;
+    font-size:17px; letter-spacing:.13em; text-transform:uppercase; color:var(--muted);
+    margin-top:26px;
+  }
+  .foot{margin-top:auto}
+  .foot .rule{margin:0}
+  /* the flagship glyph, right-centered */
+  .glyph{
+    position:absolute; right:74px; top:50%; transform:translateY(-46%);
+    width:210px; height:210px; z-index:2;
+  }
+  .glyph svg{width:100%;height:100%;display:block;overflow:visible}
+  .g-stroke{fill:none; stroke:var(--ink); stroke-width:7; stroke-linecap:round; stroke-linejoin:round}
+  .g-thin{fill:none; stroke:var(--ink-soft); stroke-width:4.5; stroke-linecap:round; stroke-linejoin:round}
+  .g-dot{fill:var(--iris)}
+  .g-brace{font-family:var(--sans); font-weight:300; fill:var(--ink); font-size:210px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="ghost" id="ghost"></div>
+  <div class="pad">
+    <div class="eyebrow"><span>PROJECT TELOS</span><span class="sep">/</span><span id="role"></span></div>
+    <div class="rule"></div>
+    <div class="headline" id="headline"></div>
+    <div class="pipeline" id="pipeline"></div>
+    <div class="foot"><div class="rule"></div></div>
+  </div>
+  <div class="glyph" id="glyph"></div>
+</div>
+<script>
+  // minimal, coherent glyph set: each shares the vivid iris dot at center.
+  var G = {
+    braces: '<svg viewBox="0 0 210 210"><text class="g-brace" x="2" y="150">{</text><circle class="g-dot" cx="105" cy="112" r="15"/><text class="g-brace" x="150" y="150">}</text></svg>',
+    diamond: '<svg viewBox="0 0 210 210"><rect class="g-stroke" x="55" y="55" width="100" height="100" rx="10" transform="rotate(45 105 105)"/><circle class="g-dot" cx="105" cy="105" r="15"/></svg>',
+    triad: '<svg viewBox="0 0 210 210"><line class="g-thin" x1="105" y1="105" x2="105" y2="34"/><line class="g-thin" x1="105" y1="105" x2="43" y2="150"/><line class="g-thin" x1="105" y1="105" x2="167" y2="150"/><circle class="g-stroke" cx="105" cy="30" r="13"/><circle class="g-stroke" cx="40" cy="154" r="13"/><circle class="g-stroke" cx="170" cy="154" r="13"/><circle class="g-dot" cx="105" cy="105" r="16"/></svg>',
+    intake: '<svg viewBox="0 0 210 210"><path class="g-stroke" d="M46 56 L105 96 L164 56"/><path class="g-thin" d="M68 100 L105 126 L142 100"/><circle class="g-dot" cx="105" cy="154" r="16"/></svg>',
+    seal: '<svg viewBox="0 0 210 210"><circle class="g-stroke" cx="105" cy="105" r="72"/><path d="M74 107 L97 131 L139 81" fill="none" stroke="#4636e8" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    graph: '<svg viewBox="0 0 210 210"><line class="g-thin" x1="48" y1="60" x2="150" y2="52"/><line class="g-thin" x1="150" y1="52" x2="105" y2="150"/><line class="g-thin" x1="48" y1="60" x2="105" y2="150"/><circle class="g-stroke" cx="150" cy="52" r="13"/><circle class="g-stroke" cx="48" cy="60" r="13"/><circle class="g-dot" cx="105" cy="150" r="16"/></svg>',
+    aperture: '<svg viewBox="0 0 210 210"><circle class="g-stroke" cx="105" cy="105" r="74"/><circle class="g-thin" cx="105" cy="105" r="48"/><circle class="g-dot" cx="105" cy="105" r="16"/></svg>'
+  };
+  var DATA = {
+    buildlang:{role:"THE EFFECTS LANGUAGE", word:"BUILDLANG", glyph:"braces",
+      headline:"Typed effects in, verified C out.",
+      pipeline:"LEX / PARSE / TYPE / EFFECTS / CODEGEN"},
+    crucible:{role:"THE JUDGMENT ORGAN", word:"CRUCIBLE", glyph:"diamond",
+      headline:"Test the thesis. Witness the verdict.",
+      pipeline:"REGISTER / STEELMAN / MEASURE / REFINE / WITNESS"},
+    forum:{role:"MULTI-AGENT ORCHESTRATION", word:"FORUM", glyph:"triad",
+      headline:"Run a team of agents. Witness every step.",
+      pipeline:"PLAN / ROUTE / RUN / WITNESS / LEDGER"},
+    gather:{role:"ACCOUNTABLE RESEARCH INTAKE", word:"GATHER", glyph:"intake",
+      headline:"Reach it anywhere. Record how you got it.",
+      pipeline:"SOURCE / RECEIPT / DIGEST / VERIFY / CORPUS"},
+    emet:{role:"THE WITNESS LAYER", word:"EMET", glyph:"seal",
+      headline:"If an agent touched it, you can check what it did.",
+      pipeline:"PERCEIVE / HASH / WITNESS / VERIFY"},
+    index:{role:"THE WORKSPACE MAP", word:"INDEX", glyph:"graph",
+      headline:"Dozens of repos, one real map.",
+      pipeline:"SCAN / GRAPH / ROLE / MAP / VERIFY"},
+    telos:{role:"THE ENGINE", word:"TELOS", glyph:"aperture",
+      headline:"See it, and shape it, together with a model.",
+      pipeline:"PERCEIVE / GATE / ACT / WITNESS"}
+  };
+  var f = new URLSearchParams(location.search).get("f") || "buildlang";
+  var d = DATA[f] || DATA.buildlang;
+  document.getElementById("role").textContent = d.role;
+  document.getElementById("headline").textContent = d.headline;
+  document.getElementById("pipeline").textContent = d.pipeline;
+  document.getElementById("ghost").textContent = d.word;
+  document.getElementById("glyph").innerHTML = G[d.glyph];
+  // scale the ghost wordmark so long names stay inside the card
+  var ghost = document.getElementById("ghost");
+  var maxw = 1200 - 52 - 120;
+  requestAnimationFrame(function(){
+    var w = ghost.scrollWidth, size = 250;
+    if (w > maxw) { size = Math.floor(250 * maxw / w); ghost.style.fontSize = size + "px"; }
+    document.documentElement.setAttribute("data-ready","1");
+  });
+</script>
+</body>
+</html>
