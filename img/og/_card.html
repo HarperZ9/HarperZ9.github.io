@@ -78,6 +78,7 @@
   </div>
   <div class="glyph" id="glyph"></div>
 </div>
+<script src="cards-data.js"></script>
 <script>
   // minimal, coherent glyph set: each shares the vivid iris dot at center.
   var G = {
@@ -87,7 +88,13 @@
     intake: '<svg viewBox="0 0 210 210"><path class="g-stroke" d="M46 56 L105 96 L164 56"/><path class="g-thin" d="M68 100 L105 126 L142 100"/><circle class="g-dot" cx="105" cy="154" r="16"/></svg>',
     seal: '<svg viewBox="0 0 210 210"><circle class="g-stroke" cx="105" cy="105" r="72"/><path d="M74 107 L97 131 L139 81" fill="none" stroke="#4636e8" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     graph: '<svg viewBox="0 0 210 210"><line class="g-thin" x1="48" y1="60" x2="150" y2="52"/><line class="g-thin" x1="150" y1="52" x2="105" y2="150"/><line class="g-thin" x1="48" y1="60" x2="105" y2="150"/><circle class="g-stroke" cx="150" cy="52" r="13"/><circle class="g-stroke" cx="48" cy="60" r="13"/><circle class="g-dot" cx="105" cy="150" r="16"/></svg>',
-    aperture: '<svg viewBox="0 0 210 210"><circle class="g-stroke" cx="105" cy="105" r="74"/><circle class="g-thin" cx="105" cy="105" r="48"/><circle class="g-dot" cx="105" cy="105" r="16"/></svg>'
+    aperture: '<svg viewBox="0 0 210 210"><circle class="g-stroke" cx="105" cy="105" r="74"/><circle class="g-thin" cx="105" cy="105" r="48"/><circle class="g-dot" cx="105" cy="105" r="16"/></svg>',
+    waveform: '<svg viewBox="0 0 210 210"><path class="g-stroke" d="M26 105 Q51 48 76 105 T126 105 T176 105"/><circle class="g-dot" cx="105" cy="105" r="14"/></svg>',
+    shield: '<svg viewBox="0 0 210 210"><path class="g-stroke" d="M105 32 L164 56 V106 Q164 150 105 178 Q46 150 46 106 V56 Z"/><path d="M84 104 L100 122 L130 86" fill="none" stroke="#4636e8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    spark: '<svg viewBox="0 0 210 210"><path class="g-thin" d="M105 36 V74 M105 136 V174 M36 105 H74 M136 105 H174 M61 61 L85 85 M125 125 L149 149 M149 61 L125 85 M85 125 L61 149"/><circle class="g-dot" cx="105" cy="105" r="16"/></svg>',
+    bracket: '<svg viewBox="0 0 210 210"><text class="g-brace" x="14" y="150">[</text><circle class="g-dot" cx="105" cy="112" r="15"/><text class="g-brace" x="150" y="150">]</text></svg>',
+    layers: '<svg viewBox="0 0 210 210"><rect class="g-thin" x="48" y="58" width="114" height="26" rx="6"/><rect class="g-stroke" x="48" y="94" width="114" height="26" rx="6"/><rect class="g-thin" x="48" y="130" width="114" height="26" rx="6"/><circle class="g-dot" cx="105" cy="107" r="12"/></svg>',
+    ledger: '<svg viewBox="0 0 210 210"><rect class="g-stroke" x="52" y="40" width="106" height="130" rx="10"/><line class="g-thin" x1="72" y1="74" x2="138" y2="74"/><line class="g-thin" x1="72" y1="105" x2="138" y2="105"/><line class="g-thin" x1="72" y1="136" x2="120" y2="136"/><circle class="g-dot" cx="150" cy="150" r="14"/></svg>'
   };
   var DATA = {
     buildlang:{role:"THE EFFECTS LANGUAGE", word:"BUILDLANG", glyph:"braces",
@@ -112,13 +119,15 @@
       headline:"See it, and shape it, together with a model.",
       pipeline:"PERCEIVE / GATE / ACT / WITNESS"}
   };
+  if (window.CARD_DATA) Object.assign(DATA, window.CARD_DATA);
   var f = new URLSearchParams(location.search).get("f") || "buildlang";
   var d = DATA[f] || DATA.buildlang;
-  document.getElementById("role").textContent = d.role;
-  document.getElementById("headline").textContent = d.headline;
-  document.getElementById("pipeline").textContent = d.pipeline;
-  document.getElementById("ghost").textContent = d.word;
-  document.getElementById("glyph").innerHTML = G[d.glyph];
+  document.getElementById("role").textContent = d.role || "";
+  document.getElementById("headline").textContent = d.headline || "";
+  var pipeEl = document.getElementById("pipeline");
+  if (d.pipeline) pipeEl.textContent = d.pipeline; else pipeEl.style.display = "none";
+  document.getElementById("ghost").textContent = d.word || f.toUpperCase();
+  document.getElementById("glyph").innerHTML = G[d.glyph] || G.aperture;
   // scale the ghost wordmark so long names stay inside the card
   var ghost = document.getElementById("ghost");
   var maxw = 1200 - 52 - 120;
