@@ -117,7 +117,10 @@
       pipeline:"SCAN / GRAPH / ROLE / MAP / VERIFY"},
     telos:{role:"THE ENGINE", word:"TELOS", glyph:"aperture",
       headline:"See it, and shape it, together with a model.",
-      pipeline:"PERCEIVE / GATE / ACT / WITNESS"}
+      pipeline:"PERCEIVE / GATE / ACT / WITNESS"},
+    learn:{role:"LEARNING AID", word:"LEARN", glyph:"layers",
+      headline:"Study what you gave it. Prove what you kept.",
+      pipeline:"REVIEW / RETRIEVE / PREDICT / EXPLAIN / ASSESS"}
   };
   if (window.CARD_DATA) Object.assign(DATA, window.CARD_DATA);
   var f = new URLSearchParams(location.search).get("f") || "buildlang";
