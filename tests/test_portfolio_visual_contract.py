@@ -26,6 +26,8 @@ INDEX = ROOT / "index.html"
 HOME_CSS = ROOT / "system" / "home.css"
 RIBBON = ROOT / "system" / "ribbon-field.js"
 SCROLL = ROOT / "system" / "home-scroll.js"
+ALEPH = ROOT / "aleph.html"
+ALEPH_HERO = ROOT / "img" / "private-line" / "aleph-hero.svg"
 
 EM_DASH = "—"
 EN_DASH = "–"
@@ -127,6 +129,19 @@ def test_five_flagships_equal_standing() -> None:
     # links to each flagship page
     for href in ("gather.html", "index-graph.html", "forum.html", "crucible.html", "studio.html", "learn.html"):
         assert f'href="{href}"' in src
+
+
+def test_aleph_page_presents_private_line_platform_contract() -> None:
+    src = ALEPH.read_text(encoding="utf-8")
+    assert ALEPH_HERO.is_file()
+    assert "Project Telos private-line platform" in src
+    assert "One release gate. Six working tools." in src
+    assert "img/private-line/aleph-hero.svg" in src
+    for term in ("Sofer", "Seed", "Kun", "ORCA", "behavior-transform"):
+        assert term in src
+    for proof in ("presentation readiness", "release_verdict: MATCH", "4/4 docs", "3/3 brand"):
+        assert proof in src
+    assert "Break your model on purpose" not in src
 
 
 def test_no_em_or_en_dashes_in_home_and_system() -> None:
