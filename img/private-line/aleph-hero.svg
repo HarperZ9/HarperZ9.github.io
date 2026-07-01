@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 520" role="img" aria-label="Aleph README hero for Project Telos. One release gate for the private line.">
+  <title>Aleph Project Telos hero</title>
+  <desc>Aleph README hero for Project Telos. One release gate for the private line.</desc>
+  <rect width="1280" height="520" rx="34" fill="#f4f3ef"/>
+  <path d="M80 96 H1200 M80 424 H1200" stroke="#0b0c0e" stroke-opacity=".14"/>
+  <text x="80" y="86" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" letter-spacing="6" fill="#585c64">PROJECT TELOS / PRIVATE-LINE RELEASE GATE</text>
+  <text x="76" y="334" font-family="Arial Black, Impact, system-ui, sans-serif" font-size="182" letter-spacing="0" fill="#0b0c0e" fill-opacity=".08">ALEPH</text>
+  <text font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="700" fill="#0b0c0e">
+    <tspan x="84" y="188">One release gate for six working</tspan>
+    <tspan x="84" dy="48">private-line tools.</tspan>
+  </text>
+  <text x="86" y="290" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill="#2f3238">DOCS / BRAND / PACKAGE / MCP / CI / RECEIPT</text>
+  <g transform="translate(878 78) scale(.70)">
+    <path d="M110 92 H410 V342 H110 Z" fill="none" stroke="#0b0c0e" stroke-width="14" stroke-linejoin="round"/>
+    <path d="M162 164 H358 M162 220 H358 M162 276 H286" stroke="#0b0c0e" stroke-width="10" stroke-linecap="round"/>
+    <path d="M330 282 L366 318 L430 238" fill="none" stroke="#4636e8" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="162" cy="164" r="13" fill="#f4f3ef" stroke="#4636e8" stroke-width="9"/>
+    <circle cx="162" cy="220" r="13" fill="#f4f3ef" stroke="#4636e8" stroke-width="9"/>
+    <circle cx="162" cy="276" r="13" fill="#f4f3ef" stroke="#4636e8" stroke-width="9"/>
+  </g>
+</svg>
