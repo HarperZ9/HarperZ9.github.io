@@ -11,6 +11,8 @@ change.
   Lab, and Ledger.
 - [x] Lab and Ledger remain marked private until public-safe splits are
   complete.
+- [x] Browser titles and social metadata lead with Gate and Runtime where those
+  are the product names.
 - [x] No package names, repository names, import paths, or CLI commands are
   renamed in this patch.
 - [x] Tests assert the public-safe private-line group appears on the home page
@@ -25,7 +27,8 @@ for repositories that passed the public-safety gate.
 - `index.html` - list the full private-line family and its safety split.
 - `overview.html` - clarify the private-line roles in the flagship map.
 - `catalog.html` - list the same function-first labels in the catalog.
-- `aleph.html` - show the same private-line contract in the Aleph page.
+- `aleph.html` - show the same private-line contract in the Gate page.
+- `orca.html` - present Runtime as the product name for the ORCA repo page.
 - `portfolio.html` - keep the portfolio note current.
 - `tests/test_portfolio_visual_contract.py` - assert the presentation contract.
 

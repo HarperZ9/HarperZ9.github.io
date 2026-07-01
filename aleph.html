@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Aleph: private-line release gate for Project Telos</title>
-<meta name="description" content="Aleph is the Project Telos private-line platform: one release gate for six working tools, with CLI, MCP, package, provenance, presentation, and CI receipts.">
+<title>Gate: private-line release gate for Project Telos</title>
+<meta name="description" content="Gate is the Project Telos private-line platform: one release gate for six working tools, with CLI, MCP, package, provenance, presentation, and CI receipts.">
 <link rel="canonical" href="https://harperz9.github.io/aleph.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="Aleph: private-line release gate for Project Telos">
-<meta property="og:description" content="One release gate for Aleph, Sofer, Seed, Kun, ORCA, and behavior-transform. Public where safe, private where required, evidence-first delivery.">
+<meta property="og:title" content="Gate: private-line release gate for Project Telos">
+<meta property="og:description" content="One release gate for Gate, Ledger, Lab, Vault, Runtime, and Boundary. Public where safe, private where required, evidence-first delivery.">
 <meta property="og:url" content="https://harperz9.github.io/aleph.html">
 <meta property="og:image" content="https://harperz9.github.io/img/private-line/aleph-hero.svg">
-<meta property="og:image:alt" content="Aleph Project Telos private-line platform hero graphic.">
+<meta property="og:image:alt" content="Gate Project Telos private-line platform hero graphic.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Aleph: private-line release gate for Project Telos">
+<meta name="twitter:title" content="Gate: private-line release gate for Project Telos">
 <meta name="twitter:description" content="One release gate for six working Project Telos private-line tools.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/private-line/aleph-hero.svg">
 <meta name="color-scheme" content="light">
@@ -32,6 +32,7 @@
   .rail{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.4rem;pointer-events:auto}
   .rail a,.rail span{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:3px;padding:.42rem .58rem;background:rgba(255,255,255,.46)}
   .rail a:hover{color:#fff;background:var(--iris);border-color:var(--iris)}
+  .rail .rail-status{color:var(--ink-muted);background:transparent;border-style:dashed}
   .proof-grid,.tool-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1.8rem;max-width:64rem}
   .proof-card,.tool-card{background:var(--paper);padding:1.05rem 1.1rem}
   .proof-k,.tool-k{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.45rem}
@@ -61,23 +62,23 @@
 <script type="module" src="system/nav.js?v=20260630a"></script>
 
 <div class="frame">
-  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">Aleph</span> &middot; private-line release gate</span></div>
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">Gate</span> &middot; private-line release gate</span></div>
   <div class="mid">
     <p class="eyebrow">PROJECT TELOS PRIVATE-LINE PLATFORM</p>
     <h1>One release gate. Six working tools.</h1>
-    <p class="lede"><span translate="no">Aleph</span> is the public contract for the Project Telos private line: <span translate="no">Aleph</span>, <span translate="no">Sofer</span>, <span translate="no">Seed</span>, <span translate="no">Kun</span>, <span translate="no">ORCA</span>, and <span translate="no">behavior-transform</span>. It verifies presentation, package shape, MCP readiness, CLI contracts, provenance receipts, and release state before anything is described as ready.</p>
+    <p class="lede"><span translate="no">Gate</span> is the public contract for the Project Telos private line: <span translate="no">Gate</span> (Aleph), <span translate="no">Ledger</span> (Sofer), <span translate="no">Lab</span> (Seed), <span translate="no">Vault</span> (Kun), <span translate="no">Runtime</span> (ORCA), and <span translate="no">Boundary</span> (behavior-transform). It verifies presentation, package shape, MCP readiness, CLI contracts, provenance receipts, and release state before anything is described as ready.</p>
     <p class="close">Public where safe, private where required, checkable delivery.</p>
     <div class="rail" aria-label="Project Telos private-line navigation">
       <a href="overview.html">Project Telos</a>
       <a href="catalog.html">Catalog</a>
-      <a href="orca.html" translate="no">ORCA</a>
-      <span translate="no">Sofer</span>
-      <span translate="no">Seed</span>
-      <span translate="no">Kun</span>
-      <span translate="no">behavior-transform</span>
+      <a href="orca.html" translate="no">Runtime</a>
+      <a href="https://github.com/HarperZ9/kun" rel="noopener" translate="no">Vault</a>
+      <a href="https://github.com/HarperZ9/behavior-transform.io" rel="noopener" translate="no">Boundary</a>
+      <span class="rail-status" translate="no">Ledger private</span>
+      <span class="rail-status" translate="no">Lab private</span>
     </div>
     <figure class="hero-art">
-      <img src="img/private-line/aleph-hero.svg" alt="Aleph README-style hero: Project Telos private-line release gate with six tools, receipts, CI, and MCP.">
+      <img src="img/private-line/aleph-hero.svg" alt="Gate README-style hero: Project Telos private-line release gate with six tools, receipts, CI, and MCP.">
     </figure>
   </div>
   <div class="seal">private by design &middot; public contract &middot; no secrets in the presentation layer</div>
@@ -87,7 +88,7 @@
 <section class="mv" id="contract" aria-labelledby="contract-h">
   <p class="eyebrow">WHAT IT IS</p>
   <h2 id="contract-h" class="reveal">A release gate for tools that have to be usable alone or inside a larger surface.</h2>
-  <p class="body-text reveal">The live public flagships now use a simple pattern: direct purpose, visible artifact, installation path, reason it matters, and current status. <span translate="no">Aleph</span> brings the same standard to the private line. Four repos are public now: <span translate="no">Aleph</span>, <span translate="no">ORCA</span>, <span translate="no">Kun</span>, and <span translate="no">behavior-transform</span>. <span translate="no">Seed</span> and <span translate="no">Sofer</span> remain private until their public-safe splits are complete.</p>
+  <p class="body-text reveal">The live public flagships now use a simple pattern: direct purpose, visible artifact, installation path, reason it matters, and current status. <span translate="no">Gate</span> brings the same standard to the private line. Four repos are public now: <span translate="no">Gate</span>, <span translate="no">Runtime</span>, <span translate="no">Vault</span>, and <span translate="no">Boundary</span>. <span translate="no">Lab</span> (Seed) and <span translate="no">Ledger</span> (Sofer) remain private until their public-safe splits are complete.</p>
   <p class="body-text reveal">The private-line standard is concrete: command surfaces must be inspectable, package metadata must agree with the docs, MCP or host-neutral integration must be declared, graphics must match the Project Telos presentation language, and every readiness claim must resolve to a receipt.</p>
 </section>
 
@@ -127,7 +128,7 @@
 <section class="mv" id="access" aria-labelledby="access-h">
   <p class="eyebrow">WORK WITH IT</p>
   <h2 id="access-h" class="reveal">Private by inquiry, not cryptic by default.</h2>
-  <p class="body-text reveal">A private-line tool can still be readable. The public promise is deliberately plain: <span translate="no">Aleph</span> makes the private line shippable by forcing each tool to say what it is, how it is operated, which receipts support the claim, and which boundary keeps sensitive behavior out of public documentation.</p>
+  <p class="body-text reveal">A private-line tool can still be readable. The public promise is deliberately plain: <span translate="no">Gate</span> makes the private line shippable by forcing each tool to say what it is, how it is operated, which receipts support the claim, and which boundary keeps sensitive behavior out of public documentation.</p>
   <div class="channels reveal">
     <span class="g">Inquiries</span>: <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
     &nbsp;&middot;&nbsp;
@@ -137,7 +138,7 @@
 </main>
 
 <footer class="footer-seal" role="contentinfo">
-  <p class="seal">Aleph &middot; Project Telos private-line platform &middot; public contract, private internals, receipt-backed delivery.</p>
+  <p class="seal">Gate &middot; Project Telos private-line platform &middot; public contract, private internals, receipt-backed delivery.</p>
 </footer>
 
 <script src="system/spine.js?v=20260625a" defer></script>

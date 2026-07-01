@@ -4,22 +4,29 @@
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ORCA: the accountable way to run an assessment</title>
-<meta name="description" content="ORCA is a local-first command-line tool for authorized, local-lab security assessments: a local engagement workspace, metadata-only checks, Markdown reports and portable bundles. It cannot reach the thing it assesses. No network, no exploitation. Every release ships checksums and a provenance receipt. v1.0.0, 361 tests. By Zain Dana Harper.">
+<title>Runtime: the accountable way to run an assessment</title>
+<meta name="description" content="Runtime is the Project Telos local-first operator runtime housed in ORCA: local engagement workspaces, metadata-only checks, Markdown reports, portable bundles, checksums, and provenance receipts. It cannot reach the thing it assesses.">
 <link rel="canonical" href="https://harperz9.github.io/orca.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="ORCA: the accountable way to run an assessment">
-<meta property="og:description" content="ORCA is a local-first command-line tool for authorized, local-lab security assessments: a local engagement workspace, metadata-only checks, Markdown reports and portable bundles. It cannot reach the thing it assesses. No network, no exploitation. Every release ships checksums and a provenance receipt. v1.0.0, 361 tests. By Zain Dana Harper.">
+<meta property="og:title" content="Runtime: the accountable way to run an assessment">
+<meta property="og:description" content="Runtime is the Project Telos local-first operator runtime housed in ORCA: local engagement workspaces, metadata-only checks, Markdown reports, portable bundles, checksums, and provenance receipts. It cannot reach the thing it assesses.">
 <meta property="og:url" content="https://harperz9.github.io/orca.html">
 <meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
 <meta property="og:image:alt" content="A still from the engine: a Julia set rendered in the site's palette, real mathematics drawn by our own code.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ORCA: the accountable way to run an assessment">
-<meta name="twitter:description" content="ORCA is a local-first command-line tool for authorized, local-lab security assessments: a local engagement workspace, metadata-only checks, Markdown reports and portable bundles. It cannot reach the thing it assesses. No network, no exploitation. Every release ships checksums and a provenance receipt. v1.0.0, 361 tests. By Zain Dana Harper.">
+<meta name="twitter:title" content="Runtime: the accountable way to run an assessment">
+<meta name="twitter:description" content="Runtime is the Project Telos local-first operator runtime housed in ORCA. It keeps local workspaces, reports, bundles, checksums, and provenance receipts joined without reaching the target.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
-<meta name="color-scheme" content="dark">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f4f3ef">
 <link rel="stylesheet" href="system/system.css?v=20260630s1">
+<style>
+  .runtime-readout{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);max-width:54rem;margin-top:1.4rem;pointer-events:auto}
+  .runtime-readout span{display:flex;flex-direction:column;gap:.28rem;background:var(--paper);padding:.72rem .8rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted)}
+  .runtime-readout b{font-family:var(--display);font-size:clamp(1.05rem,1.8vw,1.38rem);line-height:1;color:var(--iris);letter-spacing:0;text-transform:none}
+  @media(max-width:760px){.runtime-readout{grid-template-columns:1fr 1fr}.runtime-readout span:last-child{grid-column:1/-1}}
+</style>
 </head>
 <body class="inner-clean">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -29,14 +36,21 @@
 <script type="module" src="system/nav.js?v=20260630a"></script>
 
 <div class="frame">
-  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">ORCA</span> &middot; the accountable assessment runner</span></div>
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">Runtime</span> &middot; the accountable assessment runner</span></div>
   <div class="mid">
-    <p class="eyebrow">OPERATOR TOOLING &middot; <span translate="no">ORCA</span></p>
+    <p class="eyebrow">OPERATOR TOOLING &middot; <span translate="no">Runtime</span> / ORCA</p>
     <h1>Run the assessment, keep the receipts. <span class="g">And never touch the target.</span></h1>
-    <p class="lede">When you do authorized security work (hired, permitted attacking of a system to find its weak spots before a real attacker does) the easy part to get wrong is the <em>discipline around it</em>: what was in the agreed boundary of what may be touched, what you actually ran, what you found, and whether the report you hand over matches the work you did. <span translate="no">ORCA</span> is the command-line workbench I run that part from. You open a local <b>engagement workspace</b>, write down the in-scope assets and the findings as plain records, run a set of <b>checks that give the same answer every time</b> over that workspace, and it produces a Markdown report and a portable bundle of the results. The line it will not cross is the important one: everything it does is <b>local and metadata-only</b> (it reads descriptions of things, not the things themselves). It does not scan, probe, resolve, connect to, or attack anything, because there is no network or exploitation capability in it at all.</p>
+    <p class="lede"><span translate="no">Runtime</span> is the command-line workbench for the discipline around an authorized assessment: what was in scope, what was recorded, what was checked, and what bundle can be handed off later. It opens a local <b>engagement workspace</b>, runs deterministic checks over that workspace, and emits a Markdown report plus a portable evidence bundle. The line it will not cross is the important one: everything is <b>local and metadata-only</b>. It does not scan, probe, resolve, connect to, or attack anything.</p>
     <p class="close">It runs the bookkeeping of an assessment, accountably. It is not a scanner, and it cannot reach the thing being assessed.</p>
+    <div class="runtime-readout" aria-label="Runtime proof readout">
+      <span>release <b>v1.0.0</b></span>
+      <span>tests <b>361</b></span>
+      <span>boundary <b>local-only</b></span>
+      <span>mode <b>metadata-only</b></span>
+      <span>artifacts <b>5 files</b></span>
+    </div>
   </div>
-  <div class="seal">v1.0.0 &middot; 361 tests &middot; private operator tool &middot; local-first &middot; metadata-only</div>
+  <div class="seal">v1.0.0 &middot; 361 tests &middot; public contract &middot; private operator material &middot; local-first &middot; metadata-only</div>
 </div>
 
 <main id="main">
@@ -44,15 +58,15 @@
 <!-- what it is -->
 <section class="mv" id="what" aria-labelledby="what-h">
   <h2 id="what-h" class="reveal">The same discipline as the rest of my work, pointed at an engagement.</h2>
-  <p class="body-text reveal">Everything else I build is about making what a machine does checkable: bound it, witness it, refuse the unclear case. <span translate="no">ORCA</span> is that habit applied to the place I most needed it: running a security engagement without losing the thread of what was authorized and what was done. An <b>engagement</b> is a local workspace: the agreed boundary of what may be touched, the assets in it, the findings as you record them. None of those records reach out to the real systems they name. They are notes about the work, held on your own disk.</p>
-  <p class="body-text reveal">Each capability in ORCA carries the <b>mode</b> it is allowed to run in (<code translate="no">sim</code>, <code translate="no">dry_run</code>, <code translate="no">local_lab</code>, or <code translate="no">authorized_run</code>), and the tool refuses to run a capability in a mode that capability does not declare. A checkpoint that says no until it is sure. The checks give <b>the same answer every time</b>: run them again and you get the same result, with no duplicated findings, and anything that doesn&rsquo;t apply is reported as skipped rather than quietly dropped. The point is that an assessment, like everything else here, should be something you can re-run and re-read, not something you have to take on trust.</p>
+  <p class="body-text reveal">Everything else I build is about making what a machine does checkable: bound it, witness it, refuse the unclear case. <span translate="no">Runtime</span> applies that habit to the place I most needed it: running a security engagement without losing the thread of what was authorized and what was done. An <b>engagement</b> is a local workspace: the agreed boundary of what may be touched, the assets in it, the findings as you record them. None of those records reach out to the real systems they name. They are notes about the work, held on your own disk.</p>
+  <p class="body-text reveal">Each capability in Runtime carries the <b>mode</b> it is allowed to run in (<code translate="no">sim</code>, <code translate="no">dry_run</code>, <code translate="no">local_lab</code>, or <code translate="no">authorized_run</code>), and the tool refuses to run a capability in a mode that capability does not declare. A checkpoint that says no until it is sure. The checks give <b>the same answer every time</b>: run them again and you get the same result, with no duplicated findings, and anything that doesn&rsquo;t apply is reported as skipped rather than quietly dropped. The point is that an assessment, like everything else here, should be something you can re-run and re-read, not something you have to take on trust.</p>
   <em class="close reveal">It reads only the workspace you build. It never reaches the asset values you record, because there is nothing in it that could.</em>
 </section>
 
 <!-- the release -->
 <section class="mv" id="release" aria-labelledby="release-h">
   <h2 id="release-h" class="reveal">A release you can verify, not just trust.</h2>
-  <p class="body-text reveal"><span translate="no">ORCA</span> ships the way I think every tool should: the v1.0.0 release carries not only the package, but a <b>checksum manifest</b> (a list of fingerprints, one per file, so you can confirm nothing changed) and a <b>provenance receipt</b>, a record of where it came from: the package&rsquo;s identity, the source revision it was built from, the Python version and platform it was built on, and the digests, all in one file. So before you run it, you can check that what you have is what was built. That is the same move the rest of my tools make about everything else, turned on the tool itself: here is the file, and here is how you work out for yourself that it&rsquo;s the real one.</p>
+  <p class="body-text reveal"><span translate="no">Runtime</span> ships the way I think every tool should: the v1.0.0 release carries not only the package, but a <b>checksum manifest</b> (a list of fingerprints, one per file, so you can confirm nothing changed) and a <b>provenance receipt</b>, a record of where it came from: the package&rsquo;s identity, the source revision it was built from, the Python version and platform it was built on, and the digests, all in one file. So before you run it, you can check that what you have is what was built. That is the same move the rest of my tools make about everything else, turned on the tool itself: here is the file, and here is how you work out for yourself that it&rsquo;s the real one.</p>
   <em class="close reveal">Five files in the release: the wheel, the source archive, a portable bundle, a checksum manifest, and the provenance receipt that ties them together.</em>
 </section>
 
@@ -60,7 +74,7 @@
 <section class="proof" id="proof" aria-labelledby="proof-h">
   <div class="proof-head">
     <h2 id="proof-h" class="reveal">Don&rsquo;t take its word that it&rsquo;s healthy and bounded. <em>Ask it.</em></h2>
-    <p class="body-text reveal">ORCA can check its own install and report exactly what it is, in plain output: the version, the capabilities it carries, where it keeps state, and that it&rsquo;s ready. Real output, nothing edited.</p>
+    <p class="body-text reveal">Runtime can check its own install and report exactly what it is, in plain output: the version, the capabilities it carries, where it keeps state, and that it&rsquo;s ready. Real output, nothing edited.</p>
   </div>
 
   <div class="exhibit reveal">
@@ -86,11 +100,11 @@ check: artifact_dir <span class="ok">ok</span> .orca/artifacts</pre>
 <!-- honest limits -->
 <section class="mv" id="limits" aria-labelledby="limits-h">
   <h2 id="limits-h" class="reveal">What it is, and what it is not.</h2>
-  <p class="body-text reveal"><span translate="no">ORCA</span> is a local-first command-line runner for authorized assessment work: v1.0.0, 361 tests, with checksums and a provenance receipt on every build. Its whole safety model is one sentence: it is local and metadata-only (it reads descriptions of things, not the things themselves), and it has no way to reach a target. It does not scan, probe, resolve, connect to, or attack anything; the records you keep are notes about the work, not connections to the systems they name; and it refuses to run a capability in a mode that capability does not declare.</p>
+  <p class="body-text reveal"><span translate="no">Runtime</span> is a local-first command-line runner for authorized assessment work: v1.0.0, 361 tests, with checksums and a provenance receipt on every build. Its whole safety model is one sentence: it is local and metadata-only (it reads descriptions of things, not the things themselves), and it has no way to reach a target. It does not scan, probe, resolve, connect to, or attack anything; the records you keep are notes about the work, not connections to the systems they name; and it refuses to run a capability in a mode that capability does not declare.</p>
   <p class="pull reveal">It cannot touch the target. That isn&rsquo;t a setting. There is no capability in it that reaches off your disk.</p>
-  <p class="body-text reveal">The honest edges: the set of built-in checks is small on purpose, because this is the discipline-and-bookkeeping layer of an engagement, not the part that finds the vulnerabilities. It is <b>proprietary and kept private</b> (an internal operator tool I run, not a public release) and it needs Python 3.11 or newer. It is the workbench I actually run my own engagements from, shipped the way I&rsquo;d want any tool I depend on to be shipped: bounded, witnessed, and able to tell you what it is.</p>
+  <p class="body-text reveal">The honest edges: the set of built-in checks is small on purpose, because this is the discipline-and-bookkeeping layer of an engagement, not the part that finds the vulnerabilities. Its public surface is the release-safe contract, docs, and verification envelope; operator-specific material stays private and local. It needs Python 3.11 or newer. It is the workbench I actually run my own engagements from, shipped the way I&rsquo;d want any tool I depend on to be shipped: bounded, witnessed, and able to tell you what it is.</p>
   <div class="channels reveal">
-    <span class="g">Status</span>: private operator tooling, not publicly released
+    <span class="g">Status</span>: public repo for release-safe docs and runtime contract; private operator material stays local
     &nbsp;&middot;&nbsp;
     <a href="overview.html">&larr; the map</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the index</a>
   </div>
