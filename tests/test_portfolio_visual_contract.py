@@ -94,7 +94,7 @@ def test_nav_contract_is_intact() -> None:
 def test_section_index_rail_present() -> None:
     src = index_source()
     assert 'class="dex"' in src
-    for label in ("Perceive", "Build", "Verify"):
+    for label in ("Thesis", "Engines", "Range", "Work", "Floor"):
         assert label in src
     assert ".dex{" in css_source()
 
@@ -104,7 +104,7 @@ def test_home_thesis_and_messaging_preserved() -> None:
     assert "Build with a model." in src
     assert "Take nothing on faith." in src
     assert "from outside the thing making the claim" in src
-    assert "Five engines, equal standing." in src
+    assert "Seven engines, equal standing." in src
     assert "Looking verified is not the same as being verifiable." in src
     assert "Build it to be checked, or do not ship it." in src
     for verdict in ("MATCH", "DRIFT", "UNVERIFIABLE"):
