@@ -2,6 +2,7 @@
 // active state derived from the path. No framework; <noscript> fallback lives in the page markup.
 const DEST = [
   ["Home", "index.html", "home"],
+  ["Guide", "guide.html", "guide"],
   ["Flagships", "overview.html", "flagships"],
   ["Catalog", "catalog.html", "catalog"],
   ["Research", "research.html", "research"],
@@ -25,6 +26,7 @@ export function navActive(pathname) {
   if (f === "") f = "index.html";
   const stem = f.replace(/\.html$/, "") || "index";
   if (stem === "index") return "home";
+  if (stem === "guide") return "guide";
   if (FLAGSHIPS.has(stem)) return "flagships";
   if (CATALOG.has(stem)) return "catalog";
   if (WRITING.has(stem)) return "writing";
