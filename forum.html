@@ -123,11 +123,11 @@
 <!-- PROOF AND RUN IT -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Current state. How to run it.</h2>
-  <p class="body-text reveal">Version 1.12.0, on PyPI as <code translate="no">forum-engine</code>. The full engine is here: durable ledger, routing, the control loop, model-agnostic executors, an HTTP and MCP daemon, the <code translate="no">forum</code> CLI, witnessed budgets and escalation, the intent and delivery ladders, typed data-flow between tasks, resumable runs, and the context and verification seams. 249 tests plus two gated real-model tests, ruff and mypy clean, no third-party runtime dependency. The license is fair-source: source-available, rights reserved to fund the research; the smaller utility tools that came out of this work stay permissive.</p>
+  <p class="body-text reveal">Version 1.12.0, on PyPI as <code translate="no">forum-engine</code>. The full engine is here: durable ledger, routing, the control loop, model-agnostic executors, an HTTP and MCP daemon, the <code translate="no">forum</code> CLI, witnessed budgets and escalation, the intent and delivery ladders, typed data-flow between tasks, resumable runs, and the context and verification seams. 271 tests plus two gated real-model tests, ruff and mypy clean, no third-party runtime dependency. The license is fair-source: source-available, rights reserved to fund the research; the smaller utility tools that came out of this work stay permissive.</p>
   <pre class="artifact" translate="no"><span class="pr">$ pip install forum-engine</span>
 <span class="pr">$ python examples/demo.py</span>   <span class="ok"># routes, plans, witnesses, then tamper-checks the ledger</span>
 <span class="pr">$ python -m pytest</span>
-<span class="ok">249 passed</span></pre>
+<span class="ok">271 passed</span></pre>
   <p class="body-text reveal">Python, standard library only. Install it, run the demo, route a real task through it. Each example under <code translate="no">examples/</code> is a short offline demonstration of one capability: the intent ladder, the delivery pass, a resumed run, an A/B of two runs. If something breaks or the ledger produces a result you cannot verify, that is exactly the kind of report I want.</p>
   <div class="channels reveal">
     <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/forum" translate="no">HarperZ9/forum</a>
