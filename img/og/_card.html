@@ -120,7 +120,13 @@
       pipeline:"PERCEIVE / GATE / ACT / WITNESS"},
     learn:{role:"LEARNING AID", word:"LEARN", glyph:"layers",
       headline:"Study what you gave it. Prove what you kept.",
-      pipeline:"REVIEW / RETRIEVE / PREDICT / EXPLAIN / ASSESS"}
+      pipeline:"REVIEW / RETRIEVE / PREDICT / EXPLAIN / ASSESS"},
+    aleph:{role:"PRIVATE-LINE RELEASE GATE", word:"GATE", glyph:"shield",
+      headline:"One gate. Receipts before claims.",
+      pipeline:"DOCS / PACKAGES / CI / SBOM / RECEIPTS"},
+    orca:{role:"OPERATOR RUNTIME", word:"RUNTIME", glyph:"bracket",
+      headline:"Local runs. Portable receipts.",
+      pipeline:"RUN / ARTIFACT / PROVENANCE / HANDOFF"}
   };
   if (window.CARD_DATA) Object.assign(DATA, window.CARD_DATA);
   var f = new URLSearchParams(location.search).get("f") || "buildlang";
