@@ -131,16 +131,28 @@ def test_five_flagships_equal_standing() -> None:
         assert f'href="{href}"' in src
 
 
+def test_public_safe_private_line_is_listed_on_home() -> None:
+    src = index_source()
+    assert "Private-line flagships, public where safe." in src
+    for repo in ("HarperZ9/aleph", "HarperZ9/orca", "HarperZ9/kun", "HarperZ9/behavior-transform.io"):
+        assert repo in src
+    for name in ("Gate", "Runtime", "Vault", "Boundary", "Lab", "Ledger"):
+        assert name in src
+    assert "Lab and Ledger remain private/proprietary" in src
+
+
 def test_aleph_page_presents_private_line_platform_contract() -> None:
     src = ALEPH.read_text(encoding="utf-8")
     assert ALEPH_HERO.is_file()
     assert "Project Telos private-line platform" in src
     assert "One release gate. Six working tools." in src
     assert "img/private-line/aleph-hero.svg" in src
-    for term in ("Sofer", "Seed", "Kun", "ORCA", "behavior-transform"):
+    for term in ("Gate", "Runtime", "Vault", "Boundary", "Lab", "Ledger"):
         assert term in src
     for proof in ("presentation readiness", "release_verdict: MATCH", "4/4 docs", "3/3 brand"):
         assert proof in src
+    assert "Public now: Gate, Runtime, Vault, and Boundary" in src
+    assert "Private until split: Lab (Seed) and Ledger (Sofer)" in src
     assert "Break your model on purpose" not in src
 
 
