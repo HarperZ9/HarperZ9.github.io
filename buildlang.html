@@ -5,18 +5,18 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BuildLang: a typed-effects language</title>
-<meta name="description" content="BuildLang is a Rust-built compiler for a typed-effects language: a function declares the effects it may perform and the lifetimes of the references it returns, and the compiler checks both and lowers the program to native code through a C backend. 1002 passing Cargo tests, 11 ignored. By Zain Dana Harper.">
+<meta name="description" content="BuildLang is a Rust-built compiler for a typed-effects language: a function declares the effects it may perform and the lifetimes of the references it returns, and the compiler checks both and lowers the program to native code through a C backend. Over 1,300 passing Cargo tests across its suites; published on crates.io as buildlang. By Zain Dana Harper.">
 <link rel="canonical" href="https://harperz9.github.io/buildlang.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="BuildLang: a typed-effects language">
-<meta property="og:description" content="BuildLang is a Rust-built compiler for a typed-effects language: a function declares the effects it may perform and the lifetimes of the references it returns, and the compiler checks both and lowers the program to native code through a C backend. 1002 passing Cargo tests, 11 ignored. By Zain Dana Harper.">
+<meta property="og:description" content="BuildLang is a Rust-built compiler for a typed-effects language: a function declares the effects it may perform and the lifetimes of the references it returns, and the compiler checks both and lowers the program to native code through a C backend. Over 1,300 passing Cargo tests across its suites; published on crates.io as buildlang. By Zain Dana Harper.">
 <meta property="og:url" content="https://harperz9.github.io/buildlang.html">
 <meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
 <meta property="og:image:alt" content="A still from the engine: a Julia set rendered in the site's palette, real mathematics drawn by our own code.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="BuildLang: a typed-effects language">
-<meta name="twitter:description" content="BuildLang is a Rust-built compiler for a typed-effects language: a function declares the effects it may perform and the lifetimes of the references it returns, and the compiler checks both and lowers the program to native code through a C backend. 1002 passing Cargo tests, 11 ignored. By Zain Dana Harper.">
+<meta name="twitter:description" content="BuildLang is a Rust-built compiler for a typed-effects language: a function declares the effects it may perform and the lifetimes of the references it returns, and the compiler checks both and lowers the program to native code through a C backend. Over 1,300 passing Cargo tests across its suites; published on crates.io as buildlang. By Zain Dana Harper.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
 <meta name="color-scheme" content="dark">
 <link rel="stylesheet" href="system/system.css?v=20260630s1">
@@ -35,7 +35,7 @@
     <p class="lede"><span translate="no">BuildLang</span> is a small programming language with one stubborn idea. Every function has to say, right at the top, what it&rsquo;s allowed to reach out and touch: your files, the screen, the network. Those reach-outs are called <em>effects</em>. The function also has to be clear about which piece of memory it hands back, and how long that memory is allowed to stay alive, the part people call <em>lifetimes</em>. The compiler, the program that turns your code into something the machine can run, checks both, then turns it into fast native code. Reach for something you never declared, and it simply won&rsquo;t build.</p>
     <p class="close">I built it so the compiler could answer a question I kept getting wrong on my own: what is this function actually allowed to do? It&rsquo;s tested where it counts, honest about its rough edges, and the careful habit at the heart of it (say what you&rsquo;ll touch, then be held to it) runs quietly under everything else here.</p>
   </div>
-  <div class="seal"><span translate="no">buildc</span> 1.0.0 &middot; a Rust-built compiler &middot; effects and lifetimes, in the type</div>
+  <div class="seal"><span translate="no">buildc</span> 1.0.5 &middot; a Rust-built compiler, on crates.io &middot; effects and lifetimes, in the type</div>
 </div>
 
 <main id="main">
@@ -51,7 +51,7 @@
 <section class="proof" id="proof" aria-labelledby="proof-h">
   <div class="proof-head">
     <h2 id="proof-h" class="reveal">Don&rsquo;t take the type. <em>Watch it refuse.</em></h2>
-    <p class="body-text reveal">Each of these is a real file checked by the real binary: <span translate="no">buildc</span> 1.0.0, release build. The output is verbatim.</p>
+    <p class="body-text reveal">Each of these is a real file checked by the real binary: <span translate="no">buildc</span> 1.0.5, release build. The output is verbatim.</p>
   </div>
 
   <div class="exhibit reveal">
@@ -104,18 +104,21 @@ Parsing... <span class="ok">OK</span> (1 items)
 
 <!-- maturity -->
 <section class="mv" id="maturity" aria-labelledby="maturity-h">
-  <h2 id="maturity-h" class="reveal">1002 passing tests, and a short list of what doesn&rsquo;t ship.</h2>
-  <p class="body-text reveal">Built in Rust, with the current Cargo baseline at 1002 passed / 0 failed / 11 ignored on 2026-06-23, up from the 868-test baseline the notes recorded on 2026-06-15. The C path carries a program all the way to something your machine can run on its own, and it&rsquo;s the route the tests check from one end to the other. That&rsquo;s the whole of what I&rsquo;ll claim, and nothing the tests won&rsquo;t back up.</p>
-  <p class="pull reveal">It isn&rsquo;t winding down. It&rsquo;s holding still, because the rest is built on it.</p>
-  <p class="body-text reveal">The core is shipped and steady: say what you&rsquo;ll touch, be clear about your memory, checked the whole way down to native code. That&rsquo;s solid ground the rest of my work stands on, not a product still chasing the next feature. Some pieces are honestly only half-built, and I&rsquo;d rather you hear it from me than stumble on it. The compiler that&rsquo;s meant to one day build itself is drawn up but doesn&rsquo;t run yet. A few features (doing many things at once, automatic memory cleanup, and talking to code written in other languages) are designed but not yet wired into the programs it produces. And the experimental paths can make code but aren&rsquo;t ready for real use. I built this on my own. Those are the rough edges I already know about: the named limits of a foundation, not a project quietly closing its doors.</p>
+  <h2 id="maturity-h" class="reveal">More than 1,300 passing tests, and an honest list of what doesn&rsquo;t ship yet.</h2>
+  <p class="body-text reveal">Built in Rust. The Cargo suites pass green at the current 2026-06-30 baseline: 872 library, 263 CLI, 83 parser, 51 lexer, and 44 binary tests, 0 failed (the suites were consolidated since the older single 1002 count, so the totals aren&rsquo;t a straight comparison). The C path carries a program all the way to something your machine can run on its own, and it&rsquo;s the route the tests check from one end to the other. That&rsquo;s the whole of what I&rsquo;ll claim, and nothing the tests won&rsquo;t back up.</p>
+  <p class="pull reveal">It isn&rsquo;t winding down, and it isn&rsquo;t standing still. The core holds steady while the ground underneath it keeps deepening.</p>
+  <p class="body-text reveal">The core is shipped and steady: say what you&rsquo;ll touch, be clear about your memory, checked the whole way down to native code. That&rsquo;s solid ground, and lately the ground itself has been growing. <span translate="no">BuildLang</span> now speaks C both ways: declare a C library with its header and link flag and call straight into it, or expose a function as <b translate="no">extern &quot;C&quot;</b> so C can call back, all emitted and checked through <b translate="no">buildc build</b>. Linear types landed too, an opt-in no-cloning rule that&rsquo;s the shared keystone for quantum, financial, and on-chain work (experimental, not yet fully sound, and I say so plainly). The first real step toward automatic memory cleanup is in as well, opt-in and deliberately narrow for now. I&rsquo;d still rather you hear the rough edges from me than stumble on them: doing many things at once is parsed and type-checked, but its runtime isn&rsquo;t wired into compiled programs yet; the compiler meant to one day build itself is drawn up but doesn&rsquo;t run; and the experimental backends can make code but aren&rsquo;t ready for real use. I built this on my own. These are the named limits of a foundation that&rsquo;s still deepening, not a project closing its doors.</p>
 </section>
 
 <!-- run it -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Build it. Then make it reject something.</h2>
-  <p class="body-text reveal">You&rsquo;ll need Rust 1.70 or newer and a C compiler installed where the system can find it. Copy the project down, build it, and <b translate="no">buildc doctor</b> tells you the C path is good to go. Point it at the examples, or, better, write a function that fibs about what it touches, and watch it gently refuse.</p>
-  <pre class="artifact" translate="no"><span class="pr">$ git clone https://github.com/HarperZ9/buildlang &amp;&amp; cd buildlang/compiler</span>
+  <p class="body-text reveal">The quickest way is <b translate="no">cargo install buildlang</b> from crates.io; you&rsquo;ll also want a C compiler installed where the system can find it. Or build from source. Either way, <b translate="no">buildc doctor</b> tells you the C path is good to go. Point it at the examples, or, better, write a function that fibs about what it touches, and watch it gently refuse.</p>
+  <pre class="artifact" translate="no"><span class="pr">$ cargo install buildlang</span>            <span class="cmt"># from crates.io; installs the buildc binary</span>
+<span class="cmt"># or from source:</span>
+<span class="pr">$ git clone https://github.com/HarperZ9/buildlang &amp;&amp; cd buildlang/compiler</span>
 <span class="pr">$ cargo build --release</span>
+
 <span class="pr">$ buildc doctor</span>                       <span class="cmt"># toolchain + C-backend readiness</span>
 C backend: <span class="ok">ready</span>
 
