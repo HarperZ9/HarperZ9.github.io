@@ -168,7 +168,7 @@
       <li>This page proves the move, not the product. It witnesses input you give it in the browser. It does not read your filesystem on its own, and it keeps no history.</li>
       <li>SHA-256 detects change. It does not tell you whether a change was intended or whether the content is correct. MATCH means unchanged, never approved.</li>
       <li>If your browser does not expose <code class="k">crypto.subtle</code> (some insecure origins withhold it), the demo reports UNVERIFIABLE rather than faking a result. That is the honest answer when it cannot check.</li>
-      <li>The full tool lives at <a class="inline" href="https://github.com/HarperZ9/emet" translate="no">github.com/HarperZ9/emet</a>: one spec, three independent language implementations, run yourself and checked on every push. The one claim it still owes is a fourth implementation built by a hand with no tie to mine.</li>
+      <li>The full tool lives at <a class="inline" href="https://github.com/HarperZ9/emet" translate="no">github.com/HarperZ9/emet</a> (v1.0, on PyPI: <code>pip install emet</code>): one spec, four independent language implementations, run yourself and checked on every push. The one claim it still owes is an implementation built by a hand with no tie to mine, a different author.</li>
     </ul>
     <p class="note">No data leaves your machine. The verdict is computed from the actual SHA-256 of your input and compared to a target you set; it is never hardcoded. Updated 2026-06-30.</p>
   </section>
