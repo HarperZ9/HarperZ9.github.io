@@ -12,7 +12,7 @@ const DEST = [
 
 // Map any page to one of the sections. Flagship pages live under Flagships; everything
 // heavier-than-a-brick down to the utilities lives under the catalog.
-const FLAGSHIPS = new Set(["overview","index-graph","forum","studio","gather","crucible"]);
+const FLAGSHIPS = new Set(["overview","index-graph","forum","studio","gather","crucible","learn"]);
 const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","accountable-machines",
   "accountable-engine","buildlang","raw","build-color","build-products","toolkit",
   "provenance-sensorium","orca","aleph","warden","presentation","atelier","gallery","demonstrations"]);
