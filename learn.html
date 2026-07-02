@@ -89,6 +89,49 @@
   <p class="body-text reveal">The provenance receipt is what makes the second half hold. Anything the tutor generated for you carries a <code translate="no">tutor-render</code> method on its receipt, the same shape <span translate="no">gather</span> uses for a fetched item, and the grading path refuses any submission whose content matches a stored tutor-render by hash. That is a mechanical check, not a policy reminder: a rendered explanation cannot quietly become a graded answer because the hash of the two would have to match, and the receipt would already have marked it. The ledger is witnessed the same way a <span translate="no">crucible</span> assessment is, re-derivable from the record on disk, not asserted from a log line you have to trust.</p>
 </section>
 
+<!-- RE-VERIFICATION -->
+<section class="mv" id="reverify" aria-labelledby="reverify-h">
+  <h2 id="reverify-h" class="reveal">A receipt you can re-check does not get to grade its own homework.</h2>
+  <p class="body-text reveal">A study receipt carries a <code translate="no">verified</code> flag and a <code translate="no">ledgerVerified</code> flag. Both are written by whoever produced the receipt, which means neither is worth anything on its own. <code translate="no">learn tutor reverify</code> ignores them on purpose and re-derives the receipt from its own evidence instead: it walks the hash chain over the witnessed practice entries and recomputes it, and it re-runs the mastery verdict from the recorded attempts under the recorded policy. If either recomputation disagrees with what the receipt claims, the receipt fails, whatever its stored booleans say.</p>
+  <div class="index reveal-children" role="list" aria-label="Re-verification verdicts">
+    <div class="index-row" role="listitem" style="--i:0">
+      <span class="index-term"><code translate="no">CHAIN_BROKEN</code></span>
+      <span class="index-gloss">the hash chain over the practice entries does not recompute; the failure names the offending entry's sequence number and hash, and a hash-consistent truncation is still caught by attempt accounting</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:1">
+      <span class="index-term"><code translate="no">VERDICT_MISMATCH</code></span>
+      <span class="index-gloss">the stored mastery verdict does not re-derive from the recorded attempts under the recorded policy; the failure carries both projections, the one on the receipt and the one recomputed, so the divergence is visible, not asserted</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:2">
+      <span class="index-term"><code translate="no">UNVERIFIED</code></span>
+      <span class="index-gloss">a receipt with no chain to walk cannot re-verify, so it is reported unverified, never verified; the absence of evidence is not treated as evidence</span>
+    </div>
+  </div>
+  <p class="close reveal">A verifier that cannot fail on a known-bad receipt is not a verifier. <code translate="no">doctor</code> re-checks that one at runtime: it must pass a clean receipt and reject a tampered chain, a hand-edited verdict, and a chainless receipt.</p>
+</section>
+
+<!-- PROOF-PACKET LESSONS -->
+<section class="mv" id="prooflesson" aria-labelledby="prooflesson-h">
+  <h2 id="prooflesson-h" class="reveal">A failed proof is a lesson, not a dead end.</h2>
+  <p class="body-text reveal">A proof-surface packet is a verified-claim record: a claim, its scope, its sources with hashes, and a <code translate="no">MATCH</code>, <code translate="no">DRIFT</code>, or <code translate="no">UNVERIFIABLE</code> verdict. <code translate="no">learn tutor prooflesson</code> turns one into something you study from, without turning it into an answer sheet. It preserves the packet's own evidence surface, source references and never their bodies, and derives three things around it.</p>
+  <div class="index reveal-children" role="list" aria-label="What a proof-packet lesson derives">
+    <div class="index-row" role="listitem" style="--i:0">
+      <span class="index-term">explanation scaffold</span>
+      <span class="index-gloss">numbered prompts that ask you to derive the reasoning yourself; the packet's own decision reasoning is never dumped into the lesson, so the lesson coaches the derivation instead of handing it over</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:1">
+      <span class="index-term">retrieval questions</span>
+      <span class="index-gloss">recall prompts built from the packet's own fields, including &lsquo;what evidence would falsify this claim,&rsquo; so the drill rehearses the actual claim and its sources rather than a paraphrase</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:2">
+      <span class="index-term">verifier binding</span>
+      <span class="index-gloss">the lesson's verdict, the packet id, and the source hashes are bound into the lesson; the lesson's verdict is copied from the packet and from nowhere else, so a lesson claiming MATCH from a DRIFT packet is impossible by construction and a forged verdict enum is rejected up front</span>
+    </div>
+  </div>
+  <p class="body-text reveal">When the proof attempt failed, the lesson also names why it failed. A <code translate="no">DRIFT</code> or <code translate="no">UNVERIFIABLE</code> packet yields a typed misconception record, <code translate="no">contradicted</code> for drift, <code translate="no">overclaim</code> for an unverifiable claim that still cited sources, <code translate="no">missing_evidence</code> for one that cited none, and its prompt asks you why the proof did not hold. A <code translate="no">MATCH</code> packet yields no misconception, because there is nothing there to correct. The lesson receipt is hash-chained the same way a study receipt is, and <code translate="no">tutor reverify</code> covers it: a tampered entry is <code translate="no">CHAIN_BROKEN</code>, a flipped verdict or edited lesson body is <code translate="no">VERDICT_MISMATCH</code>.</p>
+  <em class="close reveal">The lesson's verdict always equals the packet's. A wrong proof teaches you where you were wrong; it never gets promoted to right.</em>
+</section>
+
 <!-- ARCHITECTURE -->
 <section class="mv" id="arch" aria-labelledby="arch-h">
   <h2 id="arch-h" class="reveal">Zero-dep Node at the core. The rest of the constellation plugs in at the seams.</h2>
@@ -108,6 +151,7 @@
     </div>
   </div>
   <p class="body-text reveal">Clocks are injected wherever a review time or a ledger timestamp is recorded, so a run is deterministic and replayable from the same inputs. The scheduler, the misconception classifier, and the three interop seams are all swappable behind a small interface, so a peer organ can plug in without <span translate="no">learn</span>'s core ever importing it directly.</p>
+  <p class="body-text reveal">Everything the loop produces lands as a named artifact you can keep and re-check: a <code translate="no">mastery-receipt</code> that witnesses the practice log and states its own boundary, a <code translate="no">study-receipt</code> that wraps the composed plan, and a proof-packet lesson receipt, each a hash-chained record on disk that <code translate="no">tutor reverify</code> can walk. There is also a zero-dependency MCP server that exposes the advisory surface, <code translate="no">learn_tutor_plan</code>, <code translate="no">learn_tutor_studyplan</code>, <code translate="no">learn_tutor_misconceptions</code>, <code translate="no">learn_tutor_reverify</code>, <code translate="no">learn_tutor_prooflesson</code>, and the rest, all read-only: a connected agent can inspect a plan, a misconception ranking, or a re-verification, but it renders and writes nothing. Actuation, running a course, stays operator-driven on the CLI.</p>
 </section>
 
 <!-- CURRENT STATE AND RUN -->
@@ -127,7 +171,12 @@ loop: self-explanation (concept: loop-invariant) ... crucible verdict: MATCH
 
 <span class="pr">$ learn tutor study my-course</span>   <span class="cmt"># open-ended coaching session, no ceiling, nothing here can be submitted as an answer</span>
 tutor: 2 due reviews, 1 known misconception on "loop-invariant" (off-by-one boundary)
-<span class="bad">after editing a prior ledger entry, chain verifies: False   &lt;- caught</span></pre>
+wrote study-receipt: tutor/my-course.study.json (hash-chained)
+
+<span class="pr">$ learn tutor reverify my-course</span>   <span class="cmt"># ignores the receipt's own verified flags; re-derives from evidence</span>
+<span class="ok">chain recomputes, verdict re-derives from recorded attempts: VERIFIED</span>
+<span class="bad">after editing a prior verdict, reverify: VERDICT_MISMATCH (stored: ready, recomputed: not-ready)</span>
+<span class="bad">after editing a prior ledger entry, reverify: CHAIN_BROKEN (seq 3)   &lt;- caught</span></pre>
   <p class="body-text reveal">Node, zero runtime dependencies. Install it, point it at your own notes, and run the demo course to see the halt and the hash chain for yourself. If a tutor-render ever slips through as a graded submission, or a ledger verifies clean after tampering, that is exactly the kind of report I want.</p>
   <div class="channels reveal">
     <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/learn" translate="no">HarperZ9/learn</a>
