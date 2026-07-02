@@ -5,21 +5,21 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Build Color: a color-science workbench</title>
-<meta name="description" content="Build Color is a Python color-science workbench: 15+ color spaces, 12 HDR tone-mapping operators, perceptual ΔE metrics, color-appearance models, chromatic adaptation, and ICC profile generation. MIT, on PyPI. By Zain Dana Harper.">
+<meta name="description" content="Build Color is a Python color-science workbench: 15+ color spaces, 12 HDR tone-mapping operators, perceptual ΔE metrics, color-appearance models, chromatic adaptation, and ICC profile generation. Fair-source (FSL-1.1-MIT), on PyPI. By Zain Dana Harper.">
 <link rel="canonical" href="https://harperz9.github.io/build-color.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Build Color: a color-science workbench">
-<meta property="og:description" content="Build Color is a Python color-science workbench: 15+ color spaces, 12 HDR tone-mapping operators, perceptual ΔE metrics, color-appearance models, chromatic adaptation, and ICC profile generation. MIT, on PyPI. By Zain Dana Harper.">
+<meta property="og:description" content="Build Color is a Python color-science workbench: 15+ color spaces, 12 HDR tone-mapping operators, perceptual ΔE metrics, color-appearance models, chromatic adaptation, and ICC profile generation. Fair-source (FSL-1.1-MIT), on PyPI. By Zain Dana Harper.">
 <meta property="og:url" content="https://harperz9.github.io/build-color.html">
 <meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
-<meta property="og:image:alt" content="A still from the engine: a Julia set rendered in the site's palette, real mathematics drawn by our own code.">
+<meta property="og:image:alt" content="A still from the engine: a Kepler orbit with its conserved angular momentum fitted from the trace, real mathematics drawn by our own code.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Build Color: a color-science workbench">
-<meta name="twitter:description" content="Build Color is a Python color-science workbench: 15+ color spaces, 12 HDR tone-mapping operators, perceptual ΔE metrics, color-appearance models, chromatic adaptation, and ICC profile generation. MIT, on PyPI. By Zain Dana Harper.">
+<meta name="twitter:description" content="Build Color is a Python color-science workbench: 15+ color spaces, 12 HDR tone-mapping operators, perceptual ΔE metrics, color-appearance models, chromatic adaptation, and ICC profile generation. Fair-source (FSL-1.1-MIT), on PyPI. By Zain Dana Harper.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
 <meta name="color-scheme" content="dark">
-<link rel="stylesheet" href="system/system.css?v=20260630s1">
+<link rel="stylesheet" href="system/system.css?v=20260701a">
 </head>
 <body class="inner-clean">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -35,7 +35,7 @@
     <p class="lede"><span translate="no">Build Color</span> is a Python workbench for anyone who needs to know more about a color than its hex code. It works in color spaces (different ways of describing a color with numbers) that are built to match what your eye actually sees, not just the raw numbers in the file. It squeezes bright, high-range light down so a normal screen can show it (that&rsquo;s <em>tone mapping</em>: fitting a wide range of brightness into a smaller one), it measures how different two colors really look to a person, it adjusts for the color of light a scene was lit by, and it can even write the small profile a display uses to show color faithfully. There&rsquo;s a window you click through and a command line you type into.</p>
     <p class="close">Real color science you can measure and check for yourself, the same instinct as the rest of my work, just pointed at light instead. I didn&rsquo;t want to trust a color swatch I couldn&rsquo;t verify, so I built the thing that verifies it.</p>
   </div>
-  <div class="seal"><span translate="no">build-color</span> 1.0.1 &middot; MIT &middot; on PyPI &middot; 15+ spaces &middot; 12 tone operators</div>
+  <div class="seal"><span translate="no">build-color</span> 1.0.2 &middot; fair-source (FSL-1.1-MIT) &middot; on PyPI &middot; 15+ spaces &middot; 12 tone operators</div>
 </div>
 
 <main id="main">
@@ -100,7 +100,7 @@ Base: <span class="lt">#ff6030</span>   Scheme: triadic
   <h2 id="depth-h" class="reveal">15+ spaces, 12 tone-mappers, the metrics by name.</h2>
   <p class="body-text reveal">Spaces: sRGB, Linear RGB, XYZ, xyY, CIELAB, LCH, <em>Oklab, Oklch, JzAzBz, JzCzhz, ICtCp</em>, HSV, Display&nbsp;P3, BT.2020, Adobe&nbsp;RGB, ACEScg. HDR tone mapping with twelve operators: ACES (Narkowicz + Hill), <em>AgX</em> (neutral / punchy / golden), Reinhard, Hable/Uncharted&nbsp;2, Lottes, Uchimura/Gran&nbsp;Turismo, PBR Neutral (Khronos glTF), BT.2390 EETF, BT.2446 Method&nbsp;A, and a custom knee. Difference by CIE76, CIE94, CIEDE2000, CMC, HyAB; chromatic adaptation, color-blindness simulation, gamut mapping, color naming, 3D-LUT I/O.</p>
   <p class="pull reveal">Color is where this whole habit started, for me: trust what you can measure, not the swatch, and be ready to show the number when someone asks.</p>
-  <p class="body-text reveal">Shipped: <b translate="no">build-color 1.0.1</b>, free to use under the MIT license, installable from PyPI, and it runs on Python 3.10 or newer. Its tests cover the color spaces, light adjustment, difference, the range of colors a device can show (its gamut), harmony, naming colors, color-blindness simulation, and reading and writing color lookup tables. And here&rsquo;s the limit I want to name before you bump into it: this is a workbench and a toolkit for working with color, not a calibrated instrument for measuring a physical screen. For the display side of things, pair it with <b translate="no">calibrate-pro</b>.</p>
+  <p class="body-text reveal">Shipped: <b translate="no">build-color 1.0.2</b>, fair-source under FSL-1.1-MIT (each release converts to MIT after two years), installable from PyPI, and it runs on Python 3.10 or newer. Its tests cover the color spaces, light adjustment, difference, the range of colors a device can show (its gamut), harmony, naming colors, color-blindness simulation, and reading and writing color lookup tables. And here&rsquo;s the limit I want to name before you bump into it: this is a workbench and a toolkit for working with color, not a calibrated instrument for measuring a physical screen. For the display side of things, pair it with <b translate="no">calibrate-pro</b>.</p>
 </section>
 
 <section class="mv" id="run" aria-labelledby="run-h">

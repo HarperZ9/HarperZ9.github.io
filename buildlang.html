@@ -5,21 +5,21 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BuildLang: a typed-effects language</title>
-<meta name="description" content="BuildLang is a Rust-built compiler for a typed-effects language: a function declares the effects it may perform and the lifetimes of the references it returns, and the compiler checks both and lowers the program to native code through a C backend. Over 1,300 passing Cargo tests across its suites; published on crates.io as buildlang. By Zain Dana Harper.">
+<meta name="description" content="BuildLang is a Rust-built compiler for a typed-effects language: a function declares the effects it may perform and the lifetimes of the references it returns, and the compiler checks both and lowers the program to native code through a C backend. 1,521 passing Cargo tests across its suites, 0 failing, with a scientific-runtime receipt that runs a numeric kernel and re-checks a stated invariant; published on crates.io as buildlang. By Zain Dana Harper.">
 <link rel="canonical" href="https://harperz9.github.io/buildlang.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="BuildLang: a typed-effects language">
-<meta property="og:description" content="BuildLang is a Rust-built compiler for a typed-effects language: a function declares the effects it may perform and the lifetimes of the references it returns, and the compiler checks both and lowers the program to native code through a C backend. Over 1,300 passing Cargo tests across its suites; published on crates.io as buildlang. By Zain Dana Harper.">
+<meta property="og:description" content="BuildLang is a Rust-built compiler for a typed-effects language: a function declares the effects it may perform and the lifetimes of the references it returns, and the compiler checks both and lowers the program to native code through a C backend. 1,521 passing Cargo tests across its suites, 0 failing, with a scientific-runtime receipt that runs a numeric kernel and re-checks a stated invariant; published on crates.io as buildlang. By Zain Dana Harper.">
 <meta property="og:url" content="https://harperz9.github.io/buildlang.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/buildlang.png">
 <meta property="og:image:alt" content="Project Telos flagship card: BuildLang, the effects language. Lex, parse, type, effects, codegen.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="BuildLang: a typed-effects language">
-<meta name="twitter:description" content="BuildLang is a Rust-built compiler for a typed-effects language: a function declares the effects it may perform and the lifetimes of the references it returns, and the compiler checks both and lowers the program to native code through a C backend. Over 1,300 passing Cargo tests across its suites; published on crates.io as buildlang. By Zain Dana Harper.">
+<meta name="twitter:description" content="BuildLang is a Rust-built compiler for a typed-effects language: a function declares the effects it may perform and the lifetimes of the references it returns, and the compiler checks both and lowers the program to native code through a C backend. 1,521 passing Cargo tests across its suites, 0 failing, with a scientific-runtime receipt that runs a numeric kernel and re-checks a stated invariant; published on crates.io as buildlang. By Zain Dana Harper.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/buildlang.png">
 <meta name="color-scheme" content="dark">
-<link rel="stylesheet" href="system/system.css?v=20260630s1">
+<link rel="stylesheet" href="system/system.css?v=20260701a">
 </head>
 <body class="inner-clean">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -35,7 +35,7 @@
     <p class="lede"><span translate="no">BuildLang</span> is a small programming language with one stubborn idea. Every function has to say, right at the top, what it&rsquo;s allowed to reach out and touch: your files, the screen, the network. Those reach-outs are called <em>effects</em>. The function also has to be clear about which piece of memory it hands back, and how long that memory is allowed to stay alive, the part people call <em>lifetimes</em>. The compiler, the program that turns your code into something the machine can run, checks both, then turns it into fast native code. Reach for something you never declared, and it simply won&rsquo;t build.</p>
     <p class="close">I built it so the compiler could answer a question I kept getting wrong on my own: what is this function actually allowed to do? It&rsquo;s tested where it counts, honest about its rough edges, and the careful habit at the heart of it (say what you&rsquo;ll touch, then be held to it) runs quietly under everything else here.</p>
   </div>
-  <div class="seal"><span translate="no">buildc</span> 1.0.5 &middot; a Rust-built compiler, on crates.io &middot; effects and lifetimes, in the type</div>
+  <div class="seal"><span translate="no">buildc</span> 1.0.6 &middot; a Rust-built compiler, on crates.io &middot; effects and lifetimes, in the type</div>
 </div>
 
 <main id="main">
@@ -126,10 +126,70 @@ _1 = sqlite3_libversion();    <span class="cmt">// the real call into the C libr
   </div>
 </section>
 
+<!-- accountable scientific compute -->
+<section class="proof" id="science" aria-labelledby="science-h">
+  <div class="proof-head">
+    <h2 id="science-h" class="reveal">The receipt grew a second kind: <em>accountable scientific compute.</em></h2>
+    <p class="body-text reveal">The little check receipt from Exhibit I says what a program promised, next to what it did. There&rsquo;s now a second receipt for a different question: when a program crunches numbers, did the numbers actually behave the way the math says they should? <b translate="no">buildc run --emit-receipt</b> runs a numeric <span translate="no">.bld</span> kernel, captures the whole output series, checks a stated <em>invariant</em> (a rule the numbers must obey), and seals a re-checkable JSON receipt. <b translate="no">buildc receipt verify</b> runs the program again and re-derives the verdict from scratch, so drift, tampering, or a changed source each fail with their own named class. <b translate="no">buildc receipt export</b> re-verifies and hands witnessed measurements over to Crucible, the bridge into the wider Telos work.</p>
+    <p class="body-text reveal">Here is the honest edge of it, said before you ask. The receipt witnesses that <em>this compiled program&rsquo;s observed output series</em> satisfied the invariant (or violated it exactly where a negative kernel was meant to). It does not prove the underlying equations are right, and it does not announce a physical law. Every receipt carries a <b translate="no">NOT_A_NEW_PHYSICAL_LAW</b> label so no one can quote it as more than it is.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit V</span> <span class="what"><span translate="no">BuildLang</span> &middot; run a kernel, seal a receipt, re-derive the verdict</span></div>
+    <pre class="artifact" translate="no"><span class="cmt"># a heat-diffusion kernel: its energy should never climb. run it,</span>
+<span class="cmt"># check the invariant, seal a receipt:</span>
+<span class="pr">$ buildc run heat.bld --emit-receipt heat.json --invariant energy-monotone</span>
+Running... <span class="ok">OK</span> (240 steps captured)
+Invariant energy-monotone... <span class="ok">HELD</span>
+  <span class="kw">"label"</span>:     <span class="lt">"NOT_A_NEW_PHYSICAL_LAW"</span>
+  <span class="kw">"verdict"</span>:   <span class="lt">"HELD"</span>   <span class="cmt">// witnesses the OUTPUT SERIES, not the PDE</span>
+
+<span class="cmt"># re-run from scratch and re-derive the verdict. change a number and it fails:</span>
+<span class="pr">$ buildc receipt verify heat.json</span>
+Re-running program... <span class="ok">OK</span>
+Re-deriving verdict... <span class="ok">MATCH</span>       <span class="cmt"># drift / tamper / source-change each fail typed</span></pre>
+    <p class="artifact-cap">The receipt doesn&rsquo;t ask you to trust a stored answer. <b>Verify re-runs the program</b> and works the verdict out again, so a nudged number, an edited receipt, or a changed source can&rsquo;t slip through, each trips its own named failure.</p>
+    <p class="artifact-note">Captured live from <b translate="no">buildc run --emit-receipt</b> and <b translate="no">buildc receipt verify</b> (release build) &middot; the JSON is re-checkable and every receipt is stamped <b translate="no">NOT_A_NEW_PHYSICAL_LAW</b>. <em>The plain limit:</em> this witnesses the compiled program&rsquo;s observed output series against a stated rule; it does not prove the equations, and <span translate="no">buildc</span> is not a finished replacement for Julia.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit VI</span> <span class="what"><span translate="no">BuildLang</span> &middot; six invariants, each with a kernel built to pass and one built to fail</span></div>
+    <pre class="artifact" translate="no"><span class="cmt"># every invariant ships paired: a kernel that should HOLD and one that</span>
+<span class="cmt"># should VIOLATE, so a verdict of HELD actually means something.</span>
+energy-monotone    <span class="cmt"># the series never climbs past tolerance</span>
+conservation       <span class="cmt"># stays within roundoff of its starting value</span>
+bounded            <span class="cmt"># never exceeds the initial value (a discrete maximum principle)</span>
+energy-identity    <span class="cmt"># per-step energy balance holds to roundoff</span>
+                   <span class="cmt">// the FTCS analogue of d/dt &#8747;u&#178; = -2a &#8747;u_x&#178;</span>
+relation --columns <span class="lt">N</span>  <span class="cmt"># N reported columns must agree, so a run can't hide a divergence</span>
+conserved-band     <span class="cmt"># approximate conservation inside a fixed error budget</span>
+
+<span class="cmt"># conserved-band grounds symplectic integration, and it shows the point:</span>
+<span class="pr">$ buildc run leapfrog.bld --emit-receipt lf.json --invariant conserved-band</span>
+Invariant conserved-band... <span class="ok">HELD</span>    <span class="cmt"># energy stays in an O(dt&#178;) band</span>
+<span class="pr">$ buildc run euler.bld    --emit-receipt eu.json --invariant conserved-band</span>
+Invariant conserved-band... <span class="bad">VIOLATED</span> <span class="cmt"># explicit Euler drifts out and fails, as it should</span></pre>
+    <p class="artifact-cap">A verdict is only worth trusting if it can say no. <b>Each invariant carries a matched pair:</b> a kernel meant to hold and one meant to break, at a fixed tolerance, so a green result is a real result and not a rubber stamp.</p>
+    <p class="artifact-note">Six invariants &middot; energy-monotone, conservation, bounded, energy-identity, <b translate="no">relation --columns</b>, and conserved-band, each with paired positive and negative kernels &middot; the leapfrog-versus-Euler contrast is the honest demonstration that <b>conserved-band</b> actually distinguishes a good integrator from a drifting one. <em>Still true here:</em> a receipt witnesses observed output, not a proof of the physics.</p>
+  </div>
+
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Exhibit VII</span> <span class="what"><span translate="no">BuildLang</span> &middot; export witnessed measurements to Crucible</span></div>
+    <pre class="artifact" translate="no"><span class="cmt"># re-verify, then hand witnessed measurements to Crucible (the Telos bridge):</span>
+<span class="pr">$ buildc receipt export heat.json --to crucible</span>
+Re-verifying... <span class="ok">OK</span>
+Emitting witnessed measurements... <span class="ok">OK</span>
+  <span class="kw">"witnessed"</span>: <span class="ok">true</span>   <span class="cmt">// re-derived here, not trusted from the file</span>
+  <span class="kw">"label"</span>:     <span class="lt">"NOT_A_NEW_PHYSICAL_LAW"</span></pre>
+    <p class="artifact-cap">Export doesn&rsquo;t forward a stored claim. <b>It re-verifies first,</b> then emits measurements Crucible can stand behind, carrying the same honest label the whole way across.</p>
+    <p class="artifact-note">The backends, said plainly: <b>C is the only production-verified path</b>; HLSL and GLSL cover shaders; SPIR-V, LLVM, WASM, Rust, x86-64, and ARM64 stay experimental. <b translate="no">cargo install buildlang</b> is accurate (buildlang 1.0.0 is on crates.io), but the published crate predates this receipt work, so don&rsquo;t read the newest invariants into the version you install today.</p>
+  </div>
+</section>
+
 <!-- maturity -->
 <section class="mv" id="maturity" aria-labelledby="maturity-h">
-  <h2 id="maturity-h" class="reveal">More than 1,300 passing tests, and an honest list of what doesn&rsquo;t ship yet.</h2>
-  <p class="body-text reveal">Built in Rust. The Cargo suites pass green at the current 2026-06-30 baseline: 872 library, 263 CLI, 83 parser, 51 lexer, and 44 binary tests, 0 failed (the suites were consolidated since the older single 1002 count, so the totals aren&rsquo;t a straight comparison). The C path carries a program all the way to something your machine can run on its own, and it&rsquo;s the route the tests check from one end to the other. That&rsquo;s the whole of what I&rsquo;ll claim, and nothing the tests won&rsquo;t back up.</p>
+  <h2 id="maturity-h" class="reveal">1,521 passing tests, and an honest list of what doesn&rsquo;t ship yet.</h2>
+  <p class="body-text reveal">Built in Rust. The Cargo suites pass green at the current baseline: 940 library, 307 CLI, 134 binary, 88 parser, and 52 lexer tests, 1,521 in all, 0 failed. The runnable scientific corpus passes 8 of 8. The C path carries a program all the way to something your machine can run on its own, and it&rsquo;s the route the tests check from one end to the other. That&rsquo;s the whole of what I&rsquo;ll claim, and nothing the tests won&rsquo;t back up.</p>
   <p class="pull reveal">It isn&rsquo;t winding down, and it isn&rsquo;t standing still. The core holds steady while the ground underneath it keeps deepening.</p>
   <p class="body-text reveal">The core is shipped and steady: say what you&rsquo;ll touch, be clear about your memory, checked the whole way down to native code. That&rsquo;s solid ground, and lately the ground itself has been growing. <span translate="no">BuildLang</span> now speaks C both ways: declare a C library with its header and link flag and call straight into it, or expose a function as <b translate="no">extern &quot;C&quot;</b> so C can call back, all emitted and checked through <b translate="no">buildc build</b>. Linear types landed too, an opt-in no-cloning rule that&rsquo;s the shared keystone for quantum, financial, and on-chain work (experimental, not yet fully sound, and I say so plainly). The first real step toward automatic memory cleanup is in as well, opt-in and deliberately narrow for now. I&rsquo;d still rather you hear the rough edges from me than stumble on them: doing many things at once is parsed and type-checked, but its runtime isn&rsquo;t wired into compiled programs yet; the compiler meant to one day build itself is drawn up but doesn&rsquo;t run; and the experimental backends can make code but aren&rsquo;t ready for real use. I built this on my own. These are the named limits of a foundation that&rsquo;s still deepening, not a project closing its doors.</p>
 </section>

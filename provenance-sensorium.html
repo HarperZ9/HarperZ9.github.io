@@ -13,13 +13,13 @@
 <meta property="og:description" content="Provenance Sensorium is a stdlib-only Python tool that scans your local files, git state, and the claims in your docs and hands back a readable receipt: a tamper-evident digest of what it saw, with flags for leaked secrets and unsupported claims. Then it stops at the human line: it prepares evidence, it does not sign off for you. 31 tests, zero dependencies. By Zain Dana Harper.">
 <meta property="og:url" content="https://harperz9.github.io/provenance-sensorium.html">
 <meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
-<meta property="og:image:alt" content="A still from the engine: a Julia set rendered in the site's palette, real mathematics drawn by our own code.">
+<meta property="og:image:alt" content="A still from the engine: a Kepler orbit with its conserved angular momentum fitted from the trace, real mathematics drawn by our own code.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Provenance Sensorium: the evidence receipt before you ship">
 <meta name="twitter:description" content="Provenance Sensorium is a stdlib-only Python tool that scans your local files, git state, and the claims in your docs and hands back a readable receipt: a tamper-evident digest of what it saw, with flags for leaked secrets and unsupported claims. Then it stops at the human line: it prepares evidence, it does not sign off for you. 31 tests, zero dependencies. By Zain Dana Harper.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
 <meta name="color-scheme" content="dark">
-<link rel="stylesheet" href="system/system.css?v=20260630s1">
+<link rel="stylesheet" href="system/system.css?v=20260701a">
 </head>
 <body class="inner-clean">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -109,7 +109,7 @@ The receipt prepares evidence; it does not sign the human act.
 <!-- honest limits -->
 <section class="mv" id="limits" aria-labelledby="limits-h">
   <h2 id="limits-h" class="reveal">What it is, and what it is not.</h2>
-  <p class="body-text reveal">Provenance Sensorium is a small reader and a small stack of guards: plain Python, nothing extra to install, 31 tests, clean on <code translate="no">main</code>. It is the same three moves the rest of my work is built on, pointed at the moment before you ship: <b>witness</b> what&rsquo;s there (fingerprint it, the way <a href="emet.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)" translate="no">EMET</a> does), <b>gate</b> the decision default-deny (the way <a href="proof-surface.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)" translate="no">proof-surface</a> does), and hold the human part open.</p>
+  <p class="body-text reveal">Provenance Sensorium is a small reader and a small stack of guards: plain Python, nothing extra to install, 31 tests, clean on <code translate="no">main</code>. It is the same three moves the rest of my work is built on, pointed at the moment before you ship: <b>witness</b> what&rsquo;s there (fingerprint it, the way <a href="emet.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(58,43,214,.45)" translate="no">EMET</a> does), <b>gate</b> the decision default-deny (the way <a href="proof-surface.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(58,43,214,.45)" translate="no">proof-surface</a> does), and hold the human part open.</p>
   <p class="body-text reveal">Plainly: it does not sign off for you, and it can&rsquo;t. That isn&rsquo;t a feature I haven&rsquo;t built yet; it&rsquo;s the point. A tool that would happily stamp &ldquo;a person reviewed this&rdquo; when no person did would be exactly the kind of comfortable lie this is meant to refuse. So it prepares the evidence, marks the human part needs-human, and leaves the actual saying-yes to a real person, where it belongs.</p>
   <p class="pull reveal">It cannot promise nothing leaked. It can make &ldquo;I looked&rdquo; a thing you actually did, with a receipt to show for it.</p>
   <p class="body-text reveal">The honest edges, named out loud: the secret check is shape-based, so it catches what looks like a credential, not everything that could be one. It reads only bounded local state (files, git, Markdown claims) and only locally, in this first version. And it is v0.1.0: a working first release I can stand behind for what it does, not a finished release-gate for someone else&rsquo;s critical pipeline. Where that line sits, I&rsquo;d rather tell you than paint over.</p>

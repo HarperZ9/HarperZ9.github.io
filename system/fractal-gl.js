@@ -262,4 +262,30 @@ export function isFractalGLAvailable() {
   }
 }
 
+// One DPR clamp for the GL fractal backing store (engine-showcase spec 1.4). Tier-gated and
+// fail-safe: on tier mid and above, size the backing to CSS layout * min(devicePixelRatio, 2)
+// so hi-DPI displays get a crisp full-resolution fragment pass without tripling the pixel load
+// on 3x devices. Below tier mid (or with no tier / any error) it is a no-op and the caller's
+// sizeCanvas() result stands. antialias stays false: MSAA does nothing for full-screen
+// fragment content. Returns true only if it changed the backing store.
+export function clampGLBackingToDPR(canvas, tier) {
+  try {
+    if (tier !== "mid" && tier !== "high" && tier !== "max") return false;
+    if (typeof window === "undefined" || !canvas) return false;
+    const parent = canvas.parentElement;
+    const ref = parent ? parent.getBoundingClientRect() : canvas.getBoundingClientRect();
+    const cssW = Math.max(1, ref.width || 1);
+    const cssH = Math.max(1, ref.height || ref.width || 1);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = Math.max(1, Math.min(4096, Math.round(cssW * dpr)));
+    const h = Math.max(1, Math.min(4096, Math.round(cssH * dpr)));
+    if (w === canvas.width && h === canvas.height) return false;
+    canvas.width = w;
+    canvas.height = h;
+    return true;
+  } catch (_) {
+    return false;   // fail-safe: never let a sizing probe break the render path
+  }
+}
+
 export const _MAX_ITERS = MAX_ITERS;   // exported for tests
