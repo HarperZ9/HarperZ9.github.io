@@ -552,7 +552,11 @@
               <div id="show-verdict" style="font-size:.78rem;margin-top:.3rem;min-height:1.2em"></div>
             </details>
             <div id="show-live" aria-live="polite" style="font-size:.8rem;margin-top:.3rem"></div>
-            <div id="show-doc" style="font-family:ui-monospace,monospace;font-size:.72rem;margin-top:.5rem;border-top:1px solid var(--hairline);padding-top:.5rem" hidden></div>
+            <div id="show-doc" style="font-family:ui-monospace,monospace;font-size:.72rem;margin-top:.5rem;border-top:1px solid var(--hairline);padding-top:.5rem">
+              <p style="margin:0 0 .3rem"><code>Studio.connectModel(fn)</code> hands your model the identical readout JSON this scene speaks aloud: system, seed, invariant value, drift ratio, refusal verdict, receipt hash, and the measured frame colours.</p>
+              <p style="margin:0 0 .3rem">The studio-perception MCP serves the same channel to a local model, so a screen reader and a model perceive exactly the same numbers.</p>
+              <p style="margin:0">Keyboard: arrows step the focused control, S cycles the system, Space pauses, R replays, key V re-checks the receipt, E exports the world and report JSON. (M is reserved for sound and is not shipped in this version.)</p>
+            </div>
             <p class="src-hint">One orbit, integrated live by the site&rsquo;s own symplectic integrator; the discovery engine fits the conserved angular momentum from the trace; the same verifier visibly refuses a damped run. The scene is seeded, hashed, and re-checkable in this browser.</p>
           </div>
         </div>
@@ -560,7 +564,7 @@
 
       <details class="rail-group rail-about">
         <summary>About the <span translate="no">Studio</span> and <span translate="no">Project Telos</span></summary>
-        <p>This is the live surface of <span translate="no">Project Telos</span>, the engine. <span translate="no">Telos</span> is the thesis made tangible: a person and a model stand before the same witnessed frame, generate from it, transform it, and verify every step together. Bring your own image, video, audio, OBJ, GLTF, PLY, CSV, or JSON; render Atelier studies, 2D and 3D fractals, nD geometry, sound-reactive visuals, and physics discovery runs; then export pixels, perception JSON, OBJ, GLTF, or witnessed artifacts. The right panel shows what the model is given: frame, fingerprint, colours, channels, receipts, and the five-flagship stack feeding the work.</p>
+        <p>This is the live surface of <span translate="no">Project Telos</span>, the engine. <span translate="no">Telos</span> is the thesis made tangible: a person and a model stand before the same witnessed frame, generate from it, transform it, and verify every step together. Bring your own image, video, audio, OBJ, GLTF, PLY, CSV, or JSON; render Atelier studies, 2D and 3D fractals, nD geometry, sound-reactive visuals, and physics discovery runs; then export pixels, perception JSON, OBJ, GLTF, or witnessed artifacts. The right panel shows what the model is given: frame, fingerprint, colours, channels, receipts, and the five-flagship stack feeding the work. In the Showcase source a connected model receives the identical readout the scene announces aloud, so a person and a model read the same seed, invariant, and verdict.</p>
       </details>
     </div>
   </aside>
