@@ -35,7 +35,7 @@
     <p class="lede">Ideas get repeated until they sound true. <span translate="no">crucible</span> makes a thesis carry its claims, the observations that would refute them, the measurements that decide them, and the record that lets the verdict be checked again. The answer is not a judge's confidence. It is <span translate="no">MATCH</span>, <span translate="no">DRIFT</span>, or <span translate="no">UNVERIFIABLE</span>, grounded in a measurement.</p>
     <p class="close">Steelman proposes what would settle the claim. Measurement decides. The verdict recomputes from the record.</p>
   </div>
-  <div class="seal"><span translate="no">crucible</span> &middot; v1.1.0 on PyPI (<span translate="no">crucible-bench</span>) &middot; Markdown reports &middot; fair-source &middot; zero core dependencies</div>
+  <div class="seal"><span translate="no">crucible</span> &middot; v1.1.0 on PyPI (<span translate="no">crucible-bench</span>) &middot; <span translate="no">MATCH</span>-provenance gate &middot; fair-source &middot; zero core dependencies</div>
 </div>
 
 <main id="main">
@@ -65,22 +65,42 @@
   <p class="body-text reveal">That is why the refine loop matters. A short thesis does not get blessed. <span translate="no">crucible</span> reports the weakest claim and the cohesion trajectory, then gives the next round a precise place to improve: strengthen the substrate, sharpen the measurement, or amend the thesis.</p>
 </section>
 
+<section class="mv" id="provenance" aria-labelledby="provenance-h">
+  <h2 id="provenance-h" class="reveal">A <span translate="no">MATCH</span> is not counted unless it can be re-checked.</h2>
+  <p class="body-text reveal">A registry can read 100 percent <span translate="no">MATCH</span> and still be theater if every match rests on a deviation the author typed in. The integrity layer splits each latest <span translate="no">MATCH</span> by its provenance. <code translate="no">crucible registry stats</code> reports <b translate="no">match_provenance</b> as three counts: <span translate="no">witnessed</span> for a match whose measurement carries a replayable <span translate="no">recheck</span> descriptor, <span translate="no">asserted</span> for a match resting on an author-supplied deviation alone, and <span translate="no">asserted_zero</span> for the softest case, a claimed exact zero with nothing to replay.</p>
+  <pre class="artifact" translate="no"><span class="pr">$ crucible registry stats .crucible --require-witnessed-match</span>
+<span class="ok">match_provenance: witnessed 4  asserted 2  asserted_zero 1</span>
+<span class="bad">refused: a latest MATCH rests on an asserted measurement with no replayable recheck (exit 1)</span></pre>
+  <p class="pull reveal">A confident number does not count as verification. Only a replayable one does.</p>
+  <p class="body-text reveal">The flag <code translate="no">--require-witnessed-match</code> turns the split into a gate. It exits nonzero the moment any latest <span translate="no">MATCH</span> is asserted only, so a run that shows all green but has no executable refutation can no longer be cited as verified. The gate reads the record; it does not ask the engine to vouch for itself.</p>
+</section>
+
+<section class="mv" id="evidence" aria-labelledby="evidence-h">
+  <h2 id="evidence-h" class="reveal">An <span translate="no">UNVERIFIABLE</span> names what is missing and what to do.</h2>
+  <p class="body-text reveal">A fail-closed verdict is only useful if it tells you why. When an assessment carries an <span translate="no">UNVERIFIABLE</span> claim, <code translate="no">crucible assess</code> adds an <span class="g">evidence needed</span> section with one typed row per claim: the exact missing-evidence class and the concrete next action. The class is one of <span translate="no">falsification_condition</span>, <span translate="no">measurement</span>, <span translate="no">claim_binding</span>, <span translate="no">trusted_deviation</span>, or <span translate="no">positive_tolerance</span>, and the action is specific, such as the exact sha256 a measurement row must bind. A claim that verifies gets no row. The explanation is derived from the same pure ladder as the verdict, so it can never disagree with it.</p>
+  <p class="body-text reveal">Before assessment runs, a validation pass warns about rows that cannot produce a trustworthy verdict: a non-positive tolerance, a negative or non-finite deviation, a boolean that would silently coerce, a row bound to no claim, or a duplicate binding. The warnings are typed, printed to stderr, and carried in JSON. They never change a verdict, and <code translate="no">--strict</code> turns any warning into a nonzero exit. An ill-posed measurement is caught before it can be read as evidence, not after.</p>
+</section>
+
 <section class="mv" id="arch" aria-labelledby="arch-h">
   <h2 id="arch-h" class="reveal">Standard library at the core. Impure edges behind seams.</h2>
   <p class="body-text reveal">The 1.1.0 line ships the claim and thesis receipts, the content-addressed registry, witnessed assessments, the steelman seam, the measure seam, the refine adapter over a thesis, drift tracking across witnessed rounds, measurement recheck descriptors, Gather/index interop, and Markdown assessment reports. The core has no third-party runtime dependency. Clocks are injected, JSON is canonical, and Null defaults keep the organ standing alone when a model, browser, or proof oracle is absent.</p>
-  <pre class="artifact" translate="no"><span class="pr">$ crucible register examples/thesis-binary-search.json --registry .crucible</span>
-<span class="ok">registered thesis ...</span>
+  <p class="body-text reveal">The command surface covers the whole loop and the checks around it: <code translate="no">register</code>, <code translate="no">steelman</code>, <code translate="no">measure</code>, and <code translate="no">assess</code> for the core path; <code translate="no">run</code> to tie the loop into one witnessed session and write a cleanroom review packet; <code translate="no">review</code> to validate that packet, spec plus artifact only, before it reaches a verifier; <code translate="no">registry</code> for stats, search, and the <span translate="no">MATCH</span>-provenance gate; <code translate="no">recheck</code> to replay descriptor-bearing measurements through an oracle; and <code translate="no">drift</code>, <code translate="no">report</code>, <code translate="no">batch</code>, <code translate="no">export</code>, <code translate="no">measurement-gate</code>, and <code translate="no">verdicts</code> around them. The same surface is reachable from a clone with <code translate="no">python -m crucible</code> and over the native MCP bridge.</p>
+  <pre class="artifact" translate="no"><span class="pr">$ crucible run examples/thesis-binary-search.json \
+    --measurements examples/measurements-binary-search.json \
+    --registry .crucible --bundle reports/binary-search-run</span>
+<span class="ok">MATCH 1  DRIFT 1  UNVERIFIABLE 1  (witnessed, recheck on disk)</span>
 
-<span class="pr">$ crucible measure examples/thesis-binary-search.json --substrate examples/substrate-binary-search.json</span>
-<span class="ok">MATCH 1  DRIFT 1  UNVERIFIABLE 1</span>
+<span class="pr">$ crucible review reports/binary-search-run</span>
+<span class="ok">cleanroom packet valid: spec + artifact only, verifier boundary intact</span>
 
 <span class="pr">$ crucible refine examples/refine-discovery-loop.json</span>
 <span class="ok">refined thesis "Discovery loop margins" over 2 round(s): correct</span></pre>
+  <p class="body-text reveal"><span translate="no">crucible review</span> holds the cleanroom line. A verifier gets the original spec and the artifact, nothing else: no worker context, no reasoning trace, no chat log. The check fails closed if the packet carries extra context, if <code translate="no">spec.json</code> no longer matches the run record, if <code translate="no">report.md</code> does not re-render from <code translate="no">run.json</code>, or if the artifact paths are rewritten away from the packet-relative contract.</p>
 </section>
 
 <section class="mv" id="state" aria-labelledby="state-h">
   <h2 id="state-h" class="reveal">Current state. What is honest to claim.</h2>
-  <p class="body-text reveal">The public repo is a 1.1.0 release, dev-parallel judgment organ: refine loop, drift tracking, thesis adapter, measurement rechecks, Markdown reports, CLI commands, README, architecture note, changelog, and regression tests. Its core loop is stable, and it is published to PyPI as <b translate="no">crucible-bench</b> (<code translate="no">pip install crucible-bench</code>) via OIDC trusted publishing. The next increments can move in parallel while the wider Telos outreach asks for verification, testing, traction, and research support.</p>
+  <p class="body-text reveal">The public repo is a 1.1.0 release, dev-parallel judgment organ: the register-through-witness loop, drift tracking, thesis adapter, measurement rechecks, Markdown reports, one-command runs, cleanroom review, the <span translate="no">MATCH</span>-provenance gate, missing-evidence explanations, ill-posed measurement warnings, the full CLI, a native MCP bridge, README, architecture note, changelog, and 279 tests across 35 files. Its core loop is stable, and it is published to PyPI as <b translate="no">crucible-bench</b> (<code translate="no">pip install crucible-bench</code>) via OIDC trusted publishing. The next increments can move in parallel while the wider Telos outreach asks for verification, testing, traction, and research support.</p>
   <div class="channels reveal">
     <span class="g">Source</span> &rarr; <a href="https://github.com/HarperZ9/crucible" rel="noopener" translate="no">github.com/HarperZ9/crucible</a>
     &nbsp;&middot;&nbsp;
