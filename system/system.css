@@ -1381,6 +1381,14 @@ h1,.lede,.eyebrow,.close,.seal,.built,.built-head,.built-name,.built-desc,
 .home-photo .built-head,.home-photo .built-desc,.home-photo .hero-cue,
 .home-photo .seal{text-shadow:none}
 .home-photo h1 .g,.home-photo .lede em{color:var(--iris)}
+/* the pre-veil hero text colors were hard-coded light-on-dark; restate them in
+   ink so the veiled ceramic hero holds the AA floor. */
+.home-photo h1{color:var(--ink)}
+.home-photo .lede{color:var(--ink-soft)}
+.home-photo .eyebrow{color:var(--ink-muted)}
+.home-photo .bar{color:var(--ink-muted)}
+.home-photo .bar .nm{color:var(--ink-muted)}
+.home-photo .seal{color:var(--ink-muted)}
 @media (max-width:760px){
   .home-photo .scrim{background:linear-gradient(to top,
     rgba(244,243,239,.96) 0%, rgba(244,243,239,.84) 50%, rgba(244,243,239,.66) 100%)}

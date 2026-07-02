@@ -126,7 +126,10 @@
       pipeline:"DOCS / PACKAGES / CI / SBOM / RECEIPTS"},
     orca:{role:"OPERATOR RUNTIME", word:"RUNTIME", glyph:"bracket",
       headline:"Local runs. Portable receipts.",
-      pipeline:"RUN / ARTIFACT / PROVENANCE / HANDOFF"}
+      pipeline:"RUN / ARTIFACT / PROVENANCE / HANDOFF"},
+    profile:{role:"THE PUBLIC PROFILE", word:"TELOS", glyph:"aperture",
+      headline:"Make things together. Re-check every step.",
+      pipeline:"ENGINES / SUBSTRATE / RECEIPTS / STATUS"}
   };
   if (window.CARD_DATA) Object.assign(DATA, window.CARD_DATA);
   var f = new URLSearchParams(location.search).get("f") || "buildlang";
