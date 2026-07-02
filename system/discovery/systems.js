@@ -74,7 +74,11 @@ export const kepler = {
     return { x, y, vx: -speed * Math.sin(ang), vy: speed * Math.cos(ang) };
   },
   accel(s, p = this.params) {
-    const r3 = Math.pow(s.x * s.x + s.y * s.y, 1.5) + 1e-12;
+    // r2 * sqrt(r2), not pow(r2, 1.5): +, *, / and sqrt are IEEE-754 correctly rounded,
+    // pow is not, so this right-hand side makes the Kepler trajectory bit-identical
+    // across engines (the showcase bit-hash precondition; spec D1).
+    const r2 = s.x * s.x + s.y * s.y;
+    const r3 = r2 * Math.sqrt(r2) + 1e-12;
     return { x: -p.mu * s.x / r3, y: -p.mu * s.y / r3 };
   },
   knownInvariant(s, p = this.params) {
