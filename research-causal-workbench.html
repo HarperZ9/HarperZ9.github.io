@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Causal Research Workbench &middot; Zain Dana Harper</title>
+<meta name="description" content="A Project Telos causal workbench preflight: a replayable toy-DAG proof packet with source receipts, adjustment-set checks, negative controls, Crucible receipts, and explicit non-claims.">
+<link rel="canonical" href="https://harperz9.github.io/research-causal-workbench.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Causal Research Workbench">
+<meta property="og:description" content="A replayable causal-claim preflight that demonstrates proof-carrying graph assumptions and adjustment-set checks without promoting causal-discovery or medical claims.">
+<meta property="og:url" content="https://harperz9.github.io/research-causal-workbench.html">
+<meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Causal Research Workbench">
+<meta name="twitter:description" content="Toy-DAG preflight for proof-carrying causal claims, with Crucible and Learn receipts.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
+<link rel="stylesheet" href="system/doc.css?v=20260630r2">
+</head>
+<body class="doc">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="index.html">Home</a> <a href="overview.html">Flagships</a> <a href="catalog.html">Catalog</a> <a href="research.html">Research</a> <a href="writing.html">Writing</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260630a"></script>
+
+<main id="main">
+<article class="sheet">
+  <header class="mast">
+    <p class="role" style="margin-bottom:.55rem">Proof-carrying research note</p>
+    <h1>Causal Research Workbench</h1>
+    <p class="role" style="color:var(--ink-soft);text-transform:none;letter-spacing:.01em;font-size:.92rem;margin:.55rem 0 .85rem">
+      A replayable preflight for causal claims before they become public assertions.</p>
+    <p class="contact">
+      <span>Zain Dana Harper</span><span class="sep">/</span>
+      <span>Seattle &middot; 2026</span><span class="sep">/</span>
+      <span>draft &middot; not archive-submitted</span><span class="sep">/</span>
+      <a href="research.html">research index</a>
+    </p>
+  </header>
+
+  <section>
+    <h2>Status</h2>
+    <p class="lead">This page reports a bounded Project Telos preflight, not a causal-discovery result. The evidence label is <b>CAUSAL_DAG_FIXTURE_MATCH</b>: a deterministic toy-DAG fixture declares graph assumptions, identifies the exact minimal adjustment set, rejects configured negative controls, and binds the result to Crucible and Learn receipts.</p>
+  </section>
+
+  <section>
+    <h2>Fixture</h2>
+    <dl class="kv">
+      <dt>Treatment</dt><dd><span translate="no">exercise</span>.</dd>
+      <dt>Outcome</dt><dd><span translate="no">health_outcome</span>.</dd>
+      <dt>Required adjustment</dt><dd><b>MATCH.</b> The fixture identifies <span translate="no">age + baseline_health</span> as the exact minimal adjustment set.</dd>
+      <dt>Rejected controls</dt><dd>No adjustment, age alone, baseline health alone, encouragement alone, and biomarker adjustment are all rejected.</dd>
+      <dt>Non-claims</dt><dd>No causal discovery, no LLM causal-reasoning validation, no medical recommendation, and no BuildLang/buildc-native runtime receipt yet.</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Why this matters</h2>
+    <p>Causal claims are a good stress test for AI-assisted research because source volume and model fluency are not enough. A serious causal packet needs a declared treatment, outcome, variables, graph assumptions, adjustment rationale, negative controls, replayable checks, and a clear boundary around what has not been proven.</p>
+    <p>The current artifact is intentionally small. Its job is to prove the packet shape before stronger claims are attempted.</p>
+  </section>
+
+  <section>
+    <h2>Toolchain map</h2>
+    <dl class="kv">
+      <dt>Gather</dt><dd>Captures papers, videos, datasets, benchmark cards, and source metadata as receipts.</dd>
+      <dt>Index</dt><dd>Packages graph files, code, local docs, and run state into context envelopes.</dd>
+      <dt>Forum</dt><dd>Routes claims through statistics, domain, verification, and publication lanes.</dd>
+      <dt>Crucible</dt><dd>Rejects causal claims without graph assumptions, adjustment rationale, negative controls, and a replayable check.</dd>
+      <dt>Learn</dt><dd>Turns passing and failing causal packets into exercises about confounding, colliders, descendants, and overclaim boundaries.</dd>
+      <dt>BuildLang/buildc</dt><dd>Target runtime for typed DAG, SCM, estimator, tensor, numerical, and report receipts after the JavaScript fixture stabilizes.</dd>
+      <dt>Telos</dt><dd>Binds source, graph, action, verdict, and learning receipts into one proof-carrying research packet.</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Receipts</h2>
+    <ul class="bul">
+      <li>Source ledger: <span translate="no">demo/research/causal-workbench-source-receipts.json</span>.</li>
+      <li>Fixture CLI: <span translate="no">demo/causal-workbench-proof-packet.mjs</span>.</li>
+      <li>Fixture output: <span translate="no">causal-workbench-proof-packet-2026-07-02.json</span>.</li>
+      <li>Crucible verdict: <span translate="no">MATCH 3 / DRIFT 0 / UNVERIFIABLE 0</span>.</li>
+      <li>Crucible run hash: <span translate="no">1880e9f0c2c4f2589d4cde2f2c95e008631fd4eea0e0a921b39f19b961eef26e</span>.</li>
+      <li>Crucible report hash: <span translate="no">cc1d3ec1cd45d68e3600da5cc98b5c72ecc9f562f404273fa389afc021bff577</span>.</li>
+      <li>Learn verdict: <span translate="no">VERIFIED</span>.</li>
+      <li>Learn witness: <span translate="no">6e358d9ea652f8e5efee0882ca7046705dc1f1c23421763d9607dd3274b6ad35</span>.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Next promotion target</h2>
+    <p>The next public demo should be a synthetic structural causal model with a known treatment effect, generated dataset, estimator receipts, negative controls, and a BuildLang/buildc typed-DAG target.</p>
+    <pre><code>source receipts
+-&gt; typed DAG
+-&gt; known-ground-truth SCM
+-&gt; estimator and adjustment receipts
+-&gt; countergraph / negative controls
+-&gt; Crucible verdict
+-&gt; Learn prooflesson</code></pre>
+  </section>
+
+  <section>
+    <h2>Do not infer</h2>
+    <ul class="bul">
+      <li>Do not infer that Telos solved causal discovery.</li>
+      <li>Do not infer that the fixture validates LLM causal reasoning.</li>
+      <li>Do not infer that the toy variables are a medical or public-health recommendation.</li>
+      <li>Do not infer that source-ledger rows are full-paper proofs inside the repository.</li>
+      <li>Do not infer that BuildLang/buildc already executes this causal runtime.</li>
+    </ul>
+  </section>
+
+  <p class="note">Local source draft: <span translate="no">docs/research/whitepapers/CAUSAL-RESEARCH-WORKBENCH-FOR-PROOF-CARRYING-CLAIMS-2026-07-02.md</span>. Current page status: draft website copy. Updated 2026-07-02.</p>
+</article>
+</main>
+</body>
+</html>
