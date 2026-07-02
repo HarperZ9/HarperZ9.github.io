@@ -5,17 +5,17 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Formal Replay Preflight for PDE Packets &middot; Zain Dana Harper</title>
-<meta name="description" content="A working paper draft showing how a bounded Navier-Stokes subclaim moves from executable witness to BuildLang parity, Lean algebraic, cyclic finite-sum, finite summation-by-parts, typed finite-grid, and finite edge/operator replay rungs, source demotion, and explicit non-resolution boundary.">
+<meta name="description" content="A working paper draft showing how a bounded Navier-Stokes subclaim moves from executable witness to BuildLang parity, Lean algebraic, cyclic finite-sum, finite summation-by-parts, typed finite-grid, finite edge/operator, and vector finite-operator replay rungs, source demotion, and explicit non-resolution boundary.">
 <link rel="canonical" href="https://harperz9.github.io/research-formal-replay-preflight.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Formal Replay Preflight for PDE Packets">
-<meta property="og:description" content="A Project Telos working-paper draft for PDE proof packets: executable witness, BuildLang parity, Lean replay rungs, source demotion, and explicit UNVERIFIABLE parent boundary.">
+<meta property="og:description" content="A Project Telos working-paper draft for PDE proof packets: executable witness, BuildLang parity, finite Lean replay rungs through vector/operator vocabulary, source demotion, and explicit UNVERIFIABLE parent boundary.">
 <meta property="og:url" content="https://harperz9.github.io/research-formal-replay-preflight.html">
 <meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Formal Replay Preflight for PDE Packets">
-<meta name="twitter:description" content="A bounded Navier-Stokes proof-packet preflight with BuildLang parity, Lean cyclic summation-by-parts replay, and the continuous theorem still open.">
+<meta name="twitter:description" content="A bounded Navier-Stokes proof-packet preflight with BuildLang parity, finite vector/operator Lean replay, and the continuous theorem still open.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
 <link rel="stylesheet" href="system/doc.css?v=20260630r2">
 </head>
@@ -43,7 +43,7 @@
 
   <section>
     <h2>Status</h2>
-    <p class="lead">This page is website copy for a working paper draft. The bounded BuildLang parity witness is <b>BUILD_PARITY_MATCH</b>. A first Lean algebraic cancellation rung is <b>LEAN_REPLAY_MATCH</b>. The finite cyclic first-difference sum is <b>CYCLIC_SUM_REPLAY_MATCH</b>. The finite paired-stencil theorem is <b>CYCLIC_SUMMATION_BY_PARTS_MATCH</b>. The typed finite-grid theorem is <b>TYPED_FINITE_GRID_SBP_MATCH</b>. The finite edge/operator theorem is <b>FINITE_EDGE_OPERATOR_SBP_MATCH</b>. The continuous periodic integration-by-parts theorem is <b>NOT_REPLAYED</b>. Fresh arXiv metadata is <b>SOURCE_LEAD_ONLY</b>. The parent Navier-Stokes existence and smoothness problem remains <b>UNVERIFIABLE</b>.</p>
+    <p class="lead">This page is website copy for a working paper draft. The bounded BuildLang parity witness is <b>BUILD_PARITY_MATCH</b>. A first Lean algebraic cancellation rung is <b>LEAN_REPLAY_MATCH</b>. The finite cyclic first-difference sum is <b>CYCLIC_SUM_REPLAY_MATCH</b>. The finite paired-stencil theorem is <b>CYCLIC_SUMMATION_BY_PARTS_MATCH</b>. The typed finite-grid theorem is <b>TYPED_FINITE_GRID_SBP_MATCH</b>. The finite edge/operator theorem is <b>FINITE_EDGE_OPERATOR_SBP_MATCH</b>. The vector finite-operator theorem is <b>VECTOR_FINITE_OPERATOR_SBP_MATCH</b>. The continuous periodic integration-by-parts theorem is <b>NOT_REPLAYED</b>. Fresh arXiv metadata is <b>SOURCE_LEAD_ONLY</b>. The parent Navier-Stokes existence and smoothness problem remains <b>UNVERIFIABLE</b>.</p>
   </section>
 
   <section>
@@ -55,8 +55,10 @@
       <dt>Cyclic summation-by-parts rung</dt><dd><b>CYCLIC_SUMMATION_BY_PARTS_MATCH.</b> A third Lean file replays a finite paired-stencil identity: <span translate="no">sum_i u[i] * (phi[i+1] - phi[i]) + sum_i phi[i] * (u[i] - u[i-1]) = 0</span>. This is still discrete <span translate="no">List (Prod Int Int)</span> algebra.</dd>
       <dt>Typed finite-grid rung</dt><dd><b>TYPED_FINITE_GRID_SBP_MATCH.</b> A fourth Lean file wraps the finite identity in <span translate="no">GridSample</span> and <span translate="no">CyclicGrid</span> structures. This is still finite integer grid algebra.</dd>
       <dt>Finite edge/operator rung</dt><dd><b>FINITE_EDGE_OPERATOR_SBP_MATCH.</b> A fifth Lean file introduces <span translate="no">FiniteEdge</span>, <span translate="no">ForwardScalarDifference</span>, and <span translate="no">BackwardVelocityDifference</span>. This is still finite integer edge/operator algebra.</dd>
+      <dt>Vector finite-operator rung</dt><dd><b>VECTOR_FINITE_OPERATOR_SBP_MATCH.</b> A sixth Lean file introduces <span translate="no">Vector2Int</span>, <span translate="no">VectorGridSample</span>, <span translate="no">VectorCyclicGrid</span>, <span translate="no">VectorFiniteEdge</span>, and componentwise gradient/divergence-like operators. This is still finite two-component integer algebra.</dd>
       <dt>Continuous theorem replay</dt><dd><b>NOT_REPLAYED.</b> There are still no Lean definitions for smooth periodic fields, integrals, divergence-free vector fields, or Navier-Stokes equations in this packet.</dd>
-      <dt>Source intake</dt><dd><b>SOURCE_LEAD_ONLY.</b> The current local demotion gate covers 20 retained arXiv metadata rows and 19 unique IDs for this replay rung. It queues leads; it does not prove source claims.</dd>
+      <dt>Source intake</dt><dd><b>SOURCE_LEAD_ONLY.</b> The current local demotion gate covers 30 retained arXiv metadata rows and 25 unique IDs for this replay rung. It queues leads; it does not prove source claims.</dd>
+      <dt>Tooling receipts</dt><dd><b>MATCH / VERIFIED.</b> Crucible assessed three bounded packet claims as <span translate="no">MATCH 3 / DRIFT 0 / UNVERIFIABLE 0</span>. Learn reverified the prooflesson receipt as <span translate="no">VERIFIED</span>. These receipt verdicts cover local packet discipline only.</dd>
       <dt>Grand problem</dt><dd><b>UNVERIFIABLE.</b> The continuous Navier-Stokes parent claim is not established by a finite grid, a compiler run, metadata intake, or a paper draft.</dd>
     </dl>
   </section>
@@ -96,12 +98,21 @@
 
   <section>
     <h2>Lean update</h2>
-    <p class="entry-note">The theorem-prover ladder now reaches explicit finite edge/operator vocabulary, but only for finite integer algebra.</p>
+    <p class="entry-note">The theorem-prover ladder now reaches explicit vector finite-operator vocabulary, but only for finite integer algebra.</p>
     <ul class="bul">
-      <li>Lean sources: <span translate="no">PeriodicCancellationPreflight.lean</span>, <span translate="no">CyclicFiniteSumPreflight.lean</span>, <span translate="no">CyclicSummationByPartsPreflight.lean</span>, <span translate="no">TypedFiniteGridSummationByPartsPreflight.lean</span>, and <span translate="no">FiniteEdgeOperatorPreflight.lean</span>.</li>
-      <li>Receipts: <span translate="no">lean-periodic-cancellation-replay-2026-07-02.json</span>, <span translate="no">lean-cyclic-finite-sum-replay-2026-07-02.json</span>, <span translate="no">lean-cyclic-summation-by-parts-replay-2026-07-02.json</span>, <span translate="no">lean-typed-finite-grid-sbp-replay-2026-07-02.json</span>, and <span translate="no">lean-finite-edge-operator-sbp-replay-2026-07-02.json</span>.</li>
+      <li>Lean sources: <span translate="no">PeriodicCancellationPreflight.lean</span>, <span translate="no">CyclicFiniteSumPreflight.lean</span>, <span translate="no">CyclicSummationByPartsPreflight.lean</span>, <span translate="no">TypedFiniteGridSummationByPartsPreflight.lean</span>, <span translate="no">FiniteEdgeOperatorPreflight.lean</span>, and <span translate="no">VectorFiniteOperatorPreflight.lean</span>.</li>
+      <li>Receipts: <span translate="no">lean-periodic-cancellation-replay-2026-07-02.json</span>, <span translate="no">lean-cyclic-finite-sum-replay-2026-07-02.json</span>, <span translate="no">lean-cyclic-summation-by-parts-replay-2026-07-02.json</span>, <span translate="no">lean-typed-finite-grid-sbp-replay-2026-07-02.json</span>, <span translate="no">lean-finite-edge-operator-sbp-replay-2026-07-02.json</span>, and <span translate="no">lean-vector-finite-operator-sbp-replay-2026-07-02.json</span>.</li>
       <li>Toolchain: Lean <span translate="no">4.31.0</span>, Lake <span translate="no">5.0.0</span>, elan <span translate="no">4.2.3</span>.</li>
-      <li>Verdict: <b>FINITE_EDGE_OPERATOR_SBP_MATCH</b> for finite edge/operator summation by parts only.</li>
+      <li>Verdict: <b>VECTOR_FINITE_OPERATOR_SBP_MATCH</b> for finite vector/operator summation by parts only.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Verification receipts</h2>
+    <ul class="bul">
+      <li>Crucible: <span translate="no">twentieth-wave-tooling-run-2026-07-02.json</span> reports <span translate="no">MATCH 3 / DRIFT 0 / UNVERIFIABLE 0</span> for bounded local packet claims.</li>
+      <li>Learn: <span translate="no">twentieth-wave-vector-finite-operator.prooflesson.json</span> reverified as <span translate="no">VERIFIED</span> from its recorded hash chain.</li>
+      <li>Gather: three twentieth-wave stores verify as content-addressed <span translate="no">MATCH</span> stores, still demoted to source leads.</li>
     </ul>
   </section>
 
@@ -122,6 +133,7 @@ parent_claim == UNVERIFIABLE</code></pre>
       <li>No claim that the finite paired-stencil theorem proves smooth periodic integration by parts is made.</li>
       <li>No claim that the typed finite-grid theorem proves smooth periodic integration by parts is made.</li>
       <li>No claim that the finite edge/operator theorem proves smooth periodic integration by parts is made.</li>
+      <li>No claim that the vector finite-operator theorem proves smooth periodic integration by parts is made.</li>
       <li>No global regularity, uniqueness, existence, turbulence, or physical-fluid validation claim is made.</li>
       <li>No native buildc relation-invariant receipt is claimed yet.</li>
       <li>No arXiv metadata row is treated as paper truth or exhaustive coverage.</li>
