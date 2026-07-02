@@ -19,7 +19,7 @@
 <meta name="twitter:description" content="BuildLang is a Rust-built compiler for a typed-effects language: a function declares the effects it may perform and the lifetimes of the references it returns, and the compiler checks both and lowers the program to native code through a C backend. Over 1,300 passing Cargo tests across its suites; published on crates.io as buildlang. By Zain Dana Harper.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/buildlang.png">
 <meta name="color-scheme" content="dark">
-<link rel="stylesheet" href="system/system.css?v=20260630s1">
+<link rel="stylesheet" href="system/system.css?v=20260701a">
 </head>
 <body class="inner-clean">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -35,7 +35,7 @@
     <p class="lede"><span translate="no">BuildLang</span> is a small programming language with one stubborn idea. Every function has to say, right at the top, what it&rsquo;s allowed to reach out and touch: your files, the screen, the network. Those reach-outs are called <em>effects</em>. The function also has to be clear about which piece of memory it hands back, and how long that memory is allowed to stay alive, the part people call <em>lifetimes</em>. The compiler, the program that turns your code into something the machine can run, checks both, then turns it into fast native code. Reach for something you never declared, and it simply won&rsquo;t build.</p>
     <p class="close">I built it so the compiler could answer a question I kept getting wrong on my own: what is this function actually allowed to do? It&rsquo;s tested where it counts, honest about its rough edges, and the careful habit at the heart of it (say what you&rsquo;ll touch, then be held to it) runs quietly under everything else here.</p>
   </div>
-  <div class="seal"><span translate="no">buildc</span> 1.0.5 &middot; a Rust-built compiler, on crates.io &middot; effects and lifetimes, in the type</div>
+  <div class="seal"><span translate="no">buildc</span> 1.0.6 &middot; a Rust-built compiler, on crates.io &middot; effects and lifetimes, in the type</div>
 </div>
 
 <main id="main">

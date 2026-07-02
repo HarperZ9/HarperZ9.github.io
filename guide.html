@@ -5,12 +5,12 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Project Telos: a plain guide to the tools</title>
-<meta name="description" content="A plain-language user guide to the Project Telos tools: what each one is for, a simple way to picture it, how you actually use it, and where to get it. Covers buildlang, gather, index, forum, crucible, emet, and the telos engine.">
+<meta name="description" content="A plain-language user guide to the Project Telos tools: what each one is for, a simple way to picture it, how you actually use it, and where to get it. Covers gather, index, forum, crucible, emet, buildlang, learn, and the telos engine.">
 <link rel="canonical" href="https://harperz9.github.io/guide.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Project Telos">
 <meta property="og:title" content="Project Telos: a plain guide to the tools">
-<meta property="og:description" content="What each tool is for, a simple way to picture it, and how you actually use it. buildlang, gather, index, forum, crucible, emet, and the telos engine.">
+<meta property="og:description" content="What each tool is for, a simple way to picture it, and how you actually use it. gather, index, forum, crucible, emet, buildlang, learn, and the telos engine.">
 <meta property="og:url" content="https://harperz9.github.io/guide.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
 <meta property="og:image:alt" content="Project Telos flagship card: Telos, the engine. See it and shape it, together with a model.">
@@ -19,7 +19,7 @@
 <meta name="twitter:description" content="What each tool is for, how to picture it, and how you actually use it.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <meta name="color-scheme" content="light">
-<link rel="stylesheet" href="system/system.css?v=20260630s1">
+<link rel="stylesheet" href="system/system.css?v=20260701a">
 <style>
 /* one idea strip */
 .idea{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:clamp(1.6rem,3vw,2.4rem);max-width:70rem}
@@ -68,7 +68,7 @@
     <p class="lede">Project Telos is a small family of tools with one habit in common: they do the work, and they leave behind something you can check afterwards. This page says, in plain terms, what each tool is for, a simple way to picture it, and how you would actually use it. No jargon required.</p>
     <p class="close">If you only read one thing, read the next section. Everything else is the same idea, pointed at a different job.</p>
   </div>
-  <div class="seal">seven tools &middot; what each is for &middot; how to use it &middot; where to get it</div>
+  <div class="seal">eight tools &middot; what each is for &middot; how to use it &middot; where to get it</div>
 </div>
 
 <main id="main">
@@ -133,8 +133,8 @@ forum submit &lt;task&gt;</dd></div>
       <dl>
         <div><dt>Think of it as</dt><dd>A devil&rsquo;s advocate who shows their work, and admits when a claim is too vague to test.</dd></div>
         <div><dt>You use it when</dt><dd>You want a claim stress-tested rather than rubber-stamped, with the reasoning left on the table.</dd></div>
-        <div><dt>How to get it</dt><dd class="use"># public, not yet on PyPI
-git clone https://github.com/HarperZ9/crucible</dd></div>
+        <div><dt>How to get it</dt><dd class="use">pip install crucible-bench
+# or: git clone https://github.com/HarperZ9/crucible</dd></div>
       </dl>
       <div class="links"><a href="crucible.html">on the site</a><a href="https://github.com/HarperZ9/crucible" translate="no">GitHub</a></div>
     </article>
@@ -145,8 +145,8 @@ git clone https://github.com/HarperZ9/crucible</dd></div>
       <dl>
         <div><dt>Think of it as</dt><dd>A logbook and a security camera for AI actions, kept in a form anyone can audit.</dd></div>
         <div><dt>You use it when</dt><dd>AI-assisted work needs to be trusted by someone who was not in the room when it happened.</dd></div>
-        <div><dt>How to get it</dt><dd class="use"># a spec plus small clean-room implementations
-git clone https://github.com/HarperZ9/emet</dd></div>
+        <div><dt>How to get it</dt><dd class="use">pip install emet
+# the spec + clean-room implementations live in the repo</dd></div>
       </dl>
       <div class="links"><a href="emet.html">on the site</a><a href="https://github.com/HarperZ9/emet" translate="no">GitHub</a></div>
     </article>
@@ -161,6 +161,18 @@ git clone https://github.com/HarperZ9/emet</dd></div>
 buildc check yourfile.bld</dd></div>
       </dl>
       <div class="links"><a href="buildlang.html">on the site</a><a href="https://github.com/HarperZ9/buildlang" translate="no">GitHub</a></div>
+    </article>
+
+    <article class="tool">
+      <div class="top"><span class="name" translate="no">learn</span><span class="role">the learning aid</span></div>
+      <p class="what">Turns material you already have into a course with a real integrity floor: spaced repetition, retrieval practice, and self-explanation checked by crucible. Every graded step stops and waits for you, and writes a witnessed receipt, so the record shows what you actually did.</p>
+      <dl>
+        <div><dt>Think of it as</dt><dd>A study plan built from your own notes, where nothing gets graded behind your back.</dd></div>
+        <div><dt>You use it when</dt><dd>You want AI help while you study something for real, with proof the practice was yours, not the model&rsquo;s.</dd></div>
+        <div><dt>How to get it</dt><dd class="use">git clone https://github.com/HarperZ9/learn
+node src/cli.mjs doctor</dd></div>
+      </dl>
+      <div class="links"><a href="learn.html">on the site</a><a href="https://github.com/HarperZ9/learn" translate="no">GitHub</a></div>
     </article>
 
     <article class="tool wide">
@@ -189,6 +201,7 @@ git clone https://github.com/HarperZ9/telos</dd></div>
     <div class="pick-row"><div class="q">I want a claim genuinely stress-tested, not just agreed with.</div><div class="a" translate="no">crucible</div></div>
     <div class="pick-row"><div class="q">Someone needs to trust AI-assisted work they did not watch happen.</div><div class="a" translate="no">emet</div></div>
     <div class="pick-row"><div class="q">I write code and want the compiler to catch hidden side effects.</div><div class="a" translate="no">buildlang</div></div>
+    <div class="pick-row"><div class="q">I am studying something and want AI help without it doing the work for me.</div><div class="a" translate="no">learn</div></div>
     <div class="pick-row"><div class="q">I want to sit down and build something with a model, in the open.</div><div class="a" translate="no">telos</div></div>
   </div>
   <div class="channels reveal" style="margin-top:2rem">
@@ -201,7 +214,7 @@ git clone https://github.com/HarperZ9/telos</dd></div>
 </main>
 
 <footer class="footer-seal" role="contentinfo">
-  <p class="seal">Same habit, seven jobs: look at the real thing, check it against a written rule, keep a receipt you can re-open. Start with the one that fits a problem you already have.</p>
+  <p class="seal">Same habit, eight jobs: look at the real thing, check it against a written rule, keep a receipt you can re-open. Start with the one that fits a problem you already have.</p>
 </footer>
 
 <script src="system/reveal.js?v=20260625a" defer></script>
