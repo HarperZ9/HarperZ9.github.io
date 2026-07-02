@@ -19,7 +19,7 @@
 <meta name="twitter:description" content="If an AI agent touched a file, EMET lets you check what it did. It reads the file itself, works out its fingerprint, and reports MATCH, DRIFT, or UNVERIFIABLE, never TRUSTED, by construction. A small, tested tool in four languages, now released as v1.0 on PyPI (pip install emet). By Zain Dana Harper.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/emet.png">
 <meta name="color-scheme" content="dark">
-<link rel="stylesheet" href="system/system.css?v=20260630s1">
+<link rel="stylesheet" href="system/system.css?v=20260701a">
 </head>
 <body class="inner-clean">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -89,7 +89,7 @@ impl/rust/emet     &rarr;  <span class="ok">CONFORMANCE 35/35 vectors pass</span
 impl/js/emet.js    &rarr;  <span class="ok">CONFORMANCE 35/35 vectors pass</span>
 impl/go/emet       &rarr;  <span class="ok">CONFORMANCE 35/35 vectors pass</span></pre>
     <p class="artifact-cap">Change a single character in the file and the answer drops from <b translate="no">MATCH</b> to <b translate="no">DRIFT</b>. It reads the file itself, not anyone who promises it&rsquo;s fine.</p>
-    <p class="artifact-note">Captured live from the <span translate="no">emet</span> run &middot; receipt format from <b translate="no">adapters/proof_surface_receipt.py</b> &middot; 35/35 conformance vectors, four language implementations, CI each push. <em>Honest limit:</em> I wrote all four versions myself, so they can only earn one honest claim: that the written rules are clear enough to build from. What they still can&rsquo;t claim is that someone with no connection to me rebuilt the tool from the spec and got the same answers, and that different-author version is something I still owe. <a href="emet-sample.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(239,171,48,.45)">See a sample proof-surface report →</a></p>
+    <p class="artifact-note">Captured live from the <span translate="no">emet</span> run &middot; receipt format from <b translate="no">adapters/proof_surface_receipt.py</b> &middot; 35/35 conformance vectors, four language implementations, CI each push. <em>Honest limit:</em> I wrote all four versions myself, so they can only earn one honest claim: that the written rules are clear enough to build from. What they still can&rsquo;t claim is that someone with no connection to me rebuilt the tool from the spec and got the same answers, and that different-author version is something I still owe. <a href="emet-sample.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(58,43,214,.45)">See a sample proof-surface report →</a></p>
   </div>
 </section>
 
@@ -99,6 +99,23 @@ impl/go/emet       &rarr;  <span class="ok">CONFORMANCE 35/35 vectors pass</span
   <p class="body-text reveal">I wrote the same rules out four separate times, each in a different programming language (Python, Rust, Node.js, Go), and each built only from what comes with that language, nothing borrowed from the outside. All four pass the very same thirty-five test cases on every change.</p>
   <p class="pull reveal">Four versions agreeing is not the same as four people agreeing.</p>
   <p class="body-text reveal">They all came from one person: me. So they earn one honest claim and not a single one more: the rules are clear enough that someone can build a working tool from them. What I still owe is the real test, a version built by someone with no tie to me, a different author and not just a fifth language. I say that here in plain words, instead of letting the number quietly imply more than it should.</p>
+</section>
+
+<!-- ─── THE BUNDLE WITNESS ─────────────────────────────────────── -->
+<section class="mv" id="bundle" aria-labelledby="bundle-h">
+  <h2 id="bundle-h" class="reveal">One file, or a whole packet.</h2>
+  <p class="body-text reveal">Checking a single file is the core. But an agent rarely produces just one file, it produces a packet: a report, the things it references, the record of what it did. So <span translate="no">EMET</span> can now witness the whole packet at once. You hand it a small manifest (a list that names every file in the packet next to the fingerprint recorded for it), and it re-derives each one, opening every file and working out its fingerprint again from scratch, then comparing that to the fingerprint written down. It is the same recipe as before, run over a list instead of a single name.</p>
+  <p class="body-text reveal">The answer stays the same three, and only these three. MATCH means every file in the packet re-derived to the fingerprint recorded for it. DRIFT means at least one recorded fingerprint no longer matches the file on disk. UNVERIFIABLE means a listed file is missing or unreadable, or the manifest itself is malformed, so the comparison can&rsquo;t be made. A difference always wins over a can&rsquo;t-check: if anything drifted, the packet reports DRIFT. There is still no fourth answer, and no way for the manifest to smuggle one in. If a word that sounds like permission shows up anywhere in the list, even in a filename, it is refused before any verdict is formed. The witness runs entirely inside <span translate="no">EMET</span>, and it never becomes an authority.</p>
+  <div class="exhibit reveal">
+    <div class="exhibit-tag"><span class="ord">Bundle</span> <span class="what">the same three answers, over a content-addressed packet</span></div>
+    <pre class="artifact" translate="no"><span class="pr">$ python adapters/proof_surface_receipt.py bundle bundle.json</span>
+<span class="cmt"># re-derives every file the manifest lists, against its recorded sha256</span>
+<span class="ok">MATCH</span>        files_total=7  files_rederived=7   <span class="cmt"># every file re-derived</span>
+<span class="bad">DRIFT</span>        one recorded digest no longer matches the file on disk
+<span class="cmt">UNVERIFIABLE  a listed file is missing, or the manifest is malformed</span></pre>
+    <p class="artifact-cap">This is the external check for a generated proof-packet: not &ldquo;the tool that made it says it&rsquo;s fine,&rdquo; but every file re-derived from scratch against the fingerprint written down for it.</p>
+    <p class="artifact-note">Bundle witness from <b translate="no">adapters/proof_surface_receipt.py</b> &middot; manifest schema <span translate="no">proof-surface-bundle/v0</span> &middot; same closed lattice, same no-authority contract as the single-file core. It reads the manifest and the files, and speaks for neither.</p>
+  </div>
 </section>
 
 <!-- ─── RUN IT ─────────────────────────────────────────────────── -->
@@ -116,6 +133,8 @@ impl/go/emet       &rarr;  <span class="ok">CONFORMANCE 35/35 vectors pass</span
     <span class="g">GitHub</span>: <a href="https://github.com/HarperZ9/emet" translate="no">HarperZ9/emet</a>
     &nbsp;&middot;&nbsp;
     <span class="g">Email</span>: <a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">License</span>: <a href="https://github.com/HarperZ9/emet/blob/main/LICENSE" translate="no">MPL-2.0</a>
     &nbsp;&middot;&nbsp;
     <a href="overview.html">&larr; the map</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the index</a>
   </div>

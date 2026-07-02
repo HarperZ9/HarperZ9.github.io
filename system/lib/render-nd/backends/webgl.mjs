@@ -2,6 +2,12 @@
 // Draws scene.segments as gl.LINES (additive glow) and scene.points as gl.POINTS (soft round falloff).
 // drawSceneGL3D additionally draws depth-tested perspective faces (the volumetric path).
 // Zero external dependencies.
+//
+// Context contract: this backend never creates a context; the caller passes gl in. For smooth
+// line-primitive edges the caller MUST request MSAA at context creation, i.e. include
+// GL_CONTEXT_ATTRIBUTES (below) in the getContext("webgl", ...) attributes. Browsers may ignore
+// the antialias flag; that is the fail-safe (the draw path needs nothing else).
+export const GL_CONTEXT_ATTRIBUTES = Object.freeze({ antialias: true });
 
 // --- Shader sources ---
 

@@ -1,10 +1,10 @@
 // studio.js: the unified Studio. One canvas, two ways in (Generate via the Atelier, or Bring your own),
 // then perceive/discuss/transform/refine with the model. Bridges the Atelier's canvas to the eye.
 import { perceptualHash, features, hamming } from "../shared-frame/eye.js";
-import { representation, richFeatures, describeFrame, rmsFromBytes, spectrumBands, dominantPitchHz, assembleFullPerception } from "./sense.js";
+import { representation, richFeatures, describeFrame, rmsFromBytes, spectrumBands, dominantPitchHz, assembleFullPerception, hueName } from "./sense.js";
 import { respond } from "./respond.js";
 import { renderFractal, PRESETS, PALETTES as FRACTAL_PALETTES } from "./fractal.js?v=20260628a";
-import { renderFractalGL, isFractalGLAvailable } from "./fractal-gl.js";
+import { renderFractalGL, isFractalGLAvailable, clampGLBackingToDPR } from "./fractal-gl.js?v=20260701a";
 import { render3D } from "./fractal3d.js";
 import { sizeToDisplay } from "./canvas-scale.js";
 import { sourceIsAnimated, shouldHaltOnStatic, fullscreenMaxBacking } from "./studio-loop.js";
@@ -12,6 +12,7 @@ import { buildModelHeaders } from "./studio-model.js";
 import { renderScene, renderSceneVolumetric } from "./ndim.js";
 import { drawSceneGL, drawSceneGL3D } from "./lib/render-nd/backends/webgl.mjs";
 import { startDiscovery, stopDiscovery } from "./discovery/studio-discovery.js";
+import { startShowcase, stopShowcase, showcaseSettled, showcaseReport, showcaseVerdict, recheckShowcase } from "./showcase/first-integral.js?v=20260701a";
 import {
   createPaintState, setBrush, setPaintTarget, paintAtTarget, toggle as togglePaint, clearPaint,
 } from "./lib/render-nd/core/paint-state.mjs";
@@ -49,6 +50,8 @@ window.__studioMediaAdapters = STUDIO_MEDIA_ADAPTERS;
 window.__studioMediaNodeRegistry = STUDIO_MEDIA_NODE_REGISTRY;
 window.__studioCreateGraphPackage = createGraphPackage;
 window.__studioValidateGraphPackage = validateGraphPackage;
+// Showcase debug/test surface (wave 1 stubs; wave 2 swaps in the real report/verdict/recheck).
+window.__studioShowcase = { report: showcaseReport, verdict: showcaseVerdict, recheck: recheckShowcase };
 
 async function bootEngineStatus() {
   const set = (id, text) => { const el = $(id); if (el) el.textContent = text; };
@@ -147,6 +150,7 @@ const SOURCES = {
   byo:       { block: "src-byo",       mode: "byo" },
   watch:     { block: "src-watch",     mode: "byo" },
   discovery: { block: "src-discovery", mode: "generate" },
+  showcase:  { block: "src-showcase",  mode: "generate" },
 };
 
 function setSource(next) {
@@ -159,6 +163,7 @@ function setSource(next) {
     stopWatch();        // release any screen/camera capture
     stopByoVideo();     // pause + release any played BYO video
     try { stopDiscovery(); } catch (_) {}  // stop the physics renderer RAF if it was running
+    try { stopShowcase(); } catch (_) {}   // settle the showcase scene if it was running
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
@@ -186,6 +191,9 @@ function setSource(next) {
   // Physics (discovery engine): render the evolving system into the shared canvas, then arm the
   // meter loop so the measurimeter perceives it (marked animated in studio-loop, so it will not idle).
   if (next === "discovery") { try { startDiscovery($("studio-canvas")); } catch (_) {} startMeterLoop(); }
+  // Showcase (First Integral): draw the scene into the shared canvas, then arm the meter loop.
+  // The loop idles once the scene settles (studio-loop gates on showcaseSettled).
+  if (next === "showcase") { try { startShowcase($("studio-canvas")); } catch (_) {} startMeterLoop(); }
   syncToolbarForSource();
   // Notify the surface layer so panzoom attaches/detaches per the source change.
   // Pass the current canvas (may be a fresh GL canvas if fractal3d swapped it).
@@ -359,6 +367,9 @@ function paintFractal(opts, aaOverride) {
     fractal3dHandle = null;   // not a 3D orbit
     if (stop3d) { stop3d(); stop3d = null; }   // ensure no 3D orbit RAF lingers on this node
     sizeCanvas(c);
+    // Tier-gated DPR clamp (spec 1.4): on tier mid+, lift the GL backing to CSS * min(dpr, 2)
+    // for a crisp hi-DPI fragment pass. Fail-safe no-op below mid or when the plan is absent.
+    try { clampGLBackingToDPR(c, window.__studioHardwareRenderPlan && window.__studioHardwareRenderPlan.tier); } catch (_) {}
     try {
       renderFractalGL(c, { ...opts, maxIter, aa });
       return c;
@@ -1928,6 +1939,28 @@ function paintMosaic(px, w, h) {
 // and a .mm-swf label below it. The label is a sibling, not a child positioned
 // absolute, so it never overflows or clips. The wrap has role="listitem" since
 // the container carries role="list".
+// Name a swatch via the vendored sense-core hueName: hex -> HSV, then the honest colour name
+// (greys read as "grey"/"near-white"/"near-black", not a stray hue). Additive: every source's
+// measurimeter swatches gain the name; the visible label stays the percent.
+function swatchName(s) {
+  let r = s.r, g = s.g, b = s.b;
+  if (typeof r !== "number" && typeof s.hex === "string") {
+    const h = s.hex.replace("#", "");
+    r = parseInt(h.slice(0, 2), 16); g = parseInt(h.slice(2, 4), 16); b = parseInt(h.slice(4, 6), 16);
+  }
+  r /= 255; g /= 255; b /= 255;
+  const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn;
+  let hue = 0;
+  if (d > 0) {
+    if (mx === r) hue = ((g - b) / d) % 6;
+    else if (mx === g) hue = (b - r) / d + 2;
+    else hue = (r - g) / d + 4;
+    hue = (hue * 60 + 360) % 360;
+  }
+  const sat = mx === 0 ? 0 : d / mx;
+  try { return hueName(hue, sat, mx); } catch (_) { return "colour"; }
+}
+
 function paintSwatches(rich) {
   const host = $("mm-swatches"); if (!host) return;
   const sw = rich.dominantSwatches || [];
@@ -1936,11 +1969,12 @@ function paintSwatches(rich) {
   host.innerHTML = "";
   for (const s of sw) {
     const pct = (s.frac * 100).toFixed(0) + "%";
+    const name = swatchName(s);   // convert hex to HSV, name via the vendored sense-core hueName
     const wrap = document.createElement("span"); wrap.className = "mm-sw-wrap"; wrap.setAttribute("role", "listitem");
     const el = document.createElement("span"); el.className = "mm-sw";
     el.style.background = s.hex;
-    el.setAttribute("aria-label", `Colour ${s.hex}, ${pct} of the frame`);
-    el.title = `${s.hex} · ${pct}`;
+    el.setAttribute("aria-label", `Colour ${name} ${s.hex}, ${pct} of the frame`);
+    el.title = `${name} · ${s.hex} · ${pct}`;
     const f = document.createElement("span"); f.className = "mm-swf"; f.textContent = pct;
     wrap.appendChild(el); wrap.appendChild(f); host.appendChild(wrap);
   }
@@ -2061,7 +2095,7 @@ function liveTick(ts) {
   // stops that whole recurring class. (studio-loop.js, node-tested.)
   if (phash === lastLoopPhash) {
     if (++staticTicks >= STATIC_STOP) {
-      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused) });
+      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: showcaseSettled() });
       if (shouldHaltOnStatic(true, animated)) { stopMeterLoop(); return; }
       staticTicks = 0;   // animated: do not halt, but reset so we re-arm the window cleanly
     }
@@ -2360,6 +2394,12 @@ function buildCtx() {
     } catch (_) { audio = null; }
   }
 
+  // Showcase readout (spec 3.2): when the First Integral scene is active it publishes the same
+  // structured readout a screen reader hears to window.__studioShowcaseReadout; attach it so the
+  // connected model perceives exactly those scene facts + measured numbers. Absent for every
+  // other source, so this is purely additive.
+  const scene = (activeSource === "showcase" && typeof window !== "undefined" && window.__studioShowcaseReadout) || null;
+
   return {
     phash,
     features: feats,
@@ -2371,6 +2411,7 @@ function buildCtx() {
     sourceName: currentSourceLabel(),
     width:  w,
     height: h,
+    scene,
   };
 }
 
@@ -2426,6 +2467,11 @@ function fullPerception() {
     source: currentSourceLabel(),
   };
   const perception = assembleFullPerception(px, w, h, 4, pre);
+  // Showcase scene facts + measured readout (spec 3.2): attach the same structured readout a
+  // screen reader hears when First Integral is active, so the model perceives those exact numbers.
+  // Additive on the returned payload (assembleFullPerception is a vendored .mjs, left untouched).
+  const showcaseScene = (activeSource === "showcase" && typeof window !== "undefined" && window.__studioShowcaseReadout) || null;
+  if (showcaseScene) perception.scene = showcaseScene;
   // Self-improvement: append this perception's fidelity record (wpre/pbe/wpir) to the append-only
   // perception-fidelity ledger. Guarded + fire-and-forget so it never blocks or breaks the payload.
   try { recordFidelity(perception); } catch (_) {}
@@ -2720,6 +2766,11 @@ function resizeActiveSurface() {
     case "music":
     case "byo":
       sizeCanvas(canvas);   // these sources read canvas.width/height on their own loop tick
+      break;
+    case "showcase":
+      // The showcase scene owns its backing (studio's sizeCanvas would reset the hero frame),
+      // so re-fit + redraw through the scene's own resize path instead.
+      try { window.__studioShowcaseResize && window.__studioShowcaseResize(); } catch (_) {}
       break;
     default:
       sizeCanvas(canvas);   // watch + any other: re-fit; the source's own loop repaints
@@ -3490,4 +3541,13 @@ if (tierBtn) {
 }
 
 // Boot the source menu: Atelier active by default (mirrors the old setMode("generate")).
-setSource("atelier");
+// The URL may pre-select a source (studio.html?source=showcase&seed=1) and the showcase hero
+// capture mode (hero=1) both enters the showcase and lets first-integral.js apply its capture
+// layout. Only known sources are honored; anything else falls back to Atelier.
+(function bootSource() {
+  // The Atelier engine rewrites location.search on boot, so read the head-snapshot global that
+  // captured ?source= before that happened; fall back to the live URL if the snapshot is absent.
+  const want = window.__studioBootSource || new URLSearchParams(window.location.search || "").get("source") || "";
+  if (want && SOURCES[want]) { try { setSource(want); return; } catch (_) {} }
+  setSource("atelier");
+})();
