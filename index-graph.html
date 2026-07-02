@@ -64,6 +64,20 @@
   <em class="close reveal">Every answer is re-checkable by anyone holding only the artifact and the evidence. No model sits in the checking step.</em>
 </section>
 
+<!-- THE VERIFIED WIKI -->
+<section class="mv" id="wiki" aria-labelledby="wiki-h">
+  <h2 id="wiki-h" class="reveal">The same discipline, turned on one unfamiliar repo.</h2>
+  <p class="body-text reveal">The atlas maps a whole workspace. <code translate="no">index wiki</code> is the other altitude, the one-repo view a newcomer actually needs. Wiki generators built on a model guess at the architecture and write confident prose about structure that is not there. Repo packers dump the source without understanding it. <code translate="no">index wiki</code> takes the third path: it derives a multi-page, self-contained wiki for one repo from the module dependency graph <span translate="no">index</span> already extracts, with no model and no generated prose, then seals it so the result can be re-checked instead of trusted.</p>
+  <p class="pull reveal">Overview, one module page per module with every edge carrying its file and line, an architecture diagram rendered from the real graph, and your own markdown joined in verbatim. One offline HTML file.</p>
+  <p class="body-text reveal">Each page is sealed with a canonical hash, the artifact is pinned to the commit it was built from, and <code translate="no">index wiki --verify</code> recomputes the page hashes and re-derives the graph against the current tree. The verdict is the same three words as every other certificate: <span translate="no">MATCH</span>, <span translate="no">DRIFT</span> (a page was tampered with, a claimed edge is absent from the real graph, or the repo moved off its pinned commit), or <span translate="no">UNVERIFIABLE</span>. The test suite keeps the known-bad fixtures, a tampered page, a hash-consistent forged edge, hostile markdown, because a verifier that cannot fail on a known-bad input is not a verifier.</p>
+  <pre class="artifact" translate="no"><span class="pr">$ index wiki https://github.com/org/repo --out wiki.html</span>
+<span class="cmt"># shallow-clone, derive from the module graph, remove the clone</span>
+<span class="pr">$ index wiki --verify wiki.html --root ./repo</span>
+<span class="ok">MATCH  pages sealed, every claimed edge present, commit pinned</span></pre>
+  <p class="body-text reveal">Point it at a git URL and <span translate="no">index</span> shallow-clones the repo to a temp directory, derives the wiki, and removes the clone, so you can read a repo you have not checked out. <code translate="no">index serve</code> puts the same thing behind a URL: a local server that derives a repo's verified wiki the moment you request it by its forge path (<code translate="no">GET /github.com/org/repo</code>) and not a moment sooner. It is consent-clean by construction. Nothing is crawled or pre-indexed, every page states that the wiki derives structure and generates no prose, <code translate="no">robots.txt</code> disallows indexing, and it binds loopback by default.</p>
+  <em class="close reveal">Same rule as the graph and the certificate: derive the artifact from evidence, seal it, and hand back an answer another run can re-check.</em>
+</section>
+
 <!-- PAIN -> SOLUTION -->
 <section class="mv" id="pain" aria-labelledby="pain-h">
   <h2 id="pain-h" class="reveal">Built from what practitioners keep asking for.</h2>
@@ -100,7 +114,7 @@
 <!-- HONEST STATE -->
 <section class="mv" id="state" aria-labelledby="state-h">
   <h2 id="state-h" class="reveal">What is done. What is next.</h2>
-  <p class="body-text reveal">Done and public on PyPI as <code translate="no">index-graph</code> (the name <code translate="no">index</code> was already taken): the two-layer atlas, the dependency graph across nine ecosystems, the intra-repo module graph, the architecture certificate with snapshot, drift, and freshness, the claim oracle, the router for a CLAUDE.md or AGENTS.md, the MCP protocol face, the token-economy benchmark, and the budgeted, receipt-backed context envelope (<code translate="no">index context-envelope --budget N</code>, source-ref-only with a re-checkable freshness root). All of it offline, with zero dependencies. Next: typed edges that say how A connects to B (defines, re-exports, replaces), and the same verified-compression discipline turned on prose.</p>
+  <p class="body-text reveal">Done and public on PyPI as <code translate="no">index-graph</code> (the name <code translate="no">index</code> was already taken): the two-layer atlas, the dependency graph across nine ecosystems, the intra-repo module graph, the architecture certificate with snapshot, drift, and freshness, the claim oracle, the router for a CLAUDE.md or AGENTS.md, the MCP protocol face, the token-economy benchmark, and the budgeted, receipt-backed context envelope (<code translate="no">index context-envelope --budget N</code>, source-ref-only with a re-checkable freshness root). The verified-compression discipline is now turned on prose too: <code translate="no">index wiki</code> derives a sealed, commit-pinned, re-checkable single-repo wiki, from a local path or a git URL, and <code translate="no">index serve</code> hosts it on demand. The staleness contract is shipped: <code translate="no">index invalidate</code> pins a tree and names exactly which artifacts a later diff invalidates, with typed reasons, and <code translate="no">index select</code> splits candidate files into selected and rejected with a typed <code translate="no">index.path-selection/v1</code> receipt on every rejection. All of it offline, with zero dependencies. Next: typed edges that say how A connects to B (defines, re-exports, replaces).</p>
   <p class="body-text reveal">Saying what is not done yet is part of the design. A map that overstates its coverage is worse than no map at all.</p>
 </section>
 
