@@ -1,7 +1,7 @@
 // studio.js: the unified Studio. One canvas, two ways in (Generate via the Atelier, or Bring your own),
 // then perceive/discuss/transform/refine with the model. Bridges the Atelier's canvas to the eye.
 import { perceptualHash, features, hamming } from "../shared-frame/eye.js";
-import { representation, richFeatures, describeFrame, rmsFromBytes, spectrumBands, dominantPitchHz, assembleFullPerception } from "./sense.js";
+import { representation, richFeatures, describeFrame, rmsFromBytes, spectrumBands, dominantPitchHz, assembleFullPerception, hueName } from "./sense.js";
 import { respond } from "./respond.js";
 import { renderFractal, PRESETS, PALETTES as FRACTAL_PALETTES } from "./fractal.js?v=20260628a";
 import { renderFractalGL, isFractalGLAvailable, clampGLBackingToDPR } from "./fractal-gl.js?v=20260701a";
@@ -1939,6 +1939,28 @@ function paintMosaic(px, w, h) {
 // and a .mm-swf label below it. The label is a sibling, not a child positioned
 // absolute, so it never overflows or clips. The wrap has role="listitem" since
 // the container carries role="list".
+// Name a swatch via the vendored sense-core hueName: hex -> HSV, then the honest colour name
+// (greys read as "grey"/"near-white"/"near-black", not a stray hue). Additive: every source's
+// measurimeter swatches gain the name; the visible label stays the percent.
+function swatchName(s) {
+  let r = s.r, g = s.g, b = s.b;
+  if (typeof r !== "number" && typeof s.hex === "string") {
+    const h = s.hex.replace("#", "");
+    r = parseInt(h.slice(0, 2), 16); g = parseInt(h.slice(2, 4), 16); b = parseInt(h.slice(4, 6), 16);
+  }
+  r /= 255; g /= 255; b /= 255;
+  const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn;
+  let hue = 0;
+  if (d > 0) {
+    if (mx === r) hue = ((g - b) / d) % 6;
+    else if (mx === g) hue = (b - r) / d + 2;
+    else hue = (r - g) / d + 4;
+    hue = (hue * 60 + 360) % 360;
+  }
+  const sat = mx === 0 ? 0 : d / mx;
+  try { return hueName(hue, sat, mx); } catch (_) { return "colour"; }
+}
+
 function paintSwatches(rich) {
   const host = $("mm-swatches"); if (!host) return;
   const sw = rich.dominantSwatches || [];
@@ -1947,11 +1969,12 @@ function paintSwatches(rich) {
   host.innerHTML = "";
   for (const s of sw) {
     const pct = (s.frac * 100).toFixed(0) + "%";
+    const name = swatchName(s);   // convert hex to HSV, name via the vendored sense-core hueName
     const wrap = document.createElement("span"); wrap.className = "mm-sw-wrap"; wrap.setAttribute("role", "listitem");
     const el = document.createElement("span"); el.className = "mm-sw";
     el.style.background = s.hex;
-    el.setAttribute("aria-label", `Colour ${s.hex}, ${pct} of the frame`);
-    el.title = `${s.hex} · ${pct}`;
+    el.setAttribute("aria-label", `Colour ${name} ${s.hex}, ${pct} of the frame`);
+    el.title = `${name} · ${s.hex} · ${pct}`;
     const f = document.createElement("span"); f.className = "mm-swf"; f.textContent = pct;
     wrap.appendChild(el); wrap.appendChild(f); host.appendChild(wrap);
   }
@@ -2371,6 +2394,12 @@ function buildCtx() {
     } catch (_) { audio = null; }
   }
 
+  // Showcase readout (spec 3.2): when the First Integral scene is active it publishes the same
+  // structured readout a screen reader hears to window.__studioShowcaseReadout; attach it so the
+  // connected model perceives exactly those scene facts + measured numbers. Absent for every
+  // other source, so this is purely additive.
+  const scene = (activeSource === "showcase" && typeof window !== "undefined" && window.__studioShowcaseReadout) || null;
+
   return {
     phash,
     features: feats,
@@ -2382,6 +2411,7 @@ function buildCtx() {
     sourceName: currentSourceLabel(),
     width:  w,
     height: h,
+    scene,
   };
 }
 
@@ -2437,6 +2467,11 @@ function fullPerception() {
     source: currentSourceLabel(),
   };
   const perception = assembleFullPerception(px, w, h, 4, pre);
+  // Showcase scene facts + measured readout (spec 3.2): attach the same structured readout a
+  // screen reader hears when First Integral is active, so the model perceives those exact numbers.
+  // Additive on the returned payload (assembleFullPerception is a vendored .mjs, left untouched).
+  const showcaseScene = (activeSource === "showcase" && typeof window !== "undefined" && window.__studioShowcaseReadout) || null;
+  if (showcaseScene) perception.scene = showcaseScene;
   // Self-improvement: append this perception's fidelity record (wpre/pbe/wpir) to the append-only
   // perception-fidelity ledger. Guarded + fire-and-forget so it never blocks or breaks the payload.
   try { recordFidelity(perception); } catch (_) {}

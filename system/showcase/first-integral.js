@@ -1,35 +1,33 @@
-// first-integral.js: the "First Integral" engine showcase, a Studio source ("Showcase", Verify
-// group). Owns the lifecycle (startShowcase / stopShowcase), the four-state machine (SEED,
-// MOTION, LAW, WITNESS), control + keyboard wiring, and the aria-live feed. Drives orbit-render.js
-// (ground World + ink polyline) and report.js (recorded IC literals, integrate + fit + live
-// refusal verify, canonical JSON, SHA-256, MATCH / DRIFT / UNVERIFIABLE re-check). The pipeline is
-// milliseconds of compute; the choreography only paces the reveal, it never recomputes. ASCII
-// only; no em or en dashes.
+// first-integral.js: the "First Integral" engine showcase, a Studio source. Owns the lifecycle,
+// the four-state machine (SEED, MOTION, LAW, WITNESS), and the reveal. controls.js owns the rail +
+// key map, readout.js the one-readout-three-consumers, report.js the witness. The pipeline is
+// milliseconds of compute; the choreography only paces the reveal. ASCII only; no em or en dashes.
 import { makeScene, buildGround, seedUint32, deriveIC } from "./orbit-render.js?v=20260701a";
 import { buildReport, recheck } from "./report.js?v=20260701a";
+import { buildReadout, readoutSentence, readoutJSON } from "./readout.js?v=20260701a";
+import { wireShowcaseControls, downloadReportJSON } from "./controls.js?v=20260701a";
+import { buildView, REFUSAL_DRAG } from "./view.js?v=20260701a";
 import { SYSTEMS } from "../discovery/systems.js";
 import { simulate } from "../discovery/integrator.js";
 import { makeFn } from "../discovery/expr.js";
 
 const STATES = ["seed", "motion", "law", "witness"];
-const REFUSAL_DRAG = 0.02;
 const CHUNK = 60;                 // integration steps revealed per frame (~2s for 2000 steps)
 const $ = (id) => document.getElementById(id);
 const reducedMotion = () =>
   typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-let canvasEl = null, scene = null, raf = 0;
-let active = false, settled = false, capture = false;
+let canvasEl = null, scene = null, raf = 0, unwireControls = null;
+let active = false, settled = false, capture = false, paused = false;
 let state = STATES[0];
 let built = null;                 // { report, states, fit, invSeries, refusalSeries, sha } after buildReport
 let axes = ["x", "y"];
 
-// The meter loop's idle gate (studio-loop.js case "showcase" reads this each tick): true
-// whenever the scene is not animating, so the loop is free to idle once settled.
+// The meter loop's idle gate (studio-loop.js case "showcase"): true when the scene is not animating.
 export function showcaseSettled() { return !active || settled; }
 
-// Debug/test surface behind window.__studioShowcase. Real values once the report is built;
-// before that a re-check is honestly UNVERIFIABLE (no report yet), never a faked verdict.
+// Debug/test surface behind window.__studioShowcase; a re-check before the report is built is
+// honestly UNVERIFIABLE, never a faked verdict.
 export function showcaseReport() { return built ? built.report : null; }
 export function showcaseVerdict() { return built ? (built.verdict || "unchecked") : "unbuilt"; }
 export async function recheckShowcase() {
@@ -41,12 +39,10 @@ export async function recheckShowcase() {
   return r;
 }
 
-// Read the scene parameters from the rail controls and the URL. Kepler is the default and the
-// only bit-hashed path; the seed drives both the ground World and the IC derivation.
+// Read the scene parameters from the rail + URL (head-snapshot seed, then URL, then rail, then
+// lab canon). Kepler is the default and the only bit-hashed path.
 function readParams() {
   const params = new URLSearchParams((typeof window !== "undefined" && window.location.search) || "");
-  // The Atelier boot rewrites location.search, so prefer the head-snapshot seed, then the URL,
-  // then the rail input, then the lab-canon default.
   const bootSeed = (typeof window !== "undefined" && window.__studioBootSeed) || "";
   const urlSeed = params.get("seed");
   const seed = String(bootSeed || urlSeed || ($("show-seed") && $("show-seed").value) || "1").trim() || "1";
@@ -60,10 +56,8 @@ function readParams() {
   return { seed, system, ecc, dt, n, basis: basis.length ? basis : undefined };
 }
 
-// Build the witness ONCE, then derive the two band series for the reveal. The invariant series
-// is the fitted law evaluated along the conserved trajectory (draws flat); the refusal series
-// is the energy candidate along a live drag-0.02 run (visibly sags). Neither is recomputed in
-// the render loop; the report already carries every number the scene shows.
+// Build the witness ONCE, then derive the two band series for the reveal (invariant draws flat,
+// the damped energy sags). Neither is recomputed in the render loop.
 async function buildScene(p) {
   const sys = SYSTEMS[p.system] || SYSTEMS.kepler;
   const ic = deriveIC(sys, seedUint32(p.seed), sys.name === "kepler" ? p.ecc : NaN);
@@ -77,68 +71,13 @@ async function buildScene(p) {
   return { ...bundle, invSeries, refusalSeries, verdict: null };
 }
 
-// The one composed view object; each state adds the layers it has earned. Nothing is drawn
-// before it is real: the law lines appear only after the fit, the receipt only at witness.
-function view(revealed) {
-  const r = built.report;
-  const v = {
-    seedLine: `seed ${r.seed} . ${r.system} . dt ${r.dt} . n ${r.n}`,
-    icLine: `ic ${icText(r)}`,
-    groundAlpha: state === "seed" ? 0.55 : 1,
-  };
-  if (state === "motion" && built.states[revealed]) v.body = built.states[revealed];
-  if (state === "law" || state === "witness") {
-    v.body = built.states[built.states.length - 1];
-    v.law = {
-      text: `${fmtExpr(r)} = ${r.invariant_value} . drift ${fmtNum(r.drift_ratio)}`,
-      series: built.invSeries,
-    };
-    v.refusal = {
-      series: built.refusalSeries,
-      label: `drag ${REFUSAL_DRAG} . energy candidate . verifier`,
-      stamp: r.refusal.verdict === "refuted" ? "REFUSED" : String(r.refusal.verdict).toUpperCase(),
-    };
-  }
-  if (state === "witness") {
-    const short = built.sha256 ? built.sha256.slice(0, 12) : "";
-    v.witness = {
-      stamp: built.verdict === "MATCH" ? "MATCH" : (built.verdict || ""),
-      rows: [
-        `report sha256 ${short} . seed ${r.seed} . ${r.system} tol ${r.verifier.tol}`,
-        `ground world ${r.ground.world.id} (cyrb53) . ${r.hash_policy.slice(0, 58)}`,
-      ],
-    };
-  }
-  return v;
-}
-
-const fmtNum = (x) => (Math.abs(x) < 1e-4 && x !== 0 ? x.toExponential(0) : String(x));
-const icText = (r) => r.system === "kepler"
-  ? `x ${r.ic.x} . y ${r.ic.y} . vx ${r.ic.vx} . vy ${r.ic.vy}`
-  : (SYSTEMS[r.system] || SYSTEMS.kepler).vars.map((k) => `${k} ${r.ic[k]}`).join(" . ");
-// Render the fitted law as a readable signed sum of terms, e.g. "x*vy - y*vx". A unit
-// coefficient collapses to the bare term; the sign of every term after the first is spelled out.
-function fmtExpr(r) {
-  const parts = [];
-  for (let i = 0; i < r.basis.length; i++) {
-    const c = r.coefficients[i];
-    if (c === 0) continue;
-    const mag = Math.abs(c), coef = mag === 1 ? "" : `${mag}*`;
-    const op = parts.length === 0 ? (c < 0 ? "-" : "") : (c < 0 ? " - " : " + ");
-    parts.push(`${op}${coef}${r.basis[i]}`);
-  }
-  return parts.join("") || "0";
-}
-
-// ---- the four-state choreography ----------------------------------------------------------
-
 function drawFrame(revealed) {
   if (!scene || !built) return;
-  scene.draw(view(revealed));
+  scene.draw(buildView(built, state, revealed));
 }
 
 function runMotion() {
-  if (!active || !scene) return;
+  if (!active || !scene || paused) return;
   const done = scene.reveal(CHUNK);
   drawFrame(done);
   if (scene.done()) { toLaw(); return; }
@@ -149,20 +88,19 @@ function toSeed() {
   state = "seed";
   scene.setTrajectory(built.states, axes);
   drawFrame(0);
-  announce(`Kepler system, seed ${built.report.seed}. Initial condition recorded. Ground breathing in.`);
-  raf = requestAnimationFrame(() => { state = "motion"; drawFrame(0); raf = requestAnimationFrame(runMotion); });
+  emitReadout();
+  raf = requestAnimationFrame(() => { state = "motion"; drawFrame(0); emitReadout(); raf = requestAnimationFrame(runMotion); });
 }
 
 function toLaw() {
   state = "law";
   drawFrame(built.states.length - 1);
-  const r = built.report;
-  const refused = r.refusal.verdict === "refuted";
-  announce(`Orbit complete. ${r.basis.join(" and ")} conserved, value ${r.invariant_value}, drift ${fmtNum(r.drift_ratio)} within tolerance ${r.verifier.tol}. Damped run ${refused ? "refused" : r.refusal.verdict} by the verifier.`);
+  emitReadout();
   raf = requestAnimationFrame(() => toWitness());
 }
 
-async function toWitness() {
+// The WITNESS tail shared by the played and the settled paths: re-check, paint, announce, settle.
+async function finishWitness() {
   state = "witness";
   const r = await recheck(built.report);
   built.verdict = r.verdict;
@@ -173,33 +111,38 @@ async function toWitness() {
   settled = true;
   if (capture && typeof window !== "undefined") window.__showcaseSettled = true;
 }
+const toWitness = () => finishWitness();
 
-// Reduced motion / hero capture: skip the visible reveal but STILL integrate + fit + verify +
-// hash exactly once (buildScene already did), so every number on screen is real. Settle at once.
+// Reduced motion / hero capture: skip the visible reveal but STILL integrate + fit + verify + hash
+// exactly once (buildScene already did), so every number is real. Reveal the full trace, then settle.
 async function settleNow() {
-  state = "witness";
   scene.setTrajectory(built.states, axes);
   scene.reveal(built.states.length);
-  const r = await recheck(built.report);
-  built.verdict = r.verdict;
-  drawFrame(built.states.length - 1);
-  paintVerdict(r);
-  paintReceipt();
-  announceVerdict(r);
-  settled = true;
-  if (capture && typeof window !== "undefined") window.__showcaseSettled = true;
+  return finishWitness();
 }
 
-// ---- DOM readout surfaces -----------------------------------------------------------------
+// The pixel bridge for the readout's sense-core measurement (the showcase composites into a
+// Canvas2D, so a direct getImageData is correct even where a WebGL backing could not be read).
+function readShowcasePixels(cv, w, h) {
+  try { return cv.getContext("2d", { willReadFrequently: true }).getImageData(0, 0, w, h).data; }
+  catch (_) { return null; }
+}
 
+// ONE readout per state change, three consumers (spec 3.2): the aria-live sentence, the model
+// channel JSON (published for buildCtx behind Studio.connectModel), and the measurimeter (its own path).
+function emitReadout(verdict) {
+  if (!built) return null;
+  const readout = buildReadout({
+    report: built.report, state, verdict: verdict || built.verdict || null,
+    receiptSha: built.sha256, canvas: canvasEl, readPixels: readShowcasePixels,
+  });
+  const live = $("show-live"); if (live) live.textContent = readoutSentence(readout);
+  if (typeof window !== "undefined") window.__studioShowcaseReadout = readoutJSON(readout);
+  return readout;
+}
+// Plain sentence announce for the pre-report / error path (no report yet, so no readout facts).
 function announce(text) { const live = $("show-live"); if (live) live.textContent = text; }
-function announceVerdict(r) {
-  const r0 = built.report;
-  const tail = r.verdict === "MATCH" ? "Verdict MATCH."
-    : r.verdict === "DRIFT" ? "Verdict DRIFT: the recomputation diverged."
-    : `Verdict UNVERIFIABLE: ${r.reason || "this environment cannot re-run the scene"}.`;
-  announce(`Kepler system, seed ${r0.seed}. Orbit complete. Angular momentum ${r0.invariant_value}, conserved within tolerance ${r0.verifier.tol}. Damped run refused by the verifier. ${tail} Dominant colours near-white ceramic and ink, one iris accent.`);
-}
+function announceVerdict(r) { emitReadout(r && r.verdict); }
 function paintVerdict(r) {
   const el = $("show-verdict"); if (!el) return;
   el.textContent = r.verdict === "MATCH" ? "MATCH: recomputed hash equals the receipt"
@@ -213,12 +156,8 @@ function paintReceipt() {
   el.textContent = `report sha256 ${built.sha256 ? built.sha256.slice(0, 12) : "(unavailable)"} . ground world ${r.ground.world.id} . ${r.system} seed ${r.seed}`;
 }
 
-// ---- sizing -------------------------------------------------------------------------------
-
-// Size the canvas backing to the rendered stage. The studio's own ResizeObserver would reset a
-// hardcoded backing, so the scene owns its size via this one path and studio.js routes resizes
-// here (window.__studioShowcaseResize). Capture uses a 1:1 backing (dpr forced to 1) so the
-// headless 2400x1350 window is a 2400x1350 canvas exactly; in-Studio it honors devicePixelRatio.
+// Size the canvas backing to the stage; the scene owns its size (studio.js routes resizes here via
+// window.__studioShowcaseResize). Capture forces dpr 1 so the headless 2400x1350 window is exact.
 function fitCanvasToStage() {
   if (!canvasEl || !scene) return;
   const parent = canvasEl.parentElement;
@@ -229,10 +168,8 @@ function fitCanvasToStage() {
   scene.resize(cssW * dpr, cssH * dpr);
 }
 
-// hero=1 puts the scene in capture layout: hide the app chrome via a body class (CSS collapses
-// the grid so the stage fills the full 2400x1350 frame), draw the capture composition (the
-// edge-pinned display word), run the timeline once on the settle path, and set
-// window.__showcaseSettled when state 4 is composed (the headless capture waits on that flag).
+// hero=1 puts the scene in capture layout: a body class collapses the grid to the full frame, the
+// capture composition draws the display word, the timeline settles once, and __showcaseSettled arms.
 function applyHero() {
   capture = true;
   if (typeof document !== "undefined") document.body.classList.add("showcase-hero");
@@ -248,8 +185,7 @@ export function resizeShowcase() {
   if (built) drawFrame(built.states.length - 1);
 }
 
-// ---- lifecycle (called by studio.js setSource) --------------------------------------------
-
+// Lifecycle (called by studio.js setSource).
 export function startShowcase(canvas) {
   canvasEl = canvas || $("studio-canvas");
   if (!canvasEl) return;
@@ -260,13 +196,17 @@ export function startShowcase(canvas) {
   const hero = (typeof window !== "undefined" && window.__studioBootHero) ||
     new URLSearchParams((typeof window !== "undefined" && window.location.search) || "").get("hero") === "1";
   if (hero) applyHero(); else fitCanvasToStage();
-  const p = readParams();
+  loadScene(readParams(), hero);
+  if (!hero && typeof document !== "undefined") unwireControls = wireShowcaseControls(controlCallbacks());
+}
+
+// Build (or rebuild) the ground + report for the params, then play or settle. Shared by the
+// initial start and every control-driven rebuild (seed edit, system cycle, term change).
+function loadScene(p, hero) {
   scene.setGround(buildGround(seedUint32(p.seed)));
   buildScene(p).then((b) => {
     if (!active) return;
-    built = b;
-    // The hero class reflows the grid; re-fit on the next frame so the backing matches the full
-    // 2400x1350 stage before the settled frame is composed.
+    built = b; settled = false;
     if (hero) fitCanvasToStage();
     if (hero || reducedMotion()) return settleNow();
     toSeed();
@@ -277,9 +217,31 @@ export function startShowcase(canvas) {
   });
 }
 
+// The keyboard + rail callbacks (spec 3.1); rebuild re-reads the rail and integrates again.
+function controlCallbacks() {
+  return {
+    rebuild: () => { if (!active) return; if (raf) { cancelAnimationFrame(raf); raf = 0; } loadScene(readParams(), false); },
+    replay: () => replayShowcase(),
+    reverify: () => { recheckShowcase(); },
+    export: () => { if (built) downloadReportJSON(built); },
+    spaceToggle: () => spaceToggle(),
+  };
+}
+
+// Space: pause freezes the reveal loop, resume continues it, mirroring the rt-playpause button.
+function spaceToggle() {
+  if (!active || !scene) return;
+  paused = !paused;
+  const pp = $("rt-playpause");
+  if (pp) { pp.setAttribute("aria-pressed", String(paused)); const l = $("rt-playpause-label"); if (l) l.textContent = paused ? "Play" : "Pause"; }
+  if (paused) { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+  else if (!settled && state === "motion") { raf = requestAnimationFrame(runMotion); }
+}
+
 export function stopShowcase() {
-  active = false; settled = false; state = STATES[0];
+  active = false; settled = false; paused = false; state = STATES[0];
   if (raf) { cancelAnimationFrame(raf); raf = 0; }
+  if (unwireControls) { try { unwireControls(); } catch (_) {} unwireControls = null; }
   if (capture && typeof document !== "undefined") document.body.classList.remove("showcase-hero");
   capture = false; scene = null; built = null; canvasEl = null;
 }
@@ -288,7 +250,7 @@ export function stopShowcase() {
 export function replayShowcase() {
   if (!active || !built || !scene) return;
   if (raf) { cancelAnimationFrame(raf); raf = 0; }
-  settled = false;
+  settled = false; paused = false;
   if (reducedMotion()) return settleNow();
   toSeed();
 }
