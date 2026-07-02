@@ -19,6 +19,11 @@
 <meta name="twitter:description" content="The Studio is the live surface of Project Telos, the engine. A person and a model perceive the same thing, generate, and verify it together, step by step.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="stylesheet" href="system/system.css?v=20260701a">
+<!-- Snapshot the source and hero query params before any module or deferred script runs. The
+     Atelier engine rewrites location.search to its own state on boot (history.replaceState),
+     which would erase ?source=showcase before studio.js reads it, so the Studio reads these
+     globals, not the live URL. ASCII only. -->
+<script>(function(){var p=new URLSearchParams(location.search);window.__studioBootSource=p.get("source")||"";window.__studioBootHero=p.get("hero")==="1";window.__studioBootSeed=p.get("seed")||"";})();</script>
 </head>
 <body class="studio-page">
 
@@ -797,7 +802,7 @@
      spine/reconcile readouts are present. -->
 <script src="system/spine.js?v=20260625a" defer></script>
 <script src="system/reconcile.js?v=20260625a" defer></script>
-<script src="system/atelier.js?v=20260628a" defer></script>
+<script src="system/atelier.js?v=20260701a" defer></script>
 <!-- Vendored interactive libraries (P1). Single prebuilt files, no runtime CDN fetch.
      panzoom (anvaka) v9.4.3: UMD, sets window.createPanzoom.
      Tweakpane v4.0.5: ESM named exports, imported directly by studio-surface.js. -->

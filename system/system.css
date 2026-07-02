@@ -1104,6 +1104,25 @@ body.world-3 .bar .rt{color:#cdd6cf}
 .viewport-stage.cam-interactive{cursor:grab;touch-action:none}
 .viewport-stage.cam-interactive:active{cursor:grabbing}
 
+/* Showcase hero capture layout (studio.html?source=showcase&hero=1): first-integral.js adds
+   body.showcase-hero, hides all app chrome, and letterboxes the canvas to the full frame so a
+   headless 2400x1350 screenshot is state 4 of the live scene. Screen only; not a print or a
+   normal viewing mode. */
+body.showcase-hero{overflow:hidden;background:var(--paper)}
+body.showcase-hero .site-nav,
+body.showcase-hero .skip-link,
+body.showcase-hero .studio-rail,
+body.showcase-hero .studio-panel,
+body.showcase-hero .render-toolbar,
+body.showcase-hero .engine-statusbar{display:none}
+/* Collapse the rail | viewport | panel grid to a single full-window column so the stage (and
+   the canvas backing sizeCanvas derives from it) fills the whole 2400x1350 frame. */
+body.showcase-hero .studio-app{display:block;grid-template-columns:none;height:100dvh;width:100vw}
+body.showcase-hero .studio-viewport{height:100dvh;width:100vw;padding:0;gap:0}
+body.showcase-hero .viewport-stage{width:100vw;height:100dvh;max-width:100vw;max-height:100dvh;
+  border:0;border-radius:0;box-shadow:none;background:var(--paper)}
+body.showcase-hero .viewport-stage canvas{width:100%;height:100%;object-fit:fill;background:var(--paper)}
+
 /* ── RIGHT PANEL (what the model sees + chat) ────────────────────────────── */
 .studio-panel{grid-area:panel;display:flex;flex-direction:column;min-height:0;
   border-left:1px solid var(--hairline);background:rgba(250,249,246,.72)}

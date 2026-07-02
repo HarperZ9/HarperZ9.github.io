@@ -2732,6 +2732,11 @@ function resizeActiveSurface() {
     case "byo":
       sizeCanvas(canvas);   // these sources read canvas.width/height on their own loop tick
       break;
+    case "showcase":
+      // The showcase scene owns its backing (studio's sizeCanvas would reset the hero frame),
+      // so re-fit + redraw through the scene's own resize path instead.
+      try { window.__studioShowcaseResize && window.__studioShowcaseResize(); } catch (_) {}
+      break;
     default:
       sizeCanvas(canvas);   // watch + any other: re-fit; the source's own loop repaints
   }
@@ -3501,4 +3506,13 @@ if (tierBtn) {
 }
 
 // Boot the source menu: Atelier active by default (mirrors the old setMode("generate")).
-setSource("atelier");
+// The URL may pre-select a source (studio.html?source=showcase&seed=1) and the showcase hero
+// capture mode (hero=1) both enters the showcase and lets first-integral.js apply its capture
+// layout. Only known sources are honored; anything else falls back to Atelier.
+(function bootSource() {
+  // The Atelier engine rewrites location.search on boot, so read the head-snapshot global that
+  // captured ?source= before that happened; fall back to the live URL if the snapshot is absent.
+  const want = window.__studioBootSource || new URLSearchParams(window.location.search || "").get("source") || "";
+  if (want && SOURCES[want]) { try { setSource(want); return; } catch (_) {} }
+  setSource("atelier");
+})();
