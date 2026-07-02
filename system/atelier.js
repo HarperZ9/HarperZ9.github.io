@@ -2520,11 +2520,25 @@
     var resizeTimer = 0;
     window.addEventListener("resize", function () {
       if (resizeTimer) clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function () { drawStrokes(ctx, sizeCanvas()[0], sizeCanvas()[1], finalStrokes, 1); }, 200);
+      // Only re-fit when the Atelier owns the canvas; otherwise a resize (e.g. entering the
+      // showcase hero layout) would repaint the Atelier's strokes over the active source.
+      resizeTimer = setTimeout(function () { if (atelierIsActiveSource()) drawStrokes(ctx, sizeCanvas()[0], sizeCanvas()[1], finalStrokes, 1); }, 200);
     });
 
     renderParams();
-    render();
+    // Skip the boot draw when the Studio is opening on a different source (e.g.
+    // ?source=showcase): drawing the default study into the shared canvas would otherwise
+    // paint over the active source. The head snapshot records the requested source before the
+    // URL is rewritten; the live activeSource is authoritative once setSource has run.
+    if (atelierIsActiveSource()) render();
+  }
+
+  // True when the Atelier owns the shared canvas: no explicit source yet, or it is "atelier".
+  function atelierIsActiveSource() {
+    var live = window.__studioActiveSource;
+    if (live) return live === "atelier";
+    var boot = window.__studioBootSource;
+    return !boot || boot === "atelier";
   }
 
   // expose for reuse (e.g. the deck title card) and self-boot

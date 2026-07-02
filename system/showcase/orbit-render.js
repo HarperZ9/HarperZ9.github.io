@@ -152,7 +152,7 @@ export function makeScene(canvas) {
     // Stage rect above the instrument band; the capture layout keeps the orbit left of the
     // golden section so the display word and receipt rows own the right and the base.
     const rect = capture
-      ? { x: w * 0.05, y: h * 0.10, w: w * 0.53, h: h * 0.56 }
+      ? { x: w * 0.05, y: h * 0.12, w: w * 0.50, h: h * 0.42 }
       : { x: w * 0.08, y: h * 0.10, w: w * 0.84, h: h * 0.60 };
     let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
     for (const s of states) {
@@ -224,7 +224,9 @@ export function makeScene(canvas) {
     if (view.seedLine) { ctx.fillText(view.seedLine, 18 * u, ty); ty += 16 * u; }
     if (view.icLine) { ctx.globalAlpha = 0.72; ctx.fillText(view.icLine, 18 * u, ty); ctx.globalAlpha = 1; ty += 16 * u; }
     if (view.note) { ctx.globalAlpha = 0.55; ctx.fillText(view.note, 18 * u, ty); ctx.globalAlpha = 1; }
-    const bandTop = h * 0.76, bandH = h * 0.15;
+    // The instrument band sits lower in-Studio (square stage) and higher in capture (wide frame),
+    // so the receipt rows and the edge-pinned display word never collide at 2400x1350.
+    const bandTop = capture ? h * 0.60 : h * 0.76, bandH = h * 0.13;
     if (view.law || view.refusal) {                                                     // the instrument band
       ctx.globalAlpha = 0.14; ctx.fillRect(18 * u, bandTop, w - 36 * u, 1); ctx.globalAlpha = 1;
       if (view.law) {
@@ -257,9 +259,9 @@ export function makeScene(canvas) {
       ctx.fillStyle = INK;
     }
     if (capture) {                                                                      // D8: capture layout only
-      ctx.font = `700 ${Math.round(w * 0.082)}px ${DISPLAY}`;
-      ctx.fillStyle = INK;
-      ctx.fillText("FIRST INTEGRAL", Math.round(w * 0.04), Math.round(h - w * 0.018));  // edge-pinned
+      ctx.font = `700 ${Math.round(w * 0.065)}px ${DISPLAY}`;                           // edge-pinned display word
+      ctx.fillStyle = INK; ctx.textBaseline = "alphabetic";
+      ctx.fillText("FIRST INTEGRAL", Math.round(w * 0.04), Math.round(h - h * 0.05));
     }
     ctx.restore();
   }
