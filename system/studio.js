@@ -4,7 +4,7 @@ import { perceptualHash, features, hamming } from "../shared-frame/eye.js";
 import { representation, richFeatures, describeFrame, rmsFromBytes, spectrumBands, dominantPitchHz, assembleFullPerception } from "./sense.js";
 import { respond } from "./respond.js";
 import { renderFractal, PRESETS, PALETTES as FRACTAL_PALETTES } from "./fractal.js?v=20260628a";
-import { renderFractalGL, isFractalGLAvailable } from "./fractal-gl.js";
+import { renderFractalGL, isFractalGLAvailable, clampGLBackingToDPR } from "./fractal-gl.js?v=20260701a";
 import { render3D } from "./fractal3d.js";
 import { sizeToDisplay } from "./canvas-scale.js";
 import { sourceIsAnimated, shouldHaltOnStatic, fullscreenMaxBacking } from "./studio-loop.js";
@@ -12,6 +12,7 @@ import { buildModelHeaders } from "./studio-model.js";
 import { renderScene, renderSceneVolumetric } from "./ndim.js";
 import { drawSceneGL, drawSceneGL3D } from "./lib/render-nd/backends/webgl.mjs";
 import { startDiscovery, stopDiscovery } from "./discovery/studio-discovery.js";
+import { startShowcase, stopShowcase, showcaseSettled, showcaseReport, showcaseVerdict, recheckShowcase } from "./showcase/first-integral.js?v=20260701a";
 import {
   createPaintState, setBrush, setPaintTarget, paintAtTarget, toggle as togglePaint, clearPaint,
 } from "./lib/render-nd/core/paint-state.mjs";
@@ -49,6 +50,8 @@ window.__studioMediaAdapters = STUDIO_MEDIA_ADAPTERS;
 window.__studioMediaNodeRegistry = STUDIO_MEDIA_NODE_REGISTRY;
 window.__studioCreateGraphPackage = createGraphPackage;
 window.__studioValidateGraphPackage = validateGraphPackage;
+// Showcase debug/test surface (wave 1 stubs; wave 2 swaps in the real report/verdict/recheck).
+window.__studioShowcase = { report: showcaseReport, verdict: showcaseVerdict, recheck: recheckShowcase };
 
 async function bootEngineStatus() {
   const set = (id, text) => { const el = $(id); if (el) el.textContent = text; };
@@ -147,6 +150,7 @@ const SOURCES = {
   byo:       { block: "src-byo",       mode: "byo" },
   watch:     { block: "src-watch",     mode: "byo" },
   discovery: { block: "src-discovery", mode: "generate" },
+  showcase:  { block: "src-showcase",  mode: "generate" },
 };
 
 function setSource(next) {
@@ -159,6 +163,7 @@ function setSource(next) {
     stopWatch();        // release any screen/camera capture
     stopByoVideo();     // pause + release any played BYO video
     try { stopDiscovery(); } catch (_) {}  // stop the physics renderer RAF if it was running
+    try { stopShowcase(); } catch (_) {}   // settle the showcase scene if it was running
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
@@ -186,6 +191,9 @@ function setSource(next) {
   // Physics (discovery engine): render the evolving system into the shared canvas, then arm the
   // meter loop so the measurimeter perceives it (marked animated in studio-loop, so it will not idle).
   if (next === "discovery") { try { startDiscovery($("studio-canvas")); } catch (_) {} startMeterLoop(); }
+  // Showcase (First Integral): draw the scene into the shared canvas, then arm the meter loop.
+  // The loop idles once the scene settles (studio-loop gates on showcaseSettled).
+  if (next === "showcase") { try { startShowcase($("studio-canvas")); } catch (_) {} startMeterLoop(); }
   syncToolbarForSource();
   // Notify the surface layer so panzoom attaches/detaches per the source change.
   // Pass the current canvas (may be a fresh GL canvas if fractal3d swapped it).
@@ -359,6 +367,9 @@ function paintFractal(opts, aaOverride) {
     fractal3dHandle = null;   // not a 3D orbit
     if (stop3d) { stop3d(); stop3d = null; }   // ensure no 3D orbit RAF lingers on this node
     sizeCanvas(c);
+    // Tier-gated DPR clamp (spec 1.4): on tier mid+, lift the GL backing to CSS * min(dpr, 2)
+    // for a crisp hi-DPI fragment pass. Fail-safe no-op below mid or when the plan is absent.
+    try { clampGLBackingToDPR(c, window.__studioHardwareRenderPlan && window.__studioHardwareRenderPlan.tier); } catch (_) {}
     try {
       renderFractalGL(c, { ...opts, maxIter, aa });
       return c;
@@ -2061,7 +2072,7 @@ function liveTick(ts) {
   // stops that whole recurring class. (studio-loop.js, node-tested.)
   if (phash === lastLoopPhash) {
     if (++staticTicks >= STATIC_STOP) {
-      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused) });
+      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: showcaseSettled() });
       if (shouldHaltOnStatic(true, animated)) { stopMeterLoop(); return; }
       staticTicks = 0;   // animated: do not halt, but reset so we re-arm the window cleanly
     }

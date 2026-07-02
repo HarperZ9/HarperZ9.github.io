@@ -53,9 +53,10 @@
         <button type="button" role="tab" data-source="watch"     aria-selected="false" aria-controls="src-watch"     tabindex="-1">Watch with me</button>
         <button type="button" role="tab" data-source="music"     aria-selected="false" aria-controls="src-music"     tabindex="-1">Music</button>
       </div>
-      <div class="source-group source-group-single" role="presentation">
+      <div class="source-group" role="presentation">
         <span class="source-group-label" aria-hidden="true">Verify</span>
         <button type="button" role="tab" data-source="discovery" aria-selected="false" aria-controls="src-discovery" tabindex="-1">Physics</button>
+        <button type="button" role="tab" data-source="showcase" aria-selected="false" aria-controls="src-showcase" tabindex="-1">Showcase</button>
       </div>
     </div>
     <p class="rail-own">Bring your own image or video. Open <b>Bring your own</b> (drop a file) or feed one to the Atelier as a specimen.</p>
@@ -490,6 +491,68 @@
         </div>
       </section>
 
+      <!-- SOURCE: Showcase ("First Integral"). One Kepler orbit integrated live over a quiet
+           reconcile flowfield ground; the discovery engine fits the conserved angular momentum
+           from the trace; the same verifier refuses a damped run; the scene is seeded, hashed,
+           and re-checkable. Wave 1 skeleton: the controls below are in place but inert;
+           system/showcase/first-integral.js draws a labeled settled placeholder. Wave 2 wires
+           the live scene, the receipt, and the re-check. -->
+      <section class="src-block" id="src-showcase" role="tabpanel" aria-label="Engine showcase controls" hidden>
+        <div class="fractal-source" id="showcase-source">
+          <div class="at-panel">
+            <details class="rail-group" open>
+              <summary>Scene</summary>
+              <div class="at-group">
+                <span class="at-glab">Seed <span class="hint">drives the ground world and the initial condition</span></span>
+                <input type="text" class="at-seed" id="show-seed" value="1" spellcheck="false" autocomplete="off" aria-label="Scene seed" disabled>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">System <span class="hint">only the Kepler path is bit-hashed; sin-based systems verify by tolerance</span></span>
+                <div class="at-chips" role="group" aria-label="Physical system" id="show-system">
+                  <button type="button" class="chip" data-show-system="sho" disabled>SHO</button>
+                  <button type="button" class="chip" data-show-system="pendulum" disabled>Pendulum</button>
+                  <button type="button" class="chip active" data-show-system="kepler" disabled>Kepler</button>
+                  <button type="button" class="chip" data-show-system="oscillator2d" disabled>2D oscillator</button>
+                </div>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Eccentricity <span class="hint">clamped so the shipped orbit stays honest under the drift gate</span></span>
+                <input type="range" class="at-slider" id="show-ecc" min="0" max="0.8" step="0.05" value="0.4" aria-label="Orbit eccentricity" disabled>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Step <span class="hint">integrator dt</span></span>
+                <input type="number" class="at-seed" id="show-dt" value="0.004" step="0.001" min="0.001" max="0.05" aria-label="Integrator time step" disabled>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Steps <span class="hint">trajectory length</span></span>
+                <input type="number" class="at-seed" id="show-n" value="2000" step="100" min="200" max="8000" aria-label="Number of integration steps" disabled>
+              </div>
+            </details>
+            <details class="rail-group" open>
+              <summary>Verify</summary>
+              <div class="at-group">
+                <span class="at-glab">Candidate terms <span class="hint">which terms the invariant is built from</span></span>
+                <input type="text" class="at-seed" id="show-terms" value="x*vy, y*vx" spellcheck="false" autocomplete="off" aria-label="Candidate invariant terms" style="width:100%" disabled>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Refusal run <span class="hint">same system with drag 0.02; the verifier must refuse energy on a damped system</span></span>
+                <button class="btn ghost" id="show-drag" type="button" aria-pressed="true" disabled>Damped negative control</button>
+              </div>
+              <div class="at-actions">
+                <button class="btn" id="show-replay" type="button" title="Replay the four states" disabled>Replay</button>
+                <button class="btn" id="show-verify" type="button" title="Re-integrate from the recorded literals, re-fit, re-hash, compare" disabled>Re-check</button>
+                <button class="btn ghost" id="show-export" type="button" title="Export the ground world and the canonical report JSON" disabled>Export</button>
+              </div>
+              <div id="show-receipt" style="font-family:ui-monospace,monospace;font-size:.72rem;margin-top:.5rem;min-height:1.2em">no receipt yet</div>
+              <div id="show-verdict" style="font-size:.78rem;margin-top:.3rem;min-height:1.2em"></div>
+            </details>
+            <div id="show-live" aria-live="polite" style="font-size:.8rem;margin-top:.3rem"></div>
+            <div id="show-doc" style="font-family:ui-monospace,monospace;font-size:.72rem;margin-top:.5rem;border-top:1px solid var(--hairline);padding-top:.5rem" hidden></div>
+            <p class="src-hint">One orbit, integrated live by the site&rsquo;s own symplectic integrator; the discovery engine fits the conserved angular momentum from the trace; the same verifier visibly refuses a damped run. The scene is seeded, hashed, and re-checkable in this browser.</p>
+          </div>
+        </div>
+      </section>
+
       <details class="rail-group rail-about">
         <summary>About the <span translate="no">Studio</span> and <span translate="no">Project Telos</span></summary>
         <p>This is the live surface of <span translate="no">Project Telos</span>, the engine. <span translate="no">Telos</span> is the thesis made tangible: a person and a model stand before the same witnessed frame, generate from it, transform it, and verify every step together. Bring your own image, video, audio, OBJ, GLTF, PLY, CSV, or JSON; render Atelier studies, 2D and 3D fractals, nD geometry, sound-reactive visuals, and physics discovery runs; then export pixels, perception JSON, OBJ, GLTF, or witnessed artifacts. The right panel shows what the model is given: frame, fingerprint, colours, channels, receipts, and the five-flagship stack feeding the work.</p>
@@ -739,7 +802,7 @@
      panzoom (anvaka) v9.4.3: UMD, sets window.createPanzoom.
      Tweakpane v4.0.5: ESM named exports, imported directly by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js"></script>
-<script type="module" src="system/studio.js?v=20260628a"></script>
+<script type="module" src="system/studio.js?v=20260701a"></script>
 <!-- Music reactive engine: zero-dependency WebAudio + Canvas visual system. -->
 <script type="module" src="system/reactive.js?v=20260625b"></script>
 <script type="module" src="system/reactive-music-ui.js?v=20260625b"></script>
