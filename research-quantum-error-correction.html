@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quantum Error-Correction Proof Packets &middot; Zain Dana Harper</title>
+<meta name="description" content="A Project Telos quantum error-correction preflight: a replayable 3-qubit bit-flip stabilizer proof packet with source receipts, syndrome checks, correction table, negative controls, Crucible receipts, and explicit non-claims.">
+<link rel="canonical" href="https://harperz9.github.io/research-quantum-error-correction.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Quantum Error-Correction Proof Packets">
+<meta property="og:description" content="A replayable QEC preflight that carries stabilizers, syndrome table, correction map, logical recovery checks, negative controls, and receipts without promoting hardware or surface-code claims.">
+<meta property="og:url" content="https://harperz9.github.io/research-quantum-error-correction.html">
+<meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Quantum Error-Correction Proof Packets">
+<meta name="twitter:description" content="3-qubit stabilizer-code preflight for proof-carrying quantum claims, with Crucible and Learn receipts.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
+<link rel="stylesheet" href="system/doc.css?v=20260630r2">
+</head>
+<body class="doc">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="index.html">Home</a> <a href="overview.html">Flagships</a> <a href="catalog.html">Catalog</a> <a href="research.html">Research</a> <a href="writing.html">Writing</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260630a"></script>
+
+<main id="main">
+<article class="sheet">
+  <header class="mast">
+    <p class="role" style="margin-bottom:.55rem">Proof-carrying quantum note</p>
+    <h1>Quantum Error-Correction Proof Packets</h1>
+    <p class="role" style="color:var(--ink-soft);text-transform:none;letter-spacing:.01em;font-size:.92rem;margin:.55rem 0 .85rem">
+      A replayable stabilizer-code preflight before quantum-computing claims become public assertions.</p>
+    <p class="contact">
+      <span>Zain Dana Harper</span><span class="sep">/</span>
+      <span>Seattle &middot; 2026</span><span class="sep">/</span>
+      <span>draft &middot; not archive-submitted</span><span class="sep">/</span>
+      <a href="research.html">research index</a>
+    </p>
+  </header>
+
+  <section>
+    <h2>Status</h2>
+    <p class="lead">This page reports a bounded Project Telos preflight, not a quantum hardware claim. The evidence label is <b>QEC_STABILIZER_FIXTURE_MATCH</b>: a deterministic 3-qubit bit-flip repetition-code fixture declares logical states, stabilizers, syndrome bits, correction map, supported error model, and negative controls.</p>
+  </section>
+
+  <section>
+    <h2>Fixture</h2>
+    <dl class="kv">
+      <dt>Code</dt><dd><span translate="no">three_qubit_bit_flip_repetition_code</span>, with logical states <span translate="no">000</span> and <span translate="no">111</span>.</dd>
+      <dt>Stabilizers</dt><dd><span translate="no">Z0Z1</span> and <span translate="no">Z1Z2</span>.</dd>
+      <dt>Syndromes</dt><dd><b>MATCH.</b> No-error and single Pauli-X errors recover the logical basis state for logical <span translate="no">0</span> and <span translate="no">1</span>.</dd>
+      <dt>Rejected controls</dt><dd>Double-X error, phase error, missing stabilizer measurement, wrong syndrome map, and non-codeword input are rejected or marked <span translate="no">UNVERIFIABLE</span>.</dd>
+      <dt>Non-claims</dt><dd>No surface-code decoder, no hardware QEC, no fault-tolerant computation, no quantum advantage, no cryptographic security, and no BuildLang/buildc-native runtime receipt yet.</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Why this matters</h2>
+    <p>Quantum-computing claims are dense with hidden assumptions: code, gate set, error model, syndrome extraction, decoder, logical operator, noise model, resource estimate, hardware assumption, and classical baseline. A serious claim needs those assumptions carried as data, not buried in prose.</p>
+    <p>The current artifact is intentionally small. Its job is to prove the packet shape before stronger quantum claims are attempted.</p>
+  </section>
+
+  <section>
+    <h2>Source leads</h2>
+    <dl class="kv">
+      <dt>Surface and topological decoding</dt><dd><span translate="no">2605.17156v2</span> and <span translate="no">2512.07737v2</span> are metadata-only source leads.</dd>
+      <dt>Syndrome decoding</dt><dd><span translate="no">2207.05942v2</span>, <span translate="no">2102.01984v1</span>, and <span translate="no">2409.01440v3</span> pressure decoder and noise-model requirements.</dd>
+      <dt>Foundations</dt><dd><span translate="no">quant-ph/0602157v1</span> and <span translate="no">1810.01029v1</span> pressure code and simulation fields.</dd>
+      <dt>Hardware and compilation</dt><dd>Cat-qubit, atom-loss, and fault-tolerant circuit rows are source leads only; they do not promote hardware or compiler claims.</dd>
+      <dt>Algorithms and QML</dt><dd>Algorithm and hybrid-QML rows are requirements pressure for resource-estimation and advantage non-claim gates.</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Toolchain map</h2>
+    <dl class="kv">
+      <dt>Gather</dt><dd>Captures QEC, decoder, compiler, hardware, benchmark, and resource-estimation source receipts.</dd>
+      <dt>Index</dt><dd>Packages circuit specs, stabilizer tables, code distance, logical operators, decoder configs, and source refs.</dd>
+      <dt>Forum</dt><dd>Routes quantum claims through physics, formal methods, compiler, hardware, and verification lanes.</dd>
+      <dt>Crucible</dt><dd>Rejects quantum claims without supported error model, code distance, syndrome table, decoder verdicts, and negative controls.</dd>
+      <dt>Learn</dt><dd>Turns packets into exercises about stabilizers, syndromes, logical errors, unsupported error models, and overclaim boundaries.</dd>
+      <dt>BuildLang/buildc</dt><dd>Target runtime for typed Pauli operators, stabilizer groups, circuit IR, decoders, and resource estimates.</dd>
+      <dt>Telos</dt><dd>Binds source, circuit/code state, decoder output, verdict, and learning receipts into one proof-carrying packet.</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Receipts</h2>
+    <ul class="bul">
+      <li>Source ledger: <span translate="no">demo/research/quantum-error-correction-source-receipts.json</span>.</li>
+      <li>Fixture CLI: <span translate="no">demo/quantum-error-correction-proof-packet.mjs</span>.</li>
+      <li>Fixture output: <span translate="no">quantum-error-correction-proof-packet-2026-07-02.json</span>.</li>
+      <li>Crucible verdict: <span translate="no">MATCH 3 / DRIFT 0 / UNVERIFIABLE 0</span>.</li>
+      <li>Crucible run hash: <span translate="no">3d46985ec81ed6330bd38ee87f05a93814503dca286a74d2718ce02e24cca438</span>.</li>
+      <li>Crucible report hash: <span translate="no">1612e3007d41bde5f106aa2b4c99156ad0af131abf10a362315040080ee01872</span>.</li>
+      <li>Learn verdict: <span translate="no">VERIFIED</span>.</li>
+      <li>Learn witness: <span translate="no">3093cea9b0746b052dba844a6745cdba1d11ae836be5468503af41f93c4702f3</span>.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Next promotion target</h2>
+    <p>The next public demo should be a BuildLang/buildc typed Pauli/stabilizer runtime for the same 3-qubit fixture, followed by a small surface-code syndrome fixture and a Clifford-circuit equivalence checker.</p>
+    <pre><code>source receipts
+-&gt; typed Pauli operators
+-&gt; stabilizer code
+-&gt; syndrome table
+-&gt; correction map
+-&gt; negative controls
+-&gt; Crucible verdict
+-&gt; Learn prooflesson</code></pre>
+  </section>
+
+  <section>
+    <h2>Do not infer</h2>
+    <ul class="bul">
+      <li>Do not infer that Telos implemented a surface-code decoder.</li>
+      <li>Do not infer that the fixture proves hardware-level quantum error correction.</li>
+      <li>Do not infer that the fixture establishes fault-tolerant quantum computing.</li>
+      <li>Do not infer that the fixture validates quantum advantage or resource estimates.</li>
+      <li>Do not infer that BuildLang/buildc already executes this quantum runtime.</li>
+    </ul>
+  </section>
+
+  <p class="note">Local source draft: <span translate="no">docs/research/whitepapers/QUANTUM-ERROR-CORRECTION-PROOF-PACKETS-2026-07-02.md</span>. Current page status: draft website copy. Updated 2026-07-02.</p>
+</article>
+</main>
+</body>
+</html>
