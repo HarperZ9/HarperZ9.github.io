@@ -35,7 +35,7 @@
     <p class="lede">Research lives behind awkward access. Captions and comments on a video, a paper behind an arXiv gate, a page that renders only under JavaScript, a scanned PDF, an audio file, an API behind a credential wall, and a fact that exists only across scattered fragments and has to be put together. Most tools handle one of those and break on the rest, and when they do reach something, you cannot tell later whether a line was pulled straight from the source or pieced together along the way. <span translate="no">gather</span> handles all of it, and writes down how.</p>
     <p class="close">Every item carries a receipt recording how it was obtained, so a quote is never confused with an inference, and what was hard to get is never dressed up as if it were lying in the open.</p>
   </div>
-  <div class="seal"><span translate="no">gather</span> &middot; v1.5.0 &middot; provenance receipts &middot; fair-source &middot; <span translate="no">pip install gather-engine</span></div>
+  <div class="seal"><span translate="no">gather</span> &middot; v1.6.0 &middot; provenance receipts &middot; fair-source &middot; <span translate="no">pip install gather-engine</span></div>
 </div>
 
 <main id="main">
@@ -125,7 +125,7 @@
 <!-- PROOF AND RUN IT -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Current state. How to run it.</h2>
-  <p class="body-text reveal">Version 1.5.0, on PyPI as <code translate="no">gather-engine</code>. It installs the <code translate="no">gather</code> command and the <code translate="no">gather</code> package. The core is pure standard library; a few adapters call an external tool (<code translate="no">yt-dlp</code>, <code translate="no">pdftotext</code>, a headless <code translate="no">chromium</code>, <code translate="no">tesseract</code>, a Whisper-style CLI), which you install only if you use that adapter. <span translate="no">gather</span> reached its organic completion at 1.5.0: every planned source and seam is shipped, and the accountability claims hold end to end across a final whole-system review. The license is fair-source: source-available, rights reserved to fund the research; the smaller utility tools that came out of this work stay permissive.</p>
+  <p class="body-text reveal">Version 1.6.0, on PyPI as <code translate="no">gather-engine</code>. It installs the <code translate="no">gather</code> command and the <code translate="no">gather</code> package. The core is pure standard library; a few adapters call an external tool (<code translate="no">yt-dlp</code>, <code translate="no">pdftotext</code>, a headless <code translate="no">chromium</code>, <code translate="no">tesseract</code>, a Whisper-style CLI), which you install only if you use that adapter. <span translate="no">gather</span> reached its organic completion at 1.6.0: every planned source and seam is shipped, and the accountability claims hold end to end across a final whole-system review. The license is fair-source: source-available, rights reserved to fund the research; the smaller utility tools that came out of this work stay permissive.</p>
   <pre class="artifact" translate="no"><span class="pr">$ pip install gather-engine</span>
 <span class="pr">$ python examples/demo.py</span>       <span class="cmt"># one video parsed, scoped, digested, then a receipt catches tampering</span>
 parsed 3 items from one video, each with a receipt

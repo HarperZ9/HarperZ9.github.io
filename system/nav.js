@@ -6,6 +6,7 @@ const DEST = [
   ["Flagships", "overview.html", "flagships"],
   ["Catalog", "catalog.html", "catalog"],
   ["Research", "research.html", "research"],
+  ["Publications", "publications.html", "publications"],
   ["Writing", "writing.html", "writing"],
   ["About", "cv.html", "about"],
 ];
@@ -17,7 +18,7 @@ const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","
   "accountable-engine","buildlang","raw","build-color","build-products","toolkit",
   "provenance-sensorium","orca","aleph","warden","presentation","atelier","gallery","demonstrations"]);
 CATALOG.add("field-guide");
-const RESEARCH = new Set(["research","why","publications"]);
+const RESEARCH = new Set(["research","why"]);
 const WRITING = new Set(["writing"]);
 const ABOUT = new Set(["cv","resume","person"]);
 
@@ -27,6 +28,7 @@ export function navActive(pathname) {
   const stem = f.replace(/\.html$/, "") || "index";
   if (stem === "index") return "home";
   if (stem === "guide") return "guide";
+  if (stem === "publications") return "publications";
   if (FLAGSHIPS.has(stem)) return "flagships";
   if (CATALOG.has(stem)) return "catalog";
   if (WRITING.has(stem)) return "writing";
