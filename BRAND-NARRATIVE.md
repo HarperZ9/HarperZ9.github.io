@@ -96,5 +96,11 @@ The brand's credibility is its only moat, so these are hard rules, not preferenc
   kernel is never called a flagship.
 - **The verdict vocabulary is not softened.** UNVERIFIABLE is a first-class outcome. A system
   that cannot confirm something says so; it does not round up to MATCH.
-- **The published family is the whole story.** Public brand surfaces describe the flagships
-  and bricks listed here, and every claim maps to a shipping, re-checkable artifact.
+- **The boundary is acknowledged, not hidden.** Not all of the work is public. Some of it is
+  dual-use, so it is kept private behind a safety gate: fenced from every public artifact and
+  from the training corpus. The public family here is described completely and honestly, and
+  the existence of that gated boundary is stated plainly rather than papered over. Choosing
+  what not to ship is itself an accountable act, and it is the reconcile turned on the work:
+  perceive what the work could do, verify it against a criterion for harm, and carry the
+  decision as a receipt. Naming the private line's contents would defeat the safety purpose;
+  pretending it does not exist would defeat the honesty. This holds both.
