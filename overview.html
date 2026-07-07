@@ -190,7 +190,7 @@
       <div class="organ-row">
         <span class="organ-name"><a href="studio.html" translate="no">telos</a></span>
         <span class="organ-role">the engine</span>
-        <span class="organ-line">A person and a model perceive the same thing, shape it, and verify every step. Demonstrated live in the <span translate="no">Studio</span>; public demo repo at v0.1.0. Its <code translate="no">telos proof</code> command turns agent actions, research claims, scientific runs, and visual measurements into re-checkable proof packets, each verdict <span translate="no">MATCH</span>, <span translate="no">DRIFT</span>, or <span translate="no">UNVERIFIABLE</span>.</span>
+        <span class="organ-line">A person and a model perceive the same thing, shape it, and verify every step. Demonstrated live in the <span translate="no">Studio</span>; public demo repo at v0.2.0. Its <code translate="no">telos proof</code> command turns agent actions, research claims, scientific runs, and visual measurements into re-checkable proof packets, each verdict <span translate="no">MATCH</span>, <span translate="no">DRIFT</span>, or <span translate="no">UNVERIFIABLE</span>.</span>
         <span class="organ-verdict"><span class="verdict verdict-shipped">Live</span></span>
       </div>
       <div class="organ-row">
@@ -403,7 +403,7 @@
 <span class="pr">&gt;&gt;&gt; witness(path, seal=None)</span>
 <span class="lt">UNVERIFIABLE   no seal to check against, not a pass, not a fail</span></pre>
     <p class="artifact-cap">The witness never says <b>trusted</b>. It works the file out byte by byte itself and tells you what it actually found. When there&rsquo;s nothing to check it against, it says exactly that, instead of guessing.</p>
-    <p class="artifact-note"><span translate="no">EMET</span> ships a tamper-seal that rebuilds a file&rsquo;s bytes from scratch and reports <span translate="no">MATCH</span> or <span translate="no">DRIFT</span>, across <b>35/35 tests, four languages</b>. That third answer, <span translate="no">UNVERIFIABLE</span>, is the one most systems quietly leave out, and it&rsquo;s exactly where most failures end up hiding. <em>Honest limit:</em> a seal with no secret key can tell you a file hasn&rsquo;t drifted from itself, but it can&rsquo;t stop a determined forger who simply recomputes the seal too. Stopping that needs an anchor from outside, and until there is one, the verdict honestly says <span translate="no">UNVERIFIABLE</span> rather than fake a pass.</p>
+    <p class="artifact-note"><span translate="no">EMET</span> ships a tamper-seal that rebuilds a file&rsquo;s bytes from scratch and reports <span translate="no">MATCH</span> or <span translate="no">DRIFT</span>, across <b>44 conformance vectors (35 core), four languages</b>. That third answer, <span translate="no">UNVERIFIABLE</span>, is the one most systems quietly leave out, and it&rsquo;s exactly where most failures end up hiding. <em>Honest limit:</em> a seal with no secret key can tell you a file hasn&rsquo;t drifted from itself, but it can&rsquo;t stop a determined forger who simply recomputes the seal too. Stopping that needs an anchor from outside, and until there is one, the verdict honestly says <span translate="no">UNVERIFIABLE</span> rather than fake a pass.</p>
   </div>
 
   <div class="exhibit reveal">
@@ -451,7 +451,7 @@
       </div>
       <p class="nojs" id="w-nojs" hidden>This demo needs JavaScript and the Web Crypto API. The real witness ships in <span translate="no">EMET</span>, linked below.</p>
     </div>
-    <p class="artifact-note reveal">The fingerprinting is the real thing: <b translate="no">crypto.subtle.digest("SHA-256")</b>, a tool built right into your browser, run on what you typed and never sent anywhere. <span translate="no">EMET</span> does the same across whole files in four languages. <b>35/35 tests</b>, <b translate="no">github.com/HarperZ9</b>. <em>Honest limit:</em> a plain seal like this proves the words weren&rsquo;t changed by accident; it cannot stop a determined faker who simply computes a fresh fingerprint to match their new version. For that, the fingerprint has to be kept somewhere separate from the thing it describes. When the witness can&rsquo;t be sure, it says <span translate="no">UNVERIFIABLE</span> rather than fake a pass.</p>
+    <p class="artifact-note reveal">The fingerprinting is the real thing: <b translate="no">crypto.subtle.digest("SHA-256")</b>, a tool built right into your browser, run on what you typed and never sent anywhere. <span translate="no">EMET</span> does the same across whole files in four languages. <b>44 conformance vectors</b>, <b translate="no">github.com/HarperZ9</b>. <em>Honest limit:</em> a plain seal like this proves the words weren&rsquo;t changed by accident; it cannot stop a determined faker who simply computes a fresh fingerprint to match their new version. For that, the fingerprint has to be kept somewhere separate from the thing it describes. When the witness can&rsquo;t be sure, it says <span translate="no">UNVERIFIABLE</span> rather than fake a pass.</p>
   </section>
 
   <!-- the gate -->
