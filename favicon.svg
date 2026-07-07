@@ -1,6 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="An instrument iris">
-  <rect width="64" height="64" rx="14" fill="#0d1b1c"/>
-  <circle cx="32" cy="32" r="20" fill="none" stroke="#df5e00" stroke-width="4.5"/>
-  <circle cx="32" cy="32" r="8.5" fill="#0d1b1c" stroke="#476762" stroke-width="3"/>
-  <circle cx="28.5" cy="28.5" r="3" fill="#efab30"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <clipPath id="tile"><rect width="64" height="64" rx="14"/></clipPath>
+  </defs>
+  <g clip-path="url(#tile)">
+    <rect width="64" height="64" fill="#14041b"/>
+    <g fill="none" stroke-linecap="round">
+      <circle cx="70" cy="-6" r="28" stroke="#ff35aa" stroke-width="8"/>
+      <circle cx="70" cy="-6" r="42" stroke="#f8cc43" stroke-width="8"/>
+      <circle cx="70" cy="-6" r="56" stroke="#99f147" stroke-width="8"/>
+      <circle cx="70" cy="-6" r="70" stroke="#26dfe8" stroke-width="8"/>
+    </g>
+  </g>
 </svg>
