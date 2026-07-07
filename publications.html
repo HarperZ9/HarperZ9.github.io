@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Publications &mdash; Zain Dana Harper</title>
+<meta name="description" content="Research papers by Zain Dana Harper on one thesis: making AI-assisted work re-checkable. Four papers on accountable verification, capability effects, witnessed independence, and proof packets. Source is public; arXiv submission in preparation.">
+<link rel="canonical" href="https://harperz9.github.io/publications.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Publications &mdash; Zain Dana Harper">
+<meta property="og:description" content="Four papers on one thesis: making AI-assisted work re-checkable. Accountable verification, capability effects, witnessed independence, proof packets.">
+<meta property="og:url" content="https://harperz9.github.io/publications.html">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260701a">
+</head>
+<body class="inner-clean">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="publications.html">Publications</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260630a"></script>
+
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Publications</span></div>
+  <div class="mid">
+    <h1>One thesis, sized to <span class="g">what the evidence carries.</span></h1>
+    <p class="lede">These papers make one bet: that AI-assisted work is only trustworthy when its result is re-checkable&mdash;a verdict you can re-derive yourself, that says plainly what it does <em>not</em> claim, and that fails to <span translate="no">UNVERIFIABLE</span> rather than to trust. Each paper is deliberately scoped to the size its code and proofs actually support. Where a result is a design and a shipped artifact rather than a measured breakthrough, it says so.</p>
+    <p class="close">Source and tests for every paper are public. ORCID <a href="https://orcid.org/0009-0001-7175-5393" translate="no">0009-0001-7175-5393</a>. arXiv submission is in preparation; links below update as each is posted.</p>
+  </div>
+  <div class="seal">honest weight &middot; re-derivable verdicts &middot; explicit non-claims &middot; source public</div>
+</div>
+
+<main id="main">
+
+<!-- ─── THE PAPERS ─────────────────────────────────────────────── -->
+<section class="mv" id="papers" aria-labelledby="papers-h">
+  <h2 id="papers-h" class="reveal">Four papers on the same spine.</h2>
+  <p class="body-text reveal">The through-line is an accountability discipline&mdash;a verdict is a re-derivable function of its inputs, carries a machine-readable statement of what it does not claim, and refuses to launder inability into trust. The four papers stake that discipline at four points: integrity witnessing, accountable compute, the independence of the checker, and the record of a single action.</p>
+
+  <div class="index reveal-children" role="list" aria-label="Publications">
+
+    <div class="index-row" role="listitem" style="--i:0">
+      <span class="index-term">EMET: An Authority-Incapable Byte-Level Integrity Witness</span>
+      <span class="index-gloss">A shipped, frozen tool whose verdict lattice (MATCH / DRIFT / UNVERIFIABLE) cannot, by construction, express <em>trusted</em> or <em>approved</em>. Four independent implementations, 44 conformance vectors. Systems paper. &middot; <a href="https://github.com/HarperZ9/emet" translate="no">source</a> &middot; <a href="https://pypi.org/project/emet/" translate="no">PyPI</a> &middot; arXiv&nbsp;cs.CR (pending)</span>
+    </div>
+
+    <div class="index-row" role="listitem" style="--i:1">
+      <span class="index-term">BuildLang: Accountable Compute via Typed Capability Effects</span>
+      <span class="index-gloss">A compiler where the capabilities a function may exercise appear in its type, feeding re-derivable codegen and scientific-runtime receipts verified by re-execution, each with a mandatory overclaim boundary. Systems paper. &middot; <a href="https://github.com/HarperZ9/buildlang" translate="no">source</a> &middot; arXiv&nbsp;cs.PL (pending)</span>
+    </div>
+
+    <div class="index-row" role="listitem" style="--i:2">
+      <span class="index-term">Witnessed Independence: Recording Whether a Verifier Graded Its Own Work</span>
+      <span class="index-gloss">A small mechanism that turns &ldquo;a criterion it did not author&rdquo; from an assumption into a recorded, three-valued field of a verdict, and refuses&mdash;at an opt-in boundary&mdash;to decide when independence is not witnessed. Draft preprint. &middot; <a href="https://github.com/HarperZ9/coherence-membrane" translate="no">source</a> &middot; arXiv (pending)</span>
+    </div>
+
+    <div class="index-row" role="listitem" style="--i:3">
+      <span class="index-term">Proof Packets: A Derive-Don&rsquo;t-Trust Envelope for Accountable Agent Actions</span>
+      <span class="index-gloss">A packet for one agent action whose verdict is derived from checks, never read from the packet: a canned MATCH can never win. Missing evidence is UNVERIFIABLE by JSON path, tamper is DRIFT. Draft preprint. &middot; <a href="https://github.com/HarperZ9" translate="no">source</a> &middot; arXiv (pending)</span>
+    </div>
+
+  </div>
+
+  <em class="close reveal">A paper that claims more than its evidence is a liability, not an asset: the first competent reviewer removes the flag. These are titled at their real size on purpose&mdash;the honesty is the point, and it is the same property the tools themselves enforce.</em>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Re-derivable verdicts, explicit non-claims, and inability reported as <b translate="no">UNVERIFIABLE</b> rather than trust. Source and tests are public&mdash;check them yourself.</p>
+</footer>
+
+<script src="system/reveal.js?v=20260625a" defer></script>
+</body>
+</html>
