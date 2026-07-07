@@ -17,7 +17,7 @@ const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","
   "accountable-engine","buildlang","raw","build-color","build-products","toolkit",
   "provenance-sensorium","orca","aleph","warden","presentation","atelier","gallery","demonstrations"]);
 CATALOG.add("field-guide");
-const RESEARCH = new Set(["research","why"]);
+const RESEARCH = new Set(["research","why","publications"]);
 const WRITING = new Set(["writing"]);
 const ABOUT = new Set(["cv","resume","person"]);
 
