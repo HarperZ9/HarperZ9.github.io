@@ -35,7 +35,7 @@
     <p class="lede"><span translate="no">BuildLang</span> is a small programming language with one stubborn idea. Every function has to say, right at the top, what it&rsquo;s allowed to reach out and touch: your files, the screen, the network. Those reach-outs are called <em>effects</em>. The function also has to be clear about which piece of memory it hands back, and how long that memory is allowed to stay alive, the part people call <em>lifetimes</em>. The compiler, the program that turns your code into something the machine can run, checks both, then turns it into fast native code. Reach for something you never declared, and it simply won&rsquo;t build.</p>
     <p class="close">I built it so the compiler could answer a question I kept getting wrong on my own: what is this function actually allowed to do? It&rsquo;s tested where it counts, honest about its rough edges, and the careful habit at the heart of it (say what you&rsquo;ll touch, then be held to it) runs quietly under everything else here.</p>
   </div>
-  <div class="seal"><span translate="no">buildc</span> 1.0.6 &middot; a Rust-built compiler, on crates.io &middot; effects and lifetimes, in the type</div>
+  <div class="seal"><span translate="no">buildc</span> &middot; buildlang 1.1.0 on crates.io &middot; effects and lifetimes, in the type</div>
 </div>
 
 <main id="main">
@@ -51,7 +51,7 @@
 <section class="proof" id="proof" aria-labelledby="proof-h">
   <div class="proof-head">
     <h2 id="proof-h" class="reveal">Don&rsquo;t take the type. <em>Watch it refuse.</em></h2>
-    <p class="body-text reveal">Each of these is a real file checked by the real binary: <span translate="no">buildc</span> 1.0.5, release build. The output is verbatim.</p>
+    <p class="body-text reveal">Each of these is a real file checked by the real binary: <span translate="no">buildc</span>, the release binary. The output is verbatim.</p>
   </div>
 
   <div class="exhibit reveal">
@@ -182,7 +182,7 @@ Emitting witnessed measurements... <span class="ok">OK</span>
   <span class="kw">"witnessed"</span>: <span class="ok">true</span>   <span class="cmt">// re-derived here, not trusted from the file</span>
   <span class="kw">"label"</span>:     <span class="lt">"NOT_A_NEW_PHYSICAL_LAW"</span></pre>
     <p class="artifact-cap">Export doesn&rsquo;t forward a stored claim. <b>It re-verifies first,</b> then emits measurements Crucible can stand behind, carrying the same honest label the whole way across.</p>
-    <p class="artifact-note">The backends, said plainly: <b>C is the only production-verified path</b>; HLSL and GLSL cover shaders; SPIR-V, LLVM, WASM, Rust, x86-64, and ARM64 stay experimental. <b translate="no">cargo install buildlang</b> is accurate (buildlang 1.0.0 is on crates.io), but the published crate predates this receipt work, so don&rsquo;t read the newest invariants into the version you install today.</p>
+    <p class="artifact-note">The backends, said plainly: <b>C is the only production-verified path</b>; HLSL and GLSL cover shaders; SPIR-V, LLVM, WASM, Rust, x86-64, and ARM64 stay experimental. <b translate="no">cargo install buildlang</b> is accurate (buildlang 1.1.0 is on crates.io), but the published crate predates this receipt work, so don&rsquo;t read the newest invariants into the version you install today.</p>
   </div>
 </section>
 
