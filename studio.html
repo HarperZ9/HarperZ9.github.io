@@ -18,7 +18,7 @@
 <meta name="twitter:title" content="The Studio &middot; Live media instrument &middot; Zain Dana Harper">
 <meta name="twitter:description" content="Render media, measure the frame, transform sources, and keep receipts available when evidence is useful.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
-<link rel="stylesheet" href="system/system.css?v=20260709i">
+<link rel="stylesheet" href="system/system.css?v=20260709k">
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
@@ -65,6 +65,38 @@
       </div>
     </div>
     <p class="rail-own">Start with a source, then open only the controls you need.</p>
+
+    <section class="studio-render-console" data-studio-render-console aria-label="Renderer console">
+      <div class="studio-console-head">
+        <span class="studio-console-title">Renderer console</span>
+        <span class="studio-console-status" data-studio-console-status>atelier renderer</span>
+      </div>
+      <div class="studio-console-stage" data-studio-console-stage tabindex="0" role="img" aria-label="Pointer-reactive renderer field preview">
+        <span class="studio-console-orbit" aria-hidden="true"></span>
+        <span class="studio-console-crosshair" aria-hidden="true"></span>
+        <span class="studio-console-pointer">pointer <b data-studio-console-pointer>50:50</b></span>
+      </div>
+      <div class="studio-console-meters" aria-label="Renderer channels">
+        <div class="studio-console-meter">
+          <div><span>field</span><output data-studio-console-meter="field">0.58</output></div>
+          <i data-studio-console-bar="field"></i>
+        </div>
+        <div class="studio-console-meter">
+          <div><span>dither</span><output data-studio-console-meter="dither">0.50</output></div>
+          <i data-studio-console-bar="dither"></i>
+        </div>
+        <div class="studio-console-meter">
+          <div><span>motion</span><output data-studio-console-meter="motion">0.46</output></div>
+          <i data-studio-console-bar="motion"></i>
+        </div>
+      </div>
+      <div class="studio-console-actions" role="group" aria-label="Renderer routes">
+        <button type="button" data-studio-console-source="showcase">Showcase</button>
+        <button type="button" data-studio-console-source="atelier">Atelier</button>
+        <button type="button" data-studio-console-source="fractal">Fractal</button>
+        <button type="button" data-studio-console-source="byo">Media</button>
+      </div>
+    </section>
 
     <div class="rail-scroll">
       <!-- SOURCE: Atelier (Task 7). boot() finds #atelier and, since there is no #at-canvas here,
@@ -815,7 +847,7 @@
      panzoom (anvaka) v9.4.3: UMD, sets window.createPanzoom.
      Tweakpane v4.0.5: ESM named exports, imported directly by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js"></script>
-<script type="module" src="system/studio.js?v=20260701a"></script>
+<script type="module" src="system/studio.js?v=20260709b"></script>
 <!-- Music reactive engine: zero-dependency WebAudio + Canvas visual system. -->
 <script type="module" src="system/reactive.js?v=20260625b"></script>
 <script type="module" src="system/reactive-music-ui.js?v=20260625b"></script>
