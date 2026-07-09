@@ -17,7 +17,7 @@ def read(path: Path) -> str:
 def test_public_test_run_request_page_is_discoverable() -> None:
     assert INTAKE.is_file()
     html = read(INTAKE)
-    assert "<title>Send A Public Proof-Surface Test Case</title>" in html
+    assert "<title>Send A Public Test Case</title>" in html
     assert f'<link rel="canonical" href="{PUBLIC_URL}">' in html
     assert f'<meta property="og:url" content="{PUBLIC_URL}">' in html
     assert PUBLIC_URL in read(SITEMAP)

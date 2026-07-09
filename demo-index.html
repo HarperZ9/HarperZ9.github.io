@@ -17,13 +17,13 @@
 <meta name="twitter:title" content="Demo: a repository map (index)">
 <meta name="twitter:description" content="A readable example of what index produces: a small dependency map of a handful of repositories, with every edge carrying the file and line that proves it. index runs offline over real repos.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
-<link rel="stylesheet" href="system/doc.css?v=20260709h">
+<link rel="stylesheet" href="system/doc.css?v=20260709m">
 <style>
   /* ---- demo surface: scoped, on-brand, built only from doc.css tokens ---- */
   .example-flag{display:inline-flex;align-items:center;gap:.55rem;
     font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.6rem;font-weight:600;
     letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);
-    background:#f3f4f0;border:1px solid var(--rule-strong);border-radius:4px;
+    background:var(--page);border:1px solid var(--rule-strong);border-radius:4px;
     padding:.4em .7em;margin:.2rem 0 0}
   .example-flag::before{content:"";width:.45rem;height:.45rem;border-radius:50%;
     background:var(--iris)}
@@ -36,12 +36,12 @@
 
   /* graph node + edge styling, driven only from the cascade's tokens */
   .gnode{cursor:pointer}
-  .gnode .nbox{fill:#f3f4f0;stroke:var(--rule-strong);stroke-width:1.4}
+  .gnode .nbox{fill:oklch(21% .05 314);stroke:var(--rule-strong);stroke-width:1.4}
   .gnode .nlabel{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;
     fill:var(--ink);text-anchor:middle;dominant-baseline:central}
   .gnode .nrole{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:8px;
     letter-spacing:.08em;fill:var(--ink-muted);text-anchor:middle;dominant-baseline:central}
-  .gnode.is-hub .nbox{fill:#eceee8;stroke:var(--iris);stroke-width:2}
+  .gnode.is-hub .nbox{fill:oklch(26% .06 310);stroke:var(--iris);stroke-width:2}
   .gnode.is-active .nbox{stroke:var(--iris);stroke-width:2.4}
   .gnode:focus{outline:none}
   .gnode:focus .nbox{stroke:var(--iris);stroke-width:2.6}
@@ -66,7 +66,7 @@
   .glegend .sw.moderate{border-top-color:#9a7a17}
   .glegend .sw.cycle{border-top-color:#a6322a;border-top-style:dashed}
   .glegend .sw.hub{width:.7rem;height:.7rem;border:2px solid var(--iris);
-    border-radius:3px;background:#eceee8}
+    border-radius:3px;background:var(--page)}
 
   /* the evidence readout: what an edge carries when you select it */
   .evidence{margin:1.3rem 0 0;border:1px solid var(--rule);border-radius:5px;overflow:hidden}
@@ -118,7 +118,7 @@
 
   /* inline code chips used in prose */
   code.k{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.82em;
-    color:var(--ink);background:#f3f4f0;border:1px solid var(--rule);border-radius:3px;
+    color:var(--ink);background:var(--page);border:1px solid var(--rule);border-radius:3px;
     padding:.06em .4em}
 
   @media (max-width:560px){
@@ -132,7 +132,7 @@
 
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="resume.html">Resume</a> <a href="portfolio.html">Portfolio</a> <a href="cover-letter.html">Cover Letter</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260709h"></script>
+<script type="module" src="system/nav.js?v=20260709m"></script>
 
 <div class="docnav">
   <span class="where">Demo &middot; a repository map</span>

@@ -8,11 +8,11 @@ workspace instructions still apply; this repo is a public GitHub Pages surface.
 ## Product Boundary
 
 Treat this repository as the first public portfolio signal for release-candidate
-products and proof-surface services.
+products and public tools.
 
 Publishable surfaces:
 
-- `index.html` - primary portfolio and work index.
+- `index.html` - generative home shell (Vite bundle plus `system/home-art.js`).
 - `*-sample.html` pages - scrubbed public sample reports and witness surfaces.
 - `README.md` and `AUTHORS.md` - repository context and authorship posture.
 
@@ -32,7 +32,7 @@ Never publish:
   portfolio surface.
 - When adding a new product tile, make the maturity level clear: sample,
   release candidate, production-ready, archived, or research.
-- Preserve a calm, work-focused tone; this site is an evidence surface, not a
+- Preserve a calm, work-focused tone; this site is a working surface, not a
   hype page.
 
 ## Verification
@@ -46,8 +46,11 @@ git diff --check
 For page or style changes, also render-check the page:
 
 ```powershell
-python -m http.server 8765
+npx serve -l 8765 .
 ```
+
+(`python -m http.server` serves `.mjs` as `text/plain` on some Windows setups,
+which breaks the Studio's module graph; use a server with correct MIME types.)
 
 Then inspect `http://127.0.0.1:8765/` at desktop and mobile widths with
 Playwright or a browser.

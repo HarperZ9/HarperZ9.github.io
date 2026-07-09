@@ -813,6 +813,13 @@ function render3DInto(opts) {
     stop3d = fractal3dHandle.stop;
     canvasIsGL = true;
     startMeterLoop();   // the orbit animates, stream the meters so the hash changes as it turns
+    // A context lost mid-orbit would leave the rAF loop drawing into a dead
+    // context; recover to the 2D canvas with a plain explanation instead.
+    c.addEventListener("webglcontextlost", (e) => {
+      e.preventDefault();
+      leave3D();
+      say("model", "The GPU context was lost; hit Render to bring the 3D view back.");
+    }, { once: true });
   } catch (e) {
     // WebGL unavailable: restore the 2D canvas and show the friendly fallback.
     leave3D();
@@ -2432,9 +2439,34 @@ function upgradeDropdown(stateId) {
   const list = document.createElement("div"); list.className = "dd-list"; list.setAttribute("role", "listbox"); list.hidden = true;
   host.appendChild(btn); host.appendChild(list);
 
-  function close() { list.hidden = true; btn.setAttribute("aria-expanded", "false"); }
+  // The list is pinned to the viewport while open so the rail's overflow can
+  // never clip it (its ancestors scroll/clip; position:absolute is not enough).
+  function place() {
+    const r = btn.getBoundingClientRect();
+    const below = window.innerHeight - r.bottom;
+    const openDown = below >= 140 || below >= r.top;
+    const room = (openDown ? below : r.top) - 12;
+    list.style.position = "fixed";
+    list.style.left = r.left + "px";
+    list.style.width = r.width + "px";
+    list.style.maxHeight = Math.max(120, Math.min(300, room)) + "px";
+    list.style.overflowY = "auto";
+    list.style.zIndex = "60";
+    if (openDown) { list.style.top = (r.bottom + 4) + "px"; list.style.bottom = "auto"; }
+    else { list.style.bottom = (window.innerHeight - r.top + 4) + "px"; list.style.top = "auto"; }
+  }
+  function onDrift() { if (!list.hidden) place(); }
+  function close() {
+    list.hidden = true; btn.setAttribute("aria-expanded", "false");
+    list.style.cssText = "";
+    window.removeEventListener("scroll", onDrift, true);
+    window.removeEventListener("resize", onDrift);
+  }
   function open() {
     list.hidden = false; btn.setAttribute("aria-expanded", "true");
+    place();
+    window.addEventListener("scroll", onDrift, true);
+    window.addEventListener("resize", onDrift);
     const cur = list.querySelector('[aria-selected="true"]'); if (cur) cur.focus();
   }
   function choose(v, emit = true) {

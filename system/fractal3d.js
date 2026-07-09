@@ -311,6 +311,9 @@ export function render3D(canvas, opts = {}) {
   // it left off so the orbit never jumps. `userActive` resumes the idle drift after a short pause.
   const cam = { yaw: 0, pitch: 0, dist: 1 };
   let raf = 0, stopped = false, t0 = 0, clock = 0, lastTs = 0, idleHold = false, holdUntil = 0;
+  // Reduced motion: the idle auto-orbit never advances on its own; the form
+  // renders still and only moves under the user's own drag/dolly input.
+  const reduceMotion = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function draw(ts) {
     if (stopped) return;
@@ -319,7 +322,7 @@ export function render3D(canvas, opts = {}) {
     const dt = (ts - lastTs) / 1000;
     lastTs = ts;
     // Advance the idle-orbit clock only when not actively held; resume after the hold window.
-    const holding = idleHold || ts < holdUntil;
+    const holding = reduceMotion || idleHold || ts < holdUntil;
     if (!holding) clock += dt;
     const w = canvas.width, h = canvas.height;
     gl.viewport(0, 0, w, h);
