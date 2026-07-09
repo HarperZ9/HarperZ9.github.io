@@ -97,6 +97,93 @@ if (typeof document !== "undefined") {
   }
 }
 
+let studioRendererConsoleSync = null;
+function syncStudioRendererConsole(source) {
+  if (typeof studioRendererConsoleSync === "function") studioRendererConsoleSync(source);
+}
+
+function bootStudioRendererConsole(root = document) {
+  const consoleEl = root.querySelector("[data-studio-render-console]");
+  if (!consoleEl || consoleEl.dataset.enhanced === "true") return;
+  consoleEl.dataset.enhanced = "true";
+
+  const status = consoleEl.querySelector("[data-studio-console-status]");
+  const pointer = consoleEl.querySelector("[data-studio-console-pointer]");
+  const stage = consoleEl.querySelector("[data-studio-console-stage]");
+  const actionButtons = [...consoleEl.querySelectorAll("[data-studio-console-source]")];
+  const sourceLabels = {
+    atelier: "atelier renderer",
+    fractal: "2D fractal",
+    fractal3d: "3D fractal",
+    ndim: "dimension renderer",
+    music: "reactive renderer",
+    byo: "media renderer",
+    watch: "watch renderer",
+    discovery: "physics engine",
+    showcase: "showcase renderer",
+  };
+
+  const setConsoleMeter = (key, value) => {
+    const pct = Math.max(0, Math.min(1, value));
+    const meter = consoleEl.querySelector(`[data-studio-console-meter="${key}"]`);
+    const bar = consoleEl.querySelector(`[data-studio-console-bar="${key}"]`);
+    if (meter) meter.textContent = pct.toFixed(2);
+    if (bar) bar.style.setProperty("--meter", pct.toFixed(3));
+  };
+
+  const sync = (source = window.__studioActiveSource || "atelier") => {
+    if (status) status.textContent = sourceLabels[source] || `${source} renderer`;
+    actionButtons.forEach((button) => {
+      const active = button.dataset.studioConsoleSource === source;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+  };
+  studioRendererConsoleSync = sync;
+
+  actionButtons.forEach((button) => {
+    button.setAttribute("aria-pressed", "false");
+    button.addEventListener("click", () => {
+      const source = button.dataset.studioConsoleSource || "atelier";
+      const sourceTab = document.querySelector(`#studio-source button[data-source="${source}"]`);
+      if (!sourceTab) return;
+      sourceTab.click();
+      try { sourceTab.focus({ preventScroll: true }); } catch (_) { sourceTab.focus(); }
+    });
+  });
+
+  if (stage) {
+    const updatePointer = (event) => {
+      const rect = stage.getBoundingClientRect();
+      const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / Math.max(1, rect.width)));
+      const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / Math.max(1, rect.height)));
+      stage.style.setProperty("--px", `${(x * 100).toFixed(1)}%`);
+      stage.style.setProperty("--py", `${(y * 100).toFixed(1)}%`);
+      consoleEl.style.setProperty("--px", `${(x * 100).toFixed(1)}%`);
+      consoleEl.style.setProperty("--py", `${(y * 100).toFixed(1)}%`);
+      if (pointer) pointer.textContent = `${Math.round(x * 100)}:${Math.round(y * 100)}`;
+    };
+    stage.addEventListener("pointermove", updatePointer);
+    stage.addEventListener("pointerdown", updatePointer);
+  }
+
+  let last = 0;
+  const reduceMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  const tick = (now = performance.now()) => {
+    if (!document.body.contains(consoleEl)) return;
+    if (now - last > 160) {
+      last = now;
+      const t = now * 0.001;
+      setConsoleMeter("field", 0.58 + Math.sin(t * 0.86) * 0.22);
+      setConsoleMeter("dither", 0.50 + Math.cos(t * 0.63 + 1.4) * 0.24);
+      setConsoleMeter("motion", 0.46 + Math.sin(t * 1.18 + 2.1) * 0.28);
+    }
+    if (!reduceMotion) window.requestAnimationFrame(tick);
+  };
+  tick();
+  sync();
+}
+
 async function bootEngineStatus() {
   const set = (id, text) => { const el = $(id); if (el) el.textContent = text; };
   try {
@@ -223,6 +310,7 @@ function setSource(next) {
     b.setAttribute("aria-selected", String(b.dataset.source === next)));
   // Roving tabindex: active tab is 0, all others -1 (ARIA tablist pattern).
   syncTabindex(next);
+  syncStudioRendererConsole(next);
   // Mark the stage interactive (grab cursor + drag affordance) for the camera-driven sources.
   // ndim is now a camera source too (P2 directive a): wheel dollies the camera into the volume.
   const stageEl = document.getElementById("viewport-stage");
@@ -267,6 +355,7 @@ $("studio-source").addEventListener("keydown", e => {
   if (j < 0) return;
   tabs[j].focus(); setSource(tabs[j].dataset.source);
 });
+bootStudioRendererConsole();
 
 // Sync roving tabindex whenever setSource changes the active tab.
 function syncTabindex(activeKey) {

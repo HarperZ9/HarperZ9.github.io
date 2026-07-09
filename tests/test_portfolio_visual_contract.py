@@ -86,7 +86,7 @@ def test_home_loads_the_vite_spectrum_shell_not_the_old_one() -> None:
     assert '<div id="root"></div>' in src
     assert 'type="module" crossorigin src="/assets/index-' in src
     assert 'rel="stylesheet" crossorigin href="/assets/index-' in src
-    assert 'href="/system/home-readable.css?v=20260709j"' in src
+    assert 'href="/system/home-readable.css?v=20260709k"' in src
     assert 'name="color-scheme" content="dark"' in src
     assert 'content="#14041b"' in src
     assert "Project Telos" in src
@@ -224,7 +224,13 @@ def test_studio_is_media_first_not_certificate_first() -> None:
     assert studio.index('id="sc-certificate"') < studio.index('id="project-telos-features"')
     assert "What the model sees" not in studio
     assert "Live Perception" in studio
+    assert 'class="studio-render-console"' in studio
+    assert 'data-studio-console-source="showcase"' in studio
+    assert 'data-studio-console-source="byo"' in studio
     assert ".studio-media-first" in css
+    assert ".studio-render-console" in css
+    assert ".studio-console-stage" in css
+    assert "resize:vertical" in css
     assert ".studio-receipts[open]" in css
     assert "grid-template-columns:minmax(12rem,18rem) minmax(0,1fr) minmax(18rem,24rem)" in css
     assert ".studio-primary-stage .viewport-stage" in css
@@ -241,16 +247,16 @@ def test_live_spectrum_hero_is_wired() -> None:
     assert "flow field traced by ~2,400 particles" in app
     assert "drawn in your browser" in app
     assert ".hero-canvas{" in css
-    assert 'src="/system/home-art.js?v=20260709j"' in index
-    assert 'href="/system/home-readable.css?v=20260709j"' in index
+    assert 'src="/system/home-art.js?v=20260709k"' in index
+    assert 'href="/system/home-readable.css?v=20260709k"' in index
     home_art = HOME_ART.read_text(encoding="utf-8")
     assert "home-generative-field" in home_art
     assert "./generative-field.js" in home_art
     assert "placeFieldInHero" in home_art
     assert "home-fluid-canvas" in home_art
     assert "upgradeHomeMenu" in home_art
-    assert "ensureEngineConsole" in home_art
-    assert "data-engine-mode-button" in home_art
+    assert "ensureEngineConsole" not in home_art
+    assert "data-engine-mode-button" not in home_art
     assert "normalizeHomeFormFields" in home_art
     assert "repairHeroCopy" in home_art
     assert "Tools for local AI" in home_art
@@ -321,9 +327,9 @@ def test_home_uses_clear_first_viewport_messaging() -> None:
     assert "repairSectionKickers" in home_art
     assert ".home-menu{" in css
     assert ".home-menu-list" in css
-    assert ".home-engine-console" in css
-    assert ".home-console-stage" in css
-    assert "resize:horizontal" in css
+    assert ".home-engine-console" not in css
+    assert ".home-console-stage" not in css
+    assert "resize:horizontal" not in css
     assert "Engine room" in home_art
     assert "Live demos" in home_art
     assert "Start here" not in home_art

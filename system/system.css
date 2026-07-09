@@ -2414,6 +2414,198 @@ section.mv{
   color:var(--faint);
 }
 
+.studio-render-console{
+  --px:50%;
+  --py:50%;
+  margin:0 clamp(.75rem,1.4vw,1rem) .75rem;
+  min-height:12.5rem;
+  max-height:min(23rem,44vh);
+  overflow:auto;
+  resize:vertical;
+  border:1px solid color-mix(in oklab, var(--signal) 18%, var(--hairline));
+  border-radius:10px;
+  background:
+    radial-gradient(110% 80% at var(--px) var(--py), color-mix(in oklab, var(--signal) 12%, transparent), transparent 58%),
+    linear-gradient(145deg, color-mix(in oklab, var(--void) 78%, black), color-mix(in oklab, var(--surface) 42%, black));
+}
+
+.studio-console-head,
+.studio-console-actions{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:.45rem;
+  padding:.58rem;
+}
+
+.studio-console-head{
+  border-bottom:1px solid color-mix(in oklab, var(--signal) 11%, transparent);
+}
+
+.studio-console-title,
+.studio-console-status,
+.studio-console-pointer,
+.studio-console-meter,
+.studio-console-actions button{
+  font-family:var(--body);
+  letter-spacing:0;
+}
+
+.studio-console-title{
+  min-width:0;
+  color:var(--bone);
+  font-size:.83rem;
+  font-weight:800;
+  line-height:1.15;
+}
+
+.studio-console-status{
+  flex:0 1 auto;
+  min-width:0;
+  padding:.3rem .42rem;
+  border:1px solid color-mix(in oklab, var(--signal) 18%, transparent);
+  border-radius:999px;
+  color:color-mix(in oklab, var(--bone) 82%, var(--muted));
+  background:color-mix(in oklab, var(--signal) 8%, transparent);
+  font-size:.64rem;
+  font-weight:750;
+  line-height:1.05;
+  text-align:right;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+
+.studio-console-stage{
+  position:relative;
+  min-height:5.75rem;
+  margin:.58rem;
+  border:1px solid color-mix(in oklab, var(--signal) 15%, transparent);
+  border-radius:8px;
+  background:
+    radial-gradient(circle at var(--px) var(--py), color-mix(in oklab, var(--signal) 28%, transparent), transparent 0 23%, transparent 55%),
+    radial-gradient(circle at calc(100% - var(--px)) calc(100% - var(--py)), color-mix(in oklab, var(--ember) 18%, transparent), transparent 0 21%, transparent 60%),
+    linear-gradient(90deg, transparent 0 49.6%, rgba(255,255,255,.10) 49.6% 50%, transparent 50%),
+    linear-gradient(0deg, transparent 0 49.6%, rgba(255,255,255,.10) 49.6% 50%, transparent 50%),
+    linear-gradient(135deg, rgba(8,1,13,.94), rgba(20,8,28,.74));
+  overflow:hidden;
+  cursor:crosshair;
+}
+
+.studio-console-stage:focus-visible{
+  outline:2px solid var(--signal);
+  outline-offset:2px;
+}
+
+.studio-console-orbit{
+  position:absolute;
+  width:5.2rem;
+  aspect-ratio:1;
+  left:calc(var(--px) - 2.6rem);
+  top:calc(var(--py) - 2.6rem);
+  border:1px solid color-mix(in oklab, var(--signal) 54%, transparent);
+  border-radius:50%;
+  transform:scaleX(1.36) rotate(18deg);
+  transition:left .18s var(--ease-out),top .18s var(--ease-out);
+}
+
+.studio-console-crosshair{
+  position:absolute;
+  width:.62rem;
+  aspect-ratio:1;
+  left:calc(var(--px) - .31rem);
+  top:calc(var(--py) - .31rem);
+  border-radius:50%;
+  background:var(--signal);
+  box-shadow:0 0 0 5px color-mix(in oklab, var(--signal) 15%, transparent);
+  transition:left .18s var(--ease-out),top .18s var(--ease-out);
+}
+
+.studio-console-pointer{
+  position:absolute;
+  right:.55rem;
+  bottom:.48rem;
+  color:color-mix(in oklab, var(--bone) 76%, var(--muted));
+  font-size:.64rem;
+  font-weight:720;
+  line-height:1;
+}
+
+.studio-console-pointer b{
+  color:var(--bone);
+  font-weight:820;
+}
+
+.studio-console-meters{
+  display:grid;
+  gap:.42rem;
+  padding:0 .58rem .58rem;
+}
+
+.studio-console-meter{
+  display:grid;
+  gap:.34rem;
+  min-width:0;
+  color:var(--bone);
+  font-size:.68rem;
+  font-weight:780;
+}
+
+.studio-console-meter div{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:.45rem;
+}
+
+.studio-console-meter output{
+  color:var(--signal);
+  font-variant-numeric:tabular-nums;
+}
+
+.studio-console-meter i{
+  --meter:.5;
+  display:block;
+  height:.36rem;
+  width:100%;
+  border-radius:999px;
+  background:
+    linear-gradient(90deg,var(--signal),var(--ember)) 0 0 / calc(var(--meter) * 100%) 100% no-repeat,
+    color-mix(in oklab, var(--surface) 64%, black);
+  transition:background-size .22s var(--ease-out);
+}
+
+.studio-console-actions{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  border-top:1px solid color-mix(in oklab, var(--signal) 11%, transparent);
+}
+
+.studio-console-actions button{
+  min-width:0;
+  min-height:2.35rem;
+  padding:.46rem .5rem;
+  border:1px solid color-mix(in oklab, var(--signal) 15%, transparent);
+  border-radius:8px;
+  color:color-mix(in oklab, var(--bone) 82%, var(--muted));
+  background:color-mix(in oklab, var(--void) 78%, transparent);
+  font-size:.68rem;
+  font-weight:780;
+  line-height:1.05;
+  text-align:center;
+  cursor:pointer;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+
+.studio-console-actions button:hover,
+.studio-console-actions button:focus-visible,
+.studio-console-actions button.is-active{
+  color:var(--bone);
+  border-color:color-mix(in oklab, var(--signal) 42%, transparent);
+  background:color-mix(in oklab, var(--signal) 12%, transparent);
+  outline:none;
+}
+
 .studio-media-first .rail-scroll{
   padding:0 clamp(.75rem,1.4vw,1rem) 1rem;
 }
@@ -2623,6 +2815,10 @@ section.mv{
     grid-template-columns:repeat(3,minmax(0,1fr));
     overflow:visible;
     padding-bottom:.65rem;
+  }
+  .studio-render-console{
+    resize:none;
+    max-height:none;
   }
   .studio-media-first .source-group{
     min-width:0;
