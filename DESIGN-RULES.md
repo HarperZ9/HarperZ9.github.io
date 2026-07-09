@@ -1,71 +1,125 @@
 # Project Telos site design rules
 
-These are the governing rules for the portfolio site. The canon is two reference
-sites, set by the operator on 2026-06-25:
+These are the governing rules for the portfolio site as of 2026-07-09. The old
+white ceramic/editorial layer is retired for the public site. The current system
+is dark-first, generative, broad-scope, and connected through one shared
+navigation and design cascade.
 
-- **aircenter.space (AIR)** for structure: monochrome, one sculptural object,
-  type pinned to the viewport edges, deep negative space, scroll-as-animation.
-- **wembi.ai** for warmth: a single bold accent, big tactile pills, large
-  editorial type even in utility sections, soft material.
+## 1. One public map, many working surfaces
 
-Build from these references in motion, not from memory. The only way to know how a
-reference behaves is to drive it (scroll, hover) and watch it move.
+The site is not a set of unrelated pages and it is not a single-lane proof
+manifesto. Home, overview, catalog, research, writing, docs, demos, and project
+pages should read as one public map of a larger workshop.
 
-**Flagship identity + hero artwork:** see [`BRAND.md`](BRAND.md). Every flagship, repo, and
-private-line tool uses one shared **flagship card** as its hero (ceramic card, one iris accent,
-`PROJECT TELOS / {ROLE}` eyebrow, sans headline, pipeline line, ghost wordmark, one glyph). Heroes
-are generated from `img/og/_card.html` + `img/og/cards-data.js`, never hand-authored per repo.
+Every page should answer three questions:
 
-## 1. One protagonist, evolving through states
+- what is this thing
+- what can the visitor try, inspect, read, or use
+- where should a serious reader go next
 
-There is a single 3D sculptural object that is the protagonist of the page. It
-carries the visual richness, and it **moves through a range of states as you
-scroll** (the work is in the state change, not in static decoration). On Telos the
-object is the Ribbon Field, and its states map to the thesis: perceive, build,
-verify.
+## 2. Visual thesis
 
-## 2. Palette: monochrome plus one accent
+The visual world is a model-native workshop: dark mineral field, procedural
+growth, generative specimens, compact route maps, and precise tool surfaces. It
+should feel built, not templated. Use generative art as craft, atmosphere, and
+evidence that the system can make its own material, not as decoration pasted
+behind text.
 
-Near-white ceramic ground (`#f4f3ef`, not sterile white), ink text, monochrome
-discipline. At most **one** bold accent, used sparingly and confidently (wembi uses
-exactly one). Color lives in the object's material and light, not in the UI.
+Reference material:
 
-## 3. Typography is a first-class object
+- local inspiration folder: `C:/Users/Zain/Desktop/art-theme-style-generative-inspiration/`
+- procedural field loader: `system/generative-field.js`
+- procedural engine source: `system/hero-gl.js`
+- home spectrum shell: `assets/index-3QeD_52_.css`
+- shared public cascades: `system/system.css` and `system/doc.css`
 
-Heavy grotesk (Archivo) at architectural scale. No expressive serif: AIR and wembi
-are grotesk. Type is **placed as independent, full-bleed layers** (edge-pinned,
-free to overlap the object), never trapped inside a centered content column. Use
-display type where a paragraph would be timid, including in the footer. Mono
-(JetBrains Mono) for instrument labels and chrome.
+## 3. Palette
 
-## 4. Independent layers that compose by overlap
+Dark-first. The page ground is near-black with violet and magenta depth. The
+primary signal is cyan. Ember, lime, violet, and muted lavender are supporting
+signals for lanes, demos, and generated material. Light ceramic surfaces are
+allowed only for generated social cards or print output.
 
-Every element (the object, the giant wordmark, the headline, the pills, the chapter
-index) lives in its own viewport-relative frame and is free to layer. No element's
-visibility or crop depends on another element's box. Each has its own field of view.
+Never reintroduce beige, cream, sand, paper, or generic editorial monochrome as
+the screen default.
 
-## 5. Components
+## 4. Typography
 
-- **Pills:** big, tactile, rounded. One emphatic solid pill, the rest quiet.
-- **Chrome:** minimal and quiet. A small nav. An orienting device (a chapter index
-  or progress indicator) that tells you where you are in the journey. A scroll cue.
-- **Rules:** hairline, low-contrast. Generous negative space everywhere.
+Use the committed system fonts:
 
-## 6. Motion
+- brand display: Telos Display 0.4, generated from `tools/fonts/build_telos_display.py`, with Kilon only as fallback. The current build is a soft technical contour face: rounded joins, capsule strokes, native lowercase display forms, real curves in the glyph outlines, and optical advances rather than strict monospacing.
+- readable display: Kilon for normal headings, document titles, labels, and mixed-case page delivery
+- body: Hanken Grotesk
+- mono/readout: JetBrains Mono or the home mono face where already bundled
 
-Scroll is a choreographed narrative, not a scrollbar. The object scrubs through its
-states. Slow and cinematic. Real pointer and hover reactivity. An enter moment that
-establishes the world. Always honor `prefers-reduced-motion` with a settled frame.
+Type should feel instrument-grade: large where it carries the page, precise in
+readouts, and readable in essays. Avoid editorial serif affect, drop caps, and
+repeated tiny section eyebrows as default scaffolding.
 
-## 7. Discipline
+`typeface.html` is the public specimen surface. Keep it wired into the shared
+nav and use it as the reference for the generated face: character coverage,
+S/5 and B/8 differentiation, native lowercase forms, local font loading, and the
+rule that Telos Display carries identity while Kilon and Hanken Grotesk carry
+reading.
 
-No clutter. No card-grid-of-everything. No small body paragraph where display type
-belongs. Restraint is the premium signal. When in doubt, remove, enlarge the type,
-and add space.
+## 5. Generative material
 
-## 8. Engineering floor (non-negotiable)
+Generative art can appear as:
 
-WebGL fails safe to a clean static page. Zero em-dashes anywhere. Accessible
-landmarks, skip link, focus-visible, reduced-motion. The dead-link crawl
-(`tests/linkcheck.mjs`) and the home contract (`tests/test_portfolio_visual_contract.py`)
-stay green.
+- a full-field background under a strong veil
+- a clipped specimen texture
+- an ambient signal layer
+- a tool-output or artifact exhibit
+- a motion or canvas scene with reduced-motion fallback
+- a route-seeded orbit, contour, crystal, or flow-field specimen generated in browser
+- a route-seeded metaball, fluid-curl, ordered-dither, or ASCII field generated in browser
+
+Inspiration should be synthesized into first-party procedural output. Do not
+copy inspiration images into the site or depend on bitmap backgrounds for the
+core public style.
+
+It must not reduce contrast or make content harder to scan. Text always wins over
+the art layer.
+
+## 6. Connected pages
+
+Every shipped page should either:
+
+- use the React home shell,
+- use `system/system.css` plus `system/nav.js`, or
+- use `system/doc.css` plus `system/nav.js` for document pages.
+
+Pages that are intentionally standalone demos must still have a route back to the
+site, an accessible title, and a clear source, demo, or context link where
+possible.
+
+## 7. Interaction and motion
+
+Motion should read like entering a live system: scanning, sensing, drawing,
+generating, or responding. It should not be a generic fade-on-scroll reflex.
+Every motion path must honor `prefers-reduced-motion`. Content must be visible
+without animation.
+
+## 8. Bans
+
+- no glassmorphism as the default material
+- no gradient text as the primary emphasis
+- no beige or cream page ground on screen
+- no generic card grid as the main page structure
+- no old editorial-magazine look
+- no accountability/proof/trust framing as the site-level thesis
+- no copied inspiration images as public assets
+- no hand-authored per-page hero style that fights the shared system
+- no hidden text, broken links, inaccessible nav, or motion-gated content
+
+## 9. Verification
+
+Before shipping visual changes:
+
+```powershell
+python -m pytest tests/test_portfolio_visual_contract.py
+node tests/linkcheck.mjs
+```
+
+For CSS or link-heavy changes, also inspect desktop and mobile renderings in a
+browser and run any targeted page tests that touch the changed surface.

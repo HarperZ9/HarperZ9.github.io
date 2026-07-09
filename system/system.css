@@ -4,20 +4,18 @@
    (sections, instrument index, organ rows, verdict chips, proof exhibits,
    scroll-reveal). Shared by every page; edit here, not per-page.
    ============================================================================ */
-/* ---- licensed faces, ALL self-hosted: Kilon (display) + Hanken Grotesk (text)
-       + JetBrains Mono (labels). Cascaded from the white home so every page shares
-       one type voice. Hanken Grotesk (humanist variable sans) carries body copy
-       for legibility; subset woff2, no third-party font request. ---- */
+/* ---- licensed/self-generated faces, ALL self-hosted: Telos Display (generated
+       project display), Kilon fallback, Hanken Grotesk text. Shared by the
+       current dark public system so every page has one type voice. ---- */
+@font-face{font-family:"Telos Display"; src:url("fonts/telos-display.woff2") format("woff2"),url("fonts/telos-display.ttf") format("truetype"); font-weight:700 900; font-style:normal; font-display:swap}
 @font-face{font-family:"Kilon"; src:url("fonts/kilon.woff2") format("woff2"),url("fonts/kilon.woff") format("woff"); font-weight:100 900; font-style:normal; font-display:swap}
 @font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk.woff2") format("woff2"); font-weight:100 900; font-style:normal; font-display:swap}
 @font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk-italic.woff2") format("woff2"); font-weight:100 900; font-style:italic; font-display:swap}
 
 /* ============================================================================
-   CERAMIC TOKENS (2026-06-25) - the white-editorial system, cascaded from the
-   home (index.html + home.css). The legacy token NAMES are preserved and
-   remapped to the ceramic palette, so every existing rule re-skins through the
-   cascade without touching a single structural class. Was a dark surface;
-   now a warm near-white ceramic ground with deep ink text and one iris accent.
+   LEGACY BASE TOKENS (2026-06-25)
+   These names are retained for structural compatibility with older selectors.
+   The screen palette is remapped later by the generative dark cascade.
    ============================================================================ */
 :root{
   /* ceramic ground + ink */
@@ -29,6 +27,7 @@
   --line:rgba(11,12,14,.14); --line-soft:rgba(11,12,14,.08);
   --card:rgba(255,255,255,.6);
   /* type */
+  --brand-display:"Telos Display","Kilon",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --display:"Kilon",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --body:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --mono:"JetBrains Mono","SFMono-Regular","Courier New",monospace;
@@ -61,7 +60,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible,
 .bar .nm{color:var(--orange);letter-spacing:.3em}
 .mid{align-self:center;max-width:min(92vw,37rem)}
 .eyebrow{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;color:var(--orange);margin-bottom:1.7rem;opacity:.92}
-h1{font-family:"Kilon",system-ui,sans-serif;font-weight:700;font-size:clamp(2.3rem,4.8vw,3.7rem);line-height:1.07;letter-spacing:-.015em;text-wrap:balance;color:var(--bone);text-shadow:0 4px 60px rgba(0,0,0,.9)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(2.3rem,4.8vw,3.7rem);line-height:1.07;letter-spacing:0;text-wrap:balance;color:var(--bone);text-shadow:0 4px 60px rgba(0,0,0,.9)}
 h1 .g{color:var(--orange)}
 .lede{margin-top:1.9rem;font-size:clamp(1.02rem,1.4vw,1.24rem);line-height:1.66;color:var(--bone);opacity:.9;max-width:37ch}
 .lede em{color:var(--orange);font-style:italic}
@@ -84,7 +83,7 @@ section.mv{position:relative;z-index:4;background:var(--void-opaque);border-top:
 
 /* ─── section typography ──────────────────────────────────────── */
 .mv .eyebrow{margin-bottom:1.2rem}
-h2{font-family:"Kilon",system-ui,sans-serif;font-weight:600;font-size:clamp(1.7rem,3.1vw,2.6rem);line-height:1.13;letter-spacing:-.012em;color:var(--bone);margin-bottom:clamp(1.4rem,2.5vw,2.2rem);text-wrap:balance}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(1.7rem,3.1vw,2.6rem);line-height:1.13;letter-spacing:0;color:var(--bone);margin-bottom:clamp(1.4rem,2.5vw,2.2rem);text-wrap:balance}
 h2 .g{color:var(--orange)}
 h2 em{font-style:normal;color:var(--orange)}
 .body-text{font-size:clamp(1.12rem,1.4vw,1.26rem);line-height:1.75;color:var(--bone);opacity:.97;max-width:66ch}
@@ -92,7 +91,7 @@ h2 em{font-style:normal;color:var(--orange)}
 .body-text+.body-text{margin-top:1.4em}
 .mv .close{margin-top:1.6rem;display:block;font-style:italic;font-size:clamp(1.06rem,1.4vw,1.28rem);line-height:1.55;color:var(--orange);max-width:52ch}
 .mv .close b{font-style:normal;font-weight:500;color:var(--bone)}
-.pull{font-family:"Kilon",system-ui,sans-serif;font-weight:600;font-size:clamp(1.5rem,3vw,2.4rem);line-height:1.2;color:var(--orange);margin:clamp(2rem,4vw,3.2rem) 0;max-width:52ch;letter-spacing:-.01em}
+.pull{font-family:var(--display);font-weight:600;font-size:clamp(1.5rem,3vw,2.4rem);line-height:1.2;color:var(--orange);margin:clamp(2rem,4vw,3.2rem) 0;max-width:52ch;letter-spacing:0}
 
 /* ─── movement number + aperture row ─────────────────────────── */
 .mv-head{display:flex;align-items:center;gap:1rem;margin-bottom:2.4rem}
@@ -243,7 +242,7 @@ h2 em{font-style:normal;color:var(--orange)}
 .wrap{max-width:72rem;margin-left:auto;margin-right:auto;padding-left:clamp(1.8rem,5.5vw,5rem);padding-right:clamp(1.8rem,5.5vw,5rem)}
 .studio{position:relative;z-index:5;padding-top:clamp(3.6rem,7vw,6rem);padding-bottom:clamp(3.6rem,7vw,6rem)}
 .studio-top{margin-bottom:clamp(2.4rem,4.5vw,3.6rem)}
-.studio-top h1{font-family:"Kilon",system-ui,sans-serif;font-weight:700;font-size:clamp(2rem,4.2vw,3.2rem);line-height:1.09;letter-spacing:-.015em;color:var(--bone);margin-bottom:1.1rem}
+.studio-top h1{font-family:var(--display);font-weight:700;font-size:clamp(2rem,4.2vw,3.2rem);line-height:1.09;letter-spacing:0;color:var(--bone);margin-bottom:1.1rem}
 .studio-top .lede{font-size:clamp(1.02rem,1.4vw,1.22rem);line-height:1.68;color:var(--bone);opacity:.88;max-width:60ch;margin-bottom:1.8rem}
 
 /* ─── seg: segmented control (mode switch) ────────────────────── */
@@ -705,6 +704,12 @@ body.world-3 .bar .rt{color:#cdd6cf}
   color:var(--muted);text-decoration:none;padding:.2em 0;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
 .site-nav .sn-links a:hover,.site-nav .sn-links a:focus-visible{color:var(--bone);outline:none}
 .site-nav .sn-links a[aria-current="page"]{color:var(--ember);border-color:var(--ember)}
+@media (max-width:760px){
+  .site-nav{width:100%;box-sizing:border-box;justify-content:center}
+  .site-nav .sn-home{width:100%;text-align:center}
+  .site-nav .sn-links{width:100%;justify-content:center;gap:.55rem .9rem}
+  .site-nav .sn-links a{font-size:.78rem;line-height:1.2}
+}
 @media (max-width:560px){ .site-nav{justify-content:center} .site-nav .sn-home{width:100%;text-align:center} }
 
 /* ─── hero launchpad doors (Task 3 - index.html front door) ──── */
@@ -960,8 +965,8 @@ body.world-3 .bar .rt{color:#cdd6cf}
   border-right:1px solid var(--hairline);background:rgba(250,249,246,.72)}
 @media (min-width:900px){.studio-rail{overflow:hidden}}
 .rail-head{padding:clamp(.9rem,1.6vw,1.3rem) clamp(1rem,1.8vw,1.4rem) .4rem}
-.rail-head h1{font-family:"Kilon",system-ui,sans-serif;font-weight:700;
-  font-size:clamp(1.25rem,1.7vw,1.55rem);line-height:1.1;letter-spacing:-.01em;color:var(--bone);margin:0}
+.rail-head h1{font-family:var(--display);font-weight:700;
+  font-size:clamp(1.25rem,1.7vw,1.55rem);line-height:1.1;letter-spacing:0;color:var(--bone);margin:0}
 .rail-lede{font-family:var(--body);font-size:.92rem;line-height:1.45;
   color:var(--muted);margin:.35rem 0 0}
 .rail-own{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.56rem;letter-spacing:.04em;
@@ -1353,102 +1358,778 @@ body.showcase-hero .viewport-stage canvas{width:100%;height:100%;object-fit:fill
 .cert-note{font-family:var(--body);font-size:.78rem;color:var(--muted);line-height:1.5;margin:.7rem 0 0}
 
 /* ============================================================================
-   CERAMIC RE-SKIN OVERRIDES (2026-06-25) - the editorial layer cascaded from the
-   white home. Later source order, so these win. Color, type-scale, and button
-   shape only; no structural class, grid, or spacing is restructured. The legacy
-   token remap above already re-skinned everything token-driven; this layer fixes
-   what was hard-coded (halos, pills, the verdict semantics, code surfaces).
+   GENERATIVE DARK CASCADE (2026-07-09)
+   The public site now follows the spectrum home: dark-first, evidence-led,
+   generative-art-forward. This late cascade intentionally supersedes the older
+   ceramic/editorial layer while preserving existing page structure and markup.
    ============================================================================ */
-
-/* font smoothing + editorial body register, matching the home */
-body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-  text-rendering:optimizeLegibility;font-feature-settings:"kern" 1,"liga" 1;
-  font-size:clamp(1rem,.96rem + .22vw,1.075rem);line-height:1.72;letter-spacing:.002em}
-
-/* editorial large-type scale (the home register). Family + weight inherit from
-   the existing rules; only size, leading, and tracking are raised here. */
-h1{font-size:clamp(2.6rem,1.2rem + 5vw,4.9rem);line-height:1;letter-spacing:-.02em}
-h2{font-size:clamp(2rem,1.2rem + 3.2vw,3.5rem);line-height:1.04;letter-spacing:-.022em}
-.lede{font-size:clamp(1.14rem,1rem + .6vw,1.5rem);line-height:1.5}
-.body-text{font-size:clamp(1.08rem,1rem + .5vw,1.3rem);line-height:1.7}
-.pull{font-size:clamp(1.9rem,1.2rem + 3vw,3.4rem);line-height:1.12;letter-spacing:-.022em}
-.close{font-size:clamp(1.1rem,1rem + .55vw,1.42rem)}
-.studio-top h1{font-size:clamp(2.1rem,1.3rem + 3.4vw,3.6rem);line-height:1.04}
-.rail-head h1{font-size:clamp(1.4rem,1rem + 1.4vw,1.8rem);line-height:1.05}
-
-/* the dark-canvas legibility halos are wrong on the ceramic ground - retire them */
-h1,.lede,.eyebrow,.close,.seal,.built,.built-head,.built-name,.built-desc,
-.built-stat,.hero-cue,.bar,.bar .nm,.bar .rt{text-shadow:none}
-
-/* hero front-door actions -> editorial underlined links, never pills. The studio
-   app's own buttons keep their (more specific) functional styling. */
-.hero-doors{gap:clamp(1.1rem,2.4vw,2rem);align-items:baseline}
-.btn{font-family:var(--mono);font-size:.92rem;font-weight:500;letter-spacing:.02em;
-  color:var(--ink);background:none;border:0;border-bottom:1.5px solid var(--line);
-  border-radius:0;padding:.5rem .1rem .55rem;
-  transition:gap .3s ease,border-color .3s ease,color .3s ease}
-.btn:hover,.btn:focus-visible{background:none;color:var(--ink);border-color:var(--ink)}
-.hero-doors .btn:first-child{font-weight:600;border-bottom-color:var(--ink)}
-.btn.ghost{color:var(--ink-muted);background:none}
-.btn.ghost:hover,.btn.ghost:focus-visible{color:var(--ink);background:none;border-color:var(--ink)}
-
-/* catalog (home-photo): veil the dark engine still to a faint ceramic texture so
-   the hero reads light like the home, while the Julia-set seal stays meaningful. */
-.home-photo .scrim{background:linear-gradient(104deg,
-  rgba(244,243,239,.95) 0%, rgba(244,243,239,.82) 42%, rgba(244,243,239,.6) 100%)}
-.home-photo h1,.home-photo .lede,.home-photo .eyebrow,.home-photo .built,
-.home-photo .built-head,.home-photo .built-desc,.home-photo .hero-cue,
-.home-photo .seal{text-shadow:none}
-.home-photo h1 .g,.home-photo .lede em{color:var(--iris)}
-/* the pre-veil hero text colors were hard-coded light-on-dark; restate them in
-   ink so the veiled ceramic hero holds the AA floor. */
-.home-photo h1{color:var(--ink)}
-.home-photo .lede{color:var(--ink-soft)}
-.home-photo .eyebrow{color:var(--ink-muted)}
-.home-photo .bar{color:var(--ink-muted)}
-.home-photo .bar .nm{color:var(--ink-muted)}
-.home-photo .seal{color:var(--ink-muted)}
-@media (max-width:760px){
-  .home-photo .scrim{background:linear-gradient(to top,
-    rgba(244,243,239,.96) 0%, rgba(244,243,239,.84) 50%, rgba(244,243,239,.66) 100%)}
+:root{
+  color-scheme:dark;
+  --paper:#14041b;
+  --paper-2:#1b0823;
+  --void:oklch(15.5% .052 316);
+  --void-opaque:oklch(15.5% .052 316);
+  --bone:oklch(97.5% .012 320);
+  --ink:oklch(97.5% .012 320);
+  --ink-soft:oklch(88% .02 318);
+  --ink-muted:oklch(78.5% .035 316);
+  --ink-faint:oklch(64% .05 314);
+  --muted:oklch(78.5% .035 316);
+  --prussian:oklch(64% .05 314);
+  --orange:oklch(82.5% .135 200);
+  --ember:oklch(76% .19 46);
+  --gold:oklch(87% .215 133);
+  --iris:oklch(69.5% .2 286);
+  --iris-soft:oklch(75% .18 286);
+  --signal:oklch(82.5% .135 200);
+  --faint:oklch(64% .05 314);
+  --match:var(--gold);
+  --drift:var(--ember);
+  --unverif:var(--faint);
+  --line:oklch(62% .08 308/.28);
+  --line-soft:oklch(62% .08 308/.14);
+  --hairline:oklch(62% .08 308/.22);
+  --card:oklch(22.5% .052 312/.82);
+  --raised:oklch(27.5% .05 310/.86);
+  --verified:oklch(87% .215 133);
 }
 
-/* proof-exhibit code blocks: light code surface (bg lightened by the literal
-   swap); restate the syntax tints at AA on ceramic. */
-.artifact{color:var(--ink-soft);border-color:var(--line)}
-.artifact .cmt,.artifact .pr{color:var(--ink-faint)}
-.artifact .ok{color:#1f7a52}
-.artifact .bad,.demo-detail .bad{color:#b8480a}
-.artifact .lt,.artifact .kw{color:#7a5a00}
+html{background:var(--void)}
+body{
+  background:
+    radial-gradient(120% 80% at 78% 8%, oklch(38% .16 352/.28), transparent 58%),
+    radial-gradient(90% 70% at 10% 18%, oklch(38% .13 200/.24), transparent 62%),
+    linear-gradient(180deg, var(--void), #0b0512 62%, #08040c);
+  color:var(--bone);
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  opacity:.28;
+  mix-blend-mode:screen;
+  background:
+    radial-gradient(circle at 78% 18%, oklch(82.5% .135 200/.34), transparent 0 10%, transparent 34%),
+    radial-gradient(circle at 18% 78%, oklch(87% .215 133/.20), transparent 0 11%, transparent 36%),
+    conic-gradient(from 210deg at 70% 24%, transparent, oklch(69.5% .2 286/.22), transparent 42%),
+    linear-gradient(90deg, rgba(20,4,27,.78), rgba(20,4,27,.18), rgba(20,4,27,.88));
+}
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.16;
+  background:
+    linear-gradient(90deg, transparent 0 calc(100% - 1px), oklch(82.5% .135 200/.18) calc(100% - 1px)) 0 0 / 44px 44px,
+    linear-gradient(180deg, transparent 0 calc(100% - 1px), oklch(69.5% .2 286/.12) calc(100% - 1px)) 0 0 / 44px 44px;
+  mask-image:radial-gradient(circle at 72% 22%, #000, transparent 70%);
+}
 
-/* utility backgrounds that used rgba(0,0,0,a) (kept out of the literal swap
-   because that family is also box-shadows) -> faint ink washes. */
-.ground,.cert-fact{background:rgba(11,12,14,.04)}
-.mm-spectrum,.mm-motion{background:rgba(11,12,14,.05)}
-.mm-track{background:rgba(11,12,14,.06)}
-.mm-sw{box-shadow:inset 0 0 0 1px rgba(11,12,14,.12)}
+.site-nav,
+.footer-seal,
+section.mv,
+.band,
+.story-band,
+.outreach-band,
+.context-strip,
+.lineup,
+.panel,
+.ground,
+.cert-evidence,
+.dd-list{
+  background:color-mix(in oklab, var(--void) 88%, transparent);
+  color:var(--bone);
+  border-color:var(--hairline);
+}
+.site-nav{
+  -webkit-backdrop-filter:blur(18px) saturate(1.35);
+  backdrop-filter:blur(18px) saturate(1.35);
+  background:linear-gradient(180deg, color-mix(in oklab, var(--void) 84%, transparent), color-mix(in oklab, var(--void) 62%, transparent));
+}
+.sn-home,
+.sn-links a,
+.channels a,
+.organ-name,
+.organ-line,
+.body-text,
+.mv .close b,
+.pull,
+h1,
+h2,
+h3,
+.built-name,
+.cert-crit-v,
+.cert-fact-v,
+.cert-ev-v,
+.dd-btn,
+.dd-opt,
+.chat-input input{
+  color:var(--bone);
+}
+.sn-links a[aria-current="page"]::after,
+.kicker::before,
+.index-term a,
+.organ-name a,
+.channels a{
+  border-color:color-mix(in oklab, var(--signal) 55%, transparent);
+}
+.sn-links a:hover,
+.sn-links a[aria-current="page"],
+.bar .nm,
+.eyebrow,
+.mv .eyebrow,
+.index-term,
+.organ-name a:hover,
+.channels a:hover,
+.mv .close,
+.close,
+.pull .g,
+h1 .g,
+h2 .g,
+h2 em,
+.aperture,
+.seal b,
+.note-line .g,
+.cert-recheck-btn{
+  color:var(--signal);
+}
+.lede,
+.body-text,
+.index-gloss,
+.organ-line,
+.atlas-note,
+.cert-empty,
+.cert-gloss,
+.cert-note,
+.organ-role,
+.seal,
+.seal-line,
+.note-line,
+.placeholder,
+.channels,
+.bar,
+.mv-num,
+.v-note,
+.cert-fact,
+.cert-ev,
+.dd-opt,
+.chat-input input::placeholder{
+  color:var(--muted);
+}
+.frame,
+.mv,
+section.mv{
+  background:linear-gradient(180deg, color-mix(in oklab, var(--void) 92%, transparent), color-mix(in oklab, var(--void) 98%, black));
+}
+.scrim{
+  background:
+    radial-gradient(80% 70% at 72% 20%, transparent 0 34%, color-mix(in oklab, var(--void) 20%, transparent) 60%, var(--void) 100%),
+    linear-gradient(90deg, color-mix(in oklab, var(--void) 94%, transparent) 0 28%, transparent 62%, var(--void) 100%);
+}
+.interlude-mark{color:oklch(82.5% .135 200/.34)}
+.index,
+.index-row,
+.organ-row,
+.organs,
+.atlas-tier,
+.lineup th,
+.lineup td,
+.footer-seal,
+section.mv,
+.mv-head,
+.cert-audit,
+.cert-ev,
+.cert-gloss[data-verdict="unverifiable"],
+.cert-gloss[data-verdict="disputed"]{
+  border-color:var(--hairline);
+}
+.verdict,
+.verdict-active,
+.verdict-dim,
+.verdict-shipped,
+.cert-chip,
+.cert-act,
+.cert-fact,
+.cert-evidence,
+.chat-input input,
+.dd-btn,
+.dd-list,
+.dd-opt[aria-selected="true"],
+.placeholder,
+.artifact,
+.ground,
+.mm-spectrum,
+.mm-motion,
+.cert-audit-row{
+  background:color-mix(in oklab, var(--void) 72%, transparent);
+  border-color:var(--hairline);
+  color:var(--bone);
+}
+.verdict-shipped,
+.cert-chip[data-verdict="verified"],
+.cert-rc-match.ok{
+  color:var(--verified);
+  border-color:color-mix(in oklab, var(--verified) 70%, transparent);
+  background:color-mix(in oklab, var(--verified) 10%, transparent);
+}
+.cert-chip[data-verdict="verified"]{
+  color:#07120c;
+  background:var(--verified);
+}
+.cert-chip[data-verdict="refuted"],
+.cert-chip[data-verdict="disputed"],
+.cert-rc-match.bad{
+  color:var(--ember);
+  border-color:color-mix(in oklab, var(--ember) 80%, transparent);
+  background:color-mix(in oklab, var(--ember) 12%, transparent);
+}
+.specimen{
+  filter:saturate(.9) brightness(.72) contrast(1.18);
+  box-shadow:0 0 0 1px var(--hairline), 0 0 42px -18px var(--signal);
+}
+.btn,
+.hero-doors .btn:first-child,
+.cert-recheck-btn,
+.cert-act{
+  color:var(--bone);
+  border-color:var(--hairline);
+}
+.btn:hover,
+.btn:focus-visible,
+.cert-recheck-btn:hover,
+.cert-act:hover{
+  color:var(--signal);
+  border-color:var(--signal);
+  background:color-mix(in oklab, var(--signal) 9%, transparent);
+}
+.artifact .ok{color:var(--verified)}
+.artifact .bad,
+.demo-detail .bad{color:var(--ember)}
+.artifact .lt,
+.artifact .kw{color:oklch(86% .155 90)}
+.artifact .cmt,
+.artifact .pr{color:var(--muted)}
+.cert-chip[data-verdict="disputed"]{
+  background:
+    linear-gradient(135deg, color-mix(in oklab, var(--ember) 24%, transparent), color-mix(in oklab, var(--iris) 18%, transparent));
+}
+.home-photo .scrim{
+  background:
+    radial-gradient(85% 70% at 75% 24%, transparent 0 32%, color-mix(in oklab, var(--void) 36%, transparent) 66%, var(--void) 100%),
+    linear-gradient(90deg, var(--void), transparent 55%, var(--void));
+}
+.home-photo h1,
+.home-photo .lede,
+.home-photo .eyebrow,
+.home-photo .bar,
+.home-photo .seal{
+  color:var(--bone);
+}
+.home-photo h1 .g,
+.home-photo .lede em{color:var(--signal)}
 
-/* chat bubbles on ceramic */
-.msg.you{background:rgba(70,54,232,.08);border-color:rgba(70,54,232,.22);color:var(--ink)}
-.msg.model{background:var(--card);border-color:var(--line);color:var(--ink-soft)}
+body.generative-host{
+  isolation:isolate;
+}
+body.generative-host > :not(#gl):not(#motes){
+  position:relative;
+  z-index:2;
+}
+#gl.generative-field-canvas,
+#motes.generative-motes-canvas{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  pointer-events:none;
+}
+#gl.generative-field-canvas{
+  z-index:0;
+  opacity:.36;
+  mix-blend-mode:screen;
+  filter:saturate(1.14) contrast(1.08);
+}
+#motes.generative-motes-canvas{
+  z-index:1;
+  opacity:.42;
+}
+.generative-field-failed #gl.generative-field-canvas,
+.generative-field-failed #motes.generative-motes-canvas{
+  display:none;
+}
 
-/* render stages stay a deliberate dark "screen" framed on the ceramic, like a
-   monitor, so the canvas output reads with full contrast. */
-.stage,.viewport-stage,.mm-mosaic{background:#0b0c0e}
-.viewport-stage{border-color:var(--line)}
+@media(max-width:760px){
+  body::before{
+    opacity:.14;
+    background:
+      radial-gradient(circle at 78% 14%, oklch(82.5% .135 200/.26), transparent 0 12%, transparent 44%),
+      linear-gradient(180deg, rgba(20,4,27,.92), rgba(20,4,27,.54), rgba(20,4,27,.95));
+  }
+  #gl.generative-field-canvas{opacity:.28}
+  #motes.generative-motes-canvas{opacity:.30}
+}
 
-/* verdict semantics stay distinct AND AA on white: verified = the calm green
-   floor; refuted + disputed take a warm danger that is NOT the brand iris;
-   unverifiable stays loud via its iris double-ring. */
-.cert-chip[data-verdict="refuted"]{color:#fff;background:#b8480a;border-color:#b8480a}
-.cert-chip[data-verdict="disputed"]{color:#fff;border-color:#b8480a;
-  background:repeating-linear-gradient(135deg,#b8480a 0,#b8480a 6px,#7a5a00 6px,#7a5a00 12px)}
-.cert-gloss[data-verdict="disputed"]{color:#b8480a;border-left-color:#b8480a}
-.cert-act[data-action="rejected"]:hover{border-color:#b8480a;color:#b8480a}
-.cert-stamp-rejected{color:#b8480a;border-color:#b8480a}
+@media(prefers-reduced-motion:reduce){
+  body::before,
+  body::after{background-attachment:scroll}
+}
 
-/* scenarios: keep the "without" case a warm danger accent, the "with" the green */
-.scenario .without{border-left-color:#b8480a;background:rgba(184,72,10,.05)}
-.scenario .without .lbl{color:#b8480a}
-.scenario .with{border-left-color:var(--verified);background:rgba(31,122,82,.06)}
-.scenario .with .lbl{color:var(--verified)}
+/* ============================================================================
+   REBUILT SITE PORT (2026-07-09)
+   Shared static pages inherit the rebuilt home language: compact top rail,
+   bounded hero type, hairline sections, procedural field under a strong veil.
+   ============================================================================ */
+:root{
+  --site-shell:clamp(1.15rem,5vw,5rem);
+  --site-max:78rem;
+}
+.site-nav{
+  position:sticky;
+  top:0;
+  z-index:40;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:clamp(.8rem,2vw,1.4rem);
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:.9rem var(--site-shell);
+  border:0;
+  border-bottom:1px solid var(--line-soft);
+  background:color-mix(in oklab, var(--void) 72%, transparent);
+  -webkit-backdrop-filter:blur(14px) saturate(1.3);
+  backdrop-filter:blur(14px) saturate(1.3);
+}
+.site-nav .sn-home{
+  display:inline-flex;
+  align-items:center;
+  gap:.65rem;
+  flex:0 0 auto;
+  font-family:var(--mono);
+  font-size:clamp(.92rem,.84rem + .18vw,1.04rem);
+  line-height:1;
+  letter-spacing:.14em;
+  font-weight:700;
+  color:var(--bone);
+  text-decoration:none;
+}
+.site-nav .sn-home:hover,
+.site-nav .sn-home:focus-visible{color:var(--signal)}
+.site-nav .sn-links{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:clamp(.8rem,2vw,1.8rem);
+  flex:1 1 auto;
+  min-width:0;
+}
+.site-nav .sn-links a,
+.site-nav .sn-more summary{
+  font-family:var(--body);
+  font-size:clamp(.86rem,.8rem + .16vw,.96rem);
+  font-weight:700;
+  line-height:1.1;
+  color:var(--muted);
+  text-decoration:none;
+  border-bottom:1.5px solid transparent;
+  padding:.25rem 0;
+  transition:color .18s ease,border-color .18s ease;
+}
+.site-nav .sn-links a:hover,
+.site-nav .sn-links a:focus-visible,
+.site-nav .sn-more summary:hover,
+.site-nav .sn-more summary:focus-visible{
+  color:var(--bone);
+  outline:none;
+}
+.site-nav .sn-links a.is-active,
+.site-nav .sn-links a[aria-current="page"],
+.site-nav .sn-more[data-current="true"] > summary{
+  color:var(--signal);
+  border-color:var(--signal);
+}
+.site-nav .sn-more{
+  position:relative;
+  flex:0 0 auto;
+}
+.site-nav .sn-more summary{
+  list-style:none;
+  cursor:pointer;
+}
+.site-nav .sn-more summary::-webkit-details-marker{display:none}
+.site-nav .sn-more summary::after{
+  content:"+";
+  margin-left:.38rem;
+  color:var(--faint);
+}
+.site-nav .sn-more[open] summary::after{content:"-"}
+.site-nav .sn-more:not([open]) .sn-more-list{display:none}
+.site-nav .sn-more-list{
+  position:absolute;
+  right:0;
+  top:calc(100% + .75rem);
+  z-index:50;
+  min-width:12rem;
+  display:grid;
+  gap:.18rem;
+  padding:.65rem;
+  border:1px solid var(--hairline);
+  border-radius:12px;
+  background:color-mix(in oklab, var(--void) 96%, black);
+}
+.site-nav .sn-more-list a{
+  display:block;
+  padding:.55rem .65rem;
+  border:0;
+  border-radius:8px;
+}
+.site-nav .sn-more-list a:hover,
+.site-nav .sn-more-list a:focus-visible{
+  background:color-mix(in oklab, var(--signal) 9%, transparent);
+}
+
+.inner-clean .frame{
+  min-height:min(860px,calc(100svh - 3.6rem));
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:clamp(1.4rem,3vw,2.4rem);
+  width:100%;
+  max-width:var(--site-max);
+  margin:0;
+  padding:clamp(4rem,12vh,8rem) var(--site-shell) clamp(3rem,8vh,6rem);
+  pointer-events:auto;
+  background:none;
+}
+.inner-clean .frame::after{
+  content:"TELOS";
+  position:absolute;
+  right:clamp(-.2rem,1vw,.75rem);
+  top:50%;
+  transform:translateY(-50%) rotate(90deg);
+  transform-origin:center;
+  font-family:var(--brand-display);
+  font-size:clamp(3.4rem,10vw,8rem);
+  line-height:1;
+  font-weight:900;
+  letter-spacing:.05em;
+  color:transparent;
+  -webkit-text-stroke:1.4px var(--hairline);
+  opacity:.38;
+  pointer-events:none;
+}
+.inner-clean .bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.55rem .9rem;
+  justify-content:flex-start;
+  max-width:min(100%,60rem);
+  font-family:var(--mono);
+  font-size:clamp(.74rem,.7rem + .14vw,.86rem);
+  letter-spacing:.18em;
+  color:var(--signal);
+}
+.inner-clean .bar .nm{color:var(--signal);letter-spacing:.18em}
+.inner-clean .bar .rt{display:inline;color:var(--muted)}
+.inner-clean .mid{
+  align-self:auto;
+  max-width:min(100%,60rem);
+  margin:0;
+}
+.inner-clean .eyebrow{
+  margin:0 0 clamp(1rem,2.2vw,1.5rem);
+  font-size:clamp(.72rem,.68rem + .14vw,.84rem);
+  letter-spacing:.24em;
+  color:var(--signal);
+}
+.inner-clean h1{
+  max-width:13.5ch;
+  font-size:clamp(2.35rem,5.4vw,4.7rem);
+  line-height:1.02;
+  letter-spacing:0;
+  font-weight:900;
+  text-shadow:none;
+}
+.inner-clean h1 .g{color:var(--match)}
+.inner-clean .lede{
+  max-width:45ch;
+  margin-top:clamp(1.4rem,2.8vw,2rem);
+  font-size:clamp(1.08rem,1rem + .7vw,1.45rem);
+  line-height:1.5;
+  color:var(--ink-soft);
+  opacity:1;
+}
+.inner-clean .lede b,
+.inner-clean .lede strong{color:var(--bone)}
+.inner-clean .lede em{color:var(--signal)}
+.inner-clean .close{
+  max-width:43ch;
+  margin-top:clamp(1.2rem,2.5vw,1.8rem);
+  font-size:clamp(1.05rem,.98rem + .5vw,1.32rem);
+  line-height:1.48;
+  color:var(--signal);
+}
+.inner-clean .seal{
+  display:inline-flex;
+  flex-wrap:wrap;
+  align-items:center;
+  align-self:flex-start;
+  gap:.25rem .55rem;
+  max-width:min(100%,62rem);
+  padding:.55rem .8rem;
+  border:1px solid var(--hairline);
+  border-radius:12px;
+  background:color-mix(in oklab, var(--void) 58%, transparent);
+  font-size:clamp(.66rem,.62rem + .12vw,.76rem);
+  line-height:1.65;
+  letter-spacing:.08em;
+  color:var(--faint);
+}
+section.mv,
+.proof,
+.turn,
+.footer-seal{
+  padding-inline:var(--site-shell);
+}
+section.mv{
+  background:color-mix(in oklab, var(--void) 88%, transparent);
+}
+.demo,
+.artifact{
+  background:color-mix(in oklab, var(--void) 78%, transparent);
+  border-color:var(--hairline);
+  color:var(--bone);
+}
+.demo textarea,
+.demo input[type=text]{
+  background:color-mix(in oklab, var(--void) 86%, black);
+  border-color:var(--hairline);
+  color:var(--bone);
+}
+
+@media(max-width:760px){
+  .site-nav{
+    gap:.75rem;
+    padding:.85rem var(--site-shell);
+  }
+  .site-nav .sn-links{
+    gap:.75rem;
+    flex:0 1 auto;
+    width:auto;
+    min-width:0;
+  }
+  .site-nav .sn-links > a:not(.is-active){
+    display:none;
+  }
+  .site-nav .sn-links > a.is-active{
+    max-width:42vw;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .site-nav .sn-more-list{
+    position:fixed;
+    left:var(--site-shell);
+    right:var(--site-shell);
+    top:4rem;
+    min-width:0;
+  }
+  .inner-clean .frame{
+    min-height:auto;
+    padding-top:clamp(3.1rem,9vh,4.8rem);
+  }
+  .inner-clean .frame::after{display:none}
+  .inner-clean h1{
+    max-width:min(100%,11ch);
+    font-size:clamp(1.85rem,8.2vw,2.35rem);
+    line-height:1.04;
+    letter-spacing:0;
+  }
+  .inner-clean .lede{
+    max-width:34ch;
+    font-size:clamp(1.02rem,4.8vw,1.18rem);
+  }
+  .inner-clean .bar,
+  .inner-clean .eyebrow{
+    letter-spacing:.2em;
+  }
+  .artifact{
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+}
+
+@media(max-width:330px){
+  .site-nav .sn-home span:last-child{display:none}
+  .site-nav .sn-links > a.is-active{max-width:48vw}
+}
+
+/* ============================================================================
+   TELOS DISPLAY SPECIMEN (2026-07-09)
+   Public typeface surface for the generated first-party display face.
+   ============================================================================ */
+.typeface-page .frame{
+  max-width:none;
+  min-height:min(900px,calc(100svh - 3.6rem));
+  overflow:hidden;
+}
+.typeface-field::before{
+  content:"";
+  position:absolute;
+  inset:8% 0 auto 42%;
+  height:min(52vh,34rem);
+  pointer-events:none;
+  opacity:.55;
+  background:
+    conic-gradient(from 145deg at 50% 50%, transparent, color-mix(in oklab, var(--signal) 36%, transparent), transparent 48%),
+    radial-gradient(circle at 72% 46%, color-mix(in oklab, var(--match) 20%, transparent), transparent 42%),
+    linear-gradient(115deg, transparent 0 28%, color-mix(in oklab, var(--iris) 26%, transparent) 29% 30%, transparent 31% 100%);
+  mask-image:radial-gradient(ellipse at center, #000 0 48%, transparent 78%);
+}
+.typeface-page .inner-clean h1,
+.typeface-page .frame h1{
+  max-width:11.5ch;
+}
+.typeface-page .frame h1 .g{
+  font-family:var(--brand-display);
+  font-weight:900;
+}
+.type-specimen{
+  display:grid;
+  grid-template-columns:minmax(0,24rem) minmax(0,1fr);
+  gap:clamp(1.5rem,4vw,4rem);
+  align-items:start;
+}
+.type-specimen h2{
+  max-width:12ch;
+  margin-bottom:0;
+}
+.type-specimen > .body-text{
+  margin-top:.2rem;
+}
+.specimen-lockup{
+  grid-column:1/-1;
+  display:grid;
+  gap:.18em;
+  margin-top:clamp(1.4rem,3vw,2.4rem);
+  font-family:var(--brand-display);
+  font-size:clamp(2.5rem,8vw,7.2rem);
+  line-height:.9;
+  letter-spacing:0;
+  font-weight:900;
+  color:var(--bone);
+}
+.specimen-lockup span:nth-child(2),
+.specimen-lockup span:nth-child(4){
+  color:var(--match);
+}
+.specimen-lockup span:nth-child(3){
+  color:var(--signal);
+}
+.charset{
+  grid-column:1/-1;
+  display:grid;
+  gap:.55rem;
+  margin-top:clamp(1.4rem,3vw,2.2rem);
+  padding:clamp(1rem,2vw,1.4rem);
+  border:1px solid var(--hairline);
+  border-radius:10px;
+  background:color-mix(in oklab, var(--void) 68%, transparent);
+  overflow:hidden;
+}
+.charset p{
+  margin:0;
+  font-family:var(--brand-display);
+  font-size:clamp(1.4rem,3.5vw,3.2rem);
+  line-height:1.08;
+  letter-spacing:0;
+  overflow-wrap:anywhere;
+  color:var(--bone);
+}
+.charset p:nth-child(2){
+  color:var(--muted);
+}
+.charset p:nth-child(3){
+  color:var(--signal);
+}
+.charset p:nth-child(4){
+  color:var(--match);
+}
+.glyph-grid{
+  grid-column:1/-1;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));
+  gap:.75rem;
+  margin-top:clamp(1.4rem,3vw,2.3rem);
+}
+.glyph-grid figure{
+  min-height:11rem;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:1rem;
+  padding:1rem;
+  border:1px solid var(--hairline);
+  border-radius:8px;
+  background:
+    radial-gradient(90% 90% at 70% 14%, color-mix(in oklab, var(--signal) 12%, transparent), transparent 62%),
+    color-mix(in oklab, var(--void) 76%, transparent);
+}
+.glyph-grid span{
+  font-family:var(--brand-display);
+  font-size:clamp(4rem,11vw,8.5rem);
+  line-height:.78;
+  letter-spacing:0;
+  color:var(--bone);
+}
+.glyph-grid figcaption,
+.type-rhythm p{
+  font-family:var(--mono);
+  font-size:clamp(.68rem,.64rem + .12vw,.78rem);
+  letter-spacing:.08em;
+  line-height:1.7;
+  color:var(--muted);
+}
+.type-rhythm{
+  grid-column:1/-1;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));
+  gap:.75rem;
+  margin-top:clamp(1.4rem,3vw,2.2rem);
+}
+.type-rhythm p{
+  min-height:8rem;
+  padding:1rem;
+  border:1px solid var(--hairline);
+  border-radius:8px;
+  background:color-mix(in oklab, var(--void) 72%, transparent);
+}
+.type-rhythm b{
+  color:var(--signal);
+}
+
+@media(max-width:760px){
+  .type-specimen{
+    grid-template-columns:1fr;
+  }
+  .type-specimen h2{
+    max-width:13ch;
+  }
+  .specimen-lockup{
+    font-size:clamp(2.3rem,13vw,4.6rem);
+  }
+  .glyph-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .glyph-grid figure{
+    min-height:8.5rem;
+    padding:.75rem;
+  }
+}

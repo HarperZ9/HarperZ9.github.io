@@ -7,7 +7,7 @@ the contract that actually ships now:
   - the Vite shell in index.html and hashed assets in assets/
   - the dark spectrum design tokens and live browser-rendered hero
   - the React-rendered accessibility floor (skip link, main landmark, focus)
-  - the home content and the MATCH / DRIFT / UNVERIFIABLE thesis
+  - the broad workshop thesis now used by the home surface
   - zero em/en dashes across the home shell and shipped home bundle
 
 The dead-link crawl in tests/linkcheck.mjs remains the link gate. Per-page
@@ -24,6 +24,11 @@ ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
 RIBBON = ROOT / "system" / "ribbon-field.js"
 SCROLL = ROOT / "system" / "home-scroll.js"
+SYSTEM_CSS = ROOT / "system" / "system.css"
+DOC_CSS = ROOT / "system" / "doc.css"
+GENERATIVE_FIELD = ROOT / "system" / "generative-field.js"
+HOME_ART = ROOT / "system" / "home-art.js"
+TYPEFACE = ROOT / "typeface.html"
 ALEPH = ROOT / "aleph.html"
 ORCA = ROOT / "orca.html"
 ALEPH_HERO = ROOT / "img" / "private-line" / "aleph-hero.svg"
@@ -62,6 +67,14 @@ def css_source() -> str:
     return app_css_path().read_text(encoding="utf-8")
 
 
+def system_css_source() -> str:
+    return SYSTEM_CSS.read_text(encoding="utf-8")
+
+
+def doc_css_source() -> str:
+    return DOC_CSS.read_text(encoding="utf-8")
+
+
 def test_home_loads_the_vite_spectrum_shell_not_the_old_one() -> None:
     src = index_source()
     assert '<div id="root"></div>' in src
@@ -80,16 +93,104 @@ def test_dark_spectrum_tokens_are_defined() -> None:
         assert token in css
     assert "background:var(--void)" in css
     assert ".spectrum-word{" in css
+    assert '@font-face{font-family:"Telos Display"' in css
+    assert '--font-brand:"Telos Display","Kilon",system-ui,sans-serif' in css
+    assert '--font-display:"Kilon",system-ui,sans-serif' in css
+    assert "-webkit-background-clip:text" not in css
+    assert "-webkit-text-fill-color:transparent" not in css
+
+
+def test_shared_pages_use_the_generative_dark_cascade() -> None:
+    css = system_css_source()
+    assert "GENERATIVE DARK CASCADE (2026-07-09)" in css
+    assert '@font-face{font-family:"Telos Display"' in css
+    assert '--brand-display:"Telos Display","Kilon",-apple-system' in css
+    assert '--display:"Kilon",-apple-system' in css
+    assert "font-family:var(--brand-display)" in css
+    assert "generative-field-canvas" in css
+    assert "generative-motes-canvas" in css
+    assert "color-scheme:dark" in css
+    assert "--paper:#14041b" in css
+    for token in ("--faint:", "--match:", "--drift:", "--unverif:"):
+        assert token in css
+    assert ".site-nav .sn-more:not([open]) .sn-more-list{display:none}" in css
+
+
+def test_document_pages_use_the_generative_document_cascade() -> None:
+    css = doc_css_source()
+    assert "GENERATIVE DOCUMENT CASCADE (2026-07-09)" in css
+    assert '@font-face{font-family:"Telos Display"' in css
+    assert '--brand-display:"Telos Display","Kilon",-apple-system' in css
+    assert '--display:"Kilon",-apple-system' in css
+    assert "generative-field-canvas" in css
+    assert "generative-motes-canvas" in css
+    assert ".site-nav" in css
+    assert ".sn-links" in css
+    assert ".sn-more-list" in css
+    assert "color-scheme:dark" in css
+    assert ".site-nav .sn-more:not([open]) .sn-more-list{display:none}" in css
+
+
+def test_shared_pages_synthesize_art_through_the_engine_not_copied_assets() -> None:
+    js = GENERATIVE_FIELD.read_text(encoding="utf-8")
+    assert 'createElement("canvas")' in js
+    assert '"gl"' in js
+    assert '"motes"' in js
+    assert 'getContext("2d"' in js
+    assert "requestAnimationFrame" in js
+    assert "hashRoute" in js
+    assert "routePalette" in js
+    assert "drawOrbitField" in js
+    assert "drawContourRidges" in js
+    assert "drawCrystalFragments" in js
+    assert "orderedDither" in js
+    assert "metaballPotential" in js
+    assert "drawMetaballWashes" in js
+    assert "drawAsciiMetaballField" in js
+    assert "drawFluidCurl" in js
+    assert "prefers-reduced-motion" in js
+    combined = system_css_source() + doc_css_source() + js
+    for copied in ("ca-diffusion-signal.webp", "hydra-grid.webp", "automata-rug.webp"):
+        assert copied not in combined
+
+
+def test_typeface_specimen_is_a_connected_public_surface() -> None:
+    nav = (ROOT / "system" / "nav.js").read_text(encoding="utf-8")
+    page = TYPEFACE.read_text(encoding="utf-8")
+    css = system_css_source()
+
+    assert TYPEFACE.is_file()
+    assert '["Typeface", "typeface.html", "typeface"]' in nav
+    assert "TYPEFACE" in page
+    assert "Telos Display" in page
+    assert "Version 0.4" in page
+    assert "soft technical" in page
+    assert "native lowercase" in page
+    assert "ABCDEFGHIJKLMNOPQRSTUVWXYZ" in page
+    assert "0123456789" in page
+    assert "type-specimen" in page
+    assert "typeface-field" in page
+    assert "system/nav.js" in page
+    assert ".type-specimen" in css
+    assert ".glyph-grid" in css
+    assert ".typeface-field" in css
 
 
 def test_live_spectrum_hero_is_wired() -> None:
     app = app_source()
     css = css_source()
+    index = index_source()
     assert "className:`hero-canvas-wrap`" in app
     assert "className:`hero-canvas`" in app
     assert "flow field traced by ~2,400 particles" in app
     assert "drawn in your browser" in app
     assert ".hero-canvas{" in css
+    assert 'src="/system/home-art.js"' in index
+    home_art = HOME_ART.read_text(encoding="utf-8")
+    assert "home-generative-field" in home_art
+    assert "./generative-field.js" in home_art
+    assert "fonts.googleapis.com" not in index
+    assert "fonts.gstatic.com" not in index
 
 
 def test_ribbon_field_is_failsafe_and_transparent() -> None:
@@ -134,32 +235,45 @@ def test_home_sections_are_present() -> None:
         assert css_class in css
 
 
-def test_home_thesis_and_messaging_preserved() -> None:
+def test_home_uses_neutral_broad_scope_messaging() -> None:
     src = app_source()
-    assert "Build with" in src
-    assert "a model." in src
-    assert "Peer into" in src
-    assert "the frontier." in src
-    assert "Telos is the looking glass" in src
-    assert "The view comes first." in src
-    assert "every step can be re-checked from outside" in src
-    assert "Build it to be checked" in src
-    assert "or do not ship it." in src
-    for verdict in ("MATCH", "DRIFT", "UNVERIFIABLE"):
-        assert verdict in src
+    assert "Systems," in src
+    assert "models," in src
+    assert "graphics," in src
+    assert "research." in src
+    assert "Project Telos is a public workshop" in src
+    assert "Start with a surface." in src
+    assert "Then follow the pieces that matter to your work." in src
+    assert "Open the workshop" in src
+    assert "then follow the working surface." in src
+    for retired in (
+        "Build with",
+        "a model.",
+        "Peer into",
+        "the frontier.",
+        "Telos is the looking glass",
+        "The view comes first.",
+        "every step can be re-checked from outside",
+        "Build it to be checked",
+        "or do not ship it.",
+        "Hire the range,",
+        "verify the rigor.",
+        "The accountability line is the current focus",
+    ):
+        assert retired not in src
 
 
 def test_eight_public_engines_equal_standing() -> None:
     src = app_source()
     for name, role in (
         ("telos", "perceive & make"),
-        ("index", "map & verify"),
-        ("gather", "intake & witness"),
+        ("index", "map workspaces"),
+        ("gather", "intake & capture"),
         ("forum", "orchestrate"),
         ("crucible", "judge"),
-        ("emet", "witness"),
+        ("emet", "byte integrity"),
         ("buildlang", "author"),
-        ("learn", "learning aid + credential provenance"),
+        ("learn", "learning aid + course engine"),
     ):
         assert f"name:`{name}`" in src
         assert f"role:`{role}`" in src
@@ -176,18 +290,18 @@ def test_eight_public_engines_equal_standing() -> None:
         assert f"href:`{href}`" in src
 
 
-def test_research_and_work_sections_keep_public_proof_line() -> None:
+def test_research_and_work_sections_keep_range_first_line() -> None:
     src = app_source()
-    assert "Six papers." in src
-    assert "One bet." in src
-    assert "verdict lattice" in src
-    assert "never " in src
-    assert "trusted" in src
+    assert "Six papers," in src
+    assert "many doors." in src
+    assert "public lanes" in src
+    assert "start anywhere" in src
     assert "0009-0001-7175-5393" in src
-    assert "Hire the range," in src
-    assert "verify the rigor." in src
+    assert "Bring the knot," in src
+    assert "make it tangible." in src
     assert "Self-taught systems engineer" in src
-    assert "every page links to its own source" in src
+    assert "unusual technical scope" in src
+    assert "systems, models, graphics, research, and web surfaces" in src
 
 
 def test_aleph_page_presents_private_line_platform_contract() -> None:
@@ -213,28 +327,29 @@ def test_aleph_page_presents_private_line_platform_contract() -> None:
 
 def test_runtime_page_presents_runtime_as_product_name() -> None:
     src = ORCA.read_text(encoding="utf-8")
-    assert "<title>Runtime: the accountable way to run an assessment</title>" in src
-    assert 'content="Runtime: the accountable way to run an assessment"' in src
-    assert 'name="color-scheme" content="light"' in src
-    assert 'name="theme-color" content="#f4f3ef"' in src
-    assert "Runtime is the Project Telos local-first operator runtime housed in ORCA" in src
-    assert '<span translate="no">Runtime</span> &middot; the accountable assessment runner' in src
+    assert "<title>Runtime: local-first operator workbench</title>" in src
+    assert 'content="Runtime: local-first operator workbench"' in src
+    assert 'name="color-scheme" content="dark"' in src
+    assert 'name="theme-color" content="#14041b"' in src
+    assert "Runtime is the Project Telos local-first operator workbench housed in ORCA" in src
+    assert '<span translate="no">Runtime</span> &middot; local-first operator workbench' in src
     assert '<span translate="no">Runtime</span> / ORCA' in src
     for proof in ("v1.0.0", "361", "local-only", "metadata-only", "5 files"):
         assert proof in src
     assert "Status</span>: public repo for release-safe docs and runtime contract; private operator material stays local" in src
+    assert "accountable assessment runner" not in src
 
 
 def test_overview_and_catalog_use_product_names_before_repo_aliases() -> None:
     overview = OVERVIEW.read_text(encoding="utf-8")
     catalog = CATALOG.read_text(encoding="utf-8")
     for src in (overview, catalog):
-        assert 'name="color-scheme" content="light"' in src
-        assert 'name="theme-color" content="#f4f3ef"' in src
-        assert "Eight public engines" in src
+        assert 'name="color-scheme" content="dark"' in src
+        assert 'name="theme-color" content="#14041b"' in src
         for term in ("Gate", "Runtime", "Vault", "Boundary", "Lab", "Ledger"):
             assert term in src
-    assert "Gate, Runtime, Vault, and Boundary" in overview
+    assert "Everything below is part of the public map" in overview
+    assert "Different doors, one workshop" in overview
     assert "Gate, Runtime, Vault, and Boundary" in catalog
     assert "Aleph, ORCA, Kun, and behavior-transform" not in overview
     assert "Aleph, ORCA, Kun, and behavior-transform" not in catalog
