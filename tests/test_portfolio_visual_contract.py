@@ -86,7 +86,7 @@ def test_home_loads_the_vite_spectrum_shell_not_the_old_one() -> None:
     assert '<div id="root"></div>' in src
     assert 'type="module" crossorigin src="/assets/index-' in src
     assert 'rel="stylesheet" crossorigin href="/assets/index-' in src
-    assert 'href="/system/home-readable.css?v=20260709k"' in src
+    assert 'href="/system/home-readable.css?v=20260709m"' in src
     assert 'name="color-scheme" content="dark"' in src
     assert 'content="#14041b"' in src
     assert "Project Telos" in src
@@ -247,13 +247,15 @@ def test_live_spectrum_hero_is_wired() -> None:
     assert "flow field traced by ~2,400 particles" in app
     assert "drawn in your browser" in app
     assert ".hero-canvas{" in css
-    assert 'src="/system/home-art.js?v=20260709k"' in index
-    assert 'href="/system/home-readable.css?v=20260709k"' in index
+    assert 'src="/system/home-art.js?v=20260709m"' in index
+    assert 'href="/system/home-readable.css?v=20260709m"' in index
     home_art = HOME_ART.read_text(encoding="utf-8")
     assert "home-generative-field" in home_art
     assert "./generative-field.js" in home_art
-    assert "placeFieldInHero" in home_art
-    assert "home-fluid-canvas" in home_art
+    # One field owns the hero: the bundle flow-field. The shared generative
+    # field stays a fixed page background and is never re-parented into .hero.
+    assert "placeFieldInHero" not in home_art
+    assert "home-fluid-canvas" not in home_art
     assert "upgradeHomeMenu" in home_art
     assert "ensureEngineConsole" not in home_art
     assert "data-engine-mode-button" not in home_art

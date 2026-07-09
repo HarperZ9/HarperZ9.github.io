@@ -11,8 +11,8 @@
        project display), Kilon fallback, Hanken Grotesk text, and Conso labels. ---- */
 @font-face{font-family:"Telos Display"; src:url("fonts/telos-display.woff2") format("woff2"),url("fonts/telos-display.ttf") format("truetype"); font-weight:700 900; font-style:normal; font-display:swap}
 @font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk.woff2") format("woff2"); font-weight:100 900; font-style:normal; font-display:swap}
-@font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk-italic.woff2") format("woff2"); font-weight:100 900; font-style:italic; font-display:swap}
-@font-face{font-family:"Kilon"; src:url("fonts/kilon.woff2") format("woff2"),url("fonts/kilon.woff") format("woff"); font-weight:100 900; font-style:normal; font-display:swap}
+@font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk-italic.woff2") format("woff2"); font-weight:400; font-style:italic; font-display:swap}
+@font-face{font-family:"Kilon"; src:url("fonts/kilon.woff2") format("woff2"),url("fonts/kilon.woff") format("woff"); font-weight:400; font-style:normal; font-display:swap}
 @font-face{font-family:"Conso"; src:url("fonts/conso-regular.woff2") format("woff2"),url("fonts/conso-regular.woff") format("woff"); font-weight:400; font-style:normal; font-display:swap}
 @font-face{font-family:"Conso"; src:url("fonts/conso-regularitalic.woff2") format("woff2"),url("fonts/conso-regularitalic.woff") format("woff"); font-weight:400; font-style:italic; font-display:swap}
 @font-face{font-family:"Conso"; src:url("fonts/conso-medium.woff2") format("woff2"),url("fonts/conso-medium.woff") format("woff"); font-weight:500; font-style:normal; font-display:swap}
@@ -44,7 +44,7 @@ body{max-width:100%;overflow-x:clip}
   --brand-display:"Telos Display","Kilon",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --display:"Kilon",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --body:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --mono:"JetBrains Mono","SFMono-Regular","Courier New",monospace;
+  --mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
 }
 
 *{box-sizing:border-box}
@@ -80,13 +80,13 @@ body.doc{
 
 /* ── masthead ──────────────────────────────────────────────────────────── */
 .mast{border-bottom:2px solid var(--teal);padding-bottom:1.15rem;margin-bottom:1.6rem}
-.mast h1{font-family:var(--display);font-weight:700;
+.mast h1{font-family:var(--display);font-weight:700;text-wrap:balance;
   font-size:clamp(2.2rem,1.4rem + 3vw,3.4rem);line-height:1.0;letter-spacing:0;
   margin:0 0 .55rem;color:var(--ink)}
 .mast .role{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:.94rem;
   letter-spacing:0;text-transform:none;color:var(--ink-soft);margin:0 0 .85rem;
   line-height:1.6}
-.mast .contact{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.72rem;
+.mast .contact{font-family:var(--mono);font-size:.72rem;
   letter-spacing:.02em;color:var(--ink-soft);line-height:1.9;margin:0;
   display:flex;flex-wrap:wrap;gap:.2rem 1.05rem}
 .mast .contact a{color:var(--teal-soft);text-decoration:none;
@@ -96,13 +96,13 @@ body.doc{
 
 /* ── sections ──────────────────────────────────────────────────────────── */
 section{margin:1.7rem 0 0}
-h2{font-family:var(--display);font-size:clamp(1.22rem,1.05rem + .68vw,1.62rem);
+h2{font-family:var(--display);text-wrap:balance;font-size:clamp(1.22rem,1.05rem + .68vw,1.62rem);
   font-weight:700;letter-spacing:0;text-transform:none;color:var(--ink);
   margin:0 0 .85rem;padding-bottom:0;border-bottom:0;
   display:block;line-height:1.12}
 h2::after{display:none}
 
-.lead{font-size:clamp(1.08rem,1rem + .5vw,1.34rem);line-height:1.56;color:var(--ink);margin:0 0 .2rem;max-width:64ch}
+.lead{font-size:clamp(1.08rem,1rem + .5vw,1.34rem);line-height:1.56;color:var(--ink);margin:0 0 .2rem;max-width:64ch;text-wrap:pretty}
 .lead b,.lead strong{color:var(--teal);font-weight:600}
 
 /* entries: role/title + meta on the right, then bullets */
@@ -113,7 +113,7 @@ h2::after{display:none}
 .entry-title{font-family:var(--display);font-weight:600;
   font-size:1.12rem;letter-spacing:0;color:var(--ink)}
 .entry-title .org{color:var(--teal-soft);font-weight:500}
-.entry-meta{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.7rem;
+.entry-meta{font-family:var(--mono);font-size:.7rem;
   letter-spacing:.06em;text-transform:uppercase;color:var(--ember);white-space:nowrap}
 .entry-note{font-family:var(--body);font-style:italic;color:var(--ink-soft);
   font-size:.96rem;margin:.1rem 0 .4rem}
@@ -124,26 +124,26 @@ ul.bul li{position:relative;padding-left:1.15rem;margin:0 0 .4rem;line-height:1.
 ul.bul li::before{content:"";position:absolute;left:.05rem;top:.62em;
   width:.34rem;height:.34rem;background:var(--teal);border-radius:50%}
 ul.bul li b{color:var(--teal);font-weight:600}
-ul.bul .num{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.92em;
+ul.bul .num{font-family:var(--mono);font-size:.92em;
   color:var(--ember);font-weight:600}
 
 /* skills / two-column key-value grid */
 .kv{display:grid;grid-template-columns:minmax(8rem,11rem) 1fr;gap:.55rem 1.4rem;margin:.2rem 0 0}
-.kv dt{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.62rem;
+.kv dt{font-family:var(--mono);font-size:.62rem;
   letter-spacing:.14em;text-transform:uppercase;color:var(--tag);padding-top:.18em}
 .kv dd{margin:0;line-height:1.5}
-.kv dd .t{display:inline-block;font-family:"JetBrains Mono",ui-monospace,monospace;
+.kv dd .t{display:inline-block;font-family:var(--mono);
   font-size:.78rem;color:var(--ink);background:#f3f4f0;border:1px solid var(--rule);
   border-radius:3px;padding:.08em .5em;margin:0 .25rem .3rem 0}
 
 /* receipts strip */
 .receipts{display:flex;flex-wrap:wrap;gap:.5rem .7rem;margin:.3rem 0 0}
-.receipts .r{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.7rem;
+.receipts .r{font-family:var(--mono);font-size:.7rem;
   letter-spacing:.02em;color:var(--ink);background:#f4f5f1;border:1px solid var(--rule);
   border-radius:3px;padding:.32em .6em}
 .receipts .r b{color:var(--teal);font-weight:600}
 
-.note{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.63rem;
+.note{font-family:var(--mono);font-size:.63rem;
   letter-spacing:.05em;color:var(--tag);line-height:1.8;margin:1.4rem 0 0;
   padding-top:.9rem;border-top:1px solid var(--rule)}
 a.inline{color:var(--teal-soft);text-decoration:none;border-bottom:1px solid rgba(70,54,232,.34)}
@@ -221,7 +221,7 @@ body.doc{
   backdrop-filter:blur(18px) saturate(1.28);
 }
 .site-nav .sn-home{
-  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-family:var(--mono);
   font-size:.66rem;
   letter-spacing:.16em;
   text-transform:uppercase;
@@ -285,7 +285,7 @@ body.doc::after{
 body.doc.generative-host{
   isolation:isolate;
 }
-body.doc.generative-host > :not(#gl):not(#motes){
+body.doc.generative-host > :not(#gl):not(#motes):not(.skip-link){
   position:relative;
   z-index:2;
 }
@@ -433,8 +433,8 @@ a.inline:hover{
 
 /* ── FOUNDATION (2026-06-21): skip-link, keyboard focus, touch targets ────── */
 .skip-link{position:absolute;left:.5rem;top:-3.5rem;z-index:30;
-  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.66rem;letter-spacing:.14em;
-  text-transform:uppercase;color:#fff;background:var(--teal);padding:.55rem .9rem;
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--page,#0b0c0e);background:var(--teal);padding:.55rem .9rem;
   border-radius:3px;text-decoration:none;transition:top .18s ease;
   width:max-content;max-width:calc(100vw - 1rem);box-sizing:border-box}
 .skip-link:focus{top:.6rem;outline:2px solid var(--ember);outline-offset:2px}
@@ -465,7 +465,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--teal-soft);outline-
   gap:.65rem;
   flex:0 0 auto;
   min-height:2.75rem;
-  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-family:var(--mono);
   font-size:clamp(.92rem,.84rem + .18vw,1.04rem);
   line-height:1;
   letter-spacing:.14em;
@@ -560,7 +560,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--teal-soft);outline-
 }
 .site-nav .sn-menu-label{
   margin:.12rem .68rem .02rem;
-  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-family:var(--mono);
   font-size:.62rem;
   line-height:1.2;
   letter-spacing:.1em;

@@ -1,4 +1,5 @@
 import { mountGenerativeField } from "./generative-field.js";
+import { MORE } from "./nav.js";
 
 function setText(el, text) {
   if (el && el.textContent !== text) el.textContent = text;
@@ -71,6 +72,18 @@ function upgradeHomeMenu(doc) {
     const clone = link.cloneNode(true);
     clone.removeAttribute("class");
     list.appendChild(clone);
+  });
+  // The rest of the site taxonomy, from the same source of truth as the
+  // static-page nav, so home and static menus agree on what exists.
+  const moreLabel = doc.createElement("p");
+  moreLabel.className = "home-menu-label";
+  moreLabel.textContent = "More pages";
+  list.appendChild(moreLabel);
+  MORE.forEach(([label, href]) => {
+    const link = doc.createElement("a");
+    link.href = href;
+    link.textContent = label;
+    list.appendChild(link);
   });
   details.appendChild(list);
   nav.appendChild(details);
@@ -166,21 +179,9 @@ function keepHeroCopySettled(doc) {
   window.setTimeout(() => observer.disconnect(), 3000);
 }
 
-function placeFieldInHero(doc) {
-  const hero = doc.querySelector(".hero");
-  const scene = doc.getElementById("gl");
-  const motes = doc.getElementById("motes");
-  if (!hero || !scene || scene.closest(".hero")) return;
-
-  const anchor = hero.querySelector(".hero-glow") || hero.firstChild;
-  scene.classList.add("home-fluid-canvas");
-  hero.insertBefore(scene, anchor);
-  if (motes) {
-    motes.classList.add("home-fluid-motes");
-    hero.insertBefore(motes, anchor);
-  }
-}
-
+// One field owns the hero: the bundle's flow-field particle canvas. The shared
+// generative field stays a fixed page background behind everything, so the two
+// systems never stack inside the same fold.
 function bootHomeArt() {
   if (!document.body) return;
   document.body.classList.add("home-generative-field");
@@ -190,7 +191,6 @@ function bootHomeArt() {
     document.documentElement.classList.add("generative-field-failed");
   }).then(() => {
     keepHeroCopySettled(document);
-    placeFieldInHero(document);
   });
 }
 
