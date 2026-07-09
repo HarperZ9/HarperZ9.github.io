@@ -170,9 +170,11 @@ body.home-generative-field .hero > #motes.generative-motes-canvas{
 }
 
 .home-menu{
-  display:none;
+  /* Visible at every width: the site taxonomy must be reachable from the
+     home nav on desktop too, matching the static pages' Menu. */
+  display:block;
   position:relative;
-  margin-left:auto;
+  margin-left:.4rem;
 }
 
 .home-menu summary{
@@ -245,6 +247,17 @@ body.home-generative-field .hero > #motes.generative-motes-canvas{
 
 .home-menu:not([open]) .home-menu-list{
   display:none;
+}
+
+.home-menu-label{
+  margin:.55rem 0 .1rem;
+  padding:.55rem .72rem 0;
+  border-top:1px solid color-mix(in oklab, var(--ink) 14%, transparent);
+  font-family:var(--font-mono, ui-monospace, monospace);
+  font-size:.62rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:color-mix(in oklab, var(--ink) 55%, transparent);
 }
 
 .home-menu-list a{
@@ -513,7 +526,7 @@ body.home-generative-field .hero > #motes.generative-motes-canvas{
 
   .brand{
     font-size:clamp(.96rem,4.7vw,1.18rem);
-    letter-spacing:.10em;
+    letter-spacing:0;
   }
 
   body.home-generative-field::before{
@@ -596,3 +609,10 @@ body.home-generative-field .hero > #motes.generative-motes-canvas{
     opacity:.28;
   }
 }
+
+/* ── reveal robustness ────────────────────────────────────────────────────
+   Content is never opacity-gated on the reveal observer. The resting state
+   stays fully visible (print, no-JS-after-boot, headless, missed
+   IntersectionObserver); the entrance reads as a transform-only settle.
+   Overrides the bundle's opacity:0 resting state; this sheet loads after it. */
+html.js .reveal:not(.in){opacity:1;transform:translateY(14px)}

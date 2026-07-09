@@ -10,7 +10,8 @@ const get = p => new Promise(r => { const req = http.get(BASE + p, res => { res.
 const getBody = p => new Promise(r => { const req = http.get(BASE + p, res => { let d=""; res.on("data",c=>d+=c); res.on("end",()=>r(d)); }); req.on("error",()=>r("")); req.setTimeout(4000,()=>{req.destroy();r("");}); });
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const walk = dir => fs.readdirSync(dir, { withFileTypes: true }).flatMap(e =>
-  e.name.startsWith(".") || e.name === "node_modules" ? []
+  // `home` is the source tree for the built root index.html, not a shipped page.
+  e.name.startsWith(".") || e.name === "node_modules" || (e.name === "home" && dir === ROOT.replace(/[\\/]$/, "")) || path.join(dir, e.name) === path.join(ROOT, "home") ? []
   : e.isDirectory() ? walk(path.join(dir, e.name))
   : e.name.endsWith(".html") ? [path.relative(ROOT, path.join(dir, e.name)).replaceAll(path.sep, "/")]
   : []);

@@ -26,6 +26,14 @@ function ensureCanvas(doc, id, className, after) {
   canvas.classList.add(className);
   canvas.setAttribute("aria-hidden", "true");
   canvas.style.display = "block";
+  // Safe inline defaults so pages without the shared stylesheets never get an
+  // unpositioned full-size canvas pushing their content down. Every styled
+  // placement uses the same fixed/inset:0 geometry, so these inline values
+  // agree with the stylesheets rather than fighting them.
+  canvas.style.position = "fixed";
+  canvas.style.inset = "0";
+  canvas.style.zIndex = "0";
+  canvas.style.pointerEvents = "none";
   return canvas;
 }
 
@@ -670,7 +678,9 @@ function startEngine(scene, motes) {
     updatePointer(event);
     addPulse(pointerState.x, pointerState.y, pointerState.last);
   };
-  const onScroll = () => markInteraction(performance.now());
+  // Scroll deliberately does NOT mark interaction: flipping to the fast redraw
+  // cadence exactly when the main thread is busiest (scrolling) costs frames
+  // where they hurt most. The idle cadence keeps drifting underneath.
   const onKeyDown = () => {
     const tick = performance.now();
     addPulse(0.5 + Math.sin(tick * 0.003 + seed) * 0.18, 0.52 + Math.cos(tick * 0.002 + seed) * 0.12, tick);
@@ -679,7 +689,6 @@ function startEngine(scene, motes) {
 
   window.addEventListener("pointermove", onPointerMove, { passive: true });
   window.addEventListener("pointerdown", onPointerDown, { passive: true });
-  window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("keydown", onKeyDown);
   window.addEventListener("resize", () => render(performance.now()), { passive: true });
   document.addEventListener("visibilitychange", () => {

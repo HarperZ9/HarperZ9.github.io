@@ -43,7 +43,7 @@ def test_studio_surfaces_project_telos_feature_stack() -> None:
 
 def test_studio_has_menuized_renderer_manipulation_controls() -> None:
     src = studio_source()
-    for section in ("Create", "Observe", "Verify", "Model transforms", "Palette &amp; detail", "4D+ rotation"):
+    for section in ("Make", "Bring", "Measure", "Model transforms", "Palette &amp; detail", "4D+ rotation"):
         assert section in src
     for control_id in (
         "studio-transforms",
