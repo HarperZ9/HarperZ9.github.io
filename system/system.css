@@ -2364,3 +2364,270 @@ section.mv{
     min-width:5.5rem;
   }
 }
+
+/* Media-first Studio redesign: canvas and measured perception lead the page. */
+.studio-media-first{
+  grid-template-columns:minmax(12rem,18rem) minmax(0,1fr) minmax(18rem,24rem);
+  gap:0;
+  background:
+    radial-gradient(90% 120% at 50% 10%, color-mix(in oklab, var(--signal) 11%, transparent), transparent 62%),
+    color-mix(in oklab, var(--void) 94%, black);
+}
+
+.studio-media-first .studio-rail{
+  background:color-mix(in oklab, var(--void) 64%, transparent);
+  border-right:1px solid var(--hairline);
+}
+
+.studio-media-first .rail-head{
+  padding:clamp(.85rem,1.4vw,1.1rem);
+}
+
+.studio-media-first .rail-head h1{
+  font-size:clamp(1.05rem,1.4vw,1.35rem);
+  letter-spacing:0;
+}
+
+.studio-media-first .rail-lede{
+  max-width:24ch;
+  font-size:.86rem;
+  line-height:1.45;
+  color:var(--muted);
+}
+
+.studio-media-first .rail-own{
+  margin:.35rem clamp(.75rem,1.4vw,1rem) .55rem;
+  color:var(--faint);
+}
+
+.studio-media-first .rail-scroll{
+  padding:0 clamp(.75rem,1.4vw,1rem) 1rem;
+}
+
+.studio-media-first .studio-mode-strip{
+  padding:.35rem clamp(.75rem,1.4vw,1rem) .55rem;
+  gap:.45rem;
+}
+
+.studio-media-first .source-group{
+  grid-template-columns:1fr;
+  gap:.32rem;
+}
+
+.studio-media-first .source-group-label{
+  margin-bottom:.1rem;
+  color:var(--signal);
+}
+
+.studio-media-first .source-menu button{
+  justify-content:flex-start;
+  min-height:2.5rem;
+  padding:.58rem .65rem;
+  font-size:.62rem;
+  color:var(--bone);
+  background:color-mix(in oklab, var(--void) 82%, var(--signal) 4%);
+  border-color:color-mix(in oklab, var(--hairline) 78%, transparent);
+}
+
+.studio-media-first .source-menu button:not([aria-selected="true"]){
+  color:color-mix(in oklab, var(--bone) 78%, var(--muted));
+  background:color-mix(in oklab, var(--void) 86%, white 4%);
+}
+
+.studio-media-first .source-menu button[aria-selected="true"]{
+  color:var(--bone);
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--signal) 18%, transparent), transparent),
+    color-mix(in oklab, var(--void) 70%, black);
+}
+
+.studio-primary-stage{
+  padding:clamp(.75rem,1.5vw,1.1rem);
+  gap:.65rem;
+}
+
+.studio-primary-stage .viewport-stage{
+  flex:1 1 auto;
+  width:100%;
+  min-height:min(68vh,calc(100dvh - 13rem));
+  max-width:none;
+  border-radius:10px;
+  background:color-mix(in oklab, var(--void) 92%, black);
+  box-shadow:0 30px 120px -70px rgba(0,0,0,.95),0 0 0 1px var(--hairline);
+}
+
+.studio-primary-stage .render-toolbar{
+  max-width:min(100%,58rem);
+  padding:.35rem;
+  border:1px solid var(--hairline);
+  border-radius:10px;
+  background:color-mix(in oklab, var(--void) 68%, transparent);
+}
+
+.studio-primary-stage .rt-btn{
+  min-height:2.5rem;
+  padding:.48rem .64rem;
+  font-size:.58rem;
+  color:var(--bone);
+  background:color-mix(in oklab, var(--void) 78%, transparent);
+  border-color:var(--hairline);
+}
+
+.studio-primary-stage .rt-btn:disabled{
+  color:var(--muted);
+  background:color-mix(in oklab, var(--void) 72%, white 3%);
+  opacity:.68;
+}
+
+.studio-primary-stage .engine-statusbar{
+  max-width:min(100%,58rem);
+  opacity:.82;
+}
+
+.studio-perception-panel{
+  background:color-mix(in oklab, var(--void) 58%, transparent);
+}
+
+.studio-perception-panel .panel-scroll{
+  display:flex;
+  flex-direction:column;
+  gap:.75rem;
+  padding:clamp(.85rem,1.5vw,1.05rem);
+}
+
+.studio-perception-panel .panel{
+  border-radius:10px;
+  background:color-mix(in oklab, var(--void) 72%, transparent);
+}
+
+.studio-perception-panel .panel h2{
+  font-size:clamp(.92rem,1vw,1.08rem);
+  line-height:1.25;
+}
+
+.studio-media-first .rail-group{
+  background:color-mix(in oklab, var(--void) 72%, transparent);
+  border-color:var(--hairline);
+}
+
+.studio-media-first .rail-group>summary{
+  color:var(--bone);
+}
+
+.studio-media-first .at-glab,
+.studio-media-first .hint,
+.studio-media-first .src-hint{
+  color:var(--muted);
+}
+
+.studio-media-first .rail-scroll .btn,
+.studio-media-first .rail-scroll .at-chip,
+.studio-media-first .rail-scroll .at-mini{
+  color:var(--bone);
+  background:color-mix(in oklab, var(--void) 78%, transparent);
+  border-color:var(--hairline);
+}
+
+.studio-media-first .rail-scroll .at-chip[aria-pressed="true"],
+.studio-media-first .rail-scroll .at-chip.is-active{
+  color:var(--bone);
+  background:
+    linear-gradient(135deg, color-mix(in oklab, var(--signal) 22%, transparent), color-mix(in oklab, var(--violet) 14%, transparent)),
+    color-mix(in oklab, var(--void) 68%, black);
+  border-color:var(--signal);
+}
+
+.studio-receipts{
+  border:1px solid var(--hairline);
+  border-radius:10px;
+  background:color-mix(in oklab, var(--void) 64%, transparent);
+  overflow:hidden;
+}
+
+.studio-receipts>summary{
+  min-height:2.65rem;
+  padding:.7rem .85rem;
+  cursor:pointer;
+  list-style:none;
+  font-family:var(--mono);
+  font-size:.62rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--signal);
+}
+
+.studio-receipts>summary::-webkit-details-marker{display:none}
+.studio-receipts>summary::after{content:"+";float:right;color:var(--muted)}
+.studio-receipts[open]>summary::after{content:"-"}
+.studio-receipts:not([open])>*:not(summary){display:none}
+
+.studio-receipts .panel{
+  border:0;
+  border-top:1px solid var(--hairline);
+  border-radius:0;
+}
+
+.studio-chat-drawer{
+  border-top:1px solid var(--hairline);
+  background:color-mix(in oklab, var(--void) 70%, transparent);
+}
+
+.studio-chat-drawer.minimized .chat-dock-body{
+  display:none;
+}
+
+.studio-chat-drawer .chat-dock-head{
+  min-height:2.7rem;
+}
+
+.studio-media-first .at-mini,
+.studio-chat-drawer .chat-min,
+.studio-primary-stage .tp-rotv_b{
+  min-width:2.5rem;
+  min-height:2.5rem;
+}
+
+.studio-primary-stage .tp-rotv_b{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+@media (max-width:899.98px){
+  .studio-media-first{
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+  }
+  .studio-media-first .studio-rail{
+    order:1;
+    border-right:0;
+    border-bottom:1px solid var(--hairline);
+  }
+  .studio-media-first .studio-mode-strip{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    overflow:visible;
+    padding-bottom:.65rem;
+  }
+  .studio-media-first .source-group{
+    min-width:0;
+  }
+  .studio-primary-stage{
+    order:2;
+    min-height:70svh;
+  }
+  .studio-primary-stage .viewport-stage{
+    min-height:min(62svh,34rem);
+  }
+  .studio-perception-panel{
+    order:3;
+  }
+  .studio-perception-panel .panel-scroll{
+    max-height:none;
+    overflow:visible;
+  }
+  .studio-chat-drawer{
+    order:4;
+  }
+}

@@ -53,6 +53,50 @@ window.__studioValidateGraphPackage = validateGraphPackage;
 // Showcase debug/test surface (wave 1 stubs; wave 2 swaps in the real report/verdict/recheck).
 window.__studioShowcase = { report: showcaseReport, verdict: showcaseVerdict, recheck: recheckShowcase };
 
+function slugStudioFieldName(value, fallback) {
+  return String(value || fallback || "control")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 48) || "control";
+}
+
+function normaliseStudioFieldNames(root = document) {
+  if (!root || !root.querySelectorAll) return;
+  const fields = root.querySelectorAll(".studio-app input, .studio-app select, .studio-app textarea");
+  fields.forEach((field, index) => {
+    if (field.id || field.name) return;
+    const label =
+      field.getAttribute("aria-label") ||
+      field.closest("[aria-label]")?.getAttribute("aria-label") ||
+      field.closest("label")?.textContent ||
+      field.closest(".tp-lblv")?.querySelector(".tp-lblv_l")?.textContent ||
+      field.getAttribute("type") ||
+      field.tagName.toLowerCase();
+    field.name = "studio-" + slugStudioFieldName(label, field.tagName) + "-" + index;
+  });
+}
+
+function bootStudioFieldNameObserver() {
+  const app = document.querySelector(".studio-app");
+  if (!app) return;
+  normaliseStudioFieldNames(app);
+  const observer = new MutationObserver((mutations) => {
+    if (mutations.some((mutation) => mutation.addedNodes.length > 0)) {
+      normaliseStudioFieldNames(app);
+    }
+  });
+  observer.observe(app, { childList: true, subtree: true });
+}
+
+if (typeof document !== "undefined") {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootStudioFieldNameObserver, { once: true });
+  } else {
+    bootStudioFieldNameObserver();
+  }
+}
+
 async function bootEngineStatus() {
   const set = (id, text) => { const el = $(id); if (el) el.textContent = text; };
   try {

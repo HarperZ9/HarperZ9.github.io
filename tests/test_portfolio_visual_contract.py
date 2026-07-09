@@ -35,6 +35,7 @@ ORCA = ROOT / "orca.html"
 ALEPH_HERO = ROOT / "img" / "private-line" / "aleph-hero.svg"
 OVERVIEW = ROOT / "overview.html"
 CATALOG = ROOT / "catalog.html"
+STUDIO = ROOT / "studio.html"
 
 EM_DASH = "\u2014"
 EN_DASH = "\u2013"
@@ -208,6 +209,27 @@ def test_typeface_specimen_is_a_connected_public_surface() -> None:
     assert ".synthesis-row" in css
     assert ".glyph-grid" in css
     assert ".typeface-field" in css
+
+
+def test_studio_is_media_first_not_certificate_first() -> None:
+    studio = STUDIO.read_text(encoding="utf-8")
+    css = system_css_source()
+
+    assert 'class="studio-app studio-media-first"' in studio
+    assert 'class="source-menu studio-mode-strip"' in studio
+    assert 'class="studio-viewport studio-primary-stage"' in studio
+    assert 'class="studio-panel studio-perception-panel"' in studio
+    assert 'class="studio-receipts"' in studio
+    assert studio.index('id="sc-meters"') < studio.index('id="sc-certificate"')
+    assert studio.index('id="sc-certificate"') < studio.index('id="project-telos-features"')
+    assert "What the model sees" not in studio
+    assert "Live Perception" in studio
+    assert ".studio-media-first" in css
+    assert ".studio-receipts[open]" in css
+    assert "grid-template-columns:minmax(12rem,18rem) minmax(0,1fr) minmax(18rem,24rem)" in css
+    assert ".studio-primary-stage .viewport-stage" in css
+    assert ".studio-chat-drawer.minimized .chat-dock-body" in css
+    assert "@media (max-width:899.98px)" in css
 
 
 def test_live_spectrum_hero_is_wired() -> None:
