@@ -4,21 +4,21 @@
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Studio &middot; Project Telos, the engine &middot; Zain Dana Harper</title>
-<meta name="description" content="The Studio is the live surface of Project Telos, the engine. A person and a model perceive the same thing, generate, and verify it together, step by step. The published telos repo is the small runnable demo of the same loop; this site is its testbench.">
+<title>The Studio &middot; Live media instrument &middot; Zain Dana Harper</title>
+<meta name="description" content="The Studio is a live media instrument for rendering, measuring, transforming, and reading the frame. Bring a source, generate a field, watch the perception channels, and keep receipts available when evidence is useful.">
 <link rel="canonical" href="https://harperz9.github.io/studio.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="The Studio &middot; Project Telos, the engine &middot; Zain Dana Harper">
-<meta property="og:description" content="The Studio is the live surface of Project Telos, the engine. A person and a model perceive the same thing, generate, and verify it together, step by step.">
+<meta property="og:title" content="The Studio &middot; Live media instrument &middot; Zain Dana Harper">
+<meta property="og:description" content="Render media, measure the frame, transform sources, and keep receipts available when evidence is useful.">
 <meta property="og:url" content="https://harperz9.github.io/studio.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
 <meta property="og:image:alt" content="Project Telos flagship card: Telos, the engine. See it and shape it, together with a model.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The Studio &middot; Project Telos, the engine &middot; Zain Dana Harper">
-<meta name="twitter:description" content="The Studio is the live surface of Project Telos, the engine. A person and a model perceive the same thing, generate, and verify it together, step by step.">
+<meta name="twitter:title" content="The Studio &middot; Live media instrument &middot; Zain Dana Harper">
+<meta name="twitter:description" content="Render media, measure the frame, transform sources, and keep receipts available when evidence is useful.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
-<link rel="stylesheet" href="system/system.css?v=20260709h">
+<link rel="stylesheet" href="system/system.css?v=20260709i">
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
@@ -34,37 +34,37 @@
 <!-- The Studio app shell: one viewport, menu-driven. On desktop (≥900px) this is a fixed-height
      CSS grid (rail · canvas · panel) and the PAGE never scrolls; each region scrolls inside itself.
      Below 900px it collapses to a single column and normal page scroll returns. -->
-<main class="studio-app" aria-label="The Studio">
+<main class="studio-app studio-media-first" aria-label="The Studio">
 
   <!-- ── LEFT RAIL: source menu + the active source's controls ───────────────────────── -->
-  <aside class="studio-rail" id="studio-rail" aria-label="Source &amp; controls">
+  <aside class="studio-rail" id="studio-rail" aria-label="Media sources and controls">
     <div class="rail-head">
       <h1 translate="no">The Studio</h1>
-      <p class="rail-lede"><span translate="no">Project Telos</span>, the engine. A person and a model perceive the same thing, generate, and verify it together, step by step. The <a href="https://github.com/HarperZ9/telos" style="color:inherit;border-bottom:1px solid rgba(58,43,214,.4);text-decoration:none">published <span translate="no">telos</span> repo</a> is the small runnable demo of the same loop. This is the engine running live.</p>
+      <p class="rail-lede">A live media instrument for rendering, measuring, transforming, and reading the frame.</p>
     </div>
 
     <!-- The source menu: pick what the model looks at. setSource(name) shows ONLY that block. -->
-    <div class="source-menu" id="studio-source" role="tablist" aria-label="Choose a source">
+    <div class="source-menu studio-mode-strip" id="studio-source" role="tablist" aria-label="Choose a media source">
       <div class="source-group" role="presentation">
-        <span class="source-group-label" aria-hidden="true">Create</span>
+        <span class="source-group-label" aria-hidden="true">Make</span>
         <button type="button" role="tab" data-source="atelier"  aria-selected="true"  aria-controls="src-atelier"   tabindex="0">Atelier</button>
         <button type="button" role="tab" data-source="fractal"   aria-selected="false" aria-controls="src-fractal"   tabindex="-1">2D Fractal</button>
         <button type="button" role="tab" data-source="fractal3d" aria-selected="false" aria-controls="src-fractal3d" tabindex="-1">3D Fractal</button>
         <button type="button" role="tab" data-source="ndim"      aria-selected="false" aria-controls="src-ndim"      tabindex="-1">Dimensions</button>
       </div>
       <div class="source-group" role="presentation">
-        <span class="source-group-label" aria-hidden="true">Observe</span>
+        <span class="source-group-label" aria-hidden="true">Bring</span>
         <button type="button" role="tab" data-source="byo"       aria-selected="false" aria-controls="src-byo"       tabindex="-1">Bring your own</button>
         <button type="button" role="tab" data-source="watch"     aria-selected="false" aria-controls="src-watch"     tabindex="-1">Watch with me</button>
         <button type="button" role="tab" data-source="music"     aria-selected="false" aria-controls="src-music"     tabindex="-1">Music</button>
       </div>
       <div class="source-group" role="presentation">
-        <span class="source-group-label" aria-hidden="true">Verify</span>
+        <span class="source-group-label" aria-hidden="true">Measure</span>
         <button type="button" role="tab" data-source="discovery" aria-selected="false" aria-controls="src-discovery" tabindex="-1">Physics</button>
         <button type="button" role="tab" data-source="showcase" aria-selected="false" aria-controls="src-showcase" tabindex="-1">Showcase</button>
       </div>
     </div>
-    <p class="rail-own">Bring your own image or video. Open <b>Bring your own</b> (drop a file) or feed one to the Atelier as a specimen.</p>
+    <p class="rail-own">Start with a source, then open only the controls you need.</p>
 
     <div class="rail-scroll">
       <!-- SOURCE: Atelier (Task 7). boot() finds #atelier and, since there is no #at-canvas here,
@@ -563,14 +563,14 @@
       </section>
 
       <details class="rail-group rail-about">
-        <summary>About the <span translate="no">Studio</span> and <span translate="no">Project Telos</span></summary>
-        <p>This is the live surface of <span translate="no">Project Telos</span>, the engine. <span translate="no">Telos</span> is the thesis made tangible: a person and a model stand before the same witnessed frame, generate from it, transform it, and verify every step together. Bring your own image, video, audio, OBJ, GLTF, PLY, CSV, or JSON; render Atelier studies, 2D and 3D fractals, nD geometry, sound-reactive visuals, physics discovery runs, and the First Integral showcase, a live Kepler orbit that fits its own conserved quantity and re-checks the result as <span translate="no">MATCH</span>, <span translate="no">DRIFT</span>, or <span translate="no">UNVERIFIABLE</span>; then export pixels, perception JSON, OBJ, GLTF, or witnessed artifacts. The right panel shows what the model is given: frame, fingerprint, colours, channels, receipts, and the five-flagship stack feeding the work. In the Showcase source a connected model receives the identical readout the scene announces aloud, so a person and a model read the same seed, invariant, and verdict.</p>
+        <summary>Studio notes</summary>
+        <p>Render media, watch the measurements move, and export the frame or perception record. Receipts remain available when a source produces checkable evidence.</p>
       </details>
     </div>
   </aside>
 
   <!-- ── CENTRE: the canvas viewport (the hero) + a slim render toolbar ───────────────── -->
-  <section class="studio-viewport" id="studio-viewport" aria-label="The frame">
+  <section class="studio-viewport studio-primary-stage" id="studio-viewport" aria-label="The live media frame">
     <div class="viewport-stage stage" id="viewport-stage">
       <canvas id="studio-canvas" width="360" height="360"
         role="img" aria-label="The live render canvas. The measurimeter panel on the right describes what the model currently perceives."
@@ -646,11 +646,11 @@
     </div>
   </section>
 
-  <!-- ── RIGHT PANEL: what the model sees (top) + the chat (fills the rest, scrolls inside) ─ -->
-  <aside class="studio-panel" id="studio-panel" aria-label="What the model sees, and the chat">
+  <!-- RIGHT PANEL: live perception, measured channels, receipts, and secondary chat. -->
+  <aside class="studio-panel studio-perception-panel" id="studio-panel" aria-label="Live perception and receipts">
     <div class="panel-scroll">
-      <section class="panel" id="studio-frame" aria-label="What the model sees">
-        <h2>What the model sees
+      <section class="panel" id="studio-frame" aria-label="Live perception summary">
+        <h2>Live Perception
           <span class="mm-live" id="mm-live" hidden aria-hidden="true"><span class="mm-dot"></span>live</span></h2>
         <div class="row"><span class="rk">perceptual hash</span><span class="rv" id="sc-phash" aria-live="polite" aria-label="Perceptual hash">-</span></div>
         <div class="row"><span class="rk">size</span><span class="rv" id="sc-size">-</span></div>
@@ -662,8 +662,8 @@
       <!-- The MEASURIMETER (Task 8d): every channel the tooling feeds the model. The faithful n×n
            representation, per-channel meters, a motion sparkline, dominant-colour swatches, and (when
            the source has sound) audio level / spectrum / pitch. Streams via a throttled rAF loop. -->
-      <section class="panel measurimeter" id="sc-meters" aria-label="The measurimeter: everything the model senses now">
-        <h2>The measurimeter <span class="mm-sub">everything fed to the model, live</span></h2>
+      <section class="panel measurimeter" id="sc-meters" aria-label="Measured perception channels">
+        <h2>Measured frame <span class="mm-sub">color, motion, structure, audio, source</span></h2>
         <div class="mm-grid">
           <div class="mm-col mm-col-repr">
             <div class="mm-clab" id="mm-lab-mosaic">colour grid <span class="mm-hint">box-averaged, faithful downscale</span></div>
@@ -691,15 +691,18 @@
         </div>
       </section>
 
-      <!-- The WITNESSED CERTIFICATE (verdict-diff): the named criterion, the verdict as a state chip,
+      <details class="studio-receipts">
+        <summary>Receipts</summary>
+
+      <!-- Receipts (verdict-diff): the named criterion, the verdict as a state chip,
            and the re-checkable evidence, rendered BEFORE the model's prose. Accept / reject / dispute
            is one click; UNVERIFIABLE and DISPUTED are the most visually distinct states; recheck
            reproduces the verdict live from the certificate's own evidence. Below it, the append-only
            audit trail (IndexedDB) replays every certificate issued and every operator action stamped.
            studio.js builds a real certificate (certificate.js) from the live reconcile and renders it
            here via certificate-panel.js; nothing is faked. -->
-      <section class="panel cert-panel" id="sc-certificate" aria-label="The witnessed certificate: criterion, verdict, and re-checkable evidence">
-        <h2>The witnessed certificate <span class="mm-sub">criterion, verdict, evidence, before the prose</span></h2>
+      <section class="panel cert-panel" id="sc-certificate" aria-label="Receipts: criterion, verdict, and re-checkable evidence">
+        <h2>Receipt <span class="mm-sub">criterion, verdict, evidence</span></h2>
         <div id="cert-render"></div>
         <div class="cert-audit" id="cert-audit">
           <div class="cert-audit-head"><span>audit trail <span class="mm-hint">append-only, newest first</span></span><span class="cert-audit-count" id="cert-audit-count"></span></div>
@@ -709,7 +712,7 @@
       </section>
 
       <section class="panel telos-stack" id="project-telos-features" aria-label="Project Telos feature stack">
-        <h2>Project Telos feature stack <span class="mm-sub">the runnable contracts behind the Studio</span></h2>
+        <h2>Engine contracts <span class="mm-sub">runnable pieces behind this Studio</span></h2>
         <p class="feature-intro">The Studio is the browser surface. The larger Telos stack now carries the repo contracts that make agent work portable, inspectable, and reusable across CLI, MCP, IDE, TUI, and app surfaces.</p>
         <div class="feature-stack-grid">
           <article>
@@ -751,15 +754,16 @@
           <a href="docs/superpowers/plans/2026-06-28-telos-universal-media-engine.md">Engine assembly</a>
         </div>
       </section>
+      </details>
     </div>
 
     <!-- The chat dock: first-class, minimizable. #studio-log scrolls inside its own box; the chips +
          the free-text input let you actually talk to the model. -->
-    <section class="chat-dock" id="chat-dock" aria-label="Talk to the model">
+    <section class="chat-dock studio-chat-drawer minimized" id="chat-dock" aria-label="Ask about the frame">
       <div class="chat-dock-head">
-        <h2>Talk to the model</h2>
-        <button class="chat-min" id="chat-min" type="button" aria-expanded="true" aria-controls="chat-body"
-          title="Minimize the chat">&minus;</button>
+        <h2>Ask about the frame</h2>
+        <button class="chat-min" id="chat-min" type="button" aria-expanded="false" aria-controls="chat-body"
+          title="Expand the chat">+</button>
       </div>
       <div class="chat-dock-body" id="chat-body">
         <div class="chat-log" id="studio-log" role="log" aria-live="polite"></div>
