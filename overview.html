@@ -20,7 +20,9 @@
 <meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#14041b">
-<link rel="stylesheet" href="system/system.css?v=20260709h">
+<link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="system/system.css?v=20260709m">
 <style>
   /* interactive demo controls: dark workshop register, AA on near-black */
   .demo{max-width:60rem;margin-top:clamp(1.8rem,3.5vw,2.6rem);
@@ -59,7 +61,7 @@
   .v-match{color:var(--gold)}.v-drift{color:var(--ember)}.v-unver{color:var(--iris-soft)}.v-deny{color:var(--ember)}
   .v-allow{color:var(--gold)}.v-needs{color:var(--iris-soft)}
   .demo-detail{color:var(--ink-muted);font-size:.68rem;letter-spacing:.04em;line-height:1.9;margin-top:.35rem}
-  .demo-detail .ok{color:#1f7a52}.demo-detail .bad{color:#b8480a}.demo-detail .lt{color:#7a5a00}
+  .demo-detail .ok{color:var(--verified)}.demo-detail .bad{color:var(--ember)}.demo-detail .lt{color:var(--gold)}
   .demo-hash{color:var(--ink-muted);font-size:.64rem;word-break:break-all;margin-top:.4rem}
   .nojs{font-family:var(--mono);font-size:.62rem;color:var(--iris);
     letter-spacing:.06em;margin-top:.8rem}
@@ -69,7 +71,7 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260709h"></script>
+<script type="module" src="system/nav.js?v=20260709m"></script>
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Field map &middot; engines &middot; research &middot; work</span></div>
   <div class="mid">
@@ -183,11 +185,11 @@
 <!-- the body of work map: grouped catalog -->
 <section class="mv" id="map" aria-labelledby="map-h">
   <h2 id="map-h" class="reveal">Flagships.</h2>
-  <p class="body-text reveal">Everything below is part of the public map: engines, private-line slices, graphics systems, papers, essays, and product experiments. The workspace behind them, mapped by <span translate="no">index</span> itself on 2026-07-01: 147 repositories, 70 public on GitHub. The private-line flagships publish only the pieces that can be safely shown, while Lab (Seed) and Ledger (Sofer) remain private until a clean public split is ready. The map is meant to help you choose a door, not memorize the whole building.</p>
+  <p class="body-text reveal">Everything below is part of the public map: engines, private-line slices, graphics systems, papers, essays, and product experiments. The workspace behind them, mapped by <span translate="no">index</span> itself on 2026-07-09: 74 repositories in the public workspace tree, 91 public repositories on GitHub. The private-line flagships publish only the pieces that can be safely shown, while Lab (Seed) and Ledger (Sofer) remain private until a clean public split is ready. The map is meant to help you choose a door, not memorize the whole building.</p>
 
   <!-- tier 0: flagships -->
   <section class="work-group reveal">
-    <h2>Flagships</h2>
+    <h2>The eight engines</h2>
     <div class="organs">
       <div class="organ-row">
         <span class="organ-name"><a href="studio.html" translate="no">telos</a></span>
@@ -426,7 +428,7 @@
     <p class="artifact-note">The gate ships in <b translate="no">proof-surface</b>: standard-library only, zero dependencies, 652 passing tests, <b translate="no">github.com/HarperZ9/proof-surface</b>. <em>Honest limit:</em> the gate gives advice, a careful recommendation the real system still has to carry out. The library itself doesn&rsquo;t hold the power to force it.</p>
   </div>
   <p class="body-text reveal" style="max-width:72ch;margin-top:clamp(1.6rem,3vw,2.4rem)">The shared backbone (<b translate="no">system/spine.js</b>) lets these pieces show up in the <a href="studio.html#verify" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(58,43,214,.4)" translate="no">studio</a>, where generated drawings can carry fingerprints and boundary checks without turning the whole site into one security product.</p>
-  <p class="seal-line reveal"><span class="g">Run them yourself</span>: the demos run locally in the browser where possible. <a href="demonstrations.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(58,43,214,.4)">Open the demo index &rarr;</a> &nbsp;&middot;&nbsp; <a href="studio.html#verify" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(58,43,214,.4)">open the <span translate="no">studio</span> route &rarr;</a></p>
+  <p class="seal-line reveal"><span class="g">Run them yourself</span>: the demos run locally in the browser where possible. <a href="demo-index.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(58,43,214,.4)">Open the demo index &rarr;</a> &nbsp;&middot;&nbsp; <a href="studio.html#verify" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(58,43,214,.4)">open the <span translate="no">studio</span> route &rarr;</a></p>
 </section>
 
 <!-- how it checks itself: live demos folded in from demonstrations.html -->
@@ -494,7 +496,7 @@
   <p class="body-text reveal">If you are evaluating the work, start anywhere concrete: run a demo, open a package, read a paper, inspect the generative surface, or send a real problem. The best conversations begin with an artifact on the table.</p>
   <p class="close reveal">Bring a workflow, a research thread, a prototype, a site, or a hard technical knot. <b>The point is to make it tangible.</b></p>
   <div class="channels reveal">
-    <span class="g">Run it</span>: <a href="demonstrations.html">demonstrations</a> &middot; <a href="studio.html">the <span translate="no">studio</span></a> &middot; <a href="presentation.html">the deck</a>
+    <span class="g">Run it</span>: <a href="demo-index.html">the demo index</a> &middot; <a href="studio.html">the <span translate="no">studio</span></a> &middot; <a href="presentation.html">the deck</a>
     &nbsp;&middot;&nbsp;
     <span class="g">Research</span>: <a href="research.html">the program</a> &middot; <a href="writing.html">essays</a>
     &nbsp;&middot;&nbsp;

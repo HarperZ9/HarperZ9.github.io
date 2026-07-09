@@ -18,28 +18,27 @@
 <meta name="twitter:title" content="Writing · Zain Dana Harper">
 <meta name="twitter:description" content="Plain-language essays and notes from Project Telos: systems, verification, artificial minds, public work, and model-era engineering practice.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Schibsted+Grotesk:wght@500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="system/doc.css?v=20260709h">
+<link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="system/doc.css?v=20260709m">
 <style>
   .essay p{margin:0 0 .95rem;max-width:66ch;line-height:1.62}
   .essay p:first-of-type{margin-top:.1rem}
   .essay strong,.essay b{color:var(--teal);font-weight:600}
-  .essay h3{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:600;
+  .essay h3{font-family:var(--display);font-weight:600;
     font-size:1.16rem;letter-spacing:-.012em;color:var(--ink);margin:1.6rem 0 .55rem}
   .essay hr{border:none;border-top:1px solid var(--rule);margin:1.7rem 0}
   .essay ul{list-style:none;margin:.4rem 0 .95rem;padding:0}
   .essay ul li{position:relative;padding-left:1.15rem;margin:0 0 .4rem;max-width:66ch;line-height:1.52}
   .essay ul li::before{content:"";position:absolute;left:.05rem;top:.62em;width:.34rem;height:.34rem;
     background:var(--teal);border-radius:50%}
-  .essay-sub{font-family:"EB Garamond",serif;font-style:italic;color:var(--ink-soft);
+  .essay-sub{font-family:var(--body);font-style:italic;color:var(--ink-soft);
     font-size:1.05rem;line-height:1.55;margin:.1rem 0 0;max-width:60ch}
-  .essay-meta{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.62rem;
+  .essay-meta{font-family:var(--mono);font-size:.62rem;
     letter-spacing:.13em;text-transform:uppercase;color:var(--tag);margin:.7rem 0 0;line-height:1.7}
-  .essay-sig{font-family:"EB Garamond",serif;font-style:italic;color:var(--ink-soft);
+  .essay-sig{font-family:var(--body);font-style:italic;color:var(--ink-soft);
     font-size:.97rem;line-height:1.55;margin:1.4rem 0 0;padding-top:.95rem;border-top:1px solid var(--rule);max-width:62ch}
-  .totop{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.6rem;letter-spacing:.2em;
+  .totop{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;
     text-transform:uppercase;color:var(--teal-soft);text-decoration:none;border-bottom:1px solid transparent}
   .totop:hover{border-color:var(--teal-soft)}
 </style>
@@ -49,7 +48,7 @@
 
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260709h"></script>
+<script type="module" src="system/nav.js?v=20260709m"></script>
 
 <main id="main">
 <article class="sheet">
@@ -70,7 +69,7 @@
       <ul class="bul"><li>An operator note for AI-assisted work: claims, evidence, checks, action state, and the unsupported remainder that should stay visible.</li></ul>
     </div>
     <div class="entry">
-      <div class="entry-head"><span class="entry-title"><a class="inline" href="test-run-request.html">Send A Public Proof-Surface Test Case</a></span><span class="entry-meta">2026 &middot; intake</span></div>
+      <div class="entry-head"><span class="entry-title"><a class="inline" href="test-run-request.html">Send A Public Test Case</a></span><span class="entry-meta">2026 &middot; intake</span></div>
       <ul class="bul"><li>A public request for small AI-assisted workflow examples where the claim, evidence, checks, and unsupported remainder matter.</li></ul>
     </div>
     <div class="entry">

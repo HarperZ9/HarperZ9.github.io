@@ -18,7 +18,9 @@
 <meta name="twitter:title" content="The Studio &middot; Live media instrument &middot; Zain Dana Harper">
 <meta name="twitter:description" content="Render media, measure the frame, transform sources, and keep receipts available when evidence is useful.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
-<link rel="stylesheet" href="system/system.css?v=20260709k">
+<link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="system/system.css?v=20260709m">
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
@@ -684,10 +686,10 @@
       <section class="panel" id="studio-frame" aria-label="Live perception summary">
         <h2>Live Perception
           <span class="mm-live" id="mm-live" hidden aria-hidden="true"><span class="mm-dot"></span>live</span></h2>
-        <div class="row"><span class="rk">perceptual hash</span><span class="rv" id="sc-phash" aria-live="polite" aria-label="Perceptual hash">-</span></div>
+        <div class="row"><span class="rk">perceptual hash</span><span class="rv" id="sc-phash" aria-label="Perceptual hash">-</span></div>
         <div class="row"><span class="rk">size</span><span class="rv" id="sc-size">-</span></div>
         <div class="grounds" id="sc-feats" aria-label="Visual feature readings"></div>
-        <p class="mm-describe" id="mm-describe" aria-live="polite"></p>
+        <p class="mm-describe" id="mm-describe"></p>
         <div class="mc-drift" id="sc-drift" hidden aria-live="polite" aria-atomic="true"></div>
       </section>
 
@@ -713,7 +715,7 @@
             <div class="mm-meters" id="mm-visual" role="list" aria-label="Visual channel readings"></div>
             <div class="mm-section">
               <div class="mm-clab">audio channels <span class="mm-hint">when the source has sound</span></div>
-              <div class="mm-meters" id="mm-audio" role="list" aria-label="Audio channel readings" aria-live="polite" aria-atomic="false"></div>
+              <div class="mm-meters" id="mm-audio" role="list" aria-label="Audio channel readings"></div>
             </div>
             <div class="mm-section">
               <div class="mm-clab">source</div>
@@ -836,7 +838,7 @@
 
 </main>
 
-<script type="module" src="system/nav.js?v=20260709h"></script>
+<script type="module" src="system/nav.js?v=20260709m"></script>
 <!-- Atelier engine (Task 7): classic IIFE, self-boots on DOM ready, binds the controls above and
      draws into #studio-canvas. Loaded before the Studio module so window.Atelier + the shared
      spine/reconcile readouts are present. -->
@@ -847,7 +849,7 @@
      panzoom (anvaka) v9.4.3: UMD, sets window.createPanzoom.
      Tweakpane v4.0.5: ESM named exports, imported directly by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js"></script>
-<script type="module" src="system/studio.js?v=20260709b"></script>
+<script type="module" src="system/studio.js?v=20260709m"></script>
 <!-- Music reactive engine: zero-dependency WebAudio + Canvas visual system. -->
 <script type="module" src="system/reactive.js?v=20260625b"></script>
 <script type="module" src="system/reactive-music-ui.js?v=20260625b"></script>
