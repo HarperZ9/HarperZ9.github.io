@@ -4,6 +4,9 @@
 // images, no remote textures.
 let mounted = false;
 let rafId = 0;
+const pulses = [];
+const pointerState = { x: 0.5, y: 0.5, px: 0.5, py: 0.5, last: 0 };
+let lastInteraction = 0;
 
 function reducedMotion() {
   return !!(window.matchMedia &&
@@ -39,6 +42,35 @@ function rand(seed, salt) {
   x ^= x >>> 13;
   x = Math.imul(x, 3266489917);
   return ((x ^ (x >>> 16)) >>> 0) / 4294967295;
+}
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function toneToRgba(tone, alpha) {
+  return `rgba(${tone[0]},${tone[1]},${tone[2]},${alpha})`;
+}
+
+function markInteraction(tick = performance.now()) {
+  lastInteraction = tick;
+}
+
+function addPulse(x, y, tick = performance.now()) {
+  pulses.push({
+    x: clamp(x, 0, 1),
+    y: clamp(y, 0, 1),
+    t: tick,
+    spin: (x * 19.17 + y * 37.41) % 1,
+  });
+  while (pulses.length > 10) pulses.shift();
+}
+
+function cullPulses(tick) {
+  for (let i = pulses.length - 1; i >= 0; i -= 1) {
+    if (tick - pulses[i].t > 2100) pulses.splice(i, 1);
+  }
+  return pulses.length;
 }
 
 function routePalette(seed) {
@@ -203,6 +235,32 @@ function drawFlowTraces(ctx, width, height, tick, seed, palette) {
   }
 }
 
+function drawDitheredPosterVeil(ctx, width, height, tick, seed, palette) {
+  const tones = palette.fluid || [[132, 245, 255], [167, 115, 255], [239, 171, 48]];
+  const cell = Math.max(16, Math.floor(Math.min(width, height) / 72));
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  for (let y = 0, row = 0; y < height; y += cell, row += 1) {
+    for (let x = 0, col = 0; x < width; x += cell, col += 1) {
+      const nx = x / width;
+      const ny = y / height;
+      const contour =
+        Math.sin(nx * 34 + seed * 0.00011 + tick * 0.00018) +
+        Math.cos((nx - ny) * 28 - tick * 0.00012) +
+        Math.sin(Math.hypot(nx - 0.72, ny - 0.38) * 42 + seed * 0.00007);
+      const level = contour * 0.5 + 0.5;
+      if (level < orderedDither(col, row) * 0.9) continue;
+      const guard = readingCorridorAlpha(x + cell * 0.5, y + cell * 0.5, width, height);
+      const tone = tones[(col + row + seed) % tones.length];
+      const alpha = (0.012 + Math.min(0.034, level * 0.024)) * guard;
+      const dot = cell * (0.22 + orderedDither(row, col) * 0.42);
+      ctx.fillStyle = toneToRgba(tone, alpha);
+      ctx.fillRect(x + cell * 0.28, y + cell * 0.28, dot, dot);
+    }
+  }
+  ctx.restore();
+}
+
 function orderedDither(x, y) {
   const matrix = [
     [0, 8, 2, 10],
@@ -211,6 +269,79 @@ function orderedDither(x, y) {
     [15, 7, 13, 5],
   ];
   return (matrix[y & 3][x & 3] + 0.5) / 16;
+}
+
+function drawHydraTiles(ctx, width, height, tick, seed, palette) {
+  const tones = palette.fluid || [[132, 245, 255], [167, 115, 255], [239, 171, 48]];
+  const tile = Math.max(118, Math.min(width, height) / 5.8);
+  const cols = Math.ceil(width / tile) + 2;
+  const rows = Math.ceil(height / tile) + 2;
+  ctx.save();
+  ctx.globalCompositeOperation = "lighter";
+  for (let row = -1; row < rows; row += 1) {
+    for (let col = -1; col < cols; col += 1) {
+      const jitter = rand(seed, row * 211 + col * 37);
+      const cx = col * tile + (row % 2) * tile * 0.5 + (jitter - 0.5) * tile * 0.16;
+      const cy = row * tile * 0.74 + (rand(seed, row * 71 + col * 163) - 0.5) * tile * 0.14;
+      const guard = readingCorridorAlpha(cx, cy, width, height);
+      const tone = tones[(row + col + tones.length * 8) % tones.length];
+      const radius = tile * (0.23 + jitter * 0.16);
+      ctx.strokeStyle = toneToRgba(tone, 0.045 * guard);
+      ctx.lineWidth = 0.8;
+      for (let ring = 0; ring < 3; ring += 1) {
+        ctx.beginPath();
+        const phase = tick * 0.00008 + ring * 0.21 + seed * 0.00001;
+        for (let side = 0; side <= 6; side += 1) {
+          const a = phase + (side / 6) * Math.PI * 2;
+          const wobble = 1 + Math.sin(side * 1.9 + tick * 0.00017 + row) * 0.11;
+          const x = cx + Math.cos(a) * radius * (1 + ring * 0.42) * wobble;
+          const y = cy + Math.sin(a) * radius * (0.62 + ring * 0.17) * wobble;
+          if (side === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.stroke();
+      }
+    }
+  }
+  ctx.restore();
+}
+
+function drawLampSymmetry(ctx, width, height, tick, seed, palette) {
+  const tones = palette.fluid || [[132, 245, 255], [167, 115, 255], [239, 171, 48]];
+  const count = Math.max(4, Math.floor(width / 420));
+  ctx.save();
+  ctx.globalCompositeOperation = "lighter";
+  for (let i = 0; i < count; i += 1) {
+    const cx = width * (0.58 + rand(seed, i * 31 + 301) * 0.38);
+    const cy = height * (0.14 + rand(seed, i * 43 + 307) * 0.74);
+    const guard = readingCorridorAlpha(cx, cy, width, height);
+    const radius = Math.min(width, height) * (0.045 + rand(seed, i * 47 + 311) * 0.065);
+    const tone = tones[i % tones.length];
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(tick * 0.000035 * (i % 2 ? -1 : 1) + rand(seed, i * 59 + 317) * Math.PI);
+    ctx.strokeStyle = toneToRgba(tone, 0.09 * guard);
+    ctx.fillStyle = toneToRgba(tone, 0.018 * guard);
+    ctx.lineWidth = 0.75;
+    for (let arm = 0; arm < 8; arm += 1) {
+      const a = (arm / 8) * Math.PI * 2;
+      const inner = radius * 0.22;
+      const outer = radius * (1.2 + (arm % 2) * 0.46);
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(a) * inner, Math.sin(a) * inner);
+      ctx.lineTo(Math.cos(a) * outer, Math.sin(a) * outer);
+      ctx.stroke();
+    }
+    for (let ring = 0; ring < 3; ring += 1) {
+      ctx.beginPath();
+      ctx.ellipse(0, 0, radius * (0.62 + ring * 0.35), radius * (0.22 + ring * 0.2), ring * 0.52, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+  ctx.restore();
 }
 
 function metaballCenters(width, height, tick, seed) {
@@ -328,12 +459,56 @@ function drawFluidCurl(ctx, width, height, tick, seed, palette) {
   ctx.restore();
 }
 
+function drawInteractionShockwaves(ctx, width, height, tick, seed, palette) {
+  if (!pulses.length) return;
+  const tones = palette.fluid || [[132, 245, 255], [167, 115, 255], [239, 171, 48]];
+  const scale = width / Math.max(1, window.innerWidth || width);
+  const chars = "+*#<>.:";
+  ctx.save();
+  ctx.globalCompositeOperation = "lighter";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.font = `${Math.max(9, Math.floor(12 * scale))}px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace`;
+  for (let i = 0; i < pulses.length; i += 1) {
+    const pulse = pulses[i];
+    const age = tick - pulse.t;
+    if (age < 0 || age > 2100) continue;
+    const x = pulse.x * width;
+    const y = pulse.y * height;
+    const tone = tones[(i + seed) % tones.length];
+    const guard = readingCorridorAlpha(x, y, width, height);
+    const fade = Math.max(0, 1 - age / 2100) * guard;
+    const radius = (age * 0.23 + 24) * scale;
+    ctx.strokeStyle = toneToRgba(tone, 0.22 * fade);
+    ctx.lineWidth = Math.max(1, 1.2 * scale);
+    for (let ring = 0; ring < 3; ring += 1) {
+      ctx.beginPath();
+      ctx.arc(x, y, radius + ring * 24 * scale, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    ctx.fillStyle = toneToRgba(tone, 0.18 * fade);
+    const marks = 18;
+    for (let mark = 0; mark < marks; mark += 1) {
+      const a = pulse.spin * Math.PI * 2 + (mark / marks) * Math.PI * 2 + age * 0.0008;
+      const dither = orderedDither(mark, i) * 22 * scale;
+      const px = x + Math.cos(a) * (radius + dither);
+      const py = y + Math.sin(a) * (radius * 0.72 + dither);
+      ctx.fillText(chars[(mark + i) % chars.length], px, py);
+    }
+  }
+  ctx.restore();
+}
+
 function drawField(ctx, width, height, tick, seed, palette) {
   ctx.clearRect(0, 0, width, height);
   drawBackdrop(ctx, width, height, tick, seed, palette);
+  drawDitheredPosterVeil(ctx, width, height, tick, seed, palette);
   drawMetaballWashes(ctx, width, height, tick, seed, palette);
   drawAsciiMetaballField(ctx, width, height, tick, seed, palette);
   drawFluidCurl(ctx, width, height, tick, seed, palette);
+  drawHydraTiles(ctx, width, height, tick, seed, palette);
+  drawLampSymmetry(ctx, width, height, tick, seed, palette);
+  drawInteractionShockwaves(ctx, width, height, tick, seed, palette);
   drawContourRidges(ctx, width, height, tick, seed, palette);
   drawCrystalFragments(ctx, width, height, tick, seed, palette);
   drawOrbitField(ctx, width, height, tick, seed, palette);
@@ -362,6 +537,7 @@ function startEngine(scene, motes) {
   const motesCtx = motes ? motes.getContext("2d", { alpha: true }) : null;
   const still = reducedMotion();
   let lastRendered = 0;
+  lastInteraction = performance.now();
 
   if (!sceneCtx) {
     document.documentElement.classList.add("generative-field-failed");
@@ -369,7 +545,10 @@ function startEngine(scene, motes) {
   }
 
   const render = (tick = 0) => {
-    if (!still && tick - lastRendered < 42) {
+    const livePulseCount = cullPulses(tick);
+    const active = tick - lastInteraction < 1400 || livePulseCount > 0;
+    const frameGap = active ? 28 : 82;
+    if (!still && tick - lastRendered < frameGap) {
       rafId = window.requestAnimationFrame(render);
       return;
     }
@@ -388,6 +567,30 @@ function startEngine(scene, motes) {
     if (!still && !document.hidden) rafId = window.requestAnimationFrame(render);
   };
 
+  const updatePointer = (event) => {
+    pointerState.px = pointerState.x;
+    pointerState.py = pointerState.y;
+    pointerState.x = clamp(event.clientX / Math.max(1, window.innerWidth), 0, 1);
+    pointerState.y = clamp(event.clientY / Math.max(1, window.innerHeight), 0, 1);
+    pointerState.last = performance.now();
+    markInteraction(pointerState.last);
+  };
+  const onPointerMove = (event) => updatePointer(event);
+  const onPointerDown = (event) => {
+    updatePointer(event);
+    addPulse(pointerState.x, pointerState.y, pointerState.last);
+  };
+  const onScroll = () => markInteraction(performance.now());
+  const onKeyDown = () => {
+    const tick = performance.now();
+    addPulse(0.5 + Math.sin(tick * 0.003 + seed) * 0.18, 0.52 + Math.cos(tick * 0.002 + seed) * 0.12, tick);
+    markInteraction(tick);
+  };
+
+  window.addEventListener("pointermove", onPointerMove, { passive: true });
+  window.addEventListener("pointerdown", onPointerDown, { passive: true });
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("keydown", onKeyDown);
   window.addEventListener("resize", () => render(performance.now()), { passive: true });
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {

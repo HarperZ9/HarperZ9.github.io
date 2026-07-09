@@ -1983,23 +1983,36 @@ section.mv{
 .typeface-field::before{
   content:"";
   position:absolute;
-  inset:8% 0 auto 42%;
-  height:min(52vh,34rem);
+  inset:5% -8% auto 34%;
+  height:min(64vh,43rem);
   pointer-events:none;
-  opacity:.55;
+  opacity:.64;
   background:
-    conic-gradient(from 145deg at 50% 50%, transparent, color-mix(in oklab, var(--signal) 36%, transparent), transparent 48%),
-    radial-gradient(circle at 72% 46%, color-mix(in oklab, var(--match) 20%, transparent), transparent 42%),
-    linear-gradient(115deg, transparent 0 28%, color-mix(in oklab, var(--iris) 26%, transparent) 29% 30%, transparent 31% 100%);
-  mask-image:radial-gradient(ellipse at center, #000 0 48%, transparent 78%);
+    repeating-radial-gradient(ellipse at 66% 42%, transparent 0 13px, color-mix(in oklab, var(--signal) 20%, transparent) 14px 15px, transparent 16px 31px),
+    repeating-linear-gradient(132deg, transparent 0 18px, color-mix(in oklab, var(--match) 17%, transparent) 19px 21px, transparent 22px 48px),
+    conic-gradient(from 145deg at 56% 48%, transparent 0 13%, color-mix(in oklab, var(--signal) 30%, transparent) 18%, transparent 31% 43%, color-mix(in oklab, var(--iris) 25%, transparent) 52%, transparent 66% 100%),
+    radial-gradient(circle at 78% 38%, color-mix(in oklab, var(--match) 24%, transparent), transparent 44%),
+    linear-gradient(115deg, transparent 0 27%, color-mix(in oklab, var(--iris) 21%, transparent) 28% 30%, transparent 31% 100%);
+  mask-image:
+    linear-gradient(90deg, transparent 0 2%, #000 16% 82%, transparent 100%),
+    radial-gradient(ellipse at center, #000 0 52%, transparent 80%);
+  mix-blend-mode:screen;
 }
 .typeface-page .inner-clean h1,
 .typeface-page .frame h1{
-  max-width:11.5ch;
+  max-width:12.8ch;
 }
-.typeface-page .frame h1 .g{
+.typeface-page .type-mark{
+  width:max-content;
+  max-width:100%;
+  margin:0 0 .8rem;
   font-family:var(--brand-display);
   font-weight:900;
+  font-size:clamp(1.1rem,1.8vw,1.9rem);
+  line-height:1;
+  letter-spacing:0;
+  color:var(--signal);
+  text-shadow:0 0 28px color-mix(in oklab, var(--signal) 34%, transparent);
 }
 .type-specimen{
   display:grid;
@@ -2017,14 +2030,31 @@ section.mv{
 .specimen-lockup{
   grid-column:1/-1;
   display:grid;
-  gap:.18em;
+  gap:.22em;
   margin-top:clamp(1.4rem,3vw,2.4rem);
-  font-family:var(--brand-display);
-  font-size:clamp(2.5rem,8vw,7.2rem);
-  line-height:.9;
+  font-family:var(--display);
+  font-size:clamp(2.25rem,7.2vw,5.8rem);
+  line-height:1.02;
   letter-spacing:0;
-  font-weight:900;
+  font-weight:760;
   color:var(--bone);
+}
+.specimen-lockup span{
+  position:relative;
+  width:max-content;
+  max-width:100%;
+  z-index:0;
+  isolation:isolate;
+}
+.specimen-lockup span::after{
+  content:attr(data-specimen);
+  position:absolute;
+  inset:.09em auto auto .08em;
+  z-index:-1;
+  font-family:var(--brand-display);
+  font-weight:900;
+  color:color-mix(in oklab, currentColor 42%, transparent);
+  filter:blur(.15px);
 }
 .specimen-lockup span:nth-child(2),
 .specimen-lockup span:nth-child(4){
@@ -2032,6 +2062,43 @@ section.mv{
 }
 .specimen-lockup span:nth-child(3){
   color:var(--signal);
+}
+.synthesis-grid .body-text{
+  align-self:start;
+}
+.synthesis-row{
+  grid-column:1/-1;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:.75rem;
+  margin-top:clamp(1.4rem,3vw,2.2rem);
+}
+.synthesis-row article{
+  min-height:13rem;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:1rem;
+  padding:1rem;
+  border:1px solid var(--hairline);
+  border-radius:8px;
+  background:
+    linear-gradient(145deg, color-mix(in oklab, var(--signal) 8%, transparent), transparent 42%),
+    repeating-linear-gradient(135deg, transparent 0 13px, color-mix(in oklab, var(--bone) 4%, transparent) 14px 15px, transparent 16px 29px),
+    color-mix(in oklab, var(--void) 73%, transparent);
+}
+.synthesis-row span{
+  font-family:var(--mono);
+  font-size:.68rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--signal);
+}
+.synthesis-row p{
+  margin:0;
+  font-size:clamp(.9rem,.86rem + .16vw,1rem);
+  line-height:1.62;
+  color:var(--muted);
 }
 .charset{
   grid-column:1/-1;
@@ -2047,8 +2114,8 @@ section.mv{
 .charset p{
   margin:0;
   font-family:var(--brand-display);
-  font-size:clamp(1.4rem,3.5vw,3.2rem);
-  line-height:1.08;
+  font-size:clamp(1.12rem,2.8vw,2.35rem);
+  line-height:1.22;
   letter-spacing:0;
   overflow-wrap:anywhere;
   color:var(--bone);
@@ -2065,12 +2132,12 @@ section.mv{
 .glyph-grid{
   grid-column:1/-1;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));
   gap:.75rem;
   margin-top:clamp(1.4rem,3vw,2.3rem);
 }
 .glyph-grid figure{
-  min-height:11rem;
+  min-height:10rem;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
@@ -2084,8 +2151,8 @@ section.mv{
 }
 .glyph-grid span{
   font-family:var(--brand-display);
-  font-size:clamp(4rem,11vw,8.5rem);
-  line-height:.78;
+  font-size:clamp(3.4rem,8.5vw,6.4rem);
+  line-height:.92;
   letter-spacing:0;
   color:var(--bone);
 }
@@ -2124,6 +2191,15 @@ section.mv{
   }
   .specimen-lockup{
     font-size:clamp(2.3rem,13vw,4.6rem);
+  }
+  .typeface-page .type-mark{
+    font-size:clamp(1rem,5vw,1.35rem);
+  }
+  .synthesis-row{
+    grid-template-columns:1fr;
+  }
+  .synthesis-row article{
+    min-height:auto;
   }
   .glyph-grid{
     grid-template-columns:repeat(2,minmax(0,1fr));

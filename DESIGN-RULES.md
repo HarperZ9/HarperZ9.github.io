@@ -47,7 +47,7 @@ the screen default.
 
 Use the committed system fonts:
 
-- brand display: Telos Display 0.4, generated from `tools/fonts/build_telos_display.py`, with Kilon only as fallback. The current build is a soft technical contour face: rounded joins, capsule strokes, native lowercase display forms, real curves in the glyph outlines, and optical advances rather than strict monospacing.
+- brand display: Telos Display 0.5, generated from `tools/fonts/build_telos_display.py`. The current build is a readable-outline derivation from Kilon: deterministic narrowing, subtle slant, contour breathing, local outline edits, and a dedicated lowercase l terminal so the face can carry identity without becoming illegible.
 - readable display: Kilon for normal headings, document titles, labels, and mixed-case page delivery
 - body: Hanken Grotesk
 - mono/readout: JetBrains Mono or the home mono face where already bundled
@@ -58,9 +58,9 @@ repeated tiny section eyebrows as default scaffolding.
 
 `typeface.html` is the public specimen surface. Keep it wired into the shared
 nav and use it as the reference for the generated face: character coverage,
-S/5 and B/8 differentiation, native lowercase forms, local font loading, and the
-rule that Telos Display carries identity while Kilon and Hanken Grotesk carry
-reading.
+lookalike differentiation, readable lowercase forms, local font loading, the
+0.5 generated-outline build, and the rule that Telos Display carries identity
+while Kilon and Hanken Grotesk carry reading.
 
 ## 5. Generative material
 
@@ -73,10 +73,16 @@ Generative art can appear as:
 - a motion or canvas scene with reduced-motion fallback
 - a route-seeded orbit, contour, crystal, or flow-field specimen generated in browser
 - a route-seeded metaball, fluid-curl, ordered-dither, or ASCII field generated in browser
+- a route-seeded hydra tile, lamp symmetry, poster dither, or interaction shock field generated in browser
 
 Inspiration should be synthesized into first-party procedural output. Do not
 copy inspiration images into the site or depend on bitmap backgrounds for the
 core public style.
+
+The 2026-07-09 synthesis pass inspected the full local inspiration corpus, a
+Ditto capture, and the reference site source. Preserve the rule from
+`docs/design/inspiration-synthesis-2026-07-09.md`: borrow architecture and
+direction, never source, shaders, images, or exact compositions.
 
 It must not reduce contrast or make content harder to scan. Text always wins over
 the art layer.

@@ -1,0 +1,70 @@
+/* Home typography patch.
+   The Vite bundle is currently checked in without source. Keep public reading
+   in Kilon/Hanken and reserve Telos Display for small signature marks. */
+
+.hero-title,
+.sec-head h2,
+.pull,
+.foot-big,
+.eng-name,
+.case-name,
+.paper-title,
+.picker-name,
+.verdict,
+.gd-verdict{
+  font-family:var(--font-body);
+  font-weight:820;
+  letter-spacing:0;
+}
+
+.hero-title{
+  max-width:13.8ch;
+  font-size:clamp(2.45rem,1.55rem + 4.4vw,6.15rem);
+  line-height:1.03;
+  text-shadow:0 2px 22px rgba(20,4,27,.46),0 18px 80px rgba(0,0,0,.72);
+}
+
+.hero-title .hl{
+  color:var(--signal);
+}
+
+.brand,
+.edgemark{
+  font-family:var(--font-brand);
+  letter-spacing:0;
+}
+
+.edgemark{
+  opacity:.28;
+}
+
+.lead{
+  max-width:44ch;
+  font-size:clamp(1.04rem,.94rem + .5vw,1.36rem);
+  line-height:1.56;
+}
+
+.sec-head h2,
+.pull,
+.foot-big{
+  line-height:1.04;
+}
+
+.eng-name,
+.case-name,
+.paper-title,
+.picker-name{
+  line-height:1.12;
+}
+
+@media (width <= 560px){
+  .hero-title{
+    max-width:11.4ch;
+    font-size:clamp(2.42rem,12vw,4.45rem);
+    line-height:1.06;
+  }
+
+  .lead{
+    font-size:clamp(1rem,4.6vw,1.14rem);
+  }
+}
