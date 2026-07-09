@@ -28,6 +28,7 @@ SYSTEM_CSS = ROOT / "system" / "system.css"
 DOC_CSS = ROOT / "system" / "doc.css"
 GENERATIVE_FIELD = ROOT / "system" / "generative-field.js"
 HOME_ART = ROOT / "system" / "home-art.js"
+HOME_READABLE = ROOT / "system" / "home-readable.css"
 TYPEFACE = ROOT / "typeface.html"
 ALEPH = ROOT / "aleph.html"
 ORCA = ROOT / "orca.html"
@@ -71,6 +72,10 @@ def system_css_source() -> str:
     return SYSTEM_CSS.read_text(encoding="utf-8")
 
 
+def home_readable_source() -> str:
+    return HOME_READABLE.read_text(encoding="utf-8")
+
+
 def doc_css_source() -> str:
     return DOC_CSS.read_text(encoding="utf-8")
 
@@ -80,6 +85,7 @@ def test_home_loads_the_vite_spectrum_shell_not_the_old_one() -> None:
     assert '<div id="root"></div>' in src
     assert 'type="module" crossorigin src="/assets/index-' in src
     assert 'rel="stylesheet" crossorigin href="/assets/index-' in src
+    assert 'href="/system/home-readable.css?v=20260709a"' in src
     assert 'name="color-scheme" content="dark"' in src
     assert 'content="#14041b"' in src
     assert "Project Telos" in src
@@ -89,6 +95,7 @@ def test_home_loads_the_vite_spectrum_shell_not_the_old_one() -> None:
 
 def test_dark_spectrum_tokens_are_defined() -> None:
     css = css_source()
+    home_css = home_readable_source()
     for token in ("--void:", "--surface:", "--signal:", "--match:", "--drift:", "--unverif:"):
         assert token in css
     assert "background:var(--void)" in css
@@ -96,6 +103,9 @@ def test_dark_spectrum_tokens_are_defined() -> None:
     assert '@font-face{font-family:"Telos Display"' in css
     assert '--font-brand:"Telos Display","Kilon",system-ui,sans-serif' in css
     assert '--font-display:"Kilon",system-ui,sans-serif' in css
+    assert ".hero-title{" in home_css
+    assert "font-family:var(--font-body)" in home_css
+    assert ".brand," in home_css
     assert "-webkit-background-clip:text" not in css
     assert "-webkit-text-fill-color:transparent" not in css
 
@@ -148,6 +158,12 @@ def test_shared_pages_synthesize_art_through_the_engine_not_copied_assets() -> N
     assert "drawMetaballWashes" in js
     assert "drawAsciiMetaballField" in js
     assert "drawFluidCurl" in js
+    assert "drawDitheredPosterVeil" in js
+    assert "drawHydraTiles" in js
+    assert "drawLampSymmetry" in js
+    assert "drawInteractionShockwaves" in js
+    assert "lastInteraction" in js
+    assert "addPulse" in js
     assert "prefers-reduced-motion" in js
     combined = system_css_source() + doc_css_source() + js
     for copied in ("ca-diffusion-signal.webp", "hydra-grid.webp", "automata-rug.webp"):
@@ -163,15 +179,18 @@ def test_typeface_specimen_is_a_connected_public_surface() -> None:
     assert '["Typeface", "typeface.html", "typeface"]' in nav
     assert "TYPEFACE" in page
     assert "Telos Display" in page
-    assert "Version 0.4" in page
-    assert "soft technical" in page
-    assert "native lowercase" in page
+    assert "Version 0.5" in page
+    assert "readable generated-outline" in page
+    assert "Synthesis, not sampling." in page
+    assert "lowercase terminal" in page
     assert "ABCDEFGHIJKLMNOPQRSTUVWXYZ" in page
     assert "0123456789" in page
     assert "type-specimen" in page
     assert "typeface-field" in page
     assert "system/nav.js" in page
     assert ".type-specimen" in css
+    assert ".type-mark" in css
+    assert ".synthesis-row" in css
     assert ".glyph-grid" in css
     assert ".typeface-field" in css
 
@@ -356,7 +375,7 @@ def test_overview_and_catalog_use_product_names_before_repo_aliases() -> None:
 
 
 def test_no_em_or_en_dashes_in_home_and_system() -> None:
-    for path in (INDEX, app_js_path(), app_css_path(), RIBBON, SCROLL):
+    for path in (INDEX, app_js_path(), app_css_path(), HOME_READABLE, RIBBON, SCROLL):
         text = path.read_text(encoding="utf-8")
         assert EM_DASH not in text, f"em-dash in {path.name}"
         assert EN_DASH not in text, f"en-dash in {path.name}"
