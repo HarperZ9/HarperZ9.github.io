@@ -16,6 +16,7 @@ _drafts/
 # internal design drafts & handoffs -- never ship to the public Pages repo
 _redesign/
 _preview/
+.preview/
 DESIGN.md
 PRODUCT.md
 _HANDOFF.md

@@ -7,16 +7,16 @@ Seattle, WA. Remote. [harperz9.github.io](https://harperz9.github.io) - [github.
 
 ## Summary
 
-Self-taught engineer shipping production software across compilers, real-time graphics, color science, and multi-agent AI systems. Eight working languages, public releases on crates.io and the VS Code Marketplace, and a real-time graphics framework past 900,000 downloads. I work as architect and orchestrator: directing agentic coding tools across the full lifecycle, then verifying and integrating every line myself. The throughline is accountability. I build systems that perceive, act, and check their own output against a named criterion, returning a verdict (MATCH, DRIFT, or UNVERIFIABLE) rather than asking to be trusted.
+Self-taught engineer shipping production software across compilers, real-time graphics, color science, and multi-agent AI systems. Eight working languages, public releases on crates.io and the VS Code Marketplace, and a real-time graphics framework past 900,000 downloads. I work as architect and orchestrator: directing agentic coding tools across the full lifecycle, then verifying and integrating every line myself. The throughline is broad systems work: make the moving parts visible, build the working surface, and leave behind an artifact another person can inspect or use.
 
 No CS degree and no industry certifications. The public releases are the credential: crates published to crates.io, an extension on the VS Code Marketplace, a real-time graphics framework past 900,000 downloads, and open repositories under github.com/HarperZ9.
 
-## Proof snapshot
+## Work snapshot
 
 - **Language compiler, public.** BuildLang, a typed-effects systems language with a full lexer-to-codegen pipeline and multiple backends, installable from crates.io with a companion VS Code extension. (shipped)
 - **Real-time graphics framework, 900,000+ downloads.** A shader post-processing framework released publicly in 2024, with a measured audience and a public demo. (shipped)
 - **Standalone graphics injector.** A self-contained D3D11 post-processing layer built from first principles in C++ and HLSL, with a companion engine bridging game state to a GPU pipeline over read-only shared memory. (shipped)
-- **Accountable AI flagships.** Public engines (orchestration, intake with provenance, a judgment organ, a byte-level witness) that share one discipline: carry a re-checkable proof, never claim trust. (active; some release candidate)
+- **Model workflow and verification engines.** Public engines for orchestration, intake, repository mapping, judgment, byte-level witnessing, and learning workflows. (active; some release candidate)
 - **Defensive AI-safety writing.** Two structural papers on a jailbreak pattern against LLM coding assistants, written as detection and governance guidance. Analysis only, no offensive detail, responsible-disclosure track. (shipped)
 
 ## Core competencies
@@ -27,7 +27,7 @@ No CS degree and no industry certifications. The public releases are the credent
 
 **Multi-agent AI and LLM engineering.** Director-pattern orchestration, task routing to specialist agents, meta-agents for decomposition, coordination, validation, and synthesis. Model-agnostic provider abstraction behind a unified tool-use surface. Model Context Protocol (MCP) server authoring. Cost-controlled inference routing.
 
-**Accountable verification.** Perceive, act, check against a named criterion, emit a MATCH / DRIFT / UNVERIFIABLE verdict with a re-derivable proof. Worker and verifier kept separate by design. Provenance and witnessing as first-class outputs.
+**Verification and agent workflow.** Perceive, act, check against a named criterion, preserve useful records, keep worker and verifier roles separate where the task calls for it, and make provenance or witnessing first-class when claims depend on it.
 
 **Systems engineering.** Shared-memory inter-process communication, CMake and vcpkg build systems, GitHub Actions CI, Python tooling and test harnesses, Linux administration.
 
@@ -53,15 +53,15 @@ Sensorless display calibration with ICC v4.4 and 3D-LUT generation and DDC/CI co
 **Multi-agent orchestration platform** - Python - active
 A director-pattern platform: task routing to specialist agents, with meta-agents for decomposition, coordination, validation, and synthesis, and a model-agnostic provider abstraction behind a unified tool-use surface with MCP servers.
 
-**Accountable verification flagships** - public - active / RC
-An open line of engines that share one discipline: an orchestrator with a witnessed causal ledger (forum), an intake tool that attaches a provenance receipt to every item (gather), a repository map and dependency graph (index), a judgment organ that steelmans a thesis and measures what holds (crucible), and a byte-level witness that reads a file and reports MATCH, DRIFT, or UNVERIFIABLE rather than "trusted" (emet).
+**Model workflow and verification engines** - public - active / RC
+An open line of engines for model-era work: an orchestrator with a causal ledger (forum), an intake tool that records how every item was obtained (gather), a repository map and dependency graph (index), a judgment organ that steelmans a thesis and measures what holds (crucible), and a byte-level witness that reads a file and reports MATCH, DRIFT, or UNVERIFIABLE rather than "trusted" (emet).
 
 ## Experience
 
 ### Independent Software Engineer / AI-Safety Researcher
 **Self-employed - 2023-present - remote**
 
-- Built the body of work above: compilers, real-time graphics and color, multi-agent AI systems, and the accountable-verification flagships.
+- Built the body of work above: compilers, real-time graphics and color, multi-agent AI systems, and the model-workflow / verification engines.
 - Architect and orchestrator across the full lifecycle, verifying and integrating every line.
 - Wrote two defensive AI-safety papers on a jailbreak pattern against LLM coding assistants, as detection and governance guidance on a responsible-disclosure track.
 
@@ -95,7 +95,7 @@ An open line of engines that share one discipline: an orchestrator with a witnes
 
 ## Fit
 
-Most useful where a team needs an engineer who can own a hard systems problem end to end and is comfortable working alongside AI as an accountable collaborator rather than an unverified shortcut. Strong fits: compiler and language tooling, real-time graphics and color, multi-agent AI infrastructure, and any role where verification and provenance are part of the product rather than an afterthought.
+Most useful where a team needs an engineer who can own a hard systems problem end to end and is comfortable working alongside AI without letting the work become opaque. Strong fits: compiler and language tooling, real-time graphics and color, multi-agent AI infrastructure, research operations, and any role where systems need to be built, explained, tested, and shipped.
 
 Open to roles across quantum and scientific computing, finance, cybersecurity, machine learning and AI, and domain-agnostic systems work. Remote preferred; open to onsite, hybrid, contract, full-time, and project-based work.
 

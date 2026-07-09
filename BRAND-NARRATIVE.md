@@ -1,100 +1,126 @@
-# Project Telos brand narrative
+# Project Telos Brand Narrative
 
-`BRAND.md` is the visual mark: one card, one accent, how a flagship hero is rendered.
-This file is the story the mark carries. It is the single source of truth for how the
-family is positioned, why the flagships cohere, and what may and may not be claimed.
-It builds on `BRAND.md` and `DESIGN-RULES.md`; it does not restate the mark.
+`BRAND.md` is the visual mark. `DESIGN-RULES.md` is the page-level design contract.
+This file is the public language contract: how the family is positioned, what holds the
+many lanes together, and what language should be retired from broad site surfaces.
 
-## The through-line: one operation, many facets
+## The Through-Line: One Workshop, Many Routes
 
-The whole family runs one operation. Everything Project Telos ships is a different
-organ performing the same loop on a different substrate:
+Project Telos is a public workshop for systems, models, graphics, research tools,
+generated media, release tracks, and long-form technical writing.
 
-> **Perceive → verify under a named criterion → carry a re-checkable receipt.**
+The shared operation is not a single product claim. It is a working habit:
 
-That is the reconcile. It is not thirteen products chasing thirteen markets. It is one
-discipline instantiated many times. The enterprise story follows directly: you are not
-buying a tool, you are adopting a standard for how work gets checked.
+> **Map the system -> make the surface -> test the claim -> leave a usable artifact.**
+
+Some artifacts are verifiers. Some are compilers. Some are demos, generated visuals,
+research notes, browser tools, runtime surfaces, or release machinery. The site should
+make that range legible first, with rigor underneath it.
 
 ## Positioning
 
-**Project Telos is the accountable-work standard.** AI systems now produce output faster
-than anyone can trust it. The common answers are authority ("the model says so") and vibes
-("looks right"). The Telos answer is re-derivation: every claim, action, digest, route, and
-verdict carries a receipt a second party can re-run and get the same answer, byte for byte.
-Trust comes from re-derivation, never from authority.
+**Project Telos is a model-era systems workshop.** It gives visitors doors into a
+body of work that includes local-model workflows, multi-agent orchestration,
+repository maps, browser-native demos, generated media, graphics and color systems,
+compiler work, research infrastructure, and public release tracks.
 
-**Accountability is the floor. Feature-leadership is the pitch.** The receipt is table
-stakes; it is what makes the family cohere. But each flagship also has to win on its own
-merits in its category: fastest, most complete, zero-dependency where zero-dependency can
-win. "Honest but less capable" loses. The brand sells the capability. The receipt is why
-you can believe the capability numbers.
+**Range is the first signal. Rigor is the floor.** The old framing made verification
+the whole public identity. The new framing treats verification as one strong lane
+inside a broader practice. Claims still need evidence, maturity labels, and plain
+boundaries, but the public pitch should feel like a wide workshop, not a compliance
+manifesto.
 
-## The three-beat spine
+**The site is an entrance map, not a funnel.** Visitors may arrive as collaborators,
+freelance prospects, researchers, engineers, artists, tool users, or reviewers. The
+copy should help them choose a door without forcing every door to explain the entire
+system.
 
-Every flagship exposes the same three verbs, and the card's mono pipeline line renders them:
+## Primary Lanes
 
-1. **Perceive.** Turn a bounded artifact (a source, a file, a screen, a workspace, a claim)
-   into an observation carrying hashes and dimensions.
-2. **Verify.** Check it against a named, external criterion, never in-band authority. The
-   shared verdict vocabulary is honest: **MATCH / DRIFT / UNVERIFIABLE**. There is no
-   TRUSTED verdict, by design.
-3. **Receipt.** Emit a re-checkable artifact a later run, or a stranger, can replay.
-
-## Each flagship as a facet of the one loop
-
-| Flagship | Substrate it reconciles | Role eyebrow |
+| Lane | What It Contains | Public Role |
 |---|---|---|
-| **gather** | external sources into verified research packets | INTAKE |
-| **crucible** | a thesis into the measurement that could break it | JUDGMENT |
-| **index** | a workspace into a verified map from file:line evidence | MAP |
-| **forum** | multi-agent work into a replayable ledger route | ORCHESTRATION |
-| **telos** | create, simulate, verify, replay: the primary engine | ENGINE |
-| **emet** | any output into an external witness that re-derives the bytes | WITNESS |
-| **accountable-surface** | agent actions on the live workstation, gated and journaled | SURFACE |
-| **learn** | study and credential work that halts at every graded step | STUDY |
-| **proof-surface** | evidence packets and contracts into records that reject authority-shape | CONTRACTS |
-| **coherence-membrane** | files, images, screens, context into inspectable observations | PERCEPTION |
-| **studio-engine** | creative work into replayable Worlds (shader, sound, motion, receipt) | STUDIO |
-| **build family** | quant, color, UI, forecasting into composable calibrated bricks | BUILD |
-| **reconcile** | the loop itself, as a primitive brick | RECONCILE |
+| Engine room | telos, forum, gather, index, crucible, emet, buildlang, learn | Working engines |
+| Model workflows | local endpoints, harnesses, orchestration, context maps | Agent infrastructure |
+| Graphics and media | studio-engine, RAW, generated art, color systems | Visual systems |
+| Research | papers, probes, source intake, benchmark notes | Thinking and evidence |
+| Release tracks | packaging, docs, CI, provenance, safety surfaces | Shipping discipline |
+| Career and collaboration | CV, resume, portfolio, offers, contact | Human entry points |
+| Private-line work | sensitive runtime, lab, vault, boundary tools | Public-safe summaries |
 
-Read top to bottom it is one sentence: perceive the world, judge it against something that
-could prove you wrong, and hand the next person a receipt.
+## Language Rules
 
-## Taglines
+Use:
 
-All em-dash-free, all earned:
+- public workshop
+- systems, models, graphics, and research
+- engines, surfaces, lanes, maps, records, artifacts
+- generated media and first-party visual material
+- inspectable, runnable, reviewable, bounded, labeled
+- shipped, active, release candidate, experiment, source lead
 
-- **Trust from re-derivation, not authority.** The family motto. It is the deepest line and
-  it is already earned by emet.
-- **Perceive. Verify. Carry the receipt.** The mark's pipeline line; it renders on the card.
-- **The accountable-work standard for AI.** The enterprise-deck headline.
-- **MATCH. DRIFT. UNVERIFIABLE. Never TRUSTED.** A manifesto line, not a hero. It tells the
-  truth about what the system will not do. Give it room to land.
+Use carefully when it names a concrete tool or result:
 
-## What holds it together
+- proof-surface
+- accountability
+- MATCH / DRIFT / UNVERIFIABLE
+- receipts
+- verifier
+- witnessed
+- trusted
 
-Four concrete, verifiable commitments. This is what makes "one standard" more than a slogan:
+Retire from broad site-level positioning:
 
-- **One verdict vocabulary.** MATCH / DRIFT / UNVERIFIABLE, no TRUSTED, across gather,
-  crucible, emet, forum, and proof-surface.
-- **One receipt shape.** Re-derivable, byte-identical on re-capture.
-- **One mark.** The flagship card is generated, not hand-authored, and is byte-identical on
-  re-render. The brand system itself obeys the reconcile. That is the tell that this is real
-  and not marketing.
-- **One honesty posture.** No SOTA, outperforms, or guarantee language. Every feature claim
-  carries a benchmark or it does not ship.
+- the accountable-work standard
+- proof before trust
+- trust from re-derivation
+- proof manifesto framing
+- every flagship as an accountability organ
+- compliance-style "proof packet" language on pages that are not about proof tooling
 
-## The honesty gate (binding)
+## Voice
 
-The brand's credibility is its only moat, so these are hard rules, not preferences:
+The voice should be wide, exacting, and alive.
 
-- **No unearned metrics.** A capability number ships only with the receipt that earned it. A
-  measurement that did not reproduce does not appear in any public copy, in any form, ever.
-- **Maturity is stated plainly.** Kernel, demo, tested-component, shippable, flagship. A
-  kernel is never called a flagship.
-- **The verdict vocabulary is not softened.** UNVERIFIABLE is a first-class outcome. A system
-  that cannot confirm something says so; it does not round up to MATCH.
-- **The published family is the whole story.** Public brand surfaces describe the flagships
-  and bricks listed here, and every claim maps to a shipping, re-checkable artifact.
+It can be candid and first-person on personal surfaces. It should be concrete on tool
+surfaces. It should avoid inflated authority claims, but it also should not bury the
+work under defensive qualifiers. The stronger move is to say what exists, what it does,
+where it stops, and why it is worth entering.
+
+Good public sentence shape:
+
+> A repository map, a local-model workbench, a graphics corridor, and a research note
+> are different doors into the same workshop.
+
+Bad public sentence shape:
+
+> Project Telos is the accountable-work standard that carries receipts for every
+> artifact.
+
+That second sentence can still describe a specific verifier lane in a specific context.
+It no longer carries the homepage, catalog, or overall brand.
+
+## Commitments
+
+- **No fake breadth.** A lane appears only when there is a real artifact, page, demo,
+  repo, source note, or staged plan behind it.
+- **No over-claiming.** Benchmarks, release status, and package numbers stay tied to
+  the artifact that produced them.
+- **No flattened identity.** Verification is important, but the public site must also
+  show compilers, graphics, color, generated media, local-model workflows, writing,
+  and collaboration surfaces.
+- **No decorative-only generation.** Generative art should come from the site's own
+  procedural engine or from generated assets that clearly serve the work.
+- **No stale editorial shell.** The site should feel like a dark, generative systems
+  workshop with dense navigation and live surfaces, not an old magazine-style essay
+  site.
+
+## Near-Term Editorial Target
+
+Every public page should answer one of these questions quickly:
+
+- What door am I standing at?
+- What can I inspect or run here?
+- What is shipped, active, private, or experimental?
+- What should I read next if this lane is not mine?
+
+That is the bridge between broad scope and technical seriousness.

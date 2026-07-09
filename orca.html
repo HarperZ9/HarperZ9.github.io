@@ -1,25 +1,25 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Runtime: the accountable way to run an assessment</title>
-<meta name="description" content="Runtime is the Project Telos local-first operator runtime housed in ORCA: local engagement workspaces, metadata-only checks, Markdown reports, portable bundles, checksums, and provenance receipts. It cannot reach the thing it assesses.">
+<title>Runtime: local-first operator workbench</title>
+<meta name="description" content="Runtime is the Project Telos local-first operator workbench housed in ORCA: local engagement workspaces, metadata-only checks, Markdown reports, portable bundles, checksums, and release records. It cannot reach the thing it assesses.">
 <link rel="canonical" href="https://harperz9.github.io/orca.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="Runtime: the accountable way to run an assessment">
-<meta property="og:description" content="Runtime is the Project Telos local-first operator runtime housed in ORCA: local engagement workspaces, metadata-only checks, Markdown reports, portable bundles, checksums, and provenance receipts. It cannot reach the thing it assesses.">
+<meta property="og:title" content="Runtime: local-first operator workbench">
+<meta property="og:description" content="Runtime is the Project Telos local-first operator workbench housed in ORCA: local engagement workspaces, metadata-only checks, Markdown reports, portable bundles, checksums, and release records. It cannot reach the thing it assesses.">
 <meta property="og:url" content="https://harperz9.github.io/orca.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/orca.png">
 <meta property="og:image:alt" content="A still from the engine: a Kepler orbit with its conserved angular momentum fitted from the trace, real mathematics drawn by our own code.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Runtime: the accountable way to run an assessment">
-<meta name="twitter:description" content="Runtime is the Project Telos local-first operator runtime housed in ORCA. It keeps local workspaces, reports, bundles, checksums, and provenance receipts joined without reaching the target.">
+<meta name="twitter:title" content="Runtime: local-first operator workbench">
+<meta name="twitter:description" content="Runtime is the Project Telos local-first operator workbench housed in ORCA. It keeps local workspaces, reports, bundles, checksums, and release records joined without reaching the target.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/orca.png">
-<meta name="color-scheme" content="light">
-<meta name="theme-color" content="#f4f3ef">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#14041b">
 <link rel="stylesheet" href="system/system.css?v=20260701a">
 <style>
   .runtime-readout{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);max-width:54rem;margin-top:1.4rem;pointer-events:auto}
@@ -36,12 +36,12 @@
 <script type="module" src="system/nav.js?v=20260630a"></script>
 
 <div class="frame">
-  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">Runtime</span> &middot; the accountable assessment runner</span></div>
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">Runtime</span> &middot; local-first operator workbench</span></div>
   <div class="mid">
     <p class="eyebrow">OPERATOR TOOLING &middot; <span translate="no">Runtime</span> / ORCA</p>
-    <h1>Run the assessment, keep the receipts. <span class="g">And never touch the target.</span></h1>
-    <p class="lede"><span translate="no">Runtime</span> is the command-line workbench for the discipline around an authorized assessment: what was in scope, what was recorded, what was checked, and what bundle can be handed off later. It opens a local <b>engagement workspace</b>, runs deterministic checks over that workspace, and emits a Markdown report plus a portable evidence bundle. The line it will not cross is the important one: everything is <b>local and metadata-only</b>. It does not scan, probe, resolve, connect to, or attack anything.</p>
-    <p class="close">It runs the bookkeeping of an assessment, accountably. It is not a scanner, and it cannot reach the thing being assessed.</p>
+    <h1>Run the workspace, keep the record. <span class="g">And never touch the target.</span></h1>
+    <p class="lede"><span translate="no">Runtime</span> is the command-line workbench for the structure around an authorized assessment: what was in scope, what was recorded, what was checked, and what bundle can be handed off later. It opens a local <b>engagement workspace</b>, runs deterministic checks over that workspace, and emits a Markdown report plus a portable bundle. The line it will not cross is the important one: everything is <b>local and metadata-only</b>. It does not scan, probe, resolve, connect to, or attack anything.</p>
+    <p class="close">It runs the bookkeeping of an assessment. It is not a scanner, and it cannot reach the thing being assessed.</p>
     <div class="runtime-readout" aria-label="Runtime proof readout">
       <span>release <b>v1.0.0</b></span>
       <span>tests <b>361</b></span>
@@ -57,17 +57,17 @@
 
 <!-- what it is -->
 <section class="mv" id="what" aria-labelledby="what-h">
-  <h2 id="what-h" class="reveal">The same discipline as the rest of my work, pointed at an engagement.</h2>
-  <p class="body-text reveal">Everything else I build is about making what a machine does checkable: bound it, witness it, refuse the unclear case. <span translate="no">Runtime</span> applies that habit to the place I most needed it: running a security engagement without losing the thread of what was authorized and what was done. An <b>engagement</b> is a local workspace: the agreed boundary of what may be touched, the assets in it, the findings as you record them. None of those records reach out to the real systems they name. They are notes about the work, held on your own disk.</p>
-  <p class="body-text reveal">Each capability in Runtime carries the <b>mode</b> it is allowed to run in (<code translate="no">sim</code>, <code translate="no">dry_run</code>, <code translate="no">local_lab</code>, or <code translate="no">authorized_run</code>), and the tool refuses to run a capability in a mode that capability does not declare. A checkpoint that says no until it is sure. The checks give <b>the same answer every time</b>: run them again and you get the same result, with no duplicated findings, and anything that doesn&rsquo;t apply is reported as skipped rather than quietly dropped. The point is that an assessment, like everything else here, should be something you can re-run and re-read, not something you have to take on trust.</p>
+  <h2 id="what-h" class="reveal">A local workbench for bounded engagement records.</h2>
+  <p class="body-text reveal"><span translate="no">Runtime</span> applies the workshop discipline to the place I needed it most: running a security engagement without losing the thread of scope, notes, findings, and handoff artifacts. An <b>engagement</b> is a local workspace: the agreed boundary of what may be touched, the assets in it, the findings as you record them. None of those records reach out to the real systems they name. They are notes about the work, held on your own disk.</p>
+  <p class="body-text reveal">Each capability in Runtime carries the <b>mode</b> it is allowed to run in (<code translate="no">sim</code>, <code translate="no">dry_run</code>, <code translate="no">local_lab</code>, or <code translate="no">authorized_run</code>), and the tool refuses to run a capability in a mode that capability does not declare. The checks give <b>the same answer every time</b>: run them again and you get the same result, with no duplicated findings, and anything that doesn&rsquo;t apply is reported as skipped rather than quietly dropped.</p>
   <em class="close reveal">It reads only the workspace you build. It never reaches the asset values you record, because there is nothing in it that could.</em>
 </section>
 
 <!-- the release -->
 <section class="mv" id="release" aria-labelledby="release-h">
-  <h2 id="release-h" class="reveal">A release you can verify, not just trust.</h2>
-  <p class="body-text reveal"><span translate="no">Runtime</span> ships the way I think every tool should: the v1.0.0 release carries not only the package, but a <b>checksum manifest</b> (a list of fingerprints, one per file, so you can confirm nothing changed) and a <b>provenance receipt</b>, a record of where it came from: the package&rsquo;s identity, the source revision it was built from, the Python version and platform it was built on, and the digests, all in one file. So before you run it, you can check that what you have is what was built. That is the same move the rest of my tools make about everything else, turned on the tool itself: here is the file, and here is how you work out for yourself that it&rsquo;s the real one.</p>
-  <em class="close reveal">Five files in the release: the wheel, the source archive, a portable bundle, a checksum manifest, and the provenance receipt that ties them together.</em>
+  <h2 id="release-h" class="reveal">A release with a clear artifact trail.</h2>
+  <p class="body-text reveal"><span translate="no">Runtime</span> ships with the package, a <b>checksum manifest</b>, and a release record: the package identity, source revision, Python version, platform, and digests in one file. Before you run it, you can see what was built and which files belong to the release.</p>
+  <em class="close reveal">Five files in the release: the wheel, the source archive, a portable bundle, a checksum manifest, and the release record that ties them together.</em>
 </section>
 
 <!-- the proof -->
@@ -93,16 +93,16 @@ check: modules   <span class="ok">ok</span>   descriptors=5
 check: state_dir <span class="ok">ok</span>   .orca/state
 check: artifact_dir <span class="ok">ok</span> .orca/artifacts</pre>
     <p class="artifact-cap">It tells you what it is before you ask it to do anything: a known version, a fixed set of capabilities, and a local place it keeps its state. No surprises, and nothing reaching off your machine.</p>
-    <p class="artifact-note">Real output from <b translate="no">python -m orca doctor</b> on a clean install: Python 3.11+, v1.0.0, 361 tests, CI green on 3.11 and 3.12. The everyday flow is <code translate="no">engagement</code> (open a workspace) &rarr; <code translate="no">assess</code> (run the local checks) &rarr; <code translate="no">report</code> (write the Markdown report) &rarr; <code translate="no">bundle</code> (a portable ZIP), and <code translate="no">orca demo create</code> builds a whole worked example in one command. <em>Honest limit:</em> the assessment checks are deliberately small and local, just seven metadata-only checks and three local module types. This is the accountable <em>runner</em> for an engagement, not a vulnerability scanner, and it is by design unable to be one.</p>
+    <p class="artifact-note">Real output from <b translate="no">python -m orca doctor</b> on a clean install: Python 3.11+, v1.0.0, 361 tests, CI green on 3.11 and 3.12. The everyday flow is <code translate="no">engagement</code> (open a workspace) &rarr; <code translate="no">assess</code> (run the local checks) &rarr; <code translate="no">report</code> (write the Markdown report) &rarr; <code translate="no">bundle</code> (a portable ZIP), and <code translate="no">orca demo create</code> builds a whole worked example in one command. <em>Honest limit:</em> the assessment checks are deliberately small and local, just seven metadata-only checks and three local module types. This is a local <em>runner</em> for an engagement, not a vulnerability scanner, and it is by design unable to be one.</p>
   </div>
 </section>
 
 <!-- honest limits -->
 <section class="mv" id="limits" aria-labelledby="limits-h">
   <h2 id="limits-h" class="reveal">What it is, and what it is not.</h2>
-  <p class="body-text reveal"><span translate="no">Runtime</span> is a local-first command-line runner for authorized assessment work: v1.0.0, 361 tests, with checksums and a provenance receipt on every build. Its whole safety model is one sentence: it is local and metadata-only (it reads descriptions of things, not the things themselves), and it has no way to reach a target. It does not scan, probe, resolve, connect to, or attack anything; the records you keep are notes about the work, not connections to the systems they name; and it refuses to run a capability in a mode that capability does not declare.</p>
+  <p class="body-text reveal"><span translate="no">Runtime</span> is a local-first command-line runner for authorized assessment work: v1.0.0, 361 tests, with checksums and a release record on every build. Its whole safety model is one sentence: it is local and metadata-only (it reads descriptions of things, not the things themselves), and it has no way to reach a target. It does not scan, probe, resolve, connect to, or attack anything; the records you keep are notes about the work, not connections to the systems they name; and it refuses to run a capability in a mode that capability does not declare.</p>
   <p class="pull reveal">It cannot touch the target. That isn&rsquo;t a setting. There is no capability in it that reaches off your disk.</p>
-  <p class="body-text reveal">The honest edges: the set of built-in checks is small on purpose, because this is the discipline-and-bookkeeping layer of an engagement, not the part that finds the vulnerabilities. Its public surface is the release-safe contract, docs, and verification envelope; operator-specific material stays private and local. It needs Python 3.11 or newer. It is the workbench I actually run my own engagements from, shipped the way I&rsquo;d want any tool I depend on to be shipped: bounded, witnessed, and able to tell you what it is.</p>
+  <p class="body-text reveal">The honest edges: the set of built-in checks is small on purpose, because this is the structure-and-bookkeeping layer of an engagement, not the part that finds the vulnerabilities. Its public surface is the release-safe contract, docs, and artifact envelope; operator-specific material stays private and local. It needs Python 3.11 or newer. It is the workbench I actually run my own engagements from: bounded, local, and able to tell you what it is.</p>
   <div class="channels reveal">
     <span class="g">Status</span>: public repo for release-safe docs and runtime contract; private operator material stays local
     &nbsp;&middot;&nbsp;
@@ -113,7 +113,7 @@ check: artifact_dir <span class="ok">ok</span> .orca/artifacts</pre>
 </main>
 
 <footer class="footer-seal" role="contentinfo">
-  <p class="seal">Local and metadata-only &middot; cannot reach the target &middot; checks that give the same answer every time. A verifiable release, and a runner that can tell you what it is.</p>
+  <p class="seal">Local and metadata-only &middot; cannot reach the target &middot; checks that give the same answer every time. A clear release record, and a runner that can tell you what it is.</p>
 </footer>
 
 <script src="system/reveal.js?v=20260625a" defer></script>
