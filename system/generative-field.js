@@ -1,12 +1,13 @@
 // First-party procedural field for shared Project Telos pages.
 // Synthesizes route-seeded orbit fields, contour ridges, crystal fragments,
-// fluid metaballs, ASCII dither, flow traces, and motes. No copied inspiration
-// images, no remote textures.
+// fluid metaballs, iso-contours, ASCII dither, flow traces, pointer wakes, and
+// motes. No copied inspiration images, no remote textures.
 let mounted = false;
 let rafId = 0;
 const pulses = [];
 const pointerState = { x: 0.5, y: 0.5, px: 0.5, py: 0.5, last: 0 };
 let lastInteraction = 0;
+let lastMovePulse = 0;
 
 function reducedMotion() {
   return !!(window.matchMedia &&
@@ -104,8 +105,9 @@ function routePalette(seed) {
 }
 
 function sizeCanvas(canvas, dpr) {
-  const width = Math.max(1, Math.ceil(window.innerWidth));
-  const height = Math.max(1, Math.ceil(window.innerHeight));
+  const rect = canvas.getBoundingClientRect ? canvas.getBoundingClientRect() : null;
+  const width = Math.max(1, Math.ceil((rect && rect.width) || window.innerWidth));
+  const height = Math.max(1, Math.ceil((rect && rect.height) || window.innerHeight));
   const backingWidth = Math.max(1, Math.round(width * dpr));
   const backingHeight = Math.max(1, Math.round(height * dpr));
   if (canvas.width !== backingWidth || canvas.height !== backingHeight) {
@@ -371,6 +373,13 @@ function metaballPotential(x, y, balls) {
   return potential;
 }
 
+function metaballGradient(x, y, balls, step) {
+  const dx = metaballPotential(x + step, y, balls) - metaballPotential(x - step, y, balls);
+  const dy = metaballPotential(x, y + step, balls) - metaballPotential(x, y - step, balls);
+  const length = Math.hypot(dx, dy) || 1;
+  return { x: dx / length, y: dy / length };
+}
+
 function readingCorridorAlpha(x, y, width, height) {
   const nx = x / width;
   const ny = y / height;
@@ -399,6 +408,42 @@ function drawMetaballWashes(ctx, width, height, tick, seed, palette) {
     grad.addColorStop(1, `rgba(${tone[0]},${tone[1]},${tone[2]},0)`);
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, width, height);
+  }
+  ctx.restore();
+}
+
+function drawMetaballContourBands(ctx, width, height, tick, seed, palette) {
+  const balls = metaballCenters(width, height, tick, seed);
+  const tones = palette.fluid || [[132, 245, 255], [167, 115, 255], [239, 171, 48]];
+  const cell = Math.max(14, Math.floor(Math.min(width, height) / 64));
+  const thresholds = [0.46, 0.62, 0.82, 1.08];
+  ctx.save();
+  ctx.globalCompositeOperation = "lighter";
+  ctx.lineCap = "round";
+  for (let y = cell * 0.5, row = 0; y < height; y += cell, row += 1) {
+    for (let x = cell * 0.5, col = 0; x < width; x += cell, col += 1) {
+      const potential = metaballPotential(x, y, balls);
+      for (let ti = 0; ti < thresholds.length; ti += 1) {
+        const threshold = thresholds[ti];
+        const band = Math.abs(potential - threshold);
+        const dither = orderedDither(col + ti, row);
+        if (band > 0.034 + dither * 0.018) continue;
+        const grad = metaballGradient(x, y, balls, cell * 0.36);
+        const tangentX = -grad.y;
+        const tangentY = grad.x;
+        const guard = readingCorridorAlpha(x, y, width, height);
+        const tone = tones[(ti + col + row) % tones.length];
+        const alpha = (0.035 + (threshold - band) * 0.06) * guard;
+        const span = cell * (0.46 + dither * 0.62);
+        const jitter = Math.sin(tick * 0.00016 + seed * 0.00001 + row * 0.7 + col * 0.33) * cell * 0.18;
+        ctx.beginPath();
+        ctx.lineWidth = 0.65 + ti * 0.12;
+        ctx.strokeStyle = toneToRgba(tone, alpha);
+        ctx.moveTo(x - tangentX * span + grad.x * jitter, y - tangentY * span + grad.y * jitter);
+        ctx.lineTo(x + tangentX * span + grad.x * jitter, y + tangentY * span + grad.y * jitter);
+        ctx.stroke();
+      }
+    }
   }
   ctx.restore();
 }
@@ -459,6 +504,44 @@ function drawFluidCurl(ctx, width, height, tick, seed, palette) {
   ctx.restore();
 }
 
+function drawPointerWake(ctx, width, height, tick, seed, palette) {
+  const age = tick - pointerState.last;
+  if (age < 0 || age > 1600) return;
+  const tones = palette.fluid || [[132, 245, 255], [167, 115, 255], [239, 171, 48]];
+  const x = pointerState.x * width;
+  const y = pointerState.y * height;
+  const dx = (pointerState.x - pointerState.px) * width;
+  const dy = (pointerState.y - pointerState.py) * height;
+  const speed = clamp(Math.hypot(dx, dy) / Math.max(width, height), 0, 0.08);
+  const fade = Math.max(0, 1 - age / 1600) * (0.55 + speed * 7);
+  const radius = Math.min(width, height) * (0.08 + speed * 2.6);
+  const guard = readingCorridorAlpha(x, y, width, height);
+  ctx.save();
+  ctx.globalCompositeOperation = "lighter";
+  ctx.lineCap = "round";
+  for (let arm = 0; arm < 28; arm += 1) {
+    const tone = tones[(arm + seed) % tones.length];
+    const base = (arm / 28) * Math.PI * 2 + tick * 0.00035;
+    const spiral = radius * (0.34 + (arm % 7) * 0.11);
+    const sx = x + Math.cos(base) * spiral;
+    const sy = y + Math.sin(base) * spiral * 0.72;
+    ctx.beginPath();
+    ctx.lineWidth = 0.8 + (arm % 4) * 0.18;
+    ctx.strokeStyle = toneToRgba(tone, 0.055 * fade * guard);
+    ctx.moveTo(sx, sy);
+    for (let step = 0; step < 18; step += 1) {
+      const local = step / 18;
+      const a = fieldAngle(sx + step * 4, sy - step * 2, tick, seed) + base * 0.22 + local * 1.7;
+      ctx.lineTo(
+        sx + Math.cos(a) * radius * local * 0.9 + dx * local * 0.38,
+        sy + Math.sin(a) * radius * local * 0.58 + dy * local * 0.38,
+      );
+    }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
 function drawInteractionShockwaves(ctx, width, height, tick, seed, palette) {
   if (!pulses.length) return;
   const tones = palette.fluid || [[132, 245, 255], [167, 115, 255], [239, 171, 48]];
@@ -504,10 +587,12 @@ function drawField(ctx, width, height, tick, seed, palette) {
   drawBackdrop(ctx, width, height, tick, seed, palette);
   drawDitheredPosterVeil(ctx, width, height, tick, seed, palette);
   drawMetaballWashes(ctx, width, height, tick, seed, palette);
+  drawMetaballContourBands(ctx, width, height, tick, seed, palette);
   drawAsciiMetaballField(ctx, width, height, tick, seed, palette);
   drawFluidCurl(ctx, width, height, tick, seed, palette);
   drawHydraTiles(ctx, width, height, tick, seed, palette);
   drawLampSymmetry(ctx, width, height, tick, seed, palette);
+  drawPointerWake(ctx, width, height, tick, seed, palette);
   drawInteractionShockwaves(ctx, width, height, tick, seed, palette);
   drawContourRidges(ctx, width, height, tick, seed, palette);
   drawCrystalFragments(ctx, width, height, tick, seed, palette);
@@ -574,6 +659,11 @@ function startEngine(scene, motes) {
     pointerState.y = clamp(event.clientY / Math.max(1, window.innerHeight), 0, 1);
     pointerState.last = performance.now();
     markInteraction(pointerState.last);
+    const moved = Math.hypot(pointerState.x - pointerState.px, pointerState.y - pointerState.py);
+    if (moved > 0.035 && pointerState.last - lastMovePulse > 240) {
+      addPulse(pointerState.x, pointerState.y, pointerState.last);
+      lastMovePulse = pointerState.last;
+    }
   };
   const onPointerMove = (event) => updatePointer(event);
   const onPointerDown = (event) => {

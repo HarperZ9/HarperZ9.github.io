@@ -85,7 +85,7 @@ def test_home_loads_the_vite_spectrum_shell_not_the_old_one() -> None:
     assert '<div id="root"></div>' in src
     assert 'type="module" crossorigin src="/assets/index-' in src
     assert 'rel="stylesheet" crossorigin href="/assets/index-' in src
-    assert 'href="/system/home-readable.css?v=20260709a"' in src
+    assert 'href="/system/home-readable.css?v=20260709d"' in src
     assert 'name="color-scheme" content="dark"' in src
     assert 'content="#14041b"' in src
     assert "Project Telos" in src
@@ -106,6 +106,9 @@ def test_dark_spectrum_tokens_are_defined() -> None:
     assert ".hero-title{" in home_css
     assert "font-family:var(--font-body)" in home_css
     assert ".brand," in home_css
+    assert "#gl.generative-field-canvas" in home_css
+    assert "#motes.generative-motes-canvas" in home_css
+    assert "body.home-generative-field::before" in home_css
     assert "-webkit-background-clip:text" not in css
     assert "-webkit-text-fill-color:transparent" not in css
 
@@ -156,8 +159,11 @@ def test_shared_pages_synthesize_art_through_the_engine_not_copied_assets() -> N
     assert "orderedDither" in js
     assert "metaballPotential" in js
     assert "drawMetaballWashes" in js
+    assert "metaballGradient" in js
+    assert "drawMetaballContourBands" in js
     assert "drawAsciiMetaballField" in js
     assert "drawFluidCurl" in js
+    assert "drawPointerWake" in js
     assert "drawDitheredPosterVeil" in js
     assert "drawHydraTiles" in js
     assert "drawLampSymmetry" in js
@@ -204,10 +210,12 @@ def test_live_spectrum_hero_is_wired() -> None:
     assert "flow field traced by ~2,400 particles" in app
     assert "drawn in your browser" in app
     assert ".hero-canvas{" in css
-    assert 'src="/system/home-art.js"' in index
+    assert 'src="/system/home-art.js?v=20260709d"' in index
     home_art = HOME_ART.read_text(encoding="utf-8")
     assert "home-generative-field" in home_art
     assert "./generative-field.js" in home_art
+    assert "placeFieldInHero" in home_art
+    assert "home-fluid-canvas" in home_art
     assert "fonts.googleapis.com" not in index
     assert "fonts.gstatic.com" not in index
 

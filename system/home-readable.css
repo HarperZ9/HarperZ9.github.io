@@ -2,6 +2,201 @@
    The Vite bundle is currently checked in without source. Keep public reading
    in Kilon/Hanken and reserve Telos Display for small signature marks. */
 
+body.home-generative-field{
+  position:relative;
+  isolation:isolate;
+  background:
+    radial-gradient(100% 90% at 80% 14%, rgba(29,226,214,.13), transparent 0 18%, transparent 52%),
+    radial-gradient(96% 78% at 92% 72%, rgba(206,73,255,.16), transparent 0 16%, transparent 58%),
+    #100214;
+}
+
+body.home-generative-field #root{
+  position:relative;
+  z-index:2;
+}
+
+body.home-generative-field::before,
+body.home-generative-field::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+
+body.home-generative-field::before{
+  z-index:1;
+  background:
+    radial-gradient(62% 74% at 28% 47%, rgba(16,2,20,.98) 0%, rgba(16,2,20,.82) 36%, rgba(16,2,20,.22) 64%, transparent 82%),
+    linear-gradient(90deg, rgba(7,1,12,.98) 0%, rgba(7,1,12,.88) 34%, rgba(7,1,12,.32) 63%, rgba(7,1,12,.74) 100%),
+    linear-gradient(180deg, rgba(7,1,12,.90) 0%, transparent 24%, transparent 66%, rgba(7,1,12,.96) 100%);
+}
+
+body.home-generative-field::after{
+  z-index:1;
+  opacity:.34;
+  mix-blend-mode:screen;
+  background:
+    radial-gradient(circle at center, rgba(190,255,246,.22) 0 1px, transparent 1.45px),
+    linear-gradient(115deg, transparent 0 42%, rgba(240,171,48,.12) 51%, transparent 62%),
+    linear-gradient(0deg, transparent 0 48%, rgba(255,255,255,.045) 49%, transparent 50%);
+  background-size:18px 18px, 100% 100%, 100% 11px;
+  -webkit-mask-image:linear-gradient(90deg, transparent 0%, transparent 35%, #000 58%, #000 100%);
+  mask-image:linear-gradient(90deg, transparent 0%, transparent 35%, #000 58%, #000 100%);
+}
+
+#gl.generative-field-canvas,
+#motes.generative-motes-canvas{
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100dvh;
+  max-width:none;
+  display:block;
+  pointer-events:none;
+  transform:translateZ(0);
+  contain:strict;
+}
+
+#gl.generative-field-canvas{
+  z-index:0;
+  opacity:.76;
+  mix-blend-mode:screen;
+  filter:saturate(1.34) contrast(1.18) brightness(.92);
+}
+
+#motes.generative-motes-canvas{
+  z-index:1;
+  opacity:.36;
+  mix-blend-mode:screen;
+  filter:saturate(1.16);
+}
+
+.generative-field-failed #gl.generative-field-canvas,
+.generative-field-failed #motes.generative-motes-canvas{
+  display:none;
+}
+
+.hero{
+  background:
+    radial-gradient(72% 78% at 79% 24%, rgba(82,232,218,.08), transparent 0 38%, transparent 74%),
+    radial-gradient(60% 68% at 90% 70%, rgba(231,86,255,.10), transparent 0 35%, transparent 72%);
+}
+
+.hero::before,
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+}
+
+.hero::before{
+  background:
+    radial-gradient(44rem 36rem at max(18vw,12rem) 48%, rgba(8,1,13,.88), rgba(8,1,13,.66) 44%, transparent 72%),
+    linear-gradient(90deg, rgba(8,1,13,.92) 0%, rgba(8,1,13,.76) 39%, transparent 73%);
+}
+
+.hero::after{
+  opacity:.42;
+  mix-blend-mode:screen;
+  background:
+    conic-gradient(from 145deg at 80% 29%, transparent 0deg, rgba(132,245,255,.12) 38deg, transparent 78deg, rgba(239,171,48,.10) 141deg, transparent 212deg, rgba(235,71,143,.10) 284deg, transparent 360deg);
+  -webkit-mask-image:radial-gradient(74% 76% at 79% 35%, #000 0 54%, transparent 78%);
+  mask-image:radial-gradient(74% 76% at 79% 35%, #000 0 54%, transparent 78%);
+}
+
+.hero-canvas-wrap{
+  opacity:.30;
+  mix-blend-mode:screen;
+  filter:saturate(1.24) contrast(1.14);
+}
+
+.hero-canvas{
+  max-width:none;
+}
+
+body.home-generative-field .hero > #gl.generative-field-canvas,
+body.home-generative-field .hero > #motes.generative-motes-canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  max-width:none;
+  display:block;
+  pointer-events:none;
+  transform:translateZ(0);
+  contain:strict;
+}
+
+body.home-generative-field .hero > #gl.generative-field-canvas{
+  z-index:0;
+  opacity:.82;
+  mix-blend-mode:screen;
+  filter:saturate(1.42) contrast(1.24) brightness(1.02);
+  -webkit-mask-image:linear-gradient(90deg, rgba(0,0,0,.34) 0%, rgba(0,0,0,.52) 32%, #000 56%, #000 100%);
+  mask-image:linear-gradient(90deg, rgba(0,0,0,.34) 0%, rgba(0,0,0,.52) 32%, #000 56%, #000 100%);
+}
+
+body.home-generative-field .hero > #motes.generative-motes-canvas{
+  z-index:0;
+  opacity:.34;
+  mix-blend-mode:screen;
+  filter:saturate(1.12);
+}
+
+.hero-glow{
+  opacity:.76;
+  filter:saturate(1.26) contrast(1.12);
+}
+
+.hero-veil{
+  background:
+    radial-gradient(54rem 44rem at 26% 50%, rgba(8,1,13,.94) 0%, rgba(8,1,13,.78) 38%, rgba(8,1,13,.16) 70%, transparent 88%),
+    radial-gradient(120% 90% at 78% 30%, transparent 0%, color-mix(in oklab, var(--void) 26%, transparent) 42%, var(--void) 90%),
+    linear-gradient(180deg, color-mix(in oklab, var(--void) 60%, transparent) 0%, transparent 24% 60%, var(--void) 100%);
+}
+
+.readout{
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--void) 78%, transparent), color-mix(in oklab, var(--surface) 70%, transparent));
+  border-color:color-mix(in oklab, var(--signal) 34%, var(--hairline));
+  box-shadow:0 0 0 1px color-mix(in oklab, var(--signal) 8%, transparent);
+}
+
+.engine{
+  overflow:hidden;
+}
+
+.engine::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:0;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--eng) 14%, transparent), transparent 36%),
+    radial-gradient(30rem 8rem at 72% 50%, color-mix(in oklab, var(--eng) 16%, transparent), transparent 72%);
+  transition:opacity .3s var(--ease-out);
+}
+
+.engine:hover::before{
+  opacity:1;
+}
+
+.engine > *{
+  position:relative;
+}
+
+.range-card,
+.pp,
+.emet,
+.wi,
+.gd{
+  border-radius:12px;
+}
+
 .hero-title,
 .sec-head h2,
 .pull,
@@ -58,6 +253,38 @@
 }
 
 @media (width <= 560px){
+  body.home-generative-field::before{
+    background:
+      radial-gradient(76% 66% at 50% 38%, rgba(8,1,13,.88) 0%, rgba(8,1,13,.72) 52%, transparent 78%),
+      linear-gradient(180deg, rgba(8,1,13,.88), transparent 32%, rgba(8,1,13,.95));
+  }
+
+  body.home-generative-field::after{
+    opacity:.20;
+    -webkit-mask-image:linear-gradient(180deg, transparent 0%, #000 26%, #000 78%, transparent 100%);
+    mask-image:linear-gradient(180deg, transparent 0%, #000 26%, #000 78%, transparent 100%);
+  }
+
+  #gl.generative-field-canvas{
+    opacity:.48;
+  }
+
+  #motes.generative-motes-canvas{
+    opacity:.24;
+  }
+
+  .hero-canvas-wrap{
+    opacity:.22;
+  }
+
+  body.home-generative-field .hero > #gl.generative-field-canvas{
+    opacity:.52;
+  }
+
+  body.home-generative-field .hero > #motes.generative-motes-canvas{
+    opacity:.20;
+  }
+
   .hero-title{
     max-width:11.4ch;
     font-size:clamp(2.42rem,12vw,4.45rem);
@@ -66,5 +293,15 @@
 
   .lead{
     font-size:clamp(1rem,4.6vw,1.14rem);
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  #motes.generative-motes-canvas{
+    display:none;
+  }
+
+  .hero-canvas-wrap{
+    opacity:.28;
   }
 }
