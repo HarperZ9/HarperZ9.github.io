@@ -170,9 +170,11 @@ body.home-generative-field .hero > #motes.generative-motes-canvas{
 }
 
 .home-menu{
-  display:none;
+  /* Visible at every width: the site taxonomy must be reachable from the
+     home nav on desktop too, matching the static pages' Menu. */
+  display:block;
   position:relative;
-  margin-left:auto;
+  margin-left:.4rem;
 }
 
 .home-menu summary{
