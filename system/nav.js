@@ -57,6 +57,54 @@ function navLink([label, href, key, external], active) {
   return `<a class="${current ? 'is-active' : ''}" href="${href}"${current ? ' aria-current="page"' : ''}${external ? ' rel="noopener"' : ''}>${label}</a>`;
 }
 
+function menuGroup(label, items, active, className) {
+  return `<div class="sn-menu-group ${className}">`
+    + `<p class="sn-menu-label">${label}</p>`
+    + items.map((item) => navLink(item, active)).join("")
+    + `</div>`;
+}
+
+function enhanceMenu(doc, mount) {
+  const details = mount.querySelector(".sn-more");
+  const summary = details && details.querySelector("summary");
+  if (!details || !summary || details.dataset.enhanced === "true") return;
+
+  details.dataset.enhanced = "true";
+  summary.setAttribute("aria-expanded", String(details.open));
+
+  if (mount.__snMenuAbort) mount.__snMenuAbort.abort();
+  const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+  const opts = controller ? { signal: controller.signal } : undefined;
+  if (controller) mount.__snMenuAbort = controller;
+
+  const close = (returnFocus = false) => {
+    if (!details.open) return;
+    details.open = false;
+    summary.setAttribute("aria-expanded", "false");
+    if (returnFocus && typeof summary.focus === "function") summary.focus();
+  };
+
+  details.addEventListener("toggle", () => {
+    summary.setAttribute("aria-expanded", String(details.open));
+  }, opts);
+
+  details.querySelectorAll(".sn-more-list a").forEach((link) => {
+    link.addEventListener("click", () => close(false), opts);
+  });
+
+  if (typeof doc.addEventListener === "function") {
+    doc.addEventListener("click", (event) => {
+      if (details.open && !details.contains(event.target)) close(false);
+    }, opts);
+    doc.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        close(true);
+      }
+    }, opts);
+  }
+}
+
 export function renderNav(doc = document) {
   const mount = doc.getElementById("site-nav");
   if (!mount) return;
@@ -67,11 +115,13 @@ export function renderNav(doc = document) {
     + `<nav class="sn-links" aria-label="Primary">`
     + PRIMARY.map((item) => navLink(item, active)).join("")
     + `<details class="sn-more"${moreActive ? ' data-current="true"' : ''}>`
-    + `<summary${moreActive ? ' aria-current="page"' : ''}>More</summary>`
-    + `<div class="sn-more-list">`
-    + MORE.map((item) => navLink(item, active)).join("")
+    + `<summary${moreActive ? ' aria-current="page"' : ''}>Menu</summary>`
+    + `<div class="sn-more-list" aria-label="Site menu">`
+    + menuGroup("Primary", PRIMARY, active, "sn-menu-primary")
+    + menuGroup("More pages", MORE, active, "sn-menu-secondary")
     + `</div></details>`
     + `</nav>`;
+  enhanceMenu(doc, mount);
 }
 
 if (typeof document !== "undefined") {

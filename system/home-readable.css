@@ -169,6 +169,99 @@ body.home-generative-field .hero > #motes.generative-motes-canvas{
   color:color-mix(in oklab, var(--ink) 76%, var(--muted));
 }
 
+.home-menu{
+  display:none;
+  position:relative;
+  margin-left:auto;
+}
+
+.home-menu summary{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.42rem;
+  min-height:2.65rem;
+  padding:.56rem .75rem;
+  border:1px solid color-mix(in oklab, var(--signal) 18%, transparent);
+  border-radius:999px;
+  color:color-mix(in oklab, var(--ink) 84%, var(--muted));
+  background:color-mix(in oklab, var(--void) 76%, transparent);
+  font-family:var(--font-body);
+  font-size:.92rem;
+  font-weight:760;
+  line-height:1;
+  list-style:none;
+  cursor:pointer;
+  user-select:none;
+  transition:color .2s var(--ease-out),border-color .2s var(--ease-out),background .2s var(--ease-out);
+}
+
+.home-menu summary::-webkit-details-marker{
+  display:none;
+}
+
+.home-menu summary::after{
+  content:"+";
+  color:var(--muted);
+  margin-left:.14rem;
+}
+
+.home-menu[open] summary::after{
+  content:"-";
+}
+
+.home-menu summary:hover,
+.home-menu summary:focus-visible{
+  color:var(--ink);
+  border-color:color-mix(in oklab, var(--signal) 42%, transparent);
+  background:color-mix(in oklab, var(--signal) 9%, transparent);
+  outline:none;
+}
+
+.home-menu summary:focus-visible{
+  box-shadow:0 0 0 2px color-mix(in oklab, var(--signal) 42%, transparent);
+}
+
+.home-menu-list{
+  position:absolute;
+  right:0;
+  top:calc(100% + .55rem);
+  z-index:70;
+  min-width:16rem;
+  display:grid;
+  gap:.16rem;
+  padding:.72rem;
+  border:1px solid color-mix(in oklab, var(--signal) 18%, var(--hairline-2));
+  border-radius:10px;
+  background:color-mix(in oklab, var(--void) 96%, black);
+  box-shadow:0 22px 68px -38px rgba(0,0,0,.92),0 0 0 1px color-mix(in oklab, var(--signal) 8%, transparent) inset;
+}
+
+.home-menu:not([open]) .home-menu-list{
+  display:none;
+}
+
+.home-menu-list a{
+  display:flex;
+  align-items:center;
+  min-height:2.7rem;
+  padding:.64rem .72rem;
+  border-radius:8px;
+  color:color-mix(in oklab, var(--ink) 84%, var(--muted));
+  text-decoration:none;
+  font-family:var(--font-body);
+  font-size:.96rem;
+  font-weight:720;
+  line-height:1.18;
+}
+
+.home-menu-list a:hover,
+.home-menu-list a:focus-visible{
+  color:var(--ink);
+  background:color-mix(in oklab, var(--signal) 10%, transparent);
+  outline:none;
+}
+
 .readout{
   width:min(100%,43rem);
   max-width:100%;
@@ -204,6 +297,67 @@ body.home-generative-field .hero > #motes.generative-motes-canvas{
 .ro-route:focus-visible{
   color:var(--ink);
   border-color:color-mix(in oklab, var(--signal) 42%, transparent);
+  background:color-mix(in oklab, var(--signal) 10%, transparent);
+}
+
+.brand:focus-visible,
+.topnav-links a:focus-visible,
+.btn:focus-visible,
+.ro-route:focus-visible,
+.eng-open:focus-visible,
+.eng-src:focus-visible,
+.paper-doi:focus-visible,
+.paper-close a:focus-visible,
+.picker-chip:focus-visible,
+.picker-open:focus-visible,
+.range-proof a:focus-visible,
+.eng-desc a:focus-visible,
+.work-body a:focus-visible,
+.lead a:focus-visible{
+  outline:2px solid color-mix(in oklab, var(--signal) 50%, transparent);
+  outline-offset:3px;
+  border-radius:8px;
+}
+
+.topnav-links a,
+.btn,
+.ro-route,
+.eng-open,
+.eng-src,
+.paper-doi,
+.picker-chip,
+.picker-open{
+  min-height:2.55rem;
+  display:inline-flex;
+  align-items:center;
+}
+
+.btn,
+.ro-route,
+.picker-chip{
+  justify-content:center;
+}
+
+.eng-open,
+.eng-src,
+.paper-doi,
+.picker-open{
+  padding-inline:.1rem;
+}
+
+.engine:focus-within,
+.range-card:focus-within,
+.paper:focus-within,
+.picker-out:focus-within{
+  border-color:color-mix(in oklab, var(--signal) 34%, var(--hairline));
+  box-shadow:0 0 0 1px color-mix(in oklab, var(--signal) 16%, transparent);
+}
+
+.picker-chip{
+  line-height:1.15;
+}
+
+.picker-chip:focus-visible{
   background:color-mix(in oklab, var(--signal) 10%, transparent);
 }
 
@@ -332,6 +486,20 @@ body.home-generative-field .hero > #motes.generative-motes-canvas{
     display:none !important;
   }
 
+  .home-menu{
+    display:block;
+  }
+
+  .home-menu-list{
+    position:fixed;
+    left:var(--shell);
+    right:var(--shell);
+    top:3.95rem;
+    min-width:0;
+    max-height:calc(100dvh - 4.7rem);
+    overflow:auto;
+  }
+
   .brand{
     font-size:clamp(.96rem,4.7vw,1.18rem);
     letter-spacing:.10em;
@@ -398,6 +566,12 @@ body.home-generative-field .hero > #motes.generative-motes-canvas{
   .ro-chip{
     text-align:center;
     padding:.32em .45em;
+  }
+
+  .ro-route,
+  .picker-chip,
+  .btn{
+    min-height:2.75rem;
   }
 }
 

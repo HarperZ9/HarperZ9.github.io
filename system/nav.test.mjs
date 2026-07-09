@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { navActive } from "./nav.js";
+import { navActive, renderNav } from "./nav.js";
 
 test("active section is derived from the path", () => {
   assert.equal(navActive("/"), "home");
@@ -31,4 +31,28 @@ test("active section is derived from the path", () => {
   assert.equal(navActive("/quantalang.html"), "catalog");
   assert.equal(navActive("/atelier.html"), "catalog");
   assert.equal(navActive("/gallery.html"), "catalog");
+});
+
+test("rendered nav includes a complete grouped menu for mobile", () => {
+  const mount = {
+    html: "",
+    set innerHTML(value) { this.html = value; },
+    get innerHTML() { return this.html; },
+    querySelector() { return null; },
+  };
+  const doc = {
+    location: { pathname: "/resume.html" },
+    getElementById(id) { return id === "site-nav" ? mount : null; },
+  };
+
+  renderNav(doc);
+
+  assert.match(mount.innerHTML, /<summary[^>]*>Menu<\/summary>/);
+  assert.match(mount.innerHTML, /class="sn-menu-group sn-menu-primary"/);
+  assert.match(mount.innerHTML, /class="sn-menu-group sn-menu-secondary"/);
+  assert.match(mount.innerHTML, /href="overview\.html"/);
+  assert.match(mount.innerHTML, /href="demo-index\.html"/);
+  assert.match(mount.innerHTML, /href="guide\.html"/);
+  assert.match(mount.innerHTML, /href="writing\.html"/);
+  assert.match(mount.innerHTML, /href="test-run-request\.html" aria-current="page"/);
 });
