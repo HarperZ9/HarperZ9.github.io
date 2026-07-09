@@ -101,9 +101,9 @@ def test_dark_spectrum_tokens_are_defined() -> None:
         assert token in css
     assert "background:var(--void)" in css
     assert ".spectrum-word{" in css
-    assert '@font-face{font-family:"Telos Display"' in css
-    assert '--font-brand:"Telos Display","Kilon",system-ui,sans-serif' in css
-    assert '--font-display:"Kilon",system-ui,sans-serif' in css
+    assert 'font-family:Telos Display' in css
+    assert '--font-brand:"Telos Display", "Kilon", system-ui, sans-serif' in css
+    assert '--font-display:"Kilon", system-ui, sans-serif' in css
     assert ".hero-title{" in home_css
     assert "font-family:var(--font-body)" in home_css
     assert ".brand," in home_css
@@ -247,8 +247,15 @@ def test_live_spectrum_hero_is_wired() -> None:
     assert "flow field traced by ~2,400 particles" in app
     assert "drawn in your browser" in app
     assert ".hero-canvas{" in css
-    assert 'src="/system/home-art.js?v=20260709m"' in index
+    # The bundle is built from home/ and loads home-art.js itself via a
+    # cache-keyed dynamic import; index.html keeps the readable-css link.
+    assert "home-art.js?v=20260709m" in app
     assert 'href="/system/home-readable.css?v=20260709m"' in index
+    # The final hero copy is authored in home/src/App.tsx and ships in the
+    # bundle - no runtime copy repair.
+    assert "Tools for local AI" in app
+    assert "Open a demo, inspect an engine, or start a project." in app
+    assert "Common first moves" in app
     home_art = HOME_ART.read_text(encoding="utf-8")
     assert "home-generative-field" in home_art
     assert "./generative-field.js" in home_art
@@ -260,9 +267,7 @@ def test_live_spectrum_hero_is_wired() -> None:
     assert "ensureEngineConsole" not in home_art
     assert "data-engine-mode-button" not in home_art
     assert "normalizeHomeFormFields" in home_art
-    assert "repairHeroCopy" in home_art
-    assert "Tools for local AI" in home_art
-    assert "Open a demo, inspect an engine, or start a project." in home_art
+    assert "repairHeroCopy" not in home_art
     assert "fonts.googleapis.com" not in index
     assert "fonts.gstatic.com" not in index
 
@@ -313,27 +318,28 @@ def test_home_uses_clear_first_viewport_messaging() -> None:
     app = app_source()
     home_art = HOME_ART.read_text(encoding="utf-8")
     css = home_readable_source()
-    assert "Project Telos is a public workshop" in app
-    assert "Tools for local AI" in home_art
-    assert "codebase maps" in home_art
-    assert "compiler tools" in home_art
-    assert "graphics systems" in home_art
-    assert "Open a demo, inspect an engine, or start a project." in home_art
-    assert "The field is live, but the text comes first." in home_art
-    assert "Common first moves" in home_art
-    assert "run a live demo" in home_art
-    assert "inspect an engine" in home_art
-    assert "read a paper" in home_art
-    assert "start a work thread" in home_art
-    assert "removeResearchLaneReadout" in home_art
-    assert "repairSectionKickers" in home_art
+    assert "Project Telos is my public workshop" in app
+    assert "Tools for local AI" in app
+    assert "codebase maps" in app
+    assert "compiler tools" in app
+    assert "graphics systems" in app
+    assert "Open a demo, inspect an engine, or start a project." in app
+    assert "flow field traced by ~2,400 particles" in app
+    # The first-move routes and section copy are authored in home/src and
+    # ship in the bundle; home-art.js no longer rewrites any copy.
+    assert "run a live demo" in app
+    assert "inspect an engine" in app
+    assert "read a paper" in app
+    assert "start a work thread" in app
+    assert "Engine room" in app
+    assert "Live demos" in app
+    assert "removeResearchLaneReadout" not in home_art
+    assert "repairSectionKickers" not in home_art
     assert ".home-menu{" in css
     assert ".home-menu-list" in css
     assert ".home-engine-console" not in css
     assert ".home-console-stage" not in css
     assert "resize:horizontal" not in css
-    assert "Engine room" in home_art
-    assert "Live demos" in home_art
     assert "Start here" not in home_art
     assert "8 engines" not in home_art
     assert "available for work" not in home_art
@@ -372,7 +378,14 @@ def test_eight_public_engines_equal_standing() -> None:
     ):
         assert f"name:`{name}`" in src
         assert f"role:`{role}`" in src
+    # Primary open-links route into the workshop; the package/repo link
+    # stays as the secondary `src` on each row.
     for href in (
+        "/studio.html", "/index-graph.html", "/gather.html", "/forum.html",
+        "/crucible.html", "/emet.html", "/buildlang.html", "/learn.html",
+    ):
+        assert f"href:`{href}`" in src
+    for source in (
         "https://github.com/HarperZ9/telos",
         "https://pypi.org/project/index-graph/",
         "https://pypi.org/project/gather-engine/",
@@ -382,7 +395,7 @@ def test_eight_public_engines_equal_standing() -> None:
         "https://github.com/HarperZ9/buildlang",
         "https://github.com/HarperZ9/learn",
     ):
-        assert f"href:`{href}`" in src
+        assert f"src:`{source}`" in src
 
 
 def test_research_and_work_sections_keep_range_first_line() -> None:
@@ -390,9 +403,8 @@ def test_research_and_work_sections_keep_range_first_line() -> None:
     home_art = HOME_ART.read_text(encoding="utf-8")
     assert "Six papers," in src
     assert "many doors." in src
-    assert "public lanes" in src
-    assert "start anywhere" in src
-    assert 'querySelector(\'.readout[aria-label="public lanes"]\')' in home_art
+    # The "public lanes" readout was retired with the broad-scope voice.
+    assert "public lanes" not in src
     assert "0009-0001-7175-5393" in src
     assert "Bring the knot," in src
     assert "make it tangible." in src

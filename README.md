@@ -45,7 +45,10 @@ accessible, and honest about maturity; private systems stay bounded off-page.
 
 ## Pages
 
-- `index.html` -- generative home shell (Vite bundle plus `system/home-art.js`).
+- `index.html` -- generative home, built from source in `home/` (Vite + React;
+  `cd home && npm run deploy` rebuilds `index.html` and `assets/`).
+- `papers/` -- direct PDFs of the six published papers, built from the
+  LaTeX sources with tectonic.
 - `overview.html` -- the engine room: the flagship lineup.
 - `studio.html` -- the Studio, a live media instrument for rendering and
   measuring the frame.

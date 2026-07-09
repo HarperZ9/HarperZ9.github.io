@@ -1,0 +1,147 @@
+/* ============================================================
+   PROJECT TELOS — design system v2
+   Direction: Supergraphic Ultramodern x generative plotter art
+   x the living-instrument thesis. Drenched jewel base, a
+   supergraphic rainbow accent system, architectural display type.
+   ============================================================ */
+
+/* ---- self-hosted faces, shared with the static pages at /system/fonts/.
+   Kilon ships as a single static 400 cut: declaring the true weight lets the
+   browser synthesize bold for 600+ requests (a 100-900 range would suppress
+   synthesis and render every heading regular). ---- */
+@font-face { font-family: "Telos Display"; src: url("/system/fonts/telos-display.woff2") format("woff2"), url("/system/fonts/telos-display.ttf") format("truetype"); font-weight: 700 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Kilon"; src: url("/system/fonts/kilon.woff2") format("woff2"), url("/system/fonts/kilon.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Hanken Grotesk"; src: url("/system/fonts/hanken-grotesk.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Conso"; src: url("/system/fonts/conso-regular.woff2") format("woff2"), url("/system/fonts/conso-regular.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Conso"; src: url("/system/fonts/conso-semibold.woff2") format("woff2"), url("/system/fonts/conso-semibold.woff") format("woff"); font-weight: 600 700; font-style: normal; font-display: swap; }
+
+:root {
+  color-scheme: dark;
+
+  /* --- base: a deep, saturated plum/aubergine jewel dark (NOT gray near-black) --- */
+  --void:      oklch(0.155 0.052 316);
+  --void-2:    oklch(0.185 0.055 314);
+  --surface:   oklch(0.225 0.052 312);
+  --raised:    oklch(0.275 0.050 310);
+  --hairline:  oklch(0.62 0.08 308 / 0.28);
+  --hairline-2:oklch(0.62 0.08 308 / 0.14);
+
+  --ink:       oklch(0.975 0.012 320);
+  --ink-2:     oklch(0.88 0.02 318);
+  --muted:     oklch(0.785 0.035 316);
+  --faint:     oklch(0.64 0.05 314);
+
+  /* --- the supergraphic spectrum: a 70s rainbow band, used deliberately --- */
+  --sg-magenta: oklch(0.685 0.255 352);
+  --sg-ember:   oklch(0.760 0.190 46);
+  --sg-gold:    oklch(0.860 0.155 90);
+  --sg-lime:    oklch(0.870 0.215 133);
+  --sg-cyan:    oklch(0.825 0.135 200);
+  --sg-iris:    oklch(0.695 0.200 286);
+
+  /* --- semantics (color never the sole signal; paired with text + shape) --- */
+  --signal:  var(--sg-cyan);
+  --spark:   var(--sg-magenta);
+  --match:   var(--sg-lime);
+  --drift:   var(--sg-ember);
+  --unverif: var(--faint);
+
+  --on-signal: oklch(0.16 0.04 250);
+  --on-spark:  oklch(0.17 0.05 350);
+
+  /* --- type --- */
+  --font-brand:   "Telos Display", "Kilon", system-ui, sans-serif;
+  --font-display: "Kilon", system-ui, sans-serif;
+  --font-body:    "Hanken Grotesk", system-ui, sans-serif;
+  --font-mono:    "Conso", ui-monospace, "SFMono-Regular", monospace;
+
+  --step--1: clamp(0.83rem, 0.80rem + 0.15vw, 0.92rem);
+  --step-0:  clamp(1.02rem, 0.98rem + 0.22vw, 1.15rem);
+  --step-1:  clamp(1.30rem, 1.20rem + 0.5vw, 1.60rem);
+  --step-2:  clamp(1.66rem, 1.45rem + 1.0vw, 2.30rem);
+  --step-3:  clamp(2.10rem, 1.70rem + 2.0vw, 3.40rem);
+  --step-4:  clamp(2.70rem, 1.90rem + 3.8vw, 5.20rem);
+  --step-5:  clamp(3.10rem, 1.70rem + 6.8vw, 7.40rem);
+
+  --sp-1: 0.5rem; --sp-2: 0.85rem; --sp-3: 1.35rem; --sp-4: 2.1rem;
+  --sp-5: 3.4rem; --sp-6: 5.5rem; --sp-7: 8rem;
+  --shell: clamp(1.15rem, 5vw, 5rem);
+  --maxw: 78rem;
+
+  --radius: 14px;
+  --radius-lg: 26px;
+
+  --z-hero-canvas: 0; --z-content: 1; --z-nav: 40; --z-dex: 45; --z-modal: 80; --z-toast: 90;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.30, 1);
+  --dur: 0.62s;
+}
+
+/* ---- reset ---- */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--void);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+img, svg, canvas { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+:focus-visible { outline: 2.5px solid var(--signal); outline-offset: 3px; border-radius: 3px; }
+::selection { background: var(--spark); color: var(--on-spark); }
+
+/* ---- type primitives ---- */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+p { text-wrap: pretty; }
+.mono { font-family: var(--font-mono); font-feature-settings: "tnum" 1; }
+.measure { max-width: 64ch; }
+
+/* ---- reveal: content is never opacity-gated. The resting state stays fully
+   visible (print, headless, missed observer); the entrance reads as a
+   transform-only settle. ---- */
+.reveal { opacity: 1; }
+html.js .reveal:not(.in) { opacity: 1; transform: translateY(14px); }
+html.js .reveal.in {
+  opacity: 1; transform: none;
+  transition: opacity 0.7s var(--ease-out), transform 0.9s var(--ease-out-expo);
+}
+html.js .reveal.d1.in { transition-delay: 0.08s; }
+html.js .reveal.d2.in { transition-delay: 0.16s; }
+html.js .reveal.d3.in { transition-delay: 0.24s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  html.js .reveal, html.js .reveal:not(.in) { opacity: 1 !important; transform: none !important; }
+  html.js .reveal.in { transition: none !important; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.skip-link {
+  position: fixed; top: 0; left: 0; z-index: var(--z-toast);
+  transform: translateY(-120%);
+  background: var(--ink); color: var(--void); padding: 0.7rem 1.1rem;
+  font-family: var(--font-mono); font-size: var(--step--1); border-radius: 0 0 10px 0;
+}
+.skip-link:focus { transform: none; }
