@@ -78,6 +78,154 @@ function upgradeHomeMenu(doc) {
   wireDetailsMenu(doc, details, summary, ".home-menu-list", "__homeMenuAbort");
 }
 
+function motionIsReduced() {
+  return !!(window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+}
+
+function setConsoleMeter(consoleEl, key, value) {
+  const meter = consoleEl.querySelector(`[data-home-meter="${key}"]`);
+  const bar = consoleEl.querySelector(`[data-home-bar="${key}"]`);
+  const pct = Math.max(0, Math.min(1, value));
+  if (meter) setText(meter, pct.toFixed(2));
+  if (bar) bar.style.setProperty("--meter", pct.toFixed(3));
+}
+
+function wireEngineConsole(doc, consoleEl) {
+  if (!consoleEl || consoleEl.dataset.enhanced === "true") return;
+  consoleEl.dataset.enhanced = "true";
+
+  if (doc.__homeConsoleAbort) doc.__homeConsoleAbort.abort();
+  const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+  const opts = controller ? { signal: controller.signal } : undefined;
+  if (controller) doc.__homeConsoleAbort = controller;
+
+  const modeButtons = [...consoleEl.querySelectorAll("[data-engine-mode-button]")];
+  const status = consoleEl.querySelector("[data-home-console-status]");
+  const pointer = consoleEl.querySelector("[data-home-pointer]");
+  const stage = consoleEl.querySelector("[data-home-console-stage]");
+
+  const setMode = (mode) => {
+    doc.body.dataset.homeEngineMode = mode;
+    modeButtons.forEach((button) => {
+      const active = button.dataset.engineModeButton === mode;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+    if (status) setText(status, `${mode} renderer`);
+  };
+
+  modeButtons.forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.classList.contains("is-active")));
+    button.addEventListener("click", () => setMode(button.dataset.engineModeButton || "fluid"), opts);
+  });
+
+  if (stage) {
+    const updatePointer = (event) => {
+      const rect = stage.getBoundingClientRect();
+      const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / Math.max(1, rect.width)));
+      const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / Math.max(1, rect.height)));
+      stage.style.setProperty("--px", `${(x * 100).toFixed(1)}%`);
+      stage.style.setProperty("--py", `${(y * 100).toFixed(1)}%`);
+      if (pointer) setText(pointer, `${Math.round(x * 100)}:${Math.round(y * 100)}`);
+    };
+    stage.addEventListener("pointermove", updatePointer, opts);
+    stage.addEventListener("pointerdown", updatePointer, opts);
+  }
+
+  let raf = 0;
+  let last = 0;
+  const update = (tick = performance.now()) => {
+    if (!doc.body.contains(consoleEl)) return;
+    if (tick - last > 160) {
+      last = tick;
+      const t = tick * 0.001;
+      setConsoleMeter(consoleEl, "field", 0.58 + Math.sin(t * 0.86) * 0.22);
+      setConsoleMeter(consoleEl, "dither", 0.50 + Math.cos(t * 0.63 + 1.4) * 0.24);
+      setConsoleMeter(consoleEl, "motion", 0.46 + Math.sin(t * 1.18 + 2.1) * 0.28);
+    }
+    if (!motionIsReduced()) raf = window.requestAnimationFrame(update);
+  };
+
+  update();
+  if (controller) {
+    controller.signal.addEventListener("abort", () => {
+      if (raf) window.cancelAnimationFrame(raf);
+    }, { once: true });
+  }
+}
+
+function ensureEngineConsole(doc) {
+  const hero = doc.querySelector(".hero");
+  const anchor = hero && hero.querySelector(".hero-inner");
+  if (!hero || !anchor) return;
+
+  let consoleEl = hero.querySelector(".home-engine-console");
+  const placeConsole = () => {
+    const cta = anchor.querySelector(".cta");
+    if (cta) anchor.insertBefore(consoleEl, cta);
+    else anchor.appendChild(consoleEl);
+  };
+
+  if (!consoleEl) {
+    consoleEl = doc.createElement("aside");
+    consoleEl.className = "home-engine-console reveal in d3";
+    consoleEl.setAttribute("aria-label", "Live renderer console");
+    consoleEl.innerHTML = `
+      <div class="home-console-head">
+        <span class="home-console-title">Renderer console</span>
+        <span class="home-console-status" data-home-console-status>fluid renderer</span>
+      </div>
+      <div class="home-console-stage" data-home-console-stage>
+        <span class="home-console-orbit" aria-hidden="true"></span>
+        <span class="home-console-crosshair" aria-hidden="true"></span>
+        <span class="home-console-pointer">pointer <b data-home-pointer>50:50</b></span>
+      </div>
+      <div class="home-engine-modules" aria-label="Renderer modules">
+        <article class="home-engine-module" data-module="field">
+          <div class="home-module-top"><span>field</span><output data-home-meter="field" aria-live="off">0.58</output></div>
+          <div class="home-module-meter" aria-hidden="true"><i data-home-bar="field"></i></div>
+          <p>metaballs, contours, pointer wakes</p>
+        </article>
+        <article class="home-engine-module" data-module="dither">
+          <div class="home-module-top"><span>dither</span><output data-home-meter="dither" aria-live="off">0.50</output></div>
+          <div class="home-module-meter" aria-hidden="true"><i data-home-bar="dither"></i></div>
+          <p>ASCII marks and posterized sampling</p>
+        </article>
+        <article class="home-engine-module" data-module="motion">
+          <div class="home-module-top"><span>motion</span><output data-home-meter="motion" aria-live="off">0.46</output></div>
+          <div class="home-module-meter" aria-hidden="true"><i data-home-bar="motion"></i></div>
+          <p>flow traces and wake response</p>
+        </article>
+      </div>
+      <div class="home-console-actions" role="group" aria-label="Renderer modes">
+        <button type="button" class="is-active" data-engine-mode-button="fluid">Fluid</button>
+        <button type="button" data-engine-mode-button="dither">Dither</button>
+        <button type="button" data-engine-mode-button="ascii">ASCII</button>
+        <a href="studio.html?source=showcase">Open Studio</a>
+      </div>`;
+    placeConsole();
+  } else if (consoleEl.parentElement !== anchor) {
+    placeConsole();
+  }
+
+  wireEngineConsole(doc, consoleEl);
+}
+
+function normalizeHomeFormFields(doc) {
+  doc.querySelectorAll("input, select, textarea").forEach((field, index) => {
+    if (field.dataset.homeFieldNormalized === "true") return;
+    const base = `home-field-${index + 1}`;
+    const label = field.closest("label");
+    const labelText = label ? label.textContent.trim().replace(/\s+/g, " ") : "";
+    const fallback = field.getAttribute("aria-label") || field.getAttribute("placeholder") || labelText || base;
+    if (!field.id) field.id = base;
+    if (!field.name) field.name = base;
+    if (!field.getAttribute("aria-label")) field.setAttribute("aria-label", fallback.slice(0, 96));
+    field.dataset.homeFieldNormalized = "true";
+  });
+}
+
 function repairHeroReadout(readout) {
   if (!readout) return;
   const label = readout.querySelector(".ro-label");
@@ -134,6 +282,8 @@ function repairHeroCopy(doc) {
   removeResearchLaneReadout(doc);
   repairSectionKickers(doc);
   upgradeHomeMenu(doc);
+  ensureEngineConsole(doc);
+  normalizeHomeFormFields(doc);
 
   setText(note, "The field is live, but the text comes first. Motion reduces automatically when requested.");
 }
