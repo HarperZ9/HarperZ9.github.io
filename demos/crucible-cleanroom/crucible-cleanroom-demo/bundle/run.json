@@ -1,0 +1,180 @@
+{
+  "ok": true,
+  "thesis": {
+    "id": "bd7404c02eb2036e",
+    "title": "Binary search comparison bounds",
+    "registered_at": 1783561209.4969292,
+    "disposition": "publishable",
+    "seal": "bd7404c02eb2036e5e77283b865758db140d7047cb4749790aec60897dfe10a8",
+    "claims": [
+      {
+        "id": "7ff7099881cc8385",
+        "sha256": "7ff7099881cc8385283873e24b23750267f6ddf7b9331b11de29cfa65115541a"
+      },
+      {
+        "id": "6c25619436f7a00b",
+        "sha256": "6c25619436f7a00ba30a5bc651e04b408afbbae07a6eed117ead29e8875c7947"
+      },
+      {
+        "id": "2fb8fae1e61a1d69",
+        "sha256": "2fb8fae1e61a1d69afe1b71eefe8307344323431d9e834ad2738d0fb553696bc"
+      }
+    ]
+  },
+  "refutations": [
+    {
+      "claim_id": "7ff7099881cc8385",
+      "claim_sha256": "7ff7099881cc8385283873e24b23750267f6ddf7b9331b11de29cfa65115541a",
+      "challenge": "test the stated falsification: a measured worst-case comparison count above 11 for n=1024",
+      "measurable": "a measured worst-case comparison count above 11 for n=1024",
+      "source": "null"
+    },
+    {
+      "claim_id": "6c25619436f7a00b",
+      "claim_sha256": "6c25619436f7a00ba30a5bc651e04b408afbbae07a6eed117ead29e8875c7947",
+      "challenge": "test the stated falsification: a measured worst-case comparison count above 3 for n=1024",
+      "measurable": "a measured worst-case comparison count above 3 for n=1024",
+      "source": "null"
+    },
+    {
+      "claim_id": "2fb8fae1e61a1d69",
+      "claim_sha256": "2fb8fae1e61a1d69afe1b71eefe8307344323431d9e834ad2738d0fb553696bc",
+      "challenge": "the claim states no falsification condition, so it cannot be refuted",
+      "measurable": "",
+      "source": "null"
+    }
+  ],
+  "assessment": {
+    "started_at": 1783561209.5029306,
+    "thesis_id": "bd7404c02eb2036e",
+    "thesis_seal": "bd7404c02eb2036e5e77283b865758db140d7047cb4749790aec60897dfe10a8",
+    "claims": 3,
+    "match": 1,
+    "drift": 1,
+    "unverifiable": 1,
+    "verdict_seal": "ddc96adb769615bc81b4f5e9cc1cccb56fcabede712c4a05970d1b806dbb2311",
+    "measurement_seal": "6bdc1a5fcd124cf1d93ae487a80f79d19c9b7190be81b1b5bd62c41de877d963",
+    "disposition": "publishable",
+    "stored": null,
+    "verdicts": [
+      {
+        "claim_id": "7ff7099881cc8385",
+        "claim_sha256": "7ff7099881cc8385283873e24b23750267f6ddf7b9331b11de29cfa65115541a",
+        "status": "MATCH",
+        "deviation": 0.0,
+        "tolerance": 0.5,
+        "margin": 1.0,
+        "method": "comparison-count",
+        "grounds": "deviation 0 within tolerance 0.5",
+        "disposition": "publishable"
+      },
+      {
+        "claim_id": "6c25619436f7a00b",
+        "claim_sha256": "6c25619436f7a00ba30a5bc651e04b408afbbae07a6eed117ead29e8875c7947",
+        "status": "DRIFT",
+        "deviation": 8.0,
+        "tolerance": 0.5,
+        "margin": -15.0,
+        "method": "comparison-count",
+        "grounds": "deviation 8 exceeds tolerance 0.5",
+        "disposition": "publishable"
+      },
+      {
+        "claim_id": "2fb8fae1e61a1d69",
+        "claim_sha256": "2fb8fae1e61a1d69afe1b71eefe8307344323431d9e834ad2738d0fb553696bc",
+        "status": "UNVERIFIABLE",
+        "deviation": null,
+        "tolerance": 0.0,
+        "margin": null,
+        "method": "none",
+        "grounds": "claim states no falsification condition",
+        "disposition": "publishable"
+      }
+    ],
+    "measurements": [
+      {
+        "claim_id": "7ff7099881cc8385",
+        "claim_sha256": "7ff7099881cc8385283873e24b23750267f6ddf7b9331b11de29cfa65115541a",
+        "deviation": 0.0,
+        "tolerance": 0.5,
+        "method": "comparison-count",
+        "measured_at": 1783561209.5029306,
+        "evidence": [
+          "worst-case probes for n=1024 is floor(log2(1024)) + 1 = 11"
+        ]
+      },
+      {
+        "claim_id": "6c25619436f7a00b",
+        "claim_sha256": "6c25619436f7a00ba30a5bc651e04b408afbbae07a6eed117ead29e8875c7947",
+        "deviation": 8.0,
+        "tolerance": 0.5,
+        "method": "comparison-count",
+        "measured_at": 1783561209.5029306,
+        "evidence": [
+          "worst case is 11, claimed bound 3, excess 8"
+        ]
+      }
+    ],
+    "seal": "3c7f449900263ca00e7be049af12b8e39dfe19d1dad25bbf39bde94686227618"
+  },
+  "verdicts": [
+    {
+      "claim_id": "7ff7099881cc8385",
+      "claim_sha256": "7ff7099881cc8385283873e24b23750267f6ddf7b9331b11de29cfa65115541a",
+      "status": "MATCH",
+      "disposition": "publishable",
+      "deviation": 0.0,
+      "tolerance": 0.5,
+      "margin": 1.0,
+      "method": "comparison-count",
+      "grounds": "deviation 0 within tolerance 0.5"
+    },
+    {
+      "claim_id": "6c25619436f7a00b",
+      "claim_sha256": "6c25619436f7a00ba30a5bc651e04b408afbbae07a6eed117ead29e8875c7947",
+      "status": "DRIFT",
+      "disposition": "publishable",
+      "deviation": 8.0,
+      "tolerance": 0.5,
+      "margin": -15.0,
+      "method": "comparison-count",
+      "grounds": "deviation 8 exceeds tolerance 0.5"
+    },
+    {
+      "claim_id": "2fb8fae1e61a1d69",
+      "claim_sha256": "2fb8fae1e61a1d69afe1b71eefe8307344323431d9e834ad2738d0fb553696bc",
+      "status": "UNVERIFIABLE",
+      "disposition": "publishable",
+      "deviation": null,
+      "tolerance": 0.0,
+      "margin": null,
+      "method": "none",
+      "grounds": "claim states no falsification condition"
+    }
+  ],
+  "measurement_warnings": [],
+  "checks": {
+    "seals_ok": true,
+    "thesis_ok": true,
+    "verdicts_rederive": true
+  },
+  "report": "report.md",
+  "record": "run.json",
+  "bundle": ".",
+  "spec": "spec.json",
+  "review": "review.md",
+  "verifier": {
+    "mode": "cleanroom",
+    "inputs": [
+      "spec.json",
+      "run.json",
+      "report.md"
+    ],
+    "excluded": [
+      "worker context",
+      "reasoning trace",
+      "intermediate steps"
+    ],
+    "checkability": "If success cannot be evaluated from the original spec and the artifact, the spec is not checkable yet."
+  }
+}
