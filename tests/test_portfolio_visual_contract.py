@@ -85,7 +85,7 @@ def test_home_loads_the_vite_spectrum_shell_not_the_old_one() -> None:
     assert '<div id="root"></div>' in src
     assert 'type="module" crossorigin src="/assets/index-' in src
     assert 'rel="stylesheet" crossorigin href="/assets/index-' in src
-    assert 'href="/system/home-readable.css?v=20260709g"' in src
+    assert 'href="/system/home-readable.css?v=20260709h"' in src
     assert 'name="color-scheme" content="dark"' in src
     assert 'content="#14041b"' in src
     assert "Project Telos" in src
@@ -127,6 +127,9 @@ def test_shared_pages_use_the_generative_dark_cascade() -> None:
     for token in ("--faint:", "--match:", "--drift:", "--unverif:"):
         assert token in css
     assert ".site-nav .sn-more:not([open]) .sn-more-list{display:none}" in css
+    assert ".site-nav .sn-menu-primary" in css
+    assert "max-height:calc(100dvh - 5rem)" in css
+    assert ".btn:focus-visible" in css
 
 
 def test_document_pages_use_the_generative_document_cascade() -> None:
@@ -145,6 +148,9 @@ def test_document_pages_use_the_generative_document_cascade() -> None:
     assert ".site-nav .sn-links > a{\n    display:none;" in css
     assert "color-scheme:dark" in css
     assert ".site-nav .sn-more:not([open]) .sn-more-list{display:none}" in css
+    assert ".site-nav .sn-menu-primary" in css
+    assert "max-height:calc(100dvh - 5rem)" in css
+    assert ".docnav a:focus-visible" in css
 
 
 def test_shared_pages_synthesize_art_through_the_engine_not_copied_assets() -> None:
@@ -213,12 +219,13 @@ def test_live_spectrum_hero_is_wired() -> None:
     assert "flow field traced by ~2,400 particles" in app
     assert "drawn in your browser" in app
     assert ".hero-canvas{" in css
-    assert 'src="/system/home-art.js?v=20260709g"' in index
+    assert 'src="/system/home-art.js?v=20260709h"' in index
     home_art = HOME_ART.read_text(encoding="utf-8")
     assert "home-generative-field" in home_art
     assert "./generative-field.js" in home_art
     assert "placeFieldInHero" in home_art
     assert "home-fluid-canvas" in home_art
+    assert "upgradeHomeMenu" in home_art
     assert "repairHeroCopy" in home_art
     assert "Tools for local AI" in home_art
     assert "Open a demo, inspect an engine, or start a project." in home_art
@@ -286,6 +293,8 @@ def test_home_uses_clear_first_viewport_messaging() -> None:
     assert "start a work thread" in home_art
     assert "removeResearchLaneReadout" in home_art
     assert "repairSectionKickers" in home_art
+    assert ".home-menu{" in css
+    assert ".home-menu-list" in css
     assert "Engine room" in home_art
     assert "Live demos" in home_art
     assert "Start here" not in home_art
