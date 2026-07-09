@@ -85,7 +85,7 @@ def test_home_loads_the_vite_spectrum_shell_not_the_old_one() -> None:
     assert '<div id="root"></div>' in src
     assert 'type="module" crossorigin src="/assets/index-' in src
     assert 'rel="stylesheet" crossorigin href="/assets/index-' in src
-    assert 'href="/system/home-readable.css?v=20260709d"' in src
+    assert 'href="/system/home-readable.css?v=20260709g"' in src
     assert 'name="color-scheme" content="dark"' in src
     assert 'content="#14041b"' in src
     assert "Project Telos" in src
@@ -140,6 +140,9 @@ def test_document_pages_use_the_generative_document_cascade() -> None:
     assert ".site-nav" in css
     assert ".sn-links" in css
     assert ".sn-more-list" in css
+    assert "overflow-wrap:anywhere" in css
+    assert "text-transform:none;color:var(--ink)" in css
+    assert ".site-nav .sn-links > a{\n    display:none;" in css
     assert "color-scheme:dark" in css
     assert ".site-nav .sn-more:not([open]) .sn-more-list{display:none}" in css
 
@@ -210,12 +213,15 @@ def test_live_spectrum_hero_is_wired() -> None:
     assert "flow field traced by ~2,400 particles" in app
     assert "drawn in your browser" in app
     assert ".hero-canvas{" in css
-    assert 'src="/system/home-art.js?v=20260709d"' in index
+    assert 'src="/system/home-art.js?v=20260709g"' in index
     home_art = HOME_ART.read_text(encoding="utf-8")
     assert "home-generative-field" in home_art
     assert "./generative-field.js" in home_art
     assert "placeFieldInHero" in home_art
     assert "home-fluid-canvas" in home_art
+    assert "repairHeroCopy" in home_art
+    assert "Tools for local AI" in home_art
+    assert "Open a demo, inspect an engine, or start a project." in home_art
     assert "fonts.googleapis.com" not in index
     assert "fonts.gstatic.com" not in index
 
@@ -262,17 +268,32 @@ def test_home_sections_are_present() -> None:
         assert css_class in css
 
 
-def test_home_uses_neutral_broad_scope_messaging() -> None:
-    src = app_source()
-    assert "Systems," in src
-    assert "models," in src
-    assert "graphics," in src
-    assert "research." in src
-    assert "Project Telos is a public workshop" in src
-    assert "Start with a surface." in src
-    assert "Then follow the pieces that matter to your work." in src
-    assert "Open the workshop" in src
-    assert "then follow the working surface." in src
+def test_home_uses_clear_first_viewport_messaging() -> None:
+    app = app_source()
+    home_art = HOME_ART.read_text(encoding="utf-8")
+    css = home_readable_source()
+    assert "Project Telos is a public workshop" in app
+    assert "Tools for local AI" in home_art
+    assert "codebase maps" in home_art
+    assert "compiler tools" in home_art
+    assert "graphics systems" in home_art
+    assert "Open a demo, inspect an engine, or start a project." in home_art
+    assert "The field is live, but the text comes first." in home_art
+    assert "Common first moves" in home_art
+    assert "run a live demo" in home_art
+    assert "inspect an engine" in home_art
+    assert "read a paper" in home_art
+    assert "start a work thread" in home_art
+    assert "removeResearchLaneReadout" in home_art
+    assert "repairSectionKickers" in home_art
+    assert "Engine room" in home_art
+    assert "Live demos" in home_art
+    assert "Start here" not in home_art
+    assert "8 engines" not in home_art
+    assert "available for work" not in home_art
+    assert ".topnav-links{\n    display:none !important;" in css
+    assert "width:calc(100vw - (var(--shell) * 2));" in css
+    assert ".kicker::before{\n  display:none;" in css
     for retired in (
         "Build with",
         "a model.",
@@ -287,7 +308,8 @@ def test_home_uses_neutral_broad_scope_messaging() -> None:
         "verify the rigor.",
         "The accountability line is the current focus",
     ):
-        assert retired not in src
+        assert retired not in app
+        assert retired not in home_art
 
 
 def test_eight_public_engines_equal_standing() -> None:
@@ -319,10 +341,12 @@ def test_eight_public_engines_equal_standing() -> None:
 
 def test_research_and_work_sections_keep_range_first_line() -> None:
     src = app_source()
+    home_art = HOME_ART.read_text(encoding="utf-8")
     assert "Six papers," in src
     assert "many doors." in src
     assert "public lanes" in src
     assert "start anywhere" in src
+    assert 'querySelector(\'.readout[aria-label="public lanes"]\')' in home_art
     assert "0009-0001-7175-5393" in src
     assert "Bring the knot," in src
     assert "make it tangible." in src
@@ -383,7 +407,7 @@ def test_overview_and_catalog_use_product_names_before_repo_aliases() -> None:
 
 
 def test_no_em_or_en_dashes_in_home_and_system() -> None:
-    for path in (INDEX, app_js_path(), app_css_path(), HOME_READABLE, RIBBON, SCROLL):
+    for path in (INDEX, app_js_path(), app_css_path(), HOME_READABLE, HOME_ART, RIBBON, SCROLL):
         text = path.read_text(encoding="utf-8")
         assert EM_DASH not in text, f"em-dash in {path.name}"
         assert EN_DASH not in text, f"en-dash in {path.name}"
