@@ -1803,22 +1803,29 @@ function drawDlaCoral(ctx, width, height, tick, seed, palette) {
   ctx.globalCompositeOperation = "source-over";
   ctx.fillStyle = "rgba(6,9,22,0.95)";
   ctx.fillRect(0, 0, width, height);
-  const cell = 3;
+  // Scale-aware: the growth grid follows the canvas so the coral occupies the
+  // same fraction of a 300px tile and a 2200px plate (a fixed 3px cell made it
+  // vanish at plate scale - operator-reported low visibility, 2026-07-10).
+  const cell = Math.max(3, Math.round(Math.min(width, height) / 150));
   const gw = Math.ceil(width / cell);
   const gh = Math.ceil(height / cell);
   const grid = new Uint8Array(gw * gh);
   const cxg = Math.floor(gw * (0.35 + rnd(2500) * 0.3));
   const cyg = Math.floor(gh * (0.36 + rnd(2501) * 0.2));
   grid[cyg * gw + cxg] = 1;
-  const walkers = 2200;
+  const walkers = 3400;
   let stuckCount = 1;
   let salt = 2510;
+  let maxR = 2;
   const ring = Math.min(gw, gh) * 0.42;
   for (let w2 = 0; w2 < walkers; w2 += 1) {
+    // Spawn near the living edge (maxR-tracked): far more walkers stick, so
+    // the accretion reads as a full reef instead of a sparse dust.
     const a0 = rnd(salt += 1) * Math.PI * 2;
-    let gx = Math.floor(cxg + Math.cos(a0) * ring * (0.4 + rnd(salt += 1) * 0.6));
-    let gy = Math.floor(cyg + Math.sin(a0) * ring * (0.4 + rnd(salt += 1) * 0.6));
-    for (let s2 = 0; s2 < 230; s2 += 1) {
+    const spawnR = Math.min(ring, maxR + 4 + rnd(salt += 1) * 10);
+    let gx = Math.floor(cxg + Math.cos(a0) * spawnR);
+    let gy = Math.floor(cyg + Math.sin(a0) * spawnR);
+    for (let s2 = 0; s2 < 380; s2 += 1) {
       const dir = Math.floor(rand(seed, salt + s2) * 4);
       gx += dir === 0 ? 1 : dir === 1 ? -1 : 0;
       gy += dir === 2 ? 1 : dir === 3 ? -1 : 0;
@@ -1826,16 +1833,20 @@ function drawDlaCoral(ctx, width, height, tick, seed, palette) {
       if (grid[gy * gw + gx + 1] || grid[gy * gw + gx - 1] || grid[(gy + 1) * gw + gx] || grid[(gy - 1) * gw + gx]) {
         stuckCount += 1;
         grid[gy * gw + gx] = 1;
-        const age = stuckCount / walkers;
-        const tone = age < 0.3 ? [240, 224, 64] : age < 0.66 ? [64, 200, 232] : [26, 74, 144];
-        ctx.fillStyle = toneToRgba(tone, 0.9);
-        ctx.fillRect(gx * cell, gy * cell, cell, cell);
-        if (rand(seed, salt + s2 + 7) > 0.965) {
-          ctx.strokeStyle = "rgba(208,40,24,0.3)";
-          ctx.lineWidth = 1;
+        const dist = Math.hypot(gx - cxg, gy - cyg);
+        maxR = Math.max(maxR, dist);
+        // Colour by radius, not stick order: a bright yellow core grading
+        // through cyan to deep blue at the rim - robust at every stick rate.
+        const rNorm = Math.min(1, dist / (ring * 0.5));
+        const tone = rNorm < 0.3 ? [250, 236, 92] : rNorm < 0.62 ? [86, 216, 244] : [52, 118, 204];
+        ctx.fillStyle = toneToRgba(tone, 0.95);
+        ctx.fillRect(gx * cell, gy * cell, cell + 1, cell + 1);
+        if (rand(seed, salt + s2 + 7) > 0.96) {
+          ctx.strokeStyle = "rgba(224,52,32,0.55)";
+          ctx.lineWidth = Math.max(1, cell * 0.35);
           ctx.beginPath();
           ctx.moveTo(gx * cell, gy * cell + cell);
-          ctx.lineTo(gx * cell + (rand(seed, salt + s2 + 9) - 0.5) * 8, gy * cell + 20 + rand(seed, salt + s2 + 11) * 60);
+          ctx.lineTo(gx * cell + (rand(seed, salt + s2 + 9) - 0.5) * cell * 3, gy * cell + cell * 7 + rand(seed, salt + s2 + 11) * cell * 20);
           ctx.stroke();
         }
         break;
@@ -1843,6 +1854,15 @@ function drawDlaCoral(ctx, width, height, tick, seed, palette) {
     }
     salt += 240;
   }
+  // A soft additive halo over the grown reef lifts it out of the deep ground.
+  ctx.globalCompositeOperation = "lighter";
+  const glowR = Math.max(cell * 8, (maxR + 6) * cell);
+  const glow = ctx.createRadialGradient(cxg * cell, cyg * cell, 0, cxg * cell, cyg * cell, glowR);
+  glow.addColorStop(0, "rgba(140,220,255,0.22)");
+  glow.addColorStop(0.55, "rgba(80,150,230,0.10)");
+  glow.addColorStop(1, "rgba(80,150,230,0)");
+  ctx.fillStyle = glow;
+  ctx.fillRect(cxg * cell - glowR, cyg * cell - glowR, glowR * 2, glowR * 2);
   ctx.restore();
 }
 
