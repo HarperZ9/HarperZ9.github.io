@@ -1,5 +1,5 @@
 import { mountGenerativeField } from "./generative-field.js";
-import { MORE } from "./nav.js";
+import { MORE, wireAnchorArrival, wireMenuArrowKeys } from "./nav.js";
 
 // The home app (built from home/) renders its final copy natively, so this
 // module no longer rewrites hero text. It adds the two enhancements the
@@ -82,6 +82,7 @@ function upgradeHomeMenu(doc) {
   nav.appendChild(details);
 
   wireDetailsMenu(doc, details, summary, ".home-menu-list", "__homeMenuAbort");
+  wireMenuArrowKeys(details, ".home-menu-list");
   return true;
 }
 
@@ -116,6 +117,7 @@ function bootHomeArt() {
   if (!document.body) return;
   document.body.classList.add("home-generative-field");
   document.documentElement.classList.add("home-generative-field-ready");
+  wireAnchorArrival(document);
   enhanceWhenReady(document);
   mountGenerativeField(document).catch(() => {
     document.documentElement.classList.add("generative-field-failed");

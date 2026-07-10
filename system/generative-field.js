@@ -1626,6 +1626,321 @@ function drawDatabendLayer(ctx, width, height, tick, seed) {
   applyDatabend(ctx, width, height, seed, 0.55);
 }
 
+/* ---------------------------------------------------------------------------
+   WAVE 3 (2026-07-10): the deep corpus. Object-on-velvet lanterns, hairline
+   particle curtains, pixel-sort ruins, chaos-game light columns, DLA coral,
+   woven cloth, and fiber canyons. Same one-shot contract as wave 2.
+--------------------------------------------------------------------------- */
+
+function drawStellatedLantern(ctx, width, height, tick, seed, palette) {
+  const rnd = (salt) => rand(seed, salt);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgba(0,0,0,0.96)";
+  ctx.fillRect(0, 0, width, height);
+  const cx = width * (0.44 + rnd(2000) * 0.12);
+  const cy = height * (0.46 + rnd(2001) * 0.1);
+  const R = Math.min(width, height) * (0.24 + rnd(2002) * 0.1);
+  const N = 4 + Math.floor(rnd(2003) * 5);
+  const petals = 8 + Math.floor(rnd(2004) * 10);
+  ctx.strokeStyle = "rgba(236,230,214,0.5)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(cx, -4);
+  ctx.lineTo(cx, cy - R * 1.02);
+  ctx.stroke();
+  ctx.globalCompositeOperation = "lighter";
+  for (let k = 0; k < N * 2; k += 1) {
+    const base = (k * Math.PI) / N;
+    const mirror = k % 2 === 1;
+    for (let p = 0; p < petals; p += 1) {
+      const t = 1 - p / petals;
+      const rr = R * (0.22 + t * 0.78);
+      const wdt = (Math.PI / N) * 0.82 * t + 0.06;
+      const saw = 1 + (p % 2) * 0.06;
+      const a0 = base + (mirror ? wdt : -wdt);
+      ctx.fillStyle = `rgba(244,227,189,${0.12 + t * 0.16})`;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      const steps = 7;
+      for (let s2 = 0; s2 <= steps; s2 += 1) {
+        const f = s2 / steps;
+        const ang = base + (a0 - base) * Math.sin(f * Math.PI);
+        const jag = 1 + (s2 % 2) * 0.045 * saw;
+        ctx.lineTo(cx + Math.cos(ang) * rr * f * jag, cy + Math.sin(ang) * rr * f * jag);
+      }
+      ctx.closePath();
+      ctx.fill();
+      if (p % 2 === 0) {
+        ctx.strokeStyle = `rgba(255,238,204,${0.10 + t * 0.14})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    }
+  }
+  const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 1.15);
+  core.addColorStop(0, "rgba(255,244,214,0.9)");
+  core.addColorStop(0.3, "rgba(226,178,110,0.42)");
+  core.addColorStop(1, "rgba(150,120,80,0)");
+  ctx.fillStyle = core;
+  ctx.fillRect(cx - R * 1.2, cy - R * 1.2, R * 2.4, R * 2.4);
+  ctx.restore();
+}
+
+function drawFiberStrands(ctx, width, height, tick, seed, palette) {
+  const rnd = (salt) => rand(seed, salt);
+  ctx.save();
+  ctx.globalCompositeOperation = "lighter";
+  const hotX = width * (0.3 + rnd(2100) * 0.4);
+  const hotY = height * (0.3 + rnd(2101) * 0.4);
+  const maxD = Math.hypot(width, height) * 0.6;
+  const particles = 900 + Math.floor(rnd(2102) * 900);
+  let salt = 2110;
+  for (let p2 = 0; p2 < particles; p2 += 1) {
+    let x = rnd(salt += 1) * width;
+    let y = rnd(salt += 1) * height * 0.5;
+    const steps = 16 + Math.floor(rnd(salt += 1) * 30);
+    const d = Math.hypot(x - hotX, y - hotY) / maxD;
+    const tone = d < 0.33 ? [72, 216, 200] : d < 0.66 ? [232, 168, 60] : [122, 95, 208];
+    ctx.strokeStyle = toneToRgba(tone, 0.07);
+    ctx.lineWidth = 0.7;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    for (let s2 = 0; s2 < steps; s2 += 1) {
+      const a = fieldAngle(x, y, tick, seed) * 0.55 + (Math.PI / 2) * 0.7;
+      x += Math.cos(a) * 4;
+      y += Math.abs(Math.sin(a)) * 4 + 2.1;
+      ctx.lineTo(x, y);
+      if (y > height + 8) break;
+    }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawPixelSortRuin(ctx, width, height, tick, seed, palette) {
+  const rnd = (salt) => rand(seed, salt);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgba(10,10,12,0.95)";
+  ctx.fillRect(0, 0, width, height);
+  const keys = [
+    [[225, 75, 210], [240, 160, 200]],
+    [[255, 180, 60], [90, 107, 128]],
+    [[223, 232, 238], [201, 184, 236]],
+  ];
+  const key = keys[Math.floor(rnd(2200) * keys.length)];
+  const mirror = rnd(2201) > 0.45;
+  const half = mirror ? width / 2 : width;
+  let salt = 2210;
+  const runs = 320 + Math.floor(rnd(2202) * 260);
+  for (let i = 0; i < runs; i += 1) {
+    const x = rnd(salt += 1) * half;
+    const y = rnd(salt += 1) * height;
+    const w2 = 2 + rnd(salt += 1) * 7;
+    const len = 18 + rnd(salt += 1) * 170 * (0.4 + Math.abs(Math.sin(y * 0.01 + seed)));
+    const tone = key[rnd(salt += 1) > 0.5 ? 0 : 1];
+    ctx.fillStyle = toneToRgba(tone, 0.16 + rnd(salt += 1) * 0.5);
+    if (rnd(salt += 1) > 0.5) ctx.fillRect(x, y, w2, len);
+    else ctx.fillRect(x, y, len, w2);
+    if (mirror) {
+      ctx.fillStyle = toneToRgba(tone, 0.14 + rnd(salt) * 0.4);
+      if (rnd(salt) > 0.5) ctx.fillRect(width - x - w2, y, w2, len);
+      else ctx.fillRect(width - x - len, y, len, w2);
+    }
+  }
+  if (mirror) {
+    const coreGrad = ctx.createLinearGradient(width / 2 - 30, 0, width / 2 + 30, 0);
+    coreGrad.addColorStop(0, "rgba(223,232,238,0)");
+    coreGrad.addColorStop(0.5, "rgba(223,232,238,0.28)");
+    coreGrad.addColorStop(1, "rgba(223,232,238,0)");
+    ctx.fillStyle = coreGrad;
+    ctx.fillRect(width / 2 - 30, 0, 60, height);
+  }
+  ctx.restore();
+}
+
+function drawIfsLightVeil(ctx, width, height, tick, seed, palette) {
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgba(1,1,3,0.97)";
+  ctx.fillRect(0, 0, width, height);
+  ctx.globalCompositeOperation = "lighter";
+  const rnd = (salt) => rand(seed, salt);
+  const colX = width * (0.36 + rnd(2300) * 0.28);
+  const colW = width * (0.05 + rnd(2301) * 0.07);
+  const maps = [];
+  for (let m = 0; m < 3; m += 1) {
+    maps.push({
+      sx: 0.42 + rnd(2310 + m * 5) * 0.34,
+      sy: 0.62 + rnd(2311 + m * 5) * 0.3,
+      tx: (rnd(2312 + m * 5) - 0.5) * colW * 2,
+      ty: rnd(2313 + m * 5) * height * 0.4,
+      rot: (rnd(2314 + m * 5) - 0.5) * 0.5,
+    });
+  }
+  const fringes = [["255,214,166", -1.6, 0], ["166,200,255", 1.6, 0.7], ["208,255,182", 0, -1.4]];
+  let px = 0;
+  let py = 0;
+  const iterations = 42000;
+  for (let i = 0; i < iterations; i += 1) {
+    const m = maps[Math.floor(rand(seed, 2400 + (i % 997)) * maps.length)];
+    const nx = px * Math.cos(m.rot) * m.sx - py * Math.sin(m.rot) * m.sx + m.tx;
+    const ny = px * Math.sin(m.rot) * m.sy + py * Math.cos(m.rot) * m.sy + m.ty;
+    px = nx;
+    py = ny;
+    if (i < 24) continue;
+    const fr = fringes[i % 3];
+    ctx.fillStyle = `rgba(${fr[0]},0.07)`;
+    ctx.fillRect(colX + px + fr[1], ((py % height) + height) % height + fr[2], 2, 2);
+  }
+  ctx.restore();
+}
+
+function drawDlaCoral(ctx, width, height, tick, seed, palette) {
+  const rnd = (salt) => rand(seed, salt);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgba(6,9,22,0.95)";
+  ctx.fillRect(0, 0, width, height);
+  const cell = 3;
+  const gw = Math.ceil(width / cell);
+  const gh = Math.ceil(height / cell);
+  const grid = new Uint8Array(gw * gh);
+  const cxg = Math.floor(gw * (0.35 + rnd(2500) * 0.3));
+  const cyg = Math.floor(gh * (0.36 + rnd(2501) * 0.2));
+  grid[cyg * gw + cxg] = 1;
+  const walkers = 2200;
+  let stuckCount = 1;
+  let salt = 2510;
+  const ring = Math.min(gw, gh) * 0.42;
+  for (let w2 = 0; w2 < walkers; w2 += 1) {
+    const a0 = rnd(salt += 1) * Math.PI * 2;
+    let gx = Math.floor(cxg + Math.cos(a0) * ring * (0.4 + rnd(salt += 1) * 0.6));
+    let gy = Math.floor(cyg + Math.sin(a0) * ring * (0.4 + rnd(salt += 1) * 0.6));
+    for (let s2 = 0; s2 < 230; s2 += 1) {
+      const dir = Math.floor(rand(seed, salt + s2) * 4);
+      gx += dir === 0 ? 1 : dir === 1 ? -1 : 0;
+      gy += dir === 2 ? 1 : dir === 3 ? -1 : 0;
+      if (gx < 1 || gy < 1 || gx >= gw - 1 || gy >= gh - 1) break;
+      if (grid[gy * gw + gx + 1] || grid[gy * gw + gx - 1] || grid[(gy + 1) * gw + gx] || grid[(gy - 1) * gw + gx]) {
+        stuckCount += 1;
+        grid[gy * gw + gx] = 1;
+        const age = stuckCount / walkers;
+        const tone = age < 0.3 ? [240, 224, 64] : age < 0.66 ? [64, 200, 232] : [26, 74, 144];
+        ctx.fillStyle = toneToRgba(tone, 0.9);
+        ctx.fillRect(gx * cell, gy * cell, cell, cell);
+        if (rand(seed, salt + s2 + 7) > 0.965) {
+          ctx.strokeStyle = "rgba(208,40,24,0.3)";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(gx * cell, gy * cell + cell);
+          ctx.lineTo(gx * cell + (rand(seed, salt + s2 + 9) - 0.5) * 8, gy * cell + 20 + rand(seed, salt + s2 + 11) * 60);
+          ctx.stroke();
+        }
+        break;
+      }
+    }
+    salt += 240;
+  }
+  ctx.restore();
+}
+
+function drawWeaveLattice(ctx, width, height, tick, seed, palette) {
+  const rnd = (salt) => rand(seed, salt);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  const grad = ctx.createLinearGradient(0, 0, 0, height);
+  grad.addColorStop(0, "rgb(208,138,40)");
+  grad.addColorStop(0.5, "rgb(168,160,64)");
+  grad.addColorStop(1, "rgb(154,184,120)");
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, width, height);
+  const cellW = 30 + rnd(2600) * 12;
+  let salt = 2610;
+  ctx.lineCap = "round";
+  for (let y = -cellW; y < height + cellW; y += cellW) {
+    for (let x = -cellW; x < width + cellW; x += cellW) {
+      if (rnd(salt += 1) < 0.15) continue;
+      const horiz = ((Math.floor(x / cellW) + Math.floor(y / cellW)) % 2 === 0) !== (rnd(salt += 1) > 0.8);
+      const jx = x + (rnd(salt += 1) - 0.5) * 8;
+      const jy = y + (rnd(salt += 1) - 0.5) * 8;
+      const len = cellW * (0.78 + rnd(salt += 1) * 0.3);
+      const wander = rnd(salt += 1) > 0.8 ? (rnd(salt += 1) - 0.5) * cellW * 0.5 : 0;
+      const x2 = horiz ? jx + len : jx + wander;
+      const y2 = horiz ? jy + wander : jy + len;
+      ctx.strokeStyle = "rgba(21,18,8,0.85)";
+      ctx.lineWidth = cellW * 0.34;
+      ctx.beginPath();
+      ctx.moveTo(jx, jy);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = cellW * 0.1;
+      ctx.beginPath();
+      ctx.moveTo(jx, jy);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      if (rnd(salt += 1) > 0.78) {
+        ctx.fillStyle = "rgba(21,18,8,0.8)";
+        ctx.beginPath();
+        ctx.moveTo(x2, y2);
+        ctx.lineTo(x2 + 4 + rnd(salt += 1) * 5, y2 + 2);
+        ctx.lineTo(x2 + 2, y2 + 5 + rnd(salt += 1) * 4);
+        ctx.closePath();
+        ctx.fill();
+      }
+    }
+  }
+  ctx.restore();
+}
+
+function drawFiberTerrain(ctx, width, height, tick, seed, palette) {
+  const rnd = (salt) => rand(seed, salt);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgba(14,6,20,0.96)";
+  ctx.fillRect(0, 0, width, height);
+  ctx.globalCompositeOperation = "lighter";
+  let salt = 2700;
+  const strokes = 2400 + Math.floor(rnd(2701) * 1200);
+  for (let i = 0; i < strokes; i += 1) {
+    const y = height * (0.3 + rnd(salt += 1) * 0.68);
+    const x = rnd(salt += 1) * width;
+    const band = (y / height - 0.3) / 0.7;
+    const tone = band < 0.35 ? [214, 90, 160] : band < 0.7 ? [222, 178, 92] : [70, 190, 170];
+    const a = fieldAngle(x, y, tick, seed) * 0.22;
+    const len = 6 + rnd(salt += 1) * 16;
+    ctx.strokeStyle = toneToRgba(tone, 0.1 + rnd(salt += 1) * 0.12);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + Math.cos(a) * len, y + Math.sin(a) * len * 0.4);
+    ctx.stroke();
+  }
+  ctx.globalCompositeOperation = "destination-out";
+  const voids = 1 + Math.floor(rnd(2702) * 2);
+  for (let v = 0; v < voids; v += 1) {
+    ctx.beginPath();
+    ctx.ellipse(width * (0.25 + rnd(2710 + v * 3) * 0.5), height * (0.55 + rnd(2711 + v * 3) * 0.3),
+      width * (0.05 + rnd(2712 + v * 3) * 0.08), height * (0.12 + rnd(2713 + v * 3) * 0.16), 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalCompositeOperation = "lighter";
+  ctx.strokeStyle = "rgba(240,244,250,0.2)";
+  ctx.lineWidth = 0.8;
+  for (let row = 0; row < 5; row += 1) {
+    const baseY = height * (0.18 + row * 0.05);
+    ctx.beginPath();
+    for (let x = 0; x <= width; x += 14) {
+      const y = baseY + Math.sin(x * 0.012 + row + (seed % 10)) * 14 + Math.sin(x * 0.037 + (seed % 7)) * 5;
+      if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
 /* Named showpieces: composed stacks tuned so the families stay coherent. */
 function drawShowpieceVeil(ctx, width, height, tick, seed, palette) {
   drawCausticVeils(ctx, width, height, tick, seed, palette);
@@ -1640,6 +1955,16 @@ function drawShowpieceBurst(ctx, width, height, tick, seed, palette) {
 function drawShowpieceWeave(ctx, width, height, tick, seed, palette) {
   drawRisoMoire(ctx, width, height, tick, seed, palette);
   drawDendrite(ctx, width, height, tick, seed + 11, palette);
+}
+
+function drawShowpieceLantern(ctx, width, height, tick, seed, palette) {
+  drawStellatedLantern(ctx, width, height, tick, seed, palette);
+  drawIfsLightVeil(ctx, width, height, tick, seed + 13, palette);
+}
+
+function drawShowpieceRuin(ctx, width, height, tick, seed, palette) {
+  drawPixelSortRuin(ctx, width, height, tick, seed, palette);
+  drawAuroraLeak(ctx, width, height, tick, seed + 17, palette);
 }
 
 /* ---------------------------------------------------------------------------
@@ -1675,6 +2000,15 @@ const SPECIMEN_LAYERS = {
   "plotter-plate": drawPlotterPlate,
   "acid-duotone": drawAcidDuotone,
   databend: drawDatabendLayer,
+  "stellated-lantern": drawStellatedLantern,
+  "fiber-strands": drawFiberStrands,
+  "pixel-sort-ruin": drawPixelSortRuin,
+  "ifs-veil": drawIfsLightVeil,
+  "dla-coral": drawDlaCoral,
+  "weave-lattice": drawWeaveLattice,
+  "fiber-terrain": drawFiberTerrain,
+  "showpiece-lantern": drawShowpieceLantern,
+  "showpiece-ruin": drawShowpieceRuin,
   "showpiece-veil": drawShowpieceVeil,
   "showpiece-burst": drawShowpieceBurst,
   "showpiece-weave": drawShowpieceWeave,
