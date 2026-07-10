@@ -229,3 +229,28 @@ test("applyDatabend draws over an existing frame and respects null seed randomne
   assert.equal(applyDatabend(ctx, 640, 300, null, 0.5), true);
   assert.ok(log.length > mid + 10, "random databend should draw");
 });
+
+/* ── wave 3: the deep corpus ─────────────────────────────────────────────── */
+const WAVE3_LAYERS = [
+  "stellated-lantern", "fiber-strands", "pixel-sort-ruin", "ifs-veil",
+  "dla-coral", "weave-lattice", "fiber-terrain",
+  "showpiece-lantern", "showpiece-ruin",
+];
+
+test("wave-3 layers are registered and draw over the backdrop", () => {
+  const names = specimenLayerNames();
+  const baseline = renderLog("wave3-base", ["__backdrop-only__"]).log.length;
+  for (const layer of WAVE3_LAYERS) {
+    assert.ok(names.includes(layer), `missing layer: ${layer}`);
+    const { log } = renderLog(`wave3-${layer}`, [layer]);
+    assert.ok(log.length > baseline + 20, `${layer} drew only ${log.length - baseline} ops over backdrop`);
+  }
+});
+
+test("seeded wave-3 renders stay deterministic", () => {
+  for (const layer of ["stellated-lantern", "dla-coral", "showpiece-ruin"]) {
+    const a = renderLog(`det3-${layer}`, [layer]).log;
+    const b = renderLog(`det3-${layer}`, [layer]).log;
+    assert.deepEqual(a, b, `${layer} not deterministic for a fixed seed`);
+  }
+});
