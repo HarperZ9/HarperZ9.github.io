@@ -1,34 +1,19 @@
 // studio.js: the unified Studio. One canvas, two ways in (Generate via the Atelier, or Bring your own),
 // then perceive/discuss/transform/refine with the model. Bridges the Atelier's canvas to the eye.
+// ── Static imports: only the organs every source shares ──────────────────────────────────────
+// Perception (eye/sense), the live-loop invariants, chat, the engine-status console, the
+// certificate stack, and the surface layer stay static. Everything per-source loads lazily
+// below, at the setSource() boundary, so first-load JS carries none of the per-source graphs.
 import { perceptualHash, features, hamming } from "../shared-frame/eye.js";
 import { representation, richFeatures, describeFrame, rmsFromBytes, spectrumBands, dominantPitchHz, assembleFullPerception, hueName } from "./sense.js";
 import { respond } from "./respond.js";
-import { renderFractal, PRESETS, PALETTES as FRACTAL_PALETTES } from "./fractal.js?v=20260628a";
-import { renderFractalGL, isFractalGLAvailable, clampGLBackingToDPR } from "./fractal-gl.js?v=20260701a";
-import { render3D } from "./fractal3d.js";
-import { sizeToDisplay } from "./canvas-scale.js";
 import { sourceIsAnimated, shouldHaltOnStatic, fullscreenMaxBacking } from "./studio-loop.js";
 import { buildModelHeaders } from "./studio-model.js";
-import { renderScene, renderSceneVolumetric } from "./ndim.js";
-import { drawSceneGL, drawSceneGL3D } from "./lib/render-nd/backends/webgl.mjs";
-import { startDiscovery, stopDiscovery } from "./discovery/studio-discovery.js";
-import { startShowcase, stopShowcase, showcaseSettled, showcaseReport, showcaseVerdict, recheckShowcase } from "./showcase/first-integral.js?v=20260701a";
-import {
-  createPaintState, setBrush, setPaintTarget, paintAtTarget, toggle as togglePaint, clearPaint,
-} from "./lib/render-nd/core/paint-state.mjs";
-import { screenRay, pickFace, nearestVertex, nearestEdge } from "./lib/render-nd/core/pick.mjs";
 import { oklchToSrgbByte } from "./lib/sense-core/colour-perceptual.mjs";
 import { probeCapability } from "./engine/capability.js";
 import { makeHardwareRenderPlan } from "./engine/render-plan.js";
 import { IR_SCHEMA, CANONICAL_MEDIA_KINDS } from "./media/ir.js";
-import { createStudioMediaAdapters } from "./media/studio-adapters.js";
-import { createMediaNodeRegistry } from "./graph/nodes/media-nodes.js";
 import { GRAPH_PACKAGE_SCHEMA, createGraphPackage, validateGraphPackage } from "./graph/package.js";
-import { StudioImporters } from "./importers.js";
-import { StudioExporters, download } from "./exporters.js";
-import { TRANSFORM_GROUPS, applyCanvasEffect } from "./studio-effects.js";
-import { cloneMesh, drawMeshPreview, meshStats, normalizeMesh, transformMesh } from "./mesh-transform.js";
-import { ModelAdapter } from "./model-adapter.js";
 import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-frame/certificate.js";
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
@@ -42,16 +27,104 @@ import {
   startMonitorLoop,
   stopMonitorLoop,
 } from "./studio-surface.js";
+
+// ── Lazy per-source module graphs (setSource() is the lazy boundary) ─────────────────────────
+// Each loader caches its in-flight promise (a graph is fetched once, never twice) and mirrors the
+// resolved namespace into a module-level ref for the synchronous call sites that are only reachable
+// AFTER the graph has loaded (e.g. paintFractal only runs once a preset was rendered, and rendering
+// awaited the load). A failed load clears the cache so a later attempt can retry, and the awaiting
+// call site surfaces the error to the user; nothing fails silently.
+function lazyLoader(importer, onLoad) {
+  let promise = null;
+  return function load() {
+    if (!promise) {
+      promise = Promise.resolve()
+        .then(importer)
+        .then(mod => { if (onLoad) onLoad(mod); return mod; })
+        .catch(err => { promise = null; throw err; });
+    }
+    return promise;
+  };
+}
+
+// 2D fractal source: fractal.js (CPU reference + PRESETS/PALETTES) + fractal-gl.js (GPU path).
+let _fractal = null, _fractalGL = null;
+const loadFractal2D = lazyLoader(
+  () => Promise.all([import("./fractal.js?v=20260628a"), import("./fractal-gl.js?v=20260701a")]),
+  ([f, g]) => {
+    _fractal = f; _fractalGL = g;
+    GL_AVAILABLE = !!g.isFractalGLAvailable();
+    buildFractalPalettes();            // idempotent (builds once)
+    buildPresetMenuNow(activeFType);   // populate the preset dropdown for the active type
+  });
+
+// 3D fractal source: the WebGL1 raymarcher.
+let _fractal3d = null;
+const loadFractal3D = lazyLoader(() => import("./fractal3d.js"), m => { _fractal3d = m; });
+
+// Dimensions source: the render-nd barrel (geometry + pick + paint-state) + the WebGL backend.
+let _ndim = null, _ndGLBackend = null;
+const loadNDimEngine = lazyLoader(
+  () => Promise.all([import("./ndim.js"), import("./lib/render-nd/backends/webgl.mjs")]),
+  ([nd, glb]) => {
+    _ndim = nd; _ndGLBackend = glb;
+    if (!_ndPaint) _ndPaint = nd.createPaintState();
+    ndimBuildPalette();                // idempotent (builds once)
+  });
+
+// Physics source: the discovery engine.
+let _discovery = null;
+const loadDiscovery = lazyLoader(() => import("./discovery/studio-discovery.js"), m => { _discovery = m; });
+
+// Showcase source: the First Integral scene.
+let _showcase = null;
+const loadShowcase = lazyLoader(() => import("./showcase/first-integral.js?v=20260701a"), m => { _showcase = m; });
+
+// BYO media: pixel effects, mesh transforms, universal import/export, local-model adapter.
+let _effects = null;
+const loadEffects = lazyLoader(() => import("./studio-effects.js"), m => { _effects = m; });
+let _meshMod = null;
+const loadMeshTransform = lazyLoader(() => import("./mesh-transform.js"), m => { _meshMod = m; });
+const loadImporters = lazyLoader(() => import("./importers.js"));
+const loadExporters = lazyLoader(() => import("./exporters.js"));
+const loadModelAdapter = lazyLoader(() => import("./model-adapter.js"));
+
+// The media engine (adapter registry + node graph) backs the engine-status counts and the
+// __studioMediaAdapters / __studioMediaNodeRegistry inspection hooks. It transitively pulls the
+// importer / exporter / effects / mesh graphs, so it loads OFF the critical path (idle, kicked from
+// bootEngineStatus) instead of statically; the status lines fill their counts in when it arrives.
+const loadMediaEngine = lazyLoader(async () => {
+  const [adaptersMod, nodesMod] = await Promise.all([
+    import("./media/studio-adapters.js"),
+    import("./graph/nodes/media-nodes.js"),
+  ]);
+  const adapters = adaptersMod.createStudioMediaAdapters();
+  const registry = nodesMod.createMediaNodeRegistry();
+  window.__studioMediaAdapters = adapters;
+  window.__studioMediaNodeRegistry = registry;
+  return { adapters, registry };
+});
+
+// Music source: the reactive engine + its tab UI (both publish window globals, imported for effect).
+const loadReactive = lazyLoader(async () => {
+  await import("./reactive.js?v=20260625b");          // sets window.MusicExperience + window.ReactiveVisuals
+  await import("./reactive-music-ui.js?v=20260625b"); // wires the Music tab controls to it
+  feedEngineCapability();                             // the engine exists now; hand it the probed capability
+});
+
 const $ = id => (window.__overlayDoc && window.__overlayDoc.getElementById(id)) || document.getElementById(id);
 const fmt = (v,n=3)=>typeof v==="number"?(Number.isInteger(v)?String(v):v.toFixed(n)):String(v);
-const STUDIO_MEDIA_ADAPTERS = createStudioMediaAdapters();
-const STUDIO_MEDIA_NODE_REGISTRY = createMediaNodeRegistry();
-window.__studioMediaAdapters = STUDIO_MEDIA_ADAPTERS;
-window.__studioMediaNodeRegistry = STUDIO_MEDIA_NODE_REGISTRY;
 window.__studioCreateGraphPackage = createGraphPackage;
 window.__studioValidateGraphPackage = validateGraphPackage;
-// Showcase debug/test surface (wave 1 stubs; wave 2 swaps in the real report/verdict/recheck).
-window.__studioShowcase = { report: showcaseReport, verdict: showcaseVerdict, recheck: recheckShowcase };
+// __studioMediaAdapters / __studioMediaNodeRegistry are published by loadMediaEngine (idle-loaded
+// from bootEngineStatus shortly after boot, or earlier if a media path asks for the registry).
+// Showcase debug/test surface: async wrappers that pull the showcase graph on first call, then
+// delegate to the real report/verdict/recheck. Callers now receive a Promise.
+window.__studioShowcase = {
+  report:  async () => (await loadShowcase()).showcaseReport(),
+  verdict: async () => (await loadShowcase()).showcaseVerdict(),
+  recheck: async () => (await loadShowcase()).recheckShowcase(),
+};
 
 function slugStudioFieldName(value, fallback) {
   return String(value || fallback || "control")
@@ -186,33 +259,44 @@ function bootStudioRendererConsole(root = document) {
 
 async function bootEngineStatus() {
   const set = (id, text) => { const el = $(id); if (el) el.textContent = text; };
+  // Everything derivable from the static graph paints immediately; the two registry-backed counts
+  // (media nodes, adapters) fill in when the idle-loaded media engine arrives. Honest either way:
+  // the pre-load lines carry only what is actually known at that moment, never invented counts.
+  const setLines = (plan) => {
+    window.__studioHardwareRenderPlan = plan;
+    set("engine-status-graph", "runtime/v1 / " + GRAPH_PACKAGE_SCHEMA.split("/").pop());
+    set("engine-status-backend", plan.backend);
+    set("engine-status-tier", plan.tier);
+    set("engine-status-particles", String(plan.particleBudget));
+    set("engine-status-splats", String(plan.splatBudget));
+    set("engine-status-media", IR_SCHEMA.split("/").pop() + " / " + CANONICAL_MEDIA_KINDS.length + " kinds");
+    set("engine-status-readback", "1/" + plan.readbackEveryNFrames);
+  };
   try {
     const canvas = $("studio-canvas");
     const cap = await probeCapability();
-    const plan = makeHardwareRenderPlan(cap, {
+    setLines(makeHardwareRenderPlan(cap, {
       width: canvas ? canvas.width : window.innerWidth,
       height: canvas ? canvas.height : window.innerHeight,
       dpr: window.devicePixelRatio || 1,
-    });
-    window.__studioHardwareRenderPlan = plan;
-    set("engine-status-graph", "runtime/v1 / " + Object.keys(STUDIO_MEDIA_NODE_REGISTRY).length + " nodes / " + GRAPH_PACKAGE_SCHEMA.split("/").pop());
-    set("engine-status-backend", plan.backend);
-    set("engine-status-tier", plan.tier);
-    set("engine-status-particles", String(plan.particleBudget));
-    set("engine-status-splats", String(plan.splatBudget));
-    set("engine-status-media", IR_SCHEMA.split("/").pop() + " / " + CANONICAL_MEDIA_KINDS.length + " kinds / " + STUDIO_MEDIA_ADAPTERS.length + " adapters");
-    set("engine-status-readback", "1/" + plan.readbackEveryNFrames);
+    }));
   } catch (_) {
-    const plan = makeHardwareRenderPlan(null, {});
-    window.__studioHardwareRenderPlan = plan;
-    set("engine-status-graph", "runtime/v1 / " + Object.keys(STUDIO_MEDIA_NODE_REGISTRY).length + " nodes / " + GRAPH_PACKAGE_SCHEMA.split("/").pop());
-    set("engine-status-backend", plan.backend);
-    set("engine-status-tier", plan.tier);
-    set("engine-status-particles", String(plan.particleBudget));
-    set("engine-status-splats", String(plan.splatBudget));
-    set("engine-status-media", IR_SCHEMA.split("/").pop() + " / " + CANONICAL_MEDIA_KINDS.length + " kinds / " + STUDIO_MEDIA_ADAPTERS.length + " adapters");
-    set("engine-status-readback", "1/" + plan.readbackEveryNFrames);
+    setLines(makeHardwareRenderPlan(null, {}));
   }
+  // Media engine counts: load the registry graph off the critical path (idle after boot), then
+  // complete the graph/media lines with the real node + adapter counts.
+  const fillCounts = ({ adapters, registry }) => {
+    set("engine-status-graph", "runtime/v1 / " + Object.keys(registry).length + " nodes / " + GRAPH_PACKAGE_SCHEMA.split("/").pop());
+    set("engine-status-media", IR_SCHEMA.split("/").pop() + " / " + CANONICAL_MEDIA_KINDS.length + " kinds / " + adapters.length + " adapters");
+  };
+  const kick = () => {
+    loadMediaEngine().then(fillCounts).catch(err => {
+      // The lines keep their schema-only readout (never invented counts); log the real cause.
+      console.warn("studio: media engine load failed", err);
+    });
+  };
+  if (typeof requestIdleCallback === "function") requestIdleCallback(kick, { timeout: 4000 });
+  else setTimeout(kick, 1500);
 }
 bootEngineStatus();
 
@@ -223,6 +307,11 @@ const lastHashByCanvas = new WeakMap();
 // "the Atelier / 2D"). The five-way source menu (Task 8f) drives it via setSource().
 let mode = "generate";
 let activeSource = "atelier";
+// Monotonic switch counter: each setSource() call bumps it, and every lazy start continuation
+// captures the value at kick-off. A continuation that resolves after another switch sees a newer
+// epoch and does nothing, so a slow module load can never start a renderer for a source the user
+// already left (the floating-promise ordering hazard of the lazy boundary).
+let _sourceEpoch = 0;
 
 // ── Quality state (Task 8g) ───────────────────────────────────────────────────
 // Standard: maxBacking=1600, aa=1 (crisp on typical 1-2x displays, fast for per-pixel fractals).
@@ -286,6 +375,8 @@ const SOURCES = {
 
 function setSource(next) {
   if (!SOURCES[next]) return;
+  _sourceEpoch++;                 // invalidate any in-flight lazy start from a previous switch
+  const epoch = _sourceEpoch;
   // Leaving the current source: stop anything it had running. Guard the calls, since some are defined
   // later in the module (hoisted function declarations), so they're safe to call from here.
   if (next !== activeSource) {
@@ -293,8 +384,10 @@ function setSource(next) {
     stopNDim();         // stop the n-dim animation RAF if one is running
     stopWatch();        // release any screen/camera capture
     stopByoVideo();     // pause + release any played BYO video
-    try { stopDiscovery(); } catch (_) {}  // stop the physics renderer RAF if it was running
-    try { stopShowcase(); } catch (_) {}   // settle the showcase scene if it was running
+    // The discovery / showcase graphs are lazy: if a graph never loaded, that source never ran,
+    // so there is nothing to stop (and an in-flight start is cancelled by the epoch bump above).
+    if (_discovery) { try { _discovery.stopDiscovery(); } catch (_) {} }
+    if (_showcase)  { try { _showcase.stopShowcase(); } catch (_) {} }
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
@@ -319,13 +412,45 @@ function setSource(next) {
   // frame, so the perception loop must be reading it. Other sources arm their own loop from their
   // entry/play path; music has no settle-frame, so arm it here. The loop self-idles only for static
   // sources via the sourceIsAnimated() guard in liveTick, so music will not freeze.
-  if (next === "music") startMeterLoop();
-  // Physics (discovery engine): render the evolving system into the shared canvas, then arm the
-  // meter loop so the measurimeter perceives it (marked animated in studio-loop, so it will not idle).
-  if (next === "discovery") { try { startDiscovery($("studio-canvas")); } catch (_) {} startMeterLoop(); }
-  // Showcase (First Integral): draw the scene into the shared canvas, then arm the meter loop.
-  // The loop idles once the scene settles (studio-loop gates on showcaseSettled).
-  if (next === "showcase") { try { startShowcase($("studio-canvas")); } catch (_) {} startMeterLoop(); }
+  // The reactive engine + its tab UI load lazily on first entry; once they arrive (and the user is
+  // still on music), fire a NON-BUBBLING click on the music tab: reactive-music-ui binds its
+  // idle-visual starter directly on that button, so only that listener runs (the delegated
+  // #studio-source handlers never see a non-bubbling event, so setSource is not re-entered).
+  if (next === "music") {
+    startMeterLoop();
+    loadReactive().then(() => {
+      if (epoch !== _sourceEpoch) return;
+      const tab = document.querySelector('#studio-source button[data-source="music"]');
+      if (tab) { try { tab.dispatchEvent(new MouseEvent("click", { bubbles: false })); } catch (_) {} }
+    }).catch(err => { say("model", "The music engine failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
+  // Physics (discovery engine): load the graph on first entry, render the evolving system into the
+  // shared canvas, then arm the meter loop (marked animated in studio-loop, so it will not idle).
+  if (next === "discovery") {
+    loadDiscovery().then(mod => {
+      if (epoch !== _sourceEpoch) return;   // user already switched away while the graph loaded
+      try { mod.startDiscovery($("studio-canvas")); } catch (_) {}
+      startMeterLoop();
+    }).catch(err => { say("model", "The physics engine failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
+  // Showcase (First Integral): load the scene graph on first entry, draw into the shared canvas,
+  // then arm the meter loop. The loop idles once the scene settles (studio-loop gates on showcaseSettled).
+  if (next === "showcase") {
+    loadShowcase().then(mod => {
+      if (epoch !== _sourceEpoch) return;   // user already switched away while the graph loaded
+      try { mod.startShowcase($("studio-canvas")); } catch (_) {}
+      startMeterLoop();
+    }).catch(err => { say("model", "The showcase failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
+  // Prefetch the graphs the entered source is about to need. Idempotent (cached promise); a
+  // prefetch failure is logged here and the first real use re-attempts and surfaces it to the user.
+  if (next === "fractal") loadFractal2D().catch(err => console.warn("studio: fractal graph prefetch failed", err));
+  if (next === "fractal3d") loadFractal3D().catch(err => console.warn("studio: fractal3d graph prefetch failed", err));
+  if (next === "ndim") loadNDimEngine().catch(err => console.warn("studio: ndim graph prefetch failed", err));
+  if (next === "byo") {
+    loadEffects().then(() => buildTransformMenu())
+      .catch(err => { say("model", "The transform menu failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
   syncToolbarForSource();
   // Notify the surface layer so panzoom attaches/detaches per the source change.
   // Pass the current canvas (may be a fresh GL canvas if fractal3d swapped it).
@@ -420,14 +545,17 @@ let fractalBaseMaxIter = 0;
 let fractalBasePalette = "ocean";
 let fractalView = null; // Transient zoom state: a shallow copy of the selected preset, never a reference into PRESETS.
 
-// GPU path available? Decided once. When true, 2D fractals render on the GPU (fractal-gl.js) for
-// near-instant frames + real-time pan/zoom; the CPU renderFractal (fractal.js, the gated reference)
+// GPU path available? Decided once, when the lazy fractal graph loads (loadFractal2D sets this
+// from fractal-gl's isFractalGLAvailable). When true, 2D fractals render on the GPU (fractal-gl.js)
+// for near-instant frames + real-time pan/zoom; the CPU render (fractal.js, the gated reference)
 // is the fallback. The fallback also serves environments without WebGL.
-const GL_AVAILABLE = isFractalGLAvailable();
+let GL_AVAILABLE = false;
 
-function buildPresetMenu(ftype) {
+// Synchronous menu build; only callable once the fractal graph is in (_fractal set by loadFractal2D).
+function buildPresetMenuNow(ftype) {
+  if (!_fractal) return;
   fractalPresetEl.innerHTML = "";
-  PRESETS.filter(p => p.type === ftype).forEach((p, i) => {
+  _fractal.PRESETS.filter(p => p.type === ftype).forEach((p, i) => {
     const opt = document.createElement("option");
     opt.value = i;
     opt.textContent = p.name;
@@ -435,6 +563,12 @@ function buildPresetMenu(ftype) {
     opt.dataset.presetName = p.name;
     fractalPresetEl.appendChild(opt);
   });
+}
+
+// Async wrapper for call sites that may run before the graph is in (type chips, Tweakpane).
+async function buildPresetMenu(ftype) {
+  await loadFractal2D();
+  buildPresetMenuNow(ftype);
 }
 
 // Default starting framing for the active fractal view, used by Reset view.
@@ -459,8 +593,8 @@ function applyFractalRenderControls(view) {
 
 function buildFractalPalettes() {
   const host = $("fractal-palettes");
-  if (!host || host.childElementCount) return;
-  const items = [["", "Preset"]].concat(Object.keys(FRACTAL_PALETTES).map(k => [k, k]));
+  if (!host || host.childElementCount || !_fractal) return;
+  const items = [["", "Preset"]].concat(Object.keys(_fractal.PALETTES).map(k => [k, k]));
   for (const [key, label] of items) {
     const b = document.createElement("button");
     b.type = "button";
@@ -480,7 +614,7 @@ function buildFractalPalettes() {
     host.appendChild(b);
   }
 }
-buildFractalPalettes();
+// (Palettes + the preset menu are built by loadFractal2D when the fractal graph first loads.)
 
 // Paint the current fractalView into #studio-canvas. GPU when available (mounting a fresh GL canvas
 // the first time, mirroring the 3D source's canvas swap), else CPU (progressive coarse-to-refine on
@@ -490,9 +624,12 @@ buildFractalPalettes();
 // pan/zoom passes 1 to stay fast; settled renders pass undefined (uses quality level).
 let _cpuRefineRaf = 0;
 function paintFractal(opts, aaOverride) {
+  // Defensive: every caller is gated on fractalView, which is only set after the lazy fractal
+  // graph loaded (renderPreset awaits it), so this guard should never fire in practice.
+  if (!_fractal) return $("studio-canvas");
   const maxIter = Math.round(opts.maxIter * currentQuality().iterMult);
   const aa = aaOverride !== undefined ? aaOverride : currentQuality().aa;
-  if (GL_AVAILABLE) {
+  if (GL_AVAILABLE && _fractalGL) {
     // Mount a GL canvas if one isn't already up (or if a 3D orbit's node is mounted, reuse it).
     let c = canvasIsGL ? $("studio-canvas") : mountGLCanvas();
     if (!canvasIsGL) { canvasIsGL = true; }
@@ -502,9 +639,9 @@ function paintFractal(opts, aaOverride) {
     sizeCanvas(c);
     // Tier-gated DPR clamp (spec 1.4): on tier mid+, lift the GL backing to CSS * min(dpr, 2)
     // for a crisp hi-DPI fragment pass. Fail-safe no-op below mid or when the plan is absent.
-    try { clampGLBackingToDPR(c, window.__studioHardwareRenderPlan && window.__studioHardwareRenderPlan.tier); } catch (_) {}
+    try { _fractalGL.clampGLBackingToDPR(c, window.__studioHardwareRenderPlan && window.__studioHardwareRenderPlan.tier); } catch (_) {}
     try {
-      renderFractalGL(c, { ...opts, maxIter, aa });
+      _fractalGL.renderFractalGL(c, { ...opts, maxIter, aa });
       return c;
     } catch (e) {
       // GPU failed at runtime: fall back to CPU on the original 2D canvas.
@@ -527,20 +664,23 @@ function cpuFractalProgressive(canvas, opts) {
   // Coarse pass: quarter-res backing (1/4 the pixels) for an instant preview.
   const cw = Math.max(1, Math.round(fullW / 4)), ch = Math.max(1, Math.round(fullH / 4));
   canvas.width = cw; canvas.height = ch;
-  renderFractal(canvas, opts);
+  _fractal.renderFractal(canvas, opts);
   // Refine to full res on the next frame (or immediately in a no-rAF env).
   const refine = () => {
     _cpuRefineRaf = 0;
     canvas.width = fullW; canvas.height = fullH;
-    renderFractal(canvas, opts);
+    _fractal.renderFractal(canvas, opts);
   };
   if (typeof requestAnimationFrame === "function") _cpuRefineRaf = requestAnimationFrame(refine);
   else refine();
 }
 
-function renderPreset() {
+async function renderPreset() {
+  try { await loadFractal2D(); }
+  catch (err) { say("model", "The fractal renderer failed to load: " + (err && err.message ? err.message : String(err))); return; }
+  if (activeSource !== "fractal") return;   // switched away while the graph loaded
   const ftype = activeFType;
-  const filtered = PRESETS.filter(p => p.type === ftype);
+  const filtered = _fractal.PRESETS.filter(p => p.type === ftype);
   const idx = parseInt(fractalPresetEl.value, 10);
   const preset = filtered[isNaN(idx) ? 0 : idx];
   if (!preset) return;
@@ -574,7 +714,7 @@ document.querySelectorAll("[data-ftype]").forEach(btn => {
   btn.addEventListener("click", () => {
     activeFType = btn.dataset.ftype;
     document.querySelectorAll("[data-ftype]").forEach(b => b.classList.toggle("active", b === btn));
-    buildPresetMenu(activeFType);
+    buildPresetMenu(activeFType).catch(err => console.warn("studio: fractal graph load failed", err));
   });
 });
 
@@ -749,8 +889,9 @@ fStage.addEventListener("touchcancel", endFractalTouch, { passive: true });
 
 $("fractal-render").addEventListener("click", renderPreset);
 
-// Build initial menu on page load
-buildPresetMenu(activeFType);
+// (No boot-time menu build: the preset menu populates when the lazy fractal graph first loads,
+// i.e. on the first entry into the fractal source. The custom dropdown's MutationObserver
+// re-renders its listbox as soon as the options arrive.)
 
 // ── 3D fractal source (Task 7c) ─────────────────────────────────────────────
 // A WebGL1 raymarcher (system/fractal3d.js) paints the shared canvas, then the eye perceives one
@@ -800,7 +941,12 @@ function leave3D() {
 }
 window.__studioLeave3D = leave3D;  // tests / source-menu (Task 8f) hook
 
-function render3DInto(opts) {
+async function render3DInto(opts) {
+  // The raymarcher graph is lazy: load it first, and bail if the user switched away meanwhile
+  // (mounting a GL canvas onto another source's stage would break that source's 2D context).
+  try { await loadFractal3D(); }
+  catch (err) { say("model", "The 3D fractal renderer failed to load: " + (err && err.message ? err.message : String(err))); return; }
+  if (activeSource !== "fractal3d") return;
   if (stop3d) { stop3d(); stop3d = null; }   // cancel the previous orbit before starting a new one
   // Mount a fresh GL canvas (idempotent: if one is already mounted we reuse the mounted node).
   let c = canvasIsGL ? $("studio-canvas") : mountGLCanvas();
@@ -809,7 +955,7 @@ function render3DInto(opts) {
   // Size the GL canvas to the hi-DPI backing resolution (the raymarcher reads canvas.width/height).
   sizeCanvas(c);
   try {
-    fractal3dHandle = render3D(c, opts);
+    fractal3dHandle = _fractal3d.render3D(c, opts);
     stop3d = fractal3dHandle.stop;
     canvasIsGL = true;
     startMeterLoop();   // the orbit animates, stream the meters so the hash changes as it turns
@@ -968,7 +1114,9 @@ let _activeNDimRotation = "all";     // all-plane rotor or 4D isoclinic rotor
 // can ray-cast against exactly what is on screen.
 const _ndCam = { yaw: 0.6, pitch: 0.5, dist: 3.2 };
 const _ndCamDefault = { yaw: 0.6, pitch: 0.5, dist: 3.2 };
-let _ndPaint = createPaintState();
+// Created by loadNDimEngine when the render-nd graph first loads (null until then; every consumer
+// either awaits the load or is only reachable after a frame was drawn, which required the load).
+let _ndPaint = null;
 let _ndLastVolScene = null;
 let _ndLastAspect = 1;
 // expose for tests / debugging (read-only views)
@@ -1012,6 +1160,7 @@ function readNDimOpts() {
 // drawn via the depth-tested WebGL path (drawSceneGL3D), 2D fallback otherwise. The last volumetric
 // scene is stashed for the picker. Returns scene.meta so callers can read real vertex/edge counts.
 function drawNDimFrame(canvas, n, t, speed, kind, projection, rotation) {
+  if (!_ndim) return null;   // render-nd graph not loaded yet (callers load it first; defensive)
   // Restore 2D canvas if a WebGL orbit has been mounted (shouldn't happen here, but guard).
   leave3D();
   sizeCanvas(canvas);
@@ -1024,7 +1173,7 @@ function drawNDimFrame(canvas, n, t, speed, kind, projection, rotation) {
   ctx.fillStyle = "#0d1b1c";
   ctx.fillRect(0, 0, w, h);
 
-  const scene = renderSceneVolumetric(
+  const scene = _ndim.renderSceneVolumetric(
     { kind, n: kind === "24cell" ? 4 : n, t: t * speed, rotation },
     _ndCam,
     { aspect, scale: 1.0, focal: 2.0, paint: _ndPaint },
@@ -1036,7 +1185,7 @@ function drawNDimFrame(canvas, n, t, speed, kind, projection, rotation) {
   const gl = ndGL();
   if (gl) {
     _ndGLCanvas.width = w; _ndGLCanvas.height = h;
-    drawSceneGL3D(gl, scene, { width: w, height: h });
+    _ndGLBackend.drawSceneGL3D(gl, scene, { width: w, height: h });
     ctx.drawImage(_ndGLCanvas, 0, 0, w, h);
   } else {
     draw3DSceneTo2D(ctx, scene, w, h, lineW);
@@ -1083,8 +1232,18 @@ function draw3DSceneTo2D(ctx, scene, w, h, lineW) {
   ctx.restore();
 }
 
-// Start the n-dim animation. Stops any running animation first.
+// Start the n-dim animation. Loads the lazy render-nd graph first (cached after the first call),
+// then starts. Stops any running animation first. The pre/post source check cancels the start if
+// the user switched sources while the graph was still downloading.
 function startNDimAnimation() {
+  const src = activeSource;
+  loadNDimEngine().then(() => {
+    if (activeSource !== src) return;   // switched away while the graph loaded
+    startNDimAnimationNow();
+  }).catch(err => { say("model", "The dimensions renderer failed to load: " + (err && err.message ? err.message : String(err))); });
+}
+
+function startNDimAnimationNow() {
   stopNDim();
   leave3D();   // restore 2D canvas if a WebGL orbit was mounted
   const canvas = $("studio-canvas");
@@ -1190,7 +1349,7 @@ const NDIM_PALETTE_OKLCH = [
   [0.40, 0.02, 0],     // graphite
 ];
 function ndimBuildPalette() {
-  const host = $("ndim-palette"); if (!host || host.childElementCount) return;
+  const host = $("ndim-palette"); if (!host || host.childElementCount || !_ndim || !_ndPaint) return;
   NDIM_PALETTE_OKLCH.forEach(([L, C, h], i) => {
     const rgb = oklchToSrgbByte(L, C, h);
     const b = document.createElement("button");
@@ -1201,21 +1360,24 @@ function ndimBuildPalette() {
     b.dataset.rgb = rgb.join(",");
     b.textContent = ".";   // keep a glyph so the chip has height; colour hidden
     b.addEventListener("click", () => {
-      setBrush(_ndPaint, rgb);
+      _ndim.setBrush(_ndPaint, rgb);
       host.querySelectorAll(".ndim-swatch").forEach(s => s.classList.toggle("active", s === b));
     });
     host.appendChild(b);
   });
   // Seed the brush from the first swatch.
-  setBrush(_ndPaint, oklchToSrgbByte(...NDIM_PALETTE_OKLCH[0]));
+  _ndim.setBrush(_ndPaint, oklchToSrgbByte(...NDIM_PALETTE_OKLCH[0]));
 }
-ndimBuildPalette();
+// (Built by loadNDimEngine when the render-nd graph first loads, i.e. on first ndim entry.)
 
-// Paint-target chips (face / vertex / edge).
+// Paint-target chips (face / vertex / edge). The chips live in the (hidden until entered) ndim
+// block, so the graph is normally already loading; awaiting the cached loader keeps click order.
 document.querySelectorAll("[data-ndim-paint]").forEach(btn => {
   btn.addEventListener("click", () => {
-    setPaintTarget(_ndPaint, btn.dataset.ndimPaint);
-    document.querySelectorAll("[data-ndim-paint]").forEach(b => b.classList.toggle("active", b === btn));
+    loadNDimEngine().then(() => {
+      _ndim.setPaintTarget(_ndPaint, btn.dataset.ndimPaint);
+      document.querySelectorAll("[data-ndim-paint]").forEach(b => b.classList.toggle("active", b === btn));
+    }).catch(err => console.warn("studio: ndim graph load failed", err));
   });
 });
 
@@ -1224,12 +1386,14 @@ document.querySelectorAll("[data-ndim-paint]").forEach(btn => {
 document.querySelectorAll("[data-ndim-toggle]").forEach(btn => {
   btn.addEventListener("click", () => {
     const flag = btn.dataset.ndimToggle;
-    const now = togglePaint(_ndPaint, flag);
-    if (now != null) {
-      btn.classList.toggle("active", now);
-      btn.setAttribute("aria-pressed", String(now));
-    }
-    if (activeSource === "ndim") ndimRepaintNow();
+    loadNDimEngine().then(() => {
+      const now = _ndim.toggle(_ndPaint, flag);
+      if (now != null) {
+        btn.classList.toggle("active", now);
+        btn.setAttribute("aria-pressed", String(now));
+      }
+      if (activeSource === "ndim") ndimRepaintNow();
+    }).catch(err => console.warn("studio: ndim graph load failed", err));
   });
 });
 
@@ -1237,9 +1401,11 @@ document.querySelectorAll("[data-ndim-toggle]").forEach(btn => {
 const ndimClearBtn = $("ndim-clear-paint");
 if (ndimClearBtn) {
   ndimClearBtn.addEventListener("click", () => {
-    clearPaint(_ndPaint);
-    if (activeSource === "ndim") ndimRepaintNow();
-    say("model", "Cleared the paint. The volume reads its depth-cued colours again.");
+    loadNDimEngine().then(() => {
+      _ndim.clearPaint(_ndPaint);
+      if (activeSource === "ndim") ndimRepaintNow();
+      say("model", "Cleared the paint. The volume reads its depth-cued colours again.");
+    }).catch(err => console.warn("studio: ndim graph load failed", err));
   });
 }
 
@@ -1268,6 +1434,12 @@ function ndimClientToNDC(clientX, clientY, canvas, rect) {
 function ndimRepaintNow() {
   const canvas = $("studio-canvas");
   if (!canvas || activeSource !== "ndim") return;
+  // Graph not in yet (e.g. Reset view clicked right after entering the source): load, then repaint.
+  if (!_ndim) {
+    loadNDimEngine().then(() => { if (activeSource === "ndim") ndimRepaintNow(); })
+      .catch(err => console.warn("studio: ndim graph load failed", err));
+    return;
+  }
   const { n, speed, kind, projection, rotation } = readNDimOpts();
   // reuse the last animation clock if running; else t=0 (a still pose to paint on).
   const t = (_ndimStartTime != null && typeof performance !== "undefined")
@@ -1325,27 +1497,27 @@ fStage.addEventListener("pointercancel", endNDimDrag);
 // repaint so the colour shows immediately.
 function ndimPaintAt(clientX, clientY) {
   const scene = _ndLastVolScene;
-  if (!scene) return;
+  if (!scene || !_ndim || !_ndPaint) return;   // a scene implies the graph loaded; guards are defensive
   const canvas = $("studio-canvas");
   const rect = canvas.getBoundingClientRect();
   const { nx, ny } = ndimClientToNDC(clientX, clientY, canvas, rect);
   const target = _ndPaint.paintTarget;
   let painted = null;
   if (target === "vertex") {
-    const hit = nearestVertex(scene.proj, nx, ny, 0.07);
-    if (hit) { paintAtTarget(_ndPaint, hit.vertexIndex); painted = `vertex ${hit.vertexIndex}`; }
+    const hit = _ndim.nearestVertex(scene.proj, nx, ny, 0.07);
+    if (hit) { _ndim.paintAtTarget(_ndPaint, hit.vertexIndex); painted = `vertex ${hit.vertexIndex}`; }
   } else if (target === "edge") {
-    const hit = nearestEdge(scene.proj, scene.edges, nx, ny, 0.05);
-    if (hit) { paintAtTarget(_ndPaint, hit.edgeIndex); painted = `edge ${hit.edgeIndex}`; }
+    const hit = _ndim.nearestEdge(scene.proj, scene.edges, nx, ny, 0.05);
+    if (hit) { _ndim.paintAtTarget(_ndPaint, hit.edgeIndex); painted = `edge ${hit.edgeIndex}`; }
   } else {
     // face: cast a world-space ray and Moller-Trumbore against the triangles.
-    const ray = screenRay(scene.cam, nx, ny, { aspect: _ndLastAspect, focal: 2.0 });
-    const hit = pickFace(ray.origin, ray.dir, scene.faceIndices, scene.world);
-    if (hit) { paintAtTarget(_ndPaint, hit.faceIndex); painted = `face ${hit.faceIndex}`; }
+    const ray = _ndim.screenRay(scene.cam, nx, ny, { aspect: _ndLastAspect, focal: 2.0 });
+    const hit = _ndim.pickFace(ray.origin, ray.dir, scene.faceIndices, scene.world);
+    if (hit) { _ndim.paintAtTarget(_ndPaint, hit.faceIndex); painted = `face ${hit.faceIndex}`; }
     else {
       // fall back to nearest vertex if no face was under the cursor (e.g. wireframe gaps)
-      const vh = nearestVertex(scene.proj, nx, ny, 0.07);
-      if (vh) { paintAtTarget(_ndPaint, vh.vertexIndex); painted = `vertex ${vh.vertexIndex}`; }
+      const vh = _ndim.nearestVertex(scene.proj, nx, ny, 0.07);
+      if (vh) { _ndim.paintAtTarget(_ndPaint, vh.vertexIndex); painted = `vertex ${vh.vertexIndex}`; }
     }
   }
   if (painted) {
@@ -1615,20 +1787,22 @@ function updateMeshPanel() {
   if (panel) panel.hidden = !_studioSourceMesh;
   const status = $("model-transform-status");
   if (!status) return;
-  if (!_studioSourceMesh) {
+  if (!_studioSourceMesh || !_meshMod) {
     status.textContent = "Load OBJ, GLTF, GLB, or PLY to enable model transforms.";
     return;
   }
-  const stats = meshStats(_studioLastMesh || _studioSourceMesh);
+  // _studioSourceMesh is only ever set after loadMeshTransform resolved (loadFile awaits it),
+  // so _meshMod is necessarily in by the time a mesh exists.
+  const stats = _meshMod.meshStats(_studioLastMesh || _studioSourceMesh);
   status.textContent =
     `${stats.vertices} vertices, ${stats.faces} faces, radius ${stats.radius.toFixed(3)}. Export uses this transformed mesh.`;
 }
 
 function renderMeshTransform({ announce = false } = {}) {
-  if (!_studioSourceMesh) { updateMeshPanel(); return; }
+  if (!_studioSourceMesh || !_meshMod) { updateMeshPanel(); return; }
   syncMeshValueLabels();
-  _studioLastMesh = transformMesh(_studioSourceMesh, meshTransformValues());
-  drawMeshPreview(byoCanvas(), _studioLastMesh, { maxBacking: currentQuality().maxBacking });
+  _studioLastMesh = _meshMod.transformMesh(_studioSourceMesh, meshTransformValues());
+  _meshMod.drawMeshPreview(byoCanvas(), _studioLastMesh, { maxBacking: currentQuality().maxBacking });
   const obs = perceive(byoCanvas());
   updateMeshPanel();
   startMeterLoop();
@@ -1654,8 +1828,8 @@ function resetMeshTransform() {
 }
 
 function normalizeSourceMesh() {
-  if (!_studioSourceMesh) return;
-  _studioSourceMesh = normalizeMesh(_studioSourceMesh);
+  if (!_studioSourceMesh || !_meshMod) return;
+  _studioSourceMesh = _meshMod.normalizeMesh(_studioSourceMesh);
   if ($("model-normalize")) $("model-normalize").checked = false;
   resetMeshTransform();
 }
@@ -1687,7 +1861,13 @@ async function loadFile(file) {
   _studioSourceMesh = null;
   updateMeshPanel();
 
-  const result = await StudioImporters.importFile(file, byoCanvas());
+  let importers;
+  try { importers = await loadImporters(); }
+  catch (err) {
+    say("model", "The media importer failed to load: " + (err && err.message ? err.message : String(err)));
+    return;
+  }
+  const result = await importers.StudioImporters.importFile(file, byoCanvas());
 
   if (!result.drewToCanvas) {
     say("model", "Unknown file type: " + (result.meta && result.meta.ext ? result.meta.ext : file.type)
@@ -1706,12 +1886,18 @@ async function loadFile(file) {
     if (typeof window.__studioExportWebmVisible === "function") window.__studioExportWebmVisible(true);
   }
 
-  // Geometry: stash for export and surface the geometry export buttons.
+  // Geometry: stash for export and surface the geometry export buttons. The mesh-transform graph
+  // loads here, BEFORE the mesh state is set, so every later mesh call site finds _meshMod ready.
   if (result.mesh) {
-    _studioSourceMesh = cloneMesh(result.mesh);
-    _studioLastMesh = cloneMesh(result.mesh);
-    renderMeshTransform();
-    if (typeof window.__studioExportMeshVisible === "function") window.__studioExportMeshVisible(true);
+    try {
+      await loadMeshTransform();
+      _studioSourceMesh = _meshMod.cloneMesh(result.mesh);
+      _studioLastMesh = _meshMod.cloneMesh(result.mesh);
+      renderMeshTransform();
+      if (typeof window.__studioExportMeshVisible === "function") window.__studioExportMeshVisible(true);
+    } catch (err) {
+      say("model", "The mesh tooling failed to load: " + (err && err.message ? err.message : String(err)));
+    }
   }
 
   const obs = perceive(byoCanvas());
@@ -1805,9 +1991,11 @@ function applyTopography() {
 }
 
 // Apply a named transform, re-perceive, say what changed, flip the turn indicator.
+// (_effects is necessarily loaded when this runs from the menu: the transform chips are built by
+// buildTransformMenu, which only runs after the effects graph resolved.)
 function applyTransform(key, who) {
   if (key === "topography") applyTopography();
-  else if (!applyCanvasEffect(byoCtx(), byoCanvas(), key)) {
+  else if (!_effects || !_effects.applyCanvasEffect(byoCtx(), byoCanvas(), key)) {
     say("model", "I do not have that effect wired yet: " + key + ".");
     return;
   }
@@ -1825,10 +2013,11 @@ $("studio-drop").addEventListener("drop", e => { e.preventDefault(); $("studio-d
 $("studio-file").addEventListener("change", e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
 
 // Build transform buttons as compact capability clusters instead of one long undifferentiated row.
+// Runs when the lazy effects graph arrives (first BYO entry); idempotent via childElementCount.
 function buildTransformMenu() {
   const host = $("studio-transforms");
-  if (!host || host.childElementCount) return;
-  const groups = TRANSFORM_GROUPS.concat([{ label: "Terrain", items: [["topography", "topography"]] }]);
+  if (!host || host.childElementCount || !_effects) return;
+  const groups = _effects.TRANSFORM_GROUPS.concat([{ label: "Terrain", items: [["topography", "topography"]] }]);
   for (const group of groups) {
     const wrap = document.createElement("div");
     wrap.className = "transform-group";
@@ -1851,7 +2040,7 @@ function buildTransformMenu() {
     host.appendChild(wrap);
   }
 }
-buildTransformMenu();
+// (Built by the setSource("byo") continuation once the lazy effects graph loads.)
 
 // Topography controls: update display spans and re-run if canvas is loaded.
 function topoHasCanvas() { return $("sc-phash").textContent !== "—"; }
@@ -2235,7 +2424,9 @@ function liveTick(ts) {
   // stops that whole recurring class. (studio-loop.js, node-tested.)
   if (phash === lastLoopPhash) {
     if (++staticTicks >= STATIC_STOP) {
-      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: showcaseSettled() });
+      // Showcase graph is lazy: before it loads (start still in flight) treat the scene as NOT
+      // settled, i.e. animated, matching studio-loop's no-state behavior for the showcase source.
+      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: _showcase ? _showcase.showcaseSettled() : false });
       if (shouldHaltOnStatic(true, animated)) { stopMeterLoop(); return; }
       staticTicks = 0;   // animated: do not halt, but reset so we re-arm the window cleanly
     }
@@ -2799,6 +2990,7 @@ window.Studio.disconnectModel = function() {
 // for workstation demos that should connect automatically.
 async function connectDetectedLocalModel() {
   try {
+    const { ModelAdapter } = await loadModelAdapter();   // lazy: only fetched when detection is asked for
     const cfg = await ModelAdapter.autodetect();
     if (cfg) {
       const fn = ModelAdapter.connect(cfg);
@@ -3041,8 +3233,9 @@ $("rt-playpause").addEventListener("click", () => {
   } else {
     if (byoVideo && byoVideo.paused) { byoVideo.play().catch(() => {}); }
     if (watchVideo && watchVideo.srcObject && watchVideo.paused) { watchVideo.play().catch(() => {}); }
-    if (canvasIsGL && !glFractal2D && !stop3d) {
-      try { fractal3dHandle = render3D($("studio-canvas"), read3DOpts()); stop3d = fractal3dHandle.stop; } catch (e) {}
+    // _fractal3d is necessarily loaded here: canvasIsGL && !glFractal2D means a 3D orbit ran before.
+    if (canvasIsGL && !glFractal2D && !stop3d && _fractal3d) {
+      try { fractal3dHandle = _fractal3d.render3D($("studio-canvas"), read3DOpts()); stop3d = fractal3dHandle.stop; } catch (e) {}
     }
     if (activeSource === "ndim") startNDimAnimation();   // resume the n-dim animation
     startMeterLoop();
@@ -3308,11 +3501,14 @@ buildMeters();
     if (btnWebm) btnWebm.hidden = !show;
   };
 
+  // The exporter graph is lazy: each button awaits the cached loader on click (the existing
+  // handlers were already async, so the failure path lands in the same say() message).
   if (btnPng) {
     btnPng.addEventListener("click", async () => {
       try {
-        const blob = await StudioExporters.export("png", $("studio-canvas"));
-        download(blob, "studio-frame.png");
+        const ex = await loadExporters();
+        const blob = await ex.StudioExporters.export("png", $("studio-canvas"));
+        ex.download(blob, "studio-frame.png");
       } catch (e) {
         say("model", "PNG export failed: " + e.message);
       }
@@ -3322,11 +3518,12 @@ buildMeters();
   if (btnJson) {
     btnJson.addEventListener("click", async () => {
       try {
+        const ex = await loadExporters();
         const perception = typeof window.__studioFullPerception === "function"
           ? window.__studioFullPerception()
           : null;
-        const json = await StudioExporters.export("json", $("studio-canvas"), { data: perception });
-        download(json, "perception.json");
+        const json = await ex.StudioExporters.export("json", $("studio-canvas"), { data: perception });
+        ex.download(json, "perception.json");
       } catch (e) {
         say("model", "JSON export failed: " + e.message);
       }
@@ -3336,8 +3533,9 @@ buildMeters();
   if (btnObj) {
     btnObj.addEventListener("click", async () => {
       try {
-        const obj = await StudioExporters.export("obj", $("studio-canvas"), { mesh: _studioLastMesh });
-        download(obj, "mesh.obj");
+        const ex = await loadExporters();
+        const obj = await ex.StudioExporters.export("obj", $("studio-canvas"), { mesh: _studioLastMesh });
+        ex.download(obj, "mesh.obj");
       } catch (e) {
         say("model", "OBJ export failed: " + e.message);
       }
@@ -3347,8 +3545,9 @@ buildMeters();
   if (btnGltf) {
     btnGltf.addEventListener("click", async () => {
       try {
-        const gltf = await StudioExporters.export("gltf", $("studio-canvas"), { mesh: _studioLastMesh });
-        download(gltf, "mesh.gltf");
+        const ex = await loadExporters();
+        const gltf = await ex.StudioExporters.export("gltf", $("studio-canvas"), { mesh: _studioLastMesh });
+        ex.download(gltf, "mesh.gltf");
       } catch (e) {
         say("model", "GLTF export failed: " + e.message);
       }
@@ -3361,8 +3560,9 @@ buildMeters();
       btnWebm.disabled = true;
       try {
         btnWebm.textContent = "Recording...";
-        const webm = await StudioExporters.export("webm", $("studio-canvas"), { durationMs: 5000 });
-        download(webm, "studio-capture.webm");
+        const ex = await loadExporters();
+        const webm = await ex.StudioExporters.export("webm", $("studio-canvas"), { durationMs: 5000 });
+        ex.download(webm, "studio-capture.webm");
       } catch (e) {
         say("model", "WebM export failed: " + e.message);
       } finally {
@@ -3652,26 +3852,30 @@ try {
   if (stored && TIER_ORDER.includes(stored)) engineTierOverride = stored;
 } catch (_) {}
 
+// Feed the music visuals engine (reactive-visuals exposes setCapability/setTierOverride). The
+// engine is lazy-loaded on first music entry, which may be long after the boot poll below gives
+// up, so this is module-scoped: loadReactive() calls it again the moment the engine exists.
+let _engineCapability = null;
+function feedEngineCapability() {
+  const RV = window.ReactiveVisuals;
+  if (RV && RV.setCapability) {
+    try { RV.setCapability(_engineCapability); RV.setTierOverride(engineTierOverride); } catch (_) {}
+    return true;
+  }
+  return false;
+}
+
 (async function bootScalableEngine() {
-  let capability = null;
   try {
     const cap = await import("./engine/capability.js");
-    capability = await cap.probeCapability();
-    window.__studioCapability = capability;   // honest, inspectable
-  } catch (_) { capability = null; }
-  // Feed the music visuals engine (reactive-visuals exposes setCapability/setTierOverride). It may
-  // not be loaded yet when this runs; retry on the window load tick and also poll briefly.
-  function feed() {
-    const RV = window.ReactiveVisuals;
-    if (RV && RV.setCapability) {
-      try { RV.setCapability(capability); RV.setTierOverride(engineTierOverride); } catch (_) {}
-      return true;
-    }
-    return false;
-  }
-  if (!feed()) {
+    _engineCapability = await cap.probeCapability();
+    window.__studioCapability = _engineCapability;   // honest, inspectable
+  } catch (_) { _engineCapability = null; }
+  // The engine may not be loaded yet when this runs; poll briefly (covers a music entry that
+  // raced the probe). A later lazy music load re-feeds via loadReactive.
+  if (!feedEngineCapability()) {
     let tries = 0;
-    const iv = setInterval(() => { if (feed() || ++tries > 40) clearInterval(iv); }, 100);
+    const iv = setInterval(() => { if (feedEngineCapability() || ++tries > 40) clearInterval(iv); }, 100);
   }
 })();
 

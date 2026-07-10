@@ -22,7 +22,7 @@
 <meta name="theme-color" content="#14041b">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/system.css?v=20260709m">
+<link rel="stylesheet" href="system/system.css?v=20260709n">
 <style>
   /* interactive demo controls: dark workshop register, AA on near-black */
   .demo{max-width:60rem;margin-top:clamp(1.8rem,3.5vw,2.6rem);
@@ -71,7 +71,7 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260709m"></script>
+<script type="module" src="system/nav.js?v=20260709n"></script>
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Field map &middot; engines &middot; research &middot; work</span></div>
   <div class="mid">
@@ -79,6 +79,9 @@
     <h1>One workshop for <span class="g">systems, models, graphics, and research.</span></h1>
     <p class="lede">Project Telos is the public map of a wider body of work: engines, demos, papers, graphics systems, local-model workflows, generated media, release tooling, and field notes. It is broad on purpose. Start with an engine, open a demo, read a paper, or route directly to a work thread.</p>
     <p class="close">A site for range, not a single thesis: compilers, agent tooling, procedural art, reverse engineering, color systems, model harnesses, research infrastructure, and the operating layer that ties them together.</p>
+    <div class="specimen-strip" aria-hidden="true">
+      <canvas data-specimen="overview" data-specimen-layers="orbit,contour"></canvas>
+    </div>
   </div>
   <div class="seal">Engines &middot; demos &middot; papers &middot; generated art &middot; local workflows &middot; work routes</div>
 </div>
@@ -249,17 +252,17 @@
       <div class="organ-row">
         <span class="organ-name"><a href="aleph.html" translate="no">Gate</a></span>
         <span class="organ-role">Aleph</span>
-        <span class="organ-line">Coordinates the private-line platform across docs, package contracts, MCP declarations, CI state, release notes, and public-safe package surfaces. Public repo: <a href="https://github.com/HarperZ9/aleph" rel="noopener" translate="no">github.com/HarperZ9/aleph</a>.</span>
+        <span class="organ-line">Coordinates the private-line platform across docs, package contracts, MCP declarations, CI state, release notes, and public-safe package surfaces. Private line; public overview: <a href="aleph.html" translate="no">the Gate page</a>.</span>
         <span class="organ-verdict"><span class="verdict verdict-shipped">Public</span></span>
       </div>
       <div class="organ-row">
         <span class="organ-name"><a href="orca.html" translate="no">Runtime</a></span>
         <span class="organ-role">ORCA</span>
-        <span class="organ-line">Native operator runtime for local run state, module execution, artifacts, release provenance, and handoff checks. Public repo: <a href="https://github.com/HarperZ9/orca" rel="noopener" translate="no">github.com/HarperZ9/orca</a>.</span>
+        <span class="organ-line">Native operator runtime for local run state, module execution, artifacts, release provenance, and handoff checks. Private line; public overview: <a href="orca.html" translate="no">the Runtime page</a>.</span>
         <span class="organ-verdict"><span class="verdict verdict-shipped">Public</span></span>
       </div>
       <div class="organ-row">
-        <span class="organ-name"><a href="https://github.com/HarperZ9/kun" rel="noopener" translate="no">Vault</a></span>
+        <span class="organ-name"><span translate="no">Vault</span></span>
         <span class="organ-role">Kun</span>
         <span class="organ-line">Access recovery vault with path-only records, manual diagnostics, rotation discipline, and operator-owned credential boundaries. Public repo, value-free by design.</span>
         <span class="organ-verdict"><span class="verdict verdict-shipped">Public</span></span>

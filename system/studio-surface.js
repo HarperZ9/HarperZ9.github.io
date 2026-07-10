@@ -13,8 +13,24 @@
 // Loaded via <script src> UMD tag (sets window.panzoom) before this module.
 //
 // Tweakpane version: 4.0.5, vendored at system/lib/vendor/tweakpane-4.0.5.min.js
-// Imported directly as ESM below (named export { Pane }).
-import { Pane as TweakpanePaneCtor } from "./lib/vendor/tweakpane-4.0.5.min.js";
+// Lazy-imported as ESM (named export { Pane }) on the first buildPane() call, so the ~150 KB
+// vendor bundle stays off the Studio's first-load critical path (buildPane runs from a
+// setTimeout after boot, so the fetch is deferred and non-blocking either way).
+let TweakpanePaneCtor = null;   // set when the lazy import resolves; null = not loaded (yet or ever)
+let _tweakpanePromise = null;
+function loadTweakpane() {
+  if (!_tweakpanePromise) {
+    _tweakpanePromise = import("./lib/vendor/tweakpane-4.0.5.min.js")
+      .then(m => { TweakpanePaneCtor = (m && m.Pane) || null; return TweakpanePaneCtor; })
+      .catch(err => {
+        // A failed vendor load leaves the pane absent; every other control keeps working.
+        console.warn("studio-surface: tweakpane load failed", err);
+        _tweakpanePromise = null;
+        return null;
+      });
+  }
+  return _tweakpanePromise;
+}
 
 // ============================================================================
 // Section 1: pan/zoom
@@ -194,7 +210,9 @@ export function registerMusicCallbacks(cbs) { _musicCallbacks = cbs; }
 export function registerFractalCallbacks(cbs) { _fractalCallbacks = cbs; }
 
 // Build or rebuild the Tweakpane pane. Called once after the DOM is ready.
-export function buildPane() {
+// Async: awaits the lazy tweakpane import first (cached after the first call).
+export async function buildPane() {
+  await loadTweakpane();
   if (!TweakpanePaneCtor) return;   // library not loaded (import failed)
 
   // Find or create a container in the render-toolbar.

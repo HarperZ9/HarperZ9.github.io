@@ -2893,3 +2893,211 @@ section.mv{
     order:8;
   }
 }
+
+/* ============================================================================
+   SPECIMEN STRIPS (2026-07-09)
+   Slim clipped bands of first-party procedural material under page mastheads.
+   Rendered once by renderSpecimen() in system/generative-field.js; decorative
+   (aria-hidden) and fully static, so reduced motion needs no override here.
+   Mirrored inline on doc.css pages (research, writing), which do not load this
+   cascade; keep the two rules in step.
+   ============================================================================ */
+.specimen-strip{
+  position:relative;
+  width:100%;
+  height:clamp(96px,14vw,160px);
+  max-height:160px;
+  margin-block:clamp(1rem,2.2vw,1.6rem);
+  border:1px solid var(--hairline);
+  border-radius:10px;
+  overflow:hidden;
+  background:color-mix(in oklab, var(--void) 86%, transparent);
+}
+.specimen-strip canvas{
+  display:block;
+  width:100%;
+  height:100%;
+  opacity:.62;
+}
+
+/* ============================================================================
+   PRISMATIC EXPRESSIONISM (2026-07-09)
+   Fused identity for the shared static pages: Supergraphic Ultramodern x
+   Crystal x Neoexpressionist, synthesized as procedural CSS (never copied
+   imagery). Vocabulary: crystal lens (ice-cyan specular rims, horizon-banded
+   fills, one dark maroon band), scanline halftone, single-hot-stroke facets.
+   Evolves the dark plum cascade above; tone, not overhaul. Bans respected:
+   no gradient text, no border-left accents, no glassmorphism-by-default,
+   nothing motion-gated. Token mirror of src/index.css; keep the tiers in step.
+   ============================================================================ */
+:root{
+  /* ice near-white cyan. Contrast (computed): 16.73:1 on --void,
+     14.73:1 on --surface. */
+  --crystal:oklch(94% .04 210);
+  /* the one dark maroon band. 1.49:1 on --void: never text on the dark
+     ground; band fill inside a --crystal shape only (11.21:1 on --crystal). */
+  --crystal-deep:oklch(32% .09 20);
+  /* THE single expressive accent per fold on these pages: the ember family
+     already present. 8.01:1 on --void (computed). */
+  --hot:var(--ember);
+  /* sharper hairline for crystal facet edges (crisper than --hairline). */
+  --facet-line:oklch(94% .04 210/.45);
+}
+
+/* Crystal edge under section-head H2s: a short clipped facet notch (block
+   ::after with clip-path, NOT border-left, NOT gradient text). The fill is
+   horizon-banded crystal glass: ice cyan split by the one maroon band. The
+   1px --facet-line top edge survives the clip because the polygon keeps the
+   full top edge. Decorative; the heading text alone carries the structure. */
+section.mv > h2::after,
+.proof-head h2::after{
+  content:"";
+  display:block;
+  width:4.25rem;
+  height:.5rem;
+  margin-top:.6rem;
+  border-top:1px solid var(--facet-line);
+  background:linear-gradient(180deg, var(--crystal) 0 52%, var(--crystal-deep) 52% 76%, var(--crystal) 76% 100%);
+  clip-path:polygon(0 0, 100% 0, calc(100% - 1.05rem) 100%, .5rem 72%);
+}
+/* centered statement sections keep the notch centered under the heading */
+.hinge h2::after{margin-inline:auto}
+
+/* Faceted corner on the hero frame: one small clipped shard, top-right,
+   translucent crystal over the void with the maroon band reading through.
+   Subtle and consistent on every .frame masthead; pointer-events off. */
+.frame::before{
+  content:"";
+  position:absolute;
+  top:0;
+  right:var(--site-shell,clamp(1.15rem,5vw,5rem));
+  width:clamp(2.4rem,4vw,3.6rem);
+  height:clamp(1.1rem,1.9vw,1.7rem);
+  pointer-events:none;
+  opacity:.55;
+  border-top:1px solid var(--facet-line);
+  background:linear-gradient(180deg,
+    color-mix(in oklab, var(--crystal) 34%, transparent) 0 44%,
+    color-mix(in oklab, var(--crystal-deep) 60%, transparent) 44% 64%,
+    transparent 64%);
+  clip-path:polygon(0 0, 100% 0, 62% 100%, 14% 58%);
+}
+
+/* Scanline-halftone divider: dashed horizontal scanlines fading through a
+   disc-shaped mask, so the strip reads as the edge of a halftone disc.
+   Usable between .mv bands; static, so reduced motion needs no override.
+   If mask-composite is unsupported the two mask layers union and the strip
+   degrades to an un-dashed faded scanline band. Decorative only. */
+.prism-divider{
+  height:clamp(1.9rem,3.4vw,2.6rem);
+  margin-block:clamp(1.4rem,3vw,2.4rem);
+  pointer-events:none;
+  background:repeating-linear-gradient(180deg, var(--crystal) 0 1px, transparent 1px 6px);
+  -webkit-mask-image:
+    repeating-linear-gradient(90deg, #000 0 18px, transparent 18px 30px),
+    radial-gradient(120% 130% at 18% 50%, #000 0 46%, transparent 78%);
+  -webkit-mask-composite:source-in;
+  mask-image:
+    repeating-linear-gradient(90deg, #000 0 18px, transparent 18px 30px),
+    radial-gradient(120% 130% at 18% 50%, #000 0 46%, transparent 78%);
+  mask-composite:intersect;
+  opacity:.5;
+}
+
+/* EXACTLY-ONE-HOT audit (static pages, per fold). The hero fold's one hot
+   is .built-stat (ember); the two calms below retire the extra ember
+   elements the legacy layer left in the same fold:
+   - .btn kept its legacy ember FILL under the dark cascade's bone text
+     (2.28:1, an AA fail as well as a second/third hot per fold). Calm the
+     fill to the shared translucent void; bone text now sits on near-void
+     (18.27:1). .btn.ghost and the studio scopes already override this.
+   - .hero-cue a:hover flipped cyan links to ember; calm to --crystal
+     (16.73:1) so hover reads as a specular lift, not a second hot.
+   Semantic verdict/state colors (cert chips, gate states) are paired with
+   text + shape and are exempt from the decorative-accent count. */
+.btn{background:color-mix(in oklab, var(--void) 72%, transparent)}
+.hero-cue a:hover{color:var(--crystal);border-color:var(--crystal)}
+
+/* ============================================================================
+   ART-MAG PLATES (2026-07-09)
+   The image-led register: full-width numbered plates of first-party procedural
+   material, captioned like figures in a printed art magazine. The canvas is
+   rendered once by renderSpecimen() in system/generative-field.js, carries
+   aria-hidden, and is fully static (no loop), so reduced motion needs no
+   override and content is never gated on it. Unknown layer names are skipped
+   by the engine, so a plate whose layers have not landed yet degrades to its
+   backdrop wash instead of breaking the page. Shared class vocabulary with
+   system/doc.css; each sheet implements it in its own material.
+   ============================================================================ */
+.plate{
+  position:relative;
+  width:100%;
+  margin:0 0 clamp(1.8rem,3.4vw,3rem);
+}
+.plate canvas{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:21/9;
+  border:1px solid var(--hairline);
+  border-radius:12px;
+  background:color-mix(in oklab, var(--void) 82%, black);
+}
+.plate figcaption{
+  display:flex;
+  align-items:baseline;
+  gap:1.1rem;
+  margin-top:.65rem;
+}
+.plate-no{
+  font-family:var(--mono);
+  font-size:.6rem;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:var(--muted);
+  white-space:nowrap;
+}
+.plate-caption{
+  font-family:var(--mono);
+  font-size:.66rem;
+  letter-spacing:.07em;
+  color:var(--muted);
+  line-height:1.7;
+  max-width:64ch;
+}
+/* Chapter-opener bleed: edge to edge within the section's content column.
+   The dark cascade re-pads section.mv with --site-shell, so cancel exactly
+   that (legacy clamp as the fallback); the folio line stays on the column. */
+.plate--bleed{
+  margin-inline:calc(var(--site-shell,clamp(2.4rem,5.5vw,5rem)) * -1);
+  width:auto;
+}
+.plate--bleed canvas{
+  aspect-ratio:2/1;
+  border-radius:0;
+  border-inline:0;
+}
+.plate--bleed figcaption{
+  padding-inline:var(--site-shell,clamp(2.4rem,5.5vw,5rem));
+}
+@media(max-width:640px){
+  .plate--bleed canvas{aspect-ratio:4/3}
+}
+/* Slim band for compact mastheads (publications). */
+.plate--slim canvas{aspect-ratio:32/7}
+/* Interstitial: the pale caustic-paper variant. The whole figure takes a bone
+   paper ground so the folio line flips to dark-on-pale no matter when the
+   layer lands. Computed WCAG contrast on the #ece9e2 ground: caption ink
+   #24272c = 12.36:1, folio mark #43474e = 7.70:1; both clear AA (4.5:1). */
+.plate--interstitial{
+  background:#ece9e2;
+  border:1px solid rgba(11,12,14,.16);
+  border-radius:12px;
+  padding:clamp(.85rem,1.8vw,1.3rem);
+}
+.plate--interstitial canvas{
+  background:#f4f2ec;
+  border-color:rgba(11,12,14,.12);
+}
+.plate--interstitial .plate-no{color:#43474e}
+.plate--interstitial .plate-caption{color:#24272c}
