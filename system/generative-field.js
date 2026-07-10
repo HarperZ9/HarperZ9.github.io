@@ -8,6 +8,7 @@
 // textures, and no pretrained weights: the seed derives every network.
 import { buildCppn, buildNeuralSdf } from "./neural.js";
 import { voxelizeSdf, isoOrder } from "./voxel.js";
+import { drawTypeface } from "./typeface.js";
 let mounted = false;
 let rafId = 0;
 const pulses = [];
@@ -2278,6 +2279,7 @@ const SPECIMEN_LAYERS = {
   "neural-field": drawNeuralField,
   "neural-sdf": drawNeuralSdf,
   "neural-voxel": drawNeuralVoxel,
+  typeface: drawTypeface,
 };
 const SPECIMEN_DEFAULT_LAYERS = ["orbit", "contour"];
 
