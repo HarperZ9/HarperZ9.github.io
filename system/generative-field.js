@@ -1,7 +1,9 @@
 // First-party procedural field for shared Project Telos pages.
 // Synthesizes route-seeded orbit fields, contour ridges, crystal fragments,
 // fluid metaballs, iso-contours, ASCII dither, flow traces, pointer wakes, and
-// motes. No copied inspiration images, no remote textures.
+// motes, plus the fixture vocabulary: crystal lens apertures, scanline
+// halftones, facet planes, groove marble, and quadrant CA weaves.
+// No copied inspiration images, no remote textures.
 let mounted = false;
 let rafId = 0;
 const pulses = [];
@@ -718,10 +720,1045 @@ export function mountGenerativeField(doc = document) {
   return Promise.resolve(mounted);
 }
 
+/* ---------------------------------------------------------------------------
+   Fixture layers (2026-07-09): a fused Supergraphic Ultramodern x Crystal x
+   Neoexpressionist vocabulary, synthesized as first-party drawing code from
+   the operator's inspiration corpus (no image is copied, traced, or embedded).
+   These are specimen-first layers, registered in SPECIMEN_LAYERS below and
+   rendered one-shot by renderSpecimen, so modest per-call allocation is fine
+   and no reading-corridor guard applies: in a fixture tile the drawing IS the
+   exhibit, not a backdrop under text. All of them are deterministic from
+   (seed, tick) alone and never touch window or document.
+--------------------------------------------------------------------------- */
+
+function lensBandTone(t, maroonAt) {
+  // Horizon curve for the crystal sheet: ice white into cyan into a deep
+  // blue floor, with one hard dark maroon shadow band cut across the stack.
+  if (Math.abs(t - maroonAt) < 0.045) return [64, 10, 34];
+  if (t < 0.3) {
+    const k = t / 0.3;
+    return [Math.round(238 - k * 98), Math.round(250 - k * 42), Math.round(252 - k * 8)];
+  }
+  if (t < 0.64) {
+    const k = (t - 0.3) / 0.34;
+    return [Math.round(140 - k * 102), Math.round(208 - k * 130), Math.round(244 - k * 58)];
+  }
+  const k = (t - 0.64) / 0.36;
+  return [Math.round(38 + k * 96), Math.round(78 + k * 138), Math.round(186 + k * 62)];
+}
+
+function lensHorizonBands(ctx, width, y0, spanH, seed, salt, phase, alphaScale) {
+  const bands = Math.max(20, Math.round(spanH / 6));
+  const maroonAt = 0.52 + rand(seed, salt + 811) * 0.2;
+  const bandH = spanH / bands;
+  for (let i = 0; i < bands; i += 1) {
+    const t = i / (bands - 1);
+    const tone = lensBandTone(t, maroonAt);
+    const shimmer = 0.5 + Math.sin(t * 8.2 + phase + rand(seed, salt + 17) * 6.28) * 0.5;
+    ctx.fillStyle = toneToRgba(tone, (0.14 + shimmer * 0.2) * alphaScale);
+    ctx.fillRect(0, y0 + i * bandH, width, bandH + 1);
+  }
+}
+
+function lensAperture(ctx, width, seed, salt, phase, cx, cy, r) {
+  // Refracted interior: the same horizon stack, re-banded at the aperture's
+  // own scale so the glass visibly bends the horizon behind it.
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.clip();
+  lensHorizonBands(ctx, width, cy - r, r * 2, seed, salt, phase + 2.1, 1.05);
+  ctx.restore();
+  // Hard specular rim: one bright thick arc at the light angle, one thin
+  // full ring, and one deep blue counter-arc on the shadow side.
+  const lightA = rand(seed, salt + 5) * Math.PI * 2;
+  ctx.lineCap = "round";
+  ctx.strokeStyle = "rgba(244,252,255,0.85)";
+  ctx.lineWidth = Math.max(1.4, r * 0.045);
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, lightA - 0.9, lightA + 0.7);
+  ctx.stroke();
+  ctx.strokeStyle = "rgba(210,240,250,0.5)";
+  ctx.lineWidth = Math.max(0.8, r * 0.014);
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.strokeStyle = "rgba(24,44,120,0.55)";
+  ctx.lineWidth = Math.max(1, r * 0.03);
+  ctx.beginPath();
+  ctx.arc(cx, cy, r * 0.965, lightA + Math.PI - 0.8, lightA + Math.PI + 0.9);
+  ctx.stroke();
+}
+
+function drawCrystalLens(ctx, width, height, tick, seed, palette) {
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  const phase = tick * 0.00004;
+  const base = Math.min(width, height);
+  lensHorizonBands(ctx, width, 0, height, seed, 400, phase, 0.6);
+  // Faceted chords: hard straight cuts across the glass sheet.
+  ctx.lineCap = "butt";
+  for (let i = 0; i < 4; i += 1) {
+    ctx.strokeStyle = `rgba(228,246,252,${0.12 + rand(seed, i + 405) * 0.12})`;
+    ctx.lineWidth = Math.max(1, base * 0.0035);
+    ctx.beginPath();
+    ctx.moveTo(rand(seed, i * 61 + 402) * width, -2);
+    ctx.lineTo(rand(seed, i * 67 + 403) * width, height + 2);
+    ctx.stroke();
+  }
+  // Overlapping circular apertures cut into the faceted glass.
+  const count = 3 + (seed % 2);
+  for (let i = 0; i < count; i += 1) {
+    const cx = width * (0.18 + rand(seed, i * 41 + 421) * 0.64);
+    const cy = height * (0.2 + rand(seed, i * 47 + 431) * 0.6);
+    const r = base * (0.16 + rand(seed, i * 53 + 441) * 0.2);
+    lensAperture(ctx, width, seed, 450 + i * 97, phase + i, cx, cy, r);
+  }
+  // One palette glint so the route color still signs the sheet.
+  ctx.fillStyle = palette.spark;
+  ctx.beginPath();
+  ctx.arc(width * (0.3 + rand(seed, 471) * 0.4), height * (0.3 + rand(seed, 477) * 0.4),
+    Math.max(2, base * 0.012), 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawScanlineHalftone(ctx, width, height, tick, seed, palette) {
+  // One iconic disc built from dashed horizontal scanlines; the dash length
+  // carries the tone. Two working colors plus one accent, plotter restraint.
+  const tones = palette.fluid || [[132, 245, 255], [167, 115, 255], [239, 171, 48]];
+  const base = Math.min(width, height);
+  const step = Math.max(3, Math.round(base / 88));
+  const rowH = Math.max(1, step * 0.44);
+  const cx = width * (0.4 + rand(seed, 501) * 0.2);
+  const cy = height * (0.42 + rand(seed, 503) * 0.16);
+  const radius = base * (0.26 + rand(seed, 505) * 0.12);
+  const lightA = rand(seed, 507) * Math.PI * 2;
+  const lx = Math.cos(lightA);
+  const ly = Math.sin(lightA);
+  const grooves = 7 + (seed % 5);
+  ctx.save();
+  ctx.globalCompositeOperation = "lighter";
+  for (let y = step * 0.5, row = 0; y < height; y += step, row += 1) {
+    const dy = (y - cy) / radius;
+    if (row % 3 === 0) {
+      // Sparse ambient scanlines keep the ground alive without stealing tone.
+      ctx.fillStyle = toneToRgba(tones[1], 0.02);
+      ctx.fillRect(0, y - rowH * 0.5, width, Math.max(1, rowH * 0.5));
+    }
+    if (Math.abs(dy) >= 1) continue;
+    const half = Math.sqrt(1 - dy * dy) * radius;
+    const ink = tones[row % 9 === 0 ? 2 : 0];
+    const xEnd = Math.min(width, cx + half);
+    let x = Math.max(0, cx - half);
+    let guard = 0;
+    while (x < xEnd && guard < 320) {
+      guard += 1;
+      const nx = (x - cx) / radius;
+      const nz = Math.sqrt(Math.max(0, 1 - nx * nx - dy * dy));
+      const lambert = Math.max(0, nx * lx + dy * ly);
+      const band = 0.5 + Math.sin(dy * grooves + nx * 2.2 + tick * 0.00002) * 0.5;
+      const tone = clamp(nz * 0.42 + lambert * 0.48 + band * 0.24, 0, 1);
+      const dash = step * (0.5 + tone * 2.8);
+      ctx.fillStyle = toneToRgba(ink, 0.08 + tone * 0.5);
+      ctx.fillRect(x, y - rowH * 0.5, Math.min(dash, xEnd - x), rowH);
+      x += dash + step * (0.35 + (1 - tone) * 2.3);
+    }
+  }
+  // One thin orbital ellipse: the plotter's signature pass.
+  ctx.strokeStyle = toneToRgba(tones[2], 0.5);
+  ctx.lineWidth = Math.max(1, base * 0.0028);
+  ctx.beginPath();
+  ctx.ellipse(cx, cy, radius * 1.28, radius * 0.44, lightA * 0.35, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function facetShardPath(ctx, seed, salt, cx, cy, size) {
+  const sides = 4 + (salt % 2);
+  ctx.beginPath();
+  for (let n = 0; n < sides; n += 1) {
+    const a = rand(seed, salt + n * 7) * 0.9 + (n / sides) * Math.PI * 2;
+    const radius = size * (0.45 + rand(seed, salt + n * 11 + 3) * 0.6);
+    const x = cx + Math.cos(a) * radius;
+    const y = cy + Math.sin(a) * radius * 0.86;
+    if (n === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+}
+
+function facetHatch(ctx, cx, cy, size, angle, alpha) {
+  // Dense parallel texture clipped to the current shard path.
+  ctx.save();
+  ctx.clip();
+  ctx.strokeStyle = `rgba(214,220,226,${alpha})`;
+  ctx.lineWidth = 0.7;
+  const span = size * 1.9;
+  const gap = Math.max(3, size / 9);
+  const dx = Math.cos(angle);
+  const dy = Math.sin(angle);
+  for (let o = -span; o <= span; o += gap) {
+    ctx.beginPath();
+    ctx.moveTo(cx - dx * span - dy * o, cy - dy * span + dx * o);
+    ctx.lineTo(cx + dx * span - dy * o, cy + dy * span + dx * o);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function facetAccentStroke(ctx, width, height, tick, seed, base) {
+  // EXACTLY ONE hot stroke per composition: the neoexpressionist gash. Keep
+  // it single; a second accent would flatten the whole grammar of the layer.
+  ctx.beginPath();
+  let x = width * (0.24 + rand(seed, 661) * 0.5);
+  let y = height * (0.14 + rand(seed, 667) * 0.3);
+  ctx.moveTo(x, y);
+  for (let s = 1; s <= 3; s += 1) {
+    x += (rand(seed, 670 + s * 7) - 0.42) * width * 0.3;
+    y += (0.14 + rand(seed, 673 + s * 11) * 0.2) * height + Math.sin(tick * 0.0001 + s) * base * 0.004;
+    ctx.lineTo(x, y);
+  }
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.strokeStyle = "rgba(206,38,24,0.82)";
+  ctx.lineWidth = Math.max(2.5, base * 0.014);
+  ctx.stroke();
+}
+
+function drawFacetPlanes(ctx, width, height, tick, seed, palette) {
+  const base = Math.min(width, height);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  // Near-monochrome angular shards over the dark ground.
+  const count = 9 + (seed % 4);
+  for (let i = 0; i < count; i += 1) {
+    const cx = rand(seed, i * 29 + 601) * width;
+    const cy = rand(seed, i * 31 + 607) * height;
+    const size = base * (0.1 + rand(seed, i * 37 + 613) * 0.24);
+    const grey = 150 + Math.round(rand(seed, i * 41 + 617) * 80);
+    facetShardPath(ctx, seed, i * 101 + 620, cx, cy, size);
+    ctx.fillStyle = `rgba(${grey},${grey + 4},${grey + 10},${0.05 + rand(seed, i + 627) * 0.08})`;
+    ctx.strokeStyle = "rgba(226,230,236,0.22)";
+    ctx.lineWidth = Math.max(1, base * 0.002);
+    ctx.fill();
+    ctx.stroke();
+    if (i % 3 === 0) facetHatch(ctx, cx, cy, size, rand(seed, i + 631) * Math.PI, 0.07);
+  }
+  // Hard diagonal light cones: flat wedges, no soft gradient edge.
+  const cones = 1 + (seed % 2);
+  for (let i = 0; i < cones; i += 1) {
+    const ax = width * (0.16 + rand(seed, i * 43 + 641) * 0.68);
+    const spread = base * (0.16 + rand(seed, i * 47 + 647) * 0.2);
+    const drift = (rand(seed, i * 53 + 653) - 0.5) * width * 0.7;
+    ctx.beginPath();
+    ctx.moveTo(ax, -4);
+    ctx.lineTo(ax + drift - spread, height + 4);
+    ctx.lineTo(ax + drift + spread, height + 4);
+    ctx.closePath();
+    ctx.fillStyle = `rgba(238,242,246,${0.08 + rand(seed, i + 659) * 0.05})`;
+    ctx.fill();
+  }
+  facetAccentStroke(ctx, width, height, tick, seed, base);
+  ctx.restore();
+}
+
+const GROOVE_RAINBOW = [
+  [255, 92, 96], [255, 176, 64], [246, 240, 120],
+  [122, 232, 140], [96, 198, 255], [186, 136, 255],
+];
+
+function grooveAngle(x, y, tick, seed, swirlX, swirlY) {
+  // A curl field: the shared fieldAngle noise plus circulation around one
+  // seed-picked swirl center, so the grooves bundle instead of wandering.
+  return fieldAngle(x * 1.7, y * 1.7, tick, seed) * 0.55 +
+    Math.atan2(y - swirlY, x - swirlX) + Math.PI * 0.52;
+}
+
+function grooveComb(ctx, xs, ys, base, rainbow, bundle, seed) {
+  // Comb the traced spine: parallel offset strokes share one path. Exactly
+  // one bundle per composition is the narrow rainbow shear ribbon; the rest
+  // stay pale grooves. Drawn strokes, never CSS gradients.
+  const teeth = rainbow ? GROOVE_RAINBOW.length : 5 + (bundle % 3);
+  const spacing = base * (rainbow ? 0.005 : 0.0065);
+  for (let k = 0; k < teeth; k += 1) {
+    const off = (k - (teeth - 1) / 2) * spacing;
+    ctx.beginPath();
+    ctx.lineWidth = rainbow ? Math.max(1, base * 0.0028) : Math.max(0.9, base * 0.0026);
+    ctx.strokeStyle = rainbow
+      ? toneToRgba(GROOVE_RAINBOW[k], 0.62)
+      : `rgba(236,228,248,${0.17 + ((k + seed) % 2) * 0.07})`;
+    for (let s = 0; s < xs.length; s += 1) {
+      const tx = s ? xs[s] - xs[s - 1] : xs[1] - xs[0];
+      const ty = s ? ys[s] - ys[s - 1] : ys[1] - ys[0];
+      const len = Math.hypot(tx, ty) || 1;
+      const x = xs[s] - (ty / len) * off;
+      const y = ys[s] + (tx / len) * off;
+      if (s === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+}
+
+function drawGrooveMarble(ctx, width, height, tick, seed, palette) {
+  const base = Math.min(width, height);
+  ctx.save();
+  // Violet/plum ground wash, uneven on purpose.
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgba(44,18,58,0.5)";
+  ctx.fillRect(0, 0, width, height);
+  for (let i = 0; i < 3; i += 1) {
+    ctx.fillStyle = `rgba(${26 + i * 14},${8 + i * 5},${40 + i * 12},0.22)`;
+    ctx.beginPath();
+    ctx.arc(width * rand(seed, 703 + i * 9), height * rand(seed, 707 + i * 9),
+      base * (0.3 + i * 0.16), 0, Math.PI * 2);
+    ctx.fill();
+  }
+  // Bundled comb streamlines along the curl field.
+  const swirlX = width * (0.34 + rand(seed, 711) * 0.32);
+  const swirlY = height * (0.34 + rand(seed, 713) * 0.32);
+  const bundles = 13 + (seed % 4);
+  const rainbowAt = seed % bundles;
+  const stride = base * 0.014;
+  const steps = 52;
+  const xs = new Array(steps);
+  const ys = new Array(steps);
+  ctx.globalCompositeOperation = "lighter";
+  ctx.lineCap = "round";
+  for (let b = 0; b < bundles; b += 1) {
+    let x = width * rand(seed, b * 17 + 721);
+    let y = height * rand(seed, b * 19 + 727);
+    for (let s = 0; s < steps; s += 1) {
+      xs[s] = x;
+      ys[s] = y;
+      const a = grooveAngle(x, y, tick, seed, swirlX, swirlY);
+      x += Math.cos(a) * stride;
+      y += Math.sin(a) * stride;
+    }
+    grooveComb(ctx, xs, ys, base, b === rainbowAt, b, seed);
+  }
+  ctx.restore();
+}
+
+function caPane(seed, salt, rule, lanes, gens, plot, pair) {
+  // Elementary 1D automaton with wrap-around lanes: two row buffers, no grid
+  // retained. Alive cells land through plot() as a two-tone weave, dithered
+  // with the same ordered matrix the poster veil uses.
+  let cur = new Uint8Array(lanes);
+  let next = new Uint8Array(lanes);
+  for (let i = 0; i < lanes; i += 1) cur[i] = rand(seed, salt + i) < 0.44 ? 1 : 0;
+  for (let g = 0; g < gens; g += 1) {
+    for (let i = 0; i < lanes; i += 1) {
+      if (cur[i]) plot(i, g, toneToRgba(pair[(i + g) & 1], 0.21 + orderedDither(i, g) * 0.1));
+      const l = cur[(i + lanes - 1) % lanes];
+      const r = cur[(i + 1) % lanes];
+      next[i] = (rule >> ((l << 2) | (cur[i] << 1) | r)) & 1;
+    }
+    const swap = cur;
+    cur = next;
+    next = swap;
+  }
+}
+
+function caSeam(ctx, width, height, cx, cy, cell, tones) {
+  // Hard quadrant boundaries: a dark cut with a stitched bright seam.
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgba(3,5,9,0.62)";
+  ctx.fillRect(cx - cell * 0.5, 0, cell, height);
+  ctx.fillRect(0, cy - cell * 0.5, width, cell);
+  ctx.fillStyle = toneToRgba(tones[0], 0.5);
+  for (let y = 0; y < height; y += cell * 3) ctx.fillRect(cx - 1, y, 2, cell * 1.4);
+  for (let x = 0; x < width; x += cell * 3) ctx.fillRect(x, cy - 1, cell * 1.4, 2);
+}
+
+function drawCaQuadrant(ctx, width, height, tick, seed, palette) {
+  // Quadrant-composed two-tone CA weave: four elementary automata march away
+  // from a seed-shifted cross, one rule and orientation per quadrant, in the
+  // pinwheel spirit of the engine's hydra tiles.
+  const tones = palette.fluid || [[132, 245, 255], [167, 115, 255], [239, 171, 48]];
+  const cell = Math.max(3, Math.round(Math.min(width, height) / 92));
+  const cx = Math.round(width * (0.42 + rand(seed, 901) * 0.16));
+  const cy = Math.round(height * (0.42 + rand(seed, 907) * 0.16));
+  const dot = Math.max(1, cell - 1);
+  const rules = [90, 110, 30, 150];
+  const cols = (span) => Math.max(1, Math.ceil(span / cell));
+  ctx.save();
+  ctx.globalCompositeOperation = "lighter";
+  const paint = (fx, fy) => (i, g, style) => {
+    ctx.fillStyle = style;
+    ctx.fillRect(fx(i, g), fy(i, g), dot, dot);
+  };
+  const panes = [
+    [cols(cx), cols(cy), paint((i) => i * cell, (i, g) => cy - (g + 1) * cell)],
+    [cols(cy), cols(width - cx), paint((i, g) => cx + g * cell, (i) => i * cell)],
+    [cols(width - cx), cols(height - cy), paint((i) => cx + i * cell, (i, g) => cy + g * cell)],
+    [cols(height - cy), cols(cx), paint((i, g) => cx - (g + 1) * cell, (i) => cy + i * cell)],
+  ];
+  for (let q = 0; q < panes.length; q += 1) {
+    const [lanes, gens, plot] = panes[q];
+    const pair = [tones[q % tones.length], tones[(q + 1) % tones.length]];
+    caPane(seed, q * 5077 + 911, rules[(q + seed) % rules.length], lanes, gens, plot, pair);
+  }
+  caSeam(ctx, width, height, cx, cy, cell, tones);
+  ctx.restore();
+}
+
+/* ---------------------------------------------------------------------------
+   WAVE 2 (2026-07-09): plate-grade layers from the full inspiration corpus.
+   Art-mag register: these draw at full-bleed scale, set their own grounds
+   where the family demands it, and stay one-shot (no rAF, no listeners).
+   Seeded mode is byte-stable; seed "live" draws a true-random one-off.
+--------------------------------------------------------------------------- */
+
+const VEIL_TONES = [[190, 235, 255], [255, 214, 150], [255, 122, 146], [236, 244, 255]];
+
+function veilRibbon(ctx, width, height, rnd, salt, tone, alphaScale, dark) {
+  const edge = Math.floor(rnd(salt) * 4);
+  const p0 = edge === 0 ? [rnd(salt + 1) * width, -height * 0.06]
+    : edge === 1 ? [width * 1.06, rnd(salt + 1) * height]
+    : edge === 2 ? [rnd(salt + 1) * width, height * 1.06]
+    : [-width * 0.06, rnd(salt + 1) * height];
+  const p2 = [width * (0.12 + rnd(salt + 2) * 0.76), height * (0.1 + rnd(salt + 3) * 0.8)];
+  const p1 = [
+    (p0[0] + p2[0]) / 2 + (rnd(salt + 4) - 0.5) * width * 0.6,
+    (p0[1] + p2[1]) / 2 + (rnd(salt + 5) - 0.5) * height * 0.6,
+  ];
+  const k = Math.max(1, Math.min(2.4, width / 900));
+  const strokes = 26 + Math.floor(rnd(salt + 6) * 26);
+  const nx = -(p2[1] - p0[1]);
+  const ny = p2[0] - p0[0];
+  const nl = Math.max(1, Math.hypot(nx, ny));
+  for (let s = 0; s < strokes; s += 1) {
+    const off = (s - strokes / 2) * (0.7 + rnd(salt + 7) * 0.8) * k;
+    const fan = (s - strokes / 2) * 0.012;
+    const ox = (nx / nl) * off;
+    const oy = (ny / nl) * off;
+    const taper = Math.max(0.12, 1 - Math.abs(s - strokes / 2) / (strokes * 0.72));
+    const alpha = (dark ? 0.075 : 0.06) * alphaScale * taper;
+    ctx.strokeStyle = dark
+      ? toneToRgba(tone, alpha)
+      : `rgba(70,84,110,${alpha})`;
+    ctx.lineWidth = 1.1 * k;
+    ctx.beginPath();
+    ctx.moveTo(p0[0] + ox, p0[1] + oy);
+    ctx.quadraticCurveTo(p1[0] + ox + fan * width * 0.2, p1[1] + oy - fan * height * 0.2, p2[0] + ox, p2[1] + oy);
+    ctx.stroke();
+  }
+  // spine highlight: one brighter pass along the fold center so the silk glows
+  ctx.strokeStyle = dark ? toneToRgba(tone, 0.26 * alphaScale) : `rgba(70,84,110,${0.14 * alphaScale})`;
+  ctx.lineWidth = 0.9 * k;
+  ctx.beginPath();
+  ctx.moveTo(p0[0], p0[1]);
+  ctx.quadraticCurveTo(p1[0], p1[1], p2[0], p2[1]);
+  ctx.stroke();
+  return p2;
+}
+
+function starCaustic(ctx, x, y, size, rnd, salt, dark) {
+  const bloom = ctx.createRadialGradient(x, y, 0, x, y, size * 2.4);
+  bloom.addColorStop(0, dark ? "rgba(255,255,255,0.5)" : "rgba(60,72,96,0.16)");
+  bloom.addColorStop(1, "rgba(255,255,255,0)");
+  ctx.fillStyle = bloom;
+  ctx.fillRect(x - size * 2.4, y - size * 2.4, size * 4.8, size * 4.8);
+  const rot = rnd(salt) * Math.PI;
+  ctx.fillStyle = dark ? "rgba(255,255,255,0.55)" : "rgba(60,72,96,0.28)";
+  for (let k = 0; k < 2; k += 1) {
+    const a = rot + (k * Math.PI) / 2;
+    ctx.beginPath();
+    ctx.moveTo(x + Math.cos(a) * size * 2.6, y + Math.sin(a) * size * 2.6);
+    ctx.lineTo(x + Math.cos(a + Math.PI / 2) * size * 0.14, y + Math.sin(a + Math.PI / 2) * size * 0.14);
+    ctx.lineTo(x + Math.cos(a + Math.PI) * size * 2.6, y + Math.sin(a + Math.PI) * size * 2.6);
+    ctx.lineTo(x + Math.cos(a - Math.PI / 2) * size * 0.14, y + Math.sin(a - Math.PI / 2) * size * 0.14);
+    ctx.closePath();
+    ctx.fill();
+  }
+}
+
+function drawCausticVeils(ctx, width, height, tick, seed, palette) {
+  const rnd = (salt) => rand(seed, salt);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgba(3,4,9,0.94)";
+  ctx.fillRect(0, 0, width, height);
+  ctx.globalCompositeOperation = "lighter";
+  const ribbons = 9 + Math.floor(rnd(300) * 7);
+  const crossings = [];
+  for (let r = 0; r < ribbons; r += 1) {
+    const tone = VEIL_TONES[Math.floor(rnd(310 + r * 11) * VEIL_TONES.length)];
+    crossings.push(veilRibbon(ctx, width, height, rnd, 320 + r * 13, tone, 1, true));
+  }
+  const stars = 2 + Math.floor(rnd(301) * 3);
+  for (let k = 0; k < stars; k += 1) {
+    const p = crossings[Math.floor(rnd(430 + k * 7) * crossings.length)];
+    starCaustic(ctx, p[0], p[1], 7 + rnd(440 + k * 5) * 12, rnd, 450 + k * 3, true);
+  }
+  ctx.restore();
+}
+
+function drawCausticPaper(ctx, width, height, tick, seed, palette) {
+  const rnd = (salt) => rand(seed, salt);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgb(243,244,246)";
+  ctx.fillRect(0, 0, width, height);
+  const ribbons = 7 + Math.floor(rnd(500) * 5);
+  const crossings = [];
+  for (let r = 0; r < ribbons; r += 1) {
+    crossings.push(veilRibbon(ctx, width, height, rnd, 510 + r * 17, VEIL_TONES[0], 1, false));
+  }
+  const stars = 1 + Math.floor(rnd(501) * 2);
+  for (let k = 0; k < stars; k += 1) {
+    const p = crossings[Math.floor(rnd(620 + k * 7) * crossings.length)];
+    starCaustic(ctx, p[0], p[1], 6 + rnd(630 + k * 5) * 9, rnd, 640 + k * 3, false);
+  }
+  ctx.restore();
+}
+
+function drawPlanetLimb(ctx, width, height, tick, seed, palette) {
+  const rnd = (salt) => rand(seed, salt);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgba(1,2,7,0.96)";
+  ctx.fillRect(0, 0, width, height);
+  const R = Math.max(width, height) * (1.05 + rnd(700) * 0.5);
+  const cx = width * (0.35 + rnd(701) * 0.3);
+  const cy = height + R * (0.62 + rnd(702) * 0.2);
+  ctx.globalCompositeOperation = "lighter";
+  const arcs = 26;
+  for (let i = 0; i < arcs; i += 1) {
+    const t = i / (arcs - 1);
+    const rr = R + (t - 0.5) * 26;
+    const col = t < 0.4
+      ? `rgba(50,90,220,${0.05 + t * 0.2})`
+      : t < 0.75
+        ? `rgba(90,200,240,${0.12 + (t - 0.4) * 0.5})`
+        : `rgba(240,250,255,${0.28 + (t - 0.75) * 1.6})`;
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 1.2 + (1 - Math.abs(t - 0.8)) * 3;
+    ctx.beginPath();
+    ctx.arc(cx, cy, rr, Math.PI * 1.05, Math.PI * 1.95);
+    ctx.stroke();
+  }
+  // ice cloud deck hugging the limb
+  for (let i = 0; i < 70; i += 1) {
+    const a = Math.PI * (1.12 + rnd(720 + i * 3) * 0.76);
+    const rr = R - 8 - rnd(721 + i * 3) * 44;
+    const ex = cx + Math.cos(a) * rr;
+    const ey = cy + Math.sin(a) * rr;
+    if (ey < -20 || ey > height + 20 || ex < -40 || ex > width + 40) continue;
+    ctx.fillStyle = `rgba(235,245,255,${0.03 + rnd(722 + i * 3) * 0.06})`;
+    ctx.beginPath();
+    ctx.ellipse(ex, ey, 14 + rnd(723 + i * 3) * 40, 3 + rnd(724 + i * 3) * 7, a + Math.PI / 2, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  // spires
+  const spires = 3 + Math.floor(rnd(760) * 3);
+  for (let s = 0; s < spires; s += 1) {
+    const a = Math.PI * (1.25 + rnd(770 + s * 5) * 0.5);
+    const bx = cx + Math.cos(a) * (R - 2);
+    const by = cy + Math.sin(a) * (R - 2);
+    const hgt = 30 + rnd(771 + s * 5) * height * 0.24;
+    ctx.fillStyle = "rgba(245,250,255,0.5)";
+    ctx.beginPath();
+    ctx.moveTo(bx - 2.4, by);
+    ctx.lineTo(bx, by - hgt);
+    ctx.lineTo(bx + 2.4, by);
+    ctx.closePath();
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+function drawAuroraLeak(ctx, width, height, tick, seed, palette) {
+  const rnd = (salt) => rand(seed, salt);
+  ctx.save();
+  ctx.globalCompositeOperation = "lighter";
+  const curtains = 5 + Math.floor(rnd(800) * 4);
+  const tones = [[80, 235, 190], [120, 160, 255], [200, 120, 255], [90, 220, 250]];
+  for (let c = 0; c < curtains; c += 1) {
+    const baseX = width * rnd(810 + c * 9);
+    const tone = tones[Math.floor(rnd(811 + c * 9) * tones.length)];
+    const drop = height * (0.35 + rnd(812 + c * 9) * 0.55);
+    const sway = 20 + rnd(813 + c * 9) * 60;
+    const rays = 30 + Math.floor(rnd(814 + c * 9) * 40);
+    for (let i = 0; i < rays; i += 1) {
+      const t = i / rays;
+      const x = baseX + Math.sin(t * 5 + c) * sway + (t - 0.5) * 60;
+      const len = drop * (0.5 + rnd(820 + c * 31 + i) * 0.5);
+      const grad = ctx.createLinearGradient(x, 0, x, len);
+      grad.addColorStop(0, toneToRgba(tone, 0.16));
+      grad.addColorStop(1, toneToRgba(tone, 0));
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.moveTo(x, -4);
+      ctx.lineTo(x + Math.sin(t * 9) * 6, len);
+      ctx.stroke();
+    }
+  }
+  ctx.restore();
+}
+
+function drawObsidianBurst(ctx, width, height, tick, seed, palette) {
+  const rnd = (salt) => rand(seed, salt);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgba(4,3,8,0.9)";
+  ctx.fillRect(0, 0, width, height);
+  const cx = width * (0.3 + rnd(900) * 0.4);
+  const cy = height * (0.3 + rnd(901) * 0.4);
+  const shards = 26 + Math.floor(rnd(902) * 14);
+  for (let s = 0; s < shards; s += 1) {
+    const a = rnd(910 + s * 7) * Math.PI * 2;
+    const len = Math.max(width, height) * (0.2 + rnd(911 + s * 7) * 0.55);
+    const wdt = 4 + rnd(912 + s * 7) * 26;
+    const x1 = cx + Math.cos(a) * len;
+    const y1 = cy + Math.sin(a) * len;
+    const px = Math.cos(a + Math.PI / 2) * wdt;
+    const py = Math.sin(a + Math.PI / 2) * wdt;
+    ctx.fillStyle = `rgba(${10 + Math.floor(rnd(913 + s * 7) * 14)},${8 + Math.floor(rnd(914 + s * 7) * 10)},${16 + Math.floor(rnd(915 + s * 7) * 18)},0.85)`;
+    ctx.beginPath();
+    ctx.moveTo(cx + px * 0.2, cy + py * 0.2);
+    ctx.lineTo(x1 + px, y1 + py);
+    ctx.lineTo(x1 - px, y1 - py);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = `rgba(190,225,255,${0.08 + rnd(916 + s * 7) * 0.22})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+  ctx.globalCompositeOperation = "lighter";
+  const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, 60 + rnd(903) * 60);
+  core.addColorStop(0, "rgba(255,236,200,0.6)");
+  core.addColorStop(0.4, "rgba(255,170,90,0.22)");
+  core.addColorStop(1, "rgba(255,170,90,0)");
+  ctx.fillStyle = core;
+  ctx.fillRect(0, 0, width, height);
+  for (let d = 0; d < 30; d += 1) {
+    const a = rnd(950 + d * 3) * Math.PI * 2;
+    const rr = 20 + rnd(951 + d * 3) * Math.max(width, height) * 0.4;
+    ctx.fillStyle = `rgba(255,230,180,${0.1 + rnd(952 + d * 3) * 0.3})`;
+    ctx.fillRect(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr, 1.6, 1.6);
+  }
+  ctx.restore();
+}
+
+function drawDendrite(ctx, width, height, tick, seed, palette) {
+  const rnd = (salt) => rand(seed, salt);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  let salt = 1000;
+  const queue = [];
+  const roots = 1 + Math.floor(rnd(999) * 2);
+  for (let r = 0; r < roots; r += 1) {
+    queue.push({
+      x: width * (0.2 + rnd(salt += 1) * 0.6),
+      y: height * 1.02,
+      a: -Math.PI / 2 + (rnd(salt += 1) - 0.5) * 0.4,
+      len: height * (0.14 + rnd(salt += 1) * 0.08),
+      depth: 0,
+    });
+  }
+  while (queue.length) {
+    const b = queue.pop();
+    if (b.depth > 8 || b.len < 3) continue;
+    const wob = (rnd(salt += 1) - 0.5) * 0.5;
+    const x1 = b.x + Math.cos(b.a + wob) * b.len;
+    const y1 = b.y + Math.sin(b.a + wob) * b.len;
+    ctx.strokeStyle = `rgba(210,226,240,${0.55 - b.depth * 0.05})`;
+    ctx.lineWidth = Math.max(0.6, 2.6 - b.depth * 0.32);
+    ctx.beginPath();
+    ctx.moveTo(b.x, b.y);
+    ctx.lineTo(x1, y1);
+    ctx.stroke();
+    if (b.depth > 1 && rnd(salt += 1) > 0.62) {
+      ctx.strokeStyle = "rgba(180,205,230,0.12)";
+      ctx.lineWidth = 0.7;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x1 + (rnd(salt += 1) > 0.5 ? width : -width) * 0.5, y1);
+      ctx.stroke();
+    }
+    const kids = b.depth < 2 ? 2 : rnd(salt += 1) > 0.3 ? 2 : 1;
+    for (let k = 0; k < kids; k += 1) {
+      queue.push({
+        x: x1, y: y1,
+        a: b.a + (k === 0 ? -1 : 1) * (0.28 + rnd(salt += 1) * 0.45),
+        len: b.len * (0.68 + rnd(salt += 1) * 0.12),
+        depth: b.depth + 1,
+      });
+    }
+  }
+  ctx.restore();
+}
+
+function drawRisoMoire(ctx, width, height, tick, seed, palette) {
+  const rnd = (salt) => rand(seed, salt);
+  const inks = [[235, 71, 143], [80, 196, 185], [239, 171, 48], [135, 237, 74]];
+  const inkA = inks[Math.floor(rnd(1100) * inks.length)];
+  let inkB = inks[Math.floor(rnd(1101) * inks.length)];
+  if (inkB === inkA) inkB = inks[(inks.indexOf(inkA) + 1) % inks.length];
+  ctx.save();
+  ctx.globalCompositeOperation = "lighter";
+  ctx.beginPath();
+  ctx.arc(width * (0.3 + rnd(1102) * 0.4), height * (0.3 + rnd(1103) * 0.4),
+    Math.min(width, height) * (0.42 + rnd(1104) * 0.22), 0, Math.PI * 2);
+  ctx.clip();
+  // pass A: line raster, slightly rotated
+  ctx.translate(width / 2, height / 2);
+  ctx.rotate((rnd(1105) - 0.5) * 0.12);
+  ctx.translate(-width / 2, -height / 2);
+  ctx.strokeStyle = toneToRgba(inkA, 0.22);
+  ctx.lineWidth = 1.6;
+  for (let y = -20; y < height + 20; y += 5) {
+    ctx.beginPath();
+    ctx.moveTo(-20, y);
+    ctx.lineTo(width + 20, y);
+    ctx.stroke();
+  }
+  // pass B: dot grid, rotated the other way (misregistered overprint)
+  ctx.translate(width / 2, height / 2);
+  ctx.rotate(0.06 + rnd(1106) * 0.1);
+  ctx.translate(-width / 2, -height / 2);
+  ctx.fillStyle = toneToRgba(inkB, 0.3);
+  for (let y = -20; y < height + 20; y += 7) {
+    for (let x = -20; x < width + 20; x += 7) {
+      if (orderedDither(x / 7, y / 7) > 0.4) ctx.fillRect(x, y, 2.1, 2.1);
+    }
+  }
+  ctx.restore();
+}
+
+function drawMoireSwirl(ctx, width, height, tick, seed, palette) {
+  const rnd = (salt) => rand(seed, salt);
+  ctx.save();
+  ctx.globalCompositeOperation = "lighter";
+  const c1x = width * (0.42 + rnd(1200) * 0.16);
+  const c1y = height * (0.42 + rnd(1201) * 0.16);
+  const off = 24 + rnd(1202) * 60;
+  const ang = rnd(1203) * Math.PI * 2;
+  const c2x = c1x + Math.cos(ang) * off;
+  const c2y = c1y + Math.sin(ang) * off;
+  const maxR = Math.max(width, height) * 0.75;
+  const toneA = [190, 230, 255];
+  const toneB = [255, 170, 220];
+  for (let r = 6; r < maxR; r += 6) {
+    ctx.strokeStyle = toneToRgba(toneA, 0.055);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(c1x, c1y, r, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.strokeStyle = toneToRgba(toneB, 0.05);
+    ctx.beginPath();
+    ctx.arc(c2x, c2y, r + rnd(1210) * 1.5, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawPlotterPlate(ctx, width, height, tick, seed, palette) {
+  const rnd = (salt) => rand(seed, salt);
+  const ink = "rgba(226,232,224,0.5)";
+  const hatch = (cx, cy, r, angle, gap, salt) => {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.translate(cx, cy);
+    ctx.rotate(angle);
+    ctx.strokeStyle = ink;
+    ctx.lineWidth = 0.8;
+    for (let y = -r; y <= r; y += gap) {
+      ctx.beginPath();
+      ctx.moveTo(-r, y);
+      ctx.lineTo(r, y);
+      ctx.stroke();
+    }
+    ctx.restore();
+  };
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  // margin frame, plotter style
+  ctx.strokeStyle = "rgba(226,232,224,0.28)";
+  ctx.lineWidth = 1;
+  ctx.strokeRect(width * 0.05, height * 0.08, width * 0.9, height * 0.84);
+  const shapes = 4 + Math.floor(rnd(1300) * 3);
+  for (let s = 0; s < shapes; s += 1) {
+    hatch(
+      width * (0.18 + rnd(1310 + s * 7) * 0.64),
+      height * (0.2 + rnd(1311 + s * 7) * 0.6),
+      Math.min(width, height) * (0.08 + rnd(1312 + s * 7) * 0.16),
+      rnd(1313 + s * 7) * Math.PI,
+      2.4 + rnd(1314 + s * 7) * 3.2,
+      1320 + s * 7
+    );
+  }
+  // one sine band across the plate
+  ctx.strokeStyle = ink;
+  ctx.lineWidth = 0.8;
+  const bandY = height * (0.3 + rnd(1301) * 0.4);
+  for (let k = 0; k < 7; k += 1) {
+    ctx.beginPath();
+    for (let x = width * 0.05; x <= width * 0.95; x += 4) {
+      const y = bandY + k * 3.2 + Math.sin(x * 0.02 + rnd(1302) * 9 + k * 0.22) * height * 0.05;
+      if (x === width * 0.05) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawAcidDuotone(ctx, width, height, tick, seed, palette) {
+  const rnd = (salt) => rand(seed, salt);
+  const lime = [148, 250, 60];
+  const magenta = [244, 60, 180];
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  // diagonal band super-shapes
+  const bands = 3 + Math.floor(rnd(1400) * 3);
+  for (let b = 0; b < bands; b += 1) {
+    const tone = b % 2 === 0 ? lime : magenta;
+    const y0 = height * rnd(1410 + b * 7);
+    const th = height * (0.08 + rnd(1411 + b * 7) * 0.18);
+    const slope = (rnd(1412 + b * 7) - 0.5) * height * 0.8;
+    ctx.fillStyle = toneToRgba(tone, 0.55);
+    ctx.beginPath();
+    ctx.moveTo(0, y0);
+    ctx.lineTo(width, y0 + slope);
+    ctx.lineTo(width, y0 + slope + th);
+    ctx.lineTo(0, y0 + th);
+    ctx.closePath();
+    ctx.fill();
+  }
+  // halftone patch
+  const px = width * (0.1 + rnd(1401) * 0.5);
+  const py = height * (0.1 + rnd(1402) * 0.5);
+  const pw = width * 0.3;
+  const ph = height * 0.3;
+  ctx.fillStyle = toneToRgba(magenta, 0.6);
+  for (let y = 0; y < ph; y += 6) {
+    for (let x = 0; x < pw; x += 6) {
+      const rDot = 2.6 * (1 - y / ph) * (0.4 + orderedDither(x / 6, y / 6));
+      if (rDot > 0.5) {
+        ctx.beginPath();
+        ctx.arc(px + x, py + y, rDot, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+  // one big cut circle slice
+  ctx.globalCompositeOperation = "lighter";
+  ctx.strokeStyle = toneToRgba(lime, 0.7);
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.arc(width * (0.4 + rnd(1403) * 0.3), height * (0.4 + rnd(1404) * 0.3),
+    Math.min(width, height) * 0.34, rnd(1405) * Math.PI, rnd(1405) * Math.PI + Math.PI * 1.2);
+  ctx.stroke();
+  ctx.restore();
+}
+
+/* The house destruction finisher: coarse-grid self-displacement, pixel-sort
+   smears, dither noise patches, channel fringe, and 1-3 flat hot rects.
+   seed=null means true-random (a live one-off is sanctioned). */
+export function applyDatabend(ctx, width, height, seed = null, intensity = 0.5) {
+  const seedNum = seed == null ? null : hashRoute(String(seed));
+  const R = (salt) => (seedNum == null ? Math.random() : rand(seedNum, salt));
+  const source = ctx.canvas;
+  if (!source) return false;
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  // 1) grid displacement
+  const rows = 10;
+  const cells = Math.floor(10 + intensity * 26);
+  for (let i = 0; i < cells; i += 1) {
+    const rh = Math.max(4, Math.floor(height / rows));
+    const sy = Math.floor(R(10 + i * 5) * (height - rh));
+    const sw = Math.floor(width * (0.12 + R(11 + i * 5) * 0.4));
+    const sx = Math.floor(R(12 + i * 5) * (width - sw));
+    const dx = Math.floor((R(13 + i * 5) - 0.5) * width * 0.22 * intensity * 2);
+    try { ctx.drawImage(source, sx, sy, sw, rh, sx + dx, sy, sw, rh); } catch (e) { break; }
+  }
+  // 2) pixel-sort smears: stretch a thin slice wide
+  const smears = Math.floor(5 + intensity * 9);
+  for (let i = 0; i < smears; i += 1) {
+    const sy = Math.floor(R(60 + i * 4) * (height - 3));
+    const sx = Math.floor(R(61 + i * 4) * (width - 4));
+    const sh = 2 + Math.floor(R(62 + i * 4) * 8);
+    const len = Math.floor(width * (0.1 + R(63 + i * 4) * 0.5));
+    try { ctx.drawImage(source, sx, sy, 2, sh, sx, sy, len, sh); } catch (e) { break; }
+  }
+  // 3) dither noise patches
+  const patches = 2 + Math.floor(R(100) * 2);
+  for (let p = 0; p < patches; p += 1) {
+    const pw2 = 20 + R(110 + p * 3) * width * 0.12;
+    const ph2 = 12 + R(111 + p * 3) * height * 0.1;
+    const px2 = R(112 + p * 3) * (width - pw2);
+    const py2 = R(113 + p * 3) * (height - ph2);
+    for (let y = 0; y < ph2; y += 3) {
+      for (let x = 0; x < pw2; x += 3) {
+        if (orderedDither(x / 3, y / 3) > 0.55) {
+          ctx.fillStyle = R(120 + p) > 0.5 ? "rgba(240,244,250,0.5)" : "rgba(8,10,16,0.6)";
+          ctx.fillRect(px2 + x, py2 + y, 2, 2);
+        }
+      }
+    }
+  }
+  // 4) channel fringe: shifted low-alpha self-copies
+  ctx.globalAlpha = 0.22;
+  try {
+    ctx.drawImage(source, 3, 0);
+    ctx.drawImage(source, -3, 1);
+  } catch (e) { /* stub contexts without full drawImage support */ }
+  ctx.globalAlpha = 1;
+  // 5) flat hot rects
+  const hots = 1 + Math.floor(R(200) * 2);
+  for (let hIdx = 0; hIdx < hots; hIdx += 1) {
+    ctx.fillStyle = R(210 + hIdx) > 0.5 ? "rgba(244,60,120,0.85)" : "rgba(255,120,40,0.85)";
+    ctx.fillRect(R(211 + hIdx * 3) * width * 0.9, R(212 + hIdx * 3) * height * 0.9,
+      4 + R(213 + hIdx * 3) * width * 0.06, 3 + R(214 + hIdx * 3) * 10);
+  }
+  ctx.restore();
+  return true;
+}
+
+function drawDatabendLayer(ctx, width, height, tick, seed) {
+  applyDatabend(ctx, width, height, seed, 0.55);
+}
+
+/* Named showpieces: composed stacks tuned so the families stay coherent. */
+function drawShowpieceVeil(ctx, width, height, tick, seed, palette) {
+  drawCausticVeils(ctx, width, height, tick, seed, palette);
+  applyDatabend(ctx, width, height, seed, 0.22);
+}
+
+function drawShowpieceBurst(ctx, width, height, tick, seed, palette) {
+  drawObsidianBurst(ctx, width, height, tick, seed, palette);
+  drawAuroraLeak(ctx, width, height, tick, seed + 7, palette);
+}
+
+function drawShowpieceWeave(ctx, width, height, tick, seed, palette) {
+  drawRisoMoire(ctx, width, height, tick, seed, palette);
+  drawDendrite(ctx, width, height, tick, seed + 11, palette);
+}
+
+/* ---------------------------------------------------------------------------
+   Specimen strips: one-shot, deterministic renders of the same layer library
+   into small page-owned canvases (canvas[data-specimen]). No animation loop,
+   no listeners; reduced motion needs no special case because the frame is
+   already static. Seeded by a string so a page's specimen is reproducible.
+--------------------------------------------------------------------------- */
+const SPECIMEN_LAYERS = {
+  orbit: drawOrbitField,
+  contour: drawContourRidges,
+  crystal: drawCrystalFragments,
+  metaball: drawMetaballWashes,
+  bands: drawMetaballContourBands,
+  fluid: drawFluidCurl,
+  hydra: drawHydraTiles,
+  lamp: drawLampSymmetry,
+  dither: drawDitheredPosterVeil,
+  flow: drawFlowTraces,
+  "crystal-lens": drawCrystalLens,
+  scanline: drawScanlineHalftone,
+  facets: drawFacetPlanes,
+  groove: drawGrooveMarble,
+  "ca-quadrant": drawCaQuadrant,
+  "caustic-veils": drawCausticVeils,
+  "caustic-paper": drawCausticPaper,
+  "planet-limb": drawPlanetLimb,
+  "aurora-leak": drawAuroraLeak,
+  "obsidian-burst": drawObsidianBurst,
+  dendrite: drawDendrite,
+  "riso-moire": drawRisoMoire,
+  "moire-swirl": drawMoireSwirl,
+  "plotter-plate": drawPlotterPlate,
+  "acid-duotone": drawAcidDuotone,
+  databend: drawDatabendLayer,
+  "showpiece-veil": drawShowpieceVeil,
+  "showpiece-burst": drawShowpieceBurst,
+  "showpiece-weave": drawShowpieceWeave,
+};
+const SPECIMEN_DEFAULT_LAYERS = ["orbit", "contour"];
+
+// The registered layer vocabulary, for tests and for pages that want to list
+// what canvas[data-specimen-layers] can request.
+export function specimenLayerNames() {
+  return Object.keys(SPECIMEN_LAYERS);
+}
+
+function sizeSpecimenCanvas(canvas, dpr) {
+  // Unlike sizeCanvas above, never fall back to the window size: a strip that
+  // has not been laid out yet should stay small, not inflate to the viewport.
+  const rect = canvas.getBoundingClientRect ? canvas.getBoundingClientRect() : null;
+  const width = Math.max(1, Math.ceil((rect && rect.width) || canvas.clientWidth || 640));
+  const height = Math.max(1, Math.ceil((rect && rect.height) || canvas.clientHeight || 150));
+  const backingWidth = Math.max(1, Math.round(width * dpr));
+  const backingHeight = Math.max(1, Math.round(height * dpr));
+  if (canvas.width !== backingWidth || canvas.height !== backingHeight) {
+    canvas.width = backingWidth;
+    canvas.height = backingHeight;
+  }
+}
+
+export function renderSpecimen(canvas, seedString, layerNames = SPECIMEN_DEFAULT_LAYERS) {
+  if (!canvas || typeof canvas.getContext !== "function") return false;
+  const ctx = canvas.getContext("2d", { alpha: true });
+  if (!ctx) return false;
+  // Seeded mode is byte-stable. Seed "live" (or null) draws a true-random
+  // one-off - sanctioned for exhibition plates that are one of one.
+  const live = seedString == null || String(seedString).toLowerCase() === "live";
+  const seed = live
+    ? (Math.floor(Math.random() * 4294967295) >>> 0)
+    : hashRoute(String(seedString || "specimen"));
+  const palette = routePalette(seed);
+  const dpr = Math.min(2, Math.max(1,
+    (typeof window !== "undefined" && window.devicePixelRatio) || 1));
+  sizeSpecimenCanvas(canvas, dpr);
+  const width = canvas.width;
+  const height = canvas.height;
+  // Frozen instant: the layer functions take a clock tick, so derive one from
+  // the seed. Same seed, same tick, same frame, every visit.
+  const tick = 40000 + (seed % 50000);
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, width, height);
+  drawBackdrop(ctx, width, height, tick, seed, palette);
+  const names = Array.isArray(layerNames) && layerNames.length
+    ? layerNames : SPECIMEN_DEFAULT_LAYERS;
+  for (const name of names) {
+    const layer = SPECIMEN_LAYERS[String(name).trim()];
+    if (layer) layer(ctx, width, height, tick, seed, palette);
+  }
+  ctx.globalCompositeOperation = "source-over";
+  return true;
+}
+
+export function mountSpecimens(doc = typeof document !== "undefined" ? document : null) {
+  if (!doc || typeof doc.querySelectorAll !== "function") return 0;
+  let rendered = 0;
+  doc.querySelectorAll("canvas[data-specimen]").forEach((canvas) => {
+    if (canvas.dataset && canvas.dataset.specimenRendered === "true") return;
+    const seedString = (canvas.dataset && canvas.dataset.specimen) || "specimen";
+    const layers = ((canvas.dataset && canvas.dataset.specimenLayers) || "")
+      .split(",")
+      .map((name) => name.trim())
+      .filter(Boolean);
+    if (renderSpecimen(canvas, seedString, layers.length ? layers : SPECIMEN_DEFAULT_LAYERS)) {
+      if (canvas.dataset) canvas.dataset.specimenRendered = "true";
+      rendered += 1;
+    }
+  });
+  return rendered;
+}
+
 if (typeof document !== "undefined" && !document.body?.dataset.deferGenerativeField) {
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => { mountGenerativeField(); }, { once: true });
-  } else {
+  const bootField = () => {
     mountGenerativeField();
+    mountSpecimens();
+  };
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootField, { once: true });
+  } else {
+    bootField();
   }
 }

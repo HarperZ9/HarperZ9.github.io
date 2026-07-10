@@ -667,3 +667,191 @@ a.inline:focus-visible,
 @media print{
   .site-nav{display:none}
 }
+
+/* ============================================================================
+   PRISMATIC EXPRESSIONISM (2026-07-09)
+   Document-page slice of the fused Supergraphic Ultramodern x Crystal x
+   Neoexpressionist identity. Screen-only texture on the dark generative
+   cascade; print output stays untouched. Bans respected: no gradient text,
+   no border-left accents, no glassmorphism-by-default, nothing motion-gated.
+   Token mirror of src/index.css and system.css; keep the tiers in step.
+   ============================================================================ */
+:root{
+  /* ice near-white cyan. Contrast (computed): 16.01:1 on the dark --page,
+     16.73:1 on the --backdrop void. */
+  --crystal:oklch(94% .04 210);
+  /* the one dark maroon band. 1.49:1 on the dark ground: never text here;
+     band fill inside a --crystal shape only (11.21:1 on --crystal). */
+  --crystal-deep:oklch(32% .09 20);
+  /* THE single expressive accent per sheet fold: the ember family already
+     present. 7.66:1 on the dark --page (computed). */
+  --hot:var(--ember);
+  /* sharper hairline for crystal facet edges (crisper than --rule). */
+  --facet-line:oklch(94% .04 210/.45);
+}
+
+/* Faceted corner on the masthead: one small clipped crystal shard, top-right
+   of .mast, the maroon band reading through the glass. clip-path polygon on
+   a ::after block; decorative, screen only. */
+.mast{position:relative}
+.mast::after{
+  content:"";
+  position:absolute;
+  top:.3rem;
+  right:0;
+  width:2.6rem;
+  height:1.15rem;
+  pointer-events:none;
+  opacity:.6;
+  border-top:1px solid var(--facet-line);
+  background:linear-gradient(180deg,
+    color-mix(in oklab, var(--crystal) 36%, transparent) 0 44%,
+    color-mix(in oklab, var(--crystal-deep) 60%, transparent) 44% 64%,
+    transparent 64%);
+  clip-path:polygon(0 0, 100% 0, 62% 100%, 14% 58%);
+}
+
+/* Scanline-halftone divider: dashed horizontal scanlines fading through a
+   disc-shaped mask (the halftone arc). Static and decorative; reduced motion
+   needs no override. If mask-composite is unsupported the mask layers union
+   and the strip degrades to an un-dashed faded scanline band. */
+.prism-divider{
+  height:clamp(1.9rem,3.4vw,2.6rem);
+  margin-block:clamp(1.4rem,3vw,2.4rem);
+  pointer-events:none;
+  background:repeating-linear-gradient(180deg, var(--crystal) 0 1px, transparent 1px 6px);
+  -webkit-mask-image:
+    repeating-linear-gradient(90deg, #000 0 18px, transparent 18px 30px),
+    radial-gradient(120% 130% at 18% 50%, #000 0 46%, transparent 78%);
+  -webkit-mask-composite:source-in;
+  mask-image:
+    repeating-linear-gradient(90deg, #000 0 18px, transparent 18px 30px),
+    radial-gradient(120% 130% at 18% 50%, #000 0 46%, transparent 78%);
+  mask-composite:intersect;
+  opacity:.5;
+}
+
+/* Document pages inherit the divider texture without markup edits: every
+   sheet after the first opens with the same scanline band (adjacent-sibling
+   rule, drawn inside the following sheet's top padding). */
+.sheet+.sheet::before{
+  content:"";
+  display:block;
+  height:1.9rem;
+  margin:-.5rem 0 1.4rem;
+  pointer-events:none;
+  background:repeating-linear-gradient(180deg, var(--crystal) 0 1px, transparent 1px 6px);
+  -webkit-mask-image:
+    repeating-linear-gradient(90deg, #000 0 18px, transparent 18px 30px),
+    radial-gradient(120% 130% at 18% 50%, #000 0 46%, transparent 78%);
+  -webkit-mask-composite:source-in;
+  mask-image:
+    repeating-linear-gradient(90deg, #000 0 18px, transparent 18px 30px),
+    radial-gradient(120% 130% at 18% 50%, #000 0 46%, transparent 78%);
+  mask-composite:intersect;
+  opacity:.45;
+}
+
+/* EXACTLY-ONE-HOT audit (document pages, per sheet fold): the dark cascade
+   already calmed .entry-meta dates to --tag, but ul.bul .num kept spraying
+   ember numerals across every bullet list. Calm the numerals to --crystal
+   (16.01:1 on the dark --page) so a sheet fold never carries more than one
+   hot element; the ember family stays available as --hot for a single
+   deliberate stroke. Focus outlines are functional, not decorative. */
+ul.bul .num{color:var(--crystal)}
+
+/* print: the prismatic texture is screen material only; the printed sheet
+   keeps its light ceramic contract. */
+@media print{
+  .mast::after,
+  .prism-divider,
+  .sheet+.sheet::before{display:none}
+  ul.bul .num{color:var(--ember)}
+}
+
+/* ============================================================================
+   ART-MAG PLATES (2026-07-09)
+   Document-sheet slice of the shared plate vocabulary (system.css carries the
+   static-page slice; class names match, materials differ). Numbered, captioned
+   procedural plates rendered once by renderSpecimen() in
+   system/generative-field.js: the canvas is aria-hidden and static, unknown
+   layer names degrade to the backdrop wash, and print output drops the plates
+   entirely so the document contract stays print-grade.
+   ============================================================================ */
+.plate{
+  position:relative;
+  width:100%;
+  margin:0 0 1.4rem;
+}
+.plate canvas{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:21/9;
+  border:1px solid var(--rule);
+  border-radius:8px;
+  background:color-mix(in oklab, var(--backdrop) 72%, black);
+}
+.plate figcaption{
+  display:flex;
+  align-items:baseline;
+  gap:1rem;
+  margin-top:.55rem;
+}
+.plate-no{
+  font-family:var(--mono);
+  font-size:.58rem;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--tag);
+  white-space:nowrap;
+}
+.plate-caption{
+  font-family:var(--mono);
+  font-size:.64rem;
+  letter-spacing:.06em;
+  color:var(--ink-muted);
+  line-height:1.7;
+  max-width:64ch;
+}
+/* Bleed within the sheet: cancels the sheet's inline padding; the folio line
+   stays on the reading column. */
+.plate--bleed{
+  margin-inline:calc(clamp(1.6rem,5vw,4.2rem) * -1);
+  width:auto;
+}
+.plate--bleed canvas{
+  aspect-ratio:2/1;
+  border-radius:0;
+  border-inline:0;
+}
+.plate--bleed figcaption{
+  padding-inline:clamp(1.6rem,5vw,4.2rem);
+}
+/* Slim band for compact mastheads. */
+.plate--slim canvas{aspect-ratio:32/7}
+/* Interstitial: a pale caustic-paper plate standing between sheets at sheet
+   width, its folio line flipped to dark-on-pale. The pale ground lives on the
+   figure itself so the flip holds no matter when the layer lands. Computed
+   WCAG contrast on the #ece9e2 ground: caption ink #24272c = 12.36:1, folio
+   mark #43474e = 7.70:1; both clear AA (4.5:1). */
+.plate--interstitial{
+  width:min(100%,50rem);
+  max-width:50rem;
+  margin:clamp(1.2rem,3vw,2.2rem) auto;
+  background:#ece9e2;
+  border:1px solid rgba(11,12,14,.16);
+  border-radius:8px;
+  padding:clamp(.85rem,1.8vw,1.3rem);
+  position:relative;
+  z-index:1;
+}
+.plate--interstitial canvas{
+  background:#f4f2ec;
+  border-color:rgba(11,12,14,.12);
+}
+.plate--interstitial .plate-no{color:#43474e}
+.plate--interstitial .plate-caption{color:#24272c}
+@media print{
+  .plate{display:none}
+}

@@ -1,8 +1,330 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta http-equiv="refresh" content="0; url=studio.html">
-<link rel="canonical" href="https://harperz9.github.io/studio.html">
-<meta name="robots" content="noindex">
-<title>Moved to The Studio</title></head>
-<body style="font-family:'Spline Sans Mono',ui-monospace,monospace;background:#0d1b1c;color:#e9e2d0;padding:2.5rem;line-height:1.7">
-<p>This has moved into <a href="studio.html" style="color:#3a2bd6">The Studio</a>, the unified place to see and make, together.</p>
-<script>location.replace("studio.html");</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gallery &mdash; Zain Dana Harper</title>
+<meta name="description" content="An exhibition of full-size generated plates from the Project Telos drawing engine, followed by a contact sheet of its instruments. Seeded plates reproduce exactly; live plates are drawn once and never again; everything is synthesized in your browser.">
+<link rel="canonical" href="https://harperz9.github.io/gallery.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Gallery &mdash; Zain Dana Harper">
+<meta property="og:description" content="Full-size generated plates from the Project Telos drawing engine: a daily opener, live one-offs, and a contact sheet of the instruments behind them.">
+<meta property="og:url" content="https://harperz9.github.io/gallery.html">
+<meta name="color-scheme" content="dark">
+<link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="system/system.css?v=20260709n">
+<style>
+  /* Exhibition plates: page-local idiom. One plate per row, art-mag rhythm.
+     Plates break out of the section gutter to min(88vw, 1100px), centered on
+     the viewport (section.mv spans the full viewport, so 50% of its content
+     box sits on the viewport centerline). Text never sits over the art. */
+  .exh-note{margin:1.4rem 0 clamp(2.6rem,5vw,3.8rem)}
+  .plate{width:min(88vw,1100px);
+    margin:0 0 clamp(3.4rem,8vw,6rem) calc(50% - min(44vw,550px))}
+  .plate:last-of-type{margin-bottom:1.2rem}
+  .plate-head{display:flex;align-items:baseline;gap:1.1rem;margin-bottom:.7rem;
+    font-family:var(--mono);text-transform:uppercase}
+  .plate-no{font-size:.62rem;letter-spacing:.32em;color:var(--orange)}
+  .plate-title{font-size:.62rem;letter-spacing:.12em;color:var(--muted)}
+  .plate-art{position:relative;border:1px solid var(--hairline);border-radius:12px;
+    overflow:hidden;background:color-mix(in oklab, var(--void) 82%, black)}
+  .plate-art canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .ratio-wide{aspect-ratio:16/10}
+  .ratio-square{aspect-ratio:1/1}
+  .ratio-band{aspect-ratio:21/9}
+  .plate-pale .plate-art{background:#efece2}
+  .plate-cap{display:flex;justify-content:space-between;align-items:baseline;
+    gap:1rem;flex-wrap:wrap;margin-top:.65rem;min-height:1.9em}
+  .plate-meta{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);line-height:1.7}
+  .plate-redraw{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--orange);background:transparent;
+    border:1px solid var(--hairline);border-radius:999px;padding:.42em 1.05em;
+    cursor:pointer;flex:none;transition:color .15s,border-color .15s}
+  .plate-redraw:hover{color:var(--bone);border-color:var(--orange)}
+  .plate-redraw:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
+
+  /* Instruments contact sheet: the wave-1 fixture tiles, kept as the
+     vocabulary reference behind the plates above. */
+  .fixture-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:clamp(.9rem,2vw,1.4rem);margin-top:2.2rem}
+  .fixture-tile{margin:0;display:flex;flex-direction:column;gap:.55rem}
+  .fixture-art{position:relative;aspect-ratio:1/1;border:1px solid var(--hairline);
+    border-radius:10px;overflow:hidden;
+    background:color-mix(in oklab, var(--void) 82%, black)}
+  .fixture-art canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .fixture-cap{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);line-height:1.6}
+</style>
+</head>
+<body class="inner-clean frame-compact">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="typeface.html">Typeface</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260709n"></script>
+
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Gallery</span></div>
+  <div class="mid">
+    <h1>Plates from <span class="g">the drawing engine.</span></h1>
+    <p class="lede">Seven full-size plates drawn in your browser by this site&rsquo;s own engine (<span translate="no">system/generative-field.js</span>), then a contact sheet of the instruments behind them. The captions carry the recipe: layers first, seed second.</p>
+  </div>
+  <div class="seal">procedural &middot; seeded plates repeat exactly &middot; live plates never do</div>
+</div>
+
+<main id="main">
+
+<section class="mv" id="exhibition" aria-labelledby="exhibition-h">
+  <h2 id="exhibition-h">The exhibition.</h2>
+  <p class="seal-line exh-note">plate 01 draws itself fresh each day &middot; redraw trades any plate&rsquo;s seed for a live one-off</p>
+
+  <figure class="plate" data-plate="01">
+    <div class="plate-head"><span class="plate-no">Plate 01</span><span class="plate-title">Today&rsquo;s plate &middot; folded light</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-opening" data-specimen-layers="showpiece-veil" role="img" aria-label="Generated plate: long folded veils of additive light crossing at four-point star caustics on a black field."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">showpiece-veil &middot; <span data-plate-seed>seed gallery-opening</span></span>
+      <button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 1 with a new one-off seed">redraw</button>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="02">
+    <div class="plate-head"><span class="plate-no">Plate 02</span><span class="plate-title">Obsidian burst, aurora rim</span></div>
+    <div class="plate-art ratio-square">
+      <canvas data-specimen="gallery-plate-02" data-specimen-layers="showpiece-burst" role="img" aria-label="Generated plate: a radial explosion of glassy black debris and dotted circuit traces, rimmed by a cold aurora glow."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">showpiece-burst &middot; <span data-plate-seed>seed gallery-plate-02</span></span>
+      <button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 2 with a new one-off seed">redraw</button>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="03">
+    <div class="plate-head"><span class="plate-no">Plate 03</span><span class="plate-title">Dendrite over riso ground</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-plate-03" data-specimen-layers="riso-moire,dendrite" role="img" aria-label="Generated plate: a coral-like dendrite growth spreading over fluorescent overprinted interference rings."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">riso-moire + dendrite &middot; <span data-plate-seed>seed gallery-plate-03</span></span>
+      <button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 3 with a new one-off seed">redraw</button>
+    </figcaption>
+  </figure>
+
+  <figure class="plate plate-pale" data-plate="04">
+    <div class="plate-head"><span class="plate-no">Plate 04</span><span class="plate-title">Pale caustics, interstitial</span></div>
+    <div class="plate-art ratio-band">
+      <canvas data-specimen="gallery-plate-04" data-specimen-layers="caustic-paper" role="img" aria-label="Generated plate: faint grey-blue light wisps on a paper-white field, almost blank."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">caustic-paper &middot; <span data-plate-seed>seed gallery-plate-04</span></span>
+      <button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 4 with a new one-off seed">redraw</button>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="05">
+    <div class="plate-head"><span class="plate-no">Plate 05</span><span class="plate-title">Interference weave</span></div>
+    <div class="plate-art ratio-square">
+      <canvas data-specimen="gallery-plate-05" data-specimen-layers="showpiece-weave" role="img" aria-label="Generated plate: a dense woven interference field of contour rings and moire bands in overprinted inks."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">showpiece-weave &middot; <span data-plate-seed>seed gallery-plate-05</span></span>
+      <button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 5 with a new one-off seed">redraw</button>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="06">
+    <div class="plate-head"><span class="plate-no">Plate 06</span><span class="plate-title">Moire swirl, light leak</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-plate-06" data-specimen-layers="moire-swirl,aurora-leak" role="img" aria-label="Generated plate: crosshatched crescent ribbons spiraling into a hot amber core, crossed by one emerald light leak."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">moire-swirl + aurora-leak &middot; <span data-plate-seed>seed gallery-plate-06</span></span>
+      <button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 6 with a new one-off seed">redraw</button>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="07">
+    <div class="plate-head"><span class="plate-no">Plate 07</span><span class="plate-title">Planet limb, closing</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-plate-07" data-specimen-layers="planet-limb" role="img" aria-label="Generated plate: a planet limb glowing cobalt to cyan over a marbled ice-white cloud deck, black space above."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">planet-limb &middot; <span data-plate-seed>seed gallery-plate-07</span></span>
+      <button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 7 with a new one-off seed">redraw</button>
+    </figcaption>
+  </figure>
+</section>
+
+<section class="mv" id="fixtures" aria-labelledby="fixtures-h">
+  <h2 id="fixtures-h">The instruments.</h2>
+  <p class="body-text">A fixture is a frozen frame: a layer stack, a seed string, and nothing else. These twelve tiles are the contact sheet behind the plates above; keep a seed and its frame is stable down to the pixel, change it and the whole composition moves.</p>
+  <noscript><p class="body-text">The plates and tiles are generated in the browser, so with JavaScript off the canvases stay empty. The drawing code is ordinary readable JavaScript at <span translate="no">system/generative-field.js</span> if you would rather read the instrument than run it.</p></noscript>
+
+  <div class="fixture-grid" role="list" aria-label="Generated fixtures">
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-01" data-specimen-layers="crystal-lens" role="img" aria-label="Generated fixture: circular apertures cut into banded glass, hard specular rims, one dark maroon band across the horizon."></canvas>
+      </div>
+      <figcaption class="fixture-cap">crystal-lens &middot; seed gallery-01</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-02" data-specimen-layers="scanline" role="img" aria-label="Generated fixture: one large disc built from dashed horizontal scanlines whose dash length carries the shading."></canvas>
+      </div>
+      <figcaption class="fixture-cap">scanline &middot; seed gallery-02</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-03" data-specimen-layers="facets" role="img" aria-label="Generated fixture: angular planar shards and a hard diagonal light cone in near-monochrome, with a single hot red stroke."></canvas>
+      </div>
+      <figcaption class="fixture-cap">facets &middot; seed gallery-03</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-04" data-specimen-layers="groove" role="img" aria-label="Generated fixture: bundled comb-like streamlines curling over a violet plum ground, one narrow rainbow shear ribbon."></canvas>
+      </div>
+      <figcaption class="fixture-cap">groove &middot; seed gallery-04</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-05" data-specimen-layers="ca-quadrant" role="img" aria-label="Generated fixture: four cellular automata woven in two tones around a hard cross seam."></canvas>
+      </div>
+      <figcaption class="fixture-cap">ca-quadrant &middot; seed gallery-05</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-06" data-specimen-layers="crystal-lens,scanline" role="img" aria-label="Generated fixture: a scanline disc laid over banded crystal glass and lens apertures."></canvas>
+      </div>
+      <figcaption class="fixture-cap">crystal-lens + scanline &middot; seed gallery-06</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-07" data-specimen-layers="facets,contour" role="img" aria-label="Generated fixture: facet shards and one hot stroke over drifting contour ridge lines."></canvas>
+      </div>
+      <figcaption class="fixture-cap">facets + contour &middot; seed gallery-07</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-08" data-specimen-layers="groove,lamp" role="img" aria-label="Generated fixture: groove marble streamlines with radial lamp symmetry figures floating above."></canvas>
+      </div>
+      <figcaption class="fixture-cap">groove + lamp &middot; seed gallery-08</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-09" data-specimen-layers="ca-quadrant,dither" role="img" aria-label="Generated fixture: a quadrant CA weave under an ordered-dither poster veil."></canvas>
+      </div>
+      <figcaption class="fixture-cap">ca-quadrant + dither &middot; seed gallery-09</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-10" data-specimen-layers="scanline,orbit" role="img" aria-label="Generated fixture: a scanline halftone disc ringed by elliptical orbit traces."></canvas>
+      </div>
+      <figcaption class="fixture-cap">scanline + orbit &middot; seed gallery-10</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-11" data-specimen-layers="crystal-lens,crystal" role="img" aria-label="Generated fixture: lens apertures in banded glass with sharp crystal fragments scattered across."></canvas>
+      </div>
+      <figcaption class="fixture-cap">crystal-lens + crystal &middot; seed gallery-11</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-12" data-specimen-layers="groove,hydra" role="img" aria-label="Generated fixture: groove marble currents beneath ringed hydra tile lattices."></canvas>
+      </div>
+      <figcaption class="fixture-cap">groove + hydra &middot; seed gallery-12</figcaption>
+    </figure>
+
+  </div>
+
+  <p class="body-text" style="margin-top:1.8rem">Where next: <a href="typeface.html">the generated typeface</a> &middot; <a href="studio.html">The Studio</a> &middot; <a href="catalog.html">the full catalog</a>.</p>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">First-party procedural material: synthesized by this site's own engine, no copied images. Seeded plates reproduce exactly from their named seed; live plates are drawn once and never again. Read the source at <span translate="no">system/generative-field.js</span>.</p>
+</footer>
+
+<script type="module">
+// Exhibition wiring: the daily opener plus per-plate reseed controls. Every
+// draw is one-shot through renderSpecimen (no animation loop, so reduced
+// motion needs no special case here). renderSpecimen skips unknown layer
+// names, so a wave-2 layer that has not landed degrades to the backdrop wash
+// instead of throwing; the try/catch below keeps one bad plate from taking
+// the rest of the exhibition down with it.
+import { renderSpecimen } from "./system/generative-field.js";
+
+function plateLayers(canvas) {
+  return ((canvas.dataset && canvas.dataset.specimenLayers) || "")
+    .split(",")
+    .map((name) => name.trim())
+    .filter(Boolean);
+}
+
+function drawPlate(canvas, seed) {
+  if (!canvas) return false;
+  try {
+    const ok = renderSpecimen(canvas, seed, plateLayers(canvas));
+    if (ok && canvas.dataset) {
+      canvas.dataset.specimen = seed;
+      canvas.dataset.specimenRendered = "true";
+    }
+    return ok;
+  } catch (error) {
+    console.error(`gallery: plate render failed for seed ${seed}`, error);
+    return false;
+  }
+}
+
+function liveSeed() {
+  if (window.crypto && typeof window.crypto.getRandomValues === "function") {
+    const words = new Uint32Array(2);
+    window.crypto.getRandomValues(words);
+    return `live-${words[0].toString(36)}${words[1].toString(36)}`;
+  }
+  return `live-${Math.random().toString(36).slice(2, 12)}`;
+}
+
+// Today's plate: the exhibition opens with a new piece daily. Drawn once;
+// the caption shows the date seed so today's frame stays reproducible.
+const daily = `gallery-${new Date().toISOString().slice(0, 10)}`;
+const opener = document.querySelector('[data-plate="01"]');
+if (opener) {
+  const canvas = opener.querySelector("canvas[data-specimen]");
+  const seedOut = opener.querySelector("[data-plate-seed]");
+  if (drawPlate(canvas, daily) && seedOut) seedOut.textContent = `seed ${daily}`;
+}
+
+// Reseed: one true-random one-off per click, never the same frame twice.
+document.querySelectorAll("[data-plate]").forEach((plate) => {
+  const button = plate.querySelector("[data-plate-redraw]");
+  const canvas = plate.querySelector("canvas[data-specimen]");
+  const seedOut = plate.querySelector("[data-plate-seed]");
+  if (!button || !canvas) return;
+  button.addEventListener("click", () => {
+    if (drawPlate(canvas, liveSeed()) && seedOut) {
+      seedOut.textContent = "live · one of one";
+    }
+  });
+});
+</script>
+
+</body>
+</html>
