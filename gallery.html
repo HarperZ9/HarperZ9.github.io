@@ -57,6 +57,14 @@
   .desk-chips{display:flex;flex-wrap:wrap;gap:.45rem;margin:.4rem 0 .9rem}
   .desk-hint{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:var(--muted);margin:.4rem 0 .2rem}
   .desk-status{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:var(--orange);min-height:1.2em}
+  .desk-variations{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin:.4rem 0 1rem}
+  .desk-var{position:relative;border:1px solid var(--hairline);border-radius:8px;overflow:hidden;
+    aspect-ratio:16/10;background:#0b0812;cursor:pointer;padding:0;transition:border-color .15s}
+  .desk-var:hover{border-color:var(--orange)}
+  .desk-var:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+  .desk-var canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .desk-var .dv-tag{position:absolute;left:.4rem;bottom:.3rem;font-family:var(--mono);font-size:.56rem;
+    letter-spacing:.12em;color:var(--bone);background:rgba(8,6,12,.72);border-radius:4px;padding:.15em .5em}
   #desk-reroll{border-color:color-mix(in oklab, var(--orange) 45%, var(--hairline))}
   /* per-instrument lock: a selected chip grows a tiny padlock toggle; locked
      instruments survive every reroll. */
@@ -255,11 +263,13 @@
     <button type="button" class="plate-redraw" id="desk-save" aria-label="Save your plate as a PNG image">save png</button>
     <button type="button" class="plate-redraw" id="desk-share" aria-label="Copy a link that reproduces this plate">copy link</button>
     <button type="button" class="plate-redraw" id="desk-plot" aria-label="Replay this plate as pen-plotter line art, stroke by stroke">plot it</button>
+    <button type="button" class="plate-redraw" id="desk-vary" aria-label="Draw four neighboring variations of this seed">variations</button>
     <a class="plate-redraw" id="desk-workshop" href="studio.html?source=poster" aria-label="Open this plate in the poster workshop">open in the workshop</a>
   </div>
   <p class="desk-hint">instruments &middot; pick up to three &middot; the padlock keeps one through rerolls</p>
   <div class="desk-chips" id="desk-chips" role="group" aria-label="Instrument selection"></div>
   <p class="desk-status" id="desk-status" role="status" aria-live="polite"></p>
+  <div class="desk-variations" id="desk-variations" hidden aria-label="Seed variations - click one to adopt it"></div>
   <figure class="plate" data-plate="desk">
     <div class="plate-head"><span class="plate-no">Your plate</span><span class="plate-title" id="desk-title">unnamed &middot; waiting for a seed</span></div>
     <div class="plate-art ratio-wide">
@@ -716,6 +726,39 @@ if (deskPlot) deskPlot.addEventListener("click", async () => {
     console.error("gallery: plot failed", error);
     say("the plot failed to draw - try a different plate");
   }
+});
+
+// Variations: four neighboring seeds of the current plate, drawn small.
+// Clicking one adopts its seed at the desk - exploration without losing the
+// original (the caption still names every seed, so nothing is unrecoverable).
+const deskVary = document.getElementById("desk-vary");
+const varyHost = document.getElementById("desk-variations");
+if (deskVary && varyHost) deskVary.addEventListener("click", () => {
+  if (!deskCanvas || deskCanvas.dataset.specimenRendered !== "true") { say("draw a plate first"); return; }
+  const base = deskSeedValue();
+  const layers = [...picked];
+  varyHost.hidden = false;
+  varyHost.innerHTML = "";
+  for (let v = 1; v <= 4; v += 1) {
+    const seed = base + "·" + v;
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "desk-var";
+    b.setAttribute("aria-label", "Adopt variation " + seed);
+    const c = document.createElement("canvas");
+    const tag = document.createElement("span");
+    tag.className = "dv-tag";
+    tag.textContent = seed;
+    b.append(c, tag);
+    varyHost.appendChild(b);
+    try { renderSpecimen(c, seed, layers); } catch (e) { console.error("gallery: variation failed", e); }
+    b.addEventListener("click", () => {
+      if (deskSeed) deskSeed.value = seed;
+      drawDesk();
+      say("adopted " + seed);
+    });
+  }
+  say("four neighbors of " + base + " - click one to adopt it");
 });
 
 // The workshop link carries the current plate's seed across surfaces.

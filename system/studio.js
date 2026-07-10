@@ -3870,7 +3870,7 @@ buildMeters();
   // own perceptual hash so the same frame plots the same way.
   const plotDesk = $("rt-plot");
   const plotPop = $("rt-plot-pop");
-  const plotOpts = { style: "flow", pens: 1, paper: "a4", format: "svg" };
+  const plotOpts = { style: "flow", pens: 1, paper: "a4", format: "svg", detail: "standard", density: "full" };
   if (plotPop) {
     plotPop.addEventListener("click", e => {
       const b = e.target.closest("button[data-plot-key]");
@@ -3905,10 +3905,10 @@ buildMeters();
         if (typeof plot.plotCanvas !== "function") throw new Error("the plotter module lacks plotCanvas");
         const canvas = $("studio-canvas");
         const seed = lastHashByCanvas.get(canvas) || "studio";
-        const { style, pens, paper } = plotOpts;
-        const result = plot.plotCanvas(canvas, { style, seed, pens, paper });
+        const { style, pens, paper, detail, density } = plotOpts;
+        const result = plot.plotCanvas(canvas, { style, seed, pens, paper, detail, density });
         const ex = await loadExporters();
-        const base = "studio-plot-" + style + "-" + pens + "pen-" + paper + "-" + seed;
+        const base = "studio-plot-" + style + "-" + detail + "-" + pens + "pen-" + paper + "-" + seed;
         const wantGcode = plotOpts.format === "gcode";
         const asGcode = wantGcode && typeof plot.toGcode === "function";
         // Multi-pen result: plotCanvas attaches .pens (separatePens output) when it clustered.

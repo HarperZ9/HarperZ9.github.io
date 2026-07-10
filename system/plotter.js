@@ -60,7 +60,7 @@ function gradient(field, w, h, x, y) {
 export function flowlinesFromLuma(px, w, h, ch = 4, opts = {}) {
   const field = lumaField(px, w, h, ch);
   const rnd = mulberry(hash32(opts.seed == null ? "plot" : opts.seed));
-  const target = Math.max(40, Math.min(2200, opts.lines || 700));
+  const target = Math.max(40, Math.min(5200, opts.lines || 700));
   const maxSteps = Math.max(8, Math.min(400, opts.steps || 110));
   const step = opts.step || 1.6;
   const lines = [];
@@ -354,6 +354,8 @@ export function separatePens(px, w, h, ch = 4, polylines = [], penCount = 2) {
    flipped so the plot comes out upright on a Y-up machine. Deterministic:
    fixed 3-decimal coordinates. */
 export function toGcode(polylines, srcW, srcH, opts = {}) {
+  // Provenance rides in the file: the seed and style reproduce this plot.
+  const provenance = "; telos plot - style " + (opts.style || "flow") + ", seed " + (opts.seed == null ? "live" : opts.seed);
   const widthMm = opts.widthMm || 190;
   const k = widthMm / Math.max(1, srcW);
   const feed = Math.round(opts.feed || 2500);
@@ -368,6 +370,7 @@ export function toGcode(polylines, srcW, srcH, opts = {}) {
   const fy = (y) => ((srcH - y) * k).toFixed(3);
   const out = [
     "; telos plotter gcode",
+    provenance,
     "; source " + srcW + "x" + srcH + " px -> " + widthMm + " mm wide",
     "G21",
     "G90",
@@ -440,9 +443,31 @@ export function toPlotterSVG(polylines, srcW, srcH, opts = {}) {
    opts.pens (2-3) to also cluster the plot into color pens: the result gains
    .pens (separatePens output) and the SVG gains one layer group per pen.
    opts.paper flows through to toPlotterSVG. */
+/* Detail tiers: how much of the frame the pen is allowed to know.
+   standard reads a 220px field; fine 420; ultra 640. Line budgets, walk
+   lengths, hatch spacing, and contour levels scale with the tier, and
+   opts.density ("airy" | "full" | "dense") multiplies the stroke budget on
+   top. Explicit opts (lines/steps/spacing/levels/sampleWidth) still win. */
+export const PLOT_DETAIL = {
+  standard: { sampleWidth: 220, lines: 700, steps: 110, spacing: 4, levels: 5 },
+  fine: { sampleWidth: 420, lines: 1500, steps: 150, spacing: 3, levels: 7 },
+  ultra: { sampleWidth: 640, lines: 2600, steps: 190, spacing: 2.4, levels: 9 },
+};
+const PLOT_DENSITY = { airy: 0.6, full: 1, dense: 1.55 };
+
 export function plotCanvas(canvas, opts = {}) {
   const style = opts.style === "hatch" || opts.style === "contour" ? opts.style : "flow";
-  const dw = Math.max(16, Math.min(240, opts.sampleWidth || 220));
+  const tier = PLOT_DETAIL[opts.detail] || PLOT_DETAIL.standard;
+  const dens = PLOT_DENSITY[opts.density] || 1;
+  opts = {
+    sampleWidth: tier.sampleWidth,
+    lines: Math.round(tier.lines * dens),
+    steps: tier.steps,
+    spacing: tier.spacing / Math.sqrt(dens),
+    levels: tier.levels,
+    ...opts,
+  };
+  const dw = Math.max(16, Math.min(720, opts.sampleWidth || 220));
   const dh = Math.max(16, Math.round(dw * (canvas.height / Math.max(1, canvas.width))));
   const doc = (typeof document !== "undefined") ? document : null;
   const scratch = opts.scratch || (doc ? doc.createElement("canvas") : null);

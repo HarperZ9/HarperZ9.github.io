@@ -540,11 +540,16 @@ export function reconstructionFidelity(px, w, h, ch = 4, detail) {
 export function perceptionDetail(px, w, h, ch = 4) {
   return {
     grid3: regionGrid(px, w, h, ch, 3),
+    // Finer spatial channels for machine readers: a 5x5 region read and a
+    // 24x24 hex map. Fidelity keeps scoring against colorGrid16 so the
+    // metric stays comparable across time.
+    grid5: regionGrid(px, w, h, ch, 5),
     colorGrid16: colorGridHex(px, w, h, ch, 16),
+    colorGrid24: colorGridHex(px, w, h, ch, 24),
     edgeOrientations: edgeOrientations(px, w, h, ch),
     symmetry: symmetryScores(px, w, h, ch),
     ascii: asciiRender(px, w, h, ch, 64),
-    shapes: shapeInventory(px, w, h, ch, 8),
+    shapes: shapeInventory(px, w, h, ch, 12),
     braille: brailleRender(px, w, h, ch, 48),
   };
 }
