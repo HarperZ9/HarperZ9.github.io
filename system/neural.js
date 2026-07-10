@@ -138,10 +138,14 @@ export function buildCppn(seed, opts = {}) {
    dist(x, y, z) returns the signed distance; bound is the marching radius. */
 export function buildNeuralSdf(seed, opts = {}) {
   const R = opts.radius == null ? 1 : opts.radius;
-  const amp = opts.amp == null ? 0.42 : opts.amp;
+  // A gentler default displacement reads as a sculptural solid rather than a
+  // spiky firefly cloud; callers can push it up for a rougher form.
+  const amp = opts.amp == null ? 0.32 : opts.amp;
   const hidden = opts.hidden || [10, 8];
-  const mlp = buildMlp(seed, [4, ...hidden, 1], { scale: opts.scale == null ? 2.2 : opts.scale });
-  const freq = 1.2 + (weightAt(seed, 77001, 1) * 0.5 + 0.5) * 2.2;
+  const mlp = buildMlp(seed, [4, ...hidden, 1], { scale: opts.scale == null ? 2.0 : opts.scale });
+  // Lower frequency = smoother, blobbier displacement (fewer thin spikes that
+  // read as noise); the surface stays a coherent sculptural solid.
+  const freq = 0.85 + (weightAt(seed, 77001, 1) * 0.5 + 0.5) * 1.15;
   const inBuf = new Array(4);
   const displace = (x, y, z) => {
     inBuf[0] = x * freq;
