@@ -343,6 +343,199 @@ export function asciiRender(px, w, h, ch = 4, cols = 64) {
   return out.join("\n");
 }
 
+/* ── reconstruction-grade perception (2026-07-10) ─────────────────────────────
+   Three channels that upgrade the packet from "described" to "reconstructable":
+   a braille luminance render (8x the spatial resolution of ASCII per char), a
+   connected-component shape inventory (what objects are there and where), and
+   a measured reconstruction-fidelity score (does the packet genuinely carry
+   the image). All pure, deterministic, canvas-free. */
+
+// Braille dot bit for cell position [dy][dx] inside a 2x4 dot cell (U+2800 block layout:
+// dots 1,2,3,7 run down the left column; 4,5,6,8 down the right).
+const BRAILLE_DOT_BITS = [
+  [0x01, 0x08],
+  [0x02, 0x10],
+  [0x04, 0x20],
+  [0x40, 0x80],
+];
+
+// Unicode braille luminance render: each char encodes a 2x4 dot cell, so a `cols`-wide
+// render carries 8x the spatial resolution of the same-width ASCII render. Dots switch on
+// where the cell's mean luminance clears a 2-level ordered threshold (a 0.25 / 0.75
+// checkerboard), so mid-tones dither into a texture instead of banding. Deterministic.
+export function brailleRender(px, w, h, ch = 4, cols = 48) {
+  if (!w || !h || !cols) return "";
+  cols = Math.max(1, Math.floor(cols));
+  const rows = Math.max(1, Math.round(cols * (h / w) * 0.5)); // same visual aspect as asciiRender
+  const dw = cols * 2, dh = rows * 4;                          // the underlying dot grid
+  const out = [];
+  for (let ry = 0; ry < rows; ry++) {
+    let line = "";
+    for (let rx = 0; rx < cols; rx++) {
+      let bits = 0;
+      for (let dy = 0; dy < 4; dy++) {
+        for (let dx = 0; dx < 2; dx++) {
+          const gx = rx * 2 + dx, gy = ry * 4 + dy;
+          const x0 = Math.floor(gx * w / dw), x1 = Math.max(x0 + 1, Math.floor((gx + 1) * w / dw));
+          const y0 = Math.floor(gy * h / dh), y1 = Math.max(y0 + 1, Math.floor((gy + 1) * h / dh));
+          let sum = 0, count = 0;
+          for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { sum += lumaAt(px, ch, w, x, y); count++; }
+          const t = sum / count / 255;
+          // 2-level ordered pattern: alternate 0.25 / 0.75 thresholds on the dot checkerboard.
+          if (t >= (((gx + gy) & 1) ? 0.75 : 0.25)) bits |= BRAILLE_DOT_BITS[dy][dx];
+        }
+      }
+      line += String.fromCharCode(0x2800 + bits);
+    }
+    out.push(line);
+  }
+  return out.join("\n");
+}
+
+// Connected-component shape inventory: "what objects are there and where" - the channel a
+// no-vision reader needs most. Works on its own coarse grid (<= 96 cells on the long side)
+// quantized by luminance ladder (greys) or hue bin x 2 luma levels (colours), then 4-connected
+// flood fill. Returns up to `maxShapes` components sorted by area, each:
+//   { areaFrac, bbox: [x0,y0,x1,y1] as 0..1 frame fractions, cx, cy (centroid 0..1),
+//     hue (named), luma (0..1), edge (fraction of cells bordering a different label) }.
+export function shapeInventory(px, w, h, ch = 4, maxShapes = 8) {
+  if (!w || !h) return [];
+  const scale = Math.min(1, 96 / Math.max(w, h));
+  const gw = Math.max(1, Math.round(w * scale));
+  const gh = Math.max(1, Math.round(h * scale));
+  const cells = gw * gh;
+  const R = new Float64Array(cells), G = new Float64Array(cells), B = new Float64Array(cells);
+  // Box-average downsample: one pass over the pixels.
+  for (let gy = 0; gy < gh; gy++) {
+    const y0 = Math.floor(gy * h / gh), y1 = Math.max(y0 + 1, Math.floor((gy + 1) * h / gh));
+    for (let gx = 0; gx < gw; gx++) {
+      const x0 = Math.floor(gx * w / gw), x1 = Math.max(x0 + 1, Math.floor((gx + 1) * w / gw));
+      let r = 0, g = 0, b = 0, count = 0;
+      for (let y = y0; y < y1; y++) {
+        const base = y * w;
+        for (let x = x0; x < x1; x++) { const i = (base + x) * ch; r += px[i]; g += px[i + 1]; b += px[i + 2]; count++; }
+      }
+      const idx = gy * gw + gx;
+      R[idx] = r / count; G[idx] = g / count; B[idx] = b / count;
+    }
+  }
+  // Quantized label per cell: greys ride a 4-step luma ladder (0..3); saturated colours get
+  // 8 hue bins x 2 luma levels (4..19). Same-label neighbours merge into one component.
+  const labels = new Int32Array(cells);
+  for (let i = 0; i < cells; i++) {
+    const l = (R[i] * 299 + G[i] * 587 + B[i] * 114) / 1000;
+    const hsv = rgbToHsv(R[i], G[i], B[i]);
+    if (hsv.s < 0.15 || hsv.v < 0.12) labels[i] = Math.min(3, (l / 64) | 0);
+    else labels[i] = 4 + (Math.floor(hsv.h / 45) % 8) * 2 + (l >= 128 ? 1 : 0);
+  }
+  // 4-connected flood fill (iterative, O(cells)).
+  const comp = new Int32Array(cells).fill(-1);
+  const found = [];
+  const stack = [];
+  for (let seed = 0; seed < cells; seed++) {
+    if (comp[seed] !== -1) continue;
+    const id = found.length, lab = labels[seed];
+    let area = 0, sx = 0, sy = 0, sr = 0, sg = 0, sb = 0, boundary = 0;
+    let bx0 = gw, by0 = gh, bx1 = -1, by1 = -1;
+    comp[seed] = id; stack.push(seed);
+    while (stack.length) {
+      const c = stack.pop();
+      const cy = (c / gw) | 0, cx = c - cy * gw;
+      area++; sx += cx + 0.5; sy += cy + 0.5; sr += R[c]; sg += G[c]; sb += B[c];
+      if (cx < bx0) bx0 = cx; if (cy < by0) by0 = cy;
+      if (cx > bx1) bx1 = cx; if (cy > by1) by1 = cy;
+      let isBoundary = false;
+      if (cx > 0) { const n = c - 1; if (labels[n] === lab) { if (comp[n] === -1) { comp[n] = id; stack.push(n); } } else isBoundary = true; }
+      if (cx < gw - 1) { const n = c + 1; if (labels[n] === lab) { if (comp[n] === -1) { comp[n] = id; stack.push(n); } } else isBoundary = true; }
+      if (cy > 0) { const n = c - gw; if (labels[n] === lab) { if (comp[n] === -1) { comp[n] = id; stack.push(n); } } else isBoundary = true; }
+      if (cy < gh - 1) { const n = c + gw; if (labels[n] === lab) { if (comp[n] === -1) { comp[n] = id; stack.push(n); } } else isBoundary = true; }
+      if (isBoundary) boundary++;
+    }
+    found.push({ area, sx, sy, sr, sg, sb, boundary, bx0, by0, bx1, by1 });
+  }
+  return found
+    .sort((a, b) => b.area - a.area)
+    .slice(0, Math.max(0, maxShapes))
+    .map((s) => {
+      const mr = s.sr / s.area, mg = s.sg / s.area, mb = s.sb / s.area;
+      const hsv = rgbToHsv(mr, mg, mb);
+      return {
+        areaFrac: +(s.area / cells).toFixed(4),
+        bbox: [
+          +(s.bx0 / gw).toFixed(3), +(s.by0 / gh).toFixed(3),
+          +((s.bx1 + 1) / gw).toFixed(3), +((s.by1 + 1) / gh).toFixed(3),
+        ],
+        cx: +(s.sx / s.area / gw).toFixed(3),
+        cy: +(s.sy / s.area / gh).toFixed(3),
+        hue: hueName(hsv.h, hsv.s, hsv.v),
+        luma: +(((mr * 299 + mg * 587 + mb * 114) / 1000) / 255).toFixed(3),
+        edge: +(s.boundary / s.area).toFixed(3),
+      };
+    });
+}
+
+// dHash-style 64-bit perceptual hash usable at small buffer sizes: box-average the luma to a
+// 9x8 grid, then emit one bit per horizontal neighbour pair (left < right). Local to this
+// module on purpose - the gated dHash in shared-frame/eye.js stays untouched.
+export function phash64(pxBuf, w, h, ch = 4) {
+  const gw = 9, gh = 8;
+  const g = [];
+  for (let gy = 0; gy < gh; gy++) {
+    const y0 = Math.floor(gy * h / gh), y1 = Math.max(y0 + 1, Math.floor((gy + 1) * h / gh));
+    const row = [];
+    for (let gx = 0; gx < gw; gx++) {
+      const x0 = Math.floor(gx * w / gw), x1 = Math.max(x0 + 1, Math.floor((gx + 1) * w / gw));
+      let sum = 0, count = 0;
+      for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { sum += lumaAt(pxBuf, ch, w, x, y); count++; }
+      row.push(sum / count);
+    }
+    g.push(row);
+  }
+  const bits = new Uint8Array(64);
+  let k = 0;
+  for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) bits[k++] = g[y][x] < g[y][x + 1] ? 1 : 0;
+  return bits;
+}
+
+// THE measurable claim: does the detail packet genuinely carry the image? Rebuild a synthetic
+// frame from detail.colorGrid16 ALONE (nearest-neighbour upscale to a 64x64 canvas-free RGBA
+// buffer), perceptual-hash both the reconstruction and the original (box-averaged to the same
+// 64x64) with the same phash64 routine, and score the bit agreement.
+// Returns { score: 1 - hamming/64, hamming, bits: 64 }. Score near 1 = the packet carries the
+// image; a grid taken from a DIFFERENT frame scores measurably lower. If the packet has no
+// colour grid the score is an honest null, never a fabricated number.
+export function reconstructionFidelity(px, w, h, ch = 4, detail) {
+  const grid = detail && detail.colorGrid16;
+  if (!grid || !grid.length || !grid[0] || !grid[0].length) return { score: null, hamming: null, bits: 64 };
+  const S = 64;
+  const gh = grid.length, gw = grid[0].length;
+  const recon = new Uint8ClampedArray(S * S * 4);
+  for (let y = 0; y < S; y++) {
+    const gy = Math.min(gh - 1, (y * gh / S) | 0);
+    for (let x = 0; x < S; x++) {
+      const gx = Math.min(gw - 1, (x * gw / S) | 0);
+      const hex = grid[gy][gx];
+      const i = (y * S + x) * 4;
+      recon[i] = parseInt(hex.slice(1, 3), 16);
+      recon[i + 1] = parseInt(hex.slice(3, 5), 16);
+      recon[i + 2] = parseInt(hex.slice(5, 7), 16);
+      recon[i + 3] = 255;
+    }
+  }
+  const { grid: og } = boxAverage(px, w, h, ch, S);
+  const orig = new Uint8ClampedArray(S * S * 4);
+  for (let y = 0; y < S; y++) {
+    for (let x = 0; x < S; x++) {
+      const i = (y * S + x) * 4, c = og[y][x];
+      orig[i] = c[0]; orig[i + 1] = c[1]; orig[i + 2] = c[2]; orig[i + 3] = 255;
+    }
+  }
+  const a = phash64(orig, S, S, 4), b = phash64(recon, S, S, 4);
+  let hamming = 0;
+  for (let i = 0; i < 64; i++) if (a[i] !== b[i]) hamming++;
+  return { score: +(1 - hamming / 64).toFixed(4), hamming, bits: 64 };
+}
+
 // The full detail bundle - everything above off one buffer read.
 export function perceptionDetail(px, w, h, ch = 4) {
   return {
@@ -351,6 +544,8 @@ export function perceptionDetail(px, w, h, ch = 4) {
     edgeOrientations: edgeOrientations(px, w, h, ch),
     symmetry: symmetryScores(px, w, h, ch),
     ascii: asciiRender(px, w, h, ch, 64),
+    shapes: shapeInventory(px, w, h, ch, 8),
+    braille: brailleRender(px, w, h, ch, 48),
   };
 }
 
@@ -383,6 +578,15 @@ export function describeFrameLong(rich, detail) {
     parts.push("Cells by row, hue/luma: "
       + detail.grid3.map((row) => row.map((c) => c.hue + " " + c.luma).join(" | ")).join(" // ") + ".");
   }
+  if (detail && Array.isArray(detail.shapes) && detail.shapes.length) {
+    const ordinal = ["largest", "second", "third"];
+    const clauses = detail.shapes.slice(0, 3).map((s, i) => {
+      const xi = Math.min(2, Math.floor(s.cx * 3)), yi = Math.min(2, Math.floor(s.cy * 3));
+      return "the " + ordinal[i] + " form sits " + CELL_NAMES[yi][xi] + ", " + s.hue
+        + ", covering " + (s.areaFrac * 100).toFixed(0) + "% of the frame";
+    });
+    parts.push("Shapes: " + clauses.join("; ") + ".");
+  }
   if (detail && detail.edgeOrientations && detail.edgeOrientations.dominant !== "none") {
     const e = detail.edgeOrientations;
     parts.push("Edges lean " + e.dominant + " (h " + e.horizontal + ", v " + e.vertical
@@ -394,6 +598,13 @@ export function describeFrameLong(rich, detail) {
       : s.horizontal > 0.9 ? "mirrored left-right" : s.vertical > 0.9 ? "mirrored top-bottom"
       : s.horizontal < 0.6 && s.vertical < 0.6 ? "asymmetric" : "loosely balanced";
     parts.push("Composition reads " + sym + " (mirror scores h " + s.horizontal + ", v " + s.vertical + ").");
+  }
+  // Fidelity clause ONLY when the caller passes a measured detail.fidelity (this function
+  // never computes it - the caller runs reconstructionFidelity and hands the result in).
+  if (detail && detail.fidelity && typeof detail.fidelity.score === "number") {
+    const f = detail.fidelity;
+    parts.push("A frame rebuilt from this packet's colour grid alone matches the original at "
+      + f.score.toFixed(2) + " (" + (f.bits - f.hamming) + " of " + f.bits + " hash bits).");
   }
   return parts.join(" ");
 }
