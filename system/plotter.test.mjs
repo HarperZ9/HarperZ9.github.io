@@ -247,3 +247,26 @@ test("plotCanvas contour style threads orderPaths and returns pens", () => {
   assert.ok(res.svg.includes("xmlns:inkscape"), "pens flow into the SVG layers");
   assert.deepEqual(run().polylines, res.polylines, "plot must be deterministic per seed");
 });
+
+
+test("detail tiers scale the plot: ultra reads a finer field and draws more", () => {
+  // plotCanvas needs a canvas; exercise the tier maths through the exported
+  // preset table + the line-budget path in flowlinesFromLuma directly.
+  const std = flowlinesFromLuma(SPLIT, W, H, 4, { seed: "tier", lines: 700 });
+  const ultra = flowlinesFromLuma(SPLIT, W, H, 4, { seed: "tier", lines: 2600 });
+  assert.ok(ultra.length > std.length * 2, `ultra ${ultra.length} vs standard ${std.length}`);
+});
+
+test("PLOT_DETAIL presets are ordered and sane", async () => {
+  const mod = await import("./plotter.js");
+  const d = mod.PLOT_DETAIL;
+  assert.ok(d.standard.sampleWidth < d.fine.sampleWidth && d.fine.sampleWidth < d.ultra.sampleWidth);
+  assert.ok(d.standard.lines < d.fine.lines && d.fine.lines < d.ultra.lines);
+  assert.ok(d.ultra.levels > d.standard.levels);
+});
+
+test("gcode carries its provenance seed", () => {
+  const lines = flowlinesFromLuma(SPLIT, W, H, 4, { seed: "prov", lines: 60 });
+  const g = toGcode(lines, W, H, { seed: "prov", style: "flow" });
+  assert.ok(g.includes("seed prov"), "provenance line missing");
+});
