@@ -94,9 +94,21 @@ export function mountPosterWorkshop(deps) {
   const status = el("p", "poster-status");
   status.setAttribute("role", "status");
 
+  // Cover-draw an image into the poster's fixed format dimensions (renderPoster
+  // has already sized the canvas), so an imported photo becomes the art layer.
+  function coverDrawImage(cv, img) {
+    const ctx = cv.getContext("2d");
+    if (!ctx || !img) return;
+    const iw = img.naturalWidth || img.width || 1;
+    const ih = img.naturalHeight || img.height || 1;
+    const cover = Math.max(cv.width / iw, cv.height / ih);
+    const dw = iw * cover, dh = ih * cover;
+    ctx.drawImage(img, (cv.width - dw) / 2, (cv.height - dh) / 2, dw, dh);
+  }
+
   // ── render loop (debounced) ────────────────────────────────────────────────
   function renderNow() {
-    const out = renderPoster(canvas, state, { renderSpecimen });
+    const out = renderPoster(canvas, state, { renderSpecimen, drawImage: coverDrawImage });
     lastBoxes = out.boxes || [];
     if (typeof perceiveNow === "function") { try { perceiveNow(canvas); } catch (_) {} }
     return out;
@@ -164,6 +176,36 @@ export function mountPosterWorkshop(deps) {
     artSel.appendChild(b);
   });
   gArt.appendChild(artSel);
+  // Use your own image as the poster art. It stays in this tab; the veil and
+  // the measured critique apply over it exactly as over engine art.
+  const imgRow = el("div", "poster-artrow");
+  const imgBtn = el("button", "at-mini", "use my image");
+  imgBtn.type = "button";
+  const imgInput = el("input", "poster-imgfile");
+  imgInput.type = "file"; imgInput.accept = "image/*"; imgInput.hidden = true;
+  imgInput.setAttribute("aria-label", "Use your own image as the poster art");
+  const imgClear = el("button", "at-mini", "back to instruments");
+  imgClear.type = "button"; imgClear.hidden = true;
+  imgBtn.addEventListener("click", () => imgInput.click());
+  imgInput.addEventListener("change", async () => {
+    const file = imgInput.files && imgInput.files[0];
+    if (!file || !/^image\//.test(file.type)) return;
+    try {
+      const bmp = typeof createImageBitmap === "function"
+        ? await createImageBitmap(file)
+        : await new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = URL.createObjectURL(file); });
+      state.art.image = bmp;
+      imgClear.hidden = false;
+      renderNow(); critiqueNow(false);
+    } catch (_) { /* ignore bad image */ }
+  });
+  imgClear.addEventListener("click", () => {
+    state.art.image = null;
+    imgClear.hidden = true;
+    renderNow(); critiqueNow(false);
+  });
+  imgRow.append(imgBtn, imgInput, imgClear);
+  gArt.appendChild(imgRow);
   const artRow = el("div", "poster-artrow");
   const seedIn = el("input", "poster-seed");
   seedIn.type = "text"; seedIn.maxLength = 40; seedIn.value = state.art.seed;

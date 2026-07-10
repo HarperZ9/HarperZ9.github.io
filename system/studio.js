@@ -3862,6 +3862,82 @@ buildMeters();
     });
   }
 
+  // Unified export menu: one row per registered kind, grouped by discipline,
+  // from EXPORT_KINDS. Perception kinds pass a fresh full perception packet;
+  // pdf passes the chosen paper; relief passes a depth. Absent module leaves
+  // the legacy PNG/JSON buttons untouched.
+  const exportDesk = $("rt-export");
+  const exportPop = $("rt-export-pop");
+  const exportList = $("rt-export-list");
+  let exportPaper = "a4";
+  if (exportPop && exportList) {
+    exportPop.addEventListener("click", e => {
+      const paper = e.target.closest("button[data-export-paper]");
+      if (paper) {
+        exportPaper = paper.dataset.exportPaper;
+        exportPop.querySelectorAll("button[data-export-paper]").forEach(b => {
+          const on = b === paper;
+          b.classList.toggle("active", on);
+          b.setAttribute("aria-pressed", String(on));
+        });
+      }
+    });
+    const runExport = async (ex, kind) => {
+      try {
+        const canvas = $("studio-canvas");
+        const phash = lastHashByCanvas.get(canvas) || "frame";
+        const opts = { quality: 0.92 };
+        if (kind.needs === "perception" || kind.needs === "both") {
+          opts.perception = (typeof window.__studioFullPerception === "function")
+            ? window.__studioFullPerception() : null;
+        }
+        if (kind.kind === "pdf") opts.paper = exportPaper;
+        if (kind.kind === "heightmap-obj") opts.depth = 12;
+        const blob = await ex.StudioExporters.export(kind.kind, canvas, opts);
+        ex.download(blob, "studio-" + kind.kind + "-" + phash + "." + kind.ext);
+        say("model", "Exported " + kind.label + " (" + kind.discipline + ").");
+      } catch (e) {
+        say("model", kind.label + " export failed: " + e.message);
+      }
+    };
+    loadExporters().then(ex => {
+      const kinds = ex.EXPORT_KINDS;
+      if (!Array.isArray(kinds)) return;
+      const byDisc = new Map();
+      for (const k of kinds) {
+        if (!byDisc.has(k.discipline)) byDisc.set(k.discipline, []);
+        byDisc.get(k.discipline).push(k);
+      }
+      for (const [disc, list] of byDisc) {
+        const row = document.createElement("div");
+        row.className = "rt-plot-row";
+        const lab = document.createElement("span");
+        lab.className = "rt-plot-lab";
+        lab.textContent = disc;
+        const chips = document.createElement("div");
+        chips.className = "rt-plot-chips";
+        for (const k of list) {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.className = "chip";
+          b.textContent = k.label;
+          b.title = k.label + " (." + k.ext + ")";
+          b.addEventListener("click", () => runExport(ex, k));
+          chips.appendChild(b);
+        }
+        row.appendChild(lab);
+        row.appendChild(chips);
+        exportList.appendChild(row);
+      }
+    }).catch(err => console.warn("studio: export menu unavailable", err));
+    if (exportDesk) {
+      document.addEventListener("click", e => {
+        if (exportDesk.open && !exportDesk.contains(e.target)) exportDesk.open = false;
+      });
+      exportDesk.addEventListener("keydown", e => { if (e.key === "Escape") exportDesk.open = false; });
+    }
+  }
+
   // Plot desk: the frame's luminance becomes plotter-ready line art. The "SVG plot"
   // control opens a small options popover (style / pens / paper / format) and wires the
   // choices through the plotter contract (plotCanvas {pens, paper}, toGcode, separatePens).

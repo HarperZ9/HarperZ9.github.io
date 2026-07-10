@@ -2105,6 +2105,98 @@ export function mountSpecimens(doc = typeof document !== "undefined" ? document 
   return rendered;
 }
 
+/* ---------------------------------------------------------------------------
+   Editor primitives (2026-07-10): compositing helpers for the Studio's image
+   editor. renderSpecimenOver lays the specimen vocabulary OVER whatever the
+   canvas already holds (an imported photograph, a prior render) - no clear,
+   no backdrop wash - and drawImageFit establishes that base image at its own
+   resolution. Neither registers anything in SPECIMEN_LAYERS: these compose
+   the existing library, they do not extend it.
+--------------------------------------------------------------------------- */
+
+// Like renderSpecimen, but composites the named layers over the existing
+// canvas content: no clearRect, no drawBackdrop. opts.alpha (0..1, default 1)
+// scales layer opacity via ctx.globalAlpha. Seed semantics match
+// renderSpecimen: "live"/null is a true-random one-off, any other string is
+// byte-stable. Unknown layer names are skipped.
+export function renderSpecimenOver(canvas, seedString, layerNames, opts = {}) {
+  if (!canvas || typeof canvas.getContext !== "function") return false;
+  const ctx = canvas.getContext("2d", { alpha: true });
+  if (!ctx) return false;
+  const live = seedString == null || String(seedString).toLowerCase() === "live";
+  const seed = live
+    ? (Math.floor(Math.random() * 4294967295) >>> 0)
+    : hashRoute(String(seedString || "specimen"));
+  const palette = routePalette(seed);
+  // The editor draws over an imported image at ITS resolution: never resize a
+  // canvas that already has a backing (resizing wipes the bitmap). Only an
+  // empty 0x0 backing gets sized from its element box.
+  if (!canvas.width || !canvas.height) {
+    const dpr = Math.min(2, Math.max(1,
+      (typeof window !== "undefined" && window.devicePixelRatio) || 1));
+    sizeSpecimenCanvas(canvas, dpr);
+  }
+  const width = canvas.width;
+  const height = canvas.height;
+  // Frozen instant, same derivation as renderSpecimen: seed in, tick out.
+  const tick = 40000 + (seed % 50000);
+  const alpha = typeof opts.alpha === "number" ? clamp(opts.alpha, 0, 1) : 1;
+  const names = Array.isArray(layerNames) ? layerNames : [];
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  for (const name of names) {
+    const layer = SPECIMEN_LAYERS[String(name).trim()];
+    if (!layer) continue;
+    // Re-asserted per layer: a layer may reset globalAlpha internally (the
+    // databend fringe pass does) and the next layer must still scale.
+    ctx.globalAlpha = alpha;
+    layer(ctx, width, height, tick, seed, palette);
+  }
+  ctx.restore();
+  ctx.globalCompositeOperation = "source-over";
+  return true;
+}
+
+// Sizes the canvas backing from opts.width/height when given (one edge given
+// derives the other from the image aspect), else from the image's natural
+// size capped at opts.maxBacking || 2048 on the long edge (aspect preserved,
+// never upscaled). Draws the image cover-fit: fills both axes, centered, the
+// overflow axis cropped. Returns { width, height } or null on bad input.
+export function drawImageFit(canvas, imgLike, opts = {}) {
+  if (!canvas || typeof canvas.getContext !== "function" || !imgLike) return null;
+  const ctx = canvas.getContext("2d", { alpha: true });
+  if (!ctx) return null;
+  const naturalW = Math.max(1, Math.round(
+    imgLike.naturalWidth || imgLike.videoWidth || imgLike.width || 1));
+  const naturalH = Math.max(1, Math.round(
+    imgLike.naturalHeight || imgLike.videoHeight || imgLike.height || 1));
+  const optW = Number(opts.width) > 0 ? Math.round(Number(opts.width)) : 0;
+  const optH = Number(opts.height) > 0 ? Math.round(Number(opts.height)) : 0;
+  let width;
+  let height;
+  if (optW && optH) {
+    width = optW;
+    height = optH;
+  } else if (optW || optH) {
+    width = optW || Math.max(1, Math.round(optH * (naturalW / naturalH)));
+    height = optH || Math.max(1, Math.round(optW * (naturalH / naturalW)));
+  } else {
+    const maxBacking = Math.max(1, Math.floor(opts.maxBacking) || 2048);
+    const scale = Math.min(1, maxBacking / Math.max(naturalW, naturalH));
+    width = Math.max(1, Math.round(naturalW * scale));
+    height = Math.max(1, Math.round(naturalH * scale));
+  }
+  canvas.width = width;
+  canvas.height = height;
+  const cover = Math.max(width / naturalW, height / naturalH);
+  const drawW = naturalW * cover;
+  const drawH = naturalH * cover;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, width, height);
+  ctx.drawImage(imgLike, (width - drawW) / 2, (height - drawH) / 2, drawW, drawH);
+  return { width, height };
+}
+
 if (typeof document !== "undefined" && !document.body?.dataset.deferGenerativeField) {
   const bootField = () => {
     mountGenerativeField();

@@ -3204,6 +3204,11 @@ section.mv > h2::after,
 .rt-plot-row{display:flex;align-items:center;gap:.5rem}
 .rt-plot-lab{font-family:var(--mono);font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;
   color:var(--muted);flex:none;width:3.6rem}
+/* the unified export menu: taller, discipline rows wrap their format chips */
+#rt-export-pop{min-width:20rem;max-height:min(70vh,32rem);overflow-y:auto}
+.rt-export-list{display:flex;flex-direction:column;gap:.5rem}
+.rt-export-list .rt-plot-lab{width:5.4rem;align-self:flex-start;padding-top:.25rem}
+.rt-export-list .rt-plot-chips{flex-wrap:wrap}
 .rt-plot-chips{display:flex;gap:.3rem;flex-wrap:wrap}
 .rt-plot-actions{display:flex;justify-content:flex-end;margin-top:.15rem}
 .rt-plot-note{font-family:var(--mono);font-size:.56rem;letter-spacing:.04em;
