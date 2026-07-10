@@ -57,6 +57,33 @@
   .desk-chips{display:flex;flex-wrap:wrap;gap:.45rem;margin:.4rem 0 .9rem}
   .desk-hint{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:var(--muted);margin:.4rem 0 .2rem}
   .desk-status{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:var(--orange);min-height:1.2em}
+  #desk-reroll{border-color:color-mix(in oklab, var(--orange) 45%, var(--hairline))}
+  /* per-instrument lock: a selected chip grows a tiny padlock toggle; locked
+     instruments survive every reroll. */
+  .chip-wrap{display:inline-flex;gap:.25rem;align-items:stretch}
+  .chip-lock{display:inline-flex;align-items:center;justify-content:center;
+    min-height:2.55rem;min-width:2.3rem;padding:0 .5em;cursor:pointer;
+    color:var(--muted);background:transparent;border:1px solid var(--hairline);
+    border-radius:999px;transition:color .15s,border-color .15s}
+  .chip-lock[hidden]{display:none}
+  .chip-lock:hover{color:var(--bone);border-color:var(--ember)}
+  .chip-lock:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+  .chip-lock[aria-pressed="true"]{color:var(--orange);border-color:var(--orange)}
+  .chip-lock svg{display:block}
+  .chip-lock[aria-pressed="true"] .lk-open{display:none}
+  .chip-lock:not([aria-pressed="true"]) .lk-shut{display:none}
+  @media (max-width:700px){.chip-lock{min-height:2.75rem}}
+  /* plate 01: the opener answers the pointer. The sheen is a css-variable
+     update only (never a canvas redraw); reduced motion drops the sheen and
+     keeps click-to-reseed. */
+  .plate-poke .plate-art{cursor:crosshair}
+  .plate-poke .plate-art::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;
+    background:radial-gradient(240px circle at var(--px,50%) var(--py,50%), rgba(255,255,255,.075), transparent 70%);
+    transition:opacity .3s}
+  .plate-poke .plate-art.lit::after{opacity:1}
+  @media (prefers-reduced-motion: reduce){.plate-poke .plate-art::after{display:none}}
+  .plate-hint{display:block;width:100%;font-family:var(--mono);font-size:.6rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 
   /* Instruments contact sheet: the wave-1 fixture tiles, kept as the
      vocabulary reference behind the plates above. */
@@ -93,7 +120,7 @@
   <h2 id="exhibition-h">The exhibition.</h2>
   <p class="seal-line exh-note">plate 01 draws itself fresh each day &middot; redraw trades any plate&rsquo;s seed for a live one-off</p>
 
-  <figure class="plate" data-plate="01">
+  <figure class="plate plate-poke" data-plate="01">
     <div class="plate-head"><span class="plate-no">Plate 01</span><span class="plate-title">Today&rsquo;s plate &middot; folded light</span></div>
     <div class="plate-art ratio-wide">
       <canvas data-specimen="gallery-opening" data-specimen-layers="showpiece-veil" role="img" aria-label="Generated plate: long folded veils of additive light crossing at four-point star caustics on a black field."></canvas>
@@ -101,6 +128,7 @@
     <figcaption class="plate-cap">
       <span class="plate-meta">showpiece-veil &middot; <span data-plate-seed>seed gallery-opening</span></span>
       <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 1 with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">disturb the plate: click to reseed where you point</span>
     </figcaption>
   </figure>
 
@@ -222,11 +250,13 @@
     <label class="visually-hidden" for="desk-seed">Seed for your plate</label>
     <input id="desk-seed" class="desk-seed" type="text" maxlength="48" placeholder="name a seed - a word, a date, anything" autocomplete="off" spellcheck="false">
     <button type="button" class="plate-redraw" id="desk-draw" aria-label="Draw a plate from this seed and the selected instruments">draw</button>
+    <button type="button" class="plate-redraw" id="desk-reroll" aria-label="Reroll: a fresh seed and fresh unlocked instruments; locked instruments stay" title="Spacebar rerolls too">reroll</button>
     <button type="button" class="plate-redraw" id="desk-save" aria-label="Save your plate as a PNG image">save png</button>
     <button type="button" class="plate-redraw" id="desk-share" aria-label="Copy a link that reproduces this plate">copy link</button>
     <button type="button" class="plate-redraw" id="desk-plot" aria-label="Replay this plate as pen-plotter line art, stroke by stroke">plot it</button>
+    <a class="plate-redraw" id="desk-workshop" href="studio.html?source=poster" aria-label="Open this plate in the poster workshop">open in the workshop</a>
   </div>
-  <p class="desk-hint">instruments &middot; pick up to three</p>
+  <p class="desk-hint">instruments &middot; pick up to three &middot; the padlock keeps one through rerolls</p>
   <div class="desk-chips" id="desk-chips" role="group" aria-label="Instrument selection"></div>
   <p class="desk-status" id="desk-status" role="status" aria-live="polite"></p>
   <figure class="plate" data-plate="desk">
@@ -392,6 +422,50 @@ if (opener) {
   if (drawPlate(canvas, daily) && seedOut) seedOut.textContent = `seed ${daily}`;
 }
 
+// First-move reward: the opener answers the pointer before anything is read.
+// pointermove only slides a css highlight (rAF-throttled, two style writes,
+// zero canvas work); the canvas re-renders ONLY on click, reseeded from where
+// you point plus today's date. The derived seed is printed in the caption, so
+// the disturbed frame stays reproducible like any other seeded plate. Reduced
+// motion skips the moving sheen; the click still works.
+if (opener) {
+  const art = opener.querySelector(".plate-art");
+  const canvas = opener.querySelector("canvas[data-specimen]");
+  const seedOut = opener.querySelector("[data-plate-seed]");
+  if (art && canvas) {
+    const reduced = typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduced) {
+      let queued = false;
+      let lastX = 0;
+      let lastY = 0;
+      art.addEventListener("pointermove", (event) => {
+        lastX = event.clientX;
+        lastY = event.clientY;
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+          queued = false;
+          const rect = art.getBoundingClientRect();
+          const px = ((lastX - rect.left) / Math.max(1, rect.width)) * 100;
+          const py = ((lastY - rect.top) / Math.max(1, rect.height)) * 100;
+          art.style.setProperty("--px", `${px.toFixed(1)}%`);
+          art.style.setProperty("--py", `${py.toFixed(1)}%`);
+          art.classList.add("lit");
+        });
+      });
+      art.addEventListener("pointerleave", () => art.classList.remove("lit"));
+    }
+    art.addEventListener("click", (event) => {
+      const rect = art.getBoundingClientRect();
+      const qx = Math.round(((event.clientX - rect.left) / Math.max(1, rect.width)) * 96);
+      const qy = Math.round(((event.clientY - rect.top) / Math.max(1, rect.height)) * 60);
+      const seed = `${daily}-x${qx}y${qy}`;
+      if (drawPlate(canvas, seed) && seedOut) seedOut.textContent = `seed ${seed}`;
+    });
+  }
+}
+
 // Reseed: one true-random one-off per click, never the same frame twice.
 document.querySelectorAll("[data-plate]").forEach((plate) => {
   const button = plate.querySelector("[data-plate-redraw]");
@@ -435,29 +509,70 @@ const deskStatus = document.getElementById("desk-status");
 const deskTitle = document.getElementById("desk-title");
 const deskMeta = document.getElementById("desk-meta");
 const picked = new Set(["showpiece-veil"]);
+const locked = new Set();
+const chipRefs = new Map();
 
 function say(text) { if (deskStatus) deskStatus.textContent = text; }
 
+// A selected chip grows a padlock. Locks pin the SELECTION: a locked
+// instrument survives every reroll (the engine draws all layers from one seed
+// in one pass, so the lock guards which instruments are in the mix, not a
+// per-layer sub-seed - that honesty is stated in the hint copy).
+const LOCK_GLYPH =
+  '<svg class="lk-open" viewBox="0 0 12 13" width="11" height="12" aria-hidden="true">' +
+  '<path d="M4 5.5V4a2.6 2.6 0 0 1 5.1-.9" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+  '<rect x="1.4" y="5.5" width="7.2" height="6" rx="1.3" fill="currentColor"/></svg>' +
+  '<svg class="lk-shut" viewBox="0 0 12 13" width="11" height="12" aria-hidden="true">' +
+  '<path d="M2.9 5.5V3.9a2.6 2.6 0 0 1 5.2 0v1.6" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+  '<rect x="1.4" y="5.5" width="7.2" height="6" rx="1.3" fill="currentColor"/></svg>';
+
 function chipFor(name) {
-  const b = document.createElement("button");
-  b.type = "button";
-  b.className = "chip";
-  b.textContent = name;
-  b.setAttribute("aria-pressed", String(picked.has(name)));
-  b.addEventListener("click", () => {
+  const wrap = document.createElement("span");
+  wrap.className = "chip-wrap";
+  const pick = document.createElement("button");
+  pick.type = "button";
+  pick.className = "chip";
+  pick.textContent = name;
+  pick.setAttribute("aria-pressed", String(picked.has(name)));
+  pick.addEventListener("click", () => {
     if (picked.has(name)) {
       picked.delete(name);
+      locked.delete(name);
     } else if (picked.size >= DESK_MAX) {
       say(`three instruments at most - drop one first`);
       return;
     } else {
       picked.add(name);
     }
-    b.setAttribute("aria-pressed", String(picked.has(name)));
     say("");
+    syncChips();
     drawDesk();
   });
-  return b;
+  const lock = document.createElement("button");
+  lock.type = "button";
+  lock.className = "chip-lock";
+  lock.hidden = !picked.has(name);
+  lock.setAttribute("aria-pressed", "false");
+  lock.setAttribute("aria-label", `Lock ${name} so rerolls keep it in the mix`);
+  lock.innerHTML = LOCK_GLYPH;
+  lock.addEventListener("click", () => {
+    if (!picked.has(name)) return;
+    if (locked.has(name)) locked.delete(name); else locked.add(name);
+    lock.setAttribute("aria-pressed", String(locked.has(name)));
+    say(locked.has(name) ? `${name} locked - rerolls keep it` : `${name} unlocked - rerolls may trade it`);
+  });
+  wrap.append(pick, lock);
+  chipRefs.set(name, { pick, lock });
+  return wrap;
+}
+
+function syncChips() {
+  chipRefs.forEach((refs, name) => {
+    if (!picked.has(name)) locked.delete(name);
+    refs.pick.setAttribute("aria-pressed", String(picked.has(name)));
+    refs.lock.hidden = !picked.has(name);
+    refs.lock.setAttribute("aria-pressed", String(locked.has(name)));
+  });
 }
 
 if (deskChips) ALL_LAYERS.forEach((name) => deskChips.appendChild(chipFor(name)));
@@ -476,8 +591,77 @@ function drawDesk() {
   if (renderSafe(deskCanvas, seed, layers)) {
     if (deskTitle) deskTitle.textContent = `${seed} · ${layers.join(" + ")}`;
     if (deskMeta) deskMeta.textContent = `seed ${seed} · ${layers.join(" + ")} · reproducible on any visit`;
+    // Mirror the drawn state into the address bar so every draw and every
+    // reroll is immediately linkable; copy link reads this same state.
+    try {
+      const url = new URL(location.href);
+      url.searchParams.set("seed", seed);
+      url.searchParams.set("layers", layers.join(","));
+      history.replaceState(null, "", url);
+    } catch (error) {
+      console.warn("gallery: address-bar state mirror skipped", error);
+    }
   }
 }
+
+// Reroll: a fresh seed plus a fresh draw of every UNLOCKED instrument from
+// the full vocabulary; locked instruments hold their place. The result is
+// still a plain seeded plate - the new seed and mix land in the caption and
+// the share state, so a lucky roll is reproducible and linkable.
+function randomWord() {
+  if (window.crypto && typeof window.crypto.getRandomValues === "function") {
+    const words = new Uint32Array(1);
+    window.crypto.getRandomValues(words);
+    return words[0];
+  }
+  return Math.floor(Math.random() * 4294967295) >>> 0;
+}
+
+function rollSeed() {
+  return `roll-${randomWord().toString(36)}${randomWord().toString(36)}`;
+}
+
+function rerollDesk() {
+  if (!picked.size) { say("pick at least one instrument, then reroll"); return; }
+  const keep = [...picked].filter((name) => locked.has(name));
+  const slots = picked.size - keep.length;
+  if (!slots) { say("every instrument is locked - unlock one to reroll"); return; }
+  const bag = ALL_LAYERS.filter((name) => !locked.has(name));
+  const next = [...keep];
+  for (let i = 0; i < slots && bag.length; i += 1) {
+    next.push(bag.splice(randomWord() % bag.length, 1)[0]);
+  }
+  picked.clear();
+  next.forEach((name) => picked.add(name));
+  if (deskSeed) deskSeed.value = rollSeed();
+  syncChips();
+  const fresh = next.filter((name) => !keep.includes(name));
+  say(keep.length ? `kept ${keep.join(" + ")} - rolled ${fresh.join(" + ")}` : `rolled ${fresh.join(" + ")}`);
+  drawDesk();
+}
+
+const deskReroll = document.getElementById("desk-reroll");
+if (deskReroll) deskReroll.addEventListener("click", rerollDesk);
+
+// Spacebar rerolls when the desk is on screen and nothing interactive holds
+// focus (a focused button keeps its native spacebar activation; typing a
+// seed is never hijacked; elsewhere on the page, space still scrolls).
+function deskInView() {
+  const desk = document.getElementById("printdesk");
+  if (!desk) return false;
+  const rect = desk.getBoundingClientRect();
+  return rect.top < window.innerHeight && rect.bottom > 0;
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.key !== " " && event.key !== "Spacebar") return;
+  const target = event.target;
+  if (target && typeof target.closest === "function" &&
+      target.closest("input,textarea,select,button,a,[contenteditable]")) return;
+  if (!deskInView()) return;
+  event.preventDefault();
+  rerollDesk();
+});
 
 function renderSafe(canvas, seed, layers) {
   try {
@@ -533,6 +717,15 @@ if (deskPlot) deskPlot.addEventListener("click", async () => {
   }
 });
 
+// The workshop link carries the current plate's seed across surfaces.
+function syncWorkshopLink() {
+  const a = document.getElementById("desk-workshop");
+  if (a && deskCanvas && deskCanvas.dataset.specimen) {
+    a.href = "studio.html?source=poster&seed=" + encodeURIComponent(deskCanvas.dataset.specimen);
+  }
+}
+setInterval(syncWorkshopLink, 1200);
+
 const deskShare = document.getElementById("desk-share");
 if (deskShare) deskShare.addEventListener("click", async () => {
   if (!deskCanvas || deskCanvas.dataset.specimenRendered !== "true") { say("draw a plate first"); return; }
@@ -555,7 +748,7 @@ const linkLayers = (params.get("layers") || "").split(",").map((n) => n.trim()).
 if (linkSeed && linkLayers.length && deskCanvas) {
   picked.clear();
   linkLayers.forEach((n) => picked.add(n));
-  if (deskChips) [...deskChips.children].forEach((chip) => chip.setAttribute("aria-pressed", String(picked.has(chip.textContent))));
+  syncChips();
   if (deskSeed) deskSeed.value = linkSeed;
   drawDesk();
   const desk = document.getElementById("printdesk");

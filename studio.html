@@ -20,7 +20,7 @@
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/system.css?v=20260709n">
+<link rel="stylesheet" href="system/system.css?v=20260710a">
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
@@ -53,6 +53,7 @@
         <button type="button" role="tab" data-source="fractal"   aria-selected="false" aria-controls="src-fractal"   tabindex="-1">2D Fractal</button>
         <button type="button" role="tab" data-source="fractal3d" aria-selected="false" aria-controls="src-fractal3d" tabindex="-1">3D Fractal</button>
         <button type="button" role="tab" data-source="ndim"      aria-selected="false" aria-controls="src-ndim"      tabindex="-1">Dimensions</button>
+        <button type="button" role="tab" data-source="poster"    aria-selected="false" aria-controls="src-poster"    tabindex="-1">Poster</button>
       </div>
       <div class="source-group" role="presentation">
         <span class="source-group-label" aria-hidden="true">Bring</span>
@@ -104,6 +105,10 @@
       <!-- SOURCE: Atelier (Task 7). boot() finds #atelier and, since there is no #at-canvas here,
            draws into the shared #studio-canvas in the viewport. These are the exact control ids
            atelier.js boot() binds. Groups wrapped in <details> so the rail never overflows. -->
+      <section class="src-block" id="src-poster" role="tabpanel" aria-label="Poster workshop controls" hidden>
+        <p class="transform-note">The typography workshop: set type in the site's own generated faces over any instrument's art, and the critique reads the poster through the same measured packet the model receives - every note carries its numbers.</p>
+        <div id="poster-mount"></div>
+      </section>
       <section class="src-block" id="src-atelier" role="tabpanel" aria-label="Atelier controls">
         <div class="atelier studio-atelier" id="atelier">
           <div class="at-panel">
@@ -655,9 +660,51 @@
       <button class="rt-btn" id="rt-export-json" type="button" title="Save the witnessed perception certificate as JSON"
         aria-label="Export perception JSON">
         <span class="rt-ico" aria-hidden="true">&#8659;</span> Perception JSON</button>
-      <button class="rt-btn" id="rt-export-svg" type="button" title="Convert the current frame to plotter-ready SVG line art"
-        aria-label="Export plotter SVG line art">
-        <span class="rt-ico" aria-hidden="true">&#8659;</span> SVG plot</button>
+      <!-- Plot desk: the SVG plot control opens an options popover (style, pens, paper, format).
+           Wired by studio.js through the plotter contract; absent capabilities fall back to the
+           single-pen flow SVG. -->
+      <details class="rt-plot" id="rt-plot">
+        <summary class="rt-btn" id="rt-export-svg" title="Plot the current frame as pen line art: choose style, pens, paper, and format"
+          aria-label="Plot options: style, pens, paper, and format">
+          <span class="rt-ico" aria-hidden="true">&#8659;</span> SVG plot</summary>
+        <div class="rt-plot-pop" id="rt-plot-pop" aria-label="Plot options">
+          <div class="rt-plot-row">
+            <span class="rt-plot-lab" id="plot-style-lab">style</span>
+            <div class="rt-plot-chips" role="group" aria-labelledby="plot-style-lab">
+              <button type="button" class="chip active" data-plot-key="style" data-plot-value="flow" aria-pressed="true">flow</button>
+              <button type="button" class="chip" data-plot-key="style" data-plot-value="hatch" aria-pressed="false">hatch</button>
+              <button type="button" class="chip" data-plot-key="style" data-plot-value="contour" aria-pressed="false">contour</button>
+            </div>
+          </div>
+          <div class="rt-plot-row">
+            <span class="rt-plot-lab" id="plot-pens-lab">pens</span>
+            <div class="rt-plot-chips" role="group" aria-labelledby="plot-pens-lab">
+              <button type="button" class="chip active" data-plot-key="pens" data-plot-value="1" aria-pressed="true">1</button>
+              <button type="button" class="chip" data-plot-key="pens" data-plot-value="2" aria-pressed="false">2</button>
+              <button type="button" class="chip" data-plot-key="pens" data-plot-value="3" aria-pressed="false">3</button>
+            </div>
+          </div>
+          <div class="rt-plot-row">
+            <span class="rt-plot-lab" id="plot-paper-lab">paper</span>
+            <div class="rt-plot-chips" role="group" aria-labelledby="plot-paper-lab">
+              <button type="button" class="chip active" data-plot-key="paper" data-plot-value="a4" aria-pressed="true">a4</button>
+              <button type="button" class="chip" data-plot-key="paper" data-plot-value="a5" aria-pressed="false">a5</button>
+              <button type="button" class="chip" data-plot-key="paper" data-plot-value="square" aria-pressed="false">square</button>
+            </div>
+          </div>
+          <div class="rt-plot-row">
+            <span class="rt-plot-lab" id="plot-format-lab">format</span>
+            <div class="rt-plot-chips" role="group" aria-labelledby="plot-format-lab">
+              <button type="button" class="chip active" data-plot-key="format" data-plot-value="svg" aria-pressed="true">SVG</button>
+              <button type="button" class="chip" data-plot-key="format" data-plot-value="gcode" aria-pressed="false">G-code</button>
+            </div>
+          </div>
+          <div class="rt-plot-actions">
+            <button type="button" class="btn" id="rt-plot-download">Download plot</button>
+          </div>
+          <p class="rt-plot-note">Single-stroke pen line art from the live frame, seeded by its perceptual hash. G-code targets pen plotters; unsupported options fall back to the flow SVG.</p>
+        </div>
+      </details>
       <button class="rt-btn" id="rt-export-obj"  type="button" title="Save the loaded geometry as OBJ"
         aria-label="Export OBJ geometry" hidden>
         <span class="rt-ico" aria-hidden="true">&#8659;</span> OBJ</button>
@@ -704,6 +751,11 @@
         <details class="mm-fullread">
           <summary>full read &middot; the no-vision view</summary>
           <p class="mm-long" id="mm-long">Render a frame and the long-form read appears here: palette with proportions, the 3&times;3 spatial grid, edge directions, and symmetry.</p>
+          <p class="mm-shapes" id="mm-shapes" hidden aria-label="Salient forms: hue, centre, area share"></p>
+          <div class="mm-readmode" id="mm-readmode" role="group" aria-label="Luminance render mode">
+            <button type="button" class="chip active" id="mm-mode-ascii" data-read-mode="ascii" aria-pressed="true">ascii</button>
+            <button type="button" class="chip" id="mm-mode-braille" data-read-mode="braille" aria-pressed="false" hidden>braille</button>
+          </div>
           <pre class="mm-ascii" id="mm-ascii" aria-label="ASCII luminance render of the current frame"></pre>
           <p class="mm-fullread-note">This is the same structured read the model receives: detailed enough to reconstruct the frame without seeing it.</p>
         </details>
@@ -714,7 +766,8 @@
            representation, per-channel meters, a motion sparkline, dominant-colour swatches, and (when
            the source has sound) audio level / spectrum / pitch. Streams via a throttled rAF loop. -->
       <section class="panel measurimeter" id="sc-meters" aria-label="Measured perception channels">
-        <h2>Measured frame <span class="mm-sub">color, motion, structure, audio, source</span></h2>
+        <h2>Measured frame <span class="mm-sub">color, motion, structure, audio, source</span>
+          <span class="mm-fidelity" id="mm-fidelity" hidden></span></h2>
         <div class="mm-grid">
           <div class="mm-col mm-col-repr">
             <div class="mm-clab" id="mm-lab-mosaic">colour grid <span class="mm-hint">box-averaged, faithful downscale</span></div>
@@ -867,7 +920,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js"></script>
-<script type="module" src="system/studio.js?v=20260709n"></script>
+<script type="module" src="system/studio.js?v=20260710a"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

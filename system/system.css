@@ -863,6 +863,50 @@ body.world-3 .bar .rt{color:#cdd6cf}
    A live instrument panel of every channel the tooling feeds the model: the faithful n×n
    representation mosaic, per-channel meters with bars, a motion sparkline, dominant-colour
    swatches, and audio level/spectrum/pitch. Meters stream via a throttled rAF loop. */
+/* ── the poster workshop panel ─────────────────────────────────────────── */
+.poster-panel{display:flex;flex-direction:column;gap:1rem;max-width:46rem}
+.poster-artchips{max-height:9.5rem;overflow-y:auto;padding-right:.2rem}
+.poster-artrow{display:flex;gap:.4rem;margin-top:.4rem}
+.poster-seed{flex:1;min-width:0;font-family:var(--mono);font-size:.74rem;color:var(--bone);
+  background:color-mix(in oklab, var(--void) 86%, black);border:1px solid var(--hairline);
+  border-radius:6px;padding:.5em .7em;letter-spacing:.08em}
+.poster-seed:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+.poster-veil-label{display:block;margin-top:.5rem}
+.poster-block{border:1px solid var(--hairline);border-radius:8px;padding:.55rem .7rem;margin-top:.5rem}
+.poster-block>summary{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);cursor:pointer;min-height:32px;display:flex;align-items:center}
+.poster-text{width:100%;resize:vertical;font-family:var(--body);font-size:.9rem;color:var(--bone);
+  background:color-mix(in oklab, var(--void) 84%, black);border:1px solid var(--hairline);
+  border-radius:6px;padding:.5em .6em;margin:.4rem 0}
+.poster-text:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+.poster-mini-label{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muted);margin:.55rem 0 .25rem}
+.poster-cellpick{display:grid;grid-template-columns:repeat(3,1.6rem);gap:.25rem}
+.poster-cell{width:1.6rem;height:1.6rem;border:1px solid var(--hairline);border-radius:4px;
+  background:transparent;cursor:pointer;transition:border-color .15s,background .15s}
+.poster-cell:hover{border-color:var(--orange)}
+.poster-cell[aria-pressed="true"]{background:color-mix(in oklab, var(--orange) 34%, transparent);border-color:var(--orange)}
+.poster-cell:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+.poster-swatches{display:flex;flex-wrap:wrap;gap:.3rem}
+.poster-swatch{width:1.55rem;height:1.55rem;border-radius:50%;border:2px solid transparent;cursor:pointer}
+.poster-swatch[aria-pressed="true"]{border-color:var(--bone)}
+.poster-swatch:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+.poster-actions{margin-top:.4rem}
+.poster-status{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:var(--orange);min-height:1.1em;margin:.2rem 0}
+.poster-critique{display:flex;flex-direction:column;gap:.45rem}
+.poster-finding{display:flex;gap:.55rem;align-items:baseline;border:1px solid var(--hairline-2, rgba(160,125,119,.2));
+  border-radius:8px;padding:.5rem .65rem;font-size:.82rem;line-height:1.5;color:var(--bone)}
+.poster-flevel{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;flex:none}
+.poster-fix .poster-flevel{color:var(--ember)}
+.poster-note .poster-flevel{color:var(--gold, #d9b44a)}
+.poster-praise .poster-flevel{color:var(--verified, #9fd6c2)}
+.poster-ftext{flex:1}
+.poster-apply{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--orange);background:transparent;border:1px solid var(--orange);border-radius:999px;
+  padding:.3em .8em;cursor:pointer;flex:none;min-height:30px}
+.poster-apply:hover{background:color-mix(in oklab, var(--orange) 18%, transparent)}
+.poster-apply:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+
 /* the full read: long-form perception + ASCII luminance render (no-vision view) */
 .mm-fullread{margin-top:.6rem;border-top:1px solid var(--hairline-2, rgba(160,125,119,.18));padding-top:.5rem}
 .mm-fullread>summary{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
@@ -3130,3 +3174,41 @@ section.mv > h2::after,
   touch-action:manipulation;
 }
 .site-nav .sn-more-list a{display:flex}
+
+/* ─── studio · advanced perception surfaces (lane D) ──────────────────────────
+   Full-read render-mode chips (ascii / braille), the salient-forms line, the
+   reconstruction-fidelity badge, and the plot-options popover on the toolbar.
+   All static: no animation, honors reduced motion by construction. */
+.mm-readmode{display:flex;gap:.35rem;margin:.55rem 0 0}
+.mm-shapes{font-family:var(--mono);font-size:.62rem;letter-spacing:.04em;
+  color:var(--bone);line-height:1.6;margin:.2rem 0 0;overflow-wrap:anywhere}
+.mm-shapes[hidden]{display:none}
+.mm-fidelity{font-family:var(--mono);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);border:1px solid var(--hairline);border-radius:999px;padding:.18em .6em;
+  margin-left:.6rem;vertical-align:middle;white-space:nowrap;display:inline-block}
+.mm-fidelity.is-verified{color:var(--verified);
+  border-color:color-mix(in oklab, var(--verified) 55%, transparent)}
+.mm-fidelity[hidden]{display:none}
+
+/* the plot desk: a details/summary popover on the render toolbar */
+.rt-plot{position:relative;display:inline-flex}
+.rt-plot>summary{list-style:none}
+.rt-plot>summary::-webkit-details-marker{display:none}
+.rt-plot>summary::after{content:"\25BE";margin-left:.35em;opacity:.7}
+.rt-plot[open]>summary::after{content:"\25B4"}
+.rt-plot-pop{position:absolute;bottom:calc(100% + .5rem);right:0;z-index:70;min-width:16.5rem;
+  display:flex;flex-direction:column;gap:.55rem;padding:.75rem .85rem;
+  border:1px solid var(--hairline);border-radius:10px;
+  background:var(--raised, rgba(20,10,26,.97));
+  box-shadow:0 14px 44px rgba(0,0,0,.55)}
+.rt-plot-row{display:flex;align-items:center;gap:.5rem}
+.rt-plot-lab{font-family:var(--mono);font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);flex:none;width:3.6rem}
+.rt-plot-chips{display:flex;gap:.3rem;flex-wrap:wrap}
+.rt-plot-actions{display:flex;justify-content:flex-end;margin-top:.15rem}
+.rt-plot-note{font-family:var(--mono);font-size:.56rem;letter-spacing:.04em;
+  color:var(--muted);line-height:1.6;margin:0;max-width:26rem}
+@media (max-width:640px){
+  /* narrow viewports: keep the popover inside the screen (the toolbar wraps) */
+  .rt-plot-pop{right:auto;left:50%;transform:translateX(-50%);min-width:15rem;max-width:92vw}
+}
