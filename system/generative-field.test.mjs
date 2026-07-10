@@ -296,7 +296,8 @@ test("neural layers are registered and render deterministically per seed", () =>
   const names = specimenLayerNames();
   assert.ok(names.includes("neural-field"), "neural-field must be registered");
   assert.ok(names.includes("neural-sdf"), "neural-sdf must be registered");
-  for (const layer of ["neural-field", "neural-sdf"]) {
+  assert.ok(names.includes("neural-voxel"), "neural-voxel must be registered");
+  for (const layer of ["neural-field", "neural-sdf", "neural-voxel"]) {
     const a = renderLog(`neu-${layer}`, [layer], 240, 160).log;
     const b = renderLog(`neu-${layer}`, [layer], 240, 160).log;
     assert.ok(a.length > 30, `${layer} should draw (got ${a.length} ops)`);

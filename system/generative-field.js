@@ -7,6 +7,7 @@
 // neural signed-distance surface). No copied inspiration images, no remote
 // textures, and no pretrained weights: the seed derives every network.
 import { buildCppn, buildNeuralSdf } from "./neural.js";
+import { voxelizeSdf, isoOrder } from "./voxel.js";
 let mounted = false;
 let rafId = 0;
 const pulses = [];
@@ -2050,13 +2051,23 @@ function drawNeuralSdf(ctx, width, height, tick, seed, palette) {
   ctx.fillStyle = "rgba(4,5,12,1)";
   ctx.fillRect(0, 0, width, height);
 
-  // March at a capped resolution regardless of canvas size, then draw filled
-  // pixels as small rects scaled to the canvas. Keeps a 2000px plate as cheap
-  // as a strip.
-  const RW = Math.min(240, Math.max(48, Math.round(width / 6)));
-  const RH = Math.max(32, Math.round(RW * (height / Math.max(1, width))));
+  // March into an offscreen buffer at a capped resolution, then let the browser
+  // bilinearly upscale it to the canvas - smooth anti-aliased edges instead of
+  // hard rects, and a 2000px plate stays as cheap as a strip. In a DOM-less
+  // context (tests) fall back to fillRect so the code path still exercises.
+  const RW = Math.min(360, Math.max(64, Math.round(width / 4)));
+  const RH = Math.max(48, Math.round(RW * (height / Math.max(1, width))));
   const px = width / RW, py = height / RH;
   const aspect = RW / RH;
+  const useBuffer = typeof document !== "undefined" && typeof document.createElement === "function";
+  let offscreen = null, octx = null, imgData = null, buf = null;
+  if (useBuffer) {
+    offscreen = document.createElement("canvas");
+    offscreen.width = RW; offscreen.height = RH;
+    octx = offscreen.getContext("2d");
+    imgData = octx.createImageData(RW, RH);
+    buf = imgData.data;
+  }
   // Orbit the camera around the origin (seed-varied 3/4 view) and always look
   // AT the object, so it stays framed regardless of yaw. Right/up basis from a
   // look-at, so ray dirs sweep a centred field of view.
@@ -2103,17 +2114,123 @@ function drawNeuralSdf(ctx, width, height, tick, seed, palette) {
       const ny = sdf.dist(x, y + eps, z) - sdf.dist(x, y - eps, z);
       const nz = sdf.dist(x, y, z + eps) - sdf.dist(x, y, z - eps);
       const nl = Math.hypot(nx, ny, nz) || 1;
-      const lam = Math.max(0.08, (nx / nl) * light[0] + (ny / nl) * light[1] + (nz / nl) * light[2]);
+      const nX = nx / nl, nY = ny / nl, nZ = nz / nl;
+      const lam = Math.max(0.08, nX * light[0] + nY * light[1] + nZ * light[2]);
       const rim = Math.pow(1 - Math.max(0, -(dx * nx + dy * ny + dz * nz) / nl), 2.5);
+      // Cheap ambient occlusion: step out along the normal and measure how much
+      // the field lags behind free space - crevices darken, tips stay bright.
+      let ao = 0;
+      for (let a = 1; a <= 3; a += 1) {
+        const dd = a * 0.06;
+        ao += (dd - Math.max(0, sdf.dist(x + nX * dd, y + nY * dd, z + nZ * dd))) / dd;
+      }
+      ao = clamp(1 - ao / 3 * 0.7, 0.35, 1);
       // Colour by surface normal direction through the palette, lit by lambert.
-      const w0 = (nx / nl + 1) * 0.5, w1 = (ny / nl + 1) * 0.5, w2 = (nz / nl + 1) * 0.5;
+      const w0 = (nX + 1) * 0.5, w1 = (nY + 1) * 0.5, w2 = (nZ + 1) * 0.5;
       const sum = w0 + w1 + w2 + 1e-4;
       const cr = (tint[0][0] * w0 + tint[1][0] * w1 + tint[2][0] * w2) / sum;
       const cg = (tint[0][1] * w0 + tint[1][1] * w1 + tint[2][1] * w2) / sum;
       const cb = (tint[0][2] * w0 + tint[1][2] * w1 + tint[2][2] * w2) / sum;
-      const shade = 0.22 + lam * 0.78;
-      ctx.fillStyle = `rgb(${Math.round(Math.min(255, cr * shade + rim * 200))},${Math.round(Math.min(255, cg * shade + rim * 210))},${Math.round(Math.min(255, cb * shade + rim * 230))})`;
-      ctx.fillRect(i * px, j * py, px + 1, py + 1);
+      const shade = (0.2 + lam * 0.8) * ao;
+      // A restrained rim sheen (not a white blowout on thin grazing features).
+      const R = Math.min(255, cr * shade + rim * ao * 70);
+      const G = Math.min(255, cg * shade + rim * ao * 80);
+      const B = Math.min(255, cb * shade + rim * ao * 96);
+      if (buf) {
+        const o = (j * RW + i) * 4;
+        buf[o] = R; buf[o + 1] = G; buf[o + 2] = B; buf[o + 3] = 255;
+      } else {
+        ctx.fillStyle = `rgb(${Math.round(R)},${Math.round(G)},${Math.round(B)})`;
+        ctx.fillRect(i * px, j * py, px + 1, py + 1);
+      }
+    }
+  }
+  if (buf) {
+    octx.putImageData(imgData, 0, 0);
+    const prevSmooth = ctx.imageSmoothingEnabled;
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(offscreen, 0, 0, width, height);
+    ctx.imageSmoothingEnabled = prevSmooth;
+  }
+  ctx.restore();
+}
+
+// The neural solid, voxelized. Sample the seed's neural SDF onto a cubic grid,
+// then paint the surface voxels as isometric cubes (back-to-front, three faces
+// each, shaded so the form reads as solid). A material becomes buildable blocks
+// - the same field the raymarcher traces, now a MagicaVoxel-style model that
+// also exports to voxel OBJ.
+function drawNeuralVoxel(ctx, width, height, tick, seed, palette) {
+  const sdf = buildNeuralSdf(seed);
+  const res = 46;
+  const vox = voxelizeSdf(sdf.dist, res, sdf.bound);
+  const order = isoOrder(vox);
+  const tint = (palette && palette.fluid) || [[80, 196, 185], [167, 115, 255], [239, 171, 48]];
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgba(5,6,13,1)";
+  ctx.fillRect(0, 0, width, height);
+
+  // Fit the isometric footprint to the frame. Iso span is ~ (nx+ny) wide and
+  // (nx+ny)/2 + nz tall in unit cubes; pick a cube size that fits with margin.
+  const spanX = (vox.nx + vox.ny);
+  const spanY = (vox.nx + vox.ny) * 0.5 + vox.nz;
+  const unit = Math.min(width / (spanX * 1.15), height / (spanY * 1.15));
+  const ox = width / 2;
+  const oy = height / 2 + (vox.nz * unit) * 0.28;
+  const cx = vox.nx / 2, cy = vox.ny / 2, cz = vox.nz / 2;
+
+  const shadeColor = (v, mul) => {
+    // colour by field depth (how deep inside) through the palette, times a
+    // per-face light multiplier.
+    const t = clamp((v.z / vox.nz), 0, 1);
+    const w0 = 1 - t, w1 = 1 - Math.abs(t - 0.5) * 2, w2 = t;
+    const sum = w0 + w1 + w2 + 1e-4;
+    const r = (tint[0][0] * w0 + tint[1][0] * w1 + tint[2][0] * w2) / sum;
+    const g = (tint[0][1] * w0 + tint[1][1] * w1 + tint[2][1] * w2) / sum;
+    const b = (tint[0][2] * w0 + tint[1][2] * w1 + tint[2][2] * w2) / sum;
+    return `rgb(${Math.round(clamp(r * mul, 0, 255))},${Math.round(clamp(g * mul, 0, 255))},${Math.round(clamp(b * mul, 0, 255))})`;
+  };
+  const project = (gx, gy, gz) => [
+    ox + (gx - cx - (gy - cy)) * unit,
+    oy + ((gx - cx) + (gy - cy)) * unit * 0.5 - (gz - cz) * unit,
+  ];
+
+  for (const v of order) {
+    const t = project(v.x, v.y, v.z + 1);        // top-front corner
+    const uW = unit, uH = unit * 0.5;
+    // top face (rhombus)
+    if (v.top) {
+      ctx.fillStyle = shadeColor(v, 1.15);
+      ctx.beginPath();
+      ctx.moveTo(t[0], t[1]);
+      ctx.lineTo(t[0] + uW, t[1] + uH);
+      ctx.lineTo(t[0], t[1] + unit);
+      ctx.lineTo(t[0] - uW, t[1] + uH);
+      ctx.closePath();
+      ctx.fill();
+    }
+    // left face (down-left column)
+    if (v.left) {
+      ctx.fillStyle = shadeColor(v, 0.62);
+      ctx.beginPath();
+      ctx.moveTo(t[0] - uW, t[1] + uH);
+      ctx.lineTo(t[0], t[1] + unit);
+      ctx.lineTo(t[0], t[1] + unit + unit);
+      ctx.lineTo(t[0] - uW, t[1] + uH + unit);
+      ctx.closePath();
+      ctx.fill();
+    }
+    // right face
+    if (v.right) {
+      ctx.fillStyle = shadeColor(v, 0.85);
+      ctx.beginPath();
+      ctx.moveTo(t[0] + uW, t[1] + uH);
+      ctx.lineTo(t[0], t[1] + unit);
+      ctx.lineTo(t[0], t[1] + unit + unit);
+      ctx.lineTo(t[0] + uW, t[1] + uH + unit);
+      ctx.closePath();
+      ctx.fill();
     }
   }
   ctx.restore();
@@ -2160,6 +2277,7 @@ const SPECIMEN_LAYERS = {
   "showpiece-weave": drawShowpieceWeave,
   "neural-field": drawNeuralField,
   "neural-sdf": drawNeuralSdf,
+  "neural-voxel": drawNeuralVoxel,
 };
 const SPECIMEN_DEFAULT_LAYERS = ["orbit", "contour"];
 
