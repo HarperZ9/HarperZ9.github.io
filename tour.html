@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Tour &mdash; watch the workshop work &middot; Zain Dana Harper</title>
+<meta name="description" content="A recorded, step-by-step walk through the Project Telos creative pipeline: mint a generative plate, lock and reroll instruments, watch it plotted stroke by stroke, set type with a model that provably sees the frame, and leave with plotter-ready files.">
+<link rel="canonical" href="https://harperz9.github.io/tour.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="The Tour: watch the workshop work">
+<meta property="og:description" content="Eight recorded steps: from a plate drawn in your browser to a poster critiqued by a model that provably sees it, to files a pen plotter can hold.">
+<meta property="og:url" content="https://harperz9.github.io/tour.html">
+<meta property="og:image" content="https://harperz9.github.io/media/tour/06-workshop.jpeg">
+<meta name="color-scheme" content="dark">
+<link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="system/system.css?v=20260710a">
+<style>
+  /* the player: one recorded frame at a time, art-mag rhythm */
+  .tour-player{max-width:min(94vw,1180px);margin:0 auto clamp(2rem,5vw,3.4rem)}
+  .tour-stage{position:relative;border:1px solid var(--hairline);border-radius:12px;overflow:hidden;
+    background:#0b0812}
+  .tour-stage img{display:block;width:100%;height:auto;opacity:1;transition:opacity .35s ease}
+  .tour-stage img.is-switching{opacity:0}
+  .tour-capbar{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;
+    padding:.85rem .2rem .2rem}
+  .tour-step-no{font-family:var(--mono);font-size:.66rem;letter-spacing:.3em;color:var(--orange);flex:none}
+  .tour-step-title{font-family:var(--display);font-weight:700;font-size:1.05rem;color:var(--bone)}
+  .tour-step-line{font-family:var(--body);font-size:.9rem;line-height:1.55;color:var(--muted);flex-basis:100%}
+  .tour-controls{display:flex;align-items:center;gap:.55rem;margin-top:.6rem;flex-wrap:wrap}
+  .tour-btn{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);background:transparent;border:1px solid var(--hairline);border-radius:999px;
+    padding:.5em 1.05em;cursor:pointer;min-height:36px;transition:color .15s,border-color .15s}
+  .tour-btn:hover{color:var(--bone);border-color:var(--orange)}
+  .tour-btn:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+  .tour-btn[aria-pressed="true"]{color:var(--orange);border-color:var(--orange)}
+  .tour-dots{display:flex;gap:.4rem;margin-left:auto}
+  .tour-dot{width:.62rem;height:.62rem;border-radius:50%;border:1px solid var(--hairline);
+    background:transparent;cursor:pointer;padding:0;min-height:0}
+  .tour-dot[aria-current="step"]{background:var(--orange);border-color:var(--orange)}
+  .tour-dot:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+  /* the printed programme: every step, art-mag list */
+  .tour-steps{margin-top:clamp(2rem,5vw,3rem);display:flex;flex-direction:column;gap:clamp(1.6rem,4vw,2.6rem)}
+  .tour-card{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(1rem,3vw,2rem);
+    align-items:center}
+  .tour-card:nth-child(even){direction:rtl}
+  .tour-card:nth-child(even)>*{direction:ltr}
+  .tour-card img{width:100%;height:auto;border:1px solid var(--hairline);border-radius:10px;display:block}
+  .tour-card h3{font-family:var(--display);font-weight:700;font-size:clamp(1.2rem,2.4vw,1.7rem);
+    color:var(--bone);margin:0 0 .5rem}
+  .tour-card p{font-family:var(--body);font-size:.95rem;line-height:1.65;color:var(--muted);margin:0 0 .7rem}
+  .tour-card a.tour-try{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--orange);text-decoration:none;border-bottom:1px solid color-mix(in oklab, var(--orange) 45%, transparent);
+    padding-bottom:2px}
+  .tour-card a.tour-try:hover{border-color:var(--orange)}
+  .tour-card .tour-step-no{display:block;margin-bottom:.4rem}
+  @media (max-width:760px){.tour-card{grid-template-columns:1fr}.tour-card:nth-child(even){direction:ltr}}
+  .tour-cta{margin-top:clamp(2.4rem,6vw,4rem);text-align:center}
+  .tour-cta .pull{font-family:var(--display);font-weight:800;font-size:clamp(1.5rem,3.4vw,2.4rem);
+    color:var(--bone);margin-bottom:1rem}
+  .tour-cta-row{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+</style>
+</head>
+<body class="inner-clean frame-compact">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="gallery.html">Gallery</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="demo-index.html">Demos</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260710a"></script>
+
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">The tour &middot; recorded</span></div>
+  <div class="mid">
+    <h1>Watch the workshop <span class="g">work.</span></h1>
+    <p class="lede">Eight recorded steps, captured from the live site exactly as you will find it. A plate drawn the moment you arrive. Instruments you can lock and reroll. A pen replay you can watch. A collaborator that reads your poster and proves what it sees. Files a machine can hold.</p>
+  </div>
+  <div class="seal">recorded from the live pipeline &middot; every frame reproducible &middot; nothing staged</div>
+</div>
+
+<main id="main">
+
+<section class="mv" id="player" aria-labelledby="player-h">
+  <h2 id="player-h" class="reveal">The recording.</h2>
+  <div class="tour-player reveal">
+    <div class="tour-stage">
+      <img id="tour-frame" src="media/tour/01-todays-plate.jpeg" alt="Step 1: the gallery opens with today's plate, drawn fresh in the browser." width="1440" height="900">
+    </div>
+    <div class="tour-capbar">
+      <span class="tour-step-no" id="tour-no">STEP 01 / 08</span>
+      <span class="tour-step-title" id="tour-title">A new plate, every day</span>
+      <span class="tour-step-line" id="tour-line">The gallery opens with today&rsquo;s plate, drawn fresh in your browser the moment you arrive. Dated, seeded, reproducible. Nothing is fetched; everything is performed.</span>
+    </div>
+    <div class="tour-controls">
+      <button type="button" class="tour-btn" id="tour-prev" aria-label="Previous step">&larr; prev</button>
+      <button type="button" class="tour-btn" id="tour-play" aria-pressed="true" aria-label="Pause the automatic tour">pause</button>
+      <button type="button" class="tour-btn" id="tour-next" aria-label="Next step">next &rarr;</button>
+      <span class="tour-dots" id="tour-dots" role="tablist" aria-label="Tour steps"></span>
+    </div>
+  </div>
+</section>
+
+<section class="mv" id="programme" aria-labelledby="programme-h">
+  <h2 id="programme-h" class="reveal">The programme, step by step.</h2>
+  <div class="tour-steps" id="tour-steps"><!-- built by the script below from TOUR --></div>
+</section>
+
+<section class="mv tour-cta" aria-label="Start now">
+  <p class="pull reveal">Your first plate is thirty seconds away.</p>
+  <div class="tour-cta-row reveal">
+    <a class="btn solid" href="gallery.html#printdesk">Open the print desk &rarr;</a>
+    <a class="btn ghost" href="studio.html?source=poster">Open the workshop &rarr;</a>
+    <a class="btn ghost" href="gallery.html">See the exhibition &rarr;</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Every frame above was captured from this site running live. Repeat any step yourself; the seeds are in the captions and the engine is <span translate="no">system/generative-field.js</span>.</p>
+</footer>
+
+<script type="module">
+const TOUR = [
+  { img: "media/tour/01-todays-plate.jpeg", title: "A new plate, every day",
+    line: "The gallery opens with today's plate, drawn fresh in your browser the moment you arrive. Dated, seeded, reproducible. Nothing is fetched; everything is performed.",
+    alt: "The gallery's exhibition opening on today's plate, a full-bleed generative artwork.",
+    try: "gallery.html", tryLabel: "see today's plate" },
+  { img: "media/tour/02-the-desk.jpeg", title: "Name a seed, mix the instruments",
+    line: "Type any word - here, first-light. Pick up to three of thirty-eight instruments. The engine draws your plate in one pass, and that name reproduces it on any machine, forever.",
+    alt: "The print desk with the seed first-light typed in and a veil-and-aurora plate drawn below.",
+    try: "gallery.html?seed=first-light&layers=showpiece-veil,aurora-leak#printdesk", tryLabel: "draw this exact plate" },
+  { img: "media/tour/03-lock-reroll.jpeg", title: "Keep what you love",
+    line: "Lock an instrument and reroll the rest. The status says exactly what happened: kept aurora-leak, rolled pixel-sort-ruin. The dice never take what you have chosen.",
+    alt: "The desk after a reroll, the lock icon lit on one instrument and the status reporting what was kept.",
+    try: "gallery.html#printdesk", tryLabel: "try lock and reroll" },
+  { img: "media/tour/04-plot-replay.jpeg", title: "Watch it plot",
+    line: "One click converts the plate to pen strokes and replays them in drawing order - the exact path a plotter's pen would travel, ink following darkness.",
+    alt: "The plate mid-plot, half-drawn in pen strokes as the replay runs.",
+    try: "gallery.html#printdesk", tryLabel: "plot a plate" },
+  { img: "media/tour/05-plot-complete.jpeg", title: "Take the file a machine can hold",
+    line: "Seven hundred strokes, single-stroke SVG, travel-ordered, plotter-ready. The download link appears the moment the pen lifts.",
+    alt: "The finished plot with the status line offering the plotter-ready SVG download.",
+    try: "gallery.html#printdesk", tryLabel: "get the SVG" },
+  { img: "media/tour/06-workshop.jpeg", title: "Set type with a collaborator",
+    line: "The workshop sets your words in the site's own generated faces over your plate. The model critiques with numbers - contrast ratios, busy cells, balance - and its suggestions are one click from taken.",
+    alt: "The poster workshop: the Poster source active, the plate as poster art, and the perception rail reading the frame.",
+    try: "studio.html?source=poster", tryLabel: "open the workshop" },
+  { img: "media/tour/07-novision.jpeg", title: "It sees what you see. Provably.",
+    line: "The full read: a braille render, the shape inventory, and the reconstruction score - the packet rebuilds the frame from its own numbers and reports the round-trip. Sixty-two of sixty-four bits agree.",
+    alt: "The Measured Frame panel showing the braille luminance render and the reconstruction fidelity badge.",
+    try: "studio.html", tryLabel: "read a frame" },
+  { img: "media/tour/08-plot-options.jpeg", title: "Every option on the table",
+    line: "Flow, hatch, or contour. One pen or three, separated from the artwork's own palette. A4, A5, or square. SVG for the studio, G-code for the machine shop.",
+    alt: "The plot options popover open in the Studio toolbar: style, pens, paper, and format controls.",
+    try: "studio.html", tryLabel: "plot from the Studio" },
+];
+
+const frame = document.getElementById("tour-frame");
+const no = document.getElementById("tour-no");
+const title = document.getElementById("tour-title");
+const line = document.getElementById("tour-line");
+const dots = document.getElementById("tour-dots");
+const playBtn = document.getElementById("tour-play");
+let i = 0;
+let timer = null;
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function show(n, user = false) {
+  i = (n + TOUR.length) % TOUR.length;
+  const step = TOUR[i];
+  frame.classList.add("is-switching");
+  setTimeout(() => {
+    frame.src = step.img;
+    frame.alt = "Step " + (i + 1) + ": " + step.alt;
+    frame.classList.remove("is-switching");
+  }, reduce ? 0 : 180);
+  no.textContent = "STEP " + String(i + 1).padStart(2, "0") + " / 08";
+  title.textContent = step.title;
+  line.textContent = step.line;
+  [...dots.children].forEach((d, di) => d.setAttribute("aria-current", di === i ? "step" : "false"));
+  if (user) stop();
+}
+
+function start() {
+  if (reduce) return; // reduced motion: manual stepping only
+  stop();
+  timer = setInterval(() => show(i + 1), 5200);
+  playBtn.textContent = "pause";
+  playBtn.setAttribute("aria-pressed", "true");
+  playBtn.setAttribute("aria-label", "Pause the automatic tour");
+}
+function stop() {
+  if (timer) clearInterval(timer);
+  timer = null;
+  playBtn.textContent = "play";
+  playBtn.setAttribute("aria-pressed", "false");
+  playBtn.setAttribute("aria-label", "Play the tour automatically");
+}
+
+TOUR.forEach((_, di) => {
+  const d = document.createElement("button");
+  d.type = "button";
+  d.className = "tour-dot";
+  d.setAttribute("role", "tab");
+  d.setAttribute("aria-label", "Go to step " + (di + 1));
+  d.setAttribute("aria-current", di === 0 ? "step" : "false");
+  d.addEventListener("click", () => show(di, true));
+  dots.appendChild(d);
+});
+document.getElementById("tour-prev").addEventListener("click", () => show(i - 1, true));
+document.getElementById("tour-next").addEventListener("click", () => show(i + 1, true));
+playBtn.addEventListener("click", () => (timer ? stop() : start()));
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight") show(i + 1, true);
+  if (e.key === "ArrowLeft") show(i - 1, true);
+});
+document.addEventListener("visibilitychange", () => { if (document.hidden) stop(); });
+if (!reduce) start(); else stop();
+
+// The programme: the same steps as a readable, linkable spread.
+const host = document.getElementById("tour-steps");
+TOUR.forEach((step, di) => {
+  const card = document.createElement("article");
+  card.className = "tour-card reveal";
+  const img = document.createElement("img");
+  img.src = step.img;
+  img.alt = "Step " + (di + 1) + ": " + step.alt;
+  img.loading = "lazy";
+  img.width = 1440; img.height = 900;
+  const body = document.createElement("div");
+  const noEl = document.createElement("span");
+  noEl.className = "tour-step-no";
+  noEl.textContent = "STEP " + String(di + 1).padStart(2, "0");
+  const h = document.createElement("h3");
+  h.textContent = step.title;
+  const p = document.createElement("p");
+  p.textContent = step.line;
+  const a = document.createElement("a");
+  a.className = "tour-try";
+  a.href = step.try;
+  a.textContent = step.tryLabel + " →";
+  body.append(noEl, h, p, a);
+  card.append(img, body);
+  host.appendChild(card);
+});
+</script>
+<script src="system/reveal.js?v=20260625a" defer></script>
+</body>
+</html>
