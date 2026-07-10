@@ -863,6 +863,18 @@ body.world-3 .bar .rt{color:#cdd6cf}
    A live instrument panel of every channel the tooling feeds the model: the faithful n×n
    representation mosaic, per-channel meters with bars, a motion sparkline, dominant-colour
    swatches, and audio level/spectrum/pitch. Meters stream via a throttled rAF loop. */
+/* the full read: long-form perception + ASCII luminance render (no-vision view) */
+.mm-fullread{margin-top:.6rem;border-top:1px solid var(--hairline-2, rgba(160,125,119,.18));padding-top:.5rem}
+.mm-fullread>summary{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);cursor:pointer;list-style:none;min-height:28px;display:flex;align-items:center}
+.mm-fullread>summary::-webkit-details-marker{display:none}
+.mm-fullread>summary::after{content:"+";margin-left:.4em;color:var(--orange)}
+.mm-fullread[open]>summary::after{content:"-"}
+.mm-long{font-family:var(--body);font-size:.82rem;line-height:1.6;color:var(--bone);margin:.5rem 0}
+.mm-ascii{font-family:var(--mono);font-size:.42rem;line-height:1.05;letter-spacing:.04em;color:var(--verified, #9fd6c2);
+  background:color-mix(in oklab, var(--void) 84%, black);border:1px solid var(--hairline);border-radius:6px;
+  padding:.6rem;overflow-x:auto;margin:.4rem 0;user-select:all}
+.mm-fullread-note{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;color:var(--muted);line-height:1.6;margin:.3rem 0 0}
 .mm-live{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;
   text-transform:uppercase;color:var(--verified);margin-left:.6rem;vertical-align:middle;
   display:inline-flex;align-items:center;gap:.32em}
