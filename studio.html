@@ -54,6 +54,7 @@
         <button type="button" role="tab" data-source="fractal3d" aria-selected="false" aria-controls="src-fractal3d" tabindex="-1">3D Fractal</button>
         <button type="button" role="tab" data-source="ndim"      aria-selected="false" aria-controls="src-ndim"      tabindex="-1">Dimensions</button>
         <button type="button" role="tab" data-source="poster"    aria-selected="false" aria-controls="src-poster"    tabindex="-1">Poster</button>
+        <button type="button" role="tab" data-source="neural"    aria-selected="false" aria-controls="src-neural"    tabindex="-1">Living neural</button>
       </div>
       <div class="source-group" role="presentation">
         <span class="source-group-label" aria-hidden="true">Bring</span>
@@ -108,6 +109,23 @@
       <section class="src-block" id="src-poster" role="tabpanel" aria-label="Poster workshop controls" hidden>
         <p class="transform-note">The typography workshop: set type in the site's own generated faces over any instrument's art, and the critique reads the poster through the same measured packet the model receives - every note carries its numbers.</p>
         <div id="poster-mount"></div>
+      </section>
+      <section class="src-block" id="src-neural" role="tabpanel" aria-label="Living neural controls" hidden>
+        <p class="transform-note">The seed's neural instruments, alive. The same network the gallery freezes into a plate runs here under a live clock, and the perception panel reads the motion it makes. Reduced-motion holds a single still frame.</p>
+        <div class="at-group">
+          <span class="at-glab">Instrument</span>
+          <div class="at-chips" id="neural-instruments" role="group" aria-label="Living neural instrument">
+            <button type="button" class="at-chip" data-neural-instrument="field" aria-pressed="true">Field</button>
+            <button type="button" class="at-chip" data-neural-instrument="solid" aria-pressed="false">Solid</button>
+          </div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Seed</span>
+          <div class="poster-artrow">
+            <input type="text" class="poster-seed" id="neural-seed" maxlength="40" value="living" aria-label="Neural seed" />
+            <button type="button" class="at-mini" id="neural-reseed">reseed</button>
+          </div>
+        </div>
       </section>
       <section class="src-block" id="src-atelier" role="tabpanel" aria-label="Atelier controls">
         <div class="atelier studio-atelier" id="atelier">

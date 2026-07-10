@@ -87,6 +87,14 @@ const loadDiscovery = lazyLoader(() => import("./discovery/studio-discovery.js")
 let _showcase = null;
 const loadShowcase = lazyLoader(() => import("./showcase/first-integral.js?v=20260701a"), m => { _showcase = m; });
 
+// Living neural source: the seed's neural instruments, animated on the shared
+// canvas and measured by the perception loop. Static under reduced motion.
+let _neural = null;
+const loadNeural = lazyLoader(() => import("./studio-neural.js"), m => { _neural = m; });
+let _neuralSeed = "living";
+let _neuralInstrument = "field";
+let _neuralStatic = false;   // true when reduced motion holds a single frame
+
 // BYO media: pixel effects, mesh transforms, universal import/export, local-model adapter.
 let _effects = null;
 const loadEffects = lazyLoader(() => import("./studio-effects.js"), m => { _effects = m; });
@@ -379,6 +387,7 @@ const SOURCES = {
   discovery: { block: "src-discovery", mode: "generate" },
   showcase:  { block: "src-showcase",  mode: "generate" },
   poster:    { block: "src-poster",    mode: "generate" },
+  neural:    { block: "src-neural",    mode: "generate" },
 };
 
 // ── The poster workshop (lazy). Mounted once on first entry; the panel owns
@@ -428,6 +437,7 @@ function setSource(next) {
     // so there is nothing to stop (and an in-flight start is cancelled by the epoch bump above).
     if (_discovery) { try { _discovery.stopDiscovery(); } catch (_) {} }
     if (_showcase)  { try { _showcase.stopShowcase(); } catch (_) {} }
+    if (_neural)    { try { _neural.stopNeural(); } catch (_) {} }
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
@@ -483,6 +493,20 @@ function setSource(next) {
       startMeterLoop();
     }).catch(err => { say("model", "The showcase failed to load: " + (err && err.message ? err.message : String(err))); });
   }
+  // Living neural: load the module on first entry, start the animated instrument on
+  // the shared canvas, then arm the meter loop so the perception panel reads it. The
+  // module reports whether it is animating (false under reduced motion) so the loop
+  // can idle on a held still frame.
+  if (next === "neural") {
+    loadNeural().then(mod => {
+      if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
+      try {
+        const res = mod.startNeural($("studio-canvas"), { seed: _neuralSeed, instrument: _neuralInstrument });
+        _neuralStatic = !(res && res.animating);
+      } catch (_) {}
+      startMeterLoop();
+    }).catch(err => { say("model", "The living neural instrument failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
   // Prefetch the graphs the entered source is about to need. Idempotent (cached promise); a
   // prefetch failure is logged here and the first real use re-attempts and surfaces it to the user.
   if (next === "fractal") loadFractal2D().catch(err => console.warn("studio: fractal graph prefetch failed", err));
@@ -522,6 +546,34 @@ $("studio-source").addEventListener("keydown", e => {
   tabs[j].focus(); setSource(tabs[j].dataset.source);
 });
 bootStudioRendererConsole();
+
+// Living neural controls: instrument (field/solid), seed, reseed. Changing any of
+// them restarts the instrument in place while the neural source is active.
+function restartNeural() {
+  if (activeSource !== "neural" || !_neural) return;
+  try {
+    const res = _neural.startNeural($("studio-canvas"), { seed: _neuralSeed, instrument: _neuralInstrument });
+    _neuralStatic = !(res && res.animating);
+  } catch (_) {}
+}
+function initNeuralControls() {
+  const chips = document.getElementById("neural-instruments");
+  const seedIn = document.getElementById("neural-seed");
+  const reseed = document.getElementById("neural-reseed");
+  if (chips) chips.addEventListener("click", e => {
+    const b = e.target.closest("button[data-neural-instrument]"); if (!b) return;
+    _neuralInstrument = b.dataset.neuralInstrument === "solid" ? "solid" : "field";
+    [...chips.querySelectorAll("button")].forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    restartNeural();
+  });
+  if (seedIn) seedIn.addEventListener("input", () => { _neuralSeed = seedIn.value.trim() || "living"; restartNeural(); });
+  if (reseed) reseed.addEventListener("click", () => {
+    _neuralSeed = "nz-" + Math.random().toString(36).slice(2, 8);
+    if (seedIn) seedIn.value = _neuralSeed;
+    restartNeural();
+  });
+}
+initNeuralControls();
 
 // Sync roving tabindex whenever setSource changes the active tab.
 function syncTabindex(activeKey) {
@@ -2756,7 +2808,7 @@ function liveTick(ts) {
     if (++staticTicks >= STATIC_STOP) {
       // Showcase graph is lazy: before it loads (start still in flight) treat the scene as NOT
       // settled, i.e. animated, matching studio-loop's no-state behavior for the showcase source.
-      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: _showcase ? _showcase.showcaseSettled() : false });
+      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: _showcase ? _showcase.showcaseSettled() : false, neuralStatic: _neuralStatic });
       if (shouldHaltOnStatic(true, animated)) { stopMeterLoop(); return; }
       staticTicks = 0;   // animated: do not halt, but reset so we re-arm the window cleanly
     }
