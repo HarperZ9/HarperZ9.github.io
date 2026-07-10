@@ -254,3 +254,39 @@ test("seeded wave-3 renders stay deterministic", () => {
     assert.deepEqual(a, b, `${layer} not deterministic for a fixed seed`);
   }
 });
+
+/* ── editor primitives (2026-07-10): renderSpecimenOver + drawImageFit ─────── */
+import { renderSpecimenOver, drawImageFit } from "./generative-field.js";
+
+test("renderSpecimenOver composites without clearing or a backdrop wash", () => {
+  const { canvas, log } = makeCanvas(640, 400);
+  canvas.width = 640; canvas.height = 400;   // an existing backing (imported image)
+  const ok = renderSpecimenOver(canvas, "edit", ["orbit", "contour"], { alpha: 0.5 });
+  assert.equal(ok, true);
+  const ops = log.map((e) => e[0]);
+  assert.ok(!ops.includes("clearRect"), "must not clear the imported content");
+  assert.ok(log.some((e) => e[0] === "set:globalAlpha"), "alpha must be applied");
+  assert.ok(log.length > 20, "layers should draw");
+});
+
+test("renderSpecimenOver is deterministic per seed and skips unknown layers", () => {
+  const a = (() => { const { canvas, log } = makeCanvas(320, 200); canvas.width = 320; canvas.height = 200; renderSpecimenOver(canvas, "s", ["orbit", "__nope__"], {}); return log; })();
+  const b = (() => { const { canvas, log } = makeCanvas(320, 200); canvas.width = 320; canvas.height = 200; renderSpecimenOver(canvas, "s", ["orbit", "__nope__"], {}); return log; })();
+  assert.deepEqual(a, b);
+});
+
+test("drawImageFit sizes from natural dimensions and draws cover-fit", () => {
+  const { canvas, log } = makeCanvas(0, 0);
+  const img = { naturalWidth: 800, naturalHeight: 600 };
+  const out = drawImageFit(canvas, img, { maxBacking: 400 });
+  assert.equal(out.width, 400);
+  assert.equal(out.height, 300);
+  assert.ok(log.some((e) => e[0] === "drawImage"), "must draw the image");
+});
+
+test("drawImageFit honors an explicit width, deriving height from aspect", () => {
+  const { canvas } = makeCanvas(0, 0);
+  const out = drawImageFit(canvas, { naturalWidth: 1000, naturalHeight: 500 }, { width: 600 });
+  assert.equal(out.width, 600);
+  assert.equal(out.height, 300);
+});

@@ -856,6 +856,168 @@ export const StudioExporters = (() => {
   return { register, export: exportAs, exportWithReceipt };
 })();
 
+// ---- modular disciplines (2026-07-10) ---------------------------------------
+// Raster variants, a hand-written PDF, design palettes, a textile chart, a text
+// read, and a relief mesh. Pure writers live in exporters-disciplines.js; the
+// canvas-dependent glue is here so it can reach readableCanvas().
+import {
+  EXPORT_KINDS as DISCIPLINE_KINDS,
+  toGplPalette, toCssPalette, toJsonPalette, stitchLegend, heightGridToObj, toTextArt,
+} from "./exporters-disciplines.js";
+
+export const EXPORT_KINDS = DISCIPLINE_KINDS;
+
+async function exportRaster(canvas, extra, mime, defaultQuality) {
+  const src = readableCanvas(canvas);
+  const q = extra && typeof extra.quality === "number" ? extra.quality : defaultQuality;
+  return new Promise((resolve, reject) => {
+    src.toBlob(blob => blob ? resolve(blob) : reject(new Error("toBlob returned null")), mime, q);
+  });
+}
+
+// A minimal single-page PDF embedding the frame as a JPEG (DCTDecode XObject).
+// Byte offsets for the xref table are computed from real chunk lengths, so the
+// file is valid without a library. paper "a4"|"a3"|"letter" sizes the page in
+// points (72/inch); the image is fit inside a 6% margin, aspect preserved.
+async function exportPDF(canvas, extra) {
+  const src = readableCanvas(canvas);
+  const q = extra && typeof extra.quality === "number" ? extra.quality : 0.92;
+  const jpegBlob = await new Promise((resolve, reject) => {
+    src.toBlob(b => b ? resolve(b) : reject(new Error("toBlob returned null")), "image/jpeg", q);
+  });
+  const jpeg = new Uint8Array(await jpegBlob.arrayBuffer());
+  const iw = canvas.width, ih = canvas.height;
+  const PAPERS = { a4: [595, 842], a3: [842, 1191], letter: [612, 792] };
+  let [pw, ph] = PAPERS[(extra && extra.paper) || "a4"] || PAPERS.a4;
+  if (iw > ih && pw < ph) { const t = pw; pw = ph; ph = t; } // landscape image -> landscape page
+  const margin = 0.06;
+  const availW = pw * (1 - 2 * margin), availH = ph * (1 - 2 * margin);
+  const scale = Math.min(availW / iw, availH / ih);
+  const dw = iw * scale, dh = ih * scale;
+  const dx = (pw - dw) / 2, dy = (ph - dh) / 2;
+
+  const enc = (s) => { const a = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) a[i] = s.charCodeAt(i) & 0xff; return a; };
+  const chunks = [];
+  let offset = 0;
+  const offsets = [];
+  const push = (bytes) => { chunks.push(bytes); offset += bytes.length; };
+  const pushStr = (s) => push(enc(s));
+  const startObj = () => { offsets.push(offset); };
+
+  pushStr("%PDF-1.4\n%\xe2\xe3\xcf\xd3\n");
+  startObj(); pushStr("1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n");
+  startObj(); pushStr("2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n");
+  startObj(); pushStr("3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 " + pw + " " + ph
+    + "] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>\nendobj\n");
+  startObj();
+  pushStr("4 0 obj\n<< /Type /XObject /Subtype /Image /Width " + iw + " /Height " + ih
+    + " /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length " + jpeg.length + " >>\nstream\n");
+  push(jpeg);
+  pushStr("\nendstream\nendobj\n");
+  const content = "q\n" + dw.toFixed(2) + " 0 0 " + dh.toFixed(2) + " " + dx.toFixed(2) + " " + dy.toFixed(2) + " cm\n/Im0 Do\nQ\n";
+  startObj(); pushStr("5 0 obj\n<< /Length " + content.length + " >>\nstream\n" + content + "endstream\nendobj\n");
+  const xrefStart = offset;
+  let xref = "xref\n0 6\n0000000000 65535 f \n";
+  for (const o of offsets) xref += String(o).padStart(10, "0") + " 00000 n \n";
+  pushStr(xref);
+  pushStr("trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n" + xrefStart + "\n%%EOF\n");
+
+  const total = chunks.reduce((n, c) => n + c.length, 0);
+  const out = new Uint8Array(total);
+  let p = 0;
+  for (const c of chunks) { out.set(c, p); p += c.length; }
+  return new Blob([out], { type: "application/pdf" });
+}
+
+async function exportPaletteGpl(canvas, extra) {
+  return new Blob([toGplPalette(extra && extra.perception)], { type: "text/plain; charset=utf-8" });
+}
+async function exportPaletteCss(canvas, extra) {
+  return new Blob([toCssPalette(extra && extra.perception)], { type: "text/css; charset=utf-8" });
+}
+async function exportPaletteJson(canvas, extra) {
+  return new Blob([toJsonPalette(extra && extra.perception)], { type: "application/json" });
+}
+
+// text-art: a BOM so Windows Notepad renders the braille block.
+async function exportTextArt(canvas, extra) {
+  return new Blob(["﻿" + toTextArt(extra && extra.perception)], { type: "text/plain; charset=utf-8" });
+}
+
+// stitch: draw a cross-stitch chart onto an offscreen canvas from the
+// perception colour grid, then return it as PNG.
+async function exportStitch(canvas, extra) {
+  const p = (extra && extra.perception) || {};
+  const detail = p.detail || p;
+  const grid = detail.colorGrid24 || detail.colorGrid16 || (p.rich && p.rich.detail && p.rich.detail.colorGrid16) || null;
+  if (!grid) throw new Error("stitch needs a perception colour grid");
+  const { legend, rows } = stitchLegend(grid, 12, 40);
+  const cell = 22, pad = 44, cols = rows[0].length, rws = rows.length;
+  const legendH = 26 * legend.length + 30;
+  const out = document.createElement("canvas");
+  out.width = pad + cols * cell + 220;
+  out.height = pad + rws * cell + legendH;
+  const ctx = out.getContext("2d");
+  ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, out.width, out.height);
+  ctx.font = "12px monospace"; ctx.textBaseline = "middle";
+  const bySym = {};
+  for (const l of legend) bySym[l.symbol] = l;
+  for (let y = 0; y < rws; y += 1) {
+    for (let x = 0; x < cols; x += 1) {
+      const sym = legend[rows[y][x]].symbol;
+      const l = bySym[sym];
+      const cx = pad + x * cell, cy = pad + y * cell;
+      ctx.fillStyle = l.hex; ctx.fillRect(cx, cy, cell, cell);
+      // dark symbol on light cells, light on dark, for contrast
+      const lum = (l.rgb[0] * 299 + l.rgb[1] * 587 + l.rgb[2] * 114) / 1000;
+      ctx.fillStyle = lum > 140 ? "#222" : "#eee";
+      ctx.textAlign = "center";
+      ctx.fillText(sym, cx + cell / 2, cy + cell / 2 + 1);
+    }
+  }
+  // grid rules every 5
+  ctx.strokeStyle = "rgba(0,0,0,0.35)"; ctx.lineWidth = 1;
+  for (let x = 0; x <= cols; x += 5) { ctx.beginPath(); ctx.moveTo(pad + x * cell, pad); ctx.lineTo(pad + x * cell, pad + rws * cell); ctx.stroke(); }
+  for (let y = 0; y <= rws; y += 5) { ctx.beginPath(); ctx.moveTo(pad, pad + y * cell); ctx.lineTo(pad + cols * cell, pad + y * cell); ctx.stroke(); }
+  // legend
+  ctx.textAlign = "left"; ctx.fillStyle = "#111";
+  let ly = pad + rws * cell + 24;
+  ctx.fillText("Floss legend (" + legend.length + " colours):", pad, ly);
+  ly += 22;
+  for (const l of legend) {
+    ctx.fillStyle = l.hex; ctx.fillRect(pad, ly - 8, 16, 16);
+    ctx.strokeStyle = "rgba(0,0,0,0.4)"; ctx.strokeRect(pad, ly - 8, 16, 16);
+    ctx.fillStyle = "#111";
+    ctx.fillText(l.symbol + "   " + l.hex + "   " + l.count + " stitches", pad + 26, ly);
+    ly += 26;
+  }
+  return new Promise((resolve, reject) => {
+    out.toBlob(b => b ? resolve(b) : reject(new Error("stitch toBlob null")), "image/png");
+  });
+}
+
+// heightmap-obj: sample the canvas luminance to a grid, emit a relief OBJ.
+async function exportHeightmapObj(canvas, extra) {
+  const src = readableCanvas(canvas);
+  const N = 96;
+  const gw = Math.min(N, canvas.width), gh = Math.max(2, Math.round(gw * (canvas.height / Math.max(1, canvas.width))));
+  const scratch = document.createElement("canvas");
+  scratch.width = gw; scratch.height = gh;
+  const sctx = scratch.getContext("2d", { willReadFrequently: true });
+  sctx.drawImage(src, 0, 0, gw, gh);
+  const px = sctx.getImageData(0, 0, gw, gh).data;
+  const grid = [];
+  for (let y = 0; y < gh; y += 1) {
+    const row = [];
+    for (let x = 0; x < gw; x += 1) {
+      const i = (y * gw + x) * 4;
+      row.push((px[i] * 299 + px[i + 1] * 587 + px[i + 2] * 114) / 255000);
+    }
+    grid.push(row);
+  }
+  return new Blob([heightGridToObj(grid, (extra && extra.depth) || 10)], { type: "text/plain; charset=utf-8" });
+}
+
 // ---- register all defaults --------------------------------------------------
 
 StudioExporters.register("png",  exportPNG);
@@ -864,6 +1026,15 @@ StudioExporters.register("obj",  exportOBJ);
 StudioExporters.register("gltf", exportGLTF);
 StudioExporters.register("webm", exportWebM);
 StudioExporters.register("json", exportJSON);
+StudioExporters.register("jpeg", (c, e) => exportRaster(c, e, "image/jpeg", 0.92));
+StudioExporters.register("webp", (c, e) => exportRaster(c, e, "image/webp", 0.92));
+StudioExporters.register("pdf", exportPDF);
+StudioExporters.register("palette-gpl", exportPaletteGpl);
+StudioExporters.register("palette-css", exportPaletteCss);
+StudioExporters.register("palette-json", exportPaletteJson);
+StudioExporters.register("stitch", exportStitch);
+StudioExporters.register("text-art", exportTextArt);
+StudioExporters.register("heightmap-obj", exportHeightmapObj);
 
 // ---- self-test --------------------------------------------------------------
 // All tests use inline fixtures. The browser-only parts (canvas.toBlob, MediaRecorder,
