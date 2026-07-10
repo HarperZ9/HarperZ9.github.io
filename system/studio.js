@@ -5,7 +5,7 @@
 // certificate stack, and the surface layer stay static. Everything per-source loads lazily
 // below, at the setSource() boundary, so first-load JS carries none of the per-source graphs.
 import { perceptualHash, features, hamming } from "../shared-frame/eye.js";
-import { representation, richFeatures, describeFrame, rmsFromBytes, spectrumBands, dominantPitchHz, assembleFullPerception, hueName } from "./sense.js";
+import { representation, richFeatures, describeFrame, describeFrameLong, perceptionDetail, rmsFromBytes, spectrumBands, dominantPitchHz, assembleFullPerception, hueName } from "./sense.js";
 import { respond } from "./respond.js";
 import { sourceIsAnimated, shouldHaltOnStatic, fullscreenMaxBacking } from "./studio-loop.js";
 import { buildModelHeaders } from "./studio-model.js";
@@ -506,6 +506,40 @@ function readPixelData(canvas, w, h) {
   return sctx.getImageData(0, 0, w, h).data;
 }
 
+// ── granular perception: the no-vision read ──────────────────────────────────
+// Computed on a <=192px downsample (description-grade, cheap), refreshed on
+// every settled perceive() and every ~2s while a source animates. The result
+// is exposed at window.__studioPerception so a no-vision model can reconstruct
+// the frame: 3x3 region grid, 16x16 hex map, edge orientations, symmetry, and
+// an ASCII luminance render.
+let _lastDetail = null;
+function computePerceptionDetail(canvas) {
+  try {
+    const dw = Math.min(192, canvas.width || 192);
+    const dh = Math.max(2, Math.round(dw * (canvas.height || 1) / (canvas.width || 1)));
+    _scratch.width = dw; _scratch.height = dh;
+    const sctx = _scratch.getContext("2d", { willReadFrequently: true });
+    sctx.clearRect(0, 0, dw, dh);
+    sctx.drawImage(canvas, 0, 0, dw, dh);
+    const dpx = sctx.getImageData(0, 0, dw, dh).data;
+    _lastDetail = perceptionDetail(dpx, dw, dh, 4);
+    return _lastDetail;
+  } catch (_) { return null; }
+}
+
+function updateDetailUI(rich) {
+  if (!_lastDetail) return;
+  const long = describeFrameLong(rich || lastRich || {}, _lastDetail);
+  const longEl = $("mm-long"); if (longEl) longEl.textContent = long;
+  const asciiEl = $("mm-ascii"); if (asciiEl) asciiEl.textContent = _lastDetail.ascii;
+  window.__studioPerception = {
+    longDescription: long,
+    detail: _lastDetail,
+    phash: lastHashByCanvas.get($("studio-canvas")) || null,
+    source: currentSourceLabel(),
+  };
+}
+
 function perceive(canvas) {
   const { width:w, height:h } = canvas;
   const px = readPixelData(canvas, w, h);
@@ -521,6 +555,8 @@ function perceive(canvas) {
   // The measurimeter: the richer, additive readout (faithful mosaic + dominant colours + edges +
   // regions). Reuses the px we already read; eye.js's gated dHash/features above are untouched.
   const rich = measure(px, w, h, phash);
+  computePerceptionDetail(canvas);
+  updateDetailUI(rich);
   return { phash, features:f, rich, width:w, height:h };
 }
 
@@ -2526,6 +2562,13 @@ function liveTick(ts) {
     // stream the cheap line + the full measurimeter (no say(), no drift mutation)
     $("sc-phash").textContent = phash;
     measure(px, w, h, phash);
+    // Granular detail refresh at ~0.5Hz while animating: description-grade,
+    // computed on a downsample, cheap enough for the live loop.
+    if (!liveTick._detailTs || ts - liveTick._detailTs > 2000) {
+      liveTick._detailTs = ts;
+      computePerceptionDetail(canvas);
+      updateDetailUI(lastRich);
+    }
     pollAudio();
   } catch (e) { /* a transient unreadable frame (e.g. canvas swap mid-tick), skip this tick */ return; }
   // fps estimate over a 0.5s window
@@ -2940,6 +2983,13 @@ function fullPerception() {
   // Additive on the returned payload (assembleFullPerception is a vendored .mjs, left untouched).
   const showcaseScene = (activeSource === "showcase" && typeof window !== "undefined" && window.__studioShowcaseReadout) || null;
   if (showcaseScene) perception.scene = showcaseScene;
+  // Granular detail: recomputed fresh from THIS canvas so the packet is
+  // self-consistent, plus the long-form description a no-vision reader uses.
+  const detail = computePerceptionDetail(canvas) || _lastDetail;
+  if (detail) {
+    perception.detail = detail;
+    try { perception.longDescription = describeFrameLong(lastRich || {}, detail); } catch (_) {}
+  }
   // Self-improvement: append this perception's fidelity record (wpre/pbe/wpir) to the append-only
   // perception-fidelity ledger. Guarded + fire-and-forget so it never blocks or breaks the payload.
   try { recordFidelity(perception); } catch (_) {}
@@ -3629,6 +3679,27 @@ buildMeters();
         ex.download(blob, "studio-frame.png");
       } catch (e) {
         say("model", "PNG export failed: " + e.message);
+      }
+    });
+  }
+
+  // Plotter SVG: the frame's luminance becomes single-stroke line art a pen
+  // plotter (or vpype) consumes directly. Lazy module; seeded by the frame's
+  // own perceptual hash so the same frame plots the same way.
+  const btnSvg = $("rt-export-svg");
+  if (btnSvg) {
+    btnSvg.addEventListener("click", async () => {
+      try {
+        const plot = await import("./plotter.js");
+        const canvas = $("studio-canvas");
+        const seed = lastHashByCanvas.get(canvas) || "studio";
+        const { svg, stats } = plot.plotCanvas(canvas, { style: "flow", seed });
+        const ex = await loadExporters();
+        ex.download(new Blob([svg], { type: "image/svg+xml" }), "studio-plot-" + seed + ".svg");
+        say("model", "Plotted the frame as " + stats.lines + " pen strokes (" + stats.points
+          + " points), seeded by its hash " + seed + ". The SVG is single-stroke and plotter-ready.");
+      } catch (e) {
+        say("model", "SVG plot failed: " + e.message);
       }
     });
   }
