@@ -92,8 +92,12 @@ export function renderPoster(canvas, state, deps = {}) {
   const ctx = canvas.getContext("2d");
   if (!ctx) return { ok: false, boxes: [] };
 
-  // 1) the art layer, drawn by the site engine itself
-  if (typeof deps.renderSpecimen === "function" && state.art && state.art.layers && state.art.layers.length) {
+  // 1) the art layer. An imported image (deps.drawImage over state.art.image)
+  //    takes precedence; else the site engine draws the chosen instruments;
+  //    else a flat ground.
+  if (state.art && state.art.image && typeof deps.drawImage === "function") {
+    try { deps.drawImage(canvas, state.art.image); } catch (_) {}
+  } else if (typeof deps.renderSpecimen === "function" && state.art && state.art.layers && state.art.layers.length) {
     try { deps.renderSpecimen(canvas, state.art.seed, state.art.layers); } catch (_) {}
   } else {
     ctx.fillStyle = "#141018";

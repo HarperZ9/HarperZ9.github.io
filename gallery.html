@@ -50,6 +50,11 @@
   .plate:hover .plate-art{border-color:color-mix(in oklab, var(--orange) 45%, var(--hairline))}
   /* the print desk: name a seed, mix layers, draw your own plate */
   .desk-controls{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:.9rem 0}
+  .desk-influence{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);
+    font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .desk-influence input{accent-color:var(--orange);width:8rem}
+  .desk-material-drop{outline:2px dashed color-mix(in oklab, var(--orange) 60%, transparent);outline-offset:-8px}
+  .desk-privacy{font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;color:var(--verified, #9fd6c2);flex-basis:100%}
   .desk-seed{flex:1;min-width:12rem;max-width:22rem;font-family:var(--mono);font-size:.8rem;
     letter-spacing:.08em;color:var(--bone);background:color-mix(in oklab, var(--void) 86%, black);
     border:1px solid var(--hairline);border-radius:8px;padding:.6em .8em}
@@ -266,6 +271,16 @@
     <button type="button" class="plate-redraw" id="desk-vary" aria-label="Draw four neighboring variations of this seed">variations</button>
     <a class="plate-redraw" id="desk-workshop" href="studio.html?source=poster" aria-label="Open this plate in the poster workshop">open in the workshop</a>
   </div>
+  <div class="desk-controls" id="desk-material-controls">
+    <button type="button" class="plate-redraw" id="desk-import" aria-label="Bring your own image and influence it with the instruments">bring your own image</button>
+    <input type="file" id="desk-import-file" accept="image/*" hidden>
+    <label class="desk-influence" id="desk-influence-wrap" hidden>
+      <span>influence</span>
+      <input type="range" id="desk-influence" min="0.1" max="1" step="0.05" value="0.5" aria-label="How strongly the instruments influence your image">
+    </label>
+    <button type="button" class="plate-redraw" id="desk-clear-material" hidden aria-label="Remove your image and return to pure engine mode">clear material</button>
+    <span class="desk-privacy" id="desk-privacy" hidden>your image never leaves this page - there is no upload, only your browser</span>
+  </div>
   <p class="desk-hint">instruments &middot; pick up to three &middot; the padlock keeps one through rerolls</p>
   <div class="desk-chips" id="desk-chips" role="group" aria-label="Instrument selection"></div>
   <p class="desk-status" id="desk-status" role="status" aria-live="polite"></p>
@@ -390,7 +405,13 @@
 // names, so a wave-2 layer that has not landed degrades to the backdrop wash
 // instead of throwing; the try/catch below keeps one bad plate from taking
 // the rest of the exhibition down with it.
-import { renderSpecimen, specimenLayerNames } from "./system/generative-field.js";
+import { renderSpecimen, renderSpecimenOver, drawImageFit, specimenLayerNames } from "./system/generative-field.js";
+
+// Bring-your-own-material: the visitor's image, influenced by the instruments.
+// It stays a bitmap in this tab; there is no upload. When material.active, the
+// desk redraws the bitmap and composites the chosen instruments OVER it at the
+// influence alpha, instead of drawing a pure seeded plate.
+const material = { active: false, bitmap: null, name: "" };
 
 function plateLayers(canvas) {
   return ((canvas.dataset && canvas.dataset.specimenLayers) || "")
@@ -597,17 +618,27 @@ function drawDesk() {
   if (!deskCanvas) return;
   const seed = deskSeedValue();
   const layers = [...picked];
-  if (!layers.length) { say("pick at least one instrument"); return; }
+  // Pure-engine mode needs an instrument; material mode can stand on the image
+  // alone (instruments then only influence it).
+  if (!layers.length && !material.active) { say("pick at least one instrument"); return; }
   deskCanvas.dataset.specimenLayers = layers.join(",");
   if (renderSafe(deskCanvas, seed, layers)) {
-    if (deskTitle) deskTitle.textContent = `${seed} · ${layers.join(" + ")}`;
-    if (deskMeta) deskMeta.textContent = `seed ${seed} · ${layers.join(" + ")} · reproducible on any visit`;
+    if (material.active) {
+      const overed = layers.length ? " · " + layers.join(" + ") + " at " + Math.round(materialInfluence() * 100) + "%" : "";
+      if (deskTitle) deskTitle.textContent = "your material · " + material.name;
+      if (deskMeta) deskMeta.textContent = "your image" + overed + " · never uploaded";
+    } else {
+      if (deskTitle) deskTitle.textContent = `${seed} · ${layers.join(" + ")}`;
+      if (deskMeta) deskMeta.textContent = `seed ${seed} · ${layers.join(" + ")} · reproducible on any visit`;
+    }
     // Mirror the drawn state into the address bar so every draw and every
-    // reroll is immediately linkable; copy link reads this same state.
+    // reroll is immediately linkable; a material plate is marked so the link
+    // says honestly that its base image lives only in the visitor's browser.
     try {
       const url = new URL(location.href);
       url.searchParams.set("seed", seed);
       url.searchParams.set("layers", layers.join(","));
+      if (material.active) url.searchParams.set("material", "own"); else url.searchParams.delete("material");
       history.replaceState(null, "", url);
     } catch (error) {
       console.warn("gallery: address-bar state mirror skipped", error);
@@ -676,7 +707,16 @@ document.addEventListener("keydown", (event) => {
 
 function renderSafe(canvas, seed, layers) {
   try {
-    const ok = renderSpecimen(canvas, seed, layers);
+    let ok;
+    if (material.active && material.bitmap) {
+      // The visitor's image is the base; the instruments influence it. Redraw
+      // the bitmap at its own resolution, then composite the layers over it.
+      drawImageFit(canvas, material.bitmap, { maxBacking: 2048 });
+      const influence = materialInfluence();
+      ok = layers.length ? renderSpecimenOver(canvas, seed, layers, { alpha: influence }) : true;
+    } else {
+      ok = renderSpecimen(canvas, seed, layers);
+    }
     if (ok && canvas.dataset) {
       canvas.dataset.specimen = seed;
       canvas.dataset.specimenRendered = "true";
@@ -687,6 +727,76 @@ function renderSafe(canvas, seed, layers) {
     say("that combination failed to draw - try different instruments");
     return false;
   }
+}
+
+function materialInfluence() {
+  const el = document.getElementById("desk-influence");
+  const v = el ? Number(el.value) : 0.5;
+  return Number.isFinite(v) ? Math.max(0.1, Math.min(1, v)) : 0.5;
+}
+
+// ── bring your own material ──────────────────────────────────────────────────
+const importBtn = document.getElementById("desk-import");
+const importFile = document.getElementById("desk-import-file");
+const influenceWrap = document.getElementById("desk-influence-wrap");
+const clearMaterialBtn = document.getElementById("desk-clear-material");
+const privacyLine = document.getElementById("desk-privacy");
+
+async function adoptMaterial(file) {
+  if (!file || !/^image\//.test(file.type)) { say("that is not an image file"); return; }
+  try {
+    let bmp;
+    if (typeof createImageBitmap === "function") {
+      bmp = await createImageBitmap(file);
+    } else {
+      bmp = await new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = URL.createObjectURL(file);
+      });
+    }
+    material.active = true;
+    material.bitmap = bmp;
+    material.name = file.name || "your image";
+    if (influenceWrap) influenceWrap.hidden = false;
+    if (clearMaterialBtn) clearMaterialBtn.hidden = false;
+    if (privacyLine) privacyLine.hidden = false;
+    if (deskTitle) deskTitle.textContent = "your material · " + material.name;
+    drawDesk();
+    say("your image is loaded - pick instruments and set the influence to work it");
+  } catch (error) {
+    console.error("gallery: material load failed", error);
+    say("that image could not be loaded");
+  }
+}
+
+if (importBtn && importFile) {
+  importBtn.addEventListener("click", () => importFile.click());
+  importFile.addEventListener("change", (e) => { if (e.target.files && e.target.files[0]) adoptMaterial(e.target.files[0]); });
+}
+if (influenceWrap) {
+  const slider = document.getElementById("desk-influence");
+  if (slider) slider.addEventListener("input", () => { if (material.active) drawDesk(); });
+}
+if (clearMaterialBtn) {
+  clearMaterialBtn.addEventListener("click", () => {
+    material.active = false; material.bitmap = null; material.name = "";
+    influenceWrap.hidden = true; clearMaterialBtn.hidden = true; if (privacyLine) privacyLine.hidden = true;
+    drawDesk();
+    say("back to pure engine mode");
+  });
+}
+// Drag-drop onto the desk plate.
+const deskArt = deskCanvas ? deskCanvas.closest(".plate-art") : null;
+if (deskArt) {
+  deskArt.addEventListener("dragover", (e) => { e.preventDefault(); deskArt.classList.add("desk-material-drop"); });
+  deskArt.addEventListener("dragleave", () => deskArt.classList.remove("desk-material-drop"));
+  deskArt.addEventListener("drop", (e) => {
+    e.preventDefault();
+    deskArt.classList.remove("desk-material-drop");
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) adoptMaterial(e.dataTransfer.files[0]);
+  });
 }
 
 const deskDraw = document.getElementById("desk-draw");
@@ -778,7 +888,9 @@ if (deskShare) deskShare.addEventListener("click", async () => {
   url.searchParams.set("layers", [...picked].join(","));
   try {
     await navigator.clipboard.writeText(url.toString());
-    say("link copied - it redraws this exact plate");
+    say(material.active
+      ? "link copied - it reproduces the instrument settings, but your image stays on your machine, so it opens on the pure plate"
+      : "link copied - it redraws this exact plate");
   } catch (error) {
     say(url.toString());
   }
