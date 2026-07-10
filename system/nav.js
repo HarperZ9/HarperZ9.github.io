@@ -9,6 +9,7 @@ const PRIMARY = [
 ];
 
 export const MORE = [
+  ["The Tour", "tour.html", "demos"],
   ["The Studio", "studio.html", "studio"],
   ["Guide", "guide.html", "guide"],
   ["Catalog", "catalog.html", "catalog"],
@@ -22,7 +23,7 @@ export const MORE = [
 // heavier-than-a-brick down to the utilities lives under the catalog.
 const FLAGSHIPS = new Set(["overview","index-graph","forum","gather","crucible","learn"]);
 const DEMOS = new Set(["demo-index","demo-emet","proof-index-sample","proof-surface-sample",
-  "public-surface-sweeper-sample","emet-sample","demonstrations"]);
+  "public-surface-sweeper-sample","emet-sample","demonstrations","tour"]);
 const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","accountable-machines",
   "accountable-engine","buildlang","raw","build-color","build-products","toolkit",
   "provenance-sensorium","orca","aleph","warden","presentation","atelier","gallery",
