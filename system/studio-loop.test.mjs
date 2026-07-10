@@ -24,6 +24,13 @@ test("byo is animated only while a video is playing", () => {
   assert.equal(sourceIsAnimated("byo", {}), false);   // still image
 });
 
+test("neural is animated unless reduced motion holds a still frame", () => {
+  assert.equal(sourceIsAnimated("neural", {}), true);                    // default: animating
+  assert.equal(sourceIsAnimated("neural", undefined), true);            // no state: animating
+  assert.equal(sourceIsAnimated("neural", { neuralStatic: true }), false); // reduced motion: still
+  assert.equal(sourceIsAnimated("neural", { neuralStatic: false }), true);
+});
+
 // ── shouldHaltOnStatic ──────────────────────────────────────────────────────────
 test("halt only when the frame is static AND the source is not animated", () => {
   assert.equal(shouldHaltOnStatic(true, false), true);    // static + static source → halt
