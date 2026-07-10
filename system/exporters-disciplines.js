@@ -21,6 +21,8 @@ export const EXPORT_KINDS = [
   { kind: "stitch", label: "Cross-stitch chart", ext: "png", mime: "image/png", discipline: "textile", needs: "perception" },
   { kind: "text-art", label: "Text art + read", ext: "txt", mime: "text/plain", discipline: "text", needs: "perception" },
   { kind: "heightmap-obj", label: "Relief mesh OBJ", ext: "obj", mime: "text/plain", discipline: "relief / cnc", needs: "canvas" },
+  { kind: "voxel-obj", label: "Voxel model OBJ", ext: "obj", mime: "text/plain", discipline: "voxel", needs: "canvas" },
+  { kind: "voxel-schematic", label: "Voxel schematic JSON", ext: "json", mime: "application/json", discipline: "voxel", needs: "canvas" },
   { kind: "obj", label: "Geometry OBJ", ext: "obj", mime: "text/plain", discipline: "3d", needs: "canvas" },
   { kind: "gltf", label: "Geometry glTF", ext: "gltf", mime: "model/gltf+json", discipline: "3d", needs: "canvas" },
   { kind: "webm", label: "WebM clip", ext: "webm", mime: "video/webm", discipline: "motion", needs: "canvas" },

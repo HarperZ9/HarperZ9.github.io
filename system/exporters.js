@@ -1018,6 +1018,39 @@ async function exportHeightmapObj(canvas, extra) {
   return new Blob([heightGridToObj(grid, (extra && extra.depth) || 10)], { type: "text/plain; charset=utf-8" });
 }
 
+// Voxelize the frame: its luminance extrudes into stacked cubes. Exports an
+// exposed-face OBJ (a buildable model) or a portable JSON schematic.
+async function frameToVoxels(canvas, depth) {
+  const vox = await import("./voxel.js");
+  const src = readableCanvas(canvas);
+  const N = 64;
+  const gw = Math.min(N, canvas.width);
+  const gh = Math.max(2, Math.round(gw * (canvas.height / Math.max(1, canvas.width))));
+  const scratch = document.createElement("canvas");
+  scratch.width = gw; scratch.height = gh;
+  const sctx = scratch.getContext("2d", { willReadFrequently: true });
+  sctx.drawImage(src, 0, 0, gw, gh);
+  const px = sctx.getImageData(0, 0, gw, gh).data;
+  const grid = [];
+  for (let y = 0; y < gh; y += 1) {
+    const row = [];
+    for (let x = 0; x < gw; x += 1) {
+      const i = (y * gw + x) * 4;
+      row.push((px[i] * 299 + px[i + 1] * 587 + px[i + 2] * 114) / 255000);
+    }
+    grid.push(row);
+  }
+  return { mod: vox, vox: vox.voxelizeHeightGrid(grid, depth || 24) };
+}
+async function exportVoxelObj(canvas, extra) {
+  const { mod, vox } = await frameToVoxels(canvas, extra && extra.depth);
+  return new Blob([mod.voxelObj(vox)], { type: "text/plain; charset=utf-8" });
+}
+async function exportVoxelSchematic(canvas, extra) {
+  const { mod, vox } = await frameToVoxels(canvas, extra && extra.depth);
+  return new Blob([mod.voxelSchematic(vox)], { type: "application/json" });
+}
+
 // ---- register all defaults --------------------------------------------------
 
 StudioExporters.register("png",  exportPNG);
@@ -1035,6 +1068,8 @@ StudioExporters.register("palette-json", exportPaletteJson);
 StudioExporters.register("stitch", exportStitch);
 StudioExporters.register("text-art", exportTextArt);
 StudioExporters.register("heightmap-obj", exportHeightmapObj);
+StudioExporters.register("voxel-obj", exportVoxelObj);
+StudioExporters.register("voxel-schematic", exportVoxelSchematic);
 
 // ---- self-test --------------------------------------------------------------
 // All tests use inline fixtures. The browser-only parts (canvas.toBlob, MediaRecorder,
