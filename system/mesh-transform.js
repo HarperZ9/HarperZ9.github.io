@@ -74,7 +74,7 @@ export function drawMeshPreview(canvas, mesh, opts = {}) {
   const maxBacking = opts.maxBacking || 1600;
   const rect = canvas.getBoundingClientRect ? canvas.getBoundingClientRect() : null;
   if (rect && rect.width && rect.height) {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min((typeof window !== "undefined" && window.devicePixelRatio) || 1, 2);
     canvas.width = Math.min(maxBacking, Math.max(2, Math.round(rect.width * dpr)));
     canvas.height = Math.min(maxBacking, Math.max(2, Math.round(rect.height * dpr)));
   } else {
@@ -95,12 +95,24 @@ export function drawMeshPreview(canvas, mesh, opts = {}) {
     dist: Math.max(1.5, finite(opts.cameraDist, 3.4)),
   };
   const projected = vertices.map((v) => project(v, b.center, radius, camera, w, h));
+  const lineScale = Math.max(0.5, finite(opts.lineScale, 1));
+  const mode = opts.shading === "solid" || opts.shading === "points" ? opts.shading : "wire";
+
+  if (mode === "solid" && (mesh.faces || []).length) {
+    drawSolid(ctx, mesh, projected, camera, w, h, opts);
+    return true;
+  }
+  if (mode === "points") {
+    drawPoints(ctx, projected, w, h);
+    return true;
+  }
+
   const edges = meshEdges(mesh);
   const sorted = edges.map(([a, b]) => ({
     a, b,
     z: ((projected[a] && projected[a].z) || 0) + ((projected[b] && projected[b].z) || 0),
   })).sort((p, q) => q.z - p.z);
-  ctx.lineWidth = Math.max(1, Math.min(2.5, Math.sqrt(w * h) / 760));
+  ctx.lineWidth = Math.max(1, Math.min(2.5, Math.sqrt(w * h) / 760)) * lineScale;
   for (const e of sorted) {
     const a = projected[e.a];
     const bpt = projected[e.b];
@@ -121,6 +133,78 @@ export function drawMeshPreview(canvas, mesh, opts = {}) {
     ctx.fill();
   }
   return true;
+}
+
+/* Solid mode: painter-sorted flat shading. Each face is filled with a teal
+   ramp lit by a fixed headlight (view direction), with a faint edge stroke so
+   silhouettes stay readable. Faces beyond maxSolidFaces fall back to wire -
+   the cap keeps a 500k-face import from freezing the main thread. */
+function faceNormal(vertices, f) {
+  const a = vertices[f[0]], b = vertices[f[1]], c = vertices[f[2]];
+  if (!a || !b || !c) return [0, 0, 1];
+  const u = [b[0] - a[0], b[1] - a[1], b[2] - a[2]];
+  const v = [c[0] - a[0], c[1] - a[1], c[2] - a[2]];
+  const n = [u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0]];
+  const l = Math.hypot(n[0], n[1], n[2]) || 1;
+  return [n[0] / l, n[1] / l, n[2] / l];
+}
+
+function drawSolid(ctx, mesh, projected, camera, w, h, opts) {
+  const vertices = mesh.vertices || [];
+  const faces = mesh.faces || [];
+  const cap = Math.max(500, finite(opts.maxSolidFaces, 14000));
+  const stride = faces.length > cap ? Math.ceil(faces.length / cap) : 1;
+  // Headlight in world space, pointed along the camera's view axis.
+  const cy = Math.cos(camera.yaw), sy = Math.sin(camera.yaw);
+  const cp = Math.cos(camera.pitch), sp = Math.sin(camera.pitch);
+  const light = [-sy * cp, sp, -cy * cp];
+  const drawn = [];
+  for (let i = 0; i < faces.length; i += stride) {
+    const f = faces[i];
+    if (!f || f.length < 3) continue;
+    let z = 0;
+    let behind = false;
+    for (const idx of f) {
+      const p = projected[idx];
+      if (!p || p.behind) { behind = true; break; }
+      z += p.z;
+    }
+    if (behind) continue;
+    drawn.push({ f, z: z / f.length });
+  }
+  drawn.sort((a, b) => a.z - b.z);
+  ctx.lineWidth = 0.6;
+  for (const item of drawn) {
+    const n = faceNormal(vertices, item.f);
+    const lambert = Math.abs(n[0] * light[0] + n[1] * light[1] + n[2] * light[2]);
+    const lum = 0.18 + lambert * 0.72;
+    ctx.fillStyle = `rgb(${Math.round(30 + 66 * lum)},${Math.round(70 + 150 * lum)},${Math.round(66 + 136 * lum)})`;
+    ctx.strokeStyle = "rgba(8,20,20,0.35)";
+    ctx.beginPath();
+    const first = projected[item.f[0]];
+    ctx.moveTo(first.x, first.y);
+    for (let k = 1; k < item.f.length; k += 1) {
+      const p = projected[item.f[k]];
+      ctx.lineTo(p.x, p.y);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+  }
+}
+
+/* Points mode: the full vertex cloud, depth-cued in size and warmth. */
+function drawPoints(ctx, projected, w, h) {
+  const stride = Math.max(1, Math.ceil(projected.length / 30000));
+  for (let i = 0; i < projected.length; i += stride) {
+    const p = projected[i];
+    if (!p || p.behind) continue;
+    const t = Math.max(0, Math.min(1, 1 - p.depth * 0.22));
+    ctx.fillStyle = `rgba(${Math.round(120 + 119 * t)},${Math.round(190 + 30 * t)},${Math.round(180 + 20 * t)},${0.35 + t * 0.5})`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 0.9 + t * 1.8, 0, Math.PI * 2);
+    ctx.fill();
+  }
 }
 
 export function meshStats(mesh) {
