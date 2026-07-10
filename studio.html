@@ -655,6 +655,9 @@
       <button class="rt-btn" id="rt-export-json" type="button" title="Save the witnessed perception certificate as JSON"
         aria-label="Export perception JSON">
         <span class="rt-ico" aria-hidden="true">&#8659;</span> Perception JSON</button>
+      <button class="rt-btn" id="rt-export-svg" type="button" title="Convert the current frame to plotter-ready SVG line art"
+        aria-label="Export plotter SVG line art">
+        <span class="rt-ico" aria-hidden="true">&#8659;</span> SVG plot</button>
       <button class="rt-btn" id="rt-export-obj"  type="button" title="Save the loaded geometry as OBJ"
         aria-label="Export OBJ geometry" hidden>
         <span class="rt-ico" aria-hidden="true">&#8659;</span> OBJ</button>
@@ -698,6 +701,12 @@
         <div class="row"><span class="rk">size</span><span class="rv" id="sc-size">-</span></div>
         <div class="grounds" id="sc-feats" aria-label="Visual feature readings"></div>
         <p class="mm-describe" id="mm-describe"></p>
+        <details class="mm-fullread">
+          <summary>full read &middot; the no-vision view</summary>
+          <p class="mm-long" id="mm-long">Render a frame and the long-form read appears here: palette with proportions, the 3&times;3 spatial grid, edge directions, and symmetry.</p>
+          <pre class="mm-ascii" id="mm-ascii" aria-label="ASCII luminance render of the current frame"></pre>
+          <p class="mm-fullread-note">This is the same structured read the model receives: detailed enough to reconstruct the frame without seeing it.</p>
+        </details>
         <div class="mc-drift" id="sc-drift" hidden aria-live="polite" aria-atomic="true"></div>
       </section>
 

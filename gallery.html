@@ -224,6 +224,7 @@
     <button type="button" class="plate-redraw" id="desk-draw" aria-label="Draw a plate from this seed and the selected instruments">draw</button>
     <button type="button" class="plate-redraw" id="desk-save" aria-label="Save your plate as a PNG image">save png</button>
     <button type="button" class="plate-redraw" id="desk-share" aria-label="Copy a link that reproduces this plate">copy link</button>
+    <button type="button" class="plate-redraw" id="desk-plot" aria-label="Replay this plate as pen-plotter line art, stroke by stroke">plot it</button>
   </div>
   <p class="desk-hint">instruments &middot; pick up to three</p>
   <div class="desk-chips" id="desk-chips" role="group" aria-label="Instrument selection"></div>
@@ -499,6 +500,38 @@ if (deskSeed) deskSeed.addEventListener("keydown", (e) => { if (e.key === "Enter
 
 const deskSave = document.getElementById("desk-save");
 if (deskSave) deskSave.addEventListener("click", () => { if (deskCanvas && deskCanvas.dataset.specimenRendered === "true") savePng(deskCanvas); else say("draw a plate first"); });
+
+// Plot it: convert the plate to plotter line art and REPLAY it stroke by
+// stroke on the plate canvas (watching it draw is the point). When the pen
+// finishes, the status offers the plotter-ready SVG.
+let _plotHandle = null;
+const deskPlot = document.getElementById("desk-plot");
+if (deskPlot) deskPlot.addEventListener("click", async () => {
+  if (!deskCanvas || deskCanvas.dataset.specimenRendered !== "true") { say("draw a plate first"); return; }
+  try {
+    if (_plotHandle) _plotHandle.stop();
+    const plot = await import("./system/plotter.js");
+    const seed = deskCanvas.dataset.specimen || "desk";
+    const { svg, polylines, srcW, srcH, stats } = plot.plotCanvas(deskCanvas, { style: "flow", seed });
+    say("plotting - " + stats.lines + " strokes...");
+    _plotHandle = plot.replayPlot(deskCanvas, polylines, srcW, srcH, {
+      onDone: () => {
+        deskCanvas.dataset.specimenRendered = "";
+        if (deskStatus) {
+          deskStatus.textContent = "plot complete - " + stats.lines + " strokes. ";
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+          a.download = "telos-plot-" + seed.replace(/[^a-z0-9_-]+/gi, "-") + ".svg";
+          a.textContent = "download the svg (plotter-ready)";
+          deskStatus.appendChild(a);
+        }
+      },
+    });
+  } catch (error) {
+    console.error("gallery: plot failed", error);
+    say("the plot failed to draw - try a different plate");
+  }
+});
 
 const deskShare = document.getElementById("desk-share");
 if (deskShare) deskShare.addEventListener("click", async () => {
