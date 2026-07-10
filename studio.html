@@ -20,7 +20,7 @@
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/system.css?v=20260709m">
+<link rel="stylesheet" href="system/system.css?v=20260709n">
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
@@ -838,7 +838,7 @@
 
 </main>
 
-<script type="module" src="system/nav.js?v=20260709m"></script>
+<script type="module" src="system/nav.js?v=20260709n"></script>
 <!-- Atelier engine (Task 7): classic IIFE, self-boots on DOM ready, binds the controls above and
      draws into #studio-canvas. Loaded before the Studio module so window.Atelier + the shared
      spine/reconcile readouts are present. -->
@@ -846,12 +846,12 @@
 <script src="system/reconcile.js?v=20260625a" defer></script>
 <script src="system/atelier.js?v=20260701a" defer></script>
 <!-- Vendored interactive libraries (P1). Single prebuilt files, no runtime CDN fetch.
-     panzoom (anvaka) v9.4.3: UMD, sets window.createPanzoom.
-     Tweakpane v4.0.5: ESM named exports, imported directly by studio-surface.js. -->
+     panzoom (anvaka) v9.4.3: UMD, sets window.createPanzoom; needed at boot (the default
+     Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
+     Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js"></script>
-<script type="module" src="system/studio.js?v=20260709m"></script>
-<!-- Music reactive engine: zero-dependency WebAudio + Canvas visual system. -->
-<script type="module" src="system/reactive.js?v=20260625b"></script>
-<script type="module" src="system/reactive-music-ui.js?v=20260625b"></script>
+<script type="module" src="system/studio.js?v=20260709n"></script>
+<!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
+     first entry into the Music source, so it is no longer a static tag here. -->
 </body>
 </html>
