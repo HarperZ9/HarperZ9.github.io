@@ -660,6 +660,26 @@
       <button class="rt-btn" id="rt-export-json" type="button" title="Save the witnessed perception certificate as JSON"
         aria-label="Export perception JSON">
         <span class="rt-ico" aria-hidden="true">&#8659;</span> Perception JSON</button>
+      <!-- Unified export menu: every registered kind grouped by discipline.
+           Populated by studio.js from EXPORT_KINDS; absent module degrades to
+           the legacy PNG/JSON buttons above. -->
+      <details class="rt-plot" id="rt-export">
+        <summary class="rt-btn" title="Export the frame across disciplines: raster, print, design, textile, text, relief"
+          aria-label="Export menu: choose a format across disciplines">
+          <span class="rt-ico" aria-hidden="true">&#8659;</span> Export as</summary>
+        <div class="rt-plot-pop" id="rt-export-pop" aria-label="Export formats">
+          <div class="rt-plot-row">
+            <span class="rt-plot-lab" id="export-paper-lab">pdf paper</span>
+            <div class="rt-plot-chips" role="group" aria-labelledby="export-paper-lab">
+              <button type="button" class="chip active" data-export-paper="a4" aria-pressed="true">a4</button>
+              <button type="button" class="chip" data-export-paper="a3" aria-pressed="false">a3</button>
+              <button type="button" class="chip" data-export-paper="letter" aria-pressed="false">letter</button>
+            </div>
+          </div>
+          <div id="rt-export-list" class="rt-export-list"></div>
+          <p class="rt-plot-note">Design, textile, and text formats read the live perception packet; PDF paper sets the print page; relief exports a luminance mesh.</p>
+        </div>
+      </details>
       <!-- Plot desk: the SVG plot control opens an options popover (style, pens, paper, format).
            Wired by studio.js through the plotter contract; absent capabilities fall back to the
            single-pen flow SVG. -->
