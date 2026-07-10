@@ -1795,18 +1795,127 @@ function updateMeshPanel() {
   // so _meshMod is necessarily in by the time a mesh exists.
   const stats = _meshMod.meshStats(_studioLastMesh || _studioSourceMesh);
   status.textContent =
-    `${stats.vertices} vertices, ${stats.faces} faces, radius ${stats.radius.toFixed(3)}. Export uses this transformed mesh.`;
+    `${stats.vertices} vertices, ${stats.faces} faces, radius ${stats.radius.toFixed(3)}. `
+    + `Viewport: drag orbits · wheel dollies · Shift+drag moves · Ctrl+drag rotates · double-click resets. Export uses this transformed mesh.`;
 }
 
-function renderMeshTransform({ announce = false } = {}) {
+// Viewport camera for the mesh preview: orbit/dolly like a DCC viewport.
+// Drag orbits, wheel dollies, Shift+drag moves the OBJECT in the view plane,
+// Ctrl+drag rotates the object, double-click resets the camera.
+const _meshCam = { yaw: 35, pitch: -18, dist: 3.4 };
+let _meshShading = "wire";
+
+function renderMeshTransform({ announce = false, fast = false } = {}) {
   if (!_studioSourceMesh || !_meshMod) { updateMeshPanel(); return; }
   syncMeshValueLabels();
   _studioLastMesh = _meshMod.transformMesh(_studioSourceMesh, meshTransformValues());
-  _meshMod.drawMeshPreview(byoCanvas(), _studioLastMesh, { maxBacking: currentQuality().maxBacking });
+  _meshMod.drawMeshPreview(byoCanvas(), _studioLastMesh, {
+    maxBacking: currentQuality().maxBacking,
+    cameraYaw: _meshCam.yaw,
+    cameraPitch: _meshCam.pitch,
+    cameraDist: _meshCam.dist,
+    // During a drag, big solid meshes drop to wire so the orbit stays fluid;
+    // the settled render restores the chosen shading.
+    shading: fast && _meshShading === "solid" && (_studioLastMesh.faces || []).length > 4000 ? "wire" : _meshShading,
+    lineScale: currentQuality().aa > 1 ? 1.2 : 1,
+  });
+  if (fast) return;
   const obs = perceive(byoCanvas());
   updateMeshPanel();
   startMeterLoop();
   if (announce) say("model", `Model transform applied. Preview fingerprint ${obs.phash}; OBJ and GLTF export now use the transformed mesh.`);
+}
+
+// rAF-throttled re-render for pointer interaction.
+let _meshRafPending = false;
+function meshInteractiveRender() {
+  if (_meshRafPending) return;
+  _meshRafPending = true;
+  requestAnimationFrame(() => {
+    _meshRafPending = false;
+    renderMeshTransform({ fast: true });
+  });
+}
+
+function nudgeMeshSlider(id, delta) {
+  const el = $(id);
+  if (!el) return;
+  const min = Number(el.min), max = Number(el.max);
+  const next = Math.min(max, Math.max(min, Number(el.value) + delta));
+  el.value = String(next);
+}
+
+let _meshViewportWired = false;
+function wireMeshViewport() {
+  if (_meshViewportWired) return;
+  const canvas = byoCanvas();
+  if (!canvas) return;
+  _meshViewportWired = true;
+  let drag = null;
+  canvas.addEventListener("pointerdown", (e) => {
+    if (!_studioSourceMesh) return;
+    drag = { x: e.clientX, y: e.clientY, mode: e.shiftKey ? "move" : e.ctrlKey ? "rotate" : "orbit" };
+    try { canvas.setPointerCapture(e.pointerId); } catch (_) { /* synthetic or already-released pointer */ }
+    e.preventDefault();
+  });
+  canvas.addEventListener("pointermove", (e) => {
+    if (!drag || !_studioSourceMesh) return;
+    const dx = e.clientX - drag.x;
+    const dy = e.clientY - drag.y;
+    drag.x = e.clientX;
+    drag.y = e.clientY;
+    if (drag.mode === "orbit") {
+      _meshCam.yaw = (_meshCam.yaw + dx * 0.45) % 360;
+      _meshCam.pitch = Math.min(89, Math.max(-89, _meshCam.pitch - dy * 0.35));
+    } else if (drag.mode === "move") {
+      // Screen-plane translation, scaled so a full drag across the stage
+      // moves the object about one bounding radius.
+      const rect = canvas.getBoundingClientRect();
+      const k = (2.2 * _meshCam.dist / 3.4) / Math.max(1, rect.width);
+      const yawRad = _meshCam.yaw * Math.PI / 180;
+      nudgeMeshSlider("model-tx", (dx * Math.cos(yawRad)) * k);
+      nudgeMeshSlider("model-tz", (dx * Math.sin(yawRad)) * k);
+      nudgeMeshSlider("model-ty", -dy * k);
+    } else {
+      nudgeMeshSlider("model-ry", dx * 0.5);
+      nudgeMeshSlider("model-rx", dy * 0.5);
+    }
+    meshInteractiveRender();
+  });
+  const settle = () => {
+    if (!drag) return;
+    drag = null;
+    renderMeshTransform({});
+  };
+  canvas.addEventListener("pointerup", settle);
+  canvas.addEventListener("pointercancel", settle);
+  canvas.addEventListener("wheel", (e) => {
+    if (!_studioSourceMesh) return;
+    e.preventDefault();
+    _meshCam.dist = Math.min(12, Math.max(1.4, _meshCam.dist * (e.deltaY > 0 ? 1.1 : 0.9)));
+    meshInteractiveRender();
+    clearTimeout(wireMeshViewport._settleT);
+    wireMeshViewport._settleT = setTimeout(() => renderMeshTransform({}), 180);
+  }, { passive: false });
+  canvas.addEventListener("dblclick", () => {
+    if (!_studioSourceMesh) return;
+    _meshCam.yaw = 35; _meshCam.pitch = -18; _meshCam.dist = 3.4;
+    renderMeshTransform({});
+  });
+}
+
+// Shading chips: wire | solid | points.
+function wireMeshShading() {
+  const group = $("model-shading");
+  if (!group || group.dataset.wired === "true") return;
+  group.dataset.wired = "true";
+  group.querySelectorAll("[data-shade]").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      _meshShading = chip.dataset.shade;
+      group.querySelectorAll("[data-shade]").forEach((c) => c.setAttribute("aria-pressed", String(c === chip)));
+      renderMeshTransform({});
+    });
+  });
 }
 
 function resetMeshTransform() {
@@ -1893,8 +2002,11 @@ async function loadFile(file) {
       await loadMeshTransform();
       _studioSourceMesh = _meshMod.cloneMesh(result.mesh);
       _studioLastMesh = _meshMod.cloneMesh(result.mesh);
+      wireMeshViewport();
+      wireMeshShading();
       renderMeshTransform();
       if (typeof window.__studioExportMeshVisible === "function") window.__studioExportMeshVisible(true);
+      say("model", "The viewport is live: drag orbits, wheel dollies, Shift+drag moves the model, Ctrl+drag rotates it, double-click resets the camera.");
     } catch (err) {
       say("model", "The mesh tooling failed to load: " + (err && err.message ? err.message : String(err)));
     }
@@ -3257,6 +3369,12 @@ function applyQualityAndRerender() {
     // Re-launch the 3D orbit at the new backing size.
     const opts = read3DOpts();
     render3DInto(opts);
+  } else if (_studioSourceMesh) {
+    // Mesh viewport: re-render at the new backing cap and line weight.
+    renderMeshTransform({});
+  } else if (activeSource === "ndim" && typeof window.__studioNDimPaint === "function") {
+    // nD projection: repaint picks up the new backing size.
+    try { window.__studioNDimPaint(); } catch (_) {}
   }
   // BYO/watch: sizeCanvas is called per-frame in drawSource, so the next draw picks it up.
   // Atelier: sizeCanvas is called at render time in atelier.js's own sizeCanvas().
