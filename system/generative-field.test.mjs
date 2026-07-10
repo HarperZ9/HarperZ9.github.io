@@ -290,3 +290,18 @@ test("drawImageFit honors an explicit width, deriving height from aspect", () =>
   assert.equal(out.width, 600);
   assert.equal(out.height, 300);
 });
+
+/* ── neural instruments (2026-07-10): CPPN field + neural SDF surface ──────── */
+test("neural layers are registered and render deterministically per seed", () => {
+  const names = specimenLayerNames();
+  assert.ok(names.includes("neural-field"), "neural-field must be registered");
+  assert.ok(names.includes("neural-sdf"), "neural-sdf must be registered");
+  for (const layer of ["neural-field", "neural-sdf"]) {
+    const a = renderLog(`neu-${layer}`, [layer], 240, 160).log;
+    const b = renderLog(`neu-${layer}`, [layer], 240, 160).log;
+    assert.ok(a.length > 30, `${layer} should draw (got ${a.length} ops)`);
+    assert.deepEqual(a, b, `${layer} must be deterministic for a seed`);
+    const c = renderLog(`neu-${layer}-other`, [layer], 240, 160).log;
+    assert.notDeepEqual(a, c, `${layer} must vary with the seed`);
+  }
+});
