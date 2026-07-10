@@ -6,6 +6,13 @@
 // below, at the setSource() boundary, so first-load JS carries none of the per-source graphs.
 import { perceptualHash, features, hamming } from "../shared-frame/eye.js";
 import { representation, richFeatures, describeFrame, describeFrameLong, perceptionDetail, rmsFromBytes, spectrumBands, dominantPitchHz, assembleFullPerception, hueName } from "./sense.js";
+// Advanced perception channels (brailleRender / shapeInventory / reconstructionFidelity), which
+// ship separately in sense-core's features.mjs and reach here through sense.js's `export *` chain
+// (sense.js -> lib/sense-core/index.mjs -> features.mjs, verified). Accessed via a NAMESPACE
+// import so a build where those exports have not landed yet degrades silently (the property
+// reads yield undefined and every call site is typeof-guarded) instead of failing the whole
+// module graph at load time the way a missing named import would.
+import * as senseCore from "./sense.js";
 import { respond } from "./respond.js";
 import { sourceIsAnimated, shouldHaltOnStatic, fullscreenMaxBacking } from "./studio-loop.js";
 import { buildModelHeaders } from "./studio-model.js";
@@ -371,7 +378,40 @@ const SOURCES = {
   watch:     { block: "src-watch",     mode: "byo" },
   discovery: { block: "src-discovery", mode: "generate" },
   showcase:  { block: "src-showcase",  mode: "generate" },
+  poster:    { block: "src-poster",    mode: "generate" },
 };
+
+// ── The poster workshop (lazy). Mounted once on first entry; the panel owns
+// its DOM inside #poster-mount and renders onto the shared studio canvas.
+let _posterWorkshop = null;
+async function enterPosterWorkshop(epoch) {
+  if (_posterWorkshop) { _posterWorkshop.render(); return; }
+  try {
+    const [panelMod, fieldMod, ex] = await Promise.all([
+      import("./poster-panel.js"),
+      import("./generative-field.js"),
+      loadExporters(),
+    ]);
+    if (epoch !== _sourceEpoch) return;   // switched away while loading
+    _posterWorkshop = panelMod.mountPosterWorkshop({
+      mount: $("poster-mount"),
+      canvas: $("studio-canvas"),
+      renderSpecimen: fieldMod.renderSpecimen,
+      layerNames: fieldMod.specimenLayerNames,
+      say,
+      perceiveNow: perceive,
+      getDetail: () => _lastDetail,
+      getRich: () => lastRich,
+      download: ex.download,
+    });
+    // Cross-surface flow: a plate arriving from the gallery seeds the art.
+    const params = new URLSearchParams(location.search);
+    const seed = (params.get("seed") || "").slice(0, 48);
+    if (seed && _posterWorkshop) _posterWorkshop.setArtSeed(seed);
+  } catch (err) {
+    say("model", "The workshop failed to load: " + (err && err.message ? err.message : String(err)));
+  }
+}
 
 function setSource(next) {
   if (!SOURCES[next]) return;
@@ -404,6 +444,7 @@ function setSource(next) {
   // Roving tabindex: active tab is 0, all others -1 (ARIA tablist pattern).
   syncTabindex(next);
   syncStudioRendererConsole(next);
+  if (next === "poster") enterPosterWorkshop(epoch);
   // Mark the stage interactive (grab cursor + drag affordance) for the camera-driven sources.
   // ndim is now a camera source too (P2 directive a): wheel dollies the camera into the volume.
   const stageEl = document.getElementById("viewport-stage");
@@ -513,6 +554,9 @@ function readPixelData(canvas, w, h) {
 // the frame: 3x3 region grid, 16x16 hex map, edge orientations, symmetry, and
 // an ASCII luminance render.
 let _lastDetail = null;
+// The downsample the detail was computed FROM (pixels + dims), kept alongside it so the
+// reconstruction-fidelity round trip can re-read the exact same field it describes.
+let _lastDetailPx = null, _lastDetailW = 0, _lastDetailH = 0;
 function computePerceptionDetail(canvas) {
   try {
     const dw = Math.min(192, canvas.width || 192);
@@ -523,21 +567,151 @@ function computePerceptionDetail(canvas) {
     sctx.drawImage(canvas, 0, 0, dw, dh);
     const dpx = sctx.getImageData(0, 0, dw, dh).data;
     _lastDetail = perceptionDetail(dpx, dw, dh, 4);
+    _lastDetailPx = dpx; _lastDetailW = dw; _lastDetailH = dh;
+    // Advanced channels (sense-core contract): braille luminance render + salient-shape
+    // inventory. If perceptionDetail already attached the field we keep it; if the export
+    // is absent the field stays absent and the UI hides its affordance. Each is guarded
+    // independently so one missing organ never costs the others.
+    if (_lastDetail) {
+      try {
+        if (_lastDetail.braille == null && typeof senseCore.brailleRender === "function")
+          _lastDetail.braille = senseCore.brailleRender(dpx, dw, dh, 4, 48);
+      } catch (_) {}
+      try {
+        if (_lastDetail.shapes == null && typeof senseCore.shapeInventory === "function")
+          _lastDetail.shapes = senseCore.shapeInventory(dpx, dw, dh, 4, 6);
+      } catch (_) {}
+    }
     return _lastDetail;
   } catch (_) { return null; }
+}
+
+// ── full-read render mode (ascii / braille) ──────────────────────────────────
+// Two chips switch #mm-ascii between the ASCII luminance render and the braille
+// render (2x4 dot cells, ~8x the spatial density per character). The braille chip
+// only shows when the field is present on the current detail.
+let _readMode = "ascii";
+function syncReadModeChips() {
+  const hasBraille = !!(_lastDetail && _lastDetail.braille);
+  if (!hasBraille && _readMode === "braille") _readMode = "ascii";
+  const brailleBtn = $("mm-mode-braille");
+  if (brailleBtn) brailleBtn.hidden = !hasBraille;
+  for (const [id, name] of [["mm-mode-ascii", "ascii"], ["mm-mode-braille", "braille"]]) {
+    const btn = $(id);
+    if (!btn) continue;
+    btn.classList.toggle("active", _readMode === name);
+    btn.setAttribute("aria-pressed", String(_readMode === name));
+  }
+}
+function renderFullRead() {
+  const asciiEl = $("mm-ascii");
+  if (!asciiEl || !_lastDetail) return;
+  const braille = _readMode === "braille" && _lastDetail.braille;
+  asciiEl.textContent = braille ? _lastDetail.braille : (_lastDetail.ascii || "");
+  asciiEl.setAttribute("aria-label", braille
+    ? "Braille luminance render of the current frame"
+    : "ASCII luminance render of the current frame");
+}
+
+// ── the shapes line: "forms: hue at (cx,cy) area%" for the top salient shapes ─
+function formatShapeEntry(s) {
+  if (!s || typeof s !== "object") return null;
+  const hue = s.hue || s.color || s.name || "form";
+  const coord = v => Number.isFinite(v) ? (v >= 0 && v <= 1 ? v.toFixed(2) : String(Math.round(v))) : "?";
+  const cx = Number(s.cx != null ? s.cx : s.x);
+  const cy = Number(s.cy != null ? s.cy : s.y);
+  const area = Number(s.areaFrac != null ? s.areaFrac : s.area != null ? s.area : s.fraction);
+  const pct = Number.isFinite(area) ? Math.round(area <= 1 ? area * 100 : area) : null;
+  return hue + " at (" + coord(cx) + "," + coord(cy) + ")" + (pct != null ? " " + pct + "%" : "");
+}
+function renderShapesLine() {
+  const el = $("mm-shapes");
+  if (!el) return;
+  const shapes = _lastDetail && Array.isArray(_lastDetail.shapes) ? _lastDetail.shapes : [];
+  const parts = shapes.slice(0, 3).map(formatShapeEntry).filter(Boolean);
+  if (!parts.length) { el.hidden = true; el.textContent = ""; return; }
+  el.hidden = false;
+  el.textContent = "forms: " + parts.join(" · ");
+}
+
+// ── reconstruction fidelity: the round-trip claim, settled renders only ───────
+// reconstructionFidelity (sense-core contract) renders the structured read back into
+// pixels and re-hashes; the badge reports how many perceptual-hash bits survive.
+// Computed ONLY on settled perceive() / send-time reads, never in the live loop, so
+// the number always describes a frame that is actually standing still.
+let _lastFidelity = null;
+function normaliseFidelity(raw) {
+  if (raw == null) return null;
+  if (typeof raw === "number" && Number.isFinite(raw)) {
+    const score = Math.max(0, Math.min(1, raw));
+    return { score, matched: Math.round(score * 64), total: 64 };
+  }
+  if (typeof raw !== "object") return null;
+  // null-safe numeric read: Number(null) is 0, so an honest null score (e.g. a packet
+  // with no colour grid) must NOT collapse into "score 0"; it hides the badge instead.
+  const num = v => (v == null || !Number.isFinite(Number(v))) ? null : Number(v);
+  const total = num(raw.total) || num(raw.outOf) || num(raw.bits) || 64;
+  let matched = num(raw.matched) != null ? num(raw.matched) : num(raw.match);
+  const hamming = num(raw.hamming);
+  let score = num(raw.score);
+  if (matched == null && hamming != null) matched = total - hamming;
+  if (score == null && matched != null) score = matched / total;
+  if (score == null) return null;
+  score = Math.max(0, Math.min(1, score));
+  if (matched == null) matched = Math.round(score * total);
+  return { score, matched, total };
+}
+function updateReconstructionBadge() {
+  let rec = null;
+  try {
+    if (typeof senseCore.reconstructionFidelity === "function" && _lastDetail && _lastDetailPx) {
+      rec = normaliseFidelity(senseCore.reconstructionFidelity(_lastDetailPx, _lastDetailW, _lastDetailH, 4, _lastDetail));
+    }
+  } catch (_) { rec = null; }
+  _lastFidelity = rec;
+  // Ride the detail attachment: the perception JSON export and __studioPerception
+  // inherit the score through detail.reconstruction, always paired with THIS detail.
+  if (rec && _lastDetail) _lastDetail.reconstruction = rec;
+  const el = $("mm-fidelity");
+  if (!el) return;
+  if (!rec) { el.hidden = true; return; }
+  el.hidden = false;
+  el.textContent = "reconstruction " + rec.matched + "/" + rec.total;
+  el.classList.toggle("is-verified", rec.score >= 0.75);
+  el.title = "Round-trip claim: the structured no-vision read is rendered back into pixels and "
+    + "re-hashed; " + rec.matched + " of " + rec.total + " perceptual-hash bits match the original "
+    + "frame. Higher means the read alone carries enough to reconstruct the frame.";
 }
 
 function updateDetailUI(rich) {
   if (!_lastDetail) return;
   const long = describeFrameLong(rich || lastRich || {}, _lastDetail);
   const longEl = $("mm-long"); if (longEl) longEl.textContent = long;
-  const asciiEl = $("mm-ascii"); if (asciiEl) asciiEl.textContent = _lastDetail.ascii;
+  syncReadModeChips();
+  renderFullRead();
+  renderShapesLine();
   window.__studioPerception = {
     longDescription: long,
     detail: _lastDetail,
     phash: lastHashByCanvas.get($("studio-canvas")) || null,
     source: currentSourceLabel(),
   };
+  // Advanced channels surface at the top level too, when the contract provides them.
+  if (_lastDetail.shapes != null) window.__studioPerception.shapes = _lastDetail.shapes;
+  if (_lastDetail.braille != null) window.__studioPerception.braille = _lastDetail.braille;
+  if (_lastDetail.reconstruction) window.__studioPerception.fidelity = _lastDetail.reconstruction;
+}
+
+// Wire the full-read mode chips (delegated; the block exists in studio.html at boot).
+{
+  const modeHost = $("mm-readmode");
+  if (modeHost) modeHost.addEventListener("click", e => {
+    const b = e.target.closest("button[data-read-mode]");
+    if (!b) return;
+    _readMode = b.dataset.readMode === "braille" ? "braille" : "ascii";
+    syncReadModeChips();
+    renderFullRead();
+  });
 }
 
 function perceive(canvas) {
@@ -556,6 +730,7 @@ function perceive(canvas) {
   // regions). Reuses the px we already read; eye.js's gated dHash/features above are untouched.
   const rich = measure(px, w, h, phash);
   computePerceptionDetail(canvas);
+  updateReconstructionBadge();   // settled render: refresh the round-trip fidelity claim
   updateDetailUI(rich);
   return { phash, features:f, rich, width:w, height:h };
 }
@@ -2987,6 +3162,10 @@ function fullPerception() {
   // self-consistent, plus the long-form description a no-vision reader uses.
   const detail = computePerceptionDetail(canvas) || _lastDetail;
   if (detail) {
+    // Send-time is a settled read: refresh the round-trip fidelity so the exported
+    // packet carries detail.reconstruction paired with THIS detail (guarded inside;
+    // a build without reconstructionFidelity simply attaches nothing).
+    try { updateReconstructionBadge(); } catch (_) {}
     perception.detail = detail;
     try { perception.longDescription = describeFrameLong(lastRich || {}, detail); } catch (_) {}
   }
@@ -3683,23 +3862,76 @@ buildMeters();
     });
   }
 
-  // Plotter SVG: the frame's luminance becomes single-stroke line art a pen
-  // plotter (or vpype) consumes directly. Lazy module; seeded by the frame's
+  // Plot desk: the frame's luminance becomes plotter-ready line art. The "SVG plot"
+  // control opens a small options popover (style / pens / paper / format) and wires the
+  // choices through the plotter contract (plotCanvas {pens, paper}, toGcode, separatePens).
+  // Every advanced capability is typeof-guarded, so a plotter build without pens, paper,
+  // or G-code support degrades to the original single-pen flow SVG. Seeded by the frame's
   // own perceptual hash so the same frame plots the same way.
-  const btnSvg = $("rt-export-svg");
-  if (btnSvg) {
-    btnSvg.addEventListener("click", async () => {
+  const plotDesk = $("rt-plot");
+  const plotPop = $("rt-plot-pop");
+  const plotOpts = { style: "flow", pens: 1, paper: "a4", format: "svg" };
+  if (plotPop) {
+    plotPop.addEventListener("click", e => {
+      const b = e.target.closest("button[data-plot-key]");
+      if (!b) return;
+      const key = b.dataset.plotKey;
+      plotOpts[key] = key === "pens" ? Math.max(1, parseInt(b.dataset.plotValue, 10) || 1) : b.dataset.plotValue;
+      plotPop.querySelectorAll('button[data-plot-key="' + key + '"]').forEach(btn => {
+        const on = btn === b;
+        btn.classList.toggle("active", on);
+        btn.setAttribute("aria-pressed", String(on));
+      });
+    });
+  }
+  if (plotDesk) {
+    // Close on outside click / Escape, like the page's other popovers.
+    document.addEventListener("click", e => {
+      if (plotDesk.open && !plotDesk.contains(e.target)) plotDesk.open = false;
+    });
+    plotDesk.addEventListener("keydown", e => {
+      if (e.key === "Escape" && plotDesk.open) {
+        plotDesk.open = false;
+        const s = plotDesk.querySelector("summary");
+        if (s) { try { s.focus({ preventScroll: true }); } catch (_) { s.focus(); } }
+      }
+    });
+  }
+  const plotGo = $("rt-plot-download");
+  if (plotGo) {
+    plotGo.addEventListener("click", async () => {
       try {
         const plot = await import("./plotter.js");
+        if (typeof plot.plotCanvas !== "function") throw new Error("the plotter module lacks plotCanvas");
         const canvas = $("studio-canvas");
         const seed = lastHashByCanvas.get(canvas) || "studio";
-        const { svg, stats } = plot.plotCanvas(canvas, { style: "flow", seed });
+        const { style, pens, paper } = plotOpts;
+        const result = plot.plotCanvas(canvas, { style, seed, pens, paper });
         const ex = await loadExporters();
-        ex.download(new Blob([svg], { type: "image/svg+xml" }), "studio-plot-" + seed + ".svg");
-        say("model", "Plotted the frame as " + stats.lines + " pen strokes (" + stats.points
-          + " points), seeded by its hash " + seed + ". The SVG is single-stroke and plotter-ready.");
+        const base = "studio-plot-" + style + "-" + pens + "pen-" + paper + "-" + seed;
+        const wantGcode = plotOpts.format === "gcode";
+        const asGcode = wantGcode && typeof plot.toGcode === "function";
+        // Multi-pen result: plotCanvas attaches .pens (separatePens output) when it clustered.
+        const penned = Array.isArray(result.pens) && result.pens.length > 1;
+        if (asGcode) {
+          // Group the toolpath by pen so each colour plots as one contiguous run (swap the
+          // pen between runs); paper maps to the machine's plot width in millimetres.
+          const gLines = penned ? result.pens.flatMap(p => p.polylines) : result.polylines;
+          const widthMm = { a4: 190, a5: 130, square: 150 }[paper] || 190;
+          const gcode = plot.toGcode(gLines, result.srcW, result.srcH, { style, seed, widthMm });
+          ex.download(new Blob([gcode], { type: "text/plain" }), base + ".gcode");
+        } else {
+          ex.download(new Blob([result.svg], { type: "image/svg+xml" }), base + ".svg");
+        }
+        const penNote = pens > 1 && !penned
+          ? pens + " pens requested, single-pen in this build" : pens + (pens > 1 ? " pens" : " pen");
+        say("model", "Plotted the frame as " + result.stats.lines + " strokes (" + result.stats.points
+          + " points): style " + style + ", " + penNote + ", paper " + paper + ", as "
+          + (asGcode ? "G-code" : wantGcode ? "SVG (G-code is unavailable in this build)" : "SVG")
+          + ". Seeded by its hash " + seed + ", so the same frame plots the same way.");
+        if (plotDesk) plotDesk.open = false;
       } catch (e) {
-        say("model", "SVG plot failed: " + e.message);
+        say("model", "Plot export failed: " + e.message);
       }
     });
   }
