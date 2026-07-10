@@ -855,3 +855,15 @@ ul.bul .num{color:var(--crystal)}
 @media print{
   .plate{display:none}
 }
+
+/* ── menu actuation (2026-07-09): 44px targets + tap-delay removal ────────── */
+.site-nav .sn-more summary,
+.site-nav .sn-more-list a,
+.site-nav .sn-links > a,
+.docnav a{
+  min-height:44px;
+  display:inline-flex;
+  align-items:center;
+  touch-action:manipulation;
+}
+.site-nav .sn-more-list a{display:flex}

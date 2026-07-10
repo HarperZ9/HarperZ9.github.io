@@ -66,6 +66,56 @@ function menuGroup(label, items, active, className) {
     + `</div>`;
 }
 
+// Arrow-key travel inside an open menu list: Down/Up cycle, Home/End jump.
+// Shared by the static-page menu and the home menu (same list-of-links shape).
+export function wireMenuArrowKeys(details, listSelector, opts) {
+  details.addEventListener("keydown", (event) => {
+    if (!details.open) return;
+    const keys = ["ArrowDown", "ArrowUp", "Home", "End"];
+    if (!keys.includes(event.key)) return;
+    const links = [...details.querySelectorAll(`${listSelector} a`)];
+    if (!links.length) return;
+    event.preventDefault();
+    const i = links.indexOf(details.ownerDocument.activeElement);
+    const next = event.key === "Home" ? 0
+      : event.key === "End" ? links.length - 1
+      : event.key === "ArrowDown" ? (i + 1) % links.length
+      : (i - 1 + links.length) % links.length;
+    links[next].focus();
+  }, opts);
+}
+
+// Guaranteed anchor arrival. Smooth scrolling rides the compositor; when the
+// page cannot produce frames (occluded window, saturated main thread on a
+// slow machine), a smooth fragment navigation moves ZERO pixels while the
+// hash still changes - the nav feels dead. This handler prefers smooth but
+// force-lands instantly if nothing moved shortly after the click.
+export function wireAnchorArrival(doc = document) {
+  if (doc.__anchorArrivalWired) return;
+  doc.__anchorArrivalWired = true;
+  doc.addEventListener("click", (event) => {
+    const anchor = event.target && event.target.closest && event.target.closest('a[href^="#"]');
+    if (!anchor || event.defaultPrevented || event.button !== 0) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const id = decodeURIComponent(anchor.getAttribute("href").slice(1));
+    if (!id) return;
+    const target = doc.getElementById(id);
+    if (!target) return;
+    event.preventDefault();
+    if (typeof history !== "undefined" && history.pushState) {
+      history.pushState(null, "", "#" + id);
+    }
+    const reduce = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    target.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    if (!reduce) {
+      const before = window.scrollY;
+      window.setTimeout(() => {
+        if (Math.abs(window.scrollY - before) < 4) target.scrollIntoView({ behavior: "auto", block: "start" });
+      }, 320);
+    }
+  });
+}
+
 function enhanceMenu(doc, mount) {
   const details = mount.querySelector(".sn-more");
   const summary = details && details.querySelector("summary");
@@ -93,6 +143,7 @@ function enhanceMenu(doc, mount) {
   details.querySelectorAll(".sn-more-list a").forEach((link) => {
     link.addEventListener("click", () => close(false), opts);
   });
+  wireMenuArrowKeys(details, ".sn-more-list", opts);
 
   if (typeof doc.addEventListener === "function") {
     doc.addEventListener("click", (event) => {
@@ -129,6 +180,7 @@ export function renderNav(doc = document) {
 if (typeof document !== "undefined") {
   const boot = () => {
     renderNav();
+    wireAnchorArrival(document);
     import("./generative-field.js").catch(() => {});
   };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);

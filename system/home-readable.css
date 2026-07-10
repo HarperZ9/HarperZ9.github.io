@@ -616,3 +616,12 @@ body.home-generative-field .hero > #motes.generative-motes-canvas{
    IntersectionObserver); the entrance reads as a transform-only settle.
    Overrides the bundle's opacity:0 resting state; this sheet loads after it. */
 html.js .reveal:not(.in){opacity:1;transform:translateY(14px)}
+
+/* ── menu actuation (2026-07-09): 44px targets + tap-delay removal ────────── */
+.home-menu summary,
+.home-menu-list a,
+.topnav-links a{
+  min-height:44px;
+  touch-action:manipulation;
+}
+.topnav-links a{display:inline-flex;align-items:center}
