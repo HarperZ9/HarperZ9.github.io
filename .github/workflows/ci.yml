@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: "24"
       - name: Install test runner
-        run: python -m pip install pytest
+        run: python -m pip install pytest fonttools
       - name: Python content contracts
         run: python -m pytest
       - name: Internal link crawl
