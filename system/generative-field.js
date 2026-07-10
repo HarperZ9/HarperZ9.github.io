@@ -2,8 +2,11 @@
 // Synthesizes route-seeded orbit fields, contour ridges, crystal fragments,
 // fluid metaballs, iso-contours, ASCII dither, flow traces, pointer wakes, and
 // motes, plus the fixture vocabulary: crystal lens apertures, scanline
-// halftones, facet planes, groove marble, and quadrant CA weaves.
-// No copied inspiration images, no remote textures.
+// halftones, facet planes, groove marble, quadrant CA weaves, and two
+// seed-authored neural instruments (a CPPN colour field and a sphere-marched
+// neural signed-distance surface). No copied inspiration images, no remote
+// textures, and no pretrained weights: the seed derives every network.
+import { buildCppn, buildNeuralSdf } from "./neural.js";
 let mounted = false;
 let rafId = 0;
 const pulses = [];
@@ -1993,6 +1996,129 @@ function drawShowpieceRuin(ctx, width, height, tick, seed, palette) {
    no listeners; reduced motion needs no special case because the frame is
    already static. Seeded by a string so a page's specimen is reproducible.
 --------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------
+   Neural instruments (2026-07-10). Seed-authored networks rendered to canvas.
+   drawNeuralField paints a CPPN colour field; drawNeuralSdf sphere-marches a
+   neural signed-distance surface. Both are one-shot and deterministic per
+   seed; the network weights come entirely from the seed (no shipped model).
+--------------------------------------------------------------------------- */
+
+// The CPPN colour field: evaluate the network over a coarse grid and fill
+// cells. Raw CPPN output is a full-gamut RGB; we tug it toward the route
+// palette's jewel tones so it sits inside the site's register instead of
+// reading as a rainbow. Cell size scales with the canvas so the structure
+// holds from a specimen strip to a full-bleed plate.
+function drawNeuralField(ctx, width, height, tick, seed, palette) {
+  const net = buildCppn(seed);
+  const tint = (palette && palette.fluid) || [[80, 196, 185], [167, 115, 255], [239, 171, 48]];
+  const cell = Math.max(2, Math.round(Math.min(width, height) / 240));
+  const cols = Math.ceil(width / cell);
+  const rows = Math.ceil(height / cell);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgba(6,7,14,1)";
+  ctx.fillRect(0, 0, width, height);
+  for (let gy = 0; gy < rows; gy += 1) {
+    const ny = (gy / (rows - 1)) * 2 - 1;
+    for (let gx = 0; gx < cols; gx += 1) {
+      const nx = (gx / (cols - 1)) * 2 - 1;
+      const c = net.eval(nx, ny);
+      // Mix the three CPPN channels as blend weights over the palette's three
+      // jewel tones, then lift by the field's own luminance for depth.
+      const w0 = c[0], w1 = c[1], w2 = c[2];
+      const sum = w0 + w1 + w2 + 1e-4;
+      const r = (tint[0][0] * w0 + tint[1][0] * w1 + tint[2][0] * w2) / sum;
+      const g = (tint[0][1] * w0 + tint[1][1] * w1 + tint[2][1] * w2) / sum;
+      const b = (tint[0][2] * w0 + tint[1][2] * w1 + tint[2][2] * w2) / sum;
+      const lift = 0.35 + 0.65 * Math.max(w0, w1, w2);
+      ctx.fillStyle = `rgb(${Math.round(r * lift)},${Math.round(g * lift)},${Math.round(b * lift)})`;
+      ctx.fillRect(gx * cell, gy * cell, cell + 1, cell + 1);
+    }
+  }
+  ctx.restore();
+}
+
+// The neural signed-distance surface. Sphere-march the seed's neural SDF from
+// a fixed three-quarter camera, shade each hit by its surface normal (finite
+// differences on the field) plus a rim light, over a deep ground. Rendered at
+// a coarse march resolution and blitted, so the one-shot cost stays bounded.
+function drawNeuralSdf(ctx, width, height, tick, seed, palette) {
+  const sdf = buildNeuralSdf(seed);
+  const tint = (palette && palette.fluid) || [[80, 196, 185], [167, 115, 255], [239, 171, 48]];
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgba(4,5,12,1)";
+  ctx.fillRect(0, 0, width, height);
+
+  // March at a capped resolution regardless of canvas size, then draw filled
+  // pixels as small rects scaled to the canvas. Keeps a 2000px plate as cheap
+  // as a strip.
+  const RW = Math.min(240, Math.max(48, Math.round(width / 6)));
+  const RH = Math.max(32, Math.round(RW * (height / Math.max(1, width))));
+  const px = width / RW, py = height / RH;
+  const aspect = RW / RH;
+  // Orbit the camera around the origin (seed-varied 3/4 view) and always look
+  // AT the object, so it stays framed regardless of yaw. Right/up basis from a
+  // look-at, so ray dirs sweep a centred field of view.
+  const yaw = -0.55 + rand(seed, 6001) * 1.1;
+  const dist = 3.0;
+  const eye = [Math.sin(yaw) * dist, 0.85, Math.cos(yaw) * dist];
+  // forward = normalize(origin - eye)
+  let fx = -eye[0], fy = -eye[1], fz = -eye[2];
+  const fl = Math.hypot(fx, fy, fz) || 1; fx /= fl; fy /= fl; fz /= fl;
+  // right = normalize(forward x up)
+  let rgx = fy * 0 - fz * 1, rgy = fz * 0 - fx * 0, rgz = fx * 1 - fy * 0;
+  const rl = Math.hypot(rgx, rgy, rgz) || 1; rgx /= rl; rgy /= rl; rgz /= rl;
+  // up = right x forward
+  const upx = rgy * fz - rgz * fy, upy = rgz * fx - rgx * fz, upz = rgx * fy - rgy * fx;
+  const fov = 0.72;
+  const light = [-0.5, 0.75, 0.55];
+  const ll = Math.hypot(light[0], light[1], light[2]);
+  light[0] /= ll; light[1] /= ll; light[2] /= ll;
+  const eps = 0.008;
+  const maxSteps = 48;
+
+  for (let j = 0; j < RH; j += 1) {
+    const v = (0.5 - j / RH) * 2 * fov;
+    for (let i = 0; i < RW; i += 1) {
+      const u = (i / RW - 0.5) * 2 * fov * aspect;
+      // Ray dir = forward + u*right + v*up (centred field of view, looks at origin).
+      let dx = fx + u * rgx + v * upx;
+      let dy = fy + u * rgy + v * upy;
+      let dz = fz + u * rgz + v * upz;
+      const dl = Math.hypot(dx, dy, dz) || 1;
+      dx /= dl; dy /= dl; dz /= dl;
+      let t = 0, hit = false;
+      for (let s = 0; s < maxSteps; s += 1) {
+        const x = eye[0] + dx * t, y = eye[1] + dy * t, z = eye[2] + dz * t;
+        const d = sdf.dist(x, y, z);
+        if (d < eps) { hit = true; break; }
+        t += Math.max(0.012, d * 0.85);
+        if (t > 6) break;
+      }
+      if (!hit) continue;
+      const x = eye[0] + dx * t, y = eye[1] + dy * t, z = eye[2] + dz * t;
+      // Normal by central differences on the field.
+      const nx = sdf.dist(x + eps, y, z) - sdf.dist(x - eps, y, z);
+      const ny = sdf.dist(x, y + eps, z) - sdf.dist(x, y - eps, z);
+      const nz = sdf.dist(x, y, z + eps) - sdf.dist(x, y, z - eps);
+      const nl = Math.hypot(nx, ny, nz) || 1;
+      const lam = Math.max(0.08, (nx / nl) * light[0] + (ny / nl) * light[1] + (nz / nl) * light[2]);
+      const rim = Math.pow(1 - Math.max(0, -(dx * nx + dy * ny + dz * nz) / nl), 2.5);
+      // Colour by surface normal direction through the palette, lit by lambert.
+      const w0 = (nx / nl + 1) * 0.5, w1 = (ny / nl + 1) * 0.5, w2 = (nz / nl + 1) * 0.5;
+      const sum = w0 + w1 + w2 + 1e-4;
+      const cr = (tint[0][0] * w0 + tint[1][0] * w1 + tint[2][0] * w2) / sum;
+      const cg = (tint[0][1] * w0 + tint[1][1] * w1 + tint[2][1] * w2) / sum;
+      const cb = (tint[0][2] * w0 + tint[1][2] * w1 + tint[2][2] * w2) / sum;
+      const shade = 0.22 + lam * 0.78;
+      ctx.fillStyle = `rgb(${Math.round(Math.min(255, cr * shade + rim * 200))},${Math.round(Math.min(255, cg * shade + rim * 210))},${Math.round(Math.min(255, cb * shade + rim * 230))})`;
+      ctx.fillRect(i * px, j * py, px + 1, py + 1);
+    }
+  }
+  ctx.restore();
+}
+
 const SPECIMEN_LAYERS = {
   orbit: drawOrbitField,
   contour: drawContourRidges,
@@ -2032,6 +2158,8 @@ const SPECIMEN_LAYERS = {
   "showpiece-veil": drawShowpieceVeil,
   "showpiece-burst": drawShowpieceBurst,
   "showpiece-weave": drawShowpieceWeave,
+  "neural-field": drawNeuralField,
+  "neural-sdf": drawNeuralSdf,
 };
 const SPECIMEN_DEFAULT_LAYERS = ["orbit", "contour"];
 
