@@ -121,7 +121,7 @@ _1 = sqlite3_libversion();    <span class="cmt">// the real call into the C libr
 <span class="cmt"># straight through a C variadic:</span>
 <span class="pr">$ buildc run examples/variadic/main.bld</span>
 <span class="ok">the answer is 1 and 2</span></pre>
-    <p class="artifact-cap">Name a C library by its header and link flag, and <span translate="no">BuildLang</span> includes the header, records the link, and calls straight in. <b><span translate="no">extern "C" fn</span></b> goes the other way, so C can call back. A foreign call is still an effect: <b>main declares <span translate="no">~ Foreign</span></b>, so reaching into C sits behind the same gate as touching a file.</p>
+    <p class="artifact-cap">Name a C library by its header and link flag, and <span translate="no">BuildLang</span> includes the header, records the link, and calls straight in. <b><span translate="no">extern "C" fn</span></b> goes the other way, so C can call back. A foreign call is still an effect: <b>main declares <span translate="no">~ Foreign</span></b>, so reaching into C sits behind the same check as touching a file.</p>
     <p class="artifact-note">Captured live from <b translate="no">buildc build --emit c</b> and <b translate="no">buildc run</b> (release build). <span translate="no">buildc</span> emits the include, the link directive, and the call, checked end to end through the build; the final native link against <span translate="no">sqlite3</span> is your own C toolchain&rsquo;s job, not something the test suite claims for you.</p>
   </div>
 </section>
