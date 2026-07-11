@@ -44,14 +44,14 @@
   <section>
     <h2>What this is</h2>
     <p class="lead">The Telos discovery mission is a witnessed, re-checkable reformulation or rediscovery of
-    physical and mathematical law. The discipline that makes it more than assertion is a single gate: a
+    physical and mathematical law. The discipline that makes it more than assertion is a single check: a
     result must be derived or simulated and then checked against a criterion it did not author, not merely
     asserted. The verifier (<a class="inline" href="crucible.html">crucible</a>) returns one of three
     verdicts: <span translate="no">MATCH</span>, <span translate="no">DRIFT</span>, or
     <span translate="no">UNVERIFIABLE</span>.</p>
     <p class="lead">The forge is the assembly line. It reads a sealed talk transcript, writes a claim card
     grounded verbatim in that transcript, attaches a concrete test that could confirm or refute the claim,
-    runs the simulate-versus-assert gate, and stores the card together with its check and its verdict so the
+    runs the simulate-versus-assert check, and stores the card together with its check and its verdict so the
     whole thing is re-runnable. The forge does not produce discoveries on its own. It produces candidate
     cards with an explicit, named falsifier attached, so a later run with a real measurement or a sound
     oracle can return a grounded verdict instead of an opinion. A card with no falsifier is rejected at
@@ -64,7 +64,7 @@
       <li><b>Source.</b> A sealed transcript or corpus item, intaken through <a class="inline" href="gather.html">gather</a> with a provenance receipt.</li>
       <li><b>Claim card.</b> A verbatim-grounded statement with its source reference and seal. No paraphrase that drifts from the talk.</li>
       <li><b>Named falsifier.</b> A concrete measurement or simulation that could confirm or refute the claim. No falsifier, no card.</li>
-      <li><b>The gate.</b> Was the result derived or simulated, or only asserted? The criterion has to come from somewhere other than the claim itself.</li>
+      <li><b>The check.</b> Was the result derived or simulated, or only asserted? The criterion has to come from somewhere other than the claim itself.</li>
       <li><b>Verdict.</b> crucible returns <span translate="no">MATCH</span>, <span translate="no">DRIFT</span>, or <span translate="no">UNVERIFIABLE</span>, with a re-derivable proof.</li>
       <li><b>Discovery object.</b> The card, the check, and the verdict, stored together and re-runnable.</li>
     </ul>
@@ -178,7 +178,7 @@
     <p class="entry-note" style="margin-bottom:.85rem">These are not physics discoveries. They are the
     machinery the forge needs so its cards can return real verdicts, drawn straight from the talks.</p>
     <div class="entry">
-      <div class="entry-head"><span class="entry-title">A fully-correct fraction gate</span><span class="entry-meta">crucible</span></div>
+      <div class="entry-head"><span class="entry-title">A fully-correct fraction check</span><span class="entry-meta">crucible</span></div>
       <ul class="bul"><li>From the chip talk: a benchmark reported "70 to 80 percent of tests correct," and the
       sharper question was whether it got any of them fully right. Add a crucible mode that reports the
       fully-correct fraction separately from the per-check pass rate, and refuses a <span translate="no">MATCH</span>
@@ -196,7 +196,7 @@
       <div class="entry-head"><span class="entry-title">Spec-legibility, a two-way render</span><span class="entry-meta">the engine</span></div>
       <ul class="bul"><li>From the chip talk's flag that getting a formalization right and legible is harder
       than the proof. The engine's two-way render should take a card's formal criterion and render it back
-      into a human-inspectable form so the operator can confirm "yes, that is what I meant." Without this, a
+      into a human-inspectable form so the maintainer can confirm "yes, that is what I meant." Without this, a
       card can pass its check while testing the wrong claim.</li></ul>
     </div>
   </section>

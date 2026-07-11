@@ -50,7 +50,7 @@
       <span>artifacts <b>5 files</b></span>
     </div>
   </div>
-  <div class="seal">v1.0.0 &middot; 361 tests &middot; public contract &middot; private operator material &middot; local-first &middot; metadata-only</div>
+  <div class="seal">v1.0.0 &middot; 361 tests &middot; public contract &middot; private owner material &middot; local-first &middot; metadata-only</div>
 </div>
 
 <main id="main">
@@ -102,9 +102,9 @@ check: artifact_dir <span class="ok">ok</span> .orca/artifacts</pre>
   <h2 id="limits-h" class="reveal">What it is, and what it is not.</h2>
   <p class="body-text reveal"><span translate="no">Runtime</span> is a local-first command-line runner for authorized assessment work: v1.0.0, 361 tests, with checksums and a release record on every build. Its whole safety model is one sentence: it is local and metadata-only (it reads descriptions of things, not the things themselves), and it has no way to reach a target. It does not scan, probe, resolve, connect to, or attack anything; the records you keep are notes about the work, not connections to the systems they name; and it refuses to run a capability in a mode that capability does not declare.</p>
   <p class="pull reveal">It cannot touch the target. That isn&rsquo;t a setting. There is no capability in it that reaches off your disk.</p>
-  <p class="body-text reveal">The honest edges: the set of built-in checks is small on purpose, because this is the structure-and-bookkeeping layer of an engagement, not the part that finds the vulnerabilities. Its public surface is the release-safe contract, docs, and artifact envelope; operator-specific material stays private and local. It needs Python 3.11 or newer. It is the workbench I actually run my own engagements from: bounded, local, and able to tell you what it is.</p>
+  <p class="body-text reveal">The honest edges: the set of built-in checks is small on purpose, because this is the structure-and-bookkeeping layer of an engagement, not the part that finds the vulnerabilities. Its public surface is the release-safe contract, docs, and artifact envelope; owner-specific material stays private and local. It needs Python 3.11 or newer. It is the workbench I actually run my own engagements from: bounded, local, and able to tell you what it is.</p>
   <div class="channels reveal">
-    <span class="g">Status</span>: public repo for release-safe docs and runtime contract; private operator material stays local
+    <span class="g">Status</span>: public repo for release-safe docs and runtime contract; private owner material stays local
     &nbsp;&middot;&nbsp;
     <a href="overview.html">&larr; the map</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the index</a>
   </div>

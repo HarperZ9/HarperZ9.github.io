@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Coherence Membrane, the read-gate</title>
+<title>Coherence Membrane, the read-check</title>
 <meta name="description" content="Coherence Membrane gives an AI a way to actually look at a file or a screen, instead of guessing what's there, and hand you a record you can re-check yourself. It only reads, never changes a thing, and answers MATCH / DRIFT / UNVERIFIABLE, never a silent match on a difference. Zero dependencies, 914 passing tests. By Zain Dana Harper.">
 <link rel="canonical" href="https://harperz9.github.io/coherence-membrane.html">
 <meta property="og:type" content="website">
@@ -29,7 +29,7 @@
 <script type="module" src="system/nav.js?v=20260709n"></script>
 
 <div class="frame">
-  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Coherence Membrane &middot; the read-gate</span></div>
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Coherence Membrane &middot; the read-check</span></div>
   <div class="mid">
     <p class="eyebrow">ACCOUNTABILITY INFRASTRUCTURE &middot; COHERENCE MEMBRANE</p>
     <h1>A guess about what&rsquo;s really there is <span class="g">not the same as looking.</span></h1>
@@ -63,9 +63,9 @@
 
 <!-- the two gates -->
 <section class="mv" id="gates" aria-labelledby="gates-h">
-  <h2 id="gates-h" class="reveal">Two gates, kept apart on purpose.</h2>
-  <p class="body-text reveal">Think of two doors with two different jobs. The read-gate (this library) answers one question: <em>what is actually there?</em> It looks at real things and turns them into Observations: honest records of what it saw. The write-gate (<b>proof-surface</b>, <code translate="no">pre_execution_gate</code>) answers a different one: <em>given what&rsquo;s there, should this action be allowed to happen?</em> It says no unless told otherwise, stays shut whenever anything is unclear, and offers advice rather than forcing anyone&rsquo;s hand.</p>
-  <p class="body-text reveal">They live in separate projects on purpose. A read-gate is useful even to something that only watches and never acts; a write-gate is useful even to something that acts but has no way to see. They fit together not by sharing code, but by sharing the same simple shape of record that passes between them. The looking tool&rsquo;s <span translate="no">MATCH</span> / <span translate="no">DRIFT</span> / <span translate="no">UNVERIFIABLE</span> is the very same set of answers the gate already speaks, so what this tool sees flows straight into the gate&rsquo;s decision with nothing in between to translate.</p>
+  <h2 id="gates-h" class="reveal">Two checks, kept apart on purpose.</h2>
+  <p class="body-text reveal">Think of two doors with two different jobs. The read-check (this library) answers one question: <em>what is actually there?</em> It looks at real things and turns them into Observations: honest records of what it saw. The write-check (<b>proof-surface</b>, <code translate="no">pre_execution_gate</code>) answers a different one: <em>given what&rsquo;s there, should this action be allowed to happen?</em> It says no unless told otherwise, stays shut whenever anything is unclear, and offers advice rather than forcing anyone&rsquo;s hand.</p>
+  <p class="body-text reveal">They live in separate projects on purpose. A read-check is useful even to something that only watches and never acts; a write-check is useful even to something that acts but has no way to see. They fit together not by sharing code, but by sharing the same simple shape of record that passes between them. The looking tool&rsquo;s <span translate="no">MATCH</span> / <span translate="no">DRIFT</span> / <span translate="no">UNVERIFIABLE</span> is the very same set of answers the check already speaks, so what this tool sees flows straight into the check&rsquo;s decision with nothing in between to translate.</p>
   <em class="close reveal">This tool never hands out permission and never removes a single check. Every real guarantee lives in the pieces it&rsquo;s joined to.</em>
 </section>
 
@@ -125,7 +125,7 @@
 <!-- honest limits -->
 <section class="mv" id="limits" aria-labelledby="limits-h">
   <h2 id="limits-h" class="reveal">What it is, and what it isn&rsquo;t.</h2>
-  <p class="body-text reveal">Here is exactly where the line sits, so you never have to guess at it. The tool only looks: it&rsquo;s built from plain Python, leans on nothing outside it, carries 914 tests, and each reader checks itself in ways that are allowed to fail. It swaps a guess for a real look; it does not swap in for a gate. Stopping or allowing things happens at the write-gate (<b>proof-surface</b>). The tool reports what it saw; the person in charge decides what to do about it.</p>
+  <p class="body-text reveal">Here is exactly where the line sits, so you never have to guess at it. The tool only looks: it&rsquo;s built from plain Python, leans on nothing outside it, carries 914 tests, and each reader checks itself in ways that are allowed to fail. It swaps a guess for a real look; it does not swap in for a check. Stopping or allowing things happens at the write-check (<b>proof-surface</b>). The tool reports what it saw; the person in charge decides what to do about it.</p>
   <p class="body-text reveal">Taking a picture of the screen only reads what&rsquo;s already shown on the display in front of you, using the operating system&rsquo;s own screen tools through <code translate="no">ctypes</code>. It does not reach inside, latch onto, or read the private memory of another program. It&rsquo;s meant to be used only on things you own or have been given permission to watch. That isn&rsquo;t fine print. It&rsquo;s how the thing was built on purpose.</p>
   <p class="pull reveal">Left to itself, the answer is never &ldquo;yes,&rdquo; and that&rsquo;s checked against the real code, not just promised in a comment.</p>
   <p class="body-text reveal">The check in <b>lattice.py</b> is done by computer, walking through every single possibility one by one. For only three answers, the underlying rules are easy to state, and that&rsquo;s on purpose. The real work isn&rsquo;t the rules; it&rsquo;s tying the actual code to them, with runnable proofs that the real functions behave exactly the way those rules demand: landing on the right answer, and combining answers in the right way.</p>
