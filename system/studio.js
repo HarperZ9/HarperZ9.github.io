@@ -94,6 +94,9 @@ const loadNeural = lazyLoader(() => import("./studio-neural.js"), m => { _neural
 let _neuralSeed = "living";
 let _neuralInstrument = "field";
 let _neuralStatic = false;   // true when reduced motion holds a single frame
+let _sound = null;
+const loadSound = lazyLoader(() => import("./studio-sound.js"), m => { _sound = m; });
+let _soundSeed = "aurora";
 
 // BYO media: pixel effects, mesh transforms, universal import/export, local-model adapter.
 let _effects = null;
@@ -388,6 +391,7 @@ const SOURCES = {
   showcase:  { block: "src-showcase",  mode: "generate" },
   poster:    { block: "src-poster",    mode: "generate" },
   neural:    { block: "src-neural",    mode: "generate" },
+  sound:     { block: "src-sound",     mode: "generate" },
 };
 
 // ── The poster workshop (lazy). Mounted once on first entry; the panel owns
@@ -438,6 +442,7 @@ function setSource(next) {
     if (_discovery) { try { _discovery.stopDiscovery(); } catch (_) {} }
     if (_showcase)  { try { _showcase.stopShowcase(); } catch (_) {} }
     if (_neural)    { try { _neural.stopNeural(); } catch (_) {} }
+    if (_sound)     { try { _sound.stopSound(); } catch (_) {} }
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
@@ -507,6 +512,16 @@ function setSource(next) {
       startMeterLoop();
     }).catch(err => { say("model", "The living neural instrument failed to load: " + (err && err.message ? err.message : String(err))); });
   }
+  // Seed sound: load the module on first entry, draw the seed's melody as a live
+  // piano-roll on the shared canvas, then arm the meter loop. Playback (and the
+  // audio measurement) is user-initiated via the play control, not on entry.
+  if (next === "sound") {
+    loadSound().then(mod => {
+      if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
+      try { mod.startSound($("studio-canvas"), { seed: _soundSeed }); } catch (_) {}
+      startMeterLoop();
+    }).catch(err => { say("model", "The sound instrument failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
   // Prefetch the graphs the entered source is about to need. Idempotent (cached promise); a
   // prefetch failure is logged here and the first real use re-attempts and surfaces it to the user.
   if (next === "fractal") loadFractal2D().catch(err => console.warn("studio: fractal graph prefetch failed", err));
@@ -573,7 +588,34 @@ function initNeuralControls() {
     restartNeural();
   });
 }
+
+function restartSound() {
+  if (activeSource !== "sound" || !_sound) return;
+  try { _sound.startSound($("studio-canvas"), { seed: _soundSeed }); } catch (_) {}
+}
+function syncSoundReadout() {
+  const out = document.getElementById("sound-readout");
+  if (out && _sound && _sound.soundReadout) { try { out.textContent = _sound.soundReadout(_soundSeed); } catch (_) {} }
+}
+function initSoundControls() {
+  const seedIn = document.getElementById("sound-seed");
+  const reseed = document.getElementById("sound-reseed");
+  const play = document.getElementById("sound-play");
+  const stop = document.getElementById("sound-stop");
+  if (seedIn) seedIn.addEventListener("input", () => { _soundSeed = seedIn.value.trim() || "aurora"; restartSound(); syncSoundReadout(); });
+  if (reseed) reseed.addEventListener("click", () => {
+    _soundSeed = "sn-" + Math.random().toString(36).slice(2, 8);
+    if (seedIn) seedIn.value = _soundSeed;
+    restartSound(); syncSoundReadout();
+  });
+  // Call playSound SYNCHRONOUSLY in the click gesture (the module is already
+  // loaded once the sound source is active), so the audio context resumes
+  // in-gesture. Deferring through loadSound().then() would lose the gesture.
+  if (play) play.addEventListener("click", () => { if (_sound && _sound.playSound) { _sound.playSound({ seed: _soundSeed }); syncSoundReadout(); } });
+  if (stop) stop.addEventListener("click", () => { if (_sound) _sound.pauseSound(); });
+}
 initNeuralControls();
+initSoundControls();
 
 // Sync roving tabindex whenever setSource changes the active tab.
 function syncTabindex(activeKey) {
