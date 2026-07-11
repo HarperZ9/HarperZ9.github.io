@@ -2356,6 +2356,43 @@ function drawClifford(ctx, width, height, tick, seed, palette) {
   ctx.restore();
 }
 
+// Phyllotaxis: the sunflower / pinecone spiral (Vogel's model). Each dot sits at
+// angle i * the golden angle and radius proportional to sqrt(i); the seed detunes
+// the angle a hair (so spirals differ), sets the count, the dot growth, and how
+// the palette sweeps from center to rim.
+function drawPhyllotaxis(ctx, width, height, tick, seed, palette) {
+  const tones = palette.fluid || [[132, 245, 255], [167, 115, 255], [239, 171, 48]];
+  const N = 700 + Math.floor(rand(seed, 8001) * 950);
+  const golden = 137.508 * Math.PI / 180;
+  const angle = golden + (rand(seed, 8002) - 0.5) * 0.045;
+  const c = Math.min(width, height) / (2.2 * Math.sqrt(N));
+  const cx = width / 2, cy = height / 2;
+  const rot = rand(seed, 8003) * Math.PI * 2;
+  const dotBase = c * (0.45 + rand(seed, 8004) * 0.55);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgba(6,7,14,1)";
+  ctx.fillRect(0, 0, width, height);
+  for (let i = 0; i < N; i += 1) {
+    const r = c * Math.sqrt(i);
+    const th = i * angle + rot;
+    const x = cx + r * Math.cos(th), y = cy + r * Math.sin(th);
+    const f = i / N;
+    const seg = f * tones.length;
+    const t0 = tones[Math.floor(seg) % tones.length];
+    const t1 = tones[(Math.floor(seg) + 1) % tones.length];
+    const m = seg % 1;
+    const R = Math.round(t0[0] * (1 - m) + t1[0] * m);
+    const G = Math.round(t0[1] * (1 - m) + t1[1] * m);
+    const B = Math.round(t0[2] * (1 - m) + t1[2] * m);
+    ctx.fillStyle = `rgba(${R},${G},${B},${0.68 + 0.3 * f})`;
+    ctx.beginPath();
+    ctx.arc(x, y, dotBase * (0.35 + f * 0.95), 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
 const SPECIMEN_LAYERS = {
   orbit: drawOrbitField,
   contour: drawContourRidges,
@@ -2402,6 +2439,7 @@ const SPECIMEN_LAYERS = {
   truchet: drawTruchet,
   "voronoi-stain": drawVoronoiStain,
   clifford: drawClifford,
+  phyllotaxis: drawPhyllotaxis,
 };
 const SPECIMEN_DEFAULT_LAYERS = ["orbit", "contour"];
 
