@@ -1,12 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 520" role="img" aria-label="Gate README hero for Project Telos. One release gate for the private line, housed in Aleph.">
-  <title>Gate Project Telos hero</title>
-  <desc>Gate README hero for Project Telos. One release gate for the private line, housed in Aleph.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 520" role="img" aria-label="Checkpoint README hero for Project Telos. One release checkpoint for the private line, housed in Aleph.">
+  <title>Checkpoint Project Telos hero</title>
+  <desc>Checkpoint README hero for Project Telos. One release checkpoint for the private line, housed in Aleph.</desc>
   <rect width="1280" height="520" rx="34" fill="#f4f3ef"/>
   <path d="M80 96 H1200 M80 424 H1200" stroke="#0b0c0e" stroke-opacity=".14"/>
-  <text x="80" y="86" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" letter-spacing="6" fill="#585c64">PROJECT TELOS / PRIVATE-LINE RELEASE GATE</text>
-  <text x="76" y="334" font-family="Arial Black, Impact, system-ui, sans-serif" font-size="182" letter-spacing="0" fill="#0b0c0e" fill-opacity=".08">GATE</text>
+  <text x="80" y="86" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" letter-spacing="6" fill="#585c64">PROJECT TELOS / PRIVATE-LINE RELEASE CHECKPOINT</text>
+  <text x="76" y="322" font-family="Arial Black, Impact, system-ui, sans-serif" font-size="150" letter-spacing="0" fill="#0b0c0e" fill-opacity=".08">CHECKPOINT</text>
   <text font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="700" fill="#0b0c0e">
-    <tspan x="84" y="188">One release gate for six working</tspan>
+    <tspan x="84" y="188">One release checkpoint for six working</tspan>
     <tspan x="84" dy="48">private-line tools.</tspan>
   </text>
   <text x="86" y="290" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill="#2f3238">DOCS / BRAND / PACKAGE / MCP / CI / RECEIPT</text>
