@@ -55,6 +55,7 @@
         <button type="button" role="tab" data-source="ndim"      aria-selected="false" aria-controls="src-ndim"      tabindex="-1">Dimensions</button>
         <button type="button" role="tab" data-source="poster"    aria-selected="false" aria-controls="src-poster"    tabindex="-1">Poster</button>
         <button type="button" role="tab" data-source="neural"    aria-selected="false" aria-controls="src-neural"    tabindex="-1">Living neural</button>
+        <button type="button" role="tab" data-source="sound"     aria-selected="false" aria-controls="src-sound"     tabindex="-1">Seed sound</button>
       </div>
       <div class="source-group" role="presentation">
         <span class="source-group-label" aria-hidden="true">Bring</span>
@@ -94,6 +95,21 @@
             <button type="button" class="at-mini" id="neural-reseed">reseed</button>
           </div>
         </div>
+      </section>
+      <section class="src-block" id="src-sound" role="tabpanel" aria-label="Seed sound controls" hidden>
+        <p class="transform-note">A seed authored as sound. The same seed that draws a plate synthesizes a short phrase: key, scale, melody, timbre, and tempo are all derived from the seed with pure math, no samples and no model. Press play to hear it; the perception panel then reads its level, spectrum, and pitch, live. Deterministic: the same seed sounds the same, so the readout is re-checkable.</p>
+        <div class="at-group">
+          <span class="at-glab">Seed</span>
+          <div class="poster-artrow">
+            <input type="text" class="poster-seed" id="sound-seed" maxlength="40" value="aurora" aria-label="Sound seed" />
+            <button type="button" class="at-mini" id="sound-reseed">reseed</button>
+          </div>
+        </div>
+        <div class="at-actions">
+          <button type="button" class="btn" id="sound-play" aria-label="Play the seed's sound and measure it live">play</button>
+          <button type="button" class="btn ghost" id="sound-stop" aria-label="Stop playback">stop</button>
+        </div>
+        <p class="src-hint" id="sound-readout">press play; the audio channels below read what the seed plays</p>
       </section>
       <section class="src-block" id="src-atelier" role="tabpanel" aria-label="Atelier controls">
         <div class="atelier studio-atelier" id="atelier">
