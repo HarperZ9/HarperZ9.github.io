@@ -2735,6 +2735,44 @@ section.mv{
     color-mix(in oklab, var(--void) 70%, black);
 }
 
+/* Rail budget: the left rail must read like the healthy right panel - a compact,
+   always-visible source picker over ONE flexing control scroll. It used to stack
+   the picker and the renderer console as fixed blocks, which pushed the active
+   source's controls (and half the console) off the bottom of the rail. Now the
+   picker holds its natural height, the console yields first, and the control
+   scroll always keeps a usable, scrollable minimum. Desktop only; the mobile rail
+   is a single scrolling column (overflow visible) and never had this problem. */
+@media (min-width:900px){
+  .studio-media-first .source-menu{ flex:0 0 auto; }
+  /* The control scroll is the single scroll region and takes all remaining rail
+     height. The renderer console now sits inside it in normal flow, so there is
+     no nested scrollbar and no fixed block competing the controls off-screen. */
+  .studio-media-first .rail-scroll{ flex:1 1 auto; min-height:8rem; }
+  .studio-media-first .rail-scroll > .studio-render-console{
+    flex:none;
+    max-height:none;
+    overflow:visible;
+    resize:none;
+    margin:0 0 .85rem;
+  }
+  /* Trim the rail header so the picker and controls get the room. */
+  .studio-media-first .rail-head{ padding:.75rem clamp(.75rem,1.4vw,1rem) .3rem; }
+  .studio-media-first .rail-lede{ font-size:.78rem; line-height:1.4; max-width:26ch; }
+}
+
+/* A pointer-fine (mouse) rail packs the ten modes tighter so the picker never
+   crowds the controls; touch devices keep their larger tap targets. */
+@media (min-width:900px) and (pointer:fine){
+  .studio-media-first .source-menu button{
+    min-height:1.85rem;
+    padding:.36rem .5rem;
+    font-size:.6rem;
+  }
+  .studio-media-first .studio-mode-strip{ gap:.3rem; }
+  .studio-media-first .source-group{ gap:.24rem; }
+  .studio-media-first .source-group-label{ margin-bottom:.04rem; }
+}
+
 .studio-primary-stage{
   padding:clamp(.75rem,1.5vw,1.1rem);
   gap:.65rem;
