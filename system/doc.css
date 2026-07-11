@@ -216,13 +216,6 @@ body.doc{
   justify-content:space-between;
   gap:1rem;
   flex-wrap:wrap;
-  max-width:86rem;
-  margin:0 auto clamp(1rem,2.4vw,1.8rem);
-  padding:.9rem clamp(1rem,3vw,2rem);
-  border:1px solid var(--rule);
-  background:linear-gradient(180deg, color-mix(in oklab, var(--backdrop) 88%, transparent), color-mix(in oklab, var(--backdrop) 66%, transparent));
-  -webkit-backdrop-filter:blur(18px) saturate(1.28);
-  backdrop-filter:blur(18px) saturate(1.28);
 }
 .site-nav .sn-home{
   font-family:var(--mono);
@@ -292,6 +285,12 @@ body.doc.generative-host{
 body.doc.generative-host > :not(#gl):not(#motes):not(.skip-link){
   position:relative;
   z-index:2;
+}
+/* Lift the nav above the page content so the open "Menu" dropdown stays clickable
+   (equal z + DOM order otherwise lets the later content wrapper intercept it).
+   Matches the specificity of the rule above (which adds :not(.skip-link)). */
+body.doc.generative-host > #site-nav:not(#motes):not(.skip-link){
+  z-index:6;
 }
 body.doc #gl.generative-field-canvas,
 body.doc #motes.generative-motes-canvas{
@@ -453,9 +452,12 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--teal-soft);outline-
   position:sticky;
   top:0;
   z-index:40;
-  width:100%;
+  width:auto;
   max-width:none;
-  margin:0 0 clamp(1rem,2.4vw,1.8rem);
+  /* Break out of body.doc's padding (top clamp, sides 1rem) so the bar is
+     full-bleed and flush to the top edge - matching the shared nav on every
+     other template, which sits on an unpadded body. */
+  margin:calc(-1 * clamp(1.2rem,4vw,3.5rem)) -1rem clamp(1rem,2.4vw,1.8rem);
   padding:.9rem clamp(1.15rem,5vw,5rem);
   border:0;
   border-bottom:1px solid var(--rule);
