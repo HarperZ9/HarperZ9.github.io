@@ -117,12 +117,13 @@
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="typeface.html">Typeface</a> <a href="cv.html">About</a></nav></noscript>
 <script type="module" src="system/nav.js?v=20260709n"></script>
+<script type="module" src="system/audio-player.js?v=20260710"></script>
 
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Gallery</span></div>
   <div class="mid">
     <h1>Plates from <span class="g">the drawing engine.</span></h1>
-    <p class="lede">Fifteen full-size plates drawn in your browser by this site&rsquo;s own engine (<span translate="no">system/generative-field.js</span>), then a contact sheet of the instruments behind them. The captions carry the recipe: layers first, seed second.</p>
+    <p class="lede">Eighteen full-size plates drawn in your browser by this site&rsquo;s own engine (<span translate="no">system/generative-field.js</span>), then a contact sheet of the instruments behind them. The captions carry the recipe: layers first, seed second.</p>
   </div>
   <div class="seal">procedural &middot; seeded plates repeat exactly &middot; live plates never do</div>
 </div>
@@ -293,8 +294,44 @@
     </figcaption>
   </figure>
 
+  <figure class="plate" data-plate="truchet">
+    <div class="plate-head"><span class="plate-no">Plate 15</span><span class="plate-title">Truchet &middot; tiles that draw a maze</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-truchet" data-specimen-layers="truchet" role="img" aria-label="Generated plate: a grid of Truchet tiles, each a pair of quarter-circle arcs, joining across cell edges into a looping maze in the palette's jewel tones."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">truchet &middot; <span data-plate-seed>seed gallery-truchet</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the Truchet plate with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">two arcs per cell, one seed per grid: a classic that never repeats</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="voronoi-stain">
+    <div class="plate-head"><span class="plate-no">Plate 16</span><span class="plate-title">Voronoi &middot; stained glass from scattered seeds</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-voronoi" data-specimen-layers="voronoi-stain" role="img" aria-label="Generated plate: a Voronoi tessellation, each cell filled by its nearest seeded site's tone with a distance shade, dark leading drawn along the borders like stained glass."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">voronoi-stain &middot; <span data-plate-seed>seed gallery-voronoi</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the Voronoi plate with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">nearest-site cells with dark leading: the seed scatters the glass</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="clifford">
+    <div class="plate-head"><span class="plate-no">Plate 17</span><span class="plate-title">Clifford &middot; a strange attractor's cloud</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-clifford" data-specimen-layers="clifford" role="img" aria-label="Generated plate: a Clifford strange attractor, tens of thousands of iterated points additively plotted into a glowing filamentary cloud whose four constants are set by the seed."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">clifford &middot; <span data-plate-seed>seed gallery-clifford</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the attractor with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">four seed-set constants, one orbit traced 140,000 times</span>
+    </figcaption>
+  </figure>
+
   <figure class="plate" data-plate="11">
-    <div class="plate-head"><span class="plate-no">Plate 15</span><span class="plate-title">Planet limb, closing</span></div>
+    <div class="plate-head"><span class="plate-no">Plate 18</span><span class="plate-title">Planet limb, closing</span></div>
     <div class="plate-art ratio-wide">
       <canvas data-specimen="gallery-plate-07" data-specimen-layers="planet-limb" role="img" aria-label="Generated plate: a planet limb glowing cobalt to cyan over a marbled ice-white cloud deck, black space above."></canvas>
     </div>
@@ -342,6 +379,13 @@
       <span class="plate-meta" id="desk-meta">the desk draws on demand; nothing is stored anywhere</span>
     </figcaption>
   </figure>
+</section>
+
+<section class="mv" id="sounddesk" aria-labelledby="sounddesk-h">
+  <h2 id="sounddesk-h">The sound desk.</h2>
+  <p class="body-text">The same seed that draws a plate can play a piece. Name a seed and the browser synthesizes a short phrase from it: the key, the scale, the melody, the timbre, and the tempo are all derived from the seed with pure math, no samples and no model. The same seed sounds the same on every visit; press play, or save it as a WAV.</p>
+  <div id="sound-desk" data-seed="aurora"></div>
+  <p class="plate-hint">seed to sound, the audio sibling of seed to plate: one DNA behind the field, the solid, the face, and now the phrase.</p>
 </section>
 
 <section class="mv" id="fixtures" aria-labelledby="fixtures-h">
