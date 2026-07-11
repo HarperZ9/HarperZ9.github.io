@@ -70,38 +70,6 @@
     </div>
     <p class="rail-own">Start with a source, then open only the controls you need.</p>
 
-    <section class="studio-render-console" data-studio-render-console aria-label="Renderer console">
-      <div class="studio-console-head">
-        <span class="studio-console-title">Renderer console</span>
-        <span class="studio-console-status" data-studio-console-status>atelier renderer</span>
-      </div>
-      <div class="studio-console-stage" data-studio-console-stage tabindex="0" role="img" aria-label="Pointer-reactive renderer field preview">
-        <span class="studio-console-orbit" aria-hidden="true"></span>
-        <span class="studio-console-crosshair" aria-hidden="true"></span>
-        <span class="studio-console-pointer">pointer <b data-studio-console-pointer>50:50</b></span>
-      </div>
-      <div class="studio-console-meters" aria-label="Renderer channels">
-        <div class="studio-console-meter">
-          <div><span>field</span><output data-studio-console-meter="field">0.58</output></div>
-          <i data-studio-console-bar="field"></i>
-        </div>
-        <div class="studio-console-meter">
-          <div><span>dither</span><output data-studio-console-meter="dither">0.50</output></div>
-          <i data-studio-console-bar="dither"></i>
-        </div>
-        <div class="studio-console-meter">
-          <div><span>motion</span><output data-studio-console-meter="motion">0.46</output></div>
-          <i data-studio-console-bar="motion"></i>
-        </div>
-      </div>
-      <div class="studio-console-actions" role="group" aria-label="Renderer routes">
-        <button type="button" data-studio-console-source="showcase">Showcase</button>
-        <button type="button" data-studio-console-source="atelier">Atelier</button>
-        <button type="button" data-studio-console-source="fractal">Fractal</button>
-        <button type="button" data-studio-console-source="byo">Media</button>
-      </div>
-    </section>
-
     <div class="rail-scroll">
       <!-- SOURCE: Atelier (Task 7). boot() finds #atelier and, since there is no #at-canvas here,
            draws into the shared #studio-canvas in the viewport. These are the exact control ids
@@ -631,6 +599,39 @@
         <summary>Studio notes</summary>
         <p>Render media, watch the measurements move, and export the frame or perception record. Receipts remain available when a source produces checkable evidence.</p>
       </details>
+      <!-- The renderer console is secondary telemetry: it sits at the end of the one
+           control scroll, below the active source's controls. -->
+      <section class="studio-render-console" data-studio-render-console aria-label="Renderer console">
+        <div class="studio-console-head">
+          <span class="studio-console-title">Renderer console</span>
+          <span class="studio-console-status" data-studio-console-status>atelier renderer</span>
+        </div>
+        <div class="studio-console-stage" data-studio-console-stage tabindex="0" role="img" aria-label="Pointer-reactive renderer field preview">
+          <span class="studio-console-orbit" aria-hidden="true"></span>
+          <span class="studio-console-crosshair" aria-hidden="true"></span>
+          <span class="studio-console-pointer">pointer <b data-studio-console-pointer>50:50</b></span>
+        </div>
+        <div class="studio-console-meters" aria-label="Renderer channels">
+          <div class="studio-console-meter">
+            <div><span>field</span><output data-studio-console-meter="field">0.58</output></div>
+            <i data-studio-console-bar="field"></i>
+          </div>
+          <div class="studio-console-meter">
+            <div><span>dither</span><output data-studio-console-meter="dither">0.50</output></div>
+            <i data-studio-console-bar="dither"></i>
+          </div>
+          <div class="studio-console-meter">
+            <div><span>motion</span><output data-studio-console-meter="motion">0.46</output></div>
+            <i data-studio-console-bar="motion"></i>
+          </div>
+        </div>
+        <div class="studio-console-actions" role="group" aria-label="Renderer routes">
+          <button type="button" data-studio-console-source="showcase">Showcase</button>
+          <button type="button" data-studio-console-source="atelier">Atelier</button>
+          <button type="button" data-studio-console-source="fractal">Fractal</button>
+          <button type="button" data-studio-console-source="byo">Media</button>
+        </div>
+      </section>
     </div>
   </aside>
 
