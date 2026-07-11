@@ -2944,28 +2944,27 @@ section.mv{
     display:contents;
   }
   .studio-media-first .rail-head{ order:1; }
+  /* Wrap the source picker so every source is visible at a glance instead of
+     hidden behind a horizontal scroll (was: nowrap + overflow-x:auto, which left
+     6 of 10 modes off-screen). The groups flatten (display:contents) so the
+     buttons wrap freely across rows; the Make/Bring/Measure labels start a new
+     row so the grouping still reads without a scroll. */
   .studio-media-first .studio-mode-strip{
     order:2;
     display:flex;
     flex-direction:row;
-    flex-wrap:nowrap;
+    flex-wrap:wrap;
     align-items:center;
-    overflow-x:auto;
-    gap:.9rem;
-    padding:.35rem 1rem .65rem;
+    gap:.4rem;
+    padding:.45rem 1rem .6rem;
     border-bottom:1px solid var(--hairline);
-    scrollbar-width:thin;
-    -webkit-overflow-scrolling:touch;
   }
-  .studio-media-first .source-group{
-    display:flex;
-    align-items:center;
-    gap:.32rem;
-    flex:0 0 auto;
-    min-width:0;
-  }
-  .studio-media-first .source-group-label{ margin:0 .2rem 0 0; }
-  .studio-media-first .source-menu button{ white-space:nowrap; flex:0 0 auto; }
+  .studio-media-first .source-group{ display:contents; }
+  /* The Make/Bring/Measure labels would each force a full row and push the canvas
+     out of the first fold; drop them on mobile (DOM order still groups the modes)
+     so the ten tabs pack into ~two rows and the canvas stays canvas-led. */
+  .studio-media-first .source-group-label{ display:none; }
+  .studio-media-first .source-menu button{ white-space:nowrap; flex:0 1 auto; }
   .studio-primary-stage{
     order:3;
     min-height:70svh;
