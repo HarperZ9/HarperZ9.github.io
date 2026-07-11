@@ -306,3 +306,17 @@ test("neural layers are registered and render deterministically per seed", () =>
     assert.notDeepEqual(a, c, `${layer} must vary with the seed`);
   }
 });
+
+/* ── art wave 3 (2026-07-10): Truchet, Voronoi stain, Clifford attractor ───── */
+test("wave-3 families are registered and render deterministically per seed", () => {
+  const names = specimenLayerNames();
+  for (const layer of ["truchet", "voronoi-stain", "clifford"]) {
+    assert.ok(names.includes(layer), `${layer} must be registered`);
+    const a = renderLog(`w3-${layer}`, [layer], 240, 160).log;
+    const b = renderLog(`w3-${layer}`, [layer], 240, 160).log;
+    assert.ok(a.length > 30, `${layer} should draw (got ${a.length} ops)`);
+    assert.deepEqual(a, b, `${layer} must be deterministic for a seed`);
+    const c = renderLog(`w3-${layer}-other`, [layer], 240, 160).log;
+    assert.notDeepEqual(a, c, `${layer} must vary with the seed`);
+  }
+});

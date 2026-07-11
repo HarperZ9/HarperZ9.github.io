@@ -2237,6 +2237,125 @@ function drawNeuralVoxel(ctx, width, height, tick, seed, palette) {
   ctx.restore();
 }
 
+// Art wave 3 (2026-07-10): three classical generative-art families, each a pure
+// function of the seed - Truchet tiles, a Voronoi stained-glass, and a Clifford
+// strange attractor. One-shot, deterministic, palette-tinted.
+
+// Truchet tiles: each cell drops one of two quarter-circle pairs; the arcs join
+// across cell edges into looping mazes. Seed picks the tile density and, per
+// cell, the orientation and stroke weight.
+function drawTruchet(ctx, width, height, tick, seed, palette) {
+  const tones = palette.fluid || [[132, 245, 255], [167, 115, 255], [239, 171, 48]];
+  const n = 9 + Math.floor(rand(seed, 5001) * 9);
+  const cell = Math.min(width, height) / n;
+  const cols = Math.ceil(width / cell), rows = Math.ceil(height / cell);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgba(8,8,16,1)";
+  ctx.fillRect(0, 0, width, height);
+  ctx.lineCap = "round";
+  for (let gy = 0; gy < rows; gy += 1) {
+    for (let gx = 0; gx < cols; gx += 1) {
+      const x = gx * cell, y = gy * cell, r = cell / 2;
+      const tone = tones[(gx + gy) % tones.length];
+      ctx.strokeStyle = toneToRgba(tone, 0.92);
+      ctx.lineWidth = cell * (0.12 + rand(seed, gx * 7 + gy * 13 + 3) * 0.12);
+      ctx.beginPath();
+      if (rand(seed, gx * 131 + gy * 977 + 17) < 0.5) {
+        ctx.arc(x, y, r, 0, Math.PI / 2);
+        ctx.arc(x + cell, y + cell, r, Math.PI, Math.PI * 1.5);
+      } else {
+        ctx.arc(x + cell, y, r, Math.PI / 2, Math.PI);
+        ctx.arc(x, y + cell, r, Math.PI * 1.5, Math.PI * 2);
+      }
+      ctx.stroke();
+    }
+  }
+  ctx.restore();
+}
+
+// Voronoi stained-glass: seed-scattered sites, each cell filled by its nearest
+// site's tone with a distance shade, and dark leading drawn along cell borders.
+function drawVoronoiStain(ctx, width, height, tick, seed, palette) {
+  const tones = palette.fluid || [[132, 245, 255], [167, 115, 255], [239, 171, 48]];
+  const K = 16 + Math.floor(rand(seed, 6001) * 26);
+  const sites = [];
+  for (let i = 0; i < K; i += 1) {
+    sites.push({ x: rand(seed, i * 17 + 3) * width, y: rand(seed, i * 29 + 7) * height, tone: tones[i % tones.length] });
+  }
+  const cell = Math.max(3, Math.round(Math.min(width, height) / 240));
+  const cols = Math.ceil(width / cell), rows = Math.ceil(height / cell);
+  const diag = Math.hypot(width, height);
+  const idx = new Int16Array(cols * rows);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgba(6,7,14,1)";
+  ctx.fillRect(0, 0, width, height);
+  for (let gy = 0; gy < rows; gy += 1) {
+    for (let gx = 0; gx < cols; gx += 1) {
+      const px = gx * cell + cell / 2, py = gy * cell + cell / 2;
+      let best = 0, bd = Infinity;
+      for (let i = 0; i < K; i += 1) {
+        const dx = px - sites[i].x, dy = py - sites[i].y, d = dx * dx + dy * dy;
+        if (d < bd) { bd = d; best = i; }
+      }
+      idx[gy * cols + gx] = best;
+      const t = sites[best].tone;
+      const shade = 0.5 + 0.5 * (1 - clamp(Math.sqrt(bd) / (diag * 0.35), 0, 1));
+      ctx.fillStyle = `rgb(${Math.round(t[0] * shade)},${Math.round(t[1] * shade)},${Math.round(t[2] * shade)})`;
+      ctx.fillRect(gx * cell, gy * cell, cell + 1, cell + 1);
+    }
+  }
+  // leading: a thin dark line wherever two cells belong to different sites.
+  ctx.strokeStyle = "rgba(5,5,11,0.9)";
+  ctx.lineWidth = Math.max(1, cell * 0.3);
+  ctx.beginPath();
+  for (let gy = 0; gy < rows; gy += 1) {
+    for (let gx = 0; gx < cols; gx += 1) {
+      const i = idx[gy * cols + gx];
+      if (gx + 1 < cols && idx[gy * cols + gx + 1] !== i) { ctx.moveTo((gx + 1) * cell, gy * cell); ctx.lineTo((gx + 1) * cell, (gy + 1) * cell); }
+      if (gy + 1 < rows && idx[(gy + 1) * cols + gx] !== i) { ctx.moveTo(gx * cell, (gy + 1) * cell); ctx.lineTo((gx + 1) * cell, (gy + 1) * cell); }
+    }
+  }
+  ctx.stroke();
+  ctx.restore();
+}
+
+// Clifford attractor: iterate x' = sin(a y) + c cos(a x), y' = sin(b x) + d cos(b y)
+// with seed-chosen a,b,c,d, and additively plot the orbit into a glowing cloud.
+function drawClifford(ctx, width, height, tick, seed, palette) {
+  const tones = palette.fluid || [[132, 245, 255], [167, 115, 255], [239, 171, 48]];
+  // Bias the constants away from the degenerate near-zero region: |a|,|b| large
+  // enough to fold space, |c|,|d| moderate, so any seed lands on a rich orbit
+  // rather than a collapsed fixed point.
+  const sgn = (s) => (rand(seed, s) < 0.5 ? -1 : 1);
+  const a = sgn(7005) * (1.3 + rand(seed, 7001) * 0.8);
+  const b = sgn(7006) * (1.3 + rand(seed, 7002) * 0.8);
+  const c = sgn(7007) * (0.5 + rand(seed, 7003) * 1.1);
+  const d = sgn(7008) * (0.5 + rand(seed, 7004) * 1.1);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "rgba(5,6,13,1)";
+  ctx.fillRect(0, 0, width, height);
+  const sx = width / (2 * (1 + Math.abs(c)) + 0.5);
+  const sy = height / (2 * (1 + Math.abs(d)) + 0.5);
+  const ox = width / 2, oy = height / 2;
+  let x = 0.1, y = 0.1;
+  const N = Math.min(360000, Math.max(60000, Math.round(width * height * 0.18)));
+  ctx.globalCompositeOperation = "lighter";
+  for (let i = 0; i < N; i += 1) {
+    const nx = Math.sin(a * y) + c * Math.cos(a * x);
+    const ny = Math.sin(b * x) + d * Math.cos(b * y);
+    x = nx; y = ny;
+    if (i < 24) continue;
+    const px = ox + x * sx, py = oy + y * sy;
+    const t = tones[(i >> 6) % tones.length];
+    ctx.fillStyle = `rgba(${t[0]},${t[1]},${t[2]},0.12)`;
+    ctx.fillRect(px, py, 1.5, 1.5);
+  }
+  ctx.restore();
+}
+
 const SPECIMEN_LAYERS = {
   orbit: drawOrbitField,
   contour: drawContourRidges,
@@ -2280,6 +2399,9 @@ const SPECIMEN_LAYERS = {
   "neural-sdf": drawNeuralSdf,
   "neural-voxel": drawNeuralVoxel,
   typeface: drawTypeface,
+  truchet: drawTruchet,
+  "voronoi-stain": drawVoronoiStain,
+  clifford: drawClifford,
 };
 const SPECIMEN_DEFAULT_LAYERS = ["orbit", "contour"];
 
