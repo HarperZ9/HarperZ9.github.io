@@ -554,7 +554,7 @@
                 </div>
               </div>
               <div class="at-group">
-                <span class="at-glab">Eccentricity <span class="hint">clamped so the shipped orbit stays honest under the drift gate</span></span>
+                <span class="at-glab">Eccentricity <span class="hint">clamped so the shipped orbit stays honest under the drift check</span></span>
                 <input type="range" class="at-slider" id="show-ecc" min="0" max="0.8" step="0.05" value="0.4" aria-label="Orbit eccentricity" disabled>
               </div>
               <div class="at-group">
@@ -935,7 +935,7 @@
         <details class="model-connect" id="model-connect">
           <summary>Advanced: connect a model</summary>
           <form class="mc-body" id="mc-form" autocomplete="off">
-            <p class="mc-note" id="mc-note">Your key stays in your browser and is sent only to the endpoint you choose. When a model is hosted by the operator, your message is sent to it to be computed and is not stored.</p>
+            <p class="mc-note" id="mc-note">Your key stays in your browser and is sent only to the endpoint you choose. When a model is hosted by the maintainer, your message is sent to it to be computed and is not stored.</p>
             <label class="mc-label" for="mc-endpoint">Endpoint URL
               <input class="mc-input" type="url" id="mc-endpoint" placeholder="https://api.openai.com/v1/chat/completions" autocomplete="off">
             </label>
