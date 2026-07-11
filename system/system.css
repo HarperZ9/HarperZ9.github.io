@@ -1718,6 +1718,16 @@ body.generative-host > :not(#gl):not(#motes){
   position:relative;
   z-index:2;
 }
+/* The rule above pins EVERY body child - the nav and the page's content wrapper
+   (.frame / .studio-app) alike - to z-index:2. Equal z + DOM order then lets the
+   later content wrapper cover and intercept the open "Menu" dropdown: it looks
+   like it opens (the wrapper is transparent) but its links are unclickable. Lift
+   the nav above the content on every generative-host page. Matches the rule
+   above's specificity (its :not(#gl):not(#motes) carries two id points) by
+   carrying an id (#site-nav) plus :not(#motes), and wins by coming later. */
+body.generative-host > #site-nav:not(#motes){
+  z-index:6;
+}
 #gl.generative-field-canvas,
 #motes.generative-motes-canvas{
   position:fixed;
