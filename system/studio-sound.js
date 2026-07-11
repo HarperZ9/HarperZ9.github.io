@@ -19,13 +19,16 @@ let raf = null, ctx = null, srcNode = null, analyser = null, freqBuf = null, tim
 let running = false, playing = false, startedAt = 0;
 let comp = null, pcm = null, dur = 0, canvasRef = null;
 
-function rmsFromTime(buf) {
+// RMS of a getByteTimeDomainData buffer (0..255 centered on 128) → [0, ~1].
+export function rmsFromTime(buf) {
   let s = 0;
   for (let i = 0; i < buf.length; i += 1) { const v = (buf[i] - 128) / 128; s += v * v; }
   return Math.sqrt(s / buf.length);
 }
 
-function dominantHz(buf, sampleRate, fftSize) {
+// The dominant frequency (Hz) from a getByteFrequencyData buffer, or 0 if the
+// loudest bin is below a noise floor.
+export function dominantHz(buf, sampleRate, fftSize) {
   let peak = 0, idx = -1;
   for (let i = 2; i < buf.length; i += 1) { if (buf[i] > peak) { peak = buf[i]; idx = i; } }
   if (peak < 24 || idx < 0) return 0;
