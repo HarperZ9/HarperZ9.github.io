@@ -450,6 +450,15 @@ function setSource(next) {
   // their canvas pointer handlers. Without this the Atelier's particle overlay fires
   // on every source, wiping music particles when the mouse crosses the canvas.
   window.__studioActiveSource = next;
+  // Surface the WebM capture button for animated sources - the seed-authored
+  // instruments (living neural, seed sound), physics, showcase, and screen/camera
+  // capture - and hide it for static ones (atelier, still image, 2D fractal), where
+  // PNG already captures the single frame. sourceIsAnimated with no transient state
+  // answers "is this source animation-capable"; the video-import path (below) still
+  // re-affirms it when a dropped clip actually starts playing.
+  if (typeof window.__studioExportWebmVisible === "function") {
+    window.__studioExportWebmVisible(sourceIsAnimated(next));
+  }
   mode = SOURCES[next].mode;
   for (const [name, cfg] of Object.entries(SOURCES)) {
     const el = $(cfg.block); if (el) el.hidden = name !== next;
@@ -4153,7 +4162,13 @@ buildMeters();
         btnWebm.textContent = "Recording...";
         const ex = await loadExporters();
         const webm = await ex.StudioExporters.export("webm", $("studio-canvas"), { durationMs: 5000 });
-        ex.download(webm, "studio-capture.webm");
+        // Name the clip after the source and, for the seed-authored instruments,
+        // the seed - so the same seed's animation is a recognisable, reproducible file.
+        const src = activeSource;
+        const seed = src === "neural" ? `${_neuralInstrument}-${_neuralSeed}`
+          : src === "sound" ? _soundSeed : "";
+        const slug = (src + (seed ? "-" + seed : "")).replace(/[^a-z0-9-]+/gi, "-").replace(/^-+|-+$/g, "").toLowerCase();
+        ex.download(webm, `telos-${slug || "capture"}.webm`);
       } catch (e) {
         say("model", "WebM export failed: " + e.message);
       } finally {
