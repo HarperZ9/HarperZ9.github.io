@@ -37,9 +37,11 @@ export function mountAudioPlayer(mount, opts = {}) {
   status.setAttribute("role", "status");
   mount.append(row, readout, status);
 
+  const NOTE = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+  const noteName = (m) => NOTE[m % 12] + (Math.floor(m / 12) - 1);
   const describe = (seed) => {
     const c = seedComposition(seed);
-    readout.textContent = `key root MIDI ${c.root} · ${c.scaleName} · ${c.bpm} bpm · ${c.noteCount} notes · seed ${c.tag}`;
+    readout.textContent = `key ${noteName(c.root)} · ${c.scaleName} · ${c.bpm} bpm · ${c.noteCount} notes · seed ${c.tag}`;
     return c;
   };
   describe(seedDefault);
