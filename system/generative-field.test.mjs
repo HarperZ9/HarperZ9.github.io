@@ -310,7 +310,7 @@ test("neural layers are registered and render deterministically per seed", () =>
 /* ── art wave 3 (2026-07-10): Truchet, Voronoi stain, Clifford attractor ───── */
 test("wave-3 families are registered and render deterministically per seed", () => {
   const names = specimenLayerNames();
-  for (const layer of ["truchet", "voronoi-stain", "clifford"]) {
+  for (const layer of ["truchet", "voronoi-stain", "clifford", "phyllotaxis"]) {
     assert.ok(names.includes(layer), `${layer} must be registered`);
     const a = renderLog(`w3-${layer}`, [layer], 240, 160).log;
     const b = renderLog(`w3-${layer}`, [layer], 240, 160).log;
