@@ -51,7 +51,13 @@ html{scroll-behavior:smooth}
 html,body{height:100%;width:100%}
 /* overflow-x uses `clip`, not `hidden`: hidden makes body a scroll container
    in Chromium and silently breaks in-page anchor scrolling (hash changes, no
-   scroll). clip clips without creating a scroll container. */
+   scroll). clip clips without creating a scroll container. The clip lives on
+   BOTH html and body: fixed-position backgrounds (the generative field/motes
+   canvases) escape body's clip because they resolve against the viewport, and a
+   canvas sized to window.innerWidth is wider than the layout viewport whenever a
+   scrollbar or device emulation makes innerWidth exceed clientWidth. Clipping at
+   the root guarantees no page ever scrolls sideways on any viewport. */
+html{overflow-x:clip}
 body{background:var(--void);color:var(--bone);font-family:var(--body);overflow-x:clip;position:relative}
 /* accessibility: visible keyboard focus on every interactive element (2026-06-24) */
 a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}
