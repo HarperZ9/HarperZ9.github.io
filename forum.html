@@ -32,7 +32,7 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">forum</span> &middot; accountable orchestrator</span></div>
   <div class="mid">
     <h1>Run a team of agents. <span class="g">Witness every step.</span></h1>
-    <p class="lede">Most orchestrators tell you an agent completed a task. <span translate="no">forum</span> writes down what actually happened: which lane the task went to, what plan was formed, what the result was, and whether validation passed or failed. All of that lands in a causal hash-chain ledger you can replay and verify yourself. A failed task is recorded as <code translate="no">ok=false</code>, not quietly blessed and passed along.</p>
+    <p class="lede">Most orchestrators tell you an agent completed a task. <span translate="no">forum</span> writes down what actually happened: which track the task went to, what plan was formed, what the result was, and whether validation passed or failed. All of that lands in a causal hash-chain ledger you can replay and verify yourself. A failed task is recorded as <code translate="no">ok=false</code>, not quietly blessed and passed along.</p>
     <p class="close">The trust comes from re-deriving the chain, not from the engine asserting it ran cleanly.</p>
   </div>
   <div class="seal"><span translate="no">forum</span> &middot; v1.12.0 &middot; witnessed ledger &middot; fair-source &middot; <span translate="no">pip install forum-engine</span></div>
@@ -51,7 +51,7 @@
 <!-- WHAT IT IS -->
 <section class="mv" id="what" aria-labelledby="what-h">
   <h2 id="what-h" class="reveal">It routes the work, runs it, and records every move.</h2>
-  <p class="body-text reveal"><span translate="no">forum</span> is a daemon-hostable engine that coordinates a team of AI agents and records each step in a ledger you can verify. You give it a task. It picks the right specialist lane, turns the request into a validated plan, runs the work under witness, judges each result against its instruction, and combines everything into one answer. Every one of those steps is written to the ledger with a hash that chains to the one before it.</p>
+  <p class="body-text reveal"><span translate="no">forum</span> is a daemon-hostable engine that coordinates a team of AI agents and records each step in a ledger you can verify. You give it a task. It picks the right specialist track, turns the request into a validated plan, runs the work under witness, judges each result against its instruction, and combines everything into one answer. Every one of those steps is written to the ledger with a hash that chains to the one before it.</p>
   <p class="body-text reveal">Around that core sit the parts that make a run trustworthy and lean: a bounded budget that stops a runaway loop, witnessed escalation up a ladder of stronger models, a check on whether the answer still covers the request, a delivery pass that tightens a verbose answer without dropping its terms, and clean seams for a peer brain to supply context and an outside verifier to check the work. Each is opt-in, each is witnessed, none is trusted on its word.</p>
   <em class="close reveal">None of those roles communicate by convention or trust. Each receives a witnessed input, produces a witnessed output, and hands it forward. There is no back-channel.</em>
 </section>
@@ -111,7 +111,7 @@
   <div class="index reveal-children" role="list" aria-label="The four control roles">
     <div class="index-row" role="listitem" style="--i:0">
       <span class="index-term">Classifier</span>
-      <span class="index-gloss">reads the incoming task and picks the specialist lane that handles it</span>
+      <span class="index-gloss">reads the incoming task and picks the specialist track that handles it</span>
     </div>
     <div class="index-row" role="listitem" style="--i:1">
       <span class="index-term">Coordinator</span>
