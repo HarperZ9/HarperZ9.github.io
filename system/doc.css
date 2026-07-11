@@ -24,6 +24,10 @@
 *::after{box-sizing:border-box}
 html,
 body{max-width:100%;overflow-x:clip}
+/* With overflow-x:clip on the page, a wide code block would be cut off on the
+   right on narrow screens; give <pre> its own horizontal scroll so nothing is
+   lost. */
+pre{overflow-x:auto;max-width:100%}
 
 :root{
   /* legacy base sheet values; the screen palette is remapped by the dark cascade below */
