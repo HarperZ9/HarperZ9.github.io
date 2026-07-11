@@ -59,6 +59,9 @@ html,body{height:100%;width:100%}
    the root guarantees no page ever scrolls sideways on any viewport. */
 html{overflow-x:clip}
 body{background:var(--void);color:var(--bone);font-family:var(--body);overflow-x:clip;position:relative}
+/* With overflow-x:clip at the root, a wide <pre> code block would have its right
+   edge cut off on narrow screens; give it its own horizontal scroll instead. */
+pre{overflow-x:auto;max-width:100%}
 /* accessibility: visible keyboard focus on every interactive element (2026-06-24) */
 a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}
 #gl,#motes{position:fixed;inset:0;width:100%;height:100%;display:block}
