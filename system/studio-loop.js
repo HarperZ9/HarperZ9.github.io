@@ -25,6 +25,7 @@ export function sourceIsAnimated(activeSource, state) {
     case "music":
     case "watch":
     case "discovery":   // the physics renderer evolves the system every frame
+    case "sound":       // the piano-roll animates and the audio tap must keep being polled
       return true;
     case "neural":
       // The living neural instrument repaints every rAF frame, EXCEPT under
