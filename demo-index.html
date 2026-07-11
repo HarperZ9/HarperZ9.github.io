@@ -72,9 +72,11 @@
   .evidence{margin:1.3rem 0 0;border:1px solid var(--rule);border-radius:5px;overflow:hidden}
   .evidence-head{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;
     padding:.9rem .95rem;background:#f6f7f3;border-bottom:1px solid var(--rule)}
+  /* The head is a hardcoded light card (#f6f7f3), so its text needs a theme-fixed
+     dark ink: var(--ink) resolves to near-white on this dark page (1:1, invisible). */
   .evidence-head .what{font-family:"Kilon",system-ui,sans-serif;font-weight:600;
-    font-size:1.04rem;color:var(--ink)}
-  .evidence-head .what .arr{color:var(--ink-muted);margin:0 .35em}
+    font-size:1.04rem;color:#191320}
+  .evidence-head .what .arr{color:#5c5568;margin:0 .35em}
   .conf{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.64rem;
     font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;
     background:var(--ink-muted);border-radius:4px;padding:.35em .7em;white-space:nowrap}

@@ -531,7 +531,7 @@
   }
   // The same SHA-256 helper the studio uses.
   function sha256(text){ return Spine.witness(text); }
-  function shortHash(h){ return h ? h.slice(0,32)+'â€¦' : h; }
+  function shortHash(h){ return h ? h.slice(0,32)+'…' : h; }
 
   async function seal(){
     var h = await sha256(content.value);
