@@ -5,22 +5,22 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Research &middot; Zain Dana Harper</title>
-<meta name="description" content="Research index for Project Telos: theses, experiments, browser demos, graphics and math probes, and model-era engineering notes. Each entry labels what is argued, tested, or still unproven.">
+<meta name="description" content="Research index for Project Telos: theses, experiments, recorded workflows, graphics and math probes, and model-era engineering notes. Each entry labels what is argued, tested, or still unproven.">
 <link rel="canonical" href="https://harperz9.github.io/research.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Research &middot; Zain Dana Harper">
-<meta property="og:description" content="Theses, experiments, browser demos, graphics and math probes, and model-era engineering notes. Each entry labels what is argued, tested, or still unproven.">
+<meta property="og:description" content="Theses, experiments, recorded workflows, graphics and math probes, and model-era engineering notes. Each entry labels what is argued, tested, or still unproven.">
 <meta property="og:url" content="https://harperz9.github.io/research.html">
-<meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
 <meta property="og:image:alt" content="A still from the engine: a Kepler orbit with its conserved angular momentum fitted from the trace, real mathematics drawn by our own code.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Research &middot; Zain Dana Harper">
-<meta name="twitter:description" content="Theses, experiments, browser demos, graphics and math probes, and model-era engineering notes. Each entry labels what is argued, tested, or still unproven.">
-<meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
+<meta name="twitter:description" content="Theses, experiments, recorded workflows, graphics and math probes, and model-era engineering notes. Each entry labels what is argued, tested, or still unproven.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/doc.css?v=20260711a">
+<link rel="stylesheet" href="system/doc.css?v=20260712c">
 </head>
 <body class="doc">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -36,7 +36,7 @@
     <p class="role" style="margin-bottom:.55rem">Research program</p>
     <h1>Research</h1>
     <p class="role" style="color:var(--ink-soft);text-transform:none;letter-spacing:.01em;font-size:.92rem;margin:.55rem 0 .85rem">
-      The thinking under the workshop: systems papers, bounded experiments, and demos you can run yourself.</p>
+      The thinking under the workshop: systems papers, bounded experiments, and workflows you can inspect and reproduce.</p>
     <p class="contact">
       <span>Zain Dana Harper</span><span class="sep">/</span>
       <span>Seattle &middot; 2025 to 2026</span><span class="sep">/</span>
@@ -57,8 +57,8 @@
     <h2>How to read this</h2>
     <p class="lead">This page is an index, grouped into three parts. The <b>theses</b> carry the long arguments:
     artificial minds, communication between bounded agents, and what a verdict can actually say. The
-    <b>experiments</b> put pieces of those arguments into bounded tests. The <b>demos</b> run in your browser so
-    you can inspect a small piece directly. Each entry is labeled by where it stands, and where a result is
+    <b>experiments</b> put pieces of those arguments into bounded tests. The <b>demos</b> include recorded workflows with
+    their evidence packages and a browser-native byte witness. Each entry is labeled by where it stands, and where a result is
     not proven, the page for it says so plainly instead of turning a gap into a claim.</p>
   </section>
 
@@ -179,7 +179,7 @@
 
   <section>
     <h2>Demos</h2>
-    <p class="entry-note" style="margin-bottom:.85rem">Two pieces of the work you can run in the browser. Nothing is uploaded; you can check the claim yourself.</p>
+    <p class="entry-note" style="margin-bottom:.85rem"><a class="inline" href="demonstrations.html">The recorded workflow library</a> shows four current tool paths with short cuts, full runs, transcripts, evidence, and explicit claim boundaries. The byte witness remains browser-native.</p>
     <div class="entry">
       <div class="entry-head"><span class="entry-title"><a class="inline" href="demo-emet.html">The byte witness</a></span><span class="entry-meta">live demo</span></div>
       <ul class="bul"><li>The one move emet makes, running entirely in your browser: re-derive the bytes of a file, compare
@@ -187,10 +187,20 @@
       anywhere.</li></ul>
     </div>
     <div class="entry">
-      <div class="entry-head"><span class="entry-title"><a class="inline" href="demo-index.html">A repository map</a></span><span class="entry-meta">example output</span></div>
-      <ul class="bul"><li>An example of what index draws: repositories as nodes, dependencies as edges, and every edge
-      carrying the evidence it was inferred from. index runs offline over real repositories; this page shows a
-      sample of its output.</li></ul>
+      <div class="entry-head"><span class="entry-title"><a class="inline" href="demo-index.html">Index: a verified workspace atlas</a></span><span class="entry-meta">recorded workflow</span></div>
+      <ul class="bul"><li>A sanitized three-repository map, a named dependency checked back to file-and-line evidence, a bounded context envelope, and an offline atlas. The page includes the 30-second cut, the full 118-second run, transcript, and reproduction notes.</li></ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title"><a class="inline" href="demo-gather.html">Gather: research intake and recall</a></span><span class="entry-meta">recorded workflow</span></div>
+      <ul class="bul"><li>Structured source blocks enter a content-addressed local corpus, both retained records re-check against their provenance, and a changed receipt is caught. The fixture is local and makes no network request.</li></ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title"><a class="inline" href="demo-forum.html">Forum: routed orchestration</a></span><span class="entry-meta">recorded workflow</span></div>
+      <ul class="bul"><li>One cross-domain request becomes three dependent execution waves with validator passes, checkpoints, payload handoffs, and a replayable ledger. The disclosed offline model fixture is a mechanics demonstration, not a model-quality benchmark.</li></ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title"><a class="inline" href="demo-crucible.html">Crucible: measured refinement</a></span><span class="entry-meta">recorded workflow</span></div>
+      <ul class="bul"><li>A three-claim brief moves from one measured match and two drifts to three matches without changing the thesis, followed by cleanroom reviews and a verdict re-derived from disk.</li></ul>
     </div>
   </section>
 
@@ -198,7 +208,7 @@
   draft &middot; v0 scaffold &middot; witnessed result) and, where useful, by stricter status labels such as
   SOURCE_LEAD, PROBE_MATCH, CRUCIBLE_MATCH, and UNVERIFIABLE. Where a result is unproven it is reported
   UNVERIFIABLE rather than waved past. Get in touch:
-  <a class="inline" href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>. &middot; Updated 2026-07-02.</p>
+  <a class="inline" href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>. &middot; Updated 2026-07-12.</p>
 
 </article>
 </main>

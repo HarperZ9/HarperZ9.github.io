@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crucible demo: measure, refine, re-check</title>
+<meta name="description" content="A recorded Crucible 1.2.0 workflow: measure a three-claim artifact, name two drifts, refine without moving the criterion, reach 3 MATCH / 0 DRIFT, and re-derive the verdict from disk.">
+<link rel="canonical" href="https://harperz9.github.io/demo-crucible.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Crucible demo: measure, refine, re-check">
+<meta property="og:description" content="A real local workflow moves from 1 MATCH / 2 DRIFT to 3 MATCH / 0 DRIFT without changing the criterion.">
+<meta property="og:url" content="https://harperz9.github.io/demo-crucible.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/crucible.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Crucible demo: measure, refine, re-check">
+<meta name="twitter:description" content="The criterion stays fixed. The worker artifact improves. The verdict is re-derived from disk.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/crucible.png">
+<link rel="stylesheet" href="system/doc.css?v=20260712c">
+<style>
+  .demo-video{display:block;width:100%;aspect-ratio:16/9;background:#0d0611;
+    border:1px solid var(--rule-strong);border-radius:6px;box-shadow:0 24px 70px rgba(8,2,13,.22)}
+  .demo-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.75rem;margin:.8rem 0 0}
+  .demo-metric{border:1px solid var(--rule);border-radius:5px;padding:.85rem;background:var(--page)}
+  .demo-metric b{display:block;font-family:var(--display);font-size:1.8rem;line-height:1;color:var(--green)}
+  .demo-metric span{display:block;margin-top:.45rem;font-family:var(--mono);font-size:.63rem;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .proof-links{display:flex;flex-wrap:wrap;gap:.55rem;margin:.8rem 0 0}
+  .proof-links a{font-family:var(--mono);font-size:.68rem;border:1px solid var(--rule-strong);
+    border-radius:4px;padding:.5rem .65rem;text-decoration:none}
+  .command{overflow:auto;border:1px solid var(--rule);border-radius:5px;background:#120817;
+    color:#f1eaf3;padding:.9rem 1rem;font-family:var(--mono);font-size:.72rem;line-height:1.65}
+  .quiet{font-family:var(--mono);font-size:.66rem;color:var(--ink-soft);line-height:1.55}
+  @media(max-width:760px){.demo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body class="doc">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="resume.html">Resume</a> <a href="portfolio.html">Portfolio</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260709n"></script>
+
+<div class="docnav">
+  <span class="where">Recorded workflow &middot; Crucible 1.2.0</span>
+  <span class="switch"><a href="crucible.html">About Crucible</a><a href="demo-crucible.html" aria-current="page">Recorded demo</a><a href="demo-gather.html">Gather demo</a><a href="demo-index.html">Index demo</a><a href="portfolio.html">Portfolio</a></span>
+</div>
+
+<main id="main">
+<article class="sheet">
+  <header class="mast">
+    <h1>Measure. Refine. Re-check.</h1>
+    <p class="role">Keep the criterion fixed, measure the artifact, name the drift, and recompute the verdict after the work improves.</p>
+    <p class="contact">Crucible 1.2.0 <span class="sep">/</span> local fixture <span class="sep">/</span> deterministic verdict <span class="sep">/</span> sanitized capture <span class="sep">/</span> <a href="https://github.com/HarperZ9/crucible" translate="no">source</a></p>
+  </header>
+
+  <section>
+    <h2>The 30-second proof</h2>
+    <p class="lead">A draft release brief satisfies one of three measured claims. Crucible records the two concrete drifts, the worker artifact is refined without moving the criterion, and the same thesis reaches three measured matches.</p>
+    <video class="demo-video" controls preload="metadata" poster="media/demos/crucible/crucible-workflow-short-poster.png" aria-label="Thirty-second silent Crucible workflow with on-screen measurements and verdicts">
+      <source src="media/demos/crucible/crucible-workflow-short-30s.mp4" type="video/mp4">
+      Your browser cannot play this video. <a href="media/demos/crucible/crucible-workflow-short-30s.mp4">Open the MP4 directly.</a>
+    </video>
+    <p class="quiet">Silent, captioned on screen. The exact sanitized transcript, thesis, artifact receipts, and machine-readable evidence are linked below.</p>
+  </section>
+
+  <section>
+    <h2>The observed conversion</h2>
+    <div class="demo-grid" aria-label="Verified workflow metrics">
+      <div class="demo-metric"><b>3</b><span>claims measured</span></div>
+      <div class="demo-metric"><b>1 / 2</b><span>draft MATCH / DRIFT</span></div>
+      <div class="demo-metric"><b>3 / 0</b><span>refined MATCH / DRIFT</span></div>
+      <div class="demo-metric"><b>2 PASS</b><span>cleanroom reviews</span></div>
+    </div>
+    <ul class="bul">
+      <li><b>Register:</b> one three-claim thesis defines the release criterion before either artifact is judged.</li>
+      <li><b>Measure the draft:</b> one claim holds; two measured axes return DRIFT rather than an invented pass.</li>
+      <li><b>Hold the boundary:</b> the cleanroom reviewer receives the spec and artifact packet, not worker context or reasoning traces.</li>
+      <li><b>Refine:</b> the artifact changes while the thesis stays fixed.</li>
+      <li><b>Re-check:</b> the refined run returns 3 MATCH / 0 DRIFT, and the verdict is re-derived from disk.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>The full 94-second workflow</h2>
+    <p class="lead">The long cut preserves all seven successful commands: build draft evidence, run and review the draft, build refined evidence, run and review the refined artifact, then verify the recorded verdicts. Every displayed count, receipt, seal, return code, and verdict comes from the captured evidence package.</p>
+    <video class="demo-video" controls preload="metadata" poster="media/demos/crucible/crucible-workflow-full-poster.png" aria-label="Full silent Crucible workflow with on-screen commands and results">
+      <source src="media/demos/crucible/crucible-workflow-full-94s.mp4" type="video/mp4">
+      Your browser cannot play this video. <a href="media/demos/crucible/crucible-workflow-full-94s.mp4">Open the MP4 directly.</a>
+    </video>
+  </section>
+
+  <section>
+    <h2>Run path</h2>
+    <pre class="command"><code>python make_substrate.py worker-draft.md substrate-draft.json artifact-evidence-draft.json
+python -m crucible run thesis.json --substrate substrate-draft.json --registry registry-draft --bundle bundle-draft
+python -m crucible review bundle-draft
+python make_substrate.py worker-refined.md substrate-refined.json artifact-evidence-refined.json
+python -m crucible run thesis.json --substrate substrate-refined.json --registry registry-refined --bundle bundle-refined
+python -m crucible review bundle-refined
+python -m crucible verdicts registry-refined --verify</code></pre>
+    <div class="proof-links">
+      <a href="media/demos/crucible/transcript.txt">Sanitized transcript</a>
+      <a href="media/demos/crucible/evidence.json">Machine-readable evidence</a>
+      <a href="media/demos/crucible/verification.json">Independent capture verification</a>
+      <a href="media/demos/crucible/thesis.json">Fixed three-claim thesis</a>
+      <a href="media/demos/crucible/README.md">Reproduction guide and checksums</a>
+      <a href="media/demos/crucible/crucible-workflow-short-30s.mp4" download>Download 30-second MP4</a>
+      <a href="media/demos/crucible/crucible-workflow-full-94s.mp4" download>Download full MP4</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Claim boundary</h2>
+    <p class="lead">This is a local, sanitized fixture built to make the measurement loop inspectable. It demonstrates the register, run, cleanroom review, refinement, witnessed assessment, and disk re-verification paths shown here. It does not claim that an evaluation criterion is automatically well-designed, that all claims can be reduced to numeric measures, or that a passing fixture proves production fitness.</p>
+    <p class="entry-note">Recorded and verified 2026-07-12 from the public Crucible 1.2.0 source revision shown in the evidence package. Both videos are H.264, 1920 x 1080, 30 fps, and contain no audio. They decoded successfully end to end, and the package passed path and credential hygiene checks.</p>
+  </section>
+</article>
+</main>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forum demo: route it, run it, prove it</title>
+<meta name="description" content="A recorded Forum 1.13.0 workflow: route one cross-domain request, execute three dependent waves, validate every result, write checkpoints and a causal ledger, then verify the chain and payloads.">
+<link rel="canonical" href="https://harperz9.github.io/demo-forum.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Forum demo: route it, run it, prove it">
+<meta property="og:description" content="Three dependent waves. Three validator passes. Nineteen ledger entries. Chain and payloads verified.">
+<meta property="og:url" content="https://harperz9.github.io/demo-forum.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/forum.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Forum demo: route it, run it, prove it">
+<meta name="twitter:description" content="Model-agnostic orchestration with checkpoints and a replayable causal ledger.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/forum.png">
+<link rel="stylesheet" href="system/doc.css?v=20260712c">
+<style>
+  .demo-video{display:block;width:100%;aspect-ratio:16/9;background:#0d0611;
+    border:1px solid var(--rule-strong);border-radius:6px;box-shadow:0 24px 70px rgba(8,2,13,.22)}
+  .demo-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.75rem;margin:.8rem 0 0}
+  .demo-metric{border:1px solid var(--rule);border-radius:5px;padding:.85rem;background:var(--page)}
+  .demo-metric b{display:block;font-family:var(--display);font-size:1.8rem;line-height:1;color:var(--green)}
+  .demo-metric span{display:block;margin-top:.45rem;font-family:var(--mono);font-size:.63rem;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .proof-links{display:flex;flex-wrap:wrap;gap:.55rem;margin:.8rem 0 0}
+  .proof-links a{font-family:var(--mono);font-size:.68rem;border:1px solid var(--rule-strong);
+    border-radius:4px;padding:.5rem .65rem;text-decoration:none}
+  .command{overflow:auto;border:1px solid var(--rule);border-radius:5px;background:#120817;
+    color:#f1eaf3;padding:.9rem 1rem;font-family:var(--mono);font-size:.72rem;line-height:1.65}
+  .quiet{font-family:var(--mono);font-size:.66rem;color:var(--ink-soft);line-height:1.55}
+  @media(max-width:760px){.demo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body class="doc">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="resume.html">Resume</a> <a href="portfolio.html">Portfolio</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260709n"></script>
+
+<div class="docnav">
+  <span class="where">Recorded workflow &middot; Forum 1.13.0</span>
+  <span class="switch"><a href="forum.html">About Forum</a><a href="demo-forum.html" aria-current="page">Recorded demo</a><a href="demo-crucible.html">Crucible demo</a><a href="demo-gather.html">Gather demo</a><a href="demo-index.html">Index demo</a></span>
+</div>
+
+<main id="main">
+<article class="sheet">
+  <header class="mast">
+    <h1>Route it. Run it. Prove it.</h1>
+    <p class="role">Turn one cross-domain request into a dependency-aware plan, validated task waves, checkpoints, and a replayable causal record.</p>
+    <p class="contact">Forum 1.13.0 <span class="sep">/</span> deterministic offline fixture <span class="sep">/</span> real CLI <span class="sep">/</span> sanitized receipts <span class="sep">/</span> <a href="https://github.com/HarperZ9/forum" translate="no">source</a></p>
+  </header>
+
+  <section>
+    <h2>The 27-second proof</h2>
+    <p class="lead">Forum routes a backend-and-documentation request, turns it into three dependent waves, validates each result, and leaves behind a content-addressed ledger that can be independently rechecked.</p>
+    <video class="demo-video" controls preload="metadata" poster="media/demos/forum/forum-demo-short-poster.png" aria-label="Twenty-seven-second silent Forum workflow with on-screen routing, plan, results, ledger, and verification">
+      <source src="media/demos/forum/forum-demo-short.mp4" type="video/mp4">
+      Your browser cannot play this video. <a href="media/demos/forum/forum-demo-short.mp4">Open the MP4 directly.</a>
+    </video>
+    <p class="quiet">Silent, captioned on screen. The exact sanitized transcript, raw ledger, structured evidence, and capture verification are linked below.</p>
+  </section>
+
+  <section>
+    <h2>The observed run</h2>
+    <div class="demo-grid" aria-label="Verified workflow metrics">
+      <div class="demo-metric"><b>3</b><span>dependency waves</span></div>
+      <div class="demo-metric"><b>3</b><span>validator passes</span></div>
+      <div class="demo-metric"><b>19</b><span>ledger entries</span></div>
+      <div class="demo-metric"><b>3</b><span>checkpoints</span></div>
+    </div>
+    <ul class="bul">
+      <li><b>Route:</b> the request selects the backend track without escalation.</li>
+      <li><b>Plan:</b> backend design, code review, and technical writing become three dependency-ordered waves.</li>
+      <li><b>Run:</b> upstream results cross typed data edges into the next task, and every wave closes with a checkpoint.</li>
+      <li><b>Validate:</b> 3 task results receive 3 validator passes and zero failures.</li>
+      <li><b>Prove:</b> 19 ledger entries, 3 checkpoints, and their content-addressed bodies pass both chain and deep-payload verification.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>The full 105-second workflow</h2>
+    <p class="lead">The long cut shows the original request, route, dependency plan, each task result, synthesized answer, causal ledger, summary, independent ledger verification, and the operator-room projection. The commands, counts, verdicts, checkpoints, hashes, and success state come from the captured run.</p>
+    <video class="demo-video" controls preload="metadata" poster="media/demos/forum/forum-demo-full-poster.png" aria-label="Full silent Forum workflow with on-screen commands and results">
+      <source src="media/demos/forum/forum-demo-full.mp4" type="video/mp4">
+      Your browser cannot play this video. <a href="media/demos/forum/forum-demo-full.mp4">Open the MP4 directly.</a>
+    </video>
+  </section>
+
+  <section>
+    <h2>Run path</h2>
+    <pre class="command"><code>python -m forum route --json "Build the backend API endpoint and database schema; review the code and write technical docs."
+python -m forum submit "..." --cmd "python &lt;DEMO_DIR&gt;/mock_forum_model.py" --ledger "&lt;DEMO_DIR&gt;/ledger" --checkpoint-each-wave --delivery-profile engineer --max-model-calls 12 --json
+python -m forum ledger show --ledger "&lt;DEMO_DIR&gt;/ledger" --limit 30
+python -m forum ledger summary --ledger "&lt;DEMO_DIR&gt;/ledger" --json
+python -m forum ledger verify --ledger "&lt;DEMO_DIR&gt;/ledger"
+python -m forum ledger room --ledger "&lt;DEMO_DIR&gt;/ledger" --brief</code></pre>
+    <div class="proof-links">
+      <a href="media/demos/forum/transcript.txt">Sanitized transcript</a>
+      <a href="media/demos/forum/evidence.json">Structured workflow evidence</a>
+      <a href="media/demos/forum/ledger-entries.jsonl">Raw ledger entries</a>
+      <a href="media/demos/forum/ledger-payloads.jsonl">Raw payload ledger</a>
+      <a href="media/demos/forum/verification.json">Capture verification</a>
+      <a href="media/demos/forum/README.md">Reproduction guide and checksums</a>
+      <a href="media/demos/forum/forum-demo-short.mp4" download>Download 27-second MP4</a>
+      <a href="media/demos/forum/forum-demo-full.mp4" download>Download full MP4</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Claim boundary</h2>
+    <p class="lead">This is a disclosed deterministic offline model fixture. It demonstrates Forum's routing, dependency planning, task-wave execution, data-edge injection, checkpoints, validation, synthesis, delivery checks, ledger construction, operator-room projection, and verification mechanics. It does not benchmark production-model quality, latency, or cost.</p>
+    <p class="entry-note">Recorded and verified 2026-07-12 from the source revision shown in the evidence package. Both videos are H.264, 1920 x 1080, 30 fps, and contain no audio. They decoded successfully end to end, and the package passed path, credential, scene-dimension, and transcript checks.</p>
+  </section>
+</article>
+</main>
+</body>
+</html>
