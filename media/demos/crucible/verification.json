@@ -1,0 +1,61 @@
+{
+  "schema": "project-telos.marketing-demo-verification/v1",
+  "videos": [
+    {
+      "file": "crucible-workflow-short-30s.mp4",
+      "bytes": 1502259,
+      "sha256": "720b69e8f940361c7f712e8f9cb5a4a144fe788e8416bc428853762805db0670",
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "width": 1920,
+      "height": 1080,
+      "duration_seconds": 30.0,
+      "full_decode_exit": 0
+    },
+    {
+      "file": "crucible-workflow-full-94s.mp4",
+      "bytes": 2683126,
+      "sha256": "f39c901cb531bb9b6fe66b3711c093c87fbe993f29379bd1dfb54d07c2bc98b4",
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "width": 1920,
+      "height": 1080,
+      "duration_seconds": 94.0,
+      "full_decode_exit": 0
+    }
+  ],
+  "workflow_steps": 7,
+  "workflow_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "cleanroom_reviews": {
+    "draft": true,
+    "refined": true
+  },
+  "rederived_from_disk": {
+    "draft": {
+      "seals_ok": true,
+      "thesis_ok": true,
+      "verdicts_rederive": true
+    },
+    "refined": {
+      "seals_ok": true,
+      "thesis_ok": true,
+      "verdicts_rederive": true
+    }
+  },
+  "sanitization_scan": {
+    "files": [
+      "raw-transcript.txt",
+      "workflow-evidence.json"
+    ],
+    "findings": {}
+  },
+  "crucible_source_status_after": "clean"
+}

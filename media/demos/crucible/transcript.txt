@@ -1,0 +1,72 @@
+CRUCIBLE RECORDED WORKFLOW
+Local deterministic replay; paths sanitized; no external services.
+
+=== inspect draft worker artifact ===
+$ python make_substrate.py worker-draft.md substrate-draft.json artifact-evidence-draft.json
+inspected worker-draft.md
+  sha256 1a0eb25a9a3078b0...
+  evidence_record_count: 2
+  unresolved_placeholder_count: 1
+  cleanroom_boundary_count: 1
+[exit 0]
+
+=== measure draft and emit cleanroom bundle ===
+$ python -m crucible run thesis.json --substrate substrate-draft.json --registry registry-draft --bundle bundle-draft
+ran thesis c7b6089f874e5273: 3 claim(s)
+  steelman refutations: 3
+  MATCH 1  DRIFT 2  UNVERIFIABLE 0
+  assessment seal: d041ded6d29430f0...
+  re-derived from disk: True  {'seals_ok': True, 'thesis_ok': True, 'verdicts_rederive': True}
+  report: report.md
+[exit 0]
+
+=== review draft verifier boundary ===
+$ python -m crucible review bundle-draft
+cleanroom bundle PASS: <DEMO_ROOT>\bundle-draft
+  required_files: True
+  no_extra_context: True
+  verifier_boundary: True
+  artifact_paths: True
+  spec_matches_run: True
+  report_matches_run: True
+  review_instructions: True
+  run_integrity: True
+[exit 0]
+
+=== inspect refined worker artifact ===
+$ python make_substrate.py worker-refined.md substrate-refined.json artifact-evidence-refined.json
+inspected worker-refined.md
+  sha256 508df97f92264ad7...
+  evidence_record_count: 3
+  unresolved_placeholder_count: 0
+  cleanroom_boundary_count: 1
+[exit 0]
+
+=== measure refined artifact and emit cleanroom bundle ===
+$ python -m crucible run thesis.json --substrate substrate-refined.json --registry registry-refined --bundle bundle-refined
+ran thesis c7b6089f874e5273: 3 claim(s)
+  steelman refutations: 3
+  MATCH 3  DRIFT 0  UNVERIFIABLE 0
+  assessment seal: 66fecffb48a193c0...
+  re-derived from disk: True  {'seals_ok': True, 'thesis_ok': True, 'verdicts_rederive': True}
+  report: report.md
+[exit 0]
+
+=== review refined verifier boundary ===
+$ python -m crucible review bundle-refined
+cleanroom bundle PASS: <DEMO_ROOT>\bundle-refined
+  required_files: True
+  no_extra_context: True
+  verifier_boundary: True
+  artifact_paths: True
+  spec_matches_run: True
+  report_matches_run: True
+  review_instructions: True
+  run_integrity: True
+[exit 0]
+
+=== re-derive witnessed verdicts from disk ===
+$ python -m crucible verdicts registry-refined --verify
+re-checked 1 assessment(s): 1 ok, 0 not
+  c7b6089f874e5273 ok=True  seals=True thesis=True rederive=True
+[exit 0]

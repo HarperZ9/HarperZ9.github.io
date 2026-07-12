@@ -35,7 +35,7 @@
     <p class="lede">Most orchestrators tell you an agent completed a task. <span translate="no">forum</span> writes down what actually happened: which track the task went to, what plan was formed, what the result was, and whether validation passed or failed. All of that lands in a causal hash-chain ledger you can replay and verify yourself. A failed task is recorded as <code translate="no">ok=false</code>, not quietly blessed and passed along.</p>
     <p class="close">The trust comes from re-deriving the chain, not from the engine asserting it ran cleanly.</p>
   </div>
-  <div class="seal"><span translate="no">forum</span> &middot; v1.12.0 &middot; witnessed ledger &middot; fair-source &middot; <span translate="no">pip install forum-engine</span></div>
+  <div class="seal"><span translate="no">forum</span> &middot; v1.13.0 &middot; witnessed ledger &middot; fair-source &middot; <span translate="no">pip install forum-engine</span></div>
 </div>
 
 <main id="main">
@@ -131,16 +131,19 @@
 <!-- PROOF AND RUN IT -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Current state. How to run it.</h2>
-  <p class="body-text reveal">Version 1.12.0, on PyPI as <code translate="no">forum-engine</code>. The full engine is here: durable ledger, routing, the control loop, model-agnostic executors, an HTTP and MCP daemon, the <code translate="no">forum</code> CLI, witnessed budgets and escalation, the intent and delivery ladders, typed data-flow between tasks, resumable runs, and the context and verification seams. 271 tests plus two guarded real-model tests, ruff and mypy clean, no third-party runtime dependency. The license is fair-source: source-available, rights reserved to fund the research; the smaller utility tools that came out of this work stay permissive.</p>
+  <p class="body-text reveal">Version 1.13.0, on PyPI as <code translate="no">forum-engine</code>. The full engine is here: durable ledger, routing, the control loop, model-agnostic executors, an HTTP and MCP daemon, the <code translate="no">forum</code> CLI, witnessed budgets and escalation, the intent and delivery ladders, typed data-flow between tasks, resumable runs, and the context and verification seams. The current core workflows are tested, linted, and type-checked, with no third-party runtime dependency. The license is fair-source: source-available, rights reserved to fund the research; the smaller utility tools that came out of this work stay permissive.</p>
+  <p class="body-text reveal"><a href="demo-forum.html">Watch the recorded workflow</a>: one routed request becomes three dependency waves, three validator passes, 19 ledger entries, three checkpoints, and a chain-plus-payload verification pass.</p>
   <pre class="artifact" translate="no"><span class="pr">$ pip install forum-engine</span>
 <span class="pr">$ python examples/demo.py</span>   <span class="ok"># routes, plans, witnesses, then tamper-checks the ledger</span>
 <span class="pr">$ python -m pytest</span>
-<span class="ok">271 passed</span></pre>
+<span class="ok"># core suite passes</span></pre>
   <p class="body-text reveal">Python, standard library only. Install it, run the demo, route a real task through it. Each example under <code translate="no">examples/</code> is a short offline demonstration of one capability: the intent ladder, the delivery pass, a resumed run, an A/B of two runs. If something breaks or the ledger produces a result you cannot verify, that is exactly the kind of report I want.</p>
   <div class="channels reveal">
     <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/forum" translate="no">HarperZ9/forum</a>
     &nbsp;&middot;&nbsp;
     <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/forum-engine/" translate="no">forum-engine</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">Recorded demo</span> &rarr; <a href="demo-forum.html">watch the workflow</a>
     &nbsp;&middot;&nbsp;
     <a href="overview.html">&larr; all flagships</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the index</a>
   </div>

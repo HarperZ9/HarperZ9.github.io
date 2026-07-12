@@ -1,0 +1,18 @@
+{
+  "title": "Release brief evidence gate",
+  "disposition": "publishable",
+  "claims": [
+    {
+      "text": "the worker artifact cites exactly three evidence records",
+      "falsification": "the measured evidence record count is not three"
+    },
+    {
+      "text": "the worker artifact contains zero unresolved placeholders",
+      "falsification": "the measured unresolved placeholder count is above zero"
+    },
+    {
+      "text": "the worker artifact names one cleanroom verifier boundary",
+      "falsification": "the measured cleanroom verifier boundary count is not one"
+    }
+  ]
+}

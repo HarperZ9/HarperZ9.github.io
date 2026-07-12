@@ -1,0 +1,11 @@
+{
+  "artifact": "worker-draft.md",
+  "artifact_sha256": "1a0eb25a9a3078b0e88e6df28c9a75284237cda797226e63a0c9c6e81951b108",
+  "bytes": 360,
+  "metrics": {
+    "evidence_record_count": 2,
+    "unresolved_placeholder_count": 1,
+    "cleanroom_boundary_count": 1
+  },
+  "inspector": "make_substrate.py/v1"
+}

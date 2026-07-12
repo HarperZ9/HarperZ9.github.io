@@ -35,7 +35,7 @@
     <p class="lede">Research lives behind awkward access. Captions and comments on a video, a paper behind an arXiv wall, a page that renders only under JavaScript, a scanned PDF, an audio file, an API behind a credential wall, and a fact that exists only across scattered fragments and has to be put together. Most tools handle one of those and break on the rest, and when they do reach something, you cannot tell later whether a line was pulled straight from the source or pieced together along the way. <span translate="no">gather</span> handles all of it, and writes down how.</p>
     <p class="close">Every item carries a receipt recording how it was obtained, so a quote is never confused with an inference, and what was hard to get is never dressed up as if it were lying in the open.</p>
   </div>
-  <div class="seal"><span translate="no">gather</span> &middot; v1.6.0 &middot; provenance receipts &middot; fair-source &middot; <span translate="no">pip install gather-engine</span></div>
+  <div class="seal"><span translate="no">gather</span> &middot; v1.6.1 &middot; provenance receipts &middot; fair-source &middot; <span translate="no">pip install gather-engine</span></div>
 </div>
 
 <main id="main">
@@ -133,7 +133,7 @@
 <!-- PROOF AND RUN IT -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Current state. How to run it.</h2>
-  <p class="body-text reveal">Version 1.6.0, on PyPI as <code translate="no">gather-engine</code>. It installs the <code translate="no">gather</code> command and the <code translate="no">gather</code> package. The core is pure standard library; a few adapters call an external tool (<code translate="no">yt-dlp</code>, <code translate="no">pdftotext</code>, a headless <code translate="no">chromium</code>, <code translate="no">tesseract</code>, a Whisper-style CLI), which you install only if you use that adapter. <span translate="no">gather</span> reached its organic completion at 1.6.0: every planned source and seam is shipped, and the accountability claims hold end to end across a final whole-system review. The license is fair-source: source-available, rights reserved to fund the research; the smaller utility tools that came out of this work stay permissive.</p>
+  <p class="body-text reveal">Version 1.6.1, published as <code translate="no">gather-engine</code>. It installs the <code translate="no">gather</code> command and the <code translate="no">gather</code> package. The core is pure standard library; optional adapters call an external tool (<code translate="no">yt-dlp</code>, <code translate="no">pdftotext</code>, headless <code translate="no">chromium</code>, <code translate="no">tesseract</code>, or a Whisper-style CLI) only when that route is selected. The current recorded workflow exercises local extraction, scoped document intake, corpus recall, verification, digest sealing, and a tamper drill without a network dependency. The license is fair-source: source-available, rights reserved to fund the research; smaller utility tools that came out of this work remain permissive.</p>
   <pre class="artifact" translate="no"><span class="pr">$ pip install gather-engine</span>
 <span class="pr">$ python examples/demo.py</span>       <span class="cmt"># one video parsed, scoped, digested, then a receipt catches tampering</span>
 parsed 3 items from one video, each with a receipt
@@ -142,6 +142,8 @@ parsed 3 items from one video, each with a receipt
 <span class="pr">$ python examples/pipeline.py</span>   <span class="cmt"># the whole organ: run, store, verify, recall, offline</span></pre>
   <p class="body-text reveal">Python, standard library only. Install it, run the demo offline, then point an adapter at a real source. Each example under <code translate="no">examples/</code> is a short demonstration of one capability: the receipt that catches tampering, the corpus that re-hashes every body, the recall that re-verifies what it returns. If an adapter reaches something it should not, or a digest produces a result you cannot verify, that is exactly the kind of report I want.</p>
   <div class="channels reveal">
+    <span class="g">Recorded demo</span> &rarr; <a href="demo-gather.html">29-second proof and full workflow</a>
+    &nbsp;&middot;&nbsp;
     <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/gather" translate="no">HarperZ9/gather</a>
     &nbsp;&middot;&nbsp;
     <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/gather-engine/" translate="no">gather-engine</a>

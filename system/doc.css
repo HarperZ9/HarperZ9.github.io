@@ -480,6 +480,20 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--teal-soft);outline-
   font-weight:700;
   color:var(--ink);
 }
+.site-nav .sn-home-field{
+  position:relative;
+  display:block;
+  flex:0 0 auto;
+  width:clamp(112px,14vw,168px);
+  height:2.5rem;
+}
+.site-nav .sn-logo-canvas,
+.site-nav .sn-logo-fallback{
+  position:absolute;
+  inset:0;
+  width:100%;height:100%;display:block;
+}
+.site-nav .sn-logo-fallback{border-radius:7px;object-fit:contain}
 .site-nav .sn-home:hover,
 .site-nav .sn-home:focus-visible{color:var(--teal)}
 .site-nav .sn-links{
@@ -875,3 +889,6 @@ ul.bul .num{color:var(--crystal)}
   touch-action:manipulation;
 }
 .site-nav .sn-more-list a{display:flex}
+
+/* Keep the compact Menu trigger authoritative after the shared tap-target rule. */
+@media(max-width:680px){.site-nav .sn-links > a{display:none}}

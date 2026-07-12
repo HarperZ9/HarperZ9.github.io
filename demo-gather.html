@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gather demo: research intake you can re-check</title>
+<meta name="description" content="A recorded Gather 1.6.1 workflow: extract structured source blocks, scope and seal local documents, recall them from a content-addressed corpus, verify 2 / 2 MATCH, and catch a changed receipt.">
+<link rel="canonical" href="https://harperz9.github.io/demo-gather.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Gather demo: research intake you can re-check">
+<meta property="og:description" content="Real local intake, content-addressed receipts, 2 / 2 MATCH, and a visible tamper failure.">
+<meta property="og:url" content="https://harperz9.github.io/demo-gather.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/gather.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gather demo: research intake you can re-check">
+<meta name="twitter:description" content="Extract, scope, seal, recall, verify, and catch a changed receipt.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/gather.png">
+<link rel="stylesheet" href="system/doc.css?v=20260712c">
+<style>
+  .demo-video{display:block;width:100%;aspect-ratio:16/9;background:#0d0611;
+    border:1px solid var(--rule-strong);border-radius:6px;box-shadow:0 24px 70px rgba(8,2,13,.22)}
+  .demo-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.75rem;margin:.8rem 0 0}
+  .demo-metric{border:1px solid var(--rule);border-radius:5px;padding:.85rem;background:var(--page)}
+  .demo-metric b{display:block;font-family:var(--display);font-size:1.8rem;line-height:1;color:var(--teal)}
+  .demo-metric span{display:block;margin-top:.45rem;font-family:var(--mono);font-size:.63rem;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .proof-links{display:flex;flex-wrap:wrap;gap:.55rem;margin:.8rem 0 0}
+  .proof-links a{font-family:var(--mono);font-size:.68rem;border:1px solid var(--rule-strong);
+    border-radius:4px;padding:.5rem .65rem;text-decoration:none}
+  .command{overflow:auto;border:1px solid var(--rule);border-radius:5px;background:#120817;
+    color:#f1eaf3;padding:.9rem 1rem;font-family:var(--mono);font-size:.72rem;line-height:1.65}
+  .quiet{font-family:var(--mono);font-size:.66rem;color:var(--ink-soft);line-height:1.55}
+  @media(max-width:760px){.demo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body class="doc">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="resume.html">Resume</a> <a href="portfolio.html">Portfolio</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260709n"></script>
+
+<div class="docnav">
+  <span class="where">Recorded workflow &middot; Gather 1.6.1</span>
+  <span class="switch"><a href="gather.html">About Gather</a><a href="demo-gather.html" aria-current="page">Recorded demo</a><a href="demo-index.html">Index demo</a><a href="portfolio.html">Portfolio</a></span>
+</div>
+
+<main id="main">
+<article class="sheet">
+  <header class="mast">
+    <h1>Research intake you can re-check.</h1>
+    <p class="role">Extract source structure, keep the lineage, seal what survives, and re-hash the evidence later.</p>
+    <p class="contact">Gather 1.6.1 <span class="sep">/</span> local fixture <span class="sep">/</span> no network <span class="sep">/</span> hashes unchanged <span class="sep">/</span> <a href="https://github.com/HarperZ9/gather" translate="no">source</a></p>
+  </header>
+
+  <section>
+    <h2>The 29-second proof</h2>
+    <p class="lead">Gather converts local source material into addressable, content-hashed blocks, scopes the useful documents into a corpus, and verifies that the stored bodies still match their provenance records.</p>
+    <video class="demo-video" controls preload="metadata" poster="media/demos/gather/gather-workflow-short-poster.png" aria-label="Twenty-nine-second silent Gather workflow with on-screen commands and results">
+      <source src="media/demos/gather/gather-workflow-short.mp4" type="video/mp4">
+      Your browser cannot play this video. <a href="media/demos/gather/gather-workflow-short.mp4">Open the MP4 directly.</a>
+    </video>
+    <p class="quiet">Silent, captioned on screen. The path-sanitized command transcript and machine-readable evidence are linked below.</p>
+  </section>
+
+  <section>
+    <h2>The observed result</h2>
+    <div class="demo-grid" aria-label="Verified workflow metrics">
+      <div class="demo-metric"><b>7</b><span>extracted blocks</span></div>
+      <div class="demo-metric"><b>2</b><span>records stored</span></div>
+      <div class="demo-metric"><b>0</b><span>documents dropped</span></div>
+      <div class="demo-metric"><b>2 / 2</b><span>MATCH</span></div>
+    </div>
+    <ul class="bul">
+      <li><b>Extract:</b> 7 extracted blocks retain source-node paths and SHA-256 fingerprints.</li>
+      <li><b>Scope and store:</b> two local notes added, 0 deduplicated, and 0 dropped.</li>
+      <li><b>Recall:</b> corpus search returns both relevant bodies with their fingerprints attached.</li>
+      <li><b>Re-check:</b> corpus verification re-reads both stored bodies and returns 2 / 2 MATCH.</li>
+      <li><b>Failure path:</b> the bundled integrity drill changes one receipt, returns False, and the workflow shows TAMPER CAUGHT.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>The full 116-second workflow</h2>
+    <p class="lead">The long cut preserves all seven real commands: version, extraction, scoped document intake, corpus search, corpus verification, digest creation, and the tamper drill. Every displayed hash, count, seal, return code, and verdict comes from the captured evidence file.</p>
+    <video class="demo-video" controls preload="metadata" poster="media/demos/gather/gather-workflow-full-poster.png" aria-label="Full silent Gather workflow with on-screen commands and results">
+      <source src="media/demos/gather/gather-workflow-full.mp4" type="video/mp4">
+      Your browser cannot play this video. <a href="media/demos/gather/gather-workflow-full.mp4">Open the MP4 directly.</a>
+    </video>
+  </section>
+
+  <section>
+    <h2>Run path</h2>
+    <pre class="command"><code>python -m gather extract &lt;DEMO_DIR&gt;/source.html
+python -m gather docs &lt;DEMO_DIR&gt;/notes --scope receipt,verification,provenance --store &lt;DEMO_DIR&gt;/corpus --json
+python -m gather corpus search &lt;DEMO_DIR&gt;/corpus --terms receipt,verification --json
+python -m gather corpus verify &lt;DEMO_DIR&gt;/corpus --json
+python -m gather corpus digest &lt;DEMO_DIR&gt;/corpus --json
+python examples/demo.py</code></pre>
+    <div class="proof-links">
+      <a href="media/demos/gather/transcript.txt">Sanitized transcript</a>
+      <a href="media/demos/gather/evidence.json">Machine-readable evidence</a>
+      <a href="media/demos/gather/README.md">Reproduction guide and checksums</a>
+      <a href="media/demos/gather/source.html">Safe source fixture</a>
+      <a href="media/demos/gather/gather-workflow-short.mp4" download>Download 29-second MP4</a>
+      <a href="media/demos/gather/gather-workflow-full.mp4" download>Download full MP4</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Claim boundary</h2>
+    <p class="lead">This is a local, sanitized fixture designed to make the evidence easy to inspect. It proves the extraction, scoping, content-addressed storage, recall, verification, digest, and tamper-detection paths shown here. It does not claim coverage of every live web source, authenticated route, OCR engine, or document format.</p>
+    <p class="entry-note">Recorded and verified 2026-07-12. Both videos are H.264, 1920 x 1080, 30 fps, and contain no audio. They decoded successfully end to end, and the evidence package passed path and credential hygiene checks.</p>
+  </section>
+</article>
+</main>
+</body>
+</html>

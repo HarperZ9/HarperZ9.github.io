@@ -1,0 +1,303 @@
+{
+  "schema": "project-telos.forum-marketing-demo-evidence/v1",
+  "forum_version": "forum 1.13.0",
+  "request": "Build the backend API endpoint and database schema; review the code and write technical docs.",
+  "fixture": {
+    "kind": "deterministic offline subprocess fixture",
+    "path": "<DEMO_DIR>/mock_forum_model.py",
+    "sha256": "a892a87f0d802cda6521a3eaf3e4b23a596121c4ec7ea75f2b61937becafabf2",
+    "network": false,
+    "production_model": false
+  },
+  "route": {
+    "decided": "backend",
+    "confidence": 0.6,
+    "needs_escalation": false,
+    "delivery_profile": "engineer",
+    "model_tier": "capable"
+  },
+  "plan": {
+    "waves": [
+      [
+        "T1"
+      ],
+      [
+        "T2"
+      ],
+      [
+        "T3"
+      ]
+    ],
+    "edges": [
+      {
+        "from": "T1",
+        "to": "T2",
+        "type": "data"
+      },
+      {
+        "from": "T1",
+        "to": "T3",
+        "type": "data"
+      },
+      {
+        "from": "T2",
+        "to": "T3",
+        "type": "data"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T1",
+      "agent": "backend",
+      "instruction": "Define the backend API endpoint, database schema, and rollout checks.",
+      "data_from": [],
+      "done_when": [
+        "Endpoints and response semantics are explicit",
+        "Rollout checks have observable pass conditions"
+      ]
+    },
+    {
+      "id": "T2",
+      "agent": "code-review",
+      "instruction": "Review the backend plan for security and failure modes.",
+      "data_from": [
+        "T1"
+      ],
+      "done_when": [
+        "Security risks and mitigations are named",
+        "Failure behavior is bounded"
+      ]
+    },
+    {
+      "id": "T3",
+      "agent": "technical-writing",
+      "instruction": "Write concise technical docs for launch and rollback.",
+      "data_from": [
+        "T1",
+        "T2"
+      ],
+      "done_when": [
+        "Launch steps are ordered",
+        "Rollback and verification steps are included"
+      ]
+    }
+  ],
+  "results": [
+    {
+      "id": "T1",
+      "output": "API contract: POST /v1/releases accepts an idempotency key and validated release manifest; GET /v1/releases/{id} returns state and immutable audit references. Database schema: release_id, manifest_hash, state, created_at, and receipt_hash. Rollout checks: schema validation, health probe, canary success, and receipt persistence.",
+      "ok": true,
+      "model": "SubprocessExecutor"
+    },
+    {
+      "id": "T2",
+      "output": "Security review: authenticate every mutation, authorize release scope, reject replayed idempotency keys, redact secrets, and rate-limit callers. Failure bounds: fail closed, preserve the prior release, emit a durable receipt, and make retry state explicit.",
+      "ok": true,
+      "model": "SubprocessExecutor"
+    },
+    {
+      "id": "T3",
+      "output": "Operator guide: 1) validate the manifest; 2) start a scoped canary; 3) verify health, receipt, and audit reference; 4) promote only after all checks pass; 5) on failure, halt promotion, restore the prior release, and verify the rollback receipt.",
+      "ok": true,
+      "model": "SubprocessExecutor"
+    }
+  ],
+  "verdicts": [
+    {
+      "id": "T1",
+      "ok": true,
+      "score": 0.97,
+      "reason": "The output is concrete, bounded, and satisfies the stated done-when checks."
+    },
+    {
+      "id": "T2",
+      "ok": true,
+      "score": 0.97,
+      "reason": "The output is concrete, bounded, and satisfies the stated done-when checks."
+    },
+    {
+      "id": "T3",
+      "ok": true,
+      "score": 0.97,
+      "reason": "The output is concrete, bounded, and satisfies the stated done-when checks."
+    }
+  ],
+  "answer": "Ship the backend API endpoint and database schema. The code review covers security and failure modes. The technical docs cover launch, verification, and rollback. From the ledger: Forum ran three dependent tasks, validated every result, and recorded the workflow. Remaining risk: this fixture exercises orchestration mechanics, not a production model.",
+  "summary": {
+    "entries": 19,
+    "requests": 1,
+    "plans": 1,
+    "tasks": 3,
+    "task_results": 3,
+    "failed_results": 0,
+    "verdicts_pass": 3,
+    "verdicts_fail": 0,
+    "intent_checks": 1,
+    "intent_flagged": 0,
+    "intent_judgments": 0,
+    "intent_drift_judged": 0,
+    "verifications": 0,
+    "verifications_refuted": 0,
+    "delivery_checks": 1,
+    "delivery_flagged": 0,
+    "revisions": 0,
+    "revisions_accepted": 0,
+    "delivery_profile_checks": 1,
+    "delivery_profile_flagged": 0,
+    "delivery_profile_operator": 0,
+    "delivery_profile_engineer": 1,
+    "delivery_profile_researcher": 0,
+    "delivery_profile_executive": 0,
+    "checkpoints": 3,
+    "resumes": 0,
+    "escalations": 0,
+    "budget_stops": 0,
+    "contexts": 0,
+    "context_budget_checks": 0,
+    "context_budget_trimmed": 0,
+    "context_budget_omitted": 0,
+    "context_tokens_original": 0,
+    "context_tokens_admitted": 0,
+    "context_tokens_saved": 0,
+    "answers": 1,
+    "model_calls": {
+      "SubprocessExecutor": 3
+    },
+    "model_calls_total": 3,
+    "payload_bytes": 4517,
+    "checkpoint": "1c005b3d2a362ac621fda2a6dad4ed3e93e9ff412cff9b813984e08749d5aad8",
+    "verified": true
+  },
+  "verification": {
+    "chain": true,
+    "deep": true
+  },
+  "receipt": {
+    "schema": "project-telos.action-receipt/v1",
+    "tool": "forum",
+    "action": "submit",
+    "action_intent_id": "sha256:ceeb56725ff5ba386d221258bf57a27dd52b5defdf93a32f106d31bc12e48bb0",
+    "side_effect_class": [
+      "ledger_write",
+      "model_call"
+    ],
+    "request": {
+      "seq": 0,
+      "kind": "request",
+      "actor": "client",
+      "payload_hash": "311153752be5b8b13431e8e3768a02304559acde3155c7716b41b0bec9cabf57",
+      "entry_hash": "6d486f2b0c1d477bf1c60b8ca513fdfe38a8a97f383a975e1ee6ba120868e067"
+    },
+    "answer": {
+      "seq": 15,
+      "kind": "result",
+      "actor": "synthesizer",
+      "payload_hash": "737588230aaa9004c72d66b6c03439e06f12ab906f6c3eb75b2fe33bce21d885",
+      "entry_hash": "7bd4e796edb4e82cdb1242eeddd7fc48b34f0e074eac859506993c20b2fe5137"
+    },
+    "ledger": {
+      "entry_range": [
+        0,
+        18
+      ],
+      "entries": 19,
+      "checkpoint": "1c005b3d2a362ac621fda2a6dad4ed3e93e9ff412cff9b813984e08749d5aad8",
+      "verified": true
+    },
+    "model": {
+      "id": "SubprocessExecutor"
+    },
+    "budget": {
+      "max_model_calls": 12
+    },
+    "context_budget": {
+      "limits": {},
+      "observed": {
+        "checks": 0,
+        "trimmed": 0,
+        "omitted": 0,
+        "tokens_original": 0,
+        "tokens_admitted": 0,
+        "tokens_saved": 0
+      }
+    },
+    "route_frame": {
+      "schema": "forum.route-frame/v1",
+      "agent": "backend",
+      "domain": "validation",
+      "intent": "validate",
+      "posture": "reviewer",
+      "delivery_profile": "engineer",
+      "model_tier": "capable",
+      "executor": "cli",
+      "proof_lane": "verify",
+      "domain_lane": "formal-proof",
+      "human_contract": "Answer as a reviewer: identify the claim, the check performed, the result, and the remaining risk.",
+      "communication_contract": {
+        "schema": "forum.communication-contract/v1",
+        "domain": "validation",
+        "intent": "validate",
+        "posture": "reviewer",
+        "profile": "engineer",
+        "proof_lane": "verify",
+        "domain_lane": "formal-proof",
+        "lead": "Lead with the verdict and the check performed.",
+        "structure": [
+          "change",
+          "interface",
+          "verification",
+          "risk",
+          "next step"
+        ],
+        "evidence": [
+          "name files, commands, tests, or ledger facts when available"
+        ],
+        "avoid": [
+          "model preambles",
+          "unsupported superlatives",
+          "vague optimism",
+          "performative hedging"
+        ],
+        "required_moves": [
+          "state pass or fail",
+          "name remaining risk"
+        ],
+        "human_contract": "Answer as a reviewer: identify the claim, the check performed, the result, and the remaining risk."
+      },
+      "signals": [
+        "review"
+      ]
+    },
+    "delivery_profile": {
+      "requested": "engineer",
+      "selected": "engineer",
+      "source": "explicit",
+      "checks": 1,
+      "flagged": 0
+    },
+    "verification": {
+      "verdict": "MATCH",
+      "ledger_deep_verified": true
+    }
+  },
+  "operator_brief": "Forum operator brief\nStatus: Complete\nPosture: reviewer / engineer\n\nRun complete: Build the backend API endpoint and database schema; review the code and write technical docs.\nThe latest run is verified, has a final answer, and has no blocking signals.\nRisk: No blocking signals detected.\nNext: Export run receipt.\n\nSignals:\n- Route: validation / validate / reviewer\n- Tasks: 3 total, 3 with results, 3 accepted\n- Answer: present",
+  "assertions": {
+    "route_selected_backend": true,
+    "route_needs_no_escalation": true,
+    "receipt_ledger_verified": true,
+    "receipt_verdict_match": true,
+    "delivery_profile_clean": true,
+    "three_tasks_completed": true,
+    "no_failed_results": true,
+    "three_verdicts_pass": true,
+    "no_failed_verdicts": true,
+    "summary_verified": true,
+    "chain_verified": true,
+    "payloads_deep_verified": true,
+    "all_task_results_ok": true,
+    "all_validator_verdicts_ok": true,
+    "run_room_complete": true,
+    "run_room_no_blockers": true
+  }
+}
