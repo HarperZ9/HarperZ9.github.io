@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flywheel, a companion for every model</title>
+<meta name="description" content="Flywheel routes to any model, local or hosted, online or offline, answers what it can verify, escalates only the hard part, and hands back a receipt you can re-run yourself. Public, FSL-1.1-MIT. By Zain Dana Harper.">
+<link rel="canonical" href="https://harperz9.github.io/flywheel.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Flywheel, a companion for every model">
+<meta property="og:description" content="Route to any model, verify locally, keep a receipt you can re-run. It does what every router does, plus the one thing none of them do: it checks the work.">
+<meta property="og:url" content="https://harperz9.github.io/flywheel.html">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260711a">
+<style>
+  .fw-fig{margin:clamp(1.6rem,4vw,2.6rem) 0 0;border:1px solid var(--hairline);border-radius:16px;
+    padding:clamp(1rem,3vw,1.6rem);background:color-mix(in oklab,var(--void) 55%,transparent);overflow-x:auto}
+  .fw-fig svg{width:100%;height:auto;min-width:660px;display:block}
+  .fw-fig figcaption{color:var(--ink-muted);font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;
+    text-transform:uppercase;margin-top:.9rem}
+  .cmp-wrap,.bt-wrap{overflow-x:auto;margin:1.4rem 0}
+  .cmp,.bt{width:100%;border-collapse:collapse;font-size:.92rem;min-width:560px}
+  .cmp th,.cmp td,.bt th,.bt td{text-align:left;padding:.62rem .85rem;border-bottom:1px solid var(--hairline)}
+  .cmp thead th,.bt thead th{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted)}
+  .cmp td.y{color:var(--verified);font-weight:600}
+  .cmp td.n{color:var(--ink-faint)}
+  .cmp .fwcol{color:var(--verified)}
+  .run{font-family:var(--mono);font-size:.9rem;background:color-mix(in oklab,var(--void) 72%,transparent);
+    border:1px solid var(--hairline);border-radius:12px;padding:1rem 1.2rem;color:var(--bone);overflow-x:auto;margin:1.2rem 0}
+  .run .c{color:var(--verified)}
+  .null{border:1px solid color-mix(in oklab,var(--ember) 48%,var(--hairline));
+    background:color-mix(in oklab,var(--ember) 9%,transparent);border-radius:16px;padding:clamp(1.2rem,3vw,2rem);margin:1.5rem 0}
+  .null h3{color:var(--ember);margin:0 0 .7rem;font-family:var(--display)}
+  .kv2{display:grid;grid-template-columns:auto 1fr;gap:.55rem 1.6rem;font-size:.92rem;margin:1.2rem 0;max-width:64ch}
+  .kv2 dt{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)}
+  .kv2 dd{color:var(--bone);margin:0}
+</style>
+</head>
+<body class="inner-clean">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="overview.html">Engines</a> <a href="studio.html">The Studio</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260709n"></script>
+
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">flywheel</span> &middot; route + verify</span></div>
+  <div class="mid">
+    <h1>A companion for <span class="g">every model.</span></h1>
+    <p class="lede">Route to any model, local or hosted, online or offline. <span translate="no">Flywheel</span> answers what it can verify, escalates only the hard part, and hands you a receipt you can re-run yourself. It does what every router and runner does, plus the one thing none of them do: it checks the work.</p>
+    <p class="close">Every number on this page is a receipt file you can re-check offline.</p>
+  </div>
+  <div class="seal"><span translate="no">flywheel</span> &middot; public &middot; FSL-1.1-MIT &middot; <span translate="no">python scripts/run_harness_cli.py app --port 8799</span></div>
+</div>
+
+<main id="main">
+
+<!-- THE WEDGE -->
+<section class="mv" id="why" aria-labelledby="why-h">
+  <h2 id="why-h" class="reveal">Routers route. Runners run. None of them check the work.</h2>
+  <p class="body-text reveal">Not one router, local runner, or agent harness checks whether the answer is right and hands you proof. <span translate="no">Flywheel</span> does all of their jobs on one surface, and adds the verify layer none of them have. The authority that accepts an answer is an external check, never a model grading its own work.</p>
+  <p class="pull reveal">Bring your keys, or bring your weights.</p>
+</section>
+
+<!-- SCHEMATIC -->
+<section class="mv" id="loop" aria-labelledby="loop-h">
+  <h2 id="loop-h" class="reveal">The verified-inference loop.</h2>
+  <p class="body-text reveal">Propose cheap with a local model. Dispose with an external check that can fail. Carry a re-checkable receipt. What passes accumulates; the next identical ask is free, re-checked before it is served.</p>
+  <figure class="fw-fig reveal">
+    <svg viewBox="0 0 880 520" xmlns="http://www.w3.org/2000/svg" font-family="Hanken Grotesk, ui-sans-serif, system-ui, sans-serif" role="img" aria-label="The verified-inference loop: propose with a local model, dispose with an external oracle, carry a content-addressed receipt; passes feed a proof cache, failures raise N or escalate to a named stronger tier.">
+      <style>
+        .bg{ fill:none; }
+        .card{ fill:color-mix(in oklab, var(--void) 55%, transparent); stroke:var(--hairline); stroke-width:1.5; }
+        .accentbox{ fill:color-mix(in oklab, var(--verified) 13%, transparent); stroke:var(--verified); stroke-width:1.5; }
+        .t{ fill:var(--bone); font-size:15px; font-weight:650; }
+        .s{ fill:var(--ink-muted); font-size:11.5px; }
+        .cap{ fill:var(--ember); font-size:11px; font-weight:700; letter-spacing:.12em; }
+        .title{ fill:var(--bone); font-size:20px; font-weight:700; }
+        .loop{ stroke:var(--verified); stroke-width:2.4; fill:none; }
+        .back{ stroke:var(--ember); stroke-width:2; fill:none; stroke-dasharray:5 4; }
+        .okt{ fill:var(--verified); font-size:13px; font-weight:700; }
+      </style>
+      <rect class="bg" x="0" y="0" width="880" height="520"/>
+      <marker id="la" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--verified)"/></marker>
+      <marker id="lw" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--ember)"/></marker>
+      <text class="cap" x="40" y="40">THE VERIFIED-INFERENCE LOOP</text>
+      <text class="title" x="40" y="66">Propose cheap. Dispose external. Carry a re-checkable receipt.</text>
+      <rect class="card" x="60" y="150" width="220" height="88" rx="14"/>
+      <text class="cap" x="82" y="178">1 &#183; PROPOSE</text>
+      <text class="t" x="82" y="200">Local model</text>
+      <text class="s" x="82" y="219">cheap, replaceable; raise N</text>
+      <text class="s" x="82" y="233">to widen the candidate pool</text>
+      <rect class="accentbox" x="330" y="150" width="220" height="88" rx="14"/>
+      <text class="cap" x="352" y="178">2 &#183; DISPOSE</text>
+      <text class="t" x="352" y="200">External check</text>
+      <text class="s" x="352" y="219">the only thing that accepts;</text>
+      <text class="s" x="352" y="233">no learned model here</text>
+      <rect class="card" x="600" y="150" width="220" height="88" rx="14" stroke="var(--verified)"/>
+      <text class="cap" x="622" y="178" fill="var(--verified)">3 &#183; RECEIPT</text>
+      <text class="t" x="622" y="200">Content-addressed</text>
+      <text class="s" x="622" y="219">re-derive it offline; tamper</text>
+      <text class="s" x="622" y="233">one byte and the check fails</text>
+      <path class="loop" d="M280,194 L330,194" marker-end="url(#la)"/>
+      <text class="s" x="288" y="186">candidates</text>
+      <path class="loop" d="M550,194 L600,194" marker-end="url(#la)"/>
+      <text class="okt" x="556" y="186">PASS</text>
+      <rect class="card" x="600" y="300" width="220" height="66" rx="14"/>
+      <text class="t" x="622" y="326">Proof cache</text>
+      <text class="s" x="622" y="345">the next identical ask is free,</text>
+      <text class="s" x="622" y="358">re-checked before it is served</text>
+      <path class="loop" d="M710,238 L710,300" marker-end="url(#la)"/>
+      <path class="back" d="M440,238 C440,300 240,300 175,300" marker-end="url(#lw)"/>
+      <text class="cap" x="300" y="292" fill="var(--ember)">NO PASS &#183; RAISE N</text>
+      <path class="back" d="M160,300 L160,238" marker-end="url(#lw)"/>
+      <rect class="card" x="60" y="330" width="380" height="60" rx="14" stroke="var(--ember)"/>
+      <text class="t" x="82" y="356" fill="var(--ember)">Budget spent below confidence &#8594; Escalate</text>
+      <text class="s" x="82" y="374">route to a stronger tier; it is named, never called for you</text>
+      <path class="back" d="M160,300 C160,318 200,322 230,330" marker-end="url(#lw)"/>
+      <text class="s" x="40" y="470">An external check earns capability a model cannot self-select. Self-test earned nothing; the external check is the lever.</text>
+      <text class="s" x="40" y="492">Every accepted answer, cached or fresh, carries the same receipt. The check can fail, which is what makes a pass mean something.</text>
+    </svg>
+    <figcaption>Schematic &middot; the loop behind every accepted answer</figcaption>
+  </figure>
+</section>
+
+<!-- FOUR BLURBS -->
+<section class="mv" id="what" aria-labelledby="what-h">
+  <h2 id="what-h" class="reveal">One surface, four things it does that others do not.</h2>
+  <div class="index reveal-children" role="list" aria-label="What Flywheel does">
+    <div class="index-row" role="listitem" style="--i:0">
+      <span class="index-term">Every provider, one surface</span>
+      <span class="index-gloss">Local weights, a local server, or any hosted provider you hold a key for. One roster, one verified path behind them all. Credentials are presence only, never a value.</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:1">
+      <span class="index-term">A record you can keep</span>
+      <span class="index-gloss">Every accepted answer carries a receipt: the inputs, the check that passed, and hashes anyone can re-run offline. This is the layer no other router has.</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:2">
+      <span class="index-term">Answer local, escalate the hard part</span>
+      <span class="index-gloss">Answers what it can verify locally for near-zero cost, and routes only the genuinely hard slice to a stronger tier, on evidence, not a guess. The stronger tier is named, never called for you.</span>
+    </div>
+    <div class="index-row" role="listitem" style="--i:3">
+      <span class="index-term">Yours when the network is not</span>
+      <span class="index-gloss">Bring your keys and it routes online. Bring your weights and a capable coder, one file just under 9 GB, runs offline on a plane, when the network is down.</span>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="mv" id="compare" aria-labelledby="compare-h">
+  <h2 id="compare-h" class="reveal">How it compares.</h2>
+  <div class="cmp-wrap reveal">
+    <table class="cmp">
+      <thead><tr><th></th><th>Ordinary router</th><th>Local runner</th><th>Agent harness</th><th class="fwcol">Flywheel</th></tr></thead>
+      <tbody>
+        <tr><td>Routes to many providers</td><td class="y">Yes</td><td class="n">No</td><td>Some</td><td class="y">Yes</td></tr>
+        <tr><td>Runs a local model</td><td class="n">No</td><td class="y">Yes</td><td>Some</td><td class="y">Yes</td></tr>
+        <tr><td>Works offline</td><td class="n">No</td><td class="y">Yes</td><td class="n">No</td><td class="y">Yes</td></tr>
+        <tr><td>Accepts on an external check</td><td class="n">No</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
+        <tr><td>Re-checkable receipt per answer</td><td class="n">No</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
+        <tr><td>Answers local, escalates the hard part</td><td class="n">No</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
+        <tr><td>One root-hashed shared state</td><td class="n">No</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
+        <tr><td>Zero dependencies, one file to run</td><td>Varies</td><td>Varies</td><td class="n">No</td><td class="y">Yes</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- RUN IT NOW -->
+<section class="mv" id="run" aria-labelledby="run-h">
+  <h2 id="run-h" class="reveal">Run it now.</h2>
+  <p class="body-text reveal">Zero dependencies, Python standard library only. Route online with your keys, or run fully offline against local weights.</p>
+  <div class="run reveal"><span class="c">python</span> scripts/run_harness_cli.py app --port 8799</div>
+  <p class="body-text reveal">Then open the surface in your browser. One origin, one page, same-origin JSON routes.</p>
+</section>
+
+<!-- BENCHMARKS -->
+<section class="mv" id="benchmarks" aria-labelledby="bench-h">
+  <h2 id="bench-h" class="reveal">Benchmarks, with the interval.</h2>
+  <p class="body-text reveal">The model is <b translate="no">Flywheel-Local-Coder-14B</b>, a trained artifact with a full provenance chain, just under 9 GB at 4-bit. Hard set, ten tasks, every arm carrying its Wilson 95% interval and 100% receipt reproducibility.</p>
+  <div class="bt-wrap reveal">
+    <table class="bt">
+      <thead><tr><th>Arm</th><th>Result</th><th>Wilson 95% CI</th><th>Receipts</th></tr></thead>
+      <tbody>
+        <tr><td>single-shot</td><td>8 / 10 (80%)</td><td>[0.490, 0.943]</td><td>100%</td></tr>
+        <tr><td>verified inference</td><td>9 / 10 (90%)</td><td>[0.596, 0.982]</td><td>100%</td></tr>
+        <tr><td>best-of-4</td><td>9 / 10 (90%)</td><td>[0.596, 0.982]</td><td>100%</td></tr>
+        <tr><td>single + oracle</td><td>8 / 10 (80%)</td><td>[0.490, 0.943]</td><td>100%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="null reveal">
+    <h3>The honest null.</h3>
+    <p class="body-text">Verified inference beats single-shot by +0.100 here. The 95% interval on that difference is [-0.236, +0.420], which includes zero, and plain best-of-4 sampling ties it. <b>So we do not claim a capability uplift.</b></p>
+    <p class="body-text">What we do claim, and can measure: 100% receipt reproducibility, every accepted answer re-checks; pass parity with the models it routes to; availability on your own schedule, from weights you hold; and local cost. A tool that refuses to overclaim is a tool whose other claims you can trust.</p>
+  </div>
+  <p class="body-text reveal">Evidence: the running app serves the receipt at <span translate="no">/artifacts/flywheel-local-coder-14b-benchmark-ci.json</span>, re-checkable offline. The number moves the day the evidence does, not before.</p>
+</section>
+
+<!-- SPEC -->
+<section class="mv" id="spec" aria-labelledby="spec-h">
+  <h2 id="spec-h" class="reveal">Spec, at a glance.</h2>
+  <dl class="kv2 reveal">
+    <dt>Dependencies</dt><dd>None. Python standard library only.</dd>
+    <dt>Network</dt><dd>Your choice per call: route online with hosted-provider keys, or run fully offline against local weights.</dd>
+    <dt>Entry point</dt><dd><span translate="no">python scripts/run_harness_cli.py app --port 8799</span></dd>
+    <dt>Surface</dt><dd>One origin, one browser page, same-origin JSON routes.</dd>
+    <dt>Local model</dt><dd>Flywheel-Local-Coder-14B, ~9 GB 4-bit, GPU optional.</dd>
+    <dt>Accept authority</dt><dd>An external check. No learned model on the accept path.</dd>
+    <dt>Receipts</dt><dd>Content-addressed, re-checkable offline, on every accepted answer.</dd>
+  </dl>
+</section>
+
+<!-- VISION -->
+<section class="mv" id="vision" aria-labelledby="vision-h">
+  <h2 id="vision-h" class="reveal">The replaceable half and the durable half.</h2>
+  <p class="body-text reveal"><span translate="no">Flywheel</span> is the front surface of a verified-inference flywheel: propose with a cheap local model, dispose with an external check, keep the re-checkable receipt, and let what passes accumulate. The model is the replaceable half; the verification harness is the durable half.</p>
+  <p class="body-text reveal">The same discipline, an external check that can fail plus a receipt anyone can re-run, scales from routing a single call to composing a whole workshop of tools. This is the largest of them, and the front door to all of them.</p>
+  <p class="seal-line reveal"><span class="g">Run it</span>: <span translate="no">github.com/HarperZ9/flywheel</span> &middot; <a href="overview.html">the engine room</a> &middot; <a href="index.html">the workshop</a></p>
+</section>
+
+</main>
+</body>
+</html>

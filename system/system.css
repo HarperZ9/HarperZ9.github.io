@@ -4,14 +4,10 @@
    (sections, instrument index, organ rows, verdict chips, proof exhibits,
    scroll-reveal). Shared by every page; edit here, not per-page.
    ============================================================================ */
-/* ---- licensed/self-generated faces, ALL self-hosted: Telos Display (generated
-       project display), Kilon fallback, Hanken Grotesk text. Shared by the
-       current dark public system so every page has one type voice. ---- */
-@font-face{font-family:"Telos Display"; src:url("fonts/telos-display.woff2") format("woff2"),url("fonts/telos-display.ttf") format("truetype"); font-weight:700 900; font-style:normal; font-display:swap}
-/* Kilon ships as a single static 400 cut. Declare the true weight so browsers
-   synthesize bold for 600+ requests; a 100-900 range on a static file suppresses
-   synthesis and renders every heading regular. */
-@font-face{font-family:"Kilon"; src:url("fonts/kilon.woff2") format("woff2"),url("fonts/kilon.woff") format("woff"); font-weight:400; font-style:normal; font-display:swap}
+/* ---- Two self-hosted faces, one type voice for the whole site (2026-07-11).
+       Hanken Grotesk carries EVERY text role from hero display to caption; weight
+       and size do the hierarchy, never extra families. Conso carries mono data and
+       labels. Telos Display and Kilon were retired to end the "six fonts" blur. ---- */
 @font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk.woff2") format("woff2"); font-weight:100 900; font-style:normal; font-display:swap}
 @font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk-italic.woff2") format("woff2"); font-weight:400; font-style:italic; font-display:swap}
 
@@ -30,8 +26,8 @@
   --line:rgba(11,12,14,.14); --line-soft:rgba(11,12,14,.08);
   --card:rgba(255,255,255,.6);
   /* type */
-  --brand-display:"Telos Display","Kilon",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --display:"Kilon",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --brand-display:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --display:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --body:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
   /* legacy names remapped to the ceramic system (do not break the contract) */
@@ -65,7 +61,12 @@ pre{overflow-x:auto;max-width:100%}
 /* accessibility: visible keyboard focus on every interactive element (2026-06-24) */
 a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}
 #gl,#motes{position:fixed;inset:0;width:100%;height:100%;display:block}
-#gl{z-index:0}#motes{z-index:2;pointer-events:none}
+/* Figure-ground: the ambient generative canvases are contained to a calm texture
+   so reading text separates cleanly from the page. Gallery and studio, where the
+   art IS the subject, restore full intensity via body.gallery / body.studio-app. */
+#gl{z-index:0;opacity:.5}#motes{z-index:2;pointer-events:none;opacity:.38}
+body.gallery #gl,body.studio-app #gl{opacity:1}
+body.gallery #motes,body.studio-app #motes{opacity:.9}
 .scrim{position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(100deg,rgba(244,243,239,.5) 14%,rgba(244,243,239,.15) 36%,transparent 52%)}
 /* HERO CHANGE 2: position:fixed;inset:0 → position:relative;min-height:100vh;width:100% */
 /* grid, padding, pointer-events, z-index unchanged */
@@ -127,7 +128,7 @@ h2 em{font-style:normal;color:var(--orange)}
 .index-term a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(70,54,232,.35)}
 .index-term a:hover{border-bottom-color:var(--orange)}
 .atlas-tier{border-top:1px solid var(--hairline)}
-.atlas-tier>summary{cursor:pointer;list-style:none;padding:.95rem 0;font-family:"Kilon",system-ui,sans-serif;font-weight:600;font-size:clamp(1.05rem,1.6vw,1.25rem);color:var(--bone);display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap}
+.atlas-tier>summary{cursor:pointer;list-style:none;padding:.95rem 0;font-family:var(--display);font-weight:600;font-size:clamp(1.05rem,1.6vw,1.25rem);color:var(--bone);display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap}
 .atlas-tier>summary::-webkit-details-marker{display:none}
 .atlas-tier>summary::before{content:"\25B8";color:var(--orange);font-weight:400;font-size:.85em}
 .atlas-tier[open]>summary::before{content:"\25BE"}
@@ -715,7 +716,7 @@ body.world-3 .bar .rt{color:#cdd6cf}
 .site-nav .sn-home{font-family:var(--mono);font-size:.66rem;
   letter-spacing:.16em;text-transform:uppercase;color:var(--bone);text-decoration:none}
 .site-nav .sn-links{display:flex;gap:clamp(.6rem,2vw,1.4rem);flex-wrap:wrap}
-.site-nav .sn-links a{font-family:"Kilon",system-ui,sans-serif;font-size:.84rem;
+.site-nav .sn-links a{font-family:var(--display);font-size:.84rem;
   color:var(--muted);text-decoration:none;padding:.2em 0;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
 .site-nav .sn-links a:hover,.site-nav .sn-links a:focus-visible{color:var(--bone);outline:none}
 .site-nav .sn-links a[aria-current="page"]{color:var(--ember);border-color:var(--ember)}
@@ -738,7 +739,7 @@ body.world-3 .bar .rt{color:#cdd6cf}
 
 /* ─── work-group catalog (Task 4 - overview.html grouped sections) ── */
 .work-group{margin:2.2rem 0}
-.work-group > h2{font-family:"Kilon",system-ui,sans-serif;font-size:1rem;color:var(--ember);
+.work-group > h2{font-family:var(--display);font-size:1rem;color:var(--ember);
   letter-spacing:.02em;margin:0 0 .8rem;padding-bottom:.3rem;border-bottom:1px solid rgba(70,54,232,.15)}
 
 /* ─── studio two-witness frame + chat (Task 6) ───────────────────── */
@@ -746,7 +747,7 @@ body.world-3 .bar .rt{color:#cdd6cf}
   grid-template-columns:1fr minmax(260px,0.92fr);margin-bottom:clamp(1.4rem,3vw,2.2rem)}
 .panel{border:1px solid var(--hairline);border-radius:14px;background:rgba(255,255,255,.62);
   padding:1.1rem 1.15rem;min-width:0}
-.panel h2{font-family:"Kilon",system-ui,sans-serif;font-weight:600;font-size:.82rem;
+.panel h2{font-family:var(--display);font-weight:600;font-size:.82rem;
   letter-spacing:.02em;margin:0 0 .85rem;color:var(--bone)}
 .stage{position:relative;width:100%;border-radius:10px;overflow:hidden;background:#000;
   border:1px solid rgba(0,0,0,.4);line-height:0}
@@ -994,7 +995,7 @@ body.world-3 .bar .rt{color:#cdd6cf}
 /* ─── domain scenarios: with vs without, across fields ──────────────── */
 .scenarios{display:grid;gap:1rem;margin:1.4rem 0}
 .scenario{border:1px solid var(--hairline);border-radius:12px;padding:1rem 1.1rem;background:color-mix(in oklab, var(--void) 72%, transparent)}
-.scenario h3{font-family:"Kilon",system-ui,sans-serif;font-size:.95rem;color:var(--bone);margin:0 0 .3rem}
+.scenario h3{font-family:var(--display);font-size:.95rem;color:var(--bone);margin:0 0 .3rem}
 .scenario .setting{color:var(--muted);font-style:italic;margin:0 0 .6rem}
 .scenario .without,.scenario .with{font-size:.95rem;line-height:1.5;padding:.5rem .7rem;border-radius:8px;margin:.35rem 0}
 .scenario .without{border:1px solid color-mix(in oklab, var(--orange) 45%, transparent);background:color-mix(in oklab, var(--orange) 8%, transparent)}
@@ -1234,7 +1235,7 @@ body.showcase-hero .viewport-stage canvas{width:100%;height:100%;object-fit:fill
 @media (min-width:900px){.chat-dock{max-height:46%}}
 .chat-dock-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;
   padding:.55rem clamp(.8rem,1.5vw,1.2rem)}
-.chat-dock-head h2{font-family:"Kilon",system-ui,sans-serif;font-weight:600;font-size:.78rem;
+.chat-dock-head h2{font-family:var(--display);font-weight:600;font-size:.78rem;
   letter-spacing:.02em;margin:0;color:var(--bone)}
 .chat-min{font-family:var(--mono);font-size:1rem;line-height:1;
   color:var(--muted);background:transparent;border:1px solid var(--hairline);border-radius:6px;
@@ -1452,12 +1453,15 @@ body.showcase-hero .viewport-stage canvas{width:100%;height:100%;object-fit:fill
   --ink-faint:oklch(64% .05 314);
   --muted:oklch(78.5% .035 316);
   --prussian:oklch(64% .05 314);
-  --orange:oklch(82.5% .135 200);
+  /* Verdict-only (2026-07-11): decorative cyan/violet collapse to neutral or the
+     one verified accent. --gold stays as the verified verdict; --ember is drift;
+     --faint is unverifiable. The spectrum lives only in the generative canvases. */
+  --orange:var(--muted);
   --ember:oklch(76% .19 46);
   --gold:oklch(87% .215 133);
-  --iris:oklch(69.5% .2 286);
-  --iris-soft:oklch(75% .18 286);
-  --signal:oklch(82.5% .135 200);
+  --iris:var(--muted);
+  --iris-soft:var(--muted);
+  --signal:var(--gold);
   --faint:oklch(64% .05 314);
   --match:var(--gold);
   --drift:var(--ember);
