@@ -287,10 +287,8 @@ body.home-generative-field .hero > #motes.generative-motes-canvas{
 .readout{
   width:min(100%,43rem);
   max-width:100%;
-  background:
-    linear-gradient(90deg, color-mix(in oklab, var(--void) 92%, black), color-mix(in oklab, var(--surface) 78%, black));
-  border-color:color-mix(in oklab, var(--signal) 18%, transparent);
-  box-shadow:0 0 0 1px color-mix(in oklab, var(--signal) 8%, transparent);
+  background:none;
+  box-shadow:none;
 }
 
 .ro-label{
