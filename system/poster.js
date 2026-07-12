@@ -16,8 +16,8 @@ export const POSTER_FORMATS = {
 };
 
 export const POSTER_FACES = {
-  brand: '"Telos Display","Kilon",system-ui,sans-serif',
-  display: '"Kilon",system-ui,sans-serif',
+  brand: '"Hanken Grotesk",system-ui,sans-serif',
+  display: '"Hanken Grotesk",system-ui,sans-serif',
   body: '"Hanken Grotesk",system-ui,sans-serif',
   mono: '"Conso","JetBrains Mono",ui-monospace,monospace',
 };

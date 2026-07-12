@@ -15,7 +15,7 @@ export const INK = "#0b0c0e";
 export const IRIS = "#4636e8";
 export const CERAMIC_RAMP = ["#f4f3ef", "#f1f0eb", "#eeede7", "#ebeae4", "#e9e8e1", "#edece6"];
 export const MONO = 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
-export const DISPLAY = '"Kilon", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+export const DISPLAY = '"Hanken Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
 
 const r6 = (x) => Math.round(x * 1e6) / 1e6;
 const clamp01 = (x) => Math.max(0, Math.min(1, x));

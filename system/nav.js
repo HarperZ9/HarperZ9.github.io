@@ -4,6 +4,7 @@ const PRIMARY = [
   ["Engines", "overview.html", "flagships"],
   ["Demos", "demo-index.html", "demos"],
   ["Research", "research.html", "research"],
+  ["Security", "security.html", "security"],
   ["Work with me", "test-run-request.html", "work"],
   ["GitHub ↗", "https://github.com/HarperZ9", "github", true],
 ];
@@ -21,7 +22,7 @@ export const MORE = [
 
 // Map any page to one of the sections. Flagship pages live under Flagships; everything
 // heavier-than-a-brick down to the utilities lives under the catalog.
-const FLAGSHIPS = new Set(["overview","index-graph","forum","gather","crucible","learn"]);
+const FLAGSHIPS = new Set(["overview","index-graph","forum","gather","crucible","learn","flywheel"]);
 const DEMOS = new Set(["demo-index","demo-emet","proof-index-sample","proof-surface-sample",
   "public-surface-sweeper-sample","emet-sample","demonstrations","tour"]);
 const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","accountable-machines",
@@ -43,6 +44,7 @@ export function navActive(pathname) {
   if (stem === "studio") return "studio";
   if (stem === "guide") return "guide";
   if (stem === "publications") return "publications";
+  if (stem === "security") return "security";
   if (FLAGSHIPS.has(stem)) return "flagships";
   if (DEMOS.has(stem)) return "demos";
   if (CATALOG.has(stem)) return "catalog";
