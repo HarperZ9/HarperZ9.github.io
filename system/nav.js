@@ -167,7 +167,7 @@ export function renderNav(doc = document) {
   const active = navActive(doc.location ? doc.location.pathname : location.pathname);
   const moreActive = MORE.some(([, , key]) => key === active);
   mount.innerHTML =
-    `<a class="sn-home" href="index.html" aria-label="Home, Project Telos"><img src="favicon.svg" alt="" width="22" height="22" style="display:block;border-radius:6px"><span>TELOS</span></a>`
+    `<a class="sn-home" href="index.html" aria-label="Home, Project Telos"><span class="sn-home-field"><canvas class="sn-logo-canvas" aria-hidden="true"></canvas><img class="sn-logo-fallback" src="favicon.svg" alt="" width="30" height="30" style="display:none"></span><span>TELOS</span></a>`
     + `<nav class="sn-links" aria-label="Primary">`
     + PRIMARY.map((item) => navLink(item, active)).join("")
     + `<details class="sn-more"${moreActive ? ' data-current="true"' : ''}>`
@@ -178,6 +178,31 @@ export function renderNav(doc = document) {
     + `</div></details>`
     + `</nav>`;
   enhanceMenu(doc, mount);
+  mountHomeLogo(doc);
+}
+
+// Mount the shared WebGL brand field into the nav home mark, so the static pages carry
+// the same live, layered logo as the React home. Falls back to the static SVG mark if
+// WebGL is unavailable or the module fails to load.
+let __logoHandle = null;
+function mountHomeLogo(doc) {
+  // Progressive enhancement only: no-op where there is no live DOM (tests, SSR).
+  if (!doc || typeof doc.querySelector !== "function") return;
+  const canvas = doc.querySelector(".sn-logo-canvas");
+  if (!canvas) return;
+  if (__logoHandle) { __logoHandle.destroy(); __logoHandle = null; }
+  const showFallback = () => {
+    const fb = doc.querySelector(".sn-logo-fallback");
+    if (fb) fb.style.display = "block";
+    canvas.style.display = "none";
+  };
+  import("./logo-field.js")
+    .then((mod) => {
+      if (!mod.isLogoFieldAvailable()) { showFallback(); return; }
+      const reduced = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      __logoHandle = mod.mountLogoField(canvas, { seed: 58, reduced });
+    })
+    .catch(() => showFallback());
 }
 
 if (typeof document !== "undefined") {
@@ -185,6 +210,7 @@ if (typeof document !== "undefined") {
     renderNav();
     wireAnchorArrival(document);
     import("./generative-field.js").catch(() => {});
+    import("./cursor-field.js").then((m) => m.mountCursorField()).catch(() => {});
   };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
