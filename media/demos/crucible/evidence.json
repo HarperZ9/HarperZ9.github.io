@@ -1,0 +1,159 @@
+{
+  "schema": "project-telos.marketing-demo-evidence/v1",
+  "tool": "crucible",
+  "tool_version": "1.2.0",
+  "source_revision": "a3cfb13e299abf1a665ebdf9338d0f85c5399367",
+  "source_status_before": "clean",
+  "workflow": "criterion -> worker artifact -> measurement -> cleanroom review -> refinement -> recheck",
+  "artifact_evidence": {
+    "draft": {
+      "artifact": "worker-draft.md",
+      "artifact_sha256": "1a0eb25a9a3078b0e88e6df28c9a75284237cda797226e63a0c9c6e81951b108",
+      "bytes": 360,
+      "metrics": {
+        "evidence_record_count": 2,
+        "unresolved_placeholder_count": 1,
+        "cleanroom_boundary_count": 1
+      },
+      "inspector": "make_substrate.py/v1"
+    },
+    "refined": {
+      "artifact": "worker-refined.md",
+      "artifact_sha256": "508df97f92264ad7d717ddae713b789287f177f5240d753b027c9b0871062788",
+      "bytes": 408,
+      "metrics": {
+        "evidence_record_count": 3,
+        "unresolved_placeholder_count": 0,
+        "cleanroom_boundary_count": 1
+      },
+      "inspector": "make_substrate.py/v1"
+    }
+  },
+  "verdict_counts": {
+    "draft": {
+      "match": 1,
+      "drift": 2,
+      "unverifiable": 0
+    },
+    "refined": {
+      "match": 3,
+      "drift": 0,
+      "unverifiable": 0
+    }
+  },
+  "rederived_from_disk": {
+    "draft": {
+      "seals_ok": true,
+      "thesis_ok": true,
+      "verdicts_rederive": true
+    },
+    "refined": {
+      "seals_ok": true,
+      "thesis_ok": true,
+      "verdicts_rederive": true
+    }
+  },
+  "cleanroom_reviews": {
+    "draft": {
+      "ok": true,
+      "bundle": "C:\\dev\\scratch\\demo-capture-crucible-2026-07-12\\bundle-draft",
+      "allowed_inputs": [
+        "spec.json",
+        "run.json",
+        "report.md"
+      ],
+      "excluded": [
+        "worker context",
+        "reasoning trace",
+        "intermediate steps"
+      ],
+      "checks": {
+        "required_files": true,
+        "no_extra_context": true,
+        "verifier_boundary": true,
+        "artifact_paths": true,
+        "spec_matches_run": true,
+        "report_matches_run": true,
+        "review_instructions": true,
+        "run_integrity": true
+      },
+      "findings": []
+    },
+    "refined": {
+      "ok": true,
+      "bundle": "C:\\dev\\scratch\\demo-capture-crucible-2026-07-12\\bundle-refined",
+      "allowed_inputs": [
+        "spec.json",
+        "run.json",
+        "report.md"
+      ],
+      "excluded": [
+        "worker context",
+        "reasoning trace",
+        "intermediate steps"
+      ],
+      "checks": {
+        "required_files": true,
+        "no_extra_context": true,
+        "verifier_boundary": true,
+        "artifact_paths": true,
+        "spec_matches_run": true,
+        "report_matches_run": true,
+        "review_instructions": true,
+        "run_integrity": true
+      },
+      "findings": []
+    }
+  },
+  "steps": [
+    {
+      "label": "inspect draft worker artifact",
+      "command": "python make_substrate.py worker-draft.md substrate-draft.json artifact-evidence-draft.json",
+      "stdout": "inspected worker-draft.md\n  sha256 1a0eb25a9a3078b0...\n  evidence_record_count: 2\n  unresolved_placeholder_count: 1\n  cleanroom_boundary_count: 1\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "label": "measure draft and emit cleanroom bundle",
+      "command": "python -m crucible run thesis.json --substrate substrate-draft.json --registry registry-draft --bundle bundle-draft",
+      "stdout": "ran thesis c7b6089f874e5273: 3 claim(s)\n  steelman refutations: 3\n  MATCH 1  DRIFT 2  UNVERIFIABLE 0\n  assessment seal: d041ded6d29430f0...\n  re-derived from disk: True  {'seals_ok': True, 'thesis_ok': True, 'verdicts_rederive': True}\n  report: report.md\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "label": "review draft verifier boundary",
+      "command": "python -m crucible review bundle-draft",
+      "stdout": "cleanroom bundle PASS: <DEMO_ROOT>\\bundle-draft\n  required_files: True\n  no_extra_context: True\n  verifier_boundary: True\n  artifact_paths: True\n  spec_matches_run: True\n  report_matches_run: True\n  review_instructions: True\n  run_integrity: True\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "label": "inspect refined worker artifact",
+      "command": "python make_substrate.py worker-refined.md substrate-refined.json artifact-evidence-refined.json",
+      "stdout": "inspected worker-refined.md\n  sha256 508df97f92264ad7...\n  evidence_record_count: 3\n  unresolved_placeholder_count: 0\n  cleanroom_boundary_count: 1\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "label": "measure refined artifact and emit cleanroom bundle",
+      "command": "python -m crucible run thesis.json --substrate substrate-refined.json --registry registry-refined --bundle bundle-refined",
+      "stdout": "ran thesis c7b6089f874e5273: 3 claim(s)\n  steelman refutations: 3\n  MATCH 3  DRIFT 0  UNVERIFIABLE 0\n  assessment seal: 66fecffb48a193c0...\n  re-derived from disk: True  {'seals_ok': True, 'thesis_ok': True, 'verdicts_rederive': True}\n  report: report.md\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "label": "review refined verifier boundary",
+      "command": "python -m crucible review bundle-refined",
+      "stdout": "cleanroom bundle PASS: <DEMO_ROOT>\\bundle-refined\n  required_files: True\n  no_extra_context: True\n  verifier_boundary: True\n  artifact_paths: True\n  spec_matches_run: True\n  report_matches_run: True\n  review_instructions: True\n  run_integrity: True\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "label": "re-derive witnessed verdicts from disk",
+      "command": "python -m crucible verdicts registry-refined --verify",
+      "stdout": "re-checked 1 assessment(s): 1 ok, 0 not\n  c7b6089f874e5273 ok=True  seals=True thesis=True rederive=True\n",
+      "stderr": "",
+      "exit_code": 0
+    }
+  ]
+}

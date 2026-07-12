@@ -2,7 +2,7 @@
 // active state derived from the path. No framework; <noscript> fallback lives in the page markup.
 const PRIMARY = [
   ["Engines", "overview.html", "flagships"],
-  ["Demos", "demo-index.html", "demos"],
+  ["Demos", "demonstrations.html", "demos"],
   ["Research", "research.html", "research"],
   ["Security", "security.html", "security"],
   ["Work with me", "test-run-request.html", "work"],
@@ -20,10 +20,18 @@ export const MORE = [
   ["About", "cv.html", "about"],
 ];
 
+export const RECORDED_DEMOS = [
+  ["All recorded workflows", "demonstrations.html", "demos"],
+  ["Index · workspace atlas", "demo-index.html", "demo-route"],
+  ["Gather · research intake", "demo-gather.html", "demo-route"],
+  ["Forum · orchestration", "demo-forum.html", "demo-route"],
+  ["Crucible · measured refinement", "demo-crucible.html", "demo-route"],
+];
+
 // Map any page to one of the sections. Flagship pages live under Flagships; everything
 // heavier-than-a-brick down to the utilities lives under the catalog.
 const FLAGSHIPS = new Set(["overview","index-graph","forum","gather","crucible","learn","flywheel"]);
-const DEMOS = new Set(["demo-index","demo-emet","proof-index-sample","proof-surface-sample",
+const DEMOS = new Set(["demo-index","demo-gather","demo-forum","demo-crucible","demo-emet","proof-index-sample","proof-surface-sample",
   "public-surface-sweeper-sample","emet-sample","demonstrations","tour"]);
 const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","accountable-machines",
   "accountable-engine","buildlang","raw","build-color","build-products","toolkit",
@@ -174,6 +182,7 @@ export function renderNav(doc = document) {
     + `<summary${moreActive ? ' aria-current="page"' : ''}>Menu</summary>`
     + `<div class="sn-more-list" aria-label="Site menu">`
     + menuGroup("Primary", PRIMARY, active, "sn-menu-primary")
+    + menuGroup("Recorded demos", RECORDED_DEMOS, active, "sn-menu-demos")
     + menuGroup("More pages", MORE, active, "sn-menu-secondary")
     + `</div></details>`
     + `</nav>`;

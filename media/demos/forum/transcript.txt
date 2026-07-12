@@ -1,0 +1,387 @@
+=== VERSION ===
+$ forum --version
+exit_code=0
+forum 1.13.0
+
+=== ROUTE ===
+$ forum route --json "Build the backend API endpoint and database schema; review the code and write technical docs."
+exit_code=0
+{
+  "decided": "backend",
+  "confidence": 0.6,
+  "needs_escalation": false,
+  "candidates": [
+    {
+      "agent": "backend",
+      "score": 0.6
+    },
+    {
+      "agent": "ci-cd",
+      "score": 0.2
+    },
+    {
+      "agent": "code-review",
+      "score": 0.2
+    },
+    {
+      "agent": "technical-writing",
+      "score": 0.2
+    },
+    {
+      "agent": "cloud-infra",
+      "score": 0.0
+    },
+    {
+      "agent": "compiler-systems",
+      "score": 0.0
+    },
+    {
+      "agent": "data-ml",
+      "score": 0.0
+    },
+    {
+      "agent": "data-pipeline",
+      "score": 0.0
+    },
+    {
+      "agent": "deep-research",
+      "score": 0.0
+    },
+    {
+      "agent": "frontend",
+      "score": 0.0
+    },
+    {
+      "agent": "function-routing",
+      "score": 0.0
+    },
+    {
+      "agent": "gpu-compute",
+      "score": 0.0
+    },
+    {
+      "agent": "knowledge-mgmt",
+      "score": 0.0
+    },
+    {
+      "agent": "materials-pbr",
+      "score": 0.0
+    },
+    {
+      "agent": "mobile",
+      "score": 0.0
+    },
+    {
+      "agent": "model-foundry",
+      "score": 0.0
+    },
+    {
+      "agent": "native-cpp",
+      "score": 0.0
+    },
+    {
+      "agent": "project-telos",
+      "score": 0.0
+    },
+    {
+      "agent": "prose-humanization",
+      "score": 0.0
+    },
+    {
+      "agent": "python-apps",
+      "score": 0.0
+    },
+    {
+      "agent": "render-pipeline",
+      "score": 0.0
+    },
+    {
+      "agent": "scene-environment",
+      "score": 0.0
+    },
+    {
+      "agent": "sdk-platform",
+      "score": 0.0
+    },
+    {
+      "agent": "shader-effects",
+      "score": 0.0
+    },
+    {
+      "agent": "sre-ops",
+      "score": 0.0
+    },
+    {
+      "agent": "synthesis",
+      "score": 0.0
+    },
+    {
+      "agent": "teaching",
+      "score": 0.0
+    },
+    {
+      "agent": "web-intel",
+      "score": 0.0
+    }
+  ],
+  "frame": {
+    "schema": "forum.route-frame/v1",
+    "agent": "backend",
+    "domain": "validation",
+    "intent": "validate",
+    "posture": "reviewer",
+    "delivery_profile": "engineer",
+    "model_tier": "capable",
+    "executor": "cli",
+    "proof_lane": "verify",
+    "domain_lane": "formal-proof",
+    "human_contract": "Answer as a reviewer: identify the claim, the check performed, the result, and the remaining risk.",
+    "communication_contract": {
+      "schema": "forum.communication-contract/v1",
+      "domain": "validation",
+      "intent": "validate",
+      "posture": "reviewer",
+      "profile": "engineer",
+      "proof_lane": "verify",
+      "domain_lane": "formal-proof",
+      "lead": "Lead with the verdict and the check performed.",
+      "structure": [
+        "change",
+        "interface",
+        "verification",
+        "risk",
+        "next step"
+      ],
+      "evidence": [
+        "name files, commands, tests, or ledger facts when available"
+      ],
+      "avoid": [
+        "model preambles",
+        "unsupported superlatives",
+        "vague optimism",
+        "performative hedging"
+      ],
+      "required_moves": [
+        "state pass or fail",
+        "name remaining risk"
+      ],
+      "human_contract": "Answer as a reviewer: identify the claim, the check performed, the result, and the remaining risk."
+    },
+    "signals": [
+      "review"
+    ]
+  }
+}
+
+=== SUBMIT ===
+$ forum submit "Build the backend API endpoint and database schema; review the code and write technical docs." --cmd "python <DEMO_DIR>/mock_forum_model.py" --ledger <DEMO_DIR>/ledger --checkpoint-each-wave --delivery-profile engineer --max-model-calls 12 --json
+exit_code=0
+{
+  "answer": "Ship the backend API endpoint and database schema. The code review covers security and failure modes. The technical docs cover launch, verification, and rollback. From the ledger: Forum ran three dependent tasks, validated every result, and recorded the workflow. Remaining risk: this fixture exercises orchestration mechanics, not a production model.",
+  "checkpoint": "1c005b3d2a362ac621fda2a6dad4ed3e93e9ff412cff9b813984e08749d5aad8",
+  "receipt": {
+    "schema": "project-telos.action-receipt/v1",
+    "tool": "forum",
+    "action": "submit",
+    "action_intent_id": "sha256:ceeb56725ff5ba386d221258bf57a27dd52b5defdf93a32f106d31bc12e48bb0",
+    "side_effect_class": [
+      "ledger_write",
+      "model_call"
+    ],
+    "request": {
+      "seq": 0,
+      "kind": "request",
+      "actor": "client",
+      "payload_hash": "311153752be5b8b13431e8e3768a02304559acde3155c7716b41b0bec9cabf57",
+      "entry_hash": "6d486f2b0c1d477bf1c60b8ca513fdfe38a8a97f383a975e1ee6ba120868e067"
+    },
+    "answer": {
+      "seq": 15,
+      "kind": "result",
+      "actor": "synthesizer",
+      "payload_hash": "737588230aaa9004c72d66b6c03439e06f12ab906f6c3eb75b2fe33bce21d885",
+      "entry_hash": "7bd4e796edb4e82cdb1242eeddd7fc48b34f0e074eac859506993c20b2fe5137"
+    },
+    "ledger": {
+      "entry_range": [
+        0,
+        18
+      ],
+      "entries": 19,
+      "checkpoint": "1c005b3d2a362ac621fda2a6dad4ed3e93e9ff412cff9b813984e08749d5aad8",
+      "verified": true
+    },
+    "model": {
+      "id": "SubprocessExecutor"
+    },
+    "budget": {
+      "max_model_calls": 12
+    },
+    "context_budget": {
+      "limits": {},
+      "observed": {
+        "checks": 0,
+        "trimmed": 0,
+        "omitted": 0,
+        "tokens_original": 0,
+        "tokens_admitted": 0,
+        "tokens_saved": 0
+      }
+    },
+    "route_frame": {
+      "schema": "forum.route-frame/v1",
+      "agent": "backend",
+      "domain": "validation",
+      "intent": "validate",
+      "posture": "reviewer",
+      "delivery_profile": "engineer",
+      "model_tier": "capable",
+      "executor": "cli",
+      "proof_lane": "verify",
+      "domain_lane": "formal-proof",
+      "human_contract": "Answer as a reviewer: identify the claim, the check performed, the result, and the remaining risk.",
+      "communication_contract": {
+        "schema": "forum.communication-contract/v1",
+        "domain": "validation",
+        "intent": "validate",
+        "posture": "reviewer",
+        "profile": "engineer",
+        "proof_lane": "verify",
+        "domain_lane": "formal-proof",
+        "lead": "Lead with the verdict and the check performed.",
+        "structure": [
+          "change",
+          "interface",
+          "verification",
+          "risk",
+          "next step"
+        ],
+        "evidence": [
+          "name files, commands, tests, or ledger facts when available"
+        ],
+        "avoid": [
+          "model preambles",
+          "unsupported superlatives",
+          "vague optimism",
+          "performative hedging"
+        ],
+        "required_moves": [
+          "state pass or fail",
+          "name remaining risk"
+        ],
+        "human_contract": "Answer as a reviewer: identify the claim, the check performed, the result, and the remaining risk."
+      },
+      "signals": [
+        "review"
+      ]
+    },
+    "delivery_profile": {
+      "requested": "engineer",
+      "selected": "engineer",
+      "source": "explicit",
+      "checks": 1,
+      "flagged": 0
+    },
+    "verification": {
+      "verdict": "MATCH",
+      "ledger_deep_verified": true
+    }
+  }
+}
+
+=== LEDGER SHOW ===
+$ forum ledger show --ledger <DEMO_DIR>/ledger --limit 30
+exit_code=0
+    0  client       request    parent=None
+    1  router       route_frame parent=0
+    2  dispatch     plan       parent=0
+    3  dispatch     task       parent=2
+    4  backend      result     parent=3
+    5  dispatch     checkpoint parent=2
+    6  dispatch     task       parent=2
+    7  code-review  result     parent=6
+    8  dispatch     checkpoint parent=2
+    9  dispatch     task       parent=2
+   10  technical-writing result     parent=9
+   11  dispatch     checkpoint parent=2
+   12  validator    verdict    parent=4
+   13  validator    verdict    parent=7
+   14  validator    verdict    parent=10
+   15  synthesizer  result     parent=0
+   16  delivery     delivery_check parent=15
+   17  delivery-profile delivery_profile_check parent=15
+   18  intent       intent_check parent=15
+
+=== SUMMARY ===
+$ forum ledger summary --ledger <DEMO_DIR>/ledger --json
+exit_code=0
+{
+  "entries": 19,
+  "requests": 1,
+  "plans": 1,
+  "tasks": 3,
+  "task_results": 3,
+  "failed_results": 0,
+  "verdicts_pass": 3,
+  "verdicts_fail": 0,
+  "intent_checks": 1,
+  "intent_flagged": 0,
+  "intent_judgments": 0,
+  "intent_drift_judged": 0,
+  "verifications": 0,
+  "verifications_refuted": 0,
+  "delivery_checks": 1,
+  "delivery_flagged": 0,
+  "revisions": 0,
+  "revisions_accepted": 0,
+  "delivery_profile_checks": 1,
+  "delivery_profile_flagged": 0,
+  "delivery_profile_operator": 0,
+  "delivery_profile_engineer": 1,
+  "delivery_profile_researcher": 0,
+  "delivery_profile_executive": 0,
+  "checkpoints": 3,
+  "resumes": 0,
+  "escalations": 0,
+  "budget_stops": 0,
+  "contexts": 0,
+  "context_budget_checks": 0,
+  "context_budget_trimmed": 0,
+  "context_budget_omitted": 0,
+  "context_tokens_original": 0,
+  "context_tokens_admitted": 0,
+  "context_tokens_saved": 0,
+  "answers": 1,
+  "model_calls": {
+    "SubprocessExecutor": 3
+  },
+  "model_calls_total": 3,
+  "payload_bytes": 4517,
+  "checkpoint": "1c005b3d2a362ac621fda2a6dad4ed3e93e9ff412cff9b813984e08749d5aad8",
+  "verified": true
+}
+
+=== VERIFY ===
+$ forum ledger verify --ledger <DEMO_DIR>/ledger
+exit_code=0
+{
+  "chain": true,
+  "deep": true
+}
+
+=== RUN ROOM ===
+$ forum ledger room --ledger <DEMO_DIR>/ledger --brief
+exit_code=0
+Forum operator brief
+Status: Complete
+Posture: reviewer / engineer
+
+Run complete: Build the backend API endpoint and database schema; review the code and write technical docs.
+The latest run is verified, has a final answer, and has no blocking signals.
+Risk: No blocking signals detected.
+Next: Export run receipt.
+
+Signals:
+- Route: validation / validate / reviewer
+- Tasks: 3 total, 3 with results, 3 accepted
+- Answer: present

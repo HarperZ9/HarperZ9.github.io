@@ -35,7 +35,7 @@
     <p class="lede"><span translate="no">index</span> scans a multi-repo workspace and builds a graph from evidence. Each repository is a node. The edges are real dependencies, and each one carries the file and line that proves it, so you can see why it was drawn. Every node gets a structural role from its place in the graph. Then <span translate="no">index</span> goes further: it measures the architecture you meant against the one you have, and hands back a verdict you re-run instead of trust. Nine ecosystems, fully offline, zero dependencies.</p>
     <p class="close">Done, tested, and public on PyPI. The two-layer atlas, the re-checkable certificate, and nine languages all ship today.</p>
   </div>
-  <div class="seal"><span translate="no">index</span> &middot; public &middot; PyPI <span translate="no">index-graph 2.8.0</span> &middot; zero dependencies &middot; offline</div>
+  <div class="seal"><span translate="no">index</span> &middot; public &middot; PyPI <span translate="no">index-graph 2.9.0</span> &middot; zero dependencies &middot; offline</div>
 </div>
 
 <main id="main">
@@ -104,6 +104,7 @@
 <section class="mv" id="demo" aria-labelledby="demo-h">
   <h2 id="demo-h" class="reveal">See it run.</h2>
   <p class="body-text reveal">One dependency edge, with the evidence that drew it. One certificate, with the verdict you re-run. One number, the token economy on your own code.</p>
+  <p class="body-text reveal"><a href="demo-index.html">Watch the recorded workflow</a>: a real sanitized workspace, three repositories, evidence-backed edges, a re-run <span translate="no">MATCH</span>, and a budgeted context pack. Choose the 30-second cut or the full 118-second run.</p>
   <pre class="artifact" translate="no"><span class="pr">$ index graph --root . --json</span>
 <span class="cmt"># every edge carries the file and line that witnesses it</span>
 {"from": "cli", "to": "core", "confidence": "high",
@@ -131,14 +132,16 @@
   <h2 id="run-h" class="reveal">Install it. Point it at the workspace.</h2>
   <p class="body-text reveal">One command to install, one command to run. If you find repos it missed, edges it drew wrong, or roles it assigned incorrectly, those are exactly the reports that sharpen the engine.</p>
   <pre class="artifact" translate="no"><span class="pr">$ pip install index-graph</span>
-<span class="ok">Successfully installed index-graph-2.8.0</span>
+<span class="ok">Successfully installed index-graph-2.9.0</span>
 
 <span class="pr">$ index atlas --root . --format html --out atlas.html</span>
 <span class="cmt"># the two-layer code-and-knowledge map, one self-contained offline file</span></pre>
   <div class="channels reveal">
     <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/index" translate="no">HarperZ9/index</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/index-graph/" translate="no">index-graph 2.8.0</a>
+    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/index-graph/" translate="no">index-graph 2.9.0</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">Recorded demo</span> &rarr; <a href="demo-index.html">watch the workflow</a>
     &nbsp;&middot;&nbsp;
     <a href="overview.html">&larr; all flagships</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the catalog</a>
   </div>

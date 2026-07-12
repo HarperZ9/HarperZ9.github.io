@@ -14,6 +14,9 @@ test("active section is derived from the path", () => {
   assert.equal(navActive("/catalog.html"), "catalog");
   assert.equal(navActive("/typeface.html"), "typeface");
   assert.equal(navActive("/demo-index.html"), "demos");
+  assert.equal(navActive("/demo-gather.html"), "demos");
+  assert.equal(navActive("/demo-forum.html"), "demos");
+  assert.equal(navActive("/demo-crucible.html"), "demos");
   assert.equal(navActive("/demonstrations.html"), "demos");
   assert.equal(navActive("/research.html"), "research");
   assert.equal(navActive("/research-proof-carrying-research-loops.html"), "research");
@@ -51,7 +54,12 @@ test("rendered nav includes a complete grouped menu for mobile", () => {
   assert.match(mount.innerHTML, /class="sn-menu-group sn-menu-primary"/);
   assert.match(mount.innerHTML, /class="sn-menu-group sn-menu-secondary"/);
   assert.match(mount.innerHTML, /href="overview\.html"/);
+  assert.match(mount.innerHTML, /href="demonstrations\.html"/);
+  assert.match(mount.innerHTML, /class="sn-menu-group sn-menu-demos"/);
   assert.match(mount.innerHTML, /href="demo-index\.html"/);
+  assert.match(mount.innerHTML, /href="demo-gather\.html"/);
+  assert.match(mount.innerHTML, /href="demo-forum\.html"/);
+  assert.match(mount.innerHTML, /href="demo-crucible\.html"/);
   assert.match(mount.innerHTML, /href="guide\.html"/);
   assert.match(mount.innerHTML, /href="writing\.html"/);
   assert.match(mount.innerHTML, /href="test-run-request\.html" aria-current="page"/);

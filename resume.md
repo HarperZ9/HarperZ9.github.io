@@ -1,108 +1,115 @@
 # Zain Dana Harper
 
-**Systems Engineer. Compilers, real-time graphics, color science, and multi-agent AI systems.**
-Seattle, WA. Remote. [harperz9.github.io](https://harperz9.github.io) - [github.com/HarperZ9](https://github.com/HarperZ9) - zaindharper@gmail.com
+## Systems Engineer
 
----
+Seattle, Washington | Open to remote, hybrid, onsite, contract, and project work
+zaindharper@gmail.com | https://harperz9.github.io | https://github.com/HarperZ9
 
-## Summary
+### Summary
 
-Self-taught engineer shipping production software across compilers, real-time graphics, color science, and multi-agent AI systems. Eight working languages, public releases on crates.io and the VS Code Marketplace, and a real-time graphics framework past 900,000 downloads. I work as architect and orchestrator: directing agentic coding tools across the full lifecycle, then verifying and integrating every line myself. The throughline is broad systems work: make the moving parts visible, build the working surface, and leave behind an artifact another person can inspect or use.
+Systems engineer and cross-domain builder whose public work spans AI-agent
+infrastructure, compilers and language tooling, real-time graphics and color
+science, verification systems, technical documentation, and operations. Builds
+inspectable tools with explicit boundaries, tests, documentation, provenance,
+and reproducible release paths. Independent engineering practice since 2023,
+grounded in earlier technical support, freelance technical writing, compliance
+documentation, customer-facing operations, and field leadership.
 
-No CS degree and no industry certifications. The public releases are the credential: crates published to crates.io, an extension on the VS Code Marketplace, a real-time graphics framework past 900,000 downloads, and open repositories under github.com/HarperZ9.
+### Selected engineering work
 
-## Work snapshot
+**Project Telos and model-era engineering tools | Python, TypeScript, Node.js**
 
-- **Language compiler, public.** BuildLang, a typed-effects systems language with a full lexer-to-codegen pipeline and multiple backends, installable from crates.io with a companion VS Code extension. (shipped)
-- **Real-time graphics framework, 900,000+ downloads.** A shader post-processing framework released publicly in 2024, with a measured audience and a public demo. (shipped)
-- **Standalone graphics injector.** A self-contained D3D11 post-processing layer built from first principles in C++ and HLSL, with a companion engine bridging game state to a GPU pipeline over read-only shared memory. (shipped)
-- **Model workflow and verification engines.** Public engines for orchestration, intake, repository mapping, judgment, byte-level witnessing, and learning workflows. (active; some release candidate)
-- **Defensive AI-safety writing.** Two structural papers on a jailbreak pattern against LLM coding assistants, written as detection and governance guidance. Analysis only, no offensive detail, responsible-disclosure track. (shipped)
+- Built a public ecosystem for repository intelligence, evidence intake,
+  multi-agent orchestration, evaluation, replayable records, and claim
+  verification.
+- Shipped focused tools including Index 2.9.0 for repository maps and context
+  packs, Gather 1.6.1 for provenance-aware research intake, Forum 1.13.0 for
+  model-agnostic orchestration, and Crucible 1.2.0 for worker/verifier
+  evaluation workflows.
+- Developed public source packages for model-endpoint coding-agent routing
+  (Relay), toolchain auto-wiring (Plexus), and provenance-carrying agent memory
+  (Mneme).
+- Designed CLI, MCP, web, documentation, testing, release, and evidence
+  surfaces so another operator can inspect how a result was produced.
 
-## Core competencies
+**BuildLang compiler and language tooling | Rust, C, HLSL, VS Code**
 
-**Compiler and language design.** Lexer, parser, AST, optimizer, code generation. Ownership and lifetime analysis from first principles. Algebraic effects. Multiple code-generation backends including a native C path and shader output.
+- Built a public lexer-to-code-generation compiler with typed effects,
+  ownership and lifetime analysis, a primary C backend, shader outputs, and
+  editor support.
+- Maintained public package and extension surfaces while keeping experimental
+  backends and self-hosting work clearly separated from shipped capability.
 
-**Real-time graphics and color science.** D3D11 and proxy-DLL architecture, HLSL shader authoring, post-processing pipelines (tone mapping, ACES and AgX, TAA, SSR, volumetrics, depth of field). CIE color, ICC profile and 3D-LUT generation, CIEDE2000 and Oklab, color-vision-deficiency simulation, sensorless display calibration.
+**Real-time graphics, color, and display tooling | C++, HLSL, Python**
 
-**Multi-agent AI and LLM engineering.** Director-pattern orchestration, task routing to specialist agents, meta-agents for decomposition, coordination, validation, and synthesis. Model-agnostic provider abstraction behind a unified tool-use surface. Model Context Protocol (MCP) server authoring. Cost-controlled inference routing.
+- Released a Skyrim real-time graphics project whose current public career
+  materials report more than 900,000 downloads.
+- Built D3D11/HLSL post-processing and rendering systems involving tone
+  mapping, TAA, SSR, SSGI, GTAO, volumetrics, shader pipelines, and read-only
+  shared-memory IPC.
+- Released Calibrate Pro 1.1 for Windows 10/11, with a PySide6 proposal-and-
+  confirmation desktop workflow, read-only diagnostics, evidence-labelled
+  reports, and explicit separation between measured and estimated results.
 
-**Verification and agent workflow.** Perceive, act, check against a named criterion, preserve useful records, keep worker and verifier roles separate where the task calls for it, and make provenance or witnessing first-class when claims depend on it.
+### Experience
 
-**Systems engineering.** Shared-memory inter-process communication, CMake and vcpkg build systems, GitHub Actions CI, Python tooling and test harnesses, Linux administration.
+**Independent Systems Engineer / Founder-Builder | Project Telos and HarperZ9**
+Seattle / remote | 2023-present
 
-**Security and compliance documentation.** Hands-on work with the major control frameworks (NIST 800-171, CMMC readiness, SOC 2, ISO 27001) as a technical writer. Frameworks worked with, written as capability, with no client deliverables, no client names, and no compliance internals reproduced here.
+- Own architecture, implementation, integration, documentation, testing,
+  packaging, public demos, and release evidence across a multi-repository
+  systems portfolio.
+- Build Python CLIs and libraries, Rust compiler tooling, TypeScript and Node
+  workflows, static and interactive web surfaces, C++23 kernels, HLSL graphics
+  systems, and cross-tool adapters.
+- Coordinate agentic development workflows while preserving first-party review,
+  verifier separation, testable contracts, and public claim discipline.
 
-## Selected work
+**Freelance Technical Writer / Documentation and Product Operations**
+Remote | 2017-present
 
-**BuildLang: typed-effects language compiler** - Rust - public - shipped
-Full lexer-to-codegen pipeline with multiple backends (native and shader targets), ownership and lifetime semantics, algebraic effects, and embedded DSLs. Roughly 600 tests. Installable from crates.io with a companion VS Code Marketplace extension. Repository under github.com/HarperZ9.
+- Produce API and implementation guides, security and compliance
+  documentation, proposals, release notes, support material, and structured
+  technical communication.
+- Work with NIST 800-171, CMMC readiness, SOC 2, ISO 27001, DFARS, incident
+  response, and audit-support concepts in a technical-writing capacity.
+- Translate implementation detail into material usable by engineers,
+  operators, customers, and nontechnical stakeholders.
 
-**Language ecosystem** - active
-A body of modules and ported Unix utilities written in the language itself and compiled to native binaries through the C backend, exercising the compiler at production scale and advancing toward self-hosting.
+**Operations and Commercial Arboriculture Lead | Family business**
+Seattle area | 2015-present
 
-**Real-time graphics framework** - HLSL / C++ - shipped
-A shader post-processing framework with a large overlay and preset system and Python tooling, released publicly in 2024 and past 900,000 downloads with a public demo.
+- Lead client intake, estimates, site assessment, scheduling, safety judgment,
+  crew and vendor coordination, written proposals, and customer communication.
+- Apply practical risk assessment, prioritization, and follow-through in a
+  field environment where plans must survive contact with the job.
 
-**Standalone D3D11 graphics injector** - C++ / HLSL - shipped
-A self-contained proxy-DLL post-processing layer built from first principles: tens of effects and dozens of HLSL shaders (ACES and AgX, TAA, SSR, volumetrics, bokeh depth of field), an ImGui interface, packaged with CMake and vcpkg. A companion engine bridges game state to a GPU pipeline (data trackers and shader systems including GTAO, SSR, SSGI, SDSM, volumetric clouds) over read-only shared-memory IPC.
+**Technical Networking Support, Xbox Division | Microsoft**
+Redmond, Washington | 2013-2014
 
-**Color and calibration suite** - Python - shipped
-Sensorless display calibration with ICC v4.4 and 3D-LUT generation and DDC/CI control; a color library spanning many color spaces and tone mappers with CIEDE2000, Oklab, CAT16, and color-vision-deficiency simulation.
+- Diagnosed TCP/IP, DNS, NAT, firewall, router, and account-adjacent console
+  networking issues across phone and chat support.
+- Documented repeatable resolutions and translated technical fixes into clear
+  user guidance.
 
-**Multi-agent orchestration platform** - Python - active
-A director-pattern platform: task routing to specialist agents, with meta-agents for decomposition, coordination, validation, and synthesis, and a model-agnostic provider abstraction behind a unified tool-use surface with MCP servers.
+### Technical strengths
 
-**Model workflow and verification engines** - public - active / RC
-An open line of engines for model-era work: an orchestrator with a causal ledger (forum), an intake tool that records how every item was obtained (gather), a repository map and dependency graph (index), a judgment organ that steelmans a thesis and measures what holds (crucible), and a byte-level witness that reads a file and reports MATCH, DRIFT, or UNVERIFIABLE rather than "trusted" (emet).
+**Languages:** Python, Rust, C++, TypeScript/JavaScript, Lua, HLSL, C#,
+PowerShell, Bash
+**Systems:** compilers, lexing/parsing, AST and IR design, type checking,
+code generation, D3D11, shader pipelines, shared-memory IPC, CMake, vcpkg
+**AI and evaluation:** model routing, tool-use loops, MCP surfaces, multi-agent
+orchestration, task decomposition, worker/verifier separation, provenance,
+replayable ledgers, evidence intake
+**Graphics and color:** real-time post-processing, HDR and tone mapping, ICC and
+3D-LUT workflows, perceptual color difference, DDC/CI, display characterization
+**Delivery:** Git and GitHub, pytest, Node test tooling, GitHub Actions, release
+notes, developer documentation, implementation guides, troubleshooting, Linux
 
-## Experience
+### Public proof
 
-### Independent Software Engineer / AI-Safety Researcher
-**Self-employed - 2023-present - remote**
+Portfolio: https://harperz9.github.io/portfolio.html
+Research: https://harperz9.github.io/research.html
+Repositories and releases: https://github.com/HarperZ9
 
-- Built the body of work above: compilers, real-time graphics and color, multi-agent AI systems, and the model-workflow / verification engines.
-- Architect and orchestrator across the full lifecycle, verifying and integrating every line.
-- Wrote two defensive AI-safety papers on a jailbreak pattern against LLM coding assistants, as detection and governance guidance on a responsible-disclosure track.
-
-### Freelance Technical Writer / Consultant
-**2017-present - remote**
-
-- Security and compliance documentation, API documentation, and proposal work. Hands-on with NIST 800-171, CMMC readiness, SOC 2, and ISO 27001 as control frameworks.
-- Structured authoring and developer-facing API reference (REST, OAuth 2.0, OpenAPI). Python data-validation pipelines over large configuration sets.
-- Stated here as capability only, with no client names and no compliance deliverables reproduced.
-
-### Operations Manager / Lead Arborist
-**Family business, Seattle area - 2015-present**
-
-- Technical operations, client relations, scheduling, and business administration over more than a decade.
-- Hundreds of written deliverables: proposals, site assessments, safety procedures, and client communications. Budget and vendor management.
-
-### Technical Networking Support, Xbox Division
-**Microsoft, Redmond, WA - 2013-2014**
-
-- Diagnosed TCP/IP, DNS, NAT, and firewall issues for console networking across phone and chat. Contributed articles to internal knowledge-base documentation.
-
-## Skills at a glance
-
-**Languages** Python, Rust, C++, TypeScript, Lua, HLSL, C#, PowerShell, Bash
-**Compilers and systems** lexer to codegen, multiple backends, ownership and lifetime analysis, D3D11 and proxy-DLL graphics, shared-memory IPC, CMake and vcpkg
-**Graphics and color** real-time post-processing, GTAO, SSR, SSGI, TAA, tone mapping, CIE color, ICC and 3D-LUT, DDC/CI, sensorless calibration
-**AI and LLM** multi-provider SDK integration, tool-use loops, multi-provider routing, MCP server authoring, agentic orchestration, worker and verifier separation
-**Verification** provenance, witnessed ledgers, MATCH / DRIFT / UNVERIFIABLE verdicts, re-derivable proofs
-**Tooling** Git and GitHub, pytest, GitHub Actions CI, PyQt6, Linux
-**Documentation** security and compliance frameworks (NIST 800-171, CMMC, SOC 2, ISO 27001) as capability, API and developer documentation, structured authoring
-
-## Fit
-
-Most useful where a team needs an engineer who can own a hard systems problem end to end and is comfortable working alongside AI without letting the work become opaque. Strong fits: compiler and language tooling, real-time graphics and color, multi-agent AI infrastructure, research operations, and any role where systems need to be built, explained, tested, and shipped.
-
-Open to roles across quantum and scientific computing, finance, cybersecurity, machine learning and AI, and domain-agnostic systems work. Remote preferred; open to onsite, hybrid, contract, full-time, and project-based work.
-
-## Background
-
-Coding since middle school, working across eight production languages. No formal degree and no industry certifications. The public releases (crates.io, the VS Code Marketplace, the 900,000-download graphics framework) and the open repositories under github.com/HarperZ9 are the credential.
-
----
-
-Updated 2026-06-30.
+Updated 2026-07-12.
