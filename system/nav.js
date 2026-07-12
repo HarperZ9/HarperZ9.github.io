@@ -167,7 +167,7 @@ export function renderNav(doc = document) {
   const active = navActive(doc.location ? doc.location.pathname : location.pathname);
   const moreActive = MORE.some(([, , key]) => key === active);
   mount.innerHTML =
-    `<a class="sn-home" href="index.html" aria-label="Home, Project Telos"><span aria-hidden="true">◐</span><span>TELOS</span></a>`
+    `<a class="sn-home" href="index.html" aria-label="Home, Project Telos"><img src="favicon.svg" alt="" width="22" height="22" style="display:block;border-radius:6px"><span>TELOS</span></a>`
     + `<nav class="sn-links" aria-label="Primary">`
     + PRIMARY.map((item) => navLink(item, active)).join("")
     + `<details class="sn-more"${moreActive ? ' data-current="true"' : ''}>`
