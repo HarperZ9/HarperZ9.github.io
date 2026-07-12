@@ -90,7 +90,7 @@ h1 .g{color:var(--orange)}
 main{position:relative;z-index:5;width:100%}
 
 /* ─── section shell ───────────────────────────────────────────── */
-section.mv{position:relative;z-index:4;background:var(--void-opaque);border-top:1px solid var(--hairline);padding:var(--section-pad) clamp(2.4rem,5.5vw,5rem)}
+section.mv{position:relative;z-index:4;background:var(--void-opaque);border-top:1px solid transparent;border-image:var(--edge) 1;padding:var(--section-pad) clamp(2.4rem,5.5vw,5rem)}
 
 /* interlude - transparent breath, organism shows through */
 .interlude{position:relative;z-index:3;min-height:40vh;display:flex;align-items:center;justify-content:center;pointer-events:none}
@@ -119,15 +119,15 @@ h2 em{font-style:normal;color:var(--orange)}
 @media(prefers-reduced-motion:reduce){.aperture .ring-outer{animation:none}}
 
 /* ─── instrument index - hairline rows ───────────────────────── */
-.index{width:100%;max-width:72ch;border-top:1px solid var(--hairline);margin-top:clamp(2rem,3.5vw,3rem)}
-.index-row{display:grid;grid-template-columns:8rem 1fr;gap:.5rem var(--col-gap);padding:.85rem 0;border-bottom:1px solid var(--hairline);align-items:baseline}
+.index{width:100%;max-width:72ch;border-top:1px solid transparent;border-image:var(--edge) 1;margin-top:clamp(2rem,3.5vw,3rem)}
+.index-row{display:grid;grid-template-columns:8rem 1fr;gap:.5rem var(--col-gap);padding:.85rem 0;border-bottom:1px solid transparent;border-image:var(--edge) 1;align-items:baseline}
 .index-term{font-family:var(--mono);font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--orange);line-height:1.5}
 .index-gloss{font-family:var(--body);font-size:clamp(1rem,1.2vw,1.1rem);line-height:1.6;color:var(--muted)}
 /* ── the atlas tree (home) ─────────────────────────────────────── */
 .atlas-tree{margin:1.6rem 0 0}
 .index-term a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(70,54,232,.35)}
 .index-term a:hover{border-bottom-color:var(--orange)}
-.atlas-tier{border-top:1px solid var(--hairline)}
+.atlas-tier{border-top:1px solid transparent;border-image:var(--edge) 1}
 .atlas-tier>summary{cursor:pointer;list-style:none;padding:.95rem 0;font-family:var(--display);font-weight:600;font-size:clamp(1.05rem,1.6vw,1.25rem);color:var(--bone);display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap}
 .atlas-tier>summary::-webkit-details-marker{display:none}
 .atlas-tier>summary::before{content:"\25B8";color:var(--orange);font-weight:400;font-size:.85em}
@@ -142,8 +142,8 @@ h2 em{font-style:normal;color:var(--orange)}
 @media (max-width:560px){.atlas-tier .index-row{grid-template-columns:1fr}}
 
 /* ─── organ rows ──────────────────────────────────────────────── */
-.organs{width:100%;max-width:58rem;border-top:1px solid var(--hairline);margin-top:clamp(2rem,3.5vw,3rem)}
-.organ-row{display:grid;grid-template-columns:12rem minmax(0,1fr) auto;column-gap:clamp(1.4rem,2.6vw,2.6rem);row-gap:.2rem;padding:1.5rem 0;border-bottom:1px solid var(--hairline);align-items:start}
+.organs{width:100%;max-width:58rem;border-top:1px solid transparent;border-image:var(--edge) 1;margin-top:clamp(2rem,3.5vw,3rem)}
+.organ-row{display:grid;grid-template-columns:12rem minmax(0,1fr) auto;column-gap:clamp(1.4rem,2.6vw,2.6rem);row-gap:.2rem;padding:1.5rem 0;border-bottom:1px solid transparent;border-image:var(--edge) 1;align-items:start}
 .organ-name{grid-column:1;grid-row:1;font-family:var(--mono);font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bone);line-height:1.45}
 .organ-name a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(70,54,232,.45);padding-bottom:1px;transition:color .2s,border-color .2s}
 .organ-name a:hover{color:var(--orange);border-color:var(--orange)}
@@ -179,7 +179,7 @@ h2 em{font-style:normal;color:var(--orange)}
 .channels a:hover{color:var(--orange);border-color:var(--orange)}
 
 /* ─── footer seal ─────────────────────────────────────────────── */
-.footer-seal{border-top:1px solid var(--hairline);padding:clamp(2rem,4vw,3rem) clamp(2.4rem,5.5vw,5rem);position:relative;z-index:4;background:var(--void-opaque)}
+.footer-seal{border-top:1px solid transparent;border-image:var(--edge) 1;padding:clamp(2rem,4vw,3rem) clamp(2.4rem,5.5vw,5rem);position:relative;z-index:4;background:var(--void-opaque)}
 
 /* ─── scroll-reveal ───────────────────────────────────────────── */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease-out,transform .65s ease-out}
@@ -204,7 +204,7 @@ h2 em{font-style:normal;color:var(--orange)}
 }
 
 /* ─── proof exhibits - real artifacts, shown ──────────────────── */
-.proof{position:relative;z-index:4;background:var(--void-opaque);border-top:1px solid var(--hairline);padding:var(--section-pad) clamp(2.4rem,5.5vw,5rem)}
+.proof{position:relative;z-index:4;background:var(--void-opaque);border-top:1px solid transparent;border-image:var(--edge) 1;padding:var(--section-pad) clamp(2.4rem,5.5vw,5rem)}
 .proof-head{max-width:60ch}
 .exhibit{margin:clamp(2.4rem,4.5vw,3.6rem) 0 0;max-width:60rem}
 .exhibit-tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.7rem;display:flex;gap:.9rem;align-items:baseline;flex-wrap:wrap}
@@ -225,7 +225,7 @@ h2 em{font-style:normal;color:var(--orange)}
 @media(max-width:680px){.artifact{font-size:.66rem;line-height:1.65}}
 
 /* ─── hero "built & tested" mini-index + scroll cue ───────────── */
-.built{margin-top:1.7rem;border-top:1px solid var(--hairline);padding-top:1.1rem;max-width:41rem;text-shadow:0 1px 12px rgba(6,14,15,.92),0 0 3px rgba(6,14,15,.85)}
+.built{margin-top:1.7rem;border-top:1px solid transparent;border-image:var(--edge) 1;padding-top:1.1rem;max-width:41rem;text-shadow:0 1px 12px rgba(6,14,15,.92),0 0 3px rgba(6,14,15,.85)}
 .built-head{font-family:var(--mono);font-size:.58rem;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);margin-bottom:.85rem}
 .built-row{display:grid;grid-template-columns:6.8rem 1fr;align-items:baseline;gap:.1rem .8rem;margin-top:.65rem}
 .built-name{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:var(--orange)}
@@ -243,7 +243,7 @@ h2 em{font-style:normal;color:var(--orange)}
 }
 
 /* ─── intentional section turn (replaces repeated mv-head scaffolding) ─ */
-.turn{position:relative;z-index:4;background:var(--void-opaque);text-align:center;padding:clamp(3.4rem,7vw,5.8rem) 1.5rem;border-top:1px solid var(--hairline)}
+.turn{position:relative;z-index:4;background:var(--void-opaque);text-align:center;padding:clamp(3.4rem,7vw,5.8rem) 1.5rem;border-top:1px solid transparent;border-image:var(--edge) 1}
 .aperture-solo{width:2.7rem;height:2.7rem;margin:0 auto 1.05rem;display:block}
 .turn-label{font-family:var(--body);font-style:italic;font-size:clamp(1.06rem,1.4vw,1.26rem);color:var(--muted);letter-spacing:.01em}
 
@@ -831,7 +831,7 @@ body.world-3 .bar .rt{color:#cdd6cf}
 .studio-atelier .at-gate .g-allow{color:#5fae93}.studio-atelier .at-gate .g-deny{color:var(--orange)}
 .studio-atelier .at-gate .g-needs{color:var(--ember)}.studio-atelier .at-gate .gmono{color:var(--ember);word-break:break-all}
 .studio-atelier .at-blurb{font-family:var(--body);font-size:.98rem;line-height:1.62;
-  color:var(--muted);border-top:1px solid var(--hairline);padding-top:.95rem;margin-top:.1rem;min-height:2.4rem}
+  color:var(--muted);border-top:1px solid transparent;border-image:var(--edge) 1;padding-top:.95rem;margin-top:.1rem;min-height:2.4rem}
 .studio-atelier .at-blurb b{color:var(--bone);font-weight:500}.studio-atelier .at-blurb .sp{color:var(--ember)}
 
 /* ─── studio · BYO mode (Task 8) ──────────────────────────────────────
@@ -854,7 +854,7 @@ body.world-3 .bar .rt{color:#cdd6cf}
 /* ─── studio · Watch with me (Task 8c) ─────────────────────────────────
    Live screen / camera capture → sample loop → perceive(). Scoped inside
    .studio-watch-ctrl so button styles don't bleed into the rest of the page. */
-.studio-watch-ctrl{margin-top:clamp(1.2rem,2.5vw,1.8rem);border-top:1px solid var(--hairline);padding-top:clamp(1rem,2vw,1.4rem)}
+.studio-watch-ctrl{margin-top:clamp(1.2rem,2.5vw,1.8rem);border-top:1px solid transparent;border-image:var(--edge) 1;padding-top:clamp(1rem,2vw,1.4rem)}
 .studio-watch-btns{display:flex;flex-wrap:wrap;gap:.55rem;margin:.55rem 0}
 .studio-watch-ctrl .btn{font-family:var(--mono);font-size:.62rem;
   letter-spacing:.16em;text-transform:uppercase;padding:.64em 1.05em;border:1px solid var(--orange);
@@ -1000,11 +1000,19 @@ body.world-3 .bar .rt{color:#cdd6cf}
 .scenario .without,.scenario .with{font-size:.95rem;line-height:1.5;padding:.5rem .7rem;border-radius:8px;margin:.35rem 0}
 .scenario .without{border:1px solid color-mix(in oklab, var(--orange) 45%, transparent);background:color-mix(in oklab, var(--orange) 8%, transparent)}
 .scenario .with{border:1px solid color-mix(in oklab, var(--verified) 45%, transparent);background:color-mix(in oklab, var(--verified) 8%, transparent)}
+/* Organic blob shapes across the static pages, mirroring the home: buttons and chips are liquid
+   ovals, panels are slowly morphing blobs. Circular elements (dots, swatches, specimens) excluded. */
+@keyframes blobmorph{0%,100%{border-radius:46% 54% 53% 47% / 56% 46% 54% 44%}50%{border-radius:55% 45% 47% 53% / 45% 55% 44% 56%}}
+@keyframes cardblob{0%,100%{border-radius:18px 32px 22px 28px / 28px 20px 32px 22px}50%{border-radius:30px 20px 30px 22px / 22px 32px 20px 30px}}
+.btn,.chip{border-radius:49% 51% 52% 48% / 54% 46% 54% 46%;animation:blobmorph 15s ease-in-out infinite}
+.btn:nth-of-type(2n),.chip:nth-of-type(2n){animation-duration:19s;animation-direction:reverse}
+.panel,.scenario{border-radius:22px 30px 24px 32px / 28px 22px 32px 24px;animation:cardblob 26s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.btn,.chip,.panel,.scenario{animation:none}}
 .scenario .lbl{font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase}
 .scenario .without .lbl{color:var(--orange)} .scenario .with .lbl{color:var(--verified)}
 
 /* scenarios-lite - compact version for Home */
-.scenarios-lite{position:relative;z-index:4;background:var(--void-opaque);border-top:1px solid var(--hairline);padding:var(--section-pad) clamp(2.4rem,5.5vw,5rem)}
+.scenarios-lite{position:relative;z-index:4;background:var(--void-opaque);border-top:1px solid transparent;border-image:var(--edge) 1;padding:var(--section-pad) clamp(2.4rem,5.5vw,5rem)}
 
 /* ============================================================================
    THE STUDIO - single-viewport app shell (Task 8f)
@@ -1146,13 +1154,13 @@ body.world-3 .bar .rt{color:#cdd6cf}
 .engine-statusbar [id^="engine-status-"]{color:var(--orange)}
 /* ── Overlay fallback: floating draggable in-page panel (Task 8h) ── */
 .studio-overlay-panel{position:fixed;top:4.5rem;right:1.2rem;width:340px;max-height:80vh;z-index:9000;display:flex;flex-direction:column;background:rgba(248,247,244,.98);border:1px solid var(--hairline);border-radius:14px;box-shadow:0 8px 48px rgba(0,0,0,.72);overflow:hidden;resize:both;min-width:240px;min-height:200px}
-.studio-overlay-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.55rem .8rem;background:rgba(248,247,244,.92);border-bottom:1px solid var(--hairline);cursor:move;flex-shrink:0;user-select:none}
+.studio-overlay-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.55rem .8rem;background:rgba(248,247,244,.92);border-bottom:1px solid transparent;border-image:var(--edge) 1;cursor:move;flex-shrink:0;user-select:none}
 .studio-overlay-head-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .studio-overlay-close{font-family:var(--mono);font-size:.65rem;letter-spacing:.06em;color:var(--muted);background:transparent;border:1px solid var(--hairline);border-radius:4px;padding:.18em .55em;cursor:pointer}
 .studio-overlay-close:hover{color:var(--bone);border-color:rgba(70,54,232,.5)}
 .studio-overlay-close:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
 .studio-overlay-body{flex:1;min-height:0;overflow-y:auto;padding:.7rem .8rem}
-.studio-overlay-note{font-family:var(--body);font-size:.82rem;line-height:1.5;color:var(--muted);margin:.6rem 0 0;padding:.5rem .6rem;border-top:1px solid var(--hairline)}
+.studio-overlay-note{font-family:var(--body);font-size:.82rem;line-height:1.5;color:var(--muted);margin:.6rem 0 0;padding:.5rem .6rem;border-top:1px solid transparent;border-image:var(--edge) 1}
 .rt-quality{color:var(--muted)}
 /* ── Immersive fullscreen (Task 8n): the canvas fills the screen; the toolbar becomes a slim,
    auto-hiding overlay that reveals on mouse move (.fs-idle hides it). Sleek + modern. ── */
@@ -1231,7 +1239,7 @@ body.showcase-hero .viewport-stage canvas{width:100%;height:100%;object-fit:fill
 
 /* the chat dock - pinned at the bottom of the panel, minimizable */
 .chat-dock{flex:0 0 auto;display:flex;flex-direction:column;min-height:0;
-  border-top:1px solid var(--hairline);background:rgba(250,249,246,.78)}
+  border-top:1px solid transparent;border-image:var(--edge) 1;background:rgba(250,249,246,.78)}
 @media (min-width:900px){.chat-dock{max-height:46%}}
 .chat-dock-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;
   padding:.55rem clamp(.8rem,1.5vw,1.2rem)}
@@ -1283,8 +1291,8 @@ body.showcase-hero .viewport-stage canvas{width:100%;height:100%;object-fit:fill
 @media (max-width:899.98px){
   .studio-app{display:block;height:auto;overflow:visible}
   .studio-rail,.studio-viewport,.studio-panel{border:0;overflow:visible;min-height:0}
-  .studio-rail{border-bottom:1px solid var(--hairline)}
-  .studio-panel{border-top:1px solid var(--hairline)}
+  .studio-rail{border-bottom:1px solid transparent;border-image:var(--edge) 1}
+  .studio-panel{border-top:1px solid transparent;border-image:var(--edge) 1}
   .rail-scroll,.panel-scroll{overflow:visible}
   .source-menu{display:grid;grid-template-columns:1fr;gap:.55rem}
   .source-group{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -1420,7 +1428,7 @@ body.showcase-hero .viewport-stage canvas{width:100%;height:100%;object-fit:fill
 .cert-rc-match.ok::before{content:"\2713 ";font-weight:700}
 .cert-rc-match.bad::before{content:"\2717 ";font-weight:700}
 /* the audit trail: append-only, most recent first in the list */
-.cert-audit{margin-top:1.1rem;border-top:1px solid var(--hairline);padding-top:.8rem}
+.cert-audit{margin-top:1.1rem;border-top:1px solid transparent;border-image:var(--edge) 1;padding-top:.8rem}
 .cert-audit-head{font-family:var(--mono);font-size:.5rem;letter-spacing:.2em;
   text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;display:flex;justify-content:space-between;gap:.6rem}
 .cert-audit-count{color:var(--prussian)}
@@ -1466,13 +1474,22 @@ body.showcase-hero .viewport-stage canvas{width:100%;height:100%;object-fit:fill
   --match:var(--gold);
   --drift:var(--ember);
   --unverif:var(--faint);
-  --line:oklch(62% .08 308/.28);
-  --line-soft:oklch(62% .08 308/.14);
-  --hairline:oklch(62% .08 308/.22);
-  --card:oklch(22.5% .052 312/.82);
-  --raised:oklch(27.5% .05 310/.86);
+  /* Edges fade and surfaces go translucent so every panel and border blends into
+     the field beneath, across every static page, rather than reading as a box. */
+  --line:oklch(62% .08 308/.18);
+  --line-soft:oklch(62% .08 308/.09);
+  --hairline:oklch(62% .08 308/.15);
+  --card:oklch(22.5% .052 312/.72);
+  --raised:oklch(27.5% .05 310/.78);
   --verified:oklch(87% .215 133);
-  --surface:oklch(22.5% .052 312);
+  --surface:oklch(22.5% .052 312/.68);
+  /* Gradient system (mirrors the home): edges dissolve at their ends, surfaces fall
+     off toward transparent, the solid button gets a tonal sheen. Tonal only. */
+  --edge:linear-gradient(90deg,transparent 0%,var(--hairline) 20%,var(--hairline) 80%,transparent 100%);
+  --edge-2:linear-gradient(90deg,transparent 0%,var(--line-soft) 22%,var(--line-soft) 78%,transparent 100%);
+  --card-grad:linear-gradient(176deg,var(--card) 0%,color-mix(in oklab,var(--card) 66%,transparent) 100%);
+  --surface-grad:linear-gradient(176deg,var(--surface) 0%,color-mix(in oklab,var(--surface) 64%,transparent) 100%);
+  --verified-grad:linear-gradient(180deg,color-mix(in oklab,var(--verified) 100%,white 7%) 0%,var(--verified) 60%,color-mix(in oklab,var(--verified) 88%,black) 100%);
   --violet:var(--iris);
   --ease-out:cubic-bezier(.22, 1, .36, 1);
 }
@@ -1794,7 +1811,7 @@ body.generative-host > #site-nav:not(#motes){
   margin:0;
   padding:.9rem var(--site-shell);
   border:0;
-  border-bottom:1px solid var(--line-soft);
+  border-bottom:1px solid transparent;border-image:var(--edge-2) 1;
   background:color-mix(in oklab, var(--void) 72%, transparent);
   -webkit-backdrop-filter:blur(14px) saturate(1.3);
   backdrop-filter:blur(14px) saturate(1.3);
@@ -1815,6 +1832,12 @@ body.generative-host > #site-nav:not(#motes){
 }
 .site-nav .sn-home:hover,
 .site-nav .sn-home:focus-visible{color:var(--signal)}
+/* Layered brand field on static pages: a wide shader mark the wordmark rides onto,
+   spreading across the header instead of a cropped tile (mirrors the React home). */
+.site-nav .sn-home-field{position:relative;display:block;flex:0 0 auto;width:clamp(112px,14vw,168px);height:2.5rem}
+.site-nav .sn-logo-canvas,.site-nav .sn-logo-fallback{position:absolute;inset:0;width:100%;height:100%;display:block}
+.site-nav .sn-logo-fallback{border-radius:7px;object-fit:contain}
+.site-nav .sn-home > span:last-child{margin-left:-1.25rem;text-shadow:0 0 12px var(--void),0 1px 2px var(--void),0 0 3px var(--void)}
 .site-nav .sn-links{
   display:flex;
   align-items:center;
@@ -2920,12 +2943,12 @@ section.mv{
 
 .studio-receipts .panel{
   border:0;
-  border-top:1px solid var(--hairline);
+  border-top:1px solid transparent;border-image:var(--edge) 1;
   border-radius:0;
 }
 
 .studio-chat-drawer{
-  border-top:1px solid var(--hairline);
+  border-top:1px solid transparent;border-image:var(--edge) 1;
   background:color-mix(in oklab, var(--void) 70%, transparent);
 }
 
@@ -2976,7 +2999,7 @@ section.mv{
     align-items:center;
     gap:.4rem;
     padding:.45rem 1rem .6rem;
-    border-bottom:1px solid var(--hairline);
+    border-bottom:1px solid transparent;border-image:var(--edge) 1;
   }
   .studio-media-first .source-group{ display:contents; }
   /* The Make/Bring/Measure labels would each force a full row and push the canvas
@@ -2999,7 +3022,7 @@ section.mv{
   }
   .studio-media-first .rail-scroll{
     order:6;
-    border-top:1px solid var(--hairline);
+    border-top:1px solid transparent;border-image:var(--edge) 1;
     padding-top:.75rem;
   }
   .studio-perception-panel{
