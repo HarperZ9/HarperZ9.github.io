@@ -2,6 +2,12 @@
 
 Generated: 2026-06-28
 
+Status correction (2026-07-12): Calibrate Pro is experimental and excluded from
+the promotion set. Its screenshot is appearance-only evidence; end-to-end
+behavior and the complete menu-action surface are not verified, and some menu
+options are known not to work. The Calibrate statements below are superseded by
+this correction.
+
 This dossier connects the Studio work to the larger Project Telos program state. It is the bridge between the public Studio Showcase, the `telos` flagship contracts, `studio-engine`, `reconcile`, and the older quality tools being promoted back into the system.
 
 ## Current Shape
@@ -50,9 +56,9 @@ The quality-tool boundary is simple: useful older tools should become typed, tes
 
 All quality tools should share a boundary with the primary five flagship tools.
 
-The current promotion set includes Calibrate Pro, Quanta Color, QuantaLang, agent-audit, context-curator-lite, secret-redact-io, repo-proof-index, release-surface-scanner, gpu-trace-validator, and the defensive WARDEN security lineage. The new engine-lineage repos `studio-engine` and `reconcile` should join as engine organs after they expose stable World/media graph packet contracts.
+The current promotion set includes Quanta Color, QuantaLang, agent-audit, context-curator-lite, secret-redact-io, repo-proof-index, release-surface-scanner, gpu-trace-validator, and the defensive WARDEN security lineage. The new engine-lineage repos `studio-engine` and `reconcile` should join as engine organs after they expose stable World/media graph packet contracts.
 
-Calibrate Pro and Quanta Color give Studio a serious color and measurement path. QuantaLang can become a shader/effects language lane. agent-audit, context-curator-lite, secret-redact-io, repo-proof-index, and release-surface-scanner provide the agent and release reliability layer. The WARDEN lineage belongs in a defensive, authorized, good-faith find-and-fix lane with synthetic labs and maintainer-friendly OSS patches.
+Quanta Color gives Studio a source-visible color-workbench path; it is not a physical display instrument. QuantaLang can become a shader/effects language lane. agent-audit, context-curator-lite, secret-redact-io, repo-proof-index, and release-surface-scanner provide the agent and release reliability layer. The WARDEN lineage belongs in a defensive, authorized, good-faith find-and-fix lane with synthetic labs and maintainer-friendly OSS patches.
 
 ## Studio Engine Implications
 

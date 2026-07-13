@@ -1,7 +1,8 @@
 # Calibrate Pro native preview
 
-This package is current public UI evidence for Calibrate Pro after the dark-room
-workbench and hardware-free preview work merged to `main`.
+This package is appearance-only evidence for an experimental Calibrate Pro
+source revision after the dark-room workbench and hardware-free preview work
+merged to `main`. It must not be used as product-readiness or outreach evidence.
 
 - Source repository: <https://github.com/HarperZ9/calibrate-pro>
 - Reviewed change: <https://github.com/HarperZ9/calibrate-pro/pull/12>
@@ -20,4 +21,6 @@ asset shows the native product surface without suggesting that an operation ran.
 This is not a colorimeter result, compatibility claim, release-binary receipt,
 or proof that calibration succeeded on physical hardware. The public v1.1.0
 binary release remains the earlier beta distribution; this asset represents the
-current source UI merged after that release.
+current source UI merged after that release. End-to-end behavior and the complete
+menu-action surface are not verified, and some menu options are known not to
+work. Promotion remains on hold until documented verification passes.

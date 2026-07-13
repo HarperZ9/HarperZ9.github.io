@@ -67,7 +67,8 @@ accessible, and honest about maturity; private systems stay bounded off-page.
 | Provenance & release | `provenance-sensorium`, `model-provenance-validator`, `public-surface-sweeper`, `release-surface-scanner`, `secret-redact-io` | Witness, provenance, and release-surface CLIs. |
 | Agent workflow | `agent-audit`, `agent-hook-pack`, `agent-routing-kit`, `context-curator-lite`, `workflow-harness-lite`, `index` | Small, low-/zero-dependency utilities and plugin extractions. |
 | Compilers & QuantaLang | `quantalang`, `quantalang-vscode`, `quantalang-tmLanguage`, `quanta-universe` | A typed-effects language (the heavy repo) plus editor support and an alpha showcase. |
-| Systems, graphics & color | `signal-kernels`, `anomaly-kernels`, `gpu-trace-validator`, `quanta-color`, `calibrate-pro` | Header-only C++ kernels, a GPU-trace validator, and color/calibration tools. |
+| Systems, graphics & color | `signal-kernels`, `anomaly-kernels`, `gpu-trace-validator`, `quanta-color` | Header-only C++ kernels, a GPU-trace validator, and color tools. |
+| Experimental hold | `calibrate-pro` | Source and release artifacts exist, but end-to-end behavior and the complete menu-action surface are not verified. Excluded from promotion pending documented verification. |
 
 Private platform and product work exists behind these leaves; public claims stay
 limited to outcomes and categories, never internals.

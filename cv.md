@@ -96,14 +96,6 @@ routing, toolchain auto-wiring, and provenance-carrying agent memory. Public
 source availability is not represented as registry publication where a
 registry release has not been verified.
 
-**Calibrate Pro | 1.1.0 released for Windows 10/11**
-
-Display-calibration toolkit with a PySide6 proposal-and-confirmation desktop
-shell, read-only diagnostics, explicit confirmation before display changes,
-evidence-labelled reports, and measured-versus-estimated result boundaries.
-The older main-window API remains as a lazy compatibility export and is not the
-active launcher.
-
 **Studio Engine | public browser-native creative system**
 
 Interactive and generated visual surfaces used to present systems work as
