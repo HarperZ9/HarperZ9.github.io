@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-/* "Which engine do I need?" — the guide.html picker, rebuilt as an
+/* "Which engine do I need?": the guide.html picker, rebuilt as an
    interactive chip row. Pick the problem, get the engine and the command. */
 
 type Pick = { problem: string; engine: string; line: string; cmd: string; href: string };
