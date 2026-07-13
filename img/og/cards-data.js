@@ -49,9 +49,9 @@ window.CARD_DATA = {
     "glyph": "aperture"
   },
   "flywheel": {
-    "role": "LOCAL-MODEL HARNESS / INTEGRATION TRACK",
-    "headline": "Run agent workflows across local endpoints and measure the improvement loop.",
-    "pipeline": "ENDPOINT / AGENT / BENCHMARK / FEEDBACK",
+    "role": "ROUTE AND VERIFY FOR ANY MODEL",
+    "headline": "Route across local or hosted models, verify the result, and keep a re-checkable receipt.",
+    "pipeline": "ROUTE / RUN / VERIFY / RECEIPT / IMPROVE",
     "word": "FLYWHEEL",
     "glyph": "waveform"
   },
@@ -75,6 +75,13 @@ window.CARD_DATA = {
     "pipeline": "REMEMBER / RETRIEVE / RECHECK / DRIFT",
     "word": "MNEME",
     "glyph": "layers"
+  },
+  "portfolio-home": {
+    "role": "FOURTEEN ENGINES / ONE FLYWHEEL THESIS",
+    "headline": "Public tools, four recorded workflows, and evidence you can inspect.",
+    "pipeline": "MAP / ROUTE / VERIFY / REMEMBER / IMPROVE",
+    "word": "PROJECT TELOS",
+    "glyph": "aperture"
   },
   "profile": {
     "role": "THE PUBLIC PROFILE",
@@ -187,13 +194,6 @@ window.CARD_DATA = {
     "pipeline": "COPY / FILL / VALIDATE / SHIP",
     "word": "CONSULTING TEMPLATE KIT",
     "glyph": "seal"
-  },
-  "calibrate-pro": {
-    "role": "EXPERIMENTAL / NOT PROMOTED",
-    "headline": "End-to-end behavior and menu actions are not yet verified.",
-    "pipeline": "AUDIT / TEST / FIX / VERIFY",
-    "word": "CALIBRATE PRO",
-    "glyph": "waveform"
   },
   "anomaly-kernels": {
     "role": "TELEMETRY ANOMALY LIBRARY",

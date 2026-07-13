@@ -3,7 +3,7 @@
  * node:test suite for the pure/node-safe surface of exporters.js.
  *
  * Run: node --test system/exporters.test.mjs
- *      (from c:/dev/public/portfolio-site)
+ *      (from the Pages repository root)
  *
  * Browser-only paths (png, svg fallback, webm, download) are skipped
  * with explicit reasons rather than fake stubs.

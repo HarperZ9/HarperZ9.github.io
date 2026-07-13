@@ -27,10 +27,10 @@ behind text.
 
 Reference material:
 
-- local inspiration folder: `C:/Users/Zain/Desktop/art-theme-style-generative-inspiration/`
+- private inspiration references stay outside the public repository
 - procedural field loader: `system/generative-field.js`
 - procedural engine source: `system/hero-gl.js`
-- home spectrum shell: `assets/index-3QeD_52_.css`
+- home spectrum shell: canonical `src/App.css` in `HarperZ9/telos-v2`
 - shared public cascades: `system/system.css` and `system/doc.css`
 
 ## 3. Palette
@@ -79,10 +79,9 @@ Inspiration should be synthesized into first-party procedural output. Do not
 copy inspiration images into the site or depend on bitmap backgrounds for the
 core public style.
 
-The 2026-07-09 synthesis pass inspected the full local inspiration corpus, a
-Ditto capture, and the reference site source. Preserve the rule from
-`docs/design/inspiration-synthesis-2026-07-09.md`: borrow architecture and
-direction, never source, shaders, images, or exact compositions.
+The synthesis rule is stable: borrow architecture and direction, never source,
+shaders, images, or exact compositions. Any private research used to establish
+that direction stays outside the deployed repository.
 
 It must not reduce contrast or make content harder to scan. Text always wins over
 the art layer.
