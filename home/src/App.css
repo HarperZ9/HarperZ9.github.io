@@ -1,7 +1,62 @@
 /* ===== layout primitives ===== */
+/* the one continuous GPU field behind every surface (GroundField). Fixed to the viewport,
+   scroll-anchored in the shader, so sections blend into it and into each other. */
+.ground-field { position: fixed; inset: 0; width: 100vw; height: 100dvh; z-index: -2; display: block; pointer-events: none; }
+/* Immersive frame: a soft vignette that draws the eye inward and settles the field into
+   the viewport edges. Above the field, below content-that-matters, never blocks a click. */
+.viewport-vignette {
+  position: fixed; inset: 0; z-index: 2; pointer-events: none;
+  background: radial-gradient(125% 118% at 50% 38%, transparent 55%, rgba(3, 2, 9, 0.5) 100%);
+}
+
+/* Shader-based emphasis: the highlighter, the pill, and ticks each host a small living organic
+   canvas (Emphasis / emphasis-field.js) behind their text. A base colour is the fallback if WebGL
+   is absent; the canvas draws the organic, glitchy marker over it and answers the field's moods. */
+.emph { position: relative; display: inline-block; vertical-align: baseline; }
+/* the shader canvas is pinned to a fixed glyph-height band centred on the text, so it can never
+   balloon past the line. No solid fill anywhere: the shader IS the mark, organic and non-solid. */
+.emph-canvas { position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 100%; z-index: 0; pointer-events: none; display: block; }
+.emph-text { position: relative; z-index: 1; }
+/* No solid base: the shader is the whole marker, a bright core that feathers out on every
+   edge and dissolves into the field (seamless). The text sits inside the bright core (held
+   there by padding) so it stays legible while the edges melt into the layer beneath. */
+.emph-mark .emph-canvas { height: 2em; left: -0.28em; width: calc(100% + 0.56em); }
+.emph-mark .emph-text { color: var(--verified); padding: 0.04em 0.28em; }
+.emph-pill .emph-canvas { height: 1.8em; left: -0.45em; width: calc(100% + 0.9em); }
+.emph-pill .emph-text { color: var(--verified); padding: 0.04em 0.4em; white-space: nowrap; }
+/* When the shader is live it renders the lit 3D letters; the flat DOM text goes transparent
+   (still present for screen readers and text selection). If WebGL is absent, .emph-lit is
+   never added and the verified-green fallback text above shows instead. */
+.emph-lit .emph-text { color: transparent; }
+
+/* Organic shapes, not rounded rectangles: an asymmetric, slowly morphing border-radius makes every
+   container a liquid blob with no straight edge to crop. The border follows the organic curve. */
+.svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+@keyframes blobmorph {
+  0%, 100% { border-radius: 46% 54% 53% 47% / 56% 46% 54% 44%; }
+  50%      { border-radius: 55% 45% 47% 53% / 45% 55% 44% 56%; }
+}
+.btn, .ro-chip {
+  border-radius: 49% 51% 52% 48% / 54% 46% 54% 46%;
+  animation: blobmorph 15s ease-in-out infinite;
+}
+.btn:nth-of-type(2n), .ro-chip:nth-of-type(2n) { animation-duration: 19s; animation-direction: reverse; }
+.btn:nth-of-type(3n), .ro-chip:nth-of-type(3n) { animation-duration: 23s; animation-delay: -6s; }
+@media (prefers-reduced-motion: reduce) { .btn, .ro-chip { animation: none; } }
+/* larger panels: gentler organic corners that morph slowly, so cards are liquid blobs too */
+@keyframes cardblob {
+  0%, 100% { border-radius: 18px 32px 22px 28px / 28px 20px 32px 22px; }
+  50%      { border-radius: 30px 20px 30px 22px / 22px 32px 20px 30px; }
+}
+.range-card, .emet, .pp, .wi, .wi-outcome, .pp-override {
+  border-radius: 22px 30px 24px 32px / 28px 22px 32px 24px;
+  animation: cardblob 26s ease-in-out infinite;
+}
+.range-card:nth-of-type(2n), .emet:nth-of-type(2n) { animation-duration: 33s; animation-direction: reverse; }
+@media (prefers-reduced-motion: reduce) { .range-card, .emet, .pp, .wi, .wi-outcome, .pp-override { animation: none; } }
 .shell { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--shell); }
 .kicker {
-  font-size: var(--step--1); letter-spacing: 0.22em; color: var(--signal);
+  font-size: var(--step--1); letter-spacing: 0.22em; color: var(--faint);
   text-transform: uppercase; font-weight: 500;
 }
 .kicker .sep { color: var(--faint); margin-inline: 0.4em; }
@@ -12,12 +67,34 @@
   position: sticky; top: 0; z-index: var(--z-nav);
   display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3);
   padding: 0.9rem var(--shell);
-  background: color-mix(in oklab, var(--void) 72%, transparent);
+  background: linear-gradient(180deg, color-mix(in oklab, var(--void) 82%, transparent), color-mix(in oklab, var(--void) 54%, transparent));
   backdrop-filter: blur(14px) saturate(1.3);
   border-bottom: 1px solid var(--hairline-2);
 }
-.brand { font-weight: 600; letter-spacing: 0.14em; font-size: var(--step-0); }
-.brand:hover { color: var(--signal); }
+/* Layered brand: a wide shader field (LogoField) the wordmark rides onto, so the mark
+   spreads across the header and reads as depth instead of a cropped tile. */
+.brand {
+  position: relative; display: inline-flex; align-items: center;
+  font-weight: 600; letter-spacing: 0.16em; font-size: var(--step-0); color: var(--ink);
+}
+.brand-field {
+  position: relative; display: block; flex: none;
+  width: clamp(140px, 18vw, 236px); height: 46px;
+}
+/* The canvas is larger than its 46px layout box and overflows the nav band, so the
+   aperture has room to show itself and dissipates into the page instead of being
+   cropped to the header. Decorative, so it never intercepts pointer events. */
+.brand-canvas {
+  position: absolute; left: -12%; top: 50%; transform: translateY(-50%);
+  width: 124%; height: 120px; display: block; pointer-events: none;
+}
+.brand-fallback { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.brand-fallback { border-radius: 8px; object-fit: contain; }
+.brand-word {
+  position: relative; margin-left: -1.15rem; /* ride onto the field's faded edge -> layered */
+  text-shadow: 0 0 12px var(--void), 0 1px 2px var(--void), 0 0 3px var(--void);
+}
+.brand:hover .brand-word { color: var(--verified); }
 .topnav-links { display: flex; align-items: center; gap: clamp(0.9rem, 2vw, 1.8rem); font-size: var(--step--1); }
 .topnav-links a { color: var(--muted); transition: color 0.2s; }
 .topnav-links a:hover { color: var(--ink); }
@@ -50,19 +127,135 @@
       transparent 90%),
     radial-gradient(60% 80% at 88% 70%, oklch(0.36 0.15 286 / 0.35) 0%, transparent 62%);
 }
+/* Left-weighted contrast scrim: dark under the masthead type on the left, clear on the
+   right where the field's aperture blooms, and a soft fade at the bottom so the hero
+   dissolves into the next surface rather than ending on a seam. */
 .hero-veil {
   position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background:
-    radial-gradient(120% 90% at 78% 30%, transparent 0%, color-mix(in oklab, var(--void) 30%, transparent) 42%, var(--void) 88%),
-    linear-gradient(180deg, color-mix(in oklab, var(--void) 55%, transparent) 0%, transparent 22% 60%, var(--void) 100%);
+    linear-gradient(100deg, rgba(5,4,12,0.84) 0%, rgba(5,4,12,0.5) 38%, rgba(5,4,12,0.16) 70%, transparent 100%),
+    linear-gradient(180deg, transparent 46%, #06040c 100%);
 }
-.hero-inner { position: relative; z-index: var(--z-content); max-width: 60rem; }
-.hero .kicker { margin-bottom: var(--sp-3); }
+/* Register from the inspiration corpus: a grain + scanline veil over the hero art,
+   so the field reads like an instrument output on the void, not a clean gradient.
+   Sits over the canvas and glow, under the text (z-content). Art layer only. */
+.hero-grain {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  mix-blend-mode: soft-light; opacity: 0.5;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.24) 0 1px, transparent 1px 3px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23n)' opacity='0.7'/%3E%3C/svg%3E");
+  background-size: auto, 150px 150px;
+}
+@media (prefers-reduced-motion: reduce) { .hero-grain { display: none; } }
+.hero-inner { position: relative; z-index: var(--z-content); max-width: 74rem; width: 100%; }
+
+/* Art-magazine masthead: a mono folio line, then a spread of masthead type beside an
+   expansive generative plate (the same shader as the nav mark, taken large). */
+.hero-folio {
+  display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap;
+  color: var(--faint); font-size: var(--step--1); letter-spacing: 0.2em;
+  text-transform: uppercase; margin-bottom: var(--sp-4);
+  padding-bottom: var(--sp-2); border-bottom: 1px solid var(--hairline-2);
+}
+.hero-folio .folio-n { color: var(--verified); font-weight: 600; }
+.hero-folio .sep { color: var(--faint); opacity: 0.55; }
+
+.hero-masthead { min-width: 0; max-width: 40rem; }
+
+/* A cropping onto the live field, not a frame around it: a partial crop edge and a
+   registration tick mark the aperture, while the field itself expands past it into the
+   page. This is the whole design idea in one element. */
+.hero-crop {
+  position: absolute; right: clamp(1.1rem, 4vw, 3.4rem); bottom: clamp(2.8rem, 8vh, 5rem);
+  z-index: var(--z-content); display: flex; flex-direction: column; gap: 0.2rem;
+  text-align: right; padding-left: 0.9rem;
+  border-left: 1px solid color-mix(in oklab, var(--verified) 42%, transparent);
+  font-size: var(--step--1); letter-spacing: 0.08em; color: var(--faint);
+}
+.hero-crop::before {
+  content: ""; position: absolute; top: -0.55rem; right: 0; width: 1.5rem; height: 1px;
+  background: color-mix(in oklab, var(--verified) 42%, transparent);
+}
+.hero-crop .crop-t { color: var(--ink-2); letter-spacing: 0.14em; text-transform: uppercase; }
+
+@media (max-width: 860px) {
+  .hero-crop { position: static; margin-top: var(--sp-4); text-align: left; align-self: flex-start; }
+}
+/* Effected eyebrow (reference: francisdoingwork.com mono-caps metadata): a short
+   dithered verified bar leads the line, so the eyebrow carries the same register
+   as the marker and pill instead of reading as plain caps. Verdict-only color. */
+.hero .kicker {
+  margin-bottom: var(--sp-3);
+  display: inline-flex; align-items: center; gap: 0.7em;
+}
+.hero .kicker::before {
+  content: ""; flex: none;
+  display: inline-block; /* beats home-readable.css .kicker::before{display:none} */
+  width: 1.7em; height: 0.62em;
+  border-radius: 1px;
+  background-color: var(--verified);
+  background-image:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.45) 0 1px, transparent 1px 2px),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.28) 0 1px, transparent 1px 2px);
+  box-shadow: 0 0 12px -3px var(--verified);
+}
+@media (prefers-reduced-motion: reduce) { .hero .kicker::before { box-shadow: none; } }
 .hero-title {
-  font-size: clamp(3.10rem, 1.70rem + 6.8vw, 6rem); font-weight: 900; line-height: 0.9; letter-spacing: -0.035em;
-  text-transform: none; margin-bottom: var(--sp-3);
+  font-size: clamp(1.75rem, 1.25rem + 2.0vw, 2.9rem); font-weight: 600; line-height: 1.36; letter-spacing: -0.015em;
+  text-transform: none; margin-bottom: var(--sp-3); text-wrap: balance; max-width: 32ch;
 }
-.hero-title .hl { color: var(--match); }
+.hero-title .hl { color: var(--verified); }
+/* Marker delivery (reference: francisdoingwork.com), rebuilt for a dark ground.
+   The named tools ride a crafted highlighter: vivid verified ink, a swiped
+   diagonal sheen, a faint fibre texture, a rim-light top edge and a soft glow,
+   with dark text so it stays crisp and legible. box-decoration-break clones the
+   ink across wrapped lines. The name sits in an outline pill, so the emphasis
+   does not all read as solid fill. */
+.hero-title .mark {
+  color: var(--void);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0.08em 0.3em 0.1em;
+  background-color: var(--verified);
+  /* the marker carries the corpus register now: a fine grain veil (feTurbulence),
+     a crossed dither hatch, a scanline, and the swiped sheen. It reads as printed
+     ink, not a clean fill, while the void text on verified stays legible. */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='84'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='84' height='84' filter='url(%23g)' opacity='0.5'/%3E%3C/svg%3E"),
+    linear-gradient(101deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0) 38%, rgba(0, 0, 0, 0.16) 100%),
+    repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.10) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.07) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.06) 0 1px, transparent 1px 2px);
+  background-size: 84px 84px, auto, auto, auto, auto;
+  background-blend-mode: multiply, normal, normal, normal, normal;
+  /* flow, not frame: the swipe feathers at every edge and tapers at the ends,
+     bleeding into the text rather than sitting in a hard box. */
+  -webkit-mask-image:
+    radial-gradient(118% 168% at 50% 47%, #000 55%, transparent 100%),
+    linear-gradient(93deg, transparent 0, #000 5%, #000 93%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    radial-gradient(118% 168% at 50% 47%, #000 55%, transparent 100%),
+    linear-gradient(93deg, transparent 0, #000 5%, #000 93%, transparent 100%);
+  mask-composite: intersect;
+}
+/* The name rides an outlined pill (reference: francisdoingwork.com), effected to
+   match: a faint grain wash inside the chip and a doubled hairline stroke, so it
+   reads as a crafted tag, not a plain border. */
+.hero-title .pill {
+  white-space: nowrap;
+  padding: 0.02em 0.5em 0.06em;
+  border: 1.4px solid color-mix(in oklab, var(--verified) 55%, var(--ink) 45%);
+  border-radius: 999px;
+  color: var(--ink);
+  background-color: color-mix(in oklab, var(--verified) 7%, transparent);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='84'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='84' height='84' filter='url(%23g)' opacity='0.35'/%3E%3C/svg%3E");
+  background-size: 84px 84px;
+  background-blend-mode: soft-light;
+  box-shadow: inset 0 0 0 0.4px color-mix(in oklab, var(--verified) 30%, transparent);
+}
 .lead {
   font-size: clamp(1.1rem, 0.98rem + 0.7vw, 1.5rem); color: var(--ink-2);
   max-width: 42ch; line-height: 1.5; margin-bottom: var(--sp-4);
@@ -80,15 +273,21 @@
 .btn span { transition: transform 0.25s var(--ease-out); }
 .btn:hover { border-color: var(--ink); transform: translateY(-2px); }
 .btn:hover span { transform: translateX(3px); }
-.btn.solid { background: var(--signal); color: var(--on-signal); border-color: var(--signal); }
-.btn.solid:hover { background: color-mix(in oklab, var(--signal) 88%, white); box-shadow: 0 10px 34px -12px var(--signal); }
+/* Not a solid slab: translucent verified so the field breathes through, with an organic grain
+   veil and a soft verified edge. Void text stays high-contrast on it. */
+.btn.solid {
+  background-color: color-mix(in oklab, var(--verified) 78%, transparent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23g)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 120px 120px; background-blend-mode: soft-light;
+  color: var(--void); border-color: color-mix(in oklab, var(--verified) 42%, transparent);
+}
+.btn.solid:hover { background-color: color-mix(in oklab, var(--verified) 90%, white); box-shadow: 0 10px 34px -12px var(--verified); }
 
 /* the instrument readout */
 .readout {
   display: inline-flex; align-items: center; flex-wrap: wrap; gap: 0.7rem;
-  margin-top: var(--sp-4); padding: 0.5rem 0.8rem;
-  border: 1px solid var(--hairline); border-radius: 12px;
-  background: color-mix(in oklab, var(--void) 60%, transparent);
+  margin-top: var(--sp-4); padding: 0.35rem 0 0.35rem 0.9rem;
+  border-left: 2px solid; border-image: linear-gradient(180deg, var(--verified), transparent) 1;
   font-size: var(--step--1);
 }
 .ro-label { color: var(--faint); letter-spacing: 0.1em; }
@@ -98,26 +297,24 @@
 .ro-drift { color: var(--drift); }
 .ro-unverifiable { color: var(--unverif); }
 .ro-note { color: var(--faint); font-style: italic; }
-.ro-cyan { color: var(--sg-cyan); }
-.ro-lime { color: var(--sg-lime); }
-.ro-gold { color: var(--sg-gold); }
-.ro-iris { color: var(--sg-iris); }
+.ro-cyan, .ro-gold, .ro-iris { color: var(--ink); }
+.ro-lime { color: var(--match); }
 .hero-note { margin-top: var(--sp-2); color: var(--faint); font-size: var(--step--1); letter-spacing: 0.04em; }
 .hero-availability {
   margin-top: var(--sp-3); max-width: 72ch; color: var(--ink-2);
   font-size: var(--step-0); line-height: 1.5;
 }
 .hero-availability a {
-  color: inherit; border-bottom: 1px solid var(--signal); padding-bottom: 0.12em;
+  color: inherit; border-bottom: 1px solid var(--verified); padding-bottom: 0.12em;
 }
-.hero-availability a:hover { color: var(--signal); }
+.hero-availability a:hover { color: var(--verified); }
 
 .edgemark {
   position: absolute; right: clamp(-0.4rem, -1vw, 0rem); top: 50%; z-index: 0;
   transform: translateY(-50%) rotate(90deg); transform-origin: right center;
   font-size: clamp(3rem, 9vw, 8rem); font-weight: 900; letter-spacing: 0.05em;
   color: transparent; -webkit-text-stroke: 1.4px var(--hairline);
-  pointer-events: none; user-select: none; opacity: 0.5;
+  pointer-events: none; user-select: none; opacity: 0.22;
 }
 .scroll-cue {
   position: absolute; bottom: 1.4rem; left: var(--shell); z-index: var(--z-content);
@@ -126,20 +323,23 @@
 
 /* ===== bands ===== */
 .band { padding-block: clamp(4rem, 11vh, var(--sp-7)); position: relative; }
-.band-alt { background: var(--void-2); }
+.band-alt { background: radial-gradient(135% 120% at 50% 50%, color-mix(in oklab, var(--void) 42%, transparent), transparent 82%); }
 .sec-head { margin-bottom: var(--sp-5); }
 .sec-head h2 { font-size: var(--step-4); margin-top: var(--sp-2); }
 /* Solid emphasis color, never gradient text: the deployed system (and the
    visual-contract tests) ban background-clip text as primary emphasis. */
 .spectrum-word {
-  color: var(--sg-gold);
+  color: var(--ink);
 }
 
 /* ===== recorded workflows: native evidence in an asymmetric sequence ===== */
 .recorded-list {
-  list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hairline);
+  list-style: none; margin: 0; padding: 0;
+  border-top: 1px solid transparent; border-image: var(--edge) 1;
 }
-.recorded-item { border-bottom: 1px solid var(--hairline); }
+.recorded-item {
+  border-bottom: 1px solid transparent; border-image: var(--edge) 1;
+}
 .recorded-shot {
   display: grid;
   grid-template-columns: minmax(0, 1.12fr) minmax(18rem, 0.88fr);
@@ -176,8 +376,8 @@
 }
 .recorded-facts li + li::before { content: "/"; margin-right: 0.75rem; color: var(--hairline); }
 .recorded-action {
-  display: inline-flex; align-items: center; gap: 0.45rem; color: var(--signal);
-  font-weight: 650; border-bottom: 1px solid color-mix(in oklab, var(--signal) 55%, transparent);
+  display: inline-flex; align-items: center; gap: 0.45rem; color: var(--verified);
+  font-weight: 650; border-bottom: 1px solid color-mix(in oklab, var(--verified) 55%, transparent);
   padding-bottom: 0.12rem;
 }
 .recorded-arrow { transition: transform 0.2s var(--ease-out); }
@@ -185,28 +385,26 @@
 .recorded-action:focus-visible .recorded-arrow { transform: translateX(0.25rem); }
 
 /* ===== engines: spectrum-banded instrument rows ===== */
-.engines { list-style: none; padding: 0; border-top: 1px solid var(--hairline); }
+.engines { list-style: none; padding: 0; border-top: 1px solid transparent; border-image: var(--edge) 1; }
 .engine {
-  --eng: var(--sg-cyan);
+  --eng: var(--verified);
   display: grid; gap: 0.35rem 1.8rem;
   grid-template-columns: 3.4rem minmax(11rem, 15rem) 1fr auto;
   grid-template-areas: "idx id desc go";
   align-items: start;
   padding: clamp(1.4rem, 3vw, 2.3rem) 0;
-  border-bottom: 1px solid var(--hairline);
+  border-bottom: 1px solid transparent; border-image: var(--edge) 1;
   position: relative;
   transition: background 0.3s;
 }
 .engine:hover { background: color-mix(in oklab, var(--eng) 7%, transparent); }
-.engine:nth-child(6n+1) { --eng: var(--sg-magenta); }
-.engine:nth-child(6n+2) { --eng: var(--sg-ember); }
-.engine:nth-child(6n+3) { --eng: var(--sg-gold); }
-.engine:nth-child(6n+4) { --eng: var(--sg-lime); }
-.engine:nth-child(6n+5) { --eng: var(--sg-cyan); }
-.engine:nth-child(6n+6) { --eng: var(--sg-iris); }
+/* Verdict-only: engine rows no longer cycle a decorative rainbow. The single
+   accent (verified) appears on hover and for shipped rows, so color carries the
+   shipped/verified meaning and nothing purely decorative. */
 
 .eng-index { grid-area: idx; display: flex; align-items: center; gap: 0.6rem; color: var(--faint); font-size: var(--step--1); padding-top: 0.5rem; }
-.eng-band { width: 8px; height: 2.2rem; border-radius: 4px; background: var(--eng); box-shadow: 0 0 20px -4px var(--eng); }
+.eng-band { width: 8px; height: 2.2rem; border-radius: 4px; background: color-mix(in oklab, var(--ink) 22%, transparent); transition: background 0.25s; }
+.engine:hover .eng-band { background: var(--eng); box-shadow: 0 0 20px -4px var(--eng); }
 .eng-id { grid-area: id; display: flex; flex-direction: column; gap: 0.3rem; }
 .eng-name { font-size: var(--step-3); font-weight: 800; line-height: 1; letter-spacing: -0.03em; color: var(--ink); transition: color 0.25s; }
 .engine:hover .eng-name { color: var(--eng); }
@@ -225,15 +423,16 @@
 /* ===== range ===== */
 .range-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--sp-3); }
 .range-card {
-  background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-lg);
+  background: var(--surface-grad); border: 1px solid var(--hairline); border-radius: var(--radius-lg);
   padding: clamp(1.5rem, 3vw, 2.4rem); display: flex; flex-direction: column; gap: var(--sp-2);
 }
 .range-card h3 { font-size: var(--step-2); color: var(--ink); }
-.range-meta { color: var(--signal); font-size: var(--step--1); letter-spacing: 0.02em; }
+.range-meta { color: var(--faint); font-size: var(--step--1); letter-spacing: 0.02em; }
 .range-card p { color: var(--muted); line-height: 1.55; }
-.range-proof { color: var(--ink-2); border-top: 1px solid var(--hairline-2); padding-top: var(--sp-2); margin-top: auto; }
-.range-proof b { color: var(--sg-gold); }
-.range-proof a, .eng-desc a, .work-body a, .lead a { color: var(--signal); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+.range-proof { color: var(--ink-2); border-top: 1px solid transparent; border-image: var(--edge-2) 1; padding-top: var(--sp-2); margin-top: auto; }
+.range-proof b { color: var(--verified); }
+.range-proof a, .eng-desc a, .work-body a, .lead a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; text-decoration-color: var(--hairline); transition: color .2s, text-decoration-color .2s; }
+.range-proof a:hover, .eng-desc a:hover, .work-body a:hover, .lead a:hover { color: var(--verified); text-decoration-color: var(--verified); }
 
 /* ===== work / floor ===== */
 .work-wrap { display: grid; grid-template-columns: minmax(14rem, 22rem) 1fr; gap: clamp(2rem, 6vw, 5rem); align-items: start; }
@@ -244,7 +443,7 @@
 .floor-line { color: var(--ink-2) !important; }
 
 /* ===== footer ===== */
-.site-foot { padding-block: clamp(4rem, 10vh, 7rem) 3rem; border-top: 1px solid var(--hairline); background: var(--void-2); }
+.site-foot { padding-block: clamp(4rem, 10vh, 7rem) 3rem; background: linear-gradient(180deg, transparent, color-mix(in oklab, var(--void) 72%, transparent)); }
 .foot-big { font-family: var(--font-display); font-weight: 900; font-size: var(--step-4); line-height: 0.95; letter-spacing: -0.03em; color: var(--ink); }
 .foot-note { color: var(--faint); font-size: var(--step--1); margin-top: var(--sp-3); max-width: 60ch; line-height: 1.7; }
 
@@ -257,12 +456,13 @@
 }
 @media (max-width: 560px) {
   .topnav-links a:not(.ghost) { display: none; }
-  .hero-title { font-size: clamp(2.7rem, 13vw, 4rem); }
+  /* keep the nowrap name pill inside the viewport on phones */
+  .hero-title { font-size: clamp(1.95rem, 8.8vw, 3.1rem); }
 }
 
 /* ===== live EMET witness demo ===== */
 .emet {
-  max-width: 46rem; background: var(--surface); border: 1px solid var(--hairline);
+  max-width: 46rem; background: var(--surface-grad); border: 1px solid var(--hairline);
   border-radius: var(--radius-lg); padding: clamp(1.3rem, 3vw, 2.2rem);
   display: flex; flex-direction: column; gap: var(--sp-3);
 }
@@ -290,7 +490,7 @@
   color: var(--signal); font-size: 0.82rem; line-height: 1.45; word-break: break-all;
   background: var(--void); border: 1px solid var(--hairline-2); border-radius: 8px; padding: 0.5rem 0.6rem;
 }
-.emet-receipt .emet-digest { color: var(--sg-gold); }
+.emet-receipt .emet-digest { color: var(--faint); }
 .emet-btn {
   padding: 0.7em 1.1em; border-radius: 10px; font-weight: 600; white-space: nowrap;
   background: var(--spark); color: var(--on-spark); border: 1.5px solid var(--spark);
@@ -299,13 +499,13 @@
 .emet-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 30px -12px var(--spark); }
 .emet-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .emet-reason { color: var(--muted); line-height: 1.55; font-size: var(--step-0); }
-.emet-foot { color: var(--faint); font-size: var(--step--1); line-height: 1.7; border-top: 1px solid var(--hairline-2); padding-top: var(--sp-2); }
+.emet-foot { color: var(--faint); font-size: var(--step--1); line-height: 1.7; border-top: 1px solid transparent; border-image: var(--edge-2) 1; padding-top: var(--sp-2); }
 .emet-foot a { color: var(--signal); }
 .emet-strike { text-decoration: line-through; text-decoration-color: var(--drift); color: var(--ink-2); }
 
 /* ===== demos layout + proof packet ===== */
 .demos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 32rem), 1fr)); gap: var(--sp-3); align-items: start; }
-.pp { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-lg); padding: clamp(1.3rem, 3vw, 2.2rem); display: flex; flex-direction: column; gap: var(--sp-2); }
+.pp { background: var(--surface-grad); border: 1px solid var(--hairline); border-radius: var(--radius-lg); padding: clamp(1.3rem, 3vw, 2.2rem); display: flex; flex-direction: column; gap: var(--sp-2); }
 .pp-head { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; flex-wrap: wrap; }
 .pp-tag { color: var(--faint); font-size: var(--step--1); flex: 1; min-width: 12rem; }
 .pp-claimed { color: var(--muted); font-size: var(--step--1); display: inline-flex; align-items: center; gap: 0.4rem; }
@@ -320,7 +520,7 @@
 .pp-controls { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
 .pp-hint { color: var(--faint); font-size: 0.78rem; line-height: 1.4; flex: 1; min-width: 14rem; }
 .pp-checks { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.35rem; }
-.pp-check { display: grid; grid-template-columns: 6.5rem auto 1fr; gap: 0.6rem; align-items: baseline; font-size: 0.82rem; padding: 0.3rem 0; border-top: 1px solid var(--hairline-2); }
+.pp-check { display: grid; grid-template-columns: 6.5rem auto 1fr; gap: 0.6rem; align-items: baseline; font-size: 0.82rem; padding: 0.3rem 0; border-top: 1px solid transparent; border-image: var(--edge-2) 1; }
 .pp-cv { font-weight: 600; }
 .pp-match .pp-cv { color: var(--match); }
 .pp-drift .pp-cv { color: var(--drift); }
@@ -332,7 +532,7 @@
 @media (max-width: 520px) { .pp-check { grid-template-columns: 5.5rem 1fr; } .pp-cn { grid-column: 1 / -1; } }
 
 /* ===== witnessed independence demo ===== */
-.wi { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-lg); padding: clamp(1.3rem, 3vw, 2.2rem); display: flex; flex-direction: column; gap: var(--sp-3); }
+.wi { background: var(--surface-grad); border: 1px solid var(--hairline); border-radius: var(--radius-lg); padding: clamp(1.3rem, 3vw, 2.2rem); display: flex; flex-direction: column; gap: var(--sp-3); }
 .wi-head { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; flex-wrap: wrap; }
 .wi-tag { color: var(--faint); font-size: var(--step--1); }
 .wi-badge { font-family: var(--font-mono); font-size: 0.76rem; padding: 0.2em 0.6em; border-radius: 7px; border: 1px solid currentColor; white-space: nowrap; }
@@ -363,7 +563,7 @@
 
 /* ===== default-deny gate demo ===== */
 .gd {
-  background: var(--surface); border: 1px solid var(--hairline);
+  background: var(--surface-grad); border: 1px solid var(--hairline);
   border-radius: var(--radius-lg); padding: clamp(1.3rem, 3vw, 2.2rem);
   display: flex; flex-direction: column; gap: var(--sp-3); height: 100%;
 }
@@ -383,13 +583,13 @@
 .gd-allow .gd-verdict { color: var(--match); }
 .gd-deny { border-color: var(--drift); background: color-mix(in oklab, var(--drift) 8%, transparent); }
 .gd-deny .gd-verdict { color: var(--drift); }
-.gd-needs-human { border-color: var(--sg-gold); background: color-mix(in oklab, var(--sg-gold) 8%, transparent); }
-.gd-needs-human .gd-verdict { color: var(--sg-gold); }
+.gd-needs-human { border-color: var(--drift); background: color-mix(in oklab, var(--drift) 8%, transparent); }
+.gd-needs-human .gd-verdict { color: var(--drift); }
 .gd-rows { display: flex; flex-direction: column; gap: 0.25rem; font-size: var(--step--1); color: var(--muted); }
 .gd-rk { letter-spacing: 0.06em; margin-right: 0.35em; }
 .gd-r-pass .gd-rk { color: var(--match); }
 .gd-r-deny .gd-rk { color: var(--drift); }
-.gd-r-needs .gd-rk { color: var(--sg-gold); }
+.gd-r-needs .gd-rk { color: var(--drift); }
 
 /* ===== "which one do you need" picker ===== */
 .picker { margin-top: var(--sp-5); }
@@ -403,7 +603,7 @@
 .picker-chip:hover { color: var(--ink); border-color: var(--muted); }
 .picker-chip.on { color: var(--void); background: var(--signal); border-color: var(--signal); font-weight: 600; }
 .picker-out {
-  background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-lg);
+  background: var(--surface-grad); border: 1px solid var(--hairline); border-radius: var(--radius-lg);
   padding: clamp(1.1rem, 2.5vw, 1.8rem); display: flex; flex-direction: column; gap: 0.6rem; max-width: 46rem;
 }
 .picker-name-row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--sp-2); }
@@ -417,16 +617,12 @@
 }
 
 /* ===== where-it-lands scenarios ===== */
-.cases { list-style: none; margin: var(--sp-5) 0 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 0; border-top: 1px solid var(--hairline); }
+.cases { list-style: none; margin: var(--sp-5) 0 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 0; border-top: 1px solid transparent; border-image: var(--edge) 1; }
 @media (min-width: 800px) { .cases { grid-template-columns: 1fr 1fr; column-gap: var(--sp-5); } }
-.case { display: grid; grid-template-columns: 9.5rem 1fr; gap: var(--sp-3); align-items: baseline; padding: var(--sp-3) 0; border-bottom: 1px solid var(--hairline); }
+.case { display: grid; grid-template-columns: 9.5rem 1fr; gap: var(--sp-3); align-items: baseline; padding: var(--sp-3) 0; border-bottom: 1px solid transparent; border-image: var(--edge) 1; }
 .case-name { font-family: var(--font-display); font-weight: 800; font-size: var(--step-1); letter-spacing: -0.015em; }
-.cases .case:nth-child(6n+1) .case-name { color: var(--sg-magenta); }
-.cases .case:nth-child(6n+2) .case-name { color: var(--sg-ember); }
-.cases .case:nth-child(6n+3) .case-name { color: var(--sg-gold); }
-.cases .case:nth-child(6n+4) .case-name { color: var(--sg-lime); }
-.cases .case:nth-child(6n+5) .case-name { color: var(--sg-cyan); }
-.cases .case:nth-child(6n+6) .case-name { color: var(--sg-iris); }
+/* Verdict-only: case names read in ink, not a decorative rainbow cycle. */
+.cases .case .case-name { color: var(--ink); }
 .case p { color: var(--muted); line-height: 1.55; }
 @media (max-width: 560px) { .case { grid-template-columns: 1fr; gap: 0.4rem; } }
 
@@ -436,11 +632,11 @@
 .foot-links a:hover { color: var(--signal); }
 
 /* ===== research corpus ledger ===== */
-.papers { list-style: none; margin: var(--sp-5) 0 0; padding: 0; border-top: 1px solid var(--hairline); }
+.papers { list-style: none; margin: var(--sp-5) 0 0; padding: 0; border-top: 1px solid transparent; border-image: var(--edge) 1; }
 .paper {
   display: grid; grid-template-columns: 7.5rem 1fr auto; gap: var(--sp-3);
   align-items: baseline; padding: var(--sp-3) var(--sp-2);
-  border-bottom: 1px solid var(--hairline);
+  border-bottom: 1px solid transparent; border-image: var(--edge) 1;
   transition: background 0.25s var(--ease-out);
 }
 .paper:hover { background: color-mix(in oklab, var(--surface) 60%, transparent); }
@@ -470,4 +666,73 @@
   .recorded-arrow { transition: none; }
   .recorded-action:hover .recorded-arrow,
   .recorded-action:focus-visible .recorded-arrow { transform: none; }
+}
+
+/* ============================================================
+   PRISMATIC EXPRESSIONISM (2026-07-09) - home material moves
+   Crystal edges, scanline halftone, and the exactly-one-hot rule
+   fused onto the existing plum spectrum system. Surgical: tone,
+   not overhaul. No gradient text, no border-left accents, no
+   glassmorphism; nothing here gates content on animation.
+   ============================================================ */
+
+/* Token mirror of the canonical tier in index.css (both sheets ship in
+   the same bundle; identical values, kept in step so either file can be
+   read standalone). */
+:root {
+  --crystal: oklch(0.94 0.04 210);
+  --crystal-deep: oklch(0.32 0.09 20);
+  --hot: var(--sg-magenta);
+  --facet-line: oklch(0.94 0.04 210 / 0.45);
+}
+
+/* Crystal top-edge glint: hovered controls catch a 1px specular rim,
+   like light on a facet edge. Inset box-shadow, never a border swap,
+   so layout cannot shift. --crystal is 16.73:1 on --void (computed). */
+.btn:hover,
+.btn:focus-visible { box-shadow: inset 0 1px 0 var(--crystal); }
+.btn.solid:hover { box-shadow: inset 0 1px 0 var(--crystal), 0 10px 34px -12px var(--signal); }
+.picker-chip:hover,
+.picker-chip:focus-visible { box-shadow: inset 0 1px 0 var(--crystal); }
+.emet-btn:hover:not(:disabled) { box-shadow: inset 0 1px 0 var(--crystal), 0 10px 30px -12px var(--spark); }
+
+/* The hero highlight becomes the hero fold's single hot stroke: solid
+   --hot (magenta), 5.94:1 against --void (>= 4.5:1, verified by
+   computation), never gradient text. The hero-glow wash behind it is
+   ground material, not an accent element, so the fold stays at exactly
+   one hot stroke. */
+.hero-title .hl { color: var(--verified); }
+
+/* EXACTLY-ONE-HOT audit (home, per fold):
+   - hero: the .hl stroke above is the one hot; the readout chips are
+     semantic verdict colors (paired with text), not decorative accents.
+   - engines / cases: the 6-step spectrum cycle encodes lanes (allowed
+     by the design docs) and lands magenta on at most one row per six.
+   - demonstrate: .emet-btn (spark) is the one hot; verdict colors are
+     semantic. .spectrum-word therefore STAYS solid --sg-gold
+     (12.83:1 on --void) instead of switching to --hot, so section
+     heads never stack a second hot into a demo fold.
+   - work: the .work-head .kicker (spark) is the one hot.
+   - research / range / footer: no hot; cyan, gold, iris carry lanes. */
+
+/* Scanline-halftone divider: dashed horizontal scanlines whose apparent
+   density fades through a disc-shaped mask, the halftone arc drawn in
+   CSS. Decorative only; place between .band sections when a seam needs
+   texture. Static (no motion), so reduced-motion needs no override.
+   If mask-composite is unsupported the layers union and the strip
+   degrades to an un-dashed faded scanline band, still legible. */
+.prism-divider {
+  height: clamp(1.9rem, 3.4vw, 2.6rem);
+  margin-block: clamp(1.4rem, 3vw, 2.4rem);
+  pointer-events: none;
+  background: repeating-linear-gradient(180deg, var(--crystal) 0 1px, transparent 1px 6px);
+  -webkit-mask-image:
+    repeating-linear-gradient(90deg, #000 0 18px, transparent 18px 30px),
+    radial-gradient(120% 130% at 18% 50%, #000 0 46%, transparent 78%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    repeating-linear-gradient(90deg, #000 0 18px, transparent 18px 30px),
+    radial-gradient(120% 130% at 18% 50%, #000 0 46%, transparent 78%);
+  mask-composite: intersect;
+  opacity: 0.5;
 }
