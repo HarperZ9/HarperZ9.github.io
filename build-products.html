@@ -12,14 +12,23 @@
 <meta property="og:title" content="The Build products: standalone tools you can run today">
 <meta property="og:description" content="The Build suite: Calibrate Pro 1.1.0 for confirmed Windows display-calibration workflows, plus practical forecasting, paper-trading, interface, and color tools. Public release, source, standalone, and PyPI distribution paths. By Zain Dana Harper.">
 <meta property="og:url" content="https://harperz9.github.io/build-products.html">
-<meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
-<meta property="og:image:alt" content="A still from the engine: a Kepler orbit with its conserved angular momentum fitted from the trace, real mathematics drawn by our own code.">
+<meta property="og:image" content="https://harperz9.github.io/img/og/calibrate-pro.png">
+<meta property="og:image:alt" content="Project Telos card for Calibrate Pro: Windows display calibration in a native workbench with explicit evidence.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Build products: standalone tools you can run today">
 <meta name="twitter:description" content="The Build suite: Calibrate Pro 1.1.0 for confirmed Windows display-calibration workflows, plus practical forecasting, paper-trading, interface, and color tools. Public release, source, standalone, and PyPI distribution paths. By Zain Dana Harper.">
-<meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/calibrate-pro.png">
 <meta name="color-scheme" content="dark">
 <link rel="stylesheet" href="system/system.css?v=20260711a">
+<style>
+  .calibrate-preview{margin:clamp(2rem,5vw,4rem) 0 0;max-width:70rem}
+  .calibrate-preview img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border:1px solid var(--rule-strong);border-radius:6px;background:#0e1014}
+  .calibrate-preview figcaption{margin-top:.7rem;max-width:66rem;font-family:var(--mono);font-size:.7rem;line-height:1.65;color:var(--ink-soft)}
+  .calibrate-preview a{color:inherit;text-underline-offset:.22em}
+  .calibrate-facts{display:flex;flex-wrap:wrap;gap:.45rem .7rem;margin:.85rem 0 0;padding:0;list-style:none;font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .calibrate-facts li{padding:.34rem .52rem;border:1px solid var(--hairline);border-radius:4px}
+  @media(max-width:680px){.calibrate-preview{margin-top:1.6rem}.calibrate-preview figcaption{font-size:.66rem}.calibrate-facts{gap:.35rem}}
+</style>
 </head>
 <body class="inner-clean">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -43,9 +52,19 @@
 
 <!-- calibrate-pro -->
 <section class="mv" id="calibrate" aria-labelledby="calibrate-h">
-  <h2 id="calibrate-h" class="reveal">calibrate-pro 1.1: mature calibration core, legacy interface.</h2>
+  <h2 id="calibrate-h" class="reveal">calibrate-pro: released v1.1.0 core; native workbench on current main.</h2>
   <p class="body-text reveal">A Windows display-calibration toolkit for characterized and measured workflows. Its current <b>PySide6</b> desktop application follows one bounded path: Detect &rarr; Method &rarr; Preview &rarr; Apply &rarr; Verify &rarr; Save/Report. It starts unelevated, previews the exact plan before a display write, and requires explicit confirmation before Apply; rejected, expired, substituted, or unsupported plans perform no write. The <b>read-only CLI diagnostics</b> cover installation and capability checks, calibration targets, characterized panels, stored evidence, HDR status, test patterns, and plugin discovery. Legacy direct-action names are <b>proposal-only</b>: they point to the GUI workflow instead of changing display state.</p>
-  <p class="body-text reveal">The core includes DDC/CI control where the monitor supports it, ICC/VCGT and LUT tooling, and native i1Display3 measurement support. Sensorless results are labelled <b>estimated</b>, not measured performance; a measured result requires a supported instrument, and missing observations remain <b>Not measured</b>. The calibration core and 1.1 packaging are current. The visual interface is still the legacy interface and is explicitly on the <b>modernization track</b>.</p>
+  <p class="body-text reveal">The core includes DDC/CI control where the monitor supports it, ICC/VCGT and LUT tooling, and native i1Display3 measurement support. Sensorless results are labelled <b>estimated</b>, not measured performance; a measured result requires a supported instrument, and missing observations remain <b>Not measured</b>. The public 1.1.0 release remains the beta distribution. Current <b>main</b> now owns a restrained dark-room theme with explicit focus, pressed, disabled, and checked states. Its hardware-free public preview uses a bundled generic fixture, marks demonstrated values <b>simulated</b> or <b>Not measured</b>, constructs no hardware-dependent workflow pages or services, and disables display/profile mutations.</p>
+  <figure class="calibrate-preview reveal">
+    <img src="media/demos/calibrate-pro/calibrate-pro-native-preview.png" alt="Calibrate Pro current dark-room desktop workbench in Simulated preview mode, showing one generic reference display and disabled calibration actions" width="1440" height="900" decoding="async">
+    <figcaption><b>Simulated preview.</b> The banner states <b>no hardware access</b> and <b>no display changes</b>; the fixture separates simulated values from Not measured observations. This current-source evidence was reviewed in <a href="https://github.com/HarperZ9/calibrate-pro/pull/12" rel="noopener">PR #12</a> and merged at <a href="https://github.com/HarperZ9/calibrate-pro/commit/8ed017577b34c7a6d2bfe04a17a254f377ad7b7c" rel="noopener"><code translate="no">8ed0175</code></a>. It is not a measurement result or a claim that the earlier v1.1.0 binaries were rebuilt.</figcaption>
+  </figure>
+  <ul class="calibrate-facts reveal" aria-label="Calibrate Pro preview facts">
+    <li>1440 &times; 900 native render</li>
+    <li>bundled public fixture</li>
+    <li>mutation actions disabled</li>
+    <li>Linux + Windows CI</li>
+  </ul>
   <em class="close reveal">The color-science origin: years of film LUT pipelines and display work, packaged into a tool a person can actually run.</em>
 </section>
 
@@ -62,7 +81,7 @@
 <section class="proof" id="proof" aria-labelledby="proof-h">
   <div class="proof-head">
     <h2 id="proof-h" class="reveal">The suite, and one tool reporting itself.</h2>
-    <p class="body-text reveal"><b>build-ui</b> is the shared visual style and controls library for the companion GUI tools. Calibrate Pro 1.1 uses the newer Build UI 2 integration with PySide6. <b>build-ecosystem</b> is the single package that installs the whole set in one command, and <a href="build-color.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(58,43,214,.45)" translate="no">build-color</a> is the color-science member, with its own page. Here is Calibrate Pro reporting its current operator boundary.</p>
+    <p class="body-text reveal"><b>build-ui</b> is the shared controls library for the companion GUI tools. Calibrate Pro&rsquo;s current main branch uses those PySide6 widgets under a Calibrate-owned dark-room theme. <b>build-ecosystem</b> is the single package that installs the whole set in one command, and <a href="build-color.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(58,43,214,.45)" translate="no">build-color</a> is the color-science member, with its own page. Here is Calibrate Pro reporting its operator boundary.</p>
   </div>
 
   <div class="exhibit reveal">
@@ -93,7 +112,7 @@ and explicitly confirm Apply. No display state was changed.</pre>
 <!-- honest -->
 <section class="mv" id="limits" aria-labelledby="limits-h">
   <h2 id="limits-h" class="reveal">Where they really are.</h2>
-  <p class="body-text reveal">These are real, tested software you can use today, a product line that also funds the slower accountability and language work and gives it somewhere practical to land. <b>calibrate-pro</b> has the most complete release path and the strongest operator boundary, while its legacy visual design remains a disclosed modernization track. <b>build-oracle</b>, <b>build-finance</b>, and <b>build-engine</b> are substantive beta toolkits with named, tested methods, built paper-first with their risk checks on by default. <b>build-ui</b> and <b>build-ecosystem</b> are exactly what they sound like, the shared look and the one-command installer: small glue, not headline products.</p>
+  <p class="body-text reveal">These are real, tested software you can use today, a product line that also funds the slower accountability and language work and gives it somewhere practical to land. <b>calibrate-pro</b> has the most complete release path and the strongest operator boundary; its current source now has the native dark-room workbench shown above, while the public 1.1.0 distribution remains honestly beta. <b>build-oracle</b>, <b>build-finance</b>, and <b>build-engine</b> are substantive beta toolkits with named, tested methods, built paper-first with their risk checks on by default. <b>build-ui</b> and <b>build-ecosystem</b> are exactly what they sound like, the shared controls and the one-command installer: small glue, not headline products.</p>
   <p class="pull reveal">Tested and usable, honestly beta, with the distribution path named for each member: Calibrate Pro on GitHub Releases, four companion packages on PyPI, and the remaining tools from source.</p>
   <div class="channels reveal">
     <span class="g">GitHub</span>: <a href="https://github.com/HarperZ9" translate="no">HarperZ9</a>
