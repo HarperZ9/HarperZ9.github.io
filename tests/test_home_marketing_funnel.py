@@ -55,15 +55,14 @@ def test_home_hero_display_size_is_capped_at_six_rem() -> None:
     assert re.search(r"font-size:\s*clamp\([^;]+,\s*6rem\)\s*;", rule)
 
 
-def test_home_source_preserves_social_metadata() -> None:
-    template = (ROOT / "home" / "index.html").read_text(encoding="utf-8")
+def test_home_source_and_generated_output_preserve_social_metadata() -> None:
     title = "Project Telos - Tools for AI, code, graphics, and research"
     description = (
         "A public workshop for any-model workflows, codebase maps, compiler tools, "
         "graphics systems, generated media, and research infrastructure."
     )
     image = "https://harperz9.github.io/img/og/telos.png"
-    for value in (
+    expected_metadata = (
         f'<title>{title}</title>',
         f'<meta property="og:title" content="{title}" />',
         f'<meta property="og:description" content="{description}" />',
@@ -73,8 +72,11 @@ def test_home_source_preserves_social_metadata() -> None:
         f'<meta name="twitter:title" content="{title}" />',
         f'<meta name="twitter:description" content="{description}" />',
         f'<meta name="twitter:image" content="{image}" />',
-    ):
-        assert value in template
+    )
+    for page in (ROOT / "home" / "index.html", ROOT / "index.html"):
+        html = page.read_text(encoding="utf-8")
+        for value in expected_metadata:
+            assert value in html, f"{page} must preserve {value}"
 
 
 def test_generated_bundle_contains_all_recorded_workflows() -> None:
