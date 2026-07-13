@@ -213,7 +213,7 @@ Scan changed files for credential-shaped strings, absolute local paths, and dead
 internal links. Commit only the source, test, plan, and generated home output:
 
 ```powershell
-git add home/src/App.tsx home/src/App.css tests/test_home_marketing_funnel.py docs/superpowers/plans/2026-07-12-evidence-led-home.md index.html assets
+git add home/src/App.tsx home/src/App.css home/index.html tests/test_home_marketing_funnel.py docs/superpowers/plans/2026-07-12-evidence-led-home.md index.html assets
 git commit -m "feat: lead portfolio with recorded workflows"
 ```
 
