@@ -9,6 +9,44 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def test_home_source_uses_the_verified_fourteen_engine_roster() -> None:
+    source = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
+    match = re.search(r"const ENGINES: Engine\[\] = \[(?P<body>.*?)\n\];", source, re.S)
+    assert match, "home source must define the engine roster"
+    assert re.findall(r'name: "([^"]+)"', match.group("body")) == [
+        "flywheel",
+        "telos",
+        "index",
+        "gather",
+        "forum",
+        "crucible",
+        "emet",
+        "buildlang",
+        "learn",
+        "relay",
+        "plexus",
+        "mneme",
+        "studio-engine",
+        "build color",
+    ]
+    assert "Fourteen engines" in source
+    assert "Flywheel thesis" in source
+    assert 'name: "calibrate pro"' not in source.lower()
+
+
+def test_home_source_preserves_the_living_shader_identity() -> None:
+    source = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
+    for value in (
+        "<GroundField />",
+        "<LogoField />",
+        "<Emphasis",
+        "/system/cursor-field.js",
+    ):
+        assert value in source
+    for filename in ("GroundField.tsx", "LogoField.tsx", "Emphasis.tsx"):
+        assert (ROOT / "home" / "src" / filename).is_file()
+
+
 def test_home_source_names_current_recorded_workflows() -> None:
     source = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
     for value in (
@@ -52,7 +90,9 @@ def test_home_hero_display_size_is_capped_at_six_rem() -> None:
     assert match, "home stylesheet must define the hero title"
     rule = match.group("body")
     assert "var(--step-5)" not in rule
-    assert re.search(r"font-size:\s*clamp\([^;]+,\s*6rem\)\s*;", rule)
+    cap = re.search(r"font-size:\s*clamp\([^;]+,\s*([0-9.]+)rem\)\s*;", rule)
+    assert cap
+    assert float(cap.group(1)) <= 6
 
 
 def test_home_source_and_generated_output_preserve_social_metadata() -> None:
@@ -87,6 +127,10 @@ def test_generated_bundle_contains_all_recorded_workflows() -> None:
     for value in (
         "Recorded workflows",
         "Available for paid work",
+        "Fourteen engines",
+        "Flywheel thesis",
+        "Build Color 1.0.2",
+        "/system/cursor-field.js",
         "Index 2.9.0",
         "Gather 1.6.1",
         "Forum 1.13.0",
@@ -102,3 +146,4 @@ def test_generated_bundle_contains_all_recorded_workflows() -> None:
         "/demonstrations.html",
     ):
         assert value in bundle
+    assert "calibrate pro" not in bundle.lower()

@@ -20,19 +20,20 @@
     <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png" />
     <script>document.documentElement.classList.add('js')</script>
     <link rel="preload" href="/system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="/system/home-readable.css?v=20260709m" />
-    <!-- home-art.js lives with the static site's shared system/, outside this
-         build; the ignored dynamic import keeps Vite from trying to bundle it. -->
-    <script type="module">import(/* @vite-ignore */ "/system/home-art.js?v=20260709m");</script>
+    <link rel="stylesheet" href="/system/home-readable.css?v=20260709n" />
+    <!-- home-art.js ships with the static site's shared /system, outside this build.
+         The specifier is assembled at runtime (non-literal) so Vite's import-analysis
+         leaves it as a plain browser dynamic import in dev and build alike, instead of
+         trying to bundle a /public file (which 500s the dev server). -->
+    <script type="module">import(/* @vite-ignore */ "/system/home-art" + ".js?v=20260709n");</script>
   </head>
   <body>
     <div id="root"></div>
     <noscript>
       <div style="max-width:60rem;margin:0 auto;padding:4rem 1.5rem;font-family:system-ui,sans-serif;color:#f5eefa;background:#14041b">
         <p style="letter-spacing:.14em;font-weight:600">TELOS</p>
-        <h1 style="font-size:2.4rem;line-height:1.1;margin:.6rem 0 1rem">Tools for local AI, codebases, graphics, and research.</h1>
-        <p style="max-width:42rem;line-height:1.6">Project Telos is Zain Dana Harper's public workshop: local-model workflows, codebase maps, compiler tools, graphics systems, generated media, and research infrastructure. This page's live version needs JavaScript; every destination below is a static page.</p>
+        <h1 style="font-size:2.4rem;line-height:1.1;margin:.6rem 0 1rem">Tools for AI, codebases, graphics, and research.</h1>
+        <p style="max-width:42rem;line-height:1.6">Project Telos is Zain Dana Harper's public workshop: any-model workflows, codebase maps, compiler tools, graphics systems, generated media, and research infrastructure. This page's live version needs JavaScript; every destination below is a static page.</p>
         <p style="line-height:2">
           <a style="color:#7de3ea" href="overview.html">Engines</a> &middot;
           <a style="color:#7de3ea" href="demo-index.html">Demos</a> &middot;
