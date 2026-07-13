@@ -56,7 +56,7 @@ python -m crucible verdicts registry-refined --verify
 
 ## Presentation choices
 
-The visual frame follows the current Telos v2 direction: a deep plum field, restrained generative spectrum, Hanken-like neutral grotesk typography, Conso-like mono surfaces, one verdict-green semantic accent, and precise cut-corner frames. The UI does not imitate the legacy Calibrate Pro design.
+The visual frame follows the current Telos v2 direction: a deep plum field, restrained generative spectrum, Hanken-like neutral grotesk typography, Conso-like mono surfaces, one verdict-green semantic accent, and precise cut-corner frames. The UI does not imitate the legacy native-app design.
 
 ## Safety and provenance
 

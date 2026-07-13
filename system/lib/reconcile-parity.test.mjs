@@ -1,15 +1,44 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync } from "node:fs";
-import { join, relative } from "node:path";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { dirname, join, relative, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
-// Byte-identity gate for the vendored reconcile engine: EVERY vendored .js under
-// system/lib/reconcile/ must equal its c:/dev/public/reconcile/src source. The main
+// Content-parity gate for the vendored reconcile engine: EVERY vendored .js under
+// system/lib/reconcile/ must equal its sibling reconcile source. The main
 // parity gate (parity.test.mjs) walks .mjs only, so the vendored .js tree would drift
-// silently without this. Same hardcoded local-path convention as parity.test.mjs;
-// re-vendor with: node tools/sync-reconcile.mjs
-const SITE_RECONCILE = "c:/dev/public/portfolio-site/system/lib/reconcile";
-const SOURCE = "c:/dev/public/reconcile/src";
+// silently without this. Set PUBLIC_REPOS_ROOT when the repositories do not share
+// the default sibling layout; re-vendor with: node tools/sync-reconcile.mjs
+const SITE_LIB = dirname(fileURLToPath(import.meta.url));
+const SITE_RECONCILE = join(SITE_LIB, "reconcile");
+
+function findPublicReposRoot() {
+  const explicit = process.env.PUBLIC_REPOS_ROOT;
+  if (explicit) {
+    const candidate = resolve(explicit);
+    if (!existsSync(join(candidate, "reconcile", "src"))) {
+      throw new Error("PUBLIC_REPOS_ROOT does not contain reconcile/src");
+    }
+    return candidate;
+  }
+
+  for (const start of [SITE_LIB, process.cwd()]) {
+    let cursor = resolve(start);
+    while (true) {
+      for (const candidate of [cursor, join(cursor, "public")]) {
+        if (existsSync(join(candidate, "reconcile", "src"))) return candidate;
+      }
+      const parent = dirname(cursor);
+      if (parent === cursor) break;
+      cursor = parent;
+    }
+  }
+  return null;
+}
+
+const PUBLIC_REPOS_ROOT = findPublicReposRoot();
+const SOURCE = PUBLIC_REPOS_ROOT && join(PUBLIC_REPOS_ROOT, "reconcile", "src");
+const normalized = (text) => text.replace(/\r\n/g, "\n");
 
 function vendoredJs(dir, base = dir) {
   const out = [];
@@ -30,9 +59,9 @@ test("the reconcile engine entry points are vendored", () => {
 });
 
 for (const f of files) {
-  test(`vendored reconcile/${f} === reconcile source`, () => {
+  test(`vendored reconcile/${f} === reconcile source`, { skip: SOURCE ? false : "reconcile source checkout unavailable" }, () => {
     const vendored = readFileSync(`${SITE_RECONCILE}/${f}`, "utf8");
     const source = readFileSync(`${SOURCE}/${f}`, "utf8");
-    assert.equal(vendored, source, `${f} drifted from reconcile source -- re-run tools/sync-reconcile.mjs`);
+    assert.equal(normalized(vendored), normalized(source), `${f} drifted from reconcile source -- re-run tools/sync-reconcile.mjs`);
   });
 }
