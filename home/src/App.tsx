@@ -366,9 +366,9 @@ export default function App() {
                 <p className="range-proof">Elder ENB, a lighting preset shipped across roughly 280 releases, has earned <b>900,000+ downloads</b> on NexusMods. Public, so you can <a href="https://www.nexusmods.com/skyrimspecialedition/mods/117327" rel="noopener">check it</a>.</p>
               </article>
               <article className="range-card reveal d1">
-                <h3>color science &amp; calibration</h3>
-                <p className="range-meta mono">ICC · 3D-LUT · DDC/CI · CIEDE2000 · Oklab · CAT16</p>
-                <p>Sensorless display calibration with ICC and 3D-LUT generation, and a color library spanning many spaces and tone mappers with color-vision-deficiency simulation. Perception made measurable.</p>
+                <h3>color science</h3>
+                <p className="range-meta mono">CIEDE2000 · Oklab · JzAzBz · CAT16 · LUT I/O</p>
+                <p>A source-visible color workbench for conversions, difference metrics, tone mapping, gamut work, color-vision-deficiency simulation, and LUT I/O. It is not represented as a physical display instrument.</p>
               </article>
             </div>
           </div>

@@ -47,9 +47,6 @@ documentation, customer-facing operations, and field leadership.
 - Built D3D11/HLSL post-processing and rendering systems involving tone
   mapping, TAA, SSR, SSGI, GTAO, volumetrics, shader pipelines, and read-only
   shared-memory IPC.
-- Released Calibrate Pro 1.1 for Windows 10/11, with a PySide6 proposal-and-
-  confirmation desktop workflow, read-only diagnostics, evidence-labelled
-  reports, and explicit separation between measured and estimated results.
 
 ### Experience
 
