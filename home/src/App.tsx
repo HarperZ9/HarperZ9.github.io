@@ -12,22 +12,33 @@ type Engine = {
   desc: string; href: string; src: string; srcLabel: string;
 };
 
+type RecordedWorkflow = {
+  name: string;
+  version: string;
+  duration: string;
+  outcome: string;
+  facts: string[];
+  href: string;
+  poster: string;
+  alt: string;
+};
+
 // Primary `href` routes to the engine's page on this site; `src` is the
 // package or repository link. The visitor stays in the workshop first.
 const ENGINES: Engine[] = [
   { name: "telos", role: "perceive & make", verdict: "active · first flagship",
     desc: "The shared workbench. Durable session state, native control of the workstation, sensory organs for screens and files, and a discovery forge, so a person and a model work the same surface at the same time.",
     href: "/studio.html", src: "https://github.com/HarperZ9/telos", srcLabel: "GitHub" },
-  { name: "index", role: "map workspaces", verdict: "index-graph 2.8.0 · PyPI", shipped: true,
+  { name: "index", role: "map workspaces", verdict: "index-graph 2.9.0 · PyPI", shipped: true,
     desc: "Maps your whole multi-repo workspace in seconds: nine language ecosystems, dependency and symbol graphs, fully offline, zero dependencies. Then certifies the map against the architecture you meant.",
     href: "/index-graph.html", src: "https://pypi.org/project/index-graph/", srcLabel: "PyPI" },
-  { name: "gather", role: "intake & capture", verdict: "gather-engine 1.6.0 · PyPI", shipped: true,
+  { name: "gather", role: "intake & capture", verdict: "gather-engine 1.6.1 · PyPI", shipped: true,
     desc: "Research intake that reaches the hard places: gated APIs, paywalls, JS-walled pages, scanned PDFs. DOM extraction, structured capture, and change tracking built in. Provenance rides along free.",
     href: "/gather.html", src: "https://pypi.org/project/gather-engine/", srcLabel: "PyPI" },
-  { name: "forum", role: "orchestrate", verdict: "v1.12.0 · PyPI · fair-source",
+  { name: "forum", role: "orchestrate", verdict: "Forum 1.13.0 · fair-source",
     desc: "Runs fleets of agents with routing, quality gates, and prose contracts, then hands you a causal ledger of who did what and why that replays step by step. Multi-agent work stops being an opaque box.",
     href: "/forum.html", src: "https://github.com/HarperZ9/forum", srcLabel: "GitHub" },
-  { name: "crucible", role: "judge", verdict: "1.1.0 · PyPI · release candidate",
+  { name: "crucible", role: "judge", verdict: "Crucible 1.2.0 · release candidate",
     desc: "A judgment engine. Registers a thesis, steelmans each claim, measures it against a substrate, and refines the weakest axis until the result is useful. Full paper trail included.",
     href: "/crucible.html", src: "https://github.com/HarperZ9/crucible", srcLabel: "GitHub" },
   { name: "emet", role: "byte integrity", verdict: "v1.0.0 · four languages · PyPI",
@@ -39,6 +50,49 @@ const ENGINES: Engine[] = [
   { name: "learn", role: "learning aid + course engine", verdict: "v1.5.0 · zero-dep Node", shipped: true,
     desc: "Turns your own material into a runnable course: spaced repetition, retrieval practice, self-explanation graded by crucible, zero dependencies. Graded steps leave records, not vibes.",
     href: "/learn.html", src: "https://github.com/HarperZ9/learn", srcLabel: "GitHub" },
+];
+
+const RECORDED_WORKFLOWS: RecordedWorkflow[] = [
+  {
+    name: "Index",
+    version: "Index 2.9.0",
+    duration: "30-second cut + 118-second run",
+    outcome: "Map a sanitized three-repository workspace, verify three evidenced edges, fit the relevant system into a bounded context, and render an offline atlas.",
+    facts: ["3 repositories", "3 evidenced edges", "bounded context", "offline atlas"],
+    href: "/demo-index.html",
+    poster: "/media/demos/index/index-demo-poster.png",
+    alt: "Index workbench showing a three-repository map and verified dependency edges",
+  },
+  {
+    name: "Gather",
+    version: "Gather 1.6.1",
+    duration: "29-second cut + full run",
+    outcome: "Extract seven source blocks, store two useful records, verify both against their provenance, and expose the changed-receipt path.",
+    facts: ["7 blocks extracted", "2 records stored", "2 of 2 match", "tamper caught"],
+    href: "/demo-gather.html",
+    poster: "/media/demos/gather/gather-workflow-short-poster.png",
+    alt: "Gather workflow showing extracted source blocks, stored records, and a provenance match",
+  },
+  {
+    name: "Forum",
+    version: "Forum 1.13.0",
+    duration: "27-second cut + full run",
+    outcome: "Route one cross-domain request through three dependent task waves, validate every result, preserve checkpoints, and re-check the causal ledger.",
+    facts: ["3 dependency waves", "3 validator passes", "3 checkpoints", "19 ledger entries"],
+    href: "/demo-forum.html",
+    poster: "/media/demos/forum/forum-demo-short-poster.png",
+    alt: "Forum workflow showing a routed request, three execution waves, checkpoints, and ledger verification",
+  },
+  {
+    name: "Crucible",
+    version: "Crucible 1.2.0",
+    duration: "30-second cut + 94-second run",
+    outcome: "Hold a three-claim thesis fixed while the artifact moves from one match and two drifts to three matches and zero drift.",
+    facts: ["1 match / 2 drift", "3 match / 0 drift", "2 reviews pass", "re-derived from disk"],
+    href: "/demo-crucible.html",
+    poster: "/media/demos/crucible/crucible-workflow-short-poster.png",
+    alt: "Crucible workflow comparing a draft with two drifts against a refined artifact with three matches",
+  },
 ];
 
 type Paper = { tag: "SYSTEMS" | "PREPRINT" | "NOTE"; title: string; line: string; doi: string; pdf: string };
@@ -65,7 +119,7 @@ const PAPERS: Paper[] = [
 ];
 
 const FIRST_MOVES: Array<[string, string]> = [
-  ["run a live demo", "#demonstrate"],
+  ["watch a recorded workflow", "#recorded"],
   ["inspect an engine", "#engines"],
   ["read a paper", "#research"],
   ["start a work thread", "#work"],
@@ -93,7 +147,8 @@ export default function App() {
         <a className="brand mono" href="#top">◐ TELOS</a>
         <div className="topnav-links">
           <a href="#engines">Engines</a>
-          <a href="#demonstrate">Demos</a>
+          <a href="#recorded">Recorded</a>
+          <a href="#demonstrate">Live checks</a>
           <a href="#research">Research</a>
           <a href="#range">Range</a>
           <a href="#work">Work with me</a>
@@ -117,10 +172,13 @@ export default function App() {
               <b>Open a demo, inspect an engine, or start a project.</b>
             </p>
             <div className="cta reveal in d3">
-              <a className="btn solid" href="#demonstrate">See it work <span aria-hidden="true">→</span></a>
+              <a className="btn solid" href="#recorded">Watch the workflows <span aria-hidden="true">→</span></a>
               <a className="btn" href="#engines">The engines <span aria-hidden="true">→</span></a>
               <a className="btn" href="#work">Work with me <span aria-hidden="true">→</span></a>
             </div>
+            <p className="hero-availability reveal in d3">
+              <a href="#work">Available for paid work, contract builds, and technical collaboration.</a>
+            </p>
             <nav className="readout mono reveal in d3" aria-label="Common first moves through Project Telos">
               <span className="ro-label">Common first moves</span>
               <span className="ro-verdicts">
@@ -175,14 +233,54 @@ export default function App() {
           </div>
         </section>
 
+        <section id="recorded" className="band band-alt">
+          <div className="shell">
+            <div className="sec-head reveal">
+              <h2>Recorded workflows</h2>
+              <p className="measure lead-2">
+                Each evidence package contains a short cut, full run, transcript, and reproduction notes.
+                Browse the <a href="/demonstrations.html">complete recorded workflow library</a>.
+              </p>
+            </div>
+            <ol className="recorded-list" aria-label="Current recorded workflows">
+              {RECORDED_WORKFLOWS.map((workflow, i) => (
+                <li className="recorded-item" key={workflow.name}>
+                  <article className="recorded-shot">
+                    <figure className="recorded-figure">
+                      <img
+                        src={workflow.poster}
+                        alt={workflow.alt}
+                        width="1920"
+                        height="1080"
+                        loading={i === 0 ? "eager" : "lazy"}
+                      />
+                      <figcaption><span>{workflow.version}</span> · {workflow.duration}</figcaption>
+                    </figure>
+                    <div className="recorded-copy">
+                      <h3>{workflow.name}</h3>
+                      <p className="recorded-outcome">{workflow.outcome}</p>
+                      <ul className="recorded-facts" aria-label={`${workflow.name} recording facts`}>
+                        {workflow.facts.map((fact) => <li key={fact}>{fact}</li>)}
+                      </ul>
+                      <a className="recorded-action" href={workflow.href}>
+                        Watch the workflow <span className="recorded-arrow" aria-hidden="true">→</span>
+                      </a>
+                    </div>
+                  </article>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
         <section id="demonstrate" className="band">
           <div className="shell">
             <div className="sec-head reveal">
               <p className="kicker mono">Live demos</p>
-              <h2>See it work.<br /><span className="spectrum-word">Right here.</span></h2>
+              <h2>Try four browser-native checks</h2>
               <p className="measure lead-2">
-                No install, no account, no video of someone else's terminal. These run in your browser, on
-                your bytes, right now. Change the input and watch the result move.
+                These small interactive witnesses run on your bytes in the browser. They are distinct from
+                the complete recorded workflows above.
               </p>
             </div>
             <div className="demos">
@@ -297,6 +395,7 @@ export default function App() {
                 <a className="btn solid" href="https://github.com/HarperZ9" rel="noopener">GitHub <span aria-hidden="true">→</span></a>
                 <a className="btn" href="/resume.html">Resume <span aria-hidden="true">→</span></a>
                 <a className="btn" href="/publications.html">Papers <span aria-hidden="true">→</span></a>
+                <a className="btn" href="/demonstrations.html">Recorded workflows <span aria-hidden="true">→</span></a>
                 <a className="btn" href="mailto:zaindharper@gmail.com">Email <span aria-hidden="true">→</span></a>
               </div>
             </div>
