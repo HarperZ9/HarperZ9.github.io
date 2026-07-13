@@ -59,7 +59,7 @@
 .hero-inner { position: relative; z-index: var(--z-content); max-width: 60rem; }
 .hero .kicker { margin-bottom: var(--sp-3); }
 .hero-title {
-  font-size: var(--step-5); font-weight: 900; line-height: 0.9; letter-spacing: -0.035em;
+  font-size: clamp(3.10rem, 1.70rem + 6.8vw, 6rem); font-weight: 900; line-height: 0.9; letter-spacing: -0.035em;
   text-transform: none; margin-bottom: var(--sp-3);
 }
 .hero-title .hl { color: var(--match); }
