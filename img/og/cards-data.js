@@ -189,9 +189,9 @@ window.CARD_DATA = {
     "glyph": "seal"
   },
   "calibrate-pro": {
-    "role": "DISPLAY CALIBRATION / LEGACY UI",
-    "headline": "Calibrate Windows displays and verify color; interface modernization is pending.",
-    "pipeline": "DETECT / CALIBRATE / PROFILE / APPLY / VERIFY",
+    "role": "DISPLAY CALIBRATION / SAFE PREVIEW",
+    "headline": "Calibrate Windows displays in a native workbench with explicit evidence.",
+    "pipeline": "DETECT / PREVIEW / APPLY / VERIFY / REPORT",
     "word": "CALIBRATE PRO",
     "glyph": "waveform"
   },
