@@ -1,7 +1,14 @@
 # Calibrate Pro current-preview publication plan
 
-**Goal:** Replace stale public claims that Calibrate Pro still uses its legacy UI
-with current, truthful evidence from the reviewed native dark-room workbench.
+**Superseded 2026-07-12.** This plan verified a source screenshot and its
+provenance, not end-to-end product behavior. Calibrate Pro is now experimental
+and excluded from promotion because its full workflow and menu-action surface
+are not verified and some menu options are known not to work. The screenshot is
+appearance evidence only. The prior publication work does not satisfy product-
+readiness or outreach criteria.
+
+**Historical goal:** Replace stale public claims that Calibrate Pro still uses
+its legacy UI with a reviewed screenshot of the native dark-room workbench.
 
 ## Evidence boundary
 
