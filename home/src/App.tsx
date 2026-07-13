@@ -1,10 +1,12 @@
 import { useEffect, type CSSProperties } from "react";
-import FlowField from "./FlowField";
 import EmetWitness from "./EmetWitness";
 import GateDemo from "./GateDemo";
 import ProofPacket from "./ProofPacket";
 import WitnessedIndependence from "./WitnessedIndependence";
 import Picker from "./Picker";
+import LogoField from "./LogoField";
+import GroundField from "./GroundField";
+import Emphasis from "./Emphasis";
 import "./App.css";
 
 type Engine = {
@@ -26,7 +28,10 @@ type RecordedWorkflow = {
 // Primary `href` routes to the engine's page on this site; `src` is the
 // package or repository link. The visitor stays in the workshop first.
 const ENGINES: Engine[] = [
-  { name: "telos", role: "perceive & make", verdict: "active · first flagship",
+  { name: "flywheel", role: "route & verify any model", verdict: "public · GitHub · FSL-1.1", shipped: true,
+    desc: "A companion for every model. Routes to any model, local or hosted, online or offline, answers what it can verify, escalates only the hard part, and hands back a receipt you can re-run yourself. It does what every router does, plus the one thing none of them do: it checks the work.",
+    href: "/flywheel.html", src: "https://github.com/HarperZ9/flywheel", srcLabel: "GitHub" },
+  { name: "telos", role: "perceive & make", verdict: "Telos 0.1.0 · public workbench",
     desc: "The shared workbench. Durable session state, native control of the workstation, sensory organs for screens and files, and a discovery forge, so a person and a model work the same surface at the same time.",
     href: "/studio.html", src: "https://github.com/HarperZ9/telos", srcLabel: "GitHub" },
   { name: "index", role: "map workspaces", verdict: "index-graph 2.9.0 · PyPI", shipped: true,
@@ -41,15 +46,30 @@ const ENGINES: Engine[] = [
   { name: "crucible", role: "judge", verdict: "Crucible 1.2.0 · release candidate",
     desc: "A judgment engine. Registers a thesis, steelmans each claim, measures it against a substrate, and refines the weakest axis until the result is useful. Full paper trail included.",
     href: "/crucible.html", src: "https://github.com/HarperZ9/crucible", srcLabel: "GitHub" },
-  { name: "emet", role: "byte integrity", verdict: "v1.0.0 · four languages · PyPI",
+  { name: "emet", role: "byte integrity", verdict: "EMET 1.1.0 · four languages · PyPI",
     desc: "Byte-integrity tooling. Re-derives a file's bytes from scratch in four independent implementations. Point it at anything; it alters nothing.",
     href: "/emet.html", src: "https://github.com/HarperZ9/emet", srcLabel: "GitHub" },
-  { name: "buildlang", role: "author", verdict: "buildlang 1.1.0 · crates.io", shipped: true,
+  { name: "buildlang", role: "author", verdict: "BuildLang 1.2.0 · public release", shipped: true,
     desc: "A real systems language: typed capability effects, sum and linear types, C FFI, native binaries. What a function may do is part of its type, checked at compile time, lowered through a verified C path.",
     href: "/buildlang.html", src: "https://github.com/HarperZ9/buildlang", srcLabel: "GitHub" },
-  { name: "learn", role: "learning aid + course engine", verdict: "v1.5.0 · zero-dep Node", shipped: true,
+  { name: "learn", role: "learning aid + course engine", verdict: "Learn 1.6.0 · zero-dep Node", shipped: true,
     desc: "Turns your own material into a runnable course: spaced repetition, retrieval practice, self-explanation graded by crucible, zero dependencies. Graded steps leave records, not vibes.",
     href: "/learn.html", src: "https://github.com/HarperZ9/learn", srcLabel: "GitHub" },
+  { name: "relay", role: "code with any model", verdict: "Relay 0.1.0 · public source", shipped: true,
+    desc: "A zero-dependency coding agent for any endpoint: local weights, a subscription CLI, or an API. Failover across providers, a gated tool loop, and a witnessed ledger of every step.",
+    href: "https://github.com/HarperZ9/relay", src: "https://github.com/HarperZ9/relay", srcLabel: "GitHub" },
+  { name: "plexus", role: "wire tools together", verdict: "Plexus 0.1.0 · public source", shipped: true,
+    desc: "Capability discovery and auto-wiring for agent toolchains. It reads what each tool emits and consumes, then connects them into a working pipeline you can inspect.",
+    href: "https://github.com/HarperZ9/plexus", src: "https://github.com/HarperZ9/plexus", srcLabel: "GitHub" },
+  { name: "mneme", role: "agent memory", verdict: "Mneme 0.1.0 · public source", shipped: true,
+    desc: "Accountable memory for agents: layered stores and hybrid retrieval where every memory carries its provenance, so recall traces back to its source.",
+    href: "https://github.com/HarperZ9/mneme", src: "https://github.com/HarperZ9/mneme", srcLabel: "GitHub" },
+  { name: "studio-engine", role: "generate worlds", verdict: "Studio Engine 0.2.0 · public source", shipped: true,
+    desc: "Generates replayable creative worlds: shaders, sound, and motion timelines drawn from a seed and carried with a receipt, so the same inputs redraw the same world.",
+    href: "https://github.com/HarperZ9/studio-engine", src: "https://github.com/HarperZ9/studio-engine", srcLabel: "GitHub" },
+  { name: "build color", role: "measure color", verdict: "Build Color 1.0.2 · PyPI · beta", shipped: true,
+    desc: "A color-science workbench with perceptual spaces, color-difference metrics, chromatic adaptation, HDR tone mapping, gamut tools, and ICC profile generation. It measures digital color behavior; it is not a physical display instrument.",
+    href: "/build-color.html", src: "https://pypi.org/project/build-color/", srcLabel: "PyPI" },
 ];
 
 const RECORDED_WORKFLOWS: RecordedWorkflow[] = [
@@ -118,13 +138,6 @@ const PAPERS: Paper[] = [
     line: "Replaces an actuator's self-report with a re-perceived effect, admitted before the fact by a capability gate." },
 ];
 
-const FIRST_MOVES: Array<[string, string]> = [
-  ["watch a recorded workflow", "#recorded"],
-  ["inspect an engine", "#engines"],
-  ["read a paper", "#research"],
-  ["start a work thread", "#work"],
-];
-
 export default function App() {
   useEffect(() => {
     const els = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
@@ -139,18 +152,42 @@ export default function App() {
     return () => { io.disconnect(); window.clearTimeout(settle); };
   }, []);
 
+  // The brand aperture as a cursor aura that trails the pointer (public/system module, native
+  // import so Vite leaves it in /public). It self-skips touch pointers and reduced motion.
+  useEffect(() => {
+    const nativeImport = new Function("u", "return import(u)") as (u: string) => Promise<any>;
+    let handle: { destroy(): void } | null = null;
+    nativeImport("/system/cursor-field.js")
+      .then((mod) => { handle = mod.mountCursorField(); })
+      .catch(() => {});
+    return () => { if (handle) handle.destroy(); };
+  }, []);
+
   return (
     <>
+      <GroundField />
+      <div className="viewport-vignette" aria-hidden="true" />
+      {/* turbulence displacement so straight CSS borders ripple into organic liquid edges */}
+      <svg className="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
+        <filter id="organic-edge" x="-60%" y="-150%" width="220%" height="400%" filterUnits="objectBoundingBox">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="2" seed="7" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </svg>
       <a className="skip-link" href="#main">Skip to content</a>
 
       <nav className="topnav" aria-label="Primary">
-        <a className="brand mono" href="#top">◐ TELOS</a>
+        <a className="brand" href="#top" aria-label="Home, Project Telos">
+          <span className="brand-field"><LogoField /></span>
+          <span className="brand-word mono">TELOS</span>
+        </a>
         <div className="topnav-links">
           <a href="#engines">Engines</a>
           <a href="#recorded">Recorded</a>
           <a href="#demonstrate">Live checks</a>
           <a href="#research">Research</a>
           <a href="#range">Range</a>
+          <a href="/security.html">Security</a>
           <a href="#work">Work with me</a>
           <a className="mono ghost" href="https://github.com/HarperZ9" rel="noopener">GitHub ↗</a>
         </div>
@@ -158,52 +195,44 @@ export default function App() {
 
       <main id="main">
         <header id="top" className="hero">
-          <div className="hero-canvas-wrap"><FlowField /></div>
-          <div className="hero-glow" aria-hidden="true" />
           <div className="hero-veil" aria-hidden="true" />
+          <div className="hero-grain" aria-hidden="true" />
           <div className="hero-inner">
-            <p className="kicker mono reveal in">Zain Dana Harper <span className="sep">/</span> Project Telos</p>
-            <h1 className="hero-title reveal in d1">
-              Tools for local AI,<br />codebases,<br /><span className="hl">graphics, and research.</span>
-            </h1>
-            <p className="lead reveal in d2">
-              Project Telos is my public workshop: local-model workflows, codebase maps, compiler
-              tools, graphics systems, generated media, and research infrastructure.{" "}
-              <b>Open a demo, inspect an engine, or start a project.</b>
-            </p>
-            <div className="cta reveal in d3">
-              <a className="btn solid" href="#recorded">Watch the workflows <span aria-hidden="true">→</span></a>
-              <a className="btn" href="#engines">The engines <span aria-hidden="true">→</span></a>
-              <a className="btn" href="#work">Work with me <span aria-hidden="true">→</span></a>
+            <div className="hero-masthead">
+              <h1 className="hero-title reveal in d1">
+                Work you can <Emphasis kind="mark">walk away</Emphasis> from.
+              </h1>
+              <p className="lead reveal in d2">
+                <Emphasis kind="pill">Zain Dana Harper</Emphasis> builds tools across AI, code, graphics, and research that run anywhere and earn your <Emphasis kind="mark">trust</Emphasis>, not your attention. Each one shows its work, and gives you your <Emphasis kind="mark">time back</Emphasis>.
+              </p>
+              <div className="cta reveal in d3">
+                <a className="btn solid" href="#recorded">Watch the workflows <span aria-hidden="true">→</span></a>
+                <a className="btn" href="#engines">The engines <span aria-hidden="true">→</span></a>
+                <a className="btn" href="#work">Work with me <span aria-hidden="true">→</span></a>
+              </div>
+              <p className="hero-availability reveal in d3">
+                <a href="#work">Available for paid work, contract builds, and technical collaboration.</a>
+              </p>
             </div>
-            <p className="hero-availability reveal in d3">
-              <a href="#work">Available for paid work, contract builds, and technical collaboration.</a>
-            </p>
-            <nav className="readout mono reveal in d3" aria-label="Common first moves through Project Telos">
-              <span className="ro-label">Common first moves</span>
-              <span className="ro-verdicts">
-                {FIRST_MOVES.map(([text, href], i) => (
-                  <a key={href} className={"ro-chip ro-route ro-" + i} href={href}>{text}</a>
-                ))}
-              </span>
-            </nav>
-            <p className="hero-note mono reveal in d3">
-              this background is live: a flow field traced by ~2,400 particles, drawn in your browser
-            </p>
           </div>
-          <p className="edgemark mono" aria-hidden="true">TELOS</p>
+          {/* a cropping onto the live field, not a frame around it: the caption marks the
+              aperture, the field expands past it into the page */}
+          <figure className="hero-crop mono" aria-hidden="true">
+            <span className="crop-t">Aperture</span>
+            <span className="crop-d">seed 58 · a live GPU field</span>
+          </figure>
           <p className="scroll-cue mono" aria-hidden="true">scroll ↓</p>
         </header>
 
         <section id="engines" className="band">
           <div className="shell">
             <div className="sec-head reveal">
-              <p className="kicker mono">Engine room</p>
-              <h2>Eight engines,<br /><span className="spectrum-word">many doors.</span></h2>
+              <h2>Fourteen engines,<br /><span className="spectrum-word">many doors.</span></h2>
               <p className="measure lead-2">
-                Each engine does a distinct job: intake, mapping, orchestration, judgment, byte
-                integrity, typed effects, learning, and shared human/model creation. They run alone,
-                and they connect through clean protocols.
+                The Flywheel thesis is simple: each engine stands on its own, then its verified
+                outputs become reusable inputs for the next. The roster spans routing, intake,
+                mapping, orchestration, judgment, byte integrity, typed effects, learning, color,
+                memory, interoperability, and shared human/model creation.
               </p>
             </div>
 
@@ -276,7 +305,6 @@ export default function App() {
         <section id="demonstrate" className="band">
           <div className="shell">
             <div className="sec-head reveal">
-              <p className="kicker mono">Live demos</p>
               <h2>Try four browser-native checks</h2>
               <p className="measure lead-2">
                 These small interactive witnesses run on your bytes in the browser. They are distinct from
@@ -295,7 +323,6 @@ export default function App() {
         <section id="cases" className="band band-alt">
           <div className="shell">
             <div className="sec-head reveal">
-              <p className="kicker mono">Where to enter</p>
               <h2>Many lanes,<br />one workshop.</h2>
               <p className="measure lead-2">
                 A few routes through the workshop. Illustrations, not deployments; everything that
@@ -316,8 +343,7 @@ export default function App() {
         <section id="research" className="band">
           <div className="shell">
             <div className="sec-head reveal">
-              <p className="kicker mono">Research</p>
-              <h2>Six papers,<br /><span className="spectrum-word">many doors.</span></h2>
+              <h2>Six papers,<br /><span className="spectrum-word">on the record.</span></h2>
               <p className="measure lead-2">
                 The publications are one research lane inside the wider workshop: byte integrity, typed
                 effects, automation boundaries, action envelopes, and made-mind philosophy. Six papers
@@ -351,7 +377,6 @@ export default function App() {
         <section id="range" className="band band-alt">
           <div className="shell">
             <div className="sec-head reveal">
-              <p className="kicker mono">Range</p>
               <h2>One engineer,<br />an unusual span.</h2>
               <p className="measure lead-2">
                 The public range is wider than any single research lane: local models, graphics, reverse
@@ -366,9 +391,9 @@ export default function App() {
                 <p className="range-proof">Elder ENB, a lighting preset shipped across roughly 280 releases, has earned <b>900,000+ downloads</b> on NexusMods. Public, so you can <a href="https://www.nexusmods.com/skyrimspecialedition/mods/117327" rel="noopener">check it</a>.</p>
               </article>
               <article className="range-card reveal d1">
-                <h3>color science</h3>
-                <p className="range-meta mono">CIEDE2000 · Oklab · JzAzBz · CAT16 · LUT I/O</p>
-                <p>A source-visible color workbench for conversions, difference metrics, tone mapping, gamut work, color-vision-deficiency simulation, and LUT I/O. It is not represented as a physical display instrument.</p>
+                <h3>color science &amp; rendering</h3>
+                <p className="range-meta mono">ICC · 3D-LUT · CIEDE2000 · Oklab · CAT16 · HDR</p>
+                <p>Build Color spans perceptual spaces, color-difference metrics, tone mapping, gamut work, color-vision-deficiency simulation, and ICC generation. Perception made measurable in software.</p>
               </article>
             </div>
           </div>
@@ -377,7 +402,6 @@ export default function App() {
         <section id="work" className="band">
           <div className="shell work-wrap">
             <div className="work-head reveal">
-              <p className="kicker mono">Work with me</p>
               <p className="pull">Bring the knot,<br />make it tangible.</p>
             </div>
             <div className="work-body reveal d1">
