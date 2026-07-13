@@ -9,6 +9,7 @@
 # This is accountable deprecation of the public exposure, not deletion.
 
 exclude:
+  - home/              # legacy source mirror; canonical source lives in HarperZ9/telos-v2
   - AGENTS.md          # agent/harness project instructions — internal
   - DESIGN.md          # design-system notes — internal
   - PRODUCT.md         # product context — internal
@@ -19,7 +20,7 @@ exclude:
   - .repomap.toml      # repo-map tool config — internal
   - README.md          # repo context (visible on GitHub; not a site page)
   - img/og/_card.html  # OG-card generator (renders the flagship social cards) — internal
-  - img/og/cards-data.js  # OG-card data table (37 repo cards) — generator input, internal
+  - img/og/cards-data.js  # social-card catalog, generator input, internal
 
 # Served verbatim: index.html, the organ pages, *-sample.html, resume.md,
 # cv.md, AUTHORS.md, CONTRIBUTING.md, system/ (css+js), img/.
