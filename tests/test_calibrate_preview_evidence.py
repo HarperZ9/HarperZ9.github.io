@@ -7,6 +7,12 @@ ROOT = Path(__file__).resolve().parents[1]
 PREVIEW = "media/demos/calibrate-pro/calibrate-pro-native-preview.png"
 
 
+def _png_dimensions(payload: bytes) -> tuple[int, int]:
+    assert payload[:8] == b"\x89PNG\r\n\x1a\n"
+    assert payload[12:16] == b"IHDR"
+    return int.from_bytes(payload[16:20], "big"), int.from_bytes(payload[20:24], "big")
+
+
 def test_build_products_uses_current_native_preview() -> None:
     page = (ROOT / "build-products.html").read_text(encoding="utf-8")
     for value in (
@@ -28,17 +34,12 @@ def test_build_products_uses_current_native_preview() -> None:
 def test_calibrate_preview_asset_is_a_1440_by_900_png() -> None:
     import hashlib
 
-    from PySide6.QtGui import QImage
-
     image_path = ROOT / PREVIEW
     payload = image_path.read_bytes()
-    assert payload[:8] == b"\x89PNG\r\n\x1a\n"
     assert hashlib.sha256(payload).hexdigest() == (
         "a693ed0150513209e683d44077c18e1260f730c85a35dadad421e45f00ca0792"
     )
-    image = QImage(str(image_path))
-    assert not image.isNull()
-    assert (image.width(), image.height()) == (1440, 900)
+    assert _png_dimensions(payload) == (1440, 900)
     receipt = image_path.with_name("README.md").read_text(encoding="utf-8")
     assert "8ed017577b34c7a6d2bfe04a17a254f377ad7b7c" in receipt
     assert "A693ED0150513209E683D44077C18E1260F730C85A35DADAD421E45F00CA0792" in receipt
@@ -55,11 +56,7 @@ def test_overview_and_card_data_no_longer_advertise_legacy_ui() -> None:
 
 
 def test_calibrate_social_card_is_present() -> None:
-    from PySide6.QtGui import QImage
-
     image_path = ROOT / "img" / "og" / "calibrate-pro.png"
-    assert image_path.read_bytes()[:8] == b"\x89PNG\r\n\x1a\n"
+    payload = image_path.read_bytes()
     assert image_path.stat().st_size > 100_000
-    image = QImage(str(image_path))
-    assert not image.isNull()
-    assert (image.width(), image.height()) == (1200, 630)
+    assert _png_dimensions(payload) == (1200, 630)
