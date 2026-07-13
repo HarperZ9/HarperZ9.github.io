@@ -47,6 +47,26 @@ def test_home_source_preserves_the_living_shader_identity() -> None:
         assert (ROOT / "home" / "src" / filename).is_file()
 
 
+def test_home_source_mirror_matches_current_maturity_and_design_positioning() -> None:
+    source = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
+    template = (ROOT / "home" / "index.html").read_text(encoding="utf-8")
+
+    for value in (
+        "Telos 0.2.0",
+        "Plexus 0.2.0",
+        "AI-assisted design workflows",
+        "Poster design and composition",
+        "native rendering",
+        "neural-network media",
+        "/studio.html?source=poster",
+    ):
+        assert value in source
+
+    assert "Plexus 0.1.0" not in source
+    assert "poster design" in template
+    assert "img/og/portfolio-home.png" in template
+
+
 def test_home_source_names_current_recorded_workflows() -> None:
     source = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
     for value in (
@@ -95,28 +115,21 @@ def test_home_hero_display_size_is_capped_at_six_rem() -> None:
     assert float(cap.group(1)) <= 6
 
 
-def test_home_source_and_generated_output_preserve_social_metadata() -> None:
-    title = "Project Telos - Tools for AI, code, graphics, and research"
-    description = (
-        "A public workshop for any-model workflows, codebase maps, compiler tools, "
-        "graphics systems, generated media, and research infrastructure."
-    )
-    image = "https://harperz9.github.io/img/og/telos.png"
+def test_generated_output_preserves_current_social_metadata() -> None:
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
     expected_metadata = (
-        f'<title>{title}</title>',
-        f'<meta property="og:title" content="{title}" />',
-        f'<meta property="og:description" content="{description}" />',
+        "<title>Project Telos: Fourteen engines, one Flywheel thesis</title>",
+        '<meta property="og:title" content="Project Telos: Fourteen engines, one Flywheel thesis" />',
         '<link rel="canonical" href="https://harperz9.github.io/" />',
-        f'<meta property="og:image" content="{image}" />',
+        '<meta property="og:image" content="https://harperz9.github.io/img/og/portfolio-home.png" />',
         '<meta name="twitter:card" content="summary_large_image" />',
-        f'<meta name="twitter:title" content="{title}" />',
-        f'<meta name="twitter:description" content="{description}" />',
-        f'<meta name="twitter:image" content="{image}" />',
+        '<meta name="twitter:image" content="https://harperz9.github.io/img/og/portfolio-home.png" />',
     )
-    for page in (ROOT / "home" / "index.html", ROOT / "index.html"):
-        html = page.read_text(encoding="utf-8")
-        for value in expected_metadata:
-            assert value in html, f"{page} must preserve {value}"
+    for value in expected_metadata:
+        assert value in html
+
+    assert (ROOT / "img" / "og" / "portfolio-home.png").is_file()
+    assert "img/og/telos.png" not in html
 
 
 def test_generated_bundle_contains_all_recorded_workflows() -> None:

@@ -2,14 +2,21 @@
 
 ![HarperZ9.github.io hero](docs/brand/portfolio-site-hero.png)
 
-> Static public site for Project Telos: engines, demos, papers, graphics
-> systems, generated media, and work routes.
+> Static public site for Project Telos: fourteen engines, recorded workflows,
+> papers, graphics, AI-assisted design, and paid-work routes.
 
 HarperZ9.github.io is the public workshop surface for **Zain Dana Harper**
 and Project Telos. It maps the range -- local-model workflows, codebase maps,
-compiler tools, real-time graphics, color science, research infrastructure,
-and clear writing -- and gives a visitor a way in: open a demo, inspect an
+compiler tools, real-time graphics, color science, AI-assisted design,
+research infrastructure, and clear writing -- and gives a visitor a way in: open a demo, inspect an
 engine, read a paper, or start a work thread.
+
+## Deployment source
+
+[`HarperZ9/telos-v2`](https://github.com/HarperZ9/telos-v2) is the canonical
+source for the generated site. Its full verification gate runs before the
+contents of `dist/` are copied here. This repository owns the deployed output,
+Pages configuration, and deployment-level checks.
 
 ## Why it matters
 
@@ -45,8 +52,7 @@ accessible, and honest about maturity; private systems stay bounded off-page.
 
 ## Pages
 
-- `index.html` -- generative home, built from source in `home/` (Vite + React;
-  `cd home && npm run deploy` rebuilds `index.html` and `assets/`).
+- `index.html` -- generated React home from the verified `telos-v2` build.
 - `papers/` -- direct PDFs of the six published papers, built from the
   LaTeX sources with tectonic.
 - `overview.html` -- the engine room: the flagship lineup.
@@ -63,12 +69,10 @@ accessible, and honest about maturity; private systems stay bounded off-page.
 
 | Group | Public repos | State |
 | --- | --- | --- |
-| Verification lane | `accountable-surface`, `proof-surface`, `coherence-membrane`, `emet`, `accountable-engine`, `repo-proof-index` | Verification and review tooling: perceive, gate, act, re-check. Tested; on PyPI / public. |
-| Provenance & release | `provenance-sensorium`, `model-provenance-validator`, `public-surface-sweeper`, `release-surface-scanner`, `secret-redact-io` | Witness, provenance, and release-surface CLIs. |
-| Agent workflow | `agent-audit`, `agent-hook-pack`, `agent-routing-kit`, `context-curator-lite`, `workflow-harness-lite`, `index` | Small, low-/zero-dependency utilities and plugin extractions. |
-| Compilers & QuantaLang | `quantalang`, `quantalang-vscode`, `quantalang-tmLanguage`, `quanta-universe` | A typed-effects language (the heavy repo) plus editor support and an alpha showcase. |
-| Systems, graphics & color | `signal-kernels`, `anomaly-kernels`, `gpu-trace-validator`, `quanta-color` | Header-only C++ kernels, a GPU-trace validator, and color tools. |
-| Experimental hold | `calibrate-pro` | Source and release artifacts exist, but end-to-end behavior and the complete menu-action surface are not verified. Excluded from promotion pending documented verification. |
+| Route, map, research, and judgment | `flywheel`, `index`, `gather`, `forum`, `crucible` | Any-model routing, workspace maps, research intake, orchestration, and evaluation. |
+| Verification, compilation, and learning | `emet`, `buildlang`, `learn` | External byte witnessing, typed-effects compilation, and witnessed learning checkpoints. |
+| Agent substrate | `relay`, `plexus`, `mneme` | Endpoint-agnostic coding, tool interop, and provenance-backed memory. |
+| Media, graphics, and design | `telos`, `studio-engine`, `build-color` | Poster systems, native rendering, neural-network graphics, simulation, and color science. |
 
 Private platform and product work exists behind these leaves; public claims stay
 limited to outcomes and categories, never internals.
