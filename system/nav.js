@@ -28,6 +28,65 @@ export const RECORDED_DEMOS = [
   ["Crucible · measured refinement", "demo-crucible.html", "demo-route"],
 ];
 
+const BRAND_LABEL = "zentropyLabs";
+const BRAND_MARK_SRC = "brand/zentropy-avatar.png";
+
+const DESKTOP_GPU_ART_QUERIES = [
+  "(prefers-reduced-motion: reduce)",
+  "(pointer: fine)",
+  "(min-width: 900px)",
+];
+
+function shouldUseDesktopGpuArt(win = typeof window !== "undefined" ? window : undefined) {
+  if (!win || typeof win.matchMedia !== "function") return false;
+  const [reducedMotion, finePointer, desktopWidth] = DESKTOP_GPU_ART_QUERIES.map((query) => win.matchMedia(query));
+  return !reducedMotion.matches && finePointer.matches && desktopWidth.matches;
+}
+
+function normalizeRouteArtSrc(raw, doc) {
+  if (!raw) return "";
+  const base = doc && doc.location ? doc.location.href : (typeof window !== "undefined" ? window.location.href : "https://harperz9.github.io/");
+  try {
+    const url = new URL(raw, base);
+    const sameRuntimeOrigin = typeof window !== "undefined" && url.origin === window.location.origin;
+    if (url.hostname === "harperz9.github.io" || sameRuntimeOrigin) return url.pathname;
+    return raw;
+  } catch {
+    return raw;
+  }
+}
+
+function getRouteArtMetadata(doc = document) {
+  const image = doc.querySelector('meta[property="og:image"],meta[name="twitter:image"]');
+  const alt = doc.querySelector('meta[property="og:image:alt"]');
+  const src = normalizeRouteArtSrc(image && image.getAttribute("content"), doc);
+  if (!src || src.includes("/brand/zentropy-logo.png")) return null;
+  return { src, alt: (alt && alt.getAttribute("content")) || "" };
+}
+
+function mountRouteArt(doc = document) {
+  if (!doc || !doc.body || doc.documentElement.dataset.homeShell === "react") return;
+  if (doc.querySelector("[data-route-art='mounted']")) return;
+  const main = doc.getElementById("main");
+  if (!main) return;
+  const art = getRouteArtMetadata(doc);
+  if (!art) return;
+
+  const figure = doc.createElement("figure");
+  figure.className = "route-art";
+  figure.dataset.routeArt = "mounted";
+  const img = doc.createElement("img");
+  img.src = art.src;
+  img.alt = art.alt;
+  img.loading = "lazy";
+  img.decoding = "async";
+  figure.appendChild(img);
+  const caption = doc.createElement("figcaption");
+  caption.textContent = "zentropyLabs / route artifact";
+  figure.appendChild(caption);
+  main.insertAdjacentElement("afterbegin", figure);
+}
+
 // Map any page to one of the sections. Flagship pages live under Flagships; everything
 // heavier-than-a-brick down to the utilities lives under the catalog.
 const FLAGSHIPS = new Set(["overview","index-graph","forum","gather","crucible","learn","flywheel"]);
@@ -174,8 +233,10 @@ export function renderNav(doc = document) {
   if (!mount) return;
   const active = navActive(doc.location ? doc.location.pathname : location.pathname);
   const moreActive = MORE.some(([, , key]) => key === active);
+  const activeLabel = active ? active.replace(/-/g, " ") : "site";
   mount.innerHTML =
-    `<a class="sn-home" href="index.html" aria-label="Home, Project Telos"><span class="sn-home-field"><canvas class="sn-logo-canvas" aria-hidden="true"></canvas><img class="sn-logo-fallback" src="favicon.svg" alt="" width="30" height="30" style="display:none"></span><span>TELOS</span></a>`
+    `<a class="sn-home" href="index.html" aria-label="${BRAND_LABEL} / Project Telos home"><span class="sn-home-field"><canvas class="sn-logo-canvas" aria-hidden="true"></canvas><img class="sn-logo-fallback" src="${BRAND_MARK_SRC}" alt="" width="30" height="30" style="display:none"></span><span class="sn-brand-word">${BRAND_LABEL}</span></a>`
+    + `<span class="sn-section" aria-label="Current section">${activeLabel}</span>`
     + `<nav class="sn-links" aria-label="Primary">`
     + PRIMARY.map((item) => navLink(item, active)).join("")
     + `<details class="sn-more"${moreActive ? ' data-current="true"' : ''}>`
@@ -205,6 +266,10 @@ function mountHomeLogo(doc) {
     if (fb) fb.style.display = "block";
     canvas.style.display = "none";
   };
+  if (!shouldUseDesktopGpuArt(window)) {
+    showFallback();
+    return;
+  }
   import("./logo-field.js")
     .then((mod) => {
       if (!mod.isLogoFieldAvailable()) { showFallback(); return; }
@@ -218,9 +283,10 @@ if (typeof document !== "undefined") {
   const boot = () => {
     renderNav();
     wireAnchorArrival(document);
+    mountRouteArt(document);
     // The React home owns its own restrained desktop field and its static
     // Zentropy mobile treatment. Static pages retain the shared enhancement.
-    if (document.documentElement.dataset.homeShell !== "react") {
+    if (document.documentElement.dataset.homeShell !== "react" && shouldUseDesktopGpuArt(window)) {
       import("./generative-field.js").catch(() => {});
       import("./cursor-field.js").then((m) => m.mountCursorField()).catch(() => {});
     }
