@@ -7,12 +7,12 @@
    visceral register. Every text/background pair clears WCAG AA.
    ============================================================================ */
 
-/* ---- licensed/self-generated faces, ALL self-hosted: Telos Display (generated
-       project display), Kilon fallback, Hanken Grotesk text, and Conso labels. ---- */
-/* Telos Display retired 2026-07-11 - one grotesk voice (Hanken) site-wide */
+/* ---- ZentropyLabs document type system (2026-07-19).
+       ZentropyDisplay carries short brand, route, and project marks. Hanken
+       Grotesk carries readable text. Conso carries mono data and labels. ---- */
+@font-face{font-family:"ZentropyDisplay";src:url("../brand/ZentropyDisplay.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk.woff2") format("woff2"); font-weight:100 900; font-style:normal; font-display:swap}
 @font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk-italic.woff2") format("woff2"); font-weight:400; font-style:italic; font-display:swap}
-/* Kilon retired 2026-07-11 - one grotesk voice (Hanken) site-wide */
 @font-face{font-family:"Conso"; src:url("fonts/conso-regular.woff2") format("woff2"),url("fonts/conso-regular.woff") format("woff"); font-weight:400; font-style:normal; font-display:swap}
 @font-face{font-family:"Conso"; src:url("fonts/conso-regularitalic.woff2") format("woff2"),url("fonts/conso-regularitalic.woff") format("woff"); font-weight:400; font-style:italic; font-display:swap}
 @font-face{font-family:"Conso"; src:url("fonts/conso-medium.woff2") format("woff2"),url("fonts/conso-medium.woff") format("woff"); font-weight:500; font-style:normal; font-display:swap}
@@ -892,3 +892,267 @@ ul.bul .num{color:var(--crystal)}
 
 /* Keep the compact Menu trigger authoritative after the shared tap-target rule. */
 @media(max-width:680px){.site-nav .sn-links > a{display:none}}
+
+/* ============================================================================
+   ZentropyLabs document shell (2026-07-19)
+   Dark screen material for research, writing, CV, and document pages. Print
+   stays plain and high-contrast.
+   ============================================================================ */
+:root{
+  --zentropy-void:#070406;
+  --zentropy-ink:#eaf5f6;
+  --zentropy-ink-2:#c8dcdf;
+  --zentropy-muted:#94afb4;
+  --zentropy-faint:#678188;
+  --zentropy-signal:#8ee3f2;
+  --zentropy-rust:#c86a44;
+  --zentropy-oxblood:#1e0f14;
+  --brand-display:"ZentropyDisplay","Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --display:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --body:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --page:#0b070a;
+  --backdrop:#070406;
+  --ink:var(--zentropy-ink);
+  --ink-soft:var(--zentropy-ink-2);
+  --ink-muted:var(--zentropy-muted);
+  --teal:var(--zentropy-ink);
+  --teal-soft:var(--zentropy-signal);
+  --ember:var(--zentropy-rust);
+  --tag:var(--zentropy-faint);
+  --rule:rgba(142,227,242,.16);
+  --rule-strong:rgba(142,227,242,.28);
+}
+
+body.doc{
+  background:
+    radial-gradient(66rem 38rem at 74% -8%,rgba(142,227,242,.11),transparent 60%),
+    linear-gradient(180deg,#070406 0%,#0a0709 60%,#12090d 100%);
+  color:var(--zentropy-ink);
+}
+
+body.doc::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:.28;
+  background:
+    linear-gradient(180deg,transparent 0 55%,rgba(200,106,68,.18) 55% 100%),
+    repeating-linear-gradient(0deg,rgba(234,245,246,.045) 0 1px,transparent 1px 3px);
+}
+
+body.doc .docnav,
+body.doc .sheet,
+body.doc .route-art{
+  position:relative;
+  z-index:2;
+}
+body.doc .sheet{
+  background:rgba(10,7,9,.94);
+  color:var(--zentropy-ink);
+  border:1px solid rgba(142,227,242,.16);
+  box-shadow:0 24px 80px -46px rgba(0,0,0,.9);
+  border-radius:0;
+}
+body.doc .mast{
+  border-bottom-color:rgba(142,227,242,.22);
+}
+body.doc .mast h1,
+body.doc h2{
+  color:var(--zentropy-ink);
+}
+body.doc a{
+  color:var(--zentropy-signal);
+}
+body.doc .entry-meta,
+body.doc ul.bul .num{
+  color:var(--zentropy-rust);
+}
+
+.site-nav{
+  background:rgba(7,4,6,.86);
+  border-bottom:1px solid rgba(142,227,242,.16);
+  backdrop-filter:blur(16px);
+}
+.site-nav .sn-home{
+  gap:.7rem;
+  color:var(--zentropy-ink);
+  font-family:var(--brand-display);
+  font-size:clamp(1.05rem,2vw,1.38rem);
+  font-weight:400;
+  letter-spacing:0;
+  text-transform:none;
+}
+.site-nav .sn-home-field{
+  width:2.55rem;
+  height:2.55rem;
+  border:1px solid rgba(142,227,242,.22);
+  background:#050305;
+}
+.site-nav .sn-logo-canvas,
+.site-nav .sn-logo-fallback{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+.site-nav .sn-logo-fallback{
+  object-fit:cover;
+  border-radius:0;
+}
+.site-nav .sn-home > span:last-child,
+.site-nav .sn-brand-word{
+  margin-left:0;
+  display:inline;
+  transform:translateY(.04em);
+  text-shadow:0 0 14px rgba(7,4,6,.86);
+}
+.site-nav .sn-section{
+  display:none;
+  font-family:var(--mono);
+  font-size:.62rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--zentropy-muted);
+}
+.site-nav .sn-links a,
+.site-nav .sn-more summary{
+  color:var(--zentropy-muted);
+}
+.site-nav .sn-links a:hover,
+.site-nav .sn-more summary:hover,
+.site-nav .sn-links a[aria-current="page"],
+.site-nav .sn-links a.is-active,
+.site-nav .sn-more[data-current="true"] summary{
+  color:var(--zentropy-signal);
+  border-color:var(--zentropy-signal);
+}
+
+body.doc .route-art{
+  position:relative;
+  z-index:2;
+  width:min(100%,50rem);
+  margin:0 auto clamp(1rem,2.4vw,1.6rem);
+  border:1px solid rgba(142,227,242,.18);
+  background:#080507;
+  overflow:hidden;
+}
+body.doc .route-art::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg,transparent 0 50%,rgba(200,106,68,.22) 58% 100%),
+    repeating-linear-gradient(0deg,rgba(234,245,246,.08) 0 1px,transparent 1px 4px);
+  mix-blend-mode:screen;
+  opacity:.58;
+}
+body.doc .route-art img{
+  display:block;
+  width:100%;
+  aspect-ratio:1280/430;
+  object-fit:cover;
+}
+body.doc .route-art figcaption{
+  position:absolute;
+  left:1rem;
+  bottom:.8rem;
+  font-family:var(--mono);
+  font-size:.58rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--zentropy-ink);
+  text-shadow:0 1px 16px #000;
+}
+
+@media (max-width:760px){
+  body.doc{
+    padding:.7rem;
+  }
+  body.doc .sheet{
+    padding:clamp(1.25rem,5vw,2rem);
+  }
+  .site-nav{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:center;
+    gap:.45rem .75rem;
+    padding:.65rem .8rem;
+  }
+  .site-nav .sn-home{
+    min-width:0;
+    width:auto;
+    text-align:left;
+    font-size:1.05rem;
+  }
+  .site-nav .sn-home-field{
+    width:2.35rem;
+    height:2.35rem;
+  }
+  .site-nav .sn-home .sn-brand-word{
+    display:inline;
+  }
+  .site-nav .sn-section{
+    display:block;
+    grid-column:1/2;
+    grid-row:2;
+    color:var(--zentropy-faint);
+  }
+  .site-nav .sn-links{
+    display:contents;
+  }
+  .site-nav .sn-links > a{
+    display:none;
+  }
+  .site-nav .sn-more{
+    grid-column:2;
+    grid-row:1/span 2;
+    justify-self:end;
+  }
+  .site-nav .sn-more summary{
+    min-block-size:44px;
+    display:flex;
+    align-items:center;
+  }
+  .site-nav .sn-more-list{
+    position:fixed;
+    left:.75rem;
+    right:.75rem;
+    top:4.4rem;
+    max-height:calc(100dvh - 5.2rem);
+    overflow:auto;
+  }
+  body.doc .route-art img{
+    aspect-ratio:16/9;
+  }
+}
+
+@media (prefers-reduced-motion:reduce),(pointer:coarse),(max-width:899px){
+  body.doc #gl.generative-field-canvas,
+  body.doc #motes.generative-motes-canvas{
+    display:none!important;
+  }
+}
+
+@media print{
+  body.doc{
+    background:#fff;
+    color:#000;
+    padding:0;
+  }
+  body.doc::before,
+  .site-nav,
+  .route-art,
+  #gl,
+  #motes{
+    display:none!important;
+  }
+  body.doc .sheet{
+    background:#fff;
+    color:#000;
+    border:0;
+    box-shadow:none;
+  }
+}

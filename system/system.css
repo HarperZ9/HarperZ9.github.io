@@ -4,10 +4,10 @@
    (sections, instrument index, organ rows, verdict chips, proof exhibits,
    scroll-reveal). Shared by every page; edit here, not per-page.
    ============================================================================ */
-/* ---- Two self-hosted faces, one type voice for the whole site (2026-07-11).
-       Hanken Grotesk carries EVERY text role from hero display to caption; weight
-       and size do the hierarchy, never extra families. Conso carries mono data and
-       labels. Telos Display and Kilon were retired to end the "six fonts" blur. ---- */
+/* ---- ZentropyLabs type system (2026-07-19).
+       ZentropyDisplay carries short brand, route, and project marks. Hanken
+       Grotesk carries readable text. Conso carries mono data and labels. ---- */
+@font-face{font-family:"ZentropyDisplay";src:url("../brand/ZentropyDisplay.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk.woff2") format("woff2"); font-weight:100 900; font-style:normal; font-display:swap}
 @font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk-italic.woff2") format("woff2"); font-weight:400; font-style:italic; font-display:swap}
 
@@ -3301,4 +3301,216 @@ section.mv > h2::after,
 @media (max-width:640px){
   /* narrow viewports: keep the popover inside the screen (the toolbar wraps) */
   .rt-plot-pop{right:auto;left:50%;transform:translateX(-50%);min-width:15rem;max-width:92vw}
+}
+
+/* ============================================================================
+   ZentropyLabs site-wide shell (2026-07-19)
+   Late layer that remaps the historical static-page contract to the approved
+   Zentropy material without breaking older page selectors.
+   ============================================================================ */
+:root{
+  --zentropy-void:#070406;
+  --zentropy-ink:#eaf5f6;
+  --zentropy-ink-2:#c8dcdf;
+  --zentropy-muted:#94afb4;
+  --zentropy-faint:#678188;
+  --zentropy-signal:#8ee3f2;
+  --zentropy-rust:#c86a44;
+  --zentropy-oxblood:#1e0f14;
+  --brand-display:"ZentropyDisplay","Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --display:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --body:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --void:var(--zentropy-void);
+  --void-opaque:var(--zentropy-void);
+  --bone:var(--zentropy-ink);
+  --orange:var(--zentropy-rust);
+  --ember:var(--zentropy-rust);
+  --signal:var(--zentropy-signal);
+  --muted:var(--zentropy-muted);
+  --prussian:var(--zentropy-faint);
+  --hairline:rgba(142,227,242,.16);
+}
+
+body{
+  background:
+    radial-gradient(80rem 50rem at 72% -10%,rgba(142,227,242,.11),transparent 58%),
+    linear-gradient(180deg,#070406 0%,#0a0709 55%,#12090d 100%);
+  color:var(--zentropy-ink);
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  opacity:.33;
+  background:
+    linear-gradient(180deg,transparent 0 54%,rgba(200,106,68,.18) 54% 90%,transparent 100%),
+    repeating-linear-gradient(0deg,rgba(234,245,246,.045) 0 1px,transparent 1px 3px);
+  mix-blend-mode:screen;
+}
+
+.site-nav{
+  background:rgba(7,4,6,.86);
+  border-bottom:1px solid rgba(142,227,242,.16);
+  backdrop-filter:blur(16px);
+}
+.site-nav .sn-home{
+  gap:.7rem;
+  color:var(--zentropy-ink);
+  font-family:var(--brand-display);
+  font-size:clamp(1.05rem,2vw,1.38rem);
+  font-weight:400;
+  letter-spacing:0;
+  text-transform:none;
+}
+.site-nav .sn-home-field{
+  width:2.55rem;
+  height:2.55rem;
+  border:1px solid rgba(142,227,242,.22);
+  background:#050305;
+}
+.site-nav .sn-logo-canvas,
+.site-nav .sn-logo-fallback{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+.site-nav .sn-logo-fallback{
+  object-fit:cover;
+  border-radius:0;
+}
+.site-nav .sn-home > span:last-child,
+.site-nav .sn-brand-word{
+  margin-left:0;
+  display:inline;
+  transform:translateY(.04em);
+  text-shadow:0 0 14px rgba(7,4,6,.86);
+}
+.site-nav .sn-section{
+  display:none;
+  font-family:var(--mono);
+  font-size:.62rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--zentropy-muted);
+}
+.site-nav .sn-links a,
+.site-nav .sn-more summary{
+  color:var(--zentropy-muted);
+}
+.site-nav .sn-links a:hover,
+.site-nav .sn-more summary:hover,
+.site-nav .sn-links a[aria-current="page"],
+.site-nav .sn-links a.is-active,
+.site-nav .sn-more[data-current="true"] summary{
+  color:var(--zentropy-signal);
+  border-color:var(--zentropy-signal);
+}
+
+.route-art{
+  position:relative;
+  z-index:4;
+  width:min(100% - 2rem,72rem);
+  margin:clamp(1rem,4vw,2.6rem) auto clamp(2rem,5vw,4rem);
+  border:1px solid rgba(142,227,242,.18);
+  background:#080507;
+  overflow:hidden;
+}
+.route-art::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg,transparent 0 50%,rgba(200,106,68,.22) 58% 100%),
+    repeating-linear-gradient(0deg,rgba(234,245,246,.08) 0 1px,transparent 1px 4px);
+  mix-blend-mode:screen;
+  opacity:.58;
+}
+.route-art img{
+  display:block;
+  width:100%;
+  aspect-ratio:1280/430;
+  object-fit:cover;
+}
+.route-art figcaption{
+  position:absolute;
+  left:clamp(.85rem,2vw,1.4rem);
+  bottom:clamp(.7rem,1.6vw,1rem);
+  font-family:var(--mono);
+  font-size:.62rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--zentropy-ink);
+  text-shadow:0 1px 16px #000;
+}
+
+@media (max-width:760px){
+  .site-nav{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:center;
+    gap:.45rem .75rem;
+    padding:.65rem .8rem;
+  }
+  .site-nav .sn-home{
+    min-width:0;
+    width:auto;
+    text-align:left;
+    font-size:1.05rem;
+  }
+  .site-nav .sn-home-field{
+    width:2.35rem;
+    height:2.35rem;
+  }
+  .site-nav .sn-home .sn-brand-word{
+    display:inline;
+  }
+  .site-nav .sn-section{
+    display:block;
+    grid-column:1/2;
+    grid-row:2;
+    color:var(--zentropy-faint);
+  }
+  .site-nav .sn-links{
+    display:contents;
+  }
+  .site-nav .sn-links > a{
+    display:none;
+  }
+  .site-nav .sn-more{
+    grid-column:2;
+    grid-row:1/span 2;
+    justify-self:end;
+  }
+  .site-nav .sn-more summary{
+    min-block-size:44px;
+    display:flex;
+    align-items:center;
+  }
+  .site-nav .sn-more-list{
+    position:fixed;
+    left:.75rem;
+    right:.75rem;
+    top:4.4rem;
+    max-height:calc(100dvh - 5.2rem);
+    overflow:auto;
+  }
+  .route-art{
+    width:calc(100% - 1rem);
+    margin:1rem auto 2rem;
+  }
+  .route-art img{
+    aspect-ratio:16/9;
+  }
+}
+
+@media (prefers-reduced-motion:reduce),(pointer:coarse),(max-width:899px){
+  #gl.generative-field-canvas,
+  #motes.generative-motes-canvas{
+    display:none!important;
+  }
 }
