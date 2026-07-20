@@ -218,8 +218,12 @@ if (typeof document !== "undefined") {
   const boot = () => {
     renderNav();
     wireAnchorArrival(document);
-    import("./generative-field.js").catch(() => {});
-    import("./cursor-field.js").then((m) => m.mountCursorField()).catch(() => {});
+    // The React home owns its own restrained desktop field and its static
+    // Zentropy mobile treatment. Static pages retain the shared enhancement.
+    if (document.documentElement.dataset.homeShell !== "react") {
+      import("./generative-field.js").catch(() => {});
+      import("./cursor-field.js").then((m) => m.mountCursorField()).catch(() => {});
+    }
   };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();

@@ -75,6 +75,7 @@
    spreads across the header and reads as depth instead of a cropped tile. */
 .brand {
   position: relative; display: inline-flex; align-items: center;
+  min-block-size: 44px;
   font-weight: 600; letter-spacing: 0.16em; font-size: var(--step-0); color: var(--ink);
 }
 .brand-field {
@@ -590,6 +591,256 @@
 .gd-r-pass .gd-rk { color: var(--match); }
 .gd-r-deny .gd-rk { color: var(--drift); }
 .gd-r-needs .gd-rk { color: var(--drift); }
+
+/* ============================================================
+   ZENTROPY LABS / PROJECT TELOS
+   The hero uses the approved source artwork as the supergraphic.
+   It is intentionally a static image first; the existing ground field
+   may enhance only capable desktop screens behind this calm text layer.
+   ============================================================ */
+
+.viewport-vignette {
+  display: none;
+  background:
+    linear-gradient(180deg, rgba(7, 4, 6, 0.26), rgba(7, 4, 6, 0.76)),
+    radial-gradient(90% 86% at 76% 22%, transparent 38%, rgba(7, 4, 6, 0.54) 100%);
+}
+
+.topnav {
+  min-height: 4.6rem;
+  background: linear-gradient(180deg, rgba(7, 4, 6, 0.95), rgba(7, 4, 6, 0.78));
+  border-bottom-color: rgba(142, 227, 242, 0.16);
+}
+
+.brand {
+  gap: 0.7rem;
+  min-width: max-content;
+  color: var(--ink);
+  letter-spacing: 0;
+}
+
+.brand-wordmark,
+.foot-brand {
+  font-family: "ZentropyDisplay", "Hanken Grotesk", sans-serif;
+  font-variant: small-caps;
+  font-feature-settings: "smcp";
+  color: var(--ink);
+  text-shadow: 0 0 18px rgba(142, 227, 242, 0.22);
+}
+
+.brand-wordmark {
+  font-size: clamp(1.24rem, 1.02rem + 0.8vw, 1.76rem);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+
+.brand-route {
+  color: var(--faint);
+  font-size: var(--step--1);
+  letter-spacing: 0.1em;
+  padding-left: 0.7rem;
+  border-left: 1px solid rgba(142, 227, 242, 0.28);
+}
+
+.brand:hover .brand-wordmark,
+.brand:focus-visible .brand-wordmark {
+  color: var(--zentropy-ice);
+}
+
+.hero {
+  min-height: min(58rem, 100svh);
+  padding-top: clamp(6.1rem, 11vh, 8.2rem);
+  padding-bottom: clamp(4.5rem, 8vh, 6.5rem);
+}
+
+.hero-veil {
+  background:
+    linear-gradient(94deg, rgba(7, 4, 6, 0.92) 0%, rgba(7, 4, 6, 0.76) 36%, rgba(7, 4, 6, 0.18) 72%, rgba(7, 4, 6, 0.3) 100%),
+    linear-gradient(180deg, transparent 56%, #070406 100%);
+}
+
+.hero-grain { opacity: 0.4; }
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(17rem, 0.8fr) minmax(31rem, 1.28fr);
+  align-items: center;
+  gap: clamp(1.7rem, 5vw, 6rem);
+  max-width: 88rem;
+}
+
+.hero-masthead {
+  grid-column: 1;
+  grid-row: 1;
+  max-width: 35rem;
+}
+
+.hero-brand-plate {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  isolation: isolate;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(142, 227, 242, 0.26);
+  clip-path: polygon(0 0, calc(100% - 2.1rem) 0, 100% 2.1rem, 100% 100%, 2.1rem 100%, 0 calc(100% - 2.1rem));
+  background: var(--zentropy-oxblood);
+  box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(200, 106, 68, 0.14);
+}
+
+.hero-brand-plate::before {
+  content: "";
+  position: absolute;
+  inset: 1rem;
+  z-index: 1;
+  pointer-events: none;
+  border: 1px solid rgba(142, 227, 242, 0.12);
+  clip-path: polygon(0 0, calc(100% - 1.2rem) 0, 100% 1.2rem, 100% 100%, 1.2rem 100%, 0 calc(100% - 1.2rem));
+}
+
+.hero-brand-plate picture,
+.hero-brand-plate img {
+  display: block;
+  width: 100%;
+}
+
+.hero-brand-plate img {
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  filter: saturate(1.03) contrast(1.04);
+}
+
+.hero-brand-plate figcaption {
+  position: absolute;
+  z-index: 2;
+  right: clamp(0.85rem, 2vw, 1.7rem);
+  bottom: clamp(0.85rem, 2vw, 1.7rem);
+  display: flex;
+  align-items: baseline;
+  gap: 0.62rem;
+  max-width: calc(100% - 2rem);
+  padding: 0.5rem 0.68rem;
+  color: var(--ink);
+  background: rgba(7, 4, 6, 0.58);
+  border-left: 1px solid var(--zentropy-ice);
+  font-size: clamp(0.68rem, 0.56rem + 0.35vw, 0.82rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-brand-plate figcaption span:first-child {
+  color: var(--zentropy-ice);
+}
+
+.hero-kicker {
+  display: inline-flex;
+  margin-bottom: var(--sp-3);
+  padding-bottom: 0.58rem;
+  color: var(--zentropy-ice);
+  border-bottom: 1px solid rgba(142, 227, 242, 0.4);
+  font-size: var(--step--1);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  max-width: 14ch;
+  color: var(--ink);
+  font-size: clamp(2.35rem, 1.65rem + 3.25vw, 5.4rem);
+  font-weight: 760;
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+}
+
+.hero-title::after {
+  content: "";
+  display: block;
+  width: min(9.5rem, 38%);
+  height: 1px;
+  margin-top: var(--sp-3);
+  background: linear-gradient(90deg, var(--zentropy-ice), rgba(142, 227, 242, 0));
+}
+
+.hero .lead {
+  color: var(--ink-2);
+  max-width: 37ch;
+}
+
+.hero .btn {
+  border-radius: 0;
+  animation: none;
+  border-color: rgba(142, 227, 242, 0.32);
+  background: rgba(7, 4, 6, 0.36);
+}
+
+.hero .btn.solid {
+  color: #070406;
+  background-color: var(--zentropy-ice);
+  border-color: var(--zentropy-ice);
+  background-image: none;
+}
+
+.hero .btn:hover,
+.hero .btn:focus-visible {
+  border-color: var(--zentropy-ice);
+  box-shadow: inset 0 1px 0 var(--zentropy-ice), 0 0.8rem 2.2rem rgba(142, 227, 242, 0.12);
+}
+
+.hero-crop {
+  right: clamp(1.1rem, 4vw, 3.4rem);
+  border-left-color: rgba(142, 227, 242, 0.52);
+}
+
+.hero-crop .crop-t { color: var(--zentropy-ice); }
+.scroll-cue { color: var(--faint); }
+.foot-brand { font-size: 1.06em; letter-spacing: 0.02em; }
+
+@media (max-width: 1040px) {
+  .topnav { min-height: 4.1rem; }
+  .topnav-links,
+  .brand-route { display: none; }
+}
+
+@media (max-width: 980px) {
+  .hero { min-height: auto; }
+  .hero-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-4);
+  }
+  .hero-brand-plate {
+    grid-column: 1;
+    grid-row: 1;
+    width: min(100%, 52rem);
+  }
+  .hero-masthead {
+    grid-column: 1;
+    grid-row: 2;
+    max-width: 40rem;
+  }
+  .hero-title { max-width: 15ch; }
+  .hero-crop { display: none; }
+}
+
+@media (max-width: 560px) {
+  .topnav { min-height: 4.1rem; }
+  .brand-route { display: none; }
+  .hero {
+    padding-top: 5.25rem;
+    padding-bottom: 4rem;
+  }
+  .hero-brand-plate {
+    margin-inline: calc(var(--shell) * -0.22);
+    width: calc(100% + var(--shell) * 0.44);
+    clip-path: polygon(0 0, calc(100% - 1.45rem) 0, 100% 1.45rem, 100% 100%, 1.45rem 100%, 0 calc(100% - 1.45rem));
+  }
+  .hero-brand-plate::before { inset: 0.56rem; }
+  .hero-brand-plate figcaption { display: none; }
+  .hero-title { font-size: clamp(2.2rem, 11vw, 3.8rem); }
+  .hero .lead { font-size: 1.07rem; }
+  .scroll-cue { display: none; }
+}
 
 /* ===== "which one do you need" picker ===== */
 .picker { margin-top: var(--sp-5); }
