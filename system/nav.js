@@ -43,6 +43,17 @@ function shouldUseDesktopGpuArt(win = typeof window !== "undefined" ? window : u
   return !reducedMotion.matches && finePointer.matches && desktopWidth.matches;
 }
 
+function shouldMountAmbientField(doc = document) {
+  if (!shouldUseDesktopGpuArt(window)) return false;
+  const body = doc && doc.body;
+  if (!body) return false;
+  return (
+    body.classList.contains("gallery") ||
+    body.classList.contains("studio-app") ||
+    body.classList.contains("studio-page")
+  );
+}
+
 function normalizeRouteArtSrc(raw, doc) {
   if (!raw) return "";
   const base = doc && doc.location ? doc.location.href : (typeof window !== "undefined" ? window.location.href : "https://harperz9.github.io/");
@@ -84,7 +95,9 @@ function mountRouteArt(doc = document) {
   const caption = doc.createElement("figcaption");
   caption.textContent = "zentropyLabs / route artifact";
   figure.appendChild(caption);
-  main.insertAdjacentElement("afterbegin", figure);
+  const frame = doc.querySelector(".frame");
+  const anchor = frame || main;
+  anchor.insertAdjacentElement("beforebegin", figure);
 }
 
 // Map any page to one of the sections. Flagship pages live under Flagships; everything
@@ -286,7 +299,7 @@ if (typeof document !== "undefined") {
     mountRouteArt(document);
     // The React home owns its own restrained desktop field and its static
     // Zentropy mobile treatment. Static pages retain the shared enhancement.
-    if (document.documentElement.dataset.homeShell !== "react" && shouldUseDesktopGpuArt(window)) {
+    if (document.documentElement.dataset.homeShell !== "react" && shouldMountAmbientField(document)) {
       import("./generative-field.js").catch(() => {});
       import("./cursor-field.js").then((m) => m.mountCursorField()).catch(() => {});
     }

@@ -39,38 +39,38 @@ workshop / brand system that frames the site.
 
 ## Requirements
 
-- [ ] Shared navigation renders `zentropyLabs` in rhinoCase and no longer
+- [x] Shared navigation renders `zentropyLabs` in rhinoCase and no longer
   hardcodes `TELOS` as the primary brand label.
-- [ ] Shared navigation uses the approved aperture/avatar mark as its compact
+- [x] Shared navigation uses the approved aperture/avatar mark as its compact
   visual signal. WebGL logo rendering is optional desktop enhancement only, not
   a baseline requirement.
-- [ ] Static pages that already expose an `og:image` use that image as visible
+- [x] Static pages that already expose an `og:image` use that image as visible
   route art. The visible treatment can be a full masthead, compact route plate,
   or background plate depending on page family, but the new artwork must not
   remain hidden only in social metadata.
-- [ ] The new Telos v2 OG artwork is copied into `img/og/` so existing metadata
+- [x] The new Telos v2 OG artwork is copied into `img/og/` so existing metadata
   and visible route plates point at current assets.
-- [ ] `zentropy-avatar.png` is copied into the public site and used for compact
+- [x] `zentropy-avatar.png` is copied into the public site and used for compact
   shell branding and route-art fallback.
-- [ ] `ZentropyDisplay` is available from the shared CSS layer and is used for
+- [x] `ZentropyDisplay` is available from the shared CSS layer and is used for
   short brand/page/project marks. Hanken Grotesk remains body text. Conso
   remains metadata/readout text.
-- [ ] `system/system.css` and `system/doc.css` share the Zentropy material
+- [x] `system/system.css` and `system/doc.css` share the Zentropy material
   direction: near-black ground, ice ink, muted blue-gray text, oxblood/rust
   wash, cyan aperture signal, grain, scanline, and fine registration details.
-- [ ] Old purple/lime/iris material remains only where a specific project
+- [x] Old purple/lime/iris material remains only where a specific project
   component needs it. It must not be the default shared site theme.
-- [ ] Static page WebGL/canvas field imports are gated by capability:
+- [x] Static page WebGL/canvas field imports are gated by capability:
   `prefers-reduced-motion: no-preference`, fine pointer, and at least a
   desktop-width viewport. Narrow/touch/reduced-motion devices receive static
   artwork and DOM content only.
-- [ ] Mobile navigation no longer crams the primary links into an unreadable
+- [x] Mobile navigation no longer crams the primary links into an unreadable
   single row. It presents the brand, a small active-section signal, and a usable
   menu control.
-- [ ] Long-form document pages keep readable measures and print-friendly
+- [x] Long-form document pages keep readable measures and print-friendly
   structure while adopting the Zentropy shell, artwork plate, and typography
   hierarchy.
-- [ ] Existing page content, links, maturity labels, and public/private
+- [x] Existing page content, links, maturity labels, and public/private
   boundaries remain intact.
 
 ## Page-Family Design
@@ -230,7 +230,18 @@ the aperture/avatar image, route art image, and text content remain visible.
   implementation passes the verification plan and the current task scope still
   includes publish approval.
 
-## Status: APPROVED
+## Implementation Notes
+
+- Shared shell updates were implemented through `system/nav.js`,
+  `system/system.css`, and `system/doc.css`.
+- Public brand assets and route artwork were synced from
+  `C:/dev/public/telos-v2/public`.
+- Page HTML updates were limited to shared CSS/JS cache-busting query strings.
+- The capability gate keeps the heavy ambient field restricted to desktop
+  gallery/studio surfaces and leaves mobile/coarse-pointer pages on static DOM
+  and image fallbacks.
+
+## Status: IMPLEMENTED
 
 Design direction approved by the user on 2026-07-19. Written-spec review was
 approved by the user before implementation planning.
