@@ -230,7 +230,7 @@ the aperture/avatar image, route art image, and text content remain visible.
   implementation passes the verification plan and the current task scope still
   includes publish approval.
 
-## Status: DRAFT
+## Status: APPROVED
 
-Design direction approved by the user on 2026-07-19. Written-spec review is
-still required before implementation planning.
+Design direction approved by the user on 2026-07-19. Written-spec review was
+approved by the user before implementation planning.
