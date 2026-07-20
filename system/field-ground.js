@@ -261,6 +261,7 @@ export function isFieldGroundAvailable() {
 // reshape; the emotional assignment of principle-to-page is theirs to make, not presumed.
 export const PRINCIPLES = {
   origin:       { mode: 0, hue: 0.00, gain: 1.00 },  // the whole: the aperture rising from filth
+  zentropy:     { mode: 0, hue: 0.53, gain: 0.24 },  // restrained ice aperture over an oxblood ground
   protection:   { mode: 1, hue: 0.62, gain: 0.92 },  // crystalline armour, cold blue-violet
   offense:      { mode: 1, hue: 0.02, gain: 1.08 },  // faceted edge, ember-red
   light:        { mode: 0, hue: 0.30, gain: 1.02 },  // discernment, warm gold-lime

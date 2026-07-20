@@ -4,9 +4,7 @@ import GateDemo from "./GateDemo";
 import ProofPacket from "./ProofPacket";
 import WitnessedIndependence from "./WitnessedIndependence";
 import Picker from "./Picker";
-import LogoField from "./LogoField";
 import GroundField from "./GroundField";
-import Emphasis from "./Emphasis";
 import "./App.css";
 
 type Engine = {
@@ -152,17 +150,6 @@ export default function App() {
     return () => { io.disconnect(); window.clearTimeout(settle); };
   }, []);
 
-  // The brand aperture as a cursor aura that trails the pointer (public/system module, native
-  // import so Vite leaves it in /public). It self-skips touch pointers and reduced motion.
-  useEffect(() => {
-    const nativeImport = new Function("u", "return import(u)") as (u: string) => Promise<any>;
-    let handle: { destroy(): void } | null = null;
-    nativeImport("/system/cursor-field.js")
-      .then((mod) => { handle = mod.mountCursorField(); })
-      .catch(() => {});
-    return () => { if (handle) handle.destroy(); };
-  }, []);
-
   return (
     <>
       <GroundField />
@@ -177,9 +164,9 @@ export default function App() {
       <a className="skip-link" href="#main">Skip to content</a>
 
       <nav className="topnav" aria-label="Primary">
-        <a className="brand" href="#top" aria-label="Home, Project Telos">
-          <span className="brand-field"><LogoField /></span>
-          <span className="brand-word mono">TELOS</span>
+        <a className="brand" href="#top" aria-label="zentropyLabs / Project Telos — home">
+          <span className="brand-wordmark" aria-hidden="true">zentropyLabs</span>
+          <span className="brand-route mono">Project Telos</span>
         </a>
         <div className="topnav-links">
           <a href="#engines">Engines</a>
@@ -198,12 +185,34 @@ export default function App() {
           <div className="hero-veil" aria-hidden="true" />
           <div className="hero-grain" aria-hidden="true" />
           <div className="hero-inner">
+            <figure className="hero-brand-plate reveal in d1">
+              <picture>
+                <source
+                  type="image/webp"
+                  srcSet="/brand/zentropy-logo-640.webp 640w, /brand/zentropy-logo-960.webp 960w, /brand/zentropy-logo-1280.webp 1280w, /brand/zentropy-logo-1600.webp 1600w"
+                  sizes="(max-width: 980px) 100vw, 52vw"
+                />
+                <img
+                  src="/brand/zentropy-logo.png"
+                  alt="Zentropy Labs aperture mark with a cyan halftone orb and oxblood reflection"
+                  width="1600"
+                  height="900"
+                  fetchPriority="high"
+                />
+              </picture>
+              <figcaption className="mono">
+                <span>zentropyLabs</span>
+                <span>publishes Project Telos</span>
+              </figcaption>
+            </figure>
             <div className="hero-masthead">
-              <h1 className="hero-title reveal in d1">
-                Work you can <Emphasis kind="mark">walk away</Emphasis> from.
+              <p className="hero-kicker mono reveal in d1">Project Telos / public workbench</p>
+              <h1 className="hero-title reveal in d2">
+                Tools you can inspect, run, and leave behind.
               </h1>
-              <p className="lead reveal in d2">
-                <Emphasis kind="pill">Zain Dana Harper</Emphasis> builds tools across AI, code, graphics, and research that run anywhere and earn your <Emphasis kind="mark">trust</Emphasis>, not your attention. Each one shows its work, and gives you your <Emphasis kind="mark">time back</Emphasis>.
+              <p className="lead reveal in d3">
+                zentropyLabs publishes the work. Project Telos maps it: fourteen connected engines
+                across models, code, graphics, and research, each with a route to inspect what is real.
               </p>
               <div className="cta reveal in d3">
                 <a className="btn solid" href="#recorded">Watch the workflows <span aria-hidden="true">→</span></a>
@@ -215,13 +224,12 @@ export default function App() {
               </p>
             </div>
           </div>
-          {/* a cropping onto the live field, not a frame around it: the caption marks the
-              aperture, the field expands past it into the page */}
+          {/* A registration caption for the approved static brand plate. */}
           <figure className="hero-crop mono" aria-hidden="true">
-            <span className="crop-t">Aperture</span>
-            <span className="crop-d">seed 58 · a live GPU field</span>
+            <span className="crop-t">Zentropy mark</span>
+            <span className="crop-d">approved static artwork</span>
           </figure>
-          <p className="scroll-cue mono" aria-hidden="true">scroll ↓</p>
+          <p className="scroll-cue mono" aria-hidden="true">scroll to inspect</p>
         </header>
 
         <section id="engines" className="band">
@@ -447,8 +455,8 @@ export default function App() {
             <a href="/person.html">The person</a>
           </nav>
           <p className="foot-note mono reveal d1">
-            Project Telos · built by Zain Dana Harper in Seattle · engines, demos, papers, graphics,
-            generated media, and work routes.
+            <span className="foot-brand">zentropyLabs</span> publishes Project Telos · built by Zain Dana Harper in Seattle ·
+            engines, demos, papers, graphics, generated media, and work routes.
           </p>
         </div>
       </footer>

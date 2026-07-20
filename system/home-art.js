@@ -1,10 +1,9 @@
-import { mountGenerativeField } from "./generative-field.js";
-import { MORE, wireAnchorArrival, wireMenuArrowKeys } from "./nav.js";
+import { MORE, wireAnchorArrival, wireMenuArrowKeys } from "./nav.js?v=20260718-zentropy";
 
 // The home app (built from home/) renders its final copy natively, so this
-// module no longer rewrites hero text. It adds the two enhancements the
-// bundle does not own: the shared-site menu (from the same source of truth
-// as the static-page nav) and the ambient generative field.
+// module no longer rewrites hero text. It keeps the shared-site menu and
+// anchor behavior, while the approved Zentropy art plate owns the visual
+// identity. A second full-page field would compete with that artwork.
 
 function wireDetailsMenu(doc, details, summary, listSelector, abortKey) {
   if (!details || !summary || details.dataset.enhanced === "true") return;
@@ -115,13 +114,8 @@ function enhanceWhenReady(doc) {
 
 function bootHomeArt() {
   if (!document.body) return;
-  document.body.classList.add("home-generative-field");
-  document.documentElement.classList.add("home-generative-field-ready");
   wireAnchorArrival(document);
   enhanceWhenReady(document);
-  mountGenerativeField(document).catch(() => {
-    document.documentElement.classList.add("generative-field-failed");
-  });
 }
 
 if (document.readyState === "loading") {

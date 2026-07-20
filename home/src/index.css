@@ -13,12 +13,15 @@
 @font-face { font-family: "Hanken Grotesk"; src: url("/system/fonts/hanken-grotesk.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
 @font-face { font-family: "Conso"; src: url("/system/fonts/conso-regular.woff2") format("woff2"), url("/system/fonts/conso-regular.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "Conso"; src: url("/system/fonts/conso-semibold.woff2") format("woff2"), url("/system/fonts/conso-semibold.woff") format("woff"); font-weight: 600 700; font-style: normal; font-display: swap; }
+/* The custom face is a mark, not a third reading typeface. It only appears in
+   the zentropyLabs wordmark defined in App.css. */
+@font-face { font-family: "ZentropyDisplay"; src: url("/brand/ZentropyDisplay.ttf") format("truetype"); font-weight: 400 900; font-style: normal; font-display: swap; }
 
 :root {
   color-scheme: dark;
 
   /* --- base: a deep, saturated plum/aubergine jewel dark (NOT gray near-black) --- */
-  --void:      oklch(0.155 0.052 316);
+  --void:      #070406;
   /* Surfaces are translucent so panels blend into the one field beneath them
      instead of reading as opaque boxes. Kept dark enough that light text on them
      stays high-contrast over the (faint) field. */
@@ -38,10 +41,17 @@
   --raised-grad:  linear-gradient(176deg, color-mix(in oklab, var(--raised) 92%, transparent) 0%, color-mix(in oklab, var(--surface) 62%, transparent) 100%);
   --verified-grad:linear-gradient(180deg, color-mix(in oklab, var(--verified) 100%, white 7%) 0%, var(--verified) 60%, color-mix(in oklab, var(--verified) 88%, black) 100%);
 
-  --ink:       oklch(0.975 0.012 320);
-  --ink-2:     oklch(0.88 0.02 318);
-  --muted:     oklch(0.785 0.035 316);
-  --faint:     oklch(0.64 0.05 314);
+  --ink:       #eaf5f6;
+  --ink-2:     #c8dcdf;
+  --muted:     #94afb4;
+  --faint:     #678188;
+
+  /* Zentropy Labs: the cool aperture and oxblood reflection are brand art,
+     kept separate from semantic verdict colors. */
+  --zentropy-ice: #8ee3f2;
+  --zentropy-ice-soft: rgba(142, 227, 242, 0.22);
+  --zentropy-rust: #c86a44;
+  --zentropy-oxblood: #1e0f14;
 
   /* --- the supergraphic spectrum: a 70s rainbow band, used deliberately --- */
   --sg-magenta: oklch(0.685 0.255 352);
@@ -131,7 +141,10 @@ body {
   font-size: var(--step-0);
   line-height: 1.6;
   color: var(--ink);
-  background: transparent; /* the fixed GPU ground shows through; --void on <html> is the fallback */
+  background:
+    radial-gradient(86rem 48rem at 76% -12%, rgba(47, 120, 144, 0.12), transparent 57%),
+    radial-gradient(70rem 38rem at 32% 22%, rgba(125, 45, 34, 0.15), transparent 62%),
+    var(--void); /* complete static ground, with desktop GPU only as an enhancement */
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: clip; /* not `hidden`: hidden makes body a scroll container and silently breaks anchor scrolling */
