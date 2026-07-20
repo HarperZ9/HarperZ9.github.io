@@ -29,6 +29,10 @@ def test_shared_nav_renders_zentropy_brand_and_desktop_gpu_gate() -> None:
     assert "shouldUseDesktopGpuArt(window)" in nav
     assert 'doc.querySelector(".frame")' in nav
     assert 'insertAdjacentElement("beforebegin", figure)' in nav
+    assert re.search(
+        r'PRIMARY\.map\(\(item\) => navLink\(item, active\)\)\.join\(""\)\s*\+\s*`</nav>`\s*\+\s*`<details class="sn-more"',
+        nav,
+    )
     assert 'classList.contains("studio-page")' in nav
     assert 'import("./generative-field.js")' in nav
     assert 'import("./cursor-field.js")' in nav
@@ -57,6 +61,13 @@ def test_shared_styles_define_zentropy_material_system() -> None:
         assert ".site-nav .sn-more summary::before" in css
         assert 'content:"Menu"' in css
         assert "visibility:visible" in css
+        assert ".site-nav .sn-links{" in css
+        assert "display:block" in css
+        assert "min-width:max-content" in css
+        assert not re.search(r"\.site-nav \.sn-links\s*\{[^}]*display:contents", css)
+        assert re.search(r"\.site-nav \.sn-links\s*\{[^}]*display:none", css)
+        assert ".site-nav > .sn-more" in css
+        assert "position:fixed!important" in css
     assert "Telos Display retired" not in system_css
     assert "Telos Display retired" not in doc_css
     assert "Kilon retired" not in doc_css

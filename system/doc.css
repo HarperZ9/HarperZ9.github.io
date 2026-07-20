@@ -1104,7 +1104,7 @@ body.doc .route-art figcaption{
     color:var(--zentropy-faint);
   }
   .site-nav .sn-links{
-    display:contents;
+    display:none;
   }
   .site-nav .sn-links > a{
     display:none;
@@ -1120,10 +1120,20 @@ body.doc .route-art figcaption{
     visibility:visible;
     z-index:3;
   }
+  .site-nav > .sn-more{
+    position:fixed!important;
+    top:.65rem;
+    right:6rem;
+    display:block!important;
+    opacity:1!important;
+    visibility:visible!important;
+    z-index:1000!important;
+  }
   .site-nav .sn-more summary{
     min-block-size:44px;
     display:flex;
     align-items:center;
+    min-width:4.4rem;
     color:var(--zentropy-ink);
     background:rgba(142,227,242,.08);
     border:1px solid rgba(142,227,242,.24);
@@ -1150,6 +1160,15 @@ body.doc .route-art figcaption{
   }
   body.doc .route-art img{
     aspect-ratio:16/9;
+  }
+}
+
+@media (max-width:330px){
+  .site-nav .sn-home .sn-brand-word{
+    display:none;
+  }
+  .site-nav > .sn-more{
+    right:1rem;
   }
 }
 

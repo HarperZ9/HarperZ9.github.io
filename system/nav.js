@@ -252,6 +252,7 @@ export function renderNav(doc = document) {
     + `<span class="sn-section" aria-label="Current section">${activeLabel}</span>`
     + `<nav class="sn-links" aria-label="Primary">`
     + PRIMARY.map((item) => navLink(item, active)).join("")
+    + `</nav>`
     + `<details class="sn-more"${moreActive ? ' data-current="true"' : ''}>`
     + `<summary${moreActive ? ' aria-current="page"' : ''}>Menu</summary>`
     + `<div class="sn-more-list" aria-label="Site menu">`
@@ -259,7 +260,7 @@ export function renderNav(doc = document) {
     + menuGroup("Recorded demos", RECORDED_DEMOS, active, "sn-menu-demos")
     + menuGroup("More pages", MORE, active, "sn-menu-secondary")
     + `</div></details>`
-    + `</nav>`;
+    ;
   enhanceMenu(doc, mount);
   mountHomeLogo(doc);
 }
