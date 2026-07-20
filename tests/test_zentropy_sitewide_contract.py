@@ -25,7 +25,11 @@ def test_shared_nav_renders_zentropy_brand_and_desktop_gpu_gate() -> None:
     assert '"(min-width: 900px)"' in nav
     assert "mountRouteArt" in nav
     assert "getRouteArtMetadata" in nav
+    assert "function shouldMountAmbientField" in nav
     assert "shouldUseDesktopGpuArt(window)" in nav
+    assert 'doc.querySelector(".frame")' in nav
+    assert 'insertAdjacentElement("beforebegin", figure)' in nav
+    assert 'classList.contains("studio-page")' in nav
     assert 'import("./generative-field.js")' in nav
     assert 'import("./cursor-field.js")' in nav
 
@@ -47,6 +51,12 @@ def test_shared_styles_define_zentropy_material_system() -> None:
         assert ".route-art" in css
         assert "@media (max-width:760px)" in css or "@media (max-width: 760px)" in css
 
+    assert ".inner-clean h1 .g" in system_css
+    assert "color:var(--zentropy-rust)" in system_css
+    for css in (system_css, doc_css):
+        assert ".site-nav .sn-more summary::before" in css
+        assert 'content:"Menu"' in css
+        assert "visibility:visible" in css
     assert "Telos Display retired" not in system_css
     assert "Telos Display retired" not in doc_css
     assert "Kilon retired" not in doc_css
