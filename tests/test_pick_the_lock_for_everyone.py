@@ -70,6 +70,10 @@ def test_pick_the_lock_preserves_voice_and_new_infrastructure_argument() -> None
         "What I owe the Mad-Happy Scientist",
         "The promise I can actually make",
         "Mental health belongs in this conversation",
+        "I do a bit of both.",
+        "I have made a home there before. I know the furniture.",
+        "I believe everybody deserves redemption.",
+        "Otherwise you are just a memory of yesterday.",
         "It should survive me.",
         "I will not call this \"human-written\"",
         "independent reconstruction",
@@ -88,6 +92,10 @@ def test_pick_the_lock_preserves_voice_and_new_infrastructure_argument() -> None
         "Pick the lock for everyone.",
         "I need to end with something less heroic.",
         "Mental health matters for everybody.",
+        "The honest answer is that I do a bit of both.",
+        "I have made a home there before. I know the furniture.",
+        "I believe everybody deserves redemption.",
+        "Otherwise you are just a memory of yesterday.",
         "Sit with it.",
     ):
         assert marker in talk
