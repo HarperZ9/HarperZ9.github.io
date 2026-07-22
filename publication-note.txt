@@ -1,2 +1,0 @@
-Temporary publication branch marker.
-This file will be removed before release.
