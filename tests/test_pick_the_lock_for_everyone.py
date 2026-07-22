@@ -12,11 +12,13 @@ TALK_URL = "https://harperz9.github.io/pick-the-lock-for-everyone-talk.html"
 
 ESSAY_PARTS = [
     ROOT / "writing" / "pick-the-lock-for-everyone" / name
-    for name in ("01.md", "02.md", "03.md", "04.md", "04b.md", "04c.md", "05.md", "06.md")
+    for name in (
+        "01.md", "02.md", "03.md", "04.md", "04b.md", "04c.md", "04d.md", "05.md", "06.md"
+    )
 ]
 TALK_PARTS = [
     ROOT / "writing" / "pick-the-lock-for-everyone-talk" / name
-    for name in ("01.md", "02.md", "02b.md", "02c.md", "03.md")
+    for name in ("01.md", "02.md", "02b.md", "02c.md", "02d.md", "03.md")
 ]
 
 
@@ -43,6 +45,8 @@ def test_pick_the_lock_pages_are_public_and_discoverable() -> None:
     assert f'<link rel="canonical" href="{TALK_URL}">' in talk
     assert 'href="pick-the-lock-for-everyone.html"' in writing
     assert 'href="pick-the-lock-for-everyone-talk.html"' in writing
+    assert "writing/pick-the-lock-for-everyone/04d.md" in essay
+    assert "writing/pick-the-lock-for-everyone-talk/02d.md" in talk
     assert ESSAY_URL in sitemap
     assert TALK_URL in sitemap
 
@@ -59,6 +63,9 @@ def test_pick_the_lock_preserves_voice_and_new_infrastructure_argument() -> None
         "A steward, not a thief",
         "That is the time dividend.",
         "Build beside the old world until it becomes unnecessary",
+        "If we are fucked up, let us fuck up in the open",
+        "Open access is not root access.",
+        "Nobody should have to become the floor.",
         "Maybe we can all eat if we stop hoarding the food.",
         "What I owe the Mad-Happy Scientist",
         "I will not call this \"human-written\"",
@@ -71,6 +78,9 @@ def test_pick_the_lock_preserves_voice_and_new_infrastructure_argument() -> None
         "Shortcuts are my field.",
         "I want a time dividend.",
         "A creative economy can be built beside it.",
+        "If we are fucked up, let us fuck up in the open.",
+        "Open access is not root access.",
+        "Nobody should have to become the floor.",
         "Capable of building the table. Capable of hoarding everything on it.",
         "Pick the lock for everyone.",
     ):
