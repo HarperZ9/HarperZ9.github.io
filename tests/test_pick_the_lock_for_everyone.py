@@ -68,6 +68,9 @@ def test_pick_the_lock_preserves_voice_and_new_infrastructure_argument() -> None
         "Nobody should have to become the floor.",
         "Maybe we can all eat if we stop hoarding the food.",
         "What I owe the Mad-Happy Scientist",
+        "The promise I can actually make",
+        "Mental health belongs in this conversation",
+        "It should survive me.",
         "I will not call this \"human-written\"",
         "independent reconstruction",
     ):
@@ -83,6 +86,9 @@ def test_pick_the_lock_preserves_voice_and_new_infrastructure_argument() -> None
         "Nobody should have to become the floor.",
         "Capable of building the table. Capable of hoarding everything on it.",
         "Pick the lock for everyone.",
+        "I need to end with something less heroic.",
+        "Mental health matters for everybody.",
+        "Sit with it.",
     ):
         assert marker in talk
 
