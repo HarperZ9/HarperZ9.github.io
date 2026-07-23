@@ -19,26 +19,107 @@
 <meta name="twitter:description" content="An apology, an argument about AI, and a refusal to keep mistaking the cage for the world.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/doc.css?v=20260722-pick-lock">
+<link rel="stylesheet" href="system/doc.css?v=20260723-pick-lock-art">
 <style>
-  .longform{width:min(100%,54rem);max-width:54rem}.article-head .lead{max-width:60ch}.article-meta{font-family:var(--mono);font-size:.68rem;letter-spacing:.035em;color:var(--ink-soft);line-height:1.75;margin:.8rem 0 0}.article-meta .sep{color:var(--rule-strong);padding:0 .32rem}.companion{margin:0 0 1.35rem;padding:.75rem .9rem;border:1px solid var(--rule);border-radius:4px;background:color-mix(in oklab,var(--page) 88%,var(--teal-soft) 12%);font-size:.94rem;line-height:1.55;max-width:68ch}.article-body{max-width:68ch}.article-body p{margin:0 0 1.05rem;line-height:1.72;text-wrap:pretty}.article-body h2{font-family:var(--display);font-size:clamp(1.42rem,1.15rem + .9vw,1.86rem);font-weight:720;line-height:1.08;margin:3.4rem 0 1rem;padding-top:.35rem;color:var(--ink);text-wrap:balance}.article-body blockquote{margin:1.35rem 0 1.8rem;padding:.9rem 1rem;border-left:3px solid var(--ember);background:color-mix(in oklab,var(--page) 88%,var(--ember) 12%);color:var(--ink-soft)}.article-body blockquote p{margin:0;line-height:1.58}.article-body ul{margin:.4rem 0 1.25rem;padding-left:1.35rem;max-width:66ch}.article-body li{margin:0 0 .5rem;line-height:1.58}.article-body a{color:var(--teal-soft);text-decoration:none;border-bottom:1px solid color-mix(in oklab,var(--teal-soft) 45%,transparent)}.article-body code{font-family:var(--mono);font-size:.88em;padding:.07em .28em;border:1px solid var(--rule);border-radius:3px}.article-body hr{border:0;border-top:1px solid var(--rule);margin:3rem 0 2rem}.article-body .source-list{font-size:.94rem;color:var(--ink-soft)}.loading{font-family:var(--mono);font-size:.75rem;color:var(--tag)}.article-footer{max-width:68ch;margin:2.6rem 0 0;padding-top:1.2rem;border-top:1px solid var(--rule);font-size:.93rem;color:var(--ink-soft);line-height:1.6}@media(max-width:560px){.article-body p{line-height:1.65}.article-body h2{margin-top:2.8rem}}
+  .longform{width:min(100%,54rem);max-width:54rem}
+  .article-head .lead{max-width:60ch}
+  .article-meta{font-family:var(--mono);font-size:.68rem;letter-spacing:.035em;color:var(--ink-soft);line-height:1.75;margin:.8rem 0 0}
+  .article-meta .sep{color:var(--rule-strong);padding:0 .32rem}
+  .companion{margin:0 0 1.35rem;padding:.75rem .9rem;border:1px solid var(--rule);border-radius:4px;background:color-mix(in oklab,var(--page) 88%,var(--teal-soft) 12%);font-size:.94rem;line-height:1.55;max-width:68ch}
+  .article-body{max-width:68ch}
+  .article-body p{margin:0 0 1.05rem;line-height:1.72;text-wrap:pretty}
+  .article-body h2{font-family:var(--display);font-size:clamp(1.42rem,1.15rem + .9vw,1.86rem);font-weight:720;line-height:1.08;margin:3.4rem 0 1rem;padding-top:.35rem;color:var(--ink);text-wrap:balance}
+  .article-body blockquote{margin:1.35rem 0 1.8rem;padding:.9rem 1rem;border-left:3px solid var(--ember);background:color-mix(in oklab,var(--page) 88%,var(--ember) 12%);color:var(--ink-soft)}
+  .article-body blockquote p{margin:0;line-height:1.58}
+  .article-body ul{margin:.4rem 0 1.25rem;padding-left:1.35rem;max-width:66ch}
+  .article-body li{margin:0 0 .5rem;line-height:1.58}
+  .article-body a{color:var(--teal-soft);text-decoration:none;border-bottom:1px solid color-mix(in oklab,var(--teal-soft) 45%,transparent)}
+  .article-body code{font-family:var(--mono);font-size:.88em;padding:.07em .28em;border:1px solid var(--rule);border-radius:3px}
+  .article-body hr{border:0;border-top:1px solid var(--rule);margin:3rem 0 2rem}
+  .article-body .source-list{font-size:.94rem;color:var(--ink-soft)}
+  .loading{font-family:var(--mono);font-size:.75rem;color:var(--tag)}
+  .article-footer{max-width:68ch;margin:2.6rem 0 0;padding-top:1.2rem;border-top:1px solid var(--rule);font-size:.93rem;color:var(--ink-soft);line-height:1.6}
+
+  .visual-prologue{width:min(68rem,calc(100vw - 2rem));margin:2.1rem 0 3.25rem;margin-left:50%;transform:translateX(-50%);padding:clamp(1rem,2vw,1.45rem);border:1px solid #302c35;border-radius:11px;background:radial-gradient(circle at 12% 0%,rgba(175,70,43,.18),transparent 33%),linear-gradient(145deg,#111015 0%,#09090c 72%);color:#f0ece5;box-shadow:0 1.6rem 4.5rem rgba(22,17,20,.22);overflow:hidden}
+  .visual-prologue-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1.25rem;align-items:end;margin-bottom:1.05rem}
+  .visual-kicker{margin:0 0 .45rem;font-family:var(--mono);font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:#c77253}
+  .visual-prologue h2{margin:0;font-family:var(--display);font-size:clamp(1.45rem,1.15rem + 1.25vw,2.15rem);line-height:1.02;color:#f5f0e8;text-wrap:balance}
+  .visual-prologue-copy{max-width:64ch;margin:.7rem 0 0;color:#bcb5bd;font-size:.92rem;line-height:1.58}
+  .visual-open{align-self:center;display:inline-flex;align-items:center;justify-content:center;min-height:2.35rem;padding:.55rem .75rem;border:1px solid #4b4248;border-radius:5px;color:#df9a75;text-decoration:none;font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;transition:border-color .18s,background .18s,color .18s}
+  .visual-open:hover{border-color:#b35c3d;background:rgba(179,92,61,.12);color:#ffd3ba}
+  .visual-controls{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:.25rem 0 .75rem}
+  .visual-order{font-family:var(--mono);font-size:.59rem;letter-spacing:.1em;text-transform:uppercase;color:#77707a}
+  .visual-nav{display:flex;align-items:center;gap:.42rem}
+  .visual-nav button{width:2rem;height:2rem;border:1px solid #403942;border-radius:4px;background:#131116;color:#d9d2d8;font:600 .9rem/1 var(--mono);cursor:pointer;transition:border-color .18s,color .18s,background .18s}
+  .visual-nav button:hover:not(:disabled){border-color:#b35c3d;color:#ffd3ba;background:#1c1515}
+  .visual-nav button:disabled{opacity:.32;cursor:default}
+  .visual-position{min-width:4.4rem;text-align:center;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:#a9a2aa}
+  .visual-rail{overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#6e4335 #171419;padding:0 0 .8rem;outline:none}
+  .visual-rail:focus-visible{outline:2px solid #b35c3d;outline-offset:5px;border-radius:5px}
+  .visual-track{display:flex;width:max-content;gap:.85rem}
+  .story-card{flex:0 0 clamp(230px,29vw,288px);margin:0;scroll-snap-align:start}
+  .story-card-image{display:block;width:100%;height:auto;border:1px solid #3b363e;border-radius:7px;background:#07070a;box-shadow:0 .7rem 1.9rem rgba(0,0,0,.25)}
+  .story-card figcaption{display:flex;justify-content:space-between;gap:.7rem;margin-top:.48rem;font-family:var(--mono);font-size:.56rem;letter-spacing:.11em;text-transform:uppercase;color:#77707a}
+  .visual-status{margin:0;padding:2.25rem 1rem;border:1px dashed #3d3740;border-radius:7px;color:#a8a1aa;font-family:var(--mono);font-size:.67rem;line-height:1.6;text-align:center}
+  .visual-status a{color:#df9a75}
+  .visual-caption{margin:.65rem 0 0;color:#817a83;font-family:var(--mono);font-size:.59rem;letter-spacing:.04em;line-height:1.55}
+
+  @media(max-width:680px){
+    .visual-prologue{width:min(100vw - 1rem,68rem);padding:1rem .8rem 1.05rem}
+    .visual-prologue-head{grid-template-columns:1fr;gap:.85rem}
+    .visual-open{justify-self:start}
+    .story-card{flex-basis:min(78vw,280px)}
+    .visual-order{display:none}
+    .visual-controls{justify-content:flex-end}
+  }
+  @media(max-width:560px){
+    .article-body p{line-height:1.65}
+    .article-body h2{margin-top:2.8rem}
+  }
+  @media(prefers-reduced-motion:reduce){.visual-open,.visual-nav button{transition:none}.visual-rail{scroll-behavior:auto}}
 </style>
 </head>
 <body class="doc">
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="writing.html">Writing</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260722-pick-lock"></script>
+<script type="module" src="system/nav.js?v=20260723-pick-lock-art"></script>
 <div class="docnav"><span class="where">Writing &middot; Pick the Lock for Everyone</span><span class="switch"><a href="writing.html">All writing</a><a href="pick-the-lock-for-everyone.html" aria-current="page">Essay</a><a href="pick-the-lock-for-everyone-talk.html">Spoken edition</a><a href="current-story.html">Visual sequence</a></span></div>
 <main id="main">
 <article class="sheet longform">
 <header class="mast article-head"><p class="role">Long-form essay · AI · art · accountability</p><h1>Pick the Lock for Everyone</h1><p class="lead">An apology, an argument about AI, and a refusal to keep mistaking the cage for the world</p><p class="article-meta">Zain Dana Harper<span class="sep">/</span>July 22, 2026<span class="sep">/</span><span data-word-count>…</span> words<span class="sep">/</span>AI-assisted, author-directed, publicly disclosed</p></header>
-<p class="companion"><a class="inline" href="pick-the-lock-for-everyone-talk.html">Read the spoken edition with delivery cues</a>. <a class="inline" href="current-story.html">View the chronological visual sequence</a>. The essay, talk, and images share a record, but they ask for different kinds of attention.</p>
+<p class="companion"><a class="inline" href="pick-the-lock-for-everyone-talk.html">Read the spoken edition with delivery cues</a>. <a class="inline" href="current-story.html">Open the uninterrupted visual sequence</a>. The essay, talk, and images share a record, but they ask for different kinds of attention.</p>
+
+<section class="visual-prologue" aria-labelledby="visual-prologue-title" data-current-story-rail>
+  <div class="visual-prologue-head">
+    <div>
+      <p class="visual-kicker">Visual prologue · 17 frames · chronological</p>
+      <h2 id="visual-prologue-title">The images belong inside the essay.</h2>
+      <p class="visual-prologue-copy">The complete sequence now appears here in its original source order. Scroll, swipe, use the arrow keys, or use the controls. No interpretive titles were added.</p>
+    </div>
+    <a class="visual-open" href="current-story.html">Open vertical edition</a>
+  </div>
+  <div class="visual-controls">
+    <span class="visual-order">1000119276 &rarr; 1000119292</span>
+    <div class="visual-nav" aria-label="Visual sequence controls">
+      <button type="button" data-story-previous aria-label="Previous artwork">&larr;</button>
+      <output class="visual-position" data-story-position aria-live="polite">01 / 17</output>
+      <button type="button" data-story-next aria-label="Next artwork">&rarr;</button>
+    </div>
+  </div>
+  <div class="visual-rail" data-story-scroller tabindex="0" aria-label="Chronological visual sequence">
+    <p class="visual-status" data-current-story-status>Loading the art. <a href="current-story.html">Open the separate visual page</a> if this surface does not render it.</p>
+    <div class="visual-track" data-current-story-track hidden></div>
+  </div>
+  <p class="visual-caption">Source order preserved. Each frame is reconstructed from the same public receipt used by the standalone visual page.</p>
+</section>
+
 <div class="article-body" aria-live="polite" data-mode="essay" data-markdown-parts="writing/pick-the-lock-for-everyone/01.md,writing/pick-the-lock-for-everyone/02.md,writing/pick-the-lock-for-everyone/03.md,writing/pick-the-lock-for-everyone/04.md,writing/pick-the-lock-for-everyone/04b.md,writing/pick-the-lock-for-everyone/04c.md,writing/pick-the-lock-for-everyone/04d.md,writing/pick-the-lock-for-everyone/05.md,writing/pick-the-lock-for-everyone/06.md"><p class="loading">Loading the plain-text essay source…</p></div>
-<noscript><p>This edition needs JavaScript to typeset the plain-text source. Start with <a class="inline" href="writing/pick-the-lock-for-everyone/01.md">source part 1</a>.</p></noscript>
-<footer class="article-footer"><strong>Authorship and process.</strong> This work was developed through an AI-assisted editorial process using Zain Dana Harper's own essays, research notes, public comments, revisions, and lived experience. The assistance is disclosed because the process belongs inside the argument. The raw source remains public in nine plain-text parts.</footer>
+<noscript><p>This edition needs JavaScript to typeset the plain-text source and reconstruct the art. Start with <a class="inline" href="writing/pick-the-lock-for-everyone/01.md">source part 1</a>, or open the <a class="inline" href="current-story.html">visual transcript</a>.</p></noscript>
+<footer class="article-footer"><strong>Authorship and process.</strong> This work was developed through an AI-assisted editorial process using Zain Dana Harper's own essays, research notes, public comments, revisions, lived experience, and the seventeen supplied artworks. The assistance is disclosed because the process belongs inside the argument. The raw essay source remains public in nine plain-text parts; the image chronology and transformation receipt remain public in the visual manifest.</footer>
 </article>
 </main>
-<script type="module" src="system/essay-loader.js?v=20260722-pick-lock"></script>
+<script type="module" src="system/current-story.js?v=20260723-inline-art"></script>
+<script type="module" src="system/essay-loader.js?v=20260723-pick-lock-art"></script>
 </body>
 </html>
