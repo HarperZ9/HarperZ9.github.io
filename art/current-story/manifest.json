@@ -4,7 +4,7 @@
   "published": "2026-07-23",
   "statement": "Seventeen images, shown in the order they were made. They tell my current story.",
   "ordering": "Ascending numeric source filename, 1000119276.png through 1000119292.png.",
-  "source_note": "Original PNG files were supplied by the author. The public WebP composite preserves the sequence and aspect ratio; the generation method is not asserted in this manifest.",
+  "source_note": "Original PNG files were supplied by the author. The public WebP composite is reconstructed from inspectable Base64 text chunks and preserves the sequence and aspect ratio. The generation method is not asserted in this manifest.",
   "images": [
     {"sequence":1,"source_filename":"1000119276.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"d1f135d7ac052d55c5a6c2848b8b5c5c0fcca613a853ea528f6c1c77d27f80a9","alt":"A fractured monochrome figure crouches in a dark geometric interior while two small figures stand beyond a bright keyhole-shaped opening."},
     {"sequence":2,"source_filename":"1000119277.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"31e5f243cc9464bb4cd515bafb3ce2664813710543c69acd761fc493082211d1","alt":"A faceted violet-gray figure in the left foreground looks toward a luminous doorway containing a distant silhouette."},
@@ -24,5 +24,27 @@
     {"sequence":16,"source_filename":"1000119291.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"1b9c6d0764e3eb0c01c96021443f035e6d422fb4c835f0d7b19a17db572aee05","alt":"A single tiny figure stands near the horizon beneath an immense blue-white field of light."},
     {"sequence":17,"source_filename":"1000119292.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"74207a0838739d43cf23da3aa53d8960723726d2812b7a059422e7dc8c570ecb","alt":"A pale cube floats above a misty sea and a low distant island under diffuse light."}
   ],
-  "published_composite": {"path":"img/current-story/sequence.webp","format":"webp","dimensions":{"width":640,"height":14368},"gap_pixels":48,"sha256":"23789c950c1f70d0459a35f0bbe1cca9c78bac23f7aff822a022546bfc69b982","bytes":385690}
+  "published_composite": {
+    "encoding": "base64-chunks",
+    "mime_type": "image/webp",
+    "dimensions": {"width": 320, "height": 7184},
+    "plate_dimensions": {"width": 320, "height": 400},
+    "gap_pixels": 24,
+    "decoded_sha256": "f286c7b2081a02f00ae08f2cead5ac945b06922547959833581878418d839cf6",
+    "decoded_bytes": 81692,
+    "base64_characters": 108924,
+    "chunks": [
+      "art/current-story/data/sequence.00.b64",
+      "art/current-story/data/sequence.01.b64",
+      "art/current-story/data/sequence.02.b64",
+      "art/current-story/data/sequence.03.b64",
+      "art/current-story/data/sequence.04.b64",
+      "art/current-story/data/sequence.05.b64",
+      "art/current-story/data/sequence.06.b64",
+      "art/current-story/data/sequence.07.b64",
+      "art/current-story/data/sequence.08.b64",
+      "art/current-story/data/sequence.09.b64",
+      "art/current-story/data/sequence.10.b64"
+    ]
+  }
 }
