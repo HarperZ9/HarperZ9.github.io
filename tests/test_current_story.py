@@ -11,6 +11,7 @@ MANIFEST = ROOT / "art" / "current-story" / "manifest.json"
 README = ROOT / "art" / "current-story" / "README.md"
 ESSAY = ROOT / "pick-the-lock-for-everyone.html"
 TALK = ROOT / "pick-the-lock-for-everyone-talk.html"
+SCRIPT = ROOT / "system" / "current-story.js"
 SITEMAP = ROOT / "sitemap.xml"
 CHUNKS = [
     ROOT / "art" / "current-story" / "data" / f"sequence.{index:02d}.b64"
@@ -18,18 +19,30 @@ CHUNKS = [
 ]
 
 
-def test_current_story_is_public_and_linked() -> None:
-    for path in (PAGE, MANIFEST, README, ESSAY, TALK, SITEMAP, *CHUNKS):
+def test_current_story_is_public_linked_and_visible_in_the_essay() -> None:
+    for path in (PAGE, MANIFEST, README, ESSAY, TALK, SCRIPT, SITEMAP, *CHUNKS):
         assert path.is_file(), path
 
     page = PAGE.read_text(encoding="utf-8")
+    essay = ESSAY.read_text(encoding="utf-8")
+    script = SCRIPT.read_text(encoding="utf-8")
+
     assert "<title>Current Story &mdash; Zain Dana Harper</title>" in page
     assert '<link rel="canonical" href="https://harperz9.github.io/current-story.html">' in page
     assert "Seventeen images, shown in the order they were made." in page
-    assert 'href="current-story.html"' in ESSAY.read_text(encoding="utf-8")
+    assert 'href="current-story.html"' in essay
     assert 'href="current-story.html"' in TALK.read_text(encoding="utf-8")
     assert "https://harperz9.github.io/current-story.html" in SITEMAP.read_text(encoding="utf-8")
-    assert "{ length: 11 }" in page
+
+    assert "data-current-story-full" in page
+    assert 'src="system/current-story.js?v=20260723-inline-art"' in page
+    assert "data-current-story-rail" in essay
+    assert "The images belong inside the essay." in essay
+    assert "data-story-previous" in essay
+    assert "data-story-next" in essay
+    assert 'src="system/current-story.js?v=20260723-inline-art"' in essay
+    assert "const CHUNK_COUNT = 11;" in script
+    assert 'document.querySelectorAll("[data-current-story-rail]")' in script
 
 
 def test_current_story_preserves_numeric_chronology_and_receipt() -> None:
