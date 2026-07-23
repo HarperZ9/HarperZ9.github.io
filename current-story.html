@@ -60,9 +60,9 @@
   <h2 id="sequence-h">The sequence.</h2>
   <p class="seal-line story-intro">No interpretive titles. Read from top to bottom. The chronology is the narrative.</p>
   <figure class="story-strip">
-    <div class="story-canvas">
-      <p id="story-load-state" class="story-load-state">Loading the chronological visual sequence&hellip;</p>
-      <img id="current-story-image" width="320" height="7184" hidden decoding="async" alt="A continuous chronological strip of seventeen images moving from dark fractured figures and keyhole-shaped openings toward pale rooms, distant doors, open light, and a floating cube.">
+    <div class="story-canvas" data-current-story-full>
+      <p class="story-load-state" data-current-story-status>Loading the chronological visual sequence&hellip;</p>
+      <img data-current-story-image width="320" height="7184" hidden decoding="async" alt="A continuous chronological strip of seventeen images moving from dark fractured figures and keyhole-shaped openings toward pale rooms, distant doors, open light, and a floating cube.">
     </div>
     <figcaption><span>01 &rarr; 17</span><span>source 1000119276 &rarr; 1000119292</span></figcaption>
   </figure>
@@ -90,32 +90,10 @@
   </details>
   <footer class="story-close">
     <p>Selected and sequenced by Zain Dana Harper. The original numbered files and the published composite are recorded in a public manifest. The image is reconstructed from inspectable text chunks, so its order and bytes do not depend on memory.</p>
-    <p class="story-links"><a href="pick-the-lock-for-everyone.html">Read the essay</a><a href="pick-the-lock-for-everyone-talk.html">Read the spoken edition</a><a href="gallery.html">Return to the gallery</a><a href="art/current-story/manifest.json">View the manifest</a></p>
+    <p class="story-links"><a href="pick-the-lock-for-everyone.html">Read the essay with the inline visual prologue</a><a href="pick-the-lock-for-everyone-talk.html">Read the spoken edition</a><a href="gallery.html">Return to the gallery</a><a href="art/current-story/manifest.json">View the manifest</a></p>
   </footer>
 </section>
 </main>
-<script type="module">
-const image = document.getElementById("current-story-image");
-const note = document.getElementById("story-load-state");
-const parts = Array.from(
-  { length: 11 },
-  (_, index) => `art/current-story/data/sequence.${String(index).padStart(2, "0")}.b64`
-);
-try {
-  const base64 = (
-    await Promise.all(parts.map(async (path) => {
-      const response = await fetch(path, { cache: "force-cache" });
-      if (!response.ok) throw new Error(`${path}: ${response.status}`);
-      return (await response.text()).trim();
-    }))
-  ).join("");
-  image.src = `data:image/webp;base64,${base64}`;
-  image.hidden = false;
-  note.remove();
-} catch (error) {
-  note.textContent = "The image sequence could not be loaded. The text transcript and source manifest remain available.";
-  console.error(error);
-}
-</script>
+<script type="module" src="system/current-story.js?v=20260723-inline-art"></script>
 </body>
 </html>
