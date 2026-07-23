@@ -1,75 +1,89 @@
 from __future__ import annotations
 
-import base64
 import hashlib
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+ESSAY = ROOT / "pick-the-lock-for-everyone.html"
 PAGE = ROOT / "current-story.html"
+SCRIPT = ROOT / "system" / "current-story.js"
+STYLE = ROOT / "system" / "current-story.css"
 MANIFEST = ROOT / "art" / "current-story" / "manifest.json"
 README = ROOT / "art" / "current-story" / "README.md"
-ESSAY = ROOT / "pick-the-lock-for-everyone.html"
-TALK = ROOT / "pick-the-lock-for-everyone-talk.html"
-SCRIPT = ROOT / "system" / "current-story.js"
 SITEMAP = ROOT / "sitemap.xml"
-CHUNKS = [
-    ROOT / "art" / "current-story" / "data" / f"sequence.{index:02d}.b64"
-    for index in range(11)
-]
 
 
-def test_current_story_is_public_linked_and_visible_in_the_essay() -> None:
-    for path in (PAGE, MANIFEST, README, ESSAY, TALK, SCRIPT, SITEMAP, *CHUNKS):
+def read(path: Path) -> str:
+    return path.read_text(encoding="utf-8")
+
+
+def test_visual_coda_is_after_the_essay() -> None:
+    for path in (ESSAY, PAGE, SCRIPT, STYLE, MANIFEST, README, SITEMAP):
         assert path.is_file(), path
 
-    page = PAGE.read_text(encoding="utf-8")
-    essay = ESSAY.read_text(encoding="utf-8")
-    script = SCRIPT.read_text(encoding="utf-8")
-
-    assert "<title>Current Story &mdash; Zain Dana Harper</title>" in page
-    assert '<link rel="canonical" href="https://harperz9.github.io/current-story.html">' in page
-    assert "Seventeen images, shown in the order they were made." in page
-    assert 'href="current-story.html"' in essay
-    assert 'href="current-story.html"' in TALK.read_text(encoding="utf-8")
-    assert "https://harperz9.github.io/current-story.html" in SITEMAP.read_text(encoding="utf-8")
-
-    assert "data-current-story-full" in page
-    assert 'src="system/current-story.js?v=20260723-inline-art"' in page
-    assert "data-current-story-rail" in essay
-    assert "The images belong inside the essay." in essay
-    assert "data-story-previous" in essay
-    assert "data-story-next" in essay
-    assert 'src="system/current-story.js?v=20260723-inline-art"' in essay
-    assert "const CHUNK_COUNT = 11;" in script
-    assert 'document.querySelectorAll("[data-current-story-rail]")' in script
+    essay = read(ESSAY)
+    assert 'class="article-body"' in essay
+    assert 'class="visual-coda"' in essay
+    assert essay.index('class="article-body"') < essay.index('class="visual-coda"')
+    assert "Visual coda · 27 frames · high resolution" in essay
+    assert "visual-prologue" not in essay
+    assert 'data-current-story-rail' in essay
+    assert 'data-current-story-grid' in read(PAGE)
+    assert "https://harperz9.github.io/current-story.html" in read(SITEMAP)
 
 
-def test_current_story_preserves_numeric_chronology_and_receipt() -> None:
-    page = PAGE.read_text(encoding="utf-8")
-    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    expected_sources = [f"100011{number}.png" for number in range(9276, 9293)]
-    expected_chunks = [
-        f"art/current-story/data/sequence.{index:02d}.b64"
-        for index in range(11)
+def test_manifest_preserves_both_movements_and_high_resolution_assets() -> None:
+    manifest = json.loads(read(MANIFEST))
+    images = manifest["images"]
+    sprites = manifest["published_assets"]["sprites"]
+
+    assert len(images) == 27
+    assert [item["sequence"] for item in images] == list(range(1, 28))
+    assert [item["source_filename"] for item in images[:17]] == [
+        f"100011{number}.png" for number in range(9276, 9293)
     ]
+    assert [item["source_filename"] for item in images[17:]] == [
+        "f6259f82-44d3-4684-b193-347bb59b05a0.png",
+        "ChatGPT Image Jul 21, 2026, 08_13_22 PM (1).png",
+        "ChatGPT Image Jul 21, 2026, 08_13_22 PM (2).png",
+        "ChatGPT Image Jul 21, 2026, 08_13_22 PM (3).png",
+        "887e81f0-8e7b-4335-bec6-2ca1444197c9.png",
+        "f38e019c-97ed-4bc7-93b5-38f7e3c1e671.png",
+        "7eed340d-66b0-44c1-a96f-fa72899ae718.png",
+        "c111f74e-c630-4850-8aef-2c7524a00574.png",
+        "ChatGPT Image Jul 20, 2026, 06_32_55 PM (2).png",
+        "ChatGPT Image Jul 20, 2026, 09_34_36 PM.png",
+    ]
+    assert {item["movement"] for item in images[:17]} == {"current-story"}
+    assert {item["movement"] for item in images[17:]} == {"continuation"}
+    assert manifest["published_assets"]["frame_dimensions"] == {
+        "width": 1024,
+        "height": 1280,
+    }
+    assert len(sprites) == 3
 
-    assert [item["sequence"] for item in manifest["images"]] == list(range(1, 18))
-    assert [item["source_filename"] for item in manifest["images"]] == expected_sources
-    assert "source 1000119276 &rarr; 1000119292" in page
+    for sprite in sprites:
+        path = ROOT / sprite["path"]
+        assert path.is_file(), path
+        data = path.read_bytes()
+        assert data[:4] == b"RIFF"
+        assert hashlib.sha256(data).hexdigest() == sprite["sha256"]
+        assert len(data) == sprite["bytes"]
+        assert sprite["frame_dimensions"] == {"width": 1024, "height": 1280}
 
-    composite = manifest["published_composite"]
-    assert composite["dimensions"] == {"width": 320, "height": 7184}
-    assert composite["plate_dimensions"] == {"width": 320, "height": 400}
-    assert composite["gap_pixels"] == 24
-    assert composite["chunks"] == expected_chunks
+    for item in images:
+        assert 0 <= item["sprite_index"] <= 2
+        assert 0 <= item["frame_index"] <= 8
+        assert item["alt"]
 
-    encoded_parts = [path.read_text(encoding="utf-8").strip() for path in CHUNKS]
-    assert sum(map(len, encoded_parts)) == composite["base64_characters"] == 108924
-    decoded = base64.b64decode("".join(encoded_parts), validate=True)
-    assert decoded[:4] == b"RIFF"
-    assert len(decoded) == composite["decoded_bytes"] == 81692
-    assert hashlib.sha256(decoded).hexdigest() == composite["decoded_sha256"]
 
-    for item in manifest["images"]:
-        assert item["alt"] in page
+def test_renderer_uses_binary_sprites_and_accessible_large_view() -> None:
+    script = read(SCRIPT)
+    assert "hq-sprite" not in script  # asset paths are manifest-driven
+    assert "data-current-story-dialog" in script
+    assert "IntersectionObserver" in script
+    assert "backgroundSize" in script
+    assert "base64" not in script.lower()
+    assert "CHUNK_COUNT" not in script
+    assert "FRAME_WIDTH = 320" not in script
