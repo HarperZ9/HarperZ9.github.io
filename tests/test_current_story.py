@@ -37,10 +37,12 @@ def test_current_story_is_public_linked_and_visible_in_the_essay() -> None:
     assert "data-current-story-full" in page
     assert 'src="system/current-story.js?v=20260723-inline-art"' in page
     assert "data-current-story-rail" in essay
-    assert "The images belong inside the essay." in essay
+    assert "Visual coda · chronological" in essay
+    assert "The images follow the argument." in essay
+    assert essay.index('class="article-body"') < essay.index("data-current-story-rail")
     assert "data-story-previous" in essay
     assert "data-story-next" in essay
-    assert 'src="system/current-story.js?v=20260723-inline-art"' in essay
+    assert 'src="system/current-story.js?v=20260723-inline-art-coda"' in essay
     assert "const CHUNK_COUNT = 11;" in script
     assert 'document.querySelectorAll("[data-current-story-rail]")' in script
 
