@@ -57,6 +57,10 @@ def test_pick_the_lock_preserves_voice_and_new_infrastructure_argument() -> None
 
     for marker in (
         "I have never apologized.",
+        "Prestige was not the dream. Acceptance was.",
+        "Culture is part of the explanation. It did not borrow my hands without permission.",
+        "Maybe bipolar is the right word for some of that. Maybe it is not.",
+        "The least I can do is turn the skills I developed while unlocking, cheating, avoiding, and improvising toward something that lowers a barrier instead of creating another victim.",
         "The black box I know best",
         "The graph does not care about your diploma",
         "Art after the archive",
@@ -70,6 +74,8 @@ def test_pick_the_lock_preserves_voice_and_new_infrastructure_argument() -> None
         "What I owe the Mad-Happy Scientist",
         "The promise I can actually make",
         "Mental health belongs in this conversation",
+        "I still prefer self-medication more often than I should.",
+        "Assistance is not surrender. Autonomy is not immunity.",
         "I do a bit of both.",
         "I have made a home there before. I know the furniture.",
         "I believe everybody deserves redemption.",
@@ -82,6 +88,9 @@ def test_pick_the_lock_preserves_voice_and_new_infrastructure_argument() -> None
 
     for marker in (
         "Walk out. Stop. Let the room settle.",
+        "Prestige was not the dream. Acceptance was.",
+        "Culture explains part of it. Culture did not borrow my hands without permission.",
+        "Maybe bipolar is the right word for some of that. Maybe it is not.",
         "Shortcuts are my field.",
         "I want a time dividend.",
         "A creative economy can be built beside it.",
@@ -92,6 +101,8 @@ def test_pick_the_lock_preserves_voice_and_new_infrastructure_argument() -> None
         "Pick the lock for everyone.",
         "I need to end with something less heroic.",
         "Mental health matters for everybody.",
+        "I still prefer self-medication more often than I should.",
+        "Help is not surrender. Autonomy is not immunity.",
         "The honest answer is that I do a bit of both.",
         "I have made a home there before. I know the furniture.",
         "I believe everybody deserves redemption.",
