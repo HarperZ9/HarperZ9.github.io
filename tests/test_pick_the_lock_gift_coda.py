@@ -2,7 +2,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ESSAY = ROOT / "writing" / "pick-the-lock-for-everyone" / "06.md"
+ESSAY = ROOT / "writing" / "pick-the-lock-for-everyone" / "05.md"
 TALK = ROOT / "writing" / "pick-the-lock-for-everyone-talk" / "03.md"
 
 
@@ -15,12 +15,13 @@ def test_gift_coda_keeps_transformation_and_accountability_together() -> None:
     talk = read(TALK)
 
     for marker in (
-        "## The gift I want to leave",
+        "## The promise I can actually make",
         "Environment is the medium.",
-        "I believe in you.",
+        "I believe in people who cannot currently believe in themselves.",
         "I am not announcing an exit. I am here.",
-        "The middleman can be a regular man too.",
-        "Sincerity is not a receipt.",
+        "The middleman can be a regular person too.",
+        "sincerity is not a receipt.",
+        "The gift begins when sincerity survives contact with somebody else's reality",
         "That is what I want to leave behind.",
     ):
         assert marker in essay
