@@ -1,7 +1,9 @@
 # Current Story
 
-Seventeen images, shown in the order they were made. They tell my current story.
+Twenty-seven works are published as the visual coda to *Pick the Lock for Everyone*.
 
-The sequence follows the original numbered source files from `1000119276.png` through `1000119292.png`. No interpretive titles were added. The chronology is the narrative.
+The first movement preserves the original numeric source order from `1000119276.png` through `1000119292.png`. The second movement contains the ten continuation images supplied on July 23, 2026, in the order they appeared in that message. No interpretive titles were added.
 
-The public page reconstructs one 320 × 7,184 WebP composite from eleven inspectable Base64 text chunks. The composite contains seventeen 320 × 400 plates separated by 24-pixel neutral gaps. `manifest.json` records the original PNG hashes, dimensions, accessibility descriptions, ordered chunk paths, and the decoded composite hash. The generation method is not asserted in this record.
+The active publication uses three high-resolution WebP sprites. Every artwork is preserved as a complete 4:5 frame at 1024 × 1280 pixels. The conversion uses proportional high-quality resizing and WebP quality 90, without interpretive cropping or recoloring. The essay renders the sequence at the end of the article, and the standalone page renders the same manifest as a vertical edition.
+
+`manifest.json` records source filenames, dimensions, SHA-256 hashes, accessible descriptions, sprite positions, and published-asset receipts. The former 320 × 400 Base64 composite is retained only in repository history and is no longer referenced by the live pages.
