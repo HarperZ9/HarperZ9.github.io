@@ -51,43 +51,62 @@ def test_pick_the_lock_pages_are_public_and_discoverable() -> None:
     assert TALK_URL in sitemap
 
 
-def test_pick_the_lock_preserves_voice_and_new_infrastructure_argument() -> None:
+def test_conversational_essay_preserves_the_full_argument() -> None:
     essay = joined(ESSAY_PARTS)
-    talk = joined(TALK_PARTS)
 
     for marker in (
         "I have never apologized.",
-        "Prestige was not the dream. Acceptance was.",
-        "That is not a respectable syllabus. It is the one I had.",
-        "the same beautifully lit spirit exists somewhere in each of us.",
-        "Culture is part of the explanation. It did not borrow my hands without permission.",
-        "Maybe bipolar is the right word for some of that. Maybe it is not.",
-        "The least I can do is turn the skills I developed while unlocking, cheating, avoiding, and improvising toward something that lowers a barrier instead of creating another victim.",
-        "The black box I know best",
-        "The graph does not care about your diploma",
-        "Art after the archive",
-        'Not "in the style of." A system built to explore the pressure underneath the style.',
-        "A steward, not a thief",
-        "That is the time dividend.",
-        "Build beside the old world until it becomes unnecessary",
-        "If we are fucked up, let us fuck up in the open",
+        "The drinking and the drugs are not the center of this story.",
+        "If independence means carving a path for yourself",
+        "relationship maintenance and emotional janitorial work",
+        "I have called myself a living, breathing reaction",
+        "The creator's confession cannot warrant the creation",
+        "## The robe and the farm",
+        "Pink Floyd gave me the sound of that contradiction",
+        "It took longer to admit that all three animals can occupy the same person",
+        "Criticism means very little if it cannot turn around and look at me.",
+        "## The bundle breaks",
+        "I call that review debt.",
+        "sentences that feel more interested in landing than in breathing",
+        "Something happened. The search boundary moved. The proof boundary did not.",
+        "A poem does not have a kernel.",
+        "## Build the instrument, not the imitation",
+        "Keep the lineage and lose the label.",
+        "## A steward at the table",
+        "Did the user get their time back, and were they allowed to keep it?",
+        "## Build beside the old world",
+        "Healthy systems do not eliminate conflict.",
+        "## Open failure, protected interior",
         "Open access is not root access.",
-        "Nobody should have to become the floor.",
-        "Maybe we can all eat if we stop hoarding the food.",
-        "What I owe the Mad-Happy Scientist",
-        "The promise I can actually make",
-        "Mental health belongs in this conversation",
-        "I still prefer self-medication more often than I should.",
-        "Assistance is not surrender. Autonomy is not immunity.",
-        "I do a bit of both.",
-        "I have made a home there before. I know the furniture.",
-        "I believe everybody deserves redemption.",
-        "Otherwise you are just a memory of yesterday.",
-        "It should survive me.",
-        "I will not call this \"human-written\"",
+        "fuck the little pipe.",
+        "## What I owe the Mad-Happy Scientist",
+        "Self-destruction removes the person who owes the work.",
+        "## The promise I can actually make",
+        "The gift begins when sincerity survives contact with somebody else's reality",
+        "## What remains",
+        "The Mad-Happy Scientist is still in there.",
+        "Pink Floyd, *Animals*.",
+        "This version deliberately leaves more room for conversation",
         "independent reconstruction",
     ):
         assert marker in essay
+
+    assert len(essay.split()) > 13_000
+    assert essay.lower().count("fuck") <= 1
+    assert essay.lower().count("shit") <= 3
+
+
+def test_art_follows_the_complete_essay_as_a_coda() -> None:
+    essay = read(ESSAY)
+
+    assert "Visual coda · chronological" in essay
+    assert "The images follow the argument." in essay
+    assert "The artwork follows the essay as a visual coda" in essay
+    assert essay.index('class="article-body"') < essay.index("data-current-story-rail")
+
+
+def test_spoken_edition_preserves_its_existing_delivery_markers() -> None:
+    talk = joined(TALK_PARTS)
 
     for marker in (
         "Walk out. Stop. Let the room settle.",
@@ -121,9 +140,8 @@ def test_pick_the_lock_preserves_voice_and_new_infrastructure_argument() -> None
 def test_pick_the_lock_pages_have_no_private_or_secret_markers() -> None:
     combined = read(ESSAY) + read(TALK) + joined(ESSAY_PARTS) + joined(TALK_PARTS)
     for marker in (
-        "C:\\",
-        "C:/",
-        "Users\\",
+        "C:",
+        "Users",
         "PRIVATE KEY",
         "api_key",
         "password:",
