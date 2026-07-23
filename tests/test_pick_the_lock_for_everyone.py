@@ -140,9 +140,8 @@ def test_spoken_edition_preserves_its_existing_delivery_markers() -> None:
 def test_pick_the_lock_pages_have_no_private_or_secret_markers() -> None:
     combined = read(ESSAY) + read(TALK) + joined(ESSAY_PARTS) + joined(TALK_PARTS)
     for marker in (
-        "C:\\",
-        "C:/",
-        "Users\\",
+        "C:",
+        "Users",
         "PRIVATE KEY",
         "api_key",
         "password:",
