@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gaussian Splat Lab &mdash; Zain Dana Harper</title>
+<meta name="description" content="A bounded lab for turning selected Current Story artworks into real, disclosed Gaussian-splat scene experiments without replacing the canonical source images.">
+<link rel="canonical" href="https://harperz9.github.io/gaussian-splats.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Gaussian Splat Lab &mdash; Zain Dana Harper">
+<meta property="og:description" content="Three prepared source images, zero published scenes, and a strict boundary between a real spatial artifact and a flat splat-styled image.">
+<meta property="og:url" content="https://harperz9.github.io/gaussian-splats.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gaussian Splat Lab &mdash; Zain Dana Harper">
+<meta name="twitter:description" content="A reproducible, source-preserving pilot for real Gaussian-splat scenes.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
+<meta name="color-scheme" content="dark">
+<link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="system/system.css?v=20260724-gaussian-splats">
+<style>
+  .splat-page{width:min(1120px,calc(100vw - 2rem));margin:0 auto;padding:clamp(2.5rem,7vw,6rem) 0 5rem}
+  .splat-hero{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.6fr);gap:clamp(1.5rem,4vw,4rem);align-items:end;padding:clamp(1.4rem,3vw,2.5rem);border:1px solid var(--hairline);border-radius:14px;background:radial-gradient(circle at 12% 8%,rgba(181,76,45,.18),transparent 35%),linear-gradient(145deg,#121015 0%,#09090c 78%);box-shadow:0 2rem 6rem rgba(0,0,0,.28)}
+  .splat-kicker,.splat-status,.source-label,.receipt-key,.splat-links{font-family:var(--mono)}
+  .splat-kicker{margin:0 0 .7rem;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--orange)}
+  .splat-hero h1{margin:0;font-family:var(--display);font-size:clamp(2.4rem,7vw,6rem);line-height:.88;letter-spacing:-.045em;color:var(--bone);text-wrap:balance}
+  .splat-lede{max-width:64ch;margin:1.2rem 0 0;color:var(--muted);font-size:clamp(1rem,1.3vw,1.15rem);line-height:1.7}
+  .splat-lede strong{color:var(--bone)}
+  .splat-status-box{padding:1rem;border:1px solid #3b343c;border-radius:10px;background:rgba(5,5,8,.68)}
+  .splat-status{display:inline-flex;align-items:center;gap:.55rem;margin:0 0 1rem;padding:.42rem .58rem;border:1px solid #5d493d;border-radius:999px;color:#e0a17d;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase}
+  .splat-status::before{content:"";width:.52rem;height:.52rem;border-radius:50%;background:#d47750;box-shadow:0 0 1rem rgba(212,119,80,.65)}
+  .status-grid{display:grid;grid-template-columns:1fr auto;gap:.65rem 1rem;margin:0}
+  .status-grid dt{color:#8f8790;font-size:.76rem}
+  .status-grid dd{margin:0;color:#e4dde3;font-family:var(--mono);font-size:.72rem;text-align:right}
+  .section{margin-top:clamp(3.5rem,8vw,7rem)}
+  .section-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,.55fr);gap:1.5rem;align-items:end;margin-bottom:1.3rem}
+  .section h2{margin:0;font-family:var(--display);font-size:clamp(1.7rem,3.5vw,3rem);line-height:1;color:var(--bone)}
+  .section-copy{margin:0;color:var(--muted);line-height:1.65}
+  .pilot-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+  .pilot{position:relative;min-height:390px;display:flex;flex-direction:column;justify-content:space-between;padding:1rem;border:1px solid var(--hairline);border-radius:11px;overflow:hidden;background:#0b0a0d}
+  .pilot::before,.pilot::after{content:"";position:absolute;inset:auto;pointer-events:none}
+  .pilot::before{width:72%;aspect-ratio:1;border:1px solid rgba(226,220,225,.22);border-radius:50%;top:10%;left:14%;box-shadow:0 0 0 22px rgba(255,255,255,.018),0 0 0 48px rgba(255,255,255,.012)}
+  .pilot::after{width:1px;height:60%;left:50%;top:18%;background:linear-gradient(transparent,rgba(219,137,94,.75),transparent);transform:rotate(24deg)}
+  .pilot:nth-child(2){background:radial-gradient(circle at 62% 28%,rgba(130,177,205,.18),transparent 25%),#0b0a0d}
+  .pilot:nth-child(2)::before{border-radius:8% 8% 42% 42%;transform:perspective(500px) rotateY(-18deg)}
+  .pilot:nth-child(3){background:radial-gradient(circle at 50% 48%,rgba(255,255,255,.09),transparent 38%),#09090b}
+  .pilot:nth-child(3)::after{height:72%;top:10%;transform:rotate(0);background:linear-gradient(transparent,rgba(255,255,255,.82),transparent)}
+  .pilot-top,.pilot-bottom{position:relative;z-index:1}
+  .source-label{display:inline-block;padding:.38rem .48rem;border:1px solid #3a343b;border-radius:4px;background:rgba(8,8,10,.74);color:#a9a1aa;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase}
+  .pilot h3{margin:12rem 0 .55rem;font-family:var(--display);font-size:1.45rem;line-height:1.02;color:#f0ebe5}
+  .pilot p{margin:0;color:#aaa2ab;font-size:.88rem;line-height:1.58}
+  .pilot-receipt{display:grid;grid-template-columns:1fr auto;gap:.45rem 1rem;margin:1.1rem 0 0;padding-top:.8rem;border-top:1px solid #28242a}
+  .receipt-key{color:#77707a;font-size:.56rem;letter-spacing:.08em;text-transform:uppercase}
+  .receipt-value{color:#cfc7ce;font-family:var(--mono);font-size:.56rem;text-align:right;overflow-wrap:anywhere}
+  .criteria{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;padding:1px;background:var(--hairline);border:1px solid var(--hairline);border-radius:10px;overflow:hidden}
+  .criterion{min-height:170px;padding:1.2rem;background:#0c0b0f}
+  .criterion strong{display:block;margin-bottom:.55rem;color:var(--bone);font-size:1rem}
+  .criterion p{margin:0;color:var(--muted);line-height:1.58}
+  .boundary{padding:clamp(1.2rem,3vw,2rem);border-left:3px solid var(--orange);background:rgba(183,78,46,.08);color:#c8c0c7;line-height:1.7}
+  .boundary strong{color:#f1ebe6}
+  .splat-links{display:flex;flex-wrap:wrap;gap:.75rem 1.25rem;margin-top:1.3rem;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase}
+  .splat-links a{color:var(--orange)}
+  @media(max-width:820px){.splat-hero,.section-head{grid-template-columns:1fr}.pilot-grid{grid-template-columns:1fr}.pilot{min-height:330px}.pilot h3{margin-top:9rem}.criteria{grid-template-columns:1fr}}
+</style>
+</head>
+<body class="inner-clean">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="gallery.html">Gallery</a> <a href="research.html">Research</a> <a href="writing.html">Writing</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260724-gaussian-splats"></script>
+<main id="main" class="splat-page">
+  <header class="splat-hero">
+    <div>
+      <p class="splat-kicker">Spatial media experiment · source preserving</p>
+      <h1>Gaussian<br>Splat Lab.</h1>
+      <p class="splat-lede">This page is deliberately not a gallery of flat images made to <em>look</em> like point clouds. A result belongs here only when it is a <strong>real renderable spatial artifact</strong>, preserves the source beside it, and discloses what the single-image reconstruction had to invent.</p>
+    </div>
+    <aside class="splat-status-box" aria-label="Current lab status">
+      <p class="splat-status" data-lab-status>Source prepared</p>
+      <dl class="status-grid">
+        <dt>Pilot sources</dt><dd data-source-count>3</dd>
+        <dt>Published scenes</dt><dd data-scene-count>0</dd>
+        <dt>Planned format</dt><dd>.spz</dd>
+        <dt>Canonical art</dt><dd>unchanged</dd>
+      </dl>
+    </aside>
+  </header>
+
+  <section class="section" aria-labelledby="pilots-title">
+    <div class="section-head">
+      <h2 id="pilots-title">Three pressure tests.</h2>
+      <p class="section-copy">The sources were selected to expose different failure modes in a single-image spatial interpretation: architectural depth, human scale, occlusion, reflective water, nested geometry, and large regions the source never shows.</p>
+    </div>
+    <div class="pilot-grid">
+      <article class="pilot">
+        <div class="pilot-top"><span class="source-label">Pilot 01 · Current Story 18</span><h3>City and witnesses</h3><p>Tests translucent architecture, a crowd at several scales, reflective water, and ambiguous foreground figures.</p></div>
+        <dl class="pilot-receipt"><dt class="receipt-key">Source SHA-256</dt><dd class="receipt-value">7d2f720654c3…d544bd6c</dd><dt class="receipt-key">Scene</dt><dd class="receipt-value">not generated</dd></dl>
+      </article>
+      <article class="pilot">
+        <div class="pilot-top"><span class="source-label">Pilot 02 · Current Story 21</span><h3>Gate and figure</h3><p>Tests a clear foreground subject, an implied path, a distant destination, and geometry that must occlude correctly as the camera moves.</p></div>
+        <dl class="pilot-receipt"><dt class="receipt-key">Source SHA-256</dt><dd class="receipt-value">b739daac9f93…284ad485</dd><dt class="receipt-key">Scene</dt><dd class="receipt-value">not generated</dd></dl>
+      </article>
+      <article class="pilot">
+        <div class="pilot-top"><span class="source-label">Pilot 03 · Current Story 23</span><h3>Monochrome geometry</h3><p>Tests nested arcs, negative space, a small human scale reference, and whether depth survives without color doing the separation work.</p></div>
+        <dl class="pilot-receipt"><dt class="receipt-key">Source SHA-256</dt><dd class="receipt-value">2c5af9d659a2…0000531b</dd><dt class="receipt-key">Scene</dt><dd class="receipt-value">not generated</dd></dl>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="counts-title">
+    <div class="section-head"><h2 id="counts-title">What counts as a splat.</h2><p class="section-copy">The acceptance boundary is intentionally stricter than visual resemblance.</p></div>
+    <div class="criteria">
+      <article class="criterion"><strong>A scene artifact exists.</strong><p>The result must include a loadable spatial file, planned as <code>.spz</code>. A PNG, video, or still render alone is not the scene.</p></article>
+      <article class="criterion"><strong>The camera changes the evidence.</strong><p>Translation must produce meaningful parallax, changing occlusion, and a different spatial relationship among visible elements.</p></article>
+      <article class="criterion"><strong>The source remains visible.</strong><p>The original artwork stays canonical and is shown beside the generated scene. The experiment does not overwrite or silently “upgrade” it.</p></article>
+      <article class="criterion"><strong>The invention is disclosed.</strong><p>The record must identify the generator commit, provider and model versions, parameters, output hash, and inferred backsides, holes, floating fragments, or duplicated forms.</p></article>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="boundary-title">
+    <div class="section-head"><h2 id="boundary-title">Current boundary.</h2><p class="section-copy">Source selection and receipts are complete. Scene generation is not.</p></div>
+    <div class="boundary"><strong>No Gaussian-splat scene is being represented as finished on this page.</strong> The three source PNGs and their hashes are prepared. Actual generation through <code>neilsonnn/image-blaster</code> requires the upstream service credentials to be configured locally or in a protected secret store. A single-image result will be described as a generated spatial interpretation, not a scan or measured reconstruction.</div>
+    <nav class="splat-links" aria-label="Gaussian Splat Lab resources">
+      <a href="art/gaussian-splats/manifest.json">Pilot manifest</a>
+      <a href="art/gaussian-splats/README.md">Runbook</a>
+      <a href="https://github.com/HarperZ9/HarperZ9.github.io/issues/81">Generation tracker</a>
+      <a href="https://github.com/neilsonnn/image-blaster">Upstream generator</a>
+      <a href="current-story.html">Canonical visual sequence</a>
+    </nav>
+  </section>
+</main>
+<script type="module">
+try {
+  const response = await fetch("art/gaussian-splats/manifest.json", { cache: "no-cache" });
+  if (!response.ok) throw new Error(`manifest: ${response.status}`);
+  const manifest = await response.json();
+  document.querySelector("[data-lab-status]").textContent = manifest.status.replaceAll("_", " ").toLowerCase();
+  document.querySelector("[data-source-count]").textContent = String(manifest.sources.length);
+  document.querySelector("[data-scene-count]").textContent = String(manifest.outputs.length);
+} catch (error) {
+  console.error(error);
+}
+</script>
+</body>
+</html>
