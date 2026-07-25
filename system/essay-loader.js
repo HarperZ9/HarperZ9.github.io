@@ -13,6 +13,7 @@ const inline = (value) => {
 
   text = text.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
     '<a class="inline" href="$2" rel="external noopener">$1</a>');
+  text = text.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
   text = text.replace(/\*([^*]+)\*/g, "<em>$1</em>");
   code.forEach((snippet, index) => {
     text = text.replace(`@@CODE${index}@@`, snippet);
@@ -68,6 +69,13 @@ const renderMarkdown = (source, mode) => {
       continue;
     }
 
+    if (line.startsWith("### ")) {
+      const label = line.slice(4).trim();
+      out.push(`<h3 id="${slug(label)}">${inline(label)}</h3>`);
+      i += 1;
+      continue;
+    }
+
     if (line.startsWith("> ")) {
       const quote = [];
       while (i < lines.length && lines[i].trim().startsWith("> ")) {
@@ -92,7 +100,7 @@ const renderMarkdown = (source, mode) => {
     i += 1;
     while (i < lines.length) {
       const next = lines[i].trim();
-      if (!next || next === "---" || next.startsWith("## ") || next.startsWith("> ") || next.startsWith("- ")) break;
+      if (!next || next === "---" || next.startsWith("## ") || next.startsWith("### ") || next.startsWith("> ") || next.startsWith("- ")) break;
       paragraph.push(next);
       i += 1;
     }
