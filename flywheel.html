@@ -177,7 +177,19 @@
 <!-- RUN IT NOW -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Run it now.</h2>
-  <p class="body-text reveal">Zero dependencies, Python standard library only. Route online with your keys, or run fully offline against local weights.</p>
+  <p class="body-text reveal">New in July 2026: <span translate="no">Flywheel</span> installs as a Windows app. The desktop and the engine arrive together, no Python, no setup. Every tool the engine mounts renders as a fillable form, the first run picks a model that can actually answer, and provider keys live in the OS keychain, shown as presence only, never a value.</p>
+  <div class="run reveal"><span class="c">download</span> <a href="https://github.com/HarperZ9/flywheel-desktop/releases/download/v0.2.1/Flywheel-Setup-0.2.1-x64.exe">Flywheel-Setup-0.2.1-x64.exe</a> &middot; Windows x64 &middot; 20 MB &middot; <a href="https://github.com/HarperZ9/flywheel-desktop/releases/tag/v0.2.1">release notes</a></div>
+  <p class="body-text reveal">The installer is built from the version tag by a public pipeline, and its hash is published beside it. Verify the copy you downloaded:</p>
+  <div class="run reveal"><span class="c">powershell</span> Get-FileHash Flywheel-Setup-0.2.1-x64.exe -Algorithm SHA256</div>
+  <dl class="kv2 reveal">
+    <dt>Version</dt><dd><span translate="no">v0.2.1</span>, July 2026</dd>
+    <dt>SHA-256</dt><dd><span translate="no" style="font-family:var(--mono);font-size:.8rem;word-break:break-all">13e50273b8d0e88dd3342a103f7f9a676a1e3d9d64056fae3442d68e5d28c2a5</span></dd>
+  </dl>
+  <div class="null reveal">
+    <h3>The honest caveat.</h3>
+    <p class="body-text">The installer is not code-signed yet, so Windows SmartScreen will warn on first run. The hash above is the substitute: it proves the file you hold is the file the pipeline built. Signing is planned; until then the receipt does the signature's job, checked by you instead of trusted by default.</p>
+  </div>
+  <p class="body-text reveal">Prefer source? Zero dependencies, Python standard library only. Route online with your keys, or run fully offline against local weights.</p>
   <div class="run reveal"><span class="c">python</span> scripts/run_harness_cli.py app --port 8799</div>
   <p class="body-text reveal">Then open the surface in your browser. One origin, one page, same-origin JSON routes.</p>
 </section>
@@ -209,6 +221,7 @@
 <section class="mv" id="spec" aria-labelledby="spec-h">
   <h2 id="spec-h" class="reveal">Spec, at a glance.</h2>
   <dl class="kv2 reveal">
+    <dt>Desktop app</dt><dd>Windows x64 installer, engine bundled, no Python required. <span translate="no">v0.2.1</span>.</dd>
     <dt>Dependencies</dt><dd>None. Python standard library only.</dd>
     <dt>Network</dt><dd>Your choice per call: route online with hosted-provider keys, or run fully offline against local weights.</dd>
     <dt>Entry point</dt><dd><span translate="no">python scripts/run_harness_cli.py app --port 8799</span></dd>
