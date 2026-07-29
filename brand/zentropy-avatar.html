@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- Zentropy Labs avatar / profile picture. The brand distilled to its core
+     motif: a luminous halftone aperture-orb on the oxblood ground, crystalline
+     rings, flare, grain. Square, safe under a circle crop. 1024x1024. -->
+<style>html,body{margin:0;background:#0a0609;overflow:hidden}canvas{display:block}</style>
+</head>
+<body>
+<canvas id="a" width="1024" height="1024" role="img" aria-label="Zentropy Labs"></canvas>
+<script>
+(function(){
+  var STATIC=/(?:\?|&)static=1/.test(location.search);
+  var c=document.getElementById('a'),x=c.getContext('2d',{alpha:false}),W=1024,H=1024,cx=512,cy=512,Or=300;
+  function rnd(v){var s=Math.sin(v*127.1+311.7)*43758.545;return s-Math.floor(s);}
+  var RAMP=[[12,22,30],[18,92,120],[60,176,204],[160,232,244],[248,255,255]];
+  function ramp(L){var t=L*4,i=t<0?0:t>3?3:Math.floor(t),f=t-i,a=RAMP[i],b=RAMP[i+1];return 'rgb('+Math.round(a[0]+(b[0]-a[0])*f)+','+Math.round(a[1]+(b[1]-a[1])*f)+','+Math.round(a[2]+(b[2]-a[2])*f)+')';}
+  function frame(t){
+    // warm-dark ground
+    var bg=x.createRadialGradient(cx,cy,0,cx,cy,W*0.62);bg.addColorStop(0,'#1c0f14');bg.addColorStop(0.6,'#0c0709');bg.addColorStop(1,'#070508');x.fillStyle=bg;x.fillRect(0,0,W,H);
+    // cool bloom
+    var bl=x.createRadialGradient(cx,cy,0,cx,cy,Or*2.2);bl.addColorStop(0,'rgba(120,210,238,0.30)');bl.addColorStop(0.5,'rgba(56,150,190,0.10)');bl.addColorStop(1,'rgba(40,120,160,0)');x.fillStyle=bl;x.fillRect(0,0,W,H);
+    // source luminance: orb + concentric aperture rings
+    var oc=document.createElement('canvas');oc.width=W;oc.height=H;var o=oc.getContext('2d');
+    var og=o.createRadialGradient(cx,cy,0,cx,cy,Or);og.addColorStop(0,'#fff');og.addColorStop(0.34,'#efefef');og.addColorStop(0.64,'#8a8a8a');og.addColorStop(0.87,'#262626');og.addColorStop(1,'#000');
+    o.fillStyle=og;o.beginPath();o.arc(cx,cy,Or,0,7);o.fill();
+    o.strokeStyle='#fff';for(var r=1;r<=6;r++){o.lineWidth=2;o.globalAlpha=0.42-r*0.05;o.beginPath();o.arc(cx,cy,Or*(1.04+r*0.10),0,7);o.stroke();}o.globalAlpha=1;
+    var d=o.getImageData(0,0,W,H).data,step=6,mR=step*0.74;
+    for(var y=0;y<H;y+=step)for(var xx=0;xx<W;xx+=step){var L=d[((y|0)*W+(xx|0))*4]/255;if(L<0.08)continue;x.fillStyle=ramp(L);x.beginPath();x.arc(xx+step/2,y+step/2,mR*Math.pow(L,0.7),0,7);x.fill();}
+    // crisp aperture rim (reads at small sizes)
+    x.strokeStyle='rgba(150,232,244,0.85)';x.lineWidth=6;x.beginPath();x.arc(cx,cy,Or*0.92,0,7);x.stroke();
+    // flare
+    x.strokeStyle='rgba(240,252,255,0.8)';x.lineWidth=2;x.beginPath();x.moveTo(cx-Or*1.55,cy);x.lineTo(cx+Or*1.55,cy);x.moveTo(cx,cy-Or*1.45);x.lineTo(cx,cy+Or*1.45);x.stroke();
+    var fg=x.createRadialGradient(cx,cy,0,cx,cy,Or*0.55);fg.addColorStop(0,'rgba(245,255,255,0.9)');fg.addColorStop(1,'rgba(245,255,255,0)');x.fillStyle=fg;x.beginPath();x.arc(cx,cy,Or*0.55,0,7);x.fill();
+    // scanlines + grain
+    x.fillStyle='rgba(4,6,10,0.24)';for(var sy=0;sy<H;sy+=3)x.fillRect(0,sy,W,1);
+    try{var g=x.getImageData(0,0,W,H),gd=g.data;for(var p=0;p<gd.length;p+=4){var n=(rnd(p*0.317+(STATIC?0:t))-0.5)*26;gd[p]+=n;gd[p+1]+=n;gd[p+2]+=n;}x.putImageData(g,0,0);}catch(e){}
+    document.documentElement.setAttribute('data-ready','1');
+  }
+  if(STATIC){frame(0);}else{var t0=0;(function loop(ts){if(!t0)t0=ts;frame((ts-t0)/1000);requestAnimationFrame(loop);})(0);}
+})();
+</script>
+</body>
+</html>
