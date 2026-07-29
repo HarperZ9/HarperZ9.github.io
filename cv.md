@@ -123,7 +123,7 @@ group adds test and conformance coverage to agent and orchestration projects:
 seeded determinism runs, mid-task recovery fixtures, edge-case fixtures, and
 evaluation benchmark suites.
 
-**Open and awaiting maintainer review | 10 pull requests across 9 repositories**
+**Open and awaiting maintainer review | 14 pull requests across 13 repositories**
 
 Open pull requests in projects including the Model Context Protocol Inspector
 and Python SDK, Poetry, Drizzle ORM, and LLM. These are open, not accepted, and
