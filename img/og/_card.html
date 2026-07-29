@@ -2,92 +2,82 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Deterministic 1200 x 630 repository and social card.
-     The composition reuses the current Telos v2 living field, local type,
-     calm plum ground, and one verdict-green mark. Use ?f=<card-key>. -->
+<!-- Deterministic 1200 x 630 repository / social card on the Zentropy Labs
+     design: minted ZentropyDisplay face, rhinoCase wordmark, oxblood-and-ice
+     palette, a luminous halftone aperture-orb, grain + scanlines. Use ?f=<key>. -->
 <style>
-  @font-face{font-family:"Hanken Grotesk";src:url("../../system/fonts/hanken-grotesk.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:block}
+  @font-face{font-family:"ZentropyDisplay";src:url("../../brand/ZentropyDisplay.ttf") format("truetype");font-display:block}
   @font-face{font-family:"Conso";src:url("../../system/fonts/conso-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:block}
   @font-face{font-family:"Conso";src:url("../../system/fonts/conso-semibold.woff2") format("woff2");font-weight:600 700;font-style:normal;font-display:block}
-  :root{
-    --void:oklch(0.155 0.052 316);
-    --surface:oklch(0.225 0.052 312 / 0.64);
-    --hairline:oklch(0.62 0.08 308 / 0.22);
-    --ink:oklch(0.975 0.012 320);
-    --muted:oklch(0.785 0.035 316);
-    --faint:oklch(0.64 0.05 314);
-    --verified:oklch(0.870 0.215 133);
-    --sans:"Hanken Grotesk",system-ui,sans-serif;
-    --mono:"Conso",ui-monospace,monospace;
-  }
+  :root{--ink:#eaf5f6;--muted:#9fb6bb;--faint:#6b8288;--warm:#c86a44;--mono:"Conso",ui-monospace,monospace}
   *{box-sizing:border-box;margin:0}
-  html,body{width:1200px;height:630px;overflow:hidden;background:var(--void);color:var(--ink)}
-  body{font-family:var(--sans);text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
-  .card{position:relative;width:1200px;height:630px;isolation:isolate;overflow:hidden;background:var(--void)}
-  .field-wash{position:absolute;inset:0;z-index:-4;background:radial-gradient(90% 115% at 89% 50%,oklch(0.36 0.18 342 / .58),transparent 63%),radial-gradient(75% 95% at 76% 24%,oklch(0.32 0.16 285 / .42),transparent 66%)}
-  .field{position:absolute;right:-44px;top:-58px;z-index:-3;width:720px;height:720px;opacity:.98}
-  .field-fallback{position:absolute;right:120px;top:125px;z-index:-4;width:360px;height:360px;object-fit:contain;opacity:.34;filter:saturate(1.25)}
-  .veil{position:absolute;inset:0;z-index:-2;background:linear-gradient(96deg,oklch(0.155 0.052 316 / .98) 0%,oklch(0.155 0.052 316 / .93) 42%,oklch(0.155 0.052 316 / .45) 72%,oklch(0.155 0.052 316 / .18) 100%)}
-  .grain{position:absolute;inset:0;z-index:-1;opacity:.16;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E")}
-  .frame{position:absolute;inset:27px;border:1px solid var(--hairline);clip-path:polygon(0 0,calc(100% - 28px) 0,100% 28px,100% 100%,28px 100%,0 calc(100% - 28px))}
-  .frame::before{content:"";position:absolute;left:0;top:0;width:164px;height:2px;background:var(--verified)}
-  .content{position:absolute;inset:0;padding:62px 70px 58px;display:flex;flex-direction:column}
-  .metadata{display:flex;align-items:center;gap:13px;max-width:870px;font-family:var(--mono);font-size:16px;line-height:1.2;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-  .metadata .mark{width:9px;height:9px;background:var(--verified);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);flex:none}
+  html,body{width:1200px;height:630px;overflow:hidden;background:#0a0709;color:var(--ink)}
+  .card{position:relative;width:1200px;height:630px;overflow:hidden}
+  #bg{position:absolute;inset:0;z-index:0}
+  .content{position:absolute;inset:0;z-index:2;padding:64px 72px 56px;display:flex;flex-direction:column}
+  .frame{position:absolute;inset:26px;z-index:1;border:1px solid rgba(150,210,220,0.14);clip-path:polygon(0 0,calc(100% - 26px) 0,100% 26px,100% 100%,26px 100%,0 calc(100% - 26px))}
+  .metadata{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .metadata .dot{width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#eafcff,#4ec4e0 55%,#1c6f86);flex:none;box-shadow:0 0 10px rgba(120,220,240,.8)}
   .metadata .role{color:var(--faint)}
-  .rule{width:min(770px,68%);height:1px;margin-top:23px;background:linear-gradient(90deg,var(--hairline),transparent)}
-  .word{max-width:790px;margin-top:70px;font-size:clamp(56px,6.8vw,82px);font-weight:800;line-height:.94;letter-spacing:-.03em;text-wrap:balance;text-transform:uppercase}
-  .headline{max-width:700px;margin-top:24px;font-size:34px;font-weight:450;line-height:1.22;letter-spacing:-.018em;color:var(--muted);text-wrap:balance}
-  .pipeline{max-width:760px;margin-top:auto;padding-top:22px;border-top:1px solid var(--hairline);font-family:var(--mono);font-size:16px;line-height:1.35;letter-spacing:.095em;text-transform:uppercase;color:var(--faint)}
+  .word{margin-top:auto;font-family:"ZentropyDisplay",system-ui,sans-serif;font-variant:small-caps;font-feature-settings:"smcp";
+        font-size:96px;line-height:.92;letter-spacing:.005em;color:#f2fbfc;text-shadow:0 0 26px rgba(120,210,235,.45);max-width:900px}
+  .headline{margin-top:20px;font-family:var(--mono);font-size:27px;line-height:1.28;letter-spacing:.005em;color:var(--muted);max-width:820px}
+  .pipeline{margin-top:24px;padding-top:20px;border-top:1px solid rgba(150,210,220,0.14);font-family:var(--mono);font-size:15px;letter-spacing:.10em;text-transform:uppercase;color:var(--faint)}
   .pipeline:empty{display:none}
-  .site{position:absolute;right:70px;bottom:57px;font-family:var(--mono);font-size:15px;letter-spacing:.08em;color:var(--muted)}
+  .site{position:absolute;right:72px;bottom:54px;z-index:2;font-family:"ZentropyDisplay",monospace;font-variant:small-caps;font-size:20px;letter-spacing:.03em;color:var(--muted)}
 </style>
 </head>
 <body>
-<main class="card" aria-label="Project Telos repository card">
-  <div class="field-wash" aria-hidden="true"></div>
-  <img class="field-fallback" src="../../favicon.svg" alt="" aria-hidden="true">
-  <canvas class="field" id="field" aria-hidden="true"></canvas>
-  <div class="veil" aria-hidden="true"></div>
-  <div class="grain" aria-hidden="true"></div>
+<main class="card" aria-label="Zentropy Labs repository card">
+  <canvas id="bg" width="1200" height="630" aria-hidden="true"></canvas>
   <div class="frame" aria-hidden="true"></div>
   <div class="content">
-    <div class="metadata"><span class="mark" aria-hidden="true"></span><span>Project Telos</span><span>/</span><span class="role" id="role"></span></div>
-    <div class="rule" aria-hidden="true"></div>
+    <div class="metadata"><span class="dot"></span><span>zentropy labs</span><span>/</span><span class="role" id="role"></span></div>
     <h1 class="word" id="word"></h1>
     <p class="headline" id="headline"></p>
     <p class="pipeline" id="pipeline"></p>
-    <p class="site">harperz9.github.io</p>
   </div>
+  <div class="site">zentropyLabs</div>
 </main>
 <script src="cards-data.js"></script>
-<script type="module">
-  import { isLogoFieldAvailable, mountLogoField } from "../../system/logo-field.js";
+<script>
+(function(){
+  var key=new URLSearchParams(location.search).get("f")||"buildlang";
+  var fb={role:"Effects-oriented compiler",word:"buildlang",headline:"Typed effects in, verified C out.",pipeline:"LEX / PARSE / TYPE / EFFECTS / CODEGEN"};
+  var data=(window.CARD_DATA&&window.CARD_DATA[key])||fb;
+  function rhino(k){return k.split('-').map(function(w,i){return i===0?w:(w.charAt(0).toUpperCase()+w.slice(1));}).join('');}
+  document.getElementById("role").textContent=(data.role||"Working system");
+  document.getElementById("word").textContent=rhino(key);
+  document.getElementById("headline").textContent=data.headline||"A working tool in the portfolio.";
+  document.getElementById("pipeline").textContent=data.pipeline||"";
 
-  const fallback = {
-    role: "Effects-oriented compiler",
-    word: "BuildLang",
-    headline: "Typed effects in, verified C out.",
-    pipeline: "LEX / PARSE / TYPE / EFFECTS / CODEGEN"
-  };
-  const key = new URLSearchParams(location.search).get("f") || "buildlang";
-  const data = (window.CARD_DATA && window.CARD_DATA[key]) || fallback;
-  document.getElementById("role").textContent = data.role || "Working system";
-  document.getElementById("word").textContent = data.word || key.replaceAll("-", " ");
-  document.getElementById("headline").textContent = data.headline || "A working tool in the Project Telos portfolio.";
-  document.getElementById("pipeline").textContent = data.pipeline || "";
+  // --- brand background: oxblood ground, halftone aperture-orb, grain, scanlines ---
+  var c=document.getElementById("bg"),x=c.getContext("2d"),W=1200,Hh=630;
+  function rnd(v){var s=Math.sin(v*127.1+311.7)*43758.545;return s-Math.floor(s);}
+  var Ox=986,Oy=232,Or=176;
+  // ground
+  var bg=x.createRadialGradient(Ox,Oy,0,Ox,Oy,W*0.9);bg.addColorStop(0,'#1c0f14');bg.addColorStop(0.55,'#0c0709');bg.addColorStop(1,'#070508');x.fillStyle=bg;x.fillRect(0,0,W,Hh);
+  var warm=x.createLinearGradient(0,Hh*0.5,0,Hh);warm.addColorStop(0,'rgba(150,58,40,0)');warm.addColorStop(1,'rgba(178,80,50,0.22)');x.fillStyle=warm;x.fillRect(0,0,W,Hh);
+  // cool bloom behind orb
+  var bl=x.createRadialGradient(Ox,Oy,0,Ox,Oy,Or*2.6);bl.addColorStop(0,'rgba(120,210,238,0.30)');bl.addColorStop(0.5,'rgba(56,150,190,0.10)');bl.addColorStop(1,'rgba(40,120,160,0)');x.fillStyle=bl;x.fillRect(0,0,W,Hh);
+  // orb luminance -> halftone dots
+  var oc=document.createElement('canvas');oc.width=W;oc.height=Hh;var o=oc.getContext('2d');
+  var og=o.createRadialGradient(Ox,Oy,0,Ox,Oy,Or);og.addColorStop(0,'#fff');og.addColorStop(0.34,'#eee');og.addColorStop(0.64,'#888');og.addColorStop(0.87,'#262626');og.addColorStop(1,'#000');
+  o.fillStyle=og;o.beginPath();o.arc(Ox,Oy,Or,0,7);o.fill();
+  var od=o.getImageData(0,0,W,Hh).data,step=5,mR=step*0.74;
+  var RAMP=[[12,22,30],[18,92,120],[60,176,204],[160,232,244],[248,255,255]];
+  function ramp(L){var t=L*4,i=t<0?0:t>3?3:Math.floor(t),f=t-i,a=RAMP[i],b=RAMP[i+1];return 'rgb('+Math.round(a[0]+(b[0]-a[0])*f)+','+Math.round(a[1]+(b[1]-a[1])*f)+','+Math.round(a[2]+(b[2]-a[2])*f)+')';}
+  for(var yy=0;yy<Hh;yy+=step)for(var xx=0;xx<W;xx+=step){var L=od[((yy|0)*W+(xx|0))*4]/255;if(L<0.09)continue;x.fillStyle=ramp(L);x.beginPath();x.arc(xx+2.5,yy+2.5,mR*Math.pow(L,0.7),0,7);x.fill();}
+  // flare
+  x.strokeStyle='rgba(240,252,255,0.8)';x.lineWidth=1.4;x.beginPath();x.moveTo(Ox-Or*1.5,Oy);x.lineTo(Ox+Or*1.5,Oy);x.moveTo(Ox,Oy-Or*1.1);x.lineTo(Ox,Oy+Or*1.1);x.stroke();
+  // scanlines
+  x.fillStyle='rgba(4,6,10,0.26)';for(var sy=0;sy<Hh;sy+=3)x.fillRect(0,sy,W,1);
+  // grain
+  try{var g=x.getImageData(0,0,W,Hh),gd=g.data;for(var p=0;p<gd.length;p+=4){var n=(rnd(p*0.317)-0.5)*26;gd[p]+=n;gd[p+1]+=n;gd[p+2]+=n;}x.putImageData(g,0,0);}catch(e){}
 
-  try {
-    if (isLogoFieldAvailable()) {
-      mountLogoField(document.getElementById("field"), { seed: 58, reduced: true });
-      document.querySelector(".field-fallback").style.display = "none";
-    }
-  } catch (_) {
-    // The static mark remains visible when WebGL is unavailable.
-  }
-
-  await document.fonts.ready;
-  requestAnimationFrame(() => document.documentElement.setAttribute("data-ready", "1"));
+  document.fonts.ready.then(function(){requestAnimationFrame(function(){document.documentElement.setAttribute("data-ready","1");});});
+  setTimeout(function(){document.documentElement.setAttribute("data-ready","1");},1200);
+})();
 </script>
 </body>
 </html>
