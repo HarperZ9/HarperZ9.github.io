@@ -67,6 +67,82 @@
     <p class="entry-note">Private-line platform: <a class="inline" href="aleph.html">Checkpoint</a>, Vault, <a class="inline" href="orca.html">Runtime</a>, and <a class="inline" href="https://github.com/HarperZ9/behavior-transform.io" rel="noopener">Boundary</a> are public where safe; Lab (Seed) and Ledger (Sofer) remain private/proprietary until their public-safe split is complete. The line carries release-checkpoint receipts, MCP and CLI contracts, package checks, and public-safe documentation.</p>
   </section>
 
+  <section id="contributions">
+    <h2>Contributions to projects I do not own</h2>
+    <p class="lead">Work sent into other people's codebases, where someone else sets the standard and decides. Every line below is one pull request you can open: the diff, the review, and the outcome. Merged means a maintainer accepted that change. It does not mean the project uses, endorses, or has any relationship with the rest of this portfolio.</p>
+    <div class="receipts">
+      <span class="r"><b>52</b> pull requests</span>
+      <span class="r"><b>24</b> merged</span>
+      <span class="r"><b>20</b> open</span>
+      <span class="r"><b>8</b> closed without merge</span>
+    </div>
+    <p class="entry-note">Every pull request authored by <span translate="no">HarperZ9</span> in a repository not owned by <span translate="no">HarperZ9</span>, counted 2026-07-28 and state-checked one by one against each upstream repository. Fourteen of the 52 only add a row to a public link list; they are held apart at the end of this section, because adding a row to an index is not a contribution to a project. That leaves <b>38</b> code and documentation pull requests: 22 merged, 10 open, 6 closed without merge.</p>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">Merged</span><span class="entry-meta">22 pull requests &middot; 19 repositories</span></div>
+      <p class="entry-note">Defect repair, missing validation, and test coverage, accepted by the maintainer.</p>
+      <ul class="bul">
+        <li><b>simonw/datasette</b> &middot; return 400 instead of 500 for wrong-arity composite primary-key row URLs. <a class="inline" href="https://github.com/simonw/datasette/pull/2815" rel="noopener">#2815</a></li>
+        <li><b>python-poetry/tomlkit</b> &middot; an array of tables replacing a dotted key no longer swallows the next sibling key. <a class="inline" href="https://github.com/python-poetry/tomlkit/pull/549" rel="noopener">#549</a></li>
+        <li><b>pydantic/pydantic-ai</b> &middot; preserve <span translate="no">FileUrl.force_download</span> through UI round-trips. <a class="inline" href="https://github.com/pydantic/pydantic-ai/pull/6205" rel="noopener">#6205</a></li>
+        <li><b>confident-ai/deepeval</b> &middot; stop the tool-correctness metric crashing on unhashable tool outputs. <a class="inline" href="https://github.com/confident-ai/deepeval/pull/2822" rel="noopener">#2822</a></li>
+        <li><b>dgilland/pydash</b> &middot; <span translate="no">to_list()</span> returns a list for dicts, not a <span translate="no">dict_values</span> view. <a class="inline" href="https://github.com/dgilland/pydash/pull/250" rel="noopener">#250</a></li>
+        <li><b>python-grimp/grimp</b> &middot; raise <span translate="no">ModuleNotPresent</span> for absent modules in direct-import queries. <a class="inline" href="https://github.com/python-grimp/grimp/pull/303" rel="noopener">#303</a></li>
+        <li><b>python-grimp/grimp</b> &middot; raise <span translate="no">ValueError</span> when one module is assigned to more than one layer. <a class="inline" href="https://github.com/python-grimp/grimp/pull/304" rel="noopener">#304</a></li>
+        <li><b>python-grimp/grimp</b> &middot; clear the ruff and clippy failures that were holding the main branch red. <a class="inline" href="https://github.com/python-grimp/grimp/pull/305" rel="noopener">#305</a></li>
+        <li><b>open-multi-agent/open-multi-agent</b> &middot; conformance fixture for mid-task recovery. <a class="inline" href="https://github.com/open-multi-agent/open-multi-agent/pull/452" rel="noopener">#452</a></li>
+        <li><b>tylerjrbuell/reactive-agents-ts</b> &middot; seeded end-to-end determinism coverage for replay. <a class="inline" href="https://github.com/tylerjrbuell/reactive-agents-ts/pull/196" rel="noopener">#196</a></li>
+        <li><b>tylerjrbuell/reactive-agents-ts</b> &middot; return replayed steps through the harness handle. <a class="inline" href="https://github.com/tylerjrbuell/reactive-agents-ts/pull/197" rel="noopener">#197</a></li>
+        <li><b>redxzeta/runtrail</b> &middot; preserve bridge startup diagnostics instead of discarding them. <a class="inline" href="https://github.com/redxzeta/runtrail/pull/154" rel="noopener">#154</a></li>
+        <li><b>sjh9714/mergewarden</b> &middot; replay fixtures for reusable-workflow pinning. <a class="inline" href="https://github.com/sjh9714/mergewarden/pull/107" rel="noopener">#107</a></li>
+        <li><b>adammmmmm/LoopCompass</b> &middot; an evaluation benchmark suite. <a class="inline" href="https://github.com/adammmmmm/LoopCompass/pull/19" rel="noopener">#19</a></li>
+        <li><b>AjnasNB/maqam</b> &middot; offline coverage for Google ADK function-tool routing. <a class="inline" href="https://github.com/AjnasNB/maqam/pull/28" rel="noopener">#28</a></li>
+        <li><b>Liuyanfeng1234/governance-spec</b> &middot; duplicate-key rejection fixtures. <a class="inline" href="https://github.com/Liuyanfeng1234/governance-spec/pull/1" rel="noopener">#1</a></li>
+        <li><b>0xzr/freellmpool</b> &middot; a capacity-status edge fixture. <a class="inline" href="https://github.com/0xzr/freellmpool/pull/79" rel="noopener">#79</a></li>
+        <li><b>michalstrnadel/scorekeeper</b> &middot; a report output and a Windows file-lock fallback. <a class="inline" href="https://github.com/michalstrnadel/scorekeeper/pull/7" rel="noopener">#7</a></li>
+        <li><b>morganlinton/Albatross</b> &middot; support external eval fixture files. <a class="inline" href="https://github.com/morganlinton/Albatross/pull/13" rel="noopener">#13</a></li>
+        <li><b>AvAdiii/rewardspy</b> &middot; an ASCII fallback for dashboard charts. <a class="inline" href="https://github.com/AvAdiii/rewardspy/pull/7" rel="noopener">#7</a></li>
+        <li><b>sguruvar/ai-inference-observability-eks</b> &middot; fix the local MCP entrypoint. <a class="inline" href="https://github.com/sguruvar/ai-inference-observability-eks/pull/1" rel="noopener">#1</a></li>
+        <li><b>lliangcol/llm-plugins-fusion</b> &middot; a worked sample workflow-evaluation record for the docs. <a class="inline" href="https://github.com/lliangcol/llm-plugins-fusion/pull/104" rel="noopener">#104</a></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">Open</span><span class="entry-meta">10 pull requests &middot; 9 repositories</span></div>
+      <p class="entry-note">Submitted and awaiting a maintainer. Open is not accepted, and none of these are counted as merged.</p>
+      <ul class="bul">
+        <li><b>simonw/datasette</b> &middot; give each non-blocking write a distinct task id. <a class="inline" href="https://github.com/simonw/datasette/pull/2861" rel="noopener">#2861</a></li>
+        <li><b>simonw/llm</b> &middot; timeout options for the OpenAI Responses client. <a class="inline" href="https://github.com/simonw/llm/pull/1506" rel="noopener">#1506</a></li>
+        <li><b>python-poetry/poetry</b> &middot; generate launchers for gui-scripts in editable installs. <a class="inline" href="https://github.com/python-poetry/poetry/pull/10968" rel="noopener">#10968</a></li>
+        <li><b>drizzle-team/drizzle-orm</b> &middot; preserve commas inside MySQL enum values in snapshots. <a class="inline" href="https://github.com/drizzle-team/drizzle-orm/pull/5961" rel="noopener">#5961</a></li>
+        <li><b>modelcontextprotocol/inspector</b> &middot; wake task polling on terminal notifications. <a class="inline" href="https://github.com/modelcontextprotocol/inspector/pull/1728" rel="noopener">#1728</a></li>
+        <li><b>modelcontextprotocol/inspector</b> &middot; a cancel control for task polling. <a class="inline" href="https://github.com/modelcontextprotocol/inspector/pull/1729" rel="noopener">#1729</a></li>
+        <li><b>modelcontextprotocol/python-sdk</b> &middot; clarify the validation error raised when a tool result is missing. <a class="inline" href="https://github.com/modelcontextprotocol/python-sdk/pull/3053" rel="noopener">#3053</a></li>
+        <li><b>pydantic/pydantic-ai</b> &middot; add a turn index to agent chat spans. <a class="inline" href="https://github.com/pydantic/pydantic-ai/pull/6135" rel="noopener">#6135</a></li>
+        <li><b>confident-ai/deepeval</b> &middot; format the TypeScript sources to clear a red main branch. <a class="inline" href="https://github.com/confident-ai/deepeval/pull/2823" rel="noopener">#2823</a></li>
+        <li><b>zilliztech/claude-context</b> &middot; privacy-preserving search receipts. <a class="inline" href="https://github.com/zilliztech/claude-context/pull/406" rel="noopener">#406</a></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">Closed without merge</span><span class="entry-meta">6 pull requests &middot; 6 repositories</span></div>
+      <p class="entry-note">Declined, superseded, or fixed another way. They stay on the record: the count above only means something if the misses are here too.</p>
+      <ul class="bul">
+        <li><b>pypa/setuptools</b> &middot; repair a broken cross-reference that was failing the docs build. <a class="inline" href="https://github.com/pypa/setuptools/pull/5245" rel="noopener">#5245</a></li>
+        <li><b>PyCQA/isort</b> &middot; wrap sorted literals under the black profile. <a class="inline" href="https://github.com/PyCQA/isort/pull/2573" rel="noopener">#2573</a></li>
+        <li><b>agronholm/typeguard</b> &middot; handle annotated walrus assignment. <a class="inline" href="https://github.com/agronholm/typeguard/pull/558" rel="noopener">#558</a></li>
+        <li><b>langfuse/langfuse</b> &middot; map GenAI input and output on AI SDK spans. <a class="inline" href="https://github.com/langfuse/langfuse/pull/14636" rel="noopener">#14636</a></li>
+        <li><b>modelcontextprotocol/registry</b> &middot; security-scan receipt metadata. <a class="inline" href="https://github.com/modelcontextprotocol/registry/pull/1405" rel="noopener">#1405</a></li>
+        <li><b>github-linguist/linguist</b> &middot; language support for <span translate="no">QuantaLang</span>. <a class="inline" href="https://github.com/github-linguist/linguist/pull/7913" rel="noopener">#7913</a></li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">Link-list submissions, held apart</span><span class="entry-meta">14 pull requests &middot; 2 merged</span></div>
+      <p class="entry-note">Fourteen pull requests add one line naming a Project Telos tool to a public &ldquo;awesome&rdquo; index: 2 merged, 10 open, 2 closed without merge. They are self-submissions to a list, they change no software, and they are deliberately excluded from every count above. A merged one means a list accepted a row, nothing more.</p>
+    </div>
+  </section>
+
   <section>
     <h2>Creative work, shipped</h2>
     <p class="lead">Evidence of shipping, iterating on, and sustaining a widely used creative product over real time, not just a one-off release.</p>
