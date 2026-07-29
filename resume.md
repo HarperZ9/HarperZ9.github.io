@@ -48,6 +48,24 @@ documentation, customer-facing operations, and field leadership.
   mapping, TAA, SSR, SSGI, GTAO, volumetrics, shader pipelines, and read-only
   shared-memory IPC.
 
+### Open-source contributions
+
+**Upstream pull requests to public projects | Python, TypeScript, Rust**
+
+- 22 code, test, and documentation pull requests merged into 19 public
+  repositories maintained by others, including Datasette, tomlkit, pydantic-ai,
+  DeepEval, pydash, and grimp.
+- Merged defect work covers HTTP status handling for malformed composite-key
+  row URLs, a TOML round-trip bug where an array of tables swallowed the next
+  sibling key, a metric crash on unhashable tool outputs, missing module and
+  layer validation errors, and lint failures blocking a red main branch.
+- Merged test work adds seeded determinism coverage, mid-task recovery
+  fixtures, edge-case fixtures, and evaluation benchmark suites to agent and
+  orchestration projects.
+- 10 further pull requests are open and awaiting maintainer review across 9
+  repositories, including the Model Context Protocol Inspector and Python SDK,
+  Poetry, Drizzle ORM, and LLM. Open is not accepted.
+
 ### Experience
 
 **Independent Systems Engineer / Founder-Builder | Project Telos and HarperZ9**
@@ -109,4 +127,4 @@ Portfolio: https://harperz9.github.io/portfolio.html
 Research: https://harperz9.github.io/research.html
 Repositories and releases: https://github.com/HarperZ9
 
-Updated 2026-07-12.
+Updated 2026-07-28.

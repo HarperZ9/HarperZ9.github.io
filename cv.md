@@ -109,6 +109,26 @@ current public career materials report more than 900,000 downloads, plus
 D3D11/HLSL systems involving tone mapping, TAA, SSR, SSGI, GTAO, volumetrics,
 GPU traces, and read-only shared-memory bridges.
 
+### Upstream open-source contributions
+
+**Merged into public repositories maintained by others | 22 pull requests across 19 repositories**
+
+Defect repair, test coverage, and documentation accepted upstream in projects
+including Datasette, tomlkit, pydantic-ai, DeepEval, pydash, and grimp.
+Representative merged work: HTTP status handling for malformed composite-key
+row URLs, a TOML round-trip bug where an array of tables swallowed the next
+sibling key, a metric crash on unhashable tool outputs, missing module and
+layer validation errors, and lint failures blocking a red main branch. A second
+group adds test and conformance coverage to agent and orchestration projects:
+seeded determinism runs, mid-task recovery fixtures, edge-case fixtures, and
+evaluation benchmark suites.
+
+**Open and awaiting maintainer review | 10 pull requests across 9 repositories**
+
+Open pull requests in projects including the Model Context Protocol Inspector
+and Python SDK, Poetry, Drizzle ORM, and LLM. These are open, not accepted, and
+are counted separately from the merged total.
+
 ### Professional experience
 
 **Independent Systems Engineer / Founder-Builder | Project Telos and HarperZ9**
@@ -189,4 +209,4 @@ Research: https://harperz9.github.io/research.html
 Repositories: https://github.com/HarperZ9
 ORCID: https://orcid.org/0009-0001-7175-5393
 
-Updated 2026-07-12.
+Updated 2026-07-28.
