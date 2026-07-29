@@ -62,7 +62,7 @@ documentation, customer-facing operations, and field leadership.
 - Merged test work adds seeded determinism coverage, mid-task recovery
   fixtures, edge-case fixtures, and evaluation benchmark suites to agent and
   orchestration projects.
-- 10 further pull requests are open and awaiting maintainer review across 9
+- 14 further pull requests are open and awaiting maintainer review across 13
   repositories, including the Model Context Protocol Inspector and Python SDK,
   Poetry, Drizzle ORM, and LLM. Open is not accepted.
 
