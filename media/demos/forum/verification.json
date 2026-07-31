@@ -1,0 +1,66 @@
+{
+  "schema": "project-telos.forum-demo-verification/v1",
+  "forum_source": {
+    "path": "<FORUM_SOURCE>",
+    "commit": "448a2e160a4cae3006005900c5232e30f416fa2b",
+    "branch": "feat/flight-recorder",
+    "repo_edited": false
+  },
+  "videos": {
+    "short": {
+      "codec": "h264",
+      "pixel_format": "yuv420p(progressive)",
+      "fps": 30.0,
+      "width": 1920,
+      "height": 1080,
+      "duration_seconds": 26.83,
+      "bytes": 2505572,
+      "sha256": "bf71b52ef4acbce88d3acb6bd59b3fee9ca0cd4bbf554fded645870989484125"
+    },
+    "full": {
+      "codec": "h264",
+      "pixel_format": "yuv420p(progressive)",
+      "fps": 30.0,
+      "width": 1920,
+      "height": 1080,
+      "duration_seconds": 104.57,
+      "bytes": 5115864,
+      "sha256": "5a8f6f676040a0007423c35fb6e7170c1ae8db2b1e845c59d5078a131e0dd381"
+    }
+  },
+  "scene_count": 21,
+  "bad_scenes": [],
+  "privacy_scan": {
+    "user_home_path": false,
+    "email_address": false,
+    "bearer_secret": false,
+    "private_key": false,
+    "api_key_assignment": false
+  },
+  "hashes": {
+    "transcript": "59059d00b42b8b2e10a5bc94f6e039eec913f7c9f6420a07248a5656e23e6bdb",
+    "evidence": "3338dd9ec24a44c11367dc2aa7fd7a45819d75ff0cdf2c7bfdc4cafb9b5fe276",
+    "fixture": "a892a87f0d802cda6521a3eaf3e4b23a596121c4ec7ea75f2b61937becafabf2",
+    "readme": "bf05fb9b9d32d1c82b02f7dac7a56ad8c3156431d4637a96aadb0f38c1d6423d"
+  },
+  "checks": {
+    "captured_assertions_all_true": true,
+    "transcript_exit_codes_all_zero": true,
+    "transcript_has_route": true,
+    "transcript_has_submit": true,
+    "transcript_has_ledger_show": true,
+    "transcript_has_verify": true,
+    "short_is_1920x1080": true,
+    "full_is_1920x1080": true,
+    "short_duration_in_range": true,
+    "full_duration_in_range": true,
+    "videos_h264": true,
+    "videos_30fps": true,
+    "videos_yuv420p": true,
+    "all_scenes_1920x1080": true,
+    "no_private_text_hits": true,
+    "fixture_network_false": true,
+    "fixture_production_model_false": true
+  },
+  "passed": true
+}

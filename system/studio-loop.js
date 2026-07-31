@@ -25,7 +25,17 @@ export function sourceIsAnimated(activeSource, state) {
     case "music":
     case "watch":
     case "discovery":   // the physics renderer evolves the system every frame
+    case "sound":       // the piano-roll animates and the audio tap must keep being polled
       return true;
+    case "neural":
+      // The living neural instrument repaints every rAF frame, EXCEPT under
+      // reduced motion, where it holds a single still frame and the loop may idle.
+      return !s.neuralStatic;
+    case "showcase":
+      // The First Integral scene animates through states 1 to 3 (seed, motion, law) and then
+      // settles on the witness frame; once settled the loop is free to idle. With no state
+      // supplied we err animated, matching the other animated sources' no-state behavior.
+      return !s.showcaseSettled;
     case "byo":
       return !!s.byoPlaying;   // a still image is static; a playing video is animated
     default:

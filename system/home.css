@@ -16,7 +16,11 @@
    colons only.
    ========================================================================== */
 
-/* ---- licensed faces, self-hosted: Kilon (display) + Conso (text) ---------- */
+/* ---- licensed faces, ALL self-hosted: Kilon (display) + Hanken Grotesk (text)
+       + JetBrains Mono (labels). Hanken Grotesk is a humanist variable sans,
+       chosen for body legibility; subset woff2, no third-party font request. ---- */
+@font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk.woff2") format("woff2"); font-weight:100 900; font-style:normal; font-display:swap}
+@font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk-italic.woff2") format("woff2"); font-weight:100 900; font-style:italic; font-display:swap}
 @font-face{font-family:"Kilon"; src:url("fonts/kilon.woff2") format("woff2"),url("fonts/kilon.woff") format("woff"); font-weight:100 900; font-style:normal; font-display:swap}
 @font-face{font-family:"Conso"; src:url("fonts/conso-regular.woff2") format("woff2"),url("fonts/conso-regular.woff") format("woff"); font-weight:400; font-style:normal; font-display:swap}
 @font-face{font-family:"Conso"; src:url("fonts/conso-regularitalic.woff2") format("woff2"),url("fonts/conso-regularitalic.woff") format("woff"); font-weight:400; font-style:italic; font-display:swap}
@@ -29,9 +33,9 @@
   --paper:#f4f3ef;          /* warm near-white ceramic, not sterile #fff */
   --paper-2:#eceae4;        /* slightly deeper panel ceramic */
   --ink:#0b0c0e;            /* near-black primary text */
-  --ink-soft:#2f3238;       /* body text, AA on ceramic */
-  --ink-muted:#585c64;      /* secondary, captions, AA-compliant */
-  --ink-faint:#8b8f98;      /* faint labels, rules (decorative) */
+  --ink-soft:#26292e;       /* body text, AA on ceramic */
+  --ink-muted:#474b53;      /* secondary, captions, AA-compliant */
+  --ink-faint:#6c707a;      /* faint labels, rules (decorative) */
 
   /* ---- one restrained accent, an iris that nods to the object edge ---- */
   --iris:#4636e8;
@@ -52,7 +56,7 @@
 
   /* ---- type ---- */
   --display:"Kilon",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --body:"Conso",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --body:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --mono:"JetBrains Mono","SFMono-Regular","Courier New",monospace;
 
   /* ---- geometry + motion ---- */

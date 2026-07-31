@@ -1,237 +1,54 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Project Telos</title>
-<meta name="description" content="Project Telos is a line of engines for the new era of working alongside AI: an accountable surface where you perceive what the model does, shape it together, and prove every step from outside the thing making the claim. Five flagships, each standing on its own. By Zain Dana Harper.">
-<link rel="canonical" href="https://harperz9.github.io/">
-<meta name="color-scheme" content="light">
-<meta name="theme-color" content="#f4f3ef">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Project Telos">
-<meta property="og:title" content="Project Telos">
-<meta property="og:description" content="A line of engines for working alongside AI and taking nothing on faith. An accountable surface where every step is provable from outside the thing making the claim.">
-<meta property="og:url" content="https://harperz9.github.io/">
-<meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Project Telos">
-<meta name="twitter:description" content="A line of engines for working alongside AI and taking nothing on faith. Every step provable from outside the claim.">
-<meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="system/home.css?v=20260625w12">
-</head>
-<body>
-<div class="loader" aria-hidden="true"><div class="loader-inner"><span class="loader-mark">Project Telos</span><span class="loader-bar"><span class="loader-fill"></span></span></div></div>
-<canvas id="ribbon-canvas" aria-hidden="true"></canvas>
-<div class="grain" aria-hidden="true"></div>
-
-<a class="skip-link" href="#main">Skip to content</a>
-
-<div id="site-nav" class="site-nav"></div>
-<noscript><nav class="site-nav" aria-label="Primary"><a class="sn-home" href="index.html">Project Telos</a><nav class="sn-links"><a href="overview.html">Flagships</a> <a href="catalog.html">Catalog</a> <a href="research.html">Research</a> <a href="writing.html">Writing</a> <a href="cv.html">About</a></nav></nav></noscript>
-<script type="module" src="system/nav.js?v=20260625a"></script>
-
-<!-- the scroll-synced section index -->
-<nav class="dex" aria-label="Sections">
-  <a href="#top" data-dex="top" class="active"><span class="tick" aria-hidden="true"></span>Perceive</a>
-  <a href="#engines" data-dex="engines"><span class="tick" aria-hidden="true"></span>Build</a>
-  <a href="#inspect" data-dex="inspect"><span class="tick" aria-hidden="true"></span>Test</a>
-  <a href="#floor" data-dex="floor"><span class="tick" aria-hidden="true"></span>Verify</a>
-</nav>
-
-<main id="main">
-
-<!-- HERO -->
-<header id="top" class="hero" aria-labelledby="hero-title">
-  <p class="edgemark" aria-hidden="true" translate="no">TELOS</p>
-  <div class="shell hero-shell">
-  <div class="hero-inner">
-    <p class="kicker reveal in">Project Telos</p>
-    <h1 id="hero-title" class="reveal in d1">Build with a model.<span class="l2">Take nothing on faith.</span></h1>
-    <p class="lead reveal in d2">A line of engines for the new era of working alongside AI. An accountable surface: you perceive what the model perceives, shape it together, and prove every step <b>from outside the thing making the claim</b>. Five flagships rest on that floor, and each one stands on its own.</p>
-    <div class="cta reveal in d3">
-      <a class="btn solid" href="overview.html">See the flagships <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
-      <a class="btn" href="catalog.html">Browse the catalog</a>
-    </div>
-  </div>
-  <div class="hero-meta reveal in d3">
-    <span><span class="dot" aria-hidden="true"></span>Five flagships, each standing alone</span>
-    <span><span class="dot" aria-hidden="true"></span>Verification is the floor, not the pitch</span>
-    <span><span class="dot" aria-hidden="true"></span>Every page links to its own source</span>
-  </div>
-  </div>
-  <p class="scroll-cue" aria-hidden="true">Scroll</p>
-</header>
-
-<!-- THE FLAGSHIPS, as instrument rows -->
-<section id="engines" class="shell" aria-labelledby="flagships-title">
-  <div class="sec-head reveal">
-    <p class="kicker">The line</p>
-    <h2 id="flagships-title">Five engines, equal standing.</h2>
-    <p>Each one earns its place the same way: it shows its work and lets you check it. Together they are the surface a person and a model build on without anyone having to be trusted.</p>
-  </div>
-
-  <div class="flagships">
-    <article class="flag reveal" aria-labelledby="flag-gather">
-      <div class="flag-id">
-        <h3 id="flag-gather" translate="no">gather</h3>
-        <span class="role">intake and witness</span>
-        <span class="verdict-chip shipped">shipped &middot; PyPI</span>
+<html lang="en" data-home-shell="react">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#070406" />
+    <title>zentropyLabs · Project Telos</title>
+    <meta name="description" content="zentropyLabs publishes Project Telos: fourteen connected engines across models, code, graphics, poster design, and research. One receipt schema now seals five computation modes into a single tamper-evident chain, with routes to inspect the work." />
+    <meta property="og:title" content="zentropyLabs · Project Telos" />
+    <meta property="og:description" content="Project Telos is the public workbench from zentropyLabs: fourteen connected engines across models, code, graphics, and research, including a receipt chain that seals five computation modes into one bundle." />
+    <link rel="canonical" href="https://harperz9.github.io/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://harperz9.github.io/" />
+    <meta property="og:image" content="https://harperz9.github.io/brand/zentropy-logo.png" />
+    <meta property="og:image:alt" content="Zentropy Labs aperture mark with a cyan halftone orb and oxblood reflection." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="zentropyLabs · Project Telos" />
+    <meta name="twitter:description" content="Fourteen connected engines from zentropyLabs across models, code, graphics, and research, including a receipt chain across five computation modes." />
+    <meta name="twitter:image" content="https://harperz9.github.io/brand/zentropy-logo.png" />
+    <meta name="twitter:image:alt" content="Zentropy Labs aperture mark with a cyan halftone orb and oxblood reflection." />
+    <script>document.documentElement.classList.add('js')</script>
+    <link rel="preload" href="/system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/system/home-readable.css?v=20260709n" />
+    <!-- home-art.js ships with the static site's shared /system, outside this build.
+         The specifier is assembled at runtime (non-literal) so Vite's import-analysis
+         leaves it as a plain browser dynamic import in dev and build alike, instead of
+         trying to bundle a /public file (which 500s the dev server). -->
+    <script type="module" crossorigin src="/assets/index-gDDtH3kw.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-P6O6miqH.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <div style="max-width:60rem;margin:0 auto;padding:4rem 1.5rem;font-family:system-ui,sans-serif;color:#f5eefa;background:#14041b">
+        <p style="letter-spacing:.14em;font-weight:600">zentropyLabs / Project Telos</p>
+        <h1 style="font-size:2.4rem;line-height:1.1;margin:.6rem 0 1rem">Tools you can inspect, run, and leave behind.</h1>
+        <p style="max-width:42rem;line-height:1.6">zentropyLabs publishes Project Telos, a public workbench for fourteen connected engines across models, code, graphics, and research. buildlang's receipt schema now seals five computation modes (deterministic, exact-probabilistic, seeded stochastic, Monte Carlo, and budgeted heuristic search) into one tamper-evident chain, at a release-shaped baseline of 1605 passing tests, 0 failing, 11 ignored, and a receipt corpus at 27 of 27. A live demonstration dated 2026-07-29, a local model proposing through a shim and a model-free kernel disposing, both receipts bound into one chain, is documented in an open pull request and not yet merged to main. This page's live version needs JavaScript; every destination below is a static page.</p>
+        <p style="line-height:2">
+          <a style="color:#7de3ea" href="overview.html">Engines</a> &middot;
+          <a style="color:#7de3ea" href="demo-index.html">Demos</a> &middot;
+          <a style="color:#7de3ea" href="studio.html">The Studio</a> &middot;
+          <a style="color:#7de3ea" href="research.html">Research</a> &middot;
+          <a style="color:#7de3ea" href="publications.html">Publications</a> &middot;
+          <a style="color:#7de3ea" href="writing.html">Writing</a> &middot;
+          <a style="color:#7de3ea" href="guide.html">Guide</a> &middot;
+          <a style="color:#7de3ea" href="catalog.html">Catalog</a> &middot;
+          <a style="color:#7de3ea" href="cv.html">About</a>
+        </p>
       </div>
-      <p class="flag-desc">The research-intake organ. It reaches information anywhere, including the hard places: gated APIs, paywalls, JavaScript-walled pages, scanned PDFs, audio, facts scattered across fragments. Every item carries a <em>provenance receipt</em>, and a run emits a witnessed digest the other engines consume. Fair source, zero core dependencies.</p>
-      <div class="flag-go">
-        <a href="gather.html">Open <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
-        <a href="https://pypi.org/project/gather-engine/" rel="noopener">PyPI</a>
-      </div>
-    </article>
-
-    <article class="flag reveal" aria-labelledby="flag-index">
-      <div class="flag-id">
-        <h3 id="flag-index" translate="no">index</h3>
-        <span class="role">map and verify</span>
-        <span class="verdict-chip shipped">shipped &middot; PyPI</span>
-      </div>
-      <p class="flag-desc">Draws your whole multi-repo workspace from evidence and checks it against the architecture you meant. You get back a <em>MATCH, DRIFT, or UNVERIFIABLE</em> certificate you re-run instead of trust. Nine ecosystems, fully offline, zero dependencies.</p>
-      <div class="flag-go">
-        <a href="index-graph.html">Open <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
-        <a href="https://pypi.org/project/index-graph/" rel="noopener">PyPI</a>
-      </div>
-    </article>
-
-    <article class="flag reveal d1" aria-labelledby="flag-forum">
-      <div class="flag-id">
-        <h3 id="flag-forum" translate="no">forum</h3>
-        <span class="role">orchestrate</span>
-        <span class="verdict-chip">active</span>
-      </div>
-      <p class="flag-desc">Runs many agents and keeps a <em>witnessed causal ledger</em> of who did what and why. A multi-agent run becomes a record you read back, step by step, instead of an opaque box.</p>
-      <div class="flag-go">
-        <a href="forum.html">Open <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
-      </div>
-    </article>
-
-    <article class="flag reveal d2" aria-labelledby="flag-crucible">
-      <div class="flag-id">
-        <h3 id="flag-crucible" translate="no">crucible</h3>
-        <span class="role">judge</span>
-        <span class="verdict-chip">1.1.0 &middot; release candidate</span>
-      </div>
-      <p class="flag-desc">The cognition organ. It registers a thesis, steelmans each claim, measures what holds against a substrate, and refines the weakest axis until the verdict is earned. <em>MATCH, DRIFT, or UNVERIFIABLE</em>, grounded in a measurement rather than a judge's say-so.</p>
-      <div class="flag-go">
-        <a href="crucible.html">Open <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
-        <a href="https://github.com/HarperZ9/crucible" rel="noopener">GitHub</a>
-      </div>
-    </article>
-
-    <article class="flag reveal d2" aria-labelledby="flag-engine">
-      <div class="flag-id">
-        <h3 id="flag-engine" translate="no">the telos engine</h3>
-        <span class="role">perceive and make</span>
-        <span class="verdict-chip">active &middot; first flagship</span>
-      </div>
-      <p class="flag-desc">The shared surface where a person and a model <em>perceive the same thing</em>, shape it, and check every step. The first flagship, the engine this whole line is named for.</p>
-      <div class="flag-go">
-        <a href="studio.html">Enter <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- OPEN CALL -->
-<section id="inspect" class="shell floor g12" aria-labelledby="inspect-title">
-  <div class="floor-head reveal">
-    <p class="kicker">Open call</p>
-    <h2 id="inspect-title">If you can use this work, test it now.</h2>
-  </div>
-  <div class="floor-body plate reveal d1">
-    <p>Project Telos is looking for people willing to verify the tools against real workflows, test the receipts, find the places where the checkability discipline breaks, and create early traction around public, re-runnable AI-accountability infrastructure. Grassroots research funding is useful too, if the work should keep moving before it looks like a normal company.</p>
-    <p class="channels">Start here:
-      <a href="https://github.com/HarperZ9/gather" rel="noopener" translate="no">gather</a>
-      &middot; <a href="https://github.com/HarperZ9/index" rel="noopener" translate="no">index</a>
-      &middot; <a href="https://github.com/HarperZ9/forum" rel="noopener" translate="no">forum</a>
-      &middot; <a href="https://github.com/HarperZ9/crucible" rel="noopener" translate="no">crucible</a>
-      &middot; <a href="https://github.com/HarperZ9/telos" rel="noopener" translate="no">the telos engine</a>
-      &middot; <a href="https://github.com/HarperZ9/accountable-surface" rel="noopener" translate="no">accountable-surface</a>
-    </p>
-    <p class="channels">Open tester threads:
-      <a href="https://github.com/HarperZ9/gather/issues/1" rel="noopener" translate="no">gather intake</a>
-      &middot; <a href="https://github.com/HarperZ9/index/issues/13" rel="noopener" translate="no">index maps</a>
-      &middot; <a href="https://github.com/HarperZ9/forum/issues/1" rel="noopener" translate="no">forum ledgers</a>
-      &middot; <a href="https://github.com/HarperZ9/crucible/issues/1" rel="noopener" translate="no">crucible checks</a>
-      &middot; <a href="https://github.com/HarperZ9/telos/issues/2" rel="noopener" translate="no">telos surface</a>
-    </p>
-  </div>
-</section>
-
-<!-- FIELD DEMOS -->
-<section id="field-demos" class="shell floor g12" aria-labelledby="field-demos-title">
-  <div class="floor-head reveal">
-    <p class="kicker">Field demos</p>
-    <h2 id="field-demos-title">Try it where receipts matter.</h2>
-  </div>
-  <div class="floor-body plate reveal d1">
-    <p>The fastest way to understand Project Telos is to bring it an actual workflow and ask what a person would need to re-check later. A clinic, a studio, and a newsroom do not need the same interface, but they do need the same floor: source fragments, routing decisions, uncertainty, and a record that says <b>UNVERIFIABLE</b> before a model's answer becomes action.</p>
-    <p><b>Doctor / clinical admin:</b> preserve the intake fragments, policy text, reviewer/tool route, and unresolved uncertainty behind a summary. <b>Artist / studio:</b> keep prompts, source assets, transforms, chosen branches, and export gates attached to the work. <b>Media / newsroom:</b> map each public sentence back to witnessed sources, conflict notes, and an editorial decision ledger.</p>
-    <p><b>Token economy and routing:</b> spend model calls where they buy evidence, not where they merely create confident prose. <b>Reasoning:</b> the model can perceive and propose; the final authority lives outside the model, in a checkable record a person can inspect.</p>
-    <p class="channels">Share target: <a href="field-guide.html">open the field guide</a></p>
-  </div>
-</section>
-
-<!-- THE FLOOR -->
-<section id="floor" class="shell floor g12" aria-labelledby="floor-title">
-  <div class="floor-head reveal">
-    <h2 id="floor-title" class="visually-hidden">The floor</h2>
-    <p class="kicker">The floor</p>
-    <p class="pull">Looking verified is not the same as being verifiable.</p>
-  </div>
-  <div class="floor-body plate reveal d1">
-    <p>It started as a way to catch an AI in a confident lie. The same gap turned out to be everywhere: proving who you are is not permission to act, a practice run on old data is not money earned, a certificate on the wall is not safety. Something that looks verified, mistaken for the thing it is meant to guarantee.</p>
-    <p>Every engine here runs the same move. Go back to the evidence, work the answer out again, stay honest about what you could not check, and give one of three verdicts: <b>MATCH</b>, <b>DRIFT</b>, or <b>UNVERIFIABLE</b>. Never the word trusted, never a guess dressed as an answer. <b>index</b> is live now: <a href="https://pypi.org/project/index-graph/" rel="noopener" translate="no">pip install index-graph</a>, the whole map and certificate in one command.</p>
-  </div>
-</section>
-
-</main>
-
-<footer class="site-foot shell">
-  <p class="foot-big reveal">Build it to be checked, or do not ship it.</p>
-  <div class="foot-cta reveal d1">
-    <a class="btn solid" href="overview.html">See the flagships <span class="arrow" aria-hidden="true">&rsaquo;</span></a>
-    <a class="btn" href="https://github.com/HarperZ9" rel="noopener">GitHub</a>
-  </div>
-  <div class="foot-cols">
-    <div class="foot-col">
-      <h4>The work</h4>
-      <a href="overview.html">Flagships</a>
-      <a href="catalog.html">Catalog</a>
-      <a href="index-graph.html">index</a>
-      <a href="forum.html">forum</a>
-      <a href="crucible.html">crucible</a>
-      <a href="gather.html">gather</a>
-      <a href="studio.html">the telos engine</a>
-    </div>
-    <div class="foot-col">
-      <h4>Read</h4>
-      <a href="research.html">Research</a>
-      <a href="writing.html">Writing</a>
-    </div>
-    <div class="foot-col">
-      <h4>Source</h4>
-      <a href="https://github.com/HarperZ9" rel="noopener">GitHub</a>
-      <a href="https://pypi.org/project/index-graph/" rel="noopener">PyPI</a>
-    </div>
-    <div class="foot-col">
-      <h4>Who</h4>
-      <a href="cv.html">About</a>
-    </div>
-  </div>
-  <p class="muted">Project Telos, built by Zain Dana Harper in Seattle. Every page links to its own source, so you never have to take a word here on trust.</p>
-</footer>
-
-<script src="system/ribbon-field.js?v=20260625w15" defer></script>
-<script src="system/home-scroll.js?v=20260625w6" defer></script>
-</body>
+    </noscript>
+  </body>
 </html>

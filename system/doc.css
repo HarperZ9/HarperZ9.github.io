@@ -7,42 +7,56 @@
    visceral register. Every text/background pair clears WCAG AA.
    ============================================================================ */
 
-/* ---- licensed faces, self-hosted: Kilon (display) + Conso (text), cascaded
-       from the white home so the document pages share one type voice. ---- */
-@font-face{font-family:"Kilon"; src:url("fonts/kilon.woff2") format("woff2"),url("fonts/kilon.woff") format("woff"); font-weight:100 900; font-style:normal; font-display:swap}
+/* ---- ZentropyLabs document type system (2026-07-19).
+       ZentropyDisplay carries short brand, route, and project marks. Hanken
+       Grotesk carries readable text. Conso carries mono data and labels. ---- */
+@font-face{font-family:"ZentropyDisplay";src:url("../brand/ZentropyDisplay.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk.woff2") format("woff2"); font-weight:100 900; font-style:normal; font-display:swap}
+@font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk-italic.woff2") format("woff2"); font-weight:400; font-style:italic; font-display:swap}
 @font-face{font-family:"Conso"; src:url("fonts/conso-regular.woff2") format("woff2"),url("fonts/conso-regular.woff") format("woff"); font-weight:400; font-style:normal; font-display:swap}
 @font-face{font-family:"Conso"; src:url("fonts/conso-regularitalic.woff2") format("woff2"),url("fonts/conso-regularitalic.woff") format("woff"); font-weight:400; font-style:italic; font-display:swap}
 @font-face{font-family:"Conso"; src:url("fonts/conso-medium.woff2") format("woff2"),url("fonts/conso-medium.woff") format("woff"); font-weight:500; font-style:normal; font-display:swap}
 @font-face{font-family:"Conso"; src:url("fonts/conso-semibold.woff2") format("woff2"),url("fonts/conso-semibold.woff") format("woff"); font-weight:600; font-style:normal; font-display:swap}
 @font-face{font-family:"Conso"; src:url("fonts/conso-bold.woff2") format("woff2"),url("fonts/conso-bold.woff") format("woff"); font-weight:700; font-style:normal; font-display:swap}
 
+*,
+*::before,
+*::after{box-sizing:border-box}
+html,
+body{max-width:100%;overflow-x:clip}
+/* With overflow-x:clip on the page, a wide code block would be cut off on the
+   right on narrow screens; give <pre> its own horizontal scroll so nothing is
+   lost. */
+pre{overflow-x:auto;max-width:100%}
+
 :root{
-  /* ceramic sheet floating on a deeper ceramic ground (cascaded from the home) */
-  --page:#fcfbf8;              /* warm near-white sheet */
-  --backdrop:#e9e7e1;          /* deeper ceramic ground, so the sheet floats */
+  /* legacy base sheet values; the screen palette is remapped by the dark cascade below */
+  --page:#fdfcf9;              /* warm near-white sheet */
+  --backdrop:#cfcabe;          /* deeper ceramic ground, so the sheet clearly floats */
   --ink:#0b0c0e;               /* primary text (19:1 on the sheet) */
-  --ink-soft:#2f3238;          /* secondary text, AA */
-  --ink-muted:#585c64;         /* captions, AA */
-  --iris:#4636e8;              /* the one restrained accent */
+  --ink-soft:#24272c;          /* secondary text, ~13:1 */
+  --ink-muted:#43474e;         /* captions, ~9:1 */
+  --iris:#3a2bd6;              /* the one restrained accent, deepened for contrast */
   /* legacy names remapped so every existing rule re-skins through the cascade */
   --teal:#0b0c0e;              /* headings + masthead rule -> ink */
-  --teal-soft:#4636e8;         /* links + org names -> iris */
-  --ember:#4636e8;             /* dates + numerals -> iris (one accent) */
-  --rule:rgba(11,12,14,.12);   /* hairlines */
-  --rule-strong:rgba(11,12,14,.24);
-  --tag:#585c64;               /* mono micro-labels, AA */
+  --teal-soft:#3a2bd6;         /* links + org names -> iris */
+  --ember:#3a2bd6;             /* dates + numerals -> iris (one accent) */
+  --rule:rgba(11,12,14,.20);   /* hairlines */
+  --rule-strong:rgba(11,12,14,.34);
+  --tag:#43474e;               /* mono micro-labels, ~9:1 */
   /* type */
-  --display:"Kilon",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --body:"Conso",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --mono:"JetBrains Mono","SFMono-Regular","Courier New",monospace;
+  --brand-display:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --display:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --body:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
 }
 
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;font-size:112.5%}/* 18px base, scales with the reader's own setting */
 body.doc{
   margin:0;background:var(--backdrop);color:var(--ink);
-  font-family:"Conso",Georgia,"Times New Roman",serif;
-  font-size:1rem;line-height:1.62;
+  font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:1.05rem;line-height:1.66;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;
   font-feature-settings:"kern" 1,"liga" 1;
   padding:clamp(1.2rem,4vw,3.5rem) 1rem;
@@ -50,32 +64,33 @@ body.doc{
 
 /* ── the page ──────────────────────────────────────────────────────────── */
 .sheet{
-  max-width:50rem;margin:0 auto;background:var(--page);
+  width:min(100%,50rem);max-width:50rem;margin:0 auto;background:var(--page);
   padding:clamp(2.2rem,5vw,4rem) clamp(1.6rem,5vw,4.2rem);
-  box-shadow:0 1px 2px rgba(20,30,28,.06),0 18px 50px -28px rgba(20,40,38,.32);
-  border:1px solid #eceae2;border-radius:2px;
+  box-shadow:0 1px 3px rgba(20,30,28,.10),0 6px 16px rgba(20,30,28,.07),0 44px 80px -42px rgba(18,34,32,.55);
+  border:1px solid #e3dfd4;border-radius:4px;
 }
 .sheet+.sheet{margin-top:clamp(1.2rem,3vw,2.2rem)}
 
 /* ── return-to-portfolio chip (screen only) ───────────────────────────── */
 .docnav{max-width:50rem;margin:0 auto clamp(1rem,2.5vw,1.6rem);display:flex;
   justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap}
-.docnav a{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.62rem;
-  letter-spacing:.22em;text-transform:uppercase;color:var(--teal-soft);
+.docnav a{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:.92rem;
+  font-weight:720;letter-spacing:0;text-transform:none;color:var(--teal-soft);
   text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
 .docnav a:hover{border-color:var(--teal-soft)}
 .docnav .where{color:var(--tag)}
-.docnav .switch a+a{margin-left:1.1rem}
+.docnav .switch{display:flex;flex-wrap:wrap;gap:.45rem 1.1rem}
+.docnav .switch a+a{margin-left:0}
 
 /* ── masthead ──────────────────────────────────────────────────────────── */
 .mast{border-bottom:2px solid var(--teal);padding-bottom:1.15rem;margin-bottom:1.6rem}
-.mast h1{font-family:"Kilon",system-ui,sans-serif;font-weight:700;
-  font-size:clamp(2.2rem,1.4rem + 3vw,3.4rem);line-height:1.0;letter-spacing:-.025em;
+.mast h1{font-family:var(--display);font-weight:700;text-wrap:balance;
+  font-size:clamp(2.2rem,1.4rem + 3vw,3.4rem);line-height:1.0;letter-spacing:0;
   margin:0 0 .55rem;color:var(--ink)}
-.mast .role{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.7rem;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin:0 0 .85rem;
+.mast .role{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:.94rem;
+  letter-spacing:0;text-transform:none;color:var(--ink-soft);margin:0 0 .85rem;
   line-height:1.6}
-.mast .contact{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.72rem;
+.mast .contact{font-family:var(--mono);font-size:.72rem;
   letter-spacing:.02em;color:var(--ink-soft);line-height:1.9;margin:0;
   display:flex;flex-wrap:wrap;gap:.2rem 1.05rem}
 .mast .contact a{color:var(--teal-soft);text-decoration:none;
@@ -85,13 +100,13 @@ body.doc{
 
 /* ── sections ──────────────────────────────────────────────────────────── */
 section{margin:1.7rem 0 0}
-h2{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.66rem;
-  font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--teal);
-  margin:0 0 .95rem;padding-bottom:.45rem;border-bottom:1px solid var(--rule);
-  display:flex;align-items:baseline;gap:.6rem}
-h2::after{content:"";flex:1 1 auto}
+h2{font-family:var(--display);text-wrap:balance;font-size:clamp(1.22rem,1.05rem + .68vw,1.62rem);
+  font-weight:700;letter-spacing:0;text-transform:none;color:var(--ink);
+  margin:0 0 .85rem;padding-bottom:0;border-bottom:0;
+  display:block;line-height:1.12}
+h2::after{display:none}
 
-.lead{font-size:clamp(1.08rem,1rem + .5vw,1.34rem);line-height:1.56;color:var(--ink);margin:0 0 .2rem;max-width:64ch}
+.lead{font-size:clamp(1.08rem,1rem + .5vw,1.34rem);line-height:1.56;color:var(--ink);margin:0 0 .2rem;max-width:64ch;text-wrap:pretty}
 .lead b,.lead strong{color:var(--teal);font-weight:600}
 
 /* entries: role/title + meta on the right, then bullets */
@@ -99,12 +114,12 @@ h2::after{content:"";flex:1 1 auto}
 .entry:last-child{margin-bottom:.2rem}
 .entry-head{display:flex;justify-content:space-between;align-items:baseline;
   gap:1rem;flex-wrap:wrap;margin-bottom:.15rem}
-.entry-title{font-family:"Kilon",system-ui,sans-serif;font-weight:600;
-  font-size:1.12rem;letter-spacing:-.01em;color:var(--ink)}
+.entry-title{font-family:var(--display);font-weight:600;
+  font-size:1.12rem;letter-spacing:0;color:var(--ink)}
 .entry-title .org{color:var(--teal-soft);font-weight:500}
-.entry-meta{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.64rem;
-  letter-spacing:.08em;text-transform:uppercase;color:var(--ember);white-space:nowrap}
-.entry-note{font-family:"Conso",serif;font-style:italic;color:var(--ink-soft);
+.entry-meta{font-family:var(--mono);font-size:.7rem;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ember);white-space:nowrap}
+.entry-note{font-family:var(--body);font-style:italic;color:var(--ink-soft);
   font-size:.96rem;margin:.1rem 0 .4rem}
 
 ul.bul{list-style:none;margin:.35rem 0 0;padding:0}
@@ -113,35 +128,40 @@ ul.bul li{position:relative;padding-left:1.15rem;margin:0 0 .4rem;line-height:1.
 ul.bul li::before{content:"";position:absolute;left:.05rem;top:.62em;
   width:.34rem;height:.34rem;background:var(--teal);border-radius:50%}
 ul.bul li b{color:var(--teal);font-weight:600}
-ul.bul .num{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.92em;
+ul.bul .num{font-family:var(--mono);font-size:.92em;
   color:var(--ember);font-weight:600}
 
 /* skills / two-column key-value grid */
 .kv{display:grid;grid-template-columns:minmax(8rem,11rem) 1fr;gap:.55rem 1.4rem;margin:.2rem 0 0}
-.kv dt{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.62rem;
+.kv dt{font-family:var(--mono);font-size:.62rem;
   letter-spacing:.14em;text-transform:uppercase;color:var(--tag);padding-top:.18em}
 .kv dd{margin:0;line-height:1.5}
-.kv dd .t{display:inline-block;font-family:"JetBrains Mono",ui-monospace,monospace;
+.kv dd .t{display:inline-block;font-family:var(--mono);
   font-size:.78rem;color:var(--ink);background:#f3f4f0;border:1px solid var(--rule);
   border-radius:3px;padding:.08em .5em;margin:0 .25rem .3rem 0}
 
 /* receipts strip */
 .receipts{display:flex;flex-wrap:wrap;gap:.5rem .7rem;margin:.3rem 0 0}
-.receipts .r{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.7rem;
+.receipts .r{font-family:var(--mono);font-size:.7rem;
   letter-spacing:.02em;color:var(--ink);background:#f4f5f1;border:1px solid var(--rule);
   border-radius:3px;padding:.32em .6em}
 .receipts .r b{color:var(--teal);font-weight:600}
 
-.note{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.63rem;
+.note{font-family:var(--mono);font-size:.63rem;
   letter-spacing:.05em;color:var(--tag);line-height:1.8;margin:1.4rem 0 0;
   padding-top:.9rem;border-top:1px solid var(--rule)}
 a.inline{color:var(--teal-soft);text-decoration:none;border-bottom:1px solid rgba(70,54,232,.34)}
 a.inline:hover{border-color:var(--teal-soft)}
+.sheet a{
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
 
 /* ── print ─────────────────────────────────────────────────────────────── */
 @page{margin:14mm 0}
 @media print{
   body.doc{background:#fff;padding:0;font-size:10.6pt;line-height:1.42}
+  .site-nav,
   .docnav{display:none}
   .sheet{max-width:none;margin:0;box-shadow:none;border:none;border-radius:0;
     padding:0 16mm}
@@ -159,14 +179,1023 @@ a.inline:hover{border-color:var(--teal-soft)}
   .entry-meta{white-space:normal}
 }
 
+/* ============================================================================
+   GENERATIVE DOCUMENT CASCADE (2026-07-09)
+   Document pages now share the dark spectrum identity with the portfolio home.
+   The sheet remains readable and printable, but the screen presentation is no
+   longer the old ceramic/editorial style.
+   ============================================================================ */
+:root{
+  color-scheme:dark;
+  --page:oklch(18.5% .055 314/.94);
+  --backdrop:oklch(15.5% .052 316);
+  --ink:oklch(97.5% .012 320);
+  --ink-soft:oklch(88% .02 318);
+  --ink-muted:oklch(78.5% .035 316);
+  /* Verdict-only (2026-07-11): decorative cyan collapses to neutral ink; lime
+     (--teal-soft) is the single accent for links + key emphasis; ember = drift. */
+  --iris:var(--ink-muted);
+  --teal:var(--ink-soft);
+  --teal-soft:oklch(87% .215 133);
+  --ember:oklch(76% .19 46);
+  --rule:oklch(62% .08 308/.30);
+  --rule-strong:oklch(62% .08 308/.44);
+  --tag:oklch(64% .05 314);
+}
+
+body.doc{
+  position:relative;
+  min-height:100vh;
+  background:
+    radial-gradient(105% 80% at 82% 4%, oklch(38% .16 352/.26), transparent 58%),
+    radial-gradient(80% 68% at 8% 14%, oklch(38% .13 200/.22), transparent 62%),
+    linear-gradient(180deg, var(--backdrop), #09040f 76%);
+  color:var(--ink);
+}
+.site-nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+.site-nav .sn-home{
+  font-family:var(--mono);
+  font-size:.66rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--ink);
+  text-decoration:none;
+}
+.site-nav .sn-links{
+  display:flex;
+  gap:clamp(.6rem,2vw,1.4rem);
+  flex-wrap:wrap;
+}
+.site-nav .sn-links a{
+  font-family:var(--display);
+  font-size:.84rem;
+  color:var(--ink-muted);
+  text-decoration:none;
+  padding:.2em 0;
+  border-bottom:2px solid transparent;
+  transition:color .15s,border-color .15s;
+}
+.site-nav .sn-links a:hover,
+.site-nav .sn-links a:focus-visible{
+  color:var(--ink);
+  outline:none;
+}
+.site-nav .sn-links a[aria-current="page"]{
+  color:var(--teal);
+  border-color:var(--teal);
+}
+body.doc::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:.18;
+  mix-blend-mode:screen;
+  background:
+    radial-gradient(circle at 80% 14%, oklch(82.5% .135 200/.22), transparent 0 11%, transparent 38%),
+    radial-gradient(circle at 16% 72%, oklch(87% .215 133/.16), transparent 0 10%, transparent 34%),
+    conic-gradient(from 228deg at 72% 24%, transparent, oklch(69.5% .2 286/.18), transparent 44%),
+    linear-gradient(90deg, rgba(20,4,27,.76), rgba(20,4,27,.28), rgba(20,4,27,.88));
+}
+body.doc::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:.12;
+  background:
+    linear-gradient(90deg, transparent 0 calc(100% - 1px), oklch(82.5% .135 200/.18) calc(100% - 1px)) 0 0 / 40px 40px,
+    linear-gradient(180deg, transparent 0 calc(100% - 1px), oklch(69.5% .2 286/.12) calc(100% - 1px)) 0 0 / 40px 40px;
+  mask-image:radial-gradient(circle at 74% 22%, #000, transparent 68%);
+}
+.docnav,
+.sheet{
+  position:relative;
+  z-index:1;
+}
+body.doc.generative-host{
+  isolation:isolate;
+}
+body.doc.generative-host > :not(#gl):not(#motes):not(.skip-link){
+  position:relative;
+  z-index:2;
+}
+/* Lift the nav above the page content so the open "Menu" dropdown stays clickable
+   (equal z + DOM order otherwise lets the later content wrapper intercept it).
+   Matches the specificity of the rule above (which adds :not(.skip-link)). */
+body.doc.generative-host > #site-nav:not(#motes):not(.skip-link){
+  z-index:6;
+}
+body.doc #gl.generative-field-canvas,
+body.doc #motes.generative-motes-canvas{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  pointer-events:none;
+}
+body.doc #gl.generative-field-canvas{
+  z-index:0;
+  opacity:.22;
+  mix-blend-mode:screen;
+  filter:saturate(1.04) contrast(1.08);
+}
+body.doc #motes.generative-motes-canvas{
+  z-index:1;
+  opacity:.28;
+}
+.generative-field-failed body.doc #gl.generative-field-canvas,
+.generative-field-failed body.doc #motes.generative-motes-canvas{
+  display:none;
+}
+.sheet{
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--page) 92%, transparent), color-mix(in oklab, var(--page) 98%, black)),
+    linear-gradient(135deg, color-mix(in oklab, var(--iris) 8%, transparent), transparent 42%);
+  border:1px solid var(--rule);
+  border-radius:10px;
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--iris) 12%, transparent) inset,
+    0 28px 90px -46px rgba(0,0,0,.85),
+    0 0 80px -52px var(--iris);
+}
+.sheet+.sheet{margin-top:clamp(1.4rem,3vw,2.4rem)}
+.docnav a,
+.mast .contact a,
+a.inline{
+  color:var(--teal-soft);
+  border-color:color-mix(in oklab, var(--teal-soft) 44%, transparent);
+}
+.docnav .where,
+.entry-note,
+.note,
+.kv dt,
+.entry-meta,
+.receipts .r,
+.tag{
+  color:var(--tag);
+}
+.mast{
+  border-color:var(--teal);
+}
+.mast h1,
+.entry-title,
+.lead,
+.kv dd,
+ul.bul li,
+.receipts .r,
+.kv dd .t{
+  color:var(--ink);
+}
+.mast .role,
+h2,
+ul.bul li::before,
+.lead b,
+.lead strong,
+ul.bul li b,
+.receipts .r b{
+  color:var(--teal);
+}
+h2,
+.note,
+.mast,
+.sheet,
+.kv dd .t,
+.receipts .r{
+  border-color:var(--rule);
+}
+.kv dd .t,
+.receipts .r{
+  background:color-mix(in oklab, var(--page) 78%, black);
+}
+.entry-title .org,
+.mast .contact a:hover,
+.docnav a:hover,
+a.inline:hover{
+  color:var(--teal-soft);
+  border-color:var(--teal-soft);
+}
+
+@media(max-width:680px){
+  .site-nav{width:100%;box-sizing:border-box;justify-content:space-between}
+  .site-nav .sn-home{width:auto;text-align:left}
+  .site-nav .sn-links{width:auto;justify-content:flex-end;gap:.55rem .9rem}
+  .site-nav .sn-links a{font-size:.78rem;line-height:1.2}
+  body.doc::before{
+    opacity:.12;
+    background:
+      radial-gradient(circle at 78% 12%, oklch(82.5% .135 200/.18), transparent 0 12%, transparent 44%),
+      linear-gradient(180deg, rgba(20,4,27,.9), rgba(20,4,27,.62), rgba(20,4,27,.96));
+  }
+  .sheet{border-radius:8px}
+  body.doc{padding:0}
+  .docnav{padding-inline:clamp(1rem,5vw,1.4rem)}
+  .sheet{
+    width:100%;
+    max-width:100vw;
+    margin-inline:0;
+    padding:clamp(1.45rem,6vw,2.2rem);
+  }
+  .mast h1{
+    font-size:clamp(2rem,10.5vw,2.75rem);
+    line-height:1.02;
+    letter-spacing:0;
+  }
+  .lead{
+    font-size:clamp(1.02rem,4.8vw,1.18rem);
+    line-height:1.55;
+  }
+}
+
+@media print{
+  :root{
+    color-scheme:light;
+    --page:#fff;
+    --backdrop:#fff;
+    --ink:#0b0c0e;
+    --ink-soft:#24272c;
+    --ink-muted:#43474e;
+    --teal:#0b0c0e;
+    --teal-soft:#3a2bd6;
+    --ember:#3a2bd6;
+    --rule:rgba(11,12,14,.20);
+    --rule-strong:rgba(11,12,14,.34);
+    --tag:#43474e;
+  }
+  body.doc::before,
+  body.doc::after{display:none}
+  .sheet{background:#fff;box-shadow:none;border:0;border-radius:0}
+}
+
 /* ── FOUNDATION (2026-06-21): skip-link, keyboard focus, touch targets ────── */
 .skip-link{position:absolute;left:.5rem;top:-3.5rem;z-index:30;
-  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.66rem;letter-spacing:.14em;
-  text-transform:uppercase;color:#fff;background:var(--teal);padding:.55rem .9rem;
-  border-radius:3px;text-decoration:none;transition:top .18s ease}
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--page,#0b0c0e);background:var(--teal);padding:.55rem .9rem;
+  border-radius:3px;text-decoration:none;transition:top .18s ease;
+  width:max-content;max-width:calc(100vw - 1rem);box-sizing:border-box}
 .skip-link:focus{top:.6rem;outline:2px solid var(--ember);outline-offset:2px}
 a:focus-visible,button:focus-visible{outline:2px solid var(--teal-soft);outline-offset:2px;border-radius:1px}
 @media (pointer:coarse){
   .docnav a{display:inline-block;padding:.3em 0}
   .mast .contact a{padding:.18em 0}
+}
+
+/* Rebuilt shared nav port. Mirrors the home rail while preserving document print output. */
+.site-nav{
+  position:sticky;
+  top:0;
+  z-index:40;
+  width:auto;
+  max-width:none;
+  /* Break out of body.doc's padding (top clamp, sides 1rem) so the bar is
+     full-bleed and flush to the top edge - matching the shared nav on every
+     other template, which sits on an unpadded body. */
+  margin:calc(-1 * clamp(1.2rem,4vw,3.5rem)) -1rem clamp(1rem,2.4vw,1.8rem);
+  padding:.9rem clamp(1.15rem,5vw,5rem);
+  border:0;
+  border-bottom:1px solid var(--rule);
+  background:color-mix(in oklab, var(--backdrop) 72%, transparent);
+  -webkit-backdrop-filter:blur(14px) saturate(1.3);
+  backdrop-filter:blur(14px) saturate(1.3);
+}
+.site-nav .sn-home{
+  display:inline-flex;
+  align-items:center;
+  gap:.65rem;
+  flex:0 0 auto;
+  min-height:2.75rem;
+  font-family:var(--mono);
+  font-size:clamp(.92rem,.84rem + .18vw,1.04rem);
+  line-height:1;
+  letter-spacing:.14em;
+  font-weight:700;
+  color:var(--ink);
+}
+.site-nav .sn-home-field{
+  position:relative;
+  display:block;
+  flex:0 0 auto;
+  width:clamp(112px,14vw,168px);
+  height:2.5rem;
+}
+.site-nav .sn-logo-canvas,
+.site-nav .sn-logo-fallback{
+  position:absolute;
+  inset:0;
+  width:100%;height:100%;display:block;
+}
+.site-nav .sn-logo-fallback{border-radius:7px;object-fit:contain}
+.site-nav .sn-home:hover,
+.site-nav .sn-home:focus-visible{color:var(--teal)}
+.site-nav .sn-links{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:clamp(.8rem,2vw,1.8rem);
+  flex:1 1 auto;
+  min-width:0;
+}
+.site-nav .sn-links a,
+.site-nav .sn-more summary{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-family:"Hanken Grotesk",system-ui,sans-serif;
+  font-size:clamp(.86rem,.8rem + .16vw,.96rem);
+  font-weight:700;
+  line-height:1.1;
+  color:var(--ink-muted);
+  text-decoration:none;
+  border-bottom:1.5px solid transparent;
+  min-height:2.65rem;
+  padding:.55rem .05rem;
+  transition:color .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease;
+}
+.site-nav .sn-links a:hover,
+.site-nav .sn-links a:focus-visible,
+.site-nav .sn-more summary:hover,
+.site-nav .sn-more summary:focus-visible{
+  color:var(--ink);
+  outline:none;
+}
+.site-nav .sn-links a:focus-visible,
+.site-nav .sn-more summary:focus-visible{
+  box-shadow:0 2px 0 var(--teal);
+}
+.site-nav .sn-links a.is-active,
+.site-nav .sn-links a[aria-current="page"],
+.site-nav .sn-more[data-current="true"] > summary{
+  color:var(--teal);
+  border-color:var(--teal);
+}
+.site-nav .sn-more{
+  position:relative;
+  flex:0 0 auto;
+}
+.site-nav .sn-more summary{
+  gap:.45rem;
+  list-style:none;
+  cursor:pointer;
+  padding-inline:.68rem;
+  border:1px solid transparent;
+  border-radius:999px;
+  user-select:none;
+}
+.site-nav .sn-more summary::-webkit-details-marker{display:none}
+.site-nav .sn-more summary::after{
+  content:"+";
+  margin-left:.38rem;
+  color:var(--tag);
+}
+.site-nav .sn-more[open] summary::after{content:"-"}
+.site-nav .sn-more:not([open]) .sn-more-list{display:none}
+.site-nav .sn-more-list{
+  position:absolute;
+  right:0;
+  top:calc(100% + .55rem);
+  z-index:50;
+  min-width:16rem;
+  max-width:min(22rem,calc(100vw - 2.3rem));
+  display:grid;
+  gap:.65rem;
+  padding:.75rem;
+  border:1px solid var(--rule);
+  border-radius:10px;
+  background:color-mix(in oklab, var(--backdrop) 96%, black);
+  box-shadow:0 20px 64px -36px rgba(0,0,0,.9),0 0 0 1px color-mix(in oklab, var(--teal) 8%, transparent) inset;
+}
+.site-nav .sn-menu-group{
+  display:grid;
+  gap:.16rem;
+}
+.site-nav .sn-menu-primary{
+  display:none;
+}
+.site-nav .sn-menu-label{
+  margin:.12rem .68rem .02rem;
+  font-family:var(--mono);
+  font-size:.62rem;
+  line-height:1.2;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--tag);
+}
+.site-nav .sn-more-list a{
+  display:flex;
+  align-items:center;
+  min-height:2.65rem;
+  padding:.62rem .68rem;
+  border:0;
+  border-radius:8px;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+.site-nav .sn-more-list a:hover,
+.site-nav .sn-more-list a:focus-visible{
+  background:color-mix(in oklab, var(--teal) 9%, transparent);
+}
+
+@media(max-width:680px){
+  .site-nav{
+    flex-wrap:nowrap;
+    gap:.75rem;
+    padding:.62rem clamp(1.15rem,5vw,5rem);
+  }
+  .site-nav .sn-links{
+    gap:0;
+    flex:0 0 auto;
+    width:auto;
+    min-width:0;
+  }
+  .site-nav .sn-links > a{
+    display:none;
+  }
+  .site-nav .sn-more summary{
+    min-height:2.65rem;
+    padding:.56rem .75rem;
+    font-size:.9rem;
+  }
+  .site-nav .sn-menu-primary{
+    display:grid;
+  }
+  .site-nav .sn-more-list{
+    position:fixed;
+    left:clamp(1.15rem,5vw,5rem);
+    right:clamp(1.15rem,5vw,5rem);
+    top:4.1rem;
+    min-width:0;
+    max-width:none;
+    max-height:calc(100dvh - 5rem);
+    overflow:auto;
+  }
+  .docnav{
+    margin-bottom:.9rem;
+    padding-inline:clamp(1rem,5vw,1.4rem);
+    gap:.55rem;
+  }
+  .docnav .where{
+    width:100%;
+    font-size:.9rem;
+    line-height:1.35;
+  }
+  .docnav .switch{
+    gap:.35rem .8rem;
+  }
+  .docnav a{
+    font-size:.86rem;
+  }
+}
+
+@media(max-width:330px){
+  .site-nav .sn-home span:last-child{display:none}
+  .site-nav .sn-more summary{padding-inline:.62rem}
+}
+
+.docnav a,
+.mast .contact a,
+a.inline,
+.sheet a{
+  text-underline-offset:3px;
+}
+
+.docnav a:focus-visible,
+.mast .contact a:focus-visible,
+a.inline:focus-visible,
+.sheet a:focus-visible{
+  outline:2px solid var(--teal-soft);
+  outline-offset:3px;
+  border-radius:6px;
+}
+
+@media(pointer:coarse){
+  .docnav a,
+  .mast .contact a,
+  a.inline{
+    display:inline-flex;
+    align-items:center;
+    min-height:2.55rem;
+  }
+}
+
+@media print{
+  .site-nav{display:none}
+}
+
+/* ============================================================================
+   PRISMATIC EXPRESSIONISM (2026-07-09)
+   Document-page slice of the fused Supergraphic Ultramodern x Crystal x
+   Neoexpressionist identity. Screen-only texture on the dark generative
+   cascade; print output stays untouched. Bans respected: no gradient text,
+   no border-left accents, no glassmorphism-by-default, nothing motion-gated.
+   Token mirror of src/index.css and system.css; keep the tiers in step.
+   ============================================================================ */
+:root{
+  /* ice near-white cyan. Contrast (computed): 16.01:1 on the dark --page,
+     16.73:1 on the --backdrop void. */
+  --crystal:oklch(94% .04 210);
+  /* the one dark maroon band. 1.49:1 on the dark ground: never text here;
+     band fill inside a --crystal shape only (11.21:1 on --crystal). */
+  --crystal-deep:oklch(32% .09 20);
+  /* THE single expressive accent per sheet fold: the ember family already
+     present. 7.66:1 on the dark --page (computed). */
+  --hot:var(--ember);
+  /* sharper hairline for crystal facet edges (crisper than --rule). */
+  --facet-line:oklch(94% .04 210/.45);
+}
+
+/* Faceted corner on the masthead: one small clipped crystal shard, top-right
+   of .mast, the maroon band reading through the glass. clip-path polygon on
+   a ::after block; decorative, screen only. */
+.mast{position:relative}
+.mast::after{
+  content:"";
+  position:absolute;
+  top:.3rem;
+  right:0;
+  width:2.6rem;
+  height:1.15rem;
+  pointer-events:none;
+  opacity:.6;
+  border-top:1px solid var(--facet-line);
+  background:linear-gradient(180deg,
+    color-mix(in oklab, var(--crystal) 36%, transparent) 0 44%,
+    color-mix(in oklab, var(--crystal-deep) 60%, transparent) 44% 64%,
+    transparent 64%);
+  clip-path:polygon(0 0, 100% 0, 62% 100%, 14% 58%);
+}
+
+/* Scanline-halftone divider: dashed horizontal scanlines fading through a
+   disc-shaped mask (the halftone arc). Static and decorative; reduced motion
+   needs no override. If mask-composite is unsupported the mask layers union
+   and the strip degrades to an un-dashed faded scanline band. */
+.prism-divider{
+  height:clamp(1.9rem,3.4vw,2.6rem);
+  margin-block:clamp(1.4rem,3vw,2.4rem);
+  pointer-events:none;
+  background:repeating-linear-gradient(180deg, var(--crystal) 0 1px, transparent 1px 6px);
+  -webkit-mask-image:
+    repeating-linear-gradient(90deg, #000 0 18px, transparent 18px 30px),
+    radial-gradient(120% 130% at 18% 50%, #000 0 46%, transparent 78%);
+  -webkit-mask-composite:source-in;
+  mask-image:
+    repeating-linear-gradient(90deg, #000 0 18px, transparent 18px 30px),
+    radial-gradient(120% 130% at 18% 50%, #000 0 46%, transparent 78%);
+  mask-composite:intersect;
+  opacity:.5;
+}
+
+/* Document pages inherit the divider texture without markup edits: every
+   sheet after the first opens with the same scanline band (adjacent-sibling
+   rule, drawn inside the following sheet's top padding). */
+.sheet+.sheet::before{
+  content:"";
+  display:block;
+  height:1.9rem;
+  margin:-.5rem 0 1.4rem;
+  pointer-events:none;
+  background:repeating-linear-gradient(180deg, var(--crystal) 0 1px, transparent 1px 6px);
+  -webkit-mask-image:
+    repeating-linear-gradient(90deg, #000 0 18px, transparent 18px 30px),
+    radial-gradient(120% 130% at 18% 50%, #000 0 46%, transparent 78%);
+  -webkit-mask-composite:source-in;
+  mask-image:
+    repeating-linear-gradient(90deg, #000 0 18px, transparent 18px 30px),
+    radial-gradient(120% 130% at 18% 50%, #000 0 46%, transparent 78%);
+  mask-composite:intersect;
+  opacity:.45;
+}
+
+/* EXACTLY-ONE-HOT audit (document pages, per sheet fold): the dark cascade
+   already calmed .entry-meta dates to --tag, but ul.bul .num kept spraying
+   ember numerals across every bullet list. Calm the numerals to --crystal
+   (16.01:1 on the dark --page) so a sheet fold never carries more than one
+   hot element; the ember family stays available as --hot for a single
+   deliberate stroke. Focus outlines are functional, not decorative. */
+ul.bul .num{color:var(--crystal)}
+
+/* print: the prismatic texture is screen material only; the printed sheet
+   keeps its light ceramic contract. */
+@media print{
+  .mast::after,
+  .prism-divider,
+  .sheet+.sheet::before{display:none}
+  ul.bul .num{color:var(--ember)}
+}
+
+/* ============================================================================
+   ART-MAG PLATES (2026-07-09)
+   Document-sheet slice of the shared plate vocabulary (system.css carries the
+   static-page slice; class names match, materials differ). Numbered, captioned
+   procedural plates rendered once by renderSpecimen() in
+   system/generative-field.js: the canvas is aria-hidden and static, unknown
+   layer names degrade to the backdrop wash, and print output drops the plates
+   entirely so the document contract stays print-grade.
+   ============================================================================ */
+.plate{
+  position:relative;
+  width:100%;
+  margin:0 0 1.4rem;
+}
+.plate canvas{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:21/9;
+  border:1px solid var(--rule);
+  border-radius:8px;
+  background:color-mix(in oklab, var(--backdrop) 72%, black);
+}
+.plate figcaption{
+  display:flex;
+  align-items:baseline;
+  gap:1rem;
+  margin-top:.55rem;
+}
+.plate-no{
+  font-family:var(--mono);
+  font-size:.58rem;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--tag);
+  white-space:nowrap;
+}
+.plate-caption{
+  font-family:var(--mono);
+  font-size:.64rem;
+  letter-spacing:.06em;
+  color:var(--ink-muted);
+  line-height:1.7;
+  max-width:64ch;
+}
+/* Bleed within the sheet: cancels the sheet's inline padding; the folio line
+   stays on the reading column. */
+.plate--bleed{
+  margin-inline:calc(clamp(1.6rem,5vw,4.2rem) * -1);
+  width:auto;
+}
+.plate--bleed canvas{
+  aspect-ratio:2/1;
+  border-radius:0;
+  border-inline:0;
+}
+.plate--bleed figcaption{
+  padding-inline:clamp(1.6rem,5vw,4.2rem);
+}
+/* Slim band for compact mastheads. */
+.plate--slim canvas{aspect-ratio:32/7}
+/* Interstitial: a pale caustic-paper plate standing between sheets at sheet
+   width, its folio line flipped to dark-on-pale. The pale ground lives on the
+   figure itself so the flip holds no matter when the layer lands. Computed
+   WCAG contrast on the #ece9e2 ground: caption ink #24272c = 12.36:1, folio
+   mark #43474e = 7.70:1; both clear AA (4.5:1). */
+.plate--interstitial{
+  width:min(100%,50rem);
+  max-width:50rem;
+  margin:clamp(1.2rem,3vw,2.2rem) auto;
+  background:#ece9e2;
+  border:1px solid rgba(11,12,14,.16);
+  border-radius:8px;
+  padding:clamp(.85rem,1.8vw,1.3rem);
+  position:relative;
+  z-index:1;
+}
+.plate--interstitial canvas{
+  background:#f4f2ec;
+  border-color:rgba(11,12,14,.12);
+}
+.plate--interstitial .plate-no{color:#43474e}
+.plate--interstitial .plate-caption{color:#24272c}
+@media print{
+  .plate{display:none}
+}
+
+/* ── menu actuation (2026-07-09): 44px targets + tap-delay removal ────────── */
+.site-nav .sn-more summary,
+.site-nav .sn-more-list a,
+.site-nav .sn-links > a,
+.docnav a{
+  min-height:44px;
+  display:inline-flex;
+  align-items:center;
+  touch-action:manipulation;
+}
+.site-nav .sn-more-list a{display:flex}
+
+/* Keep the compact Menu trigger authoritative after the shared tap-target rule. */
+@media(max-width:680px){.site-nav .sn-links > a{display:none}}
+
+/* ============================================================================
+   ZentropyLabs document shell (2026-07-19)
+   Dark screen material for research, writing, CV, and document pages. Print
+   stays plain and high-contrast.
+   ============================================================================ */
+:root{
+  --zentropy-void:#070406;
+  --zentropy-ink:#eaf5f6;
+  --zentropy-ink-2:#c8dcdf;
+  --zentropy-muted:#94afb4;
+  --zentropy-faint:#678188;
+  --zentropy-signal:#8ee3f2;
+  --zentropy-rust:#c86a44;
+  --zentropy-oxblood:#1e0f14;
+  --brand-display:"ZentropyDisplay","Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --display:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --body:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --page:#0b070a;
+  --backdrop:#070406;
+  --ink:var(--zentropy-ink);
+  --ink-soft:var(--zentropy-ink-2);
+  --ink-muted:var(--zentropy-muted);
+  --teal:var(--zentropy-ink);
+  --teal-soft:var(--zentropy-signal);
+  --ember:var(--zentropy-rust);
+  --tag:var(--zentropy-faint);
+  --rule:rgba(142,227,242,.16);
+  --rule-strong:rgba(142,227,242,.28);
+}
+
+body.doc{
+  background:
+    radial-gradient(66rem 38rem at 74% -8%,rgba(142,227,242,.11),transparent 60%),
+    linear-gradient(180deg,#070406 0%,#0a0709 60%,#12090d 100%);
+  color:var(--zentropy-ink);
+}
+
+body.doc::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:.28;
+  background:
+    linear-gradient(180deg,transparent 0 55%,rgba(200,106,68,.18) 55% 100%),
+    repeating-linear-gradient(0deg,rgba(234,245,246,.045) 0 1px,transparent 1px 3px);
+}
+
+body.doc .docnav,
+body.doc .sheet,
+body.doc .route-art{
+  position:relative;
+  z-index:2;
+}
+body.doc .sheet{
+  background:rgba(10,7,9,.94);
+  color:var(--zentropy-ink);
+  border:1px solid rgba(142,227,242,.16);
+  box-shadow:0 24px 80px -46px rgba(0,0,0,.9);
+  border-radius:0;
+}
+body.doc .mast{
+  border-bottom-color:rgba(142,227,242,.22);
+}
+body.doc .mast h1,
+body.doc h2{
+  color:var(--zentropy-ink);
+}
+body.doc a{
+  color:var(--zentropy-signal);
+}
+body.doc .entry-meta,
+body.doc ul.bul .num{
+  color:var(--zentropy-rust);
+}
+
+.site-nav{
+  background:rgba(7,4,6,.86);
+  border-bottom:1px solid rgba(142,227,242,.16);
+  backdrop-filter:blur(16px);
+}
+.site-nav .sn-home{
+  gap:.7rem;
+  color:var(--zentropy-ink);
+  font-family:var(--brand-display);
+  font-size:clamp(1.05rem,2vw,1.38rem);
+  font-weight:400;
+  letter-spacing:0;
+  text-transform:none;
+}
+.site-nav .sn-home-field{
+  width:2.55rem;
+  height:2.55rem;
+  border:1px solid rgba(142,227,242,.22);
+  background:#050305;
+}
+.site-nav .sn-logo-canvas,
+.site-nav .sn-logo-fallback{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+.site-nav .sn-logo-fallback{
+  object-fit:cover;
+  border-radius:0;
+}
+.site-nav .sn-home > span:last-child,
+.site-nav .sn-brand-word{
+  margin-left:0;
+  display:inline;
+  transform:translateY(.04em);
+  text-shadow:0 0 14px rgba(7,4,6,.86);
+}
+.site-nav .sn-section{
+  display:none;
+  font-family:var(--mono);
+  font-size:.62rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--zentropy-muted);
+}
+.site-nav .sn-links a,
+.site-nav .sn-more summary{
+  color:var(--zentropy-muted);
+}
+.site-nav .sn-links a:hover,
+.site-nav .sn-more summary:hover,
+.site-nav .sn-links a[aria-current="page"],
+.site-nav .sn-links a.is-active,
+.site-nav .sn-more[data-current="true"] summary{
+  color:var(--zentropy-signal);
+  border-color:var(--zentropy-signal);
+}
+
+body.doc .route-art{
+  position:relative;
+  z-index:2;
+  width:min(100%,50rem);
+  margin:0 auto clamp(1rem,2.4vw,1.6rem);
+  border:1px solid rgba(142,227,242,.18);
+  background:#080507;
+  overflow:hidden;
+}
+body.doc .route-art::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg,transparent 0 50%,rgba(200,106,68,.22) 58% 100%),
+    repeating-linear-gradient(0deg,rgba(234,245,246,.08) 0 1px,transparent 1px 4px);
+  mix-blend-mode:screen;
+  opacity:.58;
+}
+body.doc .route-art img{
+  display:block;
+  width:100%;
+  aspect-ratio:1280/430;
+  object-fit:cover;
+}
+body.doc .route-art figcaption{
+  position:relative;
+  left:auto;
+  bottom:auto;
+  padding:.65rem 1rem;
+  border-top:1px solid rgba(142,227,242,.14);
+  background:#080507;
+  font-family:var(--mono);
+  font-size:.58rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--zentropy-ink);
+  text-shadow:0 1px 16px #000;
+}
+
+@media (max-width:760px){
+  body.doc{
+    padding:.7rem;
+  }
+  body.doc .sheet{
+    padding:clamp(1.25rem,5vw,2rem);
+  }
+  .site-nav{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:center;
+    gap:.45rem .75rem;
+    padding:.65rem .8rem;
+  }
+  .site-nav .sn-home{
+    min-width:0;
+    width:auto;
+    text-align:left;
+    font-size:1.05rem;
+  }
+  .site-nav .sn-home-field{
+    width:2.35rem;
+    height:2.35rem;
+  }
+  .site-nav .sn-home .sn-brand-word{
+    display:inline;
+  }
+  .site-nav .sn-section{
+    display:block;
+    grid-column:1/2;
+    grid-row:2;
+    color:var(--zentropy-faint);
+  }
+  .site-nav .sn-links{
+    display:none;
+  }
+  .site-nav .sn-links > a{
+    display:none;
+  }
+  .site-nav .sn-more{
+    grid-column:2;
+    grid-row:1/span 2;
+    justify-self:end;
+    align-self:center;
+    display:block;
+    min-width:max-content;
+    opacity:1;
+    visibility:visible;
+    z-index:3;
+  }
+  .site-nav > .sn-more{
+    position:fixed!important;
+    top:.65rem;
+    right:6rem;
+    display:block!important;
+    opacity:1!important;
+    visibility:visible!important;
+    z-index:1000!important;
+  }
+  .site-nav .sn-more summary{
+    min-block-size:44px;
+    display:flex;
+    align-items:center;
+    min-width:4.4rem;
+    color:var(--zentropy-ink);
+    background:rgba(142,227,242,.08);
+    border:1px solid rgba(142,227,242,.24);
+    border-radius:0;
+    font-size:0;
+    white-space:nowrap;
+    visibility:visible;
+  }
+  .site-nav .sn-more summary::before{
+    content:"Menu";
+    font-size:.78rem;
+  }
+  .site-nav .sn-more summary::after{
+    font-size:.78rem;
+    color:var(--zentropy-signal);
+  }
+  .site-nav .sn-more-list{
+    position:fixed;
+    left:.75rem;
+    right:.75rem;
+    top:4.4rem;
+    max-height:calc(100dvh - 5.2rem);
+    overflow:auto;
+  }
+  body.doc .route-art img{
+    aspect-ratio:16/9;
+  }
+}
+
+@media (max-width:330px){
+  .site-nav .sn-home .sn-brand-word{
+    display:none;
+  }
+  .site-nav > .sn-more{
+    right:1rem;
+  }
+}
+
+@media (prefers-reduced-motion:reduce),(pointer:coarse),(max-width:899px){
+  body.doc #gl.generative-field-canvas,
+  body.doc #motes.generative-motes-canvas{
+    display:none!important;
+  }
+}
+
+@media print{
+  body.doc{
+    background:#fff;
+    color:#000;
+    padding:0;
+  }
+  body.doc::before,
+  .site-nav,
+  .route-art,
+  #gl,
+  #motes{
+    display:none!important;
+  }
+  body.doc .sheet{
+    background:#fff;
+    color:#000;
+    border:0;
+    box-shadow:none;
+  }
 }

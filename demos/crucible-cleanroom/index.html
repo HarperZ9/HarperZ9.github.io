@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crucible Cleanroom Verdict Packet Demo</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f6f2;
+      --panel: #ffffff;
+      --ink: #1f2328;
+      --muted: #5b626b;
+      --line: #d8d5ca;
+      --blue: #0b63ce;
+      --green: #126b4f;
+      --red: #a3292a;
+      --amber: #8c5b00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+    header, main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 28px 20px;
+    }
+    header {
+      padding-top: 42px;
+      padding-bottom: 22px;
+    }
+    h1 {
+      max-width: 760px;
+      margin: 0 0 12px;
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+    .dek {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 9px 14px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--blue);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .button.primary {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 8px 0 24px;
+    }
+    .card, .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .card {
+      padding: 16px;
+      min-height: 128px;
+    }
+    .card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 22px;
+    }
+    .match { color: var(--green); }
+    .drift { color: var(--red); }
+    .unknown { color: var(--amber); }
+    .panel {
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+    h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+    code, pre {
+      font-family: Consolas, "Courier New", monospace;
+      background: #f0f0eb;
+      border: 1px solid #dedbd1;
+      border-radius: 5px;
+    }
+    code {
+      padding: 1px 4px;
+      overflow-wrap: anywhere;
+    }
+    pre {
+      max-width: 100%;
+      padding: 12px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    pre code {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      white-space: inherit;
+      overflow-wrap: inherit;
+      word-break: inherit;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 9px 8px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      color: var(--muted);
+      background: #fbfbf8;
+    }
+    tr:last-child td { border-bottom: 0; }
+    .hash {
+      overflow-wrap: anywhere;
+      font-size: 13px;
+    }
+    footer {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 8px 20px 40px;
+      color: var(--muted);
+    }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+      header { padding-top: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Cleanroom verdict packet demo</h1>
+    <p class="dek">A tiny public packet where the verdict is re-derived from the record instead of accepted from an agent summary.</p>
+    <div class="actions">
+      <a class="button primary" href="crucible-cleanroom-demo.zip">Download bundle</a>
+      <a class="button" href="crucible-cleanroom-demo/README.md">Read packet README</a>
+      <a class="button" href="crucible-cleanroom-demo/bundle/report.md">View report</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="grid" aria-label="verdict counts">
+      <div class="card">
+        <strong class="match">MATCH 1</strong>
+        <span>The measured bound matches the claim.</span>
+      </div>
+      <div class="card">
+        <strong class="drift">DRIFT 1</strong>
+        <span>The claim says 3 comparisons; the record shows the worst case is 11.</span>
+      </div>
+      <div class="card">
+        <strong class="unknown">UNVERIFIABLE 1</strong>
+        <span>The claim has no falsification condition, so the packet refuses to pretend.</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>What This Is</h2>
+      <p>This is a small review packet for one binary-search thesis. The point is not binary search. The point is the review boundary: the packet keeps claims, measurements, verdicts, and unmeasured claims separate enough for another reviewer to inspect.</p>
+      <p>The verifier boundary excludes worker context, reasoning trace, intermediate steps, prior chat, and notes. If the packet cannot support a claim, the result stays <code>UNVERIFIABLE</code>.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Included Records</h2>
+      <table>
+        <thead>
+          <tr><th>File</th><th>Role</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>spec.json</code></td><td>Original claims and falsification conditions.</td></tr>
+          <tr><td><code>run.json</code></td><td>Witnessed run record, verdicts, seals, and integrity checks.</td></tr>
+          <tr><td><code>report.md</code></td><td>Human-readable summary of verdicts and evidence.</td></tr>
+          <tr><td><code>review.md</code></td><td>Cleanroom review boundary and excluded context.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Verify Locally</h2>
+      <p>From a fresh clone of <code>HarperZ9/crucible</code>:</p>
+      <pre><code>pip install -e ".[dev]"
+python -m crucible review path/to/crucible-cleanroom-demo/bundle</code></pre>
+      <p>Expected result:</p>
+      <pre><code>cleanroom bundle PASS</code></pre>
+    </section>
+
+    <section class="panel">
+      <h2>Download Hash</h2>
+      <p class="hash"><strong>SHA-256:</strong> <code>2D4E819E4032F07E3A54D35AF2DC78161C1D2F04C43F89C26B56878D6377D1F1</code></p>
+    </section>
+
+    <section class="panel">
+      <h2>What To Critique</h2>
+      <ul>
+        <li>Does the packet include enough to re-check the verdict?</li>
+        <li>What fields imply more trust than they should?</li>
+        <li>Where should signatures, attestations, or provenance anchors fit?</li>
+        <li>What should stay outside this packet?</li>
+        <li>Is <code>UNVERIFIABLE</code> represented clearly enough for reviewers?</li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2>Non-Claims</h2>
+      <p>This does not certify code, safety, compliance, or correctness beyond the tiny demo. It is a small example of a review packet that can say <code>MATCH</code>, <code>DRIFT</code>, or <code>UNVERIFIABLE</code>.</p>
+    </section>
+  </main>
+
+  <footer>
+    Project Telos / Crucible proof-surface demo. Build with a model. Take nothing on faith.
+  </footer>
+</body>
+</html>

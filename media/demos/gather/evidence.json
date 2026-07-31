@@ -1,0 +1,69 @@
+{
+  "schema": "gather-marketing-demo-evidence/v1",
+  "captured_utc": "2026-07-12T21:34:01+00:00",
+  "network_used": false,
+  "sanitization": [
+    "demo directory prefix",
+    "Gather checkout prefix",
+    "Python executable path"
+  ],
+  "sections": [
+    {
+      "name": "version",
+      "command": "python -m gather --version",
+      "returncode": 0,
+      "duration_ms": 162,
+      "stdout": "gather 1.6.1",
+      "stderr": ""
+    },
+    {
+      "name": "extract",
+      "command": "python -m gather extract <DEMO_DIR>/source.html",
+      "returncode": 0,
+      "duration_ms": 505,
+      "stdout": "{\n  \"blocks\": [\n    {\n      \"path\": \"html[1]/body[1]/main[1]/h1[1]\",\n      \"sha256\": \"77fe1757ad064289d9916cbfefb914e4dc40e2f8bc842c00786c86504e8f8fcf\",\n      \"tag\": \"h1\"\n    },\n    {\n      \"path\": \"html[1]/body[1]/main[1]/p[1]\",\n      \"sha256\": \"fbb7b02723879ca95817b8ca4e27c3c7f8fec601eca39c1330f9f58aece69cf5\",\n      \"tag\": \"p\"\n    },\n    {\n      \"path\": \"html[1]/body[1]/main[1]/h2[1]\",\n      \"sha256\": \"d47a36f4f055810755db08b8d52e479baa4bb7a7a1f6449f71fa1ad5c20495ef\",\n      \"tag\": \"h2\"\n    },\n    {\n      \"path\": \"html[1]/body[1]/main[1]/ul[1]/li[1]\",\n      \"sha256\": \"e029fe5b03190a4b351ad0844adc1548cd41c04a5600ef62a4fc8fa09940a552\",\n      \"tag\": \"li\"\n    },\n    {\n      \"path\": \"html[1]/body[1]/main[1]/ul[1]/li[2]\",\n      \"sha256\": \"e5cc0848e6720485a5618ec4bf75f998f54eafb46c168952af5244093b9d7a1a\",\n      \"tag\": \"li\"\n    },\n    {\n      \"path\": \"html[1]/body[1]/main[1]/ul[1]/li[3]\",\n      \"sha256\": \"d433c077811177e5231542e26a7b16df90184087e0a45707809601c404669464\",\n      \"tag\": \"li\"\n    },\n    {\n      \"path\": \"html[1]/body[1]/main[1]/p[2]\",\n      \"sha256\": \"b28b4268f329a12752ac0667ad52b2a0431a43c4c77dab69326efcfff2db9b4a\",\n      \"tag\": \"p\"\n    }\n  ],\n  \"content_sha256\": \"32d493643936a4fcf687b1e6974e3a5bf8c4e4cf976a9c127313792492ade9cc\",\n  \"fetched_at\": 0.0,\n  \"markdown_sha256\": \"e60a84d745df86549568094dc6864ff41d823adfafcf7a06fb2aebe64b9fa24a\",\n  \"method\": \"html-extract\",\n  \"title\": \"Agent evaluation brief\",\n  \"url\": \"file://<DEMO_DIR>\\\\source.html\"\n}",
+      "stderr": ""
+    },
+    {
+      "name": "store",
+      "command": "python -m gather docs <DEMO_DIR>/notes --scope receipt,verification,provenance --store <DEMO_DIR>/corpus --json",
+      "returncode": 0,
+      "duration_ms": 196,
+      "stdout": "{\n  \"schema\": \"gather.catalog-digest/v1\",\n  \"catalog\": [\n    {\n      \"kind\": \"document\",\n      \"id\": \"01-brief.md\",\n      \"title\": \"01-brief.md\",\n      \"source\": \"docs\",\n      \"ref\": \"<DEMO_DIR>\\\\notes\\\\01-brief.md\",\n      \"method\": \"file-read\",\n      \"sha256\": \"8d23e400225f421b5c592c34d0338233a53fedfe8b329bc461bc894265eb2af3\",\n      \"derived_from\": [],\n      \"chars\": 297\n    },\n    {\n      \"kind\": \"document\",\n      \"id\": \"02-observation.md\",\n      \"title\": \"02-observation.md\",\n      \"source\": \"docs\",\n      \"ref\": \"<DEMO_DIR>\\\\notes\\\\02-observation.md\",\n      \"method\": \"file-read\",\n      \"sha256\": \"f48c546c44a717bb3352184dd589e6ca808687073b895239bd8e3457606d31d1\",\n      \"derived_from\": [],\n      \"chars\": 301\n    }\n  ],\n  \"digest\": {\n    \"receipts\": [\n      {\n        \"kind\": \"document\",\n        \"id\": \"01-brief.md\",\n        \"title\": \"01-brief.md\",\n        \"source\": \"docs\",\n        \"ref\": \"<DEMO_DIR>\\\\notes\\\\01-brief.md\",\n        \"method\": \"file-read\",\n        \"sha256\": \"8d23e400225f421b5c592c34d0338233a53fedfe8b329bc461bc894265eb2af3\",\n        \"derived_from\": []\n      },\n      {\n        \"kind\": \"document\",\n        \"id\": \"02-observation.md\",\n        \"title\": \"02-observation.md\",\n        \"source\": \"docs\",\n        \"ref\": \"<DEMO_DIR>\\\\notes\\\\02-observation.md\",\n        \"method\": \"file-read\",\n        \"sha256\": \"f48c546c44a717bb3352184dd589e6ca808687073b895239bd8e3457606d31d1\",\n        \"derived_from\": []\n      }\n    ],\n    \"seal\": \"aac58984d65dee86c783cdb2cce1d557c542d5230ac54a1f646842dae475d3e3\"\n  },\n  \"verified\": true,\n  \"dropped\": 0,\n  \"stored\": {\n    \"added\": 2,\n    \"deduped\": 0,\n    \"total\": 2\n  }\n}",
+      "stderr": ""
+    },
+    {
+      "name": "search",
+      "command": "python -m gather corpus search <DEMO_DIR>/corpus --terms receipt,verification --json",
+      "returncode": 0,
+      "duration_ms": 542,
+      "stdout": "{\n  \"catalog\": [\n    {\n      \"kind\": \"document\",\n      \"id\": \"01-brief.md\",\n      \"title\": \"01-brief.md\",\n      \"source\": \"docs\",\n      \"ref\": \"<DEMO_DIR>\\\\notes\\\\01-brief.md\",\n      \"method\": \"file-read\",\n      \"sha256\": \"8d23e400225f421b5c592c34d0338233a53fedfe8b329bc461bc894265eb2af3\",\n      \"derived_from\": [],\n      \"chars\": 297\n    },\n    {\n      \"kind\": \"document\",\n      \"id\": \"02-observation.md\",\n      \"title\": \"02-observation.md\",\n      \"source\": \"docs\",\n      \"ref\": \"<DEMO_DIR>\\\\notes\\\\02-observation.md\",\n      \"method\": \"file-read\",\n      \"sha256\": \"f48c546c44a717bb3352184dd589e6ca808687073b895239bd8e3457606d31d1\",\n      \"derived_from\": [],\n      \"chars\": 301\n    }\n  ],\n  \"digest\": {\n    \"receipts\": [\n      {\n        \"kind\": \"document\",\n        \"id\": \"01-brief.md\",\n        \"title\": \"01-brief.md\",\n        \"source\": \"docs\",\n        \"ref\": \"<DEMO_DIR>\\\\notes\\\\01-brief.md\",\n        \"method\": \"file-read\",\n        \"sha256\": \"8d23e400225f421b5c592c34d0338233a53fedfe8b329bc461bc894265eb2af3\",\n        \"derived_from\": []\n      },\n      {\n        \"kind\": \"document\",\n        \"id\": \"02-observation.md\",\n        \"title\": \"02-observation.md\",\n        \"source\": \"docs\",\n        \"ref\": \"<DEMO_DIR>\\\\notes\\\\02-observation.md\",\n        \"method\": \"file-read\",\n        \"sha256\": \"f48c546c44a717bb3352184dd589e6ca808687073b895239bd8e3457606d31d1\",\n        \"derived_from\": []\n      }\n    ],\n    \"seal\": \"aac58984d65dee86c783cdb2cce1d557c542d5230ac54a1f646842dae475d3e3\"\n  },\n  \"skipped\": []\n}",
+      "stderr": ""
+    },
+    {
+      "name": "verify",
+      "command": "python -m gather corpus verify <DEMO_DIR>/corpus --json",
+      "returncode": 0,
+      "duration_ms": 160,
+      "stdout": "[\n  {\n    \"id\": \"01-brief.md\",\n    \"sha256\": \"8d23e400225f421b5c592c34d0338233a53fedfe8b329bc461bc894265eb2af3\",\n    \"status\": \"MATCH\"\n  },\n  {\n    \"id\": \"02-observation.md\",\n    \"sha256\": \"f48c546c44a717bb3352184dd589e6ca808687073b895239bd8e3457606d31d1\",\n    \"status\": \"MATCH\"\n  }\n]",
+      "stderr": ""
+    },
+    {
+      "name": "digest",
+      "command": "python -m gather corpus digest <DEMO_DIR>/corpus --json",
+      "returncode": 0,
+      "duration_ms": 448,
+      "stdout": "{\n  \"receipts\": [\n    {\n      \"kind\": \"document\",\n      \"id\": \"01-brief.md\",\n      \"title\": \"01-brief.md\",\n      \"source\": \"docs\",\n      \"ref\": \"<DEMO_DIR>\\\\notes\\\\01-brief.md\",\n      \"method\": \"file-read\",\n      \"sha256\": \"8d23e400225f421b5c592c34d0338233a53fedfe8b329bc461bc894265eb2af3\",\n      \"derived_from\": []\n    },\n    {\n      \"kind\": \"document\",\n      \"id\": \"02-observation.md\",\n      \"title\": \"02-observation.md\",\n      \"source\": \"docs\",\n      \"ref\": \"<DEMO_DIR>\\\\notes\\\\02-observation.md\",\n      \"method\": \"file-read\",\n      \"sha256\": \"f48c546c44a717bb3352184dd589e6ca808687073b895239bd8e3457606d31d1\",\n      \"derived_from\": []\n    }\n  ],\n  \"seal\": \"aac58984d65dee86c783cdb2cce1d557c542d5230ac54a1f646842dae475d3e3\"\n}",
+      "stderr": ""
+    },
+    {
+      "name": "integrity_drill",
+      "command": "python <GATHER_CHECKOUT>/examples/demo.py",
+      "returncode": 0,
+      "duration_ms": 521,
+      "stdout": "parsed 3 items from one video, each with a receipt:\n  metadata   abc123  sha256=40d9839ffb0e...  verify=True\n  transcript abc123  sha256=f798cd2c334c...  verify=True\n  comment    c1  sha256=301cf39d5091...  verify=True\n\nscope to ['tile','monotile']: kept 3, dropped 0\nwitnessed digest: 3 receipts, seal 7da7dc456b11..., verified True\n\nafter tampering one receipt, digest verifies: False  <- caught",
+      "stderr": ""
+    }
+  ],
+  "transcript_sha256": "4f5d0f46fd7258ca55ea33534080d02cfbfe4e4327ab820575b55651be8a5f74"
+}

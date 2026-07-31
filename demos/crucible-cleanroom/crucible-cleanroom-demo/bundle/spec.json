@@ -1,0 +1,26 @@
+{
+  "id": "bd7404c02eb2036e",
+  "title": "Binary search comparison bounds",
+  "disposition": "publishable",
+  "seal": "bd7404c02eb2036e5e77283b865758db140d7047cb4749790aec60897dfe10a8",
+  "claims": [
+    {
+      "id": "7ff7099881cc8385",
+      "text": "binary search over a sorted array of 1024 elements does at most 11 comparisons",
+      "falsification": "a measured worst-case comparison count above 11 for n=1024",
+      "sha256": "7ff7099881cc8385283873e24b23750267f6ddf7b9331b11de29cfa65115541a"
+    },
+    {
+      "id": "6c25619436f7a00b",
+      "text": "binary search over a sorted array of 1024 elements does at most 3 comparisons",
+      "falsification": "a measured worst-case comparison count above 3 for n=1024",
+      "sha256": "6c25619436f7a00ba30a5bc651e04b408afbbae07a6eed117ead29e8875c7947"
+    },
+    {
+      "id": "2fb8fae1e61a1d69",
+      "text": "binary search is more elegant than linear search",
+      "falsification": "",
+      "sha256": "2fb8fae1e61a1d69afe1b71eefe8307344323431d9e834ad2738d0fb553696bc"
+    }
+  ]
+}

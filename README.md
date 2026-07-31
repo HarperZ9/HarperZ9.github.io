@@ -2,85 +2,110 @@
 
 ![HarperZ9.github.io hero](docs/brand/portfolio-site-hero.png)
 
-> Static public site for the Zentropy Labs portfolio, demos, repos, and evidence.
+> Static public site for Project Telos: fourteen engines, recorded workflows,
+> papers, graphics, AI-assisted design, and paid-work routes.
 
-The public site surface for **Zain Dana Harper** (HarperZ9). It links the
-portfolio, flagship tools, sample reports, creative demos, proof surfaces, and
-developer entry points a visitor can open and inspect.
+HarperZ9.github.io is the public workshop surface for **Zain Dana Harper**
+and Project Telos. It maps the range -- local-model workflows, codebase maps,
+compiler tools, real-time graphics, color science, AI-assisted design,
+research infrastructure, and clear writing -- and gives a visitor a way in: open a demo, inspect an
+engine, read a paper, or start a work thread.
 
-## The thesis
+## Deployment source
 
-One accountable perception-and-action loop: a model perceives only through
-**witnessed** organs, acts only through a **gate** it cannot talk past,
-**journals** everything, and **verifies** its own work by re-perceiving. The
-public repos are the organs; **Flywheel** composes them into the live loop.
+[`HarperZ9/telos-v2`](https://github.com/HarperZ9/telos-v2) is the canonical
+source for the generated site. Its full verification gate runs before the
+contents of `dist/` are copied here. This repository owns the deployed output,
+Pages configuration, and deployment-level checks.
 
-The product infrastructure that makes people stop double-checking every answer
-is not a better model — it is a receipt discipline that makes agent actions
-auditable. **Proof before trust.**
+## Why it matters
+
+The website has to serve both public readers and developers. Public readers
+need plain language, working surfaces, and visible status; developers need
+runnable demos, repo links, and a path from the page to the code behind it.
+Rigor stays present as infrastructure -- source links, tests, dates, maturity
+labels -- without becoming the headline of every page.
 
 ## Try it
 
 ```powershell
 git clone https://github.com/HarperZ9/HarperZ9.github.io.git
 cd HarperZ9.github.io
-python -m http.server 8765
+npx serve -l 8765 .
 ```
 
-Open `http://127.0.0.1:8765/`.
+Use a server that gives `.mjs` files a JavaScript MIME type (`npx serve`
+does). `python -m http.server` serves `.mjs` as `text/plain` on some Windows
+setups, which silently breaks the Studio's module graph.
 
-## The stack
+## What to test first
 
-| Component | Repo | What it does |
+- Open `http://127.0.0.1:8765/`.
+- Check the first viewport orients a new visitor: who this is, what the range
+  is, where to enter.
+- Verify public repo links, sample pages, and mobile/desktop readability.
+
+## Current status
+
+Static public portfolio and product-surface site. It should stay inspectable,
+accessible, and honest about maturity; private systems stay bounded off-page.
+
+## Pages
+
+- `index.html` -- generated React home from the verified `telos-v2` build.
+- `papers/` -- direct PDFs of the six published papers, built from the
+  LaTeX sources with tectonic.
+- `overview.html` -- the engine room: the flagship lineup.
+- `studio.html` -- the Studio, a live media instrument for rendering and
+  measuring the frame.
+- `demo-index.html` -- runnable browser demos.
+- `research.html` | `publications.html` -- research index and papers.
+- `writing.html` -- essays, notes, and the public test-case intake.
+- `catalog.html` | `guide.html` -- the full catalog and the site guide.
+- `typeface.html` -- Telos Display specimen and synthesis notes.
+- `cv.html` | `person.html` | `resume.html` -- about and career surfaces.
+
+## Public lineup
+
+| Group | Public repos | State |
 | --- | --- | --- |
-| **Flywheel** | [local-model](https://github.com/HarperZ9/local-model) | The engine: verified-inference harness, agent loop, gateway, lanes, receipt-wrapped tool calls, routing |
-| **Flywheel Desktop** | [flywheel-desktop](https://github.com/HarperZ9/flywheel-desktop) | Native Flutter client (no browser, offline-first) |
-| **buildlang / buildc** | [buildlang](https://github.com/HarperZ9/buildlang) | Compiler + epistemics engine: capability-typed sealed receipts for verified computation |
-| **gather** | [gather](https://github.com/HarperZ9/gather) | Research intake + provenance receipts; accountable pilot evidence engine |
-| **crucible** | [crucible](https://github.com/HarperZ9/crucible) | Falsifiable verification (thesis to MATCH / DRIFT / UNVERIFIABLE) |
-| **index** | [index](https://github.com/HarperZ9/index) | Workspace map + symbol graph + verified wiki + context envelopes |
-| **forum** | [forum](https://github.com/HarperZ9/forum) | Witnessed causal ledger + model-agnostic routing + approval gates |
-| **learn** | [learn](https://github.com/HarperZ9/learn) | Accountable learning forge (spaced repetition, retrieval, teach-you loop) |
-| **telos** | [telos](https://github.com/HarperZ9/telos) | The reconciliation lane: five-tool workflow, creative engine, doctors, proof packets |
-| **EMET** | [emet](https://github.com/HarperZ9/emet) | Closed verdict lattice + portable witness receipts |
+| Route, map, research, and judgment | `flywheel`, `index`, `gather`, `forum`, `crucible` | Any-model routing, workspace maps, research intake, orchestration, and evaluation. |
+| Verification, compilation, and learning | `emet`, `buildlang`, `learn` | External byte witnessing, typed-effects compilation, and witnessed learning checkpoints. |
+| Agent substrate | `relay`, `plexus`, `mneme` | Endpoint-agnostic coding, tool interop, and provenance-backed memory. |
+| Media, graphics, and design | `telos`, `studio-engine`, `build-color` | Poster systems, native rendering, neural-network graphics, simulation, and color science. |
 
-## What is new (2026-07-31)
-
-- **Receipt-wrapped agent tool-calls**: every tool invocation in the agent loop
-  now carries a sealed, chain-linked receipt (capability class, admission,
-  witnessed I/O digests). The enforced AgentRiskBOM. [PR #22](https://github.com/HarperZ9/local-model/pull/22)
-- **Cross-language verify arm**: `buildc receipt verify` reads tool-call
-  receipts in Rust, golden-pinned against the Python emit side. [PR #36](https://github.com/HarperZ9/buildlang/pull/36)
-- **Gather pilot evidence engine**: a portable `gather pilot` command (run /
-  refresh / verify / bundle) that turns mixed sources into a verifiable corpus. [PR #14](https://github.com/HarperZ9/gather/pull/14)
-- **Native client canonical**: Flywheel Desktop is the primary UI; the browser
-  shell is a dev/CI fallback. [PR #21](https://github.com/HarperZ9/local-model/pull/21)
-
-## CoSAI alignment
-
-The stack's receipt-discipline spine maps directly to CoSAI Workstream 4
-(Secure Design Patterns for Agentic Systems):
-
-- **Tool Design runbook** — the tool-call receipt is a reference implementation
-- **MCP Runtime Isolation runbook** — capability classification (read / write / exec / mcp)
-- **Trust-Aware Dataplane RFC** — the transitive-witness DAG
-
-Apache 2.0 (code) / CC-BY 4.0 (docs) — matching CoSAI's license terms.
+Private platform and product work exists behind these leaves; public claims stay
+limited to outcomes and categories, never internals.
 
 ## Local verification
 
-```powershell
-python -m http.server 8765
-```
+Serve this directory locally (see **Try it** above for the MIME caveat), then
+visit `http://127.0.0.1:8765/`. Before publishing, verify:
 
-Visit `http://127.0.0.1:8765/`. Verify: first viewport, internal links,
-external GitHub links, mobile/desktop legibility, no secrets staged.
+- The first viewport orients: range, entry points, working surfaces.
+- Internal links and `*-sample.html` resolve; no link 404s.
+- External GitHub links point at intended public repositories.
+- The page stays legible at desktop and mobile widths.
+- No secrets, generated logs, or private artifacts are staged.
+
+Test suites:
+
+```powershell
+python -m pytest tests -q
+node --test system
+node tests/linkcheck.mjs
+```
 
 ## For developers
 
 Keep the public README, examples, and repository metadata aligned with current
-behavior. Before opening a PR or publishing a release, verify the working tree.
+behavior. Before opening a PR or publishing a release, verify the working tree
+and any documented commands for this repo.
 
 ```bash
 git status --short
 ```
+
+---
+
+**[Zentropy Labs](https://github.com/ZentropyLabs-ai)** · order out of entropy. An independent lab building evidence-first tools that leave a re-checkable artifact behind. Built by Zain Dana Harper in Seattle. The full workbench is at [Project Telos](https://harperz9.github.io).

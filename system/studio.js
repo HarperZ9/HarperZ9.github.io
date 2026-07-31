@@ -1,33 +1,26 @@
 // studio.js: the unified Studio. One canvas, two ways in (Generate via the Atelier, or Bring your own),
 // then perceive/discuss/transform/refine with the model. Bridges the Atelier's canvas to the eye.
+// ── Static imports: only the organs every source shares ──────────────────────────────────────
+// Perception (eye/sense), the live-loop invariants, chat, the engine-status console, the
+// certificate stack, and the surface layer stay static. Everything per-source loads lazily
+// below, at the setSource() boundary, so first-load JS carries none of the per-source graphs.
 import { perceptualHash, features, hamming } from "../shared-frame/eye.js";
-import { representation, richFeatures, describeFrame, rmsFromBytes, spectrumBands, dominantPitchHz, assembleFullPerception } from "./sense.js";
+import { representation, richFeatures, describeFrame, describeFrameLong, perceptionDetail, rmsFromBytes, spectrumBands, dominantPitchHz, assembleFullPerception, hueName } from "./sense.js";
+// Advanced perception channels (brailleRender / shapeInventory / reconstructionFidelity), which
+// ship separately in sense-core's features.mjs and reach here through sense.js's `export *` chain
+// (sense.js -> lib/sense-core/index.mjs -> features.mjs, verified). Accessed via a NAMESPACE
+// import so a build where those exports have not landed yet degrades silently (the property
+// reads yield undefined and every call site is typeof-guarded) instead of failing the whole
+// module graph at load time the way a missing named import would.
+import * as senseCore from "./sense.js";
 import { respond } from "./respond.js";
-import { renderFractal, PRESETS, PALETTES as FRACTAL_PALETTES } from "./fractal.js?v=20260628a";
-import { renderFractalGL, isFractalGLAvailable } from "./fractal-gl.js";
-import { render3D } from "./fractal3d.js";
-import { sizeToDisplay } from "./canvas-scale.js";
 import { sourceIsAnimated, shouldHaltOnStatic, fullscreenMaxBacking } from "./studio-loop.js";
 import { buildModelHeaders } from "./studio-model.js";
-import { renderScene, renderSceneVolumetric } from "./ndim.js";
-import { drawSceneGL, drawSceneGL3D } from "./lib/render-nd/backends/webgl.mjs";
-import { startDiscovery, stopDiscovery } from "./discovery/studio-discovery.js";
-import {
-  createPaintState, setBrush, setPaintTarget, paintAtTarget, toggle as togglePaint, clearPaint,
-} from "./lib/render-nd/core/paint-state.mjs";
-import { screenRay, pickFace, nearestVertex, nearestEdge } from "./lib/render-nd/core/pick.mjs";
 import { oklchToSrgbByte } from "./lib/sense-core/colour-perceptual.mjs";
 import { probeCapability } from "./engine/capability.js";
 import { makeHardwareRenderPlan } from "./engine/render-plan.js";
 import { IR_SCHEMA, CANONICAL_MEDIA_KINDS } from "./media/ir.js";
-import { createStudioMediaAdapters } from "./media/studio-adapters.js";
-import { createMediaNodeRegistry } from "./graph/nodes/media-nodes.js";
 import { GRAPH_PACKAGE_SCHEMA, createGraphPackage, validateGraphPackage } from "./graph/package.js";
-import { StudioImporters } from "./importers.js";
-import { StudioExporters, download } from "./exporters.js";
-import { TRANSFORM_GROUPS, applyCanvasEffect } from "./studio-effects.js";
-import { cloneMesh, drawMeshPreview, meshStats, normalizeMesh, transformMesh } from "./mesh-transform.js";
-import { ModelAdapter } from "./model-adapter.js";
 import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-frame/certificate.js";
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
@@ -41,44 +34,287 @@ import {
   startMonitorLoop,
   stopMonitorLoop,
 } from "./studio-surface.js";
+
+// ── Lazy per-source module graphs (setSource() is the lazy boundary) ─────────────────────────
+// Each loader caches its in-flight promise (a graph is fetched once, never twice) and mirrors the
+// resolved namespace into a module-level ref for the synchronous call sites that are only reachable
+// AFTER the graph has loaded (e.g. paintFractal only runs once a preset was rendered, and rendering
+// awaited the load). A failed load clears the cache so a later attempt can retry, and the awaiting
+// call site surfaces the error to the user; nothing fails silently.
+function lazyLoader(importer, onLoad) {
+  let promise = null;
+  return function load() {
+    if (!promise) {
+      promise = Promise.resolve()
+        .then(importer)
+        .then(mod => { if (onLoad) onLoad(mod); return mod; })
+        .catch(err => { promise = null; throw err; });
+    }
+    return promise;
+  };
+}
+
+// 2D fractal source: fractal.js (CPU reference + PRESETS/PALETTES) + fractal-gl.js (GPU path).
+let _fractal = null, _fractalGL = null;
+const loadFractal2D = lazyLoader(
+  () => Promise.all([import("./fractal.js?v=20260628a"), import("./fractal-gl.js?v=20260701a")]),
+  ([f, g]) => {
+    _fractal = f; _fractalGL = g;
+    GL_AVAILABLE = !!g.isFractalGLAvailable();
+    buildFractalPalettes();            // idempotent (builds once)
+    buildPresetMenuNow(activeFType);   // populate the preset dropdown for the active type
+  });
+
+// 3D fractal source: the WebGL1 raymarcher.
+let _fractal3d = null;
+const loadFractal3D = lazyLoader(() => import("./fractal3d.js"), m => { _fractal3d = m; });
+
+// Dimensions source: the render-nd barrel (geometry + pick + paint-state) + the WebGL backend.
+let _ndim = null, _ndGLBackend = null;
+const loadNDimEngine = lazyLoader(
+  () => Promise.all([import("./ndim.js"), import("./lib/render-nd/backends/webgl.mjs")]),
+  ([nd, glb]) => {
+    _ndim = nd; _ndGLBackend = glb;
+    if (!_ndPaint) _ndPaint = nd.createPaintState();
+    ndimBuildPalette();                // idempotent (builds once)
+  });
+
+// Physics source: the discovery engine.
+let _discovery = null;
+const loadDiscovery = lazyLoader(() => import("./discovery/studio-discovery.js"), m => { _discovery = m; });
+
+// Showcase source: the First Integral scene.
+let _showcase = null;
+const loadShowcase = lazyLoader(() => import("./showcase/first-integral.js?v=20260701a"), m => { _showcase = m; });
+
+// Living neural source: the seed's neural instruments, animated on the shared
+// canvas and measured by the perception loop. Static under reduced motion.
+let _neural = null;
+const loadNeural = lazyLoader(() => import("./studio-neural.js"), m => { _neural = m; });
+let _neuralSeed = "living";
+let _neuralInstrument = "field";
+let _neuralStatic = false;   // true when reduced motion holds a single frame
+let _sound = null;
+const loadSound = lazyLoader(() => import("./studio-sound.js"), m => { _sound = m; });
+let _soundSeed = "aurora";
+
+// BYO media: pixel effects, mesh transforms, universal import/export, local-model adapter.
+let _effects = null;
+const loadEffects = lazyLoader(() => import("./studio-effects.js"), m => { _effects = m; });
+let _meshMod = null;
+const loadMeshTransform = lazyLoader(() => import("./mesh-transform.js"), m => { _meshMod = m; });
+const loadImporters = lazyLoader(() => import("./importers.js"));
+const loadExporters = lazyLoader(() => import("./exporters.js"));
+const loadModelAdapter = lazyLoader(() => import("./model-adapter.js"));
+
+// The media engine (adapter registry + node graph) backs the engine-status counts and the
+// __studioMediaAdapters / __studioMediaNodeRegistry inspection hooks. It transitively pulls the
+// importer / exporter / effects / mesh graphs, so it loads OFF the critical path (idle, kicked from
+// bootEngineStatus) instead of statically; the status lines fill their counts in when it arrives.
+const loadMediaEngine = lazyLoader(async () => {
+  const [adaptersMod, nodesMod] = await Promise.all([
+    import("./media/studio-adapters.js"),
+    import("./graph/nodes/media-nodes.js"),
+  ]);
+  const adapters = adaptersMod.createStudioMediaAdapters();
+  const registry = nodesMod.createMediaNodeRegistry();
+  window.__studioMediaAdapters = adapters;
+  window.__studioMediaNodeRegistry = registry;
+  return { adapters, registry };
+});
+
+// Music source: the reactive engine + its tab UI (both publish window globals, imported for effect).
+const loadReactive = lazyLoader(async () => {
+  await import("./reactive.js?v=20260625b");          // sets window.MusicExperience + window.ReactiveVisuals
+  await import("./reactive-music-ui.js?v=20260625b"); // wires the Music tab controls to it
+  feedEngineCapability();                             // the engine exists now; hand it the probed capability
+});
+
 const $ = id => (window.__overlayDoc && window.__overlayDoc.getElementById(id)) || document.getElementById(id);
 const fmt = (v,n=3)=>typeof v==="number"?(Number.isInteger(v)?String(v):v.toFixed(n)):String(v);
-const STUDIO_MEDIA_ADAPTERS = createStudioMediaAdapters();
-const STUDIO_MEDIA_NODE_REGISTRY = createMediaNodeRegistry();
-window.__studioMediaAdapters = STUDIO_MEDIA_ADAPTERS;
-window.__studioMediaNodeRegistry = STUDIO_MEDIA_NODE_REGISTRY;
 window.__studioCreateGraphPackage = createGraphPackage;
 window.__studioValidateGraphPackage = validateGraphPackage;
+// __studioMediaAdapters / __studioMediaNodeRegistry are published by loadMediaEngine (idle-loaded
+// from bootEngineStatus shortly after boot, or earlier if a media path asks for the registry).
+// Showcase debug/test surface: async wrappers that pull the showcase graph on first call, then
+// delegate to the real report/verdict/recheck. Callers now receive a Promise.
+window.__studioShowcase = {
+  report:  async () => (await loadShowcase()).showcaseReport(),
+  verdict: async () => (await loadShowcase()).showcaseVerdict(),
+  recheck: async () => (await loadShowcase()).recheckShowcase(),
+};
+
+function slugStudioFieldName(value, fallback) {
+  return String(value || fallback || "control")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 48) || "control";
+}
+
+function normaliseStudioFieldNames(root = document) {
+  if (!root || !root.querySelectorAll) return;
+  const fields = root.querySelectorAll(".studio-app input, .studio-app select, .studio-app textarea");
+  fields.forEach((field, index) => {
+    if (field.id || field.name) return;
+    const label =
+      field.getAttribute("aria-label") ||
+      field.closest("[aria-label]")?.getAttribute("aria-label") ||
+      field.closest("label")?.textContent ||
+      field.closest(".tp-lblv")?.querySelector(".tp-lblv_l")?.textContent ||
+      field.getAttribute("type") ||
+      field.tagName.toLowerCase();
+    field.name = "studio-" + slugStudioFieldName(label, field.tagName) + "-" + index;
+  });
+}
+
+function bootStudioFieldNameObserver() {
+  const app = document.querySelector(".studio-app");
+  if (!app) return;
+  normaliseStudioFieldNames(app);
+  const observer = new MutationObserver((mutations) => {
+    if (mutations.some((mutation) => mutation.addedNodes.length > 0)) {
+      normaliseStudioFieldNames(app);
+    }
+  });
+  observer.observe(app, { childList: true, subtree: true });
+}
+
+if (typeof document !== "undefined") {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootStudioFieldNameObserver, { once: true });
+  } else {
+    bootStudioFieldNameObserver();
+  }
+}
+
+let studioRendererConsoleSync = null;
+function syncStudioRendererConsole(source) {
+  if (typeof studioRendererConsoleSync === "function") studioRendererConsoleSync(source);
+}
+
+function bootStudioRendererConsole(root = document) {
+  const consoleEl = root.querySelector("[data-studio-render-console]");
+  if (!consoleEl || consoleEl.dataset.enhanced === "true") return;
+  consoleEl.dataset.enhanced = "true";
+
+  const status = consoleEl.querySelector("[data-studio-console-status]");
+  const pointer = consoleEl.querySelector("[data-studio-console-pointer]");
+  const stage = consoleEl.querySelector("[data-studio-console-stage]");
+  const actionButtons = [...consoleEl.querySelectorAll("[data-studio-console-source]")];
+  const sourceLabels = {
+    atelier: "atelier renderer",
+    fractal: "2D fractal",
+    fractal3d: "3D fractal",
+    ndim: "dimension renderer",
+    music: "reactive renderer",
+    byo: "media renderer",
+    watch: "watch renderer",
+    discovery: "physics engine",
+    showcase: "showcase renderer",
+  };
+
+  const setConsoleMeter = (key, value) => {
+    const pct = Math.max(0, Math.min(1, value));
+    const meter = consoleEl.querySelector(`[data-studio-console-meter="${key}"]`);
+    const bar = consoleEl.querySelector(`[data-studio-console-bar="${key}"]`);
+    if (meter) meter.textContent = pct.toFixed(2);
+    if (bar) bar.style.setProperty("--meter", pct.toFixed(3));
+  };
+
+  const sync = (source = window.__studioActiveSource || "atelier") => {
+    if (status) status.textContent = sourceLabels[source] || `${source} renderer`;
+    actionButtons.forEach((button) => {
+      const active = button.dataset.studioConsoleSource === source;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+  };
+  studioRendererConsoleSync = sync;
+
+  actionButtons.forEach((button) => {
+    button.setAttribute("aria-pressed", "false");
+    button.addEventListener("click", () => {
+      const source = button.dataset.studioConsoleSource || "atelier";
+      const sourceTab = document.querySelector(`#studio-source button[data-source="${source}"]`);
+      if (!sourceTab) return;
+      sourceTab.click();
+      try { sourceTab.focus({ preventScroll: true }); } catch (_) { sourceTab.focus(); }
+    });
+  });
+
+  if (stage) {
+    const updatePointer = (event) => {
+      const rect = stage.getBoundingClientRect();
+      const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / Math.max(1, rect.width)));
+      const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / Math.max(1, rect.height)));
+      stage.style.setProperty("--px", `${(x * 100).toFixed(1)}%`);
+      stage.style.setProperty("--py", `${(y * 100).toFixed(1)}%`);
+      consoleEl.style.setProperty("--px", `${(x * 100).toFixed(1)}%`);
+      consoleEl.style.setProperty("--py", `${(y * 100).toFixed(1)}%`);
+      if (pointer) pointer.textContent = `${Math.round(x * 100)}:${Math.round(y * 100)}`;
+    };
+    stage.addEventListener("pointermove", updatePointer);
+    stage.addEventListener("pointerdown", updatePointer);
+  }
+
+  let last = 0;
+  const reduceMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  const tick = (now = performance.now()) => {
+    if (!document.body.contains(consoleEl)) return;
+    if (now - last > 160) {
+      last = now;
+      const t = now * 0.001;
+      setConsoleMeter("field", 0.58 + Math.sin(t * 0.86) * 0.22);
+      setConsoleMeter("dither", 0.50 + Math.cos(t * 0.63 + 1.4) * 0.24);
+      setConsoleMeter("motion", 0.46 + Math.sin(t * 1.18 + 2.1) * 0.28);
+    }
+    if (!reduceMotion) window.requestAnimationFrame(tick);
+  };
+  tick();
+  sync();
+}
 
 async function bootEngineStatus() {
   const set = (id, text) => { const el = $(id); if (el) el.textContent = text; };
+  // Everything derivable from the static graph paints immediately; the two registry-backed counts
+  // (media nodes, adapters) fill in when the idle-loaded media engine arrives. Honest either way:
+  // the pre-load lines carry only what is actually known at that moment, never invented counts.
+  const setLines = (plan) => {
+    window.__studioHardwareRenderPlan = plan;
+    set("engine-status-graph", "runtime/v1 / " + GRAPH_PACKAGE_SCHEMA.split("/").pop());
+    set("engine-status-backend", plan.backend);
+    set("engine-status-tier", plan.tier);
+    set("engine-status-particles", String(plan.particleBudget));
+    set("engine-status-splats", String(plan.splatBudget));
+    set("engine-status-media", IR_SCHEMA.split("/").pop() + " / " + CANONICAL_MEDIA_KINDS.length + " kinds");
+    set("engine-status-readback", "1/" + plan.readbackEveryNFrames);
+  };
   try {
     const canvas = $("studio-canvas");
     const cap = await probeCapability();
-    const plan = makeHardwareRenderPlan(cap, {
+    setLines(makeHardwareRenderPlan(cap, {
       width: canvas ? canvas.width : window.innerWidth,
       height: canvas ? canvas.height : window.innerHeight,
       dpr: window.devicePixelRatio || 1,
-    });
-    window.__studioHardwareRenderPlan = plan;
-    set("engine-status-graph", "runtime/v1 / " + Object.keys(STUDIO_MEDIA_NODE_REGISTRY).length + " nodes / " + GRAPH_PACKAGE_SCHEMA.split("/").pop());
-    set("engine-status-backend", plan.backend);
-    set("engine-status-tier", plan.tier);
-    set("engine-status-particles", String(plan.particleBudget));
-    set("engine-status-splats", String(plan.splatBudget));
-    set("engine-status-media", IR_SCHEMA.split("/").pop() + " / " + CANONICAL_MEDIA_KINDS.length + " kinds / " + STUDIO_MEDIA_ADAPTERS.length + " adapters");
-    set("engine-status-readback", "1/" + plan.readbackEveryNFrames);
+    }));
   } catch (_) {
-    const plan = makeHardwareRenderPlan(null, {});
-    window.__studioHardwareRenderPlan = plan;
-    set("engine-status-graph", "runtime/v1 / " + Object.keys(STUDIO_MEDIA_NODE_REGISTRY).length + " nodes / " + GRAPH_PACKAGE_SCHEMA.split("/").pop());
-    set("engine-status-backend", plan.backend);
-    set("engine-status-tier", plan.tier);
-    set("engine-status-particles", String(plan.particleBudget));
-    set("engine-status-splats", String(plan.splatBudget));
-    set("engine-status-media", IR_SCHEMA.split("/").pop() + " / " + CANONICAL_MEDIA_KINDS.length + " kinds / " + STUDIO_MEDIA_ADAPTERS.length + " adapters");
-    set("engine-status-readback", "1/" + plan.readbackEveryNFrames);
+    setLines(makeHardwareRenderPlan(null, {}));
   }
+  // Media engine counts: load the registry graph off the critical path (idle after boot), then
+  // complete the graph/media lines with the real node + adapter counts.
+  const fillCounts = ({ adapters, registry }) => {
+    set("engine-status-graph", "runtime/v1 / " + Object.keys(registry).length + " nodes / " + GRAPH_PACKAGE_SCHEMA.split("/").pop());
+    set("engine-status-media", IR_SCHEMA.split("/").pop() + " / " + CANONICAL_MEDIA_KINDS.length + " kinds / " + adapters.length + " adapters");
+  };
+  const kick = () => {
+    loadMediaEngine().then(fillCounts).catch(err => {
+      // The lines keep their schema-only readout (never invented counts); log the real cause.
+      console.warn("studio: media engine load failed", err);
+    });
+  };
+  if (typeof requestIdleCallback === "function") requestIdleCallback(kick, { timeout: 4000 });
+  else setTimeout(kick, 1500);
 }
 bootEngineStatus();
 
@@ -89,6 +325,11 @@ const lastHashByCanvas = new WeakMap();
 // "the Atelier / 2D"). The five-way source menu (Task 8f) drives it via setSource().
 let mode = "generate";
 let activeSource = "atelier";
+// Monotonic switch counter: each setSource() call bumps it, and every lazy start continuation
+// captures the value at kick-off. A continuation that resolves after another switch sees a newer
+// epoch and does nothing, so a slow module load can never start a renderer for a source the user
+// already left (the floating-promise ordering hazard of the lazy boundary).
+let _sourceEpoch = 0;
 
 // ── Quality state (Task 8g) ───────────────────────────────────────────────────
 // Standard: maxBacking=1600, aa=1 (crisp on typical 1-2x displays, fast for per-pixel fractals).
@@ -147,10 +388,48 @@ const SOURCES = {
   byo:       { block: "src-byo",       mode: "byo" },
   watch:     { block: "src-watch",     mode: "byo" },
   discovery: { block: "src-discovery", mode: "generate" },
+  showcase:  { block: "src-showcase",  mode: "generate" },
+  poster:    { block: "src-poster",    mode: "generate" },
+  neural:    { block: "src-neural",    mode: "generate" },
+  sound:     { block: "src-sound",     mode: "generate" },
 };
+
+// ── The poster workshop (lazy). Mounted once on first entry; the panel owns
+// its DOM inside #poster-mount and renders onto the shared studio canvas.
+let _posterWorkshop = null;
+async function enterPosterWorkshop(epoch) {
+  if (_posterWorkshop) { _posterWorkshop.render(); return; }
+  try {
+    const [panelMod, fieldMod, ex] = await Promise.all([
+      import("./poster-panel.js"),
+      import("./generative-field.js"),
+      loadExporters(),
+    ]);
+    if (epoch !== _sourceEpoch) return;   // switched away while loading
+    _posterWorkshop = panelMod.mountPosterWorkshop({
+      mount: $("poster-mount"),
+      canvas: $("studio-canvas"),
+      renderSpecimen: fieldMod.renderSpecimen,
+      layerNames: fieldMod.specimenLayerNames,
+      say,
+      perceiveNow: perceive,
+      getDetail: () => _lastDetail,
+      getRich: () => lastRich,
+      download: ex.download,
+    });
+    // Cross-surface flow: a plate arriving from the gallery seeds the art.
+    const params = new URLSearchParams(location.search);
+    const seed = (params.get("seed") || "").slice(0, 48);
+    if (seed && _posterWorkshop) _posterWorkshop.setArtSeed(seed);
+  } catch (err) {
+    say("model", "The workshop failed to load: " + (err && err.message ? err.message : String(err)));
+  }
+}
 
 function setSource(next) {
   if (!SOURCES[next]) return;
+  _sourceEpoch++;                 // invalidate any in-flight lazy start from a previous switch
+  const epoch = _sourceEpoch;
   // Leaving the current source: stop anything it had running. Guard the calls, since some are defined
   // later in the module (hoisted function declarations), so they're safe to call from here.
   if (next !== activeSource) {
@@ -158,7 +437,12 @@ function setSource(next) {
     stopNDim();         // stop the n-dim animation RAF if one is running
     stopWatch();        // release any screen/camera capture
     stopByoVideo();     // pause + release any played BYO video
-    try { stopDiscovery(); } catch (_) {}  // stop the physics renderer RAF if it was running
+    // The discovery / showcase graphs are lazy: if a graph never loaded, that source never ran,
+    // so there is nothing to stop (and an in-flight start is cancelled by the epoch bump above).
+    if (_discovery) { try { _discovery.stopDiscovery(); } catch (_) {} }
+    if (_showcase)  { try { _showcase.stopShowcase(); } catch (_) {} }
+    if (_neural)    { try { _neural.stopNeural(); } catch (_) {} }
+    if (_sound)     { try { _sound.stopSound(); } catch (_) {} }
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
@@ -166,6 +450,15 @@ function setSource(next) {
   // their canvas pointer handlers. Without this the Atelier's particle overlay fires
   // on every source, wiping music particles when the mouse crosses the canvas.
   window.__studioActiveSource = next;
+  // Surface the WebM capture button for animated sources - the seed-authored
+  // instruments (living neural, seed sound), physics, showcase, and screen/camera
+  // capture - and hide it for static ones (atelier, still image, 2D fractal), where
+  // PNG already captures the single frame. sourceIsAnimated with no transient state
+  // answers "is this source animation-capable"; the video-import path (below) still
+  // re-affirms it when a dropped clip actually starts playing.
+  if (typeof window.__studioExportWebmVisible === "function") {
+    window.__studioExportWebmVisible(sourceIsAnimated(next));
+  }
   mode = SOURCES[next].mode;
   for (const [name, cfg] of Object.entries(SOURCES)) {
     const el = $(cfg.block); if (el) el.hidden = name !== next;
@@ -174,6 +467,8 @@ function setSource(next) {
     b.setAttribute("aria-selected", String(b.dataset.source === next)));
   // Roving tabindex: active tab is 0, all others -1 (ARIA tablist pattern).
   syncTabindex(next);
+  syncStudioRendererConsole(next);
+  if (next === "poster") enterPosterWorkshop(epoch);
   // Mark the stage interactive (grab cursor + drag affordance) for the camera-driven sources.
   // ndim is now a camera source too (P2 directive a): wheel dollies the camera into the volume.
   const stageEl = document.getElementById("viewport-stage");
@@ -182,10 +477,69 @@ function setSource(next) {
   // frame, so the perception loop must be reading it. Other sources arm their own loop from their
   // entry/play path; music has no settle-frame, so arm it here. The loop self-idles only for static
   // sources via the sourceIsAnimated() guard in liveTick, so music will not freeze.
-  if (next === "music") startMeterLoop();
-  // Physics (discovery engine): render the evolving system into the shared canvas, then arm the
-  // meter loop so the measurimeter perceives it (marked animated in studio-loop, so it will not idle).
-  if (next === "discovery") { try { startDiscovery($("studio-canvas")); } catch (_) {} startMeterLoop(); }
+  // The reactive engine + its tab UI load lazily on first entry; once they arrive (and the user is
+  // still on music), fire a NON-BUBBLING click on the music tab: reactive-music-ui binds its
+  // idle-visual starter directly on that button, so only that listener runs (the delegated
+  // #studio-source handlers never see a non-bubbling event, so setSource is not re-entered).
+  if (next === "music") {
+    startMeterLoop();
+    loadReactive().then(() => {
+      if (epoch !== _sourceEpoch) return;
+      const tab = document.querySelector('#studio-source button[data-source="music"]');
+      if (tab) { try { tab.dispatchEvent(new MouseEvent("click", { bubbles: false })); } catch (_) {} }
+    }).catch(err => { say("model", "The music engine failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
+  // Physics (discovery engine): load the graph on first entry, render the evolving system into the
+  // shared canvas, then arm the meter loop (marked animated in studio-loop, so it will not idle).
+  if (next === "discovery") {
+    loadDiscovery().then(mod => {
+      if (epoch !== _sourceEpoch) return;   // user already switched away while the graph loaded
+      try { mod.startDiscovery($("studio-canvas")); } catch (_) {}
+      startMeterLoop();
+    }).catch(err => { say("model", "The physics engine failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
+  // Showcase (First Integral): load the scene graph on first entry, draw into the shared canvas,
+  // then arm the meter loop. The loop idles once the scene settles (studio-loop gates on showcaseSettled).
+  if (next === "showcase") {
+    loadShowcase().then(mod => {
+      if (epoch !== _sourceEpoch) return;   // user already switched away while the graph loaded
+      try { mod.startShowcase($("studio-canvas")); } catch (_) {}
+      startMeterLoop();
+    }).catch(err => { say("model", "The showcase failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
+  // Living neural: load the module on first entry, start the animated instrument on
+  // the shared canvas, then arm the meter loop so the perception panel reads it. The
+  // module reports whether it is animating (false under reduced motion) so the loop
+  // can idle on a held still frame.
+  if (next === "neural") {
+    loadNeural().then(mod => {
+      if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
+      try {
+        const res = mod.startNeural($("studio-canvas"), { seed: _neuralSeed, instrument: _neuralInstrument });
+        _neuralStatic = !(res && res.animating);
+      } catch (_) {}
+      startMeterLoop();
+    }).catch(err => { say("model", "The living neural instrument failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
+  // Seed sound: load the module on first entry, draw the seed's melody as a live
+  // piano-roll on the shared canvas, then arm the meter loop. Playback (and the
+  // audio measurement) is user-initiated via the play control, not on entry.
+  if (next === "sound") {
+    loadSound().then(mod => {
+      if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
+      try { mod.startSound($("studio-canvas"), { seed: _soundSeed }); } catch (_) {}
+      startMeterLoop();
+    }).catch(err => { say("model", "The sound instrument failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
+  // Prefetch the graphs the entered source is about to need. Idempotent (cached promise); a
+  // prefetch failure is logged here and the first real use re-attempts and surfaces it to the user.
+  if (next === "fractal") loadFractal2D().catch(err => console.warn("studio: fractal graph prefetch failed", err));
+  if (next === "fractal3d") loadFractal3D().catch(err => console.warn("studio: fractal3d graph prefetch failed", err));
+  if (next === "ndim") loadNDimEngine().catch(err => console.warn("studio: ndim graph prefetch failed", err));
+  if (next === "byo") {
+    loadEffects().then(() => buildTransformMenu())
+      .catch(err => { say("model", "The transform menu failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
   syncToolbarForSource();
   // Notify the surface layer so panzoom attaches/detaches per the source change.
   // Pass the current canvas (may be a fresh GL canvas if fractal3d swapped it).
@@ -215,6 +569,62 @@ $("studio-source").addEventListener("keydown", e => {
   if (j < 0) return;
   tabs[j].focus(); setSource(tabs[j].dataset.source);
 });
+bootStudioRendererConsole();
+
+// Living neural controls: instrument (field/solid), seed, reseed. Changing any of
+// them restarts the instrument in place while the neural source is active.
+function restartNeural() {
+  if (activeSource !== "neural" || !_neural) return;
+  try {
+    const res = _neural.startNeural($("studio-canvas"), { seed: _neuralSeed, instrument: _neuralInstrument });
+    _neuralStatic = !(res && res.animating);
+  } catch (_) {}
+}
+function initNeuralControls() {
+  const chips = document.getElementById("neural-instruments");
+  const seedIn = document.getElementById("neural-seed");
+  const reseed = document.getElementById("neural-reseed");
+  if (chips) chips.addEventListener("click", e => {
+    const b = e.target.closest("button[data-neural-instrument]"); if (!b) return;
+    _neuralInstrument = b.dataset.neuralInstrument === "solid" ? "solid" : "field";
+    [...chips.querySelectorAll("button")].forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    restartNeural();
+  });
+  if (seedIn) seedIn.addEventListener("input", () => { _neuralSeed = seedIn.value.trim() || "living"; restartNeural(); });
+  if (reseed) reseed.addEventListener("click", () => {
+    _neuralSeed = "nz-" + Math.random().toString(36).slice(2, 8);
+    if (seedIn) seedIn.value = _neuralSeed;
+    restartNeural();
+  });
+}
+
+function restartSound() {
+  if (activeSource !== "sound" || !_sound) return;
+  try { _sound.startSound($("studio-canvas"), { seed: _soundSeed }); } catch (_) {}
+}
+function syncSoundReadout() {
+  const out = document.getElementById("sound-readout");
+  if (out && _sound && _sound.soundReadout) { try { out.textContent = _sound.soundReadout(_soundSeed); } catch (_) {} }
+}
+function initSoundControls() {
+  const seedIn = document.getElementById("sound-seed");
+  const reseed = document.getElementById("sound-reseed");
+  const play = document.getElementById("sound-play");
+  const stop = document.getElementById("sound-stop");
+  if (seedIn) seedIn.addEventListener("input", () => { _soundSeed = seedIn.value.trim() || "aurora"; restartSound(); syncSoundReadout(); });
+  if (reseed) reseed.addEventListener("click", () => {
+    _soundSeed = "sn-" + Math.random().toString(36).slice(2, 8);
+    if (seedIn) seedIn.value = _soundSeed;
+    restartSound(); syncSoundReadout();
+  });
+  // Call playSound SYNCHRONOUSLY in the click gesture (the module is already
+  // loaded once the sound source is active), so the audio context resumes
+  // in-gesture. Deferring through loadSound().then() would lose the gesture.
+  if (play) play.addEventListener("click", () => { if (_sound && _sound.playSound) { _sound.playSound({ seed: _soundSeed }); syncSoundReadout(); } });
+  if (stop) stop.addEventListener("click", () => { if (_sound) _sound.pauseSound(); });
+}
+initNeuralControls();
+initSoundControls();
 
 // Sync roving tabindex whenever setSource changes the active tab.
 function syncTabindex(activeKey) {
@@ -240,6 +650,173 @@ function readPixelData(canvas, w, h) {
   return sctx.getImageData(0, 0, w, h).data;
 }
 
+// ── granular perception: the no-vision read ──────────────────────────────────
+// Computed on a <=192px downsample (description-grade, cheap), refreshed on
+// every settled perceive() and every ~2s while a source animates. The result
+// is exposed at window.__studioPerception so a no-vision model can reconstruct
+// the frame: 3x3 region grid, 16x16 hex map, edge orientations, symmetry, and
+// an ASCII luminance render.
+let _lastDetail = null;
+// The downsample the detail was computed FROM (pixels + dims), kept alongside it so the
+// reconstruction-fidelity round trip can re-read the exact same field it describes.
+let _lastDetailPx = null, _lastDetailW = 0, _lastDetailH = 0;
+function computePerceptionDetail(canvas) {
+  try {
+    const dw = Math.min(192, canvas.width || 192);
+    const dh = Math.max(2, Math.round(dw * (canvas.height || 1) / (canvas.width || 1)));
+    _scratch.width = dw; _scratch.height = dh;
+    const sctx = _scratch.getContext("2d", { willReadFrequently: true });
+    sctx.clearRect(0, 0, dw, dh);
+    sctx.drawImage(canvas, 0, 0, dw, dh);
+    const dpx = sctx.getImageData(0, 0, dw, dh).data;
+    _lastDetail = perceptionDetail(dpx, dw, dh, 4);
+    _lastDetailPx = dpx; _lastDetailW = dw; _lastDetailH = dh;
+    // Advanced channels (sense-core contract): braille luminance render + salient-shape
+    // inventory. If perceptionDetail already attached the field we keep it; if the export
+    // is absent the field stays absent and the UI hides its affordance. Each is guarded
+    // independently so one missing organ never costs the others.
+    if (_lastDetail) {
+      try {
+        if (_lastDetail.braille == null && typeof senseCore.brailleRender === "function")
+          _lastDetail.braille = senseCore.brailleRender(dpx, dw, dh, 4, 48);
+      } catch (_) {}
+      try {
+        if (_lastDetail.shapes == null && typeof senseCore.shapeInventory === "function")
+          _lastDetail.shapes = senseCore.shapeInventory(dpx, dw, dh, 4, 6);
+      } catch (_) {}
+    }
+    return _lastDetail;
+  } catch (_) { return null; }
+}
+
+// ── full-read render mode (ascii / braille) ──────────────────────────────────
+// Two chips switch #mm-ascii between the ASCII luminance render and the braille
+// render (2x4 dot cells, ~8x the spatial density per character). The braille chip
+// only shows when the field is present on the current detail.
+let _readMode = "ascii";
+function syncReadModeChips() {
+  const hasBraille = !!(_lastDetail && _lastDetail.braille);
+  if (!hasBraille && _readMode === "braille") _readMode = "ascii";
+  const brailleBtn = $("mm-mode-braille");
+  if (brailleBtn) brailleBtn.hidden = !hasBraille;
+  for (const [id, name] of [["mm-mode-ascii", "ascii"], ["mm-mode-braille", "braille"]]) {
+    const btn = $(id);
+    if (!btn) continue;
+    btn.classList.toggle("active", _readMode === name);
+    btn.setAttribute("aria-pressed", String(_readMode === name));
+  }
+}
+function renderFullRead() {
+  const asciiEl = $("mm-ascii");
+  if (!asciiEl || !_lastDetail) return;
+  const braille = _readMode === "braille" && _lastDetail.braille;
+  asciiEl.textContent = braille ? _lastDetail.braille : (_lastDetail.ascii || "");
+  asciiEl.setAttribute("aria-label", braille
+    ? "Braille luminance render of the current frame"
+    : "ASCII luminance render of the current frame");
+}
+
+// ── the shapes line: "forms: hue at (cx,cy) area%" for the top salient shapes ─
+function formatShapeEntry(s) {
+  if (!s || typeof s !== "object") return null;
+  const hue = s.hue || s.color || s.name || "form";
+  const coord = v => Number.isFinite(v) ? (v >= 0 && v <= 1 ? v.toFixed(2) : String(Math.round(v))) : "?";
+  const cx = Number(s.cx != null ? s.cx : s.x);
+  const cy = Number(s.cy != null ? s.cy : s.y);
+  const area = Number(s.areaFrac != null ? s.areaFrac : s.area != null ? s.area : s.fraction);
+  const pct = Number.isFinite(area) ? Math.round(area <= 1 ? area * 100 : area) : null;
+  return hue + " at (" + coord(cx) + "," + coord(cy) + ")" + (pct != null ? " " + pct + "%" : "");
+}
+function renderShapesLine() {
+  const el = $("mm-shapes");
+  if (!el) return;
+  const shapes = _lastDetail && Array.isArray(_lastDetail.shapes) ? _lastDetail.shapes : [];
+  const parts = shapes.slice(0, 3).map(formatShapeEntry).filter(Boolean);
+  if (!parts.length) { el.hidden = true; el.textContent = ""; return; }
+  el.hidden = false;
+  el.textContent = "forms: " + parts.join(" · ");
+}
+
+// ── reconstruction fidelity: the round-trip claim, settled renders only ───────
+// reconstructionFidelity (sense-core contract) renders the structured read back into
+// pixels and re-hashes; the badge reports how many perceptual-hash bits survive.
+// Computed ONLY on settled perceive() / send-time reads, never in the live loop, so
+// the number always describes a frame that is actually standing still.
+let _lastFidelity = null;
+function normaliseFidelity(raw) {
+  if (raw == null) return null;
+  if (typeof raw === "number" && Number.isFinite(raw)) {
+    const score = Math.max(0, Math.min(1, raw));
+    return { score, matched: Math.round(score * 64), total: 64 };
+  }
+  if (typeof raw !== "object") return null;
+  // null-safe numeric read: Number(null) is 0, so an honest null score (e.g. a packet
+  // with no colour grid) must NOT collapse into "score 0"; it hides the badge instead.
+  const num = v => (v == null || !Number.isFinite(Number(v))) ? null : Number(v);
+  const total = num(raw.total) || num(raw.outOf) || num(raw.bits) || 64;
+  let matched = num(raw.matched) != null ? num(raw.matched) : num(raw.match);
+  const hamming = num(raw.hamming);
+  let score = num(raw.score);
+  if (matched == null && hamming != null) matched = total - hamming;
+  if (score == null && matched != null) score = matched / total;
+  if (score == null) return null;
+  score = Math.max(0, Math.min(1, score));
+  if (matched == null) matched = Math.round(score * total);
+  return { score, matched, total };
+}
+function updateReconstructionBadge() {
+  let rec = null;
+  try {
+    if (typeof senseCore.reconstructionFidelity === "function" && _lastDetail && _lastDetailPx) {
+      rec = normaliseFidelity(senseCore.reconstructionFidelity(_lastDetailPx, _lastDetailW, _lastDetailH, 4, _lastDetail));
+    }
+  } catch (_) { rec = null; }
+  _lastFidelity = rec;
+  // Ride the detail attachment: the perception JSON export and __studioPerception
+  // inherit the score through detail.reconstruction, always paired with THIS detail.
+  if (rec && _lastDetail) _lastDetail.reconstruction = rec;
+  const el = $("mm-fidelity");
+  if (!el) return;
+  if (!rec) { el.hidden = true; return; }
+  el.hidden = false;
+  el.textContent = "reconstruction " + rec.matched + "/" + rec.total;
+  el.classList.toggle("is-verified", rec.score >= 0.75);
+  el.title = "Round-trip claim: the structured no-vision read is rendered back into pixels and "
+    + "re-hashed; " + rec.matched + " of " + rec.total + " perceptual-hash bits match the original "
+    + "frame. Higher means the read alone carries enough to reconstruct the frame.";
+}
+
+function updateDetailUI(rich) {
+  if (!_lastDetail) return;
+  const long = describeFrameLong(rich || lastRich || {}, _lastDetail);
+  const longEl = $("mm-long"); if (longEl) longEl.textContent = long;
+  syncReadModeChips();
+  renderFullRead();
+  renderShapesLine();
+  window.__studioPerception = {
+    longDescription: long,
+    detail: _lastDetail,
+    phash: lastHashByCanvas.get($("studio-canvas")) || null,
+    source: currentSourceLabel(),
+  };
+  // Advanced channels surface at the top level too, when the contract provides them.
+  if (_lastDetail.shapes != null) window.__studioPerception.shapes = _lastDetail.shapes;
+  if (_lastDetail.braille != null) window.__studioPerception.braille = _lastDetail.braille;
+  if (_lastDetail.reconstruction) window.__studioPerception.fidelity = _lastDetail.reconstruction;
+}
+
+// Wire the full-read mode chips (delegated; the block exists in studio.html at boot).
+{
+  const modeHost = $("mm-readmode");
+  if (modeHost) modeHost.addEventListener("click", e => {
+    const b = e.target.closest("button[data-read-mode]");
+    if (!b) return;
+    _readMode = b.dataset.readMode === "braille" ? "braille" : "ascii";
+    syncReadModeChips();
+    renderFullRead();
+  });
+}
+
 function perceive(canvas) {
   const { width:w, height:h } = canvas;
   const px = readPixelData(canvas, w, h);
@@ -255,6 +832,9 @@ function perceive(canvas) {
   // The measurimeter: the richer, additive readout (faithful mosaic + dominant colours + edges +
   // regions). Reuses the px we already read; eye.js's gated dHash/features above are untouched.
   const rich = measure(px, w, h, phash);
+  computePerceptionDetail(canvas);
+  updateReconstructionBadge();   // settled render: refresh the round-trip fidelity claim
+  updateDetailUI(rich);
   return { phash, features:f, rich, width:w, height:h };
 }
 
@@ -279,14 +859,17 @@ let fractalBaseMaxIter = 0;
 let fractalBasePalette = "ocean";
 let fractalView = null; // Transient zoom state: a shallow copy of the selected preset, never a reference into PRESETS.
 
-// GPU path available? Decided once. When true, 2D fractals render on the GPU (fractal-gl.js) for
-// near-instant frames + real-time pan/zoom; the CPU renderFractal (fractal.js, the gated reference)
+// GPU path available? Decided once, when the lazy fractal graph loads (loadFractal2D sets this
+// from fractal-gl's isFractalGLAvailable). When true, 2D fractals render on the GPU (fractal-gl.js)
+// for near-instant frames + real-time pan/zoom; the CPU render (fractal.js, the gated reference)
 // is the fallback. The fallback also serves environments without WebGL.
-const GL_AVAILABLE = isFractalGLAvailable();
+let GL_AVAILABLE = false;
 
-function buildPresetMenu(ftype) {
+// Synchronous menu build; only callable once the fractal graph is in (_fractal set by loadFractal2D).
+function buildPresetMenuNow(ftype) {
+  if (!_fractal) return;
   fractalPresetEl.innerHTML = "";
-  PRESETS.filter(p => p.type === ftype).forEach((p, i) => {
+  _fractal.PRESETS.filter(p => p.type === ftype).forEach((p, i) => {
     const opt = document.createElement("option");
     opt.value = i;
     opt.textContent = p.name;
@@ -294,6 +877,12 @@ function buildPresetMenu(ftype) {
     opt.dataset.presetName = p.name;
     fractalPresetEl.appendChild(opt);
   });
+}
+
+// Async wrapper for call sites that may run before the graph is in (type chips, Tweakpane).
+async function buildPresetMenu(ftype) {
+  await loadFractal2D();
+  buildPresetMenuNow(ftype);
 }
 
 // Default starting framing for the active fractal view, used by Reset view.
@@ -318,8 +907,8 @@ function applyFractalRenderControls(view) {
 
 function buildFractalPalettes() {
   const host = $("fractal-palettes");
-  if (!host || host.childElementCount) return;
-  const items = [["", "Preset"]].concat(Object.keys(FRACTAL_PALETTES).map(k => [k, k]));
+  if (!host || host.childElementCount || !_fractal) return;
+  const items = [["", "Preset"]].concat(Object.keys(_fractal.PALETTES).map(k => [k, k]));
   for (const [key, label] of items) {
     const b = document.createElement("button");
     b.type = "button";
@@ -339,7 +928,7 @@ function buildFractalPalettes() {
     host.appendChild(b);
   }
 }
-buildFractalPalettes();
+// (Palettes + the preset menu are built by loadFractal2D when the fractal graph first loads.)
 
 // Paint the current fractalView into #studio-canvas. GPU when available (mounting a fresh GL canvas
 // the first time, mirroring the 3D source's canvas swap), else CPU (progressive coarse-to-refine on
@@ -349,9 +938,12 @@ buildFractalPalettes();
 // pan/zoom passes 1 to stay fast; settled renders pass undefined (uses quality level).
 let _cpuRefineRaf = 0;
 function paintFractal(opts, aaOverride) {
+  // Defensive: every caller is gated on fractalView, which is only set after the lazy fractal
+  // graph loaded (renderPreset awaits it), so this guard should never fire in practice.
+  if (!_fractal) return $("studio-canvas");
   const maxIter = Math.round(opts.maxIter * currentQuality().iterMult);
   const aa = aaOverride !== undefined ? aaOverride : currentQuality().aa;
-  if (GL_AVAILABLE) {
+  if (GL_AVAILABLE && _fractalGL) {
     // Mount a GL canvas if one isn't already up (or if a 3D orbit's node is mounted, reuse it).
     let c = canvasIsGL ? $("studio-canvas") : mountGLCanvas();
     if (!canvasIsGL) { canvasIsGL = true; }
@@ -359,8 +951,11 @@ function paintFractal(opts, aaOverride) {
     fractal3dHandle = null;   // not a 3D orbit
     if (stop3d) { stop3d(); stop3d = null; }   // ensure no 3D orbit RAF lingers on this node
     sizeCanvas(c);
+    // Tier-gated DPR clamp (spec 1.4): on tier mid+, lift the GL backing to CSS * min(dpr, 2)
+    // for a crisp hi-DPI fragment pass. Fail-safe no-op below mid or when the plan is absent.
+    try { _fractalGL.clampGLBackingToDPR(c, window.__studioHardwareRenderPlan && window.__studioHardwareRenderPlan.tier); } catch (_) {}
     try {
-      renderFractalGL(c, { ...opts, maxIter, aa });
+      _fractalGL.renderFractalGL(c, { ...opts, maxIter, aa });
       return c;
     } catch (e) {
       // GPU failed at runtime: fall back to CPU on the original 2D canvas.
@@ -383,20 +978,23 @@ function cpuFractalProgressive(canvas, opts) {
   // Coarse pass: quarter-res backing (1/4 the pixels) for an instant preview.
   const cw = Math.max(1, Math.round(fullW / 4)), ch = Math.max(1, Math.round(fullH / 4));
   canvas.width = cw; canvas.height = ch;
-  renderFractal(canvas, opts);
+  _fractal.renderFractal(canvas, opts);
   // Refine to full res on the next frame (or immediately in a no-rAF env).
   const refine = () => {
     _cpuRefineRaf = 0;
     canvas.width = fullW; canvas.height = fullH;
-    renderFractal(canvas, opts);
+    _fractal.renderFractal(canvas, opts);
   };
   if (typeof requestAnimationFrame === "function") _cpuRefineRaf = requestAnimationFrame(refine);
   else refine();
 }
 
-function renderPreset() {
+async function renderPreset() {
+  try { await loadFractal2D(); }
+  catch (err) { say("model", "The fractal renderer failed to load: " + (err && err.message ? err.message : String(err))); return; }
+  if (activeSource !== "fractal") return;   // switched away while the graph loaded
   const ftype = activeFType;
-  const filtered = PRESETS.filter(p => p.type === ftype);
+  const filtered = _fractal.PRESETS.filter(p => p.type === ftype);
   const idx = parseInt(fractalPresetEl.value, 10);
   const preset = filtered[isNaN(idx) ? 0 : idx];
   if (!preset) return;
@@ -430,7 +1028,7 @@ document.querySelectorAll("[data-ftype]").forEach(btn => {
   btn.addEventListener("click", () => {
     activeFType = btn.dataset.ftype;
     document.querySelectorAll("[data-ftype]").forEach(b => b.classList.toggle("active", b === btn));
-    buildPresetMenu(activeFType);
+    buildPresetMenu(activeFType).catch(err => console.warn("studio: fractal graph load failed", err));
   });
 });
 
@@ -605,8 +1203,9 @@ fStage.addEventListener("touchcancel", endFractalTouch, { passive: true });
 
 $("fractal-render").addEventListener("click", renderPreset);
 
-// Build initial menu on page load
-buildPresetMenu(activeFType);
+// (No boot-time menu build: the preset menu populates when the lazy fractal graph first loads,
+// i.e. on the first entry into the fractal source. The custom dropdown's MutationObserver
+// re-renders its listbox as soon as the options arrive.)
 
 // ── 3D fractal source (Task 7c) ─────────────────────────────────────────────
 // A WebGL1 raymarcher (system/fractal3d.js) paints the shared canvas, then the eye perceives one
@@ -656,7 +1255,12 @@ function leave3D() {
 }
 window.__studioLeave3D = leave3D;  // tests / source-menu (Task 8f) hook
 
-function render3DInto(opts) {
+async function render3DInto(opts) {
+  // The raymarcher graph is lazy: load it first, and bail if the user switched away meanwhile
+  // (mounting a GL canvas onto another source's stage would break that source's 2D context).
+  try { await loadFractal3D(); }
+  catch (err) { say("model", "The 3D fractal renderer failed to load: " + (err && err.message ? err.message : String(err))); return; }
+  if (activeSource !== "fractal3d") return;
   if (stop3d) { stop3d(); stop3d = null; }   // cancel the previous orbit before starting a new one
   // Mount a fresh GL canvas (idempotent: if one is already mounted we reuse the mounted node).
   let c = canvasIsGL ? $("studio-canvas") : mountGLCanvas();
@@ -665,10 +1269,17 @@ function render3DInto(opts) {
   // Size the GL canvas to the hi-DPI backing resolution (the raymarcher reads canvas.width/height).
   sizeCanvas(c);
   try {
-    fractal3dHandle = render3D(c, opts);
+    fractal3dHandle = _fractal3d.render3D(c, opts);
     stop3d = fractal3dHandle.stop;
     canvasIsGL = true;
     startMeterLoop();   // the orbit animates, stream the meters so the hash changes as it turns
+    // A context lost mid-orbit would leave the rAF loop drawing into a dead
+    // context; recover to the 2D canvas with a plain explanation instead.
+    c.addEventListener("webglcontextlost", (e) => {
+      e.preventDefault();
+      leave3D();
+      say("model", "The GPU context was lost; hit Render to bring the 3D view back.");
+    }, { once: true });
   } catch (e) {
     // WebGL unavailable: restore the 2D canvas and show the friendly fallback.
     leave3D();
@@ -817,7 +1428,9 @@ let _activeNDimRotation = "all";     // all-plane rotor or 4D isoclinic rotor
 // can ray-cast against exactly what is on screen.
 const _ndCam = { yaw: 0.6, pitch: 0.5, dist: 3.2 };
 const _ndCamDefault = { yaw: 0.6, pitch: 0.5, dist: 3.2 };
-let _ndPaint = createPaintState();
+// Created by loadNDimEngine when the render-nd graph first loads (null until then; every consumer
+// either awaits the load or is only reachable after a frame was drawn, which required the load).
+let _ndPaint = null;
 let _ndLastVolScene = null;
 let _ndLastAspect = 1;
 // expose for tests / debugging (read-only views)
@@ -861,6 +1474,7 @@ function readNDimOpts() {
 // drawn via the depth-tested WebGL path (drawSceneGL3D), 2D fallback otherwise. The last volumetric
 // scene is stashed for the picker. Returns scene.meta so callers can read real vertex/edge counts.
 function drawNDimFrame(canvas, n, t, speed, kind, projection, rotation) {
+  if (!_ndim) return null;   // render-nd graph not loaded yet (callers load it first; defensive)
   // Restore 2D canvas if a WebGL orbit has been mounted (shouldn't happen here, but guard).
   leave3D();
   sizeCanvas(canvas);
@@ -873,7 +1487,7 @@ function drawNDimFrame(canvas, n, t, speed, kind, projection, rotation) {
   ctx.fillStyle = "#0d1b1c";
   ctx.fillRect(0, 0, w, h);
 
-  const scene = renderSceneVolumetric(
+  const scene = _ndim.renderSceneVolumetric(
     { kind, n: kind === "24cell" ? 4 : n, t: t * speed, rotation },
     _ndCam,
     { aspect, scale: 1.0, focal: 2.0, paint: _ndPaint },
@@ -885,7 +1499,7 @@ function drawNDimFrame(canvas, n, t, speed, kind, projection, rotation) {
   const gl = ndGL();
   if (gl) {
     _ndGLCanvas.width = w; _ndGLCanvas.height = h;
-    drawSceneGL3D(gl, scene, { width: w, height: h });
+    _ndGLBackend.drawSceneGL3D(gl, scene, { width: w, height: h });
     ctx.drawImage(_ndGLCanvas, 0, 0, w, h);
   } else {
     draw3DSceneTo2D(ctx, scene, w, h, lineW);
@@ -932,8 +1546,18 @@ function draw3DSceneTo2D(ctx, scene, w, h, lineW) {
   ctx.restore();
 }
 
-// Start the n-dim animation. Stops any running animation first.
+// Start the n-dim animation. Loads the lazy render-nd graph first (cached after the first call),
+// then starts. Stops any running animation first. The pre/post source check cancels the start if
+// the user switched sources while the graph was still downloading.
 function startNDimAnimation() {
+  const src = activeSource;
+  loadNDimEngine().then(() => {
+    if (activeSource !== src) return;   // switched away while the graph loaded
+    startNDimAnimationNow();
+  }).catch(err => { say("model", "The dimensions renderer failed to load: " + (err && err.message ? err.message : String(err))); });
+}
+
+function startNDimAnimationNow() {
   stopNDim();
   leave3D();   // restore 2D canvas if a WebGL orbit was mounted
   const canvas = $("studio-canvas");
@@ -1039,7 +1663,7 @@ const NDIM_PALETTE_OKLCH = [
   [0.40, 0.02, 0],     // graphite
 ];
 function ndimBuildPalette() {
-  const host = $("ndim-palette"); if (!host || host.childElementCount) return;
+  const host = $("ndim-palette"); if (!host || host.childElementCount || !_ndim || !_ndPaint) return;
   NDIM_PALETTE_OKLCH.forEach(([L, C, h], i) => {
     const rgb = oklchToSrgbByte(L, C, h);
     const b = document.createElement("button");
@@ -1050,21 +1674,24 @@ function ndimBuildPalette() {
     b.dataset.rgb = rgb.join(",");
     b.textContent = ".";   // keep a glyph so the chip has height; colour hidden
     b.addEventListener("click", () => {
-      setBrush(_ndPaint, rgb);
+      _ndim.setBrush(_ndPaint, rgb);
       host.querySelectorAll(".ndim-swatch").forEach(s => s.classList.toggle("active", s === b));
     });
     host.appendChild(b);
   });
   // Seed the brush from the first swatch.
-  setBrush(_ndPaint, oklchToSrgbByte(...NDIM_PALETTE_OKLCH[0]));
+  _ndim.setBrush(_ndPaint, oklchToSrgbByte(...NDIM_PALETTE_OKLCH[0]));
 }
-ndimBuildPalette();
+// (Built by loadNDimEngine when the render-nd graph first loads, i.e. on first ndim entry.)
 
-// Paint-target chips (face / vertex / edge).
+// Paint-target chips (face / vertex / edge). The chips live in the (hidden until entered) ndim
+// block, so the graph is normally already loading; awaiting the cached loader keeps click order.
 document.querySelectorAll("[data-ndim-paint]").forEach(btn => {
   btn.addEventListener("click", () => {
-    setPaintTarget(_ndPaint, btn.dataset.ndimPaint);
-    document.querySelectorAll("[data-ndim-paint]").forEach(b => b.classList.toggle("active", b === btn));
+    loadNDimEngine().then(() => {
+      _ndim.setPaintTarget(_ndPaint, btn.dataset.ndimPaint);
+      document.querySelectorAll("[data-ndim-paint]").forEach(b => b.classList.toggle("active", b === btn));
+    }).catch(err => console.warn("studio: ndim graph load failed", err));
   });
 });
 
@@ -1073,12 +1700,14 @@ document.querySelectorAll("[data-ndim-paint]").forEach(btn => {
 document.querySelectorAll("[data-ndim-toggle]").forEach(btn => {
   btn.addEventListener("click", () => {
     const flag = btn.dataset.ndimToggle;
-    const now = togglePaint(_ndPaint, flag);
-    if (now != null) {
-      btn.classList.toggle("active", now);
-      btn.setAttribute("aria-pressed", String(now));
-    }
-    if (activeSource === "ndim") ndimRepaintNow();
+    loadNDimEngine().then(() => {
+      const now = _ndim.toggle(_ndPaint, flag);
+      if (now != null) {
+        btn.classList.toggle("active", now);
+        btn.setAttribute("aria-pressed", String(now));
+      }
+      if (activeSource === "ndim") ndimRepaintNow();
+    }).catch(err => console.warn("studio: ndim graph load failed", err));
   });
 });
 
@@ -1086,9 +1715,11 @@ document.querySelectorAll("[data-ndim-toggle]").forEach(btn => {
 const ndimClearBtn = $("ndim-clear-paint");
 if (ndimClearBtn) {
   ndimClearBtn.addEventListener("click", () => {
-    clearPaint(_ndPaint);
-    if (activeSource === "ndim") ndimRepaintNow();
-    say("model", "Cleared the paint. The volume reads its depth-cued colours again.");
+    loadNDimEngine().then(() => {
+      _ndim.clearPaint(_ndPaint);
+      if (activeSource === "ndim") ndimRepaintNow();
+      say("model", "Cleared the paint. The volume reads its depth-cued colours again.");
+    }).catch(err => console.warn("studio: ndim graph load failed", err));
   });
 }
 
@@ -1117,6 +1748,12 @@ function ndimClientToNDC(clientX, clientY, canvas, rect) {
 function ndimRepaintNow() {
   const canvas = $("studio-canvas");
   if (!canvas || activeSource !== "ndim") return;
+  // Graph not in yet (e.g. Reset view clicked right after entering the source): load, then repaint.
+  if (!_ndim) {
+    loadNDimEngine().then(() => { if (activeSource === "ndim") ndimRepaintNow(); })
+      .catch(err => console.warn("studio: ndim graph load failed", err));
+    return;
+  }
   const { n, speed, kind, projection, rotation } = readNDimOpts();
   // reuse the last animation clock if running; else t=0 (a still pose to paint on).
   const t = (_ndimStartTime != null && typeof performance !== "undefined")
@@ -1174,27 +1811,27 @@ fStage.addEventListener("pointercancel", endNDimDrag);
 // repaint so the colour shows immediately.
 function ndimPaintAt(clientX, clientY) {
   const scene = _ndLastVolScene;
-  if (!scene) return;
+  if (!scene || !_ndim || !_ndPaint) return;   // a scene implies the graph loaded; guards are defensive
   const canvas = $("studio-canvas");
   const rect = canvas.getBoundingClientRect();
   const { nx, ny } = ndimClientToNDC(clientX, clientY, canvas, rect);
   const target = _ndPaint.paintTarget;
   let painted = null;
   if (target === "vertex") {
-    const hit = nearestVertex(scene.proj, nx, ny, 0.07);
-    if (hit) { paintAtTarget(_ndPaint, hit.vertexIndex); painted = `vertex ${hit.vertexIndex}`; }
+    const hit = _ndim.nearestVertex(scene.proj, nx, ny, 0.07);
+    if (hit) { _ndim.paintAtTarget(_ndPaint, hit.vertexIndex); painted = `vertex ${hit.vertexIndex}`; }
   } else if (target === "edge") {
-    const hit = nearestEdge(scene.proj, scene.edges, nx, ny, 0.05);
-    if (hit) { paintAtTarget(_ndPaint, hit.edgeIndex); painted = `edge ${hit.edgeIndex}`; }
+    const hit = _ndim.nearestEdge(scene.proj, scene.edges, nx, ny, 0.05);
+    if (hit) { _ndim.paintAtTarget(_ndPaint, hit.edgeIndex); painted = `edge ${hit.edgeIndex}`; }
   } else {
     // face: cast a world-space ray and Moller-Trumbore against the triangles.
-    const ray = screenRay(scene.cam, nx, ny, { aspect: _ndLastAspect, focal: 2.0 });
-    const hit = pickFace(ray.origin, ray.dir, scene.faceIndices, scene.world);
-    if (hit) { paintAtTarget(_ndPaint, hit.faceIndex); painted = `face ${hit.faceIndex}`; }
+    const ray = _ndim.screenRay(scene.cam, nx, ny, { aspect: _ndLastAspect, focal: 2.0 });
+    const hit = _ndim.pickFace(ray.origin, ray.dir, scene.faceIndices, scene.world);
+    if (hit) { _ndim.paintAtTarget(_ndPaint, hit.faceIndex); painted = `face ${hit.faceIndex}`; }
     else {
       // fall back to nearest vertex if no face was under the cursor (e.g. wireframe gaps)
-      const vh = nearestVertex(scene.proj, nx, ny, 0.07);
-      if (vh) { paintAtTarget(_ndPaint, vh.vertexIndex); painted = `vertex ${vh.vertexIndex}`; }
+      const vh = _ndim.nearestVertex(scene.proj, nx, ny, 0.07);
+      if (vh) { _ndim.paintAtTarget(_ndPaint, vh.vertexIndex); painted = `vertex ${vh.vertexIndex}`; }
     }
   }
   if (painted) {
@@ -1464,24 +2101,135 @@ function updateMeshPanel() {
   if (panel) panel.hidden = !_studioSourceMesh;
   const status = $("model-transform-status");
   if (!status) return;
-  if (!_studioSourceMesh) {
+  if (!_studioSourceMesh || !_meshMod) {
     status.textContent = "Load OBJ, GLTF, GLB, or PLY to enable model transforms.";
     return;
   }
-  const stats = meshStats(_studioLastMesh || _studioSourceMesh);
+  // _studioSourceMesh is only ever set after loadMeshTransform resolved (loadFile awaits it),
+  // so _meshMod is necessarily in by the time a mesh exists.
+  const stats = _meshMod.meshStats(_studioLastMesh || _studioSourceMesh);
   status.textContent =
-    `${stats.vertices} vertices, ${stats.faces} faces, radius ${stats.radius.toFixed(3)}. Export uses this transformed mesh.`;
+    `${stats.vertices} vertices, ${stats.faces} faces, radius ${stats.radius.toFixed(3)}. `
+    + `Viewport: drag orbits · wheel dollies · Shift+drag moves · Ctrl+drag rotates · double-click resets. Export uses this transformed mesh.`;
 }
 
-function renderMeshTransform({ announce = false } = {}) {
-  if (!_studioSourceMesh) { updateMeshPanel(); return; }
+// Viewport camera for the mesh preview: orbit/dolly like a DCC viewport.
+// Drag orbits, wheel dollies, Shift+drag moves the OBJECT in the view plane,
+// Ctrl+drag rotates the object, double-click resets the camera.
+const _meshCam = { yaw: 35, pitch: -18, dist: 3.4 };
+let _meshShading = "wire";
+
+function renderMeshTransform({ announce = false, fast = false } = {}) {
+  if (!_studioSourceMesh || !_meshMod) { updateMeshPanel(); return; }
   syncMeshValueLabels();
-  _studioLastMesh = transformMesh(_studioSourceMesh, meshTransformValues());
-  drawMeshPreview(byoCanvas(), _studioLastMesh, { maxBacking: currentQuality().maxBacking });
+  _studioLastMesh = _meshMod.transformMesh(_studioSourceMesh, meshTransformValues());
+  _meshMod.drawMeshPreview(byoCanvas(), _studioLastMesh, {
+    maxBacking: currentQuality().maxBacking,
+    cameraYaw: _meshCam.yaw,
+    cameraPitch: _meshCam.pitch,
+    cameraDist: _meshCam.dist,
+    // During a drag, big solid meshes drop to wire so the orbit stays fluid;
+    // the settled render restores the chosen shading.
+    shading: fast && _meshShading === "solid" && (_studioLastMesh.faces || []).length > 4000 ? "wire" : _meshShading,
+    lineScale: currentQuality().aa > 1 ? 1.2 : 1,
+  });
+  if (fast) return;
   const obs = perceive(byoCanvas());
   updateMeshPanel();
   startMeterLoop();
   if (announce) say("model", `Model transform applied. Preview fingerprint ${obs.phash}; OBJ and GLTF export now use the transformed mesh.`);
+}
+
+// rAF-throttled re-render for pointer interaction.
+let _meshRafPending = false;
+function meshInteractiveRender() {
+  if (_meshRafPending) return;
+  _meshRafPending = true;
+  requestAnimationFrame(() => {
+    _meshRafPending = false;
+    renderMeshTransform({ fast: true });
+  });
+}
+
+function nudgeMeshSlider(id, delta) {
+  const el = $(id);
+  if (!el) return;
+  const min = Number(el.min), max = Number(el.max);
+  const next = Math.min(max, Math.max(min, Number(el.value) + delta));
+  el.value = String(next);
+}
+
+let _meshViewportWired = false;
+function wireMeshViewport() {
+  if (_meshViewportWired) return;
+  const canvas = byoCanvas();
+  if (!canvas) return;
+  _meshViewportWired = true;
+  let drag = null;
+  canvas.addEventListener("pointerdown", (e) => {
+    if (!_studioSourceMesh) return;
+    drag = { x: e.clientX, y: e.clientY, mode: e.shiftKey ? "move" : e.ctrlKey ? "rotate" : "orbit" };
+    try { canvas.setPointerCapture(e.pointerId); } catch (_) { /* synthetic or already-released pointer */ }
+    e.preventDefault();
+  });
+  canvas.addEventListener("pointermove", (e) => {
+    if (!drag || !_studioSourceMesh) return;
+    const dx = e.clientX - drag.x;
+    const dy = e.clientY - drag.y;
+    drag.x = e.clientX;
+    drag.y = e.clientY;
+    if (drag.mode === "orbit") {
+      _meshCam.yaw = (_meshCam.yaw + dx * 0.45) % 360;
+      _meshCam.pitch = Math.min(89, Math.max(-89, _meshCam.pitch - dy * 0.35));
+    } else if (drag.mode === "move") {
+      // Screen-plane translation, scaled so a full drag across the stage
+      // moves the object about one bounding radius.
+      const rect = canvas.getBoundingClientRect();
+      const k = (2.2 * _meshCam.dist / 3.4) / Math.max(1, rect.width);
+      const yawRad = _meshCam.yaw * Math.PI / 180;
+      nudgeMeshSlider("model-tx", (dx * Math.cos(yawRad)) * k);
+      nudgeMeshSlider("model-tz", (dx * Math.sin(yawRad)) * k);
+      nudgeMeshSlider("model-ty", -dy * k);
+    } else {
+      nudgeMeshSlider("model-ry", dx * 0.5);
+      nudgeMeshSlider("model-rx", dy * 0.5);
+    }
+    meshInteractiveRender();
+  });
+  const settle = () => {
+    if (!drag) return;
+    drag = null;
+    renderMeshTransform({});
+  };
+  canvas.addEventListener("pointerup", settle);
+  canvas.addEventListener("pointercancel", settle);
+  canvas.addEventListener("wheel", (e) => {
+    if (!_studioSourceMesh) return;
+    e.preventDefault();
+    _meshCam.dist = Math.min(12, Math.max(1.4, _meshCam.dist * (e.deltaY > 0 ? 1.1 : 0.9)));
+    meshInteractiveRender();
+    clearTimeout(wireMeshViewport._settleT);
+    wireMeshViewport._settleT = setTimeout(() => renderMeshTransform({}), 180);
+  }, { passive: false });
+  canvas.addEventListener("dblclick", () => {
+    if (!_studioSourceMesh) return;
+    _meshCam.yaw = 35; _meshCam.pitch = -18; _meshCam.dist = 3.4;
+    renderMeshTransform({});
+  });
+}
+
+// Shading chips: wire | solid | points.
+function wireMeshShading() {
+  const group = $("model-shading");
+  if (!group || group.dataset.wired === "true") return;
+  group.dataset.wired = "true";
+  group.querySelectorAll("[data-shade]").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      _meshShading = chip.dataset.shade;
+      group.querySelectorAll("[data-shade]").forEach((c) => c.setAttribute("aria-pressed", String(c === chip)));
+      renderMeshTransform({});
+    });
+  });
 }
 
 function resetMeshTransform() {
@@ -1503,8 +2251,8 @@ function resetMeshTransform() {
 }
 
 function normalizeSourceMesh() {
-  if (!_studioSourceMesh) return;
-  _studioSourceMesh = normalizeMesh(_studioSourceMesh);
+  if (!_studioSourceMesh || !_meshMod) return;
+  _studioSourceMesh = _meshMod.normalizeMesh(_studioSourceMesh);
   if ($("model-normalize")) $("model-normalize").checked = false;
   resetMeshTransform();
 }
@@ -1536,7 +2284,13 @@ async function loadFile(file) {
   _studioSourceMesh = null;
   updateMeshPanel();
 
-  const result = await StudioImporters.importFile(file, byoCanvas());
+  let importers;
+  try { importers = await loadImporters(); }
+  catch (err) {
+    say("model", "The media importer failed to load: " + (err && err.message ? err.message : String(err)));
+    return;
+  }
+  const result = await importers.StudioImporters.importFile(file, byoCanvas());
 
   if (!result.drewToCanvas) {
     say("model", "Unknown file type: " + (result.meta && result.meta.ext ? result.meta.ext : file.type)
@@ -1555,12 +2309,21 @@ async function loadFile(file) {
     if (typeof window.__studioExportWebmVisible === "function") window.__studioExportWebmVisible(true);
   }
 
-  // Geometry: stash for export and surface the geometry export buttons.
+  // Geometry: stash for export and surface the geometry export buttons. The mesh-transform graph
+  // loads here, BEFORE the mesh state is set, so every later mesh call site finds _meshMod ready.
   if (result.mesh) {
-    _studioSourceMesh = cloneMesh(result.mesh);
-    _studioLastMesh = cloneMesh(result.mesh);
-    renderMeshTransform();
-    if (typeof window.__studioExportMeshVisible === "function") window.__studioExportMeshVisible(true);
+    try {
+      await loadMeshTransform();
+      _studioSourceMesh = _meshMod.cloneMesh(result.mesh);
+      _studioLastMesh = _meshMod.cloneMesh(result.mesh);
+      wireMeshViewport();
+      wireMeshShading();
+      renderMeshTransform();
+      if (typeof window.__studioExportMeshVisible === "function") window.__studioExportMeshVisible(true);
+      say("model", "The viewport is live: drag orbits, wheel dollies, Shift+drag moves the model, Ctrl+drag rotates it, double-click resets the camera.");
+    } catch (err) {
+      say("model", "The mesh tooling failed to load: " + (err && err.message ? err.message : String(err)));
+    }
   }
 
   const obs = perceive(byoCanvas());
@@ -1654,9 +2417,11 @@ function applyTopography() {
 }
 
 // Apply a named transform, re-perceive, say what changed, flip the turn indicator.
+// (_effects is necessarily loaded when this runs from the menu: the transform chips are built by
+// buildTransformMenu, which only runs after the effects graph resolved.)
 function applyTransform(key, who) {
   if (key === "topography") applyTopography();
-  else if (!applyCanvasEffect(byoCtx(), byoCanvas(), key)) {
+  else if (!_effects || !_effects.applyCanvasEffect(byoCtx(), byoCanvas(), key)) {
     say("model", "I do not have that effect wired yet: " + key + ".");
     return;
   }
@@ -1674,10 +2439,11 @@ $("studio-drop").addEventListener("drop", e => { e.preventDefault(); $("studio-d
 $("studio-file").addEventListener("change", e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
 
 // Build transform buttons as compact capability clusters instead of one long undifferentiated row.
+// Runs when the lazy effects graph arrives (first BYO entry); idempotent via childElementCount.
 function buildTransformMenu() {
   const host = $("studio-transforms");
-  if (!host || host.childElementCount) return;
-  const groups = TRANSFORM_GROUPS.concat([{ label: "Terrain", items: [["topography", "topography"]] }]);
+  if (!host || host.childElementCount || !_effects) return;
+  const groups = _effects.TRANSFORM_GROUPS.concat([{ label: "Terrain", items: [["topography", "topography"]] }]);
   for (const group of groups) {
     const wrap = document.createElement("div");
     wrap.className = "transform-group";
@@ -1700,7 +2466,7 @@ function buildTransformMenu() {
     host.appendChild(wrap);
   }
 }
-buildTransformMenu();
+// (Built by the setSource("byo") continuation once the lazy effects graph loads.)
 
 // Topography controls: update display spans and re-run if canvas is loaded.
 function topoHasCanvas() { return $("sc-phash").textContent !== "—"; }
@@ -1928,6 +2694,28 @@ function paintMosaic(px, w, h) {
 // and a .mm-swf label below it. The label is a sibling, not a child positioned
 // absolute, so it never overflows or clips. The wrap has role="listitem" since
 // the container carries role="list".
+// Name a swatch via the vendored sense-core hueName: hex -> HSV, then the honest colour name
+// (greys read as "grey"/"near-white"/"near-black", not a stray hue). Additive: every source's
+// measurimeter swatches gain the name; the visible label stays the percent.
+function swatchName(s) {
+  let r = s.r, g = s.g, b = s.b;
+  if (typeof r !== "number" && typeof s.hex === "string") {
+    const h = s.hex.replace("#", "");
+    r = parseInt(h.slice(0, 2), 16); g = parseInt(h.slice(2, 4), 16); b = parseInt(h.slice(4, 6), 16);
+  }
+  r /= 255; g /= 255; b /= 255;
+  const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn;
+  let hue = 0;
+  if (d > 0) {
+    if (mx === r) hue = ((g - b) / d) % 6;
+    else if (mx === g) hue = (b - r) / d + 2;
+    else hue = (r - g) / d + 4;
+    hue = (hue * 60 + 360) % 360;
+  }
+  const sat = mx === 0 ? 0 : d / mx;
+  try { return hueName(hue, sat, mx); } catch (_) { return "colour"; }
+}
+
 function paintSwatches(rich) {
   const host = $("mm-swatches"); if (!host) return;
   const sw = rich.dominantSwatches || [];
@@ -1936,11 +2724,12 @@ function paintSwatches(rich) {
   host.innerHTML = "";
   for (const s of sw) {
     const pct = (s.frac * 100).toFixed(0) + "%";
+    const name = swatchName(s);   // convert hex to HSV, name via the vendored sense-core hueName
     const wrap = document.createElement("span"); wrap.className = "mm-sw-wrap"; wrap.setAttribute("role", "listitem");
     const el = document.createElement("span"); el.className = "mm-sw";
     el.style.background = s.hex;
-    el.setAttribute("aria-label", `Colour ${s.hex}, ${pct} of the frame`);
-    el.title = `${s.hex} · ${pct}`;
+    el.setAttribute("aria-label", `Colour ${name} ${s.hex}, ${pct} of the frame`);
+    el.title = `${name} · ${s.hex} · ${pct}`;
     const f = document.createElement("span"); f.className = "mm-swf"; f.textContent = pct;
     wrap.appendChild(el); wrap.appendChild(f); host.appendChild(wrap);
   }
@@ -2051,6 +2840,13 @@ function liveTick(ts) {
     // stream the cheap line + the full measurimeter (no say(), no drift mutation)
     $("sc-phash").textContent = phash;
     measure(px, w, h, phash);
+    // Granular detail refresh at ~0.5Hz while animating: description-grade,
+    // computed on a downsample, cheap enough for the live loop.
+    if (!liveTick._detailTs || ts - liveTick._detailTs > 2000) {
+      liveTick._detailTs = ts;
+      computePerceptionDetail(canvas);
+      updateDetailUI(lastRich);
+    }
     pollAudio();
   } catch (e) { /* a transient unreadable frame (e.g. canvas swap mid-tick), skip this tick */ return; }
   // fps estimate over a 0.5s window
@@ -2061,7 +2857,9 @@ function liveTick(ts) {
   // stops that whole recurring class. (studio-loop.js, node-tested.)
   if (phash === lastLoopPhash) {
     if (++staticTicks >= STATIC_STOP) {
-      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused) });
+      // Showcase graph is lazy: before it loads (start still in flight) treat the scene as NOT
+      // settled, i.e. animated, matching studio-loop's no-state behavior for the showcase source.
+      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: _showcase ? _showcase.showcaseSettled() : false, neuralStatic: _neuralStatic });
       if (shouldHaltOnStatic(true, animated)) { stopMeterLoop(); return; }
       staticTicks = 0;   // animated: do not halt, but reset so we re-arm the window cleanly
     }
@@ -2265,9 +3063,34 @@ function upgradeDropdown(stateId) {
   const list = document.createElement("div"); list.className = "dd-list"; list.setAttribute("role", "listbox"); list.hidden = true;
   host.appendChild(btn); host.appendChild(list);
 
-  function close() { list.hidden = true; btn.setAttribute("aria-expanded", "false"); }
+  // The list is pinned to the viewport while open so the rail's overflow can
+  // never clip it (its ancestors scroll/clip; position:absolute is not enough).
+  function place() {
+    const r = btn.getBoundingClientRect();
+    const below = window.innerHeight - r.bottom;
+    const openDown = below >= 140 || below >= r.top;
+    const room = (openDown ? below : r.top) - 12;
+    list.style.position = "fixed";
+    list.style.left = r.left + "px";
+    list.style.width = r.width + "px";
+    list.style.maxHeight = Math.max(120, Math.min(300, room)) + "px";
+    list.style.overflowY = "auto";
+    list.style.zIndex = "60";
+    if (openDown) { list.style.top = (r.bottom + 4) + "px"; list.style.bottom = "auto"; }
+    else { list.style.bottom = (window.innerHeight - r.top + 4) + "px"; list.style.top = "auto"; }
+  }
+  function onDrift() { if (!list.hidden) place(); }
+  function close() {
+    list.hidden = true; btn.setAttribute("aria-expanded", "false");
+    list.style.cssText = "";
+    window.removeEventListener("scroll", onDrift, true);
+    window.removeEventListener("resize", onDrift);
+  }
   function open() {
     list.hidden = false; btn.setAttribute("aria-expanded", "true");
+    place();
+    window.addEventListener("scroll", onDrift, true);
+    window.addEventListener("resize", onDrift);
     const cur = list.querySelector('[aria-selected="true"]'); if (cur) cur.focus();
   }
   function choose(v, emit = true) {
@@ -2360,6 +3183,12 @@ function buildCtx() {
     } catch (_) { audio = null; }
   }
 
+  // Showcase readout (spec 3.2): when the First Integral scene is active it publishes the same
+  // structured readout a screen reader hears to window.__studioShowcaseReadout; attach it so the
+  // connected model perceives exactly those scene facts + measured numbers. Absent for every
+  // other source, so this is purely additive.
+  const scene = (activeSource === "showcase" && typeof window !== "undefined" && window.__studioShowcaseReadout) || null;
+
   return {
     phash,
     features: feats,
@@ -2371,6 +3200,7 @@ function buildCtx() {
     sourceName: currentSourceLabel(),
     width:  w,
     height: h,
+    scene,
   };
 }
 
@@ -2426,6 +3256,22 @@ function fullPerception() {
     source: currentSourceLabel(),
   };
   const perception = assembleFullPerception(px, w, h, 4, pre);
+  // Showcase scene facts + measured readout (spec 3.2): attach the same structured readout a
+  // screen reader hears when First Integral is active, so the model perceives those exact numbers.
+  // Additive on the returned payload (assembleFullPerception is a vendored .mjs, left untouched).
+  const showcaseScene = (activeSource === "showcase" && typeof window !== "undefined" && window.__studioShowcaseReadout) || null;
+  if (showcaseScene) perception.scene = showcaseScene;
+  // Granular detail: recomputed fresh from THIS canvas so the packet is
+  // self-consistent, plus the long-form description a no-vision reader uses.
+  const detail = computePerceptionDetail(canvas) || _lastDetail;
+  if (detail) {
+    // Send-time is a settled read: refresh the round-trip fidelity so the exported
+    // packet carries detail.reconstruction paired with THIS detail (guarded inside;
+    // a build without reconstructionFidelity simply attaches nothing).
+    try { updateReconstructionBadge(); } catch (_) {}
+    perception.detail = detail;
+    try { perception.longDescription = describeFrameLong(lastRich || {}, detail); } catch (_) {}
+  }
   // Self-improvement: append this perception's fidelity record (wpre/pbe/wpir) to the append-only
   // perception-fidelity ledger. Guarded + fire-and-forget so it never blocks or breaks the payload.
   try { recordFidelity(perception); } catch (_) {}
@@ -2588,6 +3434,7 @@ window.Studio.disconnectModel = function() {
 // for workstation demos that should connect automatically.
 async function connectDetectedLocalModel() {
   try {
+    const { ModelAdapter } = await loadModelAdapter();   // lazy: only fetched when detection is asked for
     const cfg = await ModelAdapter.autodetect();
     if (cfg) {
       const fn = ModelAdapter.connect(cfg);
@@ -2721,6 +3568,11 @@ function resizeActiveSurface() {
     case "byo":
       sizeCanvas(canvas);   // these sources read canvas.width/height on their own loop tick
       break;
+    case "showcase":
+      // The showcase scene owns its backing (studio's sizeCanvas would reset the hero frame),
+      // so re-fit + redraw through the scene's own resize path instead.
+      try { window.__studioShowcaseResize && window.__studioShowcaseResize(); } catch (_) {}
+      break;
     default:
       sizeCanvas(canvas);   // watch + any other: re-fit; the source's own loop repaints
   }
@@ -2825,8 +3677,9 @@ $("rt-playpause").addEventListener("click", () => {
   } else {
     if (byoVideo && byoVideo.paused) { byoVideo.play().catch(() => {}); }
     if (watchVideo && watchVideo.srcObject && watchVideo.paused) { watchVideo.play().catch(() => {}); }
-    if (canvasIsGL && !glFractal2D && !stop3d) {
-      try { fractal3dHandle = render3D($("studio-canvas"), read3DOpts()); stop3d = fractal3dHandle.stop; } catch (e) {}
+    // _fractal3d is necessarily loaded here: canvasIsGL && !glFractal2D means a 3D orbit ran before.
+    if (canvasIsGL && !glFractal2D && !stop3d && _fractal3d) {
+      try { fractal3dHandle = _fractal3d.render3D($("studio-canvas"), read3DOpts()); stop3d = fractal3dHandle.stop; } catch (e) {}
     }
     if (activeSource === "ndim") startNDimAnimation();   // resume the n-dim animation
     startMeterLoop();
@@ -2848,6 +3701,12 @@ function applyQualityAndRerender() {
     // Re-launch the 3D orbit at the new backing size.
     const opts = read3DOpts();
     render3DInto(opts);
+  } else if (_studioSourceMesh) {
+    // Mesh viewport: re-render at the new backing cap and line weight.
+    renderMeshTransform({});
+  } else if (activeSource === "ndim" && typeof window.__studioNDimPaint === "function") {
+    // nD projection: repaint picks up the new backing size.
+    try { window.__studioNDimPaint(); } catch (_) {}
   }
   // BYO/watch: sizeCanvas is called per-frame in drawSource, so the next draw picks it up.
   // Atelier: sizeCanvas is called at render time in atelier.js's own sizeCanvas().
@@ -3092,13 +3951,166 @@ buildMeters();
     if (btnWebm) btnWebm.hidden = !show;
   };
 
+  // The exporter graph is lazy: each button awaits the cached loader on click (the existing
+  // handlers were already async, so the failure path lands in the same say() message).
   if (btnPng) {
     btnPng.addEventListener("click", async () => {
       try {
-        const blob = await StudioExporters.export("png", $("studio-canvas"));
-        download(blob, "studio-frame.png");
+        const ex = await loadExporters();
+        const blob = await ex.StudioExporters.export("png", $("studio-canvas"));
+        ex.download(blob, "studio-frame.png");
       } catch (e) {
         say("model", "PNG export failed: " + e.message);
+      }
+    });
+  }
+
+  // Unified export menu: one row per registered kind, grouped by discipline,
+  // from EXPORT_KINDS. Perception kinds pass a fresh full perception packet;
+  // pdf passes the chosen paper; relief passes a depth. Absent module leaves
+  // the legacy PNG/JSON buttons untouched.
+  const exportDesk = $("rt-export");
+  const exportPop = $("rt-export-pop");
+  const exportList = $("rt-export-list");
+  let exportPaper = "a4";
+  if (exportPop && exportList) {
+    exportPop.addEventListener("click", e => {
+      const paper = e.target.closest("button[data-export-paper]");
+      if (paper) {
+        exportPaper = paper.dataset.exportPaper;
+        exportPop.querySelectorAll("button[data-export-paper]").forEach(b => {
+          const on = b === paper;
+          b.classList.toggle("active", on);
+          b.setAttribute("aria-pressed", String(on));
+        });
+      }
+    });
+    const runExport = async (ex, kind) => {
+      try {
+        const canvas = $("studio-canvas");
+        const phash = lastHashByCanvas.get(canvas) || "frame";
+        const opts = { quality: 0.92 };
+        if (kind.needs === "perception" || kind.needs === "both") {
+          opts.perception = (typeof window.__studioFullPerception === "function")
+            ? window.__studioFullPerception() : null;
+        }
+        if (kind.kind === "pdf") opts.paper = exportPaper;
+        if (kind.kind === "heightmap-obj") opts.depth = 12;
+        const blob = await ex.StudioExporters.export(kind.kind, canvas, opts);
+        ex.download(blob, "studio-" + kind.kind + "-" + phash + "." + kind.ext);
+        say("model", "Exported " + kind.label + " (" + kind.discipline + ").");
+      } catch (e) {
+        say("model", kind.label + " export failed: " + e.message);
+      }
+    };
+    loadExporters().then(ex => {
+      const kinds = ex.EXPORT_KINDS;
+      if (!Array.isArray(kinds)) return;
+      const byDisc = new Map();
+      for (const k of kinds) {
+        if (!byDisc.has(k.discipline)) byDisc.set(k.discipline, []);
+        byDisc.get(k.discipline).push(k);
+      }
+      for (const [disc, list] of byDisc) {
+        const row = document.createElement("div");
+        row.className = "rt-plot-row";
+        const lab = document.createElement("span");
+        lab.className = "rt-plot-lab";
+        lab.textContent = disc;
+        const chips = document.createElement("div");
+        chips.className = "rt-plot-chips";
+        for (const k of list) {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.className = "chip";
+          b.textContent = k.label;
+          b.title = k.label + " (." + k.ext + ")";
+          b.addEventListener("click", () => runExport(ex, k));
+          chips.appendChild(b);
+        }
+        row.appendChild(lab);
+        row.appendChild(chips);
+        exportList.appendChild(row);
+      }
+    }).catch(err => console.warn("studio: export menu unavailable", err));
+    if (exportDesk) {
+      document.addEventListener("click", e => {
+        if (exportDesk.open && !exportDesk.contains(e.target)) exportDesk.open = false;
+      });
+      exportDesk.addEventListener("keydown", e => { if (e.key === "Escape") exportDesk.open = false; });
+    }
+  }
+
+  // Plot desk: the frame's luminance becomes plotter-ready line art. The "SVG plot"
+  // control opens a small options popover (style / pens / paper / format) and wires the
+  // choices through the plotter contract (plotCanvas {pens, paper}, toGcode, separatePens).
+  // Every advanced capability is typeof-guarded, so a plotter build without pens, paper,
+  // or G-code support degrades to the original single-pen flow SVG. Seeded by the frame's
+  // own perceptual hash so the same frame plots the same way.
+  const plotDesk = $("rt-plot");
+  const plotPop = $("rt-plot-pop");
+  const plotOpts = { style: "flow", pens: 1, paper: "a4", format: "svg", detail: "standard", density: "full" };
+  if (plotPop) {
+    plotPop.addEventListener("click", e => {
+      const b = e.target.closest("button[data-plot-key]");
+      if (!b) return;
+      const key = b.dataset.plotKey;
+      plotOpts[key] = key === "pens" ? Math.max(1, parseInt(b.dataset.plotValue, 10) || 1) : b.dataset.plotValue;
+      plotPop.querySelectorAll('button[data-plot-key="' + key + '"]').forEach(btn => {
+        const on = btn === b;
+        btn.classList.toggle("active", on);
+        btn.setAttribute("aria-pressed", String(on));
+      });
+    });
+  }
+  if (plotDesk) {
+    // Close on outside click / Escape, like the page's other popovers.
+    document.addEventListener("click", e => {
+      if (plotDesk.open && !plotDesk.contains(e.target)) plotDesk.open = false;
+    });
+    plotDesk.addEventListener("keydown", e => {
+      if (e.key === "Escape" && plotDesk.open) {
+        plotDesk.open = false;
+        const s = plotDesk.querySelector("summary");
+        if (s) { try { s.focus({ preventScroll: true }); } catch (_) { s.focus(); } }
+      }
+    });
+  }
+  const plotGo = $("rt-plot-download");
+  if (plotGo) {
+    plotGo.addEventListener("click", async () => {
+      try {
+        const plot = await import("./plotter.js");
+        if (typeof plot.plotCanvas !== "function") throw new Error("the plotter module lacks plotCanvas");
+        const canvas = $("studio-canvas");
+        const seed = lastHashByCanvas.get(canvas) || "studio";
+        const { style, pens, paper, detail, density } = plotOpts;
+        const result = plot.plotCanvas(canvas, { style, seed, pens, paper, detail, density });
+        const ex = await loadExporters();
+        const base = "studio-plot-" + style + "-" + detail + "-" + pens + "pen-" + paper + "-" + seed;
+        const wantGcode = plotOpts.format === "gcode";
+        const asGcode = wantGcode && typeof plot.toGcode === "function";
+        // Multi-pen result: plotCanvas attaches .pens (separatePens output) when it clustered.
+        const penned = Array.isArray(result.pens) && result.pens.length > 1;
+        if (asGcode) {
+          // Group the toolpath by pen so each colour plots as one contiguous run (swap the
+          // pen between runs); paper maps to the machine's plot width in millimetres.
+          const gLines = penned ? result.pens.flatMap(p => p.polylines) : result.polylines;
+          const widthMm = { a4: 190, a5: 130, square: 150 }[paper] || 190;
+          const gcode = plot.toGcode(gLines, result.srcW, result.srcH, { style, seed, widthMm });
+          ex.download(new Blob([gcode], { type: "text/plain" }), base + ".gcode");
+        } else {
+          ex.download(new Blob([result.svg], { type: "image/svg+xml" }), base + ".svg");
+        }
+        const penNote = pens > 1 && !penned
+          ? pens + " pens requested, single-pen in this build" : pens + (pens > 1 ? " pens" : " pen");
+        say("model", "Plotted the frame as " + result.stats.lines + " strokes (" + result.stats.points
+          + " points): style " + style + ", " + penNote + ", paper " + paper + ", as "
+          + (asGcode ? "G-code" : wantGcode ? "SVG (G-code is unavailable in this build)" : "SVG")
+          + ". Seeded by its hash " + seed + ", so the same frame plots the same way.");
+        if (plotDesk) plotDesk.open = false;
+      } catch (e) {
+        say("model", "Plot export failed: " + e.message);
       }
     });
   }
@@ -3106,11 +4118,12 @@ buildMeters();
   if (btnJson) {
     btnJson.addEventListener("click", async () => {
       try {
+        const ex = await loadExporters();
         const perception = typeof window.__studioFullPerception === "function"
           ? window.__studioFullPerception()
           : null;
-        const json = await StudioExporters.export("json", $("studio-canvas"), { data: perception });
-        download(json, "perception.json");
+        const json = await ex.StudioExporters.export("json", $("studio-canvas"), { data: perception });
+        ex.download(json, "perception.json");
       } catch (e) {
         say("model", "JSON export failed: " + e.message);
       }
@@ -3120,8 +4133,9 @@ buildMeters();
   if (btnObj) {
     btnObj.addEventListener("click", async () => {
       try {
-        const obj = await StudioExporters.export("obj", $("studio-canvas"), { mesh: _studioLastMesh });
-        download(obj, "mesh.obj");
+        const ex = await loadExporters();
+        const obj = await ex.StudioExporters.export("obj", $("studio-canvas"), { mesh: _studioLastMesh });
+        ex.download(obj, "mesh.obj");
       } catch (e) {
         say("model", "OBJ export failed: " + e.message);
       }
@@ -3131,8 +4145,9 @@ buildMeters();
   if (btnGltf) {
     btnGltf.addEventListener("click", async () => {
       try {
-        const gltf = await StudioExporters.export("gltf", $("studio-canvas"), { mesh: _studioLastMesh });
-        download(gltf, "mesh.gltf");
+        const ex = await loadExporters();
+        const gltf = await ex.StudioExporters.export("gltf", $("studio-canvas"), { mesh: _studioLastMesh });
+        ex.download(gltf, "mesh.gltf");
       } catch (e) {
         say("model", "GLTF export failed: " + e.message);
       }
@@ -3145,8 +4160,15 @@ buildMeters();
       btnWebm.disabled = true;
       try {
         btnWebm.textContent = "Recording...";
-        const webm = await StudioExporters.export("webm", $("studio-canvas"), { durationMs: 5000 });
-        download(webm, "studio-capture.webm");
+        const ex = await loadExporters();
+        const webm = await ex.StudioExporters.export("webm", $("studio-canvas"), { durationMs: 5000 });
+        // Name the clip after the source and, for the seed-authored instruments,
+        // the seed - so the same seed's animation is a recognisable, reproducible file.
+        const src = activeSource;
+        const seed = src === "neural" ? `${_neuralInstrument}-${_neuralSeed}`
+          : src === "sound" ? _soundSeed : "";
+        const slug = (src + (seed ? "-" + seed : "")).replace(/[^a-z0-9-]+/gi, "-").replace(/^-+|-+$/g, "").toLowerCase();
+        ex.download(webm, `telos-${slug || "capture"}.webm`);
       } catch (e) {
         say("model", "WebM export failed: " + e.message);
       } finally {
@@ -3436,26 +4458,30 @@ try {
   if (stored && TIER_ORDER.includes(stored)) engineTierOverride = stored;
 } catch (_) {}
 
+// Feed the music visuals engine (reactive-visuals exposes setCapability/setTierOverride). The
+// engine is lazy-loaded on first music entry, which may be long after the boot poll below gives
+// up, so this is module-scoped: loadReactive() calls it again the moment the engine exists.
+let _engineCapability = null;
+function feedEngineCapability() {
+  const RV = window.ReactiveVisuals;
+  if (RV && RV.setCapability) {
+    try { RV.setCapability(_engineCapability); RV.setTierOverride(engineTierOverride); } catch (_) {}
+    return true;
+  }
+  return false;
+}
+
 (async function bootScalableEngine() {
-  let capability = null;
   try {
     const cap = await import("./engine/capability.js");
-    capability = await cap.probeCapability();
-    window.__studioCapability = capability;   // honest, inspectable
-  } catch (_) { capability = null; }
-  // Feed the music visuals engine (reactive-visuals exposes setCapability/setTierOverride). It may
-  // not be loaded yet when this runs; retry on the window load tick and also poll briefly.
-  function feed() {
-    const RV = window.ReactiveVisuals;
-    if (RV && RV.setCapability) {
-      try { RV.setCapability(capability); RV.setTierOverride(engineTierOverride); } catch (_) {}
-      return true;
-    }
-    return false;
-  }
-  if (!feed()) {
+    _engineCapability = await cap.probeCapability();
+    window.__studioCapability = _engineCapability;   // honest, inspectable
+  } catch (_) { _engineCapability = null; }
+  // The engine may not be loaded yet when this runs; poll briefly (covers a music entry that
+  // raced the probe). A later lazy music load re-feeds via loadReactive.
+  if (!feedEngineCapability()) {
     let tries = 0;
-    const iv = setInterval(() => { if (feed() || ++tries > 40) clearInterval(iv); }, 100);
+    const iv = setInterval(() => { if (feedEngineCapability() || ++tries > 40) clearInterval(iv); }, 100);
   }
 })();
 
@@ -3490,4 +4516,13 @@ if (tierBtn) {
 }
 
 // Boot the source menu: Atelier active by default (mirrors the old setMode("generate")).
-setSource("atelier");
+// The URL may pre-select a source (studio.html?source=showcase&seed=1) and the showcase hero
+// capture mode (hero=1) both enters the showcase and lets first-integral.js apply its capture
+// layout. Only known sources are honored; anything else falls back to Atelier.
+(function bootSource() {
+  // The Atelier engine rewrites location.search on boot, so read the head-snapshot global that
+  // captured ?source= before that happened; fall back to the live URL if the snapshot is absent.
+  const want = window.__studioBootSource || new URLSearchParams(window.location.search || "").get("source") || "";
+  if (want && SOURCES[want]) { try { setSource(want); return; } catch (_) {} }
+  setSource("atelier");
+})();

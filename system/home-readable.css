@@ -1,0 +1,625 @@
+/* Home typography patch.
+   The Vite bundle is currently checked in without source. Keep public reading
+   in Kilon/Hanken and reserve Telos Display for small signature marks. */
+
+body.home-generative-field{
+  position:relative;
+  isolation:isolate;
+  background:
+    radial-gradient(100% 90% at 80% 14%, rgba(29,226,214,.13), transparent 0 18%, transparent 52%),
+    radial-gradient(96% 78% at 92% 72%, rgba(206,73,255,.16), transparent 0 16%, transparent 58%),
+    #100214;
+}
+
+body.home-generative-field #root{
+  position:relative;
+  z-index:2;
+}
+
+body.home-generative-field::before,
+body.home-generative-field::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+
+body.home-generative-field::before{
+  z-index:1;
+  background:
+    radial-gradient(68% 78% at 26% 47%, rgba(8,1,13,.99) 0%, rgba(8,1,13,.90) 43%, rgba(8,1,13,.34) 67%, transparent 86%),
+    linear-gradient(90deg, rgba(7,1,12,.99) 0%, rgba(7,1,12,.93) 38%, rgba(7,1,12,.42) 65%, rgba(7,1,12,.80) 100%),
+    linear-gradient(180deg, rgba(7,1,12,.90) 0%, transparent 24%, transparent 66%, rgba(7,1,12,.96) 100%);
+}
+
+body.home-generative-field::after{
+  z-index:1;
+  opacity:.34;
+  mix-blend-mode:screen;
+  background:
+    radial-gradient(circle at center, rgba(190,255,246,.22) 0 1px, transparent 1.45px),
+    linear-gradient(115deg, transparent 0 42%, rgba(240,171,48,.12) 51%, transparent 62%),
+    linear-gradient(0deg, transparent 0 48%, rgba(255,255,255,.045) 49%, transparent 50%);
+  background-size:18px 18px, 100% 100%, 100% 11px;
+  -webkit-mask-image:linear-gradient(90deg, transparent 0%, transparent 35%, #000 58%, #000 100%);
+  mask-image:linear-gradient(90deg, transparent 0%, transparent 35%, #000 58%, #000 100%);
+}
+
+#gl.generative-field-canvas,
+#motes.generative-motes-canvas{
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100dvh;
+  max-width:none;
+  display:block;
+  pointer-events:none;
+  transform:translateZ(0);
+  contain:strict;
+}
+
+#gl.generative-field-canvas{
+  z-index:0;
+  opacity:.76;
+  mix-blend-mode:screen;
+  filter:saturate(1.34) contrast(1.18) brightness(.92);
+}
+
+#motes.generative-motes-canvas{
+  z-index:1;
+  opacity:.36;
+  mix-blend-mode:screen;
+  filter:saturate(1.16);
+}
+
+.generative-field-failed #gl.generative-field-canvas,
+.generative-field-failed #motes.generative-motes-canvas{
+  display:none;
+}
+
+.hero{
+  background:
+    radial-gradient(72% 78% at 79% 24%, rgba(82,232,218,.08), transparent 0 38%, transparent 74%),
+    radial-gradient(60% 68% at 90% 70%, rgba(231,86,255,.10), transparent 0 35%, transparent 72%);
+}
+
+.hero::before,
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+}
+
+.hero::before{
+  background:
+    radial-gradient(48rem 40rem at max(18vw,12rem) 48%, rgba(8,1,13,.96), rgba(8,1,13,.82) 46%, rgba(8,1,13,.22) 72%, transparent 88%),
+    linear-gradient(90deg, rgba(8,1,13,.97) 0%, rgba(8,1,13,.86) 44%, rgba(8,1,13,.18) 78%);
+}
+
+.hero::after{
+  opacity:.42;
+  mix-blend-mode:screen;
+  background:
+    conic-gradient(from 145deg at 80% 29%, transparent 0deg, rgba(132,245,255,.12) 38deg, transparent 78deg, rgba(239,171,48,.10) 141deg, transparent 212deg, rgba(235,71,143,.10) 284deg, transparent 360deg);
+  -webkit-mask-image:radial-gradient(74% 76% at 79% 35%, #000 0 54%, transparent 78%);
+  mask-image:radial-gradient(74% 76% at 79% 35%, #000 0 54%, transparent 78%);
+}
+
+.hero-canvas-wrap{
+  opacity:.30;
+  mix-blend-mode:screen;
+  filter:saturate(1.24) contrast(1.14);
+}
+
+.hero-canvas{
+  max-width:none;
+}
+
+body.home-generative-field .hero > #gl.generative-field-canvas,
+body.home-generative-field .hero > #motes.generative-motes-canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  max-width:none;
+  display:block;
+  pointer-events:none;
+  transform:translateZ(0);
+  contain:strict;
+}
+
+body.home-generative-field .hero > #gl.generative-field-canvas{
+  z-index:0;
+  opacity:.54;
+  mix-blend-mode:screen;
+  filter:saturate(1.24) contrast(1.12) brightness(.88);
+  -webkit-mask-image:linear-gradient(90deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.14) 36%, rgba(0,0,0,.70) 58%, #000 100%);
+  mask-image:linear-gradient(90deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.14) 36%, rgba(0,0,0,.70) 58%, #000 100%);
+}
+
+body.home-generative-field .hero > #motes.generative-motes-canvas{
+  z-index:0;
+  opacity:.34;
+  mix-blend-mode:screen;
+  filter:saturate(1.12);
+}
+
+.hero-glow{
+  opacity:.76;
+  filter:saturate(1.26) contrast(1.12);
+}
+
+.hero-veil{
+  background:
+    radial-gradient(58rem 46rem at 24% 50%, rgba(8,1,13,.98) 0%, rgba(8,1,13,.90) 42%, rgba(8,1,13,.22) 70%, transparent 88%),
+    radial-gradient(120% 90% at 78% 30%, transparent 0%, color-mix(in oklab, var(--void) 26%, transparent) 42%, var(--void) 90%),
+    linear-gradient(180deg, color-mix(in oklab, var(--void) 60%, transparent) 0%, transparent 24% 60%, var(--void) 100%);
+}
+
+.topnav{
+  background:color-mix(in oklab, var(--void) 92%, black);
+  border-bottom-color:color-mix(in oklab, var(--signal) 16%, var(--hairline-2));
+  -webkit-backdrop-filter:blur(18px) saturate(1.15);
+  backdrop-filter:blur(18px) saturate(1.15);
+}
+
+.topnav-links a{
+  color:color-mix(in oklab, var(--ink) 76%, var(--muted));
+}
+
+.home-menu{
+  /* Visible at every width: the site taxonomy must be reachable from the
+     home nav on desktop too, matching the static pages' Menu. */
+  display:block;
+  position:relative;
+  margin-left:.4rem;
+}
+
+.home-menu summary{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.42rem;
+  min-height:2.65rem;
+  padding:.56rem .75rem;
+  border:1px solid color-mix(in oklab, var(--signal) 18%, transparent);
+  border-radius:999px;
+  color:color-mix(in oklab, var(--ink) 84%, var(--muted));
+  background:color-mix(in oklab, var(--void) 76%, transparent);
+  font-family:var(--font-body);
+  font-size:.92rem;
+  font-weight:760;
+  line-height:1;
+  list-style:none;
+  cursor:pointer;
+  user-select:none;
+  transition:color .2s var(--ease-out),border-color .2s var(--ease-out),background .2s var(--ease-out);
+}
+
+.home-menu summary::-webkit-details-marker{
+  display:none;
+}
+
+.home-menu summary::after{
+  content:"+";
+  color:var(--muted);
+  margin-left:.14rem;
+}
+
+.home-menu[open] summary::after{
+  content:"-";
+}
+
+.home-menu summary:hover,
+.home-menu summary:focus-visible{
+  color:var(--ink);
+  border-color:color-mix(in oklab, var(--signal) 42%, transparent);
+  background:color-mix(in oklab, var(--signal) 9%, transparent);
+  outline:none;
+}
+
+.home-menu summary:focus-visible{
+  box-shadow:0 0 0 2px color-mix(in oklab, var(--signal) 42%, transparent);
+}
+
+.home-menu-list{
+  position:absolute;
+  right:0;
+  top:calc(100% + .55rem);
+  z-index:70;
+  box-sizing:border-box;
+  width:max-content;
+  min-width:16rem;
+  max-width:min(22rem,calc(100vw - 1.5rem));
+  max-height:calc(100dvh - 5rem);
+  display:grid;
+  gap:.16rem;
+  padding:.72rem;
+  border:1px solid color-mix(in oklab, var(--signal) 18%, var(--hairline-2));
+  border-radius:10px;
+  background:color-mix(in oklab, var(--void) 96%, black);
+  box-shadow:0 22px 68px -38px rgba(0,0,0,.92),0 0 0 1px color-mix(in oklab, var(--signal) 8%, transparent) inset;
+  overflow:auto;
+  overscroll-behavior:contain;
+}
+
+.home-menu:not([open]) .home-menu-list{
+  display:none;
+}
+
+.home-menu-label{
+  margin:.55rem 0 .1rem;
+  padding:.55rem .72rem 0;
+  border-top:1px solid color-mix(in oklab, var(--ink) 14%, transparent);
+  font-family:var(--font-mono, ui-monospace, monospace);
+  font-size:.62rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:color-mix(in oklab, var(--ink) 55%, transparent);
+}
+
+.home-menu-list a{
+  display:flex;
+  align-items:center;
+  min-height:2.7rem;
+  padding:.64rem .72rem;
+  border-radius:8px;
+  color:color-mix(in oklab, var(--ink) 84%, var(--muted));
+  text-decoration:none;
+  font-family:var(--font-body);
+  font-size:.96rem;
+  font-weight:720;
+  line-height:1.18;
+  min-width:0;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+
+.home-menu-list a:hover,
+.home-menu-list a:focus-visible{
+  color:var(--ink);
+  background:color-mix(in oklab, var(--signal) 10%, transparent);
+  outline:none;
+}
+
+.readout{
+  width:min(100%,43rem);
+  max-width:100%;
+  background:none;
+  box-shadow:none;
+}
+
+.ro-label{
+  letter-spacing:0;
+  text-transform:none;
+  color:var(--ink-2);
+}
+
+.ro-verdicts{
+  min-width:0;
+  flex-wrap:wrap;
+}
+
+.ro-chip{
+  color:inherit;
+  text-decoration:none;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+
+.ro-route{
+  transition:color .2s var(--ease-out), border-color .2s var(--ease-out), background .2s var(--ease-out);
+}
+
+.ro-route:hover,
+.ro-route:focus-visible{
+  color:var(--ink);
+  border-color:color-mix(in oklab, var(--signal) 42%, transparent);
+  background:color-mix(in oklab, var(--signal) 10%, transparent);
+}
+
+.brand:focus-visible,
+.topnav-links a:focus-visible,
+.btn:focus-visible,
+.ro-route:focus-visible,
+.eng-open:focus-visible,
+.eng-src:focus-visible,
+.paper-doi:focus-visible,
+.paper-close a:focus-visible,
+.picker-chip:focus-visible,
+.picker-open:focus-visible,
+.range-proof a:focus-visible,
+.eng-desc a:focus-visible,
+.work-body a:focus-visible,
+.lead a:focus-visible{
+  outline:2px solid color-mix(in oklab, var(--signal) 50%, transparent);
+  outline-offset:3px;
+  border-radius:8px;
+}
+
+.topnav-links a,
+.btn,
+.ro-route,
+.eng-open,
+.eng-src,
+.paper-doi,
+.picker-chip,
+.picker-open{
+  min-height:2.55rem;
+  display:inline-flex;
+  align-items:center;
+}
+
+.btn,
+.ro-route,
+.picker-chip{
+  justify-content:center;
+}
+
+.eng-open,
+.eng-src,
+.paper-doi,
+.picker-open{
+  padding-inline:.1rem;
+}
+
+.engine:focus-within,
+.range-card:focus-within,
+.paper:focus-within,
+.picker-out:focus-within{
+  border-color:color-mix(in oklab, var(--signal) 34%, var(--hairline));
+  box-shadow:0 0 0 1px color-mix(in oklab, var(--signal) 16%, transparent);
+}
+
+.picker-chip{
+  line-height:1.15;
+}
+
+.picker-chip:focus-visible{
+  background:color-mix(in oklab, var(--signal) 10%, transparent);
+}
+
+.engine{
+  overflow:hidden;
+}
+
+.engine::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:0;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg, color-mix(in oklab, var(--eng) 14%, transparent), transparent 36%),
+    radial-gradient(30rem 8rem at 72% 50%, color-mix(in oklab, var(--eng) 16%, transparent), transparent 72%);
+  transition:opacity .3s var(--ease-out);
+}
+
+.engine:hover::before{
+  opacity:1;
+}
+
+.engine > *{
+  position:relative;
+}
+
+.range-card,
+.pp,
+.emet,
+.wi,
+.gd{
+  border-radius:12px;
+}
+
+.hero-title,
+.sec-head h2,
+.pull,
+.foot-big,
+.eng-name,
+.case-name,
+.paper-title,
+.picker-name,
+.verdict,
+.gd-verdict{
+  font-family:var(--font-body);
+  font-weight:820;
+  letter-spacing:0;
+}
+
+.hero-title{
+  max-width:15.6ch;
+  font-size:clamp(2.35rem,1.44rem + 4.05vw,5.8rem);
+  line-height:1.04;
+  text-shadow:0 2px 18px rgba(20,4,27,.62),0 18px 72px rgba(0,0,0,.86);
+}
+
+.hero-title .hl{
+  color:var(--signal);
+}
+
+.brand,
+.edgemark{
+  font-family:var(--font-brand);
+  letter-spacing:0;
+}
+
+.edgemark{
+  display:none;
+}
+
+.lead{
+  max-width:49ch;
+  font-size:clamp(1.04rem,.94rem + .44vw,1.28rem);
+  line-height:1.56;
+  color:color-mix(in oklab, var(--ink) 88%, var(--ink-2));
+  text-shadow:0 2px 18px rgba(0,0,0,.72);
+}
+
+.hero .kicker,
+.sec-head .kicker{
+  font-family:var(--font-body);
+  color:color-mix(in oklab, var(--ink) 78%, var(--muted));
+  font-weight:720;
+  letter-spacing:0;
+  text-transform:none;
+}
+
+.hero .kicker{
+  font-size:clamp(.96rem,.88rem + .22vw,1.08rem);
+}
+
+.sec-head .kicker{
+  color:var(--muted);
+  font-size:var(--step-0);
+}
+
+.kicker::before{
+  display:none;
+}
+
+.eng-index{
+  font-size:0;
+}
+
+.sec-head h2,
+.pull,
+.foot-big{
+  line-height:1.04;
+}
+
+.eng-name,
+.case-name,
+.paper-title,
+.picker-name{
+  line-height:1.12;
+}
+
+@media (width <= 560px){
+  .topnav{
+    min-height:3.55rem;
+    padding:.72rem var(--shell);
+  }
+
+  .topnav-links{
+    display:none !important;
+  }
+
+  .home-menu{
+    display:block;
+  }
+
+  .home-menu-list{
+    position:fixed;
+    left:var(--shell);
+    right:var(--shell);
+    top:3.95rem;
+    width:auto;
+    min-width:0;
+    max-width:none;
+    max-height:calc(100dvh - 4.7rem);
+    overflow:auto;
+  }
+
+  .brand{
+    font-size:clamp(.96rem,4.7vw,1.18rem);
+    letter-spacing:0;
+  }
+
+  body.home-generative-field::before{
+    background:
+      radial-gradient(76% 66% at 50% 38%, rgba(8,1,13,.88) 0%, rgba(8,1,13,.72) 52%, transparent 78%),
+      linear-gradient(180deg, rgba(8,1,13,.88), transparent 32%, rgba(8,1,13,.95));
+  }
+
+  body.home-generative-field::after{
+    opacity:.20;
+    -webkit-mask-image:linear-gradient(180deg, transparent 0%, #000 26%, #000 78%, transparent 100%);
+    mask-image:linear-gradient(180deg, transparent 0%, #000 26%, #000 78%, transparent 100%);
+  }
+
+  #gl.generative-field-canvas{
+    opacity:.48;
+  }
+
+  #motes.generative-motes-canvas{
+    opacity:.24;
+  }
+
+  .hero-canvas-wrap{
+    opacity:.22;
+  }
+
+  body.home-generative-field .hero > #gl.generative-field-canvas{
+    opacity:.30;
+    -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,.04) 0%, rgba(0,0,0,.10) 54%, rgba(0,0,0,.52) 100%);
+    mask-image:linear-gradient(180deg, rgba(0,0,0,.04) 0%, rgba(0,0,0,.10) 54%, rgba(0,0,0,.52) 100%);
+  }
+
+  body.home-generative-field .hero > #motes.generative-motes-canvas{
+    opacity:.20;
+  }
+
+  .hero-title{
+    max-width:12.6ch;
+    font-size:clamp(2.2rem,10.4vw,3.65rem);
+    line-height:1.06;
+  }
+
+  .lead{
+    font-size:clamp(1rem,4.3vw,1.1rem);
+  }
+
+  .readout{
+    width:calc(100vw - (var(--shell) * 2));
+    display:grid;
+    grid-template-columns:1fr;
+    gap:.55rem;
+    padding:.7rem;
+  }
+
+  .ro-verdicts{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:.42rem;
+  }
+
+  .ro-chip{
+    text-align:center;
+    padding:.32em .45em;
+  }
+
+  .ro-route,
+  .picker-chip,
+  .btn{
+    min-height:2.75rem;
+  }
+
+}
+
+@media (prefers-reduced-motion:reduce){
+  #motes.generative-motes-canvas{
+    display:none;
+  }
+
+  .hero-canvas-wrap{
+    opacity:.28;
+  }
+}
+
+/* ── reveal robustness ────────────────────────────────────────────────────
+   Content is never opacity-gated on the reveal observer. The resting state
+   stays fully visible (print, no-JS-after-boot, headless, missed
+   IntersectionObserver); the entrance reads as a transform-only settle.
+   Overrides the bundle's opacity:0 resting state; this sheet loads after it. */
+html.js .reveal:not(.in){opacity:1;transform:translateY(14px)}
+
+/* ── menu actuation (2026-07-09): 44px targets + tap-delay removal ────────── */
+.home-menu summary,
+.home-menu-list a,
+.topnav-links a{
+  min-height:44px;
+  touch-action:manipulation;
+}
+.topnav-links a{display:inline-flex;align-items:center}

@@ -4,24 +4,28 @@
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Studio &middot; Project Telos, the engine &middot; Zain Dana Harper</title>
-<meta name="description" content="The Studio is the live surface of Project Telos, the engine. A person and a model perceive the same thing, generate, and verify it together, step by step. The published telos repo is the small runnable demo of the same loop; this site is its testbench.">
+<title>The Studio &middot; Live media instrument &middot; Zain Dana Harper</title>
+<meta name="description" content="The Studio is a live media instrument for rendering, measuring, transforming, and reading the frame. Bring a source, generate a field, watch the perception channels, and keep receipts available when evidence is useful.">
 <link rel="canonical" href="https://harperz9.github.io/studio.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="The Studio &middot; Project Telos, the engine &middot; Zain Dana Harper">
-<meta property="og:description" content="The Studio is the live surface of Project Telos, the engine. A person and a model perceive the same thing, generate, and verify it together, step by step.">
+<meta property="og:title" content="The Studio &middot; Live media instrument &middot; Zain Dana Harper">
+<meta property="og:description" content="Render media, measure the frame, transform sources, and keep receipts available when evidence is useful.">
 <meta property="og:url" content="https://harperz9.github.io/studio.html">
-<meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
-<meta property="og:image:alt" content="A still from the engine: a Julia set rendered in the site's palette, real mathematics drawn by our own code.">
+<meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
+<meta property="og:image:alt" content="Project Telos flagship card: Telos, the engine. See it and shape it, together with a model.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The Studio &middot; Project Telos, the engine &middot; Zain Dana Harper">
-<meta name="twitter:description" content="The Studio is the live surface of Project Telos, the engine. A person and a model perceive the same thing, generate, and verify it together, step by step.">
-<meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Schibsted+Grotesk:wght@500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="system/system.css?v=20260625a">
+<meta name="twitter:title" content="The Studio &middot; Live media instrument &middot; Zain Dana Harper">
+<meta name="twitter:description" content="Render media, measure the frame, transform sources, and keep receipts available when evidence is useful.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
+<link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="system/system.css?v=20260719-zentropy-sitewide">
+<!-- Snapshot the source and hero query params before any module or deferred script runs. The
+     Atelier engine rewrites location.search to its own state on boot (history.replaceState),
+     which would erase ?source=showcase before studio.js reads it, so the Studio reads these
+     globals, not the live URL. ASCII only. -->
+<script>(function(){var p=new URLSearchParams(location.search);window.__studioBootSource=p.get("source")||"";window.__studioBootHero=p.get("hero")==="1";window.__studioBootSeed=p.get("seed")||"";})();</script>
 </head>
 <body class="studio-page">
 
@@ -32,41 +36,81 @@
 <!-- The Studio app shell: one viewport, menu-driven. On desktop (≥900px) this is a fixed-height
      CSS grid (rail · canvas · panel) and the PAGE never scrolls; each region scrolls inside itself.
      Below 900px it collapses to a single column and normal page scroll returns. -->
-<main class="studio-app" aria-label="The Studio">
+<main class="studio-app studio-media-first" aria-label="The Studio">
 
   <!-- ── LEFT RAIL: source menu + the active source's controls ───────────────────────── -->
-  <aside class="studio-rail" id="studio-rail" aria-label="Source &amp; controls">
+  <aside class="studio-rail" id="studio-rail" aria-label="Media sources and controls">
     <div class="rail-head">
       <h1 translate="no">The Studio</h1>
-      <p class="rail-lede"><span translate="no">Project Telos</span>, the engine. A person and a model perceive the same thing, generate, and verify it together, step by step. The <a href="https://github.com/HarperZ9/telos" style="color:inherit;border-bottom:1px solid rgba(239,171,48,.4);text-decoration:none">published <span translate="no">telos</span> repo</a> is the small runnable demo of the same loop. This is the engine running live.</p>
+      <p class="rail-lede">A live media instrument for rendering, measuring, transforming, and reading the frame.</p>
     </div>
 
     <!-- The source menu: pick what the model looks at. setSource(name) shows ONLY that block. -->
-    <div class="source-menu" id="studio-source" role="tablist" aria-label="Choose a source">
+    <div class="source-menu studio-mode-strip" id="studio-source" role="tablist" aria-label="Choose a media source">
       <div class="source-group" role="presentation">
-        <span class="source-group-label" aria-hidden="true">Create</span>
+        <span class="source-group-label" aria-hidden="true">Make</span>
         <button type="button" role="tab" data-source="atelier"  aria-selected="true"  aria-controls="src-atelier"   tabindex="0">Atelier</button>
         <button type="button" role="tab" data-source="fractal"   aria-selected="false" aria-controls="src-fractal"   tabindex="-1">2D Fractal</button>
         <button type="button" role="tab" data-source="fractal3d" aria-selected="false" aria-controls="src-fractal3d" tabindex="-1">3D Fractal</button>
         <button type="button" role="tab" data-source="ndim"      aria-selected="false" aria-controls="src-ndim"      tabindex="-1">Dimensions</button>
+        <button type="button" role="tab" data-source="poster"    aria-selected="false" aria-controls="src-poster"    tabindex="-1">Poster</button>
+        <button type="button" role="tab" data-source="neural"    aria-selected="false" aria-controls="src-neural"    tabindex="-1">Living neural</button>
+        <button type="button" role="tab" data-source="sound"     aria-selected="false" aria-controls="src-sound"     tabindex="-1">Seed sound</button>
       </div>
       <div class="source-group" role="presentation">
-        <span class="source-group-label" aria-hidden="true">Observe</span>
+        <span class="source-group-label" aria-hidden="true">Bring</span>
         <button type="button" role="tab" data-source="byo"       aria-selected="false" aria-controls="src-byo"       tabindex="-1">Bring your own</button>
         <button type="button" role="tab" data-source="watch"     aria-selected="false" aria-controls="src-watch"     tabindex="-1">Watch with me</button>
         <button type="button" role="tab" data-source="music"     aria-selected="false" aria-controls="src-music"     tabindex="-1">Music</button>
       </div>
-      <div class="source-group source-group-single" role="presentation">
-        <span class="source-group-label" aria-hidden="true">Verify</span>
+      <div class="source-group" role="presentation">
+        <span class="source-group-label" aria-hidden="true">Measure</span>
         <button type="button" role="tab" data-source="discovery" aria-selected="false" aria-controls="src-discovery" tabindex="-1">Physics</button>
+        <button type="button" role="tab" data-source="showcase" aria-selected="false" aria-controls="src-showcase" tabindex="-1">Showcase</button>
       </div>
     </div>
-    <p class="rail-own">Bring your own image or video. Open <b>Bring your own</b> (drop a file) or feed one to the Atelier as a specimen.</p>
+    <p class="rail-own">Start with a source, then open only the controls you need.</p>
 
     <div class="rail-scroll">
       <!-- SOURCE: Atelier (Task 7). boot() finds #atelier and, since there is no #at-canvas here,
            draws into the shared #studio-canvas in the viewport. These are the exact control ids
            atelier.js boot() binds. Groups wrapped in <details> so the rail never overflows. -->
+      <section class="src-block" id="src-poster" role="tabpanel" aria-label="Poster workshop controls" hidden>
+        <p class="transform-note">The typography workshop: set type in the site's own generated faces over any instrument's art, and the critique reads the poster through the same measured packet the model receives - every note carries its numbers.</p>
+        <div id="poster-mount"></div>
+      </section>
+      <section class="src-block" id="src-neural" role="tabpanel" aria-label="Living neural controls" hidden>
+        <p class="transform-note">The seed's neural instruments, alive. The same network the gallery freezes into a plate runs here under a live clock, and the perception panel reads the motion it makes. Reduced-motion holds a single still frame.</p>
+        <div class="at-group">
+          <span class="at-glab">Instrument</span>
+          <div class="at-chips" id="neural-instruments" role="group" aria-label="Living neural instrument">
+            <button type="button" class="at-chip" data-neural-instrument="field" aria-pressed="true">Field</button>
+            <button type="button" class="at-chip" data-neural-instrument="solid" aria-pressed="false">Solid</button>
+          </div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Seed</span>
+          <div class="poster-artrow">
+            <input type="text" class="poster-seed" id="neural-seed" maxlength="40" value="living" aria-label="Neural seed" />
+            <button type="button" class="at-mini" id="neural-reseed">reseed</button>
+          </div>
+        </div>
+      </section>
+      <section class="src-block" id="src-sound" role="tabpanel" aria-label="Seed sound controls" hidden>
+        <p class="transform-note">A seed authored as sound. The same seed that draws a plate synthesizes a short phrase: key, scale, melody, timbre, and tempo are all derived from the seed with pure math, no samples and no model. Press play to hear it; the perception panel then reads its level, spectrum, and pitch, live. Deterministic: the same seed sounds the same, so the readout is re-checkable.</p>
+        <div class="at-group">
+          <span class="at-glab">Seed</span>
+          <div class="poster-artrow">
+            <input type="text" class="poster-seed" id="sound-seed" maxlength="40" value="aurora" aria-label="Sound seed" />
+            <button type="button" class="at-mini" id="sound-reseed">reseed</button>
+          </div>
+        </div>
+        <div class="at-actions">
+          <button type="button" class="btn" id="sound-play" aria-label="Play the seed's sound and measure it live">play</button>
+          <button type="button" class="btn ghost" id="sound-stop" aria-label="Stop playback">stop</button>
+        </div>
+        <p class="src-hint" id="sound-readout">press play; the audio channels below read what the seed plays</p>
+      </section>
       <section class="src-block" id="src-atelier" role="tabpanel" aria-label="Atelier controls">
         <div class="atelier studio-atelier" id="atelier">
           <div class="at-panel">
@@ -307,6 +351,14 @@
                 <span>Normalize to unit frame</span>
               </label>
             </div>
+            <div class="at-group">
+              <span class="at-glab">Shading</span>
+              <div class="at-chips" id="model-shading" role="group" aria-label="Mesh shading mode">
+                <button type="button" class="at-chip" data-shade="wire" aria-pressed="true">wire</button>
+                <button type="button" class="at-chip" data-shade="solid" aria-pressed="false">solid</button>
+                <button type="button" class="at-chip" data-shade="points" aria-pressed="false">points</button>
+              </div>
+            </div>
             <div class="transform-grid">
               <label>Scale <span id="model-scale-val">1.00</span>
                 <input type="range" class="at-slider" id="model-scale" min="0.1" max="3" step="0.05" value="1">
@@ -493,15 +545,114 @@
         </div>
       </section>
 
+      <!-- SOURCE: Showcase ("First Integral"). One Kepler orbit integrated live over a quiet
+           reconcile flowfield ground; the discovery engine fits the conserved angular momentum
+           from the trace; the same verifier refuses a damped run; the scene is seeded, hashed,
+           and re-checkable. Wave 1 skeleton: the controls below are in place but inert;
+           system/showcase/first-integral.js draws a labeled settled placeholder. Wave 2 wires
+           the live scene, the receipt, and the re-check. -->
+      <section class="src-block" id="src-showcase" role="tabpanel" aria-label="Engine showcase controls" hidden>
+        <div class="fractal-source" id="showcase-source">
+          <div class="at-panel">
+            <details class="rail-group" open>
+              <summary>Scene</summary>
+              <div class="at-group">
+                <span class="at-glab">Seed <span class="hint">drives the ground world and the initial condition</span></span>
+                <input type="text" class="at-seed" id="show-seed" value="1" spellcheck="false" autocomplete="off" aria-label="Scene seed" disabled>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">System <span class="hint">only the Kepler path is bit-hashed; sin-based systems verify by tolerance</span></span>
+                <div class="at-chips" role="group" aria-label="Physical system" id="show-system">
+                  <button type="button" class="chip" data-show-system="sho" disabled>SHO</button>
+                  <button type="button" class="chip" data-show-system="pendulum" disabled>Pendulum</button>
+                  <button type="button" class="chip active" data-show-system="kepler" disabled>Kepler</button>
+                  <button type="button" class="chip" data-show-system="oscillator2d" disabled>2D oscillator</button>
+                </div>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Eccentricity <span class="hint">clamped so the shipped orbit stays honest under the drift check</span></span>
+                <input type="range" class="at-slider" id="show-ecc" min="0" max="0.8" step="0.05" value="0.4" aria-label="Orbit eccentricity" disabled>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Step <span class="hint">integrator dt</span></span>
+                <input type="number" class="at-seed" id="show-dt" value="0.004" step="0.001" min="0.001" max="0.05" aria-label="Integrator time step" disabled>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Steps <span class="hint">trajectory length</span></span>
+                <input type="number" class="at-seed" id="show-n" value="2000" step="100" min="200" max="8000" aria-label="Number of integration steps" disabled>
+              </div>
+            </details>
+            <details class="rail-group" open>
+              <summary>Verify</summary>
+              <div class="at-group">
+                <span class="at-glab">Candidate terms <span class="hint">which terms the invariant is built from</span></span>
+                <input type="text" class="at-seed" id="show-terms" value="x*vy, y*vx" spellcheck="false" autocomplete="off" aria-label="Candidate invariant terms" style="width:100%" disabled>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Refusal run <span class="hint">same system with drag 0.02; the verifier must refuse energy on a damped system</span></span>
+                <button class="btn ghost" id="show-drag" type="button" aria-pressed="true" disabled>Damped negative control</button>
+              </div>
+              <div class="at-actions">
+                <button class="btn" id="show-replay" type="button" title="Replay the four states" disabled>Replay</button>
+                <button class="btn" id="show-verify" type="button" title="Re-integrate from the recorded literals, re-fit, re-hash, compare" disabled>Re-check</button>
+                <button class="btn ghost" id="show-export" type="button" title="Export the ground world and the canonical report JSON" disabled>Export</button>
+              </div>
+              <div id="show-receipt" style="font-family:ui-monospace,monospace;font-size:.72rem;margin-top:.5rem;min-height:1.2em">no receipt yet</div>
+              <div id="show-verdict" style="font-size:.78rem;margin-top:.3rem;min-height:1.2em"></div>
+            </details>
+            <div id="show-live" aria-live="polite" style="font-size:.8rem;margin-top:.3rem"></div>
+            <div id="show-doc" style="font-family:ui-monospace,monospace;font-size:.72rem;margin-top:.5rem;border-top:1px solid var(--hairline);padding-top:.5rem">
+              <p style="margin:0 0 .3rem"><code>Studio.connectModel(fn)</code> hands your model the identical readout JSON this scene speaks aloud: system, seed, invariant value, drift ratio, refusal verdict, receipt hash, and the measured frame colours.</p>
+              <p style="margin:0 0 .3rem">The studio-perception MCP serves the same channel to a local model, so a screen reader and a model perceive exactly the same numbers.</p>
+              <p style="margin:0">Keyboard: arrows step the focused control, S cycles the system, Space pauses, R replays, key V re-checks the receipt, E exports the world and report JSON. (M is reserved for sound and is not shipped in this version.)</p>
+            </div>
+            <p class="src-hint">One orbit, integrated live by the site&rsquo;s own symplectic integrator; the discovery engine fits the conserved angular momentum from the trace; the same verifier visibly refuses a damped run. The scene is seeded, hashed, and re-checkable in this browser.</p>
+          </div>
+        </div>
+      </section>
+
       <details class="rail-group rail-about">
-        <summary>About the <span translate="no">Studio</span> and <span translate="no">Project Telos</span></summary>
-        <p>This is the live surface of <span translate="no">Project Telos</span>, the engine. <span translate="no">Telos</span> is the thesis made tangible: a person and a model stand before the same witnessed frame, generate from it, transform it, and verify every step together. Bring your own image, video, audio, OBJ, GLTF, PLY, CSV, or JSON; render Atelier studies, 2D and 3D fractals, nD geometry, sound-reactive visuals, and physics discovery runs; then export pixels, perception JSON, OBJ, GLTF, or witnessed artifacts. The right panel shows what the model is given: frame, fingerprint, colours, channels, receipts, and the five-flagship stack feeding the work.</p>
+        <summary>Studio notes</summary>
+        <p>Render media, watch the measurements move, and export the frame or perception record. Animated sources - the living neural and seed-sound instruments, physics, the orbit, and screen capture - add a WebM button that records the motion itself; the file is named for the source and seed, so a seed's animation is reproducible. Receipts remain available when a source produces checkable evidence.</p>
       </details>
+      <!-- The renderer console is secondary telemetry: it sits at the end of the one
+           control scroll, below the active source's controls. -->
+      <section class="studio-render-console" data-studio-render-console aria-label="Renderer console">
+        <div class="studio-console-head">
+          <span class="studio-console-title">Renderer console</span>
+          <span class="studio-console-status" data-studio-console-status>atelier renderer</span>
+        </div>
+        <div class="studio-console-stage" data-studio-console-stage tabindex="0" role="img" aria-label="Pointer-reactive renderer field preview">
+          <span class="studio-console-orbit" aria-hidden="true"></span>
+          <span class="studio-console-crosshair" aria-hidden="true"></span>
+          <span class="studio-console-pointer">pointer <b data-studio-console-pointer>50:50</b></span>
+        </div>
+        <div class="studio-console-meters" aria-label="Renderer channels">
+          <div class="studio-console-meter">
+            <div><span>field</span><output data-studio-console-meter="field">0.58</output></div>
+            <i data-studio-console-bar="field"></i>
+          </div>
+          <div class="studio-console-meter">
+            <div><span>dither</span><output data-studio-console-meter="dither">0.50</output></div>
+            <i data-studio-console-bar="dither"></i>
+          </div>
+          <div class="studio-console-meter">
+            <div><span>motion</span><output data-studio-console-meter="motion">0.46</output></div>
+            <i data-studio-console-bar="motion"></i>
+          </div>
+        </div>
+        <div class="studio-console-actions" role="group" aria-label="Renderer routes">
+          <button type="button" data-studio-console-source="showcase">Showcase</button>
+          <button type="button" data-studio-console-source="atelier">Atelier</button>
+          <button type="button" data-studio-console-source="fractal">Fractal</button>
+          <button type="button" data-studio-console-source="byo">Media</button>
+        </div>
+      </section>
     </div>
   </aside>
 
   <!-- ── CENTRE: the canvas viewport (the hero) + a slim render toolbar ───────────────── -->
-  <section class="studio-viewport" id="studio-viewport" aria-label="The frame">
+  <section class="studio-viewport studio-primary-stage" id="studio-viewport" aria-label="The live media frame">
     <div class="viewport-stage stage" id="viewport-stage">
       <canvas id="studio-canvas" width="360" height="360"
         role="img" aria-label="The live render canvas. The measurimeter panel on the right describes what the model currently perceives."
@@ -544,6 +695,87 @@
       <button class="rt-btn" id="rt-export-json" type="button" title="Save the witnessed perception certificate as JSON"
         aria-label="Export perception JSON">
         <span class="rt-ico" aria-hidden="true">&#8659;</span> Perception JSON</button>
+      <!-- Unified export menu: every registered kind grouped by discipline.
+           Populated by studio.js from EXPORT_KINDS; absent module degrades to
+           the legacy PNG/JSON buttons above. -->
+      <details class="rt-plot" id="rt-export">
+        <summary class="rt-btn" title="Export the frame across disciplines: raster, print, design, textile, text, relief"
+          aria-label="Export menu: choose a format across disciplines">
+          <span class="rt-ico" aria-hidden="true">&#8659;</span> Export as</summary>
+        <div class="rt-plot-pop" id="rt-export-pop" aria-label="Export formats">
+          <div class="rt-plot-row">
+            <span class="rt-plot-lab" id="export-paper-lab">pdf paper</span>
+            <div class="rt-plot-chips" role="group" aria-labelledby="export-paper-lab">
+              <button type="button" class="chip active" data-export-paper="a4" aria-pressed="true">a4</button>
+              <button type="button" class="chip" data-export-paper="a3" aria-pressed="false">a3</button>
+              <button type="button" class="chip" data-export-paper="letter" aria-pressed="false">letter</button>
+            </div>
+          </div>
+          <div id="rt-export-list" class="rt-export-list"></div>
+          <p class="rt-plot-note">Design, textile, and text formats read the live perception packet; PDF paper sets the print page; relief exports a luminance mesh.</p>
+        </div>
+      </details>
+      <!-- Plot desk: the SVG plot control opens an options popover (style, pens, paper, format).
+           Wired by studio.js through the plotter contract; absent capabilities fall back to the
+           single-pen flow SVG. -->
+      <details class="rt-plot" id="rt-plot">
+        <summary class="rt-btn" id="rt-export-svg" title="Plot the current frame as pen line art: choose style, pens, paper, and format"
+          aria-label="Plot options: style, pens, paper, and format">
+          <span class="rt-ico" aria-hidden="true">&#8659;</span> SVG plot</summary>
+        <div class="rt-plot-pop" id="rt-plot-pop" aria-label="Plot options">
+          <div class="rt-plot-row">
+            <span class="rt-plot-lab" id="plot-style-lab">style</span>
+            <div class="rt-plot-chips" role="group" aria-labelledby="plot-style-lab">
+              <button type="button" class="chip active" data-plot-key="style" data-plot-value="flow" aria-pressed="true">flow</button>
+              <button type="button" class="chip" data-plot-key="style" data-plot-value="hatch" aria-pressed="false">hatch</button>
+              <button type="button" class="chip" data-plot-key="style" data-plot-value="contour" aria-pressed="false">contour</button>
+            </div>
+          </div>
+          <div class="rt-plot-row">
+            <span class="rt-plot-lab" id="plot-pens-lab">pens</span>
+            <div class="rt-plot-chips" role="group" aria-labelledby="plot-pens-lab">
+              <button type="button" class="chip active" data-plot-key="pens" data-plot-value="1" aria-pressed="true">1</button>
+              <button type="button" class="chip" data-plot-key="pens" data-plot-value="2" aria-pressed="false">2</button>
+              <button type="button" class="chip" data-plot-key="pens" data-plot-value="3" aria-pressed="false">3</button>
+            </div>
+          </div>
+          <div class="rt-plot-row">
+            <span class="rt-plot-lab" id="plot-paper-lab">paper</span>
+            <div class="rt-plot-chips" role="group" aria-labelledby="plot-paper-lab">
+              <button type="button" class="chip active" data-plot-key="paper" data-plot-value="a4" aria-pressed="true">a4</button>
+              <button type="button" class="chip" data-plot-key="paper" data-plot-value="a5" aria-pressed="false">a5</button>
+              <button type="button" class="chip" data-plot-key="paper" data-plot-value="square" aria-pressed="false">square</button>
+            </div>
+          </div>
+          <div class="rt-plot-row">
+            <span class="rt-plot-lab" id="plot-detail-lab">detail</span>
+            <div class="rt-plot-chips" role="group" aria-labelledby="plot-detail-lab">
+              <button type="button" class="chip active" data-plot-key="detail" data-plot-value="standard" aria-pressed="true">standard</button>
+              <button type="button" class="chip" data-plot-key="detail" data-plot-value="fine" aria-pressed="false">fine</button>
+              <button type="button" class="chip" data-plot-key="detail" data-plot-value="ultra" aria-pressed="false">ultra</button>
+            </div>
+          </div>
+          <div class="rt-plot-row">
+            <span class="rt-plot-lab" id="plot-density-lab">density</span>
+            <div class="rt-plot-chips" role="group" aria-labelledby="plot-density-lab">
+              <button type="button" class="chip" data-plot-key="density" data-plot-value="airy" aria-pressed="false">airy</button>
+              <button type="button" class="chip active" data-plot-key="density" data-plot-value="full" aria-pressed="true">full</button>
+              <button type="button" class="chip" data-plot-key="density" data-plot-value="dense" aria-pressed="false">dense</button>
+            </div>
+          </div>
+          <div class="rt-plot-row">
+            <span class="rt-plot-lab" id="plot-format-lab">format</span>
+            <div class="rt-plot-chips" role="group" aria-labelledby="plot-format-lab">
+              <button type="button" class="chip active" data-plot-key="format" data-plot-value="svg" aria-pressed="true">SVG</button>
+              <button type="button" class="chip" data-plot-key="format" data-plot-value="gcode" aria-pressed="false">G-code</button>
+            </div>
+          </div>
+          <div class="rt-plot-actions">
+            <button type="button" class="btn" id="rt-plot-download">Download plot</button>
+          </div>
+          <p class="rt-plot-note">Single-stroke pen line art from the live frame, seeded by its perceptual hash. G-code targets pen plotters; unsupported options fall back to the flow SVG.</p>
+        </div>
+      </details>
       <button class="rt-btn" id="rt-export-obj"  type="button" title="Save the loaded geometry as OBJ"
         aria-label="Export OBJ geometry" hidden>
         <span class="rt-ico" aria-hidden="true">&#8659;</span> OBJ</button>
@@ -577,24 +809,36 @@
     </div>
   </section>
 
-  <!-- ── RIGHT PANEL: what the model sees (top) + the chat (fills the rest, scrolls inside) ─ -->
-  <aside class="studio-panel" id="studio-panel" aria-label="What the model sees, and the chat">
+  <!-- RIGHT PANEL: live perception, measured channels, receipts, and secondary chat. -->
+  <aside class="studio-panel studio-perception-panel" id="studio-panel" aria-label="Live perception and receipts">
     <div class="panel-scroll">
-      <section class="panel" id="studio-frame" aria-label="What the model sees">
-        <h2>What the model sees
+      <section class="panel" id="studio-frame" aria-label="Live perception summary">
+        <h2>Live Perception
           <span class="mm-live" id="mm-live" hidden aria-hidden="true"><span class="mm-dot"></span>live</span></h2>
-        <div class="row"><span class="rk">perceptual hash</span><span class="rv" id="sc-phash" aria-live="polite" aria-label="Perceptual hash">-</span></div>
+        <div class="row"><span class="rk">perceptual hash</span><span class="rv" id="sc-phash" aria-label="Perceptual hash">-</span></div>
         <div class="row"><span class="rk">size</span><span class="rv" id="sc-size">-</span></div>
         <div class="grounds" id="sc-feats" aria-label="Visual feature readings"></div>
-        <p class="mm-describe" id="mm-describe" aria-live="polite"></p>
+        <p class="mm-describe" id="mm-describe"></p>
+        <details class="mm-fullread">
+          <summary>full read &middot; the no-vision view</summary>
+          <p class="mm-long" id="mm-long">Render a frame and the long-form read appears here: palette with proportions, the 3&times;3 spatial grid, edge directions, and symmetry.</p>
+          <p class="mm-shapes" id="mm-shapes" hidden aria-label="Salient forms: hue, centre, area share"></p>
+          <div class="mm-readmode" id="mm-readmode" role="group" aria-label="Luminance render mode">
+            <button type="button" class="chip active" id="mm-mode-ascii" data-read-mode="ascii" aria-pressed="true">ascii</button>
+            <button type="button" class="chip" id="mm-mode-braille" data-read-mode="braille" aria-pressed="false" hidden>braille</button>
+          </div>
+          <pre class="mm-ascii" id="mm-ascii" aria-label="ASCII luminance render of the current frame"></pre>
+          <p class="mm-fullread-note">This is the same structured read the model receives: detailed enough to reconstruct the frame without seeing it.</p>
+        </details>
         <div class="mc-drift" id="sc-drift" hidden aria-live="polite" aria-atomic="true"></div>
       </section>
 
       <!-- The MEASURIMETER (Task 8d): every channel the tooling feeds the model. The faithful n×n
            representation, per-channel meters, a motion sparkline, dominant-colour swatches, and (when
            the source has sound) audio level / spectrum / pitch. Streams via a throttled rAF loop. -->
-      <section class="panel measurimeter" id="sc-meters" aria-label="The measurimeter: everything the model senses now">
-        <h2>The measurimeter <span class="mm-sub">everything fed to the model, live</span></h2>
+      <section class="panel measurimeter" id="sc-meters" aria-label="Measured perception channels">
+        <h2>Measured frame <span class="mm-sub">color, motion, structure, audio, source</span>
+          <span class="mm-fidelity" id="mm-fidelity" hidden></span></h2>
         <div class="mm-grid">
           <div class="mm-col mm-col-repr">
             <div class="mm-clab" id="mm-lab-mosaic">colour grid <span class="mm-hint">box-averaged, faithful downscale</span></div>
@@ -612,7 +856,7 @@
             <div class="mm-meters" id="mm-visual" role="list" aria-label="Visual channel readings"></div>
             <div class="mm-section">
               <div class="mm-clab">audio channels <span class="mm-hint">when the source has sound</span></div>
-              <div class="mm-meters" id="mm-audio" role="list" aria-label="Audio channel readings" aria-live="polite" aria-atomic="false"></div>
+              <div class="mm-meters" id="mm-audio" role="list" aria-label="Audio channel readings"></div>
             </div>
             <div class="mm-section">
               <div class="mm-clab">source</div>
@@ -622,15 +866,18 @@
         </div>
       </section>
 
-      <!-- The WITNESSED CERTIFICATE (verdict-diff): the named criterion, the verdict as a state chip,
+      <details class="studio-receipts">
+        <summary>Receipts</summary>
+
+      <!-- Receipts (verdict-diff): the named criterion, the verdict as a state chip,
            and the re-checkable evidence, rendered BEFORE the model's prose. Accept / reject / dispute
            is one click; UNVERIFIABLE and DISPUTED are the most visually distinct states; recheck
            reproduces the verdict live from the certificate's own evidence. Below it, the append-only
-           audit trail (IndexedDB) replays every certificate issued and every operator action stamped.
+           audit trail (IndexedDB) replays every certificate issued and every owner action stamped.
            studio.js builds a real certificate (certificate.js) from the live reconcile and renders it
            here via certificate-panel.js; nothing is faked. -->
-      <section class="panel cert-panel" id="sc-certificate" aria-label="The witnessed certificate: criterion, verdict, and re-checkable evidence">
-        <h2>The witnessed certificate <span class="mm-sub">criterion, verdict, evidence, before the prose</span></h2>
+      <section class="panel cert-panel" id="sc-certificate" aria-label="Receipts: criterion, verdict, and re-checkable evidence">
+        <h2>Receipt <span class="mm-sub">criterion, verdict, evidence</span></h2>
         <div id="cert-render"></div>
         <div class="cert-audit" id="cert-audit">
           <div class="cert-audit-head"><span>audit trail <span class="mm-hint">append-only, newest first</span></span><span class="cert-audit-count" id="cert-audit-count"></span></div>
@@ -640,12 +887,12 @@
       </section>
 
       <section class="panel telos-stack" id="project-telos-features" aria-label="Project Telos feature stack">
-        <h2>Project Telos feature stack <span class="mm-sub">the runnable contracts behind the Studio</span></h2>
+        <h2>Engine contracts <span class="mm-sub">runnable pieces behind this Studio</span></h2>
         <p class="feature-intro">The Studio is the browser surface. The larger Telos stack now carries the repo contracts that make agent work portable, inspectable, and reusable across CLI, MCP, IDE, TUI, and app surfaces.</p>
         <div class="feature-stack-grid">
           <article>
-            <h3>Five-flagship spine</h3>
-            <p><b>Gather</b> intake, <b>Index</b> context, <b>Forum</b> routing, <b>Crucible</b> verification, and <b>Telos</b> witnessed execution.</p>
+            <h3>Fourteen-engine Flywheel</h3>
+            <p><b>Flywheel</b> routes and verifies; <b>Gather</b> intake, <b>Index</b> context, <b>Forum</b> orchestration, <b>Crucible</b> judgment, and <b>Telos</b> shared work pass maps, receipts, memory, code, media, and measurements forward.</p>
           </article>
           <article>
             <h3>Context and receipts</h3>
@@ -661,7 +908,7 @@
           </article>
           <article>
             <h3>Revival registry</h3>
-            <p>Older Quanta, Calibrate Pro, Context Curator, defensive analysis, and creative engines can be pulled into the same I/O contract.</p>
+            <p>Build, Build Color, Context Curator, defensive analysis, and creative engines can share the same I/O contract.</p>
           </article>
           <article>
             <h3>Interop target</h3>
@@ -679,18 +926,19 @@
           <a href="forum.html">Forum</a>
           <a href="crucible.html">Crucible</a>
           <a href="https://github.com/HarperZ9/telos">Telos repo</a>
-          <a href="docs/superpowers/plans/2026-06-28-telos-universal-media-engine.md">Engine assembly</a>
+          <a href="https://github.com/HarperZ9/studio-engine">Studio Engine repo</a>
         </div>
       </section>
+      </details>
     </div>
 
     <!-- The chat dock: first-class, minimizable. #studio-log scrolls inside its own box; the chips +
          the free-text input let you actually talk to the model. -->
-    <section class="chat-dock" id="chat-dock" aria-label="Talk to the model">
+    <section class="chat-dock studio-chat-drawer minimized" id="chat-dock" aria-label="Ask about the frame">
       <div class="chat-dock-head">
-        <h2>Talk to the model</h2>
-        <button class="chat-min" id="chat-min" type="button" aria-expanded="true" aria-controls="chat-body"
-          title="Minimize the chat">&minus;</button>
+        <h2>Ask about the frame</h2>
+        <button class="chat-min" id="chat-min" type="button" aria-expanded="false" aria-controls="chat-body"
+          title="Expand the chat">+</button>
       </div>
       <div class="chat-dock-body" id="chat-body">
         <div class="chat-log" id="studio-log" role="log" aria-live="polite"></div>
@@ -703,7 +951,7 @@
         <details class="model-connect" id="model-connect">
           <summary>Advanced: connect a model</summary>
           <form class="mc-body" id="mc-form" autocomplete="off">
-            <p class="mc-note" id="mc-note">Your key stays in your browser and is sent only to the endpoint you choose. When a model is hosted by the operator, your message is sent to it to be computed and is not stored.</p>
+            <p class="mc-note" id="mc-note">Your key stays in your browser and is sent only to the endpoint you choose. When a model is hosted by the maintainer, your message is sent to it to be computed and is not stored.</p>
             <label class="mc-label" for="mc-endpoint">Endpoint URL
               <input class="mc-input" type="url" id="mc-endpoint" placeholder="https://api.openai.com/v1/chat/completions" autocomplete="off">
             </label>
@@ -731,20 +979,20 @@
 
 </main>
 
-<script type="module" src="system/nav.js?v=20260625a"></script>
+<script type="module" src="system/nav.js?v=20260719-zentropy-sitewide"></script>
 <!-- Atelier engine (Task 7): classic IIFE, self-boots on DOM ready, binds the controls above and
      draws into #studio-canvas. Loaded before the Studio module so window.Atelier + the shared
      spine/reconcile readouts are present. -->
 <script src="system/spine.js?v=20260625a" defer></script>
 <script src="system/reconcile.js?v=20260625a" defer></script>
-<script src="system/atelier.js?v=20260628a" defer></script>
+<script src="system/atelier.js?v=20260701a" defer></script>
 <!-- Vendored interactive libraries (P1). Single prebuilt files, no runtime CDN fetch.
-     panzoom (anvaka) v9.4.3: UMD, sets window.createPanzoom.
-     Tweakpane v4.0.5: ESM named exports, imported directly by studio-surface.js. -->
+     panzoom (anvaka) v9.4.3: UMD, sets window.createPanzoom; needed at boot (the default
+     Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
+     Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js"></script>
-<script type="module" src="system/studio.js?v=20260628a"></script>
-<!-- Music reactive engine: zero-dependency WebAudio + Canvas visual system. -->
-<script type="module" src="system/reactive.js?v=20260625b"></script>
-<script type="module" src="system/reactive-music-ui.js?v=20260625b"></script>
+<script type="module" src="system/studio.js?v=20260710a"></script>
+<!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
+     first entry into the Music source, so it is no longer a static tag here. -->
 </body>
 </html>

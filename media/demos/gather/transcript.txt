@@ -1,0 +1,235 @@
+GATHER RECORDED WORKFLOW / RAW SANITIZED TRANSCRIPT
+captured_utc: 2026-07-12T21:34:01+00:00
+sanitization: local checkout and demo-directory prefixes replaced; hashes and tool output unchanged
+network: not used
+
+=== version ===
+$ python -m gather --version
+# returncode=0 duration_ms=162
+gather 1.6.1
+
+=== extract ===
+$ python -m gather extract <DEMO_DIR>/source.html
+# returncode=0 duration_ms=505
+{
+  "blocks": [
+    {
+      "path": "html[1]/body[1]/main[1]/h1[1]",
+      "sha256": "77fe1757ad064289d9916cbfefb914e4dc40e2f8bc842c00786c86504e8f8fcf",
+      "tag": "h1"
+    },
+    {
+      "path": "html[1]/body[1]/main[1]/p[1]",
+      "sha256": "fbb7b02723879ca95817b8ca4e27c3c7f8fec601eca39c1330f9f58aece69cf5",
+      "tag": "p"
+    },
+    {
+      "path": "html[1]/body[1]/main[1]/h2[1]",
+      "sha256": "d47a36f4f055810755db08b8d52e479baa4bb7a7a1f6449f71fa1ad5c20495ef",
+      "tag": "h2"
+    },
+    {
+      "path": "html[1]/body[1]/main[1]/ul[1]/li[1]",
+      "sha256": "e029fe5b03190a4b351ad0844adc1548cd41c04a5600ef62a4fc8fa09940a552",
+      "tag": "li"
+    },
+    {
+      "path": "html[1]/body[1]/main[1]/ul[1]/li[2]",
+      "sha256": "e5cc0848e6720485a5618ec4bf75f998f54eafb46c168952af5244093b9d7a1a",
+      "tag": "li"
+    },
+    {
+      "path": "html[1]/body[1]/main[1]/ul[1]/li[3]",
+      "sha256": "d433c077811177e5231542e26a7b16df90184087e0a45707809601c404669464",
+      "tag": "li"
+    },
+    {
+      "path": "html[1]/body[1]/main[1]/p[2]",
+      "sha256": "b28b4268f329a12752ac0667ad52b2a0431a43c4c77dab69326efcfff2db9b4a",
+      "tag": "p"
+    }
+  ],
+  "content_sha256": "32d493643936a4fcf687b1e6974e3a5bf8c4e4cf976a9c127313792492ade9cc",
+  "fetched_at": 0.0,
+  "markdown_sha256": "e60a84d745df86549568094dc6864ff41d823adfafcf7a06fb2aebe64b9fa24a",
+  "method": "html-extract",
+  "title": "Agent evaluation brief",
+  "url": "file://<DEMO_DIR>\\source.html"
+}
+
+=== store ===
+$ python -m gather docs <DEMO_DIR>/notes --scope receipt,verification,provenance --store <DEMO_DIR>/corpus --json
+# returncode=0 duration_ms=196
+{
+  "schema": "gather.catalog-digest/v1",
+  "catalog": [
+    {
+      "kind": "document",
+      "id": "01-brief.md",
+      "title": "01-brief.md",
+      "source": "docs",
+      "ref": "<DEMO_DIR>\\notes\\01-brief.md",
+      "method": "file-read",
+      "sha256": "8d23e400225f421b5c592c34d0338233a53fedfe8b329bc461bc894265eb2af3",
+      "derived_from": [],
+      "chars": 297
+    },
+    {
+      "kind": "document",
+      "id": "02-observation.md",
+      "title": "02-observation.md",
+      "source": "docs",
+      "ref": "<DEMO_DIR>\\notes\\02-observation.md",
+      "method": "file-read",
+      "sha256": "f48c546c44a717bb3352184dd589e6ca808687073b895239bd8e3457606d31d1",
+      "derived_from": [],
+      "chars": 301
+    }
+  ],
+  "digest": {
+    "receipts": [
+      {
+        "kind": "document",
+        "id": "01-brief.md",
+        "title": "01-brief.md",
+        "source": "docs",
+        "ref": "<DEMO_DIR>\\notes\\01-brief.md",
+        "method": "file-read",
+        "sha256": "8d23e400225f421b5c592c34d0338233a53fedfe8b329bc461bc894265eb2af3",
+        "derived_from": []
+      },
+      {
+        "kind": "document",
+        "id": "02-observation.md",
+        "title": "02-observation.md",
+        "source": "docs",
+        "ref": "<DEMO_DIR>\\notes\\02-observation.md",
+        "method": "file-read",
+        "sha256": "f48c546c44a717bb3352184dd589e6ca808687073b895239bd8e3457606d31d1",
+        "derived_from": []
+      }
+    ],
+    "seal": "aac58984d65dee86c783cdb2cce1d557c542d5230ac54a1f646842dae475d3e3"
+  },
+  "verified": true,
+  "dropped": 0,
+  "stored": {
+    "added": 2,
+    "deduped": 0,
+    "total": 2
+  }
+}
+
+=== search ===
+$ python -m gather corpus search <DEMO_DIR>/corpus --terms receipt,verification --json
+# returncode=0 duration_ms=542
+{
+  "catalog": [
+    {
+      "kind": "document",
+      "id": "01-brief.md",
+      "title": "01-brief.md",
+      "source": "docs",
+      "ref": "<DEMO_DIR>\\notes\\01-brief.md",
+      "method": "file-read",
+      "sha256": "8d23e400225f421b5c592c34d0338233a53fedfe8b329bc461bc894265eb2af3",
+      "derived_from": [],
+      "chars": 297
+    },
+    {
+      "kind": "document",
+      "id": "02-observation.md",
+      "title": "02-observation.md",
+      "source": "docs",
+      "ref": "<DEMO_DIR>\\notes\\02-observation.md",
+      "method": "file-read",
+      "sha256": "f48c546c44a717bb3352184dd589e6ca808687073b895239bd8e3457606d31d1",
+      "derived_from": [],
+      "chars": 301
+    }
+  ],
+  "digest": {
+    "receipts": [
+      {
+        "kind": "document",
+        "id": "01-brief.md",
+        "title": "01-brief.md",
+        "source": "docs",
+        "ref": "<DEMO_DIR>\\notes\\01-brief.md",
+        "method": "file-read",
+        "sha256": "8d23e400225f421b5c592c34d0338233a53fedfe8b329bc461bc894265eb2af3",
+        "derived_from": []
+      },
+      {
+        "kind": "document",
+        "id": "02-observation.md",
+        "title": "02-observation.md",
+        "source": "docs",
+        "ref": "<DEMO_DIR>\\notes\\02-observation.md",
+        "method": "file-read",
+        "sha256": "f48c546c44a717bb3352184dd589e6ca808687073b895239bd8e3457606d31d1",
+        "derived_from": []
+      }
+    ],
+    "seal": "aac58984d65dee86c783cdb2cce1d557c542d5230ac54a1f646842dae475d3e3"
+  },
+  "skipped": []
+}
+
+=== verify ===
+$ python -m gather corpus verify <DEMO_DIR>/corpus --json
+# returncode=0 duration_ms=160
+[
+  {
+    "id": "01-brief.md",
+    "sha256": "8d23e400225f421b5c592c34d0338233a53fedfe8b329bc461bc894265eb2af3",
+    "status": "MATCH"
+  },
+  {
+    "id": "02-observation.md",
+    "sha256": "f48c546c44a717bb3352184dd589e6ca808687073b895239bd8e3457606d31d1",
+    "status": "MATCH"
+  }
+]
+
+=== digest ===
+$ python -m gather corpus digest <DEMO_DIR>/corpus --json
+# returncode=0 duration_ms=448
+{
+  "receipts": [
+    {
+      "kind": "document",
+      "id": "01-brief.md",
+      "title": "01-brief.md",
+      "source": "docs",
+      "ref": "<DEMO_DIR>\\notes\\01-brief.md",
+      "method": "file-read",
+      "sha256": "8d23e400225f421b5c592c34d0338233a53fedfe8b329bc461bc894265eb2af3",
+      "derived_from": []
+    },
+    {
+      "kind": "document",
+      "id": "02-observation.md",
+      "title": "02-observation.md",
+      "source": "docs",
+      "ref": "<DEMO_DIR>\\notes\\02-observation.md",
+      "method": "file-read",
+      "sha256": "f48c546c44a717bb3352184dd589e6ca808687073b895239bd8e3457606d31d1",
+      "derived_from": []
+    }
+  ],
+  "seal": "aac58984d65dee86c783cdb2cce1d557c542d5230ac54a1f646842dae475d3e3"
+}
+
+=== integrity_drill ===
+$ python <GATHER_CHECKOUT>/examples/demo.py
+# returncode=0 duration_ms=521
+parsed 3 items from one video, each with a receipt:
+  metadata   abc123  sha256=40d9839ffb0e...  verify=True
+  transcript abc123  sha256=f798cd2c334c...  verify=True
+  comment    c1  sha256=301cf39d5091...  verify=True
+
+scope to ['tile','monotile']: kept 3, dropped 0
+witnessed digest: 3 receipts, seal 7da7dc456b11..., verified True
+
+after tampering one receipt, digest verifies: False  <- caught

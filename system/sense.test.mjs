@@ -8,6 +8,10 @@ import {
   rms, rmsFromBytes, spectrumBands, dominantPitchHz,
   multiScaleGrids, assembleFullPerception,
 } from "./sense.js";
+import {
+  brailleRender, shapeInventory, reconstructionFidelity,
+  perceptionDetail, describeFrameLong, colorGridHex,
+} from "./sense.js";
 
 // Build an RGBA buffer of w×h from a (x,y)->[r,g,b] function.
 function mkRGBA(w, h, fn) {
@@ -325,4 +329,101 @@ test("Tier-2: all ORIGINAL assembleFullPerception keys remain present (additive,
   assert.equal(fp.contrast, 0.5);
   assert.equal(fp.source, "orig");
   assert.ok(fp.distributions.luma && fp.distributions.hue);
+});
+
+// ── reconstruction-grade perception (braille / shapes / fidelity) ────────────
+
+test("brailleRender: braille-range chars, dark/bright asymmetry, mid-grey dithers, deterministic", () => {
+  const W = 64, H = 32, cols = 16;
+  const countDots = (s) => {
+    let dots = 0, chars = 0;
+    for (const c of s) {
+      if (c === "\n") continue;
+      const code = c.codePointAt(0);
+      assert.ok(code >= 0x2800 && code <= 0x28ff, "every char is in the braille block");
+      chars++;
+      let bits = code - 0x2800;
+      while (bits) { dots += bits & 1; bits >>= 1; }
+    }
+    return { dots, chars };
+  };
+  const bright = mkRGBA(W, H, () => [255, 255, 255]);
+  const dark = mkRGBA(W, H, () => [0, 0, 0]);
+  const mid = mkRGBA(W, H, () => [128, 128, 128]);
+
+  const b = countDots(brailleRender(bright, W, H, 4, cols));
+  const d = countDots(brailleRender(dark, W, H, 4, cols));
+  const m = countDots(brailleRender(mid, W, H, 4, cols));
+  assert.equal(d.dots, 0, "a black frame raises no dots");
+  assert.equal(b.dots, b.chars * 8, "a white frame raises every dot");
+  assert.ok(b.dots > d.dots, "dark/bright asymmetry");
+  // mid-grey clears the 0.25 threshold cells but not the 0.75 cells: dithers, never bands
+  assert.ok(m.dots > 0 && m.dots < m.chars * 8, "mid-grey raises some dots, not all");
+  assert.ok(Math.abs(m.dots / (m.chars * 8) - 0.5) < 0.2, "roughly half the dots at mid-grey");
+  // deterministic: same pixels, same string
+  assert.equal(brailleRender(mid, W, H, 4, cols), brailleRender(mid, W, H, 4, cols));
+});
+
+test("shapeInventory: finds a bright square on a dark field and localizes its centroid", () => {
+  const W = 64, H = 64;
+  // dark field (luma ~20) with a 16px bright square centred at (0.75, 0.25)
+  const px = mkRGBA(W, H, (x, y) =>
+    (x >= 40 && x < 56 && y >= 8 && y < 24) ? [230, 230, 230] : [20, 20, 20]);
+  const shapes = shapeInventory(px, W, H, 4, 8);
+  assert.ok(Array.isArray(shapes) && shapes.length >= 2, "background + square found");
+  for (let i = 1; i < shapes.length; i++)
+    assert.ok(shapes[i - 1].areaFrac >= shapes[i].areaFrac, "sorted by area, largest first");
+  const sq = shapes.find((s) => s.luma > 0.5);
+  assert.ok(sq, "the bright component is in the inventory");
+  assert.ok(Math.abs(sq.cx - 0.75) < 0.1, `centroid x ${sq.cx} within 0.1 of 0.75`);
+  assert.ok(Math.abs(sq.cy - 0.25) < 0.1, `centroid y ${sq.cy} within 0.1 of 0.25`);
+  assert.ok(Math.abs(sq.areaFrac - 0.0625) < 0.03, "area fraction ~ 6.25% of the frame");
+  const [x0, y0, x1, y1] = sq.bbox;
+  assert.ok(x0 <= sq.cx && sq.cx <= x1 && y0 <= sq.cy && sq.cy <= y1, "bbox contains the centroid");
+  assert.ok(x0 >= 0 && y0 >= 0 && x1 <= 1 && y1 <= 1, "bbox is in 0..1 frame fractions");
+  assert.equal(typeof sq.hue, "string");
+  assert.ok(sq.edge > 0, "an interior component reports a boundary fraction");
+});
+
+test("reconstructionFidelity: self-consistent packet >= 0.8; a mismatched grid scores strictly lower", () => {
+  const W = 64, H = 64;
+  const ramp = mkRGBA(W, H, (x) => { const v = Math.round(x * 255 / (W - 1)); return [v, v, v]; });
+  const inverse = mkRGBA(W, H, (x) => { const v = 255 - Math.round(x * 255 / (W - 1)); return [v, v, v]; });
+
+  const own = reconstructionFidelity(ramp, W, H, 4, { colorGrid16: colorGridHex(ramp, W, H, 4, 16) });
+  assert.equal(own.bits, 64);
+  assert.equal(typeof own.hamming, "number");
+  assert.ok(Math.abs(own.score - (1 - own.hamming / 64)) < 1e-3, "score is 1 - hamming/64");
+  assert.ok(own.score >= 0.8, `self-consistent score ${own.score} >= 0.8`);
+
+  // the SAME original scored against a grid taken from a DIFFERENT frame
+  const crossed = reconstructionFidelity(ramp, W, H, 4, { colorGrid16: colorGridHex(inverse, W, H, 4, 16) });
+  assert.ok(crossed.score < own.score, `mismatched grid ${crossed.score} < self ${own.score}`);
+
+  // no grid -> honest null, never a fabricated score
+  assert.equal(reconstructionFidelity(ramp, W, H, 4, {}).score, null);
+});
+
+test("perceptionDetail carries shapes + braille; describeFrameLong narrates shapes, gates fidelity", () => {
+  const W = 64, H = 64;
+  // near-black field with a teal square top-right
+  const px = mkRGBA(W, H, (x, y) =>
+    (x >= 40 && x < 56 && y >= 8 && y < 24) ? [0, 200, 200] : [24, 24, 24]);
+  const det = perceptionDetail(px, W, H, 4);
+  assert.ok(Array.isArray(det.shapes) && det.shapes.length >= 2, "detail bundle includes shapes");
+  assert.equal(typeof det.braille, "string");
+  const code0 = det.braille.codePointAt(0);
+  assert.ok(code0 >= 0x2800 && code0 <= 0x28ff, "detail bundle includes a braille render");
+
+  const rich = richFeatures(px, W, H, 4);
+  const text = describeFrameLong(rich, det);
+  assert.match(text, /largest form sits/, "narrates the largest shape");
+  assert.match(text, /% of the frame/, "narrates the shape's area fraction");
+  assert.match(text, /teal/, "names the square's hue somewhere in the read");
+  assert.doesNotMatch(text, /rebuilt from this packet/, "no fidelity clause unless the caller passes one");
+
+  det.fidelity = reconstructionFidelity(px, W, H, 4, det);
+  const withFid = describeFrameLong(rich, det);
+  assert.match(withFid, /rebuilt from this packet/, "fidelity clause appears when the caller passes it");
+  assert.match(withFid, /of 64 hash bits/, "clause carries the measured bit agreement");
 });

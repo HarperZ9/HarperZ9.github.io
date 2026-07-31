@@ -1,0 +1,11 @@
+{
+  "artifact": "worker-refined.md",
+  "artifact_sha256": "508df97f92264ad7d717ddae713b789287f177f5240d753b027c9b0871062788",
+  "bytes": 408,
+  "metrics": {
+    "evidence_record_count": 3,
+    "unresolved_placeholder_count": 0,
+    "cleanroom_boundary_count": 1
+  },
+  "inspector": "make_substrate.py/v1"
+}

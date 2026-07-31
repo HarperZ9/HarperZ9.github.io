@@ -1,0 +1,43 @@
+INDEX RECORDED WORKFLOW TRANSCRIPT
+Capture date: 2026-07-12
+Source: Index 2.9.0, source checkout commit 46247e2
+Sanitization: the capture root is represented as <capture-root>; no remote URLs or credentials were used.
+
+PS <capture-root>> $IndexSource = Resolve-Path '..\..\public\index'
+PS <capture-root>> $env:PYTHONPATH = "$IndexSource\src"
+
+PS <capture-root>> python -m index_graph graph --root .\workspace
+# Context pack: dependency graph
+
+## Roles (project: roles, in/out degree)
+- operator-console: (none) (in=0 out=2)
+- routing-service: library (in=1 out=1)
+- signal-core: library, hub (in=2 out=0)
+
+## Relations (A -> B: signals [confidence])
+- operator-console -> routing-service: import+manifest [high]
+- operator-console -> signal-core: import+manifest [high]
+- routing-service -> signal-core: import+manifest [high]
+
+## External dependencies (A -> name)
+
+## Inventory (all projects, extracted description)
+- operator-console [python]: Joins [[routing-service]] and [[signal-core]] into one review receipt.
+- routing-service [python]: Consumes [[signal-core]] and emits a typed route for [[operator-console]].
+- signal-core [python]: Normalizes raw observations into stable evidence records for [[routing-service]].
+
+PS <capture-root>> python -m index_graph verify --root .\workspace --depends "operator-console -> routing-service"
+verdict=MATCH: operator-console depends on routing-service (pyproject.toml:5)
+
+PS <capture-root>> python -m index_graph context-envelope --root .\workspace --focus operator-console --budget 1200
+context-envelope verdict=MATCH tokens=738/1200
+retained=3 omitted=0
+
+PS <capture-root>> python -m index_graph workbench --root .\workspace --budget 1200 --out .\index-workbench.html
+workbench -> .\index-workbench.html  (3 repos, 4 docs, 0 spine envelopes, receipt 2999aacfce8573cc…)
+
+PS <capture-root>> python -m index_graph atlas --root .\workspace
+repos=3 docs=4 knowledge_edges=12
+
+PS <capture-root>> python -m index_graph atlas --root .\workspace --format html --out .\index-atlas.html
+wrote .\index-atlas.html

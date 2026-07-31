@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Build products: source-visible tools with explicit maturity</title>
+<meta name="description" content="The Build suite: source-visible forecasting, paper-trading, interface, and color tools with explicit maturity boundaries. By Zain Dana Harper.">
+<link rel="canonical" href="https://harperz9.github.io/build-products.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="The Build products: source-visible tools with explicit maturity">
+<meta property="og:description" content="Forecasting, paper-trading, interface, and color tools with explicit maturity boundaries.">
+<meta property="og:url" content="https://harperz9.github.io/build-products.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
+<meta property="og:image:alt" content="Project Telos: a public map of source-visible tools, research, and evidence.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Build products: source-visible tools with explicit maturity">
+<meta name="twitter:description" content="Forecasting, paper-trading, interface, and color tools with explicit maturity boundaries.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260719-zentropy-sitewide">
+</head>
+<body class="inner-clean">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260719-zentropy-sitewide"></script>
+
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">The Build products</span></div>
+  <div class="mid">
+    <p class="eyebrow">PRODUCTS &middot; THE BUILD SUITE</p>
+    <h1>Tools with their maturity <span class="g">named plainly.</span></h1>
+    <p class="lede">A source-visible suite separate from the accountability research: forecasting and paper-trading toolkits, color utilities, and a shared interface layer. Distribution, source availability, and product readiness are different claims; this page keeps them separate.</p>
+    <p class="close">Four companion packages (<span translate="no">build-color</span>, <span translate="no">build-ui</span>, <span translate="no">build-oracle</span>, <span translate="no">build-engine</span>) are distributed on PyPI; the remaining companion tools ship from source. Availability is not represented as end-to-end readiness.</p>
+  </div>
+  <div class="seal">forecasting &middot; paper trading &middot; interface &middot; color &middot; source-visible with explicit maturity boundaries</div>
+</div>
+
+<main id="main">
+
+<!-- the quant trio -->
+<section class="mv" id="quant" aria-labelledby="quant-h">
+  <h2 id="quant-h" class="reveal">The forecasting &amp; trading toolkits, paper-first by design.</h2>
+  <p class="body-text reveal"><b>build-oracle</b> is a toolkit for predicting trends in data over time and spotting unusual breaks or jumps: ARIMA with automatic order selection, structural-break (changepoint) detection by information criterion (a score that picks the simplest explanation that still fits the data), and feature engineering, which builds extra signals like recent averages, lag values, and Fourier terms to help the model see patterns. The honest forecasting layer the others build on.</p>
+  <p class="body-text reveal"><b>build-finance</b> is a rule-based trading toolkit for stocks and crypto: backtesting (running a strategy against old data to see what would have happened), portfolio optimization using named methods (Markowitz, Black&ndash;Litterman, Hierarchical Risk Parity, Risk Parity), and strategies like an EMA-crossover momentum filter. It runs the analysis and the backtest; it doesn&rsquo;t pretend a backtest is a promise.</p>
+  <p class="body-text reveal"><b>build-engine</b> is the self-adjusting loop on top: it trains forecasters, turns forecasts into signals, paper-trades or backtests them, and feeds the results back to adjust its own internal settings (the numbers that determine how the model behaves). It is <b>paper-trading by default</b>, and live brokerage is deliberately hard to switch on. It refuses to run live unless you set an explicit risk-acknowledgement in the environment. The guardrail is the feature.</p>
+  <em class="close reveal">These are real toolkits, honestly beta. Nothing here is financial advice, and the design assumes you&rsquo;ll paper-trade first; it makes that the path of least resistance on purpose.</em>
+</section>
+
+<!-- the shared layers -->
+<section class="proof" id="proof" aria-labelledby="proof-h">
+  <div class="proof-head">
+    <h2 id="proof-h" class="reveal">The shared interface and color layers.</h2>
+    <p class="body-text reveal"><b>build-ui</b> is the shared controls library for the companion GUI tools. <b>build-ecosystem</b> installs the companion set, and <a href="build-color.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(58,43,214,.45)" translate="no">build-color</a> is the color-science member, with its own page. Each package&rsquo;s repository and tests remain the authority for its exact maturity.</p>
+  </div>
+</section>
+
+<!-- honest -->
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h" class="reveal">Where they really are.</h2>
+  <p class="body-text reveal"><b>build-oracle</b>, <b>build-finance</b>, and <b>build-engine</b> are source-visible beta toolkits with named methods and paper-first defaults. <b>build-ui</b> and <b>build-ecosystem</b> are the shared controls and companion installer. Each readiness claim on this page is bounded to the named public package and its current evidence.</p>
+  <p class="pull reveal">Source-visible, distribution paths named, and readiness claims bounded to evidence.</p>
+  <div class="channels reveal">
+    <span class="g">GitHub</span>: <a href="https://github.com/HarperZ9" translate="no">HarperZ9</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">Color member</span>: <a href="build-color.html" translate="no">build-color &rarr;</a>
+    &nbsp;&middot;&nbsp;
+    <a href="overview.html">&larr; the map</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the index</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Source-visible tools &middot; explicit maturity &middot; paper-first where it counts &middot; no readiness claim without end-to-end evidence.</p>
+</footer>
+
+<script src="system/reveal.js?v=20260625a" defer></script>
+</body>
+</html>

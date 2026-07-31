@@ -1,77 +1,130 @@
 # Zain Dana Harper
 
-**Systems Engineer / Cross-Domain Systems Builder - AI accountability, agent orchestration, compilers, graphics, research infrastructure, technical operations, and documentation.**
-Seattle, WA - onsite, hybrid, remote, flexible, travel/field-facing, contract, full-time, part-time, and project-based roles.
-[harperz9.github.io](https://harperz9.github.io) - [github.com/HarperZ9](https://github.com/HarperZ9) - zaindharper@gmail.com
+## Systems Engineer
 
----
+Seattle, Washington | Open to remote, hybrid, onsite, contract, and project work
+zaindharper@gmail.com | https://harperz9.github.io | https://github.com/HarperZ9
 
-## Summary
+### Summary
 
-Cross-domain systems builder with roughly 13 years of programming experience overall, including hobby, self-directed, and exploratory development, and a serious non-hobby/public engineering arc from 2023-present. Current work: Project Telos, a public product ecosystem for making model perception, action, research intake, orchestration, repository intelligence, and evaluation answerable to evidence.
+Systems engineer and cross-domain builder whose public work spans AI-agent
+infrastructure, compilers and language tooling, real-time graphics and color
+science, verification systems, technical documentation, and operations. Builds
+inspectable tools with explicit boundaries, tests, documentation, provenance,
+and reproducible release paths. Independent engineering practice since 2023,
+grounded in earlier technical support, freelance technical writing, compliance
+documentation, customer-facing operations, and field leadership.
 
-Strong fit for ambiguous roles that need one person to map a system, identify the constraint, build the artifact or workflow, verify the result, and communicate it clearly across technical and nontechnical audiences.
+### Selected engineering work
 
-## Proof snapshot
+**Project Telos and model-era engineering tools | Python, TypeScript, Node.js**
 
-- Authenticated GitHub footprint: **73 owned repositories total**, including **47 public repos**; direct `index` run over the local public workspace on 2026-06-26 mapped **49 repositories**, including **45 public repos**.
-- Five current flagships: **telos**, **index** (`index-graph` 2.8.0), **forum** (`forum-engine` 1.12.0), **gather** (`gather-engine` 1.5.0), and **crucible** (`crucible-bench` 1.1.0 release candidate).
-- Public work includes Python CLIs, zero-dependency libraries, browser demos, static product pages, MCP-facing tools, release checks, documentation systems, ledgers, receipts, recheck surfaces, and portfolio pages.
+- Built a public ecosystem for repository intelligence, evidence intake,
+  multi-agent orchestration, evaluation, replayable records, and claim
+  verification.
+- Shipped focused tools including Index 2.9.0 for repository maps and context
+  packs, Gather 1.6.1 for provenance-aware research intake, Forum 1.13.0 for
+  model-agnostic orchestration, and Crucible 1.2.0 for worker/verifier
+  evaluation workflows.
+- Developed public source packages for model-endpoint coding-agent routing
+  (Relay), toolchain auto-wiring (Plexus), and provenance-carrying agent memory
+  (Mneme).
+- Designed CLI, MCP, web, documentation, testing, release, and evidence
+  surfaces so another operator can inspect how a result was produced.
 
-## Core competencies
+**BuildLang compiler and language tooling | Rust, C, HLSL, VS Code**
 
-**Systems and software:** Python, JavaScript/Node, Rust, C++23, WebGL/GLSL/HLSL, CLI design, static sites, MCP tools, test harnesses, package/release workflows, provenance systems, data/graph tooling.
+- Built a public lexer-to-code-generation compiler with typed effects,
+  ownership and lifetime analysis, a primary C backend, shader outputs, and
+  editor support.
+- Maintained public package and extension surfaces while keeping experimental
+  backends and self-hosting work clearly separated from shipped capability.
 
-**AI and research infrastructure:** agent orchestration, worker/verifier separation, evidence intake, model-agnostic execution seams, tamper-evident ledgers, claim evaluation, accountable AI workflows, red-team/evaluation habits.
+**Real-time graphics, color, and display tooling | C++, HLSL, Python**
 
-**Operations and documentation:** technical writing, GRC/compliance documentation, support playbooks, customer support, field operations, process design, risk language, proposals, implementation support, product operations.
+- Released a Skyrim real-time graphics project whose current public career
+  materials report more than 900,000 downloads.
+- Built D3D11/HLSL post-processing and rendering systems involving tone
+  mapping, TAA, SSR, SSGI, GTAO, volumetrics, shader pipelines, and read-only
+  shared-memory IPC.
 
-## Experience
+### Open-source contributions
 
-### Independent Systems Engineer / Founder-Builder
-**Project Telos and HarperZ9 public ecosystem - Seattle, WA - 2023-present**
+**Upstream pull requests to public projects | Python, TypeScript, Rust**
 
-- Turned a long self-directed programming background into serious public engineering from 2023 onward, shipping a multi-repo flagship line around evidence-carrying AI work: shared perception/state, orchestration, research intake, repository intelligence, and claim evaluation.
-- Built and documented the five-flagship Project Telos line: `telos` for shared perception/state, `index` for workspace mapping, `forum` for agent orchestration, `gather` for accountable research intake, and `crucible` for clean claim evaluation.
-- Designed tools with checkable boundaries: content hashes, receipts, ledgers, replayable demos, verifier seams, drift checks, release checks, and explicit maturity labels.
-- Built Python CLIs and libraries, JavaScript/Node demos, static frontends, WebGL/Canvas surfaces, C++23 kernels, release tooling, documentation systems, and public portfolio pages.
-- Directed AI systems as coordinated engineering teammates while keeping architecture, integration, verification, and public claims first-party and evidence-backed.
+- 22 code, test, and documentation pull requests merged into 19 public
+  repositories maintained by others, including Datasette, tomlkit, pydantic-ai,
+  DeepEval, pydash, and grimp.
+- Merged defect work covers HTTP status handling for malformed composite-key
+  row URLs, a TOML round-trip bug where an array of tables swallowed the next
+  sibling key, a metric crash on unhashable tool outputs, missing module and
+  layer validation errors, and lint failures blocking a red main branch.
+- Merged test work adds seeded determinism coverage, mid-task recovery
+  fixtures, edge-case fixtures, and evaluation benchmark suites to agent and
+  orchestration projects.
+- 14 further pull requests are open and awaiting maintainer review across 13
+  repositories, including the Model Context Protocol Inspector and Python SDK,
+  Poetry, Drizzle ORM, and LLM. Open is not accepted.
 
-### Technical Writer / GRC Documentation / Product Operations
-**Freelance and independent project work - 2017-present**
+### Experience
 
-- Produced technical guides, API/reference documentation, compliance documentation, policy/process artifacts, RFP/grant materials, implementation notes, release notes, and client-facing documentation.
-- Wrote and organized materials aligned to NIST 800-171, CMMC readiness, SOC 2, ISO 27001, DFARS, incident response, System Security Plans, risk assessments, and evidence mapping.
-- Translated complex technical systems into clear operational language for technical, executive, customer, audit-facing, and engineering audiences.
+**Independent Systems Engineer / Founder-Builder | Project Telos and HarperZ9**
+Seattle / remote | 2023-present
 
-### Commercial Arborist / Operations Lead
-**Family business / field operations - Seattle area - 2015-present**
+- Own architecture, implementation, integration, documentation, testing,
+  packaging, public demos, and release evidence across a multi-repository
+  systems portfolio.
+- Build Python CLIs and libraries, Rust compiler tooling, TypeScript and Node
+  workflows, static and interactive web surfaces, C++23 kernels, HLSL graphics
+  systems, and cross-tool adapters.
+- Coordinate agentic development workflows while preserving first-party review,
+  verifier separation, testable contracts, and public claim discipline.
 
-- Managed high-variability field work involving site assessment, safety judgment, client communication, scheduling, estimates, crew coordination, equipment/vendor coordination, and written proposals.
-- Built practical operating habits under real constraints: assess risk, communicate clearly, coordinate people and tools, adapt to changing conditions, and finish the job safely.
+**Freelance Technical Writer / Documentation and Product Operations**
+Remote | 2017-present
 
-### Technical Networking Support, Xbox Division
-**Microsoft - Redmond, WA - 2013-2014**
+- Produce API and implementation guides, security and compliance
+  documentation, proposals, release notes, support material, and structured
+  technical communication.
+- Work with NIST 800-171, CMMC readiness, SOC 2, ISO 27001, DFARS, incident
+  response, and audit-support concepts in a technical-writing capacity.
+- Translate implementation detail into material usable by engineers,
+  operators, customers, and nontechnical stakeholders.
 
-- Diagnosed Xbox Live connectivity and account-adjacent issues across TCP/IP, DNS, NAT, firewall, router, and home-network conditions.
-- Handled high-volume customer support, documented repeatable resolutions, and translated technical fixes for nontechnical users.
+**Operations and Commercial Arboriculture Lead | Family business**
+Seattle area | 2015-present
 
-## Selected technical body of work
+- Lead client intake, estimates, site assessment, scheduling, safety judgment,
+  crew and vendor coordination, written proposals, and customer communication.
+- Apply practical risk assessment, prioritization, and follow-through in a
+  field environment where plans must survive contact with the job.
 
-- **Project Telos flagship ecosystem:** shared model/human perception, repository intelligence, multi-agent orchestration, research intake, and measurement-backed claim evaluation.
-- **Compilers and languages:** QuantaLang / quantac, a Rust-built typed-effects compiler where effects and lifetimes are part of the checked function contract, with a verified C path and shader output represented on the portfolio.
-- **Graphics and native systems:** RAW, a real-time D3D11/HLSL rendering platform built from proxy-DLL pipeline interception, mid-frame dispatch, screen-space GI/AO/reflections, GPU-trace receipts, and live-state graphics work.
-- **Color science and calibration:** quanta-color 1.0.1 on PyPI, with color-space conversion, appearance models, tone mapping, ICC/LUT workflows, harmony/difference tooling, and display-calibration adjacency.
-- **Security and integrity:** reverse-engineering-informed defensive design, tamper/evasion detection, adversarial testing, and a private C++23 integrity / anti-cheat line used to harden the public accountability platform.
+**Technical Networking Support, Xbox Division | Microsoft**
+Redmond, Washington | 2013-2014
 
-## Industries and role fit
+- Diagnosed TCP/IP, DNS, NAT, firewall, router, and account-adjacent console
+  networking issues across phone and chat support.
+- Documented repeatable resolutions and translated technical fixes into clear
+  user guidance.
 
-Technology, SaaS, AI/ML, research operations, security, public sector, education, healthcare operations, manufacturing, logistics, utilities, construction/field services, compliance, nonprofits, customer support, product operations, technical writing, implementation, QA, support engineering, and general business operations.
+### Technical strengths
 
-## Education and trajectory
+**Languages:** Python, Rust, C++, TypeScript/JavaScript, Lua, HLSL, C#,
+PowerShell, Bash
+**Systems:** compilers, lexing/parsing, AST and IR design, type checking,
+code generation, D3D11, shader pipelines, shared-memory IPC, CMake, vcpkg
+**AI and evaluation:** model routing, tool-use loops, MCP surfaces, multi-agent
+orchestration, task decomposition, worker/verifier separation, provenance,
+replayable ledgers, evidence intake
+**Graphics and color:** real-time post-processing, HDR and tone mapping, ICC and
+3D-LUT workflows, perceptual color difference, DDC/CI, display characterization
+**Delivery:** Git and GitHub, pytest, Node test tooling, GitHub Actions, release
+notes, developer documentation, implementation guides, troubleshooting, Linux
 
-No computer-science degree. Programming experience is roughly 13 years overall; serious public, release-driven engineering is 2023-present. The work is the credential: public repos, release artifacts, tests, receipts, demos, docs, and a live portfolio.
+### Public proof
 
----
+Portfolio: https://harperz9.github.io/portfolio.html
+Research: https://harperz9.github.io/research.html
+Repositories and releases: https://github.com/HarperZ9
 
-Updated 2026-06-26.
+Updated 2026-07-28.

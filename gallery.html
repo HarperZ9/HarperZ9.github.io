@@ -1,8 +1,1020 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta http-equiv="refresh" content="0; url=studio.html">
-<link rel="canonical" href="https://harperz9.github.io/studio.html">
-<meta name="robots" content="noindex">
-<title>Moved to The Studio</title></head>
-<body style="font-family:'Spline Sans Mono',ui-monospace,monospace;background:#0d1b1c;color:#e9e2d0;padding:2.5rem;line-height:1.7">
-<p>This has moved into <a href="studio.html" style="color:#efab30">The Studio</a>, the unified place to see and make, together.</p>
-<script>location.replace("studio.html");</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gallery &mdash; Zain Dana Harper</title>
+<meta name="description" content="An exhibition of full-size generated plates from the Project Telos drawing engine, followed by a contact sheet of its instruments. Seeded plates reproduce exactly; live plates are drawn once and never again; everything is synthesized in your browser.">
+<link rel="canonical" href="https://harperz9.github.io/gallery.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Gallery &mdash; Zain Dana Harper">
+<meta property="og:description" content="Full-size generated plates from the Project Telos drawing engine: a daily opener, live one-offs, and a contact sheet of the instruments behind them.">
+<meta property="og:url" content="https://harperz9.github.io/gallery.html">
+<meta name="color-scheme" content="dark">
+<link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="system/system.css?v=20260719-zentropy-sitewide">
+<style>
+  /* Exhibition plates: page-local idiom. One plate per row, art-mag rhythm.
+     Plates break out of the section gutter to min(88vw, 1100px), centered on
+     the viewport (section.mv spans the full viewport, so 50% of its content
+     box sits on the viewport centerline). Text never sits over the art. */
+  .exh-note{margin:1.4rem 0 clamp(2.6rem,5vw,3.8rem)}
+  .plate{width:min(88vw,1100px);
+    margin:0 0 clamp(3.4rem,8vw,6rem) calc(50% - min(44vw,550px))}
+  .plate:last-of-type{margin-bottom:1.2rem}
+  .plate-head{display:flex;align-items:baseline;gap:1.1rem;margin-bottom:.7rem;
+    font-family:var(--mono);text-transform:uppercase}
+  .plate-no{font-size:.62rem;letter-spacing:.32em;color:var(--orange)}
+  .plate-title{font-size:.62rem;letter-spacing:.12em;color:var(--muted)}
+  .plate-art{position:relative;border:1px solid var(--hairline);border-radius:12px;
+    overflow:hidden;background:color-mix(in oklab, var(--void) 82%, black)}
+  .plate-art canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .ratio-wide{aspect-ratio:16/10}
+  .ratio-square{aspect-ratio:1/1}
+  .ratio-band{aspect-ratio:21/9}
+  .plate-pale .plate-art{background:#efece2}
+  .plate-cap{display:flex;justify-content:space-between;align-items:baseline;
+    gap:1rem;flex-wrap:wrap;margin-top:.65rem;min-height:1.9em}
+  .plate-meta{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);line-height:1.7}
+  .plate-redraw{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--orange);background:transparent;
+    border:1px solid var(--hairline);border-radius:999px;padding:.42em 1.05em;
+    cursor:pointer;flex:none;transition:color .15s,border-color .15s}
+  .plate-redraw:hover{color:var(--bone);border-color:var(--orange)}
+  .plate-redraw:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
+  .plate-actions{display:flex;gap:.5rem;flex:none}
+  .plate:hover .plate-art{border-color:color-mix(in oklab, var(--orange) 45%, var(--hairline))}
+  /* the print desk: name a seed, mix layers, draw your own plate */
+  .desk-controls{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:.9rem 0}
+  .desk-influence{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);
+    font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .desk-influence input{accent-color:var(--orange);width:8rem}
+  .desk-material-drop{outline:2px dashed color-mix(in oklab, var(--orange) 60%, transparent);outline-offset:-8px}
+  .desk-privacy{font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;color:var(--verified, #9fd6c2);flex-basis:100%}
+  .desk-seed{flex:1;min-width:12rem;max-width:22rem;font-family:var(--mono);font-size:.8rem;
+    letter-spacing:.08em;color:var(--bone);background:color-mix(in oklab, var(--void) 86%, black);
+    border:1px solid var(--hairline);border-radius:8px;padding:.6em .8em}
+  .desk-seed:focus-visible{outline:2px solid var(--ember);outline-offset:2px;border-color:var(--orange)}
+  .desk-chips{display:flex;flex-wrap:wrap;gap:.45rem;margin:.4rem 0 .9rem}
+  .desk-hint{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:var(--muted);margin:.4rem 0 .2rem}
+  .desk-status{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:var(--orange);min-height:1.2em}
+  .desk-variations{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin:.4rem 0 1rem}
+  .desk-var{position:relative;border:1px solid var(--hairline);border-radius:8px;overflow:hidden;
+    aspect-ratio:16/10;background:#0b0812;cursor:pointer;padding:0;transition:border-color .15s}
+  .desk-var:hover{border-color:var(--orange)}
+  .desk-var:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+  .desk-var canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .desk-var .dv-tag{position:absolute;left:.4rem;bottom:.3rem;font-family:var(--mono);font-size:.56rem;
+    letter-spacing:.12em;color:var(--bone);background:rgba(8,6,12,.72);border-radius:4px;padding:.15em .5em}
+  #desk-reroll{border-color:color-mix(in oklab, var(--orange) 45%, var(--hairline))}
+  /* per-instrument lock: a selected chip grows a tiny padlock toggle; locked
+     instruments survive every reroll. */
+  .chip-wrap{display:inline-flex;gap:.25rem;align-items:stretch}
+  .chip-lock{display:inline-flex;align-items:center;justify-content:center;
+    min-height:2.55rem;min-width:2.3rem;padding:0 .5em;cursor:pointer;
+    color:var(--muted);background:transparent;border:1px solid var(--hairline);
+    border-radius:999px;transition:color .15s,border-color .15s}
+  .chip-lock[hidden]{display:none}
+  .chip-lock:hover{color:var(--bone);border-color:var(--ember)}
+  .chip-lock:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+  .chip-lock[aria-pressed="true"]{color:var(--orange);border-color:var(--orange)}
+  .chip-lock svg{display:block}
+  .chip-lock[aria-pressed="true"] .lk-open{display:none}
+  .chip-lock:not([aria-pressed="true"]) .lk-shut{display:none}
+  @media (max-width:700px){.chip-lock{min-height:2.75rem}}
+  /* plate 01: the opener answers the pointer. The sheen is a css-variable
+     update only (never a canvas redraw); reduced motion drops the sheen and
+     keeps click-to-reseed. */
+  .plate-poke .plate-art{cursor:crosshair}
+  .plate-poke .plate-art::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;
+    background:radial-gradient(240px circle at var(--px,50%) var(--py,50%), rgba(255,255,255,.075), transparent 70%);
+    transition:opacity .3s}
+  .plate-poke .plate-art.lit::after{opacity:1}
+  @media (prefers-reduced-motion: reduce){.plate-poke .plate-art::after{display:none}}
+  .plate-hint{display:block;width:100%;font-family:var(--mono);font-size:.6rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+  /* Instruments contact sheet: the wave-1 fixture tiles, kept as the
+     vocabulary reference behind the plates above. */
+  .fixture-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:clamp(.9rem,2vw,1.4rem);margin-top:2.2rem}
+  .fixture-tile{margin:0;display:flex;flex-direction:column;gap:.55rem}
+  .fixture-art{position:relative;aspect-ratio:1/1;border:1px solid var(--hairline);
+    border-radius:10px;overflow:hidden;
+    background:color-mix(in oklab, var(--void) 82%, black)}
+  .fixture-art canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .fixture-cap{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);line-height:1.6}
+</style>
+</head>
+<body class="inner-clean frame-compact">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="typeface.html">Typeface</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260719-zentropy-sitewide"></script>
+<script type="module" src="system/audio-player.js?v=20260710"></script>
+
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Gallery</span></div>
+  <div class="mid">
+    <h1>Plates from <span class="g">the drawing engine.</span></h1>
+    <p class="lede">Nineteen full-size plates drawn in your browser by this site&rsquo;s own engine (<span translate="no">system/generative-field.js</span>), then a contact sheet of the instruments behind them. The captions carry the recipe: layers first, seed second.</p>
+  </div>
+  <div class="seal">procedural &middot; seeded plates repeat exactly &middot; live plates never do</div>
+</div>
+
+<main id="main">
+
+<section class="mv" id="exhibition" aria-labelledby="exhibition-h">
+  <h2 id="exhibition-h">The exhibition.</h2>
+  <p class="seal-line exh-note">plate 01 draws itself fresh each day &middot; redraw trades any plate&rsquo;s seed for a live one-off</p>
+  <p class="seal-line exh-note">new here? <a href="tour.html">watch the recorded tour</a> - eight steps from a blank seed to a plotter-ready file</p>
+
+  <figure class="plate plate-poke" data-plate="01">
+    <div class="plate-head"><span class="plate-no">Plate 01</span><span class="plate-title">Today&rsquo;s plate &middot; folded light</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-opening" data-specimen-layers="showpiece-veil" role="img" aria-label="Generated plate: long folded veils of additive light crossing at four-point star caustics on a black field."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">showpiece-veil &middot; <span data-plate-seed>seed gallery-opening</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 1 with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">disturb the plate: click to reseed where you point</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="02">
+    <div class="plate-head"><span class="plate-no">Plate 02</span><span class="plate-title">Obsidian burst, aurora rim</span></div>
+    <div class="plate-art ratio-square">
+      <canvas data-specimen="gallery-plate-02" data-specimen-layers="showpiece-burst" role="img" aria-label="Generated plate: a radial explosion of glassy black debris and dotted circuit traces, rimmed by a cold aurora glow."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">showpiece-burst &middot; <span data-plate-seed>seed gallery-plate-02</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 2 with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="03">
+    <div class="plate-head"><span class="plate-no">Plate 03</span><span class="plate-title">Dendrite over riso ground</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-plate-03" data-specimen-layers="riso-moire,dendrite" role="img" aria-label="Generated plate: a coral-like dendrite growth spreading over fluorescent overprinted interference rings."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">riso-moire + dendrite &middot; <span data-plate-seed>seed gallery-plate-03</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 3 with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate plate-pale" data-plate="04">
+    <div class="plate-head"><span class="plate-no">Plate 04</span><span class="plate-title">Pale caustics, interstitial</span></div>
+    <div class="plate-art ratio-band">
+      <canvas data-specimen="gallery-plate-04" data-specimen-layers="caustic-paper" role="img" aria-label="Generated plate: faint grey-blue light wisps on a paper-white field, almost blank."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">caustic-paper &middot; <span data-plate-seed>seed gallery-plate-04</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 4 with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="05">
+    <div class="plate-head"><span class="plate-no">Plate 05</span><span class="plate-title">Interference weave</span></div>
+    <div class="plate-art ratio-square">
+      <canvas data-specimen="gallery-plate-05" data-specimen-layers="showpiece-weave" role="img" aria-label="Generated plate: a dense woven interference field of contour rings and moire bands in overprinted inks."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">showpiece-weave &middot; <span data-plate-seed>seed gallery-plate-05</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 5 with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="06">
+    <div class="plate-head"><span class="plate-no">Plate 06</span><span class="plate-title">Moire swirl, light leak</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-plate-06" data-specimen-layers="moire-swirl,aurora-leak" role="img" aria-label="Generated plate: crosshatched crescent ribbons spiraling into a hot amber core, crossed by one emerald light leak."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">moire-swirl + aurora-leak &middot; <span data-plate-seed>seed gallery-plate-06</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 6 with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="07">
+    <div class="plate-head"><span class="plate-no">Plate 07</span><span class="plate-title">Lantern, hung in the void</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-plate-07b" data-specimen-layers="showpiece-lantern" role="img" aria-label="Generated plate: a stellated paper lantern glowing warm ivory on absolute black, hung from a single hairline cord, a column of folded light behind it."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">showpiece-lantern &middot; <span data-plate-seed>seed gallery-plate-07b</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 7 with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="08">
+    <div class="plate-head"><span class="plate-no">Plate 08</span><span class="plate-title">Monument, pixel-sorted</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-plate-08" data-specimen-layers="showpiece-ruin" role="img" aria-label="Generated plate: architecture dissolving into mirrored pixel-sorted runs around a silver core, a light leak curling above."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">showpiece-ruin &middot; <span data-plate-seed>seed gallery-plate-08</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 8 with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="09">
+    <div class="plate-head"><span class="plate-no">Plate 09</span><span class="plate-title">Coral accretion, thermal</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-plate-09" data-specimen-layers="dla-coral" role="img" aria-label="Generated plate: a diffusion-limited coral growth radiating from a bright yellow core through cyan to deep blue, scarlet drips falling from its underside."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">dla-coral &middot; <span data-plate-seed>seed gallery-plate-09</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 9 with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="10">
+    <div class="plate-head"><span class="plate-no">Plate 10</span><span class="plate-title">Fiber canyon, wireframed</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-plate-10" data-specimen-layers="fiber-terrain" role="img" aria-label="Generated plate: eroded canyon strata built from thousands of fiber strokes in pink, straw, and teal, arch voids punched through, a white wireframe contour mesh floating above."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">fiber-terrain &middot; <span data-plate-seed>seed gallery-plate-10</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw plate 10 with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="neural-field">
+    <div class="plate-head"><span class="plate-no">Plate 11</span><span class="plate-title">Neural field &middot; the seed is the network</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-neural-field" data-specimen-layers="neural-field" role="img" aria-label="Generated plate: a smooth continuous colour field painted by a compositional pattern-producing network whose weights are derived entirely from the seed."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">neural-field &middot; <span data-plate-seed>seed gallery-neural-field</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the neural field with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">a CPPN: no pretrained weights, the seed derives the whole network</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="neural-sdf">
+    <div class="plate-head"><span class="plate-no">Plate 12</span><span class="plate-title">Neural solid &middot; a marched implicit surface</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-neural-sdf" data-specimen-layers="neural-sdf" role="img" aria-label="Generated plate: a three-dimensional lobed solid, a sphere displaced by a small neural network into an organic form, sphere-marched and shaded by its surface normals."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">neural-sdf &middot; <span data-plate-seed>seed gallery-neural-sdf</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the neural solid with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">a neural signed-distance surface, ray-marched in your browser</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="neural-voxel">
+    <div class="plate-head"><span class="plate-no">Plate 13</span><span class="plate-title">Neural voxels &middot; the solid, built in blocks</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-neural-voxel" data-specimen-layers="neural-voxel" role="img" aria-label="Generated plate: the neural solid sampled onto a cubic grid and drawn as isometric voxels, a MagicaVoxel-style block model shaded on three faces and tinted by depth."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">neural-voxel &middot; <span data-plate-seed>seed gallery-neural-voxel</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the voxel model with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">the same neural field, voxelized - exports to a voxel OBJ you can print</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="typeface">
+    <div class="plate-head"><span class="plate-no">Plate 14</span><span class="plate-title">Seeded typeface &middot; the seed authors a face</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-typeface" data-specimen-layers="typeface" role="img" aria-label="Generated plate: the word Telos set in a display face whose slant, width, and weight are derived entirely from the seed, previewing the real font the builder exports."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">typeface &middot; <span data-plate-seed>seed gallery-typeface</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the typeface specimen with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">a live preview of the seed's slant, width, and weight; the builder exports it as a real .ttf/.woff2</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="truchet">
+    <div class="plate-head"><span class="plate-no">Plate 15</span><span class="plate-title">Truchet &middot; tiles that draw a maze</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-truchet" data-specimen-layers="truchet" role="img" aria-label="Generated plate: a grid of Truchet tiles, each a pair of quarter-circle arcs, joining across cell edges into a looping maze in the palette's jewel tones."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">truchet &middot; <span data-plate-seed>seed gallery-truchet</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the Truchet plate with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">two arcs per cell, one seed per grid: a classic that never repeats</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="voronoi-stain">
+    <div class="plate-head"><span class="plate-no">Plate 16</span><span class="plate-title">Voronoi &middot; stained glass from scattered seeds</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-voronoi" data-specimen-layers="voronoi-stain" role="img" aria-label="Generated plate: a Voronoi tessellation, each cell filled by its nearest seeded site's tone with a distance shade, dark leading drawn along the borders like stained glass."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">voronoi-stain &middot; <span data-plate-seed>seed gallery-voronoi</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the Voronoi plate with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">nearest-site cells with dark leading: the seed scatters the glass</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="clifford">
+    <div class="plate-head"><span class="plate-no">Plate 17</span><span class="plate-title">Clifford &middot; a strange attractor's cloud</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-clifford" data-specimen-layers="clifford" role="img" aria-label="Generated plate: a Clifford strange attractor, tens of thousands of iterated points additively plotted into a glowing filamentary cloud whose four constants are set by the seed."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">clifford &middot; <span data-plate-seed>seed gallery-clifford</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the attractor with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">four seed-set constants, one orbit traced 140,000 times</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="phyllotaxis">
+    <div class="plate-head"><span class="plate-no">Plate 18</span><span class="plate-title">Phyllotaxis &middot; the sunflower spiral</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-phyllotaxis" data-specimen-layers="phyllotaxis" role="img" aria-label="Generated plate: a phyllotaxis spiral, hundreds of dots each placed at the golden angle from the last and a radius growing with its square root, the sunflower packing, tinted from center to rim by the palette."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">phyllotaxis &middot; <span data-plate-seed>seed gallery-phyllotaxis</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the phyllotaxis spiral with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">the golden angle, packed: the seed detunes the spiral and sweeps the palette</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="11">
+    <div class="plate-head"><span class="plate-no">Plate 19</span><span class="plate-title">Planet limb, closing</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-plate-07" data-specimen-layers="planet-limb" role="img" aria-label="Generated plate: a planet limb glowing cobalt to cyan over a marbled ice-white cloud deck, black space above."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">planet-limb &middot; <span data-plate-seed>seed gallery-plate-07</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the closing plate with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+    </figcaption>
+  </figure>
+</section>
+
+<section class="mv" id="printdesk" aria-labelledby="printdesk-h">
+  <h2 id="printdesk-h">The print desk.</h2>
+  <p class="body-text">Make your own plate. Name a seed, pick up to three instruments, and the engine draws it here, in your browser. The same seed and instruments reproduce the same plate on any visit; save the PNG or copy a link that redraws it.</p>
+  <div class="desk-controls">
+    <label class="visually-hidden" for="desk-seed">Seed for your plate</label>
+    <input id="desk-seed" class="desk-seed" type="text" maxlength="48" placeholder="name a seed - a word, a date, anything" autocomplete="off" spellcheck="false">
+    <button type="button" class="plate-redraw" id="desk-draw" aria-label="Draw a plate from this seed and the selected instruments">draw</button>
+    <button type="button" class="plate-redraw" id="desk-reroll" aria-label="Reroll: a fresh seed and fresh unlocked instruments; locked instruments stay" title="Spacebar rerolls too">reroll</button>
+    <button type="button" class="plate-redraw" id="desk-save" aria-label="Save your plate as a PNG image">save png</button>
+    <button type="button" class="plate-redraw" id="desk-share" aria-label="Copy a link that reproduces this plate">copy link</button>
+    <button type="button" class="plate-redraw" id="desk-plot" aria-label="Replay this plate as pen-plotter line art, stroke by stroke">plot it</button>
+    <button type="button" class="plate-redraw" id="desk-vary" aria-label="Draw four neighboring variations of this seed">variations</button>
+    <a class="plate-redraw" id="desk-workshop" href="studio.html?source=poster" aria-label="Open this plate in the poster workshop">open in the workshop</a>
+  </div>
+  <div class="desk-controls" id="desk-material-controls">
+    <button type="button" class="plate-redraw" id="desk-import" aria-label="Bring your own image and influence it with the instruments">bring your own image</button>
+    <input type="file" id="desk-import-file" accept="image/*" hidden>
+    <label class="desk-influence" id="desk-influence-wrap" hidden>
+      <span>influence</span>
+      <input type="range" id="desk-influence" min="0.1" max="1" step="0.05" value="0.5" aria-label="How strongly the instruments influence your image">
+    </label>
+    <button type="button" class="plate-redraw" id="desk-clear-material" hidden aria-label="Remove your image and return to pure engine mode">clear material</button>
+    <span class="desk-privacy" id="desk-privacy" hidden>your image never leaves this page - there is no upload, only your browser</span>
+  </div>
+  <p class="desk-hint">instruments &middot; pick up to three &middot; the padlock keeps one through rerolls</p>
+  <div class="desk-chips" id="desk-chips" role="group" aria-label="Instrument selection"></div>
+  <p class="desk-status" id="desk-status" role="status" aria-live="polite"></p>
+  <div class="desk-variations" id="desk-variations" hidden aria-label="Seed variations - click one to adopt it"></div>
+  <figure class="plate" data-plate="desk">
+    <div class="plate-head"><span class="plate-no">Your plate</span><span class="plate-title" id="desk-title">unnamed &middot; waiting for a seed</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas id="desk-canvas" role="img" aria-label="Your generated plate, drawn from your seed and instrument selection."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta" id="desk-meta">the desk draws on demand; nothing is stored anywhere</span>
+    </figcaption>
+  </figure>
+</section>
+
+<section class="mv" id="sounddesk" aria-labelledby="sounddesk-h">
+  <h2 id="sounddesk-h">The sound desk.</h2>
+  <p class="body-text">The same seed that draws a plate can play a piece. Name a seed and the browser synthesizes a short phrase from it: the key, the scale, the melody, the timbre, and the tempo are all derived from the seed with pure math, no samples and no model. The same seed sounds the same on every visit; press play, or save it as a WAV.</p>
+  <div id="sound-desk" data-seed="aurora"></div>
+  <p class="plate-hint">seed to sound, the audio sibling of seed to plate: one DNA behind the field, the solid, the face, and now the phrase.</p>
+</section>
+
+<section class="mv" id="fixtures" aria-labelledby="fixtures-h">
+  <h2 id="fixtures-h">The instruments.</h2>
+  <p class="body-text">A fixture is a frozen frame: a layer stack, a seed string, and nothing else. These twelve tiles are the contact sheet behind the plates above; keep a seed and its frame is stable down to the pixel, change it and the whole composition moves.</p>
+  <noscript><p class="body-text">The plates and tiles are generated in the browser, so with JavaScript off the canvases stay empty. The drawing code is ordinary readable JavaScript at <span translate="no">system/generative-field.js</span> if you would rather read the instrument than run it.</p></noscript>
+
+  <div class="fixture-grid" role="list" aria-label="Generated fixtures">
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-01" data-specimen-layers="crystal-lens" role="img" aria-label="Generated fixture: circular apertures cut into banded glass, hard specular rims, one dark maroon band across the horizon."></canvas>
+      </div>
+      <figcaption class="fixture-cap">crystal-lens &middot; seed gallery-01</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-02" data-specimen-layers="scanline" role="img" aria-label="Generated fixture: one large disc built from dashed horizontal scanlines whose dash length carries the shading."></canvas>
+      </div>
+      <figcaption class="fixture-cap">scanline &middot; seed gallery-02</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-03" data-specimen-layers="facets" role="img" aria-label="Generated fixture: angular planar shards and a hard diagonal light cone in near-monochrome, with a single hot red stroke."></canvas>
+      </div>
+      <figcaption class="fixture-cap">facets &middot; seed gallery-03</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-04" data-specimen-layers="groove" role="img" aria-label="Generated fixture: bundled comb-like streamlines curling over a violet plum ground, one narrow rainbow shear ribbon."></canvas>
+      </div>
+      <figcaption class="fixture-cap">groove &middot; seed gallery-04</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-05" data-specimen-layers="ca-quadrant" role="img" aria-label="Generated fixture: four cellular automata woven in two tones around a hard cross seam."></canvas>
+      </div>
+      <figcaption class="fixture-cap">ca-quadrant &middot; seed gallery-05</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-06" data-specimen-layers="crystal-lens,scanline" role="img" aria-label="Generated fixture: a scanline disc laid over banded crystal glass and lens apertures."></canvas>
+      </div>
+      <figcaption class="fixture-cap">crystal-lens + scanline &middot; seed gallery-06</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-07" data-specimen-layers="facets,contour" role="img" aria-label="Generated fixture: facet shards and one hot stroke over drifting contour ridge lines."></canvas>
+      </div>
+      <figcaption class="fixture-cap">facets + contour &middot; seed gallery-07</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-08" data-specimen-layers="groove,lamp" role="img" aria-label="Generated fixture: groove marble streamlines with radial lamp symmetry figures floating above."></canvas>
+      </div>
+      <figcaption class="fixture-cap">groove + lamp &middot; seed gallery-08</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-09" data-specimen-layers="ca-quadrant,dither" role="img" aria-label="Generated fixture: a quadrant CA weave under an ordered-dither poster veil."></canvas>
+      </div>
+      <figcaption class="fixture-cap">ca-quadrant + dither &middot; seed gallery-09</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-10" data-specimen-layers="scanline,orbit" role="img" aria-label="Generated fixture: a scanline halftone disc ringed by elliptical orbit traces."></canvas>
+      </div>
+      <figcaption class="fixture-cap">scanline + orbit &middot; seed gallery-10</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-11" data-specimen-layers="crystal-lens,crystal" role="img" aria-label="Generated fixture: lens apertures in banded glass with sharp crystal fragments scattered across."></canvas>
+      </div>
+      <figcaption class="fixture-cap">crystal-lens + crystal &middot; seed gallery-11</figcaption>
+    </figure>
+
+    <figure class="fixture-tile" role="listitem">
+      <div class="fixture-art">
+        <canvas data-specimen="gallery-12" data-specimen-layers="groove,hydra" role="img" aria-label="Generated fixture: groove marble currents beneath ringed hydra tile lattices."></canvas>
+      </div>
+      <figcaption class="fixture-cap">groove + hydra &middot; seed gallery-12</figcaption>
+    </figure>
+
+  </div>
+
+  <p class="body-text" style="margin-top:1.8rem">Where next: <a href="typeface.html">the generated typeface</a> &middot; <a href="studio.html">The Studio</a> &middot; <a href="catalog.html">the full catalog</a>.</p>
+</section>
+
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">First-party procedural material: synthesized by this site's own engine, no copied images. Seeded plates reproduce exactly from their named seed; live plates are drawn once and never again. Read the source at <span translate="no">system/generative-field.js</span>.</p>
+</footer>
+
+<script type="module">
+// Exhibition wiring: the daily opener plus per-plate reseed controls. Every
+// draw is one-shot through renderSpecimen (no animation loop, so reduced
+// motion needs no special case here). renderSpecimen skips unknown layer
+// names, so a wave-2 layer that has not landed degrades to the backdrop wash
+// instead of throwing; the try/catch below keeps one bad plate from taking
+// the rest of the exhibition down with it.
+import { renderSpecimen, renderSpecimenOver, drawImageFit, specimenLayerNames } from "./system/generative-field.js";
+
+// Bring-your-own-material: the visitor's image, influenced by the instruments.
+// It stays a bitmap in this tab; there is no upload. When material.active, the
+// desk redraws the bitmap and composites the chosen instruments OVER it at the
+// influence alpha, instead of drawing a pure seeded plate.
+const material = { active: false, bitmap: null, name: "" };
+
+function plateLayers(canvas) {
+  return ((canvas.dataset && canvas.dataset.specimenLayers) || "")
+    .split(",")
+    .map((name) => name.trim())
+    .filter(Boolean);
+}
+
+function drawPlate(canvas, seed) {
+  if (!canvas) return false;
+  try {
+    const ok = renderSpecimen(canvas, seed, plateLayers(canvas));
+    if (ok && canvas.dataset) {
+      canvas.dataset.specimen = seed;
+      canvas.dataset.specimenRendered = "true";
+    }
+    return ok;
+  } catch (error) {
+    console.error(`gallery: plate render failed for seed ${seed}`, error);
+    return false;
+  }
+}
+
+function liveSeed() {
+  if (window.crypto && typeof window.crypto.getRandomValues === "function") {
+    const words = new Uint32Array(2);
+    window.crypto.getRandomValues(words);
+    return `live-${words[0].toString(36)}${words[1].toString(36)}`;
+  }
+  return `live-${Math.random().toString(36).slice(2, 12)}`;
+}
+
+// Today's plate: the exhibition opens with a new piece daily. Drawn once;
+// the caption shows the date seed so today's frame stays reproducible.
+const daily = `gallery-${new Date().toISOString().slice(0, 10)}`;
+const opener = document.querySelector('[data-plate="01"]');
+if (opener) {
+  const canvas = opener.querySelector("canvas[data-specimen]");
+  const seedOut = opener.querySelector("[data-plate-seed]");
+  if (drawPlate(canvas, daily) && seedOut) seedOut.textContent = `seed ${daily}`;
+}
+
+// First-move reward: the opener answers the pointer before anything is read.
+// pointermove only slides a css highlight (rAF-throttled, two style writes,
+// zero canvas work); the canvas re-renders ONLY on click, reseeded from where
+// you point plus today's date. The derived seed is printed in the caption, so
+// the disturbed frame stays reproducible like any other seeded plate. Reduced
+// motion skips the moving sheen; the click still works.
+if (opener) {
+  const art = opener.querySelector(".plate-art");
+  const canvas = opener.querySelector("canvas[data-specimen]");
+  const seedOut = opener.querySelector("[data-plate-seed]");
+  if (art && canvas) {
+    const reduced = typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduced) {
+      let queued = false;
+      let lastX = 0;
+      let lastY = 0;
+      art.addEventListener("pointermove", (event) => {
+        lastX = event.clientX;
+        lastY = event.clientY;
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+          queued = false;
+          const rect = art.getBoundingClientRect();
+          const px = ((lastX - rect.left) / Math.max(1, rect.width)) * 100;
+          const py = ((lastY - rect.top) / Math.max(1, rect.height)) * 100;
+          art.style.setProperty("--px", `${px.toFixed(1)}%`);
+          art.style.setProperty("--py", `${py.toFixed(1)}%`);
+          art.classList.add("lit");
+        });
+      });
+      art.addEventListener("pointerleave", () => art.classList.remove("lit"));
+    }
+    art.addEventListener("click", (event) => {
+      const rect = art.getBoundingClientRect();
+      const qx = Math.round(((event.clientX - rect.left) / Math.max(1, rect.width)) * 96);
+      const qy = Math.round(((event.clientY - rect.top) / Math.max(1, rect.height)) * 60);
+      const seed = `${daily}-x${qx}y${qy}`;
+      if (drawPlate(canvas, seed) && seedOut) seedOut.textContent = `seed ${seed}`;
+    });
+  }
+}
+
+// Reseed: one true-random one-off per click, never the same frame twice.
+document.querySelectorAll("[data-plate]").forEach((plate) => {
+  const button = plate.querySelector("[data-plate-redraw]");
+  const canvas = plate.querySelector("canvas[data-specimen]");
+  const seedOut = plate.querySelector("[data-plate-seed]");
+  if (button && canvas) {
+    button.addEventListener("click", () => {
+      if (drawPlate(canvas, liveSeed()) && seedOut) {
+        seedOut.textContent = "live · one of one";
+      }
+    });
+  }
+  // Save any plate as a PNG named after its seed.
+  const save = plate.querySelector("[data-plate-save]");
+  if (save && canvas) save.addEventListener("click", () => savePng(canvas));
+});
+
+function savePng(canvas) {
+  try {
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+      const a = document.createElement("a");
+      const seed = (canvas.dataset && canvas.dataset.specimen) || "plate";
+      a.href = URL.createObjectURL(blob);
+      a.download = `telos-plate-${seed.replace(/[^a-z0-9_-]+/gi, "-").slice(0, 60)}.png`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    }, "image/png");
+  } catch (error) {
+    console.error("gallery: save failed", error);
+  }
+}
+
+/* ── the print desk: seed + instrument mix -> your plate ─────────────────── */
+const ALL_LAYERS = specimenLayerNames();
+const DESK_MAX = 3;
+const deskCanvas = document.getElementById("desk-canvas");
+const deskSeed = document.getElementById("desk-seed");
+const deskChips = document.getElementById("desk-chips");
+const deskStatus = document.getElementById("desk-status");
+const deskTitle = document.getElementById("desk-title");
+const deskMeta = document.getElementById("desk-meta");
+const picked = new Set(["showpiece-veil"]);
+const locked = new Set();
+const chipRefs = new Map();
+
+function say(text) { if (deskStatus) deskStatus.textContent = text; }
+
+// A selected chip grows a padlock. Locks pin the SELECTION: a locked
+// instrument survives every reroll (the engine draws all layers from one seed
+// in one pass, so the lock guards which instruments are in the mix, not a
+// per-layer sub-seed - that honesty is stated in the hint copy).
+const LOCK_GLYPH =
+  '<svg class="lk-open" viewBox="0 0 12 13" width="11" height="12" aria-hidden="true">' +
+  '<path d="M4 5.5V4a2.6 2.6 0 0 1 5.1-.9" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+  '<rect x="1.4" y="5.5" width="7.2" height="6" rx="1.3" fill="currentColor"/></svg>' +
+  '<svg class="lk-shut" viewBox="0 0 12 13" width="11" height="12" aria-hidden="true">' +
+  '<path d="M2.9 5.5V3.9a2.6 2.6 0 0 1 5.2 0v1.6" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+  '<rect x="1.4" y="5.5" width="7.2" height="6" rx="1.3" fill="currentColor"/></svg>';
+
+function chipFor(name) {
+  const wrap = document.createElement("span");
+  wrap.className = "chip-wrap";
+  const pick = document.createElement("button");
+  pick.type = "button";
+  pick.className = "chip";
+  pick.textContent = name;
+  pick.setAttribute("aria-pressed", String(picked.has(name)));
+  pick.addEventListener("click", () => {
+    if (picked.has(name)) {
+      picked.delete(name);
+      locked.delete(name);
+    } else if (picked.size >= DESK_MAX) {
+      say(`three instruments at most - drop one first`);
+      return;
+    } else {
+      picked.add(name);
+    }
+    say("");
+    syncChips();
+    drawDesk();
+  });
+  const lock = document.createElement("button");
+  lock.type = "button";
+  lock.className = "chip-lock";
+  lock.hidden = !picked.has(name);
+  lock.setAttribute("aria-pressed", "false");
+  lock.setAttribute("aria-label", `Lock ${name} so rerolls keep it in the mix`);
+  lock.innerHTML = LOCK_GLYPH;
+  lock.addEventListener("click", () => {
+    if (!picked.has(name)) return;
+    if (locked.has(name)) locked.delete(name); else locked.add(name);
+    lock.setAttribute("aria-pressed", String(locked.has(name)));
+    say(locked.has(name) ? `${name} locked - rerolls keep it` : `${name} unlocked - rerolls may trade it`);
+  });
+  wrap.append(pick, lock);
+  chipRefs.set(name, { pick, lock });
+  return wrap;
+}
+
+function syncChips() {
+  chipRefs.forEach((refs, name) => {
+    if (!picked.has(name)) locked.delete(name);
+    refs.pick.setAttribute("aria-pressed", String(picked.has(name)));
+    refs.lock.hidden = !picked.has(name);
+    refs.lock.setAttribute("aria-pressed", String(locked.has(name)));
+  });
+}
+
+if (deskChips) ALL_LAYERS.forEach((name) => deskChips.appendChild(chipFor(name)));
+
+function deskSeedValue() {
+  const raw = (deskSeed && deskSeed.value.trim()) || "";
+  return raw.slice(0, 48) || "unnamed";
+}
+
+function drawDesk() {
+  if (!deskCanvas) return;
+  const seed = deskSeedValue();
+  const layers = [...picked];
+  // Pure-engine mode needs an instrument; material mode can stand on the image
+  // alone (instruments then only influence it).
+  if (!layers.length && !material.active) { say("pick at least one instrument"); return; }
+  deskCanvas.dataset.specimenLayers = layers.join(",");
+  if (renderSafe(deskCanvas, seed, layers)) {
+    if (material.active) {
+      const overed = layers.length ? " · " + layers.join(" + ") + " at " + Math.round(materialInfluence() * 100) + "%" : "";
+      if (deskTitle) deskTitle.textContent = "your material · " + material.name;
+      if (deskMeta) deskMeta.textContent = "your image" + overed + " · never uploaded";
+    } else {
+      if (deskTitle) deskTitle.textContent = `${seed} · ${layers.join(" + ")}`;
+      if (deskMeta) deskMeta.textContent = `seed ${seed} · ${layers.join(" + ")} · reproducible on any visit`;
+    }
+    // Mirror the drawn state into the address bar so every draw and every
+    // reroll is immediately linkable; a material plate is marked so the link
+    // says honestly that its base image lives only in the visitor's browser.
+    try {
+      const url = new URL(location.href);
+      url.searchParams.set("seed", seed);
+      url.searchParams.set("layers", layers.join(","));
+      if (material.active) url.searchParams.set("material", "own"); else url.searchParams.delete("material");
+      history.replaceState(null, "", url);
+    } catch (error) {
+      console.warn("gallery: address-bar state mirror skipped", error);
+    }
+  }
+}
+
+// Reroll: a fresh seed plus a fresh draw of every UNLOCKED instrument from
+// the full vocabulary; locked instruments hold their place. The result is
+// still a plain seeded plate - the new seed and mix land in the caption and
+// the share state, so a lucky roll is reproducible and linkable.
+function randomWord() {
+  if (window.crypto && typeof window.crypto.getRandomValues === "function") {
+    const words = new Uint32Array(1);
+    window.crypto.getRandomValues(words);
+    return words[0];
+  }
+  return Math.floor(Math.random() * 4294967295) >>> 0;
+}
+
+function rollSeed() {
+  return `roll-${randomWord().toString(36)}${randomWord().toString(36)}`;
+}
+
+function rerollDesk() {
+  if (!picked.size) { say("pick at least one instrument, then reroll"); return; }
+  const keep = [...picked].filter((name) => locked.has(name));
+  const slots = picked.size - keep.length;
+  if (!slots) { say("every instrument is locked - unlock one to reroll"); return; }
+  const bag = ALL_LAYERS.filter((name) => !locked.has(name));
+  const next = [...keep];
+  for (let i = 0; i < slots && bag.length; i += 1) {
+    next.push(bag.splice(randomWord() % bag.length, 1)[0]);
+  }
+  picked.clear();
+  next.forEach((name) => picked.add(name));
+  if (deskSeed) deskSeed.value = rollSeed();
+  syncChips();
+  const fresh = next.filter((name) => !keep.includes(name));
+  say(keep.length ? `kept ${keep.join(" + ")} - rolled ${fresh.join(" + ")}` : `rolled ${fresh.join(" + ")}`);
+  drawDesk();
+}
+
+const deskReroll = document.getElementById("desk-reroll");
+if (deskReroll) deskReroll.addEventListener("click", rerollDesk);
+
+// Spacebar rerolls when the desk is on screen and nothing interactive holds
+// focus (a focused button keeps its native spacebar activation; typing a
+// seed is never hijacked; elsewhere on the page, space still scrolls).
+function deskInView() {
+  const desk = document.getElementById("printdesk");
+  if (!desk) return false;
+  const rect = desk.getBoundingClientRect();
+  return rect.top < window.innerHeight && rect.bottom > 0;
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.key !== " " && event.key !== "Spacebar") return;
+  const target = event.target;
+  if (target && typeof target.closest === "function" &&
+      target.closest("input,textarea,select,button,a,[contenteditable]")) return;
+  if (!deskInView()) return;
+  event.preventDefault();
+  rerollDesk();
+});
+
+function renderSafe(canvas, seed, layers) {
+  try {
+    let ok;
+    if (material.active && material.bitmap) {
+      // The visitor's image is the base; the instruments influence it. Redraw
+      // the bitmap at its own resolution, then composite the layers over it.
+      drawImageFit(canvas, material.bitmap, { maxBacking: 2048 });
+      const influence = materialInfluence();
+      ok = layers.length ? renderSpecimenOver(canvas, seed, layers, { alpha: influence }) : true;
+    } else {
+      ok = renderSpecimen(canvas, seed, layers);
+    }
+    if (ok && canvas.dataset) {
+      canvas.dataset.specimen = seed;
+      canvas.dataset.specimenRendered = "true";
+    }
+    return ok;
+  } catch (error) {
+    console.error("gallery: desk render failed", error);
+    say("that combination failed to draw - try different instruments");
+    return false;
+  }
+}
+
+function materialInfluence() {
+  const el = document.getElementById("desk-influence");
+  const v = el ? Number(el.value) : 0.5;
+  return Number.isFinite(v) ? Math.max(0.1, Math.min(1, v)) : 0.5;
+}
+
+// ── bring your own material ──────────────────────────────────────────────────
+const importBtn = document.getElementById("desk-import");
+const importFile = document.getElementById("desk-import-file");
+const influenceWrap = document.getElementById("desk-influence-wrap");
+const clearMaterialBtn = document.getElementById("desk-clear-material");
+const privacyLine = document.getElementById("desk-privacy");
+
+async function adoptMaterial(file) {
+  if (!file || !/^image\//.test(file.type)) { say("that is not an image file"); return; }
+  try {
+    let bmp;
+    if (typeof createImageBitmap === "function") {
+      bmp = await createImageBitmap(file);
+    } else {
+      bmp = await new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = URL.createObjectURL(file);
+      });
+    }
+    material.active = true;
+    material.bitmap = bmp;
+    material.name = file.name || "your image";
+    if (influenceWrap) influenceWrap.hidden = false;
+    if (clearMaterialBtn) clearMaterialBtn.hidden = false;
+    if (privacyLine) privacyLine.hidden = false;
+    if (deskTitle) deskTitle.textContent = "your material · " + material.name;
+    drawDesk();
+    say("your image is loaded - pick instruments and set the influence to work it");
+  } catch (error) {
+    console.error("gallery: material load failed", error);
+    say("that image could not be loaded");
+  }
+}
+
+if (importBtn && importFile) {
+  importBtn.addEventListener("click", () => importFile.click());
+  importFile.addEventListener("change", (e) => { if (e.target.files && e.target.files[0]) adoptMaterial(e.target.files[0]); });
+}
+if (influenceWrap) {
+  const slider = document.getElementById("desk-influence");
+  if (slider) slider.addEventListener("input", () => { if (material.active) drawDesk(); });
+}
+if (clearMaterialBtn) {
+  clearMaterialBtn.addEventListener("click", () => {
+    material.active = false; material.bitmap = null; material.name = "";
+    influenceWrap.hidden = true; clearMaterialBtn.hidden = true; if (privacyLine) privacyLine.hidden = true;
+    drawDesk();
+    say("back to pure engine mode");
+  });
+}
+// Drag-drop onto the desk plate.
+const deskArt = deskCanvas ? deskCanvas.closest(".plate-art") : null;
+if (deskArt) {
+  deskArt.addEventListener("dragover", (e) => { e.preventDefault(); deskArt.classList.add("desk-material-drop"); });
+  deskArt.addEventListener("dragleave", () => deskArt.classList.remove("desk-material-drop"));
+  deskArt.addEventListener("drop", (e) => {
+    e.preventDefault();
+    deskArt.classList.remove("desk-material-drop");
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) adoptMaterial(e.dataTransfer.files[0]);
+  });
+}
+
+const deskDraw = document.getElementById("desk-draw");
+if (deskDraw) deskDraw.addEventListener("click", drawDesk);
+if (deskSeed) deskSeed.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); drawDesk(); } });
+
+const deskSave = document.getElementById("desk-save");
+if (deskSave) deskSave.addEventListener("click", () => { if (deskCanvas && deskCanvas.dataset.specimenRendered === "true") savePng(deskCanvas); else say("draw a plate first"); });
+
+// Plot it: convert the plate to plotter line art and REPLAY it stroke by
+// stroke on the plate canvas (watching it draw is the point). When the pen
+// finishes, the status offers the plotter-ready SVG.
+let _plotHandle = null;
+const deskPlot = document.getElementById("desk-plot");
+if (deskPlot) deskPlot.addEventListener("click", async () => {
+  if (!deskCanvas || deskCanvas.dataset.specimenRendered !== "true") { say("draw a plate first"); return; }
+  try {
+    if (_plotHandle) _plotHandle.stop();
+    const plot = await import("./system/plotter.js");
+    const seed = deskCanvas.dataset.specimen || "desk";
+    const { svg, polylines, srcW, srcH, stats } = plot.plotCanvas(deskCanvas, { style: "flow", seed });
+    say("plotting - " + stats.lines + " strokes...");
+    _plotHandle = plot.replayPlot(deskCanvas, polylines, srcW, srcH, {
+      onDone: () => {
+        deskCanvas.dataset.specimenRendered = "";
+        if (deskStatus) {
+          deskStatus.textContent = "plot complete - " + stats.lines + " strokes. ";
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+          a.download = "telos-plot-" + seed.replace(/[^a-z0-9_-]+/gi, "-") + ".svg";
+          a.textContent = "download the svg (plotter-ready)";
+          deskStatus.appendChild(a);
+        }
+      },
+    });
+  } catch (error) {
+    console.error("gallery: plot failed", error);
+    say("the plot failed to draw - try a different plate");
+  }
+});
+
+// Variations: four neighboring seeds of the current plate, drawn small.
+// Clicking one adopts its seed at the desk - exploration without losing the
+// original (the caption still names every seed, so nothing is unrecoverable).
+const deskVary = document.getElementById("desk-vary");
+const varyHost = document.getElementById("desk-variations");
+if (deskVary && varyHost) deskVary.addEventListener("click", () => {
+  if (!deskCanvas || deskCanvas.dataset.specimenRendered !== "true") { say("draw a plate first"); return; }
+  const base = deskSeedValue();
+  const layers = [...picked];
+  varyHost.hidden = false;
+  varyHost.innerHTML = "";
+  for (let v = 1; v <= 4; v += 1) {
+    const seed = base + "·" + v;
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "desk-var";
+    b.setAttribute("aria-label", "Adopt variation " + seed);
+    const c = document.createElement("canvas");
+    const tag = document.createElement("span");
+    tag.className = "dv-tag";
+    tag.textContent = seed;
+    b.append(c, tag);
+    varyHost.appendChild(b);
+    try { renderSpecimen(c, seed, layers); } catch (e) { console.error("gallery: variation failed", e); }
+    b.addEventListener("click", () => {
+      if (deskSeed) deskSeed.value = seed;
+      drawDesk();
+      say("adopted " + seed);
+    });
+  }
+  say("four neighbors of " + base + " - click one to adopt it");
+});
+
+// The workshop link carries the current plate's seed across surfaces.
+function syncWorkshopLink() {
+  const a = document.getElementById("desk-workshop");
+  if (a && deskCanvas && deskCanvas.dataset.specimen) {
+    a.href = "studio.html?source=poster&seed=" + encodeURIComponent(deskCanvas.dataset.specimen);
+  }
+}
+setInterval(syncWorkshopLink, 1200);
+
+const deskShare = document.getElementById("desk-share");
+if (deskShare) deskShare.addEventListener("click", async () => {
+  if (!deskCanvas || deskCanvas.dataset.specimenRendered !== "true") { say("draw a plate first"); return; }
+  const url = new URL(location.pathname, location.origin);
+  url.searchParams.set("seed", deskCanvas.dataset.specimen || "unnamed");
+  url.searchParams.set("layers", [...picked].join(","));
+  try {
+    await navigator.clipboard.writeText(url.toString());
+    say(material.active
+      ? "link copied - it reproduces the instrument settings, but your image stays on your machine, so it opens on the pure plate"
+      : "link copied - it redraws this exact plate");
+  } catch (error) {
+    say(url.toString());
+  }
+});
+
+// Deep links: gallery.html?seed=...&layers=a,b renders the visitor's plate
+// at the desk on arrival and brings it into view.
+const params = new URLSearchParams(location.search);
+const linkSeed = (params.get("seed") || "").slice(0, 48);
+const linkLayers = (params.get("layers") || "").split(",").map((n) => n.trim()).filter((n) => ALL_LAYERS.includes(n)).slice(0, DESK_MAX);
+if (linkSeed && linkLayers.length && deskCanvas) {
+  picked.clear();
+  linkLayers.forEach((n) => picked.add(n));
+  syncChips();
+  if (deskSeed) deskSeed.value = linkSeed;
+  drawDesk();
+  const desk = document.getElementById("printdesk");
+  if (desk) desk.scrollIntoView();
+}
+</script>
+
+</body>
+</html>

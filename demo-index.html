@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Index demo: verified workspace atlas</title>
+<meta name="description" content="A recorded, reproducible Index 2.9.0 workflow: map a sanitized three-repository workspace, verify a dependency to file-and-line evidence, fit it into a bounded context envelope, and render an offline workbench.">
+<link rel="canonical" href="https://harperz9.github.io/demo-index.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Index demo: verified workspace atlas">
+<meta property="og:description" content="Thirty seconds of real Index output, plus the full 118-second workflow and its reproducible evidence package.">
+<meta property="og:url" content="https://harperz9.github.io/demo-index.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/index.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Index demo: verified workspace atlas">
+<meta name="twitter:description" content="Map, verify, bound context, and render a workspace from real local evidence.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/index.png">
+<link rel="stylesheet" href="system/doc.css?v=20260719-zentropy-sitewide">
+<style>
+  .demo-video{display:block;width:100%;aspect-ratio:16/9;background:#0d0611;
+    border:1px solid var(--rule-strong);border-radius:6px;box-shadow:0 24px 70px rgba(8,2,13,.22)}
+  .demo-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.75rem;margin:.8rem 0 0}
+  .demo-metric{border:1px solid var(--rule);border-radius:5px;padding:.85rem;background:var(--page)}
+  .demo-metric b{display:block;font-family:var(--display);font-size:1.8rem;line-height:1;color:var(--teal)}
+  .demo-metric span{display:block;margin-top:.45rem;font-family:var(--mono);font-size:.63rem;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .proof-links{display:flex;flex-wrap:wrap;gap:.55rem;margin:.8rem 0 0}
+  .proof-links a{font-family:var(--mono);font-size:.68rem;border:1px solid var(--rule-strong);
+    border-radius:4px;padding:.5rem .65rem;text-decoration:none}
+  .command{overflow:auto;border:1px solid var(--rule);border-radius:5px;background:#120817;
+    color:#f1eaf3;padding:.9rem 1rem;font-family:var(--mono);font-size:.72rem;line-height:1.65}
+  .quiet{font-family:var(--mono);font-size:.66rem;color:var(--ink-soft);line-height:1.55}
+  @media(max-width:760px){.demo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body class="doc">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="resume.html">Resume</a> <a href="portfolio.html">Portfolio</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260719-zentropy-sitewide"></script>
+
+<div class="docnav">
+  <span class="where">Recorded workflow &middot; Index 2.9.0</span>
+  <span class="switch"><a href="index-graph.html">About Index</a><a href="demo-index.html" aria-current="page">Recorded demo</a><a href="proof-index-sample.html">Sample report</a><a href="portfolio.html">Portfolio</a></span>
+</div>
+
+<main id="main">
+<article class="sheet">
+  <header class="mast">
+    <h1>Map the workspace. Verify every edge.</h1>
+    <p class="role">A real Index workflow over a sanitized three-repository system: local, deterministic, and re-runnable.</p>
+    <p class="contact">Index 2.9.0 <span class="sep">/</span> source commit 46247e2 <span class="sep">/</span> no model <span class="sep">/</span> no network <span class="sep">/</span> <a href="https://github.com/HarperZ9/index" translate="no">source</a></p>
+  </header>
+
+  <section>
+    <h2>The 30-second proof</h2>
+    <p class="lead">Index turns an unfamiliar workspace into a dependency graph, checks a named relationship back to file-and-line evidence, fits the relevant system into a bounded context envelope, and renders the result as an offline workbench.</p>
+    <video class="demo-video" controls preload="metadata" poster="media/demos/index/index-demo-poster.png" aria-label="Thirty-second silent Index workflow with on-screen commands and results">
+      <source src="media/demos/index/index-verified-workspace-short-30s.mp4" type="video/mp4">
+      Your browser cannot play this video. <a href="media/demos/index/index-verified-workspace-short-30s.mp4">Open the MP4 directly.</a>
+    </video>
+    <p class="quiet">Silent, captioned on screen. The exact terminal text is available in the sanitized transcript below.</p>
+  </section>
+
+  <section>
+    <h2>The observed result</h2>
+    <div class="demo-grid" aria-label="Verified workflow metrics">
+      <div class="demo-metric"><b>3</b><span>repositories mapped</span></div>
+      <div class="demo-metric"><b>3</b><span>high-confidence edges</span></div>
+      <div class="demo-metric"><b>738</b><span>tokens retained</span></div>
+      <div class="demo-metric"><b>0</b><span>items omitted</span></div>
+    </div>
+    <ul class="bul">
+      <li><b>Graph:</b> three internal dependencies, each supported by independent import and manifest signals.</li>
+      <li><b>Verification:</b> MATCH for <span translate="no">operator-console -&gt; routing-service</span>, witnessed at <span translate="no">pyproject.toml:5</span>.</li>
+      <li><b>Context envelope:</b> MATCH at 738 of 1,200 tokens, with all three repositories retained and 0 omitted.</li>
+      <li><b>Offline atlas:</b> 3 repositories, 4 authored documents, and 12 knowledge edges in one self-contained artifact.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>The full 118-second workflow</h2>
+    <p class="lead">The long cut preserves the fixture, graph, check, context envelope, workbench, map, context lens, and atlas handoff. It is a visual edit assembled from the exact transcript and real generated Index screenshots, not a simulated shell session.</p>
+    <video class="demo-video" controls preload="metadata" poster="media/demos/index/workbench-map-1920x1080.png" aria-label="Full silent Index workflow with on-screen commands and results">
+      <source src="media/demos/index/index-verified-workspace-full-118s.mp4" type="video/mp4">
+      Your browser cannot play this video. <a href="media/demos/index/index-verified-workspace-full-118s.mp4">Open the MP4 directly.</a>
+    </video>
+  </section>
+
+  <section>
+    <h2>Run path</h2>
+    <pre class="command"><code>python -m index_graph graph --root .\workspace
+python -m index_graph verify --root .\workspace --depends "operator-console -&gt; routing-service"
+python -m index_graph context-envelope --root .\workspace --focus operator-console --budget 1200
+python -m index_graph workbench --root .\workspace --budget 1200 --out .\index-workbench.html
+python -m index_graph atlas --root .\workspace --format html --out .\index-atlas.html</code></pre>
+    <div class="proof-links">
+      <a href="media/demos/index/raw-terminal-sanitized.txt">Sanitized transcript</a>
+      <a href="media/demos/index/README.md">Reproduction guide and checksums</a>
+      <a href="media/demos/index/index-atlas.html">Generated offline atlas</a>
+      <a href="media/demos/index/index-verified-workspace-short-30s.mp4" download>Download 30-second MP4</a>
+      <a href="media/demos/index/index-verified-workspace-full-118s.mp4" download>Download full MP4</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Claim boundary</h2>
+    <p class="lead">This fixture is deliberately small enough to inspect by hand. It proves the workflow, evidence model, bounded-context path, and generated workbench. It is not a scale benchmark and does not claim that every repository language or dependency shape is covered. Re-running the documented commands is the final check.</p>
+    <p class="entry-note">Recorded and verified 2026-07-12. Both videos are H.264, 1920 x 1080, 30 fps, and contain no audio. The publication package was scanned for private paths and credential-shaped strings.</p>
+  </section>
+</article>
+</main>
+</body>
+</html>

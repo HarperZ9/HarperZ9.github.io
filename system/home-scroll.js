@@ -36,7 +36,7 @@
       var y = window.pageYOffset || 0;
       if (canvas) {
         var t = Math.min(1, Math.max(0, (y - h * 0.45) / (h * 0.85)));
-        canvas.style.opacity = (1 - t * 0.5).toFixed(3);
+        canvas.style.opacity = (1 - t * 0.82).toFixed(3);
       }
       // gentle wordmark parallax: the foreground drifts against the object
       if (edge && !reduced) {
@@ -92,7 +92,7 @@
       if (best && best.target.id && byId[best.target.id]) setActive(best.target.id);
     }, { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.01, 0.2, 0.5] });
 
-    ["top", "engines", "floor"].forEach(function (id) {
+    ["top", "engines", "range", "work", "floor"].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) sObs.observe(el);
     });

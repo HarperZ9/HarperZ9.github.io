@@ -5,41 +5,40 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Writing · Zain Dana Harper</title>
-<meta name="description" content="Two plain-language essays on when a check is actually enough to trust something: one on a verified-looking artifact mistaken for safety across five fields, one on why nothing carries its own warrant. Companions to the research corpus. Authored, dated, published independently.">
+<meta name="description" content="Essays and public notes from Project Telos on systems, verification, artificial minds, creative work, accountability, and model-era engineering practice.">
 <link rel="canonical" href="https://harperz9.github.io/writing.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Writing · Zain Dana Harper">
-<meta property="og:description" content="Two plain-language essays on when a check is actually enough to trust something: one on a verified-looking artifact mistaken for safety across five fields, one on why nothing carries its own warrant. Companions to the research corpus. Authored, dated, published independently.">
+<meta property="og:description" content="Essays and public notes from Project Telos on systems, verification, artificial minds, creative work, accountability, and model-era engineering practice.">
 <meta property="og:url" content="https://harperz9.github.io/writing.html">
-<meta property="og:image" content="https://harperz9.github.io/img/hero-engine.png">
-<meta property="og:image:alt" content="A still from the engine: a Julia set rendered in the site's palette, real mathematics drawn by our own code.">
+<meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
+<meta property="og:image:alt" content="A still from the engine: a Kepler orbit with its conserved angular momentum fitted from the trace, real mathematics drawn by our own code.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Writing · Zain Dana Harper">
-<meta name="twitter:description" content="Two plain-language essays on when a check is actually enough to trust something: one on a verified-looking artifact mistaken for safety across five fields, one on why nothing carries its own warrant. Companions to the research corpus. Authored, dated, published independently.">
-<meta name="twitter:image" content="https://harperz9.github.io/img/hero-engine.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Schibsted+Grotesk:wght@500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="system/doc.css?v=20260624a">
+<meta name="twitter:description" content="Essays and public notes from Project Telos on systems, verification, artificial minds, creative work, accountability, and model-era engineering practice.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
+<link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="system/doc.css?v=20260722-pick-lock">
 <style>
   .essay p{margin:0 0 .95rem;max-width:66ch;line-height:1.62}
   .essay p:first-of-type{margin-top:.1rem}
   .essay strong,.essay b{color:var(--teal);font-weight:600}
-  .essay h3{font-family:"Schibsted Grotesk",system-ui,sans-serif;font-weight:600;
+  .essay h2{font-family:var(--display);font-weight:600;
     font-size:1.16rem;letter-spacing:-.012em;color:var(--ink);margin:1.6rem 0 .55rem}
   .essay hr{border:none;border-top:1px solid var(--rule);margin:1.7rem 0}
   .essay ul{list-style:none;margin:.4rem 0 .95rem;padding:0}
   .essay ul li{position:relative;padding-left:1.15rem;margin:0 0 .4rem;max-width:66ch;line-height:1.52}
   .essay ul li::before{content:"";position:absolute;left:.05rem;top:.62em;width:.34rem;height:.34rem;
     background:var(--teal);border-radius:50%}
-  .essay-sub{font-family:"EB Garamond",serif;font-style:italic;color:var(--ink-soft);
+  .essay-sub{font-family:var(--body);font-style:italic;color:var(--ink-soft);
     font-size:1.05rem;line-height:1.55;margin:.1rem 0 0;max-width:60ch}
-  .essay-meta{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.62rem;
+  .essay-meta{font-family:var(--mono);font-size:.62rem;
     letter-spacing:.13em;text-transform:uppercase;color:var(--tag);margin:.7rem 0 0;line-height:1.7}
-  .essay-sig{font-family:"EB Garamond",serif;font-style:italic;color:var(--ink-soft);
+  .essay-sig{font-family:var(--body);font-style:italic;color:var(--ink-soft);
     font-size:.97rem;line-height:1.55;margin:1.4rem 0 0;padding-top:.95rem;border-top:1px solid var(--rule);max-width:62ch}
-  .totop{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:.6rem;letter-spacing:.2em;
+  .totop{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;
     text-transform:uppercase;color:var(--teal-soft);text-decoration:none;border-bottom:1px solid transparent}
   .totop:hover{border-color:var(--teal-soft)}
 </style>
@@ -49,7 +48,7 @@
 
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260625a"></script>
+<script type="module" src="system/nav.js?v=20260722-pick-lock"></script>
 
 <main id="main">
 <article class="sheet">
@@ -57,24 +56,53 @@
     <p class="role" style="margin-bottom:.55rem">Writing</p>
     <h1>Essays</h1>
     <p class="role" style="color:var(--ink-soft);text-transform:none;letter-spacing:.01em;font-size:.92rem;margin:.55rem 0 .85rem">
-      Two short essays on a habit worth keeping: when something checks out, ask what the check actually proved before you trust it. Plain-language companions to the research, written to be read, and to be attacked.</p>
+      Essays and public notes from the workshop: model-assisted work, verification gaps, artificial minds, creative practice, accountability, and the habits that keep a fast system honest without flattening it into a single doctrine.</p>
     <p class="contact">
       <span>Zain Dana Harper</span><span class="sep">/</span>
       <span>Seattle · 2026</span><span class="sep">/</span>
-      <span>Authored · dated · CC-BY-4.0</span>
+      <span>Authored · dated · process disclosed</span>
     </p>
   </header>
+
   <section>
+        <div class="entry">
+      <div class="entry-head"><span class="entry-title"><a class="inline" href="models-propose-oracles-dispose.html">Models Propose, Oracles Dispose</a></span><span class="entry-meta">2026 &middot; AI, verification, engineering</span></div>
+      <ul class="bul"><li>An essay on the boundary that keeps generated work out of the evidence layer: receipts that re-derive, negative fixtures that prove the checks can still fail, and a live round trip where a model's proposal crossed a sealed boundary and a model-free kernel did the judging.</li></ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title"><a class="inline" href="no-receipt-no-accept.html">No Receipt, No Accept</a></span><span class="entry-meta">2026 &middot; AI, verification, labor</span></div>
+      <ul class="bul"><li>The flagship long-form essay on the idea behind all of this work: review debt, the proposer-checker loop, verifier independence, discovery as instrument, who gets the other nine, safety as moat, the open box, honest nulls, and machines anyone can check. Available on the web, as a <a class="inline" href="writing/no-receipt-no-accept/no-receipt-no-accept.pdf">PDF</a>, and as <a class="inline" href="writing/no-receipt-no-accept/no-receipt-no-accept.md">Markdown</a>.</li></ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title"><a class="inline" href="pick-the-lock-for-everyone.html">Pick the Lock for Everyone</a></span><span class="entry-meta">2026 &middot; AI, art, accountability</span></div>
+      <ul class="bul"><li>A long-form personal essay on shame, creative labor, Gibran's robe, discovery systems, source-bounded generative art, mutualistic creative infrastructure, the time dividend, and the work of becoming answerable. Includes an <a class="inline" href="pick-the-lock-for-everyone-talk.html">18-to-23-minute spoken edition</a> with optional extended movements.</li></ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title"><a class="inline" href="the-summary-is-not-the-record.html">The Summary Is Not The Record</a></span><span class="entry-meta">2026 &middot; agents</span></div>
+      <ul class="bul"><li>A maintainer note for AI-assisted work: claims, evidence, checks, action state, and the unsupported remainder that should stay visible.</li></ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title"><a class="inline" href="test-run-request.html">Send A Public Test Case</a></span><span class="entry-meta">2026 &middot; intake</span></div>
+      <ul class="bul"><li>A public request for small AI-assisted workflow examples where the claim, evidence, checks, and unsupported remainder matter.</li></ul>
+    </div>
     <div class="entry">
       <div class="entry-head"><span class="entry-title"><a class="inline" href="#verified">Verified Is Not Trustworthy</a></span><span class="entry-meta">2026 · verification</span></div>
-      <ul class="bul"><li>A pattern that turns up in five corners of finance and technology, and what it says about how we decide what to trust. Companion to <em>The Witnessing Spine</em>.</li></ul>
+      <ul class="bul"><li>A pattern that turns up in five corners of finance and technology, and what it says about the gap between a check and the larger claim people build on top of it.</li></ul>
     </div>
     <div class="entry">
       <div class="entry-head"><span class="entry-title"><a class="inline" href="#conferred">Conferred Existence</a></span><span class="entry-meta">2026 · philosophy</span></div>
-      <ul class="bul"><li>A philosophy of accountability for the age of artificial minds. Nothing possesses its own existence, and what follows for machines, makers, and the limits of authentication.</li></ul>
+      <ul class="bul"><li>A philosophy essay for the age of artificial minds: nothing possesses its own existence, and the question of machine standing changes shape from there.</li></ul>
     </div>
   </section>
 </article>
+
+<figure class="plate plate--interstitial">
+  <canvas data-specimen="writing-plate-01" data-specimen-layers="caustic-paper" aria-hidden="true"></canvas>
+  <figcaption>
+    <span class="plate-no">Plate 01</span>
+    <span class="plate-caption">A near-blank paper field, wisps at the edge of visibility: breathing room between the essays.</span>
+  </figcaption>
+</figure>
 
 <article class="sheet essay" id="verified">
   <header class="mast">
@@ -121,7 +149,7 @@
   <header class="mast">
     <p class="role" style="margin-bottom:.55rem">Essay</p>
     <h1>Conferred Existence</h1>
-    <p class="essay-sub">A philosophy of accountability for the age of artificial minds. Nothing possesses its own existence: follow that one premise honestly, and the questions we ask about machine minds change shape.</p>
+    <p class="essay-sub">A philosophy essay for the age of artificial minds. Nothing possesses its own existence: follow that one premise honestly, and the questions we ask about machine minds change shape.</p>
     <p class="essay-meta">Zain Dana Harper · 2026 · companion to <a class="inline" href="https://doi.org/10.5281/zenodo.20773724">Conferred Existence</a> (the corpus)</p>
   </header>
 
@@ -129,28 +157,28 @@
 
   <p>That small gap is the seam I have spent a long time pulling on. This essay is about where the thread leads.</p>
 
-  <h3>One premise</h3>
+  <h2>One premise</h2>
   <p>Start with a single claim: nothing possesses its own existence. Not you, not me, not a star, not a sentence. To exist is to be conferred: held up, moment to moment, by what is not you. The flame is the old image: it gives off real heat, it is genuinely hot, and it does not own a second of its own burning. Cut off the fuel and the air and it is simply gone. Its heat was real. Its independence was never there.</p>
 
   <p>Philosophers call the property of owning your own existence <em>aseity</em>: being "from oneself." The work I have been building, <em>Conferred Existence</em>, argues for the opposite at every level: <strong>no-aseity</strong>. Existence, status, standing, the moral "ought," legitimate authority, even the meaning a verified command carries, each is conferred, relational, re-spoken at every instant, owned by no one all the way down. And, this is the part that matters, none of it is less real, or less binding, for being conferred.</p>
 
   <p>This is not a fashionable idea, but it is not a lonely one either. Three traditions that never met arrived at the same seam independently: the Ash'arite theologians of medieval Islam, who held that God re-creates the world at every instant (their term <em>kasb</em>, "acquisition," names the strange way a conferred act is still genuinely yours); Madhyamaka Buddhism, with its emptiness of own-being; and Yoruba thought, where a person's destiny, <em>orí</em>, is received rather than self-made. Different vocabularies, the same structural discovery: a thing can be real and ownerless at once.</p>
 
-  <h3>Why a machine-age reader should care</h3>
+  <h2>Why a machine-age reader should care</h2>
   <p>Here is where the abstract premise turns sharp.</p>
 
   <p><strong>Authentication cannot confer authorization.</strong> Return to the door. A perfect identity check (cryptographic, unspoofable, certain) still cannot tell you whether the person should be let in. That requires a <em>policy</em>: a permission, which is a different kind of thing entirely, owing nothing to the facts of identity. Readers with a philosophical bent will recognize a cousin of Hume's law, the old point that you cannot derive an "ought" from an "is." I call the place it lives the <strong>membrane</strong>, and the result is unforgiving: no improvement in authentication ever closes the gap, because the gap is logical, not technical. We build enormous systems that quietly confuse the two: granting power because they recognized a face. The confusion has a name now, and a shape.</p>
 
   <p><strong>Origin does not determine standing.</strong> If existence is conferred rather than self-owned, then <em>how</em> a mind came to be (born, grown, trained, manufactured) cannot by itself settle what that mind is owed. That does not hand machines a claim to moral status. It does the narrower, harder thing: it removes "but we made it" as an <em>automatic</em> answer. The question then has to be asked on its merits, not closed in advance by an appeal to origin.</p>
 
-  <h3>What is actually claimed, and what isn't</h3>
-  <p>I want to be exact about the standing of this work, because the work is <em>about</em> accountability and would be a hypocrite otherwise.</p>
+  <h2>What is actually claimed, and what isn't</h2>
+  <p>I want to be exact about the standing of this work, because the work is <em>about</em> not over-claiming and would be a hypocrite otherwise.</p>
 
   <p>Three results I offer as genuinely new. The membrane framing above. A <strong>transcendental argument</strong> that wherever an act of conferring occurs, it occupies a real here-and-now: established, I argue, without circularity, and bounded honestly to the conventional level (the verdict in the text is stamped, literally, <em>forces-conventionally-only</em>). And an <strong>arity gap</strong> in the free-will debate: the popular move to reduce <em>holding someone responsible</em> to merely <em>shaping their future behavior</em> quietly deletes one of the two people in the relation. You cannot collapse a two-place relation into a one-place vocabulary without losing a relatum.</p>
 
-  <p>And the honest part. This corpus is <strong>pre-proof</strong>. It is, in plain terms, AI-assisted research substrate: an argument built quickly and then stress-tested hard, but one whose every claim a human author still has to re-derive and own before signing his name to it as finished. I publish it now not as a finished result but to stake a dated, citable claim and to invite exactly the adversarial scrutiny that would break it if it deserves breaking. Proof before trust: including about authorship. Especially about authorship.</p>
+  <p>And the honest part. This corpus is <strong>pre-proof</strong>. It is, in plain terms, AI-assisted research substrate: an argument built quickly and then stress-tested hard, but one whose every claim a human author still has to re-derive and own before signing his name to it as finished. I publish it now not as a finished result but to stake a dated, citable claim and to invite exactly the adversarial scrutiny that would break it if it deserves breaking. No borrowed authority: including about authorship. Especially about authorship.</p>
 
-  <h3>The thread, and where it goes</h3>
+  <h2>The thread, and where it goes</h2>
   <p>The same seam runs through all of it: the distance between a fact and a permission, between recognizing a thing and answering for it. It is a philosophical claim, but it is also, increasingly, an engineering one, because we are now building systems that recognize and act at a scale where confusing the two becomes its own kind of danger.</p>
 
   <p>The full corpus (the thesis, the four papers, the adversarial examination record, and a SHA-256 manifest staking priority on every file) is public:</p>
@@ -161,7 +189,7 @@
 
   <p>If you think it is wrong, that is the most useful thing you could tell me. The argument is built to be attacked.</p>
 
-  <p class="essay-sig">Zain Dana Harper is an independent researcher in Seattle. He writes about accountability: in machines, and in the people who build them. &nbsp;<a class="totop" href="#">↑ top</a></p>
+  <p class="essay-sig">Zain Dana Harper is an independent researcher in Seattle. He writes about systems, artificial minds, and the people who build them. &nbsp;<a class="totop" href="#">↑ top</a></p>
 </article>
 
 </main>
