@@ -2,17 +2,22 @@
 
 ![HarperZ9.github.io hero](docs/brand/portfolio-site-hero.png)
 
-> Static public site for the Project Telos portfolio, demos, repos, and evidence.
+> Static public site for the Zentropy Labs portfolio, demos, repos, and evidence.
 
-HarperZ9.github.io is the public site surface for Project Telos. It links the
+The public site surface for **Zain Dana Harper** (HarperZ9). It links the
 portfolio, flagship tools, sample reports, creative demos, proof surfaces, and
 developer entry points a visitor can open and inspect.
 
-## Why it matters
+## The thesis
 
-The website has to serve both public readers and developers. Public readers need
-plain claims and visible status; developers need local verification, repo links,
-and a path from the page to the code or receipt behind it.
+One accountable perception-and-action loop: a model perceives only through
+**witnessed** organs, acts only through a **gate** it cannot talk past,
+**journals** everything, and **verifies** its own work by re-perceiving. The
+public repos are the organs; **Flywheel** composes them into the live loop.
+
+The product infrastructure that makes people stop double-checking every answer
+is not a better model — it is a receipt discipline that makes agent actions
+auditable. **Proof before trust.**
 
 ## Try it
 
@@ -22,79 +27,59 @@ cd HarperZ9.github.io
 python -m http.server 8765
 ```
 
-## What to test first
+Open `http://127.0.0.1:8765/`.
 
-- Open `http://127.0.0.1:8765/`.
-- Check the first viewport for plain product and evidence language.
-- Verify public repo links, sample pages, and mobile/desktop readability.
+## The stack
 
-## Current status
-
-Static public portfolio and product-surface site. It should stay inspectable,
-accessible, and honest about maturity; private systems stay bounded off-page.
-
-## Existing technical notes
-
-The portfolio and product-surface site for **Zain Dana Harper** -- an evidence-first
-entry point for the accountability work, the compiler work, the graphics/color tools,
-and the public research.
-
-The site is deliberately static and inspectable. It leads with what can be opened,
-built, and checked; it keeps private systems bounded; it labels maturity instead of
-inflating it; and every claim points at the repo, test, receipt, or live page that
-supports it. **Proof before trust.**
-
-## The thesis
-
-One accountable perception-and-action loop: a model perceives only through **witnessed**
-organs, acts only through a **gate** it cannot talk past, **journals** everything, and
-**verifies** its own work by re-perceiving. The public repos are the organs;
-`accountable-surface` composes them into the live loop. The portfolio is the
-forward-facing presentation of the same idea.
-
-## Pages
-
-- `index.html` -- primary portfolio and work index.
-- `proof-surface.html` -- the write-gate organ (allow / deny / needs-human).
-- `coherence-membrane.html` -- the witnessed perception organs.
-- `accountable-machines.html` -- the live perceive -> gate -> act -> verify loop.
-- `emet.html` | `quantalang.html` -- the byte witness, and the typed-effects compiler.
-- `*-sample.html` -- scrubbed public sample reports and witness surfaces.
-- `resume.md` | `cv.md` -- text-bodied resume and CV.
-- `AUTHORS.md` -- authorship and release ownership.
-
-## Public lineup
-
-| Group | Public repos | State |
+| Component | Repo | What it does |
 | --- | --- | --- |
-| Accountability spine | `accountable-surface`, `proof-surface`, `coherence-membrane`, `emet`, `accountable-engine`, `repo-proof-index` | The perceive -> gate -> act -> verify organs. Tested; on PyPI / public. |
-| Provenance & release | `provenance-sensorium`, `model-provenance-validator`, `public-surface-sweeper`, `release-surface-scanner`, `secret-redact-io` | Witness, provenance, and release-surface CLIs. |
-| Agent workflow | `agent-audit`, `agent-hook-pack`, `agent-routing-kit`, `context-curator-lite`, `workflow-harness-lite`, `index` | Small, low-/zero-dependency utilities and plugin extractions. |
-| Compilers & QuantaLang | `quantalang`, `quantalang-vscode`, `quantalang-tmLanguage`, `quanta-universe` | A typed-effects language (the heavy repo) plus editor support and an alpha showcase. |
-| Systems, graphics & color | `signal-kernels`, `anomaly-kernels`, `gpu-trace-validator`, `quanta-color`, `calibrate-pro` | Header-only C++ kernels, a GPU-trace validator, and color/calibration tools. |
+| **Flywheel** | [local-model](https://github.com/HarperZ9/local-model) | The engine: verified-inference harness, agent loop, gateway, lanes, receipt-wrapped tool calls, routing |
+| **Flywheel Desktop** | [flywheel-desktop](https://github.com/HarperZ9/flywheel-desktop) | Native Flutter client (no browser, offline-first) |
+| **buildlang / buildc** | [buildlang](https://github.com/HarperZ9/buildlang) | Compiler + epistemics engine: capability-typed sealed receipts for verified computation |
+| **gather** | [gather](https://github.com/HarperZ9/gather) | Research intake + provenance receipts; accountable pilot evidence engine |
+| **crucible** | [crucible](https://github.com/HarperZ9/crucible) | Falsifiable verification (thesis to MATCH / DRIFT / UNVERIFIABLE) |
+| **index** | [index](https://github.com/HarperZ9/index) | Workspace map + symbol graph + verified wiki + context envelopes |
+| **forum** | [forum](https://github.com/HarperZ9/forum) | Witnessed causal ledger + model-agnostic routing + approval gates |
+| **learn** | [learn](https://github.com/HarperZ9/learn) | Accountable learning forge (spaced repetition, retrieval, teach-you loop) |
+| **telos** | [telos](https://github.com/HarperZ9/telos) | The reconciliation lane: five-tool workflow, creative engine, doctors, proof packets |
+| **EMET** | [emet](https://github.com/HarperZ9/emet) | Closed verdict lattice + portable witness receipts |
 
-Private platform and product work exists behind these leaves; public claims stay
-limited to outcomes and categories, never internals.
+## What is new (2026-07-31)
+
+- **Receipt-wrapped agent tool-calls**: every tool invocation in the agent loop
+  now carries a sealed, chain-linked receipt (capability class, admission,
+  witnessed I/O digests). The enforced AgentRiskBOM. [PR #22](https://github.com/HarperZ9/local-model/pull/22)
+- **Cross-language verify arm**: `buildc receipt verify` reads tool-call
+  receipts in Rust, golden-pinned against the Python emit side. [PR #36](https://github.com/HarperZ9/buildlang/pull/36)
+- **Gather pilot evidence engine**: a portable `gather pilot` command (run /
+  refresh / verify / bundle) that turns mixed sources into a verifiable corpus. [PR #14](https://github.com/HarperZ9/gather/pull/14)
+- **Native client canonical**: Flywheel Desktop is the primary UI; the browser
+  shell is a dev/CI fallback. [PR #21](https://github.com/HarperZ9/local-model/pull/21)
+
+## CoSAI alignment
+
+The stack's receipt-discipline spine maps directly to CoSAI Workstream 4
+(Secure Design Patterns for Agentic Systems):
+
+- **Tool Design runbook** — the tool-call receipt is a reference implementation
+- **MCP Runtime Isolation runbook** — capability classification (read / write / exec / mcp)
+- **Trust-Aware Dataplane RFC** — the transitive-witness DAG
+
+Apache 2.0 (code) / CC-BY 4.0 (docs) — matching CoSAI's license terms.
 
 ## Local verification
-
-Serve this directory locally:
 
 ```powershell
 python -m http.server 8765
 ```
 
-Then visit `http://127.0.0.1:8765/`. Before publishing, verify:
-
-- The first viewport says what the strongest public evidence is.
-- Internal links and `*-sample.html` resolve; no link 404s.
-- External GitHub links point at intended public repositories.
-- The page stays legible at desktop and mobile widths.
-- No secrets, generated logs, or private artifacts are staged.
+Visit `http://127.0.0.1:8765/`. Verify: first viewport, internal links,
+external GitHub links, mobile/desktop legibility, no secrets staged.
 
 ## For developers
 
-Keep the public README, examples, and repository metadata aligned with current behavior. Before opening a PR or publishing a release, verify the working tree and any documented commands for this repo.
+Keep the public README, examples, and repository metadata aligned with current
+behavior. Before opening a PR or publishing a release, verify the working tree.
 
 ```bash
 git status --short
