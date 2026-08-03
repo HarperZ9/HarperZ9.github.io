@@ -1,0 +1,37 @@
+{
+  "schema": "zentropy.editions/v1",
+  "updated": "2026-08-03",
+  "policy": {
+    "register": "Open editions, given away. The seed is the provenance.",
+    "acquire_now": [
+      "save the PNG beside any plate",
+      "plot the plotter-ready SVG at the print desk",
+      "export print, textile, and relief files from the Studio",
+      "run the spatial edition live in the Studio"
+    ],
+    "physical_prints": null,
+    "note": "Every plate is free to keep and reproduce from its named seed. A physical print route is not configured; when one exists it will be named here, not implied."
+  },
+  "editions": [
+    { "plate": "01", "title": "Today's plate, folded light", "kind": "daily", "seed": "gallery-<today>", "instruments": "showpiece-veil", "provenance": "system/generative-field.js" },
+    { "plate": "02", "title": "Obsidian burst, aurora rim", "kind": "seeded", "seed": "gallery-plate-02", "instruments": "showpiece-burst", "provenance": "system/generative-field.js" },
+    { "plate": "03", "title": "Dendrite over riso ground", "kind": "seeded", "seed": "gallery-plate-03", "instruments": "riso-moire + dendrite", "provenance": "system/generative-field.js" },
+    { "plate": "04", "title": "Pale caustics, interstitial", "kind": "seeded", "seed": "gallery-plate-04", "instruments": "caustic-paper", "provenance": "system/generative-field.js" },
+    { "plate": "05", "title": "Interference weave", "kind": "seeded", "seed": "gallery-plate-05", "instruments": "showpiece-weave", "provenance": "system/generative-field.js" },
+    { "plate": "06", "title": "Moire swirl, light leak", "kind": "seeded", "seed": "gallery-plate-06", "instruments": "moire-swirl + aurora-leak", "provenance": "system/generative-field.js" },
+    { "plate": "07", "title": "Lantern, hung in the void", "kind": "seeded", "seed": "gallery-plate-07b", "instruments": "showpiece-lantern", "provenance": "system/generative-field.js" },
+    { "plate": "08", "title": "Monument, pixel-sorted", "kind": "seeded", "seed": "gallery-plate-08", "instruments": "showpiece-ruin", "provenance": "system/generative-field.js" },
+    { "plate": "09", "title": "Coral accretion, thermal", "kind": "seeded", "seed": "gallery-plate-09", "instruments": "dla-coral", "provenance": "system/generative-field.js" },
+    { "plate": "10", "title": "Fiber canyon, wireframed", "kind": "seeded", "seed": "gallery-plate-10", "instruments": "fiber-terrain", "provenance": "system/generative-field.js" },
+    { "plate": "11", "title": "Neural field", "kind": "seeded", "seed": "gallery-neural-field", "instruments": "neural-field", "provenance": "system/generative-field.js" },
+    { "plate": "12", "title": "Neural solid", "kind": "seeded", "seed": "gallery-neural-sdf", "instruments": "neural-sdf", "provenance": "system/generative-field.js" },
+    { "plate": "13", "title": "Neural voxels", "kind": "seeded", "seed": "gallery-neural-voxel", "instruments": "neural-voxel", "provenance": "system/generative-field.js" },
+    { "plate": "14", "title": "Seeded typeface", "kind": "seeded", "seed": "gallery-typeface", "instruments": "typeface", "provenance": "system/generative-field.js" },
+    { "plate": "15", "title": "Truchet", "kind": "seeded", "seed": "gallery-truchet", "instruments": "truchet", "provenance": "system/generative-field.js" },
+    { "plate": "16", "title": "Voronoi, stained glass", "kind": "seeded", "seed": "gallery-voronoi", "instruments": "voronoi-stain", "provenance": "system/generative-field.js" },
+    { "plate": "17", "title": "Clifford, a strange attractor's cloud", "kind": "seeded", "seed": "gallery-clifford", "instruments": "clifford", "provenance": "system/generative-field.js" },
+    { "plate": "18", "title": "Phyllotaxis, the sunflower spiral", "kind": "seeded", "seed": "gallery-phyllotaxis", "instruments": "phyllotaxis", "provenance": "system/generative-field.js" },
+    { "plate": "19", "title": "Planet limb, closing", "kind": "seeded", "seed": "gallery-plate-07", "instruments": "planet-limb", "provenance": "system/generative-field.js" },
+    { "plate": "20", "title": "Folded light, inhabited", "kind": "spatial", "seed": "folded-light-inhabited", "instruments": "veil layers + selective Gaussian material", "provenance": "art/spatial/folded-light.world.json", "run": "studio.html?source=spatial" }
+  ]
+}
