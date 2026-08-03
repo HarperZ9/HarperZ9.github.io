@@ -2838,6 +2838,7 @@ function paintMeta(w, h, rich) {
 }
 function currentSourceLabel() {
   if (watchStream) return "screen/camera";
+  if (activeSource === "spatial") return "spatial world";
   if (canvasIsGL && !glFractal2D) return "3D fractal";
   if (activeSource === "fractal") return "2D fractal";
   if (activeSource === "ndim") return "n-dim hypercube";
