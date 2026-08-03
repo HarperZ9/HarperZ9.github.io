@@ -10,6 +10,10 @@
 import { buildRunReceipt } from "./engine/world-package.js";
 import { acquireContext } from "./spatial-gl.js";
 
+// Backing ceiling for the atlas stage, matching the Studio's standard quality
+// level (system/studio.js sizeCanvas).
+const MAX_BACKING_EDGE = 1600;
+
 const ATLAS_VS = `#version 300 es
 precision highp float; precision highp int;
 layout(location=0) in vec2 aCorner; layout(location=1) in vec3 aMean; layout(location=2) in vec3 aScale; layout(location=3) in vec4 aQuat; layout(location=4) in vec3 aColor; layout(location=5) in float aOpacity; layout(location=6) in vec4 aMeta; layout(location=7) in vec3 aViewCoeff;
@@ -156,12 +160,45 @@ class AtlasScene {
     this.distance = 2.55; this.target = [0, -0.12, 0];
     this.stopped = false; this.raf = 0; this.sortTimer = 0;
     this.view = new Float32Array(16); this.projection = new Float32Array(16);
+    this.pendingSize = null;
+    this.observeSize();
     this.setup();
   }
 
   get splatCount() { return this.activeCount || 0; }
   get splatsDropped() { return this.droppedCount || 0; }
   get sceneList() { return this.manifest.scenes; }
+
+  // Layout is read only when the box actually changes, off the render path.
+  // The observed element is the PARENT stage, never the canvas: writing
+  // canvas.width changes the canvas's own intrinsic size, so observing itself
+  // is a feedback loop that resizes every frame. The backing is clamped to the
+  // site's standard ceiling; a 4MP field of blended splats buys nothing on a
+  // letterboxed stage and costs the whole frame budget.
+  observeSize() {
+    const apply = (cssW, cssH) => {
+      const dpr = Math.min(globalThis.devicePixelRatio || 1, 2);
+      let w = Math.max(1, Math.round(cssW * dpr));
+      let h = Math.max(1, Math.round(cssH * dpr));
+      const longer = Math.max(w, h);
+      if (longer > MAX_BACKING_EDGE) {
+        const k = MAX_BACKING_EDGE / longer;
+        w = Math.max(1, Math.round(w * k));
+        h = Math.max(1, Math.round(h * k));
+      }
+      this.pendingSize = { w, h };
+    };
+    const host = this.canvas.parentElement || this.canvas;
+    if (typeof ResizeObserver === "function") {
+      this.sizeObserver = new ResizeObserver((entries) => {
+        const box = entries[0] && entries[0].contentRect;
+        if (box && box.width && box.height) apply(box.width, box.height);
+      });
+      this.sizeObserver.observe(host);
+    }
+    const rect = host.getBoundingClientRect();
+    if (rect.width && rect.height) apply(rect.width, rect.height);
+  }
 
   setup() {
     const gl = this.gl;
@@ -320,6 +357,7 @@ class AtlasScene {
     this.stopped = true;
     if (this.raf) cancelAnimationFrame(this.raf);
     clearTimeout(this.sortTimer);
+    if (this.sizeObserver) { try { this.sizeObserver.disconnect(); } catch (_) { /* gone */ } }
     const gl = this.gl;
     try {
       gl.deleteProgram(this.program);
@@ -332,10 +370,19 @@ class AtlasScene {
 
   frame(elapsedMs) {
     const gl = this.gl;
-    const dpr = Math.min(globalThis.devicePixelRatio || 1, 2);
-    const rect = this.canvas.getBoundingClientRect();
-    const w = Math.max(1, Math.round(rect.width * dpr)), h = Math.max(1, Math.round(rect.height * dpr));
-    if (this.canvas.width !== w || this.canvas.height !== h) { this.canvas.width = w; this.canvas.height = h; }
+    // Sizing is observer-driven, never measured here: reading layout right
+    // after writing canvas.width forced a synchronous reflow every frame
+    // (profiled at 121ms of layout thrash), which starved input until clicks
+    // stopped landing.
+    if (this.pendingSize) {
+      const { w: pw, h: ph } = this.pendingSize;
+      this.pendingSize = null;
+      if (this.canvas.width !== pw || this.canvas.height !== ph) {
+        this.canvas.width = pw;
+        this.canvas.height = ph;
+      }
+    }
+    const w = this.canvas.width, h = this.canvas.height;
     gl.viewport(0, 0, w, h);
     this.yaw += (this.targetYaw - this.yaw) * 0.12;
     this.pitch += (this.targetPitch - this.pitch) * 0.12;

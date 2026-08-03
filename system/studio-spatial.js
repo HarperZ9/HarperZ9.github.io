@@ -187,14 +187,28 @@ function wireShared() {
   }
   document.querySelectorAll("[data-world]").forEach((chip) => {
     chip.classList.toggle("active", chip.dataset.world === currentWorld);
+    chip.setAttribute("aria-pressed", String(chip.dataset.world === currentWorld));
     chip.onclick = () => {
       // Same-world clicks are ignored ONLY while that world is actually
       // running; after a failed start the chip must retry, not no-op.
       if ((chip.dataset.world === currentWorld && scene) || !currentCanvas) return;
       currentWorld = chip.dataset.world;
-      startSpatial(currentCanvas, currentOpts || {}).catch((err) => {
-        status("the world failed to start: " + (err && err.message ? err.message : String(err)), "bad");
+      // Answer the click immediately. A world package is megabytes; without
+      // this the chip stayed unselected for the whole fetch, so the control
+      // read as broken and people clicked it again.
+      document.querySelectorAll("[data-world]").forEach((b) => {
+        const isTarget = b === chip;
+        b.classList.toggle("active", isTarget);
+        b.setAttribute("aria-pressed", String(isTarget));
+        b.classList.toggle("loading", isTarget);
       });
+      startSpatial(currentCanvas, currentOpts || {})
+        .catch((err) => {
+          status("the world failed to start: " + (err && err.message ? err.message : String(err)), "bad");
+        })
+        .finally(() => {
+          document.querySelectorAll("[data-world]").forEach((b) => b.classList.remove("loading"));
+        });
     };
   });
 }

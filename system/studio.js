@@ -222,12 +222,25 @@ function bootStudioRendererConsole(root = document) {
     showcase: "showcase renderer",
   };
 
+  // Cache the meter nodes and skip no-op writes: this ran per streaming tick
+  // and re-queried the DOM plus wrote unchanged text every time.
+  const consoleMeterNodes = new Map();
   const setConsoleMeter = (key, value) => {
     const pct = Math.max(0, Math.min(1, value));
-    const meter = consoleEl.querySelector(`[data-studio-console-meter="${key}"]`);
-    const bar = consoleEl.querySelector(`[data-studio-console-bar="${key}"]`);
-    if (meter) meter.textContent = pct.toFixed(2);
-    if (bar) bar.style.setProperty("--meter", pct.toFixed(3));
+    let nodes = consoleMeterNodes.get(key);
+    if (!nodes) {
+      nodes = {
+        meter: consoleEl.querySelector(`[data-studio-console-meter="${key}"]`),
+        bar: consoleEl.querySelector(`[data-studio-console-bar="${key}"]`),
+        last: null,
+      };
+      consoleMeterNodes.set(key, nodes);
+    }
+    const text = pct.toFixed(2);
+    if (nodes.last === text) return;
+    nodes.last = text;
+    if (nodes.meter) nodes.meter.textContent = text;
+    if (nodes.bar) nodes.bar.style.setProperty("--meter", pct.toFixed(3));
   };
 
   const sync = (source = window.__studioActiveSource || "atelier") => {
@@ -685,6 +698,26 @@ function readPixelData(canvas, w, h) {
   sctx.clearRect(0, 0, w, h);
   sctx.drawImage(canvas, 0, 0, w, h);
   return sctx.getImageData(0, 0, w, h).data;
+}
+
+// The STREAMING read: a bounded downsample for the live loop. A full-resolution
+// mirror-and-read of a GL canvas is a GPU sync plus a multi-megapixel CPU copy
+// (measured at 46ms for 1.3MP), and at 12Hz that starves the main thread until
+// clicks stop landing. The meters and the frame-to-frame hash are box-averaged
+// to small grids anyway, so a bounded read is the same readout for a fraction
+// of the cost. perceive() keeps reading full resolution for the settled,
+// canonical hash that receipts and answers quote.
+const LIVE_READ_MAX_EDGE = 512;
+function readPixelDataBounded(canvas, maxEdge) {
+  const w0 = canvas.width, h0 = canvas.height;
+  const scale = Math.min(1, maxEdge / Math.max(w0, h0));
+  if (scale === 1) return { px: readPixelData(canvas, w0, h0), w: w0, h: h0 };
+  const w = Math.max(1, Math.round(w0 * scale)), h = Math.max(1, Math.round(h0 * scale));
+  _scratch.width = w; _scratch.height = h;
+  const sctx = _scratch.getContext("2d", { willReadFrequently: true });
+  sctx.clearRect(0, 0, w, h);
+  sctx.drawImage(canvas, 0, 0, w, h);
+  return { px: sctx.getImageData(0, 0, w, h).data, w, h };
 }
 
 // ── granular perception: the no-vision read ──────────────────────────────────
@@ -2756,7 +2789,13 @@ function swatchName(s) {
 function paintSwatches(rich) {
   const host = $("mm-swatches"); if (!host) return;
   const sw = rich.dominantSwatches || [];
-  if (!sw.length) { host.className = "mm-swatches mm-empty"; host.innerHTML = ""; return; }
+  if (!sw.length) { host.className = "mm-swatches mm-empty"; host.innerHTML = ""; paintSwatches._sig = ""; return; }
+  // Rebuilding this DOM every streaming tick was one of the largest main-thread
+  // costs on the page; the palette rarely changes between ticks, so skip the
+  // rebuild unless the swatches actually differ.
+  const sig = sw.map((s) => s.hex + (s.frac * 100).toFixed(0)).join("|");
+  if (sig === paintSwatches._sig) return;
+  paintSwatches._sig = sig;
   host.className = "mm-swatches";
   host.innerHTML = "";
   for (const s of sw) {
@@ -2872,8 +2911,11 @@ function liveTick(ts) {
   }
   let px, phash;
   try {
-    const w = canvas.width, h = canvas.height;
-    px = readPixelData(canvas, w, h);
+    // Bounded streaming read: keeps the loop off the main thread's critical
+    // path so the UI stays responsive while an animated source renders.
+    const read = readPixelDataBounded(canvas, LIVE_READ_MAX_EDGE);
+    px = read.px;
+    const w = read.w, h = read.h;
     phash = perceptualHash(px, w, h, 4);
     // stream the cheap line + the full measurimeter (no say(), no drift mutation)
     $("sc-phash").textContent = phash;
