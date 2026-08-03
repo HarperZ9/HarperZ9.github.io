@@ -54,7 +54,11 @@ async function sha256Hex(bytes) {
 async function fetchPackage(world) {
   const manifestUrl = PACKAGES[world];
   const base = manifestUrl.slice(0, manifestUrl.lastIndexOf("/") + 1);
-  const manifestResponse = await fetch(manifestUrl, { cache: "no-cache" });
+  // Default HTTP caching everywhere: every sidecar is re-hashed against its
+  // manifest receipt before rendering, so a stale or corrupted cache entry is
+  // caught as DRIFT rather than dodged with no-cache refetches. Crystal City
+  // is 5.7 MB; refusing the cache made every visit a multi-second black wait.
+  const manifestResponse = await fetch(manifestUrl);
   if (!manifestResponse.ok) throw new Error(`manifest: HTTP ${manifestResponse.status}`);
   const manifest = await manifestResponse.json();
   const shape = validateWorldPackage(manifest);
@@ -66,7 +70,7 @@ async function fetchPackage(world) {
   const files = {};
   let verdict = "MATCH";
   for (const name of names) {
-    const response = await fetch(base + name, { cache: "no-cache" });
+    const response = await fetch(base + name);
     if (!response.ok) throw new Error(`${name}: HTTP ${response.status}`);
     const bytes = new Uint8Array(await response.arrayBuffer());
     files[name] = bytes;
@@ -110,21 +114,32 @@ function wireAtlasControls() {
       select.appendChild(option);
     }
     if (scene.currentMeta) select.value = scene.currentMeta.id;
+    select.disabled = false;
     select.onchange = async () => {
+      // The picker can fire mid-transition (a world switch in flight) when
+      // the live scene is not an atlas scene, or not a scene at all.
+      if (!scene || typeof scene.loadScene !== "function") return;
+      const target = scene;
+      select.disabled = true;
       try {
         status(`loading ${select.value}…`, "");
-        const { meta, verdict } = await scene.loadScene(select.value);
-        setVerdict(verdict);
-        announceAtlasScene(meta, verdict);
+        const { meta, verdict } = await target.loadScene(select.value);
+        if (scene === target) {
+          setVerdict(verdict);
+          announceAtlasScene(meta, verdict);
+        }
       } catch (err) {
-        status("scene failed: " + (err && err.message ? err.message : String(err)), "bad");
+        if (scene === target) status("scene failed: " + (err && err.message ? err.message : String(err)), "bad");
+      } finally {
+        select.disabled = false;
       }
     };
   }
   document.querySelectorAll("[data-atlas-mode]").forEach((chip) => {
     chip.onclick = () => {
+      if (!scene || typeof scene.loadScene !== "function") return;
       document.querySelectorAll("[data-atlas-mode]").forEach((b) => b.classList.toggle("active", b === chip));
-      if (scene) scene.setControl("mode", chip.dataset.atlasMode);
+      scene.setControl("mode", chip.dataset.atlasMode);
     };
   });
   const sliders = [["sp-depth", "depthScale", "sp-depth-val"], ["sp-size", "splatScale", "sp-size-val"], ["sp-exposure", "exposure", "sp-exposure-val"]];
@@ -232,18 +247,21 @@ export async function startSpatial(canvas, opts = {}) {
   // any superseded one tears its scene down instead of clobbering.
   const token = (startSpatial._token = (startSpatial._token || 0) + 1);
   const superseded = () => token !== startSpatial._token;
-  stopSpatial();
-  canvas = freshCanvas(canvas);
-  currentCanvas = canvas;
   currentOpts = opts;
   if (!startSpatial._bootConsumed) {
     startSpatial._bootConsumed = true;
     const want = (window.__studioBootWorld || "").trim();
     if (want && PACKAGES[want]) currentWorld = want;
   }
+  // Fetch and verify the incoming package BEFORE tearing the current world
+  // down: the old scene keeps rendering during the download instead of the
+  // stage sitting as a black empty rectangle for the whole transfer.
   status("loading the world package…", "");
   const { manifest, base, files, verdict, checked } = await fetchPackage(currentWorld);
   if (superseded()) return { animating: false, splatCount: 0, world: currentWorld, superseded: true };
+  stopSpatial();
+  canvas = freshCanvas(currentCanvas && currentCanvas.isConnected ? currentCanvas : canvas);
+  currentCanvas = canvas;
   syncBlocks(manifest.mode);
   if (verdict === "DRIFT") {
     setVerdict(verdict);
