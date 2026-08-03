@@ -39,6 +39,7 @@ vec4 splatTexel(uint idx, int slot){
  return texelFetch(uSplatData, ivec2(t % uDataWidth, t / uDataWidth), 0);
 }
 uniform mat4 uView; uniform mat4 uProjection; uniform float uSplatScale; uniform float uDepthScale; uniform int uMode; uniform float uTime;
+uniform vec3 uEye; uniform vec2 uViewport;
 uniform vec3 uInvCenter; uniform float uInvRadius; uniform float uInvStrength; uniform float uInvExponent; uniform float uInvShell; uniform float uInvThickness; uniform float uInvTwist; uniform float uInvInner; uniform float uInvOuter;
 uniform float uHoloStrength;
 out vec2 vCorner; out vec3 vColor; out float vOpacity; out vec4 vMeta; out vec3 vNormal; out vec3 vViewCoeff;
@@ -63,13 +64,46 @@ void main(){
  vec3 base0=vec3(aMean.xy,aMean.z*uDepthScale);float originalR=length(base0-uInvCenter);
  if(uMode==1&&(originalR<uInvInner||originalR>uInvOuter)){gl_Position=vec4(2.0,2.0,2.0,1.0);vCorner=vec2(0);vColor=vec3(0);vOpacity=0.0;vMeta=vec4(0);vNormal=vec3(0,0,1);vViewCoeff=vec3(0);return;}
  vec3 p=warp(aMean);
- vec3 ax0=qrot(aQuat,vec3(aScale.x,0,0));vec3 ay0=qrot(aQuat,vec3(0,aScale.y,0));vec3 n0=normalize(qrot(aQuat,vec3(0,0,1)));
- vec3 ax=warp(aMean+ax0)-p;vec3 ay=warp(aMean+ay0)-p;
- vec4 cp=uProjection*uView*vec4(p,1);vec4 cax=uProjection*uView*vec4(p+ax,1);vec4 cay=uProjection*uView*vec4(p+ay,1);
- vec2 ndc=cp.xy/cp.w;vec2 dx=cax.xy/cax.w-ndc;vec2 dy=cay.xy/cay.w-ndc;
- vec2 finalNdc=ndc+(aCorner.x*dx+aCorner.y*dy)*uSplatScale;
- gl_Position=vec4(finalNdc*cp.w,cp.z,cp.w);
- vCorner=aCorner;vColor=aColor;vOpacity=aOpacity;vMeta=aMeta;vNormal=n0;vViewCoeff=aViewCoeff;}`;
+ // Full anisotropic covariance: all three scale axes, carried through the
+ // warp so a transformed field keeps correct footprints. Sigma = M M^T with
+ // M the warped local frame; the third axis is no longer discarded.
+ vec3 ax0=qrot(aQuat,vec3(aScale.x,0,0));
+ vec3 ay0=qrot(aQuat,vec3(0,aScale.y,0));
+ vec3 az0=qrot(aQuat,vec3(0,0,aScale.z));
+ vec3 n0=normalize(qrot(aQuat,vec3(0,0,1)));
+ vec3 ax=warp(aMean+ax0)-p, ay=warp(aMean+ay0)-p, az=warp(aMean+az0)-p;
+ mat3 M=mat3(ax,ay,az);
+ mat3 Sigma=M*transpose(M);
+ // View space, then the perspective Jacobian to NDC (EWA splatting).
+ vec3 pv=(uView*vec4(p,1)).xyz;
+ mat3 W=mat3(uView);
+ mat3 Sv=W*Sigma*transpose(W);
+ float fx=uProjection[0][0], fy=uProjection[1][1];
+ float z=pv.z;
+ if(z>-1e-4){gl_Position=vec4(2.0,2.0,2.0,1.0);vCorner=vec2(0);vColor=vec3(0);vOpacity=0.0;vMeta=vec4(0);vNormal=vec3(0,0,1);vViewCoeff=vec3(0);return;}
+ float iz=1.0/(-z), iz2=iz*iz;
+ vec3 j0=vec3(fx*iz, 0.0, fx*pv.x*iz2);
+ vec3 j1=vec3(0.0, fy*iz, fy*pv.y*iz2);
+ float c00=dot(j0,Sv*j0), c01=dot(j0,Sv*j1), c11=dot(j1,Sv*j1);
+ // Low-pass dilation of roughly a third of a pixel, the term stock 3DGS and
+ // Mip-Splatting add so sub-pixel splats stop scintillating under motion.
+ vec2 px=2.0/uViewport;
+ c00+=0.3*px.x*px.x; c11+=0.3*px.y*px.y;
+ // Closed-form eigenbasis of the 2x2, giving principal axes and radii.
+ float tr=c00+c11, det=c00*c11-c01*c01;
+ float disc=sqrt(max(tr*tr*0.25-det,0.0));
+ float l1=max(tr*0.5+disc,1e-12), l2=max(tr*0.5-disc,1e-12);
+ vec2 e1=(abs(c01)>1e-12)?normalize(vec2(l1-c11,c01)):vec2(1.0,0.0);
+ vec2 e2=vec2(-e1.y,e1.x);
+ vec2 ndc=vec2(fx*pv.x*iz, fy*pv.y*iz);
+ vec2 offset=(aCorner.x*e1*sqrt(l1)+aCorner.y*e2*sqrt(l2))*3.0*uSplatScale;
+ vec2 finalNdc=ndc+offset;
+ gl_Position=vec4(finalNdc*(-z),(uProjection*vec4(pv,1)).z,-z);
+ // View-dependent response: the shipped channel is now evaluated against the
+ // actual eye direction instead of a per-splat constant.
+ vec3 viewDir=normalize(uEye-p);
+ vCorner=aCorner;vColor=aColor;vOpacity=aOpacity;vMeta=aMeta;
+ vNormal=vec3(n0.xy,dot(n0,viewDir));vViewCoeff=aViewCoeff;}`;
 
 const ATLAS_FS = `#version 300 es
 precision highp float; precision highp int;
@@ -78,7 +112,9 @@ uniform float uOpacityScale; uniform float uExposure; uniform float uGamma; unif
 out vec4 outColor;
 void main(){
  float r2=dot(vCorner,vCorner);if(r2>1.0)discard;
- float a=exp(-3.7*r2)*vOpacity*uOpacityScale;if(a<.008)discard;
+ // The quad spans 3 sigma along each principal axis, so the corner is already
+ // in sigma units: this is the exact Gaussian in its own eigenbasis.
+ float a=exp(-4.5*r2)*vOpacity*uOpacityScale;if(a<.004)discard;
  vec3 c=vColor;float ndv=clamp(abs(vNormal.z),0.,1.);c+=vViewCoeff*(ndv-.5);
  if(uMode==3){float phase=dot(normalize(vNormal+vec3(.001)),normalize(vec3(vCorner,.8)))+uTime*.08;c=mix(c,.5+.5*cos(vec3(0,2.1,4.2)+phase*6.283),clamp(uIridescence*.45,0.,.82));}
  c=pow(max(c*uExposure,vec3(0)),vec3(1.0/uGamma));
@@ -228,7 +264,7 @@ class AtlasScene {
     this.program = p;
     gl.useProgram(p);
     this.uniform = {};
-    for (const n of ["uView", "uProjection", "uSplatScale", "uDepthScale", "uMode", "uTime", "uInvCenter", "uInvRadius", "uInvStrength", "uInvExponent", "uInvShell", "uInvThickness", "uInvTwist", "uInvInner", "uInvOuter", "uHoloStrength", "uOpacityScale", "uExposure", "uGamma", "uIridescence", "uSplatData", "uDataWidth"]) {
+    for (const n of ["uView", "uProjection", "uSplatScale", "uDepthScale", "uMode", "uTime", "uInvCenter", "uInvRadius", "uInvStrength", "uInvExponent", "uInvShell", "uInvThickness", "uInvTwist", "uInvInner", "uInvOuter", "uHoloStrength", "uOpacityScale", "uExposure", "uGamma", "uIridescence", "uSplatData", "uDataWidth", "uEye", "uViewport"]) {
       this.uniform[n] = gl.getUniformLocation(p, n);
     }
     this.vao = gl.createVertexArray();
@@ -327,12 +363,29 @@ class AtlasScene {
     const { depth, order, counts } = this.sortScratch;
     const ex = frame.eye[0], ey = frame.eye[1], ez = frame.eye[2];
     const fx = frame.forward[0], fy = frame.forward[1], fz = frame.forward[2];
+    // Sort in the space the shader actually rasterizes. depthScale was already
+    // mirrored here; the inversphere warp was not, so a transformed field was
+    // ordered by its pre-warp depths and blended out of order.
+    const inv = this.mode === 1 ? this.inv : null;
     let min = Infinity, max = -Infinity;
     for (let i = 0; i < n; i += 1) {
       const s = baseIndices[i] * 3;
-      const d = (scene.means[s] - ex) * fx
-        + (scene.means[s + 1] - ey) * fy
-        + (scene.means[s + 2] * ds - ez) * fz;
+      let px = scene.means[s], py = scene.means[s + 1], pz = scene.means[s + 2] * ds;
+      if (inv) {
+        const qx = px - inv.center[0], qy = py - inv.center[1], qz = pz - inv.center[2];
+        const r = Math.max(Math.hypot(qx, qy, qz), 1e-4);
+        const angle = inv.twist * (1 / (r + 0.22) - 1);
+        const ca = Math.cos(angle), sa = Math.sin(angle);
+        const rx = ca * qx + sa * qz, ry = qy, rz = -sa * qx + ca * qz;
+        const k = Math.pow(inv.radius / r, 2 * inv.exponent);
+        const ivx = inv.center[0] + rx * k, ivy = inv.center[1] + ry * k, ivz = inv.center[2] + rz * k;
+        const sr = inv.radius + Math.tanh((r - inv.radius) * 3.2) * inv.thickness;
+        const rn = Math.hypot(rx, ry, rz) || 1;
+        const shx = inv.center[0] + (rx / rn) * sr, shy = inv.center[1] + (ry / rn) * sr, shz = inv.center[2] + (rz / rn) * sr;
+        const tx = ivx + (shx - ivx) * inv.shell, ty = ivy + (shy - ivy) * inv.shell, tz = ivz + (shz - ivz) * inv.shell;
+        px += (tx - px) * inv.strength; py += (ty - py) * inv.strength; pz += (tz - pz) * inv.strength;
+      }
+      const d = (px - ex) * fx + (py - ey) * fy + (pz - ez) * fz;
       depth[i] = d;
       if (d < min) min = d;
       if (d > max) max = d;
@@ -413,9 +466,13 @@ class AtlasScene {
   }
 
   setControl(name, value) {
-    if (name === "mode") { this.mode = Number(value) | 0; return; }
+    // A mode switch changes the space splats are warped into, so the order
+    // computed for the previous space no longer holds: re-sort, do not return
+    // early. Every control that moves geometry marks the order stale.
+    if (name === "mode") { this.mode = Number(value) | 0; this.scheduleSort(); this.dirty = true; return; }
     if (name in this.controls) this.controls[name] = Number(value);
-    if (name === "depthScale") this.scheduleSort();
+    this.dirty = true;
+    if (name === "depthScale" || name === "splatScale") this.scheduleSort();
   }
 
   setPaused(paused) { this.paused = paused; }
@@ -477,8 +534,13 @@ class AtlasScene {
     }
     const w = this.canvas.width, h = this.canvas.height;
     gl.viewport(0, 0, w, h);
-    this.yaw += (this.targetYaw - this.yaw) * 0.12;
-    this.pitch += (this.targetPitch - this.pitch) * 0.12;
+    // Reduced motion: snap rather than ease, so the surface holds a still
+    // frame instead of animating toward one. studio.html publishes this.
+    if (this.reducedMotion) { this.yaw = this.targetYaw; this.pitch = this.targetPitch; }
+    else {
+      this.yaw += (this.targetYaw - this.yaw) * 0.12;
+      this.pitch += (this.targetPitch - this.pitch) * 0.12;
+    }
     // Order follows the camera every frame, including mid-drag and through the
     // easing that continues after the pointer stops.
     this.sortIfViewMoved();
@@ -502,7 +564,11 @@ class AtlasScene {
     gl.uniform1f(u.uSplatScale, c.splatScale);
     gl.uniform1f(u.uDepthScale, c.depthScale);
     gl.uniform1i(u.uMode, this.mode);
-    gl.uniform1f(u.uTime, this.paused ? 0 : elapsedMs * 0.001 * 0.55);
+    // Reduced motion holds the clock at zero; Holo is the only time-varying
+    // mode and it must not animate for a user who asked for stillness.
+    gl.uniform1f(u.uTime, (this.paused || this.reducedMotion) ? 0 : elapsedMs * 0.001 * 0.55);
+    gl.uniform3fv(u.uEye, new Float32Array(f.eye));
+    gl.uniform2f(u.uViewport, w, h);
     gl.uniform3fv(u.uInvCenter, inv.center);
     gl.uniform1f(u.uInvRadius, inv.radius);
     gl.uniform1f(u.uInvStrength, inv.strength);

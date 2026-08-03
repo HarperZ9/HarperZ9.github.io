@@ -1789,7 +1789,11 @@ function drawIfsLightVeil(ctx, width, height, tick, seed, palette) {
   let py = 0;
   const iterations = 42000;
   for (let i = 0; i < iterations; i += 1) {
-    const m = maps[Math.floor(rand(seed, 2400 + (i % 997)) * maps.length)];
+    // The salt must advance with the iteration. Wrapping it at 997 gave the
+    // map sequence a period of 997, so the chaos game converged to a cycle and
+    // 93 percent of the plotted points were redundant: the invariant measure
+    // was never actually sampled. Still fully deterministic per seed.
+    const m = maps[Math.floor(rand(seed, 2400 + i) * maps.length)];
     const nx = px * Math.cos(m.rot) * m.sx - py * Math.sin(m.rot) * m.sx + m.tx;
     const ny = px * Math.sin(m.rot) * m.sy + py * Math.cos(m.rot) * m.sy + m.ty;
     px = nx;
