@@ -156,9 +156,20 @@ function wireAtlasControls() {
 }
 
 function announceAtlasScene(meta, verdict) {
-  const psnr = meta.mean_psnr_after ? ` · held-out PSNR ${meta.mean_psnr_after.toFixed(1)}` : "";
+  // A number without its denominator is not evidence. The held-out figure is
+  // a mean over synthesized views at a fraction of the canonical resolution,
+  // so it is reported with its view count and its scale, or not at all.
+  const views = meta.held_out_views;
+  const psnr = meta.mean_psnr_after
+    ? ` · held-out PSNR ${meta.mean_psnr_after.toFixed(1)} dB mean over ${views || "?"} synthesized views`
+    : "";
   status(`${meta.title} · ${meta.profile} profile · ${(meta.gaussian_count || 0).toLocaleString()} gaussians · receipt ${verdict}${psnr}`,
     verdict === "MATCH" ? "good" : "");
+  const boundary = $("sp-boundary");
+  if (boundary) {
+    const manifest = scene && scene.manifest;
+    boundary.textContent = (manifest && (manifest.claim_boundary || manifest.disclosure)) || "";
+  }
   const splatStatus = $("engine-status-splats");
   if (splatStatus && scene) splatStatus.textContent = `${scene.splatCount.toLocaleString()} active`;
 }

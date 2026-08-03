@@ -204,7 +204,13 @@ class SpatialScene {
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
     for (const veil of this.veils) this.drawVeil(veil, view, proj, time, aspect, false);
+    // The selective Gaussian material is emissive (dust, beam, water, sparks,
+    // bokeh, stars), so additive blending is exactly order-independent and
+    // matches the intended luminous look. Alpha-over here made the composite
+    // depend on buffer order, which is arbitrary.
+    gl.blendFunc(gl.ONE, gl.ONE);
     this.drawPoints(view, proj, time, aspect, h);
+    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 
     if (this.onFrame) this.onFrame({ time, camera: { ...this.cam } });
   }

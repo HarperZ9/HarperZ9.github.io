@@ -369,7 +369,11 @@ class TexturedScene {
 
     gl.depthMask(false);
     for (const name of this.spec.color_order) this.drawMesh(name, supportMix, false, view, proj, time);
+    // Emissive material composites additively, which is order-independent by
+    // construction; the buffer order it was drawn in carried no depth meaning.
+    gl.blendFunc(gl.ONE, gl.ONE);
     this.drawPoints(view, proj, time);
+    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
   }
 }
 
