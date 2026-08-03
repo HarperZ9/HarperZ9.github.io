@@ -1,17 +1,28 @@
 // studio-spatial.js: the Studio's Spatial source.
 //
-// Loads the authored world package, re-checks its receipts byte for byte in
-// the browser (SHA-256 of the sidecar against the manifest), clamps the splat
-// block to the device tier's budget, starts the hybrid renderer, and wires the
-// rail controls. The receipt verdict is spoken in the site's own vocabulary:
-// MATCH, DRIFT, or UNVERIFIABLE, and a DRIFT package is refused, not softened.
+// Serves certified world packages. Every sidecar the manifest receipts is
+// fetched and re-hashed (SHA-256) in the browser before anything renders;
+// a DRIFT package is refused, not softened. Two lanes ship today:
+//   crystal-city  reconstruction lane: the spatial session's Crystal City
+//                 hybrid scene, extracted byte-exact from the v1.3 proof.
+//   folded-light  authored lane: seed-generated veils + Gaussian material.
+// The manifest's mode field picks the renderer.
 
+import { validateWorldPackage } from "./engine/world-package.js";
 import { startSpatialScene } from "./spatial-scene.js";
+import { startTexturedScene } from "./spatial-textured.js";
 
-const PACKAGE_URL = "art/spatial/folded-light.world.json";
+const PACKAGES = Object.freeze({
+  "crystal-city": "art/spatial/crystal-city/crystal-city.world.json",
+  "folded-light": "art/spatial/folded-light.world.json",
+});
+const DEFAULT_WORLD = "crystal-city";
 
 let scene = null;
 let paused = false;
+let currentWorld = DEFAULT_WORLD;
+let currentCanvas = null;
+let currentOpts = null;
 
 function $(id) { return document.getElementById(id); }
 
@@ -28,35 +39,52 @@ async function sha256Hex(bytes) {
   return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-async function fetchPackage() {
-  const manifestResponse = await fetch(PACKAGE_URL, { cache: "no-cache" });
+async function fetchBytes(url) {
+  const response = await fetch(url, { cache: "no-cache" });
+  if (!response.ok) throw new Error(`${url}: HTTP ${response.status}`);
+  return new Uint8Array(await response.arrayBuffer());
+}
+
+// Fetch the manifest plus every receipted sidecar, re-hash each, and return
+// the package with one overall verdict: MATCH only if every file matches.
+async function fetchPackage(world) {
+  const manifestUrl = PACKAGES[world];
+  const base = manifestUrl.slice(0, manifestUrl.lastIndexOf("/") + 1);
+  const manifestResponse = await fetch(manifestUrl, { cache: "no-cache" });
   if (!manifestResponse.ok) throw new Error(`manifest: HTTP ${manifestResponse.status}`);
   const manifest = await manifestResponse.json();
-  const sidecar = manifest.splats && manifest.splats.sidecar;
-  if (!sidecar) throw new Error("manifest names no splat sidecar");
-  const binResponse = await fetch(`art/spatial/${sidecar}`, { cache: "no-cache" });
-  if (!binResponse.ok) throw new Error(`sidecar: HTTP ${binResponse.status}`);
-  const bytes = new Uint8Array(await binResponse.arrayBuffer());
+  const verdictOf = validateWorldPackage(manifest);
+  if (!verdictOf.ok) throw new Error(`world package refused: ${verdictOf.failureCode} at ${verdictOf.field}`);
 
-  const expected = manifest.receipts && manifest.receipts[sidecar];
-  const actual = await sha256Hex(bytes);
-  let verdict = "UNVERIFIABLE";
-  if (actual && expected) verdict = actual === expected ? "MATCH" : "DRIFT";
-  return { manifest, splatBytes: bytes, verdict };
+  const names = Object.keys(manifest.receipts);
+  const files = {};
+  let verdict = "MATCH";
+  for (const name of names) {
+    const bytes = await fetchBytes(base + name);
+    files[name] = bytes;
+    const actual = await sha256Hex(bytes);
+    if (!actual) verdict = "UNVERIFIABLE";
+    else if (actual !== manifest.receipts[name] && verdict !== "UNVERIFIABLE") verdict = "DRIFT";
+  }
+  return { manifest, files, verdict, checked: names.length };
 }
 
 function wireControls() {
+  const map = {
+    "crystal-city": { "sp-drift": "atmosphereFlow", "sp-glow": "glow", "sp-water": "waterFlow", "sp-parallax": "parallax" },
+    "folded-light": { "sp-drift": "drift", "sp-glow": "glow", "sp-water": "water", "sp-parallax": "parallax" },
+  }[currentWorld];
   const bindings = [
-    ["sp-parallax", "parallax", "sp-parallax-val"],
-    ["sp-drift", "drift", "sp-drift-val"],
-    ["sp-glow", "glow", "sp-glow-val"],
-    ["sp-water", "water", "sp-water-val"],
+    ["sp-parallax", "sp-parallax-val"],
+    ["sp-drift", "sp-drift-val"],
+    ["sp-glow", "sp-glow-val"],
+    ["sp-water", "sp-water-val"],
   ];
-  for (const [id, control, valueId] of bindings) {
+  for (const [id, valueId] of bindings) {
     const el = $(id);
     if (!el) continue;
     el.oninput = () => {
-      if (scene) scene.setControl(control, el.value);
+      if (scene) scene.setControl(map[id], el.value);
       const out = $(valueId);
       if (out) out.textContent = Number(el.value).toFixed(2);
     };
@@ -77,16 +105,28 @@ function wireControls() {
       const blob = new Blob([JSON.stringify(scene.receipt(), null, 2)], { type: "application/json" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = "folded-light-run-receipt.json";
+      a.download = `${currentWorld}-run-receipt.json`;
       a.click();
       setTimeout(() => URL.revokeObjectURL(a.href), 1500);
     };
   }
+  document.querySelectorAll("[data-world]").forEach((chip) => {
+    chip.classList.toggle("active", chip.dataset.world === currentWorld);
+    chip.onclick = () => {
+      if (chip.dataset.world === currentWorld || !currentCanvas) return;
+      currentWorld = chip.dataset.world;
+      startSpatial(currentCanvas, currentOpts || {}).catch((err) => {
+        status("the world failed to start: " + (err && err.message ? err.message : String(err)), "bad");
+      });
+    };
+  });
 }
 
-// Camera drag on the canvas: the same narrow-boundary interaction grammar as
-// the session's proof. The package's clamps are enforced inside the scene.
+// Camera drag on the canvas: the narrow-boundary interaction grammar from the
+// session's proof. The package's clamps are enforced inside the scene.
 function wireCamera(canvas) {
+  if (canvas.dataset.spatialCameraWired === "1") return;
+  canvas.dataset.spatialCameraWired = "1";
   let dragging = false;
   let last = [0, 0];
   canvas.style.touchAction = "none";
@@ -112,11 +152,20 @@ function wireCamera(canvas) {
 }
 
 // Entry point for studio.js. canvas is the mounted GL canvas; opts carries the
-// hardware render plan (for the splat budget) and the reduced-motion flag.
+// hardware render plan (splat budget) and the reduced-motion flag. A ?world=
+// deep link (snapshotted at head, before the Atelier rewrites the URL) picks
+// the package on first entry.
 export async function startSpatial(canvas, opts = {}) {
   stopSpatial();
+  currentCanvas = canvas;
+  currentOpts = opts;
+  if (!startSpatial._bootConsumed) {
+    startSpatial._bootConsumed = true;
+    const want = (window.__studioBootWorld || "").trim();
+    if (want && PACKAGES[want]) currentWorld = want;
+  }
   status("loading the world package…", "");
-  const { manifest, splatBytes, verdict } = await fetchPackage();
+  const { manifest, files, verdict, checked } = await fetchPackage(currentWorld);
 
   const verdictEl = $("sp-verdict");
   if (verdictEl) {
@@ -124,17 +173,21 @@ export async function startSpatial(canvas, opts = {}) {
     verdictEl.dataset.verdict = verdict;
   }
   if (verdict === "DRIFT") {
-    status("receipt DRIFT: the sidecar does not match its manifest hash. Refusing to render.", "bad");
+    status("receipt DRIFT: a sidecar does not match its manifest hash. Refusing to render.", "bad");
     throw new Error("world package receipt DRIFT");
   }
 
   const budget = opts.plan && Number(opts.plan.splatBudget) > 0
     ? Number(opts.plan.splatBudget)
     : Infinity;
-  scene = await startSpatialScene(canvas, { manifest, splatBytes }, {
-    splatBudget: budget,
-    reducedMotion: !!opts.reducedMotion,
-  });
+  const sceneOpts = { splatBudget: budget, reducedMotion: !!opts.reducedMotion };
+  scene = manifest.mode === "textured-hybrid"
+    ? await startTexturedScene(canvas, { manifest, files }, sceneOpts)
+    : await startSpatialScene(canvas, {
+        manifest,
+        splatBytes: files[manifest.splats.sidecar],
+      }, sceneOpts);
+  window.__spatialScene = scene;   // honest, inspectable (same pattern as __studioCapability)
   paused = false;
   wireControls();
   wireCamera(canvas);
@@ -142,7 +195,8 @@ export async function startSpatial(canvas, opts = {}) {
   const budgetNote = scene.splatsDropped
     ? `${scene.splatCount.toLocaleString()} drawn, ${scene.splatsDropped.toLocaleString()} held back for this tier`
     : `${scene.splatCount.toLocaleString()} drawn`;
-  status(`${manifest.title} · receipt ${verdict} · ${budgetNote}`, verdict === "MATCH" ? "good" : "");
+  status(`${manifest.title} · ${manifest.lane} lane · receipt ${verdict} across ${checked} files · ${budgetNote}`,
+    verdict === "MATCH" ? "good" : "");
   const splatStatus = $("engine-status-splats");
   if (splatStatus) {
     splatStatus.textContent = Number.isFinite(budget)
@@ -153,12 +207,14 @@ export async function startSpatial(canvas, opts = {}) {
     animating: scene.animating,
     splatCount: scene.splatCount,
     verdict,
+    world: currentWorld,
   };
 }
 
 export function stopSpatial() {
   if (scene) {
     try { scene.stop(); } catch (_) { /* context may already be lost */ }
+    if (window.__spatialScene === scene) window.__spatialScene = null;
     scene = null;
   }
 }

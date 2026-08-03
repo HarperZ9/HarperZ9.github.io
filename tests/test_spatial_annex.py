@@ -66,6 +66,26 @@ def test_builder_is_deterministic() -> None:
         assert json.loads((rebuilt / "folded-light.world.json").read_text(encoding="utf-8")) == load_manifest()
 
 
+def test_crystal_city_package_receipts() -> None:
+    cc = WORLD_DIR / "crystal-city"
+    manifest = json.loads((cc / "crystal-city.world.json").read_text(encoding="utf-8"))
+    assert manifest["schema"] == "zentropy.world-package/v1"
+    assert manifest["lane"] == "reconstruction"
+    assert manifest["mode"] == "textured-hybrid"
+    assert "not a scan" in manifest["disclosure"]
+    assert "invented" in manifest["disclosure"]
+    for name, expected in manifest["receipts"].items():
+        blob = (cc / name).read_bytes()
+        assert hashlib.sha256(blob).hexdigest() == expected, f"receipt drift: {name}"
+    splats = (cc / manifest["splats"]["sidecar"]).read_bytes()
+    assert len(splats) % RECORD_BYTES == 0
+    assert len(splats) // RECORD_BYTES == manifest["splats"]["count"]
+    kinds = set()
+    for offset in range(0, len(splats), RECORD_BYTES):
+        kinds.add(int(struct.unpack_from("<10f", splats, offset)[8]))
+    assert kinds <= set(range(8)), "unknown splat kind id in Crystal City sidecar"
+
+
 def test_editions_ledger_is_honest() -> None:
     ledger = json.loads(EDITIONS.read_text(encoding="utf-8"))
     assert ledger["schema"] == "zentropy.editions/v1"
@@ -76,11 +96,15 @@ def test_editions_ledger_is_honest() -> None:
     for fabrication in ("collector", "sold", "price", "wallet", "0x"):
         assert fabrication not in text, f"editions ledger must not fabricate sales language: {fabrication}"
     editions = ledger["editions"]
-    assert len(editions) == 20
+    assert len(editions) == 21
     assert all(ed["seed"] and ed["provenance"] for ed in editions)
     spatial = [ed for ed in editions if ed["kind"] == "spatial"]
-    assert len(spatial) == 1
-    assert spatial[0]["run"] == "studio.html?source=spatial"
+    assert len(spatial) == 2
+    runs = {ed["run"] for ed in spatial}
+    assert runs == {
+        "studio.html?source=spatial&world=crystal-city",
+        "studio.html?source=spatial&world=folded-light",
+    }
 
 
 def test_gallery_serves_the_editions_desk() -> None:

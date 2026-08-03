@@ -38,8 +38,12 @@ export async function startSpatialScene(canvas, pkg, opts = {}) {
   if (!verdict.ok) {
     throw new Error(`world package refused: ${verdict.failureCode} at ${verdict.field}`);
   }
-  const gl = canvas.getContext("webgl", { antialias: true, alpha: false })
-    || canvas.getContext("experimental-webgl");
+  // preserveDrawingBuffer: the Studio's perception loop, PNG export, and WebM
+  // capture all read the canvas back outside the rAF callback (site-wide GL
+  // convention; see fractal3d.js and fractal-gl.js).
+  const glOptions = { preserveDrawingBuffer: true, antialias: true, alpha: false };
+  const gl = canvas.getContext("webgl", glOptions)
+    || canvas.getContext("experimental-webgl", glOptions);
   if (!gl) throw new Error("WebGL is unavailable on this device");
 
   const parsed = parseSplatRecords(pkg.splatBytes, pkg.manifest.splats.count);
@@ -123,10 +127,17 @@ class SpatialScene {
   }
 
   stop() {
+    // A stop is a render-loop stop plus resource release, NOT a context
+    // teardown: the Studio swaps world packages on one shared GL canvas, and
+    // losing the context here would kill the next scene (and trip the
+    // source-level contextlost handler). leave3D() owns context release.
     this.stopped = true;
     if (this.raf) cancelAnimationFrame(this.raf);
-    const lose = this.gl.getExtension("WEBGL_lose_context");
-    if (lose) { try { lose.loseContext(); } catch (_) { /* already lost */ } }
+    const gl = this.gl;
+    try {
+      for (const p of [this.backdropProgram, this.veilProgram, this.pointProgram]) gl.deleteProgram(p);
+      for (const b of [this.quadBuffer, this.gridVB, this.gridIB, this.pointBuffer]) gl.deleteBuffer(b);
+    } catch (_) { /* context may already be lost */ }
   }
 
   setControl(name, value) {

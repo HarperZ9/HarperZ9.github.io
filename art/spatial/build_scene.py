@@ -142,6 +142,7 @@ def main() -> None:
     manifest = {
         "schema": SCHEMA,
         "lane": "authored",
+        "mode": "procedural-veils",
         "title": TITLE,
         "seed": SEED,
         "published": "2026-08-03",

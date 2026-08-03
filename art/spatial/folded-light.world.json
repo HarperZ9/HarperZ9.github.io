@@ -1,6 +1,7 @@
 {
   "schema": "zentropy.world-package/v1",
   "lane": "authored",
+  "mode": "procedural-veils",
   "title": "Folded light, inhabited",
   "seed": "folded-light-inhabited",
   "published": "2026-08-03",

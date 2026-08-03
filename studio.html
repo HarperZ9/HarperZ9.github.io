@@ -25,7 +25,7 @@
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
      globals, not the live URL. ASCII only. -->
-<script>(function(){var p=new URLSearchParams(location.search);window.__studioBootSource=p.get("source")||"";window.__studioBootHero=p.get("hero")==="1";window.__studioBootSeed=p.get("seed")||"";})();</script>
+<script>(function(){var p=new URLSearchParams(location.search);window.__studioBootSource=p.get("source")||"";window.__studioBootHero=p.get("hero")==="1";window.__studioBootSeed=p.get("seed")||"";window.__studioBootWorld=p.get("world")||"";})();</script>
 </head>
 <body class="studio-page">
 
@@ -337,13 +337,14 @@
       <section class="src-block" id="src-spatial" role="tabpanel" aria-label="Spatial world controls" hidden>
         <div class="fractal-source" id="spatial-source">
           <div class="at-panel">
-            <p class="transform-note">An authored spatial world, served as a certified package. The scene is generated from its named seed; the sidecar bytes are re-checked against the manifest hash before anything renders. Drag the frame to move inside the disclosed camera boundary; splats follow your device tier's budget.</p>
+            <p class="transform-note">Certified world packages on the hybrid renderer. Every sidecar is re-hashed against its manifest receipt before anything renders. Crystal City is the spatial session's generated artwork: semantic depth meshes carry the composition, Gaussian primitives carry only the atmosphere, and the invented support fill stays labeled. Drag the frame to move inside the disclosed camera boundary; splats follow your device tier's budget.</p>
             <details class="rail-group" open>
               <summary>World</summary>
               <div class="at-group">
-                <span class="at-glab">Package <span class="hint">authored lane &middot; seed folded-light-inhabited</span></span>
+                <span class="at-glab">Package <span class="hint">reconstruction &middot; authored: two lanes, each labeled</span></span>
                 <div class="at-chips" role="group" aria-label="World package">
-                  <button type="button" class="chip active" disabled>Folded light, inhabited</button>
+                  <button type="button" class="chip active" data-world="crystal-city">Crystal City</button>
+                  <button type="button" class="chip" data-world="folded-light">Folded light</button>
                 </div>
               </div>
               <div class="at-group">

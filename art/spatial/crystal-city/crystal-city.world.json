@@ -1,0 +1,164 @@
+{
+  "schema": "zentropy.world-package/v1",
+  "lane": "reconstruction",
+  "mode": "textured-hybrid",
+  "title": "Crystal City of Light and Wonder",
+  "seed": "crystal_city_of_light_and_wonder.png",
+  "published": "2026-08-03",
+  "disclosure": "A generated spatial interpretation of one canonical 2D artwork, not a scan or measured reconstruction. Semantic depth meshes carry the composition; Gaussian primitives carry only atmosphere, beam energy, water, sparks, bokeh, and glints. Newly exposed regions use a deterministic support fill that is invented material and is labeled as such. Extracted byte-exact from Crystal City Hybrid Proof v1.3.",
+  "source_receipt": {
+    "artwork": "crystal_city_of_light_and_wonder.png",
+    "embedded_rgb_sha256": "8d818f78cb9f7e5e2884c832ebfd49f15eeda8516cdeccc44068857c9209b08d",
+    "dimensions": {
+      "width": 1024,
+      "height": 1280
+    }
+  },
+  "camera": {
+    "maxX": 0.045,
+    "maxY": 0.03,
+    "maxDolly": 0.12
+  },
+  "layers": [
+    {
+      "name": "witness",
+      "depth": 0.0
+    },
+    {
+      "name": "water",
+      "depth": 0.125
+    },
+    {
+      "name": "beam",
+      "depth": 0.25
+    },
+    {
+      "name": "membrane",
+      "depth": 0.375
+    },
+    {
+      "name": "celestials",
+      "depth": 0.5
+    },
+    {
+      "name": "city",
+      "depth": 0.625
+    },
+    {
+      "name": "portal",
+      "depth": 0.75
+    },
+    {
+      "name": "haze",
+      "depth": 0.875
+    },
+    {
+      "name": "deep_sky",
+      "depth": 1.0
+    }
+  ],
+  "textured": {
+    "width": 1024,
+    "height": 1280,
+    "mask_width": 512,
+    "mask_height": 640,
+    "color_order": [
+      "deep_sky",
+      "haze",
+      "portal",
+      "city",
+      "celestials",
+      "membrane",
+      "beam",
+      "water",
+      "witness"
+    ],
+    "structural": [
+      "portal",
+      "city",
+      "celestials",
+      "membrane",
+      "water",
+      "witness"
+    ],
+    "field_order": [
+      "mask/deep_sky",
+      "mask/haze",
+      "mask/celestials",
+      "mask/portal",
+      "mask/city",
+      "mask/membrane",
+      "mask/beam",
+      "mask/water",
+      "mask/witness",
+      "depth/deep_sky",
+      "depth/haze",
+      "depth/celestials",
+      "depth/portal",
+      "depth/city",
+      "depth/membrane",
+      "depth/beam",
+      "depth/water",
+      "depth/witness",
+      "depth/support",
+      "confidence"
+    ],
+    "rasters": {
+      "source": "source.png",
+      "support": "support.jpg",
+      "backdrop": "backdrop.jpg",
+      "atmosphere": "atmosphere.jpg",
+      "fields": "fields.png"
+    },
+    "defaults": {
+      "parallax": 0.7,
+      "skyCurve": 0.24,
+      "atmosphereDensity": 0.88,
+      "hazeOpacity": 0.34,
+      "atmosphereFlow": 0.28,
+      "bokehScale": 1.05,
+      "beamFlow": 0.36,
+      "glow": 0.52,
+      "waterFlow": 0.2
+    },
+    "water_horizon": 0.61
+  },
+  "splats": {
+    "count": 23850,
+    "kinds": [
+      "dust",
+      "beam",
+      "water",
+      "stars",
+      "spark",
+      "bokeh",
+      "haze",
+      "glint"
+    ],
+    "kind_semantics": {
+      "0": "city glints",
+      "1": "beam energy",
+      "2": "water",
+      "3": "deep-sky volume",
+      "4": "structural sparks (membrane, witness)",
+      "5": "bokeh",
+      "6": "haze dust",
+      "7": "celestial glints"
+    },
+    "record_bytes": 40,
+    "sidecar": "splats.bin"
+  },
+  "provenance": {
+    "session": "ZentropyLabs spatial session, Crystal City Hybrid Proof v1.0 to v1.3",
+    "standalone": "Crystal_City_Hybrid_Proof_v1.3_Standalone.html",
+    "extractor": "art/spatial/extract_crystal_city.py"
+  },
+  "receipts": {
+    "source.png": "c67bcd7c16b24839e80ba08f5a68ce4c019de8ca1142a910252582e9bf5ae80c",
+    "support.jpg": "d1142374aa771a4539196c6e1a07481791ddeb1aa67a2ebe4a608ae3384764e6",
+    "backdrop.jpg": "720a7e4050b45070f559036d540d6d9b87c9958c964485a3a9d28fb461a4df7c",
+    "atmosphere.jpg": "ba6f81946b99db048cf24aefa4d46e2690f199d9abb2e56ce61d3b8c4db13bd0",
+    "fields.png": "5a6279641a0c4d87a1bc7280bcb73c789c25e47aeb95349a180735359a7a7bc8",
+    "splats.bin": "12ce873c470369fdfa3b7345dac4c020d737457667c2e02938bbadb25a71f85c"
+  }
+}

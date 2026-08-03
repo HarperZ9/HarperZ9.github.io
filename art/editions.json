@@ -32,6 +32,7 @@
     { "plate": "17", "title": "Clifford, a strange attractor's cloud", "kind": "seeded", "seed": "gallery-clifford", "instruments": "clifford", "provenance": "system/generative-field.js" },
     { "plate": "18", "title": "Phyllotaxis, the sunflower spiral", "kind": "seeded", "seed": "gallery-phyllotaxis", "instruments": "phyllotaxis", "provenance": "system/generative-field.js" },
     { "plate": "19", "title": "Planet limb, closing", "kind": "seeded", "seed": "gallery-plate-07", "instruments": "planet-limb", "provenance": "system/generative-field.js" },
-    { "plate": "20", "title": "Folded light, inhabited", "kind": "spatial", "seed": "folded-light-inhabited", "instruments": "veil layers + selective Gaussian material", "provenance": "art/spatial/folded-light.world.json", "run": "studio.html?source=spatial" }
+    { "plate": "20", "title": "Crystal City of Light and Wonder", "kind": "spatial", "seed": "crystal_city_of_light_and_wonder.png", "instruments": "semantic depth meshes + selective Gaussian atmosphere", "provenance": "art/spatial/crystal-city/crystal-city.world.json", "run": "studio.html?source=spatial&world=crystal-city" },
+    { "plate": "21", "title": "Folded light, inhabited", "kind": "spatial", "seed": "folded-light-inhabited", "instruments": "veil layers + selective Gaussian material", "provenance": "art/spatial/folded-light.world.json", "run": "studio.html?source=spatial&world=folded-light" }
   ]
 }
