@@ -98,6 +98,14 @@ let _sound = null;
 const loadSound = lazyLoader(() => import("./studio-sound.js"), m => { _sound = m; });
 let _soundSeed = "aurora";
 
+// Spatial source: the authored world package + hybrid renderer. The module
+// re-checks the package's byte receipts before it draws, clamps the splat
+// block to the device tier's budget, and holds a still frame under reduced
+// motion (mirrors the neural instrument's static flag).
+let _spatial = null;
+const loadSpatial = lazyLoader(() => import("./studio-spatial.js"), m => { _spatial = m; });
+let _spatialStatic = false;   // true when reduced motion holds a single frame
+
 // BYO media: pixel effects, mesh transforms, universal import/export, local-model adapter.
 let _effects = null;
 const loadEffects = lazyLoader(() => import("./studio-effects.js"), m => { _effects = m; });
@@ -384,6 +392,7 @@ const SOURCES = {
   fractal:   { block: "src-fractal",   mode: "generate" },
   fractal3d: { block: "src-fractal3d", mode: "generate" },
   ndim:      { block: "src-ndim",      mode: "generate" },
+  spatial:   { block: "src-spatial",   mode: "generate" },
   music:     { block: "src-music",     mode: "generate" },
   byo:       { block: "src-byo",       mode: "byo" },
   watch:     { block: "src-watch",     mode: "byo" },
@@ -443,6 +452,7 @@ function setSource(next) {
     if (_showcase)  { try { _showcase.stopShowcase(); } catch (_) {} }
     if (_neural)    { try { _neural.stopNeural(); } catch (_) {} }
     if (_sound)     { try { _sound.stopSound(); } catch (_) {} }
+    if (_spatial)   { try { _spatial.stopSpatial(); } catch (_) {} }
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
@@ -472,7 +482,7 @@ function setSource(next) {
   // Mark the stage interactive (grab cursor + drag affordance) for the camera-driven sources.
   // ndim is now a camera source too (P2 directive a): wheel dollies the camera into the volume.
   const stageEl = document.getElementById("viewport-stage");
-  if (stageEl) stageEl.classList.toggle("cam-interactive", next === "fractal" || next === "fractal3d" || next === "ndim");
+  if (stageEl) stageEl.classList.toggle("cam-interactive", next === "fractal" || next === "fractal3d" || next === "ndim" || next === "spatial");
   // Music is an animated source: the reactive engine (or its idle loop) paints the canvas every
   // frame, so the perception loop must be reading it. Other sources arm their own loop from their
   // entry/play path; music has no settle-frame, so arm it here. The loop self-idles only for static
@@ -530,6 +540,35 @@ function setSource(next) {
       try { mod.startSound($("studio-canvas"), { seed: _soundSeed }); } catch (_) {}
       startMeterLoop();
     }).catch(err => { say("model", "The sound instrument failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
+  // Spatial: mount a GL canvas (same swap discipline as fractal3d), then let the
+  // module fetch + receipt-check the world package and start the hybrid world
+  // under the device tier's splat budget. A DRIFT receipt refuses to render.
+  if (next === "spatial") {
+    loadSpatial().then(async mod => {
+      if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
+      const c = canvasIsGL ? $("studio-canvas") : mountGLCanvas();
+      glFractal2D = false;
+      canvasIsGL = true;
+      sizeCanvas(c);
+      const reduced = typeof window.matchMedia === "function" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const plan = makeHardwareRenderPlan(_engineCapability, { width: c.width, height: c.height, splats: 10500 }, engineTierOverride);
+      try {
+        const res = await mod.startSpatial(c, { plan, reducedMotion: reduced });
+        if (epoch !== _sourceEpoch) { mod.stopSpatial(); return; }
+        _spatialStatic = !(res && res.animating);
+        startMeterLoop();
+        c.addEventListener("webglcontextlost", (e) => {
+          e.preventDefault();
+          leave3D();
+          say("model", "The GPU context was lost; re-enter Spatial to bring the world back.");
+        }, { once: true });
+      } catch (err) {
+        leave3D();
+        say("model", "The spatial world failed to start: " + (err && err.message ? err.message : String(err)));
+      }
+    }).catch(err => { say("model", "The spatial engine failed to load: " + (err && err.message ? err.message : String(err))); });
   }
   // Prefetch the graphs the entered source is about to need. Idempotent (cached promise); a
   // prefetch failure is logged here and the first real use re-attempts and surfaces it to the user.
@@ -2859,7 +2898,7 @@ function liveTick(ts) {
     if (++staticTicks >= STATIC_STOP) {
       // Showcase graph is lazy: before it loads (start still in flight) treat the scene as NOT
       // settled, i.e. animated, matching studio-loop's no-state behavior for the showcase source.
-      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: _showcase ? _showcase.showcaseSettled() : false, neuralStatic: _neuralStatic });
+      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: _showcase ? _showcase.showcaseSettled() : false, neuralStatic: _neuralStatic, spatialStatic: _spatialStatic });
       if (shouldHaltOnStatic(true, animated)) { stopMeterLoop(); return; }
       staticTicks = 0;   // animated: do not halt, but reset so we re-arm the window cleanly
     }
