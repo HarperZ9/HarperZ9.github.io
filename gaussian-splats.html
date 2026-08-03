@@ -122,12 +122,13 @@
 
   <section class="section" aria-labelledby="boundary-title">
     <div class="section-head"><h2 id="boundary-title">Current boundary.</h2><p class="section-copy">Source selection and receipts are complete. Scene generation is not.</p></div>
-    <div class="boundary"><strong>No Gaussian-splat scene is being represented as finished on this page.</strong> The three source PNGs and their hashes are prepared. Actual generation through <code>neilsonnn/image-blaster</code> requires the upstream service credentials to be configured locally or in a protected secret store. A single-image result will be described as a generated spatial interpretation, not a scan or measured reconstruction.</div>
+    <div class="boundary"><strong>No Gaussian-splat scene is being represented as finished on this page.</strong> The three source PNGs and their hashes are prepared. The generation route is now this repository's own native pipeline: the hybrid renderer and the certified world-package contract in <code>system/spatial-scene.js</code> and <code>system/engine/world-package.js</code>, with no hosted model, no credentials, and no metered endpoint. A single-image result will be described as a generated spatial interpretation, not a scan or measured reconstruction. Both lanes already run in <a href="studio.html?source=spatial">the Studio's Spatial source</a>: the reconstruction lane serves the session's Crystal City hybrid scene (a generated spatial interpretation of one canonical artwork, its invented support fill labeled), and the authored lane serves a world whose every primitive is generated from a named seed. These three pilot sources remain unreconstructed until each has its own composition profile, and each lane is labeled as what it is.</div>
     <nav class="splat-links" aria-label="Gaussian Splat Lab resources">
       <a href="art/gaussian-splats/manifest.json">Pilot manifest</a>
       <a href="art/gaussian-splats/README.md">Runbook</a>
       <a href="https://github.com/HarperZ9/HarperZ9.github.io/issues/81">Generation tracker</a>
-      <a href="https://github.com/neilsonnn/image-blaster">Upstream generator</a>
+      <a href="studio.html?source=spatial">Native engine, live</a>
+      <a href="art/spatial/folded-light.world.json">Authored world package</a>
       <a href="current-story.html">Canonical visual sequence</a>
     </nav>
   </section>

@@ -25,7 +25,7 @@
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
      globals, not the live URL. ASCII only. -->
-<script>(function(){var p=new URLSearchParams(location.search);window.__studioBootSource=p.get("source")||"";window.__studioBootHero=p.get("hero")==="1";window.__studioBootSeed=p.get("seed")||"";})();</script>
+<script>(function(){var p=new URLSearchParams(location.search);window.__studioBootSource=p.get("source")||"";window.__studioBootHero=p.get("hero")==="1";window.__studioBootSeed=p.get("seed")||"";window.__studioBootWorld=p.get("world")||"";window.__studioBootScene=p.get("scene")||"";})();</script>
 </head>
 <body class="studio-page">
 
@@ -53,6 +53,7 @@
         <button type="button" role="tab" data-source="fractal"   aria-selected="false" aria-controls="src-fractal"   tabindex="-1">2D Fractal</button>
         <button type="button" role="tab" data-source="fractal3d" aria-selected="false" aria-controls="src-fractal3d" tabindex="-1">3D Fractal</button>
         <button type="button" role="tab" data-source="ndim"      aria-selected="false" aria-controls="src-ndim"      tabindex="-1">Dimensions</button>
+        <button type="button" role="tab" data-source="spatial"   aria-selected="false" aria-controls="src-spatial"   tabindex="-1">Spatial</button>
         <button type="button" role="tab" data-source="poster"    aria-selected="false" aria-controls="src-poster"    tabindex="-1">Poster</button>
         <button type="button" role="tab" data-source="neural"    aria-selected="false" aria-controls="src-neural"    tabindex="-1">Living neural</button>
         <button type="button" role="tab" data-source="sound"     aria-selected="false" aria-controls="src-sound"     tabindex="-1">Seed sound</button>
@@ -326,6 +327,85 @@
               <button class="btn" id="ndim-render" type="button">Render</button>
             </div>
             <p class="src-hint">The eye perceives each frame as it rotates through dimensions you can't quite hold. Scroll to dolly the camera in, drag to orbit, click to paint.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SOURCE: Spatial. The authored world package on the hybrid renderer: seed-derived light
+           veils on depth planes plus selective Gaussian material, receipt-checked byte for byte
+           before it draws. Wired by studio-spatial.js; the splat budget follows the device tier. -->
+      <section class="src-block" id="src-spatial" role="tabpanel" aria-label="Spatial world controls" hidden>
+        <div class="fractal-source" id="spatial-source">
+          <div class="at-panel">
+            <p class="transform-note">Certified world packages on the hybrid renderer. Every sidecar is re-hashed against its manifest receipt before anything renders. Crystal City is the spatial session's generated artwork: semantic depth meshes carry the composition, Gaussian primitives carry only the atmosphere, and the invented support fill stays labeled. Drag the frame to move inside the disclosed camera boundary; splats follow your device tier's budget.</p>
+            <details class="rail-group" open>
+              <summary>World</summary>
+              <div class="at-group">
+                <span class="at-glab">Package <span class="hint">reconstruction &middot; authored: two lanes, each labeled</span></span>
+                <div class="at-chips" role="group" aria-label="World package">
+                  <button type="button" class="chip active" data-world="atlas">The Atlas</button>
+                  <button type="button" class="chip" data-world="crystal-city">Crystal City</button>
+                  <button type="button" class="chip" data-world="folded-light">Folded light</button>
+                </div>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Receipt <span class="hint">sidecar bytes against the manifest hash</span></span>
+                <span class="at-seed" id="sp-verdict" data-verdict="pending" style="width:auto;text-align:center">pending</span>
+              </div>
+            </details>
+            <details class="rail-group" open id="sp-atlas-block">
+              <summary>Atlas scene</summary>
+              <div class="at-group">
+                <span class="at-glab">Work <span class="hint">27 spatial studies, one per artwork</span></span>
+                <select id="sp-scene" class="at-seed" style="width:100%" aria-label="Atlas scene"></select>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Transform <span class="hint">a spatial transformation of the field, never an image filter</span></span>
+                <div class="at-chips" role="group" aria-label="Atlas transform mode">
+                  <button type="button" class="chip active" data-atlas-mode="0">Field</button>
+                  <button type="button" class="chip" data-atlas-mode="1">Inversphere</button>
+                  <button type="button" class="chip" data-atlas-mode="3">Holo</button>
+                </div>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Depth <span class="hint">(<span id="sp-depth-val">1.00</span>)</span></span>
+                <input type="range" class="at-slider" id="sp-depth" min="0.2" max="2.2" step="0.01" value="1" aria-label="Depth scale">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Splat size <span class="hint">(<span id="sp-size-val">1.00</span>)</span></span>
+                <input type="range" class="at-slider" id="sp-size" min="0.3" max="2.5" step="0.01" value="1" aria-label="Splat size">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Exposure <span class="hint">(<span id="sp-exposure-val">1.00</span>)</span></span>
+                <input type="range" class="at-slider" id="sp-exposure" min="0.4" max="2.4" step="0.01" value="1" aria-label="Exposure">
+              </div>
+              <p class="src-hint">Drag to orbit, wheel to dolly, double-click resets. Needs WebGL2; the hybrid worlds run everywhere.</p>
+            </details>
+            <details class="rail-group" open id="sp-hybrid-block" hidden>
+              <summary>Camera &amp; material</summary>
+              <div class="at-group">
+                <span class="at-glab">Parallax strength <span class="hint">(<span id="sp-parallax-val">0.70</span>)</span></span>
+                <input type="range" class="at-slider" id="sp-parallax" min="0" max="1.2" step="0.01" value="0.7" aria-label="Parallax strength">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Atmosphere drift <span class="hint">dust + veil breathing (<span id="sp-drift-val">0.35</span>)</span></span>
+                <input type="range" class="at-slider" id="sp-drift" min="0" max="1.5" step="0.01" value="0.35" aria-label="Atmosphere drift">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Luminous gain <span class="hint">(<span id="sp-glow-val">0.50</span>)</span></span>
+                <input type="range" class="at-slider" id="sp-glow" min="0" max="2.2" step="0.01" value="0.5" aria-label="Luminous gain">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Water motion <span class="hint">glint shimmer (<span id="sp-water-val">0.25</span>)</span></span>
+                <input type="range" class="at-slider" id="sp-water" min="0" max="1.2" step="0.01" value="0.25" aria-label="Water motion">
+              </div>
+            </details>
+            <div class="at-actions">
+              <button class="btn ghost" id="sp-pause" type="button" aria-pressed="false">pause motion</button>
+              <button class="btn ghost" id="sp-receipt" type="button" title="Export the run receipt: package, boundary, budget, controls">export run receipt</button>
+            </div>
+            <p class="src-hint" id="sp-status" aria-live="polite">the world loads when you enter this source</p>
+            <p class="src-hint">Motion is material-scoped: dust drifts, the beam carries current, water shimmers, and the veils breathe; nothing structural ripples. Reduced motion holds a single still frame.</p>
           </div>
         </div>
       </section>
@@ -991,7 +1071,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js"></script>
-<script type="module" src="system/studio.js?v=20260710a"></script>
+<script type="module" src="system/studio.js?v=20260803a"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

@@ -1,0 +1,59 @@
+{
+  "schema": "zentropy.world-package/v1",
+  "lane": "authored",
+  "mode": "procedural-veils",
+  "title": "Folded light, inhabited",
+  "seed": "folded-light-inhabited",
+  "published": "2026-08-03",
+  "disclosure": "Authored spatial scene. Every layer and every Gaussian primitive is generated from the named seed by this repository's own deterministic builder; nothing is reconstructed from an image, so nothing hidden was invented. The camera boundary below is the proof boundary.",
+  "camera": {
+    "maxX": 0.045,
+    "maxY": 0.03,
+    "maxDolly": 0.12
+  },
+  "layers": [
+    {
+      "name": "deep_veil",
+      "depth": 0.95
+    },
+    {
+      "name": "far_veil",
+      "depth": 0.75
+    },
+    {
+      "name": "mid_veil",
+      "depth": 0.55
+    },
+    {
+      "name": "near_veil",
+      "depth": 0.22
+    }
+  ],
+  "splats": {
+    "count": 10500,
+    "kinds": [
+      "dust",
+      "beam",
+      "water",
+      "stars",
+      "spark",
+      "bokeh"
+    ],
+    "record_bytes": 40,
+    "priority_order": "beam, spark, water, dust, bokeh, stars",
+    "sidecar": "folded-light.splats.bin"
+  },
+  "temporal": {
+    "systems": [
+      "water shimmer",
+      "dust drift",
+      "beam current",
+      "veil breathing"
+    ],
+    "note": "Motion is material-scoped: veils breathe slowly, structure holds."
+  },
+  "builder": "art/spatial/build_scene.py",
+  "receipts": {
+    "folded-light.splats.bin": "a27e52de47c258b00626fa94fc4f2aea11f40feae00d954923ac0204f81624ce"
+  }
+}

@@ -98,6 +98,22 @@
   .plate-hint{display:block;width:100%;font-family:var(--mono);font-size:.6rem;
     letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 
+  /* The editions desk: the open-edition ledger, one quiet row per plate.
+     No counters that imply scarcity; the seed is the provenance. */
+  .editions-ledger{display:grid;gap:1px;border:1px solid var(--hairline);border-radius:10px;
+    overflow:hidden;background:var(--hairline);margin-top:1.4rem}
+  .edition-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.4rem 1.1rem;
+    align-items:baseline;padding:.7rem .9rem;background:color-mix(in oklab, var(--void) 88%, black)}
+  .edition-no{font-family:var(--mono);font-size:.62rem;letter-spacing:.24em;color:var(--orange)}
+  .edition-title{font-size:.86rem;color:var(--bone)}
+  .edition-meta{grid-column:2;font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--muted)}
+  .edition-take{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);text-align:right;white-space:nowrap}
+  .edition-take a{color:var(--orange)}
+  @media (max-width:700px){.edition-row{grid-template-columns:auto minmax(0,1fr)}
+    .edition-take{grid-column:2;text-align:left;white-space:normal}}
+
   /* Instruments contact sheet: the wave-1 fixture tiles, kept as the
      vocabulary reference behind the plates above. */
   .fixture-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
@@ -398,6 +414,14 @@
   <p class="body-text">The same seed that draws a plate can play a piece. Name a seed and the browser synthesizes a short phrase from it: the key, the scale, the melody, the timbre, and the tempo are all derived from the seed with pure math, no samples and no model. The same seed sounds the same on every visit; press play, or save it as a WAV.</p>
   <div id="sound-desk" data-seed="aurora"></div>
   <p class="plate-hint">seed to sound, the audio sibling of seed to plate: one DNA behind the field, the solid, the face, and now the phrase.</p>
+</section>
+
+<section class="mv" id="editions" aria-labelledby="editions-h">
+  <h2 id="editions-h">The editions desk.</h2>
+  <p class="body-text">Every plate above is an open edition. Its provenance is its named seed: the same seed and instruments reproduce the same plate, in your browser, on any visit. Take what you want today: the PNG beside any plate, the plotter-ready SVG, print files from the Studio, or the spatial edition running live. Computer art magazines were selling reproductions beside the printed work in 1976; this desk keeps the offer beside the work and removes the coupon.</p>
+  <p class="seal-line exh-note" id="editions-status" role="status">reading the edition ledger&hellip;</p>
+  <div class="editions-ledger" id="editions-ledger" aria-label="Edition ledger"></div>
+  <noscript><p class="body-text">The ledger is a plain JSON file at <span translate="no">art/editions.json</span>: twenty-one open editions, each with its seed and provenance, free to keep. The two spatial editions run live in the Studio.</p></noscript>
 </section>
 
 <section class="mv" id="fixtures" aria-labelledby="fixtures-h">
@@ -1014,6 +1038,55 @@ if (linkSeed && linkLayers.length && deskCanvas) {
   const desk = document.getElementById("printdesk");
   if (desk) desk.scrollIntoView();
 }
+
+/* ── the editions desk: the open-edition ledger ─────────────────────────────
+   Serving the plates as shop items, honestly: the ledger is a static JSON
+   file, the provenance is the seed, and everything listed is free to keep.
+   No sale counters, no collectors, no scarcity theater. */
+(async () => {
+  const statusEl = document.getElementById("editions-status");
+  const ledgerEl = document.getElementById("editions-ledger");
+  if (!statusEl || !ledgerEl) return;
+  try {
+    const response = await fetch("art/editions.json", { cache: "no-cache" });
+    if (!response.ok) throw new Error(`editions ledger: HTTP ${response.status}`);
+    const ledger = await response.json();
+    const editions = Array.isArray(ledger.editions) ? ledger.editions : [];
+    const studies = Array.isArray(ledger.spatial_studies) ? ledger.spatial_studies : [];
+    const prints = ledger.policy && ledger.policy.physical_prints;
+    statusEl.textContent =
+      `${editions.length} open editions · ${studies.length} spatial studies · every one free to keep · physical print route: ${prints ? prints : "not configured"}`;
+    for (const ed of editions) {
+      const row = document.createElement("div");
+      row.className = "edition-row";
+      const take = ed.kind === "spatial"
+        ? `<a href="${ed.run}">run it live in the Studio</a>`
+        : (ed.kind === "daily" ? "save png &middot; redraw daily" : "save png &middot; plot svg");
+      row.innerHTML =
+        `<span class="edition-no">${ed.plate}</span>` +
+        `<span class="edition-title">${ed.title}</span>` +
+        `<span class="edition-take">${take}</span>` +
+        `<span class="edition-meta">${ed.kind} &middot; seed ${ed.seed} &middot; ${ed.instruments}</span>`;
+      ledgerEl.appendChild(row);
+    }
+    // The Spatial Atlas: one virtual-angle study per artwork, each carrying
+    // its gaussian count and held-out PSNR from the training receipt.
+    for (const st of studies) {
+      const row = document.createElement("div");
+      row.className = "edition-row";
+      const psnr = st.held_out_psnr ? ` &middot; held-out psnr ${st.held_out_psnr}` : "";
+      row.innerHTML =
+        `<span class="edition-no">${st.id.replace("scene-", "S")}</span>` +
+        `<span class="edition-title">${st.title}</span>` +
+        `<span class="edition-take"><a href="${st.run}">orbit it live</a></span>` +
+        `<span class="edition-meta">spatial study &middot; ${st.profile} profile &middot; ${(st.gaussians || 0).toLocaleString()} gaussians${psnr}</span>`;
+      ledgerEl.appendChild(row);
+    }
+  } catch (error) {
+    console.error("gallery: editions ledger failed", error);
+    statusEl.textContent = "the edition ledger could not be read; the plates above remain free to keep";
+  }
+})();
 </script>
 
 </body>

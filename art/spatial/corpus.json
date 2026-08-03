@@ -1,0 +1,7 @@
+{
+  "schema": "zentropy.artwork-corpus/v1",
+  "assembled": "2026-08-03",
+  "note": "Deduplicated by SHA-256. published_17 is live on main; pr79_pending is recorded in the open high-resolution coda PR. When no originals are local, the Spatial Atlas derivatives in art/spatial/atlas are the verified record. Candidates matched a filename pattern but no record and need the operator's confirmation before use.",
+  "works": [],
+  "unmatched_candidates": 62
+}
