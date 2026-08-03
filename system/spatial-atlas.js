@@ -146,10 +146,13 @@ class AtlasScene {
     this.animating = !this.reducedMotion;
     this.onSceneLoaded = typeof opts.onSceneLoaded === "function" ? opts.onSceneLoaded : null;
     this.mode = 0;
-    this.controls = { splatScale: 1, depthScale: 1, opacityScale: 0.92, exposure: 1, gamma: 2.2, holoStrength: 0.08, iridescence: 0.42 };
+    // Defaults tuned visually against the original Atlas standalone: closer
+    // framing, slight lift, and a brighter response so the field carries the
+    // artwork's presence instead of reading as gauze.
+    this.controls = { splatScale: 1.12, depthScale: 1, opacityScale: 1.0, exposure: 1.18, gamma: 2.2, holoStrength: 0.08, iridescence: 0.42 };
     this.inv = { center: [0, 0, -0.08], radius: 0.86, strength: 1, exponent: 1, shell: 0.24, thickness: 0.28, twist: 0, inner: 0.04, outer: 2.8 };
     this.yaw = 0; this.pitch = 0; this.targetYaw = 0; this.targetPitch = 0;
-    this.distance = 3.25; this.target = [0, 0, 0];
+    this.distance = 2.55; this.target = [0, -0.12, 0];
     this.stopped = false; this.raf = 0; this.sortTimer = 0;
     this.view = new Float32Array(16); this.projection = new Float32Array(16);
     this.setup();
@@ -276,7 +279,7 @@ class AtlasScene {
     c.addEventListener("pointerup", end);
     c.addEventListener("pointercancel", end);
     c.addEventListener("wheel", (e) => { e.preventDefault(); this.distance = clampN(this.distance + e.deltaY * 0.0018, 0.18, 7.5); this.scheduleSort(); }, { passive: false });
-    c.addEventListener("dblclick", () => { this.targetYaw = this.targetPitch = 0; this.distance = 3.25; this.scheduleSort(); });
+    c.addEventListener("dblclick", () => { this.targetYaw = this.targetPitch = 0; this.distance = 2.55; this.target = [0, -0.12, 0]; this.scheduleSort(); });
   }
 
   setControl(name, value) {
