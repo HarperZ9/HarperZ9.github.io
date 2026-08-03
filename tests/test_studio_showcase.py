@@ -18,7 +18,7 @@ def test_studio_surfaces_project_telos_feature_stack() -> None:
     src = studio_source()
     assert 'id="project-telos-features"' in src
     for term in (
-        "Five-flagship spine",
+        "Fourteen-engine Flywheel",
         "project-telos.context-envelope/v1",
         "loop ledger",
         "action receipts",
@@ -36,14 +36,17 @@ def test_studio_surfaces_project_telos_feature_stack() -> None:
         "forum.html",
         "crucible.html",
         "https://github.com/HarperZ9/telos",
-        "docs/superpowers/plans/2026-06-28-telos-universal-media-engine.md",
+        "https://github.com/HarperZ9/studio-engine",
     ):
         assert f'href="{href}"' in src
 
 
 def test_studio_has_menuized_renderer_manipulation_controls() -> None:
     src = studio_source()
-    for section in ("Create", "Observe", "Verify", "Model transforms", "Palette &amp; detail", "4D+ rotation"):
+    # The source menu groups renamed Create/Observe/Verify to Make/Bring/Measure
+    # when the Studio unified; the Spatial source joined the Make group.
+    for section in ("Make", "Bring", "Measure", 'data-source="spatial"',
+                    "Model transforms", "Palette &amp; detail", "4D+ rotation"):
         assert section in src
     for control_id in (
         "studio-transforms",
@@ -69,8 +72,11 @@ def test_studio_has_menuized_renderer_manipulation_controls() -> None:
 def test_studio_wires_effects_mesh_and_ndim_rotation() -> None:
     js = studio_js()
     for marker in (
-        'from "./studio-effects.js"',
-        'from "./mesh-transform.js"',
+        # Effects, mesh, media, and graph modules load lazily at the
+        # setSource() boundary now, so the wiring marker is the module path,
+        # not a static-import clause.
+        './studio-effects.js',
+        './mesh-transform.js',
         "TRANSFORM_GROUPS",
         "renderMeshTransform",
         "_activeNDimRotation",
@@ -80,9 +86,9 @@ def test_studio_wires_effects_mesh_and_ndim_rotation() -> None:
         'from "./engine/capability.js"',
         'from "./engine/render-plan.js"',
         'from "./media/ir.js"',
-        'from "./media/studio-adapters.js"',
-        'from "./graph/nodes/media-nodes.js"',
-        'from "./graph/package.js"',
+        './media/studio-adapters.js',
+        './graph/nodes/media-nodes.js',
+        './graph/package.js',
         "bootEngineStatus",
         "CANONICAL_MEDIA_KINDS",
         "createStudioMediaAdapters",
