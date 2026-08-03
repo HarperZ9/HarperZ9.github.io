@@ -8,6 +8,7 @@
 // shows a labeled fallback when it is absent.
 
 import { buildRunReceipt } from "./engine/world-package.js";
+import { acquireContext } from "./spatial-gl.js";
 
 const ATLAS_VS = `#version 300 es
 precision highp float; precision highp int;
@@ -127,7 +128,7 @@ const dot3 = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 const clampN = (v, lo, hi) => v < lo ? lo : v > hi ? hi : v;
 
 export async function startAtlasScene(canvas, pkg, opts = {}) {
-  const gl = canvas.getContext("webgl2", { antialias: false, alpha: false, premultipliedAlpha: true, preserveDrawingBuffer: true });
+  const gl = opts.gl || await acquireContext(canvas, "webgl2", { antialias: false, alpha: false, premultipliedAlpha: true, preserveDrawingBuffer: true });
   if (!gl) throw new Error("The Spatial Atlas needs WebGL2; this device reports none. The hybrid worlds still run.");
   const scene = new AtlasScene(canvas, gl, pkg, opts);
   await scene.loadScene(opts.sceneId || pkg.manifest.scenes[0].id);
@@ -370,7 +371,10 @@ class AtlasScene {
     gl.uniform1f(u.uInvOuter, inv.outer);
     gl.uniform1f(u.uHoloStrength, c.holoStrength);
     gl.uniform1f(u.uOpacityScale, c.opacityScale);
-    gl.uniform1f(u.uExposure, c.exposure);
+    // EV mapping: the slider value feeds the shader as 2^((v-1)*1.6) so the
+    // knob has real authority; a linear multiplier was flattened by gamma
+    // into a barely visible range (found by the piecewise sweep).
+    gl.uniform1f(u.uExposure, Math.pow(2, (c.exposure - 1) * 1.6));
     gl.uniform1f(u.uGamma, c.gamma);
     gl.uniform1f(u.uIridescence, c.iridescence);
     gl.bindVertexArray(this.vao);

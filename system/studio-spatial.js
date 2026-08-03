@@ -12,6 +12,7 @@ import { validateWorldPackage } from "./engine/world-package.js";
 import { startSpatialScene } from "./spatial-scene.js";
 import { startTexturedScene } from "./spatial-textured.js";
 import { startAtlasScene } from "./spatial-atlas.js";
+import { acquireContext } from "./spatial-gl.js";
 
 const PACKAGES = Object.freeze({
   "atlas": "art/spatial/atlas/atlas.world.json",
@@ -187,7 +188,9 @@ function wireShared() {
   document.querySelectorAll("[data-world]").forEach((chip) => {
     chip.classList.toggle("active", chip.dataset.world === currentWorld);
     chip.onclick = () => {
-      if (chip.dataset.world === currentWorld || !currentCanvas) return;
+      // Same-world clicks are ignored ONLY while that world is actually
+      // running; after a failed start the chip must retry, not no-op.
+      if ((chip.dataset.world === currentWorld && scene) || !currentCanvas) return;
       currentWorld = chip.dataset.world;
       startSpatial(currentCanvas, currentOpts || {}).catch((err) => {
         status("the world failed to start: " + (err && err.message ? err.message : String(err)), "bad");
@@ -225,20 +228,18 @@ function wireHybridCamera(canvas) {
 }
 
 // A canvas owns exactly one context TYPE for its lifetime, and the atlas
-// (WebGL2) and hybrid worlds (WebGL1) differ, so every start after the first
-// mounts a fresh canvas node under the same id.
-function freshCanvas(canvas) {
-  if (canvas.dataset.spatialUsed !== "1") {
-    canvas.dataset.spatialUsed = "1";
-    return canvas;
-  }
+// (WebGL2) and hybrid worlds (WebGL1) differ, so every world start renders
+// into a fresh canvas node. The fresh node is built DETACHED and its GL
+// context is claimed off-DOM before any package bytes download: a naked
+// canvas in the DOM gets claimed as 2d by the Studio's perception plumbing
+// within milliseconds, which poisons it for GL forever.
+function detachedCanvas(like) {
   const next = document.createElement("canvas");
-  next.id = canvas.id;
-  next.width = canvas.width;
-  next.height = canvas.height;
-  next.style.cssText = canvas.style.cssText;
+  next.id = like.id;
+  next.width = like.width;
+  next.height = like.height;
+  next.style.cssText = like.style.cssText;
   next.dataset.spatialUsed = "1";
-  canvas.replaceWith(next);
   return next;
 }
 
@@ -255,12 +256,28 @@ export async function startSpatial(canvas, opts = {}) {
   }
   // Fetch and verify the incoming package BEFORE tearing the current world
   // down: the old scene keeps rendering during the download instead of the
-  // stage sitting as a black empty rectangle for the whole transfer.
+  // stage sitting as a black empty rectangle for the whole transfer. The
+  // replacement canvas is prepared detached, with its context type (decided
+  // by the manifest's mode) claimed off-DOM before the heavy sidecars load.
   status("loading the world package…", "");
   const { manifest, base, files, verdict, checked } = await fetchPackage(currentWorld);
   if (superseded()) return { animating: false, splatCount: 0, world: currentWorld, superseded: true };
+  const domCanvas = currentCanvas && currentCanvas.isConnected ? currentCanvas : canvas;
+  const next = detachedCanvas(domCanvas);
+  const wantsWebgl2 = manifest.mode === "ngsf-atlas";
+  const gl = await acquireContext(next, wantsWebgl2 ? "webgl2" : "webgl",
+    wantsWebgl2
+      ? { antialias: false, alpha: false, premultipliedAlpha: true, preserveDrawingBuffer: true }
+      : { preserveDrawingBuffer: true, antialias: true, alpha: false, premultipliedAlpha: true });
+  if (!gl) {
+    throw new Error(wantsWebgl2
+      ? "The Spatial Atlas needs WebGL2; this device reports none. The hybrid worlds still run."
+      : "WebGL is unavailable on this device");
+  }
+  if (superseded()) return { animating: false, splatCount: 0, world: currentWorld, superseded: true };
   stopSpatial();
-  canvas = freshCanvas(currentCanvas && currentCanvas.isConnected ? currentCanvas : canvas);
+  domCanvas.replaceWith(next);
+  canvas = next;
   currentCanvas = canvas;
   syncBlocks(manifest.mode);
   if (verdict === "DRIFT") {
@@ -270,7 +287,7 @@ export async function startSpatial(canvas, opts = {}) {
   }
 
   const budget = opts.plan && Number(opts.plan.splatBudget) > 0 ? Number(opts.plan.splatBudget) : Infinity;
-  const sceneOpts = { splatBudget: budget, reducedMotion: !!opts.reducedMotion };
+  const sceneOpts = { splatBudget: budget, reducedMotion: !!opts.reducedMotion, gl };
   let started;
   if (manifest.mode === "ngsf-atlas") {
     const bootScene = (window.__studioBootScene || "").trim();
