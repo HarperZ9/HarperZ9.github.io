@@ -2,7 +2,7 @@
   "title": "Current Story",
   "author": "Zain Dana Harper",
   "published": "2026-07-23",
-  "updated": "2026-07-23",
+  "updated": "2026-08-03",
   "statement": "Twenty-seven images shown as a visual coda: the original seventeen in numeric source order, followed by ten continuation images in the order supplied.",
   "ordering": {
     "original": "Ascending numeric source filename, 1000119276.png through 1000119292.png.",
@@ -13,8 +13,8 @@
     "format": "webp",
     "quality": 90,
     "frame_dimensions": {
-      "width": 1024,
-      "height": 1280
+      "width": 640,
+      "height": 800
     },
     "sprites": [
       {
@@ -22,47 +22,52 @@
         "path": "img/current-story/hq-sprite-01.webp",
         "frames": 9,
         "dimensions": {
-          "width": 1024,
-          "height": 11520
+          "width": 640,
+          "height": 7200
         },
         "frame_dimensions": {
-          "width": 1024,
-          "height": 1280
+          "width": 640,
+          "height": 800
         },
-        "sha256": "90051ab7d7039a4819114f57e180758a8c625e05032615d9289aba2b95c5f44d",
-        "bytes": 2688206
+        "sha256": "53b5bd5b92b09286c9dd00040c36d67825fbc1ef027cc607638a9662715ccbad",
+        "bytes": 1348076
       },
       {
         "index": 1,
         "path": "img/current-story/hq-sprite-02.webp",
         "frames": 9,
         "dimensions": {
-          "width": 1024,
-          "height": 11520
+          "width": 640,
+          "height": 7200
         },
         "frame_dimensions": {
-          "width": 1024,
-          "height": 1280
+          "width": 640,
+          "height": 800
         },
-        "sha256": "cc29bfa53434bfc96f0d4a6dcce959a8175c739d3cf42411a6f1539abd150d30",
-        "bytes": 1278944
+        "sha256": "e805895c5ec55495c3b247e2b1c6161a3dda598b1e4e3d107769fed69309d3a6",
+        "bytes": 544700
       },
       {
         "index": 2,
         "path": "img/current-story/hq-sprite-03.webp",
         "frames": 9,
         "dimensions": {
-          "width": 1024,
-          "height": 11520
+          "width": 640,
+          "height": 7200
         },
         "frame_dimensions": {
-          "width": 1024,
-          "height": 1280
+          "width": 640,
+          "height": 800
         },
-        "sha256": "62bcd31693b83cf53c3ac35deba85ce5eb4d6467d8a485719c183bcd31e08f5b",
-        "bytes": 2464372
+        "sha256": "1f99dcaf9ed372e52512e77f19e36b14bf6bd92d30000bf06481e90010de47c0",
+        "bytes": 1076262
       }
-    ]
+    ],
+    "rebuilt": {
+      "date": "2026-08-03",
+      "frame_resolution": "640x800",
+      "note": "The original 1024x1280 sprites were corrupted in transfer and their source bytes are no longer available locally; every base64 chunk generation in this repository decodes truncated. These sprites are rebuilt at 640x800 from the Spatial Atlas source derivatives (art/spatial/atlas on main), which were verified against this manifest's original source hashes at extraction. 640x800 is four times the pixel count of the previously published 320x400 composite. A true 1024x1280 edition requires re-supplying the original PNGs; the source_sha256 fields still record them exactly."
+    }
   },
   "images": [
     {
@@ -70,7 +75,10 @@
       "movement": "current-story",
       "source_filename": "1000119276.png",
       "display_source": "1000119276",
-      "source_dimensions": {"width": 1229, "height": 1536},
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
       "source_sha256": "d1f135d7ac052d55c5a6c2848b8b5c5c0fcca613a853ea528f6c1c77d27f80a9",
       "sprite_index": 0,
       "frame_index": 0,
@@ -81,7 +89,10 @@
       "movement": "current-story",
       "source_filename": "1000119277.png",
       "display_source": "1000119277",
-      "source_dimensions": {"width": 1229, "height": 1536},
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
       "source_sha256": "31e5f243cc9464bb4cd515bafb3ce2664813710543c69acd761fc493082211d1",
       "sprite_index": 0,
       "frame_index": 1,
@@ -92,7 +103,10 @@
       "movement": "current-story",
       "source_filename": "1000119278.png",
       "display_source": "1000119278",
-      "source_dimensions": {"width": 1229, "height": 1536},
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
       "source_sha256": "94bb982be92f282a85e644f417782a928c4ce4d7497b454131563d358cb3716b",
       "sprite_index": 0,
       "frame_index": 2,
@@ -103,7 +117,10 @@
       "movement": "current-story",
       "source_filename": "1000119279.png",
       "display_source": "1000119279",
-      "source_dimensions": {"width": 1229, "height": 1536},
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
       "source_sha256": "61dacbb8815ae24a6193bddb424006539d529d4aeec1b05b17f7c584d84f2b1a",
       "sprite_index": 0,
       "frame_index": 3,
@@ -114,7 +131,10 @@
       "movement": "current-story",
       "source_filename": "1000119280.png",
       "display_source": "1000119280",
-      "source_dimensions": {"width": 1229, "height": 1536},
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
       "source_sha256": "d5d6183b5da38d1a96f038cecb691f3e6c9753e5e2d4869e8570b1f665dfbed8",
       "sprite_index": 0,
       "frame_index": 4,
@@ -125,7 +145,10 @@
       "movement": "current-story",
       "source_filename": "1000119281.png",
       "display_source": "1000119281",
-      "source_dimensions": {"width": 1229, "height": 1536},
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
       "source_sha256": "2e7e97579179e2ffc45d588fd9f675ee4a7afcc5c71abd68806e56902f224593",
       "sprite_index": 0,
       "frame_index": 5,
@@ -136,7 +159,10 @@
       "movement": "current-story",
       "source_filename": "1000119282.png",
       "display_source": "1000119282",
-      "source_dimensions": {"width": 1229, "height": 1536},
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
       "source_sha256": "c172a2c7864d7444100ff7e70a0626c038233e023f19157e2f97aa93e8e272c4",
       "sprite_index": 0,
       "frame_index": 6,
@@ -147,7 +173,10 @@
       "movement": "current-story",
       "source_filename": "1000119283.png",
       "display_source": "1000119283",
-      "source_dimensions": {"width": 1229, "height": 1536},
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
       "source_sha256": "b3ab4776db9ba05d3b2c3cf26dea609df43e8eb0fa765037e72019bbcfdc8c82",
       "sprite_index": 0,
       "frame_index": 7,
@@ -158,7 +187,10 @@
       "movement": "current-story",
       "source_filename": "1000119284.png",
       "display_source": "1000119284",
-      "source_dimensions": {"width": 1229, "height": 1536},
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
       "source_sha256": "2bed6704add3deae218b909ca31235df323ad8ec82a5187fdb0e173ad87c3482",
       "sprite_index": 0,
       "frame_index": 8,
@@ -169,7 +201,10 @@
       "movement": "current-story",
       "source_filename": "1000119285.png",
       "display_source": "1000119285",
-      "source_dimensions": {"width": 1229, "height": 1536},
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
       "source_sha256": "ae8d3ca7f1d54870316fa2418043fbaada53bd1355e36e7eb5d1414a7919f634",
       "sprite_index": 1,
       "frame_index": 0,
@@ -180,7 +215,10 @@
       "movement": "current-story",
       "source_filename": "1000119286.png",
       "display_source": "1000119286",
-      "source_dimensions": {"width": 1229, "height": 1536},
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
       "source_sha256": "e8fad932a15a6be163294dd5667b92da80e69259ee878636cf5341ce05aa2350",
       "sprite_index": 1,
       "frame_index": 1,
@@ -191,7 +229,10 @@
       "movement": "current-story",
       "source_filename": "1000119287.png",
       "display_source": "1000119287",
-      "source_dimensions": {"width": 1229, "height": 1536},
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
       "source_sha256": "bdfd94334166ee83be44c58a0e2c60462e9c0df67714a38b2c1e01878b4d18b3",
       "sprite_index": 1,
       "frame_index": 2,
@@ -202,7 +243,10 @@
       "movement": "current-story",
       "source_filename": "1000119288.png",
       "display_source": "1000119288",
-      "source_dimensions": {"width": 1229, "height": 1536},
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
       "source_sha256": "f6ae6c6cfaa914c5e5ac17d1e46a46160c43d4b2b3f687a1e24293771cd14907",
       "sprite_index": 1,
       "frame_index": 3,
@@ -213,7 +257,10 @@
       "movement": "current-story",
       "source_filename": "1000119289.png",
       "display_source": "1000119289",
-      "source_dimensions": {"width": 1229, "height": 1536},
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
       "source_sha256": "227d3fa37705aca4f6703de9cf44ac07456071ae91ba3f21da1cbf08fbad1b83",
       "sprite_index": 1,
       "frame_index": 4,
@@ -224,7 +271,10 @@
       "movement": "current-story",
       "source_filename": "1000119290.png",
       "display_source": "1000119290",
-      "source_dimensions": {"width": 1229, "height": 1536},
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
       "source_sha256": "91299051833e51da9f8b3d0553b3e9071d0454310fb3e081e01d55b1cf1f0b74",
       "sprite_index": 1,
       "frame_index": 5,
@@ -235,7 +285,10 @@
       "movement": "current-story",
       "source_filename": "1000119291.png",
       "display_source": "1000119291",
-      "source_dimensions": {"width": 1229, "height": 1536},
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
       "source_sha256": "1b9c6d0764e3eb0c01c96021443f035e6d422fb4c835f0d7b19a17db572aee05",
       "sprite_index": 1,
       "frame_index": 6,
@@ -246,7 +299,10 @@
       "movement": "current-story",
       "source_filename": "1000119292.png",
       "display_source": "1000119292",
-      "source_dimensions": {"width": 1229, "height": 1536},
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
       "source_sha256": "74207a0838739d43cf23da3aa53d8960723726d2812b7a059422e7dc8c570ecb",
       "sprite_index": 1,
       "frame_index": 7,
@@ -257,7 +313,10 @@
       "movement": "continuation",
       "source_filename": "f6259f82-44d3-4684-b193-347bb59b05a0.png",
       "display_source": "continuation 01",
-      "source_dimensions": {"width": 1122, "height": 1402},
+      "source_dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
       "source_sha256": "7d2f720654c343c7525e4645ffd33396ad5bef03f548a58821d2e909d544bd6c",
       "sprite_index": 1,
       "frame_index": 8,
@@ -268,7 +327,10 @@
       "movement": "continuation",
       "source_filename": "ChatGPT Image Jul 21, 2026, 08_13_22 PM (1).png",
       "display_source": "continuation 02",
-      "source_dimensions": {"width": 1122, "height": 1402},
+      "source_dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
       "source_sha256": "39ddbb94dacae83522994b99b8fd0a3c74d258d010ac1981d8bca72750541632",
       "sprite_index": 2,
       "frame_index": 0,
@@ -279,7 +341,10 @@
       "movement": "continuation",
       "source_filename": "ChatGPT Image Jul 21, 2026, 08_13_22 PM (2).png",
       "display_source": "continuation 03",
-      "source_dimensions": {"width": 1122, "height": 1402},
+      "source_dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
       "source_sha256": "c546bc09148ebe03f03f5c8d0f0681e36ceb02aa80cd34ff76e05ec5dbe845c2",
       "sprite_index": 2,
       "frame_index": 1,
@@ -290,7 +355,10 @@
       "movement": "continuation",
       "source_filename": "ChatGPT Image Jul 21, 2026, 08_13_22 PM (3).png",
       "display_source": "continuation 04",
-      "source_dimensions": {"width": 1122, "height": 1402},
+      "source_dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
       "source_sha256": "b739daac9f937a56d3eeb838f9dc32fa393355a4c44051537232e520284ad485",
       "sprite_index": 2,
       "frame_index": 2,
@@ -301,7 +369,10 @@
       "movement": "continuation",
       "source_filename": "887e81f0-8e7b-4335-bec6-2ca1444197c9.png",
       "display_source": "continuation 05",
-      "source_dimensions": {"width": 1122, "height": 1402},
+      "source_dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
       "source_sha256": "691c99bcdfb61ddb721412672be06db5f2e9cb2a49661e52bf6e58ba93e5274d",
       "sprite_index": 2,
       "frame_index": 3,
@@ -312,7 +383,10 @@
       "movement": "continuation",
       "source_filename": "f38e019c-97ed-4bc7-93b5-38f7e3c1e671.png",
       "display_source": "continuation 06",
-      "source_dimensions": {"width": 1122, "height": 1402},
+      "source_dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
       "source_sha256": "2c5af9d659a255bc77ca3628c1332197aab0ca660d6495f2f1d2e9bd0000531b",
       "sprite_index": 2,
       "frame_index": 4,
@@ -323,7 +397,10 @@
       "movement": "continuation",
       "source_filename": "7eed340d-66b0-44c1-a96f-fa72899ae718.png",
       "display_source": "continuation 07",
-      "source_dimensions": {"width": 1122, "height": 1402},
+      "source_dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
       "source_sha256": "bb6bb4510b920bbd1b6551fc0767422283277e5a683874db0cb610a6b55cbafa",
       "sprite_index": 2,
       "frame_index": 5,
@@ -334,7 +411,10 @@
       "movement": "continuation",
       "source_filename": "c111f74e-c630-4850-8aef-2c7524a00574.png",
       "display_source": "continuation 08",
-      "source_dimensions": {"width": 1122, "height": 1402},
+      "source_dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
       "source_sha256": "e12a99cbe35443d74ca280e4c673468797aab4bbab02f3117c0bec55cf98a40d",
       "sprite_index": 2,
       "frame_index": 6,
@@ -345,7 +425,10 @@
       "movement": "continuation",
       "source_filename": "ChatGPT Image Jul 20, 2026, 06_32_55 PM (2).png",
       "display_source": "continuation 09",
-      "source_dimensions": {"width": 1122, "height": 1402},
+      "source_dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
       "source_sha256": "5532427e2e7e3253ae573bf449d53fc00b7987a5b3b7a92f8ecf49cd6d5d6aa8",
       "sprite_index": 2,
       "frame_index": 7,
@@ -356,7 +439,10 @@
       "movement": "continuation",
       "source_filename": "ChatGPT Image Jul 20, 2026, 09_34_36 PM.png",
       "display_source": "continuation 10",
-      "source_dimensions": {"width": 1122, "height": 1402},
+      "source_dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
       "source_sha256": "1dc6e73b8b9093ee9a57e51cec7a3313f5d200331bbeb0610f127e683c907c92",
       "sprite_index": 2,
       "frame_index": 8,

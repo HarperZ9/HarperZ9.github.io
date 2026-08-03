@@ -57,10 +57,14 @@ def test_manifest_preserves_both_movements_and_high_resolution_assets() -> None:
     ]
     assert {item["movement"] for item in images[:17]} == {"current-story"}
     assert {item["movement"] for item in images[17:]} == {"continuation"}
+    # 640x800: the sprites were rebuilt from the verified Spatial Atlas
+    # derivatives after the original 1024x1280 bytes were lost to transfer
+    # corruption; the manifest's published_assets.rebuilt note is the record.
     assert manifest["published_assets"]["frame_dimensions"] == {
-        "width": 1024,
-        "height": 1280,
+        "width": 640,
+        "height": 800,
     }
+    assert "rebuilt" in manifest["published_assets"]
     assert len(sprites) == 3
 
     for sprite in sprites:
@@ -70,7 +74,7 @@ def test_manifest_preserves_both_movements_and_high_resolution_assets() -> None:
         assert data[:4] == b"RIFF"
         assert hashlib.sha256(data).hexdigest() == sprite["sha256"]
         assert len(data) == sprite["bytes"]
-        assert sprite["frame_dimensions"] == {"width": 1024, "height": 1280}
+        assert sprite["frame_dimensions"] == {"width": 640, "height": 800}
 
     for item in images:
         assert 0 <= item["sprite_index"] <= 2
