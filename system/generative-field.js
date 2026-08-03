@@ -199,7 +199,20 @@ function parseCssColour(value) {
   return null;
 }
 
+// Some layers depict a THING whose material colour is part of what it is: a
+// paper lantern lit from within is warm ivory in every palette, and snapping
+// it to a magenta anchor would contradict the plate's own caption. Those
+// layers wrap their subject in withLiteralColour(); abstract fields keep
+// following the seed.
+let preserveLiteralColour = false;
+function withLiteralColour(run) {
+  const prior = preserveLiteralColour;
+  preserveLiteralColour = true;
+  try { run(); } finally { preserveLiteralColour = prior; }
+}
+
 function alignColourToPalette(value, hues) {
+  if (preserveLiteralColour) return value;
   const c = parseCssColour(value);
   if (!c || !hues || !hues.length) return value;
   const [labL, labA, labB] = linearRgbToOklab(srgbToLinear(c.r / 255), srgbToLinear(c.g / 255), srgbToLinear(c.b / 255));
@@ -1773,58 +1786,114 @@ function drawDatabendLayer(ctx, width, height, tick, seed) {
    woven cloth, and fiber canyons. Same one-shot contract as wave 2.
 --------------------------------------------------------------------------- */
 
+// A stellated paper lantern: a star polygon of folded facets, lit from within,
+// hung from a hairline cord. The previous version drew many low-alpha slivers
+// that summed to a haze with no readable silhouette, so the plate never showed
+// the object its caption names. This builds the form explicitly: alternating
+// outer and inner vertices, one shaded quad per fold, a rim that catches the
+// light, and an interior glow clipped to the silhouette so the paper reads as
+// lit from behind rather than as a lamp painted over the scene.
 function drawStellatedLantern(ctx, width, height, tick, seed, palette) {
+  // The paper and its flame keep their own colour; the light column behind is
+  // drawn by another layer and still follows the seed's palette.
+  withLiteralColour(() => drawStellatedLanternBody(ctx, width, height, tick, seed, palette));
+}
+
+function drawStellatedLanternBody(ctx, width, height, tick, seed, palette) {
   const rnd = (salt) => rand(seed, salt);
-  ctx.save();
-  ctx.globalCompositeOperation = "source-over";
-  ctx.fillStyle = "rgba(0,0,0,0.96)";
-  ctx.fillRect(0, 0, width, height);
   const cx = width * (0.44 + rnd(2000) * 0.12);
   const cy = height * (0.46 + rnd(2001) * 0.1);
-  const R = Math.min(width, height) * (0.24 + rnd(2002) * 0.1);
-  const N = 4 + Math.floor(rnd(2003) * 5);
-  const petals = 8 + Math.floor(rnd(2004) * 10);
-  ctx.strokeStyle = "rgba(236,230,214,0.5)";
-  ctx.lineWidth = 1;
+  const R = Math.min(width, height) * (0.26 + rnd(2002) * 0.08);
+  const points = 6 + Math.floor(rnd(2003) * 5);        // star points
+  const inner = R * (0.46 + rnd(2004) * 0.12);          // valley radius
+  const tilt = (rnd(2005) - 0.5) * 0.5;
+  const warm = [252, 232, 190];
+  const deep = [214, 156, 86];
+
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+
+  // The cord: one hairline from the top edge to the crown, slightly off
+  // vertical so the lantern reads as hanging rather than floating.
+  const crownX = cx + Math.cos(-Math.PI / 2 + tilt) * R;
+  const crownY = cy + Math.sin(-Math.PI / 2 + tilt) * R;
+  ctx.strokeStyle = "rgba(236,230,214,0.55)";
+  ctx.lineWidth = Math.max(0.6, R * 0.006);
   ctx.beginPath();
-  ctx.moveTo(cx, -4);
-  ctx.lineTo(cx, cy - R * 1.02);
+  ctx.moveTo(crownX - tilt * height * 0.05, -4);
+  ctx.lineTo(crownX, crownY);
   ctx.stroke();
-  ctx.globalCompositeOperation = "lighter";
-  for (let k = 0; k < N * 2; k += 1) {
-    const base = (k * Math.PI) / N;
-    const mirror = k % 2 === 1;
-    for (let p = 0; p < petals; p += 1) {
-      const t = 1 - p / petals;
-      const rr = R * (0.22 + t * 0.78);
-      const wdt = (Math.PI / N) * 0.82 * t + 0.06;
-      const saw = 1 + (p % 2) * 0.06;
-      const a0 = base + (mirror ? wdt : -wdt);
-      ctx.fillStyle = `rgba(244,227,189,${0.12 + t * 0.16})`;
-      ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      const steps = 7;
-      for (let s2 = 0; s2 <= steps; s2 += 1) {
-        const f = s2 / steps;
-        const ang = base + (a0 - base) * Math.sin(f * Math.PI);
-        const jag = 1 + (s2 % 2) * 0.045 * saw;
-        ctx.lineTo(cx + Math.cos(ang) * rr * f * jag, cy + Math.sin(ang) * rr * f * jag);
-      }
-      ctx.closePath();
-      ctx.fill();
-      if (p % 2 === 0) {
-        ctx.strokeStyle = `rgba(255,238,204,${0.10 + t * 0.14})`;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      }
-    }
+
+  // Silhouette vertices, alternating peak and valley.
+  const verts = [];
+  for (let i = 0; i < points * 2; i += 1) {
+    const peak = i % 2 === 0;
+    const ang = tilt - Math.PI / 2 + (i * Math.PI) / points;
+    const rr = (peak ? R : inner) * (1 + (rnd(2100 + i) - 0.5) * 0.06);
+    verts.push([cx + Math.cos(ang) * rr, cy + Math.sin(ang) * rr]);
   }
-  const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 1.15);
-  core.addColorStop(0, "rgba(255,244,214,0.9)");
-  core.addColorStop(0.3, "rgba(226,178,110,0.42)");
-  core.addColorStop(1, "rgba(150,120,80,0)");
+
+  const silhouette = () => {
+    ctx.beginPath();
+    ctx.moveTo(verts[0][0], verts[0][1]);
+    for (let i = 1; i < verts.length; i += 1) ctx.lineTo(verts[i][0], verts[i][1]);
+    ctx.closePath();
+  };
+
+  // Interior glow, clipped to the paper so light stays inside the object.
+  ctx.save();
+  silhouette();
+  ctx.clip();
+  // Occlude the veil first: paper is opaque, and letting the light column
+  // speckle through the body read as noise rather than as a lit surface.
+  ctx.fillStyle = "rgba(18,13,8,0.94)";
+  ctx.fillRect(cx - R * 1.3, cy - R * 1.3, R * 2.6, R * 2.6);
+  const core = ctx.createRadialGradient(cx, cy - R * 0.1, R * 0.05, cx, cy, R * 1.1);
+  core.addColorStop(0, `rgba(${warm[0]},${warm[1]},${warm[2]},0.95)`);
+  core.addColorStop(0.45, `rgba(${deep[0]},${deep[1]},${deep[2]},0.55)`);
+  core.addColorStop(1, `rgba(${deep[0]},${deep[1]},${deep[2]},0.16)`);
   ctx.fillStyle = core;
-  ctx.fillRect(cx - R * 1.2, cy - R * 1.2, R * 2.4, R * 2.4);
+  ctx.fillRect(cx - R * 1.3, cy - R * 1.3, R * 2.6, R * 2.6);
+  ctx.restore();
+
+  // Folded facets: each pair of adjacent vertices makes a panel with the
+  // centre, shaded by which way the fold turns, which is what makes the form
+  // read as folded paper rather than a flat star.
+  for (let i = 0; i < verts.length; i += 1) {
+    const a = verts[i], b = verts[(i + 1) % verts.length];
+    const mid = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+    // Facing: panels whose midpoint sits left of centre catch less light.
+    const facing = 0.5 + 0.5 * ((mid[0] - cx) / R);
+    const lift = 0.30 + facing * 0.42 + (i % 2 ? 0.06 : 0);
+    ctx.fillStyle = `rgba(${warm[0]},${warm[1]},${warm[2]},${(0.26 + lift * 0.34).toFixed(3)})`;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(a[0], a[1]);
+    ctx.lineTo(b[0], b[1]);
+    ctx.closePath();
+    ctx.fill();
+    // The crease from the centre to each peak.
+    ctx.strokeStyle = `rgba(${warm[0]},${warm[1]},${warm[2]},${(0.10 + lift * 0.18).toFixed(3)})`;
+    ctx.lineWidth = Math.max(0.5, R * 0.004);
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(a[0], a[1]);
+    ctx.stroke();
+  }
+
+  // Rim: the lit edge of the paper, the brightest mark in the plate.
+  ctx.strokeStyle = `rgba(255,246,222,0.9)`;
+  ctx.lineWidth = Math.max(0.8, R * 0.009);
+  silhouette();
+  ctx.stroke();
+
+  // A restrained halo, additive, so the void around it stays black.
+  ctx.globalCompositeOperation = "lighter";
+  const halo = ctx.createRadialGradient(cx, cy, R * 0.85, cx, cy, R * 2.1);
+  halo.addColorStop(0, `rgba(${deep[0]},${deep[1]},${deep[2]},0.20)`);
+  halo.addColorStop(1, `rgba(${deep[0]},${deep[1]},${deep[2]},0)`);
+  ctx.fillStyle = halo;
+  ctx.fillRect(cx - R * 2.2, cy - R * 2.2, R * 4.4, R * 4.4);
   ctx.restore();
 }
 
@@ -2123,8 +2192,12 @@ function drawShowpieceWeave(ctx, width, height, tick, seed, palette) {
 }
 
 function drawShowpieceLantern(ctx, width, height, tick, seed, palette) {
-  drawStellatedLantern(ctx, width, height, tick, seed, palette);
+  // The caption promises a lantern hung in the void with a column of folded
+  // light BEHIND it. The veil was drawn last, so it covered the lantern and
+  // the plate read as a speckled column with no object in it. Ground first,
+  // then the subject on top.
   drawIfsLightVeil(ctx, width, height, tick, seed + 13, palette);
+  drawStellatedLantern(ctx, width, height, tick, seed, palette);
 }
 
 function drawShowpieceRuin(ctx, width, height, tick, seed, palette) {
