@@ -1,0 +1,188 @@
+{
+  "schema": "zentropy.artwork-corpus/v1",
+  "assembled": "2026-08-03",
+  "note": "Deduplicated by SHA-256. published_17 is live on main; pr79_pending is recorded in the open high-resolution coda PR; unpublished_wave3 is the 2026-07-27 batch with no public record yet; candidates matched a filename pattern but no record and need the operator's confirmation before use.",
+  "works": [
+    {
+      "sha256": "e1ab934a5819588139e3a870d4a705ecf39cb42ccf53e0963a57e26a281fee94",
+      "file": "1000119401.jpg",
+      "bytes": 680071,
+      "dimensions": {
+        "width": 1440,
+        "height": 3120
+      },
+      "mtime_utc": "2026-07-27",
+      "identity": "wave3-1000119401",
+      "status": "unpublished_wave3"
+    },
+    {
+      "sha256": "2fa7f1bc07d9c5041ac3cb23921d65d988d914f3dbb2e7eedc0b01ec50323e6d",
+      "file": "1000119403.jpg",
+      "bytes": 802229,
+      "dimensions": {
+        "width": 1440,
+        "height": 3120
+      },
+      "mtime_utc": "2026-07-27",
+      "identity": "wave3-1000119403",
+      "status": "unpublished_wave3"
+    },
+    {
+      "sha256": "0ae7f2af5c84fcb3648f1bf351563436c8d6b9dcc9a79a2593a6707dbd9abd90",
+      "file": "1000119405.jpg",
+      "bytes": 693276,
+      "dimensions": {
+        "width": 1440,
+        "height": 3120
+      },
+      "mtime_utc": "2026-07-27",
+      "identity": "wave3-1000119405",
+      "status": "unpublished_wave3"
+    },
+    {
+      "sha256": "7851ba3cf428e095f7797917315ca56a5a2a261b38bf99d0663dd178ef9dc081",
+      "file": "1000119407.jpg",
+      "bytes": 799659,
+      "dimensions": {
+        "width": 1440,
+        "height": 3120
+      },
+      "mtime_utc": "2026-07-27",
+      "identity": "wave3-1000119407",
+      "status": "unpublished_wave3"
+    },
+    {
+      "sha256": "da9d5ddd9055db9a085f8e045c5365ac6f16d2b3c44ee2c49190a4804ef84691",
+      "file": "1000119409.jpg",
+      "bytes": 785477,
+      "dimensions": {
+        "width": 1440,
+        "height": 3120
+      },
+      "mtime_utc": "2026-07-27",
+      "identity": "wave3-1000119409",
+      "status": "unpublished_wave3"
+    },
+    {
+      "sha256": "93bb987144425455c358070c3ddd5a7baf21137b756e0b0accbab4c96ff506a8",
+      "file": "1000119411.jpg",
+      "bytes": 711094,
+      "dimensions": {
+        "width": 1440,
+        "height": 3120
+      },
+      "mtime_utc": "2026-07-27",
+      "identity": "wave3-1000119411",
+      "status": "unpublished_wave3"
+    },
+    {
+      "sha256": "4d5e08cbde791aba795fe48cfb852565aefb8c5a2c4d7df906a851e0c4507c72",
+      "file": "1000119415.jpg",
+      "bytes": 876455,
+      "dimensions": {
+        "width": 1440,
+        "height": 3120
+      },
+      "mtime_utc": "2026-07-27",
+      "identity": "wave3-1000119415",
+      "status": "unpublished_wave3"
+    },
+    {
+      "sha256": "34755afed016c8309cd53b6068e169d73a53c61acb2ba01b43f05f4d53f21196",
+      "file": "1000119417.jpg",
+      "bytes": 687152,
+      "dimensions": {
+        "width": 1440,
+        "height": 3120
+      },
+      "mtime_utc": "2026-07-27",
+      "identity": "wave3-1000119417",
+      "status": "unpublished_wave3"
+    },
+    {
+      "sha256": "9612bdaaeb13cb1ce1edac89e51b87c9602a1f199e095c112b0e2149e396a1f1",
+      "file": "1000119419.jpg",
+      "bytes": 719178,
+      "dimensions": {
+        "width": 1440,
+        "height": 3120
+      },
+      "mtime_utc": "2026-07-27",
+      "identity": "wave3-1000119419",
+      "status": "unpublished_wave3"
+    },
+    {
+      "sha256": "bd8c24358576b1e2551f9546b62e849d5cd11b4a665485ebde6cec66b4f9426d",
+      "file": "1000119421.jpg",
+      "bytes": 685844,
+      "dimensions": {
+        "width": 1440,
+        "height": 3120
+      },
+      "mtime_utc": "2026-07-27",
+      "identity": "wave3-1000119421",
+      "status": "unpublished_wave3"
+    },
+    {
+      "sha256": "3c02173be994af2275452c63146d45045809ee25aedeae7be1242f6e88247e06",
+      "file": "1000119423.jpg",
+      "bytes": 802907,
+      "dimensions": {
+        "width": 1440,
+        "height": 3120
+      },
+      "mtime_utc": "2026-07-27",
+      "identity": "wave3-1000119423",
+      "status": "unpublished_wave3"
+    },
+    {
+      "sha256": "2ade1b4312966b55f1d26e0ca1d7e45aa5a3f47889741ac422836ad480964c52",
+      "file": "1000119425.jpg",
+      "bytes": 793722,
+      "dimensions": {
+        "width": 1440,
+        "height": 3120
+      },
+      "mtime_utc": "2026-07-27",
+      "identity": "wave3-1000119425",
+      "status": "unpublished_wave3"
+    },
+    {
+      "sha256": "19dd6311c7debcf82a55e3094b50e23312c67d0032ba28a98d3fbfa2f26cf6f4",
+      "file": "1000119427.jpg",
+      "bytes": 778967,
+      "dimensions": {
+        "width": 1440,
+        "height": 3120
+      },
+      "mtime_utc": "2026-07-27",
+      "identity": "wave3-1000119427",
+      "status": "unpublished_wave3"
+    },
+    {
+      "sha256": "a5606200291bfa6087802d9b6d028fa1406f73cb4068854a0b1f72dc84cd1097",
+      "file": "1000119429.jpg",
+      "bytes": 668690,
+      "dimensions": {
+        "width": 1440,
+        "height": 3120
+      },
+      "mtime_utc": "2026-07-27",
+      "identity": "wave3-1000119429",
+      "status": "unpublished_wave3"
+    },
+    {
+      "sha256": "50e5370503a4dbdc2d81a5cf0fa0139388de991beb58ee29fc751c57cdba7c93",
+      "file": "1000119431.jpg",
+      "bytes": 682974,
+      "dimensions": {
+        "width": 1440,
+        "height": 3120
+      },
+      "mtime_utc": "2026-07-27",
+      "identity": "wave3-1000119431",
+      "status": "unpublished_wave3"
+    }
+  ],
+  "unmatched_candidates": 285
+}

@@ -1052,9 +1052,11 @@ if (linkSeed && linkLayers.length && deskCanvas) {
     if (!response.ok) throw new Error(`editions ledger: HTTP ${response.status}`);
     const ledger = await response.json();
     const editions = Array.isArray(ledger.editions) ? ledger.editions : [];
+    const studies = Array.isArray(ledger.spatial_studies) ? ledger.spatial_studies : [];
+    const queued = Array.isArray(ledger.queued) ? ledger.queued : [];
     const prints = ledger.policy && ledger.policy.physical_prints;
     statusEl.textContent =
-      `${editions.length} open editions · every one free to keep · physical print route: ${prints ? prints : "not configured"}`;
+      `${editions.length} open editions · ${studies.length} spatial studies · ${queued.length} queued · every one free to keep · physical print route: ${prints ? prints : "not configured"}`;
     for (const ed of editions) {
       const row = document.createElement("div");
       row.className = "edition-row";
@@ -1066,6 +1068,29 @@ if (linkSeed && linkLayers.length && deskCanvas) {
         `<span class="edition-title">${ed.title}</span>` +
         `<span class="edition-take">${take}</span>` +
         `<span class="edition-meta">${ed.kind} &middot; seed ${ed.seed} &middot; ${ed.instruments}</span>`;
+      ledgerEl.appendChild(row);
+    }
+    // The Spatial Atlas: one virtual-angle study per artwork, each carrying
+    // its gaussian count and held-out PSNR from the training receipt.
+    for (const st of studies) {
+      const row = document.createElement("div");
+      row.className = "edition-row";
+      const psnr = st.held_out_psnr ? ` &middot; held-out psnr ${st.held_out_psnr}` : "";
+      row.innerHTML =
+        `<span class="edition-no">${st.id.replace("scene-", "S")}</span>` +
+        `<span class="edition-title">${st.title}</span>` +
+        `<span class="edition-take"><a href="${st.run}">orbit it live</a></span>` +
+        `<span class="edition-meta">spatial study &middot; ${st.profile} profile &middot; ${(st.gaussians || 0).toLocaleString()} gaussians${psnr}</span>`;
+      ledgerEl.appendChild(row);
+    }
+    if (queued.length) {
+      const row = document.createElement("div");
+      row.className = "edition-row";
+      row.innerHTML =
+        `<span class="edition-no">Q</span>` +
+        `<span class="edition-title">${queued.length} newer works, queued</span>` +
+        `<span class="edition-take">no spatial claim yet</span>` +
+        `<span class="edition-meta">${ledger.queued_note || "listed so the absence is stated, not implied"}</span>`;
       ledgerEl.appendChild(row);
     }
   } catch (error) {

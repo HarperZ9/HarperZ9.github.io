@@ -1,0 +1,381 @@
+{
+  "schema": "zentropy.native-splat-atlas.training.v1",
+  "version": "0.5.0",
+  "status": "VIRTUAL_ANGLE_TRAINED",
+  "scene_id": "scene-05",
+  "sequence": 5,
+  "title": "Current Story 05",
+  "profile": "figure",
+  "source": {
+    "filename": "1000119280.png",
+    "bytes": 541459,
+    "sha256": "d5d6183b5da38d1a96f038cecb691f3e6c9753e5e2d4869e8570b1f665dfbed8",
+    "dimensions": [
+      1229,
+      1536
+    ]
+  },
+  "claim_boundary": "Twenty-one camera targets are synthesized from a disclosed layered interpretation of one canonical image. Optimization improves angular self-consistency but does not recover independent hidden observations or metric geometry.",
+  "training": {
+    "iterations": 32,
+    "seed": 16,
+    "elapsed_seconds": 3.7930545806884766,
+    "cameras": [
+      {
+        "yaw": -18,
+        "pitch": -7,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": -12,
+        "pitch": -7,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": -6,
+        "pitch": -7,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": 0,
+        "pitch": -7,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": 6,
+        "pitch": -7,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": 12,
+        "pitch": -7,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": 18,
+        "pitch": -7,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": -18,
+        "pitch": 0,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": -12,
+        "pitch": 0,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": -6,
+        "pitch": 0,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": 0,
+        "pitch": 0,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": 6,
+        "pitch": 0,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": 12,
+        "pitch": 0,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": 18,
+        "pitch": 0,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": -18,
+        "pitch": 7,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": -12,
+        "pitch": 7,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": -6,
+        "pitch": 7,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": 0,
+        "pitch": 7,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": 6,
+        "pitch": 7,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": 12,
+        "pitch": 7,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": 18,
+        "pitch": 7,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      }
+    ],
+    "held_out_cameras": [
+      {
+        "yaw": -15,
+        "pitch": -3,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": -9,
+        "pitch": 3,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": -3,
+        "pitch": -4,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": 3,
+        "pitch": 4,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": 9,
+        "pitch": -3,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": 15,
+        "pitch": 3,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": 0,
+        "pitch": -5,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      },
+      {
+        "yaw": 0,
+        "pitch": 5,
+        "radius": 3.3,
+        "fov": 50,
+        "width": 144,
+        "height": 180
+      }
+    ],
+    "history": [
+      {
+        "iteration": 0,
+        "loss": 0.012360526248812675,
+        "views": [
+          10,
+          6,
+          4
+        ]
+      },
+      {
+        "iteration": 8,
+        "loss": 0.010012776590883732,
+        "views": [
+          17,
+          4,
+          15
+        ]
+      },
+      {
+        "iteration": 16,
+        "loss": 0.009659470058977604,
+        "views": [
+          19,
+          17,
+          6
+        ]
+      },
+      {
+        "iteration": 24,
+        "loss": 0.008396551012992859,
+        "views": [
+          10,
+          14,
+          8
+        ]
+      },
+      {
+        "iteration": 31,
+        "loss": 0.008279524743556976,
+        "views": [
+          5,
+          0,
+          14
+        ]
+      }
+    ],
+    "held_out_metrics": [
+      {
+        "yaw": -15,
+        "pitch": -3,
+        "psnr_before": 30.504434824581512,
+        "psnr_after": 37.70980034196257
+      },
+      {
+        "yaw": -9,
+        "pitch": 3,
+        "psnr_before": 31.366021571184607,
+        "psnr_after": 39.10893596424468
+      },
+      {
+        "yaw": -3,
+        "pitch": -4,
+        "psnr_before": 32.621830275669815,
+        "psnr_after": 39.72305507122706
+      },
+      {
+        "yaw": 3,
+        "pitch": 4,
+        "psnr_before": 31.178978340035272,
+        "psnr_after": 38.30582995650452
+      },
+      {
+        "yaw": 9,
+        "pitch": -3,
+        "psnr_before": 32.00898248193517,
+        "psnr_after": 39.04599483682485
+      },
+      {
+        "yaw": 15,
+        "pitch": 3,
+        "psnr_before": 30.129608337377892,
+        "psnr_after": 36.55905613592484
+      },
+      {
+        "yaw": 0,
+        "pitch": -5,
+        "psnr_before": 32.76508384072502,
+        "psnr_after": 40.49047617834283
+      },
+      {
+        "yaw": 0,
+        "pitch": 5,
+        "psnr_before": 31.291533178819776,
+        "psnr_after": 38.94601568118114
+      }
+    ]
+  },
+  "counts": {
+    "initial": 29613,
+    "published": 29613,
+    "median_support": 21.0,
+    "max_support": 21,
+    "layers": {
+      "0": 14580,
+      "1": 3618,
+      "2": 11138,
+      "3": 277
+    }
+  },
+  "output": {
+    "path": "assets/models/scene-05.ngsf",
+    "bytes": 947632,
+    "sha256": "7cf627d958e6a26f92c13c67bfb40b31c6f29ba9f749bb455066fa30706f3bf8",
+    "record_bytes": 32
+  },
+  "source_preview": {
+    "path": "assets/sources/scene-05.jpg",
+    "bytes": 214788,
+    "sha256": "51bddab872eaa51f0b7411360a960fa69f5be475a026cefb3669956212c31cf7",
+    "format": "baseline-jpeg"
+  }
+}

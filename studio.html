@@ -25,7 +25,7 @@
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
      globals, not the live URL. ASCII only. -->
-<script>(function(){var p=new URLSearchParams(location.search);window.__studioBootSource=p.get("source")||"";window.__studioBootHero=p.get("hero")==="1";window.__studioBootSeed=p.get("seed")||"";window.__studioBootWorld=p.get("world")||"";})();</script>
+<script>(function(){var p=new URLSearchParams(location.search);window.__studioBootSource=p.get("source")||"";window.__studioBootHero=p.get("hero")==="1";window.__studioBootSeed=p.get("seed")||"";window.__studioBootWorld=p.get("world")||"";window.__studioBootScene=p.get("scene")||"";})();</script>
 </head>
 <body class="studio-page">
 
@@ -343,7 +343,8 @@
               <div class="at-group">
                 <span class="at-glab">Package <span class="hint">reconstruction &middot; authored: two lanes, each labeled</span></span>
                 <div class="at-chips" role="group" aria-label="World package">
-                  <button type="button" class="chip active" data-world="crystal-city">Crystal City</button>
+                  <button type="button" class="chip active" data-world="atlas">The Atlas</button>
+                  <button type="button" class="chip" data-world="crystal-city">Crystal City</button>
                   <button type="button" class="chip" data-world="folded-light">Folded light</button>
                 </div>
               </div>
@@ -352,7 +353,35 @@
                 <span class="at-seed" id="sp-verdict" data-verdict="pending" style="width:auto;text-align:center">pending</span>
               </div>
             </details>
-            <details class="rail-group" open>
+            <details class="rail-group" open id="sp-atlas-block">
+              <summary>Atlas scene</summary>
+              <div class="at-group">
+                <span class="at-glab">Work <span class="hint">27 spatial studies, one per artwork</span></span>
+                <select id="sp-scene" class="at-seed" style="width:100%" aria-label="Atlas scene"></select>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Transform <span class="hint">a spatial transformation of the field, never an image filter</span></span>
+                <div class="at-chips" role="group" aria-label="Atlas transform mode">
+                  <button type="button" class="chip active" data-atlas-mode="0">Field</button>
+                  <button type="button" class="chip" data-atlas-mode="1">Inversphere</button>
+                  <button type="button" class="chip" data-atlas-mode="3">Holo</button>
+                </div>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Depth <span class="hint">(<span id="sp-depth-val">1.00</span>)</span></span>
+                <input type="range" class="at-slider" id="sp-depth" min="0.2" max="2.2" step="0.01" value="1" aria-label="Depth scale">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Splat size <span class="hint">(<span id="sp-size-val">1.00</span>)</span></span>
+                <input type="range" class="at-slider" id="sp-size" min="0.3" max="2.5" step="0.01" value="1" aria-label="Splat size">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Exposure <span class="hint">(<span id="sp-exposure-val">1.00</span>)</span></span>
+                <input type="range" class="at-slider" id="sp-exposure" min="0.4" max="2.4" step="0.01" value="1" aria-label="Exposure">
+              </div>
+              <p class="src-hint">Drag to orbit, wheel to dolly, double-click resets. Needs WebGL2; the hybrid worlds run everywhere.</p>
+            </details>
+            <details class="rail-group" open id="sp-hybrid-block" hidden>
               <summary>Camera &amp; material</summary>
               <div class="at-group">
                 <span class="at-glab">Parallax strength <span class="hint">(<span id="sp-parallax-val">0.70</span>)</span></span>

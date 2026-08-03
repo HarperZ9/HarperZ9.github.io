@@ -86,6 +86,27 @@ def test_crystal_city_package_receipts() -> None:
     assert kinds <= set(range(8)), "unknown splat kind id in Crystal City sidecar"
 
 
+def test_atlas_package_receipts_and_models() -> None:
+    atlas_dir = WORLD_DIR / "atlas"
+    manifest = json.loads((atlas_dir / "atlas.world.json").read_text(encoding="utf-8"))
+    assert manifest["schema"] == "zentropy.world-package/v1"
+    assert manifest["lane"] == "reconstruction"
+    assert manifest["mode"] == "ngsf-atlas"
+    assert "not a scan" in manifest["disclosure"]
+    scenes = manifest["scenes"]
+    assert len(scenes) == 27
+    assert all(s["profile"] for s in scenes)
+    for name, expected in manifest["receipts"].items():
+        blob = (atlas_dir / name).read_bytes()
+        assert hashlib.sha256(blob).hexdigest() == expected, f"receipt drift: {name}"
+    for s in scenes:
+        model = (atlas_dir / s["model"]).read_bytes()
+        assert model[:4] == b"NGS5", s["id"]
+        count = struct.unpack_from("<I", model, 8)[0]
+        assert count == s["gaussian_count"], f"{s['id']}: header count vs manifest"
+        assert 16 + count * 32 == len(model), f"{s['id']}: torn model"
+
+
 def test_editions_ledger_is_honest() -> None:
     ledger = json.loads(EDITIONS.read_text(encoding="utf-8"))
     assert ledger["schema"] == "zentropy.editions/v1"
@@ -105,6 +126,13 @@ def test_editions_ledger_is_honest() -> None:
         "studio.html?source=spatial&world=crystal-city",
         "studio.html?source=spatial&world=folded-light",
     }
+    studies = ledger["spatial_studies"]
+    assert len(studies) == 27
+    assert all(st["run"].startswith("studio.html?source=spatial&world=atlas&scene=scene-") for st in studies)
+    assert all(st["source_sha256"] and st["profile"] for st in studies)
+    queued = ledger["queued"]
+    assert len(queued) == 15
+    assert all(q["status"] == "no spatial interpretation yet" for q in queued)
 
 
 def test_gallery_serves_the_editions_desk() -> None:
