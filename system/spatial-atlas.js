@@ -311,6 +311,8 @@ class AtlasScene {
   }
 
   stop() {
+    // Every start mounts a fresh canvas, so this canvas is being discarded:
+    // release resources AND the context (browsers cap ~16 live contexts).
     this.stopped = true;
     if (this.raf) cancelAnimationFrame(this.raf);
     clearTimeout(this.sortTimer);
@@ -320,6 +322,8 @@ class AtlasScene {
       for (const b of Object.values(this.buffers)) gl.deleteBuffer(b);
       gl.deleteVertexArray(this.vao);
     } catch (_) { /* context may already be lost */ }
+    const lose = gl.getExtension("WEBGL_lose_context");
+    if (lose) { try { lose.loseContext(); } catch (_) { /* already lost */ } }
   }
 
   frame(elapsedMs) {

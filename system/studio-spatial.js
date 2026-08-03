@@ -228,6 +228,10 @@ function freshCanvas(canvas) {
 }
 
 export async function startSpatial(canvas, opts = {}) {
+  // Rapid world switches can overlap async starts; the newest start wins and
+  // any superseded one tears its scene down instead of clobbering.
+  const token = (startSpatial._token = (startSpatial._token || 0) + 1);
+  const superseded = () => token !== startSpatial._token;
   stopSpatial();
   canvas = freshCanvas(canvas);
   currentCanvas = canvas;
@@ -239,6 +243,7 @@ export async function startSpatial(canvas, opts = {}) {
   }
   status("loading the world package…", "");
   const { manifest, base, files, verdict, checked } = await fetchPackage(currentWorld);
+  if (superseded()) return { animating: false, splatCount: 0, world: currentWorld, superseded: true };
   syncBlocks(manifest.mode);
   if (verdict === "DRIFT") {
     setVerdict(verdict);
@@ -248,23 +253,28 @@ export async function startSpatial(canvas, opts = {}) {
 
   const budget = opts.plan && Number(opts.plan.splatBudget) > 0 ? Number(opts.plan.splatBudget) : Infinity;
   const sceneOpts = { splatBudget: budget, reducedMotion: !!opts.reducedMotion };
+  let started;
   if (manifest.mode === "ngsf-atlas") {
     const bootScene = (window.__studioBootScene || "").trim();
-    scene = await startAtlasScene(canvas, { manifest, baseUrl: base }, {
+    started = await startAtlasScene(canvas, { manifest, baseUrl: base }, {
       ...sceneOpts,
       sceneId: bootScene && manifest.scenes.some((s) => s.id === bootScene) ? bootScene : undefined,
     });
+  } else if (manifest.mode === "textured-hybrid") {
+    started = await startTexturedScene(canvas, { manifest, files }, sceneOpts);
+  } else {
+    started = await startSpatialScene(canvas, { manifest, splatBytes: files[manifest.splats.sidecar] }, sceneOpts);
+  }
+  if (superseded()) {
+    try { started.stop(); } catch (_) { /* torn down either way */ }
+    return { animating: false, splatCount: 0, world: currentWorld, superseded: true };
+  }
+  scene = started;
+  if (manifest.mode === "ngsf-atlas") {
     setVerdict(scene.sceneVerdict);
     wireAtlasControls();
     announceAtlasScene(scene.currentMeta, scene.sceneVerdict);
-  } else if (manifest.mode === "textured-hybrid") {
-    scene = await startTexturedScene(canvas, { manifest, files }, sceneOpts);
-    setVerdict(verdict);
-    wireHybridControls();
-    wireHybridCamera(canvas);
-    announceHybrid(manifest, verdict, checked);
   } else {
-    scene = await startSpatialScene(canvas, { manifest, splatBytes: files[manifest.splats.sidecar] }, sceneOpts);
     setVerdict(verdict);
     wireHybridControls();
     wireHybridCamera(canvas);
@@ -273,6 +283,16 @@ export async function startSpatial(canvas, opts = {}) {
   window.__spatialScene = scene;   // honest, inspectable (same pattern as __studioCapability)
   paused = false;
   wireShared();
+  // Real GPU loss recovery. Intentional teardown (world switch, source exit)
+  // marks the canvas first, so this only speaks up for genuine device loss.
+  canvas.addEventListener("webglcontextlost", (e) => {
+    e.preventDefault();
+    // Ignore every intentional path: flagged teardown, a canvas leave3D()
+    // already detached, or a canvas a later world start superseded.
+    if (canvas.dataset.spatialTeardown === "1" || !canvas.isConnected || canvas !== currentCanvas) return;
+    stopSpatial();
+    status("the GPU context was lost; pick a world to bring it back", "bad");
+  }, { once: true });
   return { animating: scene.animating, splatCount: scene.splatCount, world: currentWorld };
 }
 
@@ -288,6 +308,7 @@ function announceHybrid(manifest, verdict, checked) {
 
 export function stopSpatial() {
   if (scene) {
+    if (currentCanvas) currentCanvas.dataset.spatialTeardown = "1";
     try { scene.stop(); } catch (_) { /* context may already be lost */ }
     if (window.__spatialScene === scene) window.__spatialScene = null;
     scene = null;

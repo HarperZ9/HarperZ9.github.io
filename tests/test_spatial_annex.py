@@ -130,9 +130,10 @@ def test_editions_ledger_is_honest() -> None:
     assert len(studies) == 27
     assert all(st["run"].startswith("studio.html?source=spatial&world=atlas&scene=scene-") for st in studies)
     assert all(st["source_sha256"] and st["profile"] for st in studies)
-    queued = ledger["queued"]
-    assert len(queued) == 15
-    assert all(q["status"] == "no spatial interpretation yet" for q in queued)
+    assert "queued" not in ledger, (
+        "the queued group was removed deliberately: the files it cataloged were "
+        "not artworks; do not reintroduce entries without operator confirmation"
+    )
 
 
 def test_gallery_serves_the_editions_desk() -> None:

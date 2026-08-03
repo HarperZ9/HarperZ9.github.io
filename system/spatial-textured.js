@@ -174,9 +174,8 @@ class TexturedScene {
   }
 
   stop() {
-    // Render-loop stop plus resource release; never a context teardown (the
-    // Studio swaps world packages on one shared GL canvas, and leave3D()
-    // owns context release on source exit).
+    // Every start mounts a fresh canvas, so this canvas is being discarded:
+    // release resources AND the context (browsers cap ~16 live contexts).
     this.stopped = true;
     if (this.raf) cancelAnimationFrame(this.raf);
     const gl = this.gl;
@@ -187,6 +186,8 @@ class TexturedScene {
         ...Object.values(this.maskTex || {}), ...Object.values(this.depthTex || {})];
       for (const t of textures) gl.deleteTexture(t);
     } catch (_) { /* context may already be lost */ }
+    const lose = gl.getExtension("WEBGL_lose_context");
+    if (lose) { try { lose.loseContext(); } catch (_) { /* already lost */ } }
   }
 
   setControl(name, value) {

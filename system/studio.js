@@ -559,11 +559,9 @@ function setSource(next) {
         if (epoch !== _sourceEpoch) { mod.stopSpatial(); return; }
         _spatialStatic = !(res && res.animating);
         startMeterLoop();
-        c.addEventListener("webglcontextlost", (e) => {
-          e.preventDefault();
-          leave3D();
-          say("model", "The GPU context was lost; re-enter Spatial to bring the world back.");
-        }, { once: true });
+        // Context-lost recovery lives in studio-spatial.js: it owns the canvas
+        // nodes (a fresh one per world start) and can tell an intentional
+        // teardown from a real GPU loss.
       } catch (err) {
         leave3D();
         say("model", "The spatial world failed to start: " + (err && err.message ? err.message : String(err)));

@@ -127,10 +127,10 @@ class SpatialScene {
   }
 
   stop() {
-    // A stop is a render-loop stop plus resource release, NOT a context
-    // teardown: the Studio swaps world packages on one shared GL canvas, and
-    // losing the context here would kill the next scene (and trip the
-    // source-level contextlost handler). leave3D() owns context release.
+    // Every start mounts a fresh canvas (WebGL1 and WebGL2 worlds cannot
+    // share a node), so this scene's canvas is being discarded: release the
+    // resources AND the context itself. Browsers cap ~16 live contexts;
+    // leaking one per world switch exhausts the cap and kills the renderer.
     this.stopped = true;
     if (this.raf) cancelAnimationFrame(this.raf);
     const gl = this.gl;
@@ -138,6 +138,8 @@ class SpatialScene {
       for (const p of [this.backdropProgram, this.veilProgram, this.pointProgram]) gl.deleteProgram(p);
       for (const b of [this.quadBuffer, this.gridVB, this.gridIB, this.pointBuffer]) gl.deleteBuffer(b);
     } catch (_) { /* context may already be lost */ }
+    const lose = gl.getExtension("WEBGL_lose_context");
+    if (lose) { try { lose.loseContext(); } catch (_) { /* already lost */ } }
   }
 
   setControl(name, value) {

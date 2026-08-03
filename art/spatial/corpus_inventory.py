@@ -20,8 +20,9 @@ from pathlib import Path
 
 from PIL import Image
 
-PATTERNS = ("10001192*.png", "10001194*.jpg", "10001189*.jpg", "10001169*.jpg",
-            "crystal_city*.png", "ChatGPT Image*.png", "*.png")
+# Only patterns with a confirmed artwork record are swept. Ranges outside the
+# published manifests are not artwork and are never cataloged here.
+PATTERNS = ("10001192*.png", "crystal_city*.png", "ChatGPT Image*.png")
 
 
 def sha256(path: Path) -> str:
@@ -92,8 +93,6 @@ def main() -> None:
         }
         if record:
             entry.update(record)
-        elif path.name.startswith("10001194"):
-            entry.update({"identity": f"wave3-{path.stem}", "status": "unpublished_wave3"})
         elif path.name.startswith("crystal_city"):
             entry.update({"identity": "crystal-city", "status": "spatial_directed"})
         else:
@@ -107,9 +106,10 @@ def main() -> None:
         "assembled": "2026-08-03",
         "note": (
             "Deduplicated by SHA-256. published_17 is live on main; pr79_pending is "
-            "recorded in the open high-resolution coda PR; unpublished_wave3 is the "
-            "2026-07-27 batch with no public record yet; candidates matched a filename "
-            "pattern but no record and need the operator's confirmation before use."
+            "recorded in the open high-resolution coda PR. When no originals are "
+            "local, the Spatial Atlas derivatives in art/spatial/atlas are the "
+            "verified record. Candidates matched a filename pattern but no record "
+            "and need the operator's confirmation before use."
         ),
         "works": sorted(matched, key=lambda e: (e["status"], e.get("sequence", 99), e["file"])),
         "unmatched_candidates": len(candidates_only),
