@@ -57,7 +57,14 @@ function recordingCanvas(cssW, cssH, dpr = 1.5) {
     isPointInPath: () => false,
   };
   for (const k of Object.keys(state)) {
-    Object.defineProperty(ctx, k, { get: () => state[k], set: (v) => { state[k] = v; }, enumerable: true });
+    // configurable, like a real CanvasRenderingContext2D accessor, so the
+    // palette-alignment shim can shadow it for the duration of a render.
+    Object.defineProperty(ctx, k, {
+      get: () => state[k],
+      set: (v) => { state[k] = v; if (k === "fillStyle" || k === "strokeStyle") calls.push("style:" + v); },
+      enumerable: true,
+      configurable: true,
+    });
   }
   const canvas = {
     width: Math.round(cssW * dpr),
@@ -141,6 +148,40 @@ test("no plate renders empty", () => {
     if (!covered) thin.push(`${layer} (${drawing.length} ops, ${blits} blits, ink ${rec.ink().toFixed(0)})`);
   }
   assert.deepEqual(thin, [], `layers rendering effectively nothing: ${thin.join(", ")}`);
+});
+
+test("colour follows the seed palette, including in the literal layers", () => {
+  // Nineteen layers drew from hardcoded rgb literals, so a plate's colour did
+  // not change with its palette. Two seeds landing on different palettes must
+  // now produce different drawn colours, for exactly those layers.
+  const literalLayers = ["facets", "groove", "caustic-paper", "planet-limb", "dendrite", "riso-moire"];
+  const stylesFor = (seedString, layer) => {
+    const rec = recordingCanvas(900, 560);
+    field.renderSpecimen(rec.canvas, seedString, [layer]);
+    return rec.calls.filter((c) => c.startsWith("style:")).join("|");
+  };
+  for (const layer of literalLayers) {
+    // Seeds chosen to land on different palette indices.
+    const a = stylesFor("palette-probe-a", layer);
+    const b = stylesFor("palette-probe-b", layer);
+    const c = stylesFor("palette-probe-c", layer);
+    assert.ok(a.length > 0, `${layer}: recorded no colour assignments at all`);
+    assert.ok(a !== b || b !== c || a !== c,
+      `${layer}: identical colours across three seeds, so the palette is still ignored`);
+  }
+});
+
+test("neutral marks survive alignment", () => {
+  // Alignment must not tint paper, ink black, or the near-white marks: only
+  // chromatic colour is snapped to the palette hues.
+  for (const neutral of ["rgba(3,4,9,0.9)", "rgb(243,244,246)", "#ffffff", "rgba(0,0,0,0.5)"]) {
+    const aligned = field.__alignForTest(neutral, [30, 150, 270]);
+    assert.equal(aligned, neutral, `neutral ${neutral} was tinted`);
+  }
+  // A saturated colour must move.
+  const moved = field.__alignForTest("rgba(50,90,220,0.4)", [30]);
+  assert.notEqual(moved, "rgba(50,90,220,0.4)");
+  assert.match(moved, /^rgba\(\d+,\d+,\d+,0\.4\)$/, "alpha must be preserved exactly");
 });
 
 test("the chaos-game driver samples without a short period", () => {

@@ -9,6 +9,9 @@
 import { buildCppn, buildNeuralSdf } from "./neural.js";
 import { voxelizeSdf, isoOrder } from "./voxel.js";
 import { drawTypeface } from "./typeface.js";
+import {
+  srgbToLinear, linearRgbToOklab, oklabToOklch, oklchToSrgbByte,
+} from "./lib/sense-core/colour-perceptual.mjs";
 let mounted = false;
 let rafId = 0;
 const pulses = [];
@@ -116,7 +119,140 @@ function routePalette(seed) {
       fluid: [[239, 171, 48], [135, 237, 74], [80, 196, 185]],
     },
   ];
-  return palettes[seed % palettes.length];
+  const base = palettes[seed % palettes.length];
+  return { ...base, ...paletteRoles(base, seed) };
+}
+
+// ── the role API ────────────────────────────────────────────────────────────
+// Nineteen layers accepted `palette` and drew from hardcoded rgb literals
+// anyway, so a plate's colour did not follow its seed and two of the shipped
+// gallery plates combined two such layers. Rather than restate literals per
+// layer, the palette exposes named roles built from its own anchors in OKLCh,
+// so hue relationships stay perceptually even instead of drifting the way
+// naive RGB interpolation does.
+//
+// Roles: ink (the drawing mark), support (the secondary mark), hot (the one
+// accent), ground (the field it sits on), and ramp(t) for continuous fields.
+// Every role returns [r,g,b] 0-255 so a layer can compose its own alpha.
+function paletteRoles(base, seed) {
+  const anchors = base.fluid;
+  const lch = anchors.map(([r, g, b]) => {
+    const [labL, labA, labB] = linearRgbToOklab(srgbToLinear(r / 255), srgbToLinear(g / 255), srgbToLinear(b / 255));
+    const [L, C, h] = oklabToOklch(labL, labA, labB);
+    return { L, C, h };
+  });
+  const toByte = (c) => oklchToSrgbByte(c.L, c.C, c.h);
+  // Rotate which anchor leads by seed, so sibling plates differ without
+  // leaving the palette.
+  const lead = seed % lch.length;
+  const ink = lch[lead];
+  const support = lch[(lead + 1) % lch.length];
+  const hot = lch[(lead + 2) % lch.length];
+  return {
+    // The hue set every drawn colour is snapped toward.
+    anchorHues: lch.map((c) => c.h),
+    roleInk: toByte(ink),
+    roleSupport: toByte(support),
+    // The single hot mark the canon allows: pushed in chroma, not in size.
+    roleHot: toByte({ L: Math.min(0.92, hot.L * 1.06), C: hot.C * 1.35, h: hot.h }),
+    // A calm ground: same hue family, low chroma, dark.
+    roleGround: toByte({ L: 0.18, C: Math.min(0.04, ink.C * 0.25), h: ink.h }),
+    // Perceptually even ramp across the three anchors, interpolating in OKLCh
+    // with shortest-arc hue so midpoints do not pass through grey.
+    ramp(t) {
+      const x = Math.max(0, Math.min(1, t)) * (lch.length - 1);
+      const i = Math.min(lch.length - 2, Math.floor(x));
+      const f = x - i;
+      const a = lch[i], b = lch[i + 1];
+      let dh = b.h - a.h;
+      if (dh > 180) dh -= 360; else if (dh < -180) dh += 360;
+      return toByte({ L: a.L + (b.L - a.L) * f, C: a.C + (b.C - a.C) * f, h: a.h + dh * f });
+    },
+  };
+}
+
+// ── palette alignment ───────────────────────────────────────────────────────
+// Nineteen layers draw from hardcoded rgb literals, so their colour did not
+// follow the seed. Rewriting ninety-eight literals by hand would risk the
+// tonal design each layer was tuned with, so alignment happens where colour
+// enters the context instead: a literal keeps its lightness, its chroma, and
+// its alpha, and only its HUE is snapped to the nearest anchor of the seed's
+// palette, in OKLCh so the snap stays perceptually even.
+//
+// Neutrals pass through untouched, which keeps blacks, papers, and the
+// near-white marks exactly as authored. A colour already drawn from the
+// palette is already at an anchor hue, so alignment is a no-op for it: this
+// is safe to apply to every layer, not only the offenders.
+const NEUTRAL_CHROMA = 0.035;
+
+function parseCssColour(value) {
+  if (typeof value !== "string") return null;
+  const rgba = value.match(/^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/i);
+  if (rgba) {
+    return { r: +rgba[1], g: +rgba[2], b: +rgba[3], a: rgba[4] === undefined ? 1 : +rgba[4] };
+  }
+  const hex = value.match(/^#([0-9a-f]{6})$/i);
+  if (hex) {
+    const n = parseInt(hex[1], 16);
+    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255, a: 1 };
+  }
+  return null;
+}
+
+function alignColourToPalette(value, hues) {
+  const c = parseCssColour(value);
+  if (!c || !hues || !hues.length) return value;
+  const [labL, labA, labB] = linearRgbToOklab(srgbToLinear(c.r / 255), srgbToLinear(c.g / 255), srgbToLinear(c.b / 255));
+  const [L, C, h0] = oklabToOklch(labL, labA, labB);
+  if (C < NEUTRAL_CHROMA) return value;          // grey, paper, ink black
+  let best = hues[0], bestD = 361;
+  for (const h of hues) {
+    const d = Math.abs(((h - h0 + 540) % 360) - 180);
+    if (d < bestD) { bestD = d; best = h; }
+  }
+  const [r, g, b] = oklchToSrgbByte(L, C, best);
+  return `rgba(${r},${g},${b},${c.a})`;
+}
+
+// Shadow the style accessors on this one context for the duration of a render.
+function installPaletteAlignment(ctx, palette) {
+  const hues = palette && palette.anchorHues;
+  if (!hues || !hues.length) return () => {};
+  const proto = Object.getPrototypeOf(ctx) || ctx;
+  const restore = [];
+  for (const prop of ["fillStyle", "strokeStyle"]) {
+    const own = Object.getOwnPropertyDescriptor(ctx, prop);
+    const desc = own || Object.getOwnPropertyDescriptor(proto, prop);
+    if (!desc || !desc.set || (own && own.configurable === false)) continue;
+    try {
+      Object.defineProperty(ctx, prop, {
+        configurable: true,
+        enumerable: true,
+        get() { return desc.get ? desc.get.call(ctx) : undefined; },
+        set(v) { desc.set.call(ctx, alignColourToPalette(v, hues)); },
+      });
+    } catch (_) {
+      continue;   // a context that refuses shadowing simply draws unaligned
+    }
+    restore.push(() => {
+      delete ctx[prop];
+      if (own) Object.defineProperty(ctx, prop, own);
+    });
+  }
+  // Gradient stops carry literals too, so the gradient factories hand back a
+  // wrapper that aligns each stop.
+  for (const factory of ["createLinearGradient", "createRadialGradient"]) {
+    const original = ctx[factory];
+    if (typeof original !== "function") continue;
+    ctx[factory] = function alignedGradient(...args) {
+      const grad = original.apply(ctx, args);
+      const addStop = grad.addColorStop.bind(grad);
+      grad.addColorStop = (offset, colour) => addStop(offset, alignColourToPalette(colour, hues));
+      return grad;
+    };
+    restore.push(() => { delete ctx[factory]; });
+  }
+  return () => { for (const undo of restore) undo(); };
 }
 
 function sizeCanvas(canvas, dpr) {
@@ -2344,20 +2480,98 @@ function drawClifford(ctx, width, height, tick, seed, palette) {
   const sx = width / (2 * (1 + Math.abs(c)) + 0.5);
   const sy = height / (2 * (1 + Math.abs(d)) + 0.5);
   const ox = width / 2, oy = height / 2;
-  let x = 0.1, y = 0.1;
   const N = Math.min(360000, Math.max(60000, Math.round(width * height * 0.18)));
-  ctx.globalCompositeOperation = "lighter";
-  for (let i = 0; i < N; i += 1) {
-    const nx = Math.sin(a * y) + c * Math.cos(a * x);
-    const ny = Math.sin(b * x) + d * Math.cos(b * y);
-    x = nx; y = ny;
-    if (i < 24) continue;
-    const px = ox + x * sx, py = oy + y * sy;
-    const t = tones[(i >> 6) % tones.length];
-    ctx.fillStyle = `rgba(${t[0]},${t[1]},${t[2]},0.12)`;
-    ctx.fillRect(px, py, 1.5, 1.5);
-  }
+  // Additive alpha at 0.12 saturates after about nine coincident hits, so the
+  // folded core of the attractor clipped to flat white while only the sparse
+  // wisps carried any gradation. Counting hits into a float buffer and mapping
+  // density logarithmically keeps the whole dynamic range: the core reads as
+  // structure rather than a blown highlight.
+  plotDensityField(ctx, width, height, tones, (plot) => {
+    let x = 0.1, y = 0.1;
+    for (let i = 0; i < N; i += 1) {
+      const nx = Math.sin(a * y) + c * Math.cos(a * x);
+      const ny = Math.sin(b * x) + d * Math.cos(b * y);
+      x = nx; y = ny;
+      if (i < 24) continue;
+      plot(ox + x * sx, oy + y * sy, (i >> 6) % tones.length);
+    }
+  });
   ctx.restore();
+}
+
+// Shared density accumulator for the point-cloud layers (the strange attractor
+// and the IFS veil). Hits land in a Float32 count buffer per tone, then one
+// logarithmic tone map is blitted, so nothing clips and point count buys
+// gradation instead of saturation.
+function plotDensityField(ctx, width, height, tones, run) {
+  const w = Math.max(1, Math.round(width));
+  const h = Math.max(1, Math.round(height));
+  // The accumulator needs pixel buffers and an offscreen canvas. Where those
+  // are unavailable, plot directly rather than failing the plate: the result
+  // is the older additive look, which is worse but is still the artwork.
+  const stageProbe = typeof document !== "undefined" ? document.createElement("canvas") : null;
+  const canAccumulate = !!(stageProbe && typeof stageProbe.getContext === "function"
+    && typeof ctx.createImageData === "function" && typeof ctx.drawImage === "function");
+  if (!canAccumulate) {
+    const prior = ctx.globalCompositeOperation;
+    ctx.globalCompositeOperation = "lighter";
+    run((px, py, lane) => {
+      const t = tones[lane % tones.length];
+      ctx.fillStyle = `rgba(${t[0]},${t[1]},${t[2]},0.12)`;
+      ctx.fillRect(px, py, 1.5, 1.5);
+    });
+    ctx.globalCompositeOperation = prior;
+    return;
+  }
+  const lanes = tones.length;
+  const counts = new Float32Array(w * h * lanes);
+  let peak = 0;
+  const plot = (px, py, lane) => {
+    const xi = px | 0, yi = py | 0;
+    if (xi < 0 || yi < 0 || xi >= w || yi >= h) return;
+    const idx = (yi * w + xi) * lanes + (lane % lanes);
+    const v = counts[idx] + 1;
+    counts[idx] = v;
+    if (v > peak) peak = v;
+  };
+  run(plot);
+  if (peak <= 0) return;
+  const img = ctx.createImageData(w, h);
+  const out = img.data;
+  const norm = 1 / Math.log(1 + peak);
+  for (let i = 0, p = 0; i < w * h; i += 1, p += 4) {
+    // Hue comes from the lane that dominates the pixel, brightness from the
+    // total density. Averaging the lanes instead would wash every busy region
+    // toward white and throw away the palette exactly where the structure is
+    // densest, which is the part worth seeing.
+    let total = 0, bestLane = -1, bestCount = 0;
+    for (let l = 0; l < lanes; l += 1) {
+      const n = counts[i * lanes + l];
+      if (!n) continue;
+      total += Math.log(1 + n) * norm;
+      if (n > bestCount) { bestCount = n; bestLane = l; }
+    }
+    if (bestLane < 0) continue;
+    const tone = tones[bestLane];
+    const a = Math.min(1, total);
+    out[p] = tone[0];
+    out[p + 1] = tone[1];
+    out[p + 2] = tone[2];
+    out[p + 3] = Math.round(a * 255);
+  }
+  // putImageData writes raw pixels and ignores compositing, so blitting it
+  // straight onto the context would erase the ground the layer just laid
+  // down. Stage it and composite additively, which is what the accumulation
+  // is modelling in the first place.
+  const stage = stageProbe;
+  stage.width = w; stage.height = h;
+  const sctx = stage.getContext("2d");
+  if (!sctx || typeof sctx.putImageData !== "function") return;
+  sctx.putImageData(img, 0, 0);
+  const priorOp = ctx.globalCompositeOperation;
+  ctx.globalCompositeOperation = "lighter";
+  ctx.drawImage(stage, 0, 0, w, h);
+  ctx.globalCompositeOperation = priorOp;
 }
 
 // Phyllotaxis: the sunflower / pinecone spiral (Vogel's model). Each dot sits at
@@ -2449,6 +2663,12 @@ const SPECIMEN_DEFAULT_LAYERS = ["orbit", "contour"];
 
 // The registered layer vocabulary, for tests and for pages that want to list
 // what canvas[data-specimen-layers] can request.
+// Test hook for the palette-alignment contract (neutrals pass, chromatic
+// colour snaps, alpha is preserved). Not part of the drawing API.
+export function __alignForTest(value, hues) {
+  return alignColourToPalette(value, hues);
+}
+
 export function specimenLayerNames() {
   return Object.keys(SPECIMEN_LAYERS);
 }
@@ -2504,9 +2724,14 @@ export function renderSpecimen(canvas, seedString, layerNames = SPECIMEN_DEFAULT
   drawBackdrop(ctx, width, height, tick, seed, palette);
   const names = Array.isArray(layerNames) && layerNames.length
     ? layerNames : SPECIMEN_DEFAULT_LAYERS;
-  for (const name of names) {
-    const layer = SPECIMEN_LAYERS[String(name).trim()];
-    if (layer) layer(ctx, width, height, tick, seed, palette);
+  const releaseAlignment = installPaletteAlignment(ctx, palette);
+  try {
+    for (const name of names) {
+      const layer = SPECIMEN_LAYERS[String(name).trim()];
+      if (layer) layer(ctx, width, height, tick, seed, palette);
+    }
+  } finally {
+    releaseAlignment();
   }
   ctx.globalCompositeOperation = "source-over";
   return true;
