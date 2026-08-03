@@ -1,2 +1,5 @@
 # Keep generated site documents stable across Windows and GitHub Pages.
 *.html text eol=lf
+
+# Spatial world packages are byte-receipted: no EOL conversion, ever.
+art/spatial/** -text
