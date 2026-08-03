@@ -2449,6 +2449,10 @@ export function specimenLayerNames() {
   return Object.keys(SPECIMEN_LAYERS);
 }
 
+// The short edge every layer's absolute pixel constants were authored against.
+// Changing this rescales the whole plate vocabulary, so it is a canon value.
+const REFERENCE_SHORT_EDGE = 300;
+
 function sizeSpecimenCanvas(canvas, dpr) {
   // Unlike sizeCanvas above, never fall back to the window size: a strip that
   // has not been laid out yet should stay small, not inflate to the viewport.
@@ -2477,12 +2481,21 @@ export function renderSpecimen(canvas, seedString, layerNames = SPECIMEN_DEFAULT
   const dpr = Math.min(2, Math.max(1,
     (typeof window !== "undefined" && window.devicePixelRatio) || 1));
   sizeSpecimenCanvas(canvas, dpr);
-  const width = canvas.width;
-  const height = canvas.height;
+  // Reference drawing space. Every layer's stroke counts, lengths, and weights
+  // are absolute numbers tuned against a short edge of REFERENCE_SHORT_EDGE, so
+  // drawing straight into a large backing store spread the same ink over many
+  // more pixels: measured, a plate at a 1032px short edge rendered at roughly
+  // an eighth the ink coverage of the same plate at 300px, which is why several
+  // exhibition plates read as near-empty frames. Drawing in reference space and
+  // scaling the context keeps composition and density identical at any size,
+  // and canvas vector ops still rasterize at full device resolution.
+  const scale = Math.max(1, Math.min(canvas.width, canvas.height) / REFERENCE_SHORT_EDGE);
+  const width = canvas.width / scale;
+  const height = canvas.height / scale;
   // Frozen instant: the layer functions take a clock tick, so derive one from
   // the seed. Same seed, same tick, same frame, every visit.
   const tick = 40000 + (seed % 50000);
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.setTransform(scale, 0, 0, scale, 0, 0);
   ctx.clearRect(0, 0, width, height);
   drawBackdrop(ctx, width, height, tick, seed, palette);
   const names = Array.isArray(layerNames) && layerNames.length
