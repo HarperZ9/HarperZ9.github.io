@@ -780,6 +780,11 @@ body.world-3 .bar .rt{color:#cdd6cf}
   border-radius:999px;padding:.42em .8em;transition:background .15s,border-color .15s}
 .chip:hover,.chip:focus-visible{background:rgba(70,54,232,.12);border-color:var(--ember);outline:none}
 .chip.active,.chip[aria-pressed="true"]{border-color:var(--signal);color:var(--bone);background:color-mix(in oklab, var(--signal) 12%, transparent)}
+/* A control that has accepted a click but is still fetching says so. */
+.chip.loading{opacity:.72}
+.chip.loading::after{content:" ·";animation:chipwait 1s steps(4,end) infinite}
+@keyframes chipwait{0%{content:" ·"}25%{content:" ··"}50%{content:" ···"}75%{content:" ··"}}
+@media (prefers-reduced-motion:reduce){.chip.loading::after{animation:none}}
 @media (max-width:700px){.frame-row{grid-template-columns:1fr}}
 
 /* ─── studio · mounted Atelier controls (Task 7) ─────────────────────
@@ -1004,8 +1009,16 @@ body.world-3 .bar .rt{color:#cdd6cf}
    ovals, panels are slowly morphing blobs. Circular elements (dots, swatches, specimens) excluded. */
 @keyframes blobmorph{0%,100%{border-radius:46% 54% 53% 47% / 56% 46% 54% 44%}50%{border-radius:55% 45% 47% 53% / 45% 55% 44% 56%}}
 @keyframes cardblob{0%,100%{border-radius:18px 32px 22px 28px / 28px 20px 32px 22px}50%{border-radius:30px 20px 30px 22px / 22px 32px 20px 30px}}
-.btn,.chip{border-radius:49% 51% 52% 48% / 54% 46% 54% 46%;animation:blobmorph 15s ease-in-out infinite}
+.btn,.chip{border-radius:49% 51% 52% 48% / 54% 46% 54% 46%;animation:blobmorph 15s ease-in-out infinite;position:relative}
 .btn:nth-of-type(2n),.chip:nth-of-type(2n){animation-duration:19s;animation-direction:reverse}
+/* The liquid oval is the look, not the hit target. A ~50% radius clips the
+   control to an ellipse, so the corners and the ends of a wide label are dead
+   to the pointer, and the morph keeps moving where the dead zone is: a button
+   reading "Crystal City" would ignore clicks on the first and last letters.
+   This restores the full rectangle as the clickable area while the blob keeps
+   its shape. Interactive controls must accept a click anywhere they look
+   clickable. */
+.btn::before,.chip::before{content:"";position:absolute;inset:-1px;border-radius:6px;background:transparent}
 .panel,.scenario{border-radius:22px 30px 24px 32px / 28px 22px 32px 24px;animation:cardblob 26s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){.btn,.chip,.panel,.scenario{animation:none}}
 .scenario .lbl{font-family:var(--mono);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase}

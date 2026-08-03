@@ -47,11 +47,12 @@ function shouldMountAmbientField(doc = document) {
   if (!shouldUseDesktopGpuArt(window)) return false;
   const body = doc && doc.body;
   if (!body) return false;
-  return (
-    body.classList.contains("gallery") ||
-    body.classList.contains("studio-app") ||
-    body.classList.contains("studio-page")
-  );
+  // The Studio is its own live instrument: a full-page ambient field animating
+  // behind it competes with the renderer for the same main thread (profiled at
+  // roughly a tenth of the frame budget) and buys nothing, because the canvas
+  // is already the subject. Ambient art stays on the reading surfaces.
+  if (body.classList.contains("studio-page") || body.classList.contains("studio-app")) return false;
+  return body.classList.contains("gallery");
 }
 
 function normalizeRouteArtSrc(raw, doc) {
