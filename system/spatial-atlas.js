@@ -14,9 +14,30 @@ import { acquireContext } from "./spatial-gl.js";
 // level (system/studio.js sizeCanvas).
 const MAX_BACKING_EDGE = 1600;
 
+// Depth-sort resolution and the view-change tolerances that trigger a re-sort.
+// 2048 buckets over the scene's depth span is finer than the visible ordering
+// error at these splat counts; the tolerances are roughly a degree of turn and
+// a small eye translation, so a slow drag still re-sorts continuously.
+// Six RGBA32F texels hold one splat: mean.xyz+opacity, scale.xyz+quat.x,
+// quat.yzw+color.r, color.gb+meta.xy, meta.zw+viewCoeff.xy, viewCoeff.z.
+const SPLAT_TEXELS = 6;
+const DATA_TEX_WIDTH = 2048;
+const DEPTH_BUCKETS = 2048;
+const SORT_COS_TOLERANCE = 0.99985;
+const SORT_EYE_TOLERANCE = 0.01;
+
+// Per-splat attributes live in a float texture and are fetched by index. Only
+// the index buffer is reordered when the camera turns, so a re-sort uploads
+// 4 bytes per splat instead of 84, and nothing is gathered on the CPU.
 const ATLAS_VS = `#version 300 es
 precision highp float; precision highp int;
-layout(location=0) in vec2 aCorner; layout(location=1) in vec3 aMean; layout(location=2) in vec3 aScale; layout(location=3) in vec4 aQuat; layout(location=4) in vec3 aColor; layout(location=5) in float aOpacity; layout(location=6) in vec4 aMeta; layout(location=7) in vec3 aViewCoeff;
+layout(location=0) in vec2 aCorner; layout(location=1) in uint aIndex;
+uniform highp sampler2D uSplatData;
+uniform int uDataWidth;
+vec4 splatTexel(uint idx, int slot){
+ int t = int(idx) * SPLAT_TEXELS + slot;
+ return texelFetch(uSplatData, ivec2(t % uDataWidth, t / uDataWidth), 0);
+}
 uniform mat4 uView; uniform mat4 uProjection; uniform float uSplatScale; uniform float uDepthScale; uniform int uMode; uniform float uTime;
 uniform vec3 uInvCenter; uniform float uInvRadius; uniform float uInvStrength; uniform float uInvExponent; uniform float uInvShell; uniform float uInvThickness; uniform float uInvTwist; uniform float uInvInner; uniform float uInvOuter;
 uniform float uHoloStrength;
@@ -28,6 +49,17 @@ vec3 warp(vec3 p){p.z*=uDepthScale;
  else if(uMode==3){float w=sin(p.x*7.0+uTime*1.7)+sin(p.y*6.0-uTime*1.1)+sin((p.x+p.y)*4.0+uTime*.7);p.z+=w*uHoloStrength*.11;p.x+=sin(p.y*5.0+uTime)*uHoloStrength*.05;}
  return p;}
 void main(){
+ vec4 t0 = splatTexel(aIndex, 0);
+ vec4 t1 = splatTexel(aIndex, 1);
+ vec4 t2 = splatTexel(aIndex, 2);
+ vec4 t3 = splatTexel(aIndex, 3);
+ vec4 t4 = splatTexel(aIndex, 4);
+ vec3 aMean = t0.xyz; float aOpacity = t0.w;
+ vec3 aScale = t1.xyz;
+ vec4 aQuat = vec4(t1.w, t2.xyz);
+ vec3 aColor = vec3(t2.w, t3.xy);
+ vec4 aMeta = vec4(t3.zw, t4.xy);
+ vec3 aViewCoeff = vec3(t4.zw, splatTexel(aIndex, 5).x);
  vec3 base0=vec3(aMean.xy,aMean.z*uDepthScale);float originalR=length(base0-uInvCenter);
  if(uMode==1&&(originalR<uInvInner||originalR>uInvOuter)){gl_Position=vec4(2.0,2.0,2.0,1.0);vCorner=vec2(0);vColor=vec3(0);vOpacity=0.0;vMeta=vec4(0);vNormal=vec3(0,0,1);vViewCoeff=vec3(0);return;}
  vec3 p=warp(aMean);
@@ -105,26 +137,6 @@ export function orderByImportance(scene, budget) {
   return { indices, dropped: scene.count - indices.length };
 }
 
-function gather(scene, indices) {
-  const n = indices.length;
-  const out = {
-    count: n,
-    means: new Float32Array(n * 3), scales: new Float32Array(n * 3),
-    quats: new Float32Array(n * 4), colors: new Float32Array(n * 3),
-    opacity: new Float32Array(n), meta: new Float32Array(n * 4),
-    viewCoeff: new Float32Array(n * 3),
-  };
-  indices.forEach((src, dst) => {
-    out.means.set(scene.means.subarray(src * 3, src * 3 + 3), dst * 3);
-    out.scales.set(scene.scales.subarray(src * 3, src * 3 + 3), dst * 3);
-    out.quats.set(scene.quats.subarray(src * 4, src * 4 + 4), dst * 4);
-    out.colors.set(scene.colors.subarray(src * 3, src * 3 + 3), dst * 3);
-    out.opacity[dst] = scene.opacity[src];
-    out.meta.set(scene.meta.subarray(src * 4, src * 4 + 4), dst * 4);
-    out.viewCoeff.set(scene.viewCoeff.subarray(src * 3, src * 3 + 3), dst * 3);
-  });
-  return out;
-}
 
 const norm3 = (v) => { const n = Math.hypot(v[0], v[1], v[2]) || 1; return [v[0] / n, v[1] / n, v[2] / n]; };
 const cross3 = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
@@ -209,14 +221,14 @@ class AtlasScene {
       return s;
     };
     const p = gl.createProgram();
-    gl.attachShader(p, make(gl.VERTEX_SHADER, ATLAS_VS));
+    gl.attachShader(p, make(gl.VERTEX_SHADER, ATLAS_VS.replace(/SPLAT_TEXELS/g, String(SPLAT_TEXELS))));
     gl.attachShader(p, make(gl.FRAGMENT_SHADER, ATLAS_FS));
     gl.linkProgram(p);
     if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p) || "link error");
     this.program = p;
     gl.useProgram(p);
     this.uniform = {};
-    for (const n of ["uView", "uProjection", "uSplatScale", "uDepthScale", "uMode", "uTime", "uInvCenter", "uInvRadius", "uInvStrength", "uInvExponent", "uInvShell", "uInvThickness", "uInvTwist", "uInvInner", "uInvOuter", "uHoloStrength", "uOpacityScale", "uExposure", "uGamma", "uIridescence"]) {
+    for (const n of ["uView", "uProjection", "uSplatScale", "uDepthScale", "uMode", "uTime", "uInvCenter", "uInvRadius", "uInvStrength", "uInvExponent", "uInvShell", "uInvThickness", "uInvTwist", "uInvInner", "uInvOuter", "uHoloStrength", "uOpacityScale", "uExposure", "uGamma", "uIridescence", "uSplatData", "uDataWidth"]) {
       this.uniform[n] = gl.getUniformLocation(p, n);
     }
     this.vao = gl.createVertexArray();
@@ -226,18 +238,46 @@ class AtlasScene {
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW);
     gl.enableVertexAttribArray(0);
     gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
-    this.buffers = {};
-    const attrs = [[1, "means", 3], [2, "scales", 3], [3, "quats", 4], [4, "colors", 3], [5, "opacity", 1], [6, "meta", 4], [7, "viewCoeff", 3]];
-    for (const [loc, name, size] of attrs) {
-      const b = gl.createBuffer();
-      this.buffers[name] = b;
-      gl.bindBuffer(gl.ARRAY_BUFFER, b);
-      gl.enableVertexAttribArray(loc);
-      gl.vertexAttribPointer(loc, size, gl.FLOAT, false, 0, 0);
-      gl.vertexAttribDivisor(loc, 1);
-    }
+    // The only per-instance attribute is the sorted index.
+    this.indexBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.indexBuffer);
+    gl.enableVertexAttribArray(1);
+    gl.vertexAttribIPointer(1, 1, gl.UNSIGNED_INT, 0, 0);
+    gl.vertexAttribDivisor(1, 1);
     gl.bindVertexArray(null);
+    this.dataTexture = gl.createTexture();
     this.bindPointers();
+  }
+
+  // Upload every splat's attributes once per scene as a float texture. After
+  // this, a camera turn only reorders indices.
+  uploadSplatData(scene) {
+    const gl = this.gl;
+    const n = scene.count;
+    const texels = n * SPLAT_TEXELS;
+    const rows = Math.ceil(texels / DATA_TEX_WIDTH);
+    const data = new Float32Array(DATA_TEX_WIDTH * rows * 4);
+    for (let i = 0; i < n; i += 1) {
+      let o = i * SPLAT_TEXELS * 4;
+      data[o] = scene.means[i * 3]; data[o + 1] = scene.means[i * 3 + 1]; data[o + 2] = scene.means[i * 3 + 2]; data[o + 3] = scene.opacity[i];
+      o += 4;
+      data[o] = scene.scales[i * 3]; data[o + 1] = scene.scales[i * 3 + 1]; data[o + 2] = scene.scales[i * 3 + 2]; data[o + 3] = scene.quats[i * 4];
+      o += 4;
+      data[o] = scene.quats[i * 4 + 1]; data[o + 1] = scene.quats[i * 4 + 2]; data[o + 2] = scene.quats[i * 4 + 3]; data[o + 3] = scene.colors[i * 3];
+      o += 4;
+      data[o] = scene.colors[i * 3 + 1]; data[o + 1] = scene.colors[i * 3 + 2]; data[o + 2] = scene.meta[i * 4]; data[o + 3] = scene.meta[i * 4 + 1];
+      o += 4;
+      data[o] = scene.meta[i * 4 + 2]; data[o + 1] = scene.meta[i * 4 + 3]; data[o + 2] = scene.viewCoeff[i * 3]; data[o + 3] = scene.viewCoeff[i * 3 + 1];
+      o += 4;
+      data[o] = scene.viewCoeff[i * 3 + 2];
+    }
+    gl.bindTexture(gl.TEXTURE_2D, this.dataTexture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, DATA_TEX_WIDTH, rows, 0, gl.RGBA, gl.FLOAT, data);
+    this.dataRows = rows;
   }
 
   async loadScene(sceneId) {
@@ -260,33 +300,85 @@ class AtlasScene {
     this.droppedCount = dropped;
     this.currentMeta = meta;
     this.sceneVerdict = verdict;
+    this.uploadSplatData(parsed);
+    this.indexSized = -1;
     this.sortAndUpload(indices);
     if (this.onSceneLoaded) this.onSceneLoaded(meta, verdict, indices.length, dropped);
     return { meta, verdict };
   }
 
+  // Back-to-front order, computed with a counting sort over quantized depth
+  // keys. The previous comparator sort allocated two array literals per
+  // comparison and ran O(n log n) with boxed math; this is one linear pass to
+  // bucket and one to emit, on preallocated scratch, so it is cheap enough to
+  // run inside the frame rather than after the interaction ends.
   sortAndUpload(baseIndices) {
     const scene = this.fullScene;
     const frame = this.cameraFrame();
     const ds = this.controls.depthScale;
-    const order = baseIndices.slice().sort((a, b) => {
-      const za = dot3([scene.means[a * 3] - frame.eye[0], scene.means[a * 3 + 1] - frame.eye[1], scene.means[a * 3 + 2] * ds - frame.eye[2]], frame.forward);
-      const zb = dot3([scene.means[b * 3] - frame.eye[0], scene.means[b * 3 + 1] - frame.eye[1], scene.means[b * 3 + 2] * ds - frame.eye[2]], frame.forward);
-      return zb - za;
-    });
-    this.baseIndices = baseIndices;
-    const gathered = gather(scene, order);
-    const gl = this.gl;
-    for (const k of ["means", "scales", "quats", "colors", "opacity", "meta", "viewCoeff"]) {
-      gl.bindBuffer(gl.ARRAY_BUFFER, this.buffers[k]);
-      gl.bufferData(gl.ARRAY_BUFFER, gathered[k], gl.DYNAMIC_DRAW);
+    const n = baseIndices.length;
+    if (!this.sortScratch || this.sortScratch.order.length !== n) {
+      this.sortScratch = {
+        depth: new Float32Array(n),
+        order: new Uint32Array(n),
+        counts: new Uint32Array(DEPTH_BUCKETS + 1),
+      };
     }
-    this.activeCount = gathered.count;
+    const { depth, order, counts } = this.sortScratch;
+    const ex = frame.eye[0], ey = frame.eye[1], ez = frame.eye[2];
+    const fx = frame.forward[0], fy = frame.forward[1], fz = frame.forward[2];
+    let min = Infinity, max = -Infinity;
+    for (let i = 0; i < n; i += 1) {
+      const s = baseIndices[i] * 3;
+      const d = (scene.means[s] - ex) * fx
+        + (scene.means[s + 1] - ey) * fy
+        + (scene.means[s + 2] * ds - ez) * fz;
+      depth[i] = d;
+      if (d < min) min = d;
+      if (d > max) max = d;
+    }
+    counts.fill(0);
+    const span = max - min;
+    const k = span > 1e-9 ? (DEPTH_BUCKETS - 1) / span : 0;
+    // Bucket descending: far splats draw first under ONE_MINUS_SRC_ALPHA.
+    for (let i = 0; i < n; i += 1) {
+      const b = DEPTH_BUCKETS - 1 - ((depth[i] - min) * k | 0);
+      counts[b + 1] += 1;
+    }
+    for (let b = 0; b < DEPTH_BUCKETS; b += 1) counts[b + 1] += counts[b];
+    for (let i = 0; i < n; i += 1) {
+      const b = DEPTH_BUCKETS - 1 - ((depth[i] - min) * k | 0);
+      order[counts[b]++] = baseIndices[i];
+    }
+    this.baseIndices = baseIndices;
+    const gl = this.gl;
+    // Upload the order only: 4 bytes per splat, no CPU gather.
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.indexBuffer);
+    if (this.indexSized === n) gl.bufferSubData(gl.ARRAY_BUFFER, 0, order);
+    else { gl.bufferData(gl.ARRAY_BUFFER, order, gl.DYNAMIC_DRAW); this.indexSized = n; }
+    this.activeCount = n;
+    this.sortedAt = { eye: [ex, ey, ez], forward: [fx, fy, fz] };
+    this.sortDirty = false;
   }
 
+  // Mark the order stale. The re-sort happens in frame(), so a continuous
+  // drag re-sorts every frame instead of never: the old debounce was reset by
+  // every pointermove, which left the whole interaction rendering the order
+  // computed before it began.
   scheduleSort() {
-    clearTimeout(this.sortTimer);
-    this.sortTimer = setTimeout(() => { if (!this.stopped && this.baseIndices) this.sortAndUpload(this.baseIndices); }, 90);
+    this.sortDirty = true;
+  }
+
+  // Re-sort only when the view has actually turned enough to invert pairs.
+  sortIfViewMoved() {
+    if (!this.baseIndices || this.stopped) return;
+    if (this.sortDirty) { this.sortAndUpload(this.baseIndices); return; }
+    const last = this.sortedAt;
+    if (!last) { this.sortAndUpload(this.baseIndices); return; }
+    const f = this.cameraFrame();
+    const dot = f.forward[0] * last.forward[0] + f.forward[1] * last.forward[1] + f.forward[2] * last.forward[2];
+    const moved = Math.hypot(f.eye[0] - last.eye[0], f.eye[1] - last.eye[1], f.eye[2] - last.eye[2]);
+    if (dot < SORT_COS_TOLERANCE || moved > SORT_EYE_TOLERANCE) this.sortAndUpload(this.baseIndices);
   }
 
   cameraFrame() {
@@ -361,7 +453,8 @@ class AtlasScene {
     const gl = this.gl;
     try {
       gl.deleteProgram(this.program);
-      for (const b of Object.values(this.buffers)) gl.deleteBuffer(b);
+      if (this.indexBuffer) gl.deleteBuffer(this.indexBuffer);
+      if (this.dataTexture) gl.deleteTexture(this.dataTexture);
       gl.deleteVertexArray(this.vao);
     } catch (_) { /* context may already be lost */ }
     const lose = gl.getExtension("WEBGL_lose_context");
@@ -386,6 +479,9 @@ class AtlasScene {
     gl.viewport(0, 0, w, h);
     this.yaw += (this.targetYaw - this.yaw) * 0.12;
     this.pitch += (this.targetPitch - this.pitch) * 0.12;
+    // Order follows the camera every frame, including mid-drag and through the
+    // easing that continues after the pointer stops.
+    this.sortIfViewMoved();
     const f = this.cameraFrame();
     this.view.set([f.right[0], f.up[0], -f.forward[0], 0, f.right[1], f.up[1], -f.forward[1], 0, f.right[2], f.up[2], -f.forward[2], 0, -dot3(f.right, f.eye), -dot3(f.up, f.eye), dot3(f.forward, f.eye), 1]);
     const fov = 58 * Math.PI / 180, fp = 1 / Math.tan(fov / 2), near = 0.015, far = 60;
@@ -424,6 +520,10 @@ class AtlasScene {
     gl.uniform1f(u.uExposure, Math.pow(2, (c.exposure - 1) * 1.6));
     gl.uniform1f(u.uGamma, c.gamma);
     gl.uniform1f(u.uIridescence, c.iridescence);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, this.dataTexture);
+    gl.uniform1i(u.uSplatData, 0);
+    gl.uniform1i(u.uDataWidth, DATA_TEX_WIDTH);
     gl.bindVertexArray(this.vao);
     if (this.activeCount) gl.drawArraysInstanced(gl.TRIANGLES, 0, 6, this.activeCount);
     gl.bindVertexArray(null);
