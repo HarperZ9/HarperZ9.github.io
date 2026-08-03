@@ -22,6 +22,7 @@ import {
 import {
   BACKDROP_VS, BACKDROP_FS, VEIL_VS, VEIL_FS, POINT_VS, POINT_FS, link,
 } from "./spatial-shaders.js";
+import { acquireContext } from "./spatial-gl.js";
 
 const GRID_COLS = 96;
 const GRID_ROWS = 96;
@@ -42,8 +43,7 @@ export async function startSpatialScene(canvas, pkg, opts = {}) {
   // capture all read the canvas back outside the rAF callback (site-wide GL
   // convention; see fractal3d.js and fractal-gl.js).
   const glOptions = { preserveDrawingBuffer: true, antialias: true, alpha: false };
-  const gl = canvas.getContext("webgl", glOptions)
-    || canvas.getContext("experimental-webgl", glOptions);
+  const gl = opts.gl || await acquireContext(canvas, "webgl", glOptions);
   if (!gl) throw new Error("WebGL is unavailable on this device");
 
   const parsed = parseSplatRecords(pkg.splatBytes, pkg.manifest.splats.count);

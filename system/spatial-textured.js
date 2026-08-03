@@ -12,6 +12,7 @@ import {
   SPLAT_RECORD_FLOATS,
 } from "./engine/world-package.js";
 import { clampCamera, sceneTime, pauseMotion, resumeMotion } from "./spatial-core.js";
+import { acquireContext } from "./spatial-gl.js";
 import { link } from "./spatial-shaders.js";
 import {
   CC_BACKDROP_VS, CC_BACKDROP_FS, CC_MESH_VS, CC_MESH_FS,
@@ -57,7 +58,7 @@ export async function startTexturedScene(canvas, pkg, opts = {}) {
   const parsed = parseSplatRecords(files[manifest.splats.sidecar], manifest.splats.count);
   const budgeted = clampToBudget(parsed, opts.splatBudget || parsed.count);
   const glOptions = { preserveDrawingBuffer: true, antialias: true, alpha: false, premultipliedAlpha: true };
-  const gl = canvas.getContext("webgl", glOptions) || canvas.getContext("experimental-webgl", glOptions);
+  const gl = opts.gl || await acquireContext(canvas, "webgl", glOptions);
   if (!gl) throw new Error("WebGL is unavailable on this device");
   const scene = new TexturedScene(canvas, gl, manifest, assets, budgeted, opts);
   scene.start();

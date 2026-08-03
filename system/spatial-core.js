@@ -52,12 +52,14 @@ export function veilParams(seed, layers) {
     out.push(Object.freeze({
       name: layer.name,
       depth: Number(layer.depth),
-      foldFreq: 2.2 + rand() * 3.4,
+      // Finer folds and tighter ridges: the first grammar read as a few fat
+      // blurred bars in the piecewise sweep; this range folds like fabric.
+      foldFreq: 14.0 + rand() * 14.0,
       foldPhase: rand() * Math.PI * 2,
       foldTilt: (rand() - 0.5) * 0.9,
       driftRate: 0.05 + rand() * 0.1,
       tint: [0.62 + rand() * 0.3, 0.5 + rand() * 0.28, 0.42 + rand() * 0.3],
-      edgeSoft: 0.16 + rand() * 0.2,
+      edgeSoft: 0.09 + rand() * 0.1,
     }));
   }
   return out;

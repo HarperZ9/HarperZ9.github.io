@@ -39,7 +39,7 @@ test("veilParams derives one stable parameter set per seed", () => {
   assert.deepEqual(first, again);
   assert.equal(first.length, 2);
   for (const veil of first) {
-    assert.ok(veil.foldFreq >= 2.2 && veil.foldFreq <= 5.6);
+    assert.ok(veil.foldFreq >= 14.0 && veil.foldFreq <= 28.0);
     assert.ok(veil.tint.every((channel) => channel > 0 && channel <= 1));
   }
   const other = veilParams("another-seed", layers);

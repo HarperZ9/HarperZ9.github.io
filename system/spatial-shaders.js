@@ -59,7 +59,9 @@ void main(){
                smoothstep(1.0, 1.0 - uEdgeSoft * 2.0, abs(p.y));
   float lum = (band * .30 + ridge * .55) * edge * mix(1.25, .55, uDepth);
   if (uDepthOnly == 1) { if (lum < 0.22) discard; gl_FragColor = vec4(0.0); return; }
-  float alpha = clamp(lum * (0.75 + uGlow * .5), 0.0, 1.0);
+  // Alpha ceiling below 1.0 so a charged glow brightens the folds without
+  // fusing them into clipped white sheets (piecewise sweep finding).
+  float alpha = clamp(lum * (0.75 + uGlow * .5), 0.0, 0.82);
   vec3 color = uTint * lum * (1.0 + uGlow * .9);
   gl_FragColor = vec4(color * alpha, alpha);
 }
