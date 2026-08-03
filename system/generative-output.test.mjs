@@ -184,6 +184,47 @@ test("neutral marks survive alignment", () => {
   assert.match(moved, /^rgba\(\d+,\d+,\d+,0\.4\)$/, "alpha must be preserved exactly");
 });
 
+test("the lantern draws an object, not a haze", () => {
+  // The caption promises "a stellated paper lantern ... hung from a single
+  // hairline cord, a column of folded light behind it". The plate used to
+  // render as a speckled column with no object in it, so the claim is tested:
+  // a closed silhouette gets filled and stroked, and a cord is drawn.
+  const rec = recordingCanvas(1100, 688);
+  field.renderSpecimen(rec.canvas, "gallery-plate-07b", ["showpiece-lantern"]);
+  const closes = rec.calls.filter((c) => c.startsWith("closePath")).length;
+  const clips = rec.calls.filter((c) => c.startsWith("clip")).length;
+  assert.ok(closes >= 6, `expected a faceted silhouette, saw ${closes} closed paths`);
+  assert.ok(clips >= 1, "the interior glow must be clipped to the paper");
+  // The cord: a stroked segment starting above the canvas top.
+  assert.ok(rec.calls.some((c) => /^moveTo:[-\d.]+,-4$/.test(c)), "no hanging cord was drawn");
+});
+
+test("the lantern keeps its own warm colour in every palette", () => {
+  // A paper lantern lit from within is warm ivory whatever the seed. Palette
+  // alignment must not tint the subject into contradicting its caption.
+  const warmth = (seedString) => {
+    // The lantern body alone: the light column behind it is a separate layer
+    // and is supposed to follow the palette.
+    const rec = recordingCanvas(900, 560);
+    field.renderSpecimen(rec.canvas, seedString, ["stellated-lantern"]);
+    const styles = rec.calls.filter((c) => c.startsWith("style:rgba(")).map((c) => c.slice(6));
+    let warm = 0, cool = 0;
+    for (const s of styles) {
+      const m = s.match(/rgba\((\d+),(\d+),(\d+)/);
+      if (!m) continue;
+      const [r, g, b] = [+m[1], +m[2], +m[3]];
+      if (r + g + b < 120) continue;              // ignore the near-black ground
+      if (r >= g && g >= b) warm += 1; else cool += 1;
+    }
+    return { warm, cool };
+  };
+  for (const seedString of ["gallery-plate-07b", "lantern-probe-a", "lantern-probe-b", "lantern-probe-c"]) {
+    const { warm, cool } = warmth(seedString);
+    assert.ok(warm > cool,
+      `${seedString}: lantern drew ${cool} non-warm marks against ${warm} warm ones`);
+  }
+});
+
 test("the chaos-game driver samples without a short period", () => {
   // The map salt must advance with the iteration; wrapping it made the orbit
   // converge to a cycle and never sample the invariant measure.
