@@ -171,7 +171,7 @@ function marchSegments(field, w, h, t) {
 /* Chain raw segments into polylines by matching quantized endpoints; walks
    forward from a chain's tail, then backward from its head. Deterministic:
    segments are visited and matched in emission order. */
-function chainSegments(segs) {
+export function chainSegments(segs) {
   const key = (p) => Math.round(p[0] * 32) + "," + Math.round(p[1] * 32);
   const at = new Map();
   segs.forEach((s, i) => {

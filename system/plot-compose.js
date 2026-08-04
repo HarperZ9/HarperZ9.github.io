@@ -188,7 +188,9 @@ export const REGISTERS = Object.freeze({
 const STROKE_BUDGET = 26000;
 
 // Apply a register to a study's ink layers: the multi-pass tonal engine the community uses.
-function applyRegister(layers, rng, register) {
+// Exported because an image plot needs exactly the same hand: the mark register is a property of
+// how the pen is driven, not of what is being drawn.
+export function applyRegister(layers, rng, register) {
   const R = REGISTERS[register] || REGISTERS.drawn;
   let base = 0;
   for (const l of layers) base += l.polylines.length;
@@ -267,6 +269,10 @@ function finish(candidate, seedStr, attempts, tried, cleared) {
     layers: candidate.layers,
     meta: {
       ...candidate.meta,
+      // The studies compose in the unit square and were tuned looking at a square stage, so the
+      // sheet IS square. Before this was explicit, the SVG export inherited the cartographic
+      // 0.75 paper and silently squashed every composed sheet by a quarter.
+      kind: "field", aspect: 1,
       seed: String(seedStr), strokes, points,
       candidates: tried, cleared,
       rejected: attempts.slice(0, -1).map((a) => `${a.study}/${a.register} ${a.score}`),

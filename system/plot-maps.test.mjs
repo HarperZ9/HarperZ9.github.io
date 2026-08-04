@@ -99,6 +99,21 @@ test("the SVG is a plotter sheet: real units, one group per layer, stroke counts
   assert.ok(!svg.includes("NaN"), "no NaN in path data");
 });
 
+test("the paper takes the sheet's own aspect: no more silent squash", async () => {
+  // Cartographic sheets are 4:3; composed sheets are square; an image sheet takes the picture's
+  // ratio. Before aspect rode in the meta, every composed sheet was exported at 0.75 and lost a
+  // quarter of its height.
+  const carto = buildPlotMap("aurora", { study: "topo" });
+  assert.equal(carto.meta.aspect, 0.75);
+  assert.ok(plotMapSVG(carto, { widthMm: 210 }).includes('height="158mm"') || plotMapSVG(carto, { widthMm: 210 }).includes('height="157mm"'), "4:3 paper");
+  const { composeSheet } = await import("./plot-compose.js");
+  const field = composeSheet("aspect-check", { candidates: 1 });
+  assert.equal(field.meta.aspect, 1, "composed sheets are square");
+  assert.ok(plotMapSVG(field, { widthMm: 210 }).includes('height="210mm"'), "square paper for a square sheet");
+  const fake = { layers: [{ name: "x", polylines: [[[0.1, 0.1], [0.9, 0.9]]], weight: 1, tone: "ink" }], meta: { seed: "s", study: "img", aspect: 1.25, strokes: 1, points: 2 } };
+  assert.ok(plotMapSVG(fake, { widthMm: 200 }).includes('height="250mm"'), "an image sheet keeps the picture's ratio");
+});
+
 test("fieldToLuma remaps through the provided function and clamps", () => {
   const luma = fieldToLuma(new Float32Array([0, 0.5, 1]), 3, 1, (v) => v * 2);
   assert.equal(luma[0], 0);

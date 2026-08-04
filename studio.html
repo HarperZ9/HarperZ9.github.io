@@ -115,13 +115,59 @@
         <p class="src-hint" id="sound-readout">press play; the audio channels below read what the seed plays</p>
       </section>
 
-      <!-- Plot maps: generative pen-plotter cartography. A seeded elevation field composed as a
-           map sheet (contours, coast, water hatching, ridgelines, graticule) through the same
-           pipeline the image plotter uses, exported as a plotter-grade SVG. -->
+      <!-- Plot maps: the pen surface. Generative studies, published plates, uploaded pictures,
+           the live canvas of any other source, and voxel builds all become plotter drawings
+           through one pipeline, blendable onto one sheet, exported as plotter-grade SVG. -->
       <section class="src-block" id="src-plotmaps" role="tabpanel" aria-label="Plot map controls" hidden>
-        <p class="transform-note">Algorithmic cartography, drawn as a plotter would: single-stroke
-        polylines from a seeded elevation field. Same seed, same sheet, re-checkable. The SVG
-        export is plotter-grade: real units, ordered paths, one layer per pen pass.</p>
+        <p class="transform-note">The pen surface. Any material — a generative field, a published
+        plate, a picture of your own, the frame another source just rendered, or the voxel build —
+        drawn as a plotter would draw it, and blendable onto one sheet. Same seed, same drawing,
+        re-checkable. The SVG export is plotter-grade: real units, ordered paths, one layer per
+        pen pass.</p>
+        <div class="at-group">
+          <span class="at-glab">Material <span class="hint">what the pen draws</span></span>
+          <div class="at-chips" role="group" aria-label="Plot material">
+            <button type="button" class="chip active" data-plot-material="field">Field</button>
+            <button type="button" class="chip" data-plot-material="plate">Plate</button>
+            <button type="button" class="chip" data-plot-material="picture">Picture</button>
+            <button type="button" class="chip" data-plot-material="canvas">Studio canvas</button>
+            <button type="button" class="chip" data-plot-material="voxels">Voxel build</button>
+          </div>
+        </div>
+        <div class="at-group" id="plot-plate-row" hidden>
+          <span class="at-glab">Plate <span class="hint">the published corpus, by receipt</span></span>
+          <div class="dropdown" data-dropdown="plot-plate"></div>
+          <div id="plot-plate" hidden>
+            <option value="scene-01" selected>01 · Current Story 01</option>
+          </div>
+        </div>
+        <div class="at-group" id="plot-file-row" hidden>
+          <span class="at-glab">Picture <span class="hint">never leaves this page</span></span>
+          <input type="file" id="plot-file" accept="image/*" aria-label="Choose a picture to plot">
+        </div>
+        <div class="at-group" id="plot-method-row" hidden>
+          <span class="at-glab">Method <span class="hint">Auto draws several and keeps the one that carries the most tone</span></span>
+          <div class="at-chips" role="group" aria-label="Image plot method">
+            <button type="button" class="chip active" data-plot-method="auto">Auto</button>
+            <button type="button" class="chip" data-plot-method="flowline">Flowline</button>
+            <button type="button" class="chip" data-plot-method="engrave">Engrave</button>
+            <button type="button" class="chip" data-plot-method="stipple">Stipple</button>
+            <button type="button" class="chip" data-plot-method="tsp">One path</button>
+            <button type="button" class="chip" data-plot-method="squiggle">Squiggle</button>
+            <button type="button" class="chip" data-plot-method="spiral">Spiral</button>
+            <button type="button" class="chip" data-plot-method="contour">Contour</button>
+            <button type="button" class="chip" data-plot-method="xdog">Line drawing</button>
+          </div>
+        </div>
+        <div class="at-group" id="plot-blend-row" hidden>
+          <span class="at-glab">Blend <span class="hint">the generative field shares the paper</span></span>
+          <div class="at-chips" role="group" aria-label="Blend with the field">
+            <button type="button" class="chip active" data-plot-blend="alone">Alone</button>
+            <button type="button" class="chip" data-plot-blend="under">Field under</button>
+            <button type="button" class="chip" data-plot-blend="over">Field over</button>
+          </div>
+        </div>
+        <div id="plot-study-rows">
         <div class="at-group">
           <span class="at-glab">Study <span class="hint">Auto lets the sheet choose, judge itself, and re-roll what it finds dull</span></span>
           <div class="at-chips" role="group" aria-label="Plot map study">
@@ -142,6 +188,7 @@
             <button type="button" class="chip" data-plot-study="chart">Chart</button>
           </div>
         </div>
+        </div>
         <div class="at-group">
           <span class="at-glab">Mark <span class="hint">how the pen lays the line down</span></span>
           <div class="at-chips" role="group" aria-label="Mark register">
@@ -159,7 +206,7 @@
             <button type="button" class="btn ghost" id="plot-reseed" aria-label="New random seed">reseed</button>
           </div>
         </div>
-        <div class="at-group">
+        <div class="at-group" id="plot-levels-row">
           <span class="at-glab">Contour levels <span class="hint">(<span id="plot-levels-val">14</span>)</span></span>
           <input type="range" class="at-slider" id="plot-levels" min="4" max="28" step="1" value="14" aria-label="Contour levels">
         </div>
@@ -233,6 +280,7 @@
           <button type="button" class="btn" id="voxel-draw" aria-label="Build and draw the voxel scene">Build</button>
           <button type="button" class="btn ghost" id="voxel-vox" aria-label="Export as MagicaVoxel .vox">.vox</button>
           <button type="button" class="btn ghost" id="voxel-obj" aria-label="Export the exposed shell as OBJ">OBJ</button>
+          <button type="button" class="btn ghost" id="voxel-plot" aria-label="Draw this build as a hidden-line plotter sheet">Plot it</button>
         </div>
         <p class="src-hint" id="voxel-readout">voxel count and dimensions report here after a build</p>
       </section>

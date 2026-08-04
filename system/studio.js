@@ -108,6 +108,24 @@ let _plotRegister = "auto";  // how the marks are made; "auto" lets the sheet de
 let _lastPlot = null;        // the last built sheet, for the SVG export
 let _plotCompose = null;
 const loadPlotCompose = lazyLoader(() => import("./plot-compose.js"), m => { _plotCompose = m; });
+// The one surface: the sheet's MATERIAL can be the generative field, a published plate, an
+// uploaded picture, whatever the studio canvas last showed, or the live voxel build — and any of
+// those can be blended with the field. plot-image handles tone fields, plot-bridge handles
+// geometry crossings and the blend.
+let _plotImage = null;
+const loadPlotImage = lazyLoader(() => import("./plot-image-studies.js"), m => { _plotImage = m; });
+let _plotBridge = null;
+const loadPlotBridge = lazyLoader(() => import("./plot-bridge.js"), m => { _plotBridge = m; });
+let _plotMaterial = "field";   // field | plate | picture | canvas | voxels
+let _plotMethod = "auto";      // image-method choice for tone-field materials
+let _plotBlend = "alone";      // alone | under | over — blend the field with the material
+let _plotField = null;         // cached tone field { w, h, lum } for plate / picture / canvas
+let _plotFieldInfo = null;     // { name } — where the cached field came from, for the receipts
+let _plateIndex = null;        // atlas.world.json scenes, fetched once for the plate picker
+// Snapshot of the shared canvas taken at the moment the user switches INTO plot maps, so
+// "Studio canvas" plots the frame they were just looking at, not the sheet that replaced it.
+const _plotSnapshot = document.createElement("canvas");
+let _plotSnapshotOk = false;
 
 // Voxels source: seeded voxel scenes (system/voxel-forge.js) drawn isometrically. Still frames.
 let _voxelForge = null;
@@ -619,10 +637,24 @@ function setSource(next) {
   }
   // Plot maps: load the cartography module and draw the current sheet. Still frames only.
   if (next === "plotmaps") {
-    Promise.all([loadPlotMaps(), loadPlotCompose()]).then(() => {
+    // Stash the outgoing frame FIRST: the sheet is about to overwrite the shared canvas, and the
+    // "Studio canvas" material plots what the user was just looking at. drawImage accepts a
+    // WebGL-backed source canvas too; whether its buffer survived is validated at plot time, not
+    // assumed here.
+    try {
+      const src = $("studio-canvas");
+      if (src && src.width > 8) {
+        _plotSnapshot.width = src.width; _plotSnapshot.height = src.height;
+        _plotSnapshot.getContext("2d").drawImage(src, 0, 0);
+        _plotSnapshotOk = true;
+      }
+    } catch (_) { _plotSnapshotOk = false; }
+    Promise.all([loadPlotMaps(), loadPlotCompose(), loadPlotImage(), loadPlotBridge()]).then(() => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
       drawPlotMap();
     }).catch(err => { say("model", "The plot-map engine failed to load: " + (err && err.message ? err.message : String(err))); });
+  } else if (window.__studioContentRect && window.__studioContentRect.source === "plotmaps") {
+    window.__studioContentRect = null;   // leaving: stop cropping measurements to the old sheet
   }
   // Voxels: load the forge and build the current scene. Still frames only.
   if (next === "voxels") {
@@ -755,6 +787,61 @@ function initSoundControls() {
 // Still-frame source: build the sheet from the seed, ink it onto the shared canvas, perceive
 // once. The SVG export re-serializes THE SAME built sheet (_lastPlot), never a rebuild, so the
 // file matches the pixels on screen by construction.
+// Acquire the tone field the current material needs, then call `then`. Plate and picture decode
+// asynchronously the first time and are cached until the material or the plate changes; canvas
+// reads the snapshot taken at source-switch. Returns true if `then` will fire.
+function acquirePlotField(then) {
+  if (_plotField) { then(); return true; }
+  const readout = $("plot-readout");
+  const fromCanvas = (cv, name) => {
+    const long = Math.max(cv.width, cv.height);
+    const k = long > 1200 ? 1200 / long : 1;
+    const w = Math.max(8, Math.round(cv.width * k)), h = Math.max(8, Math.round(cv.height * k));
+    const off = document.createElement("canvas");
+    off.width = w; off.height = h;
+    off.getContext("2d").drawImage(cv, 0, 0, w, h);
+    const data = off.getContext("2d").getImageData(0, 0, w, h);
+    _plotField = _plotImage.toneField(data.data, w, h);
+    _plotFieldInfo = { name };
+  };
+  if (_plotMaterial === "canvas") {
+    if (!_plotSnapshotOk || _plotSnapshot.width < 9) {
+      say("model", "No frame to plot: nothing was on the studio canvas when you switched here. Render a source, then come back.");
+      return false;
+    }
+    fromCanvas(_plotSnapshot, "the studio canvas");
+    // A released GPU buffer drawImages as solid black: near-zero tonal span means the capture
+    // failed, and saying so beats plotting a black rectangle as if it were the artwork.
+    let lo = 1, hi = 0;
+    for (const v of _plotField.lum) { if (v < lo) lo = v; if (v > hi) hi = v; }
+    if (hi - lo < 0.02) {
+      _plotField = null; _plotFieldInfo = null;
+      say("model", "The last frame could not be captured — that source renders on a GPU buffer the browser had already released. Render it again, then switch straight here.");
+      return false;
+    }
+    then(); return true;
+  }
+  if (_plotMaterial === "plate") {
+    const sel = $("plot-plate");
+    const id = (sel && sel.value) || "scene-01";
+    if (readout) readout.textContent = "fetching " + id + "…";
+    const img = new Image();
+    img.onload = () => {
+      const off = document.createElement("canvas");
+      off.width = img.naturalWidth; off.height = img.naturalHeight;
+      off.getContext("2d").drawImage(img, 0, 0);
+      fromCanvas(off, id);
+      if (activeSource === "plotmaps" && _plotMaterial === "plate") then();
+    };
+    img.onerror = () => say("model", "The plate " + id + " failed to load.");
+    img.src = "art/spatial/atlas/" + id + ".jpg";
+    return true;
+  }
+  // picture: nothing cached means no file chosen yet.
+  say("model", "Choose a picture first — any image file becomes a plotter drawing.");
+  return false;
+}
+
 function drawPlotMap() {
   if (!_plotMaps || activeSource !== "plotmaps") return;
   leave3D();
@@ -763,58 +850,199 @@ function drawPlotMap() {
   const seedIn = $("plot-seed");
   const seed = ((seedIn && seedIn.value.trim()) || "aurora").slice(0, 48);
   const levelsEl = $("plot-levels"), densityEl = $("plot-density");
+  const density = densityEl ? parseFloat(densityEl.value) : 1;
   let plot;
-  // The four cartographic studies keep their explicit path (and their existing seeds keep
-  // reproducing). Everything else, including "auto", goes through the composer: it picks the
-  // study, the mark register and the furniture, measures what it made, and re-rolls a sheet it
-  // judges dull. The operator's note was that the maps should not be user-generated.
-  if (_plotStudy !== "auto" && _plotMaps.PLOT_STUDIES[_plotStudy]) {
+
+  if (_plotMaterial === "voxels") {
+    // The build crosses over as GEOMETRY: hidden-line axonometric drawing, not a traced
+    // screenshot. The live scene comes across with its rotations and hand edits; without one, the
+    // seed builds a fresh scene through the same forge the Voxels source uses.
+    if (!_voxelForge) { loadVoxelForge().then(drawPlotMap).catch(() => {}); return; }
+    const scene = _lastVoxelScene || _voxelForge.buildVoxelScene(seed, { study: _voxelStudy });
+    plot = _plotBridge.voxelSheet(scene, { density });
+  } else if (_plotMaterial !== "field") {
+    // Tone-field materials: plate, picture, canvas. First call may need an async decode; it
+    // re-enters here when the field is cached.
+    if (!_plotField) { acquirePlotField(drawPlotMap); return; }
+    plot = _plotImage.composeFromImage(_plotField, seed, {
+      method: _plotMethod, register: _plotRegister, density,
+      source: _plotFieldInfo ? _plotFieldInfo.name : null,
+    });
+  } else if (_plotStudy !== "auto" && _plotMaps.PLOT_STUDIES[_plotStudy]) {
+    // The four cartographic studies keep their explicit path (and their existing seeds keep
+    // reproducing).
     plot = _plotMaps.buildPlotMap(seed, {
       study: _plotStudy,
       levels: levelsEl ? parseInt(levelsEl.value, 10) : 14,
-      density: densityEl ? parseFloat(densityEl.value) : 1,
+      density,
       res: currentQuality().maxBacking >= 3200 ? 320 : 220,
     });
   } else {
+    // The composer: picks the study, the mark register and the furniture, measures what it made,
+    // and re-rolls a sheet it judges dull.
     plot = _plotCompose.composeSheet(seed, {
       study: _plotStudy === "auto" ? "auto" : _plotStudy,
       register: _plotRegister,
       candidates: 6,
     });
   }
+
+  // The blend: the generative field shares the paper with the material — under it as the ground,
+  // or breaking over it. One frame, one aspect, one measurement, provenance per part.
+  if (_plotBlend !== "alone" && _plotMaterial !== "field" && plot.layers.length) {
+    const fieldSheet = _plotCompose.composeSheet(seed, { register: _plotRegister, candidates: 4 });
+    plot = _plotBridge.mergeSheets(plot, fieldSheet, _plotBlend);
+  }
+
   _lastPlot = plot;
   const ctx = c.getContext("2d", { willReadFrequently: true });
   if (!ctx) return;
-  _plotMaps.renderPlotMap(ctx, plot, c.width, c.height, {}, { view: _stillView.plotmaps });
+  const rect = _plotMaps.renderPlotMap(ctx, plot, c.width, c.height, {}, { view: _stillView.plotmaps });
+  if (rect) window.__studioContentRect = { ...rect, source: "plotmaps" };
   const m = plot.meta.measure;
   const readout = $("plot-readout");
   if (readout) readout.textContent =
     `${plot.meta.strokes.toLocaleString()} strokes · ${plot.meta.points.toLocaleString()} points`
-    + (m ? ` · score ${m.score} after ${plot.meta.candidates} candidate${plot.meta.candidates === 1 ? "" : "s"}`
-      : ` · sea level ${plot.meta.seaLevel}`);
+    + (plot.meta.tone ? ` · tone r ${plot.meta.tone.r}` : "")
+    + (m && plot.meta.candidates ? ` · score ${m.score} after ${plot.meta.candidates} candidate${plot.meta.candidates === 1 ? "" : "s"}` : "")
+    + (plot.meta.seaLevel != null ? ` · sea level ${plot.meta.seaLevel}` : "");
   const obs = perceive(c);
-  const label = (_plotMaps.PLOT_STUDIES[plot.meta.study] || _plotCompose.STUDY_BUILDERS[plot.meta.study] || {}).label
-    || plot.meta.study;
-  if (m) {
-    // Say honestly how the sheet came to be, including when nothing cleared the bar.
-    const rejected = (plot.meta.rejected || []).length;
+  sayPlotReceipt(plot, seed, obs);
+  startMeterLoop();
+}
+
+// The sheet's own account of how it came to be — one voice per kind, every claim carried by a
+// number the panel can re-check.
+function sayPlotReceipt(plot, seed, obs) {
+  const meta = plot.meta, m = meta.measure;
+  if (meta.kind === "blend") {
+    const [a, b] = meta.parts;
     say("model",
-      `The sheet chose itself: a ${label} in the ${plot.meta.register} register, `
-      + `${plot.meta.strokes.toLocaleString()} single-stroke paths from seed "${seed}". `
-      + (plot.meta.cleared
+      `Two mediums on one sheet: ${meta.label}, the field ${meta.mode === "over" ? "breaking over" : "laid under"} the subject — `
+      + `${a.strokes.toLocaleString()} strokes from the ${a.kind}, ${b.strokes.toLocaleString()} from the ${b.kind}, `
+      + `re-measured whole: coverage ${m.coverage}, direction ${m.direction}. Fingerprint ${obs.phash}. Same seed, same blend.`);
+    return;
+  }
+  if (meta.kind === "voxel") {
+    say("model",
+      `The build crossed over as geometry: ${meta.voxels.toLocaleString()} voxels became a hidden-line drawing — `
+      + `${meta.faces.toLocaleString()} visible faces, silhouette and crease edges chained, walls hatched by their lit tone, `
+      + `${meta.strokes.toLocaleString()} strokes${meta.edits ? `, ${meta.edits} hand edit${meta.edits === 1 ? "" : "s"} included` : ""}. `
+      + `Fingerprint ${obs.phash}. The SVG plots exactly this.`);
+    return;
+  }
+  if (meta.kind === "image") {
+    const src = meta.source ? ` of ${meta.source}` : "";
+    say("model",
+      `A ${meta.label} drawing${src}: ${meta.strokes.toLocaleString()} strokes, `
+      + (meta.chosen === "measured"
+        ? `method chosen by measurement — tone correlation r ${meta.tone.r} against the source over ${meta.tone.cells} cells, from ${meta.considered.length} candidates (${meta.considered.join(", ")}). `
+        : `tone correlation r ${meta.tone.r} against the source over ${meta.tone.cells} cells. `)
+      + (meta.note ? meta.note + ". " : "")
+      + `Fingerprint ${obs.phash}. Same picture, same seed, same drawing.`);
+    return;
+  }
+  const label = (_plotMaps.PLOT_STUDIES[meta.study] || _plotCompose.STUDY_BUILDERS[meta.study] || {}).label || meta.study;
+  if (m && meta.candidates) {
+    const rejected = (meta.rejected || []).length;
+    say("model",
+      `The sheet chose itself: a ${label} in the ${meta.register} register, `
+      + `${meta.strokes.toLocaleString()} single-stroke paths from seed "${seed}". `
+      + (meta.cleared
         ? (rejected ? `It rejected ${rejected} duller candidate${rejected === 1 ? "" : "s"} first. ` : `It cleared on the first try. `)
-        : `Nothing cleared the bar this time, so this is the strongest of ${plot.meta.candidates} candidates, said plainly. `)
+        : `Nothing cleared the bar this time, so this is the strongest of ${meta.candidates} candidates, said plainly. `)
       + `Coverage ${m.coverage}, spread ${m.spread}, scale ${m.scale}, direction ${m.direction}. `
       + `Fingerprint ${obs.phash}. Same seed, same sheet.`);
   } else {
     say("model",
-      `A ${label} sheet from seed "${seed}": ${plot.meta.strokes} single-stroke paths over a seeded elevation field, `
-      + `sea level at ${plot.meta.seaLevel}. Fingerprint ${obs.phash}. Same seed, same sheet — `
+      `A ${label} sheet from seed "${seed}": ${meta.strokes} single-stroke paths over a seeded elevation field, `
+      + `sea level at ${meta.seaLevel}. Fingerprint ${obs.phash}. Same seed, same sheet — `
       + `the SVG export carries real units and one layer per pen pass.`);
   }
-  startMeterLoop();
 }
+// Show only the control rows the current material can use: study rows drive the field, method
+// row drives tone-field materials, blend row exists wherever there is something to blend with.
+function syncPlotMaterialUI() {
+  const isField = _plotMaterial === "field";
+  const isTone = _plotMaterial === "plate" || _plotMaterial === "picture" || _plotMaterial === "canvas";
+  const show = (id, on) => { const el = $(id); if (el) el.hidden = !on; };
+  show("plot-study-rows", isField);
+  show("plot-method-row", isTone);
+  show("plot-plate-row", _plotMaterial === "plate");
+  show("plot-file-row", _plotMaterial === "picture");
+  show("plot-blend-row", !isField);
+  show("plot-levels-row", isField);
+}
+
+// The plate picker lists the atlas corpus — every published scene with its receipt-carried title,
+// fetched once from the world manifest the Spatial source already trusts.
+function fillPlatePicker() {
+  const sel = $("plot-plate");
+  if (!sel || _plateIndex) return;
+  fetch("art/spatial/atlas/atlas.world.json").then(r => r.json()).then(world => {
+    _plateIndex = world.scenes || [];
+    sel.innerHTML = "";
+    for (const s of _plateIndex) {
+      const opt = document.createElement("option");
+      opt.value = s.id;
+      opt.textContent = `${s.id.replace("scene-", "")} · ${s.title}`;
+      sel.appendChild(opt);
+    }
+  }).catch(() => { /* the picker keeps its static fallback options */ });
+}
+
 function initPlotMapControls() {
+  document.querySelectorAll("[data-plot-material]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _plotMaterial = chip.dataset.plotMaterial;
+      _plotField = null; _plotFieldInfo = null;   // material changed: any cached field is stale
+      document.querySelectorAll("[data-plot-material]").forEach(b => b.classList.toggle("active", b === chip));
+      syncPlotMaterialUI();
+      if (_plotMaterial === "plate") fillPlatePicker();
+      drawPlotMap();
+    });
+  });
+  document.querySelectorAll("[data-plot-method]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _plotMethod = chip.dataset.plotMethod;
+      document.querySelectorAll("[data-plot-method]").forEach(b => b.classList.toggle("active", b === chip));
+      drawPlotMap();
+    });
+  });
+  document.querySelectorAll("[data-plot-blend]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _plotBlend = chip.dataset.plotBlend;
+      document.querySelectorAll("[data-plot-blend]").forEach(b => b.classList.toggle("active", b === chip));
+      drawPlotMap();
+    });
+  });
+  const plateSel = $("plot-plate");
+  if (plateSel) plateSel.addEventListener("change", () => { _plotField = null; _plotFieldInfo = null; drawPlotMap(); });
+  const fileIn = $("plot-file");
+  if (fileIn) fileIn.addEventListener("change", () => {
+    const file = fileIn.files && fileIn.files[0];
+    if (!file) return;
+    const img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(img.src);
+      const long = Math.max(img.naturalWidth, img.naturalHeight);
+      const k = long > 1200 ? 1200 / long : 1;
+      const off = document.createElement("canvas");
+      off.width = Math.max(8, Math.round(img.naturalWidth * k));
+      off.height = Math.max(8, Math.round(img.naturalHeight * k));
+      off.getContext("2d").drawImage(img, 0, 0, off.width, off.height);
+      const data = off.getContext("2d").getImageData(0, 0, off.width, off.height);
+      _plotField = _plotImage ? _plotImage.toneField(data.data, off.width, off.height) : null;
+      _plotFieldInfo = { name: file.name };
+      _plotMaterial = "picture";
+      document.querySelectorAll("[data-plot-material]").forEach(b =>
+        b.classList.toggle("active", b.dataset.plotMaterial === "picture"));
+      syncPlotMaterialUI();
+      drawPlotMap();
+    };
+    img.onerror = () => { URL.revokeObjectURL(img.src); say("model", "That file did not decode as an image."); };
+    img.src = URL.createObjectURL(file);
+  });
   document.querySelectorAll("[data-plot-study]").forEach(chip => {
     chip.addEventListener("click", () => {
       _plotStudy = chip.dataset.plotStudy;
@@ -854,6 +1082,7 @@ function initPlotMapControls() {
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 1500);
   });
+  syncPlotMaterialUI();   // rows start matched to the default material
 }
 
 // ── Voxels: build + controls ─────────────────────────────────────────────────
@@ -894,7 +1123,8 @@ function repaintPlotMap() {
   const c = $("studio-canvas");
   const ctx = c.getContext("2d", { willReadFrequently: true });
   if (!ctx) return;
-  _plotMaps.renderPlotMap(ctx, _lastPlot, c.width, c.height, {}, { view: _stillView.plotmaps });
+  const rect = _plotMaps.renderPlotMap(ctx, _lastPlot, c.width, c.height, {}, { view: _stillView.plotmaps });
+  if (rect) window.__studioContentRect = { ...rect, source: "plotmaps" };
 }
 
 function readVoxelTune() {
@@ -1067,6 +1297,17 @@ function initVoxelControls() {
   if (objBtn) objBtn.addEventListener("click", () => {
     if (!_lastVoxelScene || !_voxelForge) return;
     dl(_voxelForge.voxelObj(_lastVoxelScene.vox), `voxel-${_lastVoxelScene.meta.study}-${_lastVoxelScene.meta.seed}.obj`, "model/obj");
+  });
+  // The crossover: this build, rotations and hand edits included, onto the pen surface as a
+  // hidden-line drawing. One click walks over to Plot maps with the material pre-set.
+  const plotBtn = $("voxel-plot");
+  if (plotBtn) plotBtn.addEventListener("click", () => {
+    _plotMaterial = "voxels";
+    document.querySelectorAll("[data-plot-material]").forEach(b =>
+      b.classList.toggle("active", b.dataset.plotMaterial === "voxels"));
+    syncPlotMaterialUI();
+    const tab = document.querySelector('#studio-source button[data-source="plotmaps"]');
+    if (tab) tab.click();
   });
 }
 
@@ -3680,6 +3921,7 @@ function upgradeDropdown(stateId) {
 }
 upgradeDropdown("fractal-preset");
 upgradeDropdown("topo-mode");
+upgradeDropdown("plot-plate");
 
 // ══ The chat dock (Task 8f) ══════════════════════════════════════════════════
 // The talk-to-the-model chat is first-class again: question chips you can tap AND a free-text box you
