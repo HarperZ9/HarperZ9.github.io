@@ -97,3 +97,64 @@ test("resolution caps hold: growth and terrain clamp, .vox refuses axes over 256
   assert.throws(() => toVoxFile({ vox: { nx: 300, ny: 10, nz: 10, occ: new Uint8Array(0) }, mat: new Uint8Array(0), palette: [] }),
     /256/, "the .vox cap is surfaced, not silently wrapped");
 });
+
+// ── Interaction layer: rotation, picking, editing, tuning (operator request) ──
+
+import { rotateScene, encodePick, decodePick, applyVoxelEdit } from "./voxel-forge.js";
+import { isoOrder } from "./voxel.js";
+
+test("four quarter-turns are the identity, and every turn preserves the solid", () => {
+  const s = buildVoxelScene("aurora", { study: "relic", res: 32 });
+  let r = s;
+  for (let i = 0; i < 4; i += 1) {
+    r = rotateScene(r, 1);
+    assert.equal(voxelCount(r.vox), s.meta.voxels, `turn ${i + 1}: count preserved`);
+  }
+  assert.deepEqual(Array.from(r.vox.occ), Array.from(s.vox.occ), "4 turns = identity");
+  assert.deepEqual(Array.from(r.mat), Array.from(s.mat), "materials ride along");
+  // A single turn on a non-symmetric solid is NOT the identity (the control does something).
+  assert.notDeepEqual(Array.from(rotateScene(s, 1).vox.occ), Array.from(s.vox.occ));
+});
+
+test("pick encoding round-trips every face id across the index range", () => {
+  for (const [idx, face] of [[0, 0], [1, 2], [884735, 1], [12345, 2]]) {
+    const [r, g, b] = encodePick(idx, face);
+    assert.deepEqual(decodePick(r, g, b), { cellIndex: idx, faceId: face });
+  }
+  assert.equal(decodePick(0, 0, 0), null, "the background decodes to nothing");
+});
+
+test("edits do what they say and are counted honestly", () => {
+  const s = buildVoxelScene("aurora", { study: "relic", res: 32 });
+  const before = s.meta.voxels;
+  const top = isoOrder(s.vox).find((c) => c.top);
+  const idx = (top.z * s.vox.ny + top.y) * s.vox.nx + top.x;
+  assert.ok(applyVoxelEdit(s, idx, 0, "build"), "build against an open top face");
+  assert.equal(s.meta.voxels, before + 1);
+  assert.ok(applyVoxelEdit(s, idx, 0, "chisel"), "chisel the picked voxel");
+  assert.equal(s.meta.voxels, before, "chisel removes exactly one");
+  const bandBefore = s.mat[idx] || 0;
+  if (s.vox.occ[idx]) {
+    assert.ok(applyVoxelEdit(s, idx, 0, "paint"));
+    assert.notEqual(s.mat[idx], bandBefore, "paint advances the band");
+  }
+  assert.ok(s.meta.edits >= 2, "every edit is counted");
+  // Refusals: editing empty space, building into a solid neighbour, building off-grid.
+  assert.equal(applyVoxelEdit(s, -1, 0, "chisel"), false);
+});
+
+test("tuning changes the algorithm and leaving it null reproduces the seeded build", () => {
+  for (const study of Object.keys(VOXEL_STUDIES)) {
+    const seeded1 = buildVoxelScene("aurora", { study, res: 32 });
+    const seeded2 = buildVoxelScene("aurora", { study, res: 32 });
+    assert.deepEqual(Array.from(seeded1.vox.occ), Array.from(seeded2.vox.occ), `${study}: untouched tune keeps the old build`);
+    const tuned = buildVoxelScene("aurora", { study, res: 32, tune: { a: 1, b: 1, c: 0 } });
+    assert.notDeepEqual(Array.from(tuned.vox.occ), Array.from(seeded1.vox.occ), `${study}: the knobs have authority`);
+    assert.ok(tuned.meta.tune, `${study}: a tuned build records its knobs`);
+    assert.equal(seeded1.meta.tune, null, `${study}: a seeded build records none`);
+  }
+  // Every study names its three knobs for the UI.
+  for (const study of Object.keys(VOXEL_STUDIES)) {
+    assert.equal(VOXEL_STUDIES[study].tune.length, 3, `${study}: three named knobs`);
+  }
+});

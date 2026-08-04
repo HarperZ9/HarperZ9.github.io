@@ -110,7 +110,12 @@ let _lastPlot = null;   // the last built sheet, for the SVG export
 let _voxelForge = null;
 const loadVoxelForge = lazyLoader(() => import("./voxel-forge.js"), m => { _voxelForge = m; });
 let _voxelStudy = "relic";
-let _lastVoxelScene = null;   // the last built scene, for the .vox / OBJ exports
+let _lastVoxelScene = null;   // the LIVE scene: rotations and edits mutate it; exports serialize it
+let _voxelMode = "orbit";     // pointer mode: orbit | build | chisel | paint
+let _voxelTuned = false;      // false = the seed's own draws; true = the three knobs apply
+// The pick buffer: the same geometry as the visible frame, drawn flat with cell+face encoded as
+// colour, so a pointer position decodes to exactly one voxel face. Redrawn with every render.
+const _voxelPick = document.createElement("canvas");
 
 // Spatial source: the authored world package + hybrid renderer. The module
 // re-checks the package's byte receipts before it draws, clamps the splat
@@ -774,6 +779,40 @@ function initPlotMapControls() {
 // Still-frame source. Exports serialize THE SAME built scene as the canvas (never a rebuild),
 // and the .vox writer is byte-deterministic, so the downloaded file's hash is a receipt for
 // exactly what was on screen.
+// Paint the LIVE scene (and its pick buffer) without rebuilding — the cheap path every edit and
+// rotation takes. Rebuilds go through drawVoxelScene, which resets edits by construction.
+function repaintVoxelScene(announce) {
+  const scene = _lastVoxelScene;
+  if (!scene || !_voxelForge || activeSource !== "voxels") return;
+  const c = $("studio-canvas");
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return;
+  _voxelPick.width = c.width; _voxelPick.height = c.height;
+  const pickCtx = _voxelPick.getContext("2d", { willReadFrequently: true });
+  _voxelForge.renderVoxelScene(ctx, scene, c.width, c.height, { pickCtx });
+  const readout = $("voxel-readout");
+  if (readout) readout.textContent =
+    `${scene.meta.voxels.toLocaleString()} voxels · ${scene.meta.res.join("×")}`
+    + (scene.meta.seaLevel != null ? ` · sea level ${scene.meta.seaLevel}` : "")
+    + (scene.meta.edits ? ` · ${scene.meta.edits} hand edit${scene.meta.edits === 1 ? "" : "s"}` : "");
+  if (announce) {
+    const obs = perceive(c);
+    const label = (_voxelForge.VOXEL_STUDIES[scene.meta.study] || {}).label || scene.meta.study;
+    say("model",
+      `A ${label} built from seed "${scene.meta.seed}": ${scene.meta.voxels.toLocaleString()} voxels at `
+      + `${scene.meta.res.join("×")}${scene.meta.tune ? ", algorithm hand-tuned" : ""}, lit with baked `
+      + `per-face occlusion. Fingerprint ${obs.phash}. Orbit turns it, Build/Chisel/Paint edit it, `
+      + `and the .vox export hashes exactly what you see — seed, turns, and hand edits included.`);
+  }
+  startMeterLoop();
+}
+
+function readVoxelTune() {
+  if (!_voxelTuned) return null;
+  const v = (id) => { const el = $(id); return el ? parseFloat(el.value) : 0.5; };
+  return { a: v("voxel-tune-a"), b: v("voxel-tune-b"), c: v("voxel-tune-c") };
+}
+
 function drawVoxelScene() {
   if (!_voxelForge || activeSource !== "voxels") return;
   leave3D();
@@ -782,31 +821,19 @@ function drawVoxelScene() {
   const seedIn = $("voxel-seed");
   const seed = ((seedIn && seedIn.value.trim()) || "aurora").slice(0, 48);
   const resEl = $("voxel-res");
-  const scene = _voxelForge.buildVoxelScene(seed, {
+  _lastVoxelScene = _voxelForge.buildVoxelScene(seed, {
     study: _voxelStudy,
     res: resEl ? parseInt(resEl.value, 10) : 48,
+    tune: readVoxelTune(),
   });
-  _lastVoxelScene = scene;
-  const ctx = c.getContext("2d", { willReadFrequently: true });
-  if (!ctx) return;
-  _voxelForge.renderVoxelScene(ctx, scene, c.width, c.height);
-  const readout = $("voxel-readout");
-  if (readout) readout.textContent =
-    `${scene.meta.voxels.toLocaleString()} voxels · ${scene.meta.res.join("×")}`
-    + (scene.meta.seaLevel != null ? ` · sea level ${scene.meta.seaLevel}` : "");
-  const obs = perceive(c);
-  const label = (_voxelForge.VOXEL_STUDIES[scene.meta.study] || {}).label || scene.meta.study;
-  say("model",
-    `A ${label} built from seed "${seed}": ${scene.meta.voxels.toLocaleString()} voxels at `
-    + `${scene.meta.res.join("×")}, lit with baked per-face occlusion. Fingerprint ${obs.phash}. `
-    + `The .vox export is byte-deterministic — same seed, same file, same hash.`);
-  startMeterLoop();
+  repaintVoxelScene(true);
 }
 function initVoxelControls() {
   document.querySelectorAll("[data-voxel-study]").forEach(chip => {
     chip.addEventListener("click", () => {
       _voxelStudy = chip.dataset.voxelStudy;
       document.querySelectorAll("[data-voxel-study]").forEach(b => b.classList.toggle("active", b === chip));
+      if (window.__voxelSyncTuneLabels) window.__voxelSyncTuneLabels();   // knobs speak the study's language
       drawVoxelScene();
     });
   });
@@ -822,6 +849,87 @@ function initVoxelControls() {
   if (resEl) {
     resEl.addEventListener("input", () => { const out = $("voxel-res-val"); if (out) out.textContent = resEl.value; });
     resEl.addEventListener("change", drawVoxelScene);
+  }
+  // Pointer modes. Orbit is the default; the other three make a click into an edit.
+  document.querySelectorAll("[data-voxel-mode]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _voxelMode = chip.dataset.voxelMode;
+      document.querySelectorAll("[data-voxel-mode]").forEach(b => b.classList.toggle("active", b === chip));
+      const c = $("studio-canvas");
+      if (c) c.style.cursor = _voxelMode === "orbit" ? "grab" : "crosshair";
+    });
+  });
+  // Quarter-turn rotation, preserving edits: rotateScene turns the LIVE scene, never a rebuild.
+  const turn = (dir) => {
+    if (!_lastVoxelScene || !_voxelForge) return;
+    _lastVoxelScene = _voxelForge.rotateScene(_lastVoxelScene, dir);
+    repaintVoxelScene(false);
+  };
+  const tl = $("voxel-turn-l"), tr = $("voxel-turn-r");
+  if (tl) tl.addEventListener("click", () => turn(-1));
+  if (tr) tr.addEventListener("click", () => turn(1));
+  // Algorithm tuning: Seeded keeps the seed's own draws; Tuned hands the three knobs over, with
+  // labels in the study's own vocabulary.
+  const syncTuneLabels = () => {
+    if (!_voxelForge) return;
+    const names = (_voxelForge.VOXEL_STUDIES[_voxelStudy] || {}).tune || ["A", "B", "C"];
+    for (const [i, key] of [[0, "a"], [1, "b"], [2, "c"]]) {
+      const lab = $(`voxel-tune-${key}-lab`);
+      if (lab) lab.textContent = names[i];
+    }
+  };
+  window.__voxelSyncTuneLabels = syncTuneLabels;   // study chips re-label on switch
+  document.querySelectorAll("[data-voxel-tunemode]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _voxelTuned = chip.dataset.voxelTunemode === "tuned";
+      document.querySelectorAll("[data-voxel-tunemode]").forEach(b => b.classList.toggle("active", b === chip));
+      const rows = $("voxel-tune-rows");
+      if (rows) rows.hidden = !_voxelTuned;
+      syncTuneLabels();
+      drawVoxelScene();
+    });
+  });
+  for (const key of ["a", "b", "c"]) {
+    const el = $(`voxel-tune-${key}`);
+    if (!el) continue;
+    el.addEventListener("input", () => { const out = $(`voxel-tune-${key}-val`); if (out) out.textContent = Number(el.value).toFixed(2); });
+    el.addEventListener("change", () => { if (_voxelTuned) drawVoxelScene(); });
+  }
+  // Editing + drag-to-orbit on the shared canvas. Guarded on the voxels source so no other
+  // source ever sees these; edits read the pick buffer at backing resolution.
+  const stageCanvas = $("studio-canvas");
+  let dragX = null;
+  const pickAt = (e) => {
+    const c = $("studio-canvas");
+    const rect = c.getBoundingClientRect();
+    const x = Math.round((e.clientX - rect.left) * (c.width / rect.width));
+    const y = Math.round((e.clientY - rect.top) * (c.height / rect.height));
+    if (x < 0 || y < 0 || x >= _voxelPick.width || y >= _voxelPick.height) return null;
+    const d = _voxelPick.getContext("2d", { willReadFrequently: true }).getImageData(x, y, 1, 1).data;
+    return _voxelForge ? _voxelForge.decodePick(d[0], d[1], d[2]) : null;
+  };
+  if (stageCanvas && stageCanvas.parentElement) {
+    const stage = stageCanvas.parentElement;
+    stage.addEventListener("pointerdown", (e) => {
+      if (activeSource !== "voxels" || _voxelMode !== "orbit") return;
+      dragX = e.clientX;
+    });
+    stage.addEventListener("pointermove", (e) => {
+      if (activeSource !== "voxels" || _voxelMode !== "orbit" || dragX == null) return;
+      const dx = e.clientX - dragX;
+      if (Math.abs(dx) > 90) { turn(dx > 0 ? 1 : -1); dragX = e.clientX; }
+    });
+    stage.addEventListener("pointerup", () => { dragX = null; });
+    stage.addEventListener("pointercancel", () => { dragX = null; });
+    stage.addEventListener("click", (e) => {
+      if (activeSource !== "voxels" || _voxelMode === "orbit" || !_lastVoxelScene) return;
+      if (!e.target.closest("#studio-canvas")) return;
+      const hit = pickAt(e);
+      if (!hit) return;
+      if (_voxelForge.applyVoxelEdit(_lastVoxelScene, hit.cellIndex, hit.faceId, _voxelMode)) {
+        repaintVoxelScene(false);
+      }
+    });
   }
   const dl = (data, name, type) => {
     const a = document.createElement("a");

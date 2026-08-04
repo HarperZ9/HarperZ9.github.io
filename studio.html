@@ -180,6 +180,34 @@
           <span class="at-glab">Resolution <span class="hint">(<span id="voxel-res-val">48</span>&sup3;)</span></span>
           <input type="range" class="at-slider" id="voxel-res" min="24" max="96" step="4" value="48" aria-label="Voxel resolution">
         </div>
+        <div class="at-group">
+          <span class="at-glab">Pointer <span class="hint">what a click on the object does</span></span>
+          <div class="at-chips" role="group" aria-label="Voxel pointer mode">
+            <button type="button" class="chip active" data-voxel-mode="orbit">Orbit</button>
+            <button type="button" class="chip" data-voxel-mode="build">Build</button>
+            <button type="button" class="chip" data-voxel-mode="chisel">Chisel</button>
+            <button type="button" class="chip" data-voxel-mode="paint">Paint</button>
+          </div>
+          <div class="at-actions">
+            <button type="button" class="btn ghost" id="voxel-turn-l" aria-label="Rotate a quarter turn left">&#10226; turn</button>
+            <button type="button" class="btn ghost" id="voxel-turn-r" aria-label="Rotate a quarter turn right">turn &#10227;</button>
+          </div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Algorithm <span class="hint">the study's own knobs</span></span>
+          <div class="at-chips" role="group" aria-label="Algorithm tuning mode">
+            <button type="button" class="chip active" data-voxel-tunemode="seeded">Seeded</button>
+            <button type="button" class="chip" data-voxel-tunemode="tuned">Tuned</button>
+          </div>
+          <div id="voxel-tune-rows" hidden>
+            <span class="at-glab"><span id="voxel-tune-a-lab">A</span> <span class="hint">(<span id="voxel-tune-a-val">0.50</span>)</span></span>
+            <input type="range" class="at-slider" id="voxel-tune-a" min="0" max="1" step="0.01" value="0.5" aria-label="Algorithm knob A">
+            <span class="at-glab"><span id="voxel-tune-b-lab">B</span> <span class="hint">(<span id="voxel-tune-b-val">0.50</span>)</span></span>
+            <input type="range" class="at-slider" id="voxel-tune-b" min="0" max="1" step="0.01" value="0.5" aria-label="Algorithm knob B">
+            <span class="at-glab"><span id="voxel-tune-c-lab">C</span> <span class="hint">(<span id="voxel-tune-c-val">0.50</span>)</span></span>
+            <input type="range" class="at-slider" id="voxel-tune-c" min="0" max="1" step="0.01" value="0.5" aria-label="Algorithm knob C">
+          </div>
+        </div>
         <div class="at-actions">
           <button type="button" class="btn" id="voxel-draw" aria-label="Build and draw the voxel scene">Build</button>
           <button type="button" class="btn ghost" id="voxel-vox" aria-label="Export as MagicaVoxel .vox">.vox</button>
