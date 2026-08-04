@@ -106,6 +106,12 @@ const loadPlotMaps = lazyLoader(() => import("./plot-maps.js"), m => { _plotMaps
 let _plotStudy = "topo";
 let _lastPlot = null;   // the last built sheet, for the SVG export
 
+// Voxels source: seeded voxel scenes (system/voxel-forge.js) drawn isometrically. Still frames.
+let _voxelForge = null;
+const loadVoxelForge = lazyLoader(() => import("./voxel-forge.js"), m => { _voxelForge = m; });
+let _voxelStudy = "relic";
+let _lastVoxelScene = null;   // the last built scene, for the .vox / OBJ exports
+
 // Spatial source: the authored world package + hybrid renderer. The module
 // re-checks the package's byte receipts before it draws, clamps the splat
 // block to the device tier's budget, and holds a still frame under reduced
@@ -423,6 +429,7 @@ const SOURCES = {
   neural:    { block: "src-neural",    mode: "generate" },
   sound:     { block: "src-sound",     mode: "generate" },
   plotmaps:  { block: "src-plotmaps",  mode: "generate" },
+  voxels:    { block: "src-voxels",    mode: "generate" },
 };
 
 // ── The poster workshop (lazy). Mounted once on first entry; the panel owns
@@ -569,6 +576,13 @@ function setSource(next) {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
       drawPlotMap();
     }).catch(err => { say("model", "The plot-map engine failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
+  // Voxels: load the forge and build the current scene. Still frames only.
+  if (next === "voxels") {
+    loadVoxelForge().then(() => {
+      if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
+      drawVoxelScene();
+    }).catch(err => { say("model", "The voxel forge failed to load: " + (err && err.message ? err.message : String(err))); });
   }
   // Spatial: mount a GL canvas (same swap discipline as fractal3d), then let the
   // module fetch + receipt-check the world package and start the hybrid world
@@ -756,9 +770,82 @@ function initPlotMapControls() {
   });
 }
 
+// ── Voxels: build + controls ─────────────────────────────────────────────────
+// Still-frame source. Exports serialize THE SAME built scene as the canvas (never a rebuild),
+// and the .vox writer is byte-deterministic, so the downloaded file's hash is a receipt for
+// exactly what was on screen.
+function drawVoxelScene() {
+  if (!_voxelForge || activeSource !== "voxels") return;
+  leave3D();
+  const c = $("studio-canvas");
+  sizeCanvas(c);
+  const seedIn = $("voxel-seed");
+  const seed = ((seedIn && seedIn.value.trim()) || "aurora").slice(0, 48);
+  const resEl = $("voxel-res");
+  const scene = _voxelForge.buildVoxelScene(seed, {
+    study: _voxelStudy,
+    res: resEl ? parseInt(resEl.value, 10) : 48,
+  });
+  _lastVoxelScene = scene;
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return;
+  _voxelForge.renderVoxelScene(ctx, scene, c.width, c.height);
+  const readout = $("voxel-readout");
+  if (readout) readout.textContent =
+    `${scene.meta.voxels.toLocaleString()} voxels · ${scene.meta.res.join("×")}`
+    + (scene.meta.seaLevel != null ? ` · sea level ${scene.meta.seaLevel}` : "");
+  const obs = perceive(c);
+  const label = (_voxelForge.VOXEL_STUDIES[scene.meta.study] || {}).label || scene.meta.study;
+  say("model",
+    `A ${label} built from seed "${seed}": ${scene.meta.voxels.toLocaleString()} voxels at `
+    + `${scene.meta.res.join("×")}, lit with baked per-face occlusion. Fingerprint ${obs.phash}. `
+    + `The .vox export is byte-deterministic — same seed, same file, same hash.`);
+  startMeterLoop();
+}
+function initVoxelControls() {
+  document.querySelectorAll("[data-voxel-study]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _voxelStudy = chip.dataset.voxelStudy;
+      document.querySelectorAll("[data-voxel-study]").forEach(b => b.classList.toggle("active", b === chip));
+      drawVoxelScene();
+    });
+  });
+  const draw = $("voxel-draw");
+  if (draw) draw.addEventListener("click", drawVoxelScene);
+  const reseed = $("voxel-reseed");
+  if (reseed) reseed.addEventListener("click", () => {
+    const seedIn = $("voxel-seed");
+    if (seedIn) seedIn.value = "vx-" + Math.random().toString(36).slice(2, 8);
+    drawVoxelScene();
+  });
+  const resEl = $("voxel-res");
+  if (resEl) {
+    resEl.addEventListener("input", () => { const out = $("voxel-res-val"); if (out) out.textContent = resEl.value; });
+    resEl.addEventListener("change", drawVoxelScene);
+  }
+  const dl = (data, name, type) => {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([data], { type }));
+    a.download = name;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+  };
+  const voxBtn = $("voxel-vox");
+  if (voxBtn) voxBtn.addEventListener("click", () => {
+    if (!_lastVoxelScene || !_voxelForge) return;
+    dl(_voxelForge.toVoxFile(_lastVoxelScene), `voxel-${_lastVoxelScene.meta.study}-${_lastVoxelScene.meta.seed}.vox`, "application/octet-stream");
+  });
+  const objBtn = $("voxel-obj");
+  if (objBtn) objBtn.addEventListener("click", () => {
+    if (!_lastVoxelScene || !_voxelForge) return;
+    dl(_voxelForge.voxelObj(_lastVoxelScene.vox), `voxel-${_lastVoxelScene.meta.study}-${_lastVoxelScene.meta.seed}.obj`, "model/obj");
+  });
+}
+
 initNeuralControls();
 initSoundControls();
 initPlotMapControls();
+initVoxelControls();
 
 // Sync roving tabindex whenever setSource changes the active tab.
 function syncTabindex(activeKey) {
