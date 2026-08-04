@@ -72,11 +72,26 @@
 <article class="sheet demo-library">
   <header class="mast">
     <h1>Watch the tools move.</h1>
-    <p class="role library-intro">Four current workflows, each shown twice: a short cut for orientation, then the full run with its transcript, machine-readable evidence, and reproduction notes.</p>
-    <p class="contact"><span>Index · Gather · Forum · Crucible</span><span class="sep">/</span><span>silent, on-screen captions</span><span class="sep">/</span><span>local or disclosed offline fixtures</span></p>
+    <p class="role library-intro">The flagship surface plus four recorded workflows. The recordings are each shown twice: a short cut for orientation, then the full run with its transcript, machine-readable evidence, and reproduction notes.</p>
+    <p class="contact"><span>Flywheel · Index · Gather · Forum · Crucible</span><span class="sep">/</span><span>silent, on-screen captions</span><span class="sep">/</span><span>local or disclosed offline fixtures</span></p>
   </header>
 
   <ol class="workflow-list" aria-label="Recorded tool workflows">
+    <li>
+      <article class="workflow">
+        <figure class="workflow-figure">
+          <img src="media/demos/flywheel/flywheel-app-console.png" alt="Flywheel gateway page: an endpoint table reporting 34 endpoints with 11 usable, a prompt routed to a local model through ollama, and the answer shown with its sealed receipt identifier" width="1440" height="900">
+          <figcaption>Endpoint table, live route to a local model, and the sealed receipt beside the answer.</figcaption>
+        </figure>
+        <div>
+          <h2>Flywheel</h2>
+          <p class="workflow-version">Gateway surface · live capture + tamper transcript, 2026-08-04</p>
+          <p class="workflow-copy">Route a prompt to any of 34 endpoints from one page, get the answer with its sealed receipt, then corrupt one byte of a receipt and watch the offline verifier answer TAMPERED with the recomputed hash named.</p>
+          <ul class="workflow-facts" aria-label="Flywheel demonstration facts"><li>34 endpoints, 11 usable</li><li>credential presence only</li><li>tamper refused: SEAL_MISMATCH</li><li>stdlib verifier</li></ul>
+          <a class="workflow-action" href="demo-flywheel.html">See the Flywheel surface and the refusal</a>
+        </div>
+      </article>
+    </li>
     <li>
       <article class="workflow">
         <figure class="workflow-figure">

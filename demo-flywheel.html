@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flywheel demo: route, receipt, tamper, refusal</title>
+<meta name="description" content="The Flywheel gateway surface routing a live prompt to a local model and sealing a receipt, then the tamper demonstration: one corrupted byte and the offline verifier answers TAMPERED with the recomputed hash named.">
+<link rel="canonical" href="https://harperz9.github.io/demo-flywheel.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Flywheel demo: route, receipt, tamper, refusal">
+<meta property="og:description" content="A live route through the Flywheel gateway with a sealed receipt, then one corrupted byte and the verifier's refusal, re-runnable from a clone with the standard library.">
+<meta property="og:url" content="https://harperz9.github.io/demo-flywheel.html">
+<link rel="stylesheet" href="system/doc.css?v=20260719-zentropy-sitewide">
+<style>
+  .shot{border:1px solid rgba(125,227,234,.35);border-radius:8px;max-width:100%;height:auto;display:block}
+  .transcript{background:#0d1117;color:#e6edf3;border:1px solid rgba(125,227,234,.25);border-radius:8px;padding:1.1rem 1.3rem;overflow-x:auto;font-size:.82rem;line-height:1.55}
+  .transcript .ok{color:#7de3ea}
+  .transcript .bad{color:#ff7b72}
+</style>
+</head>
+<body class="doc">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="index.html">Home</a> <a href="overview.html">Engines</a> <a href="demonstrations.html">Demos</a> <a href="research.html">Research</a> <a href="resume.html">Resume</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260719-zentropy-sitewide"></script>
+
+<main id="main">
+<article class="sheet">
+  <header class="mast">
+    <h1>Flywheel: route, receipt, tamper, refusal.</h1>
+    <p class="role">The orchestration engine's own surface, then the check that cannot be talked past.</p>
+  </header>
+
+  <section>
+    <h2>The surface</h2>
+    <p class="lead">The gateway serves one page on one local origin. Below, captured 2026-08-04: the endpoint table reads 34 endpoints with 11 usable right now and records credential presence only, never a value. The prompt routes to a local model (<span translate="no">telos-coder-14b</span> through <span translate="no">ollama</span>) and the answer comes back with the sealed receipt's identifier beside it.</p>
+    <img class="shot" src="media/demos/flywheel/flywheel-app-console.png" alt="Flywheel gateway page: an endpoint table reporting 34 endpoints with 11 usable, a prompt routed to a local model through ollama, and the answer shown with its sealed receipt identifier" width="1440" height="900">
+  </section>
+
+  <section>
+    <h2>The tamper demonstration</h2>
+    <p class="lead">Recorded terminal transcript, 2026-08-04, from the public repository at its default branch. Two chained tool-call receipts are sealed and verified, one byte of the second receipt's admission decision is corrupted, and the verifier answers <span translate="no">TAMPERED / SEAL_MISMATCH</span> with the recomputed hash named. The chain check refuses too. The verifier is Python standard library only: no key, no network, no dependency on the runtime that emitted the receipt.</p>
+    <pre class="transcript">$ tamper-demo  (flywheel harness, stdlib only, offline)
+
+STEP 1 -- seal two chained tool-call receipts
+  receipt 1: seal e4cb1ba6daf5e1c3...  (read_file, builtin-read, allow)
+  receipt 2: seal 63a2f2d838e693ae...  (run_tests, builtin-exec, allow, chained to 1)
+
+STEP 2 -- verify both, untouched (recomputes every seal from the record alone)
+  receipt 1: <span class="ok">verdict MATCH</span>   seal e4cb1ba6daf5e1c30701860bbd440b6e2fb3fe7b7a4e4d6d9af68279fdcd196d
+  receipt 2: <span class="ok">verdict MATCH</span>   seal 63a2f2d838e693ae2077792d08f76ab5abb73f027301cf11c208898932aa8819
+  chain:     <span class="ok">verdict MATCH</span>   n=2
+
+STEP 3 -- corrupt ONE byte: receipt 2's admission 'allow' -&gt; 'aIlow'
+  tampered receipt 2: <span class="bad">verdict TAMPERED</span>
+  failure_class: SEAL_MISMATCH
+  detail: seal sha256:63a2f2d838e6, recomputed sha256:6885189a7439
+
+STEP 4 -- the chain refuses too
+  chain: <span class="bad">verdict TAMPERED</span>  n=2  (receipt 1 MATCH, receipt 2 TAMPERED)</pre>
+    <p class="entry-note">Raw transcript: <a href="artifacts/flywheel-tamper-demo-2026-08-04.txt">artifacts/flywheel-tamper-demo-2026-08-04.txt</a></p>
+  </section>
+
+  <section>
+    <h2>Run it yourself</h2>
+    <p class="lead">From a clone of <a href="https://github.com/HarperZ9/flywheel" translate="no">github.com/HarperZ9/flywheel</a>:</p>
+    <pre class="transcript">git clone https://github.com/HarperZ9/flywheel
+cd flywheel
+pip install -e .
+python scripts/run_harness_cli.py app --port 8799   # the surface above
+python -m harness.cli tasks/example_pass            # ends in FAIL, deliberately:
+                                                    # the default proposer offers a
+                                                    # wrong candidate and the engine
+                                                    # refuses to accept it</pre>
+    <p class="lead">The rejection is the feature: acceptance you cannot forge is what makes the acceptance worth having.</p>
+  </section>
+
+  <section>
+    <h2>Claim boundary</h2>
+    <p class="lead">This page demonstrates that a sealed receipt refuses tampering and that the gateway routes and seals on one surface. It does not demonstrate model quality, capability uplift, or that a verified answer is true in the world; a passing check proves the check passed, and each verdict says so.</p>
+    <p class="entry-note">Captured and verified 2026-08-04. The screenshot was reviewed for private paths and credential-shaped strings before publication; the endpoint table records presence labels only.</p>
+  </section>
+</article>
+</main>
+</body>
+</html>
