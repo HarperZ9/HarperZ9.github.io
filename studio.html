@@ -58,6 +58,7 @@
         <button type="button" role="tab" data-source="neural"    aria-selected="false" aria-controls="src-neural"    tabindex="-1">Living neural</button>
         <button type="button" role="tab" data-source="sound"     aria-selected="false" aria-controls="src-sound"     tabindex="-1">Seed sound</button>
         <button type="button" role="tab" data-source="plotmaps"  aria-selected="false" aria-controls="src-plotmaps"  tabindex="-1">Plot maps</button>
+        <button type="button" role="tab" data-source="voxels"    aria-selected="false" aria-controls="src-voxels"    tabindex="-1">Voxels</button>
       </div>
       <div class="source-group" role="presentation">
         <span class="source-group-label" aria-hidden="true">Bring</span>
@@ -150,6 +151,41 @@
           <button type="button" class="btn ghost" id="plot-svg" aria-label="Export the sheet as a plotter-grade SVG">SVG sheet</button>
         </div>
         <p class="src-hint" id="plot-readout">the sheet's stroke count and sea level report here after a draw</p>
+      </section>
+
+      <!-- Voxels: seeded voxel scenes (CSG relics, monuments, terrain shared with Plot maps,
+           accretive growth), lit with per-face baked ambient occlusion, drawn isometrically,
+           exported as MagicaVoxel .vox (byte-deterministic) or an OBJ shell. -->
+      <section class="src-block" id="src-voxels" role="tabpanel" aria-label="Voxel controls" hidden>
+        <p class="transform-note">Voxel tooling from a seed: build, light, export. Terrain shares
+        the Plot maps elevation truth, so a seed's map and its relief agree. The .vox export is
+        byte-deterministic — the same seed always hashes the same file.</p>
+        <div class="at-group">
+          <span class="at-glab">Study <span class="hint">what gets built</span></span>
+          <div class="at-chips" role="group" aria-label="Voxel study">
+            <button type="button" class="chip active" data-voxel-study="relic">Relic</button>
+            <button type="button" class="chip" data-voxel-study="monument">Monument</button>
+            <button type="button" class="chip" data-voxel-study="terrain">Terrain</button>
+            <button type="button" class="chip" data-voxel-study="growth">Growth</button>
+          </div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Seed <span class="hint">names the object</span></span>
+          <div class="at-actions">
+            <input type="text" class="at-seed" id="voxel-seed" value="aurora" maxlength="48" aria-label="Voxel seed">
+            <button type="button" class="btn ghost" id="voxel-reseed" aria-label="New random seed">reseed</button>
+          </div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Resolution <span class="hint">(<span id="voxel-res-val">48</span>&sup3;)</span></span>
+          <input type="range" class="at-slider" id="voxel-res" min="24" max="96" step="4" value="48" aria-label="Voxel resolution">
+        </div>
+        <div class="at-actions">
+          <button type="button" class="btn" id="voxel-draw" aria-label="Build and draw the voxel scene">Build</button>
+          <button type="button" class="btn ghost" id="voxel-vox" aria-label="Export as MagicaVoxel .vox">.vox</button>
+          <button type="button" class="btn ghost" id="voxel-obj" aria-label="Export the exposed shell as OBJ">OBJ</button>
+        </div>
+        <p class="src-hint" id="voxel-readout">voxel count and dimensions report here after a build</p>
       </section>
       <section class="src-block" id="src-atelier" role="tabpanel" aria-label="Atelier controls">
         <div class="atelier studio-atelier" id="atelier">
