@@ -20,7 +20,7 @@
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/system.css?v=20260804-atlas-compare">
+<link rel="stylesheet" href="system/system.css?v=20260805-studio-shelf">
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
@@ -59,6 +59,7 @@
         <button type="button" role="tab" data-source="sound"     aria-selected="false" aria-controls="src-sound"     tabindex="-1">Seed sound</button>
         <button type="button" role="tab" data-source="plotmaps"  aria-selected="false" aria-controls="src-plotmaps"  tabindex="-1">Plot maps</button>
         <button type="button" role="tab" data-source="voxels"    aria-selected="false" aria-controls="src-voxels"    tabindex="-1">Voxels</button>
+        <button type="button" role="tab" data-source="sketch"    aria-selected="false" aria-controls="src-sketch"    tabindex="-1">Sketch</button>
       </div>
       <div class="source-group" role="presentation">
         <span class="source-group-label" aria-hidden="true">Bring</span>
@@ -132,6 +133,7 @@
             <button type="button" class="chip" data-plot-material="picture">Picture</button>
             <button type="button" class="chip" data-plot-material="canvas">Studio canvas</button>
             <button type="button" class="chip" data-plot-material="voxels">Voxel build</button>
+            <button type="button" class="chip" data-plot-material="sketchsheet">Sketch</button>
           </div>
         </div>
         <div class="at-group" id="plot-plate-row" hidden>
@@ -179,6 +181,12 @@
             <button type="button" class="chip" data-plot-study="monolith">Monolith</button>
             <button type="button" class="chip" data-plot-study="nomogram">Nomogram</button>
             <button type="button" class="chip" data-plot-study="orbital">Orbital</button>
+            <button type="button" class="chip" data-plot-study="scanline">Scanline</button>
+            <button type="button" class="chip" data-plot-study="horizon">Horizon</button>
+            <button type="button" class="chip" data-plot-study="stitch">Stitch</button>
+            <button type="button" class="chip" data-plot-study="tanaka">Tanaka</button>
+            <button type="button" class="chip" data-plot-study="relief">Relief</button>
+            <button type="button" class="chip" data-plot-study="zigzag">Zigzag</button>
           </div>
           <span class="at-glab">Map register <span class="hint">the four cartographic studies</span></span>
           <div class="at-chips" role="group" aria-label="Cartographic study">
@@ -214,11 +222,71 @@
           <span class="at-glab">Line density <span class="hint">(<span id="plot-density-val">1.00</span>)</span></span>
           <input type="range" class="at-slider" id="plot-density" min="0.3" max="2.5" step="0.05" value="1" aria-label="Line density">
         </div>
+        <div class="at-group" id="plot-replay-row">
+          <span class="at-glab">Watch it draw <span class="hint">the sheet replayed as the plotter would run it, pen by pen</span></span>
+          <div class="at-actions">
+            <button type="button" class="btn ghost" id="plot-play" aria-label="Replay the sheet stroke by stroke">Watch</button>
+            <input type="range" class="at-slider" id="plot-speed" min="0.25" max="6" step="0.25" value="1" aria-label="Replay speed">
+          </div>
+          <input type="range" class="at-slider" id="plot-scrub" min="0" max="1000" step="1" value="0" aria-label="Replay position">
+          <p class="src-hint" id="plot-pen-note">press Watch; pen changes are called out as they happen</p>
+        </div>
         <div class="at-actions">
           <button type="button" class="btn" id="plot-draw" aria-label="Draw the map sheet">Draw</button>
           <button type="button" class="btn ghost" id="plot-svg" aria-label="Export the sheet as a plotter-grade SVG">SVG sheet</button>
+          <button type="button" class="btn ghost" id="plot-gcode" aria-label="Export the sheet as pen-plotter G-code with pen-change pauses">G-code</button>
+          <button type="button" class="btn ghost" id="plot-pin" aria-label="Pin this sheet to the shelf">Pin</button>
         </div>
         <p class="src-hint" id="plot-readout">the sheet's stroke count and sea level report here after a draw</p>
+      </section>
+
+      <!-- Sketch: freehand drawing as a first-class material. Strokes are captured in sheet
+           space, expanded live through a symmetry (the kaleidoscope is the toy), laid down in
+           the same mark registers the pen surface uses, and sent onward as a plot sheet. -->
+      <section class="src-block" id="src-sketch" role="tabpanel" aria-label="Sketch controls" hidden>
+        <p class="transform-note">Draw by hand. Strokes land on the sheet in the pen's own mark
+        registers, a symmetry expands them live as you draw, and the finished drawing is a plot
+        sheet like any other: watch it draw, send it to the pen surface, blend it, export it.
+        Nothing you draw leaves this page.</p>
+        <div class="at-group">
+          <span class="at-glab">Symmetry <span class="hint">changing it re-expands what you already drew</span></span>
+          <div class="at-chips" role="group" aria-label="Sketch symmetry">
+            <button type="button" class="chip active" data-sketch-sym="none">None</button>
+            <button type="button" class="chip" data-sketch-sym="mirror">Mirror</button>
+            <button type="button" class="chip" data-sketch-sym="radial">Radial</button>
+            <button type="button" class="chip" data-sketch-sym="kaleido">Kaleido</button>
+          </div>
+          <span class="at-glab">Fold <span class="hint">(<span id="sketch-k-val">6</span>)</span></span>
+          <input type="range" class="at-slider" id="sketch-k" min="2" max="12" step="1" value="6" aria-label="Symmetry fold count">
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Guide <span class="hint">drawn light, kept out of exports unless asked</span></span>
+          <div class="at-chips" role="group" aria-label="Sketch guide">
+            <button type="button" class="chip active" data-sketch-guide="none">None</button>
+            <button type="button" class="chip" data-sketch-guide="grid">Grid</button>
+            <button type="button" class="chip" data-sketch-guide="iso">Isometric</button>
+            <button type="button" class="chip" data-sketch-guide="zigzag">Zigzag</button>
+          </div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Mark <span class="hint">how the pen lays your line down</span></span>
+          <div class="at-chips" role="group" aria-label="Sketch mark register">
+            <button type="button" class="chip" data-sketch-register="clean">Clean</button>
+            <button type="button" class="chip active" data-sketch-register="drawn">Drawn</button>
+            <button type="button" class="chip" data-sketch-register="worked">Worked</button>
+            <button type="button" class="chip" data-sketch-register="laboured">Laboured</button>
+          </div>
+        </div>
+        <div class="at-actions">
+          <button type="button" class="btn ghost" id="sketch-undo" aria-label="Remove the last stroke">Undo</button>
+          <button type="button" class="btn ghost" id="sketch-clear" aria-label="Clear the sketch">Clear</button>
+        </div>
+        <div class="at-actions">
+          <button type="button" class="btn" id="sketch-plot" aria-label="Send this sketch to the pen surface">To pen surface</button>
+          <button type="button" class="btn ghost" id="sketch-svg" aria-label="Export the sketch as a plotter-grade SVG">SVG sheet</button>
+          <button type="button" class="btn ghost" id="sketch-pin" aria-label="Pin this sketch to the shelf">Pin</button>
+        </div>
+        <p class="src-hint" id="sketch-readout">draw on the canvas; strokes and symmetry report here</p>
       </section>
 
       <!-- Voxels: seeded voxel scenes (CSG relics, monuments, terrain shared with Plot maps,
@@ -281,6 +349,7 @@
           <button type="button" class="btn ghost" id="voxel-vox" aria-label="Export as MagicaVoxel .vox">.vox</button>
           <button type="button" class="btn ghost" id="voxel-obj" aria-label="Export the exposed shell as OBJ">OBJ</button>
           <button type="button" class="btn ghost" id="voxel-plot" aria-label="Draw this build as a hidden-line plotter sheet">Plot it</button>
+          <button type="button" class="btn ghost" id="voxel-pin" aria-label="Pin this build to the shelf">Pin</button>
         </div>
         <p class="src-hint" id="voxel-readout">voxel count and dimensions report here after a build</p>
       </section>
@@ -872,6 +941,23 @@
             <p class="src-hint">One orbit, integrated live by the site&rsquo;s own symplectic integrator; the discovery engine fits the conserved angular momentum from the trace; the same verifier visibly refuses a damped run. The scene is seeded, hashed, and re-checkable in this browser.</p>
           </div>
         </div>
+      </section>
+
+      <!-- The shelf: the studio's memory, cross-source, quiet by design. Every pin is a RECIPE
+           (seed + controls, plus raw strokes for sketches) that reproduces the creation exactly;
+           it persists in this browser and travels as a JSON file. No streaks, no scores - the
+           shelf belongs to the visitor, not to the site. -->
+      <section class="rail-group studio-shelf" id="studio-shelf" aria-label="Shelf of pinned creations">
+        <div class="shelf-head">
+          <span class="at-glab">Shelf <span class="hint">pins reproduce exactly; stored in this browser only</span></span>
+        </div>
+        <div class="shelf-strip" id="shelf-strip" role="list" aria-label="Pinned creations"></div>
+        <div class="at-actions">
+          <button type="button" class="btn ghost" id="shelf-export" aria-label="Download the shelf as a JSON file">Export shelf</button>
+          <button type="button" class="btn ghost" id="shelf-import" aria-label="Import a shelf JSON file">Import</button>
+          <input type="file" id="shelf-import-file" accept="application/json,.json" hidden aria-hidden="true">
+        </div>
+        <p class="src-hint" id="shelf-hint">nothing pinned yet; Pin lives beside each source's exports</p>
       </section>
 
       <details class="rail-group rail-about">

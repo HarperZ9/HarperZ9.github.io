@@ -273,14 +273,13 @@ export function buildPlotMap(seedStr, opts = {}) {
 // the cartographic studies, the picture's own ratio for an image plot), which makes the pixels and
 // the plotter file agree by construction. Returns the sheet's visible rect so the caller can
 // publish it as the measurement content rect: perception must read the paper, not the surround.
-export function renderPlotMap(ctx, plot, W, H, palette = {}, opts = {}) {
-  const ink = palette.ink || "#e8e6e1";
-  const support = palette.support || "rgba(232,230,225,0.45)";
-  const ground = palette.ground || "#0d1b1c";
-  ctx.fillStyle = ground;
-  ctx.fillRect(0, 0, W, H);
-  ctx.lineCap = "round";
-  ctx.lineJoin = "round";
+// The letterbox mapping lived inline in renderPlotMap until the replay path needed it too: a
+// stroke replayed on screen must land on the SAME pixels as the static render, and two copies of
+// this arithmetic would eventually disagree. Extracted, one truth. Returns the normalized→canvas
+// transforms (tx, ty), the letterboxed sheet size and offset (sw, sh, ox, oy), and the sheet's
+// visible rect already clamped to the canvas — the same rect renderPlotMap publishes as the
+// measurement content rect.
+export function sheetTransform(plot, W, H, opts = {}) {
   const aspect = opts.aspect || (plot.meta && plot.meta.aspect) || 0.75;
   let sw = W, sh = W * aspect;
   if (sh > H) { sh = H; sw = H / aspect; }
@@ -290,6 +289,20 @@ export function renderPlotMap(ctx, plot, W, H, palette = {}, opts = {}) {
   const ccx = (view ? view.cx : 0.5) * sw, ccy = (view ? view.cy : 0.5) * sh;
   const tx = (x) => ox + (x * sw - ccx) * zoom + sw / 2;
   const ty = (y) => oy + (y * sh - ccy) * zoom + sh / 2;
+  const vx0 = Math.max(0, tx(0)), vy0 = Math.max(0, ty(0));
+  const vx1 = Math.min(W, tx(1)), vy1 = Math.min(H, ty(1));
+  return { tx, ty, sw, sh, ox, oy, rect: { x: vx0, y: vy0, w: Math.max(1, vx1 - vx0), h: Math.max(1, vy1 - vy0) } };
+}
+
+export function renderPlotMap(ctx, plot, W, H, palette = {}, opts = {}) {
+  const ink = palette.ink || "#e8e6e1";
+  const support = palette.support || "rgba(232,230,225,0.45)";
+  const ground = palette.ground || "#0d1b1c";
+  ctx.fillStyle = ground;
+  ctx.fillRect(0, 0, W, H);
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  const { tx, ty, sw, rect } = sheetTransform(plot, W, H, opts);
   for (const layer of plot.layers) {
     ctx.strokeStyle = layer.tone === "support" ? support : ink;
     ctx.lineWidth = Math.max(0.5, layer.weight * (sw / 900));
@@ -303,9 +316,7 @@ export function renderPlotMap(ctx, plot, W, H, palette = {}, opts = {}) {
     }
     ctx.stroke();
   }
-  const vx0 = Math.max(0, tx(0)), vy0 = Math.max(0, ty(0));
-  const vx1 = Math.min(W, tx(1)), vy1 = Math.min(H, ty(1));
-  return { x: vx0, y: vy0, w: Math.max(1, vx1 - vx0), h: Math.max(1, vy1 - vy0) };
+  return rect;
 }
 
 // ── Plotter-grade SVG ────────────────────────────────────────────────────────
@@ -323,13 +334,15 @@ export function renderPlotMap(ctx, plot, W, H, palette = {}, opts = {}) {
 // plotter driver, or an editor can address, reorder, or drop individual strokes.
 const NOMINAL_PEN_MM = 0.3;
 
-function penIndexFor(layer) {
+// Both helpers are exported so plot-replay.js runs playback in the SAME pen order and pass count
+// the SVG declares — one pen model, two consumers, no copy to drift.
+export function penIndexFor(layer) {
   // Three pens is what most plotter setups actually keep loaded: a fine support pen, the drawing
   // pen, and a heavy pen for frames and emphasis.
   if (layer.tone === "support") return 0;
   return (layer.weight || 1) >= 1.2 ? 2 : 1;
 }
-function passesFor(layer) {
+export function passesFor(layer) {
   const w = layer.weight || 1;
   return w >= 1.4 ? 3 : w >= 0.9 ? 2 : 1;
 }

@@ -1106,6 +1106,26 @@ body.world-3 .bar .rt{color:#cdd6cf}
 .rail-group .at-group{margin-top:.7rem}
 .rail-about{margin-top:1rem}
 .rail-about p{font-family:var(--body);font-size:.9rem;line-height:1.55;color:var(--muted)}
+/* ── The shelf: pinned-creation strip. Quiet, user-owned; thumbs are recipes, not trophies. ── */
+.studio-shelf{padding:.65rem .8rem .8rem;margin-top:1rem}
+.studio-shelf .shelf-head{margin:0 0 .5rem}
+.shelf-strip{display:flex;gap:.5rem;overflow-x:auto;padding:.15rem 0 .35rem;min-height:1rem;
+  scrollbar-width:thin}
+.shelf-pin{position:relative;flex:0 0 auto;width:74px;border:1px solid var(--hairline);
+  border-radius:6px;background:rgba(255,255,255,.55);padding:4px 4px 3px;cursor:pointer;
+  display:flex;flex-direction:column;gap:3px;align-items:stretch}
+.shelf-pin:hover{border-color:var(--ember)}
+.shelf-pin img,.shelf-pin canvas{width:100%;height:52px;object-fit:cover;border-radius:3px;
+  background:#0d1b1c;display:block}
+.shelf-pin .shelf-pin-title{font-family:var(--mono);font-size:.5rem;letter-spacing:.02em;
+  color:var(--prussian);line-height:1.25;max-height:2.5em;overflow:hidden;text-align:left;
+  word-break:break-word}
+.shelf-pin .shelf-pin-x{position:absolute;top:-6px;right:-6px;width:16px;height:16px;
+  border-radius:50%;border:1px solid var(--hairline);background:var(--void-opaque);
+  color:var(--prussian);font-size:.6rem;line-height:1;display:none;align-items:center;
+  justify-content:center;cursor:pointer;padding:0}
+.shelf-pin:hover .shelf-pin-x,.shelf-pin:focus-within .shelf-pin-x{display:flex}
+.shelf-pin .shelf-pin-x:hover{color:var(--bone);border-color:var(--ember)}
 .rail-about em{color:var(--ember);font-style:italic}
 .src-hint{font-family:var(--mono);font-size:.56rem;letter-spacing:.03em;
   color:var(--prussian);margin:.7rem 0 0;line-height:1.6}

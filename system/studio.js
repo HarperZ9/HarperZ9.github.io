@@ -127,6 +127,29 @@ let _plateIndex = null;        // atlas.world.json scenes, fetched once for the 
 const _plotSnapshot = document.createElement("canvas");
 let _plotSnapshotOk = false;
 
+// Sketch source: freehand drawing as a first-class sheet (system/sketch.js). The sketch object
+// deliberately SURVIVES source switches — draw, hop to the pen surface, come back, keep drawing.
+let _sketchMod = null;
+const loadSketch = lazyLoader(() => import("./sketch.js"), m => { _sketchMod = m; });
+let _sketch = null;
+let _sketchRegister = "drawn";
+let _sketchGuide = "none";
+let _lastSketchSheet = null;   // last built sheet — the pen surface's "Sketch" material
+
+// Replay theatre (system/plot-replay.js): any sheet watched stroke-by-stroke in pen order.
+let _replayMod = null;
+const loadReplay = lazyLoader(() => import("./plot-replay.js"), m => { _replayMod = m; });
+let _replay = null;            // { stepper, raf } while playing; null when idle
+
+// The shelf (system/studio-shelf.js): pinned recipes, user-owned memory, quiet by design.
+let _shelfMod = null, _shelf = null;
+const loadShelf = lazyLoader(() => import("./studio-shelf.js"), m => { _shelfMod = m; });
+
+// Voxel op log: meta.edits is a COUNT, which is receipt enough for the readout but not enough to
+// REPRODUCE a build. The shelf needs the ops themselves, so every rotation and hand edit made
+// through the UI is logged here and replayed on restore. A rebuild resets the log by construction.
+let _voxelOps = [];
+
 // Voxels source: seeded voxel scenes (system/voxel-forge.js) drawn isometrically. Still frames.
 let _voxelForge = null;
 const loadVoxelForge = lazyLoader(() => import("./voxel-forge.js"), m => { _voxelForge = m; });
@@ -495,6 +518,7 @@ const SOURCES = {
   sound:     { block: "src-sound",     mode: "generate" },
   plotmaps:  { block: "src-plotmaps",  mode: "generate" },
   voxels:    { block: "src-voxels",    mode: "generate" },
+  sketch:    { block: "src-sketch",    mode: "generate" },
 };
 
 // ── The poster workshop (lazy). Mounted once on first entry; the panel owns
@@ -662,6 +686,16 @@ function setSource(next) {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
       drawVoxelScene();
     }).catch(err => { say("model", "The voxel forge failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
+  // Sketch: freehand drawing. The sketch object persists across switches, so returning shows the
+  // drawing exactly as it was left. plot-maps loads alongside for the renderer and exports.
+  if (next === "sketch") {
+    Promise.all([loadSketch(), loadPlotMaps(), loadPlotCompose()]).then(() => {
+      if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
+      if (!_sketch) _sketch = _sketchMod.createSketch();
+      window.__studioSketch = _sketch;   // inspection hook, same register as __studioMediaAdapters
+      drawSketch(true);
+    }).catch(err => { say("model", "The sketch engine failed to load: " + (err && err.message ? err.message : String(err))); });
   }
   // Spatial: mount a GL canvas (same swap discipline as fractal3d), then let the
   // module fetch + receipt-check the world package and start the hybrid world
@@ -844,6 +878,7 @@ function acquirePlotField(then) {
 
 function drawPlotMap() {
   if (!_plotMaps || activeSource !== "plotmaps") return;
+  stopReplay();   // a rebuilt sheet invalidates any running replay
   leave3D();
   const c = $("studio-canvas");
   sizeCanvas(c);
@@ -860,6 +895,16 @@ function drawPlotMap() {
     if (!_voxelForge) { loadVoxelForge().then(drawPlotMap).catch(() => {}); return; }
     const scene = _lastVoxelScene || _voxelForge.buildVoxelScene(seed, { study: _voxelStudy });
     plot = _plotBridge.voxelSheet(scene, { density });
+  } else if (_plotMaterial === "sketchsheet") {
+    // The drawing crosses as geometry too. The pen-surface register chip re-marks it when set
+    // explicitly; "auto" keeps the register the sketch was drawn in.
+    if (!_sketch || _sketch.isEmpty()) {
+      if (!_lastSketchSheet) { say("model", "No sketch yet — draw one in the Sketch source first."); return; }
+      plot = _lastSketchSheet;
+    } else {
+      plot = _sketch.toSheet({ register: _plotRegister !== "auto" ? _plotRegister : _sketchRegister });
+      _lastSketchSheet = plot;
+    }
   } else if (_plotMaterial !== "field") {
     // Tone-field materials: plate, picture, canvas. First call may need an async decode; it
     // re-enters here when the field is cached.
@@ -1120,6 +1165,7 @@ function repaintVoxelScene(announce) {
 // Repaint the plot sheet without rebuilding — the pure-zoom path.
 function repaintPlotMap() {
   if (!_plotMaps || !_lastPlot || activeSource !== "plotmaps") return;
+  stopReplay();   // zooming mid-replay would draw two truths on one canvas
   const c = $("studio-canvas");
   const ctx = c.getContext("2d", { willReadFrequently: true });
   if (!ctx) return;
@@ -1146,6 +1192,7 @@ function drawVoxelScene() {
     res: resEl ? parseInt(resEl.value, 10) : 48,
     tune: readVoxelTune(),
   });
+  _voxelOps = [];   // a rebuild starts a fresh op log: the recipe is seed + what happens next
   repaintVoxelScene(true);
 }
 function initVoxelControls() {
@@ -1183,6 +1230,7 @@ function initVoxelControls() {
   const turn = (dir) => {
     if (!_lastVoxelScene || !_voxelForge) return;
     _lastVoxelScene = _voxelForge.rotateScene(_lastVoxelScene, dir);
+    _voxelOps.push({ op: "turn", dir });
     repaintVoxelScene(false);
   };
   const tl = $("voxel-turn-l"), tr = $("voxel-turn-r");
@@ -1247,6 +1295,7 @@ function initVoxelControls() {
       const hit = pickAt(e);
       if (!hit) return;
       if (_voxelForge.applyVoxelEdit(_lastVoxelScene, hit.cellIndex, hit.faceId, _voxelMode)) {
+        _voxelOps.push({ op: "edit", cellIndex: hit.cellIndex, faceId: hit.faceId, mode: _voxelMode });
         repaintVoxelScene(false);
       }
     });
@@ -1311,10 +1360,531 @@ function initVoxelControls() {
   });
 }
 
+// ── Sketch: draw + controls ──────────────────────────────────────────────────
+// The pointer is the instrument. Strokes land in sheet space through the same letterbox mapping
+// the renderer uses; the symmetry expands them live while the pen is down; the ink SETTLES into
+// its mark register on pen-up (the jitter of a register belongs to a finished stroke, not to a
+// stroke mid-gesture). The sketch object persists across source switches by design.
+function sketchLetterbox(c) {
+  // Sketch sheets are square (aspect 1) at zoom 1, so the mapping is the minimal letterbox.
+  const side = Math.min(c.width, c.height);
+  return { side, ox: (c.width - side) / 2, oy: (c.height - side) / 2 };
+}
+function drawSketch(announce) {
+  if (!_sketch || !_plotMaps || activeSource !== "sketch") return;
+  leave3D();
+  const c = $("studio-canvas");
+  sizeCanvas(c);
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return;
+  const sheet = _sketch.toSheet({ register: _sketchRegister });
+  _lastSketchSheet = sheet;
+  // Guides render UNDER the drawing, support-toned, and stay out of the sheet itself.
+  const guides = _sketchGuide === "none" ? [] : _sketch.guideLayers(_sketchGuide);
+  const display = { layers: guides.concat(sheet.layers), meta: sheet.meta };
+  const rect = _plotMaps.renderPlotMap(ctx, display, c.width, c.height, {});
+  if (rect) window.__studioContentRect = { ...rect, source: "plotmaps" };
+  const readout = $("sketch-readout");
+  const sym = sheet.meta.symmetry || { mode: "none", k: 1 };
+  if (readout) readout.textContent =
+    `${sheet.meta.strokes.toLocaleString()} strokes · ${sheet.meta.points.toLocaleString()} points`
+    + (sym.mode !== "none" ? ` · ${sym.mode} ×${sym.k}` : "")
+    + ` · hash ${sheet.meta.geometryHash}`;
+  if (announce) {
+    const obs = perceive(c);
+    say("model",
+      _sketch.isEmpty()
+        ? `A blank sheet, waiting. Draw with the pointer; the symmetry expands every stroke live, `
+          + `and the ${_sketchRegister} register settles the ink when the pen lifts.`
+        : `Your drawing, ${sheet.meta.strokes.toLocaleString()} strokes in the ${_sketchRegister} register`
+          + (sym.mode !== "none" ? ` under ${sym.mode} ×${sym.k} symmetry` : "")
+          + `. Geometry hash ${sheet.meta.geometryHash} — the receipt that this is exactly your drawing. `
+          + `Fingerprint ${obs.phash}.`);
+  }
+  startMeterLoop();
+}
+function initSketchControls() {
+  // Same event root as the voxel editor: the canvas's parent, so a swapped canvas node (the
+  // fractal3d GL dance) never orphans the handlers.
+  const sc = $("studio-canvas");
+  const stage = (sc && sc.parentElement) || document;
+  let drawing = false;
+  let livePts = null;      // the in-progress stroke, raw
+  let settled = null;      // ImageData of the sheet at pen-down, restored under live feedback
+  const toSheetXY = (e) => {
+    const c = $("studio-canvas");
+    const r = c.getBoundingClientRect();
+    const bx = (e.clientX - r.left) * (c.width / Math.max(1, r.width));
+    const by = (e.clientY - r.top) * (c.height / Math.max(1, r.height));
+    const { side, ox, oy } = sketchLetterbox(c);
+    return [(bx - ox) / side, (by - oy) / side];
+  };
+  const liveDraw = () => {
+    if (!livePts || livePts.length < 2) return;
+    const c = $("studio-canvas");
+    const ctx = c.getContext("2d", { willReadFrequently: true });
+    if (settled) ctx.putImageData(settled, 0, 0);
+    const { side, ox, oy } = sketchLetterbox(c);
+    ctx.strokeStyle = "#e8e6e1";
+    ctx.lineWidth = Math.max(0.6, side / 900);
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
+    const copies = _sketch.expandStroke(livePts);
+    ctx.beginPath();
+    for (const line of copies) {
+      for (let i = 0; i < line.length; i++) {
+        const X = ox + line[i][0] * side, Y = oy + line[i][1] * side;
+        if (i === 0) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+      }
+    }
+    ctx.stroke();
+  };
+  stage.addEventListener("pointerdown", (e) => {
+    if (activeSource !== "sketch" || !_sketch) return;
+    if (!e.target.closest("#studio-canvas")) return;
+    e.preventDefault();
+    try { e.target.setPointerCapture(e.pointerId); } catch (_) {}
+    const c = $("studio-canvas");
+    const ctx = c.getContext("2d", { willReadFrequently: true });
+    settled = ctx ? ctx.getImageData(0, 0, c.width, c.height) : null;
+    const [x, y] = toSheetXY(e);
+    _sketch.beginStroke(x, y);
+    livePts = [[x, y]];
+    drawing = true;
+  });
+  stage.addEventListener("pointermove", (e) => {
+    if (!drawing || activeSource !== "sketch" || !_sketch) return;
+    const [x, y] = toSheetXY(e);
+    _sketch.extendStroke(x, y);
+    livePts.push([x, y]);
+    liveDraw();
+  });
+  const penUp = () => {
+    if (!drawing) return;
+    drawing = false; livePts = null; settled = null;
+    if (_sketch) _sketch.endStroke();
+    drawSketch(false);
+  };
+  stage.addEventListener("pointerup", penUp);
+  stage.addEventListener("pointercancel", penUp);
+  // A release outside the stage (drag off-window, alt-tab, focus steal) must still lift the pen:
+  // an open stroke silently swallows every later hover move into one monster gesture. Seen live —
+  // a 639-point phantom stroke committed by the NEXT pen-down. Window-level release + visibility
+  // loss both commit whatever is open.
+  window.addEventListener("pointerup", penUp);
+  window.addEventListener("blur", penUp);
+  document.addEventListener("visibilitychange", () => { if (document.hidden) penUp(); });
+  document.querySelectorAll("[data-sketch-sym]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      document.querySelectorAll("[data-sketch-sym]").forEach(b => b.classList.toggle("active", b === chip));
+      if (_sketch) {
+        const k = parseInt(($("sketch-k") || {}).value, 10) || 6;
+        _sketch.setSymmetry(chip.dataset.sketchSym, k);
+        drawSketch(false);
+      }
+    });
+  });
+  const kEl = $("sketch-k");
+  if (kEl) {
+    kEl.addEventListener("input", () => { const out = $("sketch-k-val"); if (out) out.textContent = kEl.value; });
+    kEl.addEventListener("change", () => {
+      if (!_sketch) return;
+      const mode = (document.querySelector("[data-sketch-sym].active") || {}).dataset;
+      _sketch.setSymmetry(mode ? mode.sketchSym : "none", parseInt(kEl.value, 10));
+      drawSketch(false);
+    });
+  }
+  document.querySelectorAll("[data-sketch-guide]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _sketchGuide = chip.dataset.sketchGuide;
+      document.querySelectorAll("[data-sketch-guide]").forEach(b => b.classList.toggle("active", b === chip));
+      drawSketch(false);
+    });
+  });
+  document.querySelectorAll("[data-sketch-register]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _sketchRegister = chip.dataset.sketchRegister;
+      document.querySelectorAll("[data-sketch-register]").forEach(b => b.classList.toggle("active", b === chip));
+      drawSketch(false);
+    });
+  });
+  const undo = $("sketch-undo");
+  if (undo) undo.addEventListener("click", () => { if (_sketch) { _sketch.undo(); drawSketch(false); } });
+  const clear = $("sketch-clear");
+  if (clear) clear.addEventListener("click", () => { if (_sketch) { _sketch.clear(); drawSketch(true); } });
+  const svgBtn = $("sketch-svg");
+  if (svgBtn) svgBtn.addEventListener("click", () => {
+    if (!_lastSketchSheet || !_plotMaps) return;
+    const svg = _plotMaps.plotMapSVG(_lastSketchSheet);
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+    a.download = `sketch-${_lastSketchSheet.meta.geometryHash}.svg`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+  });
+  // The crossover: the drawing onto the pen surface as its own material.
+  const toPlot = $("sketch-plot");
+  if (toPlot) toPlot.addEventListener("click", () => {
+    if (!_sketch || _sketch.isEmpty()) { say("model", "Nothing to send yet — draw something first."); return; }
+    _plotMaterial = "sketchsheet";
+    document.querySelectorAll("[data-plot-material]").forEach(b =>
+      b.classList.toggle("active", b.dataset.plotMaterial === "sketchsheet"));
+    syncPlotMaterialUI();
+    const tab = document.querySelector('#studio-source button[data-source="plotmaps"]');
+    if (tab) tab.click();
+  });
+  const pin = $("sketch-pin");
+  if (pin) pin.addEventListener("click", () => pinCurrent("sketch"));
+}
+
+// ── Replay theatre: any sheet watched as a plotter would run it ─────────────
+// The stream module orders the strokes pen by pen; this loop spends a point budget per frame so
+// playback speed is uniform in INK, not in strokes. The replay draws each pass the pen model
+// declares, which is TRUER to the physical plot than the one-pass static render.
+function stopReplay() {
+  if (!_replay) return;
+  if (_replay.raf) cancelAnimationFrame(_replay.raf);
+  _replay = null;
+  const btn = $("plot-play");
+  if (btn) btn.textContent = "Watch";
+}
+function replayGround(ctx, c) {
+  ctx.fillStyle = "#0d1b1c";
+  ctx.fillRect(0, 0, c.width, c.height);
+}
+function replayDrawBatch(ctx, T, batch) {
+  for (const seg of batch) {
+    ctx.strokeStyle = seg.tone === "support" ? "rgba(232,230,225,0.45)" : "#e8e6e1";
+    ctx.lineWidth = Math.max(0.5, seg.weight * (T.sw / 900));
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
+    ctx.beginPath();
+    const line = seg.line;
+    for (let i = seg.from; i <= seg.to; i++) {
+      const X = T.tx(line[i][0]), Y = T.ty(line[i][1]);
+      if (i === seg.from) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+    }
+    ctx.stroke();
+  }
+}
+function startReplay() {
+  if (!_lastPlot || !_replayMod || !_plotMaps) return;
+  stopReplay();
+  const c = $("studio-canvas");
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return;
+  const stepper = _replayMod.createReplay(_lastPlot);
+  const T = _plotMaps.sheetTransform(_lastPlot, c.width, c.height, { view: _stillView.plotmaps });
+  replayGround(ctx, c);
+  _replay = { stepper, raf: 0 };
+  const btn = $("plot-play");
+  if (btn) btn.textContent = "Pause";
+  const note = $("plot-pen-note");
+  const scrub = $("plot-scrub");
+  const tick = () => {
+    if (!_replay || _replay.stepper !== stepper) return;
+    // Base rate tuned to the WATCHING, not the finishing: ~70 points per frame puts a dense
+    // sheet at half a minute and a sparse one at ten seconds, which is the meditative range —
+    // the first cut at 260 finished a 42k-point sheet in under two seconds, a blink, not a plot.
+    const speed = parseFloat(($("plot-speed") || {}).value) || 1;
+    const r = stepper.step(Math.max(8, Math.round(70 * speed)));
+    replayDrawBatch(ctx, T, r.batch);
+    if (r.penChanged != null && note) {
+      const names = _replayMod.PEN_NAMES || [];
+      note.textContent = `pen change — ${names[r.penChanged] || "pen " + r.penChanged} down`;
+    }
+    if (scrub) scrub.value = String(Math.round(r.progress * 1000));
+    if (r.done) {
+      if (note) note.textContent = `sheet complete — drawn as the plotter would run it`;
+      stopReplay();
+      return;
+    }
+    _replay.raf = requestAnimationFrame(tick);
+  };
+  _replay.raf = requestAnimationFrame(tick);
+}
+function initReplayControls() {
+  const btn = $("plot-play");
+  if (btn) btn.addEventListener("click", () => {
+    if (_replay) { stopReplay(); repaintPlotMap(); return; }
+    if (!_lastPlot) { say("model", "Draw a sheet first, then watch it."); return; }
+    loadReplay().then(startReplay).catch(err => say("model", "The replay engine failed to load: " + err.message));
+  });
+  const scrub = $("plot-scrub");
+  if (scrub) scrub.addEventListener("input", () => {
+    if (!_lastPlot || !_replayMod || !_plotMaps || activeSource !== "plotmaps") return;
+    stopReplay();
+    const c = $("studio-canvas");
+    const ctx = c.getContext("2d", { willReadFrequently: true });
+    if (!ctx) return;
+    const target = parseInt(scrub.value, 10) / 1000;
+    const stepper = _replayMod.createReplay(_lastPlot);
+    const T = _plotMaps.sheetTransform(_lastPlot, c.width, c.height, { view: _stillView.plotmaps });
+    replayGround(ctx, c);
+    // Scrubbing is an instant re-run to the target: the stepper is stepped synchronously and
+    // every batch drawn, so the canvas holds exactly the ink laid down by that much progress.
+    let guard = 4000;
+    while (guard-- > 0) {
+      const r = stepper.step(20000);
+      replayDrawBatch(ctx, T, r.batch);
+      if (r.done || r.progress >= target) break;
+    }
+  });
+  const gcodeBtn = $("plot-gcode");
+  if (gcodeBtn) gcodeBtn.addEventListener("click", () => {
+    if (!_lastPlot) { say("model", "Draw a sheet first."); return; }
+    loadReplay().then(() => {
+      const g = _replayMod.sheetGcode(_lastPlot, { widthMm: 210 });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([g], { type: "text/plain" }));
+      a.download = `plot-${_lastPlot.meta.study || "sheet"}-${_lastPlot.meta.seed || "live"}.gcode`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+      say("model", "G-code exported: pen-ordered, with an M0 pause at every pen change so you can swap pens at the machine.");
+    }).catch(err => say("model", "G-code export failed: " + err.message));
+  });
+}
+
+// ── The shelf: pin, restore, carry ──────────────────────────────────────────
+// Pins are RECIPES: seed + controls (+ raw strokes for a sketch, + the op log for a voxel build),
+// enough to reproduce the creation exactly. Thumbs are only a memory aid; the recipe is the work.
+function thumbFromCanvas() {
+  const c = $("studio-canvas");
+  if (!c || c.width < 9) return null;
+  const t = document.createElement("canvas");
+  t.width = 96; t.height = 72;
+  const tc = t.getContext("2d");
+  tc.fillStyle = "#0d1b1c"; tc.fillRect(0, 0, 96, 72);
+  const k = Math.min(96 / c.width, 72 / c.height);
+  const w = c.width * k, h = c.height * k;
+  try { tc.drawImage(c, (96 - w) / 2, (72 - h) / 2, w, h); } catch (_) { return null; }
+  try { return t.toDataURL("image/jpeg", 0.62); } catch (_) { return null; }
+}
+function currentPlotRecipe() {
+  const meta = _lastPlot ? _lastPlot.meta : {};
+  const rec = {
+    source: "plotmaps", material: _plotMaterial,
+    study: _plotStudy, method: _plotMethod, register: _plotRegister, blend: _plotBlend,
+    seed: (($("plot-seed") || {}).value || "aurora").trim(),
+    density: parseFloat(($("plot-density") || {}).value) || 1,
+    levels: parseInt(($("plot-levels") || {}).value, 10) || 14,
+    plateId: (($("plot-plate") || {}).value) || null,
+    voxel: null, sketch: null,
+  };
+  if (_plotMaterial === "voxels" && _lastVoxelScene) {
+    rec.voxel = {
+      study: _lastVoxelScene.meta.study, seed: _lastVoxelScene.meta.seed,
+      tune: _lastVoxelScene.meta.tune || null, ops: _voxelOps.slice(),
+    };
+  }
+  if (_plotMaterial === "sketchsheet" && _sketch) rec.sketch = _sketch.serialize();
+  return { kind: meta.kind || "field", rec };
+}
+function pinCurrent(what) {
+  const finish = () => {
+    let kind, rec, title;
+    if (what === "voxel") {
+      if (!_lastVoxelScene) { say("model", "Build something first."); return; }
+      kind = "voxel";
+      rec = {
+        source: "voxels", material: null, study: null, method: null, register: null, blend: null,
+        seed: _lastVoxelScene.meta.seed, density: null, levels: null, plateId: null,
+        voxel: {
+          study: _lastVoxelScene.meta.study, seed: _lastVoxelScene.meta.seed,
+          res: _lastVoxelScene.meta.res ? _lastVoxelScene.meta.res[0] : 48,
+          tune: _lastVoxelScene.meta.tune || null, ops: _voxelOps.slice(),
+        },
+        sketch: null,
+      };
+      title = `${_lastVoxelScene.meta.study} · ${_lastVoxelScene.meta.seed}`
+        + (_voxelOps.length ? ` +${_voxelOps.length}` : "");
+    } else if (what === "sketch") {
+      if (!_sketch || _sketch.isEmpty()) { say("model", "Draw something first."); return; }
+      kind = "sketch";
+      rec = {
+        source: "sketch", material: null, study: null, method: null,
+        register: _sketchRegister, blend: null, seed: null, density: null, levels: null,
+        plateId: null, voxel: null, sketch: _sketch.serialize(),
+      };
+      const sheet = _lastSketchSheet || _sketch.toSheet({ register: _sketchRegister });
+      title = `sketch · ${sheet.meta.geometryHash}`;
+    } else {
+      if (!_lastPlot) { say("model", "Draw a sheet first."); return; }
+      const cur = currentPlotRecipe();
+      kind = cur.kind; rec = cur.rec;
+      title = `${_lastPlot.meta.label || _lastPlot.meta.study || "sheet"} · ${rec.seed}`;
+    }
+    const res = _shelf.add({ kind, title, recipe: rec, thumb: thumbFromCanvas(), stamp: new Date().toISOString() });
+    const hint = $("shelf-hint");
+    if (!res.ok) {
+      if (hint) hint.textContent = "not pinned: " + res.why;
+      say("model", "The shelf refused the pin: " + res.why + ".");
+      return;
+    }
+    renderShelfStrip();
+    if (hint) hint.textContent = "pinned — the recipe reproduces it exactly, in this browser or from an exported file";
+  };
+  if (_shelf) { finish(); return; }
+  loadShelf().then(() => {
+    if (!_shelf) {
+      let storage = null;
+      try { storage = window.localStorage; storage.setItem("studio.shelf.probe", "1"); storage.removeItem("studio.shelf.probe"); } catch (_) { storage = null; }
+      if (!storage) { say("model", "The shelf needs browser storage, which is unavailable here — pins would not survive. Export/import still works once storage exists."); return; }
+      _shelf = _shelfMod.createShelf({ storage });
+    }
+    finish();
+  }).catch(err => say("model", "The shelf failed to load: " + err.message));
+}
+function restorePin(pin) {
+  const r = pin.recipe;
+  if (pin.kind === "voxel" && r.voxel) {
+    const seedIn = $("voxel-seed");
+    if (seedIn) seedIn.value = r.voxel.seed;
+    _voxelStudy = r.voxel.study;
+    document.querySelectorAll("[data-voxel-study]").forEach(b =>
+      b.classList.toggle("active", b.dataset.voxelStudy === r.voxel.study));
+    setSource("voxels");
+    // The rebuild is async behind the module load; apply the op log once the scene exists.
+    const t0 = performance.now();
+    const applyOps = () => {
+      if (_lastVoxelScene && _lastVoxelScene.meta.seed === r.voxel.seed && _voxelForge) {
+        for (const op of (r.voxel.ops || [])) {
+          if (op.op === "turn") { _lastVoxelScene = _voxelForge.rotateScene(_lastVoxelScene, op.dir); _voxelOps.push(op); }
+          else if (op.op === "edit" && _voxelForge.applyVoxelEdit(_lastVoxelScene, op.cellIndex, op.faceId, op.mode)) _voxelOps.push(op);
+        }
+        repaintVoxelScene(true);
+        return;
+      }
+      if (performance.now() - t0 < 4000) requestAnimationFrame(applyOps);
+    };
+    requestAnimationFrame(applyOps);
+    return;
+  }
+  if (pin.kind === "sketch" && r.sketch) {
+    Promise.all([loadSketch(), loadPlotMaps()]).then(() => {
+      if (!_sketch) _sketch = _sketchMod.createSketch();
+      if (!_sketch.restore(r.sketch)) { say("model", "That pin's sketch format is newer than this page understands."); return; }
+      if (r.register) {
+        _sketchRegister = r.register;
+        document.querySelectorAll("[data-sketch-register]").forEach(b =>
+          b.classList.toggle("active", b.dataset.sketchRegister === r.register));
+      }
+      setSource("sketch");
+    }).catch(() => {});
+    return;
+  }
+  // Sheet kinds: set the pen-surface state, then let its own load path draw.
+  const seedIn = $("plot-seed");
+  if (seedIn && r.seed) seedIn.value = r.seed;
+  _plotMaterial = r.material || "field";
+  _plotStudy = r.study || "auto";
+  _plotMethod = r.method || "auto";
+  _plotRegister = r.register || "auto";
+  _plotBlend = r.blend || "alone";
+  _plotField = null; _plotFieldInfo = null;
+  const dEl = $("plot-density");
+  if (dEl && r.density != null) { dEl.value = String(r.density); const v = $("plot-density-val"); if (v) v.textContent = Number(r.density).toFixed(2); }
+  const lEl = $("plot-levels");
+  if (lEl && r.levels != null) { lEl.value = String(r.levels); const v = $("plot-levels-val"); if (v) v.textContent = String(r.levels); }
+  for (const [attr, val] of [["plot-material", _plotMaterial], ["plot-study", _plotStudy], ["plot-method", _plotMethod], ["plot-register", _plotRegister], ["plot-blend", _plotBlend]]) {
+    document.querySelectorAll(`[data-${attr}]`).forEach(b =>
+      b.classList.toggle("active", b.dataset[attr.replace(/-([a-z])/g, (_, ch) => ch.toUpperCase())] === val));
+  }
+  syncPlotMaterialUI();
+  if (r.material === "plate" && r.plateId) {
+    fillPlatePicker();
+    const t0 = performance.now();
+    const setPlate = () => {
+      const sel = $("plot-plate");
+      if (sel) { sel.value = r.plateId; if (sel.value === r.plateId) return; }
+      if (performance.now() - t0 < 4000) requestAnimationFrame(setPlate);
+    };
+    setPlate();
+  }
+  if ((r.material === "picture" || r.material === "canvas") && !_plotField) {
+    say("model", "That pin used a " + (r.material === "picture" ? "picture" : "captured frame") + " that lives only in the moment it was made — choose it again and the rest of the recipe applies as pinned.");
+  }
+  if (r.material === "sketchsheet" && r.sketch) {
+    Promise.all([loadSketch()]).then(() => {
+      if (!_sketch) _sketch = _sketchMod.createSketch();
+      _sketch.restore(r.sketch);
+      setSource("plotmaps");
+    }).catch(() => {});
+    return;
+  }
+  setSource("plotmaps");
+}
+function renderShelfStrip() {
+  const strip = $("shelf-strip");
+  if (!strip || !_shelf) return;
+  strip.innerHTML = "";
+  const pins = _shelf.list();
+  const hint = $("shelf-hint");
+  if (!pins.length && hint) hint.textContent = "nothing pinned yet; Pin lives beside each source's exports";
+  for (const pin of pins) {
+    const el = document.createElement("button");
+    el.type = "button"; el.className = "shelf-pin"; el.setAttribute("role", "listitem");
+    el.title = `${pin.title} — pinned ${String(pin.stamp).slice(0, 10)}; click to reproduce`;
+    if (pin.thumb) {
+      const img = document.createElement("img");
+      img.src = pin.thumb; img.alt = "";
+      el.appendChild(img);
+    }
+    const t = document.createElement("span");
+    t.className = "shelf-pin-title"; t.textContent = pin.title;
+    el.appendChild(t);
+    const x = document.createElement("span");
+    x.className = "shelf-pin-x"; x.textContent = "×"; x.setAttribute("aria-label", "Remove this pin");
+    x.addEventListener("click", (e) => { e.stopPropagation(); _shelf.remove(pin.id); renderShelfStrip(); });
+    el.appendChild(x);
+    el.addEventListener("click", () => restorePin(pin));
+    strip.appendChild(el);
+  }
+}
+function initShelf() {
+  loadShelf().then(() => {
+    let storage = null;
+    try { storage = window.localStorage; storage.setItem("studio.shelf.probe", "1"); storage.removeItem("studio.shelf.probe"); } catch (_) { storage = null; }
+    if (storage) { _shelf = _shelfMod.createShelf({ storage }); renderShelfStrip(); }
+  }).catch(() => {});
+  const pinPlot = $("plot-pin");
+  if (pinPlot) pinPlot.addEventListener("click", () => pinCurrent("plot"));
+  const pinVox = $("voxel-pin");
+  if (pinVox) pinVox.addEventListener("click", () => pinCurrent("voxel"));
+  const exp = $("shelf-export");
+  if (exp) exp.addEventListener("click", () => {
+    if (!_shelf || !_shelf.list().length) { say("model", "The shelf is empty — nothing to export."); return; }
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([_shelf.exportJSON()], { type: "application/json" }));
+    a.download = "studio-shelf.json";
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+  });
+  const impBtn = $("shelf-import");
+  const impFile = $("shelf-import-file");
+  if (impBtn && impFile) {
+    impBtn.addEventListener("click", () => impFile.click());
+    impFile.addEventListener("change", () => {
+      const f = impFile.files && impFile.files[0];
+      if (!f || !_shelf) return;
+      f.text().then(txt => {
+        const res = _shelf.importJSON(txt, { merge: true });
+        const hint = $("shelf-hint");
+        if (res.ok) {
+          renderShelfStrip();
+          if (hint) hint.textContent = `imported ${res.added} pin${res.added === 1 ? "" : "s"}` + (res.skipped ? `, ${res.skipped} already here` : "");
+        } else if (hint) hint.textContent = "import refused: " + res.why;
+      });
+      impFile.value = "";
+    });
+  }
+}
+
 initNeuralControls();
 initSoundControls();
 initPlotMapControls();
 initVoxelControls();
+initSketchControls();
+initReplayControls();
+initShelf();
 
 // Sync roving tabindex whenever setSource changes the active tab.
 function syncTabindex(activeKey) {

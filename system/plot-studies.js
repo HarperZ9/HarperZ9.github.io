@@ -22,7 +22,9 @@
 // so the composer can stack them and the existing SVG exporter can pen-separate them unchanged.
 
 import { jitter, multiPass, stipple, hatchFollows, dashed, spiralFill, clipLines } from "./plot-marks.js";
-import { elevationField } from "./plot-maps.js";
+import { elevationField, fieldToLuma } from "./plot-maps.js";
+import { contourFromLuma } from "./plotter.js";
+import { toneField, edgeTangentFlow, evenStreamlines } from "./plot-image.js";
 
 const TAU = 6.283185307;
 const M = 0.04;   // sheet margin, shared with plot-maps' frame
@@ -474,6 +476,153 @@ export function stitch(seedStr, rng, opts = {}) {
   };
 }
 
+// ── tanaka: illuminated contours ────────────────────────────────────────────
+// Tanaka's relief method (1950): light every contour from a fixed NW sun and let LINE WEIGHT
+// carry the shading. A contour segment whose slope falls toward the light draws thin, one whose
+// slope falls away draws heavy, and where the slope runs parallel to the rays the line drops out
+// entirely. Two pens, one rule, no hatch — the technical-sheet register at its most economical,
+// and the relief must read from weight alone or the study has failed.
+export function tanaka(seedStr, rng, opts = {}) {
+  const N = opts.res || 150;
+  const { field, seaLevel } = elevationField(seedStr, N, N, { octaves: 6, ridged: rng() < 0.35 });
+  // Many levels through the ONE tested iso-line tracer. contourFromLuma ignores its threshold
+  // option (plot-maps has been feeding it one for nothing) and always marches five fixed
+  // thresholds, so each call here windows a narrow elevation band onto those five: `bands` calls
+  // times five thresholds is 5*bands honest levels, and marching squares stays where it is tested.
+  const bands = Math.round(opts.bands || 5);
+  const lo = seaLevel + 0.02, hi = 0.975;
+  const gain = (0.7 * bands) / Math.max(0.15, hi - lo);
+  const contours = [];
+  for (let b = 0; b < bands; b++) {
+    const Lc = lo + ((b + 0.5) / bands) * (hi - lo);
+    contours.push(...contourFromLuma(fieldToLuma(field, N, N, (v) => 0.5 + (v - Lc) * gain), N, N, 4));
+  }
+  // The sun. NW is the cartographic convention (and why a map's relief inverts upside down);
+  // screen y grows DOWN, so up-left is (-1,-1) and its angle is -3pi/4. A small wobble keeps
+  // sheets from being clones without ever moving the sun off its quadrant.
+  const sunA = -2.356 + (rng() - 0.5) * 0.5;
+  const lx = Math.cos(sunA), ly = Math.sin(sunA);
+  const at = (x, y) => field[Math.max(0, Math.min(N - 1, y)) * N + Math.max(0, Math.min(N - 1, x))];
+  const facing = (mx, my) => {
+    const xi = Math.round(mx), yi = Math.round(my);
+    const gx = at(xi + 1, yi) - at(xi - 1, yi), gy = at(xi, yi + 1) - at(xi, yi - 1);
+    const m = Math.hypot(gx, gy);
+    return m < 1e-9 ? 0 : (-gx * lx - gy * ly) / m;   // downhill direction · toward the sun
+  };
+  const gapT = 0.2 + rng() * 0.1;   // the drop-out sector where a line tapers to nothing
+  const lit = [], shade = [];
+  for (const poly of contours) {
+    let run = null, cls = 0;
+    const flush = () => { if (run && run.length > 1) (cls > 0 ? lit : shade).push(run); run = null; };
+    for (let i = 1; i < poly.length; i++) {
+      const f = facing((poly[i - 1][0] + poly[i][0]) / 2, (poly[i - 1][1] + poly[i][1]) / 2);
+      const c = f > gapT ? 1 : f < -gapT ? -1 : 0;
+      if (c !== cls) { flush(); cls = c; }
+      if (c !== 0) {
+        if (!run) run = [[poly[i - 1][0] / N, poly[i - 1][1] / N]];
+        run.push([poly[i][0] / N, poly[i][1] / N]);
+      }
+    }
+    flush();
+  }
+  return {
+    layers: [
+      // Two weights, two pens: 0.38 stays on the drawing pen, 1.25 crosses the exporter's 1.2
+      // heavy-pen threshold, so the light/shadow split survives into the physical plot.
+      { name: "lit", polylines: clip(lit), weight: 0.38, tone: "ink" },
+      { name: "shade", polylines: clip(shade), weight: 1.25, tone: "ink" },
+    ],
+    meta: { levels: bands * 5, seaLevel: +seaLevel.toFixed(4), gapT: +gapT.toFixed(3) },
+  };
+}
+
+// ── relief: the engraved landform ───────────────────────────────────────────
+// Jobard & Lefer's even streamline placement pointed at terrain instead of a photograph: the
+// elevation field becomes a tone field (valleys dark, ridges near paper), the structure tensor of
+// that tone gives the flow, and the strokes follow the landform with separation carrying the tone
+// — tight in the valleys, open on the crests. Burin logic applied to ground, and the same
+// primitives plot-image-studies runs on a picture, reused rather than rebuilt.
+export function relief(seedStr, rng, opts = {}) {
+  const N = opts.res || 180;
+  const { field, seaLevel } = elevationField(seedStr, N, N, { octaves: 5, ridged: rng() < 0.5 });
+  // The tone floor stays above 0 so the deepest valley still reads as LINE at sepMin, not a
+  // flood; the ceiling stays under 1 but under inkMin at the very top, so crests go bare paper.
+  const g = 1.1 + rng() * 0.7;
+  const tone = toneField(fieldToLuma(field, N, N, (v) => 0.10 + 0.82 * Math.pow(v, g)), N, N, 4);
+  const etf = edgeTangentFlow(tone, { sigma: 3 });
+  const sepMin = 1.4 + rng() * 0.5, sepMax = 7.5 + rng() * 3;
+  const flow = evenStreamlines(tone, etf, { sepMin, sepMax, maxSteps: 340, maxLines: 6000, inkMin: 0.09 });
+  // Second burin pass ACROSS the flow, gated to the deepest tone: the crosshatch that gives the
+  // valley floors their weight (engrave's move in plot-image-studies, same inkMin gate).
+  const cross = evenStreamlines(tone, etf, {
+    offset: Math.PI / 2, inkMin: 0.62, sepMin: sepMin + 0.7, sepMax: 6, maxSteps: 150, maxLines: 2200,
+  });
+  const norm = (ls) => ls.map((l) => l.map(([x, y]) => [x / (N - 1), y / (N - 1)]));
+  const layers = [{ name: "flow", polylines: clip(norm(flow)), weight: 0.5, tone: "ink" }];
+  if (cross.length) layers.push({ name: "cross", polylines: clip(norm(cross)), weight: 0.42, tone: "ink" });
+  return { layers, meta: { seaLevel: +seaLevel.toFixed(4), strokes: flow.length + cross.length } };
+}
+
+// ── zigzag: op-art textile interference ─────────────────────────────────────
+// The Riley move, and the textile shelf's: a strict zigzag repeat that a slow modulation pushes
+// into interference. Every strand is the same triangle wave; a low-frequency seeded field bends
+// each strand's RATE and AMPLITUDE slightly, so strands drift in and out of phase with their
+// neighbours and the flat weave breaks into standing waves that exist in no single strand.
+// NO jitter anywhere: the op-art edge is a hard edge, and on this sheet the drawn-line wobble
+// every other study wants would read as a defect. Exactness is the register.
+export function zigzag(seedStr, rng, opts = {}) {
+  const rows = Math.round(opts.rows || (140 + Math.floor(rng() * 70)));
+  const zigs = 22 + Math.floor(rng() * 16);
+  const G = 40;
+  const { field: rf } = elevationField(String(seedStr) + "~rate", G, G, { octaves: 2, baseFreq: 2.1 });
+  const { field: af } = elevationField(String(seedStr) + "~amp", G, G, { octaves: 2, baseFreq: 1.7 });
+  // Bilinear over the lattice: nearest sampling would step the phase RATE cell to cell, and a
+  // stepped rate integrates into visible kinks on what must be a machined line.
+  const smooth = (f) => (x, y) => {
+    const gx = Math.max(0, Math.min(G - 1.001, x * (G - 1))), gy = Math.max(0, Math.min(G - 1.001, y * (G - 1)));
+    const x0 = gx | 0, y0 = gy | 0, fx = gx - x0, fy = gy - y0;
+    const a = f[y0 * G + x0], b = f[y0 * G + x0 + 1], c = f[(y0 + 1) * G + x0], d = f[(y0 + 1) * G + x0 + 1];
+    return a + (b - a) * fx + (c + (d - c) * fx - (a + (b - a) * fx)) * fy;
+  };
+  const rate = smooth(rf), ampF = smooth(af);
+  const span = 1 - 2 * M, pitch = span / rows;
+  const A0 = pitch * (0.8 + rng() * 0.5);
+  const pdepth = 0.9 + rng() * 0.7;   // capped so the zig rate never stalls or reverses
+  const amp = (x, y) => A0 * (0.55 + 0.9 * ampF(x, y));
+  // Triangle wave, phase in CYCLES: tri(m) = -1, tri(m + 0.5) = +1, straight legs between.
+  const tri = (p) => { const c = p - Math.floor(p); return c < 0.5 ? 4 * c - 1 : 3 - 4 * c; };
+  const samples = zigs * 7;
+  // The strand band is inset by the largest possible amplitude: a strand that crossed the margin
+  // would be clipped into half-zigs, and a frayed edge is exactly what this panel must not have.
+  const maxA = A0 * 1.45, y0lo = M + maxA, yspan = span - 2 * maxA;
+  const lines = [];
+  for (let j = 0; j < rows; j++) {
+    const y0 = y0lo + (j + 0.5) * (yspan / rows);
+    let phase = 0.5;   // every strand starts ON its crest: the aligned repeat is the ground state
+    let xp = M;
+    const line = [[M, y0 + amp(M, y0)]];
+    for (let s = 1; s <= samples; s++) {
+      const x = M + (s / samples) * span;
+      const dp = (zigs / samples) * (1 + pdepth * (rate(x, y0) - 0.5));
+      const p2 = phase + dp;
+      // Emit a vertex AT every crest the step crossed. Sampling alone clips the corners by up to
+      // a quarter of the amplitude wherever the modulated crest lands between samples, and a
+      // randomly blunted zig reads as jitter — the one thing this study must never show.
+      for (let k = Math.floor(phase / 0.5) + 1; k * 0.5 < p2; k++) {
+        const xc = xp + ((k * 0.5 - phase) / dp) * (x - xp);
+        line.push([xc, y0 + amp(xc, y0) * (k % 2 ? 1 : -1)]);
+      }
+      line.push([x, y0 + amp(x, y0) * tri(p2)]);
+      phase = p2; xp = x;
+    }
+    lines.push(line);
+  }
+  return {
+    layers: [{ name: "weave", polylines: clip(lines), weight: 0.55, tone: "ink" }],
+    meta: { rows, zigs, strokes: lines.length },
+  };
+}
+
 export const STUDY_BUILDERS = Object.freeze({
   basin:    { label: "River basin",  build: basin },
   moire:    { label: "Moire",        build: moire },
@@ -485,4 +634,7 @@ export const STUDY_BUILDERS = Object.freeze({
   scanline: { label: "Scanline",     build: scanline },
   horizon:  { label: "Horizon",      build: horizon },
   stitch:   { label: "Stitch",       build: stitch },
+  tanaka:   { label: "Tanaka",       build: tanaka },
+  relief:   { label: "Relief",       build: relief },
+  zigzag:   { label: "Zigzag",       build: zigzag },
 });
