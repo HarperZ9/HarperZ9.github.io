@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Flywheel, a companion for every model">
-<meta property="og:description" content="Route to any model, verify locally, keep a receipt you can re-run. It does what every router does, plus the one thing none of them do: it checks the work.">
+<meta property="og:description" content="Route to any model, verify locally, keep a receipt you can re-run. The authority that accepts an answer is an external check, never a model grading its own work.">
 <meta property="og:url" content="https://harperz9.github.io/flywheel.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/flywheel.png">
 <meta property="og:image:alt" content="Flywheel card: route and verify for any model, then keep a re-checkable receipt.">
@@ -55,7 +55,7 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">flywheel</span> &middot; route + verify</span></div>
   <div class="mid">
     <h1>A companion for <span class="g">every model.</span></h1>
-    <p class="lede">Route to any model, local or hosted, online or offline. <span translate="no">Flywheel</span> answers what it can verify, escalates only the hard part, and hands you a receipt you can re-run yourself. It does what every router and runner does, plus the one thing none of them do: it checks the work.</p>
+    <p class="lede">Route to any model, local or hosted, online or offline. <span translate="no">Flywheel</span> answers what it can verify, escalates only the hard part, and hands you a receipt you can re-run yourself.</p>
     <p class="close">Every number on this page is a receipt file you can re-check offline.</p>
   </div>
   <div class="seal"><span translate="no">flywheel</span> &middot; public &middot; FSL-1.1-MIT &middot; <span translate="no">python scripts/run_harness_cli.py app --port 8799</span></div>
@@ -65,8 +65,8 @@
 
 <!-- THE WEDGE -->
 <section class="mv" id="why" aria-labelledby="why-h">
-  <h2 id="why-h" class="reveal">Routers route. Runners run. None of them check the work.</h2>
-  <p class="body-text reveal">Not one router, local runner, or agent harness checks whether the answer is right and hands you proof. <span translate="no">Flywheel</span> does all of their jobs on one surface, and adds the verify layer none of them have. The authority that accepts an answer is an external check, never a model grading its own work.</p>
+  <h2 id="why-h" class="reveal">Routing is not the hard part. Checking the work is.</h2>
+  <p class="body-text reveal"><span translate="no">Flywheel</span> routes, runs, and verifies on one surface. Every accepted answer has passed a check the model does not control, and carries the record of that check with it. The authority that accepts an answer is an external verifier, never a model grading its own work.</p>
   <p class="pull reveal">Bring your keys, or bring your weights.</p>
 </section>
 
@@ -141,7 +141,7 @@
     </div>
     <div class="index-row" role="listitem" style="--i:1">
       <span class="index-term">A record you can keep</span>
-      <span class="index-gloss">Every accepted answer carries a receipt: the inputs, the check that passed, and hashes anyone can re-run offline. This is the layer no other router has.</span>
+      <span class="index-gloss">Every accepted answer carries a receipt: the inputs, the check that passed, and hashes anyone can re-run offline.</span>
     </div>
     <div class="index-row" role="listitem" style="--i:2">
       <span class="index-term">Answer local, escalate the hard part</span>
@@ -238,6 +238,13 @@
   <p class="body-text reveal"><span translate="no">Flywheel</span> is the front surface of a verified-inference flywheel: propose with a cheap local model, dispose with an external check, keep the re-checkable receipt, and let what passes accumulate. The model is the replaceable half; the verification harness is the durable half.</p>
   <p class="body-text reveal">The same discipline, an external check that can fail plus a receipt anyone can re-run, scales from routing a single call to composing a whole workshop of tools. This is the largest of them, and the front door to all of them.</p>
   <p class="seal-line reveal"><span class="g">Run it</span>: <span translate="no">github.com/HarperZ9/flywheel</span> &middot; <a href="overview.html">the engine room</a> &middot; <a href="index.html">the workshop</a></p>
+</section>
+
+<!-- STATE OF THE WORK -->
+<section class="mv" id="state" aria-labelledby="state-h">
+  <h2 id="state-h" class="reveal">State of the work, August 2026.</h2>
+  <p class="body-text reveal">The engine, the receipt discipline, the witness graph, the infrastructure controls, and the verify layer are all on the public default branch. Merged as of 2026-08-03: capability-typed shell admission with Unicode-spoof neutralization, a domain oracle registry with three live verifier domains (code via pytest, mathematics via the Lean kernel, and a measurement gate for empirical claims) and an honest UNVERIFIABLE verdict elsewhere, a model-neutral router with quota failover, a subscription-auth adapter, and session tooling for past verified runs.</p>
+  <p class="body-text reveal">No capability uplift is claimed for the trained local model. The engine's first preregistered confirmatory run completed 2026-08-04: zero verdict disagreements across 2,646 certificate bodies in nine model contexts, significant held-out selection uplift at every model size on the solvable task family, nulls kept, analysis anchored in a signed ledger anyone can verify offline.</p>
 </section>
 
 </main>
