@@ -57,6 +57,7 @@
         <button type="button" role="tab" data-source="poster"    aria-selected="false" aria-controls="src-poster"    tabindex="-1">Poster</button>
         <button type="button" role="tab" data-source="neural"    aria-selected="false" aria-controls="src-neural"    tabindex="-1">Living neural</button>
         <button type="button" role="tab" data-source="sound"     aria-selected="false" aria-controls="src-sound"     tabindex="-1">Seed sound</button>
+        <button type="button" role="tab" data-source="plotmaps"  aria-selected="false" aria-controls="src-plotmaps"  tabindex="-1">Plot maps</button>
       </div>
       <div class="source-group" role="presentation">
         <span class="source-group-label" aria-hidden="true">Bring</span>
@@ -111,6 +112,44 @@
           <button type="button" class="btn ghost" id="sound-stop" aria-label="Stop playback">stop</button>
         </div>
         <p class="src-hint" id="sound-readout">press play; the audio channels below read what the seed plays</p>
+      </section>
+
+      <!-- Plot maps: generative pen-plotter cartography. A seeded elevation field composed as a
+           map sheet (contours, coast, water hatching, ridgelines, graticule) through the same
+           pipeline the image plotter uses, exported as a plotter-grade SVG. -->
+      <section class="src-block" id="src-plotmaps" role="tabpanel" aria-label="Plot map controls" hidden>
+        <p class="transform-note">Algorithmic cartography, drawn as a plotter would: single-stroke
+        polylines from a seeded elevation field. Same seed, same sheet, re-checkable. The SVG
+        export is plotter-grade: real units, ordered paths, one layer per pen pass.</p>
+        <div class="at-group">
+          <span class="at-glab">Study <span class="hint">the sheet's composition grammar</span></span>
+          <div class="at-chips" role="group" aria-label="Plot map study">
+            <button type="button" class="chip active" data-plot-study="topo">Topographic</button>
+            <button type="button" class="chip" data-plot-study="flow">Flow field</button>
+            <button type="button" class="chip" data-plot-study="ridge">Ridgelines</button>
+            <button type="button" class="chip" data-plot-study="chart">Chart</button>
+          </div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Seed <span class="hint">names the terrain</span></span>
+          <div class="at-actions">
+            <input type="text" class="at-seed" id="plot-seed" value="aurora" maxlength="48" aria-label="Plot map seed">
+            <button type="button" class="btn ghost" id="plot-reseed" aria-label="New random seed">reseed</button>
+          </div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Contour levels <span class="hint">(<span id="plot-levels-val">14</span>)</span></span>
+          <input type="range" class="at-slider" id="plot-levels" min="4" max="28" step="1" value="14" aria-label="Contour levels">
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Line density <span class="hint">(<span id="plot-density-val">1.00</span>)</span></span>
+          <input type="range" class="at-slider" id="plot-density" min="0.3" max="2.5" step="0.05" value="1" aria-label="Line density">
+        </div>
+        <div class="at-actions">
+          <button type="button" class="btn" id="plot-draw" aria-label="Draw the map sheet">Draw</button>
+          <button type="button" class="btn ghost" id="plot-svg" aria-label="Export the sheet as a plotter-grade SVG">SVG sheet</button>
+        </div>
+        <p class="src-hint" id="plot-readout">the sheet's stroke count and sea level report here after a draw</p>
       </section>
       <section class="src-block" id="src-atelier" role="tabpanel" aria-label="Atelier controls">
         <div class="atelier studio-atelier" id="atelier">

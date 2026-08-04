@@ -98,6 +98,14 @@ let _sound = null;
 const loadSound = lazyLoader(() => import("./studio-sound.js"), m => { _sound = m; });
 let _soundSeed = "aurora";
 
+// Plot maps source: generative pen-plotter cartography (system/plot-maps.js), a seeded
+// elevation field composed as a map sheet and drawn as single-stroke polylines. Still frames:
+// nothing animates, so reduced motion needs no special handling here.
+let _plotMaps = null;
+const loadPlotMaps = lazyLoader(() => import("./plot-maps.js"), m => { _plotMaps = m; });
+let _plotStudy = "topo";
+let _lastPlot = null;   // the last built sheet, for the SVG export
+
 // Spatial source: the authored world package + hybrid renderer. The module
 // re-checks the package's byte receipts before it draws, clamps the splat
 // block to the device tier's budget, and holds a still frame under reduced
@@ -414,6 +422,7 @@ const SOURCES = {
   poster:    { block: "src-poster",    mode: "generate" },
   neural:    { block: "src-neural",    mode: "generate" },
   sound:     { block: "src-sound",     mode: "generate" },
+  plotmaps:  { block: "src-plotmaps",  mode: "generate" },
 };
 
 // ── The poster workshop (lazy). Mounted once on first entry; the panel owns
@@ -554,6 +563,13 @@ function setSource(next) {
       startMeterLoop();
     }).catch(err => { say("model", "The sound instrument failed to load: " + (err && err.message ? err.message : String(err))); });
   }
+  // Plot maps: load the cartography module and draw the current sheet. Still frames only.
+  if (next === "plotmaps") {
+    loadPlotMaps().then(() => {
+      if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
+      drawPlotMap();
+    }).catch(err => { say("model", "The plot-map engine failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
   // Spatial: mount a GL canvas (same swap discipline as fractal3d), then let the
   // module fetch + receipt-check the world package and start the hybrid world
   // under the device tier's splat budget. A DRIFT receipt refuses to render.
@@ -673,8 +689,76 @@ function initSoundControls() {
   if (play) play.addEventListener("click", () => { if (_sound && _sound.playSound) { _sound.playSound({ seed: _soundSeed }); syncSoundReadout(); } });
   if (stop) stop.addEventListener("click", () => { if (_sound) _sound.pauseSound(); });
 }
+// ── Plot maps: draw + controls ───────────────────────────────────────────────
+// Still-frame source: build the sheet from the seed, ink it onto the shared canvas, perceive
+// once. The SVG export re-serializes THE SAME built sheet (_lastPlot), never a rebuild, so the
+// file matches the pixels on screen by construction.
+function drawPlotMap() {
+  if (!_plotMaps || activeSource !== "plotmaps") return;
+  leave3D();
+  const c = $("studio-canvas");
+  sizeCanvas(c);
+  const seedIn = $("plot-seed");
+  const seed = ((seedIn && seedIn.value.trim()) || "aurora").slice(0, 48);
+  const levelsEl = $("plot-levels"), densityEl = $("plot-density");
+  const plot = _plotMaps.buildPlotMap(seed, {
+    study: _plotStudy,
+    levels: levelsEl ? parseInt(levelsEl.value, 10) : 14,
+    density: densityEl ? parseFloat(densityEl.value) : 1,
+    res: currentQuality().maxBacking >= 3200 ? 320 : 220,
+  });
+  _lastPlot = plot;
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return;
+  _plotMaps.renderPlotMap(ctx, plot, c.width, c.height);
+  const readout = $("plot-readout");
+  if (readout) readout.textContent =
+    `${plot.meta.strokes} strokes · ${plot.meta.points.toLocaleString()} points · sea level ${plot.meta.seaLevel}`;
+  const obs = perceive(c);
+  const label = (_plotMaps.PLOT_STUDIES[plot.meta.study] || {}).label || plot.meta.study;
+  say("model",
+    `A ${label} sheet from seed "${seed}": ${plot.meta.strokes} single-stroke paths over a seeded elevation field, `
+    + `sea level at ${plot.meta.seaLevel}. Fingerprint ${obs.phash}. Same seed, same sheet — `
+    + `the SVG export carries real units and one layer per pen pass.`);
+  startMeterLoop();
+}
+function initPlotMapControls() {
+  document.querySelectorAll("[data-plot-study]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _plotStudy = chip.dataset.plotStudy;
+      document.querySelectorAll("[data-plot-study]").forEach(b => b.classList.toggle("active", b === chip));
+      drawPlotMap();
+    });
+  });
+  const draw = $("plot-draw");
+  if (draw) draw.addEventListener("click", drawPlotMap);
+  const reseed = $("plot-reseed");
+  if (reseed) reseed.addEventListener("click", () => {
+    const seedIn = $("plot-seed");
+    if (seedIn) seedIn.value = "pm-" + Math.random().toString(36).slice(2, 8);
+    drawPlotMap();
+  });
+  for (const [id, valId, fmt] of [["plot-levels", "plot-levels-val", v => String(Math.round(v))], ["plot-density", "plot-density-val", v => Number(v).toFixed(2)]]) {
+    const el = $(id);
+    if (!el) continue;
+    el.addEventListener("input", () => { const out = $(valId); if (out) out.textContent = fmt(el.value); });
+    el.addEventListener("change", drawPlotMap);
+  }
+  const svgBtn = $("plot-svg");
+  if (svgBtn) svgBtn.addEventListener("click", () => {
+    if (!_lastPlot || !_plotMaps) return;
+    const svg = _plotMaps.plotMapSVG(_lastPlot);
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+    a.download = `plot-map-${_lastPlot.meta.study}-${_lastPlot.meta.seed}.svg`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+  });
+}
+
 initNeuralControls();
 initSoundControls();
+initPlotMapControls();
 
 // Sync roving tabindex whenever setSource changes the active tab.
 function syncTabindex(activeKey) {
