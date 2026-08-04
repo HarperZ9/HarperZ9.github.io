@@ -177,13 +177,14 @@
 <!-- RUN IT NOW -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Run it now.</h2>
-  <p class="body-text reveal">New in July 2026: <span translate="no">Flywheel</span> installs as a Windows app. The desktop and the engine arrive together, no Python, no setup. Every tool the engine mounts renders as a fillable form, the first run picks a model that can actually answer, and provider keys live in the OS keychain, shown as presence only, never a value.</p>
-  <div class="run reveal"><span class="c">download</span> <a href="https://github.com/HarperZ9/flywheel-desktop/releases/download/v0.2.2/Flywheel-Setup-0.2.2-x64.exe">Flywheel-Setup-0.2.2-x64.exe</a> &middot; Windows x64 &middot; 20 MB &middot; <a href="https://github.com/HarperZ9/flywheel-desktop/releases/tag/v0.2.2">release notes</a></div>
-  <p class="body-text reveal">The installer is built from the version tag by a public pipeline, and its hash is published beside it. Verify the copy you downloaded:</p>
-  <div class="run reveal"><span class="c">powershell</span> Get-FileHash Flywheel-Setup-0.2.2-x64.exe -Algorithm SHA256</div>
+  <p class="body-text reveal"><span translate="no">Flywheel</span> installs two ways, both one line. On any platform with Python: <span translate="no">pip install flywheel-verify</span>, then <span translate="no">flywheel up</span> (the PyPI name is <span translate="no">flywheel-verify</span>; the bare name belongs to an unrelated package; the installed command is <span translate="no">flywheel</span>). On Windows, the desktop installer bundles the engine, no Python, no setup: every tool the engine mounts renders as a fillable form, the first run picks a model that can actually answer, and provider keys live in the OS keychain, shown as presence only, never a value.</p>
+  <div class="run reveal"><span class="c">pip</span> pip install flywheel-verify <span class="c">&middot;</span> flywheel up</div>
+  <div class="run reveal"><span class="c">download</span> <a href="https://github.com/HarperZ9/flywheel/releases/download/v0.3.3/Flywheel-Setup-0.3.3-x64.exe">Flywheel-Setup-0.3.3-x64.exe</a> &middot; Windows x64 &middot; 21 MB &middot; <a href="https://github.com/HarperZ9/flywheel/releases/tag/v0.3.3">release notes</a></div>
+  <p class="body-text reveal">The installer ships from the platform repository's version tag with its hash published beside it. Verify the copy you downloaded:</p>
+  <div class="run reveal"><span class="c">powershell</span> Get-FileHash Flywheel-Setup-0.3.3-x64.exe -Algorithm SHA256</div>
   <dl class="kv2 reveal">
-    <dt>Version</dt><dd><span translate="no">v0.2.2</span>, July 2026</dd>
-    <dt>SHA-256</dt><dd><span translate="no" style="font-family:var(--mono);font-size:.8rem;word-break:break-all">62d7201ad9613dd175595e6bf1e7600634025d94f543435d7939a49650bbee90</span></dd>
+    <dt>Version</dt><dd><span translate="no">v0.3.3</span>, August 2026</dd>
+    <dt>SHA-256</dt><dd><span translate="no" style="font-family:var(--mono);font-size:.8rem;word-break:break-all">4e9af4d38f9c292c1c1edc1aa0e8b83a1b55dc5a11d87008cee200443ad12486</span></dd>
   </dl>
   <div class="null reveal">
     <h3>The honest caveat.</h3>
@@ -221,10 +222,11 @@
 <section class="mv" id="spec" aria-labelledby="spec-h">
   <h2 id="spec-h" class="reveal">Spec, at a glance.</h2>
   <dl class="kv2 reveal">
-    <dt>Desktop app</dt><dd>Windows x64 installer, engine bundled, no Python required. <span translate="no">v0.2.2</span>.</dd>
+    <dt>Install</dt><dd><span translate="no">pip install flywheel-verify</span>, then <span translate="no">flywheel up</span>.</dd>
+    <dt>Desktop app</dt><dd>Windows x64 installer, engine bundled, no Python required. <span translate="no">v0.3.3</span>, released from the platform repository.</dd>
     <dt>Dependencies</dt><dd>None. Python standard library only.</dd>
     <dt>Network</dt><dd>Your choice per call: route online with hosted-provider keys, or run fully offline against local weights.</dd>
-    <dt>Entry point</dt><dd><span translate="no">python scripts/run_harness_cli.py app --port 8799</span></dd>
+    <dt>Entry point</dt><dd><span translate="no">flywheel up</span>, or <span translate="no">python scripts/run_harness_cli.py app --port 8799</span> from a clone.</dd>
     <dt>Surface</dt><dd>One origin, one browser page, same-origin JSON routes.</dd>
     <dt>Local model</dt><dd>Flywheel-Local-Coder-14B, ~9 GB 4-bit, GPU optional.</dd>
     <dt>Accept authority</dt><dd>An external check. No learned model on the accept path.</dd>

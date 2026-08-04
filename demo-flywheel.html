@@ -66,8 +66,12 @@ STEP 4 -- the chain refuses too
 
   <section>
     <h2>Run it yourself</h2>
-    <p class="lead">From a clone of <a href="https://github.com/HarperZ9/flywheel" translate="no">github.com/HarperZ9/flywheel</a>:</p>
-    <pre class="transcript">git clone https://github.com/HarperZ9/flywheel
+    <p class="lead">One line from PyPI, or from a clone of <a href="https://github.com/HarperZ9/flywheel" translate="no">github.com/HarperZ9/flywheel</a>:</p>
+    <pre class="transcript">pip install flywheel-verify                         # the PyPI name; the command is `flywheel`
+flywheel up                                         # the surface above
+
+# or, from a clone:
+git clone https://github.com/HarperZ9/flywheel
 cd flywheel
 pip install -e .
 python scripts/run_harness_cli.py app --port 8799   # the surface above
