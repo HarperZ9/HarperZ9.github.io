@@ -185,6 +185,7 @@ uniform float uWaterFlow;
 uniform float uGlow;
 uniform float uAtmosphereDensity;
 uniform float uBokehScale;
+uniform float uMaxPoint;
 uniform vec4 uKindVisibilityA;
 uniform vec4 uKindVisibilityB;
 varying vec3 vColor;
@@ -234,7 +235,13 @@ void main(){
  else if(kind==6)shape=1.20+.55*uAtmosphereDensity;
  else if(kind==7)shape=.90+.12*uGlow;
  float luminousSize=1.0+uGlow*(kind==1?.22:(kind==7?.18:.08));
- gl_PointSize=clamp(iSize*920.0*shape*luminousSize/max(-cam.z,.2),1.0,42.0);
+ // Energy-preserving clamp: a sprite forced up to the 1px floor covers more area than it earned,
+ // so its alpha comes down by the same area ratio and distant material fades instead of popping.
+ // The ceiling is the driver's own ALIASED_POINT_SIZE_RANGE, capped to what this lane wants.
+ float wantSize=iSize*920.0*shape*luminousSize/max(-cam.z,.2);
+ float sizePx=clamp(wantSize,1.0,uMaxPoint);
+ float areaRatio=min(1.0,(wantSize/sizePx)*(wantSize/sizePx));
+ gl_PointSize=sizePx;
  float pulse=.88+.12*sin(uTime*(kind==7?1.05:(kind==3?.42:.62))+phase);
  float colorGain=1.0+uGlow*(kind==7?1.85:(kind==1?1.55:(kind==5?1.05:.72)))*pulse;
  vColor=iColor*colorGain;
@@ -242,7 +249,7 @@ void main(){
  float bokehPresence=kind==5?mix(.18,2.55,smoothstep(.20,2.80,uBokehScale)):1.0;
  float beamPresence=kind==1?(1.0+.62*uBeamFlow):1.0;
  float glowPresence=1.0+uGlow*(kind==7?.95:(kind==1?.72:(kind==5?.48:.30)));
- vAlpha=clamp(iAlpha*pulse*density*bokehPresence*beamPresence*glowPresence*kindVisibility(kind),0.0,.96);
+ vAlpha=clamp(iAlpha*pulse*density*bokehPresence*beamPresence*glowPresence*kindVisibility(kind),0.0,.96)*areaRatio;
  vKind=iKind;
 }`;
 
