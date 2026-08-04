@@ -85,6 +85,9 @@ export function renderSceneVolumetric(scene = {}, camera = {}, opts = {}) {
   const t = scene.t || 0;
   const rotation = scene.rotation || "all";
   const embedDist = opts.embedDist == null ? 3.0 : opts.embedDist;
+  // How the axes above 3 collapse (perspective | orthographic | stereographic). Accepted from
+  // either the scene (parity with the flat path's scene.projection) or opts; scene wins.
+  const embedMode = (scene.projection && scene.projection.mode) || scene.projectionMode || opts.projectionMode || "perspective";
   const scale = opts.scale == null ? 1.0 : opts.scale;
   const aspect = opts.aspect == null ? 1.0 : opts.aspect;
   const focal = opts.focal == null ? 2.0 : opts.focal;
@@ -101,7 +104,7 @@ export function renderSceneVolumetric(scene = {}, camera = {}, opts = {}) {
 
   // 2) embed to 3D, then normalize the embedded cloud into a unit-ish ball so framing is stable
   //    across kinds/dimensions (the camera distance then controls zoom).
-  const e3 = rot.map((v) => embedTo3D(v, embedDist));
+  const e3 = rot.map((v) => embedTo3D(v, embedDist, embedMode));
   let maxR = 0;
   for (const p of e3) { const r = Math.hypot(p[0], p[1], p[2]); if (r > maxR) maxR = r; }
   const norm = (maxR > 1e-6 ? 1 / maxR : 1) * scale;
@@ -212,7 +215,7 @@ export function renderSceneVolumetric(scene = {}, camera = {}, opts = {}) {
     points, segments, faces: tris,
     world, cam, proj, edges, faceIndices: faces,
     meta: {
-      kind, n, t, projection: "perspective3d",
+      kind, n, t, projection: embedMode + "3d",
       vertices: proj.length, edges: edges.length, faceCount: faces.length,
     },
   };
