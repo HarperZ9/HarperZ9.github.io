@@ -1621,7 +1621,10 @@ function drawNDimFrame(canvas, n, t, speed, kind, projection, rotation) {
   ctx.fillRect(0, 0, w, h);
 
   const scene = _ndim.renderSceneVolumetric(
-    { kind, n: kind === "24cell" ? 4 : n, t: t * speed, rotation },
+    // projectionMode is the chips' whole meaning: how the axes above 3 collapse. It was read
+    // into this function and then dropped before the render, so all three chips produced the
+    // same frame (2026-08-04 control sweep) — wired through now, asserted by ndim tests.
+    { kind, n: kind === "24cell" ? 4 : n, t: t * speed, rotation, projectionMode: projection },
     _ndCam,
     { aspect, scale: 1.0, focal: 2.0, paint: _ndPaint },
   );

@@ -60,6 +60,11 @@ export function nOrthoplexVertices(n) {
   return out;
 }
 export function nOrthoplexEdges(n) {
+  // The antipodal-exclusion rule is a convention for n >= 2, where +/-e_i are opposite apexes.
+  // At n = 1 the only vertex pair IS antipodal, so the rule returned an empty edge set and the
+  // 1-orthoplex rendered as nothing at all (found by the 2026-08-04 control sweep). The
+  // 1-orthoplex is the segment [-1, 1] - same object as the 1-cube - and its one edge is real.
+  if (n === 1) return [[0, 1]];
   const edges = [], count = 2 * n;
   for (let i = 0; i < count; i++) for (let j = i + 1; j < count; j++) {
     if ((i >> 1) === (j >> 1)) continue; // same axis → antipodal, no edge

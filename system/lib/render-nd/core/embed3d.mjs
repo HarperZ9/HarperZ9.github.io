@@ -16,20 +16,45 @@
 // of 2. For n <= 3 this is the identity (pad missing axes with 0). The result is a real 3D point.
 //
 // vert: a length-n array (Float64Array or plain array). dist: the nD->lower projection distance.
+// mode selects HOW the axes above 3 collapse - this is the mathematical content of the Studio's
+// projection chips, and until 2026-08-04 it never reached this function: the chips wrote state
+// that studio.js dropped before the render, so all three produced identical frames (found by the
+// control sweep; a control that changes nothing is a defect, not a subtlety).
+//   "perspective"   scale kept axes by dist/(dist - ck) per collapsed axis (the original look:
+//                   far cells shrink, near cells grow).
+//   "orthographic"  drop the higher axes entirely (f = 1): all cells the same size, the flat
+//                   engineering read of the same rotation.
+//   "stereographic" normalize the vertex onto the unit n-sphere, then project from a pole just
+//                   past +1 on each collapsed axis (f = pole/(pole - ck)): cells near the pole
+//                   bloat dramatically, the conformal "inflated" read.
 // Returns [x, y, z] (always length 3).
-export function embedTo3D(vert, dist = 3.0) {
+export function embedTo3D(vert, dist = 3.0, mode = "perspective") {
   const n = vert.length;
   if (n === 0) return [0, 0, 0];
+  let v = vert;
+  if (mode === "stereographic" && n > 3) {
+    let r = 0;
+    for (let k = 0; k < n; k++) r += (vert[k] || 0) * (vert[k] || 0);
+    r = Math.sqrt(r);
+    if (r > 1e-9) { const inv = 1 / r; v = Array.from(vert, (c) => (c || 0) * inv); }
+  }
   const coord = new Float64Array(3);
-  coord[0] = vert[0] || 0;
-  coord[1] = n > 1 ? (vert[1] || 0) : 0;
-  coord[2] = n > 2 ? (vert[2] || 0) : 0;
-  // Collapse the higher axes (index >= 3) one at a time onto the kept 3, exactly like projectTo2D
-  // but with the floor at 3 rather than 2: scale the kept axes by dist/(dist - coord[k]).
+  coord[0] = v[0] || 0;
+  coord[1] = n > 1 ? (v[1] || 0) : 0;
+  coord[2] = n > 2 ? (v[2] || 0) : 0;
+  const POLE = 1.12;   // stereographic projection point, just past the unit sphere: no singularity
   for (let k = n - 1; k >= 3; k--) {
-    const ck = vert[k] || 0;
-    const denom = dist - ck;
-    const f = Math.abs(denom) < 1e-9 ? 1.0 : dist / denom;
+    const ck = v[k] || 0;
+    let f = 1.0;
+    if (mode === "orthographic") {
+      f = 1.0;
+    } else if (mode === "stereographic") {
+      const denom = POLE - ck;
+      f = Math.abs(denom) < 1e-9 ? 1.0 : POLE / denom;
+    } else {
+      const denom = dist - ck;
+      f = Math.abs(denom) < 1e-9 ? 1.0 : dist / denom;
+    }
     coord[0] *= f;
     coord[1] *= f;
     coord[2] *= f;
