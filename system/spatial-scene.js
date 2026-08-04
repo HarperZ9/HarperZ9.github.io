@@ -20,7 +20,7 @@ import {
   resumeMotion,
 } from "./spatial-core.js";
 import {
-  BACKDROP_VS, BACKDROP_FS, VEIL_VS, VEIL_FS, POINT_VS, POINT_FS, link,
+  BACKDROP_VS, BACKDROP_FS, VEIL_VS, VEIL_FS, POINT_VS, POINT_FS, link, maxPointSize,
 } from "./spatial-shaders.js";
 import { acquireContext } from "./spatial-gl.js";
 
@@ -262,6 +262,7 @@ class SpatialScene {
     gl.uniform1f(this.loc(p, "uWater"), this.controls.water);
     gl.uniform1f(this.loc(p, "uGlow"), this.controls.glow);
     gl.uniform1f(this.loc(p, "uPixelScale"), backingHeight / 720);
+    gl.uniform1f(this.loc(p, "uMaxPoint"), maxPointSize(gl, 64));
     gl.bindBuffer(gl.ARRAY_BUFFER, this.pointBuffer);
     const stride = SPLAT_RECORD_FLOATS * 4;
     const attribs = [["iPosition", 3, 0], ["iColor", 3, 12], ["iSize", 1, 24], ["iAlpha", 1, 28], ["iKind", 1, 32], ["iSeed", 1, 36]];

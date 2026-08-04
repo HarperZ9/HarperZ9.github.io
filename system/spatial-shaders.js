@@ -75,7 +75,7 @@ attribute vec3 iPosition;
 attribute vec3 iColor;
 attribute float iSize, iAlpha, iKind, iSeed;
 uniform mat4 uView, uProj;
-uniform float uTime, uAspect, uDrift, uWater, uGlow, uPixelScale;
+uniform float uTime, uAspect, uDrift, uWater, uGlow, uPixelScale, uMaxPoint;
 varying vec3 vColor;
 varying float vAlpha, vKind;
 void main(){
@@ -99,9 +99,18 @@ void main(){
   if (iKind == 3.0) twinkle = .75 + .25 * sin(uTime * .9 + phase * 3.1);
   if (iKind == 4.0) twinkle = .70 + .30 * sin(uTime * 1.7 + phase * 2.3);
   vColor = iColor;
-  vAlpha = iAlpha * twinkle * (0.85 + uGlow * .5);
   vKind = iKind;
-  gl_PointSize = clamp(iSize * uPixelScale * (3.4 / max(0.4, -viewPos.z)), 1.0, 64.0);
+  // A point sprite cannot be drawn smaller than one pixel, so distant material gets inflated to the
+  // 1.0 floor. Left alone that hands a splat which should have covered a quarter of a pixel four
+  // times the area at unchanged peak alpha: far material reads too dense, and every splat crossing
+  // the threshold under camera motion pops. Scaling alpha by the inverse area ratio keeps the
+  // INTEGRATED energy right, so a receding splat fades out instead of clamping and shimmering.
+  // The ceiling comes from the driver's own ALIASED_POINT_SIZE_RANGE, not a guessed constant.
+  float want = iSize * uPixelScale * (3.4 / max(0.4, -viewPos.z));
+  float size = clamp(want, 1.0, uMaxPoint);
+  float areaRatio = min(1.0, (want / size) * (want / size));
+  gl_PointSize = size;
+  vAlpha = iAlpha * twinkle * (0.85 + uGlow * .5) * areaRatio;
 }
 `;
 
@@ -122,6 +131,25 @@ void main(){
   gl_FragColor = vec4(vColor * alpha, alpha);
 }
 `;
+
+// The largest point sprite this context will actually rasterize. WebGL reports the supported span
+// through ALIASED_POINT_SIZE_RANGE and implementations are free to stop well below a shader's
+// hard-coded ceiling; a program asking for 64 on a driver that caps at 32 is silently clamped, and
+// the near field quietly loses size with nothing reported. Query once per context, cache on it, and
+// fall back to the caller's ceiling if the parameter is missing or nonsense.
+const MAX_POINT = Symbol("spatialMaxPointSize");
+export function maxPointSize(gl, ceiling) {
+  if (gl[MAX_POINT] === undefined) {
+    let reported = 0;
+    try {
+      const range = gl.getParameter(gl.ALIASED_POINT_SIZE_RANGE);
+      if (range && isFinite(range[1]) && range[1] >= 1) reported = range[1];
+    } catch (_) { reported = 0; }
+    gl[MAX_POINT] = reported;
+  }
+  const driver = gl[MAX_POINT];
+  return driver > 0 ? Math.min(ceiling, driver) : ceiling;
+}
 
 export function compile(gl, type, source, label) {
   const shader = gl.createShader(type);

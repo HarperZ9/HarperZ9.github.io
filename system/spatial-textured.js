@@ -13,7 +13,7 @@ import {
 } from "./engine/world-package.js";
 import { clampCamera, sceneTime, pauseMotion, resumeMotion } from "./spatial-core.js";
 import { acquireContext } from "./spatial-gl.js";
-import { link } from "./spatial-shaders.js";
+import { link, maxPointSize } from "./spatial-shaders.js";
 import {
   CC_BACKDROP_VS, CC_BACKDROP_FS, CC_MESH_VS, CC_MESH_FS,
   CC_DEPTH_FS, CC_POINT_VS, CC_POINT_FS,
@@ -316,6 +316,7 @@ class TexturedScene {
     gl.uniform1f(this.loc(p, "uGlow"), c.glow);
     gl.uniform1f(this.loc(p, "uAtmosphereDensity"), c.atmosphereDensity);
     gl.uniform1f(this.loc(p, "uBokehScale"), c.bokehScale);
+    gl.uniform1f(this.loc(p, "uMaxPoint"), maxPointSize(gl, 42));
     gl.uniform4f(this.loc(p, "uKindVisibilityA"), 1, 1, 1, 1);
     gl.uniform4f(this.loc(p, "uKindVisibilityB"), 1, 1, 1, 1);
     gl.bindBuffer(gl.ARRAY_BUFFER, this.pointBuffer);
