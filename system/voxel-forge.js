@@ -44,10 +44,13 @@ const smin = (a, b, k) => { const h = Math.max(k - Math.abs(a - b), 0) / k; retu
 // ── Studies: each builds { vox, mat } from a seed ────────────────────────────
 // mat is a per-cell material band (Uint8Array, 0 = empty) driving palette + export colours.
 
-function buildRelic(rng, res) {
-  // 2-4 smooth-unioned cores minus 1-3 carvers: the excavated-artifact grammar.
+function buildRelic(rng, res, tune) {
+  // 2-4 smooth-unioned cores minus 1-3 carvers: the excavated-artifact grammar. `tune` lets the
+  // operator take the algorithm's own knobs (core count, carver count, weld softness); absent, the
+  // seed decides exactly as before, so existing seeds keep reproducing byte for byte.
   const cores = [];
-  const n = 2 + Math.floor(rng() * 3);
+  const n = tune && tune.a != null ? Math.round(1 + tune.a * 4) : 2 + Math.floor(rng() * 3);
+  const weld = tune && tune.c != null ? 0.05 + tune.c * 0.4 : 0.22;
   for (let i = 0; i < n; i++) {
     const kind = Math.floor(rng() * 4);
     const cx = (rng() - 0.5) * 0.8, cy = (rng() - 0.5) * 0.8, cz = (rng() - 0.5) * 0.8;
@@ -55,7 +58,7 @@ function buildRelic(rng, res) {
     cores.push({ kind, cx, cy, cz, s, r2: 0.12 + rng() * 0.2 });
   }
   const carvers = [];
-  const m = 1 + Math.floor(rng() * 3);
+  const m = tune && tune.b != null ? Math.round(tune.b * 4) : 1 + Math.floor(rng() * 3);
   for (let i = 0; i < m; i++) {
     carvers.push({ cx: (rng() - 0.5) * 1.2, cy: (rng() - 0.5) * 1.2, cz: (rng() - 0.5) * 1.2, r: 0.28 + rng() * 0.3 });
   }
@@ -68,7 +71,7 @@ function buildRelic(rng, res) {
       else if (c.kind === 1) dd = sdBox(px, py, pz, c.s * 0.8, c.s * 0.8, c.s * 0.8);
       else if (c.kind === 2) dd = sdTorus(px, py, pz, c.s * 0.8, c.r2);
       else dd = sdOcta(px, py, pz, c.s * 1.1);
-      d = smin(d, dd, 0.22);
+      d = smin(d, dd, weld);
     }
     for (const c of carvers) d = Math.max(d, -sdSphere(x - c.cx, y - c.cy, z - c.cz, c.r));
     return d;
@@ -76,15 +79,17 @@ function buildRelic(rng, res) {
   return voxelizeSdf(dist, res, 1.15);
 }
 
-function buildMonument(rng, res) {
+function buildMonument(rng, res, tune) {
   // Mirrored-x architecture: plinth, paired columns, lintel, an arch cut, stepped crown.
   // The geometry is authored y-up (the SDF idiom), but voxelizeSdf's k axis — the axis the
   // isometric painter draws as UP — is the SDF's z. The wrapper swaps the two so the monument
   // stands instead of lying on its side (the first build rendered it horizontal; the browser
   // contact sheet caught it).
-  const colX = 0.35 + rng() * 0.25, colR = 0.09 + rng() * 0.07;
-  const lintelY = 0.25 + rng() * 0.2, archR = 0.22 + rng() * 0.16;
-  const crown = 0.12 + rng() * 0.14;
+  const colX = tune && tune.a != null ? 0.2 + tune.a * 0.45 : 0.35 + rng() * 0.25;
+  const colR = 0.09 + rng() * 0.07;
+  const lintelY = 0.25 + rng() * 0.2;
+  const archR = tune && tune.b != null ? 0.1 + tune.b * 0.32 : 0.22 + rng() * 0.16;
+  const crown = tune && tune.c != null ? 0.06 + tune.c * 0.24 : 0.12 + rng() * 0.14;
   const upright = (x, y, z) => {
     const ax = Math.abs(x);
     let d = sdBox(x, y + 0.85, z, 0.95, 0.14, 0.6);                       // plinth (y = -0.85 is the ground)
@@ -99,23 +104,27 @@ function buildMonument(rng, res) {
   return voxelizeSdf(dist, res, 1.15);
 }
 
-function buildTerrain(seedStr, rng, res) {
+function buildTerrain(seedStr, rng, res, tune) {
   // The plot-maps elevation field extruded to columns: the cartography and voxel lanes share
   // one terrain truth, so a seed's map and its voxel relief agree by construction.
   const w = res, h = res;
-  const { field, seaLevel } = elevationField(seedStr, w, h, { ridged: rng() < 0.5 });
+  const { field, seaLevel } = elevationField(seedStr, w, h, {
+    ridged: tune && tune.c != null ? tune.c >= 0.5 : rng() < 0.5,
+    waterFrac: tune && tune.b != null ? 0.1 + tune.b * 0.6 : 0.3,
+  });
+  const heightScale = tune && tune.a != null ? 0.25 + tune.a * 0.6 : 0.55;
   const grid = [];
   for (let y = 0; y < h; y++) {
     const row = [];
     for (let x = 0; x < w; x++) row.push(0.12 + 0.88 * field[y * w + x]);
     grid.push(row);
   }
-  const vox = voxelizeHeightGrid(grid, Math.round(res * 0.55));
+  const vox = voxelizeHeightGrid(grid, Math.round(res * heightScale));
   vox.seaLevel = seaLevel;
   return vox;
 }
 
-function buildGrowth(rng, res) {
+function buildGrowth(rng, res, tune) {
   // Accretion: from a floor seed, each round attaches new cells to the surface with an upward
   // bias — coral logic, deterministic because the candidate scan order and rng are both fixed.
   const nx = res, ny = res, nz = res;
@@ -124,7 +133,9 @@ function buildGrowth(rng, res) {
   const set = (x, y, z) => { occ[(z * ny + y) * nx + x] = 1; };
   const c = Math.floor(res / 2);
   for (let dx = -2; dx <= 2; dx++) for (let dy = -2; dy <= 2; dy++) set(c + dx, c + dy, 0);
-  const rounds = Math.round(res * 1.4);
+  const rounds = Math.round(res * (tune && tune.a != null ? 0.6 + tune.a * 2.2 : 1.4));
+  const supportW = tune && tune.c != null ? 0.012 + tune.c * 0.05 : 0.028;
+  const upBias = tune && tune.b != null ? tune.b * 0.12 : 0.05;
   for (let r = 0; r < rounds; r++) {
     const adds = [];
     for (let z = 0; z < nz - 1; z++) {
@@ -134,7 +145,7 @@ function buildGrowth(rng, res) {
           const support = at(x - 1, y, z) + at(x + 1, y, z) + at(x, y - 1, z) + at(x, y + 1, z) + at(x, y, z - 1);
           if (!support) continue;
           // Upward-biased stochastic accretion; more support = likelier fill (smoother trunks).
-          const p = 0.028 * support + (at(x, y, z - 1) ? 0.05 : 0) + z / nz * 0.012;
+          const p = supportW * support + (at(x, y, z - 1) ? upBias : 0) + z / nz * 0.012;
           if (rng() < p) adds.push((z * ny + y) * nx + x);
         }
       }
@@ -182,19 +193,32 @@ export function seededPalette(rng) {
   ];
 }
 
+// Per-study labels for the three tuning knobs, so the UI can say what each slider means in the
+// study's own terms rather than "a / b / c".
 export const VOXEL_STUDIES = Object.freeze({
-  relic:    { label: "Relic",    build: (seed, rng, res) => buildRelic(rng, res) },
-  monument: { label: "Monument", build: (seed, rng, res) => buildMonument(rng, res) },
-  terrain:  { label: "Terrain",  build: (seed, rng, res) => buildTerrain(seed, rng, Math.min(96, res)) },
-  growth:   { label: "Growth",   build: (seed, rng, res) => buildGrowth(rng, Math.min(72, res)) },
+  relic:    { label: "Relic",    tune: ["Cores", "Carvers", "Weld"],
+              build: (seed, rng, res, tune) => buildRelic(rng, res, tune) },
+  monument: { label: "Monument", tune: ["Column spread", "Arch size", "Crown"],
+              build: (seed, rng, res, tune) => buildMonument(rng, res, tune) },
+  terrain:  { label: "Terrain",  tune: ["Height", "Water", "Ridged"],
+              build: (seed, rng, res, tune) => buildTerrain(seed, rng, Math.min(96, res), tune) },
+  growth:   { label: "Growth",   tune: ["Rounds", "Reach", "Thickness"],
+              build: (seed, rng, res, tune) => buildGrowth(rng, Math.min(72, res), tune) },
 });
 
-/** buildVoxelScene(seedStr, { study, res }) → { vox, mat, palette, meta } — the whole sheet. */
+/**
+ * buildVoxelScene(seedStr, { study, res, tune }) → { vox, mat, palette, meta } — the whole sheet.
+ * `tune` is { a, b, c } in [0,1] or null: null keeps the seed's own draws, so every seed built
+ * before tuning existed still reproduces byte for byte; a tuned build records its knobs in meta.
+ */
 export function buildVoxelScene(seedStr, opts = {}) {
   const study = VOXEL_STUDIES[opts.study] ? opts.study : "relic";
   const res = Math.max(16, Math.min(96, opts.res || 48));
+  const tune = opts.tune && (opts.tune.a != null || opts.tune.b != null || opts.tune.c != null)
+    ? { a: clamp01(opts.tune.a), b: clamp01(opts.tune.b), c: clamp01(opts.tune.c) }
+    : null;
   const rng = mulberry(hash32(String(seedStr) + ":" + study));
-  const vox = VOXEL_STUDIES[study].build(String(seedStr), rng, res);
+  const vox = VOXEL_STUDIES[study].build(String(seedStr), rng, res, tune);
   const mat = assignMaterials(vox, rng, vox.seaLevel);
   const palette = seededPalette(rng);
   return {
@@ -202,8 +226,95 @@ export function buildVoxelScene(seedStr, opts = {}) {
     meta: {
       seed: String(seedStr), study, res: [vox.nx, vox.ny, vox.nz],
       voxels: voxelCount(vox), seaLevel: vox.seaLevel == null ? null : +vox.seaLevel.toFixed(4),
+      tune, edits: 0,
     },
   };
+}
+function clamp01(v) { return v == null ? null : Math.max(0, Math.min(1, Number(v) || 0)); }
+
+// ── Rotation: quarter turns about the vertical axis ──────────────────────────
+// The painter's grammar (top/right/left faces, x+y+z depth) is fixed, so rotation happens in the
+// DATA: remap occupancy and materials k quarter-turns about z and hand the painter a grid it
+// already knows how to draw. Four turns must be the identity; a test holds that.
+export function rotateScene(scene, quarterTurns) {
+  const k = ((quarterTurns % 4) + 4) % 4;
+  if (k === 0) return scene;
+  const { vox, mat } = scene;
+  const src = { nx: vox.nx, ny: vox.ny };
+  const nx = k % 2 === 0 ? vox.nx : vox.ny;
+  const ny = k % 2 === 0 ? vox.ny : vox.nx;
+  const occ = new Uint8Array(nx * ny * vox.nz);
+  const m2 = new Uint8Array(nx * ny * vox.nz);
+  for (let z = 0; z < vox.nz; z++) {
+    for (let y = 0; y < src.ny; y++) {
+      for (let x = 0; x < src.nx; x++) {
+        const i = (z * src.ny + y) * src.nx + x;
+        if (!vox.occ[i]) continue;
+        let tx, ty;
+        if (k === 1) { tx = src.ny - 1 - y; ty = x; }
+        else if (k === 2) { tx = src.nx - 1 - x; ty = src.ny - 1 - y; }
+        else { tx = y; ty = src.nx - 1 - x; }
+        const j = (z * ny + ty) * nx + tx;
+        occ[j] = 1;
+        m2[j] = mat[i];
+      }
+    }
+  }
+  return {
+    ...scene,
+    vox: { ...vox, nx, ny, occ },
+    mat: m2,
+  };
+}
+
+// ── Manual editing ───────────────────────────────────────────────────────────
+// The pick buffer gives the pointer a voxel: each visible face is drawn flat with a colour that
+// encodes (cellIndex * 4 + faceId + 1) across RGB, no blending, no AO, so one getImageData read
+// decodes exactly which face of which cell is under the cursor.
+const FACE_IDS = { top: 0, right: 1, left: 2 };
+const FACE_DIRS = [[0, 0, 1], [1, 0, 0], [0, 1, 0]];   // outward normal per face id
+
+export function encodePick(cellIndex, faceId) {
+  const v = cellIndex * 4 + faceId + 1;
+  return [(v >> 16) & 255, (v >> 8) & 255, v & 255];
+}
+export function decodePick(r, g, b) {
+  const v = ((r << 16) | (g << 8) | b) - 1;
+  if (v < 0) return null;
+  return { cellIndex: Math.floor(v / 4), faceId: v % 4 };
+}
+
+/**
+ * applyVoxelEdit(scene, cellIndex, faceId, mode) → true if the scene changed.
+ *   build  — place a voxel against the picked face (inherits the picked cell's material)
+ *   chisel — remove the picked voxel
+ *   paint  — advance the picked voxel's material band (cycles 1..5)
+ * Edits mutate the live scene and bump meta.edits, so the readout and every export say honestly
+ * that the object is seed + N hand edits, not pure seed.
+ */
+export function applyVoxelEdit(scene, cellIndex, faceId, mode) {
+  const { vox, mat } = scene;
+  if (cellIndex < 0 || cellIndex >= vox.occ.length || !vox.occ[cellIndex]) return false;
+  if (mode === "chisel") {
+    vox.occ[cellIndex] = 0;
+    mat[cellIndex] = 0;
+  } else if (mode === "paint") {
+    mat[cellIndex] = (mat[cellIndex] % 5) + 1;
+  } else {   // build
+    const d = FACE_DIRS[faceId] || FACE_DIRS[0];
+    const x = cellIndex % vox.nx;
+    const y = Math.floor(cellIndex / vox.nx) % vox.ny;
+    const z = Math.floor(cellIndex / (vox.nx * vox.ny));
+    const tx = x + d[0], ty = y + d[1], tz = z + d[2];
+    if (tx < 0 || ty < 0 || tz < 0 || tx >= vox.nx || ty >= vox.ny || tz >= vox.nz) return false;
+    const j = (tz * vox.ny + ty) * vox.nx + tx;
+    if (vox.occ[j]) return false;
+    vox.occ[j] = 1;
+    mat[j] = mat[cellIndex] || 2;
+  }
+  scene.meta.voxels = voxelCount(vox);
+  scene.meta.edits = (scene.meta.edits || 0) + 1;
+  return true;
 }
 
 // ── Per-face ambient occlusion (0fps voxel-AO, per face instead of per vertex) ──
@@ -222,11 +333,17 @@ export function faceAO(vox, x, y, z, face) {
 }
 
 // ── Isometric painter (2D canvas, back-to-front via isoOrder) ────────────────
+// Quality pass: a soft ground shadow under the object's footprint anchors it (an object with no
+// shadow floats), and a thin dark rim on every face both reads as drawn linework and hides the
+// polygon seams between faces. opts.pickCtx, when given, receives the SAME geometry drawn flat
+// with pick-encoded colours (no shadow, no rim, no cue), so pointer reads decode to cell + face.
 export function renderVoxelScene(ctx, scene, W, H, opts = {}) {
   const { vox, mat, palette } = scene;
   const ground = opts.ground || "#0d1b1c";
   ctx.fillStyle = ground;
   ctx.fillRect(0, 0, W, H);
+  const pick = opts.pickCtx || null;
+  if (pick) { pick.fillStyle = "#000"; pick.fillRect(0, 0, W, H); }
   const list = isoOrder(vox);
   if (!list.length) return;
   const span = (vox.nx + vox.ny);
@@ -236,27 +353,60 @@ export function renderVoxelScene(ctx, scene, W, H, opts = {}) {
   const py = (x, y, z) => oy + (x + y) * s * 0.5 - z * s;
   const shade = ([r, g, b], f) => `rgb(${Math.round(r * f)},${Math.round(g * f)},${Math.round(b * f)})`;
   const depthMax = vox.nx + vox.ny + vox.nz;
+
+  // Ground shadow: the z-max footprint projected at z = 0, blurred. Painted before any voxel.
+  if (opts.shadow !== false) {
+    ctx.save();
+    ctx.fillStyle = "rgba(0,0,0,0.34)";
+    ctx.filter = `blur(${Math.max(2, s * 0.9)}px)`;
+    ctx.beginPath();
+    for (let y = 0; y < vox.ny; y++) {
+      for (let x = 0; x < vox.nx; x++) {
+        let solid = false;
+        for (let z = 0; z < vox.nz; z++) { if (vox.occ[(z * vox.ny + y) * vox.nx + x]) { solid = true; break; } }
+        if (!solid) continue;
+        const X = px(x, y), Y = py(x, y, -0.4);
+        ctx.moveTo(X, Y - s); ctx.lineTo(X + s, Y - s * 0.5); ctx.lineTo(X, Y); ctx.lineTo(X - s, Y - s * 0.5);
+      }
+    }
+    ctx.fill();
+    ctx.restore();
+  }
+
+  const rim = opts.rim !== false;
+  ctx.lineWidth = Math.max(0.4, s * 0.05);
+  ctx.strokeStyle = "rgba(0,0,0,0.22)";
+  ctx.lineJoin = "round";
+  const face = (X, Y, corners, fill, target) => {
+    target.fillStyle = fill;
+    target.beginPath();
+    target.moveTo(X + corners[0][0] * s, Y + corners[0][1] * s);
+    for (let i = 1; i < corners.length; i++) target.lineTo(X + corners[i][0] * s, Y + corners[i][1] * s);
+    target.closePath();
+    target.fill();
+    if (rim && target === ctx) target.stroke();
+  };
+  const TOP = [[0, -1], [1, -0.5], [0, 0], [-1, -0.5]];
+  const RIGHT = [[1, -0.5], [1, 0.5], [0, 1], [0, 0]];
+  const LEFT = [[-1, -0.5], [-1, 0.5], [0, 1], [0, 0]];
+  const pickCss = (i, f) => { const [r, g, b] = encodePick(i, f); return `rgb(${r},${g},${b})`; };
+
   for (const v of list) {
-    const base = palette[mat[(v.z * vox.ny + v.y) * vox.nx + v.x]] || palette[2];
+    const idx = (v.z * vox.ny + v.y) * vox.nx + v.x;
+    const base = palette[mat[idx]] || palette[2];
     const cue = 0.82 + 0.18 * (v.depth / depthMax);   // farther = slightly brighter (air)
     const X = px(v.x, v.y), Y = py(v.x, v.y, v.z);
     if (v.top) {
-      ctx.fillStyle = shade(base, 1.0 * faceAO(vox, v.x, v.y, v.z, "top") * cue);
-      ctx.beginPath();
-      ctx.moveTo(X, Y - s); ctx.lineTo(X + s, Y - s * 0.5); ctx.lineTo(X, Y); ctx.lineTo(X - s, Y - s * 0.5);
-      ctx.closePath(); ctx.fill();
+      face(X, Y, TOP, shade(base, 1.0 * faceAO(vox, v.x, v.y, v.z, "top") * cue), ctx);
+      if (pick) face(X, Y, TOP, pickCss(idx, FACE_IDS.top), pick);
     }
     if (v.right) {
-      ctx.fillStyle = shade(base, 0.62 * faceAO(vox, v.x, v.y, v.z, "right") * cue);
-      ctx.beginPath();
-      ctx.moveTo(X + s, Y - s * 0.5); ctx.lineTo(X + s, Y + s * 0.5); ctx.lineTo(X, Y + s); ctx.lineTo(X, Y);
-      ctx.closePath(); ctx.fill();
+      face(X, Y, RIGHT, shade(base, 0.62 * faceAO(vox, v.x, v.y, v.z, "right") * cue), ctx);
+      if (pick) face(X, Y, RIGHT, pickCss(idx, FACE_IDS.right), pick);
     }
     if (v.left) {
-      ctx.fillStyle = shade(base, 0.42 * faceAO(vox, v.x, v.y, v.z, "left") * cue);
-      ctx.beginPath();
-      ctx.moveTo(X - s, Y - s * 0.5); ctx.lineTo(X - s, Y + s * 0.5); ctx.lineTo(X, Y + s); ctx.lineTo(X, Y);
-      ctx.closePath(); ctx.fill();
+      face(X, Y, LEFT, shade(base, 0.42 * faceAO(vox, v.x, v.y, v.z, "left") * cue), ctx);
+      if (pick) face(X, Y, LEFT, pickCss(idx, FACE_IDS.left), pick);
     }
   }
 }
