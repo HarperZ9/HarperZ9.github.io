@@ -1039,6 +1039,32 @@ function paintFractal(opts, aaOverride) {
   return c;
 }
 
+// An honest word about the arithmetic under a deep view. float32 coordinates stop separating
+// neighbouring pixels once a view spans less than about width * 5e-7 of the plane; below that
+// fractal-gl compiles the df64 (emulated double) program automatically, and roughly eight orders
+// deeper again df64 runs out too. Returns "" for ordinary views and for the CPU fallback (JS
+// doubles throughout), so the note only ever appears when it is the truth about the frame.
+//
+// It reports what the renderer ACTUALLY ran, read back off the canvas, because a device whose
+// fragment shaders demote highp gets the deep program refused — and saying "running df64" there
+// would be a claim the hardware never honoured.
+function fractalPrecisionNote() {
+  if (!GL_AVAILABLE || !glFractal2D || !_fractalGL || !_fractalGL.fractalPrecisionMode || !fractalView) return "";
+  const c = $("studio-canvas");
+  const want = _fractalGL.fractalPrecisionMode(
+    fractalView.cx, fractalView.cy, fractalView.scale, (c && c.width) || 1600);
+  if (want === "single") return "";
+  if (c && c.__fractalPrecisionUsed !== "double") {
+    return "Heads up: this view is past float32's reach, but this device's fragment shaders do not "
+      + "carry full precision, so neighbouring pixels are collapsing onto the same point. ";
+  }
+  if (want === "double") {
+    return "Past float32's reach here, so the shader is running emulated double precision (df64). ";
+  }
+  return "Precision floor: df64 is at its limit here, so neighbouring pixels are starting to land "
+    + "on the same point and the frame has stopped gaining detail. Zoom out and dive elsewhere. ";
+}
+
 // Progressive CPU fractal: a coarse pass first (downscaled backing → fast, scaled up by CSS), then a
 // rAF-deferred full-resolution pass. Keeps the main thread responsive instead of one long blocking
 // putImageData. Cancels any in-flight refine when a new render starts.
@@ -1087,6 +1113,7 @@ async function renderPreset() {
     + `I fingerprinted it at ${obs.phash}; it reads as ${detail}`
     + (fcol ? `, dominated by ${obs.rich.hueName} (${fcol})` : ``) + `. `
     + `Max iterations: ${fractalView.maxIter}. `
+    + fractalPrecisionNote()
     + (GL_AVAILABLE ? `Scroll to zoom toward the cursor, drag to pan` : `Click to zoom toward a point`)
     + `, swap the palette, or hand it back to the Atelier.`
   );
@@ -1219,7 +1246,7 @@ fStage.addEventListener("click", e => {
   const obs = perceive(canvas);
   say("model",
     `Zoomed in. Now at (${fractalView.cx.toFixed(8)}, ${fractalView.cy.toFixed(8)}), scale ${fractalView.scale.toExponential(2)}. `
-    + `Fingerprint: ${obs.phash}. Scroll or click to keep diving.`
+    + `Fingerprint: ${obs.phash}. ` + fractalPrecisionNote() + `Scroll or click to keep diving.`
   );
   startMeterLoop();
 });
@@ -1390,6 +1417,11 @@ function read3DOpts() {
     scale: parseFloat(f3("f3-scale").value),
     power: parseFloat(f3("f3-power").value),
     iterations: parseInt(f3("f3-iterations").value, 10),
+    // Supersample the silhouette on High quality, or on a device the render
+    // plan already rates high. One march per sample, so it stays off below
+    // that. The plan carries the tier; the raw capability record does not.
+    aa: (qualityKey === "high" || ["high", "max"].includes(
+      (window.__studioHardwareRenderPlan && window.__studioHardwareRenderPlan.tier) || "low")) ? 4 : 1,
   };
 }
 // Live-label the sliders.

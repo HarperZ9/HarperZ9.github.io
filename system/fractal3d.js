@@ -93,7 +93,7 @@ float de(vec3 pos) {
 // MAX_STEPS*DE_ITERS well under ~1500). MAX_ITERS is the compile-time upper bound on the DE
 // loop; the actual iteration count is the u_iterations uniform, clamped JS-side to [1, MAX_ITERS].
 
-function buildFragment(type) {
+function buildFragment(type, aaSamples) {
   const de = type === "mandelbulb" ? MANDELBULB_DE : MANDELBOX_DE;
   // Mandelbulb needs a tighter far plane (research §3 table: 8.0 vs 20.0) and fewer steps.
   const maxSteps = type === "mandelbulb" ? 96 : 110;
@@ -102,6 +102,7 @@ function buildFragment(type) {
   const baseCol = type === "mandelbulb" ? "vec3(0.55, 0.45, 0.6)" : "vec3(0.6, 0.5, 0.4)";
 
   return `precision highp float;
+#define AA_SAMPLES ${aaSamples === 4 ? 4 : 1}
 
 uniform vec2  u_resolution;
 uniform float u_time;
@@ -164,9 +165,11 @@ mat3 makeCam(vec3 ro, vec3 ta) {
     return mat3(right, up, fwd);
 }
 
-void main() {
-    // NDC with correct aspect (research §3).
-    vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution) / u_resolution.y;
+// One ray, from a point in NDC. Split out of main() so the frame can take
+// several sub-pixel samples: a raymarched surface is a hard binary hit test at
+// the silhouette, so a single sample per pixel leaves stair-stepped edges and
+// crawling under motion, which no amount of shading quality hides.
+vec3 renderRay(vec2 uv) {
 
     // Camera orbit: a gentle idle auto-orbit on u_time PLUS the user's drag yaw/pitch and wheel
     // dolly (research §"Adopt This" #6/#9 for the idle motion; drag/dolly added for Task 8n
@@ -244,6 +247,26 @@ void main() {
     // tone curve + gamma. ACES-ish filmic curve: keeps blacks dark, rolls off highlights.
     col = (col * (2.51 * col + 0.03)) / (col * (2.43 * col + 0.59) + 0.14);
     col = pow(clamp(col, 0.0, 1.0), vec3(0.4545));
+    return col;
+}
+
+void main() {
+    // Rotated-grid supersampling. The offsets are the standard 2x2 rotated
+    // pattern, which resolves near-horizontal and near-vertical silhouette
+    // edges far better than an axis-aligned grid at the same sample count.
+    // Tone mapping happens per sample inside renderRay, so averaging here
+    // blends display-referred values and cannot blow out an edge pixel.
+    vec2 base = gl_FragCoord.xy - 0.5 * u_resolution;
+    float inv = 1.0 / u_resolution.y;
+#if AA_SAMPLES == 4
+    vec3 col = renderRay((base + vec2(-0.125, -0.375)) * inv)
+             + renderRay((base + vec2( 0.375, -0.125)) * inv)
+             + renderRay((base + vec2( 0.125,  0.375)) * inv)
+             + renderRay((base + vec2(-0.375,  0.125)) * inv);
+    col *= 0.25;
+#else
+    vec3 col = renderRay(base * inv);
+#endif
     gl_FragColor = vec4(col, 1.0);
 }`;
 }
@@ -280,7 +303,10 @@ export function render3D(canvas, opts = {}) {
   const power = clampNum(opts.power, 2.0, 12.0, 8.0);
   const iterations = Math.round(clampNum(opts.iterations, 1, 20, type === "mandelbulb" ? 8 : 12));
 
-  const fragSrc = buildFragment(type);
+  // Supersampling costs one full march per sample, so it is opt-in: the
+  // caller passes aa=4 when the device tier and quality level can afford it.
+  const aaSamples = opts.aa === 4 ? 4 : 1;
+  const fragSrc = buildFragment(type, aaSamples);
   const prog = gl.createProgram();
   gl.attachShader(prog, compile(gl, gl.VERTEX_SHADER, VERT));
   gl.attachShader(prog, compile(gl, gl.FRAGMENT_SHADER, fragSrc));
