@@ -347,8 +347,18 @@ export function renderVoxelScene(ctx, scene, W, H, opts = {}) {
   const list = isoOrder(vox);
   if (!list.length) return;
   const span = (vox.nx + vox.ny);
-  const s = Math.min(W / (span * 1.1), H / (vox.nz + span * 0.5) / 1.05);
-  const ox = W / 2, oy = H * 0.12 + (vox.nz * s);
+  const s0 = Math.min(W / (span * 1.1), H / (vox.nz + span * 0.5) / 1.05);
+  // View transform: a REAL zoom, not a raster magnification. The painter is vector parallelograms,
+  // so re-rendering with a scaled projection stays crisp at any magnification — the whole reason
+  // this source refuses the CSS panzoom layer. view = { zoom, cx, cy } with (cx, cy) the zoom
+  // centre as a fraction of the base frame; identity when absent.
+  const view = opts.view || null;
+  const zoom = view && view.zoom > 0 ? view.zoom : 1;
+  const s = s0 * zoom;
+  const baseOx = W / 2, baseOy = H * 0.12 + (vox.nz * s0);
+  const ccx = (view ? view.cx : 0.5) * W, ccy = (view ? view.cy : 0.5) * H;
+  const ox = W / 2 + (baseOx - ccx) * zoom;
+  const oy = H / 2 + (baseOy - ccy) * zoom;
   const px = (x, y) => ox + (x - y) * s;
   const py = (x, y, z) => oy + (x + y) * s * 0.5 - z * s;
   const shade = ([r, g, b], f) => `rgb(${Math.round(r * f)},${Math.round(g * f)},${Math.round(b * f)})`;

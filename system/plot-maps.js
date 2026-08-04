@@ -258,7 +258,10 @@ export function buildPlotMap(seedStr, opts = {}) {
 }
 
 // ── Render to a 2D canvas: ink on the site's calm ground ─────────────────────
-export function renderPlotMap(ctx, plot, W, H, palette = {}) {
+// opts.view = { zoom, cx, cy } re-renders the sheet magnified about (cx, cy) — a vector zoom, so
+// the ink stays crisp at any magnification. Line weight deliberately does NOT scale with zoom:
+// zooming a plot sheet reads like leaning closer to the paper, and the pen never got thicker.
+export function renderPlotMap(ctx, plot, W, H, palette = {}, opts = {}) {
   const ink = palette.ink || "#e8e6e1";
   const support = palette.support || "rgba(232,230,225,0.45)";
   const ground = palette.ground || "#0d1b1c";
@@ -266,6 +269,11 @@ export function renderPlotMap(ctx, plot, W, H, palette = {}) {
   ctx.fillRect(0, 0, W, H);
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
+  const view = opts.view || null;
+  const zoom = view && view.zoom > 0 ? view.zoom : 1;
+  const ccx = (view ? view.cx : 0.5) * W, ccy = (view ? view.cy : 0.5) * H;
+  const tx = (x) => (x * W - ccx) * zoom + W / 2;
+  const ty = (y) => (y * H - ccy) * zoom + H / 2;
   for (const layer of plot.layers) {
     ctx.strokeStyle = layer.tone === "support" ? support : ink;
     ctx.lineWidth = Math.max(0.5, layer.weight * (W / 900));
@@ -273,8 +281,8 @@ export function renderPlotMap(ctx, plot, W, H, palette = {}) {
     for (const line of layer.polylines) {
       for (let i = 0; i < line.length; i++) {
         const [x, y] = line[i];
-        if (i === 0) ctx.moveTo(x * W, y * H);
-        else ctx.lineTo(x * W, y * H);
+        if (i === 0) ctx.moveTo(tx(x), ty(y));
+        else ctx.lineTo(tx(x), ty(y));
       }
     }
     ctx.stroke();

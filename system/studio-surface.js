@@ -43,8 +43,11 @@ function loadTweakpane() {
 //   - fractal / fractal3d: native complex-plane / raymarch camera (unchanged).
 //   - ndim (P2 directive a): the volumetric nD renderer dollies the camera INTO the volume on wheel
 //     and orbits on drag, so CSS panzoom is wrong for it. Reclassified here from the flat set.
+//   - voxels / plotmaps (2026-08-04): both are VECTOR painters, so CSS zoom rasterizes what could
+//     re-render crisp — the operator zoomed into voxel cubes and got magnified mush. Each now
+//     drives its own wheel zoom (re-render at the zoomed view), so the flat layer must stand off.
 // CSS panzoom stays ONLY for genuinely flat content: atelier drawing, BYO still image, music, watch.
-const NATIVE_CAMERA_SOURCES = new Set(["fractal", "fractal3d", "ndim"]);
+const NATIVE_CAMERA_SOURCES = new Set(["fractal", "fractal3d", "ndim", "voxels", "plotmaps"]);
 
 // The panzoom instance currently attached to the canvas stage element.
 let _pzInstance = null;
@@ -109,7 +112,24 @@ function attachPanzoom(canvas) {
   });
 
   _stage = canvas.closest(".stage") || canvas.parentElement;
+
+  // Zoom-adaptive backing (2026-08-04, operator: crisp zoom must cover the WHOLE studio). CSS
+  // panzoom magnifies whatever pixels exist, so on its own a zoomed flat source is a blur of
+  // stretched texels. The display transform stays CSS (the invariant above holds — perception
+  // still reads the full backing), but the studio is TOLD the zoom level, raises the backing
+  // resolution to match, and redraws the generated frame — so the CSS magnification lands on a
+  // backing that genuinely has the pixels. Debounced: re-rendering mid-pinch would stutter.
+  _pzInstance.on("zoom", () => {
+    clearTimeout(_zoomNotify);
+    _zoomNotify = setTimeout(() => {
+      try {
+        const t = _pzInstance ? _pzInstance.getTransform() : null;
+        if (t && typeof window.__studioFlatZoomChanged === "function") window.__studioFlatZoomChanged(t.scale);
+      } catch (_) { /* the notification is additive; zoom itself must never break */ }
+    }, 180);
+  });
 }
+let _zoomNotify = 0;
 
 function detachPanzoom() {
   if (_pzInstance) {

@@ -112,6 +112,9 @@ const loadVoxelForge = lazyLoader(() => import("./voxel-forge.js"), m => { _voxe
 let _voxelStudy = "relic";
 let _lastVoxelScene = null;   // the LIVE scene: rotations and edits mutate it; exports serialize it
 let _voxelMode = "orbit";     // pointer mode: orbit | build | chisel | paint
+// Native view for the two vector still-sources: wheel re-renders at the zoomed view, so the
+// frame stays crisp at any magnification (the whole reason they refuse the CSS panzoom layer).
+const _stillView = { voxels: { zoom: 1, cx: 0.5, cy: 0.5 }, plotmaps: { zoom: 1, cx: 0.5, cy: 0.5 } };
 let _voxelTuned = false;      // false = the seed's own draws; true = the three knobs apply
 // The pick buffer: the same geometry as the visible frame, drawn flat with cell+face encoded as
 // colour, so a pointer position decodes to exactly one voxel face. Redrawn with every render.
@@ -381,6 +384,37 @@ const QUALITY_LEVELS = {
 };
 let qualityKey = "standard";
 function currentQuality() { return QUALITY_LEVELS[qualityKey]; }
+
+// ── Zoom-adaptive backing for flat sources ───────────────────────────────────
+// The studio-wide crisp-zoom contract has two halves. Native-camera sources (fractals, ndim,
+// spatial, voxels, plot maps) re-render their own view on wheel: crisp at any depth. Everything
+// else is magnified by the CSS panzoom layer, which on its own stretches texels into mush — so
+// when panzoom reports a zoom, the backing grows to match (flatZoomBoost feeds sizeCanvas) and
+// the active source redraws. Raster-bounded content (a BYO photo, a screen capture, the neural
+// grid) sharpens up to its own data resolution and no further; that ceiling is the data's, not
+// the renderer's.
+const FLAT_ZOOM_REDRAW = () => ({
+  atelier: () => { const b = $("at-draw"); if (b) b.click(); },
+  poster: () => { if (_posterWorkshop) _posterWorkshop.render(); },
+  sound: () => restartSound(),
+  neural: () => restartNeural(),
+  // byo: video re-blits every live-loop frame and picks the new backing up on its own; a dropped
+  // still image is not retained after its draw, so its zoom ceiling stays the first-draw backing.
+});
+let _flatZoom = 1;
+function flatZoomBoost() {
+  // The boost applies only while a flat source is active; native-camera sources own their zoom.
+  if (activeSource === "fractal" || activeSource === "fractal3d" || activeSource === "ndim"
+    || activeSource === "spatial" || activeSource === "voxels" || activeSource === "plotmaps") return 1;
+  return Math.max(1, Math.min(8, _flatZoom));
+}
+window.__studioFlatZoomChanged = (scale) => {
+  const z = Math.max(1, Math.min(8, Number(scale) || 1));
+  if (Math.abs(z - _flatZoom) < 0.15) return;   // ignore sub-step jitter
+  _flatZoom = z;
+  const redraw = FLAT_ZOOM_REDRAW()[activeSource];
+  if (redraw) { try { redraw(); } catch (_) { /* a zoom redraw is additive, never fatal */ } }
+};
 // Shared helper: size the canvas to the current quality level and return backing dims.
 // The canvas CSS size is determined by its container (.viewport-stage, max-width:100%), NOT by the
 // canvas.width attribute itself, so we read the parent's bounding rect to get the true display size.
@@ -402,8 +436,13 @@ function sizeCanvas(canvas) {
     const scr = (typeof screen !== "undefined" && screen) || { width: cssW, height: cssH };
     mb = fullscreenMaxBacking(scr.width, scr.height, dpr, { hardCap, floor: mb });
   }
-  let rawW = Math.round(cssW * dpr);
-  let rawH = Math.round(cssH * dpr);
+  // Zoom-adaptive backing: when a FLAT source is zoomed (CSS panzoom), the backing grows with the
+  // zoom (capped at 4096) and the source redraws, so the magnified display still has real pixels
+  // under it. Native-camera sources zoom by re-rendering their own view and never take the boost.
+  const zb = flatZoomBoost();
+  if (zb > 1) mb = Math.min(4096, Math.round(mb * Math.min(zb, 2.56)));
+  let rawW = Math.round(cssW * dpr * zb);
+  let rawH = Math.round(cssH * dpr * zb);
   const longer = Math.max(rawW, rawH);
   if (longer > mb) {
     const s = mb / longer;
@@ -628,6 +667,7 @@ function setSource(next) {
   syncToolbarForSource();
   // Notify the surface layer so panzoom attaches/detaches per the source change.
   // Pass the current canvas (may be a fresh GL canvas if fractal3d swapped it).
+  _flatZoom = 1;   // a zoom belongs to the source it was made in; the next source starts at 1:1
   try { surfaceOnSourceChange(next, $("studio-canvas")); } catch (_) {}
   // Start Tweakpane monitor loop for animated sources; stop it for static ones.
   if (next === "music" || next === "ndim" || next === "fractal3d") {
@@ -729,7 +769,7 @@ function drawPlotMap() {
   _lastPlot = plot;
   const ctx = c.getContext("2d", { willReadFrequently: true });
   if (!ctx) return;
-  _plotMaps.renderPlotMap(ctx, plot, c.width, c.height);
+  _plotMaps.renderPlotMap(ctx, plot, c.width, c.height, {}, { view: _stillView.plotmaps });
   const readout = $("plot-readout");
   if (readout) readout.textContent =
     `${plot.meta.strokes} strokes · ${plot.meta.points.toLocaleString()} points · sea level ${plot.meta.seaLevel}`;
@@ -789,7 +829,7 @@ function repaintVoxelScene(announce) {
   if (!ctx) return;
   _voxelPick.width = c.width; _voxelPick.height = c.height;
   const pickCtx = _voxelPick.getContext("2d", { willReadFrequently: true });
-  _voxelForge.renderVoxelScene(ctx, scene, c.width, c.height, { pickCtx });
+  _voxelForge.renderVoxelScene(ctx, scene, c.width, c.height, { pickCtx, view: _stillView.voxels });
   const readout = $("voxel-readout");
   if (readout) readout.textContent =
     `${scene.meta.voxels.toLocaleString()} voxels · ${scene.meta.res.join("×")}`
@@ -805,6 +845,15 @@ function repaintVoxelScene(announce) {
       + `and the .vox export hashes exactly what you see — seed, turns, and hand edits included.`);
   }
   startMeterLoop();
+}
+
+// Repaint the plot sheet without rebuilding — the pure-zoom path.
+function repaintPlotMap() {
+  if (!_plotMaps || !_lastPlot || activeSource !== "plotmaps") return;
+  const c = $("studio-canvas");
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return;
+  _plotMaps.renderPlotMap(ctx, _lastPlot, c.width, c.height, {}, { view: _stillView.plotmaps });
 }
 
 function readVoxelTune() {
@@ -929,6 +978,36 @@ function initVoxelControls() {
       if (_voxelForge.applyVoxelEdit(_lastVoxelScene, hit.cellIndex, hit.faceId, _voxelMode)) {
         repaintVoxelScene(false);
       }
+    });
+    // Native wheel zoom for both vector still-sources: re-render at the zoomed view, keeping the
+    // point under the cursor fixed. This is the crisp path — the CSS panzoom layer never touches
+    // these sources, so magnification is always a repaint, never a raster stretch.
+    stage.addEventListener("wheel", (e) => {
+      const src = activeSource;
+      if (src !== "voxels" && src !== "plotmaps") return;
+      e.preventDefault();
+      const v = _stillView[src];
+      const c = $("studio-canvas");
+      const rect = c.getBoundingClientRect();
+      const mx = (e.clientX - rect.left) / Math.max(1, rect.width);
+      const my = (e.clientY - rect.top) / Math.max(1, rect.height);
+      const oldZ = v.zoom;
+      const z = Math.max(1, Math.min(24, oldZ * Math.exp((e.deltaY > 0 ? -1 : 1) * 0.16)));
+      const bx = v.cx + (mx - 0.5) / oldZ;   // base-frame point under the cursor…
+      const by = v.cy + (my - 0.5) / oldZ;
+      v.cx = bx - (mx - 0.5) / z;            // …stays under it at the new zoom
+      v.cy = by - (my - 0.5) / z;
+      v.zoom = z;
+      if (z === 1) { v.cx = 0.5; v.cy = 0.5; }
+      if (src === "voxels") repaintVoxelScene(false);
+      else repaintPlotMap();
+    }, { passive: false });
+    stage.addEventListener("dblclick", () => {
+      const src = activeSource;
+      if (src !== "voxels" && src !== "plotmaps") return;
+      _stillView[src] = { zoom: 1, cx: 0.5, cy: 0.5 };
+      if (src === "voxels") repaintVoxelScene(false);
+      else repaintPlotMap();
     });
   }
   const dl = (data, name, type) => {
