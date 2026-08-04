@@ -179,12 +179,11 @@
   <h2 id="run-h" class="reveal">Run it now.</h2>
   <p class="body-text reveal"><span translate="no">Flywheel</span> installs two ways, both one line. On any platform with Python: <span translate="no">pip install flywheel-verify</span>, then <span translate="no">flywheel up</span> (the PyPI name is <span translate="no">flywheel-verify</span>; the bare name belongs to an unrelated package; the installed command is <span translate="no">flywheel</span>). On Windows, the desktop installer bundles the engine, no Python, no setup: every tool the engine mounts renders as a fillable form, the first run picks a model that can actually answer, and provider keys live in the OS keychain, shown as presence only, never a value.</p>
   <div class="run reveal"><span class="c">pip</span> pip install flywheel-verify <span class="c">&middot;</span> flywheel up</div>
-  <div class="run reveal"><span class="c">download</span> <a href="https://github.com/HarperZ9/flywheel/releases/download/v0.3.3/Flywheel-Setup-0.3.3-x64.exe">Flywheel-Setup-0.3.3-x64.exe</a> &middot; Windows x64 &middot; 21 MB &middot; <a href="https://github.com/HarperZ9/flywheel/releases/tag/v0.3.3">release notes</a></div>
-  <p class="body-text reveal">The installer ships from the platform repository's version tag with its hash published beside it. Verify the copy you downloaded:</p>
-  <div class="run reveal"><span class="c">powershell</span> Get-FileHash Flywheel-Setup-0.3.3-x64.exe -Algorithm SHA256</div>
+  <div class="run reveal"><span class="c">download</span> <a href="https://github.com/HarperZ9/flywheel/releases/latest">the latest Windows x64 installer</a> &middot; <span translate="no">Flywheel-Setup-&lt;version&gt;-x64.exe</span> &middot; ~21 MB</div>
+  <p class="body-text reveal">Each installer ships from the platform repository's version tag with <span translate="no">SHA256SUMS.txt</span> published beside it in the same release. Verify the copy you downloaded against that file:</p>
+  <div class="run reveal"><span class="c">powershell</span> Get-FileHash Flywheel-Setup-&lt;version&gt;-x64.exe -Algorithm SHA256</div>
   <dl class="kv2 reveal">
-    <dt>Version</dt><dd><span translate="no">v0.3.3</span>, August 2026</dd>
-    <dt>SHA-256</dt><dd><span translate="no" style="font-family:var(--mono);font-size:.8rem;word-break:break-all">4e9af4d38f9c292c1c1edc1aa0e8b83a1b55dc5a11d87008cee200443ad12486</span></dd>
+    <dt>Release line</dt><dd><span translate="no">v0.3.x</span>, August 2026; the releases page names the current version and carries its hash.</dd>
   </dl>
   <div class="null reveal">
     <h3>The honest caveat.</h3>
@@ -223,7 +222,7 @@
   <h2 id="spec-h" class="reveal">Spec, at a glance.</h2>
   <dl class="kv2 reveal">
     <dt>Install</dt><dd><span translate="no">pip install flywheel-verify</span>, then <span translate="no">flywheel up</span>.</dd>
-    <dt>Desktop app</dt><dd>Windows x64 installer, engine bundled, no Python required. <span translate="no">v0.3.3</span>, released from the platform repository.</dd>
+    <dt>Desktop app</dt><dd>Windows x64 installer, engine bundled, no Python required. <span translate="no">v0.3.x</span> line, released from the platform repository with published checksums.</dd>
     <dt>Dependencies</dt><dd>None. Python standard library only.</dd>
     <dt>Network</dt><dd>Your choice per call: route online with hosted-provider keys, or run fully offline against local weights.</dd>
     <dt>Entry point</dt><dd><span translate="no">flywheel up</span>, or <span translate="no">python scripts/run_harness_cli.py app --port 8799</span> from a clone.</dd>
