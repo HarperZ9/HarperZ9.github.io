@@ -133,6 +133,10 @@ export function ridgelines(field, w, h, opts = {}) {
 
 // ── The map sheet ────────────────────────────────────────────────────────────
 // STUDIES are the composition grammars: which layers a sheet carries and how they read.
+// The cartographic studies. The wider vocabulary (basin, moire, lattice, strata, monolith,
+// nomogram, orbital) lives in plot-studies.js and reaches the Studio through plot-compose.js,
+// which also decides for itself which study a seed becomes. These four stay because they are the
+// map register, and because existing seeds must keep reproducing.
 export const PLOT_STUDIES = Object.freeze({
   topo:  { label: "Topographic",  layers: ["water", "contours", "coast", "frame"] },
   flow:  { label: "Flow field",   layers: ["flow", "contours-light", "frame"] },
@@ -289,19 +293,60 @@ export function renderPlotMap(ctx, plot, W, H, palette = {}, opts = {}) {
   }
 }
 
-// ── Plotter-grade SVG: one <g> per layer, ordered paths, real units ──────────
+// ── Plotter-grade SVG ────────────────────────────────────────────────────────
+// A PEN HAS ONE WIDTH. The first version encoded a layer's weight as stroke-width, which is the
+// least plotter-honest thing the file could do: the machine cannot honour a fractional width, so
+// the SVG was promising something no plot could deliver and the screen preview was lying about
+// how the sheet would come out. Weight is now expressed the way a plotter actually expresses it:
+//   - PEN INDEX. Layers are grouped into pen passes (data-pen), so heavy and light are different
+//     pens or different inks, swapped between passes, which is what the operator physically does.
+//   - PASS COUNT. Within a pen, a heavier layer is drawn more times (data-passes). Ink builds.
+// stroke-width in the file is a fixed nominal 0.3mm for PREVIEW ONLY, declared as such, so no
+// downstream tool mistakes it for an instruction.
+//
+// Each path also gets its own <path> element rather than one concatenated `d`, so vpype, a
+// plotter driver, or an editor can address, reorder, or drop individual strokes.
+const NOMINAL_PEN_MM = 0.3;
+
+function penIndexFor(layer) {
+  // Three pens is what most plotter setups actually keep loaded: a fine support pen, the drawing
+  // pen, and a heavy pen for frames and emphasis.
+  if (layer.tone === "support") return 0;
+  return (layer.weight || 1) >= 1.2 ? 2 : 1;
+}
+function passesFor(layer) {
+  const w = layer.weight || 1;
+  return w >= 1.4 ? 3 : w >= 0.9 ? 2 : 1;
+}
+
 export function plotMapSVG(plot, opts = {}) {
   const Wmm = opts.widthMm || 210, Hmm = Math.round(Wmm * 0.75);
   const scale = (line) => line.map(([x, y]) => [x * Wmm, y * Hmm]);
-  const groups = plot.layers.map((layer) => {
-    const ordered = orderPaths(layer.polylines.map(scale));
-    const d = ordered.map((line) =>
-      "M" + line.map(([x, y]) => `${x.toFixed(2)},${y.toFixed(2)}`).join(" L")).join(" ");
-    return `  <g id="${layer.name}" fill="none" stroke="black" stroke-width="${(layer.weight * 0.35).toFixed(2)}" data-strokes="${ordered.length}">\n    <path d="${d}"/>\n  </g>`;
-  });
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${Wmm} ${Hmm}" width="${Wmm}mm" height="${Hmm}mm">\n` +
-    `  <!-- seed ${plot.meta.seed} · study ${plot.meta.study} · ${plot.meta.strokes} strokes · deterministic -->\n` +
-    groups.join("\n") + "\n</svg>\n";
+  // Group by pen so the file is ordered the way the plot is run: all of pen 0, then pen 1, then
+  // pen 2, one pen change between groups instead of one per layer.
+  const byPen = new Map();
+  for (const layer of plot.layers) {
+    const pen = penIndexFor(layer);
+    if (!byPen.has(pen)) byPen.set(pen, []);
+    byPen.get(pen).push(layer);
+  }
+  const groups = [];
+  for (const pen of [...byPen.keys()].sort((a, b) => a - b)) {
+    for (const layer of byPen.get(pen)) {
+      const ordered = orderPaths(layer.polylines.map(scale));
+      const paths = ordered.map((line) =>
+        `      <path d="M${line.map(([x, y]) => `${x.toFixed(2)},${y.toFixed(2)}`).join(" L")}"/>`).join("\n");
+      groups.push(
+        `  <g id="${layer.name}" data-pen="${pen}" data-passes="${passesFor(layer)}" data-strokes="${ordered.length}"\n`
+        + `     fill="none" stroke="black" stroke-width="${NOMINAL_PEN_MM}" stroke-linecap="round">\n${paths}\n  </g>`);
+    }
+  }
+  const m = plot.meta;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${Wmm} ${Hmm}" width="${Wmm}mm" height="${Hmm}mm">\n`
+    + `  <!-- seed ${m.seed} · study ${m.study}${m.register ? " · register " + m.register : ""} · ${m.strokes} strokes · deterministic -->\n`
+    + `  <!-- stroke-width is a nominal ${NOMINAL_PEN_MM}mm for preview only. Weight is carried by\n`
+    + `       data-pen (which pen draws the group) and data-passes (how many times it is drawn). -->\n`
+    + groups.join("\n") + "\n</svg>\n";
 }
 
 export { toPlotterSVG };   // re-export so callers can reach the shared exporter through one door
