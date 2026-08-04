@@ -11,7 +11,7 @@
 import { validateWorldPackage } from "./engine/world-package.js";
 import { startSpatialScene } from "./spatial-scene.js";
 import { startTexturedScene } from "./spatial-textured.js";
-import { startAtlasScene } from "./spatial-atlas.js";
+import { startAtlasScene, projectAabbRect } from "./spatial-atlas.js";
 import { acquireContext } from "./spatial-gl.js";
 
 const PACKAGES = Object.freeze({
@@ -153,6 +153,129 @@ function wireAtlasControls() {
       if (out) out.textContent = Number(el.value).toFixed(2);
     };
   }
+  wireCompareControls();
+}
+
+// ── Source compare: the training artwork over the live reconstruction ────────
+// The operator asked for live compare-and-contrast, and the honest-disclosure canon wants it too:
+// a reconstruction shown beside what it reconstructs makes its own limits visible. The source
+// derivatives already ship next to every .ngsf, so this is alignment + a divergence readout, not
+// new assets. Curtain clips the source at the mix position; overlay cross-fades it. The image is
+// aligned to the same content-rect the measurement layer crops to, so all three surfaces (render,
+// panel, compare) agree about where the artwork is.
+let compareMode = "off";
+let compareTimer = 0;
+
+function compareElements() {
+  return { layer: $("sp-compare-layer"), img: $("sp-compare-img"), tag: $("sp-compare-tag"),
+    mix: $("sp-compare-mix"), note: $("sp-compare-note") };
+}
+
+function setCompareMode(mode) {
+  compareMode = mode;
+  const { layer, mix, note } = compareElements();
+  document.querySelectorAll("[data-compare]").forEach((b) => b.classList.toggle("active", b.dataset.compare === mode));
+  const on = mode !== "off";
+  if (layer) { layer.hidden = !on; layer.setAttribute("aria-hidden", String(!on)); }
+  if (mix) mix.hidden = !on;
+  if (note) note.hidden = !on;
+  clearInterval(compareTimer);
+  compareTimer = 0;
+  if (on) {
+    syncCompare();
+    compareTimer = setInterval(syncCompare, 500);
+  }
+}
+
+// Align the source image to the artwork's on-canvas box and refresh the divergence readout.
+// Alignment projects the PICTURE PLANE (the XY extent at z = 0), not the full splat AABB the
+// measurement layer uses: the box includes depth relief, which projects ~12% wider than the flat
+// artwork and would stretch the source against its own reconstruction.
+function compareRect(canvas) {
+  const s = scene;
+  if (!s || !s.aabb || !s.view || !s.projection) return (typeof window !== "undefined") ? window.__studioContentRect : null;
+  const [mn, mx] = s.aabb;
+  const flat = [[mn[0], mn[1], 0], [mx[0], mx[1], 0]];
+  return projectAabbRect(flat, s.view, s.projection, canvas.width, canvas.height, 1)
+    || ((typeof window !== "undefined") ? window.__studioContentRect : null);
+}
+
+function syncCompare() {
+  const { layer, img, mix } = compareElements();
+  const canvas = $("studio-canvas");
+  const rect = canvas ? compareRect(canvas) : null;
+  if (!layer || !img || !canvas || !rect || currentWorld !== "atlas") { if (layer) layer.hidden = true; return; }
+  layer.hidden = compareMode === "off";
+  if (compareMode === "off") return;
+  // Backing pixels → CSS pixels within the stage.
+  const scaleX = canvas.clientWidth / (canvas.width || 1);
+  const scaleY = canvas.clientHeight / (canvas.height || 1);
+  layer.style.left = (canvas.offsetLeft + rect.x * scaleX) + "px";
+  layer.style.top = (canvas.offsetTop + rect.y * scaleY) + "px";
+  layer.style.width = (rect.w * scaleX) + "px";
+  layer.style.height = (rect.h * scaleY) + "px";
+  const meta = scene && scene.currentMeta;
+  // The manifest names the derivative (source_preview); the id-based path is only a fallback.
+  const file = meta ? (meta.source_preview || `${meta.id}.jpg`) : "";
+  const wantSrc = file ? `art/spatial/atlas/${file}` : "";
+  if (wantSrc && !img.src.endsWith(file)) img.src = wantSrc;
+  if (meta && img.alt !== (meta.alt || meta.title)) img.alt = `Source artwork: ${meta.alt || meta.title}`;
+  const t = mix ? Number(mix.value) : 0.5;
+  if (compareMode === "side") {
+    img.style.opacity = "1";
+    img.style.clipPath = `inset(0 ${(100 - t * 100).toFixed(1)}% 0 0)`;
+  } else {
+    img.style.opacity = String(t);
+    img.style.clipPath = "none";
+  }
+  updateCompareNote();
+}
+
+// The divergence readout, measured over the artwork box: what the reconstruction keeps of the
+// source's saturation and luminance, and how much of the box it covers at all. Means over lit
+// pixels only for the render — a pointillist field's black gaps are coverage, not colour.
+let _compareStats = 0;
+function updateCompareNote() {
+  const note = $("sp-compare-note");
+  const canvas = $("studio-canvas");
+  const rect = canvas ? compareRect(canvas) : null;
+  const img = $("sp-compare-img");
+  if (!note || !canvas || !rect || !img || !img.complete || !img.naturalWidth) return;
+  const now = performance.now();
+  if (now - _compareStats < 900) return;
+  _compareStats = now;
+  try {
+    const W = 96, H = 120;
+    const t = document.createElement("canvas"); t.width = W; t.height = H;
+    const x = t.getContext("2d", { willReadFrequently: true });
+    x.drawImage(canvas, rect.x, rect.y, rect.w, rect.h, 0, 0, W, H);
+    const a = x.getImageData(0, 0, W, H).data;
+    x.clearRect(0, 0, W, H);
+    x.drawImage(img, 0, 0, W, H);
+    const b = x.getImageData(0, 0, W, H).data;
+    let rs = 0, rl = 0, rn = 0, ss = 0, sl = 0, lit = 0, n = 0;
+    for (let i = 0; i < a.length; i += 4) {
+      n += 1;
+      const al = (a[i] + a[i+1] + a[i+2]) / 3;
+      if (al > 8) { lit += 1; rs += Math.max(a[i],a[i+1],a[i+2]) - Math.min(a[i],a[i+1],a[i+2]); rl += al; rn += 1; }
+      ss += Math.max(b[i],b[i+1],b[i+2]) - Math.min(b[i],b[i+1],b[i+2]);
+      sl += (b[i] + b[i+1] + b[i+2]) / 3;
+    }
+    if (!rn || !n) return;
+    const satKept = Math.round(100 * (rs / rn) / Math.max(1, ss / n));
+    const lumKept = Math.round(100 * (rl / rn) / Math.max(1, sl / n));
+    note.textContent = `Reconstruction vs source over the artwork box: covers ${Math.round(100 * lit / n)}% · `
+      + `lit pixels keep ${Math.min(999, satKept)}% of the source's saturation, ${Math.min(999, lumKept)}% of its luminance. `
+      + `The gap is the density ceiling, disclosed, not hidden.`;
+  } catch (_) { /* a taint or transient decode failure never breaks the compare */ }
+}
+
+function wireCompareControls() {
+  document.querySelectorAll("[data-compare]").forEach((chip) => {
+    chip.onclick = () => setCompareMode(chip.dataset.compare);
+  });
+  const mix = $("sp-compare-mix");
+  if (mix) mix.oninput = () => syncCompare();
 }
 
 function announceAtlasScene(meta, verdict) {
@@ -172,6 +295,15 @@ function announceAtlasScene(meta, verdict) {
   }
   const splatStatus = $("engine-status-splats");
   if (splatStatus && scene) splatStatus.textContent = `${scene.splatCount.toLocaleString()} active`;
+  // A new scene means a new source image for the compare layer, and a settled perceive so the
+  // Live Perception column carries this scene's hash and artwork-box size instead of a stale "-".
+  syncCompare();
+  setTimeout(() => {
+    try {
+      const c = $("studio-canvas");
+      if (c && typeof window.__studioPerceive === "function") window.__studioPerceive(c);
+    } catch (_) { /* perception is additive; a failure must not block the scene */ }
+  }, 450);
 }
 
 function wireShared() {
@@ -204,6 +336,8 @@ function wireShared() {
       // running; after a failed start the chip must retry, not no-op.
       if ((chip.dataset.world === currentWorld && scene) || !currentCanvas) return;
       currentWorld = chip.dataset.world;
+      // The compare layer is atlas-only; leaving the atlas must take it down with us.
+      if (currentWorld !== "atlas") setCompareMode("off");
       // Answer the click immediately. A world package is megabytes; without
       // this the chip stayed unselected for the whole fetch, so the control
       // read as broken and people clicked it again.
@@ -367,6 +501,7 @@ function announceHybrid(manifest, verdict, checked) {
 }
 
 export function stopSpatial() {
+  setCompareMode("off");   // the compare layer and its timer never outlive the source
   if (scene) {
     if (currentCanvas) currentCanvas.dataset.spatialTeardown = "1";
     try { scene.stop(); } catch (_) { /* context may already be lost */ }

@@ -191,3 +191,72 @@ test("every shipped scale code sits inside the encodable band", { skip: !atlasSc
     assert.ok(s.minScaleCode > 5, `${file}: scale code ${s.minScaleCode} is at the exponential floor`);
   }
 });
+
+// ── Kernel faithfulness to the training-time forward model ────────────────────
+// The 27 scenes were trained under the v0.5.0 standalone's renderer: quads cut at ONE sigma,
+// exp(-3.7 r^2) falloff, 0.008 discard, opacity 0.92, exposure 1.0, gamma 2.2. The port
+// originally drew 3-sigma quads — mathematically the complete Gaussian, and visually wrong for
+// this data: 9x the per-splat area meant deep stacks of tails cross-mixing under alpha-over,
+// which read as blur and washed chroma frontally and turned one drag into a white smear.
+// These assertions hold the kernel still; loosening any of them re-renders every artwork
+// through a forward model it was never trained under.
+
+import { _ATLAS_SHADERS, ATLAS_DEFAULT_CONTROLS, projectAabbRect } from "./spatial-atlas.js";
+
+test("the splat quad is cut at one sigma, not three", () => {
+  assert.ok(_ATLAS_SHADERS.vertex.includes(")*uSplatScale;"), "offset scales by uSplatScale alone");
+  assert.ok(!_ATLAS_SHADERS.vertex.includes("*3.0*uSplatScale"), "the 3-sigma quad must not return");
+});
+
+test("the fragment falloff and discard match the reference renderer", () => {
+  assert.ok(_ATLAS_SHADERS.fragment.includes("exp(-3.7*r2)"), "falloff exp(-3.7 r^2)");
+  assert.ok(_ATLAS_SHADERS.fragment.includes("if(a<.008)discard"), "discard below 0.008");
+  assert.ok(!_ATLAS_SHADERS.fragment.includes("exp(-4.5*r2)"), "the retuned falloff must not return");
+});
+
+test("the control defaults are the reference renderer's, verbatim", () => {
+  assert.deepEqual(
+    { ...ATLAS_DEFAULT_CONTROLS },
+    { splatScale: 1.0, depthScale: 1, opacityScale: 0.92, exposure: 1.0, gamma: 2.2, holoStrength: 0.08, iridescence: 0.42 },
+  );
+});
+
+// ── projectAabbRect: the measurement layer's crop contract ────────────────────
+// A camera at the origin looking down -z (identity view), symmetric perspective with
+// projection[0] = projection[5] = 2 (fov ~53deg): a unit box centred at z = -5 must project to a
+// centred rect whose extent follows ndc = (x / -z) * p0.
+
+function perspectiveCols(p0, p5) {
+  const p = new Float32Array(16); p[0] = p0; p[5] = p5; p[11] = -1; return p;
+}
+const IDENTITY_VIEW = (() => { const v = new Float32Array(16); v[0] = v[5] = v[10] = v[15] = 1; return v; })();
+
+test("projectAabbRect centres a symmetric box and scales with distance", () => {
+  const aabb = [[-1, -1, -6], [1, 1, -4]];
+  const rect = projectAabbRect(aabb, IDENTITY_VIEW, perspectiveCols(2, 2), 1000, 1000, 1);
+  assert.ok(rect, "a box in front of the camera projects");
+  // Nearest face (z=-4) bounds the rect: ndc = ±(1/4)*2 = ±0.5 → pixels 250..750.
+  assert.ok(Math.abs(rect.x - 250) < 1, `left edge from the near face (got ${rect.x})`);
+  assert.ok(Math.abs(rect.w - 500) < 2, `width from the near face (got ${rect.w})`);
+  // Symmetric in y as well.
+  assert.ok(Math.abs(rect.y - 250) < 1 && Math.abs(rect.h - 500) < 2, "y symmetric");
+});
+
+test("projectAabbRect returns null behind the camera and clamps to the canvas", () => {
+  assert.equal(projectAabbRect([[-1, -1, 2], [1, 1, 4]], IDENTITY_VIEW, perspectiveCols(2, 2), 800, 600, 1), null,
+    "a box entirely behind the camera has no rect");
+  const huge = projectAabbRect([[-50, -50, -2.1], [50, 50, -1.9]], IDENTITY_VIEW, perspectiveCols(2, 2), 800, 600, 1);
+  assert.ok(huge && huge.x === 0 && huge.y === 0 && huge.w === 800 && huge.h === 600,
+    "an oversized box clamps to the full canvas");
+});
+
+test("projectAabbRect applies depthScale to z before projecting", () => {
+  // Same box, depth flattened to a plane at z=0 → still projects via the remaining extent…
+  const aabb = [[-1, -1, -10], [1, 1, -2]];
+  const flat = projectAabbRect(aabb, IDENTITY_VIEW, perspectiveCols(2, 2), 1000, 1000, 0);
+  assert.equal(flat, null, "z scaled to 0 puts the box on the camera plane: no rect, not a crash");
+  const half = projectAabbRect(aabb, IDENTITY_VIEW, perspectiveCols(2, 2), 1000, 1000, 0.5);
+  assert.ok(half, "z scaled by half still projects");
+  // Near face now at z=-1: ndc = ±2 → off-canvas → clamped to full width.
+  assert.equal(half.w, 1000);
+});

@@ -96,7 +96,15 @@ void main(){
  vec2 e1=(abs(c01)>1e-12)?normalize(vec2(l1-c11,c01)):vec2(1.0,0.0);
  vec2 e2=vec2(-e1.y,e1.x);
  vec2 ndc=vec2(fx*pv.x*iz, fy*pv.y*iz);
- vec2 offset=(aCorner.x*e1*sqrt(l1)+aCorner.y*e2*sqrt(l2))*3.0*uSplatScale;
+ // Quad extent: ONE sigma per principal axis, times the user's splat-size control. This matches
+ // the v0.5.0 reference renderer the scenes were trained against, which cuts each splat hard at
+ // its stored axis length — the pointillist look IS the artwork. The port originally drew 3-sigma
+ // quads ("mathematically complete" Gaussian tails), and 9x the per-splat area meant deep stacks
+ // of overlapping tails cross-mixing under alpha-over: frontally it read as blur and lost chroma,
+ // and one drag turned the field into a white smear (measured: the reference kernel at the same
+ // oblique view keeps the structure; the 3-sigma kernel does not). Faithfulness to the
+ // training-time forward model beats textbook completeness here.
+ vec2 offset=(aCorner.x*e1*sqrt(l1)+aCorner.y*e2*sqrt(l2))*uSplatScale;
  vec2 finalNdc=ndc+offset;
  gl_Position=vec4(finalNdc*(-z),(uProjection*vec4(pv,1)).z,-z);
  // View-dependent response: the shipped channel is now evaluated against the
@@ -112,13 +120,27 @@ uniform float uOpacityScale; uniform float uExposure; uniform float uGamma; unif
 out vec4 outColor;
 void main(){
  float r2=dot(vCorner,vCorner);if(r2>1.0)discard;
- // The quad spans 3 sigma along each principal axis, so the corner is already
- // in sigma units: this is the exact Gaussian in its own eigenbasis.
- float a=exp(-4.5*r2)*vOpacity*uOpacityScale;if(a<.004)discard;
+ // exp(-3.7 r^2) with the quad cut at one sigma: the reference kernel, verbatim. The falloff and
+ // the discard threshold both match the v0.5.0 standalone so the shipped scenes composite exactly
+ // as they did under the renderer they were trained against.
+ float a=exp(-3.7*r2)*vOpacity*uOpacityScale;if(a<.008)discard;
  vec3 c=vColor;float ndv=clamp(abs(vNormal.z),0.,1.);c+=vViewCoeff*(ndv-.5);
  if(uMode==3){float phase=dot(normalize(vNormal+vec3(.001)),normalize(vec3(vCorner,.8)))+uTime*.08;c=mix(c,.5+.5*cos(vec3(0,2.1,4.2)+phase*6.283),clamp(uIridescence*.45,0.,.82));}
  c=pow(max(c*uExposure,vec3(0)),vec3(1.0/uGamma));
  outColor=vec4(c*a,a);}`;
+
+// The reference renderer's control defaults, verbatim from the v0.5.0 standalone. Exported so the
+// tests can hold them still: drifting any of these re-tunes every shipped scene away from the
+// forward model it was trained under.
+export const ATLAS_DEFAULT_CONTROLS = Object.freeze({
+  splatScale: 1.0, depthScale: 1, opacityScale: 0.92, exposure: 1.0, gamma: 2.2,
+  holoStrength: 0.08, iridescence: 0.42,
+});
+
+// Shader sources exported for tests: the kernel constants (one-sigma cut, exp(-3.7) falloff,
+// 0.008 discard) are the fidelity contract with the trained scenes, and a "cleanup" that widens
+// the quad or retunes the falloff silently re-renders all 27 artworks through the wrong kernel.
+export const _ATLAS_SHADERS = Object.freeze({ vertex: ATLAS_VS, fragment: ATLAS_FS });
 
 function halfLikeScale(u) { return Math.exp((u / 65535) * 8 - 9); }
 
@@ -163,6 +185,39 @@ export function parseNGSF(buffer) {
   return { count, means, scales, quats, colors, opacity, meta, viewCoeff };
 }
 
+// Project a world-space AABB through view+projection into a canvas-pixel rect. Pure so the
+// measurement contract is testable in node: the Studio crops every perception read to this rect,
+// and a wrong rect silently mis-measures every atlas frame. Returns null when the box is entirely
+// behind the camera or degenerate. `view`/`projection` are column-major mat4 as the renderer
+// stores them; only projection[0] and projection[5] are read (a standard perspective matrix).
+export function projectAabbRect(aabb, view, projection, w, h, depthScale = 1) {
+  if (!aabb) return null;
+  const [mn, mx] = aabb;
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity, seen = 0;
+  for (let i = 0; i < 8; i += 1) {
+    const px = i & 1 ? mx[0] : mn[0];
+    const py = i & 2 ? mx[1] : mn[1];
+    const pz = (i & 4 ? mx[2] : mn[2]) * depthScale;
+    const vx = view[0] * px + view[4] * py + view[8] * pz + view[12];
+    const vy = view[1] * px + view[5] * py + view[9] * pz + view[13];
+    const vz = view[2] * px + view[6] * py + view[10] * pz + view[14];
+    if (vz > -1e-3) continue;   // behind (or on) the camera plane
+    const iw = 1 / -vz;
+    const nx = projection[0] * vx * iw, ny = projection[5] * vy * iw;
+    const sx = (nx * 0.5 + 0.5) * w, sy = (1 - (ny * 0.5 + 0.5)) * h;
+    if (sx < x0) x0 = sx;
+    if (sx > x1) x1 = sx;
+    if (sy < y0) y0 = sy;
+    if (sy > y1) y1 = sy;
+    seen += 1;
+  }
+  if (!seen || !(x1 > x0) || !(y1 > y0)) return null;
+  const cx = Math.max(0, x0), cy = Math.max(0, y0);
+  const cw = Math.min(w, x1) - cx, ch = Math.min(h, y1) - cy;
+  if (!(cw > 8) || !(ch > 8)) return null;
+  return { x: cx, y: cy, w: cw, h: ch };
+}
+
 // Keep the highest-importance records under a budget: the quantized format
 // carries per-splat importance exactly for this tiering.
 export function orderByImportance(scene, budget) {
@@ -199,10 +254,11 @@ class AtlasScene {
     this.animating = !this.reducedMotion;
     this.onSceneLoaded = typeof opts.onSceneLoaded === "function" ? opts.onSceneLoaded : null;
     this.mode = 0;
-    // Defaults tuned visually against the original Atlas standalone: closer
-    // framing, slight lift, and a brighter response so the field carries the
-    // artwork's presence instead of reading as gauze.
-    this.controls = { splatScale: 1.12, depthScale: 1, opacityScale: 1.0, exposure: 1.18, gamma: 2.2, holoStrength: 0.08, iridescence: 0.42 };
+    // Defaults are the v0.5.0 reference renderer's, verbatim. The earlier splatScale 1.12 /
+    // exposure 1.18 were tuned frontally against a 3-sigma kernel to compensate its wash; with
+    // the kernel restored (one-sigma cut, exp(-3.7) falloff) the reference values reproduce the
+    // standalone by construction, at every angle rather than only head-on.
+    this.controls = { ...ATLAS_DEFAULT_CONTROLS };
     this.inv = { center: [0, 0, -0.08], radius: 0.86, strength: 1, exponent: 1, shell: 0.24, thickness: 0.28, twist: 0, inner: 0.04, outer: 2.8 };
     this.yaw = 0; this.pitch = 0; this.targetYaw = 0; this.targetPitch = 0;
     this.distance = 2.55; this.target = [0, -0.12, 0];
@@ -332,6 +388,21 @@ class AtlasScene {
     if (verdict === "DRIFT") throw new Error(`${meta.model}: receipt DRIFT; refusing to render`);
     const parsed = parseNGSF(bytes.buffer);
     const { indices, dropped } = orderByImportance(parsed, this.splatBudget);
+    // The artwork's bounding box, for the content-rect the measurement layer crops to. Without it
+    // the Studio's perception panel measures the letterbox: a portrait artwork in a wide canvas
+    // reads as "wide, dominated by near-black", which is a description of the empty frame.
+    {
+      const mn = [Infinity, Infinity, Infinity], mx = [-Infinity, -Infinity, -Infinity];
+      const m = parsed.means;
+      for (let i = 0; i < parsed.count; i += 1) {
+        for (let k = 0; k < 3; k += 1) {
+          const v = m[i * 3 + k];
+          if (v < mn[k]) mn[k] = v;
+          if (v > mx[k]) mx[k] = v;
+        }
+      }
+      this.aabb = [mn, mx];
+    }
     this.fullScene = parsed;
     this.droppedCount = dropped;
     this.currentMeta = meta;
@@ -500,10 +571,27 @@ class AtlasScene {
     this.raf = requestAnimationFrame(step);
   }
 
+  // Publish where the artwork actually sits on the canvas, so the measurement layer describes the
+  // piece and not the letterbox around it. Throttled off the frame clock; the transform modes warp
+  // the field inside roughly the same bounds, so the field-mode box stays a fair crop for them.
+  publishContentRect(w, h, elapsedMs) {
+    if (typeof window === "undefined") return;
+    if (this._rectStamp !== undefined && elapsedMs - this._rectStamp < 250) return;
+    this._rectStamp = elapsedMs;
+    const rect = projectAabbRect(this.aabb, this.view, this.projection, w, h, this.controls.depthScale);
+    window.__studioContentRect = rect
+      ? { ...rect, sparse: true, source: "atlas", label: this.currentMeta ? this.currentMeta.id : "" }
+      : null;
+  }
+
   stop() {
     // Every start mounts a fresh canvas, so this canvas is being discarded:
     // release resources AND the context (browsers cap ~16 live contexts).
     this.stopped = true;
+    // Withdraw the content-rect so the next source is measured full-frame, not through a stale crop.
+    if (typeof window !== "undefined" && window.__studioContentRect && window.__studioContentRect.source === "atlas") {
+      window.__studioContentRect = null;
+    }
     if (this.raf) cancelAnimationFrame(this.raf);
     clearTimeout(this.sortTimer);
     if (this.sizeObserver) { try { this.sizeObserver.disconnect(); } catch (_) { /* gone */ } }
@@ -586,6 +674,7 @@ class AtlasScene {
     gl.uniform1f(u.uExposure, Math.pow(2, (c.exposure - 1) * 1.6));
     gl.uniform1f(u.uGamma, c.gamma);
     gl.uniform1f(u.uIridescence, c.iridescence);
+    this.publishContentRect(w, h, elapsedMs);
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, this.dataTexture);
     gl.uniform1i(u.uSplatData, 0);

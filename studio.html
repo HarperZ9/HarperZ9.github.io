@@ -20,7 +20,7 @@
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/system.css?v=20260803-hit-target">
+<link rel="stylesheet" href="system/system.css?v=20260804-atlas-compare">
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
@@ -378,6 +378,16 @@
               <div class="at-group">
                 <span class="at-glab">Exposure <span class="hint">(<span id="sp-exposure-val">1.00</span>)</span></span>
                 <input type="range" class="at-slider" id="sp-exposure" min="0.4" max="2.4" step="0.01" value="1" aria-label="Exposure">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Source compare <span class="hint">the reconstruction against the artwork it was trained on</span></span>
+                <div class="at-chips" role="group" aria-label="Source compare mode">
+                  <button type="button" class="chip active" data-compare="off">Off</button>
+                  <button type="button" class="chip" data-compare="side">Curtain</button>
+                  <button type="button" class="chip" data-compare="overlay">Overlay</button>
+                </div>
+                <input type="range" class="at-slider" id="sp-compare-mix" min="0" max="1" step="0.01" value="0.5" aria-label="Compare position or overlay mix" hidden>
+                <p class="src-hint" id="sp-compare-note" hidden></p>
               </div>
               <p class="src-hint" id="sp-boundary" data-claim-boundary></p>
               <p class="src-hint">Drag to orbit, wheel to dolly, double-click resets. Needs WebGL2; the hybrid worlds run everywhere.</p>
@@ -738,6 +748,13 @@
       <canvas id="studio-canvas" width="360" height="360"
         role="img" aria-label="The live render canvas. The measurimeter panel on the right describes what the model currently perceives."
         aria-live="off"></canvas>
+      <!-- Source-compare layer (spatial atlas): the training artwork aligned over the live
+           reconstruction's content box. Curtain mode clips it at the mix position; overlay mode
+           fades it. Pointer-transparent, so orbit/dolly keep working underneath. -->
+      <div id="sp-compare-layer" hidden aria-hidden="true">
+        <img id="sp-compare-img" alt="" decoding="async">
+        <span id="sp-compare-tag">source</span>
+      </div>
     </div>
     <div class="render-toolbar" id="render-toolbar" role="toolbar" aria-label="Render controls">
       <button class="rt-btn" id="rt-snapshot" type="button" title="Freeze this frame and ask the model"

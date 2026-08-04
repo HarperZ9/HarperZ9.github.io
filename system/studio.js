@@ -689,14 +689,34 @@ function syncTabindex(activeKey) {
 // for a 2D canvas, or by blitting the (WebGL) canvas through a 2D scratch canvas with drawImage
 // (which accepts any source canvas regardless of its backing context). Keeps perceive() reusable.
 const _scratch = document.createElement("canvas");
-function readPixelData(canvas, w, h) {
-  const ctx2d = canvas.getContext("2d", { willReadFrequently: true });
-  if (ctx2d) return ctx2d.getImageData(0, 0, w, h).data;
-  // WebGL-backed (or otherwise non-2D) canvas: mirror it into a 2D scratch and read that.
+
+// The content-rect contract: a source that letterboxes its artwork inside the shared canvas
+// publishes window.__studioContentRect {x, y, w, h} in canvas-backing pixels (the spatial atlas
+// projects its splat AABB each frame). Every measurement crops to it, because measuring the full
+// frame describes the letterbox: a portrait artwork in a wide canvas read as "wide, dominated by
+// near-black" — a true statement about the pixels and a false one about the piece. Sources that
+// fill the frame publish nothing and are measured exactly as before.
+function contentRect(canvas) {
+  const r = window.__studioContentRect;
+  if (!r || !(r.w > 8) || !(r.h > 8)) return null;
+  const x = Math.max(0, Math.min(canvas.width - 9, Math.round(r.x)));
+  const y = Math.max(0, Math.min(canvas.height - 9, Math.round(r.y)));
+  const w = Math.min(canvas.width - x, Math.round(r.w));
+  const h = Math.min(canvas.height - y, Math.round(r.h));
+  return (w > 8 && h > 8) ? { x, y, w, h } : null;
+}
+
+function readPixelData(canvas, w, h, rect) {
+  if (!rect) {
+    const ctx2d = canvas.getContext("2d", { willReadFrequently: true });
+    if (ctx2d) return ctx2d.getImageData(0, 0, w, h).data;
+  }
+  // WebGL-backed canvas, or a content-rect crop: mirror through a 2D scratch and read that.
   _scratch.width = w; _scratch.height = h;
   const sctx = _scratch.getContext("2d", { willReadFrequently: true });
   sctx.clearRect(0, 0, w, h);
-  sctx.drawImage(canvas, 0, 0, w, h);
+  if (rect) sctx.drawImage(canvas, rect.x, rect.y, rect.w, rect.h, 0, 0, w, h);
+  else sctx.drawImage(canvas, 0, 0, w, h);
   return sctx.getImageData(0, 0, w, h).data;
 }
 
@@ -709,14 +729,16 @@ function readPixelData(canvas, w, h) {
 // canonical hash that receipts and answers quote.
 const LIVE_READ_MAX_EDGE = 512;
 function readPixelDataBounded(canvas, maxEdge) {
-  const w0 = canvas.width, h0 = canvas.height;
+  const rect = contentRect(canvas);
+  const w0 = rect ? rect.w : canvas.width, h0 = rect ? rect.h : canvas.height;
   const scale = Math.min(1, maxEdge / Math.max(w0, h0));
-  if (scale === 1) return { px: readPixelData(canvas, w0, h0), w: w0, h: h0 };
+  if (scale === 1 && !rect) return { px: readPixelData(canvas, w0, h0), w: w0, h: h0 };
   const w = Math.max(1, Math.round(w0 * scale)), h = Math.max(1, Math.round(h0 * scale));
   _scratch.width = w; _scratch.height = h;
   const sctx = _scratch.getContext("2d", { willReadFrequently: true });
   sctx.clearRect(0, 0, w, h);
-  sctx.drawImage(canvas, 0, 0, w, h);
+  if (rect) sctx.drawImage(canvas, rect.x, rect.y, rect.w, rect.h, 0, 0, w, h);
+  else sctx.drawImage(canvas, 0, 0, w, h);
   return { px: sctx.getImageData(0, 0, w, h).data, w, h };
 }
 
@@ -732,12 +754,18 @@ let _lastDetail = null;
 let _lastDetailPx = null, _lastDetailW = 0, _lastDetailH = 0;
 function computePerceptionDetail(canvas) {
   try {
-    const dw = Math.min(192, canvas.width || 192);
-    const dh = Math.max(2, Math.round(dw * (canvas.height || 1) / (canvas.width || 1)));
+    // Same content-rect contract as perceive(): the no-vision reconstruction describes the
+    // artwork box when a source publishes one, not the letterbox around it.
+    const rect = contentRect(canvas);
+    const srcW = rect ? rect.w : (canvas.width || 192);
+    const srcH = rect ? rect.h : (canvas.height || 1);
+    const dw = Math.min(192, srcW || 192);
+    const dh = Math.max(2, Math.round(dw * (srcH || 1) / (srcW || 1)));
     _scratch.width = dw; _scratch.height = dh;
     const sctx = _scratch.getContext("2d", { willReadFrequently: true });
     sctx.clearRect(0, 0, dw, dh);
-    sctx.drawImage(canvas, 0, 0, dw, dh);
+    if (rect) sctx.drawImage(canvas, rect.x, rect.y, rect.w, rect.h, 0, 0, dw, dh);
+    else sctx.drawImage(canvas, 0, 0, dw, dh);
     const dpx = sctx.getImageData(0, 0, dw, dh).data;
     _lastDetail = perceptionDetail(dpx, dw, dh, 4);
     _lastDetailPx = dpx; _lastDetailW = dw; _lastDetailH = dh;
@@ -888,11 +916,14 @@ function updateDetailUI(rich) {
 }
 
 function perceive(canvas) {
-  const { width:w, height:h } = canvas;
-  const px = readPixelData(canvas, w, h);
+  const rect = contentRect(canvas);
+  const w = rect ? rect.w : canvas.width, h = rect ? rect.h : canvas.height;
+  const px = readPixelData(canvas, w, h, rect);
   const phash = perceptualHash(px,w,h,4), f = features(px,w,h,4);
   $("sc-phash").textContent = phash;
-  $("sc-size").textContent = `${w}×${h}`;
+  // When a content-rect is active the measured region IS the artwork box, and saying so beats
+  // quoting the canvas dimensions of a frame that is mostly letterbox.
+  $("sc-size").textContent = rect ? `${w}×${h} artwork box` : `${w}×${h}`;
   $("sc-feats").innerHTML = [["contrast",f.contrast],["structure",f.entropy],["balance",f.balance]]
     .map(([k,v])=>`<span class="ground"><span class="gk">${k}</span> ${fmt(v)}</span>`).join("");
   const prev = lastHashByCanvas.get(canvas);
