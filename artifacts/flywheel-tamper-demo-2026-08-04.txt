@@ -1,0 +1,20 @@
+$ tamper-demo  (flywheel harness, stdlib only, offline)
+
+STEP 1 -- seal two chained tool-call receipts
+  receipt 1: seal e4cb1ba6daf5e1c3...  (read_file, builtin-read, allow)
+  receipt 2: seal 63a2f2d838e693ae...  (run_tests, builtin-exec, allow, chained to 1)
+
+STEP 2 -- verify both, untouched (recomputes every seal from the record alone)
+  receipt 1: {'schema': 'flywheel.tool-call-receipt/v1', 'verdict': 'MATCH', 'source': 'tool:demo-run:1', 'outcome': 'COMPLETED', 'seal': {'algorithm': 'sha256', 'hex': 'e4cb1ba6daf5e1c30701860bbd440b6e2fb3fe7b7a4e4d6d9af68279fdcd196d'}, 'has_rationale': True}
+  receipt 2: {'schema': 'flywheel.tool-call-receipt/v1', 'verdict': 'MATCH', 'source': 'tool:demo-run:2', 'outcome': 'COMPLETED', 'seal': {'algorithm': 'sha256', 'hex': '63a2f2d838e693ae2077792d08f76ab5abb73f027301cf11c208898932aa8819'}, 'has_rationale': True}
+  chain:     {'verdict': 'MATCH', 'n': 2, 'receipts': [{'schema': 'flywheel.tool-call-receipt/v1', 'verdict': 'MATCH', 'source': 'tool:demo-run:1', 'outcome': 'COMPLETED', 'seal': {'algorithm': 'sha256', 'hex': 'e4cb1ba6daf5e1c30701860bbd440b6e2fb3fe7b7a4e4d6d9af68279fdcd196d'}, 'has_rationale': True}, {'schema': 'flywheel.tool-call-receipt/v1', 'verdict': 'MATCH', 'source': 'tool:demo-run:2', 'outcome': 'COMPLETED', 'seal': {'algorithm': 'sha256', 'hex': '63a2f2d838e693ae2077792d08f76ab5abb73f027301cf11c208898932aa8819'}, 'has_rationale': True}]}
+
+STEP 3 -- corrupt ONE byte: receipt 2's admission 'allow' -> 'aIlow'
+  tampered receipt 2: {'schema': 'flywheel.tool-call-receipt/v1', 'verdict': 'TAMPERED', 'failure_class': 'SEAL_MISMATCH', 'detail': 'seal sha256:63a2f2d838e6, recomputed sha256:6885189a7439'}
+
+STEP 4 -- the chain refuses too
+  chain: {'verdict': 'TAMPERED', 'n': 2, 'receipts': [{'schema': 'flywheel.tool-call-receipt/v1', 'verdict': 'MATCH', 'source': 'tool:demo-run:1', 'outcome': 'COMPLETED', 'seal': {'algorithm': 'sha256', 'hex': 'e4cb1ba6daf5e1c30701860bbd440b6e2fb3fe7b7a4e4d6d9af68279fdcd196d'}, 'has_rationale': True}, {'schema': 'flywheel.tool-call-receipt/v1', 'verdict': 'TAMPERED', 'failure_class': 'SEAL_MISMATCH', 'detail': 'seal sha256:63a2f2d838e6, recomputed sha256:6885189a7439'}]}
+
+The rejection is the feature: acceptance you cannot forge is what
+makes the acceptance worth having. Verifier: Python stdlib only,
+no key, no network, no dependency on the runtime that emitted it.

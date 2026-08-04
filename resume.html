@@ -38,75 +38,81 @@
     <p class="role">Systems Engineer</p>
     <p class="contact">Seattle, Washington | Open to remote, hybrid, onsite, contract, and project work zaindharper@gmail.com | <a href="https://harperz9.github.io" translate="no">https://harperz9.github.io</a> | <a href="https://github.com/HarperZ9" translate="no">https://github.com/HarperZ9</a></p>
   </header>
-  <p class="entry-note">Download: <a href="career/Zain-Dana-Harper-Resume-2026-07-28.pdf" download>Resume PDF</a> <span class="sep">/</span> <a href="career/Zain-Dana-Harper-Resume-2026-07-12.docx" download>Resume DOCX</a></p>
+  <p class="entry-note">Download: <a href="career/Zain-Dana-Harper-Resume-2026-08-04.pdf" download>Resume PDF</a> <span class="sep">/</span> <a href="career/Zain-Dana-Harper-Resume-2026-08-04.docx" download>Resume DOCX</a></p>
   <section>
     <h2>Summary</h2>
-    <p class="lead">Systems engineer and cross-domain builder whose public work spans AI-agent infrastructure, compilers and language tooling, real-time graphics and color science, verification systems, technical documentation, and operations. Builds inspectable tools with explicit boundaries, tests, documentation, provenance, and reproducible release paths. Independent engineering practice since 2023, grounded in earlier technical support, freelance technical writing, compliance documentation, customer-facing operations, and field leadership.</p>
+    <p class="lead">Systems engineer whose current work is verification infrastructure for AI agents: accountability engines, capability-typed tooling, and re-checkable evidence surfaces. Public work also spans compilers and language tooling, real-time graphics and color science, technical documentation, and operations. Builds inspectable tools with explicit boundaries, tests, provenance, and reproducible release paths. Independent engineering practice since 2023, grounded in earlier technical support, freelance technical writing, compliance documentation, and eleven years of field operations leadership.</p>
   </section>
   <section>
     <h2>Selected engineering work</h2>
+    <p class="lead"><b>Flywheel accountability engine for AI agents | Python (stdlib-only engine), Flutter</b></p>
+    <ul class="bul">
+      <li>Built an engine in which every agent tool call passes a default-deny capability gate and emits a sealed, hash-chained, offline-verifiable receipt binding what was allowed to what actually happened (witnessed argument and output digests, never raw content).</li>
+      <li>Receipts compose into a transitive witness graph: a drifted action degrades exactly its downstream dependents, and a third party can re-verify the whole chain offline.</li>
+      <li>Shipped an infrastructure control package (network egress receipts, credential scanning, isolation acceptance tests, a dual-confirmation kill switch, cross-layer event correlation) and published a dated assessment mapping it against the failure classes of the July 2026 agentic-security incidents.</li>
+      <li>Merged to the default branch as of 2026-08-03: capability-typed shell admission with Unicode-spoof neutralization, a domain oracle registry routing claims to independent verifiers across three live domains (pytest for code, the Lean kernel for mathematics, and a measurement gate for empirical claims) with an honest UNVERIFIABLE verdict elsewhere, a model-neutral router with quota failover across providers, a subscription-auth adapter that consumes an authorized token rather than minting one, and session tooling to browse, resume, and export past verified runs.</li>
+      <li>Completed the engine's first preregistered confirmatory run (2026-08-04): zero verdict disagreements across 2,646 certificate bodies in nine model contexts, statistically significant held-out selection uplift at every model size on the solvable task family, honest nulls kept, and the whole analysis anchored in a signed, offline-verifiable ledger.</li>
+    </ul>
+    <p class="lead"><b>BuildLang compiler and language tooling | Rust, C, HLSL, VS Code</b></p>
+    <ul class="bul">
+      <li>Built a systems language where ambient access is part of a function's type: typed capability effects (filesystem, network, foreign calls) that a callback or closure cannot silently launder, with Hindley-Milner inference and experimental linear types.</li>
+      <li>Ships as the `buildc` toolchain (build, run, test, repl, fmt, pkg, LSP) with a production C backend, HLSL and GLSL shader output, and re-checkable build receipts: `buildc check --receipt` seals what a build observed and `buildc receipt verify` re-derives it later.</li>
+    </ul>
     <p class="lead"><b>Project Telos and model-era engineering tools | Python, TypeScript, Node.js</b></p>
     <ul class="bul">
       <li>Built a public ecosystem for repository intelligence, evidence intake, multi-agent orchestration, evaluation, replayable records, and claim verification.</li>
       <li>Shipped focused tools including Index 2.9.0 for repository maps and context packs, Gather 1.6.1 for provenance-aware research intake, Forum 1.13.0 for model-agnostic orchestration, and Crucible 1.2.0 for worker/verifier evaluation workflows.</li>
-      <li>Developed public source packages for model-endpoint coding-agent routing (Relay), toolchain auto-wiring (Plexus), and provenance-carrying agent memory (Mneme).</li>
-      <li>Designed CLI, MCP, web, documentation, testing, release, and evidence surfaces so another operator can inspect how a result was produced.</li>
-    </ul>
-    <p class="lead"><b>BuildLang compiler and language tooling | Rust, C, HLSL, VS Code</b></p>
-    <ul class="bul">
-      <li>Built a public lexer-to-code-generation compiler with typed effects, ownership and lifetime analysis, a primary C backend, shader outputs, and editor support.</li>
-      <li>Maintained public package and extension surfaces while keeping experimental backends and self-hosting work clearly separated from shipped capability.</li>
     </ul>
     <p class="lead"><b>Real-time graphics, color, and display tooling | C++, HLSL, Python</b></p>
     <ul class="bul">
       <li>Released a Skyrim real-time graphics project whose current public career materials report more than 900,000 downloads.</li>
-      <li>Built D3D11/HLSL post-processing and rendering systems involving tone mapping, TAA, SSR, SSGI, GTAO, volumetrics, shader pipelines, and read-only shared-memory IPC.</li>
+      <li>Built D3D11/HLSL post-processing and rendering systems involving tone mapping, TAA, SSR, SSGI, GTAO, volumetrics, and read-only shared-memory IPC.</li>
     </ul>
   </section>
   <section>
     <h2>Open-source contributions</h2>
-    <p class="lead"><b>Upstream pull requests to public projects | Python, TypeScript, Rust</b></p>
     <ul class="bul">
       <li>22 code, test, and documentation pull requests merged into 19 public repositories maintained by others, including Datasette, tomlkit, pydantic-ai, DeepEval, pydash, and grimp.</li>
-      <li>Merged defect work covers HTTP status handling for malformed composite-key row URLs, a TOML round-trip bug where an array of tables swallowed the next sibling key, a metric crash on unhashable tool outputs, missing module and layer validation errors, and lint failures blocking a red main branch.</li>
-      <li>Merged test work adds seeded determinism coverage, mid-task recovery fixtures, edge-case fixtures, and evaluation benchmark suites to agent and orchestration projects.</li>
-      <li>14 further pull requests are open and awaiting maintainer review across 13 repositories, including the Model Context Protocol Inspector and Python SDK, Poetry, Drizzle ORM, and LLM. Open is not accepted.</li>
+      <li>11 further pull requests open and awaiting maintainer review across 11 repositories, including the Model Context Protocol Python SDK, Drizzle ORM, Datasette, and LLM. Open is not accepted.</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Speaking</h2>
+    <ul class="bul">
+      <li>"Pick the Lock for Everyone: Building Verifiable AI Workflows in Python," invited talk, Puget Sound Programming Python (PuPPy), scheduled 2026-08-19.</li>
     </ul>
   </section>
   <section>
     <h2>Experience</h2>
-    <p class="lead"><b>Independent Systems Engineer / Founder-Builder | Project Telos and HarperZ9</b> Seattle / remote | 2023-present</p>
+    <p class="lead"><b>Independent Systems Engineer / Founder-Builder | Zentropy Labs (Project Telos, HarperZ9)</b> Seattle / remote | 2023-present</p>
     <ul class="bul">
       <li>Own architecture, implementation, integration, documentation, testing, packaging, public demos, and release evidence across a multi-repository systems portfolio.</li>
-      <li>Build Python CLIs and libraries, Rust compiler tooling, TypeScript and Node workflows, static and interactive web surfaces, C++23 kernels, HLSL graphics systems, and cross-tool adapters.</li>
       <li>Coordinate agentic development workflows while preserving first-party review, verifier separation, testable contracts, and public claim discipline.</li>
     </ul>
     <p class="lead"><b>Freelance Technical Writer / Documentation and Product Operations</b> Remote | 2017-present</p>
     <ul class="bul">
-      <li>Produce API and implementation guides, security and compliance documentation, proposals, release notes, support material, and structured technical communication.</li>
+      <li>Produce API and implementation guides, security and compliance documentation, proposals, release notes, and support material.</li>
       <li>Work with NIST 800-171, CMMC readiness, SOC 2, ISO 27001, DFARS, incident response, and audit-support concepts in a technical-writing capacity.</li>
-      <li>Translate implementation detail into material usable by engineers, operators, customers, and nontechnical stakeholders.</li>
     </ul>
     <p class="lead"><b>Operations and Commercial Arboriculture Lead | Family business</b> Seattle area | 2015-present</p>
     <ul class="bul">
-      <li>Lead client intake, estimates, site assessment, scheduling, safety judgment, crew and vendor coordination, written proposals, and customer communication.</li>
-      <li>Apply practical risk assessment, prioritization, and follow-through in a field environment where plans must survive contact with the job.</li>
+      <li>Operated tree crews from the ground for eleven years: ran the rigging systems, judged clearances and how far limbs would swing relative to structures and people, and served as the second set of eyes for the person in the air.</li>
+      <li>Led client intake, estimates, site assessment, scheduling, safety judgment, and crew and vendor coordination.</li>
     </ul>
     <p class="lead"><b>Technical Networking Support, Xbox Division | Microsoft</b> Redmond, Washington | 2013-2014</p>
     <ul class="bul">
       <li>Diagnosed TCP/IP, DNS, NAT, firewall, router, and account-adjacent console networking issues across phone and chat support.</li>
-      <li>Documented repeatable resolutions and translated technical fixes into clear user guidance.</li>
     </ul>
   </section>
   <section>
     <h2>Technical strengths</h2>
-    <p class="lead"><b>Languages:</b> Python, Rust, C++, TypeScript/JavaScript, Lua, HLSL, C#, PowerShell, Bash <b>Systems:</b> compilers, lexing/parsing, AST and IR design, type checking, code generation, D3D11, shader pipelines, shared-memory IPC, CMake, vcpkg <b>AI and evaluation:</b> model routing, tool-use loops, MCP surfaces, multi-agent orchestration, task decomposition, worker/verifier separation, provenance, replayable ledgers, evidence intake <b>Graphics and color:</b> real-time post-processing, HDR and tone mapping, ICC and 3D-LUT workflows, perceptual color difference, DDC/CI, display characterization <b>Delivery:</b> Git and GitHub, pytest, Node test tooling, GitHub Actions, release notes, developer documentation, implementation guides, troubleshooting, Linux</p>
+    <p class="lead"><b>Languages:</b> Python, Rust, C++, TypeScript/JavaScript, Lua, HLSL, C#, PowerShell, Bash <b>Verification and AI:</b> capability gates, sealed receipts, offline re-verification, provenance, replayable ledgers, model routing, tool-use loops, MCP surfaces, worker/verifier separation, evaluation <b>Systems:</b> compilers, type systems, typed effects, code generation, D3D11, shader pipelines, shared-memory IPC, CMake <b>Delivery:</b> Git and GitHub, pytest, GitHub Actions, release notes, developer documentation, Linux</p>
   </section>
   <section>
     <h2>Public proof</h2>
-    <p class="lead">Portfolio: <a href="https://harperz9.github.io/portfolio.html" translate="no">https://harperz9.github.io/portfolio.html</a> Research: <a href="https://harperz9.github.io/research.html" translate="no">https://harperz9.github.io/research.html</a> Repositories and releases: <a href="https://github.com/HarperZ9" translate="no">https://github.com/HarperZ9</a></p>
-    <p class="entry-note">Updated 2026-07-28.</p>
+    <p class="lead">Portfolio: <a href="https://harperz9.github.io/portfolio.html" translate="no">https://harperz9.github.io/portfolio.html</a> Repositories and releases: <a href="https://github.com/HarperZ9" translate="no">https://github.com/HarperZ9</a></p>
   </section>
+  <p class="entry-note">Updated 2026-08-04.</p>
 </article>
 </main>
 </body>
