@@ -119,34 +119,82 @@ def test_plate_grid_uses_the_existing_composite_only():
 
 
 def test_every_plate_points_at_the_best_surviving_copy():
-    """The composite is 320x400 per plate. The best copy that still exists is 640x800.
+    """Each plate points at the best copy of that work that exists, and says which kind it is.
 
-    The 1229x1536 originals are unrecoverable: they are not on disk anywhere, and only their
-    sha256 and dimensions survive as receipts. The 640x800 atlas derivatives are the highest
-    fidelity that remains, they are already served from this repo, and they are matched to this
-    sequence by the ORIGINAL file's sha256 rather than by filename or ordering, so a renamed or
-    reordered file cannot silently attach the wrong artwork to a plate.
+    Two origins, two rules, because they earn trust differently:
+
+    - ``atlas-derivative`` (640x800) is selected by the ORIGINAL file's sha256, so a renamed or
+      reordered file cannot silently attach the wrong artwork to a plate.
+    - ``session-archive`` (1122x1402) was recovered from the authoring session's own art archive
+      and identified by structural correlation, because its bytes do NOT hash to the recorded
+      original. It therefore has to carry the source asset it came from, and it is labelled as a
+      session archive rather than as an original. That distinction is the honest part.
+
+    The 1229x1536 originals remain unrecovered. Their sha256 and dimensions stay recorded per
+    image, which is exactly what would make a future recovery provable rather than plausible.
     """
     manifest = json.loads((ROOT / "art" / "current-story" / "manifest.json").read_text(encoding="utf-8"))
     world = json.loads((ROOT / "art" / "spatial" / "atlas" / "atlas.world.json").read_text(encoding="utf-8"))
     by_sha = {s["canonical_source_sha256"]: s for s in world["scenes"]}
-
     plate = manifest["published_composite"]["plate_dimensions"]
+
+    origins = set()
     for item in manifest["images"]:
         full = item.get("full_view")
         assert full, f"{item['source_filename']} has no full view"
         path = ROOT / full["path"]
         assert path.is_file(), full["path"]
-        # The pointer is only trustworthy if it was derived from the original's hash.
-        assert item["source_sha256"] in by_sha, "the plate maps to a real atlas scene"
-        assert by_sha[item["source_sha256"]]["source_preview"] == path.name, \
-            f"{item['source_filename']} points at the scene its ORIGINAL hash selects"
-        # And it must actually be an improvement, or there is no reason to fetch it.
+        origin = full.get("origin")
+        assert origin in {"atlas-derivative", "session-archive"}, f"{full['path']}: unlabelled origin"
+        origins.add(origin)
+
+        if origin == "atlas-derivative":
+            assert item["source_sha256"] in by_sha, "the plate maps to a real atlas scene"
+            assert by_sha[item["source_sha256"]]["source_preview"] == path.name, \
+                f"{item['source_filename']} points at the scene its ORIGINAL hash selects"
+        else:
+            src = full.get("source_asset")
+            assert src, f"{full['path']}: a session-archive plate must name what it came from"
+            for key in ("name", "archive", "png_sha256", "png_bytes"):
+                assert src.get(key), f"{full['path']}: source_asset.{key} missing"
+            assert len(src["png_sha256"]) == 64, "the source asset's hash is recorded in full"
+            # It must beat what it replaced, or replacing was pointless.
+            assert full["dimensions"][0] > 640 and full["dimensions"][1] > 800, \
+                "a recovered plate must beat the atlas derivative it replaced"
+
+        # Every kind must beat the composite, or there is no reason to fetch it at all.
         assert full["dimensions"][0] > plate["width"], "the full view beats the composite plate"
         assert full["dimensions"][1] > plate["height"]
-        # The bytes on disk are the bytes the manifest claims.
+        # And the bytes on disk are the bytes the manifest claims.
         assert hashlib.sha256(path.read_bytes()).hexdigest() == full["sha256"], \
             f"{full['path']} drifted from its recorded hash"
+
+    # A mixed sequence is the honest state right now; the note must not pretend otherwise.
+    note = manifest["full_view_note"]
+    if "session-archive" in origins and "atlas-derivative" in origins:
+        assert "09" in note and "17" in note, "the note names which works are still the old copy"
+        assert "unrecovered" in note or "not in that archive" in note
+
+
+def test_no_plate_claims_to_be_an_original():
+    """Nothing recovered hashes to a recorded original, so nothing may be labelled as one.
+
+    The recorded sha256 of each 1229x1536 original is the only thing that could ever prove a file
+    IS that original. Until a file matches one, calling it the original would be a fabrication
+    with a receipt attached, which is worse than the low-resolution copy it replaced.
+    """
+    manifest = json.loads((ROOT / "art" / "current-story" / "manifest.json").read_text(encoding="utf-8"))
+    recorded = {i["source_sha256"] for i in manifest["images"]}
+    for item in manifest["images"]:
+        full = item["full_view"]
+        assert full.get("origin") != "original", "no plate may claim original status"
+        assert full["sha256"] not in recorded, "a delivered file must not be confused with an original"
+        src = full.get("source_asset")
+        if src:
+            # If a source asset ever DID match a recorded original, that is a promotion worth
+            # making deliberately, so fail loudly rather than leaving it mislabelled.
+            assert src["png_sha256"] not in recorded, \
+                f"{full['path']} came from a file that IS a recorded original: relabel it"
 
 
 def test_the_page_stays_cheap_until_a_plate_is_opened():

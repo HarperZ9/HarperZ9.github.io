@@ -16,14 +16,21 @@
       "source_sha256": "d1f135d7ac052d55c5a6c2848b8b5c5c0fcca613a853ea528f6c1c77d27f80a9",
       "alt": "A fractured monochrome figure crouches in a dark geometric interior while two small figures stand beyond a bright keyhole-shaped opening.",
       "full_view": {
-        "path": "art/spatial/atlas/scene-01.jpg",
+        "path": "art/current-story/full/01.jpg",
         "dimensions": [
-          640,
-          800
+          1122,
+          1402
         ],
-        "sha256": "791d833e2bac76332b65a12d3faa7256f727741d4c7ed3e2a04bafcdef249343",
-        "bytes": 169841,
-        "scene": "scene-01"
+        "sha256": "70b5ed68877bf3c93b71dc76cd88dc6b1d139409ad124d255e4924bedbe04a9a",
+        "bytes": 426860,
+        "origin": "session-archive",
+        "source_asset": {
+          "name": "trapped_in_a_fractured_realm.png",
+          "archive": "complete_session_art_archive_no_references.zip",
+          "png_sha256": "8a97232a7b2e2b4ecbbb08bb1c3a7646835187203a248c82a4f88c5a7baaf2b7",
+          "png_bytes": 2702741,
+          "match": "structural correlation 1.0000 against the published plate"
+        }
       }
     },
     {
@@ -36,14 +43,21 @@
       "source_sha256": "31e5f243cc9464bb4cd515bafb3ce2664813710543c69acd761fc493082211d1",
       "alt": "A faceted violet-gray figure in the left foreground looks toward a luminous doorway containing a distant silhouette.",
       "full_view": {
-        "path": "art/spatial/atlas/scene-02.jpg",
+        "path": "art/current-story/full/02.jpg",
         "dimensions": [
-          640,
-          800
+          1122,
+          1402
         ],
-        "sha256": "281d180e75332d480d26ff1d51b750d42e51bfb37668c8a04f7f3d8a76eae825",
-        "bytes": 195258,
-        "scene": "scene-02"
+        "sha256": "9ce05e42ad4ed4a4c6f0cdaa40e0f8db6198adaff685b7bbe040f1f00fc5e67f",
+        "bytes": 454384,
+        "origin": "session-archive",
+        "source_asset": {
+          "name": "mystery_beyond_the_glowing_doorway.png",
+          "archive": "complete_session_art_archive_no_references.zip",
+          "png_sha256": "dee866d1f942fb4d2474658afde52f1dbaa860e3759c4e292f48f51e53e45b27",
+          "png_bytes": 2863859,
+          "match": "structural correlation 1.0000 against the published plate"
+        }
       }
     },
     {
@@ -56,14 +70,21 @@
       "source_sha256": "94bb982be92f282a85e644f417782a928c4ce4d7497b454131563d358cb3716b",
       "alt": "Two dark fragmented figures lean together in a wet, ruined interior, with a small open doorway at the far right.",
       "full_view": {
-        "path": "art/spatial/atlas/scene-03.jpg",
+        "path": "art/current-story/full/03.jpg",
         "dimensions": [
-          640,
-          800
+          1122,
+          1402
         ],
-        "sha256": "30114c6198fa9541a4d7e33cb0a60c0d031c3ace54d310190d3620737aa84d58",
-        "bytes": 197258,
-        "scene": "scene-03"
+        "sha256": "40fce7ceeeb80e518a6aa8a3bd19089d6c13f64d5c872714177190df8772a1d3",
+        "bytes": 484337,
+        "origin": "session-archive",
+        "source_asset": {
+          "name": "fragmented_intimacy_in_a_melancholic_landscape.png",
+          "archive": "complete_session_art_archive_no_references.zip",
+          "png_sha256": "24896410923d10a67a1c5d83e494271cd3372e4f4f80f80eaf9fb9a1c0ba6ac5",
+          "png_bytes": 3021482,
+          "match": "structural correlation 1.0000 against the published plate"
+        }
       }
     },
     {
@@ -76,14 +97,21 @@
       "source_sha256": "61dacbb8815ae24a6193bddb424006539d529d4aeec1b05b17f7c584d84f2b1a",
       "alt": "A seated angular figure covers their face in shadow while two small figures appear beyond a bright keyhole opening.",
       "full_view": {
-        "path": "art/spatial/atlas/scene-04.jpg",
+        "path": "art/current-story/full/04.jpg",
         "dimensions": [
-          640,
-          800
+          1122,
+          1402
         ],
-        "sha256": "a698ceecc6bcb81122fbad2a3f5665a0e985cdb2ca3e074120c5dae9f4fa7bdb",
-        "bytes": 185231,
-        "scene": "scene-04"
+        "sha256": "c4d91c230486bdc79d177ce2e67516a3162905639e59e0271de05a851a0ced59",
+        "bytes": 421514,
+        "origin": "session-archive",
+        "source_asset": {
+          "name": "prison_of_light_and_longing.png",
+          "archive": "complete_session_art_archive_no_references.zip",
+          "png_sha256": "5047b95008dc0b0510cb17bf35306404d8e36bdffae62422709e29ffcae0d3e6",
+          "png_bytes": 2667495,
+          "match": "structural correlation 1.0000 against the published plate"
+        }
       }
     },
     {
@@ -96,14 +124,21 @@
       "source_sha256": "d5d6183b5da38d1a96f038cecb691f3e6c9753e5e2d4869e8570b1f665dfbed8",
       "alt": "A black-and-white fragmented standing figure covers their face against a cracked, dripping wall.",
       "full_view": {
-        "path": "art/spatial/atlas/scene-05.jpg",
+        "path": "art/current-story/full/05.jpg",
         "dimensions": [
-          640,
-          800
+          1122,
+          1402
         ],
-        "sha256": "51bddab872eaa51f0b7411360a960fa69f5be475a026cefb3669956212c31cf7",
-        "bytes": 214788,
-        "scene": "scene-05"
+        "sha256": "53a19bd4bb9c9463146b12fa5a2d07eeb11fd12749d7d2f3d90192764b5b83bd",
+        "bytes": 502772,
+        "origin": "session-archive",
+        "source_asset": {
+          "name": "fragmented_reflections_of_despair.png",
+          "archive": "complete_session_art_archive_no_references.zip",
+          "png_sha256": "b30fc7b7c225a535c38de406c679c30e2e652e8fb5b5fe5eedb2ab493affd1b1",
+          "png_bytes": 2958620,
+          "match": "structural correlation 1.0000 against the published plate"
+        }
       }
     },
     {
@@ -116,14 +151,21 @@
       "source_sha256": "2e7e97579179e2ffc45d588fd9f675ee4a7afcc5c71abd68806e56902f224593",
       "alt": "A black-and-white angular figure bends forward in a corridor while a distant silhouette stands in a bright doorway.",
       "full_view": {
-        "path": "art/spatial/atlas/scene-06.jpg",
+        "path": "art/current-story/full/06.jpg",
         "dimensions": [
-          640,
-          800
+          1122,
+          1402
         ],
-        "sha256": "3a8645ed446f616229bbfa8545966bef34f2e4d7c2a0030d2e4a55f90bbcafd5",
-        "bytes": 203716,
-        "scene": "scene-06"
+        "sha256": "e31512c39af88b27f513c13d65474c93f749a54bd4eee4df1bdd348407717e59",
+        "bytes": 499757,
+        "origin": "session-archive",
+        "source_asset": {
+          "name": "fragmented_figure_in_decaying_space.png",
+          "archive": "complete_session_art_archive_no_references.zip",
+          "png_sha256": "6f454704743fbb573820fe8fdc0026aab4970874497b68a2c6c70e836b1306fa",
+          "png_bytes": 3052866,
+          "match": "structural correlation 1.0000 against the published plate"
+        }
       }
     },
     {
@@ -136,14 +178,21 @@
       "source_sha256": "c172a2c7864d7444100ff7e70a0626c038233e023f19157e2f97aa93e8e272c4",
       "alt": "A fractured black-and-white figure leans forward with a hand over their face as shadowed forms repeat behind them.",
       "full_view": {
-        "path": "art/spatial/atlas/scene-07.jpg",
+        "path": "art/current-story/full/07.jpg",
         "dimensions": [
-          640,
-          800
+          1122,
+          1402
         ],
-        "sha256": "bced73da3da02c345903ba795ad8faa37b21f427e7ec8424ff5f33d55775c859",
-        "bytes": 214242,
-        "scene": "scene-07"
+        "sha256": "8bd4d2458a35e60276b74bddd6c1fe3adefabaf5180181cd6635771fde328485",
+        "bytes": 542513,
+        "origin": "session-archive",
+        "source_asset": {
+          "name": "intimate_embrace_in_a_fractured_world.png",
+          "archive": "complete_session_art_archive_no_references.zip",
+          "png_sha256": "277bd0086f6ec3d67a00c80ecfca8a8e0905d1861cdeb8cad0d4ec666e55f921",
+          "png_bytes": 3193543,
+          "match": "structural correlation 1.0000 against the published plate"
+        }
       }
     },
     {
@@ -156,14 +205,21 @@
       "source_sha256": "b3ab4776db9ba05d3b2c3cf26dea609df43e8eb0fa765037e72019bbcfdc8c82",
       "alt": "A red, charcoal, and violet fractured portrait rests its head in one hand against a dark geometric field.",
       "full_view": {
-        "path": "art/spatial/atlas/scene-08.jpg",
+        "path": "art/current-story/full/08.jpg",
         "dimensions": [
-          640,
-          800
+          1122,
+          1402
         ],
-        "sha256": "2effb7daa5c2da573c7400c4d2561a29047297232bc2763524b81f6ed2d45912",
-        "bytes": 201660,
-        "scene": "scene-08"
+        "sha256": "60ed7d679c28ea1c19ca35d02cfcf620e9f7029e788fc676aac7778444ef5b66",
+        "bytes": 455707,
+        "origin": "session-archive",
+        "source_asset": {
+          "name": "fragmented_sorrow_in_urban_decay.png",
+          "archive": "complete_session_art_archive_no_references.zip",
+          "png_sha256": "5c6b82c9ac21b717c5f552649be6cc5c7a49157d0863036dfb9e0d9ffbc5c91f",
+          "png_bytes": 2822042,
+          "match": "structural correlation 1.0000 against the published plate"
+        }
       }
     },
     {
@@ -183,7 +239,8 @@
         ],
         "sha256": "c951184716738cf4adc2746907efbcd6dcb71aaf5babccb43fd6877e49b240d9",
         "bytes": 89573,
-        "scene": "scene-09"
+        "scene": "scene-09",
+        "origin": "atlas-derivative"
       }
     },
     {
@@ -203,7 +260,8 @@
         ],
         "sha256": "8abcca99ae22581045d05c11dfa3af01550cfbd7087d59bf42ea77260721cd05",
         "bytes": 96425,
-        "scene": "scene-10"
+        "scene": "scene-10",
+        "origin": "atlas-derivative"
       }
     },
     {
@@ -223,7 +281,8 @@
         ],
         "sha256": "d2f7be9e8d06da736a06af6ea8ebbbe2ed1141f08c4c9fcc264a1e02dc7eca6b",
         "bytes": 78047,
-        "scene": "scene-11"
+        "scene": "scene-11",
+        "origin": "atlas-derivative"
       }
     },
     {
@@ -243,7 +302,8 @@
         ],
         "sha256": "7e6fd1ad5db182015cec0637000c01c3c7b60ac47d72d1f92fbbd3ea3914c2e3",
         "bytes": 81023,
-        "scene": "scene-12"
+        "scene": "scene-12",
+        "origin": "atlas-derivative"
       }
     },
     {
@@ -263,7 +323,8 @@
         ],
         "sha256": "c4cb2684a78a48db6b0e418b9acd16d9b68e52db7fc3447ac87fafee29b75790",
         "bytes": 77351,
-        "scene": "scene-13"
+        "scene": "scene-13",
+        "origin": "atlas-derivative"
       }
     },
     {
@@ -283,7 +344,8 @@
         ],
         "sha256": "76bee8c2e1e1e52120653158c4fd1bcd3b89c39f67c2906ab1921ddab4fc03e0",
         "bytes": 90181,
-        "scene": "scene-14"
+        "scene": "scene-14",
+        "origin": "atlas-derivative"
       }
     },
     {
@@ -303,7 +365,8 @@
         ],
         "sha256": "8ba42ea446a7d321c6a583b8057f984f20ca6fb51a1ae32ddcdcf2fb39e846f6",
         "bytes": 73703,
-        "scene": "scene-15"
+        "scene": "scene-15",
+        "origin": "atlas-derivative"
       }
     },
     {
@@ -323,7 +386,8 @@
         ],
         "sha256": "724184354f0da15120a7a08945863922dd2a89a2ab119258a8df48ca54b43785",
         "bytes": 62517,
-        "scene": "scene-16"
+        "scene": "scene-16",
+        "origin": "atlas-derivative"
       }
     },
     {
@@ -343,7 +407,8 @@
         ],
         "sha256": "85977ce629023123bf22e145c6c82b65b9e2d1a5ee31403d88570f12b11d2123",
         "bytes": 79920,
-        "scene": "scene-17"
+        "scene": "scene-17",
+        "origin": "atlas-derivative"
       }
     }
   ],
@@ -376,5 +441,5 @@
       "art/current-story/data/sequence.10.b64"
     ]
   },
-  "full_view_note": "Each plate points at the highest-fidelity copy of that work which still exists: the 640x800 atlas derivative, matched to this sequence by the ORIGINAL file's sha256, not by filename or order. The 1229x1536 originals are unrecoverable; only their hashes and dimensions survive, recorded per image above. The composite below remains 320x400 per plate and is what the page loads up front; the full view is fetched only when a plate is opened."
+  "full_view_note": "Each plate points at the best copy of that work available. Works 01 to 08 were recovered from the authoring session's own art archive at 1122x1402 lossless PNG, identified by structural correlation of 1.0000 against the published plate (their bytes do NOT hash to the recorded originals, so they are labelled session-archive rather than original) and delivered here as quality-90 JPEG so a 2.8MB plate does not become a 2.8MB request. Works 09 to 17 are still the 640x800 atlas derivative: they are not in that archive, and nothing was substituted for them. The 1229x1536 originals remain unrecovered; their sha256 and dimensions are recorded per image above, which is what makes any future recovery provable. The composite the page loads up front is unchanged at 320x400 per plate."
 }
