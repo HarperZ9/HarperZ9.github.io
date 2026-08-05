@@ -124,6 +124,15 @@ removed without a mouse. And "Nothing you draw leaves this page" was an overclai
 own model and the canvas frame goes to the endpoint you configure. The copy now says exactly
 that.
 
+**Three the panel returned after the merge** (its full run finished later; 24 confirmed, 0
+refuted). The replay scrubber was inert until Watch had been pressed once, because the replay
+module is a lazy import nothing else loaded. Restoring a captured-frame pin re-snapshotted the
+live canvas on the way in, so the frame you happened to be looking at was plotted under the
+pinned recipe's receipt — the single thing a reproduction must never do; refusals in that path
+now reach the panel, not only the chat. And a voxel sheet drawn without opening the Voxels
+source refused to pin although it is fully reproducible from (seed, study) at the forge's
+defaults, which the recipe now records, with a test pinning the equivalence.
+
 **Geometry.** `tanaka` was tracing every interior band boundary twice — an artifact of working
 around the dead `threshold` option — laying double ink on four of its levels and reading as false
 index contours, which defeats the study's own premise that weight alone carries the shading. With

@@ -126,6 +126,11 @@ let _plateIndex = null;        // atlas.world.json scenes, fetched once for the 
 // "Studio canvas" plots the frame they were just looking at, not the sheet that replaced it.
 const _plotSnapshot = document.createElement("canvas");
 let _plotSnapshotOk = false;
+// Set while a pin is being restored, so the switch INTO the pen surface does not overwrite the
+// snapshot with whatever happens to be on screen. Without it, restoring a captured-frame pin
+// silently plotted the CURRENT frame under the pinned recipe's receipt — the one thing a
+// reproduction must never do.
+let _restoringPin = false;
 
 // Sketch source: freehand drawing as a first-class sheet (system/sketch.js). The sketch object
 // deliberately SURVIVES source switches — draw, hop to the pen surface, come back, keep drawing.
@@ -669,7 +674,8 @@ function setSource(next) {
     // assumed here.
     try {
       const src = $("studio-canvas");
-      if (src && src.width > 8) {
+      if (_restoringPin) { /* a restore must not re-capture the screen as the pinned frame */ }
+      else if (src && src.width > 8) {
         _plotSnapshot.width = src.width; _plotSnapshot.height = src.height;
         _plotSnapshot.getContext("2d").drawImage(src, 0, 0);
         _plotSnapshotOk = true;
@@ -840,10 +846,17 @@ function acquirePlotField(then) {
     _plotField = _plotImage.toneField(data.data, w, h);
     _plotFieldInfo = { name };
   };
+  // A refusal has to reach the PANEL, not only the chat: leaving the previous sheet's stroke
+  // count under a blank canvas reads as a sheet that was drawn, which is the opposite of true.
+  const refuse = (panel, spoken) => {
+    if (readout) readout.textContent = panel;
+    say("model", spoken);
+    return false;
+  };
   if (_plotMaterial === "canvas") {
     if (!_plotSnapshotOk || _plotSnapshot.width < 9) {
-      say("model", "No frame to plot: nothing was on the studio canvas when you switched here. Render a source, then come back.");
-      return false;
+      return refuse("no captured frame — render a source, then switch straight here",
+        "No frame to plot: nothing was on the studio canvas when you switched here. Render a source, then come back.");
     }
     fromCanvas(_plotSnapshot, "the studio canvas");
     // A released GPU buffer drawImages as solid black: near-zero tonal span means the capture
@@ -852,8 +865,8 @@ function acquirePlotField(then) {
     for (const v of _plotField.lum) { if (v < lo) lo = v; if (v > hi) hi = v; }
     if (hi - lo < 0.02) {
       _plotField = null; _plotFieldInfo = null;
-      say("model", "The last frame could not be captured — that source renders on a GPU buffer the browser had already released. Render it again, then switch straight here.");
-      return false;
+      return refuse("the captured frame came back blank — that source's GPU buffer was already released",
+        "The last frame could not be captured — that source renders on a GPU buffer the browser had already released. Render it again, then switch straight here.");
     }
     then(); return true;
   }
@@ -874,8 +887,8 @@ function acquirePlotField(then) {
     return true;
   }
   // picture: nothing cached means no file chosen yet.
-  say("model", "Choose a picture first — any image file becomes a plotter drawing.");
-  return false;
+  return refuse("choose a picture above — it stays in this browser",
+    "Choose a picture first — any image file becomes a plotter drawing.");
 }
 
 function drawPlotMap() {
@@ -1646,26 +1659,13 @@ function initReplayControls() {
   });
   const scrub = $("plot-scrub");
   if (scrub) scrub.addEventListener("input", () => {
-    if (!_lastPlot || !_replayMod || !_plotMaps || activeSource !== "plotmaps") return;
-    stopReplay();
-    const c = $("studio-canvas");
-    const ctx = c.getContext("2d", { willReadFrequently: true });
-    if (!ctx) return;
-    const target = parseInt(scrub.value, 10) / 1000;
-    const stepper = _replayMod.createReplay(_lastPlot);
-    const T = _plotMaps.sheetTransform(_lastPlot, c.width, c.height, { view: _stillView.plotmaps });
-    replayGround(ctx, c);
-    // Scrubbing is an instant re-run to the target. The step budget is sized to the REMAINING
-    // distance, not a fixed 20,000: a fat fixed budget overshot the requested position by most of
-    // a sheet, so the slider and the ink disagreed and the control read as broken.
-    const total = stepper.totals.points || 1;
-    let prog = 0, guard = 4000;
-    while (guard-- > 0) {
-      const r = stepper.step(Math.max(1, Math.round((target - prog) * total)));
-      replayDrawBatch(ctx, T, r.batch);
-      prog = r.progress;
-      if (r.done || prog >= target - 1e-9) break;
-    }
+    if (!_lastPlot || !_plotMaps || activeSource !== "plotmaps") return;
+    // The scrubber used to be a dead control until Watch had been pressed once, because the
+    // replay module is a lazy import and only Watch and G-code loaded it: the thumb slid the
+    // full width, the canvas never moved, and nothing said why. Scrubbing IS a request to
+    // replay, so it loads the module itself and then does what was asked.
+    if (!_replayMod) { loadReplay().then(() => scrubTo(scrub)).catch(err => say("model", "The replay engine failed to load: " + err.message)); return; }
+    scrubTo(scrub);
   });
   const gcodeBtn = $("plot-gcode");
   if (gcodeBtn) gcodeBtn.addEventListener("click", () => {
@@ -1680,6 +1680,31 @@ function initReplayControls() {
       say("model", "G-code exported: pen-ordered, with an M0 pause at every pen change so you can swap pens at the machine.");
     }).catch(err => say("model", "G-code export failed: " + err.message));
   });
+}
+
+// Draw the sheet exactly as far as the scrubber asks. Separated from the handler so the
+// lazy-load path can call it once the module has arrived.
+function scrubTo(scrub) {
+  if (!_lastPlot || !_replayMod || !_plotMaps || activeSource !== "plotmaps") return;
+  stopReplay();
+  const c = $("studio-canvas");
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return;
+  const target = parseInt(scrub.value, 10) / 1000;
+  const stepper = _replayMod.createReplay(_lastPlot);
+  const T = _plotMaps.sheetTransform(_lastPlot, c.width, c.height, { view: _stillView.plotmaps });
+  replayGround(ctx, c);
+  // Scrubbing is an instant re-run to the target. The step budget is sized to the REMAINING
+  // distance, not a fixed 20,000: a fat fixed budget overshot the requested position by most of a
+  // sheet, so the slider and the ink disagreed and the control read as broken.
+  const total = stepper.totals.points || 1;
+  let prog = 0, guard = 4000;
+  while (guard-- > 0) {
+    const r = stepper.step(Math.max(1, Math.round((target - prog) * total)));
+    replayDrawBatch(ctx, T, r.batch);
+    prog = r.progress;
+    if (r.done || prog >= target - 1e-9) break;
+  }
 }
 
 // ── The shelf: pin, restore, carry ──────────────────────────────────────────
@@ -1713,11 +1738,13 @@ function currentPlotRecipe() {
     voxel: null, sketch: null,
   };
   if (_plotMaterial === "voxels") {
-    // A voxel sheet drawn without ever opening the Voxels source has no live scene to describe,
-    // so there is no recipe that reproduces it. Say so instead of handing the shelf a pin it will
-    // refuse with a schema message the visitor cannot act on.
-    if (!_lastVoxelScene) return { kind: "voxel", rec: null, why: "open the Voxels source and build once, then this sheet can be pinned" };
-    rec.voxel = voxelRecipe();
+    // A voxel sheet drawn without ever opening the Voxels source is still fully reproducible:
+    // drawPlotMap synthesises the scene from (seed, study) at the forge's own defaults, so the
+    // recipe writes down exactly that. Refusing the pin here — as the first cut did — turned a
+    // reproducible sheet into an unpinnable one for no reason.
+    rec.voxel = _lastVoxelScene ? voxelRecipe() : {
+      study: _voxelStudy, seed: rec.seed, res: 48, tune: null, ops: [],
+    };
   }
   if (_plotMaterial === "sketchsheet" && _sketch) {
     rec.sketch = _sketch.serialize();
@@ -1947,7 +1974,13 @@ function restorePin(pin) {
   }
   syncPlotMaterialUI();
   if ((r.material === "picture" || r.material === "canvas") && !_plotField) {
-    say("model", "That pin used a " + (r.material === "picture" ? "picture" : "captured frame") + " that lives only in the moment it was made — choose it again and the rest of the recipe applies as pinned.");
+    // The pixels are genuinely gone. Blank the stale snapshot so nothing else can stand in for
+    // them, and say so — the pen surface then reports "no frame to plot" rather than drawing an
+    // unrelated image under this pin's name.
+    _restoringPin = true;
+    _plotSnapshotOk = false;
+    say("model", "That pin used a " + (r.material === "picture" ? "picture" : "captured frame") + " that lives only in the moment it was made, so it cannot be redrawn from the recipe. Every other control is set exactly as pinned — choose the image again and the sheet comes back.");
+    setTimeout(() => { _restoringPin = false; }, 0);
   }
   if (r.material === "plate" && r.plateId) {
     // The plate picker is a custom listbox fed by an async fetch, and its .value setter REFUSES a
