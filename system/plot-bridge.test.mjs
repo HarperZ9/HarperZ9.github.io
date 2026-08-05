@@ -110,3 +110,15 @@ test("mergeSheets: one frame, both provenances, re-measured whole", () => {
     "over: the field is drawn last before the frame");
   assert.ok(merged.meta.measure.score > 0, "the blend is measured as one composition");
 });
+
+test("a crossover sheet built from seed alone equals one built from a live scene", async () => {
+  // The pen surface synthesises the scene when no build is open (buildVoxelScene at the forge's
+  // own defaults), and the shelf recipe writes down exactly those defaults. If the two ever drift
+  // apart, restoring a pin made without visiting the Voxels source draws a different object.
+  const { buildVoxelScene } = await import("./voxel-forge.js");
+  const adHoc = buildVoxelScene("cross-seed", { study: "relic" });
+  const fromRecipe = buildVoxelScene("cross-seed", { study: "relic", res: 48, tune: null });
+  assert.equal(adHoc.meta.res[0], 48, "the forge's default resolution is what the recipe records");
+  assert.equal(voxelSheet(adHoc, { density: 1 }).meta.strokes,
+    voxelSheet(fromRecipe, { density: 1 }).meta.strokes, "same drawing either way");
+});
