@@ -16,7 +16,7 @@ ESSAY_PARTS = [
 ]
 TALK_PARTS = [
     ROOT / "writing" / "pick-the-lock-for-everyone-talk" / name
-    for name in ("01.md", "02.md", "02b.md", "02c.md", "02d.md", "03.md")
+    for name in ("01.md", "02.md", "02b.md", "02c.md", "02d.md", "02e.md", "03.md")
 ]
 
 
@@ -100,7 +100,21 @@ def test_canonical_essay_preserves_the_expanded_argument() -> None:
         assert marker in essay
 
     assert len(essay.split()) > 20_000
-    assert essay.lower().count("fuck") <= 1
+    # The profanity budget is deliberate, and it is now five rather than one. Four of the five
+    # arrive together in a single passage that is ABOUT the word: it quotes the line the author
+    # inherited ("ima fuck yo bitch"), names the property claim inside it, and then spends the
+    # word three times redirecting it away from a person and onto the monopoly, the gate, and the
+    # label. Removing them removes the argument, not the profanity. The fifth is the original
+    # "Fuck the little pipe." The number stays pinned so a sixth use has to be argued for, and
+    # the redirect lines are asserted below so the budget cannot be quietly respent elsewhere.
+    assert essay.lower().count("fuck") == 5
+    for redirect in (
+        "Fuck the monopoly, not the woman.",
+        "Fuck the gate, not the person trapped beside it.",
+        "Fuck the little pipe.",
+        "So I want to keep the defiance and kill the possession.",
+    ):
+        assert redirect in essay, redirect
     assert essay.lower().count("shit") <= 3
     assert "—" not in essay
     assert "–" not in essay

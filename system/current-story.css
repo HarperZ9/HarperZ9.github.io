@@ -144,3 +144,22 @@
   color: var(--prussian);
   margin: clamp(1.8rem, 4vw, 2.8rem) 0 .6rem;
 }
+
+/* The statement sits AFTER the work. The page opens by refusing interpretation ("no interpretive
+   titles, the chronology is the narrative"), so the words that frame the sequence belong where
+   they cannot pre-empt it. */
+.story-statement {
+  width: min(88vw, 640px);
+  margin: clamp(2rem, 5vw, 3.4rem) auto 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.story-statement h3 {
+  font-family: var(--mono);
+  font-size: .6rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--prussian);
+  margin: 0 0 .9rem;
+}
+.story-statement p { max-width: 62ch; margin: 0 0 1rem; }
