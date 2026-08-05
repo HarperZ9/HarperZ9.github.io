@@ -2,7 +2,11 @@ const CHUNK_COUNT = 11;
 const FRAME_WIDTH = 320;
 const FRAME_HEIGHT = 400;
 const FRAME_GAP = 24;
-const MANIFEST_PATH = "art/current-story/manifest.json";
+// Version-stamped for the same reason the stylesheet is: this file is fetched with
+// force-cache, so without a stamp a returning visitor keeps the manifest they cached
+// before the plates were recovered and never sees the higher-resolution copies at all.
+// Bump this whenever the manifest's contents change.
+const MANIFEST_PATH = "art/current-story/manifest.json?v=20260805-plates";
 
 let storyPromise;
 

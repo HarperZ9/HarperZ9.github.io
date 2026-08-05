@@ -9,7 +9,9 @@
 // (4.5MB total, lazily) and the full copy is fetched only when a work is opened. Same discipline
 // the sequence page uses, same reason.
 
-const MANIFEST = "art/session-archive/manifest.json";
+// Stamped for the same reason the sequence manifest is: force-cache plus no stamp means a
+// returning visitor never sees a work added to the archive.
+const MANIFEST = "art/session-archive/manifest.json?v=20260805a";
 
 async function loadManifest() {
   const r = await fetch(MANIFEST, { cache: "force-cache" });
