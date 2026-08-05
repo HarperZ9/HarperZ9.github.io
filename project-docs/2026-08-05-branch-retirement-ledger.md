@@ -1,0 +1,97 @@
+# Branch retirement ledger (2026-08-05)
+
+Twenty branches sat unmerged into `main`. Each was assessed by the only question that matters
+for a live site: **does this branch hold something `main` does not?** Not "has it been merged" —
+old work here was frequently re-authored by hand rather than merged, so patch-ids do not match
+and `git cherry` reports false positives.
+
+**Method.** For every branch, for every file it touched, compare the branch's version of that
+file against `main`'s version directly (`git diff main origin/BRANCH -- PATH`), discounting the
+sitewide `system.css?v=` stamp. An empty diff means `main` already carries the content. A
+non-empty diff was then read to establish DIRECTION: does the branch add something missing, or
+is it an older draft `main` has since grown past?
+
+**Why not merge them.** Most sit 60 to 160 commits behind. A merge would not have been a
+no-op; it would have reverted shipped work. `site/2026-08-04-outreach-refresh` would have
+returned the public Flywheel page to v0.2.2 pinned against `flywheel-desktop`, a repository
+that has since been archived into `flywheel`. `site/2026-07-30-measured-verification` would
+have deleted the Flywheel flagship workflow from the demonstrations page. That is the whole
+hazard, and it is why every verdict below is anchored to file content rather than to graph
+topology.
+
+**Nothing is lost.** Every retired branch's tip SHA is recorded here. `git fetch origin <sha>`
+or `git checkout <sha>` restores it in full, permanently.
+
+## Retired: content already in `main`, byte for byte
+
+These four differ from `main` in nothing but the CSS cache stamp. `fix/pr-evidence-recount`
+shipped as PR #111; the branch was simply never deleted.
+
+| Branch | Tip | Evidence |
+|---|---|---|
+| `fix/latest-release-link` | `0eb1363` | zero files differ from `main` |
+| `fix/pr-evidence-recount` | `42bed35` | `portfolio.html` identical; shipped as #111 |
+| `publish/pick-lock-v3-2026-07-24` | `d2f21ae` | zero files differ from `main` |
+| `site/2026-07-30-ci-repair` | `f2ebcb0` | zero files differ from `main` |
+
+## Retired: `main` is strictly newer, and merging would regress
+
+| Branch | Tip | What merging would have undone |
+|---|---|---|
+| `fix/flywheel-033-currency` | `9beedda` | re-pins v0.3.3 with a hardcoded SHA-256; `main` carries the durable `releases/latest` link that survives 0.3.4 and beyond |
+| `site/2026-08-04-outreach-refresh` | `92bb017` | reverts Flywheel to v0.2.2 on the archived `flywheel-desktop` repo |
+| `site/2026-07-30-measured-verification` | `478ce56` | deletes the Flywheel flagship workflow from `demonstrations.html` |
+| `chore/update-readme-current-state` | `7be8269` | replaces the React-shell test contract with one asserting the retired white-ceramic home (`system/home.css`, Ribbon Field) |
+| `publish/conviction-coda-2026-07-22` | `9365fdc` | removes 75 and 53 lines from essay sections `main` has since finished |
+| `publish/redemption-canyon-2026-07-22` | `c74a4fa` | same lineage, an earlier draft |
+| `publish/open-failure-foundation-2026-07-22` | `4e6cf61` | removes 91 lines from `pick-the-lock-for-everyone.html` |
+| `publish/pick-the-lock-for-everyone-2026-07-22` | `58223db` | earlier draft of the same page and its test |
+| `publish/current-story-visual-sequence-2026-07-23` | `308e91d` | removes 23 URLs from `sitemap.xml` |
+| `publish/high-resolution-visual-coda-2026-07-23` | `823e916` | PR #79. Four abandoned sprite pipelines (`hq-data`, `hq-data-v2`, `avif-data`, `avif-data-v2`, `avif-data-v3`, `avif25-data`), one chunk each, plus a stray `connector-file-path-test.txt`. `main` serves the sequence from `art/current-story/data/` and the 27-scene atlas with receipts. |
+| `publish/high-resolution-27-frame-coda-2026-07-24` | `d7f36bd` | two chunks of the same retired pipeline |
+
+## Retired: dead build lineage (2026-07-12/13)
+
+All four reference hashed bundles (`assets/index-BlofTrJV.js`, `index-BP9vft9V.js`,
+`index-pWGxxfgs.js`) that no longer exist; `main` ships `index-gDDtH3kw.js`. Their page edits
+target files rewritten many times since.
+
+| Branch | Tip | Note |
+|---|---|---|
+| `agent/deploy-public-boundary-20260713` | `15006f8` | would delete 4,101 lines relative to `main` |
+| `feat/evidence-led-home` | `f68ed98` | superseded by the React shell |
+| `feat/calibrate-preview-evidence` | `bef53f9` | publishes Calibrate Pro demo assets |
+| `fix/calibrate-readiness-boundary` | `76ba64a` | withholds Calibrate Pro from promotion |
+
+The last two are a matched pair, and the second is the later decision. `main` has no
+`media/demos/calibrate-pro/`, and the demos directory carries crucible, flywheel, forum,
+gather, and index only. Calibrate Pro was deliberately not promoted; that decision stands.
+
+## KEPT — not retired, not published: unpublished writing
+
+`publish/living-breathing-reaction-2026-07-23` — tip `a13f240`. **This branch is the one
+exception and it is being kept.**
+
+It is the only branch in the twenty that ADDS more than it removes, and three of its files are
+absent from `main` entirely:
+
+- `writing/pick-the-lock-for-everyone/05b.md` (4,976 bytes) — `main` has 01 through 06 including
+  04b, 04c, 04d, but no 05b
+- `writing/pick-the-lock-for-everyone-talk/02e.md` (3,363 bytes) — `main` has 02, 02b, 02c, 02d,
+  but no 02e
+- `writing/living-breathing-reaction.md` (3,485 bytes) — a standalone piece, unreferenced by any
+  page in `main`
+
+This is real writing, and it is good. It argues that AI can become for creation what sampling
+became for music: that the ugly part was never transformation, it was the ownership system
+around the masters. "Fuck the label. Keep the lineage."
+
+**It was not published, and this pass does not publish it, for two reasons that belong
+together.** The section opens by naming family and by confessing — and a boundary set on
+2026-07-25, two days AFTER this was drafted, holds that essays from that point cover the work
+and the mission, with family and confession out. Second, the talk version marks itself
+`[Optional movement. Keep the voltage. Kill the possession.]` — the author already flagged it as
+a candidate rather than a commitment.
+
+Publishing it is the operator's call, not a cleanup decision. The branch stays so the writing
+stays, and the question stays open rather than being answered by deletion.
