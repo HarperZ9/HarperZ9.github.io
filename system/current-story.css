@@ -1,0 +1,146 @@
+/* current-story.css — the plate grid and its lightbox.
+ *
+ * The sequence page used to be one 320x7184 strip: seventeen works in a single <img>, carrying a
+ * single alt sentence for all of them. The strip is the right object for reading the sequence as
+ * a sequence, and it stays. What it cannot do is let anyone look at ONE work, or let a screen
+ * reader announce ONE work, and both of those are the point of an artwork page.
+ *
+ * So the plates are also laid out as a grid, sliced from the same composite the strip already
+ * loads (no new asset enters the repo for this), and any plate opens full-size in a dialog.
+ * Ink on the calm ground, one hot mark, two type families: the sitewide canon, nothing local. */
+
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: clamp(.7rem, 2vw, 1.15rem);
+  margin: clamp(1.2rem, 3vw, 2rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.story-plate {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  cursor: zoom-in;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+}
+.story-plate canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  background: #0d1b1c;
+  transition: border-color .16s ease;
+}
+.story-plate:hover canvas,
+.story-plate:focus-visible canvas { border-color: var(--ember); }
+.story-plate figcaption {
+  font-family: var(--mono);
+  font-size: .56rem;
+  letter-spacing: .06em;
+  color: var(--prussian);
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+}
+
+/* The movement boundary. The sequence turns at the seventeenth work's predecessor; marking it
+ * costs one rule and tells the viewer something the images alone do not. */
+.story-turn {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  margin: .5rem 0 .1rem;
+  font-family: var(--mono);
+  font-size: .55rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--prussian);
+}
+.story-turn::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--hairline);
+}
+
+/* ── the lightbox ────────────────────────────────────────────────────────── */
+.story-dialog {
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  background: var(--void-opaque);
+  color: var(--bone);
+  padding: 0;
+  max-width: min(94vw, 760px);
+  max-height: 94vh;
+  overflow: hidden;
+}
+.story-dialog::backdrop { background: rgba(8, 12, 12, .82); }
+.story-dialog-body { display: flex; flex-direction: column; gap: .6rem; padding: .9rem; }
+.story-dialog canvas {
+  width: auto;
+  max-width: 100%;
+  max-height: min(72vh, 640px);
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  background: #0d1b1c;
+  border-radius: 3px;
+}
+.story-dialog-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem;
+  font-family: var(--mono);
+  font-size: .58rem;
+  letter-spacing: .06em;
+  color: var(--prussian);
+}
+.story-dialog-bar nav { display: flex; gap: .4rem; }
+.story-dialog-bar button {
+  font-family: var(--mono);
+  font-size: .58rem;
+  letter-spacing: .06em;
+  color: var(--bone);
+  background: none;
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  padding: .25rem .6rem;
+  cursor: pointer;
+  min-width: 2.2rem;
+}
+.story-dialog-bar button:hover:not(:disabled) { border-color: var(--ember); }
+.story-dialog-bar button:disabled { opacity: .38; cursor: default; }
+.story-dialog-alt {
+  font-family: var(--body);
+  font-size: .82rem;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 0;
+  max-width: 62ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-plate canvas { transition: none; }
+}
+
+/* The strip keeps its own heading now that the plates precede it, so the page reads as two
+   deliberate views of one sequence rather than one view with an unexplained repeat. */
+.story-subhead {
+  font-family: var(--mono);
+  font-size: .6rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--prussian);
+  margin: clamp(1.8rem, 4vw, 2.8rem) 0 .6rem;
+}
