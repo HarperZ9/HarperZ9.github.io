@@ -22,6 +22,7 @@
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="system/system.css?v=20260805-studio-shelf">
+<link rel="stylesheet" href="system/current-story.css?v=20260805-plates">
 <style>
   .story-intro{margin:1.2rem 0 2.8rem;max-width:61ch}
   .story-intro strong{color:var(--bone);font-weight:600}
@@ -59,6 +60,18 @@
 <section class="mv" aria-labelledby="sequence-h">
   <h2 id="sequence-h">The sequence.</h2>
   <p class="seal-line story-intro">No interpretive titles. Read from top to bottom. The chronology is the narrative.</p>
+
+  <!-- The plates. Sliced from the same composite the strip below already loads, so no new asset
+       backs this view. Each plate opens full size, and each carries its own description: the
+       strip is one image with one alt sentence for seventeen works, which reads the sequence
+       well and reads any single work not at all. -->
+  <div class="story-plates" data-current-story-grid>
+    <p class="story-load-state" data-current-story-status>Loading the plates&hellip;</p>
+    <div class="story-grid" data-current-story-grid-target hidden></div>
+    <noscript><p class="story-load-state">The plates need JavaScript to slice the composite. The uninterrupted sequence below and the <a href="art/current-story/manifest.json">source manifest</a> do not.</p></noscript>
+  </div>
+
+  <h3 class="story-subhead">The uninterrupted sequence.</h3>
   <figure class="story-strip">
     <div class="story-canvas" data-current-story-full>
       <p class="story-load-state" data-current-story-status>Loading the chronological visual sequence&hellip;</p>
