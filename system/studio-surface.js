@@ -47,7 +47,9 @@ function loadTweakpane() {
 //     re-render crisp — the operator zoomed into voxel cubes and got magnified mush. Each now
 //     drives its own wheel zoom (re-render at the zoomed view), so the flat layer must stand off.
 // CSS panzoom stays ONLY for genuinely flat content: atelier drawing, BYO still image, music, watch.
-const NATIVE_CAMERA_SOURCES = new Set(["fractal", "fractal3d", "ndim", "voxels", "plotmaps"]);
+// sketch is native too: its pointer IS the instrument, so the CSS panzoom layer must never
+// intercept or transform the canvas it draws on.
+const NATIVE_CAMERA_SOURCES = new Set(["fractal", "fractal3d", "ndim", "voxels", "plotmaps", "sketch"]);
 
 // The panzoom instance currently attached to the canvas stage element.
 let _pzInstance = null;

@@ -257,7 +257,8 @@ export function buildPlotMap(seedStr, opts = {}) {
   for (const l of layers) { strokes += l.polylines.length; points += l.polylines.reduce((a, p) => a + p.length, 0); }
   return {
     layers,
-    meta: { seed: String(seedStr), study, res: [w, h], levels, density, seaLevel: +seaLevel.toFixed(4), strokes, points },
+    // aspect 0.75: the elevation field is 4:3, and the sheet keeps the field's shape.
+    meta: { kind: "field", aspect: 0.75, seed: String(seedStr), study, res: [w, h], levels, density, seaLevel: +seaLevel.toFixed(4), strokes, points },
   };
 }
 
@@ -265,6 +266,34 @@ export function buildPlotMap(seedStr, opts = {}) {
 // opts.view = { zoom, cx, cy } re-renders the sheet magnified about (cx, cy) — a vector zoom, so
 // the ink stays crisp at any magnification. Line weight deliberately does NOT scale with zoom:
 // zooming a plot sheet reads like leaning closer to the paper, and the pen never got thicker.
+// A SHEET HAS AN ASPECT. Mapping the normalized unit square straight onto the canvas stretched
+// every sheet by whatever the viewport happened to be, so the screen and the exported SVG showed
+// different proportions of the same drawing — and an image plot would have been skewed on top of
+// that. The sheet is now letterboxed into the canvas at its own aspect (plot.meta.aspect, 0.75 for
+// the cartographic studies, the picture's own ratio for an image plot), which makes the pixels and
+// the plotter file agree by construction. Returns the sheet's visible rect so the caller can
+// publish it as the measurement content rect: perception must read the paper, not the surround.
+// The letterbox mapping lived inline in renderPlotMap until the replay path needed it too: a
+// stroke replayed on screen must land on the SAME pixels as the static render, and two copies of
+// this arithmetic would eventually disagree. Extracted, one truth. Returns the normalized→canvas
+// transforms (tx, ty), the letterboxed sheet size and offset (sw, sh, ox, oy), and the sheet's
+// visible rect already clamped to the canvas — the same rect renderPlotMap publishes as the
+// measurement content rect.
+export function sheetTransform(plot, W, H, opts = {}) {
+  const aspect = opts.aspect || (plot.meta && plot.meta.aspect) || 0.75;
+  let sw = W, sh = W * aspect;
+  if (sh > H) { sh = H; sw = H / aspect; }
+  const ox = (W - sw) / 2, oy = (H - sh) / 2;
+  const view = opts.view || null;
+  const zoom = view && view.zoom > 0 ? view.zoom : 1;
+  const ccx = (view ? view.cx : 0.5) * sw, ccy = (view ? view.cy : 0.5) * sh;
+  const tx = (x) => ox + (x * sw - ccx) * zoom + sw / 2;
+  const ty = (y) => oy + (y * sh - ccy) * zoom + sh / 2;
+  const vx0 = Math.max(0, tx(0)), vy0 = Math.max(0, ty(0));
+  const vx1 = Math.min(W, tx(1)), vy1 = Math.min(H, ty(1));
+  return { tx, ty, sw, sh, ox, oy, rect: { x: vx0, y: vy0, w: Math.max(1, vx1 - vx0), h: Math.max(1, vy1 - vy0) } };
+}
+
 export function renderPlotMap(ctx, plot, W, H, palette = {}, opts = {}) {
   const ink = palette.ink || "#e8e6e1";
   const support = palette.support || "rgba(232,230,225,0.45)";
@@ -273,14 +302,10 @@ export function renderPlotMap(ctx, plot, W, H, palette = {}, opts = {}) {
   ctx.fillRect(0, 0, W, H);
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
-  const view = opts.view || null;
-  const zoom = view && view.zoom > 0 ? view.zoom : 1;
-  const ccx = (view ? view.cx : 0.5) * W, ccy = (view ? view.cy : 0.5) * H;
-  const tx = (x) => (x * W - ccx) * zoom + W / 2;
-  const ty = (y) => (y * H - ccy) * zoom + H / 2;
+  const { tx, ty, sw, rect } = sheetTransform(plot, W, H, opts);
   for (const layer of plot.layers) {
     ctx.strokeStyle = layer.tone === "support" ? support : ink;
-    ctx.lineWidth = Math.max(0.5, layer.weight * (W / 900));
+    ctx.lineWidth = Math.max(0.5, layer.weight * (sw / 900));
     ctx.beginPath();
     for (const line of layer.polylines) {
       for (let i = 0; i < line.length; i++) {
@@ -291,6 +316,7 @@ export function renderPlotMap(ctx, plot, W, H, palette = {}, opts = {}) {
     }
     ctx.stroke();
   }
+  return rect;
 }
 
 // ── Plotter-grade SVG ────────────────────────────────────────────────────────
@@ -308,19 +334,24 @@ export function renderPlotMap(ctx, plot, W, H, palette = {}, opts = {}) {
 // plotter driver, or an editor can address, reorder, or drop individual strokes.
 const NOMINAL_PEN_MM = 0.3;
 
-function penIndexFor(layer) {
+// Both helpers are exported so plot-replay.js runs playback in the SAME pen order and pass count
+// the SVG declares — one pen model, two consumers, no copy to drift.
+export function penIndexFor(layer) {
   // Three pens is what most plotter setups actually keep loaded: a fine support pen, the drawing
   // pen, and a heavy pen for frames and emphasis.
   if (layer.tone === "support") return 0;
   return (layer.weight || 1) >= 1.2 ? 2 : 1;
 }
-function passesFor(layer) {
+export function passesFor(layer) {
   const w = layer.weight || 1;
   return w >= 1.4 ? 3 : w >= 0.9 ? 2 : 1;
 }
 
 export function plotMapSVG(plot, opts = {}) {
-  const Wmm = opts.widthMm || 210, Hmm = Math.round(Wmm * 0.75);
+  // The paper takes the sheet's own aspect — 0.75 for the cartographic studies, the picture's
+  // ratio for an image plot — so the file and the screen are the same drawing at the same shape.
+  const aspect = opts.aspect || (plot.meta && plot.meta.aspect) || 0.75;
+  const Wmm = opts.widthMm || 210, Hmm = Math.round(Wmm * aspect);
   const scale = (line) => line.map(([x, y]) => [x * Wmm, y * Hmm]);
   // Group by pen so the file is ordered the way the plot is run: all of pen 0, then pen 1, then
   // pen 2, one pen change between groups instead of one per layer.

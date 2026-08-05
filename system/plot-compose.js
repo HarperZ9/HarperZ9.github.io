@@ -122,6 +122,12 @@ export function measureSheet(layers) {
 export const STUDY_FLOORS = Object.freeze({
   basin: 0.680, moire: 0.775, lattice: 0.665, strata: 0.725, monolith: 0.585,
   nomogram: 0.670, orbital: 0.635, scanline: 0.575, horizon: 0.570, stitch: 0.465,
+  // The illuminated-terrain shelf, measured 2026-08-04 by the same method: p33 of composeSheet
+  // scores over 16 seeds per study. All three sit high because contour-following ink covers and
+  // spreads well by construction; the floor still cuts each register's own weakest third.
+  // tanaka re-measured 2026-08-04 after its duplicate band-boundary contours were removed (the
+  // levels are now asked for explicitly, one trace each, instead of windowed onto five fixed ones).
+  tanaka: 0.883, relief: 0.897, zigzag: 0.732,
 });
 export const DULL_SCORE = 0.60;   // fallback for a study with no measured floor yet
 
@@ -188,7 +194,9 @@ export const REGISTERS = Object.freeze({
 const STROKE_BUDGET = 26000;
 
 // Apply a register to a study's ink layers: the multi-pass tonal engine the community uses.
-function applyRegister(layers, rng, register) {
+// Exported because an image plot needs exactly the same hand: the mark register is a property of
+// how the pen is driven, not of what is being drawn.
+export function applyRegister(layers, rng, register) {
   const R = REGISTERS[register] || REGISTERS.drawn;
   let base = 0;
   for (const l of layers) base += l.polylines.length;
@@ -267,6 +275,10 @@ function finish(candidate, seedStr, attempts, tried, cleared) {
     layers: candidate.layers,
     meta: {
       ...candidate.meta,
+      // The studies compose in the unit square and were tuned looking at a square stage, so the
+      // sheet IS square. Before this was explicit, the SVG export inherited the cartographic
+      // 0.75 paper and silently squashed every composed sheet by a quarter.
+      kind: "field", aspect: 1,
       seed: String(seedStr), strokes, points,
       candidates: tried, cleared,
       rejected: attempts.slice(0, -1).map((a) => `${a.study}/${a.register} ${a.score}`),

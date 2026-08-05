@@ -99,6 +99,52 @@ test("the SVG is a plotter sheet: real units, one group per layer, stroke counts
   assert.ok(!svg.includes("NaN"), "no NaN in path data");
 });
 
+test("contour threshold is honoured, on either scale, and the levels knob is real", async () => {
+  // The defect: contourFromLuma accepted opts.threshold and marched five fixed levels anyway, so
+  // 14 requested contour levels were the same 5 re-traced and the coast was nowhere near sea
+  // level. Two different thresholds must now produce different geometry; the byte scale and the
+  // unit scale must agree; and asking a topo sheet for more levels must actually buy more.
+  const { contourFromLuma } = await import("./plotter.js");
+  const w = 64, h = 64;
+  const px = new Uint8ClampedArray(w * h * 4);
+  for (let y = 0; y < h; y += 1) {
+    for (let x = 0; x < w; x += 1) {
+      const v = Math.round((x / (w - 1)) * 255);   // horizontal ramp: iso-lines are verticals
+      const i = (y * w + x) * 4;
+      px[i] = v; px[i + 1] = v; px[i + 2] = v; px[i + 3] = 255;
+    }
+  }
+  const lo = contourFromLuma(px, w, h, 4, { threshold: 51 });
+  const hi = contourFromLuma(px, w, h, 4, { threshold: 229 });
+  assert.ok(lo.length && hi.length, "both thresholds trace something");
+  assert.notEqual(JSON.stringify(lo), JSON.stringify(hi), "different thresholds, different geometry");
+  // On a ramp the iso-line's x position IS the threshold.
+  const meanX = (ls) => { let s = 0, n = 0; for (const l of ls) for (const p of l) { s += p[0]; n += 1; } return s / n; };
+  assert.ok(meanX(lo) < meanX(hi), "the iso-line moved with the threshold");
+  const unit = contourFromLuma(px, w, h, 4, { threshold: 0.2 });
+  assert.equal(JSON.stringify(unit), JSON.stringify(contourFromLuma(px, w, h, 4, { threshold: 51 })),
+    "0-1 and 0-255 scales agree");
+  const few = buildPlotMap("aurora", { study: "topo", levels: 6 });
+  const many = buildPlotMap("aurora", { study: "topo", levels: 24 });
+  const contours = (p) => (p.layers.find((l) => l.name === "contours") || { polylines: [] }).polylines.length;
+  assert.ok(contours(many) > contours(few), `more levels, more contours (${contours(few)} -> ${contours(many)})`);
+});
+
+test("the paper takes the sheet's own aspect: no more silent squash", async () => {
+  // Cartographic sheets are 4:3; composed sheets are square; an image sheet takes the picture's
+  // ratio. Before aspect rode in the meta, every composed sheet was exported at 0.75 and lost a
+  // quarter of its height.
+  const carto = buildPlotMap("aurora", { study: "topo" });
+  assert.equal(carto.meta.aspect, 0.75);
+  assert.ok(plotMapSVG(carto, { widthMm: 210 }).includes('height="158mm"') || plotMapSVG(carto, { widthMm: 210 }).includes('height="157mm"'), "4:3 paper");
+  const { composeSheet } = await import("./plot-compose.js");
+  const field = composeSheet("aspect-check", { candidates: 1 });
+  assert.equal(field.meta.aspect, 1, "composed sheets are square");
+  assert.ok(plotMapSVG(field, { widthMm: 210 }).includes('height="210mm"'), "square paper for a square sheet");
+  const fake = { layers: [{ name: "x", polylines: [[[0.1, 0.1], [0.9, 0.9]]], weight: 1, tone: "ink" }], meta: { seed: "s", study: "img", aspect: 1.25, strokes: 1, points: 2 } };
+  assert.ok(plotMapSVG(fake, { widthMm: 200 }).includes('height="250mm"'), "an image sheet keeps the picture's ratio");
+});
+
 test("fieldToLuma remaps through the provided function and clamps", () => {
   const luma = fieldToLuma(new Float32Array([0, 0.5, 1]), 3, 1, (v) => v * 2);
   assert.equal(luma[0], 0);
