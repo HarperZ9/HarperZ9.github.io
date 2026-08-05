@@ -82,9 +82,15 @@ absent from `main` entirely:
 - `writing/living-breathing-reaction.md` (3,485 bytes) — a standalone piece, unreferenced by any
   page in `main`
 
-This is real writing, and it is good. It argues that AI can become for creation what sampling
-became for music: that the ugly part was never transformation, it was the ownership system
-around the masters. "Fuck the label. Keep the lineage."
+**Correction, after an adversarial re-check of this entry.** The first version of this ledger
+implied the whole of it was unpublished. It is not. The sampling argument, the strongest thing
+in the section, IS already live: `writing/pick-the-lock-for-everyone-v3/10.md` on `main` carries
+it, closing line included. "Fuck the label. Keep the lineage."
+
+What is genuinely absent from `main` is narrower, and it is the personal half: the opening that
+names father, mother, stepfather, brother, and the possession block that follows it. Which means
+the branch's unique remainder is precisely the material the 2026-07-25 boundary excludes, and
+the part worth publishing was published without it.
 
 **It was not published, and this pass does not publish it, for two reasons that belong
 together.** The section opens by naming family and by confessing — and a boundary set on
