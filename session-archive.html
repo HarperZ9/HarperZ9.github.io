@@ -59,13 +59,17 @@
   .arc-links{display:flex;gap:.75rem 1.2rem;flex-wrap:wrap;font-family:var(--mono);font-size:.66rem;
     letter-spacing:.08em;text-transform:uppercase}
   .arc-links a{color:var(--orange)}
+  .arc-draw{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--signal);border:1px solid var(--hairline);border-radius:2px;padding:.3rem .6rem;
+    text-decoration:none;white-space:nowrap}
+  .arc-draw:hover,.arc-draw:focus-visible{border-color:var(--ember);color:var(--bone)}
 </style>
 </head>
 <body class="inner-clean frame-compact">
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="gallery.html">Gallery</a> <a href="research.html">Research</a> <a href="writing.html">Writing</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260805-session-archive"></script>
+<script type="module" src="system/nav.js?v=20260805-archive-nav"></script>
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Session archive</span></div>
   <div class="mid">
@@ -104,7 +108,15 @@
     <p>Reference and inspiration images supplied to the session are not present. One generated
     collage was, and it is excluded here because it reproduces those references, which are other
     people's artwork. The manifest names it and says why, rather than dropping it quietly.</p>
+    <h3 class="story-subhead">These are materials, not only pictures.</h3>
+    <p>Open any work and it carries a <strong>draw this</strong> link into the
+    <a class="inline" href="studio.html?source=plotmaps&amp;material=archive">studio's pen surface</a>,
+    where the whole archive is one of the materials the pen can draw: eight image methods, a
+    generative field blended over or under, stroke-by-stroke replay, and export as plotter-grade
+    SVG or G-code. The picker there bands the corpus by the same measurements this page bands by,
+    and a sheet drawn from a work cites the hash of the file it came from.</p>
     <p class="arc-links">
+      <a href="studio.html?source=plotmaps&amp;material=archive">Draw from the archive</a>
       <a href="current-story.html">The Current Story sequence</a>
       <a href="gallery.html">Return to the gallery</a>
       <a href="art/session-archive/manifest.json">View the manifest</a>
@@ -112,6 +124,6 @@
   </footer>
 </section>
 </main>
-<script type="module" src="system/session-archive.js?v=20260805-range"></script>
+<script type="module" src="system/session-archive.js?v=20260805-materials"></script>
 </body>
 </html>

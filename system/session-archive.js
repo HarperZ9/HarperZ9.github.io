@@ -13,6 +13,14 @@
 // own delivered pixels, the grid can be ordered by those measurements, and the range readout
 // draws the whole span as one plot. A count proves how much there is; the range shows how far
 // it goes.
+//
+// They are also material, not only pictures. Every work opens on the studio's pen surface through
+// the same catalogue the studio uses, so a piece can be drawn by any of the eight image methods,
+// blended with a generative field, replayed, and exported for a plotter.
+
+// One definition of how a work is handed to the studio, shared by the surface that links and the
+// boot path that receives, so the two cannot drift apart.
+import { studioLink } from "./studio-library.js";
 
 // Stamped for the same reason the sequence manifest is: force-cache plus no stamp means a
 // returning visitor never sees a work added to the archive. Bumped when the manifest gained
@@ -42,16 +50,23 @@ function buildDialog() {
   prev.type = "button"; prev.textContent = "←"; prev.setAttribute("aria-label", "Previous work");
   const next = document.createElement("button");
   next.type = "button"; next.textContent = "→"; next.setAttribute("aria-label", "Next work");
+  // Every work here is material the studio can pick up: this link opens it on the pen surface as
+  // a tone field, where it can be drawn by any of the eight methods, blended with a generative
+  // field, replayed stroke by stroke, and exported as plotter-grade SVG or G-code.
+  const draw = document.createElement("a");
+  draw.className = "arc-draw";
+  draw.textContent = "draw this";
+  draw.setAttribute("aria-label", "Open this work on the studio pen surface");
   const close = document.createElement("button");
   close.type = "button"; close.textContent = "close"; close.setAttribute("aria-label", "Close");
-  nav.append(prev, next, close);
+  nav.append(prev, next, draw, close);
   bar.append(position, nav);
   const caption = document.createElement("p");
   caption.className = "story-dialog-alt";
   body.append(img, bar, caption);
   dialog.append(body);
   document.body.append(dialog);
-  return { dialog, img, position, caption, prev, next, close };
+  return { dialog, img, position, caption, prev, next, draw, close };
 }
 
 function measureLine(w) {
@@ -83,6 +98,7 @@ function wireViewer() {
       + (w.kind === "collage" ? " · generated collage" : "")
       + measureLine(w);
     ui.caption.textContent = w.title + (w.also_published_as ? ` · also published as ${w.also_published_as}` : "");
+    ui.draw.href = studioLink(w.id);
     ui.prev.disabled = at === 0;
     ui.next.disabled = at === seq.length - 1;
   };

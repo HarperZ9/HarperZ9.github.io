@@ -75,8 +75,12 @@ const NUM = (x) => Number.isFinite(x);
 const KIND_FIELDS = {
   field:  { need: { seed: STR, study: STR },
             may:  { register: STR, density: NUM, levels: NUM } },
+  // workId is the archive material's identity. Unlike a picture or a captured frame, an archive
+  // work is published, so a sheet drawn from one restores exactly — but only if the recipe is
+  // allowed to hold which work it was.
   image:  { need: { source: STR, method: STR },
-            may:  { material: STR, seed: STR, register: STR, density: NUM, levels: NUM, plateId: STR } },
+            may:  { material: STR, seed: STR, register: STR, density: NUM, levels: NUM,
+                    plateId: STR, workId: STR } },
   // A voxel PIN is the build; a voxel-material SHEET is a drawing of the build, and needs the pen
   // surface's own controls too or restore routes it back to the Voxels source and loses the sheet.
   voxel:  { need: {}, may: { seed: STR, material: STR, register: STR, blend: STR, density: NUM, levels: NUM } },
@@ -85,7 +89,7 @@ const KIND_FIELDS = {
                     blend: STR, study: STR, method: STR, density: NUM, levels: NUM } },
   blend:  { need: { seed: STR, study: STR, material: STR, blend: (x) => x === "under" || x === "over" },
             may:  { source: STR, method: STR, register: STR, sketchRegister: STR, guide: STR,
-                    density: NUM, levels: NUM, plateId: STR } },
+                    density: NUM, levels: NUM, plateId: STR, workId: STR } },
 };
 
 // The voxel block mirrors buildVoxelScene's meta (seed, study, res, tune) plus the ORDERED op

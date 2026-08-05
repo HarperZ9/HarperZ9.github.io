@@ -25,7 +25,7 @@
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
      globals, not the live URL. ASCII only. -->
-<script>(function(){var p=new URLSearchParams(location.search);window.__studioBootSource=p.get("source")||"";window.__studioBootHero=p.get("hero")==="1";window.__studioBootSeed=p.get("seed")||"";window.__studioBootWorld=p.get("world")||"";window.__studioBootScene=p.get("scene")||"";})();</script>
+<script>(function(){var p=new URLSearchParams(location.search);window.__studioBootSearch=location.search||"";window.__studioBootSource=p.get("source")||"";window.__studioBootHero=p.get("hero")==="1";window.__studioBootSeed=p.get("seed")||"";window.__studioBootWorld=p.get("world")||"";window.__studioBootScene=p.get("scene")||"";})();</script>
 </head>
 <body class="studio-page">
 
@@ -130,6 +130,7 @@
           <div class="at-chips" role="group" aria-label="Plot material">
             <button type="button" class="chip active" data-plot-material="field">Field</button>
             <button type="button" class="chip" data-plot-material="plate">Plate</button>
+            <button type="button" class="chip" data-plot-material="archive">Archive</button>
             <button type="button" class="chip" data-plot-material="picture">Picture</button>
             <button type="button" class="chip" data-plot-material="canvas">Studio canvas</button>
             <button type="button" class="chip" data-plot-material="voxels">Voxel build</button>
@@ -142,6 +143,22 @@
           <div id="plot-plate" hidden>
             <option value="scene-01" selected>01 · Current Story 01</option>
           </div>
+        </div>
+        <div class="at-group" id="plot-work-row" hidden>
+          <span class="at-glab">Archive <span class="hint">165 published works, banded by their own measurements</span></span>
+          <div class="at-chips" role="group" aria-label="Filter the archive by band">
+            <button type="button" class="chip active" data-plot-band="all" data-plot-band-label="All">All</button>
+            <button type="button" class="chip" data-plot-band="dark" data-plot-band-label="Dark">Dark</button>
+            <button type="button" class="chip" data-plot-band="mid" data-plot-band-label="Mid">Mid</button>
+            <button type="button" class="chip" data-plot-band="luminous" data-plot-band-label="Luminous">Luminous</button>
+            <button type="button" class="chip" data-plot-band="monochrome" data-plot-band-label="Monochrome">Monochrome</button>
+            <button type="button" class="chip" data-plot-band="warm" data-plot-band-label="Warm">Warm</button>
+            <button type="button" class="chip" data-plot-band="cool" data-plot-band-label="Cool">Cool</button>
+            <button type="button" class="chip" data-plot-band="collage" data-plot-band-label="Collages">Collages</button>
+          </div>
+          <div class="dropdown" data-dropdown="plot-work"></div>
+          <div id="plot-work" hidden></div>
+          <span class="hint" id="plot-work-note">the catalogue loads when this material is chosen</span>
         </div>
         <div class="at-group" id="plot-file-row" hidden>
           <span class="at-glab">Picture <span class="hint">never leaves this page</span></span>
@@ -1338,7 +1355,7 @@
 
 </main>
 
-<script type="module" src="system/nav.js?v=20260719-zentropy-sitewide"></script>
+<script type="module" src="system/nav.js?v=20260805-archive-nav"></script>
 <!-- Atelier engine (Task 7): classic IIFE, self-boots on DOM ready, binds the controls above and
      draws into #studio-canvas. Loaded before the Studio module so window.Atelier + the shared
      spine/reconcile readouts are present. -->
@@ -1350,7 +1367,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js"></script>
-<script type="module" src="system/studio.js?v=20260803a"></script>
+<script type="module" src="system/studio.js?v=20260805-archive-material"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

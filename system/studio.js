@@ -116,11 +116,22 @@ let _plotImage = null;
 const loadPlotImage = lazyLoader(() => import("./plot-image-studies.js"), m => { _plotImage = m; });
 let _plotBridge = null;
 const loadPlotBridge = lazyLoader(() => import("./plot-bridge.js"), m => { _plotBridge = m; });
-let _plotMaterial = "field";   // field | plate | picture | canvas | voxels
+// The published archive (165 works, each measured) is material too: studio-library.js turns the
+// manifest into a catalogue the picker can band the same way the archive page bands it.
+let _library = null;
+let _libraryMod = null;
+const loadLibraryMod = lazyLoader(() => import("./studio-library.js"), m => { _libraryMod = m; });
+let _libraryFilter = "all";
+// The work a deep link or a restored pin asked for, held until the picker exists to receive it.
+// Without it, whichever async path filled the picker first selected the first work in the band,
+// drew it, and the requested work then drew second — two sheets, the first one wrong.
+let _libraryWant = null;
+let _plotMaterial = "field";   // field | plate | archive | picture | canvas | voxels | sketchsheet
 let _plotMethod = "auto";      // image-method choice for tone-field materials
 let _plotBlend = "alone";      // alone | under | over — blend the field with the material
-let _plotField = null;         // cached tone field { w, h, lum } for plate / picture / canvas
-let _plotFieldInfo = null;     // { name } — where the cached field came from, for the receipts
+let _plotField = null;         // cached tone field { w, h, lum } for plate / archive / picture / canvas
+let _plotFieldPending = null;  // key of an in-flight acquisition, so two callers share one fetch
+let _plotFieldInfo = null;     // { name, workId, sha } — where the cached field came from, for the receipts
 let _plateIndex = null;        // atlas.world.json scenes, fetched once for the plate picker
 // Snapshot of the shared canvas taken at the moment the user switches INTO plot maps, so
 // "Studio canvas" plots the frame they were just looking at, not the sheet that replaced it.
@@ -870,21 +881,74 @@ function acquirePlotField(then) {
     }
     then(); return true;
   }
-  if (_plotMaterial === "plate") {
-    const sel = $("plot-plate");
-    const id = (sel && sel.value) || "scene-01";
+  // Plate and archive are the same shape of material: a published file, fetched by id, carrying
+  // its own provenance. They differ only in where the id resolves and what the receipt can cite.
+  //
+  // Acquisition is asynchronous and re-enters drawPlotMap when it lands, so two callers asking for
+  // the same material at the same moment (the source's entry draw and a deep link, say) each
+  // started a fetch and each drew, producing two identical sheets and two identical receipts. The
+  // second caller now joins the first rather than racing it.
+  const fromPublished = (id, url, name, extra) => {
+    const key = _plotMaterial + ":" + id;
+    if (_plotFieldPending === key) return true;
+    _plotFieldPending = key;
     if (readout) readout.textContent = "fetching " + id + "…";
     const img = new Image();
+    const material = _plotMaterial;
     img.onload = () => {
+      if (_plotFieldPending === key) _plotFieldPending = null;
       const off = document.createElement("canvas");
       off.width = img.naturalWidth; off.height = img.naturalHeight;
       off.getContext("2d").drawImage(img, 0, 0);
-      fromCanvas(off, id);
-      if (activeSource === "plotmaps" && _plotMaterial === "plate") then();
+      fromCanvas(off, name);
+      if (extra) Object.assign(_plotFieldInfo, extra);
+      if (activeSource === "plotmaps" && _plotMaterial === material) then();
     };
-    img.onerror = () => say("model", "The plate " + id + " failed to load.");
-    img.src = "art/spatial/atlas/" + id + ".jpg";
+    img.onerror = () => {
+      if (_plotFieldPending === key) _plotFieldPending = null;
+      say("model", "The material " + id + " failed to load.");
+    };
+    img.src = url;
     return true;
+  };
+  if (_plotMaterial === "plate") {
+    const sel = $("plot-plate");
+    const id = (sel && sel.value) || "scene-01";
+    return fromPublished(id, "art/spatial/atlas/" + id + ".jpg", id, null);
+  }
+  if (_plotMaterial === "archive") {
+    // The catalogue is a fetch, and a draw can be asked for before it lands — by the source's own
+    // entry path, by a deep link, by a restored pin. Waiting for it is right; refusing was not,
+    // because the sheet WAS about to be drawable and the panel said otherwise.
+    if (!_library) {
+      if (_plotFieldPending === "archive:catalogue") return true;   // one fetch, one draw
+      _plotFieldPending = "archive:catalogue";
+      if (readout) readout.textContent = "loading the archive catalogue…";
+      fillLibraryPicker().then(() => {
+        // Release only this acquisition's own claim. Clearing unconditionally wiped the key of an
+        // image fetch another caller had already started, which let a second fetch through and put
+        // the double draw back.
+        if (_plotFieldPending === "archive:catalogue") _plotFieldPending = null;
+        if (!_library) {
+          refuse("the archive catalogue could not be loaded",
+            "The archive catalogue could not be loaded, so there is nothing to draw from yet.");
+          return;   // no re-entry: a failed fetch must not spin
+        }
+        if (activeSource === "plotmaps" && _plotMaterial === "archive") then();
+      });
+      return true;
+    }
+    const sel = $("plot-work");
+    const id = (sel && sel.value) || (_library.works.length ? _library.works[0].id : null);
+    const work = id ? _library.byId(id) : null;
+    if (!work) {
+      return refuse("no work chosen — pick one from the archive above",
+        "Choose a work from the archive picker, and the pen draws it.");
+    }
+    // The receipt names the file this was drawn from, not the title, because a title can be
+    // renamed and a hash cannot.
+    return fromPublished(work.id, work.full, _libraryMod.workProvenance(work),
+      { workId: work.id, sha: work.sha });
   }
   // picture: nothing cached means no file chosen yet.
   return refuse("choose a picture above — it stays in this browser",
@@ -986,7 +1050,11 @@ function sayPlotReceipt(plot, seed, obs) {
     say("model",
       `Two mediums on one sheet: ${meta.label}, the field ${meta.mode === "over" ? "breaking over" : "laid under"} the subject — `
       + `${a.strokes.toLocaleString()} strokes from the ${a.kind}, ${b.strokes.toLocaleString()} from the ${b.kind}, `
-      + `re-measured whole: coverage ${m.coverage}, direction ${m.direction}. Fingerprint ${obs.phash}. Same seed, same blend.`);
+      + `re-measured whole: coverage ${m.coverage}, direction ${m.direction}. `
+      // A blend hides which material went in, so an archive work says so here or the sheet's own
+      // account stops naming where half of it came from.
+      + (_plotFieldInfo && _plotFieldInfo.workId ? `Drawn from ${_plotFieldInfo.name}. ` : "")
+      + `Fingerprint ${obs.phash}. Same seed, same blend.`);
     return;
   }
   if (meta.kind === "voxel") {
@@ -1042,11 +1110,13 @@ function sayPlotReceipt(plot, seed, obs) {
 // row drives tone-field materials, blend row exists wherever there is something to blend with.
 function syncPlotMaterialUI() {
   const isField = _plotMaterial === "field";
-  const isTone = _plotMaterial === "plate" || _plotMaterial === "picture" || _plotMaterial === "canvas";
+  const isTone = _plotMaterial === "plate" || _plotMaterial === "archive"
+    || _plotMaterial === "picture" || _plotMaterial === "canvas";
   const show = (id, on) => { const el = $(id); if (el) el.hidden = !on; };
   show("plot-study-rows", isField);
   show("plot-method-row", isTone);
   show("plot-plate-row", _plotMaterial === "plate");
+  show("plot-work-row", _plotMaterial === "archive");
   show("plot-file-row", _plotMaterial === "picture");
   show("plot-blend-row", !isField);
   show("plot-levels-row", isField);
@@ -1073,6 +1143,64 @@ function fillPlatePicker() {
   }).catch(() => { /* the picker keeps its static fallback options */ });
 }
 
+// The archive catalogue: fetched once, kept for the session. Every work in it is material the pen
+// surface can pick up, so this is the corpus becoming usable rather than only viewable.
+let _libraryLoad = null;
+function loadLibrary() {
+  if (_library) return Promise.resolve(_library);
+  if (!_libraryLoad) {
+    _libraryLoad = loadLibraryMod()
+      .then(() => fetch(_libraryMod.LIBRARY_MANIFEST, { cache: "force-cache" }))
+      .then(r => { if (!r.ok) throw new Error(`archive manifest: ${r.status}`); return r.json(); })
+      .then(m => { _library = _libraryMod.buildLibrary(m); return _library; })
+      .catch(err => { _libraryLoad = null; throw err; });   // a failed fetch must be retryable
+  }
+  return _libraryLoad;
+}
+
+// Fill the work picker from the current band filter. Bands are the archive page's own, so a
+// visitor who came from there finds the corpus grouped the way they left it.
+function fillLibraryPicker(keepId) {
+  const sel = $("plot-work");
+  if (!sel) return Promise.resolve(null);
+  return loadLibrary().then(lib => {
+    const shown = _libraryMod.filterWorks(lib.works, _libraryFilter);
+    const want = keepId || _libraryWant || sel.value;
+    sel.innerHTML = "";
+    shown.forEach((w, i) => {
+      const opt = document.createElement("option");
+      opt.value = w.id;
+      opt.textContent = _libraryMod.workLabel(w, i + 1);
+      sel.appendChild(opt);
+    });
+    // The band chips carry their counts, so choosing one is a claim about how much it holds.
+    const counts = _libraryMod.filterCounts(lib.works);
+    document.querySelectorAll("[data-plot-band]").forEach(b => {
+      const n = counts[b.dataset.plotBand];
+      if (n != null) b.textContent = `${b.dataset.plotBandLabel || b.textContent.split(" · ")[0]} · ${n}`;
+      b.classList.toggle("active", b.dataset.plotBand === _libraryFilter);
+    });
+    const note = $("plot-work-note");
+    if (note) {
+      note.textContent = `${shown.length} of ${lib.count} works · each drawn from its published file,`
+        + " cited by the hash of the PNG it came from";
+    }
+    // Keep the chosen work across a filter change when the band still holds it, and otherwise
+    // land on the first of the new band EXPLICITLY. The dropdown re-derives its own selection
+    // from a mutation observer, which runs after this returns, so reading the value back here
+    // reports the work that was showing a moment ago and a caller comparing before against after
+    // sees no change when the selection did in fact move.
+    const landed = (want && shown.some(w => w.id === want)) ? want : (shown[0] ? shown[0].id : null);
+    if (landed) sel.value = landed;
+    if (_libraryWant && _libraryWant === landed) _libraryWant = null;   // satisfied
+    return landed;
+  }).catch(() => {
+    const note = $("plot-work-note");
+    if (note) note.textContent = "the archive catalogue could not be loaded";
+    return null;
+  });
+}
+
 function initPlotMapControls() {
   document.querySelectorAll("[data-plot-material]").forEach(chip => {
     chip.addEventListener("click", () => {
@@ -1081,9 +1209,29 @@ function initPlotMapControls() {
       document.querySelectorAll("[data-plot-material]").forEach(b => b.classList.toggle("active", b === chip));
       syncPlotMaterialUI();
       if (_plotMaterial === "plate") fillPlatePicker();
+      // The catalogue has to be in hand before the sheet can be drawn from it, so the draw waits
+      // on the fetch rather than refusing once and leaving the panel saying "still loading".
+      if (_plotMaterial === "archive") { fillLibraryPicker().then(() => drawPlotMap()); return; }
       drawPlotMap();
     });
   });
+  document.querySelectorAll("[data-plot-band]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _libraryFilter = chip.dataset.plotBand;
+      const before = ($("plot-work") || {}).value;
+      // Narrowing to a band that does not hold the current work moves the selection. Leaving the
+      // old sheet on the canvas would make the picker and the drawing disagree, and the readout
+      // would then describe a work that is not the one named above it.
+      fillLibraryPicker().then(after => {
+        if (after && after !== before && _plotMaterial === "archive") {
+          _plotField = null; _plotFieldInfo = null;
+          drawPlotMap();
+        }
+      });
+    });
+  });
+  const workSel = $("plot-work");
+  if (workSel) workSel.addEventListener("change", () => { _plotField = null; _plotFieldInfo = null; drawPlotMap(); });
   document.querySelectorAll("[data-plot-method]").forEach(chip => {
     chip.addEventListener("click", () => {
       _plotMethod = chip.dataset.plotMethod;
@@ -1735,6 +1883,9 @@ function currentPlotRecipe() {
     density: parseFloat(($("plot-density") || {}).value) || 1,
     levels: parseInt(($("plot-levels") || {}).value, 10) || 14,
     plateId: (($("plot-plate") || {}).value) || null,
+    // An archive sheet is fully reproducible from its work id: the pixels are published, so unlike
+    // a picture or a captured frame this restores exactly, hash and all.
+    workId: (_plotMaterial === "archive" && (($("plot-work") || {}).value)) || null,
     voxel: null, sketch: null,
   };
   if (_plotMaterial === "voxels") {
@@ -1981,6 +2132,29 @@ function restorePin(pin) {
     _plotSnapshotOk = false;
     say("model", "That pin used a " + (r.material === "picture" ? "picture" : "captured frame") + " that lives only in the moment it was made, so it cannot be redrawn from the recipe. Every other control is set exactly as pinned — choose the image again and the sheet comes back.");
     setTimeout(() => { _restoringPin = false; }, 0);
+  }
+  if (r.material === "archive" && r.workId) {
+    // Same custom-listbox problem the plate picker has: .value refuses a value whose option has
+    // not arrived, and the options arrive from a fetch. Fill first, then set, then redraw. The
+    // band filter is widened to All if the pinned work is not in the band currently shown, or the
+    // option would never exist and the sheet would draw from whatever was selected before.
+    loadLibrary().then(lib => {
+      const work = lib.byId(r.workId);
+      if (!work) {
+        say("model", `That pin was drawn from archive work ${r.workId}, which is not in the published catalogue any more. Every other control is set as pinned.`);
+        return;
+      }
+      if (!_libraryMod.filterWorks(lib.works, _libraryFilter).some(w => w.id === work.id)) {
+        _libraryFilter = "all";
+      }
+      _libraryWant = work.id;
+      return fillLibraryPicker(work.id).then(() => {
+        const sel = $("plot-work");
+        if (sel) sel.value = work.id;
+        _plotField = null; _plotFieldInfo = null;
+        if (activeSource === "plotmaps") drawPlotMap();
+      });
+    }).catch(() => say("model", "The archive catalogue could not be loaded, so that pin could not be redrawn."));
   }
   if (r.material === "plate" && r.plateId) {
     // The plate picker is a custom listbox fed by an async fetch, and its .value setter REFUSES a
@@ -4724,6 +4898,7 @@ function upgradeDropdown(stateId) {
 upgradeDropdown("fractal-preset");
 upgradeDropdown("topo-mode");
 upgradeDropdown("plot-plate");
+upgradeDropdown("plot-work");
 
 // ══ The chat dock (Task 8f) ══════════════════════════════════════════════════
 // The talk-to-the-model chat is first-class again: question chips you can tap AND a free-text box you
@@ -6111,7 +6286,57 @@ if (tierBtn) {
 (function bootSource() {
   // The Atelier engine rewrites location.search on boot, so read the head-snapshot global that
   // captured ?source= before that happened; fall back to the live URL if the snapshot is absent.
-  const want = window.__studioBootSource || new URLSearchParams(window.location.search || "").get("source") || "";
-  if (want && SOURCES[want]) { try { setSource(want); return; } catch (_) {} }
+  const search = window.__studioBootSearch || window.location.search || "";
+  const want = window.__studioBootSource || new URLSearchParams(search).get("source") || "";
+  if (want && SOURCES[want]) {
+    try {
+      setSource(want);
+      if (want === "plotmaps") bootPlotMaterial(search);
+      return;
+    } catch (_) {}
+  }
   setSource("atelier");
 })();
+
+// A work handed over from another surface. The archive page links every one of its 165 works
+// here, which is what makes them material rather than pictures: arriving with ?work=w042 puts the
+// pen surface on that work with the method left at Auto, so the studio measures the picture and
+// picks the drawing method itself. Anything malformed is ignored and the surface boots normally.
+function bootPlotMaterial(search) {
+  loadLibraryMod().then(() => {
+    const want = _libraryMod.parseStudioLink(search);
+    if (!want) return;
+    return loadPlotMaps().then(() => {
+      _plotMaterial = "archive";
+      _libraryWant = want.work;
+      _plotField = null; _plotFieldInfo = null;
+      if (want.method) _plotMethod = want.method;
+      document.querySelectorAll("[data-plot-material]").forEach(b =>
+        b.classList.toggle("active", b.dataset.plotMaterial === "archive"));
+      document.querySelectorAll("[data-plot-method]").forEach(b =>
+        b.classList.toggle("active", b.dataset.plotMethod === _plotMethod));
+      syncPlotMaterialUI();
+      // The pen surface's own entry path may already have drawn this work, because it waits for
+      // the same catalogue fetch. Drawing again would be a second identical sheet and a second
+      // identical receipt, so it draws only if that has not happened.
+      const alreadyDrawn = () => _lastPlot && _plotFieldInfo && _plotFieldInfo.workId === want.work;
+      return fillLibraryPicker(want.work).then(() => {
+        const sel = $("plot-work");
+        if (!sel) return;
+        sel.value = want.work;
+        if (sel.value !== want.work) {
+          // The work exists but sits outside the band the picker is showing: widen and retry, or
+          // the sheet would silently draw from a different work than the link named.
+          _libraryFilter = "all";
+          _libraryWant = want.work;
+          return fillLibraryPicker(want.work).then(() => {
+            const s2 = $("plot-work");
+            if (s2) s2.value = want.work;
+            if (!alreadyDrawn()) drawPlotMap();
+          });
+        }
+        if (!alreadyDrawn()) drawPlotMap();
+      });
+    });
+  }).catch(() => {});
+}
