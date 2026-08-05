@@ -1,0 +1,4140 @@
+{
+ "title": "Session archive",
+ "author": "Zain Dana Harper",
+ "assembled": "2026-08-05",
+ "statement": "Every artwork generated in the authoring session that is still recoverable, published whole rather than curated down. The Current Story sequence is drawn from this same body of work.",
+ "provenance": "Assembled from four archives exported from the session. Each work records the sha256 and byte count of the PNG it came from, and the sha256 of the JPEG delivered here, so the chain from archive to page is inspectable. Delivered as JPEG because the source PNGs total 449MB.",
+ "exclusions": "Reference and inspiration images supplied to the session are not present in any of these archives. One generated collage WAS present and is excluded here because it reproduces those reference images, which are other people's artwork.",
+ "counts": {
+  "works": 165,
+  "singles": 154,
+  "collages": 11,
+  "excluded": 1
+ },
+ "excluded_items": [
+  {
+   "name": "a_large_composite_collage_moodboard_style_image.png",
+   "png_sha256": "472e0bbb861dfd7cafd5443dfdd9cbc510b358918f81b96a7033f8d32f548803",
+   "why": "reproduces the supplied inspiration images (third-party artwork)"
+  }
+ ],
+ "works": [
+  {
+   "id": "w001",
+   "title": "A highly stylized cinematic sci fi fantasy landsc",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "a_highly_stylized_cinematic_sci_fi_fantasy_landsc.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "a86991758ae42bbb49020b27e1835556705e249269fbb318061f0996b20747b5",
+    "png_bytes": 2595133
+   },
+   "full": "art/session-archive/full/w001.jpg",
+   "full_sha256": "38c9dfef4d14aa24bef34526f7a0de38c975778bc6765b2ade41e194cd97e521",
+   "full_bytes": 356690,
+   "thumb": "art/session-archive/thumb/w001.jpg",
+   "thumb_sha256": "96bb45b91e22f7a6fd111c287123e900e27c34de2ea6fe2bd3146573ece01350",
+   "thumb_bytes": 27807,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w002",
+   "title": "A surreal hyper detailed sci fi fantasy landscape",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "a_surreal_hyper_detailed_sci_fi_fantasy_landscape.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "43cdc1b83a45044d9cb612b9551dac7a824efdc182e445d1c2c05b0a6e5e4d36",
+    "png_bytes": 2835553
+   },
+   "full": "art/session-archive/full/w002.jpg",
+   "full_sha256": "1d46098e4b8914086871f3a9304f240285a96cb43372076fef13fc670584f7bf",
+   "full_bytes": 402327,
+   "thumb": "art/session-archive/thumb/w002.jpg",
+   "thumb_sha256": "c4175c80b56d5924aa26c4af97883e6443cc38680922ec301027a6f921a46e13",
+   "thumb_bytes": 27998,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w003",
+   "title": "A vivid stylized surreal cyber fantasy illustra",
+   "kind": "single",
+   "dimensions": [
+    1214,
+    1295
+   ],
+   "source_asset": {
+    "name": "a_vivid_stylized_surreal_cyber_fantasy_illustra.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "997cb0e3167145adf57ac1b552064812067955427c8379b8b33842653aa4a455",
+    "png_bytes": 3426191
+   },
+   "full": "art/session-archive/full/w003.jpg",
+   "full_sha256": "e0b9d6b5d8826cd6e507f8881d042f5b7947ae5dccf1cf4222b494b6654d05cd",
+   "full_bytes": 592705,
+   "thumb": "art/session-archive/thumb/w003.jpg",
+   "thumb_sha256": "b4b40b982404bfedb210505f50d5124f216ea5a9df9e6e45c46e8959e488e1af",
+   "thumb_bytes": 55071,
+   "thumb_dimensions": [
+    394,
+    420
+   ]
+  },
+  {
+   "id": "w004",
+   "title": "Celestial temple reflected in still waters",
+   "kind": "single",
+   "dimensions": [
+    1254,
+    1254
+   ],
+   "source_asset": {
+    "name": "celestial_temple_reflected_in_still_waters.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "4da34f6eb28a023043392e84840736cdb0f38459cf108faea1eee5f2d137ad46",
+    "png_bytes": 3615893
+   },
+   "full": "art/session-archive/full/w004.jpg",
+   "full_sha256": "5b6f8c1d291292da80ed7c4d4b497066e39f0abcb5e37be2e9a79cfa4ec56afe",
+   "full_bytes": 628136,
+   "thumb": "art/session-archive/thumb/w004.jpg",
+   "thumb_sha256": "d251cdccf71bb824a3c09e780cbd6a6af615664f61c43d62ff00c8f65bbaf7ff",
+   "thumb_bytes": 49686,
+   "thumb_dimensions": [
+    420,
+    420
+   ]
+  },
+  {
+   "id": "w005",
+   "title": "Celestial traveler across alien highlands",
+   "kind": "single",
+   "dimensions": [
+    1254,
+    1254
+   ],
+   "source_asset": {
+    "name": "celestial_traveler_across_alien_highlands.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "102df294ba9ec34c8c5adc120a4e4f1f92b98c3f52aa5add0e15e9c51b2d5e83",
+    "png_bytes": 2989363
+   },
+   "full": "art/session-archive/full/w005.jpg",
+   "full_sha256": "e894cbad55290326fe76af7e525df579a9f0e14db4e9af80968cc6fd8325e832",
+   "full_bytes": 490298,
+   "thumb": "art/session-archive/thumb/w005.jpg",
+   "thumb_sha256": "655e1887dd6d9f345789f884bb8c38dd3f3cf3a50520e791658fee28ed53b23c",
+   "thumb_bytes": 57207,
+   "thumb_dimensions": [
+    420,
+    420
+   ]
+  },
+  {
+   "id": "w006",
+   "title": "Celestial ziggurat cityscape",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "celestial_ziggurat_cityscape.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "78479006e5153cb403d987b103c17f391c706baf1c4196bc65e384dfc39a4d1c",
+    "png_bytes": 3261200
+   },
+   "full": "art/session-archive/full/w006.jpg",
+   "full_sha256": "604323bce4d8d9f103696d2c0898048e0f548b5179f36a41a82116ba4ef9b6e6",
+   "full_bytes": 531982,
+   "thumb": "art/session-archive/thumb/w006.jpg",
+   "thumb_sha256": "c3f1a8485fecd0a6141134bd89ba091d8090857019a212b324e7cf78f94c1ac6",
+   "thumb_bytes": 38632,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w007",
+   "title": "Cosmic temple city and spirit basin",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_temple_city_and_spirit_basin.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "5dd3718525215d04f5906c5b7f74bf453dd8181d1ad05eb56242cd7479ef4824",
+    "png_bytes": 3635369
+   },
+   "full": "art/session-archive/full/w007.jpg",
+   "full_sha256": "7a1d5d7de4e12ba2f6deeefed1612bcf0c51bab7cd6cb32fbe04481397046ba0",
+   "full_bytes": 648143,
+   "thumb": "art/session-archive/thumb/w007.jpg",
+   "thumb_sha256": "0c60deb36b6c5df90fe40d7c2cdc0dabaa1f7b71dacaaab2fa545223aa345508",
+   "thumb_bytes": 43183,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w008",
+   "title": "Cosmic temple of the star sphere",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_temple_of_the_star_sphere.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "1970cbd7d27dd372e50051639320839c43f7704cd3ee10bbaa092f8d213d4110",
+    "png_bytes": 2455543
+   },
+   "full": "art/session-archive/full/w008.jpg",
+   "full_sha256": "e05215b6a1cdefe8d31eaa5e60168568bf9a7debea6769a2433fd9b1bd99d7a4",
+   "full_bytes": 300348,
+   "thumb": "art/session-archive/thumb/w008.jpg",
+   "thumb_sha256": "a7f62e048b31e883294e901eeca57cf1a75d00cc45cfe98211fa5421f1550cbc",
+   "thumb_bytes": 23125,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w009",
+   "title": "Cosmic traveler over the mystic valley",
+   "kind": "single",
+   "dimensions": [
+    1254,
+    1254
+   ],
+   "source_asset": {
+    "name": "cosmic_traveler_over_the_mystic_valley.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "ece9dc4ef2d05422dda3bbbdefb42531dbf0e91190cea2430c33b859c7280cf3",
+    "png_bytes": 3360728
+   },
+   "full": "art/session-archive/full/w009.jpg",
+   "full_sha256": "a4280a8997fb97ca73076841473a9529ebb5ed1180f3219b4efb5ae060979348",
+   "full_bytes": 579048,
+   "thumb": "art/session-archive/thumb/w009.jpg",
+   "thumb_sha256": "e6ba2c7ab7cd3ea5c4d762c6255c051cad27e968344e1dd6dc18822bcb023d8f",
+   "thumb_bytes": 53373,
+   "thumb_dimensions": [
+    420,
+    420
+   ]
+  },
+  {
+   "id": "w010",
+   "title": "Epic stormlit meadow with ancient ruins",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "epic_stormlit_meadow_with_ancient_ruins.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "3cfa67f1c1983ce6ef25244c392352918e59c334792a0cfc956af2393e00314b",
+    "png_bytes": 2694206
+   },
+   "full": "art/session-archive/full/w010.jpg",
+   "full_sha256": "89f4778d6fc80e3b65140b33ad87da834eb09c110e575c6036770ed18350a60c",
+   "full_bytes": 348465,
+   "thumb": "art/session-archive/thumb/w010.jpg",
+   "thumb_sha256": "0fce9b6a54b380840d88b89fd7df7ed390fe803779642c24a16307d52b422a8b",
+   "thumb_bytes": 26882,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w011",
+   "title": "Ethereal guardian of the luminous pool",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "ethereal_guardian_of_the_luminous_pool.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "eb8d92e8f1801b28431ad633449077d98f6e99e84bd93b2e85dc0c568452fe0f",
+    "png_bytes": 1717684
+   },
+   "full": "art/session-archive/full/w011.jpg",
+   "full_sha256": "a6db9402187062bf93bdf719989db354bb036b0f2fc813b05ac3975d8799e28d",
+   "full_bytes": 123440,
+   "thumb": "art/session-archive/thumb/w011.jpg",
+   "thumb_sha256": "f61736883e13eca06a9829b69247bd1b238e30e40bfd83eb8a256d8e904e466c",
+   "thumb_bytes": 11709,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w012",
+   "title": "Lone figure on the monolithic edge",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "lone_figure_on_the_monolithic_edge.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "296aaecfe63818fac03bb8e5b1c75bc808ee875824b4e62daf7ed3aefddd09ea",
+    "png_bytes": 2110277
+   },
+   "full": "art/session-archive/full/w012.jpg",
+   "full_sha256": "a352232fafe1c64b353a11de8bfccf6a12040ffa5dd858b21d3aaf9d50ac5de8",
+   "full_bytes": 162780,
+   "thumb": "art/session-archive/thumb/w012.jpg",
+   "thumb_sha256": "03a5af32ae97165df66379d538f38b44984576c06a555dc3b5a8615ddc79c218",
+   "thumb_bytes": 6229,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w013",
+   "title": "Lotus lagoon beneath ancient ruins",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "lotus_lagoon_beneath_ancient_ruins.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "3151c1c90d7573110a263e3897702451de722c3b153891be0334a606c90884d4",
+    "png_bytes": 2807559
+   },
+   "full": "art/session-archive/full/w013.jpg",
+   "full_sha256": "3dc852df85f28ca24233126a6d8d90ff670594efb1b4b778d8739a9eed207553",
+   "full_bytes": 393230,
+   "thumb": "art/session-archive/thumb/w013.jpg",
+   "thumb_sha256": "230f78a61ea3b198bc76ff531bf33208b7db058adf6d589e11ec4fcbe10abebe",
+   "thumb_bytes": 30578,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w014",
+   "title": "Misty eco village at dawn",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "misty_eco_village_at_dawn.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "3d48433fb7a31dd6fab69fb4a4747c327c5924c7e782136caa57db71fde2b0bb",
+    "png_bytes": 2357219
+   },
+   "full": "art/session-archive/full/w014.jpg",
+   "full_sha256": "bd6c3bbbe46f6deeabf3a8a81d2231f099f96b9aa547798a72928b206ac93a5d",
+   "full_bytes": 263638,
+   "thumb": "art/session-archive/thumb/w014.jpg",
+   "thumb_sha256": "f6ba17ee81d6be8e42c4ca0216d2dcfa326c93c10b5d8fffa84a3c348435f8f9",
+   "thumb_bytes": 19503,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w015",
+   "title": "Misty oasis of domes and horses",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "misty_oasis_of_domes_and_horses.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "b58fba5a3634ec963c6ad2949b115831eeb8855c13e86447d236def411b12826",
+    "png_bytes": 2410117
+   },
+   "full": "art/session-archive/full/w015.jpg",
+   "full_sha256": "46b5f8b0f838a755e530b418a16ce0555e0f029079859af257612dcffa81218a",
+   "full_bytes": 285830,
+   "thumb": "art/session-archive/thumb/w015.jpg",
+   "thumb_sha256": "bc7968d64cbf53e91bc40d9925e76928caf89b3cf2c58e5677ec11e32ab853e1",
+   "thumb_bytes": 23176,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w016",
+   "title": "Moonlit egyptian temple reflections",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "moonlit_egyptian_temple_reflections.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "a2a97d9a5a9006da97c73006292fc78199acf5286276ef65823b0bdac89ab533",
+    "png_bytes": 3627429
+   },
+   "full": "art/session-archive/full/w016.jpg",
+   "full_sha256": "b48aa042ab25677b06a11d8a911ee8b790715ae9ab10b93013622458e59be8ed",
+   "full_bytes": 623195,
+   "thumb": "art/session-archive/thumb/w016.jpg",
+   "thumb_sha256": "3c910f3ad5e2e3ca3c81b1fad71e4f677e2b57479c57c3e5058280061c22c5e8",
+   "thumb_bytes": 33862,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w017",
+   "title": "Mosaic colonnade reflections by the lagoon",
+   "kind": "single",
+   "dimensions": [
+    1254,
+    1254
+   ],
+   "source_asset": {
+    "name": "mosaic_colonnade_reflections_by_the_lagoon.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "5d02ff3342e326abb84ea0b319c3deb1f8e58e948c59ef91e314e23acf847352",
+    "png_bytes": 3830794
+   },
+   "full": "art/session-archive/full/w017.jpg",
+   "full_sha256": "f8f076731b3c5bd8066b275f9ff824468be4416ef64761cc9fa793faebdc07dd",
+   "full_bytes": 650688,
+   "thumb": "art/session-archive/thumb/w017.jpg",
+   "thumb_sha256": "9f7105f19c184e60ebbcfa46a33f9eb69dce4fb22f047046de1237e320d2d358",
+   "thumb_bytes": 64846,
+   "thumb_dimensions": [
+    420,
+    420
+   ]
+  },
+  {
+   "id": "w018",
+   "title": "Mystical marsh beneath the ancient city",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "mystical_marsh_beneath_the_ancient_city.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "09ce930a215c6a8163225f856526cebce83a859d238f3e61aed9ee546f769f68",
+    "png_bytes": 2775235
+   },
+   "full": "art/session-archive/full/w018.jpg",
+   "full_sha256": "3a398b77bf1dbf6b7a250f28fb60a0906029c826e8b6ce351b6a6d21e73b8c74",
+   "full_bytes": 388634,
+   "thumb": "art/session-archive/thumb/w018.jpg",
+   "thumb_sha256": "ddc385bc101dac03e6edf59e5758137df99ae573fc5779842b0a88d18a2c19f2",
+   "thumb_bytes": 29383,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w019",
+   "title": "Solitary figure atop the ancient monolith",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "solitary_figure_atop_the_ancient_monolith.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "a59fe417e5f422084301447cf0fc7eb1b9be8fe4c1fd7b2fdd0ced536b60a3f1",
+    "png_bytes": 2621814
+   },
+   "full": "art/session-archive/full/w019.jpg",
+   "full_sha256": "7f31a3257ee490766feef2ded62bc9c6ebe0d18e93b25cb22448be53029973ef",
+   "full_bytes": 326952,
+   "thumb": "art/session-archive/thumb/w019.jpg",
+   "thumb_sha256": "9aebcb0494df8cd893699f7a3c674b3106cce5f1849e3d9f8fc405ac5932cf47",
+   "thumb_bytes": 22787,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w020",
+   "title": "Starlit wanderer over the ancient valley",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "starlit_wanderer_over_the_ancient_valley.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "ae3fbc779946c27733d3710b06f975e135212e0014040dad3e95e7c3fa5a8877",
+    "png_bytes": 3753941
+   },
+   "full": "art/session-archive/full/w020.jpg",
+   "full_sha256": "7e3d68d1ae4246746568622f356024c98667e2931a43e3b29b4017b899f23d2b",
+   "full_bytes": 659991,
+   "thumb": "art/session-archive/thumb/w020.jpg",
+   "thumb_sha256": "1f698a9472176cb13569df45ad059a8a2bc165e2a40fcd926080ae3fb9a6fb3c",
+   "thumb_bytes": 35647,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w021",
+   "title": "Twilight lagoon before the ancient city",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "twilight_lagoon_before_the_ancient_city.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "ffd6a7f9c17590ed886888cbefdc72698fef060f15aefa4ef7564c1b30922f1a",
+    "png_bytes": 2830793
+   },
+   "full": "art/session-archive/full/w021.jpg",
+   "full_sha256": "bd76a5d5a88dfa1467375b789e56054716aa2b867904d3b6ba7eb3e9c9350b81",
+   "full_bytes": 401454,
+   "thumb": "art/session-archive/thumb/w021.jpg",
+   "thumb_sha256": "aa37937f9aff941125ac9d4b1a61d5cad8f9ec56d5653d6097ea3be563b4929d",
+   "thumb_bytes": 28596,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w022",
+   "title": "Twilight over the ancient temple city",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "twilight_over_the_ancient_temple_city.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "20aad67889a5c6136bc6cd43fddbf12409d21540e990547c22db931b9189bea4",
+    "png_bytes": 2738326
+   },
+   "full": "art/session-archive/full/w022.jpg",
+   "full_sha256": "15047b91c64712f41dc280892f2e070b69a474a39c275145edf419411737691e",
+   "full_bytes": 377606,
+   "thumb": "art/session-archive/thumb/w022.jpg",
+   "thumb_sha256": "723dad7f0345ec71d85555a272f2938a18610b376462cb4291565f02158d359f",
+   "thumb_bytes": 28401,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w023",
+   "title": "Twilight pilgrimage over the ancient city",
+   "kind": "single",
+   "dimensions": [
+    1536,
+    1024
+   ],
+   "source_asset": {
+    "name": "twilight_pilgrimage_over_the_ancient_city.png",
+    "archive": "session_generated_art_only.zip",
+    "png_sha256": "e0dbc588f07c022c0065c6c670476cb04064db8e7dd2ee3bac4f54029db8f0ee",
+    "png_bytes": 3116260
+   },
+   "full": "art/session-archive/full/w023.jpg",
+   "full_sha256": "22bd2949634a5f94f538f9a09ade8cd0177716e77ad8cc7a723641e24bab38a0",
+   "full_bytes": 408705,
+   "thumb": "art/session-archive/thumb/w023.jpg",
+   "thumb_sha256": "447b575547c0728ae32dce29d960a53b488a77b122753783996e317182b2c1cc",
+   "thumb_bytes": 22991,
+   "thumb_dimensions": [
+    420,
+    280
+   ]
+  },
+  {
+   "id": "w024",
+   "title": "A high contrast black and white monochrome abstrac",
+   "kind": "single",
+   "dimensions": [
+    1024,
+    1536
+   ],
+   "source_asset": {
+    "name": "a_high_contrast_black_and_white_monochrome_abstrac.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "89d0f9c3c447b51b2ea874711be406fb5dc8dcd33506ab20b66d11aa1b2b7b26",
+    "png_bytes": 2920244
+   },
+   "full": "art/session-archive/full/w024.jpg",
+   "full_sha256": "4e997315f35aaed0c76721e12f6d3c54df1a1980b9a7a1978ab6d87d609ef144",
+   "full_bytes": 311057,
+   "thumb": "art/session-archive/thumb/w024.jpg",
+   "thumb_sha256": "5a4843f257fbc1041afd68fb60773e88b3bea784d8b8e01eeb5da0afcdb7ee03",
+   "thumb_bytes": 20325,
+   "thumb_dimensions": [
+    280,
+    420
+   ]
+  },
+  {
+   "id": "w025",
+   "title": "A wide surreal sci fi fantasy landscape abstrac",
+   "kind": "single",
+   "dimensions": [
+    1672,
+    941
+   ],
+   "source_asset": {
+    "name": "a_wide_surreal_sci_fi_fantasy_landscape_abstrac.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "18164e24f2f9dff5d7ea99e7578e3b0d1eba5af4f7bba9aed11123c6d9a05dd8",
+    "png_bytes": 2204643
+   },
+   "full": "art/session-archive/full/w025.jpg",
+   "full_sha256": "e0c72726bf184808e13b491bfe782d147ebb93433c82c543ef0850d74c7b4360",
+   "full_bytes": 226803,
+   "thumb": "art/session-archive/thumb/w025.jpg",
+   "thumb_sha256": "3bb4b720d3489d55cc6987f60b78e16c1e00e090ea782b980536374038532543",
+   "thumb_bytes": 15401,
+   "thumb_dimensions": [
+    420,
+    236
+   ]
+  },
+  {
+   "id": "w026",
+   "title": "Abstract geometric sanctuary of light",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "abstract_geometric_sanctuary_of_light.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "0283792764192eb39371315267bbd40aedcb4e331e5acb9541bacc0401eb5b54",
+    "png_bytes": 2258037
+   },
+   "full": "art/session-archive/full/w026.jpg",
+   "full_sha256": "57935d12be80a1cdd5ffff8965038ad652e97c464973bd089cfd4e8bb7ee56f8",
+   "full_bytes": 241276,
+   "thumb": "art/session-archive/thumb/w026.jpg",
+   "thumb_sha256": "bcb2418bd356b153cf27e4d60e72411278ef72dc55f4220af1424b8ec8d6dc1f",
+   "thumb_bytes": 17436,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w027",
+   "title": "Abstract landscape with distant glow",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "abstract_landscape_with_distant_glow.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "bda56219c6a7d746b93fd4e2b750149b43869b797863561bd11339f43e6a5eb9",
+    "png_bytes": 2633821
+   },
+   "full": "art/session-archive/full/w027.jpg",
+   "full_sha256": "83b8f78df22820f059acb445f9c2832d5a08d8f73eb146c0cd9218dc2fbff4e9",
+   "full_bytes": 271962,
+   "thumb": "art/session-archive/thumb/w027.jpg",
+   "thumb_sha256": "aba0133cd4598d4b6626cf8ff0a65b4c15395f1d30fc481ffc1d963076203984",
+   "thumb_bytes": 14099,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w028",
+   "title": "Abstract portrait with geometric flow",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "abstract_portrait_with_geometric_flow.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "967bc14aca14fbccdba1fb6aa320b5bda474edf208856ec163fc81e7822af5f7",
+    "png_bytes": 2511550
+   },
+   "full": "art/session-archive/full/w028.jpg",
+   "full_sha256": "8a3b058e1b19ac662b81d47ee704c317c553b2bfe28fb1ff1a6bd773ae792841",
+   "full_bytes": 308089,
+   "thumb": "art/session-archive/thumb/w028.jpg",
+   "thumb_sha256": "45b7f0ec977af83dafe202d9f8a67ef08c3868c20d623d52bdc37951c87535e5",
+   "thumb_bytes": 19367,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w029",
+   "title": "Apocalyptic rider and glowing saint",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "apocalyptic_rider_and_glowing_saint.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "4c9d9583e313c78f7fb4e8f67f8d5450a7232b2ee4dcb7b9c2ef4effff4acdf6",
+    "png_bytes": 3172089
+   },
+   "full": "art/session-archive/full/w029.jpg",
+   "full_sha256": "ba07cadf505f13c7b797b280db1384d6b700ef9bed5518cc3630822ce19c1ece",
+   "full_bytes": 610763,
+   "thumb": "art/session-archive/thumb/w029.jpg",
+   "thumb_sha256": "859acf15e939b709497ea0135f042df4bf7a42ec5905556e016cd76bd9871220",
+   "thumb_bytes": 50932,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w030",
+   "title": "Architectural visage in glitch distortion",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "architectural_visage_in_glitch_distortion.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "d5631fd879e3f0f72f565652d17dc60cca083d8e7fee04182703df96359041e1",
+    "png_bytes": 2982859
+   },
+   "full": "art/session-archive/full/w030.jpg",
+   "full_sha256": "f65e00d2b5b500ee20fba1166b7ac2a21044a4995c73ea4162f553d32723863e",
+   "full_bytes": 443781,
+   "thumb": "art/session-archive/thumb/w030.jpg",
+   "thumb_sha256": "b9b9e88e0b428b76f8fa0927560b7683c2e8562ac135a466766f8ae0631668ce",
+   "thumb_bytes": 38059,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w031",
+   "title": "Astral journey through neon gateways",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "astral_journey_through_neon_gateways.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "325bad07173fa29d18082267ad58fcf091249b7f2ebc670271e8fb95c3fb7de8",
+    "png_bytes": 2966193
+   },
+   "full": "art/session-archive/full/w031.jpg",
+   "full_sha256": "473a8445265f2c4f0910f098dbe9627763cd7064f9b2ae2c7f914bced956eae9",
+   "full_bytes": 414439,
+   "thumb": "art/session-archive/thumb/w031.jpg",
+   "thumb_sha256": "3b373d684858fb38f5231052247fbe84a4a8e853ef6dd7536c4ecf2fc8555acf",
+   "thumb_bytes": 29974,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w032",
+   "title": "Climbing towards the cosmic portal",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "climbing_towards_the_cosmic_portal.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "b14453afcb016fdc8e99203d3cb34fa6e7dfde8b5ec049e9a3f95f9f8e83c6e0",
+    "png_bytes": 3248250
+   },
+   "full": "art/session-archive/full/w032.jpg",
+   "full_sha256": "874b04239ca08e6a7a1919c6db25dc045310bd3584a9732e1646bb14afc7a82a",
+   "full_bytes": 492185,
+   "thumb": "art/session-archive/thumb/w032.jpg",
+   "thumb_sha256": "e48148610df796dd36fd3c361273f229ce8ed50ee851ae1e39fb5fc0dbe09b2c",
+   "thumb_bytes": 33706,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w033",
+   "title": "Confrontation on a dark shoreline",
+   "kind": "single",
+   "dimensions": [
+    1672,
+    941
+   ],
+   "source_asset": {
+    "name": "confrontation_on_a_dark_shoreline.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "bfdd5fd5dbe06fb719cc27d2701c03d5361befdc544e4df73a0ac238106ffa99",
+    "png_bytes": 2162490
+   },
+   "full": "art/session-archive/full/w033.jpg",
+   "full_sha256": "02b89a3232f6363bf8657766992b9a6d40c5deffac89a4d02d74216311b13277",
+   "full_bytes": 178269,
+   "thumb": "art/session-archive/thumb/w033.jpg",
+   "thumb_sha256": "d7693d818a6c940160f00d94568f64201c63381c53e785c056c9238992139a48",
+   "thumb_bytes": 6194,
+   "thumb_dimensions": [
+    420,
+    236
+   ]
+  },
+  {
+   "id": "w034",
+   "title": "Cosmic battle of fractured light",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_battle_of_fractured_light.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "45cbf227a059906c848ae7c445c1ebe39968c24cb471bff8b91a09d41fc5e455",
+    "png_bytes": 3462564
+   },
+   "full": "art/session-archive/full/w034.jpg",
+   "full_sha256": "a4cb83acd3a1965a20ac77db67a06ff91797f0c3f50cd3f920811fbca0034aff",
+   "full_bytes": 621001,
+   "thumb": "art/session-archive/thumb/w034.jpg",
+   "thumb_sha256": "6fb117f5b86ae41dbeeffd97132468a88583a545a6bd47cbf0feddf027315463",
+   "thumb_bytes": 52701,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w035",
+   "title": "Cosmic cathedral of light and reflection",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_cathedral_of_light_and_reflection.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "ffb81e8295ed8655a1c13795b81a080b7d466227b69b6f5ec92592db76a0b23d",
+    "png_bytes": 1887425
+   },
+   "full": "art/session-archive/full/w035.jpg",
+   "full_sha256": "c9c3fbd9e6e8218f5650388a561b789004e4853948780ff1c00be412994798f9",
+   "full_bytes": 191813,
+   "thumb": "art/session-archive/thumb/w035.jpg",
+   "thumb_sha256": "99a887d916ddc22f30488d27235dced5170dc9f93688d847b00d891d8e986edb",
+   "thumb_bytes": 19729,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w036",
+   "title": "Cosmic devotion under radiant light",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_devotion_under_radiant_light.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "b72b7ba515a6c2b81265cffd54832027c8fc96444f172e2f2d66b1a820b12337",
+    "png_bytes": 2433809
+   },
+   "full": "art/session-archive/full/w036.jpg",
+   "full_sha256": "3e56569bdeb508943bfd85a573a727ecfe96f517eaf0db566b57a27650706995",
+   "full_bytes": 324996,
+   "thumb": "art/session-archive/thumb/w036.jpg",
+   "thumb_sha256": "e7a0823e7b287a3631f68ce602d680b4a67ca038ac3435c3a8a240ffafd114f2",
+   "thumb_bytes": 33108,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w037",
+   "title": "Cosmic fragments of divine connection",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_fragments_of_divine_connection.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "628b0967aaa90d867f71240155939139483323f98a80ba7607851afcb0ee33f4",
+    "png_bytes": 3257717
+   },
+   "full": "art/session-archive/full/w037.jpg",
+   "full_sha256": "db2417e3d7027f389b7950753f68f894f5ba71d7fc51eed11b0bbb8c77b0f8fb",
+   "full_bytes": 568786,
+   "thumb": "art/session-archive/thumb/w037.jpg",
+   "thumb_sha256": "3d36714133cb1cfc721337fb3dfd3416e450c052808de1a42e1f5d88f815fcfe",
+   "thumb_bytes": 44259,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w038",
+   "title": "Cosmic gateway of light and reflection",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_gateway_of_light_and_reflection.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "e0a5d280663ebccf258c369be278ea2e294a378b4949fbd04cc028d6017f360b",
+    "png_bytes": 2032488
+   },
+   "full": "art/session-archive/full/w038.jpg",
+   "full_sha256": "0dc19c6d35d54d060b7d6daebc7995f393e0ea35b7978651c413322e2f2a760a",
+   "full_bytes": 206301,
+   "thumb": "art/session-archive/thumb/w038.jpg",
+   "thumb_sha256": "46f096daa71cfcffde58dbebc5c8b6b05f44805387b58ad7d6b6310a69cdc150",
+   "thumb_bytes": 20791,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w039",
+   "title": "Cosmic mandala and neon landscape",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_mandala_and_neon_landscape.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "7a996ecffabda53d3908975de67bf87a2f82ff017d326e24b6482728defd9ffa",
+    "png_bytes": 3514014
+   },
+   "full": "art/session-archive/full/w039.jpg",
+   "full_sha256": "ea46314f4da0d8f4b2ffa9f74a32292b80829292ee97afdde51af0df9555f003",
+   "full_bytes": 624007,
+   "thumb": "art/session-archive/thumb/w039.jpg",
+   "thumb_sha256": "041a97ef8a716f25f222c438bf3d107902a299adac1465137e0f487cda4dc35e",
+   "thumb_bytes": 50283,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w040",
+   "title": "Cosmic reflections in glowing geometry",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_reflections_in_glowing_geometry.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "0e1b2ce94c5f4e44218f29ba65e235340f93b62d84776d9118f1ccc5969ceb5c",
+    "png_bytes": 1303117
+   },
+   "full": "art/session-archive/full/w040.jpg",
+   "full_sha256": "d7a25955a06cc0f32b141b19e61b520f4695146c1fc5f21ab7ec89c4567fa56d",
+   "full_bytes": 133073,
+   "thumb": "art/session-archive/thumb/w040.jpg",
+   "thumb_sha256": "0c0fcd9047f9ac04ed1e9fbf20e416785eeabdd0cd83d8cfe7714276a8ea36bf",
+   "thumb_bytes": 13700,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w041",
+   "title": "Cosmic ritual under the green eclipse",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_ritual_under_the_green_eclipse.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "90ba90910510f0357916e5d9e7009e94e0696ceed68d0c7129889f2ed7f0319f",
+    "png_bytes": 3376043
+   },
+   "full": "art/session-archive/full/w041.jpg",
+   "full_sha256": "2695e7a123edff4320d6b7ca4ccaa2861cb52ffbce2b070f7934f1bfbc36fc3a",
+   "full_bytes": 540745,
+   "thumb": "art/session-archive/thumb/w041.jpg",
+   "thumb_sha256": "33dcfb0b54c01080dc6ec6b87a2cc195cc82592551fe02aac053aab36ee9ae82",
+   "thumb_bytes": 40225,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w042",
+   "title": "Cosmic shrine in reflective symmetry",
+   "kind": "single",
+   "dimensions": [
+    1024,
+    1536
+   ],
+   "source_asset": {
+    "name": "cosmic_shrine_in_reflective_symmetry.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "5b13544af27e996c2212af976e4179712ade13211d720d705075917cf6c7ba1f",
+    "png_bytes": 3051577
+   },
+   "full": "art/session-archive/full/w042.jpg",
+   "full_sha256": "286d1459c25ad9589d3401dd9bb3dcbe49ff46756b6e63a08bb6876e79d0cbf3",
+   "full_bytes": 363643,
+   "thumb": "art/session-archive/thumb/w042.jpg",
+   "thumb_sha256": "903fba3e567adb87452cff5ef97943864082ea5479dbf163baaf7981a3f07481",
+   "thumb_bytes": 19137,
+   "thumb_dimensions": [
+    280,
+    420
+   ]
+  },
+  {
+   "id": "w043",
+   "title": "Cosmic temple and reclining giant",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_temple_and_reclining_giant.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "4674053d7e1d78dea93f175bbb4540a69d2d5dd6c1cb04f315405e2978941054",
+    "png_bytes": 3003079
+   },
+   "full": "art/session-archive/full/w043.jpg",
+   "full_sha256": "02f8e1a338ffc982123a94dfd7c77378fa8e61e2467f7b7d1e4d71c68263c283",
+   "full_bytes": 414299,
+   "thumb": "art/session-archive/thumb/w043.jpg",
+   "thumb_sha256": "5cea88e5166df58ada1cc8544e407e7d5e37ee0bdd179c9132c3a6704697ff41",
+   "thumb_bytes": 30767,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w044",
+   "title": "Cosmic tug of war in neon geometry",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_tug_of_war_in_neon_geometry.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "c27f1db7a3e1ba671e10af73c54500275ab0ce869c884b77c503eac130ba85ce",
+    "png_bytes": 3215128
+   },
+   "full": "art/session-archive/full/w044.jpg",
+   "full_sha256": "01e8c428cecf2e94cb89598c5a49f3d690895236a9babc076b9262e9120d65d0",
+   "full_bytes": 505029,
+   "thumb": "art/session-archive/thumb/w044.jpg",
+   "thumb_sha256": "cfa395c83a83132f9accbbe6197d9b2a7a53a232f887aafe2567229c1f8d0e77",
+   "thumb_bytes": 41786,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w045",
+   "title": "Crystalline embrace in cosmic temple",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "crystalline_embrace_in_cosmic_temple.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "722a63b7e50635ed69b4553936a7ad5ba75c3d9733cf707f0ea795f51adce03d",
+    "png_bytes": 3067132
+   },
+   "full": "art/session-archive/full/w045.jpg",
+   "full_sha256": "9ec73549a8f7e55b24237220d699e8dee383f2c870162a585b053d92eb4f4f4d",
+   "full_bytes": 438204,
+   "thumb": "art/session-archive/thumb/w045.jpg",
+   "thumb_sha256": "b372edd335449393af9dac12e3977a4250c9927d7f2a39928921370aafc59953",
+   "thumb_bytes": 34455,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w046",
+   "title": "Cyber surreal portrait with architectural chaos",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cyber_surreal_portrait_with_architectural_chaos.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "f7e9da34cd54b0bfea545840d54d1930495fbf61cf4f35fe232bc6c121fcf395",
+    "png_bytes": 3273910
+   },
+   "full": "art/session-archive/full/w046.jpg",
+   "full_sha256": "756a7a57d528a0481ae3ed370fd78328db4c2801893d34a03633b7617f0f87a7",
+   "full_bytes": 502040,
+   "thumb": "art/session-archive/thumb/w046.jpg",
+   "thumb_sha256": "03912eee703448aef2595eeb88327b44250e8ae9e9a429d47414fe548a4d81fd",
+   "thumb_bytes": 37270,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w047",
+   "title": "Eclipsed in mist and reflection",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "eclipsed_in_mist_and_reflection.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "40aecf6fb0689ca5bc760886b87b76ae7a79b4fc5f75423fecb3d28bd515e94a",
+    "png_bytes": 3447505
+   },
+   "full": "art/session-archive/full/w047.jpg",
+   "full_sha256": "d847840f602663cea60fa710e8c44996dbef50bee1593f197bb5ebc88d6ffbdb",
+   "full_bytes": 487793,
+   "thumb": "art/session-archive/thumb/w047.jpg",
+   "thumb_sha256": "ed9b5275a48c5d483dcd3d1ac52ab016b9394cd06514c9008971a3a1f02a201f",
+   "thumb_bytes": 27425,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w048",
+   "title": "Epic pilgrimage to the radiant gate",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "epic_pilgrimage_to_the_radiant_gate.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "393904acf50d844eeff5813fb9714252122f1ff8ec86dfccbf9085c47f606782",
+    "png_bytes": 3497941
+   },
+   "full": "art/session-archive/full/w048.jpg",
+   "full_sha256": "84e60f9fabdfd5795f16089e78928fc83ac4640a834ac36f8e161e243ab39f16",
+   "full_bytes": 604159,
+   "thumb": "art/session-archive/thumb/w048.jpg",
+   "thumb_sha256": "cb941aac4256fa429542255ab76e23d8b891d33773fe54608d0b9638218648f9",
+   "thumb_bytes": 46589,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w049",
+   "title": "Ethereal figure in a cosmic corridor",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "ethereal_figure_in_a_cosmic_corridor.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "d5420a4e5c23b63dcc0740bb78d0c1a76f493591fd217f85c902934a3ad4ac10",
+    "png_bytes": 3395109
+   },
+   "full": "art/session-archive/full/w049.jpg",
+   "full_sha256": "51e165f4aa9f1742b8b551f9a9e835e50c4cadfc19170921b53a12df5f721ff7",
+   "full_bytes": 528740,
+   "thumb": "art/session-archive/thumb/w049.jpg",
+   "thumb_sha256": "be66d476cb96afad8691c1d09322944855d0e02092fb07b5a01757d81ef8273e",
+   "thumb_bytes": 37475,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w050",
+   "title": "Ethereal guardians in a cosmic landscape",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "ethereal_guardians_in_a_cosmic_landscape.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "1e9e8be75a7a450c3a0eb1cfab24da059c1a5232e4205375c83714058cc17192",
+    "png_bytes": 2732043
+   },
+   "full": "art/session-archive/full/w050.jpg",
+   "full_sha256": "10b918d31f30ed03a8b940529c12c20875ba459ba2d6604a30a41a7cb913701f",
+   "full_bytes": 345898,
+   "thumb": "art/session-archive/thumb/w050.jpg",
+   "thumb_sha256": "cddb07b3aa69a31dffd2aae84d9ddc4d5239a9bd31b6cfe2ce144d6caec4487b",
+   "thumb_bytes": 24149,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w051",
+   "title": "Ethereal procession in a haunted landscape",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "ethereal_procession_in_a_haunted_landscape.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "52cb65a2a62d6ab18a88d78524703b74724bc8e8f6353afd8e5521d076c6cc10",
+    "png_bytes": 3321148
+   },
+   "full": "art/session-archive/full/w051.jpg",
+   "full_sha256": "d0241f559bf7adb8bf38c3ffb27d898b98da29b20f04c82e523d3868f3884112",
+   "full_bytes": 487840,
+   "thumb": "art/session-archive/thumb/w051.jpg",
+   "thumb_sha256": "41da91b0b4ac0453a91b14a82c626fc3cce2f0920ee47803070b6836f5b9848b",
+   "thumb_bytes": 31097,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w052",
+   "title": "Floating cocoon in surreal wasteland",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "floating_cocoon_in_surreal_wasteland.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "dc90cca5eed28fc39a0f8a96420045344e1a6253e79c63cbd99f4b845d6185bd",
+    "png_bytes": 3232093
+   },
+   "full": "art/session-archive/full/w052.jpg",
+   "full_sha256": "57791a0e6e12d348e7cb46eb2cca08bd97fffda37cee2830ce5fea201bae2b2f",
+   "full_bytes": 452543,
+   "thumb": "art/session-archive/thumb/w052.jpg",
+   "thumb_sha256": "331bcc79e9567c409fc622046311d2be0b2ecf052c60c374bc762e58c7cd6a70",
+   "thumb_bytes": 27565,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w053",
+   "title": "Fractured skull in neon geometry",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "fractured_skull_in_neon_geometry.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "d790db6b4e03b9796784117c9b463e1fbf9e6ace877840e09358c962983baaf8",
+    "png_bytes": 3921998
+   },
+   "full": "art/session-archive/full/w053.jpg",
+   "full_sha256": "34341e2b2d130d1c8a6a0121252af408a437f8de47dedc12ce9ba7eb2a2ac1ae",
+   "full_bytes": 715223,
+   "thumb": "art/session-archive/thumb/w053.jpg",
+   "thumb_sha256": "40bc6c5032ddd62139a10d65d588c755844a6cf62a3532671814887c09343ba8",
+   "thumb_bytes": 57041,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w054",
+   "title": "Fragmented architecture of the mind",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "fragmented_architecture_of_the_mind.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "27826b989c0e98c78f8f0fb052c8c932a3b59476789dfe20ef5147dad8f245a6",
+    "png_bytes": 3719943
+   },
+   "full": "art/session-archive/full/w054.jpg",
+   "full_sha256": "00803bc8c986c19999be20cc997a63e45c1b18d3fe85512c87871b0566f340c1",
+   "full_bytes": 652555,
+   "thumb": "art/session-archive/thumb/w054.jpg",
+   "thumb_sha256": "f489c81d1ab8088a39fc65ea8cc325f8caeead23f698d7064a95d4934f71a242",
+   "thumb_bytes": 44255,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w055",
+   "title": "Fragmented light and crystal portrait",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "fragmented_light_and_crystal_portrait.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "c0f08f4676c0188077bb35c95e6bca645421650380f59ac26408123839c530f3",
+    "png_bytes": 2587433
+   },
+   "full": "art/session-archive/full/w055.jpg",
+   "full_sha256": "d84596aa420a1cfbcf1d6e7510a7072df2ad869dda1cab5da1d6c1cfbe30a84f",
+   "full_bytes": 279469,
+   "thumb": "art/session-archive/thumb/w055.jpg",
+   "thumb_sha256": "eacb88d8dfb0c16cabbb82f9eed659bbc6fb9b4cd8221e1cb92f0ed657f92acd",
+   "thumb_bytes": 18374,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w056",
+   "title": "Futuristic cathedral of light and reflection",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "futuristic_cathedral_of_light_and_reflection.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "522fde1ee24b0006fc7952145cc50c981a534149dad12afbcbc6be250c012010",
+    "png_bytes": 1830144
+   },
+   "full": "art/session-archive/full/w056.jpg",
+   "full_sha256": "d0315596d1388cc0e9d5daf7c3ec41285dc74c8a190ea3ce197dd0acc9a02014",
+   "full_bytes": 181700,
+   "thumb": "art/session-archive/thumb/w056.jpg",
+   "thumb_sha256": "a29154c9947bcc58a92b98919f6cae17e6e3c82bdeba6078dfae985fd8bf4551",
+   "thumb_bytes": 18360,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w057",
+   "title": "Futuristic cosmic gateway with neon ribbons",
+   "kind": "single",
+   "dimensions": [
+    1024,
+    1536
+   ],
+   "source_asset": {
+    "name": "futuristic_cosmic_gateway_with_neon_ribbons.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "2bbc15f116ae930f5a201a72fe49cb5a8a870c824c7d0bc8d5bdf0fc830bd60b",
+    "png_bytes": 2635686
+   },
+   "full": "art/session-archive/full/w057.jpg",
+   "full_sha256": "99af3f69638f48a54ff5273bcf5f34f87251e1c27635d98b44c388fb9021ea60",
+   "full_bytes": 310789,
+   "thumb": "art/session-archive/thumb/w057.jpg",
+   "thumb_sha256": "1e99bb91ea3cf6d0d7495b5fd3970396cba5a3d01e3c10e6e87c892ece986022",
+   "thumb_bytes": 20951,
+   "thumb_dimensions": [
+    280,
+    420
+   ]
+  },
+  {
+   "id": "w058",
+   "title": "Futuristic cosmic portal with reflections",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "futuristic_cosmic_portal_with_reflections.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "5fe5251eef913d1fa8fbb68bb7d6d2fafcc82ab6ecdd77296b3013b1be5cceb2",
+    "png_bytes": 1729649
+   },
+   "full": "art/session-archive/full/w058.jpg",
+   "full_sha256": "129cb33996feaf320d3a1dc64869e22e69a69b26e358c6e74181ce873b1a9a2f",
+   "full_bytes": 173781,
+   "thumb": "art/session-archive/thumb/w058.jpg",
+   "thumb_sha256": "4ca7cb3420c5aadccd20bb494d4b2f89e20c888b7ae2408524d16693cc7642dc",
+   "thumb_bytes": 19426,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w059",
+   "title": "Futuristic flight through glowing ribbons",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "futuristic_flight_through_glowing_ribbons.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "ea4bf66174539c7993d6e0af943511c261c95dfc4e3c0edd1d5977134f40edb4",
+    "png_bytes": 1683950
+   },
+   "full": "art/session-archive/full/w059.jpg",
+   "full_sha256": "e165fbb59d66026b7350cc04a3ead795ca642024ed863e70f559916e3d70218f",
+   "full_bytes": 165953,
+   "thumb": "art/session-archive/thumb/w059.jpg",
+   "thumb_sha256": "2def10006f202784ce41496503f6c18397a236f5a05955418cf62cf0050a6d77",
+   "thumb_bytes": 18470,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w060",
+   "title": "Futuristic fragments in glowing reflections",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "futuristic_fragments_in_glowing_reflections.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "95fc5ce7eeca01aa901f3a5cbd2963750e7051d84fceb67af584caaa91ea5a31",
+    "png_bytes": 3121957
+   },
+   "full": "art/session-archive/full/w060.jpg",
+   "full_sha256": "802ae57aa2714ec20f27b1cef9426f4f0421d8683497860d2e7b83b3c23f9022",
+   "full_bytes": 475343,
+   "thumb": "art/session-archive/thumb/w060.jpg",
+   "thumb_sha256": "42a391559fbc5f2b19057805c69fbb34b5ea025fc4cf6ef055b1ae8c47a547d6",
+   "thumb_bytes": 33935,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w061",
+   "title": "Futuristic geometric face with flowing colors",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "futuristic_geometric_face_with_flowing_colors.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "c6aa88aa940eb910e930dec8e88416bef0216fcc34b11388b2ce03426a69e14e",
+    "png_bytes": 3161904
+   },
+   "full": "art/session-archive/full/w061.jpg",
+   "full_sha256": "890aa57bf343fb42ba9870052b61157d20152a3b5ad7d31035416ac12c81894e",
+   "full_bytes": 448301,
+   "thumb": "art/session-archive/thumb/w061.jpg",
+   "thumb_sha256": "9c82b1d534e89ee451e2d4332ef6dba69a8dbb063f14442fa601ad434d69e674",
+   "thumb_bytes": 33364,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w062",
+   "title": "Futuristic glitch landscape in neon",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "futuristic_glitch_landscape_in_neon.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "4db541279720f50cbe5c17afb343cae11b7fd06829b4fee9595a75ea1754ae72",
+    "png_bytes": 2571125
+   },
+   "full": "art/session-archive/full/w062.jpg",
+   "full_sha256": "a86ae68a765db922e0fed8de656c80c8a2f7235a34cef5f0293290dc0cf05fee",
+   "full_bytes": 274314,
+   "thumb": "art/session-archive/thumb/w062.jpg",
+   "thumb_sha256": "cf2e695470f4a0143abe932f2cd5abefbc69de30b34abc37c4348f675c3ecd73",
+   "thumb_bytes": 19850,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w063",
+   "title": "Ghostly figure in a fractured city",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "ghostly_figure_in_a_fractured_city.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "3510847b4538d5fd2e32e50ef7591bf6055ea1021a3efea43c7e196dc604a4ce",
+    "png_bytes": 3412077
+   },
+   "full": "art/session-archive/full/w063.jpg",
+   "full_sha256": "037723aa7f4cf87fa183f9ebe9f3c1f8ca46d612ccdfbda3c1669940ad75783d",
+   "full_bytes": 514964,
+   "thumb": "art/session-archive/thumb/w063.jpg",
+   "thumb_sha256": "9bd7ed8273bc75ae809ecae585a5978b3070acfaf56c747d6348e49eeea4ea8d",
+   "thumb_bytes": 34191,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w064",
+   "title": "Glitchy sci fi landscape with neon reflections",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "glitchy_sci_fi_landscape_with_neon_reflections.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "70944ef8d765e771458a7e71e5e8082c1094e2a5e2bbe10e4ffab824895bca84",
+    "png_bytes": 2480407
+   },
+   "full": "art/session-archive/full/w064.jpg",
+   "full_sha256": "a12d2eb54241db824239f52e379c1ec558c4ebef7206eafb1475ca7179feeece",
+   "full_bytes": 264108,
+   "thumb": "art/session-archive/thumb/w064.jpg",
+   "thumb_sha256": "829afadfe5d61f0e90d10b47736f29613dedefdb37d627cf9cec776e28d1b9c0",
+   "thumb_bytes": 12809,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w065",
+   "title": "Iridescent figure in a celestial cathedral",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "iridescent_figure_in_a_celestial_cathedral.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "1b5621e7a0122a178fe27d41282a136e360a380728ecc1d52b7442ab6656e49e",
+    "png_bytes": 2376427
+   },
+   "full": "art/session-archive/full/w065.jpg",
+   "full_sha256": "027412a04ce0ace0dd76a3b76d2663433f26f38c93dc2a496b656f3c2136f40f",
+   "full_bytes": 312912,
+   "thumb": "art/session-archive/thumb/w065.jpg",
+   "thumb_sha256": "a49f0615992428cba12307ed7e84c404d0a52fc22f81be992d8f98e3dae5a3f5",
+   "thumb_bytes": 36212,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w066",
+   "title": "Kneeling in cosmic reflection",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "kneeling_in_cosmic_reflection.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "151a8bf8e11ece5df7d6850a500e1faa6f218f3bb78c49210eff7dec04e8c8c8",
+    "png_bytes": 2706962
+   },
+   "full": "art/session-archive/full/w066.jpg",
+   "full_sha256": "237296e7b0447b443319a9183a9a85a283f145af598b410dbc6f9a1008eb5818",
+   "full_bytes": 418806,
+   "thumb": "art/session-archive/thumb/w066.jpg",
+   "thumb_sha256": "afb43dbcb8086d78ac3a4a3b31a07603a565930e87c828c23cbbfd116eddc487",
+   "thumb_bytes": 38799,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w067",
+   "title": "Lone figure in a cosmic temple",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "lone_figure_in_a_cosmic_temple.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "aa9ad4c2e7ea7b57e3290c272645cd1231b07a85ee6546c1205db706fe687701",
+    "png_bytes": 1856657
+   },
+   "full": "art/session-archive/full/w067.jpg",
+   "full_sha256": "f9cb2f7e45f3cdbccb79b21309179794185fe677fcf6310107a24cf63ef7978b",
+   "full_bytes": 192027,
+   "thumb": "art/session-archive/thumb/w067.jpg",
+   "thumb_sha256": "cb206bc0700f69e68945641b6305615e4a00abb39baf036a76b3a55c999a009a",
+   "thumb_bytes": 20071,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w068",
+   "title": "Monolithic figure in a glitchy sky",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "monolithic_figure_in_a_glitchy_sky.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "8230b3492c1c7d3c91a1b4cefd00dac536ab08f1a37caa84e953651449e09413",
+    "png_bytes": 2603584
+   },
+   "full": "art/session-archive/full/w068.jpg",
+   "full_sha256": "48cc312c2bdfe27887bd3052cc466cca177fd422db08d3f93a1f121a86ba5dd0",
+   "full_bytes": 301733,
+   "thumb": "art/session-archive/thumb/w068.jpg",
+   "thumb_sha256": "74e81496bd347017c6f5024b15ed3262fcfada08b2803630cae93b92fd2e057f",
+   "thumb_bytes": 18197,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w069",
+   "title": "Mystical ritual in surreal geometry",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "mystical_ritual_in_surreal_geometry.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "e4d8e44955a47c6a2ed65163210cf21eb7d9bd76f6ee7710f8f60cc9af200c70",
+    "png_bytes": 3075228
+   },
+   "full": "art/session-archive/full/w069.jpg",
+   "full_sha256": "34c61bbda2dd0072cae01bfcda1589342ca147fceff0f91e7d713e3059219495",
+   "full_bytes": 421314,
+   "thumb": "art/session-archive/thumb/w069.jpg",
+   "thumb_sha256": "7305e5f1dd973f2310d3f7f8bbd433a60e494661eb91866a6d05487b5c8a0f3e",
+   "thumb_bytes": 29865,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w070",
+   "title": "Neon oracle in cosmic chaos",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "neon_oracle_in_cosmic_chaos.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "53ae4dabe5f4420fb6f1648643a9665ce2a5e6e9b9b62548027bcf2a48330bfe",
+    "png_bytes": 3589784
+   },
+   "full": "art/session-archive/full/w070.jpg",
+   "full_sha256": "ec466735c376ce97009e08130d68142f9d7b57c43eb3d7142301be9c557bc071",
+   "full_bytes": 654087,
+   "thumb": "art/session-archive/thumb/w070.jpg",
+   "thumb_sha256": "0c7a597fc9807c470d8782cbeecccb7487311375b9ade83f60f201dbcab7413c",
+   "thumb_bytes": 56918,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w071",
+   "title": "Neon prophet in fractured geometry",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "neon_prophet_in_fractured_geometry.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "bfb2e0c2b3068db3fb3ed8d1e7ee20841b95cdc20b5d853fc983605e065cdcd5",
+    "png_bytes": 3541668
+   },
+   "full": "art/session-archive/full/w071.jpg",
+   "full_sha256": "6c5e46134dbf719380f9d0afd65ab22db536cc410e6012896b4d4176af59ad80",
+   "full_bytes": 649978,
+   "thumb": "art/session-archive/thumb/w071.jpg",
+   "thumb_sha256": "9533e9a9dd3c09cb59642c1e7cc41781f405385ebf0025647109fd5bab60ce0c",
+   "thumb_bytes": 56271,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w072",
+   "title": "Neon tug of war in a cosmic landscape",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "neon_tug_of_war_in_a_cosmic_landscape.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "39f465904232414de4ba37da6050205640e2d94382c51842d03d8ffef92f103f",
+    "png_bytes": 3601919
+   },
+   "full": "art/session-archive/full/w072.jpg",
+   "full_sha256": "b08c16c7d415fac6775baaf93ad34e8060a003b5bd4a11306448fa1a260fc320",
+   "full_bytes": 647562,
+   "thumb": "art/session-archive/thumb/w072.jpg",
+   "thumb_sha256": "822a0300c32de23e84df4520519d04aa6518a28351af116c9e5c8ef763c606e5",
+   "thumb_bytes": 47449,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w073",
+   "title": "Neon void in a fractured landscape",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "neon_void_in_a_fractured_landscape.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "7b9b4739beef731eb9e93d6754bc70cb5b5f569bddff6e193da7050831c8efdc",
+    "png_bytes": 2914864
+   },
+   "full": "art/session-archive/full/w073.jpg",
+   "full_sha256": "c320ef4fc93ea3e45e3a9a630f339853921ce9e795ceb0e56144e0d909e0a198",
+   "full_bytes": 387204,
+   "thumb": "art/session-archive/thumb/w073.jpg",
+   "thumb_sha256": "392a2fcaebe0c48c384cb3122644ccfd3292c8a60f613d865db8877eb85cde43",
+   "thumb_bytes": 24781,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w074",
+   "title": "Otherworldly cathedral of light and reflections",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "otherworldly_cathedral_of_light_and_reflections.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "10b3b0f55a30ea8137a82ad9c5e82b226dce00a2ada2568eabf104531e87b87e",
+    "png_bytes": 1611750
+   },
+   "full": "art/session-archive/full/w074.jpg",
+   "full_sha256": "27b1a44f60ceec64ac762fed5ae81aa44f49cb32dbe46d2cca5bb3c2029f8895",
+   "full_bytes": 158349,
+   "thumb": "art/session-archive/thumb/w074.jpg",
+   "thumb_sha256": "81d39f68d76f98e335d1e48022c6acb7992ee108db2c870ba9731d550c01ca5e",
+   "thumb_bytes": 16612,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w075",
+   "title": "Otherworldly gateway in glowing light",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "otherworldly_gateway_in_glowing_light.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "481d71cf288cbced429e10b09108ccad044003d35831546d29782e4394cfbc8d",
+    "png_bytes": 1953615
+   },
+   "full": "art/session-archive/full/w075.jpg",
+   "full_sha256": "d098cba2295b266245049cf8bef41d0d42f7576417b1af47c9078bb867c4c374",
+   "full_bytes": 194304,
+   "thumb": "art/session-archive/thumb/w075.jpg",
+   "thumb_sha256": "a23d919f61854cd5341de5ce6012c350643ed8fa96a7f7d4730c46bc2e864e33",
+   "thumb_bytes": 19326,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w076",
+   "title": "Portal to a luminous city",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "portal_to_a_luminous_city.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "06abd7fa6c7bf80b981814c8d199ac183b2e278a56f5f1872e3ee13f50c88edb",
+    "png_bytes": 2730163
+   },
+   "full": "art/session-archive/full/w076.jpg",
+   "full_sha256": "b1b31d26ecad0cb4b6a84df8e08db8e850fdb52cfd252875794d356abcfe7dd9",
+   "full_bytes": 331974,
+   "thumb": "art/session-archive/thumb/w076.jpg",
+   "thumb_sha256": "f534eb5670f67ad48adfee7c6738737245f7da6e901d47ad6a222b14bd435312",
+   "thumb_bytes": 22359,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w077",
+   "title": "Ritual of light and reflection",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "ritual_of_light_and_reflection.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "5c4e6142eb882e09eca46bc176c548c3bc71162787b17485bba2dac66d95cde2",
+    "png_bytes": 3603249
+   },
+   "full": "art/session-archive/full/w077.jpg",
+   "full_sha256": "007d829d00dde03ef88edc7508e575d2dd64cfaccf8f7e224e35d1aac5020fd6",
+   "full_bytes": 553172,
+   "thumb": "art/session-archive/thumb/w077.jpg",
+   "thumb_sha256": "0086c5522d2a0781f7774ad4bb825ea4164a9a48939e4e4b86d77ba3efdc4cf1",
+   "thumb_bytes": 30194,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w078",
+   "title": "Solitude in a fragmented expanse",
+   "kind": "single",
+   "dimensions": [
+    1672,
+    941
+   ],
+   "source_asset": {
+    "name": "solitude_in_a_fragmented_expanse.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "99c5e9bab698598c91422f595e8ace0a6e8327dbeaae9963ae68bbd911a9e29d",
+    "png_bytes": 2516370
+   },
+   "full": "art/session-archive/full/w078.jpg",
+   "full_sha256": "d15703f434867f1a5672244155ff032dd7b0d1e62781a0d33ccc7dccf522f27e",
+   "full_bytes": 244331,
+   "thumb": "art/session-archive/thumb/w078.jpg",
+   "thumb_sha256": "28701c8bfea151571ecd2b78d7db123e0c4af88d934e8f687687a41c1bab224f",
+   "thumb_bytes": 9030,
+   "thumb_dimensions": [
+    420,
+    236
+   ]
+  },
+  {
+   "id": "w079",
+   "title": "Spectral gateway in a digital realm",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "spectral_gateway_in_a_digital_realm.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "b2763b33fc9294c202531d37b59ea43a347318f2a3117de00313b8b026ddbd88",
+    "png_bytes": 2459698
+   },
+   "full": "art/session-archive/full/w079.jpg",
+   "full_sha256": "19a5e0095436bace83652c4d497831c268d3d7d3c85b1b00931935c6d167ca14",
+   "full_bytes": 297791,
+   "thumb": "art/session-archive/thumb/w079.jpg",
+   "thumb_sha256": "973db669f9a658d47b4eb47dfba9cb7f20a946ac6d375fad69d319f3be40ad19",
+   "thumb_bytes": 24063,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w080",
+   "title": "Surreal cityscape with spectral figures",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "surreal_cityscape_with_spectral_figures.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "64c65f57590133210175da79bc5f1b5633e97d0aad9adb7f5864577160e6af40",
+    "png_bytes": 3099562
+   },
+   "full": "art/session-archive/full/w080.jpg",
+   "full_sha256": "54456f3b6040b7be45d792c90205ee1edd12508101d4697fce5a6acf653e4bea",
+   "full_bytes": 418812,
+   "thumb": "art/session-archive/thumb/w080.jpg",
+   "thumb_sha256": "a1db3425c8766ff734fa192b1c1629e015213da82cba7662d78fb5de3506367f",
+   "thumb_bytes": 26052,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w081",
+   "title": "Surreal monolith in misty landscape",
+   "kind": "single",
+   "dimensions": [
+    1672,
+    941
+   ],
+   "source_asset": {
+    "name": "surreal_monolith_in_misty_landscape.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "5c05397d26cab1ab25a0a8c594a4ad048807fa378bfbb91c07c7a7c014bead8e",
+    "png_bytes": 2254404
+   },
+   "full": "art/session-archive/full/w081.jpg",
+   "full_sha256": "99d5a789ffd61ec87aa3128833f74976830053750b31a09b4af1ff2707107ee0",
+   "full_bytes": 203513,
+   "thumb": "art/session-archive/thumb/w081.jpg",
+   "thumb_sha256": "046dc54a2e8636699e60986d0d73338885f83f8a7354a83639734db7ffb6e8bc",
+   "thumb_bytes": 9009,
+   "thumb_dimensions": [
+    420,
+    236
+   ]
+  },
+  {
+   "id": "w082",
+   "title": "Symmetrical totem with vibrant ribbons",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "symmetrical_totem_with_vibrant_ribbons.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "37c40d1df6cf578f055d6a1f03e79a3576713104c5cd37432ef61fb0d15e6792",
+    "png_bytes": 2831369
+   },
+   "full": "art/session-archive/full/w082.jpg",
+   "full_sha256": "7990b031850d0561e82f79c2e63a44e12c287269d551cea9b9f1ac2604ba6c9d",
+   "full_bytes": 367780,
+   "thumb": "art/session-archive/thumb/w082.jpg",
+   "thumb_sha256": "a87a1cfff7bb50543789b44b678b9b54df1883a0a51fa89b48d37ced6b8e46a8",
+   "thumb_bytes": 29166,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w083",
+   "title": "A high detail glossy sci fi album art collage sce",
+   "kind": "collage",
+   "dimensions": [
+    1536,
+    1024
+   ],
+   "source_asset": {
+    "name": "a_high_detail_glossy_sci_fi_album_art_collage_sce.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "c97ec4cf4636ace2ebccecfda1b16d7bae85b3b8f3606a49824811f3b34acc48",
+    "png_bytes": 2880658
+   },
+   "full": "art/session-archive/full/w083.jpg",
+   "full_sha256": "c38374d2954abfe33b32052a6887c3a1cbefa0ec941ead0cc801b7e1d68d603e",
+   "full_bytes": 462628,
+   "thumb": "art/session-archive/thumb/w083.jpg",
+   "thumb_sha256": "8d7faff0ecfa9b20b22956680880659701c9c2a4a256724bfbb073b8ac78380f",
+   "thumb_bytes": 37664,
+   "thumb_dimensions": [
+    420,
+    280
+   ]
+  },
+  {
+   "id": "w084",
+   "title": "A large collage contact sheet style image 5 col",
+   "kind": "collage",
+   "dimensions": [
+    1024,
+    1536
+   ],
+   "source_asset": {
+    "name": "a_large_collage_contact_sheet_style_image_5_col.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "937195ddfd37da8a76fc86ed7c29457e2f3472dd2afb3d52ac4450996e24c8f2",
+    "png_bytes": 2368088
+   },
+   "full": "art/session-archive/full/w084.jpg",
+   "full_sha256": "1cfeea2319ca00e21379162c62a9bff0d68327134dc75f821bb308c2002c51e7",
+   "full_bytes": 235401,
+   "thumb": "art/session-archive/thumb/w084.jpg",
+   "thumb_sha256": "052836e48b15a6432fb58b8fa04376010306f0482eb946b603f9fa2c17de5035",
+   "thumb_bytes": 21407,
+   "thumb_dimensions": [
+    280,
+    420
+   ]
+  },
+  {
+   "id": "w085",
+   "title": "A tall grid collage of many black and white infrar",
+   "kind": "collage",
+   "dimensions": [
+    1024,
+    1536
+   ],
+   "source_asset": {
+    "name": "a_tall_grid_collage_of_many_black_and_white_infrar.png",
+    "archive": "session_generated_art_only_part1.zip",
+    "png_sha256": "64aba492df56eb6652e0a7c8a614e0d8f9c7e163bfa098f1dde3a4af758e42c7",
+    "png_bytes": 2308772
+   },
+   "full": "art/session-archive/full/w085.jpg",
+   "full_sha256": "c70bb436b48c0a5a4f9545bc185c6cabc1876f40dde163a21d5c3cb198bb4c1a",
+   "full_bytes": 239302,
+   "thumb": "art/session-archive/thumb/w085.jpg",
+   "thumb_sha256": "09c8f2faa1281bdc93dbe82f481b7bbcbc8787961c1e9b86ef5bd8561fc8c31f",
+   "thumb_bytes": 21181,
+   "thumb_dimensions": [
+    280,
+    420
+   ]
+  },
+  {
+   "id": "w086",
+   "title": "A high contrast monochrome black and white abstrac",
+   "kind": "single",
+   "dimensions": [
+    1024,
+    1536
+   ],
+   "source_asset": {
+    "name": "a_high_contrast_monochrome_black_and_white_abstrac.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "24527d2f8a2469acaef41992e6b72b7288ffb0bd817da1ed9c904f77c7151a3a",
+    "png_bytes": 2765768
+   },
+   "full": "art/session-archive/full/w086.jpg",
+   "full_sha256": "f556660e47a73d4b5d0665d6b43598ef5294b5128117f656a04cf722e878b270",
+   "full_bytes": 270431,
+   "thumb": "art/session-archive/thumb/w086.jpg",
+   "thumb_sha256": "334235b9383239026eaade6fa644c01568ac71a0ae93ea075ce0cf75dcae6efc",
+   "thumb_bytes": 16062,
+   "thumb_dimensions": [
+    280,
+    420
+   ]
+  },
+  {
+   "id": "w087",
+   "title": "A stark high contrast black and white inverted n",
+   "kind": "single",
+   "dimensions": [
+    1536,
+    1024
+   ],
+   "source_asset": {
+    "name": "a_stark_high_contrast_black_and_white_inverted_n.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "78ed8e5fedbfb357e8f5fed84ab9e33493cbd5a9b3ad1f528cb9029ceb09fb2a",
+    "png_bytes": 2629660
+   },
+   "full": "art/session-archive/full/w087.jpg",
+   "full_sha256": "9df084a2c72ebd531c7031f1f493d71d0205446c65ec7033981228f1c74719df",
+   "full_bytes": 233933,
+   "thumb": "art/session-archive/thumb/w087.jpg",
+   "thumb_sha256": "58bce0c655851c60f4bbeba84064f02c8b2b872632a86dcde1234d6fe4eb6e7e",
+   "thumb_bytes": 12513,
+   "thumb_dimensions": [
+    420,
+    280
+   ]
+  },
+  {
+   "id": "w088",
+   "title": "A wide surreal abstract allegorical scene like a",
+   "kind": "single",
+   "dimensions": [
+    1536,
+    1024
+   ],
+   "source_asset": {
+    "name": "a_wide_surreal_abstract_allegorical_scene_like_a.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "13bd2a297c23a09bbd3ef932c069cf7916c1d37337086d515d3a5b0ec93b8388",
+    "png_bytes": 3511269
+   },
+   "full": "art/session-archive/full/w088.jpg",
+   "full_sha256": "6620f869db5ad5644ad8961f9d9ccf79cee149e69e363b482756a1f2e8569cab",
+   "full_bytes": 416803,
+   "thumb": "art/session-archive/thumb/w088.jpg",
+   "thumb_sha256": "91d8f0339920cb1d067cc3cfe1adc1291466494e3e9325f73d071ff97e9f28ff",
+   "thumb_bytes": 24164,
+   "thumb_dimensions": [
+    420,
+    280
+   ]
+  },
+  {
+   "id": "w089",
+   "title": "Abstract portal in a desolate landscape",
+   "kind": "single",
+   "dimensions": [
+    1672,
+    941
+   ],
+   "source_asset": {
+    "name": "abstract_portal_in_a_desolate_landscape.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "325dc55f29eb07e8e8b705cef36859c4ebd77b3234bde043169bd12eaa9dac0c",
+    "png_bytes": 1853362
+   },
+   "full": "art/session-archive/full/w089.jpg",
+   "full_sha256": "6eb4e74a65c26415db22dd19d8f1271ad2a7c15f949ba350ffb38a6ebf37c6d0",
+   "full_bytes": 140361,
+   "thumb": "art/session-archive/thumb/w089.jpg",
+   "thumb_sha256": "1d0683eaacc17f77cbda874c8307a576c4637ac4338d420da61b35a98a4fefff",
+   "thumb_bytes": 6157,
+   "thumb_dimensions": [
+    420,
+    236
+   ]
+  },
+  {
+   "id": "w090",
+   "title": "Alien corridor of endless light",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "alien_corridor_of_endless_light.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "f29970407743ad0dd1bc262bce1a44800ecc8a64b0e24b5dafb69fd74697febf",
+    "png_bytes": 1545445
+   },
+   "full": "art/session-archive/full/w090.jpg",
+   "full_sha256": "dd4ca4fa4c8f9ebfe8e3b0bf74888bc7740489b83e9f99ef0778b99e6280f681",
+   "full_bytes": 122737,
+   "thumb": "art/session-archive/thumb/w090.jpg",
+   "thumb_sha256": "c4b86f26ec07d48c1a301e227fbe1e05c3f46081c5cd1f8a2d15edc979b7529c",
+   "thumb_bytes": 15433,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w091",
+   "title": "Cosmic cathedral in a dreamscape",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_cathedral_in_a_dreamscape.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "bea33229e212eab2b02a832eed7db309c7a21484800100aee2a4a2e26cd607cb",
+    "png_bytes": 3711023
+   },
+   "full": "art/session-archive/full/w091.jpg",
+   "full_sha256": "399689de85eb489e26160dc4207a4fd2654610d4ffdde0f7147dfb262c5d59cb",
+   "full_bytes": 598041,
+   "thumb": "art/session-archive/thumb/w091.jpg",
+   "thumb_sha256": "c5efaa09b981bfda22f42aecf1a2320108af6137b4d6b7868cf3680a228be85e",
+   "thumb_bytes": 37037,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w092",
+   "title": "Cosmic connection in a fractured world",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_connection_in_a_fractured_world.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "c8c813dd08c67ae088c3bdd91f432a81f88eead8662003e72c72b891775e3f58",
+    "png_bytes": 3079949
+   },
+   "full": "art/session-archive/full/w092.jpg",
+   "full_sha256": "feaeafa7f0d63bb1515eab75206fe68048ec0d21a9e3cf4f4f586d3e994fd268",
+   "full_bytes": 437039,
+   "thumb": "art/session-archive/thumb/w092.jpg",
+   "thumb_sha256": "cf89361783e858a8c858b0cfb9872b0e157c0ac4b0ec17e1954c3930f8443e49",
+   "thumb_bytes": 32101,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w093",
+   "title": "Cosmic field of glowing flowers",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_field_of_glowing_flowers.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "33aee1976507d9a25e5b3d5d200f0a96af7eafc5cb4e425709e8050a23d3498e",
+    "png_bytes": 3599042
+   },
+   "full": "art/session-archive/full/w093.jpg",
+   "full_sha256": "75295a1dd297a5cd16ca1e31d81326753e0c0c91fc4cad881fd494b59b1bd5a1",
+   "full_bytes": 614188,
+   "thumb": "art/session-archive/thumb/w093.jpg",
+   "thumb_sha256": "57a36ca431a0739236cdfd884e56a15bdd576510837f02b8dbca2f891f1a522d",
+   "thumb_bytes": 42012,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w094",
+   "title": "Cosmic portal in a fractured landscape",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_portal_in_a_fractured_landscape.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "95cc397a75694ad075c54b2c06e98645b1c6cbdd7437895b234ed923ee65a6b5",
+    "png_bytes": 1646713
+   },
+   "full": "art/session-archive/full/w094.jpg",
+   "full_sha256": "968e7b728685b781b1e78dcca49ac4d1389872a2690b123bc28fb36c825eaa67",
+   "full_bytes": 150463,
+   "thumb": "art/session-archive/thumb/w094.jpg",
+   "thumb_sha256": "c3b63923b3fa72dac5c364fe6eeadaae31b9c5bfd7016cda13ac2e9f07cce283",
+   "thumb_bytes": 10011,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w095",
+   "title": "Cosmic procession towards the celestial city",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_procession_towards_the_celestial_city.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "b6d7403e306b8c18ae36f223a9ab7d4fcfedfff9f2c0da07185d10a8f82e9a17",
+    "png_bytes": 2913792
+   },
+   "full": "art/session-archive/full/w095.jpg",
+   "full_sha256": "742b8b5172601b6ee658852b421957bb4a7d60d9e916f0737243e406b68545b8",
+   "full_bytes": 394223,
+   "thumb": "art/session-archive/thumb/w095.jpg",
+   "thumb_sha256": "ecad25c90248d420edcb6043eac25e0be59570a439b1276653dd008644a16b36",
+   "thumb_bytes": 26529,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w096",
+   "title": "Cosmic sigil and ethereal reverence",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "cosmic_sigil_and_ethereal_reverence.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "eef423c0445555a26525bd0af97c20855afcb481d1376e913077e4a71ec863b8",
+    "png_bytes": 3014750
+   },
+   "full": "art/session-archive/full/w096.jpg",
+   "full_sha256": "96f734ab2eca98cb5895446497e46b0644e1405e221e929c2de5d2df37f7d0d3",
+   "full_bytes": 426204,
+   "thumb": "art/session-archive/thumb/w096.jpg",
+   "thumb_sha256": "a53a4a5b5d1e3e319ead2229378341327d1d7b02643f3ffc5aa4e384737d3093",
+   "thumb_bytes": 28359,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w097",
+   "title": "Cosmic vortex in a dark void",
+   "kind": "single",
+   "dimensions": [
+    1672,
+    941
+   ],
+   "source_asset": {
+    "name": "cosmic_vortex_in_a_dark_void.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "9218d0fd55baa3da0dc83bd0ec67ff41b866e14f83fc5bbf9b2b2ae9f1723e34",
+    "png_bytes": 1985387
+   },
+   "full": "art/session-archive/full/w097.jpg",
+   "full_sha256": "b055787ab883dfad92c0d916f1f449680aa9729e5194fa865cb60b18ac6d78d9",
+   "full_bytes": 165658,
+   "thumb": "art/session-archive/thumb/w097.jpg",
+   "thumb_sha256": "a462db56e7307afe94673f6b0f81adbb9a560e4ebb8e50c979c3b533e1d0d633",
+   "thumb_bytes": 6979,
+   "thumb_dimensions": [
+    420,
+    236
+   ]
+  },
+  {
+   "id": "w098",
+   "title": "Dancing among cosmic reflections",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "dancing_among_cosmic_reflections.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "22d5a12d666b9729b966e739aec9e182c94aa5e812ddbe54bcbbddbf5350ce34",
+    "png_bytes": 3160933
+   },
+   "full": "art/session-archive/full/w098.jpg",
+   "full_sha256": "151c6b24be89ad63df461533e2093a517eeb92d1bd99fabe983100de121e5b37",
+   "full_bytes": 439372,
+   "thumb": "art/session-archive/thumb/w098.jpg",
+   "thumb_sha256": "3230cd697c5c5db824222b8793593dc80b732eb645613c6e041f70a18d314006",
+   "thumb_bytes": 32126,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w099",
+   "title": "Decaying cathedral of forgotten bones",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "decaying_cathedral_of_forgotten_bones.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "79a3c723c98f7d257debeb46d4f8fc87256ab40de4d3b244e82d6bb84685555e",
+    "png_bytes": 3566116
+   },
+   "full": "art/session-archive/full/w099.jpg",
+   "full_sha256": "69c6c441668630b584b6707a0f2a27a3074f59304bbd18df1dc7059d4713f8d7",
+   "full_bytes": 594309,
+   "thumb": "art/session-archive/thumb/w099.jpg",
+   "thumb_sha256": "728e1e1fb7817dafc3b0b861f071c4d2a3d7120bb31183e658f5fbf0e564ebb7",
+   "thumb_bytes": 47529,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w100",
+   "title": "Desolate monolith in eerie landscape",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "desolate_monolith_in_eerie_landscape.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "4e6ab0828142639afb2d2cd2019ca3e2d360342a2d51c2041755107e7491d2a7",
+    "png_bytes": 2944754
+   },
+   "full": "art/session-archive/full/w100.jpg",
+   "full_sha256": "2c1caeac440ef8445ae741b29b443ccf0b010b6411b963b9b2dea25c97e19656",
+   "full_bytes": 381332,
+   "thumb": "art/session-archive/thumb/w100.jpg",
+   "thumb_sha256": "94703d7582ec56ca8e543548c8695eed673b28dc8dcf04aea1d01ac4d7f941a8",
+   "thumb_bytes": 21850,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w101",
+   "title": "Eclipsed reflections in a surreal landscape",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "eclipsed_reflections_in_a_surreal_landscape.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "8e10068fbee1873d1e56c6a528dbe66f15716147f68a9abb9b8b7635b38c8283",
+    "png_bytes": 3020274
+   },
+   "full": "art/session-archive/full/w101.jpg",
+   "full_sha256": "5709fb5072679723e30eb23eab8b56ad274be4ec11b2e4b1ccf84406f37bf253",
+   "full_bytes": 407685,
+   "thumb": "art/session-archive/thumb/w101.jpg",
+   "thumb_sha256": "9d93145f700e18eb712204019ce0a438aa5d5f6b35aaa1c7ba98d798856a264f",
+   "thumb_bytes": 25452,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w102",
+   "title": "Ethereal gateway in a crystalline city",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "ethereal_gateway_in_a_crystalline_city.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "b8c0a9f3c409f02c8b0daf74d5df72605bf0d9df0ecd6e5b81664f6ae6a75e8e",
+    "png_bytes": 2584179
+   },
+   "full": "art/session-archive/full/w102.jpg",
+   "full_sha256": "2105dc1123a544147a68403bbca66a374c96290f35a4d0774a789a2d6e06d2c6",
+   "full_bytes": 315928,
+   "thumb": "art/session-archive/thumb/w102.jpg",
+   "thumb_sha256": "8a4162432e5c746a1eb0fe50b79741352a3d2de0349e6c760cf2b46f8465164b",
+   "thumb_bytes": 22863,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w103",
+   "title": "Ethereal geometric abstract in pastels",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "ethereal_geometric_abstract_in_pastels.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "d4237381bb3b694e01b07a33061bca712e75709c9de480e5b8648e1c842a524c",
+    "png_bytes": 2447004
+   },
+   "full": "art/session-archive/full/w103.jpg",
+   "full_sha256": "8887e937a9ae4e18ebba0da0747b4cb813f67e673429b18967c943fa3b59dc23",
+   "full_bytes": 237106,
+   "thumb": "art/session-archive/thumb/w103.jpg",
+   "thumb_sha256": "e8113f193ba91b79e823c15d855b7675c341b9e3ad1b55fa847d918963185a29",
+   "thumb_bytes": 14007,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w104",
+   "title": "Ethereal glow over a ghostly sea",
+   "kind": "single",
+   "dimensions": [
+    1672,
+    941
+   ],
+   "source_asset": {
+    "name": "ethereal_glow_over_a_ghostly_sea.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "807a13ef0053d102e8f0ffe65b165030e83dfe04648ad420c26e4aa53a717ed6",
+    "png_bytes": 2115266
+   },
+   "full": "art/session-archive/full/w104.jpg",
+   "full_sha256": "d0850add1ac823e86b285bbe1d920a97862b8612e5e0a4081ff5413de3e5a354",
+   "full_bytes": 192983,
+   "thumb": "art/session-archive/thumb/w104.jpg",
+   "thumb_sha256": "0f9f0f5a258588a3c4d13cacd6d693fabf5642badd55bcbd8dda88c2e1b8a901",
+   "thumb_bytes": 6889,
+   "thumb_dimensions": [
+    420,
+    236
+   ]
+  },
+  {
+   "id": "w105",
+   "title": "Ethereal portal in a dark void",
+   "kind": "single",
+   "dimensions": [
+    1672,
+    941
+   ],
+   "source_asset": {
+    "name": "ethereal_portal_in_a_dark_void.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "fad476976c3dacb676eb75b0028e03b1de28e58ab7334f62e7d772dc1f203543",
+    "png_bytes": 1917683
+   },
+   "full": "art/session-archive/full/w105.jpg",
+   "full_sha256": "9237061ff02aa92dbf2c53ecccc6cc0dd0a3a00165e4c6fdb79eda363e0209ce",
+   "full_bytes": 136384,
+   "thumb": "art/session-archive/thumb/w105.jpg",
+   "thumb_sha256": "70e1fb76344ec4a7e4d354d4a260b41a038aadccced250089208d381cf37b563",
+   "thumb_bytes": 6175,
+   "thumb_dimensions": [
+    420,
+    236
+   ]
+  },
+  {
+   "id": "w106",
+   "title": "Ethereal portal in a digital cathedral",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "ethereal_portal_in_a_digital_cathedral.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "06cd818db158b5c5ea6c7bc3d4c8c7636fd1476244490c348fff5f479abfc683",
+    "png_bytes": 2435468
+   },
+   "full": "art/session-archive/full/w106.jpg",
+   "full_sha256": "52d9e1ad2bd6434a0a27914cae26bad5e1d6d9a3d247f2774cfba3ad994bef77",
+   "full_bytes": 310028,
+   "thumb": "art/session-archive/thumb/w106.jpg",
+   "thumb_sha256": "4c2d59414de8573af27950112accc12fb1c0c785b3471e60d70883fdbaa60f93",
+   "thumb_bytes": 24877,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w107",
+   "title": "Floating cosmic totem in reflective waters",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "floating_cosmic_totem_in_reflective_waters.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "360ddaee3bc78fb6080068729a796991dd1fb43942245547affee9c22da1f6d1",
+    "png_bytes": 2199023
+   },
+   "full": "art/session-archive/full/w107.jpg",
+   "full_sha256": "48a608c8f9191d1bc8de7f4beebb7903fb323fefccb7d326d862cf527e5ad813",
+   "full_bytes": 216794,
+   "thumb": "art/session-archive/thumb/w107.jpg",
+   "thumb_sha256": "54f0d13f0259d6508d8219ff412ab297c9411c5c9d90ace61181769dbc498050",
+   "thumb_bytes": 17166,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w108",
+   "title": "Fragmented anatomy and glitch art",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "fragmented_anatomy_and_glitch_art.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "dbbce7a103c6e749fea6362d8cead88be4c46a27d1523e7d0f2d93214c76ee9a",
+    "png_bytes": 3833684
+   },
+   "full": "art/session-archive/full/w108.jpg",
+   "full_sha256": "dc8dfaa12772799b2350a7a70363943a42690840277a03130f95365ebd0076d1",
+   "full_bytes": 705858,
+   "thumb": "art/session-archive/thumb/w108.jpg",
+   "thumb_sha256": "8ac1b864728ced4490f4319ade75493a3212a3c8c90f97c47436c7a8afefc275",
+   "thumb_bytes": 54351,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w109",
+   "title": "Fragmented cosmic visage with ethereal blooms",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "fragmented_cosmic_visage_with_ethereal_blooms.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "cf8c8ab673a2818af2f354faa00554df1a848a96eeacbf59ed180f70b1e66e24",
+    "png_bytes": 3092981
+   },
+   "full": "art/session-archive/full/w109.jpg",
+   "full_sha256": "fe7ed53cc29e275bf9a1dfad97b46d61225e0a59b0b3ea25a54c7b2020ed13e2",
+   "full_bytes": 463674,
+   "thumb": "art/session-archive/thumb/w109.jpg",
+   "thumb_sha256": "ad8cea3d9822a71c7a90855a8b3f2e593cec052f6c689e600180753e9a233e7f",
+   "thumb_bytes": 36851,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w110",
+   "title": "Fragmented spirit in radiant light",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "fragmented_spirit_in_radiant_light.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "cacacc5378ea0add577e5b3ad17f40842cea40954521a94ac337316bee9fd491",
+    "png_bytes": 2594484
+   },
+   "full": "art/session-archive/full/w110.jpg",
+   "full_sha256": "8751566e039589e3579d9d50e97f46364dc34af751463cb0b6eeb986f7988b06",
+   "full_bytes": 288849,
+   "thumb": "art/session-archive/thumb/w110.jpg",
+   "thumb_sha256": "e4e3c76a3f1bb21cabce61ae11808b928d2fc4ae8f220001f7576d87851acf80",
+   "thumb_bytes": 19936,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w111",
+   "title": "Futuristic cathedral with glowing portal",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "futuristic_cathedral_with_glowing_portal.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "1f49000644f0b2976ed8b7edbe26e69357f4e0de1b3c96cfa13ee2de827dc095",
+    "png_bytes": 1776123
+   },
+   "full": "art/session-archive/full/w111.jpg",
+   "full_sha256": "20b45228ea33a2f7a3cc53acf84a79f5e59e5edc7b137fa662e70a7eb4d5da50",
+   "full_bytes": 178462,
+   "thumb": "art/session-archive/thumb/w111.jpg",
+   "thumb_sha256": "3c713947e690bd6ee9e1c1d3e6844933f1ff04c80d8b05a7eaba6ef49b8c4c9a",
+   "thumb_bytes": 19436,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w112",
+   "title": "Futuristic corridor of light and color",
+   "kind": "single",
+   "dimensions": [
+    1024,
+    1536
+   ],
+   "source_asset": {
+    "name": "futuristic_corridor_of_light_and_color.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "4cecee5db4abf8107c7bf2a844f23dd49a51a9605cb2a2116617904dff0515eb",
+    "png_bytes": 2731392
+   },
+   "full": "art/session-archive/full/w112.jpg",
+   "full_sha256": "0d46e60faccd9abbc68cb53762f1fd01365ea6d7bb485e53e1b65989213cc596",
+   "full_bytes": 301296,
+   "thumb": "art/session-archive/thumb/w112.jpg",
+   "thumb_sha256": "08fca71b43966edab8ec41a0048238bcd2bf705414e7ff85cee6a2ea87431618",
+   "thumb_bytes": 19260,
+   "thumb_dimensions": [
+    280,
+    420
+   ]
+  },
+  {
+   "id": "w113",
+   "title": "Futuristic cosmic temple with floating spheres",
+   "kind": "single",
+   "dimensions": [
+    1024,
+    1536
+   ],
+   "source_asset": {
+    "name": "futuristic_cosmic_temple_with_floating_spheres.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "ac13ac4b4284573768e1b442efafd5f5400aa7abfd45f711d423be6de6b2129b",
+    "png_bytes": 2552682
+   },
+   "full": "art/session-archive/full/w113.jpg",
+   "full_sha256": "05b7d236dc926eccc30fc67a778fbb452eb6fba2984867b33a58a39aa8b683ce",
+   "full_bytes": 287192,
+   "thumb": "art/session-archive/thumb/w113.jpg",
+   "thumb_sha256": "edffad0fd47e1ad81c2e83090f19529e425ab774e2b13a3e8f1c59485854be07",
+   "thumb_bytes": 18616,
+   "thumb_dimensions": [
+    280,
+    420
+   ]
+  },
+  {
+   "id": "w114",
+   "title": "Futuristic cosmic triptych and portal",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "futuristic_cosmic_triptych_and_portal.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "c06d14bc90ba00ee82c6edf169f3356675f8d53408fe3918007cf09a267234a9",
+    "png_bytes": 3288738
+   },
+   "full": "art/session-archive/full/w114.jpg",
+   "full_sha256": "5b05134deb6dbaa4446da8c6f1a8554262148faaec2cb2c6cb7e3eac00916bb1",
+   "full_bytes": 472134,
+   "thumb": "art/session-archive/thumb/w114.jpg",
+   "thumb_sha256": "6e47f806dd60c29d5cd1669e4817fec330e84ff46b6f8b16561afc1ca0b50912",
+   "thumb_bytes": 30685,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w115",
+   "title": "Futuristic flight through a luminous portal",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "futuristic_flight_through_a_luminous_portal.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "5bceef8b8e83264448b2f46619845d240ed6fad4d39d345d9cc3ccb4be210653",
+    "png_bytes": 1779170
+   },
+   "full": "art/session-archive/full/w115.jpg",
+   "full_sha256": "c64c4a9b9c0fb20bc1fe04bbf07422f882f198a47e4ad11d6a2c57a7b4d55a8b",
+   "full_bytes": 175096,
+   "thumb": "art/session-archive/thumb/w115.jpg",
+   "thumb_sha256": "2dbcbe2de4d48a1163323625c87377b9692ea3c655ef8f25e850b4b4dbc2a777",
+   "thumb_bytes": 23400,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w116",
+   "title": "Futuristic neon geometric abstraction",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "futuristic_neon_geometric_abstraction.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "0ea95d2f84bb75ddeb8df1dc65e51f9fa4f05406a1bfc37e0e1e6fe919e9452d",
+    "png_bytes": 2038801
+   },
+   "full": "art/session-archive/full/w116.jpg",
+   "full_sha256": "a870bc327434d8f41e970ff40d30ad9f111d56aaf6521768538c4d88f58e8741",
+   "full_bytes": 204442,
+   "thumb": "art/session-archive/thumb/w116.jpg",
+   "thumb_sha256": "a9282fc26225cd1b1d6b1cc319db393ab207404c2a396b38902de10ad2ae1c67",
+   "thumb_bytes": 17628,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w117",
+   "title": "Futuristic orb in cosmic space",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "futuristic_orb_in_cosmic_space.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "342a52604ace655e5fc9c1d1c598e7e8ca946a9572ab63a8aabb6cc1982c67a6",
+    "png_bytes": 2712861
+   },
+   "full": "art/session-archive/full/w117.jpg",
+   "full_sha256": "467f554095e0644123f0eab3885bf549e5299db26704c51633b0b7626c45a85d",
+   "full_bytes": 329318,
+   "thumb": "art/session-archive/thumb/w117.jpg",
+   "thumb_sha256": "87baf6f0008d5c1719dd213c52db1d4cb0cd7f8f1398ee3440cb60fc833193fa",
+   "thumb_bytes": 27326,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w118",
+   "title": "Futuristic portal at dawn",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "futuristic_portal_at_dawn.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "73532b0271624c92d122e98a86696fe438cd0f333c187de75451116fd58ef769",
+    "png_bytes": 2325891
+   },
+   "full": "art/session-archive/full/w118.jpg",
+   "full_sha256": "c76e3bfa8b4627b3b7b692164a6ab97f764c248d25bafdb02181c04f0960d7f9",
+   "full_bytes": 230395,
+   "thumb": "art/session-archive/thumb/w118.jpg",
+   "thumb_sha256": "e4c59ae2aeb141d0ae238c3da0c20e46f6ea03bc3f6aaf283e2cc8e95428d641",
+   "thumb_bytes": 15024,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w119",
+   "title": "Glowing orb over a reflective wasteland",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "glowing_orb_over_a_reflective_wasteland.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "ab0cd45e739bdcd36aff204c729e278ee2e4196e08475e19067f543367db1477",
+    "png_bytes": 2871576
+   },
+   "full": "art/session-archive/full/w119.jpg",
+   "full_sha256": "7fd979887f10c2438ec79c597d5edf37324387f446105b5f0dfb02f5f97f9c7f",
+   "full_bytes": 385844,
+   "thumb": "art/session-archive/thumb/w119.jpg",
+   "thumb_sha256": "9cb65b12410624168d0f3044f935b152c9be792a6bd0bc6d2009501bd85c9dba",
+   "thumb_bytes": 25530,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w120",
+   "title": "Hallucinatory ritual in a cosmic corridor",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "hallucinatory_ritual_in_a_cosmic_corridor.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "b892e1bd4d1c5beb47475e3f7c1c3acb5d725af3d4ce89f86464d03d42450a8f",
+    "png_bytes": 3219118
+   },
+   "full": "art/session-archive/full/w120.jpg",
+   "full_sha256": "8becdd15592335b64a566e719c214c6b6d76f2eab3e0412bab1bbfda7a5ba348",
+   "full_bytes": 465475,
+   "thumb": "art/session-archive/thumb/w120.jpg",
+   "thumb_sha256": "a41c645ca12c517f0f8d8e7e435060ab6f900d352ba58f1f86313b2639b88d45",
+   "thumb_bytes": 32006,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w121",
+   "title": "Haunted path to the void mansion",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "haunted_path_to_the_void_mansion.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "aab177902744b9b58641f791948e71bf6250a68e009531ba02b47c0ec5429669",
+    "png_bytes": 3372550
+   },
+   "full": "art/session-archive/full/w121.jpg",
+   "full_sha256": "294af4d333ec50cc2fadd1d644fedfff7e9916fc90630b4f0c0c55f4126a724b",
+   "full_bytes": 535747,
+   "thumb": "art/session-archive/thumb/w121.jpg",
+   "thumb_sha256": "1f49eaee4bf2611525f9766de93592037854e447c05613d24570c1a0500b6ec7",
+   "thumb_bytes": 40496,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w122",
+   "title": "Iridescent figure in celestial reflection",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "iridescent_figure_in_celestial_reflection.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "346f69438084ce3f0ca2b431b62279dbb89b7de5bc18960e1f0d8857c3f046a9",
+    "png_bytes": 2478246
+   },
+   "full": "art/session-archive/full/w122.jpg",
+   "full_sha256": "c92247e7341aa1a7e846d398653bb4fbe50afc23ef31874475ddd10073f9a29a",
+   "full_bytes": 335666,
+   "thumb": "art/session-archive/thumb/w122.jpg",
+   "thumb_sha256": "39d4d6e7f9653e6fb0e01dec0c019ba3773b2613bc89428a94de19f14ed7aa37",
+   "thumb_bytes": 34833,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w123",
+   "title": "Lonely path to the haunted mansion",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "lonely_path_to_the_haunted_mansion.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "cd13389650c4b0e780805bc0e91072eebaf66e5990771c5519bfdf196adaaa8f",
+    "png_bytes": 3119154
+   },
+   "full": "art/session-archive/full/w123.jpg",
+   "full_sha256": "6937355064d3a1f314366c1511aea9b1534adf85e106dfae3dfd0b49b8fcbd99",
+   "full_bytes": 452834,
+   "thumb": "art/session-archive/thumb/w123.jpg",
+   "thumb_sha256": "94705bbdfdee28856f3b7dd5633dd5e3f3ac85ab2707e76c13de5b74f54be446",
+   "thumb_bytes": 38080,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w124",
+   "title": "Mystical horizon beneath glowing sigil",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "mystical_horizon_beneath_glowing_sigil.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "a8c0876b7878259396676b269180d0b567c1d1923f759a71140585eac560a96f",
+    "png_bytes": 3462794
+   },
+   "full": "art/session-archive/full/w124.jpg",
+   "full_sha256": "01f45c9281b50ccf7873e71957b62583a8631a0aee71024f2dc45a78dbb3bac4",
+   "full_bytes": 582049,
+   "thumb": "art/session-archive/thumb/w124.jpg",
+   "thumb_sha256": "71a17b0459219e46f83825eaad52bfec6f1f9d6ef9c9f8e086d064f8bbbac66a",
+   "thumb_bytes": 44525,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w125",
+   "title": "Mystical journey toward the glowing portal",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "mystical_journey_toward_the_glowing_portal.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "dc2114afa9f1a91762edb21e9037b780dbc4527b98bcac90a75cf2d17a417420",
+    "png_bytes": 3256058
+   },
+   "full": "art/session-archive/full/w125.jpg",
+   "full_sha256": "9f049da9214dc45852c1d9a76b1dd331669958394376a4f5b97c459510d8f41a",
+   "full_bytes": 526221,
+   "thumb": "art/session-archive/thumb/w125.jpg",
+   "thumb_sha256": "ff17f5cc0096bdb5f3e74e49483963295323ea911a625f7c07fd20e25d1ac5f6",
+   "thumb_bytes": 46195,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w126",
+   "title": "Neon dreams and fractured realities",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "neon_dreams_and_fractured_realities.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "394e3814f8edeb6d24af4b3edf4b7d6b7d6340976228f3ba438a215bfead2ee1",
+    "png_bytes": 3477812
+   },
+   "full": "art/session-archive/full/w126.jpg",
+   "full_sha256": "d97d46037b9b70dba7cc628df5d7c1452d70ba0c0d0fa764373013b0d2aa665c",
+   "full_bytes": 613500,
+   "thumb": "art/session-archive/thumb/w126.jpg",
+   "thumb_sha256": "0feefb575183e30ba698a2a3858d8783cd89e7704fd947ab92e1276bb210b1eb",
+   "thumb_bytes": 47270,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w127",
+   "title": "Neon skull in mechanical ruins",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "neon_skull_in_mechanical_ruins.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "26d5af06cc1d173df766626479f2ccdc624181ecb34e16eb19ef86979ca666ed",
+    "png_bytes": 3437822
+   },
+   "full": "art/session-archive/full/w127.jpg",
+   "full_sha256": "eeae96081649b305075fccc0281691cc6dcac586914cb661348ec28261adbdf9",
+   "full_bytes": 511257,
+   "thumb": "art/session-archive/thumb/w127.jpg",
+   "thumb_sha256": "b94607b82ae98f9646dff1655a15fb3218df074a96ed00e52190b1b3e8d5d240",
+   "thumb_bytes": 34688,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w128",
+   "title": "Otherworldly vortex and glowing arcs",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "otherworldly_vortex_and_glowing_arcs.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "2f163609c5756891b7e3599abba4a214e5fe19d52b9339ba8e7c5bb692290697",
+    "png_bytes": 1626484
+   },
+   "full": "art/session-archive/full/w128.jpg",
+   "full_sha256": "f7f608d9ff1935bd14c08ffe83f96a72ca48a460c012133fc18629cc37fd2937",
+   "full_bytes": 143274,
+   "thumb": "art/session-archive/thumb/w128.jpg",
+   "thumb_sha256": "a51ce6fba3e93f691183aafc6f79986d5ca4b8aff9cfbf88a33ba695a3fe86cb",
+   "thumb_bytes": 15925,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w129",
+   "title": "Reaching for celestial transcendence",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "reaching_for_celestial_transcendence.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "3ea19e948b57813ffafd21e0ce60bd44c54f2e31bf75c69265ec60f491844ff8",
+    "png_bytes": 3186661
+   },
+   "full": "art/session-archive/full/w129.jpg",
+   "full_sha256": "0da8cd12cc055feb59c3a9d47f07938bc8708de208b6316ca24106b25dd7ce1e",
+   "full_bytes": 557575,
+   "thumb": "art/session-archive/thumb/w129.jpg",
+   "thumb_sha256": "7a97494c4fd04e6ed6d837921d1969edbf8b4f0ab16bf3f42f0984ca375250b4",
+   "thumb_bytes": 45257,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w130",
+   "title": "Reaching for the cosmic void",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "reaching_for_the_cosmic_void.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "65f9701e9fa78379cf7ecdc8e24e52f19b7fc0e95d8451284b40d352722ba4e1",
+    "png_bytes": 3295481
+   },
+   "full": "art/session-archive/full/w130.jpg",
+   "full_sha256": "581e9295883b36f195608a95d5fa9cc3bce2d3189f9601ab859d032836c85c30",
+   "full_bytes": 542279,
+   "thumb": "art/session-archive/thumb/w130.jpg",
+   "thumb_sha256": "7219f250969dfe62db2bef054799747f8caaa3aef3ec4eddc1ca45dab787ecee",
+   "thumb_bytes": 43341,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w131",
+   "title": "Regal mantis in cosmic cathedral",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "regal_mantis_in_cosmic_cathedral.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "3cf9fa6c5e760325b1c4cdcb09a78a03c420a614d28834ab1a92e3ed36fda8c0",
+    "png_bytes": 2996191
+   },
+   "full": "art/session-archive/full/w131.jpg",
+   "full_sha256": "d149ea966d5646a3f981eaeea6d14130191da28e152eaf7f6a6b6db00e8c3a41",
+   "full_bytes": 429198,
+   "thumb": "art/session-archive/thumb/w131.jpg",
+   "thumb_sha256": "b0ea99763130cae9704666bbde2c680502a484042221f5245f91b0aa33520fa4",
+   "thumb_bytes": 33437,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w132",
+   "title": "Solitary monolith in a quiet expanse",
+   "kind": "single",
+   "dimensions": [
+    1672,
+    941
+   ],
+   "source_asset": {
+    "name": "solitary_monolith_in_a_quiet_expanse.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "5a34b7036ddbe097940a6fd03eefd07dc4322a48aa993a6e80db45e670233300",
+    "png_bytes": 2302556
+   },
+   "full": "art/session-archive/full/w132.jpg",
+   "full_sha256": "18532a6ce13d8c4931655afe20e3d169af9becab0b9e515a0b307b6cebaab5b8",
+   "full_bytes": 202196,
+   "thumb": "art/session-archive/thumb/w132.jpg",
+   "thumb_sha256": "63a3319f78d587041e64c58ea12bbe7a83ff4eb3de0c2255f66a638dd27b5eed",
+   "thumb_bytes": 7198,
+   "thumb_dimensions": [
+    420,
+    236
+   ]
+  },
+  {
+   "id": "w133",
+   "title": "Spectral journey through a cosmic portal",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "spectral_journey_through_a_cosmic_portal.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "43bd60af68e312499ba00232fc00887f8aa4f70074c5eafdf5c9e98ede8b7848",
+    "png_bytes": 2776286
+   },
+   "full": "art/session-archive/full/w133.jpg",
+   "full_sha256": "9c70688e90bd14668104a27989e9c095320820058e2605bd05ed48a6c43c34e2",
+   "full_bytes": 350006,
+   "thumb": "art/session-archive/thumb/w133.jpg",
+   "thumb_sha256": "eb7aa23b02df96a3736ba3a1291e85cf9a4af156935ff0d74d69028ed49016a8",
+   "thumb_bytes": 23856,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w134",
+   "title": "Surreal glitch portrait with marching figures",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "surreal_glitch_portrait_with_marching_figures.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "750b4006fb5a474a65100a1266186fce8979049fabc7d00e7388fdeddacaea1b",
+    "png_bytes": 3265034
+   },
+   "full": "art/session-archive/full/w134.jpg",
+   "full_sha256": "e06102572f01f8ebdefffb556d3517ee6bd4c700c164367c3a6dd1556cf689cc",
+   "full_bytes": 464372,
+   "thumb": "art/session-archive/thumb/w134.jpg",
+   "thumb_sha256": "da17623e3c8a2b50efd27fa30a84897c6e5a07291e78f6ad98c1b78b286b8afd",
+   "thumb_bytes": 27640,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w135",
+   "title": "Surreal neon apocalypse with dark entity",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "surreal_neon_apocalypse_with_dark_entity.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "0d4510a43789a5f0c3912499f589825e13ea04fa101d75d71aabedff83eb6236",
+    "png_bytes": 3215795
+   },
+   "full": "art/session-archive/full/w135.jpg",
+   "full_sha256": "c5f6ce75d09db630685498dd0d6a998764bf5ae5d5b026581780bf97706d60c1",
+   "full_bytes": 495074,
+   "thumb": "art/session-archive/thumb/w135.jpg",
+   "thumb_sha256": "2a6578148d000ccb426f6abf4d1b60bc1b3420e660db61f95a42c2457231648b",
+   "thumb_bytes": 39477,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w136",
+   "title": "Surreal portal with abstract geometry",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "surreal_portal_with_abstract_geometry.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "9e14501bf240a7713230e70951751976f6ea499d5346d44c23aa9873e613a817",
+    "png_bytes": 3383476
+   },
+   "full": "art/session-archive/full/w136.jpg",
+   "full_sha256": "8a1a0c5a428d53fdfcea08973b96d155f99dee38629138cba774d961c6143c47",
+   "full_bytes": 580047,
+   "thumb": "art/session-archive/thumb/w136.jpg",
+   "thumb_sha256": "ea1644e9a4417df9ce742387977b28f31d26cbf65eb7a645913a0b15dc289a3d",
+   "thumb_bytes": 42927,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w137",
+   "title": "Surreal portrait with geometric energy",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "surreal_portrait_with_geometric_energy.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "bec881f64a908d3564d615967a0a84afa8d1b0f8fd9fc2de071cd099b6c068bd",
+    "png_bytes": 2967703
+   },
+   "full": "art/session-archive/full/w137.jpg",
+   "full_sha256": "c3471abc78136a359126dbc612f6f24ea9549412aa6ac58d657db3c223cdc5c8",
+   "full_bytes": 393236,
+   "thumb": "art/session-archive/thumb/w137.jpg",
+   "thumb_sha256": "387ae0d915a84087bebe0b01d8e2ea4750e51a696d70088cd85b69ee9346082a",
+   "thumb_bytes": 27199,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w138",
+   "title": "Surreal terminal with ghostly apparition",
+   "kind": "single",
+   "dimensions": [
+    1672,
+    941
+   ],
+   "source_asset": {
+    "name": "surreal_terminal_with_ghostly_apparition.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "6c4e14cfab449684f0720fdc8a88e6524ded35c610a7b8200c76f8d0614fe486",
+    "png_bytes": 3066098
+   },
+   "full": "art/session-archive/full/w138.jpg",
+   "full_sha256": "8eafe559e6e3a72ca5424cd6b961f69119ea9e6362c54c76f88d42c16999ed5f",
+   "full_bytes": 363365,
+   "thumb": "art/session-archive/thumb/w138.jpg",
+   "thumb_sha256": "70dab6f34e145e696dfcd552e14b987e1dc9f428870543344f2f14cad6edc135",
+   "thumb_bytes": 12851,
+   "thumb_dimensions": [
+    420,
+    236
+   ]
+  },
+  {
+   "id": "w139",
+   "title": "The apparition by the shore",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "the_apparition_by_the_shore.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "38894a788c74351d4c0c38219c295dc14955bcf93c8c87b851ecaf8b9e9c0d1b",
+    "png_bytes": 3527106
+   },
+   "full": "art/session-archive/full/w139.jpg",
+   "full_sha256": "30bc0a42bb159499ef619c0423d14a9a4c4ad3eb9cb35abd9d9dcabf1a7dbf11",
+   "full_bytes": 545956,
+   "thumb": "art/session-archive/thumb/w139.jpg",
+   "thumb_sha256": "6f2fcf007ffa6e1dcbef146cc10d221d5234a3ef75e73767fb24ba491394a2af",
+   "thumb_bytes": 33353,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w140",
+   "title": "A black and white infrared negative style collage",
+   "kind": "collage",
+   "dimensions": [
+    1024,
+    1536
+   ],
+   "source_asset": {
+    "name": "a_black_and_white_infrared_negative_style_collage.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "15cb6bfdc93f4701e4a1b02763f6667702b173ea3d7eda37ae64e5f0f6318151",
+    "png_bytes": 2552073
+   },
+   "full": "art/session-archive/full/w140.jpg",
+   "full_sha256": "e0d146aeba43dccf7ad38d2f3c42746b24f6f730088b5ab498f42debf0401b89",
+   "full_bytes": 240835,
+   "thumb": "art/session-archive/thumb/w140.jpg",
+   "thumb_sha256": "2c13e19b1dab9a825b891ff0a2341a9e4c826f78d59331e8d36d7d04d8933be8",
+   "thumb_bytes": 18462,
+   "thumb_dimensions": [
+    280,
+    420
+   ]
+  },
+  {
+   "id": "w141",
+   "title": "A collage mosaic overall scene a 3x4 grid of su",
+   "kind": "collage",
+   "dimensions": [
+    1213,
+    1296
+   ],
+   "source_asset": {
+    "name": "a_collage_mosaic_overall_scene_a_3x4_grid_of_su.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "7bb5c6b1ad9c312843a5f6d14ee0e3761fec0e52fcd4682f514c0a7d25251ca4",
+    "png_bytes": 3449821
+   },
+   "full": "art/session-archive/full/w141.jpg",
+   "full_sha256": "30cd23c5f5dba13156495aa365c0cae424fd8c27cecb9803f3cef1ac561f98b0",
+   "full_bytes": 567000,
+   "thumb": "art/session-archive/thumb/w141.jpg",
+   "thumb_sha256": "14f9aefb5abb02e4032ec5d77e6c9f2eb925389974114376df87b585d7f755c0",
+   "thumb_bytes": 53675,
+   "thumb_dimensions": [
+    393,
+    420
+   ]
+  },
+  {
+   "id": "w142",
+   "title": "A dramatic collage of four monochrome high contra",
+   "kind": "collage",
+   "dimensions": [
+    1024,
+    1536
+   ],
+   "source_asset": {
+    "name": "a_dramatic_collage_of_four_monochrome_high_contra.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "d33961834902a257ea536371e65aac5a611c490aa3ffbfc7998818cf828f510f",
+    "png_bytes": 2395875
+   },
+   "full": "art/session-archive/full/w142.jpg",
+   "full_sha256": "7d5251ed95fd4eb9caeb22436111ae6c9436af16c12b726f8c23ff79cca1f5a2",
+   "full_bytes": 242159,
+   "thumb": "art/session-archive/thumb/w142.jpg",
+   "thumb_sha256": "7194845920df1529aaf6dc8243f6b6392171283fa69f80a9b17de008d089d54d",
+   "thumb_bytes": 21276,
+   "thumb_dimensions": [
+    280,
+    420
+   ]
+  },
+  {
+   "id": "w143",
+   "title": "A grid collage of 12 eerie black and white negat",
+   "kind": "collage",
+   "dimensions": [
+    1536,
+    1024
+   ],
+   "source_asset": {
+    "name": "a_grid_collage_of_12_eerie_black_and_white_negat.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "37fa814ee87f14379d6a6757f8581f0716ab13dada337aeb2d340f0943ac257f",
+    "png_bytes": 2243062
+   },
+   "full": "art/session-archive/full/w143.jpg",
+   "full_sha256": "d905367f17c73a7dbb2430ca7467810ef9b457e4febc83b12e0d0d47c6092c79",
+   "full_bytes": 174579,
+   "thumb": "art/session-archive/thumb/w143.jpg",
+   "thumb_sha256": "06968fa8040eae0d099ae3a38740cb4d74010a2b207b12279269bc9d0e249fe8",
+   "thumb_bytes": 14289,
+   "thumb_dimensions": [
+    420,
+    280
+   ]
+  },
+  {
+   "id": "w144",
+   "title": "A grid collage overall a large poster like montag",
+   "kind": "collage",
+   "dimensions": [
+    1024,
+    1536
+   ],
+   "source_asset": {
+    "name": "a_grid_collage_overall_a_large_poster_like_montag.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "d8c87e95cbeb48983eed712d5b499baea3e65a89f80553e66c7cdd2fccafb801",
+    "png_bytes": 2315286
+   },
+   "full": "art/session-archive/full/w144.jpg",
+   "full_sha256": "7c3a8b0443f6dd5c672376c0129b0280f1bc54e37f0ca278147ec4eed69307d3",
+   "full_bytes": 229918,
+   "thumb": "art/session-archive/thumb/w144.jpg",
+   "thumb_sha256": "32416caa0cc61ad293d117e041cbfadf8da06c564cf556cf69ecd52a58bbe2d8",
+   "thumb_bytes": 20166,
+   "thumb_dimensions": [
+    280,
+    420
+   ]
+  },
+  {
+   "id": "w145",
+   "title": "A large composite poster collage scene a 4x5 ish",
+   "kind": "collage",
+   "dimensions": [
+    1024,
+    1536
+   ],
+   "source_asset": {
+    "name": "a_large_composite_poster_collage_scene_a_4x5_ish.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "8dce177c98ac9cf9b2c35dd13a2d7b56aaa0bea3f8235bd3ea7d54cc816c516b",
+    "png_bytes": 3751755
+   },
+   "full": "art/session-archive/full/w145.jpg",
+   "full_sha256": "f371ee25547a8ecffb1cef6bf4aacffade226cc781e7121919ca439a17812670",
+   "full_bytes": 611170,
+   "thumb": "art/session-archive/thumb/w145.jpg",
+   "thumb_sha256": "eb1edb5b24cbb0ce9d3c97f873da0099b33ec828259e77332bd1bda1ec1f47a5",
+   "thumb_bytes": 44467,
+   "thumb_dimensions": [
+    280,
+    420
+   ]
+  },
+  {
+   "id": "w146",
+   "title": "A large high resolution collage montage of abstr",
+   "kind": "collage",
+   "dimensions": [
+    1536,
+    1024
+   ],
+   "source_asset": {
+    "name": "a_large_high_resolution_collage_montage_of_abstr.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "fe475f5abc14a9a511598485ece3d629a17c2af8051ae35196b2d5a4d570c2dc",
+    "png_bytes": 2486798
+   },
+   "full": "art/session-archive/full/w146.jpg",
+   "full_sha256": "ba460f91b6a4d94e03ad0ac89010eec67b8a069bad434816a7cc69cd21f9a3d6",
+   "full_bytes": 207814,
+   "thumb": "art/session-archive/thumb/w146.jpg",
+   "thumb_sha256": "4a83e38cf6783dd1458d0d9444248d99c5975024ef268b09fec553259b8c9802",
+   "thumb_bytes": 14356,
+   "thumb_dimensions": [
+    420,
+    280
+   ]
+  },
+  {
+   "id": "w147",
+   "title": "A wide cinematic surreal collage digital art sc",
+   "kind": "collage",
+   "dimensions": [
+    1672,
+    941
+   ],
+   "source_asset": {
+    "name": "a_wide_cinematic_surreal_collage_digital_art_sc.png",
+    "archive": "session_generated_art_only_part2.zip",
+    "png_sha256": "5a7a4b084f439b41eacd57dd50487e2bed5b8ccc11cc0f86d4c5655201d2f447",
+    "png_bytes": 2672423
+   },
+   "full": "art/session-archive/full/w147.jpg",
+   "full_sha256": "986f937700c9128944851509fca6bdcf02bb7bc20c60ce0ab27e0bb946a33d40",
+   "full_bytes": 311458,
+   "thumb": "art/session-archive/thumb/w147.jpg",
+   "thumb_sha256": "b69aed2060641897fd6f62fd5efcf9e66aeeae1a20334fe72f1fd4c72dd50552",
+   "thumb_bytes": 16042,
+   "thumb_dimensions": [
+    420,
+    236
+   ]
+  },
+  {
+   "id": "w148",
+   "title": "A dark moody surreal illustration painting scene",
+   "kind": "single",
+   "dimensions": [
+    1024,
+    1536
+   ],
+   "source_asset": {
+    "name": "a_dark_moody_surreal_illustration_painting_scene.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "4efa522ad2d9a0e10fe779b985bdff37fc82cffe00e81b73f59f39b6e38968c7",
+    "png_bytes": 3408360
+   },
+   "full": "art/session-archive/full/w148.jpg",
+   "full_sha256": "a6cc066a6687cedba592435362a0f97b5d959f7292136ab38ffd9438480dfe67",
+   "full_bytes": 420092,
+   "thumb": "art/session-archive/thumb/w148.jpg",
+   "thumb_sha256": "aad06448b7487e822534100d746f7f36bf75993c1c47c4815385ec6b6924b0e6",
+   "thumb_bytes": 22644,
+   "thumb_dimensions": [
+    280,
+    420
+   ]
+  },
+  {
+   "id": "w149",
+   "title": "A tall vertical surreal abstract painting like s",
+   "kind": "single",
+   "dimensions": [
+    1024,
+    1536
+   ],
+   "source_asset": {
+    "name": "a_tall_vertical_surreal_abstract_painting_like_s.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "a44e6c222a169f391b7ffe00f670970694f69e10db54aa7de6ebaddafb6c96c7",
+    "png_bytes": 2130288
+   },
+   "full": "art/session-archive/full/w149.jpg",
+   "full_sha256": "11f6333f2fa1287822609d73837f319104ac199805f164a9f398fc29b61c4c95",
+   "full_bytes": 172542,
+   "thumb": "art/session-archive/thumb/w149.jpg",
+   "thumb_sha256": "011856c11073ea788538ecf05808d822e65f39eaecccc10b00c6ae95a98c22f3",
+   "thumb_bytes": 9430,
+   "thumb_dimensions": [
+    280,
+    420
+   ]
+  },
+  {
+   "id": "w150",
+   "title": "Ethereal embrace in a dreamscape",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "ethereal_embrace_in_a_dreamscape.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "e86e1954100c930b69c409f6c0ddb676cebe5c448c8ef57e51821fb28f4d471f",
+    "png_bytes": 3394888
+   },
+   "full": "art/session-archive/full/w150.jpg",
+   "full_sha256": "d0c1e762c4403bc909e0266f1a13e7f71723c423a0466132cb9263905ff6fbd7",
+   "full_bytes": 509110,
+   "thumb": "art/session-archive/thumb/w150.jpg",
+   "thumb_sha256": "72cfedd907ce5b5dd13cb1c3375851d08a121aebd45ddc70a2f8776a99b22104",
+   "thumb_bytes": 34880,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w151",
+   "title": "Fragmented cathedral city under cosmic skies",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "fragmented_cathedral_city_under_cosmic_skies.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "cfe2fe208e68ad94915329e22b3b871f3402a193410aa1eec3549bb229c56678",
+    "png_bytes": 2619705
+   },
+   "full": "art/session-archive/full/w151.jpg",
+   "full_sha256": "6f2fdf9c516d1c04b862ec9c0a92f947bcf6c582e94e2e81527f75046dcc054d",
+   "full_bytes": 356906,
+   "thumb": "art/session-archive/thumb/w151.jpg",
+   "thumb_sha256": "93aa8754c87dffe66c575716423fdfb5c63247c8dcdc03c04bf488986c82f688",
+   "thumb_bytes": 29601,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w152",
+   "title": "Fragmented face in abstract chaos",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "fragmented_face_in_abstract_chaos.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "ef5504b5b2f9bfc3ebab275914094e7ad2a5852a432e03e0398048099e3f3016",
+    "png_bytes": 3405715
+   },
+   "full": "art/session-archive/full/w152.jpg",
+   "full_sha256": "a9c5feea8fb5a3be4045b77c780fc9b9f6ed77e8f9869e5cc22a8ac78e2a0cf0",
+   "full_bytes": 524190,
+   "thumb": "art/session-archive/thumb/w152.jpg",
+   "thumb_sha256": "0c763a1dbe2826764b281fd556b15c9f63d4be0ffb543b5a0579a1ba415e1bbf",
+   "thumb_bytes": 41139,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w153",
+   "title": "Fragmented figure in decaying space",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "fragmented_figure_in_decaying_space.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "6f454704743fbb573820fe8fdc0026aab4970874497b68a2c6c70e836b1306fa",
+    "png_bytes": 3052866
+   },
+   "full": "art/current-story/full/06.jpg",
+   "also_published_as": "current-story plate 06",
+   "thumb": "art/session-archive/thumb/w153.jpg",
+   "thumb_sha256": "2d4f850c74aec4ed9da0d95be0a1096b0ed11d41641723581c130f427da9d313",
+   "thumb_bytes": 35084,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w154",
+   "title": "Fragmented gaze in mixed media",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "fragmented_gaze_in_mixed_media.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "3e511a9aef5aee84c54018bc7ed19e92a41a652efdcde10e2431327aeabe725b",
+    "png_bytes": 3508751
+   },
+   "full": "art/session-archive/full/w154.jpg",
+   "full_sha256": "55b9469218dac2a9fa9978adcdad7f887e3ab07141be07c03190586bc2e1e0ae",
+   "full_bytes": 562707,
+   "thumb": "art/session-archive/thumb/w154.jpg",
+   "thumb_sha256": "394b2899eca3530979fcf45ab0ca2680c06080cd810322612302c3e476654b22",
+   "thumb_bytes": 40960,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w155",
+   "title": "Fragmented intimacy in a melancholic landscape",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "fragmented_intimacy_in_a_melancholic_landscape.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "24896410923d10a67a1c5d83e494271cd3372e4f4f80f80eaf9fb9a1c0ba6ac5",
+    "png_bytes": 3021482
+   },
+   "full": "art/current-story/full/03.jpg",
+   "also_published_as": "current-story plate 03",
+   "thumb": "art/session-archive/thumb/w155.jpg",
+   "thumb_sha256": "8d17a72c5e24ebbfd27e59de05e41901225145011911a7221424e4fac74b3115",
+   "thumb_bytes": 28242,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w156",
+   "title": "Fragmented portal to coastal twilight",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "fragmented_portal_to_coastal_twilight.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "90b2056cf0b1e6434c24f707c237aecd15ce0ce9832548e00a35a1c7105f6f3f",
+    "png_bytes": 2719578
+   },
+   "full": "art/session-archive/full/w156.jpg",
+   "full_sha256": "9be120d8a98038f493d5078dc136ee011364cf8347df2c7e1e0107f313165a20",
+   "full_bytes": 366505,
+   "thumb": "art/session-archive/thumb/w156.jpg",
+   "thumb_sha256": "d50e3e529f16c5b4dd6049a2cd25706deecef3e7d34ac03d771247447bdc7240",
+   "thumb_bytes": 27594,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w157",
+   "title": "Fragmented reflections of despair",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "fragmented_reflections_of_despair.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "b30fc7b7c225a535c38de406c679c30e2e652e8fb5b5fe5eedb2ab493affd1b1",
+    "png_bytes": 2958620
+   },
+   "full": "art/current-story/full/05.jpg",
+   "also_published_as": "current-story plate 05",
+   "thumb": "art/session-archive/thumb/w157.jpg",
+   "thumb_sha256": "baf4441a68f3415e322fd558412d3c29c5eea68c17b3f2c7bb2845617d200545",
+   "thumb_bytes": 36328,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w158",
+   "title": "Fragmented sorrow in urban decay",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "fragmented_sorrow_in_urban_decay.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "5c6b82c9ac21b717c5f552649be6cc5c7a49157d0863036dfb9e0d9ffbc5c91f",
+    "png_bytes": 2822042
+   },
+   "full": "art/current-story/full/08.jpg",
+   "also_published_as": "current-story plate 08",
+   "thumb": "art/session-archive/thumb/w158.jpg",
+   "thumb_sha256": "df3b8e492b1556b08c9af0a6e75c88ba125dcab03ada755044074d138eb7b1e5",
+   "thumb_bytes": 29006,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w159",
+   "title": "Industrial wasteland in fiery glow",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "industrial_wasteland_in_fiery_glow.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "a6d1805cae7a9d7907b6d142aeb4522c07affc4772d440d823329d9f7eb6c1ba",
+    "png_bytes": 2876043
+   },
+   "full": "art/session-archive/full/w159.jpg",
+   "full_sha256": "a8120326b48deb9058c5d2ba710b25bb068f79fcc2cc73a12881451a46e798ab",
+   "full_bytes": 396102,
+   "thumb": "art/session-archive/thumb/w159.jpg",
+   "thumb_sha256": "fd44590478e14420a6cd946d2fc722fea895e2e659f8d133ef5f7ba38eca3d1e",
+   "thumb_bytes": 27636,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w160",
+   "title": "Intimate embrace in a fractured world",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "intimate_embrace_in_a_fractured_world.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "277bd0086f6ec3d67a00c80ecfca8a8e0905d1861cdeb8cad0d4ec666e55f921",
+    "png_bytes": 3193543
+   },
+   "full": "art/current-story/full/07.jpg",
+   "also_published_as": "current-story plate 07",
+   "thumb": "art/session-archive/thumb/w160.jpg",
+   "thumb_sha256": "1f9e38c9ac500385b7dc48433274ad05f388ce8c8f61b3ef9c5b0ae05a30efd6",
+   "thumb_bytes": 35222,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w161",
+   "title": "Mystery beyond the glowing doorway",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "mystery_beyond_the_glowing_doorway.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "dee866d1f942fb4d2474658afde52f1dbaa860e3759c4e292f48f51e53e45b27",
+    "png_bytes": 2863859
+   },
+   "full": "art/current-story/full/02.jpg",
+   "also_published_as": "current-story plate 02",
+   "thumb": "art/session-archive/thumb/w161.jpg",
+   "thumb_sha256": "50d2e7d081fe62c4fd42c1277f06e7eff85ce54aac317f84df64b2c50e28187f",
+   "thumb_bytes": 27303,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w162",
+   "title": "Prison of light and longing",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "prison_of_light_and_longing.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "5047b95008dc0b0510cb17bf35306404d8e36bdffae62422709e29ffcae0d3e6",
+    "png_bytes": 2667495
+   },
+   "full": "art/current-story/full/04.jpg",
+   "also_published_as": "current-story plate 04",
+   "thumb": "art/session-archive/thumb/w162.jpg",
+   "thumb_sha256": "6a16b98e888ec53829213d7f04f34da79a17b465ba4b0ae3ed4aff5e8489f25f",
+   "thumb_bytes": 26119,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w163",
+   "title": "Ruined industrial dreamscape with ghostly figures",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "ruined_industrial_dreamscape_with_ghostly_figures.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "6898c9a400123d3ee9679bb0df5c5851d8a0488a968817af4654deab43096719",
+    "png_bytes": 3073553
+   },
+   "full": "art/session-archive/full/w163.jpg",
+   "full_sha256": "91d29a9a6e58e649cb7fe23a79ad899f395fa7edd249e0cabae1b5bfca149986",
+   "full_bytes": 417113,
+   "thumb": "art/session-archive/thumb/w163.jpg",
+   "thumb_sha256": "84b94f32088de44d7a45cd9ddf57cd57263210edeefbbef3d49e2fd920e2ec15",
+   "thumb_bytes": 29404,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w164",
+   "title": "Ruins through a textured archway",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "ruins_through_a_textured_archway.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "dc466d09b8ad9c686e7b243b60d92c858c71d74afcb5d1e0cf49adf43b9014bd",
+    "png_bytes": 3070938
+   },
+   "full": "art/session-archive/full/w164.jpg",
+   "full_sha256": "c10ad85ee42b3aaf30f23c9e9bcda7136ea2aeb451dc4e40d1109a35b6652ac3",
+   "full_bytes": 441552,
+   "thumb": "art/session-archive/thumb/w164.jpg",
+   "thumb_sha256": "e81674128fde031932732061022a68acdd11decb93cf99c1e3643a4bed4cd351",
+   "thumb_bytes": 31504,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  },
+  {
+   "id": "w165",
+   "title": "Trapped in a fractured realm",
+   "kind": "single",
+   "dimensions": [
+    1122,
+    1402
+   ],
+   "source_asset": {
+    "name": "trapped_in_a_fractured_realm.png",
+    "archive": "complete_session_art_archive_no_references.zip",
+    "png_sha256": "8a97232a7b2e2b4ecbbb08bb1c3a7646835187203a248c82a4f88c5a7baaf2b7",
+    "png_bytes": 2702741
+   },
+   "full": "art/current-story/full/01.jpg",
+   "also_published_as": "current-story plate 01",
+   "thumb": "art/session-archive/thumb/w165.jpg",
+   "thumb_sha256": "dc824571bba9ce66bf1e8fc03fa45e26c967a33960df3b2ea1523c51a68ed37c",
+   "thumb_bytes": 28501,
+   "thumb_dimensions": [
+    336,
+    420
+   ]
+  }
+ ]
+}
