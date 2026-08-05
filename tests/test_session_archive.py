@@ -97,3 +97,19 @@ def test_the_archive_and_the_sequence_point_at_each_other() -> None:
     assert shared, "works published in both places say so"
     for w in shared:
         assert w["full"].startswith("art/current-story/"), "a shared work reuses the sequence's file"
+
+
+def test_manifest_fetches_are_version_stamped() -> None:
+    """A force-cache fetch with no version stamp is a permanent stale read.
+
+    Both manifests are fetched with ``cache: "force-cache"``, which is right for a file that
+    rarely changes and wrong the moment it does: a visitor who loaded the page before the plates
+    were recovered keeps their cached manifest and never sees the higher-resolution copies. This
+    repo already applies the same rule to the stylesheet; a data manifest that changes shape
+    earns it too.
+    """
+    for script, path in ((SCRIPT, "art/session-archive/manifest.json"),
+                         (ROOT / "system" / "current-story.js", "art/current-story/manifest.json")):
+        js = script.read_text(encoding="utf-8")
+        assert "force-cache" in js, f"{script.name}: expected a cached manifest fetch"
+        assert f'{path}?v=' in js, f"{script.name}: the manifest fetch needs a version stamp"
