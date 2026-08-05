@@ -6,29 +6,358 @@
   "ordering": "Ascending numeric source filename, 1000119276.png through 1000119292.png.",
   "source_note": "Original PNG files were supplied by the author. The public WebP composite is reconstructed from inspectable Base64 text chunks and preserves the sequence and aspect ratio. The generation method is not asserted in this manifest.",
   "images": [
-    {"sequence":1,"source_filename":"1000119276.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"d1f135d7ac052d55c5a6c2848b8b5c5c0fcca613a853ea528f6c1c77d27f80a9","alt":"A fractured monochrome figure crouches in a dark geometric interior while two small figures stand beyond a bright keyhole-shaped opening."},
-    {"sequence":2,"source_filename":"1000119277.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"31e5f243cc9464bb4cd515bafb3ce2664813710543c69acd761fc493082211d1","alt":"A faceted violet-gray figure in the left foreground looks toward a luminous doorway containing a distant silhouette."},
-    {"sequence":3,"source_filename":"1000119278.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"94bb982be92f282a85e644f417782a928c4ce4d7497b454131563d358cb3716b","alt":"Two dark fragmented figures lean together in a wet, ruined interior, with a small open doorway at the far right."},
-    {"sequence":4,"source_filename":"1000119279.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"61dacbb8815ae24a6193bddb424006539d529d4aeec1b05b17f7c584d84f2b1a","alt":"A seated angular figure covers their face in shadow while two small figures appear beyond a bright keyhole opening."},
-    {"sequence":5,"source_filename":"1000119280.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"d5d6183b5da38d1a96f038cecb691f3e6c9753e5e2d4869e8570b1f665dfbed8","alt":"A black-and-white fragmented standing figure covers their face against a cracked, dripping wall."},
-    {"sequence":6,"source_filename":"1000119281.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"2e7e97579179e2ffc45d588fd9f675ee4a7afcc5c71abd68806e56902f224593","alt":"A black-and-white angular figure bends forward in a corridor while a distant silhouette stands in a bright doorway."},
-    {"sequence":7,"source_filename":"1000119282.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"c172a2c7864d7444100ff7e70a0626c038233e023f19157e2f97aa93e8e272c4","alt":"A fractured black-and-white figure leans forward with a hand over their face as shadowed forms repeat behind them."},
-    {"sequence":8,"source_filename":"1000119283.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"b3ab4776db9ba05d3b2c3cf26dea609df43e8eb0fa765037e72019bbcfdc8c82","alt":"A red, charcoal, and violet fractured portrait rests its head in one hand against a dark geometric field."},
-    {"sequence":9,"source_filename":"1000119284.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"2bed6704add3deae218b909ca31235df323ad8ec82a5187fdb0e173ad87c3482","alt":"Two small dark figures stand close together beside a narrow door in a pale, fog-filled expanse."},
-    {"sequence":10,"source_filename":"1000119285.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"ae8d3ca7f1d54870316fa2418043fbaada53bd1355e36e7eb5d1414a7919f634","alt":"A lone curled figure sits near the bottom center of a vast pale field."},
-    {"sequence":11,"source_filename":"1000119286.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"e8fad932a15a6be163294dd5667b92da80e69259ee878636cf5341ce05aa2350","alt":"One figure stands in the foreground of a pale gray expanse while another waits far away in a bright doorway."},
-    {"sequence":12,"source_filename":"1000119287.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"bdfd94334166ee83be44c58a0e2c60462e9c0df67714a38b2c1e01878b4d18b3","alt":"A crouched figure occupies the dark foreground beneath a giant keyhole opening where two figures stand in light."},
-    {"sequence":13,"source_filename":"1000119288.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"f6ae6c6cfaa914c5e5ac17d1e46a46160c43d4b2b3f687a1e24293771cd14907","alt":"A luminous empty room contains a worn chair, a narrow doorway at left, and an open horizon at right."},
-    {"sequence":14,"source_filename":"1000119289.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"227d3fa37705aca4f6703de9cf44ac07456071ae91ba3f21da1cbf08fbad1b83","alt":"A freestanding slab with a keyhole opening stands in a pale landscape, with a small crouched figure beside it and another opening in the distance."},
-    {"sequence":15,"source_filename":"1000119290.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"91299051833e51da9f8b3d0553b3e9071d0454310fb3e081e01d55b1cf1f0b74","alt":"A tiny doorway and a nearly invisible figure sit on the horizon of a vast luminous plain."},
-    {"sequence":16,"source_filename":"1000119291.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"1b9c6d0764e3eb0c01c96021443f035e6d422fb4c835f0d7b19a17db572aee05","alt":"A single tiny figure stands near the horizon beneath an immense blue-white field of light."},
-    {"sequence":17,"source_filename":"1000119292.png","source_dimensions":{"width":1229,"height":1536},"source_sha256":"74207a0838739d43cf23da3aa53d8960723726d2812b7a059422e7dc8c570ecb","alt":"A pale cube floats above a misty sea and a low distant island under diffuse light."}
+    {
+      "sequence": 1,
+      "source_filename": "1000119276.png",
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
+      "source_sha256": "d1f135d7ac052d55c5a6c2848b8b5c5c0fcca613a853ea528f6c1c77d27f80a9",
+      "alt": "A fractured monochrome figure crouches in a dark geometric interior while two small figures stand beyond a bright keyhole-shaped opening.",
+      "full_view": {
+        "path": "art/spatial/atlas/scene-01.jpg",
+        "dimensions": [
+          640,
+          800
+        ],
+        "sha256": "791d833e2bac76332b65a12d3faa7256f727741d4c7ed3e2a04bafcdef249343",
+        "bytes": 169841,
+        "scene": "scene-01"
+      }
+    },
+    {
+      "sequence": 2,
+      "source_filename": "1000119277.png",
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
+      "source_sha256": "31e5f243cc9464bb4cd515bafb3ce2664813710543c69acd761fc493082211d1",
+      "alt": "A faceted violet-gray figure in the left foreground looks toward a luminous doorway containing a distant silhouette.",
+      "full_view": {
+        "path": "art/spatial/atlas/scene-02.jpg",
+        "dimensions": [
+          640,
+          800
+        ],
+        "sha256": "281d180e75332d480d26ff1d51b750d42e51bfb37668c8a04f7f3d8a76eae825",
+        "bytes": 195258,
+        "scene": "scene-02"
+      }
+    },
+    {
+      "sequence": 3,
+      "source_filename": "1000119278.png",
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
+      "source_sha256": "94bb982be92f282a85e644f417782a928c4ce4d7497b454131563d358cb3716b",
+      "alt": "Two dark fragmented figures lean together in a wet, ruined interior, with a small open doorway at the far right.",
+      "full_view": {
+        "path": "art/spatial/atlas/scene-03.jpg",
+        "dimensions": [
+          640,
+          800
+        ],
+        "sha256": "30114c6198fa9541a4d7e33cb0a60c0d031c3ace54d310190d3620737aa84d58",
+        "bytes": 197258,
+        "scene": "scene-03"
+      }
+    },
+    {
+      "sequence": 4,
+      "source_filename": "1000119279.png",
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
+      "source_sha256": "61dacbb8815ae24a6193bddb424006539d529d4aeec1b05b17f7c584d84f2b1a",
+      "alt": "A seated angular figure covers their face in shadow while two small figures appear beyond a bright keyhole opening.",
+      "full_view": {
+        "path": "art/spatial/atlas/scene-04.jpg",
+        "dimensions": [
+          640,
+          800
+        ],
+        "sha256": "a698ceecc6bcb81122fbad2a3f5665a0e985cdb2ca3e074120c5dae9f4fa7bdb",
+        "bytes": 185231,
+        "scene": "scene-04"
+      }
+    },
+    {
+      "sequence": 5,
+      "source_filename": "1000119280.png",
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
+      "source_sha256": "d5d6183b5da38d1a96f038cecb691f3e6c9753e5e2d4869e8570b1f665dfbed8",
+      "alt": "A black-and-white fragmented standing figure covers their face against a cracked, dripping wall.",
+      "full_view": {
+        "path": "art/spatial/atlas/scene-05.jpg",
+        "dimensions": [
+          640,
+          800
+        ],
+        "sha256": "51bddab872eaa51f0b7411360a960fa69f5be475a026cefb3669956212c31cf7",
+        "bytes": 214788,
+        "scene": "scene-05"
+      }
+    },
+    {
+      "sequence": 6,
+      "source_filename": "1000119281.png",
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
+      "source_sha256": "2e7e97579179e2ffc45d588fd9f675ee4a7afcc5c71abd68806e56902f224593",
+      "alt": "A black-and-white angular figure bends forward in a corridor while a distant silhouette stands in a bright doorway.",
+      "full_view": {
+        "path": "art/spatial/atlas/scene-06.jpg",
+        "dimensions": [
+          640,
+          800
+        ],
+        "sha256": "3a8645ed446f616229bbfa8545966bef34f2e4d7c2a0030d2e4a55f90bbcafd5",
+        "bytes": 203716,
+        "scene": "scene-06"
+      }
+    },
+    {
+      "sequence": 7,
+      "source_filename": "1000119282.png",
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
+      "source_sha256": "c172a2c7864d7444100ff7e70a0626c038233e023f19157e2f97aa93e8e272c4",
+      "alt": "A fractured black-and-white figure leans forward with a hand over their face as shadowed forms repeat behind them.",
+      "full_view": {
+        "path": "art/spatial/atlas/scene-07.jpg",
+        "dimensions": [
+          640,
+          800
+        ],
+        "sha256": "bced73da3da02c345903ba795ad8faa37b21f427e7ec8424ff5f33d55775c859",
+        "bytes": 214242,
+        "scene": "scene-07"
+      }
+    },
+    {
+      "sequence": 8,
+      "source_filename": "1000119283.png",
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
+      "source_sha256": "b3ab4776db9ba05d3b2c3cf26dea609df43e8eb0fa765037e72019bbcfdc8c82",
+      "alt": "A red, charcoal, and violet fractured portrait rests its head in one hand against a dark geometric field.",
+      "full_view": {
+        "path": "art/spatial/atlas/scene-08.jpg",
+        "dimensions": [
+          640,
+          800
+        ],
+        "sha256": "2effb7daa5c2da573c7400c4d2561a29047297232bc2763524b81f6ed2d45912",
+        "bytes": 201660,
+        "scene": "scene-08"
+      }
+    },
+    {
+      "sequence": 9,
+      "source_filename": "1000119284.png",
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
+      "source_sha256": "2bed6704add3deae218b909ca31235df323ad8ec82a5187fdb0e173ad87c3482",
+      "alt": "Two small dark figures stand close together beside a narrow door in a pale, fog-filled expanse.",
+      "full_view": {
+        "path": "art/spatial/atlas/scene-09.jpg",
+        "dimensions": [
+          640,
+          800
+        ],
+        "sha256": "c951184716738cf4adc2746907efbcd6dcb71aaf5babccb43fd6877e49b240d9",
+        "bytes": 89573,
+        "scene": "scene-09"
+      }
+    },
+    {
+      "sequence": 10,
+      "source_filename": "1000119285.png",
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
+      "source_sha256": "ae8d3ca7f1d54870316fa2418043fbaada53bd1355e36e7eb5d1414a7919f634",
+      "alt": "A lone curled figure sits near the bottom center of a vast pale field.",
+      "full_view": {
+        "path": "art/spatial/atlas/scene-10.jpg",
+        "dimensions": [
+          640,
+          800
+        ],
+        "sha256": "8abcca99ae22581045d05c11dfa3af01550cfbd7087d59bf42ea77260721cd05",
+        "bytes": 96425,
+        "scene": "scene-10"
+      }
+    },
+    {
+      "sequence": 11,
+      "source_filename": "1000119286.png",
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
+      "source_sha256": "e8fad932a15a6be163294dd5667b92da80e69259ee878636cf5341ce05aa2350",
+      "alt": "One figure stands in the foreground of a pale gray expanse while another waits far away in a bright doorway.",
+      "full_view": {
+        "path": "art/spatial/atlas/scene-11.jpg",
+        "dimensions": [
+          640,
+          800
+        ],
+        "sha256": "d2f7be9e8d06da736a06af6ea8ebbbe2ed1141f08c4c9fcc264a1e02dc7eca6b",
+        "bytes": 78047,
+        "scene": "scene-11"
+      }
+    },
+    {
+      "sequence": 12,
+      "source_filename": "1000119287.png",
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
+      "source_sha256": "bdfd94334166ee83be44c58a0e2c60462e9c0df67714a38b2c1e01878b4d18b3",
+      "alt": "A crouched figure occupies the dark foreground beneath a giant keyhole opening where two figures stand in light.",
+      "full_view": {
+        "path": "art/spatial/atlas/scene-12.jpg",
+        "dimensions": [
+          640,
+          800
+        ],
+        "sha256": "7e6fd1ad5db182015cec0637000c01c3c7b60ac47d72d1f92fbbd3ea3914c2e3",
+        "bytes": 81023,
+        "scene": "scene-12"
+      }
+    },
+    {
+      "sequence": 13,
+      "source_filename": "1000119288.png",
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
+      "source_sha256": "f6ae6c6cfaa914c5e5ac17d1e46a46160c43d4b2b3f687a1e24293771cd14907",
+      "alt": "A luminous empty room contains a worn chair, a narrow doorway at left, and an open horizon at right.",
+      "full_view": {
+        "path": "art/spatial/atlas/scene-13.jpg",
+        "dimensions": [
+          640,
+          800
+        ],
+        "sha256": "c4cb2684a78a48db6b0e418b9acd16d9b68e52db7fc3447ac87fafee29b75790",
+        "bytes": 77351,
+        "scene": "scene-13"
+      }
+    },
+    {
+      "sequence": 14,
+      "source_filename": "1000119289.png",
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
+      "source_sha256": "227d3fa37705aca4f6703de9cf44ac07456071ae91ba3f21da1cbf08fbad1b83",
+      "alt": "A freestanding slab with a keyhole opening stands in a pale landscape, with a small crouched figure beside it and another opening in the distance.",
+      "full_view": {
+        "path": "art/spatial/atlas/scene-14.jpg",
+        "dimensions": [
+          640,
+          800
+        ],
+        "sha256": "76bee8c2e1e1e52120653158c4fd1bcd3b89c39f67c2906ab1921ddab4fc03e0",
+        "bytes": 90181,
+        "scene": "scene-14"
+      }
+    },
+    {
+      "sequence": 15,
+      "source_filename": "1000119290.png",
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
+      "source_sha256": "91299051833e51da9f8b3d0553b3e9071d0454310fb3e081e01d55b1cf1f0b74",
+      "alt": "A tiny doorway and a nearly invisible figure sit on the horizon of a vast luminous plain.",
+      "full_view": {
+        "path": "art/spatial/atlas/scene-15.jpg",
+        "dimensions": [
+          640,
+          800
+        ],
+        "sha256": "8ba42ea446a7d321c6a583b8057f984f20ca6fb51a1ae32ddcdcf2fb39e846f6",
+        "bytes": 73703,
+        "scene": "scene-15"
+      }
+    },
+    {
+      "sequence": 16,
+      "source_filename": "1000119291.png",
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
+      "source_sha256": "1b9c6d0764e3eb0c01c96021443f035e6d422fb4c835f0d7b19a17db572aee05",
+      "alt": "A single tiny figure stands near the horizon beneath an immense blue-white field of light.",
+      "full_view": {
+        "path": "art/spatial/atlas/scene-16.jpg",
+        "dimensions": [
+          640,
+          800
+        ],
+        "sha256": "724184354f0da15120a7a08945863922dd2a89a2ab119258a8df48ca54b43785",
+        "bytes": 62517,
+        "scene": "scene-16"
+      }
+    },
+    {
+      "sequence": 17,
+      "source_filename": "1000119292.png",
+      "source_dimensions": {
+        "width": 1229,
+        "height": 1536
+      },
+      "source_sha256": "74207a0838739d43cf23da3aa53d8960723726d2812b7a059422e7dc8c570ecb",
+      "alt": "A pale cube floats above a misty sea and a low distant island under diffuse light.",
+      "full_view": {
+        "path": "art/spatial/atlas/scene-17.jpg",
+        "dimensions": [
+          640,
+          800
+        ],
+        "sha256": "85977ce629023123bf22e145c6c82b65b9e2d1a5ee31403d88570f12b11d2123",
+        "bytes": 79920,
+        "scene": "scene-17"
+      }
+    }
   ],
   "published_composite": {
     "encoding": "base64-chunks",
     "mime_type": "image/webp",
-    "dimensions": {"width": 320, "height": 7184},
-    "plate_dimensions": {"width": 320, "height": 400},
+    "dimensions": {
+      "width": 320,
+      "height": 7184
+    },
+    "plate_dimensions": {
+      "width": 320,
+      "height": 400
+    },
     "gap_pixels": 24,
     "decoded_sha256": "f286c7b2081a02f00ae08f2cead5ac945b06922547959833581878418d839cf6",
     "decoded_bytes": 81692,
@@ -46,5 +375,6 @@
       "art/current-story/data/sequence.09.b64",
       "art/current-story/data/sequence.10.b64"
     ]
-  }
+  },
+  "full_view_note": "Each plate points at the highest-fidelity copy of that work which still exists: the 640x800 atlas derivative, matched to this sequence by the ORIGINAL file's sha256, not by filename or order. The 1229x1536 originals are unrecoverable; only their hashes and dimensions survive, recorded per image above. The composite below remains 320x400 per plate and is what the page loads up front; the full view is fetched only when a plate is opened."
 }

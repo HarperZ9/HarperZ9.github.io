@@ -75,12 +75,15 @@
 
 /* ── the lightbox ────────────────────────────────────────────────────────── */
 .story-dialog {
+  /* The sitewide reset sets margin:0 on every element, and a modal <dialog> centres itself with
+     margin:auto. Without this the lightbox opened pinned to the top-left corner. */
+  margin: auto;
   border: 1px solid var(--hairline);
   border-radius: 6px;
   background: var(--void-opaque);
   color: var(--bone);
   padding: 0;
-  max-width: min(94vw, 760px);
+  max-width: min(94vw, 880px);
   max-height: 94vh;
   overflow: hidden;
 }
@@ -89,7 +92,7 @@
 .story-dialog canvas {
   width: auto;
   max-width: 100%;
-  max-height: min(72vh, 640px);
+  max-height: min(78vh, 800px);
   height: auto;
   display: block;
   margin: 0 auto;

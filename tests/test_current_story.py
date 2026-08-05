@@ -116,3 +116,47 @@ def test_plate_grid_uses_the_existing_composite_only():
     # The slicing arithmetic in the JS only holds if the strip really is plate+gap stacked.
     assert plate["height"] * count + gap * (count - 1) == composite["dimensions"]["height"], \
         "the composite is plates stacked with gaps, which is what the grid slices"
+
+
+def test_every_plate_points_at_the_best_surviving_copy():
+    """The composite is 320x400 per plate. The best copy that still exists is 640x800.
+
+    The 1229x1536 originals are unrecoverable: they are not on disk anywhere, and only their
+    sha256 and dimensions survive as receipts. The 640x800 atlas derivatives are the highest
+    fidelity that remains, they are already served from this repo, and they are matched to this
+    sequence by the ORIGINAL file's sha256 rather than by filename or ordering, so a renamed or
+    reordered file cannot silently attach the wrong artwork to a plate.
+    """
+    manifest = json.loads((ROOT / "art" / "current-story" / "manifest.json").read_text(encoding="utf-8"))
+    world = json.loads((ROOT / "art" / "spatial" / "atlas" / "atlas.world.json").read_text(encoding="utf-8"))
+    by_sha = {s["canonical_source_sha256"]: s for s in world["scenes"]}
+
+    plate = manifest["published_composite"]["plate_dimensions"]
+    for item in manifest["images"]:
+        full = item.get("full_view")
+        assert full, f"{item['source_filename']} has no full view"
+        path = ROOT / full["path"]
+        assert path.is_file(), full["path"]
+        # The pointer is only trustworthy if it was derived from the original's hash.
+        assert item["source_sha256"] in by_sha, "the plate maps to a real atlas scene"
+        assert by_sha[item["source_sha256"]]["source_preview"] == path.name, \
+            f"{item['source_filename']} points at the scene its ORIGINAL hash selects"
+        # And it must actually be an improvement, or there is no reason to fetch it.
+        assert full["dimensions"][0] > plate["width"], "the full view beats the composite plate"
+        assert full["dimensions"][1] > plate["height"]
+        # The bytes on disk are the bytes the manifest claims.
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == full["sha256"], \
+            f"{full['path']} drifted from its recorded hash"
+
+
+def test_the_page_stays_cheap_until_a_plate_is_opened():
+    """The high-resolution copies are 2.2MB for seventeen. Loading them up front would make an
+    artwork page cost twenty times what it costs now for pixels nobody has asked to see yet."""
+    js = (ROOT / "system" / "current-story.js").read_text(encoding="utf-8")
+    assert "full_view" in js, "the lightbox knows about the full view"
+    # The composite must be drawn first and remain the fallback.
+    assert "paintComposite" in js and "paintFull" in js
+    assert "onerror" in js, "a failed fetch degrades to the composite rather than to nothing"
+    # Nothing may preload the full views into the grid.
+    grid = js[js.index("async function renderGrid"):]
+    assert "full_view" not in grid, "the grid draws from the composite only"

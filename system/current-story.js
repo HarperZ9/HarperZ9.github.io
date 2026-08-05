@@ -234,9 +234,15 @@ function buildDialog() {
 function openPlates(source, items) {
   const ui = buildDialog();
   let at = 0;
-  const show = (index) => {
-    at = Math.max(0, Math.min(items.length - 1, index));
-    const item = items[at];
+  // The composite is 320x400 per plate, which is right for a thumbnail and thin for looking at
+  // one work. The highest-fidelity copy that still exists is the 640x800 atlas derivative, four
+  // times the pixels, already served from this repo and matched to each plate by the ORIGINAL
+  // file's sha256 (manifest.images[].full_view). It is fetched only when a plate is opened, so
+  // the page still costs one small composite up front instead of 2.2MB of plates nobody asked
+  // for. The composite slice draws first and stays as the fallback, so a failed fetch degrades
+  // to the old resolution rather than to nothing.
+  const fullCache = new Map();
+  const paintComposite = (item) => {
     ui.canvas.width = FRAME_WIDTH;
     ui.canvas.height = FRAME_HEIGHT;
     const ctx = ui.canvas.getContext("2d", { alpha: false });
@@ -244,8 +250,37 @@ function openPlates(source, items) {
       ctx.drawImage(source, 0, at * (FRAME_HEIGHT + FRAME_GAP), FRAME_WIDTH, FRAME_HEIGHT,
         0, 0, FRAME_WIDTH, FRAME_HEIGHT);
     }
+  };
+  const paintFull = (item, forIndex) => {
+    const full = item.full_view;
+    if (!full || !full.path) return;
+    const done = (img) => {
+      if (at !== forIndex) return;          // the viewer moved on while this decoded
+      ui.canvas.width = img.naturalWidth;
+      ui.canvas.height = img.naturalHeight;
+      const ctx = ui.canvas.getContext("2d", { alpha: false });
+      if (ctx) ctx.drawImage(img, 0, 0);
+      ui.canvas.dataset.resolution = `${img.naturalWidth}x${img.naturalHeight}`;
+    };
+    const cached = fullCache.get(full.path);
+    if (cached) { done(cached); return; }
+    const img = new Image();
+    img.decoding = "async";
+    img.onload = () => { fullCache.set(full.path, img); done(img); };
+    img.onerror = () => { /* the composite slice already on screen stays */ };
+    img.src = full.path;
+  };
+  const show = (index) => {
+    at = Math.max(0, Math.min(items.length - 1, index));
+    const item = items[at];
+    paintComposite(item);
+    ui.canvas.dataset.resolution = `${FRAME_WIDTH}x${FRAME_HEIGHT}`;
+    paintFull(item, at);
     ui.canvas.setAttribute("aria-label", item.alt);
-    ui.position.textContent = `${String(at + 1).padStart(2, "0")} of ${String(items.length).padStart(2, "0")} · ${item.source_filename.replace(/\.png$/i, "")}`;
+    const fv = item.full_view;
+    ui.position.textContent = `${String(at + 1).padStart(2, "0")} of ${String(items.length).padStart(2, "0")}`
+      + ` · ${item.source_filename.replace(/\.png$/i, "")}`
+      + (fv && fv.dimensions ? ` · ${fv.dimensions[0]}×${fv.dimensions[1]}` : "");
     ui.alt.textContent = item.alt;
     ui.prev.disabled = at === 0;
     ui.next.disabled = at === items.length - 1;
