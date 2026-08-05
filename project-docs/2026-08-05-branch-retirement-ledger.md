@@ -67,7 +67,7 @@ The last two are a matched pair, and the second is the later decision. `main` ha
 `media/demos/calibrate-pro/`, and the demos directory carries crucible, flywheel, forum,
 gather, and index only. Calibrate Pro was deliberately not promoted; that decision stands.
 
-## KEPT — not retired, not published: unpublished writing
+## PUBLISHED (2026-08-05), then retired: the writing that was being held
 
 `publish/living-breathing-reaction-2026-07-23` — tip `a13f240`. **This branch is the one
 exception and it is being kept.**
@@ -99,5 +99,26 @@ and the mission, with family and confession out. Second, the talk version marks 
 `[Optional movement. Keep the voltage. Kill the possession.]` — the author already flagged it as
 a candidate rather than a commitment.
 
-Publishing it is the operator's call, not a cleanup decision. The branch stays so the writing
-stays, and the question stays open rather than being answered by deletion.
+Publishing it was the operator's call, not a cleanup decision, so the branch was kept and the
+question left open rather than answered by deletion.
+
+**The operator then made the call: publish.** All three texts are live as of 2026-08-05, each
+placed where it belongs and reproduced verbatim, selection only:
+
+- the frame and the possession turn were inserted into `writing/pick-the-lock-for-everyone-v3/10.md`
+  at the two seams where the draft's own flow continued. The draft's sampling paragraphs were not
+  copied, since the essay already carried them in a fuller form.
+- `writing/pick-the-lock-for-everyone-talk/02e.md` became its own movement in the spoken edition,
+  between "nobody should have to become the floor" and the local-first close. Its
+  `[Optional movement. Keep the voltage. Kill the possession.]` header was a stage direction to the
+  author, not prose for a reader; the decision it flagged had now been made, so the note went and
+  the movement stayed.
+- the artist's statement went onto `current-story.html`, after the sequence rather than before it,
+  instead of becoming a second page for the same seventeen images.
+
+One gate changed with it. The essay's profanity budget was one; four more arrive together in the
+passage that is ABOUT the word. It is now pinned at exactly five with the three redirect lines
+asserted by name, which is a tighter constraint than the one it replaced, not a looser one.
+
+The branch is therefore retired like the rest, tip `a13f240`, restorable by SHA. It is recorded
+here separately because its verdict was decided by a person rather than by a diff.
