@@ -19,8 +19,18 @@ have deleted the Flywheel flagship workflow from the demonstrations page. That i
 hazard, and it is why every verdict below is anchored to file content rather than to graph
 topology.
 
-**Nothing is lost.** Every retired branch's tip SHA is recorded here. `git fetch origin <sha>`
-or `git checkout <sha>` restores it in full, permanently.
+**Nothing is lost, and the promise is now a real ref.** Every retired branch's tip SHA is
+recorded here, and each one also carries a permanent annotated tag on `origin`:
+
+```bash
+git checkout -b <name> retired/<name>
+```
+
+The first version of this ledger promised recovery by bare SHA. That worked, but only for as long
+as the host kept serving an unreferenced object, which is not a guarantee anybody should rely on.
+Thirty-three `retired/*` tags now hold those commits reachable forever, which is what made it safe
+to delete the local mirrors as well as the remote branches. Verified by restoring one at random
+and reading its tree back.
 
 ## Retired: content already in `main`, byte for byte
 
@@ -122,3 +132,25 @@ asserted by name, which is a tighter constraint than the one it replaced, not a 
 
 The branch is therefore retired like the rest, tip `a13f240`, restorable by SHA. It is recorded
 here separately because its verdict was decided by a person rather than by a diff.
+
+
+## The rest of the local repository (2026-08-05)
+
+The twenty branches above were the ones unmerged into `main`. Clearing them exposed the rest, and
+it got the same treatment rather than a different one.
+
+- **56 merged remote branches** and **94 merged local branches** deleted. Fully contained in
+  `main` by definition; verified with an ahead-count of zero on every one before deleting.
+- **12 further local-only branches** assessed the same way: ten `preserve/pre-replay-*` snapshots
+  from 2026-06-30 to 07-02, `feat/music-experience` (2026-06-25), and `agent/restore-telos-v2-home`.
+  All predate the React redesign and everything after it; each one's differing files exist in
+  `main` in a later form. `essay/no-receipt-no-accept` was already whole in `main`, press kit
+  included. All are tagged and retired.
+- **6 stale worktrees** removed. Four reported as dirty and none of it was real: 77 "modified"
+  files in the telos-v2 worktree and one in the calibrate worktree were `core.autocrlf` line-ending
+  churn with an empty diff body, and the remaining changes were `.superpowers/sdd/*` planning
+  scaffolding. Checked before removing, because a worktree named for a restore is exactly the kind
+  of thing that should not be deleted on the assumption that it is noise.
+
+End state: one branch (`main`), one worktree, zero open pull requests, thirty-three retirement
+tags.
