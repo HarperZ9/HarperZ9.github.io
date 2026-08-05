@@ -12,6 +12,9 @@ const PRIMARY = [
 export const MORE = [
   ["The Tour", "tour.html", "demos"],
   ["The Studio", "studio.html", "studio"],
+  // The archive sits next to the Studio because it is now one of the Studio's materials, not only
+  // a page of pictures. It was reachable from two paragraphs of body copy and nowhere else.
+  ["Session archive", "session-archive.html", "archive"],
   ["Guide", "guide.html", "guide"],
   ["Catalog", "catalog.html", "catalog"],
   ["Typeface", "typeface.html", "typeface"],
@@ -123,6 +126,7 @@ export function navActive(pathname) {
   const stem = f.replace(/\.html$/, "") || "index";
   if (stem === "index") return "home";
   if (stem === "studio") return "studio";
+  if (stem === "session-archive") return "archive";
   if (stem === "guide") return "guide";
   if (stem === "publications") return "publications";
   if (stem === "security") return "security";
