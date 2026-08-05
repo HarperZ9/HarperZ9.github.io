@@ -143,9 +143,11 @@ export function createSketch(opts = {}) {
   function setSymmetry(mode, k) {
     if (!SYM_MODES.includes(mode)) return false;   // refuse rather than guess a mode
     sym.mode = mode;
-    if (mode === "radial" || mode === "kaleido") {
-      sym.k = Math.max(2, Math.min(12, Math.round(k == null ? sym.k : k)));
-    }
+    // The fold is REMEMBERED in every mode, not only the two that currently use it. Assigning k
+    // only for radial/kaleido meant a sketch saved under "none" or "mirror" lost its fold on the
+    // way through serialize/restore, so a drawing pinned at ×9 came back at the default ×6 the
+    // moment its symmetry was turned back on.
+    if (k != null && Number.isFinite(k)) sym.k = Math.max(2, Math.min(12, Math.round(k)));
     return true;
   }
   const getSymmetry = () => ({ mode: sym.mode, k: sym.k });

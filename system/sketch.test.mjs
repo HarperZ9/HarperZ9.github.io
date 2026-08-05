@@ -203,3 +203,18 @@ test("the register is applied by hand: worked lays more line than clean", () => 
   assert.equal(worked.meta.register, "worked", "and the sheet records which hand drew it");
   assert.equal(clean.meta.strokes, 1, "raw stroke count is untouched by register or symmetry");
 });
+
+test("the fold survives a round-trip taken under a symmetry that does not use it", () => {
+  // The defect: setSymmetry assigned k only for radial/kaleido, so a drawing saved under "none"
+  // or "mirror" lost its fold — and came back at the default the moment symmetry was turned on.
+  const a = createSketch();
+  a.setSymmetry("radial", 9);
+  a.beginStroke(0.3, 0.3); a.extendStroke(0.6, 0.4); a.extendStroke(0.7, 0.6); a.endStroke();
+  a.setSymmetry("none");
+  assert.equal(a.getSymmetry().k, 9, "the fold is remembered even while unused");
+  const b = createSketch();
+  assert.ok(b.restore(a.serialize()), "restores");
+  assert.equal(b.getSymmetry().k, 9, "and survives serialize/restore");
+  b.setSymmetry("kaleido");
+  assert.equal(b.expandStroke([[0.2, 0.2], [0.4, 0.4]]).length, 18, "turning symmetry on uses the remembered fold, not the default");
+});

@@ -485,17 +485,20 @@ export function stitch(seedStr, rng, opts = {}) {
 export function tanaka(seedStr, rng, opts = {}) {
   const N = opts.res || 150;
   const { field, seaLevel } = elevationField(seedStr, N, N, { octaves: 6, ridged: rng() < 0.35 });
-  // Many levels through the ONE tested iso-line tracer. contourFromLuma ignores its threshold
-  // option (plot-maps has been feeding it one for nothing) and always marches five fixed
-  // thresholds, so each call here windows a narrow elevation band onto those five: `bands` calls
-  // times five thresholds is 5*bands honest levels, and marching squares stays where it is tested.
-  const bands = Math.round(opts.bands || 5);
+  // Many levels through the ONE tested iso-line tracer, each at an explicit threshold. The first
+  // cut had to window narrow elevation bands onto contourFromLuma's five fixed levels, because
+  // the threshold option was accepted and ignored; that workaround traced every interior band
+  // boundary TWICE (band b's top level and band b+1's bottom level resolve to the same
+  // elevation), laying double ink on four of the levels and reading as false index contours —
+  // which defeats the study's whole premise that weight alone carries the shading. The option is
+  // honest now, so the levels are simply asked for.
+  const levels = Math.max(6, Math.min(48, Math.round(opts.levels || 25)));
   const lo = seaLevel + 0.02, hi = 0.975;
-  const gain = (0.7 * bands) / Math.max(0.15, hi - lo);
+  const luma = fieldToLuma(field, N, N);
   const contours = [];
-  for (let b = 0; b < bands; b++) {
-    const Lc = lo + ((b + 0.5) / bands) * (hi - lo);
-    contours.push(...contourFromLuma(fieldToLuma(field, N, N, (v) => 0.5 + (v - Lc) * gain), N, N, 4));
+  for (let i = 0; i < levels; i++) {
+    const t = lo + ((i + 0.5) / levels) * (hi - lo);
+    contours.push(...contourFromLuma(luma, N, N, 4, { threshold: t }));
   }
   // The sun. NW is the cartographic convention (and why a map's relief inverts upside down);
   // screen y grows DOWN, so up-left is (-1,-1) and its angle is -3pi/4. A small wobble keeps
@@ -532,7 +535,7 @@ export function tanaka(seedStr, rng, opts = {}) {
       { name: "lit", polylines: clip(lit), weight: 0.38, tone: "ink" },
       { name: "shade", polylines: clip(shade), weight: 1.25, tone: "ink" },
     ],
-    meta: { levels: bands * 5, seaLevel: +seaLevel.toFixed(4), gapT: +gapT.toFixed(3) },
+    meta: { levels, seaLevel: +seaLevel.toFixed(4), gapT: +gapT.toFixed(3) },
   };
 }
 

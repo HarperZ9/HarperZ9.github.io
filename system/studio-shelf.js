@@ -66,15 +66,26 @@ function deriveId(kind, recipe) {
 
 const STR = (x) => typeof x === "string" && x.length > 0;
 const NUM = (x) => Number.isFinite(x);
+// A field a kind cannot HOLD is a field restore cannot get back. Every optional here was added
+// because a pin was silently reproducing something other than what was pinned: a sketch's mark
+// register (worked is three passes, drawn is one — a different sheet), the guide it was drawn
+// against, and the pen-surface context (material/blend/density) of a sketch pinned from the pen
+// surface rather than from the Sketch source. Normalization still strips genuine junk; it just no
+// longer strips the recipe.
 const KIND_FIELDS = {
   field:  { need: { seed: STR, study: STR },
             may:  { register: STR, density: NUM, levels: NUM } },
   image:  { need: { source: STR, method: STR },
             may:  { material: STR, seed: STR, register: STR, density: NUM, levels: NUM, plateId: STR } },
-  voxel:  { need: {}, may: { register: STR } },   // carried entirely by the voxel block below
-  sketch: { need: {}, may: { seed: STR } },       // carried entirely by the opaque sketch payload
+  // A voxel PIN is the build; a voxel-material SHEET is a drawing of the build, and needs the pen
+  // surface's own controls too or restore routes it back to the Voxels source and loses the sheet.
+  voxel:  { need: {}, may: { seed: STR, material: STR, register: STR, blend: STR, density: NUM, levels: NUM } },
+  sketch: { need: {},
+            may:  { seed: STR, material: STR, register: STR, sketchRegister: STR, guide: STR,
+                    blend: STR, study: STR, method: STR, density: NUM, levels: NUM } },
   blend:  { need: { seed: STR, study: STR, material: STR, blend: (x) => x === "under" || x === "over" },
-            may:  { source: STR, method: STR, register: STR, density: NUM, levels: NUM, plateId: STR } },
+            may:  { source: STR, method: STR, register: STR, sketchRegister: STR, guide: STR,
+                    density: NUM, levels: NUM, plateId: STR } },
 };
 
 // The voxel block mirrors buildVoxelScene's meta (seed, study, res, tune) plus the ORDERED op
@@ -130,8 +141,12 @@ function normalizeRecipe(kind, raw) {
     if (!v) return { ok: false, why: `${kind} recipe: voxel block needs { study, seed } and sound edits` };
     out.voxel = v;
   } else out.voxel = null;
-  if (kind === "sketch") {
+  if (kind === "sketch" || (kind === "blend" && raw.sketch != null)) {
     // Opaque on purpose: the sketch module owns its payload's shape; the shelf only carries it.
+    // A BLEND over a sketch must carry it too — dropping it here accepted the pin, kept a thumb
+    // showing the drawing, and reproduced nothing: a user who trusted the pin and cleared the
+    // sketch had lost the work. The blend case is opt-in on presence, so a blend over a plate or
+    // a field still stores no sketch payload at all.
     if (raw.sketch == null) return { ok: false, why: "sketch recipe needs its sketch payload" };
     out.sketch = raw.sketch;
   } else out.sketch = null;

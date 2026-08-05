@@ -1106,6 +1106,9 @@ body.world-3 .bar .rt{color:#cdd6cf}
 .rail-group .at-group{margin-top:.7rem}
 .rail-about{margin-top:1rem}
 .rail-about p{font-family:var(--body);font-size:.9rem;line-height:1.55;color:var(--muted)}
+/* A control that cannot act on the current state says so rather than sitting there looking live. */
+.at-group.is-inert{opacity:.42}
+.at-group.is-inert input[type="range"]{cursor:not-allowed}
 /* ── The shelf: pinned-creation strip. Quiet, user-owned; thumbs are recipes, not trophies. ── */
 .studio-shelf{padding:.65rem .8rem .8rem;margin-top:1rem}
 .studio-shelf .shelf-head{margin:0 0 .5rem}

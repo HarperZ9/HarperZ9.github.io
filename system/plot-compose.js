@@ -125,7 +125,9 @@ export const STUDY_FLOORS = Object.freeze({
   // The illuminated-terrain shelf, measured 2026-08-04 by the same method: p33 of composeSheet
   // scores over 16 seeds per study. All three sit high because contour-following ink covers and
   // spreads well by construction; the floor still cuts each register's own weakest third.
-  tanaka: 0.888, relief: 0.897, zigzag: 0.732,
+  // tanaka re-measured 2026-08-04 after its duplicate band-boundary contours were removed (the
+  // levels are now asked for explicitly, one trace each, instead of windowed onto five fixed ones).
+  tanaka: 0.883, relief: 0.897, zigzag: 0.732,
 });
 export const DULL_SCORE = 0.60;   // fallback for a study with no measured floor yet
 

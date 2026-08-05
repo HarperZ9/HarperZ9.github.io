@@ -248,3 +248,82 @@ test("a corrupt pin in our own storage drops quietly; the rest of the shelf surv
   assert.equal(reloaded.list().length, 1, "the broken pin was dropped");
   assert.equal(reloaded.list()[0].recipe.seed, "survivor", "the intact pin was kept");
 });
+
+// ── Recipes must be able to HOLD what restore needs ─────────────────────────
+// Every case below was a real defect found by adversarial review of the first cut: the shelf
+// accepted the pin, showed a thumb of the work, promised "reproduces it exactly", and had
+// silently dropped the field that made the work what it was.
+
+test("a blended sketch keeps its strokes: the drawing is not dropped on the way in", () => {
+  const shelf = createShelf({ storage: memStorage() });
+  const sketchPayload = { v: 1, strokes: [[[0.1, 0.1], [0.5, 0.6]]], symmetry: { mode: "kaleido", k: 6 }, guide: "iso" };
+  const res = shelf.add({
+    kind: "blend", stamp: STAMP,
+    recipe: {
+      seed: "blended", study: "basin", material: "sketchsheet", blend: "under",
+      register: "worked", sketch: sketchPayload,
+    },
+  });
+  assert.ok(res.ok, "the blend pins");
+  const stored = shelf.get(res.id);
+  assert.deepEqual(stored.recipe.sketch, sketchPayload,
+    "the drawing survives — dropping it lost work a user had trusted the shelf to keep");
+  // A blend over something that is NOT a sketch still carries no payload.
+  const plain = shelf.add({
+    kind: "blend", stamp: STAMP,
+    recipe: { seed: "plain", study: "moire", material: "plate", blend: "over", plateId: "scene-03" },
+  });
+  assert.ok(plain.ok);
+  assert.equal(shelf.get(plain.id).recipe.sketch, null, "no sketch, no payload");
+});
+
+test("a sketch pin keeps the register and guide it was made in", () => {
+  const shelf = createShelf({ storage: memStorage() });
+  const res = shelf.add({
+    kind: "sketch", stamp: STAMP,
+    recipe: { register: "worked", guide: "iso", sketch: { v: 1, strokes: [[[0.2, 0.2], [0.8, 0.8]]], symmetry: { mode: "none", k: 6 }, guide: "iso" } },
+  });
+  assert.ok(res.ok);
+  const rec = shelf.get(res.id).recipe;
+  // The register is not decoration: worked is three passes, drawn is one, so losing it restores a
+  // visibly different sheet from the same strokes.
+  assert.equal(rec.register, "worked", "the mark register survives");
+  assert.equal(rec.guide, "iso", "the guide survives");
+});
+
+test("a sketch pinned from the pen surface keeps its pen-surface context", () => {
+  const shelf = createShelf({ storage: memStorage() });
+  const res = shelf.add({
+    kind: "sketch", stamp: STAMP,
+    recipe: {
+      seed: "pen-side", material: "sketchsheet", blend: "alone", register: "clean",
+      density: 1.4, sketch: { v: 1, strokes: [[[0.3, 0.3], [0.7, 0.4]]], symmetry: { mode: "mirror", k: 6 }, guide: "none" },
+    },
+  });
+  assert.ok(res.ok);
+  const rec = shelf.get(res.id).recipe;
+  assert.equal(rec.material, "sketchsheet", "restore can tell this belongs on the pen surface");
+  assert.equal(rec.density, 1.4, "and the sheet controls come back too");
+});
+
+test("a voxel pin carries the grid it was built on, not just its seed", () => {
+  const shelf = createShelf({ storage: memStorage() });
+  const res = shelf.add({
+    kind: "voxel", stamp: STAMP,
+    recipe: {
+      voxel: {
+        study: "relic", seed: "gridcheck", res: 64, tune: { a: 0.3, b: 0.7, c: 0.5 },
+        ops: [{ op: "turn", dir: 1 }, { op: "edit", cellIndex: 131731, faceId: 0, mode: "chisel" }],
+      },
+    },
+  });
+  assert.ok(res.ok);
+  const v = shelf.get(res.id).recipe.voxel;
+  // An op log is a sequence of cell indices, and a cell index only means what it meant on the
+  // grid it was recorded against: rebuilding at another res lands every edit somewhere else.
+  assert.equal(v.res, 64, "the resolution is part of the identity");
+  assert.deepEqual(v.tune, { a: 0.3, b: 0.7, c: 0.5 }, "so are the knobs");
+  assert.equal(v.ops.length, 2, "and the ordered op log");
+  const bad = shelf.add({ kind: "voxel", stamp: STAMP, recipe: { voxel: { study: "relic", seed: "s", res: 4 } } });
+  assert.ok(!bad.ok, "a nonsense resolution is refused rather than stored");
+});

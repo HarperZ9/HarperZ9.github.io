@@ -253,3 +253,16 @@ test("sheetGcode: pen-ordered, paused at every pen change, y-flipped, determinis
   const yTop = sheetGcode({ layers: [{ name: "a", polylines: [[[0.5, 0.05], [0.6, 0.05]]], weight: 1, tone: "ink" }], meta: { aspect: 1 } }, { widthMm: 100 });
   assert.ok(yTop.includes("Y95.000"), "top of the sheet is far-Y at the machine");
 });
+
+test("the G-code paper and the SVG paper are the same paper", async () => {
+  const { sheetGcode } = await import("./plot-replay.js");
+  const { plotMapSVG } = await import("./plot-maps.js");
+  // aspect 0.75 at 210mm is 157.5mm: unrounded in one file and rounded in the other made the two
+  // exports disagree about the sheet by half a millimetre.
+  const plot = { layers: [{ name: "a", polylines: [[[0.1, 0.1], [0.9, 0.9]]], weight: 1, tone: "ink" }], meta: { seed: "paper", study: "x", aspect: 0.75, strokes: 1, points: 2 } };
+  const svgH = /height="(\d+)mm"/.exec(plotMapSVG(plot, { widthMm: 210 }))[1];
+  const gcode = sheetGcode(plot, { widthMm: 210 });
+  const gMatch = /sheet 210mm x ([\d.]+)mm/.exec(gcode);
+  assert.ok(gMatch, "the g-code declares its paper");
+  assert.equal(Number(gMatch[1]), Number(svgH), "both exports declare the same height");
+});

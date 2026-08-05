@@ -566,6 +566,8 @@ function setSource(next) {
     stopByoVideo();     // pause + release any played BYO video
     // The discovery / showcase graphs are lazy: if a graph never loaded, that source never ran,
     // so there is nothing to stop (and an in-flight start is cancelled by the epoch bump above).
+    stopReplay();       // a replay paints plot strokes; without this it kept painting them onto
+                        // whatever source came next, over that source's own frame
     if (_discovery) { try { _discovery.stopDiscovery(); } catch (_) {} }
     if (_showcase)  { try { _showcase.stopShowcase(); } catch (_) {} }
     if (_neural)    { try { _neural.stopNeural(); } catch (_) {} }
@@ -940,6 +942,12 @@ function drawPlotMap() {
   }
 
   _lastPlot = plot;
+  // A new sheet invalidates the last replay's commentary and position; leaving them was a claim
+  // about a run that never happened for this sheet.
+  const penNote = $("plot-pen-note");
+  if (penNote) penNote.textContent = "press Watch; pen changes are called out as they happen";
+  const scrubEl = $("plot-scrub");
+  if (scrubEl) scrubEl.value = "0";
   const ctx = c.getContext("2d", { willReadFrequently: true });
   if (!ctx) return;
   const rect = _plotMaps.renderPlotMap(ctx, plot, c.width, c.height, {}, { view: _stillView.plotmaps });
@@ -987,6 +995,18 @@ function sayPlotReceipt(plot, seed, obs) {
       + `Fingerprint ${obs.phash}. Same picture, same seed, same drawing.`);
     return;
   }
+  if (meta.kind === "sketch") {
+    // Without this the sketch sheet fell through to the cartography branch and announced a study
+    // of "undefined" over "a seeded elevation field" with a sea level of undefined — a receipt
+    // describing a sheet that does not exist.
+    const sym = meta.symmetry || { mode: "none", k: 1 };
+    say("model",
+      `Your drawing on the pen surface: ${meta.strokes.toLocaleString()} hand strokes in the ${meta.register} register`
+      + (sym.mode !== "none" ? ` under ${sym.mode} ×${sym.k} symmetry` : "")
+      + `, ${meta.points.toLocaleString()} points. Geometry hash ${meta.geometryHash}. `
+      + `Fingerprint ${obs.phash}. The SVG and the G-code plot exactly this.`);
+    return;
+  }
   const label = (_plotMaps.PLOT_STUDIES[meta.study] || _plotCompose.STUDY_BUILDERS[meta.study] || {}).label || meta.study;
   if (m && meta.candidates) {
     const rejected = (meta.rejected || []).length;
@@ -1017,6 +1037,10 @@ function syncPlotMaterialUI() {
   show("plot-file-row", _plotMaterial === "picture");
   show("plot-blend-row", !isField);
   show("plot-levels-row", isField);
+  // Density drives the generative studies, the image methods, and the voxel hatch — but a sketch
+  // sheet is the hand's own strokes, and nothing about it is denser or sparser. A visible slider
+  // that cannot move the drawing is a lie about the instrument, so it goes away here.
+  show("plot-density-row", _plotMaterial !== "sketchsheet");
 }
 
 // The plate picker lists the atlas corpus — every published scene with its receipt-carried title,
@@ -1411,6 +1435,7 @@ function initSketchControls() {
   let drawing = false;
   let livePts = null;      // the in-progress stroke, raw
   let settled = null;      // ImageData of the sheet at pen-down, restored under live feedback
+  let penId = null;        // the ONE pointer drawing; a second finger is not part of this stroke
   const toSheetXY = (e) => {
     const c = $("studio-canvas");
     const r = c.getBoundingClientRect();
@@ -1441,7 +1466,9 @@ function initSketchControls() {
   stage.addEventListener("pointerdown", (e) => {
     if (activeSource !== "sketch" || !_sketch) return;
     if (!e.target.closest("#studio-canvas")) return;
+    if (drawing) return;            // a second finger mid-stroke is not part of this stroke
     e.preventDefault();
+    penId = e.pointerId;
     try { e.target.setPointerCapture(e.pointerId); } catch (_) {}
     const c = $("studio-canvas");
     const ctx = c.getContext("2d", { willReadFrequently: true });
@@ -1453,6 +1480,7 @@ function initSketchControls() {
   });
   stage.addEventListener("pointermove", (e) => {
     if (!drawing || activeSource !== "sketch" || !_sketch) return;
+    if (penId != null && e.pointerId !== penId) return;   // ignore every pointer but the pen's
     const [x, y] = toSheetXY(e);
     _sketch.extendStroke(x, y);
     livePts.push([x, y]);
@@ -1460,7 +1488,7 @@ function initSketchControls() {
   });
   const penUp = () => {
     if (!drawing) return;
-    drawing = false; livePts = null; settled = null;
+    drawing = false; livePts = null; settled = null; penId = null;
     if (_sketch) _sketch.endStroke();
     drawSketch(false);
   };
@@ -1479,6 +1507,7 @@ function initSketchControls() {
       if (_sketch) {
         const k = parseInt(($("sketch-k") || {}).value, 10) || 6;
         _sketch.setSymmetry(chip.dataset.sketchSym, k);
+        syncFoldEnabled();
         drawSketch(false);
       }
     });
@@ -1496,6 +1525,10 @@ function initSketchControls() {
   document.querySelectorAll("[data-sketch-guide]").forEach(chip => {
     chip.addEventListener("click", () => {
       _sketchGuide = chip.dataset.sketchGuide;
+      // Tell the SKETCH too, not just this module. guideLayers() takes an explicit argument, so
+      // the drawing looked right while the sketch's own guide stayed "none" — and serialize()
+      // reports the sketch's state, so every pin recorded the wrong guide.
+      if (_sketch) _sketch.setGuide(_sketchGuide);
       document.querySelectorAll("[data-sketch-guide]").forEach(b => b.classList.toggle("active", b === chip));
       drawSketch(false);
     });
@@ -1534,6 +1567,7 @@ function initSketchControls() {
   });
   const pin = $("sketch-pin");
   if (pin) pin.addEventListener("click", () => pinCurrent("sketch"));
+  syncFoldEnabled();   // the default symmetry is None, so the fold starts inert and says so
 }
 
 // ── Replay theatre: any sheet watched as a plotter would run it ─────────────
@@ -1545,7 +1579,7 @@ function stopReplay() {
   if (_replay.raf) cancelAnimationFrame(_replay.raf);
   _replay = null;
   const btn = $("plot-play");
-  if (btn) btn.textContent = "Watch";
+  if (btn) { btn.textContent = "Watch"; btn.setAttribute("aria-label", "Replay the sheet stroke by stroke"); }
 }
 function replayGround(ctx, c) {
   ctx.fillStyle = "#0d1b1c";
@@ -1566,7 +1600,9 @@ function replayDrawBatch(ctx, T, batch) {
   }
 }
 function startReplay() {
-  if (!_lastPlot || !_replayMod || !_plotMaps) return;
+  // Guarded because the module load is async: a Watch click followed by a source switch would
+  // otherwise resolve into a replay that wipes the NEW source's canvas and draws a stale sheet.
+  if (!_lastPlot || !_replayMod || !_plotMaps || activeSource !== "plotmaps") return;
   stopReplay();
   const c = $("studio-canvas");
   const ctx = c.getContext("2d", { willReadFrequently: true });
@@ -1576,11 +1612,11 @@ function startReplay() {
   replayGround(ctx, c);
   _replay = { stepper, raf: 0 };
   const btn = $("plot-play");
-  if (btn) btn.textContent = "Pause";
+  if (btn) { btn.textContent = "Pause"; btn.setAttribute("aria-label", "Pause the replay"); }
   const note = $("plot-pen-note");
   const scrub = $("plot-scrub");
   const tick = () => {
-    if (!_replay || _replay.stepper !== stepper) return;
+    if (!_replay || _replay.stepper !== stepper || activeSource !== "plotmaps") { stopReplay(); return; }
     // Base rate tuned to the WATCHING, not the finishing: ~70 points per frame puts a dense
     // sheet at half a minute and a sparse one at ten seconds, which is the meditative range —
     // the first cut at 260 finished a 42k-point sheet in under two seconds, a blink, not a plot.
@@ -1619,13 +1655,16 @@ function initReplayControls() {
     const stepper = _replayMod.createReplay(_lastPlot);
     const T = _plotMaps.sheetTransform(_lastPlot, c.width, c.height, { view: _stillView.plotmaps });
     replayGround(ctx, c);
-    // Scrubbing is an instant re-run to the target: the stepper is stepped synchronously and
-    // every batch drawn, so the canvas holds exactly the ink laid down by that much progress.
-    let guard = 4000;
+    // Scrubbing is an instant re-run to the target. The step budget is sized to the REMAINING
+    // distance, not a fixed 20,000: a fat fixed budget overshot the requested position by most of
+    // a sheet, so the slider and the ink disagreed and the control read as broken.
+    const total = stepper.totals.points || 1;
+    let prog = 0, guard = 4000;
     while (guard-- > 0) {
-      const r = stepper.step(20000);
+      const r = stepper.step(Math.max(1, Math.round((target - prog) * total)));
       replayDrawBatch(ctx, T, r.batch);
-      if (r.done || r.progress >= target) break;
+      prog = r.progress;
+      if (r.done || prog >= target - 1e-9) break;
     }
   });
   const gcodeBtn = $("plot-gcode");
@@ -1661,7 +1700,11 @@ function thumbFromCanvas() {
 function currentPlotRecipe() {
   const meta = _lastPlot ? _lastPlot.meta : {};
   const rec = {
-    source: "plotmaps", material: _plotMaterial,
+    // `source` is the MATERIAL's origin, not the panel it was plotted in. Hardcoding "plotmaps"
+    // made two different photographs hash to the same recipe id, so pinning the second silently
+    // overwrote the first — the shelf's dedupe turned into data loss.
+    source: (_plotFieldInfo && _plotFieldInfo.name) || "plotmaps",
+    material: _plotMaterial,
     study: _plotStudy, method: _plotMethod, register: _plotRegister, blend: _plotBlend,
     seed: (($("plot-seed") || {}).value || "aurora").trim(),
     density: parseFloat(($("plot-density") || {}).value) || 1,
@@ -1669,14 +1712,95 @@ function currentPlotRecipe() {
     plateId: (($("plot-plate") || {}).value) || null,
     voxel: null, sketch: null,
   };
-  if (_plotMaterial === "voxels" && _lastVoxelScene) {
-    rec.voxel = {
-      study: _lastVoxelScene.meta.study, seed: _lastVoxelScene.meta.seed,
-      tune: _lastVoxelScene.meta.tune || null, ops: _voxelOps.slice(),
-    };
+  if (_plotMaterial === "voxels") {
+    // A voxel sheet drawn without ever opening the Voxels source has no live scene to describe,
+    // so there is no recipe that reproduces it. Say so instead of handing the shelf a pin it will
+    // refuse with a schema message the visitor cannot act on.
+    if (!_lastVoxelScene) return { kind: "voxel", rec: null, why: "open the Voxels source and build once, then this sheet can be pinned" };
+    rec.voxel = voxelRecipe();
   }
-  if (_plotMaterial === "sketchsheet" && _sketch) rec.sketch = _sketch.serialize();
+  if (_plotMaterial === "sketchsheet" && _sketch) {
+    rec.sketch = _sketch.serialize();
+    rec.guide = _sketchGuide;
+    // The sheet's register and the DRAWING's register are two different things: the pen surface's
+    // chip may sit at "auto", which is not a register a sketch can be inked in. Store the one the
+    // sheet was actually built with, or a restore silently re-inks a worked drawing as drawn.
+    rec.sketchRegister = _plotRegister !== "auto" ? _plotRegister : _sketchRegister;
+  }
   return { kind: meta.kind || "field", rec };
+}
+
+// One place that says what a voxel build IS: seed, study, the resolution and knobs it was built
+// at, and the ordered op log. Restore applies every one of these; earlier it applied only the
+// seed and study, so a build pinned at res 64 with tuned knobs rebuilt at res 48 untuned and the
+// ops then landed on cells that meant something else entirely.
+function voxelRecipe() {
+  const m = _lastVoxelScene.meta;
+  return {
+    study: m.study, seed: m.seed,
+    res: m.res ? m.res[0] : 48,
+    tune: m.tune || null,
+    ops: _voxelOps.slice(),
+  };
+}
+// Put the voxel controls back exactly where the recipe says, THEN let the source rebuild.
+function applyVoxelRecipe(v) {
+  const seedIn = $("voxel-seed");
+  if (seedIn) seedIn.value = v.seed;
+  _voxelStudy = v.study;
+  document.querySelectorAll("[data-voxel-study]").forEach(b =>
+    b.classList.toggle("active", b.dataset.voxelStudy === v.study));
+  const resEl = $("voxel-res");
+  if (resEl && v.res != null) {
+    resEl.value = String(v.res);
+    const out = $("voxel-res-val"); if (out) out.textContent = String(v.res);
+  }
+  _voxelTuned = !!v.tune;
+  document.querySelectorAll("[data-voxel-tunemode]").forEach(b =>
+    b.classList.toggle("active", (b.dataset.voxelTunemode === "tuned") === _voxelTuned));
+  const rows = $("voxel-tune-rows");
+  if (rows) rows.hidden = !_voxelTuned;
+  if (v.tune) {
+    for (const [id, valId, key] of [["voxel-tune-a", "voxel-tune-a-val", "a"], ["voxel-tune-b", "voxel-tune-b-val", "b"], ["voxel-tune-c", "voxel-tune-c-val", "c"]]) {
+      const el = $(id);
+      if (!el || v.tune[key] == null) continue;
+      el.value = String(v.tune[key]);
+      const out = $(valId); if (out) out.textContent = Number(v.tune[key]).toFixed(2);
+    }
+  }
+  if (window.__voxelSyncTuneLabels) window.__voxelSyncTuneLabels();
+}
+// Replay an op log onto the LIVE scene, in order. Turns and edits interleave because that is how
+// they were made: an edit recorded after a turn addresses the rotated grid.
+function applyVoxelOps(ops) {
+  let dropped = 0;
+  for (const op of (ops || [])) {
+    if (op.op === "turn") { _lastVoxelScene = _voxelForge.rotateScene(_lastVoxelScene, op.dir); _voxelOps.push(op); }
+    else if (op.op === "edit" && _voxelForge.applyVoxelEdit(_lastVoxelScene, op.cellIndex, op.faceId, op.mode)) _voxelOps.push(op);
+    else dropped += 1;
+  }
+  // Never let a partial restore pass as exact.
+  if (dropped) {
+    say("model", `Restored the build, but ${dropped} of ${ops.length} recorded steps no longer land on this grid and were dropped. That means this is not an exact reproduction, said out loud rather than hidden.`);
+  }
+  return dropped;
+}
+// Wait for the source's own async rebuild to produce a scene that MATCHES the recipe, then
+// replay. The guard checks the whole grid identity, not just the seed: an op log is a sequence of
+// cell indices, and a cell index only means what it meant on the grid it was recorded against.
+function replayVoxelOps(v, announce) {
+  const t0 = performance.now();
+  const tick = () => {
+    const scene = _lastVoxelScene;
+    if (scene && _voxelForge && scene.meta.seed === v.seed && scene.meta.study === v.study
+      && (v.res == null || scene.meta.res[0] === v.res)) {
+      applyVoxelOps(v.ops);
+      repaintVoxelScene(announce);
+      return;
+    }
+    if (performance.now() - t0 < 4000) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
 }
 function pinCurrent(what) {
   const finish = () => {
@@ -1687,11 +1811,7 @@ function pinCurrent(what) {
       rec = {
         source: "voxels", material: null, study: null, method: null, register: null, blend: null,
         seed: _lastVoxelScene.meta.seed, density: null, levels: null, plateId: null,
-        voxel: {
-          study: _lastVoxelScene.meta.study, seed: _lastVoxelScene.meta.seed,
-          res: _lastVoxelScene.meta.res ? _lastVoxelScene.meta.res[0] : 48,
-          tune: _lastVoxelScene.meta.tune || null, ops: _voxelOps.slice(),
-        },
+        voxel: voxelRecipe(),
         sketch: null,
       };
       title = `${_lastVoxelScene.meta.study} · ${_lastVoxelScene.meta.seed}`
@@ -1701,14 +1821,20 @@ function pinCurrent(what) {
       kind = "sketch";
       rec = {
         source: "sketch", material: null, study: null, method: null,
-        register: _sketchRegister, blend: null, seed: null, density: null, levels: null,
-        plateId: null, voxel: null, sketch: _sketch.serialize(),
+        register: _sketchRegister, guide: _sketchGuide, blend: null, seed: null,
+        density: null, levels: null, plateId: null, voxel: null, sketch: _sketch.serialize(),
       };
       const sheet = _lastSketchSheet || _sketch.toSheet({ register: _sketchRegister });
       title = `sketch · ${sheet.meta.geometryHash}`;
     } else {
       if (!_lastPlot) { say("model", "Draw a sheet first."); return; }
       const cur = currentPlotRecipe();
+      if (!cur.rec) {
+        const hint0 = $("shelf-hint");
+        if (hint0) hint0.textContent = "not pinned: " + cur.why;
+        say("model", "This sheet cannot be pinned yet — " + cur.why + ".");
+        return;
+      }
       kind = cur.kind; rec = cur.rec;
       title = `${_lastPlot.meta.label || _lastPlot.meta.study || "sheet"} · ${rec.seed}`;
     }
@@ -1733,40 +1859,71 @@ function pinCurrent(what) {
     finish();
   }).catch(err => say("model", "The shelf failed to load: " + err.message));
 }
+// Put the sketch state back: strokes, the register they were marked in, and the guide they were
+// drawn against. Returns false when the payload is from a newer page than this one.
+function applySketchRecipe(r) {
+  if (!_sketch) _sketch = _sketchMod.createSketch();
+  if (!_sketch.restore(r.sketch)) {
+    say("model", "That pin's sketch format is newer than this page understands, so nothing was changed.");
+    return false;
+  }
+  // sketchRegister when the pin came from the pen surface, register when it came from the Sketch
+  // source; "auto" is a pen-surface value and never a register the drawing can be inked in.
+  const reg = r.sketchRegister || (r.register !== "auto" ? r.register : null);
+  if (reg) {
+    _sketchRegister = reg;
+    document.querySelectorAll("[data-sketch-register]").forEach(b =>
+      b.classList.toggle("active", b.dataset.sketchRegister === reg));
+  }
+  if (r.guide) {
+    _sketchGuide = r.guide;
+    _sketch.setGuide(r.guide);
+    document.querySelectorAll("[data-sketch-guide]").forEach(b =>
+      b.classList.toggle("active", b.dataset.sketchGuide === r.guide));
+  }
+  // The symmetry lives in the restored payload, so the CHIPS have to follow it. Left unsynced,
+  // the panel showed "None" over a kaleidoscope, and the first touch of either control snapped
+  // the drawing to whatever the stale chips claimed.
+  const sym = _sketch.getSymmetry();
+  document.querySelectorAll("[data-sketch-sym]").forEach(b =>
+    b.classList.toggle("active", b.dataset.sketchSym === sym.mode));
+  const kEl = $("sketch-k");
+  if (kEl) { kEl.value = String(sym.k); const out = $("sketch-k-val"); if (out) out.textContent = String(sym.k); }
+  syncFoldEnabled();
+  return true;
+}
+// The fold only means something under a rotational symmetry. Disabling it there beats leaving a
+// live-looking slider that silently does nothing.
+function syncFoldEnabled() {
+  const kEl = $("sketch-k");
+  if (!kEl) return;
+  const mode = (document.querySelector("[data-sketch-sym].active") || { dataset: {} }).dataset.sketchSym || "none";
+  const on = mode === "radial" || mode === "kaleido";
+  kEl.disabled = !on;
+  const row = kEl.closest(".at-group");
+  if (row) row.classList.toggle("is-inert", !on);
+}
+
+// Restore routes by WHAT THE PIN IS MADE OF, not by which button pinned it. A blend is a sheet
+// whose material may be a sketch or a voxel build, and a sketch pinned from the pen surface is
+// still a pen-surface sheet — reading only pin.kind sent both down the wrong path and rebuilt
+// something else in silence.
 function restorePin(pin) {
   const r = pin.recipe;
-  if (pin.kind === "voxel" && r.voxel) {
-    const seedIn = $("voxel-seed");
-    if (seedIn) seedIn.value = r.voxel.seed;
-    _voxelStudy = r.voxel.study;
-    document.querySelectorAll("[data-voxel-study]").forEach(b =>
-      b.classList.toggle("active", b.dataset.voxelStudy === r.voxel.study));
+  const material = r.material || null;
+  const wantsVoxel = r.voxel && (pin.kind === "voxel" || material === "voxels");
+  const wantsSketch = r.sketch && (pin.kind === "sketch" || material === "sketchsheet");
+  // A voxel pin, or any sheet whose material is the build: the build is restored first, because
+  // the sheet is drawn FROM it.
+  if (wantsVoxel && pin.kind === "voxel") {
+    applyVoxelRecipe(r.voxel);
     setSource("voxels");
-    // The rebuild is async behind the module load; apply the op log once the scene exists.
-    const t0 = performance.now();
-    const applyOps = () => {
-      if (_lastVoxelScene && _lastVoxelScene.meta.seed === r.voxel.seed && _voxelForge) {
-        for (const op of (r.voxel.ops || [])) {
-          if (op.op === "turn") { _lastVoxelScene = _voxelForge.rotateScene(_lastVoxelScene, op.dir); _voxelOps.push(op); }
-          else if (op.op === "edit" && _voxelForge.applyVoxelEdit(_lastVoxelScene, op.cellIndex, op.faceId, op.mode)) _voxelOps.push(op);
-        }
-        repaintVoxelScene(true);
-        return;
-      }
-      if (performance.now() - t0 < 4000) requestAnimationFrame(applyOps);
-    };
-    requestAnimationFrame(applyOps);
+    replayVoxelOps(r.voxel, true);
     return;
   }
-  if (pin.kind === "sketch" && r.sketch) {
+  if (pin.kind === "sketch" && material !== "sketchsheet") {
     Promise.all([loadSketch(), loadPlotMaps()]).then(() => {
-      if (!_sketch) _sketch = _sketchMod.createSketch();
-      if (!_sketch.restore(r.sketch)) { say("model", "That pin's sketch format is newer than this page understands."); return; }
-      if (r.register) {
-        _sketchRegister = r.register;
-        document.querySelectorAll("[data-sketch-register]").forEach(b =>
-          b.classList.toggle("active", b.dataset.sketchRegister === r.register));
-      }
+      if (!applySketchRecipe(r)) return;
       setSource("sketch");
     }).catch(() => {});
     return;
@@ -1774,7 +1931,7 @@ function restorePin(pin) {
   // Sheet kinds: set the pen-surface state, then let its own load path draw.
   const seedIn = $("plot-seed");
   if (seedIn && r.seed) seedIn.value = r.seed;
-  _plotMaterial = r.material || "field";
+  _plotMaterial = material || "field";
   _plotStudy = r.study || "auto";
   _plotMethod = r.method || "auto";
   _plotRegister = r.register || "auto";
@@ -1789,23 +1946,48 @@ function restorePin(pin) {
       b.classList.toggle("active", b.dataset[attr.replace(/-([a-z])/g, (_, ch) => ch.toUpperCase())] === val));
   }
   syncPlotMaterialUI();
+  if ((r.material === "picture" || r.material === "canvas") && !_plotField) {
+    say("model", "That pin used a " + (r.material === "picture" ? "picture" : "captured frame") + " that lives only in the moment it was made — choose it again and the rest of the recipe applies as pinned.");
+  }
   if (r.material === "plate" && r.plateId) {
+    // The plate picker is a custom listbox fed by an async fetch, and its .value setter REFUSES a
+    // value whose option has not arrived yet — so the first attempt is a silent no-op and the
+    // sheet would draw from whatever plate was already selected. Poll until it sticks, then force
+    // the redraw the setter deliberately does not fire.
     fillPlatePicker();
     const t0 = performance.now();
     const setPlate = () => {
       const sel = $("plot-plate");
-      if (sel) { sel.value = r.plateId; if (sel.value === r.plateId) return; }
+      if (sel) {
+        sel.value = r.plateId;
+        if (sel.value === r.plateId) {
+          _plotField = null; _plotFieldInfo = null;
+          if (activeSource === "plotmaps") drawPlotMap();
+          return;
+        }
+      }
       if (performance.now() - t0 < 4000) requestAnimationFrame(setPlate);
     };
     setPlate();
   }
-  if ((r.material === "picture" || r.material === "canvas") && !_plotField) {
-    say("model", "That pin used a " + (r.material === "picture" ? "picture" : "captured frame") + " that lives only in the moment it was made — choose it again and the rest of the recipe applies as pinned.");
+  if (wantsSketch) {
+    Promise.all([loadSketch(), loadPlotMaps()]).then(() => {
+      applySketchRecipe(r);
+      setSource("plotmaps");
+    }).catch(() => {});
+    return;
   }
-  if (r.material === "sketchsheet" && r.sketch) {
-    Promise.all([loadSketch()]).then(() => {
-      if (!_sketch) _sketch = _sketchMod.createSketch();
-      _sketch.restore(r.sketch);
+  if (wantsVoxel) {
+    // A sheet drawn FROM the build: rebuild the scene and replay its ops SYNCHRONOUSLY, then
+    // switch. Doing the replay in a rAF here would race the sheet's own draw and plot a build
+    // that had not finished becoming itself.
+    Promise.all([loadVoxelForge(), loadPlotMaps()]).then(() => {
+      applyVoxelRecipe(r.voxel);
+      _lastVoxelScene = _voxelForge.buildVoxelScene(r.voxel.seed, {
+        study: r.voxel.study, res: r.voxel.res, tune: r.voxel.tune,
+      });
+      _voxelOps = [];
+      applyVoxelOps(r.voxel.ops);
       setSource("plotmaps");
     }).catch(() => {});
     return;
@@ -1818,7 +2000,7 @@ function renderShelfStrip() {
   strip.innerHTML = "";
   const pins = _shelf.list();
   const hint = $("shelf-hint");
-  if (!pins.length && hint) hint.textContent = "nothing pinned yet; Pin lives beside each source's exports";
+  if (!pins.length && hint) hint.textContent = "nothing pinned yet; Pin sits beside the exports in Plot maps, Voxels, and Sketch";
   for (const pin of pins) {
     const el = document.createElement("button");
     el.type = "button"; el.className = "shelf-pin"; el.setAttribute("role", "listitem");
@@ -1831,9 +2013,16 @@ function renderShelfStrip() {
     const t = document.createElement("span");
     t.className = "shelf-pin-title"; t.textContent = pin.title;
     el.appendChild(t);
+    // A real button, not a span: nested inside the pin button it was unreachable by keyboard, so
+    // a pinned creation could be made but never removed without a mouse. Kept out of the pin's
+    // own click by stopPropagation, and out of its element nesting by absolute positioning.
     const x = document.createElement("span");
-    x.className = "shelf-pin-x"; x.textContent = "×"; x.setAttribute("aria-label", "Remove this pin");
-    x.addEventListener("click", (e) => { e.stopPropagation(); _shelf.remove(pin.id); renderShelfStrip(); });
+    x.className = "shelf-pin-x"; x.textContent = "×";
+    x.setAttribute("role", "button"); x.setAttribute("tabindex", "0");
+    x.setAttribute("aria-label", "Remove the pin " + pin.title);
+    const removePin = (e) => { e.stopPropagation(); e.preventDefault(); _shelf.remove(pin.id); renderShelfStrip(); };
+    x.addEventListener("click", removePin);
+    x.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") removePin(e); });
     el.appendChild(x);
     el.addEventListener("click", () => restorePin(pin));
     strip.appendChild(el);
@@ -1851,7 +2040,8 @@ function initShelf() {
   if (pinVox) pinVox.addEventListener("click", () => pinCurrent("voxel"));
   const exp = $("shelf-export");
   if (exp) exp.addEventListener("click", () => {
-    if (!_shelf || !_shelf.list().length) { say("model", "The shelf is empty — nothing to export."); return; }
+    if (!_shelf) { say("model", "This window blocks browser storage, so there is no shelf to export."); return; }
+    if (!_shelf.list().length) { say("model", "The shelf is empty — nothing to export."); return; }
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([_shelf.exportJSON()], { type: "application/json" }));
     a.download = "studio-shelf.json";
@@ -1864,7 +2054,16 @@ function initShelf() {
     impBtn.addEventListener("click", () => impFile.click());
     impFile.addEventListener("change", () => {
       const f = impFile.files && impFile.files[0];
-      if (!f || !_shelf) return;
+      if (!f) return;
+      if (!_shelf) {
+        // Storage is blocked (private window, cookies off). Saying so beats swallowing the file
+        // the user just chose and leaving the button looking like it worked.
+        const hint = $("shelf-hint");
+        if (hint) hint.textContent = "import needs browser storage, which this window blocks";
+        say("model", "This window blocks browser storage, so the shelf has nowhere to keep an imported pin. Nothing was changed.");
+        impFile.value = "";
+        return;
+      }
       f.text().then(txt => {
         const res = _shelf.importJSON(txt, { merge: true });
         const hint = $("shelf-hint");

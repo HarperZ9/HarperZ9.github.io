@@ -218,7 +218,7 @@
           <span class="at-glab">Contour levels <span class="hint">(<span id="plot-levels-val">14</span>)</span></span>
           <input type="range" class="at-slider" id="plot-levels" min="4" max="28" step="1" value="14" aria-label="Contour levels">
         </div>
-        <div class="at-group">
+        <div class="at-group" id="plot-density-row">
           <span class="at-glab">Line density <span class="hint">(<span id="plot-density-val">1.00</span>)</span></span>
           <input type="range" class="at-slider" id="plot-density" min="0.3" max="2.5" step="0.05" value="1" aria-label="Line density">
         </div>
@@ -229,7 +229,7 @@
             <input type="range" class="at-slider" id="plot-speed" min="0.25" max="6" step="0.25" value="1" aria-label="Replay speed">
           </div>
           <input type="range" class="at-slider" id="plot-scrub" min="0" max="1000" step="1" value="0" aria-label="Replay position">
-          <p class="src-hint" id="plot-pen-note">press Watch; pen changes are called out as they happen</p>
+          <p class="src-hint" id="plot-pen-note" aria-live="polite">press Watch; pen changes are called out as they happen</p>
         </div>
         <div class="at-actions">
           <button type="button" class="btn" id="plot-draw" aria-label="Draw the map sheet">Draw</button>
@@ -247,7 +247,10 @@
         <p class="transform-note">Draw by hand. Strokes land on the sheet in the pen's own mark
         registers, a symmetry expands them live as you draw, and the finished drawing is a plot
         sheet like any other: watch it draw, send it to the pen surface, blend it, export it.
-        Nothing you draw leaves this page.</p>
+        Your strokes stay in this browser: the drawing is never uploaded, and a pin is stored on
+        this device. The one exception is the one you make yourself, and it is the same for every
+        source: if you connect your own model below, the frame on the canvas is sent to the
+        endpoint you configure.</p>
         <div class="at-group">
           <span class="at-glab">Symmetry <span class="hint">changing it re-expands what you already drew</span></span>
           <div class="at-chips" role="group" aria-label="Sketch symmetry">
@@ -957,7 +960,7 @@
           <button type="button" class="btn ghost" id="shelf-import" aria-label="Import a shelf JSON file">Import</button>
           <input type="file" id="shelf-import-file" accept="application/json,.json" hidden aria-hidden="true">
         </div>
-        <p class="src-hint" id="shelf-hint">nothing pinned yet; Pin lives beside each source's exports</p>
+        <p class="src-hint" id="shelf-hint">nothing pinned yet; Pin sits beside the exports in Plot maps, Voxels, and Sketch</p>
       </section>
 
       <details class="rail-group rail-about">

@@ -145,7 +145,9 @@ export function createReplay(plot, opts = {}) {
 export function sheetGcode(plot, opts = {}) {
   const widthMm = opts.widthMm || 210;
   const aspect = (plot && plot.meta && plot.meta.aspect) || 0.75;
-  const heightMm = widthMm * aspect;
+  // Rounded exactly as plotMapSVG rounds it. Unrounded, the same sheet came out up to half a
+  // millimetre taller in G-code than in the SVG, so the two files disagreed about the paper.
+  const heightMm = Math.round(widthMm * aspect);
   const feed = Math.round(opts.feed || 2500);
   const zMode = opts.mode === "z";
   const up = zMode ? "G0 Z" + Number(opts.zUp == null ? 5 : opts.zUp).toFixed(3)

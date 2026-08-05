@@ -89,6 +89,48 @@ passed a threshold.
   their unscripted strokes exposed the open-stroke leak above. Real hands beat synthetic
   events, again.
 
+## Adversarial review, and what it found
+
+The slice was reviewed by a four-lens agent panel (wiring lifecycle, determinism/receipts,
+geometry/pipeline, dead-controls/honest-copy), every finding independently verified with a code
+walk or a node reproduction before it counted. Fourteen findings were confirmed. All of them are
+fixed here; the shelf ones matter most, because a shelf that quietly loses work is worse than no
+shelf at all.
+
+**The recipe could not hold what restore needed.**
+- A voxel pin stored its resolution and knobs; restore applied neither. A build pinned at 64³
+  tuned rebuilt at 48³ untuned, and the op log then replayed onto a grid where those cell
+  indices meant something else. Now the whole grid identity is restored first, the replay guard
+  checks it, and any op that still cannot land is **reported, not swallowed**.
+- A blended sketch pinned with `sketch: null` — accepted, thumb showing the drawing, promising
+  exact reproduction, reproducing nothing. A user who trusted the pin and cleared the sketch had
+  lost the work.
+- A sketch's mark register was stripped before hashing. `worked` is three passes and `drawn` is
+  one, so the same strokes restored as a visibly different sheet.
+- The pen surface's register (`auto`) was being written over the drawing's own — caught by my own
+  verification pass, not the panel: the restored blend came back 24 strokes light.
+- `source` was hardcoded to `"plotmaps"`, so **two different photographs hashed to the same
+  recipe id** and pinning the second silently overwrote the first. Dedupe had become data loss.
+
+**Lifecycle.** A running replay had no source guard and `setSource` never stopped it, so it kept
+painting plot strokes over whatever source came next. The scrubber's fixed 20,000-point budget
+overshot the requested position by most of a sheet.
+
+**Honest surfaces.** A sketch sheet's receipt fell through to the cartography branch and
+announced a study of `undefined` over a sea level of `undefined`. The fold slider sat live under
+symmetries that ignore it. The density slider was visible and inert under the sketch material.
+The pin remove control was a `<span>` inside a `<button>` — a creation could be pinned but never
+removed without a mouse. And "Nothing you draw leaves this page" was an overclaim: connect your
+own model and the canvas frame goes to the endpoint you configure. The copy now says exactly
+that.
+
+**Geometry.** `tanaka` was tracing every interior band boundary twice — an artifact of working
+around the dead `threshold` option — laying double ink on four of its levels and reading as false
+index contours, which defeats the study's own premise that weight alone carries the shading. With
+the option honest, the levels are simply asked for; floor re-measured 0.888 → **0.883**. G-code
+rounded its paper height differently from the SVG, so the two files disagreed by half a
+millimetre about the same sheet.
+
 ## Boundaries
 
 - A pinned picture/canvas material sheet cannot re-fetch its pixels (they live only in the
