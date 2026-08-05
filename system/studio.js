@@ -103,8 +103,11 @@ let _soundSeed = "aurora";
 // nothing animates, so reduced motion needs no special handling here.
 let _plotMaps = null;
 const loadPlotMaps = lazyLoader(() => import("./plot-maps.js"), m => { _plotMaps = m; });
-let _plotStudy = "topo";
-let _lastPlot = null;   // the last built sheet, for the SVG export
+let _plotStudy = "auto";     // "auto" hands the choice to the composer
+let _plotRegister = "auto";  // how the marks are made; "auto" lets the sheet decide
+let _lastPlot = null;        // the last built sheet, for the SVG export
+let _plotCompose = null;
+const loadPlotCompose = lazyLoader(() => import("./plot-compose.js"), m => { _plotCompose = m; });
 
 // Voxels source: seeded voxel scenes (system/voxel-forge.js) drawn isometrically. Still frames.
 let _voxelForge = null;
@@ -616,7 +619,7 @@ function setSource(next) {
   }
   // Plot maps: load the cartography module and draw the current sheet. Still frames only.
   if (next === "plotmaps") {
-    loadPlotMaps().then(() => {
+    Promise.all([loadPlotMaps(), loadPlotCompose()]).then(() => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
       drawPlotMap();
     }).catch(err => { say("model", "The plot-map engine failed to load: " + (err && err.message ? err.message : String(err))); });
@@ -760,32 +763,70 @@ function drawPlotMap() {
   const seedIn = $("plot-seed");
   const seed = ((seedIn && seedIn.value.trim()) || "aurora").slice(0, 48);
   const levelsEl = $("plot-levels"), densityEl = $("plot-density");
-  const plot = _plotMaps.buildPlotMap(seed, {
-    study: _plotStudy,
-    levels: levelsEl ? parseInt(levelsEl.value, 10) : 14,
-    density: densityEl ? parseFloat(densityEl.value) : 1,
-    res: currentQuality().maxBacking >= 3200 ? 320 : 220,
-  });
+  let plot;
+  // The four cartographic studies keep their explicit path (and their existing seeds keep
+  // reproducing). Everything else, including "auto", goes through the composer: it picks the
+  // study, the mark register and the furniture, measures what it made, and re-rolls a sheet it
+  // judges dull. The operator's note was that the maps should not be user-generated.
+  if (_plotStudy !== "auto" && _plotMaps.PLOT_STUDIES[_plotStudy]) {
+    plot = _plotMaps.buildPlotMap(seed, {
+      study: _plotStudy,
+      levels: levelsEl ? parseInt(levelsEl.value, 10) : 14,
+      density: densityEl ? parseFloat(densityEl.value) : 1,
+      res: currentQuality().maxBacking >= 3200 ? 320 : 220,
+    });
+  } else {
+    plot = _plotCompose.composeSheet(seed, {
+      study: _plotStudy === "auto" ? "auto" : _plotStudy,
+      register: _plotRegister,
+      candidates: 6,
+    });
+  }
   _lastPlot = plot;
   const ctx = c.getContext("2d", { willReadFrequently: true });
   if (!ctx) return;
   _plotMaps.renderPlotMap(ctx, plot, c.width, c.height, {}, { view: _stillView.plotmaps });
+  const m = plot.meta.measure;
   const readout = $("plot-readout");
   if (readout) readout.textContent =
-    `${plot.meta.strokes} strokes · ${plot.meta.points.toLocaleString()} points · sea level ${plot.meta.seaLevel}`;
+    `${plot.meta.strokes.toLocaleString()} strokes · ${plot.meta.points.toLocaleString()} points`
+    + (m ? ` · score ${m.score} after ${plot.meta.candidates} candidate${plot.meta.candidates === 1 ? "" : "s"}`
+      : ` · sea level ${plot.meta.seaLevel}`);
   const obs = perceive(c);
-  const label = (_plotMaps.PLOT_STUDIES[plot.meta.study] || {}).label || plot.meta.study;
-  say("model",
-    `A ${label} sheet from seed "${seed}": ${plot.meta.strokes} single-stroke paths over a seeded elevation field, `
-    + `sea level at ${plot.meta.seaLevel}. Fingerprint ${obs.phash}. Same seed, same sheet — `
-    + `the SVG export carries real units and one layer per pen pass.`);
+  const label = (_plotMaps.PLOT_STUDIES[plot.meta.study] || _plotCompose.STUDY_BUILDERS[plot.meta.study] || {}).label
+    || plot.meta.study;
+  if (m) {
+    // Say honestly how the sheet came to be, including when nothing cleared the bar.
+    const rejected = (plot.meta.rejected || []).length;
+    say("model",
+      `The sheet chose itself: a ${label} in the ${plot.meta.register} register, `
+      + `${plot.meta.strokes.toLocaleString()} single-stroke paths from seed "${seed}". `
+      + (plot.meta.cleared
+        ? (rejected ? `It rejected ${rejected} duller candidate${rejected === 1 ? "" : "s"} first. ` : `It cleared on the first try. `)
+        : `Nothing cleared the bar this time, so this is the strongest of ${plot.meta.candidates} candidates, said plainly. `)
+      + `Coverage ${m.coverage}, spread ${m.spread}, scale ${m.scale}, direction ${m.direction}. `
+      + `Fingerprint ${obs.phash}. Same seed, same sheet.`);
+  } else {
+    say("model",
+      `A ${label} sheet from seed "${seed}": ${plot.meta.strokes} single-stroke paths over a seeded elevation field, `
+      + `sea level at ${plot.meta.seaLevel}. Fingerprint ${obs.phash}. Same seed, same sheet — `
+      + `the SVG export carries real units and one layer per pen pass.`);
+  }
   startMeterLoop();
 }
 function initPlotMapControls() {
   document.querySelectorAll("[data-plot-study]").forEach(chip => {
     chip.addEventListener("click", () => {
       _plotStudy = chip.dataset.plotStudy;
+      // The two study rows are one exclusive set: picking a cartographic study clears Auto.
       document.querySelectorAll("[data-plot-study]").forEach(b => b.classList.toggle("active", b === chip));
+      drawPlotMap();
+    });
+  });
+  document.querySelectorAll("[data-plot-register]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _plotRegister = chip.dataset.plotRegister;
+      document.querySelectorAll("[data-plot-register]").forEach(b => b.classList.toggle("active", b === chip));
       drawPlotMap();
     });
   });

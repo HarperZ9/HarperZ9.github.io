@@ -123,12 +123,33 @@
         polylines from a seeded elevation field. Same seed, same sheet, re-checkable. The SVG
         export is plotter-grade: real units, ordered paths, one layer per pen pass.</p>
         <div class="at-group">
-          <span class="at-glab">Study <span class="hint">the sheet's composition grammar</span></span>
+          <span class="at-glab">Study <span class="hint">Auto lets the sheet choose, judge itself, and re-roll what it finds dull</span></span>
           <div class="at-chips" role="group" aria-label="Plot map study">
-            <button type="button" class="chip active" data-plot-study="topo">Topographic</button>
+            <button type="button" class="chip active" data-plot-study="auto">Auto</button>
+            <button type="button" class="chip" data-plot-study="basin">River basin</button>
+            <button type="button" class="chip" data-plot-study="moire">Moire</button>
+            <button type="button" class="chip" data-plot-study="lattice">Lattice</button>
+            <button type="button" class="chip" data-plot-study="strata">Strata</button>
+            <button type="button" class="chip" data-plot-study="monolith">Monolith</button>
+            <button type="button" class="chip" data-plot-study="nomogram">Nomogram</button>
+            <button type="button" class="chip" data-plot-study="orbital">Orbital</button>
+          </div>
+          <span class="at-glab">Map register <span class="hint">the four cartographic studies</span></span>
+          <div class="at-chips" role="group" aria-label="Cartographic study">
+            <button type="button" class="chip" data-plot-study="topo">Topographic</button>
             <button type="button" class="chip" data-plot-study="flow">Flow field</button>
             <button type="button" class="chip" data-plot-study="ridge">Ridgelines</button>
             <button type="button" class="chip" data-plot-study="chart">Chart</button>
+          </div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Mark <span class="hint">how the pen lays the line down</span></span>
+          <div class="at-chips" role="group" aria-label="Mark register">
+            <button type="button" class="chip active" data-plot-register="auto">Auto</button>
+            <button type="button" class="chip" data-plot-register="clean">Clean</button>
+            <button type="button" class="chip" data-plot-register="drawn">Drawn</button>
+            <button type="button" class="chip" data-plot-register="worked">Worked</button>
+            <button type="button" class="chip" data-plot-register="laboured">Laboured</button>
           </div>
         </div>
         <div class="at-group">
