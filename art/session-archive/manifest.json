@@ -42,7 +42,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1956,
+    "chroma": 29.89,
+    "contrast": 0.1419,
+    "hue": 347.0,
+    "hue_focus": 0.644,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w002",
@@ -67,7 +77,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1952,
+    "chroma": 15.5,
+    "contrast": 0.1153,
+    "hue": 338.2,
+    "hue_focus": 0.678,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w003",
@@ -92,7 +112,17 @@
    "thumb_dimensions": [
     394,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2948,
+    "chroma": 32.08,
+    "contrast": 0.2053,
+    "hue": 356.7,
+    "hue_focus": 0.528,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w004",
@@ -117,7 +147,17 @@
    "thumb_dimensions": [
     420,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.4172,
+    "chroma": 32.29,
+    "contrast": 0.2131,
+    "hue": 305.6,
+    "hue_focus": 0.637,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w005",
@@ -142,7 +182,17 @@
    "thumb_dimensions": [
     420,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.4124,
+    "chroma": 39.65,
+    "contrast": 0.2418,
+    "hue": 325.2,
+    "hue_focus": 0.48,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w006",
@@ -167,7 +217,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3561,
+    "chroma": 26.77,
+    "contrast": 0.1534,
+    "hue": 357.8,
+    "hue_focus": 0.333,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w007",
@@ -192,7 +252,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3727,
+    "chroma": 21.83,
+    "contrast": 0.1753,
+    "hue": 303.2,
+    "hue_focus": 0.388,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w008",
@@ -217,7 +287,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3871,
+    "chroma": 22.75,
+    "contrast": 0.1659,
+    "hue": 320.8,
+    "hue_focus": 0.964,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w009",
@@ -242,7 +322,17 @@
    "thumb_dimensions": [
     420,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.292,
+    "chroma": 31.02,
+    "contrast": 0.1911,
+    "hue": 338.5,
+    "hue_focus": 0.624,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w010",
@@ -267,7 +357,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.4906,
+    "chroma": 10.13,
+    "contrast": 0.1896,
+    "hue": 54.2,
+    "hue_focus": 0.743,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w011",
@@ -292,7 +392,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2295,
+    "chroma": 11.52,
+    "contrast": 0.1358,
+    "hue": 332.5,
+    "hue_focus": 0.887,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w012",
@@ -317,7 +427,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1697,
+    "chroma": 2.51,
+    "contrast": 0.1071,
+    "hue": 280.3,
+    "hue_focus": 0.988,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w013",
@@ -342,7 +462,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.4948,
+    "chroma": 20.0,
+    "contrast": 0.1868,
+    "hue": 7.4,
+    "hue_focus": 0.58,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w014",
@@ -367,7 +497,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.5116,
+    "chroma": 8.74,
+    "contrast": 0.2581,
+    "hue": 86.3,
+    "hue_focus": 0.867,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w015",
@@ -392,7 +532,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.6373,
+    "chroma": 11.13,
+    "contrast": 0.228,
+    "hue": 19.8,
+    "hue_focus": 0.732,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w016",
@@ -417,7 +567,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2702,
+    "chroma": 28.67,
+    "contrast": 0.1597,
+    "hue": 313.2,
+    "hue_focus": 0.5,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w017",
@@ -442,7 +602,17 @@
    "thumb_dimensions": [
     420,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.4228,
+    "chroma": 34.47,
+    "contrast": 0.2463,
+    "hue": 312.8,
+    "hue_focus": 0.458,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w018",
@@ -467,7 +637,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3866,
+    "chroma": 12.5,
+    "contrast": 0.1671,
+    "hue": 18.1,
+    "hue_focus": 0.538,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w019",
@@ -492,7 +672,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.4611,
+    "chroma": 20.11,
+    "contrast": 0.1867,
+    "hue": 59.6,
+    "hue_focus": 0.965,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w020",
@@ -517,7 +707,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3486,
+    "chroma": 25.3,
+    "contrast": 0.1678,
+    "hue": 328.9,
+    "hue_focus": 0.469,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w021",
@@ -542,7 +742,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3532,
+    "chroma": 15.65,
+    "contrast": 0.1576,
+    "hue": 308.3,
+    "hue_focus": 0.532,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w022",
@@ -567,7 +777,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3718,
+    "chroma": 15.14,
+    "contrast": 0.168,
+    "hue": 297.7,
+    "hue_focus": 0.533,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w023",
@@ -592,7 +812,17 @@
    "thumb_dimensions": [
     420,
     280
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3464,
+    "chroma": 9.49,
+    "contrast": 0.1442,
+    "hue": 333.5,
+    "hue_focus": 0.417,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w024",
@@ -617,7 +847,17 @@
    "thumb_dimensions": [
     280,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2976,
+    "chroma": 1.92,
+    "contrast": 0.2257,
+    "hue": 76.3,
+    "hue_focus": 0.967,
+    "tone": "mid",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w025",
@@ -642,7 +882,17 @@
    "thumb_dimensions": [
     420,
     236
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2341,
+    "chroma": 6.96,
+    "contrast": 0.2072,
+    "hue": 339.9,
+    "hue_focus": 0.775,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w026",
@@ -667,7 +917,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3338,
+    "chroma": 11.79,
+    "contrast": 0.205,
+    "hue": 61.0,
+    "hue_focus": 0.941,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w027",
@@ -692,7 +952,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.5953,
+    "chroma": 3.74,
+    "contrast": 0.2953,
+    "hue": 79.2,
+    "hue_focus": 0.958,
+    "tone": "luminous",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w028",
@@ -717,7 +987,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.8846,
+    "chroma": 4.74,
+    "contrast": 0.1654,
+    "hue": 327.8,
+    "hue_focus": 0.256,
+    "tone": "luminous",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w029",
@@ -742,7 +1022,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2761,
+    "chroma": 29.57,
+    "contrast": 0.2147,
+    "hue": 81.5,
+    "hue_focus": 0.853,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w030",
@@ -767,7 +1057,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3092,
+    "chroma": 36.11,
+    "contrast": 0.2204,
+    "hue": 339.6,
+    "hue_focus": 0.98,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w031",
@@ -792,7 +1092,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.24,
+    "chroma": 15.7,
+    "contrast": 0.2049,
+    "hue": 204.5,
+    "hue_focus": 0.045,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w032",
@@ -817,7 +1127,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2164,
+    "chroma": 16.19,
+    "contrast": 0.1678,
+    "hue": 34.7,
+    "hue_focus": 0.927,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w033",
@@ -842,7 +1162,17 @@
    "thumb_dimensions": [
     420,
     236
-   ]
+   ],
+   "measure": {
+    "lightness": 0.0955,
+    "chroma": 2.6,
+    "contrast": 0.1254,
+    "hue": 306.2,
+    "hue_focus": 0.892,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w034",
@@ -867,7 +1197,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2627,
+    "chroma": 33.08,
+    "contrast": 0.1937,
+    "hue": 4.4,
+    "hue_focus": 0.722,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w035",
@@ -892,7 +1232,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3032,
+    "chroma": 23.17,
+    "contrast": 0.2667,
+    "hue": 51.8,
+    "hue_focus": 0.988,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w036",
@@ -917,7 +1267,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.5692,
+    "chroma": 65.12,
+    "contrast": 0.1959,
+    "hue": 49.9,
+    "hue_focus": 0.858,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w037",
@@ -942,7 +1302,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1897,
+    "chroma": 17.3,
+    "contrast": 0.1943,
+    "hue": 71.8,
+    "hue_focus": 0.618,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w038",
@@ -967,7 +1337,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.4127,
+    "chroma": 31.35,
+    "contrast": 0.2651,
+    "hue": 48.0,
+    "hue_focus": 0.977,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w039",
@@ -992,7 +1372,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3208,
+    "chroma": 41.25,
+    "contrast": 0.2119,
+    "hue": 1.2,
+    "hue_focus": 0.784,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w040",
@@ -1017,7 +1407,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.0612,
+    "chroma": 0.19,
+    "contrast": 0.1608,
+    "hue": 99.1,
+    "hue_focus": 0.883,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w041",
@@ -1042,7 +1442,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.207,
+    "chroma": 11.12,
+    "contrast": 0.2093,
+    "hue": 63.7,
+    "hue_focus": 0.332,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w042",
@@ -1067,7 +1477,17 @@
    "thumb_dimensions": [
     280,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1231,
+    "chroma": 2.24,
+    "contrast": 0.1712,
+    "hue": 354.1,
+    "hue_focus": 0.399,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w043",
@@ -1092,7 +1512,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2488,
+    "chroma": 14.66,
+    "contrast": 0.2193,
+    "hue": 286.3,
+    "hue_focus": 0.982,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w044",
@@ -1117,7 +1547,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2905,
+    "chroma": 46.25,
+    "contrast": 0.1897,
+    "hue": 357.1,
+    "hue_focus": 0.755,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w045",
@@ -1142,7 +1582,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2704,
+    "chroma": 15.91,
+    "contrast": 0.1959,
+    "hue": 302.4,
+    "hue_focus": 0.972,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w046",
@@ -1167,7 +1617,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2131,
+    "chroma": 19.49,
+    "contrast": 0.1812,
+    "hue": 343.8,
+    "hue_focus": 0.955,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w047",
@@ -1192,7 +1652,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.459,
+    "chroma": 12.48,
+    "contrast": 0.2629,
+    "hue": 281.5,
+    "hue_focus": 0.614,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w048",
@@ -1217,7 +1687,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2389,
+    "chroma": 18.51,
+    "contrast": 0.1999,
+    "hue": 55.8,
+    "hue_focus": 0.96,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w049",
@@ -1242,7 +1722,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3196,
+    "chroma": 34.97,
+    "contrast": 0.2161,
+    "hue": 316.9,
+    "hue_focus": 0.918,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w050",
@@ -1267,7 +1757,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.5716,
+    "chroma": 27.02,
+    "contrast": 0.1896,
+    "hue": 355.0,
+    "hue_focus": 0.603,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w051",
@@ -1292,7 +1792,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3194,
+    "chroma": 14.24,
+    "contrast": 0.1363,
+    "hue": 65.5,
+    "hue_focus": 0.758,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w052",
@@ -1317,7 +1827,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3176,
+    "chroma": 18.94,
+    "contrast": 0.2128,
+    "hue": 339.4,
+    "hue_focus": 0.705,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w053",
@@ -1342,7 +1862,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.4243,
+    "chroma": 12.68,
+    "contrast": 0.2852,
+    "hue": 73.2,
+    "hue_focus": 0.842,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w054",
@@ -1367,7 +1897,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3408,
+    "chroma": 23.54,
+    "contrast": 0.2369,
+    "hue": 81.2,
+    "hue_focus": 0.656,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w055",
@@ -1392,7 +1932,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.7907,
+    "chroma": 12.28,
+    "contrast": 0.1499,
+    "hue": 69.2,
+    "hue_focus": 0.698,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w056",
@@ -1417,7 +1967,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1252,
+    "chroma": 0.07,
+    "contrast": 0.1884,
+    "hue": 98.9,
+    "hue_focus": 0.684,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w057",
@@ -1442,7 +2002,17 @@
    "thumb_dimensions": [
     280,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1529,
+    "chroma": 2.35,
+    "contrast": 0.2074,
+    "hue": 325.7,
+    "hue_focus": 0.293,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w058",
@@ -1467,7 +2037,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1212,
+    "chroma": 0.15,
+    "contrast": 0.181,
+    "hue": 106.8,
+    "hue_focus": 0.87,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w059",
@@ -1492,7 +2072,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.0897,
+    "chroma": 0.04,
+    "contrast": 0.1802,
+    "hue": 109.6,
+    "hue_focus": 0.902,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w060",
@@ -1517,7 +2107,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3016,
+    "chroma": 33.06,
+    "contrast": 0.1967,
+    "hue": 16.7,
+    "hue_focus": 0.9,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w061",
@@ -1542,7 +2142,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.7544,
+    "chroma": 14.15,
+    "contrast": 0.2396,
+    "hue": 3.7,
+    "hue_focus": 0.442,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w062",
@@ -1567,7 +2177,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2137,
+    "chroma": 22.75,
+    "contrast": 0.2287,
+    "hue": 290.7,
+    "hue_focus": 0.737,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w063",
@@ -1592,7 +2212,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3522,
+    "chroma": 14.97,
+    "contrast": 0.2177,
+    "hue": 21.0,
+    "hue_focus": 0.617,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w064",
@@ -1617,7 +2247,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1185,
+    "chroma": 3.32,
+    "contrast": 0.1458,
+    "hue": 129.9,
+    "hue_focus": 0.45,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w065",
@@ -1642,7 +2282,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.5243,
+    "chroma": 62.84,
+    "contrast": 0.1929,
+    "hue": 47.8,
+    "hue_focus": 0.854,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w066",
@@ -1667,7 +2317,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.4277,
+    "chroma": 57.62,
+    "contrast": 0.2143,
+    "hue": 47.7,
+    "hue_focus": 0.877,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w067",
@@ -1692,7 +2352,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2818,
+    "chroma": 20.74,
+    "contrast": 0.2427,
+    "hue": 53.4,
+    "hue_focus": 0.988,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w068",
@@ -1717,7 +2387,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3222,
+    "chroma": 11.58,
+    "contrast": 0.1759,
+    "hue": 7.5,
+    "hue_focus": 0.77,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w069",
@@ -1742,7 +2422,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3832,
+    "chroma": 10.65,
+    "contrast": 0.2212,
+    "hue": 353.8,
+    "hue_focus": 0.391,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w070",
@@ -1767,7 +2457,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2453,
+    "chroma": 24.72,
+    "contrast": 0.2352,
+    "hue": 89.4,
+    "hue_focus": 0.222,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w071",
@@ -1792,7 +2492,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2114,
+    "chroma": 21.54,
+    "contrast": 0.1936,
+    "hue": 24.6,
+    "hue_focus": 0.113,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w072",
@@ -1817,7 +2527,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3831,
+    "chroma": 50.7,
+    "contrast": 0.2093,
+    "hue": 19.2,
+    "hue_focus": 0.591,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w073",
@@ -1842,7 +2562,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2296,
+    "chroma": 13.38,
+    "contrast": 0.2021,
+    "hue": 7.3,
+    "hue_focus": 0.202,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w074",
@@ -1867,7 +2597,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1099,
+    "chroma": 0.12,
+    "contrast": 0.1981,
+    "hue": 288.1,
+    "hue_focus": 0.969,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w075",
@@ -1892,7 +2632,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.4199,
+    "chroma": 31.48,
+    "contrast": 0.2431,
+    "hue": 48.8,
+    "hue_focus": 0.992,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w076",
@@ -1917,7 +2667,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.5328,
+    "chroma": 17.29,
+    "contrast": 0.1784,
+    "hue": 323.9,
+    "hue_focus": 0.646,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w077",
@@ -1942,7 +2702,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2347,
+    "chroma": 21.81,
+    "contrast": 0.1642,
+    "hue": 39.5,
+    "hue_focus": 0.971,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w078",
@@ -1967,7 +2737,17 @@
    "thumb_dimensions": [
     420,
     236
-   ]
+   ],
+   "measure": {
+    "lightness": 0.6898,
+    "chroma": 9.76,
+    "contrast": 0.1012,
+    "hue": 85.7,
+    "hue_focus": 0.936,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w079",
@@ -1992,7 +2772,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.6888,
+    "chroma": 19.42,
+    "contrast": 0.1504,
+    "hue": 300.2,
+    "hue_focus": 0.774,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w080",
@@ -2017,7 +2807,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2616,
+    "chroma": 14.3,
+    "contrast": 0.2022,
+    "hue": 327.9,
+    "hue_focus": 0.658,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w081",
@@ -2042,7 +2842,17 @@
    "thumb_dimensions": [
     420,
     236
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3406,
+    "chroma": 11.45,
+    "contrast": 0.131,
+    "hue": 77.0,
+    "hue_focus": 0.916,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w082",
@@ -2067,7 +2877,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.7291,
+    "chroma": 11.55,
+    "contrast": 0.3027,
+    "hue": 8.0,
+    "hue_focus": 0.252,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w083",
@@ -2092,7 +2912,17 @@
    "thumb_dimensions": [
     420,
     280
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2907,
+    "chroma": 34.83,
+    "contrast": 0.2312,
+    "hue": 47.1,
+    "hue_focus": 0.859,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w084",
@@ -2117,7 +2947,17 @@
    "thumb_dimensions": [
     280,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3792,
+    "chroma": 0.9,
+    "contrast": 0.3121,
+    "hue": 58.3,
+    "hue_focus": 0.853,
+    "tone": "luminous",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w085",
@@ -2142,7 +2982,17 @@
    "thumb_dimensions": [
     280,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2989,
+    "chroma": 0.37,
+    "contrast": 0.2801,
+    "hue": 13.7,
+    "hue_focus": 0.655,
+    "tone": "mid",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w086",
@@ -2167,7 +3017,17 @@
    "thumb_dimensions": [
     280,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.6107,
+    "chroma": 2.5,
+    "contrast": 0.2729,
+    "hue": 69.6,
+    "hue_focus": 0.966,
+    "tone": "luminous",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w087",
@@ -2192,7 +3052,17 @@
    "thumb_dimensions": [
     420,
     280
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3071,
+    "chroma": 0.78,
+    "contrast": 0.1945,
+    "hue": 61.4,
+    "hue_focus": 0.741,
+    "tone": "mid",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w088",
@@ -2217,7 +3087,17 @@
    "thumb_dimensions": [
     420,
     280
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3631,
+    "chroma": 15.19,
+    "contrast": 0.177,
+    "hue": 29.9,
+    "hue_focus": 0.763,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w089",
@@ -2242,7 +3122,17 @@
    "thumb_dimensions": [
     420,
     236
-   ]
+   ],
+   "measure": {
+    "lightness": 0.0506,
+    "chroma": 0.93,
+    "contrast": 0.0838,
+    "hue": 35.8,
+    "hue_focus": 0.457,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w090",
@@ -2267,7 +3157,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1892,
+    "chroma": 0.32,
+    "contrast": 0.2492,
+    "hue": 107.4,
+    "hue_focus": 0.961,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w091",
@@ -2292,7 +3192,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2306,
+    "chroma": 11.61,
+    "contrast": 0.171,
+    "hue": 9.6,
+    "hue_focus": 0.729,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w092",
@@ -2317,7 +3227,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2299,
+    "chroma": 30.69,
+    "contrast": 0.1812,
+    "hue": 316.4,
+    "hue_focus": 0.406,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w093",
@@ -2342,7 +3262,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3579,
+    "chroma": 47.0,
+    "contrast": 0.1949,
+    "hue": 359.9,
+    "hue_focus": 0.781,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w094",
@@ -2367,7 +3297,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.085,
+    "chroma": 3.12,
+    "contrast": 0.0925,
+    "hue": 14.1,
+    "hue_focus": 0.748,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w095",
@@ -2392,7 +3332,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2222,
+    "chroma": 17.43,
+    "contrast": 0.16,
+    "hue": 34.2,
+    "hue_focus": 0.888,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w096",
@@ -2417,7 +3367,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2436,
+    "chroma": 14.4,
+    "contrast": 0.1597,
+    "hue": 69.4,
+    "hue_focus": 0.751,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w097",
@@ -2442,7 +3402,17 @@
    "thumb_dimensions": [
     420,
     236
-   ]
+   ],
+   "measure": {
+    "lightness": 0.0839,
+    "chroma": 2.41,
+    "contrast": 0.1222,
+    "hue": 290.7,
+    "hue_focus": 0.876,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w098",
@@ -2467,7 +3437,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2332,
+    "chroma": 7.34,
+    "contrast": 0.1794,
+    "hue": 305.2,
+    "hue_focus": 0.971,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w099",
@@ -2492,7 +3472,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.414,
+    "chroma": 17.64,
+    "contrast": 0.2188,
+    "hue": 352.2,
+    "hue_focus": 0.796,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w100",
@@ -2517,7 +3507,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3759,
+    "chroma": 18.33,
+    "contrast": 0.2369,
+    "hue": 67.0,
+    "hue_focus": 0.951,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w101",
@@ -2542,7 +3542,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1699,
+    "chroma": 13.92,
+    "contrast": 0.1395,
+    "hue": 29.4,
+    "hue_focus": 0.873,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w102",
@@ -2567,7 +3577,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.6204,
+    "chroma": 23.31,
+    "contrast": 0.1663,
+    "hue": 285.7,
+    "hue_focus": 0.988,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w103",
@@ -2592,7 +3612,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.8209,
+    "chroma": 6.22,
+    "contrast": 0.1486,
+    "hue": 63.2,
+    "hue_focus": 0.904,
+    "tone": "luminous",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w104",
@@ -2617,7 +3647,17 @@
    "thumb_dimensions": [
     420,
     236
-   ]
+   ],
+   "measure": {
+    "lightness": 0.0372,
+    "chroma": 0.83,
+    "contrast": 0.0621,
+    "hue": 351.6,
+    "hue_focus": 0.082,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w105",
@@ -2642,7 +3682,17 @@
    "thumb_dimensions": [
     420,
     236
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1003,
+    "chroma": 7.43,
+    "contrast": 0.1183,
+    "hue": 273.2,
+    "hue_focus": 0.93,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w106",
@@ -2667,7 +3717,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2717,
+    "chroma": 26.5,
+    "contrast": 0.2242,
+    "hue": 132.7,
+    "hue_focus": 0.999,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w107",
@@ -2692,7 +3752,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1415,
+    "chroma": 4.7,
+    "contrast": 0.1585,
+    "hue": 3.2,
+    "hue_focus": 0.724,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w108",
@@ -2717,7 +3787,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3921,
+    "chroma": 14.83,
+    "contrast": 0.2737,
+    "hue": 72.1,
+    "hue_focus": 0.875,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w109",
@@ -2742,7 +3822,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2538,
+    "chroma": 11.61,
+    "contrast": 0.2255,
+    "hue": 37.9,
+    "hue_focus": 0.726,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w110",
@@ -2767,7 +3857,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.8114,
+    "chroma": 10.24,
+    "contrast": 0.1038,
+    "hue": 82.0,
+    "hue_focus": 0.737,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w111",
@@ -2792,7 +3892,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1606,
+    "chroma": 0.3,
+    "contrast": 0.2272,
+    "hue": 106.8,
+    "hue_focus": 0.957,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w112",
@@ -2817,7 +3927,17 @@
    "thumb_dimensions": [
     280,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1512,
+    "chroma": 7.29,
+    "contrast": 0.1815,
+    "hue": 310.7,
+    "hue_focus": 0.677,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w113",
@@ -2842,7 +3962,17 @@
    "thumb_dimensions": [
     280,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1301,
+    "chroma": 2.25,
+    "contrast": 0.1863,
+    "hue": 336.6,
+    "hue_focus": 0.703,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w114",
@@ -2867,7 +3997,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3276,
+    "chroma": 12.24,
+    "contrast": 0.2384,
+    "hue": 268.8,
+    "hue_focus": 0.992,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w115",
@@ -2892,7 +4032,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1362,
+    "chroma": 0.32,
+    "contrast": 0.2096,
+    "hue": 76.1,
+    "hue_focus": 0.716,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w116",
@@ -2917,7 +4067,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1339,
+    "chroma": 6.59,
+    "contrast": 0.1636,
+    "hue": 73.2,
+    "hue_focus": 0.417,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w117",
@@ -2942,7 +4102,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2993,
+    "chroma": 7.16,
+    "contrast": 0.2472,
+    "hue": 313.7,
+    "hue_focus": 0.918,
+    "tone": "mid",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w118",
@@ -2967,7 +4137,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.774,
+    "chroma": 7.85,
+    "contrast": 0.161,
+    "hue": 257.3,
+    "hue_focus": 0.811,
+    "tone": "luminous",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w119",
@@ -2992,7 +4172,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.482,
+    "chroma": 23.42,
+    "contrast": 0.2673,
+    "hue": 43.1,
+    "hue_focus": 0.759,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w120",
@@ -3017,7 +4207,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3409,
+    "chroma": 13.13,
+    "contrast": 0.1816,
+    "hue": 333.5,
+    "hue_focus": 0.599,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w121",
@@ -3042,7 +4242,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2157,
+    "chroma": 34.0,
+    "contrast": 0.2102,
+    "hue": 302.6,
+    "hue_focus": 0.49,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w122",
@@ -3067,7 +4277,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.5246,
+    "chroma": 64.21,
+    "contrast": 0.2181,
+    "hue": 46.9,
+    "hue_focus": 0.863,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w123",
@@ -3092,7 +4312,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.15,
+    "chroma": 13.84,
+    "contrast": 0.1586,
+    "hue": 309.6,
+    "hue_focus": 0.927,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w124",
@@ -3117,7 +4347,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.4126,
+    "chroma": 40.89,
+    "contrast": 0.1833,
+    "hue": 353.2,
+    "hue_focus": 0.644,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w125",
@@ -3142,7 +4382,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2716,
+    "chroma": 19.73,
+    "contrast": 0.204,
+    "hue": 56.5,
+    "hue_focus": 0.963,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w126",
@@ -3167,7 +4417,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2694,
+    "chroma": 29.29,
+    "contrast": 0.1969,
+    "hue": 53.1,
+    "hue_focus": 0.576,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w127",
@@ -3192,7 +4452,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3219,
+    "chroma": 16.5,
+    "contrast": 0.178,
+    "hue": 292.7,
+    "hue_focus": 0.198,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w128",
@@ -3217,7 +4487,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1394,
+    "chroma": 0.33,
+    "contrast": 0.1934,
+    "hue": 107.5,
+    "hue_focus": 0.954,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w129",
@@ -3242,7 +4522,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2556,
+    "chroma": 38.61,
+    "contrast": 0.2263,
+    "hue": 49.1,
+    "hue_focus": 0.96,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w130",
@@ -3267,7 +4557,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2448,
+    "chroma": 20.42,
+    "contrast": 0.2174,
+    "hue": 63.9,
+    "hue_focus": 0.884,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w131",
@@ -3292,7 +4592,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1287,
+    "chroma": 9.34,
+    "contrast": 0.1333,
+    "hue": 5.1,
+    "hue_focus": 0.352,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w132",
@@ -3317,7 +4627,17 @@
    "thumb_dimensions": [
     420,
     236
-   ]
+   ],
+   "measure": {
+    "lightness": 0.5998,
+    "chroma": 8.49,
+    "contrast": 0.1828,
+    "hue": 11.6,
+    "hue_focus": 0.17,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w133",
@@ -3342,7 +4662,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.5363,
+    "chroma": 27.79,
+    "contrast": 0.1791,
+    "hue": 346.4,
+    "hue_focus": 0.494,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w134",
@@ -3367,7 +4697,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3762,
+    "chroma": 17.1,
+    "contrast": 0.2372,
+    "hue": 345.3,
+    "hue_focus": 0.538,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w135",
@@ -3392,7 +4732,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2402,
+    "chroma": 48.78,
+    "contrast": 0.1653,
+    "hue": 314.1,
+    "hue_focus": 0.88,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w136",
@@ -3417,7 +4767,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2715,
+    "chroma": 36.45,
+    "contrast": 0.1996,
+    "hue": 52.9,
+    "hue_focus": 0.978,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w137",
@@ -3442,7 +4802,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.8235,
+    "chroma": 9.49,
+    "contrast": 0.1995,
+    "hue": 351.4,
+    "hue_focus": 0.259,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w138",
@@ -3467,7 +4837,17 @@
    "thumb_dimensions": [
     420,
     236
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3467,
+    "chroma": 24.52,
+    "contrast": 0.2053,
+    "hue": 274.2,
+    "hue_focus": 0.965,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w139",
@@ -3492,7 +4872,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2655,
+    "chroma": 13.23,
+    "contrast": 0.2317,
+    "hue": 340.5,
+    "hue_focus": 0.792,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w140",
@@ -3517,7 +4907,17 @@
    "thumb_dimensions": [
     280,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.4527,
+    "chroma": 2.29,
+    "contrast": 0.2739,
+    "hue": 62.5,
+    "hue_focus": 0.916,
+    "tone": "luminous",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w141",
@@ -3542,7 +4942,17 @@
    "thumb_dimensions": [
     393,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3948,
+    "chroma": 36.55,
+    "contrast": 0.259,
+    "hue": 41.5,
+    "hue_focus": 0.642,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w142",
@@ -3567,7 +4977,17 @@
    "thumb_dimensions": [
     280,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1251,
+    "chroma": 0.89,
+    "contrast": 0.182,
+    "hue": 90.9,
+    "hue_focus": 0.94,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w143",
@@ -3592,7 +5012,17 @@
    "thumb_dimensions": [
     420,
     280
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3233,
+    "chroma": 1.26,
+    "contrast": 0.2974,
+    "hue": 66.8,
+    "hue_focus": 0.937,
+    "tone": "mid",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w144",
@@ -3617,7 +5047,17 @@
    "thumb_dimensions": [
     280,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.291,
+    "chroma": 1.18,
+    "contrast": 0.2719,
+    "hue": 51.5,
+    "hue_focus": 0.741,
+    "tone": "mid",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w145",
@@ -3642,7 +5082,17 @@
    "thumb_dimensions": [
     280,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.4272,
+    "chroma": 32.74,
+    "contrast": 0.2286,
+    "hue": 49.1,
+    "hue_focus": 0.519,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w146",
@@ -3667,7 +5117,17 @@
    "thumb_dimensions": [
     420,
     280
-   ]
+   ],
+   "measure": {
+    "lightness": 0.4367,
+    "chroma": 1.48,
+    "contrast": 0.3205,
+    "hue": 72.6,
+    "hue_focus": 0.946,
+    "tone": "luminous",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w147",
@@ -3692,7 +5152,17 @@
    "thumb_dimensions": [
     420,
     236
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2686,
+    "chroma": 9.87,
+    "contrast": 0.1914,
+    "hue": 71.3,
+    "hue_focus": 0.825,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w148",
@@ -3717,7 +5187,17 @@
    "thumb_dimensions": [
     280,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2669,
+    "chroma": 7.6,
+    "contrast": 0.2141,
+    "hue": 87.0,
+    "hue_focus": 0.906,
+    "tone": "mid",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w149",
@@ -3742,7 +5222,17 @@
    "thumb_dimensions": [
     280,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.643,
+    "chroma": 4.3,
+    "contrast": 0.2455,
+    "hue": 252.4,
+    "hue_focus": 0.366,
+    "tone": "luminous",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w150",
@@ -3767,7 +5257,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.4081,
+    "chroma": 15.67,
+    "contrast": 0.1925,
+    "hue": 19.0,
+    "hue_focus": 0.783,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w151",
@@ -3792,7 +5292,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1259,
+    "chroma": 5.57,
+    "contrast": 0.1408,
+    "hue": 269.4,
+    "hue_focus": 0.731,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w152",
@@ -3817,7 +5327,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3969,
+    "chroma": 13.22,
+    "contrast": 0.2095,
+    "hue": 28.7,
+    "hue_focus": 0.767,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w153",
@@ -3841,7 +5361,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2862,
+    "chroma": 2.6,
+    "contrast": 0.207,
+    "hue": 69.0,
+    "hue_focus": 0.956,
+    "tone": "mid",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w154",
@@ -3866,7 +5396,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2692,
+    "chroma": 11.22,
+    "contrast": 0.1765,
+    "hue": 24.8,
+    "hue_focus": 0.292,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w155",
@@ -3890,7 +5430,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3553,
+    "chroma": 8.09,
+    "contrast": 0.2104,
+    "hue": 344.6,
+    "hue_focus": 0.749,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w156",
@@ -3915,7 +5465,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2475,
+    "chroma": 7.26,
+    "contrast": 0.2113,
+    "hue": 72.7,
+    "hue_focus": 0.273,
+    "tone": "mid",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w157",
@@ -3939,7 +5499,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2465,
+    "chroma": 1.77,
+    "contrast": 0.2027,
+    "hue": 26.7,
+    "hue_focus": 0.746,
+    "tone": "mid",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w158",
@@ -3963,7 +5533,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1835,
+    "chroma": 8.33,
+    "contrast": 0.1454,
+    "hue": 2.3,
+    "hue_focus": 0.835,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w159",
@@ -3988,7 +5568,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3046,
+    "chroma": 16.02,
+    "contrast": 0.1832,
+    "hue": 44.5,
+    "hue_focus": 0.91,
+    "tone": "mid",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w160",
@@ -4012,7 +5602,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2958,
+    "chroma": 2.43,
+    "contrast": 0.2129,
+    "hue": 55.0,
+    "hue_focus": 0.915,
+    "tone": "mid",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w161",
@@ -4036,7 +5636,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.3303,
+    "chroma": 7.36,
+    "contrast": 0.2111,
+    "hue": 350.0,
+    "hue_focus": 0.728,
+    "tone": "mid",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w162",
@@ -4060,7 +5670,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1568,
+    "chroma": 6.59,
+    "contrast": 0.1722,
+    "hue": 345.9,
+    "hue_focus": 0.841,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   },
   {
    "id": "w163",
@@ -4085,7 +5705,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.378,
+    "chroma": 13.73,
+    "contrast": 0.2153,
+    "hue": 36.3,
+    "hue_focus": 0.963,
+    "tone": "luminous",
+    "monochrome": false,
+    "family": "warm"
+   }
   },
   {
    "id": "w164",
@@ -4110,7 +5740,17 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.2063,
+    "chroma": 11.45,
+    "contrast": 0.1362,
+    "hue": 273.6,
+    "hue_focus": 0.619,
+    "tone": "dark",
+    "monochrome": false,
+    "family": "cool"
+   }
   },
   {
    "id": "w165",
@@ -4134,7 +5774,48 @@
    "thumb_dimensions": [
     336,
     420
-   ]
+   ],
+   "measure": {
+    "lightness": 0.1605,
+    "chroma": 2.45,
+    "contrast": 0.1757,
+    "hue": 82.3,
+    "hue_focus": 0.971,
+    "tone": "dark",
+    "monochrome": true,
+    "family": "monochrome"
+   }
   }
- ]
+ ],
+ "range": {
+  "method": "Measured on the delivered pixels: CIE L* for lightness, mean LAB chroma for colour, the spread of L* for contrast, and a chroma-weighted circular mean for hue so grey pixels do not vote. Tone bands are this corpus's own terciles of measured lightness, not chosen numbers; monochrome is chroma under 8.",
+  "lightness": {
+   "min": 0.0372,
+   "max": 0.8846,
+   "median": 0.2989,
+   "dark_below": 0.2454,
+   "luminous_above": 0.3625
+  },
+  "chroma": {
+   "min": 0.04,
+   "max": 65.12,
+   "median": 13.73,
+   "monochrome_below": 8.0
+  },
+  "contrast": {
+   "min": 0.0621,
+   "max": 0.3205,
+   "median": 0.1959
+  },
+  "tone_counts": {
+   "dark": 55,
+   "mid": 55,
+   "luminous": 55
+  },
+  "family_counts": {
+   "monochrome": 50,
+   "warm": 87,
+   "cool": 28
+  }
+ }
 }
