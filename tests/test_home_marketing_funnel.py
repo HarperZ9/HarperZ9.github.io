@@ -29,8 +29,8 @@ def test_home_source_uses_the_verified_fourteen_engine_roster() -> None:
         "studio-engine",
         "build color",
     ]
-    assert "Fourteen engines" in source
-    assert "Flywheel thesis" in source
+    assert "Fourteen systems" in source
+    assert "integrated Flywheel engine remains the active build" in " ".join(source.split())
     assert 'name: "calibrate pro"' not in source.lower()
 
 
@@ -154,6 +154,86 @@ def test_recorded_workflow_layout_has_mobile_and_reduced_motion_rules() -> None:
     assert "@media (max-width: 760px)" in css
 
 
+def test_home_hero_offers_semantic_make_and_prove_entrances() -> None:
+    source = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
+    doors = re.search(
+        r'<nav className="hero-doors[^\"]*" '
+        r'aria-label="Choose how to enter the workbench">(?P<body>.*?)</nav>',
+        source,
+        re.S,
+    )
+    assert doors, "home hero must expose the dual front door as labelled navigation"
+    body = doors.group("body")
+    assert 'href="#make"' in body
+    assert "Create with the retro engine, studio, and gallery." in body
+    assert 'href="#engines"' in body
+    assert "Inspect receipts, workflows, research, and verification systems." in body
+    assert "Two entrances. One public record." in body
+
+
+def test_home_hero_entrances_preserve_focus_mobile_and_reduced_motion_contracts() -> None:
+    css = (ROOT / "home" / "src" / "App.css").read_text(encoding="utf-8")
+    assert ".hero-door-rows" in css
+    assert ".hero-door:focus-visible" in css
+    mobile = css[css.index("@media (max-width: 560px)") :]
+    assert ".hero-door-rows" in mobile
+    assert "grid-template-columns: 1fr" in mobile
+    reduced = css[css.rindex("@media (prefers-reduced-motion: reduce)") :]
+    assert ".hero-door" in reduced
+    assert "transition: none" in reduced
+
+
+def test_home_make_prove_copy_states_the_current_public_boundary() -> None:
+    source = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
+    normalized = " ".join(source.split())
+    expected_lead = (
+        "zentropyLabs is one workshop across a wide span. At the making end: a live retro engine, "
+        "a generative studio, and a gallery of seed-reproducible plates. At the proving end: "
+        "fourteen public systems with receipts, verifiers, and runnable tools at different maturity "
+        "levels. They share one operating thesis, but they do not yet form a single executable loop. "
+        "Six papers sit on the record between them. Each page names what runs, what evidence exists, "
+        "and what remains unfinished."
+    )
+    assert expected_lead in normalized
+    assert "Then prove it." in source
+    assert "Fourteen systems." in source
+    assert "Each of these fourteen systems stands on its own today" in normalized
+    assert "integrated Flywheel engine remains the active build" in normalized
+    assert (
+        "The roster spans routing, intake, mapping, orchestration, judgment, byte integrity, "
+        "typed effects, learning, color, memory, interoperability, and shared human and model creation."
+        in normalized
+    )
+
+
+def test_home_metadata_and_fallback_describe_make_and_prove_without_overclaiming() -> None:
+    template = (ROOT / "home" / "index.html").read_text(encoding="utf-8")
+    expected = (
+        "Project Telos is one public workshop with two entrances: Make for live creative systems; "
+        "Prove for receipts, workflows, research, and fourteen independently published verification systems."
+    )
+    assert f'<meta name="description" content="{expected}" />' in template
+    assert f'<meta property="og:description" content="{expected}" />' in template
+    assert f'<meta name="twitter:description" content="{expected}" />' in template
+    noscript = re.search(r"<noscript>(?P<body>.*?)</noscript>", template, re.S)
+    assert noscript
+    fallback = noscript.group("body")
+    assert "Make" in fallback and "Prove" in fallback
+    assert "fourteen independently published verification systems" in fallback
+    for overclaim in (
+        "fourteen connected engines",
+        "everything here proves what it claims",
+        "every artifact proves every claim",
+    ):
+        assert overclaim not in template.lower()
+
+
+def test_retro_hero_names_the_current_shader_count() -> None:
+    retro = (ROOT / "retro.html").read_text(encoding="utf-8")
+    assert "190 shaders sit on the shelf" in retro
+    assert "Forty-eight shaders" not in retro
+
+
 def test_home_hero_display_size_is_capped_at_six_rem() -> None:
     css = (ROOT / "home" / "src" / "App.css").read_text(encoding="utf-8")
     match = re.search(r"\.hero-title\s*\{(?P<body>[^}]*)\}", css)
@@ -190,8 +270,8 @@ def test_generated_bundle_contains_all_recorded_workflows() -> None:
     for value in (
         "Recorded workflows",
         "Available for paid work",
-        "Fourteen engines",
-        "Flywheel thesis",
+        "Fourteen systems",
+        "integrated Flywheel engine remains the active build",
         "Build Color 1.0.2",
         "Index 2.9.0",
         "Gather 1.6.1",

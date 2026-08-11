@@ -765,7 +765,96 @@
 
 .hero .lead {
   color: var(--ink-2);
-  max-width: 37ch;
+  max-width: 54ch;
+}
+
+/* One shared instrument face, with Make and Prove as operating modes. */
+.hero-doors {
+  margin-top: var(--sp-4);
+  max-width: 46rem;
+}
+
+.hero-door-rows {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-block: 1px solid rgba(142, 227, 242, 0.34);
+  background: rgba(7, 4, 6, 0.48);
+}
+
+.hero-door {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "mode enter"
+    "name enter"
+    "description description";
+  align-items: center;
+  gap: 0.38rem 0.9rem;
+  min-block-size: 44px;
+  padding: 0.95rem 1rem 1.05rem;
+  color: var(--ink);
+  transition: background-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+}
+
+.hero-door + .hero-door { border-left: 1px solid rgba(142, 227, 242, 0.22); }
+.hero-door:hover { background: rgba(142, 227, 242, 0.08); }
+.hero-door:focus-visible {
+  z-index: 1;
+  outline: 3px solid var(--zentropy-ice);
+  outline-offset: -3px;
+  box-shadow: inset 0 0 0 1px #070406;
+}
+
+.hero-door-mode {
+  grid-area: mode;
+  color: var(--zentropy-ice);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-door strong {
+  grid-area: name;
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1;
+}
+
+.hero-door-description {
+  grid-area: description;
+  color: var(--muted);
+  font-size: var(--step--1);
+  line-height: 1.45;
+}
+
+.hero-door-enter {
+  grid-area: enter;
+  color: var(--faint);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  transition: color 0.2s var(--ease-out);
+}
+
+.hero-door:hover .hero-door-enter,
+.hero-door:focus-visible .hero-door-enter { color: var(--zentropy-ice); }
+
+.hero-door-bridge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.65rem;
+  color: var(--faint);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-door-bridge::before {
+  content: "";
+  width: 1.8rem;
+  height: 1px;
+  background: var(--zentropy-ice);
 }
 
 .hero .btn {
@@ -839,6 +928,11 @@
   .hero-brand-plate figcaption { display: none; }
   .hero-title { font-size: clamp(2.2rem, 11vw, 3.8rem); }
   .hero .lead { font-size: 1.07rem; }
+  .hero-door-rows { grid-template-columns: 1fr; }
+  .hero-door + .hero-door {
+    border-top: 1px solid rgba(142, 227, 242, 0.22);
+    border-left: 0;
+  }
   .scroll-cue { display: none; }
 }
 
@@ -914,6 +1008,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-door,
+  .hero-door-enter { transition: none; }
   .recorded-arrow { transition: none; }
   .recorded-action:hover .recorded-arrow,
   .recorded-action:focus-visible .recorded-arrow { transform: none; }

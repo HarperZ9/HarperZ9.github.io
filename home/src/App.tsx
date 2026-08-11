@@ -212,19 +212,30 @@ export default function App() {
                 Made to be run, inspected, and kept.
               </h1>
               <p className="lead reveal in d3">
-                zentropyLabs is one workshop across a wide span. At the making end, a live retro
+                zentropyLabs is one workshop across a wide span. At the making end: a live retro
                 engine, a generative studio, and a gallery of seed-reproducible plates. At the
-                proving end, fourteen connected engines that route any model, re-derive a file's
-                bytes, and seal a run into a receipt you can re-check offline. Six papers sit on the
-                record between them. Everything here runs in your browser or on your machine, proves
-                what it claims, and is yours to keep.
+                proving end: fourteen public systems with receipts, verifiers, and runnable tools at
+                different maturity levels. They share one operating thesis, but they do not yet form
+                a single executable loop. Six papers sit on the record between them. Each page names
+                what runs, what evidence exists, and what remains unfinished.
               </p>
-              <div className="cta reveal in d3">
-                <a className="btn solid" href="/retro.html">Retro Engine <span aria-hidden="true">→</span></a>
-                <a className="btn" href="/studio.html">The Studio <span aria-hidden="true">→</span></a>
-                <a className="btn" href="/gallery.html">Gallery <span aria-hidden="true">→</span></a>
-                <a className="btn" href="/flywheel.html">Flywheel <span aria-hidden="true">→</span></a>
-              </div>
+              <nav className="hero-doors reveal in d3" aria-label="Choose how to enter the workbench">
+                <div className="hero-door-rows">
+                  <a className="hero-door" href="#make">
+                    <span className="hero-door-mode mono">Make / live systems</span>
+                    <strong>Make</strong>
+                    <span className="hero-door-description">Create with the retro engine, studio, and gallery.</span>
+                    <span className="hero-door-enter mono" aria-hidden="true">enter →</span>
+                  </a>
+                  <a className="hero-door" href="#engines">
+                    <span className="hero-door-mode mono">Prove / public record</span>
+                    <strong>Prove</strong>
+                    <span className="hero-door-description">Inspect receipts, workflows, research, and verification systems.</span>
+                    <span className="hero-door-enter mono" aria-hidden="true">enter →</span>
+                  </a>
+                </div>
+                <p className="hero-door-bridge mono">Two entrances. One public record.</p>
+              </nav>
               <p className="hero-availability reveal in d3">
                 <a href="#work">Available for paid work, contract builds, and technical collaboration.</a>
               </p>
@@ -274,11 +285,10 @@ export default function App() {
         <section id="engines" className="band">
           <div className="shell">
             <div className="sec-head reveal">
-              <h2>Then prove it.<br /><span className="spectrum-word">Fourteen engines.</span></h2>
+              <h2>Then prove it. <span className="spectrum-word">Fourteen systems.</span></h2>
               <p className="measure lead-2">
-                The accountability end of the same workshop. The Flywheel thesis is simple: each
-                engine stands on its own, then its verified outputs become reusable inputs for the
-                next. The roster spans routing, intake, mapping, orchestration, judgment, byte
+                Each of these fourteen systems stands on its own today, while the integrated Flywheel
+                engine remains the active build. The roster spans routing, intake, mapping, orchestration, judgment, byte
                 integrity, typed effects, learning, color, memory, interoperability, and shared
                 human and model creation.
               </p>

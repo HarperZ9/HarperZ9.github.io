@@ -52,13 +52,14 @@ def test_noscript_fallback_is_a_complete_front_door() -> None:
 
 def test_noscript_spans_the_ecosystem() -> None:
     """The static fallback showcases the whole span, from the making end (the
-    retro engine, the generative studio) to the proving end, and keeps the
-    honest register: a run seals into a receipt you can re-check offline."""
+    retro engine, the generative studio) to independently published proving
+    systems without describing them as one already-connected engine."""
     src = index_source().lower()
-    assert "fourteen connected engines" in src
+    assert "fourteen independently published verification systems" in src
+    assert "fourteen connected engines" not in src
     assert "retro engine" in src           # the making end is named
     assert "generative studio" in src
-    assert "receipt" in src                # the proving end: a re-checkable receipt
+    assert "receipts" in src               # the proving end is named without a universal claim
 
 
 def test_white_ceramic_tokens_are_defined() -> None:
