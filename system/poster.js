@@ -63,14 +63,22 @@ function applyCase(text, mode) {
   return String(text);
 }
 
-// Wrap text to a max width using the canvas measurer. Pure given a ctx.
-export function wrapText(ctx, text, maxWidth) {
+// Rendered width of a line INCLUDING the manual per-glyph tracking applied at draw time.
+// The wrap and fit must use this, not the raw measurer, or a tracked line that "fits" on
+// measurement renders wider than the frame and clips.
+export function trackedWidth(ctx, line, tracking = 0) {
+  const s = String(line);
+  return ctx.measureText(s).width + Math.max(0, tracking) * Math.max(0, s.length - 1);
+}
+
+// Wrap text to a max width using the canvas measurer, counting letter tracking. Pure given a ctx.
+export function wrapText(ctx, text, maxWidth, tracking = 0) {
   const words = String(text).split(/\s+/).filter(Boolean);
   const lines = [];
   let line = "";
   for (const word of words) {
     const probe = line ? line + " " + word : word;
-    if (line && ctx.measureText(probe).width > maxWidth) {
+    if (line && trackedWidth(ctx, probe, tracking) > maxWidth) {
       lines.push(line);
       line = word;
     } else {
@@ -103,6 +111,24 @@ export function renderPoster(canvas, state, deps = {}) {
     ctx.fillStyle = "#141018";
     ctx.fillRect(0, 0, fmt.w, fmt.h);
   }
+  // 1b) optional retro treatment: pixelate the art layer through the Retro Engine
+  //     before the veil and type land on top, so the poster reads as a pixel-art print.
+  if (state.art && state.art.retro && typeof deps.renderRetro === "function") {
+    try {
+      const tmp = document.createElement("canvas"); tmp.width = fmt.w; tmp.height = fmt.h;
+      tmp.getContext("2d").drawImage(canvas, 0, 0);
+      const rc = document.createElement("canvas");
+      // Print-oriented defaults (no CRT curvature/scanlines); state.art.retro overrides.
+      deps.renderRetro(tmp, rc, {
+        targetWidth: 240, dither: "bayer4", scanlines: false, curvature: 0, vignette: 0, bloom: 0,
+        ...state.art.retro,
+      });
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(rc, 0, 0, fmt.w, fmt.h);
+      ctx.imageSmoothingEnabled = true;
+    } catch (_) {}
+  }
+
   // 2) a tunable veil so type keeps AA over busy art
   const veil = state.art ? Math.max(0, Math.min(0.85, state.art.veil ?? 0.25)) : 0.25;
   if (veil > 0) {
@@ -115,17 +141,30 @@ export function renderPoster(canvas, state, deps = {}) {
   const margin = Math.max(0.02, Math.min(0.2, state.margin ?? 0.07));
   for (const block of state.blocks || []) {
     const face = POSTER_FACES[block.face] || POSTER_FACES.display;
-    const sizePx = Math.max(8, Math.round((block.size || 0.03) * fmt.h));
     const anchor = cellAnchor(block.cell || "center", margin);
-    ctx.font = `${block.kind === "headline" ? 800 : 500} ${sizePx}px ${face}`;
     ctx.textBaseline = "top";
     const maxWidth = fmt.w * (1 - 2 * margin) * (anchor.col === 1 ? 1 : 0.72);
     const text = applyCase(block.text || "", block.caseMode);
-    const lines = wrapText(ctx, text, maxWidth);
+    const weight = block.kind === "headline" ? 800 : 500;
+
+    // Fit type to the frame. Size, tracking, and wrapping are interdependent, and the
+    // glyphs are drawn with manual per-letter tracking, so the wrap and the width MUST
+    // count that tracking or a "fitting" line renders wider than the frame and clips.
+    let sizePx = Math.max(8, Math.round((block.size || 0.03) * fmt.h));
+    let tracking = (block.tracking || 0) * sizePx;
+    ctx.font = `${weight} ${sizePx}px ${face}`;
+    let lines = wrapText(ctx, text, maxWidth, tracking);
+    let widest = lines.reduce((m, l) => Math.max(m, trackedWidth(ctx, l, tracking)), 0);
+    // An unbreakable token or heavy tracking can still exceed the frame; shrink to fit once.
+    if (widest > maxWidth && widest > 0) {
+      sizePx = Math.max(8, Math.floor(sizePx * (maxWidth / widest)));
+      tracking = (block.tracking || 0) * sizePx;
+      ctx.font = `${weight} ${sizePx}px ${face}`;
+      lines = wrapText(ctx, text, maxWidth, tracking);
+      widest = lines.reduce((m, l) => Math.max(m, trackedWidth(ctx, l, tracking)), 0);
+    }
     const leading = sizePx * (block.leading || 1.1);
     const blockH = leading * lines.length;
-    let widest = 0;
-    for (const line of lines) widest = Math.max(widest, ctx.measureText(line).width);
     // anchor: col 0 -> left-aligned at margin; col 1 -> centered; col 2 -> right edge
     const x0 = anchor.col === 0 ? fmt.w * margin
       : anchor.col === 1 ? (fmt.w - widest) / 2
@@ -134,12 +173,11 @@ export function renderPoster(canvas, state, deps = {}) {
       : anchor.row === 1 ? (fmt.h - blockH) / 2
       : fmt.h * (1 - margin) - blockH;
     ctx.fillStyle = block.color || "#f2ecf7";
-    const tracking = (block.tracking || 0) * sizePx;
     lines.forEach((line, li) => {
       if (tracking > 0.01) {
-        // manual tracking: draw per character
-        let cx = anchor.col === 1 ? (fmt.w - (ctx.measureText(line).width + tracking * Math.max(0, line.length - 1))) / 2
-          : anchor.col === 2 ? fmt.w * (1 - margin) - (ctx.measureText(line).width + tracking * Math.max(0, line.length - 1))
+        // manual tracking: draw per character, positioned by the tracking-aware width
+        let cx = anchor.col === 1 ? (fmt.w - trackedWidth(ctx, line, tracking)) / 2
+          : anchor.col === 2 ? fmt.w * (1 - margin) - trackedWidth(ctx, line, tracking)
           : x0;
         for (const chr of line) {
           ctx.fillText(chr, cx, y0 + li * leading);

@@ -12,6 +12,7 @@ import {
   defaultPosterState, renderPoster, critiquePoster,
   POSTER_FORMATS, POSTER_FACES, POSTER_CELLS,
 } from "./poster.js";
+import { renderRetro } from "./retro-engine.js";
 
 const PALETTE = ["#f2ecf7", "#c9c2d4", "#8f86a0", "#7de3ea", "#99f147", "#f8cc43", "#ff8334", "#ff35aa", "#111016"];
 
@@ -108,7 +109,7 @@ export function mountPosterWorkshop(deps) {
 
   // ── render loop (debounced) ────────────────────────────────────────────────
   function renderNow() {
-    const out = renderPoster(canvas, state, { renderSpecimen, drawImage: coverDrawImage });
+    const out = renderPoster(canvas, state, { renderSpecimen, drawImage: coverDrawImage, renderRetro });
     lastBoxes = out.boxes || [];
     if (typeof perceiveNow === "function") { try { perceiveNow(canvas); } catch (_) {} }
     return out;
@@ -228,6 +229,22 @@ export function mountPosterWorkshop(deps) {
   veil.addEventListener("input", () => { state.art.veil = Number(veil.value); queueRender(); });
   veilLab.appendChild(veil);
   gArt.appendChild(veilLab);
+  // Retro treatment: pixel-art the poster's art layer through the Retro Engine.
+  gArt.appendChild(el("span", "at-glab", "Retro treatment"));
+  const retroChips = el("div", "poster-artchips at-chips");
+  [["off", "Off"], ["outrun", "Outrun"], ["gameboy", "Game Boy"], ["c64", "C64"], ["ega", "EGA"], ["pico8", "PICO-8"], ["aurora", "Aurora"]]
+    .forEach(([val, label], i) => {
+      const b = el("button", "at-chip", label);
+      b.type = "button";
+      b.setAttribute("aria-pressed", String(i === 0));   // Off by default
+      b.addEventListener("click", () => {
+        state.art.retro = val === "off" ? null : { palette: val };
+        [...retroChips.children].forEach((c) => c.setAttribute("aria-pressed", String(c === b)));
+        queueRender();
+      });
+      retroChips.appendChild(b);
+    });
+  gArt.appendChild(retroChips);
   root.appendChild(gArt);
 
   // blocks

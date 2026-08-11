@@ -9,6 +9,8 @@ test("active section is derived from the path", () => {
   assert.equal(navActive("/index-graph.html"), "flagships");
   assert.equal(navActive("/forum.html"), "flagships");
   assert.equal(navActive("/studio.html"), "studio");
+  assert.equal(navActive("/gallery.html"), "gallery");
+  assert.equal(navActive("/retro.html"), "retro");
   assert.equal(navActive("/gather.html"), "flagships");
   assert.equal(navActive("/crucible.html"), "flagships");
   assert.equal(navActive("/catalog.html"), "catalog");
@@ -33,7 +35,6 @@ test("active section is derived from the path", () => {
   assert.equal(navActive("/proof-surface-sample.html"), "demos");
   assert.equal(navActive("/quantalang.html"), "catalog");
   assert.equal(navActive("/atelier.html"), "catalog");
-  assert.equal(navActive("/gallery.html"), "catalog");
 });
 
 test("rendered nav includes a complete grouped menu for mobile", () => {

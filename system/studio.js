@@ -6283,18 +6283,77 @@ if (tierBtn) {
 // The URL may pre-select a source (studio.html?source=showcase&seed=1) and the showcase hero
 // capture mode (hero=1) both enters the showcase and lets first-integral.js apply its capture
 // layout. Only known sources are honored; anything else falls back to Atelier.
+// A render handed over from the Retro Engine: stored as a PNG in sessionStorage,
+// loaded here as the plot-map picture material, so a shader / plate / photo run
+// through the engine becomes a pen-plotter map (and from there SVG or G-code).
+// Mirrors the plot-file upload path exactly; anything malformed is ignored.
+// The reverse bridge: hand whatever the studio canvas is showing to the Retro
+// Engine, where it becomes an upload source for palettes, dither, and effects.
+(function bootStudioToRetro() {
+  const wire = () => {
+    const btn = document.getElementById("rt-retro");
+    if (!btn) return;
+    btn.addEventListener("click", () => {
+      const cv = document.getElementById("studio-canvas");
+      if (!cv) return;
+      try { sessionStorage.setItem("re.retro.handoff", cv.toDataURL("image/png")); }
+      catch (_) { say("model", "That frame is too large to hand over."); return; }
+      location.href = "retro.html?import=plate";
+    });
+  };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire, { once: true });
+  else wire();
+})();
+
+function bootRetroHandoff() {
+  let dataURL = null;
+  try { dataURL = sessionStorage.getItem("re.studio.handoff"); } catch (_) { return; }
+  if (!dataURL) return;
+  try { sessionStorage.removeItem("re.studio.handoff"); } catch (_) {}
+  Promise.all([loadPlotMaps(), loadPlotImage()]).then(() => {
+    const img = new Image();
+    img.onload = () => {
+      const long = Math.max(img.naturalWidth, img.naturalHeight);
+      const k = long > 1200 ? 1200 / long : 1;
+      const off = document.createElement("canvas");
+      off.width = Math.max(8, Math.round(img.naturalWidth * k));
+      off.height = Math.max(8, Math.round(img.naturalHeight * k));
+      off.getContext("2d").drawImage(img, 0, 0, off.width, off.height);
+      const data = off.getContext("2d").getImageData(0, 0, off.width, off.height);
+      const field = _plotImage ? _plotImage.toneField(data.data, off.width, off.height) : null;
+      // Re-assert a few times: the plotmaps source's own default-material init is a
+      // separate async chain, so a single set can lose the race to "field".
+      const apply = () => {
+        _plotField = field;
+        _plotFieldInfo = { name: "retro render" };
+        _plotMaterial = "picture";
+        document.querySelectorAll("[data-plot-material]").forEach(b =>
+          b.classList.toggle("active", b.dataset.plotMaterial === "picture"));
+        syncPlotMaterialUI();
+        drawPlotMap();
+      };
+      apply(); setTimeout(apply, 500); setTimeout(apply, 1500);
+    };
+    img.onerror = () => {};
+    img.src = dataURL;
+  }).catch(() => {});
+}
+
 (function bootSource() {
   // The Atelier engine rewrites location.search on boot, so read the head-snapshot global that
   // captured ?source= before that happened; fall back to the live URL if the snapshot is absent.
   const search = window.__studioBootSearch || window.location.search || "";
   const want = window.__studioBootSource || new URLSearchParams(search).get("source") || "";
+  const wantImport = new URLSearchParams(search).get("import") === "retro";
   if (want && SOURCES[want]) {
     try {
       setSource(want);
       if (want === "plotmaps") bootPlotMaterial(search);
+      if (wantImport) bootRetroHandoff();
       return;
     } catch (_) {}
   }
+  if (wantImport) { try { setSource("plotmaps"); bootRetroHandoff(); return; } catch (_) {} }
   setSource("atelier");
 })();
 

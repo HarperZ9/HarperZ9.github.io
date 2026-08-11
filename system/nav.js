@@ -1,19 +1,22 @@
 // nav.js, one source of truth for the site navigation. Injected into #site-nav on every page;
 // active state derived from the path. No framework; <noscript> fallback lives in the page markup.
 const PRIMARY = [
+  ["The Studio", "studio.html", "studio"],
+  ["Gallery", "gallery.html", "gallery"],
+  ["Retro Engine", "retro.html", "retro"],
   ["Engines", "overview.html", "flagships"],
-  ["Demos", "demonstrations.html", "demos"],
   ["Research", "research.html", "research"],
-  ["Security", "security.html", "security"],
   ["Work with me", "test-run-request.html", "work"],
   ["GitHub ↗", "https://github.com/HarperZ9", "github", true],
 ];
 
 export const MORE = [
   ["The Tour", "tour.html", "demos"],
-  ["The Studio", "studio.html", "studio"],
-  // The archive sits next to the Studio because it is now one of the Studio's materials, not only
-  // a page of pictures. It was reachable from two paragraphs of body copy and nowhere else.
+  ["Demos", "demonstrations.html", "demos"],
+  ["Poster", "studio.html?source=poster", "studio"],
+  ["Security", "security.html", "security"],
+  // The archive is one of the Studio's materials, not only a page of pictures. The Studio,
+  // Gallery, and Retro Engine now lead the primary nav; the archive stays one click away.
   ["Session archive", "session-archive.html", "archive"],
   ["Guide", "guide.html", "guide"],
   ["Catalog", "catalog.html", "catalog"],
@@ -111,7 +114,7 @@ const DEMOS = new Set(["demo-index","demo-gather","demo-forum","demo-crucible","
   "public-surface-sweeper-sample","emet-sample","demonstrations","tour"]);
 const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","accountable-machines",
   "accountable-engine","buildlang","raw","build-color","build-products","toolkit",
-  "provenance-sensorium","orca","aleph","warden","presentation","atelier","gallery",
+  "provenance-sensorium","orca","aleph","warden","presentation","atelier",
   "quanta-color","quanta-products","quantalang"]);
 CATALOG.add("field-guide");
 const RESEARCH = new Set(["research","why"]);
@@ -126,6 +129,8 @@ export function navActive(pathname) {
   const stem = f.replace(/\.html$/, "") || "index";
   if (stem === "index") return "home";
   if (stem === "studio") return "studio";
+  if (stem === "gallery") return "gallery";
+  if (stem === "retro") return "retro";
   if (stem === "session-archive") return "archive";
   if (stem === "guide") return "guide";
   if (stem === "publications") return "publications";

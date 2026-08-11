@@ -169,6 +169,7 @@ export default function App() {
           <span className="brand-route mono">Project Telos</span>
         </a>
         <div className="topnav-links">
+          <a href="#make">Make</a>
           <a href="#engines">Engines</a>
           <a href="#recorded">Recorded</a>
           <a href="#demonstrate">Live checks</a>
@@ -208,16 +209,21 @@ export default function App() {
             <div className="hero-masthead">
               <p className="hero-kicker mono reveal in d1">Project Telos / public workbench</p>
               <h1 className="hero-title reveal in d2">
-                Tools you can inspect, run, and leave behind.
+                Made to be run, inspected, and kept.
               </h1>
               <p className="lead reveal in d3">
-                zentropyLabs publishes the work. Project Telos maps it: fourteen connected engines
-                across models, code, graphics, and research, each with a route to inspect what is real.
+                zentropyLabs is one workshop across a wide span. At the making end, a live retro
+                engine, a generative studio, and a gallery of seed-reproducible plates. At the
+                proving end, fourteen connected engines that route any model, re-derive a file's
+                bytes, and seal a run into a receipt you can re-check offline. Six papers sit on the
+                record between them. Everything here runs in your browser or on your machine, proves
+                what it claims, and is yours to keep.
               </p>
               <div className="cta reveal in d3">
-                <a className="btn solid" href="#recorded">Watch the workflows <span aria-hidden="true">→</span></a>
-                <a className="btn" href="#engines">The engines <span aria-hidden="true">→</span></a>
-                <a className="btn" href="#work">Work with me <span aria-hidden="true">→</span></a>
+                <a className="btn solid" href="/retro.html">Retro Engine <span aria-hidden="true">→</span></a>
+                <a className="btn" href="/studio.html">The Studio <span aria-hidden="true">→</span></a>
+                <a className="btn" href="/gallery.html">Gallery <span aria-hidden="true">→</span></a>
+                <a className="btn" href="/flywheel.html">Flywheel <span aria-hidden="true">→</span></a>
               </div>
               <p className="hero-availability reveal in d3">
                 <a href="#work">Available for paid work, contract builds, and technical collaboration.</a>
@@ -232,15 +238,49 @@ export default function App() {
           <p className="scroll-cue mono" aria-hidden="true">scroll to inspect</p>
         </header>
 
+        <section id="make" className="band">
+          <div className="shell">
+            <div className="sec-head reveal">
+              <h2>Start by making.</h2>
+              <p className="measure lead-2">
+                The creative end of the workshop. Each surface runs live in your browser,
+                reproduces from a seed, and is yours to keep. The same tools that make an image
+                also measure it, so a creation can cross straight into the proving end below.
+              </p>
+            </div>
+            <div className="range-grid">
+              <article className="range-card reveal">
+                <h3>Retro Engine</h3>
+                <p className="range-meta mono">shaders · hardware palettes · feel rack · export</p>
+                <p>A live retro and pixel-art renderer: editable GLSL, hardware palettes and dither, a stackable feel rack (soft, hard, angular, wavy, goopy, bubbly, sparkly, starry), and a bridge that hands a render to the Studio as a plotter map.</p>
+                <p className="range-proof"><a href="/retro.html">Open the Retro Engine</a>.</p>
+              </article>
+              <article className="range-card reveal d1">
+                <h3>The Studio</h3>
+                <p className="range-meta mono">generative fields · plotter maps · voxels · posters</p>
+                <p>A media instrument for rendering, measuring, and transforming a frame: generative fields, plotter maps exported as plotter-grade SVG or G-code, voxel builds, and a poster surface, all reading from the same measured source.</p>
+                <p className="range-proof"><a href="/studio.html">Open the Studio</a>.</p>
+              </article>
+              <article className="range-card reveal d2">
+                <h3>Gallery</h3>
+                <p className="range-meta mono">seed-reproducible plates · same seed, same work</p>
+                <p>A gallery of seed-reproducible plates. The seed is the record: the same seed redraws the same work, so a piece is a recipe you can re-run rather than a picture you have to trust.</p>
+                <p className="range-proof"><a href="/gallery.html">Open the Gallery</a>.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
         <section id="engines" className="band">
           <div className="shell">
             <div className="sec-head reveal">
-              <h2>Fourteen engines,<br /><span className="spectrum-word">many doors.</span></h2>
+              <h2>Then prove it.<br /><span className="spectrum-word">Fourteen engines.</span></h2>
               <p className="measure lead-2">
-                The Flywheel thesis is simple: each engine stands on its own, then its verified
-                outputs become reusable inputs for the next. The roster spans routing, intake,
-                mapping, orchestration, judgment, byte integrity, typed effects, learning, color,
-                memory, interoperability, and shared human/model creation.
+                The accountability end of the same workshop. The Flywheel thesis is simple: each
+                engine stands on its own, then its verified outputs become reusable inputs for the
+                next. The roster spans routing, intake, mapping, orchestration, judgment, byte
+                integrity, typed effects, learning, color, memory, interoperability, and shared
+                human and model creation.
               </p>
             </div>
 

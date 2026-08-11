@@ -1038,6 +1038,9 @@
       <button class="rt-btn" id="rt-snapshot" type="button" title="Freeze this frame and ask the model"
         aria-label="Snapshot: freeze this frame and ask the model">
         <span class="rt-ico" aria-hidden="true">&#9677;</span> Snapshot</button>
+      <button class="rt-btn" id="rt-retro" type="button" title="Send this frame to the Retro Engine"
+        aria-label="Send this frame to the Retro Engine to pixelate and run effects on it">
+        <span class="rt-ico" aria-hidden="true">&#9638;</span> To Retro</button>
       <button class="rt-btn" id="rt-playpause" type="button" aria-pressed="false"
         title="Pause or resume animated sources" aria-label="Pause animated source" disabled>
         <span class="rt-ico" aria-hidden="true">&#9208;</span> <span id="rt-playpause-label">Pause</span></button>
@@ -1355,7 +1358,7 @@
 
 </main>
 
-<script type="module" src="system/nav.js?v=20260805-archive-nav"></script>
+<script type="module" src="system/nav.js?v=20260805-retro"></script>
 <!-- Atelier engine (Task 7): classic IIFE, self-boots on DOM ready, binds the controls above and
      draws into #studio-canvas. Loaded before the Studio module so window.Atelier + the shared
      spine/reconcile readouts are present. -->
@@ -1367,7 +1370,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js"></script>
-<script type="module" src="system/studio.js?v=20260805-archive-material"></script>
+<script type="module" src="system/studio.js?v=20260805-bridge"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

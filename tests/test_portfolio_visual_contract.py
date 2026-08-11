@@ -44,18 +44,21 @@ def test_home_loads_the_react_shell() -> None:
 def test_noscript_fallback_is_a_complete_front_door() -> None:
     src = index_source()
     assert "<noscript>" in src
-    assert "Tools you can inspect, run, and leave behind." in src
-    for href in ("overview.html", "demo-index.html", "studio.html", "research.html",
-                 "publications.html", "writing.html", "guide.html", "catalog.html", "cv.html"):
+    assert "One workshop, from making to proving." in src
+    for href in ("retro.html", "studio.html", "gallery.html", "overview.html", "demo-index.html",
+                 "research.html", "publications.html", "writing.html", "guide.html", "catalog.html", "cv.html"):
         assert f'href="{href}"' in src, f"noscript fallback lost {href}"
 
 
-def test_noscript_copy_keeps_the_receipt_register() -> None:
-    src = index_source()
+def test_noscript_spans_the_ecosystem() -> None:
+    """The static fallback showcases the whole span, from the making end (the
+    retro engine, the generative studio) to the proving end, and keeps the
+    honest register: a run seals into a receipt you can re-check offline."""
+    src = index_source().lower()
     assert "fourteen connected engines" in src
-    assert "tamper-evident chain" in src
-    # the honest null stays honest: in-flight work is named as not yet merged
-    assert "not yet merged to main" in src
+    assert "retro engine" in src           # the making end is named
+    assert "generative studio" in src
+    assert "receipt" in src                # the proving end: a re-checkable receipt
 
 
 def test_white_ceramic_tokens_are_defined() -> None:

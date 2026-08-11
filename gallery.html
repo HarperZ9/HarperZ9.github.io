@@ -132,7 +132,7 @@
 
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="typeface.html">Typeface</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260805-archive-nav"></script>
+<script type="module" src="system/nav.js?v=20260805-retro"></script>
 <script type="module" src="system/audio-player.js?v=20260710"></script>
 
 <div class="frame">
@@ -383,6 +383,7 @@
     <button type="button" class="plate-redraw" id="desk-share" aria-label="Copy a link that reproduces this plate">copy link</button>
     <button type="button" class="plate-redraw" id="desk-plot" aria-label="Replay this plate as pen-plotter line art, stroke by stroke">plot it</button>
     <button type="button" class="plate-redraw" id="desk-vary" aria-label="Draw four neighboring variations of this seed">variations</button>
+    <button type="button" class="plate-redraw" id="desk-retro" aria-label="Send this plate to the Retro Engine to pixelate, palette, and run effects on it">send to the retro engine</button>
     <a class="plate-redraw" id="desk-workshop" href="studio.html?source=poster" aria-label="Open this plate in the poster workshop">open in the workshop</a>
   </div>
   <div class="desk-controls" id="desk-material-controls">
@@ -914,6 +915,16 @@ if (clearMaterialBtn) {
     influenceWrap.hidden = true; clearMaterialBtn.hidden = true; if (privacyLine) privacyLine.hidden = true;
     drawDesk();
     say("back to pure engine mode");
+  });
+}
+// Hand this plate to the Retro Engine as an upload source, so a plate you drew
+// here can be pixelated, paletted, and run through the effects rack there.
+const deskRetro = document.getElementById("desk-retro");
+if (deskRetro && deskCanvas) {
+  deskRetro.addEventListener("click", () => {
+    try { sessionStorage.setItem("re.retro.handoff", deskCanvas.toDataURL("image/png")); }
+    catch (err) { if (deskStatus) deskStatus.textContent = "that plate is too large to hand over"; return; }
+    location.href = "retro.html?import=plate";
   });
 }
 // Drag-drop onto the desk plate.

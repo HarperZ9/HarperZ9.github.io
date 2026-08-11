@@ -111,7 +111,9 @@ def test_home_source_mirror_matches_current_maturity_and_design_positioning() ->
         assert value in source
 
     assert "Plexus 0.1.0" not in source
-    assert "poster design" in template
+    # the template's no-JS fallback positions the making end of the workshop
+    assert "retro engine" in template.lower()
+    assert "generative studio" in template.lower()
     assert "brand/zentropy-logo.png" in template
 
 
