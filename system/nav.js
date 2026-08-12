@@ -14,6 +14,7 @@ export const MORE = [
   ["The Tour", "tour.html", "demos"],
   ["Demos", "demonstrations.html", "demos"],
   ["Poster", "studio.html?source=poster", "studio"],
+  ["The Loom", "loom.html", "loom"],
   ["Security", "security.html", "security"],
   // The archive is one of the Studio's materials, not only a page of pictures. The Studio,
   // Gallery, and Retro Engine now lead the primary nav; the archive stays one click away.
@@ -131,6 +132,7 @@ export function navActive(pathname) {
   if (stem === "studio") return "studio";
   if (stem === "gallery") return "gallery";
   if (stem === "retro") return "retro";
+  if (stem === "loom") return "loom";
   if (stem === "session-archive") return "archive";
   if (stem === "guide") return "guide";
   if (stem === "publications") return "publications";

@@ -135,11 +135,20 @@ export function createRetroAudio() {
     ensureAnalyser();
   }
 
+  let waveBuf = null;
   return {
     isOn: () => on,
     ping,
     feed,
     bands,
+    // Raw time-domain samples from the analysis tap, for the XY scope. Null
+    // until something is connected; the caller idles on its own figure then.
+    waveform() {
+      if (!analyser) return null;
+      if (!waveBuf || waveBuf.length !== analyser.fftSize) waveBuf = new Float32Array(analyser.fftSize);
+      analyser.getFloatTimeDomainData(waveBuf);
+      return waveBuf;
+    },
     hasInput: () => !!(micNode || fileNode),
     // Listen to your own room. The stream is analysed in this tab and never
     // recorded, uploaded, or routed to the speakers (which would howl).

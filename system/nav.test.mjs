@@ -11,6 +11,7 @@ test("active section is derived from the path", () => {
   assert.equal(navActive("/studio.html"), "studio");
   assert.equal(navActive("/gallery.html"), "gallery");
   assert.equal(navActive("/retro.html"), "retro");
+  assert.equal(navActive("/loom.html"), "loom");
   assert.equal(navActive("/gather.html"), "flagships");
   assert.equal(navActive("/crucible.html"), "flagships");
   assert.equal(navActive("/catalog.html"), "catalog");

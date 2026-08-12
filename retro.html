@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Retro Engine &mdash; Zain Dana Harper</title>
+<title>Retro Engine &middot; Zain Dana Harper</title>
 <meta name="description" content="A live retro / pixel-art renderer. Feed it a generative plate, your own image, or custom GLSL shader code, then pixelate it through hardware palettes, ordered dither, depth-shade, and a CRT stage. Everything runs in your browser.">
 <link rel="canonical" href="https://harperz9.github.io/retro.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="Retro Engine &mdash; Zain Dana Harper">
+<meta property="og:title" content="Retro Engine &middot; Zain Dana Harper">
 <meta property="og:description" content="A live retro / pixel-art renderer: generative plate, your own image, or custom shader code, rendered through hardware palettes, dither, depth-shade, and a CRT stage.">
 <meta property="og:url" content="https://harperz9.github.io/retro.html">
 <meta name="color-scheme" content="dark">
@@ -149,6 +149,7 @@
         <button class="re-tab" role="tab" data-src="plate" aria-selected="false">Plate</button>
         <button class="re-tab" role="tab" data-src="upload" aria-selected="false">Upload</button>
         <button class="re-tab" role="tab" data-src="shader" aria-selected="true">Shader</button>
+        <button class="re-tab" role="tab" data-src="scope" aria-selected="false">Scope</button>
       </div>
 
       <div class="re-srcpanel" data-panel="plate" hidden>
@@ -171,10 +172,17 @@
         <p class="re-privacy">Read locally in your browser. Nothing is uploaded.</p>
       </div>
 
+      <div class="re-srcpanel" data-panel="scope" hidden>
+        <p class="re-hint">Sound that draws. Whatever is connected under Sound (the instrument, your microphone, your own audio) traces the beam of an XY oscilloscope, and that trace is the picture. With nothing connected the beam idles on a figure the knobs steer: A and B set the frequency ratio, C turns the phase.</p>
+        <div class="re-field"><span class="re-lab">Persistence <span class="re-val" id="re-scope-persist-v">70</span></span>
+          <input type="range" id="re-scope-persist" min="0" max="100" value="70" aria-label="Phosphor persistence"></div>
+        <p class="re-privacy">Analysed in your browser. Nothing is recorded or uploaded.</p>
+      </div>
+
       <div class="re-srcpanel" data-panel="shader">
         <div class="re-field"><span class="re-lab">Preset <span class="re-hint" id="re-preset-count"></span></span>
           <input type="text" class="re-in" id="re-preset-filter" placeholder="filter: eva, psx, ink, audio..." spellcheck="false" autocomplete="off" aria-label="Filter the shader shelf">
-          <select class="re-in" id="re-preset"><option value="">&mdash; custom &mdash;</option></select>
+          <select class="re-in" id="re-preset"><option value="">&middot; custom &middot;</option></select>
           <div class="re-actions re-browse">
             <button class="re-btn" id="re-prev" type="button" aria-label="Previous shader">&#9664;</button>
             <button class="re-btn" id="re-next" type="button" aria-label="Next shader">&#9654;</button>
@@ -268,6 +276,18 @@
       <div class="re-actions">
         <button class="re-btn" id="re-save">Save PNG</button>
         <button class="re-btn" id="re-send-studio">Send to Studio &rarr;</button>
+        <button class="re-btn" id="re-send-loom">Send to Loom &rarr;</button>
+      </div>
+      <div class="re-field"><span class="re-lab">Make it physical</span></div>
+      <div class="re-actions">
+        <button class="re-btn" id="re-relief" title="A 3D-printable relief of this frame: bright prints thin, light shines through">Relief STL</button>
+        <button class="re-btn" id="re-spin" title="Twelve frames of the animation on a printable disc: cut, pin, spin in front of a mirror">Spin disc</button>
+      </div>
+      <div class="re-field"><span class="re-lab">Performance score <span class="re-hint">every edit you make is a note</span></span></div>
+      <div class="re-actions">
+        <button class="re-btn" id="re-rec" aria-pressed="false" title="Record your edits as a score: every chip, slider, and knob move becomes a timed note">Record</button>
+        <button class="re-btn" id="re-rec-play" title="Hear the recorded performance back (sound must be on)">Play</button>
+        <button class="re-btn" id="re-rec-midi" title="Save the performance as a standard MIDI file for any DAW">Save MIDI</button>
       </div>
       <div class="re-actions">
         <button class="re-btn" id="re-save-patch">Save patch</button>
@@ -287,6 +307,6 @@
   <p>Zentropy Labs &middot; order out of entropy &middot; <a href="index.html">home</a></p>
 </footer>
 
-<script type="module" src="system/retro-studio.js?v=20260805-fine"></script>
+<script type="module" src="system/retro-studio.js?v=20260811-crossings"></script>
 </body>
 </html>

@@ -213,7 +213,8 @@ export default function App() {
               </h1>
               <p className="lead reveal in d3">
                 zentropyLabs is one workshop across a wide span. At the making end: a live retro
-                engine, a generative studio, and a gallery of seed-reproducible plates. At the
+                engine, a generative studio, a gallery of seed-reproducible plates, and a loom
+                that weaves any render into cloth. At the
                 proving end: fourteen public systems with receipts, verifiers, and runnable tools at
                 different maturity levels. They share one operating thesis, but they do not yet form
                 a single executable loop. Six papers sit on the record between them. Each page names
@@ -262,9 +263,15 @@ export default function App() {
             <div className="range-grid">
               <article className="range-card reveal">
                 <h3>Retro Engine</h3>
-                <p className="range-meta mono">shaders · hardware palettes · feel rack · export</p>
-                <p>A live retro and pixel-art renderer: editable GLSL, hardware palettes and dither, a stackable feel rack (soft, hard, angular, wavy, goopy, bubbly, sparkly, starry), and a bridge that hands a render to the Studio as a plotter map.</p>
+                <p className="range-meta mono">190 shaders · sound draws · physical exports</p>
+                <p>A live retro and pixel-art renderer: 190 editable shaders across 31 shelves, hardware palettes and dither, a stackable feel rack, an oscilloscope source where your own sound draws the picture, and exports that leave the screen: a printable relief, a spinning phenakistoscope disc, a MIDI score of your session.</p>
                 <p className="range-proof"><a href="/retro.html">Open the Retro Engine</a>.</p>
+              </article>
+              <article className="range-card reveal d1">
+                <h3>The Loom</h3>
+                <p className="range-meta mono">image to cloth · WIF drafts · woven sound</p>
+                <p>Weave any render into working cloth: a frame from the engine, the Studio, or your own image becomes threading, tie-up, and treadling in a real weave structure, built pick by pick with each row played as notes. The WIF draft opens in real loom software.</p>
+                <p className="range-proof"><a href="/loom.html">Open the Loom</a>.</p>
               </article>
               <article className="range-card reveal d1">
                 <h3>The Studio</h3>

@@ -9,7 +9,7 @@
 import { renderRetro } from "./retro-engine.js";
 import { createShaderRunner, DEFAULT_FRAG } from "./shader-runner.js?v=20260805-react";
 import { applyOps, OP_META, rngFrom } from "./glitch-ops.js?v=20260805-mosaic";
-import { SHADER_PRESETS } from "./shader-presets.js?v=20260805-fine";
+import { SHADER_PRESETS } from "./shader-presets.js?v=20260811-rich";
 
 const $ = (id) => document.getElementById(id);
 const rand = () => Math.random().toString(36).slice(2, 9);
@@ -27,6 +27,12 @@ function boot() {
 
   // shader stack: extra shader layers composited onto the base (editor) shader
   const stackCanvas = document.createElement("canvas"); stackCanvas.width = 1024; stackCanvas.height = 640;
+
+  // the XY scope: sound drawing the picture. Lazily loaded with its own canvas
+  // that acts as a source like any other; phosphor persistence lives in the
+  // canvas itself (faded, never cleared).
+  const scopeCanvas = document.createElement("canvas"); scopeCanvas.width = 1024; scopeCanvas.height = 640;
+  let scopeMod = null, scopeLoading = false;
   const extraLayers = []; // [{canvas, runner, glsl, name, blend, opacity}]
   const MAX_LAYERS = 4;
   const BLENDS = [["lighter", "Add"], ["screen", "Screen"], ["multiply", "Multiply"],
@@ -35,7 +41,7 @@ function boot() {
   // audio instrument (lazily created on first Sound press). ping = play a note
   // for a physical edit; guarded so it is a no-op until sound is on.
   let audio = null, micOn = false;
-  const ping = (k, v) => { try { if (audio && audio.isOn()) audio.ping(k, v); } catch (_) {} };
+  const ping = (k, v) => { recEvent(k, v); try { if (audio && audio.isOn()) audio.ping(k, v); } catch (_) {} };
   let _lastPing = 0;
   const pingSlide = (k, v) => { const n = performance.now(); if (n - _lastPing > 70) { _lastPing = n; ping(k, v); } };
 
@@ -56,9 +62,10 @@ function boot() {
   const knobVals = () => [(+$("re-knobA").value) / 100, (+$("re-knobB").value) / 100, (+$("re-knobC").value) / 100];
 
   const fxAnimOn = () => $("re-fxanim").checked;
-  const sourceCanvas = () => (state === "shader" ? (extraLayers.length ? stackCanvas : shaderCanvas) : srcCanvas);
+  const sourceCanvas = () => (state === "shader" ? (extraLayers.length ? stackCanvas : shaderCanvas)
+    : state === "scope" ? scopeCanvas : srcCanvas);
   // Sound keeps the loop alive too: a still plate should still move to music.
-  const loopActive = () => state === "shader" || (fxAnimOn() && activeFx.size > 0)
+  const loopActive = () => state === "shader" || state === "scope" || (fxAnimOn() && activeFx.size > 0)
     || !!(audio && audio.isOn() && reactOn.size);
 
   function opts() {
@@ -154,6 +161,10 @@ function boot() {
     }
     const m = (id, v) => { const el = $(id); if (el) el.style.setProperty("--m", String(Math.round((1 - Math.max(0, Math.min(1, v))) * 100)) + "%"); };
     m("re-m-bass", AU.bass); m("re-m-mid", AU.mid); m("re-m-treb", AU.treble);
+    if (REC.on && REC.bands.length < 4000 && performance.now() - REC.lastBand > 150) {
+      REC.lastBand = performance.now();
+      REC.bands.push([performance.now() - REC.t0, AU.bass, AU.mid, AU.treble]);
+    }
   }
 
   function renderShaderFrame(t) {
@@ -171,6 +182,31 @@ function boot() {
       ctx.drawImage(L.canvas, 0, 0, stackCanvas.width, stackCanvas.height);
     }
     ctx.globalCompositeOperation = "source-over"; ctx.globalAlpha = 1;
+  }
+
+  // The scope frame: the beam idles on a knob-steered figure until real sound
+  // is connected, then the sound itself draws via phase-space embedding.
+  function ensureScope() {
+    if (scopeMod || scopeLoading) return;
+    scopeLoading = true;
+    import("./scope-voice.js?v=20260811-crossings")
+      .then((m) => { scopeMod = m; })
+      .catch((e) => { status("scope unavailable: " + e.message, "err"); })
+      .finally(() => { scopeLoading = false; });
+  }
+  function renderScopeFrame(t) {
+    if (state !== "scope" || !scopeMod) return;
+    const ctx = scopeCanvas.getContext("2d");
+    const persist = (+($("re-scope-persist") ? $("re-scope-persist").value : 70)) / 100;
+    scopeMod.fadeTrace(ctx, scopeCanvas.width, scopeCanvas.height, 0.03 + (1 - persist) * 0.45);
+    let pts = null;
+    const wf = audio && audio.waveform ? audio.waveform() : null;
+    if (wf) {
+      let rms = 0; for (let i = 0; i < wf.length; i += 8) rms += wf[i] * wf[i];
+      if (Math.sqrt(rms / (wf.length / 8)) > 0.004) pts = scopeMod.delayEmbed(wf, 96, 2);
+    }
+    if (!pts) { const k = knobVals(); pts = scopeMod.idlePath($("re-fxseed").value || "beam", t, k[0], k[1], k[2]); }
+    scopeMod.drawTrace(ctx, pts, scopeCanvas.width, scopeCanvas.height, { beam: 0.9 });
   }
 
   // Sonify the render: split a mid scanline into six brightness bands and let
@@ -239,6 +275,7 @@ function boot() {
       const t = now / 1000;
       pumpAudio(t);
       if (state === "shader") renderShaderFrame(t);
+      if (state === "scope") renderScopeFrame(t);
       if (now - lastRetro > 45) { retroPass(t); lastRetro = now; }
       animRaf = requestAnimationFrame(loop);
     };
@@ -254,6 +291,7 @@ function boot() {
     if (state === "plate") renderPlate();
     else if (state === "upload") renderUpload();
     else if (state === "shader") { if (!runShader()) return; }
+    else if (state === "scope") ensureScope();
     sync();
   }
 
@@ -590,6 +628,133 @@ function boot() {
     location.href = "studio.html?source=plotmaps&import=retro";
   });
 
+  // Hand the current render to the Loom to be woven into cloth.
+  const sendLoom = $("re-send-loom");
+  if (sendLoom) sendLoom.addEventListener("click", () => {
+    try { sessionStorage.setItem("re.loom.handoff", out.toDataURL("image/png")); }
+    catch (e) { status("render too large to hand off", "err"); return; }
+    ping("bell"); status("opening the Loom…", "ok");
+    location.href = "loom.html?import=render";
+  });
+
+  // --- make it physical: the render leaves the screen -----------------------
+  const saveBlob = (name, blob) => {
+    const a = document.createElement("a"); a.download = name;
+    a.href = URL.createObjectURL(blob); a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  };
+
+  // Relief STL: the frame's luminance as touchable depth. Bright prints thin,
+  // so held to a light the print IS the picture (lithophane practice).
+  const reliefBtn = $("re-relief");
+  if (reliefBtn) reliefBtn.addEventListener("click", async () => {
+    ping("bell"); status("building the relief…", "");
+    try {
+      const m = await import("./relief-stl.js?v=20260811-crossings");
+      const gw = 180, gh = Math.max(24, Math.round(gw * out.height / out.width));
+      const g = document.createElement("canvas"); g.width = gw; g.height = gh;
+      const ctx = g.getContext("2d", { willReadFrequently: true });
+      ctx.drawImage(out, 0, 0, gw, gh);
+      const px = ctx.getImageData(0, 0, gw, gh).data;
+      const heights = new Float32Array(gw * gh);
+      for (let i = 0; i < gw * gh; i++) {
+        const o = i * 4;
+        heights[i] = (px[o] * 0.299 + px[o + 1] * 0.587 + px[o + 2] * 0.114) / 255;
+      }
+      const buf = m.heightmapToSTL(heights, gw, gh, { widthMM: 100, invert: true });
+      saveBlob("retro-relief.stl", new Blob([buf], { type: "application/octet-stream" }));
+      status("relief saved: print it and hold it to a light", "ok");
+    } catch (e) { status("relief failed: " + e.message, "err"); }
+  });
+
+  // Phenakistoscope disc: twelve frames of the animation around one loop,
+  // printed, cut, pinned, and spun in front of a mirror. Animation you hold.
+  const spinBtn = $("re-spin");
+  if (spinBtn) spinBtn.addEventListener("click", async () => {
+    ping("bell"); status("catching twelve frames…", "");
+    try {
+      const m = await import("./zoetrope.js?v=20260811-crossings");
+      const frames = [], N = 12, loopSec = 2.4;
+      for (let k = 0; k < N; k++) {
+        const tk = (k / N) * loopSec;
+        if (state === "shader") renderShaderFrame(tk);
+        if (state === "scope" && scopeMod) renderScopeFrame(tk);
+        retroPass(tk);
+        const f = document.createElement("canvas"); f.width = out.width; f.height = out.height;
+        f.getContext("2d").drawImage(out, 0, 0);
+        frames.push(f);
+      }
+      redraw();
+      const disc = document.createElement("canvas");
+      m.composeDisc(disc, frames, { diameterPx: 2400, label: "zentropyLabs retro engine" });
+      saveBlob("retro-spin-disc.png", await new Promise((r) => disc.toBlob(r, "image/png")));
+      status(loopActive() ? "disc saved: print, cut, pin, spin at a mirror" : "disc saved: a still source spins into a still image", "ok");
+    } catch (e) { status("disc failed: " + e.message, "err"); }
+  });
+
+  const persistSlider = $("re-scope-persist");
+  if (persistSlider) persistSlider.addEventListener("input", () => {
+    $("re-scope-persist-v").textContent = persistSlider.value;
+    pingSlide("slider", persistSlider.value / 100);
+  });
+
+  // --- the performance score: the playing itself becomes a medium -----------
+  // While armed, every physical edit (each ping) is captured with its offset
+  // and the audio bands are sampled as a contour; the record replays as sound
+  // and exports as a standard MIDI file any DAW opens. Playback pings the
+  // audio directly, not through the wrapped ping, so it cannot re-record.
+  const REC = { on: false, t0: 0, events: [], bands: [], lastBand: 0, timers: [] };
+  function recEvent(k, v) {
+    if (!REC.on || REC.events.length >= 4000) return;
+    REC.events.push([performance.now() - REC.t0, k, v === undefined ? 0.6 : v]);
+  }
+  const PENTA = [0, 3, 5, 7, 10];
+  const KIND_STEP = { chip: 0, slider: 1, preset: 2, tab: 3, bell: 4 };
+  const recNote = (k, v) => {
+    const base = 57 + PENTA[(KIND_STEP[k] !== undefined ? KIND_STEP[k] : 2) % 5];
+    return Math.max(24, Math.min(96, base + Math.round((v || 0) * 12)));
+  };
+  const recBtn = $("re-rec");
+  if (recBtn) recBtn.addEventListener("click", () => {
+    REC.on = !REC.on;
+    recBtn.setAttribute("aria-pressed", String(REC.on));
+    if (REC.on) {
+      REC.t0 = performance.now(); REC.events = []; REC.bands = [];
+      status("recording: every edit is a note, sound on or off", "ok");
+    } else {
+      const secs = REC.events.length ? (REC.events[REC.events.length - 1][0] / 1000).toFixed(1) : "0";
+      status("recorded " + REC.events.length + " gestures across " + secs + "s", "ok");
+    }
+  });
+  const recPlay = $("re-rec-play");
+  if (recPlay) recPlay.addEventListener("click", async () => {
+    if (!REC.events.length) { status("nothing recorded yet: press Record and play the panel", ""); return; }
+    try { await ensureAudio(); if (!audio.isOn()) await audio.start(audioSeed()); } catch (_) { status("sound needs a click to start", "err"); return; }
+    REC.timers.forEach(clearTimeout); REC.timers = [];
+    for (const [t, k, v] of REC.events) REC.timers.push(setTimeout(() => { try { audio.ping(k, v); } catch (_) {} }, t));
+    status("playing the performance back: " + REC.events.length + " gestures", "ok");
+  });
+  const recMidi = $("re-rec-midi");
+  if (recMidi) recMidi.addEventListener("click", async () => {
+    if (!REC.events.length) { status("nothing recorded yet: press Record and play the panel", ""); return; }
+    try {
+      const m = await import("./midi-writer.js?v=20260811-crossings");
+      const TPQ = 480, BPM = 96, tick = (ms) => Math.round((ms * TPQ * BPM) / 60000);
+      const ev = [];
+      for (const [t, k, v] of REC.events) {
+        const n = recNote(k, v);
+        ev.push({ tick: tick(t), type: "on", ch: 0, a: n, b: Math.min(127, 48 + Math.round((v || 0.5) * 70)) });
+        ev.push({ tick: tick(t) + 240, type: "off", ch: 0, a: n, b: 0 });
+      }
+      for (const [t, bass, mid, treb] of REC.bands) {
+        ev.push({ tick: tick(t), type: "cc", ch: 0, a: 1, b: Math.min(127, Math.round(((bass + mid + treb) / 3) * 127)) });
+      }
+      const bytes = m.writeMIDI({ ticksPerQuarter: TPQ, tempoBPM: BPM, events: ev });
+      saveBlob("retro-performance.mid", new Blob([bytes], { type: "audio/midi" }));
+      ping("bell"); status("performance saved as MIDI: " + REC.events.length + " notes", "ok");
+    } catch (e) { status("MIDI failed: " + e.message, "err"); }
+  });
+
   // --- shader stack: composite extra shader layers with blend modes ---------
   function stackCount() { const el = $("re-stack-count"); if (el) el.textContent = (extraLayers.length + 1) + (extraLayers.length ? " layers" : " layer"); }
   function addLayer(idx) {
@@ -641,7 +806,7 @@ function boot() {
   const audioSeed = () => ($("re-fxseed").value || "drone") + "-" + $("re-palette").value;
   async function ensureAudio() {
     if (audio) return audio;
-    const m = await import("./retro-audio.js?v=20260805-react");
+    const m = await import("./retro-audio.js?v=20260811-crossings");
     audio = m.createRetroAudio();
     return audio;
   }

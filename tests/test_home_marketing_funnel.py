@@ -188,7 +188,8 @@ def test_home_make_prove_copy_states_the_current_public_boundary() -> None:
     normalized = " ".join(source.split())
     expected_lead = (
         "zentropyLabs is one workshop across a wide span. At the making end: a live retro engine, "
-        "a generative studio, and a gallery of seed-reproducible plates. At the proving end: "
+        "a generative studio, a gallery of seed-reproducible plates, and a loom that weaves any "
+        "render into cloth. At the proving end: "
         "fourteen public systems with receipts, verifiers, and runnable tools at different maturity "
         "levels. They share one operating thesis, but they do not yet form a single executable loop. "
         "Six papers sit on the record between them. Each page names what runs, what evidence exists, "
