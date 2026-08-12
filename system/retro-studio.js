@@ -9,7 +9,10 @@
 import { renderRetro } from "./retro-engine.js";
 import { createShaderRunner, DEFAULT_FRAG } from "./shader-runner.js?v=20260805-react";
 import { applyOps, OP_META, rngFrom } from "./glitch-ops.js?v=20260805-mosaic";
-import { SHADER_PRESETS } from "./shader-presets.js?v=20260811-rich";
+import { SHADER_PRESETS } from "./shader-presets.js?v=20260812-motion";
+import { sendPiece, receiveTrail, mountFlow } from "./workbench.js?v=20260812-cohesion";
+import { setUserPalette } from "./retro-palettes.js";
+import { MOD_SOURCES, evalSources, computeOffsets, modValue } from "./mod-matrix.js?v=20260812-motion";
 
 const $ = (id) => document.getElementById(id);
 const rand = () => Math.random().toString(36).slice(2, 9);
@@ -33,6 +36,40 @@ function boot() {
   // canvas itself (faded, never cleared).
   const scopeCanvas = document.createElement("canvas"); scopeCanvas.width = 1024; scopeCanvas.height = 640;
   let scopeMod = null, scopeLoading = false;
+
+  // the Draw source: the user's hand, straight into the pipeline
+  const drawCanvas = document.createElement("canvas"); drawCanvas.width = 1024; drawCanvas.height = 640;
+  { const g = drawCanvas.getContext("2d"); g.fillStyle = "#07070c"; g.fillRect(0, 0, 1024, 640); }
+  let drawing = false, lastPt = null;
+  // the drawn beam figure: normalized [-1,1] points and its looping sound.
+  // beamGen invalidates in-flight lifts: release or a new stroke bumps it,
+  // and a lift that finishes late must not resurrect a released figure.
+  let beamPath = [], beamFigure = null, beamDrawing = false, beamGen = 0;
+
+  // the motion rack: routes patch sources into parameters; offsets are
+  // fractions of each slider's range, recomputed every frame, never written
+  // into the DOM so the user's set point survives under the movement.
+  const MOD_TARGETS = [
+    ["tw", "re-tw", "Pixel size"], ["bloom", "re-bloom", "Bloom"], ["curv", "re-curv", "Curvature"],
+    ["vig", "re-vig", "Vignette"], ["scan", "re-scan", "Scanlines"], ["gam", "re-gam", "Gamma"],
+    ["amount", "re-fxamount", "Effect amount"], ["knobA", "re-knobA", "Knob A"],
+    ["knobB", "re-knobB", "Knob B"], ["knobC", "re-knobC", "Knob C"], ["fb", "re-fb-amt", "Feedback decay"],
+  ];
+  let modRoutes = [], modOffsets = {};
+  const mv = (key, id) => {
+    const el = $(id);
+    if (!el) return 0;
+    return modValue(+el.value, +el.min, +el.max, modOffsets[key]);
+  };
+
+  // video feedback: the previous OUT frame folded back over the next one
+  const fbCanvas = document.createElement("canvas");
+  const fbOn = () => { const el = $("re-fb"); return !!(el && el.checked); };
+
+  // draw undo: a short stack of ground truth, one entry per stroke
+  const drawUndo = [];
+  // a running clip keeps the loop alive even on a still source
+  let clipActive = false;
   const extraLayers = []; // [{canvas, runner, glsl, name, blend, opacity}]
   const MAX_LAYERS = 4;
   const BLENDS = [["lighter", "Add"], ["screen", "Screen"], ["multiply", "Multiply"],
@@ -48,7 +85,7 @@ function boot() {
   // Per-effect amounts. The master Amount sets them all at once; each active
   // effect then keeps its own dial, so a chain can be tuned part by part.
   const fxAmount = new Map();
-  const masterAmt = () => (+($("re-fxamount") ? $("re-fxamount").value : 50)) / 100;
+  const masterAmt = () => ($("re-fxamount") ? mv("amount", "re-fxamount") : 50) / 100;
   const ampOf = (op) => (fxAmount.has(op) ? fxAmount.get(op) : masterAmt());
 
   // Where the cursor sits over the picture, 0..1. Effects that model light
@@ -59,27 +96,27 @@ function boot() {
   const AU = { bass: 0, mid: 0, treble: 0, level: 0 };
   const reactOn = new Set(["shader"]);
   const reactAmt = () => (+($("re-react") ? $("re-react").value : 60)) / 100;
-  const knobVals = () => [(+$("re-knobA").value) / 100, (+$("re-knobB").value) / 100, (+$("re-knobC").value) / 100];
+  const knobVals = () => [mv("knobA", "re-knobA") / 100, mv("knobB", "re-knobB") / 100, mv("knobC", "re-knobC") / 100];
 
   const fxAnimOn = () => $("re-fxanim").checked;
   const sourceCanvas = () => (state === "shader" ? (extraLayers.length ? stackCanvas : shaderCanvas)
-    : state === "scope" ? scopeCanvas : srcCanvas);
+    : state === "scope" ? scopeCanvas : state === "draw" ? drawCanvas : srcCanvas);
   // Sound keeps the loop alive too: a still plate should still move to music.
   const loopActive = () => state === "shader" || state === "scope" || (fxAnimOn() && activeFx.size > 0)
-    || !!(audio && audio.isOn() && reactOn.size);
+    || !!(audio && audio.isOn() && reactOn.size) || modRoutes.length > 0 || fbOn() || clipActive;
 
   function opts() {
-    let tw = +$("re-tw").value; const scan = +$("re-scan").value / 100;
-    let bloom = +$("re-bloom").value / 100;
+    let tw = Math.round(mv("tw", "re-tw")); const scan = mv("scan", "re-scan") / 100;
+    let bloom = mv("bloom", "re-bloom") / 100;
     const r = reactAmt();
     // sound reaching into the picture: bass coarsens the pixel grid, level blooms
     if (reactOn.has("pixel")) tw = Math.max(24, Math.round(tw * (1 - AU.bass * 0.45 * r)));
     if (reactOn.has("bloom")) bloom = Math.min(1.4, bloom + AU.level * 0.9 * r);
     return {
       palette: $("re-palette").value, targetWidth: tw, dither: $("re-dither").value,
-      gamma: +$("re-gam").value / 100, sdfShade: $("re-sdf").checked,
-      curvature: +$("re-curv").value / 100, bloom,
-      vignette: +$("re-vig").value / 100, scanStrength: scan, scanlines: scan > 0.02,
+      gamma: mv("gam", "re-gam") / 100, sdfShade: $("re-sdf").checked,
+      curvature: mv("curv", "re-curv") / 100, bloom,
+      vignette: mv("vig", "re-vig") / 100, scanStrength: scan, scanlines: scan > 0.02,
       upscale: Math.max(2, Math.min(12, Math.round(900 / tw))),
     };
   }
@@ -128,6 +165,19 @@ function boot() {
 
   function status(msg, kind) { const el = $("re-status"); el.textContent = msg || ""; el.className = "re-status" + (kind ? " " + kind : ""); }
 
+  // --- your own colors as hardware: six swatches become the "yours" palette
+  const YOURPAL_KEY = "re.userpal.v1";
+  function palInputs() { return [...document.querySelectorAll("#re-yourpal-row .re-color")]; }
+  function hexTriple(h) { const v = parseInt(h.slice(1), 16); return [(v >> 16) & 255, (v >> 8) & 255, v & 255]; }
+  function applyUserPalette(save) {
+    const inputs = palInputs();
+    if (!inputs.length) return;
+    if (setUserPalette(inputs.map((i) => hexTriple(i.value))) && save) {
+      try { localStorage.setItem(YOURPAL_KEY, JSON.stringify(inputs.map((i) => i.value))); } catch (_) {}
+    }
+  }
+  function syncYourPal() { const f = $("re-yourpal"); if (f) f.hidden = $("re-palette").value !== "yours"; }
+
   // Render the base shader, then composite the extra shader layers on top with
   // their blend modes — novel combinations of shader math in one frame.
   // Push the live knob values into every running program (no recompile).
@@ -143,7 +193,9 @@ function boot() {
     // With no sound connected the bands breathe on a slow synthetic pulse, so an
     // audio-reactive shader is alive the moment you open it. Real sound, once
     // you start it, replaces the pulse entirely.
-    if (!audio || !audio.hasInput || (!audio.isOn() && !audio.hasInput())) {
+    const scanLive = !!(audio && audio.scanPlaying && audio.scanPlaying());
+    const loopLive = !!(audio && audio.loopPlaying && audio.loopPlaying());
+    if (!audio || !audio.hasInput || (!audio.isOn() && !audio.hasInput() && !scanLive && !loopLive)) {
       const s = t || 0;
       AU.bass = 0.34 + 0.30 * Math.sin(s * 0.85);
       AU.mid = 0.30 + 0.24 * Math.sin(s * 1.33 + 1.1);
@@ -200,10 +252,16 @@ function boot() {
     const persist = (+($("re-scope-persist") ? $("re-scope-persist").value : 70)) / 100;
     scopeMod.fadeTrace(ctx, scopeCanvas.width, scopeCanvas.height, 0.03 + (1 - persist) * 0.45);
     let pts = null;
-    const wf = audio && audio.waveform ? audio.waveform() : null;
-    if (wf) {
-      let rms = 0; for (let i = 0; i < wf.length; i += 8) rms += wf[i] * wf[i];
-      if (Math.sqrt(rms / (wf.length / 8)) > 0.004) pts = scopeMod.delayEmbed(wf, 96, 2);
+    // Priority: the figure the user drew, then the partial path under the
+    // finger, then live audio, then the idle knob-steered Lissajous.
+    if (beamFigure) pts = beamFigure;
+    else if (beamDrawing && beamPath.length >= 4) pts = Float32Array.from(beamPath);
+    else {
+      const wf = audio && audio.waveform ? audio.waveform() : null;
+      if (wf) {
+        let rms = 0; for (let i = 0; i < wf.length; i += 8) rms += wf[i] * wf[i];
+        if (Math.sqrt(rms / (wf.length / 8)) > 0.004) pts = scopeMod.delayEmbed(wf, 96, 2);
+      }
     }
     if (!pts) { const k = knobVals(); pts = scopeMod.idlePath($("re-fxseed").value || "beam", t, k[0], k[1], k[2]); }
     scopeMod.drawTrace(ctx, pts, scopeCanvas.width, scopeCanvas.height, { beam: 0.9 });
@@ -227,10 +285,45 @@ function boot() {
     audio.feed(bands);
   }
 
+  // Sources drive parameters through the routes; offsets refresh per frame.
+  // Knob routes push the modulated values into the running shaders too.
+  function modPass(t) {
+    if (!modRoutes.length) { if (modOffsets.tw !== undefined || Object.keys(modOffsets).length) modOffsets = {}; return; }
+    const env = {
+      bass: AU.bass, mid: AU.mid, treble: AU.treble, level: AU.level,
+      mx: MOUSE.x, my: MOUSE.y,
+      knobA: (+$("re-knobA").value) / 100, knobB: (+$("re-knobB").value) / 100, knobC: (+$("re-knobC").value) / 100,
+    };
+    modOffsets = computeOffsets(modRoutes, evalSources(t, env));
+    if (modRoutes.some((r) => r.tgt === "knobA" || r.tgt === "knobB" || r.tgt === "knobC")) pushKnobs();
+  }
+
   function retroPass(t = 0) {
     const s = sourceCanvas(); if (!s.width) return;
     try { renderRetro(s, out, opts()); if (activeFx.size) applyOps(out, buildFx(t)); }
     catch (e) { status("render error: " + e.message, "err"); }
+    // Feedback: the previous frame folded back over this one (zoomed and
+    // rotated a little), then the blend becomes the next frame's memory.
+    if (fbOn()) {
+      const g = out.getContext("2d");
+      // Blend the memory even across size changes (a modulated pixel grid
+      // resizes the canvas nearly every frame): the old frame scale-blits
+      // into the new dimensions instead of being thrown away.
+      if (fbCanvas.width > 0 && fbCanvas.height > 0) {
+        g.save();
+        g.globalAlpha = Math.max(0, Math.min(0.95, mv("fb", "re-fb-amt") / 100));
+        g.translate(out.width / 2, out.height / 2);
+        g.rotate(((+$("re-fb-rot").value) / 10) * Math.PI / 180);
+        const z = 1 + (+$("re-fb-zoom").value) / 1000;
+        g.scale(z, z);
+        g.drawImage(fbCanvas, -out.width / 2, -out.height / 2, out.width, out.height);
+        g.restore();
+      }
+      if (fbCanvas.width !== out.width || fbCanvas.height !== out.height) {
+        fbCanvas.width = out.width; fbCanvas.height = out.height;
+      }
+      fbCanvas.getContext("2d").drawImage(out, 0, 0);
+    }
     sampleAudio();
   }
 
@@ -274,6 +367,7 @@ function boot() {
     const loop = (now) => {
       const t = now / 1000;
       pumpAudio(t);
+      modPass(t);
       if (state === "shader") renderShaderFrame(t);
       if (state === "scope") renderScopeFrame(t);
       if (now - lastRetro > 45) { retroPass(t); lastRetro = now; }
@@ -365,6 +459,7 @@ function boot() {
     ping("button");
     const pals = ["outrun", "gameboy", "nes", "c64", "zx", "ega", "teletext", "pico8", "vboy", "amber", "mono1", "aurora", "auto"];
     $("re-palette").value = pals[Math.floor(Math.random() * pals.length)];
+    syncYourPal();
     const setR = (id, v, vid, div) => { $(id).value = v; if (vid) $(vid).textContent = (v / (div || 1)).toFixed(div ? 2 : 0); };
     setR("re-tw", 60 + Math.floor(Math.random() * 240), "re-tw-v", 1);
     setR("re-curv", Math.floor(Math.random() * 70), "re-curv-v", 100);
@@ -381,14 +476,57 @@ function boot() {
   // --- wiring -------------------------------------------------------------
   document.querySelectorAll(".re-tab").forEach((tab) => {
     tab.addEventListener("click", () => {
+      const leaving = state;
       state = tab.dataset.src;
       document.querySelectorAll(".re-tab").forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
       document.querySelectorAll(".re-srcpanel").forEach((p) => { p.hidden = p.dataset.panel !== state; });
-      if (state === "upload" && $("re-palette").value !== "auto") $("re-palette").value = "auto";
+      // Leaving the Scope releases a sounding figure: its only controls live
+      // in the Scope panel, so it must never outlive the visit.
+      if (leaving === "scope" && state !== "scope" && (beamFigure || beamDrawing)) {
+        beamFigure = null; beamPath = []; beamDrawing = false; beamGen++;
+        if (audio && audio.stopLoop) audio.stopLoop();
+      }
+      // Uploads default to the extracted palette, but a deliberate "yours"
+      // is the user's choice and stays.
+      if (state === "upload" && $("re-palette").value !== "auto" && $("re-palette").value !== "yours") $("re-palette").value = "auto";
+      syncYourPal();
+      // A new source starts with a clean feedback memory: the old source
+      // must not ghost over the first seconds of the new one.
+      if (leaving !== state) fbCanvas.width = 0;
       ping("bell"); refreshSource();
     });
   });
-  ["re-palette", "re-dither", "re-sdf"].forEach((id) => $(id).addEventListener("change", () => { redraw(); ping(id === "re-sdf" ? "chip" : "preset", 0.5); }));
+  // The tablist keeps its keyboard contract: arrows walk the tabs, Home and
+  // End jump, and moving focus activates the source.
+  const tablist = document.querySelector(".re-sources");
+  if (tablist) tablist.addEventListener("keydown", (e) => {
+    const tabs = [...tablist.querySelectorAll(".re-tab")];
+    const cur = tabs.indexOf(document.activeElement);
+    if (cur < 0) return;
+    let next = -1;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (cur + 1) % tabs.length;
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = (cur - 1 + tabs.length) % tabs.length;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = tabs.length - 1;
+    if (next < 0) return;
+    e.preventDefault();
+    tabs[next].focus(); tabs[next].click();
+  });
+  ["re-palette", "re-dither", "re-sdf"].forEach((id) => $(id).addEventListener("change", () => {
+    if (id === "re-palette") syncYourPal();
+    redraw(); ping(id === "re-sdf" ? "chip" : "preset", 0.5);
+  }));
+  // Boot the user palette: saved swatches, or the defaults in the markup.
+  try {
+    const saved = JSON.parse(localStorage.getItem(YOURPAL_KEY) || "null");
+    if (Array.isArray(saved)) palInputs().forEach((i, k) => { if (saved[k]) i.value = saved[k]; });
+  } catch (_) {}
+  applyUserPalette(false);
+  syncYourPal();
+  palInputs().forEach((i) => i.addEventListener("input", () => {
+    applyUserPalette(true); pingSlide("slider", 0.5);
+    if ($("re-palette").value === "yours") redraw();
+  }));
   [["re-tw", "re-tw-v", 1], ["re-curv", "re-curv-v", 100], ["re-bloom", "re-bloom-v", 100],
    ["re-vig", "re-vig-v", 100], ["re-scan", "re-scan-v", 100], ["re-gam", "re-gam-v", 100],
    ["re-fxamount", "re-fxamount-v", 100]]
@@ -550,13 +688,23 @@ function boot() {
       react: [...reactOn], reactAmt: +$("re-react").value,
       seed: $("re-seed").value, plate: $("re-layers").value,
       layers: extraLayers.map((L) => ({ name: L.name, glsl: L.glsl, blend: L.blend, opacity: L.opacity })),
+      userPal: $("re-palette").value === "yours" ? palInputs().map((i) => i.value) : undefined,
+      mod: modRoutes.map((r) => ({ src: r.src, tgt: r.tgt, depth: r.depth })),
+      fb: { on: fbOn(), amt: +$("re-fb-amt").value, zoom: +$("re-fb-zoom").value, rot: +$("re-fb-rot").value },
     };
   }
 
   function applyPatch(p) {
     if (!p || typeof p !== "object") return;
     const setV = (id, v, vid, div) => { if (v == null || !$(id)) return; $(id).value = String(v); if (vid && $(vid)) $(vid).textContent = div ? (v / div).toFixed(2) : String(v); };
+    if (Array.isArray(p.userPal)) {
+      // A shared patch shows its author's colors for this session; it never
+      // overwrites the palette the visitor saved for themselves.
+      palInputs().forEach((i, k) => { if (p.userPal[k]) i.value = p.userPal[k]; });
+      applyUserPalette(false);
+    }
     setV("re-palette", p.pal); setV("re-dither", p.dith);
+    syncYourPal();
     setV("re-tw", p.tw, "re-tw-v"); setV("re-gam", p.gam, "re-gam-v", 100);
     setV("re-curv", p.curv, "re-curv-v", 100); setV("re-bloom", p.bloom, "re-bloom-v", 100);
     setV("re-vig", p.vig, "re-vig-v", 100); setV("re-scan", p.scan, "re-scan-v", 100);
@@ -580,10 +728,25 @@ function boot() {
       if (r.ok) extraLayers.push({ canvas: cv, runner: r, glsl: L.glsl, name: L.name || "layer", blend: L.blend || "lighter", opacity: L.opacity == null ? 0.7 : L.opacity });
     }
     rebuildStackUI(); stackCount();
+    modRoutes = Array.isArray(p.mod)
+      ? p.mod.filter((r) => r && r.src && r.tgt).map((r) => ({ src: r.src, tgt: r.tgt, depth: Math.max(-1, Math.min(1, +r.depth || 0)) })).slice(0, 12)
+      : [];
+    renderModRows();
+    if (p.fb) {
+      if ($("re-fb")) $("re-fb").checked = !!p.fb.on;
+      fbCanvas.width = 0;
+      if (p.fb.amt != null && $("re-fb-amt")) { $("re-fb-amt").value = String(p.fb.amt); $("re-fb-amt-v").textContent = String(p.fb.amt); }
+      if (p.fb.zoom != null && $("re-fb-zoom")) { $("re-fb-zoom").value = String(p.fb.zoom); $("re-fb-zoom-v").textContent = (p.fb.zoom / 10).toFixed(1); }
+      if (p.fb.rot != null && $("re-fb-rot")) { $("re-fb-rot").value = String(p.fb.rot); $("re-fb-rot-v").textContent = (p.fb.rot / 10).toFixed(1); }
+    }
     if (p.glsl) $("re-code").value = p.glsl;
     syncFxChips();
     const tab = document.querySelector('.re-tab[data-src="' + (p.src || "shader") + '"]');
     if (tab) tab.click(); else refreshSource();
+    // The upload tab's auto-palette convenience must not undo the patch's
+    // own palette choice.
+    if (p.pal != null && $("re-palette").value !== p.pal) { $("re-palette").value = p.pal; redraw(); }
+    syncYourPal();
     pushKnobs();
   }
 
@@ -620,21 +783,31 @@ function boot() {
   $("re-randomize").addEventListener("click", randomize);
   $("re-save").addEventListener("click", () => { ping("preset"); const a = document.createElement("a"); a.download = "retro-" + $("re-palette").value + ".png"; a.href = out.toDataURL("image/png"); a.click(); });
 
-  // Hand the current render to the Studio as a plot map (via sessionStorage).
-  $("re-send-studio").addEventListener("click", () => {
-    try { sessionStorage.setItem("re.studio.handoff", out.toDataURL("image/png")); }
-    catch (e) { status("render too large to hand off", "err"); return; }
-    ping("bell"); status("opening the Studio…", "ok");
-    location.href = "studio.html?source=plotmaps&import=retro";
-  });
+  // What this piece is right now, for the trail it carries onward.
+  function pieceLabel() {
+    let what = state;
+    if (state === "shader") {
+      const sel = $("re-preset");
+      what = sel && sel.selectedIndex > 0 ? sel.options[sel.selectedIndex].text : "custom shader";
+      if (extraLayers.length) what += " +" + extraLayers.length;
+    }
+    return what + ", " + $("re-palette").value;
+  }
 
-  // Hand the current render to the Loom to be woven into cloth.
+  // Hand the current render onward through the workbench: the legacy key the
+  // receiver reads plus the trail the piece carries.
+  $("re-send-studio").addEventListener("click", () => {
+    if (!sendPiece("studio", out.toDataURL("image/png"), { surface: "retro", label: pieceLabel() })) {
+      status("render too large to hand off", "err"); return;
+    }
+    ping("bell"); status("opening the Studio…", "ok");
+  });
   const sendLoom = $("re-send-loom");
   if (sendLoom) sendLoom.addEventListener("click", () => {
-    try { sessionStorage.setItem("re.loom.handoff", out.toDataURL("image/png")); }
-    catch (e) { status("render too large to hand off", "err"); return; }
+    if (!sendPiece("loom", out.toDataURL("image/png"), { surface: "retro", label: pieceLabel() })) {
+      status("render too large to hand off", "err"); return;
+    }
     ping("bell"); status("opening the Loom…", "ok");
-    location.href = "loom.html?import=render";
   });
 
   // --- make it physical: the render leaves the screen -----------------------
@@ -667,29 +840,47 @@ function boot() {
     } catch (e) { status("relief failed: " + e.message, "err"); }
   });
 
-  // Phenakistoscope disc: twelve frames of the animation around one loop,
-  // printed, cut, pinned, and spun in front of a mirror. Animation you hold.
+  // Twelve frames of the animation around one loop, shared by the disc and
+  // the strip. Capturing walks the real pipeline at each phase.
+  function captureFrames(N, loopSec) {
+    const frames = [];
+    for (let k = 0; k < N; k++) {
+      const tk = (k / N) * loopSec;
+      modPass(tk);
+      if (state === "shader") renderShaderFrame(tk);
+      if (state === "scope" && scopeMod) renderScopeFrame(tk);
+      retroPass(tk);
+      const f = document.createElement("canvas"); f.width = out.width; f.height = out.height;
+      f.getContext("2d").drawImage(out, 0, 0);
+      frames.push(f);
+    }
+    redraw();
+    return frames;
+  }
+
+  // Phenakistoscope disc: printed, cut, pinned, and spun in front of a
+  // mirror. The strip is its zoetrope sibling: rolled into a drum instead.
   const spinBtn = $("re-spin");
   if (spinBtn) spinBtn.addEventListener("click", async () => {
     ping("bell"); status("catching twelve frames…", "");
     try {
-      const m = await import("./zoetrope.js?v=20260811-crossings");
-      const frames = [], N = 12, loopSec = 2.4;
-      for (let k = 0; k < N; k++) {
-        const tk = (k / N) * loopSec;
-        if (state === "shader") renderShaderFrame(tk);
-        if (state === "scope" && scopeMod) renderScopeFrame(tk);
-        retroPass(tk);
-        const f = document.createElement("canvas"); f.width = out.width; f.height = out.height;
-        f.getContext("2d").drawImage(out, 0, 0);
-        frames.push(f);
-      }
-      redraw();
+      const m = await import("./zoetrope-compose.js?v=20260812-cohesion");
       const disc = document.createElement("canvas");
-      m.composeDisc(disc, frames, { diameterPx: 2400, label: "zentropyLabs retro engine" });
+      m.composeDisc(disc, captureFrames(12, 2.4), { diameterPx: 2400, label: "zentropyLabs retro engine" });
       saveBlob("retro-spin-disc.png", await new Promise((r) => disc.toBlob(r, "image/png")));
       status(loopActive() ? "disc saved: print, cut, pin, spin at a mirror" : "disc saved: a still source spins into a still image", "ok");
     } catch (e) { status("disc failed: " + e.message, "err"); }
+  });
+  const stripBtn = $("re-strip");
+  if (stripBtn) stripBtn.addEventListener("click", async () => {
+    ping("bell"); status("catching twelve frames…", "");
+    try {
+      const m = await import("./zoetrope-compose.js?v=20260812-cohesion");
+      const strip = document.createElement("canvas");
+      m.composeStrip(strip, captureFrames(12, 2.4), { widthPx: 3300 });
+      saveBlob("retro-zoetrope-strip.png", await new Promise((r) => strip.toBlob(r, "image/png")));
+      status("strip saved: roll it into a drum, tape the tab, spin", "ok");
+    } catch (e) { status("strip failed: " + e.message, "err"); }
   });
 
   const persistSlider = $("re-scope-persist");
@@ -755,6 +946,49 @@ function boot() {
     } catch (e) { status("MIDI failed: " + e.message, "err"); }
   });
 
+  // --- the ANS voice: the picture itself is the score -----------------------
+  // Rows are frequencies folded onto the instrument's scale, the scan is
+  // time, brightness is loudness. Playing routes through the analysis tap,
+  // so switching to the Scope while it plays draws the picture's own sound.
+  const playPic = $("re-play-pic");
+  let picRun = null, picTimer = 0, picBusy = false;
+  if (playPic) playPic.addEventListener("click", async () => {
+    if (picBusy) return;
+    if (picRun) {
+      clearTimeout(picTimer);
+      picRun.stop(); picRun = null;
+      playPic.setAttribute("aria-pressed", "false"); status("scan stopped", "");
+      return;
+    }
+    picBusy = true;
+    try {
+      await ensureAudio();
+      const m = await import("./ans-voice.js?v=20260812-cohesion");
+      const scan = m.scanImage(out, 40, 96);
+      const freqs = m.rowFrequencies(scan.rows, { mode: "penta" });
+      picRun = await audio.playScan(scan, freqs, 9);
+    } catch (_) { status("could not play the picture", "err"); picBusy = false; return; }
+    picBusy = false;
+    playPic.setAttribute("aria-pressed", "true");
+    status("playing the picture: rows are pitches, the scan is time", "ok");
+    clearTimeout(picTimer);
+    picTimer = setTimeout(() => { picRun = null; playPic.setAttribute("aria-pressed", "false"); }, 9700);
+  });
+  const picMidi = $("re-pic-midi");
+  if (picMidi) picMidi.addEventListener("click", async () => {
+    try {
+      const a = await import("./ans-voice.js?v=20260812-cohesion");
+      const w = await import("./midi-writer.js?v=20260811-crossings");
+      const scan = a.scanImage(out, 40, 96);
+      const freqs = a.rowFrequencies(scan.rows, { mode: "penta" });
+      const ev = a.scanToMIDI(scan, freqs, {});
+      if (!ev.length) { status("the picture is too dark to transcribe: brighten it first", ""); return; }
+      const bytes = w.writeMIDI({ ticksPerQuarter: 480, tempoBPM: 96, events: ev });
+      saveBlob("retro-picture.mid", new Blob([bytes], { type: "audio/midi" }));
+      ping("bell"); status("picture transcribed: " + ev.filter((e) => e.type === "on").length + " notes", "ok");
+    } catch (e) { status("transcription failed: " + e.message, "err"); }
+  });
+
   // --- shader stack: composite extra shader layers with blend modes ---------
   function stackCount() { const el = $("re-stack-count"); if (el) el.textContent = (extraLayers.length + 1) + (extraLayers.length ? " layers" : " layer"); }
   function addLayer(idx) {
@@ -806,7 +1040,7 @@ function boot() {
   const audioSeed = () => ($("re-fxseed").value || "drone") + "-" + $("re-palette").value;
   async function ensureAudio() {
     if (audio) return audio;
-    const m = await import("./retro-audio.js?v=20260811-crossings");
+    const m = await import("./retro-audio.js?v=20260812-cohesion");
     audio = m.createRetroAudio();
     return audio;
   }
@@ -864,15 +1098,163 @@ function boot() {
     if (!animRaf) { renderShaderFrame(performance.now() / 1000); retroPass(0); }
   });
   out.addEventListener("click", () => {
+    // The hand modes own the surface: no seed re-roll under a brush stroke
+    // or while the beam is being drawn.
+    if (state === "draw") return;
+    if (state === "scope" && $("re-beam-draw") && $("re-beam-draw").checked) return;
     ping("click");
     $("re-fxseed").value = rand();
     if (state === "plate") { $("re-seed").value = rand(); renderPlate(); } else redraw();
   });
 
+  // --- the hand on the glass: the Draw source and the beam figure -----------
+  const outPos = (e) => {
+    const r = out.getBoundingClientRect();
+    return { x: (e.clientX - r.left) / r.width, y: (e.clientY - r.top) / r.height };
+  };
+  function strokeTo(np) {
+    const W = drawCanvas.width, H = drawCanvas.height;
+    const p = { x: np.x * W, y: np.y * H };
+    const from = lastPt || p;
+    const g = drawCanvas.getContext("2d");
+    g.strokeStyle = $("re-erase").checked ? "#07070c" : $("re-ink").value;
+    g.lineWidth = +$("re-brush").value; g.lineCap = "round"; g.lineJoin = "round";
+    const sym = $("re-sym").value;
+    const mx = (q) => ({ x: W - q.x, y: q.y });
+    const my = (q) => ({ x: q.x, y: H - q.y });
+    const pairs = [[from, p]];
+    if (sym === "mirror") pairs.push([mx(from), mx(p)]);
+    else if (sym === "quad") pairs.push([mx(from), mx(p)], [my(from), my(p)], [mx(my(from)), mx(my(p))]);
+    else if (sym === "radial6") for (let k = 1; k < 6; k++) {
+      const t = (k * Math.PI) / 3, cs = Math.cos(t), sn = Math.sin(t);
+      const rot = (q) => ({ x: W / 2 + (q.x - W / 2) * cs - (q.y - H / 2) * sn, y: H / 2 + (q.x - W / 2) * sn + (q.y - H / 2) * cs });
+      pairs.push([rot(from), rot(p)]);
+    }
+    const erase = $("re-erase").checked;
+    const wet = !erase && $("re-brushmode") && $("re-brushmode").value === "wet";
+    const seg = (a, b, width, alpha, color) => {
+      g.globalAlpha = alpha; g.strokeStyle = color; g.lineWidth = width;
+      g.beginPath(); g.moveTo(a.x, a.y); g.lineTo(b.x, b.y); g.stroke();
+    };
+    const size = +$("re-brush").value, ink = $("re-erase").checked ? "#07070c" : $("re-ink").value;
+    const darken = (h, f) => {
+      const v = parseInt(h.slice(1), 16);
+      const c = (x) => Math.round(((v >> x) & 255) * f);
+      return "rgb(" + c(16) + "," + c(8) + "," + c(0) + ")";
+    };
+    for (const [a, b] of pairs) {
+      if (!wet) seg(a, b, size, 1, ink);
+      else {
+        // Wet media: a broad translucent blot whose darker outer ring reads
+        // as the pigment edge, a lighter body wash, a soft core, and a few
+        // granulation speckles. Pigment accumulates where strokes overlap.
+        seg(a, b, size * 2.8, 0.05, darken(ink, 0.6));
+        seg(a, b, size * 2.1, 0.09, ink);
+        seg(a, b, size * 1.1, 0.28, ink);
+        for (let k = 0; k < 2; k++) {
+          const gx = b.x + (Math.random() - 0.5) * size * 2.2, gy = b.y + (Math.random() - 0.5) * size * 2.2;
+          g.globalAlpha = 0.10; g.fillStyle = darken(ink, 0.55);
+          g.beginPath(); g.arc(gx, gy, 0.8 + Math.random() * 1.4, 0, Math.PI * 2); g.fill();
+        }
+      }
+    }
+    g.globalAlpha = 1;
+    lastPt = p;
+  }
+  async function liftBeam() {
+    beamDrawing = false;
+    if (beamPath.length < 16) { beamPath = []; return; }
+    beamFigure = Float32Array.from(beamPath);
+    const gen = beamGen;
+    try {
+      await ensureAudio();
+      const m = await import("./scope-voice.js?v=20260812-cohesion");
+      if (gen !== beamGen) return;
+      const hz = 55 * Math.pow(2, knobVals()[0] * 3);
+      const sr = await audio.rate();
+      if (gen !== beamGen) return;
+      const { left, right } = m.pathToStereo(beamFigure, sr, 1 / hz);
+      await audio.playLoop(left, right);
+      if (gen !== beamGen) { audio.stopLoop(); return; }
+      status("the figure is sounding at " + Math.round(hz) + " Hz: your hand, retraced", "ok");
+    } catch (_) { if (gen === beamGen) status("could not sound the figure", "err"); }
+  }
+  function pushDrawUndo() {
+    try {
+      drawUndo.push(drawCanvas.getContext("2d").getImageData(0, 0, drawCanvas.width, drawCanvas.height));
+      if (drawUndo.length > 6) drawUndo.shift();
+    } catch (_) {}
+  }
+  function undoDraw() {
+    const snap = drawUndo.pop();
+    if (!snap) { status("nothing to undo", ""); return; }
+    drawCanvas.getContext("2d").putImageData(snap, 0, 0);
+    redraw(); ping("chip", 0.3);
+  }
+  out.addEventListener("pointerdown", (e) => {
+    if (state === "draw") {
+      drawing = true; lastPt = null;
+      pushDrawUndo();
+      try { out.setPointerCapture(e.pointerId); } catch (_) {}
+      strokeTo(outPos(e)); redraw(); ping("chip", 0.4);
+    } else if (state === "scope" && $("re-beam-draw") && $("re-beam-draw").checked) {
+      beamDrawing = true; beamPath = []; beamFigure = null; beamGen++;
+      if (audio && audio.stopLoop) audio.stopLoop();
+      const p = outPos(e); beamPath.push(p.x * 2 - 1, 1 - p.y * 2);
+      try { out.setPointerCapture(e.pointerId); } catch (_) {}
+    }
+  });
+  out.addEventListener("pointermove", (e) => {
+    if (drawing && state === "draw") { strokeTo(outPos(e)); redraw(); }
+    else if (beamDrawing && state === "scope") { const p = outPos(e); beamPath.push(p.x * 2 - 1, 1 - p.y * 2); }
+  });
+  out.addEventListener("pointerup", () => {
+    if (drawing) { drawing = false; lastPt = null; ping("preset", 0.5); }
+    if (beamDrawing) liftBeam();
+  });
+  // An interrupted gesture (scroll takeover, palm rejection, capture loss)
+  // must end the stroke cleanly: the drawing stops, the beam path is
+  // abandoned rather than lifted into sound.
+  const abandonPointer = () => {
+    if (drawing) { drawing = false; lastPt = null; }
+    if (beamDrawing) { beamDrawing = false; beamPath = []; beamGen++; }
+  };
+  out.addEventListener("pointercancel", abandonPointer);
+  out.addEventListener("lostpointercapture", () => { if (drawing || beamDrawing) abandonPointer(); });
+  if ($("re-brush")) $("re-brush").addEventListener("input", () => {
+    $("re-brush-v").textContent = $("re-brush").value; pingSlide("slider", (+$("re-brush").value) / 60);
+  });
+  if ($("re-clear-draw")) $("re-clear-draw").addEventListener("click", () => {
+    pushDrawUndo();
+    const g = drawCanvas.getContext("2d");
+    g.fillStyle = "#07070c"; g.fillRect(0, 0, drawCanvas.width, drawCanvas.height);
+    redraw(); ping("bell"); status("fresh ground (undo brings it back)", "");
+  });
+  if ($("re-undo-draw")) $("re-undo-draw").addEventListener("click", undoDraw);
+  if ($("re-brushmode")) $("re-brushmode").addEventListener("change", () => ping("chip", 0.5));
+  ["re-ink", "re-sym", "re-erase"].forEach((id) => { const el = $(id); if (el) el.addEventListener("change", () => ping("chip", 0.5)); });
+  const beamClear = $("re-beam-clear");
+  if (beamClear) beamClear.addEventListener("click", () => {
+    beamFigure = null; beamPath = []; beamGen++;
+    if (audio && audio.stopLoop) audio.stopLoop();
+    status("figure released: the beam is free", "");
+  });
+  const beamToggle = $("re-beam-draw");
+  if (beamToggle) beamToggle.addEventListener("change", () => {
+    if (!beamToggle.checked && beamClear) beamClear.click();
+    ping("chip", 0.5);
+  });
+
   // Keyboard: quick moves for people working the surface, never while typing.
   document.addEventListener("keydown", (e) => {
     const t = e.target, tag = t && t.tagName;
-    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (t && t.isContentEditable)) return;
+    const typing = tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (t && t.isContentEditable);
+    // Undo works even with a panel button focused; only real text entry
+    // keeps its own Ctrl+Z.
+    if (!typing && (e.ctrlKey || e.metaKey) && !e.altKey && (e.key === "z" || e.key === "Z") && state === "draw") {
+      e.preventDefault(); undoDraw(); return;
+    }
+    if (typing || tag === "BUTTON") return;
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     const k = e.key.toLowerCase();
     if (k === "f") { e.preventDefault(); toggleFullscreen(); }
@@ -930,6 +1312,143 @@ function boot() {
   const stage = $("re-stage-preview");
   const fsHud = $("re-fs-hud");
   const inFs = () => document.fullscreenElement === stage;
+  // --- the motion rack: routes, feedback, MIDI hands, the clip --------------
+  const modSrcSel = $("re-mod-src"), modTgtSel = $("re-mod-tgt"), modRows = $("re-mod-rows");
+  if (modSrcSel && modTgtSel) {
+    MOD_SOURCES.forEach((s) => { const o = document.createElement("option"); o.value = s.id; o.textContent = s.label; modSrcSel.appendChild(o); });
+    MOD_TARGETS.forEach(([key, , label]) => { const o = document.createElement("option"); o.value = key; o.textContent = label; modTgtSel.appendChild(o); });
+    modSrcSel.value = "lfo-sine"; modTgtSel.value = "bloom";
+  }
+  function renderModRows() {
+    if (!modRows) return;
+    modRows.textContent = "";
+    modRoutes.forEach((r, i) => {
+      const row = document.createElement("div"); row.className = "re-prow";
+      const lab = document.createElement("span");
+      const s = MOD_SOURCES.find((x) => x.id === r.src);
+      const t = MOD_TARGETS.find((x) => x[0] === r.tgt);
+      lab.textContent = (s ? s.label : r.src) + " → " + (t ? t[2] : r.tgt);
+      const sl = document.createElement("input"); sl.type = "range"; sl.min = "-100"; sl.max = "100";
+      sl.value = String(Math.round(r.depth * 100));
+      sl.setAttribute("aria-label", "Depth for " + lab.textContent);
+      sl.addEventListener("input", () => { r.depth = (+sl.value) / 100; pingSlide("slider", (+sl.value + 100) / 200); });
+      const rm = document.createElement("button"); rm.type = "button"; rm.className = "re-btn re-rm"; rm.textContent = "×";
+      rm.setAttribute("aria-label", "Remove route " + lab.textContent);
+      rm.addEventListener("click", () => { modRoutes.splice(i, 1); renderModRows(); ping("chip", 0.3); modChanged(); });
+      row.append(lab, sl, rm);
+      modRows.appendChild(row);
+    });
+  }
+  // Route edits settle the rack: with no routes left the offsets clear and
+  // the shaders get their base knob values back, so nothing freezes at the
+  // phantom value a removed route last produced.
+  function modChanged() {
+    if (!modRoutes.length) modOffsets = {};
+    pushKnobs();
+    sync();
+    redraw();
+  }
+  if ($("re-mod-add")) $("re-mod-add").addEventListener("click", () => {
+    if (modRoutes.length >= 12) { status("twelve routes is the whole rack", ""); return; }
+    modRoutes.push({ src: modSrcSel.value, tgt: modTgtSel.value, depth: 0.35 });
+    renderModRows(); ping("bell"); modChanged();
+    status("patched: the motion is live, dial its depth below", "ok");
+  });
+
+  [["re-fb-amt", "re-fb-amt-v", (v) => String(v)], ["re-fb-zoom", "re-fb-zoom-v", (v) => (v / 10).toFixed(1)],
+   ["re-fb-rot", "re-fb-rot-v", (v) => (v / 10).toFixed(1)]]
+    .forEach(([id, vid, fmt]) => { const el = $(id); if (el) el.addEventListener("input", () => { $(vid).textContent = fmt(+el.value); pingSlide("slider", 0.5); }); });
+  if ($("re-fb")) $("re-fb").addEventListener("change", () => { if (!fbOn()) fbCanvas.width = 0; ping("chip", 0.6); sync(); });
+  if ($("re-fb-clear")) $("re-fb-clear").addEventListener("click", () => { fbCanvas.width = 0; ping("chip", 0.3); status("feedback flushed", ""); });
+
+  // MIDI learn: press Learn, move a slider on screen, turn a hardware knob.
+  const MIDI_KEY = "re.midimap.v1";
+  let midiMap = {}; try { midiMap = JSON.parse(localStorage.getItem(MIDI_KEY) || "{}"); } catch (_) {}
+  let midiLearn = null, midiInputs = 0;
+  const midiState = () => { const el = $("re-midi-state"); if (el) el.textContent = midiInputs ? midiInputs + " in · " + Object.keys(midiMap).length + " mapped" : "no device"; };
+  function onMIDI(msg) {
+    const d = msg.data; if (!d || (d[0] & 0xF0) !== 0xB0) return;
+    const key = (d[0] & 0x0F) + ":" + d[1];
+    if (midiLearn && midiLearn.stage === 2) {
+      midiMap[key] = midiLearn.target;
+      try { localStorage.setItem(MIDI_KEY, JSON.stringify(midiMap)); } catch (_) {}
+      status("mapped CC " + d[1] + ": turn it and watch", "ok");
+      midiLearn = null; if ($("re-midi")) $("re-midi").setAttribute("aria-pressed", "false");
+      midiState(); return;
+    }
+    const el = midiMap[key] && $(midiMap[key]);
+    if (el && el.type === "range") {
+      el.value = String(+el.min + (d[2] / 127) * (+el.max - +el.min));
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+  }
+  async function ensureMIDI() {
+    if (!navigator.requestMIDIAccess) { status("MIDI needs a browser with WebMIDI (Chrome or Edge)", ""); return null; }
+    const acc = await navigator.requestMIDIAccess({ sysex: false });
+    const wire = () => { midiInputs = 0; acc.inputs.forEach((inp) => { midiInputs++; inp.onmidimessage = onMIDI; }); midiState(); };
+    acc.onstatechange = wire; wire();
+    return acc;
+  }
+  if ($("re-midi")) $("re-midi").addEventListener("click", async () => {
+    let acc = null;
+    try { acc = await ensureMIDI(); } catch (_) { status("MIDI permission denied", "err"); return; }
+    if (!acc) return;
+    if (midiLearn) { midiLearn = null; $("re-midi").setAttribute("aria-pressed", "false"); status("learn cancelled", ""); return; }
+    midiLearn = { stage: 1 };
+    $("re-midi").setAttribute("aria-pressed", "true");
+    status("learn: move a slider on screen first", "ok");
+  });
+  if ($("re-midi-clear")) $("re-midi-clear").addEventListener("click", () => {
+    midiMap = {}; try { localStorage.removeItem(MIDI_KEY); } catch (_) {}
+    midiState(); status("all MIDI bindings forgotten", "");
+  });
+  panelRoot.addEventListener("input", (e) => {
+    // Only a real hand qualifies: synthetic input events (MIDI-driven sets,
+    // preset side effects) must not advance or steal the learn state.
+    if (!midiLearn || midiLearn.stage !== 1 || !e.isTrusted || e.target.type !== "range") return;
+    if (!e.target.id) { status("that dial cannot be mapped; pick one of the labelled sliders", ""); return; }
+    midiLearn = { stage: 2, target: e.target.id };
+    status("learn: now turn a knob on your device", "ok");
+  }, true);
+
+  // Record clip: six seconds of the moving picture as WebM, for the reel.
+  const clipBtn = $("re-clip");
+  if (clipBtn && (!("MediaRecorder" in window) || !out.captureStream)) clipBtn.hidden = true;
+  else if (clipBtn) clipBtn.addEventListener("click", () => {
+    if (clipBtn.dataset.rec) return;
+    let rec = null;
+    try {
+      let mime = "video/webm;codecs=vp9";
+      if (!MediaRecorder.isTypeSupported(mime)) mime = "video/webm";
+      rec = new MediaRecorder(out.captureStream(30), { mimeType: mime, videoBitsPerSecond: 8000000 });
+    } catch (_) { status("clip recording is not supported in this browser", "err"); return; }
+    clipBtn.dataset.rec = "1";
+    clipActive = true;
+    const wasLooping = !!animRaf;
+    if (!wasLooping) startLoop();
+    const chunks = [];
+    rec.ondataavailable = (e) => { if (e.data.size) chunks.push(e.data); };
+    const finish = () => {
+      if (!clipActive) return;
+      clipActive = false;
+      delete clipBtn.dataset.rec;
+      if (chunks.length) { saveBlob("retro-clip.webm", new Blob(chunks, { type: "video/webm" })); status("six seconds saved as WebM", "ok"); }
+      else status("the clip came back empty", "err");
+      sync();
+    };
+    rec.onstop = finish;
+    rec.onerror = finish;
+    try { rec.start(250); } catch (_) { finish(); return; }
+    ping("bell");
+    let left = 6;
+    status("recording: 6s", "ok");
+    const tick = setInterval(() => {
+      left--;
+      if (left <= 0) { clearInterval(tick); try { rec.stop(); } catch (_) { finish(); } }
+      else status("recording: " + left + "s", "ok");
+    }, 1000);
+  });
+
   function setHud() {
     if (!fsHud) return;
     fsHud.textContent = "R randomize · space animate · [ ] amount · F or Esc to leave";
@@ -963,7 +1482,8 @@ function boot() {
       uploaded = img;
       const tab = document.querySelector('.re-tab[data-src="upload"]');
       if (tab) tab.click(); else { state = "upload"; refreshSource(); }
-      status("loaded the plate you sent over", "ok");
+      const rec = receiveTrail("retro");
+      status(rec && rec.line ? "arrived: " + rec.line : "loaded the plate you sent over", "ok");
     };
     img.onerror = () => status("could not read the handed-over image", "err");
     img.src = dataURL;
@@ -980,6 +1500,7 @@ function boot() {
     try { bootPatch = raw ? JSON.parse(raw) : null; } catch (_) { bootPatch = null; }
     if (bootPatch && bootPatch.glsl) booted = bootPatch.glsl;
   }
+  mountFlow($("re-flow"), "retro");
   $("re-code").value = booted;
   syncFxCount();
   if (bootPatch) { applyPatch(bootPatch); status("patch loaded from link", "ok"); }

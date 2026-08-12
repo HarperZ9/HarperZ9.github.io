@@ -263,8 +263,8 @@ export default function App() {
             <div className="range-grid">
               <article className="range-card reveal">
                 <h3>Retro Engine</h3>
-                <p className="range-meta mono">190 shaders · sound draws · physical exports</p>
-                <p>A live retro and pixel-art renderer: 190 editable shaders across 31 shelves, hardware palettes and dither, a stackable feel rack, an oscilloscope source where your own sound draws the picture, and exports that leave the screen: a printable relief, a spinning phenakistoscope disc, a MIDI score of your session.</p>
+                <p className="range-meta mono">191 shaders · sound draws · physical exports</p>
+                <p>A live retro and pixel-art renderer: 191 editable shaders across 31 shelves, hardware palettes and dither, a stackable feel rack, an oscilloscope source where your own sound draws the picture, and exports that leave the screen: a printable relief, a spinning phenakistoscope disc, a MIDI score of your session.</p>
                 <p className="range-proof"><a href="/retro.html">Open the Retro Engine</a>.</p>
               </article>
               <article className="range-card reveal d1">

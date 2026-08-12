@@ -69,6 +69,15 @@ export const RETRO_PALETTES = {
 
 export function paletteNames() { return Object.keys(RETRO_PALETTES); }
 
+// The palette the user mixes: registered under "yours" like any hardware
+// palette, cache invalidated so the mapper picks the change up immediately.
+export function setUserPalette(rgb) {
+  if (!Array.isArray(rgb) || rgb.length < 2) return false;
+  RETRO_PALETTES.yours = rgb.map(([r, g, b]) => [r | 0, g | 0, b | 0]);
+  _labCache.delete("yours");
+  return true;
+}
+
 const _labCache = new Map();
 export function labPalette(name) {
   if (_labCache.has(name)) return _labCache.get(name);

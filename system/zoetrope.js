@@ -214,53 +214,6 @@ export function drawDiscTemplate(ctx, layout, scale) {
   }
 }
 
-// Composite animation frames into the disc's image band, template on top.
-// target is a canvas the caller owns; frames are drawable sources. Frames run
-// counter to slot numbering so the mirror view plays forward. Returns layout.
-export function composeDisc(target, frames, opts = {}) {
-  if (!frames || frames.length < 2) throw new RangeError("composeDisc needs at least 2 frames");
-  const layout = discLayout(Object.assign({ frames: frames.length }, opts.layout || {}));
-  const px = opts.diameterPx || 2400;
-  const scale = px / layout.diameterMM;
-  target.width = px; target.height = px;
-  const ctx = target.getContext("2d");
-  ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, px, px);
-  const half = Math.PI / layout.frames;
-  const rOut = layout.imageOuterRMM * scale, rIn = layout.imageInnerRMM * scale;
-  const rMid = (rOut + rIn) / 2, bandH = rOut - rIn;
-  const bandW = (2 * Math.PI * rMid) / layout.frames;
-  frames.forEach((f, i) => {
-    const a = (layout.frameCenterAngleDeg(i) * Math.PI) / 180;
-    ctx.save();
-    ctx.translate(px / 2, px / 2);
-    ctx.rotate(a);
-    ctx.beginPath();
-    ctx.arc(0, 0, rOut, -Math.PI / 2 - half, -Math.PI / 2 + half);
-    ctx.arc(0, 0, rIn, -Math.PI / 2 + half, -Math.PI / 2 - half, true);
-    ctx.closePath();
-    ctx.clip();
-    ctx.translate(0, -rMid);
-    const w = f.width || f.naturalWidth, h = f.height || f.naturalHeight;
-    const s = Math.max((bandW * 1.12) / w, bandH / h);
-    ctx.drawImage(f, (-w * s) / 2, (-h * s) / 2, w * s, h * s);
-    ctx.restore();
-  });
-  ctx.save();
-  ctx.translate(px / 2, px / 2);
-  ctx.strokeStyle = "#111111"; ctx.lineWidth = Math.max(1, 0.3 * scale);
-  ctx.fillStyle = "#111111";
-  drawDiscTemplate(ctx, layout, scale);
-  ctx.font = Math.round(2.4 * scale) + "px monospace";
-  ctx.textAlign = "center";
-  const spin = layout.spin(12);
-  const lines = [opts.label || "phenakistoscope",
-    "cut the rim and the slots, pin the center",
-    "spin about " + Math.round(spin.rpm) + " rpm, watch through", "the slots in a mirror"];
-  lines.forEach((ln, i) => ctx.fillText(ln, 0, rIn * 0.30 + i * 3.4 * scale));
-  ctx.restore();
-  return layout;
-}
-
 // Strip template: slot band boxes on top, frame boxes below, tab at the end.
 // ctx origin at the strip's top left corner; scale is px per mm.
 export function drawStripTemplate(ctx, layout, scale) {

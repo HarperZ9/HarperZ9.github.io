@@ -135,12 +135,97 @@ export function createRetroAudio() {
     ensureAnalyser();
   }
 
+  // The ANS scan bank: one sine per image row, frequencies fixed, only the
+  // gains automated as the playhead crosses columns (lookahead window, so the
+  // AudioParam event lists stay short). Routed to the speakers and the
+  // analysis tap directly: the picture sounds whether or not the drone runs,
+  // and the scope can draw what the picture sings.
+  let scanRun = null;
+  async function playScan(scan, freqs, seconds) {
+    await ensureCtx();
+    if (scanRun) scanRun.stop();
+    const { grid, rows, cols } = scan;
+    const dur = Math.max(2, seconds || 8);
+    const bus = ctx.createGain();
+    bus.gain.value = 2.2 / rows;
+    // A compressor between the bank and the speakers: bright material sums
+    // hot (rows of near-unity gains on harmonically related sines), and the
+    // ceiling should be musical, not a hard clip.
+    const comp2 = ctx.createDynamicsCompressor();
+    comp2.threshold.value = -12; comp2.ratio.value = 8;
+    bus.connect(comp2); comp2.connect(ctx.destination);
+    bus.connect(analyBus);
+    const oscs2 = [], gains = [];
+    for (let r = 0; r < rows; r++) {
+      const o = ctx.createOscillator(); o.type = "sine"; o.frequency.value = freqs[r];
+      const g = ctx.createGain(); g.gain.value = 0;
+      o.connect(g); g.connect(bus); o.start();
+      oscs2.push(o); gains.push(g);
+    }
+    const t0 = ctx.currentTime + 0.08, colDur = dur / cols;
+    let nextCol = 0, timer = 0;
+    // The lookahead must outlive background-tab timer throttling (1s floor),
+    // or late-scheduled gains snap instead of enveloping.
+    const schedule = () => {
+      const horizon = ctx.currentTime + 1.2;
+      while (nextCol < cols && t0 + nextCol * colDur < horizon) {
+        const t = t0 + nextCol * colDur;
+        for (let r = 0; r < rows; r++) {
+          const v = grid[r * cols + nextCol];
+          gains[r].gain.setTargetAtTime(Math.pow(v, 1.5), t, colDur * 0.45);
+        }
+        nextCol++;
+      }
+      if (nextCol >= cols) { clearInterval(timer); setTimeout(done, (t0 + dur + 0.5 - ctx.currentTime) * 1000); }
+    };
+    let stopped = false;
+    const done = () => {
+      if (stopped) return; stopped = true;
+      for (const g of gains) { try { g.gain.cancelScheduledValues(ctx.currentTime); g.gain.setTargetAtTime(0, ctx.currentTime, 0.05); } catch (_) {} }
+      setTimeout(() => { for (const o of oscs2) { try { o.stop(); } catch (_) {} } try { bus.disconnect(); comp2.disconnect(); } catch (_) {} }, 300);
+      if (scanRun && scanRun._done === done) scanRun = null;
+    };
+    timer = setInterval(schedule, 200);
+    schedule();
+    scanRun = { stop: () => { clearInterval(timer); done(); }, _done: done };
+    return scanRun;
+  }
+
+  // A drawn figure as a looping stereo buffer: left is X, right is Y, the
+  // retrace rate is the pitch. Routed to the speakers and the analysis tap;
+  // one figure at a time.
+  let loopSrc = null, loopGain = null;
+  async function playLoop(left, right) {
+    await ensureCtx();
+    stopLoop();
+    const buf = ctx.createBuffer(2, left.length, ctx.sampleRate);
+    buf.copyToChannel(left, 0); buf.copyToChannel(right, 1);
+    loopSrc = ctx.createBufferSource(); loopSrc.buffer = buf; loopSrc.loop = true;
+    loopGain = ctx.createGain(); loopGain.gain.value = 0.2;
+    loopSrc.connect(loopGain); loopGain.connect(ctx.destination); loopGain.connect(analyBus);
+    loopSrc.start();
+    return { stop: stopLoop };
+  }
+  function stopLoop() {
+    if (!loopSrc) return;
+    try { loopSrc.stop(); } catch (_) {}
+    try { loopSrc.disconnect(); loopGain.disconnect(); } catch (_) {}
+    loopSrc = null; loopGain = null;
+  }
+
   let waveBuf = null;
   return {
     isOn: () => on,
     ping,
     feed,
     bands,
+    playScan,
+    scanPlaying: () => !!scanRun,
+    playLoop,
+    stopLoop,
+    loopPlaying: () => !!loopSrc,
+    // The context's true rate, for callers building sample-exact buffers.
+    async rate() { await ensureCtx(); return ctx.sampleRate; },
     // Raw time-domain samples from the analysis tap, for the XY scope. Null
     // until something is connected; the caller idles on its own figure then.
     waveform() {
@@ -192,6 +277,11 @@ export function createRetroAudio() {
     stop() {
       if (!on || !ctx) return;
       on = false;
+      // The stop button is the mute the user reaches for: everything the
+      // engine is sounding dies with it, including the figure loop and a
+      // running picture scan, which route around the master bus.
+      stopLoop();
+      if (scanRun) { try { scanRun.stop(); } catch (_) {} }
       const t = now();
       if (master) { master.gain.cancelScheduledValues(t); master.gain.setValueAtTime(master.gain.value, t); master.gain.linearRampToValueAtTime(0, t + 0.4); }
       const killO = oscs.splice(0), killG = oscGains.splice(0);

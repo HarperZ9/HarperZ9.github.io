@@ -6290,16 +6290,21 @@ if (tierBtn) {
 // The reverse bridge: hand whatever the studio canvas is showing to the Retro
 // Engine, where it becomes an upload source for palettes, dither, and effects.
 (function bootStudioToRetro() {
+  const sendFrame = async (target) => {
+    const cv = document.getElementById("studio-canvas");
+    if (!cv) return;
+    try {
+      const wb = await import("./workbench.js?v=20260812-cohesion");
+      if (!wb.sendPiece(target, cv.toDataURL("image/png"), { surface: "studio", label: "studio frame" })) {
+        say("model", "That frame is too large to hand over.");
+      }
+    } catch (_) { say("model", "That frame is too large to hand over."); }
+  };
   const wire = () => {
     const btn = document.getElementById("rt-retro");
-    if (!btn) return;
-    btn.addEventListener("click", () => {
-      const cv = document.getElementById("studio-canvas");
-      if (!cv) return;
-      try { sessionStorage.setItem("re.retro.handoff", cv.toDataURL("image/png")); }
-      catch (_) { say("model", "That frame is too large to hand over."); return; }
-      location.href = "retro.html?import=plate";
-    });
+    if (btn) btn.addEventListener("click", () => sendFrame("retro"));
+    const loomBtn = document.getElementById("rt-loom");
+    if (loomBtn) loomBtn.addEventListener("click", () => sendFrame("loom"));
   };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire, { once: true });
   else wire();
@@ -6310,6 +6315,11 @@ function bootRetroHandoff() {
   try { dataURL = sessionStorage.getItem("re.studio.handoff"); } catch (_) { return; }
   if (!dataURL) return;
   try { sessionStorage.removeItem("re.studio.handoff"); } catch (_) {}
+  // The piece's trail, if it arrived through the workbench. Claimed now
+  // (records are one-shot), announced only once the piece actually applies.
+  const trailReady = import("./workbench.js?v=20260812-cohesion")
+    .then((wb) => { const rec = wb.receiveTrail("studio"); return rec && rec.line ? rec.line : null; })
+    .catch(() => null);
   Promise.all([loadPlotMaps(), loadPlotImage()]).then(() => {
     const img = new Image();
     img.onload = () => {
@@ -6333,8 +6343,9 @@ function bootRetroHandoff() {
         drawPlotMap();
       };
       apply(); setTimeout(apply, 500); setTimeout(apply, 1500);
+      trailReady.then((line) => { if (line) say("model", "Arrived: " + line + "."); });
     };
-    img.onerror = () => {};
+    img.onerror = () => { say("model", "The handed-over frame could not be read."); };
     img.src = dataURL;
   }).catch(() => {});
 }

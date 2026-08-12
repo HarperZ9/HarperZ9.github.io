@@ -6,6 +6,7 @@
 // and the cloth handed back to the Retro Engine's pixel pipeline.
 import { STRUCTURES, computeDraft, draftToWIF, weftPaletteFor } from "./weave-engine.js?v=20260811-crossings";
 import { renderCloth, renderDraftChart } from "./weave-render.js?v=20260811-crossings";
+import { sendPiece, receiveTrail, mountFlow } from "./workbench.js?v=20260812-cohesion";
 
 const $ = (id) => document.getElementById(id);
 
@@ -63,7 +64,9 @@ function boot() {
     const pal = mode === "image"
       ? weftPaletteFor(draft, (p) => rowRGB[p], "image")
       : weftPaletteFor(draft, (p) => rowRGB[p], WEFTS[mode] || WEFTS["bone-ink"]);
-    colors = { warpHex: WARPS[$("wv-warp").value] || WARPS.ink, weftHexes: pal.hexes, weftHexAt: (p) => pal.hexes[pal.indexAt(p)], weftIndexAt: pal.indexAt };
+    const warpSel = $("wv-warp").value;
+    const warpHex = warpSel === "custom" ? ($("wv-warp-color") ? $("wv-warp-color").value : WARPS.bone) : (WARPS[warpSel] || WARPS.ink);
+    colors = { warpHex, weftHexes: pal.hexes, weftHexAt: (p) => pal.hexes[pal.indexAt(p)], weftIndexAt: pal.indexAt };
     const hint = $("wv-structure-hint"), s = STRUCTURES[structureId];
     if (hint && s) hint.textContent = s.perCell ? "per-thread shading, chart + cloth exports" : s.shafts + " shafts, " + s.treadles + " treadles";
     if (fresh) woven = $("wv-weaveit").checked ? 0 : draft.picks;
@@ -127,8 +130,11 @@ function boot() {
     if (!dataURL) return false;
     try { sessionStorage.removeItem("re.loom.handoff"); } catch (_) {}
     const img = new Image();
-    img.onload = () => useImage(img, "warping up the frame you sent over");
-    img.onerror = () => status("could not read the handed-over image", "err");
+    img.onload = () => {
+      const rec = receiveTrail("loom");
+      useImage(img, rec && rec.line ? "arrived: " + rec.line : "warping up the frame you sent over");
+    };
+    img.onerror = () => { status("could not read the handed-over image", "err"); bootPlate(); };
     img.src = dataURL;
     return true;
   }
@@ -162,21 +168,41 @@ function boot() {
   Object.keys(STRUCTURES).forEach((id, i) => {
     const b = document.createElement("button");
     b.className = "re-chip"; b.type = "button"; b.setAttribute("role", "radio");
-    b.setAttribute("aria-pressed", String(id === structureId));
+    b.setAttribute("aria-checked", String(id === structureId));
     b.textContent = STRUCTURES[id].name; b.dataset.id = id;
     b.addEventListener("click", () => {
       structureId = id; ping("chip", i / 4);
-      host.querySelectorAll(".re-chip").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.id === id)));
+      host.querySelectorAll(".re-chip").forEach((c) => c.setAttribute("aria-checked", String(c.dataset.id === id)));
       rebuild(true);
     });
     host.appendChild(b);
+  });
+  // Radio semantics carry a keyboard contract: arrows walk the structures.
+  host.addEventListener("keydown", (e) => {
+    const chips = [...host.querySelectorAll(".re-chip")];
+    const cur = chips.indexOf(document.activeElement);
+    if (cur < 0) return;
+    let next = -1;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (cur + 1) % chips.length;
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = (cur - 1 + chips.length) % chips.length;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = chips.length - 1;
+    if (next < 0) return;
+    e.preventDefault();
+    chips[next].focus(); chips[next].click();
   });
   [["wv-sett", "wv-sett-v", (v) => v + " ends"], ["wv-tone", "wv-tone-v", (v) => v], ["wv-speed", "wv-speed-v", (v) => v]]
     .forEach(([id, vid, fmt]) => $(id).addEventListener("input", () => {
       $(vid).textContent = fmt($(id).value);
       if (id !== "wv-speed") rebuild(id === "wv-sett");
     }));
-  ["wv-warp", "wv-weft"].forEach((id) => $(id).addEventListener("change", () => { ping("preset"); rebuild(false); }));
+  ["wv-warp", "wv-weft"].forEach((id) => $(id).addEventListener("change", () => {
+    const c = $("wv-warp-color");
+    if (c) c.hidden = $("wv-warp").value !== "custom";
+    ping("preset"); rebuild(false);
+  }));
+  const warpColor = $("wv-warp-color");
+  if (warpColor) warpColor.addEventListener("input", () => { if ($("wv-warp").value === "custom") rebuild(false); });
   $("wv-weaveit").addEventListener("change", () => {
     if ($("wv-weaveit").checked) { if (draft && woven >= draft.picks) woven = 0; }
     else if (draft) { woven = draft.picks; draw(); }
@@ -185,12 +211,41 @@ function boot() {
   $("wv-sound").addEventListener("change", async () => {
     if ($("wv-sound").checked) {
       try {
-        const m = await import("./retro-audio.js?v=20260811-crossings");
+        const m = await import("./retro-audio.js?v=20260812-cohesion");
         if (!audio) audio = m.createRetroAudio();
         await audio.start("loom-" + structureId);
         status("the rows will sound as they weave", "ok");
       } catch (e) { status("sound needs a click to start", "err"); $("wv-sound").checked = false; }
     } else if (audio && audio.isOn()) { try { audio.stop(); } catch (_) {} }
+  });
+
+  // The cloth as a score: the woven canvas scanned ANS-style, rows to
+  // frequencies on the instrument's scale, width to time. The loom's punch
+  // card ancestry, played back on itself.
+  const playCloth = $("wv-play");
+  let clothRun = null, clothTimer = 0, clothBusy = false;
+  if (playCloth) playCloth.addEventListener("click", async () => {
+    if (!draft || clothBusy) return;
+    if (clothRun) {
+      clearTimeout(clothTimer);
+      clothRun.stop(); clothRun = null;
+      playCloth.setAttribute("aria-pressed", "false"); status("cloth stopped", "");
+      return;
+    }
+    clothBusy = true;
+    try {
+      const am = await import("./retro-audio.js?v=20260812-cohesion");
+      if (!audio) audio = am.createRetroAudio();
+      const m = await import("./ans-voice.js?v=20260812-cohesion");
+      const scan = m.scanImage(out, 36, 88);
+      const freqs = m.rowFrequencies(scan.rows, { mode: "penta" });
+      clothRun = await audio.playScan(scan, freqs, 10);
+    } catch (e) { status("could not play the cloth", "err"); clothBusy = false; return; }
+    clothBusy = false;
+    playCloth.setAttribute("aria-pressed", "true");
+    status("the cloth is playing: weft rows are pitches, the width is time", "ok");
+    clearTimeout(clothTimer);
+    clothTimer = setTimeout(() => { clothRun = null; playCloth.setAttribute("aria-pressed", "false"); }, 10700);
   });
 
   // --- exports --------------------------------------------------------------
@@ -212,11 +267,51 @@ function boot() {
   $("wv-save").addEventListener("click", () => { if (draft) { download("loom-cloth.png", out.toDataURL("image/png")); ping("preset"); } });
   $("wv-send-retro").addEventListener("click", () => {
     if (!draft) return;
-    try { sessionStorage.setItem("re.retro.handoff", out.toDataURL("image/png")); }
-    catch (e) { status("cloth too large to hand off", "err"); return; }
+    const label = STRUCTURES[structureId].name.toLowerCase() + ", " + draft.ends + " ends";
+    if (!sendPiece("retro", out.toDataURL("image/png"), { surface: "loom", label })) {
+      status("cloth too large to hand off", "err"); return;
+    }
     ping("bell"); status("opening the Retro Engine…", "ok");
-    location.href = "retro.html?import=plate";
   });
+
+  // --- setups: the whole loom state kept and restored, trail included -------
+  const SETUPS_KEY = "wb.loom.setups.v1";
+  const loadSetups = () => { try { return JSON.parse(localStorage.getItem(SETUPS_KEY) || "[]"); } catch (_) { return []; } };
+  function refreshSetups() {
+    const sel = $("wv-setups"); if (!sel) return;
+    sel.querySelectorAll("option:not([value=''])").forEach((o) => o.remove());
+    loadSetups().forEach((s, i) => {
+      const o = document.createElement("option"); o.value = String(i); o.textContent = s.name; sel.appendChild(o);
+    });
+  }
+  const saveSetupBtn = $("wv-save-setup");
+  if (saveSetupBtn) saveSetupBtn.addEventListener("click", async () => {
+    const wb = await import("./workbench.js?v=20260812-cohesion");
+    const setups = loadSetups();
+    const name = STRUCTURES[structureId].name.toLowerCase() + " · " + $("wv-sett").value + " ends · " + setups.length;
+    setups.unshift({ name, structureId, sett: $("wv-sett").value, tone: $("wv-tone").value,
+      warp: $("wv-warp").value, warpColor: $("wv-warp-color") ? $("wv-warp-color").value : undefined,
+      weft: $("wv-weft").value, speed: $("wv-speed").value, trail: wb.currentTrail() });
+    try { localStorage.setItem(SETUPS_KEY, JSON.stringify(setups.slice(0, 24))); } catch (e) { status("could not keep the setup", "err"); return; }
+    refreshSetups(); ping("bell"); status("setup kept: " + name, "ok");
+  });
+  const setupsSel = $("wv-setups");
+  if (setupsSel) setupsSel.addEventListener("change", async () => {
+    const s = loadSetups()[+setupsSel.value]; setupsSel.value = "";
+    if (!s) return;
+    structureId = s.structureId in STRUCTURES ? s.structureId : "jacquard";
+    host.querySelectorAll(".re-chip").forEach((c) => c.setAttribute("aria-checked", String(c.dataset.id === structureId)));
+    $("wv-sett").value = s.sett; $("wv-sett-v").textContent = s.sett + " ends";
+    $("wv-tone").value = s.tone; $("wv-tone-v").textContent = s.tone;
+    $("wv-warp").value = s.warp; $("wv-weft").value = s.weft;
+    const wc = $("wv-warp-color");
+    if (wc) { if (s.warpColor) wc.value = s.warpColor; wc.hidden = s.warp !== "custom"; }
+    $("wv-speed").value = s.speed; $("wv-speed-v").textContent = s.speed;
+    rebuild(true); ping("preset");
+    const wb = await import("./workbench.js?v=20260812-cohesion");
+    status("setup restored: " + s.name + (s.trail && s.trail.length ? " · was " + wb.trailLine(s.trail) : ""), "ok");
+  });
+  refreshSetups();
 
   // --- palpable controls + keys + fullscreen (the house feel) ---------------
   const canBuzz = "vibrate" in navigator && !matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -243,16 +338,24 @@ function boot() {
   }
   $("wv-fullscreen").addEventListener("click", fullscreen);
   out.addEventListener("dblclick", fullscreen);
+  document.addEventListener("fullscreenchange", () => {
+    $("wv-fullscreen").setAttribute("aria-pressed", String(!!document.fullscreenElement));
+  });
   document.addEventListener("keydown", (e) => {
-    if (e.target.matches("input[type=text],textarea,select")) return;
+    const t = e.target, tag = t && t.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || tag === "BUTTON" || (t && t.isContentEditable)) return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
     if (e.key === " ") { e.preventDefault(); $("wv-weaveit").checked = !$("wv-weaveit").checked; $("wv-weaveit").dispatchEvent(new Event("change")); }
     else if (e.key === "s" || e.key === "S") $("wv-save").click();
     else if (e.key === "f" || e.key === "F") fullscreen();
   });
 
   // --- boot -----------------------------------------------------------------
+  mountFlow($("wv-flow"), "loom");
+  // A handoff is claimed only when the URL says one was sent; an organic
+  // visit must never consume a stale key a cancelled navigation left behind.
   const wantsImport = new URLSearchParams(location.search).get("import") === "render";
-  if (!(wantsImport && bootHandoff()) && !bootHandoff()) bootPlate();
+  if (!(wantsImport && bootHandoff())) bootPlate();
 }
 
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);

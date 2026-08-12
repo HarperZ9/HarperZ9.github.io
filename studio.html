@@ -1041,6 +1041,9 @@
       <button class="rt-btn" id="rt-retro" type="button" title="Send this frame to the Retro Engine"
         aria-label="Send this frame to the Retro Engine to pixelate and run effects on it">
         <span class="rt-ico" aria-hidden="true">&#9638;</span> To Retro</button>
+      <button class="rt-btn" id="rt-loom" type="button" title="Send this frame to the Loom to be woven"
+        aria-label="Send this frame to the Loom to be woven into cloth">
+        <span class="rt-ico" aria-hidden="true">&#9636;</span> To Loom</button>
       <button class="rt-btn" id="rt-playpause" type="button" aria-pressed="false"
         title="Pause or resume animated sources" aria-label="Pause animated source" disabled>
         <span class="rt-ico" aria-hidden="true">&#9208;</span> <span id="rt-playpause-label">Pause</span></button>
@@ -1196,7 +1199,7 @@
           <span class="mm-live" id="mm-live" hidden aria-hidden="true"><span class="mm-dot"></span>live</span></h2>
         <div class="row"><span class="rk">perceptual hash</span><span class="rv" id="sc-phash" aria-label="Perceptual hash">-</span></div>
         <div class="row"><span class="rk">size</span><span class="rv" id="sc-size">-</span></div>
-        <div class="grounds" id="sc-feats" aria-label="Visual feature readings"></div>
+        <div class="grounds" id="sc-feats" role="group" aria-label="Visual feature readings"></div>
         <p class="mm-describe" id="mm-describe"></p>
         <details class="mm-fullread">
           <summary>full read &middot; the no-vision view</summary>
@@ -1235,7 +1238,7 @@
             <div class="mm-meters" id="mm-visual" role="list" aria-label="Visual channel readings"></div>
             <div class="mm-section">
               <div class="mm-clab">audio channels <span class="mm-hint">when the source has sound</span></div>
-              <div class="mm-meters" id="mm-audio" role="list" aria-label="Audio channel readings"></div>
+              <div class="mm-meters" id="mm-audio" role="group" aria-label="Audio channel readings"></div>
             </div>
             <div class="mm-section">
               <div class="mm-clab">source</div>

@@ -230,8 +230,12 @@ def test_home_metadata_and_fallback_describe_make_and_prove_without_overclaiming
 
 
 def test_retro_hero_names_the_current_shader_count() -> None:
+    """The lede's shader count is derived from the library, never hand-kept."""
     retro = (ROOT / "retro.html").read_text(encoding="utf-8")
-    assert "190 shaders sit on the shelf" in retro
+    presets = (ROOT / "system" / "shader-presets.js").read_text(encoding="utf-8")
+    count = presets.count('"name":')
+    assert count >= 190
+    assert f"{count} shaders sit on the shelf" in retro
     assert "Forty-eight shaders" not in retro
 
 

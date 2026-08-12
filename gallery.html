@@ -384,6 +384,7 @@
     <button type="button" class="plate-redraw" id="desk-plot" aria-label="Replay this plate as pen-plotter line art, stroke by stroke">plot it</button>
     <button type="button" class="plate-redraw" id="desk-vary" aria-label="Draw four neighboring variations of this seed">variations</button>
     <button type="button" class="plate-redraw" id="desk-retro" aria-label="Send this plate to the Retro Engine to pixelate, palette, and run effects on it">send to the retro engine</button>
+    <button type="button" class="plate-redraw" id="desk-loom" aria-label="Send this plate to the Loom to be woven into cloth">weave it on the loom</button>
     <a class="plate-redraw" id="desk-workshop" href="studio.html?source=poster" aria-label="Open this plate in the poster workshop">open in the workshop</a>
   </div>
   <div class="desk-controls" id="desk-material-controls">
@@ -399,7 +400,7 @@
   <p class="desk-hint">instruments &middot; pick up to three &middot; the padlock keeps one through rerolls</p>
   <div class="desk-chips" id="desk-chips" role="group" aria-label="Instrument selection"></div>
   <p class="desk-status" id="desk-status" role="status" aria-live="polite"></p>
-  <div class="desk-variations" id="desk-variations" hidden aria-label="Seed variations - click one to adopt it"></div>
+  <div class="desk-variations" id="desk-variations" hidden role="group" aria-label="Seed variations - click one to adopt it"></div>
   <figure class="plate" data-plate="desk">
     <div class="plate-head"><span class="plate-no">Your plate</span><span class="plate-title" id="desk-title">unnamed &middot; waiting for a seed</span></div>
     <div class="plate-art ratio-wide">
@@ -920,13 +921,17 @@ if (clearMaterialBtn) {
 // Hand this plate to the Retro Engine as an upload source, so a plate you drew
 // here can be pixelated, paletted, and run through the effects rack there.
 const deskRetro = document.getElementById("desk-retro");
-if (deskRetro && deskCanvas) {
-  deskRetro.addEventListener("click", () => {
-    try { sessionStorage.setItem("re.retro.handoff", deskCanvas.toDataURL("image/png")); }
-    catch (err) { if (deskStatus) deskStatus.textContent = "that plate is too large to hand over"; return; }
-    location.href = "retro.html?import=plate";
-  });
-}
+const deskLoom = document.getElementById("desk-loom");
+const sendDesk = async (target) => {
+  try {
+    const wb = await import("./system/workbench.js?v=20260812-cohesion");
+    if (!wb.sendPiece(target, deskCanvas.toDataURL("image/png"), { surface: "gallery", label: "desk plate" })) {
+      if (deskStatus) deskStatus.textContent = "that plate is too large to hand over";
+    }
+  } catch (err) { if (deskStatus) deskStatus.textContent = "that plate is too large to hand over"; }
+};
+if (deskRetro && deskCanvas) deskRetro.addEventListener("click", () => sendDesk("retro"));
+if (deskLoom && deskCanvas) deskLoom.addEventListener("click", () => sendDesk("loom"));
 // Drag-drop onto the desk plate.
 const deskArt = deskCanvas ? deskCanvas.closest(".plate-art") : null;
 if (deskArt) {
