@@ -6310,6 +6310,105 @@ if (tierBtn) {
   else wire();
 })();
 
+// The studio joins the instrument family: sound on the toolbar, the frame
+// as a score, a clip of the moving canvas, the house feel, the workshop line.
+(function bootStudioInstrument() {
+  let audio = null, frameRun = null, frameTimer = 0, frameBusy = false, clipRec = null;
+  async function ensureAudio() {
+    const m = await import("./retro-audio.js?v=20260812-cohesion");
+    if (!audio) audio = m.createRetroAudio();
+    return audio;
+  }
+  // The drone toggle also kills a running scan by design; the play button's
+  // state must settle with it or it strands a pressed button over silence.
+  function settleFrame(btn) {
+    clearTimeout(frameTimer);
+    frameRun = null;
+    if (btn) btn.setAttribute("aria-pressed", "false");
+  }
+  const wire = () => {
+    const sBtn = document.getElementById("rt-sound");
+    const pBtn = document.getElementById("rt-playframe");
+    if (sBtn) sBtn.addEventListener("click", async () => {
+      try {
+        const a = await ensureAudio();
+        if (a.isOn()) {
+          a.stop();
+          if (frameRun) settleFrame(pBtn);
+          sBtn.setAttribute("aria-pressed", "false"); say("model", "Sound off.");
+        } else {
+          await a.start("studio");
+          sBtn.setAttribute("aria-pressed", "true"); say("model", "Sound on: the toolbar plays notes.");
+        }
+      } catch (_) { say("model", "Audio could not start."); }
+    });
+    if (pBtn) pBtn.addEventListener("click", async () => {
+      if (frameBusy) return;
+      const cv = document.getElementById("studio-canvas");
+      if (!cv) return;
+      if (frameRun) {
+        frameRun.stop(); settleFrame(pBtn);
+        say("model", "Frame stopped.");
+        return;
+      }
+      frameBusy = true;
+      try {
+        const a = await ensureAudio();
+        const v = await import("./ans-voice.js?v=20260812-cohesion");
+        const scan = v.scanImage(cv, 40, 96);
+        frameRun = await a.playScan(scan, v.rowFrequencies(scan.rows, { mode: "penta" }), 9);
+        pBtn.setAttribute("aria-pressed", "true");
+        say("model", "The frame is playing: rows are pitches, the scan is time.");
+        clearTimeout(frameTimer);
+        frameTimer = setTimeout(() => { frameRun = null; pBtn.setAttribute("aria-pressed", "false"); }, 9700);
+      } catch (_) { say("model", "Could not play the frame."); }
+      frameBusy = false;
+    });
+    const cBtn = document.getElementById("rt-clip");
+    if (cBtn) import("./clip-export.js?v=20260812-depth").then((ce) => {
+      if (!ce.canRecordClips(window, document.getElementById("studio-canvas"))) { cBtn.hidden = true; return; }
+      cBtn.addEventListener("click", () => {
+        if (clipRec) { clipRec.stop(); return; }
+        // The canvas is re-queried at click time: GL sources swap the node,
+        // and a wire-time capture would record the detached 2D canvas.
+        const cv = document.getElementById("studio-canvas");
+        if (!cv) return;
+        const paused = document.getElementById("rt-playpause");
+        if (paused && paused.getAttribute("aria-pressed") === "true") {
+          say("model", "Resume playback first; a paused canvas records nothing."); return;
+        }
+        clipRec = ce.recordClip(cv, {
+          seconds: 6, name: "studio-clip.webm",
+          onTick: (s) => say("model", "Recording: " + s + "s."),
+          onDone: (ok, took) => {
+            clipRec = null;
+            say("model", ok ? "Saved " + took + (took === 1 ? " second" : " seconds") + " as WebM." : "The clip came back empty.");
+          },
+        });
+        if (!clipRec) say("model", "Clip recording is not supported in this browser.");
+      });
+    }).catch(() => {});
+    import("./palpable.js?v=20260812-depth").then((pal) => {
+      pal.wirePalpable(document.getElementById("render-toolbar") || document.body, {
+        hitSelector: ".rt-btn",
+        ping: (k, val) => { try { if (audio && audio.isOn()) audio.ping(k, val); } catch (_) {} },
+      });
+    }).catch(() => {});
+    const tb = document.getElementById("render-toolbar");
+    if (tb && !document.getElementById("st-flow")) {
+      const pEl = document.createElement("p");
+      pEl.id = "st-flow";
+      pEl.style.cssText = "font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;color:var(--muted);margin:.4rem 0 0";
+      tb.insertAdjacentElement("afterend", pEl);
+    }
+    import("./workbench.js?v=20260812-cohesion").then((wb) => {
+      wb.mountFlow(document.getElementById("st-flow"), "studio");
+    }).catch(() => {});
+  };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire, { once: true });
+  else wire();
+})();
+
 function bootRetroHandoff() {
   let dataURL = null;
   try { dataURL = sessionStorage.getItem("re.studio.handoff"); } catch (_) { return; }

@@ -63,6 +63,8 @@
   .desk-hint{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:var(--muted);margin:.4rem 0 .2rem}
   .desk-status{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:var(--orange);min-height:1.2em}
   .desk-variations{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin:.4rem 0 1rem}
+  #gal-flow{font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;color:var(--muted);margin:.5rem 0 0}
+  #gal-flow b{color:var(--bone);font-weight:400}
   .desk-var{position:relative;border:1px solid var(--hairline);border-radius:8px;overflow:hidden;
     aspect-ratio:16/10;background:#0b0812;cursor:pointer;padding:0;transition:border-color .15s}
   .desk-var:hover{border-color:var(--orange)}
@@ -386,7 +388,10 @@
     <button type="button" class="plate-redraw" id="desk-retro" aria-label="Send this plate to the Retro Engine to pixelate, palette, and run effects on it">send to the retro engine</button>
     <button type="button" class="plate-redraw" id="desk-loom" aria-label="Send this plate to the Loom to be woven into cloth">weave it on the loom</button>
     <a class="plate-redraw" id="desk-workshop" href="studio.html?source=poster" aria-label="Open this plate in the poster workshop">open in the workshop</a>
+    <button type="button" class="plate-redraw" id="desk-sound" aria-pressed="false" aria-label="Sound on or off: redraws and adoptions play notes">sound</button>
+    <button type="button" class="plate-redraw" id="desk-play" aria-pressed="false" aria-label="Play this plate as a score: rows are pitches, the scan is time">play the plate</button>
   </div>
+  <p class="plate-note" id="gal-flow" aria-hidden="false"></p>
   <div class="desk-controls" id="desk-material-controls">
     <button type="button" class="plate-redraw" id="desk-import" aria-label="Bring your own image and influence it with the instruments">bring your own image</button>
     <input type="file" id="desk-import-file" accept="image/*" hidden>
@@ -925,13 +930,74 @@ const deskLoom = document.getElementById("desk-loom");
 const sendDesk = async (target) => {
   try {
     const wb = await import("./system/workbench.js?v=20260812-cohesion");
-    if (!wb.sendPiece(target, deskCanvas.toDataURL("image/png"), { surface: "gallery", label: "desk plate" })) {
+    if (!wb.sendPiece(target, deskCanvas.toDataURL("image/png"), { surface: "gallery", label: "desk plate, seed " + ((deskCanvas.dataset && deskCanvas.dataset.specimen) || deskSeedValue()) })) {
       if (deskStatus) deskStatus.textContent = "that plate is too large to hand over";
     }
   } catch (err) { if (deskStatus) deskStatus.textContent = "that plate is too large to hand over"; }
 };
 if (deskRetro && deskCanvas) deskRetro.addEventListener("click", () => sendDesk("retro"));
 if (deskLoom && deskCanvas) deskLoom.addEventListener("click", () => sendDesk("loom"));
+
+// The desk sings. Sound arms the note-per-action instrument; Play the plate
+// scans the desk canvas ANS-style (rows are pitches, the scan is time).
+let deskAudio = null, plateRun = null, plateTimer = 0, plateBusy = false;
+async function ensureDeskAudio() {
+  const m = await import("./system/retro-audio.js?v=20260812-cohesion");
+  if (!deskAudio) deskAudio = m.createRetroAudio();
+  return deskAudio;
+}
+const deskSound = document.getElementById("desk-sound");
+if (deskSound) deskSound.addEventListener("click", async () => {
+  try {
+    const a = await ensureDeskAudio();
+    if (a.isOn()) {
+      a.stop();
+      if (plateRun) {
+        clearTimeout(plateTimer); plateRun = null;
+        const dp = document.getElementById("desk-play");
+        if (dp) dp.setAttribute("aria-pressed", "false");
+      }
+      deskSound.setAttribute("aria-pressed", "false");
+      if (deskStatus) deskStatus.textContent = "sound off";
+    } else {
+      await a.start("gallery-" + deskSeedValue());
+      deskSound.setAttribute("aria-pressed", "true");
+      if (deskStatus) deskStatus.textContent = "sound on: every redraw and adoption plays a note";
+    }
+  } catch (_) { if (deskStatus) deskStatus.textContent = "audio needs a click in a quiet tab"; }
+});
+const deskPlay = document.getElementById("desk-play");
+if (deskPlay) deskPlay.addEventListener("click", async () => {
+  if (!deskCanvas || plateBusy) return;
+  if (plateRun) {
+    clearTimeout(plateTimer);
+    plateRun.stop(); plateRun = null;
+    deskPlay.setAttribute("aria-pressed", "false");
+    if (deskStatus) deskStatus.textContent = "plate stopped";
+    return;
+  }
+  plateBusy = true;
+  try {
+    const a = await ensureDeskAudio();
+    const v = await import("./system/ans-voice.js?v=20260812-cohesion");
+    const scan = v.scanImage(deskCanvas, 40, 96);
+    plateRun = await a.playScan(scan, v.rowFrequencies(scan.rows, { mode: "penta" }), 9);
+    deskPlay.setAttribute("aria-pressed", "true");
+    if (deskStatus) deskStatus.textContent = "the plate is playing: rows are pitches, the scan is time";
+    clearTimeout(plateTimer);
+    plateTimer = setTimeout(() => { plateRun = null; deskPlay.setAttribute("aria-pressed", "false"); }, 9700);
+  } catch (_) { if (deskStatus) deskStatus.textContent = "could not play the plate"; }
+  plateBusy = false;
+});
+import("./system/palpable.js?v=20260812-depth").then((pal) => {
+  pal.wirePalpable(document.body, {
+    hitSelector: ".plate-redraw, .desk-var",
+    ping: (k, val) => { try { if (deskAudio && deskAudio.isOn()) deskAudio.ping(k, val); } catch (_) {} },
+  });
+}).catch(() => {});
+import("./system/workbench.js?v=20260812-cohesion").then((wb) => {
+  wb.mountFlow(document.getElementById("gal-flow"), "gallery");
+}).catch(() => {});
 // Drag-drop onto the desk plate.
 const deskArt = deskCanvas ? deskCanvas.closest(".plate-art") : null;
 if (deskArt) {

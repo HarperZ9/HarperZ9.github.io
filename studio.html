@@ -1071,6 +1071,18 @@
         <span class="rt-ico" aria-hidden="true">&#9724;</span> Cinema</button>
       <!-- Export group: wired by studio.js. OBJ/GLTF shown only when a mesh is loaded;
            WebM shown only for animated sources. PNG and JSON are always available. -->
+      <button class="rt-btn" id="rt-sound" type="button" aria-pressed="false"
+        title="Sound on or off: toolbar actions play notes in the house scale"
+        aria-label="Toggle the studio's sound">
+        <span class="rt-ico" aria-hidden="true">&#9835;</span> Sound</button>
+      <button class="rt-btn" id="rt-playframe" type="button" aria-pressed="false"
+        title="Play this frame as a score: rows are pitches, the scan is time"
+        aria-label="Play the current frame as sound">
+        <span class="rt-ico" aria-hidden="true">&#9658;</span> Play frame</button>
+      <button class="rt-btn" id="rt-clip" type="button"
+        title="Record six seconds of the moving canvas as a WebM clip"
+        aria-label="Record a six second clip of the canvas">
+        <span class="rt-ico" aria-hidden="true">&#9679;</span> Clip</button>
       <button class="rt-btn" id="rt-export-png"  type="button" title="Save the current frame as a PNG image"
         aria-label="Export PNG image">
         <span class="rt-ico" aria-hidden="true">&#8659;</span> PNG</button>
@@ -1373,7 +1385,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js"></script>
-<script type="module" src="system/studio.js?v=20260805-bridge"></script>
+<script type="module" src="system/studio.js?v=20260812-depth"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

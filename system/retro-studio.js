@@ -1049,7 +1049,11 @@ function boot() {
 
   $("re-src-instr").addEventListener("click", async () => {
     try { await ensureAudio(); } catch (_) { status("audio unavailable", "err"); return; }
-    if (audio.isOn()) { audio.stop(); press("re-src-instr", false); }
+    if (audio.isOn()) {
+      audio.stop(); press("re-src-instr", false);
+      // stop() also kills a playing picture scan by design; settle its button
+      if (picRun) { clearTimeout(picTimer); picRun = null; if (playPic) playPic.setAttribute("aria-pressed", "false"); }
+    }
     else { try { await audio.start(audioSeed()); press("re-src-instr", true); ping("bell"); } catch (_) { status("audio needs a click to start", "err"); return; } }
     audioState(audio.isOn() ? "instrument" : (audio.hasInput() ? "listening" : "off"));
     sync();
