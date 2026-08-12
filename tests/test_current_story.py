@@ -27,7 +27,7 @@ def test_current_story_is_public_linked_and_visible_in_the_essay() -> None:
     essay = ESSAY.read_text(encoding="utf-8")
     script = SCRIPT.read_text(encoding="utf-8")
 
-    assert "<title>Current Story &mdash; Zain Dana Harper</title>" in page
+    assert "<title>Current Story &middot; Zain Dana Harper</title>" in page
     assert '<link rel="canonical" href="https://harperz9.github.io/current-story.html">' in page
     assert "Seventeen images, shown in the order they were made." in page
     assert 'href="current-story.html"' in essay

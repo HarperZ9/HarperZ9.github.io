@@ -17,7 +17,7 @@ def test_gaussian_splat_lab_route_and_resources_exist() -> None:
         assert path.is_file(), path
 
     page = PAGE.read_text(encoding="utf-8")
-    assert "<title>Gaussian Splat Lab &mdash; Zain Dana Harper</title>" in page
+    assert "<title>Gaussian Splat Lab &middot; Zain Dana Harper</title>" in page
     assert 'href="art/gaussian-splats/manifest.json"' in page
     assert 'href="art/gaussian-splats/README.md"' in page
     assert "No Gaussian-splat scene is being represented as finished" in page
