@@ -581,9 +581,72 @@ export function mosaic(canvas, p = {}) {
   ctx.putImageData(img, 0, 0);
 }
 
+// Datamosh, after entro_play's WebGL datamoshing and FFglitch practice: the
+// previous frame smeared along a procedural block motion field, refreshed in
+// periodic bands like sparse I-frames. The caller maintains step.prev as a
+// snapshot of the LAST composed frame, so the smear feeds on its own output.
+function datamosh(canvas, step) {
+  const prev = step.prev;
+  if (!prev || !prev.width) return;
+  const g = canvas.getContext("2d");
+  const W = canvas.width, H = canvas.height;
+  const amt = step.amount === undefined ? 0.6 : step.amount;
+  const rng = rngFrom((step.seed || "mosh") + "|field");
+  const bs = Math.max(12, Math.round(Math.min(W, H) / 22));
+  const t = step.phase || 0;
+  // refresh band: a strip of honest current frame sweeps through, everything
+  // else re-projects the stale frame with per-block drift
+  const bandY = ((t * 0.13) % 1) * H;
+  const bandH = H * (0.10 + 0.25 * (1 - amt));
+  for (let y = 0; y < H; y += bs) {
+    const inBand = y + bs > bandY && y < bandY + bandH;
+    if (inBand) continue;
+    for (let x = 0; x < W; x += bs) {
+      const n1 = rng(), n2 = rng();
+      const swirl = Math.sin((x / W) * 5.1 + t * 0.7 + n1 * 6.28) + Math.cos((y / H) * 4.3 - t * 0.5 + n2 * 6.28);
+      const mag = amt * (4 + 22 * Math.abs(swirl) * 0.5);
+      const vx = Math.round(Math.cos(n1 * 6.28 + swirl) * mag);
+      const vy = Math.round(Math.sin(n2 * 6.28 - swirl) * mag);
+      const sx = Math.max(0, Math.min(prev.width - bs, x + vx));
+      const sy = Math.max(0, Math.min(prev.height - bs, y + vy));
+      g.drawImage(prev, sx, sy, bs, bs, x, y, bs, bs);
+    }
+  }
+}
+
+// Slit scan, after the Kinect slit-scan lineage: each horizontal strip of the
+// output samples a different moment from a short ring of past frames, so
+// motion shears into time. The caller maintains the ring at half resolution.
+function slitscan(canvas, step) {
+  const ring = step.ring, len = step.len || 0, head = step.head || 0;
+  if (!ring || !len) return;
+  const g = canvas.getContext("2d");
+  const W = canvas.width, H = canvas.height;
+  const amt = step.amount === undefined ? 0.6 : step.amount;
+  const strips = 48;
+  const sh = Math.ceil(H / strips);
+  const col = step.axis === "col";
+  const n = col ? Math.ceil(W / sh) : strips;
+  for (let i = 0; i < n; i++) {
+    const frac = i / n;
+    const wobble = 0.5 + 0.5 * Math.sin(frac * 6.28 * 2 + (step.phase || 0) * 0.6);
+    const age = Math.min(len - 1, Math.floor(frac * wobble * amt * (len - 1)));
+    const src = ring[(head - age + len * 4) % len];
+    if (!src || !src.width) continue;
+    if (col) {
+      const x = i * sh, sxs = Math.floor((x / W) * src.width), sws = Math.max(1, Math.floor((sh / W) * src.width));
+      g.drawImage(src, sxs, 0, sws, src.height, x, 0, sh, H);
+    } else {
+      const y = i * sh, sys = Math.floor((y / H) * src.height), shs = Math.max(1, Math.floor((sh / H) * src.height));
+      g.drawImage(src, 0, sys, src.width, shs, 0, y, W, sh);
+    }
+  }
+}
+
 export const OPS = {
   soften, sharpen, crystallize, wavy, goop, bubbly, sparkle, starry, melt, kaleido, prism, neon, mosaic,
   dither, halftone, posterize, pixelSort, databend, rgbShift, slice, wave, echo, mirror, ascii, bleed, scanlines, invert,
+  datamosh, slitscan,
 };
 
 // Metadata for the effects rack UI. Array order IS the apply pipeline
@@ -610,6 +673,8 @@ export const OP_META = [
   { op: "rgbShift", label: "RGB shift", cat: "glitch" },
   { op: "slice", label: "Slice", cat: "glitch" },
   { op: "wave", label: "Wave", cat: "glitch" },
+  { op: "datamosh", label: "Datamosh", cat: "glitch" },
+  { op: "slitscan", label: "Slit scan", cat: "glitch" },
   { op: "echo", label: "Echo", cat: "glitch" },
   { op: "mirror", label: "Mirror", cat: "glitch" },
   { op: "bleed", label: "Bleed", cat: "tone" },

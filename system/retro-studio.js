@@ -8,8 +8,8 @@
 
 import { renderRetro } from "./retro-engine.js";
 import { createShaderRunner, DEFAULT_FRAG } from "./shader-runner.js?v=20260805-react";
-import { applyOps, OP_META, rngFrom } from "./glitch-ops.js?v=20260805-mosaic";
-import { SHADER_PRESETS } from "./shader-presets.js?v=20260812-motion";
+import { applyOps, OP_META, rngFrom } from "./glitch-ops.js?v=20260812-entro";
+import { SHADER_PRESETS } from "./shader-presets.js?v=20260812-wave7";
 import { sendPiece, receiveTrail, mountFlow } from "./workbench.js?v=20260812-cohesion";
 import { setUserPalette } from "./retro-palettes.js";
 import { MOD_SOURCES, evalSources, computeOffsets, modValue } from "./mod-matrix.js?v=20260812-motion";
@@ -70,6 +70,13 @@ function boot() {
   const drawUndo = [];
   // a running clip keeps the loop alive even on a still source
   let clipActive = false;
+
+  // temporal op state, after entro_play's practice: datamosh feeds on a
+  // snapshot of the last composed frame; slit scan reads a short half-res
+  // ring of past frames. Both maintained only while their op is active.
+  const moshPrev = document.createElement("canvas");
+  const SLIT_LEN = 16;
+  const slitRing = { frames: [], head: 0 };
   const extraLayers = []; // [{canvas, runner, glsl, name, blend, opacity}]
   const MAX_LAYERS = 4;
   const BLENDS = [["lighter", "Add"], ["screen", "Screen"], ["multiply", "Multiply"],
@@ -153,6 +160,8 @@ function boot() {
         list.push({ op, amount: amt, phase: t, seed: base, mode: modes[Math.floor(rng() * 4)],
           lightX: MOUSE.x, lightY: MOUSE.y, glint: 0.35 + amt * 0.5 });
       }
+      else if (op === "datamosh") list.push({ op, amount: amt, phase: t, seed: base, prev: moshPrev });
+      else if (op === "slitscan") list.push({ op, amount: amt, phase: t, ring: slitRing.frames, head: slitRing.head, len: slitRing.frames.length, axis: rng() > 0.72 ? "col" : "row" });
       else if (op === "crystallize" || op === "melt") list.push({ op, amount: amt, phase: ph, seed: base });
       else if (op === "kaleido") list.push({ op, amount: amt, phase: ph });
       else if (op === "wavy") list.push({ op, amount: amt, phase: ph, freq: 2 + Math.floor(rng() * 4) });
@@ -323,6 +332,19 @@ function boot() {
         fbCanvas.width = out.width; fbCanvas.height = out.height;
       }
       fbCanvas.getContext("2d").drawImage(out, 0, 0);
+    }
+    // temporal op memory, refreshed from the frame just composed
+    if (activeFx.has("datamosh")) {
+      if (moshPrev.width !== out.width || moshPrev.height !== out.height) { moshPrev.width = out.width; moshPrev.height = out.height; }
+      moshPrev.getContext("2d").drawImage(out, 0, 0);
+    }
+    if (activeFx.has("slitscan")) {
+      const rw = Math.max(2, out.width >> 1), rh = Math.max(2, out.height >> 1);
+      slitRing.head = (slitRing.head + 1) % SLIT_LEN;
+      let f = slitRing.frames[slitRing.head];
+      if (!f) { f = document.createElement("canvas"); slitRing.frames[slitRing.head] = f; }
+      if (f.width !== rw || f.height !== rh) { f.width = rw; f.height = rh; }
+      f.getContext("2d").drawImage(out, 0, 0, rw, rh);
     }
     sampleAudio();
   }
