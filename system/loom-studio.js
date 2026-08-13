@@ -4,7 +4,7 @@
 // and the Gallery, or by local upload; with neither, a seeded generative plate
 // keeps the loom warm on arrival. Exports: WIF draft, chart PNG, cloth PNG,
 // and the cloth handed back to the Retro Engine's pixel pipeline.
-import { STRUCTURES, computeDraft, draftToWIF, weftPaletteFor } from "./weave-engine.js?v=20260811-crossings";
+import { STRUCTURES, computeDraft, draftToWIF, weftPaletteFor, wifToDraft } from "./weave-engine.js?v=20260813-wif";
 import { renderCloth, renderDraftChart } from "./weave-render.js?v=20260811-crossings";
 import { sendPiece, receiveTrail, mountFlow } from "./workbench.js?v=20260812-cohesion";
 
@@ -248,6 +248,70 @@ function boot() {
         rebuild(true);
       });
       recipeHost.appendChild(b);
+    });
+  }
+
+  // ── WIF in, and a check on the way out ───────────────────────────────────
+  // The exporter had no reader, so nothing could ever verify it. An imported
+  // draft replaces the computed one wholesale: its threading, tie-up and
+  // treadling are the weaver's, not ours, so the source image stops driving it.
+  let imported = null;
+  function showImported(res) {
+    imported = res;
+    draft = res.draft;
+    colors = {
+      warpHex: res.colors.warpHex,
+      weftHexes: res.colors.weftHexes,
+      weftHexAt: (p) => res.colors.weftHexes[p % res.colors.weftHexes.length],
+      weftIndexAt: (p) => p % res.colors.weftHexes.length,
+    };
+    haveSource = true;
+    woven = $("wv-weaveit").checked ? 0 : draft.picks;
+    status(`${res.title}: ${draft.ends} ends, ${draft.picks} picks, ${draft.shafts} shafts`, "ok");
+    draw();
+    sync();
+  }
+  const wifIn = $("wv-wif-in"), wifOpen = $("wv-wif-open"), wifCheck = $("wv-wif-check");
+  if (wifOpen && wifIn) {
+    wifOpen.addEventListener("click", () => wifIn.click());
+    wifIn.addEventListener("change", async () => {
+      const f = wifIn.files && wifIn.files[0];
+      if (!f) return;
+      try {
+        const res = wifToDraft(await f.text());
+        if (!res) { status("that file did not parse as a WIF draft", "err"); return; }
+        showImported(res);
+      } catch (e) { status("could not read that file: " + e.message, "err"); }
+      wifIn.value = "";
+    });
+  }
+  // The self-check: write the draft out, read it straight back, and compare
+  // every crossing. A claim about an export is worth what its check is worth.
+  if (wifCheck) {
+    wifCheck.addEventListener("click", () => {
+      if (!draft) { status("weave something first", "err"); return; }
+      if (STRUCTURES[structureId] && STRUCTURES[structureId].perCell && !imported) {
+        status("per-thread cloth has no shaft draft to write; pick a shaft structure", "err");
+        return;
+      }
+      try {
+        const wif = draftToWIF(draft, {
+          title: "self check", warpHex: colors.warpHex,
+          weftHexes: colors.weftHexes, weftIndexAt: colors.weftIndexAt,
+        });
+        const back = wifToDraft(wif);
+        if (!back) { status("the export did not read back", "err"); return; }
+        let diff = 0, cells = 0;
+        for (let e = 0; e < draft.ends; e += 1) {
+          for (let pk = 0; pk < draft.picks; pk += 1) {
+            cells += 1;
+            if ((draft.liftAt(e, pk) ? 1 : 0) !== (back.draft.liftAt(e, pk) ? 1 : 0)) diff += 1;
+          }
+        }
+        status(diff === 0
+          ? `export verified: ${cells} crossings re-read identically`
+          : `export differs on ${diff} of ${cells} crossings`, diff === 0 ? "ok" : "err");
+      } catch (e) { status("check failed: " + e.message, "err"); }
     });
   }
 

@@ -52,6 +52,15 @@
         <input type="file" class="re-in" id="wv-file" aria-label="Source image to weave" accept="image/*">
         <p class="re-privacy">Read locally in your browser. Nothing is uploaded.</p>
         <p class="re-hint">Or press Send to Loom on the Retro Engine or the Studio desk and the frame lands here.</p>
+        <p class="re-hint">Or open a WIF draft from Fiberworks, WeaveIt, or any WIF-aware tool.</p>
+        <div class="re-actions">
+          <input type="file" class="re-in" id="wv-wif-in" accept=".wif,text/plain" hidden>
+          <button class="re-btn" id="wv-wif-open" type="button"
+            aria-label="Open a WIF draft file">Open a WIF draft</button>
+          <button class="re-btn" id="wv-wif-check" type="button"
+            title="Export this draft, read it straight back, and compare every crossing"
+            aria-label="Check the export by re-reading it">Check the export</button>
+        </div>
       </div>
 
       <div class="re-field"><span class="re-lab">Start from <span class="re-hint">a whole setup in one press</span></span>
@@ -133,6 +142,6 @@
 </section>
 </main>
 
-<script type="module" src="system/loom-studio.js?v=20260813-depth"></script>
+<script type="module" src="system/loom-studio.js?v=20260813-wif"></script>
 </body>
 </html>

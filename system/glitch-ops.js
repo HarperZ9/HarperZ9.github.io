@@ -671,7 +671,7 @@ export const OP_META = [
   { op: "dither", label: "Dither", cat: "tone", desc: "ordered Bayer dither, tone carried by a dot pattern" },
   { op: "halftone", label: "Halftone", cat: "tone", desc: "a print screen: tone becomes dot size on a rotated grid" },
   { op: "posterize", label: "Posterize", cat: "tone", desc: "collapses the tones to a few flat steps" },
-  { op: "invert", label: "Invert", cat: "tone", desc: "swaps light for dark, keeping the hue" },
+  { op: "invert", label: "Invert", cat: "tone", desc: "swaps light for dark; at part strength it greys, so use it near full" },
   { op: "pixelSort", label: "Pixel sort", cat: "glitch", desc: "sorts runs of pixels by brightness into smears" },
   { op: "databend", label: "Databend", cat: "glitch", desc: "corrupts the bytes as if the file were damaged" },
   { op: "rgbShift", label: "RGB shift", cat: "glitch", desc: "pulls the three colour channels apart" },
@@ -689,6 +689,41 @@ export const OP_META = [
 ];
 
 // Apply an ordered list of { op, ...params } steps to a canvas, in place.
+/* applyOpsWet(canvas, list, mix)
+
+   A real strength control for the whole rack. Most ops here take their own
+   named parameters (posterize takes `levels`, pixelSort takes `low`/`high`,
+   databend takes `shift`/`xor`) and never read `amount` at all, because the
+   Retro Engine gives each one its own dial. A surface that offers a single
+   strength slider and passes `amount` therefore moves nothing for roughly a
+   third of the rack.
+
+   So strength is applied where it always works: the ops run at full force on a
+   copy, and that copy is composited back over the original at `mix`. Wet over
+   dry. Every op gains a meaningful strength, including the binary ones, and the
+   result is predictable across the whole rack. */
+export function applyOpsWet(canvas, list, mix = 1) {
+  const m = Math.max(0, Math.min(1, Number(mix)));
+  if (!list || !list.length || m <= 0) return;
+  if (m >= 0.999) { applyOps(canvas, list); return; }
+  const w = canvas.width, h = canvas.height;
+  if (!w || !h) return;
+  const wet = document.createElement("canvas");
+  wet.width = w; wet.height = h;
+  const wctx = wet.getContext("2d");
+  if (!wctx) return;
+  wctx.drawImage(canvas, 0, 0);
+  applyOps(wet, list);
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);   // callers may be mid-transform
+  ctx.globalAlpha = m;
+  ctx.globalCompositeOperation = "source-over";
+  ctx.drawImage(wet, 0, 0);
+  ctx.restore();
+}
+
 export function applyOps(canvas, list) {
   for (const step of list || []) { const fn = OPS[step.op]; if (fn) { try { fn(canvas, step); } catch (_) {} } }
 }

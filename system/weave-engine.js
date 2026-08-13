@@ -193,3 +193,109 @@ export function draftToWIF(draft, opts = {}) {
   for (let p = 0; p < draft.picks; p++) L.push((p + 1) + "=" + (weftIndexAt(p) + 2));
   return L.join("\r\n") + "\r\n";
 }
+
+/* wifToDraft(text) -> { draft, colors, title } | null
+
+   The reader the writer never had. Without it the WIF export was unverifiable:
+   nothing could open one, so nothing could prove a round trip. A weaver can now
+   bring in a draft from Fiberworks or WeaveIt, and the page can check its own
+   export by re-reading it.
+
+   Tolerant by design. Real WIF in the wild varies: section names in any case,
+   comment lines, blank lines, CRLF or LF, keys out of order, and a file that
+   carries a LIFTPLAN but no TIEUP (a table loom) or the reverse. Threading and
+   treadling are 1-based in the file and 0-based here. */
+export function wifToDraft(text) {
+  if (typeof text !== "string" || !text.trim()) return null;
+  const sec = {};
+  let cur = null;
+  const NL = String.fromCharCode(10);
+  for (let raw of text.split(NL)) {
+    const line = raw.trim();          // trim also drops a trailing CR
+    if (!line || line[0] === ";" || line[0] === "#") continue;
+    if (line[0] === "[" && line.indexOf("]") > 0) {
+      cur = line.slice(1, line.indexOf("]")).trim().toUpperCase();
+      sec[cur] = sec[cur] || {};
+      continue;
+    }
+    if (!cur) continue;
+    const eq = line.indexOf("=");
+    if (eq < 0) continue;
+    sec[cur][line.slice(0, eq).trim().toUpperCase()] = line.slice(eq + 1).trim();
+  }
+  const weaving = sec.WEAVING || {};
+  const num = (v, d) => { const n = parseInt(v, 10); return Number.isFinite(n) ? n : d; };
+  const shafts = num(weaving.SHAFTS, 0);
+  const treadles = num(weaving.TREADLES, 0);
+  const ends = num((sec.WARP || {}).THREADS, 0);
+  const picks = num((sec.WEFT || {}).THREADS, 0);
+  if (!(shafts > 0 && ends > 0 && picks > 0)) return null;
+
+  const threading = new Array(ends).fill(0);
+  const th = sec.THREADING || {};
+  for (const k in th) {
+    const i = num(k, 0) - 1;
+    if (i >= 0 && i < ends) threading[i] = Math.max(0, num(th[k], 1) - 1);
+  }
+  const tieup = [];
+  const tu = sec.TIEUP || {};
+  const tCount = Math.max(treadles, Object.keys(tu).length);
+  for (let t = 0; t < tCount; t += 1) {
+    const row = new Array(shafts).fill(false);
+    const spec = tu[String(t + 1)];
+    if (spec) for (const part of spec.split(",")) {
+      const sh = num(part, 0) - 1;
+      if (sh >= 0 && sh < shafts) row[sh] = true;
+    }
+    tieup.push(row);
+  }
+  const treadling = new Array(picks).fill(0);
+  const tr = sec.TREADLING || {};
+  const lift = sec.LIFTPLAN || {};
+  if (Object.keys(tr).length) {
+    for (const k in tr) {
+      const i = num(k, 0) - 1;
+      if (i >= 0 && i < picks) treadling[i] = Math.max(0, num(tr[k], 1) - 1);
+    }
+  } else if (Object.keys(lift).length) {
+    // A liftplan file has no treadles: synthesise one treadle per distinct row.
+    const key = (row) => row.map((b) => (b ? 1 : 0)).join("");
+    const seen = new Map();
+    tieup.length = 0;
+    for (let p = 0; p < picks; p += 1) {
+      const row = new Array(shafts).fill(false);
+      const spec = lift[String(p + 1)];
+      if (spec) for (const part of spec.split(",")) {
+        const sh = num(part, 0) - 1;
+        if (sh >= 0 && sh < shafts) row[sh] = true;
+      }
+      const k = key(row);
+      if (!seen.has(k)) { seen.set(k, tieup.length); tieup.push(row); }
+      treadling[p] = seen.get(k);
+    }
+  }
+  if (!tieup.length) return null;
+
+  const draft = {
+    ends, picks, shafts,
+    treadles: tieup.length,
+    threading, tieup, treadling,
+    liftAt: (e, p) => {
+      const row = tieup[treadling[p]];
+      return row && row[threading[e]] ? 1 : 0;
+    },
+  };
+  const table = sec["COLOR TABLE"] || {};
+  const toHex = (v) => {
+    const p3 = String(v).split(",").map((n) => Math.max(0, Math.min(255, parseInt(n, 10) || 0)));
+    return "#" + p3.slice(0, 3).map((n) => n.toString(16).padStart(2, "0")).join("");
+  };
+  const warpHex = table["1"] ? toHex(table["1"]) : "#e8e2d4";
+  const weftHexes = Object.keys(table).filter((k) => k !== "1")
+    .sort((a, b) => (+a) - (+b)).map((k) => toHex(table[k]));
+  return {
+    draft,
+    colors: { warpHex, weftHexes: weftHexes.length ? weftHexes : ["#14131a"] },
+    title: ((sec.TEXT || {}).TITLE || "imported draft").slice(0, 80),
+  };
+}

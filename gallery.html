@@ -869,7 +869,7 @@
 // instead of throwing; the try/catch below keeps one bad plate from taking
 // the rest of the exhibition down with it.
 import { renderSpecimen, renderSpecimenOver, drawImageFit, specimenLayerNames, specimenLayerFamilies, specimenLayerBlurbs } from "./system/generative-field.js?v=20260813-fx";
-import { applyOps, OP_META } from "./system/glitch-ops.js?v=20260813-wave2";
+import { applyOpsWet, OP_META } from "./system/glitch-ops.js?v=20260813-wet";
 
 // Bring-your-own-material: the visitor's image, influenced by the instruments.
 // It stays a bitmap in this tab; there is no upload. When material.active, the
@@ -1175,7 +1175,11 @@ function applyDeskFx() {
   if (!deskCanvas || !activeFx.length) return;
   const seed = deskSeedValue();
   const amount = fxAmount();
-  applyOps(deskCanvas, activeFx.map((op, i) => ({ op, amount, seed: seed + ":" + op + ":" + i })));
+  // ops run at full force; the slider is the wet/dry mix, which is the only
+  // strength that means anything across a rack where most ops ignore `amount`
+  applyOpsWet(deskCanvas,
+    activeFx.map((op, i) => ({ op, amount: 1, seed: seed + ":" + op + ":" + i })),
+    amount);
 }
 
 if (deskFx && Array.isArray(OP_META)) {

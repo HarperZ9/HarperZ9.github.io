@@ -149,8 +149,8 @@ export function renderPoster(canvas, state, deps = {}) {
     const amt = Math.max(0.05, Math.min(1, state.art.fxAmount ?? 0.6));
     try {
       deps.applyOps(canvas, state.art.fx.map((op, i) => ({
-        op, amount: amt, seed: (state.art.seed || "poster") + ":" + op + ":" + i,
-      })));
+        op, amount: 1, seed: (state.art.seed || "poster") + ":" + op + ":" + i,
+      })), amt);
     } catch (_) {}
   }
 

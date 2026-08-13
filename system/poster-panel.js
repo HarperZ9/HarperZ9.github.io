@@ -13,7 +13,7 @@ import {
   POSTER_FORMATS, POSTER_FACES, POSTER_CELLS,
 } from "./poster.js";
 import { renderRetro } from "./retro-engine.js";
-import { applyOps, OP_META } from "./glitch-ops.js";
+import { applyOpsWet, OP_META } from "./glitch-ops.js";
 
 const PALETTE = ["#f2ecf7", "#c9c2d4", "#8f86a0", "#7de3ea", "#99f147", "#f8cc43", "#ff8334", "#ff35aa", "#111016"];
 
@@ -110,7 +110,7 @@ export function mountPosterWorkshop(deps) {
 
   // ── render loop (debounced) ────────────────────────────────────────────────
   function renderNow() {
-    const out = renderPoster(canvas, state, { renderSpecimen, drawImage: coverDrawImage, renderRetro, applyOps });
+    const out = renderPoster(canvas, state, { renderSpecimen, drawImage: coverDrawImage, renderRetro, applyOps: applyOpsWet });
     lastBoxes = out.boxes || [];
     if (typeof perceiveNow === "function") { try { perceiveNow(canvas); } catch (_) {} }
     return out;
