@@ -1937,7 +1937,8 @@ body.generative-host > #site-nav:not(#motes){
   cursor:pointer;
   padding-inline:.68rem;
   border:1px solid transparent;
-  border-radius:999px;
+  /* the last capsule in the shared nav: square, like every other control */
+  border-radius:0;
   user-select:none;
 }
 .site-nav .sn-more summary::-webkit-details-marker{display:none}

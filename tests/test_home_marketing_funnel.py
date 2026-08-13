@@ -59,7 +59,11 @@ def test_home_source_uses_the_approved_zentropy_identity() -> None:
     brand = re.search(r"\.brand\s*\{(?P<body>[^}]*)\}", css)
     assert brand
     assert "min-block-size: 44px" in brand.group("body")
-    assert 'aria-label="zentropyLabs / Project Telos — home"' in source
+    # The canon bans em-dashes in every register, and an aria-label is read
+    # aloud, so it is prose like any other. This assertion used to pin the
+    # dash in place, which made the contract enforce the defect.
+    assert 'aria-label="zentropyLabs / Project Telos, home"' in source
+    assert "—" not in source, "no em-dashes on a public surface, including labels"
     assert "@media (max-width: 1040px)" in css
 
 

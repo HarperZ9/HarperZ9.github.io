@@ -96,8 +96,13 @@
   --shell: clamp(1.15rem, 5vw, 5rem);
   --maxw: 78rem;
 
-  --radius: 14px;
-  --radius-lg: 26px;
+  /* Architectural, not organic. Corrected at the token rather than by a blanket
+     rule: an earlier attempt set border-radius:0 on the card selectors, and
+     every one of them re-declared a radius later in the same file at equal
+     specificity, so the reset was dead CSS and the cards kept rendering at
+     26px. Zeroing the source is the fix that cannot lose the cascade. */
+  --radius: 0px;
+  --radius-lg: 0px;
 
   --z-hero-canvas: 0; --z-content: 1; --z-nav: 40; --z-dex: 45; --z-modal: 80; --z-toast: 90;
 

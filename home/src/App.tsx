@@ -164,7 +164,7 @@ export default function App() {
       <a className="skip-link" href="#main">Skip to content</a>
 
       <nav className="topnav" aria-label="Primary">
-        <a className="brand" href="#top" aria-label="zentropyLabs / Project Telos — home">
+        <a className="brand" href="#top" aria-label="zentropyLabs / Project Telos, home">
           <span className="brand-wordmark" aria-hidden="true">zentropyLabs</span>
           <span className="brand-route mono">Project Telos</span>
         </a>
@@ -245,7 +245,7 @@ export default function App() {
           {/* A registration caption for the approved static brand plate. */}
           <figure className="hero-crop mono" aria-hidden="true">
             <span className="crop-t">Zentropy mark</span>
-            <span className="crop-d">approved static artwork</span>
+            <span className="crop-d">static mark, drawn once</span>
           </figure>
           <p className="scroll-cue mono" aria-hidden="true">scroll to inspect</p>
         </header>
@@ -260,32 +260,40 @@ export default function App() {
                 also measure it, so a creation can cross straight into the proving end below.
               </p>
             </div>
-            <div className="range-grid">
-              <article className="range-card reveal">
-                <h3>Retro Engine</h3>
-                <p className="range-meta mono">254 shaders · sound draws · physical exports</p>
-                <p>A live retro and pixel-art renderer: 254 editable shaders across 38 shelves, hardware palettes and dither, a stackable feel rack, an oscilloscope source where your own sound draws the picture, and exports that leave the screen: a printable relief, a spinning phenakistoscope disc, a MIDI score of your session.</p>
-                <p className="range-proof"><a href="/retro.html">Open the Retro Engine</a>.</p>
-              </article>
-              <article className="range-card reveal d1">
-                <h3>The Loom</h3>
-                <p className="range-meta mono">image to cloth · WIF drafts · woven sound</p>
-                <p>Weave any render into working cloth: a frame from the engine, the Studio, or your own image becomes threading, tie-up, and treadling in a real weave structure, built pick by pick with each row played as notes. The WIF draft opens in real loom software.</p>
-                <p className="range-proof"><a href="/loom.html">Open the Loom</a>.</p>
-              </article>
-              <article className="range-card reveal d1">
-                <h3>The Studio</h3>
-                <p className="range-meta mono">generative fields · plotter maps · voxels · posters</p>
-                <p>A media instrument for rendering, measuring, and transforming a frame: generative fields, plotter maps exported as plotter-grade SVG or G-code, voxel builds, and a poster surface, all reading from the same measured source.</p>
-                <p className="range-proof"><a href="/studio.html">Open the Studio</a>.</p>
-              </article>
-              <article className="range-card reveal d2">
-                <h3>Gallery</h3>
-                <p className="range-meta mono">seed-reproducible plates · same seed, same work</p>
-                <p>A gallery of seed-reproducible plates. The seed is the record: the same seed redraws the same work, so a piece is a recipe you can re-run rather than a picture you have to trust.</p>
-                <p className="range-proof"><a href="/gallery.html">Open the Gallery</a>.</p>
-              </article>
-            </div>
+            {/* The making surfaces used to be four identical cards in a grid,
+                which is the templated pattern the canon rules out, and it broke
+                three-and-one on a three-column grid. They are an index, so they
+                use the same numbered-row grammar the engines below use: one
+                language for the whole page, and the numeral is the marker the
+                canon prefers over a stacked label. */}
+            <ol className="engines engines-making" aria-label="Making surfaces">
+              {[
+                { name: "Retro Engine", role: "254 shaders · sound draws · physical exports",
+                  desc: "A live retro and pixel-art renderer: 254 editable shaders across 38 shelves, hardware palettes and dither, a stackable feel rack, an oscilloscope source where your own sound draws the picture, and exports that leave the screen: a printable relief, a spinning phenakistoscope disc, a MIDI score of your session.",
+                  href: "/retro.html" },
+                { name: "The Loom", role: "image to cloth · WIF drafts · woven sound",
+                  desc: "Weave any render into working cloth: a frame from the engine, the Studio, or your own image becomes threading, tie-up, and treadling in a real weave structure, built pick by pick with each row played as notes. The WIF draft opens in real loom software.",
+                  href: "/loom.html" },
+                { name: "The Studio", role: "generative fields · plotter maps · voxels · posters",
+                  desc: "A media instrument for rendering, measuring, and transforming a frame: generative fields, plotter maps exported as plotter-grade SVG or G-code, voxel builds, and a poster surface, all reading from the same measured source.",
+                  href: "/studio.html" },
+                { name: "Gallery", role: "94 instruments · seed-reproducible plates",
+                  desc: "A gallery of seed-reproducible plates drawn by 94 instruments across the workshop's registers. The seed is the record: the same seed redraws the same work, so a piece is a recipe you can re-run rather than a picture you have to trust.",
+                  href: "/gallery.html" },
+              ].map((m, i) => (
+                <li className="engine reveal" style={{ "--i": String(i) } as CSSProperties} key={m.name}>
+                  <div className="eng-index mono"><span className="eng-band" aria-hidden="true" />{String(i + 1).padStart(2, "0")}</div>
+                  <div className="eng-id">
+                    <h3 className="eng-name">{m.name}</h3>
+                    <span className="eng-role">{m.role}</span>
+                  </div>
+                  <p className="eng-desc">{m.desc}</p>
+                  <div className="eng-go">
+                    <a className="eng-open" href={m.href}>open <span aria-hidden="true">→</span></a>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
 
@@ -388,7 +396,7 @@ export default function App() {
         <section id="cases" className="band band-alt">
           <div className="shell">
             <div className="sec-head reveal">
-              <h2>Many lanes,<br />one workshop.</h2>
+              <h2>Many routes,<br />one workshop.</h2>
               <p className="measure lead-2">
                 A few routes through the workshop. Illustrations, not deployments; everything that
                 actually runs is linked above, so try it against your own workflow.
@@ -410,7 +418,7 @@ export default function App() {
             <div className="sec-head reveal">
               <h2>Six papers,<br /><span className="spectrum-word">on the record.</span></h2>
               <p className="measure lead-2">
-                The publications are one research lane inside the wider workshop: byte integrity, typed
+                The publications are one thread inside the wider workshop: byte integrity, typed
                 effects, automation boundaries, action envelopes, and made-mind philosophy. Six papers
                 are archived on Zenodo with permanent DOIs, and hosted here as direct PDFs.
               </p>
@@ -444,7 +452,7 @@ export default function App() {
             <div className="sec-head reveal">
               <h2>One engineer,<br />an unusual span.</h2>
               <p className="measure lead-2">
-                The public range is wider than any single research lane: local models, graphics, reverse
+                The public range is wider than any single thread: local models, graphics, reverse
                 engineering, color systems, generated media, and web surfaces all sit in the same workshop.
               </p>
             </div>

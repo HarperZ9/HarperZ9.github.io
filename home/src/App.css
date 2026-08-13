@@ -86,7 +86,7 @@
 .topnav-links { display: flex; align-items: center; gap: clamp(0.9rem, 2vw, 1.8rem); font-size: var(--step--1); }
 .topnav-links a { color: var(--muted); transition: color 0.2s; }
 .topnav-links a:hover { color: var(--ink); }
-.topnav-links .ghost { color: var(--signal); letter-spacing: 0.06em; }
+.topnav-links .ghost { color: var(--muted); letter-spacing: 0.06em; }
 
 /* ===== hero ===== */
 .hero {
@@ -251,19 +251,48 @@
 .lead b { color: var(--ink); font-weight: 700; }
 
 .cta { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
+/* The bracketed instrument: an action is text with four corner ticks and no
+   enclosing box, matching the Studio, Gallery, Retro Engine and Loom so a
+   visitor crossing from here into a making surface meets one instrument rather
+   than two products. The ticks are eight background layers, so no pseudo
+   element is spent and the whole mark animates by swapping one property. */
 .btn {
+  --tk: 9px;
+  --tw: 1px;
+  --brk: color-mix(in oklab, var(--ink) 34%, transparent);
   display: inline-flex; align-items: center; gap: 0.5em;
   padding: 0.85em 1.35em; border-radius: 0;
   font-weight: 600; font-size: var(--step-0);
-  border: 1.5px solid var(--hairline); color: var(--ink);
-  transition: transform 0.25s var(--ease-out), background 0.25s, border-color 0.25s, color 0.25s, box-shadow 0.25s;
+  border: 0; color: var(--ink);
+  background-color: transparent;
+  background-image:
+    linear-gradient(var(--brk), var(--brk)), linear-gradient(var(--brk), var(--brk)),
+    linear-gradient(var(--brk), var(--brk)), linear-gradient(var(--brk), var(--brk)),
+    linear-gradient(var(--brk), var(--brk)), linear-gradient(var(--brk), var(--brk)),
+    linear-gradient(var(--brk), var(--brk)), linear-gradient(var(--brk), var(--brk));
+  background-size:
+    var(--tk) var(--tw), var(--tw) var(--tk), var(--tk) var(--tw), var(--tw) var(--tk),
+    var(--tk) var(--tw), var(--tw) var(--tk), var(--tk) var(--tw), var(--tw) var(--tk);
+  background-position:
+    left top, left top, right top, right top,
+    left bottom, left bottom, right bottom, right bottom;
+  background-repeat: no-repeat;
+  transition: background-image 0.2s, color 0.25s, box-shadow 0.25s;
 }
 .btn span { transition: transform 0.25s var(--ease-out); }
-.btn:hover { border-color: var(--ink); transform: translateY(-2px); }
+.btn:hover { --brk: var(--ink); box-shadow: inset 0 -1px 0 var(--ink); }
+.btn:focus-visible { --brk: var(--ink); outline: 1px solid var(--ink); outline-offset: 3px; }
 .btn:hover span { transform: translateX(3px); }
 /* Not a solid slab: translucent verified so the field breathes through, with an organic grain
    veil and a soft verified edge. Void text stays high-contrast on it. */
+/* The one filled action on the page keeps its fill: a solid primary is not the
+   capsule the canon rules out, and it is the single hot mark the hero is
+   allowed. It opts out of the bracket layers, and resets the tiling the bracket
+   rule set, or its grain texture would be pinned to one corner unrepeated. */
 .btn.solid {
+  background-repeat: repeat;
+  background-position: 0 0;
+  border: 1.5px solid transparent;
   background-color: color-mix(in oklab, var(--verified) 78%, transparent);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23g)' opacity='0.5'/%3E%3C/svg%3E");
   background-size: 120px 120px; background-blend-mode: soft-light;
@@ -280,7 +309,7 @@
 }
 .ro-label { color: var(--faint); letter-spacing: 0.1em; }
 .ro-verdicts { display: inline-flex; gap: 0.4rem; }
-.ro-chip { padding: 0.15em 0.6em; border-radius: 6px; font-weight: 500; border: 1px solid currentColor; }
+.ro-chip { padding: 0.15em 0.6em; border-radius: 0; font-weight: 500; border: 1px solid currentColor; }
 .ro-match { color: var(--match); }
 .ro-drift { color: var(--drift); }
 .ro-unverifiable { color: var(--unverif); }
@@ -396,9 +425,20 @@
 .eng-id { grid-area: id; display: flex; flex-direction: column; gap: 0.3rem; }
 .eng-name { font-size: var(--step-3); font-weight: 800; line-height: 1; letter-spacing: -0.03em; color: var(--ink); transition: color 0.25s; }
 .engine:hover .eng-name { color: var(--eng); }
+
+/* The making index reuses the engine row grammar, but its names are phrases
+   ("The Retro Engine") where the engine roster is single tokens ("emet"), so
+   the identity column gets room and the name steps down one size. Without this
+   every name breaks across two lines mid-phrase. */
+.engines-making .engine { grid-template-columns: 3.4rem minmax(13rem, 19rem) 1fr auto; }
+.engines-making .eng-name { font-size: var(--step-2); letter-spacing: -0.02em; text-wrap: balance; }
 .eng-role { color: var(--muted); font-size: var(--step--1); }
 .eng-verdict { color: var(--faint); font-size: 0.78rem; letter-spacing: 0.02em; }
-.eng-verdict.shipped { color: var(--eng); }
+/* Canon 2: one hot mark per view. This fired on every shipped row, roughly a
+   dozen times in one scroll, which spends the emphasis and leaves nothing
+   emphasised. The verdict now reads in ink at full weight, and the colour is
+   held back for the single hot mark the page is allowed. */
+.eng-verdict.shipped { color: var(--ink); font-weight: 600; }
 .eng-desc { grid-area: desc; color: var(--muted); max-width: 52ch; line-height: 1.55; }
 .eng-go { grid-area: go; display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; text-align: right; padding-top: 0.4rem; }
 .eng-open { color: var(--ink); font-weight: 600; display: inline-flex; gap: 0.4em; transition: color 0.25s; }
@@ -458,7 +498,7 @@
 .emet-tag { color: var(--faint); font-size: var(--step--1); letter-spacing: 0.04em; }
 .verdict {
   font-family: var(--font-display); font-weight: 800; font-size: var(--step-2);
-  letter-spacing: -0.02em; padding: 0.05em 0.5em; border-radius: 10px; line-height: 1;
+  letter-spacing: -0.02em; padding: 0.05em 0.5em; border-radius: 0; line-height: 1;
   border: 1.5px solid currentColor;
 }
 .verdict-match { color: var(--match); box-shadow: 0 0 34px -10px var(--match); }
@@ -467,7 +507,7 @@
 .emet-label { color: var(--muted); font-size: var(--step--1); font-weight: 600; }
 .emet-input {
   width: 100%; resize: vertical; background: var(--void); color: var(--ink);
-  border: 1px solid var(--hairline); border-radius: 12px; padding: 0.8rem 0.9rem;
+  border: 1px solid var(--hairline); border-radius: 0; padding: 0.8rem 0.9rem;
   font-size: 0.95rem; line-height: 1.5;
 }
 .emet-input:focus-visible { border-color: var(--signal); outline-offset: 1px; }
@@ -480,7 +520,7 @@
 }
 .emet-receipt .emet-digest { color: var(--faint); }
 .emet-btn {
-  padding: 0.7em 1.1em; border-radius: 10px; font-weight: 600; white-space: nowrap;
+  padding: 0.7em 1.1em; border-radius: 0; font-weight: 600; white-space: nowrap;
   background: var(--spark); color: var(--on-spark); border: 1.5px solid var(--spark);
   transition: transform 0.2s var(--ease-out), box-shadow 0.2s, opacity 0.2s;
 }
@@ -501,9 +541,9 @@
 .pp-outputs { display: flex; flex-direction: column; gap: 0.7rem; }
 .pp-out-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.3rem; }
 .pp-out-name { color: var(--signal); font-size: 0.82rem; }
-.pp-clear { color: var(--drift); font-size: 0.74rem; border: 1px solid var(--hairline-2); border-radius: 6px; padding: 0.1rem 0.45rem; }
+.pp-clear { color: var(--drift); font-size: 0.74rem; border: 1px solid var(--hairline-2); border-radius: 0; padding: 0.1rem 0.45rem; }
 .pp-clear:hover { border-color: var(--drift); }
-.pp-body { width: 100%; resize: vertical; background: var(--void); color: var(--ink); border: 1px solid var(--hairline); border-radius: 10px; padding: 0.6rem 0.7rem; font-size: 0.82rem; line-height: 1.45; }
+.pp-body { width: 100%; resize: vertical; background: var(--void); color: var(--ink); border: 1px solid var(--hairline); border-radius: 0; padding: 0.6rem 0.7rem; font-size: 0.82rem; line-height: 1.45; }
 .pp-body:focus-visible { border-color: var(--signal); }
 .pp-controls { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
 .pp-hint { color: var(--faint); font-size: 0.78rem; line-height: 1.4; flex: 1; min-width: 14rem; }
@@ -515,7 +555,7 @@
 .pp-unverifiable .pp-cv { color: var(--unverif); }
 .pp-cp { color: var(--muted); }
 .pp-cn { color: var(--faint); }
-.pp-override { color: var(--ink-2); font-size: var(--step--1); line-height: 1.55; border: 1px solid var(--drift); border-radius: 10px; padding: 0.7rem 0.85rem; background: color-mix(in oklab, var(--drift) 8%, transparent); }
+.pp-override { color: var(--ink-2); font-size: var(--step--1); line-height: 1.55; border: 1px solid var(--drift); border-radius: 0; padding: 0.7rem 0.85rem; background: color-mix(in oklab, var(--drift) 8%, transparent); }
 .pp-override b { color: var(--ink); }
 @media (max-width: 520px) { .pp-check { grid-template-columns: 5.5rem 1fr; } .pp-cn { grid-column: 1 / -1; } }
 
@@ -530,13 +570,13 @@
 .wi-authors { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: var(--sp-3); }
 .wi-field { display: flex; flex-direction: column; gap: 0.4rem; }
 .wi-label { color: var(--muted); font-size: var(--step--1); font-weight: 600; }
-.wi-field input { background: var(--void); color: var(--ink); border: 1px solid var(--hairline); border-radius: 10px; padding: 0.6rem 0.7rem; font-size: 0.9rem; }
+.wi-field input { background: var(--void); color: var(--ink); border: 1px solid var(--hairline); border-radius: 0; padding: 0.6rem 0.7rem; font-size: 0.9rem; }
 .wi-field input:focus-visible { border-color: var(--signal); }
 .wi-toggle { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--muted); font-size: var(--step-0); cursor: pointer; }
 .wi-toggle input { width: 1.1rem; height: 1.1rem; accent-color: var(--signal); flex: none; }
 .wi-mode { color: var(--faint); font-size: 0.8rem; }
 .wi-noteline { color: var(--muted); line-height: 1.55; }
-.wi-outcome { display: flex; align-items: center; gap: 0.7rem; padding: 0.8rem 1rem; border-radius: 12px; font-size: var(--step-0); border: 1px solid var(--hairline); }
+.wi-outcome { display: flex; align-items: center; gap: 0.7rem; padding: 0.8rem 1rem; border-radius: 0; font-size: var(--step-0); border: 1px solid var(--hairline); }
 .wi-outcome-k { font-size: 1.2rem; line-height: 1; }
 .wi-outcome-refused { color: var(--unverif); border-color: var(--unverif); background: color-mix(in oklab, var(--unverif) 8%, transparent); }
 .wi-outcome-graded { color: var(--ink); border-color: var(--match); background: color-mix(in oklab, var(--match) 8%, transparent); }
@@ -564,7 +604,7 @@
 .gd-sub { color: var(--faint); font-size: var(--step--1); }
 .gd-out {
   display: flex; flex-direction: column; gap: 0.6rem;
-  padding: 0.9rem 1rem; border-radius: 12px; border: 1px solid var(--hairline);
+  padding: 0.9rem 1rem; border-radius: 0; border: 1px solid var(--hairline);
 }
 .gd-verdict { font-family: var(--font-display); font-weight: 800; font-size: var(--step-2); letter-spacing: 0.01em; }
 .gd-allow { border-color: var(--match); background: color-mix(in oklab, var(--match) 8%, transparent); }
@@ -721,15 +761,27 @@
   color: var(--zentropy-ice);
 }
 
+/* The canon rules out the reflexive eyebrow: a tracked-caps label stacked over
+   a heading, which it names as one of the two reasons every site looks alike.
+   This line carries real information (what this place is), so it keeps its
+   words and loses the shout: sentence case, normal tracking, and a hairline
+   that runs out from it rather than underlining it like a tab. */
 .hero-kicker {
-  display: inline-flex;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
   margin-bottom: var(--sp-3);
-  padding-bottom: 0.58rem;
-  color: var(--zentropy-ice);
-  border-bottom: 1px solid rgba(142, 227, 242, 0.4);
+  color: var(--muted);
   font-size: var(--step--1);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.hero-kicker::after {
+  content: "";
+  flex: 1;
+  max-width: 12rem;
+  height: 1px;
+  background: var(--hairline);
 }
 
 .hero-title {
@@ -795,10 +847,10 @@
 
 .hero-door-mode {
   grid-area: mode;
-  color: var(--zentropy-ice);
-  font-size: 0.66rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .hero-door strong {
@@ -832,9 +884,9 @@
   gap: 0.75rem;
   margin-top: 0.65rem;
   color: var(--faint);
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .hero-door-bridge::before {
