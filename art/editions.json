@@ -1,6 +1,6 @@
 {
  "schema": "zentropy.editions/v1",
- "updated": "2026-08-12",
+ "updated": "2026-08-13",
  "policy": {
   "register": "Open editions, given away. The seed is the provenance.",
   "acquire_now": [
@@ -247,6 +247,102 @@
   },
   {
    "plate": "30",
+   "title": "Monolith, poured on glass",
+   "kind": "seeded",
+   "seed": "ash-tower-collodion",
+   "instruments": "strata-monolith, developed halation then wetPlate",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "31",
+   "title": "Apsides over an ice limb",
+   "kind": "seeded",
+   "seed": "orrery-uncorrected",
+   "instruments": "planet-limb + apsis-ledger, developed bokeh then aberrate",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "32",
+   "title": "Colonnade, reversed in the developer",
+   "kind": "seeded",
+   "seed": "mackie-nave",
+   "instruments": "ossuary-colonnade + mourning-veils, developed sabattier",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "33",
+   "title": "Sun over the ash line",
+   "kind": "seeded",
+   "seed": "aperture-ashline-77",
+   "instruments": "ashfall-horizon + pale-aperture, developed bleachBypass then starburst",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "34",
+   "title": "Arch, lit from behind",
+   "kind": "seeded",
+   "seed": "vault-of-cold-light",
+   "instruments": "caustic-veils + ossuary-arch, developed halation",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "35",
+   "title": "Star chart, out of focus",
+   "kind": "seeded",
+   "seed": "nova-defocus-12",
+   "instruments": "engraved-sky + aurora-leak, developed bokeh then halation",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "36",
+   "title": "Floor grid, read one row at a time",
+   "kind": "seeded",
+   "seed": "plate-tear-shutter",
+   "instruments": "horizon-tear + star-streak, developed rollingShutter",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "37",
+   "title": "Sun off a worn tape",
+   "kind": "seeded",
+   "seed": "plate-tape-sun",
+   "instruments": "venetian-sun + laser-ridge, developed vhsTracking",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "38",
+   "title": "Terminal, tracking lost",
+   "kind": "seeded",
+   "seed": "plate-terminal-tape",
+   "instruments": "phosphor-readout + toggle-rail, developed vhsTracking",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "39",
+   "title": "Two reels, bad scan",
+   "kind": "seeded",
+   "seed": "plate-transport-riso",
+   "instruments": "riso-moire + tape-transport, developed rollingShutter",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "40",
+   "title": "Ridge scan, one ink",
+   "kind": "seeded",
+   "seed": "plate-ridge-ink",
+   "instruments": "ridge-scan, developed duotone",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "41",
+   "title": "Terrace, screened",
+   "kind": "seeded",
+   "seed": "plate-terrace-screen",
+   "instruments": "terrace-hatch, developed halftone",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "42",
    "title": "Planet limb, closing",
    "kind": "seeded",
    "seed": "gallery-plate-07",
@@ -254,7 +350,7 @@
    "provenance": "system/generative-field.js"
   },
   {
-   "plate": "31",
+   "plate": "43",
    "title": "Crystal City of Light and Wonder",
    "kind": "spatial",
    "seed": "crystal_city_of_light_and_wonder.png",
@@ -263,7 +359,7 @@
    "run": "studio.html?source=spatial&world=crystal-city"
   },
   {
-   "plate": "32",
+   "plate": "44",
    "title": "Folded light, inhabited",
    "kind": "spatial",
    "seed": "folded-light-inhabited",

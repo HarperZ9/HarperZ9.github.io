@@ -2893,6 +2893,11 @@ export function renderSpecimen(canvas, seedString, layerNames = SPECIMEN_DEFAULT
   // and applied synchronously only when a plate actually asks for it.
   if (Array.isArray(fx) && fx.length && _opsModule && _opsModule.applyOps) {
     const amt = Math.max(0.05, Math.min(1, fxAmount));
+    // The layers were drawn in REFERENCE SPACE, under ctx.setTransform(scale...).
+    // The ops work in device pixels and draw the canvas back into itself, so
+    // leaving that transform active scales every one of their drawImage calls
+    // into a corner of the frame. Reset to identity before developing.
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     try {
       _opsModule.applyOps(canvas, fx.map((op, i) => ({
         op, amount: amt, seed: String(seedString) + ":" + op + ":" + i,
