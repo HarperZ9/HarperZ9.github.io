@@ -83,7 +83,14 @@ function boot() {
     // so it lives on the stage now, behind a view switch.
     const chart = $("wv-chart");
     if (chart && view === "draft") {
-      try { renderDraftChart(chart, draft, colors, { width: 1200 }); } catch (_) {}
+      // Render wider as the zoom rises: chartLayout derives its cell size from
+      // the width, so this is what actually makes a cell clickable rather than
+      // scaling a small chart up and blurring it.
+      try { renderDraftChart(chart, draft, colors, { width: 1200 * chartZoom }); } catch (_) {}
+      const stage = $("wv-stage-preview");
+      if (stage) stage.classList.toggle("wv-zoomed", chartZoom > 1);
+      chart.style.width = chartZoom > 1 ? chart.width + "px" : "";
+      chart.style.height = chartZoom > 1 ? chart.height + "px" : "";
     }
     paintReadout();
   }
@@ -274,7 +281,9 @@ function boot() {
   function chartClick(ev) {
     const chart = $("wv-chart");
     if (!chart || chart.hidden || !draftIsEditable()) return;
-    const L = chartLayout(draft, 1200);
+    // MUST match the width the chart was rendered at, or every click maps to
+    // the wrong cell the moment the zoom is not 1.
+    const L = chartLayout(draft, 1200 * chartZoom);
     const r = chart.getBoundingClientRect();
     // the canvas is drawn at L.width x L.height and displayed at r.width x r.height
     const x = (ev.clientX - r.left) * (L.width / r.width);
@@ -382,7 +391,19 @@ function boot() {
     });
   }
 
-  let view = "cloth";
+  let view = "cloth", chartZoom = 1;
+  const zoomHost = $("wv-zooms");
+  if (zoomHost) {
+    zoomHost.addEventListener("click", (ev) => {
+      const b = ev.target.closest("[data-zoom]");
+      if (!b) return;
+      chartZoom = Math.max(1, Math.min(8, +b.dataset.zoom || 1));
+      [...zoomHost.querySelectorAll("[data-zoom]")].forEach((x) =>
+        x.setAttribute("aria-checked", String(x === b)));
+      ping("chip", 0.4);
+      draw();
+    });
+  }
   const viewHost = $("wv-views");
   if (viewHost) {
     viewHost.addEventListener("click", (ev) => {
@@ -394,6 +415,10 @@ function boot() {
       const chart = $("wv-chart"), cloth = $("wv-out");
       if (chart) chart.hidden = view !== "draft";
       if (cloth) cloth.hidden = view === "draft";
+      const zf = $("wv-zoom-field");
+      if (zf) zf.hidden = view !== "draft";
+      const stage = $("wv-stage-preview");
+      if (stage && view !== "draft") stage.classList.remove("wv-zoomed");
       draw();
     });
   }

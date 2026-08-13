@@ -6,7 +6,7 @@
    glitch can animate; the preview reacts to the pointer; Randomize rolls the
    whole chain. Everything is local; nothing uploads. */
 
-import { renderRetro } from "./retro-engine.js";
+import { renderRetro } from "./retro-engine.js?v=20260813-pal";
 import { createShaderRunner, DEFAULT_FRAG } from "./shader-runner.js?v=20260805-react";
 import { applyOps, OP_META, rngFrom } from "./glitch-ops.js?v=20260813-wave2";
 import { SHADER_PRESETS } from "./shader-presets.js?v=20260812-wave7";
@@ -313,6 +313,61 @@ function boot() {
   }
 
 
+
+  // ── the palette a frame actually resolved to ─────────────────────────────
+  // "Auto (from image)" median-cuts a palette out of the picture. Until the
+  // renderer started returning its entries, the visitor could see the result
+  // and never the colours it chose, and could not keep them. The strip shows
+  // them for every mode, hardware palettes included, and Adopt copies them into
+  // Your colors so they can be edited rather than only accepted.
+  let lastEntries = [], _palAt = 0;
+  function paintPalStrip() {
+    const host = document.getElementById("re-palstrip");
+    if (!host || !lastMeasure) return;
+    const ent = lastMeasure.entries;
+    if (!ent || !ent.length) return;
+    const key = ent.join(",");
+    if (host.dataset.key === key) return;      // only repaint on a real change
+    const now = performance.now();
+    if (now - _palAt < 300) return;
+    _palAt = now;
+    host.dataset.key = key;
+    lastEntries = ent.slice(0);
+    host.innerHTML = "";
+    for (const hex of ent) {
+      const sw = document.createElement("i");
+      sw.style.background = hex;
+      sw.title = hex;
+      host.appendChild(sw);
+    }
+    const note = document.getElementById("re-palstrip-note");
+    if (note) {
+      note.textContent = ent.length + " colours"
+        + ($("re-palette").value === "auto" ? ", cut from the picture" : ", from " + $("re-palette").value);
+    }
+  }
+  const adopt = document.getElementById("re-pal-adopt");
+  if (adopt) adopt.addEventListener("click", () => {
+    if (!lastEntries.length) { status("nothing to adopt yet", "err"); return; }
+    const inputs = palInputs();
+    if (!inputs.length) { status("no colour inputs to adopt into", "err"); return; }
+    // the strip can be longer or shorter than the six slots: sample across it
+    // so an adopted palette keeps its range instead of only its darkest end
+    inputs.forEach((el, i) => {
+      const at = inputs.length === 1 ? 0
+        : Math.round((i / (inputs.length - 1)) * (lastEntries.length - 1));
+      el.value = lastEntries[Math.max(0, Math.min(lastEntries.length - 1, at))];
+    });
+    const sel = $("re-palette");
+    if (sel) {
+      const mine = [...sel.options].find((o) => /your|custom|mine/i.test(o.textContent));
+      if (mine) { sel.value = mine.value; sel.dispatchEvent(new Event("change")); }
+    }
+    ping("preset");
+    status("adopted " + inputs.length + " colours into Your colors", "ok");
+    sync();
+  });
+
   // ── modulation, made visible ─────────────────────────────────────────────
   // Routes deliberately never write the DOM, so the user's own setting is never
   // clobbered by an LFO. The cost was that a swept control looked completely
@@ -376,7 +431,7 @@ function boot() {
       if (activeFx.size) applyOps(out, buildFx(t));
     }
     catch (e) { status("render error: " + e.message, "err"); }
-    try { paintMeasure(); } catch (_) {}
+    try { paintMeasure(); paintPalStrip(); } catch (_) {}
     // Feedback: the previous frame folded back over this one (zoomed and
     // rotated a little), then the blend becomes the next frame's memory.
     if (fbOn()) {

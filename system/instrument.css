@@ -8,6 +8,11 @@
 .re-preview{position:relative;border:1px solid var(--hairline);border-radius:12px;overflow:hidden;
   background:#07070c;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center}
 .re-preview canvas{max-width:100%;max-height:100%;display:block}
+/* display:block above is an author rule and beats the UA [hidden] rule, so a
+   canvas marked hidden kept its box and pushed its sibling out of the stage.
+   Third time this pattern has bitten in this codebase: an author display always
+   needs its own [hidden] escape. */
+.re-preview canvas[hidden]{display:none}
 .re-panel{display:flex;flex-direction:column;gap:.9rem;font-family:var(--mono)}
 .re-field{display:flex;flex-direction:column;gap:.3rem}
 .re-lab{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);

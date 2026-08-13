@@ -190,7 +190,15 @@ export function renderRetro(src, dst, opts = {}) {
   dctx.drawImage(small, 0, 0, dw, dh);
   if (o.scanlines || o.bloom > 0 || o.curvature > 0 || o.vignette > 0) crtStage(dctx, dw, dh, o);
 
-  return { w: dw, h: dh, palette: o.palette, cells: tw * th, colors: pal.length };
+  // The resolved palette itself, not just its name and count. "Auto (from
+  // image)" median-cuts a palette out of the picture and the caller could never
+  // see which colours it chose, let alone keep them.
+  const entries = pal.map((e) => {
+    const [r, g, b] = oklabToSrgb(e.lab[0], e.lab[1], e.lab[2]);
+    const hx = (v) => Math.max(0, Math.min(255, Math.round(v * 255))).toString(16).padStart(2, "0");
+    return "#" + hx(r) + hx(g) + hx(b);
+  });
+  return { w: dw, h: dh, palette: o.palette, cells: tw * th, colors: pal.length, entries };
 }
 
 /* applyChain(source, dst, steps) -> dst
