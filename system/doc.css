@@ -86,7 +86,14 @@
   --body:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --mono:"Conso",ui-monospace,"SFMono-Regular",monospace;
 
-  --measure:68ch;              /* the reading column, everywhere */
+  /* The reading column. This is 56ch, not the 68ch it was, because the ch unit
+     is the width of the "0" glyph and not the width of an average character.
+     In Hanken Grotesk a zero is appreciably wider than a lowercase letter, so
+     a 68ch column measured out at about 86 real characters: comfortably past
+     the 65 to 75 a line should hold, and the whole point of setting a measure.
+     56ch measures at roughly 71. Checked by rendering text and dividing the
+     box by the width of its own characters, not by trusting the unit. */
+  --measure:56ch;
   --sheet-pad-x:clamp(1.5rem,4vw,3.6rem);
 }
 

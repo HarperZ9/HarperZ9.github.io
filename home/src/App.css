@@ -975,7 +975,7 @@
 .paper-line { color: var(--muted); margin-top: 0.4rem; max-width: 62ch; line-height: 1.55; }
 .paper-doi { color: var(--signal); font-size: var(--step--1); white-space: nowrap; }
 .paper-doi:hover { text-decoration: underline; text-underline-offset: 3px; }
-.paper-close { color: var(--faint); margin-top: var(--sp-3); font-style: italic; max-width: 70ch; line-height: 1.6; }
+.paper-close { color: var(--faint); margin-top: var(--sp-3); font-style: italic; max-width: 56ch; line-height: 1.6; }
 .paper-close a { color: var(--muted); }
 .paper-close a:hover { color: var(--signal); }
 @media (max-width: 760px) {

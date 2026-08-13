@@ -37,7 +37,11 @@
   .article-head h1,.article-head .lead,.article-body,.companion,.article-footer{font-family:"Times New Roman",Tinos,"Nimbus Roman No9 L","Liberation Serif",serif}
   .article-head h1{font-weight:700;letter-spacing:-.025em}
   .article-head .lead{font-size:1.17rem;line-height:1.52}
-  .article-body{max-width:70ch;font-size:1.075rem}
+  /* 58ch, not 70ch. This is set in Times, where the zero the ch unit measures
+     is narrower than the average letter, so 70ch ran to 86 and 93 real
+     characters on the longest essays. These are the pages somebody actually
+     sits and reads, so the measure matters most here. 58ch lands near 72. */
+  .article-body{max-width:58ch;font-size:1.075rem}
   .article-body p{margin:0 0 1.05rem;line-height:1.72;text-wrap:pretty}
   .article-body h2{font-family:"Times New Roman",Tinos,"Nimbus Roman No9 L","Liberation Serif",serif;font-size:clamp(1.52rem,1.2rem + .95vw,2rem);font-weight:700;line-height:1.08;margin:3.5rem 0 1rem;padding-top:.35rem;color:var(--ink);text-wrap:balance}
   .article-body h3{font-family:"Times New Roman",Tinos,"Nimbus Roman No9 L","Liberation Serif",serif;font-size:1.14rem;font-weight:700;line-height:1.2;margin:2.2rem 0 .7rem;color:var(--ink);text-wrap:balance}

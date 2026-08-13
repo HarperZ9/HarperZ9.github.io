@@ -65,3 +65,13 @@ input[type=range]{accent-color:var(--orange);width:100%}
 .re-keys b{color:var(--bone);font-weight:400;letter-spacing:.14em;text-transform:uppercase}
 .re-keys kbd{font-family:var(--mono);font-size:.58rem;color:var(--orange);border:1px solid var(--hairline);
   border-radius:4px;padding:.1em .35em;background:color-mix(in oklab,var(--void) 80%,transparent)}
+
+/* ── reading measure for the small print (2026-08-13) ─────────────────────
+   Hints, key legends, and seal lines had no measure at all, so on a wide
+   screen they ran the full width of their container: 238 characters on the
+   Loom's hint line, 222 on the Retro Engine's seal, 201 on its key legend.
+   Small text needs a shorter line than body copy, not a longer one, because
+   the eye has further to travel back for less reward. Values are in ch and
+   land near 70 real characters at these sizes. */
+.re-hint{max-width:60ch}
+.re-keys{max-width:64ch}

@@ -101,7 +101,10 @@ section.mv{position:relative;z-index:4;background:var(--void-opaque);border-top:
 h2{font-family:var(--display);font-weight:600;font-size:clamp(1.7rem,3.1vw,2.6rem);line-height:1.13;letter-spacing:0;color:var(--bone);margin-bottom:clamp(1.4rem,2.5vw,2.2rem);text-wrap:balance}
 h2 .g{color:var(--orange)}
 h2 em{font-style:normal;color:var(--orange)}
-.body-text{font-size:clamp(1.12rem,1.4vw,1.26rem);line-height:1.75;color:var(--bone);opacity:.97;max-width:66ch}
+/* 54ch, not 66ch: the ch unit is the width of a zero, which in this face is
+   wider than an average character, so a 66ch column ran to about 86 real
+   characters. 54ch measures at roughly 70. */
+.body-text{font-size:clamp(1.12rem,1.4vw,1.26rem);line-height:1.75;color:var(--bone);opacity:.97;max-width:54ch}
 .body-text em{color:var(--orange);font-style:italic}
 .body-text+.body-text{margin-top:1.4em}
 .mv .close{margin-top:1.6rem;display:block;font-style:italic;font-size:clamp(1.06rem,1.4vw,1.28rem);line-height:1.55;color:var(--orange);max-width:52ch}
@@ -3632,3 +3635,29 @@ h2 em,
 #sp-compare-tag{position:absolute;top:6px;left:6px;font-family:var(--mono,monospace);font-size:10px;
   letter-spacing:.08em;text-transform:uppercase;color:rgba(232,230,225,.85);
   background:rgba(6,6,10,.72);padding:2px 6px;border-radius:3px;line-height:1.4}
+
+/* ── reading measure for the small print (2026-08-13) ─────────────────── */
+.seal-line{max-width:66ch}
+.organ-line{max-width:54ch}
+.what{max-width:56ch}
+.tour-step-line{max-width:62ch}
+.artifact-note{max-width:62ch}
+.plate-note{max-width:62ch}
+.field-grid p,
+.story-grid p{max-width:56ch}
+
+/* The overview's framing paragraphs had no measure and ran to 183 characters
+   on a wide screen. */
+.setting{max-width:56ch}
+.atlas-note{max-width:54ch}
+
+/* The last of the uncapped running text (2026-08-13). Measured by rendering
+   each block and dividing its box by the width of its own characters, so
+   these land near 70 real characters rather than near 70 zeroes. */
+.without p{max-width:56ch}
+.status-row span{max-width:58ch}
+.tour-steps p,
+.tour-step p{max-width:56ch}
+.arc-method{max-width:52ch}
+.paper-close{max-width:56ch}
+.companion{max-width:58ch}
