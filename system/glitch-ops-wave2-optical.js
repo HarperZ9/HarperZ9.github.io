@@ -343,10 +343,10 @@ export const OPS2 = { barrel, aberrate, bokeh, halation, anamorph, starburst };
 // Pipeline order: geometry, then the optics that read it, then the light that
 // sits on top. Merge onto OP_META and the rack groups these into its shelves.
 export const OP_META2 = [
-  { op: "barrel", label: "Barrel", cat: "feel" },
-  { op: "aberrate", label: "Aberration", cat: "feel" },
-  { op: "bokeh", label: "Bokeh", cat: "feel" },
-  { op: "halation", label: "Halation", cat: "tone" },
-  { op: "anamorph", label: "Anamorphic", cat: "feel" },
-  { op: "starburst", label: "Starburst", cat: "feel" },
+  { op: "barrel", label: "Barrel", cat: "feel", desc: "lens distortion, straight lines bowing out from the centre" },
+  { op: "aberrate", label: "Aberration", cat: "feel", desc: "chromatic aberration scaling the channels radially, worst at the corners" },
+  { op: "bokeh", label: "Bokeh", cat: "feel", desc: "defocus where highlights open into aperture-shaped discs" },
+  { op: "halation", label: "Halation", cat: "tone", desc: "the warm glow film base bleeds around a bright area" },
+  { op: "anamorph", label: "Anamorphic", cat: "feel", desc: "a long horizontal streak off the clipped highlights" },
+  { op: "starburst", label: "Starburst", cat: "feel", desc: "iris diffraction spikes at a seeded blade count" },
 ];

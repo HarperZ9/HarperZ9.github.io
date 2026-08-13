@@ -310,7 +310,8 @@ export function mountPosterWorkshop(deps) {
     const b = el("button", "at-chip", m.label);
     b.type = "button";
     b.setAttribute("aria-pressed", "false");
-    b.setAttribute("aria-label", m.label + " effect, " + m.cat);
+    if (m.desc) b.title = m.desc;
+    b.setAttribute("aria-label", m.desc ? m.label + ": " + m.desc : m.label + " effect, " + m.cat);
     b.addEventListener("click", () => {
       state.art.fx = Array.isArray(state.art.fx) ? state.art.fx : [];
       const at = state.art.fx.indexOf(m.op);

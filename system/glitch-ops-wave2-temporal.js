@@ -370,10 +370,10 @@ export const OPS2 = { timeWarp, rollingShutter, interlace, vhsTracking, dropout,
 // then the scan faults, then the signal faults, and the ghost last so it echoes
 // whatever the rest of the rack made.
 export const OP_META2 = [
-  { op: "timeWarp", label: "Time warp", cat: "glitch" },
-  { op: "rollingShutter", label: "Rolling shutter", cat: "glitch" },
-  { op: "interlace", label: "Interlace", cat: "glitch" },
-  { op: "vhsTracking", label: "VHS tracking", cat: "glitch" },
-  { op: "dropout", label: "Dropout", cat: "glitch" },
-  { op: "frameEcho", label: "Frame echo", cat: "glitch" },
+  { op: "timeWarp", label: "Time warp", cat: "glitch", desc: "each region samples a different moment along a noise field" },
+  { op: "rollingShutter", label: "Rolling shutter", cat: "glitch", desc: "every scanline reads its own instant, so motion leans" },
+  { op: "interlace", label: "Interlace", cat: "glitch", desc: "two fields a moment apart, combed on the vertical edges" },
+  { op: "vhsTracking", label: "VHS tracking", cat: "glitch", desc: "lost lock: chroma trails right, head-switch noise at the foot" },
+  { op: "dropout", label: "Dropout", cat: "glitch", desc: "runs of signal simply missing" },
+  { op: "frameEcho", label: "Frame echo", cat: "glitch", desc: "a displaced ghost of the frame before this one" },
 ];

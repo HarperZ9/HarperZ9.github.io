@@ -445,10 +445,10 @@ export const OPS2 = { sabattier, dyeTransfer, bleachBypass, lith, duotone, wetPl
 // press processes next, the hand-poured plate last so its edge frames whatever
 // the rest of the rack did.
 export const OP_META2 = [
-  { op: "sabattier", label: "Sabattier", cat: "tone" },
-  { op: "bleachBypass", label: "Bleach bypass", cat: "tone" },
-  { op: "lith", label: "Lith print", cat: "tone" },
-  { op: "duotone", label: "Duotone", cat: "tone" },
-  { op: "dyeTransfer", label: "Dye transfer", cat: "tone" },
-  { op: "wetPlate", label: "Wet plate", cat: "feel" },
+  { op: "sabattier", label: "Sabattier", cat: "tone", desc: "second-exposure reversal above a luminance crossover, with the developer's pale fringe" },
+  { op: "bleachBypass", label: "Bleach bypass", cat: "tone", desc: "keeps the silver: desaturated dye under a steepened monochrome" },
+  { op: "lith", label: "Lith print", cat: "tone", desc: "crushed blacks, blown highlights, grain that grows with exposure" },
+  { op: "duotone", label: "Duotone", cat: "tone", desc: "two real ink curves laid subtractively over warm paper" },
+  { op: "dyeTransfer", label: "Dye transfer", cat: "tone", desc: "three ink plates printed a fraction out of register, bare paper at the margins" },
+  { op: "wetPlate", label: "Wet plate", cat: "feel", desc: "hand-poured collodion with a tide line and bromide drips" },
 ];

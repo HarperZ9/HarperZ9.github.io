@@ -41,6 +41,8 @@
   <div class="re-stage">
     <div class="re-preview" id="wv-stage-preview">
       <canvas id="wv-out" role="img" aria-label="The woven cloth built from the current source image"></canvas>
+      <canvas id="wv-chart" role="img" hidden
+        aria-label="The draft: threading across the top, tie-up at the corner, treadling down the side, drawdown in the field"></canvas>
       <button class="re-fs" id="wv-fullscreen" type="button" aria-pressed="false"
         title="Full screen (F). Double-click the cloth too." aria-label="View the cloth full screen">&#10530;</button>
     </div>
@@ -52,8 +54,23 @@
         <p class="re-hint">Or press Send to Loom on the Retro Engine or the Studio desk and the frame lands here.</p>
       </div>
 
+      <div class="re-field"><span class="re-lab">Start from <span class="re-hint">a whole setup in one press</span></span>
+        <div class="re-chips" role="group" aria-label="Starting points" id="wv-recipes"></div>
+      </div>
+
+      <div class="re-field"><span class="re-lab">View</span>
+        <div class="re-chips" role="radiogroup" aria-label="What the stage shows" id="wv-views">
+          <button type="button" class="re-chip" role="radio" aria-checked="true" data-view="cloth">Cloth</button>
+          <button type="button" class="re-chip" role="radio" aria-checked="false" data-view="draft">Draft</button>
+        </div>
+      </div>
+
       <div class="re-field"><span class="re-lab">Structure <span class="re-hint" id="wv-structure-hint"></span></span>
         <div class="re-chips" role="radiogroup" aria-label="Weave structure" id="wv-structures"></div>
+      </div>
+
+      <div class="re-field"><span class="re-lab">The cloth</span>
+        <p class="re-hint" id="wv-readout">draw or drop an image to read the cloth</p>
       </div>
 
       <div class="re-field"><span class="re-lab">Sett <span class="re-val" id="wv-sett-v">120 ends</span></span>
@@ -113,6 +130,6 @@
 </section>
 </main>
 
-<script type="module" src="system/loom-studio.js?v=20260812-cohesion"></script>
+<script type="module" src="system/loom-studio.js?v=20260813-depth"></script>
 </body>
 </html>

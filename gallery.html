@@ -1048,7 +1048,8 @@ if (deskFx && Array.isArray(OP_META)) {
       b.className = "chip";
       b.textContent = m.label;
       b.setAttribute("aria-pressed", "false");
-      b.setAttribute("aria-label", `${m.label} effect, ${cat}`);
+      if (m.desc) b.title = m.desc;
+      b.setAttribute("aria-label", m.desc ? `${m.label}: ${m.desc}` : `${m.label} effect, ${cat}`);
       b.addEventListener("click", () => {
         const at = activeFx.indexOf(m.op);
         if (at >= 0) activeFx.splice(at, 1); else activeFx.push(m.op);

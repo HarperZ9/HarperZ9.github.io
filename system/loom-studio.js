@@ -77,6 +77,44 @@ function boot() {
   function draw() {
     if (!draft) return;
     renderCloth(out, draft, colors, { upTo: woven, light: 0.65 });
+    // The draft chart was computed and thrown away on every rebuild, visible
+    // only inside the export handler. It is the thing a weaver actually reads,
+    // so it lives on the stage now, behind a view switch.
+    const chart = $("wv-chart");
+    if (chart && view === "draft") {
+      try { renderDraftChart(chart, draft, colors, { width: 1200 }); } catch (_) {}
+    }
+    paintReadout();
+  }
+
+  // What the cloth IS, measured from the draft rather than described in prose:
+  // its size, its longest floats (the number a weaver checks first, because a
+  // long float snags), and how much of the face is warp.
+  function paintReadout() {
+    const el = $("wv-readout");
+    if (!el || !draft) return;
+    let maxWarp = 0, maxWeft = 0, warpUp = 0, total = 0;
+    const lift = (e, p) => (draft.liftAt ? draft.liftAt(e, p) : 0);
+    for (let e = 0; e < draft.ends; e += 1) {
+      let run = 0;
+      for (let p = 0; p < draft.picks; p += 1) {
+        const up = lift(e, p) ? 1 : 0;
+        total += 1; warpUp += up;
+        if (up) { run += 1; if (run > maxWarp) maxWarp = run; } else { run = 0; }
+      }
+    }
+    for (let p = 0; p < draft.picks; p += 1) {
+      let run = 0;
+      for (let e = 0; e < draft.ends; e += 1) {
+        if (!lift(e, p)) { run += 1; if (run > maxWeft) maxWeft = run; } else { run = 0; }
+      }
+    }
+    const face = total ? Math.round((warpUp / total) * 100) : 0;
+    const st = STRUCTURES[structureId];
+    el.textContent = `${draft.ends} ends x ${draft.picks} picks`
+      + ` · longest float ${maxWarp} warp / ${maxWeft} weft`
+      + ` · ${face}% warp-faced`
+      + (st ? ` · ${st.perCell ? "per-thread" : st.shafts + " shafts"}` : "");
   }
 
   // --- the weaving animation: the shuttle crosses, the row sounds -----------
@@ -165,6 +203,61 @@ function boot() {
 
   // --- controls -------------------------------------------------------------
   const host = $("wv-structures");
+  // Cloth or draft on the stage. The chart only renders while it is showing, so
+  // a hidden view costs nothing on every rebuild.
+  // Starting points. The page used to boot into jacquard with no explanation of
+  // what any structure is for, so a visitor who has never woven had nothing to
+  // press. Each recipe sets a whole setup in one go.
+  const RECIPES = [
+    { name: "Dish towel", structure: "twill22", sett: 120, tone: 55, warp: "bone", weft: "bone-ink" },
+    { name: "Photo shade", structure: "jacquard", sett: 200, tone: 85, warp: "ink", weft: "image" },
+    { name: "Scarf", structure: "satin5", sett: 152, tone: 45, warp: "indigo", weft: "indigo-bone" },
+    { name: "Log cabin", structure: "plain", sett: 96, tone: 30, warp: "bone", weft: "bone-ink" },
+    { name: "Coverlet", structure: "overshot", sett: 136, tone: 70, warp: "rust", weft: "ember" },
+  ];
+  const recipeHost = $("wv-recipes");
+  if (recipeHost) {
+    RECIPES.filter((r) => STRUCTURES[r.structure]).forEach((r, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "re-chip";
+      b.textContent = r.name;
+      b.title = `${STRUCTURES[r.structure].name} · ${r.sett} ends · ${r.warp} warp`;
+      b.setAttribute("aria-label", `Start from ${r.name}: ${b.title}`);
+      b.addEventListener("click", () => {
+        structureId = r.structure;
+        const set = (id, v) => { const el = $(id); if (el) { el.value = String(v); el.dispatchEvent(new Event("input")); } };
+        set("wv-sett", r.sett);
+        set("wv-tone", r.tone);
+        const warp = $("wv-warp"), weft = $("wv-weft");
+        if (warp) { warp.value = r.warp; warp.dispatchEvent(new Event("change")); }
+        if (weft) { weft.value = r.weft; weft.dispatchEvent(new Event("change")); }
+        [...document.querySelectorAll("#wv-structures .re-chip")].forEach((c) =>
+          c.setAttribute("aria-checked", String(c.dataset.id === r.structure)));
+        ping("chip", i / 5);
+        status(`${r.name}: ${STRUCTURES[r.structure].name}, ${r.sett} ends`);
+        rebuild(true);
+      });
+      recipeHost.appendChild(b);
+    });
+  }
+
+  let view = "cloth";
+  const viewHost = $("wv-views");
+  if (viewHost) {
+    viewHost.addEventListener("click", (ev) => {
+      const b = ev.target.closest("[data-view]");
+      if (!b) return;
+      view = b.dataset.view;
+      [...viewHost.querySelectorAll("[data-view]")].forEach((x) =>
+        x.setAttribute("aria-checked", String(x === b)));
+      const chart = $("wv-chart"), cloth = $("wv-out");
+      if (chart) chart.hidden = view !== "draft";
+      if (cloth) cloth.hidden = view === "draft";
+      draw();
+    });
+  }
+
   Object.keys(STRUCTURES).forEach((id, i) => {
     const b = document.createElement("button");
     b.className = "re-chip"; b.type = "button"; b.setAttribute("role", "radio");

@@ -307,10 +307,32 @@ function boot() {
     if (modRoutes.some((r) => r.tgt === "knobA" || r.tgt === "knobB" || r.tgt === "knobC")) pushKnobs();
   }
 
+  // The live measurement of the frame, painted under the stage on a throttle so
+  // a 60fps loop does not write the DOM 60 times a second.
+  let lastMeasure = null, _measureAt = 0;
+  function paintMeasure() {
+    const el = document.getElementById("re-measure");
+    if (!el || !lastMeasure) return;
+    const now = performance.now();
+    if (now - _measureAt < 400) return;
+    _measureAt = now;
+    const m = lastMeasure;
+    el.textContent = `${m.cells} cells · ${m.colors} colours from ${m.palette}`
+      + ` · ${activeFx.size} effect${activeFx.size === 1 ? "" : "s"}`
+      + ` · output ${m.w}×${m.h}`;
+  }
+
   function retroPass(t = 0) {
     const s = sourceCanvas(); if (!s.width) return;
-    try { renderRetro(s, out, opts()); if (activeFx.size) applyOps(out, buildFx(t)); }
+    try {
+      // renderRetro reports the grid it just built ({w,h,palette,cells,colors});
+      // the call site used to drop it, so the one surface whose whole subject is
+      // the pixel grid never told you what the grid was.
+      lastMeasure = renderRetro(s, out, opts()) || null;
+      if (activeFx.size) applyOps(out, buildFx(t));
+    }
     catch (e) { status("render error: " + e.message, "err"); }
+    try { paintMeasure(); } catch (_) {}
     // Feedback: the previous frame folded back over this one (zoomed and
     // rotated a little), then the blend becomes the next frame's memory.
     if (fbOn()) {
@@ -425,6 +447,9 @@ function boot() {
       if (m.cat !== cat) return;
       const b = document.createElement("button");
       b.className = "re-chip"; b.type = "button"; b.textContent = m.label; b.setAttribute("aria-pressed", "false");
+      // every effect ships a plain-language line; a chip that is one word with
+      // no explanation is a control the visitor has to guess at
+      if (m.desc) { b.title = m.desc; b.setAttribute("aria-label", m.label + ": " + m.desc); }
       b.addEventListener("click", () => {
         if (activeFx.has(m.op)) activeFx.delete(m.op); else activeFx.add(m.op);
         b.setAttribute("aria-pressed", String(activeFx.has(m.op)));
@@ -608,9 +633,56 @@ function boot() {
     if (+tw.value < 300) { tw.value = "300"; tw.dispatchEvent(new Event("input")); }
   }
 
+  // Every one of the 254 presets ships a plain-language line naming what its
+  // three knobs do ("A=tessera size B=grout width C=glint sharpness"). The page
+  // used to show a static developer note instead, so three of the strongest
+  // controls on the surface were unlabelled. Parse the line and name the dials.
+  function nameKnobs(preset) {
+    const fallback = { A: "A", B: "B", C: "C", note: "iKnobA / B / C in your code" };
+    const raw = preset && typeof preset.knobs === "string" ? preset.knobs : "";
+    const found = { ...fallback };
+    if (raw) {
+      // "A=tessera size B=grout width C=glint sharpness  (cursor = the lamp)"
+      // Parsed by slicing between the A=/B=/C= markers rather than by one regex:
+      // the values themselves can contain spaces and an equals sign.
+      const note = raw.indexOf("(");
+      const body = note >= 0 ? raw.slice(0, note) : raw;
+      if (note >= 0) {
+        const close = raw.indexOf(")", note);
+        found.note = raw.slice(note + 1, close < 0 ? undefined : close).trim();
+      } else {
+        found.note = "";
+      }
+      const marks = [];
+      for (const k of ["A", "B", "C"]) {
+        const at = body.indexOf(k + "=");
+        if (at >= 0) marks.push({ k, at });
+      }
+      marks.sort((x, y) => x.at - y.at);
+      marks.forEach((mk, i) => {
+        const from = mk.at + 2;
+        const to = i + 1 < marks.length ? marks[i + 1].at : body.length;
+        const val = body.slice(from, to).trim();
+        if (val) found[mk.k] = val;
+      });
+    }
+    for (const k of ["A", "B", "C"]) {
+      const lab = document.querySelector("#re-knob" + k + "-v");
+      if (!lab || !lab.parentElement) continue;
+      const first = lab.parentElement.firstChild;
+      if (first && first.nodeType === 3) first.nodeValue = found[k] + " ";
+      const slider = $("re-knob" + k);
+      if (slider) slider.setAttribute("aria-label", "Shader knob " + k + ": " + found[k]);
+    }
+    const help = $("re-knob-help");
+    if (help) help.textContent = found.note;
+  }
+
+
   function loadShader(glsl, preset) {
     if (glsl == null) return;
     honourFineGrid(preset);
+    try { nameKnobs(preset); } catch (_) {}
     $("re-code").value = glsl;
     if (state !== "shader") document.querySelector('.re-tab[data-src="shader"]').click();
     else if (runShader()) sync();
