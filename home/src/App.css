@@ -29,31 +29,18 @@
    never added and the verified-green fallback text above shows instead. */
 .emph-lit .emph-text { color: transparent; }
 
-/* Organic shapes, not rounded rectangles: an asymmetric, slowly morphing border-radius makes every
-   container a liquid blob with no straight edge to crop. The border follows the organic curve. */
+/* Architectural shapes, not organic ones (2026-08-12).
+   Buttons, chips, and cards used to be liquid blobs on a 15s to 33s infinite
+   morph. The canon rules that out twice over: the corpus is angular,
+   crystalline, and drawn rather than soft capsules, and motion has to carry
+   state rather than decorate. A morphing ellipse also eats its own click
+   target, since the corners of a wide label fall outside the clip while the
+   dead zone keeps moving. Square controls need no such compensation, because
+   the box is the hit area. This matches the making surfaces, which now speak
+   the same bracketed instrument language. */
 .svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-@keyframes blobmorph {
-  0%, 100% { border-radius: 46% 54% 53% 47% / 56% 46% 54% 44%; }
-  50%      { border-radius: 55% 45% 47% 53% / 45% 55% 44% 56%; }
-}
-.btn, .ro-chip {
-  border-radius: 49% 51% 52% 48% / 54% 46% 54% 46%;
-  animation: blobmorph 15s ease-in-out infinite;
-}
-.btn:nth-of-type(2n), .ro-chip:nth-of-type(2n) { animation-duration: 19s; animation-direction: reverse; }
-.btn:nth-of-type(3n), .ro-chip:nth-of-type(3n) { animation-duration: 23s; animation-delay: -6s; }
-@media (prefers-reduced-motion: reduce) { .btn, .ro-chip { animation: none; } }
-/* larger panels: gentler organic corners that morph slowly, so cards are liquid blobs too */
-@keyframes cardblob {
-  0%, 100% { border-radius: 18px 32px 22px 28px / 28px 20px 32px 22px; }
-  50%      { border-radius: 30px 20px 30px 22px / 22px 32px 20px 30px; }
-}
-.range-card, .emet, .pp, .wi, .wi-outcome, .pp-override {
-  border-radius: 22px 30px 24px 32px / 28px 22px 32px 24px;
-  animation: cardblob 26s ease-in-out infinite;
-}
-.range-card:nth-of-type(2n), .emet:nth-of-type(2n) { animation-duration: 33s; animation-direction: reverse; }
-@media (prefers-reduced-motion: reduce) { .range-card, .emet, .pp, .wi, .wi-outcome, .pp-override { animation: none; } }
+.btn, .ro-chip { border-radius: 0; }
+.range-card, .emet, .pp, .wi, .wi-outcome, .pp-override { border-radius: 0; }
 .shell { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--shell); }
 .kicker {
   font-size: var(--step--1); letter-spacing: 0.22em; color: var(--faint);
@@ -266,7 +253,7 @@
 .cta { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
 .btn {
   display: inline-flex; align-items: center; gap: 0.5em;
-  padding: 0.85em 1.35em; border-radius: 999px;
+  padding: 0.85em 1.35em; border-radius: 0;
   font-weight: 600; font-size: var(--step-0);
   border: 1.5px solid var(--hairline); color: var(--ink);
   transition: transform 0.25s var(--ease-out), background 0.25s, border-color 0.25s, color 0.25s, box-shadow 0.25s;
@@ -941,7 +928,7 @@
 .picker-title { font-size: var(--step-2); font-weight: 800; letter-spacing: -0.02em; margin-bottom: var(--sp-3); }
 .picker-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: var(--sp-3); }
 .picker-chip {
-  padding: 0.55em 1em; border-radius: 999px; font-size: var(--step--1);
+  padding: 0.55em 1em; border-radius: 0; font-size: var(--step--1);
   border: 1px solid var(--hairline); color: var(--muted); background: transparent;
   cursor: pointer; transition: color 0.2s, border-color 0.2s, background 0.2s;
 }

@@ -1,0 +1,504 @@
+/* instrument-forms.css: the control vocabulary for the four making surfaces
+   (Studio, Gallery, Retro Engine, Loom).
+
+   Why this file exists. The canon bans the two templated forms of AI-built UI:
+   the pill (everything rounded to a capsule) and the eyebrow (a tiny uppercase
+   tracked label stacked over every section). Those surfaces had 19 pill rules
+   and 121 eyebrow labels. This layer replaces that vocabulary with the
+   bracketed instrument: a control is text with four corner ticks, no enclosing
+   capsule, zero radius; a division is a hairline rule, not a shouted word.
+   Wide-tracked mono caps survive only on genuine metadata rows (seed,
+   instruments, year), which is what the canon reserves them for.
+
+   Scoped to body.instrument-surface so the pages nobody complained about keep
+   their existing chrome. Loaded after system.css and instrument.css. */
+
+/* ── the ground: pure black, per the inspiration doc ──────────────────────── */
+body.instrument-surface{
+  --void:#000;
+  --void-opaque:#000;
+  --paper:#000;
+  --paper-2:#050507;
+  /* panels lift off black by a hair, never by a box */
+  --card:oklch(14% .022 312/.66);
+  --surface:oklch(13% .020 312/.62);
+  --raised:oklch(17% .022 310/.86);
+  /* hairlines carry every division now, so they read one step up */
+  --hairline:oklch(70% .04 308/.22);
+  --line:oklch(70% .04 308/.24);
+  --line-soft:oklch(70% .04 308/.11);
+  /* the bracket ink: the resting tick, and the engaged tick */
+  --brk:oklch(70% .04 308/.42);
+  --brk-live:var(--bone);
+  background:#000;
+}
+
+/* the unifying veil: fine scanline plus grain, the surface texture the corpus
+   puts over nearly every piece. Sits above the page, under the top layer, so
+   fullscreen art is never veiled. No blend mode: a full-viewport blend layer
+   would force the live canvas to recomposite every frame. */
+body.instrument-surface::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:60;
+  pointer-events:none;
+  background-image:
+    repeating-linear-gradient(0deg,
+      oklch(100% 0 0/.020) 0 1px, transparent 1px 3px),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23g)' opacity='.30'/></svg>");
+  background-size:auto, 140px 140px;
+  opacity:.55;
+}
+@media (prefers-contrast:more){body.instrument-surface::after{display:none}}
+@media (forced-colors:active){body.instrument-surface::after{display:none}}
+
+/* ── the bracketed control ────────────────────────────────────────────────────
+   Four corner ticks drawn as background layers: no pseudo-elements (several of
+   these buttons already own ::before/::after for markers and glyphs), no extra
+   DOM, and the whole mark animates by swapping one custom property. */
+body.instrument-surface .rt-btn,
+body.instrument-surface .chip,
+body.instrument-surface .at-chip,
+body.instrument-surface .plate-redraw,
+body.instrument-surface .re-btn,
+body.instrument-surface .re-chip,
+body.instrument-surface .at-mini,
+body.instrument-surface .tp-pane-container .tp-rotv_b{
+  --tk:7px;      /* tick arm */
+  --tw:1px;      /* tick weight */
+  border:0;
+  border-radius:0;
+  background-color:transparent;
+  background-image:
+    linear-gradient(var(--brk),var(--brk)), linear-gradient(var(--brk),var(--brk)),
+    linear-gradient(var(--brk),var(--brk)), linear-gradient(var(--brk),var(--brk)),
+    linear-gradient(var(--brk),var(--brk)), linear-gradient(var(--brk),var(--brk)),
+    linear-gradient(var(--brk),var(--brk)), linear-gradient(var(--brk),var(--brk));
+  background-size:
+    var(--tk) var(--tw), var(--tw) var(--tk),
+    var(--tk) var(--tw), var(--tw) var(--tk),
+    var(--tk) var(--tw), var(--tw) var(--tk),
+    var(--tk) var(--tw), var(--tw) var(--tk);
+  background-position:
+    left top, left top,
+    right top, right top,
+    left bottom, left bottom,
+    right bottom, right bottom;
+  background-repeat:no-repeat;
+  padding:.5em .8em;
+  color:var(--muted);
+  transition:color .14s, background-image .14s;
+}
+body.instrument-surface .rt-btn:hover:not([disabled]),
+body.instrument-surface .chip:hover:not([disabled]),
+body.instrument-surface .at-chip:hover:not([disabled]),
+body.instrument-surface .plate-redraw:hover:not([disabled]),
+body.instrument-surface .re-btn:hover:not([disabled]),
+body.instrument-surface .re-chip:hover:not([disabled]),
+body.instrument-surface .at-mini:hover:not([disabled]),
+body.instrument-surface .tp-pane-container .tp-rotv_b:hover{
+  --brk:oklch(70% .04 308/.7);
+  color:var(--bone);
+  background-color:transparent;
+}
+/* engaged: the brackets go to full ink and the control takes a 1px underline.
+   Ink, not colour, so a deck with four things on does not become four hot
+   marks. Colour stays reserved for a verdict. */
+body.instrument-surface .rt-btn[aria-pressed="true"],
+body.instrument-surface .chip[aria-pressed="true"],
+body.instrument-surface .at-chip[aria-pressed="true"],
+body.instrument-surface .at-chip.active,
+body.instrument-surface .plate-redraw[aria-pressed="true"],
+body.instrument-surface .re-btn[aria-pressed="true"],
+body.instrument-surface .re-chip[aria-pressed="true"],
+body.instrument-surface .re-chip[aria-checked="true"],
+body.instrument-surface [role="tab"][aria-selected="true"]{
+  --brk:var(--brk-live);
+  color:var(--bone);
+  background-color:transparent;
+  box-shadow:inset 0 -1px 0 var(--bone);
+}
+body.instrument-surface .rt-btn[disabled],
+body.instrument-surface .chip[disabled],
+body.instrument-surface .at-chip[disabled],
+body.instrument-surface .re-btn[disabled]{
+  --brk:oklch(70% .04 308/.12);
+  color:var(--prussian);
+  cursor:default;
+}
+body.instrument-surface .rt-btn:focus-visible,
+body.instrument-surface .chip:focus-visible,
+body.instrument-surface .at-chip:focus-visible,
+body.instrument-surface .plate-redraw:focus-visible,
+body.instrument-surface .re-btn:focus-visible,
+body.instrument-surface .re-chip:focus-visible,
+body.instrument-surface .at-mini:focus-visible,
+body.instrument-surface .tp-pane-container .tp-rotv_b:focus-visible{
+  outline:1px solid var(--bone);
+  outline-offset:2px;
+  --brk:var(--brk-live);
+}
+/* a recipe is a proposal, not a state: its ticks are drawn open */
+body.instrument-surface .chip-recipe{--tk:11px;--brk:oklch(70% .04 308/.3)}
+
+/* ── divisions: a hairline, not a shouted word ───────────────────────────────
+   The Studio deck's five cluster labels are removed in markup; the clusters
+   now read from the rule between them. */
+body.instrument-surface .rt-group,
+body.instrument-surface .dk-group{
+  border:0;
+  border-radius:0;
+  padding:.1rem .55rem;
+  gap:.1rem;
+  position:relative;
+}
+body.instrument-surface .rt-group + .rt-group::before,
+body.instrument-surface .dk-group + .dk-group::before{
+  content:"";
+  position:absolute;
+  left:-.28rem;
+  top:22%;
+  bottom:22%;
+  width:1px;
+  background:var(--hairline);
+}
+body.instrument-surface .rt-group-lab{display:none}
+
+/* the family shelf on the print desk keeps its name (it is real information,
+   the register the instrument belongs to) but stops shouting: sentence case,
+   normal tracking, sitting on the rule that divides the shelf */
+body.instrument-surface .desk-fam-lab{
+  display:flex;
+  align-items:center;
+  gap:.7rem;
+  font-family:var(--body);
+  font-size:.74rem;
+  letter-spacing:0;
+  text-transform:none;
+  color:var(--ink-soft);
+  margin:1.1rem 0 .1rem;
+}
+body.instrument-surface .desk-fam-lab::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:var(--hairline);
+}
+
+/* the rail and panel group labels: same correction, 121 of them at once.
+   These name a real control group, so they keep their words and lose the
+   uppercase-tracked eyebrow treatment. */
+body.instrument-surface .at-glab,
+body.instrument-surface .studio-atelier .at-glab,
+body.instrument-surface .re-lab{
+  font-family:var(--body);
+  font-size:.78rem;
+  letter-spacing:0;
+  text-transform:none;
+  font-weight:500;
+  color:var(--ink-soft);
+}
+body.instrument-surface .re-lab{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:.6rem;
+}
+body.instrument-surface .re-lab .re-val{
+  font-family:var(--mono);
+  font-size:.7rem;
+  letter-spacing:.02em;
+  color:var(--bone);
+}
+body.instrument-surface .at-glab .hint,
+body.instrument-surface .re-hint{
+  font-family:var(--body);
+  font-size:.72rem;
+  letter-spacing:0;
+  text-transform:none;
+  color:var(--muted);
+  opacity:1;
+}
+
+/* a genuine metadata row is the one place wide-tracked mono caps still belong:
+   medium, seed, year. Left exactly as authored. */
+body.instrument-surface .plate-meta,
+body.instrument-surface .edition-no,
+body.instrument-surface .edition-meta{letter-spacing:.1em}
+
+/* ── panels: instrument surfaces, drawn with hairlines, not boxes ──────────── */
+body.instrument-surface .re-panel,
+body.instrument-surface .studio-panel,
+body.instrument-surface .studio-rail{background:transparent}
+body.instrument-surface .rail-group,
+body.instrument-surface .at-group{
+  border:0;
+  border-top:1px solid var(--line-soft);
+  border-radius:0;
+  background:transparent;
+}
+body.instrument-surface .render-toolbar{
+  border:0;
+  border-top:1px solid var(--hairline);
+  border-radius:0;
+  background:transparent;
+  padding-top:.7rem;
+}
+body.instrument-surface .re-preview,
+body.instrument-surface .plate-art,
+body.instrument-surface .viewport-stage{
+  border:1px solid var(--hairline);
+  border-radius:0;
+  background:#000;
+}
+/* popovers are apertures onto a list: square, opaque, hairlined */
+body.instrument-surface .rt-plot-pop,
+body.instrument-surface .tp-pane-container .tp-rotv_c{
+  border-radius:0;
+  border:1px solid var(--hairline);
+  background:#050506;
+}
+body.instrument-surface .desk-seed,
+body.instrument-surface input[type=text].re-in,
+body.instrument-surface select.re-in,
+body.instrument-surface .poster-seed{
+  border-radius:0;
+  background:#050506;
+  border:1px solid var(--line-soft);
+}
+body.instrument-surface .editions-ledger,
+body.instrument-surface .fixture-card,
+body.instrument-surface .panel{border-radius:0}
+
+/* the aperture exception: a full round is allowed only where the form IS an
+   aperture. The live dot and the lock glyph earn it; nothing else does. */
+body.instrument-surface .live-dot,
+body.instrument-surface .chip-lock{border-radius:999px}
+
+/* ── the shout, corrected ─────────────────────────────────────────────────────
+   636 elements on these four pages rendered in wide-tracked uppercase. When
+   everything shouts there is no hierarchy left, which is the same failure the
+   eyebrow rule names. Control text becomes sentence case in the text face and
+   takes its hierarchy from weight and size. Wide-tracked mono caps survive on
+   the genuine metadata rows the canon reserves them for: the plate numeral, the
+   instruments-and-seed line, and the ledger. */
+body.instrument-surface .rt-btn,
+body.instrument-surface .at-chip,
+body.instrument-surface .chip,
+body.instrument-surface .plate-redraw,
+body.instrument-surface .re-btn,
+body.instrument-surface .re-chip,
+body.instrument-surface .re-vibe,
+body.instrument-surface .re-tab,
+body.instrument-surface .re-toggle,
+body.instrument-surface .at-mini,
+body.instrument-surface .btn,
+body.instrument-surface .edition-take,
+body.instrument-surface .tp-pane-container .tp-rotv_t{
+  font-family:var(--body);
+  font-size:.8rem;
+  letter-spacing:0;
+  text-transform:none;
+  font-weight:500;
+}
+/* the instrument names are kebab-case identifiers: mono suits them, caps do not */
+body.instrument-surface .at-chip,
+body.instrument-surface .chip{
+  font-family:var(--mono);
+  font-size:.74rem;
+}
+
+/* row labels inside the popovers and rails: named, not shouted */
+body.instrument-surface .rt-plot-lab,
+body.instrument-surface .source-group-label,
+body.instrument-surface .re-fxgrouplab,
+body.instrument-surface .mm-clab,
+body.instrument-surface .mm-mname,
+body.instrument-surface .at-pname,
+body.instrument-surface .poster-mini-label{
+  font-family:var(--body);
+  font-size:.75rem;
+  letter-spacing:0;
+  text-transform:none;
+  font-weight:500;
+  color:var(--ink-soft);
+}
+body.instrument-surface .mm-mname,
+body.instrument-surface .mm-clab{font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+/* the source menu's three division words become rules that carry the name */
+body.instrument-surface .source-group-label{
+  display:flex;align-items:center;gap:.7rem;margin:1rem 0 .35rem;
+}
+body.instrument-surface .source-group-label::after{
+  content:"";flex:1;height:1px;background:var(--hairline);
+}
+body.instrument-surface .dk-group-lab{display:none}
+
+/* the source tabs: a list of sources, marked by a rule, never a capsule */
+body.instrument-surface .source-group [role="tab"],
+body.instrument-surface .re-tab{
+  border:0;
+  border-left:1px solid var(--hairline);
+  border-radius:0;
+  background:transparent;
+  text-align:left;
+  padding:.5em .7em;
+  color:var(--muted);
+  transition:color .14s, border-color .14s, background .14s;
+}
+body.instrument-surface .source-group [role="tab"]:hover,
+body.instrument-surface .re-tab:hover{
+  color:var(--bone);
+  border-left-color:oklch(70% .04 308/.55);
+}
+body.instrument-surface .source-group [role="tab"][aria-selected="true"],
+body.instrument-surface .re-tab[aria-selected="true"]{
+  color:var(--bone);
+  border-left:1px solid var(--bone);
+  background:oklch(100% 0 0/.035);
+  box-shadow:none;
+}
+body.instrument-surface .source-group [role="tab"]:focus-visible,
+body.instrument-surface .re-tab:focus-visible{outline:1px solid var(--bone);outline-offset:1px}
+
+/* ── the exhibition: a plate is titled, not tagged ────────────────────────── */
+body.instrument-surface .plate-head{
+  text-transform:none;
+  letter-spacing:0;
+  align-items:baseline;
+  gap:.9rem;
+  border-bottom:1px solid var(--line-soft);
+  padding-bottom:.5rem;
+}
+/* the numeral is the marker the canon prefers: it stays mono, and it stays quiet */
+body.instrument-surface .plate-no{
+  font-family:var(--mono);
+  font-size:.62rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--prussian);
+}
+/* the title reads as a title */
+body.instrument-surface .plate-title{
+  font-family:var(--body);
+  font-size:1.02rem;
+  font-weight:600;
+  letter-spacing:-.01em;
+  text-transform:none;
+  color:var(--bone);
+}
+/* the recipe line is a genuine metadata row: mono caps earned */
+body.instrument-surface .plate-meta{
+  font-family:var(--mono);
+  font-size:.6rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+body.instrument-surface .plate-hint,
+body.instrument-surface .fixture-cap,
+body.instrument-surface .desk-hint,
+body.instrument-surface .exh-note{
+  font-family:var(--body);
+  font-size:.8rem;
+  letter-spacing:0;
+  text-transform:none;
+  color:var(--muted);
+}
+body.instrument-surface .edition-meta{
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
+}
+
+/* ── stop the morph ───────────────────────────────────────────────────────────
+   Every .btn and .chip carried `animation: blobmorph 15s infinite` (19s reversed
+   on every second one), and every .panel a 26s cardblob. An ANIMATED value
+   outranks a normal declaration, so a border-radius:0 rule could never win: the
+   morph had to be stopped at the animation. It also fails the canon twice over,
+   as a soft organic capsule where the corpus is angular and crystalline, and as
+   perpetual motion that conveys no state. The upstream code carries a ::before
+   patch that existed only to restore the click target the ellipse clip was
+   eating; with a square control the box is the hit area again. */
+body.instrument-surface .btn,
+body.instrument-surface .chip,
+body.instrument-surface .panel,
+body.instrument-surface .scenario,
+body.instrument-surface .at-chip,
+body.instrument-surface .plate-redraw{
+  animation:none;
+  border-radius:0;
+}
+body.instrument-surface .btn::before,
+body.instrument-surface .chip::before{display:none}
+body.instrument-surface .panel,
+body.instrument-surface .scenario,
+body.instrument-surface .fixture-card,
+body.instrument-surface .plate{border-radius:0}
+
+/* readout furniture: the little data chips and meter tracks were capsules too.
+   The live dot and the orbit ring keep their round: they ARE apertures, and the
+   pulse is genuine state (the loop is running), not decoration. */
+body.instrument-surface .ground,
+body.instrument-surface .mm-fidelity,
+body.instrument-surface .mm-track,
+body.instrument-surface .mm-fill,
+body.instrument-surface .cert-chip,
+body.instrument-surface .studio-console-status{border-radius:0}
+body.instrument-surface .mm-track{height:.42rem}
+body.instrument-surface details.rail-group>summary,
+body.instrument-surface details>summary{border-radius:0}
+
+/* ── two grammars, so the marks mean something ────────────────────────────────
+   An ACTION is bracketed: it does a thing, and the ticks read as a control.
+   A SELECTION chip is text on a faint rule: there are ninety-four of them on the
+   print desk, and four ticks apiece turned the shelves into a field of crop
+   marks. The canon allows both forms, so use the difference to carry the
+   distinction. A chip earns its brackets when it is engaged. */
+body.instrument-surface .at-chip,
+body.instrument-surface .chip{
+  background-image:none;
+  box-shadow:inset 0 -1px 0 var(--line-soft);
+  padding:.4em .55em;
+}
+body.instrument-surface .at-chip:hover:not([disabled]),
+body.instrument-surface .chip:hover:not([disabled]){
+  background-image:none;
+  box-shadow:inset 0 -1px 0 oklch(70% .04 308/.55);
+  color:var(--bone);
+}
+body.instrument-surface .at-chip[aria-pressed="true"],
+body.instrument-surface .at-chip.active,
+body.instrument-surface .chip[aria-pressed="true"]{
+  --brk:var(--brk-live);
+  background-image:
+    linear-gradient(var(--brk),var(--brk)), linear-gradient(var(--brk),var(--brk)),
+    linear-gradient(var(--brk),var(--brk)), linear-gradient(var(--brk),var(--brk)),
+    linear-gradient(var(--brk),var(--brk)), linear-gradient(var(--brk),var(--brk)),
+    linear-gradient(var(--brk),var(--brk)), linear-gradient(var(--brk),var(--brk));
+  box-shadow:inset 0 -1px 0 var(--bone);
+}
+/* a recipe proposes a whole setup: it keeps its open brackets so it reads as an
+   action among the selections it sets */
+body.instrument-surface .chip-recipe{
+  background-image:
+    linear-gradient(var(--brk),var(--brk)), linear-gradient(var(--brk),var(--brk)),
+    linear-gradient(var(--brk),var(--brk)), linear-gradient(var(--brk),var(--brk)),
+    linear-gradient(var(--brk),var(--brk)), linear-gradient(var(--brk),var(--brk)),
+    linear-gradient(var(--brk),var(--brk)), linear-gradient(var(--brk),var(--brk));
+  box-shadow:none;
+}
+
+/* the rail's disclosure headings: they name a group of controls, so they read as
+   headings rather than tracked caps. The engine status bar keys and the live
+   marker stay mono caps: those are a genuine readout row. */
+body.instrument-surface details.rail-group>summary,
+body.instrument-surface .poster-block>summary,
+body.instrument-surface .mm-fullread>summary{
+  font-family:var(--body);
+  font-size:.86rem;
+  font-weight:600;
+  letter-spacing:0;
+  text-transform:none;
+  color:var(--bone);
+}
+body.instrument-surface .tp-pane-container .tp-rotv_b{text-transform:none}

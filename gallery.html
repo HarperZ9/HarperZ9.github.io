@@ -15,7 +15,8 @@
 <meta name="color-scheme" content="dark">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/system.css?v=20260805-studio-shelf">
+<link rel="stylesheet" href="system/system.css?v=20260812-angular">
+<link rel="stylesheet" href="system/instrument-forms.css?v=20260812-bracket">
 <style>
   /* Exhibition plates: page-local idiom. One plate per row, art-mag rhythm.
      Plates break out of the section gutter to min(88vw, 1100px), centered on
@@ -49,7 +50,16 @@
   .plate-actions{display:flex;gap:.5rem;flex:none}
   .plate:hover .plate-art{border-color:color-mix(in oklab, var(--orange) 45%, var(--hairline))}
   /* the print desk: name a seed, mix layers, draw your own plate */
-  .desk-controls{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:.9rem 0}
+  .desk-controls{display:flex;flex-wrap:wrap;gap:.5rem .45rem;align-items:center;margin:.9rem 0}
+  /* the desk deck: labeled clusters, same grammar as the Studio toolbar */
+  .dk-group{display:inline-flex;flex-wrap:wrap;align-items:center;gap:.14rem;padding:.12rem .3rem;
+    border:1px solid var(--hairline);border-radius:12px}
+  .dk-group-lab{font-family:var(--mono);font-size:.46rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);padding:0 .26rem;user-select:none}
+  .dk-group .plate-redraw{border-color:transparent;background:transparent;white-space:nowrap;padding:.42em .7em;text-decoration:none}
+  .dk-group .plate-redraw:hover{background:color-mix(in oklab,var(--ember) 12%,transparent);border-color:transparent}
+  .dk-group .plate-redraw[aria-pressed="true"]{background:var(--ember);border-color:var(--ember);color:var(--void)}
+  .desk-influence[hidden]{display:none}
   .desk-influence{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);
     font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
   .desk-influence input{accent-color:var(--orange);width:8rem}
@@ -60,6 +70,11 @@
     border:1px solid var(--hairline);border-radius:8px;padding:.6em .8em}
   .desk-seed:focus-visible{outline:2px solid var(--ember);outline-offset:2px;border-color:var(--orange)}
   .desk-chips{display:flex;flex-wrap:wrap;gap:.45rem;margin:.4rem 0 .9rem}
+  /* family shelves: a label breaks the row and names the register */
+  .desk-fam-lab{flex-basis:100%;font-family:var(--mono);font-size:.5rem;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--muted);margin:.5rem 0 0;user-select:none}
+  .desk-fam-lab:first-child{margin-top:0}
+  .chip-recipe{border-style:dashed}
   .desk-hint{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:var(--muted);margin:.4rem 0 .2rem}
   .desk-status{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;color:var(--orange);min-height:1.2em}
   .desk-variations{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin:.4rem 0 1rem}
@@ -129,7 +144,7 @@
     text-transform:uppercase;color:var(--muted);line-height:1.6}
 </style>
 </head>
-<body class="inner-clean frame-compact">
+<body class="inner-clean frame-compact instrument-surface">
 <a class="skip-link" href="#main">Skip to content</a>
 
 <div id="site-nav" class="site-nav"></div>
@@ -141,7 +156,7 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Gallery</span></div>
   <div class="mid">
     <h1>Plates from <span class="g">the drawing engine.</span></h1>
-    <p class="lede">Nineteen full-size plates drawn in your browser by this site&rsquo;s own engine (<span translate="no">system/generative-field.js</span>), then a contact sheet of the instruments behind them. The captions carry the recipe: layers first, seed second.</p>
+    <p class="lede">Thirty full-size plates drawn in your browser by this site&rsquo;s own engine (<span translate="no">system/generative-field.js</span>), then a contact sheet of the instruments behind them. The captions carry the recipe: layers first, seed second.</p>
   </div>
   <div class="seal">procedural &middot; seeded plates repeat exactly &middot; live plates never do</div>
 </div>
@@ -361,8 +376,142 @@
     </figcaption>
   </figure>
 
+  <p class="seal-line exh-note">second movement &middot; the registers: night highway, control room, cloth, machine anatomy, monument, quasicrystal, pen, sky</p>
+
+  <figure class="plate" data-plate="night-drive">
+    <div class="plate-head"><span class="plate-no">Plate 19</span><span class="plate-title">Night drive</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-night-drive" data-specimen-layers="venetian-sun,laser-ridge,star-streak" role="img" aria-label="Generated plate: a banded sunset sun over ridged laser terrain, streaked stars falling toward a perspective horizon."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">venetian-sun + laser-ridge + star-streak &middot; <span data-plate-seed>seed gallery-night-drive</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the night drive with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">the sun is occluded arcs, the terrain is a waveform ridge field, the stars streak with real perspective</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="control-room">
+    <div class="plate-head"><span class="plate-no">Plate 20</span><span class="plate-title">Control room, 02:40</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-nightshift" data-specimen-layers="vu-bank,patch-catenary,phosphor-readout" role="img" aria-label="Generated plate: a bank of ivory VU meters over a patch bay of sagging cables and a green phosphor terminal, one needle kissing red."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">vu-bank + patch-catenary + phosphor-readout &middot; <span data-plate-seed>seed gallery-nightshift</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the control room with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">cassette futurism: needles at plausible deflections, cables sagging under real catenary math</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="ikat">
+    <div class="plate-head"><span class="plate-no">Plate 21</span><span class="plate-title">Ikat, drifting</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-ikat" data-specimen-layers="ikat-drift,drape-tone" role="img" aria-label="Generated plate: chevron ikat weave in amber and teal, its dye edges feathered by the resist, hung cloth folds shaded in engraved scanlines."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">ikat-drift + drape-tone &middot; <span data-plate-seed>seed gallery-ikat</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the ikat cloth with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">the blur along each chevron edge is the resist-dye bleed that names the technique</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="vega">
+    <div class="plate-head"><span class="plate-no">Plate 22</span><span class="plate-title">Vega swell</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-op-art" data-specimen-layers="vega-bulge,riley-swell" role="img" aria-label="Generated plate: a checkered sphere bulging out of a fine grid while a field of parallel lines bends around an invisible form."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">vega-bulge + riley-swell &middot; <span data-plate-seed>seed gallery-op-art</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the op-art plate with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">two op-art grammars interfering: the bulge displaces the grid, the swell displaces the lines</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="spinal">
+    <div class="plate-head"><span class="plate-no">Plate 23</span><span class="plate-title">Spinal machine</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-spinal" data-specimen-layers="vertebra-drive,ribbed-conduit" role="img" aria-label="Generated plate: a curving spinal column of vertebra-machine segments crossed by ribbed hose conduits, hatched in ballpoint density, one node glowing cold."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">vertebra-drive + ribbed-conduit &middot; <span data-plate-seed>seed gallery-spinal</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the spinal machine with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">anatomy abstracted to machine parts, form carried by crosshatch spacing alone</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="tower">
+    <div class="plate-head"><span class="plate-no">Plate 24</span><span class="plate-title">The tower in ash</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-tower" data-specimen-layers="strata-monolith,ashfall-horizon,mourning-veils" role="img" aria-label="Generated plate: an eroded stratified tower rising off-center into ash haze, wind-dragged horizon bands behind it, veils of particulate light falling."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">strata-monolith + ashfall-horizon + mourning-veils &middot; <span data-plate-seed>seed gallery-tower</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the tower with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">structure carried by tonal masses, not outline; the veils are gauze curtains of falling light</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="penrose">
+    <div class="plate-head"><span class="plate-no">Plate 25</span><span class="plate-title">Kite and dart</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-penrose" data-specimen-layers="kite-and-dart,ammann-ghost" role="img" aria-label="Generated plate: a Penrose tiling of kites and darts grown by deflation, five-pointed star clusters emerging, ghost bars carrying the ink across it."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">kite-and-dart + ammann-ghost &middot; <span data-plate-seed>seed gallery-penrose</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the Penrose patch with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">grown by real deflation with matching rules; the pattern never repeats, anywhere, ever</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="terrace">
+    <div class="plate-head"><span class="plate-no">Plate 26</span><span class="plate-title">Terrace, hatched</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-terrace" data-specimen-layers="terrace-hatch" role="img" aria-label="Generated plate: hatched isoline terrain, every elevation band hatched at its own angle, reading as a plotter drawing of contoured hills."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">terrace-hatch &middot; <span data-plate-seed>seed gallery-terrace</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the terrain with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">pen honesty: one stroke colour, tone only from hatch spacing and direction &middot; plottable as drawn</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="flowcomb">
+    <div class="plate-head"><span class="plate-no">Plate 27</span><span class="plate-title">Flow comb</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-flow-comb" data-specimen-layers="flow-comb" role="img" aria-label="Generated plate: hundreds of short parallel streamline strokes combing around vortices, the whole field reading as wind made visible."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">flow-comb &middot; <span data-plate-seed>seed gallery-flow-comb</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the flow field with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">a seeded vector field, combed: each stroke is a short streamline through it</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="sky">
+    <div class="plate-head"><span class="plate-no">Plate 28</span><span class="plate-title">Engraved sky</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-engraved-sky" data-specimen-layers="engraved-sky" role="img" aria-label="Generated plate: an engraved star atlas, magnitude-sized stars joined by constellation rules over a curved great-circle grid, one anomaly glowing."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">engraved-sky &middot; <span data-plate-seed>seed gallery-engraved-sky</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the star atlas with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">an atlas of a sky that exists only in this seed &middot; the anomaly is the authored gesture</span>
+    </figcaption>
+  </figure>
+
+  <figure class="plate" data-plate="occultation">
+    <div class="plate-head"><span class="plate-no">Plate 29</span><span class="plate-title">Occultation</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas data-specimen="gallery-occultation" data-specimen-layers="occultation-strip,analemma-trace" role="img" aria-label="Generated plate: an eclipse phase sequence strip crossing the sun's figure-eight analemma path, solstice rings marked, one flare at eclipse day."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta">occultation-strip + analemma-trace &middot; <span data-plate-seed>seed gallery-occultation</span></span>
+      <span class="plate-actions"><button type="button" class="plate-redraw" data-plate-redraw aria-label="Redraw the occultation with a new one-off seed">redraw</button><button type="button" class="plate-redraw" data-plate-save aria-label="Save this plate as a PNG image">save png</button></span>
+      <span class="plate-hint">two calendars crossing: the phase strip counts the eclipse, the analemma counts the year</span>
+    </figcaption>
+  </figure>
+
   <figure class="plate" data-plate="11">
-    <div class="plate-head"><span class="plate-no">Plate 19</span><span class="plate-title">Planet limb, closing</span></div>
+    <div class="plate-head"><span class="plate-no">Plate 30</span><span class="plate-title">Planet limb, closing</span></div>
     <div class="plate-art ratio-wide">
       <canvas data-specimen="gallery-plate-07" data-specimen-layers="planet-limb" role="img" aria-label="Generated plate: a planet limb glowing cobalt to cyan over a marbled ice-white cloud deck, black space above."></canvas>
     </div>
@@ -379,31 +528,48 @@
   <div class="desk-controls">
     <label class="visually-hidden" for="desk-seed">Seed for your plate</label>
     <input id="desk-seed" class="desk-seed" type="text" maxlength="48" placeholder="name a seed - a word, a date, anything" autocomplete="off" spellcheck="false">
-    <button type="button" class="plate-redraw" id="desk-draw" aria-label="Draw a plate from this seed and the selected instruments">draw</button>
-    <button type="button" class="plate-redraw" id="desk-reroll" aria-label="Reroll: a fresh seed and fresh unlocked instruments; locked instruments stay" title="Spacebar rerolls too">reroll</button>
-    <button type="button" class="plate-redraw" id="desk-save" aria-label="Save your plate as a PNG image">save png</button>
-    <button type="button" class="plate-redraw" id="desk-share" aria-label="Copy a link that reproduces this plate">copy link</button>
-    <button type="button" class="plate-redraw" id="desk-plot" aria-label="Replay this plate as pen-plotter line art, stroke by stroke">plot it</button>
-    <button type="button" class="plate-redraw" id="desk-vary" aria-label="Draw four neighboring variations of this seed">variations</button>
-    <button type="button" class="plate-redraw" id="desk-retro" aria-label="Send this plate to the Retro Engine to pixelate, palette, and run effects on it">send to the retro engine</button>
-    <button type="button" class="plate-redraw" id="desk-loom" aria-label="Send this plate to the Loom to be woven into cloth">weave it on the loom</button>
-    <a class="plate-redraw" id="desk-workshop" href="studio.html?source=poster" aria-label="Open this plate in the poster workshop">open in the workshop</a>
-    <button type="button" class="plate-redraw" id="desk-sound" aria-pressed="false" aria-label="Sound on or off: redraws and adoptions play notes">sound</button>
-    <button type="button" class="plate-redraw" id="desk-play" aria-pressed="false" aria-label="Play this plate as a score: rows are pitches, the scan is time">play the plate</button>
+    <div class="dk-group" role="group" aria-label="Make">
+      <span class="dk-group-lab" aria-hidden="true">make</span>
+      <button type="button" class="plate-redraw" id="desk-draw" aria-label="Draw a plate from this seed and the selected instruments">draw</button>
+      <button type="button" class="plate-redraw" id="desk-reroll" aria-label="Reroll: a fresh seed and fresh unlocked instruments; locked instruments stay" title="Spacebar rerolls too">reroll</button>
+    </div>
+    <div class="dk-group" role="group" aria-label="Keep">
+      <span class="dk-group-lab" aria-hidden="true">keep</span>
+      <button type="button" class="plate-redraw" id="desk-save" aria-label="Save your plate as a PNG image">save png</button>
+      <button type="button" class="plate-redraw" id="desk-share" aria-label="Copy a link that reproduces this plate">copy link</button>
+      <button type="button" class="plate-redraw" id="desk-plot" aria-label="Replay this plate as pen-plotter line art, stroke by stroke">plot it</button>
+      <button type="button" class="plate-redraw" id="desk-vary" aria-label="Draw four neighboring variations of this seed">variations</button>
+    </div>
+    <div class="dk-group" role="group" aria-label="Send">
+      <span class="dk-group-lab" aria-hidden="true">send</span>
+      <button type="button" class="plate-redraw" id="desk-retro" aria-label="Send this plate to the Retro Engine to pixelate, palette, and run effects on it">to the retro engine</button>
+      <button type="button" class="plate-redraw" id="desk-loom" aria-label="Send this plate to the Loom to be woven into cloth">to the loom</button>
+      <a class="plate-redraw" id="desk-workshop" href="studio.html?source=poster" aria-label="Send this plate to the workshop: the Studio poster tool">to the workshop</a>
+    </div>
+    <div class="dk-group" role="group" aria-label="Sound">
+      <span class="dk-group-lab" aria-hidden="true">sound</span>
+      <button type="button" class="plate-redraw" id="desk-sound" aria-pressed="false" aria-label="Sound on or off: redraws and adoptions play notes">sound</button>
+      <button type="button" class="plate-redraw" id="desk-play" aria-pressed="false" aria-label="Play this plate as a score: rows are pitches, the scan is time">play the plate</button>
+    </div>
   </div>
   <p class="plate-note" id="gal-flow" aria-hidden="false"></p>
   <div class="desk-controls" id="desk-material-controls">
-    <button type="button" class="plate-redraw" id="desk-import" aria-label="Bring your own image and influence it with the instruments">bring your own image</button>
+    <div class="dk-group" role="group" aria-label="Material">
+      <span class="dk-group-lab" aria-hidden="true">material</span>
+      <button type="button" class="plate-redraw" id="desk-import" aria-label="Bring your own image and influence it with the instruments">bring your own image</button>
+      <label class="desk-influence" id="desk-influence-wrap" hidden>
+        <span>influence</span>
+        <input type="range" id="desk-influence" min="0.1" max="1" step="0.05" value="0.5" aria-label="How strongly the instruments influence your image">
+      </label>
+      <button type="button" class="plate-redraw" id="desk-clear-material" hidden aria-label="Remove your image and return to pure engine mode">clear material</button>
+    </div>
     <input type="file" id="desk-import-file" accept="image/*" hidden>
-    <label class="desk-influence" id="desk-influence-wrap" hidden>
-      <span>influence</span>
-      <input type="range" id="desk-influence" min="0.1" max="1" step="0.05" value="0.5" aria-label="How strongly the instruments influence your image">
-    </label>
-    <button type="button" class="plate-redraw" id="desk-clear-material" hidden aria-label="Remove your image and return to pure engine mode">clear material</button>
     <span class="desk-privacy" id="desk-privacy" hidden>your image never leaves this page - there is no upload, only your browser</span>
   </div>
+  <p class="desk-hint">recipes &middot; a named place to start &middot; picking one sets the instruments, the seed stays yours</p>
+  <div class="desk-chips" id="desk-recipes" role="group" aria-label="Recipe starting points"></div>
   <p class="desk-hint">instruments &middot; pick up to three &middot; the padlock keeps one through rerolls</p>
-  <div class="desk-chips" id="desk-chips" role="group" aria-label="Instrument selection"></div>
+  <div class="desk-chips desk-chips-shelved" id="desk-chips" role="group" aria-label="Instrument selection, shelved by family"></div>
   <p class="desk-status" id="desk-status" role="status" aria-live="polite"></p>
   <div class="desk-variations" id="desk-variations" hidden role="group" aria-label="Seed variations - click one to adopt it"></div>
   <figure class="plate" data-plate="desk">
@@ -429,7 +595,7 @@
   <p class="body-text">Every plate above is an open edition. Its provenance is its named seed: the same seed and instruments reproduce the same plate, in your browser, on any visit. Take what you want today: the PNG beside any plate, the plotter-ready SVG, print files from the Studio, or the spatial edition running live. Computer art magazines were selling reproductions beside the printed work in 1976; this desk keeps the offer beside the work and removes the coupon.</p>
   <p class="seal-line exh-note" id="editions-status" role="status">reading the edition ledger&hellip;</p>
   <div class="editions-ledger" id="editions-ledger" aria-label="Edition ledger"></div>
-  <noscript><p class="body-text">The ledger is a plain JSON file at <span translate="no">art/editions.json</span>: twenty-one open editions, each with its seed and provenance, free to keep. The two spatial editions run live in the Studio.</p></noscript>
+  <noscript><p class="body-text">The ledger is a plain JSON file at <span translate="no">art/editions.json</span>: thirty-two open editions, each with its seed and provenance, free to keep. The two spatial editions run live in the Studio.</p></noscript>
 </section>
 
 <section class="mv" id="fixtures" aria-labelledby="fixtures-h">
@@ -541,7 +707,7 @@
 // names, so a wave-2 layer that has not landed degrades to the backdrop wash
 // instead of throwing; the try/catch below keeps one bad plate from taking
 // the rest of the exhibition down with it.
-import { renderSpecimen, renderSpecimenOver, drawImageFit, specimenLayerNames } from "./system/generative-field.js";
+import { renderSpecimen, renderSpecimenOver, drawImageFit, specimenLayerNames, specimenLayerFamilies, specimenLayerBlurbs } from "./system/generative-field.js";
 
 // Bring-your-own-material: the visitor's image, influenced by the instruments.
 // It stays a bitmap in this tab; there is no upload. When material.active, the
@@ -694,6 +860,7 @@ const LOCK_GLYPH =
   '<path d="M2.9 5.5V3.9a2.6 2.6 0 0 1 5.2 0v1.6" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
   '<rect x="1.4" y="5.5" width="7.2" height="6" rx="1.3" fill="currentColor"/></svg>';
 
+const LAYER_BLURBS = specimenLayerBlurbs();
 function chipFor(name) {
   const wrap = document.createElement("span");
   wrap.className = "chip-wrap";
@@ -701,6 +868,11 @@ function chipFor(name) {
   pick.type = "button";
   pick.className = "chip";
   pick.textContent = name;
+  const blurb = LAYER_BLURBS[name];
+  if (blurb) {
+    pick.title = blurb;
+    pick.setAttribute("aria-label", `${name}: ${blurb}`);
+  }
   pick.setAttribute("aria-pressed", String(picked.has(name)));
   pick.addEventListener("click", () => {
     if (picked.has(name)) {
@@ -743,7 +915,73 @@ function syncChips() {
   });
 }
 
-if (deskChips) ALL_LAYERS.forEach((name) => deskChips.appendChild(chipFor(name)));
+// The vocabulary shelved by family: each register gets a labeled row, so at
+// eighty-plus instruments the wall reads as a library, not noise.
+const FAMILY_ORDER = [
+  "showpieces", "outrun", "cassette console", "op-art textile", "biomech ink",
+  "dark monument", "aperiodic order", "plotter density", "observatory",
+  "field studies", "optics", "print & interference", "glitch & ruin",
+  "growth", "mathematics", "thread & structure", "neural", "more",
+];
+if (deskChips) {
+  const fam = specimenLayerFamilies();
+  const shelves = new Map();
+  ALL_LAYERS.forEach((name) => {
+    const f = fam[name] || "more";
+    if (!shelves.has(f)) shelves.set(f, []);
+    shelves.get(f).push(name);
+  });
+  const order = FAMILY_ORDER.filter((f) => shelves.has(f))
+    .concat([...shelves.keys()].filter((f) => !FAMILY_ORDER.includes(f)));
+  for (const f of order) {
+    const lab = document.createElement("span");
+    lab.className = "desk-fam-lab";
+    lab.textContent = f;
+    deskChips.appendChild(lab);
+    shelves.get(f).forEach((name) => deskChips.appendChild(chipFor(name)));
+  }
+}
+
+// Recipes: named starting combinations. Picking one swaps the selection in
+// (locks clear, the seed stays) and draws. Only recipes whose instruments all
+// exist are offered, so the list can lead the library by a wave.
+const DESK_RECIPES = [
+  { name: "lantern night", layers: ["showpiece-lantern", "aurora-leak"] },
+  { name: "overprint cloth", layers: ["riso-moire", "weave-lattice", "dendrite"] },
+  { name: "signal ruin", layers: ["databend", "pixel-sort-ruin", "scanline"] },
+  { name: "atlas plate", layers: ["plotter-plate", "contour", "dither"] },
+  { name: "glass planet", layers: ["planet-limb", "crystal-lens", "caustic-veils"] },
+  { name: "coral etching", layers: ["dla-coral", "groove", "moire-swirl"] },
+  { name: "night drive", layers: ["venetian-sun", "laser-ridge", "star-streak"] },
+  { name: "control room", layers: ["vu-bank", "patch-catenary", "phosphor-readout"] },
+  { name: "interference cloth", layers: ["ikat-drift", "riley-swell"] },
+  { name: "spinal machine", layers: ["vertebra-drive", "ribbed-conduit", "chitin-shingles"] },
+  { name: "dark tower", layers: ["strata-monolith", "ashfall-horizon", "mourning-veils"] },
+  { name: "quasicrystal", layers: ["kite-and-dart", "ammann-ghost", "starburst-grating"] },
+  { name: "pen study", layers: ["spiral-tone", "terrace-hatch"] },
+  { name: "star atlas", layers: ["engraved-sky", "apsis-ledger"] },
+];
+const deskRecipes = document.getElementById("desk-recipes");
+if (deskRecipes) {
+  DESK_RECIPES.filter((r) => r.layers.every((l) => ALL_LAYERS.includes(l)))
+    .forEach((r) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip chip-recipe";
+      b.textContent = r.name;
+      b.title = r.layers.join(" + ");
+      b.setAttribute("aria-label",
+        `Recipe ${r.name}: set the instruments to ${r.layers.join(", ")}`);
+      b.addEventListener("click", () => {
+        picked.clear(); locked.clear();
+        r.layers.forEach((l) => picked.add(l));
+        say(`${r.name}: ${r.layers.join(" + ")}`);
+        syncChips();
+        drawDesk();
+      });
+      deskRecipes.appendChild(b);
+    });
+}
 
 function deskSeedValue() {
   const raw = (deskSeed && deskSeed.value.trim()) || "";

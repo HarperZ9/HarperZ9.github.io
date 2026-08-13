@@ -4486,6 +4486,7 @@ function paintSwatches(rich) {
     const wrap = document.createElement("span"); wrap.className = "mm-sw-wrap"; wrap.setAttribute("role", "listitem");
     const el = document.createElement("span"); el.className = "mm-sw";
     el.style.background = s.hex;
+    el.setAttribute("role", "img");
     el.setAttribute("aria-label", `Colour ${name} ${s.hex}, ${pct} of the frame`);
     el.title = `${name} · ${s.hex} · ${pct}`;
     const f = document.createElement("span"); f.className = "mm-swf"; f.textContent = pct;
@@ -4552,6 +4553,7 @@ function paintMeta(w, h, rich) {
   host.innerHTML = "";
   for (const [k, v] of rows) {
     const row = document.createElement("div"); row.className = "mm-meter";
+    row.setAttribute("role", "listitem");
     const name = document.createElement("span"); name.className = "mm-mname"; name.textContent = k;
     const val = document.createElement("span"); val.className = "mm-mval"; val.textContent = v;
     row.appendChild(name); row.appendChild(val); host.appendChild(row);
@@ -5291,12 +5293,24 @@ const viewport = $("studio-viewport");
 // Fullscreen API on the viewport stage: the canvas fills the screen, the toolbar collapses to a
 // slim auto-hiding overlay (revealed on mouse move / touch), Escape exits. Sleek + modern.
 let _fsHideTimer = 0;
+// The idle fade must never swallow an open menu (export / plot / the Controls pane
+// all live inside the toolbar) or strand a keyboard user whose focus sits in it.
+function fsToolbarEngaged() {
+  const tb = $("render-toolbar");
+  if (!tb) return false;
+  if (tb.contains(document.activeElement)) return true;
+  if (tb.querySelector("details[open]")) return true;
+  const pane = tb.querySelector(".tp-rotv");
+  return !!(pane && !pane.classList.contains("tp-rotv-cpl"));
+}
 function revealFsControls() {
   if (!document.fullscreenElement) return;
   viewport.classList.remove("fs-idle");
   clearTimeout(_fsHideTimer);
-  _fsHideTimer = setTimeout(() => {
-    if (document.fullscreenElement) viewport.classList.add("fs-idle");
+  _fsHideTimer = setTimeout(function tick() {
+    if (!document.fullscreenElement) return;
+    if (fsToolbarEngaged()) { _fsHideTimer = setTimeout(tick, 2200); return; }
+    viewport.classList.add("fs-idle");
   }, 2200);
 }
 // ── resizeActiveSurface (BUG 2): the ONE authority that re-fits the canvas backing to the current
@@ -5319,7 +5333,13 @@ function resizeActiveSurface() {
     case "atelier":
       // Let the Atelier re-fit + redraw via its own resize path (it manages this canvas).
       try { window.dispatchEvent(new Event("resize")); } catch (_) {}
-      return;   // atelier.js re-arms its own draw; nothing else to do here
+      // atelier.js re-arms its own DRAW, but nothing re-arms PERCEPTION, and this
+      // branch used to return before startMeterLoop(). Any layout shift during boot
+      // (a late stylesheet, a webfont, a slow rail) therefore left the readout empty
+      // for the whole session on the default source. Arm the loop on the next frame,
+      // once the Atelier has repainted at the new size.
+      requestAnimationFrame(() => { try { startMeterLoop(); } catch (_) {} });
+      return;
     case "fractal":
       if (fractalView) { const c = paintFractal(fractalView); try { perceive(c); } catch (_) {} }
       break;
@@ -5354,6 +5374,8 @@ function onFsChange() {
     viewport.addEventListener("mousemove", revealFsControls);
     viewport.addEventListener("touchstart", revealFsControls, { passive: true });
     viewport.addEventListener("pointerdown", revealFsControls);
+    viewport.addEventListener("keydown", revealFsControls);
+    viewport.addEventListener("focusin", revealFsControls);
     // Re-fit the backing to the (now full-screen) layout. Defer one frame so the fullscreen layout
     // has settled and the parent rect reflects the real screen size before we read it.
     requestAnimationFrame(() => { try { resizeActiveSurface(); } catch (_) {} });
@@ -5363,6 +5385,8 @@ function onFsChange() {
     viewport.removeEventListener("mousemove", revealFsControls);
     viewport.removeEventListener("touchstart", revealFsControls);
     viewport.removeEventListener("pointerdown", revealFsControls);
+    viewport.removeEventListener("keydown", revealFsControls);
+    viewport.removeEventListener("focusin", revealFsControls);
     // Re-fit the backing to the restored windowed layout.
     requestAnimationFrame(() => { try { resizeActiveSurface(); } catch (_) {} });
   }
@@ -6465,6 +6489,21 @@ function bootRetroHandoff() {
   }
   if (wantImport) { try { setSource("plotmaps"); bootRetroHandoff(); return; } catch (_) {} }
   setSource("atelier");
+})();
+
+// Boot race repair. atelier.js is a deferred classic script and this file is a
+// module, so the Atelier can settle and fire its one-shot "atelier:drawn" before
+// the listeners above exist. Anything that delays module execution triggers it: an
+// extra render-blocking stylesheet, a cold cache, a slow font. When it happened the
+// perception readout stayed empty for the entire session with no error anywhere,
+// because nothing else arms the meter loop on the default source. The Atelier now
+// records its last settled paint, so replay it once if we arrived too late.
+(function replayMissedAtelierDraw() {
+  if (activeSource !== "atelier") return;      // another source owns the canvas
+  const last = window.__atelierLastDrawn;
+  if (!last || !last.canvas) return;           // nothing painted yet: the live event will arrive
+  if ($("sc-phash") && $("sc-phash").textContent.trim() !== "-") return;  // already perceived
+  try { document.dispatchEvent(new CustomEvent("atelier:drawn", { detail: last })); } catch (_) {}
 })();
 
 // A work handed over from another surface. The archive page links every one of its 165 works

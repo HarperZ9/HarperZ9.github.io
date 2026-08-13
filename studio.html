@@ -20,14 +20,36 @@
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/system.css?v=20260805-studio-shelf">
+<link rel="stylesheet" href="system/system.css?v=20260812-angular">
+<link rel="stylesheet" href="system/instrument-forms.css?v=20260812-bracket">
+<style>
+  /* the toolbar breathes: labeled clusters instead of a wrapped soup */
+  .render-toolbar{max-width:min(100%,920px);gap:.4rem .45rem;align-items:stretch;justify-content:center}
+  .rt-group{display:inline-flex;flex-wrap:wrap;align-items:center;gap:.14rem;padding:.12rem .3rem;
+    border:1px solid var(--hairline);border-radius:12px}
+  .rt-group-lab{font-family:var(--mono);font-size:.46rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);padding:0 .26rem;user-select:none}
+  .rt-group .rt-btn{border-color:transparent;background:transparent;padding:.4em .5em;white-space:nowrap}
+  .rt-group .rt-btn:hover:not([disabled]){background:color-mix(in oklab,var(--ember) 12%,transparent);border-color:transparent}
+  .rt-group .rt-btn[aria-pressed="true"]{background:var(--ember);border-color:var(--ember);color:var(--void)}
+  .rt-group details.rt-plot summary.rt-btn{border-color:transparent;background:transparent}
+  /* the seed and algorithm shelves scroll instead of stacking a wall
+     (padding keeps the focus ring inside the clip box on edge rows) */
+  .at-chips{max-height:15.5rem;overflow-y:auto;scrollbar-width:thin;padding:.35rem}
+  /* source tabs sit uniform, no orphan widths */
+  .source-group [role="tab"]{width:100%}
+  /* laptop widths: the side columns give ground so the canvas keeps its stage */
+  @media (min-width:900px) and (max-width:1279.98px){
+    .studio-app{grid-template-columns:minmax(238px,17rem) minmax(0,1fr) minmax(272px,19rem)}
+  }
+</style>
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
      globals, not the live URL. ASCII only. -->
 <script>(function(){var p=new URLSearchParams(location.search);window.__studioBootSearch=location.search||"";window.__studioBootSource=p.get("source")||"";window.__studioBootHero=p.get("hero")==="1";window.__studioBootSeed=p.get("seed")||"";window.__studioBootWorld=p.get("world")||"";window.__studioBootScene=p.get("scene")||"";})();</script>
 </head>
-<body class="studio-page">
+<body class="studio-page instrument-surface">
 
 <a class="skip-link" href="#studio-viewport">Skip to the canvas</a>
 <div id="site-nav" class="site-nav"></div>
@@ -1035,42 +1057,32 @@
       </div>
     </div>
     <div class="render-toolbar" id="render-toolbar" role="toolbar" aria-label="Render controls">
-      <button class="rt-btn" id="rt-snapshot" type="button" title="Freeze this frame and ask the model"
-        aria-label="Snapshot: freeze this frame and ask the model">
-        <span class="rt-ico" aria-hidden="true">&#9677;</span> Snapshot</button>
-      <button class="rt-btn" id="rt-retro" type="button" title="Send this frame to the Retro Engine"
-        aria-label="Send this frame to the Retro Engine to pixelate and run effects on it">
-        <span class="rt-ico" aria-hidden="true">&#9638;</span> To Retro</button>
-      <button class="rt-btn" id="rt-loom" type="button" title="Send this frame to the Loom to be woven"
-        aria-label="Send this frame to the Loom to be woven into cloth">
-        <span class="rt-ico" aria-hidden="true">&#9636;</span> To Loom</button>
+      <div class="rt-group" role="group" aria-label="View">
+        <span class="rt-group-lab" aria-hidden="true">view</span>
       <button class="rt-btn" id="rt-playpause" type="button" aria-pressed="false"
         title="Pause or resume animated sources" aria-label="Pause animated source" disabled>
         <span class="rt-ico" aria-hidden="true">&#9208;</span> <span id="rt-playpause-label">Pause</span></button>
       <button class="rt-btn" id="rt-reset" type="button" title="Restore the source's default framing"
         aria-label="Reset view to default framing">
         <span class="rt-ico" aria-hidden="true">&#10226;</span> Reset view</button>
-      <button class="rt-btn" id="rt-fullscreen" type="button" title="Fill the screen with the canvas"
-        aria-label="Enter fullscreen" aria-pressed="false">
-        <span class="rt-ico" aria-hidden="true">&#10548;</span> Fullscreen</button>
-      <button class="rt-btn" id="rt-overlay" type="button" aria-pressed="false"
-        title="Pop the readout into a floating overlay"
-        aria-label="Open readout overlay panel">
-        <span class="rt-ico" aria-hidden="true">&#9645;</span> Overlay</button>
-      <!-- Fit/Fill: toggle canvas between object-fit contain (Fit) and cover (Fill).
-           Default is Fit. Wired by studio-surface.js via wireToolbarButtons(). -->
       <button class="rt-btn" id="rt-fit-fill" type="button" aria-pressed="false"
         title="Toggle canvas between Fit (letterboxed) and Fill (cover)"
         aria-label="Toggle Fit or Fill canvas scaling">
         <span class="rt-ico" aria-hidden="true">&#9974;</span> <span id="rt-fit-fill-label">Fit</span></button>
-      <!-- Cinema: collapse both side rails so the canvas spans full width.
-           Distinct from OS fullscreen. Wired by studio-surface.js via wireToolbarButtons(). -->
+      <button class="rt-btn" id="rt-overlay" type="button" aria-pressed="false"
+        title="Pop the readout into a floating overlay"
+        aria-label="Open readout overlay panel">
+        <span class="rt-ico" aria-hidden="true">&#9645;</span> Overlay</button>
       <button class="rt-btn" id="rt-cinema" type="button" aria-pressed="false"
         title="Cinema mode: collapse the side panels"
         aria-label="Toggle cinema mode: collapse side panels">
         <span class="rt-ico" aria-hidden="true">&#9724;</span> Cinema</button>
-      <!-- Export group: wired by studio.js. OBJ/GLTF shown only when a mesh is loaded;
-           WebM shown only for animated sources. PNG and JSON are always available. -->
+      <button class="rt-btn" id="rt-fullscreen" type="button" title="Fill the screen with the canvas"
+        aria-label="Enter fullscreen" aria-pressed="false">
+        <span class="rt-ico" aria-hidden="true">&#10548;</span> Fullscreen</button>
+      </div>
+      <div class="rt-group" role="group" aria-label="Sound">
+        <span class="rt-group-lab" aria-hidden="true">sound</span>
       <button class="rt-btn" id="rt-sound" type="button" aria-pressed="false"
         title="Sound on or off: toolbar actions play notes in the house scale"
         aria-label="Toggle the studio's sound">
@@ -1083,20 +1095,37 @@
         title="Record six seconds of the moving canvas as a WebM clip"
         aria-label="Record a six second clip of the canvas">
         <span class="rt-ico" aria-hidden="true">&#9679;</span> Clip</button>
+      </div>
+      <div class="rt-group" role="group" aria-label="Send">
+        <span class="rt-group-lab" aria-hidden="true">send</span>
+      <button class="rt-btn" id="rt-snapshot" type="button" title="Freeze this frame and ask the model"
+        aria-label="Snapshot: freeze this frame and ask the model">
+        <span class="rt-ico" aria-hidden="true">&#9677;</span> Snapshot</button>
+      <button class="rt-btn" id="rt-retro" type="button" title="Send this frame to the Retro Engine"
+        aria-label="Send this frame to the Retro Engine to pixelate and run effects on it">
+        <span class="rt-ico" aria-hidden="true">&#9638;</span> To Retro</button>
+      <button class="rt-btn" id="rt-loom" type="button" title="Send this frame to the Loom to be woven"
+        aria-label="Send this frame to the Loom to be woven into cloth">
+        <span class="rt-ico" aria-hidden="true">&#9636;</span> To Loom</button>
+      </div>
+      <div class="rt-group" role="group" aria-label="Export">
+        <span class="rt-group-lab" aria-hidden="true">export</span>
       <button class="rt-btn" id="rt-export-png"  type="button" title="Save the current frame as a PNG image"
         aria-label="Export PNG image">
         <span class="rt-ico" aria-hidden="true">&#8659;</span> PNG</button>
-      <button class="rt-btn" id="rt-export-json" type="button" title="Save the witnessed perception certificate as JSON"
-        aria-label="Export perception JSON">
-        <span class="rt-ico" aria-hidden="true">&#8659;</span> Perception JSON</button>
-      <!-- Unified export menu: every registered kind grouped by discipline.
-           Populated by studio.js from EXPORT_KINDS; absent module degrades to
-           the legacy PNG/JSON buttons above. -->
       <details class="rt-plot" id="rt-export">
         <summary class="rt-btn" title="Export the frame across disciplines: raster, print, design, textile, text, relief"
           aria-label="Export menu: choose a format across disciplines">
           <span class="rt-ico" aria-hidden="true">&#8659;</span> Export as</summary>
         <div class="rt-plot-pop" id="rt-export-pop" aria-label="Export formats">
+          <div class="rt-plot-row">
+            <span class="rt-plot-lab">quick</span>
+            <div class="rt-plot-chips">
+      <button class="rt-btn" id="rt-export-json" type="button" title="Save the witnessed perception certificate as JSON"
+        aria-label="Export perception JSON">
+        <span class="rt-ico" aria-hidden="true">&#8659;</span> Perception JSON</button>
+            </div>
+          </div>
           <div class="rt-plot-row">
             <span class="rt-plot-lab" id="export-paper-lab">pdf paper</span>
             <div class="rt-plot-chips" role="group" aria-labelledby="export-paper-lab">
@@ -1109,9 +1138,6 @@
           <p class="rt-plot-note">Design, textile, and text formats read the live perception packet; PDF paper sets the print page; relief exports a luminance mesh.</p>
         </div>
       </details>
-      <!-- Plot desk: the SVG plot control opens an options popover (style, pens, paper, format).
-           Wired by studio.js through the plotter contract; absent capabilities fall back to the
-           single-pen flow SVG. -->
       <details class="rt-plot" id="rt-plot">
         <summary class="rt-btn" id="rt-export-svg" title="Plot the current frame as pen line art: choose style, pens, paper, and format"
           aria-label="Plot options: style, pens, paper, and format">
@@ -1179,10 +1205,9 @@
       <button class="rt-btn" id="rt-export-webm" type="button" title="Record 5 seconds of the canvas as WebM video"
         aria-label="Record WebM video" hidden>
         <span class="rt-ico" aria-hidden="true">&#8659;</span> WebM</button>
-      <span class="rt-spacer"></span>
-      <!-- Engine tier override (Stage 1 scalable engine): Auto picks low/mid/high/max from the device
-           capability probe; the user can force a tier. Shown for the Music source (particles engine);
-           the live backend (WebGPU/WebGL2/CPU) is reflected in the title. -->
+      </div>
+      <div class="rt-group" role="group" aria-label="Engine">
+        <span class="rt-group-lab" aria-hidden="true">engine</span>
       <button class="rt-btn rt-tier" id="rt-tier" type="button"
         title="Engine tier: Auto / Low / Mid / High / Max"
         aria-label="Cycle engine tier" hidden>
@@ -1191,6 +1216,8 @@
         title="Cycle render quality: Standard / High"
         aria-label="Cycle render quality" disabled>
         Quality: <span id="rt-quality-val">Standard</span></button>
+      <div id="tp-pane-container" class="tp-pane-container"></div>
+      </div>
     </div>
     <div class="engine-statusbar" id="engine-statusbar" aria-label="Engine runtime status">
       <span><b>Graph</b> <span id="engine-status-graph">ready</span></span>
@@ -1379,13 +1406,13 @@
      spine/reconcile readouts are present. -->
 <script src="system/spine.js?v=20260625a" defer></script>
 <script src="system/reconcile.js?v=20260625a" defer></script>
-<script src="system/atelier.js?v=20260701a" defer></script>
+<script src="system/atelier.js?v=20260812-replay" defer></script>
 <!-- Vendored interactive libraries (P1). Single prebuilt files, no runtime CDN fetch.
      panzoom (anvaka) v9.4.3: UMD, sets window.createPanzoom; needed at boot (the default
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js"></script>
-<script type="module" src="system/studio.js?v=20260812-depth"></script>
+<script type="module" src="system/studio.js?v=20260812-gui"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>
