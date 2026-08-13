@@ -113,7 +113,7 @@ const RECORDED_WORKFLOWS: RecordedWorkflow[] = [
   },
 ];
 
-type Paper = { tag: "SYSTEMS" | "PREPRINT" | "NOTE"; title: string; line: string; doi: string; pdf: string };
+type Paper = { tag: "SYSTEMS" | "PREPRINT" | "NOTE" | "CORPUS"; title: string; line: string; doi: string; pdf?: string; read?: string };
 
 const PAPERS: Paper[] = [
   { tag: "SYSTEMS", doi: "10.5281/zenodo.21230267", pdf: "/papers/emet-integrity-witness.pdf",
@@ -134,6 +134,16 @@ const PAPERS: Paper[] = [
   { tag: "NOTE", doi: "10.5281/zenodo.21231311", pdf: "/papers/re-perceived-effects.pdf",
     title: "Re-Perceived Effects: A Well-Formedness Contract for Accountable Actuation",
     line: "Replaces an actuator's self-report with a re-perceived effect, admitted before the fact by a capability gate." },
+  // Deposited whole rather than cut into papers, and listed as corpora because
+  // that is what they are. Both are now readable here in full as well.
+  { tag: "CORPUS", doi: "10.5281/zenodo.20773724", pdf: "/papers/conferred-existence.pdf",
+    read: "/conferred-existence.html",
+    title: "Conferred Existence",
+    line: "A thesis on made minds: perception, memory, external anchors, and what a made mind could be owed and held to." },
+  { tag: "CORPUS", doi: "10.5281/zenodo.20778927", pdf: "/papers/witnessing-spine.pdf",
+    read: "/witnessing-spine.html",
+    title: "The Witnessing Spine",
+    line: "The collected research corpus behind the verification work, from bounded claims to the rule the software enforces." },
 ];
 
 export default function App() {
@@ -217,7 +227,7 @@ export default function App() {
                 that weaves any render into cloth. At the
                 proving end: fourteen public systems with receipts, verifiers, and runnable tools at
                 different maturity levels. They share one operating thesis, but they do not yet form
-                a single executable loop. Six papers sit on the record between them. Each page names
+                a single executable loop. Eight records sit on the file between them. Each page names
                 what runs, what evidence exists, and what remains unfinished.
               </p>
               <nav className="hero-doors reveal in d3" aria-label="Choose how to enter the workbench">
@@ -416,11 +426,12 @@ export default function App() {
         <section id="research" className="band">
           <div className="shell">
             <div className="sec-head reveal">
-              <h2>Six papers,<br /><span className="spectrum-word">on the record.</span></h2>
+              <h2>Eight records,<br /><span className="spectrum-word">on the file.</span></h2>
               <p className="measure lead-2">
                 The publications are one thread inside the wider workshop: byte integrity, typed
-                effects, automation boundaries, action envelopes, and made-mind philosophy. Six papers
-                are archived on Zenodo with permanent DOIs, and hosted here as direct PDFs.
+                effects, automation boundaries, action envelopes, and made-mind philosophy. Four
+                papers, two notes, and two archived corpora, all on Zenodo with permanent DOIs. None
+                of it is peer reviewed, and each entry says which it is.
               </p>
             </div>
 
@@ -433,7 +444,9 @@ export default function App() {
                     <p className="paper-line">{p.line}</p>
                   </div>
                   <span className="paper-doi mono">
-                    <a href={p.pdf}>PDF</a> · <a href={"https://doi.org/" + p.doi} rel="noopener">{p.doi} ↗</a>
+                    {p.read ? <><a href={p.read}>Read</a> · </> : null}
+                    {p.pdf ? <><a href={p.pdf}>PDF</a> · </> : null}
+                    <a href={"https://doi.org/" + p.doi} rel="noopener">{p.doi} ↗</a>
                   </span>
                 </li>
               ))}

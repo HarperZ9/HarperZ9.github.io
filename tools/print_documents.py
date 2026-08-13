@@ -35,6 +35,13 @@ DOCUMENTS = {
     "dossier.html": "Zain-Dana-Harper-Dossier.pdf",
 }
 
+# The two archived corpora print into papers/ beside the six papers, so
+# publications.html can offer a local copy of every record it lists.
+CORPORA = {
+    "conferred-existence.html": "conferred-existence.pdf",
+    "witnessing-spine.html": "witnessing-spine.pdf",
+}
+
 MIME = {
     ".js": "text/javascript", ".mjs": "text/javascript", ".css": "text/css",
     ".json": "application/json", ".svg": "image/svg+xml", ".woff2": "font/woff2",
@@ -73,13 +80,15 @@ def main() -> int:
     with serving(ROOT, PORT) as base, sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
-        for source, target in DOCUMENTS.items():
+        jobs = [(s, OUT / t) for s, t in DOCUMENTS.items()]
+        jobs += [(s, ROOT / "papers" / t) for s, t in CORPORA.items()]
+        for source, path in jobs:
+            path.parent.mkdir(parents=True, exist_ok=True)
             page.goto(base + source, wait_until="networkidle")
             # The print stylesheet is what defines these documents on paper, so
             # emulate print rather than screen before measuring anything.
             page.emulate_media(media="print")
             page.wait_for_timeout(400)
-            path = OUT / target
             page.pdf(
                 path=str(path),
                 format="Letter",
@@ -87,7 +96,7 @@ def main() -> int:
                 margin={"top": "14mm", "bottom": "14mm", "left": "13mm", "right": "13mm"},
             )
             size_kb = path.stat().st_size / 1024
-            print(f"{target:44} {size_kb:7.0f} kB")
+            print(f"{path.name:44} {size_kb:7.0f} kB")
         browser.close()
     return 0
 

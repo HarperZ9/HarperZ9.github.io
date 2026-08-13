@@ -196,10 +196,13 @@ def test_home_make_prove_copy_states_the_current_public_boundary() -> None:
         "render into cloth. At the proving end: "
         "fourteen public systems with receipts, verifiers, and runnable tools at different maturity "
         "levels. They share one operating thesis, but they do not yet form a single executable loop. "
-        "Six papers sit on the record between them. Each page names what runs, what evidence exists, "
+        "Eight records sit on the file between them. Each page names what runs, what evidence exists, "
         "and what remains unfinished."
     )
     assert expected_lead in normalized
+    # The homepage states the size of the research record. It has to match the
+    # record, which test_publication_record.py holds to eight.
+    assert "Eight records," in source and "Six papers" not in source
     assert "Then prove it." in source
     assert "Fourteen systems." in source
     assert "Each of these fourteen systems stands on its own today" in normalized

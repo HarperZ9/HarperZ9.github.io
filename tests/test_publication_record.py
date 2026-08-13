@@ -82,10 +82,27 @@ def test_nothing_claims_peer_review() -> None:
         assert re.search(r"(not|none of (it|this) is|never)[^.]{0,60}peer[ -]reviewed", src, re.I), name
 
 
-def test_a_paper_pdf_is_only_offered_where_one_exists() -> None:
-    """The four papers and two notes are hosted here as PDFs. The two corpora
-    are Zenodo deposits with no local file, and the page must not offer one."""
+def test_every_record_is_readable_without_leaving_the_site() -> None:
+    """All eight are hosted here now: six as PDFs, and the two corpora as
+    full-text pages rendered from the deposited sources. A link to a file that
+    is not there is the exact failure this site exists to argue against."""
     src = read("publications.html")
     for href in re.findall(r'href="(papers/[^"]+)"', src):
         assert (ROOT / href).is_file(), f"publications.html offers a missing PDF: {href}"
-    assert len(re.findall(r'href="papers/', src)) == 6, "expected six locally hosted PDFs"
+    assert len(re.findall(r'href="papers/', src)) == len(RECORD),         f"expected a local file for all {len(RECORD)} records"
+    for page in ("conferred-existence.html", "witnessing-spine.html"):
+        assert (ROOT / page).is_file(), f"{page} was never rendered"
+        assert f'href="{page}"' in src, f"publications.html does not link {page}"
+
+
+def test_the_rendered_corpora_carry_their_source() -> None:
+    """The pages are generated from the deposited Markdown. If a render ever
+    silently drops a section the word count collapses, so hold a floor."""
+    import html as H
+    for page, floor in (("conferred-existence.html", 60_000), ("witnessing-spine.html", 1_800)):
+        src = read(page)
+        body = src.split("</header>", 1)[1].split('<p class="note">')[0]
+        words = len(H.unescape(re.sub(r"<[^>]+>", " ", body)).split())
+        assert words >= floor, f"{page} carries only {words} words, expected at least {floor}"
+        assert "doi.org/10.5281/zenodo" in src, f"{page} does not cite its deposit"
+        assert 'data-export-slot' in src, f"{page} cannot be taken away"

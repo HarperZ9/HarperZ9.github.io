@@ -970,7 +970,7 @@
    reader a second colour language the rest of the site does not speak. The word
    already says which kind it is, so the tag reads in ink and the distinction
    survives in the text. */
-.tag-systems, .tag-preprint, .tag-note { color: var(--muted); }
+.tag-systems, .tag-preprint, .tag-note, .tag-corpus { color: var(--muted); }
 .paper-title { font-size: var(--step-1); font-weight: 700; letter-spacing: -0.012em; line-height: 1.25; text-wrap: balance; }
 .paper-line { color: var(--muted); margin-top: 0.4rem; max-width: 62ch; line-height: 1.55; }
 .paper-doi { color: var(--signal); font-size: var(--step--1); white-space: nowrap; }
