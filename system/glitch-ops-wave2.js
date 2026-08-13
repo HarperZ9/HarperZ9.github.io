@@ -132,19 +132,27 @@ export function dyeTransfer(canvas, p = {}) {
   const bead = a * 130;                          // how much dye the lifting edge leaves
   const swell = a * 0.5;                         // and how much it thickens what is there
 
+  // The plate transform is affine, so each row starts once and then steps: one
+  // add per pixel per plate instead of a fresh rotation.
+  const rx0 = -cx, sxr = new Float64Array(3), syr = new Float64Array(3);
   for (let y = 0; y < h; y++) {
-    const ry = y - cy;
+    const ry = y - cy, row = y * w * 4;
+    for (let k = 0; k < 3; k++) {
+      sxr[k] = cx + rx0 * ca[k] - ry * sa[k] + ox[k];
+      syr[k] = cy + rx0 * sa[k] + ry * ca[k] + oy[k];
+    }
     for (let x = 0; x < w; x++) {
-      const rx = x - cx, di = (y * w + x) * 4;
+      const di = row + x * 4;
       for (let k = 0; k < 3; k++) {
-        const sx = cx + rx * ca[k] - ry * sa[k] + ox[k];
-        const sy = cy + rx * sa[k] + ry * ca[k] + oy[k];
+        const sx = sxr[k], sy = syr[k];
+        sxr[k] += ca[k]; syr[k] += sa[k];            // step one pixel along the row
         // distance from this plate's own boundary, in plate coordinates
-        const ed = Math.min(Math.min(sx, w - 1 - sx), Math.min(sy, h - 1 - sy));
+        const edx = sx < w - 1 - sx ? sx : w - 1 - sx;
+        const edy = sy < h - 1 - sy ? sy : h - 1 - sy;
+        const ed = edx < edy ? edx : edy;
         if (ed < 0) { o[di + k] = 255; continue; }   // off the plate: no ink, bare paper
-        let xi = Math.round(sx), yi = Math.round(sy);
-        xi = xi < 0 ? 0 : xi > w - 1 ? w - 1 : xi;
-        yi = yi < 0 ? 0 : yi > h - 1 ? h - 1 : yi;
+        let xi = (sx + 0.5) | 0, yi = (sy + 0.5) | 0;
+        xi = xi > w - 1 ? w - 1 : xi; yi = yi > h - 1 ? h - 1 : yi;
         let dens = 255 - s[(yi * w + xi) * 4 + k];
         if (ed < roll) {
           const kb = 1 - ed / roll;                  // 0 at the roll line, 1 at the edge
@@ -171,9 +179,9 @@ export function bleachBypass(canvas, p = {}) {
   const ctx = canvas.getContext("2d");
   const img = ctx.getImageData(0, 0, w, h), d = img.data;
 
-  const pull = a * 0.88;              // how much dye colour the silver buries
-  const steep = 1 + a * 1.9;          // the retained silver's own contrast
-  const dense = 1 + a * 0.24;         // and its overall density gain
+  const pull = a * 0.82;              // how much dye colour the silver buries
+  const steep = 1 + a * 1.45;         // the retained silver's own contrast
+  const dense = 1 + a * 0.16;         // and its overall density gain
   const n = w * h;
   // the silver layer is one curve on luminance: build it once
   const SIL = new Float32Array(256);
@@ -213,12 +221,14 @@ export function lith(canvas, p = {}) {
 
   const rng = rng2From(p.seed == null ? "lith" : p.seed);
   const salt = (rng() * 2147483647) | 0;
-  const expo = 1 + a * 1.9;                       // how long the paper sat under the lamp
-  const toe = 0.05 + a * 0.30;                    // where the blacks snap shut
-  const shoulder = 0.99 - a * 0.30;               // where the highlights leave the paper
+  // Exposure is the squeeze on the curve, not a gain: the longer the paper sits
+  // under the lamp the higher the toe climbs and the lower the shoulder drops,
+  // until the whole picture lives in a narrow band of half-developed midtone.
+  const toe = 0.02 + a * 0.30;                    // where the blacks snap shut
+  const shoulder = 0.97 - a * 0.28;               // where the highlights leave the paper
   const span = Math.max(0.05, shoulder - toe);
   const inf = 1 + a * 1.9;                        // the snowball
-  const blowAt = 0.78 - a * 0.24;
+  const blowAt = 0.86 - a * 0.14;
   const gAmp = a * 82;                            // grain grows with exposure
   const gClump = 1 + a * 1.7;                     // and clumps coarser
   const keepC = 1 - a * 0.74;                     // scene colour that survives the paper
@@ -228,7 +238,7 @@ export function lith(canvas, p = {}) {
   // the paper's characteristic curve: exposure, toe, infectious run-up, shoulder
   const CURVE = new Float32Array(256), GRAIN = new Float32Array(256);
   for (let k = 0; k < 256; k++) {
-    let t = ((k / 255) * expo - toe) / span;
+    let t = (k / 255 - toe) / span;
     t = t < 0 ? 0 : t > 1 ? 1 : t;
     let v = Math.pow(t, inf);                     // infectious: the low end collapses
     if (v > blowAt) v = v + (1 - v) * smooth((v - blowAt) / (1 - blowAt)) * (0.35 + a * 0.65);

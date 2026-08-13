@@ -1,3 +1,6 @@
+import { OPS2 as OPS_CHEM, OP_META2 as META_CHEM } from "./glitch-ops-wave2.js";
+import { OPS2 as OPS_OPT, OP_META2 as META_OPT } from "./glitch-ops-wave2-optical.js";
+import { OPS2 as OPS_TIME, OP_META2 as META_TIME } from "./glitch-ops-wave2-temporal.js";
 /* glitch-ops.js — a stackable rack of manipulation + transformation effects.
 
    Each op takes a canvas and mutates it in place, so they compose in any order
@@ -644,6 +647,7 @@ function slitscan(canvas, step) {
 }
 
 export const OPS = {
+  ...OPS_CHEM, ...OPS_OPT, ...OPS_TIME,
   soften, sharpen, crystallize, wavy, goop, bubbly, sparkle, starry, melt, kaleido, prism, neon, mosaic,
   dither, halftone, posterize, pixelSort, databend, rgbShift, slice, wave, echo, mirror, ascii, bleed, scanlines, invert,
   datamosh, slitscan,
@@ -681,6 +685,7 @@ export const OP_META = [
   { op: "scanlines", label: "Scanlines", cat: "tone" },
   { op: "sparkle", label: "Sparkly", cat: "feel" },
   { op: "starry", label: "Starry", cat: "feel" },
+  ...META_CHEM, ...META_OPT, ...META_TIME,
 ];
 
 // Apply an ordered list of { op, ...params } steps to a canvas, in place.

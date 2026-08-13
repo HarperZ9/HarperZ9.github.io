@@ -8,7 +8,7 @@
 
 import { renderRetro } from "./retro-engine.js";
 import { createShaderRunner, DEFAULT_FRAG } from "./shader-runner.js?v=20260805-react";
-import { applyOps, OP_META, rngFrom } from "./glitch-ops.js?v=20260812-entro";
+import { applyOps, OP_META, rngFrom } from "./glitch-ops.js?v=20260813-wave2";
 import { SHADER_PRESETS } from "./shader-presets.js?v=20260812-wave7";
 import { sendPiece, receiveTrail, mountFlow } from "./workbench.js?v=20260812-cohesion";
 import { setUserPalette } from "./retro-palettes.js";

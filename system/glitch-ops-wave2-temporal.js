@@ -244,12 +244,12 @@ export function dropout(canvas, p = {}) {
   const { ctx, w, h, a } = D;
   const rng = rngFrom((p.seed || "drop") + "|loss");
   const tmp = copyOf(canvas, w, h);
-  const events = Math.max(1, Math.round(a * (4 + h * 0.06)));
+  const events = Math.max(1, Math.round(a * (6 + h * 0.16)));
   for (let e = 0; e < events; e++) {
-    const rows = 1 + Math.floor(rng() * (1 + a * 4));
+    const rows = 1 + Math.floor(rng() * (1 + a * 7));
     const y = Math.min(h - rows, Math.floor(rng() * h));
-    const full = rng() < 0.12 * a;
-    const len = full ? w : Math.max(3, Math.round(w * (0.03 + rng() * rng() * 0.6 * a)));
+    const full = rng() < 0.18 * a;
+    const len = full ? w : Math.max(3, Math.round(w * (0.03 + rng() * rng() * 0.75 * a)));
     const x = full ? 0 : Math.min(w - len, Math.floor(rng() * w));
     const kind = rng();
     if (kind < 0.42) {
