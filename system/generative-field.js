@@ -9,6 +9,15 @@
 import { buildCppn, buildNeuralSdf } from "./neural.js";
 import { voxelizeSdf, isoOrder } from "./voxel.js";
 import { drawTypeface } from "./typeface.js";
+// Wave 8: eight registers from the operator's own corpus, one module each.
+import { WAVE8_OUTRUN, WAVE8_OUTRUN_META } from "./instruments/wave8-outrun.js";
+import { WAVE8_CASSETTE, WAVE8_CASSETTE_META } from "./instruments/wave8-cassette-console.js";
+import { WAVE8_OPART, WAVE8_OPART_META } from "./instruments/wave8-op-art-textile.js";
+import { WAVE8_BIOMECH, WAVE8_BIOMECH_META } from "./instruments/wave8-biomech-ink.js";
+import { WAVE8_MONUMENT, WAVE8_MONUMENT_META } from "./instruments/wave8-dark-monument.js";
+import { WAVE8_APERIODIC, WAVE8_APERIODIC_META } from "./instruments/wave8-aperiodic.js";
+import { WAVE8_PLOTTER, WAVE8_PLOTTER_META } from "./instruments/wave8-plotter-density.js";
+import { WAVE8_OBSERVATORY, WAVE8_OBSERVATORY_META } from "./instruments/wave8-observatory.js";
 import {
   srgbToLinear, linearRgbToOklab, oklabToOklch, oklchToSrgbByte,
 } from "./lib/sense-core/colour-perceptual.mjs";
@@ -2731,6 +2740,14 @@ const SPECIMEN_LAYERS = {
   "voronoi-stain": drawVoronoiStain,
   clifford: drawClifford,
   phyllotaxis: drawPhyllotaxis,
+  ...WAVE8_OUTRUN,
+  ...WAVE8_CASSETTE,
+  ...WAVE8_OPART,
+  ...WAVE8_BIOMECH,
+  ...WAVE8_MONUMENT,
+  ...WAVE8_APERIODIC,
+  ...WAVE8_PLOTTER,
+  ...WAVE8_OBSERVATORY,
 };
 const SPECIMEN_DEFAULT_LAYERS = ["orbit", "contour"];
 
@@ -2744,6 +2761,69 @@ export function __alignForTest(value, hues) {
 
 export function specimenLayerNames() {
   return Object.keys(SPECIMEN_LAYERS);
+}
+
+// Curated family for every instrument, for pages that shelve the vocabulary
+// by register instead of one flat wall. Names missing here land in "more".
+const SPECIMEN_FAMILIES = {
+  "showpiece-lantern": "showpieces", "showpiece-ruin": "showpieces",
+  "showpiece-veil": "showpieces", "showpiece-burst": "showpieces",
+  "showpiece-weave": "showpieces",
+  orbit: "field studies", contour: "field studies", flow: "field studies",
+  fluid: "field studies", metaball: "field studies", bands: "field studies",
+  hydra: "field studies", lamp: "field studies", crystal: "field studies",
+  "crystal-lens": "optics", "caustic-veils": "optics", "caustic-paper": "optics",
+  "planet-limb": "optics", "aurora-leak": "optics", facets: "optics",
+  groove: "optics",
+  scanline: "print & interference", dither: "print & interference",
+  "riso-moire": "print & interference", "moire-swirl": "print & interference",
+  "acid-duotone": "print & interference", "plotter-plate": "print & interference",
+  "weave-lattice": "print & interference",
+  databend: "glitch & ruin", "pixel-sort-ruin": "glitch & ruin",
+  "obsidian-burst": "glitch & ruin",
+  dendrite: "growth", "dla-coral": "growth", "ca-quadrant": "growth",
+  "voronoi-stain": "growth", phyllotaxis: "growth",
+  clifford: "mathematics", truchet: "mathematics", "ifs-veil": "mathematics",
+  "fiber-strands": "thread & structure", "fiber-terrain": "thread & structure",
+  "stellated-lantern": "thread & structure", typeface: "thread & structure",
+  "neural-field": "neural", "neural-sdf": "neural", "neural-voxel": "neural",
+};
+// Wave-8 instruments carry their family in their META entries; fold them in
+// under the display label the desk shelves use.
+const WAVE8_FAMILY_LABEL = {
+  outrun: "outrun", "cassette-console": "cassette console",
+  "op-art-textile": "op-art textile", "biomech-ink": "biomech ink",
+  "dark-monument": "dark monument", aperiodic: "aperiodic order",
+  "plotter-density": "plotter density", observatory: "observatory",
+};
+for (const meta of [
+  ...WAVE8_OUTRUN_META, ...WAVE8_CASSETTE_META, ...WAVE8_OPART_META,
+  ...WAVE8_BIOMECH_META, ...WAVE8_MONUMENT_META, ...WAVE8_APERIODIC_META,
+  ...WAVE8_PLOTTER_META, ...WAVE8_OBSERVATORY_META,
+]) {
+  SPECIMEN_FAMILIES[meta.name] = WAVE8_FAMILY_LABEL[meta.family] || meta.family;
+}
+
+export function specimenLayerFamilies() {
+  const out = {};
+  for (const name of Object.keys(SPECIMEN_LAYERS)) {
+    out[name] = SPECIMEN_FAMILIES[name] || "more";
+  }
+  return out;
+}
+
+// One-line blurbs where an instrument's META carries one (wave 8 onward);
+// pages surface them as chip tooltips so a name is never the only clue.
+const SPECIMEN_BLURBS = {};
+for (const meta of [
+  ...WAVE8_OUTRUN_META, ...WAVE8_CASSETTE_META, ...WAVE8_OPART_META,
+  ...WAVE8_BIOMECH_META, ...WAVE8_MONUMENT_META, ...WAVE8_APERIODIC_META,
+  ...WAVE8_PLOTTER_META, ...WAVE8_OBSERVATORY_META,
+]) {
+  if (meta.blurb) SPECIMEN_BLURBS[meta.name] = meta.blurb;
+}
+export function specimenLayerBlurbs() {
+  return { ...SPECIMEN_BLURBS };
 }
 
 // The short edge every layer's absolute pixel constants were authored against.

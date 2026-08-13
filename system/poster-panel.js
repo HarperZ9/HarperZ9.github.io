@@ -229,22 +229,72 @@ export function mountPosterWorkshop(deps) {
   veil.addEventListener("input", () => { state.art.veil = Number(veil.value); queueRender(); });
   veilLab.appendChild(veil);
   gArt.appendChild(veilLab);
+  // Veil mode: wash darkens the whole frame; panel scrims each type block only,
+  // so the art keeps its brightness everywhere else.
+  const veilModes = el("div", "poster-artchips at-chips");
+  veilModes.setAttribute("role", "group");
+  veilModes.setAttribute("aria-label", "Veil mode");
+  // Fallback must match renderPoster: a state with no veilMode renders "wash"
+  // (pre-wave-8 states were authored under the whole-frame veil).
+  [["panel", "Behind type only"], ["wash", "Whole frame"]].forEach(([val, label]) => {
+    const b = el("button", "at-chip", label);
+    b.type = "button";
+    b.setAttribute("aria-pressed", String((state.art.veilMode || "wash") === val));
+    b.addEventListener("click", () => {
+      state.art.veilMode = val;
+      [...veilModes.children].forEach((c) => c.setAttribute("aria-pressed", String(c === b)));
+      queueRender();
+    });
+    veilModes.appendChild(b);
+  });
+  gArt.appendChild(veilModes);
   // Retro treatment: pixel-art the poster's art layer through the Retro Engine.
+  // "Keep colors" quantizes to the art's own palette so the instrument choice
+  // survives the treatment; the console palettes replace it deliberately.
   gArt.appendChild(el("span", "at-glab", "Retro treatment"));
   const retroChips = el("div", "poster-artchips at-chips");
-  [["off", "Off"], ["outrun", "Outrun"], ["gameboy", "Game Boy"], ["c64", "C64"], ["ega", "EGA"], ["pico8", "PICO-8"], ["aurora", "Aurora"]]
+  const retroTune = el("div", "poster-retro-tune");
+  [["off", "Off"], ["keep", "Keep colors"], ["outrun", "Outrun"], ["gameboy", "Game Boy"], ["c64", "C64"], ["ega", "EGA"], ["pico8", "PICO-8"], ["aurora", "Aurora"]]
     .forEach(([val, label], i) => {
       const b = el("button", "at-chip", label);
       b.type = "button";
       b.setAttribute("aria-pressed", String(i === 0));   // Off by default
       b.addEventListener("click", () => {
         state.art.retro = val === "off" ? null : { palette: val };
+        retroTune.hidden = !state.art.retro;
         [...retroChips.children].forEach((c) => c.setAttribute("aria-pressed", String(c === b)));
         queueRender();
       });
       retroChips.appendChild(b);
     });
   gArt.appendChild(retroChips);
+  // Treatment tuning: pixel grid + how hard the treatment lands over the raw art.
+  retroTune.hidden = true;
+  const resRow = el("div", "poster-artchips at-chips");
+  resRow.setAttribute("role", "group");
+  resRow.setAttribute("aria-label", "Treatment pixel grid");
+  [["fine", "Fine"], ["standard", "Standard"], ["chunky", "Chunky"]].forEach(([val, label]) => {
+    const b = el("button", "at-chip", label);
+    b.type = "button";
+    b.setAttribute("aria-pressed", String((state.art.retroRes || "standard") === val));
+    b.addEventListener("click", () => {
+      state.art.retroRes = val;
+      [...resRow.children].forEach((c) => c.setAttribute("aria-pressed", String(c === b)));
+      queueRender();
+    });
+    resRow.appendChild(b);
+  });
+  retroTune.appendChild(resRow);
+  const mixLab = el("label", "poster-veil-label");
+  mixLab.appendChild(el("span", "at-glab", "Treatment strength"));
+  const mix = el("input", "at-slider");
+  mix.type = "range"; mix.min = "0.2"; mix.max = "1"; mix.step = "0.05";
+  mix.value = String(state.art.retroMix ?? 1);
+  mix.setAttribute("aria-label", "How hard the treatment lands over the raw art");
+  mix.addEventListener("input", () => { state.art.retroMix = Number(mix.value); queueRender(); });
+  mixLab.appendChild(mix);
+  retroTune.appendChild(mixLab);
+  gArt.appendChild(retroTune);
   root.appendChild(gArt);
 
   // blocks

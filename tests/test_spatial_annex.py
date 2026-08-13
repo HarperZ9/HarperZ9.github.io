@@ -117,7 +117,14 @@ def test_editions_ledger_is_honest() -> None:
     for fabrication in ("collector", "sold", "price", "wallet", "0x"):
         assert fabrication not in text, f"editions ledger must not fabricate sales language: {fabrication}"
     editions = ledger["editions"]
-    assert len(editions) == 21
+    # The count DERIVES from the exhibition: every gallery plate figure except
+    # the desk's "Your plate" has a ledger row, plus the two spatial editions.
+    gallery = (EDITIONS.parent.parent / "gallery.html").read_text(encoding="utf-8")
+    plate_figures = gallery.count('<figure class="plate') - 1  # minus the desk
+    assert len(editions) == plate_figures + 2, (
+        f"ledger has {len(editions)} editions but the gallery shows "
+        f"{plate_figures} plates (+2 spatial); the two surfaces must agree"
+    )
     assert all(ed["seed"] and ed["provenance"] for ed in editions)
     spatial = [ed for ed in editions if ed["kind"] == "spatial"]
     assert len(spatial) == 2

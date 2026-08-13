@@ -34,7 +34,7 @@ export function defaultPosterState(seed = "poster-01") {
   return {
     format: "a3",
     margin: 0.07,
-    art: { layers: ["showpiece-veil"], seed, opacity: 1, veil: 0.25 },
+    art: { layers: ["showpiece-veil"], seed, opacity: 1, veil: 0.25, veilMode: "panel" },
     blocks: [
       { kind: "headline", text: "THE LOOKING GLASS", face: "brand", size: 0.09,
         tracking: 0.02, leading: 1.02, align: "left", cell: "middle-left",
@@ -113,25 +113,39 @@ export function renderPoster(canvas, state, deps = {}) {
   }
   // 1b) optional retro treatment: pixelate the art layer through the Retro Engine
   //     before the veil and type land on top, so the poster reads as a pixel-art print.
+  //     Composition rules that keep treatments from NEGATING the instrument choice:
+  //     palette "keep" quantizes to the art's OWN colours (median cut) instead of a
+  //     console palette, retroRes picks the pixel grid, and retroMix blends the
+  //     treated frame over the untreated one so the treatment can be a texture,
+  //     not a replacement.
   if (state.art && state.art.retro && typeof deps.renderRetro === "function") {
     try {
       const tmp = document.createElement("canvas"); tmp.width = fmt.w; tmp.height = fmt.h;
       tmp.getContext("2d").drawImage(canvas, 0, 0);
       const rc = document.createElement("canvas");
-      // Print-oriented defaults (no CRT curvature/scanlines); state.art.retro overrides.
+      const RES = { fine: 420, standard: 240, chunky: 120 };
+      const pal = state.art.retro.palette;
+      // Print-oriented defaults (no CRT curvature/scanlines).
       deps.renderRetro(tmp, rc, {
-        targetWidth: 240, dither: "bayer4", scanlines: false, curvature: 0, vignette: 0, bloom: 0,
-        ...state.art.retro,
+        targetWidth: RES[state.art.retroRes] || 240,
+        dither: "bayer4", scanlines: false, curvature: 0, vignette: 0, bloom: 0,
+        ...(pal === "keep" ? { palette: "auto", autoK: 12 } : { palette: pal }),
       });
+      const mix = Math.max(0, Math.min(1, state.art.retroMix ?? 1));
       ctx.imageSmoothingEnabled = false;
+      ctx.globalAlpha = mix;
       ctx.drawImage(rc, 0, 0, fmt.w, fmt.h);
+      ctx.globalAlpha = 1;
       ctx.imageSmoothingEnabled = true;
     } catch (_) {}
   }
 
-  // 2) a tunable veil so type keeps AA over busy art
+  // 2) legibility for type over busy art. Two modes: "wash" darkens the whole
+  //    frame (the classic veil); "panel" leaves the art alone and puts a soft
+  //    scrim behind each type block only, drawn in the type pass below.
   const veil = state.art ? Math.max(0, Math.min(0.85, state.art.veil ?? 0.25)) : 0.25;
-  if (veil > 0) {
+  const veilMode = (state.art && state.art.veilMode) || "wash";
+  if (veil > 0 && veilMode === "wash") {
     ctx.fillStyle = `rgba(10,6,14,${veil})`;
     ctx.fillRect(0, 0, fmt.w, fmt.h);
   }
@@ -172,6 +186,24 @@ export function renderPoster(canvas, state, deps = {}) {
     const y0 = anchor.row === 0 ? fmt.h * margin
       : anchor.row === 1 ? (fmt.h - blockH) / 2
       : fmt.h * (1 - margin) - blockH;
+    // panel veil: a feathered scrim behind this block only, so the art
+    // elsewhere keeps its full brightness
+    if (veilMode === "panel" && veil > 0 && text.trim() && lines.length) {
+      const padX = sizePx * 0.9, padY = sizePx * 0.55;
+      ctx.fillStyle = `rgba(10,6,14,${(veil * 0.34).toFixed(3)})`;
+      for (let k = 2; k >= 0; k -= 1) {
+        const grow = k * sizePx * 0.35;
+        const px = x0 - padX - grow, py = y0 - padY - grow;
+        const pw = widest + 2 * (padX + grow), ph = blockH + 2 * (padY + grow);
+        if (typeof ctx.roundRect === "function") {
+          ctx.beginPath();
+          ctx.roundRect(px, py, pw, ph, sizePx * 0.5 + grow);
+          ctx.fill();
+        } else {
+          ctx.fillRect(px, py, pw, ph);
+        }
+      }
+    }
     ctx.fillStyle = block.color || "#f2ecf7";
     lines.forEach((line, li) => {
       if (tracking > 0.01) {

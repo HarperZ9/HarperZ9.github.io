@@ -1,433 +1,521 @@
 {
-  "schema": "zentropy.editions/v1",
-  "updated": "2026-08-03",
-  "policy": {
-    "register": "Open editions, given away. The seed is the provenance.",
-    "acquire_now": [
-      "save the PNG beside any plate",
-      "plot the plotter-ready SVG at the print desk",
-      "export print, textile, and relief files from the Studio",
-      "run the spatial edition live in the Studio"
-    ],
-    "physical_prints": null,
-    "note": "Every plate is free to keep and reproduce from its named seed. A physical print route is not configured; when one exists it will be named here, not implied."
+ "schema": "zentropy.editions/v1",
+ "updated": "2026-08-12",
+ "policy": {
+  "register": "Open editions, given away. The seed is the provenance.",
+  "acquire_now": [
+   "save the PNG beside any plate",
+   "plot the plotter-ready SVG at the print desk",
+   "export print, textile, and relief files from the Studio",
+   "run the spatial edition live in the Studio"
+  ],
+  "physical_prints": null,
+  "note": "Every plate is free to keep and reproduce from its named seed. A physical print route is not configured; when one exists it will be named here, not implied."
+ },
+ "editions": [
+  {
+   "plate": "01",
+   "title": "Today's plate, folded light",
+   "kind": "daily",
+   "seed": "gallery-<today>",
+   "instruments": "showpiece-veil",
+   "provenance": "system/generative-field.js"
   },
-  "editions": [
-    {
-      "plate": "01",
-      "title": "Today's plate, folded light",
-      "kind": "daily",
-      "seed": "gallery-<today>",
-      "instruments": "showpiece-veil",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "02",
-      "title": "Obsidian burst, aurora rim",
-      "kind": "seeded",
-      "seed": "gallery-plate-02",
-      "instruments": "showpiece-burst",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "03",
-      "title": "Dendrite over riso ground",
-      "kind": "seeded",
-      "seed": "gallery-plate-03",
-      "instruments": "riso-moire + dendrite",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "04",
-      "title": "Pale caustics, interstitial",
-      "kind": "seeded",
-      "seed": "gallery-plate-04",
-      "instruments": "caustic-paper",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "05",
-      "title": "Interference weave",
-      "kind": "seeded",
-      "seed": "gallery-plate-05",
-      "instruments": "showpiece-weave",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "06",
-      "title": "Moire swirl, light leak",
-      "kind": "seeded",
-      "seed": "gallery-plate-06",
-      "instruments": "moire-swirl + aurora-leak",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "07",
-      "title": "Lantern, hung in the void",
-      "kind": "seeded",
-      "seed": "gallery-plate-07b",
-      "instruments": "showpiece-lantern",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "08",
-      "title": "Monument, pixel-sorted",
-      "kind": "seeded",
-      "seed": "gallery-plate-08",
-      "instruments": "showpiece-ruin",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "09",
-      "title": "Coral accretion, thermal",
-      "kind": "seeded",
-      "seed": "gallery-plate-09",
-      "instruments": "dla-coral",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "10",
-      "title": "Fiber canyon, wireframed",
-      "kind": "seeded",
-      "seed": "gallery-plate-10",
-      "instruments": "fiber-terrain",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "11",
-      "title": "Neural field",
-      "kind": "seeded",
-      "seed": "gallery-neural-field",
-      "instruments": "neural-field",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "12",
-      "title": "Neural solid",
-      "kind": "seeded",
-      "seed": "gallery-neural-sdf",
-      "instruments": "neural-sdf",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "13",
-      "title": "Neural voxels",
-      "kind": "seeded",
-      "seed": "gallery-neural-voxel",
-      "instruments": "neural-voxel",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "14",
-      "title": "Seeded typeface",
-      "kind": "seeded",
-      "seed": "gallery-typeface",
-      "instruments": "typeface",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "15",
-      "title": "Truchet",
-      "kind": "seeded",
-      "seed": "gallery-truchet",
-      "instruments": "truchet",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "16",
-      "title": "Voronoi, stained glass",
-      "kind": "seeded",
-      "seed": "gallery-voronoi",
-      "instruments": "voronoi-stain",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "17",
-      "title": "Clifford, a strange attractor's cloud",
-      "kind": "seeded",
-      "seed": "gallery-clifford",
-      "instruments": "clifford",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "18",
-      "title": "Phyllotaxis, the sunflower spiral",
-      "kind": "seeded",
-      "seed": "gallery-phyllotaxis",
-      "instruments": "phyllotaxis",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "19",
-      "title": "Planet limb, closing",
-      "kind": "seeded",
-      "seed": "gallery-plate-07",
-      "instruments": "planet-limb",
-      "provenance": "system/generative-field.js"
-    },
-    {
-      "plate": "20",
-      "title": "Crystal City of Light and Wonder",
-      "kind": "spatial",
-      "seed": "crystal_city_of_light_and_wonder.png",
-      "instruments": "semantic depth meshes + selective Gaussian atmosphere",
-      "provenance": "art/spatial/crystal-city/crystal-city.world.json",
-      "run": "studio.html?source=spatial&world=crystal-city"
-    },
-    {
-      "plate": "21",
-      "title": "Folded light, inhabited",
-      "kind": "spatial",
-      "seed": "folded-light-inhabited",
-      "instruments": "veil layers + selective Gaussian material",
-      "provenance": "art/spatial/folded-light.world.json",
-      "run": "studio.html?source=spatial&world=folded-light"
-    }
-  ],
-  "spatial_studies": [
-    {
-      "id": "scene-01",
-      "title": "Current Story 01",
-      "profile": "threshold",
-      "gaussians": 26915,
-      "held_out_psnr": 43.4,
-      "source_sha256": "d1f135d7ac052d55c5a6c2848b8b5c5c0fcca613a853ea528f6c1c77d27f80a9",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-01"
-    },
-    {
-      "id": "scene-02",
-      "title": "Current Story 02",
-      "profile": "corridor",
-      "gaussians": 26779,
-      "held_out_psnr": 43.4,
-      "source_sha256": "31e5f243cc9464bb4cd515bafb3ce2664813710543c69acd761fc493082211d1",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-02"
-    },
-    {
-      "id": "scene-03",
-      "title": "Current Story 03",
-      "profile": "embrace",
-      "gaussians": 26947,
-      "held_out_psnr": 42.6,
-      "source_sha256": "94bb982be92f282a85e644f417782a928c4ce4d7497b454131563d358cb3716b",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-03"
-    },
-    {
-      "id": "scene-04",
-      "title": "Current Story 04",
-      "profile": "threshold",
-      "gaussians": 26128,
-      "held_out_psnr": 43.7,
-      "source_sha256": "61dacbb8815ae24a6193bddb424006539d529d4aeec1b05b17f7c584d84f2b1a",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-04"
-    },
-    {
-      "id": "scene-05",
-      "title": "Current Story 05",
-      "profile": "figure",
-      "gaussians": 29613,
-      "held_out_psnr": 38.7,
-      "source_sha256": "d5d6183b5da38d1a96f038cecb691f3e6c9753e5e2d4869e8570b1f665dfbed8",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-05"
-    },
-    {
-      "id": "scene-06",
-      "title": "Current Story 06",
-      "profile": "corridor",
-      "gaussians": 29286,
-      "held_out_psnr": 39.5,
-      "source_sha256": "2e7e97579179e2ffc45d588fd9f675ee4a7afcc5c71abd68806e56902f224593",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-06"
-    },
-    {
-      "id": "scene-07",
-      "title": "Current Story 07",
-      "profile": "embrace",
-      "gaussians": 28512,
-      "held_out_psnr": 40.0,
-      "source_sha256": "c172a2c7864d7444100ff7e70a0626c038233e023f19157e2f97aa93e8e272c4",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-07"
-    },
-    {
-      "id": "scene-08",
-      "title": "Current Story 08",
-      "profile": "portrait",
-      "gaussians": 26917,
-      "held_out_psnr": 43.0,
-      "source_sha256": "b3ab4776db9ba05d3b2c3cf26dea609df43e8eb0fa765037e72019bbcfdc8c82",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-08"
-    },
-    {
-      "id": "scene-09",
-      "title": "Current Story 09",
-      "profile": "minimal",
-      "gaussians": 21015,
-      "held_out_psnr": 49.2,
-      "source_sha256": "2bed6704add3deae218b909ca31235df323ad8ec82a5187fdb0e173ad87c3482",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-09"
-    },
-    {
-      "id": "scene-10",
-      "title": "Current Story 10",
-      "profile": "minimal",
-      "gaussians": 21479,
-      "held_out_psnr": 50.7,
-      "source_sha256": "ae8d3ca7f1d54870316fa2418043fbaada53bd1355e36e7eb5d1414a7919f634",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-10"
-    },
-    {
-      "id": "scene-11",
-      "title": "Current Story 11",
-      "profile": "corridor",
-      "gaussians": 19987,
-      "held_out_psnr": 44.7,
-      "source_sha256": "e8fad932a15a6be163294dd5667b92da80e69259ee878636cf5341ce05aa2350",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-11"
-    },
-    {
-      "id": "scene-12",
-      "title": "Current Story 12",
-      "profile": "threshold",
-      "gaussians": 19862,
-      "held_out_psnr": 45.6,
-      "source_sha256": "bdfd94334166ee83be44c58a0e2c60462e9c0df67714a38b2c1e01878b4d18b3",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-12"
-    },
-    {
-      "id": "scene-13",
-      "title": "Current Story 13",
-      "profile": "horizon",
-      "gaussians": 21199,
-      "held_out_psnr": 55.4,
-      "source_sha256": "f6ae6c6cfaa914c5e5ac17d1e46a46160c43d4b2b3f687a1e24293771cd14907",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-13"
-    },
-    {
-      "id": "scene-14",
-      "title": "Current Story 14",
-      "profile": "room",
-      "gaussians": 19686,
-      "held_out_psnr": 52.1,
-      "source_sha256": "227d3fa37705aca4f6703de9cf44ac07456071ae91ba3f21da1cbf08fbad1b83",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-14"
-    },
-    {
-      "id": "scene-15",
-      "title": "Current Story 15",
-      "profile": "horizon",
-      "gaussians": 19337,
-      "held_out_psnr": 56.0,
-      "source_sha256": "91299051833e51da9f8b3d0553b3e9071d0454310fb3e081e01d55b1cf1f0b74",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-15"
-    },
-    {
-      "id": "scene-16",
-      "title": "Current Story 16",
-      "profile": "horizon",
-      "gaussians": 19641,
-      "held_out_psnr": 55.5,
-      "source_sha256": "1b9c6d0764e3eb0c01c96021443f035e6d422fb4c835f0d7b19a17db572aee05",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-16"
-    },
-    {
-      "id": "scene-17",
-      "title": "Current Story 17",
-      "profile": "threshold",
-      "gaussians": 20976,
-      "held_out_psnr": 46.4,
-      "source_sha256": "74207a0838739d43cf23da3aa53d8960723726d2812b7a059422e7dc8c570ecb",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-17"
-    },
-    {
-      "id": "scene-18",
-      "title": "City and witnesses",
-      "profile": "crystal",
-      "gaussians": 25562,
-      "held_out_psnr": 44.2,
-      "source_sha256": "7d2f720654c343c7525e4645ffd33396ad5bef03f548a58821d2e909d544bd6c",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-18"
-    },
-    {
-      "id": "scene-19",
-      "title": "Membrane, figure, and portal",
-      "profile": "crystal",
-      "gaussians": 26536,
-      "held_out_psnr": 44.0,
-      "source_sha256": "39ddbb94dacae83522994b99b8fd0a3c74d258d010ac1981d8bca72750541632",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-19"
-    },
-    {
-      "id": "scene-20",
-      "title": "Colossal arch and witness",
-      "profile": "crystal",
-      "gaussians": 27797,
-      "held_out_psnr": 44.2,
-      "source_sha256": "c546bc09148ebe03f03f5c8d0f0681e36ceb02aa80cd34ff76e05ec5dbe845c2",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-20"
-    },
-    {
-      "id": "scene-21",
-      "title": "Gate and figure",
-      "profile": "crystal",
-      "gaussians": 25923,
-      "held_out_psnr": 40.4,
-      "source_sha256": "b739daac9f937a56d3eeb838f9dc32fa393355a4c44051537232e520284ad485",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-21"
-    },
-    {
-      "id": "scene-22",
-      "title": "Orbital crystal engine",
-      "profile": "geometry",
-      "gaussians": 26290,
-      "held_out_psnr": 31.1,
-      "source_sha256": "691c99bcdfb61ddb721412672be06db5f2e9cb2a49661e52bf6e58ba93e5274d",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-22"
-    },
-    {
-      "id": "scene-23",
-      "title": "Monochrome geometry",
-      "profile": "geometry",
-      "gaussians": 23619,
-      "held_out_psnr": 35.1,
-      "source_sha256": "2c5af9d659a255bc77ca3628c1332197aab0ca660d6495f2f1d2e9bd0000531b",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-23"
-    },
-    {
-      "id": "scene-24",
-      "title": "Nested luminous arches",
-      "profile": "geometry",
-      "gaussians": 23579,
-      "held_out_psnr": 35.5,
-      "source_sha256": "bb6bb4510b920bbd1b6551fc0767422283277e5a683874db0cb610a6b55cbafa",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-24"
-    },
-    {
-      "id": "scene-25",
-      "title": "Path through rings",
-      "profile": "geometry",
-      "gaussians": 23614,
-      "held_out_psnr": 36.3,
-      "source_sha256": "e12a99cbe35443d74ca280e4c673468797aab4bbab02f3117c0bec55cf98a40d",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-25"
-    },
-    {
-      "id": "scene-26",
-      "title": "Crystal embrace",
-      "profile": "embrace",
-      "gaussians": 27923,
-      "held_out_psnr": 37.3,
-      "source_sha256": "5532427e2e7e3253ae573bf449d53fc00b7987a5b3b7a92f8ecf49cd6d5d6aa8",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-26"
-    },
-    {
-      "id": "scene-27",
-      "title": "Painterly embrace",
-      "profile": "embrace",
-      "gaussians": 28907,
-      "held_out_psnr": 41.4,
-      "source_sha256": "1dc6e73b8b9093ee9a57e51cec7a3313f5d200331bbeb0610f127e683c907c92",
-      "run": "studio.html?source=spatial&world=atlas&scene=scene-27"
-    }
-  ],
-  "spatial_studies_note": "Twenty-seven virtual-angle spatial studies, one per artwork, from the Spatial Atlas. Each is a generated interpretation of one canonical image, served beside its source receipt. The later hybrid review judged all-splat weaker than the source at the canonical view; that critique is part of the record."
+  {
+   "plate": "02",
+   "title": "Obsidian burst, aurora rim",
+   "kind": "seeded",
+   "seed": "gallery-plate-02",
+   "instruments": "showpiece-burst",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "03",
+   "title": "Dendrite over riso ground",
+   "kind": "seeded",
+   "seed": "gallery-plate-03",
+   "instruments": "riso-moire + dendrite",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "04",
+   "title": "Pale caustics, interstitial",
+   "kind": "seeded",
+   "seed": "gallery-plate-04",
+   "instruments": "caustic-paper",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "05",
+   "title": "Interference weave",
+   "kind": "seeded",
+   "seed": "gallery-plate-05",
+   "instruments": "showpiece-weave",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "06",
+   "title": "Moire swirl, light leak",
+   "kind": "seeded",
+   "seed": "gallery-plate-06",
+   "instruments": "moire-swirl + aurora-leak",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "07",
+   "title": "Lantern, hung in the void",
+   "kind": "seeded",
+   "seed": "gallery-plate-07b",
+   "instruments": "showpiece-lantern",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "08",
+   "title": "Monument, pixel-sorted",
+   "kind": "seeded",
+   "seed": "gallery-plate-08",
+   "instruments": "showpiece-ruin",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "09",
+   "title": "Coral accretion, thermal",
+   "kind": "seeded",
+   "seed": "gallery-plate-09",
+   "instruments": "dla-coral",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "10",
+   "title": "Fiber canyon, wireframed",
+   "kind": "seeded",
+   "seed": "gallery-plate-10",
+   "instruments": "fiber-terrain",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "11",
+   "title": "Neural field",
+   "kind": "seeded",
+   "seed": "gallery-neural-field",
+   "instruments": "neural-field",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "12",
+   "title": "Neural solid",
+   "kind": "seeded",
+   "seed": "gallery-neural-sdf",
+   "instruments": "neural-sdf",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "13",
+   "title": "Neural voxels",
+   "kind": "seeded",
+   "seed": "gallery-neural-voxel",
+   "instruments": "neural-voxel",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "14",
+   "title": "Seeded typeface",
+   "kind": "seeded",
+   "seed": "gallery-typeface",
+   "instruments": "typeface",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "15",
+   "title": "Truchet",
+   "kind": "seeded",
+   "seed": "gallery-truchet",
+   "instruments": "truchet",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "16",
+   "title": "Voronoi, stained glass",
+   "kind": "seeded",
+   "seed": "gallery-voronoi",
+   "instruments": "voronoi-stain",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "17",
+   "title": "Clifford, a strange attractor's cloud",
+   "kind": "seeded",
+   "seed": "gallery-clifford",
+   "instruments": "clifford",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "18",
+   "title": "Phyllotaxis, the sunflower spiral",
+   "kind": "seeded",
+   "seed": "gallery-phyllotaxis",
+   "instruments": "phyllotaxis",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "19",
+   "title": "Night drive",
+   "kind": "seeded",
+   "seed": "gallery-night-drive",
+   "instruments": "venetian-sun + laser-ridge + star-streak",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "20",
+   "title": "Control room, 02:40",
+   "kind": "seeded",
+   "seed": "gallery-nightshift",
+   "instruments": "vu-bank + patch-catenary + phosphor-readout",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "21",
+   "title": "Ikat, drifting",
+   "kind": "seeded",
+   "seed": "gallery-ikat",
+   "instruments": "ikat-drift + drape-tone",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "22",
+   "title": "Vega swell",
+   "kind": "seeded",
+   "seed": "gallery-op-art",
+   "instruments": "vega-bulge + riley-swell",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "23",
+   "title": "Spinal machine",
+   "kind": "seeded",
+   "seed": "gallery-spinal",
+   "instruments": "vertebra-drive + ribbed-conduit",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "24",
+   "title": "The tower in ash",
+   "kind": "seeded",
+   "seed": "gallery-tower",
+   "instruments": "strata-monolith + ashfall-horizon + mourning-veils",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "25",
+   "title": "Kite and dart",
+   "kind": "seeded",
+   "seed": "gallery-penrose",
+   "instruments": "kite-and-dart + ammann-ghost",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "26",
+   "title": "Terrace, hatched",
+   "kind": "seeded",
+   "seed": "gallery-terrace",
+   "instruments": "terrace-hatch",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "27",
+   "title": "Flow comb",
+   "kind": "seeded",
+   "seed": "gallery-flow-comb",
+   "instruments": "flow-comb",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "28",
+   "title": "Engraved sky",
+   "kind": "seeded",
+   "seed": "gallery-engraved-sky",
+   "instruments": "engraved-sky",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "29",
+   "title": "Occultation",
+   "kind": "seeded",
+   "seed": "gallery-occultation",
+   "instruments": "occultation-strip + analemma-trace",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "30",
+   "title": "Planet limb, closing",
+   "kind": "seeded",
+   "seed": "gallery-plate-07",
+   "instruments": "planet-limb",
+   "provenance": "system/generative-field.js"
+  },
+  {
+   "plate": "31",
+   "title": "Crystal City of Light and Wonder",
+   "kind": "spatial",
+   "seed": "crystal_city_of_light_and_wonder.png",
+   "instruments": "semantic depth meshes + selective Gaussian atmosphere",
+   "provenance": "art/spatial/crystal-city/crystal-city.world.json",
+   "run": "studio.html?source=spatial&world=crystal-city"
+  },
+  {
+   "plate": "32",
+   "title": "Folded light, inhabited",
+   "kind": "spatial",
+   "seed": "folded-light-inhabited",
+   "instruments": "veil layers + selective Gaussian material",
+   "provenance": "art/spatial/folded-light.world.json",
+   "run": "studio.html?source=spatial&world=folded-light"
+  }
+ ],
+ "spatial_studies": [
+  {
+   "id": "scene-01",
+   "title": "Current Story 01",
+   "profile": "threshold",
+   "gaussians": 26915,
+   "held_out_psnr": 43.4,
+   "source_sha256": "d1f135d7ac052d55c5a6c2848b8b5c5c0fcca613a853ea528f6c1c77d27f80a9",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-01"
+  },
+  {
+   "id": "scene-02",
+   "title": "Current Story 02",
+   "profile": "corridor",
+   "gaussians": 26779,
+   "held_out_psnr": 43.4,
+   "source_sha256": "31e5f243cc9464bb4cd515bafb3ce2664813710543c69acd761fc493082211d1",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-02"
+  },
+  {
+   "id": "scene-03",
+   "title": "Current Story 03",
+   "profile": "embrace",
+   "gaussians": 26947,
+   "held_out_psnr": 42.6,
+   "source_sha256": "94bb982be92f282a85e644f417782a928c4ce4d7497b454131563d358cb3716b",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-03"
+  },
+  {
+   "id": "scene-04",
+   "title": "Current Story 04",
+   "profile": "threshold",
+   "gaussians": 26128,
+   "held_out_psnr": 43.7,
+   "source_sha256": "61dacbb8815ae24a6193bddb424006539d529d4aeec1b05b17f7c584d84f2b1a",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-04"
+  },
+  {
+   "id": "scene-05",
+   "title": "Current Story 05",
+   "profile": "figure",
+   "gaussians": 29613,
+   "held_out_psnr": 38.7,
+   "source_sha256": "d5d6183b5da38d1a96f038cecb691f3e6c9753e5e2d4869e8570b1f665dfbed8",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-05"
+  },
+  {
+   "id": "scene-06",
+   "title": "Current Story 06",
+   "profile": "corridor",
+   "gaussians": 29286,
+   "held_out_psnr": 39.5,
+   "source_sha256": "2e7e97579179e2ffc45d588fd9f675ee4a7afcc5c71abd68806e56902f224593",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-06"
+  },
+  {
+   "id": "scene-07",
+   "title": "Current Story 07",
+   "profile": "embrace",
+   "gaussians": 28512,
+   "held_out_psnr": 40.0,
+   "source_sha256": "c172a2c7864d7444100ff7e70a0626c038233e023f19157e2f97aa93e8e272c4",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-07"
+  },
+  {
+   "id": "scene-08",
+   "title": "Current Story 08",
+   "profile": "portrait",
+   "gaussians": 26917,
+   "held_out_psnr": 43.0,
+   "source_sha256": "b3ab4776db9ba05d3b2c3cf26dea609df43e8eb0fa765037e72019bbcfdc8c82",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-08"
+  },
+  {
+   "id": "scene-09",
+   "title": "Current Story 09",
+   "profile": "minimal",
+   "gaussians": 21015,
+   "held_out_psnr": 49.2,
+   "source_sha256": "2bed6704add3deae218b909ca31235df323ad8ec82a5187fdb0e173ad87c3482",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-09"
+  },
+  {
+   "id": "scene-10",
+   "title": "Current Story 10",
+   "profile": "minimal",
+   "gaussians": 21479,
+   "held_out_psnr": 50.7,
+   "source_sha256": "ae8d3ca7f1d54870316fa2418043fbaada53bd1355e36e7eb5d1414a7919f634",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-10"
+  },
+  {
+   "id": "scene-11",
+   "title": "Current Story 11",
+   "profile": "corridor",
+   "gaussians": 19987,
+   "held_out_psnr": 44.7,
+   "source_sha256": "e8fad932a15a6be163294dd5667b92da80e69259ee878636cf5341ce05aa2350",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-11"
+  },
+  {
+   "id": "scene-12",
+   "title": "Current Story 12",
+   "profile": "threshold",
+   "gaussians": 19862,
+   "held_out_psnr": 45.6,
+   "source_sha256": "bdfd94334166ee83be44c58a0e2c60462e9c0df67714a38b2c1e01878b4d18b3",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-12"
+  },
+  {
+   "id": "scene-13",
+   "title": "Current Story 13",
+   "profile": "horizon",
+   "gaussians": 21199,
+   "held_out_psnr": 55.4,
+   "source_sha256": "f6ae6c6cfaa914c5e5ac17d1e46a46160c43d4b2b3f687a1e24293771cd14907",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-13"
+  },
+  {
+   "id": "scene-14",
+   "title": "Current Story 14",
+   "profile": "room",
+   "gaussians": 19686,
+   "held_out_psnr": 52.1,
+   "source_sha256": "227d3fa37705aca4f6703de9cf44ac07456071ae91ba3f21da1cbf08fbad1b83",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-14"
+  },
+  {
+   "id": "scene-15",
+   "title": "Current Story 15",
+   "profile": "horizon",
+   "gaussians": 19337,
+   "held_out_psnr": 56.0,
+   "source_sha256": "91299051833e51da9f8b3d0553b3e9071d0454310fb3e081e01d55b1cf1f0b74",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-15"
+  },
+  {
+   "id": "scene-16",
+   "title": "Current Story 16",
+   "profile": "horizon",
+   "gaussians": 19641,
+   "held_out_psnr": 55.5,
+   "source_sha256": "1b9c6d0764e3eb0c01c96021443f035e6d422fb4c835f0d7b19a17db572aee05",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-16"
+  },
+  {
+   "id": "scene-17",
+   "title": "Current Story 17",
+   "profile": "threshold",
+   "gaussians": 20976,
+   "held_out_psnr": 46.4,
+   "source_sha256": "74207a0838739d43cf23da3aa53d8960723726d2812b7a059422e7dc8c570ecb",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-17"
+  },
+  {
+   "id": "scene-18",
+   "title": "City and witnesses",
+   "profile": "crystal",
+   "gaussians": 25562,
+   "held_out_psnr": 44.2,
+   "source_sha256": "7d2f720654c343c7525e4645ffd33396ad5bef03f548a58821d2e909d544bd6c",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-18"
+  },
+  {
+   "id": "scene-19",
+   "title": "Membrane, figure, and portal",
+   "profile": "crystal",
+   "gaussians": 26536,
+   "held_out_psnr": 44.0,
+   "source_sha256": "39ddbb94dacae83522994b99b8fd0a3c74d258d010ac1981d8bca72750541632",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-19"
+  },
+  {
+   "id": "scene-20",
+   "title": "Colossal arch and witness",
+   "profile": "crystal",
+   "gaussians": 27797,
+   "held_out_psnr": 44.2,
+   "source_sha256": "c546bc09148ebe03f03f5c8d0f0681e36ceb02aa80cd34ff76e05ec5dbe845c2",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-20"
+  },
+  {
+   "id": "scene-21",
+   "title": "Gate and figure",
+   "profile": "crystal",
+   "gaussians": 25923,
+   "held_out_psnr": 40.4,
+   "source_sha256": "b739daac9f937a56d3eeb838f9dc32fa393355a4c44051537232e520284ad485",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-21"
+  },
+  {
+   "id": "scene-22",
+   "title": "Orbital crystal engine",
+   "profile": "geometry",
+   "gaussians": 26290,
+   "held_out_psnr": 31.1,
+   "source_sha256": "691c99bcdfb61ddb721412672be06db5f2e9cb2a49661e52bf6e58ba93e5274d",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-22"
+  },
+  {
+   "id": "scene-23",
+   "title": "Monochrome geometry",
+   "profile": "geometry",
+   "gaussians": 23619,
+   "held_out_psnr": 35.1,
+   "source_sha256": "2c5af9d659a255bc77ca3628c1332197aab0ca660d6495f2f1d2e9bd0000531b",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-23"
+  },
+  {
+   "id": "scene-24",
+   "title": "Nested luminous arches",
+   "profile": "geometry",
+   "gaussians": 23579,
+   "held_out_psnr": 35.5,
+   "source_sha256": "bb6bb4510b920bbd1b6551fc0767422283277e5a683874db0cb610a6b55cbafa",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-24"
+  },
+  {
+   "id": "scene-25",
+   "title": "Path through rings",
+   "profile": "geometry",
+   "gaussians": 23614,
+   "held_out_psnr": 36.3,
+   "source_sha256": "e12a99cbe35443d74ca280e4c673468797aab4bbab02f3117c0bec55cf98a40d",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-25"
+  },
+  {
+   "id": "scene-26",
+   "title": "Crystal embrace",
+   "profile": "embrace",
+   "gaussians": 27923,
+   "held_out_psnr": 37.3,
+   "source_sha256": "5532427e2e7e3253ae573bf449d53fc00b7987a5b3b7a92f8ecf49cd6d5d6aa8",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-26"
+  },
+  {
+   "id": "scene-27",
+   "title": "Painterly embrace",
+   "profile": "embrace",
+   "gaussians": 28907,
+   "held_out_psnr": 41.4,
+   "source_sha256": "1dc6e73b8b9093ee9a57e51cec7a3313f5d200331bbeb0610f127e683c907c92",
+   "run": "studio.html?source=spatial&world=atlas&scene=scene-27"
+  }
+ ],
+ "spatial_studies_note": "Twenty-seven virtual-angle spatial studies, one per artwork, from the Spatial Atlas. Each is a generated interpretation of one canonical image, served beside its source receipt. The later hybrid review judged all-splat weaker than the source at the canonical view; that critique is part of the record."
 }
