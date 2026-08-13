@@ -34,7 +34,7 @@ export function defaultPosterState(seed = "poster-01") {
   return {
     format: "a3",
     margin: 0.07,
-    art: { layers: ["showpiece-veil"], seed, opacity: 1, veil: 0.25, veilMode: "panel" },
+    art: { layers: ["showpiece-veil"], seed, opacity: 1, veil: 0.25, veilMode: "panel", fx: [], fxAmount: 0.6 },
     blocks: [
       { kind: "headline", text: "THE LOOKING GLASS", face: "brand", size: 0.09,
         tracking: 0.02, leading: 1.02, align: "left", cell: "middle-left",
@@ -137,6 +137,20 @@ export function renderPoster(canvas, state, deps = {}) {
       ctx.drawImage(rc, 0, 0, fmt.w, fmt.h);
       ctx.globalAlpha = 1;
       ctx.imageSmoothingEnabled = true;
+    } catch (_) {}
+  }
+
+  // 1c) the effect rack: the same treatments the Retro Engine and the print desk
+  //     run, landing on the ART only. Order matters: after the retro treatment
+  //     (so a pixel grid gets treated, not the other way round) and BEFORE the
+  //     veil and the type, so a glitch never chews the words.
+  if (state.art && Array.isArray(state.art.fx) && state.art.fx.length
+      && typeof deps.applyOps === "function") {
+    const amt = Math.max(0.05, Math.min(1, state.art.fxAmount ?? 0.6));
+    try {
+      deps.applyOps(canvas, state.art.fx.map((op, i) => ({
+        op, amount: amt, seed: (state.art.seed || "poster") + ":" + op + ":" + i,
+      })));
     } catch (_) {}
   }
 

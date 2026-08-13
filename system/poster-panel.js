@@ -13,6 +13,7 @@ import {
   POSTER_FORMATS, POSTER_FACES, POSTER_CELLS,
 } from "./poster.js";
 import { renderRetro } from "./retro-engine.js";
+import { applyOps, OP_META } from "./glitch-ops.js";
 
 const PALETTE = ["#f2ecf7", "#c9c2d4", "#8f86a0", "#7de3ea", "#99f147", "#f8cc43", "#ff8334", "#ff35aa", "#111016"];
 
@@ -109,7 +110,7 @@ export function mountPosterWorkshop(deps) {
 
   // ── render loop (debounced) ────────────────────────────────────────────────
   function renderNow() {
-    const out = renderPoster(canvas, state, { renderSpecimen, drawImage: coverDrawImage, renderRetro });
+    const out = renderPoster(canvas, state, { renderSpecimen, drawImage: coverDrawImage, renderRetro, applyOps });
     lastBoxes = out.boxes || [];
     if (typeof perceiveNow === "function") { try { perceiveNow(canvas); } catch (_) {} }
     return out;
@@ -295,6 +296,42 @@ export function mountPosterWorkshop(deps) {
   mixLab.appendChild(mix);
   retroTune.appendChild(mixLab);
   gArt.appendChild(retroTune);
+
+  // The effect rack: the treatments the Retro Engine and the print desk run,
+  // reachable here so a poster can be developed rather than only palette-swapped.
+  // They land on the art only, under the veil and the type.
+  gArt.appendChild(el("span", "at-glab", "Effects"));
+  const fxRow = el("div", "poster-artchips at-chips");
+  fxRow.setAttribute("role", "group");
+  fxRow.setAttribute("aria-label", "Effects over the art");
+  const fxTune = el("div", "poster-retro-tune");
+  fxTune.hidden = true;
+  (Array.isArray(OP_META) ? OP_META : []).forEach((m) => {
+    const b = el("button", "at-chip", m.label);
+    b.type = "button";
+    b.setAttribute("aria-pressed", "false");
+    b.setAttribute("aria-label", m.label + " effect, " + m.cat);
+    b.addEventListener("click", () => {
+      state.art.fx = Array.isArray(state.art.fx) ? state.art.fx : [];
+      const at = state.art.fx.indexOf(m.op);
+      if (at >= 0) state.art.fx.splice(at, 1); else state.art.fx.push(m.op);
+      b.setAttribute("aria-pressed", String(state.art.fx.includes(m.op)));
+      fxTune.hidden = state.art.fx.length === 0;
+      queueRender();
+    });
+    fxRow.appendChild(b);
+  });
+  gArt.appendChild(fxRow);
+  const fxLab = el("label", "poster-veil-label");
+  fxLab.appendChild(el("span", "at-glab", "Effect strength"));
+  const fxAmt = el("input", "at-slider");
+  fxAmt.type = "range"; fxAmt.min = "0.1"; fxAmt.max = "1"; fxAmt.step = "0.05";
+  fxAmt.value = String(state.art.fxAmount ?? 0.6);
+  fxAmt.setAttribute("aria-label", "How strongly the effects land on the art");
+  fxAmt.addEventListener("input", () => { state.art.fxAmount = Number(fxAmt.value); queueRender(); });
+  fxLab.appendChild(fxAmt);
+  fxTune.appendChild(fxLab);
+  gArt.appendChild(fxTune);
   root.appendChild(gArt);
 
   // blocks

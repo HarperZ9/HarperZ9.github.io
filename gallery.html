@@ -155,16 +155,91 @@
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Gallery</span></div>
   <div class="mid">
-    <h1>Plates from <span class="g">the drawing engine.</span></h1>
-    <p class="lede">Thirty full-size plates drawn in your browser by this site&rsquo;s own engine (<span translate="no">system/generative-field.js</span>), then a contact sheet of the instruments behind them. The captions carry the recipe: layers first, seed second.</p>
+    <h1>Draw a plate, <span class="g">then see thirty more.</span></h1>
+    <p class="lede">The desk is first: name a seed, pick instruments from ninety-four, and this site&rsquo;s own engine (<span translate="no">system/generative-field.js</span>) draws your plate in your browser. Below it, thirty full-size plates and a contact sheet of the instruments behind them. Every caption carries the recipe: layers first, seed second.</p>
   </div>
   <div class="seal">procedural &middot; seeded plates repeat exactly &middot; live plates never do</div>
 </div>
 
 <main id="main">
 
+<section class="mv" id="printdesk" aria-labelledby="printdesk-h">
+  <h2 id="printdesk-h">The print desk.</h2>
+  <p class="body-text">Start here. Name a seed, pick up to three of the ninety-four instruments, and the engine draws your plate on this page. The same seed and instruments reproduce the same plate on any visit, so save the PNG or copy a link that redraws it. If you would rather see what the engine can do first, the exhibition is directly below.</p>
+  <div class="desk-controls">
+    <label class="visually-hidden" for="desk-seed">Seed for your plate</label>
+    <input id="desk-seed" class="desk-seed" type="text" maxlength="48" placeholder="name a seed - a word, a date, anything" autocomplete="off" spellcheck="false">
+    <div class="dk-group" role="group" aria-label="Make">
+      <span class="dk-group-lab" aria-hidden="true">make</span>
+      <button type="button" class="plate-redraw" id="desk-draw" aria-label="Draw a plate from this seed and the selected instruments">draw</button>
+      <button type="button" class="plate-redraw" id="desk-reroll" aria-label="Reroll: a fresh seed and fresh unlocked instruments; locked instruments stay" title="Spacebar rerolls too">reroll</button>
+    </div>
+    <div class="dk-group" role="group" aria-label="Keep">
+      <span class="dk-group-lab" aria-hidden="true">keep</span>
+      <button type="button" class="plate-redraw" id="desk-save" aria-label="Save your plate as a PNG image">save png</button>
+      <button type="button" class="plate-redraw" id="desk-share" aria-label="Copy a link that reproduces this plate">copy link</button>
+      <button type="button" class="plate-redraw" id="desk-plot" aria-label="Replay this plate as pen-plotter line art, stroke by stroke">plot it</button>
+      <button type="button" class="plate-redraw" id="desk-vary" aria-label="Draw four neighboring variations of this seed">variations</button>
+    </div>
+    <div class="dk-group" role="group" aria-label="Send">
+      <span class="dk-group-lab" aria-hidden="true">send</span>
+      <button type="button" class="plate-redraw" id="desk-retro" aria-label="Send this plate to the Retro Engine to pixelate, palette, and run effects on it">to the retro engine</button>
+      <button type="button" class="plate-redraw" id="desk-loom" aria-label="Send this plate to the Loom to be woven into cloth">to the loom</button>
+      <a class="plate-redraw" id="desk-workshop" href="studio.html?source=poster" aria-label="Send this plate to the workshop: the Studio poster tool">to the workshop</a>
+    </div>
+    <div class="dk-group" role="group" aria-label="Sound">
+      <span class="dk-group-lab" aria-hidden="true">sound</span>
+      <button type="button" class="plate-redraw" id="desk-sound" aria-pressed="false" aria-label="Sound on or off: redraws and adoptions play notes">sound</button>
+      <button type="button" class="plate-redraw" id="desk-play" aria-pressed="false" aria-label="Play this plate as a score: rows are pitches, the scan is time">play the plate</button>
+    </div>
+  </div>
+  <p class="plate-note" id="gal-flow" aria-hidden="false"></p>
+  <div class="desk-controls" id="desk-material-controls">
+    <div class="dk-group" role="group" aria-label="Material">
+      <span class="dk-group-lab" aria-hidden="true">material</span>
+      <button type="button" class="plate-redraw" id="desk-import" aria-label="Bring your own image and influence it with the instruments">bring your own image</button>
+      <label class="desk-influence" id="desk-influence-wrap" hidden>
+        <span>influence</span>
+        <input type="range" id="desk-influence" min="0.1" max="1" step="0.05" value="0.5" aria-label="How strongly the instruments influence your image">
+      </label>
+      <button type="button" class="plate-redraw" id="desk-clear-material" hidden aria-label="Remove your image and return to pure engine mode">clear material</button>
+    </div>
+    <input type="file" id="desk-import-file" accept="image/*" hidden>
+    <span class="desk-privacy" id="desk-privacy" hidden>your image never leaves this page - there is no upload, only your browser</span>
+  </div>
+  <p class="desk-hint">recipes &middot; a named place to start &middot; picking one sets the instruments, the seed stays yours</p>
+  <div class="desk-chips" id="desk-recipes" role="group" aria-label="Recipe starting points"></div>
+  <p class="desk-hint">instruments &middot; pick up to three &middot; the padlock keeps one through rerolls</p>
+  <div class="desk-chips desk-chips-shelved" id="desk-chips" role="group" aria-label="Instrument selection, shelved by family"></div>
+  <p class="desk-hint">effects &middot; a treatment over the drawn plate &middot; they stack in the order you switch them on</p>
+  <div class="desk-chips desk-chips-shelved" id="desk-fx" role="group" aria-label="Effects, shelved by kind"></div>
+  <div class="desk-controls" id="desk-fx-tune" hidden>
+    <div class="dk-group" role="group" aria-label="Effect strength">
+      <span class="dk-group-lab" aria-hidden="true">strength</span>
+      <label class="desk-influence">
+        <span>amount</span>
+        <input type="range" id="desk-fx-amount" min="0.1" max="1" step="0.05" value="0.6"
+          aria-label="How strongly the effects land on the plate">
+      </label>
+      <button type="button" class="plate-redraw" id="desk-fx-clear" aria-label="Turn every effect off">clear effects</button>
+    </div>
+  </div>
+  <p class="desk-status" id="desk-status" role="status" aria-live="polite"></p>
+  <div class="desk-variations" id="desk-variations" hidden role="group" aria-label="Seed variations - click one to adopt it"></div>
+  <figure class="plate" data-plate="desk">
+    <div class="plate-head"><span class="plate-no">Your plate</span><span class="plate-title" id="desk-title">unnamed &middot; waiting for a seed</span></div>
+    <div class="plate-art ratio-wide">
+      <canvas id="desk-canvas" role="img" aria-label="Your generated plate, drawn from your seed and instrument selection."></canvas>
+    </div>
+    <figcaption class="plate-cap">
+      <span class="plate-meta" id="desk-meta">the desk draws on demand; nothing is stored anywhere</span>
+    </figcaption>
+  </figure>
+</section>
+
 <section class="mv" id="exhibition" aria-labelledby="exhibition-h">
   <h2 id="exhibition-h">The exhibition.</h2>
+  <p class="seal-line exh-note">thirty plates from the same engine you just used &middot; every caption names the instruments, so any of them can go back into the desk above</p>
   <p class="seal-line exh-note">plate 01 draws itself fresh each day &middot; redraw trades any plate&rsquo;s seed for a live one-off</p>
   <p class="seal-line exh-note">new here? <a href="tour.html">watch the recorded tour</a> - eight steps from a blank seed to a plotter-ready file</p>
   <p class="seal-line exh-note">the painted work lives elsewhere: <a href="current-story.html">the Current Story sequence</a> is seventeen works chosen out of a <a href="session-archive.html">165-work session archive</a>, published whole</p>
@@ -522,67 +597,6 @@
   </figure>
 </section>
 
-<section class="mv" id="printdesk" aria-labelledby="printdesk-h">
-  <h2 id="printdesk-h">The print desk.</h2>
-  <p class="body-text">Make your own plate. Name a seed, pick up to three instruments, and the engine draws it here, in your browser. The same seed and instruments reproduce the same plate on any visit; save the PNG or copy a link that redraws it.</p>
-  <div class="desk-controls">
-    <label class="visually-hidden" for="desk-seed">Seed for your plate</label>
-    <input id="desk-seed" class="desk-seed" type="text" maxlength="48" placeholder="name a seed - a word, a date, anything" autocomplete="off" spellcheck="false">
-    <div class="dk-group" role="group" aria-label="Make">
-      <span class="dk-group-lab" aria-hidden="true">make</span>
-      <button type="button" class="plate-redraw" id="desk-draw" aria-label="Draw a plate from this seed and the selected instruments">draw</button>
-      <button type="button" class="plate-redraw" id="desk-reroll" aria-label="Reroll: a fresh seed and fresh unlocked instruments; locked instruments stay" title="Spacebar rerolls too">reroll</button>
-    </div>
-    <div class="dk-group" role="group" aria-label="Keep">
-      <span class="dk-group-lab" aria-hidden="true">keep</span>
-      <button type="button" class="plate-redraw" id="desk-save" aria-label="Save your plate as a PNG image">save png</button>
-      <button type="button" class="plate-redraw" id="desk-share" aria-label="Copy a link that reproduces this plate">copy link</button>
-      <button type="button" class="plate-redraw" id="desk-plot" aria-label="Replay this plate as pen-plotter line art, stroke by stroke">plot it</button>
-      <button type="button" class="plate-redraw" id="desk-vary" aria-label="Draw four neighboring variations of this seed">variations</button>
-    </div>
-    <div class="dk-group" role="group" aria-label="Send">
-      <span class="dk-group-lab" aria-hidden="true">send</span>
-      <button type="button" class="plate-redraw" id="desk-retro" aria-label="Send this plate to the Retro Engine to pixelate, palette, and run effects on it">to the retro engine</button>
-      <button type="button" class="plate-redraw" id="desk-loom" aria-label="Send this plate to the Loom to be woven into cloth">to the loom</button>
-      <a class="plate-redraw" id="desk-workshop" href="studio.html?source=poster" aria-label="Send this plate to the workshop: the Studio poster tool">to the workshop</a>
-    </div>
-    <div class="dk-group" role="group" aria-label="Sound">
-      <span class="dk-group-lab" aria-hidden="true">sound</span>
-      <button type="button" class="plate-redraw" id="desk-sound" aria-pressed="false" aria-label="Sound on or off: redraws and adoptions play notes">sound</button>
-      <button type="button" class="plate-redraw" id="desk-play" aria-pressed="false" aria-label="Play this plate as a score: rows are pitches, the scan is time">play the plate</button>
-    </div>
-  </div>
-  <p class="plate-note" id="gal-flow" aria-hidden="false"></p>
-  <div class="desk-controls" id="desk-material-controls">
-    <div class="dk-group" role="group" aria-label="Material">
-      <span class="dk-group-lab" aria-hidden="true">material</span>
-      <button type="button" class="plate-redraw" id="desk-import" aria-label="Bring your own image and influence it with the instruments">bring your own image</button>
-      <label class="desk-influence" id="desk-influence-wrap" hidden>
-        <span>influence</span>
-        <input type="range" id="desk-influence" min="0.1" max="1" step="0.05" value="0.5" aria-label="How strongly the instruments influence your image">
-      </label>
-      <button type="button" class="plate-redraw" id="desk-clear-material" hidden aria-label="Remove your image and return to pure engine mode">clear material</button>
-    </div>
-    <input type="file" id="desk-import-file" accept="image/*" hidden>
-    <span class="desk-privacy" id="desk-privacy" hidden>your image never leaves this page - there is no upload, only your browser</span>
-  </div>
-  <p class="desk-hint">recipes &middot; a named place to start &middot; picking one sets the instruments, the seed stays yours</p>
-  <div class="desk-chips" id="desk-recipes" role="group" aria-label="Recipe starting points"></div>
-  <p class="desk-hint">instruments &middot; pick up to three &middot; the padlock keeps one through rerolls</p>
-  <div class="desk-chips desk-chips-shelved" id="desk-chips" role="group" aria-label="Instrument selection, shelved by family"></div>
-  <p class="desk-status" id="desk-status" role="status" aria-live="polite"></p>
-  <div class="desk-variations" id="desk-variations" hidden role="group" aria-label="Seed variations - click one to adopt it"></div>
-  <figure class="plate" data-plate="desk">
-    <div class="plate-head"><span class="plate-no">Your plate</span><span class="plate-title" id="desk-title">unnamed &middot; waiting for a seed</span></div>
-    <div class="plate-art ratio-wide">
-      <canvas id="desk-canvas" role="img" aria-label="Your generated plate, drawn from your seed and instrument selection."></canvas>
-    </div>
-    <figcaption class="plate-cap">
-      <span class="plate-meta" id="desk-meta">the desk draws on demand; nothing is stored anywhere</span>
-    </figcaption>
-  </figure>
-</section>
-
 <section class="mv" id="sounddesk" aria-labelledby="sounddesk-h">
   <h2 id="sounddesk-h">The sound desk.</h2>
   <p class="body-text">The same seed that draws a plate can play a piece. Name a seed and the browser synthesizes a short phrase from it: the key, the scale, the melody, the timbre, and the tempo are all derived from the seed with pure math, no samples and no model. The same seed sounds the same on every visit; press play, or save it as a WAV.</p>
@@ -708,6 +722,7 @@
 // instead of throwing; the try/catch below keeps one bad plate from taking
 // the rest of the exhibition down with it.
 import { renderSpecimen, renderSpecimenOver, drawImageFit, specimenLayerNames, specimenLayerFamilies, specimenLayerBlurbs } from "./system/generative-field.js";
+import { applyOps, OP_META } from "./system/glitch-ops.js?v=20260813-desk";
 
 // Bring-your-own-material: the visitor's image, influenced by the instruments.
 // It stays a bitmap in this tab; there is no upload. When material.active, the
@@ -988,6 +1003,70 @@ function deskSeedValue() {
   return raw.slice(0, 48) || "unnamed";
 }
 
+// ── the effect rack ──────────────────────────────────────────────────────────
+// The same treatments the Retro Engine runs, reachable without leaving the
+// desk. They are a LAYER OVER the drawn plate, never a replacement: the plate
+// redraws from its seed first, then every active effect lands in switch-on
+// order, so the result stays reproducible from (seed, instruments, effects).
+const activeFx = [];                      // ordered: the stack is the order
+const fxRefs = new Map();
+const deskFx = document.getElementById("desk-fx");
+const deskFxTune = document.getElementById("desk-fx-tune");
+const deskFxAmount = document.getElementById("desk-fx-amount");
+
+function fxAmount() {
+  const v = deskFxAmount ? Number(deskFxAmount.value) : 0.6;
+  return Number.isFinite(v) ? Math.max(0.05, Math.min(1, v)) : 0.6;
+}
+function syncFx() {
+  fxRefs.forEach((btn, op) => btn.setAttribute("aria-pressed", String(activeFx.includes(op))));
+  if (deskFxTune) deskFxTune.hidden = activeFx.length === 0;
+}
+// Applied to the plate after it draws. Seeded from the plate's own seed so the
+// same seed and the same stack give the same treated plate on any visit.
+function applyDeskFx() {
+  if (!deskCanvas || !activeFx.length) return;
+  const seed = deskSeedValue();
+  const amount = fxAmount();
+  applyOps(deskCanvas, activeFx.map((op, i) => ({ op, amount, seed: seed + ":" + op + ":" + i })));
+}
+
+if (deskFx && Array.isArray(OP_META)) {
+  const shelves = new Map();
+  for (const m of OP_META) {
+    if (!shelves.has(m.cat)) shelves.set(m.cat, []);
+    shelves.get(m.cat).push(m);
+  }
+  for (const [cat, metas] of shelves) {
+    const lab = document.createElement("span");
+    lab.className = "desk-fam-lab";
+    lab.textContent = cat;
+    deskFx.appendChild(lab);
+    for (const m of metas) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip";
+      b.textContent = m.label;
+      b.setAttribute("aria-pressed", "false");
+      b.setAttribute("aria-label", `${m.label} effect, ${cat}`);
+      b.addEventListener("click", () => {
+        const at = activeFx.indexOf(m.op);
+        if (at >= 0) activeFx.splice(at, 1); else activeFx.push(m.op);
+        syncFx();
+        say(activeFx.length ? activeFx.join(" -> ") : "effects off");
+        drawDesk();
+      });
+      fxRefs.set(m.op, b);
+      deskFx.appendChild(b);
+    }
+  }
+}
+if (deskFxAmount) deskFxAmount.addEventListener("input", () => drawDesk());
+const deskFxClear = document.getElementById("desk-fx-clear");
+if (deskFxClear) deskFxClear.addEventListener("click", () => {
+  activeFx.length = 0; syncFx(); say("effects off"); drawDesk();
+});
+
 function drawDesk() {
   if (!deskCanvas) return;
   const seed = deskSeedValue();
@@ -997,13 +1076,16 @@ function drawDesk() {
   if (!layers.length && !material.active) { say("pick at least one instrument"); return; }
   deskCanvas.dataset.specimenLayers = layers.join(",");
   if (renderSafe(deskCanvas, seed, layers)) {
+    applyDeskFx();          // treatments land over the freshly drawn plate
     if (material.active) {
       const overed = layers.length ? " · " + layers.join(" + ") + " at " + Math.round(materialInfluence() * 100) + "%" : "";
       if (deskTitle) deskTitle.textContent = "your material · " + material.name;
       if (deskMeta) deskMeta.textContent = "your image" + overed + " · never uploaded";
     } else {
+      const fxLine = activeFx.length
+        ? ` · treated ${activeFx.join(" -> ")} at ${Math.round(fxAmount() * 100)}%` : "";
       if (deskTitle) deskTitle.textContent = `${seed} · ${layers.join(" + ")}`;
-      if (deskMeta) deskMeta.textContent = `seed ${seed} · ${layers.join(" + ")} · reproducible on any visit`;
+      if (deskMeta) deskMeta.textContent = `seed ${seed} · ${layers.join(" + ")}${fxLine} · reproducible on any visit`;
     }
     // Mirror the drawn state into the address bar so every draw and every
     // reroll is immediately linkable; a material plate is marked so the link
@@ -1012,6 +1094,12 @@ function drawDesk() {
       const url = new URL(location.href);
       url.searchParams.set("seed", seed);
       url.searchParams.set("layers", layers.join(","));
+      // A treated plate is only reproducible if the treatment travels with the
+      // link, so the stack and its strength ride along in switch-on order.
+      if (activeFx.length) {
+        url.searchParams.set("fx", activeFx.join(","));
+        url.searchParams.set("fxa", String(fxAmount()));
+      } else { url.searchParams.delete("fx"); url.searchParams.delete("fxa"); }
       if (material.active) url.searchParams.set("material", "own"); else url.searchParams.delete("material");
       history.replaceState(null, "", url);
     } catch (error) {
@@ -1350,10 +1438,20 @@ if (deskShare) deskShare.addEventListener("click", async () => {
 const params = new URLSearchParams(location.search);
 const linkSeed = (params.get("seed") || "").slice(0, 48);
 const linkLayers = (params.get("layers") || "").split(",").map((n) => n.trim()).filter((n) => ALL_LAYERS.includes(n)).slice(0, DESK_MAX);
+const linkFx = (params.get("fx") || "").split(",").map((n) => n.trim())
+  .filter((n) => fxRefs.has(n)).slice(0, 8);
+const linkFxAmount = Number(params.get("fxa"));
 if (linkSeed && linkLayers.length && deskCanvas) {
   picked.clear();
   linkLayers.forEach((n) => picked.add(n));
   syncChips();
+  // restore the treatment too, or a shared link redraws a different picture
+  activeFx.length = 0;
+  linkFx.forEach((op) => activeFx.push(op));
+  if (deskFxAmount && Number.isFinite(linkFxAmount) && linkFxAmount > 0) {
+    deskFxAmount.value = String(Math.max(0.1, Math.min(1, linkFxAmount)));
+  }
+  syncFx();
   if (deskSeed) deskSeed.value = linkSeed;
   drawDesk();
   const desk = document.getElementById("printdesk");
