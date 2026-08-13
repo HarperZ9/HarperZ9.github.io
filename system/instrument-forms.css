@@ -502,3 +502,30 @@ body.instrument-surface .mm-fullread>summary{
   color:var(--bone);
 }
 body.instrument-surface .tp-pane-container .tp-rotv_b{text-transform:none}
+
+/* ── the dissolving hairline ──────────────────────────────────────────────────
+   Ported from the homepage, which had the better rule. A flat 1px line ends on
+   a hard stop at both ends, and when hairlines carry every division (as they do
+   here, now that the shouted labels are gone) those stops read as a stack of
+   little ticks down the page. --edge fades the rule out at both ends, so a
+   division separates without drawing a box. The horizontal divisions take it;
+   the short vertical rules between deck clusters stay solid, because a 20px
+   line has no room to dissolve. */
+body.instrument-surface .desk-fam-lab::after,
+body.instrument-surface .source-group-label::after,
+body.instrument-surface .hero-kicker::after{
+  background:var(--edge);
+}
+body.instrument-surface .rail-group,
+body.instrument-surface .at-group,
+body.instrument-surface .render-toolbar,
+body.instrument-surface .plate-head{
+  border-top-color:transparent;
+  border-bottom-color:transparent;
+  border-image:var(--edge) 1;
+}
+/* .plate-head divides below, the others above: give each the right edge */
+body.instrument-surface .plate-head{border-top:0}
+body.instrument-surface .rail-group,
+body.instrument-surface .at-group,
+body.instrument-surface .render-toolbar{border-bottom:0}

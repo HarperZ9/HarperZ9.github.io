@@ -39,7 +39,7 @@
    the box is the hit area. This matches the making surfaces, which now speak
    the same bracketed instrument language. */
 .svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-.btn, .ro-chip { border-radius: 0; }
+.btn { border-radius: 0; }
 .range-card, .emet, .pp, .wi, .wi-outcome, .pp-override { border-radius: 0; }
 .shell { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--shell); }
 .kicker {
@@ -64,10 +64,6 @@
   position: relative; display: inline-flex; align-items: center;
   min-block-size: 44px;
   font-weight: 600; letter-spacing: 0.16em; font-size: var(--step-0); color: var(--ink);
-}
-.brand-field {
-  position: relative; display: block; flex: none;
-  width: clamp(140px, 18vw, 236px); height: 46px;
 }
 /* The canvas is larger than its 46px layout box and overflows the nav band, so the
    aperture has room to show itself and dissipates into the page instead of being
@@ -95,26 +91,8 @@
   padding: clamp(4rem, 12vh, 9rem) var(--shell) clamp(3rem, 8vh, 6rem);
   overflow: hidden;
 }
-.hero-canvas-wrap { position: absolute; inset: 0; z-index: var(--z-hero-canvas); }
 .hero-canvas { width: 100%; height: 100%; }
-/* drenched supergraphic underglow: concentric spectrum bands around the same
-   off-screen center the particle arcs orbit. screen-blended so the plotter
-   strokes ride on saturated color instead of bare void. sits under the veil,
-   so the text zone stays at full contrast. */
-.hero-glow {
-  position: absolute; inset: 0; z-index: var(--z-hero-canvas); pointer-events: none;
-  mix-blend-mode: screen;
-  background:
-    radial-gradient(135% 165% at 112% 16%,
-      oklch(0.46 0.23 352 / 0.60) 0%,
-      oklch(0.44 0.19 46  / 0.44) 16%,
-      oklch(0.46 0.15 90  / 0.32) 30%,
-      oklch(0.44 0.17 133 / 0.25) 44%,
-      oklch(0.42 0.14 200 / 0.21) 58%,
-      oklch(0.40 0.17 286 / 0.17) 72%,
-      transparent 90%),
-    radial-gradient(60% 80% at 88% 70%, oklch(0.36 0.15 286 / 0.35) 0%, transparent 62%);
-}
+
 /* Left-weighted contrast scrim: dark under the masthead type on the left, clear on the
    right where the field's aperture blooms, and a soft fade at the bottom so the hero
    dissolves into the next surface rather than ending on a seam. */
@@ -137,17 +115,6 @@
 }
 @media (prefers-reduced-motion: reduce) { .hero-grain { display: none; } }
 .hero-inner { position: relative; z-index: var(--z-content); max-width: 74rem; width: 100%; }
-
-/* Art-magazine masthead: a mono folio line, then a spread of masthead type beside an
-   expansive generative plate (the same shader as the nav mark, taken large). */
-.hero-folio {
-  display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap;
-  color: var(--faint); font-size: var(--step--1); letter-spacing: 0.2em;
-  text-transform: uppercase; margin-bottom: var(--sp-4);
-  padding-bottom: var(--sp-2); border-bottom: 1px solid var(--hairline-2);
-}
-.hero-folio .folio-n { color: var(--verified); font-weight: 600; }
-.hero-folio .sep { color: var(--faint); opacity: 0.55; }
 
 .hero-masthead { min-width: 0; max-width: 40rem; }
 
@@ -299,24 +266,6 @@
   color: var(--void); border-color: color-mix(in oklab, var(--verified) 42%, transparent);
 }
 .btn.solid:hover { background-color: color-mix(in oklab, var(--verified) 90%, white); box-shadow: 0 10px 34px -12px var(--verified); }
-
-/* the instrument readout */
-.readout {
-  display: inline-flex; align-items: center; flex-wrap: wrap; gap: 0.7rem;
-  margin-top: var(--sp-4); padding: 0.35rem 0 0.35rem 0.9rem;
-  border-left: 2px solid; border-image: linear-gradient(180deg, var(--verified), transparent) 1;
-  font-size: var(--step--1);
-}
-.ro-label { color: var(--faint); letter-spacing: 0.1em; }
-.ro-verdicts { display: inline-flex; gap: 0.4rem; }
-.ro-chip { padding: 0.15em 0.6em; border-radius: 0; font-weight: 500; border: 1px solid currentColor; }
-.ro-match { color: var(--match); }
-.ro-drift { color: var(--drift); }
-.ro-unverifiable { color: var(--unverif); }
-.ro-note { color: var(--faint); font-style: italic; }
-.ro-cyan, .ro-gold, .ro-iris { color: var(--ink); }
-.ro-lime { color: var(--match); }
-.hero-note { margin-top: var(--sp-2); color: var(--faint); font-size: var(--step--1); letter-spacing: 0.04em; }
 .hero-availability {
   margin-top: var(--sp-3); max-width: 72ch; color: var(--ink-2);
   font-size: var(--step-0); line-height: 1.5;
@@ -325,14 +274,6 @@
   color: inherit; border-bottom: 1px solid var(--verified); padding-bottom: 0.12em;
 }
 .hero-availability a:hover { color: var(--verified); }
-
-.edgemark {
-  position: absolute; right: clamp(-0.4rem, -1vw, 0rem); top: 50%; z-index: 0;
-  transform: translateY(-50%) rotate(90deg); transform-origin: right center;
-  font-size: clamp(3rem, 9vw, 8rem); font-weight: 900; letter-spacing: 0.05em;
-  color: transparent; -webkit-text-stroke: 1.4px var(--hairline);
-  pointer-events: none; user-select: none; opacity: 0.22;
-}
 .scroll-cue {
   position: absolute; bottom: 1.4rem; left: var(--shell); z-index: var(--z-content);
   color: var(--faint); font-size: var(--step--1); letter-spacing: 0.14em;
@@ -480,7 +421,6 @@
   .engine { grid-template-columns: 2.6rem 1fr; grid-template-areas: "idx id" ". desc" ". go"; gap: 0.5rem 1rem; }
   .eng-go { align-items: flex-start; text-align: left; flex-direction: row; gap: 1.2rem; }
   .work-wrap { grid-template-columns: 1fr; gap: var(--sp-3); }
-  .edgemark { display: none; }
 }
 @media (max-width: 560px) {
   .topnav-links a:not(.ghost) { display: none; }
@@ -996,7 +936,7 @@
 .picker-open:hover { text-decoration: underline; text-underline-offset: 3px; }
 .picker-line { color: var(--muted); line-height: 1.55; max-width: 58ch; }
 .picker-cmd {
-  align-self: flex-start; font-size: var(--step--1); color: var(--sg-lime);
+  align-self: flex-start; font-size: var(--step--1); color: var(--ink);
   background: var(--void); border: 1px solid var(--hairline); border-radius: 8px; padding: 0.5em 0.9em;
 }
 
@@ -1025,9 +965,12 @@
 }
 .paper:hover { background: color-mix(in oklab, var(--surface) 60%, transparent); }
 .paper-tag { font-size: var(--step--1); letter-spacing: 0.14em; }
-.tag-systems { color: var(--sg-cyan); }
-.tag-preprint { color: var(--sg-iris); }
-.tag-note { color: var(--sg-gold); }
+/* Canon 2: colour means a verdict, never a category. These three carried a
+   taxonomy (systems / preprint / note) in three spectrum hues, which teaches a
+   reader a second colour language the rest of the site does not speak. The word
+   already says which kind it is, so the tag reads in ink and the distinction
+   survives in the text. */
+.tag-systems, .tag-preprint, .tag-note { color: var(--muted); }
 .paper-title { font-size: var(--step-1); font-weight: 700; letter-spacing: -0.012em; line-height: 1.25; text-wrap: balance; }
 .paper-line { color: var(--muted); margin-top: 0.4rem; max-width: 62ch; line-height: 1.55; }
 .paper-doi { color: var(--signal); font-size: var(--step--1); white-space: nowrap; }
@@ -1089,36 +1032,16 @@
    one hot stroke. */
 .hero-title .hl { color: var(--verified); }
 
-/* EXACTLY-ONE-HOT audit (home, per fold):
-   - hero: the .hl stroke above is the one hot; the readout chips are
-     semantic verdict colors (paired with text), not decorative accents.
-   - engines / cases: the 6-step spectrum cycle encodes lanes (allowed
-     by the design docs) and lands magenta on at most one row per six.
-   - demonstrate: .emet-btn (spark) is the one hot; verdict colors are
-     semantic. .spectrum-word therefore STAYS solid --sg-gold
-     (12.83:1 on --void) instead of switching to --hot, so section
-     heads never stack a second hot into a demo fold.
-   - work: the .work-head .kicker (spark) is the one hot.
-   - research / range / footer: no hot; cyan, gold, iris carry lanes. */
+/* One-hot audit (home, per fold). Canon 2: colour is a verdict, at most one
+   hot mark per view, and the spectrum lives only where art is the subject.
+   - hero: the generative plate is the art and carries the spectrum; the one
+     hot mark in the chrome is the solid primary action.
+   - make / engines: numerals and hairlines mark the rows. The shipped verdict
+     reads in ink at weight, so the accent is not spent a dozen times a scroll.
+   - demonstrate: the demo verdict colours are semantic (paired with their own
+     text), which is what the verdict palette is for.
+   - research / range / footer: no hot mark. The paper tags name their kind in
+     words rather than encoding it in three hues.
+   Rewritten 2026-08-12: the previous version described readout chips that no
+   longer render and licensed a colour taxonomy the canon rules out. */
 
-/* Scanline-halftone divider: dashed horizontal scanlines whose apparent
-   density fades through a disc-shaped mask, the halftone arc drawn in
-   CSS. Decorative only; place between .band sections when a seam needs
-   texture. Static (no motion), so reduced-motion needs no override.
-   If mask-composite is unsupported the layers union and the strip
-   degrades to an un-dashed faded scanline band, still legible. */
-.prism-divider {
-  height: clamp(1.9rem, 3.4vw, 2.6rem);
-  margin-block: clamp(1.4rem, 3vw, 2.4rem);
-  pointer-events: none;
-  background: repeating-linear-gradient(180deg, var(--crystal) 0 1px, transparent 1px 6px);
-  -webkit-mask-image:
-    repeating-linear-gradient(90deg, #000 0 18px, transparent 18px 30px),
-    radial-gradient(120% 130% at 18% 50%, #000 0 46%, transparent 78%);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    repeating-linear-gradient(90deg, #000 0 18px, transparent 18px 30px),
-    radial-gradient(120% 130% at 18% 50%, #000 0 46%, transparent 78%);
-  mask-composite: intersect;
-  opacity: 0.5;
-}
