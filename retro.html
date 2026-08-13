@@ -28,6 +28,12 @@
   .re-sheet button:hover,.re-sheet button:focus-visible{border-color:var(--bone);outline:none}
   .re-sheet button[aria-pressed="true"]{border-color:var(--bone);box-shadow:inset 0 0 0 1px var(--bone)}
   .re-sheet canvas{width:100%;height:100%;display:block}
+  /* the ghost of a modulated value: a thin mark riding the track while the
+     real thumb stays where the user put it */
+  .re-modmark{position:absolute;bottom:.15rem;width:2px;height:.85rem;
+    background:var(--bone);opacity:.85;pointer-events:none;transform:translateX(-1px);
+    box-shadow:0 0 0 1px color-mix(in oklab,var(--void) 70%,transparent)}
+  @media (prefers-reduced-motion:reduce){.re-modmark{transition:none}}
   .re-sheet .sh-name{position:absolute;left:0;right:0;bottom:0;font-family:var(--mono);
     font-size:.44rem;line-height:1.25;padding:.15em .25em;color:var(--bone);
     background:color-mix(in oklab,var(--void) 82%,transparent);text-align:left;
@@ -319,6 +325,9 @@
 
       <div class="re-actions">
         <button class="re-btn" id="re-save">Save PNG</button>
+        <button class="re-btn" id="re-save-1x" title="Save the pixel grid itself, one image pixel per cell, with no upscaling">Save 1x</button>
+        <button class="re-btn" id="re-undo" title="Step back through your last twenty changes (Ctrl+Z)" aria-label="Undo the last change">Undo</button>
+        <button class="re-btn" id="re-fresh" title="Clear the restored session and start from the default patch" aria-label="Start fresh">Start fresh</button>
         <button class="re-btn" id="re-clip" title="Record six seconds of the moving picture as a WebM clip">Record clip</button>
         <button class="re-btn" id="re-send-studio">Send to Studio &rarr;</button>
         <button class="re-btn" id="re-send-loom">Send to Loom &rarr;</button>
@@ -356,6 +365,6 @@
   <p>Zentropy Labs &middot; order out of entropy &middot; <a href="index.html">home</a></p>
 </footer>
 
-<script type="module" src="system/retro-studio.js?v=20260813-depth"></script>
+<script type="module" src="system/retro-studio.js?v=20260813-mod"></script>
 </body>
 </html>

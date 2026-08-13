@@ -297,7 +297,11 @@ function boot() {
   // Sources drive parameters through the routes; offsets refresh per frame.
   // Knob routes push the modulated values into the running shaders too.
   function modPass(t) {
-    if (!modRoutes.length) { if (modOffsets.tw !== undefined || Object.keys(modOffsets).length) modOffsets = {}; return; }
+    if (!modRoutes.length) {
+      if (modOffsets.tw !== undefined || Object.keys(modOffsets).length) modOffsets = {};
+      try { paintModMarkers(); } catch (_) {}   // drop any stale markers
+      return;
+    }
     const env = {
       bass: AU.bass, mid: AU.mid, treble: AU.treble, level: AU.level,
       mx: MOUSE.x, my: MOUSE.y,
@@ -305,6 +309,46 @@ function boot() {
     };
     modOffsets = computeOffsets(modRoutes, evalSources(t, env));
     if (modRoutes.some((r) => r.tgt === "knobA" || r.tgt === "knobB" || r.tgt === "knobC")) pushKnobs();
+    try { paintModMarkers(); } catch (_) {}
+  }
+
+
+  // ── modulation, made visible ─────────────────────────────────────────────
+  // Routes deliberately never write the DOM, so the user's own setting is never
+  // clobbered by an LFO. The cost was that a swept control looked completely
+  // inert: the thumb sat still and nothing said the value was moving. A ghost
+  // marker rides the track at the modulated value instead, leaving the real
+  // thumb exactly where it was put.
+  let _modPaintAt = 0;
+  function paintModMarkers() {
+    const now = performance.now();
+    if (now - _modPaintAt < 90) return;      // ~11fps is plenty for a marker
+    _modPaintAt = now;
+    const routed = new Set(modRoutes.map((r) => r.tgt));
+    for (const [key, id] of MOD_TARGETS) {
+      const el = $(id);
+      if (!el || !el.parentElement) continue;
+      let mark = el.parentElement.querySelector('[data-mod-for="' + id + '"]');
+      if (!routed.has(key)) { if (mark) mark.remove(); continue; }
+      if (!mark) {
+        mark = document.createElement("span");
+        mark.className = "re-modmark";
+        mark.dataset.modFor = id;
+        mark.setAttribute("aria-hidden", "true");
+        if (getComputedStyle(el.parentElement).position === "static") {
+          el.parentElement.style.position = "relative";
+        }
+        el.parentElement.appendChild(mark);
+      }
+      const lo = +el.min, hi = +el.max;
+      const span = hi - lo;
+      if (!(span > 0)) continue;
+      const v = mv(key, id);
+      const f = Math.max(0, Math.min(1, (v - lo) / span));
+      mark.style.left = (f * 100).toFixed(2) + "%";
+      // the label reads the live value, so the number is legible too
+      mark.title = String(Math.round(v * 100) / 100);
+    }
   }
 
   // The live measurement of the frame, painted under the stage on a throttle so
@@ -422,7 +466,8 @@ function boot() {
   function stopLoop() { if (animRaf) cancelAnimationFrame(animRaf); animRaf = 0; }
 
   // Decide whether to animate or draw one still frame.
-  function sync() { if (loopActive()) startLoop(); else { stopLoop(); retroPass(0); } }
+  function sync() { if (loopActive()) startLoop(); else { stopLoop(); retroPass(0); }
+    try { sessionSnapshot(); } catch (_) {} }
 
   function refreshSource() {
     stopLoop();
@@ -954,6 +999,107 @@ function boot() {
   $("re-fxseed").addEventListener("input", () => { pingSlide("slider", 0.6); redraw(); });
   $("re-fxanim").addEventListener("change", () => { ping("chip", 0.7); sync(); });
   $("re-randomize").addEventListener("click", randomize);
+
+  // ── the session: autosave, undo, and a way out ───────────────────────────
+  // A refresh used to drop everything back to the default patch, and there was
+  // no way to take back a Randomize. The patch is already a complete snapshot
+  // (collectPatch/applyPatch), so both are a matter of keeping copies of it.
+  const SESSION_KEY = "re.session.v1";
+  const HISTORY_MAX = 20;
+  const history = [];
+  let histAt = -1;              // where we are in the ring while undoing
+  let restoring = false;        // suppress recording while applyPatch runs
+  let saveTimer = 0;
+
+  function sessionSnapshot(reason) {
+    if (restoring) return;
+    let patch;
+    try { patch = collectPatch(); } catch (_) { return; }
+    const json = JSON.stringify(patch);
+    // ignore no-op changes: a slider fires many events for one gesture
+    if (history.length && history[history.length - 1].json === json) return;
+    // a new change after undoing truncates the redo tail, as in any editor
+    if (histAt >= 0 && histAt < history.length - 1) history.length = histAt + 1;
+    history.push({ json, reason: reason || "" });
+    while (history.length > HISTORY_MAX) history.shift();
+    histAt = history.length - 1;
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      try { localStorage.setItem(SESSION_KEY, json); } catch (_) {}
+    }, 600);
+    const u = document.getElementById("re-undo");
+    if (u) u.disabled = history.length < 2;
+  }
+
+  function undoStep() {
+    if (histAt <= 0) { status("nothing further to undo", "err"); return; }
+    histAt -= 1;
+    const entry = history[histAt];
+    try {
+      restoring = true;
+      applyPatch(JSON.parse(entry.json));
+      status("stepped back" + (entry.reason ? " past " + entry.reason : ""), "ok");
+    } catch (e) { status("could not undo: " + e.message, "err"); }
+    finally { restoring = false; }
+    try { localStorage.setItem(SESSION_KEY, entry.json); } catch (_) {}
+    const u = document.getElementById("re-undo");
+    if (u) u.disabled = histAt <= 0;
+  }
+
+  // Snapshot on any settled control change. Hooking sync() alone missed most of
+  // the panel, because plenty of controls call redraw() instead; listening to
+  // the panel itself catches every one of them, and the debounce plus the
+  // identical-JSON guard keep one gesture to one entry.
+  (function watchPanel() {
+    const panel = document.querySelector(".re-panel");
+    if (!panel) return;
+    let t = 0;
+    const bump = (ev) => {
+      const el = ev.target;
+      if (!el || el.id === "re-undo" || el.id === "re-fresh") return;
+      clearTimeout(t);
+      t = setTimeout(() => { try { sessionSnapshot(); } catch (_) {} }, 420);
+    };
+    panel.addEventListener("change", bump, true);
+    panel.addEventListener("input", bump, true);
+    panel.addEventListener("click", (ev) => {
+      if (ev.target && ev.target.closest(".re-chip, .re-btn, .re-vibe")) bump(ev);
+    }, true);
+  })();
+
+  const undoBtn = document.getElementById("re-undo");
+  if (undoBtn) { undoBtn.disabled = true; undoBtn.addEventListener("click", undoStep); }
+  const freshBtn = document.getElementById("re-fresh");
+  if (freshBtn) freshBtn.addEventListener("click", () => {
+    try { localStorage.removeItem(SESSION_KEY); } catch (_) {}
+    history.length = 0; histAt = -1;
+    if (undoBtn) undoBtn.disabled = true;
+    location.href = location.origin + location.pathname;
+  });
+
+  // Pixel-exact export. Save PNG writes the upscaled canvas, so the grid the
+  // whole engine is about could never leave at its true resolution. This writes
+  // one image pixel per cell, nearest-neighbour, no CRT stage.
+  const save1x = document.getElementById("re-save-1x");
+  if (save1x) save1x.addEventListener("click", () => {
+    const src = sourceCanvas();
+    if (!src || !src.width) { status("nothing to export yet", "err"); return; }
+    try {
+      const o = opts();
+      const one = document.createElement("canvas");
+      renderRetro(src, one, Object.assign({}, o, {
+        upscale: 1, scanlines: false, bloom: 0, curvature: 0, vignette: 0,
+      }));
+      if (activeFx.size) applyOps(one, buildFx(0));
+      ping("preset");
+      const a = document.createElement("a");
+      a.download = "retro-" + $("re-palette").value + "-1x-" + one.width + "x" + one.height + ".png";
+      a.href = one.toDataURL("image/png");
+      a.click();
+      status("saved " + one.width + "\u00d7" + one.height + ", one pixel per cell", "ok");
+    } catch (e) { status("1x export failed: " + e.message, "err"); }
+  });
+
   $("re-save").addEventListener("click", () => { ping("preset"); const a = document.createElement("a"); a.download = "retro-" + $("re-palette").value + ".png"; a.href = out.toDataURL("image/png"); a.click(); });
 
   // What this piece is right now, for the trail it carries onward.
@@ -1437,6 +1583,7 @@ function boot() {
     if (k === "f") { e.preventDefault(); toggleFullscreen(); }
     else if (k === "r") { e.preventDefault(); randomize(); }
     else if (k === "s") { e.preventDefault(); $("re-save").click(); }
+    else if (k === "z" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); undoStep(); }
     else if (k === " ") { e.preventDefault(); const a = $("re-animate"); a.checked = !a.checked; a.dispatchEvent(new Event("change")); }
     else if (k === "[" || k === "]") {
       e.preventDefault();
@@ -1681,7 +1828,23 @@ function boot() {
   $("re-code").value = booted;
   syncFxCount();
   if (bootPatch) { applyPatch(bootPatch); status("patch loaded from link", "ok"); }
-  else refreshSource();
+  else {
+    // A shared link always wins; otherwise pick the session back up where it
+    // was left, and say so, because silently restoring state is its own trap.
+    let saved = null;
+    try { saved = localStorage.getItem(SESSION_KEY); } catch (_) {}
+    if (saved) {
+      try {
+        restoring = true;
+        applyPatch(JSON.parse(saved));
+        status("picked up where you left off · Start fresh clears it", "ok");
+      } catch (_) { refreshSource(); }
+      finally { restoring = false; }
+    } else {
+      refreshSource();
+    }
+  }
+  try { sessionSnapshot("the start"); } catch (_) {}
   if (new URLSearchParams(location.search).get("import") === "plate") bootImportedImage();
 }
 

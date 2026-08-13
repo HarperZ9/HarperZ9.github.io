@@ -5,7 +5,7 @@
 // keeps the loom warm on arrival. Exports: WIF draft, chart PNG, cloth PNG,
 // and the cloth handed back to the Retro Engine's pixel pipeline.
 import { STRUCTURES, computeDraft, draftToWIF, weftPaletteFor, wifToDraft } from "./weave-engine.js?v=20260813-wif";
-import { renderCloth, renderDraftChart } from "./weave-render.js?v=20260811-crossings";
+import { renderCloth, renderDraftChart, chartLayout } from "./weave-render.js?v=20260813-edit";
 import { sendPiece, receiveTrail, mountFlow } from "./workbench.js?v=20260812-cohesion";
 
 const $ = (id) => document.getElementById(id);
@@ -58,6 +58,7 @@ function boot() {
 
   function rebuild(fresh) {
     if (!haveSource) return;
+    if (edited) { edited = false; status("redrawn from the image; hand edits cleared"); }
     const { ends, picks, luma, rowRGB } = sample();
     draft = computeDraft(luma, ends, picks, structureId, { toneDrive: (+$("wv-tone").value) / 100 });
     const mode = $("wv-weft").value;
@@ -249,6 +250,72 @@ function boot() {
       });
       recipeHost.appendChild(b);
     });
+  }
+
+
+  // ── the draft, edited by hand ────────────────────────────────────────────
+  // Threading, tie-up and treadling were pure functions of the structure and the
+  // image, so a weaver could look at the draft and change nothing in it. Click a
+  // tie-up cell to lift or drop that shaft, click a threading column to move the
+  // end to another shaft, click a treadling row to change which treadle the pick
+  // uses. The drawdown is recomputed from the edited arrays, so the cloth, the
+  // readout, and the WIF export all follow the edit.
+  let edited = false;
+  function draftIsEditable() {
+    return !!(draft && draft.threading && draft.tieup && draft.treadling && draft.shafts);
+  }
+  function rebindLift() {
+    // liftAt may be a closure over the ORIGINAL arrays; rebind it to the live ones
+    draft.liftAt = (e, p) => {
+      const row = draft.tieup[draft.treadling[p]];
+      return row && row[draft.threading[e]] ? 1 : 0;
+    };
+  }
+  function chartClick(ev) {
+    const chart = $("wv-chart");
+    if (!chart || chart.hidden || !draftIsEditable()) return;
+    const L = chartLayout(draft, 1200);
+    const r = chart.getBoundingClientRect();
+    // the canvas is drawn at L.width x L.height and displayed at r.width x r.height
+    const x = (ev.clientX - r.left) * (L.width / r.width);
+    const y = (ev.clientY - r.top) * (L.height / r.height);
+    const inBox = (b) => x >= b.x && x < b.x + b.w && y >= b.y && y < b.y + b.h;
+    let touched = "";
+    if (inBox(L.tieup)) {
+      const t = Math.floor((x - L.tieup.x) / L.cell);
+      const sh = Math.floor((y - L.tieup.y) / L.cell);
+      if (draft.tieup[t] && sh >= 0 && sh < draft.shafts) {
+        draft.tieup[t][sh] = !draft.tieup[t][sh];
+        touched = "tie-up " + (t + 1) + "/" + (sh + 1);
+      }
+    } else if (inBox(L.threading)) {
+      const e = Math.floor((x - L.threading.x) / L.cell);
+      const sh = Math.floor((y - L.threading.y) / L.cell);
+      if (e >= 0 && e < draft.ends && sh >= 0 && sh < draft.shafts) {
+        draft.threading[e] = sh;
+        touched = "end " + (e + 1) + " to shaft " + (sh + 1);
+      }
+    } else if (inBox(L.treadling)) {
+      const t = Math.floor((x - L.treadling.x) / L.cell);
+      const p = Math.floor((y - L.treadling.y) / L.cell);
+      if (p >= 0 && p < draft.picks && t >= 0 && t < draft.tieup.length) {
+        draft.treadling[p] = t;
+        touched = "pick " + (p + 1) + " on treadle " + (t + 1);
+      }
+    }
+    if (!touched) return;
+    edited = true;
+    rebindLift();
+    ping("chip", 0.5);
+    status("edited: " + touched + " · the cloth follows the draft", "ok");
+    draw();
+  }
+  const chartEl = $("wv-chart");
+  if (chartEl) {
+    chartEl.addEventListener("click", chartClick);
+    chartEl.style.cursor = "crosshair";
+    chartEl.setAttribute("tabindex", "0");
+    chartEl.setAttribute("role", "img");
   }
 
   // ── WIF in, and a check on the way out ───────────────────────────────────
