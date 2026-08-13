@@ -221,12 +221,23 @@ export function readPage(doc = document) {
   // Every export writes the title as its own heading, so the page's own h1
   // would otherwise appear twice in a row. Drop the leading one when it says
   // the same thing.
-  const flat = (b) => b.inline.map(function f(p) {
+  // Compare on normalised whitespace. The title comes from raw textContent,
+  // which keeps the newlines and indentation of a heading that spans lines,
+  // while the block model has already collapsed them, so an exact match missed
+  // and the heading printed twice.
+  const norm = (s) => s.replace(/\s+/g, " ").trim();
+  const flat = (b) => norm(b.inline.map(function f(p) {
     return p.t === "text" ? p.v : (p.c ? p.c.map(f).join("") : (p.v || ""));
-  }).join("").trim();
-  if (blocks.length && blocks[0].type === "heading" && blocks[0].level === 1
-      && flat(blocks[0]) === title) {
-    blocks.shift();
+  }).join(""));
+  // Scan the opening blocks rather than only the first: a page can carry a
+  // kicker or a metadata line above its h1, which pushed the heading out of
+  // position zero and left the title printed twice.
+  for (let i = 0; i < Math.min(4, blocks.length); i++) {
+    const b = blocks[i];
+    if (b.type === "heading" && b.level === 1 && flat(b) === norm(title)) {
+      blocks.splice(i, 1);
+      break;
+    }
   }
 
   return {

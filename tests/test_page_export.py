@@ -22,8 +22,12 @@ def test_the_three_shared_files_ship() -> None:
 
 def test_nav_loads_the_exporter_and_the_stylesheets() -> None:
     nav = read("system/nav.js")
-    assert 'import("./export.js")' in nav, "no page would offer an export"
+    assert 'import("./export.js?v="' in nav, "no page would offer an export"
     assert '"nav.css"' in nav and '"print.css"' in nav and '"export.css"' in nav
+    # These are fetched by nav.js rather than named in the markup, so they need
+    # a stamp of their own or a warm cache never sees an update to any of them.
+    assert re.search(r'const ASSET_V = "[\w.-]+"', nav)
+    assert 'name + "?v=" + ASSET_V' in nav
 
 
 def test_print_and_export_sheets_load_after_the_page_stylesheets() -> None:

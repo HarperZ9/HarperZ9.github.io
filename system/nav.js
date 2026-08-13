@@ -338,9 +338,16 @@ function mountHomeLogo(doc) {
 // ground. This prepends the shared nav stylesheet to the head, so it sits
 // first in the cascade and any page that does style the nav still wins on
 // every property it sets.
+// One stamp for every asset this module pulls in. The pages cache nav.js by
+// its own ?v= in the markup, so a new nav.js is what asks for new versions of
+// these; without a stamp here a reader with a warm cache keeps the old
+// stylesheet and the old exporter forever. Bump this with the nav.js stamp.
+const ASSET_V = "20260813-export2";
+
 function sheetHref(name) {
   const here = import.meta && import.meta.url ? import.meta.url : "";
-  return here ? new URL("./" + name, here).href : "system/" + name;
+  const rel = name + "?v=" + ASSET_V;
+  return here ? new URL("./" + rel, here).href : "system/" + rel;
 }
 
 function addSheet(doc, name, key, where) {
@@ -380,7 +387,7 @@ if (typeof document !== "undefined") {
     mountPlates(document);
     // Every page offers its own text as Markdown, plain text, Word, or print.
     // The module reads the live page, so a page added later needs nothing.
-    import("./export.js").catch(() => {});
+    import("./export.js?v=" + ASSET_V).catch(() => {});
   };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
