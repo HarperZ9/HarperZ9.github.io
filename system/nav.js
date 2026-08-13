@@ -338,16 +338,31 @@ function mountHomeLogo(doc) {
 // ground. This prepends the shared nav stylesheet to the head, so it sits
 // first in the cascade and any page that does style the nav still wins on
 // every property it sets.
-function ensureNavStylesheet(doc = document) {
-  if (!doc || !doc.head) return;
-  if (doc.querySelector('link[data-nav-style]')) return;
+function sheetHref(name) {
   const here = import.meta && import.meta.url ? import.meta.url : "";
-  const href = here ? new URL("./nav.css", here).href : "system/nav.css";
+  return here ? new URL("./" + name, here).href : "system/" + name;
+}
+
+function addSheet(doc, name, key, where) {
+  if (doc.querySelector("link[data-" + key + "]")) return;
   const link = doc.createElement("link");
   link.rel = "stylesheet";
-  link.href = href;
-  link.dataset.navStyle = "";
-  doc.head.insertBefore(link, doc.head.firstChild);
+  link.href = sheetHref(name);
+  link.setAttribute("data-" + key, "");
+  if (where === "first") doc.head.insertBefore(link, doc.head.firstChild);
+  else doc.head.appendChild(link);
+}
+
+function ensureNavStylesheet(doc = document) {
+  if (!doc || !doc.head) return;
+  // nav.css goes first so any page that styles its own nav still wins.
+  addSheet(doc, "nav.css", "nav-style", "first");
+  // print.css and export.css go last because they have to beat screen rules
+  // that sit further down the page's own cascade. A media query adds no
+  // specificity, so a print rule loaded early loses to a plain screen rule
+  // loaded late, and the page prints black-on-black.
+  addSheet(doc, "export.css", "export-style", "last");
+  addSheet(doc, "print.css", "print-style", "last");
 }
 
 if (typeof document !== "undefined") {
@@ -363,6 +378,9 @@ if (typeof document !== "undefined") {
       import("./cursor-field.js").then((m) => m.mountCursorField()).catch(() => {});
     }
     mountPlates(document);
+    // Every page offers its own text as Markdown, plain text, Word, or print.
+    // The module reads the live page, so a page added later needs nothing.
+    import("./export.js").catch(() => {});
   };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();

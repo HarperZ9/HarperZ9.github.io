@@ -1,0 +1,162 @@
+/* ============================================================================
+   export.css - the "take this page" control.
+
+   This appears on 80-odd pages that do not share a palette: dark document
+   sheets, dark instrument shells, and four light paper-coloured sample
+   reports. So it states no colours of its own. Everything is drawn in
+   currentColor, mixed down for rules and hints, which means it inherits
+   whatever the surrounding page already decided about ink and reads correctly
+   on all of them. This is the lesson from nav.css written down as a rule: a
+   component that lands on unknown ground either paints its own ground or
+   inherits the ink, and it must not read a variable whose meaning it cannot
+   check.
+   ============================================================================ */
+
+.export-bar{
+  margin:2.4rem 0 0;
+  padding-top:1.1rem;
+  border-top:1px solid color-mix(in oklab, currentColor 18%, transparent);
+  display:flex;
+  justify-content:flex-start;
+}
+
+.export-menu{display:inline-block}
+
+/* A bracketed control, not a capsule: text inside a hairline, matching the
+   instrument vocabulary the making surfaces use. */
+.export-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  min-height:44px;
+  padding:.5rem .8rem;
+  cursor:pointer;
+  user-select:none;
+  font-family:inherit;
+  font-size:.86rem;
+  font-weight:650;
+  letter-spacing:.01em;
+  color:inherit;
+  border:1px solid color-mix(in oklab, currentColor 26%, transparent);
+  border-radius:0;
+  background:transparent;
+  transition:border-color .18s ease, background .18s ease;
+}
+.export-toggle::after{
+  content:"+";
+  font-family:"Conso",ui-monospace,monospace;
+  opacity:.6;
+}
+.export-toggle[aria-expanded="true"]::after{content:"-"}
+.export-toggle:hover,
+.export-toggle:focus-visible{
+  border-color:color-mix(in oklab, currentColor 55%, transparent);
+  background:color-mix(in oklab, currentColor 7%, transparent);
+  outline:none;
+}
+.export-toggle:focus-visible{
+  outline:2px solid color-mix(in oklab, currentColor 70%, transparent);
+  outline-offset:2px;
+}
+
+/* The panel is a top-layer popover parked on <body>, so no ancestor overflow,
+   transform, or z-index can clip it. It carries its own colours because it no
+   longer sits inside the text it belongs to: canvas and canvastext are the
+   system keywords, so it follows the reader's own light or dark setting
+   rather than guessing at the page's. */
+.export-list{
+  /* !important on four properties, and only these four. The panel is parked on
+     <body>, and system.css carries
+     `body.generative-host > :not(#gl):not(#motes){position:relative}`, whose
+     two :not() pseudo-classes give it a specificity of (2,1,1) against this
+     rule's (0,1,0). It won, the panel stopped being fixed, and on a 39,000px
+     gallery page it rendered 38,000px above the viewport: open, focused, and
+     nowhere on screen. Raising specificity here only defers the problem to the
+     next page with a broad descendant rule, and a positioned popover is not
+     something a page should be able to reposition by accident. */
+  position:fixed !important;
+  inset:auto !important;
+  z-index:2147483000;
+  margin:0 !important;
+  min-width:19rem;
+  max-width:min(24rem, calc(100vw - 1rem));
+  display:grid;
+  gap:.1rem;
+  padding:.55rem;
+  border:1px solid color-mix(in oklab, canvastext 34%, transparent);
+  border-radius:0;
+  background:canvas;
+  color:canvastext;
+  box-shadow:0 18px 50px -30px rgba(0,0,0,.8);
+  overflow:auto;
+  max-height:min(70dvh, 30rem);
+}
+.export-list:not([popover]){display:grid}
+.export-list[popover]:not(:popover-open){display:none}
+.export-list::backdrop{background:transparent}
+
+.export-note{
+  margin:.1rem .55rem .45rem;
+  font-family:"Conso",ui-monospace,monospace;
+  font-size:.66rem;
+  line-height:1.5;
+  opacity:.7;
+  max-width:26ch;
+}
+
+.export-action{
+  display:grid;
+  gap:.08rem;
+  width:100%;
+  min-height:44px;
+  padding:.5rem .55rem;
+  text-align:left;
+  cursor:pointer;
+  font-family:inherit;
+  color:inherit;
+  background:transparent;
+  border:0;
+  border-radius:0;
+}
+.export-action:hover,
+.export-action:focus-visible{
+  background:color-mix(in oklab, currentColor 10%, transparent);
+  outline:none;
+}
+.export-action:focus-visible{
+  outline:2px solid color-mix(in oklab, currentColor 60%, transparent);
+  outline-offset:-2px;
+}
+.export-label{font-size:.9rem;font-weight:650}
+.export-hint{
+  font-family:"Conso",ui-monospace,monospace;
+  font-size:.64rem;
+  line-height:1.4;
+  opacity:.68;
+}
+
+/* The document pages name their own slot next to the download line, so the
+   control sits with the other ways of taking the page rather than alone at
+   the bottom. */
+[data-export-slot] .export-bar{
+  margin:.4rem 0 0;
+  padding-top:0;
+  border-top:0;
+}
+
+@media (max-width:40rem){
+  /* On a phone the panel spans the width and sits against the bottom edge,
+     within thumb reach. JS still sets top/left, so those are overridden. */
+  .export-list{
+    left:.5rem !important;
+    right:.5rem !important;
+    top:auto !important;
+    bottom:.5rem !important;
+    min-width:0;
+    max-width:none;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .export-toggle{transition:none}
+}

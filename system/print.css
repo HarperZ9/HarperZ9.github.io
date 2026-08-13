@@ -1,0 +1,166 @@
+/* ============================================================================
+   print.css - every page prints.
+
+   system.css carried no @media print block at all, so 46 of the 81 pages
+   printed as a dark screen layout: near-black paper, the navigation bar across
+   the top of every sheet, live canvases and controls in the middle of the
+   text, and body copy set at display size. This is the floor that makes any
+   page come out as a document.
+
+   nav.js appends it last, after the page's own stylesheets. That order is
+   deliberate and it is why the flips carry !important: a print rule sits in a
+   different medium from the screen rule it has to beat, and media queries add
+   no specificity, so `@media print{body{background:#fff}}` loses to a plain
+   `body{background:#07070a}` further down the cascade. There is no cascade
+   partner to negotiate with here; paper is white.
+
+   Document pages keep their own tuned print output. doc.css sets a full print
+   contract already, so the typographic half of this file is scoped to
+   body:not(.doc) and only the chrome-hiding half is universal.
+   ============================================================================ */
+
+@media print {
+
+  /* ── chrome that never belongs on paper ──────────────────────────────── */
+  .site-nav,
+  .docnav,
+  .skip-link,
+  .export-bar,
+  .export-menu,
+  .sn-more,
+  .sn-more-list,
+  .totop,
+  .route-art,
+  #gl,
+  #motes,
+  video,
+  audio,
+  iframe,
+  [data-print="hide"]{
+    display:none !important;
+  }
+
+  /* Live instruments: a control panel is not a document. Their captions and
+     headings stay, so the reader still knows what the missing thing was. */
+  .studio-shell canvas,
+  .re-panel,
+  .re-preview,
+  .dk-panel,
+  .wv-panel,
+  .studio-viewport,
+  .tp-dfwv,
+  .tp-rotv,
+  input,
+  select,
+  textarea,
+  button,
+  .controls,
+  .visual-controls,
+  .visual-nav{
+    display:none !important;
+  }
+
+  /* Plates print. A canvas is replaced content, so the browser rasterises it
+     into the page like an image, and on the gallery and the exhibition those
+     drawings are the subject rather than decoration: dropping them would print
+     rows of captions with nothing above them. The document pages take the
+     opposite view in doc.css, where a plate is texture beside an argument and
+     the printed sheet is meant to stay plain. Both are deliberate. */
+  .plate canvas,
+  figure > canvas{
+    max-width:100% !important;
+    height:auto !important;
+    page-break-inside:avoid;
+  }
+  .plate,
+  figure{page-break-inside:avoid}
+  .plate figcaption,
+  figure > figcaption{
+    font-style:italic;
+    color:#3a3d42 !important;
+    page-break-inside:avoid;
+  }
+
+  /* ── the page itself ─────────────────────────────────────────────────── */
+  @page{margin:14mm 13mm}
+
+  html,
+  body{
+    background:#fff !important;
+    color:#000 !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
+  body::before,
+  body::after{display:none !important}
+
+  /* Everything below is the floor for pages without their own print contract.
+     doc.css already prints well and is left alone. */
+  body:not(.doc){
+    font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
+    font-size:10pt !important;
+    line-height:1.42 !important;
+  }
+  body:not(.doc) *{
+    background-image:none !important;
+    box-shadow:none !important;
+    text-shadow:none !important;
+    filter:none !important;
+    animation:none !important;
+    transition:none !important;
+  }
+  body:not(.doc) *:not(mark){
+    background-color:transparent !important;
+    color:#000 !important;
+    border-color:rgba(0,0,0,.28) !important;
+  }
+  body:not(.doc) main,
+  body:not(.doc) article,
+  body:not(.doc) section,
+  body:not(.doc) .sheet,
+  body:not(.doc) .wrap,
+  body:not(.doc) .inner{
+    width:auto !important;
+    max-width:none !important;
+    margin:0 !important;
+    padding:0 !important;
+    display:block !important;
+    position:static !important;
+    transform:none !important;
+  }
+  body:not(.doc) h1{font-size:19pt !important;margin:0 0 .3rem !important}
+  body:not(.doc) h2{font-size:13pt !important;margin:.8rem 0 .25rem !important}
+  body:not(.doc) h3{font-size:11pt !important;margin:.6rem 0 .2rem !important}
+  body:not(.doc) p,
+  body:not(.doc) li,
+  body:not(.doc) dd,
+  body:not(.doc) td{font-size:10pt !important;line-height:1.42 !important}
+  body:not(.doc) pre,
+  body:not(.doc) code{
+    font-family:"Conso",ui-monospace,monospace !important;
+    font-size:8.6pt !important;
+    border:.5pt solid rgba(0,0,0,.3) !important;
+    white-space:pre-wrap !important;
+    word-break:break-word !important;
+  }
+
+  /* ── shared rules for every page ─────────────────────────────────────── */
+  h1,h2,h3,h4{page-break-after:avoid;break-after:avoid-page}
+  li,tr,figure,blockquote{page-break-inside:avoid}
+  table{border-collapse:collapse;width:100% !important}
+  th,td{border-bottom:.5pt solid rgba(0,0,0,.25);text-align:left;vertical-align:top}
+  img{max-width:100% !important;height:auto !important;page-break-inside:avoid}
+
+  /* A link is useless on paper unless its destination comes with it, so an
+     external target is printed after the text. Internal anchors and links
+     whose text is already the URL are left alone, because repeating those
+     just doubles the line. */
+  a{color:#000 !important;text-decoration:none !important;border:0 !important}
+  a[href^="http"]:not([href*="harperz9.github.io"])::after{
+    content:" (" attr(href) ")";
+    font-size:.82em;
+    color:#3a3d42 !important;
+    word-break:break-all;
+  }
+  a[href^="http"][href$=".pdf"]::after{content:""}
+}
