@@ -19,6 +19,21 @@
 <link rel="stylesheet" href="system/instrument.css?v=20260812-fullscreen">
 <link rel="stylesheet" href="system/instrument-forms.css?v=20260812-bracket">
 <style>
+  /* the contact sheet: every shader as a small live thumbnail, so the shelf can
+     be browsed by eye instead of one dropdown load at a time */
+  .re-sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:.4rem;
+    max-height:20rem;overflow-y:auto;margin-top:.5rem;padding:.35rem;scrollbar-width:thin}
+  .re-sheet button{position:relative;padding:0;border:1px solid var(--hairline);border-radius:0;
+    background:#000;cursor:pointer;aspect-ratio:1;overflow:hidden}
+  .re-sheet button:hover,.re-sheet button:focus-visible{border-color:var(--bone);outline:none}
+  .re-sheet button[aria-pressed="true"]{border-color:var(--bone);box-shadow:inset 0 0 0 1px var(--bone)}
+  .re-sheet canvas{width:100%;height:100%;display:block}
+  .re-sheet .sh-name{position:absolute;left:0;right:0;bottom:0;font-family:var(--mono);
+    font-size:.44rem;line-height:1.25;padding:.15em .25em;color:var(--bone);
+    background:color-mix(in oklab,var(--void) 82%,transparent);text-align:left;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+</style>
+<style>
   /* the retro engine's own racks; the shared chassis lives in instrument.css */
   .re-preview canvas{image-rendering:pixelated;cursor:crosshair;touch-action:none}
   input[type=color].re-color{width:2.1rem;height:2.1rem;border:1px solid var(--hairline);border-radius:6px;
@@ -175,7 +190,10 @@
             <button class="re-btn" id="re-prev" type="button" aria-label="Previous shader">&#9664;</button>
             <button class="re-btn" id="re-next" type="button" aria-label="Next shader">&#9654;</button>
             <button class="re-btn" id="re-lucky" type="button" aria-label="Jump to a random shader">surprise me &#9860;</button>
-          </div></div>
+            <button class="re-btn" id="re-sheet-toggle" type="button" aria-expanded="false"
+              aria-controls="re-sheet" aria-label="Show the contact sheet of every shader">contact sheet</button>
+          </div>
+          <div class="re-sheet" id="re-sheet" hidden role="group" aria-label="Shader contact sheet"></div></div>
         <div class="re-field"><span class="re-lab">Fragment shader<span class="re-val" id="re-shader-live"></span></span>
           <textarea class="re-in re-code" id="re-code" aria-label="Shader source code, GLSL" spellcheck="false" autocapitalize="off"></textarea></div>
         <div class="re-actions"><button class="re-btn" id="re-run">Run shader</button>

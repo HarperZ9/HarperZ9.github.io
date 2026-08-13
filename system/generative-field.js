@@ -2844,7 +2844,7 @@ function sizeSpecimenCanvas(canvas, dpr) {
   }
 }
 
-export function renderSpecimen(canvas, seedString, layerNames = SPECIMEN_DEFAULT_LAYERS) {
+export function renderSpecimen(canvas, seedString, layerNames = SPECIMEN_DEFAULT_LAYERS, fx = null, fxAmount = 0.6) {
   if (!canvas || typeof canvas.getContext !== "function") return false;
   const ctx = canvas.getContext("2d", { alpha: true });
   if (!ctx) return false;
@@ -2887,7 +2887,32 @@ export function renderSpecimen(canvas, seedString, layerNames = SPECIMEN_DEFAULT
     releaseAlignment();
   }
   ctx.globalCompositeOperation = "source-over";
+  // Optional treatment stack. The 46-op rack is the same one the print desk and
+  // the Retro Engine run, so an exhibition plate can be developed rather than
+  // only composed, and its caption still names the whole recipe. Loaded lazily
+  // and applied synchronously only when a plate actually asks for it.
+  if (Array.isArray(fx) && fx.length && _opsModule && _opsModule.applyOps) {
+    const amt = Math.max(0.05, Math.min(1, fxAmount));
+    try {
+      _opsModule.applyOps(canvas, fx.map((op, i) => ({
+        op, amount: amt, seed: String(seedString) + ":" + op + ":" + i,
+      })));
+    } catch (_) {}
+  }
   return true;
+}
+
+// The op rack is a separate module and most pages never need it, so it is
+// fetched once, on demand, the first time a plate asks for a treatment.
+let _opsModule = null, _opsPending = null;
+export function loadSpecimenOps() {
+  if (_opsModule) return Promise.resolve(_opsModule);
+  if (!_opsPending) {
+    _opsPending = import("./glitch-ops.js")
+      .then((m) => { _opsModule = m; return m; })
+      .catch(() => null);
+  }
+  return _opsPending;
 }
 
 export function mountSpecimens(doc = typeof document !== "undefined" ? document : null) {
@@ -2900,7 +2925,20 @@ export function mountSpecimens(doc = typeof document !== "undefined" ? document 
       .split(",")
       .map((name) => name.trim())
       .filter(Boolean);
-    if (renderSpecimen(canvas, seedString, layers.length ? layers : SPECIMEN_DEFAULT_LAYERS)) {
+    const fx = ((canvas.dataset && canvas.dataset.specimenFx) || "")
+      .split(",").map((n) => n.trim()).filter(Boolean);
+    const fxAmount = Number((canvas.dataset && canvas.dataset.specimenFxAmount) || 0.6);
+    const use = layers.length ? layers : SPECIMEN_DEFAULT_LAYERS;
+    if (fx.length) {
+      // draw immediately so the plate is never blank, then develop it once the
+      // rack arrives; the caption already names the treatment either way
+      renderSpecimen(canvas, seedString, use);
+      loadSpecimenOps().then(() => {
+        renderSpecimen(canvas, seedString, use, fx, fxAmount);
+      });
+      if (canvas.dataset) canvas.dataset.specimenRendered = "true";
+      rendered += 1;
+    } else if (renderSpecimen(canvas, seedString, use)) {
       if (canvas.dataset) canvas.dataset.specimenRendered = "true";
       rendered += 1;
     }

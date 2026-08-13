@@ -718,6 +718,85 @@ function boot() {
       const preset = (v && v.indexOf("mine:") !== 0) ? SHADER_PRESETS[+v] : null;
       loadShader(resolveGlsl(v), preset);
     });
+    // ── the contact sheet ────────────────────────────────────────────────────
+    // 254 shaders behind a dropdown can only be browsed one load at a time. The
+    // sheet renders each preset as a single still frame into a small canvas,
+    // lazily via IntersectionObserver, through ONE shared runner and one shared
+    // offscreen GL canvas: 254 live contexts would exhaust the browser's WebGL
+    // limit long before the sheet finished.
+    (function buildContactSheet() {
+      const host = $("re-sheet"), toggle = $("re-sheet-toggle");
+      if (!host || !toggle) return;
+      let built = false, shared = null, io = null;
+
+      function thumbRunner() {
+        if (shared) return shared;
+        const c = document.createElement("canvas");
+        c.width = 168; c.height = 168;
+        const r = createShaderRunner(c, DEFAULT_FRAG);
+        shared = r.ok ? r : null;
+        return shared;
+      }
+
+      function paint(cell, preset) {
+        const r = thumbRunner();
+        const cv = cell.querySelector("canvas");
+        if (!r || !cv) return;
+        const res = r.setSource(preset.glsl);
+        if (!res || !res.ok) { cell.dataset.failed = "true"; return; }
+        // a frozen instant well past zero: most pieces are dull at t=0
+        r.renderFrame(6.5);
+        const ctx = cv.getContext("2d");
+        if (ctx) { try { ctx.drawImage(r.canvas, 0, 0, cv.width, cv.height); } catch (_) {} }
+      }
+
+      function build() {
+        if (built) return;
+        built = true;
+        io = ("IntersectionObserver" in window) ? new IntersectionObserver((entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            const cell = e.target;
+            io.unobserve(cell);
+            if (cell.dataset.painted === "true") continue;
+            cell.dataset.painted = "true";
+            const idx = +cell.dataset.idx;
+            const preset = SHADER_PRESETS[idx];
+            if (preset) requestAnimationFrame(() => paint(cell, preset));
+          }
+        }, { root: host, rootMargin: "120px" }) : null;
+
+        SHADER_PRESETS.forEach((preset, i) => {
+          const cell = document.createElement("button");
+          cell.type = "button";
+          cell.dataset.idx = String(i);
+          cell.setAttribute("aria-pressed", "false");
+          cell.title = preset.name;
+          cell.setAttribute("aria-label", "Load shader " + preset.name);
+          const cv = document.createElement("canvas");
+          cv.width = 84; cv.height = 84;
+          const nm = document.createElement("span");
+          nm.className = "sh-name";
+          nm.textContent = preset.name;
+          cell.append(cv, nm);
+          cell.addEventListener("click", () => {
+            presetSel.value = String(i);
+            presetSel.dispatchEvent(new Event("change"));
+            [...host.children].forEach((c) => c.setAttribute("aria-pressed", String(c === cell)));
+          });
+          host.appendChild(cell);
+          if (io) io.observe(cell); else { cell.dataset.painted = "true"; paint(cell, preset); }
+        });
+      }
+
+      toggle.addEventListener("click", () => {
+        const open = host.hidden;
+        host.hidden = !open;
+        toggle.setAttribute("aria-expanded", String(open));
+        if (open) build();
+      });
+    })();
+
     $("re-code").addEventListener("input", () => { presetSel.value = ""; });
 
     // Browse the shelf without hunting the dropdown: previous, next, or a jump.

@@ -111,7 +111,16 @@ function boot() {
     }
     const face = total ? Math.round((warpUp / total) * 100) : 0;
     const st = STRUCTURES[structureId];
-    el.textContent = `${draft.ends} ends x ${draft.picks} picks`
+    // "Sett" means ends per inch, which is what turns a thread count into a
+    // finished size. The slider used to be labelled sett while setting the total
+    // end count, so the cloth had no real-world dimensions at all.
+    const epiEl = $("wv-epi");
+    const epi = epiEl ? Math.max(1, +epiEl.value) : 24;
+    const ppi = epi;                       // balanced cloth unless a structure says otherwise
+    const wIn = draft.ends / epi, hIn = draft.picks / ppi;
+    const dim = `${wIn.toFixed(1)} x ${hIn.toFixed(1)} in`
+      + ` (${Math.round(wIn * 2.54)} x ${Math.round(hIn * 2.54)} cm) at ${epi} epi`;
+    el.textContent = `${draft.ends} ends x ${draft.picks} picks · ${dim}`
       + ` · longest float ${maxWarp} warp / ${maxWeft} weft`
       + ` · ${face}% warp-faced`
       + (st ? ` · ${st.perCell ? "per-thread" : st.shafts + " shafts"}` : "");
@@ -283,6 +292,11 @@ function boot() {
     if (next < 0) return;
     e.preventDefault();
     chips[next].focus(); chips[next].click();
+  });
+  const _epi = $("wv-epi");
+  if (_epi) _epi.addEventListener("input", () => {
+    const v = $("wv-epi-v"); if (v) v.textContent = _epi.value + " epi";
+    paintReadout();                       // sett changes the size, not the threading
   });
   [["wv-sett", "wv-sett-v", (v) => v + " ends"], ["wv-tone", "wv-tone-v", (v) => v], ["wv-speed", "wv-speed-v", (v) => v]]
     .forEach(([id, vid, fmt]) => $(id).addEventListener("input", () => {
