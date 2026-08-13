@@ -24,6 +24,9 @@ export const MORE = [
   ["Typeface", "typeface.html", "typeface"],
   ["Publications", "publications.html", "publications"],
   ["Writing", "writing.html", "writing"],
+  ["Dossier", "dossier.html", "dossier"],
+  ["Resume and CV", "resume.html", "work"],
+  ["Portfolio", "portfolio.html", "work"],
   ["About", "cv.html", "about"],
 ];
 
@@ -62,6 +65,24 @@ function shouldMountAmbientField(doc = document) {
   return body.classList.contains("gallery");
 }
 
+// Plates are not the ambient field, and gating them together was a mistake that
+// blanked every plate outside the gallery. The ambient field is a full-page
+// canvas that animates, so it is fair to hold it back from a slow machine, a
+// touch device, or a reader who asked for less motion. A plate is a figure in
+// the document: drawn once, static, aria-hidden, and captioned as the subject
+// of the paragraph beside it. Withholding it leaves an empty framed box where
+// an illustration should be, which is worse on every one of those devices than
+// simply drawing it. So plates mount wherever they appear, on their own path.
+function mountPlates(doc = document) {
+  if (!doc || typeof doc.querySelector !== "function") return;
+  if (!doc.querySelector("canvas[data-specimen]")) return;
+  import("./generative-field.js")
+    .then((mod) => {
+      if (typeof mod.mountSpecimens === "function") mod.mountSpecimens(doc);
+    })
+    .catch(() => {});
+}
+
 function normalizeRouteArtSrc(raw, doc) {
   if (!raw) return "";
   const base = doc && doc.location ? doc.location.href : (typeof window !== "undefined" ? window.location.href : "https://harperz9.github.io/");
@@ -86,6 +107,11 @@ function getRouteArtMetadata(doc = document) {
 function mountRouteArt(doc = document) {
   if (!doc || !doc.body || doc.documentElement.dataset.homeShell === "react") return;
   if (doc.querySelector("[data-route-art='mounted']")) return;
+  // A page that carries its own opening figure opts out, so a reader does not
+  // scroll past two banner images stacked on each other before the first
+  // sentence. The og:image stays set either way, because that one is for the
+  // link preview and has nothing to do with the page body.
+  if (doc.body.dataset.routeArt === "off") return;
   const main = doc.getElementById("main");
   if (!main) return;
   const art = getRouteArtMetadata(doc);
@@ -120,7 +146,7 @@ const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","
 CATALOG.add("field-guide");
 const RESEARCH = new Set(["research","why"]);
 const WRITING = new Set(["writing","the-summary-is-not-the-record"]);
-const WORK = new Set(["test-run-request","resume","cover-letter"]);
+const WORK = new Set(["test-run-request","resume","cover-letter","portfolio"]);
 const ABOUT = new Set(["cv","person"]);
 const TYPEFACE = new Set(["typeface"]);
 
@@ -136,6 +162,7 @@ export function navActive(pathname) {
   if (stem === "session-archive") return "archive";
   if (stem === "guide") return "guide";
   if (stem === "publications") return "publications";
+  if (stem === "dossier") return "dossier";
   if (stem === "security") return "security";
   if (FLAGSHIPS.has(stem)) return "flagships";
   if (DEMOS.has(stem)) return "demos";
@@ -305,8 +332,27 @@ function mountHomeLogo(doc) {
     .catch(() => showFallback());
 }
 
+// nav.js puts the same bar on every page, including pages that carry only
+// their own inline styles and never wrote a rule for it. Those rendered the
+// bar as browser defaults: underlined #0000EE links at 1.9:1 on a black
+// ground. This prepends the shared nav stylesheet to the head, so it sits
+// first in the cascade and any page that does style the nav still wins on
+// every property it sets.
+function ensureNavStylesheet(doc = document) {
+  if (!doc || !doc.head) return;
+  if (doc.querySelector('link[data-nav-style]')) return;
+  const here = import.meta && import.meta.url ? import.meta.url : "";
+  const href = here ? new URL("./nav.css", here).href : "system/nav.css";
+  const link = doc.createElement("link");
+  link.rel = "stylesheet";
+  link.href = href;
+  link.dataset.navStyle = "";
+  doc.head.insertBefore(link, doc.head.firstChild);
+}
+
 if (typeof document !== "undefined") {
   const boot = () => {
+    ensureNavStylesheet(document);
     renderNav();
     wireAnchorArrival(document);
     mountRouteArt(document);
@@ -316,6 +362,7 @@ if (typeof document !== "undefined") {
       import("./generative-field.js").catch(() => {});
       import("./cursor-field.js").then((m) => m.mountCursorField()).catch(() => {});
     }
+    mountPlates(document);
   };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();

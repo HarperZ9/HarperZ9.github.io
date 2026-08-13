@@ -17,26 +17,31 @@
 <meta name="twitter:title" content="Zain Dana Harper: Portfolio">
 <meta name="twitter:description" content="Fourteen connected engines across AI infrastructure, native rendering, neural-network graphics, poster design, color, and AI-assisted design, plus four recorded workflows.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/portfolio-home.png">
-<link rel="stylesheet" href="system/doc.css?v=20260719-zentropy-sitewide">
+<link rel="stylesheet" href="system/doc.css?v=20260813-document">
 </head>
 <body class="doc">
 <a class="skip-link" href="#main">Skip to content</a>
 
 <div id="site-nav" class="site-nav"></div>
-<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="resume.html">Resume</a> <a href="portfolio.html">Portfolio</a> <a href="cover-letter.html">Cover Letter</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260805-retro"></script>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="resume.html">Resume</a> <a href="portfolio.html">Portfolio</a> <a href="cover-letter.html">Letter</a> <a href="cv.html">Full CV</a> <a href="dossier.html">Dossier</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260813-plates"></script>
 
 <div class="docnav">
-  <span class="where">Career &middot; one of four pages</span>
-  <span class="switch"><a href="cv.html">Full CV</a><a href="resume.html">Resume</a><a href="portfolio.html" aria-current="page">Portfolio</a><a href="cover-letter.html">Cover Letter</a></span>
+  <span class="where">Career &middot; one of five documents</span>
+  <span class="switch"><a href="resume.html">Resume</a><a href="cv.html">Full CV</a><a href="portfolio.html" aria-current="page">Portfolio</a><a href="cover-letter.html">Letter</a><a href="dossier.html">Dossier</a></span>
 </div>
 
 <main id="main">
-<article class="sheet">
+<article class="sheet doc-rail">
   <header class="mast">
     <h1>Zain Dana Harper</h1>
-    <p class="role">Portfolio &middot; writing, analysis, and the flagship engineering work.</p>
-    <p class="contact">Seattle, WA &middot; remote <span class="sep">/</span> <a href="https://harperz9.github.io" translate="no">harperz9.github.io</a> <span class="sep">/</span> <a href="https://github.com/HarperZ9" translate="no">github.com/HarperZ9</a> <span class="sep">/</span> zaindharper@gmail.com</p>
+    <p class="role">Portfolio. The engineering, the upstream ledger, and the writing and analysis samples.</p>
+    <p class="contact contact--fields">
+      <span>Seattle, Washington</span>
+      <span>zaindharper@gmail.com</span>
+      <span><a href="https://harperz9.github.io" translate="no">harperz9.github.io</a></span>
+      <span><a href="https://github.com/HarperZ9" translate="no">github.com/HarperZ9</a></span>
+    </p>
   </header>
 
   <section>
@@ -71,15 +76,15 @@
     <h2>Contributions to projects I do not own</h2>
     <p class="lead">Work sent into other people's codebases, where someone else sets the standard and decides. Every line below is one pull request you can open: the diff, the review, and the outcome. Merged means a maintainer accepted that change. It does not mean the project uses, endorses, or has any relationship with the rest of this portfolio.</p>
     <div class="receipts">
-      <span class="r"><b>56</b> pull requests</span>
-      <span class="r"><b>24</b> merged</span>
-      <span class="r"><b>21</b> open</span>
-      <span class="r"><b>13</b> closed without merge</span>
+      <span class="r"><b data-census="all">60</b> pull requests</span>
+      <span class="r"><b data-census="merged">25</b> merged</span>
+      <span class="r"><b data-census="open">22</b> open</span>
+      <span class="r r--drift"><b data-census="closed">13</b> closed without merge</span>
     </div>
-    <p class="entry-note">Every pull request authored by <span translate="no">HarperZ9</span> in a repository not owned by <span translate="no">HarperZ9</span>, counted 2026-08-04 and state-checked against each upstream repository. Fourteen of the 58 only add a row to a public link list; they are held apart at the end of this section, because adding a row to an index is not a contribution to a project. That leaves <b>44</b> code and documentation pull requests: 22 merged, 11 open, 11 closed without merge.</p>
+    <p class="entry-note">Every pull request authored by <span translate="no">HarperZ9</span> in a repository not owned by <span translate="no">HarperZ9</span>. The counts are read straight from the GitHub API by <span translate="no">tools/pr_census.py</span> and a test fails the build if this page disagrees with the live record, so nothing here is transcribed by hand. <b data-census="listings">14</b> of them only add a row to a public link list. Those are held apart at the end of this section, because adding a row to an index is not a contribution to a project. That leaves <b data-census="engineering">46</b> code and documentation pull requests: <b data-census="merged-engineering">23</b> merged, <b data-census="open-engineering">12</b> open, <b data-census="closed-engineering">11</b> closed without merge.</p>
 
     <div class="entry">
-      <div class="entry-head"><span class="entry-title">Merged</span><span class="entry-meta">22 pull requests &middot; 19 repositories</span></div>
+      <div class="entry-head"><span class="entry-title">Merged</span><span class="entry-meta"><span data-census="merged-engineering">23</span> pull requests &middot; <span data-census="merged-engineering-repos">20</span> repositories</span></div>
       <p class="entry-note">Defect repair, missing validation, and test coverage, accepted by the maintainer.</p>
       <ul class="bul">
         <li><b>simonw/datasette</b> &middot; return 400 instead of 500 for wrong-arity composite primary-key row URLs. <a class="inline" href="https://github.com/simonw/datasette/pull/2815" rel="noopener">#2815</a></li>
@@ -104,11 +109,12 @@
         <li><b>AvAdiii/rewardspy</b> &middot; an ASCII fallback for dashboard charts. <a class="inline" href="https://github.com/AvAdiii/rewardspy/pull/7" rel="noopener">#7</a></li>
         <li><b>sguruvar/ai-inference-observability-eks</b> &middot; fix the local MCP entrypoint. <a class="inline" href="https://github.com/sguruvar/ai-inference-observability-eks/pull/1" rel="noopener">#1</a></li>
         <li><b>lliangcol/llm-plugins-fusion</b> &middot; a worked sample workflow-evaluation record for the docs. <a class="inline" href="https://github.com/lliangcol/llm-plugins-fusion/pull/104" rel="noopener">#104</a></li>
+        <li><b>haeliotang/agent-runtime-observatory</b> &middot; content-only golden traces, so re-recording leaves a clean diff. <a class="inline" href="https://github.com/haeliotang/agent-runtime-observatory/pull/42" rel="noopener">#42</a></li>
       </ul>
     </div>
 
     <div class="entry">
-      <div class="entry-head"><span class="entry-title">Open</span><span class="entry-meta">11 pull requests &middot; 11 repositories</span></div>
+      <div class="entry-head"><span class="entry-title">Open</span><span class="entry-meta"><span data-census="open-engineering">12</span> pull requests &middot; <span data-census="open-engineering-repos">12</span> repositories</span></div>
       <p class="entry-note">Submitted and awaiting a maintainer. Open is not accepted, and none of these are counted as merged.</p>
       <ul class="bul">
         <li><b>simonw/datasette</b> &middot; give each non-blocking write a distinct task id. <a class="inline" href="https://github.com/simonw/datasette/pull/2861" rel="noopener">#2861</a></li>
@@ -118,7 +124,8 @@
         <li><b>confident-ai/deepeval</b> &middot; format the TypeScript sources to clear a red main branch. <a class="inline" href="https://github.com/confident-ai/deepeval/pull/2823" rel="noopener">#2823</a></li>
         <li><b>zilliztech/claude-context</b> &middot; privacy-preserving search receipts. <a class="inline" href="https://github.com/zilliztech/claude-context/pull/406" rel="noopener">#406</a></li>
         <li><b>sundeep-dayalan/sentient-trader</b> &middot; a config-gated deterministic no-key replay mode. <a class="inline" href="https://github.com/sundeep-dayalan/sentient-trader/pull/53" rel="noopener">#53</a></li>
-        <li><b>haeliotang/agent-runtime-observatory</b> &middot; content-only golden traces so re-recording leaves a clean diff. <a class="inline" href="https://github.com/haeliotang/agent-runtime-observatory/pull/42" rel="noopener">#42</a></li>
+        <li><b>dgenio/agentfence</b> &middot; a deterministic large-trace baseline for the engine. <a class="inline" href="https://github.com/dgenio/agentfence/pull/253" rel="noopener">#253</a></li>
+        <li><b>vectorvoyager358/voxwire</b> &middot; cover offline websocket recording replay. <a class="inline" href="https://github.com/vectorvoyager358/voxwire/pull/44" rel="noopener">#44</a></li>
         <li><b>huangyikai05/Tabulint</b> &middot; a deterministic large-workbook benchmark. <a class="inline" href="https://github.com/huangyikai05/Tabulint/pull/20" rel="noopener">#20</a></li>
         <li><b>hsaghir/looplet</b> &middot; a recipe for migrating a private tool loop to one outcome-grounded regression contract. <a class="inline" href="https://github.com/hsaghir/looplet/pull/109" rel="noopener">#109</a></li>
         <li><b>smdysk/cc-parachute</b> &middot; document the auto-compact filler strategy and cost ceiling for the compaction benchmark. <a class="inline" href="https://github.com/smdysk/cc-parachute/pull/12" rel="noopener">#12</a></li>
@@ -126,7 +133,7 @@
     </div>
 
     <div class="entry">
-      <div class="entry-head"><span class="entry-title">Closed without merge</span><span class="entry-meta">11 pull requests &middot; 10 repositories</span></div>
+      <div class="entry-head"><span class="entry-title">Closed without merge</span><span class="entry-meta"><span data-census="closed-engineering">11</span> pull requests &middot; <span data-census="closed-engineering-repos">10</span> repositories</span></div>
       <p class="entry-note">Declined, superseded, or fixed another way. They stay on the record: the count above only means something if the misses are here too.</p>
       <ul class="bul">
         <li><b>pypa/setuptools</b> &middot; repair a broken cross-reference that was failing the docs build. <a class="inline" href="https://github.com/pypa/setuptools/pull/5245" rel="noopener">#5245</a></li>
@@ -144,8 +151,8 @@
     </div>
 
     <div class="entry">
-      <div class="entry-head"><span class="entry-title">Link-list submissions, held apart</span><span class="entry-meta">14 pull requests &middot; 2 merged</span></div>
-      <p class="entry-note">Fourteen pull requests add one line naming a Project Telos tool to a public &ldquo;awesome&rdquo; index: 2 merged, 10 open, 2 closed without merge. They are self-submissions to a list, they change no software, and they are deliberately excluded from every count above. A merged one means a list accepted a row, nothing more.</p>
+      <div class="entry-head"><span class="entry-title">Link-list submissions, held apart</span><span class="entry-meta"><span data-census="listings">14</span> pull requests &middot; <span data-census="merged-listings">2</span> merged</span></div>
+      <p class="entry-note">These add one line naming a Project Telos tool to a public &ldquo;awesome&rdquo; index: <b data-census="merged-listings">2</b> merged, <b data-census="open-listings">10</b> open, <b data-census="closed-listings">2</b> closed without merge. They are self-submissions to a list, they change no software, and they are excluded from every count above. A merged one means a list accepted a row and nothing more.</p>
     </div>
   </section>
 
@@ -227,7 +234,9 @@
     </ul>
     <p class="lead">If you need a sample in one of the excluded categories, a sanitized, branding-free version can be produced on request. When in doubt, it was left out.</p>
   </section>
-  <p class="note">Updated 2026-07-13. Every sample is owner-held and public-safe; the samples carry the evidence, not the description of them.</p>
+  <p class="entry-note">Download this page: <a href="career/Zain-Dana-Harper-Portfolio.pdf" download>Portfolio PDF</a>. Printed from this page, so the two cannot drift apart.</p>
+
+  <p class="note">Updated 2026-08-13. Every sample is owner-held and public-safe, and the samples carry the evidence rather than a description of it. Upstream counts are read from the GitHub API by tools/pr_census.py and gated by a test.</p>
 </article>
 </main>
 </body>

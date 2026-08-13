@@ -1,0 +1,458 @@
+{
+ "user": "HarperZ9",
+ "buckets": {
+  "merged": {
+   "total": 25,
+   "engineering": 23,
+   "listings": 2,
+   "engineering_repos": 20,
+   "repos": 22,
+   "items": [
+    {
+     "repo": "haeliotang/agent-runtime-observatory",
+     "title": "fix: content-only golden traces so re-recording leaves a clean diff (#15)",
+     "url": "https://github.com/haeliotang/agent-runtime-observatory/pull/42",
+     "listing": false,
+     "closed_at": "2026-08-11T05:20:37Z"
+    },
+    {
+     "repo": "open-multi-agent/open-multi-agent",
+     "title": "test: mid-task recovery conformance fixture for #312",
+     "url": "https://github.com/open-multi-agent/open-multi-agent/pull/452",
+     "listing": false,
+     "closed_at": "2026-07-29T02:25:59Z"
+    },
+    {
+     "repo": "redxzeta/runtrail",
+     "title": "fix(mcp): preserve bridge startup diagnostics",
+     "url": "https://github.com/redxzeta/runtrail/pull/154",
+     "listing": false,
+     "closed_at": "2026-07-25T23:47:57Z"
+    },
+    {
+     "repo": "tylerjrbuell/reactive-agents-ts",
+     "title": "test(replay): return replayed steps through harness handle",
+     "url": "https://github.com/tylerjrbuell/reactive-agents-ts/pull/197",
+     "listing": false,
+     "closed_at": "2026-07-22T22:06:34Z"
+    },
+    {
+     "repo": "Liuyanfeng1234/governance-spec",
+     "title": "Add duplicate-key rejection fixtures",
+     "url": "https://github.com/Liuyanfeng1234/governance-spec/pull/1",
+     "listing": false,
+     "closed_at": "2026-07-20T08:29:29Z"
+    },
+    {
+     "repo": "0xzr/freellmpool",
+     "title": "Add capacity status edge fixture",
+     "url": "https://github.com/0xzr/freellmpool/pull/79",
+     "listing": false,
+     "closed_at": "2026-07-20T11:40:13Z"
+    },
+    {
+     "repo": "michalstrnadel/scorekeeper",
+     "title": "Add telos-coder report and Windows lock fallback",
+     "url": "https://github.com/michalstrnadel/scorekeeper/pull/7",
+     "listing": false,
+     "closed_at": "2026-07-21T21:17:49Z"
+    },
+    {
+     "repo": "adammmmmm/LoopCompass",
+     "title": "Add evaluation benchmark suite",
+     "url": "https://github.com/adammmmmm/LoopCompass/pull/19",
+     "listing": false,
+     "closed_at": "2026-07-21T18:31:54Z"
+    },
+    {
+     "repo": "AjnasNB/maqam",
+     "title": "test: cover Google ADK FunctionTool routing offline",
+     "url": "https://github.com/AjnasNB/maqam/pull/28",
+     "listing": false,
+     "closed_at": "2026-07-20T11:56:47Z"
+    },
+    {
+     "repo": "tylerjrbuell/reactive-agents-ts",
+     "title": "test(replay): add seeded end-to-end determinism coverage",
+     "url": "https://github.com/tylerjrbuell/reactive-agents-ts/pull/196",
+     "listing": false,
+     "closed_at": "2026-07-19T23:49:26Z"
+    },
+    {
+     "repo": "lliangcol/llm-plugins-fusion",
+     "title": "docs: add a completed fictional workflow-evaluation record",
+     "url": "https://github.com/lliangcol/llm-plugins-fusion/pull/104",
+     "listing": false,
+     "closed_at": "2026-07-18T22:56:22Z"
+    },
+    {
+     "repo": "sjh9714/mergewarden",
+     "title": "test: add reusable workflow pinning replay fixtures",
+     "url": "https://github.com/sjh9714/mergewarden/pull/107",
+     "listing": false,
+     "closed_at": "2026-07-17T21:21:17Z"
+    },
+    {
+     "repo": "TensorBlock/awesome-mcp-servers",
+     "title": "Add Project Telos MCP workbench",
+     "url": "https://github.com/TensorBlock/awesome-mcp-servers/pull/1017",
+     "listing": true,
+     "closed_at": "2026-07-03T01:06:09Z"
+    },
+    {
+     "repo": "pydantic/pydantic-ai",
+     "title": "Preserve `FileUrl.force_download` in UI round-trips",
+     "url": "https://github.com/pydantic/pydantic-ai/pull/6205",
+     "listing": false,
+     "closed_at": "2026-07-06T16:13:10Z"
+    },
+    {
+     "repo": "sguruvar/ai-inference-observability-eks",
+     "title": "Fix local MCP entrypoint",
+     "url": "https://github.com/sguruvar/ai-inference-observability-eks/pull/1",
+     "listing": false,
+     "closed_at": "2026-07-02T00:42:21Z"
+    },
+    {
+     "repo": "python-poetry/tomlkit",
+     "title": "Fix array of tables replacing a dotted key swallowing the next sibling (#542)",
+     "url": "https://github.com/python-poetry/tomlkit/pull/549",
+     "listing": false,
+     "closed_at": "2026-07-14T00:59:46Z"
+    },
+    {
+     "repo": "simonw/datasette",
+     "title": "Return 400 instead of 500 for wrong-arity composite-PK row URLs (#2811)",
+     "url": "https://github.com/simonw/datasette/pull/2815",
+     "listing": false,
+     "closed_at": "2026-07-07T21:19:08Z"
+    },
+    {
+     "repo": "confident-ai/deepeval",
+     "title": "Fix TypeError: unhashable type in ToolCorrectnessMetric for unhashable tool outputs (#2815)",
+     "url": "https://github.com/confident-ai/deepeval/pull/2822",
+     "listing": false,
+     "closed_at": "2026-07-02T18:04:10Z"
+    },
+    {
+     "repo": "python-grimp/grimp",
+     "title": "Fix the lint failures that are failing CI on main (ruff + clippy)",
+     "url": "https://github.com/python-grimp/grimp/pull/305",
+     "listing": false,
+     "closed_at": "2026-07-03T10:17:26Z"
+    },
+    {
+     "repo": "dgilland/pydash",
+     "title": "Fix to_list() returning dict_values instead of a list for dicts (#249)",
+     "url": "https://github.com/dgilland/pydash/pull/250",
+     "listing": false,
+     "closed_at": "2026-07-06T21:15:25Z"
+    },
+    {
+     "repo": "python-grimp/grimp",
+     "title": "Raise ValueError when a module is assigned to more than one layer (#165)",
+     "url": "https://github.com/python-grimp/grimp/pull/304",
+     "listing": false,
+     "closed_at": "2026-07-03T11:37:34Z"
+    },
+    {
+     "repo": "python-grimp/grimp",
+     "title": "Raise ModuleNotPresent for absent modules in direct-import queries (#113)",
+     "url": "https://github.com/python-grimp/grimp/pull/303",
+     "listing": false,
+     "closed_at": "2026-07-03T11:21:10Z"
+    },
+    {
+     "repo": "morganlinton/Albatross",
+     "title": "Support external eval fixture files",
+     "url": "https://github.com/morganlinton/Albatross/pull/13",
+     "listing": false,
+     "closed_at": "2026-06-29T16:27:28Z"
+    },
+    {
+     "repo": "punkpeye/awesome-mcp-servers",
+     "title": "Add Project Telos MCP tooling \ud83e\udd16\ud83e\udd16\ud83e\udd16",
+     "url": "https://github.com/punkpeye/awesome-mcp-servers/pull/8911",
+     "listing": true,
+     "closed_at": "2026-07-13T11:03:22Z"
+    },
+    {
+     "repo": "AvAdiii/rewardspy",
+     "title": "Add ASCII fallback for dashboard charts",
+     "url": "https://github.com/AvAdiii/rewardspy/pull/7",
+     "listing": false,
+     "closed_at": "2026-07-07T10:39:27Z"
+    }
+   ]
+  },
+  "open": {
+   "total": 22,
+   "engineering": 12,
+   "listings": 10,
+   "engineering_repos": 12,
+   "repos": 22,
+   "items": [
+    {
+     "repo": "dgenio/agentfence",
+     "title": "test(engine): add deterministic large-trace baseline",
+     "url": "https://github.com/dgenio/agentfence/pull/253",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "vectorvoyager358/voxwire",
+     "title": "test: cover offline websocket recording replay",
+     "url": "https://github.com/vectorvoyager358/voxwire/pull/44",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "hsaghir/looplet",
+     "title": "Recipe: migrate a private tool loop to one outcome-grounded regression contract",
+     "url": "https://github.com/hsaghir/looplet/pull/109",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "smdysk/cc-parachute",
+     "title": "docs: auto-compact filler strategy and cost ceiling for the compaction benchmark",
+     "url": "https://github.com/smdysk/cc-parachute/pull/12",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "sundeep-dayalan/sentient-trader",
+     "title": "feat: add config-gated deterministic no-key replay mode (#31)",
+     "url": "https://github.com/sundeep-dayalan/sentient-trader/pull/53",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "huangyikai05/Tabulint",
+     "title": "feat: add deterministic large-workbook benchmark",
+     "url": "https://github.com/huangyikai05/Tabulint/pull/20",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "simonw/datasette",
+     "title": "Give each non-blocking write a distinct task id",
+     "url": "https://github.com/simonw/datasette/pull/2861",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "modelcontextprotocol/python-sdk",
+     "title": "Clarify missing tool_result validation error",
+     "url": "https://github.com/modelcontextprotocol/python-sdk/pull/3053",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "jim-schwoebel/awesome_ai_agents",
+     "title": "Add Project Telos agent tooling",
+     "url": "https://github.com/jim-schwoebel/awesome_ai_agents/pull/372",
+     "listing": true,
+     "closed_at": null
+    },
+    {
+     "repo": "slavakurilyak/awesome-ai-agents",
+     "title": "Add Project Telos observability framework",
+     "url": "https://github.com/slavakurilyak/awesome-ai-agents/pull/330",
+     "listing": true,
+     "closed_at": null
+    },
+    {
+     "repo": "caramaschiHG/awesome-ai-agents-2026",
+     "title": "Add Project Telos protocol tooling",
+     "url": "https://github.com/caramaschiHG/awesome-ai-agents-2026/pull/395",
+     "listing": true,
+     "closed_at": null
+    },
+    {
+     "repo": "ProjectRecon/awesome-ai-agents-security",
+     "title": "Add Project Telos agent security tool",
+     "url": "https://github.com/ProjectRecon/awesome-ai-agents-security/pull/66",
+     "listing": true,
+     "closed_at": null
+    },
+    {
+     "repo": "Puliczek/awesome-mcp-security",
+     "title": "Add Project Telos MCP security tool",
+     "url": "https://github.com/Puliczek/awesome-mcp-security/pull/222",
+     "listing": true,
+     "closed_at": null
+    },
+    {
+     "repo": "WagnerAgent/awesome-mcp-servers-devops",
+     "title": "Add Project Telos DevOps visibility tool",
+     "url": "https://github.com/WagnerAgent/awesome-mcp-servers-devops/pull/55",
+     "listing": true,
+     "closed_at": null
+    },
+    {
+     "repo": "MobinX/awesome-mcp-list",
+     "title": "Add Project Telos developer tool",
+     "url": "https://github.com/MobinX/awesome-mcp-list/pull/336",
+     "listing": true,
+     "closed_at": null
+    },
+    {
+     "repo": "rohitg00/awesome-devops-mcp-servers",
+     "title": "Add Project Telos DevOps visibility tool",
+     "url": "https://github.com/rohitg00/awesome-devops-mcp-servers/pull/270",
+     "listing": true,
+     "closed_at": null
+    },
+    {
+     "repo": "punkpeye/awesome-mcp-devtools",
+     "title": "Add Project Telos testing tool",
+     "url": "https://github.com/punkpeye/awesome-mcp-devtools/pull/216",
+     "listing": true,
+     "closed_at": null
+    },
+    {
+     "repo": "simonw/llm",
+     "title": "Add OpenAI Responses client timeout options",
+     "url": "https://github.com/simonw/llm/pull/1506",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "confident-ai/deepeval",
+     "title": "Fix red main CI: format TypeScript sources with Prettier",
+     "url": "https://github.com/confident-ai/deepeval/pull/2823",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "drizzle-team/drizzle-orm",
+     "title": "fix(drizzle-kit): preserve commas inside MySQL enum values in snapshots (#5957)",
+     "url": "https://github.com/drizzle-team/drizzle-orm/pull/5961",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "zilliztech/claude-context",
+     "title": "Add privacy-preserving search receipts",
+     "url": "https://github.com/zilliztech/claude-context/pull/406",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "ai-boost/awesome-harness-engineering",
+     "title": "Add Project Telos observability reference",
+     "url": "https://github.com/ai-boost/awesome-harness-engineering/pull/90",
+     "listing": true,
+     "closed_at": null
+    }
+   ]
+  },
+  "closed_unmerged": {
+   "total": 13,
+   "engineering": 11,
+   "listings": 2,
+   "engineering_repos": 10,
+   "repos": 12,
+   "items": [
+    {
+     "repo": "frostney/lwpt",
+     "title": "Add deterministic HTTP fetch-failure tests via a loopback archive-fetch override",
+     "url": "https://github.com/frostney/lwpt/pull/122",
+     "listing": false,
+     "closed_at": "2026-08-02T17:59:27Z"
+    },
+    {
+     "repo": "modelcontextprotocol/inspector",
+     "title": "Add cancel control for task polling",
+     "url": "https://github.com/modelcontextprotocol/inspector/pull/1729",
+     "listing": false,
+     "closed_at": "2026-07-31T19:03:45Z"
+    },
+    {
+     "repo": "modelcontextprotocol/inspector",
+     "title": "Wake task polling on terminal notifications",
+     "url": "https://github.com/modelcontextprotocol/inspector/pull/1728",
+     "listing": false,
+     "closed_at": "2026-07-31T19:03:53Z"
+    },
+    {
+     "repo": "PyCQA/isort",
+     "title": "Wrap sorted literals with black profile settings",
+     "url": "https://github.com/PyCQA/isort/pull/2573",
+     "listing": false,
+     "closed_at": "2026-07-12T14:16:27Z"
+    },
+    {
+     "repo": "agronholm/typeguard",
+     "title": "Fix annotated walrus assignment handling (#557)",
+     "url": "https://github.com/agronholm/typeguard/pull/558",
+     "listing": false,
+     "closed_at": "2026-07-19T08:51:00Z"
+    },
+    {
+     "repo": "punkpeye/awesome-mcp-servers",
+     "title": "Add Project Telos local-first MCP servers (gather, index, forum, crucible, telos) \ud83e\udd16\ud83e\udd16\ud83e\udd16",
+     "url": "https://github.com/punkpeye/awesome-mcp-servers/pull/8966",
+     "listing": true,
+     "closed_at": "2026-07-02T00:16:31Z"
+    },
+    {
+     "repo": "python-poetry/poetry",
+     "title": "Generate launchers for gui-scripts in editable installs",
+     "url": "https://github.com/python-poetry/poetry/pull/10968",
+     "listing": false,
+     "closed_at": "2026-08-01T05:43:11Z"
+    },
+    {
+     "repo": "pypa/setuptools",
+     "title": "Fix broken build:installation cross-reference failing the docs build",
+     "url": "https://github.com/pypa/setuptools/pull/5245",
+     "listing": false,
+     "closed_at": "2026-07-04T23:56:21Z"
+    },
+    {
+     "repo": "langfuse/langfuse",
+     "title": "fix(otel): map GenAI IO on AI SDK spans",
+     "url": "https://github.com/langfuse/langfuse/pull/14636",
+     "listing": false,
+     "closed_at": "2026-07-19T01:18:25Z"
+    },
+    {
+     "repo": "pydantic/pydantic-ai",
+     "title": "Add turn index to agent chat spans",
+     "url": "https://github.com/pydantic/pydantic-ai/pull/6135",
+     "listing": false,
+     "closed_at": "2026-07-30T05:56:43Z"
+    },
+    {
+     "repo": "modelcontextprotocol/registry",
+     "title": "Add security scan receipt metadata",
+     "url": "https://github.com/modelcontextprotocol/registry/pull/1405",
+     "listing": false,
+     "closed_at": "2026-06-29T08:01:06Z"
+    },
+    {
+     "repo": "ai-boost/awesome-harness-engineering",
+     "title": "Add Project Telos demo harness",
+     "url": "https://github.com/ai-boost/awesome-harness-engineering/pull/89",
+     "listing": true,
+     "closed_at": "2026-06-27T17:22:15Z"
+    },
+    {
+     "repo": "github-linguist/linguist",
+     "title": "Add QuantaLang language support",
+     "url": "https://github.com/github-linguist/linguist/pull/7913",
+     "listing": false,
+     "closed_at": "2026-04-12T18:59:46Z"
+    }
+   ]
+  }
+ },
+ "totals": {
+  "all": 60,
+  "engineering": 46,
+  "listings": 14,
+  "engineering_repos": 39
+ }
+}

@@ -1,0 +1,154 @@
+/* ============================================================================
+   nav.css - the shared navigation bar, as a floor.
+
+   nav.js injects the same nav into every page, but five pages carry only their
+   own inline styles and never styled it, so the bar rendered as raw browser
+   defaults: underlined links in #0000EE at 1.9:1 against a black ground, which
+   is unreadable and looks like a broken page. nav.js now prepends this file to
+   the head, ahead of everything else, so it is the lowest-priority stylesheet
+   in the cascade. A page with its own nav rules (doc.css, system.css) still
+   wins on every property it sets; a page with none gets a legible bar.
+
+   Colours here are literal, deliberately. The first version read the page's
+   own --ink and --void through var() fallbacks, which broke worse than the bug
+   it fixed: a light-themed sample page defines --ink as a near-black meant for
+   its white ground, and putting that on this dark bar measured 1.09:1. The bar
+   paints its own ground, so it states its own foreground. A floor that borrows
+   the page's variables is not a floor.
+   ============================================================================ */
+
+.site-nav{
+  position:sticky;top:0;z-index:40;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;flex-wrap:wrap;
+  box-sizing:border-box;
+  padding:.75rem clamp(1.15rem,5vw,5rem);
+  border:0;border-bottom:1px solid rgba(238,241,243,.14);
+  background:#070406;
+  font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+.site-nav *{box-sizing:border-box}
+.site-nav a{text-decoration:none}
+
+.site-nav .sn-home{
+  display:inline-flex;align-items:center;gap:.7rem;flex:0 0 auto;
+  min-height:2.75rem;
+  font-family:"ZentropyDisplay","Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:clamp(1.05rem,2vw,1.38rem);
+  font-weight:600;line-height:1;letter-spacing:0;text-transform:none;
+  color:#eef1f3;
+}
+.site-nav .sn-home:hover,
+.site-nav .sn-home:focus-visible{color:#8ee3f2}
+.site-nav .sn-home-field{
+  position:relative;display:block;flex:0 0 auto;
+  width:2.55rem;height:2.55rem;
+  border:1px solid rgba(238,241,243,.26);
+  background:#050305;
+}
+.site-nav .sn-logo-canvas,
+.site-nav .sn-logo-fallback{position:absolute;inset:0;width:100%;height:100%;display:block}
+.site-nav .sn-logo-fallback{object-fit:cover}
+.site-nav .sn-brand-word{display:inline}
+
+.site-nav .sn-section{
+  display:none;
+  font-family:"Conso",ui-monospace,monospace;
+  font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
+  color:#9aa2aa;
+}
+.site-nav .sn-links{
+  display:flex;align-items:center;justify-content:flex-end;
+  gap:clamp(.8rem,2vw,1.8rem);flex:1 1 auto;min-width:0;
+}
+.site-nav .sn-links a,
+.site-nav .sn-more summary{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:clamp(.86rem,.8rem + .16vw,.96rem);
+  font-weight:700;line-height:1.1;
+  color:#9aa2aa;
+  border-bottom:1.5px solid transparent;
+  min-height:44px;padding:.55rem .05rem;
+  touch-action:manipulation;
+}
+.site-nav .sn-links a:hover,
+.site-nav .sn-links a:focus-visible,
+.site-nav .sn-more summary:hover,
+.site-nav .sn-more summary:focus-visible{color:#eef1f3;outline:none}
+.site-nav .sn-links a.is-active,
+.site-nav .sn-links a[aria-current="page"],
+.site-nav .sn-more[data-current="true"] > summary{
+  color:#8ee3f2;border-color:#8ee3f2;
+}
+
+.site-nav .sn-more{position:relative;flex:0 0 auto}
+.site-nav .sn-more summary{
+  gap:.45rem;list-style:none;cursor:pointer;padding-inline:.68rem;
+  border:1px solid transparent;user-select:none;
+}
+.site-nav .sn-more summary::-webkit-details-marker{display:none}
+.site-nav .sn-more summary::after{content:"+";margin-left:.38rem;color:#8b939b}
+.site-nav .sn-more[open] summary::after{content:"-"}
+.site-nav .sn-more:not([open]) .sn-more-list{display:none}
+.site-nav .sn-more-list{
+  position:absolute;right:0;top:calc(100% + .55rem);z-index:50;
+  min-width:16rem;max-width:min(22rem,calc(100vw - 2.3rem));
+  display:grid;gap:.55rem;padding:.7rem;
+  border:1px solid rgba(238,241,243,.26);
+  background:#070406;
+  box-shadow:0 20px 64px -36px rgba(0,0,0,.9);
+}
+.site-nav .sn-menu-group{display:grid;gap:.14rem}
+.site-nav .sn-menu-primary{display:none}
+.site-nav .sn-menu-label{
+  margin:.12rem .68rem .02rem;
+  font-family:"Conso",ui-monospace,monospace;
+  font-size:.62rem;line-height:1.2;letter-spacing:.1em;
+  text-transform:uppercase;color:#8b939b;
+}
+.site-nav .sn-more-list a{
+  display:flex;align-items:center;min-height:44px;
+  padding:.6rem .68rem;border:0;
+  white-space:normal;overflow-wrap:anywhere;touch-action:manipulation;
+  color:#9aa2aa;font-weight:700;
+}
+.site-nav .sn-more-list a:hover,
+.site-nav .sn-more-list a:focus-visible{
+  color:#eef1f3;
+  background:color-mix(in oklab,#8ee3f2 10%,transparent);
+}
+
+@media(max-width:760px){
+  .site-nav{
+    display:grid;grid-template-columns:minmax(0,1fr) auto;
+    align-items:center;gap:.45rem .75rem;padding:.65rem .8rem;
+  }
+  .site-nav .sn-home{min-width:0;width:auto;font-size:1.05rem}
+  .site-nav .sn-home-field{width:2.35rem;height:2.35rem}
+  .site-nav .sn-section{display:block;grid-column:1/2;grid-row:2}
+  .site-nav .sn-links{display:none}
+  .site-nav .sn-menu-primary{display:grid}
+  .site-nav .sn-more{
+    grid-column:2;grid-row:1/span 2;justify-self:end;align-self:center;
+    display:block;min-width:max-content;z-index:3;
+  }
+  .site-nav .sn-more summary{
+    min-block-size:44px;display:flex;align-items:center;min-width:4.4rem;
+    color:#eef1f3;
+    background:color-mix(in oklab,#8ee3f2 9%,transparent);
+    border:1px solid rgba(238,241,243,.26);
+    font-size:0;white-space:nowrap;
+  }
+  .site-nav .sn-more summary::before{content:"Menu";font-size:.78rem}
+  .site-nav .sn-more summary::after{font-size:.78rem;color:#8ee3f2}
+  .site-nav .sn-more-list{
+    position:fixed;left:.75rem;right:.75rem;top:4.4rem;
+    min-width:0;max-width:none;max-height:calc(100dvh - 5.2rem);overflow:auto;
+  }
+}
+@media(max-width:330px){
+  .site-nav .sn-home .sn-brand-word{display:none}
+}
+@media print{
+  .site-nav{display:none!important}
+}
