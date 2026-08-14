@@ -216,10 +216,14 @@ def test_home_make_prove_copy_states_the_current_public_boundary() -> None:
 
 def test_home_metadata_and_fallback_describe_make_and_prove_without_overclaiming() -> None:
     template = (ROOT / "home" / "index.html").read_text(encoding="utf-8")
+    # Shortened to fit a search result, which shows about 155 characters; the
+    # old one ran to 188 and the tail was never displayed. The claims this test
+    # exists to protect are unchanged: both entrances named, and fourteen.
     expected = (
-        "Project Telos is one public workshop with two entrances: Make for live creative systems; "
-        "Prove for receipts, workflows, research, and fourteen independently published verification systems."
+        "One public workshop, two entrances. Make for live creative systems; "
+        "Prove for receipts, workflows, research, and fourteen verification systems."
     )
+    assert len(expected) <= 158
     assert f'<meta name="description" content="{expected}" />' in template
     assert f'<meta property="og:description" content="{expected}" />' in template
     assert f'<meta name="twitter:description" content="{expected}" />' in template

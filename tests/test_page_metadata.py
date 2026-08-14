@@ -114,3 +114,23 @@ def test_the_injector_styles_what_it_injects() -> None:
     css = (ROOT / "system" / "nav.css").read_text(encoding="utf-8")
     assert ".site-nav{" in css
     assert ".route-art img{" in css and "max-width:100%" in css
+
+
+def test_descriptions_fit_the_space_they_are_shown_in() -> None:
+    """A search result shows roughly 155 characters. 62 pages carried between
+    165 and 468, so most of what was written there was never read by anyone.
+    Each one is now built from the page's own opening claim."""
+    for p in real_pages():
+        m = re.search(r'<meta name="description" content="([^"]*)"', read(p))
+        assert m, f"{p.name} has no description"
+        n = len(m.group(1))
+        assert 40 <= n <= 160, f"{p.name} description is {n} characters"
+
+
+def test_descriptions_keep_the_house_voice() -> None:
+    for p in real_pages():
+        m = re.search(r'<meta name="description" content="([^"]*)"', read(p))
+        text = m.group(1)
+        assert "—" not in text, f"{p.name} description contains an em dash"
+        for hype in ("revolutionary", "seamless", "cutting-edge", "game-changing", "world-class"):
+            assert hype not in text.lower(), f"{p.name} description says {hype!r}"

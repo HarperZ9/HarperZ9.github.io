@@ -1,0 +1,19 @@
+{
+  "product": "Elder ENB",
+  "platform": "NexusMods",
+  "url": "https://www.nexusmods.com/skyrimspecialedition/mods/117327",
+  "version": "final-elder-9",
+  "read_on": "2026-08-14",
+  "read_by": "operator, from the mod page",
+  "note": "NexusMods returns 403 to an automated request, so this cannot be refreshed by a script the way the pull-request census is. It is a dated reading, entered by hand, and every figure on the site is stamped from this file. All four only ever move upward, so a stale entry understates rather than overstates.",
+  "figures": {
+    "total_downloads": 936657,
+    "unique_downloaders": 160939,
+    "endorsements": 2394,
+    "total_views": 139120
+  },
+  "rounded": {
+    "total_downloads": "930,000",
+    "unique_downloaders": "160,000"
+  }
+}

@@ -121,3 +121,26 @@ def test_contact_fields_are_separate_elements() -> None:
         assert m, f"{name} has no contact line"
         assert "contact--fields" in m.group(0), name
         assert m.group(1).count("<span") >= 3, f"{name} contact line is not split into fields"
+
+
+def test_the_elder_enb_figures_match_the_dated_reading() -> None:
+    """NexusMods returns 403 to an automated request, so unlike the pull-request
+    census these cannot be refreshed by a script. They are a dated reading in
+    career/elder-enb.json, entered by hand, and every figure on the site is
+    stamped from it. All of them only move upward, so a stale entry understates
+    rather than overstates, which is the safe direction for a claim."""
+    data = json.loads((ROOT / "career" / "elder-enb.json").read_text(encoding="utf-8"))
+    figures, rounded = data["figures"], data["rounded"]
+
+    portfolio = read("portfolio.html")
+    for key in ("total_downloads", "unique_downloaders", "endorsements"):
+        assert f"{figures[key]:,}" in portfolio, f"portfolio.html does not state {key}"
+    assert data["read_on"] in portfolio, "the exact figures are stated without their reading date"
+    assert data["version"] in portfolio, "the reading does not name the version it was taken at"
+
+    # A rounded claim must stay under the exact figure, or it is not rounding.
+    assert int(rounded["total_downloads"].replace(",", "")) <= figures["total_downloads"]
+    assert int(rounded["unique_downloaders"].replace(",", "")) <= figures["unique_downloaders"]
+    for name in ("resume.html", "cv.html", "cover-letter.html"):
+        src = read(name)
+        assert "900,000" not in src, f"{name} still states a figure two readings out of date"

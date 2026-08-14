@@ -474,7 +474,7 @@ export default function App() {
                 <h3>graphics &amp; reverse engineering</h3>
                 <p className="range-meta mono">D3D11 · HLSL · native · proxy-DLL interception</p>
                 <p>From-scratch D3D11/HLSL frameworks that take ownership of a game's render pipeline, and the primary vehicle for hands-on reverse engineering: binary analysis, runtime instrumentation, live game-state extraction.</p>
-                <p className="range-proof">Elder ENB, a lighting preset shipped across roughly 280 releases, has earned <b>900,000+ downloads</b> on NexusMods. Public, so you can <a href="https://www.nexusmods.com/skyrimspecialedition/mods/117327" rel="noopener">check it</a>.</p>
+                <p className="range-proof">Elder ENB, a lighting preset shipped across roughly 280 releases, has earned <b>930,000+ downloads</b> on NexusMods. Public, so you can <a href="https://www.nexusmods.com/skyrimspecialedition/mods/117327" rel="noopener">check it</a>.</p>
               </article>
               <article className="range-card reveal d1">
                 <h3>color science &amp; rendering</h3>
