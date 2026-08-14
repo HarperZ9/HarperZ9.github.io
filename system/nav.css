@@ -152,3 +152,12 @@
 @media print{
   .site-nav{display:none!important}
 }
+
+/* ── the route artifact ──────────────────────────────────────────────────
+   nav.js also injects a .route-art figure built from the page's og:image.
+   Most pages style it; one did not, and the raw image rendered at its
+   natural 1200px inside a 375px window, making the whole document scroll
+   sideways. Same rule as the bar above: this file is the floor for anything
+   nav.js puts on a page that did not ask for it. */
+.route-art{max-width:100%;overflow:hidden;box-sizing:border-box}
+.route-art img{display:block;width:100%;height:auto;max-width:100%}
