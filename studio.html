@@ -23,13 +23,18 @@
 <link rel="stylesheet" href="system/system.css?v=20260812-angular">
 <link rel="stylesheet" href="system/instrument-forms.css?v=20260812-bracket">
 <style>
-  /* the toolbar breathes: labeled clusters instead of a wrapped soup */
-  .render-toolbar{max-width:min(100%,920px);gap:.4rem .45rem;align-items:stretch;justify-content:center}
-  .rt-group{display:inline-flex;flex-wrap:wrap;align-items:center;gap:.14rem;padding:.12rem .3rem;
-    border:1px solid var(--hairline);border-radius:12px}
+  /* the toolbar reads as clusters divided by a rule, left-aligned so every row
+     shares one edge instead of each centring on its own width (a ragged block).
+     The clusters carry no visible label by canon; the hairline between groups is
+     the division, and the four corner ticks on each control are the instrument. */
+  .render-toolbar{max-width:min(100%,928px);gap:.34rem 1.1rem;align-items:flex-start;justify-content:flex-start}
+  .rt-group{display:inline-flex;flex-wrap:wrap;align-items:center;padding:.12rem .1rem}
+  /* the ticks need air: at 1.6px the corner marks of neighbouring controls
+     collided into a hatch. This wins over the shared instrument rule (.1rem). */
+  .render-toolbar .rt-group{gap:.1rem .5rem}
   .rt-group-lab{font-family:var(--mono);font-size:.46rem;letter-spacing:.16em;text-transform:uppercase;
     color:var(--muted);padding:0 .26rem;user-select:none}
-  .rt-group .rt-btn{border-color:transparent;background:transparent;padding:.4em .5em;white-space:nowrap}
+  .rt-group .rt-btn{border-color:transparent;background:transparent;padding:.4em .55em;white-space:nowrap}
   .rt-group .rt-btn:hover:not([disabled]){background:color-mix(in oklab,var(--ember) 12%,transparent);border-color:transparent}
   .rt-group .rt-btn[aria-pressed="true"]{background:var(--ember);border-color:var(--ember);color:var(--void)}
   .rt-group details.rt-plot summary.rt-btn{border-color:transparent;background:transparent}
@@ -41,6 +46,13 @@
   /* laptop widths: the side columns give ground so the canvas keeps its stage */
   @media (min-width:900px) and (max-width:1279.98px){
     .studio-app{grid-template-columns:minmax(238px,17rem) minmax(0,1fr) minmax(272px,19rem)}
+  }
+  /* 1280 and up: trim the panel and rail from their system maxima (22rem/25rem)
+     so the centre column, the canvas and its toolbar, stays the widest region.
+     The hero should read as the hero; before this the two side columns together
+     (288+384) outweighed the 608 stage on a 1280 laptop. */
+  @media (min-width:1280px){
+    .studio-app{grid-template-columns:minmax(258px,19.5rem) minmax(0,1fr) minmax(300px,21.5rem)}
   }
 </style>
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
