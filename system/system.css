@@ -1336,7 +1336,13 @@ body.showcase-hero .viewport-stage canvas{width:100%;height:100%;object-fit:fill
   .studio-rail,.studio-viewport,.studio-panel{border:0;overflow:visible;min-height:0}
   .studio-rail{border-bottom:1px solid transparent;border-image:var(--edge) 1}
   .studio-panel{border-top:1px solid transparent;border-image:var(--edge) 1}
-  .rail-scroll,.panel-scroll{overflow:visible}
+  .panel-scroll{overflow:visible}
+  /* The rail's control column (source picker + the active source panel, e.g. the
+     Atelier algorithm/seed shelf) must not expand to its full content height on a
+     phone. Unbounded, it drew a tall dark empty column between the canvas and the
+     perception panel (the page ran past 5000px). Bound it to a scroll region so
+     every control stays reachable without the void. */
+  .rail-scroll{max-height:min(72vh,34rem);overflow-y:auto;overflow-x:hidden}
   .source-menu{display:grid;grid-template-columns:1fr;gap:.55rem}
   .source-group{grid-template-columns:repeat(3,minmax(0,1fr))}
   .source-group-single{grid-template-columns:1fr}
