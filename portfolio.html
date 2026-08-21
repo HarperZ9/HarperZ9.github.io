@@ -76,17 +76,23 @@
     <h2>Contributions to projects I do not own</h2>
     <p class="lead">Work sent into other people's codebases, where someone else sets the standard and decides. Every line below is one pull request you can open: the diff, the review, and the outcome. Merged means a maintainer accepted that change. It does not mean the project uses, endorses, or has any relationship with the rest of this portfolio.</p>
     <div class="receipts">
-      <span class="r"><b data-census="all">60</b> pull requests</span>
-      <span class="r"><b data-census="merged">25</b> merged</span>
-      <span class="r"><b data-census="open">22</b> open</span>
+      <span class="r"><b data-census="all">63</b> pull requests</span>
+      <span class="r"><b data-census="merged">32</b> merged</span>
+      <span class="r"><b data-census="open">18</b> open</span>
       <span class="r r--drift"><b data-census="closed">13</b> closed without merge</span>
     </div>
-    <p class="entry-note">Every pull request authored by <span translate="no">HarperZ9</span> in a repository not owned by <span translate="no">HarperZ9</span>. The counts are read straight from the GitHub API by <span translate="no">tools/pr_census.py</span> and a test fails the build if this page disagrees with the live record, so nothing here is transcribed by hand. <b data-census="listings">14</b> of them only add a row to a public link list. Those are held apart at the end of this section, because adding a row to an index is not a contribution to a project. That leaves <b data-census="engineering">46</b> code and documentation pull requests: <b data-census="merged-engineering">23</b> merged, <b data-census="open-engineering">12</b> open, <b data-census="closed-engineering">11</b> closed without merge.</p>
+    <p class="entry-note">Every pull request authored by <span translate="no">HarperZ9</span> in a repository not owned by <span translate="no">HarperZ9</span>. The counts are read straight from the GitHub API by <span translate="no">tools/pr_census.py</span> and a test fails the build if this page disagrees with the live record, so nothing here is transcribed by hand. <b data-census="listings">14</b> of them only add a row to a public link list. Those are held apart at the end of this section, because adding a row to an index is not a contribution to a project. That leaves <b data-census="engineering">49</b> code and documentation pull requests: <b data-census="merged-engineering">29</b> merged, <b data-census="open-engineering">9</b> open, <b data-census="closed-engineering">11</b> closed without merge.</p>
 
     <div class="entry">
-      <div class="entry-head"><span class="entry-title">Merged</span><span class="entry-meta"><span data-census="merged-engineering">23</span> pull requests &middot; <span data-census="merged-engineering-repos">20</span> repositories</span></div>
-      <p class="entry-note">Defect repair, missing validation, and test coverage, accepted by the maintainer.</p>
+      <div class="entry-head"><span class="entry-title">Merged</span><span class="entry-meta"><span data-census="merged-engineering">29</span> pull requests &middot; <span data-census="merged-engineering-repos">24</span> repositories</span></div>
+      <p class="entry-note">Defect repair, missing validation, performance, documentation, and test coverage, accepted by the maintainer.</p>
       <ul class="bul">
+        <li><b>dgenio/agentfence</b> &middot; precompute rule-lookup group and pattern order in the policy engine, a measured allocation reduction. <a class="inline" href="https://github.com/dgenio/agentfence/pull/261" rel="noopener">#261</a></li>
+        <li><b>dgenio/agentfence</b> &middot; a governance evidence-mapping document tying recorded events to reviewer questions, with limits stated per row. <a class="inline" href="https://github.com/dgenio/agentfence/pull/262" rel="noopener">#262</a></li>
+        <li><b>dgenio/agentfence</b> &middot; a deterministic large-trace performance baseline. <a class="inline" href="https://github.com/dgenio/agentfence/pull/253" rel="noopener">#253</a></li>
+        <li><b>community-shaders/skyrim-community-shaders</b> &middot; patch Truth ENB and Elder ENB settings for the Effects 11 host. <a class="inline" href="https://github.com/community-shaders/skyrim-community-shaders/pull/2663" rel="noopener">#2663</a></li>
+        <li><b>vectorvoyager358/voxwire</b> &middot; offline websocket recording-replay coverage. <a class="inline" href="https://github.com/vectorvoyager358/voxwire/pull/44" rel="noopener">#44</a></li>
+        <li><b>sundeep-dayalan/sentient-trader</b> &middot; a config-gated deterministic no-key replay mode. <a class="inline" href="https://github.com/sundeep-dayalan/sentient-trader/pull/53" rel="noopener">#53</a></li>
         <li><b>simonw/datasette</b> &middot; return 400 instead of 500 for wrong-arity composite primary-key row URLs. <a class="inline" href="https://github.com/simonw/datasette/pull/2815" rel="noopener">#2815</a></li>
         <li><b>python-poetry/tomlkit</b> &middot; an array of tables replacing a dotted key no longer swallows the next sibling key. <a class="inline" href="https://github.com/python-poetry/tomlkit/pull/549" rel="noopener">#549</a></li>
         <li><b>pydantic/pydantic-ai</b> &middot; preserve <span translate="no">FileUrl.force_download</span> through UI round-trips. <a class="inline" href="https://github.com/pydantic/pydantic-ai/pull/6205" rel="noopener">#6205</a></li>
@@ -114,7 +120,7 @@
     </div>
 
     <div class="entry">
-      <div class="entry-head"><span class="entry-title">Open</span><span class="entry-meta"><span data-census="open-engineering">12</span> pull requests &middot; <span data-census="open-engineering-repos">12</span> repositories</span></div>
+      <div class="entry-head"><span class="entry-title">Open</span><span class="entry-meta"><span data-census="open-engineering">9</span> pull requests &middot; <span data-census="open-engineering-repos">9</span> repositories</span></div>
       <p class="entry-note">Submitted and awaiting a maintainer. Open is not accepted, and none of these are counted as merged.</p>
       <ul class="bul">
         <li><b>simonw/datasette</b> &middot; give each non-blocking write a distinct task id. <a class="inline" href="https://github.com/simonw/datasette/pull/2861" rel="noopener">#2861</a></li>
@@ -123,9 +129,6 @@
         <li><b>modelcontextprotocol/python-sdk</b> &middot; clarify the validation error raised when a tool result is missing. <a class="inline" href="https://github.com/modelcontextprotocol/python-sdk/pull/3053" rel="noopener">#3053</a></li>
         <li><b>confident-ai/deepeval</b> &middot; format the TypeScript sources to clear a red main branch. <a class="inline" href="https://github.com/confident-ai/deepeval/pull/2823" rel="noopener">#2823</a></li>
         <li><b>zilliztech/claude-context</b> &middot; privacy-preserving search receipts. <a class="inline" href="https://github.com/zilliztech/claude-context/pull/406" rel="noopener">#406</a></li>
-        <li><b>sundeep-dayalan/sentient-trader</b> &middot; a config-gated deterministic no-key replay mode. <a class="inline" href="https://github.com/sundeep-dayalan/sentient-trader/pull/53" rel="noopener">#53</a></li>
-        <li><b>dgenio/agentfence</b> &middot; a deterministic large-trace baseline for the engine. <a class="inline" href="https://github.com/dgenio/agentfence/pull/253" rel="noopener">#253</a></li>
-        <li><b>vectorvoyager358/voxwire</b> &middot; cover offline websocket recording replay. <a class="inline" href="https://github.com/vectorvoyager358/voxwire/pull/44" rel="noopener">#44</a></li>
         <li><b>huangyikai05/Tabulint</b> &middot; a deterministic large-workbook benchmark. <a class="inline" href="https://github.com/huangyikai05/Tabulint/pull/20" rel="noopener">#20</a></li>
         <li><b>hsaghir/looplet</b> &middot; a recipe for migrating a private tool loop to one outcome-grounded regression contract. <a class="inline" href="https://github.com/hsaghir/looplet/pull/109" rel="noopener">#109</a></li>
         <li><b>smdysk/cc-parachute</b> &middot; document the auto-compact filler strategy and cost ceiling for the compaction benchmark. <a class="inline" href="https://github.com/smdysk/cc-parachute/pull/12" rel="noopener">#12</a></li>
@@ -151,8 +154,8 @@
     </div>
 
     <div class="entry">
-      <div class="entry-head"><span class="entry-title">Link-list submissions, held apart</span><span class="entry-meta"><span data-census="listings">14</span> pull requests &middot; <span data-census="merged-listings">2</span> merged</span></div>
-      <p class="entry-note">These add one line naming a Project Telos tool to a public &ldquo;awesome&rdquo; index: <b data-census="merged-listings">2</b> merged, <b data-census="open-listings">10</b> open, <b data-census="closed-listings">2</b> closed without merge. They are self-submissions to a list, they change no software, and they are excluded from every count above. A merged one means a list accepted a row and nothing more.</p>
+      <div class="entry-head"><span class="entry-title">Link-list submissions, held apart</span><span class="entry-meta"><span data-census="listings">14</span> pull requests &middot; <span data-census="merged-listings">3</span> merged</span></div>
+      <p class="entry-note">These add one line naming a Project Telos tool to a public &ldquo;awesome&rdquo; index: <b data-census="merged-listings">3</b> merged, <b data-census="open-listings">9</b> open, <b data-census="closed-listings">2</b> closed without merge. They are self-submissions to a list, they change no software, and they are excluded from every count above. A merged one means a list accepted a row and nothing more.</p>
     </div>
   </section>
 
@@ -237,7 +240,7 @@
   <p class="entry-note">Download this page: <a href="career/Zain-Dana-Harper-Portfolio.pdf" download>Portfolio PDF</a>. Printed from this page, so the two cannot drift apart.</p>
     <div data-export-slot></div>
 
-  <p class="note">Updated 2026-08-13. Every sample is owner-held and public-safe, and the samples carry the evidence rather than a description of it. Upstream counts are read from the GitHub API by tools/pr_census.py and gated by a test.</p>
+  <p class="note">Updated 2026-08-21. Every sample is owner-held and public-safe, and the samples carry the evidence rather than a description of it. Upstream counts are read from the GitHub API by tools/pr_census.py and gated by a test.</p>
 </article>
 </main>
 </body>

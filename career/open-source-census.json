@@ -2,12 +2,54 @@
  "user": "HarperZ9",
  "buckets": {
   "merged": {
-   "total": 25,
-   "engineering": 23,
-   "listings": 2,
-   "engineering_repos": 20,
-   "repos": 22,
+   "total": 32,
+   "engineering": 29,
+   "listings": 3,
+   "engineering_repos": 24,
+   "repos": 27,
    "items": [
+    {
+     "repo": "dgenio/agentfence",
+     "title": "docs(aiuc-1): add AIUC-1 evidence mapping",
+     "url": "https://github.com/dgenio/agentfence/pull/262",
+     "listing": false,
+     "closed_at": "2026-08-21T21:57:03Z"
+    },
+    {
+     "repo": "dgenio/agentfence",
+     "title": "perf(engine): precompute lookupRule group and pattern order",
+     "url": "https://github.com/dgenio/agentfence/pull/261",
+     "listing": false,
+     "closed_at": "2026-08-21T12:46:30Z"
+    },
+    {
+     "repo": "community-shaders/skyrim-community-shaders",
+     "title": "feat(effects11): patch Truth ENB & Elder ENB settings",
+     "url": "https://github.com/community-shaders/skyrim-community-shaders/pull/2663",
+     "listing": false,
+     "closed_at": "2026-08-19T07:37:53Z"
+    },
+    {
+     "repo": "dgenio/agentfence",
+     "title": "test(engine): add deterministic large-trace baseline",
+     "url": "https://github.com/dgenio/agentfence/pull/253",
+     "listing": false,
+     "closed_at": "2026-08-21T05:03:21Z"
+    },
+    {
+     "repo": "vectorvoyager358/voxwire",
+     "title": "test: cover offline websocket recording replay",
+     "url": "https://github.com/vectorvoyager358/voxwire/pull/44",
+     "listing": false,
+     "closed_at": "2026-08-15T19:49:29Z"
+    },
+    {
+     "repo": "sundeep-dayalan/sentient-trader",
+     "title": "feat: add config-gated deterministic no-key replay mode (#31)",
+     "url": "https://github.com/sundeep-dayalan/sentient-trader/pull/53",
+     "listing": false,
+     "closed_at": "2026-08-14T01:17:04Z"
+    },
     {
      "repo": "haeliotang/agent-runtime-observatory",
      "title": "fix: content-only golden traces so re-recording leaves a clean diff (#15)",
@@ -91,6 +133,13 @@
      "url": "https://github.com/sjh9714/mergewarden/pull/107",
      "listing": false,
      "closed_at": "2026-07-17T21:21:17Z"
+    },
+    {
+     "repo": "WagnerAgent/awesome-mcp-servers-devops",
+     "title": "Add Project Telos DevOps visibility tool",
+     "url": "https://github.com/WagnerAgent/awesome-mcp-servers-devops/pull/55",
+     "listing": true,
+     "closed_at": "2026-08-20T21:31:40Z"
     },
     {
      "repo": "TensorBlock/awesome-mcp-servers",
@@ -186,26 +235,12 @@
    ]
   },
   "open": {
-   "total": 22,
-   "engineering": 12,
-   "listings": 10,
-   "engineering_repos": 12,
-   "repos": 22,
+   "total": 18,
+   "engineering": 9,
+   "listings": 9,
+   "engineering_repos": 9,
+   "repos": 18,
    "items": [
-    {
-     "repo": "dgenio/agentfence",
-     "title": "test(engine): add deterministic large-trace baseline",
-     "url": "https://github.com/dgenio/agentfence/pull/253",
-     "listing": false,
-     "closed_at": null
-    },
-    {
-     "repo": "vectorvoyager358/voxwire",
-     "title": "test: cover offline websocket recording replay",
-     "url": "https://github.com/vectorvoyager358/voxwire/pull/44",
-     "listing": false,
-     "closed_at": null
-    },
     {
      "repo": "hsaghir/looplet",
      "title": "Recipe: migrate a private tool loop to one outcome-grounded regression contract",
@@ -217,13 +252,6 @@
      "repo": "smdysk/cc-parachute",
      "title": "docs: auto-compact filler strategy and cost ceiling for the compaction benchmark",
      "url": "https://github.com/smdysk/cc-parachute/pull/12",
-     "listing": false,
-     "closed_at": null
-    },
-    {
-     "repo": "sundeep-dayalan/sentient-trader",
-     "title": "feat: add config-gated deterministic no-key replay mode (#31)",
-     "url": "https://github.com/sundeep-dayalan/sentient-trader/pull/53",
      "listing": false,
      "closed_at": null
     },
@@ -280,13 +308,6 @@
      "repo": "Puliczek/awesome-mcp-security",
      "title": "Add Project Telos MCP security tool",
      "url": "https://github.com/Puliczek/awesome-mcp-security/pull/222",
-     "listing": true,
-     "closed_at": null
-    },
-    {
-     "repo": "WagnerAgent/awesome-mcp-servers-devops",
-     "title": "Add Project Telos DevOps visibility tool",
-     "url": "https://github.com/WagnerAgent/awesome-mcp-servers-devops/pull/55",
      "listing": true,
      "closed_at": null
     },
@@ -450,9 +471,9 @@
   }
  },
  "totals": {
-  "all": 60,
-  "engineering": 46,
+  "all": 63,
+  "engineering": 49,
   "listings": 14,
-  "engineering_repos": 39
+  "engineering_repos": 40
  }
 }

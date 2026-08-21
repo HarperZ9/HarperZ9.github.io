@@ -36,7 +36,7 @@ QUERIES = {
 }
 
 # Pages that carry a census number, and the element ids that hold it.
-STAMPED = ("portfolio.html", "resume.html", "cv.html", "dossier.html")
+STAMPED = ("portfolio.html", "resume.html", "cv.html", "dossier.html", "cover-letter.html")
 
 
 def is_listing(repo: str) -> bool:
