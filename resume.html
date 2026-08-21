@@ -5,17 +5,17 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Zain Dana Harper: Resume</title>
-<meta name="description" content="Resume of Zain Dana Harper: accountability infrastructure for AI agents, compilers and typed effects, real-time graphics and color, and operations.">
+<meta name="description" content="Resume of Zain Dana Harper: testing, evaluation, and audit infrastructure for AI agents, compilers, real-time graphics and color, and operations.">
 <link rel="canonical" href="https://harperz9.github.io/resume.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Zain Dana Harper: Resume">
-<meta property="og:description" content="Resume of Zain Dana Harper: accountability infrastructure for AI agents, compilers and typed effects, real-time graphics and color, and operations.">
+<meta property="og:description" content="Resume of Zain Dana Harper: testing, evaluation, and audit infrastructure for AI agents, compilers, real-time graphics and color, and operations.">
 <meta property="og:url" content="https://harperz9.github.io/resume.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/profile.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Zain Dana Harper: Resume">
-<meta name="twitter:description" content="Resume of Zain Dana Harper: accountability infrastructure for AI agents, compilers and typed effects, real-time graphics and color, and operations.">
+<meta name="twitter:description" content="Resume of Zain Dana Harper: testing, evaluation, and audit infrastructure for AI agents, compilers, real-time graphics and color, and operations.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/profile.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="system/doc.css?v=20260813-document">
@@ -36,7 +36,7 @@
 <article class="sheet doc-rail">
   <header class="mast">
     <h1>Zain Dana Harper</h1>
-    <p class="role">Systems and verification engineer. Accountability infrastructure for AI agents, compilers and typed effects, real-time graphics and color.</p>
+    <p class="role">Software engineer. Testing, evaluation, and audit infrastructure for AI agents, compilers, real-time graphics and color.</p>
     <p class="contact contact--fields">
       <span>Seattle, Washington</span>
       <span>Remote, hybrid, onsite, contract, or project</span>
@@ -49,21 +49,33 @@
 
   <section>
     <h2>Summary</h2>
-    <p class="opening">I build systems that someone who was not in the room can check. That means capability gates a model cannot talk past, receipts that re-derive offline from the record alone, and a compiler where reaching for the network is part of a function's type.</p>
-    <p class="lead">Public engineering practice since 2023, on about thirteen years of programming and eleven years running field operations. The same discipline covers the rest of it: real-time graphics and color science, technical and compliance documentation, and research systems that carry their evidence with them. Every claim below opens onto something public.</p>
+    <p class="opening">I build the testing and audit layer for AI systems. My tools decide what an AI agent is allowed to do, record tamper-evident evidence of what it actually did, and let a person who was not in the room verify that record independently. The same discipline runs through a compiler that tracks network and filesystem access in the type system.</p>
+    <p class="lead">Public engineering practice since 2023, on about thirteen years of programming and eleven years running field operations. The same discipline covers the rest of it: real-time graphics and color science, technical and compliance documentation, and research systems that carry their evidence with them. Every claim below opens onto something public. In hiring terms the record maps to AI evaluation and safety engineering, QA and test infrastructure, developer tooling, technical support, and technical writing.</p>
+  </section>
+
+  <section>
+    <h2>Core competencies</h2>
+    <p class="lead">AI agent evaluation and testing &middot; policy enforcement and audit logging &middot; test automation with pytest and GitHub Actions &middot; Python, Rust, C++, TypeScript &middot; API and developer documentation &middot; compliance documentation across NIST 800-171, SOC 2, and CMMC readiness &middot; release engineering &middot; CLI and developer-tool design &middot; customer-facing technical support</p>
   </section>
 
   <section>
     <h2>Selected engineering</h2>
 
     <h3>Flywheel, accountability engine for AI agents</h3>
-    <p class="entry-note">Python, stdlib-only engine, with a Flutter client. The public flagship.</p>
+    <p class="entry-note">The public flagship: a permission gate and tamper-evident audit log for AI agents. Python standard library only, with a Flutter client.</p>
     <ul class="bul">
-      <li>Every tool call a model makes passes a default-deny capability gate and emits a sealed, hash-chained receipt binding what was permitted to what happened. Receipts witness argument and output digests, never raw content, and a third party re-verifies the chain offline.</li>
-      <li>Receipts compose into a witness graph, so one drifted action degrades exactly its downstream dependents and nothing further.</li>
-      <li>A domain oracle registry routes each claim to an independent verifier: pytest for code, the Lean kernel for mathematics, a measurement gate for empirical claims. Where no verifier exists the answer is UNVERIFIABLE, which is the honest one.</li>
+      <li>Every tool call a model makes passes a default-deny permission gate and emits a sealed, hash-chained receipt binding what was permitted to what happened. Receipts record argument and output digests, never raw content, and a third party re-verifies the whole chain offline.</li>
+      <li>Receipts link into a dependency graph, so one bad action flags exactly the downstream work that relied on it and nothing further.</li>
+      <li>Each claim routes to an independent checker: pytest for code, the Lean kernel for mathematics, a measurement gate for empirical claims. Where no checker exists the answer is UNVERIFIABLE, which is the honest one.</li>
       <li>Shipped an infrastructure control package covering network egress receipts, credential scanning, isolation acceptance tests, a dual-confirmation kill switch, and cross-layer event correlation, with a dated assessment mapping it against the failure classes of the July 2026 agentic-security incidents. Gaps are stated per class.</li>
-      <li>Ran the engine's first preregistered confirmatory study in August 2026. Across 2,646 certificate bodies in nine model contexts, zero verdict disagreements, so acceptance is a function of the certificate and not of the model. Held-out selection beat random selection at every model size on the solvable task family. The harder family defeated every model on the ladder, and that null is published as a null.</li>
+      <li>Ran the engine's first preregistered confirmatory study in August 2026. Across 2,646 verification certificates in nine model configurations, zero verdict disagreements, so acceptance is a function of the certificate and not of the model. Held-out selection beat random selection at every model size on the solvable task family. The harder family defeated every model on the ladder, and that null is published as a null.</li>
+    </ul>
+
+    <h3>AI evaluation environments</h3>
+    <p class="entry-note">Python. Published on Prime Intellect's Environments Hub.</p>
+    <ul class="bul">
+      <li>Built and published <span translate="no">mlflow-terminal-state</span>, a 324-case evaluation environment that scores an AI coding agent by the terminal state of the environment it worked in rather than by what its transcript claims. Cases, scoring spec, and package are public under <span translate="no">zaindanaharper</span>.</li>
+      <li>Several of the merged open-source contributions below began the same way: a minimal failing fixture that reproduces the defect before any fix is proposed.</li>
     </ul>
 
     <h3>BuildLang, compiler and language tooling</h3>
@@ -104,13 +116,13 @@
     <h2>Open source</h2>
     <p class="lead">Work sent into repositories other people own, where a maintainer sets the standard and makes the call. Counted from the GitHub API by <span translate="no">tools/pr_census.py</span>, and every entry opens onto the diff.</p>
     <div class="receipts">
-      <span class="r"><b data-census="merged-engineering">23</b> merged</span>
-      <span class="r"><b data-census="merged-engineering-repos">20</b> repositories</span>
-      <span class="r"><b data-census="open-engineering">12</b> open</span>
+      <span class="r"><b data-census="merged-engineering">29</b> merged</span>
+      <span class="r"><b data-census="merged-engineering-repos">24</b> repositories</span>
+      <span class="r"><b data-census="open-engineering">9</b> open</span>
       <span class="r r--drift"><b data-census="closed-engineering">11</b> closed without merge</span>
     </div>
     <ul class="bul">
-      <li>Merged work covers defect repair, missing validation, and test coverage in Datasette, tomlkit, pydantic-ai, DeepEval, pydash, and grimp. Examples: the correct HTTP status for a malformed composite-key row URL, a TOML round-trip bug where an array of tables swallowed the next sibling key, and a metric that crashed on unhashable tool outputs.</li>
+      <li>Merged work covers defect repair, missing validation, performance, documentation, and test coverage in Datasette, tomlkit, pydantic-ai, DeepEval, pydash, grimp, and agentfence. Examples: the correct HTTP status for a malformed composite-key row URL, a TOML round-trip bug where an array of tables swallowed the next sibling key, a metric that crashed on unhashable tool outputs, and, in August 2026, a policy-engine change with a measured allocation reduction plus a governance evidence-mapping document, both merged into agentfence.</li>
       <li>A further <b data-census="listings">14</b> pull requests add one row naming a tool to a public link index. They change no software, so they are held apart from the counts above rather than folded into them.</li>
       <li>Open is not accepted, and the misses stay on the record. The full ledger, including every declined pull request, is on the <a class="inline" href="portfolio.html#contributions">portfolio</a>.</li>
     </ul>
@@ -119,7 +131,7 @@
   <section>
     <h2>Speaking and service</h2>
     <ul class="bul">
-      <li><b>Puget Sound Programming Python.</b> "Pick the Lock for Everyone: Building Verifiable AI Workflows in Python," invited talk, scheduled 2026-08-19.</li>
+      <li><b>Puget Sound Programming Python.</b> "Pick the Lock for Everyone: Building Verifiable AI Workflows in Python," invited talk, 2026-08-19.</li>
       <li><b>Coalition for Secure AI.</b> Individual contributor to Workstream 4, Secure Design for Agentic Systems, contributing secure-design patterns and a reference implementation.</li>
       <li><b>PlantAmnesty.</b> Volunteer time every year since 2015 with a Seattle network of horticulturists and arborists, supporting workshops and member events. Self-reported; a service-history letter has been requested.</li>
     </ul>
@@ -195,7 +207,7 @@
     <div data-export-slot></div>
   </section>
 
-  <p class="note">Updated 2026-08-13. Open-source counts are read from the GitHub API by <span translate="no">tools/pr_census.py</span> and gated by a test, so a number here that disagrees with the live record breaks the build.</p>
+  <p class="note">Updated 2026-08-21. Open-source counts are read from the GitHub API by <span translate="no">tools/pr_census.py</span> and gated by a test, so a number here that disagrees with the live record breaks the build.</p>
 </article>
 </main>
 </body>
