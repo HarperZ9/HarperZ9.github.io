@@ -70,6 +70,23 @@ const ENGINES: Engine[] = [
     href: "/build-color.html", src: "https://pypi.org/project/build-color/", srcLabel: "PyPI" },
 ];
 
+// Platforms are not engines: standalone products and practices with their own
+// page and identity, held apart from the fourteen. Phantom is public and shipped;
+// the offensive-security line is private, shared only under lawful authorization.
+type Platform = {
+  name: string; role: string; verdict: string; shipped?: boolean;
+  desc: string; href: string; src?: string; srcLabel?: string;
+};
+
+const PLATFORMS: Platform[] = [
+  { name: "phantom", role: "hardware-identity privacy for Windows", verdict: "Phantom 1.0.0 · shipped · proprietary", shipped: true,
+    desc: "Puts your machine's hardware fingerprint under your control. Audits what the device reveals, generates a consistent replacement identity from a seed, applies it to the registry identifiers software reads most, and backs up every original first, so revert and uninstall restore them exactly. Verified end to end on a fresh Windows VM.",
+    href: "/phantom.html", src: "https://github.com/HarperZ9/phantom", srcLabel: "GitHub" },
+  { name: "authorized offensive security", role: "adversarial capability, under authorization", verdict: "private line · authorized parties only",
+    desc: "A private line held apart from the open tools. Offensive and dual-use security capability and adversarial-AI testing for lawful operators, shared only after authorization is established. The page names the practice and states the boundary; it does not distribute capability.",
+    href: "/security.html" },
+];
+
 const RECORDED_WORKFLOWS: RecordedWorkflow[] = [
   {
     name: "Index",
@@ -181,11 +198,11 @@ export default function App() {
         <div className="topnav-links">
           <a href="#make">Make</a>
           <a href="#engines">Engines</a>
+          <a href="#platforms">Platforms</a>
           <a href="#recorded">Recorded</a>
           <a href="#demonstrate">Live checks</a>
           <a href="#research">Research</a>
           <a href="#range">Range</a>
-          <a href="/security.html">Security</a>
           <a href="#work">Work with me</a>
           <a className="mono ghost" href="https://github.com/HarperZ9" rel="noopener">GitHub ↗</a>
         </div>
@@ -342,6 +359,36 @@ export default function App() {
             </p>
 
             <Picker />
+          </div>
+        </section>
+
+        <section id="platforms" className="band">
+          <div className="shell">
+            <div className="sec-head reveal">
+              <h2>Standalone platforms.</h2>
+              <p className="measure lead-2">
+                Two things that are not engines: finished products and practices with their own page
+                and identity, held apart from the fourteen. Phantom is public and shipped; the
+                offensive-security line is private, shared only under lawful authorization.
+              </p>
+            </div>
+            <ol className="engines" aria-label="Platforms">
+              {PLATFORMS.map((p, i) => (
+                <li className="engine reveal" style={{ "--i": String(i) } as CSSProperties} key={p.name}>
+                  <div className="eng-index mono"><span className="eng-band" aria-hidden="true" />{String(i + 1).padStart(2, "0")}</div>
+                  <div className="eng-id">
+                    <h3 className="eng-name">{p.name}</h3>
+                    <span className="eng-role">{p.role}</span>
+                    <span className={"eng-verdict mono" + (p.shipped ? " shipped" : "")}>{p.verdict}</span>
+                  </div>
+                  <p className="eng-desc">{p.desc}</p>
+                  <div className="eng-go">
+                    <a className="eng-open" href={p.href}>open <span aria-hidden="true">→</span></a>
+                    {p.src ? <a className="eng-src mono" href={p.src} rel="noopener">{p.srcLabel} ↗</a> : null}
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
 
