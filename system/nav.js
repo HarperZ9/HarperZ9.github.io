@@ -10,12 +10,19 @@ const PRIMARY = [
   ["GitHub ↗", "https://github.com/HarperZ9", "github", true],
 ];
 
+// Platforms: standalone products and practices, each with its own complete page and
+// identity, held apart from the fourteen engines. Phantom is public and shipped; the
+// offensive-security line is private and shared only under lawful authorization.
+export const PLATFORMS = [
+  ["Phantom", "phantom.html", "phantom"],
+  ["Authorized offensive security", "security.html", "security"],
+];
+
 export const MORE = [
   ["The Tour", "tour.html", "demos"],
   ["Demos", "demonstrations.html", "demos"],
   ["Poster", "studio.html?source=poster", "studio"],
   ["The Loom", "loom.html", "loom"],
-  ["Security", "security.html", "security"],
   // The archive is one of the Studio's materials, not only a page of pictures. The Studio,
   // Gallery, and Retro Engine now lead the primary nav; the archive stays one click away.
   ["Session archive", "session-archive.html", "archive"],
@@ -136,7 +143,7 @@ function mountRouteArt(doc = document) {
 
 // Map any page to one of the sections. Flagship pages live under Flagships; everything
 // heavier-than-a-brick down to the utilities lives under the catalog.
-const FLAGSHIPS = new Set(["overview","index-graph","forum","gather","crucible","learn","flywheel","phantom"]);
+const FLAGSHIPS = new Set(["overview","index-graph","forum","gather","crucible","learn","flywheel"]);
 const DEMOS = new Set(["demo-index","demo-gather","demo-forum","demo-crucible","demo-emet","proof-index-sample","proof-surface-sample",
   "public-surface-sweeper-sample","emet-sample","demonstrations","tour"]);
 const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","accountable-machines",
@@ -164,6 +171,7 @@ export function navActive(pathname) {
   if (stem === "publications") return "publications";
   if (stem === "dossier") return "dossier";
   if (stem === "security") return "security";
+  if (stem === "phantom") return "phantom";
   if (FLAGSHIPS.has(stem)) return "flagships";
   if (DEMOS.has(stem)) return "demos";
   if (CATALOG.has(stem)) return "catalog";
@@ -284,7 +292,7 @@ export function renderNav(doc = document) {
   const mount = doc.getElementById("site-nav");
   if (!mount) return;
   const active = navActive(doc.location ? doc.location.pathname : location.pathname);
-  const moreActive = MORE.some(([, , key]) => key === active);
+  const moreActive = MORE.some(([, , key]) => key === active) || PLATFORMS.some(([, , key]) => key === active);
   const activeLabel = active ? active.replace(/-/g, " ") : "site";
   mount.innerHTML =
     `<a class="sn-home" href="index.html" aria-label="${BRAND_LABEL} / Project Telos home"><span class="sn-home-field"><canvas class="sn-logo-canvas" aria-hidden="true"></canvas><img class="sn-logo-fallback" src="${BRAND_MARK_SRC}" alt="" width="30" height="30" style="display:none"></span><span class="sn-brand-word">${BRAND_LABEL}</span></a>`
@@ -296,6 +304,7 @@ export function renderNav(doc = document) {
     + `<summary${moreActive ? ' aria-current="page"' : ''}>Menu</summary>`
     + `<div class="sn-more-list" aria-label="Site menu">`
     + menuGroup("Primary", PRIMARY, active, "sn-menu-primary")
+    + menuGroup("Platforms", PLATFORMS, active, "sn-menu-platforms")
     + menuGroup("Recorded demos", RECORDED_DEMOS, active, "sn-menu-demos")
     + menuGroup("More pages", MORE, active, "sn-menu-secondary")
     + `</div></details>`
