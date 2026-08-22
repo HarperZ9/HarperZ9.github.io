@@ -1,4 +1,11 @@
 window.CARD_DATA = {
+  "phantom": {
+    "role": "HARDWARE-IDENTITY PRIVACY",
+    "headline": "Audit what your machine reveals, spoof it, and restore the originals exactly.",
+    "pipeline": "AUDIT / GENERATE / APPLY / VALIDATE / REVERT",
+    "word": "PHANTOM",
+    "glyph": "shield"
+  },
   "buildlang": {
     "role": "EFFECTS-ORIENTED COMPILER",
     "headline": "Declare effects and lifetimes, then compile to native code.",
