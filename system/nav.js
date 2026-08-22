@@ -136,7 +136,7 @@ function mountRouteArt(doc = document) {
 
 // Map any page to one of the sections. Flagship pages live under Flagships; everything
 // heavier-than-a-brick down to the utilities lives under the catalog.
-const FLAGSHIPS = new Set(["overview","index-graph","forum","gather","crucible","learn","flywheel"]);
+const FLAGSHIPS = new Set(["overview","index-graph","forum","gather","crucible","learn","flywheel","phantom"]);
 const DEMOS = new Set(["demo-index","demo-gather","demo-forum","demo-crucible","demo-emet","proof-index-sample","proof-surface-sample",
   "public-surface-sweeper-sample","emet-sample","demonstrations","tour"]);
 const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","accountable-machines",
