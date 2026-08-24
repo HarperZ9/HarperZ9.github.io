@@ -88,8 +88,9 @@ This was a monitoring false-positive review, not a new factual development. It d
 - Edition: 2026-08-24
 - Local edition hash: `c8ca79052d804290c7143e014fbdba03a89263d3babbc5e248f73d0359054fa4`
 - Website feature commit: `b786d2f3d9153f1feba42c64d618f728c39788d3`
+- Publication-integrity commit: `3b99be84dbbba327209cbc68ad3bfc6f6de29764`
 - Integration state: held because the inherited site baseline has two Behavior-Transform metadata failures outside this workstream
-- Pull request: pending
+- Pull request: draft [#140](https://github.com/HarperZ9/HarperZ9.github.io/pull/140)
 - Pages build: pending
 - X post: not posted
 - LinkedIn post: not posted
