@@ -56,7 +56,8 @@ Corrections are append-only. A corrected edition adds a correction entry describ
 
 - Edition: 2026-08-24
 - Local edition hash: `c8ca79052d804290c7143e014fbdba03a89263d3babbc5e248f73d0359054fa4`
-- Website commit: pending
+- Website feature commit: `b786d2f3d9153f1feba42c64d618f728c39788d3`
+- Integration state: held because the inherited site baseline has two Behavior-Transform metadata failures outside this workstream
 - Pull request: pending
 - Pages build: pending
 - X post: not posted
