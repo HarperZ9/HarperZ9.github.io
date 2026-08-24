@@ -15,6 +15,7 @@ const PRIMARY = [
 // offensive-security line is private and shared only under lawful authorization.
 export const PLATFORMS = [
   ["Phantom", "phantom.html", "phantom"],
+  ["behavior-transform.io", "behavior-transform.html", "behavior-transform"],
   ["Authorized offensive security", "security.html", "security"],
 ];
 
@@ -172,6 +173,7 @@ export function navActive(pathname) {
   if (stem === "dossier") return "dossier";
   if (stem === "security") return "security";
   if (stem === "phantom") return "phantom";
+  if (stem === "behavior-transform") return "behavior-transform";
   if (FLAGSHIPS.has(stem)) return "flagships";
   if (DEMOS.has(stem)) return "demos";
   if (CATALOG.has(stem)) return "catalog";
