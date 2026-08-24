@@ -16,6 +16,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW_PATH = ROOT / ".github" / "workflows" / "frontier-safety-daily.yml"
+CI_WORKFLOW_PATH = ROOT / ".github" / "workflows" / "ci.yml"
 
 
 def load_workflow() -> dict:
@@ -180,6 +181,14 @@ def test_actions_are_immutable_and_checkout_never_persists_credentials() -> None
     install = named_step(workflow["jobs"]["publish"], "Install pinned test dependencies")
     assert "pytest==" in install["run"]
     assert not re.search(r"\bpytest(?:\s|$)", install["run"].replace("pytest==", ""))
+
+
+def test_primary_ci_installs_the_workflow_test_parser_at_a_pinned_version() -> None:
+    workflow = yaml.load(CI_WORKFLOW_PATH.read_text(encoding="utf-8"), Loader=yaml.BaseLoader)
+    install = named_step(workflow["jobs"]["static-site"], "Install test dependencies")
+
+    assert "pytest==8.4.2" in install["run"]
+    assert "PyYAML==6.0.2" in install["run"]
 
 
 def test_publication_scans_input_and_staged_outputs_before_commit() -> None:
