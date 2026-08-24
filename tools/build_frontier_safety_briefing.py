@@ -11,8 +11,13 @@ import argparse
 import hashlib
 import html
 import json
+import os
 import re
+import shutil
+import tempfile
 from copy import deepcopy
+from datetime import date as calendar_date
+from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -70,6 +75,13 @@ def _require_text(mapping: dict, key: str, context: str) -> str:
     return value.strip()
 
 
+def _require_choice(mapping: dict, key: str, allowed: set[str], context: str) -> str:
+    value = mapping.get(key)
+    if not isinstance(value, str) or value not in allowed:
+        raise EditionError(f"{context}.{key} is invalid")
+    return value
+
+
 def _validate_url(url: str, context: str) -> None:
     parsed = urlparse(url)
     if parsed.scheme != "https" or parsed.hostname not in ALLOWED_SOURCE_HOSTS:
@@ -77,31 +89,50 @@ def _validate_url(url: str, context: str) -> None:
 
 
 def validate_edition(edition: dict) -> None:
+    if not isinstance(edition, dict):
+        raise EditionError("edition must be an object")
     if edition.get("schema_version") != 1:
         raise EditionError("schema_version must be 1")
     date = _require_text(edition, "edition_date", "edition")
     if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
         raise EditionError("edition_date must be YYYY-MM-DD")
+    try:
+        calendar_date.fromisoformat(date)
+    except ValueError as exc:
+        raise EditionError("edition_date must be a valid calendar date") from exc
     observed = _require_text(edition, "observed_at", "edition")
-    if not observed.endswith("Z"):
-        raise EditionError("observed_at must be UTC and end in Z")
+    try:
+        observed_time = datetime.fromisoformat(observed)
+    except ValueError as exc:
+        raise EditionError("observed_at must be a valid ISO-8601 timestamp") from exc
+    if observed_time.tzinfo is None or observed_time.utcoffset() != timedelta(0):
+        raise EditionError("observed_at must be timezone-aware UTC")
     for key in ("title", "change_summary", "methodology"):
         _require_text(edition, key, "edition")
+    _require_choice(edition, "edition_state", ALLOWED_STATES, "edition")
 
     lanes = edition.get("lanes")
-    if not isinstance(lanes, list) or {lane.get("id") for lane in lanes} != ALLOWED_LANES:
+    if (
+        not isinstance(lanes, list)
+        or len(lanes) != len(ALLOWED_LANES)
+        or any(not isinstance(lane, dict) for lane in lanes)
+    ):
+        raise EditionError("edition must contain exactly the aisi, anthropic, and industry lanes")
+    lane_ids = {_require_text(lane, "id", "lane") for lane in lanes}
+    if lane_ids != ALLOWED_LANES:
         raise EditionError("edition must contain exactly the aisi, anthropic, and industry lanes")
     item_ids: set[str] = set()
     for lane in lanes:
         lane_id = lane["id"]
         _require_text(lane, "label", f"lane[{lane_id}]")
         _require_text(lane, "summary", f"lane[{lane_id}]")
-        if lane.get("state") not in ALLOWED_STATES:
-            raise EditionError(f"lane[{lane_id}].state is invalid")
+        _require_choice(lane, "state", ALLOWED_STATES, f"lane[{lane_id}]")
         items = lane.get("items")
         if not isinstance(items, list) or not items:
             raise EditionError(f"lane[{lane_id}] must include at least one item")
         for item in items:
+            if not isinstance(item, dict):
+                raise EditionError(f"lane[{lane_id}].items must contain objects")
             item_id = _require_text(item, "id", f"lane[{lane_id}].item")
             if item_id in item_ids:
                 raise EditionError(f"duplicate item id: {item_id}")
@@ -109,29 +140,48 @@ def validate_edition(edition: dict) -> None:
             context = f"item[{item_id}]"
             for key in ("title", "published_at", "event_time", "summary", "does_not_prove"):
                 _require_text(item, key, context)
-            if item.get("status") not in ALLOWED_STATES:
-                raise EditionError(f"{context}.status is invalid")
-            if item.get("source_role") not in ALLOWED_ROLES:
-                raise EditionError(f"{context}.source_role is invalid")
-            if item.get("confidence") not in ALLOWED_CONFIDENCE:
-                raise EditionError(f"{context}.confidence is invalid")
+            _require_choice(item, "status", ALLOWED_STATES, context)
+            _require_choice(item, "source_role", ALLOWED_ROLES, context)
+            _require_choice(item, "confidence", ALLOWED_CONFIDENCE, context)
             sources = item.get("sources")
             if not isinstance(sources, list) or not sources:
                 raise EditionError(f"{context}.sources must be non-empty")
             for index, source in enumerate(sources):
+                if not isinstance(source, dict):
+                    raise EditionError(f"{context}.sources[{index}] must be an object")
                 _require_text(source, "title", f"{context}.sources[{index}]")
                 url = _require_text(source, "url", f"{context}.sources[{index}]")
                 _validate_url(url, f"{context}.sources[{index}]")
 
-    for index, control in enumerate(edition.get("controls", [])):
+    controls = edition.get("controls")
+    if not isinstance(controls, list):
+        raise EditionError("edition.controls must be a list")
+    for index, control in enumerate(controls):
+        if not isinstance(control, dict):
+            raise EditionError(f"controls[{index}] must be an object")
         for key in ("claim", "announced_by", "status", "evidence_boundary"):
             _require_text(control, key, f"controls[{index}]")
-        for url in control.get("sources", []):
+        sources = control.get("sources")
+        if not isinstance(sources, list):
+            raise EditionError(f"controls[{index}].sources must be a list")
+        for source_index, url in enumerate(sources):
+            url = _require_text(
+                {"url": url}, "url", f"controls[{index}].sources[{source_index}]"
+            )
             _validate_url(url, f"controls[{index}]")
-    for index, question in enumerate(edition.get("open_questions", [])):
-        if not isinstance(question, str) or not question.strip():
-            raise EditionError(f"open_questions[{index}] must be non-empty text")
-    social = edition.get("social", {})
+    questions = edition.get("open_questions")
+    if not isinstance(questions, list):
+        raise EditionError("edition.open_questions must be a list")
+    for index, question in enumerate(questions):
+        _require_text({"question": question}, "question", f"open_questions[{index}]")
+    corrections = edition.get("corrections", [])
+    if not isinstance(corrections, list):
+        raise EditionError("edition.corrections must be a list")
+    for index, correction in enumerate(corrections):
+        _require_text({"correction": correction}, "correction", f"corrections[{index}]")
+    social = edition.get("social")
+    if not isinstance(social, dict):
+        raise EditionError("edition.social must be an object")
     x_copy = _require_text(social, "x", "social")
     linkedin = _require_text(social, "linkedin", "social")
     if len(x_copy) > 280:
@@ -315,15 +365,143 @@ def render_html(edition: dict, *, archive: bool) -> str:
 """
 
 
-def _write_text(path: Path, content: str) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
+def _text_bytes(content: str) -> bytes:
     if not content.endswith("\n"):
         content += "\n"
-    path.write_text(content, encoding="utf-8", newline="\n")
+    return content.encode("utf-8")
 
 
-def _write_json(path: Path, payload: dict | list) -> None:
-    _write_text(path, json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=False))
+def _json_bytes(payload: dict | list) -> bytes:
+    return _text_bytes(json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=False))
+
+
+def _load_history(path: Path) -> dict:
+    if not path.exists():
+        return {"schema_version": 1, "editions": []}
+    try:
+        history = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise EditionError(f"cannot read valid history: {path}") from exc
+    if not isinstance(history, dict) or history.get("schema_version") != 1:
+        raise EditionError("history.schema_version must be 1")
+    entries = history.get("editions")
+    if not isinstance(entries, list):
+        raise EditionError("history.editions must be a list")
+    seen_dates: set[str] = set()
+    for index, entry in enumerate(entries):
+        if not isinstance(entry, dict):
+            raise EditionError(f"history.editions[{index}] must be an object")
+        for key in ("date", "sha256", "state", "html", "json"):
+            _require_text(entry, key, f"history.editions[{index}]")
+        if entry["date"] in seen_dates:
+            raise EditionError(f"history contains duplicate date: {entry['date']}")
+        seen_dates.add(entry["date"])
+    return history
+
+
+def _validate_archive_collision(
+    *,
+    date: str,
+    digest: str,
+    history: dict,
+    dated_outputs: dict[Path, bytes],
+) -> None:
+    matches = [entry for entry in history["editions"] if entry["date"] == date]
+    existing_dated = [path for path in dated_outputs if path.exists()]
+    if matches:
+        if matches[0]["sha256"] != digest:
+            raise EditionError(
+                f"edition_date {date} is already published with different content; "
+                "use a new edition or correction identifier"
+            )
+        missing = [path for path in dated_outputs if not path.exists()]
+        if missing:
+            raise EditionError(f"published edition {date} has an incomplete archive")
+        mismatched = [
+            path for path, expected in dated_outputs.items() if path.read_bytes() != expected
+        ]
+        if mismatched:
+            raise EditionError(
+                f"edition_date {date} dated archive bytes differ at {mismatched[0]}; "
+                "use a new edition or correction identifier"
+            )
+        return
+    if existing_dated:
+        raise EditionError(
+            f"edition_date {date} already has archive artifacts without a history entry; "
+            "use a new edition or correction identifier"
+        )
+
+
+def _publish_atomically(outputs: dict[Path, bytes], output_root: Path) -> None:
+    changed = {
+        path: content
+        for path, content in outputs.items()
+        if not path.exists() or path.read_bytes() != content
+    }
+    if not changed:
+        return
+
+    root_created = not output_root.exists()
+    output_root.mkdir(parents=True, exist_ok=True)
+    transaction = Path(tempfile.mkdtemp(prefix=".frontier-safety-publish-", dir=output_root))
+    staged: dict[Path, Path] = {}
+    backups: dict[Path, Path] = {}
+    created_directories: set[Path] = set()
+    committed: list[Path] = []
+    cleanup_transaction = False
+    try:
+        for index, (destination, content) in enumerate(changed.items()):
+            staged_path = transaction / f"staged-{index}"
+            staged_path.write_bytes(content)
+            staged[destination] = staged_path
+            if destination.exists():
+                backup_path = transaction / f"backup-{index}"
+                shutil.copy2(destination, backup_path)
+                backups[destination] = backup_path
+
+        for destination, staged_path in staged.items():
+            missing_parents = []
+            parent = destination.parent
+            while not parent.exists():
+                missing_parents.append(parent)
+                parent = parent.parent
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            created_directories.update(missing_parents)
+            os.replace(staged_path, destination)
+            committed.append(destination)
+        cleanup_transaction = True
+    except BaseException as publish_error:
+        rollback_errors: list[OSError] = []
+        for destination in reversed(committed):
+            try:
+                backup = backups.get(destination)
+                if backup is None:
+                    destination.unlink(missing_ok=True)
+                else:
+                    os.replace(backup, destination)
+            except OSError as exc:
+                rollback_errors.append(exc)
+        for directory in sorted(created_directories, key=lambda path: len(path.parts), reverse=True):
+            try:
+                directory.rmdir()
+            except OSError:
+                pass
+        if rollback_errors:
+            raise RuntimeError(
+                "publication failed and rollback was incomplete; "
+                f"recovery artifacts retained at {transaction}"
+            ) from publish_error
+        cleanup_transaction = True
+        raise
+    finally:
+        if cleanup_transaction:
+            shutil.rmtree(transaction, ignore_errors=True)
+            if root_created:
+                try:
+                    output_root.rmdir()
+                except OSError:
+                    pass
 
 
 def build(edition_path: Path, output_root: Path = ROOT) -> dict:
@@ -335,18 +513,26 @@ def build(edition_path: Path, output_root: Path = ROOT) -> dict:
     date = rendered["edition_date"]
 
     fs_root = output_root / "frontier-safety"
-    _write_json(fs_root / "data" / "current.json", rendered)
-    _write_json(fs_root / "data" / "archive" / f"{date}.json", rendered)
-    _write_text(output_root / "frontier-safety.html", render_html(rendered, archive=False))
-    _write_text(fs_root / "archive" / f"{date}.html", render_html(rendered, archive=True))
-    _write_text(fs_root / "social" / f"{date}-x.txt", rendered["social"]["x"])
-    _write_text(fs_root / "social" / f"{date}-linkedin.txt", rendered["social"]["linkedin"])
-
     history_path = fs_root / "data" / "history.json"
-    if history_path.exists():
-        history = json.loads(history_path.read_text(encoding="utf-8"))
-    else:
-        history = {"schema_version": 1, "editions": []}
+    archive_json_path = fs_root / "data" / "archive" / f"{date}.json"
+    dated_outputs = {
+        archive_json_path: _json_bytes(rendered),
+        fs_root / "archive" / f"{date}.html": _text_bytes(
+            render_html(rendered, archive=True)
+        ),
+        fs_root / "social" / f"{date}-x.txt": _text_bytes(rendered["social"]["x"]),
+        fs_root / "social" / f"{date}-linkedin.txt": _text_bytes(
+            rendered["social"]["linkedin"]
+        ),
+    }
+    outputs = {
+        fs_root / "data" / "current.json": _json_bytes(rendered),
+        output_root / "frontier-safety.html": _text_bytes(
+            render_html(rendered, archive=False)
+        ),
+        **dated_outputs,
+    }
+    history = _load_history(history_path)
     entry = {
         "date": date,
         "sha256": digest,
@@ -354,15 +540,27 @@ def build(edition_path: Path, output_root: Path = ROOT) -> dict:
         "html": f"../archive/{date}.html",
         "json": f"archive/{date}.json",
     }
-    matches = [index for index, item in enumerate(history["editions"]) if item["date"] == date]
-    if len(matches) > 1:
-        raise EditionError(f"history contains duplicate date: {date}")
-    if matches:
-        history["editions"][matches[0]] = entry
+    proposed_history = deepcopy(history)
+    matching_history = [
+        index
+        for index, item in enumerate(proposed_history["editions"])
+        if item["date"] == date
+    ]
+    if matching_history:
+        proposed_history["editions"][matching_history[0]] = entry
     else:
-        history["editions"].append(entry)
-    history["editions"].sort(key=lambda item: item["date"])
-    _write_json(history_path, history)
+        proposed_history["editions"].append(entry)
+        proposed_history["editions"].sort(key=lambda item: item["date"])
+    outputs[history_path] = _json_bytes(proposed_history)
+
+    _validate_archive_collision(
+        date=date,
+        digest=digest,
+        history=history,
+        dated_outputs=dated_outputs,
+    )
+
+    _publish_atomically(outputs, output_root)
     return {"edition_date": date, "edition_sha256": digest}
 
 

@@ -10,6 +10,7 @@
       "published_at": "2026-08-04",
       "role": "government report",
       "status": "available",
+      "fingerprint_profile": "aisi_report_article",
       "does_not_prove": "The report does not establish how often the behavior would occur outside the specific evaluation configuration."
     },
     {
@@ -20,6 +21,7 @@
       "published_at": "2026-07-30",
       "role": "developer statement",
       "status": "available",
+      "fingerprint_profile": "anthropic_news_article",
       "does_not_prove": "A developer retrospective does not independently verify the completeness of its review or the effectiveness of announced controls."
     },
     {
@@ -30,6 +32,7 @@
       "published_at": "2026-07-21",
       "role": "developer statement",
       "status": "available",
+      "fingerprint_profile": "openai_news_article",
       "does_not_prove": "The preliminary account does not substitute for the announced technical report or independent assessment."
     },
     {
@@ -40,6 +43,8 @@
       "published_at": "2026-07-27",
       "role": "affected-party technical timeline",
       "status": "available",
+      "fingerprint_url": "https://raw.githubusercontent.com/huggingface/blog/main/agent-intrusion-technical-timeline.md",
+      "fingerprint_profile": "markdown_document",
       "does_not_prove": "The affected party's reconstruction does not by itself resolve model intent or every event outside its observability."
     },
     {
@@ -50,6 +55,7 @@
       "published_at": "2026-08-04",
       "role": "developer statement",
       "status": "available",
+      "fingerprint_profile": "openai_news_article",
       "does_not_prove": "The statement reports the developer's current findings and does not independently validate containment changes."
     },
     {
@@ -60,6 +66,7 @@
       "published_at": "2026-08-18",
       "role": "developer statement",
       "status": "available",
+      "fingerprint_profile": "openai_news_article",
       "does_not_prove": "Announced pauses, monitoring, and isolation controls are not evidence that the controls are complete or independently effective."
     },
     {
@@ -70,6 +77,7 @@
       "published_at": "2026-07-28",
       "role": "independent analysis",
       "status": "context-only",
+      "fingerprint_profile": "metr_blog_article",
       "does_not_prove": "A methodology note is not the announced case-specific review."
     },
     {
@@ -80,6 +88,7 @@
       "published_at": null,
       "role": "vulnerability record",
       "status": "context-only",
+      "fingerprint_profile": "nvd_vulnerability_detail",
       "does_not_prove": "A vulnerability record does not establish that a specific actor used it in a specific incident."
     },
     {
@@ -90,6 +99,7 @@
       "published_at": null,
       "role": "independent analysis",
       "status": "context-only",
+      "fingerprint_profile": "sysdig_blog_article",
       "does_not_prove": "A vendor analysis does not establish the prevalence of the observed activity across the wider threat landscape."
     },
     {
