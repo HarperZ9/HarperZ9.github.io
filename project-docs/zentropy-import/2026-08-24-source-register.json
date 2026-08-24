@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-08-24T17:58:14Z",
+  "sources": [
+    {
+      "id": "aisi-unsanctioned-agent-behaviour",
+      "lane": "aisi",
+      "title": "Incident Report: unsanctioned agent behaviour during cyber testing",
+      "url": "https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing",
+      "published_at": "2026-08-04",
+      "role": "government report",
+      "status": "available",
+      "does_not_prove": "The report does not establish how often the behavior would occur outside the specific evaluation configuration."
+    },
+    {
+      "id": "anthropic-three-cyber-eval-incidents",
+      "lane": "anthropic",
+      "title": "Investigating three real-world incidents in our cybersecurity evaluations",
+      "url": "https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals",
+      "published_at": "2026-07-30",
+      "role": "developer statement",
+      "status": "available",
+      "does_not_prove": "A developer retrospective does not independently verify the completeness of its review or the effectiveness of announced controls."
+    },
+    {
+      "id": "openai-hugging-face-incident",
+      "lane": "industry",
+      "title": "OpenAI and Hugging Face partner to address security incident during model evaluation",
+      "url": "https://openai.com/index/hugging-face-model-evaluation-security-incident/",
+      "published_at": "2026-07-21",
+      "role": "developer statement",
+      "status": "available",
+      "does_not_prove": "The preliminary account does not substitute for the announced technical report or independent assessment."
+    },
+    {
+      "id": "hugging-face-agent-intrusion-timeline",
+      "lane": "industry",
+      "title": "Anatomy of a Frontier Lab Agent Intrusion: A Technical Timeline of the July 2026 Incident",
+      "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline",
+      "published_at": "2026-07-27",
+      "role": "affected-party technical timeline",
+      "status": "available",
+      "does_not_prove": "The affected party's reconstruction does not by itself resolve model intent or every event outside its observability."
+    },
+    {
+      "id": "openai-third-party-cyber-evaluations",
+      "lane": "industry",
+      "title": "Third-party cyber evaluations involving OpenAI models",
+      "url": "https://openai.com/index/third-party-cyber-evaluations-involving-openai-models/",
+      "published_at": "2026-08-04",
+      "role": "developer statement",
+      "status": "available",
+      "does_not_prove": "The statement reports the developer's current findings and does not independently validate containment changes."
+    },
+    {
+      "id": "openai-pacing-model-development",
+      "lane": "industry",
+      "title": "Pacing model development in an era of cyber-critical capabilities",
+      "url": "https://openai.com/index/pacing-model-development-cyber-capabilities/",
+      "published_at": "2026-08-18",
+      "role": "developer statement",
+      "status": "available",
+      "does_not_prove": "Announced pauses, monitoring, and isolation controls are not evidence that the controls are complete or independently effective."
+    },
+    {
+      "id": "metr-incident-investigation-method",
+      "lane": "industry",
+      "title": "Investigating AI propensities after incidents",
+      "url": "https://metr.org/blog/2026-07-28-investigating-ai-propensities-after-incidents/",
+      "published_at": "2026-07-28",
+      "role": "independent analysis",
+      "status": "context-only",
+      "does_not_prove": "A methodology note is not the announced case-specific review."
+    },
+    {
+      "id": "nvd-cve-2025-3248",
+      "lane": "industry",
+      "title": "CVE-2025-3248 detail",
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-3248",
+      "published_at": null,
+      "role": "vulnerability record",
+      "status": "context-only",
+      "does_not_prove": "A vulnerability record does not establish that a specific actor used it in a specific incident."
+    },
+    {
+      "id": "sysdig-jadepuffer",
+      "lane": "industry",
+      "title": "JADEPUFFER: agentic ransomware for automated database extortion",
+      "url": "https://www.sysdig.com/blog/jadepuffer-agentic-ransomware-for-automated-database-extortion",
+      "published_at": null,
+      "role": "independent analysis",
+      "status": "context-only",
+      "does_not_prove": "A vendor analysis does not establish the prevalence of the observed activity across the wider threat landscape."
+    },
+    {
+      "id": "openai-metr-redwood-joint-review",
+      "lane": "industry",
+      "title": "Announced METR and Redwood joint assessment",
+      "url": "https://openai.com/index/hugging-face-model-evaluation-security-incident/",
+      "published_at": null,
+      "role": "independent review announcement",
+      "status": "pending",
+      "does_not_prove": "An announced review has no findings until the reviewers publish their own report."
+    }
+  ]
+}

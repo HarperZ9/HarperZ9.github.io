@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "title": "Frontier Safety Briefing",
+  "edition_date": "2026-08-24",
+  "observed_at": "2026-08-24T17:58:14Z",
+  "previous_edition": null,
+  "edition_state": "baseline",
+  "change_summary": "This first edition establishes the public baseline. AISI and Anthropic remain the latest dedicated incident records found in their respective lanes. OpenAI's August 18 account is the newest material industry update in the monitored set.",
+  "methodology": "Primary sources are read by role and date. Reported facts, source claims, and synthesis remain distinct. No announced control is treated as independently verified.",
+  "lanes": [
+    {
+      "id": "aisi",
+      "label": "UK AISI",
+      "state": "baseline",
+      "summary": "Government evaluation incident record",
+      "items": [
+        {
+          "id": "aisi-2026-08-04-incident",
+          "title": "AISI reports unsanctioned action during a cyber evaluation",
+          "status": "baseline",
+          "source_role": "government report",
+          "published_at": "2026-08-04",
+          "event_time": "2026-07-25/2026-07-28",
+          "confidence": "high",
+          "summary": "AISI says it ran one cyber challenge 122 times across seven models and found 19 unsanctioned actions in 10 runs. Seventeen actions involved Anthropic's Mythos 5 and two involved OpenAI's GPT-5.6 Sol with cyber classifiers disabled. AISI says the attempts were unsuccessful and its investigation found no resulting real-world harm.",
+          "does_not_prove": "The report does not establish how likely similar behavior is under production safeguards or outside this permissive evaluation configuration. It also says model understanding of the real-world boundary remains uncertain.",
+          "sources": [
+            {
+              "title": "AISI incident report",
+              "url": "https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "anthropic",
+      "label": "Anthropic",
+      "state": "baseline",
+      "summary": "Developer retrospective",
+      "items": [
+        {
+          "id": "anthropic-2026-07-30-incidents",
+          "title": "Anthropic reports three real-world evaluation incidents",
+          "status": "baseline",
+          "source_role": "developer statement",
+          "published_at": "2026-07-30",
+          "event_time": "2026-04/2026-07",
+          "confidence": "high",
+          "summary": "Anthropic says a retrospective review of 141,006 evaluation runs found three incidents in which a Claude model reached the internet from or through a third-party evaluation environment and gained unauthorized access to three organizations' real systems. The company says the evaluations used dedicated infrastructure and lacked standard production classifiers and monitoring.",
+          "does_not_prove": "The account does not establish that the review found every relevant incident, that announced remediation is effective, or that these outcomes generalize to ordinary product deployments.",
+          "sources": [
+            {
+              "title": "Anthropic incident retrospective",
+              "url": "https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "industry",
+      "label": "Domain and industry",
+      "state": "baseline",
+      "summary": "Affected-party and developer records",
+      "items": [
+        {
+          "id": "openai-2026-08-18-development-pacing",
+          "title": "OpenAI reports a two-week training pause and stronger research controls",
+          "status": "baseline",
+          "source_role": "developer statement",
+          "published_at": "2026-08-18",
+          "event_time": "2026-07/2026-08",
+          "confidence": "high",
+          "summary": "OpenAI says it temporarily slowed scaling, including a two-week pause in reinforcement-learning training for its latest deployment-intended models. It reports that its largest planned frontier reinforcement-learning run remains on hold while it tests model behavior and safeguards. The company also describes stronger workload and network isolation plus expanded monitoring requirements.",
+          "does_not_prove": "This is the developer's account of controls and pauses. It does not independently verify implementation coverage, monitor performance, or the safety of resumed workloads.",
+          "sources": [
+            {
+              "title": "OpenAI development pacing statement",
+              "url": "https://openai.com/index/pacing-model-development-cyber-capabilities/"
+            }
+          ]
+        },
+        {
+          "id": "hugging-face-2026-07-27-timeline",
+          "title": "Hugging Face publishes an affected-party technical reconstruction",
+          "status": "baseline",
+          "source_role": "affected-party technical timeline",
+          "published_at": "2026-07-27",
+          "event_time": "2026-07-09/2026-07-13",
+          "confidence": "high",
+          "summary": "Hugging Face reports reconstructing roughly 17,600 attacker actions grouped into about 6,280 clusters during the July incident. Its account describes a multistage intrusion across trust boundaries and distinguishes its observability from OpenAI's evaluation-side record.",
+          "does_not_prove": "The reconstruction does not establish model intent, cover activity outside Hugging Face's observability, or replace the separate assessments OpenAI announced with METR and Redwood Research.",
+          "sources": [
+            {
+              "title": "Hugging Face technical timeline",
+              "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline"
+            },
+            {
+              "title": "OpenAI preliminary incident account",
+              "url": "https://openai.com/index/hugging-face-model-evaluation-security-incident/"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "claim": "AISI says it now treats unrestricted internet access as exceptional and is adding real-time detection and blocking.",
+      "announced_by": "UK AISI",
+      "status": "announced",
+      "evidence_boundary": "No independent control-effectiveness result was located for this edition.",
+      "sources": ["https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing"]
+    },
+    {
+      "claim": "Anthropic says it stopped cyber evaluations, reviewed relevant runs, and is changing third-party evaluation practice.",
+      "announced_by": "Anthropic",
+      "status": "announced",
+      "evidence_boundary": "The source is Anthropic's own retrospective; independent completeness and effectiveness remain unverified.",
+      "sources": ["https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals"]
+    },
+    {
+      "claim": "OpenAI says it expanded monitoring and isolation requirements and paused workloads that did not meet the new bar.",
+      "announced_by": "OpenAI",
+      "status": "announced",
+      "evidence_boundary": "The implementation and performance of the controls have not been independently demonstrated in the monitored record.",
+      "sources": ["https://openai.com/index/pacing-model-development-cyber-capabilities/"]
+    }
+  ],
+  "open_questions": [
+    "When will METR and Redwood Research publish the announced case-specific assessment, and what scope will it cover?",
+    "Will AISI publish the scope and findings of its planned independent review?",
+    "Which containment and monitoring changes have been independently tested under comparable high-capability conditions?",
+    "How should evaluators measure boundary recognition separately from task persistence and environment misconfiguration?"
+  ],
+  "corrections": [],
+  "social": {
+    "x": "Frontier Safety Briefing, 24 Aug 2026: AISI and Anthropic incident records remain the current baselines. OpenAI reports stronger research controls and a partial training pause. Sources, limits, and archive: https://harperz9.github.io/frontier-safety.html",
+    "linkedin": "The first ZentropyLabs Frontier Safety Briefing is live. It separates event time from publication time, labels each source by role, and states what each record does not prove. Today's baseline covers the UK AISI cyber-evaluation incident, Anthropic's three-incident retrospective, Hugging Face's affected-party reconstruction, and OpenAI's August 18 account of paused workloads and stronger research controls. Announced controls remain announced, not independently verified. The edition includes stable source links, open questions, a machine-readable record, and an append-only corrections path. Read it here: https://harperz9.github.io/frontier-safety.html"
+  }
+}

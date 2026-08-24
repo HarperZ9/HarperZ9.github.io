@@ -41,5 +41,6 @@ def test_key_pages_exist() -> None:
         "overview.html", "studio.html", "gallery.html", "catalog.html",
         "guide.html", "research.html", "publications.html", "writing.html",
         "demo-index.html", "cv.html", "typeface.html", "why.html",
+        "frontier-safety.html",
     ):
         assert (ROOT / page).is_file(), page

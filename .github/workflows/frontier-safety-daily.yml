@@ -1,0 +1,78 @@
+name: Frontier Safety daily source check
+
+on:
+  schedule:
+    - cron: "30 15 * * *"
+  workflow_dispatch:
+    inputs:
+      edition:
+        description: Reviewed edition JSON path
+        required: false
+        default: frontier-safety/data/editions/2026-08-24.json
+      publish_reviewed_edition:
+        description: Render and commit the reviewed edition
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: frontier-safety-daily
+  cancel-in-progress: false
+
+jobs:
+  check-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install test runner
+        run: python -m pip install pytest
+      - name: Check curated source fingerprints
+        run: |
+          python tools/check_frontier_safety_sources.py \
+            --registry project-docs/zentropy-import/2026-08-24-source-register.json \
+            --state frontier-safety/data/source-state.json \
+            --report "$RUNNER_TEMP/frontier-safety-source-check.json"
+      - name: Read source-check result
+        id: source_check
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          report = json.loads((Path(os.environ["RUNNER_TEMP"]) / "frontier-safety-source-check.json").read_text())
+          output = Path(os.environ["GITHUB_OUTPUT"])
+          with output.open("a", encoding="utf-8") as stream:
+              stream.write(f"changed={len(report['changed_source_ids'])}\n")
+              stream.write(f"errors={len(report['error_source_ids'])}\n")
+          PY
+      - name: Preserve a changed-source review packet
+        if: steps.source_check.outputs.changed != '0' || steps.source_check.outputs.errors != '0'
+        uses: actions/upload-artifact@v6
+        with:
+          name: frontier-safety-source-check-${{ github.run_id }}
+          path: ${{ runner.temp }}/frontier-safety-source-check.json
+          retention-days: 14
+      - name: Render reviewed edition
+        if: github.event_name == 'workflow_dispatch' && inputs.publish_reviewed_edition
+        run: python tools/build_frontier_safety_briefing.py "${{ inputs.edition }}"
+      - name: Validate reviewed edition
+        if: github.event_name == 'workflow_dispatch' && inputs.publish_reviewed_edition
+        run: python -m pytest -q tests/test_frontier_safety_briefing.py tests/test_deploy_sanity.py
+      - name: Commit only a material reviewed edition
+        if: github.event_name == 'workflow_dispatch' && inputs.publish_reviewed_edition
+        run: |
+          if git diff --quiet; then
+            echo "No material edition change. Nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add frontier-safety.html frontier-safety/data frontier-safety/archive frontier-safety/social
+          git diff --cached --check
+          git commit -m "research: publish reviewed frontier safety edition"
+          git push

@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-08-24T18:04:30Z",
+  "sources": [
+    {"id":"aisi-unsanctioned-agent-behaviour","status":"available","changed":false,"url":"https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing","sha256":"14b3cf791552cfc7136cae7d04785f38326f40b54544207fc938fbbd03217bff","normalized_characters":18445,"etag":null,"last_modified":"Fri, 21 Aug 2026 09:32:06 GMT"},
+    {"id":"anthropic-three-cyber-eval-incidents","status":"available","changed":false,"url":"https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals","sha256":"e80e92c4a1c23578579627a06c6e51966c58a9ac2ac7184d318bbfa41d38b1a0","normalized_characters":23358,"etag":null,"last_modified":null},
+    {"id":"openai-hugging-face-incident","status":"available","changed":false,"url":"https://openai.com/index/hugging-face-model-evaluation-security-incident/","sha256":"3545b1e8d809de9ab183b1f5adba215e92db94725da2a97f189e7ceef01148d4","normalized_characters":12092,"etag":null,"last_modified":null},
+    {"id":"hugging-face-agent-intrusion-timeline","status":"available","changed":false,"url":"https://huggingface.co/blog/agent-intrusion-technical-timeline","sha256":"91d1a3cac2b3acd364dd0861a09e8aeb08839e638272618f871c129830480b66","normalized_characters":182554,"etag":"W/\"a2599-4xVItNmLkPTWWgH6cDhgTreNkq8\"","last_modified":null},
+    {"id":"openai-third-party-cyber-evaluations","status":"available","changed":false,"url":"https://openai.com/index/third-party-cyber-evaluations-involving-openai-models/","sha256":"7c1a9b3042a4695286772919afac5be7c27a7cd32aa86fa744887cb53e59b4a4","normalized_characters":10211,"etag":null,"last_modified":null},
+    {"id":"openai-pacing-model-development","status":"available","changed":false,"url":"https://openai.com/index/pacing-model-development-cyber-capabilities/","sha256":"b5a3362b984dfe73c6dad3e50eb5c03360bb2e430d003ad828bd6c2a3fd058b8","normalized_characters":11789,"etag":null,"last_modified":null},
+    {"id":"metr-incident-investigation-method","status":"available","changed":false,"url":"https://metr.org/blog/2026-07-28-investigating-ai-propensities-after-incidents/","sha256":"9bc27fdadc36ebbf3192f221425d4dcc4c476ad81ae37e52c8240b90502e6b69","normalized_characters":11422,"etag":"\"09de16e29b7a0160c587392f4db2b660-ssl\"","last_modified":null},
+    {"id":"nvd-cve-2025-3248","status":"available","changed":false,"url":"https://nvd.nist.gov/vuln/detail/CVE-2025-3248","sha256":"df8bdbec9eea35fd63dd488b53c90c388c8d218cdd94f081103ab34ac87b1f18","normalized_characters":9196,"etag":null,"last_modified":null},
+    {"id":"sysdig-jadepuffer","status":"available","changed":false,"url":"https://www.sysdig.com/blog/jadepuffer-agentic-ransomware-for-automated-database-extortion","sha256":"05e24e9905a584614769b383bb558164776b5e0f91ac985d63eac989e996b3e4","normalized_characters":26542,"etag":null,"last_modified":"Mon, 24 Aug 2026 15:00:50 GMT"},
+    {"id":"openai-metr-redwood-joint-review","url":"https://openai.com/index/hugging-face-model-evaluation-security-incident/","status":"pending","changed":false}
+  ],
+  "changed_source_ids": [],
+  "error_source_ids": []
+}

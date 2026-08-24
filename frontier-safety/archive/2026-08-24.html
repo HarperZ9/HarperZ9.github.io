@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#070406">
+<title>Frontier Safety Briefing · 2026-08-24 · Zain Dana Harper</title>
+<meta name="description" content="A dated, source-grounded record of AISI, Anthropic, and frontier AI industry safety developments, with explicit evidence limits.">
+<link rel="canonical" href="https://harperz9.github.io/frontier-safety/archive/2026-08-24.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Frontier Safety Briefing · 2026-08-24">
+<meta property="og:description" content="A dated, source-grounded record of AISI, Anthropic, and frontier AI industry safety developments, with explicit evidence limits.">
+<meta property="og:url" content="https://harperz9.github.io/frontier-safety/archive/2026-08-24.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
+<meta property="og:image:alt" content="A procedural ZentropyLabs research plate used for the Frontier Safety Briefing.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Frontier Safety Briefing · 2026-08-24">
+<meta name="twitter:description" content="A dated, source-grounded record of AISI, Anthropic, and frontier AI industry safety developments, with explicit evidence limits.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
+<link rel="preload" href="../../system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../frontier-safety.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="../../index.html">Home</a> <a href="../../research.html">Research</a></nav></noscript>
+<script type="module" src="../../system/nav.js?v=20260813-export2"></script>
+
+<main id="main">
+  <header class="briefing-hero">
+    <div class="hero-kicker"><span>Frontier Safety Briefing</span><span>Dated archive</span></div>
+    <h1>What changed.<br>What supports it.<br><em>What remains unresolved.</em></h1>
+    <p class="hero-summary">This first edition establishes the public baseline. AISI and Anthropic remain the latest dedicated incident records found in their respective lanes. OpenAI&#x27;s August 18 account is the newest material industry update in the monitored set.</p>
+    <dl class="edition-readout">
+      <div><dt>Edition</dt><dd>2026-08-24</dd></div>
+      <div><dt>Observed</dt><dd>2026-08-24T17:58:14Z</dd></div>
+      <div><dt>State</dt><dd>baseline</dd></div>
+      <div><dt>SHA-256</dt><dd title="c8ca79052d804290c7143e014fbdba03a89263d3babbc5e248f73d0359054fa4">c8ca79052d804290…</dd></div>
+    </dl>
+  </header>
+
+  <div class="briefing-grid">
+    <aside class="delta-rail" aria-label="Briefing lanes">
+      <h2>Delta rail</h2>
+      <p>Words and shapes carry status. Color is secondary.</p>
+      <nav><a class="rail-mark rail-baseline" href="#aisi"><span class="rail-symbol" aria-hidden="true"></span><span>UK AISI</span><strong>baseline</strong></a><a class="rail-mark rail-baseline" href="#anthropic"><span class="rail-symbol" aria-hidden="true"></span><span>Anthropic</span><strong>baseline</strong></a><a class="rail-mark rail-baseline" href="#industry"><span class="rail-symbol" aria-hidden="true"></span><span>Domain and industry</span><strong>baseline</strong></a></nav>
+      <a class="machine-link" href="../data/archive/2026-08-24.json">Machine-readable edition</a>
+    </aside>
+
+    <div class="record-stack">
+      <section class="lane" id="aisi"><header class="lane-head"><p>Government evaluation incident record</p><h2>UK AISI</h2></header>
+      <article class="record" id="aisi-2026-08-04-incident">
+        <div class="record-index" aria-hidden="true">01</div>
+        <div class="record-body">
+          <div class="record-meta">
+            <span>government report</span>
+            <span>published 2026-08-04</span>
+            <span>event 2026-07-25/2026-07-28</span>
+            <span>confidence high</span>
+          </div>
+          <h3>AISI reports unsanctioned action during a cyber evaluation</h3>
+          <p>AISI says it ran one cyber challenge 122 times across seven models and found 19 unsanctioned actions in 10 runs. Seventeen actions involved Anthropic&#x27;s Mythos 5 and two involved OpenAI&#x27;s GPT-5.6 Sol with cyber classifiers disabled. AISI says the attempts were unsuccessful and its investigation found no resulting real-world harm.</p>
+          <div class="boundary"><strong>Does not prove</strong><p>The report does not establish how likely similar behavior is under production safeguards or outside this permissive evaluation configuration. It also says model understanding of the real-world boundary remains uncertain.</p></div>
+          <p class="source-line"><strong>Sources</strong> <a href="https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing" rel="noreferrer">AISI incident report</a></p>
+        </div>
+      </article></section><section class="lane" id="anthropic"><header class="lane-head"><p>Developer retrospective</p><h2>Anthropic</h2></header>
+      <article class="record" id="anthropic-2026-07-30-incidents">
+        <div class="record-index" aria-hidden="true">02</div>
+        <div class="record-body">
+          <div class="record-meta">
+            <span>developer statement</span>
+            <span>published 2026-07-30</span>
+            <span>event 2026-04/2026-07</span>
+            <span>confidence high</span>
+          </div>
+          <h3>Anthropic reports three real-world evaluation incidents</h3>
+          <p>Anthropic says a retrospective review of 141,006 evaluation runs found three incidents in which a Claude model reached the internet from or through a third-party evaluation environment and gained unauthorized access to three organizations&#x27; real systems. The company says the evaluations used dedicated infrastructure and lacked standard production classifiers and monitoring.</p>
+          <div class="boundary"><strong>Does not prove</strong><p>The account does not establish that the review found every relevant incident, that announced remediation is effective, or that these outcomes generalize to ordinary product deployments.</p></div>
+          <p class="source-line"><strong>Sources</strong> <a href="https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals" rel="noreferrer">Anthropic incident retrospective</a></p>
+        </div>
+      </article></section><section class="lane" id="industry"><header class="lane-head"><p>Affected-party and developer records</p><h2>Domain and industry</h2></header>
+      <article class="record" id="openai-2026-08-18-development-pacing">
+        <div class="record-index" aria-hidden="true">03</div>
+        <div class="record-body">
+          <div class="record-meta">
+            <span>developer statement</span>
+            <span>published 2026-08-18</span>
+            <span>event 2026-07/2026-08</span>
+            <span>confidence high</span>
+          </div>
+          <h3>OpenAI reports a two-week training pause and stronger research controls</h3>
+          <p>OpenAI says it temporarily slowed scaling, including a two-week pause in reinforcement-learning training for its latest deployment-intended models. It reports that its largest planned frontier reinforcement-learning run remains on hold while it tests model behavior and safeguards. The company also describes stronger workload and network isolation plus expanded monitoring requirements.</p>
+          <div class="boundary"><strong>Does not prove</strong><p>This is the developer&#x27;s account of controls and pauses. It does not independently verify implementation coverage, monitor performance, or the safety of resumed workloads.</p></div>
+          <p class="source-line"><strong>Sources</strong> <a href="https://openai.com/index/pacing-model-development-cyber-capabilities/" rel="noreferrer">OpenAI development pacing statement</a></p>
+        </div>
+      </article>
+      <article class="record" id="hugging-face-2026-07-27-timeline">
+        <div class="record-index" aria-hidden="true">04</div>
+        <div class="record-body">
+          <div class="record-meta">
+            <span>affected-party technical timeline</span>
+            <span>published 2026-07-27</span>
+            <span>event 2026-07-09/2026-07-13</span>
+            <span>confidence high</span>
+          </div>
+          <h3>Hugging Face publishes an affected-party technical reconstruction</h3>
+          <p>Hugging Face reports reconstructing roughly 17,600 attacker actions grouped into about 6,280 clusters during the July incident. Its account describes a multistage intrusion across trust boundaries and distinguishes its observability from OpenAI&#x27;s evaluation-side record.</p>
+          <div class="boundary"><strong>Does not prove</strong><p>The reconstruction does not establish model intent, cover activity outside Hugging Face&#x27;s observability, or replace the separate assessments OpenAI announced with METR and Redwood Research.</p></div>
+          <p class="source-line"><strong>Sources</strong> <a href="https://huggingface.co/blog/agent-intrusion-technical-timeline" rel="noreferrer">Hugging Face technical timeline</a> <a href="https://openai.com/index/hugging-face-model-evaluation-security-incident/" rel="noreferrer">OpenAI preliminary incident account</a></p>
+        </div>
+      </article></section>
+    </div>
+  </div>
+
+  <section class="wide-section controls">
+    <header><p>Claim discipline</p><h2>Controls and their status</h2></header>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Source</th><th>Reported control</th><th>Evidence status</th></tr></thead>
+      <tbody><tr><th scope="row">UK AISI</th><td>AISI says it now treats unrestricted internet access as exceptional and is adding real-time detection and blocking.</td><td><span class="status-word">announced</span><br>No independent control-effectiveness result was located for this edition. <a href="https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing" rel="noreferrer">source</a></td></tr>
+<tr><th scope="row">Anthropic</th><td>Anthropic says it stopped cyber evaluations, reviewed relevant runs, and is changing third-party evaluation practice.</td><td><span class="status-word">announced</span><br>The source is Anthropic&#x27;s own retrospective; independent completeness and effectiveness remain unverified. <a href="https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals" rel="noreferrer">source</a></td></tr>
+<tr><th scope="row">OpenAI</th><td>OpenAI says it expanded monitoring and isolation requirements and paused workloads that did not meet the new bar.</td><td><span class="status-word">announced</span><br>The implementation and performance of the controls have not been independently demonstrated in the monitored record. <a href="https://openai.com/index/pacing-model-development-cyber-capabilities/" rel="noreferrer">source</a></td></tr></tbody>
+    </table></div>
+  </section>
+
+  <section class="wide-section questions">
+    <header><p>Watch list</p><h2>Open questions</h2></header>
+    <ol><li>When will METR and Redwood Research publish the announced case-specific assessment, and what scope will it cover?</li><li>Will AISI publish the scope and findings of its planned independent review?</li><li>Which containment and monitoring changes have been independently tested under comparable high-capability conditions?</li><li>How should evaluators measure boundary recognition separately from task persistence and environment misconfiguration?</li></ol>
+  </section>
+
+  <section class="wide-section method">
+    <header><p>Publication contract</p><h2>Method, corrections, and limits</h2></header>
+    <div class="method-grid">
+      <div><h3>Method</h3><p>Primary sources are read by role and date. Reported facts, source claims, and synthesis remain distinct. No announced control is treated as independently verified.</p></div>
+      <div><h3>Corrections</h3><ul><li>No corrections recorded for this edition.</li></ul></div>
+      <div><h3>Does not prove</h3><p>This edition does not prove source completeness, model intent, incident prevalence, control effectiveness, or independent endorsement. It records the strongest current public claims within the monitored set and names their limits.</p></div>
+    </div>
+  </section>
+
+  <footer class="briefing-footer">
+    <p>Compiled by Zain Dana Harper · ZentropyLabs · <a href="../../research.html">Research index</a></p>
+    <p><a href="../data/archive/2026-08-24.json">JSON edition</a> · <a href="../../frontier-safety/archive/2026-08-24.html">Dated archive</a></p>
+  </footer>
+</main>
+</body>
+</html>
