@@ -1,0 +1,241 @@
+name: Frontier Safety daily source check
+
+on:
+  schedule:
+    - cron: "30 15 * * *"
+  workflow_dispatch:
+    inputs:
+      edition:
+        description: Committed reviewed edition JSON path
+        required: false
+        default: frontier-safety/data/editions/2026-08-24.json
+      publish_reviewed_edition:
+        description: Render and commit the reviewed edition
+        required: false
+        type: boolean
+        default: false
+      publication_mode:
+        description: Normal editions require a changed, error-free source check
+        required: false
+        type: choice
+        default: normal
+        options:
+          - normal
+          - correction
+      correction_reason:
+        description: Required audit reason when publication_mode is correction
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: frontier-safety-daily
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      changed: ${{ steps.source_check.outputs.changed }}
+      errors: ${{ steps.source_check.outputs.errors }}
+      unbaselined: ${{ steps.source_check.outputs.unbaselined }}
+      review_required: ${{ steps.source_check.outputs.review_required }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+      - name: Check curated source fingerprints
+        run: |
+          python tools/check_frontier_safety_sources.py \
+            --registry project-docs/zentropy-import/2026-08-24-source-register.json \
+            --state frontier-safety/data/source-state.json \
+            --report "$RUNNER_TEMP/frontier-safety-source-check.json"
+      - name: Read source-check result
+        id: source_check
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          report = json.loads(
+              (Path(os.environ["RUNNER_TEMP"]) / "frontier-safety-source-check.json").read_text(
+                  encoding="utf-8"
+              )
+          )
+          with Path(os.environ["GITHUB_OUTPUT"]).open("a", encoding="utf-8") as stream:
+              stream.write(f"changed={len(report['changed_source_ids'])}\n")
+              stream.write(f"errors={len(report['error_source_ids'])}\n")
+              stream.write(f"unbaselined={len(report['unbaselined_source_ids'])}\n")
+              stream.write(f"review_required={len(report['review_required_source_ids'])}\n")
+          PY
+      - name: Preserve a source-review packet
+        if: >-
+          steps.source_check.outputs.changed != '0' ||
+          steps.source_check.outputs.errors != '0' ||
+          steps.source_check.outputs.unbaselined != '0' ||
+          steps.source_check.outputs.review_required != '0'
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: frontier-safety-source-check-${{ github.run_id }}
+          path: ${{ runner.temp }}/frontier-safety-source-check.json
+          retention-days: 14
+
+  publish:
+    needs: monitor
+    if: github.event_name == 'workflow_dispatch' && inputs.publish_reviewed_edition
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+      - name: Install pinned test dependencies
+        run: python -m pip install pytest==8.4.2 PyYAML==6.0.2
+      - name: Enforce publication gate
+        env:
+          EDITION_INPUT: ${{ inputs.edition }}
+          SOURCE_CHANGED: ${{ needs.monitor.outputs.changed }}
+          SOURCE_ERRORS: ${{ needs.monitor.outputs.errors }}
+          SOURCE_UNBASELINED: ${{ needs.monitor.outputs.unbaselined }}
+          SOURCE_REVIEW_REQUIRED: ${{ needs.monitor.outputs.review_required }}
+          PUBLICATION_MODE: ${{ inputs.publication_mode }}
+          CORRECTION_REASON: ${{ inputs.correction_reason }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          def reject(message: str) -> None:
+              raise SystemExit(f"Publication gate rejected: {message}")
+
+          workspace = Path(os.environ["GITHUB_WORKSPACE"]).resolve()
+          edition_path = (workspace / os.environ["EDITION_INPUT"]).resolve(strict=True)
+
+          edition = json.loads(edition_path.read_text(encoding="utf-8"))
+          changed = int(os.environ["SOURCE_CHANGED"])
+          errors = int(os.environ["SOURCE_ERRORS"])
+          unbaselined = int(os.environ["SOURCE_UNBASELINED"])
+          review_required = int(os.environ["SOURCE_REVIEW_REQUIRED"])
+          mode = os.environ["PUBLICATION_MODE"]
+          reason = " ".join(os.environ.get("CORRECTION_REASON", "").split())
+          runner_temp = Path(os.environ["RUNNER_TEMP"])
+          commit_message = runner_temp / "frontier-safety-commit-message.txt"
+
+          if mode == "normal":
+              if edition.get("edition_state") == "correction":
+                  reject("a correction edition requires correction mode")
+              if errors:
+                  reject(f"normal publication requires zero fetch errors, observed {errors}")
+              if unbaselined:
+                  reject(
+                      "normal publication requires zero unbaselined sources, "
+                      f"observed {unbaselined}"
+                  )
+              if changed < 1:
+                  reject("normal publication requires at least one changed source")
+              if review_required != changed:
+                  reject(
+                      "normal publication requires every review-required source to be an "
+                      f"existing changed source, observed changed={changed} and "
+                      f"review_required={review_required}"
+                  )
+              commit_message.write_text(
+                  "research: publish reviewed frontier safety edition\n",
+                  encoding="utf-8",
+                  newline="\n",
+              )
+          elif mode == "correction":
+              if not reason:
+                  reject("correction mode requires a recorded reason")
+              if edition.get("edition_state") != "correction":
+                  reject("correction mode requires edition_state=correction")
+              corrections = edition.get("corrections")
+              if not isinstance(corrections, list) or not any(
+                  isinstance(item, str) and item.strip() for item in corrections
+              ):
+                  reject("correction mode requires a public correction entry")
+              reason_path = runner_temp / "frontier-safety-correction-reason.txt"
+              reason_path.write_text(reason + "\n", encoding="utf-8", newline="\n")
+              commit_message.write_text(
+                  "research: publish corrected frontier safety edition\n\n"
+                  f"Correction reason: {reason}\n",
+                  encoding="utf-8",
+                  newline="\n",
+              )
+          else:
+              reject(f"unsupported publication mode: {mode}")
+          print(f"Publication gate accepted {mode} mode for {edition_path.name}.")
+          PY
+      - name: Scan reviewed publication input
+        env:
+          EDITION_INPUT: ${{ inputs.edition }}
+          PUBLICATION_MODE: ${{ inputs.publication_mode }}
+          CORRECTION_REASON_FILE: ${{ runner.temp }}/frontier-safety-correction-reason.txt
+        run: |
+          python tools/check_frontier_safety_public_artifacts.py "$EDITION_INPUT"
+          if [[ "$PUBLICATION_MODE" == "correction" ]]; then
+            python tools/check_frontier_safety_public_artifacts.py "$CORRECTION_REASON_FILE"
+          fi
+      - name: Render reviewed edition
+        env:
+          EDITION_INPUT: ${{ inputs.edition }}
+        run: python tools/build_frontier_safety_briefing.py "$EDITION_INPUT"
+      - name: Validate reviewed edition and reproducibility
+        run: |
+          python -m pytest -q \
+            tests/test_frontier_safety_*.py \
+            tests/test_deploy_sanity.py
+      - name: Stage generated public artifacts
+        id: stage
+        run: |
+          git add \
+            frontier-safety.html \
+            frontier-safety/archive \
+            frontier-safety/data/current.json \
+            frontier-safety/data/archive \
+            frontier-safety/data/history.json \
+            frontier-safety/social
+          if git diff --cached --quiet; then
+            echo "No material edition change. Nothing to commit."
+            echo "material=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "material=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Scan staged public artifacts
+        if: steps.stage.outputs.material == 'true'
+        run: |
+          mapfile -d '' staged_files < <(git diff --cached --name-only --diff-filter=ACMR -z)
+          if (( ${#staged_files[@]} == 0 )); then
+            echo "Expected staged public artifacts but found none." >&2
+            exit 1
+          fi
+          python tools/check_frontier_safety_public_artifacts.py "${staged_files[@]}"
+          git diff --cached --check
+      - name: Commit reviewed edition
+        if: steps.stage.outputs.material == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit --file "$RUNNER_TEMP/frontier-safety-commit-message.txt"
+      - name: Push reviewed edition
+        if: steps.stage.outputs.material == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          git -c credential.helper= \
+            -c 'credential.helper=!f() { echo "username=x-access-token"; echo "password=$GITHUB_TOKEN"; }; f' \
+            push

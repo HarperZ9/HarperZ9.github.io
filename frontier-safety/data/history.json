@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "editions": [
+    {
+      "date": "2026-08-24",
+      "sha256": "c8ca79052d804290c7143e014fbdba03a89263d3babbc5e248f73d0359054fa4",
+      "state": "baseline",
+      "html": "../archive/2026-08-24.html",
+      "json": "archive/2026-08-24.json"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+Frontier Safety Briefing, 24 Aug 2026: AISI and Anthropic incident records remain the current baselines. OpenAI reports stronger research controls and a partial training pause. Sources, limits, and archive: https://harperz9.github.io/frontier-safety.html
