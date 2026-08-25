@@ -125,23 +125,51 @@ def test_page_metadata_social_copy_and_site_links() -> None:
     assert "https://harperz9.github.io/frontier-safety.html" in linkedin
 
 
-def test_briefing_uses_the_shared_document_design_canon() -> None:
+def test_briefing_uses_the_shared_site_design_canon() -> None:
     page = (ROOT / "frontier-safety.html").read_text(encoding="utf-8")
     archive = (ROOT / "frontier-safety" / "archive" / f"{EDITION_DATE}.html").read_text(encoding="utf-8")
-    stylesheet = (ROOT / "frontier-safety" / "frontier-safety.css").read_text(encoding="utf-8")
+    stylesheet = (ROOT / "frontier-safety" / "frontier-safety-site.css").read_text(encoding="utf-8")
 
-    for html in (page, archive):
-        assert '<body class="doc frontier-briefing">' in html
-        assert 'class="docnav"' in html
-        assert 'class="sheet briefing-sheet"' in html
-        assert 'class="mast briefing-mast"' in html
-        assert 'class="data data--wide controls-table"' in html
-        assert "kilon.woff2" not in html
-        assert "conso-regular.woff2" in html
+    assert '<body class="inner-clean frame-compact frontier-briefing">' in page
+    assert 'class="frame briefing-hero"' in page
+    assert 'class="bar"' in page
+    assert 'class="mid briefing-intro"' in page
+    assert 'class="plate plate--slim briefing-plate"' in page
+    assert '<main id="main">' in page
+    assert 'class="mv briefing-overview"' in page
+    assert 'class="mv lane"' in page
+    assert 'class="data data--wide controls-table"' in page
+    assert 'class="footer-seal"' in page
+    assert "system/reveal.js" in page
+    assert "conso-regular.woff2" in page
+    assert '<meta name="theme-color" content="#070406">' in page
 
-    assert '@import url("../system/doc.css")' in stylesheet
+    # A published dated archive is immutable. Its original document shell and
+    # stylesheet remain byte-for-byte reproducible while the live and future
+    # editions move to the site's shared presentation.
+    assert '<body class="doc frontier-briefing">' in archive
+    assert 'href="../frontier-safety.css"' in archive
+
+    assert '@import url("../system/system.css' in stylesheet
+    assert '@import url("../system/doc.css")' not in stylesheet
     assert "Kilon" not in stylesheet
     assert "initial-scan" not in stylesheet
+
+
+def test_future_dated_archives_use_the_shared_site_shell_and_nested_paths() -> None:
+    builder = load_builder()
+    future = read_json(f"frontier-safety/data/editions/{EDITION_DATE}.json")
+    future["edition_date"] = "2026-08-25"
+    future["observed_at"] = "2026-08-25T16:00:00Z"
+
+    archive = builder.render_html(future, archive=True)
+
+    assert '<body class="inner-clean frame-compact frontier-briefing">' in archive
+    assert 'href="../frontier-safety-site.css"' in archive
+    assert 'src="../../system/nav.js?v=20260824-frontier-safety"' in archive
+    assert 'href="../data/archive/2026-08-25.json"' in archive
+    assert 'href="../../research.html"' in archive
+    assert 'class="docnav"' not in archive
 
 
 def test_briefing_is_discoverable_from_the_catalog_index() -> None:

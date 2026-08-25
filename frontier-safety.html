@@ -21,42 +21,44 @@
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="system/fonts/conso-regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="frontier-safety/frontier-safety.css">
+<link rel="stylesheet" href="frontier-safety/frontier-safety-site.css">
 </head>
-<body class="doc frontier-briefing">
+<body class="inner-clean frame-compact frontier-briefing">
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="index.html">Home</a> <a href="research.html">Research</a></nav></noscript>
 <script type="module" src="system/nav.js?v=20260824-frontier-safety"></script>
 
-<div class="docnav">
-  <span class="where">Research · Frontier Safety</span>
-  <span class="switch"><a href="research.html">Research index</a><a href="frontier-safety.html" aria-current="page">Current edition</a></span>
-</div>
-
-<main id="main" class="sheet briefing-sheet">
-  <header class="mast briefing-mast">
-    <div class="hero-kicker"><span>Frontier Safety Briefing</span><span>Current edition</span></div>
-    <h1>What changed.<br>What supports it.<br><em>What remains unresolved.</em></h1>
-    <p class="hero-summary">This first edition establishes the public baseline. AISI and Anthropic remain the latest dedicated incident records found in their respective lanes. OpenAI&#x27;s August 18 account is the newest material industry update in the monitored set.</p>
+<div class="frame briefing-hero">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Research · Frontier Safety</span></div>
+  <div class="mid briefing-intro">
+    <p class="eyebrow">Frontier Safety Briefing · Current edition</p>
+    <h1>What changed. What supports it. <span class="g">What remains unresolved.</span></h1>
+    <p class="lede">This first edition establishes the public baseline. AISI and Anthropic remain the latest dedicated incident records found in their respective lanes. OpenAI&#x27;s August 18 account is the newest material industry update in the monitored set.</p>
+    <figure class="plate plate--slim briefing-plate">
+      <canvas data-specimen="frontier-safety-2026-08-24" data-specimen-layers="obsidian-burst" aria-hidden="true"></canvas>
+      <figcaption><span class="plate-no">Edition 2026-08-24</span><span class="plate-caption">A source record drawn at the size of its evidence, with every unresolved boundary left visible.</span></figcaption>
+    </figure>
     <dl class="edition-readout">
       <div><dt>Edition</dt><dd>2026-08-24</dd></div>
       <div><dt>Observed</dt><dd>2026-08-24T17:58:14Z</dd></div>
       <div><dt>State</dt><dd>baseline</dd></div>
       <div><dt>SHA-256</dt><dd title="c8ca79052d804290c7143e014fbdba03a89263d3babbc5e248f73d0359054fa4">c8ca79052d804290…</dd></div>
     </dl>
-  </header>
+  </div>
+  <div class="seal">reported facts · source roles · explicit non-claims · <a href="frontier-safety/data/current.json">machine-readable edition</a></div>
+</div>
 
-  <div class="briefing-grid">
-    <aside class="delta-rail" aria-label="Briefing lanes">
-      <h2>Delta rail</h2>
-      <p>Words and shapes carry status. Color is secondary.</p>
-      <nav><a class="rail-mark rail-baseline" href="#aisi"><span class="rail-symbol" aria-hidden="true"></span><span>UK AISI</span><strong>baseline</strong></a><a class="rail-mark rail-baseline" href="#anthropic"><span class="rail-symbol" aria-hidden="true"></span><span>Anthropic</span><strong>baseline</strong></a><a class="rail-mark rail-baseline" href="#industry"><span class="rail-symbol" aria-hidden="true"></span><span>Domain and industry</span><strong>baseline</strong></a></nav>
-      <a class="machine-link" href="frontier-safety/data/current.json">Machine-readable edition</a>
-    </aside>
+<main id="main">
+  <section class="mv briefing-overview">
+    <p class="eyebrow">Edition map</p>
+    <h2>Three monitored lanes. One claim discipline.</h2>
+    <p class="body-text">Words and shapes carry status. Color is secondary. Each lane separates the public record from the conclusions that record cannot support.</p>
+    <nav class="delta-rail" aria-label="Briefing lanes"><a class="rail-mark rail-baseline" href="#aisi"><span class="rail-symbol" aria-hidden="true"></span><span>UK AISI</span><strong>baseline</strong></a><a class="rail-mark rail-baseline" href="#anthropic"><span class="rail-symbol" aria-hidden="true"></span><span>Anthropic</span><strong>baseline</strong></a><a class="rail-mark rail-baseline" href="#industry"><span class="rail-symbol" aria-hidden="true"></span><span>Domain and industry</span><strong>baseline</strong></a></nav>
+    <p class="briefing-links"><a href="research.html">Research index</a> · <a href="frontier-safety.html" aria-current="page">Current edition</a> · <a href="frontier-safety/data/current.json">JSON edition</a></p>
+  </section>
 
-    <div class="record-stack">
-      <section class="lane" id="aisi"><header class="lane-head"><p>Government evaluation incident record</p><h2>UK AISI</h2></header>
+  <section class="mv lane" id="aisi"><header class="lane-head"><p class="eyebrow">Government evaluation incident record</p><h2>UK AISI</h2></header>
       <article class="record" id="aisi-2026-08-04-incident">
         <div class="record-index" aria-hidden="true">01</div>
         <div class="record-body">
@@ -71,7 +73,7 @@
           <div class="boundary"><strong>Does not prove</strong><p>The report does not establish how likely similar behavior is under production safeguards or outside this permissive evaluation configuration. It also says model understanding of the real-world boundary remains uncertain.</p></div>
           <p class="source-line"><strong>Sources</strong> <a href="https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing" rel="noreferrer">AISI incident report</a></p>
         </div>
-      </article></section><section class="lane" id="anthropic"><header class="lane-head"><p>Developer retrospective</p><h2>Anthropic</h2></header>
+      </article></section><section class="mv lane" id="anthropic"><header class="lane-head"><p class="eyebrow">Developer retrospective</p><h2>Anthropic</h2></header>
       <article class="record" id="anthropic-2026-07-30-incidents">
         <div class="record-index" aria-hidden="true">02</div>
         <div class="record-body">
@@ -86,7 +88,7 @@
           <div class="boundary"><strong>Does not prove</strong><p>The account does not establish that the review found every relevant incident, that announced remediation is effective, or that these outcomes generalize to ordinary product deployments.</p></div>
           <p class="source-line"><strong>Sources</strong> <a href="https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals" rel="noreferrer">Anthropic incident retrospective</a></p>
         </div>
-      </article></section><section class="lane" id="industry"><header class="lane-head"><p>Affected-party and developer records</p><h2>Domain and industry</h2></header>
+      </article></section><section class="mv lane" id="industry"><header class="lane-head"><p class="eyebrow">Affected-party and developer records</p><h2>Domain and industry</h2></header>
       <article class="record" id="openai-2026-08-18-development-pacing">
         <div class="record-index" aria-hidden="true">03</div>
         <div class="record-body">
@@ -117,11 +119,9 @@
           <p class="source-line"><strong>Sources</strong> <a href="https://huggingface.co/blog/agent-intrusion-technical-timeline" rel="noreferrer">Hugging Face technical timeline</a> <a href="https://openai.com/index/hugging-face-model-evaluation-security-incident/" rel="noreferrer">OpenAI preliminary incident account</a></p>
         </div>
       </article></section>
-    </div>
-  </div>
 
-  <section class="wide-section controls">
-    <header><p>Claim discipline</p><h2>Controls and their status</h2></header>
+  <section class="mv wide-section controls">
+    <header><p class="eyebrow">Claim discipline</p><h2>Controls and their status</h2></header>
     <div class="table-wrap"><table class="data data--wide controls-table">
       <thead><tr><th>Source</th><th>Reported control</th><th>Evidence status</th></tr></thead>
       <tbody><tr><th scope="row">UK AISI</th><td>AISI says it now treats unrestricted internet access as exceptional and is adding real-time detection and blocking.</td><td><span class="status-word">announced</span><br>No independent control-effectiveness result was located for this edition. <a href="https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing" rel="noreferrer">source</a></td></tr>
@@ -130,24 +130,24 @@
     </table></div>
   </section>
 
-  <section class="wide-section questions">
-    <header><p>Watch list</p><h2>Open questions</h2></header>
+  <section class="mv wide-section questions">
+    <header><p class="eyebrow">Watch list</p><h2>Open questions</h2></header>
     <ol><li>When will METR and Redwood Research publish the announced case-specific assessment, and what scope will it cover?</li><li>Will AISI publish the scope and findings of its planned independent review?</li><li>Which containment and monitoring changes have been independently tested under comparable high-capability conditions?</li><li>How should evaluators measure boundary recognition separately from task persistence and environment misconfiguration?</li></ol>
   </section>
 
-  <section class="wide-section method">
-    <header><p>Publication contract</p><h2>Method, corrections, and limits</h2></header>
+  <section class="mv wide-section method">
+    <header><p class="eyebrow">Publication contract</p><h2>Method, corrections, and limits</h2></header>
     <div class="method-grid">
       <div><h3>Method</h3><p>Primary sources are read by role and date. Reported facts, source claims, and synthesis remain distinct. No announced control is treated as independently verified.</p></div>
       <div><h3>Corrections</h3><ul><li>No corrections recorded for this edition.</li></ul></div>
       <div><h3>Does not prove</h3><p>This edition does not prove source completeness, model intent, incident prevalence, control effectiveness, or independent endorsement. It records the strongest current public claims within the monitored set and names their limits.</p></div>
     </div>
   </section>
-
-  <footer class="briefing-footer">
-    <p>Compiled by Zain Dana Harper · ZentropyLabs · <a href="research.html">Research index</a></p>
-    <p><a href="frontier-safety/data/current.json">JSON edition</a> · <a href="frontier-safety/archive/2026-08-24.html">Dated archive</a></p>
-  </footer>
 </main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Compiled by Zain Dana Harper · ZentropyLabs · <a href="research.html">Research index</a> · <a href="frontier-safety/data/current.json">JSON edition</a> · <a href="frontier-safety/archive/2026-08-24.html">Dated archive</a></p>
+</footer>
+<script src="system/reveal.js?v=20260625a" defer></script>
 </body>
 </html>
