@@ -5,18 +5,18 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Checkpoint: private-line release readiness for Project Telos</title>
-<meta name="description" content="Checkpoint is the public contract for the Project Telos private line: six working tools, opened where that is safe and named where it is not.">
+<meta name="description" content="Checkpoint is the public contract for the Project Telos private line: ten working tools, opened where that is safe and named where it is not.">
 <link rel="canonical" href="https://harperz9.github.io/aleph.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Checkpoint: private-line release readiness for Project Telos">
-<meta property="og:description" content="Checkpoint is the public contract for the Project Telos private line: six working tools, opened where that is safe and named where it is not.">
+<meta property="og:description" content="Checkpoint is the public contract for the Project Telos private line: ten working tools, opened where that is safe and named where it is not.">
 <meta property="og:url" content="https://harperz9.github.io/aleph.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/aleph.png">
 <meta property="og:image:alt" content="Checkpoint Project Telos private-line platform hero graphic.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Checkpoint: private-line release readiness for Project Telos">
-<meta name="twitter:description" content="Checkpoint is the public contract for the Project Telos private line: six working tools, opened where that is safe and named where it is not.">
+<meta name="twitter:description" content="Checkpoint is the public contract for the Project Telos private line: ten working tools, opened where that is safe and named where it is not.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/aleph.png">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#14041b">
@@ -65,20 +65,24 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">Checkpoint</span> &middot; private-line release checkpoint</span></div>
   <div class="mid">
     <p class="eyebrow">PROJECT TELOS PRIVATE-LINE PLATFORM</p>
-    <h1>One checkpoint. Six working tools.</h1>
-    <p class="lede"><span translate="no">Checkpoint</span> is the public contract for the Project Telos private line: <span translate="no">Checkpoint</span> (Aleph), <span translate="no">Ledger</span> (Sofer), <span translate="no">Lab</span> (Seed), <span translate="no">Vault</span> (Kun), <span translate="no">Runtime</span> (ORCA), and <span translate="no">Boundary</span> (behavior-transform). It verifies presentation, package shape, MCP readiness, CLI contracts, provenance receipts, and release state before anything is described as ready.</p>
+    <h1>One checkpoint. Ten working tools.</h1>
+    <p class="lede"><span translate="no">Checkpoint</span> is the public contract for the Project Telos private line: <span translate="no">Checkpoint</span> (Aleph), <span translate="no">Ledger</span> (Sofer), <span translate="no">Lab</span> (Seed), <span translate="no">Vault</span> (Kun), <span translate="no">Runtime</span> (ORCA), <span translate="no">Isomorph</span>, <span translate="no">Array</span>, <span translate="no">Bounds</span>, <span translate="no">Phantom</span>, and <span translate="no">Aeterna</span>. It verifies presentation, package shape, MCP readiness, CLI contracts, provenance receipts, and release state before anything is described as ready.</p>
     <p class="close">Public where safe, private where required, checkable delivery.</p>
     <div class="rail" aria-label="Project Telos private-line navigation">
       <a href="overview.html">Project Telos</a>
       <a href="catalog.html">Catalog</a>
       <a href="orca.html" translate="no">Runtime</a>
       <span translate="no">Vault</span>
-      <a href="https://github.com/HarperZ9/behavior-transform.io" rel="noopener" translate="no">Boundary</a>
-      <span class="rail-status" translate="no">Ledger private</span>
-      <span class="rail-status" translate="no">Lab private</span>
+      <a href="isomorph.html" translate="no">Isomorph</a>
+      <a href="array.html" translate="no">Array</a>
+      <a href="bounds.html" translate="no">Bounds</a>
+      <a href="sofer.html" translate="no">Ledger</a>
+      <a href="seed.html" translate="no">Lab</a>
+      <a href="kun.html" translate="no">Vault</a>
+      <a href="aeterna.html" translate="no">Aeterna</a>
     </div>
     <figure class="hero-art">
-      <img src="img/private-line/aleph-hero.svg" alt="Checkpoint README-style hero: Project Telos private-line release checkpoint with six tools, receipts, CI, and MCP.">
+      <img src="img/private-line/aleph-hero.svg" alt="Checkpoint README-style hero: Project Telos private-line release checkpoint with ten tools, receipts, CI, and MCP.">
     </figure>
   </div>
   <div class="seal">private by design &middot; public contract &middot; no secrets in the presentation layer</div>
@@ -88,20 +92,24 @@
 <section class="mv" id="contract" aria-labelledby="contract-h">
   <p class="eyebrow">WHAT IT IS</p>
   <h2 id="contract-h" class="reveal">A release checkpoint for tools that have to be usable alone or inside a larger surface.</h2>
-  <p class="body-text reveal">The live public flagships now use a simple pattern: direct purpose, visible artifact, installation path, reason it matters, and current status. <span translate="no">Checkpoint</span> brings the same standard to the private line. Four repos are public now: <span translate="no">Checkpoint</span>, <span translate="no">Runtime</span>, <span translate="no">Vault</span>, and <span translate="no">Boundary</span>. <span translate="no">Lab</span> (Seed) and <span translate="no">Ledger</span> (Sofer) remain private until their public-safe splits are complete.</p>
+  <p class="body-text reveal">The live public flagships now use a simple pattern: direct purpose, visible artifact, installation path, reason it matters, and current status. <span translate="no">Checkpoint</span> brings the same standard to the private line. Ten tools, each with its own repository, each checked by the same release gate.</p>
   <p class="body-text reveal">The private-line standard is concrete: command surfaces must be inspectable, package metadata must agree with the docs, MCP or host-neutral integration must be declared, graphics must match the Project Telos presentation language, and every readiness claim must resolve to a receipt.</p>
 </section>
 
 <section class="mv" id="tools" aria-labelledby="tools-h">
-  <p class="eyebrow">THE SIX UNITS</p>
+  <p class="eyebrow">THE TEN UNITS</p>
   <h2 id="tools-h" class="reveal">Each tool has a clear job.</h2>
   <div class="tool-grid reveal">
-    <div class="tool-card"><span class="tool-k" translate="no">Checkpoint</span><p>Aleph. Product shell for the private line: docs, package contracts, MCP declarations, CI state, and receipt checks. Public repo.</p></div>
-    <div class="tool-card"><span class="tool-k" translate="no">Ledger</span><p>Sofer. Agent workflow routing through intent, admission, execution, evidence references, replay, and verification records. Private/proprietary until the public-safe split removes credential-pattern corpora and internal security-research material.</p></div>
-    <div class="tool-card"><span class="tool-k" translate="no">Lab</span><p>Seed. Controlled native assessment labs with synthetic fixtures, scenario packs, detection engineering, and deterministic outputs. Private/proprietary until the public-safe split removes internal modules and token-shaped corpora.</p></div>
-    <div class="tool-card"><span class="tool-k" translate="no">Vault</span><p>Kun. Local access-recovery and owner vault surface that records path-only, read-only receipts instead of exposing sensitive material. Public repo.</p></div>
-    <div class="tool-card"><span class="tool-k" translate="no">Runtime</span><p>ORCA. Local runtime modules, run state, artifact layout, and release provenance for owner-held workflows. Public repo.</p></div>
-    <div class="tool-card"><span class="tool-k" translate="no">Boundary</span><p>behavior-transform. Host boundary wrapper for read, write, exec, fetch, input, and model-boundary receipts. Public repo.</p></div>
+    <div class="tool-card"><span class="tool-k" translate="no">Checkpoint</span><p><a href="aleph.html">Aleph</a>. Release gate for the private line: docs, package contracts, MCP declarations, CI state, and receipt checks.</p></div>
+    <div class="tool-card"><span class="tool-k" translate="no">Ledger</span><p><a href="sofer.html">Sofer</a>. 74-package orchestration suite for warfare intelligence, law enforcement, child safety, CBRN, financial crime, infrastructure defense, and cyber operations. MCP bridges and action receipts.</p></div>
+    <div class="tool-card"><span class="tool-k" translate="no">Lab</span><p><a href="seed.html">Seed</a>. C++23 red-team assessment runtime with ATT&CK-mapped verification. 59 modules, 3,065 tests. Nested in Array.</p></div>
+    <div class="tool-card"><span class="tool-k" translate="no">Vault</span><p><a href="kun.html">Kun</a>. Local access-recovery vault with redacted diagnostics, rotation notes, and operator runbooks. Path-only receipts, never raw credentials.</p></div>
+    <div class="tool-card"><span class="tool-k" translate="no">Runtime</span><p><a href="orca.html">ORCA</a>. Native operator runtime for module execution, local run state, release provenance, and package handoff.</p></div>
+    <div class="tool-card"><span class="tool-k" translate="no">Isomorph</span><p><a href="isomorph.html">Isomorph</a>. Inference boundary research infrastructure. Transform pipeline, probe engine, refusal substrate, leakage accounting, and findings engine.</p></div>
+    <div class="tool-card"><span class="tool-k" translate="no">Array</span><p><a href="array.html">Array</a>. Offensive assessment platform. Campaign planning, fixture orchestration, containment, and receipt-backed results. Seed nested as the assessment engine.</p></div>
+    <div class="tool-card"><span class="tool-k" translate="no">Bounds</span><p><a href="bounds.html">Bounds</a>. Trust verification at every scope. Agent intent-drift auditing, runtime sensors, guard layers, release-readiness scanning, and proof index.</p></div>
+    <div class="tool-card"><span class="tool-k" translate="no">Phantom</span><p><a href="phantom.html">Phantom</a>. Hardware identity privacy for Windows and Linux. Audit, generate, apply, revert. Shipped v1.1.0.</p></div>
+    <div class="tool-card"><span class="tool-k" translate="no">Aeterna</span><p><a href="aeterna.html">Aeterna</a>. DX11/DX12 overlay framework. Proxy DLL hooks Present via MinHook, renders ImGui overlay for runtime instrumentation.</p></div>
   </div>
 </section>
 
@@ -117,7 +125,7 @@
     <div class="proof-card"><span class="proof-k">public boundary</span><span class="proof-v">clean</span></div>
   </div>
   <div class="status-list reveal">
-    <div class="status-row"><b>Presentation</b><span>All six private-line repos carry the live Project Telos visual language: off-white hero, pale wordmark, direct purpose, and shared docs/brand asset layout.</span></div>
+    <div class="status-row"><b>Presentation</b><span>All ten private-line repos carry the live Project Telos visual language: off-white hero, pale wordmark, direct purpose, and shared docs/brand asset layout.</span></div>
     <div class="status-row"><b>Visibility</b><span>Public now: Checkpoint, Runtime, Vault, and Boundary. Private until split: Lab (Seed) and Ledger (Sofer).</span></div>
     <div class="status-row"><b>Release</b><span>The local release checkpoint checks the docs and package surfaces before a readiness claim is allowed to stand.</span></div>
     <div class="status-row"><b>Integration</b><span>CLI, MCP, plugin, IDE/TUI, and app-host boundaries are documented as host-neutral contracts rather than single-surface demos.</span></div>
