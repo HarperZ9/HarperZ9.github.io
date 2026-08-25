@@ -1,4 +1,4 @@
-import { MORE, wireAnchorArrival, wireMenuArrowKeys } from "./nav.js?v=20260718-zentropy";
+import { MORE, wireAnchorArrival, wireMenuArrowKeys } from "./nav.js?v=20260824-frontier-safety";
 
 // The home app (built from home/) renders its final copy natively, so this
 // module no longer rewrites hero text. It keeps the shared-site menu and

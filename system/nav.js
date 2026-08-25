@@ -31,6 +31,7 @@ export const MORE = [
   ["Catalog", "catalog.html", "catalog"],
   ["Typeface", "typeface.html", "typeface"],
   ["Publications", "publications.html", "publications"],
+  ["Frontier Safety Briefing", "/frontier-safety.html", "frontier-safety"],
   ["Writing", "writing.html", "writing"],
   ["Dossier", "dossier.html", "dossier"],
   ["Resume and CV", "resume.html", "work"],
@@ -170,6 +171,7 @@ export function navActive(pathname) {
   if (stem === "session-archive") return "archive";
   if (stem === "guide") return "guide";
   if (stem === "publications") return "publications";
+  if (stem === "frontier-safety") return "frontier-safety";
   if (stem === "dossier") return "dossier";
   if (stem === "security") return "security";
   if (stem === "phantom") return "phantom";
@@ -353,7 +355,7 @@ function mountHomeLogo(doc) {
 // its own ?v= in the markup, so a new nav.js is what asks for new versions of
 // these; without a stamp here a reader with a warm cache keeps the old
 // stylesheet and the old exporter forever. Bump this with the nav.js stamp.
-const ASSET_V = "20260813-export2";
+const ASSET_V = "20260824-frontier-safety";
 
 function sheetHref(name) {
   const here = import.meta && import.meta.url ? import.meta.url : "";
