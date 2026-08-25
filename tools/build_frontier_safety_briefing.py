@@ -37,6 +37,13 @@ ALLOWED_LANES = {"aisi", "anthropic", "industry"}
 ALLOWED_STATES = {"baseline", "changed", "unchanged", "correction"}
 ALLOWED_SOCIAL_PUBLICATION_STATES = {"not_posted", "posted"}
 LEGACY_OPTIONAL_SOCIAL_PUBLICATION_DATES = {"2026-08-24"}
+X_SOCIAL_POST_HOSTS = {"x.com", "www.x.com", "twitter.com", "www.twitter.com"}
+LINKEDIN_SOCIAL_POST_HOSTS = {"linkedin.com", "www.linkedin.com"}
+X_FINAL_STATUS_PATH = re.compile(r"^/[A-Za-z0-9_]{1,15}/status/[0-9]+/?$")
+LINKEDIN_FINAL_UPDATE_PATH = re.compile(
+    r"^/feed/update/urn:li:(activity|share):[0-9]+/?$"
+)
+LINKEDIN_FINAL_POST_PATH = re.compile(r"^/posts/[^/]+/?$")
 ALLOWED_ROLES = {
     "government report",
     "developer statement",
@@ -124,13 +131,37 @@ def _validate_social_publication(edition: dict) -> None:
             continue
         if not isinstance(post_url, str) or not post_url.strip():
             raise EditionError(
-                f"social_publication.{channel}.post_url must be a final HTTPS URL when posted"
+                f"social_publication.{channel}.post_url must be a final {channel} post URL when posted"
             )
-        parsed = urlparse(post_url)
-        if parsed.scheme != "https" or not parsed.netloc:
-            raise EditionError(
-                f"social_publication.{channel}.post_url must be a final HTTPS URL when posted"
+        _validate_social_post_url(channel, post_url)
+
+
+def _validate_social_post_url(channel: str, post_url: str) -> None:
+    parsed = urlparse(post_url)
+    hostname = (parsed.hostname or "").lower()
+    has_clean_url_suffix = not parsed.params and not parsed.fragment
+    is_final_post = False
+    if channel == "x":
+        is_final_post = (
+            parsed.scheme == "https"
+            and hostname in X_SOCIAL_POST_HOSTS
+            and has_clean_url_suffix
+            and X_FINAL_STATUS_PATH.fullmatch(parsed.path) is not None
+        )
+    elif channel == "linkedin":
+        is_final_post = (
+            parsed.scheme == "https"
+            and hostname in LINKEDIN_SOCIAL_POST_HOSTS
+            and has_clean_url_suffix
+            and (
+                LINKEDIN_FINAL_UPDATE_PATH.fullmatch(parsed.path) is not None
+                or LINKEDIN_FINAL_POST_PATH.fullmatch(parsed.path) is not None
             )
+        )
+    if not is_final_post:
+        raise EditionError(
+            f"social_publication.{channel}.post_url must be a final {channel} post URL when posted"
+        )
 
 
 def validate_edition(edition: dict) -> None:

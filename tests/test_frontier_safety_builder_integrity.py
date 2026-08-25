@@ -250,17 +250,37 @@ def test_malformed_renderer_schema_fails_before_writes(tmp_path: Path, malform) 
     assert snapshot_tree(output_root) == {}
 
 
-def test_posted_social_publication_requires_https_final_urls(tmp_path: Path) -> None:
+@pytest.mark.parametrize(
+    ("x_url", "linkedin_url"),
+    [
+        (
+            "https://x.com/zentropylabs/status/1234567890",
+            "https://www.linkedin.com/feed/update/urn:li:activity:1234567890/",
+        ),
+        (
+            "https://www.twitter.com/Zain_Dana/status/987654321/?s=20",
+            "https://linkedin.com/feed/update/urn:li:share:987654321",
+        ),
+        (
+            "https://www.x.com/Zain_Dana/status/987654321/",
+            "https://www.linkedin.com/posts/frontier-safety-correction-123",
+        ),
+    ],
+    ids=["canonical-current-hosts", "legacy-twitter-and-share", "trailing-slash-post"],
+)
+def test_posted_social_publication_accepts_final_post_urls(
+    tmp_path: Path, x_url: str, linkedin_url: str
+) -> None:
     builder = load_builder()
     edition = read_edition()
     edition["social_publication"] = {
         "x": {
             "state": "posted",
-            "post_url": "https://x.com/zentropylabs/status/1234567890",
+            "post_url": x_url,
         },
         "linkedin": {
             "state": "posted",
-            "post_url": "https://www.linkedin.com/feed/update/urn:li:activity:1234567890/",
+            "post_url": linkedin_url,
         },
     }
     edition_path = write_edition(tmp_path / "posted.json", edition)
@@ -286,6 +306,56 @@ def test_posted_social_publication_requires_https_final_urls(tmp_path: Path) -> 
     assert result["edition_date"] == "2026-08-24"
     assert current["social_publication"] == edition["social_publication"]
     assert archived["social_publication"] == edition["social_publication"]
+
+
+@pytest.mark.parametrize(
+    ("channel", "post_url"),
+    [
+        ("x", "https://example.com/zentropylabs/status/1234567890"),
+        ("x", "https://x.com/zentropylabs"),
+        ("x", "https://x.com/zentropylabs/status/notnumeric"),
+        ("x", "https://x.com/team/zentropylabs/status/1234567890"),
+        ("x", "https://x.com/zentropylabs/posts/1234567890"),
+        ("x", "https://www.linkedin.com/feed/update/urn:li:activity:1234567890/"),
+        ("linkedin", "https://x.com/zentropylabs/status/1234567890"),
+        ("linkedin", "https://www.linkedin.com/company/zentropylabs"),
+        ("linkedin", "https://linkedin.com/feed/update/urn:li:comment:1234567890/"),
+        ("linkedin", "https://linkedin.com/feed/update/urn:li:activity:notnumeric/"),
+        ("linkedin", "https://linkedin.com/posts/"),
+        ("linkedin", "https://example.com/posts/frontier-safety-correction"),
+    ],
+    ids=[
+        "x-wrong-host",
+        "x-missing-status",
+        "x-nonnumeric-status",
+        "x-multiple-handle-segments",
+        "x-generic-posts-path",
+        "x-cross-channel-linkedin",
+        "linkedin-cross-channel-x",
+        "linkedin-generic-company",
+        "linkedin-wrong-urn-kind",
+        "linkedin-nonnumeric-urn",
+        "linkedin-empty-post-id",
+        "linkedin-wrong-host",
+    ],
+)
+def test_posted_social_publication_rejects_non_final_post_urls(
+    tmp_path: Path, channel: str, post_url: str
+) -> None:
+    builder = load_builder()
+    edition = read_edition()
+    edition["social_publication"][channel] = {
+        "state": "posted",
+        "post_url": post_url,
+    }
+    edition_path = write_edition(tmp_path / "posted.json", edition)
+    output_root = tmp_path / "public"
+    output_root.mkdir()
+
+    with pytest.raises(builder.EditionError, match="final .* post URL|final post URL"):
+        builder.build(edition_path, output_root)
+
+    assert snapshot_tree(output_root) == {}
 
 
 def test_late_replace_failure_rolls_back_entire_publication(
