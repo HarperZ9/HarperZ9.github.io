@@ -602,15 +602,8 @@ def _text_bytes(content: str) -> bytes:
     return content.encode("utf-8")
 
 
-def _crlf_text_bytes(content: str) -> bytes:
-    normalized = content.replace("\r\n", "\n").replace("\r", "\n")
-    if not normalized.endswith("\n"):
-        normalized += "\n"
-    return normalized.replace("\n", "\r\n").encode("utf-8")
-
-
 def _json_bytes(payload: dict | list) -> bytes:
-    return _crlf_text_bytes(
+    return _text_bytes(
         json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=False)
     )
 
@@ -760,8 +753,8 @@ def build(edition_path: Path, output_root: Path = ROOT) -> dict:
         fs_root / "archive" / f"{date}.html": _text_bytes(
             render_html(rendered, archive=True)
         ),
-        fs_root / "social" / f"{date}-x.txt": _crlf_text_bytes(rendered["social"]["x"]),
-        fs_root / "social" / f"{date}-linkedin.txt": _crlf_text_bytes(
+        fs_root / "social" / f"{date}-x.txt": _text_bytes(rendered["social"]["x"]),
+        fs_root / "social" / f"{date}-linkedin.txt": _text_bytes(
             rendered["social"]["linkedin"]
         ),
     }

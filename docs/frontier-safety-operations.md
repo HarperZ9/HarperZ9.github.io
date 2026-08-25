@@ -109,6 +109,6 @@ This was a monitoring false-positive review, not a new factual development. It d
 - Merge receipt: GitHub PR #143 records the final merge commit and merge time; pending at the time this pre-publication receipt was committed
 - Pages build receipt: the repository's Pages deployment for the PR #143 merge commit; pending at the time this pre-publication receipt was committed
 - Live hash verification: required after the Pages build succeeds; pending at the time this pre-publication receipt was committed
-- Reviewed source-state baseline: unchanged, SHA-256 `4abb8f39cfcf81c90562205f947d63e61b2ebfdfda36abc5e7669cae7d15ebe6`; acceptance of the new source fingerprint remains a separate reviewed change
+- Reviewed source-state baseline: content unchanged at Git blob `9193e6231401017d31e266bf73e11023f095cd50`; canonical LF file SHA-256 `59306c296fcc8f1b0ae77cdc187d9fbc5768ef6e1fb7c8bae7d193409684fb42`; acceptance of the new source fingerprint remains a separate reviewed change
 - X post: not posted; edition-matched draft retained
 - LinkedIn post: not posted; edition-matched draft retained
