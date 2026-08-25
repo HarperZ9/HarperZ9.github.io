@@ -35,6 +35,8 @@ ALLOWED_SOURCE_HOSTS = {
 }
 ALLOWED_LANES = {"aisi", "anthropic", "industry"}
 ALLOWED_STATES = {"baseline", "changed", "unchanged", "correction"}
+ALLOWED_SOCIAL_PUBLICATION_STATES = {"not_posted", "posted"}
+LEGACY_OPTIONAL_SOCIAL_PUBLICATION_DATES = {"2026-08-24"}
 ALLOWED_ROLES = {
     "government report",
     "developer statement",
@@ -86,6 +88,49 @@ def _validate_url(url: str, context: str) -> None:
     parsed = urlparse(url)
     if parsed.scheme != "https" or parsed.hostname not in ALLOWED_SOURCE_HOSTS:
         raise EditionError(f"{context} uses an unapproved source URL: {url}")
+
+
+def _validate_social_publication(edition: dict) -> None:
+    publication = edition.get("social_publication")
+    if not isinstance(publication, dict):
+        if (
+            edition.get("edition_date") in LEGACY_OPTIONAL_SOCIAL_PUBLICATION_DATES
+            and publication is None
+        ):
+            return
+        raise EditionError("edition.social_publication must be an object")
+    if set(publication) != {"x", "linkedin"}:
+        raise EditionError("edition.social_publication must contain x and linkedin")
+    for channel in ("x", "linkedin"):
+        record = publication[channel]
+        if not isinstance(record, dict):
+            raise EditionError(f"social_publication.{channel} must be an object")
+        if set(record) != {"state", "post_url"}:
+            raise EditionError(
+                f"social_publication.{channel} must contain state and post_url"
+            )
+        state = _require_choice(
+            record,
+            "state",
+            ALLOWED_SOCIAL_PUBLICATION_STATES,
+            f"social_publication.{channel}",
+        )
+        post_url = record.get("post_url")
+        if state == "not_posted":
+            if post_url is not None:
+                raise EditionError(
+                    f"social_publication.{channel}.post_url must be null when not_posted"
+                )
+            continue
+        if not isinstance(post_url, str) or not post_url.strip():
+            raise EditionError(
+                f"social_publication.{channel}.post_url must be a final HTTPS URL when posted"
+            )
+        parsed = urlparse(post_url)
+        if parsed.scheme != "https" or not parsed.netloc:
+            raise EditionError(
+                f"social_publication.{channel}.post_url must be a final HTTPS URL when posted"
+            )
 
 
 def validate_edition(edition: dict) -> None:
@@ -188,6 +233,7 @@ def validate_edition(edition: dict) -> None:
         raise EditionError("social.x exceeds 280 characters")
     if len(linkedin) > 3000:
         raise EditionError("social.linkedin exceeds 3000 characters")
+    _validate_social_publication(edition)
 
 
 def _e(value: object) -> str:

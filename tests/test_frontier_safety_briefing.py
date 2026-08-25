@@ -98,6 +98,27 @@ def test_current_archive_and_history_are_hash_consistent() -> None:
     assert len(dates) == len(set(dates))
 
 
+def test_current_edition_records_unposted_social_publication() -> None:
+    edition = read_json(f"frontier-safety/data/editions/{CURRENT_EDITION_DATE}.json")
+    current = read_json("frontier-safety/data/current.json")
+    archived = read_json(f"frontier-safety/data/archive/{CURRENT_EDITION_DATE}.json")
+    expected = {
+        "x": {"state": "not_posted", "post_url": None},
+        "linkedin": {"state": "not_posted", "post_url": None},
+    }
+
+    assert edition["social_publication"] == expected
+    assert current["social_publication"] == expected
+    assert archived["social_publication"] == expected
+    assert current == archived
+    assert (
+        ROOT / "frontier-safety" / "social" / f"{CURRENT_EDITION_DATE}-x.txt"
+    ).read_text(encoding="utf-8").strip() == edition["social"]["x"]
+    assert (
+        ROOT / "frontier-safety" / "social" / f"{CURRENT_EDITION_DATE}-linkedin.txt"
+    ).read_text(encoding="utf-8").strip() == edition["social"]["linkedin"]
+
+
 def test_generator_is_idempotent(tmp_path: Path) -> None:
     builder = load_builder()
     edition_path = ROOT / "frontier-safety" / "data" / "editions" / f"{CURRENT_EDITION_DATE}.json"
