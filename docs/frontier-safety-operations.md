@@ -94,3 +94,21 @@ This was a monitoring false-positive review, not a new factual development. It d
 - Pages build: pending
 - X post: not posted
 - LinkedIn post: not posted
+
+## 2026-08-25 correction publication receipt
+
+- Edition: 2026-08-25
+- Observation time: `2026-08-25T15:06:19Z`
+- Correction state: reviewed correction; the 2026-08-24 dated archive and hash remain unchanged
+- Live edition target: [https://harperz9.github.io/frontier-safety.html](https://harperz9.github.io/frontier-safety.html)
+- Edition hash: `0034b2bcf37697e96bee6c271057b15820c23ef4f8f52746bd630b933f07fe2d`
+- Reviewed edition commit: `abdb8f4995142bc2d6372e43a7641e0cd93c5b33`
+- Social receipt schema commit: `960900a767017aa8e6e71eba147241b93b50a55a`
+- Social URL integrity commit: `458de2f79de43413cf397ee3ab0efae36fb8a908`
+- Pull request: [#143](https://github.com/HarperZ9/HarperZ9.github.io/pull/143)
+- Merge receipt: GitHub PR #143 records the final merge commit and merge time; pending at the time this pre-publication receipt was committed
+- Pages build receipt: the repository's Pages deployment for the PR #143 merge commit; pending at the time this pre-publication receipt was committed
+- Live hash verification: required after the Pages build succeeds; pending at the time this pre-publication receipt was committed
+- Reviewed source-state baseline: content unchanged at Git blob `9193e6231401017d31e266bf73e11023f095cd50`; canonical LF file SHA-256 `59306c296fcc8f1b0ae77cdc187d9fbc5768ef6e1fb7c8bae7d193409684fb42`; acceptance of the new source fingerprint remains a separate reviewed change
+- X post: not posted; edition-matched draft retained
+- LinkedIn post: not posted; edition-matched draft retained

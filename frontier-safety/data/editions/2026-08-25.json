@@ -128,36 +128,28 @@
       "announced_by": "UK AISI",
       "status": "announced",
       "evidence_boundary": "No independent control-effectiveness result was located for this edition.",
-      "sources": [
-        "https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing"
-      ]
+      "sources": ["https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing"]
     },
     {
       "claim": "Anthropic says it stopped cyber evaluations, reviewed relevant runs, and is changing third-party evaluation practice.",
       "announced_by": "Anthropic",
       "status": "announced",
       "evidence_boundary": "The source is Anthropic's own retrospective; independent completeness and effectiveness remain unverified.",
-      "sources": [
-        "https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals"
-      ]
+      "sources": ["https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals"]
     },
     {
       "claim": "OpenAI says it expanded monitoring and isolation requirements and paused workloads that did not meet the new bar.",
       "announced_by": "OpenAI",
       "status": "announced",
       "evidence_boundary": "The implementation and performance of the controls have not been independently demonstrated in the monitored record.",
-      "sources": [
-        "https://openai.com/index/pacing-model-development-cyber-capabilities/"
-      ]
+      "sources": ["https://openai.com/index/pacing-model-development-cyber-capabilities/"]
     },
     {
       "claim": "OpenAI says Private Safety Processing is designed to detect patterns across related interactions while limiting personnel access to underlying customer content.",
       "announced_by": "OpenAI",
       "status": "preview",
       "evidence_boundary": "The source describes testing with early customers and a planned rollout. No independent privacy, security, detection-performance, or control-effectiveness result was located.",
-      "sources": [
-        "https://openai.com/index/offering-zero-data-retention-for-frontier-models/"
-      ]
+      "sources": ["https://openai.com/index/offering-zero-data-retention-for-frontier-models/"]
     }
   ],
   "open_questions": [
@@ -183,6 +175,5 @@
       "state": "not_posted",
       "post_url": null
     }
-  },
-  "edition_sha256": "0034b2bcf37697e96bee6c271057b15820c23ef4f8f52746bd630b933f07fe2d"
+  }
 }

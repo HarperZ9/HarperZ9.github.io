@@ -7,6 +7,13 @@
       "state": "baseline",
       "html": "../archive/2026-08-24.html",
       "json": "archive/2026-08-24.json"
+    },
+    {
+      "date": "2026-08-25",
+      "sha256": "0034b2bcf37697e96bee6c271057b15820c23ef4f8f52746bd630b933f07fe2d",
+      "state": "correction",
+      "html": "../archive/2026-08-25.html",
+      "json": "archive/2026-08-25.json"
     }
   ]
 }

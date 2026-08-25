@@ -35,6 +35,15 @@ ALLOWED_SOURCE_HOSTS = {
 }
 ALLOWED_LANES = {"aisi", "anthropic", "industry"}
 ALLOWED_STATES = {"baseline", "changed", "unchanged", "correction"}
+ALLOWED_SOCIAL_PUBLICATION_STATES = {"not_posted", "posted"}
+LEGACY_OPTIONAL_SOCIAL_PUBLICATION_DATES = {"2026-08-24"}
+X_SOCIAL_POST_HOSTS = {"x.com", "www.x.com", "twitter.com", "www.twitter.com"}
+LINKEDIN_SOCIAL_POST_HOSTS = {"linkedin.com", "www.linkedin.com"}
+X_FINAL_STATUS_PATH = re.compile(r"^/[A-Za-z0-9_]{1,15}/status/[0-9]+/?$")
+LINKEDIN_FINAL_UPDATE_PATH = re.compile(
+    r"^/feed/update/urn:li:(activity|share):[0-9]+/?$"
+)
+LINKEDIN_FINAL_POST_PATH = re.compile(r"^/posts/[^/]+/?$")
 ALLOWED_ROLES = {
     "government report",
     "developer statement",
@@ -86,6 +95,73 @@ def _validate_url(url: str, context: str) -> None:
     parsed = urlparse(url)
     if parsed.scheme != "https" or parsed.hostname not in ALLOWED_SOURCE_HOSTS:
         raise EditionError(f"{context} uses an unapproved source URL: {url}")
+
+
+def _validate_social_publication(edition: dict) -> None:
+    publication = edition.get("social_publication")
+    if not isinstance(publication, dict):
+        if (
+            edition.get("edition_date") in LEGACY_OPTIONAL_SOCIAL_PUBLICATION_DATES
+            and publication is None
+        ):
+            return
+        raise EditionError("edition.social_publication must be an object")
+    if set(publication) != {"x", "linkedin"}:
+        raise EditionError("edition.social_publication must contain x and linkedin")
+    for channel in ("x", "linkedin"):
+        record = publication[channel]
+        if not isinstance(record, dict):
+            raise EditionError(f"social_publication.{channel} must be an object")
+        if set(record) != {"state", "post_url"}:
+            raise EditionError(
+                f"social_publication.{channel} must contain state and post_url"
+            )
+        state = _require_choice(
+            record,
+            "state",
+            ALLOWED_SOCIAL_PUBLICATION_STATES,
+            f"social_publication.{channel}",
+        )
+        post_url = record.get("post_url")
+        if state == "not_posted":
+            if post_url is not None:
+                raise EditionError(
+                    f"social_publication.{channel}.post_url must be null when not_posted"
+                )
+            continue
+        if not isinstance(post_url, str) or not post_url.strip():
+            raise EditionError(
+                f"social_publication.{channel}.post_url must be a final {channel} post URL when posted"
+            )
+        _validate_social_post_url(channel, post_url)
+
+
+def _validate_social_post_url(channel: str, post_url: str) -> None:
+    parsed = urlparse(post_url)
+    hostname = (parsed.hostname or "").lower()
+    has_clean_url_suffix = not parsed.params and not parsed.fragment
+    is_final_post = False
+    if channel == "x":
+        is_final_post = (
+            parsed.scheme == "https"
+            and hostname in X_SOCIAL_POST_HOSTS
+            and has_clean_url_suffix
+            and X_FINAL_STATUS_PATH.fullmatch(parsed.path) is not None
+        )
+    elif channel == "linkedin":
+        is_final_post = (
+            parsed.scheme == "https"
+            and hostname in LINKEDIN_SOCIAL_POST_HOSTS
+            and has_clean_url_suffix
+            and (
+                LINKEDIN_FINAL_UPDATE_PATH.fullmatch(parsed.path) is not None
+                or LINKEDIN_FINAL_POST_PATH.fullmatch(parsed.path) is not None
+            )
+        )
+    if not is_final_post:
+        raise EditionError(
+            f"social_publication.{channel}.post_url must be a final {channel} post URL when posted"
+        )
 
 
 def validate_edition(edition: dict) -> None:
@@ -188,6 +264,7 @@ def validate_edition(edition: dict) -> None:
         raise EditionError("social.x exceeds 280 characters")
     if len(linkedin) > 3000:
         raise EditionError("social.linkedin exceeds 3000 characters")
+    _validate_social_publication(edition)
 
 
 def _e(value: object) -> str:
@@ -236,7 +313,7 @@ def _render_controls(controls: list[dict]) -> str:
     return "\n".join(rows)
 
 
-def render_html(edition: dict, *, archive: bool) -> str:
+def _render_legacy_html(edition: dict, *, archive: bool) -> str:
     date = edition["edition_date"]
     if archive:
         root_prefix = "../../"
@@ -372,6 +449,153 @@ def render_html(edition: dict, *, archive: bool) -> str:
 """
 
 
+def render_html(edition: dict, *, archive: bool) -> str:
+    """Render the live shared-site shell while preserving published archives.
+
+    The inaugural 2026-08-24 archive shipped with the document shell. Its HTML
+    is an immutable publication artifact, so it continues through the legacy
+    renderer. The live page and every later archive use the site-wide
+    shared site presentation.
+    """
+
+    date = edition["edition_date"]
+    if archive and date == "2026-08-24":
+        return _render_legacy_html(edition, archive=True)
+
+    if archive:
+        root_prefix = "../../"
+        css_href = "../frontier-safety-site.css"
+        canonical = f"https://harperz9.github.io/frontier-safety/archive/{date}.html"
+        data_href = f"../data/archive/{date}.json"
+        self_href = f"{date}.html"
+        page_label = "Dated archive"
+    else:
+        root_prefix = ""
+        css_href = "frontier-safety/frontier-safety-site.css"
+        canonical = "https://harperz9.github.io/frontier-safety.html"
+        data_href = "frontier-safety/data/current.json"
+        self_href = "frontier-safety.html"
+        page_label = "Current edition"
+
+    rail = []
+    records = []
+    number = 1
+    for lane in edition["lanes"]:
+        rail.append(
+            f'<a class="rail-mark rail-{_e(lane["state"])}" href="#{_e(lane["id"])}">'
+            f'<span class="rail-symbol" aria-hidden="true"></span><span>{_e(lane["label"])}</span>'
+            f'<strong>{_e(lane["state"])}</strong></a>'
+        )
+        lane_items = []
+        for item in lane["items"]:
+            lane_items.append(_render_item(item, number))
+            number += 1
+        records.append(
+            f'<section class="mv lane" id="{_e(lane["id"])}"><header class="lane-head">'
+            f'<p class="eyebrow">{_e(lane["summary"])}</p><h2>{_e(lane["label"])}</h2></header>'
+            f'{"".join(lane_items)}</section>'
+        )
+
+    questions = "".join(f"<li>{_e(q)}</li>" for q in edition["open_questions"])
+    corrections = edition.get("corrections") or ["No corrections recorded for this edition."]
+    correction_items = "".join(f"<li>{_e(item)}</li>" for item in corrections)
+    digest = edition_sha256(edition)
+    description = "A dated, source-grounded record of AISI, Anthropic, and frontier AI industry safety developments, with explicit evidence limits."
+
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="{root_prefix}favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#070406">
+<title>Frontier Safety Briefing · {_e(date)} · Zain Dana Harper</title>
+<meta name="description" content="{description}">
+<link rel="canonical" href="{canonical}">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Frontier Safety Briefing · {_e(date)}">
+<meta property="og:description" content="{description}">
+<meta property="og:url" content="{canonical}">
+<meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
+<meta property="og:image:alt" content="A procedural ZentropyLabs research plate used for the Frontier Safety Briefing.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Frontier Safety Briefing · {_e(date)}">
+<meta name="twitter:description" content="{description}">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
+<link rel="preload" href="{root_prefix}system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{root_prefix}system/fonts/conso-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{css_href}">
+</head>
+<body class="inner-clean frame-compact frontier-briefing">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="{root_prefix}index.html">Home</a> <a href="{root_prefix}research.html">Research</a></nav></noscript>
+<script type="module" src="{root_prefix}system/nav.js?v=20260824-frontier-safety"></script>
+
+<div class="frame briefing-hero">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Research · Frontier Safety</span></div>
+  <div class="mid briefing-intro">
+    <p class="eyebrow">Frontier Safety Briefing · {_e(page_label)}</p>
+    <h1>What changed. What supports it. <span class="g">What remains unresolved.</span></h1>
+    <p class="lede">{_e(edition['change_summary'])}</p>
+    <figure class="plate plate--slim briefing-plate">
+      <canvas data-specimen="frontier-safety-{_e(date)}" data-specimen-layers="obsidian-burst" aria-hidden="true"></canvas>
+      <figcaption><span class="plate-no">Edition {_e(date)}</span><span class="plate-caption">A source record drawn at the size of its evidence, with every unresolved boundary left visible.</span></figcaption>
+    </figure>
+    <dl class="edition-readout">
+      <div><dt>Edition</dt><dd>{_e(date)}</dd></div>
+      <div><dt>Observed</dt><dd>{_e(edition['observed_at'])}</dd></div>
+      <div><dt>State</dt><dd>{_e(edition['edition_state'])}</dd></div>
+      <div><dt>SHA-256</dt><dd title="{digest}">{digest[:16]}…</dd></div>
+    </dl>
+  </div>
+  <div class="seal">reported facts · source roles · explicit non-claims · <a href="{data_href}">machine-readable edition</a></div>
+</div>
+
+<main id="main">
+  <section class="mv briefing-overview">
+    <p class="eyebrow">Edition map</p>
+    <h2>Three monitored lanes. One claim discipline.</h2>
+    <p class="body-text">Words and shapes carry status. Color is secondary. Each lane separates the public record from the conclusions that record cannot support.</p>
+    <nav class="delta-rail" aria-label="Briefing lanes">{''.join(rail)}</nav>
+    <p class="briefing-links"><a href="{root_prefix}research.html">Research index</a> · <a href="{self_href}" aria-current="page">{_e(page_label)}</a> · <a href="{data_href}">JSON edition</a></p>
+  </section>
+
+  {''.join(records)}
+
+  <section class="mv wide-section controls">
+    <header><p class="eyebrow">Claim discipline</p><h2>Controls and their status</h2></header>
+    <div class="table-wrap"><table class="data data--wide controls-table">
+      <thead><tr><th>Source</th><th>Reported control</th><th>Evidence status</th></tr></thead>
+      <tbody>{_render_controls(edition['controls'])}</tbody>
+    </table></div>
+  </section>
+
+  <section class="mv wide-section questions">
+    <header><p class="eyebrow">Watch list</p><h2>Open questions</h2></header>
+    <ol>{questions}</ol>
+  </section>
+
+  <section class="mv wide-section method">
+    <header><p class="eyebrow">Publication contract</p><h2>Method, corrections, and limits</h2></header>
+    <div class="method-grid">
+      <div><h3>Method</h3><p>{_e(edition['methodology'])}</p></div>
+      <div><h3>Corrections</h3><ul>{correction_items}</ul></div>
+      <div><h3>Does not prove</h3><p>This edition does not prove source completeness, model intent, incident prevalence, control effectiveness, or independent endorsement. It records the strongest current public claims within the monitored set and names their limits.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Compiled by Zain Dana Harper · ZentropyLabs · <a href="{root_prefix}research.html">Research index</a> · <a href="{data_href}">JSON edition</a> · <a href="{root_prefix}frontier-safety/archive/{_e(date)}.html">Dated archive</a></p>
+</footer>
+<script src="{root_prefix}system/reveal.js?v=20260625a" defer></script>
+</body>
+</html>
+"""
+
+
 def _text_bytes(content: str) -> bytes:
     if not content.endswith("\n"):
         content += "\n"
@@ -379,7 +603,9 @@ def _text_bytes(content: str) -> bytes:
 
 
 def _json_bytes(payload: dict | list) -> bytes:
-    return _text_bytes(json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=False))
+    return _text_bytes(
+        json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=False)
+    )
 
 
 def _load_history(path: Path) -> dict:

@@ -1,0 +1,1 @@
+Correction, 25 Aug 2026: the briefing now includes OpenAI's Aug 19 Private Safety Processing preview. It is a developer claim under early testing, not validated privacy or control effectiveness. Record and limits: https://harperz9.github.io/frontier-safety.html
