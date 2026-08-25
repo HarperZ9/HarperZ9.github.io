@@ -10,7 +10,10 @@ from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EDITION_DATE = "2026-08-24"
+BASELINE_EDITION_DATE = "2026-08-24"
+CURRENT_EDITION_DATE = json.loads(
+    (ROOT / "frontier-safety" / "data" / "current.json").read_text(encoding="utf-8")
+)["edition_date"]
 ALLOWED_SOURCE_HOSTS = {
     "www.aisi.gov.uk",
     "www.anthropic.com",
@@ -36,9 +39,9 @@ def load_builder():
     return module
 
 
-def test_first_edition_has_three_lanes_and_complete_evidence_boundaries() -> None:
-    edition = read_json(f"frontier-safety/data/editions/{EDITION_DATE}.json")
-    assert edition["edition_date"] == EDITION_DATE
+def test_current_edition_has_three_lanes_and_complete_evidence_boundaries() -> None:
+    edition = read_json(f"frontier-safety/data/editions/{CURRENT_EDITION_DATE}.json")
+    assert edition["edition_date"] == CURRENT_EDITION_DATE
     assert edition["observed_at"].endswith("Z")
     assert {lane["id"] for lane in edition["lanes"]} == {"aisi", "anthropic", "industry"}
 
@@ -67,11 +70,11 @@ def test_first_edition_has_three_lanes_and_complete_evidence_boundaries() -> Non
 def test_public_copy_has_no_opaque_citations_private_paths_or_bare_severity() -> None:
     checked = [
         ROOT / "frontier-safety.html",
-        ROOT / "frontier-safety" / "archive" / f"{EDITION_DATE}.html",
+        ROOT / "frontier-safety" / "archive" / f"{CURRENT_EDITION_DATE}.html",
         ROOT / "frontier-safety" / "data" / "current.json",
-        ROOT / "frontier-safety" / "data" / "archive" / f"{EDITION_DATE}.json",
-        ROOT / "frontier-safety" / "social" / f"{EDITION_DATE}-x.txt",
-        ROOT / "frontier-safety" / "social" / f"{EDITION_DATE}-linkedin.txt",
+        ROOT / "frontier-safety" / "data" / "archive" / f"{CURRENT_EDITION_DATE}.json",
+        ROOT / "frontier-safety" / "social" / f"{CURRENT_EDITION_DATE}-x.txt",
+        ROOT / "frontier-safety" / "social" / f"{CURRENT_EDITION_DATE}-linkedin.txt",
     ]
     for path in checked:
         source = path.read_text(encoding="utf-8")
@@ -84,12 +87,12 @@ def test_public_copy_has_no_opaque_citations_private_paths_or_bare_severity() ->
 
 def test_current_archive_and_history_are_hash_consistent() -> None:
     current = read_json("frontier-safety/data/current.json")
-    archived = read_json(f"frontier-safety/data/archive/{EDITION_DATE}.json")
+    archived = read_json(f"frontier-safety/data/archive/{CURRENT_EDITION_DATE}.json")
     history = read_json("frontier-safety/data/history.json")
     builder = load_builder()
 
     assert current == archived
-    assert history["editions"][-1]["date"] == EDITION_DATE
+    assert history["editions"][-1]["date"] == CURRENT_EDITION_DATE
     assert history["editions"][-1]["sha256"] == builder.edition_sha256(current)
     dates = [entry["date"] for entry in history["editions"]]
     assert len(dates) == len(set(dates))
@@ -97,7 +100,7 @@ def test_current_archive_and_history_are_hash_consistent() -> None:
 
 def test_generator_is_idempotent(tmp_path: Path) -> None:
     builder = load_builder()
-    edition_path = ROOT / "frontier-safety" / "data" / "editions" / f"{EDITION_DATE}.json"
+    edition_path = ROOT / "frontier-safety" / "data" / "editions" / f"{CURRENT_EDITION_DATE}.json"
     first = builder.build(edition_path, tmp_path)
     second = builder.build(edition_path, tmp_path)
     assert first == second
@@ -106,11 +109,11 @@ def test_generator_is_idempotent(tmp_path: Path) -> None:
 
 def test_page_metadata_social_copy_and_site_links() -> None:
     page = (ROOT / "frontier-safety.html").read_text(encoding="utf-8")
-    archive = (ROOT / "frontier-safety" / "archive" / f"{EDITION_DATE}.html").read_text(encoding="utf-8")
+    archive = (ROOT / "frontier-safety" / "archive" / f"{CURRENT_EDITION_DATE}.html").read_text(encoding="utf-8")
     research = (ROOT / "research.html").read_text(encoding="utf-8")
     sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
-    x_copy = (ROOT / "frontier-safety" / "social" / f"{EDITION_DATE}-x.txt").read_text(encoding="utf-8").strip()
-    linkedin = (ROOT / "frontier-safety" / "social" / f"{EDITION_DATE}-linkedin.txt").read_text(encoding="utf-8").strip()
+    x_copy = (ROOT / "frontier-safety" / "social" / f"{CURRENT_EDITION_DATE}-x.txt").read_text(encoding="utf-8").strip()
+    linkedin = (ROOT / "frontier-safety" / "social" / f"{CURRENT_EDITION_DATE}-linkedin.txt").read_text(encoding="utf-8").strip()
 
     for html in (page, archive):
         assert html.count("<h1") == 1
@@ -127,7 +130,7 @@ def test_page_metadata_social_copy_and_site_links() -> None:
 
 def test_briefing_uses_the_shared_site_design_canon() -> None:
     page = (ROOT / "frontier-safety.html").read_text(encoding="utf-8")
-    archive = (ROOT / "frontier-safety" / "archive" / f"{EDITION_DATE}.html").read_text(encoding="utf-8")
+    archive = (ROOT / "frontier-safety" / "archive" / f"{BASELINE_EDITION_DATE}.html").read_text(encoding="utf-8")
     stylesheet = (ROOT / "frontier-safety" / "frontier-safety-site.css").read_text(encoding="utf-8")
 
     assert '<body class="inner-clean frame-compact frontier-briefing">' in page
@@ -158,16 +161,16 @@ def test_briefing_uses_the_shared_site_design_canon() -> None:
 
 def test_future_dated_archives_use_the_shared_site_shell_and_nested_paths() -> None:
     builder = load_builder()
-    future = read_json(f"frontier-safety/data/editions/{EDITION_DATE}.json")
-    future["edition_date"] = "2026-08-25"
-    future["observed_at"] = "2026-08-25T16:00:00Z"
+    future = read_json(f"frontier-safety/data/editions/{BASELINE_EDITION_DATE}.json")
+    future["edition_date"] = "2026-08-26"
+    future["observed_at"] = "2026-08-26T16:00:00Z"
 
     archive = builder.render_html(future, archive=True)
 
     assert '<body class="inner-clean frame-compact frontier-briefing">' in archive
     assert 'href="../frontier-safety-site.css"' in archive
     assert 'src="../../system/nav.js?v=20260824-frontier-safety"' in archive
-    assert 'href="../data/archive/2026-08-25.json"' in archive
+    assert 'href="../data/archive/2026-08-26.json"' in archive
     assert 'href="../../research.html"' in archive
     assert 'class="docnav"' not in archive
 
