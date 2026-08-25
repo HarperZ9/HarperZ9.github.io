@@ -125,6 +125,12 @@ def test_page_metadata_social_copy_and_site_links() -> None:
     assert "https://harperz9.github.io/frontier-safety.html" in linkedin
 
 
+def test_briefing_is_discoverable_from_the_catalog_index() -> None:
+    catalog = (ROOT / "catalog.html").read_text(encoding="utf-8")
+
+    assert 'href="frontier-safety.html"' in catalog
+
+
 def test_source_registry_is_current_and_explicit_about_roles() -> None:
     registry = read_json("project-docs/zentropy-import/2026-08-24-source-register.json")
     assert registry["observed_at"].endswith("Z")

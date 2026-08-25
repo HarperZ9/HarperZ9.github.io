@@ -305,7 +305,7 @@ def render_html(edition: dict, *, archive: bool) -> str:
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="{root_prefix}index.html">Home</a> <a href="{root_prefix}research.html">Research</a></nav></noscript>
-<script type="module" src="{root_prefix}system/nav.js?v=20260813-export2"></script>
+<script type="module" src="{root_prefix}system/nav.js?v=20260824-frontier-safety"></script>
 
 <main id="main">
   <header class="briefing-hero">
