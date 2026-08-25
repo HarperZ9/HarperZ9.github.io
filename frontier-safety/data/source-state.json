@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "observed_at": "2026-08-24T19:27:58Z",
+  "observed_at": "2026-08-25T20:01:08Z",
   "sources": [
     {"id":"aisi-unsanctioned-agent-behaviour","status":"available","changed":false,"url":"https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing","sha256":"0c0b5e65920b52a9ff97b1b6bcfbf2a97121455e893f898a38915b0886e773b4","normalized_characters":17264,"etag":null,"last_modified":"Fri, 21 Aug 2026 09:32:06 GMT"},
     {"id":"anthropic-three-cyber-eval-incidents","status":"available","changed":false,"url":"https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals","sha256":"90c9148dfd01c15b0b200bd4ca9c5a45b6668d49cf09c005a56c6c5554e47539","normalized_characters":20686,"etag":null,"last_modified":null},
@@ -11,7 +11,9 @@
     {"id":"metr-incident-investigation-method","status":"available","changed":false,"url":"https://metr.org/blog/2026-07-28-investigating-ai-propensities-after-incidents/","sha256":"5fa53f1b186555831632cae89e1c6a6ff23bced450c1b687ccb2417691ce75cb","normalized_characters":8711,"etag":"\"09de16e29b7a0160c587392f4db2b660-ssl\"","last_modified":null},
     {"id":"nvd-cve-2025-3248","status":"available","changed":false,"url":"https://nvd.nist.gov/vuln/detail/CVE-2025-3248","sha256":"037cc799420766b86c075012007773865602ace5d50dd20ec8c5b69fe4b0b7bc","normalized_characters":7133,"etag":null,"last_modified":null},
     {"id":"sysdig-jadepuffer","status":"available","changed":false,"url":"https://www.sysdig.com/blog/jadepuffer-agentic-ransomware-for-automated-database-extortion","sha256":"7acdecb003a1a0aa4d55b58277c7b16958ae0054d22435567d746b784f15b443","normalized_characters":22053,"etag":null,"last_modified":"Mon, 24 Aug 2026 15:00:50 GMT"},
-    {"id":"openai-metr-redwood-joint-review","url":"https://openai.com/index/hugging-face-model-evaluation-security-incident/","status":"pending","changed":false}
+    {"id":"openai-metr-redwood-joint-review","url":"https://openai.com/index/hugging-face-model-evaluation-security-incident/","status":"pending","changed":false},
+    {"id":"aisi-ai-safety-research-sabotage","status":"available","changed":false,"url":"https://www.aisi.gov.uk/blog/evaluating-whether-ai-models-would-sabotage-ai-safety-research","sha256":"fef8517fe47e739e2ed5b054228ad195b907b0cef503a425db8f58655f9b0568","normalized_characters":8028,"etag":null,"last_modified":"Tue, 25 Aug 2026 16:24:04 GMT"},
+    {"id":"anthropic-august-2026-risk-report","status":"available","changed":false,"url":"https://www.anthropic.com/aug-2026-risk-report","sha256":"df211234da3f7d4f7dd89796b54e2e48ecca3a02cd9e8df5b825b9350920f18a","normalized_characters":23231,"etag":null,"last_modified":null,"fingerprint_url":"https://www.anthropic.com/responsible-scaling-policy"}
   ],
   "changed_source_ids": [],
   "error_source_ids": []
