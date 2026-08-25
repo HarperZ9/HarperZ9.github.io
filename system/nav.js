@@ -15,7 +15,7 @@ const PRIMARY = [
 // offensive-security line is private and shared only under lawful authorization.
 export const PLATFORMS = [
   ["Phantom", "phantom.html", "phantom"],
-  ["behavior-transform.io", "behavior-transform.html", "behavior-transform"],
+  ["Isomorph", "isomorph.html", "isomorph"],
   ["Authorized offensive security", "security.html", "security"],
 ];
 
@@ -149,7 +149,7 @@ const DEMOS = new Set(["demo-index","demo-gather","demo-forum","demo-crucible","
   "public-surface-sweeper-sample","emet-sample","demonstrations","tour"]);
 const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","accountable-machines",
   "accountable-engine","buildlang","raw","build-color","build-products","toolkit",
-  "provenance-sensorium","orca","aleph","warden","presentation","atelier",
+  "provenance-sensorium","orca","aleph","seed","sofer","kun","array","bounds","aeterna","warden","presentation","atelier",
   "quanta-color","quanta-products","quantalang"]);
 CATALOG.add("field-guide");
 const RESEARCH = new Set(["research","why"]);
@@ -173,7 +173,8 @@ export function navActive(pathname) {
   if (stem === "dossier") return "dossier";
   if (stem === "security") return "security";
   if (stem === "phantom") return "phantom";
-  if (stem === "behavior-transform") return "behavior-transform";
+  if (stem === "isomorph") return "isomorph";
+  if (stem === "behavior-transform") return "isomorph";
   if (FLAGSHIPS.has(stem)) return "flagships";
   if (DEMOS.has(stem)) return "demos";
   if (CATALOG.has(stem)) return "catalog";
