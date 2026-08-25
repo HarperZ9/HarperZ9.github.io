@@ -125,6 +125,25 @@ def test_page_metadata_social_copy_and_site_links() -> None:
     assert "https://harperz9.github.io/frontier-safety.html" in linkedin
 
 
+def test_briefing_uses_the_shared_document_design_canon() -> None:
+    page = (ROOT / "frontier-safety.html").read_text(encoding="utf-8")
+    archive = (ROOT / "frontier-safety" / "archive" / f"{EDITION_DATE}.html").read_text(encoding="utf-8")
+    stylesheet = (ROOT / "frontier-safety" / "frontier-safety.css").read_text(encoding="utf-8")
+
+    for html in (page, archive):
+        assert '<body class="doc frontier-briefing">' in html
+        assert 'class="docnav"' in html
+        assert 'class="sheet briefing-sheet"' in html
+        assert 'class="mast briefing-mast"' in html
+        assert 'class="data data--wide controls-table"' in html
+        assert "kilon.woff2" not in html
+        assert "conso-regular.woff2" in html
+
+    assert '@import url("../system/doc.css")' in stylesheet
+    assert "Kilon" not in stylesheet
+    assert "initial-scan" not in stylesheet
+
+
 def test_briefing_is_discoverable_from_the_catalog_index() -> None:
     catalog = (ROOT / "catalog.html").read_text(encoding="utf-8")
 

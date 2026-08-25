@@ -243,12 +243,14 @@ def render_html(edition: dict, *, archive: bool) -> str:
         css_href = "../frontier-safety.css"
         canonical = f"https://harperz9.github.io/frontier-safety/archive/{date}.html"
         data_href = f"../data/archive/{date}.json"
+        self_href = f"{date}.html"
         page_label = "Dated archive"
     else:
         root_prefix = ""
         css_href = "frontier-safety/frontier-safety.css"
         canonical = "https://harperz9.github.io/frontier-safety.html"
         data_href = "frontier-safety/data/current.json"
+        self_href = "frontier-safety.html"
         page_label = "Current edition"
 
     rail = []
@@ -298,17 +300,22 @@ def render_html(edition: dict, *, archive: bool) -> str:
 <meta name="twitter:description" content="{description}">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="{root_prefix}system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="{root_prefix}system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{root_prefix}system/fonts/conso-regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{css_href}">
 </head>
-<body>
+<body class="doc frontier-briefing">
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="{root_prefix}index.html">Home</a> <a href="{root_prefix}research.html">Research</a></nav></noscript>
 <script type="module" src="{root_prefix}system/nav.js?v=20260824-frontier-safety"></script>
 
-<main id="main">
-  <header class="briefing-hero">
+<div class="docnav">
+  <span class="where">Research · Frontier Safety</span>
+  <span class="switch"><a href="{root_prefix}research.html">Research index</a><a href="{self_href}" aria-current="page">{_e(page_label)}</a></span>
+</div>
+
+<main id="main" class="sheet briefing-sheet">
+  <header class="mast briefing-mast">
     <div class="hero-kicker"><span>Frontier Safety Briefing</span><span>{_e(page_label)}</span></div>
     <h1>What changed.<br>What supports it.<br><em>What remains unresolved.</em></h1>
     <p class="hero-summary">{_e(edition['change_summary'])}</p>
@@ -335,7 +342,7 @@ def render_html(edition: dict, *, archive: bool) -> str:
 
   <section class="wide-section controls">
     <header><p>Claim discipline</p><h2>Controls and their status</h2></header>
-    <div class="table-wrap"><table>
+    <div class="table-wrap"><table class="data data--wide controls-table">
       <thead><tr><th>Source</th><th>Reported control</th><th>Evidence status</th></tr></thead>
       <tbody>{_render_controls(edition['controls'])}</tbody>
     </table></div>
