@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "observed_at": "2026-08-25T15:06:19Z",
+  "observed_at": "2026-08-25T20:08:00Z",
   "sources": [
     {
       "id": "aisi-unsanctioned-agent-behaviour",
@@ -14,6 +14,17 @@
       "does_not_prove": "The report does not establish how often the behavior would occur outside the specific evaluation configuration."
     },
     {
+      "id": "aisi-ai-safety-research-sabotage",
+      "lane": "aisi",
+      "title": "Evaluating whether AI models would sabotage AI safety research",
+      "url": "https://www.aisi.gov.uk/blog/evaluating-whether-ai-models-would-sabotage-ai-safety-research",
+      "published_at": "2026-04-27",
+      "role": "government evaluation report",
+      "status": "available",
+      "fingerprint_profile": "aisi_report_article",
+      "does_not_prove": "No detected spontaneous sabotage in this evaluation suite does not establish that deployed models will never undermine safety research, particularly given evaluation awareness and limited scenario coverage."
+    },
+    {
       "id": "anthropic-three-cyber-eval-incidents",
       "lane": "anthropic",
       "title": "Investigating three real-world incidents in our cybersecurity evaluations",
@@ -23,6 +34,18 @@
       "status": "available",
       "fingerprint_profile": "anthropic_news_article",
       "does_not_prove": "A developer retrospective does not independently verify the completeness of its review or the effectiveness of announced controls."
+    },
+    {
+      "id": "anthropic-august-2026-risk-report",
+      "lane": "anthropic",
+      "title": "Redacted Risk Report: August 2026",
+      "url": "https://www.anthropic.com/aug-2026-risk-report",
+      "published_at": "2026-08-14",
+      "role": "developer risk assessment",
+      "status": "available",
+      "fingerprint_url": "https://www.anthropic.com/responsible-scaling-policy",
+      "fingerprint_profile": "anthropic_news_article",
+      "does_not_prove": "Anthropic's own risk designations, acceleration estimates, and mitigation descriptions do not independently establish model safety, threshold compliance, or control effectiveness."
     },
     {
       "id": "openai-hugging-face-incident",
