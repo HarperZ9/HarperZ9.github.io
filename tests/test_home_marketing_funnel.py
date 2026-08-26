@@ -191,15 +191,14 @@ def test_home_make_prove_copy_states_the_current_public_boundary() -> None:
     source = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
     normalized = " ".join(source.split())
     expected_lead = (
-        "zentropyLabs is one workshop across a wide span. At the making end: a live retro engine, "
-        "a generative studio, a gallery of seed-reproducible plates, and a loom that weaves any "
-        "render into cloth. At the proving end: "
-        "fourteen public systems with receipts, verifiers, and runnable tools at different maturity "
-        "levels. They share one operating thesis, but they do not yet form a single executable loop. "
-        "Eight records sit on the file between them. Each page names what runs, what evidence exists, "
-        "and what remains unfinished."
-    )
+            "I build deterministic evaluation environments, developer tools, and accountable agent "
+            "infrastructure. The public record includes 31 merged engineering changes across 26 "
+            "third-party repositories, an exhaustive 324-case terminal-state environment, and "
+            "a maintained graphics project with more than 160,000 unique downloads."
+        )
     assert expected_lead in normalized
+    assert "Systems Engineer | AI Evaluation, Developer Tools, and Technical Operations" in source
+    assert 'href="/hire.html"' in source
     # The homepage states the size of the research record. It has to match the
     # record, which test_publication_record.py holds to eight.
     assert "Eight records," in source and "Six papers" not in source
@@ -216,12 +215,9 @@ def test_home_make_prove_copy_states_the_current_public_boundary() -> None:
 
 def test_home_metadata_and_fallback_describe_make_and_prove_without_overclaiming() -> None:
     template = (ROOT / "home" / "index.html").read_text(encoding="utf-8")
-    # Shortened to fit a search result, which shows about 155 characters; the
-    # old one ran to 188 and the tail was never displayed. The claims this test
-    # exists to protect are unchanged: both entrances named, and fourteen.
     expected = (
-        "One public workshop, two entrances. Make for live creative systems; "
-        "Prove for receipts, workflows, research, and fourteen verification systems."
+        "Systems engineer for AI evaluation, developer tools, and technical operations. "
+        "Public work, hiring paths, and the Zentropy Labs workshop."
     )
     assert len(expected) <= 158
     assert f'<meta name="description" content="{expected}" />' in template
@@ -230,6 +226,7 @@ def test_home_metadata_and_fallback_describe_make_and_prove_without_overclaiming
     noscript = re.search(r"<noscript>(?P<body>.*?)</noscript>", template, re.S)
     assert noscript
     fallback = noscript.group("body")
+    assert "Zain Dana Harper" in fallback
     assert "Make" in fallback and "Prove" in fallback
     assert "fourteen independently published verification systems" in fallback
     for overclaim in (
@@ -264,8 +261,8 @@ def test_home_hero_display_size_is_capped_at_six_rem() -> None:
 def test_generated_output_preserves_current_social_metadata() -> None:
     html = (ROOT / "index.html").read_text(encoding="utf-8")
     expected_metadata = (
-        "<title>zentropyLabs · Project Telos</title>",
-        '<meta property="og:title" content="zentropyLabs · Project Telos" />',
+        "<title>Zain Dana Harper · Systems Engineer</title>",
+        '<meta property="og:title" content="Zain Dana Harper · Systems Engineer" />',
         '<link rel="canonical" href="https://harperz9.github.io/" />',
         '<meta property="og:image" content="https://harperz9.github.io/brand/zentropy-logo.png" />',
         '<meta name="twitter:card" content="summary_large_image" />',

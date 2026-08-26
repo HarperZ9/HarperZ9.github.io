@@ -299,6 +299,32 @@ ol.bul li::before{
 }
 ol.bul li b{color:var(--ink);font-weight:700}
 
+/* Hiring routes use the document canon as a decision surface: numbered,
+   unequal text blocks with one quiet rule, not marketing cards. */
+.path-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;max-width:none;border-block:1px solid var(--rule-strong)}
+.career-path{padding:1.15rem 1.2rem 1.2rem;margin:0;min-width:0}
+.career-path + .career-path{border-left:1px solid var(--rule)}
+.career-path .path-index{font-family:var(--mono);font-size:.68rem;color:var(--tag);margin:0 0 .8rem}
+.career-path h3{margin:0 0 .5rem;font-size:1.08rem}
+.career-path > p:not(.path-index){font-size:.94rem;line-height:1.5;color:var(--ink-soft);margin:0}
+.career-actions{display:flex;flex-direction:column;align-items:flex-start;gap:.35rem;margin-top:1rem}
+.career-actions a{font-family:var(--mono);font-size:.72rem;color:var(--signal);text-decoration:none;border-bottom:1px solid rgba(142,227,242,.3)}
+.career-actions a:hover{border-color:var(--signal)}
+.evidence-strip{margin-top:1rem}
+.career-quickpaths{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1px solid var(--rule-strong);margin:0 0 1.25rem}
+.career-quickpaths a{display:flex;align-items:center;gap:.55rem;min-height:2.8rem;padding:.55rem .75rem;color:var(--ink);font-size:.84rem;text-decoration:none}
+.career-quickpaths a + a{border-left:1px solid var(--rule)}
+.career-quickpaths span{font-family:var(--mono);font-size:.62rem;color:var(--tag)}
+.career-quickpaths a:hover,.career-quickpaths a:focus-visible{color:var(--signal);background:var(--page-sunk)}
+
+@media (max-width:760px){
+  .path-grid{grid-template-columns:1fr}
+  .career-path + .career-path{border-left:0;border-top:1px solid var(--rule)}
+  .career-quickpaths{grid-template-columns:1fr}
+  .career-quickpaths a{min-height:2.55rem;padding:.4rem 0}
+  .career-quickpaths a + a{border-left:0;border-top:1px solid var(--rule)}
+}
+
 /* ── key/value grid ────────────────────────────────────────────────────── */
 .kv{display:grid;grid-template-columns:minmax(7rem,9.5rem) 1fr;gap:.55rem 1.5rem;margin:.2rem 0 0;max-width:var(--measure)}
 .kv dt{

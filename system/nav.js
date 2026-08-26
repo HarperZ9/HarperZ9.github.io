@@ -6,7 +6,7 @@ const PRIMARY = [
   ["Retro Engine", "retro.html", "retro"],
   ["Engines", "overview.html", "flagships"],
   ["Research", "research.html", "research"],
-  ["Work with me", "test-run-request.html", "work"],
+  ["Hire / work", "hire.html", "work"],
   ["GitHub ↗", "https://github.com/HarperZ9", "github", true],
 ];
 
@@ -154,7 +154,7 @@ const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","
 CATALOG.add("field-guide");
 const RESEARCH = new Set(["research","why"]);
 const WRITING = new Set(["writing","the-summary-is-not-the-record"]);
-const WORK = new Set(["test-run-request","resume","cover-letter","portfolio"]);
+const WORK = new Set(["hire","test-run-request","resume","cover-letter","portfolio"]);
 const ABOUT = new Set(["cv","person"]);
 const TYPEFACE = new Set(["typeface"]);
 
@@ -354,7 +354,7 @@ function mountHomeLogo(doc) {
 // its own ?v= in the markup, so a new nav.js is what asks for new versions of
 // these; without a stamp here a reader with a warm cache keeps the old
 // stylesheet and the old exporter forever. Bump this with the nav.js stamp.
-const ASSET_V = "20260813-export2";
+const ASSET_V = "20260825-hiring";
 
 function sheetHref(name) {
   const here = import.meta && import.meta.url ? import.meta.url : "";
