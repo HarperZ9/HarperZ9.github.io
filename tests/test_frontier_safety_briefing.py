@@ -190,7 +190,7 @@ def test_future_dated_archives_use_the_shared_site_shell_and_nested_paths() -> N
 
     assert '<body class="inner-clean frame-compact frontier-briefing">' in archive
     assert 'href="../frontier-safety-site.css"' in archive
-    assert 'src="../../system/nav.js?v=20260824-frontier-safety"' in archive
+    assert 'src="../../system/nav.js?v=20260826-hiring-main"' in archive
     assert 'href="../data/archive/2026-08-26.json"' in archive
     assert 'href="../../research.html"' in archive
     assert 'class="docnav"' not in archive

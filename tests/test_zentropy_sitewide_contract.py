@@ -73,6 +73,26 @@ def test_shared_styles_define_zentropy_material_system() -> None:
     assert "Kilon retired" not in doc_css
 
 
+def test_narrow_mobile_nav_does_not_overlap_the_wordmark() -> None:
+    """A fixed menu trigger must not cover the brand at phone widths."""
+    system_css = read("system/system.css")
+    doc_css = read("system/doc.css")
+
+    for css in (system_css, doc_css):
+        narrow_mobile = re.search(
+            r"@media\s*\(max-width:\s*430px\)\s*\{(?P<body>.*?)\n\}",
+            css,
+            re.DOTALL,
+        )
+        assert narrow_mobile, "shared navigation needs a narrow-phone breakpoint"
+        body = narrow_mobile.group("body")
+        assert re.search(
+            r"\.site-nav \.sn-home \.sn-brand-word\s*\{[^}]*display:none!important",
+            body,
+        )
+        assert re.search(r"\.site-nav > \.sn-more\s*\{[^}]*right:1rem", body)
+
+
 def test_current_zentropy_assets_are_shipped() -> None:
     expected_assets = {
         "brand/zentropy-avatar.png": 450_000,

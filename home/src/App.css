@@ -742,6 +742,16 @@
   background: linear-gradient(90deg, var(--zentropy-ice), rgba(142, 227, 242, 0));
 }
 
+.hero-title.hero-role-title {
+  max-width: 17ch;
+  font-size: clamp(2.15rem, 1.58rem + 2.65vw, 4.35rem);
+  line-height: 1;
+}
+
+.hero-hiring-actions {
+  margin-top: var(--sp-4);
+}
+
 .hero .lead {
   color: var(--ink-2);
   max-width: 54ch;

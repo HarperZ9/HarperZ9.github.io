@@ -206,7 +206,7 @@ export default function App() {
           <a href="#demonstrate">Live checks</a>
           <a href="#research">Research</a>
           <a href="#range">Range</a>
-          <a href="#work">Work with me</a>
+          <a href="/hire.html">Hire / work</a>
           <a className="mono ghost" href="https://github.com/HarperZ9" rel="noopener">GitHub ↗</a>
         </div>
       </nav>
@@ -237,19 +237,22 @@ export default function App() {
               </figcaption>
             </figure>
             <div className="hero-masthead">
-              <p className="hero-kicker mono reveal in d1">Project Telos / public workbench</p>
-              <h1 className="hero-title reveal in d2">
-                Made to be run, inspected, and kept.
+              <p className="hero-kicker mono reveal in d1">Zain Dana Harper / Seattle, Washington</p>
+              <h1 className="hero-title hero-role-title reveal in d2">
+                Systems Engineer | AI Evaluation, Developer Tools, and Technical Operations
               </h1>
               <p className="lead reveal in d3">
-                zentropyLabs is one workshop across a wide span. At the making end: a live retro
-                engine, a generative studio, a gallery of seed-reproducible plates, and a loom
-                that weaves any render into cloth. At the
-                proving end: fourteen public systems with receipts, verifiers, and runnable tools at
-                different maturity levels. They share one operating thesis, but they do not yet form
-                a single executable loop. Eight records sit on the file between them. Each page names
-                what runs, what evidence exists, and what remains unfinished.
+                I build deterministic evaluation environments, developer tools, and accountable agent
+                infrastructure. The public record includes 31 merged engineering changes across 26
+                third-party repositories, an exhaustive 324-case terminal-state environment, and a
+                maintained graphics project with more than 160,000 unique downloads.
               </p>
+              <div className="cta hero-hiring-actions reveal in d3">
+                <a className="btn solid" href="/hire.html">Choose the relevant work <span aria-hidden="true">→</span></a>
+                <a className="btn" href="/resume.html">Technical resume <span aria-hidden="true">→</span></a>
+                <a className="btn" href="mailto:zaindharper@gmail.com">Email <span aria-hidden="true">→</span></a>
+              </div>
+              <p className="hero-availability reveal in d3">Available for paid work, contract builds, and technical collaboration.</p>
               <nav className="hero-doors reveal in d3" aria-label="Choose how to enter the workbench">
                 <div className="hero-door-rows">
                   <a className="hero-door" href="#make">
@@ -267,9 +270,6 @@ export default function App() {
                 </div>
                 <p className="hero-door-bridge mono">Two entrances. One public record.</p>
               </nav>
-              <p className="hero-availability reveal in d3">
-                <a href="#work">Available for paid work, contract builds, and technical collaboration.</a>
-              </p>
             </div>
           </div>
           {/* A registration caption for the approved static brand plate. */}
@@ -547,9 +547,10 @@ export default function App() {
             </div>
             <div className="work-body reveal d1">
               <p>
-                Self-taught systems engineer, open across roles, industries, and work modes. No CS degree; the
-                public releases are the credential. The strongest fit is any environment that needs someone who
-                can enter ambiguity, learn the domain fast, build a reliable artifact, and explain it to anyone.
+                The strongest fit is work that needs evidence to survive a handoff: evaluation and test
+                infrastructure, developer tools, technical support, documentation, product operations, or
+                field coordination. I can enter ambiguity, learn the domain, build a reliable artifact, and
+                explain what changed.
               </p>
               <p className="floor-line">
                 This is the fit: unusual technical scope, fast learning, and practical artifacts across systems,
@@ -557,6 +558,7 @@ export default function App() {
                 scoped run with visible outputs.
               </p>
               <div className="cta">
+                <a className="btn solid" href="/hire.html">Hiring map <span aria-hidden="true">→</span></a>
                 <a className="btn solid" href="https://github.com/HarperZ9" rel="noopener">GitHub <span aria-hidden="true">→</span></a>
                 <a className="btn" href="/resume.html">Resume <span aria-hidden="true">→</span></a>
                 <a className="btn" href="/publications.html">Papers <span aria-hidden="true">→</span></a>

@@ -23,6 +23,11 @@ from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
+CURRENT_NAV_ASSET_VERSION = "20260826-hiring-main"
+ARCHIVE_NAV_ASSET_VERSIONS = {
+    "2026-08-24": "20260824-frontier-safety",
+    "2026-08-25": "20260824-frontier-safety",
+}
 ALLOWED_SOURCE_HOSTS = {
     "www.aisi.gov.uk",
     "www.anthropic.com",
@@ -501,6 +506,11 @@ def render_html(edition: dict, *, archive: bool) -> str:
     correction_items = "".join(f"<li>{_e(item)}</li>" for item in corrections)
     digest = edition_sha256(edition)
     description = "A dated, source-grounded record of AISI, Anthropic, and frontier AI industry safety developments, with explicit evidence limits."
+    nav_asset_version = (
+        ARCHIVE_NAV_ASSET_VERSIONS.get(date, CURRENT_NAV_ASSET_VERSION)
+        if archive
+        else CURRENT_NAV_ASSET_VERSION
+    )
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -531,7 +541,7 @@ def render_html(edition: dict, *, archive: bool) -> str:
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="{root_prefix}index.html">Home</a> <a href="{root_prefix}research.html">Research</a></nav></noscript>
-<script type="module" src="{root_prefix}system/nav.js?v=20260824-frontier-safety"></script>
+<script type="module" src="{root_prefix}system/nav.js?v={nav_asset_version}"></script>
 
 <div class="frame briefing-hero">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Research · Frontier Safety</span></div>

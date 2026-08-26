@@ -15,7 +15,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CENSUS = ROOT / "career" / "open-source-census.json"
-DOCS = ("resume.html", "cv.html", "portfolio.html", "cover-letter.html", "dossier.html")
+DOCS = ("hire.html", "resume.html", "cv.html", "portfolio.html", "cover-letter.html", "dossier.html")
+RESUME_PDFS = (
+    "career/Zain-Dana-Harper-Resume-Grounds.pdf",
+    "career/Zain-Dana-Harper-Resume-Public-Operations.pdf",
+    "career/Zain-Dana-Harper-Resume-Technical-Operations.pdf",
+    "career/Zain-Dana-Harper-Resume-Technical.pdf",
+)
 
 
 def read(name: str) -> str:
@@ -25,6 +31,14 @@ def read(name: str) -> str:
 def test_every_career_document_exists() -> None:
     for name in DOCS:
         assert (ROOT / name).is_file(), name
+
+
+def test_downloadable_resume_assets_are_pdf_documents() -> None:
+    """A failed binary transplant once replaced the PDFs with extracted text."""
+    for name in RESUME_PDFS:
+        payload = (ROOT / name).read_bytes()
+        assert payload.startswith(b"%PDF-"), f"{name} has no PDF file signature"
+        assert b"%%EOF" in payload[-1024:], f"{name} has no PDF end marker"
 
 
 def test_census_file_is_present_and_complete() -> None:
@@ -144,3 +158,48 @@ def test_the_elder_enb_figures_match_the_dated_reading() -> None:
     for name in ("resume.html", "cv.html", "cover-letter.html"):
         src = read(name)
         assert "900,000" not in src, f"{name} still states a figure two readings out of date"
+
+
+def test_hiring_page_leads_with_name_role_and_three_paths() -> None:
+    src = read("hire.html")
+    assert "Zain Dana Harper" in src
+    assert "Systems Engineer | AI Evaluation, Developer Tools, and Technical Operations" in src
+    assert src.count('class="career-path') == 3
+    assert src.count('class="career-quickpaths"') == 1
+    assert all(anchor in src for anchor in ("#engineering-path", "#technical-operations-path", "#public-field-path"))
+    assert "zaindharper@gmail.com" in src
+    assert '<body class="doc" data-route-art="off">' in src
+    assert "private-client material" not in src
+
+
+def test_home_source_foregrounds_the_hiring_identity() -> None:
+    src = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
+    name = src.index("Zain Dana Harper")
+    headline = src.index("Systems Engineer | AI Evaluation, Developer Tools, and Technical Operations")
+    hiring_route = src.index('href="/hire.html"')
+    workshop_catalog = src.index('id="make"')
+    assert name < workshop_catalog
+    assert headline < workshop_catalog
+    assert hiring_route < workshop_catalog
+
+
+def test_resume_keeps_projects_inside_zentropy_experience() -> None:
+    src = read("resume.html")
+    zentropy = src.index("Zentropy Labs")
+    projects = src.index("Selected project evidence")
+    next_role = src.index("Freelance technical writer")
+    assert zentropy < projects < next_role
+
+
+def test_primary_resume_and_public_letter_are_bounded_first_impressions() -> None:
+    resume_words = re.findall(r"\b[\w'-]+\b", re.sub(r"<[^>]+>", " ", read("resume.html")))
+    letter_words = re.findall(r"\b[\w'-]+\b", re.sub(r"<[^>]+>", " ", read("cover-letter.html")))
+    assert len(resume_words) <= 900
+    assert 250 <= len(letter_words) <= 350
+
+
+def test_public_hiring_surfaces_do_not_upgrade_private_hub_staging() -> None:
+    for name in ("hire.html", "resume.html", "portfolio.html", "cover-letter.html"):
+        src = read(name)
+        assert "Published on Prime Intellect" not in src
+        assert "public Hub release" not in src

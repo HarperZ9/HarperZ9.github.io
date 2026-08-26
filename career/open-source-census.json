@@ -2,12 +2,26 @@
  "user": "HarperZ9",
  "buckets": {
   "merged": {
-   "total": 32,
-   "engineering": 29,
+   "total": 34,
+   "engineering": 31,
    "listings": 3,
-   "engineering_repos": 24,
-   "repos": 27,
+   "engineering_repos": 26,
+   "repos": 29,
    "items": [
+    {
+     "repo": "Hebbian-Robotics/hflow",
+     "title": "Test episodes view reserved-column drift",
+     "url": "https://github.com/Hebbian-Robotics/hflow/pull/157",
+     "listing": false,
+     "closed_at": "2026-08-25T03:36:07Z"
+    },
+    {
+     "repo": "freelawproject/litigant-portal",
+     "title": "docs: document runnable DB-free fast tests",
+     "url": "https://github.com/freelawproject/litigant-portal/pull/820",
+     "listing": false,
+     "closed_at": "2026-08-25T15:16:10Z"
+    },
     {
      "repo": "dgenio/agentfence",
      "title": "docs(aiuc-1): add AIUC-1 evidence mapping",
@@ -235,12 +249,68 @@
    ]
   },
   "open": {
-   "total": 18,
-   "engineering": 9,
+   "total": 26,
+   "engineering": 17,
    "listings": 9,
-   "engineering_repos": 9,
-   "repos": 18,
+   "engineering_repos": 15,
+   "repos": 24,
    "items": [
+    {
+     "repo": "finos/opengris-scaler",
+     "title": "Fix pickle round trips for PyYMQ exceptions",
+     "url": "https://github.com/finos/opengris-scaler/pull/961",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "python-poetry/tomlkit",
+     "title": "Fix out-of-order dotted-key child promoted to a table swallowing following siblings",
+     "url": "https://github.com/python-poetry/tomlkit/pull/588",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "METR/vivaria",
+     "title": "Add terminal-state run classification fixture",
+     "url": "https://github.com/METR/vivaria/pull/1122",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "gkroiz/agent-interp-envs",
+     "title": "feat: add deterministic social-deduction claim-and-vote environment",
+     "url": "https://github.com/gkroiz/agent-interp-envs/pull/56",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "gkroiz/model_forensics_paper",
+     "title": "feat: implement rollout dataset downloader",
+     "url": "https://github.com/gkroiz/model_forensics_paper/pull/54",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "gkroiz/agent-interp-envs",
+     "title": "docs: correct precommit arm and resume details",
+     "url": "https://github.com/gkroiz/agent-interp-envs/pull/55",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "tylerjrbuell/reactive-agents-ts",
+     "title": "feat(tools): corrective path-traversal rejections + relative-path schema hints",
+     "url": "https://github.com/tylerjrbuell/reactive-agents-ts/pull/202",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "confident-ai/deepeval",
+     "title": "fix(metrics): measure() returns the score under async_mode=True across all metrics",
+     "url": "https://github.com/confident-ai/deepeval/pull/3091",
+     "listing": false,
+     "closed_at": null
+    },
     {
      "repo": "hsaghir/looplet",
      "title": "Recipe: migrate a private tool loop to one outcome-grounded regression contract",
@@ -341,7 +411,7 @@
     },
     {
      "repo": "confident-ai/deepeval",
-     "title": "Fix red main CI: format TypeScript sources with Prettier",
+     "title": "ci: format typescript src and test with prettier",
      "url": "https://github.com/confident-ai/deepeval/pull/2823",
      "listing": false,
      "closed_at": null
@@ -370,12 +440,40 @@
    ]
   },
   "closed_unmerged": {
-   "total": 13,
-   "engineering": 11,
+   "total": 17,
+   "engineering": 15,
    "listings": 2,
-   "engineering_repos": 10,
-   "repos": 12,
+   "engineering_repos": 14,
+   "repos": 16,
    "items": [
+    {
+     "repo": "kysely-org/kysely",
+     "title": "test(cancellation): cover connection release when abort strategy is unsupported",
+     "url": "https://github.com/kysely-org/kysely/pull/1993",
+     "listing": false,
+     "closed_at": "2026-08-25T08:01:39Z"
+    },
+    {
+     "repo": "sigstore/sigstore-python",
+     "title": "Close OAuth redirect server socket",
+     "url": "https://github.com/sigstore/sigstore-python/pull/1884",
+     "listing": false,
+     "closed_at": "2026-08-24T03:20:32Z"
+    },
+    {
+     "repo": "astropy/astropy",
+     "title": "Preserve masks in Time.insert",
+     "url": "https://github.com/astropy/astropy/pull/20258",
+     "listing": false,
+     "closed_at": "2026-08-22T10:21:06Z"
+    },
+    {
+     "repo": "pypa/pip",
+     "title": "Name the wheel file when installation fails on a corrupt wheel",
+     "url": "https://github.com/pypa/pip/pull/14271",
+     "listing": false,
+     "closed_at": "2026-08-22T07:04:30Z"
+    },
     {
      "repo": "frostney/lwpt",
      "title": "Add deterministic HTTP fetch-failure tests via a loopback archive-fetch override",
@@ -471,9 +569,9 @@
   }
  },
  "totals": {
-  "all": 63,
-  "engineering": 49,
+  "all": 77,
+  "engineering": 63,
   "listings": 14,
-  "engineering_repos": 40
+  "engineering_repos": 50
  }
 }

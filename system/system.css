@@ -3609,9 +3609,9 @@ h2 em,
   }
 }
 
-@media (max-width:330px){
+@media (max-width:430px){
   .site-nav .sn-home .sn-brand-word{
-    display:none;
+    display:none!important;
   }
   .site-nav > .sn-more{
     right:1rem;
