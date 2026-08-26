@@ -4,5 +4,8 @@ frontier-safety/data/*.json text eol=lf
 frontier-safety/data/**/*.json text eol=lf
 frontier-safety/social/*.txt text eol=lf
 
+# Downloadable career documents are byte-verified release artifacts.
+*.pdf binary
+
 # Spatial world packages are byte-receipted: no EOL conversion, ever.
 art/spatial/** -text

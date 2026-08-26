@@ -142,5 +142,5 @@ def test_shared_nav_changes_reach_pages_that_cached_it() -> None:
         for part in read(page).split('nav.js?v=')[1:]:
             stamps.add(part.split('"')[0].split("'")[0])
     assert stamps, "no page loads the shared nav"
-    assert stamps == {"20260824-frontier-safety"}, f"unexpected nav.js cache stamps: {sorted(stamps)}"
-    assert 'const ASSET_V = "20260824-frontier-safety"' in read(NAV)
+    assert stamps == {"20260826-hiring-main"}, f"unexpected nav.js cache stamps: {sorted(stamps)}"
+    assert 'const ASSET_V = "20260826-hiring-main"' in read(NAV)

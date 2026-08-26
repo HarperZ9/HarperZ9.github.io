@@ -24,18 +24,18 @@
 
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="resume.html">Resume</a> <a href="portfolio.html">Portfolio</a> <a href="cover-letter.html">Letter</a> <a href="cv.html">Full CV</a> <a href="dossier.html">Dossier</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260824-frontier-safety"></script>
+<script type="module" src="system/nav.js?v=20260826-hiring-main"></script>
 
 <div class="docnav">
-  <span class="where">Career &middot; one of five documents</span>
-  <span class="switch"><a href="resume.html">Resume</a><a href="cv.html">Full CV</a><a href="portfolio.html" aria-current="page">Portfolio</a><a href="cover-letter.html">Letter</a><a href="dossier.html">Dossier</a></span>
+  <span class="where">Career &middot; full public ledger</span>
+  <span class="switch"><a href="hire.html">Hire</a><a href="resume.html">Resume</a><a href="cv.html">Full CV</a><a href="portfolio.html" aria-current="page">Portfolio</a><a href="cover-letter.html">Letter</a><a href="dossier.html">Dossier</a></span>
 </div>
 
 <main id="main">
 <article class="sheet doc-rail">
   <header class="mast">
     <h1>Zain Dana Harper</h1>
-    <p class="role">Portfolio. The engineering, the upstream ledger, and the writing and analysis samples.</p>
+    <p class="role">Selected work first. Full engineering, upstream, writing, and analysis ledger after it.</p>
     <p class="contact contact--fields">
       <span>Seattle, Washington</span>
       <span>zaindharper@gmail.com</span>
@@ -45,8 +45,15 @@
   </header>
 
   <section>
-    <h2>How to read this index</h2>
-    <p class="lead">A working index of writing and analysis samples, plus the engineering work that makes up the flagship line. Every claim links to a public artifact you can open: a crate, a marketplace listing, a repo, a release, or a live page. Maturity is stated plainly as beta, current tagged release, versioned public package, or source version, never inflated.</p>
+    <h2>Start with five artifacts</h2>
+    <p class="opening">This portfolio is a deep ledger. A hiring reader can begin with five representative surfaces, then continue only where the role makes it useful.</p>
+    <ol class="bul">
+      <li><b><a class="inline" href="https://github.com/HarperZ9/flywheel" rel="noopener">Flywheel</a>.</b> Model routing, verification, gated agent actions, and offline-recheckable tool-call receipts.</li>
+      <li><b><a class="inline" href="https://github.com/HarperZ9/terminal-state-fixtures" rel="noopener">Terminal State Fixtures</a>.</b> Exhaustive evaluation environments with deterministic reference scorers and claims pinned by tests.</li>
+      <li><b><a class="inline" href="https://github.com/HarperZ9/buildlang" rel="noopener">BuildLang</a>.</b> Typed capability effects, native output through C, C FFI, shader output, a bundled CLI and LSP, and re-checkable receipts.</li>
+      <li><b><a class="inline" href="#contributions">Third-party pull requests</a>.</b> <span data-census="merged-engineering">31</span> engineering changes merged across <span data-census="merged-engineering-repos">26</span> repositories, with open and declined work kept beside them.</li>
+      <li><b><a class="inline" href="https://www.nexusmods.com/skyrimspecialedition/mods/117327" rel="noopener">Elder ENB</a>.</b> 936,657 downloads and 160,939 unique downloaders in the dated 2026-08-14 reading.</li>
+    </ol>
     <p class="lead">Material that could not be made public-safe was left out on purpose. See <a class="inline" href="#what-is-not-here">What is not here</a> at the end.</p>
   </section>
 
@@ -76,15 +83,15 @@
     <h2>Contributions to projects I do not own</h2>
     <p class="lead">Work sent into other people's codebases, where someone else sets the standard and decides. Every line below is one pull request you can open: the diff, the review, and the outcome. Merged means a maintainer accepted that change. It does not mean the project uses, endorses, or has any relationship with the rest of this portfolio.</p>
     <div class="receipts">
-      <span class="r"><b data-census="all">63</b> pull requests</span>
-      <span class="r"><b data-census="merged">32</b> merged</span>
-      <span class="r"><b data-census="open">18</b> open</span>
-      <span class="r r--drift"><b data-census="closed">13</b> closed without merge</span>
+      <span class="r"><b data-census="all">77</b> pull requests</span>
+      <span class="r"><b data-census="merged">34</b> merged</span>
+      <span class="r"><b data-census="open">26</b> open</span>
+      <span class="r r--drift"><b data-census="closed">17</b> closed without merge</span>
     </div>
-    <p class="entry-note">Every pull request authored by <span translate="no">HarperZ9</span> in a repository not owned by <span translate="no">HarperZ9</span>. The counts are read straight from the GitHub API by <span translate="no">tools/pr_census.py</span> and a test fails the build if this page disagrees with the live record, so nothing here is transcribed by hand. <b data-census="listings">14</b> of them only add a row to a public link list. Those are held apart at the end of this section, because adding a row to an index is not a contribution to a project. That leaves <b data-census="engineering">49</b> code and documentation pull requests: <b data-census="merged-engineering">29</b> merged, <b data-census="open-engineering">9</b> open, <b data-census="closed-engineering">11</b> closed without merge.</p>
+    <p class="entry-note">Every pull request authored by <span translate="no">HarperZ9</span> in a repository not owned by <span translate="no">HarperZ9</span>. The counts are read straight from the GitHub API by <span translate="no">tools/pr_census.py</span> and a test fails the build if this page disagrees with the live record, so nothing here is transcribed by hand. <b data-census="listings">14</b> of them only add a row to a public link list. Those are held apart at the end of this section, because adding a row to an index is not a contribution to a project. That leaves <b data-census="engineering">63</b> code and documentation pull requests: <b data-census="merged-engineering">31</b> merged, <b data-census="open-engineering">17</b> open, <b data-census="closed-engineering">15</b> closed without merge.</p>
 
     <div class="entry">
-      <div class="entry-head"><span class="entry-title">Merged</span><span class="entry-meta"><span data-census="merged-engineering">29</span> pull requests &middot; <span data-census="merged-engineering-repos">24</span> repositories</span></div>
+      <div class="entry-head"><span class="entry-title">Merged</span><span class="entry-meta"><span data-census="merged-engineering">31</span> pull requests &middot; <span data-census="merged-engineering-repos">26</span> repositories</span></div>
       <p class="entry-note">Defect repair, missing validation, performance, documentation, and test coverage, accepted by the maintainer.</p>
       <ul class="bul">
         <li><b>dgenio/agentfence</b> &middot; precompute rule-lookup group and pattern order in the policy engine, a measured allocation reduction. <a class="inline" href="https://github.com/dgenio/agentfence/pull/261" rel="noopener">#261</a></li>
@@ -120,7 +127,7 @@
     </div>
 
     <div class="entry">
-      <div class="entry-head"><span class="entry-title">Open</span><span class="entry-meta"><span data-census="open-engineering">9</span> pull requests &middot; <span data-census="open-engineering-repos">9</span> repositories</span></div>
+      <div class="entry-head"><span class="entry-title">Open</span><span class="entry-meta"><span data-census="open-engineering">17</span> pull requests &middot; <span data-census="open-engineering-repos">15</span> repositories</span></div>
       <p class="entry-note">Submitted and awaiting a maintainer. Open is not accepted, and none of these are counted as merged.</p>
       <ul class="bul">
         <li><b>simonw/datasette</b> &middot; give each non-blocking write a distinct task id. <a class="inline" href="https://github.com/simonw/datasette/pull/2861" rel="noopener">#2861</a></li>
@@ -136,7 +143,7 @@
     </div>
 
     <div class="entry">
-      <div class="entry-head"><span class="entry-title">Closed without merge</span><span class="entry-meta"><span data-census="closed-engineering">11</span> pull requests &middot; <span data-census="closed-engineering-repos">10</span> repositories</span></div>
+      <div class="entry-head"><span class="entry-title">Closed without merge</span><span class="entry-meta"><span data-census="closed-engineering">15</span> pull requests &middot; <span data-census="closed-engineering-repos">14</span> repositories</span></div>
       <p class="entry-note">Declined, superseded, or fixed another way. They stay on the record: the count above only means something if the misses are here too.</p>
       <ul class="bul">
         <li><b>pypa/setuptools</b> &middot; repair a broken cross-reference that was failing the docs build. <a class="inline" href="https://github.com/pypa/setuptools/pull/5245" rel="noopener">#5245</a></li>
