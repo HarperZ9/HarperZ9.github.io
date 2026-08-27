@@ -92,7 +92,7 @@ Test suites:
 
 ```powershell
 python -m pytest tests -q
-node --test system
+node --test "system/**/*.test.mjs"
 node tests/linkcheck.mjs
 ```
 
