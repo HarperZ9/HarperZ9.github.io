@@ -47,8 +47,8 @@ Require each record to expose the following exact fields and controlled values:
 REQUIRED = {
     "id", "name", "purpose", "useCases", "href", "sourceHref", "domains",
     "audiences", "deploymentContexts", "maturity", "placement", "accessMode",
-    "evidence", "limitations", "boundary", "inputs", "outputs", "dependencies",
-    "related", "lastVerified",
+    "entryCommand", "verificationCommand", "evidence", "limitations", "boundary",
+    "inputs", "outputs", "dependencies", "related", "lastVerified",
 }
 MATURITY = {"shipped", "active", "research", "controlled-private", "archived"}
 PLACEMENT = {"featured", "catalog-only"}
@@ -59,7 +59,9 @@ DOMAINS = {
 }
 ```
 
-Assert stable unique IDs, one canonical local route per public system, valid
+Assert stable unique IDs, one canonical local route per public system, nullable
+`sourceHref`, `entryCommand`, and `verificationCommand` values with explicit
+nulls for unknown state, valid
 dependency and relationship IDs, ISO dates, no empty limitations, no local
 paths, and no private source URL when `maturity == "controlled-private"`.
 
@@ -131,12 +133,20 @@ git commit -m "feat(site): define one verified system registry"
 - Modify: `C:/dev/worktrees/telos-hiring-first-public-presence/src/App.tsx`
 - Modify: `C:/dev/worktrees/telos-hiring-first-public-presence/public/security-tools.json`
 - Modify: `C:/dev/worktrees/telos-hiring-first-public-presence/scripts/render-system-registry.mjs`
+- Create: `C:/dev/worktrees/telos-hiring-first-public-presence/scripts/render-system-pages.mjs`
+- Modify: `C:/dev/worktrees/telos-hiring-first-public-presence/public/catalog.html`
+- Create: `C:/dev/worktrees/telos-hiring-first-public-presence/public/systems/relay.html`
+- Create: `C:/dev/worktrees/telos-hiring-first-public-presence/public/systems/plexus.html`
+- Create: `C:/dev/worktrees/telos-hiring-first-public-presence/public/systems/mneme.html`
+- Create: `C:/dev/worktrees/telos-hiring-first-public-presence/public/systems/studio-engine.html`
+- Modify: `C:/dev/worktrees/telos-hiring-first-public-presence/public/sitemap.xml`
 - Create: `C:/dev/worktrees/telos-hiring-first-public-presence/tests/test_system_inventory.py`
+- Create: `C:/dev/worktrees/telos-hiring-first-public-presence/tests/test_system_pages.py`
 - Modify: `C:/dev/worktrees/telos-hiring-first-public-presence/tests/test_security_surface.py`
 
 **Interfaces:**
 - Consumes: Task 1 registry and generated accessors.
-- Produces: one normalized inventory used by the homepage, catalog, and security projection.
+- Produces: one normalized inventory used by the homepage, catalog, generated first-class system pages, sitemap, and security projection.
 
 - [ ] **Step 1: Write failing ownership and migration tests**
 
@@ -181,15 +191,39 @@ Add a renderer output that selects systems with `security-privacy` in
 ```javascript
 const securityRecords = registry.systems
   .filter((system) => system.domains.includes("security-privacy"))
-  .map(({ id: slug, name, purpose, maturity, sourceHref: source, limitations, boundary: authorizationBoundary, lastVerified: evidenceDate }) => ({
-    slug, name, purpose, maturity, source, limitations, authorizationBoundary, evidenceDate,
+  .map(({ id: slug, name, purpose, maturity, sourceHref: source, entryCommand: installOrEntry, verificationCommand, limitations, boundary: authorizationBoundary, lastVerified: evidenceDate }) => ({
+    slug, name, purpose, maturity, source, installOrEntry, verificationCommand,
+    limitations, authorizationBoundary, evidenceDate,
   }));
 ```
 
 Preserve the richer install and verification fields when the registry evidence
 supports them. Delete no public caveat during migration.
 
-- [ ] **Step 5: Replace homepage arrays with registry-derived views**
+- [ ] **Step 5: Generate the catalog and missing first-class system pages**
+
+Render the complete catalog by capability domain, with filters expressed as
+ordinary links and progressive enhancement rather than a JavaScript-only list.
+Keep existing authored system routes for Flywheel, Telos, Index, Gather, Forum,
+Crucible, EMET, BuildLang, Learn, Build Color, Phantom, and the authorized
+private practice. Generate local pages for Relay, Plexus, Mneme, and Studio
+Engine so every mature system has a canonical site route.
+
+Each generated page must contain these eight labeled regions in source order:
+
+```python
+REQUIRED_SECTIONS = (
+    "What it does", "Who it is for", "Representative workflow",
+    "Run or evaluate", "Architecture and relationships", "Current evidence",
+    "Limitations and authorization boundaries", "Related systems and next action",
+)
+```
+
+When an entry or verification command is null, render `Not publicly verified`
+and the record's limitation instead of an empty code block. Add every generated
+route to the sitemap and require it to resolve in the link crawler.
+
+- [ ] **Step 6: Replace homepage arrays with registry-derived views**
 
 Import `FEATURED_SYSTEMS` and group by capability domain. Preserve current
 hiring content, but remove the copy that treats engines and platforms as
@@ -202,14 +236,14 @@ const FEATURED_BY_DOMAIN = CAPABILITY_DOMAINS.map((domain) => ({
 })).filter((domain) => domain.systems.length > 0);
 ```
 
-- [ ] **Step 6: Verify and commit the migration**
+- [ ] **Step 7: Verify and commit the migration**
 
 ```powershell
 npm run systems:render
 npm run systems:check
-python -m pytest tests/test_system_registry.py tests/test_system_inventory.py tests/test_security_surface.py tests/test_home_roster_and_marketing.py -q
+python -m pytest tests/test_system_registry.py tests/test_system_inventory.py tests/test_system_pages.py tests/test_security_surface.py tests/test_home_roster_and_marketing.py -q
 git diff --check
-git add site/systems.json scripts/render-system-registry.mjs src/App.tsx public/security-tools.json src/system-registry.ts public/system/systems.js public/system/systems.json tests
+git add site/systems.json scripts/render-system-registry.mjs scripts/render-system-pages.mjs src/App.tsx public/security-tools.json public/catalog.html public/systems public/sitemap.xml src/system-registry.ts public/system/systems.js public/system/systems.json tests
 git commit -m "refactor(site): derive public systems from one registry"
 ```
 
