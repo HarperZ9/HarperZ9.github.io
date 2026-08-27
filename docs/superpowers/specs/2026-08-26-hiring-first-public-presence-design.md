@@ -2,6 +2,10 @@
 
 Status: approved direction, specification review
 
+The capability taxonomy, homepage operating surface, visualization system, and daily
+publication pipeline are extended and, where terminology conflicts, superseded by
+`2026-08-26-capability-first-publication-visual-system-design.md`.
+
 ## Objective
 
 Rebuild the public HarperZ9 presence around a hiring-first entrance while preserving
@@ -48,7 +52,7 @@ systems, security, research, or studio lanes without losing the career context.
 The stable top-level taxonomy is:
 
 1. **Work**: hiring routes, résumé variants, portfolio, CV, contributions, and contact.
-2. **Systems**: flagship engines, developer tools, demonstrations, and the full catalog.
+2. **Systems**: mature systems, developer tools, demonstrations, and the full catalog.
 3. **Security**: shipped security products, the security-engineering toolkit, and
    bounded public-contract pages for selected private work.
 4. **Research**: publications, Frontier Safety, research notes, and writing.
@@ -146,10 +150,10 @@ links inside prose remain ordinary links.
 
 The public security lane uses four levels:
 
-1. **Shipped flagships**: EMET and Phantom. These receive full product pages, reproducible
+1. **Shipped public systems**: EMET and Phantom. These receive full product pages, reproducible
    flagship artwork, current releases, runnable entry points, current CI evidence, and
    explicit limitations.
-2. **Release candidate**: Accountable Surface becomes a standalone flagship only after a
+2. **Release candidate**: Accountable Surface receives a standalone system page only after a
    tagged release and reverified public readiness. Until then it appears as alpha.
 3. **Security Engineering Toolkit**: Public Surface Sweeper, Secret Redact IO, Model
    Provenance Validator, Agent Hook Pack, and Repo Proof Index share one grouped page.
@@ -218,7 +222,7 @@ The `HarperZ9/HarperZ9` root README becomes the GitHub counterpart of the homepa
 
 - hiring-first introduction and the three work routes;
 - direct résumé, portfolio, site, email, and LinkedIn actions;
-- a small current flagship table grouped by Systems, Security, Research, and Studio;
+- a small table of representative featured systems grouped by capability;
 - current versions and maturity labels generated or checked from first-party state;
 - explicit separation between public repositories and authorized private work;
 - current contribution highlights and a dated evidence note.
@@ -314,7 +318,8 @@ reconciliation. The intended responsibilities are:
   crossing the previous breakpoint.
 - Every career route has a dedicated current document and evidence path.
 - EMET and Phantom present current first-party versions and explicit limitations.
-- Smaller verified security tools have one coherent grouped surface.
+- Smaller verified security tools have one coherent grouped surface and remain first-class
+  catalog records.
 - Private offensive work is represented only through reviewed public-contract language.
 - Public-contract pages give a detailed, useful account of what each selected tool is
   for while preserving the private-source and operational-safety boundary.
@@ -330,7 +335,7 @@ reconciliation. The intended responsibilities are:
   histories, credentials, or restricted environment artifacts.
 - Adding engagement analytics, tracking pixels, behavioral targeting, or a contact
   database.
-- Presenting every repository as a flagship.
+- Giving every repository equal homepage space or claiming maturity without evidence.
 - Rewriting reserved parallel projects such as Flywheel or Behavior Transform.
 - Claiming security certification, adoption, endorsement, current CI, or release maturity
   without first-party evidence.
