@@ -26,6 +26,7 @@ test("active section is derived from the path", () => {
   assert.equal(navActive("/research-proof-carrying-research-loops.html"), "research");
   assert.equal(navActive("/writing.html"), "writing");
   assert.equal(navActive("/the-summary-is-not-the-record.html"), "writing");
+  assert.equal(navActive("/hire.html"), "work");
   assert.equal(navActive("/test-run-request.html"), "work");
   assert.equal(navActive("/why.html"), "research");
   assert.equal(navActive("/cv.html"), "about");
@@ -70,5 +71,6 @@ test("rendered nav includes a complete grouped menu for mobile", () => {
     new URL("/frontier-safety.html", "https://harperz9.github.io/frontier-safety/archive/2026-08-24.html").pathname,
     "/frontier-safety.html",
   );
-  assert.match(mount.innerHTML, /href="test-run-request\.html" aria-current="page"/);
+  assert.match(mount.innerHTML, /href="hire\.html" aria-current="page"/);
+  assert.doesNotMatch(mount.innerHTML, /sn-menu-primary[\s\S]*href="test-run-request\.html"/);
 });

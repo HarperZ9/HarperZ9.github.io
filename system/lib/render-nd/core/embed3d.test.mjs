@@ -31,6 +31,17 @@ test("embedTo3D: a 4D point collapses the 4th axis with perspective (keeps a rea
   assert.ok(Math.abs(e[0] - 1.5) < 1e-12, `x scaled by 1.5, got ${e[0]}`);
 });
 
+test("embedTo3D: projection modes remain observably distinct above three dimensions", () => {
+  const point = [1, 0.5, -0.25, 0.75];
+  const perspective = embedTo3D(point, 3, "perspective");
+  const orthographic = embedTo3D(point, 3, "orthographic");
+  const stereographic = embedTo3D(point, 3, "stereographic");
+
+  assert.deepEqual(orthographic, [1, 0.5, -0.25]);
+  assert.notDeepEqual(perspective, orthographic);
+  assert.notDeepEqual(stereographic, perspective);
+});
+
 test("embedTo3D: empty vector returns origin", () => {
   assert.deepEqual(embedTo3D([], 3), [0, 0, 0]);
 });
