@@ -1,0 +1,108 @@
+{
+  "schema": "harperz9-briefing-build/v1",
+  "briefingId": "2026-08-26-openai-hugging-face-incident",
+  "renderer": "render-publications/v1",
+  "settings": {
+    "encoding": "utf-8",
+    "figureRenderer": "telos-figure/v1",
+    "figureViewBox": "0 0 960 540",
+    "jsonIndent": 2,
+    "lineEnding": "LF",
+    "sortMode": "stable-public-keys"
+  },
+  "inputs": {
+    "articleSha256": "7f0e41474c67eb54de0231fe895145fa38802bda4d4ad8548a6b3f8bcc1011c5",
+    "claimsSha256": "62450878aa45325a59ea859f12d43a3b0b653c7d79f359dc27509de01ced48b6",
+    "figuresSha256": "11e85ff0a7eaecefe0261180ac4bd110eb2aa5d6ae800e01b72796342360620a"
+  },
+  "outputs": [
+    {
+      "path": "briefings/2026-08-26-openai-hugging-face-incident/claims.json",
+      "sha256": "b6f602a0fc6dadb48ca039a35dc0a2d650af3981f715a71d76f42d2073e171c5"
+    },
+    {
+      "path": "briefings/2026-08-26-openai-hugging-face-incident/index.html",
+      "sha256": "8ff51eaf5428ffa5cdd6566ed2663d2f043d080099a841cf324c1854fbd2563e"
+    },
+    {
+      "path": "briefings/2026-08-26-openai-hugging-face-incident/publication.json",
+      "sha256": "47eef40116cb3715c174f3bd5a9c62e562658397a907de4b64520e833a1f9e76"
+    },
+    {
+      "path": "briefings/2026-08-26-openai-hugging-face-incident/sources.json",
+      "sha256": "f232afaa4d7fe720066ac08dcc53c365a7e70a3862903d64dea340095848b5b4"
+    },
+    {
+      "path": "figures/claim-provenance-panel.html",
+      "sha256": "e6562dda10f385a24603807fd7c45e7db1a881f6c15afe6074905e71dbf7b096"
+    },
+    {
+      "path": "figures/claim-provenance-panel.json",
+      "sha256": "551c612af7679dccb8c4c77fd8ffd1638ece8fda2a40558c1bf87041eb4fb32e"
+    },
+    {
+      "path": "figures/claim-provenance-panel.svg",
+      "sha256": "018d916f26dfdaeac5e5e5d6d4caa201d1fc8599f84ad3806872cbd6e7972a08"
+    },
+    {
+      "path": "figures/control-boundary-flow.html",
+      "sha256": "6ffd2f88d56990676ba9861054ace702e19ea3a6964f0d5fbf7568dad03cd623"
+    },
+    {
+      "path": "figures/control-boundary-flow.json",
+      "sha256": "7dcc4e5d0ba491e03224ccf42ffda3523210b6d3a8c35588f6cfa14c10b89f66"
+    },
+    {
+      "path": "figures/control-boundary-flow.svg",
+      "sha256": "8d0483c5128661ea2efaf01c6d0e12eba53a9e3edc7ecc768382fc1f7b3a0587"
+    },
+    {
+      "path": "figures/incident-multilane-timeline.html",
+      "sha256": "c65d0892d60fd1d9d43c724f7938b86e701b2519680f4c40d1a9669ffd05d1e9"
+    },
+    {
+      "path": "figures/incident-multilane-timeline.json",
+      "sha256": "0ac6d01af6b568c113d7e44f44f406cc78367935c75baac1557e925afc0dd4a1"
+    },
+    {
+      "path": "figures/incident-multilane-timeline.svg",
+      "sha256": "c083551ef9a586e443115f172fb14fbb1c13d5743003f3a856feb5fac6fd3cc1"
+    },
+    {
+      "path": "figures/recovered-actions-by-day.html",
+      "sha256": "53046b5199e5c94c251295ef7f1360b20d9ab99de3de56b40a1c8a6ec4f07833"
+    },
+    {
+      "path": "figures/recovered-actions-by-day.json",
+      "sha256": "fc255cea542205a384fbf04e206dc0257c7e3d7423be6f93fc51ea9f3541041e"
+    },
+    {
+      "path": "figures/recovered-actions-by-day.svg",
+      "sha256": "ccc1e5c731a36047b0fa6f24aa496ca98c74863dfc38061c05e4f9b4c651c1a4"
+    },
+    {
+      "path": "figures/source-scope-matrix.html",
+      "sha256": "88778ead4fdfe6f35d7b1673fc58c6e9af780ef8760dd37ede85c528d6b3d39a"
+    },
+    {
+      "path": "figures/source-scope-matrix.json",
+      "sha256": "0e8d22bc07967c90d6d8b93a8c1beaadf8939fc27b5932831b84813588d5d667"
+    },
+    {
+      "path": "figures/source-scope-matrix.svg",
+      "sha256": "abf1a407e62bef3ed6b08228bfaf1f0b9fe0dc9fe5b6064f3cbe621c2b7ede61"
+    },
+    {
+      "path": "figures/task-overrepresentation.html",
+      "sha256": "24ae308a6bf167d2f62821b4cb38fd3d07280cab04d113de9d74fcec05692435"
+    },
+    {
+      "path": "figures/task-overrepresentation.json",
+      "sha256": "93adfa144b2da32f2f7a2e0ed93214cafb21e5526cdab1f1114e1f45b188e14d"
+    },
+    {
+      "path": "figures/task-overrepresentation.svg",
+      "sha256": "7eb7b4b38adddeccdffd09754dbdbec37384b70084e2b3a434e7c7d7ab78f82d"
+    }
+  ]
+}

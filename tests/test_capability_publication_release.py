@@ -1,0 +1,226 @@
+"""Selective-release contract for the reviewed capability/publication spine."""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import re
+from pathlib import Path
+from urllib.parse import urlsplit
+from xml.etree import ElementTree
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+RELEASE_PATHS = (
+    "assets/index-Btig5ajT.js",
+    "assets/index-CcR8Ey0G.css",
+    "briefings/2026-08-26-openai-hugging-face-incident/build.json",
+    "briefings/2026-08-26-openai-hugging-face-incident/claims.json",
+    "briefings/2026-08-26-openai-hugging-face-incident/figures.json",
+    "briefings/2026-08-26-openai-hugging-face-incident/index.html",
+    "briefings/2026-08-26-openai-hugging-face-incident/publication.json",
+    "briefings/2026-08-26-openai-hugging-face-incident/social/linkedin.txt",
+    "briefings/2026-08-26-openai-hugging-face-incident/social/x.txt",
+    "briefings/2026-08-26-openai-hugging-face-incident/sources.json",
+    "briefings/index.html",
+    "career/open-source-census.json",
+    "career/Zain-Dana-Harper-Resume-Grounds.pdf",
+    "career/Zain-Dana-Harper-Resume-Public-Operations.pdf",
+    "career/Zain-Dana-Harper-Resume-Technical-Operations.pdf",
+    "career/Zain-Dana-Harper-Resume-Technical.pdf",
+    "catalog.html",
+    "feed.json",
+    "feed.xml",
+    "figures/claim-provenance-panel.html",
+    "figures/claim-provenance-panel.json",
+    "figures/claim-provenance-panel.svg",
+    "figures/control-boundary-flow.html",
+    "figures/control-boundary-flow.json",
+    "figures/control-boundary-flow.svg",
+    "figures/incident-multilane-timeline.html",
+    "figures/incident-multilane-timeline.json",
+    "figures/incident-multilane-timeline.svg",
+    "figures/recovered-actions-by-day.html",
+    "figures/recovered-actions-by-day.json",
+    "figures/recovered-actions-by-day.svg",
+    "figures/source-scope-matrix.html",
+    "figures/source-scope-matrix.json",
+    "figures/source-scope-matrix.svg",
+    "figures/system-capability-map.html",
+    "figures/system-capability-map.json",
+    "figures/system-capability-map.svg",
+    "figures/task-overrepresentation.html",
+    "figures/task-overrepresentation.json",
+    "figures/task-overrepresentation.svg",
+    "hire.html",
+    "img/og/private-practice.png",
+    "img/og/security-toolkit.png",
+    "index.html",
+    "private-practice.html",
+    "security-toolkit.html",
+    "security-tools.json",
+    "system/figure.css",
+    "system/figure.js",
+    "system/figure.test.mjs",
+    "system/hire.css",
+    "system/routes.js",
+    "system/systems.js",
+    "system/systems.json",
+    "systems/behavior-transform.html",
+    "systems/mneme.html",
+    "systems/plexus.html",
+    "systems/relay.html",
+    "systems/studio-engine.html",
+)
+
+REVIEWED_RELEASE_SHA256 = "f12302e1f1f950d4ffd166fa3b02bbb5e55433806e6a9818f3ce7ac9969a73fb"
+
+BRIEFING_FIGURES = (
+    "claim-provenance-panel",
+    "control-boundary-flow",
+    "incident-multilane-timeline",
+    "recovered-actions-by-day",
+    "source-scope-matrix",
+    "task-overrepresentation",
+)
+
+PUBLIC_MARKERS = (
+    re.compile(r"(?i)(?<![a-z0-9])[a-z]:[/\\]+(?:users|dev|program files)[/\\]+"),
+    re.compile(r"(?i)file:///(?:[a-z]:[/\\]+|users/|home/)"),
+    re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
+    re.compile(r"\bghp_[A-Za-z0-9]{30,}\b"),
+    re.compile(r"\bgithub_pat_[A-Za-z0-9_]{40,}\b"),
+    re.compile(r"(?<![A-Za-z0-9_-])sk-(?:proj-|svcacct-)?[A-Za-z0-9_-]{20,}"),
+    re.compile(r"\bAKIA[0-9A-Z]{16}\b"),
+)
+
+
+def _text(path: str) -> str:
+    return (ROOT / path).read_text(encoding="utf-8")
+
+
+def _release_fingerprint() -> str:
+    records = []
+    for relative in sorted(RELEASE_PATHS):
+        payload = (ROOT / relative).read_bytes()
+        records.append(f"{relative}\t{hashlib.sha256(payload).hexdigest()}")
+    return hashlib.sha256(("\n".join(records) + "\n").encode()).hexdigest()
+
+
+def _local_target(href: str) -> tuple[Path, str]:
+    parsed = urlsplit(href)
+    relative = parsed.path.lstrip("/") or "index.html"
+    if relative.endswith("/"):
+        relative += "index.html"
+    return ROOT / relative, parsed.fragment
+
+
+def _route_registry() -> dict[str, object]:
+    source = _text("system/routes.js")
+    match = re.search(r'ROUTE_REGISTRY_JSON = ("(?:[^"\\]|\\.)*");', source)
+    assert match, "generated route registry JSON is missing"
+    return json.loads(json.loads(match.group(1)))
+
+
+def test_release_spine_matches_the_reviewed_artifact_fingerprint() -> None:
+    missing = [path for path in RELEASE_PATHS if not (ROOT / path).is_file()]
+    assert not missing, f"release files missing: {missing}"
+
+    for directory in ("briefings", "figures", "systems"):
+        actual = {
+            path.relative_to(ROOT).as_posix()
+            for path in (ROOT / directory).rglob("*")
+            if path.is_file()
+        }
+        expected = {path for path in RELEASE_PATHS if path.startswith(f"{directory}/")}
+        assert actual == expected, f"{directory} release tree drifted"
+
+    assert _release_fingerprint() == REVIEWED_RELEASE_SHA256
+
+
+def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
+    source = _text("index.html")
+    obsolete_js = "index-B_" + "tbCD5Q.js"
+    obsolete_css = "index-D3" + "HRo6Wc.css"
+    assert 'src="/assets/index-Btig5ajT.js"' in source
+    assert 'href="/assets/index-CcR8Ey0G.css"' in source
+    assert obsolete_js not in source
+    assert obsolete_css not in source
+    assert not (ROOT / "assets" / obsolete_js).exists()
+    assert not (ROOT / "assets" / obsolete_css).exists()
+
+
+def test_six_briefing_figures_keep_semantic_nonvisual_fallbacks() -> None:
+    for stem in BRIEFING_FIGURES:
+        source = _text(f"figures/{stem}.html")
+        assert '<figure class="evidence-figure"' in source, stem
+        assert "<figcaption" in source, stem
+        assert '<table class="figure-table">' in source, stem
+        assert "data-figure-row" in source, stem
+        assert '<svg role="img"' in source, stem
+        assert "aria-labelledby=" in source, stem
+        assert re.search(r'data-figure-kind="(?:relationship|timeline|matrix|bar)"', source), stem
+
+
+def test_briefing_archive_and_feeds_resolve_to_the_permanent_record() -> None:
+    route = "/briefings/2026-08-26-openai-hugging-face-incident/"
+    archive = _text("briefings/index.html")
+    assert f'href="{route}"' in archive
+    assert 'href="/feed.json"' in archive
+    assert 'href="/feed.xml"' in archive
+
+    feed = json.loads(_text("feed.json"))
+    assert feed["home_page_url"].endswith("/briefings/")
+    assert [urlsplit(item["url"]).path for item in feed["items"]] == [route]
+
+    atom = ElementTree.fromstring(_text("feed.xml"))
+    namespace = {"atom": "http://www.w3.org/2005/Atom"}
+    assert atom.findtext("atom:entry/atom:id", namespaces=namespace).endswith(route)
+    target, fragment = _local_target(route)
+    assert target.is_file() and not fragment
+
+
+def test_every_generated_capability_and_hiring_route_resolves() -> None:
+    registry = _route_registry()
+    routes = [route for family in registry["families"] for route in family["routes"]]
+    hrefs = {route["href"] for route in routes}
+    assert {
+        "hire.html#engineering-path",
+        "hire.html#technical-operations-path",
+        "hire.html#public-service-field-path",
+        "catalog.html",
+        "systems/behavior-transform.html",
+        "systems/mneme.html",
+        "systems/plexus.html",
+        "systems/relay.html",
+        "systems/studio-engine.html",
+    } <= hrefs
+
+    for href in sorted(hrefs):
+        target, fragment = _local_target(href)
+        assert target.is_file(), f"route target missing: {href}"
+        if fragment:
+            source = target.read_text(encoding="utf-8")
+            assert re.search(rf'\bid=["\']{re.escape(fragment)}["\']', source), href
+
+    systems = json.loads(_text("system/systems.json"))["systems"]
+    assert systems, "capability registry is empty"
+    for system in systems:
+        target, fragment = _local_target(system["href"])
+        assert target.is_file(), f"capability target missing: {system['id']} -> {system['href']}"
+        if fragment:
+            assert re.search(
+                rf'\bid=["\']{re.escape(fragment)}["\']',
+                target.read_text(encoding="utf-8"),
+            ), system["id"]
+
+
+def test_release_spine_contains_no_owner_local_paths_or_secret_markers() -> None:
+    findings = []
+    for relative in RELEASE_PATHS:
+        source = (ROOT / relative).read_bytes().decode("utf-8", errors="ignore")
+        normalized = re.sub(r"\\{2,}", r"\\", source)
+        if any(pattern.search(candidate) for pattern in PUBLIC_MARKERS for candidate in (source, normalized)):
+            findings.append(relative)
+    assert not findings, f"public boundary markers found in: {findings}"

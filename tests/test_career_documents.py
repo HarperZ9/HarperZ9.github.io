@@ -110,12 +110,16 @@ def test_documents_use_the_shared_document_system() -> None:
     for name in DOCS:
         src = read(name)
         assert 'href="system/doc.css' in src, name
-        assert 'class="sheet' in src, name
+        if name == "hire.html":
+            assert 'class="hire-sheet"' in src, name
+        else:
+            assert 'class="sheet' in src, name
         # The letter is one continuous piece of writing and correctly has no
         # section headings. Everything else is a document a reader scans.
         if name != "cover-letter.html":
             assert "<h2>" in src, f"{name} has no section headings"
-            assert 'class="sheet doc-rail"' in src, f"{name} does not use the heading rail"
+            if name != "hire.html":
+                assert 'class="sheet doc-rail"' in src, f"{name} does not use the heading rail"
 
 
 def test_no_em_dashes_on_the_public_documents() -> None:
@@ -164,9 +168,16 @@ def test_hiring_page_leads_with_name_role_and_three_paths() -> None:
     src = read("hire.html")
     assert "Zain Dana Harper" in src
     assert "Systems Engineer | AI Evaluation, Developer Tools, and Technical Operations" in src
-    assert src.count('class="career-path') == 3
+    assert len(re.findall(r'<article class="hire-route-band(?: [^"]+)?"', src)) == 3
     assert src.count('class="career-quickpaths"') == 1
-    assert all(anchor in src for anchor in ("#engineering-path", "#technical-operations-path", "#public-field-path"))
+    assert all(
+        anchor in src
+        for anchor in (
+            "#engineering-path",
+            "#technical-operations-path",
+            "#public-service-field-path",
+        )
+    )
     assert "zaindharper@gmail.com" in src
     assert '<body class="doc" data-route-art="off">' in src
     assert "private-client material" not in src

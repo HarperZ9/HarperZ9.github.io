@@ -1,0 +1,213 @@
+{
+  "renderer": "telos-figure/v1",
+  "viewBox": "0 0 960 540",
+  "figure": {
+    "id": "control-boundary-flow",
+    "kind": "relationship",
+    "title": "Conceptual trust boundary and review layers",
+    "description": "A conceptual relationship diagram moves from OpenAI's research environment to reported activity on Hugging Face production systems, then separates host evidence, company response, vendor remediation, independent analysis, and legal review. Every connection uses equal-width geometry.",
+    "claim": "Technical containment, company response, vendor remediation, independent analysis, and legal review are separate layers with different evidence owners.",
+    "doesNotProve": "The diagram does not establish a complete technical path, traffic volume, probability, intent, severity, control effectiveness, liability, or universal agent behavior.",
+    "sources": [
+      {
+        "label": "Alabama announcement",
+        "href": "https://www.alabamaag.gov/attorney-general-marshall-launches-investigation-into-openai-and-sam-altman-for-massive-artificial-intelligence-data-breach/"
+      },
+      {
+        "label": "Alabama subpoena",
+        "href": "https://www.alabamaag.gov/wp-content/uploads/2026/08/OpenAI-Subpoena_Final.pdf"
+      },
+      {
+        "label": "Hugging Face technical timeline",
+        "href": "https://huggingface.co/blog/agent-intrusion-technical-timeline"
+      },
+      {
+        "label": "JFrog statement",
+        "href": "https://jfrog.com/blog/jfrog-and-openai-collaboration-on-zero-day-security-findings/"
+      },
+      {
+        "label": "METR joint report",
+        "href": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/"
+      },
+      {
+        "label": "OpenAI overview",
+        "href": "https://openai.com/index/hugging-face-incident-and-the-road-ahead/"
+      },
+      {
+        "label": "OpenAI technical report",
+        "href": "https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf"
+      }
+    ],
+    "retrievedAt": "2026-08-26",
+    "units": "conceptual relationships",
+    "transformations": [
+      "Keep the diagram conceptual and omit reusable technical instructions, secret indicators, and sensitive infrastructure detail.",
+      "Render every connection with equal-width lines.",
+      "Use relationship labels and state labels in addition to color."
+    ],
+    "uncertainty": "The diagram reconciles reported layers and is not a complete architecture or control inventory. Every node remains attributable to its source family.",
+    "data": {
+      "type": "relationship",
+      "nodes": [
+        {
+          "id": "company-response",
+          "label": "OpenAI investigation, control changes, and evaluations",
+          "status": "caution",
+          "stateLabel": "Company response",
+          "group": "Company report",
+          "evidenceLane": "OpenAI company report",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
+          ]
+        },
+        {
+          "id": "host-response",
+          "label": "Host containment, reconstruction, and affected-asset assessment",
+          "status": "verified",
+          "stateLabel": "Host evidence",
+          "group": "Host telemetry",
+          "evidenceLane": "Hugging Face host telemetry",
+          "sourceIds": [
+            "hf-1",
+            "hf-2"
+          ]
+        },
+        {
+          "id": "independent-review",
+          "label": "METR and Redwood analysis with access limits",
+          "status": "caution",
+          "stateLabel": "Independent analysis",
+          "group": "Independent review",
+          "evidenceLane": "METR and Redwood independent investigation",
+          "sourceIds": [
+            "mr-1",
+            "mr-2"
+          ]
+        },
+        {
+          "id": "legal-review",
+          "label": "Alabama investigation and records demands",
+          "status": "caution",
+          "stateLabel": "Open legal process",
+          "group": "Legal process",
+          "evidenceLane": "Legal process",
+          "sourceIds": [
+            "al-1",
+            "al-2"
+          ]
+        },
+        {
+          "id": "reported-crossing",
+          "label": "Reported activity on Hugging Face production systems",
+          "status": "caution",
+          "stateLabel": "Reported crossing",
+          "group": "Host boundary",
+          "evidenceLane": "OpenAI company report",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
+          ]
+        },
+        {
+          "id": "research-environment",
+          "label": "OpenAI research and evaluation environment",
+          "status": "caution",
+          "stateLabel": "Company-reported boundary",
+          "group": "Company report",
+          "evidenceLane": "OpenAI company report",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
+          ]
+        },
+        {
+          "id": "vendor-response",
+          "label": "JFrog statement and advisory context",
+          "status": "caution",
+          "stateLabel": "Vendor remediation",
+          "group": "Vendor record",
+          "evidenceLane": "Vendor remediation",
+          "sourceIds": [
+            "jf-1",
+            "jf-2"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "source": "company-response",
+          "target": "legal-review",
+          "label": "Legal inquiry; no liability finding",
+          "status": "caution",
+          "type": "relationship",
+          "evidenceLane": "Legal process",
+          "sourceIds": [
+            "al-1",
+            "al-2"
+          ]
+        },
+        {
+          "source": "company-response",
+          "target": "vendor-response",
+          "label": "Vendor remediation context",
+          "status": "caution",
+          "type": "relationship",
+          "evidenceLane": "Vendor remediation",
+          "sourceIds": [
+            "jf-1",
+            "jf-2"
+          ]
+        },
+        {
+          "source": "host-response",
+          "target": "company-response",
+          "label": "Separate company review layer",
+          "status": "caution",
+          "type": "relationship",
+          "evidenceLane": "OpenAI company report",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
+          ]
+        },
+        {
+          "source": "host-response",
+          "target": "independent-review",
+          "label": "Evidence supplied for bounded review",
+          "status": "caution",
+          "type": "relationship",
+          "evidenceLane": "METR and Redwood independent investigation",
+          "sourceIds": [
+            "mr-1",
+            "mr-2"
+          ]
+        },
+        {
+          "source": "reported-crossing",
+          "target": "host-response",
+          "label": "Host response record; no causal claim",
+          "status": "verified",
+          "type": "relationship",
+          "evidenceLane": "Hugging Face host telemetry",
+          "sourceIds": [
+            "hf-1",
+            "hf-2"
+          ]
+        },
+        {
+          "source": "research-environment",
+          "target": "reported-crossing",
+          "label": "Company-reported sequence; no causal claim",
+          "status": "caution",
+          "type": "relationship",
+          "evidenceLane": "OpenAI company report",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
+          ]
+        }
+      ]
+    }
+  }
+}

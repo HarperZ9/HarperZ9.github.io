@@ -1,0 +1,373 @@
+<svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" aria-labelledby="system-capability-map-title system-capability-map-desc" data-figure-kind="relationship">
+  <title id="system-capability-map-title">Public system capability relationships</title>
+  <desc id="system-capability-map-desc">A generated map of the systems and public evidence records in the canonical public registry. The map shows declared dependencies, related systems, and evidence references recorded in the public registry.</desc>
+  <defs>
+    <pattern id="system-capability-map-verified-pattern" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#13262b"/><path d="M0 8L8 0" stroke="#54c9d1" stroke-width="2"/></pattern>
+    <pattern id="system-capability-map-caution-pattern" width="10" height="10" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="#291b18"/><path d="M-2 10L10-2M4 12L12 4" stroke="#d47a5a" stroke-width="2"/></pattern>
+    <pattern id="system-capability-map-unavailable-pattern" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#17252c"/><circle cx="2" cy="2" r="1.2" fill="#9eb8bf"/></pattern>
+    <marker id="system-capability-map-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 0L8 4L0 8Z" fill="#9eb8bf"/></marker>
+  </defs>
+  <style>
+    text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#f2f8f8}
+    .mono{font-family:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace}
+    .muted{fill:#b9cbd0}.hairline{stroke:#36505a;stroke-width:1}.value{font-variant-numeric:tabular-nums}
+    [data-figure-point]:focus{outline:none}[data-figure-point]:focus-visible .focus-ring{stroke:#54c9d1;stroke-width:4;fill:none}
+  </style>
+  <rect width="960" height="540" fill="#0b1115"/>
+  <text x="28" y="30" class="mono muted" font-size="11">SYSTEMS</text><text x="770" y="30" class="mono muted" font-size="11">PUBLIC EVIDENCE</text><path id="system-capability-map-edge-0" d="M183.00 86.00 C268.00 86.00 335.00 86.00 353.00 86.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-0" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-1" d="M183.00 86.00 C349.25 86.00 497.50 86.00 515.50 86.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-1" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-2" d="M183.00 86.00 C349.25 86.00 497.50 151.00 515.50 151.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-2" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-3" d="M183.00 86.00 C476.50 86.00 752.00 53.50 770.00 53.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-3" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-4" d="M183.00 86.00 C205.00 86.00 10.00 216.00 28.00 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-4" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-5" d="M345.50 86.00 C557.75 86.00 752.00 72.50 770.00 72.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-5" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-6" d="M345.50 86.00 C367.50 86.00 172.50 346.00 190.50 346.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-6" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-7" d="M345.50 86.00 C430.50 86.00 497.50 346.00 515.50 346.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-7" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-8" d="M345.50 86.00 C367.50 86.00 10.00 411.00 28.00 411.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-8" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-9" d="M508.00 86.00 C530.00 86.00 10.00 86.00 28.00 86.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-9" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-10" d="M508.00 86.00 C530.00 86.00 497.50 86.00 515.50 86.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-10" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-11" d="M508.00 86.00 C639.00 86.00 752.00 91.50 770.00 91.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-11" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-12" d="M508.00 86.00 C530.00 86.00 497.50 281.00 515.50 281.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-12" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-13" d="M670.50 86.00 C692.50 86.00 10.00 86.00 28.00 86.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-13" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-14" d="M670.50 86.00 C692.50 86.00 335.00 86.00 353.00 86.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-14" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-15" d="M670.50 86.00 C720.25 86.00 752.00 110.50 770.00 110.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-15" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-16" d="M670.50 86.00 C692.50 86.00 10.00 216.00 28.00 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-16" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-17" d="M670.50 86.00 C692.50 86.00 497.50 281.00 515.50 281.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-17" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-18" d="M183.00 151.00 C205.00 151.00 172.50 151.00 190.50 151.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-18" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-19" d="M183.00 151.00 C476.50 151.00 752.00 129.50 770.00 129.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-19" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-20" d="M183.00 151.00 C205.00 151.00 172.50 411.00 190.50 411.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-20" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-21" d="M183.00 151.00 C268.00 151.00 335.00 411.00 353.00 411.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-21" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-22" d="M345.50 151.00 C367.50 151.00 10.00 151.00 28.00 151.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-22" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-23" d="M345.50 151.00 C557.75 151.00 752.00 148.50 770.00 148.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-23" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-24" d="M345.50 151.00 C367.50 151.00 172.50 411.00 190.50 411.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-24" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-25" d="M508.00 151.00 C530.00 151.00 497.50 151.00 515.50 151.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-25" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-26" d="M508.00 151.00 C639.00 151.00 752.00 167.50 770.00 167.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-26" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-27" d="M508.00 151.00 C530.00 151.00 10.00 216.00 28.00 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-27" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-28" d="M508.00 151.00 C530.00 151.00 335.00 216.00 353.00 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-28" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-29" d="M508.00 151.00 C530.00 151.00 10.00 281.00 28.00 281.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-29" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-30" d="M670.50 151.00 C692.50 151.00 10.00 86.00 28.00 86.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-30" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-31" d="M670.50 151.00 C692.50 151.00 335.00 151.00 353.00 151.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-31" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-32" d="M670.50 151.00 C720.25 151.00 752.00 186.50 770.00 186.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-32" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-33" d="M670.50 151.00 C692.50 151.00 10.00 216.00 28.00 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-33" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-34" d="M670.50 151.00 C692.50 151.00 497.50 346.00 515.50 346.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-34" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-35" d="M183.00 216.00 C268.00 216.00 335.00 151.00 353.00 151.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-35" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-36" d="M183.00 216.00 C476.50 216.00 752.00 205.50 770.00 205.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-36" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-37" d="M183.00 216.00 C205.00 216.00 172.50 216.00 190.50 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-37" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-38" d="M183.00 216.00 C268.00 216.00 335.00 216.00 353.00 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-38" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-39" d="M183.00 216.00 C349.25 216.00 497.50 216.00 515.50 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-39" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-40" d="M183.00 216.00 C205.00 216.00 10.00 281.00 28.00 281.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-40" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-41" d="M183.00 216.00 C205.00 216.00 172.50 281.00 190.50 281.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-41" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-42" d="M183.00 216.00 C205.00 216.00 10.00 346.00 28.00 346.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-42" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-43" d="M183.00 216.00 C268.00 216.00 335.00 346.00 353.00 346.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-43" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-44" d="M183.00 216.00 C268.00 216.00 335.00 411.00 353.00 411.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-44" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-45" d="M345.50 216.00 C557.75 216.00 752.00 224.50 770.00 224.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-45" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-46" d="M345.50 216.00 C367.50 216.00 10.00 216.00 28.00 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-46" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-47" d="M345.50 216.00 C367.50 216.00 172.50 281.00 190.50 281.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-47" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-48" d="M345.50 216.00 C367.50 216.00 10.00 346.00 28.00 346.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-48" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-49" d="M345.50 216.00 C367.50 216.00 335.00 346.00 353.00 346.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-49" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-50" d="M508.00 216.00 C530.00 216.00 335.00 151.00 353.00 151.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-50" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-51" d="M508.00 216.00 C639.00 216.00 752.00 243.50 770.00 243.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-51" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-52" d="M508.00 216.00 C530.00 216.00 10.00 216.00 28.00 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-52" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-53" d="M508.00 216.00 C530.00 216.00 497.50 216.00 515.50 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-53" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-54" d="M670.50 216.00 C720.25 216.00 752.00 262.50 770.00 262.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-54" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-55" d="M670.50 216.00 C692.50 216.00 10.00 216.00 28.00 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-55" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-56" d="M670.50 216.00 C692.50 216.00 172.50 216.00 190.50 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-56" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-57" d="M670.50 216.00 C692.50 216.00 335.00 216.00 353.00 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-57" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-58" d="M183.00 281.00 C268.00 281.00 335.00 151.00 353.00 151.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-58" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-59" d="M183.00 281.00 C476.50 281.00 752.00 281.50 770.00 281.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-59" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-60" d="M183.00 281.00 C205.00 281.00 10.00 216.00 28.00 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-60" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-61" d="M183.00 281.00 C268.00 281.00 335.00 216.00 353.00 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-61" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-62" d="M345.50 281.00 C557.75 281.00 752.00 300.50 770.00 300.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-62" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-63" d="M345.50 281.00 C367.50 281.00 10.00 216.00 28.00 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-63" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-64" d="M345.50 281.00 C367.50 281.00 172.50 216.00 190.50 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-64" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-65" d="M345.50 281.00 C367.50 281.00 335.00 346.00 353.00 346.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-65" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-66" d="M508.00 281.00 C530.00 281.00 497.50 151.00 515.50 151.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-66" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-67" d="M508.00 281.00 C639.00 281.00 752.00 319.50 770.00 319.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-67" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-68" d="M508.00 281.00 C530.00 281.00 172.50 346.00 190.50 346.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-68" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-69" d="M508.00 281.00 C530.00 281.00 497.50 346.00 515.50 346.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-69" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-70" d="M670.50 281.00 C692.50 281.00 10.00 86.00 28.00 86.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-70" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-71" d="M670.50 281.00 C692.50 281.00 335.00 86.00 353.00 86.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-71" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-72" d="M670.50 281.00 C692.50 281.00 497.50 86.00 515.50 86.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-72" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-73" d="M670.50 281.00 C720.25 281.00 752.00 338.50 770.00 338.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-73" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-74" d="M183.00 346.00 C476.50 346.00 752.00 357.50 770.00 357.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-74" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-75" d="M183.00 346.00 C205.00 346.00 10.00 216.00 28.00 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-75" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-76" d="M183.00 346.00 C205.00 346.00 172.50 216.00 190.50 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-76" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-77" d="M183.00 346.00 C268.00 346.00 335.00 346.00 353.00 346.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-77" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-78" d="M345.50 346.00 C367.50 346.00 172.50 86.00 190.50 86.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-78" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-79" d="M345.50 346.00 C557.75 346.00 752.00 376.50 770.00 376.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-79" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-80" d="M345.50 346.00 C367.50 346.00 335.00 281.00 353.00 281.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-80" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-81" d="M345.50 346.00 C430.50 346.00 497.50 346.00 515.50 346.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-81" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-82" d="M345.50 346.00 C367.50 346.00 10.00 411.00 28.00 411.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-82" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-83" d="M508.00 346.00 C639.00 346.00 752.00 395.50 770.00 395.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-83" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-84" d="M508.00 346.00 C530.00 346.00 10.00 216.00 28.00 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-84" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-85" d="M508.00 346.00 C530.00 346.00 172.50 216.00 190.50 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-85" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-86" d="M508.00 346.00 C530.00 346.00 172.50 281.00 190.50 281.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-86" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-87" d="M508.00 346.00 C530.00 346.00 10.00 346.00 28.00 346.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-87" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-88" d="M670.50 346.00 C692.50 346.00 497.50 151.00 515.50 151.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-88" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-89" d="M670.50 346.00 C720.25 346.00 752.00 414.50 770.00 414.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-89" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-90" d="M670.50 346.00 C692.50 346.00 335.00 281.00 353.00 281.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-90" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-91" d="M670.50 346.00 C692.50 346.00 172.50 346.00 190.50 346.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-91" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-92" d="M183.00 411.00 C205.00 411.00 172.50 86.00 190.50 86.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-92" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-93" d="M183.00 411.00 C476.50 411.00 752.00 433.50 770.00 433.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-93" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-94" d="M183.00 411.00 C268.00 411.00 335.00 281.00 353.00 281.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-94" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-95" d="M183.00 411.00 C205.00 411.00 172.50 346.00 190.50 346.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-95" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-96" d="M345.50 411.00 C367.50 411.00 10.00 151.00 28.00 151.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-96" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-97" d="M345.50 411.00 C367.50 411.00 172.50 151.00 190.50 151.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-97" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-98" d="M345.50 411.00 C557.75 411.00 752.00 452.50 770.00 452.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-98" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-99" d="M345.50 411.00 C367.50 411.00 335.00 411.00 353.00 411.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-99" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-100" d="M508.00 411.00 C530.00 411.00 10.00 151.00 28.00 151.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-100" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-101" d="M508.00 411.00 C639.00 411.00 752.00 471.50 770.00 471.50" fill="none" stroke="#54c9d1" stroke-width="1.5" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.62" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-101" startOffset="14%">evidence</textPath></text>
+<path id="system-capability-map-edge-102" d="M508.00 411.00 C530.00 411.00 10.00 216.00 28.00 216.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-102" startOffset="14%">related</textPath></text>
+<path id="system-capability-map-edge-103" d="M508.00 411.00 C530.00 411.00 172.50 411.00 190.50 411.00" fill="none" stroke="#9eb8bf" stroke-width="1" stroke-dasharray="3 5" marker-end="url(#system-capability-map-arrow)" opacity="0.3" aria-hidden="true"/><text class="mono muted" font-size="7"><textPath href="#system-capability-map-edge-103" startOffset="14%">related</textPath></text><g data-figure-point data-figure-key="accountable-surface" data-status-label="Active" role="graphics-symbol" aria-label="Accountable Surface. Active." tabindex="-1">
+      <rect class="focus-ring" x="25" y="61" width="161" height="50" stroke="transparent"/>
+      <rect x="28" y="64" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="36" y="82" font-size="11">Accountable Surface</text>
+      <text x="36" y="98" class="mono muted" font-size="8">Active</text>
+    </g>
+<g data-figure-point data-figure-key="agent-hook-pack" data-status-label="Shipped" role="graphics-symbol" aria-label="Agent Hook Pack. Shipped." tabindex="-1">
+      <rect class="focus-ring" x="187.5" y="61" width="161" height="50" stroke="transparent"/>
+      <rect x="190.5" y="64" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="198.5" y="82" font-size="11">Agent Hook Pack</text>
+      <text x="198.5" y="98" class="mono muted" font-size="8">Shipped</text>
+    </g>
+<g data-figure-point data-figure-key="authorized-private-practice" data-status-label="Controlled private" role="graphics-symbol" aria-label="Authorized Private Security Practice. Controlled private." tabindex="-1">
+      <rect class="focus-ring" x="350" y="61" width="161" height="50" stroke="transparent"/>
+      <rect x="353" y="64" width="155" height="44" fill="url(#system-capability-map-unavailable-pattern)" stroke="#9eb8bf" stroke-width="1.5"/>
+      <text x="361" y="82" font-size="11">Authorized Private Sec…</text>
+      <text x="361" y="98" class="mono muted" font-size="8">Controlled private</text>
+    </g>
+<g data-figure-point data-figure-key="behavior-transform" data-status-label="Active" role="graphics-symbol" aria-label="behavior-transform.io. Active." tabindex="-1">
+      <rect class="focus-ring" x="512.5" y="61" width="161" height="50" stroke="transparent"/>
+      <rect x="515.5" y="64" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="523.5" y="82" font-size="11">behavior-transform.io</text>
+      <text x="523.5" y="98" class="mono muted" font-size="8">Active</text>
+    </g>
+<g data-figure-point data-figure-key="build-color" data-status-label="Active" role="graphics-symbol" aria-label="Build Color. Active." tabindex="-1">
+      <rect class="focus-ring" x="25" y="126" width="161" height="50" stroke="transparent"/>
+      <rect x="28" y="129" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="36" y="147" font-size="11">Build Color</text>
+      <text x="36" y="163" class="mono muted" font-size="8">Active</text>
+    </g>
+<g data-figure-point data-figure-key="buildlang" data-status-label="Shipped" role="graphics-symbol" aria-label="BuildLang. Shipped." tabindex="-1">
+      <rect class="focus-ring" x="187.5" y="126" width="161" height="50" stroke="transparent"/>
+      <rect x="190.5" y="129" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="198.5" y="147" font-size="11">BuildLang</text>
+      <text x="198.5" y="163" class="mono muted" font-size="8">Shipped</text>
+    </g>
+<g data-figure-point data-figure-key="crucible" data-status-label="Shipped" role="graphics-symbol" aria-label="Crucible. Shipped." tabindex="-1">
+      <rect class="focus-ring" x="350" y="126" width="161" height="50" stroke="transparent"/>
+      <rect x="353" y="129" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="361" y="147" font-size="11">Crucible</text>
+      <text x="361" y="163" class="mono muted" font-size="8">Shipped</text>
+    </g>
+<g data-figure-point data-figure-key="emet" data-status-label="Shipped" role="graphics-symbol" aria-label="EMET. Shipped." tabindex="-1">
+      <rect class="focus-ring" x="512.5" y="126" width="161" height="50" stroke="transparent"/>
+      <rect x="515.5" y="129" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="523.5" y="147" font-size="11">EMET</text>
+      <text x="523.5" y="163" class="mono muted" font-size="8">Shipped</text>
+    </g>
+<g data-figure-point data-figure-key="evidence:accountable-surface:accountable-surface-public-source" data-status-label="Verified" role="graphics-symbol" aria-label="Accountable Surface public source. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="44" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="46" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="57" class="mono" font-size="7.5">Accountable Surface public sour…</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:agent-hook-pack:agent-hook-pack-release-v0-1-0" data-status-label="Verified" role="graphics-symbol" aria-label="Agent Hook Pack v0.1.0. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="63" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="65" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="76" class="mono" font-size="7.5">Agent Hook Pack v0.1.0</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:authorized-private-practice:private-practice-public-boundary" data-status-label="Verified" role="graphics-symbol" aria-label="Public engagement boundary. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="82" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="84" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="95" class="mono" font-size="7.5">Public engagement boundary</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:behavior-transform:behavior-transform-public-source" data-status-label="Verified" role="graphics-symbol" aria-label="behavior-transform.io public source. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="101" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="103" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="114" class="mono" font-size="7.5">behavior-transform.io public so…</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:build-color:build-color-release-v1-0-1" data-status-label="Verified" role="graphics-symbol" aria-label="Build Color v1.0.1. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="120" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="122" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="133" class="mono" font-size="7.5">Build Color v1.0.1</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:buildlang:buildlang-release-v1-2-0" data-status-label="Verified" role="graphics-symbol" aria-label="BuildLang v1.2.0. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="139" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="141" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="152" class="mono" font-size="7.5">BuildLang v1.2.0</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:crucible:crucible-release-v1-2-0" data-status-label="Verified" role="graphics-symbol" aria-label="Crucible v1.2.0. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="158" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="160" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="171" class="mono" font-size="7.5">Crucible v1.2.0</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:emet:emet-release-v1-2-0" data-status-label="Verified" role="graphics-symbol" aria-label="EMET v1.2.0. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="177" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="179" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="190" class="mono" font-size="7.5">EMET v1.2.0</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:flywheel:flywheel-release-v0-3-10" data-status-label="Verified" role="graphics-symbol" aria-label="Flywheel v0.3.10. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="196" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="198" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="209" class="mono" font-size="7.5">Flywheel v0.3.10</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:forum:forum-release-v1-13-0" data-status-label="Verified" role="graphics-symbol" aria-label="Forum v1.13.0. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="215" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="217" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="228" class="mono" font-size="7.5">Forum v1.13.0</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:gather:gather-release-v1-6-1" data-status-label="Verified" role="graphics-symbol" aria-label="Gather v1.6.1. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="234" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="236" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="247" class="mono" font-size="7.5">Gather v1.6.1</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:index:index-release-v2-9-0" data-status-label="Verified" role="graphics-symbol" aria-label="Index v2.9.0. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="253" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="255" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="266" class="mono" font-size="7.5">Index v2.9.0</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:learn:learn-public-source" data-status-label="Verified" role="graphics-symbol" aria-label="Learn public source. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="272" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="274" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="285" class="mono" font-size="7.5">Learn public source</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:mneme:mneme-public-source" data-status-label="Verified" role="graphics-symbol" aria-label="Mneme public source. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="291" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="293" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="304" class="mono" font-size="7.5">Mneme public source</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:model-provenance-validator:model-provenance-validator-release-v0-1-1" data-status-label="Verified" role="graphics-symbol" aria-label="Model Provenance Validator v0.1.1. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="310" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="312" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="323" class="mono" font-size="7.5">Model Provenance Validator v0.1…</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:phantom:phantom-release-v1-1-0" data-status-label="Verified" role="graphics-symbol" aria-label="Phantom v1.1.0. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="329" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="331" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="342" class="mono" font-size="7.5">Phantom v1.1.0</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:plexus:plexus-public-source" data-status-label="Verified" role="graphics-symbol" aria-label="Plexus public source. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="348" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="350" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="361" class="mono" font-size="7.5">Plexus public source</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:public-surface-sweeper:public-surface-sweeper-release-v0-1-1" data-status-label="Verified" role="graphics-symbol" aria-label="Public Surface Sweeper v0.1.1. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="367" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="369" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="380" class="mono" font-size="7.5">Public Surface Sweeper v0.1.1</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:relay:relay-public-source" data-status-label="Verified" role="graphics-symbol" aria-label="Relay public source. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="386" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="388" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="399" class="mono" font-size="7.5">Relay public source</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:repo-proof-index:repo-proof-index-release-v0-1-1" data-status-label="Verified" role="graphics-symbol" aria-label="Repo Proof Index v0.1.1. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="405" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="407" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="418" class="mono" font-size="7.5">Repo Proof Index v0.1.1</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:secret-redact-io:secret-redact-io-release-v0-1-0" data-status-label="Verified" role="graphics-symbol" aria-label="Secret Redact IO v0.1.0. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="424" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="426" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="437" class="mono" font-size="7.5">Secret Redact IO v0.1.0</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:studio-engine:studio-engine-public-source" data-status-label="Verified" role="graphics-symbol" aria-label="Studio Engine public source. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="443" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="445" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="456" class="mono" font-size="7.5">Studio Engine public source</text>
+      </g>
+<g data-figure-point data-figure-key="evidence:telos:telos-public-source" data-status-label="Verified" role="graphics-symbol" aria-label="Telos public source. Verified." tabindex="-1">
+        <rect class="focus-ring" x="768" y="462" width="168" height="19" stroke="transparent"/>
+        <rect x="770" y="464" width="164" height="15" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-dasharray="none"/>
+        <text x="775" y="475" class="mono" font-size="7.5">Telos public source</text>
+      </g>
+<g data-figure-point data-figure-key="flywheel" data-status-label="Shipped" role="graphics-symbol" aria-label="Flywheel. Shipped." tabindex="-1">
+      <rect class="focus-ring" x="25" y="191" width="161" height="50" stroke="transparent"/>
+      <rect x="28" y="194" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="36" y="212" font-size="11">Flywheel</text>
+      <text x="36" y="228" class="mono muted" font-size="8">Shipped</text>
+    </g>
+<g data-figure-point data-figure-key="forum" data-status-label="Shipped" role="graphics-symbol" aria-label="Forum. Shipped." tabindex="-1">
+      <rect class="focus-ring" x="187.5" y="191" width="161" height="50" stroke="transparent"/>
+      <rect x="190.5" y="194" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="198.5" y="212" font-size="11">Forum</text>
+      <text x="198.5" y="228" class="mono muted" font-size="8">Shipped</text>
+    </g>
+<g data-figure-point data-figure-key="gather" data-status-label="Shipped" role="graphics-symbol" aria-label="Gather. Shipped." tabindex="-1">
+      <rect class="focus-ring" x="350" y="191" width="161" height="50" stroke="transparent"/>
+      <rect x="353" y="194" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="361" y="212" font-size="11">Gather</text>
+      <text x="361" y="228" class="mono muted" font-size="8">Shipped</text>
+    </g>
+<g data-figure-point data-figure-key="index" data-status-label="Shipped" role="graphics-symbol" aria-label="Index. Shipped." tabindex="-1">
+      <rect class="focus-ring" x="512.5" y="191" width="161" height="50" stroke="transparent"/>
+      <rect x="515.5" y="194" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="523.5" y="212" font-size="11">Index</text>
+      <text x="523.5" y="228" class="mono muted" font-size="8">Shipped</text>
+    </g>
+<g data-figure-point data-figure-key="learn" data-status-label="Shipped" role="graphics-symbol" aria-label="Learn. Shipped." tabindex="-1">
+      <rect class="focus-ring" x="25" y="256" width="161" height="50" stroke="transparent"/>
+      <rect x="28" y="259" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="36" y="277" font-size="11">Learn</text>
+      <text x="36" y="293" class="mono muted" font-size="8">Shipped</text>
+    </g>
+<g data-figure-point data-figure-key="mneme" data-status-label="Active" role="graphics-symbol" aria-label="Mneme. Active." tabindex="-1">
+      <rect class="focus-ring" x="187.5" y="256" width="161" height="50" stroke="transparent"/>
+      <rect x="190.5" y="259" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="198.5" y="277" font-size="11">Mneme</text>
+      <text x="198.5" y="293" class="mono muted" font-size="8">Active</text>
+    </g>
+<g data-figure-point data-figure-key="model-provenance-validator" data-status-label="Shipped" role="graphics-symbol" aria-label="Model Provenance Validator. Shipped." tabindex="-1">
+      <rect class="focus-ring" x="350" y="256" width="161" height="50" stroke="transparent"/>
+      <rect x="353" y="259" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="361" y="277" font-size="11">Model Provenance Valid…</text>
+      <text x="361" y="293" class="mono muted" font-size="8">Shipped</text>
+    </g>
+<g data-figure-point data-figure-key="phantom" data-status-label="Shipped" role="graphics-symbol" aria-label="Phantom. Shipped." tabindex="-1">
+      <rect class="focus-ring" x="512.5" y="256" width="161" height="50" stroke="transparent"/>
+      <rect x="515.5" y="259" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="523.5" y="277" font-size="11">Phantom</text>
+      <text x="523.5" y="293" class="mono muted" font-size="8">Shipped</text>
+    </g>
+<g data-figure-point data-figure-key="plexus" data-status-label="Active" role="graphics-symbol" aria-label="Plexus. Active." tabindex="-1">
+      <rect class="focus-ring" x="25" y="321" width="161" height="50" stroke="transparent"/>
+      <rect x="28" y="324" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="36" y="342" font-size="11">Plexus</text>
+      <text x="36" y="358" class="mono muted" font-size="8">Active</text>
+    </g>
+<g data-figure-point data-figure-key="public-surface-sweeper" data-status-label="Shipped" role="graphics-symbol" aria-label="Public Surface Sweeper. Shipped." tabindex="-1">
+      <rect class="focus-ring" x="187.5" y="321" width="161" height="50" stroke="transparent"/>
+      <rect x="190.5" y="324" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="198.5" y="342" font-size="11">Public Surface Sweeper</text>
+      <text x="198.5" y="358" class="mono muted" font-size="8">Shipped</text>
+    </g>
+<g data-figure-point data-figure-key="relay" data-status-label="Active" role="graphics-symbol" aria-label="Relay. Active." tabindex="-1">
+      <rect class="focus-ring" x="350" y="321" width="161" height="50" stroke="transparent"/>
+      <rect x="353" y="324" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="361" y="342" font-size="11">Relay</text>
+      <text x="361" y="358" class="mono muted" font-size="8">Active</text>
+    </g>
+<g data-figure-point data-figure-key="repo-proof-index" data-status-label="Shipped" role="graphics-symbol" aria-label="Repo Proof Index. Shipped." tabindex="-1">
+      <rect class="focus-ring" x="512.5" y="321" width="161" height="50" stroke="transparent"/>
+      <rect x="515.5" y="324" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="523.5" y="342" font-size="11">Repo Proof Index</text>
+      <text x="523.5" y="358" class="mono muted" font-size="8">Shipped</text>
+    </g>
+<g data-figure-point data-figure-key="secret-redact-io" data-status-label="Shipped" role="graphics-symbol" aria-label="Secret Redact IO. Shipped." tabindex="-1">
+      <rect class="focus-ring" x="25" y="386" width="161" height="50" stroke="transparent"/>
+      <rect x="28" y="389" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="36" y="407" font-size="11">Secret Redact IO</text>
+      <text x="36" y="423" class="mono muted" font-size="8">Shipped</text>
+    </g>
+<g data-figure-point data-figure-key="studio-engine" data-status-label="Active" role="graphics-symbol" aria-label="Studio Engine. Active." tabindex="-1">
+      <rect class="focus-ring" x="187.5" y="386" width="161" height="50" stroke="transparent"/>
+      <rect x="190.5" y="389" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="198.5" y="407" font-size="11">Studio Engine</text>
+      <text x="198.5" y="423" class="mono muted" font-size="8">Active</text>
+    </g>
+<g data-figure-point data-figure-key="telos" data-status-label="Active" role="graphics-symbol" aria-label="Telos. Active." tabindex="-1">
+      <rect class="focus-ring" x="350" y="386" width="161" height="50" stroke="transparent"/>
+      <rect x="353" y="389" width="155" height="44" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="361" y="407" font-size="11">Telos</text>
+      <text x="361" y="423" class="mono muted" font-size="8">Active</text>
+    </g><text x="28" y="525" class="mono muted" font-size="9">Edge labels name bounded relationships. Line width is not a weight.</text>
+</svg>

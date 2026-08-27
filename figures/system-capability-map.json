@@ -1,0 +1,1128 @@
+{
+  "renderer": "telos-figure/v1",
+  "viewBox": "0 0 960 540",
+  "figure": {
+    "id": "system-capability-map",
+    "kind": "relationship",
+    "title": "Public system capability relationships",
+    "description": "A generated map of the systems and public evidence records in the canonical public registry.",
+    "claim": "The map shows declared dependencies, related systems, and evidence references recorded in the public registry.",
+    "doesNotProve": "The map does not establish production adoption, independent review, or operational compatibility between related systems.",
+    "sources": [
+      {
+        "label": "Canonical public system registry",
+        "href": "https://github.com/HarperZ9/telos-v2/blob/main/site/systems.json"
+      }
+    ],
+    "retrievedAt": "2026-08-27",
+    "units": "declared relationships",
+    "transformations": [
+      "Dependency, related, and evidence-reference edges are emitted without inference.",
+      "System and evidence records are sorted by stable public identifiers."
+    ],
+    "uncertainty": "Related edges are declared associations. They do not state direction, strength, or runtime coupling.",
+    "data": {
+      "type": "relationship",
+      "nodes": [
+        {
+          "id": "accountable-surface",
+          "label": "Accountable Surface",
+          "status": "verified",
+          "stateLabel": "Active",
+          "group": "security-privacy",
+          "nodeType": "system"
+        },
+        {
+          "id": "agent-hook-pack",
+          "label": "Agent Hook Pack",
+          "status": "verified",
+          "stateLabel": "Shipped",
+          "group": "security-privacy",
+          "nodeType": "system"
+        },
+        {
+          "id": "authorized-private-practice",
+          "label": "Authorized Private Security Practice",
+          "status": "unavailable",
+          "stateLabel": "Controlled private",
+          "group": "security-privacy",
+          "nodeType": "system"
+        },
+        {
+          "id": "behavior-transform",
+          "label": "behavior-transform.io",
+          "status": "verified",
+          "stateLabel": "Active",
+          "group": "security-privacy",
+          "nodeType": "system"
+        },
+        {
+          "id": "build-color",
+          "label": "Build Color",
+          "status": "verified",
+          "stateLabel": "Active",
+          "group": "graphics-media",
+          "nodeType": "system"
+        },
+        {
+          "id": "buildlang",
+          "label": "BuildLang",
+          "status": "verified",
+          "stateLabel": "Shipped",
+          "group": "developer-infrastructure",
+          "nodeType": "system"
+        },
+        {
+          "id": "crucible",
+          "label": "Crucible",
+          "status": "verified",
+          "stateLabel": "Shipped",
+          "group": "evaluation-verification",
+          "nodeType": "system"
+        },
+        {
+          "id": "emet",
+          "label": "EMET",
+          "status": "verified",
+          "stateLabel": "Shipped",
+          "group": "evaluation-verification",
+          "nodeType": "system"
+        },
+        {
+          "id": "evidence:accountable-surface:accountable-surface-public-source",
+          "label": "Accountable Surface public source",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:agent-hook-pack:agent-hook-pack-release-v0-1-0",
+          "label": "Agent Hook Pack v0.1.0",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:authorized-private-practice:private-practice-public-boundary",
+          "label": "Public engagement boundary",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:behavior-transform:behavior-transform-public-source",
+          "label": "behavior-transform.io public source",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:build-color:build-color-release-v1-0-1",
+          "label": "Build Color v1.0.1",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:buildlang:buildlang-release-v1-2-0",
+          "label": "BuildLang v1.2.0",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:crucible:crucible-release-v1-2-0",
+          "label": "Crucible v1.2.0",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:emet:emet-release-v1-2-0",
+          "label": "EMET v1.2.0",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:flywheel:flywheel-release-v0-3-10",
+          "label": "Flywheel v0.3.10",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:forum:forum-release-v1-13-0",
+          "label": "Forum v1.13.0",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:gather:gather-release-v1-6-1",
+          "label": "Gather v1.6.1",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:index:index-release-v2-9-0",
+          "label": "Index v2.9.0",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:learn:learn-public-source",
+          "label": "Learn public source",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:mneme:mneme-public-source",
+          "label": "Mneme public source",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:model-provenance-validator:model-provenance-validator-release-v0-1-1",
+          "label": "Model Provenance Validator v0.1.1",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:phantom:phantom-release-v1-1-0",
+          "label": "Phantom v1.1.0",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:plexus:plexus-public-source",
+          "label": "Plexus public source",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:public-surface-sweeper:public-surface-sweeper-release-v0-1-1",
+          "label": "Public Surface Sweeper v0.1.1",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:relay:relay-public-source",
+          "label": "Relay public source",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:repo-proof-index:repo-proof-index-release-v0-1-1",
+          "label": "Repo Proof Index v0.1.1",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:secret-redact-io:secret-redact-io-release-v0-1-0",
+          "label": "Secret Redact IO v0.1.0",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:studio-engine:studio-engine-public-source",
+          "label": "Studio Engine public source",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:telos:telos-public-source",
+          "label": "Telos public source",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "flywheel",
+          "label": "Flywheel",
+          "status": "verified",
+          "stateLabel": "Shipped",
+          "group": "agent-systems",
+          "nodeType": "system"
+        },
+        {
+          "id": "forum",
+          "label": "Forum",
+          "status": "verified",
+          "stateLabel": "Shipped",
+          "group": "agent-systems",
+          "nodeType": "system"
+        },
+        {
+          "id": "gather",
+          "label": "Gather",
+          "status": "verified",
+          "stateLabel": "Shipped",
+          "group": "research-education",
+          "nodeType": "system"
+        },
+        {
+          "id": "index",
+          "label": "Index",
+          "status": "verified",
+          "stateLabel": "Shipped",
+          "group": "developer-infrastructure",
+          "nodeType": "system"
+        },
+        {
+          "id": "learn",
+          "label": "Learn",
+          "status": "verified",
+          "stateLabel": "Shipped",
+          "group": "research-education",
+          "nodeType": "system"
+        },
+        {
+          "id": "mneme",
+          "label": "Mneme",
+          "status": "verified",
+          "stateLabel": "Active",
+          "group": "agent-systems",
+          "nodeType": "system"
+        },
+        {
+          "id": "model-provenance-validator",
+          "label": "Model Provenance Validator",
+          "status": "verified",
+          "stateLabel": "Shipped",
+          "group": "security-privacy",
+          "nodeType": "system"
+        },
+        {
+          "id": "phantom",
+          "label": "Phantom",
+          "status": "verified",
+          "stateLabel": "Shipped",
+          "group": "security-privacy",
+          "nodeType": "system"
+        },
+        {
+          "id": "plexus",
+          "label": "Plexus",
+          "status": "verified",
+          "stateLabel": "Active",
+          "group": "agent-systems",
+          "nodeType": "system"
+        },
+        {
+          "id": "public-surface-sweeper",
+          "label": "Public Surface Sweeper",
+          "status": "verified",
+          "stateLabel": "Shipped",
+          "group": "security-privacy",
+          "nodeType": "system"
+        },
+        {
+          "id": "relay",
+          "label": "Relay",
+          "status": "verified",
+          "stateLabel": "Active",
+          "group": "agent-systems",
+          "nodeType": "system"
+        },
+        {
+          "id": "repo-proof-index",
+          "label": "Repo Proof Index",
+          "status": "verified",
+          "stateLabel": "Shipped",
+          "group": "security-privacy",
+          "nodeType": "system"
+        },
+        {
+          "id": "secret-redact-io",
+          "label": "Secret Redact IO",
+          "status": "verified",
+          "stateLabel": "Shipped",
+          "group": "security-privacy",
+          "nodeType": "system"
+        },
+        {
+          "id": "studio-engine",
+          "label": "Studio Engine",
+          "status": "verified",
+          "stateLabel": "Active",
+          "group": "graphics-media",
+          "nodeType": "system"
+        },
+        {
+          "id": "telos",
+          "label": "Telos",
+          "status": "verified",
+          "stateLabel": "Active",
+          "group": "agent-systems",
+          "nodeType": "system"
+        }
+      ],
+      "edges": [
+        {
+          "source": "accountable-surface",
+          "target": "authorized-private-practice",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "accountable-surface",
+          "target": "behavior-transform",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "accountable-surface",
+          "target": "emet",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "accountable-surface",
+          "target": "evidence:accountable-surface:accountable-surface-public-source",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "accountable-surface",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "agent-hook-pack",
+          "target": "evidence:agent-hook-pack:agent-hook-pack-release-v0-1-0",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "agent-hook-pack",
+          "target": "public-surface-sweeper",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "agent-hook-pack",
+          "target": "repo-proof-index",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "agent-hook-pack",
+          "target": "secret-redact-io",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "authorized-private-practice",
+          "target": "accountable-surface",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "authorized-private-practice",
+          "target": "behavior-transform",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "authorized-private-practice",
+          "target": "evidence:authorized-private-practice:private-practice-public-boundary",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "authorized-private-practice",
+          "target": "phantom",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "behavior-transform",
+          "target": "accountable-surface",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "behavior-transform",
+          "target": "authorized-private-practice",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "behavior-transform",
+          "target": "evidence:behavior-transform:behavior-transform-public-source",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "behavior-transform",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "behavior-transform",
+          "target": "phantom",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "build-color",
+          "target": "buildlang",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "build-color",
+          "target": "evidence:build-color:build-color-release-v1-0-1",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "build-color",
+          "target": "studio-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "build-color",
+          "target": "telos",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "buildlang",
+          "target": "build-color",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "buildlang",
+          "target": "evidence:buildlang:buildlang-release-v1-2-0",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "buildlang",
+          "target": "studio-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "crucible",
+          "target": "emet",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "crucible",
+          "target": "evidence:crucible:crucible-release-v1-2-0",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "crucible",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "crucible",
+          "target": "gather",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "crucible",
+          "target": "learn",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "emet",
+          "target": "accountable-surface",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "emet",
+          "target": "crucible",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "emet",
+          "target": "evidence:emet:emet-release-v1-2-0",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "emet",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "emet",
+          "target": "repo-proof-index",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "crucible",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "evidence:flywheel:flywheel-release-v0-3-10",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "flywheel",
+          "target": "forum",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "gather",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "index",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "learn",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "mneme",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "plexus",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "relay",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "telos",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "forum",
+          "target": "evidence:forum:forum-release-v1-13-0",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "forum",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "forum",
+          "target": "mneme",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "forum",
+          "target": "plexus",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "forum",
+          "target": "relay",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "gather",
+          "target": "crucible",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "gather",
+          "target": "evidence:gather:gather-release-v1-6-1",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "gather",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "gather",
+          "target": "index",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "index",
+          "target": "evidence:index:index-release-v2-9-0",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "index",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "index",
+          "target": "forum",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "index",
+          "target": "gather",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "learn",
+          "target": "crucible",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "learn",
+          "target": "evidence:learn:learn-public-source",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "learn",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "learn",
+          "target": "gather",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "mneme",
+          "target": "evidence:mneme:mneme-public-source",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "mneme",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "mneme",
+          "target": "forum",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "mneme",
+          "target": "relay",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "model-provenance-validator",
+          "target": "emet",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "model-provenance-validator",
+          "target": "evidence:model-provenance-validator:model-provenance-validator-release-v0-1-1",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "model-provenance-validator",
+          "target": "public-surface-sweeper",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "model-provenance-validator",
+          "target": "repo-proof-index",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "phantom",
+          "target": "accountable-surface",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "phantom",
+          "target": "authorized-private-practice",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "phantom",
+          "target": "behavior-transform",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "phantom",
+          "target": "evidence:phantom:phantom-release-v1-1-0",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "plexus",
+          "target": "evidence:plexus:plexus-public-source",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "plexus",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "plexus",
+          "target": "forum",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "plexus",
+          "target": "relay",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "public-surface-sweeper",
+          "target": "agent-hook-pack",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "public-surface-sweeper",
+          "target": "evidence:public-surface-sweeper:public-surface-sweeper-release-v0-1-1",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "public-surface-sweeper",
+          "target": "model-provenance-validator",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "public-surface-sweeper",
+          "target": "repo-proof-index",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "public-surface-sweeper",
+          "target": "secret-redact-io",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "relay",
+          "target": "evidence:relay:relay-public-source",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "relay",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "relay",
+          "target": "forum",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "relay",
+          "target": "mneme",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "relay",
+          "target": "plexus",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "repo-proof-index",
+          "target": "emet",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "repo-proof-index",
+          "target": "evidence:repo-proof-index:repo-proof-index-release-v0-1-1",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "repo-proof-index",
+          "target": "model-provenance-validator",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "repo-proof-index",
+          "target": "public-surface-sweeper",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "secret-redact-io",
+          "target": "agent-hook-pack",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "secret-redact-io",
+          "target": "evidence:secret-redact-io:secret-redact-io-release-v0-1-0",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "secret-redact-io",
+          "target": "model-provenance-validator",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "secret-redact-io",
+          "target": "public-surface-sweeper",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "studio-engine",
+          "target": "build-color",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "studio-engine",
+          "target": "buildlang",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "studio-engine",
+          "target": "evidence:studio-engine:studio-engine-public-source",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "studio-engine",
+          "target": "telos",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "telos",
+          "target": "build-color",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "telos",
+          "target": "evidence:telos:telos-public-source",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "telos",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "telos",
+          "target": "studio-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        }
+      ]
+    }
+  }
+}

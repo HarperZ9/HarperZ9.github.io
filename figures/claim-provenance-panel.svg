@@ -1,0 +1,99 @@
+<svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" aria-labelledby="claim-provenance-panel-title claim-provenance-panel-desc" data-figure-kind="matrix">
+  <title id="claim-provenance-panel-title">Claim provenance and evidentiary role</title>
+  <desc id="claim-provenance-panel-desc">A five-row panel distinguishes filing, host telemetry, independent inference, company self-report, and unresolved allegation. Each row keeps the record&apos;s contribution adjacent to its boundary and source label. Filing, telemetry, independent inference, company self-report, and unresolved allegation are separate provenance classes in this briefing.</desc>
+  <defs>
+    <pattern id="claim-provenance-panel-verified-pattern" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#13262b"/><path d="M0 8L8 0" stroke="#54c9d1" stroke-width="2"/></pattern>
+    <pattern id="claim-provenance-panel-caution-pattern" width="10" height="10" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="#291b18"/><path d="M-2 10L10-2M4 12L12 4" stroke="#d47a5a" stroke-width="2"/></pattern>
+    <pattern id="claim-provenance-panel-unavailable-pattern" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#17252c"/><circle cx="2" cy="2" r="1.2" fill="#9eb8bf"/></pattern>
+    <marker id="claim-provenance-panel-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 0L8 4L0 8Z" fill="#9eb8bf"/></marker>
+  </defs>
+  <style>
+    text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#f2f8f8}
+    .mono{font-family:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace}
+    .muted{fill:#b9cbd0}.hairline{stroke:#36505a;stroke-width:1}.value{font-variant-numeric:tabular-nums}
+    [data-figure-point]:focus{outline:none}[data-figure-point]:focus-visible .focus-ring{stroke:#54c9d1;stroke-width:4;fill:none}
+  </style>
+  <rect width="960" height="540" fill="#0b1115"/>
+  <text x="315" y="76" text-anchor="middle" class="mono" font-size="11">Boundary</text>
+<text x="465" y="76" text-anchor="middle" class="mono" font-size="11">Contribution</text>
+<text x="615" y="76" text-anchor="middle" class="mono" font-size="11">Record</text><text x="220" y="138" text-anchor="end" font-size="13">Company self-report</text>
+<g data-figure-point data-figure-key="matrix:company-self-report:boundary" data-status-label="Caution" role="graphics-symbol" aria-label="Company self-report, Boundary: Preliminary evaluations lack public uncertainty and independent replication. Caution." tabindex="-1">
+        <rect class="focus-ring" x="243" y="103" width="144" height="60" stroke="transparent"/>
+        <rect x="245" y="105" width="140" height="56" fill="url(#claim-provenance-panel-caution-pattern)" stroke="#d47a5a"/>
+        <text x="315" y="137" text-anchor="middle" class="mono" font-size="10">Preliminary evaluations lack public uncertainty and independent replication</text>
+      </g>
+<g data-figure-point data-figure-key="matrix:company-self-report:contribution" data-status-label="Caution" role="graphics-symbol" aria-label="Company self-report, Contribution: Internal system context, impact assessment, and remediation claims. Caution." tabindex="-1">
+        <rect class="focus-ring" x="393" y="103" width="144" height="60" stroke="transparent"/>
+        <rect x="395" y="105" width="140" height="56" fill="url(#claim-provenance-panel-caution-pattern)" stroke="#d47a5a"/>
+        <text x="465" y="137" text-anchor="middle" class="mono" font-size="10">Internal system context, impact assessment, and remediation claims</text>
+      </g>
+<g data-figure-point data-figure-key="matrix:company-self-report:record" data-status-label="Caution" role="graphics-symbol" aria-label="Company self-report, Record: OpenAI overview and technical report. Caution." tabindex="-1">
+        <rect class="focus-ring" x="543" y="103" width="144" height="60" stroke="transparent"/>
+        <rect x="545" y="105" width="140" height="56" fill="url(#claim-provenance-panel-caution-pattern)" stroke="#d47a5a"/>
+        <text x="615" y="137" text-anchor="middle" class="mono" font-size="10">OpenAI overview and technical report</text>
+      </g>
+<text x="220" y="204" text-anchor="end" font-size="13">Filing</text>
+<g data-figure-point data-figure-key="matrix:filing:boundary" data-status-label="Caution" role="graphics-symbol" aria-label="Filing, Boundary: A filing does not establish liability. Caution." tabindex="-1">
+        <rect class="focus-ring" x="243" y="169" width="144" height="60" stroke="transparent"/>
+        <rect x="245" y="171" width="140" height="56" fill="url(#claim-provenance-panel-caution-pattern)" stroke="#d47a5a"/>
+        <text x="315" y="203" text-anchor="middle" class="mono" font-size="10">A filing does not establish liability</text>
+      </g>
+<g data-figure-point data-figure-key="matrix:filing:contribution" data-status-label="Verified" role="graphics-symbol" aria-label="Filing, Contribution: Legal process, requests, and response deadline. Verified." tabindex="-1">
+        <rect class="focus-ring" x="393" y="169" width="144" height="60" stroke="transparent"/>
+        <rect x="395" y="171" width="140" height="56" fill="url(#claim-provenance-panel-verified-pattern)" stroke="#54c9d1"/>
+        <text x="465" y="203" text-anchor="middle" class="mono" font-size="10">Legal process, requests, and response deadline</text>
+      </g>
+<g data-figure-point data-figure-key="matrix:filing:record" data-status-label="Verified" role="graphics-symbol" aria-label="Filing, Record: Alabama subpoena. Verified." tabindex="-1">
+        <rect class="focus-ring" x="543" y="169" width="144" height="60" stroke="transparent"/>
+        <rect x="545" y="171" width="140" height="56" fill="url(#claim-provenance-panel-verified-pattern)" stroke="#54c9d1"/>
+        <text x="615" y="203" text-anchor="middle" class="mono" font-size="10">Alabama subpoena</text>
+      </g>
+<text x="220" y="270" text-anchor="end" font-size="13">Independent inference</text>
+<g data-figure-point data-figure-key="matrix:independent-inference:boundary" data-status-label="Caution" role="graphics-symbol" aria-label="Independent inference, Boundary: OpenAI controlled supplied-data access; Redwood hosts a mirror. Caution." tabindex="-1">
+        <rect class="focus-ring" x="243" y="235" width="144" height="60" stroke="transparent"/>
+        <rect x="245" y="237" width="140" height="56" fill="url(#claim-provenance-panel-caution-pattern)" stroke="#d47a5a"/>
+        <text x="315" y="269" text-anchor="middle" class="mono" font-size="10">OpenAI controlled supplied-data access; Redwood hosts a mirror</text>
+      </g>
+<g data-figure-point data-figure-key="matrix:independent-inference:contribution" data-status-label="Caution" role="graphics-symbol" aria-label="Independent inference, Contribution: Behavioral analysis and methodological limits. Caution." tabindex="-1">
+        <rect class="focus-ring" x="393" y="235" width="144" height="60" stroke="transparent"/>
+        <rect x="395" y="237" width="140" height="56" fill="url(#claim-provenance-panel-caution-pattern)" stroke="#d47a5a"/>
+        <text x="465" y="269" text-anchor="middle" class="mono" font-size="10">Behavioral analysis and methodological limits</text>
+      </g>
+<g data-figure-point data-figure-key="matrix:independent-inference:record" data-status-label="Caution" role="graphics-symbol" aria-label="Independent inference, Record: METR and Redwood joint report. Caution." tabindex="-1">
+        <rect class="focus-ring" x="543" y="235" width="144" height="60" stroke="transparent"/>
+        <rect x="545" y="237" width="140" height="56" fill="url(#claim-provenance-panel-caution-pattern)" stroke="#d47a5a"/>
+        <text x="615" y="269" text-anchor="middle" class="mono" font-size="10">METR and Redwood joint report</text>
+      </g>
+<text x="220" y="336" text-anchor="end" font-size="13">Telemetry</text>
+<g data-figure-point data-figure-key="matrix:telemetry:boundary" data-status-label="Caution" role="graphics-symbol" aria-label="Telemetry, Boundary: Recovered records may be incomplete. Caution." tabindex="-1">
+        <rect class="focus-ring" x="243" y="301" width="144" height="60" stroke="transparent"/>
+        <rect x="245" y="303" width="140" height="56" fill="url(#claim-provenance-panel-caution-pattern)" stroke="#d47a5a"/>
+        <text x="315" y="335" text-anchor="middle" class="mono" font-size="10">Recovered records may be incomplete</text>
+      </g>
+<g data-figure-point data-figure-key="matrix:telemetry:contribution" data-status-label="Verified" role="graphics-symbol" aria-label="Telemetry, Contribution: Recovered host activity and affected-asset assessment. Verified." tabindex="-1">
+        <rect class="focus-ring" x="393" y="301" width="144" height="60" stroke="transparent"/>
+        <rect x="395" y="303" width="140" height="56" fill="url(#claim-provenance-panel-verified-pattern)" stroke="#54c9d1"/>
+        <text x="465" y="335" text-anchor="middle" class="mono" font-size="10">Recovered host activity and affected-asset assessment</text>
+      </g>
+<g data-figure-point data-figure-key="matrix:telemetry:record" data-status-label="Verified" role="graphics-symbol" aria-label="Telemetry, Record: Hugging Face technical timeline. Verified." tabindex="-1">
+        <rect class="focus-ring" x="543" y="301" width="144" height="60" stroke="transparent"/>
+        <rect x="545" y="303" width="140" height="56" fill="url(#claim-provenance-panel-verified-pattern)" stroke="#54c9d1"/>
+        <text x="615" y="335" text-anchor="middle" class="mono" font-size="10">Hugging Face technical timeline</text>
+      </g>
+<text x="220" y="402" text-anchor="end" font-size="13">Unresolved allegation</text>
+<g data-figure-point data-figure-key="matrix:unresolved-allegation:boundary" data-status-label="Caution" role="graphics-symbol" aria-label="Unresolved allegation, Boundary: Allegations are not adjudicated findings. Caution." tabindex="-1">
+        <rect class="focus-ring" x="243" y="367" width="144" height="60" stroke="transparent"/>
+        <rect x="245" y="369" width="140" height="56" fill="url(#claim-provenance-panel-caution-pattern)" stroke="#d47a5a"/>
+        <text x="315" y="401" text-anchor="middle" class="mono" font-size="10">Allegations are not adjudicated findings</text>
+      </g>
+<g data-figure-point data-figure-key="matrix:unresolved-allegation:contribution" data-status-label="Caution" role="graphics-symbol" aria-label="Unresolved allegation, Contribution: Consumer-protection questions and attributed allegations. Caution." tabindex="-1">
+        <rect class="focus-ring" x="393" y="367" width="144" height="60" stroke="transparent"/>
+        <rect x="395" y="369" width="140" height="56" fill="url(#claim-provenance-panel-caution-pattern)" stroke="#d47a5a"/>
+        <text x="465" y="401" text-anchor="middle" class="mono" font-size="10">Consumer-protection questions and attributed allegations</text>
+      </g>
+<g data-figure-point data-figure-key="matrix:unresolved-allegation:record" data-status-label="Caution" role="graphics-symbol" aria-label="Unresolved allegation, Record: Alabama investigation announcement. Caution." tabindex="-1">
+        <rect class="focus-ring" x="543" y="367" width="144" height="60" stroke="transparent"/>
+        <rect x="545" y="369" width="140" height="56" fill="url(#claim-provenance-panel-caution-pattern)" stroke="#d47a5a"/>
+        <text x="615" y="401" text-anchor="middle" class="mono" font-size="10">Alabama investigation announcement</text>
+      </g><text x="28" y="510" class="mono muted" font-size="11">Cells use text, pattern, and outline in addition to color.</text>
+</svg>

@@ -1,0 +1,20 @@
+{
+  "schema": "harperz9-briefing-publication/v1",
+  "briefingId": "2026-08-26-openai-hugging-face-incident",
+  "canonicalUrl": "https://harperz9.github.io/briefings/2026-08-26-openai-hugging-face-incident/",
+  "siteStatus": "built",
+  "social": {
+    "figureId": "source-scope-matrix",
+    "figureAlt": "A five-column evidence-scope matrix separates legal process, company report, host telemetry, independent investigation, and vendor remediation.",
+    "x": {
+      "status": "prepared",
+      "postUrl": null,
+      "publishedAt": null
+    },
+    "linkedin": {
+      "status": "prepared",
+      "postUrl": null,
+      "publishedAt": null
+    }
+  }
+}
