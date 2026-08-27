@@ -74,7 +74,7 @@ RELEASE_PATHS = (
     "systems/studio-engine.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "f12302e1f1f950d4ffd166fa3b02bbb5e55433806e6a9818f3ce7ac9969a73fb"
+REVIEWED_RELEASE_SHA256 = "cb5ab1f5b60ca6b8bf8a0eec437875b32611ecc7d4b228f60d2c689dff21676e"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

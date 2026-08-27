@@ -50,7 +50,7 @@
 
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="overview.html">Engines</a> <a href="studio.html">The Studio</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260826-hiring-main"></script>
+<script type="module" src="system/nav.js?v=20260827-capability-publication"></script>
 
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">phantom</span> &middot; hardware-identity privacy</span></div>
@@ -252,6 +252,7 @@
   <h2 id="state-h" class="reveal">State of the work, August 2026.</h2>
   <p class="body-text reveal"><span translate="no">Phantom</span> v1.1.0 is shipped, on Windows and Linux. The Layer-2 path is verified end to end on fresh VMs of both: audit, generate, apply, validate, a clean uninstall that returns the machine to its original identity, and reboot persistence. On Linux that last one is proven through an actual power-cycle, where the service brought a spoofed MAC back after a reboot.</p>
   <p class="body-text reveal">It is honest about its edges. Layer 2 only for now, with Layers 1 and 0 modeled but not shipped. The Layer 1 kernel driver now compiles under CI and two of its security defects are fixed, but it is unsigned and not yet functional end to end. The Windows installer is not code-signed yet, so SmartScreen warns until a certificate is in place. Intended for machines you own or are expressly authorized to test, not for evading fraud controls or misrepresenting a device you do not control.</p>
+  <p class="body-text reveal">The shared public maturity record, verification entry point, and authorization boundary are also available in <a href="security-tools.json">security-tools.json</a>.</p>
 </section>
 
 </main>

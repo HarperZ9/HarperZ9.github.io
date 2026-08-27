@@ -1,10 +1,11 @@
 window.CARD_DATA = {
   "phantom": {
-    "role": "HARDWARE-IDENTITY PRIVACY",
-    "headline": "Audit what your machine reveals, spoof it, and restore the originals exactly.",
-    "pipeline": "AUDIT / GENERATE / APPLY / VALIDATE / REVERT",
+    "role": "AUTHORIZED HARDWARE IDENTITY PRIVACY",
+    "headline": "Audit and restore hardware identity fields on systems you control.",
+    "pipeline": "AUDIT / SEED / APPLY / VALIDATE / RESTORE",
     "word": "PHANTOM",
-    "glyph": "shield"
+    "glyph": "shield",
+    "showGlyph": true
   },
   "buildlang": {
     "role": "EFFECTS-ORIENTED COMPILER",
@@ -40,6 +41,22 @@ window.CARD_DATA = {
     "pipeline": "READ / HASH / COMPARE / VERDICT",
     "word": "EMET",
     "glyph": "seal"
+  },
+  "security-toolkit": {
+    "role": "PUBLIC SECURITY ENGINEERING TOOLKIT",
+    "headline": "Review public surfaces before claims outgrow evidence.",
+    "pipeline": "SWEEP / REDACT / PROVENANCE / REPORT",
+    "word": "SECURITY TOOLKIT",
+    "glyph": "ledger",
+    "showGlyph": true
+  },
+  "private-practice": {
+    "role": "AUTHORIZED PRIVATE SECURITY PRACTICE",
+    "headline": "Scope sensitive review work before any private detail moves.",
+    "pipeline": "SCOPE / BOUND / RUN / WITNESS / HANDOFF",
+    "word": "PRIVATE PRACTICE",
+    "glyph": "seal",
+    "showGlyph": true
   },
   "index": {
     "role": "WORKSPACE MAP",
