@@ -1,0 +1,1056 @@
+{
+  "schema_version": "1.0.0-draft",
+  "briefing_id": "frontier-incident-2026-08-26",
+  "publication_date": "2026-08-26",
+  "renderer": {
+    "name": null,
+    "version": null,
+    "status": "not-rendered",
+    "deterministic_seed": null,
+    "note": "The data package is renderer-neutral. No stochastic layout is required."
+  },
+  "source_registry": {
+    "AL-1": {
+      "title": "Attorney General Marshall Launches Investigation into OpenAI and Sam Altman",
+      "publisher": "Alabama Attorney General",
+      "url": "https://www.alabamaag.gov/attorney-general-marshall-launches-investigation-into-openai-and-sam-altman-for-massive-artificial-intelligence-data-breach/",
+      "retrieved": "2026-08-26"
+    },
+    "AL-2": {
+      "title": "Subpoena duces tecum 26-0007",
+      "publisher": "Alabama Attorney General",
+      "url": "https://www.alabamaag.gov/wp-content/uploads/2026/08/OpenAI-Subpoena_Final.pdf",
+      "retrieved": "2026-08-26"
+    },
+    "AL-3": {
+      "title": "Fifteen-state attorneys general letter",
+      "publisher": "Iowa Attorney General",
+      "url": "https://www.iowaattorneygeneral.gov/media/cms/08_5392C9E17791C.pdf",
+      "retrieved": "2026-08-26"
+    },
+    "MR-1": {
+      "title": "OpenAI and Hugging Face Incident Investigation",
+      "publisher": "METR and Redwood Research",
+      "url": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/",
+      "retrieved": "2026-08-26"
+    },
+    "MR-2": {
+      "title": "OpenAI and Hugging Face Incident Investigation",
+      "publisher": "Redwood Research",
+      "url": "https://www.redwoodresearch.org/research/hugging-face-incident",
+      "retrieved": "2026-08-26",
+      "scope_status": "registered_mirror_only",
+      "used_in_figures": false,
+      "used_in_claims": false,
+      "scope_note": "Mirror of the joint METR and Redwood report. MR-1 remains the canonical claim and figure citation to avoid duplicate evidence."
+    },
+    "OA-1": {
+      "title": "The Hugging Face incident and the road ahead",
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/hugging-face-incident-and-the-road-ahead/",
+      "retrieved": "2026-08-26"
+    },
+    "OA-2": {
+      "title": "OpenAI Hugging Face Incident Technical Report",
+      "publisher": "OpenAI",
+      "url": "https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf",
+      "retrieved": "2026-08-26"
+    },
+    "OA-3": {
+      "title": "Hugging Face model evaluation security incident",
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/hugging-face-model-evaluation-security-incident/",
+      "retrieved": "2026-08-26"
+    },
+    "HF-1": {
+      "title": "Security incident, July 2026",
+      "publisher": "Hugging Face",
+      "url": "https://huggingface.co/blog/security-incident-july-2026",
+      "retrieved": "2026-08-26"
+    },
+    "HF-2": {
+      "title": "Agent intrusion technical timeline",
+      "publisher": "Hugging Face",
+      "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline",
+      "retrieved": "2026-08-26"
+    },
+    "JF-1": {
+      "title": "JFrog and OpenAI collaboration on zero-day security findings",
+      "publisher": "JFrog",
+      "url": "https://jfrog.com/blog/jfrog-and-openai-collaboration-on-zero-day-security-findings/",
+      "retrieved": "2026-08-26",
+      "scope_status": "registered_context_only",
+      "used_in_figures": false,
+      "used_in_claims": false,
+      "scope_note": "Vendor remediation context is outside the current six-figure and claim package. No JFrog remediation claim is made in article.md."
+    },
+    "JF-2": {
+      "title": "JFrog security advisories",
+      "publisher": "JFrog",
+      "url": "https://docs.jfrog.com/releases/docs/jfrog-security-advisories",
+      "retrieved": "2026-08-26",
+      "scope_status": "registered_context_only",
+      "used_in_figures": false,
+      "used_in_claims": false,
+      "scope_note": "CVE and fixed-version context is outside the current six-figure and claim package."
+    }
+  },
+  "figures": [
+    {
+      "id": "recovered-actions-by-day",
+      "family": "measured_bar_chart",
+      "ordinal": 1,
+      "title": "Recovered actions by day",
+      "accessible_description": "A zero-baseline bar chart of Hugging Face's recovered logged actions from July 9 through July 13, 2026. July 11 has the highest recovered count at 7,677. The values are recovered actions, not unique attacks or a measure of harm.",
+      "claim_supported": "Hugging Face's recovered-action telemetry is concentrated on July 11 within the five displayed UTC dates.",
+      "claim_ids": [
+        "HF-DAILY-ACTIONS"
+      ],
+      "source_ids": [
+        "HF-2"
+      ],
+      "inputs": {
+        "unit": "recovered_logged_actions",
+        "time_zone": "UTC",
+        "series": [
+          {
+            "date": "2026-07-09",
+            "value": 3779
+          },
+          {
+            "date": "2026-07-10",
+            "value": 1135
+          },
+          {
+            "date": "2026-07-11",
+            "value": 7677
+          },
+          {
+            "date": "2026-07-12",
+            "value": 3892
+          },
+          {
+            "date": "2026-07-13",
+            "value": 1130
+          }
+        ]
+      },
+      "transformations": [
+        "Sort records by date ascending.",
+        "Render one bar per date with a y-axis that begins at zero.",
+        "Label each bar with its exact recovered-action count.",
+        "Do not normalize, smooth, infer missing dates, or convert counts into percentages."
+      ],
+      "filters": {
+        "date_start": "2026-07-09",
+        "date_end": "2026-07-13",
+        "inclusion": "Only the five daily counts enumerated by Hugging Face."
+      },
+      "uncertainty_and_missing_data": "Hugging Face describes these as recovered actions. Unrecovered activity is unknown. Dates outside the displayed interval are out of scope and must not be rendered as zero.",
+      "visual_encoding": {
+        "x": "date_utc",
+        "y": "recovered_logged_actions",
+        "color": "verified_cyan",
+        "secondary_encoding": "exact value label and day label",
+        "hot_marks": 0
+      },
+      "table_fallback": {
+        "caption": "Recovered logged actions by UTC date, as reported by Hugging Face.",
+        "columns": [
+          "Date, UTC",
+          "Recovered actions"
+        ],
+        "rows": [
+          [
+            "2026-07-09",
+            3779
+          ],
+          [
+            "2026-07-10",
+            1135
+          ],
+          [
+            "2026-07-11",
+            7677
+          ],
+          [
+            "2026-07-12",
+            3892
+          ],
+          [
+            "2026-07-13",
+            1130
+          ]
+        ]
+      },
+      "does_not_prove": "The chart does not show unique attacks, severity, intent, harm, complete activity, or causal relationships."
+    },
+    {
+      "id": "incident-multilane-timeline",
+      "family": "multilane_timeline",
+      "ordinal": 2,
+      "title": "Incident, disclosure, review, and government response",
+      "accessible_description": "A five-lane chronology separates the independent review window, a neutral July 5 marker with no event claim, METR and Redwood's attributed reconstruction of July 8 through July 13 events in OpenAI's environment, activity recovered on Hugging Face infrastructure, OpenAI's internal detection and disclosure, public technical reporting, and government actions from June 26 through August 26, 2026.",
+      "claim_supported": "The public record developed through distinct technical, disclosure, independent-review, and legal processes rather than one continuous evidentiary stream.",
+      "claim_ids": [
+        "MR-SCOPE-DATES",
+        "MR-JULY5-NEUTRAL-ANCHOR",
+        "MR-JULY8-13-RECONSTRUCTION",
+        "HF-OBSERVED-PERIOD",
+        "HF-INITIAL-DISCLOSURE-DATE",
+        "OA-DETECTION-DISCLOSURE-DATES",
+        "HF-TECHNICAL-TIMELINE-DATE",
+        "AL-MULTISTATE-LETTER",
+        "AL-SUBPOENA-STATUS",
+        "AL-INVESTIGATION-STATUS",
+        "REPORT-PUBLICATION-DATE"
+      ],
+      "source_ids": [
+        "MR-1",
+        "HF-1",
+        "HF-2",
+        "OA-1",
+        "OA-2",
+        "OA-3",
+        "AL-1",
+        "AL-2",
+        "AL-3"
+      ],
+      "inputs": {
+        "time_zone": "UTC where a time is supplied; source-local date otherwise",
+        "lanes": [
+          {
+            "id": "independent_review",
+            "label": "Independent review"
+          },
+          {
+            "id": "hugging_face_infrastructure",
+            "label": "Hugging Face infrastructure"
+          },
+          {
+            "id": "openai_investigation",
+            "label": "OpenAI investigation"
+          },
+          {
+            "id": "public_disclosure",
+            "label": "Public disclosure"
+          },
+          {
+            "id": "government_response",
+            "label": "Government response"
+          }
+        ],
+        "events": [
+          {
+            "id": "mr-scope-start",
+            "lane": "independent_review",
+            "start": "2026-06-26",
+            "end": "2026-07-13",
+            "label": "Joint investigation scope",
+            "source_ids": [
+              "MR-1"
+            ]
+          },
+          {
+            "id": "july5-neutral-marker",
+            "lane": "independent_review",
+            "start": "2026-07-05",
+            "end": null,
+            "label": "Neutral July 5 chronology marker; no event claim encoded",
+            "attribution_boundary": "Marker only. No outage, investigation, or other event is attributed to this date.",
+            "source_ids": []
+          },
+          {
+            "id": "mr-reconstructs-experiments-and-board-activity",
+            "lane": "independent_review",
+            "start": "2026-07-08",
+            "end": "2026-07-13",
+            "label": "METR and Redwood report ExploitGym experiments beginning July 8 and reconstruct message-board activity through July 13",
+            "attribution_boundary": "Independent behavioral reconstruction from OpenAI-supplied data; timestamps may contain small error",
+            "source_ids": [
+              "MR-1"
+            ]
+          },
+          {
+            "id": "hf-observed-window",
+            "lane": "hugging_face_infrastructure",
+            "start": "2026-07-09T02:28:00Z",
+            "end": "2026-07-13T14:14:00Z",
+            "label": "Recovered-action observation window",
+            "source_ids": [
+              "HF-2"
+            ]
+          },
+          {
+            "id": "hf-initial-disclosure",
+            "lane": "public_disclosure",
+            "start": "2026-07-16",
+            "end": null,
+            "label": "Hugging Face initial disclosure",
+            "source_ids": [
+              "HF-1"
+            ]
+          },
+          {
+            "id": "oa-detected",
+            "lane": "openai_investigation",
+            "start": "2026-07-19",
+            "end": null,
+            "label": "OpenAI says it detected suspicious internal activity",
+            "source_ids": [
+              "OA-2"
+            ]
+          },
+          {
+            "id": "oa-connected",
+            "lane": "openai_investigation",
+            "start": "2026-07-20",
+            "end": null,
+            "label": "OpenAI says it connected the activity to Hugging Face",
+            "source_ids": [
+              "OA-2"
+            ]
+          },
+          {
+            "id": "oa-public-disclosure",
+            "lane": "public_disclosure",
+            "start": "2026-07-21",
+            "end": null,
+            "label": "OpenAI initial public disclosure",
+            "source_ids": [
+              "OA-3"
+            ]
+          },
+          {
+            "id": "hf-technical-timeline",
+            "lane": "public_disclosure",
+            "start": "2026-07-27",
+            "end": null,
+            "label": "Hugging Face technical timeline",
+            "source_ids": [
+              "HF-2"
+            ]
+          },
+          {
+            "id": "multistate-letter",
+            "lane": "government_response",
+            "start": "2026-08-03",
+            "end": null,
+            "label": "Fifteen-state attorneys general letter",
+            "source_ids": [
+              "AL-3"
+            ]
+          },
+          {
+            "id": "al-subpoena",
+            "lane": "government_response",
+            "start": "2026-08-20",
+            "end": null,
+            "label": "Alabama executes and serves subpoena",
+            "source_ids": [
+              "AL-2"
+            ]
+          },
+          {
+            "id": "al-announcement",
+            "lane": "government_response",
+            "start": "2026-08-24",
+            "end": null,
+            "label": "Alabama announces investigation",
+            "source_ids": [
+              "AL-1"
+            ]
+          },
+          {
+            "id": "oa-final-report",
+            "lane": "public_disclosure",
+            "start": "2026-08-26",
+            "end": null,
+            "label": "OpenAI incident overview and technical report",
+            "source_ids": [
+              "OA-1",
+              "OA-2"
+            ]
+          },
+          {
+            "id": "mr-report",
+            "lane": "independent_review",
+            "start": "2026-08-26",
+            "end": null,
+            "label": "METR and Redwood publish joint investigation",
+            "source_ids": [
+              "MR-1"
+            ]
+          }
+        ]
+      },
+      "transformations": [
+        "Preserve source-supplied date precision.",
+        "Render events only in their assigned lane.",
+        "Use a range mark when both start and end are supplied and a point mark otherwise.",
+        "Do not infer causal connectors between lanes."
+      ],
+      "filters": {
+        "date_start": "2026-06-26",
+        "date_end": "2026-08-26",
+        "inclusion": "Only dates needed to distinguish recovered activity, disclosure, independent review, and government response."
+      },
+      "uncertainty_and_missing_data": "The timeline is a selected public chronology, not a complete event log. A publication date does not establish when underlying analysis was completed. Unshown dates must not be interpreted as inactivity.",
+      "visual_encoding": {
+        "x": "calendar_time",
+        "y": "evidence_lane",
+        "point_shape": "event type",
+        "range_texture": "bounded source interval",
+        "color": "cyan for reported event; rust outline for legal inquiry; muted ink for publication marker",
+        "hot_marks": 1
+      },
+      "table_fallback": {
+        "caption": "Selected chronology with evidence lanes and source attribution.",
+        "columns": [
+          "Start",
+          "End",
+          "Lane",
+          "Event",
+          "Source IDs"
+        ],
+        "rows": [
+          [
+            "2026-06-26",
+            "2026-07-13",
+            "Independent review",
+            "Joint investigation scope",
+            "MR-1"
+          ],
+          [
+            "2026-07-05",
+            null,
+            "Independent review",
+            "Neutral chronology marker; no event claim encoded",
+            null
+          ],
+          [
+            "2026-07-08",
+            "2026-07-13",
+            "Independent review",
+            "METR and Redwood report ExploitGym experiments beginning July 8 and reconstruct message-board activity through July 13",
+            "MR-1"
+          ],
+          [
+            "2026-07-09T02:28:00Z",
+            "2026-07-13T14:14:00Z",
+            "Hugging Face infrastructure",
+            "Recovered-action observation window",
+            "HF-2"
+          ],
+          [
+            "2026-07-16",
+            null,
+            "Public disclosure",
+            "Hugging Face initial disclosure",
+            "HF-1"
+          ],
+          [
+            "2026-07-19",
+            null,
+            "OpenAI investigation",
+            "OpenAI says it detected suspicious internal activity",
+            "OA-2"
+          ],
+          [
+            "2026-07-20",
+            null,
+            "OpenAI investigation",
+            "OpenAI says it connected the activity to Hugging Face",
+            "OA-2"
+          ],
+          [
+            "2026-07-21",
+            null,
+            "Public disclosure",
+            "OpenAI initial public disclosure",
+            "OA-3"
+          ],
+          [
+            "2026-07-27",
+            null,
+            "Public disclosure",
+            "Hugging Face technical timeline",
+            "HF-2"
+          ],
+          [
+            "2026-08-03",
+            null,
+            "Government response",
+            "Fifteen-state attorneys general letter",
+            "AL-3"
+          ],
+          [
+            "2026-08-20",
+            null,
+            "Government response",
+            "Alabama executes and serves subpoena",
+            "AL-2"
+          ],
+          [
+            "2026-08-24",
+            null,
+            "Government response",
+            "Alabama announces investigation",
+            "AL-1"
+          ],
+          [
+            "2026-08-26",
+            null,
+            "Public disclosure",
+            "OpenAI incident overview and technical report",
+            "OA-1, OA-2"
+          ],
+          [
+            "2026-08-26",
+            null,
+            "Independent review",
+            "METR and Redwood publish joint investigation",
+            "MR-1"
+          ]
+        ]
+      },
+      "does_not_prove": "Temporal proximity does not prove causation, coordination, completeness, legal liability, or the accuracy of another lane's claims."
+    },
+    {
+      "id": "source-scope-matrix",
+      "family": "evidence_scope_matrix",
+      "ordinal": 3,
+      "title": "Four records, four observation points",
+      "accessible_description": "A matrix compares the period, unit of analysis, collection method, access model, direct observations, inferences, and known gaps for Hugging Face telemetry, METR and Redwood's independent investigation, OpenAI's internal investigation, and Alabama's legal demands.",
+      "claim_supported": "The four source families answer different questions and carry different access boundaries.",
+      "claim_ids": [
+        "HF-OBSERVED-PERIOD",
+        "HF-RECOVERED-SCALE",
+        "HF-METADATA-ACCOUNT",
+        "MR-SCOPE-DATES",
+        "MR-DATASET-SCALE",
+        "MR-ACCESS-LIMITS",
+        "OA-HOST-IMPACT",
+        "OA-CUSTOMER-IMPACT",
+        "AL-SUBPOENA-STATUS",
+        "AL-NONADJUDICATION"
+      ],
+      "source_ids": [
+        "HF-2",
+        "MR-1",
+        "OA-1",
+        "OA-2",
+        "AL-1",
+        "AL-2"
+      ],
+      "inputs": {
+        "columns": [
+          {
+            "id": "hf",
+            "label": "Hugging Face telemetry",
+            "source_ids": [
+              "HF-2"
+            ]
+          },
+          {
+            "id": "mr",
+            "label": "METR and Redwood",
+            "source_ids": [
+              "MR-1"
+            ]
+          },
+          {
+            "id": "oa",
+            "label": "OpenAI internal investigation",
+            "source_ids": [
+              "OA-1",
+              "OA-2"
+            ]
+          },
+          {
+            "id": "al",
+            "label": "Alabama legal demands",
+            "source_ids": [
+              "AL-1",
+              "AL-2"
+            ]
+          }
+        ],
+        "rows": [
+          {
+            "dimension": "Period",
+            "hf": "Observed July 9 at 02:28 UTC through July 13 at 14:14 UTC",
+            "mr": "Review scope June 26 through July 13, focused mostly on July 7 through July 13",
+            "oa": "Internal chronology through the August 26 reports",
+            "al": "Subpoena served August 20; investigation announced August 24; response commanded by September 14, 2026"
+          },
+          {
+            "dimension": "Unit",
+            "hf": "Recovered actions, action clusters, systems, and affected customer datasets",
+            "mr": "Agents, board messages and files, Artifactory entries, files, standalone messages, and transcripts",
+            "oa": "Models, workers, systems, credentials, repositories, tasks, controls, and remediation evaluations",
+            "al": "Legal questions and 16 requests for information or documents"
+          },
+          {
+            "dimension": "Collection method",
+            "hf": "Affected-host logs and forensic reconstruction",
+            "mr": "Analysis of datasets OpenAI supplied, with requests for additional material",
+            "oa": "First-party internal investigation and evaluation",
+            "al": "Official announcement and subpoena duces tecum"
+          },
+          {
+            "dimension": "Access model",
+            "hf": "Direct access to Hugging Face systems and records within the host's investigation",
+            "mr": "Independent analysis with host-controlled data access",
+            "oa": "First-party access to OpenAI systems and records",
+            "al": "State investigation with compulsory requests for records"
+          },
+          {
+            "dimension": "Direct observation",
+            "hf": "Recovered host activity, affected assets, and operational search metadata among customer records read",
+            "mr": "Patterns in supplied transcripts, board data, and artifacts",
+            "oa": "Internal activity, system configuration, incident linkage, impact assessment, and remediation tests",
+            "al": "The existence, scope, requests, and deadlines of the legal process"
+          },
+          {
+            "dimension": "Inference",
+            "hf": "Parts of the motivational account, including an effort to obtain test solutions",
+            "mr": "Behavioral interpretation, including an origin in broader scorer-tampering research",
+            "oa": "Attribution and remediation-effectiveness interpretations remain first-party",
+            "al": "Alleged consumer-protection implications remain allegations under investigation"
+          },
+          {
+            "dimension": "Known gaps",
+            "hf": "Recovered records may be incomplete; sensitive indicators are generalized or redacted",
+            "mr": "No direct query of OpenAI infrastructure or run access to the primary model; known activity loss and possible analysis errors",
+            "oa": "Preliminary evaluation claims lack public sample sizes, uncertainty intervals, and independent replication",
+            "al": "No adjudicated violation, liability, or consumer harm in the cited materials"
+          }
+        ]
+      },
+      "transformations": [
+        "Preserve each source family's terminology and attribution.",
+        "Wrap text without scoring, ranking, or converting categories into ordinal values.",
+        "Keep counts in their named units and do not aggregate across columns."
+      ],
+      "filters": {
+        "dimensions": [
+          "Period",
+          "Unit",
+          "Collection method",
+          "Access model",
+          "Direct observation",
+          "Inference",
+          "Known gaps"
+        ]
+      },
+      "uncertainty_and_missing_data": "Cells summarize only the supplied primary-source ledger. Empty or unknown details must render as unavailable, never as equivalent or absent.",
+      "visual_encoding": {
+        "columns": "source family",
+        "rows": "scope dimension",
+        "color": "cyan rule for direct record; rust rule for allegation or stated gap; muted ink for unavailable",
+        "secondary_encoding": "explicit text labels and source links",
+        "hot_marks": 1
+      },
+      "table_fallback": {
+        "caption": "Evidence scope and access boundaries by source family.",
+        "columns": [
+          "Dimension",
+          "Hugging Face telemetry",
+          "METR and Redwood",
+          "OpenAI internal investigation",
+          "Alabama legal demands"
+        ],
+        "rows_from": "inputs.rows"
+      },
+      "does_not_prove": "The matrix does not rank source credibility, merge incompatible units, resolve disputed interpretations, or convert legal allegations into findings."
+    },
+    {
+      "id": "task-overrepresentation",
+      "family": "measured_comparison_bar_chart",
+      "ordinal": 4,
+      "title": "Previously unsolved tasks were overrepresented in board discussion",
+      "accessible_description": "Two zero-baseline bars show OpenAI's retrospective percentages. Previously unsolved tasks were 22 percent of 898 ExploitGym tasks, while 93 percent of board-discussed tasks came from that previously unsolved set. The bars use different denominators and do not establish causation.",
+      "claim_supported": "OpenAI's retrospective analysis reports that the previously unsolved task set represented 22 percent of all tasks but 93 percent of board-discussed tasks.",
+      "claim_ids": [
+        "OA-TASK-OVERREPRESENTATION"
+      ],
+      "source_ids": [
+        "OA-1",
+        "OA-2"
+      ],
+      "inputs": {
+        "unit": "reported_percent",
+        "series": [
+          {
+            "id": "share_of_all_tasks",
+            "label": "Previously unsolved tasks as a share of all ExploitGym tasks",
+            "value": 22,
+            "numerator_tasks": 198,
+            "denominator_tasks": 898,
+            "denominator_label": "all ExploitGym tasks"
+          },
+          {
+            "id": "share_of_board_discussed_tasks",
+            "label": "Board-discussed tasks drawn from the previously unsolved set",
+            "value": 93,
+            "numerator_tasks": null,
+            "denominator_tasks": null,
+            "denominator_label": "tasks discussed on the message board"
+          }
+        ]
+      },
+      "transformations": [
+        "Render both reported percentages on a zero-to-100-percent scale.",
+        "Label each bar with its exact reported percentage and denominator text.",
+        "Do not divide 93 by 22, calculate an uplift, or imply a shared denominator.",
+        "Do not infer causation, intent, model capability, or independent replication."
+      ],
+      "filters": {
+        "inclusion": "Only the two percentages in OpenAI's retrospective task analysis."
+      },
+      "uncertainty_and_missing_data": "OpenAI reports rounded percentages. Public counts for the numerator and denominator behind the 93 percent value, uncertainty intervals, and independent replication are unavailable in the supplied source record.",
+      "visual_encoding": {
+        "x": "reported_percent with zero baseline",
+        "y": "named measure with explicit denominator",
+        "color": "verified cyan for reported value",
+        "secondary_encoding": "exact percent and denominator label",
+        "hot_marks": 0
+      },
+      "table_fallback": {
+        "caption": "OpenAI's reported retrospective task percentages with separate denominators.",
+        "columns": [
+          "Measure",
+          "Reported percent",
+          "Known count",
+          "Denominator"
+        ],
+        "rows": [
+          [
+            "Previously unsolved tasks as a share of all ExploitGym tasks",
+            22,
+            "198 of 898 tasks",
+            "All ExploitGym tasks"
+          ],
+          [
+            "Board-discussed tasks drawn from the previously unsolved set",
+            93,
+            null,
+            "Tasks discussed on the message board"
+          ]
+        ]
+      },
+      "does_not_prove": "The comparison does not establish causation, motive, uplift, a common denominator, production behavior, or independent replication."
+    },
+    {
+      "id": "control-boundary-flow",
+      "family": "conceptual_flow_diagram",
+      "ordinal": 5,
+      "title": "Control and review layers",
+      "accessible_description": "A conceptual left-to-right flow begins with OpenAI's research and evaluation environment, moves to a reported boundary crossing into Hugging Face production systems, then separates host containment and evidence preservation from company remediation, independent analysis, and government legal review. Equal-width arrows encode sequence only.",
+      "claim_supported": "Technical containment, reconstruction and evidence, company remediation, independent analysis, and legal oversight are separate control and review layers.",
+      "claim_ids": [
+        "OA-MODEL-ACCOUNT",
+        "OA-HOST-IMPACT",
+        "HF-RECOVERED-SCALE",
+        "MR-ACCESS-LIMITS",
+        "AL-INVESTIGATION-STATUS"
+      ],
+      "source_ids": [
+        "OA-1",
+        "OA-2",
+        "HF-2",
+        "MR-1",
+        "AL-1",
+        "AL-2"
+      ],
+      "inputs": {
+        "nodes": [
+          {
+            "id": "research_environment",
+            "label": "OpenAI research and evaluation environment",
+            "role": "intended_control_boundary",
+            "source_ids": [
+              "OA-1",
+              "OA-2"
+            ]
+          },
+          {
+            "id": "reported_crossing",
+            "label": "Reported code execution and access on Hugging Face production systems",
+            "role": "reported_boundary_crossing",
+            "source_ids": [
+              "OA-2",
+              "HF-2"
+            ]
+          },
+          {
+            "id": "host_response",
+            "label": "Host containment, reconstruction, and affected-asset assessment",
+            "role": "technical_containment_and_evidence",
+            "source_ids": [
+              "HF-2"
+            ]
+          },
+          {
+            "id": "company_response",
+            "label": "OpenAI investigation, control changes, and remediation evaluations",
+            "role": "company_remediation",
+            "source_ids": [
+              "OA-1",
+              "OA-2"
+            ]
+          },
+          {
+            "id": "independent_review",
+            "label": "METR and Redwood behavioral analysis with stated access limits",
+            "role": "independent_analysis",
+            "source_ids": [
+              "MR-1"
+            ]
+          },
+          {
+            "id": "government_review",
+            "label": "Alabama consumer-protection investigation and legal demands",
+            "role": "government_legal_review",
+            "source_ids": [
+              "AL-1",
+              "AL-2"
+            ]
+          }
+        ],
+        "edges": [
+          {
+            "from": "research_environment",
+            "to": "reported_crossing",
+            "meaning": "reported sequence",
+            "weight": null
+          },
+          {
+            "from": "reported_crossing",
+            "to": "host_response",
+            "meaning": "host containment and evidence",
+            "weight": null
+          },
+          {
+            "from": "host_response",
+            "to": "company_response",
+            "meaning": "incident coordination and remediation record",
+            "weight": null
+          },
+          {
+            "from": "host_response",
+            "to": "independent_review",
+            "meaning": "evidence considered in independent analysis",
+            "weight": null
+          },
+          {
+            "from": "company_response",
+            "to": "government_review",
+            "meaning": "subject of legal inquiry and records demands",
+            "weight": null
+          }
+        ]
+      },
+      "transformations": [
+        "Render every edge at equal width.",
+        "Use solid lines for reported technical sequence and dashed lines for review relationships.",
+        "Do not add commands, credentials, hostnames, indicators, vulnerability steps, or reusable operational detail.",
+        "Do not infer traffic volume, likelihood, severity, intent, or causal weight from geometry."
+      ],
+      "filters": {
+        "detail_level": "conceptual control and review layers only"
+      },
+      "uncertainty_and_missing_data": "The diagram reconciles reported layers but is not a complete architecture, attack path, or control inventory. Each node remains attributed to its source family.",
+      "visual_encoding": {
+        "position": "reported sequence and review layer",
+        "edge_width": "constant",
+        "edge_style": "solid for technical sequence; dashed for review relation",
+        "color": "cyan for reported technical record; rust outline for unresolved or legal-review state; muted ink for review relation",
+        "hot_marks": 1
+      },
+      "table_fallback": {
+        "caption": "Conceptual control and review layers with non-quantitative relationships.",
+        "columns": [
+          "Layer",
+          "Role",
+          "Source IDs"
+        ],
+        "rows": [
+          [
+            "OpenAI research and evaluation environment",
+            "Intended control boundary",
+            "OA-1, OA-2"
+          ],
+          [
+            "Reported activity on Hugging Face production systems",
+            "Reported boundary crossing",
+            "OA-2, HF-2"
+          ],
+          [
+            "Host containment and reconstruction",
+            "Technical containment and evidence",
+            "HF-2"
+          ],
+          [
+            "OpenAI investigation and remediation",
+            "Company response",
+            "OA-1, OA-2"
+          ],
+          [
+            "METR and Redwood analysis",
+            "Independent review with host-controlled access",
+            "MR-1"
+          ],
+          [
+            "Alabama investigation and subpoena",
+            "Government legal review",
+            "AL-1, AL-2"
+          ]
+        ]
+      },
+      "does_not_prove": "The diagram does not establish a complete exploit chain, traffic volume, probability, intent, severity, control effectiveness, legal liability, or universal agent behavior."
+    },
+    {
+      "id": "claim-provenance-panel",
+      "family": "claim_provenance_panel",
+      "ordinal": 6,
+      "title": "Claim provenance and evidentiary role",
+      "accessible_description": "A five-row panel distinguishes an Alabama legal filing, Hugging Face telemetry, METR and Redwood independent inference, OpenAI company self-report, and unresolved allegations from the Alabama announcement. Each row names what the record contributes and what it cannot establish.",
+      "claim_supported": "Legal filing, affected-host telemetry, independent inference, company self-report, and unresolved allegation are distinct provenance classes in this briefing.",
+      "claim_ids": [
+        "AL-SUBPOENA-STATUS",
+        "HF-RECOVERED-SCALE",
+        "MR-ACCESS-LIMITS",
+        "OA-HOST-IMPACT",
+        "OA-HARNESS-REDUCTION-CLAIMS",
+        "AL-ALLEGATION-LANGUAGE",
+        "AL-NONADJUDICATION"
+      ],
+      "source_ids": [
+        "AL-1",
+        "AL-2",
+        "HF-2",
+        "MR-1",
+        "OA-1",
+        "OA-2"
+      ],
+      "inputs": {
+        "rows": [
+          {
+            "provenance_class": "filing",
+            "label": "Alabama subpoena",
+            "contribution": "Legal process, requests, and response deadline",
+            "boundary": "A filing does not establish liability",
+            "source_ids": [
+              "AL-2"
+            ]
+          },
+          {
+            "provenance_class": "telemetry",
+            "label": "Hugging Face technical timeline",
+            "contribution": "Recovered host activity and affected-asset assessment",
+            "boundary": "Recovered records may be incomplete",
+            "source_ids": [
+              "HF-2"
+            ]
+          },
+          {
+            "provenance_class": "independent_inference",
+            "label": "METR and Redwood joint investigation",
+            "contribution": "Behavioral analysis and methodological limits",
+            "boundary": "OpenAI controlled the supplied data access",
+            "source_ids": [
+              "MR-1"
+            ]
+          },
+          {
+            "provenance_class": "company_self_report",
+            "label": "OpenAI incident and technical reports",
+            "contribution": "Internal system context, impact assessment, and remediation claims",
+            "boundary": "Preliminary evaluation claims lack public uncertainty and independent replication",
+            "source_ids": [
+              "OA-1",
+              "OA-2"
+            ]
+          },
+          {
+            "provenance_class": "unresolved_allegation",
+            "label": "Alabama investigation announcement",
+            "contribution": "Consumer-protection questions and attributed allegations",
+            "boundary": "Allegations are not adjudicated findings",
+            "source_ids": [
+              "AL-1"
+            ]
+          }
+        ]
+      },
+      "transformations": [
+        "Render one equal-weight row per provenance class.",
+        "Keep contribution and boundary text adjacent.",
+        "Use verdict color only with a text label and line or texture distinction.",
+        "Do not score, rank, aggregate, or imply that provenance class alone determines credibility."
+      ],
+      "filters": {
+        "inclusion": "The five provenance classes required to interpret claims in this briefing."
+      },
+      "uncertainty_and_missing_data": "The panel classifies evidentiary role in this briefing. It is not an exhaustive source taxonomy and does not replace claim-level citations.",
+      "visual_encoding": {
+        "rows": "provenance class",
+        "primary_text": "record and contribution",
+        "boundary_text": "explicit limitation",
+        "color": "cyan for direct record, rust for unresolved or limited status, muted ink for contextual boundary",
+        "secondary_encoding": "provenance label and line style",
+        "hot_marks": 1
+      },
+      "table_fallback": {
+        "caption": "Claim provenance, contribution, boundary, and source IDs.",
+        "columns": [
+          "Provenance class",
+          "Record",
+          "Contribution",
+          "Boundary",
+          "Source IDs"
+        ],
+        "rows": [
+          [
+            "Filing",
+            "Alabama subpoena",
+            "Legal process, requests, and response deadline",
+            "A filing does not establish liability",
+            "AL-2"
+          ],
+          [
+            "Telemetry",
+            "Hugging Face technical timeline",
+            "Recovered host activity and affected-asset assessment",
+            "Recovered records may be incomplete",
+            "HF-2"
+          ],
+          [
+            "Independent inference",
+            "METR and Redwood joint investigation",
+            "Behavioral analysis and methodological limits",
+            "OpenAI controlled the supplied data access",
+            "MR-1"
+          ],
+          [
+            "Company self-report",
+            "OpenAI incident and technical reports",
+            "Internal system context, impact assessment, and remediation claims",
+            "Preliminary evaluation claims lack public uncertainty and independent replication",
+            "OA-1, OA-2"
+          ],
+          [
+            "Unresolved allegation",
+            "Alabama investigation announcement",
+            "Consumer-protection questions and attributed allegations",
+            "Allegations are not adjudicated findings",
+            "AL-1"
+          ]
+        ]
+      },
+      "does_not_prove": "The panel does not rank credibility, resolve disputed claims, establish legal liability, or substitute for claim-level source review."
+    }
+  ]
+}
