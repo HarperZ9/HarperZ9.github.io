@@ -1,6 +1,6 @@
 # Capability-First Public Presence and Publication Visual System
 
-Status: approved direction, written specification review
+Status: approved by the operator on 2026-08-26
 
 ## Objective
 

@@ -1,5 +1,10 @@
 # Hiring-First Public Presence Implementation Plan
 
+> Continuation: the operator-approved capability-first catalog, living homepage,
+> shared visualization grammar, and daily publication pipeline are specified in
+> `../specs/2026-08-26-capability-first-publication-visual-system-design.md` and
+> implemented by `2026-08-26-capability-first-publication-visual-system.md`.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Use superpowers:test-driven-development for every behavior change, superpowers:systematic-debugging for every failure, and superpowers:verification-before-completion before any success claim, commit, push, PR, or deploy.
 
 **Goal:** Turn HarperZ9.github.io and the HarperZ9 GitHub profile into a conversion-first, three-path hiring surface, preserve current career artifacts in the canonical build source, and present public and private security work with verified maturity and useful public-safe detail.
