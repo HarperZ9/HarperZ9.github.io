@@ -20,12 +20,12 @@
 <meta name="color-scheme" content="dark">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/system.css?v=20260812-angular">
+<link rel="stylesheet" href="system/system.css?v=20260828-site-design">
 <style>
   .splat-page{width:min(1120px,calc(100vw - 2rem));margin:0 auto;padding:clamp(2.5rem,7vw,6rem) 0 5rem}
   .splat-hero{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.6fr);gap:clamp(1.5rem,4vw,4rem);align-items:end;padding:clamp(1.4rem,3vw,2.5rem);border:1px solid var(--hairline);border-radius:14px;background:radial-gradient(circle at 12% 8%,rgba(181,76,45,.18),transparent 35%),linear-gradient(145deg,#121015 0%,#09090c 78%);box-shadow:0 2rem 6rem rgba(0,0,0,.28)}
-  .splat-kicker,.splat-status,.source-label,.receipt-key,.splat-links{font-family:var(--mono)}
-  .splat-kicker{margin:0 0 .7rem;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--orange)}
+  .experiment-context,.splat-status,.source-label,.receipt-key,.splat-links{font-family:var(--mono)}
+  .experiment-context{margin:0 0 .7rem;font-size:.8rem;letter-spacing:0;text-transform:none;color:var(--orange)}
   .splat-hero h1{margin:0;font-family:var(--display);font-size:clamp(2.4rem,7vw,6rem);line-height:.88;letter-spacing:-.045em;color:var(--bone);text-wrap:balance}
   .splat-lede{max-width:64ch;margin:1.2rem 0 0;color:var(--muted);font-size:clamp(1rem,1.3vw,1.15rem);line-height:1.7}
   .splat-lede strong{color:var(--bone)}
@@ -70,11 +70,11 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="gallery.html">Gallery</a> <a href="research.html">Research</a> <a href="writing.html">Writing</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260827-capability-publication"></script>
+<script type="module" src="system/nav.js?v=20260828-site-design"></script>
 <main id="main" class="splat-page">
   <header class="splat-hero">
     <div>
-      <p class="splat-kicker">Spatial media experiment · source preserving</p>
+      <p class="experiment-context">Spatial media experiment · source preserving</p>
       <h1>Gaussian<br>Splat Lab.</h1>
       <p class="splat-lede">This page is deliberately not a gallery of flat images made to <em>look</em> like point clouds. A result belongs here only when it is a <strong>real renderable spatial artifact</strong>, preserves the source beside it, and discloses what the single-image reconstruction had to invent.</p>
     </div>

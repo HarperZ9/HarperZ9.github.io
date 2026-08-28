@@ -98,7 +98,7 @@ def test_noscript_fallback_is_a_complete_identity_first_front_door() -> None:
         "Systems engineering, security tooling, graphics, and public research.",
         "Featured platform: Flywheel",
         "Evidence board",
-        "Capability constellation",
+        "Capability map",
         "Representative work",
         "Current research",
         "Retro Systems Lab",
@@ -159,7 +159,7 @@ def test_deployed_bundle_matches_the_new_front_door_after_build() -> None:
     for value in (
         "Zain Dana Harper",
         "Zentropy Labs is the workshop behind Flywheel and the wider body of work.",
-        "Capability constellation",
+        "Capability map",
         "Retro Systems Lab",
         "Security boundary",
         "Hiring and collaboration",

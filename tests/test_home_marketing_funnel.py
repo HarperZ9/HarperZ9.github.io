@@ -148,7 +148,7 @@ def test_home_capability_constellation_is_curated_not_a_wall_of_cards() -> None:
 
     assert 6 <= node_count <= 12
     assert "data-node-id={system.id}" in source
-    assert "Capability constellation" in source
+    assert "Capability map" in source
     assert "CAPABILITY_FAMILY_IDS" in source
     assert [domain["label"] for domain in systems["domains"]] == [
         "Agent systems",
@@ -203,7 +203,7 @@ def test_home_metadata_and_noscript_mirror_follow_the_same_front_door() -> None:
         "Hire or collaborate",
         "Featured platform: Flywheel",
         "Evidence board",
-        "Capability constellation",
+        "Capability map",
         "Retro Systems Lab",
         "Security boundary",
         "Hiring and collaboration",
@@ -241,3 +241,23 @@ def test_home_hero_display_and_visual_system_are_restrained() -> None:
     assert "@media (prefers-reduced-motion: reduce)" in css
     assert "@media (max-width: 760px)" in css
     assert "overflow-x: clip" in read(ROOT / "home" / "src" / "index.css")
+
+
+def test_home_and_static_routes_share_the_same_primary_navigation_spine() -> None:
+    source = read(HOME_SOURCE)
+    topnav = re.search(
+        r'<div className="topnav-links">(?P<body>.*?)</div>',
+        source,
+        re.S,
+    )
+    assert topnav
+    labels = re.findall(r'<a [^>]*>([^<]+)</a>', topnav.group("body"))
+    assert labels == [
+        "Hire / work",
+        "Engines",
+        "Research",
+        "The Studio",
+        "Gallery",
+        "Retro Engine",
+        "GitHub",
+    ]

@@ -67,7 +67,7 @@
 
 .lane{scroll-margin-top:5rem}
 .lane-head{max-width:72rem;margin-bottom:clamp(1.5rem,3vw,2.5rem)}
-.lane-head .eyebrow{margin-bottom:.75rem}
+.lane-head .lane-status{max-width:62ch;margin:0 0 .75rem;color:var(--muted);font-size:.92rem;line-height:1.55}
 .record{
   display:grid;grid-template-columns:3rem minmax(0,1fr);gap:clamp(.8rem,2vw,1.5rem);
   max-width:72rem;padding:clamp(1.4rem,3vw,2.2rem) 0;

@@ -8,11 +8,11 @@
 .frontier-briefing .briefing-sheet{margin-bottom:clamp(1rem,2.4vw,1.8rem)}
 .frontier-briefing .briefing-mast{margin-bottom:0}
 
-.hero-kicker{
+.edition-context{
   display:flex;justify-content:space-between;gap:.45rem 1rem;flex-wrap:wrap;
   margin:0 0 .75rem;
   font-family:var(--mono);font-size:.68rem;line-height:1.4;
-  letter-spacing:.08em;text-transform:uppercase;color:var(--tag)
+  letter-spacing:0;text-transform:none;color:var(--tag)
 }
 .briefing-mast h1{
   max-width:24ch;margin-bottom:.7rem;

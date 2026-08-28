@@ -13,8 +13,8 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-CZipnc6C.js",
-    "assets/index-CTypHnDj.css",
+    "assets/index-C-YSPaTO.js",
+    "assets/index-BXPtvrj2.css",
     "brender-archival.html",
     "briefings/2026-08-26-openai-hugging-face-incident/build.json",
     "briefings/2026-08-26-openai-hugging-face-incident/claims.json",
@@ -119,7 +119,7 @@ RELEASE_PATHS = (
     "systems/studio-engine.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "400c75d675f03b1db53a2cdcb2484a1045f3c7f6e87625bd630c9ebdd84c3c34"
+REVIEWED_RELEASE_SHA256 = "6dbbc8c310adc4435a8ce2a64d802a5ace4d5e4b29fc08663a87ff4d880cb701"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -130,6 +130,8 @@ BRIEFING_FIGURES = (
     "source-scope-matrix",
     "task-overrepresentation",
 )
+
+ALL_FIGURES = tuple(path.stem for path in sorted((ROOT / "figures").glob("*.json")))
 
 PUBLIC_MARKERS = (
     re.compile(r"(?i)(?<![a-z0-9])[a-z]:[/\\]+(?:users|dev|program files)[/\\]+"),
@@ -214,8 +216,8 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_fix_css = "index-Bh3pWSfE.css"
     previous_art_js = "index-BPBDYusx.js"
     previous_art_css = "index-D6A4RL1P.css"
-    assert 'src="/assets/index-CZipnc6C.js"' in source
-    assert 'href="/assets/index-CTypHnDj.css"' in source
+    assert 'src="/assets/index-C-YSPaTO.js"' in source
+    assert 'href="/assets/index-BXPtvrj2.css"' in source
     assert obsolete_js not in source
     assert obsolete_css not in source
     assert not (ROOT / "assets" / obsolete_js).exists()
@@ -255,6 +257,70 @@ def test_six_briefing_figures_keep_semantic_nonvisual_fallbacks() -> None:
         assert '<svg role="img"' in source, stem
         assert "aria-labelledby=" in source, stem
         assert re.search(r'data-figure-kind="(?:relationship|timeline|matrix|bar)"', source), stem
+
+
+def test_every_evidence_plate_has_readable_labels_and_explicit_scope() -> None:
+    required = {
+        "title",
+        "claim",
+        "doesNotProve",
+        "retrievedAt",
+        "units",
+        "transformations",
+        "uncertainty",
+        "sources",
+    }
+    for stem in ALL_FIGURES:
+        companion = json.loads(_text(f"figures/{stem}.json"))["figure"]
+        assert required <= set(companion), stem
+        assert companion["sources"], stem
+        assert companion["transformations"], stem
+
+        html = _text(f"figures/{stem}.html")
+        svg = _text(f"figures/{stem}.svg")
+        ElementTree.fromstring(svg)
+        assert re.search(r'class="[^"]*\bfigure-finding\b', html), stem
+        assert re.search(r'class="[^"]*\bfigure-scope\b', html), stem
+        assert re.search(r'class="[^"]*\bfigure-limitations\b', html), stem
+        assert svg in html, f"{stem}: inline and standalone SVG drifted"
+
+        root = ElementTree.fromstring(svg)
+        view_box = [float(value) for value in root.attrib["viewBox"].split()]
+        intrinsic_width = float(root.attrib.get("width", view_box[2]))
+        display_scale = intrinsic_width / view_box[2]
+        label_sizes = [float(value) for value in re.findall(r'font-size="([0-9.]+)"', svg)]
+        effective_labels = [value * display_scale for value in label_sizes]
+        assert effective_labels and min(effective_labels) >= 16, (
+            stem,
+            min(effective_labels, default=None),
+        )
+
+        point_groups = re.findall(
+            r'<g\b[^>]*data-figure-point="true"[^>]*>(.*?)</g>',
+            svg,
+            re.DOTALL,
+        )
+        assert point_groups, stem
+        for group in point_groups:
+            marks = re.findall(
+                r'<(?:rect|path|line|circle)\b(?=[^>]*stroke="(?!transparent)[^"]+")[^>]*>',
+                group,
+            )
+            effective_strokes = []
+            for mark in marks:
+                width = re.search(r'stroke-width="([0-9.]+)"', mark)
+                effective_strokes.append(float(width.group(1)) * display_scale if width else display_scale)
+            assert effective_strokes and max(effective_strokes) >= 2, stem
+
+
+def test_incident_briefing_uses_readable_embedded_evidence_plates() -> None:
+    page = _text("briefings/2026-08-26-openai-hugging-face-incident/index.html")
+    styles = _text("system/system.css")
+    assert 'class="inner-clean frame-compact briefing-document"' in page
+    assert len(re.findall(r"<iframe\b", page)) == 7
+    assert ".briefing-document iframe" in styles
+    assert re.search(r"inline-size:\s*100%", styles)
+    assert re.search(r"min-block-size:\s*", styles)
 
 
 def test_briefing_archive_and_feeds_resolve_to_the_permanent_record() -> None:

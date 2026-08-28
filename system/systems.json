@@ -1,5 +1,5 @@
 {
-  "schema": "harperz9-systems/v2",
+  "schema": "harperz9-systems/v4",
   "domains": [
     {
       "id": "agent-systems",
@@ -32,11 +32,154 @@
       "summary": "Research intake, learning systems, publications, and teaching surfaces."
     }
   ],
+  "relationshipPolicy": {
+    "relatedUsage": "navigation-only",
+    "integrationClaims": "relations-only",
+    "hierarchyClaims": "prohibited-without-explicit-verified-relation"
+  },
+  "relations": [
+    {
+      "source": "flywheel",
+      "target": "gather",
+      "relation": "integrates-lane",
+      "status": "verified-in-source",
+      "evidenceIds": ["flywheel-release-v0-3-10", "gather-release-v1-6-1"],
+      "claimScope": "Flywheel declares and launches Gather as its research-intake MCP lane. This does not make Gather a Flywheel-owned product."
+    },
+    {
+      "source": "flywheel",
+      "target": "crucible",
+      "relation": "integrates-lane",
+      "status": "verified-in-source",
+      "evidenceIds": ["flywheel-release-v0-3-10", "crucible-release-v1-2-0"],
+      "claimScope": "Flywheel declares and launches Crucible as its verification MCP lane. This does not make Crucible a Flywheel-owned product."
+    },
+    {
+      "source": "flywheel",
+      "target": "index",
+      "relation": "integrates-lane",
+      "status": "verified-in-source",
+      "evidenceIds": ["flywheel-release-v0-3-10", "index-release-v2-10-0"],
+      "claimScope": "Flywheel declares and launches Index as its workspace-structure MCP lane. The Flywheel lane metadata currently trails the published Index 2.10.0 package."
+    },
+    {
+      "source": "flywheel",
+      "target": "forum",
+      "relation": "integrates-lane",
+      "status": "verified-in-source",
+      "evidenceIds": ["flywheel-release-v0-3-10", "forum-release-v1-13-0"],
+      "claimScope": "Flywheel declares and launches Forum as its orchestration MCP lane."
+    },
+    {
+      "source": "flywheel",
+      "target": "learn",
+      "relation": "integrates-lane",
+      "status": "verified-in-source",
+      "evidenceIds": ["flywheel-release-v0-3-10", "learn-public-source"],
+      "claimScope": "Flywheel declares Learn 1.6.0 as a Node MCP lane. Learn remains an independently published package."
+    },
+    {
+      "source": "flywheel",
+      "target": "telos",
+      "relation": "integrates-lane",
+      "status": "verified-in-source",
+      "evidenceIds": ["flywheel-release-v0-3-10", "telos-public-source"],
+      "claimScope": "Flywheel declares and launches the Telos MCP workbench as a lane."
+    },
+    {
+      "source": "flywheel",
+      "target": "relay",
+      "relation": "integrates-lane",
+      "status": "verified-in-source",
+      "evidenceIds": ["flywheel-release-v0-3-10", "relay-public-source"],
+      "claimScope": "Flywheel declares and launches Relay as its coding-agent MCP lane."
+    },
+    {
+      "source": "flywheel",
+      "target": "plexus",
+      "relation": "integrates-lane",
+      "status": "verified-in-source",
+      "evidenceIds": ["flywheel-release-v0-3-10", "plexus-public-source"],
+      "claimScope": "Flywheel declares and launches Plexus as its tool-wiring MCP lane. Plexus derives wiring from declared manifests rather than probing every tool by default."
+    },
+    {
+      "source": "flywheel",
+      "target": "mneme",
+      "relation": "integrates-lane",
+      "status": "verified-in-source",
+      "evidenceIds": ["flywheel-release-v0-3-10", "mneme-public-source"],
+      "claimScope": "Flywheel declares and launches Mneme as its memory MCP lane. Flywheel lane metadata currently trails Mneme source version 0.2.0."
+    },
+    {
+      "source": "flywheel",
+      "target": "accountable-surface",
+      "relation": "integrates-lane",
+      "status": "verified-in-source",
+      "evidenceIds": ["flywheel-release-v0-3-10", "accountable-surface-public-source"],
+      "claimScope": "Flywheel declares Accountable Surface as an actuation lane with additional Coherence Membrane and Proof Surface source roots."
+    },
+    {
+      "source": "truth-enb",
+      "target": "enb-runtime-core",
+      "relation": "build-dependency",
+      "status": "verified-in-source",
+      "evidenceIds": ["truth-enb-source-1-0-0", "enb-runtime-core-public-source-0-1-0"],
+      "claimScope": "Truth ENB pins ENB Runtime Core for its native runtime build."
+    },
+    {
+      "source": "truth-enb",
+      "target": "skyrimbridge",
+      "relation": "optional-runtime-integration",
+      "status": "verified-in-source",
+      "evidenceIds": ["truth-enb-source-1-0-0", "skyrimbridge-public-source-3-0-0"],
+      "claimScope": "SkyrimBridge is optional for the base optical suite and supplies celestial data used by the current procedural sky path."
+    },
+    {
+      "source": "elder-enb",
+      "target": "enb-runtime-core",
+      "relation": "optional-native-runtime-dependency",
+      "status": "verified-in-source",
+      "evidenceIds": ["elder-enb-public-source-0-1-0", "enb-runtime-core-public-source-0-1-0"],
+      "claimScope": "Elder ENB's optional native runtime links ENB Runtime Core."
+    },
+    {
+      "source": "elder-enb",
+      "target": "skyrimbridge",
+      "relation": "optional-runtime-integration",
+      "status": "verified-in-source",
+      "evidenceIds": ["elder-enb-public-source-0-1-0", "skyrimbridge-public-source-3-0-0"],
+      "claimScope": "Elder ENB exposes optional SkyrimBridge interoperability. This does not make either project a dependency of the other."
+    },
+    {
+      "source": "engine-revival",
+      "target": "brender-archival",
+      "relation": "accepts-evidence-from",
+      "status": "verified-in-source",
+      "evidenceIds": ["engine-revival-release-v0-1-0", "brender-archival-release-v0-1-1"],
+      "claimScope": "Engine Revival can import BRender Archival evidence; neither project is a runtime dependency of the other."
+    },
+    {
+      "source": "studio-engine",
+      "target": "raw",
+      "relation": "optional-native-render-bridge",
+      "status": "verified-in-source",
+      "evidenceIds": ["studio-engine-public-source", "raw-public-source-1-0-0"],
+      "claimScope": "Studio Engine can locate and invoke the optional RAW native CLI bridge; its Python core remains usable without RAW."
+    },
+    {
+      "source": "chorus",
+      "target": "gather",
+      "relation": "accepts-corpus-from",
+      "status": "verified-in-source",
+      "evidenceIds": ["chorus-public-source-0-1-0", "gather-release-v1-6-1"],
+      "claimScope": "Chorus accepts Gather-compatible corpus directories or JSON comment rows. It is not a declared Flywheel lane in the current lane registry."
+    }
+  ],
   "systems": [
     {
       "id": "flywheel",
       "name": "Flywheel",
-      "purpose": "Route local or hosted models through gated, receipt-backed inference and tool-use workflows.",
+      "purpose": "Run a verified-inference platform and native desktop client in which models perceive through witnessed tools, act through permission gates, journal their work, and re-check outcomes through integrated lanes.",
       "useCases": [
         "agent workflow orchestration",
         "model-neutral execution",
@@ -83,15 +226,16 @@
       ],
       "boundary": "Use model routes, tools, data, and environments only with the authority required by their owners and providers.",
       "inputs": [
-        "task specifications",
-        "model routes",
-        "tool results",
-        "evidence records"
+        "task and acceptance criteria",
+        "model and endpoint profiles",
+        "tool manifests and permission grants",
+        "workspace evidence"
       ],
       "outputs": [
-        "workflow results",
+        "agent run results",
+        "witnessed tool and model events",
         "verification receipts",
-        "reviewable artifacts"
+        "replayable run artifacts"
       ],
       "dependencies": [],
       "related": [
@@ -104,16 +248,17 @@
         "relay",
         "plexus",
         "mneme",
-        "retro-engine",
-        "engine-revival",
-        "brender-archival"
+        "chorus"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "agent-systems",
+      "productType": "verified-inference platform and desktop client",
+      "releaseState": "stable v0.3.10"
     },
     {
       "id": "telos",
       "name": "Telos",
-      "purpose": "Provide a local MCP workbench for creation, simulation, workstation interaction, and re-checkable proof packets.",
+      "purpose": "Run a zero-dependency local workbench for MCP tools, native workstation control, creative measurement, proof packets, research preflights, model-foundry work, and replayable AI sessions.",
       "useCases": [
         "shared human-model workspaces",
         "MCP tool execution",
@@ -127,7 +272,7 @@
         "graphics-media"
       ],
       "family": "infrastructure",
-      "architectureRole": "engine",
+      "architectureRole": "shared-workbench",
       "audiences": [
         "agent-system engineers",
         "software engineers",
@@ -160,25 +305,35 @@
       ],
       "boundary": "Workstation actions and external effects remain subject to explicit operator authority and tool-specific gates.",
       "inputs": [
-        "shared human-model workspaces inputs",
-        "operator-defined constraints"
+        "MCP requests",
+        "workspace paths and task material",
+        "native-control grants",
+        "creative or research specifications"
       ],
       "outputs": [
-        "shared human-model workspaces result",
-        "reviewable verification record"
+        "tool results",
+        "proof packets",
+        "measured creative artifacts",
+        "replayable session records"
       ],
       "dependencies": [],
       "related": [
         "flywheel",
-        "studio-engine",
-        "build-color"
+        "gather",
+        "index",
+        "forum",
+        "crucible",
+        "studio-engine"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "developer-infrastructure",
+      "productType": "local MCP workbench",
+      "releaseState": "active source 0.2.0; latest tag v0.1.0"
     },
     {
       "id": "index",
       "name": "Index",
-      "purpose": "Build offline repository and workspace maps, dependency graphs, symbols, and bounded context artifacts from file-line evidence.",
+      "purpose": "Derive offline repository wikis, dependency and symbol graphs, workspace atlases, context envelopes, architecture checks, and freshness evidence from file-and-line-grounded source.",
       "useCases": [
         "multi-repository mapping",
         "dependency analysis",
@@ -191,7 +346,7 @@
         "evaluation-verification"
       ],
       "family": "infrastructure",
-      "architectureRole": "standalone-system",
+      "architectureRole": "workspace-map-and-context-layer",
       "audiences": [
         "software engineers",
         "evaluation engineers"
@@ -207,13 +362,13 @@
       "verificationCommand": "index wiki --verify wiki.html --root <repo-path>",
       "evidence": [
         {
-          "id": "index-release-v2-9-0",
+          "id": "index-release-v2-10-0",
           "type": "release",
-          "label": "Index v2.9.0",
-          "href": "https://github.com/HarperZ9/index/releases/tag/v2.9.0",
-          "date": "2026-08-27",
+          "label": "Index 2.10.0 on PyPI",
+          "href": "https://pypi.org/project/index-graph/2.10.0/",
+          "date": "2026-08-28",
           "status": "verified",
-          "summary": "The v2.9.0 release is verified; newer beta source metadata is not presented as a stable release."
+          "summary": "The package index and source metadata both report index-graph 2.10.0; the local installed copy remains 2.9.0."
         }
       ],
       "limitations": [
@@ -222,31 +377,36 @@
       ],
       "boundary": "Inspect only repositories and workspaces you are authorized to read.",
       "inputs": [
-        "multi-repository mapping inputs",
-        "operator-defined constraints"
+        "repository or workspace roots",
+        "include and exclude rules",
+        "mapping and verification options"
       ],
       "outputs": [
-        "multi-repository mapping result",
-        "reviewable verification record"
+        "offline wikis and atlases",
+        "dependency and symbol graphs",
+        "context envelopes",
+        "freshness and drift findings"
       ],
       "dependencies": [],
       "related": [
         "flywheel",
         "forum",
         "gather",
-        "engine-revival",
-        "brender-archival"
+        "telos"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "developer-infrastructure",
+      "productType": "workspace map and context system",
+      "releaseState": "beta 2.10.0 in source and PyPI"
     },
     {
       "id": "gather",
       "name": "Gather",
-      "purpose": "Capture web, scholarly, document, browser, OCR, video, and audio material into provenance-bearing research records.",
+      "purpose": "Extract and crawl difficult research sources, including JavaScript-rendered pages, authenticated APIs, scholarly records, PDFs, OCR, audio, video, feeds, and local documents; store content-addressed corpora and attach re-checkable provenance to every item.",
       "useCases": [
-        "research intake",
-        "document extraction",
-        "change-tracked evidence capture"
+        "structured extraction, crawling, and change tracking",
+        "scholarly and hard-source research intake",
+        "corpus verification and pilot evidence bundles"
       ],
       "href": "gather.html",
       "sourceHref": "https://github.com/HarperZ9/gather",
@@ -255,7 +415,7 @@
         "developer-infrastructure"
       ],
       "family": "research-education",
-      "architectureRole": "standalone-system",
+      "architectureRole": "research-intake-layer",
       "audiences": [
         "researchers and educators",
         "software engineers"
@@ -286,27 +446,33 @@
       ],
       "boundary": "Respect access controls, copyright, privacy, and the terms governing each source.",
       "inputs": [
-        "research intake inputs",
-        "operator-defined constraints"
+        "URLs and API endpoints",
+        "local files and directories",
+        "source manifests",
+        "adapter configuration"
       ],
       "outputs": [
-        "research intake result",
-        "reviewable verification record"
+        "extracted Markdown and structured blocks",
+        "receipted corpus items",
+        "content-addressed corpora",
+        "witnessed digests and bundles"
       ],
       "dependencies": [],
       "related": [
         "flywheel",
-        "index",
         "crucible",
-        "engine-revival",
-        "brender-archival"
+        "learn",
+        "chorus"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "research-education",
+      "productType": "research intake and corpus system",
+      "releaseState": "stable v1.6.1"
     },
     {
       "id": "forum",
       "name": "Forum",
-      "purpose": "Route and run agent fleets with budgets, approval gates, checkpoints, and a causal ledger.",
+      "purpose": "Route, plan, and execute multi-agent dependency waves across model-neutral backends with budgets, approval gates, crash-safe checkpoints, delivery contracts, service surfaces, and a replayable causal ledger.",
       "useCases": [
         "multi-agent orchestration",
         "dependency-aware planning",
@@ -320,7 +486,7 @@
         "evaluation-verification"
       ],
       "family": "infrastructure",
-      "architectureRole": "engine",
+      "architectureRole": "multi-agent-orchestration-engine",
       "audiences": [
         "agent-system engineers",
         "software engineers",
@@ -353,12 +519,16 @@
       ],
       "boundary": "Agent permissions must remain no broader than the operator's authority and the active task scope.",
       "inputs": [
-        "multi-agent orchestration inputs",
-        "operator-defined constraints"
+        "task graphs and delivery contracts",
+        "agent and executor profiles",
+        "budgets and approval policy",
+        "checkpoint state"
       ],
       "outputs": [
-        "multi-agent orchestration result",
-        "reviewable verification record"
+        "dependency-ordered agent runs",
+        "handoff artifacts",
+        "crash-safe checkpoints",
+        "causal ledger entries"
       ],
       "dependencies": [],
       "related": [
@@ -367,16 +537,19 @@
         "plexus",
         "mneme"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "agent-systems",
+      "productType": "multi-agent orchestration engine",
+      "releaseState": "stable v1.13.0"
     },
     {
       "id": "crucible",
       "name": "Crucible",
-      "purpose": "Test falsifiable claims against supplied measurements and emit MATCH, DRIFT, or UNVERIFIABLE outcomes.",
+      "purpose": "Register a thesis as falsifiable claims, steelman the tests, measure each claim against replayable oracles, refine the weakest axis, and emit re-checkable MATCH, DRIFT, or UNVERIFIABLE verdicts.",
       "useCases": [
-        "claim evaluation",
-        "artifact review",
-        "evidence-bounded refinement"
+        "thesis and falsification evaluation",
+        "cleanroom verifier handoff",
+        "verdict-regression CI and oracle replay"
       ],
       "href": "crucible.html",
       "sourceHref": "https://github.com/HarperZ9/crucible",
@@ -385,7 +558,7 @@
         "research-education"
       ],
       "family": "verification",
-      "architectureRole": "evaluation-layer",
+      "architectureRole": "measured-judgment-layer",
       "audiences": [
         "evaluation engineers",
         "researchers and educators"
@@ -416,26 +589,34 @@
       ],
       "boundary": "Do not present a verdict as stronger than the evidence and criterion that produced it.",
       "inputs": [
-        "claim evaluation inputs",
-        "operator-defined constraints"
+        "thesis and claim specifications",
+        "measurements and tolerances",
+        "replay descriptors",
+        "verifier artifacts"
       ],
       "outputs": [
-        "claim evaluation result",
-        "reviewable verification record"
+        "per-claim verdicts",
+        "witnessed assessments",
+        "cleanroom review bundles",
+        "CI verdict matrices"
       ],
       "dependencies": [],
       "related": [
         "flywheel",
-        "emet",
         "gather",
+        "index",
+        "telos",
         "learn"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "evaluation-verification",
+      "productType": "falsifiable claim evaluation system",
+      "releaseState": "stable v1.2.0"
     },
     {
       "id": "emet",
       "name": "EMET",
-      "purpose": "Re-derive byte consistency and portable integrity receipts across independent language implementations.",
+      "purpose": "Verify whether bytes reaching a model, reviewer, or pipeline still match their claimed source; anchor, compare, neutralize embedded authority, audit drift, and mint portable closed-verdict receipts across four implementations.",
       "useCases": [
         "byte-integrity verification",
         "proof-packet witnessing",
@@ -449,7 +630,7 @@
         "developer-infrastructure"
       ],
       "family": "verification",
-      "architectureRole": "engine",
+      "architectureRole": "independent-integrity-witness",
       "audiences": [
         "evaluation engineers",
         "authorized security teams",
@@ -482,26 +663,30 @@
       ],
       "boundary": "Run on files and packets you are authorized to inspect.",
       "inputs": [
-        "byte-integrity verification inputs",
-        "operator-defined constraints"
+        "source and observed byte streams",
+        "anchor and comparison policy",
+        "portable receipt envelopes"
       ],
       "outputs": [
-        "byte-integrity verification result",
-        "reviewable verification record"
+        "MATCH, DRIFT, or UNVERIFIABLE integrity verdicts",
+        "portable witness receipts",
+        "cross-implementation conformance results"
       ],
       "dependencies": [],
       "related": [
-        "flywheel",
         "crucible",
         "repo-proof-index",
         "accountable-surface"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "evaluation-verification",
+      "productType": "cross-implementation integrity witness",
+      "releaseState": "stable v1.2.0"
     },
     {
       "id": "buildlang",
       "name": "BuildLang",
-      "purpose": "Compile systems programs with typed capability effects, C interoperability, native C-path binaries, and shader targets.",
+      "purpose": "Compile a systems language with typed capability effects, sum and linear types, a production C backend, two-way C FFI, shader output, CLI and LSP tooling, and re-checkable build receipts.",
       "useCases": [
         "capability-aware systems programming",
         "native C-path compilation",
@@ -514,7 +699,7 @@
         "graphics-media"
       ],
       "family": "infrastructure",
-      "architectureRole": "engine",
+      "architectureRole": "compiler-toolchain",
       "audiences": [
         "software engineers",
         "graphics engineers"
@@ -545,31 +730,36 @@
       ],
       "boundary": "Generated programs inherit the authority and safety obligations of the capabilities they exercise.",
       "inputs": [
-        "capability-aware systems programming inputs",
-        "operator-defined constraints"
+        "BuildLang source",
+        "capability declarations",
+        "C FFI bindings",
+        "compiler and target options"
       ],
       "outputs": [
-        "capability-aware systems programming result",
-        "reviewable verification record"
+        "C and native binaries",
+        "HLSL and GLSL shaders",
+        "diagnostics and LSP responses",
+        "build receipts"
       ],
       "dependencies": [],
       "related": [
-        "build-color",
         "studio-engine",
-        "retro-engine",
-        "engine-revival",
-        "brender-archival"
+        "build-color",
+        "raw"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "developer-infrastructure",
+      "productType": "systems language and compiler toolchain",
+      "releaseState": "stable v1.2.0; non-C backends experimental"
     },
     {
       "id": "learn",
       "name": "Learn",
-      "purpose": "Turn operator-provided material into study plans and course workflows with spaced practice and re-verifiable receipts.",
+      "purpose": "Plan and re-check learner-authored study sessions from declared objectives and recorded attempts, using spaced review, retrieval prompts, prerequisite gating, misconception tracking, prediction, and self-explanation; separately run course logistics while halting at graded work.",
       "useCases": [
-        "course generation",
-        "retrieval practice",
-        "witnessed learning workflows"
+        "study planning and retrieval practice",
+        "practice-ledger and mastery re-verification",
+        "course logistics with hard human handoffs"
       ],
       "href": "learn.html",
       "sourceHref": "https://github.com/HarperZ9/learn",
@@ -578,7 +768,7 @@
         "agent-systems"
       ],
       "family": "research-education",
-      "architectureRole": "standalone-system",
+      "architectureRole": "learning-and-coursework-system",
       "audiences": [
         "researchers and educators",
         "agent-system engineers"
@@ -590,7 +780,7 @@
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "npm install -g @harperz9/learn; learn tutor study mysession",
+      "entryCommand": "npm install -g @harperz9/learn; learn tutor plan mysession --topic algebra --objectives solve-equations",
       "verificationCommand": "node --test",
       "evidence": [
         {
@@ -609,25 +799,32 @@
       ],
       "boundary": "The learner remains responsible for graded answers, consent, identity, and institutional rules.",
       "inputs": [
-        "course generation inputs",
-        "operator-defined constraints"
+        "topics and declared learning objectives",
+        "learner-supplied attempts and feedback",
+        "course workflow JSON",
+        "proof packets"
       ],
       "outputs": [
-        "course generation result",
-        "reviewable verification record"
+        "study plans and due-review schedules",
+        "misconception and readiness results",
+        "tutor receipts",
+        "course-logistics and human-assessment handoff records"
       ],
       "dependencies": [],
       "related": [
-        "crucible",
         "gather",
+        "crucible",
         "flywheel"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "research-education",
+      "productType": "learning and coursework system",
+      "releaseState": "published npm 1.6.0; no GitHub release"
     },
     {
       "id": "relay",
       "name": "Relay",
-      "purpose": "Provide a zero-dependency coding agent for local, subscription, API, and cloud endpoints with permission gates and a hash-chained run ledger.",
+      "purpose": "Run a permission-gated coding agent across local models, subscription CLIs, APIs, gateways, and cloud endpoints, with failover, acceptance checks, resumable sessions, MCP access, and a hash-chained trajectory.",
       "useCases": [
         "model-neutral coding workflows",
         "provider failover",
@@ -640,7 +837,7 @@
         "developer-infrastructure"
       ],
       "family": "infrastructure",
-      "architectureRole": "adapter",
+      "architectureRole": "coding-agent-and-execution-lane",
       "audiences": [
         "agent-system engineers",
         "software engineers"
@@ -671,12 +868,16 @@
       ],
       "boundary": "Tool use remains permission-checked and limited to authorized repositories, systems, and endpoints.",
       "inputs": [
-        "model-neutral coding workflows inputs",
-        "operator-defined constraints"
+        "coding tasks and acceptance checks",
+        "repository context",
+        "endpoint profiles",
+        "tool grants"
       ],
       "outputs": [
-        "model-neutral coding workflows result",
-        "reviewable verification record"
+        "proposed and applied code changes",
+        "acceptance-check results",
+        "resumable session state",
+        "hash-chained trajectories"
       ],
       "dependencies": [],
       "related": [
@@ -685,12 +886,15 @@
         "plexus",
         "mneme"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "agent-systems",
+      "productType": "permission-gated coding agent",
+      "releaseState": "active PyPI 0.1.0; no GitHub release"
     },
     {
       "id": "plexus",
       "name": "Plexus",
-      "purpose": "Discover declared tool capabilities and derive inspectable producer-consumer wiring plans.",
+      "purpose": "Read declared interop manifests, derive producer-consumer wiring and dependency plans from those declarations, emit inspectable graphs and pipeline scripts, expose the mesh over MCP, and optionally probe a registered Flywheel lane when explicitly requested.",
       "useCases": [
         "tool discovery",
         "capability matching",
@@ -703,7 +907,7 @@
         "developer-infrastructure"
       ],
       "family": "infrastructure",
-      "architectureRole": "evaluation-layer",
+      "architectureRole": "toolchain-wiring-layer",
       "audiences": [
         "agent-system engineers",
         "software engineers"
@@ -734,12 +938,15 @@
       ],
       "boundary": "A wiring plan does not grant authority to execute any connected capability.",
       "inputs": [
-        "tool discovery inputs",
-        "operator-defined constraints"
+        "tool and lane manifests",
+        "desired inputs and outputs",
+        "pipeline constraints"
       ],
       "outputs": [
-        "tool discovery result",
-        "reviewable verification record"
+        "capability graphs",
+        "producer-consumer wiring plans",
+        "runnable pipeline scripts",
+        "lane health results"
       ],
       "dependencies": [],
       "related": [
@@ -747,12 +954,15 @@
         "forum",
         "flywheel"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "developer-infrastructure",
+      "productType": "toolchain wiring and pipeline planner",
+      "releaseState": "active source 0.2.0; no GitHub release"
     },
     {
       "id": "mneme",
       "name": "Mneme",
-      "purpose": "Provide layered agent memory with provenance, reproducible hybrid recall, drift detection, and audited forgetting.",
+      "purpose": "Provide deterministic four-tier agent memory with hybrid retrieval, per-memory provenance, reproducible rankings, source-drift detection, temporal and multi-user memory, audited forgetting, and MCP access.",
       "useCases": [
         "agent memory",
         "provenance-bearing recall",
@@ -765,7 +975,7 @@
         "evaluation-verification"
       ],
       "family": "verification",
-      "architectureRole": "evaluation-layer",
+      "architectureRole": "agent-memory-subsystem",
       "audiences": [
         "agent-system engineers",
         "evaluation engineers"
@@ -796,12 +1006,16 @@
       ],
       "boundary": "Store and recall only information the operator is authorized to retain and process.",
       "inputs": [
-        "agent memory inputs",
-        "operator-defined constraints"
+        "memory records and provenance",
+        "retrieval queries and filters",
+        "source snapshots",
+        "forgetting policy"
       ],
       "outputs": [
-        "agent memory result",
-        "reviewable verification record"
+        "ranked memory recall",
+        "provenance and drift findings",
+        "temporal and user-scoped memory views",
+        "audited forgetting receipts"
       ],
       "dependencies": [],
       "related": [
@@ -809,12 +1023,15 @@
         "forum",
         "flywheel"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "agent-systems",
+      "productType": "deterministic agent memory subsystem",
+      "releaseState": "active source 0.2.0; PyPI 0.1.1; release v0.1.0"
     },
     {
       "id": "studio-engine",
       "name": "Studio Engine",
-      "purpose": "Generate deterministic shader, sound, motion, preview, and receipt-bearing creative-world packets.",
+      "purpose": "Generate, critique, refine, and preserve replayable creative worlds from one expression algebra that emits shader programs, audio graphs, motion timelines, previews, measurements, and receipts.",
       "useCases": [
         "seeded world generation",
         "shader and sound authoring",
@@ -827,7 +1044,7 @@
         "developer-infrastructure"
       ],
       "family": "graphics-retro",
-      "architectureRole": "engine",
+      "architectureRole": "creative-simulation-and-render-engine",
       "audiences": [
         "graphics engineers",
         "software engineers"
@@ -858,28 +1075,32 @@
       ],
       "boundary": "Generated media must respect the rights, licenses, and consent attached to its inputs and intended use.",
       "inputs": [
-        "seeded world generation inputs",
-        "operator-defined constraints"
+        "seed and generator expression",
+        "render, sound, and motion parameters",
+        "critique and refinement constraints"
       ],
       "outputs": [
-        "seeded world generation result",
-        "reviewable verification record"
+        "WebGL shader programs",
+        "WebAudio graphs",
+        "motion timelines",
+        "deterministic frames and receipts"
       ],
       "dependencies": [],
       "related": [
-        "telos",
         "build-color",
         "buildlang",
-        "retro-engine",
-        "engine-revival",
-        "brender-archival"
+        "raw",
+        "retro-engine"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "graphics-media",
+      "productType": "procedural audiovisual engine",
+      "releaseState": "active pre-1.0 source 0.2.0; no release"
     },
     {
       "id": "build-color",
       "name": "Build Color",
-      "purpose": "Provide a software color-science workbench for spaces, color difference, adaptation, HDR, gamut, spectra, ICC, and LUT workflows.",
+      "purpose": "Measure, convert, compare, and transform digital color across perceptual spaces, HDR tone maps, appearance models, chromatic adaptation, spectral utilities, gamut mapping, ICC profiles, LUTs, and an optional GUI.",
       "useCases": [
         "color measurement",
         "HDR tone mapping",
@@ -891,7 +1112,7 @@
         "graphics-media"
       ],
       "family": "graphics-retro",
-      "architectureRole": "plugin",
+      "architectureRole": "color-science-workbench",
       "audiences": [
         "graphics engineers"
       ],
@@ -920,26 +1141,35 @@
       ],
       "boundary": "Do not represent software output as physical-instrument evidence without an actual calibrated instrument.",
       "inputs": [
-        "color measurement inputs",
-        "operator-defined constraints"
+        "color values and color-space metadata",
+        "spectral or viewing-condition data",
+        "HDR and gamut policy",
+        "ICC and LUT parameters"
       ],
       "outputs": [
-        "color measurement result",
-        "reviewable verification record"
+        "converted and compared colors",
+        "tone-mapped and gamut-mapped values",
+        "ICC profiles and LUTs",
+        "workbench visualizations"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "numpy"
+      ],
       "related": [
         "studio-engine",
         "telos",
         "buildlang",
         "retro-engine"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "graphics-media",
+      "productType": "color-science library and workbench",
+      "releaseState": "beta source 1.0.2; latest tag v1.0.1"
     },
     {
       "id": "retro-engine",
       "name": "Retro Engine",
-      "purpose": "Serve as the Retro Systems Lab play pillar: an interactive browser studio for owned pixel, palette, shader, and CRT experiments.",
+      "purpose": "Run a browser studio that accepts images, drawing, GLSL, and audio traces; applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects; then exports images, patches, MIDI, relief or disc data, and Loom handoffs.",
       "useCases": [
         "play",
         "browser pixel studio",
@@ -952,7 +1182,7 @@
         "developer-infrastructure"
       ],
       "family": "graphics-retro",
-      "architectureRole": "engine",
+      "architectureRole": "embedded-browser-studio",
       "audiences": [
         "graphics engineers",
         "software engineers",
@@ -985,28 +1215,33 @@
       ],
       "boundary": "Use only owned or licensed input media and do not present generated retro visuals as archival proof for another repository.",
       "inputs": [
-        "owned images or browser-rendered frames",
-        "palette and shader settings"
+        "local images and drawings",
+        "GLSL source and preset parameters",
+        "audio traces and optional MIDI input"
       ],
       "outputs": [
-        "interactive browser render",
-        "static capture with provenance"
+        "interactive WebGL and Canvas renders",
+        "exported images and shader patches",
+        "MIDI, relief, disc, and Loom handoff data"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "Browser Canvas, WebGL, and WebAudio APIs"
+      ],
       "related": [
-        "flywheel",
-        "engine-revival",
-        "brender-archival",
         "studio-engine",
-        "buildlang",
-        "build-color"
+        "build-color",
+        "engine-revival",
+        "brender-archival"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "graphics-media",
+      "productType": "browser graphics and sound studio",
+      "releaseState": "active public application; no package release"
     },
     {
       "id": "engine-revival",
       "name": "Engine Revival",
-      "purpose": "Serve as the Retro Systems Lab preserve pillar: a public MIT evidence spine for historical engine and rendering-library revival records.",
+      "purpose": "Maintain public-safe metadata, schemas, validators, target matrices, reproduction recipes, evidence packets, and reports for reviving historical game engines, SDKs, rendering libraries, CGI toolkits, and studio technology.",
       "useCases": [
         "preserve",
         "repository evidence refresh",
@@ -1021,7 +1256,7 @@
         "developer-infrastructure"
       ],
       "family": "graphics-retro",
-      "architectureRole": "engine",
+      "architectureRole": "archival-and-revival-evidence-platform",
       "audiences": [
         "graphics engineers",
         "evaluation engineers",
@@ -1055,30 +1290,31 @@
       ],
       "boundary": "Publish only repository metadata and restoration facts that have current first-party receipts, and keep imported AGPL-covered BRender media and receipts distinct from MIT repository code.",
       "inputs": [
-        "public repository manifests",
-        "license and recipe review receipts",
-        "imported BRender release evidence"
+        "public provenance and license records",
+        "revival targets and reproduction recipes",
+        "attempt and validation records",
+        "imported BRender evidence"
       ],
       "outputs": [
-        "preservation status page",
-        "verified evidence manifest"
+        "validated preservation records",
+        "target matrices and generated reports",
+        "public-safe evidence packets",
+        "materialized test harnesses"
       ],
       "dependencies": [],
       "related": [
-        "flywheel",
-        "retro-engine",
         "brender-archival",
-        "studio-engine",
-        "buildlang",
-        "gather",
-        "index"
+        "retro-engine"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "graphics-media",
+      "productType": "software-preservation tooling",
+      "releaseState": "stable v0.1.0"
     },
     {
       "id": "brender-archival",
       "name": "BRender Archival",
-      "purpose": "Serve as the Retro Systems Lab verify pillar: a specific BRender restoration surface that stays separate from generic Retro Engine media.",
+      "purpose": "Rebuild and document Argonaut BRender from its public MIT source with an out-of-tree CMake harness, a 21-rung native verification ladder, reproducible render captures, provenance records, and public-safe release packaging.",
       "useCases": [
         "verify",
         "specific restoration evidence",
@@ -1093,7 +1329,7 @@
         "developer-infrastructure"
       ],
       "family": "graphics-retro",
-      "architectureRole": "standalone-system",
+      "architectureRole": "brender-revival-archive-and-harness",
       "audiences": [
         "graphics engineers",
         "evaluation engineers",
@@ -1127,24 +1363,25 @@
       ],
       "boundary": "Keep BRender restoration evidence, Retro Engine play output, and Engine Revival preservation status distinct.",
       "inputs": [
-        "BRender public repository evidence",
-        "restoration receipts and license notes"
+        "pinned public BRender source checkout",
+        "Visual Studio Win32 and CMake toolchain",
+        "public-safe test assets and provenance records"
       ],
       "outputs": [
-        "BRender archival status page",
-        "specific evidence boundary"
+        "out-of-tree BRender builds",
+        "21-target native verification results",
+        "reproducible softrend and pentprim captures",
+        "release and provenance packets"
       ],
       "dependencies": [],
       "related": [
-        "flywheel",
-        "retro-engine",
         "engine-revival",
-        "studio-engine",
-        "buildlang",
-        "gather",
-        "index"
+        "retro-engine"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "graphics-media",
+      "productType": "focused engine-restoration lab",
+      "releaseState": "bounded milestone v0.1.1"
     },
     {
       "id": "proof-surface",
@@ -1163,7 +1400,7 @@
         "agent-systems"
       ],
       "family": "security",
-      "architectureRole": "evaluation-layer",
+      "architectureRole": "authorization-and-proof-contract-layer",
       "audiences": [
         "agent-system engineers",
         "evaluation engineers",
@@ -1195,13 +1432,14 @@
       ],
       "boundary": "Use only with explicit human authority; a recommendation does not itself grant permission.",
       "inputs": [
-        "planned actions",
-        "authorization receipts",
-        "evidence records"
+        "proposed agent actions",
+        "authority and delegation grants",
+        "scope and evidence contracts"
       ],
       "outputs": [
-        "default-deny decisions",
-        "reviewable proof packets"
+        "default-deny authorization decisions",
+        "bounded delegation records",
+        "proof packets and denial receipts"
       ],
       "dependencies": [],
       "related": [
@@ -1210,12 +1448,15 @@
         "emet",
         "repo-proof-index"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "security-privacy",
+      "productType": "authorization and proof-packet library",
+      "releaseState": "active source 0.2.0; no release"
     },
     {
       "id": "elder-enb",
       "name": "Elder ENB",
-      "purpose": "Provide a public graphics configuration and runtime integration surface for Elder Scrolls ENB workflows.",
+      "purpose": "Build an independently authored nine-stage ENBSeries 0.504 shader suite for Skyrim SE/AE, with five quality tiers, bounded cinematic effects, identity fallbacks, deterministic packaging, and an optional native frame-pulse runtime.",
       "useCases": [
         "ENB configuration review",
         "graphics runtime integration",
@@ -1227,7 +1468,7 @@
         "graphics-media"
       ],
       "family": "graphics-retro",
-      "architectureRole": "plugin",
+      "architectureRole": "enb-shader-suite",
       "audiences": [
         "graphics engineers",
         "mod developers"
@@ -1258,30 +1499,37 @@
       ],
       "boundary": "Use only with the game, runtime, and asset rights required by their owners.",
       "inputs": [
-        "ENB configuration",
-        "host runtime"
+        "Skyrim SE/AE scene and ENBSeries data",
+        "quality-tier configuration",
+        "optional native frame-pulse state"
       ],
       "outputs": [
-        "configured graphics output",
-        "public source evidence"
+        "nine ENB shader stages",
+        "five quality-tier configurations",
+        "deterministic archives and shader verification results"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "Skyrim SE/AE",
+        "ENBSeries 0.504"
+      ],
       "related": [
-        "truth-enb",
         "enb-runtime-core",
         "skyrimbridge",
-        "retro-engine"
+        "truth-enb"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "graphics-media",
+      "productType": "ENB shader suite",
+      "releaseState": "prerelease v1.0.0-rc.5"
     },
     {
       "id": "truth-enb",
       "name": "Truth ENB",
-      "purpose": "Provide a public ENB graphics configuration surface for reviewable visual-runtime workflows.",
+      "purpose": "Build a from-scratch ENBSeries 0.504 shader suite for Skyrim SE/AE, with a computed physical atmosphere and sky, raymarched clouds, an aurora curtain, exposure and tone mapping, five quality tiers, and an optional native camera bridge.",
       "useCases": [
-        "ENB configuration review",
-        "graphics runtime integration",
-        "public build inspection"
+        "installing a complete Skyrim SE/AE ENB preset",
+        "running one authored look across five performance tiers",
+        "developing and testing procedural sky, cloud, aurora, exposure, and tone-mapping shaders"
       ],
       "href": "truth-enb.html",
       "sourceHref": "https://github.com/HarperZ9/truth-enb",
@@ -1289,57 +1537,65 @@
         "graphics-media"
       ],
       "family": "graphics-retro",
-      "architectureRole": "plugin",
+      "architectureRole": "enb-shader-suite",
       "audiences": [
-        "graphics engineers",
-        "mod developers"
+        "Skyrim ENB users",
+        "ENB preset and shader authors",
+        "Skyrim mod developers"
       ],
       "deploymentContexts": [
-        "creative production pipelines",
-        "local development workspaces"
+        "Skyrim SE/AE with ENBSeries 0.504",
+        "partial optical and post-processing use with Community Shaders and Effects 11",
+        "local Windows shader and runtime development"
       ],
       "maturity": "active",
       "placement": "catalog-only",
       "accessMode": "inspect",
-      "entryCommand": null,
-      "verificationCommand": null,
+      "entryCommand": "cmake --preset vs2026-x64; cmake --build --preset vs2026-x64-debug",
+      "verificationCommand": "ctest --preset vs2026-x64-debug --output-on-failure --no-tests=error",
       "evidence": [
         {
-          "id": "truth-enb-public-source-1-0-0",
+          "id": "truth-enb-source-1-0-0",
           "type": "source",
-          "label": "Truth ENB public source 1.0.0",
+          "label": "Truth ENB 1.0.0 source",
           "href": "https://github.com/HarperZ9/truth-enb",
-          "date": "2026-08-27",
+          "date": "2026-08-28",
           "status": "verified",
-          "summary": "Public source identifies version 1.0.0 and latest tag v1.0.0-rc.1; no release claim is made."
+          "summary": "CMake identifies project version 1.0.0. Current main is c2eaa9f, 32 commits after release-candidate tag v1.0.0-rc.1. Public upload remains blocked until the required live Skyrim SE/AE and ENB 0.504 acceptance runs are recorded."
         }
       ],
       "limitations": [
-        "The latest tag v1.0.0-rc.1 is not presented as a release.",
-        "Visual output depends on the host game, ENB runtime, and local graphics environment."
+        "Public upload remains blocked until the required live Skyrim SE/AE and ENB 0.504 acceptance matrix is recorded.",
+        "The Community Shaders and Effects 11 path currently covers only partial optical and post-processing compatibility; world-space prepass composition remains disabled there.",
+        "Generated promotional art is not gameplay evidence; visual-quality claims require labeled in-game captures."
       ],
-      "boundary": "Use only with the game, runtime, and asset rights required by their owners.",
+      "boundary": "Truth does not bundle ENBSeries, Community Shaders, Effects 11, Address Library, SkyrimBridge, or Bethesda shader source. Install one supported shader host and the required game and runtime dependencies separately.",
       "inputs": [
-        "ENB configuration",
-        "host runtime"
+        "Skyrim scene, depth, weather, time, interior, bloom, lens, and adaptation data",
+        "one supported shader host and one selected quality-tier overlay",
+        "optional native camera data and SkyrimBridge celestial data"
       ],
       "outputs": [
-        "configured graphics output",
-        "public source evidence"
+        "a nine-stage Skyrim ENB shader suite",
+        "procedural sky, cloud, aurora, optical, exposure, color, and tone-mapped frame output",
+        "deterministic release-candidate archives, WARP reference captures, and verification reports"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "enb-runtime-core"
+      ],
       "related": [
-        "elder-enb",
-        "enb-runtime-core",
         "skyrimbridge",
-        "retro-engine"
+        "elder-enb"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-28",
+      "primaryDomain": "graphics-media",
+      "productType": "ENB shader suite",
+      "releaseState": "release-candidate source 1.0.0; tag v1.0.0-rc.1"
     },
     {
       "id": "enb-runtime-core",
       "name": "ENB Runtime Core",
-      "purpose": "Provide a public runtime core for ENB integration components that operate inside an already-loaded host.",
+      "purpose": "Identify an already-loaded ENBSeries host, validate its SDK surface, queue callbacks outside callback context, coordinate save quiescence and reapplication, and gate a fail-closed Skyrim engine bridge.",
       "useCases": [
         "ENB runtime integration",
         "graphics plugin inspection",
@@ -1352,7 +1608,7 @@
         "developer-infrastructure"
       ],
       "family": "graphics-retro",
-      "architectureRole": "adapter",
+      "architectureRole": "embedded-runtime-library",
       "audiences": [
         "graphics engineers",
         "mod developers"
@@ -1384,24 +1640,33 @@
       "boundary": "Use only with a permitted host runtime and the rights required by its owners.",
       "inputs": [
         "already-loaded ENBSeries host",
-        "runtime integration inputs"
+        "callback and save-lifecycle events",
+        "optional Skyrim bridge state"
       ],
       "outputs": [
-        "hosted graphics runtime behavior",
-        "public source evidence"
+        "validated host fingerprint",
+        "queued callback dispatch",
+        "save quiescence and reapplication state",
+        "fail-closed bridge status"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "already-loaded ENBSeries host",
+        "Windows system APIs"
+      ],
       "related": [
         "elder-enb",
         "truth-enb",
         "skyrimbridge"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "graphics-media",
+      "productType": "ENB host lifecycle library",
+      "releaseState": "active source 0.1.0; no release"
     },
     {
       "id": "skyrimbridge",
       "name": "SkyrimBridge",
-      "purpose": "Provide a public bridge between Skyrim-facing integration workflows and reviewable graphics-runtime components.",
+      "purpose": "Expose Skyrim live engine state and editing surfaces to shaders and external tools through an SKSE plugin, versioned ABI, shared-memory command channel, record editor, asset conversion pipeline, diagnostics, and optional D3D11 rendering tier.",
       "useCases": [
         "Skyrim runtime integration",
         "graphics bridge inspection",
@@ -1414,7 +1679,7 @@
         "developer-infrastructure"
       ],
       "family": "graphics-retro",
-      "architectureRole": "adapter",
+      "architectureRole": "skyrim-runtime-integration-platform",
       "audiences": [
         "graphics engineers",
         "mod developers"
@@ -1445,20 +1710,33 @@
       ],
       "boundary": "Use only with the game, runtime, and asset rights required by their owners.",
       "inputs": [
-        "Skyrim integration inputs",
-        "runtime bridge configuration"
+        "live Skyrim engine state",
+        "shared-memory and in-process commands",
+        "record edits",
+        "texture and model conversion requests"
       ],
       "outputs": [
-        "bridge integration behavior",
-        "public source evidence"
+        "shader-facing game-state channels",
+        "runtime record changes",
+        "converted assets and collision",
+        "diagnostics and automation results"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "Skyrim SE/AE/VR",
+        "SKSE or SKSEVR",
+        "Address Library",
+        "CommonLibSSE-NG"
+      ],
       "related": [
         "elder-enb",
         "truth-enb",
-        "enb-runtime-core"
+        "enb-runtime-core",
+        "raw"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "graphics-media",
+      "productType": "Skyrim runtime integration platform",
+      "releaseState": "prerelease v3.0.0-rc.1"
     },
     {
       "id": "phantom",
@@ -1475,7 +1753,7 @@
         "security-privacy"
       ],
       "family": "security",
-      "architectureRole": "standalone-system",
+      "architectureRole": "reversible-device-identity-system",
       "audiences": [
         "authorized security teams"
       ],
@@ -1504,12 +1782,15 @@
       ],
       "boundary": "Use only on machines you own or are expressly authorized to test; do not use it for fraud, anti-cheat targeting, or unauthorized access.",
       "inputs": [
-        "hardware-identity privacy inputs",
-        "operator-defined constraints"
+        "owned or authorized Windows or Linux host",
+        "hardware-identity audit scope",
+        "selected identity profile"
       ],
       "outputs": [
-        "hardware-identity privacy result",
-        "reviewable verification record"
+        "identifier audit",
+        "consistent reversible identity profile",
+        "validation report",
+        "exact restore backup"
       ],
       "dependencies": [],
       "related": [
@@ -1517,7 +1798,10 @@
         "authorized-private-practice",
         "accountable-surface"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "security-privacy",
+      "productType": "hardware-identity privacy system",
+      "releaseState": "stable v1.1.0"
     },
     {
       "id": "behavior-transform",
@@ -1536,7 +1820,7 @@
         "developer-infrastructure"
       ],
       "family": "security",
-      "architectureRole": "adapter",
+      "architectureRole": "io-boundary-and-receipt-layer",
       "audiences": [
         "authorized security teams",
         "agent-system engineers",
@@ -1569,12 +1853,13 @@
       ],
       "boundary": "Use the boundary only within the operator's authority and governing provider, data-owner, and system policies.",
       "inputs": [
-        "model-boundary receipts inputs",
-        "operator-defined constraints"
+        "read, write, fetch, execute, input, and model-boundary events",
+        "declared policy and session context"
       ],
       "outputs": [
-        "model-boundary receipts result",
-        "reviewable verification record"
+        "policy-aware I/O results",
+        "session and action receipts",
+        "boundary audit records"
       ],
       "dependencies": [],
       "related": [
@@ -1583,16 +1868,21 @@
         "accountable-surface",
         "authorized-private-practice"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "security-privacy",
+      "productType": "I/O boundary and receipt library",
+      "releaseState": "active public source; no tagged release"
     },
     {
       "id": "authorized-private-practice",
       "name": "Authorized Private Security Practice",
-      "purpose": "Provide offensive-security and adversarial-AI review for lawfully authorized operators without publishing operational capability.",
+      "purpose": "Operate distinct private systems for controlled offensive campaigns, native assessment labs, multi-domain orchestration, model refusal and jailbreak testing, agent and runtime trust verification, operator execution, and release authority.",
       "useCases": [
-        "authorized adversarial evaluation",
-        "high-consequence security review",
-        "engagement-scoped attack and defense analysis"
+        "authorized offensive-security campaign execution",
+        "native security assessment and detection engineering",
+        "AI refusal and jailbreak-class control evaluation",
+        "high-consequence multi-domain technical operations",
+        "runtime, artifact, and release trust verification"
       ],
       "href": "private-practice.html",
       "sourceHref": null,
@@ -1600,12 +1890,16 @@
         "security-privacy"
       ],
       "family": "security",
-      "architectureRole": "controlled-private-constellation",
+      "architectureRole": "private-operational-systems-index",
       "audiences": [
-        "authorized security teams"
+        "authorized security and red teams",
+        "high-consequence technical operators",
+        "organizations requiring controlled private delivery"
       ],
       "deploymentContexts": [
-        "owned or expressly authorized systems"
+        "owned or expressly authorized systems",
+        "isolated assessment environments",
+        "approved private or embargoed recipient channels"
       ],
       "maturity": "controlled-private",
       "placement": "featured",
@@ -1618,23 +1912,25 @@
           "type": "public-receipt",
           "label": "Public engagement boundary",
           "href": "https://harperz9.github.io/private-practice.html",
-          "date": "2026-08-27",
+          "date": "2026-08-28",
           "status": "verified",
-          "summary": "The public page names the practice and authorization boundary without distributing private methods."
+          "summary": "The public page names Array, Seed, Sofer, Isomorph, Bounds, ORCA, and Gate and describes each system's distinct role. The underlying private repositories and operational material are not public evidence."
         }
       ],
       "limitations": [
-        "No private repository, operational method, target detail, client fact, or engagement result is published.",
-        "No third-party acceptance, deployment, or outcome is claimed."
+        "No private repository, target, credential, live payload, client data, engagement-specific finding, or deployable exploit detail is published.",
+        "Private source inspection establishes owner-controlled implementation state; it does not establish third-party acceptance, deployment, or outcome."
       ],
-      "boundary": "Written authorization, a defined scope, and engagement-specific review are required before any private capability is discussed or used.",
+      "boundary": "Operational use requires Written authorization, a defined scope, an approved environment, and a recipient responsible for remediation. Sensitive methods and findings move through that approved private or embargoed channel.",
       "inputs": [
-        "authorized adversarial evaluation inputs",
-        "operator-defined constraints"
+        "written authority and scope",
+        "campaign or assessment objectives",
+        "approved targets, fixtures, tools, and execution environment"
       ],
       "outputs": [
-        "authorized adversarial evaluation result",
-        "reviewable verification record"
+        "campaign plans and assessment runs",
+        "findings, evidence, cleanup, and trust receipts",
+        "reports, portable bundles, and release decisions"
       ],
       "dependencies": [],
       "related": [
@@ -1642,7 +1938,10 @@
         "behavior-transform",
         "accountable-surface"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-28",
+      "primaryDomain": "security-privacy",
+      "productType": "private operational security systems index",
+      "releaseState": "controlled private systems; public capability index"
     },
     {
       "id": "accountable-surface",
@@ -1661,7 +1960,7 @@
         "agent-systems"
       ],
       "family": "security",
-      "architectureRole": "evaluation-layer",
+      "architectureRole": "controlled-agent-action-workbench",
       "audiences": [
         "authorized security teams",
         "evaluation engineers",
@@ -1694,12 +1993,16 @@
       ],
       "boundary": "Every effect requires authority external to the model and remains limited to the granted scope.",
       "inputs": [
-        "bounded agent actions inputs",
-        "operator-defined constraints"
+        "perceived interface structure",
+        "externally supplied action grants",
+        "bounded effector requests",
+        "rollback policy"
       ],
       "outputs": [
-        "bounded agent actions result",
-        "reviewable verification record"
+        "authorized effects or denials",
+        "post-action re-perception",
+        "rollback results",
+        "durable action journal"
       ],
       "dependencies": [],
       "related": [
@@ -1708,7 +2011,10 @@
         "behavior-transform",
         "authorized-private-practice"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "security-privacy",
+      "productType": "controlled agent-action workbench",
+      "releaseState": "active source 0.1.0; no release"
     },
     {
       "id": "public-surface-sweeper",
@@ -1726,7 +2032,7 @@
         "developer-infrastructure"
       ],
       "family": "security",
-      "architectureRole": "standalone-system",
+      "architectureRole": "release-surface-auditor",
       "audiences": [
         "authorized security teams",
         "software engineers"
@@ -1757,12 +2063,15 @@
       ],
       "boundary": "Scan only repositories and artifacts you are authorized to inspect.",
       "inputs": [
-        "public repository hygiene inputs",
-        "operator-defined constraints"
+        "repository or release directory",
+        "required-file and text-hygiene policy",
+        "secret-shape rules",
+        "proof-packet contracts"
       ],
       "outputs": [
-        "public repository hygiene result",
-        "reviewable verification record"
+        "public-file and hygiene findings",
+        "secret-shaped-value findings",
+        "proof-packet readiness summary"
       ],
       "dependencies": [],
       "related": [
@@ -1771,12 +2080,15 @@
         "agent-hook-pack",
         "repo-proof-index"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "security-privacy",
+      "productType": "public release-surface auditor",
+      "releaseState": "stable v0.1.1"
     },
     {
       "id": "model-provenance-validator",
       "name": "Model Provenance Validator",
-      "purpose": "Validate provenance-envelope schema and redact secret-shaped output.",
+      "purpose": "Validate the schema, source references, retrieval dates, and publishable status of compact model and release provenance envelopes, scrub sensitive output, and emit proof-surface packets without certifying underlying truth.",
       "useCases": [
         "release provenance checks",
         "model claim envelopes",
@@ -1789,7 +2101,7 @@
         "evaluation-verification"
       ],
       "family": "verification",
-      "architectureRole": "evaluation-layer",
+      "architectureRole": "provenance-envelope-validator",
       "audiences": [
         "authorized security teams",
         "evaluation engineers"
@@ -1819,20 +2131,27 @@
       ],
       "boundary": "Validate only public or authorized envelopes and keep protected source evidence outside public output.",
       "inputs": [
-        "release provenance checks inputs",
-        "operator-defined constraints"
+        "model or release provenance envelope",
+        "schema and publishability policy",
+        "local source-reference context"
       ],
       "outputs": [
-        "release provenance checks result",
-        "reviewable verification record"
+        "validation findings",
+        "redacted summaries",
+        "proof-surface packets"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "proof-surface>=0.1"
+      ],
       "related": [
         "public-surface-sweeper",
         "repo-proof-index",
         "emet"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "evaluation-verification",
+      "productType": "model provenance-envelope validator",
+      "releaseState": "alpha v0.1.1"
     },
     {
       "id": "secret-redact-io",
@@ -1850,7 +2169,7 @@
         "developer-infrastructure"
       ],
       "family": "security",
-      "architectureRole": "plugin",
+      "architectureRole": "guarded-io-library",
       "audiences": [
         "authorized security teams",
         "software engineers"
@@ -1881,12 +2200,13 @@
       ],
       "boundary": "Do not pass secrets to destinations that are not authorized to receive them, even when redaction is enabled.",
       "inputs": [
-        "secret-aware IO inputs",
-        "operator-defined constraints"
+        "file, fetch, write, or subprocess request",
+        "redaction patterns and output policy"
       ],
       "outputs": [
-        "secret-aware IO result",
-        "reviewable verification record"
+        "redacted I/O result",
+        "hash-only receipt",
+        "secret-shape findings"
       ],
       "dependencies": [],
       "related": [
@@ -1894,7 +2214,10 @@
         "agent-hook-pack",
         "model-provenance-validator"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "security-privacy",
+      "productType": "secret-aware I/O helper library",
+      "releaseState": "stable v0.1.0"
     },
     {
       "id": "agent-hook-pack",
@@ -1912,7 +2235,7 @@
         "developer-infrastructure"
       ],
       "family": "security",
-      "architectureRole": "plugin",
+      "architectureRole": "repository-hook-toolkit",
       "audiences": [
         "authorized security teams",
         "software engineers"
@@ -1943,12 +2266,14 @@
       ],
       "boundary": "Hooks support, but do not replace, repository-specific policy and human review.",
       "inputs": [
-        "pre-commit hygiene inputs",
-        "operator-defined constraints"
+        "repository configuration",
+        "branch and environment policy",
+        "hook selection"
       ],
       "outputs": [
-        "pre-commit hygiene result",
-        "reviewable verification record"
+        "installed public-safe hooks",
+        "branch and secret check results",
+        "environment synchronization findings"
       ],
       "dependencies": [],
       "related": [
@@ -1956,12 +2281,15 @@
         "secret-redact-io",
         "repo-proof-index"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "developer-infrastructure",
+      "productType": "repository hook toolkit",
+      "releaseState": "stable v0.1.0"
     },
     {
       "id": "repo-proof-index",
       "name": "Repo Proof Index",
-      "purpose": "Index proof packets, receipts, and contracts into reviewer-ready summaries without making approval decisions.",
+      "purpose": "Scan proof contracts, proof-surface packets, receipt bundles, and witness receipts into schema-tolerant reviewer summaries while validating known proof-surface contracts without judging sufficiency.",
       "useCases": [
         "proof-packet indexing",
         "receipt discovery",
@@ -1975,7 +2303,7 @@
         "developer-infrastructure"
       ],
       "family": "verification",
-      "architectureRole": "evaluation-layer",
+      "architectureRole": "evidence-index-and-review-handoff",
       "audiences": [
         "authorized security teams",
         "evaluation engineers",
@@ -2007,20 +2335,177 @@
       ],
       "boundary": "Index only public or authorized evidence and keep private payloads outside public summaries.",
       "inputs": [
-        "proof-packet indexing inputs",
-        "operator-defined constraints"
+        "proof contracts and packets",
+        "receipt bundles",
+        "witness receipts"
       ],
       "outputs": [
-        "proof-packet indexing result",
-        "reviewable verification record"
+        "schema-tolerant evidence index",
+        "reviewer summaries",
+        "known-contract validation findings"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "proof-surface>=0.1"
+      ],
       "related": [
         "emet",
         "model-provenance-validator",
         "public-surface-sweeper"
       ],
-      "lastVerified": "2026-08-27"
+      "lastVerified": "2026-08-27",
+      "primaryDomain": "evaluation-verification",
+      "productType": "evidence index and reviewer handoff",
+      "releaseState": "alpha v0.1.1"
+    },
+    {
+      "maturity": "active",
+      "placement": "catalog-only",
+      "accessMode": "run",
+      "boundary": "Use only source material and systems you are authorized to access; preserve privacy, licensing, and source provenance.",
+      "lastVerified": "2026-08-28",
+      "id": "chorus",
+      "name": "Chorus",
+      "purpose": "Turn a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests that rank themes, surface dissent, and identify genuinely contested topics.",
+      "useCases": [
+        "community and comment research",
+        "ranked theme and controversy analysis",
+        "change-triggered discourse monitoring"
+      ],
+      "href": "chorus.html",
+      "sourceHref": "https://github.com/HarperZ9/chorus",
+      "domains": [
+        "research-education",
+        "developer-infrastructure"
+      ],
+      "primaryDomain": "research-education",
+      "family": "research-education",
+      "productType": "discourse synthesis system",
+      "architectureRole": "discourse-synthesis-system",
+      "audiences": [
+        "researchers",
+        "community analysts",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "local research corpora",
+        "community and comment analysis",
+        "Flywheel discourse bridge"
+      ],
+      "releaseState": "active source 0.1.0; no PyPI or GitHub release",
+      "entryCommand": "python -m pip install -e .; chorus run examples/discourse-sample.json --verify",
+      "verificationCommand": "python -m pytest",
+      "evidence": [
+        {
+          "id": "chorus-public-source-0-1-0",
+          "type": "source",
+          "label": "Chorus source 0.1.0",
+          "href": "https://github.com/HarperZ9/chorus",
+          "date": "2026-08-28",
+          "status": "verified",
+          "summary": "The public source implements weighted lexical theme clustering, controversy ranking, receipts, Gather-corpus input, and an optional separately-provenanced model overlay. No package or GitHub release is claimed."
+        }
+      ],
+      "limitations": [
+        "Core sentiment is English and literal; sarcasm and context can be missed.",
+        "Lexical clustering is not semantic equivalence.",
+        "The optional model overlay is advisory and excluded from the re-checkable core digest."
+      ],
+      "inputs": [
+        "Gather corpus directory or JSON comment rows",
+        "weighting and clustering configuration",
+        "optional model-overlay configuration"
+      ],
+      "outputs": [
+        "ranked theme digest",
+        "controversy and dissent analysis",
+        "split-topic findings",
+        "verification receipt"
+      ],
+      "dependencies": [],
+      "related": [
+        "gather",
+        "flywheel"
+      ]
+    },
+    {
+      "maturity": "active",
+      "placement": "catalog-only",
+      "accessMode": "run",
+      "boundary": "RAW requires an owned Skyrim installation and its declared runtime and build dependencies. It does not bundle Bethesda assets.",
+      "lastVerified": "2026-08-28",
+      "id": "raw",
+      "name": "RAW",
+      "purpose": "Develop a D3D11 rendering platform for Skyrim SE that combines proxy-level pipeline ownership with SKSE-driven mid-frame effect dispatch, hot-reloadable HLSL, frame capture, GPU diagnostics, and a focused set of screen-space lighting and post-processing effects.",
+      "useCases": [
+        "Skyrim D3D11 render-pipeline development",
+        "screen-space lighting and post-processing",
+        "GPU frame capture and diagnostics"
+      ],
+      "href": "raw.html",
+      "sourceHref": "https://github.com/HarperZ9/RAW",
+      "domains": [
+        "graphics-media",
+        "developer-infrastructure"
+      ],
+      "primaryDomain": "graphics-media",
+      "family": "graphics-retro",
+      "productType": "Skyrim D3D11 rendering platform",
+      "architectureRole": "skyrim-d3d11-rendering-platform",
+      "audiences": [
+        "Skyrim graphics developers",
+        "D3D11 rendering engineers",
+        "shader authors"
+      ],
+      "deploymentContexts": [
+        "Skyrim SE with SKSE",
+        "local D3D11 graphics development"
+      ],
+      "releaseState": "active source 1.0.0; no public release",
+      "entryCommand": "cmake --preset windows-release; cmake --build --preset windows-release",
+      "verificationCommand": "cmake --build --preset windows-debug; ctest --preset windows-debug --output-on-failure",
+      "evidence": [
+        {
+          "id": "raw-public-source-1-0-0",
+          "type": "source",
+          "label": "RAW source 1.0.0",
+          "href": "https://github.com/HarperZ9/RAW",
+          "date": "2026-08-28",
+          "status": "verified",
+          "summary": "CMake builds the SKSE plugin and D3D11 proxy, active pipeline infrastructure, hot-reload and diagnostics, and a bounded set of effects. Several additional renderers remain present but disabled pending testing."
+        }
+      ],
+      "limitations": [
+        "No public GitHub release is claimed.",
+        "Effects have different readiness levels; disabled source is not presented as active capability.",
+        "Live Skyrim and GPU behavior requires hardware and game acceptance testing."
+      ],
+      "inputs": [
+        "Skyrim D3D11 frames and engine state",
+        "SKSE integration events",
+        "HLSL source and effect configuration"
+      ],
+      "outputs": [
+        "mid-frame D3D11 effect dispatch",
+        "screen-space lighting and compositing",
+        "frame captures and GPU profiles",
+        "hot-reloaded shader results"
+      ],
+      "dependencies": [
+        "Skyrim SE",
+        "SKSE",
+        "CommonLibSSE-NG",
+        "D3D11",
+        "DXGI",
+        "D3DCompiler",
+        "ImGui",
+        "RmlUi",
+        "FreeType"
+      ],
+      "related": [
+        "skyrimbridge",
+        "studio-engine",
+        "buildlang"
+      ]
     }
   ]
 }

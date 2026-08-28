@@ -65,17 +65,17 @@
     {
       "slug": "authorized-private-practice",
       "name": "Authorized Private Security Practice",
-      "purpose": "Provide offensive-security and adversarial-AI review for lawfully authorized operators without publishing operational capability.",
+      "purpose": "Operate distinct private systems for controlled offensive campaigns, native assessment labs, multi-domain orchestration, model refusal and jailbreak testing, agent and runtime trust verification, operator execution, and release authority.",
       "maturity": "controlled-private",
       "source": null,
       "installOrEntry": null,
       "verificationCommand": null,
       "limitations": [
-        "No private repository, operational method, target detail, client fact, or engagement result is published.",
-        "No third-party acceptance, deployment, or outcome is claimed."
+        "Public descriptions omit targets, credentials, live payloads, client data, engagement-specific findings, and deployable exploit details.",
+        "Private source inspection establishes owner-controlled implementation state; it does not establish third-party acceptance, deployment, or outcome."
       ],
-      "authorizationBoundary": "Written authorization, a defined scope, and engagement-specific review are required before any private capability is discussed or used.",
-      "evidenceDate": "2026-08-27"
+      "authorizationBoundary": "Operational use requires written authorization, a defined scope, an approved environment, and a recipient responsible for remediation. Sensitive methods and findings move through that approved private or embargoed channel.",
+      "evidenceDate": "2026-08-28"
     },
     {
       "slug": "accountable-surface",
