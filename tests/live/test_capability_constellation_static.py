@@ -147,12 +147,13 @@ def test_required_live_routes_and_assets_exist() -> None:
         assert (ROOT / route).is_file(), route
 
     home = _text("index.html")
-    assert "<title>Flywheel: model-neutral agent workbench and public evidence atlas</title>" in home
-    assert "Flywheel is the primary public system" in home
-    assert "Route -&gt; Verify -&gt; Receipt -&gt; Reuse" in home or "Route -> Verify -> Receipt -> Reuse" in home
-    assert "Capability families" in home
-    assert "Run, inspect, or verify" in home
-    assert "Current briefing" in home
+    assert "<title>Zain Dana Harper and Zentropy Labs</title>" in home
+    assert "Systems engineering, security tooling, graphics, and public research." in home
+    assert "Featured platform: Flywheel" in home
+    assert "Evidence board" in home
+    assert "Capability constellation" in home
+    assert "Current research" in home
+    assert "Hiring and collaboration" in home
 
     for asset in _asset_paths(home):
         assert (ROOT / asset).is_file(), asset
