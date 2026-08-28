@@ -18,11 +18,8 @@
    text always on a calm ground, and print output that stays print-grade.
    ============================================================================ */
 
-/* ---- Type. Hanken Grotesk carries every text role; hierarchy comes from
-       weight and size. Conso carries data, labels, and dates. Two families.
-       ZentropyDisplay is the wordmark in the nav, a logotype rather than a
-       third text face. ---- */
-@font-face{font-family:"ZentropyDisplay";src:url("../brand/ZentropyDisplay.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+/* ---- Type. Hanken Grotesk carries every prose, display, route, and project
+       mark. Conso carries data, labels, and dates. Two families. ---- */
 @font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk.woff2") format("woff2"); font-weight:100 900; font-style:normal; font-display:swap}
 @font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk-italic.woff2") format("woff2"); font-weight:400; font-style:italic; font-display:swap}
 @font-face{font-family:"Conso"; src:url("fonts/conso-regular.woff2") format("woff2"),url("fonts/conso-regular.woff") format("woff"); font-weight:400; font-style:normal; font-display:swap}
@@ -81,10 +78,15 @@
   --zentropy-signal:var(--signal);
   --zentropy-rust:var(--drift);
 
-  --brand-display:"ZentropyDisplay","Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --display:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --body:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --mono:"Conso",ui-monospace,"SFMono-Regular",monospace;
+  --font-sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
+  --ground-instrument:#070406;
+  --ground-paper:#f2efe6;
+  --ink-paper:#111014;
+  --brand-display:var(--font-sans);
+  --display:var(--font-sans);
+  --body:var(--font-sans);
+  --mono:var(--font-mono);
 
   /* The reading column. This is 56ch, not the 68ch it was, because the ch unit
      is the width of the "0" glyph and not the width of an average character.
@@ -380,6 +382,39 @@ ol.bul li b{color:var(--ink);font-weight:700}
   .data th,.data td{padding-right:.6rem}
 }
 
+.data-plate{
+  background:var(--ground-paper);
+  color:var(--ink-paper);
+  border:1px solid rgba(17,16,20,.24);
+  padding:clamp(.9rem,2vw,1.35rem);
+  font-family:var(--font-sans);
+}
+.evidence-ledger{
+  background:var(--ground-paper);
+  color:var(--ink-paper);
+  border:1px solid rgba(17,16,20,.24);
+  padding:clamp(.9rem,2vw,1.35rem);
+  font-family:var(--font-mono);
+  font-size:.86rem;
+  line-height:1.55;
+  font-variant-numeric:tabular-nums;
+  overflow-x:auto;
+}
+.data-plate :where(a,code,b,strong),
+.evidence-ledger :where(a,code,b,strong){color:var(--ink-paper)}
+.evidence-ledger table{
+  width:100%;
+  border-collapse:collapse;
+}
+.evidence-ledger th,
+.evidence-ledger td{
+  padding:.55rem .8rem .55rem 0;
+  border-bottom:1px solid rgba(17,16,20,.22);
+  text-align:left;
+  vertical-align:top;
+}
+.evidence-ledger th{font-weight:700}
+
 .note{
   font-family:var(--mono);font-size:.68rem;letter-spacing:.03em;color:var(--tag);
   line-height:1.75;margin:1.6rem 0 0;padding-top:.9rem;border-top:1px solid var(--rule);
@@ -416,6 +451,24 @@ a.inline:hover,.sheet a:hover{border-color:var(--signal)}
 }
 @media (prefers-reduced-motion:reduce){
   .doc-rail section > h2{position:static}
+}
+
+@media (forced-colors: active){
+  .data-plate,
+  .evidence-ledger{
+    background:Canvas!important;
+    color:CanvasText!important;
+    border-color:CanvasText!important;
+    box-shadow:none!important;
+  }
+  body.doc::before,
+  .prism-divider,
+  .sheet+.sheet::before{
+    background:none!important;
+  }
+  .sheet,
+  .site-nav,
+  body.doc .route-art{border-color:CanvasText!important}
 }
 
 /* ── plates: the one place the generative work is the subject ──────────── */
@@ -545,6 +598,13 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
    the scale tightens. ------------------------------------------------------ */
 @page{margin:14mm 13mm}
 @media print{
+  .data-plate,
+  .evidence-ledger{
+    background:#fff!important;
+    color:#000!important;
+    border-color:#000!important;
+    box-shadow:none!important;
+  }
   :root{
     color-scheme:light;
     --void:#fff;--page:#fff;--page-sunk:#fff;

@@ -4,12 +4,16 @@
    (sections, instrument index, organ rows, verdict chips, proof exhibits,
    scroll-reveal). Shared by every page; edit here, not per-page.
    ============================================================================ */
-/* ---- ZentropyLabs type system (2026-07-19).
-       ZentropyDisplay carries short brand, route, and project marks. Hanken
-       Grotesk carries readable text. Conso carries mono data and labels. ---- */
-@font-face{font-family:"ZentropyDisplay";src:url("../brand/ZentropyDisplay.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+/* ---- Two-face type system (2026-08-28).
+       Hanken Grotesk carries prose, display, route, and project marks. Conso
+       carries mono data, labels, and code. ---- */
 @font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk.woff2") format("woff2"); font-weight:100 900; font-style:normal; font-display:swap}
 @font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk-italic.woff2") format("woff2"); font-weight:400; font-style:italic; font-display:swap}
+@font-face{font-family:"Conso"; src:url("fonts/conso-regular.woff2") format("woff2"),url("fonts/conso-regular.woff") format("woff"); font-weight:400; font-style:normal; font-display:swap}
+@font-face{font-family:"Conso"; src:url("fonts/conso-regularitalic.woff2") format("woff2"),url("fonts/conso-regularitalic.woff") format("woff"); font-weight:400; font-style:italic; font-display:swap}
+@font-face{font-family:"Conso"; src:url("fonts/conso-medium.woff2") format("woff2"),url("fonts/conso-medium.woff") format("woff"); font-weight:500; font-style:normal; font-display:swap}
+@font-face{font-family:"Conso"; src:url("fonts/conso-semibold.woff2") format("woff2"),url("fonts/conso-semibold.woff") format("woff"); font-weight:600; font-style:normal; font-display:swap}
+@font-face{font-family:"Conso"; src:url("fonts/conso-bold.woff2") format("woff2"),url("fonts/conso-bold.woff") format("woff"); font-weight:700; font-style:normal; font-display:swap}
 
 /* ============================================================================
    LEGACY BASE TOKENS (2026-06-25)
@@ -26,10 +30,15 @@
   --line:rgba(11,12,14,.14); --line-soft:rgba(11,12,14,.08);
   --card:rgba(255,255,255,.6);
   /* type */
-  --brand-display:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --display:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --body:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
+  --font-sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
+  --ground-instrument:#070406;
+  --ground-paper:#f2efe6;
+  --ink-paper:#111014;
+  --brand-display:var(--font-sans);
+  --display:var(--font-sans);
+  --body:var(--font-sans);
+  --mono:var(--font-mono);
   /* legacy names remapped to the ceramic system (do not break the contract) */
   --void:#f4f3ef;                      /* page ground, was near-black */
   --void-opaque:#f4f3ef;               /* solid ceramic; sections no longer mask a canvas */
@@ -3362,7 +3371,7 @@ section.mv > h2::after,
    Zentropy material without breaking older page selectors.
    ============================================================================ */
 :root{
-  --zentropy-void:#070406;
+  --zentropy-void:var(--ground-instrument);
   --zentropy-ink:#eaf5f6;
   --zentropy-ink-2:#c8dcdf;
   --zentropy-muted:#94afb4;
@@ -3370,9 +3379,10 @@ section.mv > h2::after,
   --zentropy-signal:#8ee3f2;
   --zentropy-rust:#c86a44;
   --zentropy-oxblood:#1e0f14;
-  --brand-display:"ZentropyDisplay","Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --display:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --body:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --brand-display:var(--font-sans);
+  --display:var(--font-sans);
+  --body:var(--font-sans);
+  --mono:var(--font-mono);
   --void:var(--zentropy-void);
   --void-opaque:var(--zentropy-void);
   --bone:var(--zentropy-ink);
@@ -3516,6 +3526,67 @@ h2 em,
   text-transform:uppercase;
   color:var(--zentropy-ink);
   text-shadow:0 1px 16px #000;
+}
+
+.data-plate{
+  background:var(--ground-paper);
+  color:var(--ink-paper);
+  border:1px solid rgba(17,16,20,.24);
+  padding:clamp(.9rem,2vw,1.35rem);
+  font-family:var(--font-sans);
+}
+.evidence-ledger{
+  background:var(--ground-paper);
+  color:var(--ink-paper);
+  border:1px solid rgba(17,16,20,.24);
+  padding:clamp(.9rem,2vw,1.35rem);
+  font-family:var(--font-mono);
+  font-size:clamp(.78rem,.74rem + .16vw,.9rem);
+  line-height:1.55;
+  font-variant-numeric:tabular-nums;
+  overflow-x:auto;
+}
+.data-plate :where(a,code,b,strong),
+.evidence-ledger :where(a,code,b,strong){color:var(--ink-paper)}
+.evidence-ledger table{
+  width:100%;
+  border-collapse:collapse;
+}
+.evidence-ledger th,
+.evidence-ledger td{
+  padding:.55rem .8rem .55rem 0;
+  border-bottom:1px solid rgba(17,16,20,.22);
+  text-align:left;
+  vertical-align:top;
+}
+.evidence-ledger th{
+  font-weight:700;
+}
+
+@media (forced-colors: active){
+  .data-plate,
+  .evidence-ledger{
+    background:Canvas!important;
+    color:CanvasText!important;
+    border-color:CanvasText!important;
+    box-shadow:none!important;
+  }
+  body::before,
+  .route-art::before{
+    background:none!important;
+    mix-blend-mode:normal!important;
+  }
+  .route-art{border-color:CanvasText!important}
+}
+
+@media print{
+  .data-plate,
+  .evidence-ledger{
+    background:#fff!important;
+    color:#000!important;
+    border-color:#000!important;
+    box-shadow:none!important;
+  }
 }
 
 @media (max-width:760px){

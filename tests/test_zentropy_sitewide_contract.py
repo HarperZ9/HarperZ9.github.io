@@ -7,6 +7,24 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SHARED_STYLE_SHEETS = (
+    "system/system.css",
+    "system/doc.css",
+    "system/nav.css",
+    "system/figure.css",
+)
+PLATE_STYLE_SHEETS = (
+    "system/system.css",
+    "system/doc.css",
+    "system/figure.css",
+)
+SHARED_VISUAL_TOKENS = (
+    '--font-sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;',
+    '--font-mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;',
+    "--ground-instrument:#070406;",
+    "--ground-paper:#f2efe6;",
+    "--ink-paper:#111014;",
+)
 
 
 def read(rel: str) -> str:
@@ -29,8 +47,10 @@ def test_shared_nav_renders_zentropy_brand_and_desktop_gpu_gate() -> None:
     assert "shouldUseDesktopGpuArt(window)" in nav
     assert 'doc.querySelector(".frame")' in nav
     assert 'insertAdjacentElement("beforebegin", figure)' in nav
-    assert 'PRIMARY_ROUTES.map((item) => navLink(item, active, locationPath, true)).join("")' in nav
-    assert 'SECONDARY_GROUPS.map((group) => menuGroup(' in nav
+    assert "const currentState = { pageCurrentAssigned: false }" in nav
+    assert 'PRIMARY_ROUTES.map((item) => navLink(item, active, locationPath, true, currentState)).join("")' in nav
+    assert 'EXTERNAL_ACTIONS.map((item) => navLink(item, active, locationPath, false, currentState)).join("")' in nav
+    assert 'SECONDARY_GROUPS.map((group) => menuGroup(group.label, group.routes, active, locationPath, "sn-menu-secondary", currentState)).join("")' in nav
     assert 'classList.contains("studio-page")' in nav
     assert 'import("./generative-field.js")' in nav
     assert 'import("./cursor-field.js")' in nav
@@ -40,9 +60,15 @@ def test_shared_styles_define_zentropy_material_system() -> None:
     system_css = read("system/system.css")
     doc_css = read("system/doc.css")
 
+    for rel in SHARED_STYLE_SHEETS:
+        css = read(rel)
+        assert "ZentropyDisplay" not in css, rel
+        for token in SHARED_VISUAL_TOKENS:
+            assert token in css, f"{rel} missing {token}"
+        assert "var(--font-sans)" in css, f"{rel} must route prose/display through --font-sans"
+        assert "var(--font-mono)" in css, f"{rel} must route mono/data/code through --font-mono"
+
     for css in (system_css, doc_css):
-        assert 'font-family:"ZentropyDisplay"' in css
-        assert '--brand-display:"ZentropyDisplay"' in css
         assert "#070406" in css
         assert "#eaf5f6" in css
         assert "#94afb4" in css
@@ -52,10 +78,6 @@ def test_shared_styles_define_zentropy_material_system() -> None:
         assert "#1e0f14" in css
         assert ".route-art" in css
         assert "@media (max-width:760px)" in css or "@media (max-width: 760px)" in css
-
-    assert ".inner-clean h1 .g" in system_css
-    assert "color:var(--zentropy-rust)" in system_css
-    for css in (system_css, doc_css):
         assert ".site-nav .sn-more summary::before" in css
         assert 'content:"Menu"' in css
         assert "visibility:visible" in css
@@ -65,18 +87,70 @@ def test_shared_styles_define_zentropy_material_system() -> None:
         assert not re.search(r"\.site-nav \.sn-links\s*\{[^}]*display:contents", css)
         assert re.search(r"\.site-nav \.sn-links\s*\{[^}]*display:none", css)
         assert ".site-nav > .sn-more" in css
-        assert "position:fixed!important" in css
+        assert re.search(r"\.site-nav > \.sn-more\s*\{[^}]*position:static", css)
+    assert ".inner-clean h1 .g" in system_css
+    assert "color:var(--zentropy-rust)" in system_css
     assert "Telos Display retired" not in system_css
     assert "Telos Display retired" not in doc_css
     assert "Kilon retired" not in doc_css
 
 
+def test_shared_styles_define_paper_data_surfaces() -> None:
+    for rel in PLATE_STYLE_SHEETS:
+        css = read(rel)
+        data_plate = re.search(r"\.data-plate\s*\{(?P<body>[^}]+)\}", css)
+        assert data_plate, f"{rel} must define .data-plate"
+        assert "background:var(--ground-paper)" in data_plate.group("body"), rel
+        assert "color:var(--ink-paper)" in data_plate.group("body"), rel
+
+        ledger = re.search(r"\.evidence-ledger\s*\{(?P<body>[^}]+)\}", css)
+        assert ledger, f"{rel} must define .evidence-ledger"
+        ledger_body = ledger.group("body")
+        assert "background:var(--ground-paper)" in ledger_body, rel
+        assert "color:var(--ink-paper)" in ledger_body, rel
+        assert "font-family:var(--font-mono)" in ledger_body, rel
+        assert re.search(r"border(?:-block|-color)?:1px solid", ledger_body), rel
+
+
+def test_data_surfaces_survive_forced_colors() -> None:
+    for rel in PLATE_STYLE_SHEETS:
+        css = read(rel)
+        forced = re.search(
+            r"@media\s*\(forced-colors:\s*active\)\s*\{(?P<body>.*?)\n\}",
+            css,
+            re.DOTALL,
+        )
+        assert forced, f"{rel} must define forced-colors rules"
+        body = forced.group("body")
+        assert ".data-plate" in body and ".evidence-ledger" in body, rel
+        assert "background:Canvas!important" in body, rel
+        assert "border-color:CanvasText!important" in body, rel
+
+
 def test_narrow_mobile_nav_does_not_overlap_the_wordmark() -> None:
-    """A fixed menu trigger must not cover the brand at phone widths."""
+    """The sticky-grid menu trigger must not cover the brand at phone widths."""
     system_css = read("system/system.css")
     doc_css = read("system/doc.css")
 
     for css in (system_css, doc_css):
+        mobile_blocks = [
+            match.group("body")
+            for match in re.finditer(
+                r"@media\s*\(max-width:\s*760px\)\s*\{(?P<body>.*?)\n\}",
+                css,
+                re.DOTALL,
+            )
+        ]
+        assert mobile_blocks, "shared navigation needs a mobile breakpoint"
+        assert any(
+            re.search(r"\.site-nav \.sn-more\s*\{[^}]*justify-self:end", body)
+            for body in mobile_blocks
+        )
+        assert any(
+            re.search(r"\.site-nav > \.sn-more\s*\{[^}]*position:static", body)
+            for body in mobile_blocks
+        )
+
         narrow_mobile = re.search(
             r"@media\s*\(max-width:\s*430px\)\s*\{(?P<body>.*?)\n\}",
             css,
@@ -88,7 +162,6 @@ def test_narrow_mobile_nav_does_not_overlap_the_wordmark() -> None:
             r"\.site-nav \.sn-home \.sn-brand-word\s*\{[^}]*display:none!important",
             body,
         )
-        assert re.search(r"\.site-nav > \.sn-more\s*\{[^}]*right:1rem", body)
 
 
 def test_current_zentropy_assets_are_shipped() -> None:
