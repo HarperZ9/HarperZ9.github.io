@@ -153,7 +153,7 @@ const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","
   "quanta-color","quanta-products","quantalang"]);
 CATALOG.add("field-guide");
 const RESEARCH = new Set(["research","why"]);
-const WRITING = new Set(["writing","the-summary-is-not-the-record"]);
+const WRITING = new Set(["writing","the-summary-is-not-the-record","frontier-safety-openai-hugging-face-incident"]);
 const WORK = new Set(["test-run-request","resume","cover-letter","portfolio"]);
 const ABOUT = new Set(["cv","person"]);
 const TYPEFACE = new Set(["typeface"]);
