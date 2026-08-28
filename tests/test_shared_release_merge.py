@@ -65,7 +65,7 @@ def test_fresh_cache_stamp_covers_the_shared_navigation_chain() -> None:
     nav = read("system/nav.js")
     home_art = read("system/home-art.js")
     home_template = read("home/index.html")
-    bundle = read("assets/index-Dwp-qWEt.js")
+    bundle = read("assets/index-B3zWbYkK.js")
     assert f'const ASSET_V = "{FRESH_STAMP}"' in nav
     assert f'./routes.js?v={FRESH_STAMP}' in nav
     assert f'./nav.js?v={FRESH_STAMP}' in home_art
