@@ -57,7 +57,7 @@ test("home enhancement loads and builds its menu from generated route groups", a
     const details = nav.children.find((child) => child.className === "home-menu");
     assert.ok(details);
     const menu = details.children.find((child) => child.className === "home-menu-list");
-    const labels = menu.children.filter((child) => child.className === "home-menu-title").map((child) => child.textContent);
+    const labels = menu.children.filter((child) => child.className === "home-menu-label").map((child) => child.textContent);
     assert.deepEqual(labels, ["Work", "Systems", "Security", "Research", "Studio"]);
     assert.ok(menu.children.some((child) => child.textContent === "Dossier" && child.href === "dossier.html"));
   } finally {

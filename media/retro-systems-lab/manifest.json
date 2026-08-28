@@ -30,7 +30,7 @@
     }
   },
   "sourceHashes": {
-    "site/systems.json": "6941e84b66e94be6bde6c7478c08313db01721d7c6da7cfcd21243c5bd95346b",
+    "site/systems.json": "47c57e43a5cc555cf4a50dc941a8cb9908903830178e065c4fa67604dbd8fb42",
     "site/routes.json": "87df191c7204a817f043e0ad43ac36f07f99d3114aa62b2f66d6a325302e3896",
     "public/retro.html": "af2c8c64d1bcdb53042ed9a9eede3fcd68f5424a649d19d0dcce3fbc9d10c7ed",
     "public/flywheel.html": "628ad2226000c84515897810807f1a6a0a95c62ea5191728d48e8426634e4407",
@@ -60,6 +60,73 @@
       "limitations": [
         "Does not prove BRender restoration facts.",
         "Does not prove browser performance or output equivalence across hosts."
+      ]
+    },
+    {
+      "id": "engine-preserve-capture",
+      "kind": "identity-svg",
+      "href": "media/retro-systems-lab/identity/engine-preserve.svg",
+      "width": 960,
+      "height": 540,
+      "bytes": 1916,
+      "byteBudget": 12000,
+      "sha256": "49fe2cab66a37788594c9a68de45340ef55f9336179a3cbf77342d9133a8b616",
+      "provenance": "Generator-owned SVG capture derived from owned route and system registry source motifs.",
+      "sourceFiles": [
+        "site/systems.json",
+        "site/routes.json",
+        "public/engine-revival.html"
+      ],
+      "alt": "Layered lines representing Engine Revival preservation receipts.",
+      "caption": "Engine Revival preserve identity capture for verified release evidence status.",
+      "limitations": [
+        "Does not prove product parity, adoption, performance, or license completeness.",
+        "Does not prove that BRender evidence comes from the local 12-target materializer."
+      ]
+    },
+    {
+      "id": "brender-verify-capture",
+      "kind": "identity-svg",
+      "href": "media/retro-systems-lab/identity/brender-verify.svg",
+      "width": 960,
+      "height": 540,
+      "bytes": 1964,
+      "byteBudget": 12000,
+      "sha256": "0ae7139067327065b99ae6c7a1beee8fa2f6573354eef5c130940364ef75d00c",
+      "provenance": "Generator-owned SVG capture derived from owned page and registry source motifs.",
+      "sourceFiles": [
+        "public/brender-archival.html",
+        "public/engine-revival.html",
+        "site/systems.json"
+      ],
+      "alt": "Evidence grid separating BRender restoration proof from generic retro media.",
+      "caption": "BRender Archival verify identity capture for specific restoration evidence boundaries.",
+      "limitations": [
+        "Does not prove BRender restoration completeness.",
+        "Does not prove rendering correctness, performance, adoption, or legal completeness."
+      ]
+    },
+    {
+      "id": "retro-crossover-capture",
+      "kind": "identity-svg",
+      "href": "media/retro-systems-lab/identity/crossover.svg",
+      "width": 960,
+      "height": 540,
+      "bytes": 3013,
+      "byteBudget": 12000,
+      "sha256": "2bf144d69b2c4b19d367ee642d4b642c40855bca84e47ca944dff73c748099d2",
+      "provenance": "Generator-owned directed crossover SVG derived from the canonical Retro Systems Lab registry records.",
+      "sourceFiles": [
+        "site/systems.json",
+        "public/retro.html",
+        "public/engine-revival.html",
+        "public/brender-archival.html"
+      ],
+      "alt": "Directed crossover diagram showing Retro Engine play leading to Engine Revival preserve leading to BRender Archival verify under Flywheel.",
+      "caption": "Shared crossover visualization for the play to preserve to verify Retro Systems Lab relationship.",
+      "limitations": [
+        "Does not prove runtime dependency between the three routes.",
+        "Does not prove BRender facts from Retro Engine output."
       ]
     },
     {
