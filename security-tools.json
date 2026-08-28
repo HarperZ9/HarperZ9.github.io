@@ -1,6 +1,6 @@
 {
   "schema": "harperz9-security-tools/v2",
-  "derivedFrom": "harperz9-systems/v1",
+  "derivedFrom": "harperz9-systems/v2",
   "records": [
     {
       "slug": "emet",
@@ -15,6 +15,21 @@
         "Same-author conformance implementations prove rule clarity, not independent authorship."
       ],
       "authorizationBoundary": "Run on files and packets you are authorized to inspect.",
+      "evidenceDate": "2026-08-27"
+    },
+    {
+      "slug": "proof-surface",
+      "name": "Proof Surface",
+      "purpose": "Provide default-deny authorization checks, bounded delegation, and reviewable proof packets for agent actions.",
+      "maturity": "active",
+      "source": "https://github.com/HarperZ9/proof-surface",
+      "installOrEntry": null,
+      "verificationCommand": null,
+      "limitations": [
+        "Proof Surface recommends authorization decisions; the surrounding system performs enforcement.",
+        "Public source 0.2.0 does not establish independent adversarial review or production safety."
+      ],
+      "authorizationBoundary": "Use only with explicit human authority; a recommendation does not itself grant permission.",
       "evidenceDate": "2026-08-27"
     },
     {

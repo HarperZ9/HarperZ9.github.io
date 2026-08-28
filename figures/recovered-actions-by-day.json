@@ -14,7 +14,7 @@
         "href": "https://huggingface.co/blog/agent-intrusion-technical-timeline"
       }
     ],
-    "retrievedAt": "2026-08-26",
+    "retrievedAt": "2026-08-27",
     "units": "recovered logged actions",
     "transformations": [
       "Do not normalize, smooth, aggregate, or infer values outside the reported interval.",

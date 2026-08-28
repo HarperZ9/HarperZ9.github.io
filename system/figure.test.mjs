@@ -3,6 +3,7 @@ import { test } from "node:test";
 
 import {
   enhanceFigureRoot,
+  enhancePrintRecords,
   nextPointIndex,
   shouldAnimate,
 } from "./figure.js";
@@ -85,4 +86,27 @@ test("reduced-motion preference disables figure motion without disabling navigat
   };
   assert.equal(enhanceFigureRoot(root, { matches: true }), true);
   assert.equal(root.dataset.figureMotion, "reduced");
+});
+
+
+test("print enhancement opens relationship records and restores their screen disclosure state", () => {
+  const listeners = new Map();
+  const printQuery = {
+    matches: true,
+    addEventListener(type, listener) { listeners.set(type, listener); },
+  };
+  const disclosure = { dataset: {}, open: false };
+  const doc = {
+    querySelectorAll(selector) {
+      return selector === "details.figure-records" ? [disclosure] : [];
+    },
+  };
+
+  assert.equal(enhancePrintRecords(doc, printQuery), 1);
+  assert.equal(disclosure.open, true);
+
+  printQuery.matches = false;
+  listeners.get("change")?.({ matches: false });
+  assert.equal(disclosure.open, false);
+  assert.equal("figurePrintWasOpen" in disclosure.dataset, false);
 });

@@ -1061,7 +1061,7 @@ function boot() {
   // (collectPatch/applyPatch), so both are a matter of keeping copies of it.
   const SESSION_KEY = "re.session.v1";
   const HISTORY_MAX = 20;
-  const history = [];
+  const undoHistory = [];
   let histAt = -1;              // where we are in the ring while undoing
   let restoring = false;        // suppress recording while applyPatch runs
   let saveTimer = 0;
@@ -1072,24 +1072,24 @@ function boot() {
     try { patch = collectPatch(); } catch (_) { return; }
     const json = JSON.stringify(patch);
     // ignore no-op changes: a slider fires many events for one gesture
-    if (history.length && history[history.length - 1].json === json) return;
+    if (undoHistory.length && undoHistory[undoHistory.length - 1].json === json) return;
     // a new change after undoing truncates the redo tail, as in any editor
-    if (histAt >= 0 && histAt < history.length - 1) history.length = histAt + 1;
-    history.push({ json, reason: reason || "" });
-    while (history.length > HISTORY_MAX) history.shift();
-    histAt = history.length - 1;
+    if (histAt >= 0 && histAt < undoHistory.length - 1) undoHistory.length = histAt + 1;
+    undoHistory.push({ json, reason: reason || "" });
+    while (undoHistory.length > HISTORY_MAX) undoHistory.shift();
+    histAt = undoHistory.length - 1;
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
       try { localStorage.setItem(SESSION_KEY, json); } catch (_) {}
     }, 600);
     const u = document.getElementById("re-undo");
-    if (u) u.disabled = history.length < 2;
+    if (u) u.disabled = undoHistory.length < 2;
   }
 
   function undoStep() {
     if (histAt <= 0) { status("nothing further to undo", "err"); return; }
     histAt -= 1;
-    const entry = history[histAt];
+    const entry = undoHistory[histAt];
     try {
       restoring = true;
       applyPatch(JSON.parse(entry.json));
@@ -1127,7 +1127,7 @@ function boot() {
   const freshBtn = document.getElementById("re-fresh");
   if (freshBtn) freshBtn.addEventListener("click", () => {
     try { localStorage.removeItem(SESSION_KEY); } catch (_) {}
-    history.length = 0; histAt = -1;
+    undoHistory.length = 0; histAt = -1;
     if (undoBtn) undoBtn.disabled = true;
     location.href = location.origin + location.pathname;
   });

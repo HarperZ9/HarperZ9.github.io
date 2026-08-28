@@ -65,7 +65,7 @@ def test_fresh_cache_stamp_covers_the_shared_navigation_chain() -> None:
     nav = read("system/nav.js")
     home_art = read("system/home-art.js")
     home_template = read("home/index.html")
-    bundle = read("assets/index-Dwp-qWEt.js")
+    bundle = read("assets/index-FyYdKcDU.js")
     assert f'const ASSET_V = "{FRESH_STAMP}"' in nav
     assert f'./routes.js?v={FRESH_STAMP}' in nav
     assert f'./nav.js?v={FRESH_STAMP}' in home_art
@@ -122,10 +122,13 @@ def test_security_surfaces_keep_deep_detail_and_add_machine_readable_maturity() 
 def test_career_pages_keep_downloads_and_describe_the_committed_census() -> None:
     portfolio = read("portfolio.html")
     resume = read("resume.html")
-    assert 'href="career/Zain-Dana-Harper-Portfolio.pdf"' in portfolio
-    assert 'href="career/Zain-Dana-Harper-Resume-Technical.pdf"' in resume
-    assert "recorded in the public open-source census" in portfolio
-    assert "recorded in the public open-source census" in resume
+    manifest = read("career/career-artifacts.json")
+    assert 'href="career/Zain-Dana-Harper-Portfolio-Brief.pdf"' in portfolio
+    assert 'href="career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf"' in resume
+    assert "Zain-Dana-Harper-Portfolio-Brief.pdf" in manifest
+    assert "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf" in manifest
+    assert "Free Law Project" in portfolio
+    assert "Free Law Project" in resume
     assert "read straight from the GitHub API" not in portfolio
     assert "come from the GitHub API" not in resume
 
