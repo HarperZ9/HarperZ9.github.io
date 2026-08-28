@@ -1,0 +1,216 @@
+{
+  "renderer": "telos-figure/v1",
+  "viewBox": "0 0 960 540",
+  "figure": {
+    "id": "security-capability-map",
+    "kind": "relationship",
+    "title": "Security capability family",
+    "description": "Public security systems shown with Flywheel as the platform context.",
+    "claim": "The map shows public security-family membership and each system's declared architecture role.",
+    "doesNotProve": "The map does not establish operational effectiveness, deployment, authorization for use, or independent review.",
+    "sources": [
+      {
+        "label": "Canonical public system registry",
+        "href": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/systems.json"
+      }
+    ],
+    "retrievedAt": "2026-08-27",
+    "units": "declared relationships",
+    "transformations": [
+      "Controlled-private records, evidence receipts, and reciprocal duplicate relationships are omitted.",
+      "Flywheel is added once as platform context.",
+      "Public security-family records are sorted by stable identifier."
+    ],
+    "uncertainty": "Architecture roles describe placement in the public taxonomy, not runtime coupling.",
+    "data": {
+      "type": "relationship",
+      "nodes": [
+        {
+          "id": "accountable-surface",
+          "label": "Accountable Surface",
+          "status": "verified",
+          "stateLabel": "evaluation layer",
+          "group": "Security",
+          "nodeType": "system"
+        },
+        {
+          "id": "agent-hook-pack",
+          "label": "Agent Hook Pack",
+          "status": "verified",
+          "stateLabel": "plugin",
+          "group": "Security",
+          "nodeType": "system"
+        },
+        {
+          "id": "behavior-transform",
+          "label": "behavior-transform.io",
+          "status": "verified",
+          "stateLabel": "adapter",
+          "group": "Security",
+          "nodeType": "system"
+        },
+        {
+          "id": "flywheel",
+          "label": "Flywheel",
+          "status": "verified",
+          "stateLabel": "Platform context",
+          "group": "Platform",
+          "nodeType": "system"
+        },
+        {
+          "id": "phantom",
+          "label": "Phantom",
+          "status": "verified",
+          "stateLabel": "standalone system",
+          "group": "Security",
+          "nodeType": "system"
+        },
+        {
+          "id": "proof-surface",
+          "label": "Proof Surface",
+          "status": "verified",
+          "stateLabel": "evaluation layer",
+          "group": "Security",
+          "nodeType": "system"
+        },
+        {
+          "id": "public-surface-sweeper",
+          "label": "Public Surface Sweeper",
+          "status": "verified",
+          "stateLabel": "standalone system",
+          "group": "Security",
+          "nodeType": "system"
+        },
+        {
+          "id": "secret-redact-io",
+          "label": "Secret Redact IO",
+          "status": "verified",
+          "stateLabel": "plugin",
+          "group": "Security",
+          "nodeType": "system"
+        }
+      ],
+      "edges": [
+        {
+          "source": "accountable-surface",
+          "target": "behavior-transform",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "accountable-surface",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "accountable-surface",
+          "target": "phantom",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "accountable-surface",
+          "target": "proof-surface",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "agent-hook-pack",
+          "target": "public-surface-sweeper",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "agent-hook-pack",
+          "target": "secret-redact-io",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "behavior-transform",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "behavior-transform",
+          "target": "phantom",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "accountable-surface",
+          "label": "evaluation layer",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "agent-hook-pack",
+          "label": "plugin",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "behavior-transform",
+          "label": "adapter",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "phantom",
+          "label": "standalone system",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "proof-surface",
+          "label": "evaluation layer",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "proof-surface",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "public-surface-sweeper",
+          "label": "standalone system",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "secret-redact-io",
+          "label": "plugin",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "public-surface-sweeper",
+          "target": "secret-redact-io",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        }
+      ]
+    }
+  }
+}

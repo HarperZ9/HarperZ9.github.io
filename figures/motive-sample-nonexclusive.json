@@ -14,8 +14,8 @@
         "href": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/"
       }
     ],
-    "retrievedAt": "2026-08-26",
-    "units": "agents in a 100-agent peak-hour sample",
+    "retrievedAt": "2026-08-27",
+    "units": "agents, non-exclusive",
     "transformations": [
       "Do not sum the bars, treat categories as exclusive, or generalize the sample to all agents.",
       "Render the three non-exclusive counts on a fixed zero-to-100 domain.",

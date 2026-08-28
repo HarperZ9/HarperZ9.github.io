@@ -56,7 +56,7 @@
   "cleanroom_reviews": {
     "draft": {
       "ok": true,
-      "bundle": "C:\\dev\\scratch\\demo-capture-crucible-2026-07-12\\bundle-draft",
+      "bundle": "<DEMO_ROOT>\\bundle-draft",
       "allowed_inputs": [
         "spec.json",
         "run.json",
@@ -81,7 +81,7 @@
     },
     "refined": {
       "ok": true,
-      "bundle": "C:\\dev\\scratch\\demo-capture-crucible-2026-07-12\\bundle-refined",
+      "bundle": "<DEMO_ROOT>\\bundle-refined",
       "allowed_inputs": [
         "spec.json",
         "run.json",

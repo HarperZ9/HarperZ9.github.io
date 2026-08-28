@@ -17,6 +17,7 @@
         "mr-scope-dates",
         "mr-july8-13-reconstruction",
         "oa-early-response-chronology",
+        "al-public-status-as-of-aug27",
         "hf-observed-period",
         "hf-initial-disclosure-date",
         "oa-detection-disclosure-dates",
@@ -35,6 +36,7 @@
       "id": "source-scope-matrix",
       "claimIds": [
         "al-subpoena-status",
+        "al-public-status-as-of-aug27",
         "al-nonadjudication",
         "oa-host-impact",
         "oa-customer-impact",
@@ -44,6 +46,7 @@
         "mr-scope-dates",
         "mr-dataset-scale",
         "mr-access-limits",
+        "mr-engagement-conditions",
         "jf-vendor-remediation-account",
         "jf-advisory-boundary"
       ],

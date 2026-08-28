@@ -17,7 +17,7 @@
 <meta name="twitter:title" content="Recorded workflows · Zain Dana Harper">
 <meta name="twitter:description" content="Four current tool workflows, shown with their transcripts, evidence, and limits.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
-<link rel="stylesheet" href="system/doc.css?v=20260813-document">
+<link rel="stylesheet" href="system/doc.css?v=20260719-zentropy-sitewide">
 <style>
   .demo-library{width:min(100%,68rem);max-width:68rem}
   .library-intro{max-width:66ch}
@@ -47,18 +47,6 @@
     .workflow-list>li:nth-child(even) .workflow-figure{order:0}
   }
   @media(prefers-reduced-motion:reduce){.workflow-action::after{transition:none}}
-  .doc-set{margin:clamp(2.4rem,5vw,4rem) 0 0;padding-top:clamp(1.6rem,3.5vw,2.6rem);border-top:1px solid var(--rule-strong)}
-  .doc-set h2{font-size:clamp(1.3rem,1rem + 1vw,1.8rem);margin:0 0 .5rem}
-  .doc-set .lead{max-width:52ch}
-  .doc-links{list-style:none;margin:clamp(1.4rem,3vw,2.2rem) 0 0;padding:0;display:grid;gap:clamp(1.1rem,2.5vw,1.6rem)}
-  .doc-links>li{border:1px solid var(--rule-strong);border-radius:6px;padding:clamp(1.1rem,2.5vw,1.5rem)}
-  .doc-links h3{font-size:1.15rem;line-height:1.3;margin:0 0 .4rem;color:var(--ink)}
-  .doc-status{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 .6rem}
-  .doc-status.review{color:var(--teal-soft)}
-  .doc-links p.doc-copy{font-size:.98rem;line-height:1.62;max-width:58ch;margin:0 0 .8rem;color:var(--ink)}
-  .doc-facts{display:flex;flex-wrap:wrap;gap:.4rem .9rem;margin:0 0 .9rem;padding:0;list-style:none;font-family:var(--mono);font-size:.66rem;color:var(--ink-soft)}
-  .doc-facts li{padding:0}
-  .doc-set .entry-note{margin-top:1.4rem}
 </style>
 </head>
 <body class="doc">
@@ -66,32 +54,17 @@
 
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="index.html">Home</a> <a href="overview.html">Engines</a> <a href="demonstrations.html" aria-current="page">Demos</a> <a href="research.html">Research</a> <a href="resume.html">Resume</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260827-capability-publication"></script>
+<script type="module" src="system/nav.js?v=20260719-zentropy-sitewide"></script>
 
 <main id="main">
 <article class="sheet demo-library">
   <header class="mast">
     <h1>Watch the tools move.</h1>
-    <p class="role library-intro">The flagship surface plus four recorded workflows. The recordings are each shown twice: a short cut for orientation, then the full run with its transcript, machine-readable evidence, and reproduction notes.</p>
-    <p class="contact"><span>Flywheel · Index · Gather · Forum · Crucible</span><span class="sep">/</span><span>silent, on-screen captions</span><span class="sep">/</span><span>local or disclosed offline fixtures</span></p>
+    <p class="role library-intro">Four current workflows, each shown twice: a short cut for orientation, then the full run with its transcript, machine-readable evidence, and reproduction notes.</p>
+    <p class="contact"><span>Index · Gather · Forum · Crucible</span><span class="sep">/</span><span>silent, on-screen captions</span><span class="sep">/</span><span>local or disclosed offline fixtures</span></p>
   </header>
 
   <ol class="workflow-list" aria-label="Recorded tool workflows">
-    <li>
-      <article class="workflow">
-        <figure class="workflow-figure">
-          <img src="media/demos/flywheel/flywheel-app-console.png" alt="Flywheel gateway page: an endpoint table reporting 34 endpoints with 11 usable, a prompt routed to a local model through ollama, and the answer shown with its sealed receipt identifier" width="1440" height="900">
-          <figcaption>Endpoint table, live route to a local model, and the sealed receipt beside the answer.</figcaption>
-        </figure>
-        <div>
-          <h2>Flywheel</h2>
-          <p class="workflow-version">Gateway surface · live capture + tamper transcript, 2026-08-04</p>
-          <p class="workflow-copy">Route a prompt to any of 34 endpoints from one page, get the answer with its sealed receipt, then corrupt one byte of a receipt and watch the offline verifier answer TAMPERED with the recomputed hash named.</p>
-          <ul class="workflow-facts" aria-label="Flywheel demonstration facts"><li>34 endpoints, 11 usable</li><li>credential presence only</li><li>tamper refused: SEAL_MISMATCH</li><li>stdlib verifier</li></ul>
-          <a class="workflow-action" href="demo-flywheel.html">See the Flywheel surface and the refusal</a>
-        </div>
-      </article>
-    </li>
     <li>
       <article class="workflow">
         <figure class="workflow-figure">
@@ -153,35 +126,6 @@
       </article>
     </li>
   </ol>
-
-  <section class="doc-set" aria-labelledby="doc-set-h">
-    <h2 id="doc-set-h">Documented in the repository, not yet recorded on video.</h2>
-    <p class="lead">Three current buildlang threads, tracked here as they land. Each links straight to its source or its pull request; nothing below is claimed as finished or merged unless its status line says so.</p>
-    <ul class="doc-links" aria-label="Documented buildlang workflows">
-      <li>
-        <h3>Five modes, one receipt chain</h3>
-        <p class="doc-status">On main &middot; documented walkthrough</p>
-        <p class="doc-copy">The same receipt schema seals five distinct computation modes end to end: deterministic, exact-probabilistic, seeded stochastic, Monte Carlo, and budgeted heuristic search, plus a cross-backend bonus mode that runs one kernel through both the C and Rust backends. <span translate="no">buildc receipt chain</span> binds any number of receipts into one ordered, tamper-evident bundle. Tampering a chained member without re-sealing it fails chain verify with <span translate="no">CHAIN_LINK_UNVERIFIED</span>; reordering, dropping, or substituting a member fails its own named class instead.</p>
-        <ul class="doc-facts" aria-label="Five-modes tour facts"><li>6 receipts chained</li><li>5 modes + 1 cross-backend bonus</li><li>exercised by <span translate="no">compiler/tests/cli.rs::five_modes_bind_into_one_chain</span></li></ul>
-        <a class="workflow-action" href="https://github.com/HarperZ9/buildlang/blob/main/docs/FIVE-MODES-TOUR.md">Read the five-modes tour</a>
-      </li>
-      <li>
-        <h3>A model proposes, an oracle disposes</h3>
-        <p class="doc-status review">In review &middot; dated 2026-07-29</p>
-        <p class="doc-copy">A local model proposes a completion through a shim&rsquo;s line protocol; <span translate="no">buildc</span> verifies the sealed model-boundary receipt over a real socket; a model-free, oracled kernel disposes with an ordinary scientific receipt; the receipt chain binds both together, with each member independently re-verified. Tampering the model member breaks the chain with <span translate="no">CHAIN_LINK_UNVERIFIED</span>, and a tampered receipt checked on its own fails <span translate="no">SEAL_MISMATCH</span>. Re-verifying the full chain, which re-executes the judged program and re-checks every seal, measures 0.450 seconds warm median over five runs on one machine and spends zero tokens: the checking layer runs no model. The general rule already stands on main: the receipt layer refuses outright to emit or verify a receipt over a program that observes a model, because models propose and oracles dispose.</p>
-        <ul class="doc-facts" aria-label="Model-boundary receipt facts"><li>chain re-verification 0.450 s warm median, 5 runs, one machine, zero tokens</li><li>buildlang PR #35, open, stacked on PR #34</li><li>local-model PR #20, open (--receipt-dir)</li><li>local-model PR #19 merged (shim wire protocol, 7/7 tests)</li></ul>
-        <a class="workflow-action" href="https://github.com/HarperZ9/buildlang/pull/35">Read buildlang PR #35</a>
-      </li>
-      <li>
-        <h3>Executed Monte Carlo intervals, with a witnessed denominator</h3>
-        <p class="doc-status review">In review &middot; not yet merged</p>
-        <p class="doc-copy">An open pull request computes the Monte Carlo interval from what the run actually executed, rather than an assumed sample count, then re-verifies it instead of trusting the stored figure. The pull request states its own count refresh: once merged, the invariant corpus would move from main&rsquo;s current 27/27 to 29/29, the self-test suite from 9/9 to 10/10, and the full Cargo suite from main&rsquo;s current 1605 passing, 0 failing, 11 ignored, toward 1683 passing, 0 failing.</p>
-        <ul class="doc-facts" aria-label="Monte Carlo interval discipline facts"><li>buildlang PR #34, open, base main</li><li>corpus 29/29 proposed (main: 27/27)</li><li>self-test 10/10 proposed (main: 9/9)</li></ul>
-        <a class="workflow-action" href="https://github.com/HarperZ9/buildlang/pull/34">Read buildlang PR #34</a>
-      </li>
-    </ul>
-    <p class="entry-note">Surveyed 2026-07-29 against buildlang and local-model origin/main and their open pull requests. Pull request status changes; the linked source is the current record, not this page.</p>
-  </section>
 
   <section class="boundary">
     <h2>What these recordings establish</h2>
