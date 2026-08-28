@@ -14,6 +14,13 @@
       "state": "correction",
       "html": "../archive/2026-08-25.html",
       "json": "archive/2026-08-25.json"
+    },
+    {
+      "date": "2026-08-27",
+      "sha256": "5a3e65267adc02065667bbcfccbe528c60c2edc90759c7c19c970ebe1d0579b1",
+      "state": "changed",
+      "html": "../archive/2026-08-27.html",
+      "json": "archive/2026-08-27.json"
     }
   ]
 }

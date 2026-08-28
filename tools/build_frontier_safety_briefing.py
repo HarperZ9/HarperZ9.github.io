@@ -29,7 +29,10 @@ ARCHIVE_NAV_ASSET_VERSIONS = {
     "2026-08-25": "20260827-capability-publication",
 }
 ALLOWED_SOURCE_HOSTS = {
+    "cdn.openai.com",
+    "harperz9.github.io",
     "www.aisi.gov.uk",
+    "www.alabamaag.gov",
     "www.anthropic.com",
     "openai.com",
     "huggingface.co",
@@ -54,6 +57,7 @@ ALLOWED_ROLES = {
     "developer statement",
     "affected-party technical timeline",
     "independent analysis",
+    "publication notice",
 }
 ALLOWED_CONFIDENCE = {"high", "moderate", "low"}
 BARE_SEVERITY = re.compile(r"(?<![A-Za-z0-9_-])T[123](?![A-Za-z0-9_-])")

@@ -1,0 +1,1 @@
+27 Aug Frontier Safety Briefing: AISI's Apr 27 research-sabotage evaluation and Anthropic's Aug 14 risk assessment. Claims stay source-attributed; simulation and developer self-assessment limits remain explicit. https://harperz9.github.io/frontier-safety.html
