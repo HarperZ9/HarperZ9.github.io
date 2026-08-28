@@ -8,7 +8,7 @@
 
 ## 1. Purpose
 
-Make the public site read as one coherent instrument, evidence atlas, and hiring surface. Flywheel is the sole primary platform. The remaining public work appears as engines, plug-ins, adapters, evaluation layers, infrastructure, research, or standalone-capable extensions.
+Make the public site read as one coherent body of work, evidence atlas, and hiring surface. Zain Dana Harper and Zentropy Labs are the front door. Flywheel is the strongest featured platform inside that body of work, not the identity of the person or lab. The remaining public work appears as engines, plug-ins, adapters, evaluation layers, infrastructure, research, or standalone-capable extensions.
 
 The redesign preserves the existing Zentropy and Telos identity while correcting the current split between the restrained Flywheel homepage and the louder route-artifact treatment on catalog, publication, career, security, and retro pages.
 
@@ -35,7 +35,12 @@ The structure may borrow evidence density, direct indexing, and figure-led expos
 
 ## 4. Identity and hierarchy
 
-### 4.1 Product hierarchy
+### 4.1 Identity before product hierarchy
+
+- The first viewport introduces `Zain Dana Harper` and `Zentropy Labs` before any product claim.
+- The site is the public body of work. It is not a Flywheel product landing page.
+- A visitor can understand the person, the lab, the range of work, and the available hiring or collaboration route without first learning an internal framework.
+- Flywheel remains the sole primary platform within the product hierarchy below the identity layer.
 
 - Flywheel is the only `primary-platform`.
 - Capability families are `platform`, `evaluation-verification`, `security`, `infrastructure`, `graphics-retro`, and `research-education`.
@@ -47,12 +52,12 @@ The structure may borrow evidence density, direct indexing, and figure-led expos
 
 The visible desktop navigation is:
 
-1. Flywheel
-2. Capabilities
+1. Work
+2. Flywheel
 3. Research
 4. Retro Systems Lab
 5. Security
-6. Hire / collaborate
+6. About / hire
 7. GitHub
 
 The compact menu carries the complete route registry. Every rendered page has exactly one `aria-current="page"` element.
@@ -99,19 +104,45 @@ The shared art vocabulary is:
 
 The global shell never places intense animation under body text. Art is contained to hero, gallery, figure, or product-evidence regions. Reduced-motion mode renders a deterministic still.
 
+### 5.5 Anti-patterns
+
+The following generated-design habits are prohibited:
+
+- slash-separated abstract concept lists such as `orientation / artifact / claim / proof / route`;
+- generic eyebrows that classify a section without helping a reader;
+- an oversized product sentence used as the entire identity;
+- floating pseudo-dashboard cards over decorative gradients;
+- framework vocabulary before the visitor meets the person, lab, or concrete work;
+- pills, chips, and badges when the element is not a real control or status;
+- generic mesh gradients, concentric rings, and node diagrams used as filler;
+- equal card grids that flatten work with different roles and maturity;
+- decorative technical notation that carries no source, measurement, or action.
+
+The hero may contain one operator-authored or tool-generated artwork, but it must function as a real visual identity or native evidence, not a background effect selected from model defaults.
+
 ## 6. Homepage architecture
 
 The homepage follows this sequence:
 
-1. **Flywheel thesis.** One concrete statement of what Flywheel does, one current release fact, and two actions: inspect Flywheel and hire or collaborate.
-2. **Evidence board.** Six to eight source-backed cells showing current releases, public tests, publication counts, or dated repository evidence. Every cell links to its record.
-3. **Operating loop.** Route, verify, receipt, reuse, shown as a readable process figure plus text fallback.
+1. **Zain Dana Harper / Zentropy Labs.** The name, the lab, and a direct description of the work appear first. The two actions are `Explore the work` and `Hire or collaborate`.
+2. **Featured platform: Flywheel.** One concise explanation, one current release fact, one native visual or terminal record, and a direct route to inspect it.
+3. **Evidence board.** Six to eight source-backed cells showing current releases, public tests, publication counts, or dated repository evidence. Every cell links to its record.
 4. **Capability constellation.** Six families, no more than twelve labeled nodes in the overview, with detail tables behind family routes.
 5. **Representative work.** A curated set of systems selected by role and proof, not a wall of equal cards.
 6. **Current research.** The canonical incident briefing and current publications with figure previews.
 7. **Retro Systems Lab.** Play, preserve, verify, with current Retro Engine output and repository evidence.
 8. **Security boundary.** Lawful public defensive work plus the controlled private-recipient boundary.
 9. **Hiring and collaboration.** Three career paths, direct document downloads, email, and GitHub.
+
+The hero copy begins with:
+
+```text
+Zain Dana Harper
+Systems engineering, security tooling, graphics, and public research.
+Zentropy Labs is the workshop behind Flywheel and the wider body of work.
+```
+
+The hero has no abstract eyebrow, no product release card, and no internal operating-loop language. Its display text is no larger than `clamp(3rem, 6vw, 5.25rem)` and should occupy no more than two lines at 1440 px.
 
 The stale recorded-workflow wall and browser-native-check block are removed from the homepage. Their routes remain available from the catalog and demonstrations library.
 
@@ -226,7 +257,8 @@ At the adopted base:
 
 The upgrade is complete only when:
 
-- Flywheel is visibly the sole primary platform;
+- Zain Dana Harper and Zentropy Labs are visibly the front door;
+- Flywheel is visibly the sole primary platform inside the body of work, not the site identity;
 - the homepage follows the sequence in section 6;
 - all active CSS uses only Hanken Grotesk and Conso;
 - data plates follow the warm-paper visualization contract;

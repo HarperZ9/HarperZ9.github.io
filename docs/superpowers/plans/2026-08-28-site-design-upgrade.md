@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Publish one coherent, accessible, Flywheel-first site using a dark instrument ground and warm-paper evidence plates.
+**Goal:** Publish one coherent, accessible Zain Dana Harper and Zentropy Labs front door, with Flywheel as the strongest featured platform, using a dark instrument ground and warm-paper evidence plates.
 
 **Architecture:** Keep `HarperZ9.github.io` as the live source of truth. Evolve shared CSS and navigation first, then rebuild the React homepage from its checked-in `home/` source, apply the shared system to publication and core route surfaces, and deploy through the existing hashed-bundle path. Preserve all current URLs and career artifact bytes.
 
@@ -12,7 +12,8 @@
 
 ## Global Constraints
 
-- Flywheel is the sole `primary-platform`.
+- Zain Dana Harper and Zentropy Labs are the front door. Flywheel is the sole `primary-platform` inside the work.
+- Do not use abstract slash-separated concept labels, generic eyebrows, floating pseudo-dashboard cards, decorative framework language, or ungrounded technical ornament.
 - Use Hanken Grotesk and Conso only.
 - Use color semantically outside art.
 - Use warm-paper plates only for charts, diagrams, tables, evidence ledgers, and publication figures.
@@ -146,7 +147,7 @@ git diff --cached --check
 git commit -m "feat(site): unify route headers and current navigation"
 ```
 
-### Task 3: Rebuild the Flywheel-first homepage sequence
+### Task 3: Rebuild the person-and-lab-first homepage sequence
 
 **Files:**
 - Modify: `tests/test_home_marketing_funnel.py`
@@ -162,11 +163,11 @@ git commit -m "feat(site): unify route headers and current navigation"
 
 **Interfaces:**
 - Consumes: `site/systems.json`, `site/evidence-stream.json`, current figure routes, current career routes, and shared `/system/home-art.js`.
-- Produces: `EvidenceBoard`, `OperatingLoop`, `CapabilityOverview`, `CurrentResearch`, `RetroSystemsLab`, `SecurityBoundary`, and `HiringRoutes` sections in `App.tsx`.
+- Produces: `IdentityHero`, `FeaturedFlywheel`, `EvidenceBoard`, `CapabilityOverview`, `CurrentResearch`, `RetroSystemsLab`, `SecurityBoundary`, and `HiringRoutes` sections in `App.tsx`.
 
 - [ ] **Step 1: Replace stale homepage tests with the adopted sequence**
 
-Assert the source contains the nine section identifiers from spec section 6. Assert it does not contain `Recorded workflows` or `Try four browser-native checks`. Require no more than twelve overview nodes, Flywheel as the only primary platform, a visible hire route, and a complete static `noscript` mirror.
+Assert the source contains the nine section identifiers from spec section 6. Require the exact hero identity lines from the spec and prohibit `orientation / artifact / claim / proof / route`, `Recorded workflows`, and `Try four browser-native checks`. Require no more than twelve overview nodes, Flywheel as the only primary platform inside the work, a visible hire route, and a complete static `noscript` mirror.
 
 - [ ] **Step 2: Run the home tests and verify RED**
 
@@ -174,7 +175,7 @@ Assert the source contains the nine section identifiers from spec section 6. Ass
 python -m pytest tests/test_home_marketing_funnel.py tests/test_portfolio_visual_contract.py -q
 ```
 
-Expected: failures identify the stale workflow and browser-check sections and missing evidence, retro, security, and hiring sections.
+Expected: failures identify the product-first hero, abstract eyebrow, release card, stale workflow and browser-check sections, and missing identity, evidence, retro, security, and hiring sections.
 
 - [ ] **Step 3: Implement the new React section components**
 
@@ -182,7 +183,7 @@ Keep components local to `App.tsx` until a component exceeds 120 lines. Use sema
 
 - [ ] **Step 4: Implement the homepage visual hierarchy**
 
-Use the instrument ground for the page, warm-paper plates for the evidence board and figures, editorial ruled rows for systems, and one contained aperture artwork in the hero. Remove active `ZentropyDisplay`, decorative cyan UI, pill controls, and the recorded-workflow poster wall from homepage CSS.
+Use the instrument ground for the page, warm-paper plates for the evidence board and figures, editorial ruled rows for systems, and one contained operator-authored or tool-generated identity artwork in the hero. Remove active `ZentropyDisplay`, decorative cyan UI, pill controls, the abstract slash eyebrow, floating release card, and the recorded-workflow poster wall from homepage CSS.
 
 - [ ] **Step 5: Build and deploy into the worktree**
 
@@ -205,7 +206,7 @@ Run the two home test modules, the atomic-bundle tests, and screenshot the home 
 ```powershell
 git add home index.html assets tests/test_home_marketing_funnel.py tests/test_portfolio_visual_contract.py
 git diff --cached --check
-git commit -m "feat(site): rebuild the Flywheel-first homepage"
+git commit -m "feat(site): rebuild the Zain and Zentropy front door"
 ```
 
 ### Task 4: Apply the evidence-plate system to figures and publications
