@@ -181,12 +181,13 @@ def test_hiring_page_leads_with_name_role_and_three_paths() -> None:
 
 def test_home_source_foregrounds_the_hiring_identity() -> None:
     src = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
-    name = src.index("Zain Dana Harper")
-    headline = src.index("Systems Engineer | AI Evaluation, Developer Tools, and Technical Operations")
+    name = src.index('<h1 className="hero-title">Zain Dana Harper</h1>')
+    practice = src.index("Systems engineering, security tooling, graphics, and public research.")
+    lab = src.index("Zentropy Labs is the workshop behind Flywheel and the wider body of work.")
+    flywheel = src.index("Featured platform: Flywheel")
     hiring_route = src.index('href="/hire.html"')
     workshop_catalog = src.index('id="make"')
-    assert name < workshop_catalog
-    assert headline < workshop_catalog
+    assert name < practice < lab < flywheel < workshop_catalog
     assert hiring_route < workshop_catalog
 
 
