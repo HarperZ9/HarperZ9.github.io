@@ -83,9 +83,9 @@ function escapeHtml(value) {
 }
 
 function locationPath(doc) {
-  const loc = doc && doc.location;
-  if (loc) return loc.pathname + (loc.search || "") + (loc.hash || "");
-  return location.pathname + location.search + location.hash;
+  const loc = (doc && doc.location) || (typeof location !== "undefined" ? location : null);
+  if (!loc) return "/";
+  return (loc.pathname || "/") + (loc.search || "") + (loc.hash || "");
 }
 
 function isHomeDocument(doc) {

@@ -369,3 +369,18 @@ test("buildRouteHeader is excluded from the React home shell", () => {
 
   assert.equal(buildRouteHeader(doc), null);
 });
+
+test("buildRouteHeader handles document stubs without location and no global location", () => {
+  const originalLocation = globalThis.location;
+  const hadLocation = Object.hasOwn(globalThis, "location");
+  try {
+    Reflect.deleteProperty(globalThis, "location");
+    const { doc } = routeHeaderFixture("/catalog.html");
+    delete doc.location;
+
+    assert.equal(buildRouteHeader(doc), null);
+  } finally {
+    if (hadLocation) globalThis.location = originalLocation;
+    else Reflect.deleteProperty(globalThis, "location");
+  }
+});

@@ -196,6 +196,60 @@ no matches
 
 390 px screenshot reinspection was attempted with local headless Chrome, but the shell command was rejected before execution. No new screenshot artifacts were produced in fix round 1. The earlier Task 2 screenshot set remains the visual baseline, and the new integration test covers the DOM-specific review failures.
 
+## Fix round 2: locationless document stubs
+
+Full Node suite review input:
+
+- `system/home-art.test.mjs` triggered the shared nav boot path with document stubs that have no `doc.location`.
+- `mountRouteHeader -> isHomeDocument -> locationPath(doc)` fell through to bare global `location`.
+- Node has no global `location`, so the import path raised `ReferenceError: location is not defined`.
+
+Red test added before implementation:
+
+- `buildRouteHeader handles document stubs without location and no global location`
+
+The test explicitly removes any `globalThis.location`, deletes `doc.location`, then calls `buildRouteHeader(doc)`.
+
+Red result:
+
+```text
+node --test system/nav.test.mjs
+fail 1
+ReferenceError: location is not defined
+```
+
+Implementation:
+
+- `locationPath(doc)` now checks `doc.location` first;
+- if absent, it checks `typeof location !== "undefined"` before reading the browser global;
+- if neither location source exists, it returns `/`, preserving homepage exclusion for non-browser document stubs.
+
+Green results:
+
+```text
+node --test system/nav.test.mjs system/home-art.test.mjs
+pass 17, fail 0
+```
+
+```text
+python -m pytest tests/test_zentropy_sitewide_contract.py tests/test_page_metadata.py -q
+22 passed in 0.25s
+```
+
+Full system Node sweep:
+
+```text
+node --test <all system/*.test.mjs>
+tests 741
+suites 34
+pass 727
+fail 0
+skipped 14
+duration_ms 2479.5254
+```
+
+No browser or screenshot command was run in fix round 2.
+
 ## Limitations and follow-up
 
 - Fix round 1 removes the mobile `.sn-section` metadata from the generated nav and shared route CSS. A fresh 390 px screenshot could not be produced in this round because the local headless Chrome command was rejected before execution.
