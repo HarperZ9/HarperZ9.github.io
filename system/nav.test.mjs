@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { navActive, renderNav } from "./nav.js";
+import { buildRouteHeader, navActive, renderNav } from "./nav.js";
 import { PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js";
 import { PRIMARY_ROUTES as NAV_PRIMARY_ROUTES } from "./routes.js?v=20260827-capability-publication";
 
@@ -116,4 +116,148 @@ test("rendered nav treats route labels and hrefs as text and attribute data", ()
   } finally {
     Object.assign(route, original);
   }
+});
+
+class FakeClassList {
+  constructor(element) {
+    this.element = element;
+  }
+  add(...names) {
+    const set = new Set((this.element.className || "").split(/\s+/).filter(Boolean));
+    for (const name of names) set.add(name);
+    this.element.className = [...set].join(" ");
+  }
+  contains(name) {
+    return (this.element.className || "").split(/\s+/).includes(name);
+  }
+}
+
+class FakeElement {
+  constructor(tagName) {
+    this.tagName = tagName.toUpperCase();
+    this.attributes = {};
+    this.children = [];
+    this.className = "";
+    this.dataset = {};
+    this.parentElement = null;
+    this.textContent = "";
+  }
+  get classList() {
+    return new FakeClassList(this);
+  }
+  get firstChild() {
+    return this.children[0] || null;
+  }
+  appendChild(child) {
+    child.parentElement = this;
+    this.children.push(child);
+    return child;
+  }
+  insertBefore(child, reference) {
+    child.parentElement = this;
+    const index = this.children.indexOf(reference);
+    if (index === -1) this.children.push(child);
+    else this.children.splice(index, 0, child);
+    return child;
+  }
+  setAttribute(name, value) {
+    this.attributes[name] = String(value);
+  }
+  getAttribute(name) {
+    return this.attributes[name] ?? null;
+  }
+  matches(selector) {
+    if (selector.startsWith(".")) return this.classList.contains(selector.slice(1));
+    if (selector.startsWith("#")) return this.id === selector.slice(1);
+    if (selector === "[data-route-header='mounted']") return this.dataset.routeHeader === "mounted";
+    return this.tagName.toLowerCase() === selector.toLowerCase();
+  }
+  closest(selectors) {
+    const parts = selectors.split(",").map((part) => part.trim());
+    let node = this;
+    while (node) {
+      if (parts.some((selector) => node.matches(selector))) return node;
+      node = node.parentElement;
+    }
+    return null;
+  }
+  querySelector(selector) {
+    return this.querySelectorAll(selector)[0] || null;
+  }
+  querySelectorAll(selector) {
+    const parts = selector.split(",").map((part) => part.trim());
+    const matches = [];
+    const visit = (node) => {
+      if (parts.some((part) => node.matches(part))) matches.push(node);
+      for (const child of node.children) visit(child);
+    };
+    for (const child of this.children) visit(child);
+    return matches;
+  }
+}
+
+function routeHeaderFixture(pathname = "/catalog.html") {
+  const doc = {
+    documentElement: { dataset: {} },
+    location: { pathname, search: "", hash: "" },
+    body: new FakeElement("body"),
+    createElement(tagName) {
+      return new FakeElement(tagName);
+    },
+    getElementById(id) {
+      return this.body.querySelector("#" + id);
+    },
+    querySelector(selector) {
+      return this.body.querySelector(selector);
+    },
+    querySelectorAll(selector) {
+      return this.body.querySelectorAll(selector);
+    },
+  };
+  const main = new FakeElement("main");
+  main.id = "main";
+  const frame = new FakeElement("div");
+  frame.className = "frame system-hero";
+  const bar = new FakeElement("div");
+  bar.className = "bar";
+  const mid = new FakeElement("div");
+  mid.className = "mid";
+  const h1 = new FakeElement("h1");
+  h1.textContent = "Systems, by capability.";
+  const lede = new FakeElement("p");
+  lede.className = "lede";
+  lede.textContent = "31 public records with purpose, evidence, limitations, and authorization boundaries.";
+
+  doc.body.appendChild(frame);
+  doc.body.appendChild(main);
+  frame.appendChild(bar);
+  frame.appendChild(mid);
+  mid.appendChild(h1);
+  mid.appendChild(lede);
+  return { doc, frame, h1, lede };
+}
+
+test("buildRouteHeader upgrades the existing opening block without cloning the h1", () => {
+  const { doc, frame, h1, lede } = routeHeaderFixture();
+  const header = buildRouteHeader(doc);
+
+  assert.equal(header, frame);
+  assert.ok(frame.classList.contains("route-header"));
+  assert.equal(frame.dataset.routeHeader, "mounted");
+  assert.ok(h1.classList.contains("route-header__title"));
+  assert.ok(lede.classList.contains("route-header__summary"));
+  assert.equal(doc.querySelectorAll("h1").length, 1);
+
+  const path = frame.querySelector(".route-header__path");
+  assert.equal(path.getAttribute("aria-label"), "Breadcrumb");
+  assert.equal(path.children[0].textContent, "Zain Dana Harper");
+  assert.equal(path.children[1].textContent, "Security");
+  assert.doesNotMatch(path.textContent, /route artifact|eyebrow|overline|kicker|\//i);
+});
+
+test("buildRouteHeader is excluded from the React home shell", () => {
+  const { doc } = routeHeaderFixture("/index.html");
+  doc.documentElement.dataset.homeShell = "react";
+
+  assert.equal(buildRouteHeader(doc), null);
 });

@@ -108,12 +108,20 @@ def test_no_page_centres_its_body_as_a_flex_row() -> None:
 
 
 def test_the_injector_styles_what_it_injects() -> None:
-    """nav.css is the floor for both things nav.js puts on a page: the bar and
-    the route figure. Without the second rule an unstyled page rendered the
-    raw 1200px og:image and scrolled sideways on a phone."""
+    """nav.css is the floor for the things nav.js puts on a page.
+
+    The old route-art injector rendered the raw social card into the document
+    flow. The current injector enhances the existing opening block as a compact
+    route header, so the stylesheet must style that component without relying
+    on page-local rules.
+    """
     css = (ROOT / "system" / "nav.css").read_text(encoding="utf-8")
     assert ".site-nav{" in css
-    assert ".route-art img{" in css and "max-width:100%" in css
+    assert ".route-header{" in css
+    assert ".route-header__path{" in css
+    assert ".route-header__title{" in css
+    assert ".route-header__summary{" in css
+    assert ".route-art" not in css
 
 
 def test_shared_navigation_keeps_a_forced_colors_focus_indicator() -> None:

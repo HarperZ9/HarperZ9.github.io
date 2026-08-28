@@ -110,20 +110,25 @@ def assert_aa_contrast(foreground: str, background: str, selector: str) -> None:
 def test_shared_nav_renders_zentropy_brand_and_desktop_gpu_gate() -> None:
     nav = read("system/nav.js")
 
-    assert "zentropyLabs" in nav
+    assert "Zentropy Labs" in nav
+    assert "zentropyLabs" not in nav
     assert "<span>TELOS</span>" not in nav
     assert "brand/zentropy-avatar.png" in nav
     assert "function shouldUseDesktopGpuArt" in nav
     assert '"(prefers-reduced-motion: reduce)"' in nav
     assert '"(pointer: fine)"' in nav
     assert '"(min-width: 900px)"' in nav
-    assert "mountRouteArt" in nav
-    assert "getRouteArtMetadata" in nav
+    assert "mountRouteArt" not in nav
+    assert "getRouteArtMetadata" not in nav
+    assert "buildRouteHeader" in nav
+    assert "mountRouteHeader" in nav
+    assert "route artifact" not in nav
+    assert "Project Telos home" not in nav
     assert "function shouldMountAmbientField" in nav
     assert "shouldUseDesktopGpuArt(window)" in nav
     assert 'doc.querySelector(".frame")' in nav
-    assert 'insertAdjacentElement("beforebegin", figure)' in nav
-    assert 'PRIMARY_ROUTES.map((item) => navLink(item, active, locationPath, true)).join("")' in nav
+    assert "route-header__path" in nav
+    assert 'PRIMARY_ROUTES.map((item) => navLink(item, active, routePath, true)).join("")' in nav
     assert 'SECONDARY_GROUPS.map((group) => menuGroup(' in nav
     assert 'classList.contains("studio-page")' in nav
     assert 'import("./generative-field.js")' in nav
@@ -150,7 +155,8 @@ def test_shared_styles_define_zentropy_material_system() -> None:
         assert "#8ee3f2" in css
         assert "#c86a44" in css
         assert "#1e0f14" in css
-        assert ".route-art" in css
+        assert ".route-header" in css
+        assert ".route-art" not in css
         assert "@media (max-width:760px)" in css or "@media (max-width: 760px)" in css
         assert ".site-nav .sn-more summary::before" in css
         assert 'content:"Menu"' in css
@@ -230,14 +236,33 @@ def test_figure_mobile_relation_cards_keep_readable_paper_contract() -> None:
     assert_aa_contrast(term_foreground, background, ".figure-relation-card dt")
 
 
-def test_nav_forced_colors_route_art_gets_a_visible_border() -> None:
+def test_nav_forced_colors_route_header_gets_a_visible_border() -> None:
     css = read("system/nav.css")
     forced = media_block(css, "(forced-colors: active)")
 
     assert re.search(
-        r"\.route-art\s*\{[^}]*border:1px solid CanvasText!important",
+        r"\.route-header\s*\{[^}]*border:1px solid CanvasText!important",
         forced,
     )
+
+
+def test_route_headers_are_not_eyebrows_or_posters() -> None:
+    nav = read("system/nav.js")
+
+    assert "route-header__path" in nav
+    assert "route-header__title" in nav
+    assert "route-header__summary" in nav
+    assert "hero-kicker" not in nav
+    assert "eyebrow" not in nav
+    assert "overline" not in nav
+    assert "kicker" not in nav
+    assert "figcaption" not in nav
+
+    for rel in ("system/system.css", "system/doc.css", "system/nav.css"):
+        css = read(rel)
+        assert ".route-header" in css, rel
+        assert ".route-art" not in css, rel
+        assert "route artifact" not in css, rel
 
 
 def test_narrow_mobile_nav_does_not_overlap_the_wordmark() -> None:
