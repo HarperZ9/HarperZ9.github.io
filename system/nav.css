@@ -149,16 +149,6 @@
 @media(max-width:330px){
   .site-nav .sn-home .sn-brand-word{display:none}
 }
-@media(forced-colors:active){
-  .site-nav .sn-more summary:focus-visible,
-  .site-nav .sn-more-list a:focus-visible,
-  .site-nav .sn-links a:focus-visible,
-  .site-nav .sn-home:focus-visible{
-    outline:2px solid CanvasText!important;
-    outline-offset:3px!important;
-    border-color:CanvasText!important;
-  }
-}
 @media print{
   .site-nav{display:none!important}
 }

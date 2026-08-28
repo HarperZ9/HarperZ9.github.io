@@ -17,12 +17,14 @@ function normaliseRoute(pathname) {
 }
 export function routeFamily(pathname) {
   const route = normaliseRoute(pathname);
+  const routePath = route.split("#")[0].split("?")[0];
   for (const family of ROUTE_REGISTRY.families) {
-    const routePath = route.split("#")[0].split("?")[0];
     if (family.routes.some((item) => {
       const itemRoute = normaliseRoute(item.href);
       return itemRoute === route || itemRoute.split("#")[0].split("?")[0] === routePath;
     })) return family.label;
+  }
+  for (const family of ROUTE_REGISTRY.families) {
     const stem = routePath.replace(/\.html$/, "");
     if ((family.prefixes || []).some((prefix) => stem.startsWith(prefix))) return family.label;
   }

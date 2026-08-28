@@ -135,7 +135,7 @@
 
   <section>
     <h2>Upstream open source</h2>
-    <p class="lead">Pull requests into repositories owned by other people. Counts are recorded in the public open-source census, and a test checks each displayed total against that committed record.</p>
+    <p class="lead">Pull requests into repositories owned by other people. Counts come from the GitHub API through <span translate="no">tools/pr_census.py</span>, and a test fails the build if this page disagrees with the live record.</p>
     <div class="receipts">
       <span class="r"><b data-census="engineering">63</b> engineering pull requests</span>
       <span class="r"><b data-census="merged-engineering">31</b> merged</span>
@@ -241,11 +241,11 @@
   <section>
     <h2>Work preferences</h2>
     <p class="lead">Remote preferred, open to onsite or hybrid, and to contract, full-time, part-time, and project-based engagements. The strongest fits are AI and agent infrastructure, verification and security tooling, compiler and language tooling, graphics and color, research operations, technical writing, and systems work in a domain I have to learn from scratch.</p>
-    <p class="entry-note">Use the page export controls below to save a current copy.</p>
+    <p class="entry-note">Download this page: <a href="career/Zain-Dana-Harper-CV.pdf" download>CV PDF</a>. The PDF is printed from this page, so the two cannot drift apart.</p>
     <div data-export-slot></div>
   </section>
 
-  <p class="note">Updated 2026-08-21. Claim status is stated per item. Nothing here is peer reviewed; where that changes, the entry will name the venue. Open-source counts are recorded in the public census and checked by a test.</p>
+  <p class="note">Updated 2026-08-21. Claim status is stated per item. Nothing here is peer reviewed; where that changes, the entry will name the venue. Open-source counts are read from the GitHub API and gated by a test.</p>
 </article>
 </main>
 </body>

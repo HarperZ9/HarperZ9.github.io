@@ -105,7 +105,7 @@ export function navActive(pathname) {
 function localRoute(value) {
   try {
     const url = new URL(value, "https://harperz9.github.io/");
-    return url.pathname.replace(/^\//, "") + url.search + url.hash;
+    return url.pathname.replace(/^\//, "") + url.search;
   } catch {
     return "";
   }
@@ -126,20 +126,18 @@ function escapeHtml(value) {
   })[character]);
 }
 
-function navLink({ label, href, family, external = false }, active, locationPath, retainSectionState = false, currentState = null) {
+function navLink({ label, href, family, external = false }, active, locationPath, retainSectionState = false) {
   const exact = !external && localRoute(href) === localRoute(locationPath);
-  const pageCurrent = exact && (!currentState || !currentState.pageCurrentAssigned);
-  if (pageCurrent && currentState) currentState.pageCurrentAssigned = true;
   const sectionActive = retainSectionState && family === active;
   const className = exact || sectionActive ? "is-active" : "";
   const renderedHref = external ? href : localHrefForPage(href, locationPath);
-  return `<a class="${className}" href="${escapeHtml(renderedHref)}"${pageCurrent ? ' aria-current="page"' : ''}${external ? ' rel="noopener"' : ''}>${escapeHtml(label)}</a>`;
+  return `<a class="${className}" href="${escapeHtml(renderedHref)}"${exact ? ' aria-current="page"' : ''}${external ? ' rel="noopener"' : ''}>${escapeHtml(label)}</a>`;
 }
 
-function menuGroup(label, items, active, locationPath, className, currentState) {
+function menuGroup(label, items, active, locationPath, className) {
   return `<div class="sn-menu-group ${className}">`
     + `<p class="sn-menu-label">${escapeHtml(label)}</p>`
-    + items.map((item) => navLink(item, active, locationPath, className === "sn-menu-primary", currentState)).join("")
+    + items.map((item) => navLink(item, active, locationPath, className === "sn-menu-primary")).join("")
     + `</div>`;
 }
 
@@ -239,27 +237,26 @@ export function renderNav(doc = document) {
   const mount = doc.getElementById("site-nav");
   if (!mount) return;
   const locationPath = doc.location
-    ? doc.location.pathname + (doc.location.search || "") + (doc.location.hash || "")
-    : location.pathname + location.search + location.hash;
+    ? doc.location.pathname + (doc.location.search || "")
+    : location.pathname + location.search;
   const active = navActive(locationPath);
   const moreActive = SECONDARY_GROUPS.some((group) => group.routes.some((route) => route.family === active));
   const activeLabel = active || "site";
   const homeHref = localHrefForPage("index.html", locationPath);
   const brandMarkSrc = localHrefForPage(BRAND_MARK_SRC, locationPath);
-  const currentState = { pageCurrentAssigned: false };
   mount.innerHTML =
     `<a class="sn-home" href="${homeHref}" aria-label="${BRAND_LABEL} / Project Telos home"><span class="sn-home-field"><canvas class="sn-logo-canvas" aria-hidden="true"></canvas><img class="sn-logo-fallback" src="${brandMarkSrc}" alt="" width="30" height="30" style="display:none"></span><span class="sn-brand-word">${BRAND_LABEL}</span></a>`
     + `<span class="sn-section" aria-label="Current section">${escapeHtml(activeLabel)}</span>`
     + `<nav class="sn-links" aria-label="Primary">`
-    + PRIMARY_ROUTES.map((item) => navLink(item, active, locationPath, true, currentState)).join("")
-    + EXTERNAL_ACTIONS.map((item) => navLink(item, active, locationPath, false, currentState)).join("")
+    + PRIMARY_ROUTES.map((item) => navLink(item, active, locationPath, true)).join("")
+    + EXTERNAL_ACTIONS.map((item) => navLink(item, active, locationPath)).join("")
     + `</nav>`
     + `<details class="sn-more"${moreActive ? ' data-current="true"' : ''}>`
     + `<summary>Menu</summary>`
     + `<div class="sn-more-list" aria-label="Site menu">`
-    + menuGroup("Primary", PRIMARY_ROUTES, active, locationPath, "sn-menu-primary", currentState)
-    + SECONDARY_GROUPS.map((group) => menuGroup(group.label, group.routes, active, locationPath, "sn-menu-secondary", currentState)).join("")
-    + menuGroup("Actions", EXTERNAL_ACTIONS, active, locationPath, "sn-menu-secondary", currentState)
+    + menuGroup("Primary", PRIMARY_ROUTES, active, locationPath, "sn-menu-primary")
+    + SECONDARY_GROUPS.map((group) => menuGroup(group.label, group.routes, active, locationPath, "sn-menu-secondary")).join("")
+    + menuGroup("Actions", EXTERNAL_ACTIONS, active, locationPath, "sn-menu-secondary")
     + `</div></details>`
     ;
   enhanceMenu(doc, mount);

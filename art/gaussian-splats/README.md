@@ -10,19 +10,31 @@ Three source PNGs have been selected, hashed, and packaged. No `.spz` scene has 
 
 ## Generator
 
-The intended upstream project is:
+The generation route is this repository's own native pipeline:
 
-- `https://github.com/neilsonnn/image-blaster`
+- `system/spatial-scene.js` (the hybrid renderer)
+- `system/engine/world-package.js` (the certified world-package contract)
+- `art/spatial/build_scene.py` (the deterministic builder pattern to follow)
+
+No hosted model, no credentials, no metered endpoint. The prior external
+reference route (`https://github.com/neilsonnn/image-blaster`) is retired; it
+remains recorded in the manifest as `generator.prior_reference`.
 
 Before running a pilot:
 
-1. Record the exact upstream commit.
-2. Follow the upstream installation and provider instructions as written at that commit.
-3. Configure service credentials locally or through a protected secret store.
-4. Never put credentials in this repository, the public manifest, an issue, or a run receipt.
-5. Preserve the source PNG without modification.
+1. Record the exact repository commit.
+2. Author the pilot's composition profile (semantic layers, depth anchors,
+   camera boundary) the way the session's Crystal City work did: the source
+   determines the representation.
+3. Preserve the source PNG without modification.
+4. Every byte the run produces gets a SHA-256 receipt in the run directory.
 
-Do not invent a command line here. Store the exact command actually used in the run directory after following the selected upstream revision.
+Do not invent a command line here. Store the exact command actually used in the run directory.
+
+Note the lane distinction: the Studio's Spatial source already serves an
+authored world package generated from a named seed. That is the authored lane.
+These three pilots are the reconstruction lane, and a reconstruction claim is
+not made until a scene passes the checks below.
 
 ## Pilot sources
 
