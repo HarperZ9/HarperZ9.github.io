@@ -37,6 +37,8 @@ def test_route_registry_is_the_union_of_hiring_capability_and_legacy_routes() ->
     } <= hrefs["Systems"]
     assert {
         "security.html", "security-toolkit.html", "phantom.html", "private-practice.html",
+        "array.html", "seed.html", "sofer.html", "isomorph.html", "bounds.html",
+        "kun.html", "aeterna.html",
         "behavior-transform.html", "systems/behavior-transform.html", "emet.html",
     } <= hrefs["Security"]
     assert {
@@ -79,7 +81,8 @@ def test_sitemap_keeps_legacy_routes_and_adds_capability_publication_routes() ->
     for route in (
         "models-propose-oracles-dispose.html", "retro.html", "loom.html", "frontier-safety.html",
         "frontier-safety/archive/2026-08-24.html", "session-archive.html", "security-toolkit.html",
-        "phantom.html", "private-practice.html", "briefings/",
+        "phantom.html", "private-practice.html", "array.html", "seed.html", "sofer.html",
+        "isomorph.html", "bounds.html", "kun.html", "aeterna.html", "briefings/",
         "briefings/2026-08-26-openai-hugging-face-incident/", "systems/relay.html",
         "systems/behavior-transform.html",
         "engine-revival.html", "brender-archival.html",
@@ -101,7 +104,11 @@ def test_security_surfaces_keep_deep_detail_and_add_machine_readable_maturity() 
     assert "written authorization" in security.lower()
     assert "Public security maturity index" in security
     assert 'href="security-tools.json"' in security
-    for route in ("security-toolkit.html", "phantom.html", "emet.html", "private-practice.html"):
+    for route in (
+        "security-toolkit.html", "phantom.html", "emet.html", "private-practice.html",
+        "array.html", "seed.html", "sofer.html", "isomorph.html", "bounds.html",
+        "kun.html", "aeterna.html",
+    ):
         assert f'href="{route}"' in security
 
     phantom = read("phantom.html")

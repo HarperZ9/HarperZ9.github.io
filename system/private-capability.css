@@ -1,0 +1,175 @@
+.capability-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.85rem;
+  margin-top: 1.4rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.capability-links a {
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  color: var(--bone);
+  padding: 0.4rem 0.7rem;
+  text-decoration: none;
+}
+
+.capability-links a:hover,
+.capability-links a:focus-visible {
+  border-color: var(--match);
+  color: var(--match);
+}
+
+.capability-figure {
+  margin: 1.6rem 0 0;
+}
+
+.capability-figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 260px;
+  border: 1px solid var(--hairline);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 12% 14%, color-mix(in oklab, var(--match) 13%, transparent), transparent 30%),
+    linear-gradient(135deg, rgba(255,255,255,0.74), rgba(255,255,255,0.44));
+  box-shadow: 0 28px 110px -80px rgba(0,0,0,.88);
+}
+
+.capability-figure figcaption {
+  max-width: 74ch;
+  margin-top: 0.85rem;
+  color: var(--muted);
+  font-family: var(--body);
+  font-size: 0.96rem;
+  line-height: 1.6;
+}
+
+.capability-node {
+  fill: rgba(255,255,255,.78);
+  stroke: color-mix(in oklab, var(--match) 45%, var(--hairline));
+  stroke-width: 1.6;
+}
+
+.capability-node--primary {
+  fill: color-mix(in oklab, var(--match) 12%, rgba(255,255,255,.84));
+  stroke: var(--match);
+}
+
+.capability-node--private {
+  fill: color-mix(in oklab, var(--orange) 12%, rgba(255,255,255,.82));
+  stroke: var(--orange);
+}
+
+.capability-edge {
+  fill: none;
+  stroke: color-mix(in oklab, var(--bone) 42%, transparent);
+  stroke-width: 2.2;
+}
+
+.capability-edge--guard {
+  stroke: var(--orange);
+  stroke-dasharray: 9 7;
+}
+
+.capability-svg-label {
+  fill: var(--bone);
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 650;
+}
+
+.capability-svg-note {
+  fill: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.capability-table-wrap {
+  overflow-x: auto;
+  margin-top: 1.3rem;
+}
+
+.capability-table {
+  min-width: 720px;
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--hairline);
+  background: rgba(255,255,255,.56);
+}
+
+.capability-table caption {
+  text-align: left;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: .68rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 0 0 .7rem;
+}
+
+.capability-table th,
+.capability-table td {
+  padding: .8rem .9rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.capability-table th {
+  color: var(--bone);
+  font-family: var(--mono);
+  font-size: .66rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.capability-table td {
+  color: var(--muted);
+  font-size: .96rem;
+  line-height: 1.55;
+}
+
+.capability-table td:first-child {
+  color: var(--bone);
+  font-weight: 650;
+}
+
+.boundary-panel {
+  border: 1px solid color-mix(in oklab, var(--orange) 50%, var(--hairline));
+  border-radius: 18px;
+  background: color-mix(in oklab, var(--orange) 8%, rgba(255,255,255,.55));
+  margin-top: 1.5rem;
+  padding: clamp(1rem, 2.6vw, 1.55rem);
+}
+
+.boundary-panel h3 {
+  margin: 0 0 .6rem;
+  color: var(--bone);
+  font-family: var(--display);
+  font-size: clamp(1.1rem, 1.7vw, 1.4rem);
+}
+
+.boundary-panel p {
+  margin: 0;
+  max-width: 74ch;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+@media (max-width: 720px) {
+  .capability-figure svg {
+    min-height: 220px;
+  }
+
+  .capability-svg-label {
+    font-size: 18px;
+  }
+}

@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Authorized private security practice">
-<meta property="og:description" content="Array, Seed, Sofer, Isomorph, Bounds, ORCA, and Gate support distinct parts of authorized offensive and high-consequence security work.">
+<meta property="og:description" content="Array, Seed, Sofer, Isomorph, Bounds, Kun, Aeterna, ORCA, and Gate support distinct parts of authorized offensive and high-consequence security work.">
 <meta property="og:url" content="https://harperz9.github.io/private-practice.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/private-practice.png">
 <meta property="og:image:alt" content="Zentropy Labs card for authorized private security practice.">
@@ -18,8 +18,9 @@
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/private-practice.png">
 <meta name="color-scheme" content="dark">
 <link rel="stylesheet" href="system/system.css?v=20260828-site-design">
+<link rel="stylesheet" href="system/private-capability.css?v=20260828-site-design">
 </head>
-<body class="inner-clean">
+<body class="inner-clean" data-capability-page="private-practice">
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="security.html">Security</a> <a href="security-toolkit.html">Toolkit</a> <a href="phantom.html">Phantom</a> <a href="hire.html">Hire</a></nav></noscript>
@@ -29,35 +30,70 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">authorized private practice</span></div>
   <div class="mid">
     <h1>Operational security systems, described by what they do.</h1>
-    <p class="lede">Array, Seed, Sofer, Isomorph, Bounds, ORCA, and Gate are separate systems for campaign control, native assessment, orchestration, AI red-team testing, trust verification, execution, and release authority.</p>
+    <p class="lede">Array, Seed, Sofer, Isomorph, Bounds, Kun, Aeterna, ORCA, and Gate are separate systems for campaign control, native assessment, orchestration, AI red-team testing, trust verification, access recovery, graphics instrumentation, execution, and release authority.</p>
     <p class="close">Written authorization first. Targets, credentials, live payloads, client data, and engagement-specific findings remain in the authorized environment.</p>
+    <nav class="capability-links" aria-label="Private capability pages"><a href="array.html">Array</a><a href="seed.html">Seed</a><a href="sofer.html">Sofer</a><a href="isomorph.html">Isomorph</a><a href="bounds.html">Bounds</a><a href="kun.html">Kun</a><a href="aeterna.html">Aeterna</a></nav>
   </div>
-  <div class="seal">seven distinct private systems &middot; source roles checked 2026-08-28</div>
+  <div class="seal">nine distinct private systems &middot; source roles checked 2026-08-28</div>
 </div>
 
 <main id="main">
 <section class="mv" id="authorized-private-practice" aria-labelledby="practice-map-h">
   <h2 id="practice-map-h">Practice map.</h2>
+  <figure class="capability-figure">
+    <svg role="img" aria-labelledby="practice-map-title practice-map-desc" viewBox="0 0 980 420" xmlns="http://www.w3.org/2000/svg">
+      <title id="practice-map-title">Capability constellation for the authorized private practice</title>
+      <desc id="practice-map-desc">A public-safe diagram showing Flywheel as the platform context, the private orchestration and campaign systems, the evaluation and trust systems, and the private recipient boundary.</desc>
+      <path class="capability-edge" d="M178 210H312"/>
+      <path class="capability-edge" d="M470 210H590"/>
+      <path class="capability-edge capability-edge--guard" d="M744 210H860"/>
+      <path class="capability-edge" d="M404 132L404 94H666L666 132"/>
+      <path class="capability-edge" d="M404 288L404 326H666L666 288"/>
+      <rect class="capability-node capability-node--primary" x="42" y="146" width="156" height="128" rx="22"/>
+      <rect class="capability-node" x="288" y="132" width="196" height="156" rx="24"/>
+      <rect class="capability-node capability-node--private" x="568" y="132" width="194" height="156" rx="24"/>
+      <rect class="capability-node" x="828" y="146" width="126" height="128" rx="22"/>
+      <rect class="capability-node" x="316" y="42" width="176" height="70" rx="18"/>
+      <rect class="capability-node" x="578" y="42" width="176" height="70" rx="18"/>
+      <rect class="capability-node" x="316" y="306" width="176" height="70" rx="18"/>
+      <rect class="capability-node" x="578" y="306" width="176" height="70" rx="18"/>
+      <text class="capability-svg-note" x="76" y="184">platform</text><text class="capability-svg-label" x="76" y="217">Flywheel</text>
+      <text class="capability-svg-note" x="320" y="172">operate</text><text class="capability-svg-label" x="320" y="206">Sofer</text><text class="capability-svg-note" x="320" y="236">Array · ORCA</text>
+      <text class="capability-svg-note" x="602" y="172">verify</text><text class="capability-svg-label" x="602" y="206">Bounds</text><text class="capability-svg-note" x="602" y="236">Seed · Isomorph</text>
+      <text class="capability-svg-note" x="856" y="184">private</text><text class="capability-svg-label" x="856" y="217">Handoff</text>
+      <text class="capability-svg-note" x="348" y="82">Kun</text><text class="capability-svg-note" x="610" y="82">Aeterna</text>
+      <text class="capability-svg-note" x="348" y="346">Gate</text><text class="capability-svg-note" x="610" y="346">Recipient scope</text>
+    </svg>
+    <figcaption>The constellation is an intake map, not an operational diagram. It shows where capability boundaries sit while keeping live payloads, target-specific methods, credentials, private traces, and findings out of the public surface.</figcaption>
+  </figure>
   <div class="index" role="list">
     <article class="index-row" role="listitem" id="seed">
-      <span class="index-term">Seed</span>
+      <span class="index-term"><a href="seed.html">Seed</a></span>
       <span class="index-gloss">Seed is a 59-module C++23 security-assessment engine with 3,065 tests. It supports controlled labs, detection engineering, training, and authorized assessment through synthetic demonstrations, scope manifests, native tests, interop adapters, and action receipts.</span>
     </article>
     <article class="index-row" role="listitem" id="array">
-      <span class="index-term">Array</span>
+      <span class="index-term"><a href="array.html">Array</a></span>
       <span class="index-gloss">Array orchestrates authorized offensive-security campaigns. It plans digest-sealed waves, holds execution behind single-use time-limited approval, supervises registered assessment tools through an independent containment monitor, and records decisions, cleanup, findings, and evidence in a verifiable ledger.</span>
     </article>
     <article class="index-row" role="listitem" id="sofer">
-      <span class="index-term">Sofer</span>
+      <span class="index-term"><a href="sofer.html">Sofer</a></span>
       <span class="index-gloss">Sofer is the private-line orchestration and operational suite. It coordinates specialist agents, model backends, assessment probes, intelligence and scheduling systems, multi-stage workflows, tool execution, admission decisions, and receipt-backed handoffs across security, infrastructure, investigative, legal, safety, and high-consequence technical domains.</span>
     </article>
     <article class="index-row" role="listitem" id="isomorph">
-      <span class="index-term">Isomorph</span>
+      <span class="index-term"><a href="isomorph.html">Isomorph</a></span>
       <span class="index-gloss">Isomorph is an authorized AI red-team harness for the inference boundary. It measures classifier and refusal behavior, transforms and retries requests through escalating reformulation layers, records which approaches succeed for each provider, and analyzes the stability of those controls. Its mechanisms are jailbreak-class; authorization and research scope determine legitimate use.</span>
     </article>
     <article class="index-row" role="listitem" id="bounds">
-      <span class="index-term">Bounds</span>
+      <span class="index-term"><a href="bounds.html">Bounds</a></span>
       <span class="index-gloss">Bounds verifies trust across agent actions, runtime observations, and releases. It detects intent drift and unsupported history claims, runs file, git, claim, secret, and fixture sensors through explicit guard layers, emits evidence-backed receipts, and builds release inventories and tamper-evident proof chains.</span>
+    </article>
+    <article class="index-row" role="listitem" id="kun">
+      <span class="index-term"><a href="kun.html">Kun</a></span>
+      <span class="index-gloss">Kun keeps local access-recovery memory for owned systems through path-only receipts, redacted diagnostics, rotation notes, and operator runbooks. It does not publish or retain raw credentials, credential recovery instructions, private browser state, or protected content.</span>
+    </article>
+    <article class="index-row" role="listitem" id="aeterna">
+      <span class="index-term"><a href="aeterna.html">Aeterna</a></span>
+      <span class="index-gloss">Aeterna is the graphics instrumentation and overlay surface for authorized DirectX research, visual debugging, runtime education, and proof-oriented inspection. Public material omits target-specific instrumentation steps and protected traces.</span>
     </article>
     <article class="index-row" role="listitem" id="orca">
       <span class="index-term">ORCA</span>
@@ -82,7 +118,7 @@
   </article>
   <article class="index-row">
     <span class="index-term">Components</span>
-    <span class="index-gloss">Campaign control, native assessment modules, specialist-agent orchestration, inference-boundary testing, trust sensors, operator runtime, release verification, and verifiable ledgers.</span>
+    <span class="index-gloss">Campaign control, native assessment modules, specialist-agent orchestration, inference-boundary testing, trust sensors, access-recovery hygiene, graphics instrumentation, operator runtime, release verification, and verifiable ledgers.</span>
   </article>
   <article class="index-row">
     <span class="index-term">Bounded workflow</span>
