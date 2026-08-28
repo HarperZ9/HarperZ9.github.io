@@ -126,8 +126,78 @@ Screenshot artifacts:
 - `.superpowers/sdd/2026-08-28-site-design-upgrade/screenshots-task-2/hire-html-engineering-path-390.png`
 - `.superpowers/sdd/2026-08-28-site-design-upgrade/screenshots-task-2/hire-html-engineering-path-1440.png`
 
+## Fix round 1: review warnings
+
+Review input:
+
+1. The route breadcrumb used `aria-current="page"` while the shared nav also owns current-page state.
+2. `routeHeaderTarget` could select a whole `main` element as the route header.
+3. The mobile nav still emitted visible current-section metadata through `.sn-section`.
+
+Red tests added before implementation:
+
+- `rendered nav does not emit mobile current-section metadata`
+- `renderNav and buildRouteHeader leave one combined aria-current page state`
+- `buildRouteHeader wraps direct-main headings in a compact header only`
+- sitewide static assertions that `sn-section` and `Current section` are absent from `system/nav.js`, and `.sn-section` is absent from shared route CSS.
+
+Red results:
+
+```text
+node --test system/nav.test.mjs
+fail 4
+```
+
+The failures matched the review warnings:
+
+- `sn-section` was still present in the rendered nav;
+- the breadcrumb still contributed `aria-current="page"`;
+- combined boot DOM had two current-page states;
+- direct-main headings returned `MAIN` rather than a compact `HEADER`.
+
+```text
+python -m pytest tests/test_zentropy_sitewide_contract.py tests/test_page_metadata.py -q
+1 failed, 21 passed
+```
+
+The Python failure was the intended `.sn-section` contract failure.
+
+Implementation:
+
+- removed breadcrumb `aria-current="page"`;
+- removed `.sn-section` from `renderNav`;
+- removed `.sn-section` rules from `system/nav.css`, `system/system.css`, and `system/doc.css`;
+- removed `main` from eligible route-header containers;
+- for an `h1` directly under `main`, create a compact `header.route-header`, move the existing `h1` and adjacent lead/summary paragraph into it, and leave the rest of `main` outside.
+
+Green results:
+
+```text
+node --test system/nav.test.mjs
+pass 14, fail 0
+```
+
+```text
+python -m pytest tests/test_zentropy_sitewide_contract.py tests/test_page_metadata.py -q
+22 passed in 0.15s
+```
+
+```text
+git diff --check
+clean
+```
+
+Direct grep:
+
+```text
+rg -n "sn-section|Current section|aria-current\", \"page\"|aria-current', 'page'|aria-current=\"page\"" system/nav.js system/nav.css system/system.css system/doc.css system/nav.test.mjs tests/test_zentropy_sitewide_contract.py
+no matches
+```
+
+390 px screenshot reinspection was attempted with local headless Chrome, but the shell command was rejected before execution. No new screenshot artifacts were produced in fix round 1. The earlier Task 2 screenshot set remains the visual baseline, and the new integration test covers the DOM-specific review failures.
+
 ## Limitations and follow-up
 
-- The last screenshot review surfaced one remaining eyebrow-like detail: on mobile, the shared nav still exposes the current section label under the logo as uppercase metadata (`SECURITY`, `STUDIO`, or `WORK`). This is outside the route-header replacement itself, but it conflicts with the later "less eyebrows" direction and should be removed or changed to non-metadata copy in the next pass.
+- Fix round 1 removes the mobile `.sn-section` metadata from the generated nav and shared route CSS. A fresh 390 px screenshot could not be produced in this round because the local headless Chrome command was rejected before execution.
 - `publications.html` still has a tall opening block because of existing page copy density. Task 2 did not rewrite route content.
 - Homepage work was intentionally not completed in this task. The homepage belongs to the next architecture and visual-system pass.

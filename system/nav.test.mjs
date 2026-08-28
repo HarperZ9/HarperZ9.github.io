@@ -93,6 +93,15 @@ test("rendered nav treats extensionless local preview routes as html pages", () 
   assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 1);
 });
 
+test("rendered nav does not emit mobile current-section metadata", () => {
+  const { doc, mount } = navFixture("/catalog.html");
+  renderNav(doc);
+
+  assert.doesNotMatch(mount.innerHTML, /sn-section/);
+  assert.doesNotMatch(mount.innerHTML, /Current section/);
+  assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 1);
+});
+
 test("rendered mobile menu retains every primary destination", () => {
   const { doc, mount } = navFixture("/hire.html");
   renderNav(doc);
@@ -153,6 +162,12 @@ class FakeElement {
     this.parentElement = null;
     this.textContent = "";
   }
+  get nextElementSibling() {
+    if (!this.parentElement) return null;
+    const siblings = this.parentElement.children;
+    const index = siblings.indexOf(this);
+    return index === -1 ? null : siblings[index + 1] || null;
+  }
   get classList() {
     return new FakeClassList(this);
   }
@@ -160,15 +175,25 @@ class FakeElement {
     return this.children[0] || null;
   }
   appendChild(child) {
+    if (child.parentElement) child.parentElement.removeChild(child);
     child.parentElement = this;
     this.children.push(child);
     return child;
   }
   insertBefore(child, reference) {
+    if (child.parentElement) child.parentElement.removeChild(child);
     child.parentElement = this;
     const index = this.children.indexOf(reference);
     if (index === -1) this.children.push(child);
     else this.children.splice(index, 0, child);
+    return child;
+  }
+  removeChild(child) {
+    const index = this.children.indexOf(child);
+    if (index !== -1) {
+      this.children.splice(index, 1);
+      child.parentElement = null;
+    }
     return child;
   }
   setAttribute(name, value) {
@@ -181,6 +206,8 @@ class FakeElement {
     if (selector.startsWith(".")) return this.classList.contains(selector.slice(1));
     if (selector.startsWith("#")) return this.id === selector.slice(1);
     if (selector === "[data-route-header='mounted']") return this.dataset.routeHeader === "mounted";
+    const attribute = selector.match(/^\[([^=]+)=['"]([^'"]+)['"]\]$/);
+    if (attribute) return this.getAttribute(attribute[1]) === attribute[2];
     return this.tagName.toLowerCase() === selector.toLowerCase();
   }
   closest(selectors) {
@@ -263,7 +290,77 @@ test("buildRouteHeader upgrades the existing opening block without cloning the h
   assert.equal(path.getAttribute("aria-label"), "Breadcrumb");
   assert.equal(path.children[0].textContent, "Zain Dana Harper");
   assert.equal(path.children[1].textContent, "Security");
+  assert.equal(path.children[1].getAttribute("aria-current"), null);
   assert.doesNotMatch(path.textContent, /route artifact|eyebrow|overline|kicker|\//i);
+});
+
+test("renderNav and buildRouteHeader leave one combined aria-current page state", () => {
+  const { doc, frame } = routeHeaderFixture("/catalog.html");
+  const mount = new FakeElement("div");
+  mount.id = "site-nav";
+  doc.body.insertBefore(mount, frame);
+
+  renderNav(doc);
+  buildRouteHeader(doc);
+
+  const navCurrent = (mount.innerHTML.match(/aria-current="page"/g) || []).length;
+  const headerCurrent = doc.querySelectorAll('[aria-current="page"]').length;
+  assert.equal(navCurrent + headerCurrent, 1);
+});
+
+function briefingIndexFixture() {
+  const doc = {
+    documentElement: { dataset: {} },
+    location: {
+      pathname: "/briefings/2026-08-26-openai-hugging-face-incident/",
+      search: "",
+      hash: "",
+    },
+    body: new FakeElement("body"),
+    createElement(tagName) {
+      return new FakeElement(tagName);
+    },
+    getElementById(id) {
+      return this.body.querySelector("#" + id);
+    },
+    querySelector(selector) {
+      return this.body.querySelector(selector);
+    },
+    querySelectorAll(selector) {
+      return this.body.querySelectorAll(selector);
+    },
+  };
+  const main = new FakeElement("main");
+  main.id = "main";
+  const h1 = new FakeElement("h1");
+  h1.textContent = "OpenAI and Hugging Face incident briefing";
+  const lead = new FakeElement("p");
+  lead.className = "lead";
+  lead.textContent = "A public-source incident briefing.";
+  const section = new FakeElement("section");
+  section.id = "evidence";
+
+  doc.body.appendChild(main);
+  main.appendChild(h1);
+  main.appendChild(lead);
+  main.appendChild(section);
+  return { doc, main, h1, lead, section };
+}
+
+test("buildRouteHeader wraps direct-main headings in a compact header only", () => {
+  const { doc, main, h1, lead, section } = briefingIndexFixture();
+  const header = buildRouteHeader(doc);
+
+  assert.equal(header.tagName, "HEADER");
+  assert.ok(header.classList.contains("route-header"));
+  assert.equal(header.dataset.routeHeader, "mounted");
+  assert.equal(doc.querySelectorAll("h1").length, 1);
+  assert.equal(h1.parentElement, header);
+  assert.equal(lead.parentElement, header);
+  assert.equal(section.parentElement, main);
+  assert.equal(main.children.length, 2);
+  assert.equal(main.children[0], header);
+  assert.equal(main.children[1], section);
 });
 
 test("buildRouteHeader is excluded from the React home shell", () => {

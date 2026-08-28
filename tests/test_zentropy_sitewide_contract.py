@@ -252,6 +252,8 @@ def test_route_headers_are_not_eyebrows_or_posters() -> None:
     assert "route-header__path" in nav
     assert "route-header__title" in nav
     assert "route-header__summary" in nav
+    assert "sn-section" not in nav
+    assert "Current section" not in nav
     assert "hero-kicker" not in nav
     assert "eyebrow" not in nav
     assert "overline" not in nav
@@ -263,6 +265,7 @@ def test_route_headers_are_not_eyebrows_or_posters() -> None:
         assert ".route-header" in css, rel
         assert ".route-art" not in css, rel
         assert "route artifact" not in css, rel
+        assert ".sn-section" not in css, rel
 
 
 def test_narrow_mobile_nav_does_not_overlap_the_wordmark() -> None:

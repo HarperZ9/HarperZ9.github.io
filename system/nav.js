@@ -124,9 +124,19 @@ function routeHeaderTarget(doc) {
   const frame = doc.querySelector(".frame");
   const h1 = (frame && frame.querySelector("h1")) || doc.querySelector("h1");
   if (!h1) return null;
-  const container = h1.closest(".frame,.hire-mast,.mast,header,article,main") || h1.parentElement;
-  if (!container) return null;
-  return { container, h1 };
+  const container = h1.closest(".frame,.hire-mast,.mast,header,article");
+  if (container) return { container, h1 };
+  const parent = h1.parentElement;
+  if (!parent) return null;
+  if ((parent.tagName || "").toLowerCase() !== "main") return { container: parent, h1 };
+  const compact = doc.createElement("header");
+  parent.insertBefore(compact, h1);
+  compact.appendChild(h1);
+  const adjacent = compact.nextElementSibling;
+  if (adjacent && [".lede", ".lead", ".opening", ".role"].some((selector) => adjacent.matches(selector))) {
+    compact.appendChild(adjacent);
+  }
+  return { container: compact, h1 };
 }
 
 function buildRoutePath(doc, family) {
@@ -140,7 +150,6 @@ function buildRoutePath(doc, family) {
   path.appendChild(home);
 
   const current = doc.createElement("span");
-  current.setAttribute("aria-current", "page");
   current.textContent = family || "Public work";
   path.appendChild(current);
   return path;
@@ -293,12 +302,10 @@ export function renderNav(doc = document) {
   const routePath = locationPath(doc);
   const active = navActive(routePath);
   const moreActive = SECONDARY_GROUPS.some((group) => group.routes.some((route) => route.family === active));
-  const activeLabel = active || "site";
   const homeHref = localHrefForPage("index.html", routePath);
   const brandMarkSrc = localHrefForPage(BRAND_MARK_SRC, routePath);
   mount.innerHTML =
     `<a class="sn-home" href="${homeHref}" aria-label="Zain Dana Harper and ${BRAND_LABEL} home"><span class="sn-home-field"><canvas class="sn-logo-canvas" aria-hidden="true"></canvas><img class="sn-logo-fallback" src="${brandMarkSrc}" alt="" width="30" height="30" style="display:none"></span><span class="sn-brand-word">${BRAND_LABEL}</span></a>`
-    + `<span class="sn-section" aria-label="Current section">${escapeHtml(activeLabel)}</span>`
     + `<nav class="sn-links" aria-label="Primary">`
     + PRIMARY_ROUTES.map((item) => navLink(item, active, routePath, true)).join("")
     + EXTERNAL_ACTIONS.map((item) => navLink(item, active, routePath)).join("")

@@ -3452,14 +3452,6 @@ body::before{
   transform:translateY(.04em);
   text-shadow:0 0 14px rgba(7,4,6,.86);
 }
-.site-nav .sn-section{
-  display:none;
-  font-family:var(--mono);
-  font-size:.62rem;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:var(--zentropy-muted);
-}
 .site-nav .sn-links a,
 .site-nav .sn-more summary{
   color:var(--zentropy-muted);
@@ -3615,12 +3607,6 @@ h2 em,
   .site-nav .sn-home .sn-brand-word{
     display:inline;
   }
-  .site-nav .sn-section{
-    display:block;
-    grid-column:1/2;
-    grid-row:2;
-    color:var(--zentropy-faint);
-  }
   .site-nav .sn-links{
     display:none;
   }
@@ -3629,7 +3615,7 @@ h2 em,
   }
   .site-nav .sn-more{
     grid-column:2;
-    grid-row:1/span 2;
+    grid-row:1;
     justify-self:end;
     align-self:center;
     display:block;
