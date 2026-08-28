@@ -22,7 +22,7 @@
 - Every figure carries scope, denominator, date, provenance, uncertainty, limitations, and semantic fallbacks.
 - Final verification covers responsive reflow, keyboard focus, AA contrast, reduced motion, forced colors, print, no-JS, links, and horizontal overflow.
 - Do not run a wholesale Telos deployment into the Pages tree.
-- Current base `2a036013b97dad407aa3d18386d919555d047d47` has 23 pre-existing Python failures; final release requires a green full suite after rebasing or reconciling `main`.
+- Current base is `b688549b9a1567f8197796554f7f627733807e65`, which includes the deployed career-parity correction. The branch gate currently has one expected release-fingerprint failure caused by intentional shared-CSS drift. Seal that fingerprint only after the complete visual release is reviewed.
 
 ---
 
@@ -107,7 +107,7 @@ git commit -m "style(site): unify instrument and evidence surfaces"
 
 - [ ] **Step 1: Write failing route-header tests**
 
-Require `buildRouteHeader` to emit a label, title, summary, and optional image without the text `route artifact`. Assert that `nav.js` does not add `aria-current` to more than one link for `hire.html#engineering-path` and that the route header is excluded from `index.html`.
+Require `buildRouteHeader` to emit a functional route path, title, summary, and optional evidence image without the text `route artifact`. The path is a sentence-case breadcrumb or real family link, never a decorative eyebrow. Assert that `nav.js` does not add `aria-current` to more than one link for `hire.html#engineering-path` and that the route header is excluded from `index.html`.
 
 - [ ] **Step 2: Run tests and verify RED**
 
@@ -120,18 +120,18 @@ Expected: the current `route artifact` caption and duplicate-current behavior fa
 
 - [ ] **Step 3: Implement `buildRouteHeader` and current-route resolution**
 
-Use the current page's existing route image and metadata. Render:
+Use the current page metadata. Render a document-flow header, not a poster or floating card:
 
 ```html
-<figure class="route-header">
-  <img class="route-header__art" alt="">
-  <figcaption>
-    <span class="route-header__label"></span>
-    <strong class="route-header__title"></strong>
-    <span class="route-header__summary"></span>
-  </figcaption>
-</figure>
+<header class="route-header">
+  <nav class="route-header__path" aria-label="Breadcrumb"></nav>
+  <h1 class="route-header__title"></h1>
+  <p class="route-header__summary"></p>
+  <!-- Optional only when the page identifies a native or sourced evidence image. -->
+</header>
 ```
+
+Do not reuse an OG card as hero art by default. Remove the current route-poster pseudo-label, scanline filler, and repeating-stripe background. Preserve the b688549 pinned mobile menu trigger and exact-current navigation contract.
 
 When a hash route is exact, mark only the exact hash link current. Otherwise mark only the base page link current.
 
@@ -183,7 +183,7 @@ Keep components local to `App.tsx` until a component exceeds 120 lines. Use sema
 
 - [ ] **Step 4: Implement the homepage visual hierarchy**
 
-Use the instrument ground for the page, warm-paper plates for the evidence board and figures, editorial ruled rows for systems, and one contained operator-authored or tool-generated identity artwork in the hero. Remove active `ZentropyDisplay`, decorative cyan UI, pill controls, the abstract slash eyebrow, floating release card, and the recorded-workflow poster wall from homepage CSS.
+Use the instrument ground for the page, one warm-paper evidence ledger for sourced measures, plain ruled index rows for systems, and one contained operator-authored or tool-generated identity artwork in the hero. Remove active `ZentropyDisplay`, decorative cyan UI, pill controls, the abstract slash eyebrow, floating release card, and the recorded-workflow poster wall from homepage CSS.
 
 - [ ] **Step 5: Build and deploy into the worktree**
 
