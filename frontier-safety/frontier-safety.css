@@ -143,6 +143,7 @@
 .wide-section>header h2{margin:0;font-size:1.16rem}
 .table-wrap{max-width:100%;overflow-x:auto}
 .controls-table{margin:.2rem 0 0;max-width:none}
+.controls-table .analysis-note{caption-side:top;padding:0 0 1rem;text-align:left;font-size:.82rem;line-height:1.55}
 .controls-table th,.controls-table td{min-width:8rem}
 .controls-table thead th:first-child{min-width:7rem}
 .controls-table tbody th{

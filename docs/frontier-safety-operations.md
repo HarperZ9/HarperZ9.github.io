@@ -11,6 +11,8 @@ The website is the canonical record. A reviewed edition JSON renders into four s
 
 The SHA-256 value is derived from canonical edition JSON. Current and archived JSON must match byte-for-meaning after parsing.
 
+Incident notices on the daily digest cite the canonical incident briefing only. The briefing's source manifest and build receipt carry the underlying developer statements, affected-party telemetry, independent analysis, and procedural records. This keeps source roles distinct and prevents the routing surface from collapsing heterogeneous evidence into a single label.
+
 ## Scheduled monitoring
 
 GitHub Actions runs the curated source check at 15:30 UTC. The monitoring job has `contents: read` permission, does not persist checkout credentials, and cannot commit or push. It fetches only registered URLs, applies the registered normalization profile, and compares SHA-256 fingerprints with the last reviewed source state.
@@ -112,3 +114,26 @@ This was a monitoring false-positive review, not a new factual development. It d
 - Reviewed source-state baseline: content unchanged at Git blob `9193e6231401017d31e266bf73e11023f095cd50`; canonical LF file SHA-256 `59306c296fcc8f1b0ae77cdc187d9fbc5768ef6e1fb7c8bae7d193409684fb42`; acceptance of the new source fingerprint remains a separate reviewed change
 - X post: not posted; edition-matched draft retained
 - LinkedIn post: not posted; edition-matched draft retained
+
+## 2026-08-27 publication receipt
+
+- Edition: 2026-08-27
+- Observation time: `2026-08-27T15:34:57Z`
+- Publication state: reviewed changed edition; no correction to the 2026-08-24 or 2026-08-25 archives
+- Live edition target: [https://harperz9.github.io/frontier-safety.html](https://harperz9.github.io/frontier-safety.html)
+- Dated archive target: [https://harperz9.github.io/frontier-safety/archive/2026-08-27.html](https://harperz9.github.io/frontier-safety/archive/2026-08-27.html)
+- Edition hash: `f587cc7c074b5dcf93b5bbcf03a525cec69b9c29b0524b45b1548a5624374b3e`
+- Reviewed content commits: `013876f0fc3a8c824e23f0f0d99f1c82b59d1835`, `7b3519d1ed6b2fe313d6fd7abfbcd273d42c6983`, and integrity commit `e7027d3`
+- Main reconciliation merge: `2c562d5bb8949e67563f248e1e97e607270d3572`
+- Pull request: [#150](https://github.com/HarperZ9/HarperZ9.github.io/pull/150)
+- Source review: the 2026-08-28 curated check ran once at `2026-08-28T15:05:40Z`; three OpenAI fingerprint deltas were reviewed as nonmaterial, the OpenAI Private Safety Processing preview received its first reviewed baseline, the published METR and Redwood case analysis replaced the announcement placeholder, and Anthropic's August risk report now fingerprints the exact PDF bytes. The NVD extraction error did not overwrite its last valid baseline.
+- Independent-review boundary: the METR and Redwood report is recorded as a scoped case analysis under its stated evidence and engagement conditions, not as proof of every claim or control outcome.
+- Reproducibility: the deterministic generator produced identical output on two consecutive runs; the 2026-08-24 and 2026-08-25 archives remained byte-reproducible.
+- Verification: 178 targeted Frontier Safety and deployment tests passed; the full suite passed 339 tests with one unrelated inherited Retro media-manifest size mismatch; 866 internal links across 131 pages had zero failures; public credential, private-path, claim-language, archive-discovery, accessibility, and diff gates passed.
+- Visual review: current and dated-archive pages passed Chrome desktop and responsive inspection with no horizontal overflow, visible methodology caption, and working keyboard navigation. The requested 390-pixel override rendered at Chrome's actual 520 CSS-pixel minimum; that exact limitation is retained rather than claiming a 390-pixel surface.
+- Merge receipt: the final merge commit and merge time are recorded by PR #150; pending at the time this pre-publication receipt was committed.
+- Pages build receipt: the Pages deployment associated with the PR #150 merge; pending at the time this pre-publication receipt was committed.
+- Live hash verification: required after Pages succeeds; pending at the time this pre-publication receipt was committed.
+- 2026-08-28 decision: no new edition. Anthropic's August 27 Model Hardware Standard research preview is material but newly observed and unbaselined, so the normal publication gate remains fail-closed.
+- X destination: `@zaindanaharper` (`ZentropyLabs.ai`); exact-edition local records show no post receipt; draft retained and not posted pending action-time confirmation.
+- LinkedIn destination: `Zain Harper`; exact-edition local records show no post receipt; draft retained and not posted pending action-time confirmation.

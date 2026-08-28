@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "observed_at": "2026-08-25T20:08:00Z",
+  "observed_at": "2026-08-28T15:28:38Z",
   "sources": [
     {
       "id": "aisi-unsanctioned-agent-behaviour",
@@ -43,8 +43,8 @@
       "published_at": "2026-08-14",
       "role": "developer risk assessment",
       "status": "available",
-      "fingerprint_url": "https://www.anthropic.com/responsible-scaling-policy",
-      "fingerprint_profile": "anthropic_news_article",
+      "fingerprint_url": "https://www-cdn.anthropic.com/f61d49fa5596956a5dec75fea0e973bf6a6a8378/Redacted%20Risk%20Report%20August%202026%20.pdf",
+      "fingerprint_profile": "pdf_document",
       "does_not_prove": "Anthropic's own risk designations, acceleration estimates, and mitigation descriptions do not independently establish model safety, threshold compliance, or control effectiveness."
     },
     {
@@ -139,12 +139,13 @@
     {
       "id": "openai-metr-redwood-joint-review",
       "lane": "industry",
-      "title": "Announced METR and Redwood joint assessment",
-      "url": "https://openai.com/index/hugging-face-model-evaluation-security-incident/",
-      "published_at": null,
-      "role": "independent review announcement",
-      "status": "pending",
-      "does_not_prove": "An announced review has no findings until the reviewers publish their own report."
+      "title": "OpenAI/Hugging Face Incident Investigation",
+      "url": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/",
+      "published_at": "2026-08-26",
+      "role": "independent case analysis",
+      "status": "available",
+      "fingerprint_profile": "metr_blog_article",
+      "does_not_prove": "The case-specific report does not independently establish facts beyond the evidence and engagement conditions the reviewers describe."
     }
   ]
 }
