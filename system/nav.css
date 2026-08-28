@@ -94,6 +94,7 @@
     border-color:CanvasText!important;
     box-shadow:none!important;
   }
+  .route-art{border:1px solid CanvasText!important}
   .site-nav .sn-home:focus-visible,
   .site-nav .sn-links a:focus-visible,
   .site-nav .sn-more summary:focus-visible,

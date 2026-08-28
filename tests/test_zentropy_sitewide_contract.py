@@ -31,6 +31,82 @@ def read(rel: str) -> str:
     return (ROOT / rel).read_text(encoding="utf-8")
 
 
+def declarations(css: str, selector: str) -> dict[str, str]:
+    match = re.search(re.escape(selector) + r"\s*\{(?P<body>[^}]+)\}", css)
+    assert match, f"{selector} rule missing"
+    return {
+        name.strip(): value.strip()
+        for part in match.group("body").split(";")
+        if ":" in part
+        for name, value in [part.split(":", 1)]
+    }
+
+
+def media_block(css: str, query: str) -> str:
+    match = re.search(r"@media\s*" + re.escape(query), css)
+    assert match, f"{query} media block missing"
+    open_brace = css.index("{", match.end())
+    depth = 0
+    for offset, character in enumerate(css[open_brace:], start=open_brace):
+        if character == "{":
+            depth += 1
+        elif character == "}":
+            depth -= 1
+            if depth == 0:
+                return css[open_brace + 1:offset]
+    raise AssertionError(f"{query} media block is not closed")
+
+
+def root_variables(css: str) -> dict[str, str]:
+    match = re.search(r":root\s*\{(?P<body>[^}]+)\}", css)
+    assert match, ":root rule missing"
+    return {
+        name: value
+        for name, value in declarations(match.group(0), ":root").items()
+        if name.startswith("--")
+    }
+
+
+def resolve_color(value: str, variables: dict[str, str]) -> str:
+    value = value.strip()
+    seen: set[str] = set()
+    while value.startswith("var("):
+        match = re.match(r"var\((--[\w-]+)\)", value)
+        assert match, f"unsupported CSS variable value {value!r}"
+        name = match.group(1)
+        assert name not in seen, f"recursive CSS variable {name}"
+        seen.add(name)
+        value = variables[name].strip()
+    if re.fullmatch(r"#[0-9a-fA-F]{3}", value):
+        value = "#" + "".join(character * 2 for character in value[1:])
+    assert re.fullmatch(r"#[0-9a-fA-F]{6}", value), f"{value!r} is not a hex colour"
+    return value.lower()
+
+
+def relative_luminance(hex_color: str) -> float:
+    channels = [int(hex_color[index:index + 2], 16) / 255 for index in (1, 3, 5)]
+
+    def linear(channel: float) -> float:
+        if channel <= 0.04045:
+            return channel / 12.92
+        return ((channel + 0.055) / 1.055) ** 2.4
+
+    red, green, blue = [linear(channel) for channel in channels]
+    return 0.2126 * red + 0.7152 * green + 0.0722 * blue
+
+
+def contrast_ratio(foreground: str, background: str) -> float:
+    fg = relative_luminance(foreground)
+    bg = relative_luminance(background)
+    lighter, darker = max(fg, bg), min(fg, bg)
+    return (lighter + 0.05) / (darker + 0.05)
+
+
+def assert_aa_contrast(foreground: str, background: str, selector: str) -> None:
+    ratio = contrast_ratio(foreground, background)
+    assert ratio >= 4.5, f"{selector} contrast is {ratio:.2f}:1"
+
+
 def test_shared_nav_renders_zentropy_brand_and_desktop_gpu_gate() -> None:
     nav = read("system/nav.js")
 
@@ -123,6 +199,45 @@ def test_data_surfaces_survive_forced_colors() -> None:
         assert ".data-plate" in body and ".evidence-ledger" in body, rel
         assert "background:Canvas!important" in body, rel
         assert "border-color:CanvasText!important" in body, rel
+
+
+def test_figure_record_search_input_has_readable_contrast() -> None:
+    css = read("system/figure.css")
+    variables = root_variables(css)
+    input_rule = declarations(css, ".figure-record-controls input")
+
+    foreground = resolve_color(input_rule["color"], variables)
+    background = resolve_color(input_rule["background"], variables)
+
+    assert_aa_contrast(foreground, background, ".figure-record-controls input")
+
+
+def test_figure_mobile_relation_cards_keep_readable_paper_contract() -> None:
+    css = read("system/figure.css")
+    variables = root_variables(css)
+    mobile = media_block(css, "(max-width: 40rem)")
+    assert ".figure-relation-cards { display: grid" in mobile
+
+    figure_rule = declarations(css, ".evidence-figure")
+    card_rule = declarations(css, ".figure-relation-card")
+    dt_rule = declarations(css, ".figure-relation-card dt")
+
+    background = resolve_color(card_rule["background"], variables)
+    body_foreground = resolve_color(card_rule.get("color", figure_rule["color"]), variables)
+    term_foreground = resolve_color(dt_rule["color"], variables)
+
+    assert_aa_contrast(body_foreground, background, ".figure-relation-card")
+    assert_aa_contrast(term_foreground, background, ".figure-relation-card dt")
+
+
+def test_nav_forced_colors_route_art_gets_a_visible_border() -> None:
+    css = read("system/nav.css")
+    forced = media_block(css, "(forced-colors: active)")
+
+    assert re.search(
+        r"\.route-art\s*\{[^}]*border:1px solid CanvasText!important",
+        forced,
+    )
 
 
 def test_narrow_mobile_nav_does_not_overlap_the_wordmark() -> None:

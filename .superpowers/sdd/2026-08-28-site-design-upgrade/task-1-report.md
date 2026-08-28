@@ -57,3 +57,42 @@ concerns:
 - The current-main rebase resolved the previous metadata failures.
 - The release-spine fingerprint remains intentionally stale until all design tasks are complete and the final reviewed artifact set can be sealed once.
 - A shortened rebased SHA can be recorded here, but an exact commit SHA cannot be embedded in the same Git object without changing that object.
+
+## Fix round 1/5
+
+status: DONE_WITH_CONCERNS
+
+fix base commit SHA: f65edaa984a99df1178d4e214e8e9a7d0250d7fd
+fix final commit SHA: self-referential in this committed report; exact task commit SHA is returned by the task response after commit
+
+files changed:
+- tests/test_zentropy_sitewide_contract.py
+- system/figure.css
+- system/nav.css
+- .superpowers/sdd/2026-08-28-site-design-upgrade/task-1-report.md
+
+RED command and expected failure summary:
+- Command: python -m pytest tests/test_zentropy_sitewide_contract.py tests/test_page_export.py -q
+- Initial RED attempt: 3 failed, 18 passed, but two contrast tests failed early because the helper read the print :root instead of the screen :root.
+- Corrected RED result before production CSS edits: 3 failed, 18 passed.
+- Expected failures:
+  - test_figure_record_search_input_has_readable_contrast computed .figure-record-controls input at 1.08:1.
+  - test_figure_mobile_relation_cards_keep_readable_paper_contract computed .figure-relation-card body text at 1.08:1 before reaching the muted dt check.
+  - test_nav_forced_colors_route_art_gets_a_visible_border found no explicit border:1px solid CanvasText!important rule for .route-art.
+
+GREEN commands and exact pass/fail counts:
+- python -m pytest tests/test_zentropy_sitewide_contract.py tests/test_page_export.py -q
+  - 21 passed, 0 failed.
+- node --test system/figure.test.mjs system/nav.test.mjs
+  - 12 passed, 0 failed, 0 skipped.
+- git diff --check
+  - Passed with exit code 0. Git emitted CRLF working-copy warnings for unrelated docs/superpowers/plans/2026-08-28-site-design-upgrade.md and docs/superpowers/specs/2026-08-28-site-design-upgrade.md, which were not touched by this fix.
+
+self-review findings:
+- .figure-record-controls input now uses background: var(--ground-paper) and color: var(--ink-paper), giving paper-surface contrast instead of near-black-on-near-black.
+- .figure-relation-card now uses background: var(--ground-paper) and color: var(--ink-paper), preserving readable mobile fallback copy and leaving dt on the existing muted paper-safe token.
+- nav.css forced-colors now guarantees .route-art has a visible 1px CanvasText border, not only a border color.
+- The operator eyebrow refinement was noted; this fix did not touch eyebrow selectors or expand scope.
+
+concerns:
+- Unrelated modified spec/plan files were present in the worktree during the fix round and were intentionally left unstaged.

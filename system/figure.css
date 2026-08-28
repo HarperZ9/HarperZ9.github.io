@@ -140,8 +140,8 @@ body.figure-document main { min-width: 0; }
   padding: 0.7rem 0.75rem;
   border: 1px solid var(--figure-line);
   border-radius: 0;
-  background: var(--figure-ground);
-  color: var(--figure-ink);
+  background: var(--ground-paper);
+  color: var(--ink-paper);
   font: inherit;
 }
 .figure-records summary:focus-visible,
@@ -154,7 +154,8 @@ body.figure-document main { min-width: 0; }
   min-width: 0;
   padding: 1rem;
   border: 1px solid var(--figure-line);
-  background: var(--figure-ground);
+  background: var(--ground-paper);
+  color: var(--ink-paper);
   overflow-wrap: anywhere;
 }
 .figure-relation-card p { margin: 0 0 0.8rem; line-height: 1.5; }
