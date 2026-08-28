@@ -13,8 +13,8 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-FyYdKcDU.js",
-    "assets/index-Bh3pWSfE.css",
+    "assets/index-CZipnc6C.js",
+    "assets/index-CTypHnDj.css",
     "brender-archival.html",
     "briefings/2026-08-26-openai-hugging-face-incident/build.json",
     "briefings/2026-08-26-openai-hugging-face-incident/claims.json",
@@ -119,7 +119,7 @@ RELEASE_PATHS = (
     "systems/studio-engine.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "c906e740b9645f6b5a8db7adf8d6b426fea5de4fbae2ee835317cd163a86addf"
+REVIEWED_RELEASE_SHA256 = "400c75d675f03b1db53a2cdcb2484a1045f3c7f6e87625bd630c9ebdd84c3c34"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -209,8 +209,13 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_css = "index-ktAZgEPv.css"
     retired_js = "index-B3zWbYkK.js"
     retired_css = "index-CiruV1jn.css"
-    assert 'src="/assets/index-FyYdKcDU.js"' in source
-    assert 'href="/assets/index-Bh3pWSfE.css"' in source
+    previous_task_js = "index-FyYdKcDU.js"
+    previous_fix_js = "index-BCyg-ZCA.js"
+    previous_fix_css = "index-Bh3pWSfE.css"
+    previous_art_js = "index-BPBDYusx.js"
+    previous_art_css = "index-D6A4RL1P.css"
+    assert 'src="/assets/index-CZipnc6C.js"' in source
+    assert 'href="/assets/index-CTypHnDj.css"' in source
     assert obsolete_js not in source
     assert obsolete_css not in source
     assert not (ROOT / "assets" / obsolete_js).exists()
@@ -223,6 +228,16 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     assert retired_css not in source
     assert not (ROOT / "assets" / retired_js).exists()
     assert not (ROOT / "assets" / retired_css).exists()
+    assert previous_task_js not in source
+    assert not (ROOT / "assets" / previous_task_js).exists()
+    assert previous_fix_js not in source
+    assert previous_fix_css not in source
+    assert not (ROOT / "assets" / previous_fix_js).exists()
+    assert not (ROOT / "assets" / previous_fix_css).exists()
+    assert previous_art_js not in source
+    assert previous_art_css not in source
+    assert not (ROOT / "assets" / previous_art_js).exists()
+    assert not (ROOT / "assets" / previous_art_css).exists()
 
 
 def test_six_briefing_figures_keep_semantic_nonvisual_fallbacks() -> None:

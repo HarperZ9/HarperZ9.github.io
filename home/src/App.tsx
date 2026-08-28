@@ -311,8 +311,7 @@ function IdentityHero() {
     <header id="identity" className="hero">
       <div className="hero-copy reveal in">
         <h1 className="hero-title">Zain Dana Harper</h1>
-        <p className="hero-line">Systems Engineer | AI Evaluation, Developer Tools, and Technical Operations</p>
-        <p className="hero-line hero-line-secondary">Systems engineering, security tooling, graphics, and public research.</p>
+        <p className="hero-line">Systems engineering, security tooling, graphics, and public research.</p>
         <p className="hero-lab">Zentropy Labs is the workshop behind Flywheel and the wider body of work.</p>
         <div className="hero-actions" aria-label="Primary actions">
           <a className="btn solid" href="#constellation">Explore the work</a>

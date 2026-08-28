@@ -164,3 +164,110 @@ The security section keeps public copy at the defensive/authorization-boundary l
 - No live deployment was performed.
 - No push or merge was performed.
 - No subagents or external reviewers were spawned from this task.
+
+## Fix round 1: remove legacy homepage floor
+
+Date: 2026-08-28
+
+Reviewed head before fix: `deb05788970ae7ee83941e48adaed92c5760816f`
+
+Review failure addressed:
+
+- `home/index.html` and generated `index.html` still referenced `/system/home-readable.css?v=20260812-angular`.
+- That legacy stylesheet defined `.hero::before`, `.hero::after`, `conic-gradient`, and `.kicker` rules, which could visually hide the new hero copy and crop the identity artwork.
+- The hero still placed the role line `Systems Engineer | AI Evaluation, Developer Tools, and Technical Operations` before the identity thesis.
+- The shipped stylesheet graph did not yet prove that homepage CSS was closed over the new visual contract.
+
+TDD RED for this fix round:
+
+```text
+python -m pytest tests/test_home_marketing_funnel.py tests/test_portfolio_visual_contract.py -q
+4 failed, 10 passed
+```
+
+The failures covered:
+
+- the role line appearing before the intended first three hero lines;
+- `home-readable.css` appearing in template/generated HTML;
+- the referenced stylesheet graph resolving to the legacy stylesheet;
+- the old deployed bundle still containing the role line.
+
+Additional RED after rendered inspection found the identity art still using `object-fit: cover`:
+
+```text
+python -m pytest tests/test_home_marketing_funnel.py::test_home_hero_display_and_visual_system_are_restrained -q
+1 failed
+```
+
+Additional RED after removing `home-readable.css` found the injected home menu had lost its closed-state rule:
+
+```text
+python -m pytest tests/test_portfolio_visual_contract.py::test_home_menu_readability_rules_live_in_the_home_bundle -q
+1 failed
+```
+
+Implementation:
+
+- Removed the `/system/home-readable.css` link from `home/index.html`; `node deploy.mjs` propagated this to generated `index.html`.
+- Removed the early role line from the hero; the role territory remains covered by the hiring section's "engineering and evaluation, technical operations, and public-service or field work" copy.
+- Changed `.identity-art img` from cropped `object-fit: cover` to contained intrinsic rendering.
+- Moved only the necessary injected `.home-menu` and `.home-menu-list` dropdown/readability rules into `home/src/App.css`.
+- Added a stylesheet-closure test that resolves every local stylesheet linked by `home/index.html` and generated `index.html`, then scans the resolved homepage CSS for `home-readable.css`, `conic-gradient`, generic `.hero::before`/`.hero::after` overlays, and legacy lead-in strings.
+
+Final local build and deploy:
+
+```text
+npm run build
+✓ built in 866ms
+dist/assets/index-CTypHnDj.css
+dist/assets/index-CZipnc6C.js
+```
+
+```text
+node deploy.mjs
+deployed: index.html + index-CTypHnDj.css, index-CZipnc6C.js
+```
+
+Final focused tests:
+
+```text
+python -m pytest tests/test_home_marketing_funnel.py tests/test_portfolio_visual_contract.py -q
+15 passed in 0.07s
+```
+
+```text
+python -m pytest tests/test_deploy_sanity.py tests/test_flywheel_retro_live_release.py -q
+9 passed in 0.20s
+```
+
+```text
+python -m pytest tests/test_capability_publication_release.py tests/test_shared_release_merge.py tests/live/test_capability_constellation_static.py -q
+22 passed in 4.88s
+```
+
+Pinned release assets after fix round 1:
+
+- `assets/index-CZipnc6C.js`
+- `assets/index-CTypHnDj.css`
+- reviewed release fingerprint: `400c75d675f03b1db53a2cdcb2484a1045f3c7f6e87625bd630c9ebdd84c3c34`
+
+Fresh rendered evidence:
+
+- `C:/dev/public/portfolio-site/.worktrees/site-design-upgrade-20260828/.superpowers/sdd/2026-08-28-site-design-upgrade/visuals/home-fix1-1440.png`
+- `C:/dev/public/portfolio-site/.worktrees/site-design-upgrade-20260828/.superpowers/sdd/2026-08-28-site-design-upgrade/visuals/home-fix1-390.png`
+- `C:/dev/public/portfolio-site/.worktrees/site-design-upgrade-20260828/.superpowers/sdd/2026-08-28-site-design-upgrade/visuals/home-fix1-390-no-js.png`
+- `C:/dev/public/portfolio-site/.worktrees/site-design-upgrade-20260828/.superpowers/sdd/2026-08-28-site-design-upgrade/visuals/home-fix1-390-forced-colors.png`
+
+Rendered checks passed:
+
+- no visible horizontal overflow at 390px or 1440px;
+- `.hero::before` and `.hero::after` computed `content: none` and `background-image: none`;
+- hero copy was rendered bright in actual screenshots, with sampled title/line luminance above the threshold;
+- identity artwork rendered as `object-fit: contain`, 505x284 desktop and 351x197 mobile, not a tall middle-letter crop;
+- no-JS fallback, reduced motion, and forced colors were checked.
+
+Fix-round scope notes:
+
+- No `home/package-lock.json` changes were made in this round.
+- No `sitemap.xml` changes were made in this round.
+- No live deployment, push, merge, subagent, or external review action was performed.
