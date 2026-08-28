@@ -1876,13 +1876,15 @@
     {
       "id": "authorized-private-practice",
       "name": "Authorized Private Security Practice",
-      "purpose": "Operate distinct private systems for controlled offensive campaigns, native assessment labs, multi-domain orchestration, model refusal and jailbreak testing, agent and runtime trust verification, operator execution, and release authority.",
+      "purpose": "Operate distinct private systems for controlled offensive campaigns, native assessment labs, multi-domain orchestration, model refusal and jailbreak testing, agent and runtime trust verification, local access recovery, graphics instrumentation, operator execution, and release authority.",
       "useCases": [
         "authorized offensive-security campaign execution",
         "native security assessment and detection engineering",
         "AI refusal and jailbreak-class control evaluation",
         "high-consequence multi-domain technical operations",
-        "runtime, artifact, and release trust verification"
+        "runtime, artifact, and release trust verification",
+        "local access-recovery hygiene",
+        "authorized graphics instrumentation"
       ],
       "href": "private-practice.html",
       "sourceHref": null,
@@ -1914,7 +1916,7 @@
           "href": "https://harperz9.github.io/private-practice.html",
           "date": "2026-08-28",
           "status": "verified",
-          "summary": "The public page names Array, Seed, Sofer, Isomorph, Bounds, ORCA, and Gate and describes each system's distinct role. The underlying private repositories and operational material are not public evidence."
+          "summary": "The public page names Array, Seed, Sofer, Isomorph, Bounds, Kun, Aeterna, ORCA, and Gate and describes each system's distinct role. The underlying private repositories and operational material are not public evidence."
         }
       ],
       "limitations": [
@@ -1942,6 +1944,501 @@
       "primaryDomain": "security-privacy",
       "productType": "private operational security systems index",
       "releaseState": "controlled private systems; public capability index"
+    },
+    {
+      "id": "array",
+      "name": "Array",
+      "purpose": "Plan controlled offensive-security campaigns, hold execution behind scoped approval, and record decisions, findings, cleanup, and evidence as a campaign ledger.",
+      "useCases": [
+        "authorized offensive-security campaign planning",
+        "assessment-wave control",
+        "containment and cleanup evidence"
+      ],
+      "href": "array.html",
+      "sourceHref": null,
+      "domains": [
+        "security-privacy",
+        "evaluation-verification"
+      ],
+      "family": "security",
+      "architectureRole": "authorized-campaign-control-ledger",
+      "audiences": [
+        "authorized security and red teams",
+        "organizations with a remediation owner"
+      ],
+      "deploymentContexts": [
+        "owned or expressly authorized systems",
+        "isolated assessment environments",
+        "approved private or embargoed recipient channels"
+      ],
+      "maturity": "controlled-private",
+      "placement": "featured",
+      "accessMode": "request",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "array-public-boundary-page",
+          "type": "public-receipt",
+          "label": "Array public boundary page",
+          "href": "https://harperz9.github.io/array.html",
+          "date": "2026-08-28",
+          "status": "verified",
+          "summary": "The public page describes Array's campaign-control role while excluding targets, payloads, credentials, exploit chains, client data, and engagement findings."
+        }
+      ],
+      "limitations": [
+        "No private source, target, live payload, credential, exploit chain, or engagement finding is published.",
+        "Private source inspection is owner-controlled evidence and does not establish third-party acceptance or deployment."
+      ],
+      "boundary": "Operational use requires written authorization, a defined scope, an approved environment, and a remediation owner. Sensitive methods and findings move through the approved private or embargoed recipient channel.",
+      "inputs": [
+        "written authority and assessment scope",
+        "approved fixtures and registered tools",
+        "remediation owner and private delivery channel"
+      ],
+      "outputs": [
+        "campaign plan and run ledger",
+        "containment and cleanup status",
+        "private findings and evidence packet"
+      ],
+      "dependencies": [],
+      "related": [
+        "seed",
+        "sofer",
+        "bounds",
+        "authorized-private-practice",
+        "flywheel"
+      ],
+      "lastVerified": "2026-08-28",
+      "primaryDomain": "security-privacy",
+      "productType": "authorized campaign-control system",
+      "releaseState": "controlled private system; public capability page"
+    },
+    {
+      "id": "seed",
+      "name": "Seed",
+      "purpose": "Run native synthetic-fixture assessment modules and emit verification records, detection notes, and assessment findings for authorized labs.",
+      "useCases": [
+        "synthetic security assessment labs",
+        "native test evidence",
+        "detection-engineering support"
+      ],
+      "href": "seed.html",
+      "sourceHref": null,
+      "domains": [
+        "security-privacy",
+        "evaluation-verification",
+        "developer-infrastructure"
+      ],
+      "family": "security",
+      "architectureRole": "native-synthetic-assessment-engine",
+      "audiences": [
+        "authorized assessment teams",
+        "detection engineers"
+      ],
+      "deploymentContexts": [
+        "isolated synthetic labs",
+        "approved private assessment environments"
+      ],
+      "maturity": "controlled-private",
+      "placement": "featured",
+      "accessMode": "request",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "seed-public-boundary-page",
+          "type": "public-receipt",
+          "label": "Seed public boundary page",
+          "href": "https://harperz9.github.io/seed.html",
+          "date": "2026-08-28",
+          "status": "verified",
+          "summary": "The public page records Seed as a private native assessment engine and repeats only the already public 59-module and 3,065-test summary."
+        }
+      ],
+      "limitations": [
+        "No live target instructions, technique internals, or operational payloads are published.",
+        "The module and test counts are public capability statements, not independent third-party audit results."
+      ],
+      "boundary": "Use requires written authorization for any non-synthetic environment and is otherwise limited to synthetic fixtures. Public material describes purpose, structure, and evidence posture only.",
+      "inputs": [
+        "approved assessment scope",
+        "synthetic fixtures",
+        "lab configuration and module selection"
+      ],
+      "outputs": [
+        "native test results",
+        "evidence records",
+        "detection notes and assessment findings"
+      ],
+      "dependencies": [],
+      "related": [
+        "array",
+        "bounds",
+        "authorized-private-practice"
+      ],
+      "lastVerified": "2026-08-28",
+      "primaryDomain": "security-privacy",
+      "productType": "native synthetic assessment engine",
+      "releaseState": "controlled private system; public capability page"
+    },
+    {
+      "id": "sofer",
+      "name": "Sofer",
+      "purpose": "Coordinate specialist agents, model backends, assessment probes, tools, packages, admission decisions, and receipt-backed handoffs across sensitive technical domains.",
+      "useCases": [
+        "private-line orchestration",
+        "high-consequence technical workflow routing",
+        "receipt-backed specialist handoff"
+      ],
+      "href": "sofer.html",
+      "sourceHref": null,
+      "domains": [
+        "security-privacy",
+        "agent-systems",
+        "developer-infrastructure"
+      ],
+      "family": "security",
+      "architectureRole": "private-line-orchestration-suite",
+      "audiences": [
+        "authorized security teams",
+        "high-consequence technical operators",
+        "organizations requiring controlled private delivery"
+      ],
+      "deploymentContexts": [
+        "approved private workspaces",
+        "sensitive technical review lanes",
+        "private or embargoed recipient channels"
+      ],
+      "maturity": "controlled-private",
+      "placement": "featured",
+      "accessMode": "request",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "sofer-public-boundary-page",
+          "type": "public-receipt",
+          "label": "Sofer public boundary page",
+          "href": "https://harperz9.github.io/sofer.html",
+          "date": "2026-08-28",
+          "status": "verified",
+          "summary": "The public page describes Sofer as the private orchestration lane while excluding private counterparty data, environment facts, controlled corpora, and target-specific techniques."
+        }
+      ],
+      "limitations": [
+        "No private operational transcript, target detail, or sensitive method is published.",
+        "Coordination state does not create legal authority or third-party acceptance."
+      ],
+      "boundary": "Sofer can route work only inside a written and approved scope. Public copy excludes private counterparty data, environment facts, controlled corpora, and target-specific techniques.",
+      "inputs": [
+        "role and lawful basis",
+        "objective and risk tier",
+        "available tools and delivery channel"
+      ],
+      "outputs": [
+        "admission decision",
+        "routed workflow",
+        "specialist handoff and status receipt"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "array",
+        "isomorph",
+        "bounds",
+        "authorized-private-practice"
+      ],
+      "lastVerified": "2026-08-28",
+      "primaryDomain": "security-privacy",
+      "productType": "private-line orchestration suite",
+      "releaseState": "controlled private system; public capability page"
+    },
+    {
+      "id": "isomorph",
+      "name": "Isomorph",
+      "purpose": "Measure refusal, classifier, transformation, and jailbreak-class boundary behavior inside authorized AI red-team evaluations.",
+      "useCases": [
+        "AI red-team boundary evaluation",
+        "refusal and classifier stability review",
+        "private remediation reporting"
+      ],
+      "href": "isomorph.html",
+      "sourceHref": null,
+      "domains": [
+        "security-privacy",
+        "evaluation-verification",
+        "research-education"
+      ],
+      "family": "security",
+      "architectureRole": "inference-boundary-evaluation-harness",
+      "audiences": [
+        "AI safety teams",
+        "authorized red teams",
+        "model and platform security reviewers"
+      ],
+      "deploymentContexts": [
+        "approved model-evaluation environments",
+        "private disclosure lanes",
+        "embargoed research handoff"
+      ],
+      "maturity": "controlled-private",
+      "placement": "featured",
+      "accessMode": "request",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "isomorph-public-boundary-page",
+          "type": "public-receipt",
+          "label": "Isomorph public boundary page",
+          "href": "https://harperz9.github.io/isomorph.html",
+          "date": "2026-08-28",
+          "status": "verified",
+          "summary": "The public page describes the controlled inference-boundary evaluation lane and explicitly withholds live jailbreak corpora, bypass payloads, exploit chains, target-specific techniques, private traces, and provider-specific recipes."
+        }
+      ],
+      "limitations": [
+        "No live jailbreak corpus, bypass payload, exploit chain, target-specific technique, private trace, or provider-specific recipe is published.",
+        "Public copy does not provide enough material to reproduce sensitive bypass behavior."
+      ],
+      "boundary": "Controlled examples and target-specific bypass material belong only in the recipient-approved private or embargoed channel. Public discussion stops at capability level when no such channel exists.",
+      "inputs": [
+        "authorized evaluation scope",
+        "approved corpus class",
+        "model route and reporting agreement"
+      ],
+      "outputs": [
+        "boundary measurements",
+        "stability observations",
+        "private remediation report"
+      ],
+      "dependencies": [],
+      "related": [
+        "sofer",
+        "bounds",
+        "authorized-private-practice",
+        "flywheel"
+      ],
+      "lastVerified": "2026-08-28",
+      "primaryDomain": "security-privacy",
+      "productType": "inference-boundary evaluation harness",
+      "releaseState": "controlled private system; public capability page"
+    },
+    {
+      "id": "bounds",
+      "name": "Bounds",
+      "purpose": "Verify agent actions, runtime observations, public claims, sensitive-file hygiene, fixture safety, release inventories, and tamper-evident proof chains.",
+      "useCases": [
+        "agent intent-drift review",
+        "release boundary verification",
+        "tamper-evident proof chains"
+      ],
+      "href": "bounds.html",
+      "sourceHref": null,
+      "domains": [
+        "security-privacy",
+        "evaluation-verification",
+        "developer-infrastructure",
+        "agent-systems"
+      ],
+      "family": "security",
+      "architectureRole": "trust-and-release-verification-spine",
+      "audiences": [
+        "agent-system engineers",
+        "authorized security teams",
+        "release reviewers"
+      ],
+      "deploymentContexts": [
+        "controlled agent workflows",
+        "release review lanes",
+        "private operational workspaces"
+      ],
+      "maturity": "controlled-private",
+      "placement": "featured",
+      "accessMode": "request",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "bounds-public-boundary-page",
+          "type": "public-receipt",
+          "label": "Bounds public boundary page",
+          "href": "https://harperz9.github.io/bounds.html",
+          "date": "2026-08-28",
+          "status": "verified",
+          "summary": "The public page presents Bounds as a verification spine around agent work, private security workflows, and release decisions."
+        }
+      ],
+      "limitations": [
+        "A local pass is evidence, not legal authority, recipient approval, independent certification, or permission to publish controlled material.",
+        "Private findings and sensitive traces are not published."
+      ],
+      "boundary": "Bounds records evidence and stops unsafe release paths, but it does not create authorization, independent audit status, or permission to disclose controlled material.",
+      "inputs": [
+        "session facts and file changes",
+        "git state, public claims, and fixtures",
+        "runtime observations and release candidates"
+      ],
+      "outputs": [
+        "drift findings and claim status",
+        "secret-scan and fixture-safety results",
+        "release inventory and proof chain"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "array",
+        "seed",
+        "sofer",
+        "isomorph",
+        "authorized-private-practice",
+        "accountable-surface"
+      ],
+      "lastVerified": "2026-08-28",
+      "primaryDomain": "security-privacy",
+      "productType": "trust and release verification spine",
+      "releaseState": "controlled private system; public capability page"
+    },
+    {
+      "id": "kun",
+      "name": "Kun",
+      "purpose": "Maintain local access-recovery memory for owned systems through path-only receipts, redacted diagnostics, rotation notes, and operator runbooks without storing raw credentials.",
+      "useCases": [
+        "local access-recovery hygiene",
+        "credential-rotation memory",
+        "redacted operational diagnostics"
+      ],
+      "href": "kun.html",
+      "sourceHref": null,
+      "domains": [
+        "security-privacy",
+        "developer-infrastructure"
+      ],
+      "family": "security",
+      "architectureRole": "local-access-recovery-vault",
+      "audiences": [
+        "operators of owned systems",
+        "security reviewers"
+      ],
+      "deploymentContexts": [
+        "local-only workstations",
+        "owned operational environments"
+      ],
+      "maturity": "controlled-private",
+      "placement": "supporting",
+      "accessMode": "request",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "kun-public-boundary-page",
+          "type": "public-receipt",
+          "label": "Kun public boundary page",
+          "href": "https://harperz9.github.io/kun.html",
+          "date": "2026-08-28",
+          "status": "verified",
+          "summary": "The public page describes Kun's path-only and redacted-receipt role and states that raw credentials, recovery instructions, and protected content are not published."
+        }
+      ],
+      "limitations": [
+        "No raw credential, credential value, credential recovery instruction, bypass step, private browser state, or protected content is published.",
+        "Path-only receipt design does not replace a dedicated secrets manager."
+      ],
+      "boundary": "Kun records where recovery authority lives and how to audit the process. It does not publish or retain raw keys, tokens, passwords, seed phrases, private browser state, or protected content.",
+      "inputs": [
+        "owned-system recovery paths",
+        "rotation metadata",
+        "redacted diagnostics and local runbook state"
+      ],
+      "outputs": [
+        "path-only receipts",
+        "rotation reminders",
+        "diagnostic summaries and recovery checklist state"
+      ],
+      "dependencies": [],
+      "related": [
+        "bounds",
+        "authorized-private-practice",
+        "secret-redact-io"
+      ],
+      "lastVerified": "2026-08-28",
+      "primaryDomain": "security-privacy",
+      "productType": "local access-recovery vault",
+      "releaseState": "controlled private system; public capability page"
+    },
+    {
+      "id": "aeterna",
+      "name": "Aeterna",
+      "purpose": "Provide graphics instrumentation and overlay surfaces for authorized DirectX research, visual debugging, render-loop inspection, and proof-oriented runtime visualization.",
+      "useCases": [
+        "authorized graphics instrumentation",
+        "visual debugging",
+        "runtime proof overlays"
+      ],
+      "href": "aeterna.html",
+      "sourceHref": null,
+      "domains": [
+        "security-privacy",
+        "graphics-media",
+        "developer-infrastructure"
+      ],
+      "family": "security",
+      "architectureRole": "graphics-instrumentation-overlay",
+      "audiences": [
+        "graphics engineers",
+        "authorized security reviewers",
+        "runtime tooling teams"
+      ],
+      "deploymentContexts": [
+        "authorized DirectX research environments",
+        "visual debugging workspaces",
+        "approved private instrumentation lanes"
+      ],
+      "maturity": "controlled-private",
+      "placement": "featured",
+      "accessMode": "request",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "aeterna-public-boundary-page",
+          "type": "public-receipt",
+          "label": "Aeterna public boundary page",
+          "href": "https://harperz9.github.io/aeterna.html",
+          "date": "2026-08-28",
+          "status": "verified",
+          "summary": "The public page describes Aeterna as a graphics instrumentation and overlay framework while omitting target-specific instrumentation steps and protected traces."
+        }
+      ],
+      "limitations": [
+        "No loader details, anti-cheat bypass guidance, target-specific instrumentation steps, or protected traces are published.",
+        "Public evidence does not establish third-party adoption or production deployment."
+      ],
+      "boundary": "Instrumentation is scope-bound. Public material omits loader details, target-specific instructions, protected traces, and any method that would enable unauthorized inspection.",
+      "inputs": [
+        "authorized graphics host",
+        "inspection objective",
+        "overlay configuration and visual evidence requirements"
+      ],
+      "outputs": [
+        "overlay panels",
+        "visual diagnostics",
+        "approved evidence screenshots"
+      ],
+      "dependencies": [],
+      "related": [
+        "studio-engine",
+        "bounds",
+        "authorized-private-practice",
+        "engine-revival",
+        "brender-archival"
+      ],
+      "lastVerified": "2026-08-28",
+      "primaryDomain": "security-privacy",
+      "productType": "graphics instrumentation overlay",
+      "releaseState": "controlled private system; public capability page"
     },
     {
       "id": "accountable-surface",

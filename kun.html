@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kun · local access-recovery vault</title>
+<meta name="description" content="Public-safe capability page for Kun, a private local access-recovery vault that stores paths, redacted diagnostics, and rotation notes without raw credentials.">
+<link rel="canonical" href="https://harperz9.github.io/kun.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Kun · local access-recovery vault">
+<meta property="og:description" content="Path-only receipts, redacted diagnostics, and rotation runbooks without storing raw credentials.">
+<meta property="og:url" content="https://harperz9.github.io/kun.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/security.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kun">
+<meta name="twitter:description" content="Public-safe description of a private local access-recovery vault.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/security.png">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260828-site-design">
+<link rel="stylesheet" href="system/private-capability.css?v=20260828-site-design">
+</head>
+<body class="inner-clean" data-capability-page="kun">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="security.html">Security</a> <a href="private-practice.html">Private practice</a> <a href="flywheel.html">Flywheel</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260828-site-design"></script>
+
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Kun · private capability</span></div>
+  <div class="mid">
+    <h1>Recovery memory without <span class="g">secret storage.</span></h1>
+    <p class="lede">Kun is a private local access-recovery vault for owned systems: path-only receipts, redacted diagnostics, rotation notes, and operator runbooks.</p>
+    <p class="close">No raw credentials, credential values, credential recovery instructions, bypass steps, or protected resource contents are published.</p>
+    <nav class="capability-links" aria-label="Related capability pages"><a href="bounds.html">Bounds</a><a href="security-toolkit.html#secret-redact-io">Secret Redact IO</a><a href="private-practice.html">Practice map</a></nav>
+  </div>
+  <div class="seal">controlled private system · public-safe summary · checked 2026-08-28</div>
+</div>
+
+<main id="main">
+<section class="mv" id="map" aria-labelledby="map-h">
+  <h2 id="map-h">Vault record model.</h2>
+  <figure class="capability-figure">
+    <svg role="img" aria-labelledby="kun-map-title kun-map-desc" viewBox="0 0 920 360" xmlns="http://www.w3.org/2000/svg">
+      <title id="kun-map-title">Kun local access-recovery vault map</title>
+      <desc id="kun-map-desc">A diagram showing local system ownership, path-only records, redaction, and recovery runbook output while credential values remain outside the vault.</desc>
+      <path class="capability-edge" d="M170 180H300"/>
+      <path class="capability-edge capability-edge--guard" d="M430 180H560"/>
+      <path class="capability-edge" d="M690 180H800"/>
+      <rect class="capability-node" x="42" y="118" width="146" height="124" rx="20"/>
+      <rect class="capability-node capability-node--primary" x="286" y="92" width="172" height="176" rx="24"/>
+      <rect class="capability-node capability-node--private" x="540" y="118" width="178" height="124" rx="20"/>
+      <rect class="capability-node" x="772" y="118" width="120" height="124" rx="20"/>
+      <text class="capability-svg-note" x="72" y="158">owned</text><text class="capability-svg-label" x="72" y="190">System</text>
+      <text class="capability-svg-note" x="318" y="142">path only</text><text class="capability-svg-label" x="318" y="178">Vault</text><text class="capability-svg-label" x="318" y="204">record</text>
+      <text class="capability-svg-note" x="572" y="158">redact</text><text class="capability-svg-label" x="572" y="190">Receipt</text>
+      <text class="capability-svg-note" x="800" y="158">human</text><text class="capability-svg-label" x="800" y="190">Runbook</text>
+    </svg>
+    <figcaption>Kun is included because recoverability is part of safe operations. The public artifact intentionally shows what the vault refuses to hold.</figcaption>
+  </figure>
+  <div class="capability-table-wrap">
+    <table class="capability-table">
+      <caption>Kun public contract</caption>
+      <thead><tr><th>Field</th><th>Public-safe statement</th><th>Boundary</th></tr></thead>
+      <tbody>
+        <tr><td>Inputs</td><td>Owned-system recovery paths, rotation metadata, redacted diagnostics, and local runbook state.</td><td>No credential values.</td></tr>
+        <tr><td>Outputs</td><td>Path-only receipts, rotation reminders, diagnostic summaries, and human recovery checklist state.</td><td>No credential recovery instructions are published.</td></tr>
+        <tr><td>Use</td><td>Local operational continuity and evidence hygiene.</td><td>No bypass guidance.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="mv" id="boundary" aria-labelledby="boundary-h">
+  <h2 id="boundary-h">Release boundary.</h2>
+  <div class="boundary-panel">
+    <h3>The vault does not contain the secret.</h3>
+    <p>Kun records where recovery authority lives and how to audit the process. It does not publish or retain raw keys, tokens, passwords, seed phrases, private browser state, or protected content.</p>
+  </div>
+</section>
+</main>
+</body>
+</html>
