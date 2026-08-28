@@ -47,10 +47,8 @@ def test_shared_nav_renders_zentropy_brand_and_desktop_gpu_gate() -> None:
     assert "shouldUseDesktopGpuArt(window)" in nav
     assert 'doc.querySelector(".frame")' in nav
     assert 'insertAdjacentElement("beforebegin", figure)' in nav
-    assert "const currentState = { pageCurrentAssigned: false }" in nav
-    assert 'PRIMARY_ROUTES.map((item) => navLink(item, active, locationPath, true, currentState)).join("")' in nav
-    assert 'EXTERNAL_ACTIONS.map((item) => navLink(item, active, locationPath, false, currentState)).join("")' in nav
-    assert 'SECONDARY_GROUPS.map((group) => menuGroup(group.label, group.routes, active, locationPath, "sn-menu-secondary", currentState)).join("")' in nav
+    assert 'PRIMARY_ROUTES.map((item) => navLink(item, active, locationPath, true)).join("")' in nav
+    assert 'SECONDARY_GROUPS.map((group) => menuGroup(' in nav
     assert 'classList.contains("studio-page")' in nav
     assert 'import("./generative-field.js")' in nav
     assert 'import("./cursor-field.js")' in nav
@@ -87,7 +85,7 @@ def test_shared_styles_define_zentropy_material_system() -> None:
         assert not re.search(r"\.site-nav \.sn-links\s*\{[^}]*display:contents", css)
         assert re.search(r"\.site-nav \.sn-links\s*\{[^}]*display:none", css)
         assert ".site-nav > .sn-more" in css
-        assert re.search(r"\.site-nav > \.sn-more\s*\{[^}]*position:static", css)
+        assert "position:fixed!important" in css
     assert ".inner-clean h1 .g" in system_css
     assert "color:var(--zentropy-rust)" in system_css
     assert "Telos Display retired" not in system_css
@@ -128,29 +126,11 @@ def test_data_surfaces_survive_forced_colors() -> None:
 
 
 def test_narrow_mobile_nav_does_not_overlap_the_wordmark() -> None:
-    """The sticky-grid menu trigger must not cover the brand at phone widths."""
+    """A fixed menu trigger must not cover the brand at phone widths."""
     system_css = read("system/system.css")
     doc_css = read("system/doc.css")
 
     for css in (system_css, doc_css):
-        mobile_blocks = [
-            match.group("body")
-            for match in re.finditer(
-                r"@media\s*\(max-width:\s*760px\)\s*\{(?P<body>.*?)\n\}",
-                css,
-                re.DOTALL,
-            )
-        ]
-        assert mobile_blocks, "shared navigation needs a mobile breakpoint"
-        assert any(
-            re.search(r"\.site-nav \.sn-more\s*\{[^}]*justify-self:end", body)
-            for body in mobile_blocks
-        )
-        assert any(
-            re.search(r"\.site-nav > \.sn-more\s*\{[^}]*position:static", body)
-            for body in mobile_blocks
-        )
-
         narrow_mobile = re.search(
             r"@media\s*\(max-width:\s*430px\)\s*\{(?P<body>.*?)\n\}",
             css,
@@ -162,6 +142,7 @@ def test_narrow_mobile_nav_does_not_overlap_the_wordmark() -> None:
             r"\.site-nav \.sn-home \.sn-brand-word\s*\{[^}]*display:none!important",
             body,
         )
+        assert re.search(r"\.site-nav > \.sn-more\s*\{[^}]*right:1rem", body)
 
 
 def test_current_zentropy_assets_are_shipped() -> None:

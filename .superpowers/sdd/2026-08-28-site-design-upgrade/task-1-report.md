@@ -2,7 +2,8 @@ status: DONE_WITH_CONCERNS
 
 release base commit SHA: 2a036013b97dad407aa3d18386d919555d047d47
 task base commit SHA: d7892893ef2b98c8b27c2b27ab55ca7de033ac7e
-final commit SHA: self-referential in this committed report; exact task commit SHA is returned by the task response after commit
+final task commit SHA before current-main rebase: 9738566ac595d077079f02e546707c3649cc6a3e
+rebased task commit SHA: f0cc153
 
 files changed:
 - tests/test_zentropy_sitewide_contract.py
@@ -33,6 +34,17 @@ GREEN commands and exact pass/fail counts:
 - git diff --check
   - Passed with exit code 0 and no output.
 
+Post-rebase reconciliation on current `origin/main` b688549:
+- Restored the current live navigation contract from b688549. The mobile menu remains a pinned fixed control and shifts to `right:1rem` after the wordmark hides at 430px.
+- python -m pytest tests/test_zentropy_sitewide_contract.py tests/test_page_export.py tests/test_page_metadata.py -q
+  - 29 passed, 0 failed.
+- node --test system/nav.test.mjs system/figure.test.mjs
+  - 12 passed, 0 failed, 0 skipped.
+- python -m pytest tests -q
+  - 339 passed, 1 failed. The remaining failure is the expected reviewed release-spine fingerprint drift caused by the intentional shared CSS changes. The fingerprint must be regenerated once the complete design release is finalized, not during this foundation task.
+- node --test "system/**/*.test.mjs"
+  - 980 passed, 0 failed, 14 skipped.
+
 self-review findings:
 - Active shared CSS files no longer contain ZentropyDisplay declarations or uses.
 - system.css, doc.css, nav.css, and figure.css define the exact shared font and ground/paper/ink tokens required by the brief.
@@ -42,5 +54,6 @@ self-review findings:
 - Existing public selectors were preserved; stale test assertions were updated only where they tracked retired implementation details in current nav.js and the current sticky-grid mobile menu.
 
 concerns:
-- The required metadata-expanded Python command still fails on page metadata outside Task 1 ownership. Resolving those failures would require editing files outside the brief-owned set.
-- An exact final commit SHA cannot be embedded in a report committed inside that same Git object because changing the report changes the SHA. The exact task commit SHA is returned separately after commit.
+- The current-main rebase resolved the previous metadata failures.
+- The release-spine fingerprint remains intentionally stale until all design tasks are complete and the final reviewed artifact set can be sealed once.
+- A shortened rebased SHA can be recorded here, but an exact commit SHA cannot be embedded in the same Git object without changing that object.
