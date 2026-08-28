@@ -112,38 +112,80 @@
       ],
       "edges": [
         {
-          "source": "engine-revival",
-          "target": "brender-archival",
-          "label": "imports public release evidence",
-          "type": "evidence-import"
-        },
-        {
-          "source": "elder-enb",
-          "target": "enb-runtime-core",
-          "label": "optional native runtime",
-          "type": "optional-integration"
-        },
-        {
-          "source": "elder-enb",
-          "target": "skyrimbridge",
-          "label": "optional interoperability",
-          "type": "optional-integration"
-        },
-        {
           "source": "truth-enb",
           "target": "enb-runtime-core",
-          "label": "native camera build dependency",
+          "relation": "build-dependency",
+          "status": "verified-in-source",
+          "evidenceIds": [
+            "truth-enb-source-1-0-0",
+            "enb-runtime-core-public-source-0-1-0"
+          ],
+          "claimScope": "Truth ENB pins ENB Runtime Core for its native runtime build.",
+          "label": "native runtime build dependency",
           "type": "dependency"
         },
         {
           "source": "truth-enb",
           "target": "skyrimbridge",
-          "label": "optional game-state integration",
+          "relation": "optional-runtime-integration",
+          "status": "verified-in-source",
+          "evidenceIds": [
+            "truth-enb-source-1-0-0",
+            "skyrimbridge-public-source-3-0-0"
+          ],
+          "claimScope": "SkyrimBridge is optional for the base optical suite and supplies celestial data used by the current procedural sky path.",
+          "label": "optional runtime integration",
           "type": "optional-integration"
+        },
+        {
+          "source": "elder-enb",
+          "target": "enb-runtime-core",
+          "relation": "optional-native-runtime-dependency",
+          "status": "verified-in-source",
+          "evidenceIds": [
+            "elder-enb-public-source-0-1-0",
+            "enb-runtime-core-public-source-0-1-0"
+          ],
+          "claimScope": "Elder ENB's optional native runtime links ENB Runtime Core.",
+          "label": "optional native runtime dependency",
+          "type": "optional-integration"
+        },
+        {
+          "source": "elder-enb",
+          "target": "skyrimbridge",
+          "relation": "optional-runtime-integration",
+          "status": "verified-in-source",
+          "evidenceIds": [
+            "elder-enb-public-source-0-1-0",
+            "skyrimbridge-public-source-3-0-0"
+          ],
+          "claimScope": "Elder ENB exposes optional SkyrimBridge interoperability. This does not make either project a dependency of the other.",
+          "label": "optional runtime integration",
+          "type": "optional-integration"
+        },
+        {
+          "source": "engine-revival",
+          "target": "brender-archival",
+          "relation": "accepts-evidence-from",
+          "status": "verified-in-source",
+          "evidenceIds": [
+            "engine-revival-release-v0-1-0",
+            "brender-archival-release-v0-1-1"
+          ],
+          "claimScope": "Engine Revival can import BRender Archival evidence; neither project is a runtime dependency of the other.",
+          "label": "accepts public release evidence from",
+          "type": "evidence-import"
         },
         {
           "source": "studio-engine",
           "target": "raw",
+          "relation": "optional-native-render-bridge",
+          "status": "verified-in-source",
+          "evidenceIds": [
+            "studio-engine-public-source",
+            "raw-public-source-1-0-0"
+          ],
+          "claimScope": "Studio Engine can locate and invoke the optional RAW native CLI bridge; its Python core remains usable without RAW.",
           "label": "optional native CLI bridge",
           "type": "optional-integration"
         }

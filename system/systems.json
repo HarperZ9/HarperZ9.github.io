@@ -59,8 +59,8 @@
       "target": "index",
       "relation": "integrates-lane",
       "status": "verified-in-source",
-      "evidenceIds": ["flywheel-release-v0-3-10", "index-release-v2-9-0"],
-      "claimScope": "Flywheel declares and launches Index as its workspace-structure MCP lane. The lane metadata currently trails Index source version 2.10.0."
+      "evidenceIds": ["flywheel-release-v0-3-10", "index-release-v2-10-0"],
+      "claimScope": "Flywheel declares and launches Index as its workspace-structure MCP lane. The Flywheel lane metadata currently trails the published Index 2.10.0 package."
     },
     {
       "source": "flywheel",
@@ -362,13 +362,13 @@
       "verificationCommand": "index wiki --verify wiki.html --root <repo-path>",
       "evidence": [
         {
-          "id": "index-release-v2-9-0",
+          "id": "index-release-v2-10-0",
           "type": "release",
-          "label": "Index v2.9.0",
-          "href": "https://github.com/HarperZ9/index/releases/tag/v2.9.0",
-          "date": "2026-08-27",
+          "label": "Index 2.10.0 on PyPI",
+          "href": "https://pypi.org/project/index-graph/2.10.0/",
+          "date": "2026-08-28",
           "status": "verified",
-          "summary": "The v2.9.0 release is verified; newer beta source metadata is not presented as a stable release."
+          "summary": "The package index and source metadata both report index-graph 2.10.0; the local installed copy remains 2.9.0."
         }
       ],
       "limitations": [
@@ -780,7 +780,7 @@
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "npm install -g @harperz9/learn; learn tutor study mysession",
+      "entryCommand": "npm install -g @harperz9/learn; learn tutor plan mysession --topic algebra --objectives solve-equations",
       "verificationCommand": "node --test",
       "evidence": [
         {
@@ -894,7 +894,7 @@
     {
       "id": "plexus",
       "name": "Plexus",
-      "purpose": "Discover tool capabilities, derive producer-consumer wiring and dependency plans, emit inspectable graphs and runnable pipeline scripts, expose the mesh over MCP, and probe registered lane health.",
+      "purpose": "Read declared interop manifests, derive producer-consumer wiring and dependency plans from those declarations, emit inspectable graphs and pipeline scripts, expose the mesh over MCP, and optionally probe a registered Flywheel lane when explicitly requested.",
       "useCases": [
         "tool discovery",
         "capability matching",

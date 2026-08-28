@@ -15,7 +15,10 @@ CURRENT_EDITION_DATE = json.loads(
     (ROOT / "frontier-safety" / "data" / "current.json").read_text(encoding="utf-8")
 )["edition_date"]
 ALLOWED_SOURCE_HOSTS = {
+    "cdn.openai.com",
+    "harperz9.github.io",
     "www.aisi.gov.uk",
+    "www.alabamaag.gov",
     "www.anthropic.com",
     "openai.com",
     "huggingface.co",
@@ -24,6 +27,10 @@ ALLOWED_SOURCE_HOSTS = {
     "nvd.nist.gov",
     "www.sysdig.com",
 }
+
+CANONICAL_OPENAI_HUGGING_FACE_BRIEFING = (
+    "https://harperz9.github.io/briefings/2026-08-26-openai-hugging-face-incident/"
+)
 
 
 def read_json(rel: str) -> dict | list:
@@ -55,6 +62,7 @@ def test_current_edition_has_three_lanes_and_complete_evidence_boundaries() -> N
             "developer statement",
             "affected-party technical timeline",
             "independent analysis",
+            "publication notice",
         }
         assert item["published_at"]
         assert item["event_time"]
@@ -65,6 +73,73 @@ def test_current_edition_has_three_lanes_and_complete_evidence_boundaries() -> N
         for source in item["sources"]:
             assert urlparse(source["url"]).hostname in ALLOWED_SOURCE_HOSTS
             assert source["title"]
+
+
+def test_current_digest_routes_incident_detail_to_the_canonical_briefing() -> None:
+    edition = read_json(f"frontier-safety/data/editions/{CURRENT_EDITION_DATE}.json")
+    current = read_json("frontier-safety/data/current.json")
+    archive = read_json(f"frontier-safety/data/archive/{CURRENT_EDITION_DATE}.json")
+    page = (ROOT / "frontier-safety.html").read_text(encoding="utf-8")
+
+    notices = [
+        item
+        for lane in edition["lanes"]
+        for item in lane["items"]
+        if item["id"] == "openai-hugging-face-incident-publication-notice"
+    ]
+    assert len(notices) == 1
+    assert all(
+        item["id"] != "hugging-face-2026-07-27-timeline"
+        for lane in edition["lanes"]
+        for item in lane["items"]
+    )
+    notice = notices[0]
+    assert notice["source_role"] == "publication notice"
+    assert {source["url"] for source in notice["sources"]} == {
+        CANONICAL_OPENAI_HUGGING_FACE_BRIEFING,
+    }
+
+    recurring_copy = "\n".join(
+        [
+            notice["summary"],
+            notice["does_not_prove"],
+            edition["social"]["x"],
+            edition["social"]["linkedin"],
+        ]
+    )
+    for duplicated_metric in (
+        "1,200",
+        "70,000",
+        "700 attacked",
+        "95%",
+        "5%",
+        "17,600",
+        "6,280",
+    ):
+        assert duplicated_metric not in recurring_copy
+        assert duplicated_metric not in page
+    for incident_term in ("OpenAI", "Hugging Face", "METR", "Redwood", "incident"):
+        assert incident_term.lower() not in edition["social"]["x"].lower()
+        assert incident_term.lower() not in edition["social"]["linkedin"].lower()
+
+    stale_question = (
+        "When will METR and Redwood Research publish the announced case-specific "
+        "assessment, and what scope will it cover?"
+    )
+    assert stale_question not in edition["open_questions"]
+    assert "previously watched OpenAI URLs" in edition["change_summary"]
+    assert current == archive
+    assert CANONICAL_OPENAI_HUGGING_FACE_BRIEFING in page
+
+
+def test_every_frontier_safety_archive_is_discoverable_from_the_sitemap() -> None:
+    history = read_json("frontier-safety/data/history.json")
+    sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+
+    for edition in history["editions"]:
+        assert (
+            f"https://harperz9.github.io/frontier-safety/archive/{edition['date']}.html" in sitemap
+        )
 
 
 def test_public_copy_has_no_opaque_citations_private_paths_or_bare_severity() -> None:
@@ -178,6 +253,20 @@ def test_briefing_uses_the_shared_site_design_canon() -> None:
     assert '@import url("../system/doc.css")' not in stylesheet
     assert "Kilon" not in stylesheet
     assert "initial-scan" not in stylesheet
+
+
+def test_controls_matrix_documents_its_accessible_analysis_contract() -> None:
+    page = (ROOT / "frontier-safety.html").read_text(encoding="utf-8")
+    archive = (
+        ROOT / "frontier-safety" / "archive" / f"{CURRENT_EDITION_DATE}.html"
+    ).read_text(encoding="utf-8")
+
+    for document in (page, archive):
+        assert f"Source-scope matrix for edition {CURRENT_EDITION_DATE}." in document
+        assert "Sources: each row links to its supporting public record." in document
+        assert "Unit: one reported control per row." in document
+        assert "Transformation: controls are grouped by reporting organization" in document
+        assert "Limitations and non-proof:" in document
 
 
 def test_future_dated_archives_use_the_shared_site_shell_and_nested_paths() -> None:

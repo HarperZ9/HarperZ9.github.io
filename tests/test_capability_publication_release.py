@@ -13,7 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-DJnUiuD_.js",
+    "assets/index-C-YSPaTO.js",
     "assets/index-BXPtvrj2.css",
     "brender-archival.html",
     "briefings/2026-08-26-openai-hugging-face-incident/build.json",
@@ -119,7 +119,7 @@ RELEASE_PATHS = (
     "systems/studio-engine.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "161137f89e2dfb669f6787485dc8d34a6f707d14343a70d022a30d3550c45951"
+REVIEWED_RELEASE_SHA256 = "6dbbc8c310adc4435a8ce2a64d802a5ace4d5e4b29fc08663a87ff4d880cb701"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -216,7 +216,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_fix_css = "index-Bh3pWSfE.css"
     previous_art_js = "index-BPBDYusx.js"
     previous_art_css = "index-D6A4RL1P.css"
-    assert 'src="/assets/index-DJnUiuD_.js"' in source
+    assert 'src="/assets/index-C-YSPaTO.js"' in source
     assert 'href="/assets/index-BXPtvrj2.css"' in source
     assert obsolete_js not in source
     assert obsolete_css not in source
