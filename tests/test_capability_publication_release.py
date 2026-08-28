@@ -13,8 +13,8 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-B3zWbYkK.js",
-    "assets/index-CiruV1jn.css",
+    "assets/index-FyYdKcDU.js",
+    "assets/index-Bh3pWSfE.css",
     "brender-archival.html",
     "briefings/2026-08-26-openai-hugging-face-incident/build.json",
     "briefings/2026-08-26-openai-hugging-face-incident/claims.json",
@@ -119,7 +119,7 @@ RELEASE_PATHS = (
     "systems/studio-engine.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "3aadf2490427a4305beb56418fe9e4a6aedf856887a466cd6adf899df97cf890"
+REVIEWED_RELEASE_SHA256 = "c906e740b9645f6b5a8db7adf8d6b426fea5de4fbae2ee835317cd163a86addf"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -207,8 +207,10 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     obsolete_css = "index-D3" + "HRo6Wc.css"
     previous_js = "index-Dwp-qWEt.js"
     previous_css = "index-ktAZgEPv.css"
-    assert 'src="/assets/index-B3zWbYkK.js"' in source
-    assert 'href="/assets/index-CiruV1jn.css"' in source
+    retired_js = "index-B3zWbYkK.js"
+    retired_css = "index-CiruV1jn.css"
+    assert 'src="/assets/index-FyYdKcDU.js"' in source
+    assert 'href="/assets/index-Bh3pWSfE.css"' in source
     assert obsolete_js not in source
     assert obsolete_css not in source
     assert not (ROOT / "assets" / obsolete_js).exists()
@@ -217,6 +219,10 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     assert previous_css not in source
     assert not (ROOT / "assets" / previous_js).exists()
     assert not (ROOT / "assets" / previous_css).exists()
+    assert retired_js not in source
+    assert retired_css not in source
+    assert not (ROOT / "assets" / retired_js).exists()
+    assert not (ROOT / "assets" / retired_css).exists()
 
 
 def test_six_briefing_figures_keep_semantic_nonvisual_fallbacks() -> None:

@@ -1,95 +1,133 @@
-"""Structural contract for the home as it ships now: the React shell.
-
-This replaces the previous contract, which pinned the white-ceramic static
-home (system/home.css, the Ribbon Field hero wired in index.html, the dex
-rail, the five-flagship sections). The home moved to a built React shell
-(data-home-shell="react", a hashed asset bundle, a full static noscript
-fallback), so those assertions described a retired surface and had been
-failing since the cutover. Same repair discipline as the last replacement:
-pin what actually ships, keep the accessibility and honesty floors, and keep
-the em-dash gate.
-
-App-rendered structure (nav, skip link, section rail) cannot be asserted by
-static grep; the noscript fallback is the static floor this file guards.
-"""
+"""Visual and static fallback contracts for the React homepage."""
 
 from __future__ import annotations
 
 import re
 from pathlib import Path
 
+
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
-HOME_CSS = ROOT / "system" / "home.css"
-RIBBON = ROOT / "system" / "ribbon-field.js"
-SCROLL = ROOT / "system" / "home-scroll.js"
+HOME_INDEX = ROOT / "home" / "index.html"
+APP = ROOT / "home" / "src" / "App.tsx"
+APP_CSS = ROOT / "home" / "src" / "App.css"
+INDEX_CSS = ROOT / "home" / "src" / "index.css"
 
 EM_DASH = "—"
 EN_DASH = "–"
 
 
-def index_source() -> str:
-    return INDEX.read_text(encoding="utf-8")
+def read(path: Path) -> str:
+    return path.read_text(encoding="utf-8")
 
 
-def test_home_loads_the_react_shell() -> None:
-    src = index_source()
-    assert 'data-home-shell="react"' in src
-    assert '<div id="root"></div>' in src
-    assert re.search(r'src="/assets/index-[\w-]+\.js"', src), "hashed app bundle missing"
-    assert "home-readable.css" in src
-    assert "styles.css" not in src   # the pre-Telos consulting stylesheet stays gone
+def deployed_assets() -> tuple[Path, Path]:
+    src = read(INDEX)
+    js_match = re.search(r'src="/(?P<asset>assets/index-[\w-]+\.js)"', src)
+    css_match = re.search(r'href="/(?P<asset>assets/index-[\w-]+\.css)"', src)
+    assert js_match, "deployed homepage must reference one hashed JavaScript bundle"
+    assert css_match, "deployed homepage must reference one hashed CSS bundle"
+    return ROOT / js_match.group("asset"), ROOT / css_match.group("asset")
 
 
-def test_noscript_fallback_is_a_complete_front_door() -> None:
-    src = index_source()
+def test_home_loads_the_react_shell_and_shared_readable_floor() -> None:
+    for path in (INDEX, HOME_INDEX):
+        src = read(path)
+        assert 'data-home-shell="react"' in src
+        assert '<div id="root"></div>' in src
+        assert "home-readable.css" in src
+        assert "styles.css" not in src
+
+
+def test_noscript_fallback_is_a_complete_identity_first_front_door() -> None:
+    src = read(HOME_INDEX)
     assert "<noscript>" in src
-    assert "Flywheel is the primary public system" in src
-    for href in (
-        "/hire.html#engineering-path",
-        "/hire.html#technical-operations-path",
-        "/hire.html#public-service-field-path",
-        "/resume.html",
-        "/catalog.html",
-        "/briefings/2026-08-26-openai-hugging-face-incident/",
-        "/figures/source-scope-matrix.html",
-        "/research.html",
-    ):
-        assert f'href="{href}"' in src, f"noscript fallback lost {href}"
-
-
-def test_noscript_spans_hiring_capabilities_evidence_and_research() -> None:
-    """The static fallback keeps the conversion path and public record usable."""
-    src = index_source().lower()
     for value in (
-        "route -> verify -> receipt -> reuse",
-        "evidence atlas",
-        "current briefing",
-        "hiring and collaboration routes",
-        "engineering and evaluation",
-        "technical operations",
-        "public service, safety, and field operations",
+        "Zain Dana Harper",
+        "Zentropy Labs",
+        "Systems engineering, security tooling, graphics, and public research.",
+        "Featured platform: Flywheel",
+        "Evidence board",
+        "Capability constellation",
+        "Representative work",
+        "Current research",
+        "Retro Systems Lab",
+        "Security boundary",
+        "Hiring and collaboration",
     ):
         assert value in src
 
-
-def test_white_ceramic_tokens_are_defined() -> None:
-    css = HOME_CSS.read_text(encoding="utf-8")
-    assert "--paper:#f4f3ef" in css
-    assert "--ink:#0b0c0e" in css
-    assert "--iris:" in css
-    assert "background:var(--paper)" in css
+    assert "Flywheel is the primary public system" not in src
+    assert "route -> verify -> receipt -> reuse" not in src.lower()
+    assert "fourteen independently published verification systems" not in src.lower()
 
 
-def test_ribbon_field_is_failsafe_and_transparent() -> None:
-    js = RIBBON.read_text(encoding="utf-8")
-    assert "premultipliedAlpha: true" in js
-    assert 'canvas.style.display = "none"' in js
-    assert "prefers-reduced-motion" in js
+def test_home_source_and_styles_have_no_decorative_home_lead_ins() -> None:
+    combined = "\n".join(read(path) for path in (HOME_INDEX, APP, APP_CSS, INDEX_CSS))
+
+    for value in (
+        "hero-kicker",
+        ".kicker",
+        "section-kicker",
+        "section-label",
+        "eyebrow",
+        "overline",
+        "orientation / artifact",
+        "viewport-vignette",
+        "ground-field",
+        "row-index",
+    ):
+        assert value not in combined
+
+    assert "ZentropyDisplay" not in combined
+    assert "Project Telos" not in combined
+    assert "brand-wordmark" not in combined
+    assert "brand-route" not in combined
+    assert "radial-gradient" not in combined
 
 
-def test_no_em_or_en_dashes_in_home_and_system() -> None:
-    for path in (INDEX, HOME_CSS, RIBBON, SCROLL):
-        text = path.read_text(encoding="utf-8")
+def test_home_visual_system_uses_evidence_plates_not_floating_dashboards() -> None:
+    css = read(APP_CSS)
+
+    assert ".identity-art" in css
+    assert ".data-plate" in css
+    assert ".evidence-table" in css
+    assert ".visualization-diagram" in css
+    assert ".node-constellation" in css
+    assert ".flow-line" in css
+    assert ".hero-card" not in css
+    assert ".release-card" not in css
+    assert ".workflow" not in css
+    assert "conic-gradient" not in css
+
+
+def test_deployed_bundle_matches_the_new_front_door_after_build() -> None:
+    js_path, css_path = deployed_assets()
+    bundle = read(js_path)
+    css = read(css_path)
+
+    for value in (
+        "Zain Dana Harper",
+        "Zentropy Labs is the workshop behind Flywheel and the wider body of work.",
+        "Capability constellation",
+        "Retro Systems Lab",
+        "Security boundary",
+        "Hiring and collaboration",
+    ):
+        assert value in bundle
+
+    for stale in ("hero-kicker", "Recorded workflows", "Try four browser-native checks", "Project Telos"):
+        assert stale not in bundle
+
+    assert "data-plate" in css
+    assert "visualization-diagram" in css
+    assert "hero-kicker" not in css
+
+
+def test_no_em_or_en_dashes_in_home_sources_and_deployed_assets() -> None:
+    paths = [HOME_INDEX, APP, APP_CSS, INDEX_CSS, INDEX]
+    paths.extend(deployed_assets())
+    for path in paths:
+        text = read(path)
         assert EM_DASH not in text, f"em-dash in {path.name}"
         assert EN_DASH not in text, f"en-dash in {path.name}"

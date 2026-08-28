@@ -1,21 +1,7 @@
-/* ============================================================
-   PROJECT TELOS: design system v2
-   Direction: Supergraphic Ultramodern x generative plotter art
-   x the living-instrument thesis. Drenched jewel base, a
-   supergraphic rainbow accent system, architectural display type.
-   ============================================================ */
-
-/* ---- self-hosted faces, shared with the static pages at /system/fonts/.
-   Kilon ships as a single static 400 cut: declaring the true weight lets the
-   browser synthesize bold for 600+ requests (a 100-900 range would suppress
-   synthesis and render every heading regular). ---- */
-/* Telos Display + Kilon retired 2026-07-11 - Hanken Grotesk is the one text voice. */
+/* Zain Dana Harper / Zentropy Labs home shell. */
 @font-face { font-family: "Hanken Grotesk"; src: url("/system/fonts/hanken-grotesk.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
 @font-face { font-family: "Conso"; src: url("/system/fonts/conso-regular.woff2") format("woff2"), url("/system/fonts/conso-regular.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "Conso"; src: url("/system/fonts/conso-semibold.woff2") format("woff2"), url("/system/fonts/conso-semibold.woff") format("woff"); font-weight: 600 700; font-style: normal; font-display: swap; }
-/* The custom face is a mark, not a third reading typeface. It only appears in
-   the zentropyLabs wordmark defined in App.css. */
-@font-face { font-family: "ZentropyDisplay"; src: url("/brand/ZentropyDisplay.ttf") format("truetype"); font-weight: 400 900; font-style: normal; font-display: swap; }
 
 :root {
   color-scheme: dark;
@@ -146,10 +132,7 @@ body {
   font-size: var(--step-0);
   line-height: 1.6;
   color: var(--ink);
-  background:
-    radial-gradient(86rem 48rem at 76% -12%, rgba(47, 120, 144, 0.12), transparent 57%),
-    radial-gradient(70rem 38rem at 32% 22%, rgba(125, 45, 34, 0.15), transparent 62%),
-    var(--void); /* complete static ground, with desktop GPU only as an enhancement */
+  background: var(--void);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: clip; /* not `hidden`: hidden makes body a scroll container and silently breaks anchor scrolling */

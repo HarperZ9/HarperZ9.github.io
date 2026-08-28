@@ -1,304 +1,230 @@
-"""Contracts for the evidence-led portfolio home funnel."""
+"""Contracts for the Zain and Zentropy Labs homepage funnel."""
 
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+HOME_SOURCE = ROOT / "home" / "src" / "App.tsx"
+HOME_CSS = ROOT / "home" / "src" / "App.css"
+HOME_INDEX = ROOT / "home" / "index.html"
+SYSTEMS = ROOT / "system" / "systems.json"
+FEED = ROOT / "feed.json"
+RETRO = ROOT / "media" / "retro-systems-lab" / "evidence-manifest.json"
+
+SECTION_SEQUENCE = [
+    "identity",
+    "flywheel",
+    "evidence",
+    "constellation",
+    "representative",
+    "research",
+    "retro-systems-lab",
+    "security-boundary",
+    "hiring-collaboration",
+]
+
+PROHIBITED_HOME_PATTERNS = (
+    "orientation / artifact / claim / proof / route",
+    "Recorded workflows",
+    "Try four browser-native checks",
+    "hero-kicker",
+    "section-kicker",
+    "section-label",
+    "eyebrow",
+    "overline",
+    "kicker",
+    "pseudo-dashboard",
+    "viewport-vignette",
+    "ground-field",
+    "row-index",
+    "Project Telos",
+    "Fourteen systems",
+    "route -> verify -> receipt -> reuse",
+    "Route→Verify",
+)
 
 
-def test_home_source_uses_the_verified_fourteen_engine_roster() -> None:
-    source = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
-    match = re.search(r"const ENGINES: Engine\[\] = \[(?P<body>.*?)\n\];", source, re.S)
-    assert match, "home source must define the engine roster"
-    assert re.findall(r'name: "([^"]+)"', match.group("body")) == [
-        "flywheel",
-        "telos",
-        "index",
-        "gather",
-        "forum",
-        "crucible",
-        "emet",
-        "buildlang",
-        "learn",
-        "relay",
-        "plexus",
-        "mneme",
-        "studio-engine",
-        "build color",
-    ]
-    assert "Fourteen systems" in source
-    assert "integrated Flywheel engine remains the active build" in " ".join(source.split())
-    assert 'name: "calibrate pro"' not in source.lower()
+def read(path: Path) -> str:
+    return path.read_text(encoding="utf-8")
 
 
-def test_home_source_uses_the_approved_zentropy_identity() -> None:
-    source = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
-    assert "zentropyLabs" in source
-    assert "/brand/zentropy-logo.png" in source
-    assert "Zentropy Labs" in source
-    assert "<GroundField />" in source
-    assert "<LogoField" not in source
-    assert "<Emphasis" not in source
-    assert "cursor-field.js" not in source
-    assert (ROOT / "brand" / "zentropy-logo.png").is_file()
-    assert (ROOT / "brand" / "ZentropyDisplay.ttf").is_file()
-    for width in (640, 960, 1280, 1600):
-        assert f"zentropy-logo-{width}.webp" in source
-        assert (ROOT / "brand" / f"zentropy-logo-{width}.webp").is_file()
-    assert 'sizes="(max-width: 980px) 100vw, 52vw"' in source
-
-    css = (ROOT / "home" / "src" / "App.css").read_text(encoding="utf-8")
-    hero_buttons = re.search(r"\.hero \.btn\s*\{(?P<body>[^}]*)\}", css)
-    assert hero_buttons
-    assert "border-radius: 0" in hero_buttons.group("body")
-    assert "animation: none" in hero_buttons.group("body")
-
-    brand = re.search(r"\.brand\s*\{(?P<body>[^}]*)\}", css)
-    assert brand
-    assert "min-block-size: 44px" in brand.group("body")
-    # The canon bans em-dashes in every register, and an aria-label is read
-    # aloud, so it is prose like any other. This assertion used to pin the
-    # dash in place, which made the contract enforce the defect.
-    assert 'aria-label="zentropyLabs / Project Telos, home"' in source
-    assert "—" not in source, "no em-dashes on a public surface, including labels"
-    assert "@media (max-width: 1040px)" in css
+def normalized(text: str) -> str:
+    return " ".join(text.split())
 
 
-def test_home_gpu_art_is_desktop_only_and_the_mobile_hero_is_static() -> None:
-    field = (ROOT / "home" / "src" / "GroundField.tsx").read_text(encoding="utf-8")
-    capability = (ROOT / "home" / "src" / "visual-capability.ts").read_text(encoding="utf-8")
+def test_home_source_uses_identity_first_section_sequence() -> None:
+    source = read(HOME_SOURCE)
+    positions = []
+    for section_id in SECTION_SEQUENCE:
+        needle = f'id="{section_id}"'
+        assert needle in source, f"homepage lost section {section_id}"
+        positions.append(source.index(needle))
 
-    assert "shouldUseDesktopGpuArt" in field
-    assert "shouldUseDesktopGpuArt" in capability
-    assert "(pointer: fine)" in capability
-    assert "(min-width: 900px)" in capability
-    assert "prefers-reduced-motion: reduce" in capability
-    assert 'typeof window.matchMedia !== "function"' in field
-    assert "query.addListener(refresh)" in field
-    assert "zentropy-logo.png" not in field
-    assert 'principle: "zentropy"' in field
-    assert "wander: false" in field
-    assert "hero: false" in field
-    assert '"/system/field-ground.js?v=20260718-zentropy"' in field
-    assert 'addEventListener("change", refresh)' in field
-    assert "zentropy:" in (ROOT / "system" / "field-ground.js").read_text(encoding="utf-8")
-
-
-def test_legacy_shared_field_does_not_mount_over_the_zentropy_home() -> None:
-    shared_home_art = (ROOT / "system" / "home-art.js").read_text(encoding="utf-8")
-    navigation = (ROOT / "system" / "nav.js").read_text(encoding="utf-8")
-
-    assert "mountGenerativeField" not in shared_home_art
-    assert "home-generative-field" not in shared_home_art
-    assert 'data-home-shell="react"' in (ROOT / "home" / "index.html").read_text(encoding="utf-8")
-    assert '"/system/home-art" + ".js?v=20260827-capability-publication"' in (ROOT / "home" / "index.html").read_text(encoding="utf-8")
-    assert '"./nav.js?v=20260827-capability-publication"' in shared_home_art
-    assert '"./routes.js?v=20260827-capability-publication"' in shared_home_art
-    assert "homeShell !== \"react\"" in navigation
-
-    deployed_index = (ROOT / "index.html").read_text(encoding="utf-8")
-    match = re.search(r'src="/(?P<asset>assets/index-[^"]+\.js)"', deployed_index)
-    assert match, "the deployed homepage must reference its hashed JavaScript bundle"
-    deployed_bundle = (ROOT / match.group("asset")).read_text(encoding="utf-8")
-    assert "/system/home-art.js?v=20260827-capability-publication" in deployed_bundle
-
-
-def test_home_source_mirror_matches_current_maturity_and_design_positioning() -> None:
-    source = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
-    template = (ROOT / "home" / "index.html").read_text(encoding="utf-8")
-
-    for value in (
-        "Telos 0.2.0",
-        "Plexus 0.2.0",
-        "AI-assisted design workflows",
-        "Poster design and composition",
-        "native rendering",
-        "neural-network media",
-        "/studio.html?source=poster",
-    ):
-        assert value in source
-
-    assert "Plexus 0.1.0" not in source
-    # the template's no-JS fallback positions the making end of the workshop
-    assert "retro engine" in template.lower()
-    assert "generative studio" in template.lower()
-    assert "brand/zentropy-logo.png" in template
-
-
-def test_home_source_names_current_recorded_workflows() -> None:
-    source = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
-    for value in (
-        "Index 2.9.0",
-        "Gather 1.6.1",
-        "Forum 1.13.0",
-        "Crucible 1.2.0",
-        "/demo-index.html",
-        "/demo-gather.html",
-        "/demo-forum.html",
-        "/demo-crucible.html",
-        "/demonstrations.html",
-        "Recorded workflows",
-        "Available for paid work",
-    ):
-        assert value in source
-
-
-def test_home_uses_native_demo_posters() -> None:
-    source = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
-    for value in (
-        "/media/demos/index/index-demo-poster.png",
-        "/media/demos/gather/gather-workflow-short-poster.png",
-        "/media/demos/forum/forum-demo-short-poster.png",
-        "/media/demos/crucible/crucible-workflow-short-poster.png",
-    ):
-        assert value in source
-
-
-def test_recorded_workflow_layout_has_mobile_and_reduced_motion_rules() -> None:
-    css = (ROOT / "home" / "src" / "App.css").read_text(encoding="utf-8")
-    assert ".recorded-list" in css
-    assert ".recorded-shot" in css
-    assert "prefers-reduced-motion: reduce" in css
-    assert "@media (max-width: 760px)" in css
-
-
-def test_home_hero_offers_semantic_make_and_prove_entrances() -> None:
-    source = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
-    doors = re.search(
-        r'<nav className="hero-doors[^\"]*" '
-        r'aria-label="Choose how to enter the workbench">(?P<body>.*?)</nav>',
-        source,
-        re.S,
-    )
-    assert doors, "home hero must expose the dual front door as labelled navigation"
-    body = doors.group("body")
-    assert 'href="#make"' in body
-    assert "Create with the retro engine, studio, and gallery." in body
-    assert 'href="#engines"' in body
-    assert "Inspect receipts, workflows, research, and verification systems." in body
-    assert "Two entrances. One public record." in body
-
-
-def test_home_hero_entrances_preserve_focus_mobile_and_reduced_motion_contracts() -> None:
-    css = (ROOT / "home" / "src" / "App.css").read_text(encoding="utf-8")
-    assert ".hero-door-rows" in css
-    assert ".hero-door:focus-visible" in css
-    mobile = css[css.index("@media (max-width: 560px)") :]
-    assert ".hero-door-rows" in mobile
-    assert "grid-template-columns: 1fr" in mobile
-    reduced = css[css.rindex("@media (prefers-reduced-motion: reduce)") :]
-    assert ".hero-door" in reduced
-    assert "transition: none" in reduced
-
-
-def test_home_make_prove_copy_states_the_current_public_boundary() -> None:
-    source = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
-    normalized = " ".join(source.split())
-    expected_lead = (
-            "I build deterministic evaluation environments, developer tools, and accountable agent "
-            "infrastructure. The public record includes 31 merged engineering changes across 26 "
-            "third-party repositories, an exhaustive 324-case terminal-state environment, and "
-            "a maintained graphics project with more than 160,000 unique downloads."
-        )
-    assert expected_lead in normalized
-    assert "Systems Engineer | AI Evaluation, Developer Tools, and Technical Operations" in source
+    assert positions == sorted(positions), "homepage sections must follow the adopted sequence"
+    assert "Zain Dana Harper" in source
+    assert "Systems engineering, security tooling, graphics, and public research." in source
+    assert "Zentropy Labs is the workshop behind Flywheel and the wider body of work." in source
+    assert 'href="#constellation"' in source
+    assert ">Explore the work" in source
     assert 'href="/hire.html"' in source
-    # The homepage states the size of the research record. It has to match the
-    # record, which test_publication_record.py holds to eight.
-    assert "Eight records," in source and "Six papers" not in source
-    assert "Then prove it." in source
-    assert "Fourteen systems." in source
-    assert "Each of these fourteen systems stands on its own today" in normalized
-    assert "integrated Flywheel engine remains the active build" in normalized
-    assert (
-        "The roster spans routing, intake, mapping, orchestration, judgment, byte integrity, "
-        "typed effects, learning, color, memory, interoperability, and shared human and model creation."
-        in normalized
-    )
+    assert ">Hire or collaborate" in source
 
 
-def test_home_metadata_and_fallback_describe_make_and_prove_without_overclaiming() -> None:
-    template = (ROOT / "home" / "index.html").read_text(encoding="utf-8")
+def test_home_source_removes_template_tropes_and_home_lead_ins() -> None:
+    source = read(HOME_SOURCE)
+    css = read(HOME_CSS)
+    combined = f"{source}\n{css}"
+
+    for pattern in PROHIBITED_HOME_PATTERNS:
+        assert pattern not in combined, f"homepage still contains {pattern!r}"
+
+    assert "const ENGINES" not in source
+    assert "RECORDED_WORKFLOWS" not in source
+    assert "GateDemo" not in source
+    assert "ProofPacket" not in source
+    assert "WitnessedIndependence" not in source
+    assert "EmetWitness" not in source
+    assert "Picker" not in source
+    assert "GroundField" not in source
+    assert "ZentropyDisplay" not in combined
+    assert "radial-gradient" not in combined
+    assert "padStart(2" not in source
+    assert ".card-grid" not in css
+    assert ".dashboard" not in css
+
+
+def test_home_uses_checked_in_registry_feed_and_retro_manifest() -> None:
+    source = read(HOME_SOURCE)
+    systems = json.loads(read(SYSTEMS))
+    feed = json.loads(read(FEED))
+    retro = json.loads(read(RETRO))
+
+    assert 'from "../../system/systems.json"' in source
+    assert 'from "../../feed.json"' in source
+    assert 'from "../../media/retro-systems-lab/evidence-manifest.json"' in source
+
+    primary = [
+        system["id"]
+        for system in systems["systems"]
+        if system.get("architectureRole") == "primary-platform"
+    ]
+    assert primary == ["flywheel"]
+    assert systems["systems"][0]["id"] == "flywheel"
+    assert 'architectureRole === "primary-platform"' in source
+    assert "featuredPlatform.entryCommand" in source
+    assert systems["systems"][0]["entryCommand"] == "pip install flywheel-verify; flywheel up"
+
+    assert feed["items"][0]["url"] == "https://harperz9.github.io/briefings/2026-08-26-openai-hugging-face-incident/"
+    assert "currentBriefing.url" in source
+    assert retro["hierarchy"]["primaryPlatform"] == "Flywheel"
+    assert 'requireSystem("retro-engine")' in source
+    assert 'requireSystem("engine-revival")' in source
+    assert 'requireSystem("brender-archival")' in source
+    assert "retroManifest.retroSystemsLab.play" in source
+    assert "retroManifest.engineRevival.release.tag" in source
+    assert "retroManifest.brenderArchival.nativeCTestTargets" in source
+    for value in ("Retro Engine", "Engine Revival", "BRender Archival", "play", "preserve", "verify"):
+        assert value in json.dumps(retro)
+
+
+def test_home_capability_constellation_is_curated_not_a_wall_of_cards() -> None:
+    source = read(HOME_SOURCE)
+    systems = json.loads(read(SYSTEMS))
+    nodes = re.search(r"const CAPABILITY_NODE_IDS = \[(?P<body>.*?)\];", source, re.S)
+    assert nodes, "homepage must declare the curated capability node list"
+    node_count = len(re.findall(r'"[^"]+"', nodes.group("body")))
+
+    assert 6 <= node_count <= 12
+    assert "data-node-id={system.id}" in source
+    assert "Capability constellation" in source
+    assert "CAPABILITY_FAMILY_IDS" in source
+    assert [domain["label"] for domain in systems["domains"]] == [
+        "Agent systems",
+        "Evaluation and verification",
+        "Security and privacy",
+        "Developer infrastructure",
+        "Graphics and media",
+        "Research and education",
+    ]
+
+    assert "Controlled security constellation" in source
+    assert "live bypass" not in source.lower()
+    assert "exploit chain" not in source.lower()
+    assert "target-specific" not in source.lower()
+
+
+def test_home_evidence_board_contains_accessible_data_visualization_primitives() -> None:
+    source = read(HOME_SOURCE)
+    css = read(HOME_CSS)
+
+    assert "Evidence board" in source
+    assert "<table" in source
+    assert "<caption>" in source
+    assert '<th scope="row">' in source
+    assert "visualization-diagram" in source
+    assert "data-plate" in css
+    assert "evidence-table" in css
+    assert "visualization-diagram" in css
+    assert "What this does not prove" in source
+    assert "no color-only" in normalized(source).lower()
+
+
+def test_home_metadata_and_noscript_mirror_follow_the_same_front_door() -> None:
+    template = read(HOME_INDEX)
     expected = (
-        "Systems engineer for AI evaluation, developer tools, and technical operations. "
-        "Public work, hiring paths, and the Zentropy Labs workshop."
+        "Zain Dana Harper and Zentropy Labs: systems engineering, security tooling, "
+        "graphics, public research, Flywheel, and hiring routes."
     )
     assert len(expected) <= 158
     assert f'<meta name="description" content="{expected}" />' in template
     assert f'<meta property="og:description" content="{expected}" />' in template
     assert f'<meta name="twitter:description" content="{expected}" />' in template
+
     noscript = re.search(r"<noscript>(?P<body>.*?)</noscript>", template, re.S)
-    assert noscript
+    assert noscript, "home template must carry a no-JS fallback"
     fallback = noscript.group("body")
-    assert "Zain Dana Harper" in fallback
-    assert "Make" in fallback and "Prove" in fallback
-    assert "fourteen independently published verification systems" in fallback
-    for overclaim in (
-        "fourteen connected engines",
-        "everything here proves what it claims",
-        "every artifact proves every claim",
-    ):
-        assert overclaim not in template.lower()
-
-
-def test_retro_hero_names_the_current_shader_count() -> None:
-    """The lede's shader count is derived from the library, never hand-kept."""
-    retro = (ROOT / "retro.html").read_text(encoding="utf-8")
-    presets = (ROOT / "system" / "shader-presets.js").read_text(encoding="utf-8")
-    count = presets.count('"name":')
-    assert count >= 190
-    assert f"{count} shaders sit on the shelf" in retro
-    assert "Forty-eight shaders" not in retro
-
-
-def test_home_hero_display_size_is_capped_at_six_rem() -> None:
-    css = (ROOT / "home" / "src" / "App.css").read_text(encoding="utf-8")
-    match = re.search(r"\.hero-title\s*\{(?P<body>[^}]*)\}", css)
-    assert match, "home stylesheet must define the hero title"
-    rule = match.group("body")
-    assert "var(--step-5)" not in rule
-    cap = re.search(r"font-size:\s*clamp\([^;]+,\s*([0-9.]+)rem\)\s*;", rule)
-    assert cap
-    assert float(cap.group(1)) <= 6
-
-
-def test_generated_output_uses_flywheel_first_social_metadata() -> None:
-    html = (ROOT / "index.html").read_text(encoding="utf-8")
-    expected_metadata = (
-        "<title>Flywheel: model-neutral agent workbench and public evidence atlas</title>",
-        '<meta property="og:title" content="Flywheel: model-neutral agent workbench" />',
-        '<link rel="canonical" href="https://harperz9.github.io/" />',
-        '<meta property="og:image" content="https://harperz9.github.io/img/og/flywheel.png" />',
-        '<meta name="twitter:card" content="summary_large_image" />',
-        '<meta name="twitter:image" content="https://harperz9.github.io/img/og/flywheel.png" />',
-    )
-    for value in expected_metadata:
-        assert value in html
-
-    assert (ROOT / "img" / "og" / "flywheel.png").is_file()
-    assert "img/og/telos.png" not in html
-
-
-def test_generated_bundle_keeps_flywheel_evidence_and_later_hiring_routes() -> None:
-    html = (ROOT / "index.html").read_text(encoding="utf-8")
-    match = re.search(r'src="(/assets/index-[^"]+\.js)"', html)
-    assert match, "generated home must reference its Vite bundle"
-    bundle = (ROOT / match.group(1).lstrip("/")).read_text(encoding="utf-8")
     for value in (
-        "Flywheel is the primary public system",
-        "Route→Verify→Receipt→Reuse",
-        "Workshop contact follows the evidence",
-        "Engineering and evaluation",
-        "Technical operations",
-        "Public service, safety, and field operations",
-        "Current briefing",
-        "Five evidence lanes, one OpenAI and Hugging Face incident",
-        "/catalog.html",
-        "/briefings/2026-08-26-openai-hugging-face-incident/",
-        "/figures/system-capability-map.html",
+        "Zain Dana Harper",
+        "Systems engineering, security tooling, graphics, and public research.",
+        "Zentropy Labs is the workshop behind Flywheel and the wider body of work.",
+        "Explore the work",
+        "Hire or collaborate",
+        "Featured platform: Flywheel",
+        "Evidence board",
+        "Capability constellation",
+        "Retro Systems Lab",
+        "Security boundary",
+        "Hiring and collaboration",
     ):
-        assert value in bundle
-    assert "calibrate pro" not in bundle.lower()
+        assert value in fallback
+
+    for href in (
+        "/hire.html",
+        "/resume.html",
+        "/flywheel.html",
+        "/catalog.html",
+        "/retro.html",
+        "/security.html",
+        "/briefings/2026-08-26-openai-hugging-face-incident/",
+        "https://github.com/HarperZ9",
+    ):
+        assert f'href="{href}"' in fallback
+
+
+def test_home_hero_display_and_visual_system_are_restrained() -> None:
+    css = read(HOME_CSS)
+    title = re.search(r"\.hero-title\s*\{(?P<body>[^}]*)\}", css)
+    assert title, "home stylesheet must define the hero title"
+    body = title.group("body")
+    assert "clamp(3rem, 6vw, 5.25rem)" in body
+    assert "7.40rem" not in body
+    assert "text-transform: none" in body
+
+    assert "@media (forced-colors: active)" in css
+    assert "@media (prefers-reduced-motion: reduce)" in css
+    assert "@media (max-width: 760px)" in css
+    assert "overflow-x: clip" in read(ROOT / "home" / "src" / "index.css")
