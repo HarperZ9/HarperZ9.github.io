@@ -4,29 +4,29 @@
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>gather, an accountable research-intake organ</title>
+<title>gather, an accountable research-intake system</title>
 <meta name="description" content="Research lives behind awkward access: paywalls, JS walls, scanned PDFs. Gather reaches it and records how, with provenance receipts and digest seals.">
 <link rel="canonical" href="https://harperz9.github.io/gather.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="gather, an accountable research-intake organ">
+<meta property="og:title" content="gather, an accountable research-intake system">
 <meta property="og:description" content="Research lives behind awkward access: paywalls, JS walls, scanned PDFs. Gather reaches it and records how, with provenance receipts and digest seals.">
 <meta property="og:url" content="https://harperz9.github.io/gather.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/gather.png">
 <meta property="og:image:alt" content="Project Telos flagship card: Gather, accountable research intake. Reach it anywhere, record how you got it.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="gather, an accountable research-intake organ">
+<meta name="twitter:title" content="gather, an accountable research-intake system">
 <meta name="twitter:description" content="Research lives behind awkward access: paywalls, JS walls, scanned PDFs. Gather reaches it and records how, with provenance receipts and digest seals.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/gather.png">
 <meta name="color-scheme" content="dark">
-<link rel="stylesheet" href="system/system.css?v=20260812-angular">
+<link rel="stylesheet" href="system/system.css?v=20260828-site-design">
 </head>
 <body class="inner-clean">
 <a class="skip-link" href="#main">Skip to content</a>
 
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260827-capability-publication"></script>
+<script type="module" src="system/nav.js?v=20260828-site-design"></script>
 
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">gather</span> &middot; accountable research-intake</span></div>
@@ -51,7 +51,7 @@
 <!-- WHAT IT IS -->
 <section class="mv" id="what" aria-labelledby="what-h">
   <h2 id="what-h" class="reveal">It brings information in, from anywhere, and records how.</h2>
-  <p class="body-text reveal"><span translate="no">gather</span> is the research-intake organ of the constellation. It reaches information from scattered, often awkward sources and returns it as items, each carrying a provenance receipt. It is the one place where network access, third-party tools, and credentials are allowed to live, isolated behind source adapters, so the rest of the constellation stays clean, offline, and deterministic. A run scope-filters what it gathered, folds the receipts into one witnessed digest, and hands that digest downstream to index, refine, and the crucible.</p>
+  <p class="body-text reveal"><span translate="no">gather</span> is a research-intake and corpus system. It reaches information from scattered, often awkward sources and returns receipted items whose content and acquisition method can be checked later. A run can scope-filter those items, store them by content hash, and fold their receipts into a witnessed digest for later research or evaluation work.</p>
   <p class="body-text reveal">Every kind of intake is one small adapter behind a single shape: one string in, a list of receipted items out. The adapter can use the network, a tool, a credential, a headless browser, whatever the source demands; nothing else in <span translate="no">gather</span> imports any of that. Awkward access is an adapter problem, not a system problem, and the core stays pure standard library because of it.</p>
   <em class="close reveal">The receipt is the rule. Each item records how it was obtained, so a transcript read from captions, text recognized from a scan, and a fact synthesized from fragments are all valid items, but they are not equal, and they are never confused.</em>
 </section>
@@ -91,10 +91,10 @@
     </div>
     <div class="index-row" role="listitem" style="--i:7">
       <span class="index-term">browser</span>
-      <span class="index-gloss">JavaScript-rendered pages via a real headless browser; the receipt records <code translate="no">browser-extract</code>, so you know JS ran. The most exposed edge, see the limit below</span>
+      <span class="index-gloss">JavaScript-rendered pages via a real headless browser; the receipt records <code translate="no">browser-extract</code>, so you know JavaScript ran. This adapter has a narrower trust boundary than the static web route; see the limit below</span>
     </div>
   </div>
-  <p class="body-text reveal">The honesty matters most exactly where the reach is widest. The <code translate="no">web</code> adapter runs no JavaScript, so it is honest that a client-rendered page gives back only its shell. The <code translate="no">browser</code> adapter runs a real headless browser, and it is the most exposed organ in the system: its host guard covers only the first navigation, and the rendered page then follows its own redirects and sub-requests unguarded. So do not point it at untrusted URLs in an environment where internal services are reachable. The <code translate="no">browser-extract</code> method is honest that JavaScript ran, but it cannot make the fetch safe. The threat model says so plainly, in the open, rather than hide it.</p>
+  <p class="body-text reveal">The honesty matters most exactly where the reach is widest. The <code translate="no">web</code> adapter runs no JavaScript, so it is honest that a client-rendered page gives back only its shell. The <code translate="no">browser</code> adapter runs a real headless browser, and it is the most exposed adapter in the system: its host guard covers only the first navigation, and the rendered page then follows its own redirects and sub-requests unguarded. So do not point it at untrusted URLs in an environment where internal services are reachable. The <code translate="no">browser-extract</code> method is honest that JavaScript ran, but it cannot make the fetch safe. The threat model says so plainly, in the open, rather than hide it.</p>
 </section>
 
 <!-- THE DIFFERENTIATOR -->
@@ -112,7 +112,7 @@
   <div class="index reveal-children" role="list" aria-label="The four stages of a witnessed run">
     <div class="index-row" role="listitem" style="--i:0">
       <span class="index-term">fetch</span>
-      <span class="index-gloss">each adapter returns receipted items behind the one <code translate="no">Source</code> shape, the only place the network, a tool, or a credential is allowed</span>
+      <span class="index-gloss">each adapter returns receipted items behind the same <code translate="no">Source</code> shape; network, tool, and credential use stays inside that adapter boundary</span>
     </div>
     <div class="index-row" role="listitem" style="--i:1">
       <span class="index-term">scope</span>
@@ -127,7 +127,7 @@
       <span class="index-gloss">an optional content-addressed corpus dedups bodies by hash, keeps every distinct receipt, and <code translate="no">corpus verify</code> re-hashes every stored body</span>
     </div>
   </div>
-  <p class="body-text reveal">A full <code translate="no">gather run</code> folds fetch, scope, optional synthesis, digest, and store into one re-checkable <code translate="no">RunRecord</code> with its own seal over what it did. Recall queries a stored corpus and re-verifies every body it returns, so a missing or corrupt item is reported, never handed back as if intact. The scope filter, the synthesizer, the store, and the external provenance verdict are all seams that default to a Null, so <span translate="no">gather</span> stands alone and a peer organ plugs in without the core ever importing it.</p>
+  <p class="body-text reveal">A full <code translate="no">gather run</code> folds fetch, scope, optional synthesis, digest, and store into one re-checkable <code translate="no">RunRecord</code> with its own seal over what it did. Recall queries a stored corpus and re-verifies every body it returns, so a missing or corrupt item is reported, never handed back as if intact. The scope filter, the synthesizer, the store, and the external provenance verdict are all seams that default to a Null, so <span translate="no">gather</span> stands alone and a peer system plugs in without the core ever importing it.</p>
 </section>
 
 <!-- PROOF AND RUN IT -->
@@ -139,7 +139,7 @@
 parsed 3 items from one video, each with a receipt
 <span class="ok">witnessed digest: 3 receipts, verified True</span>
 <span class="bad">after tampering one receipt, digest verifies: False   &lt;- caught</span>
-<span class="pr">$ python examples/pipeline.py</span>   <span class="cmt"># the whole organ: run, store, verify, recall, offline</span></pre>
+<span class="pr">$ python examples/pipeline.py</span>   <span class="cmt"># the whole path: run, store, verify, recall, offline</span></pre>
   <p class="body-text reveal">Python, standard library only. Install it, run the demo offline, then point an adapter at a real source. Each example under <code translate="no">examples/</code> is a short demonstration of one capability: the receipt that catches tampering, the corpus that re-hashes every body, the recall that re-verifies what it returns. If an adapter reaches something it should not, or a digest produces a result you cannot verify, that is exactly the kind of report I want.</p>
   <div class="channels reveal">
     <span class="g">Recorded demo</span> &rarr; <a href="demo-gather.html">29-second proof and full workflow</a>
@@ -158,6 +158,6 @@ parsed 3 items from one video, each with a receipt
   <p class="seal"><span translate="no">gather</span> records how every item was obtained and folds the receipts into one witnessed seal. Re-hash the content. Recompute the seal. The provenance comes from the receipt, not from a promise.</p>
 </footer>
 
-<script src="system/reveal.js?v=20260625a" defer></script>
+<script src="system/reveal.js?v=20260828-site-design" defer></script>
 </body>
 </html>

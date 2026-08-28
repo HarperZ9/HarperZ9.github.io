@@ -21,8 +21,11 @@ type SystemRecord = {
   href: string;
   sourceHref: string | null;
   domains: string[];
+  primaryDomain: string;
+  productType: string;
   architectureRole: string;
   maturity: string;
+  releaseState: string;
   placement: string;
   accessMode: string;
   entryCommand: string | null;
@@ -60,10 +63,8 @@ type Feed = {
 
 type RetroManifest = {
   recordedAt: string;
-  hierarchy: {
-    primaryPlatform: string;
-    cluster: string;
-    relationship: string;
+  relationships: {
+    boundary: string;
   };
   retroSystemsLab: {
     play: string;
@@ -294,12 +295,12 @@ function TopNav() {
         <span className="brand-lab">Zentropy Labs</span>
       </a>
       <div className="topnav-links">
-        <a href="#representative">Work</a>
-        <a href="#flywheel">Flywheel</a>
-        <a href="#research">Research</a>
-        <a href="#retro-systems-lab">Retro Systems Lab</a>
-        <a href="#security-boundary">Security</a>
-        <a href="/hire.html">About / hire</a>
+        <a href="/hire.html">Hire / work</a>
+        <a href="/overview.html">Engines</a>
+        <a href="/research.html">Research</a>
+        <a href="/studio.html">The Studio</a>
+        <a href="/gallery.html">Gallery</a>
+        <a href="/retro.html">Retro Engine</a>
         <a href="https://github.com/HarperZ9" rel="noopener">GitHub</a>
       </div>
     </nav>
@@ -427,15 +428,15 @@ function CapabilityOverview() {
     <span id="make" hidden aria-hidden="true" />
     <section id="constellation" className="section constellation-section">
       <div className="section-heading">
-        <h2>Capability constellation</h2>
+        <h2>Capability map</h2>
         <p className="section-lead">
-          Six families organize the work by what they let a person or team do. Flywheel is the primary platform; the rest are engines,
-          adapters, evidence layers, and public tools that plug into or support it.
+          Six capability families help visitors navigate the work. They do not define a product or imply a parent-child architecture.
+          Each system keeps its own product type, dependencies, maturity, and evidence.
         </p>
       </div>
       <div className="constellation-layout">
         <figure className="visualization-diagram data-plate" aria-labelledby="constellation-title">
-          <figcaption id="constellation-title">Platform, evidence, and execution map</figcaption>
+          <figcaption id="constellation-title">Selected systems and their implemented product types</figcaption>
           <div className="node-constellation" role="list">
             {capabilityNodes.map((system) => (
               <a
@@ -446,14 +447,14 @@ function CapabilityOverview() {
                 data-node-id={system.id}
               >
                 <span>{system.name}</span>
-                <small>{system.architectureRole.replaceAll("-", " ")}</small>
+                <small>{system.productType}</small>
               </a>
             ))}
             <span className="flow-line flow-platform" aria-hidden="true" />
             <span className="flow-line flow-evidence" aria-hidden="true" />
             <span className="flow-line flow-retro" aria-hidden="true" />
           </div>
-          <p>Line styles separate platform, evidence, security, and retro flow. Color reinforces the grouping but is not the only encoding.</p>
+          <p>Placement shows a visitor route, not ownership or runtime dependency. The catalog records secondary domains separately.</p>
         </figure>
         <div className="family-index">
           {CAPABILITY_FAMILY_IDS.map((familyId) => {
@@ -493,7 +494,7 @@ function RepresentativeWork() {
             <dl>
               <div>
                 <dt>Role</dt>
-                <dd>{system.architectureRole.replaceAll("-", " ")}</dd>
+                <dd>{system.productType}</dd>
               </div>
               <div>
                 <dt>Evidence</dt>
@@ -545,8 +546,8 @@ function RetroSystemsLab() {
       <div className="section-heading">
         <h2>Retro Systems Lab</h2>
         <p className="section-lead">
-          Play, preserve, verify. The retro lane is part of the Flywheel ecosystem and also a separate creative pillar: visible, approachable,
-          and grounded in source evidence.
+          Retro Engine, Engine Revival, and BRender Archival are independent projects with different jobs. The first is an interactive browser
+          studio, the second is preservation tooling, and the third is a focused BRender restoration lab.
         </p>
       </div>
       <div className="retro-flow">
@@ -559,7 +560,7 @@ function RetroSystemsLab() {
           </article>
         ))}
       </div>
-      <p className="boundary-note">{retroManifest.hierarchy.relationship}</p>
+      <p className="boundary-note">{retroManifest.relationships.boundary}</p>
     </section>
   );
 }
@@ -570,18 +571,18 @@ function SecurityBoundary() {
       <div className="section-heading">
         <h2>Security boundary</h2>
         <p className="section-lead">
-          Public pages describe lawful purpose, maturity, proof, and boundary. Controlled offensive and adversarial material moves through approved
-          private recipient channels, not the public portfolio.
+          The security line includes public privacy and verification products plus distinct private systems for controlled offensive campaigns,
+          native assessment, orchestration, model refusal and jailbreak testing, trust verification, operator execution, and release authority.
         </p>
       </div>
       <div className="security-layout">
         <article className="data-plate boundary-card">
           <h3>Controlled security constellation</h3>
           <p>
-            The public surface can show tooling, safety posture, and engagement gates. Operational payloads, private objectives, and unpublished
-            vulnerabilities stay out of public distribution.
+            Array, Seed, Sofer, Isomorph, Bounds, ORCA, and Gate perform different jobs across an authorized engagement. Their public descriptions name
+            those jobs. Targets, credentials, live payloads, client data, and engagement-specific findings stay in the approved private channel.
           </p>
-          <a className="text-link" href="/security.html">Read the public boundary</a>
+          <a className="text-link" href="/security.html">Explore the security systems</a>
         </article>
         <ol className="security-list">
           {securitySystems.map((system) => (

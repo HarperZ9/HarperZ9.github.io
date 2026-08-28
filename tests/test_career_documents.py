@@ -203,7 +203,7 @@ def test_hiring_document_delegates_current_page_state_to_shared_navigation() -> 
 def test_hiring_paths_use_one_column_at_mobile_and_readable_action_targets() -> None:
     page = read("hire.html")
     css = read("system/hire.css")
-    assert 'system/hire.css?v=20260828-work-paths' in page
+    assert 'system/hire.css?v=20260828-site-design' in page
     assert ".hire-route-kicker" not in css
     assert ".hire-path" in css
     assert "min-height:44px" in css

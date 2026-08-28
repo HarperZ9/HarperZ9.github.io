@@ -112,9 +112,9 @@
       "href": "media/retro-systems-lab/identity/crossover.svg",
       "width": 960,
       "height": 540,
-      "bytes": 3013,
+      "bytes": 3074,
       "byteBudget": 12000,
-      "sha256": "2bf144d69b2c4b19d367ee642d4b642c40855bca84e47ca944dff73c748099d2",
+      "sha256": "910b52d07a791b32c48d4ba1877658b40edd3f19dd094ab3ed2ff223ec18df09",
       "provenance": "Generator-owned directed crossover SVG derived from the canonical Retro Systems Lab registry records.",
       "sourceFiles": [
         "site/systems.json",

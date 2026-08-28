@@ -124,15 +124,15 @@
 
 .home-menu:not([open]) .home-menu-list{display:none}
 
-.home-menu-label{
+.home-menu-title{
   margin:.55rem 0 .1rem;
   padding:.55rem .72rem 0;
   border-top:1px solid var(--line);
   color:var(--faint);
-  font-family:var(--font-mono);
-  font-size:.62rem;
-  letter-spacing:.08em;
-  text-transform:uppercase;
+  font-family:var(--font-sans);
+  font-size:.78rem;
+  letter-spacing:0;
+  text-transform:none;
 }
 
 .home-menu-list a{

@@ -151,7 +151,7 @@ def test_required_live_routes_and_assets_exist() -> None:
     assert "Systems engineering, security tooling, graphics, and public research." in home
     assert "Featured platform: Flywheel" in home
     assert "Evidence board" in home
-    assert "Capability constellation" in home
+    assert "Capability map" in home
     assert "Current research" in home
     assert "Hiring and collaboration" in home
 
@@ -161,7 +161,7 @@ def test_required_live_routes_and_assets_exist() -> None:
 
 def test_system_registry_keeps_flywheel_primary_and_private_security_bounded() -> None:
     registry = _json("system/systems.json")
-    assert registry["schema"] == "harperz9-systems/v2"
+    assert registry["schema"] == "harperz9-systems/v4"
     records = {record["id"]: record for record in registry["systems"]}
     assert REQUIRED_SYSTEMS <= set(records)
 
@@ -170,10 +170,10 @@ def test_system_registry_keeps_flywheel_primary_and_private_security_bounded() -
     assert records["flywheel"]["name"] == "Flywheel"
     assert records["flywheel"]["maturity"] == "shipped"
     assert records["flywheel"]["evidence"][0]["label"] == "Flywheel v0.3.10"
-    assert {"engine-revival", "brender-archival", "retro-engine"} <= set(records["flywheel"]["related"])
+    assert {"engine-revival", "brender-archival", "retro-engine"}.isdisjoint(records["flywheel"]["related"])
 
     private = records["authorized-private-practice"]
-    assert private["architectureRole"] == "controlled-private-constellation"
+    assert private["architectureRole"] == "private-operational-systems-index"
     assert private["sourceHref"] is None
     assert private["accessMode"] == "request"
     assert "Written authorization" in private["boundary"]

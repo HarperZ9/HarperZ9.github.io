@@ -23,10 +23,10 @@ from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CURRENT_NAV_ASSET_VERSION = "20260827-capability-publication"
+CURRENT_NAV_ASSET_VERSION = "20260828-site-design"
 ARCHIVE_NAV_ASSET_VERSIONS = {
-    "2026-08-24": "20260827-capability-publication",
-    "2026-08-25": "20260827-capability-publication",
+    "2026-08-24": "20260828-site-design",
+    "2026-08-25": "20260828-site-design",
 }
 ALLOWED_SOURCE_HOSTS = {
     "www.aisi.gov.uk",
@@ -322,14 +322,14 @@ def _render_legacy_html(edition: dict, *, archive: bool) -> str:
     date = edition["edition_date"]
     if archive:
         root_prefix = "../../"
-        css_href = "../frontier-safety.css"
+        css_href = f"../frontier-safety.css?v={CURRENT_NAV_ASSET_VERSION}"
         canonical = f"https://harperz9.github.io/frontier-safety/archive/{date}.html"
         data_href = f"../data/archive/{date}.json"
         self_href = f"{date}.html"
         page_label = "Dated archive"
     else:
         root_prefix = ""
-        css_href = "frontier-safety/frontier-safety.css"
+        css_href = f"frontier-safety/frontier-safety.css?v={CURRENT_NAV_ASSET_VERSION}"
         canonical = "https://harperz9.github.io/frontier-safety.html"
         data_href = "frontier-safety/data/current.json"
         self_href = "frontier-safety.html"
@@ -389,7 +389,7 @@ def _render_legacy_html(edition: dict, *, archive: bool) -> str:
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="{root_prefix}index.html">Home</a> <a href="{root_prefix}research.html">Research</a></nav></noscript>
-<script type="module" src="{root_prefix}system/nav.js?v=20260827-capability-publication"></script>
+<script type="module" src="{root_prefix}system/nav.js?v={CURRENT_NAV_ASSET_VERSION}"></script>
 
 <div class="docnav">
   <span class="where">Research · Frontier Safety</span>
@@ -398,7 +398,7 @@ def _render_legacy_html(edition: dict, *, archive: bool) -> str:
 
 <main id="main" class="sheet briefing-sheet">
   <header class="mast briefing-mast">
-    <div class="hero-kicker"><span>Frontier Safety Briefing</span><span>{_e(page_label)}</span></div>
+    <div class="edition-context"><span>Frontier Safety Briefing</span><span>{_e(page_label)}</span></div>
     <h1>What changed.<br>What supports it.<br><em>What remains unresolved.</em></h1>
     <p class="hero-summary">{_e(edition['change_summary'])}</p>
     <dl class="edition-readout">
@@ -469,14 +469,14 @@ def render_html(edition: dict, *, archive: bool) -> str:
 
     if archive:
         root_prefix = "../../"
-        css_href = "../frontier-safety-site.css"
+        css_href = f"../frontier-safety-site.css?v={CURRENT_NAV_ASSET_VERSION}"
         canonical = f"https://harperz9.github.io/frontier-safety/archive/{date}.html"
         data_href = f"../data/archive/{date}.json"
         self_href = f"{date}.html"
         page_label = "Dated archive"
     else:
         root_prefix = ""
-        css_href = "frontier-safety/frontier-safety-site.css"
+        css_href = f"frontier-safety/frontier-safety-site.css?v={CURRENT_NAV_ASSET_VERSION}"
         canonical = "https://harperz9.github.io/frontier-safety.html"
         data_href = "frontier-safety/data/current.json"
         self_href = "frontier-safety.html"
@@ -497,7 +497,7 @@ def render_html(edition: dict, *, archive: bool) -> str:
             number += 1
         records.append(
             f'<section class="mv lane" id="{_e(lane["id"])}"><header class="lane-head">'
-            f'<p class="eyebrow">{_e(lane["summary"])}</p><h2>{_e(lane["label"])}</h2></header>'
+            f'<p class="lane-status">{_e(lane["summary"])}</p><h2>{_e(lane["label"])}</h2></header>'
             f'{"".join(lane_items)}</section>'
         )
 
@@ -546,7 +546,6 @@ def render_html(edition: dict, *, archive: bool) -> str:
 <div class="frame briefing-hero">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Research · Frontier Safety</span></div>
   <div class="mid briefing-intro">
-    <p class="eyebrow">Frontier Safety Briefing · {_e(page_label)}</p>
     <h1>What changed. What supports it. <span class="g">What remains unresolved.</span></h1>
     <p class="lede">{_e(edition['change_summary'])}</p>
     <figure class="plate plate--slim briefing-plate">
@@ -565,7 +564,6 @@ def render_html(edition: dict, *, archive: bool) -> str:
 
 <main id="main">
   <section class="mv briefing-overview">
-    <p class="eyebrow">Edition map</p>
     <h2>Three monitored lanes. One claim discipline.</h2>
     <p class="body-text">Words and shapes carry status. Color is secondary. Each lane separates the public record from the conclusions that record cannot support.</p>
     <nav class="delta-rail" aria-label="Briefing lanes">{''.join(rail)}</nav>
@@ -575,7 +573,7 @@ def render_html(edition: dict, *, archive: bool) -> str:
   {''.join(records)}
 
   <section class="mv wide-section controls">
-    <header><p class="eyebrow">Claim discipline</p><h2>Controls and their status</h2></header>
+    <header><h2>Controls and their status</h2></header>
     <div class="table-wrap"><table class="data data--wide controls-table">
       <thead><tr><th>Source</th><th>Reported control</th><th>Evidence status</th></tr></thead>
       <tbody>{_render_controls(edition['controls'])}</tbody>
@@ -583,12 +581,12 @@ def render_html(edition: dict, *, archive: bool) -> str:
   </section>
 
   <section class="mv wide-section questions">
-    <header><p class="eyebrow">Watch list</p><h2>Open questions</h2></header>
+    <header><h2>Open questions</h2></header>
     <ol>{questions}</ol>
   </section>
 
   <section class="mv wide-section method">
-    <header><p class="eyebrow">Publication contract</p><h2>Method, corrections, and limits</h2></header>
+    <header><h2>Method, corrections, and limits</h2></header>
     <div class="method-grid">
       <div><h3>Method</h3><p>{_e(edition['methodology'])}</p></div>
       <div><h3>Corrections</h3><ul>{correction_items}</ul></div>
@@ -600,7 +598,7 @@ def render_html(edition: dict, *, archive: bool) -> str:
 <footer class="footer-seal" role="contentinfo">
   <p class="seal">Compiled by Zain Dana Harper · ZentropyLabs · <a href="{root_prefix}research.html">Research index</a> · <a href="{data_href}">JSON edition</a> · <a href="{root_prefix}frontier-safety/archive/{_e(date)}.html">Dated archive</a></p>
 </footer>
-<script src="{root_prefix}system/reveal.js?v=20260625a" defer></script>
+<script src="{root_prefix}system/reveal.js?v={CURRENT_NAV_ASSET_VERSION}" defer></script>
 </body>
 </html>
 """

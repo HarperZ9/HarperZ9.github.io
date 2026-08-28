@@ -268,6 +268,61 @@ def test_route_headers_are_not_eyebrows_or_posters() -> None:
         assert ".sn-section" not in css, rel
 
 
+def test_product_and_system_routes_do_not_repeat_decorative_eyebrows() -> None:
+    decorative_routes = (
+        "accountable-engine.html",
+        "accountable-machines.html",
+        "build-products.html",
+        "coherence-membrane.html",
+        "overview.html",
+        "proof-surface.html",
+        "provenance-sensorium.html",
+        "toolkit.html",
+        "typeface.html",
+        "why.html",
+    )
+    for rel in decorative_routes:
+        assert 'class="eyebrow"' not in read(rel), rel
+
+    for rel in ("brender-archival.html", "engine-revival.html", "retro.html"):
+        assert "retro-lab-kicker" not in read(rel), rel
+
+
+def test_public_routes_reserve_micro_labels_for_semantic_context() -> None:
+    for path in ROOT.rglob("*.html"):
+        relative = path.relative_to(ROOT)
+        if any(part == "node_modules" for part in relative.parts):
+            continue
+        source = path.read_text(encoding="utf-8")
+        assert not re.search(r'class="[^"]*\beyebrow\b', source), path
+
+    home_art = read("system/home-art.js")
+    home_css = read("home/src/App.css")
+    assert "home-menu-label" not in home_art
+    assert ".home-menu-label" not in home_css
+
+    system_css = read("system/system.css")
+    bar_rule = re.search(r"\.bar\{(?P<body>[^}]*)\}", system_css)
+    assert bar_rule
+    assert "text-transform:uppercase" not in bar_rule.group("body")
+    assert "letter-spacing:.22em" not in bar_rule.group("body")
+
+
+def test_shared_frontend_assets_use_one_cache_revision() -> None:
+    revision = "20260828-site-design"
+    for path in ROOT.rglob("*.html"):
+        relative = path.relative_to(ROOT)
+        if any(part in {"node_modules", "dist"} for part in relative.parts):
+            continue
+        source = path.read_text(encoding="utf-8")
+        for target in re.findall(r'(?:href|src)="([^"]+\.(?:css|js)(?:\?[^"]*)?)"', source):
+            if target.startswith(("http://", "https://", "//")):
+                continue
+            if re.search(r"(?:^|/)assets/[^/?]+-[A-Za-z0-9_-]{8,}\.(?:css|js)$", target):
+                continue
+            assert target.endswith(f"?v={revision}"), (relative.as_posix(), target)
+
+
 def test_narrow_mobile_nav_does_not_overlap_the_wordmark() -> None:
     """A fixed menu trigger must not cover the brand at phone widths."""
     system_css = read("system/system.css")

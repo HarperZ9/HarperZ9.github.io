@@ -80,7 +80,7 @@ body.gallery #motes,body.studio-app #motes{opacity:.9}
 /* HERO CHANGE 2: position:fixed;inset:0 → position:relative;min-height:100vh;width:100% */
 /* grid, padding, pointer-events, z-index unchanged */
 .frame{position:relative;min-height:100vh;width:100%;z-index:4;display:grid;grid-template-rows:auto 1fr auto;padding:clamp(1.8rem,3.6vw,3.2rem) clamp(2.4rem,5.5vw,5rem);pointer-events:none}
-.bar{display:flex;justify-content:space-between;align-items:baseline;gap:1.5rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.bar{display:flex;justify-content:space-between;align-items:baseline;gap:1.5rem;font-family:var(--body);font-size:.78rem;letter-spacing:0;text-transform:none;color:var(--muted)}
 .bar .nm{color:var(--orange);letter-spacing:.3em}
 .mid{align-self:center;max-width:min(92vw,37rem)}
 .eyebrow{font-family:var(--mono);font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;color:var(--orange);margin-bottom:1.7rem;opacity:.92}
@@ -3717,3 +3717,101 @@ h2 em,
 .arc-method{max-width:52ch}
 .paper-close{max-width:56ch}
 .companion{max-width:58ch}
+
+/* Research briefings are reading surfaces, not raw record dumps. */
+.briefing-document main{
+  width:min(calc(100% - 2rem),78rem);
+  margin-inline:auto;
+  padding-block:clamp(2.5rem,6vw,6rem);
+}
+.briefing-document article > header{
+  display:grid;
+  gap:1rem;
+  padding-block-end:clamp(2.5rem,6vw,5rem);
+  border-block-end:2px solid var(--hairline);
+}
+.briefing-document article > header > *{margin:0}
+.briefing-document article > header h1{
+  max-width:18ch;
+  font-size:clamp(2.75rem,7vw,6rem);
+  line-height:.96;
+  letter-spacing:-.045em;
+  text-wrap:balance;
+}
+.briefing-document article > header p{
+  max-width:68ch;
+  font-size:clamp(1rem,1.6vw,1.25rem);
+  line-height:1.65;
+}
+.briefing-document article > section{
+  padding-block:clamp(2.5rem,5vw,4.5rem);
+  border-block-end:1px solid var(--hairline);
+}
+.briefing-document article > section > h2{
+  max-width:28ch;
+  margin:0 0 1.5rem;
+  font-size:clamp(1.8rem,3.5vw,3.1rem);
+  line-height:1.05;
+  letter-spacing:-.025em;
+  text-wrap:balance;
+}
+.briefing-document .claim-paragraph{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1rem;
+  margin-block:1.5rem 2.25rem;
+}
+.briefing-document .claim-paragraph > p{
+  grid-column:1/-1;
+  max-width:78ch;
+  margin:0 0 .5rem;
+  font-size:1.06rem;
+  line-height:1.7;
+}
+.briefing-document .claim-record{
+  min-width:0;
+  padding:1rem 1.1rem 1.15rem;
+  border:1px solid var(--hairline);
+  background:rgba(142,227,242,.035);
+}
+.briefing-document .claim-record h3{
+  margin:0 0 .8rem;
+  font-size:1rem;
+  line-height:1.35;
+  overflow-wrap:anywhere;
+}
+.briefing-document .claim-record p{
+  margin:.55rem 0 0;
+  font-size:.94rem;
+  line-height:1.55;
+}
+.briefing-document figure{
+  margin:2rem 0 0;
+  padding:clamp(.75rem,1.5vw,1.25rem);
+  border:1px solid var(--hairline);
+  background:#070406;
+}
+.briefing-document iframe{
+  display:block;
+  inline-size:100%;
+  min-block-size:clamp(48rem,80vh,68rem);
+  border:0;
+  background:#f2efe7;
+}
+.briefing-document figcaption{
+  max-width:78ch;
+  padding-block-start:1rem;
+  font-size:.98rem;
+  line-height:1.6;
+}
+.briefing-document article > footer{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.6rem 1.25rem;
+  padding-block:2.5rem 5rem;
+}
+@media (max-width:48rem){
+  .briefing-document main{width:min(calc(100% - 1rem),78rem)}
+  .briefing-document .claim-paragraph{grid-template-columns:1fr}
+  .briefing-document iframe{min-block-size:42rem}
+}

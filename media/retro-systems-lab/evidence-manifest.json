@@ -1,11 +1,12 @@
 {
-  "schema": "harperz9-retro-systems-lab-evidence/v1",
+  "schema": "harperz9-retro-systems-evidence/v2",
   "recordedAt": "2026-08-27",
   "sourceParityBase": "b4faa8fe7407aed2009f8a5df98e79a7a6921c12",
   "hierarchy": {
-    "primaryPlatform": "Flywheel",
-    "cluster": "Retro Systems Lab",
-    "relationship": "Retro systems are engines in the Flywheel ecosystem, not peer primary products."
+    "primaryPlatform": "Flywheel"
+  },
+  "relationships": {
+    "boundary": "Retro Engine, Engine Revival, and BRender Archival are independent projects. Their shared navigation does not imply runtime dependency, shared release state, or inherited evidence."
   },
   "retroSystemsLab": {
     "play": "Retro Engine",

@@ -29,7 +29,7 @@ def test_engines_page_is_an_identity_first_capability_map() -> None:
     assert "Zentropy Labs" in page
     assert page.index("Zentropy Labs") < page.index("Flywheel")
     assert '<body class="inner-clean engines-page">' in page
-    assert 'href="system/engines.css?v=20260828"' in page
+    assert 'href="system/engines.css?v=20260828-site-design"' in page
     assert 'class="engine-rail"' in page
     assert 'aria-labelledby="engine-rail-title"' in page
     assert 'class="engine-rail__fallback"' in page

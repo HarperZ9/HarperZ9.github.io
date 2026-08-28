@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Non-exclusive motive tags in 100-agent sample</title>
-  <link rel="stylesheet" href="../system/figure.css">
+  <link rel="stylesheet" href="../system/figure.css?v=20260828-site-design">
 </head>
 <body class="figure-document">
   <main>
@@ -12,7 +12,7 @@
       <figcaption class="figure-heading">
         <h1>Non-exclusive motive tags in 100-agent sample</h1>
         <p class="figure-description">Three bars show METR and Redwood&apos;s AI-assisted, non-exclusive tags for 100 agents that joined around 8-9 AM UTC on July 11. Counts can overlap by agent.</p>
-        <p class="figure-claim">METR and Redwood report three non-exclusive motive-tag counts in a 100-agent peak-hour sample.</p>
+        <p class="figure-claim figure-finding">METR and Redwood report three non-exclusive motive-tag counts in a 100-agent peak-hour sample.</p>
       </figcaption>
 <div class="figure-table-wrap">
     <table class="figure-table">
@@ -22,8 +22,8 @@
 <tr data-figure-row data-figure-key="bar:1"><td>Shared infrastructure or credentials</td><td>66</td><td>agents, non-exclusive</td><td><span class="figure-status figure-status--caution">Caution</span></td></tr>
 <tr data-figure-row data-figure-key="bar:2"><td>Task solution or private trajectories</td><td>89</td><td>agents, non-exclusive</td><td><span class="figure-status figure-status--caution">Caution</span></td></tr></tbody>
     </table>
-  </div>      <div class="figure-svg-scroll" tabindex="0" aria-label="Scrollable visualization for Non-exclusive motive tags in 100-agent sample">
-        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" aria-labelledby="motive-sample-nonexclusive-title motive-sample-nonexclusive-desc" data-figure-kind="bar">
+  </div>      <div class="figure-svg-scroll figure-svg-scroll--medium" tabindex="0" aria-label="Scrollable visualization for Non-exclusive motive tags in 100-agent sample">
+        <svg role="img" width="1280" height="720" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" aria-labelledby="motive-sample-nonexclusive-title motive-sample-nonexclusive-desc" data-figure-kind="bar">
   <title id="motive-sample-nonexclusive-title">Non-exclusive motive tags in 100-agent sample</title>
   <desc id="motive-sample-nonexclusive-desc">Three bars show METR and Redwood&apos;s AI-assisted, non-exclusive tags for 100 agents that joined around 8-9 AM UTC on July 11. Counts can overlap by agent. METR and Redwood report three non-exclusive motive-tag counts in a 100-agent peak-hour sample.</desc>
   <defs>
@@ -43,35 +43,35 @@
       <rect class="focus-ring" x="18" y="62" width="914" height="64" rx="2" stroke="transparent"/>
       <text x="28" y="88" font-size="15">Scorer source or access</text>
       <line x1="190" y1="95" x2="890" y2="95" class="hairline"/>
-      <rect x="190.00" y="75" width="679.00" height="28" fill="url(#motive-sample-nonexclusive-caution-pattern)" stroke="#d47a5a"/>
+      <rect x="190.00" y="75" width="679.00" height="28" fill="url(#motive-sample-nonexclusive-caution-pattern)" stroke="#d47a5a" stroke-width="1.5"/>
       <text x="900" y="94" text-anchor="end" class="mono value" font-size="13">97 agents, non-exclusive</text>
     </g>
 <g data-figure-point="true" data-figure-key="bar:1" data-status-label="Caution" role="graphics-symbol" aria-label="Shared infrastructure or credentials: 66 agents, non-exclusive. Caution." tabindex="-1">
       <rect class="focus-ring" x="18" y="134" width="914" height="64" rx="2" stroke="transparent"/>
       <text x="28" y="160" font-size="15">Shared infrastructure or credentials</text>
       <line x1="190" y1="167" x2="890" y2="167" class="hairline"/>
-      <rect x="190.00" y="147" width="462.00" height="28" fill="url(#motive-sample-nonexclusive-caution-pattern)" stroke="#d47a5a"/>
+      <rect x="190.00" y="147" width="462.00" height="28" fill="url(#motive-sample-nonexclusive-caution-pattern)" stroke="#d47a5a" stroke-width="1.5"/>
       <text x="900" y="166" text-anchor="end" class="mono value" font-size="13">66 agents, non-exclusive</text>
     </g>
 <g data-figure-point="true" data-figure-key="bar:2" data-status-label="Caution" role="graphics-symbol" aria-label="Task solution or private trajectories: 89 agents, non-exclusive. Caution." tabindex="-1">
       <rect class="focus-ring" x="18" y="206" width="914" height="64" rx="2" stroke="transparent"/>
       <text x="28" y="232" font-size="15">Task solution or private trajectories</text>
       <line x1="190" y1="239" x2="890" y2="239" class="hairline"/>
-      <rect x="190.00" y="219" width="623.00" height="28" fill="url(#motive-sample-nonexclusive-caution-pattern)" stroke="#d47a5a"/>
+      <rect x="190.00" y="219" width="623.00" height="28" fill="url(#motive-sample-nonexclusive-caution-pattern)" stroke="#d47a5a" stroke-width="1.5"/>
       <text x="900" y="238" text-anchor="end" class="mono value" font-size="13">89 agents, non-exclusive</text>
     </g>
 </svg>
       </div>
-<dl class="figure-evidence">
+<dl class="figure-evidence figure-scope">
     <dt>Sources</dt><dd><ul><li><a href="https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/">METR joint report</a></li></ul></dd>
     <dt>Retrieved</dt><dd><time datetime="2026-08-27">2026-08-27</time></dd>
     <dt>Units</dt><dd>agents, non-exclusive</dd>
     <dt>Transformations</dt><dd><ul><li>Do not sum the bars, treat categories as exclusive, or generalize the sample to all agents.</li><li>Render the three non-exclusive counts on a fixed zero-to-100 domain.</li><li>Use source ID mr-1 for the METR and Redwood report.</li></ul></dd>
     <dt>Uncertainty</dt><dd>The tags were produced by AI-assisted analysis agents, and METR and Redwood did not carefully inspect or iterate on this classification.</dd>
-    <dt>What this figure does not prove</dt><dd class="figure-does-not-prove">The figure does not show exclusive motives, representative shares for all agents, human-verified classifications, causation, or settled intent.</dd>
+    <dt>What this figure does not prove</dt><dd class="figure-does-not-prove figure-limitations">The figure does not show exclusive motives, representative shares for all agents, human-verified classifications, causation, or settled intent.</dd>
   </dl>
     </figure>
   </main>
-  <script type="module" src="../system/figure.js"></script>
+  <script type="module" src="../system/figure.js?v=20260828-site-design"></script>
 </body>
 </html>
