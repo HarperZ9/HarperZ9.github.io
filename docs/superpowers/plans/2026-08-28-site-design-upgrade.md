@@ -162,7 +162,7 @@ git commit -m "feat(site): unify route headers and current navigation"
 - Regenerate: `assets/index-*.css`
 
 **Interfaces:**
-- Consumes: `site/systems.json`, `site/evidence-stream.json`, current figure routes, current career routes, and shared `/system/home-art.js`.
+- Consumes: `system/systems.json`, `feed.json`, `media/retro-systems-lab/evidence-manifest.json`, current figure routes, current career routes, and shared `/system/home-art.js`. There is no `site/` data directory or `site/evidence-stream.json`; do not invent either contract.
 - Produces: `IdentityHero`, `FeaturedFlywheel`, `EvidenceBoard`, `CapabilityOverview`, `CurrentResearch`, `RetroSystemsLab`, `SecurityBoundary`, and `HiringRoutes` sections in `App.tsx`.
 
 - [ ] **Step 1: Replace stale homepage tests with the adopted sequence**
@@ -179,7 +179,7 @@ Expected: failures identify the product-first hero, abstract eyebrow, release ca
 
 - [ ] **Step 3: Implement the new React section components**
 
-Keep components local to `App.tsx` until a component exceeds 120 lines. Use semantic `section`, `figure`, `table`, `ol`, and `article` elements. The evidence board must derive its displayed values from checked-in data rather than duplicating counts in JSX.
+Keep components local to `App.tsx` until a component exceeds 120 lines. Use semantic `section`, `figure`, `table`, `ol`, and `article` elements. The evidence board must derive its displayed values from the checked-in system registry and publication feed rather than duplicating counts in JSX. Retro claims must come from the checked-in Retro Systems Lab evidence manifest and preserve its explicit does-not-prove boundaries.
 
 - [ ] **Step 4: Implement the homepage visual hierarchy**
 
