@@ -508,14 +508,18 @@ def test_sitemap_promotes_current_evidence_and_source_inventory() -> None:
 
 
 def test_generated_analytics_keep_mobile_overflow_inside_keyboard_scrollers(tmp_path: Path) -> None:
-    playwright = __import__("playwright.sync_api", fromlist=["sync_playwright"])
+    import pytest
+
+    playwright = pytest.importorskip(
+        "playwright.sync_api",
+        reason="responsive contract requires the optional Playwright dependency",
+    )
     chrome_candidates = [
         Path(os.environ.get("PROGRAMFILES", "C:/Program Files")) / "Google/Chrome/Application/chrome.exe",
         Path(os.environ.get("PROGRAMFILES(X86)", "C:/Program Files (x86)")) / "Microsoft/Edge/Application/msedge.exe",
     ]
     browser_path = next((path for path in chrome_candidates if path.exists()), None)
     if browser_path is None:
-        import pytest
         pytest.skip("responsive contract requires a local Chromium browser")
 
     out = tmp_path / "figures"
