@@ -15,6 +15,14 @@ def read(relative: str) -> str:
     return (ROOT / relative).read_text(encoding="utf-8")
 
 
+def site_html_pages() -> list[Path]:
+    return [
+        page.relative_to(ROOT)
+        for page in ROOT.rglob("*.html")
+        if ".worktrees" not in page.relative_to(ROOT).parts
+    ]
+
+
 def route_registry() -> dict[str, object]:
     source = read("system/routes.js")
     match = re.search(r'ROUTE_REGISTRY_JSON = ("(?:[^"\\]|\\.)*");', source)
@@ -57,8 +65,8 @@ def test_route_registry_is_the_union_of_hiring_capability_and_legacy_routes() ->
 
 def test_fresh_cache_stamp_covers_the_shared_navigation_chain() -> None:
     stamps = set()
-    for page in ROOT.rglob("*.html"):
-        for part in read(page.relative_to(ROOT).as_posix()).split("nav.js?v=")[1:]:
+    for page in site_html_pages():
+        for part in read(page.as_posix()).split("nav.js?v=")[1:]:
             stamps.add(part.split('"')[0].split("'")[0])
     assert stamps == {FRESH_STAMP}
 

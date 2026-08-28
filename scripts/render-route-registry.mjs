@@ -43,6 +43,18 @@ for (const [label, href] of [...privateRoutes].reverse()) {
 
 studio.routes = studio.routes.filter((route) => route.href !== "aeterna.html");
 
+const research = registry.families.find((family) => family.label === "Research");
+if (!research) throw new Error("research route family is missing");
+const incidentBrief = {
+  label: "OpenAI / Hugging Face incident",
+  href: "frontier-safety-openai-hugging-face-incident.html",
+  summary: "August 26 incident-source comparison with public-safe control-plane visualization.",
+};
+if (!research.routes.some((route) => route.href === incidentBrief.href)) {
+  const frontierIndex = research.routes.findIndex((route) => route.href === "frontier-safety.html");
+  research.routes.splice(frontierIndex >= 0 ? frontierIndex : research.routes.length, 0, incidentBrief);
+}
+
 function moveRoute(href, targetFamily, afterHref) {
   let route = null;
   for (const family of registry.families) {
