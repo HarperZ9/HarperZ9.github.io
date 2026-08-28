@@ -137,3 +137,20 @@ This was a monitoring false-positive review, not a new factual development. It d
 - 2026-08-28 decision: no new edition. Anthropic's August 27 Model Hardware Standard research preview is material but newly observed and unbaselined, so the normal publication gate remains fail-closed.
 - X destination: `@zaindanaharper` (`ZentropyLabs.ai`); exact-edition local records show no post receipt; draft retained and not posted pending action-time confirmation.
 - LinkedIn destination: `Zain Harper`; exact-edition local records show no post receipt; draft retained and not posted pending action-time confirmation.
+
+## 2026-08-28 OpenAI / Hugging Face incident long-form receipt
+
+- Publication type: public-safe long-form writing page and visual control-plane diagram, not a new dated Frontier Safety digest edition.
+- Live article target: [https://harperz9.github.io/frontier-safety-openai-hugging-face-incident.html](https://harperz9.github.io/frontier-safety-openai-hugging-face-incident.html)
+- Live writing-index target: [https://harperz9.github.io/writing.html](https://harperz9.github.io/writing.html)
+- Live diagram target: [https://harperz9.github.io/img/diagrams/frontier-safety-incident-control-plane.svg](https://harperz9.github.io/img/diagrams/frontier-safety-incident-control-plane.svg)
+- Source roles: OpenAI self-report and technical report, Hugging Face affected-party disclosure, and METR independent investigation report are cited separately in the article body.
+- Public-safety boundary: the article intentionally stays at control categories and omits live bypass corpora, exploit chains, payloads, credentials, hostnames, target-specific techniques, and affected-version details.
+- Feature commit: `1e417436e1ed02ceab36dd88c6715fc6a6289217`
+- Pull request: [#157](https://github.com/HarperZ9/HarperZ9.github.io/pull/157)
+- Merge commit: `7702a4c6b359c3d3e6e877e0ce93955b710d06e6`
+- CI receipt: GitHub Actions run `33207890445`, `CI / static-site`, succeeded on merge commit `7702a4c6b359c3d3e6e877e0ce93955b710d06e6`.
+- Pages receipt: GitHub Actions run `33207889297`, `pages-build-deployment`, succeeded on merge commit `7702a4c6b359c3d3e6e877e0ce93955b710d06e6`.
+- Local verification before merge: `python -m pytest` passed `374` tests; `git diff --check` passed; Python Playwright rendered the article at desktop and mobile widths with the article loaded, source links present, diagram alt present, no horizontal overflow, and no page errors.
+- Live verification after Pages deployment: article, writing index, all three Markdown article parts, and SVG diagram returned HTTP `200`; live article shell contained the title and diagram link; live Markdown parts contained the `warning shot` framing, public-safety boundary, and source links.
+- Social distribution: no X or LinkedIn post was made in this receipt. Social derivatives remain a separate representational-publication step.
