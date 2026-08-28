@@ -120,6 +120,8 @@ The following generated-design habits are prohibited:
 
 The hero may contain one operator-authored or tool-generated artwork, but it must function as a real visual identity or native evidence, not a background effect selected from model defaults.
 
+Eyebrows are an exception, not a component primitive. The homepage has none. Route titles, project introductions, and ordinary section headings have none. A small lead-in may appear only when it communicates a concrete state a reader would otherwise miss, such as `Verified 2026-08-28` or `Private recipient channel`; it must use sentence case, appear no more than once in a section, and remain understandable when removed from the visual hierarchy.
+
 ## 6. Homepage architecture
 
 The homepage follows this sequence:

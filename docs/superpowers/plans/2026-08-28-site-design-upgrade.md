@@ -13,7 +13,7 @@
 ## Global Constraints
 
 - Zain Dana Harper and Zentropy Labs are the front door. Flywheel is the sole `primary-platform` inside the work.
-- Do not use abstract slash-separated concept labels, generic eyebrows, floating pseudo-dashboard cards, decorative framework language, or ungrounded technical ornament.
+- Do not use abstract slash-separated concept labels, generic eyebrows, floating pseudo-dashboard cards, decorative framework language, or ungrounded technical ornament. The homepage has no eyebrow. Elsewhere, a lead-in is allowed only for a concrete dated or boundary state, at most once per section.
 - Use Hanken Grotesk and Conso only.
 - Use color semantically outside art.
 - Use warm-paper plates only for charts, diagrams, tables, evidence ledgers, and publication figures.
@@ -107,7 +107,7 @@ git commit -m "style(site): unify instrument and evidence surfaces"
 
 - [ ] **Step 1: Write failing route-header tests**
 
-Require `buildRouteHeader` to emit a functional route path, title, summary, and optional evidence image without the text `route artifact`. The path is a sentence-case breadcrumb or real family link, never a decorative eyebrow. Assert that `nav.js` does not add `aria-current` to more than one link for `hire.html#engineering-path` and that the route header is excluded from `index.html`.
+Require `buildRouteHeader` to emit a functional route path, title, summary, and optional evidence image without the text `route artifact`. The path is a sentence-case breadcrumb or real family link, never a decorative eyebrow. Route headers must not add a separate kicker, overline, or eyebrow. Assert that `nav.js` does not add `aria-current` to more than one link for `hire.html#engineering-path` and that the route header is excluded from `index.html`.
 
 - [ ] **Step 2: Run tests and verify RED**
 
@@ -120,18 +120,18 @@ Expected: the current `route artifact` caption and duplicate-current behavior fa
 
 - [ ] **Step 3: Implement `buildRouteHeader` and current-route resolution**
 
-Use the current page metadata. Render a document-flow header, not a poster or floating card:
+Use the current page metadata and existing opening structure. Prefer enhancing the page's existing `.frame`, document mast, or first-heading container with `.route-header`; never add a second `h1`. Only create a wrapper when no suitable container exists, and move the existing `h1` into it rather than cloning it. The resulting structure is a document-flow header, not a poster or floating card:
 
 ```html
 <header class="route-header">
   <nav class="route-header__path" aria-label="Breadcrumb"></nav>
-  <h1 class="route-header__title"></h1>
-  <p class="route-header__summary"></p>
+  <h1 class="route-header__title"><!-- the page's existing h1 --></h1>
+  <p class="route-header__summary"><!-- existing lede, or metadata only when absent --></p>
   <!-- Optional only when the page identifies a native or sourced evidence image. -->
 </header>
 ```
 
-Do not reuse an OG card as hero art by default. Remove the current route-poster pseudo-label, scanline filler, and repeating-stripe background. Preserve the b688549 pinned mobile menu trigger and exact-current navigation contract.
+Do not reuse an OG card as hero art by default. Remove the current route-poster pseudo-label, scanline filler, and repeating-stripe background. Preserve the b688549 pinned mobile menu trigger and exact-current navigation contract. The shared home label is `Zentropy Labs`, and its accessible label no longer calls the site `Project Telos`.
 
 When a hash route is exact, mark only the exact hash link current. Otherwise mark only the base page link current.
 
@@ -167,7 +167,7 @@ git commit -m "feat(site): unify route headers and current navigation"
 
 - [ ] **Step 1: Replace stale homepage tests with the adopted sequence**
 
-Assert the source contains the nine section identifiers from spec section 6. Require the exact hero identity lines from the spec and prohibit `orientation / artifact / claim / proof / route`, `Recorded workflows`, and `Try four browser-native checks`. Require no more than twelve overview nodes, Flywheel as the only primary platform inside the work, a visible hire route, and a complete static `noscript` mirror.
+Assert the source contains the nine section identifiers from spec section 6. Require the exact hero identity lines from the spec and prohibit `orientation / artifact / claim / proof / route`, `Recorded workflows`, and `Try four browser-native checks`. Prohibit homepage kicker, overline, and eyebrow elements, including the current `hero-kicker`. Require no more than twelve overview nodes, Flywheel as the only primary platform inside the work, a visible hire route, and a complete static `noscript` mirror.
 
 - [ ] **Step 2: Run the home tests and verify RED**
 
@@ -183,7 +183,7 @@ Keep components local to `App.tsx` until a component exceeds 120 lines. Use sema
 
 - [ ] **Step 4: Implement the homepage visual hierarchy**
 
-Use the instrument ground for the page, one warm-paper evidence ledger for sourced measures, plain ruled index rows for systems, and one contained operator-authored or tool-generated identity artwork in the hero. Remove active `ZentropyDisplay`, decorative cyan UI, pill controls, the abstract slash eyebrow, floating release card, and the recorded-workflow poster wall from homepage CSS.
+Use the instrument ground for the page, one warm-paper evidence ledger for sourced measures, plain ruled index rows for systems, and one contained operator-authored or tool-generated identity artwork in the hero. The name and direct description begin the page without an eyebrow, kicker, overline, or ornamental preface. Remove active `ZentropyDisplay`, decorative cyan UI, pill controls, the abstract slash eyebrow, floating release card, and the recorded-workflow poster wall from homepage CSS.
 
 - [ ] **Step 5: Build and deploy into the worktree**
 
