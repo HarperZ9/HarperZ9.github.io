@@ -47,17 +47,24 @@ function mountPlates(doc = document) {
     .catch(() => {});
 }
 
-export function navActive(pathname) {
-  return routeFamily(pathname);
-}
-
 function localRoute(value, includeHash = false) {
   try {
     const url = new URL(value, "https://harperz9.github.io/");
-    return url.pathname.replace(/^\//, "") + url.search + (includeHash ? url.hash : "");
+    let pathname = url.pathname.replace(/^\//, "");
+    if (!pathname || pathname.endsWith("/")) {
+      pathname += "index.html";
+    } else {
+      const leaf = pathname.split("/").pop() || "";
+      if (leaf && !leaf.includes(".")) pathname += ".html";
+    }
+    return pathname + url.search + (includeHash ? url.hash : "");
   } catch {
     return "";
   }
+}
+
+export function navActive(pathname) {
+  return routeFamily(localRoute(pathname, true));
 }
 
 function localHrefForPage(value, locationPath) {

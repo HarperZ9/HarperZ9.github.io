@@ -33,6 +33,9 @@ test("active section is derived from the route registry", () => {
   assert.equal(navActive("/studio.html"), "Studio");
   assert.equal(navActive("/gallery.html"), "Studio");
   assert.equal(navActive("/session-archive.html"), "Studio");
+  assert.equal(navActive("/catalog"), "Security");
+  assert.equal(navActive("/hire#engineering-path"), "Work");
+  assert.equal(navActive("http://127.0.0.1:8765/retro"), "Studio");
 });
 
 function navFixture(pathname, search = "", hash = "") {
@@ -79,6 +82,14 @@ test("rendered nav gives a duplicated primary route only one current-page state"
   renderNav(doc);
 
   assert.equal((mount.innerHTML.match(/href="hire\.html" aria-current="page"/g) || []).length, 1);
+  assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 1);
+});
+
+test("rendered nav treats extensionless local preview routes as html pages", () => {
+  const { doc, mount } = navFixture("/catalog");
+  renderNav(doc);
+
+  assert.match(mount.innerHTML, /href="catalog\.html" aria-current="page"/);
   assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 1);
 });
 
