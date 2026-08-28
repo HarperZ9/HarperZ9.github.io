@@ -1336,8 +1336,7 @@ body.showcase-hero .viewport-stage canvas{width:100%;height:100%;object-fit:fill
   .studio-rail,.studio-viewport,.studio-panel{border:0;overflow:visible;min-height:0}
   .studio-rail{border-bottom:1px solid transparent;border-image:var(--edge) 1}
   .studio-panel{border-top:1px solid transparent;border-image:var(--edge) 1}
-  .rail-scroll{max-height:min(72vh,34rem);overflow-y:auto;overflow-x:hidden}
-  .panel-scroll{overflow:visible}
+  .rail-scroll,.panel-scroll{overflow:visible}
   .source-menu{display:grid;grid-template-columns:1fr;gap:.55rem}
   .source-group{grid-template-columns:repeat(3,minmax(0,1fr))}
   .source-group-single{grid-template-columns:1fr}
@@ -3564,10 +3563,13 @@ h2 em,
     z-index:3;
   }
   .site-nav > .sn-more{
-    position:static;
-    display:block;
-    opacity:1;
-    visibility:visible;
+    position:fixed!important;
+    top:.65rem;
+    right:6rem;
+    display:block!important;
+    opacity:1!important;
+    visibility:visible!important;
+    z-index:1000!important;
   }
   .site-nav .sn-more summary{
     min-block-size:44px;
@@ -3610,6 +3612,9 @@ h2 em,
 @media (max-width:430px){
   .site-nav .sn-home .sn-brand-word{
     display:none!important;
+  }
+  .site-nav > .sn-more{
+    right:1rem;
   }
 }
 
@@ -3656,10 +3661,3 @@ h2 em,
 .arc-method{max-width:52ch}
 .paper-close{max-width:56ch}
 .companion{max-width:58ch}
-
-/* Pages PR #132: on mobile, the rail owns its own vertical scroll while the
-   perception panel remains part of the document flow. */
-@media(max-width:899.98px){
-  .rail-scroll{max-height:min(72vh,34rem);overflow-y:auto;overflow-x:hidden}
-  .panel-scroll{overflow:visible}
-}

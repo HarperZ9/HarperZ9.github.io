@@ -81,167 +81,167 @@
       "sha256": "c1fa64cb2d9e1f35acd4ce9f3e1332b89c8a7bf81db81b404b2739559809e708"
     },
     {
-      "byte_length": 2599,
-      "extraction_sha256": "319ecf53be8ea15b71d91174635022df0b6c70857afc8ea4f093ae719c350563",
+      "byte_length": 3226,
+      "extraction_sha256": "0d4f9923a4b79a369b2e61a752fe10c65451154294d6d317a0e57f07cb3897ac",
       "format": "pdf",
       "lane_id": "page:cover-letter",
       "mime_type": "application/pdf",
       "page_count": 1,
       "path": "career/Zain-Dana-Harper-Cover-Letter.pdf",
-      "sha256": "4359dfaae3060fc3962c865d7695add17338da334c9da9b6c639eaca98cd0075"
+      "sha256": "93f911f0f56893532dce7edf3dc76fe50d17d8f1ff5eae6ec32cce3988079721"
     },
     {
-      "byte_length": 37380,
-      "extraction_sha256": "42bdf2ace8b7c83339f1b1b216b2bb7ebcabe44d13b813252990e78b188b3e01",
+      "byte_length": 37818,
+      "extraction_sha256": "303569ed6e99abfb191c73bee7c95fa31756c535b547d81a2a8ddd80287f4583",
       "format": "docx",
       "lane_id": "page:cover-letter",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-Cover-Letter.docx",
-      "sha256": "3ca886c1601e777f026c88f58e1003329ac7a83bd54f4c622704a42bc56622f6"
+      "sha256": "efbb94cfa66aeb94b0bfa897c9a4cd3050170b8c3af2a661daee2fcfc09d1b82"
     },
     {
-      "byte_length": 3102,
-      "extraction_sha256": "ca2d5d23f586259a028490ec916b028162c8c0d13c9ff3f0f692a11fe8ef5542",
+      "byte_length": 3286,
+      "extraction_sha256": "2f863a9470dea9bc9c1d6810bbccdd23d6f718447fabaf5bc450f5d3999f8a7b",
       "format": "pdf",
       "lane_id": "page:cv",
       "mime_type": "application/pdf",
       "page_count": 1,
       "path": "career/Zain-Dana-Harper-CV.pdf",
-      "sha256": "ce954d40540259ad2242815295d20ee89d5ebc2f62760a2c889a8d314e17f3e8"
+      "sha256": "c2c8b264c4ef4d703cf6c0bd84f38d2e8d039d71137c3f1f9da146ebe78d72c4"
     },
     {
-      "byte_length": 37706,
-      "extraction_sha256": "9b500158fc6bf1f5ca8c5f6a3b92be4a31af61784262f60a4af930b44e5a2e00",
+      "byte_length": 37837,
+      "extraction_sha256": "ddc5c6ac3f0965296ca362429feda041fd38955c9428651ec3677792e3163c7a",
       "format": "docx",
       "lane_id": "page:cv",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-CV.docx",
-      "sha256": "fe3c13fee37a35b201ee104e5c3db5ce4b8d96a780b3d300e5fad81699a764f9"
+      "sha256": "9ddd2d53ac1dc1d91dc0dfe2aa3c1ddb6b1931fce976f6a0401862eb5387d167"
     },
     {
-      "byte_length": 3495,
-      "extraction_sha256": "e40638cbeaa24d036e1a524497b71f350b93880fa6895fc0941c8b189524deca",
+      "byte_length": 4273,
+      "extraction_sha256": "b3e084e6d76fee79cd131753b4a1563c07cb0bc025d246ddaf9926a89e43092f",
       "format": "pdf",
       "lane_id": "page:portfolio",
       "mime_type": "application/pdf",
-      "page_count": 1,
+      "page_count": 2,
       "path": "career/Zain-Dana-Harper-Portfolio-Brief.pdf",
-      "sha256": "4bf8e8f94e99b351a2065697bbb90601dd6792b50984a31cb1cbd8ba4b3e4e8a"
+      "sha256": "3fce3cdf8a79e6fba7de3cae4a92d98927828b108b9054bd192a28889232c486"
     },
     {
-      "byte_length": 37965,
-      "extraction_sha256": "9cc9a87b0ae31a532a59316f31907cdaddbc29952c38954974f61682a80f63ca",
+      "byte_length": 38135,
+      "extraction_sha256": "0672035341ef4a12ec9b698ca3aa6f5bf303fa13845f85cca695300de827a231",
       "format": "docx",
       "lane_id": "page:portfolio",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-Portfolio-Brief.docx",
-      "sha256": "35cea20a3c9daa56cf10b1fa01f2fbb678a379d1185b0d6e9c35b4df5a75242f"
+      "sha256": "970f083e2e083031c4de94e4491f8bd2f9bd54b56fe495386f9d10a060d8b5f6"
     }
   ],
   "authority_sha256": "8c5a030161fc2de8873dcc870e1315e0d6dc9c728f74727c683787bd5e152d34",
   "current_html": [
     {
-      "byte_length": 8946,
-      "extraction_sha256": "4055adafe35d061d6537ca272fb6cf3af74ffad31a0f2ccaa9fc71ccb174fcf8",
+      "byte_length": 9200,
+      "extraction_sha256": "90c050997b9e3c2f387404494beba58a147f564a68b211e83e83855acc6f185f",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "hire.html",
-      "sha256": "58d6a9696319dab6ffe876af2118471a8d311701d999821f69b24aaf7bd119e2"
+      "sha256": "3b25b36db439d68cefe5edd9194458da43fcf2c7d93ba4e9a63ba0707fae1c0e"
     },
     {
-      "byte_length": 5713,
-      "extraction_sha256": "3896c32b964526ce17ed15aafe7d3dcb8d4c01be99db0ade2b2e24f7763df934",
+      "byte_length": 6327,
+      "extraction_sha256": "3faf8f7ba6e019bedb4dfe8077cf8baf92a5120923ca0400c2c3ff059d5f79de",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume.html",
-      "sha256": "fba7f460d14a6c90692d67b01b9fd83d3743819a7b893fb3d4410a5be8965d63"
+      "sha256": "7c2779ca9b4c1ba7fb8b29abe804014201e63ab45b0b10eade24a5a265e969d9"
     },
     {
-      "byte_length": 5548,
-      "extraction_sha256": "b80a33d7504c22d76d4ed9cd9a8c75b9e59eee04714bb61ba84c2df108e0e2eb",
+      "byte_length": 6321,
+      "extraction_sha256": "bac68a0991b0604187ad82d582e01894b22ebbc6ef00a07730183ad9446a7f54",
       "format": "html",
       "lane_id": "page:portfolio",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "portfolio.html",
-      "sha256": "d551bf974fb55db3731278cd7bcd861a1dd31d84185289d95a6ac0799fdedf03"
+      "sha256": "2f8ba396c409222bedc61fd1731bc9aec913a7cb4c60545565bc69ea5deebde0"
     },
     {
-      "byte_length": 3339,
-      "extraction_sha256": "aedefaf9968e06d22d61b9b5e1ec3b3316abf4b832528fa044babb0c2f1af279",
+      "byte_length": 4454,
+      "extraction_sha256": "de73f2ac4be981c9fb7415804306f2391d297d402d9ad49a356ca15fcb721d0f",
       "format": "html",
       "lane_id": "page:cover-letter",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "cover-letter.html",
-      "sha256": "33bac9c3eb42fcfa24ae9df499ce780c3b6de0608b45cc5d9a09b22278176f0f"
+      "sha256": "3c5f62f8721e39fb32d5ed33833efcd43f6430e4338d3a7c6fc247def27db2e6"
     },
     {
-      "byte_length": 4787,
-      "extraction_sha256": "e49ee760a7574aaa4a5401c902b858f3a431bf8b4933b875231d9397def874d5",
+      "byte_length": 5197,
+      "extraction_sha256": "d731715392dc8f56e57dfc22e916ca9e3864846cd0eb58327ae9d349d5ea53b7",
       "format": "html",
       "lane_id": "page:cv",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "cv.html",
-      "sha256": "c60539d71308f0840aa7586098cf423a7f6e29d4038692165837756d4c2495e8"
+      "sha256": "3007d7dc83eec68ab083ede2f125833e7a2fa71bc5d39df3c8822c087f9fa0fe"
     },
     {
-      "byte_length": 3329,
-      "extraction_sha256": "f73d19a29b7cccf2614d7a5fc6b0d362a99ef97006b413b94f2b23bbc6fcc36d",
+      "byte_length": 4006,
+      "extraction_sha256": "317d9560db396cd6e17fa7b529c65d386d7d54818339a809bb728c74af3f3747",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "dossier.html",
-      "sha256": "8a965a528b3b18b0d2007c89552ea04314ac624dd1ef61bcc2b3ec3711fc92c5"
+      "sha256": "21c9cd53683cb250e757358f1b8ba297cc1cfe0c20bc8a3aa860f7f362f03bc7"
     },
     {
-      "byte_length": 2955,
+      "byte_length": 4024,
       "extraction_sha256": "b15c16171ec73e5438ebed387de561143f8fa9ec42c90853f7ab86582c777d16",
       "format": "html",
       "lane_id": "support-operations-qa",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume-support-operations.html",
-      "sha256": "1c6be91fd8020d2b089c794439143675d3c76c04ea618d2ab32099d82f248641"
+      "sha256": "ba99243614111dd8ae0dc57c8d1e562b5961a40f71df1dd774ea9bb7acf59e06"
     },
     {
-      "byte_length": 2904,
+      "byte_length": 3888,
       "extraction_sha256": "05948027ab670b7b0aefbdc2bec5607f14bea663ba007e461f1bc6012f15c902",
       "format": "html",
       "lane_id": "evaluation-python-tools",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume-evaluation-tooling.html",
-      "sha256": "b945a953027d90c8e95461f6ac952c528933f8c7031b0b71bff93e2a183938d4"
+      "sha256": "ee19766054e3e3528f4f7dd40ed2883cfe4ab229923a250ce6ff98712b276574"
     },
     {
-      "byte_length": 2647,
+      "byte_length": 3640,
       "extraction_sha256": "4313f0e0086ce683629ea760b80a90595ab2d1082e6dcc8bb0ed287246ca87f3",
       "format": "html",
       "lane_id": "public-operations",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume-public-operations.html",
-      "sha256": "fc2738793c9f34ced0ee002481d7c285dd40b841e56482204817fe0c3d8035b0"
+      "sha256": "953025a0228ce85b5c5e3c086cb26cec91c02980c614ea399a1eef440bf1b0f9"
     },
     {
-      "byte_length": 2770,
+      "byte_length": 3738,
       "extraction_sha256": "6f22cb32f82d17d8fa38c87c841ed988af0051d114526c7ef35f38ebcd53de7d",
       "format": "html",
       "lane_id": "grounds",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume-grounds.html",
-      "sha256": "ea6f1c247b00fdd9018fe09efadc32ec9c5c8a1f2c960c3c42e155a834047712"
+      "sha256": "5f84a51ef9cb0d1a02e59665529fd8633001ea82b14cbdaa8bdb87d8ff1b73e1"
     }
   ],
   "generated_at_epoch": 1787817600,

@@ -15,12 +15,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CENSUS = ROOT / "career" / "open-source-census.json"
+MANIFEST = ROOT / "career" / "career-artifacts.json"
 DOCS = ("hire.html", "resume.html", "cv.html", "portfolio.html", "cover-letter.html", "dossier.html")
 RESUME_PDFS = (
     "career/Zain-Dana-Harper-Resume-Grounds.pdf",
     "career/Zain-Dana-Harper-Resume-Public-Operations.pdf",
-    "career/Zain-Dana-Harper-Resume-Technical-Operations.pdf",
-    "career/Zain-Dana-Harper-Resume-Technical.pdf",
+    "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf",
+    "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf",
 )
 
 
@@ -31,6 +32,11 @@ def read(name: str) -> str:
 def test_every_career_document_exists() -> None:
     for name in DOCS:
         assert (ROOT / name).is_file(), name
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    for record in manifest["current_html"] + manifest["artifacts"]:
+        assert (ROOT / record["path"]).is_file(), record["path"]
+    for retired in manifest["retired_artifacts"]:
+        assert not (ROOT / retired).exists(), retired
 
 
 def test_downloadable_resume_assets_are_pdf_documents() -> None:
@@ -141,24 +147,14 @@ def test_contact_fields_are_separate_elements() -> None:
         assert m.group(1).count("<span") >= 3, f"{name} contact line is not split into fields"
 
 
-def test_the_elder_enb_figures_match_the_dated_reading() -> None:
-    """NexusMods returns 403 to an automated request, so unlike the pull-request
-    census these cannot be refreshed by a script. They are a dated reading in
-    career/elder-enb.json, entered by hand, and every figure on the site is
-    stamped from it. All of them only move upward, so a stale entry understates
-    rather than overstates, which is the safe direction for a claim."""
-    data = json.loads((ROOT / "career" / "elder-enb.json").read_text(encoding="utf-8"))
-    figures, rounded = data["figures"], data["rounded"]
-
+def test_portfolio_names_retro_work_without_stale_download_claims() -> None:
+    """The new career funnel names retro-system work as project evidence, but
+    does not depend on stale off-site download counters in the first impression."""
     portfolio = read("portfolio.html")
-    for key in ("total_downloads", "unique_downloaders", "endorsements"):
-        assert f"{figures[key]:,}" in portfolio, f"portfolio.html does not state {key}"
-    assert data["read_on"] in portfolio, "the exact figures are stated without their reading date"
-    assert data["version"] in portfolio, "the reading does not name the version it was taken at"
-
-    # A rounded claim must stay under the exact figure, or it is not rounding.
-    assert int(rounded["total_downloads"].replace(",", "")) <= figures["total_downloads"]
-    assert int(rounded["unique_downloaders"].replace(",", "")) <= figures["unique_downloaders"]
+    assert "Brender Archival" in portfolio
+    assert "Engine Revival" in portfolio
+    assert "900,000" not in portfolio
+    assert "936,657" not in portfolio
     for name in ("resume.html", "cv.html", "cover-letter.html"):
         src = read(name)
         assert "900,000" not in src, f"{name} still states a figure two readings out of date"
@@ -169,13 +165,13 @@ def test_hiring_page_leads_with_name_role_and_three_paths() -> None:
     assert "Zain Dana Harper" in src
     assert "Systems Engineer | AI Evaluation, Developer Tools, and Technical Operations" in src
     assert len(re.findall(r'<article class="hire-route-band(?: [^"]+)?"', src)) == 3
-    assert src.count('class="career-quickpaths"') == 1
+    assert src.count("career-quickpaths") == 1
     assert all(
-        anchor in src
+        re.search(rf'\bid="{re.escape(anchor)}"', src)
         for anchor in (
-            "#engineering-path",
-            "#technical-operations-path",
-            "#public-service-field-path",
+            "engineering-path",
+            "technical-operations-path",
+            "public-service-field-path",
         )
     )
     assert "zaindharper@gmail.com" in src
@@ -196,10 +192,10 @@ def test_home_source_foregrounds_the_hiring_identity() -> None:
 
 def test_resume_keeps_projects_inside_zentropy_experience() -> None:
     src = read("resume.html")
-    zentropy = src.index("Zentropy Labs")
-    projects = src.index("Selected project evidence")
-    next_role = src.index("Freelance technical writer")
-    assert zentropy < projects < next_role
+    accepted = src.index("Technical support, developer operations, and QA")
+    owned = src.index("Flywheel")
+    boundary = src.index("Identity and date boundary")
+    assert accepted < owned < boundary
 
 
 def test_primary_resume_and_public_letter_are_bounded_first_impressions() -> None:
