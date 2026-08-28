@@ -97,11 +97,6 @@ def test_current_digest_routes_incident_detail_to_the_canonical_briefing() -> No
     assert notice["source_role"] == "publication notice"
     assert {source["url"] for source in notice["sources"]} == {
         CANONICAL_OPENAI_HUGGING_FACE_BRIEFING,
-        "https://openai.com/index/hugging-face-incident-and-the-road-ahead/",
-        "https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf",
-        "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/",
-        "https://www.alabamaag.gov/attorney-general-marshall-launches-investigation-into-openai-and-sam-altman-for-massive-artificial-intelligence-data-breach/",
-        "https://www.alabamaag.gov/wp-content/uploads/2026/08/OpenAI-Subpoena_Final.pdf",
     }
 
     recurring_copy = "\n".join(
@@ -135,6 +130,16 @@ def test_current_digest_routes_incident_detail_to_the_canonical_briefing() -> No
     assert "previously watched OpenAI URLs" in edition["change_summary"]
     assert current == archive
     assert CANONICAL_OPENAI_HUGGING_FACE_BRIEFING in page
+
+
+def test_every_frontier_safety_archive_is_discoverable_from_the_sitemap() -> None:
+    history = read_json("frontier-safety/data/history.json")
+    sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+
+    for edition in history["editions"]:
+        assert (
+            f"https://harperz9.github.io/frontier-safety/archive/{edition['date']}.html" in sitemap
+        )
 
 
 def test_public_copy_has_no_opaque_citations_private_paths_or_bare_severity() -> None:
@@ -248,6 +253,20 @@ def test_briefing_uses_the_shared_site_design_canon() -> None:
     assert '@import url("../system/doc.css")' not in stylesheet
     assert "Kilon" not in stylesheet
     assert "initial-scan" not in stylesheet
+
+
+def test_controls_matrix_documents_its_accessible_analysis_contract() -> None:
+    page = (ROOT / "frontier-safety.html").read_text(encoding="utf-8")
+    archive = (
+        ROOT / "frontier-safety" / "archive" / f"{CURRENT_EDITION_DATE}.html"
+    ).read_text(encoding="utf-8")
+
+    for document in (page, archive):
+        assert f"Source-scope matrix for edition {CURRENT_EDITION_DATE}." in document
+        assert "Sources: each row links to its supporting public record." in document
+        assert "Unit: one reported control per row." in document
+        assert "Transformation: controls are grouped by reporting organization" in document
+        assert "Limitations and non-proof:" in document
 
 
 def test_future_dated_archives_use_the_shared_site_shell_and_nested_paths() -> None:

@@ -19,6 +19,7 @@ from urllib.request import Request, urlopen
 
 USER_AGENT = "ZentropyLabs-Frontier-Safety-Briefing/1.0 (+https://harperz9.github.io/frontier-safety.html)"
 MAX_BYTES = 3_000_000
+MAX_PDF_BYTES = 10_000_000
 MIN_NORMALIZED_CHARACTERS = 200
 VOID_ELEMENTS = {
     "area",
@@ -45,7 +46,7 @@ HTML_FINGERPRINT_PROFILES = {
     "openai_news_article",
     "sysdig_blog_article",
 }
-FINGERPRINT_PROFILES = HTML_FINGERPRINT_PROFILES | {"markdown_document"}
+FINGERPRINT_PROFILES = HTML_FINGERPRINT_PROFILES | {"markdown_document", "pdf_document"}
 SCHEMA_VERSION = 1
 REGISTRY_STATUSES = {"available", "context-only", "pending"}
 STATE_STATUSES = {"available", "pending"}
@@ -289,11 +290,29 @@ def normalize_html(raw: bytes, profile: str | None = None) -> str:
 
 
 def fetch(url: str, timeout: float, profile: str | None = None) -> dict:
-    request = Request(url, headers={"User-Agent": USER_AGENT, "Accept": "text/html,application/xhtml+xml"})
+    is_pdf = profile == "pdf_document"
+    accept = "application/pdf" if is_pdf else "text/html,application/xhtml+xml"
+    max_bytes = MAX_PDF_BYTES if is_pdf else MAX_BYTES
+    request = Request(url, headers={"User-Agent": USER_AGENT, "Accept": accept})
     with urlopen(request, timeout=timeout) as response:
-        raw = response.read(MAX_BYTES + 1)
-        if len(raw) > MAX_BYTES:
-            raise ValueError(f"response exceeded {MAX_BYTES} bytes")
+        raw = response.read(max_bytes + 1)
+        if len(raw) > max_bytes:
+            raise ValueError(f"response exceeded {max_bytes} bytes")
+        if is_pdf:
+            if not raw.startswith(b"%PDF-"):
+                raise ValueError("pdf_document response missing PDF header")
+            if len(raw) < MIN_NORMALIZED_CHARACTERS:
+                raise ValueError(
+                    "PDF fingerprint did not meet minimum content contract "
+                    f"({len(raw)} < {MIN_NORMALIZED_CHARACTERS} bytes)"
+                )
+            return {
+                "url": response.geturl(),
+                "sha256": hashlib.sha256(raw).hexdigest(),
+                "normalized_characters": len(raw),
+                "etag": response.headers.get("ETag"),
+                "last_modified": response.headers.get("Last-Modified"),
+            }
         normalized = normalize_html(raw, profile=profile)
         return {
             "url": response.geturl(),

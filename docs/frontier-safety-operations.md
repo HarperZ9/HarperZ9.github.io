@@ -11,6 +11,8 @@ The website is the canonical record. A reviewed edition JSON renders into four s
 
 The SHA-256 value is derived from canonical edition JSON. Current and archived JSON must match byte-for-meaning after parsing.
 
+Incident notices on the daily digest cite the canonical incident briefing only. The briefing's source manifest and build receipt carry the underlying developer statements, affected-party telemetry, independent analysis, and procedural records. This keeps source roles distinct and prevents the routing surface from collapsing heterogeneous evidence into a single label.
+
 ## Scheduled monitoring
 
 GitHub Actions runs the curated source check at 15:30 UTC. The monitoring job has `contents: read` permission, does not persist checkout credentials, and cannot commit or push. It fetches only registered URLs, applies the registered normalization profile, and compares SHA-256 fingerprints with the last reviewed source state.

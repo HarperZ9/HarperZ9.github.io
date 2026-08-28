@@ -322,6 +322,22 @@ def _render_controls(controls: list[dict]) -> str:
     return "\n".join(rows)
 
 
+def _render_controls_caption(edition_date: str) -> str:
+    if edition_date < "2026-08-27":
+        return ""
+    return (
+        '<caption class="analysis-note">'
+        f'<strong>Source-scope matrix for edition {_e(edition_date)}.</strong> '
+        'Sources: each row links to its supporting public record. '
+        'Unit: one reported control per row. '
+        'Transformation: controls are grouped by reporting organization and assigned '
+        'the evidence status stated in the reviewed edition. '
+        'Limitations and non-proof: row count is not a severity measure and does not '
+        'establish control coverage or effectiveness.'
+        '</caption>\n      '
+    )
+
+
 def _render_legacy_html(edition: dict, *, archive: bool) -> str:
     date = edition["edition_date"]
     if archive:
@@ -429,7 +445,7 @@ def _render_legacy_html(edition: dict, *, archive: bool) -> str:
   <section class="wide-section controls">
     <header><p>Claim discipline</p><h2>Controls and their status</h2></header>
     <div class="table-wrap"><table class="data data--wide controls-table">
-      <thead><tr><th>Source</th><th>Reported control</th><th>Evidence status</th></tr></thead>
+      {_render_controls_caption(edition['edition_date'])}<thead><tr><th>Source</th><th>Reported control</th><th>Evidence status</th></tr></thead>
       <tbody>{_render_controls(edition['controls'])}</tbody>
     </table></div>
   </section>
@@ -581,7 +597,7 @@ def render_html(edition: dict, *, archive: bool) -> str:
   <section class="mv wide-section controls">
     <header><p class="eyebrow">Claim discipline</p><h2>Controls and their status</h2></header>
     <div class="table-wrap"><table class="data data--wide controls-table">
-      <thead><tr><th>Source</th><th>Reported control</th><th>Evidence status</th></tr></thead>
+      {_render_controls_caption(edition['edition_date'])}<thead><tr><th>Source</th><th>Reported control</th><th>Evidence status</th></tr></thead>
       <tbody>{_render_controls(edition['controls'])}</tbody>
     </table></div>
   </section>
