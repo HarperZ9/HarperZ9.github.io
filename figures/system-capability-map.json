@@ -1,13 +1,13 @@
 {
   "renderer": "telos-figure/v1",
-  "viewBox": "0 0 1200 2072",
+  "viewBox": "0 0 960 540",
   "figure": {
     "id": "system-capability-map",
     "kind": "relationship",
-    "title": "Verified cross-system relationships",
-    "description": "Every row is one implementation relationship recorded in the public system registry. Systems repeat when they participate in more than one relationship.",
-    "claim": "17 implementation relationships are backed by the evidence IDs on their registry records. The map does not infer family, ownership, or general-association lines.",
-    "doesNotProve": "A recorded relationship does not establish product ownership, general interoperability, production adoption, performance, correctness, safety, or independent review.",
+    "title": "Flywheel capability overview",
+    "description": "A compact orientation map from Flywheel to six capability families and five representative public systems.",
+    "claim": "The map shows the visitor-facing family taxonomy recorded in the canonical public registry.",
+    "doesNotProve": "The map does not establish runtime compatibility, production adoption, independent review, or performance.",
     "sources": [
       {
         "label": "Canonical public system registry",
@@ -15,415 +15,190 @@
       }
     ],
     "retrievedAt": "2026-08-28",
-    "units": "registry systems and verified typed relationship records",
+    "units": "declared relationships",
     "transformations": [
-      "Only verified-in-source typed relation records are included.",
-      "Systems with no typed relationship are omitted from this relationship view.",
-      "Rows are sorted by source name, relationship type, and target name."
+      "Evidence receipt records and reciprocal duplicate relationships are omitted from the overview.",
+      "Five representative public systems are selected by explicit stable identifiers.",
+      "Flywheel and all six family records are rendered once."
     ],
-    "uncertainty": "The registry is a checked snapshot. Local source or a public release can change after its recorded verification date.",
+    "uncertainty": "Family membership is a navigation taxonomy. It does not state runtime dependency or implementation strength.",
     "data": {
       "type": "relationship",
       "nodes": [
         {
-          "id": "accountable-surface",
-          "label": "Accountable Surface",
+          "id": "family:graphics-retro",
+          "label": "Graphics and retro",
           "status": "verified",
-          "stateLabel": "controlled agent-action workbench",
-          "group": "Security and privacy",
-          "nodeType": "system"
+          "stateLabel": "Capability family",
+          "group": "Capability families",
+          "nodeType": "family"
         },
         {
-          "id": "brender-archival",
-          "label": "BRender Archival",
+          "id": "family:infrastructure",
+          "label": "Infrastructure",
           "status": "verified",
-          "stateLabel": "focused engine-restoration lab",
-          "group": "Graphics and media",
-          "nodeType": "system"
+          "stateLabel": "Capability family",
+          "group": "Capability families",
+          "nodeType": "family"
         },
         {
-          "id": "chorus",
-          "label": "Chorus",
+          "id": "family:platform",
+          "label": "Platform",
           "status": "verified",
-          "stateLabel": "discourse synthesis system",
-          "group": "Research and education",
-          "nodeType": "system"
+          "stateLabel": "Capability family",
+          "group": "Capability families",
+          "nodeType": "family"
         },
         {
-          "id": "crucible",
-          "label": "Crucible",
+          "id": "family:research-education",
+          "label": "Research and education",
           "status": "verified",
-          "stateLabel": "falsifiable claim evaluation system",
-          "group": "Evaluation and verification",
-          "nodeType": "system"
+          "stateLabel": "Capability family",
+          "group": "Capability families",
+          "nodeType": "family"
         },
         {
-          "id": "elder-enb",
-          "label": "Elder ENB",
+          "id": "family:security",
+          "label": "Security",
           "status": "verified",
-          "stateLabel": "ENB shader suite",
-          "group": "Graphics and media",
-          "nodeType": "system"
+          "stateLabel": "Capability family",
+          "group": "Capability families",
+          "nodeType": "family"
         },
         {
-          "id": "enb-runtime-core",
-          "label": "ENB Runtime Core",
+          "id": "family:verification",
+          "label": "Verification",
           "status": "verified",
-          "stateLabel": "ENB host lifecycle library",
-          "group": "Graphics and media",
-          "nodeType": "system"
-        },
-        {
-          "id": "engine-revival",
-          "label": "Engine Revival",
-          "status": "verified",
-          "stateLabel": "software-preservation tooling",
-          "group": "Graphics and media",
-          "nodeType": "system"
+          "stateLabel": "Capability family",
+          "group": "Capability families",
+          "nodeType": "family"
         },
         {
           "id": "flywheel",
           "label": "Flywheel",
           "status": "verified",
-          "stateLabel": "verified-inference platform and desktop client",
-          "group": "Agent systems",
-          "nodeType": "system"
-        },
-        {
-          "id": "forum",
-          "label": "Forum",
-          "status": "verified",
-          "stateLabel": "multi-agent orchestration engine",
-          "group": "Agent systems",
-          "nodeType": "system"
-        },
-        {
-          "id": "gather",
-          "label": "Gather",
-          "status": "verified",
-          "stateLabel": "research intake and corpus system",
-          "group": "Research and education",
-          "nodeType": "system"
-        },
-        {
-          "id": "index",
-          "label": "Index",
-          "status": "verified",
-          "stateLabel": "workspace map and context system",
-          "group": "Developer infrastructure",
+          "stateLabel": "Primary platform",
+          "group": "Platform",
           "nodeType": "system"
         },
         {
           "id": "learn",
           "label": "Learn",
           "status": "verified",
-          "stateLabel": "learning and coursework system",
+          "stateLabel": "standalone system",
           "group": "Research and education",
           "nodeType": "system"
         },
         {
-          "id": "mneme",
-          "label": "Mneme",
+          "id": "phantom",
+          "label": "Phantom",
           "status": "verified",
-          "stateLabel": "deterministic agent memory subsystem",
-          "group": "Agent systems",
+          "stateLabel": "standalone system",
+          "group": "Security",
           "nodeType": "system"
         },
         {
-          "id": "plexus",
-          "label": "Plexus",
+          "id": "proof-surface",
+          "label": "Proof Surface",
           "status": "verified",
-          "stateLabel": "toolchain wiring and pipeline planner",
-          "group": "Developer infrastructure",
-          "nodeType": "system"
-        },
-        {
-          "id": "raw",
-          "label": "RAW",
-          "status": "verified",
-          "stateLabel": "Skyrim D3D11 rendering platform",
-          "group": "Graphics and media",
+          "stateLabel": "evaluation layer",
+          "group": "Security",
           "nodeType": "system"
         },
         {
           "id": "relay",
           "label": "Relay",
           "status": "verified",
-          "stateLabel": "permission-gated coding agent",
-          "group": "Agent systems",
+          "stateLabel": "adapter",
+          "group": "Infrastructure",
           "nodeType": "system"
         },
         {
-          "id": "skyrimbridge",
-          "label": "SkyrimBridge",
+          "id": "retro-engine",
+          "label": "Retro Engine",
           "status": "verified",
-          "stateLabel": "Skyrim runtime integration platform",
-          "group": "Graphics and media",
-          "nodeType": "system"
-        },
-        {
-          "id": "studio-engine",
-          "label": "Studio Engine",
-          "status": "verified",
-          "stateLabel": "procedural audiovisual engine",
-          "group": "Graphics and media",
-          "nodeType": "system"
-        },
-        {
-          "id": "telos",
-          "label": "Telos",
-          "status": "verified",
-          "stateLabel": "local MCP workbench",
-          "group": "Developer infrastructure",
-          "nodeType": "system"
-        },
-        {
-          "id": "truth-enb",
-          "label": "Truth ENB",
-          "status": "verified",
-          "stateLabel": "ENB shader suite",
-          "group": "Graphics and media",
+          "stateLabel": "engine",
+          "group": "Graphics and retro",
           "nodeType": "system"
         }
       ],
       "edges": [
         {
-          "source": "chorus",
-          "target": "gather",
-          "relation": "accepts-corpus-from",
-          "status": "verified-in-source",
-          "evidenceIds": [
-            "chorus-gather-corpus-code",
-            "chorus-public-source-0-1-0",
-            "gather-release-v1-6-1"
-          ],
-          "claimScope": "Chorus accepts Gather-compatible corpus directories or JSON comment rows. It is not a declared Flywheel lane in the current lane registry.",
-          "label": "accepts corpus from",
-          "type": "accepts-corpus-from"
+          "source": "family:graphics-retro",
+          "target": "retro-engine",
+          "label": "engine",
+          "status": "verified",
+          "type": "hierarchy"
         },
         {
-          "source": "elder-enb",
-          "target": "enb-runtime-core",
-          "relation": "optional-native-runtime-dependency",
-          "status": "verified-in-source",
-          "evidenceIds": [
-            "elder-enb-runtime-core-link-code",
-            "elder-enb-public-source-0-1-0",
-            "enb-runtime-core-public-source-0-1-0"
-          ],
-          "claimScope": "Elder ENB's optional native runtime links ENB Runtime Core.",
-          "label": "optionally links at runtime",
-          "type": "optional-native-runtime-dependency"
-        },
-        {
-          "source": "elder-enb",
-          "target": "skyrimbridge",
-          "relation": "optional-runtime-integration",
-          "status": "verified-in-source",
-          "evidenceIds": [
-            "elder-enb-skyrimbridge-code",
-            "elder-enb-public-source-0-1-0",
-            "skyrimbridge-public-source-3-0-0"
-          ],
-          "claimScope": "Elder ENB exposes optional SkyrimBridge interoperability. This does not make either project a dependency of the other.",
-          "label": "supports an optional runtime integration",
-          "type": "optional-runtime-integration"
-        },
-        {
-          "source": "engine-revival",
-          "target": "brender-archival",
-          "relation": "accepts-evidence-from",
-          "status": "verified-in-source",
-          "evidenceIds": [
-            "engine-revival-brender-evidence-code",
-            "engine-revival-release-v0-1-0",
-            "brender-archival-release-v0-1-1"
-          ],
-          "claimScope": "Engine Revival can import BRender Archival evidence; neither project is a runtime dependency of the other.",
-          "label": "accepts evidence from",
-          "type": "accepts-evidence-from"
-        },
-        {
-          "source": "flywheel",
-          "target": "accountable-surface",
-          "relation": "integrates-lane",
-          "status": "verified-in-source",
-          "evidenceIds": [
-            "flywheel-accountable-surface-lane-code",
-            "flywheel-release-v0-3-10",
-            "accountable-surface-public-source"
-          ],
-          "claimScope": "Flywheel declares Accountable Surface as an actuation lane with additional Coherence Membrane and Proof Surface source roots.",
-          "label": "launches as a configured lane",
-          "type": "integrates-lane"
-        },
-        {
-          "source": "flywheel",
-          "target": "crucible",
-          "relation": "integrates-lane",
-          "status": "verified-in-source",
-          "evidenceIds": [
-            "flywheel-crucible-lane-code",
-            "flywheel-release-v0-3-10",
-            "crucible-release-v1-2-0"
-          ],
-          "claimScope": "Flywheel declares and launches Crucible as its verification MCP lane. This does not make Crucible a Flywheel-owned product.",
-          "label": "launches as a configured lane",
-          "type": "integrates-lane"
-        },
-        {
-          "source": "flywheel",
-          "target": "forum",
-          "relation": "integrates-lane",
-          "status": "verified-in-source",
-          "evidenceIds": [
-            "flywheel-forum-lane-code",
-            "flywheel-release-v0-3-10",
-            "forum-release-v1-13-0"
-          ],
-          "claimScope": "Flywheel declares and launches Forum as its orchestration MCP lane.",
-          "label": "launches as a configured lane",
-          "type": "integrates-lane"
-        },
-        {
-          "source": "flywheel",
-          "target": "gather",
-          "relation": "integrates-lane",
-          "status": "verified-in-source",
-          "evidenceIds": [
-            "flywheel-gather-lane-code",
-            "flywheel-release-v0-3-10",
-            "gather-release-v1-6-1"
-          ],
-          "claimScope": "Flywheel declares and launches Gather as its research-intake MCP lane. This does not make Gather a Flywheel-owned product.",
-          "label": "launches as a configured lane",
-          "type": "integrates-lane"
-        },
-        {
-          "source": "flywheel",
-          "target": "index",
-          "relation": "integrates-lane",
-          "status": "verified-in-source",
-          "evidenceIds": [
-            "flywheel-index-lane-code",
-            "flywheel-release-v0-3-10",
-            "index-release-v2-10-0"
-          ],
-          "claimScope": "Flywheel declares and launches Index as its workspace-structure MCP lane. The Flywheel lane metadata currently trails the published Index 2.10.0 package.",
-          "label": "launches as a configured lane",
-          "type": "integrates-lane"
-        },
-        {
-          "source": "flywheel",
-          "target": "learn",
-          "relation": "integrates-lane",
-          "status": "verified-in-source",
-          "evidenceIds": [
-            "flywheel-learn-lane-code",
-            "flywheel-release-v0-3-10",
-            "learn-public-source"
-          ],
-          "claimScope": "Flywheel declares Learn 1.6.0 as a Node MCP lane. Learn remains an independently published package.",
-          "label": "launches as a configured lane",
-          "type": "integrates-lane"
-        },
-        {
-          "source": "flywheel",
-          "target": "mneme",
-          "relation": "integrates-lane",
-          "status": "verified-in-source",
-          "evidenceIds": [
-            "flywheel-mneme-lane-code",
-            "flywheel-release-v0-3-10",
-            "mneme-public-source"
-          ],
-          "claimScope": "Flywheel declares and launches Mneme as its memory MCP lane. Flywheel lane metadata currently trails Mneme source version 0.2.0.",
-          "label": "launches as a configured lane",
-          "type": "integrates-lane"
-        },
-        {
-          "source": "flywheel",
-          "target": "plexus",
-          "relation": "integrates-lane",
-          "status": "verified-in-source",
-          "evidenceIds": [
-            "flywheel-plexus-lane-code",
-            "flywheel-release-v0-3-10",
-            "plexus-public-source"
-          ],
-          "claimScope": "Flywheel declares and launches Plexus as its tool-wiring MCP lane. Plexus derives wiring from declared manifests rather than probing every tool by default.",
-          "label": "launches as a configured lane",
-          "type": "integrates-lane"
-        },
-        {
-          "source": "flywheel",
+          "source": "family:infrastructure",
           "target": "relay",
-          "relation": "integrates-lane",
-          "status": "verified-in-source",
-          "evidenceIds": [
-            "flywheel-relay-lane-code",
-            "flywheel-release-v0-3-10",
-            "relay-public-source"
-          ],
-          "claimScope": "Flywheel declares and launches Relay as its coding-agent MCP lane.",
-          "label": "launches as a configured lane",
-          "type": "integrates-lane"
+          "label": "adapter",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "family:research-education",
+          "target": "learn",
+          "label": "standalone system",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "family:security",
+          "target": "phantom",
+          "label": "standalone system",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "family:security",
+          "target": "proof-surface",
+          "label": "evaluation layer",
+          "status": "verified",
+          "type": "hierarchy"
         },
         {
           "source": "flywheel",
-          "target": "telos",
-          "relation": "integrates-lane",
-          "status": "verified-in-source",
-          "evidenceIds": [
-            "flywheel-telos-lane-code",
-            "flywheel-release-v0-3-10",
-            "telos-public-source"
-          ],
-          "claimScope": "Flywheel declares and launches the Telos MCP workbench as a lane.",
-          "label": "launches as a configured lane",
-          "type": "integrates-lane"
+          "target": "family:graphics-retro",
+          "label": "capability family",
+          "status": "verified",
+          "type": "hierarchy"
         },
         {
-          "source": "studio-engine",
-          "target": "raw",
-          "relation": "optional-native-render-bridge",
-          "status": "verified-in-source",
-          "evidenceIds": [
-            "studio-engine-raw-bridge-code",
-            "studio-engine-public-source",
-            "raw-public-source-1-0-0"
-          ],
-          "claimScope": "Studio Engine can locate and invoke the optional RAW native CLI bridge; its Python core remains usable without RAW.",
-          "label": "can invoke as an optional native bridge",
-          "type": "optional-native-render-bridge"
+          "source": "flywheel",
+          "target": "family:infrastructure",
+          "label": "capability family",
+          "status": "verified",
+          "type": "hierarchy"
         },
         {
-          "source": "truth-enb",
-          "target": "enb-runtime-core",
-          "relation": "build-dependency",
-          "status": "verified-in-source",
-          "evidenceIds": [
-            "truth-enb-runtime-core-link-code",
-            "truth-enb-source-1-0-0",
-            "enb-runtime-core-public-source-0-1-0"
-          ],
-          "claimScope": "Truth ENB pins ENB Runtime Core for its native runtime build.",
-          "label": "builds against",
-          "type": "build-dependency"
+          "source": "flywheel",
+          "target": "family:platform",
+          "label": "capability family",
+          "status": "verified",
+          "type": "hierarchy"
         },
         {
-          "source": "truth-enb",
-          "target": "skyrimbridge",
-          "relation": "optional-runtime-integration",
-          "status": "verified-in-source",
-          "evidenceIds": [
-            "truth-enb-skyrimbridge-code",
-            "truth-enb-source-1-0-0",
-            "skyrimbridge-public-source-3-0-0"
-          ],
-          "claimScope": "SkyrimBridge is optional for the base optical suite and supplies celestial data used by the current procedural sky path.",
-          "label": "supports an optional runtime integration",
-          "type": "optional-runtime-integration"
+          "source": "flywheel",
+          "target": "family:research-education",
+          "label": "capability family",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "family:security",
+          "label": "capability family",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "family:verification",
+          "label": "capability family",
+          "status": "verified",
+          "type": "hierarchy"
         }
       ]
     }

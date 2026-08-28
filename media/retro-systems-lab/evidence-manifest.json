@@ -1,17 +1,19 @@
 {
-  "schema": "harperz9-retro-systems-evidence/v3",
+  "schema": "harperz9-retro-systems-lab-evidence/v1",
   "recordedAt": "2026-08-27",
   "sourceParityBase": "b4faa8fe7407aed2009f8a5df98e79a7a6921c12",
-  "relationships": {
-    "boundary": "Retro Engine, Engine Revival, and BRender Archival are independent projects. Their shared navigation does not imply runtime dependency, shared release state, or inherited evidence."
+  "hierarchy": {
+    "primaryPlatform": "Flywheel",
+    "cluster": "Retro Systems Lab",
+    "relationship": "Retro systems are engines in the Flywheel ecosystem, not peer primary products."
   },
-  "projects": {
-    "retroEngine": "interactive browser studio",
-    "engineRevival": "archive and revival tooling",
-    "brenderArchival": "focused BRender restoration lab"
+  "retroSystemsLab": {
+    "play": "Retro Engine",
+    "preserve": "Engine Revival",
+    "verify": "BRender Archival"
   },
   "engineRevival": {
-    "role": "archive-and-revival-tooling",
+    "role": "preserve",
     "release": {
       "status": "verified",
       "tag": "v0.1.0",
@@ -33,7 +35,7 @@
     "doesNotProve": "This manifest does not prove product parity, adoption, performance, legal completeness, or that local 12-target materializer output is the external 21-target BRender release."
   },
   "brenderArchival": {
-    "role": "brender-restoration-lab",
+    "role": "verify",
     "release": {
       "status": "verified",
       "tag": "v0.1.1",
@@ -48,7 +50,7 @@
     "doesNotProve": "Retro Engine output, generic screenshots, product parity, adoption, performance, x64 readiness, completed textured TIA output, or legal completeness."
   },
   "retroEngine": {
-    "role": "interactive-browser-studio",
+    "role": "play",
     "boundary": "Retro Engine is a companion renderer and creative studio. Generic Retro Engine output is not BRender evidence."
   }
 }

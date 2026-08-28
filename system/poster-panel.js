@@ -12,8 +12,6 @@ import {
   defaultPosterState, renderPoster, critiquePoster,
   POSTER_FORMATS, POSTER_FACES, POSTER_CELLS,
 } from "./poster.js";
-import { renderRetro } from "./retro-engine.js";
-import { applyOpsWet, OP_META } from "./glitch-ops.js";
 
 const PALETTE = ["#f2ecf7", "#c9c2d4", "#8f86a0", "#7de3ea", "#99f147", "#f8cc43", "#ff8334", "#ff35aa", "#111016"];
 
@@ -110,7 +108,7 @@ export function mountPosterWorkshop(deps) {
 
   // ── render loop (debounced) ────────────────────────────────────────────────
   function renderNow() {
-    const out = renderPoster(canvas, state, { renderSpecimen, drawImage: coverDrawImage, renderRetro, applyOps: applyOpsWet });
+    const out = renderPoster(canvas, state, { renderSpecimen, drawImage: coverDrawImage });
     lastBoxes = out.boxes || [];
     if (typeof perceiveNow === "function") { try { perceiveNow(canvas); } catch (_) {} }
     return out;
@@ -230,109 +228,6 @@ export function mountPosterWorkshop(deps) {
   veil.addEventListener("input", () => { state.art.veil = Number(veil.value); queueRender(); });
   veilLab.appendChild(veil);
   gArt.appendChild(veilLab);
-  // Veil mode: wash darkens the whole frame; panel scrims each type block only,
-  // so the art keeps its brightness everywhere else.
-  const veilModes = el("div", "poster-artchips at-chips");
-  veilModes.setAttribute("role", "group");
-  veilModes.setAttribute("aria-label", "Veil mode");
-  // Fallback must match renderPoster: a state with no veilMode renders "wash"
-  // (pre-wave-8 states were authored under the whole-frame veil).
-  [["panel", "Behind type only"], ["wash", "Whole frame"]].forEach(([val, label]) => {
-    const b = el("button", "at-chip", label);
-    b.type = "button";
-    b.setAttribute("aria-pressed", String((state.art.veilMode || "wash") === val));
-    b.addEventListener("click", () => {
-      state.art.veilMode = val;
-      [...veilModes.children].forEach((c) => c.setAttribute("aria-pressed", String(c === b)));
-      queueRender();
-    });
-    veilModes.appendChild(b);
-  });
-  gArt.appendChild(veilModes);
-  // Retro treatment: pixel-art the poster's art layer through the Retro Engine.
-  // "Keep colors" quantizes to the art's own palette so the instrument choice
-  // survives the treatment; the console palettes replace it deliberately.
-  gArt.appendChild(el("span", "at-glab", "Retro treatment"));
-  const retroChips = el("div", "poster-artchips at-chips");
-  const retroTune = el("div", "poster-retro-tune");
-  [["off", "Off"], ["keep", "Keep colors"], ["outrun", "Outrun"], ["gameboy", "Game Boy"], ["c64", "C64"], ["ega", "EGA"], ["pico8", "PICO-8"], ["aurora", "Aurora"]]
-    .forEach(([val, label], i) => {
-      const b = el("button", "at-chip", label);
-      b.type = "button";
-      b.setAttribute("aria-pressed", String(i === 0));   // Off by default
-      b.addEventListener("click", () => {
-        state.art.retro = val === "off" ? null : { palette: val };
-        retroTune.hidden = !state.art.retro;
-        [...retroChips.children].forEach((c) => c.setAttribute("aria-pressed", String(c === b)));
-        queueRender();
-      });
-      retroChips.appendChild(b);
-    });
-  gArt.appendChild(retroChips);
-  // Treatment tuning: pixel grid + how hard the treatment lands over the raw art.
-  retroTune.hidden = true;
-  const resRow = el("div", "poster-artchips at-chips");
-  resRow.setAttribute("role", "group");
-  resRow.setAttribute("aria-label", "Treatment pixel grid");
-  [["fine", "Fine"], ["standard", "Standard"], ["chunky", "Chunky"]].forEach(([val, label]) => {
-    const b = el("button", "at-chip", label);
-    b.type = "button";
-    b.setAttribute("aria-pressed", String((state.art.retroRes || "standard") === val));
-    b.addEventListener("click", () => {
-      state.art.retroRes = val;
-      [...resRow.children].forEach((c) => c.setAttribute("aria-pressed", String(c === b)));
-      queueRender();
-    });
-    resRow.appendChild(b);
-  });
-  retroTune.appendChild(resRow);
-  const mixLab = el("label", "poster-veil-label");
-  mixLab.appendChild(el("span", "at-glab", "Treatment strength"));
-  const mix = el("input", "at-slider");
-  mix.type = "range"; mix.min = "0.2"; mix.max = "1"; mix.step = "0.05";
-  mix.value = String(state.art.retroMix ?? 1);
-  mix.setAttribute("aria-label", "How hard the treatment lands over the raw art");
-  mix.addEventListener("input", () => { state.art.retroMix = Number(mix.value); queueRender(); });
-  mixLab.appendChild(mix);
-  retroTune.appendChild(mixLab);
-  gArt.appendChild(retroTune);
-
-  // The effect rack: the treatments the Retro Engine and the print desk run,
-  // reachable here so a poster can be developed rather than only palette-swapped.
-  // They land on the art only, under the veil and the type.
-  gArt.appendChild(el("span", "at-glab", "Effects"));
-  const fxRow = el("div", "poster-artchips at-chips");
-  fxRow.setAttribute("role", "group");
-  fxRow.setAttribute("aria-label", "Effects over the art");
-  const fxTune = el("div", "poster-retro-tune");
-  fxTune.hidden = true;
-  (Array.isArray(OP_META) ? OP_META : []).forEach((m) => {
-    const b = el("button", "at-chip", m.label);
-    b.type = "button";
-    b.setAttribute("aria-pressed", "false");
-    if (m.desc) b.title = m.desc;
-    b.setAttribute("aria-label", m.desc ? m.label + ": " + m.desc : m.label + " effect, " + m.cat);
-    b.addEventListener("click", () => {
-      state.art.fx = Array.isArray(state.art.fx) ? state.art.fx : [];
-      const at = state.art.fx.indexOf(m.op);
-      if (at >= 0) state.art.fx.splice(at, 1); else state.art.fx.push(m.op);
-      b.setAttribute("aria-pressed", String(state.art.fx.includes(m.op)));
-      fxTune.hidden = state.art.fx.length === 0;
-      queueRender();
-    });
-    fxRow.appendChild(b);
-  });
-  gArt.appendChild(fxRow);
-  const fxLab = el("label", "poster-veil-label");
-  fxLab.appendChild(el("span", "at-glab", "Effect strength"));
-  const fxAmt = el("input", "at-slider");
-  fxAmt.type = "range"; fxAmt.min = "0.1"; fxAmt.max = "1"; fxAmt.step = "0.05";
-  fxAmt.value = String(state.art.fxAmount ?? 0.6);
-  fxAmt.setAttribute("aria-label", "How strongly the effects land on the art");
-  fxAmt.addEventListener("input", () => { state.art.fxAmount = Number(fxAmt.value); queueRender(); });
-  fxLab.appendChild(fxAmt);
-  fxTune.appendChild(fxLab);
-  gArt.appendChild(fxTune);
   root.appendChild(gArt);
 
   // blocks

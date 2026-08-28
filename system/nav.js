@@ -1,8 +1,8 @@
 // nav.js, one source of truth for the site navigation. Injected into #site-nav on every page;
 // active state derived from the path. No framework; <noscript> fallback lives in the page markup.
-import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js?v=20260828-site-design";
+import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js?v=20260827-capability-publication";
 
-const BRAND_LABEL = "Zentropy Labs";
+const BRAND_LABEL = "zentropyLabs";
 const BRAND_MARK_SRC = "brand/zentropy-avatar.png";
 
 const DESKTOP_GPU_ART_QUERIES = [
@@ -47,24 +47,68 @@ function mountPlates(doc = document) {
     .catch(() => {});
 }
 
-function localRoute(value, includeHash = false) {
+function normalizeRouteArtSrc(raw, doc) {
+  if (!raw) return "";
+  const base = doc && doc.location ? doc.location.href : (typeof window !== "undefined" ? window.location.href : "https://harperz9.github.io/");
   try {
-    const url = new URL(value, "https://harperz9.github.io/");
-    let pathname = url.pathname.replace(/^\//, "");
-    if (!pathname || pathname.endsWith("/")) {
-      pathname += "index.html";
-    } else {
-      const leaf = pathname.split("/").pop() || "";
-      if (leaf && !leaf.includes(".")) pathname += ".html";
-    }
-    return pathname + url.search + (includeHash ? url.hash : "");
+    const url = new URL(raw, base);
+    const sameRuntimeOrigin = typeof window !== "undefined" && url.origin === window.location.origin;
+    if (url.hostname === "harperz9.github.io" || sameRuntimeOrigin) return url.pathname;
+    return raw;
   } catch {
-    return "";
+    return raw;
   }
 }
 
+function getRouteArtMetadata(doc = document) {
+  const image = doc.querySelector('meta[property="og:image"],meta[name="twitter:image"]');
+  const alt = doc.querySelector('meta[property="og:image:alt"]');
+  const src = normalizeRouteArtSrc(image && image.getAttribute("content"), doc);
+  if (!src || src.includes("/brand/zentropy-logo.png")) return null;
+  return { src, alt: (alt && alt.getAttribute("content")) || "" };
+}
+
+function mountRouteArt(doc = document) {
+  if (!doc || !doc.body || doc.documentElement.dataset.homeShell === "react") return;
+  if (doc.querySelector("[data-route-art='mounted']")) return;
+  // A page that carries its own opening figure opts out, so a reader does not
+  // scroll past two banner images stacked on each other before the first
+  // sentence. The og:image stays set either way, because that one is for the
+  // link preview and has nothing to do with the page body.
+  if (doc.body.dataset.routeArt === "off") return;
+  const main = doc.getElementById("main");
+  if (!main) return;
+  const art = getRouteArtMetadata(doc);
+  if (!art) return;
+
+  const figure = doc.createElement("figure");
+  figure.className = "route-art";
+  figure.dataset.routeArt = "mounted";
+  const img = doc.createElement("img");
+  img.src = art.src;
+  img.alt = art.alt;
+  img.loading = "lazy";
+  img.decoding = "async";
+  figure.appendChild(img);
+  const caption = doc.createElement("figcaption");
+  caption.textContent = "zentropyLabs / route artifact";
+  figure.appendChild(caption);
+  const frame = doc.querySelector(".frame");
+  const anchor = frame || main;
+  anchor.insertAdjacentElement("beforebegin", figure);
+}
+
 export function navActive(pathname) {
-  return routeFamily(localRoute(pathname, true));
+  return routeFamily(pathname);
+}
+
+function localRoute(value) {
+  try {
+    const url = new URL(value, "https://harperz9.github.io/");
+    return url.pathname.replace(/^\//, "") + url.search + url.hash;
+  } catch {
+    return "";
+  }
 }
 
 function localHrefForPage(value, locationPath) {
@@ -82,125 +126,20 @@ function escapeHtml(value) {
   })[character]);
 }
 
-function locationPath(doc) {
-  const loc = (doc && doc.location) || (typeof location !== "undefined" ? location : null);
-  if (!loc) return "/";
-  return (loc.pathname || "/") + (loc.search || "") + (loc.hash || "");
-}
-
-function isHomeDocument(doc) {
-  if (!doc || !doc.documentElement) return false;
-  if (doc.documentElement.dataset && doc.documentElement.dataset.homeShell === "react") return true;
-  const path = localRoute(locationPath(doc)).split("?")[0].split("#")[0];
-  return path === "" || path === "index.html";
-}
-
-function allLocalRoutes() {
-  return [
-    ...PRIMARY_ROUTES,
-    ...SECONDARY_GROUPS.flatMap((group) => group.routes),
-  ];
-}
-
-function currentRouteRecord(doc) {
-  const current = localRoute(locationPath(doc), true);
-  const currentBase = current.split("#")[0].split("?")[0];
-  const routes = allLocalRoutes();
-  return routes.find((route) => localRoute(route.href, true) === current)
-    || routes.find((route) => localRoute(route.href, true).split("#")[0].split("?")[0] === currentBase)
-    || null;
-}
-
-function firstElement(container, selectors) {
-  if (!container || typeof container.querySelector !== "function") return null;
-  for (const selector of selectors) {
-    const found = container.querySelector(selector);
-    if (found) return found;
-  }
-  return null;
-}
-
-function routeHeaderTarget(doc) {
-  const frame = doc.querySelector(".frame");
-  const h1 = (frame && frame.querySelector("h1")) || doc.querySelector("h1");
-  if (!h1) return null;
-  const container = h1.closest(".frame,.hire-mast,.mast,header,article");
-  if (container) return { container, h1 };
-  const parent = h1.parentElement;
-  if (!parent) return null;
-  if ((parent.tagName || "").toLowerCase() !== "main") return { container: parent, h1 };
-  const compact = doc.createElement("header");
-  parent.insertBefore(compact, h1);
-  compact.appendChild(h1);
-  const adjacent = compact.nextElementSibling;
-  if (adjacent && [".lede", ".lead", ".opening", ".role"].some((selector) => adjacent.matches(selector))) {
-    compact.appendChild(adjacent);
-  }
-  return { container: compact, h1 };
-}
-
-function buildRoutePath(doc, family) {
-  const path = doc.createElement("nav");
-  path.className = "route-header__path";
-  path.setAttribute("aria-label", "Breadcrumb");
-
-  const home = doc.createElement("a");
-  home.href = localHrefForPage("index.html", locationPath(doc));
-  home.textContent = "Zain Dana Harper";
-  path.appendChild(home);
-
-  const current = doc.createElement("span");
-  current.textContent = family || "Public work";
-  path.appendChild(current);
-  return path;
-}
-
-export function buildRouteHeader(doc = document) {
-  if (!doc || !doc.body || isHomeDocument(doc)) return null;
-  const existing = doc.querySelector("[data-route-header='mounted']");
-  if (existing) return existing;
-  const target = routeHeaderTarget(doc);
-  if (!target) return null;
-
-  const { container, h1 } = target;
-  const route = currentRouteRecord(doc);
-  const family = (route && (route.breadcrumbLabel || route.family)) || navActive(locationPath(doc));
-  const copyParent = h1.parentElement || container;
-  const summary = firstElement(copyParent, [".lede", ".lead", ".opening", ".role"])
-    || firstElement(container, [".lede", ".lead", ".opening", ".role"]);
-
-  container.classList.add("route-header");
-  container.dataset.routeHeader = "mounted";
-  h1.classList.add("route-header__title");
-  if (summary) summary.classList.add("route-header__summary");
-  if (!copyParent.querySelector(".route-header__path")) {
-    copyParent.insertBefore(buildRoutePath(doc, family), h1);
-  }
-  return container;
-}
-
-function mountRouteHeader(doc = document) {
-  buildRouteHeader(doc);
-}
-
-function navLink({ label, href, family, external = false }, active, locationPath, retainSectionState = false, allowExact = true) {
-  const exact = allowExact && !external && localRoute(href, true) === localRoute(locationPath, true);
+function navLink({ label, href, family, external = false }, active, locationPath, retainSectionState = false, currentState = null) {
+  const exact = !external && localRoute(href) === localRoute(locationPath);
+  const pageCurrent = exact && (!currentState || !currentState.pageCurrentAssigned);
+  if (pageCurrent && currentState) currentState.pageCurrentAssigned = true;
   const sectionActive = retainSectionState && family === active;
   const className = exact || sectionActive ? "is-active" : "";
   const renderedHref = external ? href : localHrefForPage(href, locationPath);
-  return `<a class="${className}" href="${escapeHtml(renderedHref)}"${exact ? ' aria-current="page"' : ''}${external ? ' rel="noopener"' : ''}>${escapeHtml(label)}</a>`;
+  return `<a class="${className}" href="${escapeHtml(renderedHref)}"${pageCurrent ? ' aria-current="page"' : ''}${external ? ' rel="noopener"' : ''}>${escapeHtml(label)}</a>`;
 }
 
-function menuGroup(label, items, active, locationPath, className) {
+function menuGroup(label, items, active, locationPath, className, currentState) {
   return `<div class="sn-menu-group ${className}">`
     + `<p class="sn-menu-label">${escapeHtml(label)}</p>`
-    + items.map((item) => navLink(
-      item,
-      active,
-      locationPath,
-      className === "sn-menu-primary",
-      className !== "sn-menu-primary",
-    )).join("")
+    + items.map((item) => navLink(item, active, locationPath, className === "sn-menu-primary", currentState)).join("")
     + `</div>`;
 }
 
@@ -299,23 +238,28 @@ function enhanceMenu(doc, mount) {
 export function renderNav(doc = document) {
   const mount = doc.getElementById("site-nav");
   if (!mount) return;
-  const routePath = locationPath(doc);
-  const active = navActive(routePath);
+  const locationPath = doc.location
+    ? doc.location.pathname + (doc.location.search || "") + (doc.location.hash || "")
+    : location.pathname + location.search + location.hash;
+  const active = navActive(locationPath);
   const moreActive = SECONDARY_GROUPS.some((group) => group.routes.some((route) => route.family === active));
-  const homeHref = localHrefForPage("index.html", routePath);
-  const brandMarkSrc = localHrefForPage(BRAND_MARK_SRC, routePath);
+  const activeLabel = active || "site";
+  const homeHref = localHrefForPage("index.html", locationPath);
+  const brandMarkSrc = localHrefForPage(BRAND_MARK_SRC, locationPath);
+  const currentState = { pageCurrentAssigned: false };
   mount.innerHTML =
-    `<a class="sn-home" href="${homeHref}" aria-label="Zain Dana Harper and ${BRAND_LABEL} home"><span class="sn-home-field"><canvas class="sn-logo-canvas" aria-hidden="true"></canvas><img class="sn-logo-fallback" src="${brandMarkSrc}" alt="" width="30" height="30" style="display:none"></span><span class="sn-brand-word">${BRAND_LABEL}</span></a>`
+    `<a class="sn-home" href="${homeHref}" aria-label="${BRAND_LABEL} / Project Telos home"><span class="sn-home-field"><canvas class="sn-logo-canvas" aria-hidden="true"></canvas><img class="sn-logo-fallback" src="${brandMarkSrc}" alt="" width="30" height="30" style="display:none"></span><span class="sn-brand-word">${BRAND_LABEL}</span></a>`
+    + `<span class="sn-section" aria-label="Current section">${escapeHtml(activeLabel)}</span>`
     + `<nav class="sn-links" aria-label="Primary">`
-    + PRIMARY_ROUTES.map((item) => navLink(item, active, routePath, true)).join("")
-    + EXTERNAL_ACTIONS.map((item) => navLink(item, active, routePath)).join("")
+    + PRIMARY_ROUTES.map((item) => navLink(item, active, locationPath, true, currentState)).join("")
+    + EXTERNAL_ACTIONS.map((item) => navLink(item, active, locationPath, false, currentState)).join("")
     + `</nav>`
     + `<details class="sn-more"${moreActive ? ' data-current="true"' : ''}>`
     + `<summary>Menu</summary>`
     + `<div class="sn-more-list" aria-label="Site menu">`
-    + menuGroup("Primary", PRIMARY_ROUTES, active, routePath, "sn-menu-primary")
-    + SECONDARY_GROUPS.map((group) => menuGroup(group.label, group.routes, active, routePath, "sn-menu-secondary")).join("")
-    + menuGroup("Actions", EXTERNAL_ACTIONS, active, routePath, "sn-menu-secondary")
+    + menuGroup("Primary", PRIMARY_ROUTES, active, locationPath, "sn-menu-primary", currentState)
+    + SECONDARY_GROUPS.map((group) => menuGroup(group.label, group.routes, active, locationPath, "sn-menu-secondary", currentState)).join("")
+    + menuGroup("Actions", EXTERNAL_ACTIONS, active, locationPath, "sn-menu-secondary", currentState)
     + `</div></details>`
     ;
   enhanceMenu(doc, mount);
@@ -360,7 +304,7 @@ function mountHomeLogo(doc) {
 // its own ?v= in the markup, so a new nav.js is what asks for new versions of
 // these; without a stamp here a reader with a warm cache keeps the old
 // stylesheet and the old exporter forever. Bump this with the nav.js stamp.
-const ASSET_V = "20260828-site-design";
+const ASSET_V = "20260827-capability-publication";
 
 function sheetHref(name) {
   const here = import.meta && import.meta.url ? import.meta.url : "";
@@ -395,7 +339,7 @@ if (typeof document !== "undefined") {
     ensureNavStylesheet(document);
     renderNav();
     wireAnchorArrival(document);
-    mountRouteHeader(document);
+    mountRouteArt(document);
     // The React home owns its own restrained desktop field and its static
     // Zentropy mobile treatment. Static pages retain the shared enhancement.
     if (document.documentElement.dataset.homeShell !== "react" && shouldMountAmbientField(document)) {

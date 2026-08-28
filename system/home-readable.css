@@ -185,8 +185,7 @@ body.home-generative-field .hero > #motes.generative-motes-canvas{
   min-height:2.65rem;
   padding:.56rem .75rem;
   border:1px solid color-mix(in oklab, var(--signal) 18%, transparent);
-  /* the last capsule on the homepage: square, like every other control */
-  border-radius:0;
+  border-radius:999px;
   color:color-mix(in oklab, var(--ink) 84%, var(--muted));
   background:color-mix(in oklab, var(--void) 76%, transparent);
   font-family:var(--font-body);
