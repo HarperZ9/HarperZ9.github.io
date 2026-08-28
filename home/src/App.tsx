@@ -41,9 +41,19 @@ type DomainRecord = {
   summary: string;
 };
 
+type RelationRecord = {
+  source: string;
+  target: string;
+  relation: string;
+  status: string;
+  evidenceIds: string[];
+  claimScope: string;
+};
+
 type Registry = {
   schema: string;
   domains: DomainRecord[];
+  relations: RelationRecord[];
   systems: SystemRecord[];
 };
 
@@ -66,10 +76,10 @@ type RetroManifest = {
   relationships: {
     boundary: string;
   };
-  retroSystemsLab: {
-    play: string;
-    preserve: string;
-    verify: string;
+  projects: {
+    retroEngine: string;
+    engineRevival: string;
+    brenderArchival: string;
   };
   engineRevival: {
     release: {
@@ -119,21 +129,6 @@ const CAPABILITY_FAMILY_IDS = [
   "research-education",
 ];
 
-const CAPABILITY_NODE_IDS = [
-  "flywheel",
-  "telos",
-  "index",
-  "gather",
-  "forum",
-  "crucible",
-  "buildlang",
-  "learn",
-  "retro-engine",
-  "engine-revival",
-  "brender-archival",
-  "phantom",
-];
-
 const REPRESENTATIVE_IDS = [
   "flywheel",
   "index",
@@ -148,7 +143,14 @@ const REPRESENTATIVE_IDS = [
 const SECURITY_IDS = [
   "phantom",
   "behavior-transform",
-  "authorized-private-practice",
+  "array",
+  "seed",
+  "sofer",
+  "isomorph",
+  "bounds",
+  "kun",
+  "orca",
+  "gate",
   "accountable-surface",
   "public-surface-sweeper",
   "model-provenance-validator",
@@ -173,30 +175,19 @@ function isoDate(value: string) {
   return value.slice(0, 10);
 }
 
-function shortSha(value: string) {
-  return value.slice(0, 12);
-}
-
-const capabilityNodes = CAPABILITY_NODE_IDS.map(requireSystem);
 const representativeSystems = REPRESENTATIVE_IDS.map(requireSystem);
 const securitySystems = SECURITY_IDS.map(requireSystem);
-const retroSystems = [
-  {
-    verb: "play",
-    system: requireSystem("retro-engine"),
-    evidence: retroManifest.retroSystemsLab.play,
-  },
-  {
-    verb: "preserve",
-    system: requireSystem("engine-revival"),
-    evidence: `${retroManifest.engineRevival.release.tag} at ${shortSha(retroManifest.engineRevival.release.commitSha)}`,
-  },
-  {
-    verb: "verify",
-    system: requireSystem("brender-archival"),
-    evidence: `${retroManifest.brenderArchival.nativeCTestTargets} native CTest targets`,
-  },
-];
+const graphicsSystems = [
+  "raw",
+  "skyrimbridge",
+  "truth-enb",
+  "elder-enb",
+  "enb-runtime-core",
+  "studio-engine",
+  "retro-engine",
+  "engine-revival",
+  "brender-archival",
+].map(requireSystem);
 
 const evidenceRows = [
   {
@@ -217,7 +208,7 @@ const evidenceRows = [
     measure: String(verifiedEvidence.length),
     label: "verified evidence rows",
     source: "system/systems.json",
-    href: "/figures/source-scope-matrix.html",
+    href: "/catalog.html",
     note: "release, source, or public-boundary records with dates",
   },
   {
@@ -296,13 +287,25 @@ function TopNav() {
       </a>
       <div className="topnav-links">
         <a href="/hire.html">Hire / work</a>
-        <a href="/overview.html">Engines</a>
+        <a href="/overview.html">Systems</a>
         <a href="/research.html">Research</a>
         <a href="/studio.html">The Studio</a>
         <a href="/gallery.html">Gallery</a>
         <a href="/retro.html">Retro Engine</a>
         <a href="https://github.com/HarperZ9" rel="noopener">GitHub</a>
       </div>
+      <details className="home-menu">
+        <summary>Menu</summary>
+        <div className="home-menu-list" aria-label="Primary menu">
+          <a href="/hire.html">Hire / work</a>
+          <a href="/overview.html">Systems</a>
+          <a href="/research.html">Research</a>
+          <a href="/studio.html">The Studio</a>
+          <a href="/gallery.html">Gallery</a>
+          <a href="/retro.html">Retro Engine</a>
+          <a href="https://github.com/HarperZ9" rel="noopener">GitHub</a>
+        </div>
+      </details>
     </nav>
   );
 }
@@ -315,7 +318,7 @@ function IdentityHero() {
         <p className="hero-line">Systems engineering, security tooling, graphics, and public research.</p>
         <p className="hero-lab">Zentropy Labs is the workshop behind Flywheel and the wider body of work.</p>
         <div className="hero-actions" aria-label="Primary actions">
-          <a className="btn solid" href="#constellation">Explore the work</a>
+          <a className="btn solid" href="#evidence-figures">Explore the work</a>
           <a className="btn" href="/hire.html">Hire or collaborate</a>
         </div>
       </div>
@@ -426,45 +429,73 @@ function CapabilityOverview() {
   return (
     <>
     <span id="make" hidden aria-hidden="true" />
-    <section id="constellation" className="section constellation-section">
+    <section id="evidence-figures" className="section evidence-figures-section">
       <div className="section-heading">
-        <h2>Capability map</h2>
+        <h2>Measured evidence</h2>
         <p className="section-lead">
-          Six capability families help visitors navigate the work. They do not define a product or imply a parent-child architecture.
-          Each system keeps its own product type, dependencies, maturity, and evidence.
+          These figures use source-attributed incident data and executed benchmark artifacts. Each includes its denominator, units,
+          source hash or record, method, and limits. Decorative capability charts are not used as evidence.
         </p>
       </div>
-      <div className="constellation-layout">
-        <figure className="visualization-diagram data-plate" aria-labelledby="constellation-title">
-          <figcaption id="constellation-title">Selected systems and their implemented product types</figcaption>
-          <div className="node-constellation" role="list">
-            {capabilityNodes.map((system) => (
-              <a
-                key={system.id}
-                role="listitem"
-                className={`node node-${system.architectureRole}`}
-                href={localHref(system.href)}
-                data-node-id={system.id}
-              >
-                <span>{system.name}</span>
-                <small>{system.productType}</small>
-              </a>
-            ))}
-            <span className="flow-line flow-platform" aria-hidden="true" />
-            <span className="flow-line flow-evidence" aria-hidden="true" />
-            <span className="flow-line flow-retro" aria-hidden="true" />
-          </div>
-          <p>Placement shows a visitor route, not ownership or runtime dependency. The catalog records secondary domains separately.</p>
-        </figure>
+      <div className="evidence-figure-grid">
+        <article className="evidence-figure-card">
+          <h3>Recovered actions by day</h3>
+          <img
+            className="research-figure-image"
+            src="/figures/recovered-actions-by-day.svg"
+            alt="Bar chart of five recovered-action counts from July 9 through July 13, 2026: 3,779; 1,135; 7,677; 3,892; and 1,130."
+            width="1280"
+            height="720"
+            loading="lazy"
+          />
+          <p>Five daily counts from Hugging Face host telemetry. Unit: recovered logged actions. The figure does not measure unique attacks, severity, intent, or harm.</p>
+          <p><a href="/figures/recovered-actions-by-day.json">Read the dataset and provenance</a></p>
+        </article>
+        <article className="evidence-figure-card">
+          <h3>Reported motive labels</h3>
+          <img
+            className="research-figure-image"
+            src="/figures/motive-sample-nonexclusive.svg"
+            alt="Bar chart of non-exclusive motive labels in a 100-agent sample: scorer source or access 97, shared infrastructure or credentials 66, and task solution or private trajectories 89."
+            width="1280"
+            height="720"
+            loading="lazy"
+          />
+          <p>Non-exclusive labels from the independent investigator sample. Categories overlap, so counts must not be summed into a population total.</p>
+          <p><a href="/figures/motive-sample-nonexclusive.json">Read the dataset and provenance</a></p>
+        </article>
+        <article className="evidence-figure-card">
+          <h3>Current cross-harness integration-failure profile</h3>
+          <img
+            className="research-figure-image"
+            src="/analytics/current-cross-harness-pilot.svg"
+            alt="Integration-failure profile for four cross-harness attempts on August 28, 2026. All four receipts verified, but zero attempts produced a valid comparable task outcome. Durations are diagnostic only."
+            width="1120"
+            height="480"
+            loading="lazy"
+          />
+          <p>Byte-identical prompt and context parity produced 4/4 verified receipts and 0 valid comparable task outcomes. This is an integration-failure profile, not market performance or a quality ranking.</p>
+          <p><a href="/analytics/current-cross-harness-pilot.html">Read exact outcomes, artifact hashes, null observations, and limits</a></p>
+        </article>
+      </div>
+      <p className="boundary-note">
+        <strong>Historical benchmark archive:</strong> <a href="/analytics/exploratory-stack-comparison.html">seven-case stack comparison</a>
+        {" "}and <a href="/analytics/model-pass-at-1-comparison.html">164-task model comparison</a>. These older scoped results remain available,
+        but they are not current headline evidence. <a href="/analytics/benchmark-evidence-status.html">Benchmark evidence status</a> retains the
+        named baseline plan; a named target is not a result, and missing runs remain NOT_MEASURED.
+      </p>
+      <div className="family-browser">
+        <h3>Browse the work by primary subject</h3>
+        <p>These are navigation labels only. Every catalog record retains its own purpose, product type, maturity, source, and limitations.</p>
         <div className="family-index">
           {CAPABILITY_FAMILY_IDS.map((familyId) => {
             const domain = domainById.get(familyId);
-            const familySystems = systems.filter((system) => system.domains.includes(familyId));
+            const familySystems = systems.filter((system) => system.primaryDomain === familyId);
             return (
               <article className="family-row" key={familyId}>
                 <h3>{domain?.label ?? familyId}</h3>
                 <p>{domain?.summary}</p>
-                <a href={`/catalog.html#${familyId}`}>{familySystems.length} related records</a>
+                <a href={`/catalog.html#domain-${familyId}`}>{familySystems.length} primary records</a>
               </article>
             );
           })}
@@ -519,7 +550,7 @@ function CurrentResearch() {
         </p>
         <div className="action-row">
           <a className="text-link" href="/publications.html">Publication index</a>
-          <a className="text-link" href="/figures/source-scope-matrix.html">Figures</a>
+          <a className="text-link" href="/figures/recovered-actions-by-day.html">Measured figures</a>
         </div>
       </div>
       <article className="data-plate briefing-card">
@@ -544,23 +575,23 @@ function RetroSystemsLab() {
   return (
     <section id="retro-systems-lab" className="section retro-section">
       <div className="section-heading">
-        <h2>Retro Systems Lab</h2>
+        <h2>Graphics, engines, and preservation</h2>
         <p className="section-lead">
-          Retro Engine, Engine Revival, and BRender Archival are independent projects with different jobs. The first is an interactive browser
-          studio, the second is preservation tooling, and the third is a focused BRender restoration lab.
+          Rendering platforms, Skyrim runtime integration, shader suites, browser graphics, procedural media, and software preservation are shown
+          as separate products. Source state, releases, tests, and limitations remain attached to each project.
         </p>
       </div>
       <div className="retro-flow">
-        {retroSystems.map(({ verb, system, evidence }) => (
+        {graphicsSystems.map((system) => (
           <article className="retro-step" key={system.id}>
-            <span className="retro-verb">{verb}</span>
+            <span className="retro-verb">{system.productType}</span>
             <h3><a href={localHref(system.href)}>{system.name}</a></h3>
             <p>{system.purpose}</p>
-            <a href={evidenceHref(system)}>{evidence}</a>
+            <a href={evidenceHref(system)}>{system.evidence[0]?.label ?? system.releaseState}</a>
           </article>
         ))}
       </div>
-      <p className="boundary-note">{retroManifest.relationships.boundary}</p>
+      <p className="boundary-note">Shared subject matter does not imply one parent product, a runtime dependency, or inherited evidence.</p>
     </section>
   );
 }
@@ -577,7 +608,7 @@ function SecurityBoundary() {
       </div>
       <div className="security-layout">
         <article className="data-plate boundary-card">
-          <h3>Controlled security constellation</h3>
+          <h3>Distinct private operational systems</h3>
           <p>
             Array, Seed, Sofer, Isomorph, Bounds, ORCA, and Gate perform different jobs across an authorized engagement. Their public descriptions name
             those jobs. Targets, credentials, live payloads, client data, and engagement-specific findings stay in the approved private channel.

@@ -45,8 +45,6 @@ def test_route_registry_is_the_union_of_hiring_capability_and_legacy_routes() ->
     } <= hrefs["Systems"]
     assert {
         "security.html", "security-toolkit.html", "phantom.html", "private-practice.html",
-        "array.html", "seed.html", "sofer.html", "isomorph.html", "bounds.html",
-        "kun.html", "aeterna.html",
         "behavior-transform.html", "systems/behavior-transform.html", "emet.html",
     } <= hrefs["Security"]
     assert {
@@ -75,7 +73,9 @@ def test_fresh_cache_stamp_covers_the_shared_navigation_chain() -> None:
     nav = read("system/nav.js")
     home_art = read("system/home-art.js")
     home_template = read("home/index.html")
-    bundle = read("assets/index-C-YSPaTO.js")
+    bundle_match = re.search(r'src="/(assets/index-[^"]+\.js)"', read("index.html"))
+    assert bundle_match, "built home page does not reference its JavaScript bundle"
+    bundle = read(bundle_match.group(1))
     assert f'const ASSET_V = "{FRESH_STAMP}"' in nav
     assert f'./routes.js?v={FRESH_STAMP}' in nav
     assert f'./nav.js?v={FRESH_STAMP}' in home_art
@@ -89,8 +89,7 @@ def test_sitemap_keeps_legacy_routes_and_adds_capability_publication_routes() ->
     for route in (
         "models-propose-oracles-dispose.html", "retro.html", "loom.html", "frontier-safety.html",
         "frontier-safety/archive/2026-08-24.html", "session-archive.html", "security-toolkit.html",
-        "phantom.html", "private-practice.html", "array.html", "seed.html", "sofer.html",
-        "isomorph.html", "bounds.html", "kun.html", "aeterna.html", "briefings/",
+        "phantom.html", "private-practice.html", "briefings/",
         "briefings/2026-08-26-openai-hugging-face-incident/", "systems/relay.html",
         "systems/behavior-transform.html",
         "engine-revival.html", "brender-archival.html",
@@ -112,11 +111,7 @@ def test_security_surfaces_keep_deep_detail_and_add_machine_readable_maturity() 
     assert "written authorization" in security.lower()
     assert "Public security maturity index" in security
     assert 'href="security-tools.json"' in security
-    for route in (
-        "security-toolkit.html", "phantom.html", "emet.html", "private-practice.html",
-        "array.html", "seed.html", "sofer.html", "isomorph.html", "bounds.html",
-        "kun.html", "aeterna.html",
-    ):
+    for route in ("security-toolkit.html", "phantom.html", "emet.html", "private-practice.html"):
         assert f'href="{route}"' in security
 
     phantom = read("phantom.html")
@@ -126,7 +121,7 @@ def test_security_surfaces_keep_deep_detail_and_add_machine_readable_maturity() 
     assert 'href="security-tools.json"' in phantom
 
     emet = read("emet.html")
-    assert "35/35 conformance" in emet
+    assert "35/35 core vectors" in emet
     assert "EMET v1.2.0" in emet
     assert "48/48" in emet
     assert "40/40" in emet

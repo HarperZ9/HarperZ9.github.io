@@ -61,7 +61,7 @@
 
 .home-menu{
   position:relative;
-  display:block;
+  display:none;
   margin-left:.4rem;
 }
 
@@ -70,7 +70,7 @@
   align-items:center;
   justify-content:center;
   gap:.42rem;
-  min-height:2.65rem;
+  min-height:44px;
   padding:.56rem .75rem;
   border:1px solid var(--line-strong);
   color:var(--muted);
@@ -138,7 +138,7 @@
 .home-menu-list a{
   display:flex;
   align-items:center;
-  min-height:2.7rem;
+  min-height:44px;
   min-width:0;
   padding:.64rem .72rem;
   color:var(--muted);
@@ -300,7 +300,6 @@ h3{
 
 .platform-record,
 .evidence-board,
-.visualization-diagram,
 .briefing-card,
 .boundary-card{
   padding:clamp(1rem,2vw,1.5rem);
@@ -347,97 +346,44 @@ code{
   max-width:70ch;
 }
 
-.constellation-layout{
+.evidence-figure-grid{
   display:grid;
-  grid-template-columns:minmax(0,1.12fr) minmax(18rem,.88fr);
-  gap:clamp(1.5rem,4vw,3rem);
-  align-items:start;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(1rem,2.4vw,1.7rem);
 }
 
-.visualization-diagram figcaption{
-  margin-bottom:1rem;
-  color:var(--ink-paper);
-  font-weight:850;
+.evidence-figure-card{
+  min-width:0;
+  padding:clamp(1rem,2.4vw,1.45rem);
+  border:1px solid var(--line-strong);
+  background:#f3f0e8;
 }
 
-.node-constellation{
-  position:relative;
-  min-height:28rem;
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  grid-auto-rows:minmax(5.4rem,auto);
-  gap:.85rem;
-  isolation:isolate;
+.evidence-figure-card h3{margin:0 0 .85rem}
+.evidence-figure-card h3{color:#111014}
+
+.evidence-figure-card p{
+  max-width:66ch;
+  color:#343840;
+  font-size:.92rem;
+  line-height:1.55;
 }
 
-.node{
-  position:relative;
-  z-index:2;
-  display:flex;
-  min-height:5.4rem;
-  flex-direction:column;
-  justify-content:space-between;
-  gap:.5rem;
-  padding:.8rem;
-  border:2px solid #111014;
-  background:#fbf9f0;
-  color:#111014;
-  text-decoration:none;
+.research-figure-image{
+  display:block;
+  width:100%;
+  height:auto;
+  border:1px solid rgba(17,16,20,.32);
+  background:#07080a;
 }
 
-.node span{font-weight:900}
-
-.node small{
-  color:#4d5459;
-  font-family:var(--font-mono);
-  font-size:.78rem;
+.family-browser{
+  margin-top:clamp(1.8rem,4vw,3.2rem);
+  padding-top:1.2rem;
+  border-top:2px solid var(--line-strong);
 }
 
-.node-primary-platform{
-  grid-column:1 / span 2;
-  grid-row:1 / span 2;
-  background:#dff8ff;
-  border-width:3px;
-  font-size:1.24rem;
-}
-
-.node-evaluation-layer{border-style:dashed}
-.node-controlled-private-constellation{background:#f1ded6}
-.node-plugin{border-style:dotted}
-
-.flow-line{
-  position:absolute;
-  z-index:1;
-  pointer-events:none;
-  background:#111014;
-}
-
-.flow-platform{
-  left:16%;
-  right:18%;
-  top:38%;
-  height:3px;
-}
-
-.flow-evidence{
-  left:42%;
-  top:12%;
-  bottom:18%;
-  width:2px;
-  border-inline:2px dashed #111014;
-  background:transparent;
-}
-
-.flow-retro{
-  left:12%;
-  right:10%;
-  bottom:19%;
-  height:2px;
-  background:transparent;
-  border-top:2px dashed #111014;
-}
-
-.visualization-diagram p{margin:.95rem 0 0}
+.family-browser > p{max-width:72ch;color:var(--muted)}
 
 .family-index{display:grid;gap:.7rem}
 
@@ -587,7 +533,7 @@ html.js .reveal.in{transform:none;transition:transform .7s cubic-bezier(.16,1,.3
   .topnav-links{max-width:34rem}
   .hero,
   .split-section,
-  .constellation-layout,
+  .evidence-figure-grid,
   .security-layout,
   .hiring-section{
     grid-template-columns:1fr;
@@ -598,26 +544,17 @@ html.js .reveal.in{transform:none;transition:transform .7s cubic-bezier(.16,1,.3
 @media (max-width: 760px){
   .topnav{
     position:relative;
-    flex-direction:column;
-    align-items:flex-start;
+    align-items:center;
+    gap:.75rem;
   }
   .topnav-links{
-    justify-content:flex-start;
-    gap:.5rem .85rem;
+    display:none;
   }
+  .home-menu{display:block;margin-left:auto}
   .hero{
     min-height:auto;
     padding-top:4rem;
   }
-  .node-constellation{
-    grid-template-columns:1fr 1fr;
-    min-height:0;
-  }
-  .node-primary-platform{
-    grid-column:1 / -1;
-    grid-row:auto;
-  }
-  .flow-line{display:none}
   .work-row{
     grid-template-columns:1fr;
     gap:.75rem;
@@ -634,6 +571,7 @@ html.js .reveal.in{transform:none;transition:transform .7s cubic-bezier(.16,1,.3
 }
 
 @media (max-width: 520px){
+  .brand-lab{display:none}
   .section{width:min(100% - 1rem,78rem)}
   .hero-actions,
   .hiring-actions{align-items:stretch}

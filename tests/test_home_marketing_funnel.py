@@ -19,7 +19,7 @@ SECTION_SEQUENCE = [
     "identity",
     "flywheel",
     "evidence",
-    "constellation",
+    "evidence-figures",
     "representative",
     "research",
     "retro-systems-lab",
@@ -76,7 +76,7 @@ def test_home_source_uses_identity_first_section_sequence() -> None:
         "Zentropy Labs is the workshop behind Flywheel and the wider body of work.",
     ]
     assert "Systems Engineer | AI Evaluation, Developer Tools, and Technical Operations" not in source
-    assert 'href="#constellation"' in source
+    assert 'href="#evidence-figures"' in source
     assert ">Explore the work" in source
     assert 'href="/hire.html"' in source
     assert ">Hire or collaborate" in source
@@ -128,28 +128,47 @@ def test_home_uses_checked_in_registry_feed_and_retro_manifest() -> None:
 
     assert feed["items"][0]["url"] == "https://harperz9.github.io/briefings/2026-08-26-openai-hugging-face-incident/"
     assert "currentBriefing.url" in source
-    assert retro["hierarchy"]["primaryPlatform"] == "Flywheel"
-    assert 'requireSystem("retro-engine")' in source
-    assert 'requireSystem("engine-revival")' in source
-    assert 'requireSystem("brender-archival")' in source
-    assert "retroManifest.retroSystemsLab.play" in source
-    assert "retroManifest.engineRevival.release.tag" in source
+    assert "hierarchy" not in retro
+    for system_id in (
+        "raw",
+        "skyrimbridge",
+        "truth-enb",
+        "elder-enb",
+        "enb-runtime-core",
+        "studio-engine",
+        "retro-engine",
+        "engine-revival",
+        "brender-archival",
+    ):
+        assert f'"{system_id}"' in source
+    assert ".map(requireSystem)" in source
     assert "retroManifest.brenderArchival.nativeCTestTargets" in source
-    for value in ("Retro Engine", "Engine Revival", "BRender Archival", "play", "preserve", "verify"):
+    for value in ("interactive browser studio", "archive and revival tooling", "focused BRender restoration lab"):
         assert value in json.dumps(retro)
 
 
-def test_home_capability_constellation_is_curated_not_a_wall_of_cards() -> None:
+def test_home_uses_real_research_figures_and_primary_subject_navigation() -> None:
     source = read(HOME_SOURCE)
     systems = json.loads(read(SYSTEMS))
-    nodes = re.search(r"const CAPABILITY_NODE_IDS = \[(?P<body>.*?)\];", source, re.S)
-    assert nodes, "homepage must declare the curated capability node list"
-    node_count = len(re.findall(r'"[^"]+"', nodes.group("body")))
-
-    assert 6 <= node_count <= 12
-    assert "data-node-id={system.id}" in source
-    assert "Capability map" in source
+    assert "Measured evidence" in source
+    assert "/figures/recovered-actions-by-day.svg" in source
+    assert "/figures/recovered-actions-by-day.json" in source
+    assert "/figures/motive-sample-nonexclusive.svg" in source
+    assert "/figures/motive-sample-nonexclusive.json" in source
+    assert "Decorative capability charts are not used as evidence" in source
+    assert "capabilityRelations" not in source
+    assert "relationship-map" not in source
+    assert "/analytics/current-cross-harness-pilot.svg" in source
+    assert "/analytics/current-cross-harness-pilot.html" in source
+    assert "integration-failure profile" in source.lower()
+    assert "0 valid comparable task outcomes" in source
+    assert 'src="/analytics/exploratory-stack-comparison.svg"' not in source
+    assert 'src="/analytics/model-pass-at-1-comparison.svg"' not in source
+    assert "Historical benchmark archive" in source
+    assert 'href="/analytics/exploratory-stack-comparison.html"' in source
+    assert 'href="/analytics/model-pass-at-1-comparison.html"' in source
     assert "CAPABILITY_FAMILY_IDS" in source
+    assert "system.primaryDomain === familyId" in source
     assert [domain["label"] for domain in systems["domains"]] == [
         "Agent systems",
         "Evaluation and verification",
@@ -159,7 +178,7 @@ def test_home_capability_constellation_is_curated_not_a_wall_of_cards() -> None:
         "Research and education",
     ]
 
-    assert "Controlled security constellation" in source
+    assert "Distinct private operational systems" in source
     assert "live bypass" not in source.lower()
     assert "exploit chain" not in source.lower()
     assert "target-specific" not in source.lower()
@@ -173,10 +192,10 @@ def test_home_evidence_board_contains_accessible_data_visualization_primitives()
     assert "<table" in source
     assert "<caption>" in source
     assert '<th scope="row">' in source
-    assert "visualization-diagram" in source
+    assert "research-figure-image" in source
     assert "data-plate" in css
     assert "evidence-table" in css
-    assert "visualization-diagram" in css
+    assert "evidence-figure-grid" in css
     assert "What this does not prove" in source
     assert "no color-only" in normalized(source).lower()
 
@@ -203,8 +222,8 @@ def test_home_metadata_and_noscript_mirror_follow_the_same_front_door() -> None:
         "Hire or collaborate",
         "Featured platform: Flywheel",
         "Evidence board",
-        "Capability map",
-        "Retro Systems Lab",
+        "Measured evidence",
+        "Graphics, engines, and preservation",
         "Security boundary",
         "Hiring and collaboration",
     ):
@@ -254,10 +273,36 @@ def test_home_and_static_routes_share_the_same_primary_navigation_spine() -> Non
     labels = re.findall(r'<a [^>]*>([^<]+)</a>', topnav.group("body"))
     assert labels == [
         "Hire / work",
-        "Engines",
+        "Systems",
         "Research",
         "The Studio",
         "Gallery",
         "Retro Engine",
         "GitHub",
     ]
+
+
+def test_home_mobile_menu_reuses_primary_routes_without_narrow_viewport_overflow() -> None:
+    source = read(HOME_SOURCE)
+    css = read(HOME_CSS)
+    desktop = re.search(r'<div className="topnav-links">(?P<body>.*?)</div>', source, re.S)
+    mobile = re.search(
+        r'<details className="home-menu">(?P<body>.*?)</details>',
+        source,
+        re.S,
+    )
+    assert desktop and mobile
+    assert "<summary>Menu</summary>" in mobile.group("body")
+    desktop_routes = re.findall(r'<a href="([^"]+)"[^>]*>([^<]+)</a>', desktop.group("body"))
+    mobile_routes = re.findall(r'<a href="([^"]+)"[^>]*>([^<]+)</a>', mobile.group("body"))
+    assert mobile_routes == desktop_routes
+
+    base_menu = re.search(r"\.home-menu\s*\{(?P<body>[^}]*)\}", css)
+    mobile_css = css.split("@media (max-width: 760px){", 1)[1].split("@media (max-width: 520px){", 1)[0]
+    mobile_links = re.search(r"\.topnav-links\s*\{(?P<body>[^}]*)\}", mobile_css)
+    mobile_menu = re.search(r"\.home-menu\s*\{(?P<body>[^}]*)\}", mobile_css)
+    assert base_menu and "display:none" in normalized(base_menu.group("body"))
+    assert mobile_links and "display:none" in normalized(mobile_links.group("body"))
+    assert mobile_menu and "display:block" in normalized(mobile_menu.group("body"))
+    assert css.count("min-height:44px") >= 2
+    assert "max-width:min(22rem, calc(100vw - 1.5rem))" in normalized(css)

@@ -18,7 +18,7 @@ def test_studio_surfaces_project_telos_feature_stack() -> None:
     src = studio_source()
     assert 'id="project-telos-features"' in src
     for term in (
-        "Fourteen-engine Flywheel",
+        "Flywheel and its declared lanes",
         "project-telos.context-envelope/v1",
         "loop ledger",
         "action receipts",

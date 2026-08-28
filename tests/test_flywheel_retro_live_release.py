@@ -119,7 +119,11 @@ def test_retro_media_manifest_matches_public_artifacts() -> None:
     assert manifest["schema"] == "harperz9-retro-systems-lab-media/v1"
 
     records = manifest["media"]
-    assert len(records) >= 6
+    assert {record["id"] for record in records} == {
+        "retro-play-capture",
+        "engine-revival-card",
+        "brender-archival-card",
+    }
     for record in records:
         path = ROOT / record["href"].lstrip("/")
         assert path.is_file(), record["href"]

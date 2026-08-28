@@ -164,7 +164,7 @@ export function buildRouteHeader(doc = document) {
 
   const { container, h1 } = target;
   const route = currentRouteRecord(doc);
-  const family = (route && route.family) || navActive(locationPath(doc));
+  const family = (route && (route.breadcrumbLabel || route.family)) || navActive(locationPath(doc));
   const copyParent = h1.parentElement || container;
   const summary = firstElement(copyParent, [".lede", ".lead", ".opening", ".role"])
     || firstElement(container, [".lede", ".lead", ".opening", ".role"]);

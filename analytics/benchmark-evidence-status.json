@@ -1,0 +1,1120 @@
+{
+  "schema": "zentropy-benchmark-evidence-status/v1",
+  "capturedAt": "2026-08-28",
+  "status": "unknown",
+  "reason": "no_valid_comparable_scorecards_found",
+  "unit": "same-task-set comparison groups",
+  "comparableGroupCount": 0,
+  "actualComparisonCount": 2,
+  "actualComparisons": {
+    "exploratoryStackMatrix": {
+      "schema": "m7-source-mined-scorecard/v1",
+      "status": "EXPLORATORY_MEASURED",
+      "capturedAt": "2026-07-09T02:44:35.010089Z",
+      "sourceSha256": "dcac28e8729d2255f3feb647c76ec00d5a975f8b616e947b92e827daf15002d6",
+      "sourceAvailability": "operator-local artifact; content hash published; no public raw-artifact link",
+      "taskSetId": "m7-source-mined-adversarial-pressure-v1",
+      "denominator": 7,
+      "caseIds": [
+        "proof_integrity_red_team_v1",
+        "graceful_degradation_v1",
+        "cross_harness_consistency_v1",
+        "tool_failure_recovery_pressure_v1",
+        "release_and_dataset_provenance_pressure_v1",
+        "schematic_drift_and_claim_integrity_v1",
+        "provider_refusal_and_accountability_pressure_v1"
+      ],
+      "measuredRows": [
+        {
+          "providerId": "serve",
+          "label": "Flywheel serve",
+          "backend": "m7-source-mined-serve",
+          "model": "14b-cpt-adapter",
+          "passed": 4,
+          "denominator": 7,
+          "passRate": 0.571,
+          "meanQuality": 0.639,
+          "meanLatencyMs": 30926.429,
+          "errorRate": 0,
+          "failureClasses": {
+            "none": 7
+          }
+        },
+        {
+          "providerId": "ollama",
+          "label": "Ollama",
+          "backend": "m7-source-mined-ollama:qwen2.5:7b",
+          "model": "qwen2.5:7b",
+          "passed": 5,
+          "denominator": 7,
+          "passRate": 0.714,
+          "meanQuality": 0.623,
+          "meanLatencyMs": 1361.571,
+          "errorRate": 0,
+          "failureClasses": {
+            "none": 7
+          }
+        },
+        {
+          "providerId": "codex",
+          "label": "OpenAI Codex",
+          "backend": "codex-plan",
+          "model": "gpt-5.3-codex-spark",
+          "passed": 0,
+          "denominator": 7,
+          "passRate": 0,
+          "meanQuality": 0.284,
+          "meanLatencyMs": 84466.286,
+          "errorRate": 0,
+          "failureClasses": {
+            "low_task_focus": 5,
+            "none": 2
+          }
+        }
+      ],
+      "unavailableRows": [
+        {
+          "providerId": "claude",
+          "label": "Claude Code",
+          "status": "NOT OPERATIONAL",
+          "reason": "quota_or_rate_limit; requested-model metadata is not treated as valid"
+        },
+        {
+          "providerId": "opencode",
+          "label": "OpenCode",
+          "status": "SKIPPED",
+          "reason": "no configured endpoint backend for provider=opencode modes=plan,api,provider,cloud"
+        }
+      ],
+      "environment": "not recorded in source artifact",
+      "method": "Same seven cases and scoring fields; different harness stacks and different requested models.",
+      "limitations": [
+        "Exploratory single-run matrix with seven custom cases.",
+        "The compared rows use different models and stack configurations; this is not a same-model harness attribution test.",
+        "Hardware, runtime versions, cost, and resource use are not recorded in the source artifact.",
+        "Claude was nonoperational and OpenCode was skipped, so neither is plotted or scored as zero."
+      ],
+      "doesNotProve": "This matrix does not prove general model or harness quality, market leadership, causal Flywheel advantage, production reliability, or independent validation."
+    },
+    "modelComparison": {
+      "schema": "flywheel.he-base-comparison/v1",
+      "status": "MEASURED",
+      "sourceSha256": "587da8ea4a04d5e520cc5ed4a83efb6c070fab6c587e0e58b00053cfdee5ed9d",
+      "sourceAvailability": "public tracked artifact at the captured commit",
+      "benchmark": "code-completion suite (164 tasks), pass@1 greedy temp0, same harness",
+      "denominator": 164,
+      "executionPolicy": "same harness; pass@1; greedy; temperature 0",
+      "models": [
+        {
+          "role": "Base Qwen 14B",
+          "modelRef": "ollama:qwen2.5-coder:14b-instruct-q4_K_M",
+          "passed": 141,
+          "passAt1": 0.8598
+        },
+        {
+          "role": "Flywheel 14B",
+          "modelRef": "ollama:flywheel-local-coder-14b",
+          "passed": 136,
+          "passAt1": 0.8293
+        }
+      ],
+      "deltaPercentagePoints": -3.05,
+      "paired": {
+        "regressions_flywheel_fail_base_pass": 14,
+        "gains_flywheel_pass_base_fail": 9,
+        "both_pass": 127,
+        "both_fail": 14
+      },
+      "mcnemar": {
+        "chiSquareContinuityCorrected": 0.696,
+        "pValue": 0.404,
+        "significantAt005": false
+      },
+      "limitations": [
+        "The base artifact digest is not pinned in this result file.",
+        "The result covers one 164-task code-completion suite and does not measure agentic tool use.",
+        "Hardware, runtime version, latency, cost, and resource use are not recorded in this result file."
+      ],
+      "doesNotProve": "This result does not show a statistically significant improvement, general coding superiority, agentic reliability, production readiness, or independent validation.",
+      "sourceProjectId": "flywheel",
+      "sourceRepositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "sourceCommit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "sourceTrackedPath": "project-docs/releases/14B/shipped-page/benchmarks/he_base_comparison.json",
+      "sourcePublicUrl": "https://github.com/HarperZ9/flywheel/blob/88c9cc0d34adcd4441c1b4e65d20760b41fc7e32/project-docs/releases/14B/shipped-page/benchmarks/he_base_comparison.json",
+      "sourceTrackedBlobSha256": "b887d87b0a2ab492c85320ca8b78d8be632b8eea890ca38a6a7f97ab61ad3f39"
+    }
+  },
+  "baselineTargets": [
+    {
+      "targetId": "aider",
+      "toolName": "Aider",
+      "modelName": "captured at execution",
+      "status": "NOT_MEASURED",
+      "reason": "No same-task, same-environment executed scorecard is present in the public analytics capture.",
+      "officialUrl": "https://aider.chat/docs/",
+      "sourceUrl": "https://github.com/Aider-AI/aider",
+      "version": "captured_at_execution",
+      "configuration": "captured_at_execution",
+      "environment": "shared_environment_captured_at_execution"
+    },
+    {
+      "targetId": "claude-code",
+      "toolName": "Claude Code",
+      "modelName": "captured at execution",
+      "status": "NOT_MEASURED",
+      "reason": "No same-task, same-environment executed scorecard is present in the public analytics capture.",
+      "officialUrl": "https://docs.anthropic.com/en/docs/claude-code/getting-started",
+      "sourceUrl": "https://github.com/anthropics/claude-code",
+      "version": "captured_at_execution",
+      "configuration": "captured_at_execution",
+      "environment": "shared_environment_captured_at_execution"
+    },
+    {
+      "targetId": "cline",
+      "toolName": "Cline",
+      "modelName": "captured at execution",
+      "status": "NOT_MEASURED",
+      "reason": "No same-task, same-environment executed scorecard is present in the public analytics capture.",
+      "officialUrl": "https://cline.bot/",
+      "sourceUrl": "https://github.com/cline/cline",
+      "version": "captured_at_execution",
+      "configuration": "captured_at_execution",
+      "environment": "shared_environment_captured_at_execution"
+    },
+    {
+      "targetId": "openai-codex",
+      "toolName": "OpenAI Codex",
+      "modelName": "captured at execution",
+      "status": "NOT_MEASURED",
+      "reason": "No same-task, same-environment executed scorecard is present in the public analytics capture.",
+      "officialUrl": "https://github.com/openai/codex",
+      "sourceUrl": "https://github.com/openai/codex",
+      "version": "captured_at_execution",
+      "configuration": "captured_at_execution",
+      "environment": "shared_environment_captured_at_execution"
+    },
+    {
+      "targetId": "opencode",
+      "toolName": "OpenCode",
+      "modelName": "captured at execution",
+      "status": "NOT_MEASURED",
+      "reason": "No same-task, same-environment executed scorecard is present in the public analytics capture.",
+      "officialUrl": "https://opencode.ai/docs",
+      "sourceUrl": "https://github.com/anomalyco/opencode",
+      "version": "captured_at_execution",
+      "configuration": "captured_at_execution",
+      "environment": "shared_environment_captured_at_execution"
+    },
+    {
+      "targetId": "openhands",
+      "toolName": "OpenHands",
+      "modelName": "captured at execution",
+      "status": "NOT_MEASURED",
+      "reason": "No same-task, same-environment executed scorecard is present in the public analytics capture.",
+      "officialUrl": "https://openhands.dev",
+      "sourceUrl": "https://github.com/OpenHands/OpenHands",
+      "version": "captured_at_execution",
+      "configuration": "captured_at_execution",
+      "environment": "shared_environment_captured_at_execution"
+    }
+  ],
+  "excludedCandidates": [
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_225412/agent_recovery_benchmark.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_225850/agent_recovery_benchmark.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_230039/agent_recovery_benchmark.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_230336/agent_recovery_benchmark.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_230513/agent_recovery_benchmark.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_230634/agent_recovery_benchmark.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_230923/spin/artifacts/agent_recovery_benchmark/20260708_230923/artifacts/agent_recovery_benchmark/20260708_230923/forum_benchmark_cases.json",
+      "schema": "forum.benchmark-case-set/v1",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_230923/spin/artifacts/agent_recovery_benchmark/20260708_230923/artifacts/agent_recovery_benchmark/20260708_230923/loop/cache/e7d325c9cd42556a.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_230923/spin/artifacts/agent_recovery_benchmark/20260708_230923/artifacts/agent_recovery_benchmark/20260708_230923/loop/env/example_pass-96a48c08fee968f6.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_230923/spin/artifacts/agent_recovery_benchmark/20260708_230923/artifacts/agent_recovery_benchmark/20260708_230923/m7_flywheel_local_dry.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_230923/spin/artifacts/agent_recovery_benchmark/20260708_230923/artifacts/agent_recovery_benchmark/20260708_230923/m7_frontier_codex_dry.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_230923/spin/artifacts/agent_recovery_benchmark/20260708_230923/artifacts/agent_recovery_benchmark/20260708_230923/report.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_230923/spin/fw_fail_a/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_230923/spin/fw_fail_b/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_230923/spin/fw_pass_a/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_230923/spin/fw_pass_b/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231022/forum_benchmark_cases.json",
+      "schema": "forum.benchmark-case-set/v1",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231022/loop/cache/e7d325c9cd42556a.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231022/loop/env/example_pass-96a48c08fee968f6.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231022/m7_flywheel_local_dry.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231022/m7_frontier_codex_dry.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231022/report.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231022/spin/fw_fail_a/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231022/spin/fw_fail_b/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231022/spin/fw_pass_a/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231022/spin/fw_pass_b/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231654/forum_benchmark_cases.json",
+      "schema": "forum.benchmark-case-set/v1",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231654/loop/cache/e7d325c9cd42556a.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231654/loop/env/example_pass-96a48c08fee968f6.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231654/m7_flywheel_local_dry.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231654/m7_frontier_codex_dry.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231654/report.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231654/spin/fw_fail_a/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231654/spin/fw_fail_b/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231654/spin/fw_pass_a/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_231654/spin/fw_pass_b/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232208/forum_benchmark_cases.json",
+      "schema": "forum.benchmark-case-set/v1",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232208/loop/cache/e7d325c9cd42556a.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232208/loop/env/example_pass-96a48c08fee968f6.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232208/m7_flywheel_local_dry.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232208/m7_frontier_codex_dry.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232208/report.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232208/spin/fw_fail_a/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232208/spin/fw_fail_b/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232208/spin/fw_pass_a/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232208/spin/fw_pass_b/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232512/forum_benchmark_cases.json",
+      "schema": "forum.benchmark-case-set/v1",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232512/loop/cache/e7d325c9cd42556a.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232512/loop/env/example_pass-96a48c08fee968f6.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232512/m7_flywheel_local_dry.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232512/m7_frontier_codex_dry.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232512/report.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232512/spin/fw_fail_a/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232512/spin/fw_fail_b/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232512/spin/fw_pass_a/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232512/spin/fw_pass_b/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232931/forum_benchmark_cases.json",
+      "schema": "forum.benchmark-case-set/v1",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232931/loop/cache/e7d325c9cd42556a.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232931/loop/env/example_pass-96a48c08fee968f6.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232931/m7_flywheel_local_dry.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232931/m7_frontier_codex_dry.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232931/report.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232931/spin/fw_fail_a/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232931/spin/fw_fail_b/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232931/spin/fw_pass_a/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/agent_recovery_benchmark/20260708_232931/spin/fw_pass_b/task.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/flywheel-local-coder-14b-benchmark-ci.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/flywheel-local-coder-14b-benchmark-m7-hard-scorecard.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts/flywheel-local-coder-14b-benchmark-m7-scorecard.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts_codex_dry.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts_codex_dry_easy_1task.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts_codex_dry_easy_full.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts_codex_dry_full_attempt.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts_codex_frontier_dry_easy_full.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts_codex_frontier_dry_hard_full.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts_codex_harness_dry_easy.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts_codex_live.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts_local_ollama_easy_full.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts_local_ollama_hard_full.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "artifacts_local_run_2.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "benchmarks/agentic-task-set-adapter-v1.json",
+      "schema": "harness.agentic-task-set-adapter/v1",
+      "reason": "planning_or_contract_artifact_not_results"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "benchmarks/agentic-task-set-implementation-plan-v1.json",
+      "schema": "harness.agentic-task-set-implementation-plan/v1",
+      "reason": "planning_or_contract_artifact_not_results"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "benchmarks/agentic-task-set-v1.json",
+      "schema": "harness.agentic-task-set/v1",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "benchmarks/cross-harness-adapter-contract-v1.json",
+      "schema": "harness.cross-harness-adapter-contract/v1",
+      "reason": "planning_or_contract_artifact_not_results"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "benchmarks/cross-harness-adapter-contract-v2.json",
+      "schema": "harness.cross-harness-adapter-contract/v2",
+      "reason": "planning_or_contract_artifact_not_results"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "benchmarks/dry-run-preflight-command-deck-v1.json",
+      "schema": "harness.dry-run-preflight-command-deck/v1",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "benchmarks/embodied-realtime-multimodal-v1.json",
+      "schema": "harness.benchmark-contract/v1",
+      "reason": "planning_or_contract_artifact_not_results"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "benchmarks/fixtures/cross-harness/documentation-topology-v1.json",
+      "schema": "harness.cross-harness-fixture.documentation-topology/v1",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "benchmarks/fixtures/cross-harness/index-events-v1.json",
+      "schema": "harness.cross-harness-fixture.index-events/v1",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "benchmarks/fixtures/cross-harness/paired-friction-observations-v1.json",
+      "schema": "harness.cross-harness-fixture.paired-friction-observations/v1",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "benchmarks/fixtures/cross-harness/shared-task-facts-v1.json",
+      "schema": "harness.cross-harness-fixture.shared-task-facts/v1",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "benchmarks/fixtures/evidence-journey/durable-restart-v2.json",
+      "schema": "flywheel.evidence-journey-acceptance-fixture/v2",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "benchmarks/forum-ledger-deep-verify-scaling-v1.json",
+      "schema": "harness.benchmark-contract/v1",
+      "reason": "planning_or_contract_artifact_not_results"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "handoff/site-designer/evidence/benchmark-ci.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "m7_scorecard.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "project-docs/releases/14B/shipped-page/benchmarks/easy_set_8task_scorecard.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "project-docs/releases/14B/shipped-page/benchmarks/hard_set_scorecard_QUARANTINED.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "project-docs/releases/14B/shipped-page/benchmarks/he_base_comparison.json",
+      "schema": "flywheel.he-base-comparison/v1",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "project-docs/releases/14B/shipped-page/benchmarks/humaneval_base_qwen14b.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "project-docs/releases/14B/shipped-page/benchmarks/humaneval_flywheel14b.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "tasks/research/encoding_sweep_scorecard_20260706.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "tasks/research/flexible_marker_scorecard_20260706.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "tasks/research/m7_hard_scorecard_20260706.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "tasks/research/m7_scorecard_20260706.json",
+      "schema": "m7-scorecard/v1",
+      "reason": "legacy_summary_missing_task_set_and_execution_identity"
+    },
+    {
+      "projectId": "flywheel",
+      "repositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "commit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "trackedPath": "tasks/research/perception_scorecard_20260706.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "forum",
+      "repositoryUrl": "https://github.com/HarperZ9/forum",
+      "commit": "844f7a3a59282fa7d0387a23a6f8d364bd90b6cb",
+      "trackedPath": "benchmarks/otlp_metrics_sample.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "forum",
+      "repositoryUrl": "https://github.com/HarperZ9/forum",
+      "commit": "844f7a3a59282fa7d0387a23a6f8d364bd90b6cb",
+      "trackedPath": "benchmarks/otlp_trace_sample.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "forum",
+      "repositoryUrl": "https://github.com/HarperZ9/forum",
+      "commit": "844f7a3a59282fa7d0387a23a6f8d364bd90b6cb",
+      "trackedPath": "benchmarks/storage_scaling.json",
+      "schema": "forum.storage-scaling-benchmark/v1",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "telos",
+      "repositoryUrl": "https://github.com/HarperZ9/telos",
+      "commit": "b9bb4f671c20b65e91b07b2a6be5d0fb31048e91",
+      "trackedPath": "docs/outreach/receipts/twenty-second-wave/hyphal-context-benchmark-2026-07-02.json",
+      "schema": "project-telos.hyphal-context-benchmark/v1",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "telos",
+      "repositoryUrl": "https://github.com/HarperZ9/telos",
+      "commit": "b9bb4f671c20b65e91b07b2a6be5d0fb31048e91",
+      "trackedPath": "docs/outreach/receipts/twenty-second-wave/hyphal-context-benchmark-correction-2026-07-18.json",
+      "schema": "project-telos.hyphal-context-benchmark-correction/v1",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "telos",
+      "repositoryUrl": "https://github.com/HarperZ9/telos",
+      "commit": "b9bb4f671c20b65e91b07b2a6be5d0fb31048e91",
+      "trackedPath": "docs/outreach/receipts/twenty-second-wave/hyphal-context-benchmark.learn-packet.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    },
+    {
+      "projectId": "telos",
+      "repositoryUrl": "https://github.com/HarperZ9/telos",
+      "commit": "b9bb4f671c20b65e91b07b2a6be5d0fb31048e91",
+      "trackedPath": "docs/outreach/receipts/twenty-second-wave/learn-hyphal-context/tutor/twenty-second-wave-hyphal-context-benchmark.prooflesson.json",
+      "schema": "unknown",
+      "reason": "unsupported_benchmark_result_schema"
+    }
+  ],
+  "doesNotProve": "A same-task-set comparison does not establish general model quality, production reliability, causal harness advantage, security, adoption, or independent validation. Results remain scoped to the recorded tasks, prompts, policy, models, harnesses, commit, and metric schema."
+}

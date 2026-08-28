@@ -117,6 +117,7 @@
           "relation": "build-dependency",
           "status": "verified-in-source",
           "evidenceIds": [
+            "truth-enb-runtime-core-link-code",
             "truth-enb-source-1-0-0",
             "enb-runtime-core-public-source-0-1-0"
           ],
@@ -130,6 +131,7 @@
           "relation": "optional-runtime-integration",
           "status": "verified-in-source",
           "evidenceIds": [
+            "truth-enb-skyrimbridge-code",
             "truth-enb-source-1-0-0",
             "skyrimbridge-public-source-3-0-0"
           ],
@@ -143,6 +145,7 @@
           "relation": "optional-native-runtime-dependency",
           "status": "verified-in-source",
           "evidenceIds": [
+            "elder-enb-runtime-core-link-code",
             "elder-enb-public-source-0-1-0",
             "enb-runtime-core-public-source-0-1-0"
           ],
@@ -156,6 +159,7 @@
           "relation": "optional-runtime-integration",
           "status": "verified-in-source",
           "evidenceIds": [
+            "elder-enb-skyrimbridge-code",
             "elder-enb-public-source-0-1-0",
             "skyrimbridge-public-source-3-0-0"
           ],
@@ -169,6 +173,7 @@
           "relation": "accepts-evidence-from",
           "status": "verified-in-source",
           "evidenceIds": [
+            "engine-revival-brender-evidence-code",
             "engine-revival-release-v0-1-0",
             "brender-archival-release-v0-1-1"
           ],
@@ -182,6 +187,7 @@
           "relation": "optional-native-render-bridge",
           "status": "verified-in-source",
           "evidenceIds": [
+            "studio-engine-raw-bridge-code",
             "studio-engine-public-source",
             "raw-public-source-1-0-0"
           ],

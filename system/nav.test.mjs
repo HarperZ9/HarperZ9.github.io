@@ -6,8 +6,10 @@ import { PRIMARY_ROUTES as NAV_PRIMARY_ROUTES } from "./routes.js?v=20260828-sit
 
 test("generated registry provides the static navigation taxonomy", () => {
   assert.equal(routeFamily("/hire.html"), "Work");
+  assert.equal(routeFamily("/catalog.html"), "Systems");
   assert.equal(routeFamily("/security.html"), "Security");
   assert.equal(routeFamily("/buildlang.html"), "Security");
+  assert.equal(routeFamily("/raw.html"), "Studio");
   assert.equal(routeFamily("/systems/relay.html"), "Systems");
   assert.equal(routeFamily("/systems/behavior-transform.html"), "Security");
   assert.equal(routeFamily("/briefings/2026-08-26-openai-hugging-face-incident/"), "Research");
@@ -33,7 +35,8 @@ test("active section is derived from the route registry", () => {
   assert.equal(navActive("/studio.html"), "Studio");
   assert.equal(navActive("/gallery.html"), "Studio");
   assert.equal(navActive("/session-archive.html"), "Studio");
-  assert.equal(navActive("/catalog"), "Security");
+  assert.equal(navActive("/catalog"), "Systems");
+  assert.equal(navActive("/raw.html"), "Studio");
   assert.equal(navActive("/hire#engineering-path"), "Work");
   assert.equal(navActive("http://127.0.0.1:8765/retro"), "Studio");
 });
@@ -275,7 +278,7 @@ function routeHeaderFixture(pathname = "/catalog.html") {
   return { doc, frame, h1, lede };
 }
 
-test("buildRouteHeader upgrades the existing opening block without cloning the h1", () => {
+test("catalog route header identifies the system catalog as Systems", () => {
   const { doc, frame, h1, lede } = routeHeaderFixture();
   const header = buildRouteHeader(doc);
 
@@ -289,9 +292,17 @@ test("buildRouteHeader upgrades the existing opening block without cloning the h
   const path = frame.querySelector(".route-header__path");
   assert.equal(path.getAttribute("aria-label"), "Breadcrumb");
   assert.equal(path.children[0].textContent, "Zain Dana Harper");
-  assert.equal(path.children[1].textContent, "Security");
+  assert.equal(path.children[1].textContent, "Systems");
   assert.equal(path.children[1].getAttribute("aria-current"), null);
   assert.doesNotMatch(path.textContent, /route artifact|eyebrow|overline|kicker|\//i);
+});
+
+test("RAW route header uses its systems registry domain label", () => {
+  const { doc, frame } = routeHeaderFixture("/raw.html");
+  buildRouteHeader(doc);
+
+  const path = frame.querySelector(".route-header__path");
+  assert.equal(path.children[1].textContent, "Graphics and media");
 });
 
 test("renderNav and buildRouteHeader leave one combined aria-current page state", () => {

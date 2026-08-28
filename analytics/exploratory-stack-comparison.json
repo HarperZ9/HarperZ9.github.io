@@ -1,0 +1,113 @@
+{
+  "renderer": "zentropy-portfolio-analytics/v2",
+  "figure": {
+    "id": "exploratory-stack-comparison",
+    "kind": "exploratory-actual-result",
+    "sourceSha256": "dcac28e8729d2255f3feb647c76ec00d5a975f8b616e947b92e827daf15002d6",
+    "units": [
+      "pass rate",
+      "quality score",
+      "milliseconds",
+      "error rate",
+      "failure counts"
+    ],
+    "denominator": 7,
+    "retrievedAt": "2026-08-28",
+    "uncertainty": [
+      "Exploratory single-run matrix with seven custom cases.",
+      "The compared rows use different models and stack configurations; this is not a same-model harness attribution test.",
+      "Hardware, runtime versions, cost, and resource use are not recorded in the source artifact.",
+      "Claude was nonoperational and OpenCode was skipped, so neither is plotted or scored as zero."
+    ],
+    "doesNotProve": "This matrix does not prove general model or harness quality, market leadership, causal Flywheel advantage, production reliability, or independent validation.",
+    "data": {
+      "schema": "m7-source-mined-scorecard/v1",
+      "status": "EXPLORATORY_MEASURED",
+      "capturedAt": "2026-07-09T02:44:35.010089Z",
+      "sourceSha256": "dcac28e8729d2255f3feb647c76ec00d5a975f8b616e947b92e827daf15002d6",
+      "sourceAvailability": "operator-local artifact; content hash published; no public raw-artifact link",
+      "taskSetId": "m7-source-mined-adversarial-pressure-v1",
+      "denominator": 7,
+      "caseIds": [
+        "proof_integrity_red_team_v1",
+        "graceful_degradation_v1",
+        "cross_harness_consistency_v1",
+        "tool_failure_recovery_pressure_v1",
+        "release_and_dataset_provenance_pressure_v1",
+        "schematic_drift_and_claim_integrity_v1",
+        "provider_refusal_and_accountability_pressure_v1"
+      ],
+      "measuredRows": [
+        {
+          "providerId": "serve",
+          "label": "Flywheel serve",
+          "backend": "m7-source-mined-serve",
+          "model": "14b-cpt-adapter",
+          "passed": 4,
+          "denominator": 7,
+          "passRate": 0.571,
+          "meanQuality": 0.639,
+          "meanLatencyMs": 30926.429,
+          "errorRate": 0,
+          "failureClasses": {
+            "none": 7
+          }
+        },
+        {
+          "providerId": "ollama",
+          "label": "Ollama",
+          "backend": "m7-source-mined-ollama:qwen2.5:7b",
+          "model": "qwen2.5:7b",
+          "passed": 5,
+          "denominator": 7,
+          "passRate": 0.714,
+          "meanQuality": 0.623,
+          "meanLatencyMs": 1361.571,
+          "errorRate": 0,
+          "failureClasses": {
+            "none": 7
+          }
+        },
+        {
+          "providerId": "codex",
+          "label": "OpenAI Codex",
+          "backend": "codex-plan",
+          "model": "gpt-5.3-codex-spark",
+          "passed": 0,
+          "denominator": 7,
+          "passRate": 0,
+          "meanQuality": 0.284,
+          "meanLatencyMs": 84466.286,
+          "errorRate": 0,
+          "failureClasses": {
+            "low_task_focus": 5,
+            "none": 2
+          }
+        }
+      ],
+      "unavailableRows": [
+        {
+          "providerId": "claude",
+          "label": "Claude Code",
+          "status": "NOT OPERATIONAL",
+          "reason": "quota_or_rate_limit; requested-model metadata is not treated as valid"
+        },
+        {
+          "providerId": "opencode",
+          "label": "OpenCode",
+          "status": "SKIPPED",
+          "reason": "no configured endpoint backend for provider=opencode modes=plan,api,provider,cloud"
+        }
+      ],
+      "environment": "not recorded in source artifact",
+      "method": "Same seven cases and scoring fields; different harness stacks and different requested models.",
+      "limitations": [
+        "Exploratory single-run matrix with seven custom cases.",
+        "The compared rows use different models and stack configurations; this is not a same-model harness attribution test.",
+        "Hardware, runtime versions, cost, and resource use are not recorded in the source artifact.",
+        "Claude was nonoperational and OpenCode was skipped, so neither is plotted or scored as zero."
+      ],
+      "doesNotProve": "This matrix does not prove general model or harness quality, market leadership, causal Flywheel advantage, production reliability, or independent validation."
+    }
+  }
+}

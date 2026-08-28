@@ -1,163 +1,235 @@
 {
   "renderer": "telos-figure/v1",
-  "viewBox": "0 0 960 540",
+  "viewBox": "0 0 1200 1204",
   "figure": {
     "id": "verification-capability-map",
     "kind": "relationship",
-    "title": "Verification capability family",
-    "description": "Public verification systems shown with Flywheel as the platform context.",
-    "claim": "The map shows public verification-family membership and each system's declared architecture role.",
-    "doesNotProve": "The map does not establish correctness for every input, production adoption, independent review, or performance.",
+    "title": "Evaluation and verification systems",
+    "description": "Systems whose registry record includes evaluation and verification, with only implementation relationships whose endpoints both remain in view.",
+    "claim": "6 verified typed registry relationships connect two systems in this evaluation-and-verification view.",
+    "doesNotProve": "The map does not establish evaluation quality, evidence sufficiency, general correctness, runtime compatibility, product ownership, production adoption, or independent review.",
     "sources": [
       {
         "label": "Canonical public system registry",
         "href": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/systems.json"
       }
     ],
-    "retrievedAt": "2026-08-27",
-    "units": "declared relationships",
+    "retrievedAt": "2026-08-28",
+    "units": "registry systems and verified typed relationship records",
     "transformations": [
-      "Evidence receipts and reciprocal duplicate relationships are omitted.",
-      "Flywheel is added once as platform context.",
-      "Public verification-family records are sorted by stable identifier."
+      "Systems are included when evaluation-verification appears in their registry domains.",
+      "Only verified typed relations whose source and target are both in this view are drawn.",
+      "No line is inferred from shared domain membership, dependencies text, or related navigation lists."
     ],
-    "uncertainty": "Architecture roles describe placement in the public taxonomy, not runtime coupling.",
+    "uncertainty": "Shared domain placement is taxonomy only. Systems without a line can still be independently useful, and lines can lag code changed after the verification date.",
     "data": {
       "type": "relationship",
       "nodes": [
         {
+          "id": "accountable-surface",
+          "label": "Accountable Surface",
+          "status": "verified",
+          "stateLabel": "controlled agent-action workbench",
+          "group": "Security and privacy",
+          "nodeType": "system"
+        },
+        {
+          "id": "bounds",
+          "label": "Bounds",
+          "status": "verified",
+          "stateLabel": "agent, runtime, and release trust verifier",
+          "group": "Evaluation and verification",
+          "nodeType": "system"
+        },
+        {
+          "id": "brender-archival",
+          "label": "BRender Archival",
+          "status": "verified",
+          "stateLabel": "focused engine-restoration lab",
+          "group": "Graphics and media",
+          "nodeType": "system"
+        },
+        {
           "id": "crucible",
           "label": "Crucible",
           "status": "verified",
-          "stateLabel": "evaluation layer",
-          "group": "Verification",
+          "stateLabel": "falsifiable claim evaluation system",
+          "group": "Evaluation and verification",
           "nodeType": "system"
         },
         {
           "id": "emet",
           "label": "EMET",
           "status": "verified",
-          "stateLabel": "engine",
-          "group": "Verification",
+          "stateLabel": "cross-implementation integrity witness",
+          "group": "Evaluation and verification",
+          "nodeType": "system"
+        },
+        {
+          "id": "engine-revival",
+          "label": "Engine Revival",
+          "status": "verified",
+          "stateLabel": "software-preservation tooling",
+          "group": "Graphics and media",
           "nodeType": "system"
         },
         {
           "id": "flywheel",
           "label": "Flywheel",
           "status": "verified",
-          "stateLabel": "Platform context",
-          "group": "Platform",
+          "stateLabel": "verified-inference platform and desktop client",
+          "group": "Agent systems",
+          "nodeType": "system"
+        },
+        {
+          "id": "forum",
+          "label": "Forum",
+          "status": "verified",
+          "stateLabel": "multi-agent orchestration engine",
+          "group": "Agent systems",
+          "nodeType": "system"
+        },
+        {
+          "id": "gate",
+          "label": "Gate",
+          "status": "verified",
+          "stateLabel": "private-system integration and release authority",
+          "group": "Developer infrastructure",
+          "nodeType": "system"
+        },
+        {
+          "id": "index",
+          "label": "Index",
+          "status": "verified",
+          "stateLabel": "workspace map and context system",
+          "group": "Developer infrastructure",
+          "nodeType": "system"
+        },
+        {
+          "id": "isomorph",
+          "label": "Isomorph",
+          "status": "verified",
+          "stateLabel": "AI inference-boundary red-team harness",
+          "group": "Evaluation and verification",
           "nodeType": "system"
         },
         {
           "id": "mneme",
           "label": "Mneme",
           "status": "verified",
-          "stateLabel": "evaluation layer",
-          "group": "Verification",
+          "stateLabel": "deterministic agent memory subsystem",
+          "group": "Agent systems",
           "nodeType": "system"
         },
         {
           "id": "model-provenance-validator",
           "label": "Model Provenance Validator",
           "status": "verified",
-          "stateLabel": "evaluation layer",
-          "group": "Verification",
+          "stateLabel": "model provenance-envelope validator",
+          "group": "Evaluation and verification",
+          "nodeType": "system"
+        },
+        {
+          "id": "proof-surface",
+          "label": "Proof Surface",
+          "status": "verified",
+          "stateLabel": "authorization and proof-packet library",
+          "group": "Security and privacy",
           "nodeType": "system"
         },
         {
           "id": "repo-proof-index",
           "label": "Repo Proof Index",
           "status": "verified",
-          "stateLabel": "evaluation layer",
-          "group": "Verification",
+          "stateLabel": "evidence index and reviewer handoff",
+          "group": "Evaluation and verification",
           "nodeType": "system"
         }
       ],
       "edges": [
         {
-          "source": "crucible",
-          "target": "emet",
-          "label": "related",
-          "status": "unavailable",
-          "type": "related"
+          "source": "engine-revival",
+          "target": "brender-archival",
+          "relation": "accepts-evidence-from",
+          "status": "verified-in-source",
+          "evidenceIds": [
+            "engine-revival-brender-evidence-code",
+            "engine-revival-release-v0-1-0",
+            "brender-archival-release-v0-1-1"
+          ],
+          "claimScope": "Engine Revival can import BRender Archival evidence; neither project is a runtime dependency of the other.",
+          "label": "accepts evidence from",
+          "type": "accepts-evidence-from"
         },
         {
-          "source": "crucible",
-          "target": "flywheel",
-          "label": "related",
-          "status": "unavailable",
-          "type": "related"
-        },
-        {
-          "source": "emet",
-          "target": "flywheel",
-          "label": "related",
-          "status": "unavailable",
-          "type": "related"
-        },
-        {
-          "source": "emet",
-          "target": "model-provenance-validator",
-          "label": "related",
-          "status": "unavailable",
-          "type": "related"
-        },
-        {
-          "source": "emet",
-          "target": "repo-proof-index",
-          "label": "related",
-          "status": "unavailable",
-          "type": "related"
+          "source": "flywheel",
+          "target": "accountable-surface",
+          "relation": "integrates-lane",
+          "status": "verified-in-source",
+          "evidenceIds": [
+            "flywheel-accountable-surface-lane-code",
+            "flywheel-release-v0-3-10",
+            "accountable-surface-public-source"
+          ],
+          "claimScope": "Flywheel declares Accountable Surface as an actuation lane with additional Coherence Membrane and Proof Surface source roots.",
+          "label": "launches as a configured lane",
+          "type": "integrates-lane"
         },
         {
           "source": "flywheel",
           "target": "crucible",
-          "label": "evaluation layer",
-          "status": "verified",
-          "type": "hierarchy"
+          "relation": "integrates-lane",
+          "status": "verified-in-source",
+          "evidenceIds": [
+            "flywheel-crucible-lane-code",
+            "flywheel-release-v0-3-10",
+            "crucible-release-v1-2-0"
+          ],
+          "claimScope": "Flywheel declares and launches Crucible as its verification MCP lane. This does not make Crucible a Flywheel-owned product.",
+          "label": "launches as a configured lane",
+          "type": "integrates-lane"
         },
         {
           "source": "flywheel",
-          "target": "emet",
-          "label": "engine",
-          "status": "verified",
-          "type": "hierarchy"
+          "target": "forum",
+          "relation": "integrates-lane",
+          "status": "verified-in-source",
+          "evidenceIds": [
+            "flywheel-forum-lane-code",
+            "flywheel-release-v0-3-10",
+            "forum-release-v1-13-0"
+          ],
+          "claimScope": "Flywheel declares and launches Forum as its orchestration MCP lane.",
+          "label": "launches as a configured lane",
+          "type": "integrates-lane"
+        },
+        {
+          "source": "flywheel",
+          "target": "index",
+          "relation": "integrates-lane",
+          "status": "verified-in-source",
+          "evidenceIds": [
+            "flywheel-index-lane-code",
+            "flywheel-release-v0-3-10",
+            "index-release-v2-10-0"
+          ],
+          "claimScope": "Flywheel declares and launches Index as its workspace-structure MCP lane. The Flywheel lane metadata currently trails the published Index 2.10.0 package.",
+          "label": "launches as a configured lane",
+          "type": "integrates-lane"
         },
         {
           "source": "flywheel",
           "target": "mneme",
-          "label": "evaluation layer",
-          "status": "verified",
-          "type": "hierarchy"
-        },
-        {
-          "source": "flywheel",
-          "target": "mneme",
-          "label": "related",
-          "status": "unavailable",
-          "type": "related"
-        },
-        {
-          "source": "flywheel",
-          "target": "model-provenance-validator",
-          "label": "evaluation layer",
-          "status": "verified",
-          "type": "hierarchy"
-        },
-        {
-          "source": "flywheel",
-          "target": "repo-proof-index",
-          "label": "evaluation layer",
-          "status": "verified",
-          "type": "hierarchy"
-        },
-        {
-          "source": "model-provenance-validator",
-          "target": "repo-proof-index",
-          "label": "related",
-          "status": "unavailable",
-          "type": "related"
+          "relation": "integrates-lane",
+          "status": "verified-in-source",
+          "evidenceIds": [
+            "flywheel-mneme-lane-code",
+            "flywheel-release-v0-3-10",
+            "mneme-public-source"
+          ],
+          "claimScope": "Flywheel declares and launches Mneme as its memory MCP lane. Flywheel lane metadata currently trails Mneme source version 0.2.0.",
+          "label": "launches as a configured lane",
+          "type": "integrates-lane"
         }
       ]
     }

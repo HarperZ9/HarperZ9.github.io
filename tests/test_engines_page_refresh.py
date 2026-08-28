@@ -53,8 +53,8 @@ def test_engines_page_routes_to_core_retro_proof_and_work() -> None:
         "retro.html",
         "engine-revival.html",
         "brender-archival.html",
-        "figures/system-capability-map.html",
-        "figures/verification-capability-map.html",
+        "figures/recovered-actions-by-day.html",
+        "figures/motive-sample-nonexclusive.html",
         "demonstrations.html",
         "catalog.html",
         "hire.html",
@@ -67,10 +67,9 @@ def test_engines_page_routes_to_core_retro_proof_and_work() -> None:
         "Retro Engine",
         "Engine Revival",
         "BRender Archival",
-        "Preserve",
-        "Verify",
-        "Play",
-        "Reuse",
+        "Archive and revival tooling",
+        "BRender restoration lab",
+        "Interactive browser studio",
     ):
         assert label in page
 

@@ -98,10 +98,10 @@ def test_noscript_fallback_is_a_complete_identity_first_front_door() -> None:
         "Systems engineering, security tooling, graphics, and public research.",
         "Featured platform: Flywheel",
         "Evidence board",
-        "Capability map",
+        "Measured evidence",
         "Representative work",
         "Current research",
-        "Retro Systems Lab",
+        "Graphics, engines, and preservation",
         "Security boundary",
         "Hiring and collaboration",
     ):
@@ -136,15 +136,18 @@ def test_home_source_and_styles_have_no_decorative_home_lead_ins() -> None:
     assert "radial-gradient" not in combined
 
 
-def test_home_visual_system_uses_evidence_plates_not_floating_dashboards() -> None:
+def test_home_visual_system_uses_real_evidence_figures_not_decorative_relationship_charts() -> None:
     css = read(APP_CSS)
 
     assert ".identity-art" in css
     assert ".data-plate" in css
     assert ".evidence-table" in css
-    assert ".visualization-diagram" in css
-    assert ".node-constellation" in css
-    assert ".flow-line" in css
+    assert ".evidence-figure-grid" in css
+    assert ".research-figure-image" in css
+    assert ".relationship-map" not in css
+    assert ".relationship-row" not in css
+    assert ".node-constellation" not in css
+    assert ".flow-line" not in css
     assert ".hero-card" not in css
     assert ".release-card" not in css
     assert ".workflow" not in css
@@ -159,8 +162,8 @@ def test_deployed_bundle_matches_the_new_front_door_after_build() -> None:
     for value in (
         "Zain Dana Harper",
         "Zentropy Labs is the workshop behind Flywheel and the wider body of work.",
-        "Capability map",
-        "Retro Systems Lab",
+        "Measured evidence",
+        "Graphics, engines, and preservation",
         "Security boundary",
         "Hiring and collaboration",
     ):
@@ -172,7 +175,7 @@ def test_deployed_bundle_matches_the_new_front_door_after_build() -> None:
         assert stale not in bundle
 
     assert "data-plate" in css
-    assert "visualization-diagram" in css
+    assert "evidence-figure-grid" in css
     assert "hero-kicker" not in css
 
 

@@ -15,8 +15,8 @@ CAPABILITY_ROUTES = (
     "isomorph.html",
     "bounds.html",
     "kun.html",
-    "aeterna.html",
 )
+SECURITY_CAPABILITY_ROUTES = CAPABILITY_ROUTES
 FORBIDDEN_PUBLIC_MARKERS = (
     re.compile(r"(?i)(?<![a-z0-9])[a-z]:[/\\]+(?:users|dev|program files)[/\\]+"),
     re.compile(r"(?i)file:///(?:[a-z]:[/\\]+|users/|home/)"),
@@ -50,12 +50,10 @@ def test_private_capability_pages_exist_and_publish_only_boundary_level_copy() -
         assert f'<link rel="canonical" href="https://harperz9.github.io/{route}">' in source
         assert "system/nav.js?v=20260828-site-design" in source
         assert "system/private-capability.css?v=20260828-site-design" in source
-        assert '<svg role="img"' in source
-        assert "aria-labelledby=" in source
-        assert "<figcaption>" in source
+        assert '<table class="capability-table">' in source
+        assert "private" in source.lower()
         assert "controlled" in source.lower()
         assert "boundary" in source.lower()
-        assert "private" in source.lower()
         for marker in FORBIDDEN_PUBLIC_MARKERS:
             assert not marker.search(source), f"{route} contains {marker.pattern}"
 
@@ -82,7 +80,7 @@ def test_controlled_material_boundary_is_explicit_on_ai_red_team_and_campaign_pa
         assert phrase in array
 
 
-def test_access_recovery_and_graphics_pages_do_not_publish_unsafe_instructions() -> None:
+def test_access_recovery_page_does_not_publish_unsafe_instructions() -> None:
     kun = read("kun.html")
     for phrase in (
         "No raw credentials",
@@ -92,15 +90,6 @@ def test_access_recovery_and_graphics_pages_do_not_publish_unsafe_instructions()
     ):
         assert phrase in kun
 
-    aeterna = read("aeterna.html")
-    for phrase in (
-        "No anti-cheat, bypass, or target-specific instructions",
-        "No unauthorized instrumentation",
-        "omits loader details",
-    ):
-        assert phrase in aeterna
-
-
 def test_capability_routes_are_visible_from_navigation_catalog_and_sitemap() -> None:
     registry = route_registry()
     security_routes = {
@@ -109,7 +98,7 @@ def test_capability_routes_are_visible_from_navigation_catalog_and_sitemap() -> 
         if family["label"] == "Security"
         for route in family["routes"]
     }
-    assert set(CAPABILITY_ROUTES) <= security_routes
+    assert set(SECURITY_CAPABILITY_ROUTES) <= security_routes
 
     sitemap = read("sitemap.xml")
     security = read("security.html")
@@ -125,6 +114,14 @@ def test_capability_routes_are_visible_from_navigation_catalog_and_sitemap() -> 
 def test_system_registry_has_individual_controlled_private_records() -> None:
     registry = system_registry()
     records = {record["id"]: record for record in registry["systems"]}
+    expected_primary_domains = {
+        "array": "security-privacy",
+        "seed": "security-privacy",
+        "sofer": "agent-systems",
+        "isomorph": "evaluation-verification",
+        "bounds": "evaluation-verification",
+        "kun": "security-privacy",
+    }
     assert set(route.removesuffix(".html") for route in CAPABILITY_ROUTES) <= set(records)
     for route in CAPABILITY_ROUTES:
         slug = route.removesuffix(".html")
@@ -133,14 +130,16 @@ def test_system_registry_has_individual_controlled_private_records() -> None:
         assert record["sourceHref"] is None
         assert record["maturity"] == "controlled-private"
         assert record["accessMode"] == "request"
-        assert record["primaryDomain"] == "security-privacy"
-        assert "written" in record["boundary"].lower() or slug in {"kun", "aeterna", "bounds", "isomorph"}
+        assert record["primaryDomain"] == expected_primary_domains[slug]
+        boundary = record["boundary"].lower()
+        assert any(term in boundary for term in ("written", "authority", "authorized", "approved"))
         assert record["evidence"][0]["href"] == f"https://harperz9.github.io/{route}"
 
 
-def test_private_practice_constellation_includes_visual_and_nonvisual_fallbacks() -> None:
+def test_private_practice_is_a_direct_index_without_decorative_constellation() -> None:
     source = read("private-practice.html")
-    assert '<svg role="img" aria-labelledby="practice-map-title practice-map-desc"' in source
-    assert "The constellation is an intake map, not an operational diagram." in source
-    for label in ("Array", "Seed", "Sofer", "Isomorph", "Bounds", "Kun", "Aeterna", "ORCA", "Gate"):
+    assert "practice-map-title" not in source
+    assert "constellation" not in source.lower()
+    assert "Aeterna" not in source
+    for label in ("Array", "Seed", "Sofer", "Isomorph", "Bounds", "Kun", "ORCA", "Gate"):
         assert label in source
