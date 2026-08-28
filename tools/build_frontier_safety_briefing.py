@@ -23,10 +23,10 @@ from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CURRENT_NAV_ASSET_VERSION = "20260826-hiring-main"
+CURRENT_NAV_ASSET_VERSION = "20260827-capability-publication"
 ARCHIVE_NAV_ASSET_VERSIONS = {
-    "2026-08-24": "20260824-frontier-safety",
-    "2026-08-25": "20260824-frontier-safety",
+    "2026-08-24": "20260827-capability-publication",
+    "2026-08-25": "20260827-capability-publication",
 }
 ALLOWED_SOURCE_HOSTS = {
     "www.aisi.gov.uk",
@@ -389,7 +389,7 @@ def _render_legacy_html(edition: dict, *, archive: bool) -> str:
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="{root_prefix}index.html">Home</a> <a href="{root_prefix}research.html">Research</a></nav></noscript>
-<script type="module" src="{root_prefix}system/nav.js?v=20260824-frontier-safety"></script>
+<script type="module" src="{root_prefix}system/nav.js?v=20260827-capability-publication"></script>
 
 <div class="docnav">
   <span class="where">Research · Frontier Safety</span>

@@ -1,0 +1,154 @@
+{
+  "schema": "harperz9-security-tools/v2",
+  "derivedFrom": "harperz9-systems/v1",
+  "records": [
+    {
+      "slug": "emet",
+      "name": "EMET",
+      "purpose": "Re-derive byte consistency and portable integrity receipts across independent language implementations.",
+      "maturity": "shipped",
+      "source": "https://github.com/HarperZ9/emet",
+      "installOrEntry": "pip install emet",
+      "verificationCommand": "emet selftest; emet check receipt.json",
+      "limitations": [
+        "The witness reports byte agreement, drift, or inability to verify; it does not judge semantic quality.",
+        "Same-author conformance implementations prove rule clarity, not independent authorship."
+      ],
+      "authorizationBoundary": "Run on files and packets you are authorized to inspect.",
+      "evidenceDate": "2026-08-27"
+    },
+    {
+      "slug": "phantom",
+      "name": "Phantom",
+      "purpose": "Audit and change reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.",
+      "maturity": "shipped",
+      "source": "https://github.com/HarperZ9/phantom",
+      "installOrEntry": "Download a v1.1.0 release asset and compare its hash with SHA256SUMS.txt.",
+      "verificationCommand": "phantom --version; phantom audit",
+      "limitations": [
+        "Phantom covers Layer 2 identity surfaces; kernel and firmware layers are modeled but not shipped end to end.",
+        "The Windows installer is unsigned, and platform controls differ between Windows and Linux."
+      ],
+      "authorizationBoundary": "Use only on machines you own or are expressly authorized to test; do not use it for fraud, anti-cheat targeting, or unauthorized access.",
+      "evidenceDate": "2026-08-27"
+    },
+    {
+      "slug": "behavior-transform",
+      "name": "behavior-transform.io",
+      "purpose": "Provide a public IO-boundary implementation for read, write, execution, fetch, input, and model-boundary receipts.",
+      "maturity": "active",
+      "source": "https://github.com/HarperZ9/behavior-transform.io",
+      "installOrEntry": null,
+      "verificationCommand": null,
+      "limitations": [
+        "No tagged release or publicly verified entry command is claimed.",
+        "A boundary receipt records declared policy and observed IO; it does not guarantee provider acceptance or substantive safety."
+      ],
+      "authorizationBoundary": "Use the boundary only within the operator's authority and governing provider, data-owner, and system policies.",
+      "evidenceDate": "2026-08-27"
+    },
+    {
+      "slug": "authorized-private-practice",
+      "name": "Authorized Private Security Practice",
+      "purpose": "Provide offensive-security and adversarial-AI review for lawfully authorized operators without publishing operational capability.",
+      "maturity": "controlled-private",
+      "source": null,
+      "installOrEntry": null,
+      "verificationCommand": null,
+      "limitations": [
+        "No private repository, operational method, target detail, client fact, or engagement result is published.",
+        "No third-party acceptance, deployment, or outcome is claimed."
+      ],
+      "authorizationBoundary": "Written authorization, a defined scope, and engagement-specific review are required before any private capability is discussed or used.",
+      "evidenceDate": "2026-08-27"
+    },
+    {
+      "slug": "accountable-surface",
+      "name": "Accountable Surface",
+      "purpose": "Provide a controlled agent-action workbench with structural perception, default-deny grants, bounded effectors, re-perception, rollback, and a durable journal.",
+      "maturity": "active",
+      "source": "https://github.com/HarperZ9/accountable-surface",
+      "installOrEntry": "python -m pip install -e \".[test]\"; python examples/demo.py",
+      "verificationCommand": "python -m pytest",
+      "limitations": [
+        "The model cannot supply its own authorization.",
+        "Self-authored tests do not establish independent adversarial review or production safety."
+      ],
+      "authorizationBoundary": "Every effect requires authority external to the model and remains limited to the granted scope.",
+      "evidenceDate": "2026-08-27"
+    },
+    {
+      "slug": "public-surface-sweeper",
+      "name": "Public Surface Sweeper",
+      "purpose": "Audit required public files, text hygiene, secret-shaped values, and proof-packet readiness.",
+      "maturity": "shipped",
+      "source": "https://github.com/HarperZ9/public-surface-sweeper",
+      "installOrEntry": "python -m pip install public-surface-sweeper; public-surface-sweeper . --summary",
+      "verificationCommand": "python -m pip install -e \".[test]\"; public-surface-sweeper examples/clean-repo; python -m pytest",
+      "limitations": [
+        "This is not an exploit tester, dependency vulnerability scanner, credential validator, compliance certification, or replacement for security review.",
+        "A secret-shaped finding does not establish that the value is a live credential."
+      ],
+      "authorizationBoundary": "Scan only repositories and artifacts you are authorized to inspect.",
+      "evidenceDate": "2026-08-27"
+    },
+    {
+      "slug": "model-provenance-validator",
+      "name": "Model Provenance Validator",
+      "purpose": "Validate provenance-envelope schema and redact secret-shaped output.",
+      "maturity": "shipped",
+      "source": "https://github.com/HarperZ9/model-provenance-validator",
+      "installOrEntry": "python -m pip install model-provenance-validator; model-provenance-validator examples/envelopes/release.provenance.json",
+      "verificationCommand": "python -m pip install -e \".[test]\"; model-provenance-validator examples/envelopes/release.provenance.json; python -m pytest",
+      "limitations": [
+        "The validator does not fetch sources, decide underlying truth, prove model safety, certify provenance, or replace human review."
+      ],
+      "authorizationBoundary": "Validate only public or authorized envelopes and keep protected source evidence outside public output.",
+      "evidenceDate": "2026-08-27"
+    },
+    {
+      "slug": "secret-redact-io",
+      "name": "Secret Redact IO",
+      "purpose": "Provide guarded Python IO helpers that redact file, fetch, write, and subprocess output while emitting hash-only receipts.",
+      "maturity": "shipped",
+      "source": "https://github.com/HarperZ9/secret-redact-io",
+      "installOrEntry": "python -m pip install secret-redact-io; secret-redact-io read README.md --json",
+      "verificationCommand": "python -m pip install -e \".[dev]\"; python -m pytest",
+      "limitations": [
+        "The package does not include credentials or environment configuration.",
+        "Redaction and hash-only receipts reduce exposure but do not replace source review."
+      ],
+      "authorizationBoundary": "Do not pass secrets to destinations that are not authorized to receive them, even when redaction is enabled.",
+      "evidenceDate": "2026-08-27"
+    },
+    {
+      "slug": "agent-hook-pack",
+      "name": "Agent Hook Pack",
+      "purpose": "Install public-safe hooks for secret checks, branch guards, environment synchronization, and repository hygiene.",
+      "maturity": "shipped",
+      "source": "https://github.com/HarperZ9/agent-hook-pack",
+      "installOrEntry": "python -m pip install -e .; agent-hook-pack audit; agent-hook-pack list",
+      "verificationCommand": "python -m pip install -e \".[test]\"; agent-hook-pack audit; python -m pytest",
+      "limitations": [
+        "Private policy layers are intentionally omitted from the public package.",
+        "Generic hooks cannot prove a repository or agent workflow is safe."
+      ],
+      "authorizationBoundary": "Hooks support, but do not replace, repository-specific policy and human review.",
+      "evidenceDate": "2026-08-27"
+    },
+    {
+      "slug": "repo-proof-index",
+      "name": "Repo Proof Index",
+      "purpose": "Index proof packets, receipts, and contracts into reviewer-ready summaries without making approval decisions.",
+      "maturity": "shipped",
+      "source": "https://github.com/HarperZ9/repo-proof-index",
+      "installOrEntry": "python -m pip install repo-proof-index; repo-proof-index contracts/*.json --summary",
+      "verificationCommand": "python -m pip install -e \".[test]\"; repo-proof-index examples/contracts/*.json --summary; python -m pytest",
+      "limitations": [
+        "The index does not decide whether evidence is sufficient, validate arbitrary schemas, or read referenced private payloads."
+      ],
+      "authorizationBoundary": "Index only public or authorized evidence and keep private payloads outside public summaries.",
+      "evidenceDate": "2026-08-27"
+    }
+  ]
+}

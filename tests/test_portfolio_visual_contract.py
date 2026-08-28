@@ -44,22 +44,33 @@ def test_home_loads_the_react_shell() -> None:
 def test_noscript_fallback_is_a_complete_front_door() -> None:
     src = index_source()
     assert "<noscript>" in src
-    assert "One workshop, from making to proving." in src
-    for href in ("retro.html", "studio.html", "gallery.html", "overview.html", "demo-index.html",
-                 "research.html", "publications.html", "writing.html", "guide.html", "catalog.html", "cv.html"):
+    assert "Flywheel is the primary public system" in src
+    for href in (
+        "/hire.html#engineering-path",
+        "/hire.html#technical-operations-path",
+        "/hire.html#public-service-field-path",
+        "/resume.html",
+        "/catalog.html",
+        "/briefings/2026-08-26-openai-hugging-face-incident/",
+        "/figures/source-scope-matrix.html",
+        "/research.html",
+    ):
         assert f'href="{href}"' in src, f"noscript fallback lost {href}"
 
 
-def test_noscript_spans_the_ecosystem() -> None:
-    """The static fallback showcases the whole span, from the making end (the
-    retro engine, the generative studio) to independently published proving
-    systems without describing them as one already-connected engine."""
+def test_noscript_spans_hiring_capabilities_evidence_and_research() -> None:
+    """The static fallback keeps the conversion path and public record usable."""
     src = index_source().lower()
-    assert "fourteen independently published verification systems" in src
-    assert "fourteen connected engines" not in src
-    assert "retro engine" in src           # the making end is named
-    assert "generative studio" in src
-    assert "receipts" in src               # the proving end is named without a universal claim
+    for value in (
+        "route -> verify -> receipt -> reuse",
+        "evidence atlas",
+        "current briefing",
+        "hiring and collaboration routes",
+        "engineering and evaluation",
+        "technical operations",
+        "public service, safety, and field operations",
+    ):
+        assert value in src
 
 
 def test_white_ceramic_tokens_are_defined() -> None:

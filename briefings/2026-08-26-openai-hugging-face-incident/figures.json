@@ -1,0 +1,102 @@
+{
+  "schema": "harperz9-briefing-figures/v1",
+  "briefingId": "2026-08-26-openai-hugging-face-incident",
+  "figures": [
+    {
+      "id": "recovered-actions-by-day",
+      "claimIds": [
+        "hf-daily-actions"
+      ],
+      "svg": "/figures/recovered-actions-by-day.svg",
+      "fallback": "/figures/recovered-actions-by-day.html",
+      "evidence": "/figures/recovered-actions-by-day.json"
+    },
+    {
+      "id": "incident-multilane-timeline",
+      "claimIds": [
+        "mr-scope-dates",
+        "mr-july8-13-reconstruction",
+        "oa-early-response-chronology",
+        "hf-observed-period",
+        "hf-initial-disclosure-date",
+        "oa-detection-disclosure-dates",
+        "hf-technical-timeline-date",
+        "al-multistate-letter",
+        "al-subpoena-status",
+        "al-investigation-status",
+        "report-publication-date",
+        "jf-vendor-remediation-account"
+      ],
+      "svg": "/figures/incident-multilane-timeline.svg",
+      "fallback": "/figures/incident-multilane-timeline.html",
+      "evidence": "/figures/incident-multilane-timeline.json"
+    },
+    {
+      "id": "source-scope-matrix",
+      "claimIds": [
+        "al-subpoena-status",
+        "al-nonadjudication",
+        "oa-host-impact",
+        "oa-customer-impact",
+        "hf-observed-period",
+        "hf-recovered-scale",
+        "hf-metadata-account",
+        "mr-scope-dates",
+        "mr-dataset-scale",
+        "mr-access-limits",
+        "jf-vendor-remediation-account",
+        "jf-advisory-boundary"
+      ],
+      "svg": "/figures/source-scope-matrix.svg",
+      "fallback": "/figures/source-scope-matrix.html",
+      "evidence": "/figures/source-scope-matrix.json"
+    },
+    {
+      "id": "task-overrepresentation",
+      "claimIds": [
+        "oa-task-overrepresentation"
+      ],
+      "svg": "/figures/task-overrepresentation.svg",
+      "fallback": "/figures/task-overrepresentation.html",
+      "evidence": "/figures/task-overrepresentation.json"
+    },
+    {
+      "id": "motive-sample-nonexclusive",
+      "claimIds": [
+        "mr-motive-sample-boundary"
+      ],
+      "svg": "/figures/motive-sample-nonexclusive.svg",
+      "fallback": "/figures/motive-sample-nonexclusive.html",
+      "evidence": "/figures/motive-sample-nonexclusive.json"
+    },
+    {
+      "id": "control-boundary-flow",
+      "claimIds": [
+        "oa-model-account",
+        "oa-host-impact",
+        "hf-recovered-scale",
+        "mr-access-limits",
+        "jf-vendor-remediation-account",
+        "al-investigation-status"
+      ],
+      "svg": "/figures/control-boundary-flow.svg",
+      "fallback": "/figures/control-boundary-flow.html",
+      "evidence": "/figures/control-boundary-flow.json"
+    },
+    {
+      "id": "claim-provenance-panel",
+      "claimIds": [
+        "al-subpoena-status",
+        "hf-recovered-scale",
+        "mr-access-limits",
+        "oa-host-impact",
+        "oa-harness-reduction-claims",
+        "al-allegation-language",
+        "al-nonadjudication"
+      ],
+      "svg": "/figures/claim-provenance-panel.svg",
+      "fallback": "/figures/claim-provenance-panel.html",
+      "evidence": "/figures/claim-provenance-panel.json"
+    }
+  ]
+}

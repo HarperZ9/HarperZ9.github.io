@@ -1,0 +1,52 @@
+<svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" aria-labelledby="recovered-actions-by-day-title recovered-actions-by-day-desc" data-figure-kind="bar">
+  <title id="recovered-actions-by-day-title">Recovered actions by day</title>
+  <desc id="recovered-actions-by-day-desc">Five zero-baseline bars show Hugging Face&apos;s recovered logged actions from July 9 through July 13, 2026. July 11 is the highest displayed day at 7,677 recovered actions. Hugging Face reports five daily recovered-action counts for July 9 through July 13, 2026.</desc>
+  <defs>
+    <pattern id="recovered-actions-by-day-verified-pattern" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#13262b"/><path d="M0 8L8 0" stroke="#54c9d1" stroke-width="2"/></pattern>
+    <pattern id="recovered-actions-by-day-caution-pattern" width="10" height="10" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="#291b18"/><path d="M-2 10L10-2M4 12L12 4" stroke="#d47a5a" stroke-width="2"/></pattern>
+    <pattern id="recovered-actions-by-day-unavailable-pattern" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#17252c"/><circle cx="2" cy="2" r="1.2" fill="#9eb8bf"/></pattern>
+    <marker id="recovered-actions-by-day-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 0L8 4L0 8Z" fill="#9eb8bf"/></marker>
+  </defs>
+  <style>
+    text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#f2f8f8}
+    .mono{font-family:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace}
+    .muted{fill:#b9cbd0}.hairline{stroke:#36505a;stroke-width:1}.value{font-variant-numeric:tabular-nums}
+    [data-figure-point]:focus{outline:none}[data-figure-point]:focus-visible .focus-ring{stroke:#54c9d1;stroke-width:4;fill:none}
+  </style>
+  <rect width="960" height="540" fill="#0b1115"/>
+  <text x="28" y="38" class="mono muted" font-size="12">VALUE / recovered logged actions</text><line x1="190.00" y1="54" x2="190.00" y2="500" stroke="#9eb8bf" stroke-dasharray="3 5"/><g data-figure-point="true" data-figure-key="bar:0" data-status-label="Verified" role="graphics-symbol" aria-label="2026-07-09 UTC: 3779 recovered logged actions. Verified." tabindex="-1">
+      <rect class="focus-ring" x="18" y="62" width="914" height="64" rx="2" stroke="transparent"/>
+      <text x="28" y="88" font-size="15">2026-07-09 UTC</text>
+      <line x1="190" y1="95" x2="890" y2="95" class="hairline"/>
+      <rect x="190.00" y="75" width="344.57" height="28" fill="url(#recovered-actions-by-day-verified-pattern)" stroke="#54c9d1"/>
+      <text x="900" y="94" text-anchor="end" class="mono value" font-size="13">3779 recovered logged actions</text>
+    </g>
+<g data-figure-point="true" data-figure-key="bar:1" data-status-label="Verified" role="graphics-symbol" aria-label="2026-07-10 UTC: 1135 recovered logged actions. Verified." tabindex="-1">
+      <rect class="focus-ring" x="18" y="134" width="914" height="64" rx="2" stroke="transparent"/>
+      <text x="28" y="160" font-size="15">2026-07-10 UTC</text>
+      <line x1="190" y1="167" x2="890" y2="167" class="hairline"/>
+      <rect x="190.00" y="147" width="103.49" height="28" fill="url(#recovered-actions-by-day-verified-pattern)" stroke="#54c9d1"/>
+      <text x="900" y="166" text-anchor="end" class="mono value" font-size="13">1135 recovered logged actions</text>
+    </g>
+<g data-figure-point="true" data-figure-key="bar:2" data-status-label="Verified" role="graphics-symbol" aria-label="2026-07-11 UTC: 7677 recovered logged actions. Verified." tabindex="-1">
+      <rect class="focus-ring" x="18" y="206" width="914" height="64" rx="2" stroke="transparent"/>
+      <text x="28" y="232" font-size="15">2026-07-11 UTC</text>
+      <line x1="190" y1="239" x2="890" y2="239" class="hairline"/>
+      <rect x="190.00" y="219" width="700.00" height="28" fill="url(#recovered-actions-by-day-verified-pattern)" stroke="#54c9d1"/>
+      <text x="900" y="238" text-anchor="end" class="mono value" font-size="13">7677 recovered logged actions</text>
+    </g>
+<g data-figure-point="true" data-figure-key="bar:3" data-status-label="Verified" role="graphics-symbol" aria-label="2026-07-12 UTC: 3892 recovered logged actions. Verified." tabindex="-1">
+      <rect class="focus-ring" x="18" y="278" width="914" height="64" rx="2" stroke="transparent"/>
+      <text x="28" y="304" font-size="15">2026-07-12 UTC</text>
+      <line x1="190" y1="311" x2="890" y2="311" class="hairline"/>
+      <rect x="190.00" y="291" width="354.88" height="28" fill="url(#recovered-actions-by-day-verified-pattern)" stroke="#54c9d1"/>
+      <text x="900" y="310" text-anchor="end" class="mono value" font-size="13">3892 recovered logged actions</text>
+    </g>
+<g data-figure-point="true" data-figure-key="bar:4" data-status-label="Verified" role="graphics-symbol" aria-label="2026-07-13 UTC: 1130 recovered logged actions. Verified." tabindex="-1">
+      <rect class="focus-ring" x="18" y="350" width="914" height="64" rx="2" stroke="transparent"/>
+      <text x="28" y="376" font-size="15">2026-07-13 UTC</text>
+      <line x1="190" y1="383" x2="890" y2="383" class="hairline"/>
+      <rect x="190.00" y="363" width="103.04" height="28" fill="url(#recovered-actions-by-day-verified-pattern)" stroke="#54c9d1"/>
+      <text x="900" y="382" text-anchor="end" class="mono value" font-size="13">1130 recovered logged actions</text>
+    </g>
+</svg>

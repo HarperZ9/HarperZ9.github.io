@@ -1,0 +1,217 @@
+/* Hiring conversion surface. Built on doc.css tokens, without the document rail. */
+.hire-sheet{
+  width:min(100%,72rem);
+  margin:0 auto;
+  background:var(--page);
+  color:var(--ink);
+  padding:clamp(1.6rem,4vw,3.2rem) var(--sheet-pad-x) clamp(2rem,4.5vw,3.4rem);
+  border:1px solid var(--rule);
+  box-shadow:0 24px 80px -50px rgba(0,0,0,.9);
+}
+
+.hire-mast{
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(18rem,.85fr);
+  gap:clamp(1.1rem,3vw,2rem);
+  align-items:end;
+  padding-bottom:clamp(1.1rem,2.5vw,1.7rem);
+  border-bottom:1px solid var(--rule-strong);
+}
+.hire-mast h1{
+  font-family:var(--display);
+  font-weight:700;
+  font-size:clamp(2rem,1.35rem + 2vw,3.2rem);
+  line-height:1;
+  letter-spacing:-.015em;
+  margin:0 0 .5rem;
+  color:var(--ink);
+  text-wrap:balance;
+}
+.hire-mast .role{
+  font-family:var(--display);
+  font-size:clamp(1rem,.9rem + .35vw,1.18rem);
+  line-height:1.42;
+  color:var(--ink-soft);
+  max-width:54ch;
+  margin:0 0 .9rem;
+}
+.hire-mast .contact{
+  font-family:var(--mono);
+  font-size:.72rem;
+  color:var(--ink-muted);
+  line-height:1.55;
+  margin:0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:.3rem 0;
+}
+.hire-mast .contact--fields > *{padding-right:.85rem;margin-right:.85rem;border-right:1px solid var(--rule)}
+.hire-mast .contact--fields > *:last-child{padding-right:0;margin-right:0;border-right:0}
+.hire-mast a{color:var(--signal);text-decoration:none;border-bottom:1px solid rgba(142,227,242,.32)}
+.hire-mast a:hover{border-color:var(--signal)}
+
+.hire-primary-actions{
+  display:grid;
+  gap:.45rem;
+  align-self:stretch;
+}
+.hire-action{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:44px;
+  padding:.58rem .75rem;
+  border:1px solid var(--rule);
+  color:var(--ink);
+  background:var(--page-sunk);
+  font-family:var(--mono);
+  font-size:.72rem;
+  line-height:1.25;
+  text-decoration:none;
+}
+.hire-action--primary{
+  color:var(--void);
+  background:var(--signal);
+  border-color:var(--signal);
+}
+.hire-mast .hire-action--primary{color:var(--void);border-color:var(--signal)}
+.hire-action:hover,.hire-action:focus-visible{border-color:var(--signal)}
+
+.hire-sheet section{margin:0;padding:1.45rem 0 0}
+.hire-sheet section + section{margin-top:.4rem;border-top:1px solid var(--rule);padding-top:1.45rem}
+.hire-sheet h2{
+  font-family:var(--display);
+  font-size:1.16rem;
+  line-height:1.24;
+  font-weight:700;
+  color:var(--ink);
+  margin:0 0 .65rem;
+}
+.hire-sheet h3{font-family:var(--display);font-size:1.05rem;line-height:1.25;margin:0 0 .45rem;color:var(--ink)}
+.hire-sheet .lead,.hire-sheet section p{max-width:58ch}
+.hire-intro .opening{max-width:64ch}
+
+.hire-route-bands{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  border-block:1px solid var(--rule-strong);
+  margin-top:1rem;
+}
+.hire-route-band{
+  display:grid;
+  grid-template-columns:5.6rem minmax(0,1fr);
+  gap:.9rem 1.1rem;
+  align-items:start;
+  padding:1.1rem clamp(.95rem,2vw,1.35rem);
+  min-width:0;
+}
+.hire-route-band--engineering{
+  grid-row:auto;
+  min-height:auto;
+  padding-block:clamp(1.2rem,2.8vw,1.75rem);
+  background:color-mix(in oklab,var(--signal) 4%,transparent);
+  border-right:0;
+}
+.hire-route-band + .hire-route-band{border-top:1px solid var(--rule)}
+.hire-route-kicker{
+  font-family:var(--mono);
+  font-size:.64rem;
+  letter-spacing:.08em;
+  color:var(--tag);
+  line-height:1.5;
+}
+.hire-route-copy p{font-size:.95rem;line-height:1.55;color:var(--ink-soft);margin:0}
+.hire-route-actions{
+  grid-column:2;
+  display:flex;
+  flex-wrap:wrap;
+  gap:.45rem .65rem;
+  margin-top:.2rem;
+}
+.hire-route-actions a{
+  display:inline-flex;
+  align-items:center;
+  min-height:44px;
+  padding:.5rem .68rem;
+  border:1px solid var(--rule);
+  color:var(--signal);
+  font-family:var(--mono);
+  font-size:.7rem;
+  line-height:1.25;
+  text-decoration:none;
+  background:var(--page-sunk);
+}
+.hire-route-actions a:hover,.hire-route-actions a:focus-visible{border-color:var(--signal)}
+
+.hire-secondary-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem;
+  margin-top:.75rem;
+}
+.hire-secondary-documents{max-width:none}
+.hire-secondary-links a{
+  display:inline-flex;
+  align-items:center;
+  min-height:44px;
+  padding:.5rem .7rem;
+  color:var(--ink);
+  border:1px solid var(--rule);
+  background:var(--page-sunk);
+  font-family:var(--mono);
+  font-size:.7rem;
+  line-height:1.25;
+  text-decoration:none;
+}
+.hire-secondary-links a:hover,.hire-secondary-links a:focus-visible{color:var(--signal);border-color:var(--signal)}
+
+@media (min-width:900px){
+  .hire-route-bands{
+    grid-template-columns:repeat(2,minmax(20rem,1fr));
+    gap:1px;
+    background:var(--rule);
+    border:1px solid var(--rule-strong);
+    border-inline:0;
+  }
+  .hire-route-band{
+    background:var(--page);
+    border-top:0;
+  }
+  .hire-route-band + .hire-route-band{border-top:0}
+  .hire-route-band--engineering{
+    grid-column:1/-1;
+    min-height:auto;
+    background:color-mix(in oklab,var(--signal) 4%,var(--page));
+  }
+}
+
+@media (min-width:1280px){
+  .hire-route-bands{
+    grid-template-columns:minmax(21rem,1.12fr) minmax(20rem,1fr) minmax(20rem,1fr);
+    align-items:stretch;
+  }
+  .hire-route-band--engineering{
+    grid-column:auto;
+    grid-row:auto;
+    min-height:100%;
+  }
+  .hire-route-band:not(.hire-route-band--engineering){
+    grid-column:auto;
+  }
+}
+
+@media (max-width:1099.98px){
+  .hire-mast{grid-template-columns:1fr}
+}
+
+@media (max-width:760px){
+  .hire-sheet{width:100%;border-inline:0;padding:clamp(1.35rem,5vw,2rem) clamp(1rem,4.5vw,1.6rem) 2rem}
+  .hire-mast .contact{display:block}
+  .hire-mast .contact--fields > *{display:block;padding-right:0;margin-right:0;border-right:0;padding-block:.12rem}
+  .career-quickpaths{grid-template-columns:1fr}
+  .career-quickpaths a{min-height:44px}
+  .career-quickpaths a + a{border-left:0;border-top:1px solid var(--rule)}
+  .hire-route-band{grid-template-columns:1fr;gap:.35rem;padding:1rem 0}
+  .hire-route-actions{grid-column:1}
+  .hire-primary-actions{grid-template-columns:1fr}
+}

@@ -1,0 +1,1660 @@
+{
+  "schema": "harperz9-systems/v1",
+  "domains": [
+    {
+      "id": "agent-systems",
+      "label": "Agent systems",
+      "summary": "Model routing, agent execution, and durable workflow state."
+    },
+    {
+      "id": "evaluation-verification",
+      "label": "Evaluation and verification",
+      "summary": "Tests, receipts, provenance, and evidence-bounded conclusions."
+    },
+    {
+      "id": "security-privacy",
+      "label": "Security and privacy",
+      "summary": "Authorized security engineering and privacy-preserving controls."
+    },
+    {
+      "id": "developer-infrastructure",
+      "label": "Developer infrastructure",
+      "summary": "Tools that make building, integrating, and releasing systems more reliable."
+    },
+    {
+      "id": "graphics-media",
+      "label": "Graphics and media",
+      "summary": "Rendering, color, audio, image, and generative production systems."
+    },
+    {
+      "id": "research-education",
+      "label": "Research and education",
+      "summary": "Research intake, learning systems, publications, and teaching surfaces."
+    }
+  ],
+  "systems": [
+    {
+      "id": "flywheel",
+      "name": "Flywheel",
+      "purpose": "Route local or hosted models through gated, receipt-backed inference and tool-use workflows.",
+      "useCases": [
+        "agent workflow orchestration",
+        "model-neutral execution",
+        "receipt-backed evaluation"
+      ],
+      "href": "flywheel.html",
+      "sourceHref": "https://github.com/HarperZ9/flywheel",
+      "domains": [
+        "agent-systems",
+        "evaluation-verification",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "agent-system engineers",
+        "evaluation engineers",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "controlled agent workflows",
+        "review and CI lanes",
+        "local development workspaces"
+      ],
+      "maturity": "shipped",
+      "placement": "featured",
+      "accessMode": "install",
+      "entryCommand": "pip install flywheel-verify; flywheel up",
+      "verificationCommand": "flywheel lanes --probe",
+      "evidence": [
+        {
+          "id": "flywheel-release-v0-3-10",
+          "type": "release",
+          "label": "Flywheel v0.3.10",
+          "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.3.10",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The v0.3.10 public release and main default branch were verified."
+        }
+      ],
+      "limitations": [
+        "Receipts establish witnessed actions and checks, not general model correctness.",
+        "Local weights and optional signing or monitoring features have separate installation requirements."
+      ],
+      "boundary": "Use model routes, tools, data, and environments only with the authority required by their owners and providers.",
+      "inputs": [
+        "task specifications",
+        "model routes",
+        "tool results",
+        "evidence records"
+      ],
+      "outputs": [
+        "workflow results",
+        "verification receipts",
+        "reviewable artifacts"
+      ],
+      "dependencies": [],
+      "related": [
+        "telos",
+        "index",
+        "gather",
+        "forum",
+        "crucible",
+        "learn",
+        "relay",
+        "plexus",
+        "mneme",
+        "retro-engine",
+        "engine-revival",
+        "brender-archival"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "telos",
+      "name": "Telos",
+      "purpose": "Provide a local MCP workbench for creation, simulation, workstation interaction, and re-checkable proof packets.",
+      "useCases": [
+        "shared human-model workspaces",
+        "MCP tool execution",
+        "replayable creative sessions"
+      ],
+      "href": "studio.html",
+      "sourceHref": "https://github.com/HarperZ9/telos",
+      "domains": [
+        "agent-systems",
+        "developer-infrastructure",
+        "graphics-media"
+      ],
+      "audiences": [
+        "agent-system engineers",
+        "software engineers",
+        "graphics engineers"
+      ],
+      "deploymentContexts": [
+        "controlled agent workflows",
+        "local development workspaces",
+        "creative production pipelines"
+      ],
+      "maturity": "active",
+      "placement": "featured",
+      "accessMode": "run",
+      "entryCommand": "node demo/run.mjs",
+      "verificationCommand": "npm run test:mcp",
+      "evidence": [
+        {
+          "id": "telos-public-source",
+          "type": "source",
+          "label": "Telos public source",
+          "href": "https://github.com/HarperZ9/telos",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The public repository is active on main; the latest tagged release is v0.1.0 while source identifies the newer Telos 0.2.0 pre-1.0 workbench."
+        }
+      ],
+      "limitations": [
+        "Pre-1.0 interfaces may change.",
+        "A research packet does not by itself prove causal discovery, robot safety, or hardware fault-tolerance claims."
+      ],
+      "boundary": "Workstation actions and external effects remain subject to explicit operator authority and tool-specific gates.",
+      "inputs": [
+        "shared human-model workspaces inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "shared human-model workspaces result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "studio-engine",
+        "build-color"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "index",
+      "name": "Index",
+      "purpose": "Build offline repository and workspace maps, dependency graphs, symbols, and bounded context artifacts from file-line evidence.",
+      "useCases": [
+        "multi-repository mapping",
+        "dependency analysis",
+        "offline architecture documentation"
+      ],
+      "href": "index-graph.html",
+      "sourceHref": "https://github.com/HarperZ9/index",
+      "domains": [
+        "developer-infrastructure",
+        "evaluation-verification"
+      ],
+      "audiences": [
+        "software engineers",
+        "evaluation engineers"
+      ],
+      "deploymentContexts": [
+        "local development workspaces",
+        "review and CI lanes"
+      ],
+      "maturity": "shipped",
+      "placement": "featured",
+      "accessMode": "install",
+      "entryCommand": "pip install index-graph; index wiki --root <repo-path> --out wiki.html",
+      "verificationCommand": "index wiki --verify wiki.html --root <repo-path>",
+      "evidence": [
+        {
+          "id": "index-release-v2-9-0",
+          "type": "release",
+          "label": "Index v2.9.0",
+          "href": "https://github.com/HarperZ9/index/releases/tag/v2.9.0",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The v2.9.0 release is verified; newer beta source metadata is not presented as a stable release."
+        }
+      ],
+      "limitations": [
+        "Dynamic imports and unsupported structures can remain incomplete or unverifiable.",
+        "Structural evidence does not guarantee the accuracy of explanatory prose."
+      ],
+      "boundary": "Inspect only repositories and workspaces you are authorized to read.",
+      "inputs": [
+        "multi-repository mapping inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "multi-repository mapping result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "forum",
+        "gather",
+        "engine-revival",
+        "brender-archival"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "gather",
+      "name": "Gather",
+      "purpose": "Capture web, scholarly, document, browser, OCR, video, and audio material into provenance-bearing research records.",
+      "useCases": [
+        "research intake",
+        "document extraction",
+        "change-tracked evidence capture"
+      ],
+      "href": "gather.html",
+      "sourceHref": "https://github.com/HarperZ9/gather",
+      "domains": [
+        "research-education",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "researchers and educators",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "research and learning environments",
+        "local development workspaces"
+      ],
+      "maturity": "shipped",
+      "placement": "featured",
+      "accessMode": "install",
+      "entryCommand": "pip install gather-engine; gather extract https://example.com/article",
+      "verificationCommand": "gather corpus verify ./corpus",
+      "evidence": [
+        {
+          "id": "gather-release-v1-6-1",
+          "type": "release",
+          "label": "Gather v1.6.1",
+          "href": "https://github.com/HarperZ9/gather/releases/tag/v1.6.1",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The v1.6.1 public release was verified."
+        }
+      ],
+      "limitations": [
+        "Static web mode does not execute JavaScript.",
+        "Optional hard-source adapters require external tools, and untrusted URLs near internal services require separate network controls."
+      ],
+      "boundary": "Respect access controls, copyright, privacy, and the terms governing each source.",
+      "inputs": [
+        "research intake inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "research intake result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "index",
+        "crucible",
+        "engine-revival",
+        "brender-archival"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "forum",
+      "name": "Forum",
+      "purpose": "Route and run agent fleets with budgets, approval gates, checkpoints, and a causal ledger.",
+      "useCases": [
+        "multi-agent orchestration",
+        "dependency-aware planning",
+        "reviewable handoffs"
+      ],
+      "href": "forum.html",
+      "sourceHref": "https://github.com/HarperZ9/forum",
+      "domains": [
+        "agent-systems",
+        "developer-infrastructure",
+        "evaluation-verification"
+      ],
+      "audiences": [
+        "agent-system engineers",
+        "software engineers",
+        "evaluation engineers"
+      ],
+      "deploymentContexts": [
+        "controlled agent workflows",
+        "local development workspaces",
+        "review and CI lanes"
+      ],
+      "maturity": "shipped",
+      "placement": "featured",
+      "accessMode": "install",
+      "entryCommand": "pip install forum-engine; forum route \"build the requested system\"",
+      "verificationCommand": "forum ledger verify",
+      "evidence": [
+        {
+          "id": "forum-release-v1-13-0",
+          "type": "release",
+          "label": "Forum v1.13.0",
+          "href": "https://github.com/HarperZ9/forum/releases/tag/v1.13.0",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The v1.13.0 public release was verified."
+        }
+      ],
+      "limitations": [
+        "A valid ledger proves recorded integrity and replayability, not that model output is substantively correct.",
+        "Executors and human approval policy remain operator-supplied."
+      ],
+      "boundary": "Agent permissions must remain no broader than the operator's authority and the active task scope.",
+      "inputs": [
+        "multi-agent orchestration inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "multi-agent orchestration result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "relay",
+        "plexus",
+        "mneme"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "crucible",
+      "name": "Crucible",
+      "purpose": "Test falsifiable claims against supplied measurements and emit MATCH, DRIFT, or UNVERIFIABLE outcomes.",
+      "useCases": [
+        "claim evaluation",
+        "artifact review",
+        "evidence-bounded refinement"
+      ],
+      "href": "crucible.html",
+      "sourceHref": "https://github.com/HarperZ9/crucible",
+      "domains": [
+        "evaluation-verification",
+        "research-education"
+      ],
+      "audiences": [
+        "evaluation engineers",
+        "researchers and educators"
+      ],
+      "deploymentContexts": [
+        "review and CI lanes",
+        "research and learning environments"
+      ],
+      "maturity": "shipped",
+      "placement": "featured",
+      "accessMode": "install",
+      "entryCommand": "pip install crucible-bench; python examples/demo.py",
+      "verificationCommand": "python -m pytest",
+      "evidence": [
+        {
+          "id": "crucible-release-v1-2-0",
+          "type": "release",
+          "label": "Crucible v1.2.0",
+          "href": "https://github.com/HarperZ9/crucible/releases/tag/v1.2.0",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The v1.2.0 public release was verified."
+        }
+      ],
+      "limitations": [
+        "Verdict quality cannot exceed the supplied substrate, measurement, tolerance, and criterion.",
+        "Missing or ill-posed evidence fails closed."
+      ],
+      "boundary": "Do not present a verdict as stronger than the evidence and criterion that produced it.",
+      "inputs": [
+        "claim evaluation inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "claim evaluation result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "emet",
+        "gather",
+        "learn"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "emet",
+      "name": "EMET",
+      "purpose": "Re-derive byte consistency and portable integrity receipts across independent language implementations.",
+      "useCases": [
+        "byte-integrity verification",
+        "proof-packet witnessing",
+        "cross-implementation conformance"
+      ],
+      "href": "emet.html",
+      "sourceHref": "https://github.com/HarperZ9/emet",
+      "domains": [
+        "evaluation-verification",
+        "security-privacy",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "evaluation engineers",
+        "authorized security teams",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "review and CI lanes",
+        "owned or expressly authorized systems",
+        "local development workspaces"
+      ],
+      "maturity": "shipped",
+      "placement": "featured",
+      "accessMode": "install",
+      "entryCommand": "pip install emet",
+      "verificationCommand": "emet selftest; emet check receipt.json",
+      "evidence": [
+        {
+          "id": "emet-release-v1-2-0",
+          "type": "release",
+          "label": "EMET v1.2.0",
+          "href": "https://github.com/HarperZ9/emet/releases/tag/v1.2.0",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The v1.2.0 public release was verified."
+        }
+      ],
+      "limitations": [
+        "The witness reports byte agreement, drift, or inability to verify; it does not judge semantic quality.",
+        "Same-author conformance implementations prove rule clarity, not independent authorship."
+      ],
+      "boundary": "Run on files and packets you are authorized to inspect.",
+      "inputs": [
+        "byte-integrity verification inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "byte-integrity verification result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "crucible",
+        "repo-proof-index",
+        "accountable-surface"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "buildlang",
+      "name": "BuildLang",
+      "purpose": "Compile systems programs with typed capability effects, C interoperability, native C-path binaries, and shader targets.",
+      "useCases": [
+        "capability-aware systems programming",
+        "native C-path compilation",
+        "shader generation"
+      ],
+      "href": "buildlang.html",
+      "sourceHref": "https://github.com/HarperZ9/buildlang",
+      "domains": [
+        "developer-infrastructure",
+        "graphics-media"
+      ],
+      "audiences": [
+        "software engineers",
+        "graphics engineers"
+      ],
+      "deploymentContexts": [
+        "local development workspaces",
+        "creative production pipelines"
+      ],
+      "maturity": "shipped",
+      "placement": "featured",
+      "accessMode": "install",
+      "entryCommand": "cargo install buildlang; buildc run examples/quickstart/hello.bld",
+      "verificationCommand": "buildc corpus verify",
+      "evidence": [
+        {
+          "id": "buildlang-release-v1-2-0",
+          "type": "release",
+          "label": "BuildLang v1.2.0",
+          "href": "https://github.com/HarperZ9/buildlang/releases/tag/v1.2.0",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The v1.2.0 public release was verified."
+        }
+      ],
+      "limitations": [
+        "C is the production backend.",
+        "SPIR-V, LLVM, WebAssembly, Rust, native-object backends, GPU compute, and linear types retain experimental scope."
+      ],
+      "boundary": "Generated programs inherit the authority and safety obligations of the capabilities they exercise.",
+      "inputs": [
+        "capability-aware systems programming inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "capability-aware systems programming result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "build-color",
+        "studio-engine",
+        "retro-engine",
+        "engine-revival",
+        "brender-archival"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "learn",
+      "name": "Learn",
+      "purpose": "Turn operator-provided material into study plans and course workflows with spaced practice and re-verifiable receipts.",
+      "useCases": [
+        "course generation",
+        "retrieval practice",
+        "witnessed learning workflows"
+      ],
+      "href": "learn.html",
+      "sourceHref": "https://github.com/HarperZ9/learn",
+      "domains": [
+        "research-education",
+        "agent-systems"
+      ],
+      "audiences": [
+        "researchers and educators",
+        "agent-system engineers"
+      ],
+      "deploymentContexts": [
+        "research and learning environments",
+        "controlled agent workflows"
+      ],
+      "maturity": "shipped",
+      "placement": "featured",
+      "accessMode": "install",
+      "entryCommand": "npm install -g @harperz9/learn; learn tutor study mysession",
+      "verificationCommand": "node --test",
+      "evidence": [
+        {
+          "id": "learn-public-source",
+          "type": "source",
+          "label": "Learn public source",
+          "href": "https://github.com/HarperZ9/learn",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The public repository identifies Learn 1.6.0 package source; no GitHub release is claimed."
+        }
+      ],
+      "limitations": [
+        "Automation halts at graded, consent, CAPTCHA, payment, and account-creation steps.",
+        "Mastery derives only from the learner's witnessed attempts."
+      ],
+      "boundary": "The learner remains responsible for graded answers, consent, identity, and institutional rules.",
+      "inputs": [
+        "course generation inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "course generation result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "crucible",
+        "gather",
+        "flywheel"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "relay",
+      "name": "Relay",
+      "purpose": "Provide a zero-dependency coding agent for local, subscription, API, and cloud endpoints with permission gates and a hash-chained run ledger.",
+      "useCases": [
+        "model-neutral coding workflows",
+        "provider failover",
+        "reviewable tool execution"
+      ],
+      "href": "systems/relay.html",
+      "sourceHref": "https://github.com/HarperZ9/relay",
+      "domains": [
+        "agent-systems",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "agent-system engineers",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "controlled agent workflows",
+        "local development workspaces"
+      ],
+      "maturity": "active",
+      "placement": "featured",
+      "accessMode": "install",
+      "entryCommand": "pip install git+https://github.com/HarperZ9/relay.git; relay --health --online",
+      "verificationCommand": "python -m pytest -q",
+      "evidence": [
+        {
+          "id": "relay-public-source",
+          "type": "source",
+          "label": "Relay public source",
+          "href": "https://github.com/HarperZ9/relay",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The public main branch identifies Relay 0.1.0; no GitHub release is claimed."
+        }
+      ],
+      "limitations": [
+        "The command denylist is not a security boundary.",
+        "A valid trajectory proves recorded actions, not that edits are correct; acceptance needs an operator-owned check."
+      ],
+      "boundary": "Tool use remains permission-checked and limited to authorized repositories, systems, and endpoints.",
+      "inputs": [
+        "model-neutral coding workflows inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "model-neutral coding workflows result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "forum",
+        "plexus",
+        "mneme"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "plexus",
+      "name": "Plexus",
+      "purpose": "Discover declared tool capabilities and derive inspectable producer-consumer wiring plans.",
+      "useCases": [
+        "tool discovery",
+        "capability matching",
+        "inspectable pipeline planning"
+      ],
+      "href": "systems/plexus.html",
+      "sourceHref": "https://github.com/HarperZ9/plexus",
+      "domains": [
+        "agent-systems",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "agent-system engineers",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "controlled agent workflows",
+        "local development workspaces"
+      ],
+      "maturity": "active",
+      "placement": "featured",
+      "accessMode": "install",
+      "entryCommand": "pip install git+https://github.com/HarperZ9/plexus.git; plexus discover --builtin",
+      "verificationCommand": "plexus plan --goal crucible --builtin > plan.json; plexus verify --plan plan.json --builtin",
+      "evidence": [
+        {
+          "id": "plexus-public-source",
+          "type": "source",
+          "label": "Plexus public source",
+          "href": "https://github.com/HarperZ9/plexus",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The public main branch identifies Plexus 0.2.0; no GitHub release is claimed."
+        }
+      ],
+      "limitations": [
+        "Plexus does not execute or probe tools.",
+        "Edges and source pointers are declared claims, not observed interoperability."
+      ],
+      "boundary": "A wiring plan does not grant authority to execute any connected capability.",
+      "inputs": [
+        "tool discovery inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "tool discovery result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "relay",
+        "forum",
+        "flywheel"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "mneme",
+      "name": "Mneme",
+      "purpose": "Provide layered agent memory with provenance, reproducible hybrid recall, drift detection, and audited forgetting.",
+      "useCases": [
+        "agent memory",
+        "provenance-bearing recall",
+        "memory drift review"
+      ],
+      "href": "systems/mneme.html",
+      "sourceHref": "https://github.com/HarperZ9/mneme",
+      "domains": [
+        "agent-systems",
+        "evaluation-verification"
+      ],
+      "audiences": [
+        "agent-system engineers",
+        "evaluation engineers"
+      ],
+      "deploymentContexts": [
+        "controlled agent workflows",
+        "review and CI lanes"
+      ],
+      "maturity": "active",
+      "placement": "featured",
+      "accessMode": "install",
+      "entryCommand": "pip install git+https://github.com/HarperZ9/mneme.git; mneme recall \"where does the user live\" --json",
+      "verificationCommand": "mneme drift; python -m pytest -q",
+      "evidence": [
+        {
+          "id": "mneme-public-source",
+          "type": "source",
+          "label": "Mneme public source",
+          "href": "https://github.com/HarperZ9/mneme",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The public source is newer than the latest v0.1.0 release, so no untagged version is presented as released."
+        }
+      ],
+      "limitations": [
+        "Source recheck remains Mneme-owned rather than independently re-read by Crucible.",
+        "Replay rejects ambiguous SQLite sidecar or hardlink state."
+      ],
+      "boundary": "Store and recall only information the operator is authorized to retain and process.",
+      "inputs": [
+        "agent memory inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "agent memory result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "relay",
+        "forum",
+        "flywheel"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "studio-engine",
+      "name": "Studio Engine",
+      "purpose": "Generate deterministic shader, sound, motion, preview, and receipt-bearing creative-world packets.",
+      "useCases": [
+        "seeded world generation",
+        "shader and sound authoring",
+        "replayable creative production"
+      ],
+      "href": "systems/studio-engine.html",
+      "sourceHref": "https://github.com/HarperZ9/studio-engine",
+      "domains": [
+        "graphics-media",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "graphics engineers",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "creative production pipelines",
+        "local development workspaces"
+      ],
+      "maturity": "active",
+      "placement": "featured",
+      "accessMode": "run",
+      "entryCommand": "python -m studio_engine 7 gyroid",
+      "verificationCommand": "python -m unittest discover -s tests",
+      "evidence": [
+        {
+          "id": "studio-engine-public-source",
+          "type": "source",
+          "label": "Studio Engine public source",
+          "href": "https://github.com/HarperZ9/studio-engine",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The public main branch identifies Studio Engine 0.2.0; no GitHub release is claimed."
+        }
+      ],
+      "limitations": [
+        "Studio Engine is not presented as a finished product.",
+        "Browsers, GPUs, and audio hosts realize its programs; the native renderer is optional and APIs may move before 1.0."
+      ],
+      "boundary": "Generated media must respect the rights, licenses, and consent attached to its inputs and intended use.",
+      "inputs": [
+        "seeded world generation inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "seeded world generation result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "telos",
+        "build-color",
+        "buildlang",
+        "retro-engine",
+        "engine-revival",
+        "brender-archival"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "build-color",
+      "name": "Build Color",
+      "purpose": "Provide a software color-science workbench for spaces, color difference, adaptation, HDR, gamut, spectra, ICC, and LUT workflows.",
+      "useCases": [
+        "color measurement",
+        "HDR tone mapping",
+        "ICC and LUT generation"
+      ],
+      "href": "build-color.html",
+      "sourceHref": "https://github.com/HarperZ9/build-color",
+      "domains": [
+        "graphics-media"
+      ],
+      "audiences": [
+        "graphics engineers"
+      ],
+      "deploymentContexts": [
+        "creative production pipelines"
+      ],
+      "maturity": "active",
+      "placement": "featured",
+      "accessMode": "install",
+      "entryCommand": "pip install .; build-color info ff6030",
+      "verificationCommand": "pytest tests/ -q --cov=build_color --cov-report=term-missing --cov-fail-under=45",
+      "evidence": [
+        {
+          "id": "build-color-release-v1-0-1",
+          "type": "release",
+          "label": "Build Color v1.0.1",
+          "href": "https://github.com/HarperZ9/build-color/releases/tag/v1.0.1",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The latest public release is v1.0.1; newer 1.0.2 source metadata remains beta."
+        }
+      ],
+      "limitations": [
+        "The workbench measures digital color behavior; it is not a physical display instrument.",
+        "The GUI and fuller numerical stack require optional dependencies."
+      ],
+      "boundary": "Do not represent software output as physical-instrument evidence without an actual calibrated instrument.",
+      "inputs": [
+        "color measurement inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "color measurement result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "studio-engine",
+        "telos",
+        "buildlang",
+        "retro-engine"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "retro-engine",
+      "name": "Retro Engine",
+      "purpose": "Serve as the Retro Systems Lab play pillar: an interactive browser studio for owned pixel, palette, shader, and CRT experiments.",
+      "useCases": [
+        "play",
+        "browser pixel studio",
+        "deterministic shader capture"
+      ],
+      "href": "retro.html",
+      "sourceHref": "https://github.com/HarperZ9/telos-v2",
+      "domains": [
+        "graphics-media",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "graphics engineers",
+        "software engineers",
+        "creative technologists"
+      ],
+      "deploymentContexts": [
+        "creative production pipelines",
+        "local development workspaces",
+        "static browser surfaces"
+      ],
+      "maturity": "active",
+      "placement": "catalog-only",
+      "accessMode": "run",
+      "entryCommand": "Open retro.html in a browser.",
+      "verificationCommand": "npm run routes:check; npm run systems:check; npm run system-pages:check",
+      "evidence": [
+        {
+          "id": "retro-engine-site-source",
+          "type": "source",
+          "label": "Retro Engine owned site source",
+          "href": "https://github.com/HarperZ9/telos-v2",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The owned public site source contains the browser Retro Engine route and renderer assets; this is not BRender evidence."
+        }
+      ],
+      "limitations": [
+        "Retro Engine output is generic creative output and does not prove any BRender restoration fact.",
+        "Browser, GPU, and font rendering can differ by host, so captures are bounded media evidence rather than performance claims."
+      ],
+      "boundary": "Use only owned or licensed input media and do not present generated retro visuals as archival proof for another repository.",
+      "inputs": [
+        "owned images or browser-rendered frames",
+        "palette and shader settings"
+      ],
+      "outputs": [
+        "interactive browser render",
+        "static capture with provenance"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "engine-revival",
+        "brender-archival",
+        "studio-engine",
+        "buildlang",
+        "build-color"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "engine-revival",
+      "name": "Engine Revival",
+      "purpose": "Serve as the Retro Systems Lab preserve pillar: a public MIT evidence spine for historical engine and rendering-library revival records.",
+      "useCases": [
+        "preserve",
+        "repository evidence refresh",
+        "restoration boundary review"
+      ],
+      "href": "engine-revival.html",
+      "sourceHref": "https://github.com/HarperZ9/engine-revival",
+      "domains": [
+        "graphics-media",
+        "evaluation-verification",
+        "research-education",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "graphics engineers",
+        "evaluation engineers",
+        "researchers and educators",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "review and CI lanes",
+        "research and learning environments",
+        "creative production pipelines"
+      ],
+      "maturity": "shipped",
+      "placement": "catalog-only",
+      "accessMode": "install",
+      "entryCommand": "python -m pip install -e \".[test]\"; engine-revival seed; engine-revival validate",
+      "verificationCommand": "engine-revival audit-public; python -m pytest",
+      "evidence": [
+        {
+          "id": "engine-revival-release-v0-1-0",
+          "type": "release",
+          "label": "Engine Revival v0.1.0",
+          "href": "https://github.com/HarperZ9/engine-revival/releases/tag/v0.1.0",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The public main and v0.1.0 release resolve to 0af6d527860a63c418b5775dc0efe9ba89557604. Engine Revival is MIT; it records local 12-target materializer scope separately from imported external 21-target BRender evidence."
+        }
+      ],
+      "limitations": [
+        "Engine Revival local 12-target materializer scope is public metadata and scaffold; the verified external 21-target BRender boundary comes from BRender Archival v0.1.1 evidence.",
+        "The page preserves evidence boundaries and does not claim product parity, adoption, performance, legal completeness, or vendored upstream source."
+      ],
+      "boundary": "Publish only repository metadata and restoration facts that have current first-party receipts, and keep imported AGPL-covered BRender media and receipts distinct from MIT repository code.",
+      "inputs": [
+        "public repository manifests",
+        "license and recipe review receipts",
+        "imported BRender release evidence"
+      ],
+      "outputs": [
+        "preservation status page",
+        "verified evidence manifest"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "retro-engine",
+        "brender-archival",
+        "studio-engine",
+        "buildlang",
+        "gather",
+        "index"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "brender-archival",
+      "name": "BRender Archival",
+      "purpose": "Serve as the Retro Systems Lab verify pillar: a specific BRender restoration surface that stays separate from generic Retro Engine media.",
+      "useCases": [
+        "verify",
+        "specific restoration evidence",
+        "archival boundary review"
+      ],
+      "href": "brender-archival.html",
+      "sourceHref": "https://github.com/HarperZ9/brender-archival",
+      "domains": [
+        "graphics-media",
+        "evaluation-verification",
+        "research-education",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "graphics engineers",
+        "evaluation engineers",
+        "researchers and educators",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "review and CI lanes",
+        "research and learning environments",
+        "creative production pipelines"
+      ],
+      "maturity": "shipped",
+      "placement": "catalog-only",
+      "accessMode": "install",
+      "entryCommand": "python -m pip install -e \".[test]\"; engine-revival seed; engine-revival validate",
+      "verificationCommand": "engine-revival audit-public; python -m pytest",
+      "evidence": [
+        {
+          "id": "brender-archival-release-v0-1-1",
+          "type": "release",
+          "label": "BRender Archival v0.1.1",
+          "href": "https://github.com/HarperZ9/brender-archival/releases/tag/v0.1.1",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The public main and v0.1.1 release resolve to 11b5a8d539e911a9c07991b751402a7d51bf1bde. The repo is AGPL-3.0-or-later, upstream BRender MIT is referenced not vendored, and 21/21 native CTest targets are recorded."
+        }
+      ],
+      "limitations": [
+        "Specific BRender restoration proof must come from BRender evidence, not from Retro Engine screenshots or generic retro visuals.",
+        "The release does not claim completed textured TIA output, x64 readiness, production readiness, adoption, endorsement, or vendored upstream source or assets."
+      ],
+      "boundary": "Keep BRender restoration evidence, Retro Engine play output, and Engine Revival preservation status distinct.",
+      "inputs": [
+        "BRender public repository evidence",
+        "restoration receipts and license notes"
+      ],
+      "outputs": [
+        "BRender archival status page",
+        "specific evidence boundary"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "retro-engine",
+        "engine-revival",
+        "studio-engine",
+        "buildlang",
+        "gather",
+        "index"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "phantom",
+      "name": "Phantom",
+      "purpose": "Audit and change reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.",
+      "useCases": [
+        "hardware-identity privacy",
+        "authorized device-surface auditing",
+        "reversible identity profiles"
+      ],
+      "href": "phantom.html",
+      "sourceHref": "https://github.com/HarperZ9/phantom",
+      "domains": [
+        "security-privacy"
+      ],
+      "audiences": [
+        "authorized security teams"
+      ],
+      "deploymentContexts": [
+        "owned or expressly authorized systems"
+      ],
+      "maturity": "shipped",
+      "placement": "featured",
+      "accessMode": "install",
+      "entryCommand": "Download a v1.1.0 release asset and compare its hash with SHA256SUMS.txt.",
+      "verificationCommand": "phantom --version; phantom audit",
+      "evidence": [
+        {
+          "id": "phantom-release-v1-1-0",
+          "type": "release",
+          "label": "Phantom v1.1.0",
+          "href": "https://github.com/HarperZ9/phantom/releases/tag/v1.1.0",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The public release exposes v1.1.0 assets for Windows and Linux."
+        }
+      ],
+      "limitations": [
+        "Phantom covers Layer 2 identity surfaces; kernel and firmware layers are modeled but not shipped end to end.",
+        "The Windows installer is unsigned, and platform controls differ between Windows and Linux."
+      ],
+      "boundary": "Use only on machines you own or are expressly authorized to test; do not use it for fraud, anti-cheat targeting, or unauthorized access.",
+      "inputs": [
+        "hardware-identity privacy inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "hardware-identity privacy result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "behavior-transform",
+        "authorized-private-practice",
+        "accountable-surface"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "behavior-transform",
+      "name": "behavior-transform.io",
+      "purpose": "Provide a public IO-boundary implementation for read, write, execution, fetch, input, and model-boundary receipts.",
+      "useCases": [
+        "model-boundary receipts",
+        "policy-aware IO",
+        "session and action auditing"
+      ],
+      "href": "systems/behavior-transform.html",
+      "sourceHref": "https://github.com/HarperZ9/behavior-transform.io",
+      "domains": [
+        "security-privacy",
+        "agent-systems",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "authorized security teams",
+        "agent-system engineers",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "owned or expressly authorized systems",
+        "controlled agent workflows",
+        "local development workspaces"
+      ],
+      "maturity": "active",
+      "placement": "featured",
+      "accessMode": "inspect",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "behavior-transform-public-source",
+          "type": "source",
+          "label": "behavior-transform.io public source",
+          "href": "https://github.com/HarperZ9/behavior-transform.io",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "A public main branch exists; no tagged release, supported install command, or production adoption is claimed."
+        }
+      ],
+      "limitations": [
+        "No tagged release or publicly verified entry command is claimed.",
+        "A boundary receipt records declared policy and observed IO; it does not guarantee provider acceptance or substantive safety."
+      ],
+      "boundary": "Use the boundary only within the operator's authority and governing provider, data-owner, and system policies.",
+      "inputs": [
+        "model-boundary receipts inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "model-boundary receipts result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "phantom",
+        "accountable-surface",
+        "authorized-private-practice"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "authorized-private-practice",
+      "name": "Authorized Private Security Practice",
+      "purpose": "Provide offensive-security and adversarial-AI review for lawfully authorized operators without publishing operational capability.",
+      "useCases": [
+        "authorized adversarial evaluation",
+        "high-consequence security review",
+        "engagement-scoped attack and defense analysis"
+      ],
+      "href": "private-practice.html",
+      "sourceHref": null,
+      "domains": [
+        "security-privacy"
+      ],
+      "audiences": [
+        "authorized security teams"
+      ],
+      "deploymentContexts": [
+        "owned or expressly authorized systems"
+      ],
+      "maturity": "controlled-private",
+      "placement": "featured",
+      "accessMode": "request",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "private-practice-public-boundary",
+          "type": "public-receipt",
+          "label": "Public engagement boundary",
+          "href": "https://harperz9.github.io/private-practice.html",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The public page names the practice and authorization boundary without distributing private methods."
+        }
+      ],
+      "limitations": [
+        "No private repository, operational method, target detail, client fact, or engagement result is published.",
+        "No third-party acceptance, deployment, or outcome is claimed."
+      ],
+      "boundary": "Written authorization, a defined scope, and engagement-specific review are required before any private capability is discussed or used.",
+      "inputs": [
+        "authorized adversarial evaluation inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "authorized adversarial evaluation result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "phantom",
+        "behavior-transform",
+        "accountable-surface"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "accountable-surface",
+      "name": "Accountable Surface",
+      "purpose": "Provide a controlled agent-action workbench with structural perception, default-deny grants, bounded effectors, re-perception, rollback, and a durable journal.",
+      "useCases": [
+        "bounded agent actions",
+        "rollback-aware automation",
+        "action receipt review"
+      ],
+      "href": "accountable-machines.html",
+      "sourceHref": "https://github.com/HarperZ9/accountable-surface",
+      "domains": [
+        "security-privacy",
+        "evaluation-verification",
+        "agent-systems"
+      ],
+      "audiences": [
+        "authorized security teams",
+        "evaluation engineers",
+        "agent-system engineers"
+      ],
+      "deploymentContexts": [
+        "owned or expressly authorized systems",
+        "review and CI lanes",
+        "controlled agent workflows"
+      ],
+      "maturity": "active",
+      "placement": "featured",
+      "accessMode": "inspect",
+      "entryCommand": "python -m pip install -e \".[test]\"; python examples/demo.py",
+      "verificationCommand": "python -m pytest",
+      "evidence": [
+        {
+          "id": "accountable-surface-public-source",
+          "type": "source",
+          "label": "Accountable Surface public source",
+          "href": "https://github.com/HarperZ9/accountable-surface",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The public repository identifies source 0.1.0 and no tagged release; self-authored tests are not independent review."
+        }
+      ],
+      "limitations": [
+        "The model cannot supply its own authorization.",
+        "Self-authored tests do not establish independent adversarial review or production safety."
+      ],
+      "boundary": "Every effect requires authority external to the model and remains limited to the granted scope.",
+      "inputs": [
+        "bounded agent actions inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "bounded agent actions result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "emet",
+        "behavior-transform",
+        "authorized-private-practice"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "public-surface-sweeper",
+      "name": "Public Surface Sweeper",
+      "purpose": "Audit required public files, text hygiene, secret-shaped values, and proof-packet readiness.",
+      "useCases": [
+        "public repository hygiene",
+        "release-surface checks",
+        "proof-packet readiness"
+      ],
+      "href": "public-surface-sweeper-sample.html",
+      "sourceHref": "https://github.com/HarperZ9/public-surface-sweeper",
+      "domains": [
+        "security-privacy",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "authorized security teams",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "owned or expressly authorized systems",
+        "local development workspaces"
+      ],
+      "maturity": "shipped",
+      "placement": "catalog-only",
+      "accessMode": "install",
+      "entryCommand": "python -m pip install public-surface-sweeper; public-surface-sweeper . --summary",
+      "verificationCommand": "python -m pip install -e \".[test]\"; public-surface-sweeper examples/clean-repo; python -m pytest",
+      "evidence": [
+        {
+          "id": "public-surface-sweeper-release-v0-1-1",
+          "type": "release",
+          "label": "Public Surface Sweeper v0.1.1",
+          "href": "https://github.com/HarperZ9/public-surface-sweeper/releases/tag/v0.1.1",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The latest tagged release is v0.1.1; newer source metadata is not presented as released."
+        }
+      ],
+      "limitations": [
+        "This is not an exploit tester, dependency vulnerability scanner, credential validator, compliance certification, or replacement for security review.",
+        "A secret-shaped finding does not establish that the value is a live credential."
+      ],
+      "boundary": "Scan only repositories and artifacts you are authorized to inspect.",
+      "inputs": [
+        "public repository hygiene inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "public repository hygiene result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "model-provenance-validator",
+        "secret-redact-io",
+        "agent-hook-pack",
+        "repo-proof-index"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "model-provenance-validator",
+      "name": "Model Provenance Validator",
+      "purpose": "Validate provenance-envelope schema and redact secret-shaped output.",
+      "useCases": [
+        "release provenance checks",
+        "model claim envelopes",
+        "redacted validation output"
+      ],
+      "href": "security-toolkit.html#model-provenance-validator",
+      "sourceHref": "https://github.com/HarperZ9/model-provenance-validator",
+      "domains": [
+        "security-privacy",
+        "evaluation-verification"
+      ],
+      "audiences": [
+        "authorized security teams",
+        "evaluation engineers"
+      ],
+      "deploymentContexts": [
+        "owned or expressly authorized systems",
+        "review and CI lanes"
+      ],
+      "maturity": "shipped",
+      "placement": "catalog-only",
+      "accessMode": "install",
+      "entryCommand": "python -m pip install model-provenance-validator; model-provenance-validator examples/envelopes/release.provenance.json",
+      "verificationCommand": "python -m pip install -e \".[test]\"; model-provenance-validator examples/envelopes/release.provenance.json; python -m pytest",
+      "evidence": [
+        {
+          "id": "model-provenance-validator-release-v0-1-1",
+          "type": "release",
+          "label": "Model Provenance Validator v0.1.1",
+          "href": "https://github.com/HarperZ9/model-provenance-validator/releases/tag/v0.1.1",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The v0.1.1 public release was verified."
+        }
+      ],
+      "limitations": [
+        "The validator does not fetch sources, decide underlying truth, prove model safety, certify provenance, or replace human review."
+      ],
+      "boundary": "Validate only public or authorized envelopes and keep protected source evidence outside public output.",
+      "inputs": [
+        "release provenance checks inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "release provenance checks result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "public-surface-sweeper",
+        "repo-proof-index",
+        "emet"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "secret-redact-io",
+      "name": "Secret Redact IO",
+      "purpose": "Provide guarded Python IO helpers that redact file, fetch, write, and subprocess output while emitting hash-only receipts.",
+      "useCases": [
+        "secret-aware IO",
+        "redacted subprocess capture",
+        "hash-only evidence receipts"
+      ],
+      "href": "security-toolkit.html#secret-redact-io",
+      "sourceHref": "https://github.com/HarperZ9/secret-redact-io",
+      "domains": [
+        "security-privacy",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "authorized security teams",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "owned or expressly authorized systems",
+        "local development workspaces"
+      ],
+      "maturity": "shipped",
+      "placement": "catalog-only",
+      "accessMode": "install",
+      "entryCommand": "python -m pip install secret-redact-io; secret-redact-io read README.md --json",
+      "verificationCommand": "python -m pip install -e \".[dev]\"; python -m pytest",
+      "evidence": [
+        {
+          "id": "secret-redact-io-release-v0-1-0",
+          "type": "release",
+          "label": "Secret Redact IO v0.1.0",
+          "href": "https://github.com/HarperZ9/secret-redact-io/releases/tag/v0.1.0",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The v0.1.0 public release was verified."
+        }
+      ],
+      "limitations": [
+        "The package does not include credentials or environment configuration.",
+        "Redaction and hash-only receipts reduce exposure but do not replace source review."
+      ],
+      "boundary": "Do not pass secrets to destinations that are not authorized to receive them, even when redaction is enabled.",
+      "inputs": [
+        "secret-aware IO inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "secret-aware IO result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "public-surface-sweeper",
+        "agent-hook-pack",
+        "model-provenance-validator"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "agent-hook-pack",
+      "name": "Agent Hook Pack",
+      "purpose": "Install public-safe hooks for secret checks, branch guards, environment synchronization, and repository hygiene.",
+      "useCases": [
+        "pre-commit hygiene",
+        "branch protection",
+        "agent environment checks"
+      ],
+      "href": "security-toolkit.html#agent-hook-pack",
+      "sourceHref": "https://github.com/HarperZ9/agent-hook-pack",
+      "domains": [
+        "security-privacy",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "authorized security teams",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "owned or expressly authorized systems",
+        "local development workspaces"
+      ],
+      "maturity": "shipped",
+      "placement": "catalog-only",
+      "accessMode": "install",
+      "entryCommand": "python -m pip install -e .; agent-hook-pack audit; agent-hook-pack list",
+      "verificationCommand": "python -m pip install -e \".[test]\"; agent-hook-pack audit; python -m pytest",
+      "evidence": [
+        {
+          "id": "agent-hook-pack-release-v0-1-0",
+          "type": "release",
+          "label": "Agent Hook Pack v0.1.0",
+          "href": "https://github.com/HarperZ9/agent-hook-pack/releases/tag/v0.1.0",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The v0.1.0 public release was verified."
+        }
+      ],
+      "limitations": [
+        "Private policy layers are intentionally omitted from the public package.",
+        "Generic hooks cannot prove a repository or agent workflow is safe."
+      ],
+      "boundary": "Hooks support, but do not replace, repository-specific policy and human review.",
+      "inputs": [
+        "pre-commit hygiene inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "pre-commit hygiene result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "public-surface-sweeper",
+        "secret-redact-io",
+        "repo-proof-index"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "repo-proof-index",
+      "name": "Repo Proof Index",
+      "purpose": "Index proof packets, receipts, and contracts into reviewer-ready summaries without making approval decisions.",
+      "useCases": [
+        "proof-packet indexing",
+        "receipt discovery",
+        "reviewer-ready evidence summaries"
+      ],
+      "href": "security-toolkit.html#repo-proof-index",
+      "sourceHref": "https://github.com/HarperZ9/repo-proof-index",
+      "domains": [
+        "security-privacy",
+        "evaluation-verification",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "authorized security teams",
+        "evaluation engineers",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "owned or expressly authorized systems",
+        "review and CI lanes",
+        "local development workspaces"
+      ],
+      "maturity": "shipped",
+      "placement": "catalog-only",
+      "accessMode": "install",
+      "entryCommand": "python -m pip install repo-proof-index; repo-proof-index contracts/*.json --summary",
+      "verificationCommand": "python -m pip install -e \".[test]\"; repo-proof-index examples/contracts/*.json --summary; python -m pytest",
+      "evidence": [
+        {
+          "id": "repo-proof-index-release-v0-1-1",
+          "type": "release",
+          "label": "Repo Proof Index v0.1.1",
+          "href": "https://github.com/HarperZ9/repo-proof-index/releases/tag/v0.1.1",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The v0.1.1 public release was verified."
+        }
+      ],
+      "limitations": [
+        "The index does not decide whether evidence is sufficient, validate arbitrary schemas, or read referenced private payloads."
+      ],
+      "boundary": "Index only public or authorized evidence and keep private payloads outside public summaries.",
+      "inputs": [
+        "proof-packet indexing inputs",
+        "operator-defined constraints"
+      ],
+      "outputs": [
+        "proof-packet indexing result",
+        "reviewable verification record"
+      ],
+      "dependencies": [],
+      "related": [
+        "emet",
+        "model-provenance-validator",
+        "public-surface-sweeper"
+      ],
+      "lastVerified": "2026-08-27"
+    }
+  ]
+}

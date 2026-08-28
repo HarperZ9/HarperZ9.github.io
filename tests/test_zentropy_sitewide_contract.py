@@ -29,10 +29,8 @@ def test_shared_nav_renders_zentropy_brand_and_desktop_gpu_gate() -> None:
     assert "shouldUseDesktopGpuArt(window)" in nav
     assert 'doc.querySelector(".frame")' in nav
     assert 'insertAdjacentElement("beforebegin", figure)' in nav
-    assert re.search(
-        r'PRIMARY\.map\(\(item\) => navLink\(item, active\)\)\.join\(""\)\s*\+\s*`</nav>`\s*\+\s*`<details class="sn-more"',
-        nav,
-    )
+    assert 'PRIMARY_ROUTES.map((item) => navLink(item, active, locationPath, true)).join("")' in nav
+    assert 'SECONDARY_GROUPS.map((group) => menuGroup(' in nav
     assert 'classList.contains("studio-page")' in nav
     assert 'import("./generative-field.js")' in nav
     assert 'import("./cursor-field.js")' in nav

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Retro Systems Lab play capture</title>
+  <desc id="desc">A deterministic pixel field for the Retro Engine play pillar.</desc>
+  <metadata>{"schema":"harperz9-retro-identity/v2","label":"RETRO ENGINE · PLAY","sourceFiles":["public/system/retro-engine.js","public/system/shader-presets.js","public/system/retro-palettes.js"]}</metadata>
+  <rect width="960" height="540" fill="#14041b"/>
+  <rect x="48" y="48" width="864" height="444" rx="28" fill="#09030d" stroke="#f6efe7" stroke-opacity=".18"/>
+  <text x="96" y="102" fill="#f6efe7" font-family="ui-monospace, monospace" font-size="18" letter-spacing="4">RETRO ENGINE · PLAY</text>
+
+      <g shape-rendering="crispEdges">
+        <rect x="118" y="126" width="92" height="92" fill="#ff6030"/>
+        <rect x="210" y="126" width="92" height="92" fill="#3b163d"/>
+        <rect x="302" y="126" width="92" height="92" fill="#62f0cc"/>
+        <rect x="394" y="126" width="92" height="92" fill="#f6efe7"/>
+        <rect x="486" y="126" width="92" height="92" fill="#1f6f6a"/>
+        <rect x="578" y="126" width="92" height="92" fill="#ffb38b"/>
+        <rect x="670" y="126" width="92" height="92" fill="#22052d"/>
+        <rect x="762" y="126" width="92" height="92" fill="#62f0cc"/>
+        <rect x="118" y="218" width="92" height="92" fill="#22052d"/>
+        <rect x="210" y="218" width="92" height="92" fill="#62f0cc"/>
+        <rect x="302" y="218" width="92" height="92" fill="#1f6f6a"/>
+        <rect x="394" y="218" width="92" height="92" fill="#ff6030"/>
+        <rect x="486" y="218" width="92" height="92" fill="#f6efe7"/>
+        <rect x="578" y="218" width="92" height="92" fill="#3b163d"/>
+        <rect x="670" y="218" width="92" height="92" fill="#ffb38b"/>
+        <rect x="762" y="218" width="92" height="92" fill="#17091f"/>
+        <rect x="118" y="310" width="92" height="92" fill="#62f0cc"/>
+        <rect x="210" y="310" width="92" height="92" fill="#17091f"/>
+        <rect x="302" y="310" width="92" height="92" fill="#ffb38b"/>
+        <rect x="394" y="310" width="92" height="92" fill="#22052d"/>
+        <rect x="486" y="310" width="92" height="92" fill="#ff6030"/>
+        <rect x="578" y="310" width="92" height="92" fill="#1f6f6a"/>
+        <rect x="670" y="310" width="92" height="92" fill="#f6efe7"/>
+        <rect x="762" y="310" width="92" height="92" fill="#3b163d"/>
+      </g>
+      <g fill="none" stroke="#f6efe7" stroke-opacity=".28">
+        <path d="M96 456 C210 376 290 432 390 326 S590 228 704 300 S842 270 880 184"/>
+        <path d="M96 470 C234 384 306 452 418 340 S604 248 734 320 S854 292 892 206" stroke="#62f0cc" stroke-opacity=".42"/>
+      </g>
+</svg>

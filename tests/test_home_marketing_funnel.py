@@ -94,15 +94,16 @@ def test_legacy_shared_field_does_not_mount_over_the_zentropy_home() -> None:
     assert "mountGenerativeField" not in shared_home_art
     assert "home-generative-field" not in shared_home_art
     assert 'data-home-shell="react"' in (ROOT / "home" / "index.html").read_text(encoding="utf-8")
-    assert '"/system/home-art" + ".js?v=20260826-hiring-main"' in (ROOT / "home" / "index.html").read_text(encoding="utf-8")
-    assert '"./nav.js?v=20260826-hiring-main"' in shared_home_art
+    assert '"/system/home-art" + ".js?v=20260827-capability-publication"' in (ROOT / "home" / "index.html").read_text(encoding="utf-8")
+    assert '"./nav.js?v=20260827-capability-publication"' in shared_home_art
+    assert '"./routes.js?v=20260827-capability-publication"' in shared_home_art
     assert "homeShell !== \"react\"" in navigation
 
     deployed_index = (ROOT / "index.html").read_text(encoding="utf-8")
     match = re.search(r'src="/(?P<asset>assets/index-[^"]+\.js)"', deployed_index)
     assert match, "the deployed homepage must reference its hashed JavaScript bundle"
     deployed_bundle = (ROOT / match.group("asset")).read_text(encoding="utf-8")
-    assert "/system/home-art.js?v=20260826-hiring-main" in deployed_bundle
+    assert "/system/home-art.js?v=20260827-capability-publication" in deployed_bundle
 
 
 def test_home_source_mirror_matches_current_maturity_and_design_positioning() -> None:
@@ -264,47 +265,40 @@ def test_home_hero_display_size_is_capped_at_six_rem() -> None:
     assert float(cap.group(1)) <= 6
 
 
-def test_generated_output_preserves_current_social_metadata() -> None:
+def test_generated_output_uses_flywheel_first_social_metadata() -> None:
     html = (ROOT / "index.html").read_text(encoding="utf-8")
     expected_metadata = (
-        "<title>Zain Dana Harper · Systems Engineer</title>",
-        '<meta property="og:title" content="Zain Dana Harper · Systems Engineer" />',
+        "<title>Flywheel: model-neutral agent workbench and public evidence atlas</title>",
+        '<meta property="og:title" content="Flywheel: model-neutral agent workbench" />',
         '<link rel="canonical" href="https://harperz9.github.io/" />',
-        '<meta property="og:image" content="https://harperz9.github.io/brand/zentropy-logo.png" />',
+        '<meta property="og:image" content="https://harperz9.github.io/img/og/flywheel.png" />',
         '<meta name="twitter:card" content="summary_large_image" />',
-        '<meta name="twitter:image" content="https://harperz9.github.io/brand/zentropy-logo.png" />',
+        '<meta name="twitter:image" content="https://harperz9.github.io/img/og/flywheel.png" />',
     )
     for value in expected_metadata:
         assert value in html
 
-    assert (ROOT / "img" / "og" / "portfolio-home.png").is_file()
+    assert (ROOT / "img" / "og" / "flywheel.png").is_file()
     assert "img/og/telos.png" not in html
 
 
-def test_generated_bundle_contains_all_recorded_workflows() -> None:
+def test_generated_bundle_keeps_flywheel_evidence_and_later_hiring_routes() -> None:
     html = (ROOT / "index.html").read_text(encoding="utf-8")
     match = re.search(r'src="(/assets/index-[^"]+\.js)"', html)
     assert match, "generated home must reference its Vite bundle"
     bundle = (ROOT / match.group(1).lstrip("/")).read_text(encoding="utf-8")
     for value in (
-        "Recorded workflows",
-        "Available for paid work",
-        "Fourteen systems",
-        "integrated Flywheel engine remains the active build",
-        "Build Color 1.0.2",
-        "Index 2.9.0",
-        "Gather 1.6.1",
-        "Forum 1.13.0",
-        "Crucible 1.2.0",
-        "/demo-index.html",
-        "/demo-gather.html",
-        "/demo-forum.html",
-        "/demo-crucible.html",
-        "/media/demos/index/index-demo-poster.png",
-        "/media/demos/gather/gather-workflow-short-poster.png",
-        "/media/demos/forum/forum-demo-short-poster.png",
-        "/media/demos/crucible/crucible-workflow-short-poster.png",
-        "/demonstrations.html",
+        "Flywheel is the primary public system",
+        "Route→Verify→Receipt→Reuse",
+        "Workshop contact follows the evidence",
+        "Engineering and evaluation",
+        "Technical operations",
+        "Public service, safety, and field operations",
+        "Current briefing",
+        "Five evidence lanes, one OpenAI and Hugging Face incident",
+        "/catalog.html",
+        "/briefings/2026-08-26-openai-hugging-face-incident/",
+        "/figures/system-capability-map.html",
     ):
         assert value in bundle
     assert "calibrate pro" not in bundle.lower()

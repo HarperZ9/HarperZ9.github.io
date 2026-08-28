@@ -13,15 +13,20 @@
 <meta property="og:description" content="A live retro renderer in your browser. Feed it a plate, your own image, GLSL, or a sound drawing, then pixelate it through palettes, dither, and a CRT.">
 <meta property="og:url" content="https://harperz9.github.io/retro.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/retro.png">
+<meta property="og:image:alt" content="Retro Engine browser studio with a rendered CRT image and local palette, shader, audio, and export controls.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Retro Engine &middot; Zain Dana Harper">
+<meta name="twitter:description" content="A live local-first retro renderer for palettes, dither, CRT, shaders, images, and sound inside the Flywheel Retro Systems Lab.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/retro.png">
+<meta name="twitter:image:alt" content="Retro Engine browser studio with a rendered CRT image and local palette, shader, audio, and export controls.">
 <meta name="color-scheme" content="dark">
+<script>document.documentElement.classList.add('js')</script>
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="system/system.css?v=20260812-angular">
 <link rel="stylesheet" href="system/instrument.css?v=20260813-hidden">
 <link rel="stylesheet" href="system/instrument-forms.css?v=20260812-bracket">
+<link rel="stylesheet" href="system/retro-systems-lab.css">
 <style>
   /* the contact sheet: every shader as a small live thumbnail, so the shelf can
      be browsed by eye instead of one dropdown load at a time */
@@ -49,6 +54,8 @@
 <style>
   /* the retro engine's own racks; the shared chassis lives in instrument.css */
   .re-preview canvas{image-rendering:pixelated;cursor:crosshair;touch-action:none}
+  html:not(.js) #engine{display:none}
+  .retro-nojs-notice{margin:.75rem 1rem;padding:.75rem 1rem;border:1px solid var(--hairline);color:var(--bone)}
   input[type=color].re-color{width:2.1rem;height:2.1rem;border:1px solid var(--hairline);border-radius:6px;
     background:transparent;padding:.1rem;cursor:pointer}
   input[type=color].re-color:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
@@ -105,8 +112,11 @@
 <a class="skip-link" href="#main">Skip to content</a>
 
 <div id="site-nav" class="site-nav"></div>
-<noscript><nav class="site-nav"><a href="studio.html">Studio</a> <a href="gallery.html">Gallery</a> <a href="overview.html">Engines</a> <a href="catalog.html">Catalog</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260826-hiring-main"></script>
+<noscript>
+  <nav class="site-nav"><a href="studio.html">Studio</a> <a href="gallery.html">Gallery</a> <a href="overview.html">Engines</a> <a href="engine-revival.html">Engine Revival</a> <a href="brender-archival.html">BRender Archival</a> <a href="catalog.html">Catalog</a> <a href="cv.html">About</a></nav>
+  <p class="retro-nojs-notice" role="status">The interactive renderer requires JavaScript. The static Retro Systems Lab evidence and companion routes remain available below.</p>
+</noscript>
+<script type="module" src="system/nav.js?v=20260827-capability-publication"></script>
 
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Retro Engine</span></div>
@@ -372,6 +382,26 @@
   <p class="re-keys" id="re-flow"></p>
   <p class="re-keys"><b>Keys</b> <kbd>F</kbd> full screen &middot; <kbd>R</kbd> randomize &middot; <kbd>S</kbd> save PNG &middot; <kbd>space</kbd> animate &middot; <kbd>[</kbd> <kbd>]</kbd> amount. Double-click the picture for full screen. Drag on the picture to move the light in most shaders.</p>
   <p class="seal-line">The renderer is ordinary readable JavaScript: <span translate="no">system/retro-engine.js</span>, <span translate="no">system/retro-palettes.js</span>, <span translate="no">system/shader-runner.js</span>. Palettes and the dither and scanline math match the coherence-membrane <span translate="no">retro.py</span> pipeline, so a browser render and an offline render read as one instrument.</p>
+</section>
+
+<section class="retro-lab-section retro-lab-shell" id="retro-systems-lab" aria-labelledby="retro-lab-h">
+  <p class="retro-lab-kicker">Retro Systems Lab under Flywheel</p>
+  <h2 id="retro-lab-h">Play, preserve, verify, without mixing proof boundaries.</h2>
+  <p class="retro-lab-lede"><span translate="no">Retro Engine</span> is the live play surface. <a href="engine-revival.html">Engine Revival</a> preserves public engine evidence and recipes. <a href="brender-archival.html">BRender Archival</a> verifies one specific BRender restoration release. Flywheel remains the primary platform above the cluster; generic Retro Engine output is not BRender evidence.</p>
+  <figure class="retro-lab-figure">
+    <img src="media/retro-systems-lab/identity/crossover.svg" width="960" height="540" alt="Directed Retro Systems Lab flow from Retro Engine play to Engine Revival preserve to BRender Archival verify." aria-label="play to preserve to verify">
+    <figcaption>The shared crossover diagram is a navigation and evidence-boundary map. It does not prove BRender behavior, adoption, performance, or product parity.</figcaption>
+  </figure>
+  <ol class="retro-lab-flow-fallback" aria-label="Retro Systems Lab semantic fallback">
+    <li><a href="retro.html">Play: Retro Engine</a></li>
+    <li><a href="engine-revival.html">Preserve: Engine Revival</a></li>
+    <li><a href="brender-archival.html">Verify: BRender Archival</a></li>
+  </ol>
+  <div class="retro-lab-links" aria-label="Retro Systems Lab companion routes">
+    <a href="flywheel.html">Flywheel platform</a>
+    <a href="studio.html">Studio</a>
+    <a href="overview.html">Systems registry</a>
+  </div>
 </section>
 </main>
 

@@ -1,0 +1,321 @@
+{
+  "renderer": "telos-figure/v1",
+  "viewBox": "0 0 960 540",
+  "figure": {
+    "id": "source-scope-matrix",
+    "kind": "matrix",
+    "title": "Five records, five observation points",
+    "description": "A complete matrix separates period, unit, collection method, access model, direct observation, inference, and known gap across legal process, OpenAI's company report, Hugging Face host telemetry, the independent investigation, and vendor remediation.",
+    "claim": "The five evidence lanes answer different questions and carry different access and attribution boundaries.",
+    "doesNotProve": "The matrix does not rank credibility, merge incompatible units, resolve disputed interpretations, or convert allegations into findings.",
+    "sources": [
+      {
+        "label": "Alabama announcement",
+        "href": "https://www.alabamaag.gov/attorney-general-marshall-launches-investigation-into-openai-and-sam-altman-for-massive-artificial-intelligence-data-breach/"
+      },
+      {
+        "label": "Alabama subpoena",
+        "href": "https://www.alabamaag.gov/wp-content/uploads/2026/08/OpenAI-Subpoena_Final.pdf"
+      },
+      {
+        "label": "Hugging Face technical timeline",
+        "href": "https://huggingface.co/blog/agent-intrusion-technical-timeline"
+      },
+      {
+        "label": "JFrog advisories",
+        "href": "https://docs.jfrog.com/releases/docs/jfrog-security-advisories"
+      },
+      {
+        "label": "JFrog statement",
+        "href": "https://jfrog.com/blog/jfrog-and-openai-collaboration-on-zero-day-security-findings/"
+      },
+      {
+        "label": "METR joint report",
+        "href": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/"
+      },
+      {
+        "label": "OpenAI overview",
+        "href": "https://openai.com/index/hugging-face-incident-and-the-road-ahead/"
+      },
+      {
+        "label": "OpenAI technical report",
+        "href": "https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf"
+      }
+    ],
+    "retrievedAt": "2026-08-26",
+    "units": "qualitative scope fields",
+    "transformations": [
+      "Keep named units inside their source cells and do not aggregate across columns.",
+      "Preserve each source lane's terminology and attribution without assigning a score.",
+      "Render every missing or bounded detail as an explicit gap rather than an inferred absence."
+    ],
+    "uncertainty": "Cells summarize the reviewed source ledger. Source access and publication dates differ, and MR-2 mirrors the joint report rather than adding another investigation.",
+    "data": {
+      "type": "matrix",
+      "rows": [
+        {
+          "id": "access",
+          "label": "Access model"
+        },
+        {
+          "id": "collection",
+          "label": "Collection method"
+        },
+        {
+          "id": "gap",
+          "label": "Known gap"
+        },
+        {
+          "id": "inference",
+          "label": "Inference"
+        },
+        {
+          "id": "observation",
+          "label": "Direct observation"
+        },
+        {
+          "id": "period",
+          "label": "Period"
+        },
+        {
+          "id": "unit",
+          "label": "Unit"
+        }
+      ],
+      "columns": [
+        {
+          "id": "hugging-face",
+          "label": "Hugging Face host telemetry"
+        },
+        {
+          "id": "independent",
+          "label": "Independent investigation"
+        },
+        {
+          "id": "legal",
+          "label": "Legal process"
+        },
+        {
+          "id": "openai",
+          "label": "OpenAI company report"
+        },
+        {
+          "id": "vendor",
+          "label": "Vendor remediation"
+        }
+      ],
+      "cells": [
+        {
+          "row": "access",
+          "column": "hugging-face",
+          "label": "Direct access to Hugging Face systems and records within the host review",
+          "status": "verified"
+        },
+        {
+          "row": "access",
+          "column": "independent",
+          "label": "Independent investigation with host-controlled data access",
+          "status": "caution"
+        },
+        {
+          "row": "access",
+          "column": "legal",
+          "label": "State inquiry with compulsory requests for records",
+          "status": "caution"
+        },
+        {
+          "row": "access",
+          "column": "openai",
+          "label": "First-party access to OpenAI systems and records",
+          "status": "caution"
+        },
+        {
+          "row": "access",
+          "column": "vendor",
+          "label": "Vendor-authored remediation and advisory records",
+          "status": "caution"
+        },
+        {
+          "row": "collection",
+          "column": "hugging-face",
+          "label": "Affected-host logs and forensic reconstruction",
+          "status": "verified"
+        },
+        {
+          "row": "collection",
+          "column": "independent",
+          "label": "Analysis of datasets OpenAI supplied, with requests for additional material",
+          "status": "caution"
+        },
+        {
+          "row": "collection",
+          "column": "legal",
+          "label": "Official announcement, subpoena, and multistate letter",
+          "status": "caution"
+        },
+        {
+          "row": "collection",
+          "column": "openai",
+          "label": "First-party internal investigation and evaluation",
+          "status": "caution"
+        },
+        {
+          "row": "collection",
+          "column": "vendor",
+          "label": "Vendor publication and maintained advisory index",
+          "status": "caution"
+        },
+        {
+          "row": "gap",
+          "column": "hugging-face",
+          "label": "Recovered records may be incomplete; sensitive indicators are generalized or redacted",
+          "status": "caution"
+        },
+        {
+          "row": "gap",
+          "column": "independent",
+          "label": "No direct OpenAI infrastructure query or primary-model run access; known loss and analysis errors",
+          "status": "caution"
+        },
+        {
+          "row": "gap",
+          "column": "legal",
+          "label": "No adjudicated violation, liability, or consumer harm in the cited materials",
+          "status": "caution"
+        },
+        {
+          "row": "gap",
+          "column": "openai",
+          "label": "Preliminary evaluations lack public sample sizes, intervals, and independent replication",
+          "status": "caution"
+        },
+        {
+          "row": "gap",
+          "column": "vendor",
+          "label": "The record does not establish deployed patch coverage or remediation effectiveness",
+          "status": "caution"
+        },
+        {
+          "row": "inference",
+          "column": "hugging-face",
+          "label": "Parts of the motivational account, including an effort to obtain test solutions",
+          "status": "caution"
+        },
+        {
+          "row": "inference",
+          "column": "independent",
+          "label": "Behavioral analysis, including origin in broader scorer-tampering research",
+          "status": "caution"
+        },
+        {
+          "row": "inference",
+          "column": "legal",
+          "label": "Consumer-protection implications remain allegations under investigation",
+          "status": "caution"
+        },
+        {
+          "row": "inference",
+          "column": "openai",
+          "label": "Attribution and remediation effectiveness remain first-party interpretations",
+          "status": "caution"
+        },
+        {
+          "row": "inference",
+          "column": "vendor",
+          "label": "No independent incident attribution is inferred from the advisory lane",
+          "status": "unavailable"
+        },
+        {
+          "row": "observation",
+          "column": "hugging-face",
+          "label": "Recovered host activity, affected assets, and operational search metadata",
+          "status": "verified"
+        },
+        {
+          "row": "observation",
+          "column": "independent",
+          "label": "Patterns in supplied transcripts, board data, and artifacts",
+          "status": "caution"
+        },
+        {
+          "row": "observation",
+          "column": "legal",
+          "label": "Existence, scope, requests, and deadlines of the legal process",
+          "status": "verified"
+        },
+        {
+          "row": "observation",
+          "column": "openai",
+          "label": "Internal activity, system configuration, impact assessment, and remediation tests",
+          "status": "caution"
+        },
+        {
+          "row": "observation",
+          "column": "vendor",
+          "label": "Published collaboration statement and advisory entries",
+          "status": "caution"
+        },
+        {
+          "row": "period",
+          "column": "hugging-face",
+          "label": "Observed July 9 at 02:28 UTC through July 13 at 14:14 UTC",
+          "status": "verified"
+        },
+        {
+          "row": "period",
+          "column": "independent",
+          "label": "Scope June 26 through July 13, focused mostly on July 7 through July 13",
+          "status": "caution"
+        },
+        {
+          "row": "period",
+          "column": "legal",
+          "label": "Subpoena served August 20; investigation announced August 24; response commanded by September 14",
+          "status": "caution"
+        },
+        {
+          "row": "period",
+          "column": "openai",
+          "label": "Internal chronology through the August 26 reports",
+          "status": "caution"
+        },
+        {
+          "row": "period",
+          "column": "vendor",
+          "label": "Statement published July 27 and updated August 5; advisories current through August 25 in the ledger",
+          "status": "caution"
+        },
+        {
+          "row": "unit",
+          "column": "hugging-face",
+          "label": "Recovered actions, clusters, systems, and affected customer datasets",
+          "status": "verified"
+        },
+        {
+          "row": "unit",
+          "column": "independent",
+          "label": "Agents, entries, board messages and files, standalone messages, and transcripts",
+          "status": "caution"
+        },
+        {
+          "row": "unit",
+          "column": "legal",
+          "label": "Legal questions and 16 requests for information or documents",
+          "status": "caution"
+        },
+        {
+          "row": "unit",
+          "column": "openai",
+          "label": "Models, workers, systems, credentials, repositories, tasks, controls, and evaluations",
+          "status": "caution"
+        },
+        {
+          "row": "unit",
+          "column": "vendor",
+          "label": "Vendor statement, advisories, CVE context, and fixed-version context",
+          "status": "caution"
+        }
+      ]
+    }
+  }
+}

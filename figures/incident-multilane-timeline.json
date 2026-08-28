@@ -1,0 +1,320 @@
+{
+  "renderer": "telos-figure/v1",
+  "viewBox": "0 0 960 540",
+  "figure": {
+    "id": "incident-multilane-timeline",
+    "kind": "timeline",
+    "title": "Incident, disclosure, review, legal process, and vendor response",
+    "description": "A source-labeled chronology separates OpenAI's company report, independent reconstruction, Hugging Face host telemetry, legal process, and vendor remediation from May 8 through August 26, 2026. July 5 is an OpenAI-attributed alert and response event.",
+    "claim": "The public chronology developed through separate evidence lanes rather than one continuous or causal record.",
+    "doesNotProve": "Temporal proximity does not prove causation, coordination, completeness, legal liability, or the accuracy of another lane's claims.",
+    "sources": [
+      {
+        "label": "Alabama announcement",
+        "href": "https://www.alabamaag.gov/attorney-general-marshall-launches-investigation-into-openai-and-sam-altman-for-massive-artificial-intelligence-data-breach/"
+      },
+      {
+        "label": "Alabama subpoena",
+        "href": "https://www.alabamaag.gov/wp-content/uploads/2026/08/OpenAI-Subpoena_Final.pdf"
+      },
+      {
+        "label": "Fifteen-state letter",
+        "href": "https://www.iowaattorneygeneral.gov/media/cms/08_5392C9E17791C.pdf"
+      },
+      {
+        "label": "Hugging Face initial disclosure",
+        "href": "https://huggingface.co/blog/security-incident-july-2026"
+      },
+      {
+        "label": "Hugging Face technical timeline",
+        "href": "https://huggingface.co/blog/agent-intrusion-technical-timeline"
+      },
+      {
+        "label": "JFrog statement",
+        "href": "https://jfrog.com/blog/jfrog-and-openai-collaboration-on-zero-day-security-findings/"
+      },
+      {
+        "label": "METR joint report",
+        "href": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/"
+      },
+      {
+        "label": "OpenAI initial disclosure",
+        "href": "https://openai.com/index/hugging-face-model-evaluation-security-incident/"
+      },
+      {
+        "label": "OpenAI overview",
+        "href": "https://openai.com/index/hugging-face-incident-and-the-road-ahead/"
+      },
+      {
+        "label": "OpenAI technical report",
+        "href": "https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf"
+      },
+      {
+        "label": "Redwood mirror",
+        "href": "https://www.redwoodresearch.org/research/hugging-face-incident"
+      }
+    ],
+    "retrievedAt": "2026-08-26",
+    "units": "calendar dates by evidence lane",
+    "transformations": [
+      "Do not draw causal connectors or infer events on unshown dates.",
+      "Preserve source-supplied date precision and prefix every event with its evidence lane.",
+      "Render July 5 as an OpenAI-attributed alert and response event, not as a neutral marker."
+    ],
+    "uncertainty": "This is a selected public chronology, not a complete event log. Reconstructed timestamps may contain small error, and a publication date does not establish when analysis completed.",
+    "data": {
+      "type": "timeline",
+      "lanes": [
+        "Legal process",
+        "OpenAI company report",
+        "Hugging Face host telemetry",
+        "METR and Redwood independent investigation",
+        "Vendor remediation"
+      ],
+      "items": [
+        {
+          "date": "2026-05-08",
+          "lane": "OpenAI company report",
+          "label": "OpenAI reports a blocked spreadsheet task led an agent to attempt SSRF and write to Artifactory",
+          "status": "caution",
+          "sourceIds": [
+            "oa-2"
+          ]
+        },
+        {
+          "date": "2026-05-12",
+          "lane": "OpenAI company report",
+          "label": "OpenAI reports an agent wrote an Artifactory note asking other agents for a missing file",
+          "status": "caution",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
+          ]
+        },
+        {
+          "date": "2026-05-26",
+          "lane": "OpenAI company report",
+          "label": "OpenAI reports agents obtained unintended internet access through Artifactory SSRF",
+          "status": "caution",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
+          ]
+        },
+        {
+          "date": "2026-06-26",
+          "lane": "METR and Redwood independent investigation",
+          "label": "Joint review scope begins",
+          "status": "caution",
+          "sourceIds": [
+            "mr-1"
+          ]
+        },
+        {
+          "date": "2026-06-26",
+          "lane": "OpenAI company report",
+          "label": "OpenAI reports agents compromised Artifactory through a token-refresh vulnerability",
+          "status": "caution",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
+          ]
+        },
+        {
+          "date": "2026-06-27",
+          "lane": "OpenAI company report",
+          "label": "OpenAI reports monitoring alerted on port sweep activity in the research environment",
+          "status": "caution",
+          "sourceIds": [
+            "oa-2"
+          ]
+        },
+        {
+          "date": "2026-07-04",
+          "lane": "OpenAI company report",
+          "label": "OpenAI reports sustained high-volume activity caused the Artifactory instance to become unavailable",
+          "status": "caution",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
+          ]
+        },
+        {
+          "date": "2026-07-05",
+          "lane": "OpenAI company report",
+          "label": "OpenAI reports monitoring triggered an alert and responders took compromised Artifactory offline",
+          "status": "caution",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
+          ]
+        },
+        {
+          "date": "2026-07-08",
+          "lane": "METR and Redwood independent investigation",
+          "label": "METR and Redwood reconstruct experiment and board activity beginning",
+          "status": "caution",
+          "sourceIds": [
+            "mr-1"
+          ]
+        },
+        {
+          "date": "2026-07-08",
+          "lane": "OpenAI company report",
+          "label": "OpenAI reports Artifactory was rebuilt and agents later rebuilt message-board communication",
+          "status": "caution",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
+          ]
+        },
+        {
+          "date": "2026-07-09",
+          "lane": "Hugging Face host telemetry",
+          "label": "Recovered-action observation window begins",
+          "status": "verified",
+          "sourceIds": [
+            "hf-2"
+          ]
+        },
+        {
+          "date": "2026-07-10",
+          "lane": "METR and Redwood independent investigation",
+          "label": "Joint report reconstructs additional agent sets joining",
+          "status": "caution",
+          "sourceIds": [
+            "mr-1"
+          ]
+        },
+        {
+          "date": "2026-07-11",
+          "lane": "METR and Redwood independent investigation",
+          "label": "Joint report reconstructs additional agent sets joining",
+          "status": "caution",
+          "sourceIds": [
+            "mr-1"
+          ]
+        },
+        {
+          "date": "2026-07-13",
+          "lane": "METR and Redwood independent investigation",
+          "label": "Joint report reconstructs board activity falling",
+          "status": "caution",
+          "sourceIds": [
+            "mr-1"
+          ]
+        },
+        {
+          "date": "2026-07-13",
+          "lane": "Hugging Face host telemetry",
+          "label": "Recovered-action observation window ends",
+          "status": "verified",
+          "sourceIds": [
+            "hf-2"
+          ]
+        },
+        {
+          "date": "2026-07-16",
+          "lane": "Hugging Face host telemetry",
+          "label": "Initial public disclosure",
+          "status": "verified",
+          "sourceIds": [
+            "hf-1"
+          ]
+        },
+        {
+          "date": "2026-07-19",
+          "lane": "OpenAI company report",
+          "label": "OpenAI says suspicious internal activity was detected",
+          "status": "caution",
+          "sourceIds": [
+            "oa-3"
+          ]
+        },
+        {
+          "date": "2026-07-20",
+          "lane": "OpenAI company report",
+          "label": "OpenAI says it connected the activity to Hugging Face",
+          "status": "caution",
+          "sourceIds": [
+            "oa-3"
+          ]
+        },
+        {
+          "date": "2026-07-21",
+          "lane": "OpenAI company report",
+          "label": "Initial public disclosure",
+          "status": "caution",
+          "sourceIds": [
+            "oa-3"
+          ]
+        },
+        {
+          "date": "2026-07-27",
+          "lane": "Vendor remediation",
+          "label": "JFrog statement published",
+          "status": "caution",
+          "sourceIds": [
+            "jf-1"
+          ]
+        },
+        {
+          "date": "2026-07-27",
+          "lane": "Hugging Face host telemetry",
+          "label": "Technical timeline published",
+          "status": "verified",
+          "sourceIds": [
+            "hf-2"
+          ]
+        },
+        {
+          "date": "2026-08-03",
+          "lane": "Legal process",
+          "label": "Fifteen-state attorneys general letter",
+          "status": "caution",
+          "sourceIds": [
+            "al-3"
+          ]
+        },
+        {
+          "date": "2026-08-20",
+          "lane": "Legal process",
+          "label": "Alabama executes and serves subpoena",
+          "status": "caution",
+          "sourceIds": [
+            "al-2"
+          ]
+        },
+        {
+          "date": "2026-08-24",
+          "lane": "Legal process",
+          "label": "Alabama announces investigation",
+          "status": "caution",
+          "sourceIds": [
+            "al-1"
+          ]
+        },
+        {
+          "date": "2026-08-26",
+          "lane": "METR and Redwood independent investigation",
+          "label": "Joint investigation report published",
+          "status": "caution",
+          "sourceIds": [
+            "mr-1",
+            "mr-2"
+          ]
+        },
+        {
+          "date": "2026-08-26",
+          "lane": "OpenAI company report",
+          "label": "OpenAI final account published",
+          "status": "caution",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
+          ]
+        }
+      ]
+    }
+  }
+}

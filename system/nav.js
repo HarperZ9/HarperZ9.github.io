@@ -1,51 +1,6 @@
 // nav.js, one source of truth for the site navigation. Injected into #site-nav on every page;
 // active state derived from the path. No framework; <noscript> fallback lives in the page markup.
-const PRIMARY = [
-  ["The Studio", "studio.html", "studio"],
-  ["Gallery", "gallery.html", "gallery"],
-  ["Retro Engine", "retro.html", "retro"],
-  ["Engines", "overview.html", "flagships"],
-  ["Research", "research.html", "research"],
-  ["Hire / work", "hire.html", "work"],
-  ["GitHub ↗", "https://github.com/HarperZ9", "github", true],
-];
-
-// Platforms: standalone products and practices, each with its own complete page and
-// identity, held apart from the fourteen engines. Phantom is public and shipped; the
-// offensive-security line is private and shared only under lawful authorization.
-export const PLATFORMS = [
-  ["Phantom", "phantom.html", "phantom"],
-  ["behavior-transform.io", "behavior-transform.html", "behavior-transform"],
-  ["Authorized offensive security", "security.html", "security"],
-];
-
-export const MORE = [
-  ["The Tour", "tour.html", "demos"],
-  ["Demos", "demonstrations.html", "demos"],
-  ["Poster", "studio.html?source=poster", "studio"],
-  ["The Loom", "loom.html", "loom"],
-  // The archive is one of the Studio's materials, not only a page of pictures. The Studio,
-  // Gallery, and Retro Engine now lead the primary nav; the archive stays one click away.
-  ["Session archive", "session-archive.html", "archive"],
-  ["Guide", "guide.html", "guide"],
-  ["Catalog", "catalog.html", "catalog"],
-  ["Typeface", "typeface.html", "typeface"],
-  ["Publications", "publications.html", "publications"],
-  ["Frontier Safety Briefing", "/frontier-safety.html", "frontier-safety"],
-  ["Writing", "writing.html", "writing"],
-  ["Dossier", "dossier.html", "dossier"],
-  ["Resume and CV", "resume.html", "work"],
-  ["Portfolio", "portfolio.html", "work"],
-  ["About", "cv.html", "about"],
-];
-
-export const RECORDED_DEMOS = [
-  ["All recorded workflows", "demonstrations.html", "demos"],
-  ["Index · workspace atlas", "demo-index.html", "demo-route"],
-  ["Gather · research intake", "demo-gather.html", "demo-route"],
-  ["Forum · orchestration", "demo-forum.html", "demo-route"],
-  ["Crucible · measured refinement", "demo-crucible.html", "demo-route"],
-];
+import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js?v=20260827-capability-publication";
 
 const BRAND_LABEL = "zentropyLabs";
 const BRAND_MARK_SRC = "brand/zentropy-avatar.png";
@@ -143,60 +98,46 @@ function mountRouteArt(doc = document) {
   anchor.insertAdjacentElement("beforebegin", figure);
 }
 
-// Map any page to one of the sections. Flagship pages live under Flagships; everything
-// heavier-than-a-brick down to the utilities lives under the catalog.
-const FLAGSHIPS = new Set(["overview","index-graph","forum","gather","crucible","learn","flywheel"]);
-const DEMOS = new Set(["demo-index","demo-gather","demo-forum","demo-crucible","demo-emet","proof-index-sample","proof-surface-sample",
-  "public-surface-sweeper-sample","emet-sample","demonstrations","tour"]);
-const CATALOG = new Set(["catalog","emet","proof-surface","coherence-membrane","accountable-machines",
-  "accountable-engine","buildlang","raw","build-color","build-products","toolkit",
-  "provenance-sensorium","orca","aleph","warden","presentation","atelier",
-  "quanta-color","quanta-products","quantalang"]);
-CATALOG.add("field-guide");
-const RESEARCH = new Set(["research","why"]);
-const WRITING = new Set(["writing","the-summary-is-not-the-record"]);
-const WORK = new Set(["hire","test-run-request","resume","cover-letter","portfolio"]);
-const ABOUT = new Set(["cv","person"]);
-const TYPEFACE = new Set(["typeface"]);
-
 export function navActive(pathname) {
-  let f = (pathname || "").split("/").pop() || "index.html";
-  if (f === "") f = "index.html";
-  const stem = f.replace(/\.html$/, "") || "index";
-  if (stem === "index") return "home";
-  if (stem === "studio") return "studio";
-  if (stem === "gallery") return "gallery";
-  if (stem === "retro") return "retro";
-  if (stem === "loom") return "loom";
-  if (stem === "session-archive") return "archive";
-  if (stem === "guide") return "guide";
-  if (stem === "publications") return "publications";
-  if (stem === "frontier-safety") return "frontier-safety";
-  if (stem === "dossier") return "dossier";
-  if (stem === "security") return "security";
-  if (stem === "phantom") return "phantom";
-  if (stem === "behavior-transform") return "behavior-transform";
-  if (FLAGSHIPS.has(stem)) return "flagships";
-  if (DEMOS.has(stem)) return "demos";
-  if (CATALOG.has(stem)) return "catalog";
-  if (TYPEFACE.has(stem)) return "typeface";
-  if (WRITING.has(stem)) return "writing";
-  if (WORK.has(stem)) return "work";
-  if (stem.startsWith("research-")) return "research";
-  if (RESEARCH.has(stem)) return "research";
-  if (ABOUT.has(stem)) return "about";
-  return "";
+  return routeFamily(pathname);
 }
 
-function navLink([label, href, key, external], active) {
-  const current = key === active;
-  return `<a class="${current ? 'is-active' : ''}" href="${href}"${current ? ' aria-current="page"' : ''}${external ? ' rel="noopener"' : ''}>${label}</a>`;
+function localRoute(value) {
+  try {
+    const url = new URL(value, "https://harperz9.github.io/");
+    return url.pathname.replace(/^\//, "") + url.search;
+  } catch {
+    return "";
+  }
 }
 
-function menuGroup(label, items, active, className) {
+function localHrefForPage(value, locationPath) {
+  const page = localRoute(locationPath).split("?")[0];
+  return page.includes("/") ? `/${value}` : value;
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  })[character]);
+}
+
+function navLink({ label, href, family, external = false }, active, locationPath, retainSectionState = false) {
+  const exact = !external && localRoute(href) === localRoute(locationPath);
+  const sectionActive = retainSectionState && family === active;
+  const className = exact || sectionActive ? "is-active" : "";
+  const renderedHref = external ? href : localHrefForPage(href, locationPath);
+  return `<a class="${className}" href="${escapeHtml(renderedHref)}"${exact ? ' aria-current="page"' : ''}${external ? ' rel="noopener"' : ''}>${escapeHtml(label)}</a>`;
+}
+
+function menuGroup(label, items, active, locationPath, className) {
   return `<div class="sn-menu-group ${className}">`
-    + `<p class="sn-menu-label">${label}</p>`
-    + items.map((item) => navLink(item, active)).join("")
+    + `<p class="sn-menu-label">${escapeHtml(label)}</p>`
+    + items.map((item) => navLink(item, active, locationPath, className === "sn-menu-primary")).join("")
     + `</div>`;
 }
 
@@ -295,22 +236,27 @@ function enhanceMenu(doc, mount) {
 export function renderNav(doc = document) {
   const mount = doc.getElementById("site-nav");
   if (!mount) return;
-  const active = navActive(doc.location ? doc.location.pathname : location.pathname);
-  const moreActive = MORE.some(([, , key]) => key === active) || PLATFORMS.some(([, , key]) => key === active);
-  const activeLabel = active ? active.replace(/-/g, " ") : "site";
+  const locationPath = doc.location
+    ? doc.location.pathname + (doc.location.search || "")
+    : location.pathname + location.search;
+  const active = navActive(locationPath);
+  const moreActive = SECONDARY_GROUPS.some((group) => group.routes.some((route) => route.family === active));
+  const activeLabel = active || "site";
+  const homeHref = localHrefForPage("index.html", locationPath);
+  const brandMarkSrc = localHrefForPage(BRAND_MARK_SRC, locationPath);
   mount.innerHTML =
-    `<a class="sn-home" href="index.html" aria-label="${BRAND_LABEL} / Project Telos home"><span class="sn-home-field"><canvas class="sn-logo-canvas" aria-hidden="true"></canvas><img class="sn-logo-fallback" src="${BRAND_MARK_SRC}" alt="" width="30" height="30" style="display:none"></span><span class="sn-brand-word">${BRAND_LABEL}</span></a>`
-    + `<span class="sn-section" aria-label="Current section">${activeLabel}</span>`
+    `<a class="sn-home" href="${homeHref}" aria-label="${BRAND_LABEL} / Project Telos home"><span class="sn-home-field"><canvas class="sn-logo-canvas" aria-hidden="true"></canvas><img class="sn-logo-fallback" src="${brandMarkSrc}" alt="" width="30" height="30" style="display:none"></span><span class="sn-brand-word">${BRAND_LABEL}</span></a>`
+    + `<span class="sn-section" aria-label="Current section">${escapeHtml(activeLabel)}</span>`
     + `<nav class="sn-links" aria-label="Primary">`
-    + PRIMARY.map((item) => navLink(item, active)).join("")
+    + PRIMARY_ROUTES.map((item) => navLink(item, active, locationPath, true)).join("")
+    + EXTERNAL_ACTIONS.map((item) => navLink(item, active, locationPath)).join("")
     + `</nav>`
     + `<details class="sn-more"${moreActive ? ' data-current="true"' : ''}>`
-    + `<summary${moreActive ? ' aria-current="page"' : ''}>Menu</summary>`
+    + `<summary>Menu</summary>`
     + `<div class="sn-more-list" aria-label="Site menu">`
-    + menuGroup("Primary", PRIMARY, active, "sn-menu-primary")
-    + menuGroup("Platforms", PLATFORMS, active, "sn-menu-platforms")
-    + menuGroup("Recorded demos", RECORDED_DEMOS, active, "sn-menu-demos")
-    + menuGroup("More pages", MORE, active, "sn-menu-secondary")
+    + menuGroup("Primary", PRIMARY_ROUTES, active, locationPath, "sn-menu-primary")
+    + SECONDARY_GROUPS.map((group) => menuGroup(group.label, group.routes, active, locationPath, "sn-menu-secondary")).join("")
+    + menuGroup("Actions", EXTERNAL_ACTIONS, active, locationPath, "sn-menu-secondary")
     + `</div></details>`
     ;
   enhanceMenu(doc, mount);
@@ -355,7 +301,7 @@ function mountHomeLogo(doc) {
 // its own ?v= in the markup, so a new nav.js is what asks for new versions of
 // these; without a stamp here a reader with a warm cache keeps the old
 // stylesheet and the old exporter forever. Bump this with the nav.js stamp.
-const ASSET_V = "20260826-hiring-main";
+const ASSET_V = "20260827-capability-publication";
 
 function sheetHref(name) {
   const here = import.meta && import.meta.url ? import.meta.url : "";

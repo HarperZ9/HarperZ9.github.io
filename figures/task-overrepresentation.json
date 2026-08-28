@@ -1,0 +1,49 @@
+{
+  "renderer": "telos-figure/v1",
+  "viewBox": "0 0 960 540",
+  "figure": {
+    "id": "task-overrepresentation",
+    "kind": "bar",
+    "title": "Company-reported retrospective task shares",
+    "description": "Two zero-baseline bars show OpenAI's rounded retrospective percentages. Previously unsolved tasks were 22 percent of 898 tasks, while 93 percent of board-discussed tasks came from that set. The measures have different denominators.",
+    "claim": "OpenAI reports that a previously unsolved task set represented 22 percent of all tasks and 93 percent of board-discussed tasks.",
+    "doesNotProve": "There is no causal implication, common denominator, uplift measure, settled intent, production-wide result, or independent replication.",
+    "sources": [
+      {
+        "label": "OpenAI overview",
+        "href": "https://openai.com/index/hugging-face-incident-and-the-road-ahead/"
+      },
+      {
+        "label": "OpenAI technical report",
+        "href": "https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf"
+      }
+    ],
+    "retrievedAt": "2026-08-26",
+    "units": "company-reported percent",
+    "transformations": [
+      "Do not divide the values, calculate uplift, or imply causation.",
+      "Keep the 198 of 898 count and the separate board-discussion denominator in the labels.",
+      "Render both rounded percentages on a zero-to-100 scale."
+    ],
+    "uncertainty": "OpenAI reports rounded percentages. Public counts behind the 93 percent value, uncertainty intervals, and independent replication are unavailable in the reviewed record.",
+    "data": {
+      "type": "bar",
+      "items": [
+        {
+          "label": "Board-discussed tasks from that set | separate denominator",
+          "value": 93,
+          "status": "caution"
+        },
+        {
+          "label": "Previously unsolved tasks | 198 of 898",
+          "value": 22,
+          "status": "caution"
+        }
+      ],
+      "domain": {
+        "min": 0,
+        "max": 100
+      }
+    }
+  }
+}
