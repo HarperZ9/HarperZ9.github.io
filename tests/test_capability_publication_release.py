@@ -91,7 +91,7 @@ RELEASE_PATHS = (
     "systems/studio-engine.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "2477e90158e0a6aa6d537954cd62c0ff85ac1249e259ae0a3c8b256e8ef66b9d"
+REVIEWED_RELEASE_SHA256 = "85768b638cf13ee95d997d47ef28f8126373abcf0b1c0fe4b86adcbafab605ee"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -122,6 +122,8 @@ def _release_fingerprint() -> str:
     records = []
     for relative in sorted(RELEASE_PATHS):
         payload = (ROOT / relative).read_bytes()
+        if Path(relative).suffix.lower() not in {".pdf", ".png"}:
+            payload = payload.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
         records.append(f"{relative}\t{hashlib.sha256(payload).hexdigest()}")
     return hashlib.sha256(("\n".join(records) + "\n").encode()).hexdigest()
 
@@ -139,6 +141,20 @@ def _route_registry() -> dict[str, object]:
     match = re.search(r'ROUTE_REGISTRY_JSON = ("(?:[^"\\]|\\.)*");', source)
     assert match, "generated route registry JSON is missing"
     return json.loads(json.loads(match.group(1)))
+
+
+def test_release_fingerprint_is_stable_across_text_line_endings(
+    tmp_path: Path, monkeypatch
+) -> None:
+    artifact = tmp_path / "artifact.html"
+    monkeypatch.setattr(__import__(__name__), "ROOT", tmp_path)
+    monkeypatch.setattr(__import__(__name__), "RELEASE_PATHS", ("artifact.html",))
+
+    artifact.write_bytes(b"alpha\nbeta\n")
+    lf_fingerprint = _release_fingerprint()
+    artifact.write_bytes(b"alpha\r\nbeta\r\n")
+
+    assert _release_fingerprint() == lf_fingerprint
 
 
 def test_release_spine_matches_the_reviewed_artifact_fingerprint() -> None:
