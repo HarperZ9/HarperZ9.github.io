@@ -59,6 +59,103 @@
 .topnav a:hover,
 .topnav a:focus-visible{color:var(--signal)}
 
+.home-menu{
+  position:relative;
+  display:block;
+  margin-left:.4rem;
+}
+
+.home-menu summary{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.42rem;
+  min-height:2.65rem;
+  padding:.56rem .75rem;
+  border:1px solid var(--line-strong);
+  color:var(--muted);
+  background:#070406;
+  font-size:.92rem;
+  font-weight:760;
+  line-height:1;
+  list-style:none;
+  cursor:pointer;
+  user-select:none;
+}
+
+.home-menu summary::-webkit-details-marker{display:none}
+
+.home-menu summary::after{
+  content:"+";
+  margin-left:.14rem;
+  color:var(--muted);
+}
+
+.home-menu[open] summary::after{content:"-"}
+
+.home-menu summary:hover,
+.home-menu summary:focus-visible{
+  color:var(--ink);
+  border-color:var(--signal);
+  background:color-mix(in oklab, var(--signal) 8%, #070406);
+  outline:none;
+}
+
+.home-menu summary:focus-visible{box-shadow:0 0 0 2px rgba(142,227,242,.32)}
+
+.home-menu-list{
+  position:absolute;
+  right:0;
+  top:calc(100% + .55rem);
+  z-index:70;
+  box-sizing:border-box;
+  display:grid;
+  width:max-content;
+  min-width:16rem;
+  max-width:min(22rem, calc(100vw - 1.5rem));
+  max-height:calc(100dvh - 5rem);
+  gap:.16rem;
+  padding:.72rem;
+  border:1px solid var(--line-strong);
+  background:#070406;
+  overflow:auto;
+  overscroll-behavior:contain;
+}
+
+.home-menu:not([open]) .home-menu-list{display:none}
+
+.home-menu-label{
+  margin:.55rem 0 .1rem;
+  padding:.55rem .72rem 0;
+  border-top:1px solid var(--line);
+  color:var(--faint);
+  font-family:var(--font-mono);
+  font-size:.62rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.home-menu-list a{
+  display:flex;
+  align-items:center;
+  min-height:2.7rem;
+  min-width:0;
+  padding:.64rem .72rem;
+  color:var(--muted);
+  font-size:.96rem;
+  font-weight:720;
+  line-height:1.18;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+
+.home-menu-list a:hover,
+.home-menu-list a:focus-visible{
+  color:var(--ink);
+  background:color-mix(in oklab, var(--signal) 8%, #070406);
+  outline:none;
+}
+
 .hero{
   min-height:100svh;
   display:grid;
@@ -148,8 +245,8 @@
 
 .identity-art img{
   width:100%;
-  aspect-ratio:16/10;
-  object-fit:cover;
+  height:auto;
+  object-fit:contain;
 }
 
 .section{

@@ -30,13 +30,63 @@ def deployed_assets() -> tuple[Path, Path]:
     return ROOT / js_match.group("asset"), ROOT / css_match.group("asset")
 
 
-def test_home_loads_the_react_shell_and_shared_readable_floor() -> None:
+def stylesheet_hrefs(src: str) -> list[str]:
+    return [
+        match.group("href")
+        for match in re.finditer(
+            r'<link\b(?=[^>]*\brel="stylesheet")(?=[^>]*\bhref="(?P<href>[^"]+)")[^>]*>',
+            src,
+        )
+    ]
+
+
+def homepage_stylesheet_records() -> list[tuple[str, str, str]]:
+    records: list[tuple[str, str, str]] = []
+    for html_path in (HOME_INDEX, INDEX):
+        src = read(html_path)
+        for href in stylesheet_hrefs(src):
+            assert "home-readable.css" not in href
+            if href.startswith(("http://", "https://")):
+                continue
+            css_path = ROOT / href.split("?", 1)[0].lstrip("/")
+            assert css_path.is_file(), f"{html_path.name} references missing stylesheet {href}"
+            records.append((html_path.name, href, read(css_path)))
+
+    assert records, "the deployed homepage must reference at least one local stylesheet"
+    return records
+
+
+def test_home_loads_the_react_shell_without_legacy_readable_floor() -> None:
     for path in (INDEX, HOME_INDEX):
         src = read(path)
         assert 'data-home-shell="react"' in src
         assert '<div id="root"></div>' in src
-        assert "home-readable.css" in src
+        assert "home-readable.css" not in src
         assert "styles.css" not in src
+
+
+def test_home_stylesheet_graph_is_closed_over_the_new_visual_contract() -> None:
+    combined = "\n".join(css for _, _, css in homepage_stylesheet_records())
+
+    for value in (
+        "home-readable.css",
+        "conic-gradient",
+        "eyebrow",
+        "kicker",
+        "orientation / artifact",
+    ):
+        assert value not in combined
+
+    assert not re.search(r"\.hero(?:::before|:before|::after|:after)", combined)
+
+
+def test_home_menu_readability_rules_live_in_the_home_bundle() -> None:
+    css = read(APP_CSS)
+
+    assert ".home-menu" in css
+    assert ".home-menu-list" in css
+    assert ".home-menu:not([open]) .home-menu-list" in css
+    assert re.search(r"\.home-menu:not\(\[open\]\)\s+\.home-menu-list\s*\{[^}]*display\s*:\s*none", css, re.S)
 
 
 def test_noscript_fallback_is_a_complete_identity_first_front_door() -> None:
@@ -115,6 +165,8 @@ def test_deployed_bundle_matches_the_new_front_door_after_build() -> None:
         "Hiring and collaboration",
     ):
         assert value in bundle
+
+    assert "Systems Engineer | AI Evaluation, Developer Tools, and Technical Operations" not in bundle
 
     for stale in ("hero-kicker", "Recorded workflows", "Try four browser-native checks", "Project Telos"):
         assert stale not in bundle

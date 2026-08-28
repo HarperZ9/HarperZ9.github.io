@@ -65,9 +65,17 @@ def test_home_source_uses_identity_first_section_sequence() -> None:
         positions.append(source.index(needle))
 
     assert positions == sorted(positions), "homepage sections must follow the adopted sequence"
-    assert "Zain Dana Harper" in source
-    assert "Systems engineering, security tooling, graphics, and public research." in source
-    assert "Zentropy Labs is the workshop behind Flywheel and the wider body of work." in source
+    hero_lines = re.findall(
+        r'<(?:h1|p) className="[^"]*hero[^"]*"[^>]*>(?P<text>.*?)</(?:h1|p)>',
+        source,
+        re.S,
+    )
+    assert hero_lines[:3] == [
+        "Zain Dana Harper",
+        "Systems engineering, security tooling, graphics, and public research.",
+        "Zentropy Labs is the workshop behind Flywheel and the wider body of work.",
+    ]
+    assert "Systems Engineer | AI Evaluation, Developer Tools, and Technical Operations" not in source
     assert 'href="#constellation"' in source
     assert ">Explore the work" in source
     assert 'href="/hire.html"' in source
@@ -223,6 +231,11 @@ def test_home_hero_display_and_visual_system_are_restrained() -> None:
     assert "clamp(3rem, 6vw, 5.25rem)" in body
     assert "7.40rem" not in body
     assert "text-transform: none" in body
+    art_image = re.search(r"\.identity-art\s+img\s*\{(?P<body>[^}]*)\}", css)
+    assert art_image, "home stylesheet must define contained identity artwork"
+    art_body = art_image.group("body")
+    assert re.search(r"object-fit\s*:\s*contain", art_body)
+    assert not re.search(r"object-fit\s*:\s*cover", art_body)
 
     assert "@media (forced-colors: active)" in css
     assert "@media (prefers-reduced-motion: reduce)" in css
