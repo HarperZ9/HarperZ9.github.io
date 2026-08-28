@@ -169,11 +169,34 @@ export function mountLogoField(canvas, opts) {
 
   let raf = 0, t0 = 0, running = false, disposed = false;
 
-  const size = () => {
-    const rect = canvas.getBoundingClientRect();
+  // Sizing is observer-driven. Measuring layout inside the draw loop forced a
+  // synchronous reflow on every animation frame (profiled as the single
+  // largest main-thread cost on the Studio, starving real input), and the
+  // logo box changes size only on layout events.
+  let pendingSize = null;
+  const measure = (cssW, cssH) => {
     const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-    const w = Math.max(1, Math.round((rect.width || 1) * dpr));
-    const h = Math.max(1, Math.round((rect.height || 1) * dpr));
+    pendingSize = {
+      w: Math.max(1, Math.round((cssW || 1) * dpr)),
+      h: Math.max(1, Math.round((cssH || 1) * dpr)),
+    };
+  };
+  let sizeObserver = null;
+  if (typeof ResizeObserver === "function") {
+    sizeObserver = new ResizeObserver((entries) => {
+      const box = entries[0] && entries[0].contentRect;
+      if (box) measure(box.width, box.height);
+    });
+    sizeObserver.observe(canvas.parentElement || canvas);
+  }
+  {
+    const rect = canvas.getBoundingClientRect();
+    measure(rect.width, rect.height);
+  }
+  const size = () => {
+    if (!pendingSize) return;
+    const { w, h } = pendingSize;
+    pendingSize = null;
     if (w !== canvas.width || h !== canvas.height) { canvas.width = w; canvas.height = h; }
   };
 
@@ -216,6 +239,7 @@ export function mountLogoField(canvas, opts) {
       disposed = true; stop();
       document.removeEventListener("visibilitychange", onVis);
       if (io) io.disconnect();
+      if (sizeObserver) sizeObserver.disconnect();
       const ext = gl.getExtension("WEBGL_lose_context");
       if (ext) ext.loseContext();
     },

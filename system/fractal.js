@@ -192,17 +192,25 @@ export const PRESETS = [
   {
     name: "Feigenbaum Point",
     type: "mandelbrot",
+    // Framed to SHOW the period-doubling cascade accumulating at the Feigenbaum point. The
+    // original framing (scale 1e-6 at the point itself) rendered solid black: a window that deep
+    // on the boundary is essentially all non-escaping at any budget, and the piecewise preset
+    // sweep (2026-08-04) measured 0% lit pixels. Presets are views, and a view that shows
+    // nothing is a defect regardless of how famous its coordinates are.
     cx: -1.401155189, cy: 0.0,
-    scale: 1e-6,
-    maxIter: 2000,
+    scale: 6e-3,
+    maxIter: 900,
     palette: "ember",
   },
   {
     name: "Period-3 Bulb",
     type: "mandelbrot",
-    cx: -0.1226, cy: 0.7449,
-    scale: 0.005,
-    maxIter: 500,
+    // The whole bulb with its boundary filaments. The original scale (0.005) sat entirely INSIDE
+    // the bulb — interior renders black by design, so the preset was a solid black frame
+    // (measured 0% lit in the 2026-08-04 preset sweep).
+    cx: -0.125, cy: 0.744,
+    scale: 0.55,
+    maxIter: 700,
     palette: "dusk",
   },
   {
@@ -288,8 +296,12 @@ export const PRESETS = [
   {
     name: "Burning Ship: Hull",
     type: "burningship",
-    cx: -0.5, cy: -0.5,
-    scale: 0.5,
+    // The ship's main body with the small replica to port. The original framing (cx -0.5,
+    // cy -0.5, scale 0.5) was a fully non-escaping window — a solid black frame, measured 0%
+    // lit in the 2026-08-04 preset sweep, which also made the Burning Ship TYPE look broken
+    // since this preset is its default.
+    cx: -1.0, cy: -0.35,
+    scale: 1.8,
     maxIter: 500,
     palette: "bone",
   },

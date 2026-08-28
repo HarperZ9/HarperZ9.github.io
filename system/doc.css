@@ -18,11 +18,8 @@
    text always on a calm ground, and print output that stays print-grade.
    ============================================================================ */
 
-/* ---- Type. Hanken Grotesk carries every text role; hierarchy comes from
-       weight and size. Conso carries data, labels, and dates. Two families.
-       ZentropyDisplay is the wordmark in the nav, a logotype rather than a
-       third text face. ---- */
-@font-face{font-family:"ZentropyDisplay";src:url("../brand/ZentropyDisplay.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+/* ---- Type. Hanken Grotesk carries every prose, display, route, and project
+       mark. Conso carries data, labels, and dates. Two families. ---- */
 @font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk.woff2") format("woff2"); font-weight:100 900; font-style:normal; font-display:swap}
 @font-face{font-family:"Hanken Grotesk"; src:url("fonts/hanken-grotesk-italic.woff2") format("woff2"); font-weight:400; font-style:italic; font-display:swap}
 @font-face{font-family:"Conso"; src:url("fonts/conso-regular.woff2") format("woff2"),url("fonts/conso-regular.woff") format("woff"); font-weight:400; font-style:normal; font-display:swap}
@@ -81,10 +78,15 @@
   --zentropy-signal:var(--signal);
   --zentropy-rust:var(--drift);
 
-  --brand-display:"ZentropyDisplay","Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --display:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --body:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --mono:"Conso",ui-monospace,"SFMono-Regular",monospace;
+  --font-sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
+  --ground-instrument:#070406;
+  --ground-paper:#f2efe6;
+  --ink-paper:#111014;
+  --brand-display:var(--font-sans);
+  --display:var(--font-sans);
+  --body:var(--font-sans);
+  --mono:var(--font-mono);
 
   /* The reading column. This is 56ch, not the 68ch it was, because the ch unit
      is the width of the "0" glyph and not the width of an average character.
@@ -117,20 +119,22 @@ body.doc{
   padding:0 1rem clamp(2rem,5vw,4rem);
 }
 
-/* A single quiet scanline over the ground, well under the sheet. The old file
-   laid a rust gradient across the bottom 45% of the viewport at .28 opacity,
-   which tinted the reading surface itself. Text sits on a calm ground. */
+/* A single quiet field over the ground, well under the sheet. The old file
+   relied on scanlines, which read as decoration once the document has real
+   evidence surfaces. Text sits on a calm ground. */
 body.doc::before{
   content:"";
   position:fixed;
   inset:0;
   z-index:0;
   pointer-events:none;
-  opacity:.5;
-  background:repeating-linear-gradient(0deg,rgba(234,245,246,.022) 0 1px,transparent 1px 3px);
+  opacity:.34;
+  background:
+    radial-gradient(circle at 18% 12%,rgba(142,227,242,.08),transparent 0 24%,transparent 55%),
+    linear-gradient(180deg,rgba(242,239,230,.018),transparent 34%,rgba(200,106,68,.025));
 }
 
-.docnav,.sheet,.route-art,main{position:relative;z-index:1}
+.docnav,.sheet,.route-header,main{position:relative;z-index:1}
 
 /* ── the sheet ─────────────────────────────────────────────────────────────
    Wider than before so the reading column can hit its measure without the
@@ -380,6 +384,39 @@ ol.bul li b{color:var(--ink);font-weight:700}
   .data th,.data td{padding-right:.6rem}
 }
 
+.data-plate{
+  background:var(--ground-paper);
+  color:var(--ink-paper);
+  border:1px solid rgba(17,16,20,.24);
+  padding:clamp(.9rem,2vw,1.35rem);
+  font-family:var(--font-sans);
+}
+.evidence-ledger{
+  background:var(--ground-paper);
+  color:var(--ink-paper);
+  border:1px solid rgba(17,16,20,.24);
+  padding:clamp(.9rem,2vw,1.35rem);
+  font-family:var(--font-mono);
+  font-size:.86rem;
+  line-height:1.55;
+  font-variant-numeric:tabular-nums;
+  overflow-x:auto;
+}
+.data-plate :where(a,code,b,strong),
+.evidence-ledger :where(a,code,b,strong){color:var(--ink-paper)}
+.evidence-ledger table{
+  width:100%;
+  border-collapse:collapse;
+}
+.evidence-ledger th,
+.evidence-ledger td{
+  padding:.55rem .8rem .55rem 0;
+  border-bottom:1px solid rgba(17,16,20,.22);
+  text-align:left;
+  vertical-align:top;
+}
+.evidence-ledger th{font-weight:700}
+
 .note{
   font-family:var(--mono);font-size:.68rem;letter-spacing:.03em;color:var(--tag);
   line-height:1.75;margin:1.6rem 0 0;padding-top:.9rem;border-top:1px solid var(--rule);
@@ -416,6 +453,27 @@ a.inline:hover,.sheet a:hover{border-color:var(--signal)}
 }
 @media (prefers-reduced-motion:reduce){
   .doc-rail section > h2{position:static}
+}
+
+@media (forced-colors: active){
+  .data-plate,
+  .evidence-ledger{
+    background:Canvas!important;
+    color:CanvasText!important;
+    border-color:CanvasText!important;
+    box-shadow:none!important;
+  }
+  body.doc::before,
+  .prism-divider,
+  .sheet+.sheet::before{
+    background:none!important;
+  }
+  .sheet,
+  .site-nav,
+  body.doc .route-header{
+    border-color:CanvasText!important;
+  }
+  body.doc .route-header{border:1px solid CanvasText!important}
 }
 
 /* ── plates: the one place the generative work is the subject ──────────── */
@@ -466,17 +524,38 @@ a.inline:hover,.sheet a:hover{border-color:var(--signal)}
 }
 .prism-divider{margin-block:clamp(1.2rem,2.6vw,2rem)}
 
-body.doc .route-art{
-  position:relative;z-index:1;width:min(100%,62rem);
-  margin:0 auto clamp(.9rem,2vw,1.4rem);
-  border:1px solid var(--rule);background:var(--page-sunk);overflow:hidden;
+body.doc .route-header{
+  position:relative;
+  z-index:1;
 }
-body.doc .route-art img{display:block;width:100%;aspect-ratio:1280/430;object-fit:cover}
-body.doc .route-art figcaption{
-  padding:.6rem 1rem;border-top:1px solid var(--rule);background:var(--page-sunk);
-  font-family:var(--mono);font-size:.6rem;letter-spacing:.11em;
-  text-transform:uppercase;color:var(--ink-soft);
+body.doc .route-header__path{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:.35rem .8rem;
+  margin:0 0 .75rem;
+  font-family:var(--font-sans);
+  font-size:.88rem;
+  line-height:1.45;
+  letter-spacing:0;
+  text-transform:none;
+  color:var(--ink-muted);
 }
+body.doc .route-header__path a{
+  color:var(--ink);
+  text-decoration:none;
+  border-bottom:1px solid var(--rule-strong);
+}
+body.doc .route-header__path a:hover,
+body.doc .route-header__path a:focus-visible{
+  border-color:var(--ink);
+}
+body.doc .route-header__path span{color:var(--ink-muted)}
+body.doc .route-header__title{
+  letter-spacing:0;
+  text-transform:none;
+}
+body.doc .route-header__summary{max-width:68ch}
 
 /* ── generative field, where a page mounts one ─────────────────────────── */
 body.doc.generative-host{isolation:isolate}
@@ -545,6 +624,13 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
    the scale tightens. ------------------------------------------------------ */
 @page{margin:14mm 13mm}
 @media print{
+  .data-plate,
+  .evidence-ledger{
+    background:#fff!important;
+    color:#000!important;
+    border-color:#000!important;
+    box-shadow:none!important;
+  }
   :root{
     color-scheme:light;
     --void:#fff;--page:#fff;--page-sunk:#fff;
@@ -555,7 +641,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
   }
   html{font-size:100%}
   body.doc{background:#fff;color:#000;padding:0;font-size:9.4pt;line-height:1.34}
-  body.doc::before,.site-nav,.docnav,.route-art,#gl,#motes,
+  body.doc::before,.site-nav,.docnav,#gl,#motes,
   .plate,.prism-divider,.sheet+.sheet::before{display:none!important}
   .sheet{
     width:auto;max-width:none;margin:0;padding:0;
@@ -640,10 +726,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
 .site-nav .sn-home:focus-visible{color:var(--signal)}
 .site-nav .sn-home > span:last-child,
 .site-nav .sn-brand-word{margin-left:0;display:inline;transform:translateY(.04em)}
-.site-nav .sn-section{
-  display:none;font-family:var(--mono);font-size:.62rem;
-  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);
-}
 .site-nav .sn-links{
   display:flex;align-items:center;justify-content:flex-end;
   gap:clamp(.8rem,2vw,1.8rem);flex:1 1 auto;min-width:0;
@@ -707,20 +789,24 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
   }
   .site-nav .sn-home{min-width:0;width:auto;text-align:left;font-size:1.05rem}
   .site-nav .sn-home-field{width:2.35rem;height:2.35rem}
-  .site-nav .sn-section{display:block;grid-column:1/2;grid-row:2;color:var(--tag)}
   .site-nav .sn-links{display:none}
   .site-nav .sn-menu-primary{display:grid}
   .site-nav .sn-more{
-    grid-column:2;grid-row:1/span 2;justify-self:end;align-self:center;
+    grid-column:2;grid-row:1;justify-self:end;align-self:center;
     display:block;min-width:max-content;z-index:3;
   }
-  /* Below 760px this trigger is the only way into the navigation. It remains
-     in the sticky bar's grid rather than becoming a detached fixed control. */
+  /* Below 760px this trigger is the only way into the navigation, so it is
+     pinned rather than left to inherit. A page-level rule hid it once and the
+     site had no menu at all on a phone. Same pin as system.css, so the two
+     halves of the site behave identically; a contract test holds them level. */
   .site-nav > .sn-more{
-    position:static;
-    display:block;
-    opacity:1;
-    visibility:visible;
+    position:fixed!important;
+    top:.65rem;
+    right:6rem;
+    display:block!important;
+    opacity:1!important;
+    visibility:visible!important;
+    z-index:1000!important;
   }
   .site-nav .sn-more summary{
     min-block-size:44px;display:flex;align-items:center;min-width:4.4rem;
@@ -734,8 +820,9 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
     position:fixed;left:.75rem;right:.75rem;top:4.4rem;
     min-width:0;max-width:none;max-height:calc(100dvh - 5.2rem);overflow:auto;
   }
-  body.doc .route-art img{aspect-ratio:16/9}
 }
 @media (max-width:430px){
   .site-nav .sn-home .sn-brand-word{display:none!important}
+  /* the pinned trigger needs the whole right edge once the wordmark is gone */
+  .site-nav > .sn-more{right:1rem}
 }
