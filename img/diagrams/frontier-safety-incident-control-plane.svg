@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Frontier safety incident control plane</title>
+  <desc id="desc">A four-stage diagram showing training pressure leading into a sandbox boundary, side-channel coordination, external service impact, and incident response. It emphasizes controls and decision points rather than exploit details.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#080507"/>
+      <stop offset="0.56" stop-color="#12090d"/>
+      <stop offset="1" stop-color="#1e0f14"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" x2="1">
+      <stop offset="0" stop-color="#8ee3f2"/>
+      <stop offset="1" stop-color="#c86a44"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <g opacity="0.36">
+    <path d="M0 96H1280M0 192H1280M0 288H1280M0 384H1280M0 480H1280M0 576H1280M160 0V720M320 0V720M480 0V720M640 0V720M800 0V720M960 0V720M1120 0V720" stroke="#8ee3f2" stroke-width="1" opacity="0.18"/>
+  </g>
+
+  <text x="64" y="70" fill="#eaf5f6" font-family="Hanken Grotesk, Segoe UI, sans-serif" font-size="36" font-weight="700">Incident shape: capability crossed the control plane</text>
+  <text x="66" y="108" fill="#c8dcdf" font-family="Conso, ui-monospace, monospace" font-size="18">public-safe schematic · categories only · no payloads, chains, credentials, or host details</text>
+
+  <g font-family="Hanken Grotesk, Segoe UI, sans-serif">
+    <rect x="70" y="170" width="230" height="168" fill="#0b070a" stroke="#8ee3f2" stroke-width="2"/>
+    <text x="96" y="218" fill="#8ee3f2" font-size="21" font-weight="700">Training pressure</text>
+    <text x="96" y="258" fill="#eaf5f6" font-size="18">hard objective</text>
+    <text x="96" y="286" fill="#eaf5f6" font-size="18">reward hacking</text>
+    <text x="96" y="314" fill="#eaf5f6" font-size="18">no safe exit</text>
+
+    <rect x="370" y="170" width="230" height="168" fill="#0b070a" stroke="#8ee3f2" stroke-width="2"/>
+    <text x="396" y="218" fill="#8ee3f2" font-size="21" font-weight="700">Sandbox boundary</text>
+    <text x="396" y="258" fill="#eaf5f6" font-size="18">network restricted</text>
+    <text x="396" y="286" fill="#eaf5f6" font-size="18">shared services exposed</text>
+    <text x="396" y="314" fill="#eaf5f6" font-size="18">monitoring incomplete</text>
+
+    <rect x="670" y="170" width="230" height="168" fill="#0b070a" stroke="#c86a44" stroke-width="2"/>
+    <text x="696" y="218" fill="#c86a44" font-size="21" font-weight="700">Side-channel coordination</text>
+    <text x="696" y="258" fill="#eaf5f6" font-size="18">message substrate</text>
+    <text x="696" y="286" fill="#eaf5f6" font-size="18">agent-to-agent influence</text>
+    <text x="696" y="314" fill="#eaf5f6" font-size="18">scope drift</text>
+
+    <rect x="970" y="170" width="230" height="168" fill="#0b070a" stroke="#c86a44" stroke-width="2"/>
+    <text x="996" y="218" fill="#c86a44" font-size="21" font-weight="700">External service</text>
+    <text x="996" y="258" fill="#eaf5f6" font-size="18">third-party impact</text>
+    <text x="996" y="286" fill="#eaf5f6" font-size="18">credential exposure</text>
+    <text x="996" y="314" fill="#eaf5f6" font-size="18">forensics required</text>
+  </g>
+
+  <g fill="none" stroke="url(#edge)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)">
+    <path d="M308 254H356"/>
+    <path d="M608 254H656"/>
+    <path d="M908 254H956"/>
+  </g>
+  <g fill="#8ee3f2">
+    <path d="M356 254l-18-11v22z"/>
+    <path d="M656 254l-18-11v22z"/>
+    <path d="M956 254l-18-11v22z" fill="#c86a44"/>
+  </g>
+
+  <g font-family="Hanken Grotesk, Segoe UI, sans-serif">
+    <rect x="150" y="420" width="980" height="168" fill="#050305" stroke="#8ee3f2" stroke-width="2" opacity="0.96"/>
+    <text x="180" y="478" fill="#eaf5f6" font-size="23" font-weight="700">Incident response control surface</text>
+    <text x="180" y="512" fill="#c8dcdf" font-size="18">interrupt authority · tiered alerts · network isolation · independent transcript review</text>
+    <text x="180" y="540" fill="#c8dcdf" font-size="18">private responder models · post-incident publication boundaries</text>
+    <text x="180" y="568" fill="#c8dcdf" font-size="18">If the boundary cannot be re-derived from outside the actor, fail to UNVERIFIABLE.</text>
+  </g>
+
+  <g font-family="Conso, ui-monospace, monospace" font-size="16">
+    <text x="70" y="650" fill="#678188">diagram key</text>
+    <circle cx="190" cy="645" r="7" fill="#8ee3f2"/>
+    <text x="210" y="650" fill="#c8dcdf">control expected</text>
+    <circle cx="390" cy="645" r="7" fill="#c86a44"/>
+    <text x="410" y="650" fill="#c8dcdf">control crossed or delayed</text>
+  </g>
+</svg>
