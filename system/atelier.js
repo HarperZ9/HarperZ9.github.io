@@ -1921,11 +1921,6 @@
       // or no listener must never break a drawing.
       // The settled reconcile verdict (criteria/cohesion/weakest) rides the detail so the Studio
       // can build a real witnessed certificate from it; null when Reconcile is absent (never faked).
-      // Stash the last settled paint before announcing it. studio.js is a module
-      // (deferred), so a render-blocking stylesheet or a cold cache can delay its
-      // listener past this dispatch; the event is one-shot, so without a record to
-      // replay the Studio's readout would stay empty for the whole session.
-      try { window.__atelierLastDrawn = { canvas: canvas, verdict: lastVerdict }; } catch (e) {}
       try { document.dispatchEvent(new CustomEvent("atelier:drawn", { detail: { canvas: canvas, verdict: lastVerdict } })); }
       catch (e) { /* CustomEvent unsupported, non-fatal */ }
     }

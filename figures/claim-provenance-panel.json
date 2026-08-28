@@ -34,12 +34,16 @@
         "href": "https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf"
       }
     ],
-    "retrievedAt": "2026-08-26",
+    "retrievedAt": "2026-08-27",
     "units": "qualitative provenance fields",
     "transformations": [
+      "Company report expands to OpenAI's first-party system context, impact assessment, remediation claims, and replication boundary.",
       "Do not score, rank, aggregate, or imply that provenance class alone determines credibility.",
+      "Host telemetry expands to Hugging Face's recovered host activity, affected-asset assessment, and incomplete-recovery boundary.",
+      "Independent review expands to the joint METR and Redwood behavioral analysis, host-controlled supplied-data access, and methodological limits.",
       "Keep the contribution, boundary, and source label adjacent.",
-      "Render one equal-weight row per provenance class."
+      "Render one equal-weight row per provenance class.",
+      "Unresolved allegation expands to Alabama's consumer-protection questions, announcement, and non-adjudication boundary."
     ],
     "uncertainty": "The panel classifies evidentiary role in this briefing. It is not an exhaustive source taxonomy and does not replace claim-local limitations.",
     "data": {
@@ -47,7 +51,7 @@
       "rows": [
         {
           "id": "company-self-report",
-          "label": "Company self-report"
+          "label": "Company report"
         },
         {
           "id": "filing",
@@ -55,15 +59,15 @@
         },
         {
           "id": "independent-inference",
-          "label": "Independent inference"
+          "label": "Independent review"
         },
         {
           "id": "telemetry",
-          "label": "Telemetry"
+          "label": "Host telemetry"
         },
         {
           "id": "unresolved-allegation",
-          "label": "Unresolved allegation"
+          "label": "Allegation"
         }
       ],
       "columns": [
@@ -84,7 +88,7 @@
         {
           "row": "company-self-report",
           "column": "boundary",
-          "label": "Preliminary evaluations lack public uncertainty and independent replication",
+          "label": "No independent replication",
           "status": "caution",
           "evidenceLane": "OpenAI company report",
           "sourceIds": [
@@ -98,7 +102,7 @@
         {
           "row": "company-self-report",
           "column": "contribution",
-          "label": "Internal system context, impact assessment, and remediation claims",
+          "label": "Systems + response",
           "status": "caution",
           "evidenceLane": "OpenAI company report",
           "sourceIds": [
@@ -112,7 +116,7 @@
         {
           "row": "company-self-report",
           "column": "record",
-          "label": "OpenAI overview and technical report",
+          "label": "OpenAI reports",
           "status": "caution",
           "evidenceLane": "OpenAI company report",
           "sourceIds": [
@@ -126,7 +130,7 @@
         {
           "row": "filing",
           "column": "boundary",
-          "label": "A filing does not establish liability",
+          "label": "No liability finding",
           "status": "caution",
           "evidenceLane": "Legal process",
           "sourceIds": [
@@ -140,7 +144,7 @@
         {
           "row": "filing",
           "column": "contribution",
-          "label": "Legal process, requests, and response deadline",
+          "label": "Requests + deadline",
           "status": "verified",
           "evidenceLane": "Legal process",
           "sourceIds": [
@@ -166,7 +170,7 @@
         {
           "row": "independent-inference",
           "column": "boundary",
-          "label": "OpenAI controlled supplied-data access; Redwood hosts a mirror",
+          "label": "Host-controlled data",
           "status": "caution",
           "evidenceLane": "METR and Redwood independent investigation",
           "sourceIds": [
@@ -180,7 +184,7 @@
         {
           "row": "independent-inference",
           "column": "contribution",
-          "label": "Behavioral analysis and methodological limits",
+          "label": "Behavior + method",
           "status": "caution",
           "evidenceLane": "METR and Redwood independent investigation",
           "sourceIds": [
@@ -193,7 +197,7 @@
         {
           "row": "independent-inference",
           "column": "record",
-          "label": "METR and Redwood joint report",
+          "label": "METR + Redwood",
           "status": "caution",
           "evidenceLane": "METR and Redwood independent investigation",
           "sourceIds": [
@@ -207,7 +211,7 @@
         {
           "row": "telemetry",
           "column": "boundary",
-          "label": "Recovered records may be incomplete",
+          "label": "Recovery may be incomplete",
           "status": "caution",
           "evidenceLane": "Hugging Face host telemetry",
           "sourceIds": [
@@ -220,7 +224,7 @@
         {
           "row": "telemetry",
           "column": "contribution",
-          "label": "Recovered host activity and affected-asset assessment",
+          "label": "Host activity + assets",
           "status": "verified",
           "evidenceLane": "Hugging Face host telemetry",
           "sourceIds": [
@@ -233,7 +237,7 @@
         {
           "row": "telemetry",
           "column": "record",
-          "label": "Hugging Face technical timeline",
+          "label": "HF timeline",
           "status": "verified",
           "evidenceLane": "Hugging Face host telemetry",
           "sourceIds": [
@@ -246,7 +250,7 @@
         {
           "row": "unresolved-allegation",
           "column": "boundary",
-          "label": "Allegations are not adjudicated findings",
+          "label": "Not adjudicated",
           "status": "caution",
           "evidenceLane": "Legal process",
           "sourceIds": [
@@ -260,7 +264,7 @@
         {
           "row": "unresolved-allegation",
           "column": "contribution",
-          "label": "Consumer-protection questions and attributed allegations",
+          "label": "Consumer-protection claims",
           "status": "caution",
           "evidenceLane": "Legal process",
           "sourceIds": [
@@ -273,7 +277,7 @@
         {
           "row": "unresolved-allegation",
           "column": "record",
-          "label": "Alabama investigation announcement",
+          "label": "Alabama announcement",
           "status": "caution",
           "evidenceLane": "Legal process",
           "sourceIds": [

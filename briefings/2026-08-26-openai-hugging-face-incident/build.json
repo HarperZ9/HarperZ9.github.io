@@ -11,18 +11,18 @@
     "sortMode": "stable-public-keys"
   },
   "inputs": {
-    "articleSha256": "7cac45d8f2b9d379d48bb645b9bd25e903b9fa44b879aa5f0719576d1faff103",
-    "claimsSha256": "e1aec85a1b72478dc9d7c51658babf5d4d714433a884fb8cc1255ef4163229c8",
-    "figuresSha256": "834b21a28e113dc8c8b3977003779773fef703adc2b8ca08509154e9cf05e53c"
+    "articleSha256": "bf2e8ef2e003da07196032389fd0abb43b7349cc4da7d259ada7156447d9f377",
+    "claimsSha256": "b3e4344cd5fea15a37ba412f74e2adc5fbd69b6b8d02d2c0ecbfd001b11f6648",
+    "figuresSha256": "1639018ec621f7226a97b2cabe17bb9d614711e080c0cd8b000afed924f77a62"
   },
   "outputs": [
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/claims.json",
-      "sha256": "dd531a50cf37f3427ed2678178040ea499ebbcf6e0b27556556f763413070cbf"
+      "sha256": "0d45b7e05fcf285161b1802d15b60a6c3891bdff350a15bb93ef4014a76ee499"
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/index.html",
-      "sha256": "44c8c3e0e606e8f92a32339e52b9a05f6fa136ab8dd26e5f2f178dda9b40b613"
+      "sha256": "ffab2945601641bf352e74297ede7628ce1de02a6bf86aa38c19df5a1a3fd897"
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/publication.json",
@@ -30,23 +30,23 @@
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/sources.json",
-      "sha256": "f232afaa4d7fe720066ac08dcc53c365a7e70a3862903d64dea340095848b5b4"
+      "sha256": "8157707b5942b1e345d5a2374437fb86c1a9de9f43ef902bf30b843eb7d427d4"
     },
     {
       "path": "figures/claim-provenance-panel.html",
-      "sha256": "32d03cebfd8d59164d88827e7719fe30c33215de0d02c408464f63a8dc607c25"
+      "sha256": "3db4db57fd0fda86c5c0b0884d208e4ee77a791c36ebe7066f38f7cbe1746edc"
     },
     {
       "path": "figures/claim-provenance-panel.json",
-      "sha256": "551c612af7679dccb8c4c77fd8ffd1638ece8fda2a40558c1bf87041eb4fb32e"
+      "sha256": "0f789c4929d744a1db4d0e0309bbda22ba7896540432e8329c2a723c664d843c"
     },
     {
       "path": "figures/claim-provenance-panel.svg",
-      "sha256": "b40801577b8c09a963aa3f7e093380c46a1beb86e658d04723b656c03fed85fa"
+      "sha256": "3584929d24ac67e3b1fc670236511946dc7908d0e4d4dc9a5491c8327a91590b"
     },
     {
       "path": "figures/control-boundary-flow.html",
-      "sha256": "c5b1e957f7728230d23bf78923bff9698c98b03b60bfd6a89aaaacf7843bd997"
+      "sha256": "e1cb5c8e79dcf6c86feb10f8c559592cd03ccbc16c3df55ff5ad2484b304c210"
     },
     {
       "path": "figures/control-boundary-flow.json",
@@ -54,39 +54,39 @@
     },
     {
       "path": "figures/control-boundary-flow.svg",
-      "sha256": "ae1aff755e829763637ae7579b1c3edc2a9c9786f6760b4696b0cbb5abfab887"
+      "sha256": "36b29ee0abc70505b33d39262c0f758acfaf18574fc9b608b1ac8888c4bc2d34"
     },
     {
       "path": "figures/incident-multilane-timeline.html",
-      "sha256": "c1a6d4f007781ac70cb65ab033ec0768530f2e9192ce088eee7ebb002c4a1c92"
+      "sha256": "185e8383e8b77796b5ab8ec43a9a2ed4eddee40590b0e1d72024ea82f3ca0a1e"
     },
     {
       "path": "figures/incident-multilane-timeline.json",
-      "sha256": "b9fc4d150ee98330ea84af321934d1d088bfe98ba6dab69a17a0311d7983febc"
+      "sha256": "bd0a123b7df81543aaa3955a0550f70fa309ad0fe65e374b86112dd2f994e4b0"
     },
     {
       "path": "figures/incident-multilane-timeline.svg",
-      "sha256": "67804b517945bc573e07f0cbec8a6192ca574b8cda1fab4808075e5db564dd6b"
+      "sha256": "092ba0b30849451592877db0ab947844ee1b31820a749b01c4b1b8387f30ad69"
     },
     {
       "path": "figures/motive-sample-nonexclusive.html",
-      "sha256": "cd2d820d64e497c896c853b474010205004b63592a0e9307a79a1532fe57aede"
+      "sha256": "d7b35a866ea3fcc4adab80efabe4c4e7afac7568d18794d6193d819fa321113d"
     },
     {
       "path": "figures/motive-sample-nonexclusive.json",
-      "sha256": "23d8f3815887f6322b2020bf494b48d0b7ba48f7b6feeb3b69baaacfacdb94a4"
+      "sha256": "d841d5f9d6d8613f6d9f57eda4e7722563dbc3deff5abbd818fd5050c51f7480"
     },
     {
       "path": "figures/motive-sample-nonexclusive.svg",
-      "sha256": "0f34fb5d134a2ae2eefe4b9bcc93e5cd6fc41b31d78f89a4a2c7db6022b16690"
+      "sha256": "a2e6f2087015bbf86e98e1c8698f87bec32ef8eaf6cd65317882e67709bab2ac"
     },
     {
       "path": "figures/recovered-actions-by-day.html",
-      "sha256": "3d6d9fca39fd654d4213b2758d24f415bd95f0020f9f22fbc731961bfc9fdc48"
+      "sha256": "06f7d65544ba8798842b7cb72f43e5b2f549e9025292aa2b46d5810212553f98"
     },
     {
       "path": "figures/recovered-actions-by-day.json",
-      "sha256": "fc255cea542205a384fbf04e206dc0257c7e3d7423be6f93fc51ea9f3541041e"
+      "sha256": "996720fea9bc23d3096111be4a1129fbe959ae893243ab8739eb940f6bdb0838"
     },
     {
       "path": "figures/recovered-actions-by-day.svg",
@@ -94,27 +94,27 @@
     },
     {
       "path": "figures/source-scope-matrix.html",
-      "sha256": "5e05ea72cb0ba2e2b4d243dd1135cc3f13a1415cd5c761fa335d87b003816bfa"
+      "sha256": "0cf9e9d086dc57b1f9caa384f0c90613f0b3a5711fb86e89180cb5d21dfa5b83"
     },
     {
       "path": "figures/source-scope-matrix.json",
-      "sha256": "0e8d22bc07967c90d6d8b93a8c1beaadf8939fc27b5932831b84813588d5d667"
+      "sha256": "1f4d91bf387e452f1384493267d908a727a77964ee2343a690510009d73c0689"
     },
     {
       "path": "figures/source-scope-matrix.svg",
-      "sha256": "6b69877d626ca44bae0b1dc000de0ad50a13e352b05dfcd1682abded976e6ee8"
+      "sha256": "75bb2a51014814d92d147f9a4a920e22339076952db8f6cfd71463eb3e35221a"
     },
     {
       "path": "figures/task-overrepresentation.html",
-      "sha256": "49c4f1c422092c6dfb2a6e4b3889a706c4dc3dfe92a9b4193c3b64180168c4d5"
+      "sha256": "7fff6945189e31a10a61c68c3fd868c299b58a86ce053e09ebd7d2f498c7f7f8"
     },
     {
       "path": "figures/task-overrepresentation.json",
-      "sha256": "93adfa144b2da32f2f7a2e0ed93214cafb21e5526cdab1f1114e1f45b188e14d"
+      "sha256": "0a119e84013e83215efa75ea4b8d06e97a8a035bf32a3f876b8b22ed3e2796d1"
     },
     {
       "path": "figures/task-overrepresentation.svg",
-      "sha256": "af1fbf4e68000d97aa294c98846216af4a8d1749734de25141de8ed802c36590"
+      "sha256": "cf9d4402e76d711617d8b0bcc5e18314b80338ae81bed085a65f23cac62f605a"
     }
   ]
 }

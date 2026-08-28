@@ -211,6 +211,11 @@ Error generating stack: `+e.message+`
           "href": "proof-surface.html"
         },
         {
+          "label": "Accountable Surface",
+          "href": "accountable-surface.html",
+          "summary": "Controlled agent actions with external authority, bounded effectors, rollback, and a durable journal."
+        },
+        {
           "label": "Coherence Membrane",
           "href": "coherence-membrane.html"
         },
@@ -245,10 +250,6 @@ Error generating stack: `+e.message+`
         {
           "label": "Provenance Sensorium",
           "href": "provenance-sensorium.html"
-        },
-        {
-          "label": "Runtime",
-          "href": "orca.html"
         },
         {
           "label": "Checkpoint",
@@ -340,6 +341,26 @@ Error generating stack: `+e.message+`
           "href": "brender-archival.html"
         },
         {
+          "label": "Elder ENB",
+          "href": "elder-enb.html",
+          "summary": "Public ENB configuration source with release-candidate state and live-host acceptance still open."
+        },
+        {
+          "label": "Truth ENB",
+          "href": "truth-enb.html",
+          "summary": "Reviewable ENB graphics configuration source with a release-candidate tag, not a release claim."
+        },
+        {
+          "label": "ENB Runtime Core",
+          "href": "enb-runtime-core.html",
+          "summary": "Runtime integration core for an already-loaded ENBSeries host."
+        },
+        {
+          "label": "SkyrimBridge",
+          "href": "skyrimbridge.html",
+          "summary": "Public Skyrim integration bridge whose default build excludes the native replacement suite."
+        },
+        {
           "label": "The Loom",
           "href": "loom.html"
         },
@@ -370,7 +391,7 @@ Error generating stack: `+e.message+`
     }
   ]
 }`),v=_.families.flatMap(e=>e.routes.filter(e=>e.primary).map(t=>({...t,family:e.label,primary:!0}))),y=_.families.map(e=>({label:e.label,routes:e.routes.filter(e=>!e.primary).map(t=>({...t,family:e.label,primary:!1}))})).filter(e=>e.routes.length),b=_.externalActions;function x(e){try{let t=new URL(e||`index.html`,`https://harperz9.github.io/`);return t.pathname.replace(/^\//,``)+t.search+t.hash}catch{return``}}function ee(e){let t=x(e);for(let e of _.families){let n=t.split(`#`)[0].split(`?`)[0];if(e.routes.some(e=>{let r=x(e.href);return r===t||r.split(`#`)[0].split(`?`)[0]===n}))return e.label;let r=n.replace(/\.html$/,``);if((e.prefixes||[]).some(e=>r.startsWith(e)))return e.label}return``}var S=JSON.parse(`{
-  "schema": "harperz9-systems/v1",
+  "schema": "harperz9-systems/v2",
   "domains": [
     {
       "id": "agent-systems",
@@ -420,6 +441,8 @@ Error generating stack: `+e.message+`
         "evaluation-verification",
         "developer-infrastructure"
       ],
+      "family": "platform",
+      "architectureRole": "primary-platform",
       "audiences": [
         "agent-system engineers",
         "evaluation engineers",
@@ -495,6 +518,8 @@ Error generating stack: `+e.message+`
         "developer-infrastructure",
         "graphics-media"
       ],
+      "family": "infrastructure",
+      "architectureRole": "engine",
       "audiences": [
         "agent-system engineers",
         "software engineers",
@@ -557,6 +582,8 @@ Error generating stack: `+e.message+`
         "developer-infrastructure",
         "evaluation-verification"
       ],
+      "family": "infrastructure",
+      "architectureRole": "standalone-system",
       "audiences": [
         "software engineers",
         "evaluation engineers"
@@ -619,6 +646,8 @@ Error generating stack: `+e.message+`
         "research-education",
         "developer-infrastructure"
       ],
+      "family": "research-education",
+      "architectureRole": "standalone-system",
       "audiences": [
         "researchers and educators",
         "software engineers"
@@ -682,6 +711,8 @@ Error generating stack: `+e.message+`
         "developer-infrastructure",
         "evaluation-verification"
       ],
+      "family": "infrastructure",
+      "architectureRole": "engine",
       "audiences": [
         "agent-system engineers",
         "software engineers",
@@ -745,6 +776,8 @@ Error generating stack: `+e.message+`
         "evaluation-verification",
         "research-education"
       ],
+      "family": "verification",
+      "architectureRole": "evaluation-layer",
       "audiences": [
         "evaluation engineers",
         "researchers and educators"
@@ -807,6 +840,8 @@ Error generating stack: `+e.message+`
         "security-privacy",
         "developer-infrastructure"
       ],
+      "family": "verification",
+      "architectureRole": "engine",
       "audiences": [
         "evaluation engineers",
         "authorized security teams",
@@ -870,6 +905,8 @@ Error generating stack: `+e.message+`
         "developer-infrastructure",
         "graphics-media"
       ],
+      "family": "infrastructure",
+      "architectureRole": "engine",
       "audiences": [
         "software engineers",
         "graphics engineers"
@@ -932,6 +969,8 @@ Error generating stack: `+e.message+`
         "research-education",
         "agent-systems"
       ],
+      "family": "research-education",
+      "architectureRole": "standalone-system",
       "audiences": [
         "researchers and educators",
         "agent-system engineers"
@@ -992,6 +1031,8 @@ Error generating stack: `+e.message+`
         "agent-systems",
         "developer-infrastructure"
       ],
+      "family": "infrastructure",
+      "architectureRole": "adapter",
       "audiences": [
         "agent-system engineers",
         "software engineers"
@@ -1053,6 +1094,8 @@ Error generating stack: `+e.message+`
         "agent-systems",
         "developer-infrastructure"
       ],
+      "family": "infrastructure",
+      "architectureRole": "evaluation-layer",
       "audiences": [
         "agent-system engineers",
         "software engineers"
@@ -1113,6 +1156,8 @@ Error generating stack: `+e.message+`
         "agent-systems",
         "evaluation-verification"
       ],
+      "family": "verification",
+      "architectureRole": "evaluation-layer",
       "audiences": [
         "agent-system engineers",
         "evaluation engineers"
@@ -1173,6 +1218,8 @@ Error generating stack: `+e.message+`
         "graphics-media",
         "developer-infrastructure"
       ],
+      "family": "graphics-retro",
+      "architectureRole": "engine",
       "audiences": [
         "graphics engineers",
         "software engineers"
@@ -1235,6 +1282,8 @@ Error generating stack: `+e.message+`
       "domains": [
         "graphics-media"
       ],
+      "family": "graphics-retro",
+      "architectureRole": "plugin",
       "audiences": [
         "graphics engineers"
       ],
@@ -1289,11 +1338,13 @@ Error generating stack: `+e.message+`
         "deterministic shader capture"
       ],
       "href": "retro.html",
-      "sourceHref": "https://github.com/HarperZ9/telos-v2",
+      "sourceHref": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/retro-engine.js",
       "domains": [
         "graphics-media",
         "developer-infrastructure"
       ],
+      "family": "graphics-retro",
+      "architectureRole": "engine",
       "audiences": [
         "graphics engineers",
         "software engineers",
@@ -1314,7 +1365,7 @@ Error generating stack: `+e.message+`
           "id": "retro-engine-site-source",
           "type": "source",
           "label": "Retro Engine owned site source",
-          "href": "https://github.com/HarperZ9/telos-v2",
+          "href": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/retro-engine.js",
           "date": "2026-08-27",
           "status": "verified",
           "summary": "The owned public site source contains the browser Retro Engine route and renderer assets; this is not BRender evidence."
@@ -1361,6 +1412,8 @@ Error generating stack: `+e.message+`
         "research-education",
         "developer-infrastructure"
       ],
+      "family": "graphics-retro",
+      "architectureRole": "engine",
       "audiences": [
         "graphics engineers",
         "evaluation engineers",
@@ -1431,6 +1484,8 @@ Error generating stack: `+e.message+`
         "research-education",
         "developer-infrastructure"
       ],
+      "family": "graphics-retro",
+      "architectureRole": "standalone-system",
       "audiences": [
         "graphics engineers",
         "evaluation engineers",
@@ -1484,6 +1539,320 @@ Error generating stack: `+e.message+`
       "lastVerified": "2026-08-27"
     },
     {
+      "id": "proof-surface",
+      "name": "Proof Surface",
+      "purpose": "Provide default-deny authorization checks, bounded delegation, and reviewable proof packets for agent actions.",
+      "useCases": [
+        "authorization receipt review",
+        "bounded agent actions",
+        "evidence-bounded evaluation"
+      ],
+      "href": "proof-surface.html",
+      "sourceHref": "https://github.com/HarperZ9/proof-surface",
+      "domains": [
+        "security-privacy",
+        "evaluation-verification",
+        "agent-systems"
+      ],
+      "family": "security",
+      "architectureRole": "evaluation-layer",
+      "audiences": [
+        "agent-system engineers",
+        "evaluation engineers",
+        "authorized security teams"
+      ],
+      "deploymentContexts": [
+        "controlled agent workflows",
+        "review and CI lanes"
+      ],
+      "maturity": "active",
+      "placement": "catalog-only",
+      "accessMode": "inspect",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "proof-surface-public-source-0-2-0",
+          "type": "source",
+          "label": "Proof Surface public source 0.2.0",
+          "href": "https://github.com/HarperZ9/proof-surface",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "Public source identifies version 0.2.0; no release claim is made."
+        }
+      ],
+      "limitations": [
+        "Proof Surface recommends authorization decisions; the surrounding system performs enforcement.",
+        "Public source 0.2.0 does not establish independent adversarial review or production safety."
+      ],
+      "boundary": "Use only with explicit human authority; a recommendation does not itself grant permission.",
+      "inputs": [
+        "planned actions",
+        "authorization receipts",
+        "evidence records"
+      ],
+      "outputs": [
+        "default-deny decisions",
+        "reviewable proof packets"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "accountable-surface",
+        "emet",
+        "repo-proof-index"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "elder-enb",
+      "name": "Elder ENB",
+      "purpose": "Provide a public graphics configuration and runtime integration surface for Elder Scrolls ENB workflows.",
+      "useCases": [
+        "ENB configuration review",
+        "graphics runtime integration",
+        "public build inspection"
+      ],
+      "href": "elder-enb.html",
+      "sourceHref": "https://github.com/HarperZ9/elder-enb",
+      "domains": [
+        "graphics-media"
+      ],
+      "family": "graphics-retro",
+      "architectureRole": "plugin",
+      "audiences": [
+        "graphics engineers",
+        "mod developers"
+      ],
+      "deploymentContexts": [
+        "creative production pipelines",
+        "local development workspaces"
+      ],
+      "maturity": "active",
+      "placement": "catalog-only",
+      "accessMode": "inspect",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "elder-enb-public-source-0-1-0",
+          "type": "source",
+          "label": "Elder ENB public source 0.1.0",
+          "href": "https://github.com/HarperZ9/elder-enb",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "Public source identifies version 0.1.0 and latest tag v1.0.0-rc.5; no release claim is made."
+        }
+      ],
+      "limitations": [
+        "Final live ENB acceptance remains a limitation.",
+        "The latest tag v1.0.0-rc.5 is not presented as a release."
+      ],
+      "boundary": "Use only with the game, runtime, and asset rights required by their owners.",
+      "inputs": [
+        "ENB configuration",
+        "host runtime"
+      ],
+      "outputs": [
+        "configured graphics output",
+        "public source evidence"
+      ],
+      "dependencies": [],
+      "related": [
+        "truth-enb",
+        "enb-runtime-core",
+        "skyrimbridge",
+        "retro-engine"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "truth-enb",
+      "name": "Truth ENB",
+      "purpose": "Provide a public ENB graphics configuration surface for reviewable visual-runtime workflows.",
+      "useCases": [
+        "ENB configuration review",
+        "graphics runtime integration",
+        "public build inspection"
+      ],
+      "href": "truth-enb.html",
+      "sourceHref": "https://github.com/HarperZ9/truth-enb",
+      "domains": [
+        "graphics-media"
+      ],
+      "family": "graphics-retro",
+      "architectureRole": "plugin",
+      "audiences": [
+        "graphics engineers",
+        "mod developers"
+      ],
+      "deploymentContexts": [
+        "creative production pipelines",
+        "local development workspaces"
+      ],
+      "maturity": "active",
+      "placement": "catalog-only",
+      "accessMode": "inspect",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "truth-enb-public-source-1-0-0",
+          "type": "source",
+          "label": "Truth ENB public source 1.0.0",
+          "href": "https://github.com/HarperZ9/truth-enb",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "Public source identifies version 1.0.0 and latest tag v1.0.0-rc.1; no release claim is made."
+        }
+      ],
+      "limitations": [
+        "The latest tag v1.0.0-rc.1 is not presented as a release.",
+        "Visual output depends on the host game, ENB runtime, and local graphics environment."
+      ],
+      "boundary": "Use only with the game, runtime, and asset rights required by their owners.",
+      "inputs": [
+        "ENB configuration",
+        "host runtime"
+      ],
+      "outputs": [
+        "configured graphics output",
+        "public source evidence"
+      ],
+      "dependencies": [],
+      "related": [
+        "elder-enb",
+        "enb-runtime-core",
+        "skyrimbridge",
+        "retro-engine"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "enb-runtime-core",
+      "name": "ENB Runtime Core",
+      "purpose": "Provide a public runtime core for ENB integration components that operate inside an already-loaded host.",
+      "useCases": [
+        "ENB runtime integration",
+        "graphics plugin inspection",
+        "hosted runtime development"
+      ],
+      "href": "enb-runtime-core.html",
+      "sourceHref": "https://github.com/HarperZ9/enb-runtime-core",
+      "domains": [
+        "graphics-media",
+        "developer-infrastructure"
+      ],
+      "family": "graphics-retro",
+      "architectureRole": "adapter",
+      "audiences": [
+        "graphics engineers",
+        "mod developers"
+      ],
+      "deploymentContexts": [
+        "creative production pipelines",
+        "local development workspaces"
+      ],
+      "maturity": "active",
+      "placement": "catalog-only",
+      "accessMode": "inspect",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "enb-runtime-core-public-source-0-1-0",
+          "type": "source",
+          "label": "ENB Runtime Core public source 0.1.0",
+          "href": "https://github.com/HarperZ9/enb-runtime-core",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "Public source identifies version 0.1.0; no release claim is made."
+        }
+      ],
+      "limitations": [
+        "Requires an already-loaded ENBSeries host.",
+        "Public source 0.1.0 is not presented as a release."
+      ],
+      "boundary": "Use only with a permitted host runtime and the rights required by its owners.",
+      "inputs": [
+        "already-loaded ENBSeries host",
+        "runtime integration inputs"
+      ],
+      "outputs": [
+        "hosted graphics runtime behavior",
+        "public source evidence"
+      ],
+      "dependencies": [],
+      "related": [
+        "elder-enb",
+        "truth-enb",
+        "skyrimbridge"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "skyrimbridge",
+      "name": "SkyrimBridge",
+      "purpose": "Provide a public bridge between Skyrim-facing integration workflows and reviewable graphics-runtime components.",
+      "useCases": [
+        "Skyrim runtime integration",
+        "graphics bridge inspection",
+        "public build review"
+      ],
+      "href": "skyrimbridge.html",
+      "sourceHref": "https://github.com/HarperZ9/skyrimbridge",
+      "domains": [
+        "graphics-media",
+        "developer-infrastructure"
+      ],
+      "family": "graphics-retro",
+      "architectureRole": "adapter",
+      "audiences": [
+        "graphics engineers",
+        "mod developers"
+      ],
+      "deploymentContexts": [
+        "creative production pipelines",
+        "local development workspaces"
+      ],
+      "maturity": "active",
+      "placement": "catalog-only",
+      "accessMode": "inspect",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "skyrimbridge-public-source-3-0-0",
+          "type": "source",
+          "label": "SkyrimBridge public source 3.0.0",
+          "href": "https://github.com/HarperZ9/skyrimbridge",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "Public source identifies version 3.0.0 and latest tag v3.0.0-rc.1; no release claim is made."
+        }
+      ],
+      "limitations": [
+        "The public/default build excludes the native replacement suite.",
+        "The latest tag v3.0.0-rc.1 is not presented as a release."
+      ],
+      "boundary": "Use only with the game, runtime, and asset rights required by their owners.",
+      "inputs": [
+        "Skyrim integration inputs",
+        "runtime bridge configuration"
+      ],
+      "outputs": [
+        "bridge integration behavior",
+        "public source evidence"
+      ],
+      "dependencies": [],
+      "related": [
+        "elder-enb",
+        "truth-enb",
+        "enb-runtime-core"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
       "id": "phantom",
       "name": "Phantom",
       "purpose": "Audit and change reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.",
@@ -1497,6 +1866,8 @@ Error generating stack: `+e.message+`
       "domains": [
         "security-privacy"
       ],
+      "family": "security",
+      "architectureRole": "standalone-system",
       "audiences": [
         "authorized security teams"
       ],
@@ -1556,6 +1927,8 @@ Error generating stack: `+e.message+`
         "agent-systems",
         "developer-infrastructure"
       ],
+      "family": "security",
+      "architectureRole": "adapter",
       "audiences": [
         "authorized security teams",
         "agent-system engineers",
@@ -1618,6 +1991,8 @@ Error generating stack: `+e.message+`
       "domains": [
         "security-privacy"
       ],
+      "family": "security",
+      "architectureRole": "controlled-private-constellation",
       "audiences": [
         "authorized security teams"
       ],
@@ -1670,13 +2045,15 @@ Error generating stack: `+e.message+`
         "rollback-aware automation",
         "action receipt review"
       ],
-      "href": "accountable-machines.html",
+      "href": "accountable-surface.html",
       "sourceHref": "https://github.com/HarperZ9/accountable-surface",
       "domains": [
         "security-privacy",
         "evaluation-verification",
         "agent-systems"
       ],
+      "family": "security",
+      "architectureRole": "evaluation-layer",
       "audiences": [
         "authorized security teams",
         "evaluation engineers",
@@ -1740,6 +2117,8 @@ Error generating stack: `+e.message+`
         "security-privacy",
         "developer-infrastructure"
       ],
+      "family": "security",
+      "architectureRole": "standalone-system",
       "audiences": [
         "authorized security teams",
         "software engineers"
@@ -1801,6 +2180,8 @@ Error generating stack: `+e.message+`
         "security-privacy",
         "evaluation-verification"
       ],
+      "family": "verification",
+      "architectureRole": "evaluation-layer",
       "audiences": [
         "authorized security teams",
         "evaluation engineers"
@@ -1860,6 +2241,8 @@ Error generating stack: `+e.message+`
         "security-privacy",
         "developer-infrastructure"
       ],
+      "family": "security",
+      "architectureRole": "plugin",
       "audiences": [
         "authorized security teams",
         "software engineers"
@@ -1920,6 +2303,8 @@ Error generating stack: `+e.message+`
         "security-privacy",
         "developer-infrastructure"
       ],
+      "family": "security",
+      "architectureRole": "plugin",
       "audiences": [
         "authorized security teams",
         "software engineers"
@@ -1981,6 +2366,8 @@ Error generating stack: `+e.message+`
         "evaluation-verification",
         "developer-infrastructure"
       ],
+      "family": "verification",
+      "architectureRole": "evaluation-layer",
       "audiences": [
         "authorized security teams",
         "evaluation engineers",
@@ -2028,9 +2415,9 @@ Error generating stack: `+e.message+`
       "lastVerified": "2026-08-27"
     }
   ]
-}`),C=S.systems,te=C.filter(e=>e.placement===`featured`),ne=S.domains,re=C.flatMap(e=>e.evidence.map(t=>({...t,systemId:e.id}))).sort((e,t)=>t.date.localeCompare(e.date));function w(e){return C.find(t=>t.id===e)}function ie(e){let t=w(e);return t?t.related.map(e=>w(e)).filter(Boolean):[]}var ae=`{
+}`),C=S.systems;C.filter(e=>e.placement===`featured`),S.domains;var te=C.flatMap(e=>e.evidence.map(t=>({...t,systemId:e.id}))).sort((e,t)=>t.date.localeCompare(e.date));function ne(e){return C.find(t=>t.id===e)}var re=`{
   "schema": "harperz9-home-evidence/v1",
-  "derivedFrom": "harperz9-systems/v1",
+  "derivedFrom": "harperz9-systems/v2",
   "records": [
     {
       "id": "flywheel-release-v0-3-10",
@@ -2093,7 +2480,7 @@ Error generating stack: `+e.message+`
     "publishedAt": "2026-08-26",
     "updatedAt": "2026-08-27",
     "sourceCount": 12,
-    "claimCount": 40,
+    "claimCount": 45,
     "figureIds": [
       "recovered-actions-by-day",
       "incident-multilane-timeline",
@@ -2108,7 +2495,9 @@ Error generating stack: `+e.message+`
       "The Alabama materials describe an investigation, subpoena, and allegations. They do not establish a legal violation, liability, or consumer harm.",
       "Actions, clusters, agents, messages, files, transcripts, tasks, repositories, systems, workers, and datasets remain separate units.",
       "METR and Redwood performed an independent investigation with host-controlled data access, not an unrestricted forensic audit.",
+      "OpenAI retained non-public-information redaction authority, provided feedback, and supplied API credits to the independent review; METR reports taking no payment.",
       "OpenAI's impact, chronology, and remediation statements remain company-reported, and its preliminary harness evaluations lack public sample sizes, intervals, and independent replication.",
+      "The 14 Hugging Face credentials, 41 Hugging Face workers, and 956 OpenAI cloud-hosted secrets are separate company-reported units and stages.",
       "The July 5 entry is an OpenAI-attributed alert and response event, not an independently verified effectiveness finding.",
       "The 100-agent motive tags are non-exclusive, AI-assisted, not carefully iterated by METR, and do not generalize to all agents.",
       "Tool-call spoofing counts keep successful cases and evaluated transcripts as separate denominators.",
@@ -2118,4 +2507,4 @@ Error generating stack: `+e.message+`
     "amends": null
   }
 }
-`,oe=new Set([`guide.html`,`catalog.html`,`research.html`,`publications.html`,`writing.html`,`studio.html`,`typeface.html`,`resume.html`,`person.html`]),se=[...v,...y.flatMap(e=>e.routes)].filter(e=>oe.has(e.href)&&ee(e.href)),ce=[{label:`HTML`,href:`/figures/system-capability-map.html`},{label:`SVG`,href:`/figures/system-capability-map.svg`},{label:`JSON`,href:`/figures/system-capability-map.json`}],le=JSON.parse(ae),ue=le.records.map(e=>re.find(t=>t.id===e.id&&t.systemId===e.systemId)).filter(e=>!!e),T=le.latestPublishedBriefing;function E(e){let[t]=e.evidence;if(!t)throw Error(`Required public evidence record is missing: ${e.id}`);return t}var de=w(`flywheel`);if(!de)throw Error(`Required public system registry record is missing: flywheel`);var fe=de,pe=E(fe),me=ie(`flywheel`),D=new Map(re.map(e=>[`evidence:${e.systemId}:${e.id}`,e.href]));function O(e){if(e.id===`flywheel`)return`primary Flywheel system`;let t=fe.related.includes(e.id)||fe.dependencies.includes(e.id),n=e.related.includes(`flywheel`)||e.dependencies.includes(`flywheel`);return t&&n?`two-way Flywheel extension`:t?`Flywheel extension`:n?`inbound Flywheel extension`:`catalog system`}var he=te.map(e=>({...e,atlasRole:O(e)})),ge=ne.map(e=>({...e,systems:te.filter(t=>t.domains.includes(e.id))})),_e=[{label:`Engineering and evaluation`,href:`/hire.html#engineering-path`,summary:`Agent systems, evaluation harnesses, developer tools, and release work.`},{label:`Technical operations`,href:`/hire.html#technical-operations-path`,summary:`Operational tooling, public documentation, automation, and infrastructure repair.`},{label:`Public service, safety, and field operations`,href:`/hire.html#public-service-field-path`,summary:`Benefits-rich public routes where systems judgment and field reliability matter.`}],ve=[{tag:`SYSTEMS`,doi:`10.5281/zenodo.21230267`,pdf:`/papers/emet-integrity-witness.pdf`,title:`EMET: An Authority-Incapable Byte-Level Integrity Witness`,line:`A byte-integrity artifact with four independent implementations checked against one conformance corpus.`},{tag:`SYSTEMS`,doi:`10.5281/zenodo.21231253`,pdf:`/papers/buildlang-capability-effects.pdf`,title:`BuildLang: Accountable Compute via Typed Capability Effects`,line:`The capabilities a function may exercise appear in its type, then lower through a constrained systems-language path.`},{tag:`PREPRINT`,doi:`10.5281/zenodo.21232206`,pdf:`/papers/witnessed-independence.pdf`,title:`Witnessed Independence: Recording Whether a Verifier Graded Its Own Work`,line:`Turns a criterion it did not author from an assumption into a recorded, three-valued field of the verdict.`},{tag:`PREPRINT`,doi:`10.5281/zenodo.21231406`,pdf:`/papers/proof-packets.pdf`,title:`Proof Packets: A Derive-Don't-Trust Envelope for Accountable Agent Actions`,line:`The verdict for one agent action is derived from checks, never read from the packet.`},{tag:`NOTE`,doi:`10.5281/zenodo.21234475`,pdf:`/papers/personhood-gate-handoff.pdf`,title:`The Personhood-Gate Handoff: Drawing the Automation Boundary at the False-Signal Line`,line:`Hand off to the person exactly when a step would transmit a false human-present signal to a third party.`},{tag:`NOTE`,doi:`10.5281/zenodo.21231311`,pdf:`/papers/re-perceived-effects.pdf`,title:`Re-Perceived Effects: A Well-Formedness Contract for Accountable Actuation`,line:`Replaces an actuator's self-report with a re-perceived effect, admitted before the fact by a capability gate.`},{tag:`CORPUS`,doi:`10.5281/zenodo.20773724`,pdf:`/papers/conferred-existence.pdf`,read:`/conferred-existence.html`,title:`Conferred Existence`,line:`A thesis on made minds: perception, memory, external anchors, and what a made mind could be owed and held to.`},{tag:`CORPUS`,doi:`10.5281/zenodo.20778927`,pdf:`/papers/witnessing-spine.pdf`,read:`/witnessing-spine.html`,title:`The Witnessing Spine`,line:`The collected research corpus behind the verification work, from bounded claims to the rule the software enforces.`}],ye=ve.map(e=>({kind:e.tag,date:e.doi.split(`.`).at(-1)??`record`,title:e.title,href:e.read??e.pdf??`https://doi.org/${e.doi}`,source:e.pdf?`PDF`:e.read?`HTML`:`DOI`,contents:e.tag.toLowerCase(),claim:e.line})),be=T?{kind:`BRIEFING`,date:T.publishedAt,title:T.title,href:T.href,source:`${T.sourceCount} public sources`,contents:`incident evidence lanes`,claim:`Separate legal process, vendor report, host telemetry, independent analysis, and remediation records before conclusions.`}:null;function xe(e,t){let n=t.trim().toLowerCase();return n?[e.kind,e.date,e.title,e.source,e.contents,e.claim].some(e=>e.toLowerCase().includes(n)):!0}function Se(e){return e===`verified`?`Verified`:e===`caution`?`Caution`:e===`unavailable`?`Unavailable`:e?e[0].toUpperCase()+e.slice(1):`Unknown`}function Ce(e){let t=e;for(let e=0;e<4;e+=1)try{let e=decodeURIComponent(t);if(e===t)break;t=e}catch{break}return t}function we(e){let t=Ce(e).toLowerCase();if(/\bsk-[a-z0-9_-]{16,}\b/i.test(t)||/(^|[?&#/])(token|secret|password|apikey|api_key|credential)=/i.test(t))return!1;try{let e=new URL(t),n=e.hostname.toLowerCase();return!(e.protocol!==`https:`||e.username||e.password||n===`localhost`||n.endsWith(`.localhost`)||n.endsWith(`.local`)||n===`example`||n.endsWith(`.example`)||n.endsWith(`.test`)||n.endsWith(`.invalid`)||/^(?:\d{1,3}\.){3}\d{1,3}$/.test(n))}catch{return!1}}function Te(e,t){return e.get(t)?.label??t}function Ee(e){return D.get(e)??null}function De(){let[e,t]=(0,f.useState)(null);(0,f.useEffect)(()=>{let e=!1;return fetch(`/figures/system-capability-map.json`).then(e=>{if(!e.ok)throw Error(`Capability map fetch failed: ${e.status}`);return e.json()}).then(n=>{e||t(n)}).catch(()=>{e||t(null)}),()=>{e=!0}},[]);let n=e?.figure,r=(0,f.useMemo)(()=>new Map((n?.data.nodes??[]).map(e=>[e.id,e])),[n]),i=n?.data.edges??[];return(0,h.jsxs)(`figure`,{className:`capability-map`,"data-atlas-artifact":!0,"aria-labelledby":`capability-map-title`,children:[(0,h.jsxs)(`figcaption`,{children:[(0,h.jsx)(`p`,{className:`mono`,children:`Figure 1 / registry relationship artifact`}),(0,h.jsx)(`h3`,{id:`capability-map-title`,children:`Capability map`}),(0,h.jsx)(`p`,{children:`The existing relationship figure stays executable here: SVG for the visual field, JSON for inspection, and edge declarations for source-safe semantic review.`}),(0,h.jsx)(`nav`,{className:`capability-map-formats mono`,"aria-label":`Capability map artifact formats`,children:ce.map(e=>(0,h.jsx)(`a`,{"data-capability-map-format":!0,href:e.href,children:e.label},e.href))})]}),(0,h.jsx)(`div`,{className:`capability-map-scroll`,"data-capability-map-scroll":!0,role:`region`,"aria-label":`Scrollable capability relationship edge map`,tabIndex:0,children:(0,h.jsx)(`object`,{"aria-label":`Public system capability relationship edges`,data:`/figures/system-capability-map.svg`,type:`image/svg+xml`,children:(0,h.jsx)(`a`,{href:`/figures/system-capability-map.svg`,children:`Open the capability map SVG`})})}),(0,h.jsxs)(`div`,{className:`capability-map-meta`,children:[(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`h4`,{children:`Claim`}),(0,h.jsx)(`p`,{children:n?.claim??`The capability map is loading from the public figure JSON.`})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`h4`,{children:`Does not prove`}),(0,h.jsx)(`p`,{children:n?.doesNotProve??`No production adoption or independent review claim is inferred from loading state.`})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`h4`,{children:`Sources`}),(0,h.jsx)(`ul`,{children:(n?.sources??[]).map(e=>{let t=we(e.href);return(0,h.jsxs)(`li`,{"data-capability-source":!0,children:[(0,h.jsx)(`span`,{children:`Source: `}),t?(0,h.jsx)(`a`,{href:e.href,children:e.label}):(0,h.jsx)(`span`,{children:e.label})]},`${e.label}:${e.href}`)})})]})]}),(0,h.jsxs)(`section`,{className:`capability-relationship-index`,"aria-labelledby":`capability-relationships-title`,children:[(0,h.jsx)(`h3`,{id:`capability-relationships-title`,children:`Complete relationship edge declarations`}),(0,h.jsx)(`p`,{children:`Edge rows are declared relationships from the figure JSON. Direction is source to target; related edges are registry-declared relation records and do not imply runtime coupling, weight, or adoption.`}),(0,h.jsx)(`div`,{className:`capability-table-scroll`,role:`region`,"aria-label":`Complete capability relationship edge declarations`,tabIndex:0,children:(0,h.jsxs)(`table`,{className:`capability-relationship-table`,"data-capability-relationships":!0,children:[(0,h.jsxs)(`caption`,{children:[i.length,` relationship edge declarations in `,n?.title??`Public system capability relationships`]}),(0,h.jsx)(`thead`,{children:(0,h.jsxs)(`tr`,{children:[(0,h.jsx)(`th`,{scope:`col`,children:`Source`}),(0,h.jsx)(`th`,{scope:`col`,children:`Relationship`}),(0,h.jsx)(`th`,{scope:`col`,children:`Direction`}),(0,h.jsx)(`th`,{scope:`col`,children:`Target`}),(0,h.jsx)(`th`,{scope:`col`,children:`State`})]})}),(0,h.jsx)(`tbody`,{children:i.map((e,t)=>{let n=Te(r,e.source),i=Te(r,e.target),a=Ee(e.target);return(0,h.jsxs)(`tr`,{"data-capability-relationship":!0,"data-state":e.status,children:[(0,h.jsx)(`td`,{"data-relationship-source":!0,children:n}),(0,h.jsx)(`td`,{"data-relationship-label":!0,children:e.label}),(0,h.jsx)(`td`,{"data-relationship-direction":!0,"aria-label":`${n} to ${i}`,children:`→`}),(0,h.jsx)(`td`,{"data-relationship-target":!0,children:a?(0,h.jsx)(`a`,{"data-capability-proof":!0,href:a,rel:`noopener`,children:i}):i}),(0,h.jsx)(`td`,{"data-relationship-state":!0,children:Se(e.status)})]},`${e.source}:${e.target}:${t}`)})})]})})]})]})}function Oe(){let[e,t]=(0,f.useState)(``),n=(0,f.useMemo)(()=>[be,...ye].filter(e=>!!e).filter(t=>xe(t,e)),[e]);return(0,h.jsxs)(h.Fragment,{children:[(0,h.jsx)(g,{}),(0,h.jsx)(`div`,{className:`viewport-vignette`,"aria-hidden":`true`}),(0,h.jsx)(`a`,{className:`skip-link`,href:`#main`,children:`Skip to content`}),(0,h.jsxs)(`nav`,{className:`topnav`,"aria-label":`Primary`,children:[(0,h.jsxs)(`a`,{className:`brand`,href:`#top`,"aria-label":`zentropyLabs / Project Telos, home`,children:[(0,h.jsx)(`span`,{className:`brand-wordmark`,"aria-hidden":`true`,children:`zentropyLabs`}),(0,h.jsx)(`span`,{className:`brand-route mono`,children:`Project Telos`})]}),(0,h.jsxs)(`div`,{className:`topnav-links`,children:[v.map(e=>(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),b.map(e=>(0,h.jsx)(`a`,{className:`mono ghost`,href:e.href,rel:`noopener`,children:e.label},e.href))]}),(0,h.jsxs)(`details`,{className:`mobile-menu`,children:[(0,h.jsx)(`summary`,{children:`Menu`}),(0,h.jsxs)(`div`,{className:`mobile-menu-list`,"aria-label":`Home menu`,children:[v.map(e=>(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),se.map(e=>(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),b.map(e=>(0,h.jsx)(`a`,{className:`mono`,href:e.href,rel:`noopener`,children:e.label},e.href))]})]})]}),(0,h.jsxs)(`main`,{id:`main`,children:[(0,h.jsxs)(`header`,{id:`top`,className:`hero`,children:[(0,h.jsx)(`div`,{className:`hero-veil`,"aria-hidden":`true`}),(0,h.jsxs)(`div`,{className:`hero-inner`,children:[(0,h.jsxs)(`div`,{className:`hero-masthead`,children:[(0,h.jsx)(`p`,{className:`hero-kicker mono reveal in d1`,children:`orientation / artifact / claim / proof / route`}),(0,h.jsx)(`h1`,{className:`hero-title reveal in d2`,children:`Flywheel is the primary public system for model-neutral agent work.`}),(0,h.jsx)(`p`,{className:`lead reveal in d3`,children:`Route→Verify→Receipt→Reuse is the operating loop: send a task through model routes and tool results, verify the run against explicit checks, keep the receipt, then reuse the artifact in the next workflow.`}),(0,h.jsxs)(`div`,{className:`flywheel-hero-actions cta reveal in d3`,children:[(0,h.jsxs)(`a`,{className:`btn solid`,href:`/flywheel.html`,children:[`Inspect Flywheel `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]}),(0,h.jsxs)(`a`,{className:`btn`,href:`/catalog.html`,children:[`Open evidence atlas `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]})]})]}),(0,h.jsxs)(`figure`,{id:`flywheel-artifact`,className:`flywheel-artifact reveal in d3`,"aria-labelledby":`flywheel-artifact-title`,children:[(0,h.jsxs)(`figcaption`,{children:[(0,h.jsx)(`span`,{className:`artifact-no mono`,children:`native process / verified 2026-08-27`}),(0,h.jsxs)(`h2`,{id:`flywheel-artifact-title`,children:[fe.name,` v0.3.10 release path`]})]}),(0,h.jsxs)(`div`,{className:`artifact-grid`,children:[(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`span`,{className:`mono`,children:`route`}),(0,h.jsx)(`code`,{children:fe.entryCommand})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`span`,{className:`mono`,children:`verify`}),(0,h.jsx)(`code`,{children:fe.verificationCommand})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`span`,{className:`mono`,children:`receipt`}),(0,h.jsxs)(`a`,{href:pe.href,rel:`noopener`,children:[pe.label,` `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`↗`})]})]})]}),(0,h.jsx)(`p`,{children:`This artifact proves a public release and default-branch verification record. It does not prove general model correctness, adoption, or provider parity.`})]})]}),(0,h.jsxs)(`figure`,{className:`hero-crop mono`,"aria-hidden":`true`,children:[(0,h.jsx)(`span`,{className:`crop-t spectrum-word`,children:`registry field`}),(0,h.jsx)(`span`,{className:`crop-d`,children:`spectrum contained inside art`})]})]}),(0,h.jsx)(`section`,{id:`route-verify-receipt-reuse`,className:`band flow-band`,"aria-labelledby":`flow-title`,children:(0,h.jsxs)(`div`,{className:`shell`,children:[(0,h.jsxs)(`div`,{className:`sec-head reveal`,children:[(0,h.jsx)(`h2`,{id:`flow-title`,children:`Route, verify, receipt, reuse.`}),(0,h.jsx)(`p`,{className:`measure lead-2`,children:`The homepage follows one continuous evidence path, not a dashboard. Orientation names the system, artifact shows the native route, claim stays bounded, proof links to evidence records, and route sends the reader deeper into a reusable workflow surface.`})]}),(0,h.jsxs)(`ol`,{className:`flow-steps`,"aria-label":`Route Verify Receipt Reuse narrative`,children:[(0,h.jsxs)(`li`,{children:[(0,h.jsx)(`strong`,{children:`Route`}),(0,h.jsx)(`p`,{children:`Task specifications, model routes, tool results, and evidence records enter Flywheel as explicit inputs.`})]}),(0,h.jsxs)(`li`,{children:[(0,h.jsx)(`strong`,{children:`Verify`}),(0,h.jsx)(`p`,{children:`Checks and limits are named before the result is treated as evidence.`})]}),(0,h.jsxs)(`li`,{children:[(0,h.jsx)(`strong`,{children:`Receipt`}),(0,h.jsx)(`p`,{children:`The run leaves an artifact that can be read apart from the model that produced it.`})]}),(0,h.jsxs)(`li`,{children:[(0,h.jsx)(`strong`,{children:`Reuse`}),(0,h.jsx)(`p`,{children:`The verified artifact becomes a reusable workflow surface for review, publishing, hiring, or collaboration.`})]})]})]})}),(0,h.jsx)(`section`,{id:`evidence-atlas`,className:`band band-alt evidence-atlas`,"aria-labelledby":`evidence-atlas-title`,children:(0,h.jsxs)(`div`,{className:`shell`,children:[(0,h.jsxs)(`div`,{className:`atlas-layout`,children:[(0,h.jsxs)(`div`,{className:`sec-head reveal`,children:[(0,h.jsx)(`h2`,{id:`evidence-atlas-title`,children:`Flywheel evidence atlas`}),(0,h.jsx)(`p`,{className:`measure lead-2`,children:`Registry records define this plate. Flywheel sits as the mothership; Index, Gather, Forum, Crucible, Relay, Plexus, Mneme, and the rest appear by declared relation, domain, evidence, limitation, and route.`})]}),(0,h.jsxs)(`aside`,{className:`atlas-rail mono reveal d1`,"aria-label":`Atlas reading keys`,children:[(0,h.jsx)(`span`,{children:`orientation: Flywheel`}),(0,h.jsx)(`span`,{children:`artifact: release, source, report, demo`}),(0,h.jsx)(`span`,{children:`claim: registry purpose`}),(0,h.jsx)(`span`,{children:`proof: dated evidence`}),(0,h.jsx)(`span`,{children:`route: deeper page`})]})]}),(0,h.jsxs)(`div`,{className:`atlas-grid atlas-instrument`,"aria-label":`Registry-derived Flywheel system atlas`,children:[(0,h.jsx)(`div`,{"data-atlas-artifact":`capability-map`,children:(0,h.jsx)(De,{})}),(0,h.jsxs)(`aside`,{className:`atlas-index`,"aria-labelledby":`atlas-index-title`,children:[(0,h.jsxs)(`p`,{className:`mono`,children:[`system index / `,he.length,` featured records / `,C.length,` total registry records / `,me.length,` declared Flywheel routes`]}),(0,h.jsx)(`h3`,{id:`atlas-index-title`,children:`Flywheel graph index`}),(0,h.jsx)(`p`,{children:`The map carries the dense structure. This index keeps almost-all-flagships discoverable without making a wall of equal-weight cards.`}),(0,h.jsx)(`ol`,{children:he.map(e=>(0,h.jsxs)(`li`,{"data-system-id":e.id,children:[(0,h.jsx)(`span`,{className:`mono`,"data-system-role":!0,children:e.atlasRole}),(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.name}),(0,h.jsx)(`a`,{className:`proof-link`,href:e.evidence[0].href,rel:`noopener`,children:e.evidence[0].label})]},e.id))}),(0,h.jsx)(`a`,{className:`atlas-catalog-link`,href:`/catalog.html`,children:`Open complete catalog`})]})]}),(0,h.jsxs)(`div`,{className:`evidence-current`,"aria-labelledby":`evidence-current-title`,children:[(0,h.jsx)(`h3`,{id:`evidence-current-title`,children:`Newest registry evidence`}),(0,h.jsx)(`ol`,{children:ue.map(e=>{let t=w(e.systemId);return(0,h.jsxs)(`li`,{"data-evidence-record":e.id,"data-evidence-system":e.systemId,children:[(0,h.jsx)(`time`,{className:`mono`,dateTime:e.date,children:e.date}),(0,h.jsx)(`a`,{href:e.href,rel:`noopener`,children:e.label}),(0,h.jsxs)(`span`,{children:[t?.name??e.systemId,`: `,e.summary]})]},`${e.systemId}:${e.id}`)})})]}),(0,h.jsx)(`div`,{className:`domain-strip`,"aria-label":`Capability domains from system registry`,children:ge.map(e=>(0,h.jsxs)(`section`,{children:[(0,h.jsx)(`h3`,{children:e.label}),(0,h.jsx)(`p`,{children:e.summary}),(0,h.jsxs)(`span`,{className:`mono`,children:[e.systems.length,` featured records`]})]},e.id))})]})}),(0,h.jsx)(`section`,{id:`editorial-index`,className:`band editorial-index`,"aria-labelledby":`editorial-index-title`,children:(0,h.jsxs)(`div`,{className:`shell editorial-shell`,children:[(0,h.jsxs)(`aside`,{className:`editorial-rail mono`,"aria-label":`Editorial index structure`,children:[(0,h.jsx)(`span`,{children:`Source`}),(0,h.jsx)(`span`,{children:`Contents`}),(0,h.jsx)(`span`,{children:`Claim`})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsxs)(`div`,{className:`sec-head reveal`,children:[(0,h.jsx)(`h2`,{id:`editorial-index-title`,children:`Searchable editorial index`}),(0,h.jsx)(`p`,{className:`measure lead-2`,children:`The index is searchable by title, kind, date, source, contents, and claim. Rows expose routing metadata without teaser prose.`})]}),T?(0,h.jsx)(`p`,{className:`current-briefing-label mono`,"data-briefing-title":T.title,children:`Current briefing is one filterable row, not a duplicate module.`}):null,(0,h.jsxs)(`label`,{className:`index-search mono`,children:[(0,h.jsx)(`span`,{children:`Search index`}),(0,h.jsx)(`input`,{"aria-label":`Search index`,type:`search`,value:e,onChange:e=>t(e.target.value),placeholder:`briefing, packets, source, claim`})]}),(0,h.jsx)(`ol`,{className:`index-rows`,"aria-label":`Publication and briefing index`,children:n.map((e,t)=>(0,h.jsxs)(`li`,{className:`index-row`,"data-editorial-record":!0,"data-kind":e.kind,children:[(0,h.jsx)(`span`,{className:`index-seq mono`,children:String(t+1).padStart(2,`0`)}),(0,h.jsx)(`time`,{className:`mono`,dateTime:e.date,children:e.date}),(0,h.jsx)(`span`,{className:`mono`,children:e.kind}),(0,h.jsx)(`h3`,{children:(0,h.jsx)(`a`,{href:e.href,children:e.title})}),(0,h.jsxs)(`dl`,{children:[(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`dt`,{children:`Source`}),(0,h.jsx)(`dd`,{children:e.source})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`dt`,{children:`Contents`}),(0,h.jsx)(`dd`,{children:e.contents})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`dt`,{children:`Claim`}),(0,h.jsx)(`dd`,{children:e.claim})]})]})]},`${e.kind}:${e.title}`))})]})]})}),(0,h.jsx)(`section`,{id:`research`,className:`band band-alt`,"aria-labelledby":`research-title`,children:(0,h.jsxs)(`div`,{className:`shell`,children:[(0,h.jsxs)(`div`,{className:`sec-head reveal`,children:[(0,h.jsx)(`h2`,{id:`research-title`,children:`Research and publications`}),(0,h.jsx)(`p`,{className:`measure lead-2`,children:`Eight records, all public and on the file. They cover byte integrity, typed effects, automation boundaries, action envelopes, and made-mind philosophy. None is peer reviewed.`})]}),(0,h.jsx)(`ol`,{className:`papers`,"aria-label":`Publications`,children:ve.map((e,t)=>(0,h.jsxs)(`li`,{className:`paper reveal`,style:{"--i":String(t)},children:[(0,h.jsx)(`span`,{className:`paper-tag mono`,children:e.tag}),(0,h.jsxs)(`div`,{className:`paper-body`,children:[(0,h.jsx)(`h3`,{className:`paper-title`,children:e.title}),(0,h.jsx)(`p`,{className:`paper-line`,children:e.line})]}),(0,h.jsxs)(`span`,{className:`paper-doi mono`,children:[e.read?(0,h.jsx)(`a`,{href:e.read,children:`Read`}):null,e.pdf?(0,h.jsx)(`a`,{href:e.pdf,children:`PDF`}):null,(0,h.jsx)(`a`,{href:`https://doi.org/${e.doi}`,rel:`noopener`,children:`DOI ↗`})]})]},e.doi))}),(0,h.jsxs)(`p`,{className:`paper-close reveal`,children:[`Each record is titled at its real size. ORCID`,` `,(0,h.jsx)(`a`,{className:`mono`,href:`https://orcid.org/0009-0001-7175-5393`,rel:`noopener`,children:`0009-0001-7175-5393`}),`. The complete index lives on `,(0,h.jsx)(`a`,{href:`/publications.html`,children:`the publications page`}),`.`]})]})}),(0,h.jsx)(`section`,{id:`work`,"aria-labelledby":`work-title`,className:`band work-wrap`,children:(0,h.jsxs)(`div`,{className:`shell work-grid`,children:[(0,h.jsxs)(`div`,{className:`work-head reveal`,children:[(0,h.jsx)(`h2`,{id:`work-title`,children:`Workshop contact follows the evidence.`}),(0,h.jsx)(`p`,{children:`Hiring, collaboration, and field-work routes stay available after the reader has seen the product thesis, process, evidence atlas, and current briefing.`})]}),(0,h.jsxs)(`nav`,{className:`work-routes`,"aria-label":`Hiring and collaboration routes`,children:[_e.map(e=>(0,h.jsxs)(`a`,{href:e.href,children:[(0,h.jsx)(`strong`,{children:e.label}),(0,h.jsx)(`span`,{children:e.summary})]},e.href)),(0,h.jsxs)(`a`,{href:`/resume.html`,children:[(0,h.jsx)(`strong`,{children:`Technical resume`}),(0,h.jsx)(`span`,{children:`Open the current resume and adjacent career material.`})]}),(0,h.jsxs)(`a`,{href:`mailto:zaindharper@gmail.com`,children:[(0,h.jsx)(`strong`,{children:`Email`}),(0,h.jsx)(`span`,{children:`Send the concrete requirement, artifact, and useful deadline.`})]})]})]})}),(0,h.jsx)(`section`,{id:`contact`,className:`band band-alt contact-band`,"aria-labelledby":`contact-title`,children:(0,h.jsxs)(`div`,{className:`shell contact-grid`,children:[(0,h.jsx)(`h2`,{id:`contact-title`,children:`Bring a concrete route.`}),(0,h.jsx)(`p`,{children:`The strongest starting point is a specific system, evidence record, publication, role, or collaboration scope. If the requirement is not yet clear, start with Flywheel or the atlas.`}),(0,h.jsxs)(`div`,{className:`cta`,children:[(0,h.jsxs)(`a`,{className:`btn solid`,href:`mailto:zaindharper@gmail.com`,children:[`Email Zain `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]}),(0,h.jsxs)(`a`,{className:`btn`,href:`/flywheel.html`,children:[`Flywheel page `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]})]})]})})]}),(0,h.jsx)(`footer`,{className:`site-foot`,children:(0,h.jsxs)(`div`,{className:`shell`,children:[(0,h.jsxs)(`p`,{className:`foot-big reveal`,children:[`Flywheel first,`,(0,h.jsx)(`br`,{}),`evidence always attached.`]}),(0,h.jsxs)(`nav`,{className:`foot-links reveal d1`,"aria-label":`Deep pages`,children:[se.map(e=>(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),(0,h.jsx)(`a`,{href:`https://github.com/HarperZ9`,rel:`noopener`,children:`GitHub`})]}),(0,h.jsxs)(`p`,{className:`foot-note mono reveal d1`,children:[(0,h.jsx)(`span`,{className:`foot-brand`,children:`zentropyLabs`}),` publishes Project Telos / built by Zain Dana Harper in Seattle / systems, evidence, research, graphics, generated media, and work routes.`]})]})})]})}(0,p.createRoot)(document.getElementById(`root`)).render((0,h.jsx)(f.StrictMode,{children:(0,h.jsx)(Oe,{})}));
+`,w=new Set([`guide.html`,`catalog.html`,`research.html`,`publications.html`,`writing.html`,`studio.html`,`typeface.html`,`resume.html`,`person.html`]),ie=[...v,...y.flatMap(e=>e.routes)].filter(e=>w.has(e.href)&&ee(e.href)),ae=JSON.parse(re),oe=ae.records.map(e=>te.find(t=>t.id===e.id&&t.systemId===e.systemId)).filter(e=>!!e),se=ae.latestPublishedBriefing;function ce(e){let[t]=e.evidence;if(!t)throw Error(`Required public evidence record is missing: ${e.id}`);return t}var le=ne(`flywheel`);if(!le)throw Error(`Required public system registry record is missing: flywheel`);var ue=le,T=ce(ue),E=[{id:`platform`,label:`Platform`,job:`Operate the model-neutral workbench and the routes that connect the rest of the workshop.`,href:`/flywheel.html`,action:`Enter Flywheel`},{id:`security`,label:`Security`,job:`Inspect public defensive systems and the bounded surface for controlled private practice.`,href:`/figures/security-capability-map.html`,action:`Inspect security map`},{id:`verification`,label:`Verification`,job:`Follow evidence, receipts, evaluation layers, and declared limits through the system graph.`,href:`/figures/verification-capability-map.html`,action:`Inspect verification map`},{id:`infrastructure`,label:`Infrastructure`,job:`Review the adapters, engines, and durable runtime surfaces that make agent work portable.`,href:`/overview.html`,action:`Review infrastructure`},{id:`graphics-retro`,label:`Graphics and retro`,job:`Enter the rendering, archival, revival, and integration work around live and legacy engines.`,href:`/figures/graphics-retro-capability-map.html`,action:`Inspect graphics map`},{id:`research-education`,label:`Research and education`,job:`Read the public papers, incident briefings, teaching artifacts, and inquiry-led field notes.`,href:`/research.html`,action:`Read the research`}].map(e=>({...e,systemCount:C.filter(t=>t.family===e.id).length})),de=[{label:`Engineering and evaluation`,href:`/hire.html#engineering-path`,summary:`Agent systems, evaluation harnesses, developer tools, and release work.`},{label:`Technical operations`,href:`/hire.html#technical-operations-path`,summary:`Operational tooling, public documentation, automation, and infrastructure repair.`},{label:`Public service, safety, and field operations`,href:`/hire.html#public-service-field-path`,summary:`Benefits-rich public routes where systems judgment and field reliability matter.`}],fe=[{tag:`SYSTEMS`,doi:`10.5281/zenodo.21230267`,pdf:`/papers/emet-integrity-witness.pdf`,title:`EMET: An Authority-Incapable Byte-Level Integrity Witness`,line:`A byte-integrity artifact with four independent implementations checked against one conformance corpus.`},{tag:`SYSTEMS`,doi:`10.5281/zenodo.21231253`,pdf:`/papers/buildlang-capability-effects.pdf`,title:`BuildLang: Accountable Compute via Typed Capability Effects`,line:`The capabilities a function may exercise appear in its type, then lower through a constrained systems-language path.`},{tag:`PREPRINT`,doi:`10.5281/zenodo.21232206`,pdf:`/papers/witnessed-independence.pdf`,title:`Witnessed Independence: Recording Whether a Verifier Graded Its Own Work`,line:`Turns a criterion it did not author from an assumption into a recorded, three-valued field of the verdict.`},{tag:`PREPRINT`,doi:`10.5281/zenodo.21231406`,pdf:`/papers/proof-packets.pdf`,title:`Proof Packets: A Derive-Don't-Trust Envelope for Accountable Agent Actions`,line:`The verdict for one agent action is derived from checks, never read from the packet.`},{tag:`NOTE`,doi:`10.5281/zenodo.21234475`,pdf:`/papers/personhood-gate-handoff.pdf`,title:`The Personhood-Gate Handoff: Drawing the Automation Boundary at the False-Signal Line`,line:`Hand off to the person exactly when a step would transmit a false human-present signal to a third party.`},{tag:`NOTE`,doi:`10.5281/zenodo.21231311`,pdf:`/papers/re-perceived-effects.pdf`,title:`Re-Perceived Effects: A Well-Formedness Contract for Accountable Actuation`,line:`Replaces an actuator's self-report with a re-perceived effect, admitted before the fact by a capability gate.`},{tag:`CORPUS`,doi:`10.5281/zenodo.20773724`,pdf:`/papers/conferred-existence.pdf`,read:`/conferred-existence.html`,title:`Conferred Existence`,line:`A thesis on made minds: perception, memory, external anchors, and what a made mind could be owed and held to.`},{tag:`CORPUS`,doi:`10.5281/zenodo.20778927`,pdf:`/papers/witnessing-spine.pdf`,read:`/witnessing-spine.html`,title:`The Witnessing Spine`,line:`The collected research corpus behind the verification work, from bounded claims to the rule the software enforces.`}],pe=fe.map(e=>({kind:e.tag,date:e.doi.split(`.`).at(-1)??`record`,title:e.title,href:e.read??e.pdf??`https://doi.org/${e.doi}`,source:e.pdf?`PDF`:e.read?`HTML`:`DOI`,contents:e.tag.toLowerCase(),claim:e.line})),me=se?{kind:`BRIEFING`,date:se.publishedAt,title:se.title,href:se.href,source:`${se.sourceCount} public sources`,contents:`incident evidence lanes`,claim:`Separate legal process, vendor report, host telemetry, independent analysis, and remediation records before conclusions.`}:null;function D(e,t){let n=t.trim().toLowerCase();return n?[e.kind,e.date,e.title,e.source,e.contents,e.claim].some(e=>e.toLowerCase().includes(n)):!0}function O(){let[e,t]=(0,f.useState)(``),n=(0,f.useMemo)(()=>[me,...pe].filter(e=>!!e).filter(t=>D(t,e)),[e]);return(0,h.jsxs)(h.Fragment,{children:[(0,h.jsx)(g,{}),(0,h.jsx)(`div`,{className:`viewport-vignette`,"aria-hidden":`true`}),(0,h.jsx)(`a`,{className:`skip-link`,href:`#main`,children:`Skip to content`}),(0,h.jsxs)(`nav`,{className:`topnav`,"aria-label":`Primary`,children:[(0,h.jsxs)(`a`,{className:`brand`,href:`#top`,"aria-label":`zentropyLabs / Project Telos, home`,children:[(0,h.jsx)(`span`,{className:`brand-wordmark`,"aria-hidden":`true`,children:`zentropyLabs`}),(0,h.jsx)(`span`,{className:`brand-route mono`,children:`Project Telos`})]}),(0,h.jsxs)(`div`,{className:`topnav-links`,children:[v.map(e=>(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),b.map(e=>(0,h.jsx)(`a`,{className:`mono ghost`,href:e.href,rel:`noopener`,children:e.label},e.href))]}),(0,h.jsxs)(`details`,{className:`mobile-menu`,children:[(0,h.jsx)(`summary`,{children:`Menu`}),(0,h.jsxs)(`div`,{className:`mobile-menu-list`,"aria-label":`Home menu`,children:[v.map(e=>(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),ie.map(e=>(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),b.map(e=>(0,h.jsx)(`a`,{className:`mono`,href:e.href,rel:`noopener`,children:e.label},e.href))]})]})]}),(0,h.jsxs)(`main`,{id:`main`,children:[(0,h.jsxs)(`header`,{id:`top`,className:`hero`,children:[(0,h.jsx)(`div`,{className:`hero-veil`,"aria-hidden":`true`}),(0,h.jsxs)(`div`,{className:`hero-aperture`,"aria-hidden":`true`,children:[(0,h.jsx)(`span`,{className:`aperture-ring`}),(0,h.jsx)(`span`,{className:`aperture-facet aperture-facet-a`}),(0,h.jsx)(`span`,{className:`aperture-facet aperture-facet-b`}),(0,h.jsx)(`span`,{className:`aperture-flare`})]}),(0,h.jsxs)(`div`,{className:`hero-inner`,children:[(0,h.jsxs)(`div`,{className:`hero-masthead`,children:[(0,h.jsx)(`p`,{className:`hero-kicker mono reveal in d1`,children:`orientation / artifact / claim / proof / route`}),(0,h.jsx)(`h1`,{className:`hero-title reveal in d2`,children:`Flywheel is the primary public system for model-neutral agent work.`}),(0,h.jsx)(`p`,{className:`lead reveal in d3`,children:`Route→Verify→Receipt→Reuse is the operating loop: send a task through model routes and tool results, verify the run against explicit checks, keep the receipt, then reuse the artifact in the next workflow.`}),(0,h.jsxs)(`div`,{className:`flywheel-hero-actions cta reveal in d3`,children:[(0,h.jsxs)(`a`,{className:`btn solid`,href:`/flywheel.html`,children:[`Inspect Flywheel `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]}),(0,h.jsxs)(`a`,{className:`btn`,href:`/catalog.html`,children:[`Open evidence atlas `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]})]})]}),(0,h.jsxs)(`figure`,{id:`flywheel-artifact`,className:`flywheel-artifact reveal in d3`,"data-architecture-role":ue.architectureRole,"aria-labelledby":`flywheel-artifact-title`,children:[(0,h.jsxs)(`figcaption`,{children:[(0,h.jsx)(`span`,{className:`artifact-no mono`,children:`native process / verified 2026-08-27`}),(0,h.jsxs)(`h2`,{id:`flywheel-artifact-title`,children:[ue.name,` v0.3.10 release path`]})]}),(0,h.jsxs)(`div`,{className:`artifact-grid`,children:[(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`span`,{className:`mono`,children:`route`}),(0,h.jsx)(`code`,{children:ue.entryCommand})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`span`,{className:`mono`,children:`verify`}),(0,h.jsx)(`code`,{children:ue.verificationCommand})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`span`,{className:`mono`,children:`receipt`}),(0,h.jsxs)(`a`,{href:T.href,rel:`noopener`,children:[T.label,` `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`↗`})]})]})]}),(0,h.jsx)(`p`,{children:`This artifact proves a public release and default-branch verification record. It does not prove general model correctness, adoption, or provider parity.`})]})]}),(0,h.jsxs)(`figure`,{className:`hero-crop mono`,"aria-hidden":`true`,children:[(0,h.jsx)(`span`,{className:`crop-t spectrum-word`,children:`registry field`}),(0,h.jsx)(`span`,{className:`crop-d`,children:`spectrum contained inside art`})]})]}),(0,h.jsx)(`section`,{id:`route-verify-receipt-reuse`,className:`band flow-band`,"aria-labelledby":`flow-title`,children:(0,h.jsxs)(`div`,{className:`shell`,children:[(0,h.jsxs)(`div`,{className:`sec-head reveal`,children:[(0,h.jsx)(`h2`,{id:`flow-title`,children:`Route, verify, receipt, reuse.`}),(0,h.jsx)(`p`,{className:`measure lead-2`,children:`The homepage follows one continuous evidence path, not a dashboard. Orientation names the system, artifact shows the native route, claim stays bounded, proof links to evidence records, and route sends the reader deeper into a reusable workflow surface.`})]}),(0,h.jsxs)(`ol`,{className:`flow-steps`,"aria-label":`Route Verify Receipt Reuse narrative`,children:[(0,h.jsxs)(`li`,{children:[(0,h.jsx)(`strong`,{children:`Route`}),(0,h.jsx)(`p`,{children:`Task specifications, model routes, tool results, and evidence records enter Flywheel as explicit inputs.`})]}),(0,h.jsxs)(`li`,{children:[(0,h.jsx)(`strong`,{children:`Verify`}),(0,h.jsx)(`p`,{children:`Checks and limits are named before the result is treated as evidence.`})]}),(0,h.jsxs)(`li`,{children:[(0,h.jsx)(`strong`,{children:`Receipt`}),(0,h.jsx)(`p`,{children:`The run leaves an artifact that can be read apart from the model that produced it.`})]}),(0,h.jsxs)(`li`,{children:[(0,h.jsx)(`strong`,{children:`Reuse`}),(0,h.jsx)(`p`,{children:`The verified artifact becomes a reusable workflow surface for review, publishing, hiring, or collaboration.`})]})]})]})}),(0,h.jsx)(`section`,{id:`capability-families`,className:`band band-alt capability-families`,"aria-labelledby":`capability-families-title`,children:(0,h.jsxs)(`div`,{className:`shell`,children:[(0,h.jsxs)(`div`,{className:`family-intro`,children:[(0,h.jsxs)(`div`,{className:`sec-head reveal`,children:[(0,h.jsx)(`h2`,{id:`capability-families-title`,children:`Capability families`}),(0,h.jsx)(`p`,{className:`measure lead-2`,children:`Choose the job you need done. Each entrance is derived from the public registry, keeps Flywheel in context, and leads to a focused route or inspectable figure.`})]}),(0,h.jsxs)(`div`,{className:`constellation-key mono`,"aria-label":`Capability family reading key`,children:[(0,h.jsx)(`span`,{children:`family`}),(0,h.jsx)(`span`,{children:`public registry count`}),(0,h.jsx)(`span`,{children:`entry route`})]})]}),(0,h.jsx)(`div`,{className:`family-ledger`,children:E.map((e,t)=>(0,h.jsxs)(`article`,{className:`family-entry reveal`,"data-capability-family":e.id,"data-family-system-count":e.systemCount,style:{"--family-index":String(t+1),"--family-share":String(e.systemCount/C.length*100)+`%`},children:[(0,h.jsx)(`div`,{className:`family-order mono`,"aria-hidden":`true`,children:String(t+1).padStart(2,`0`)}),(0,h.jsxs)(`div`,{className:`family-copy`,children:[(0,h.jsx)(`h3`,{children:e.label}),(0,h.jsx)(`p`,{children:e.job})]}),(0,h.jsxs)(`div`,{className:`family-readout`,children:[(0,h.jsxs)(`span`,{className:`family-count mono`,children:[e.systemCount,` public registry `,e.systemCount===1?`record`:`records`]}),(0,h.jsx)(`span`,{className:`family-meter`,"aria-hidden":`true`,children:(0,h.jsx)(`span`,{})})]}),(0,h.jsxs)(`a`,{className:`family-route`,href:e.href,children:[e.action,` `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`↗`})]})]},e.id))}),(0,h.jsxs)(`section`,{id:`proof-actions`,className:`proof-stage`,"aria-labelledby":`proof-actions-title`,children:[(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`h3`,{id:`proof-actions-title`,children:`Run, inspect, or verify`}),(0,h.jsx)(`p`,{children:`Start with the platform, open the relationship instrument, or read the release receipt. The complete catalog stays available as the secondary index.`})]}),(0,h.jsxs)(`nav`,{className:`proof-actions`,"aria-label":`Runnable and inspectable proof`,children:[(0,h.jsx)(`a`,{href:`/flywheel.html`,children:`Run Flywheel`}),(0,h.jsx)(`a`,{href:`/figures/system-capability-map.html`,children:`Inspect the capability map`}),(0,h.jsx)(`a`,{href:T.href,rel:`noopener`,children:`Verify the release record`}),(0,h.jsx)(`a`,{className:`proof-actions-secondary`,href:`/catalog.html`,children:`Open the complete catalog`})]})]}),(0,h.jsxs)(`section`,{className:`evidence-current`,"aria-labelledby":`evidence-current-title`,children:[(0,h.jsx)(`h3`,{id:`evidence-current-title`,children:`Newest registry evidence`}),(0,h.jsx)(`ol`,{children:oe.map(e=>{let t=ne(e.systemId);return(0,h.jsxs)(`li`,{"data-evidence-record":e.id,"data-evidence-system":e.systemId,children:[(0,h.jsx)(`time`,{className:`mono`,dateTime:e.date,children:e.date}),(0,h.jsx)(`a`,{href:e.href,rel:`noopener`,children:e.label}),(0,h.jsxs)(`span`,{children:[t?.name??e.systemId,`: `,e.summary]})]},e.systemId+`:`+e.id)})})]})]})}),(0,h.jsx)(`section`,{id:`editorial-index`,className:`band editorial-index`,"aria-labelledby":`editorial-index-title`,children:(0,h.jsxs)(`div`,{className:`shell editorial-shell`,children:[(0,h.jsxs)(`aside`,{className:`editorial-rail mono`,"aria-label":`Editorial index structure`,children:[(0,h.jsx)(`span`,{children:`Source`}),(0,h.jsx)(`span`,{children:`Contents`}),(0,h.jsx)(`span`,{children:`Claim`})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsxs)(`div`,{className:`sec-head reveal`,children:[(0,h.jsx)(`h2`,{id:`editorial-index-title`,children:`Searchable editorial index`}),(0,h.jsx)(`p`,{className:`measure lead-2`,children:`The index is searchable by title, kind, date, source, contents, and claim. Rows expose routing metadata without teaser prose.`})]}),se?(0,h.jsx)(`p`,{className:`current-briefing-label mono`,"data-briefing-title":se.title,children:`Current briefing is one filterable row, not a duplicate module.`}):null,(0,h.jsxs)(`label`,{className:`index-search mono`,children:[(0,h.jsx)(`span`,{children:`Search index`}),(0,h.jsx)(`input`,{"aria-label":`Search index`,type:`search`,value:e,onChange:e=>t(e.target.value),placeholder:`briefing, packets, source, claim`})]}),(0,h.jsx)(`ol`,{className:`index-rows`,"aria-label":`Publication and briefing index`,children:n.map((e,t)=>(0,h.jsxs)(`li`,{className:`index-row`,"data-editorial-record":!0,"data-kind":e.kind,children:[(0,h.jsx)(`span`,{className:`index-seq mono`,children:String(t+1).padStart(2,`0`)}),(0,h.jsx)(`time`,{className:`mono`,dateTime:e.date,children:e.date}),(0,h.jsx)(`span`,{className:`mono`,children:e.kind}),(0,h.jsx)(`h3`,{children:(0,h.jsx)(`a`,{href:e.href,children:e.title})}),(0,h.jsxs)(`dl`,{children:[(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`dt`,{children:`Source`}),(0,h.jsx)(`dd`,{children:e.source})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`dt`,{children:`Contents`}),(0,h.jsx)(`dd`,{children:e.contents})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`dt`,{children:`Claim`}),(0,h.jsx)(`dd`,{children:e.claim})]})]})]},`${e.kind}:${e.title}`))})]})]})}),(0,h.jsx)(`section`,{id:`research`,className:`band band-alt`,"aria-labelledby":`research-title`,children:(0,h.jsxs)(`div`,{className:`shell`,children:[(0,h.jsxs)(`div`,{className:`sec-head reveal`,children:[(0,h.jsx)(`h2`,{id:`research-title`,children:`Research and publications`}),(0,h.jsx)(`p`,{className:`measure lead-2`,children:`Eight records, all public and on the file. They cover byte integrity, typed effects, automation boundaries, action envelopes, and made-mind philosophy. None is peer reviewed.`})]}),(0,h.jsx)(`ol`,{className:`papers`,"aria-label":`Publications`,children:fe.map((e,t)=>(0,h.jsxs)(`li`,{className:`paper reveal`,style:{"--i":String(t)},children:[(0,h.jsx)(`span`,{className:`paper-tag mono`,children:e.tag}),(0,h.jsxs)(`div`,{className:`paper-body`,children:[(0,h.jsx)(`h3`,{className:`paper-title`,children:e.title}),(0,h.jsx)(`p`,{className:`paper-line`,children:e.line})]}),(0,h.jsxs)(`span`,{className:`paper-doi mono`,children:[e.read?(0,h.jsx)(`a`,{href:e.read,children:`Read`}):null,e.pdf?(0,h.jsx)(`a`,{href:e.pdf,children:`PDF`}):null,(0,h.jsx)(`a`,{href:`https://doi.org/${e.doi}`,rel:`noopener`,children:`DOI ↗`})]})]},e.doi))}),(0,h.jsxs)(`p`,{className:`paper-close reveal`,children:[`Each record is titled at its real size. ORCID`,` `,(0,h.jsx)(`a`,{className:`mono`,href:`https://orcid.org/0009-0001-7175-5393`,rel:`noopener`,children:`0009-0001-7175-5393`}),`. The complete index lives on `,(0,h.jsx)(`a`,{href:`/publications.html`,children:`the publications page`}),`.`]})]})}),(0,h.jsx)(`section`,{id:`work`,"aria-labelledby":`work-title`,className:`band work-wrap`,children:(0,h.jsxs)(`div`,{className:`shell work-grid`,children:[(0,h.jsxs)(`div`,{className:`work-head reveal`,children:[(0,h.jsx)(`h2`,{id:`work-title`,children:`Workshop contact follows the evidence.`}),(0,h.jsx)(`p`,{children:`Hiring, collaboration, and field-work routes stay available after the reader has seen the product thesis, process, evidence atlas, and current briefing.`})]}),(0,h.jsxs)(`nav`,{className:`work-routes`,"aria-label":`Hiring and collaboration routes`,children:[de.map(e=>(0,h.jsxs)(`a`,{href:e.href,children:[(0,h.jsx)(`strong`,{children:e.label}),(0,h.jsx)(`span`,{children:e.summary})]},e.href)),(0,h.jsxs)(`a`,{href:`/resume.html`,children:[(0,h.jsx)(`strong`,{children:`Technical resume`}),(0,h.jsx)(`span`,{children:`Open the current resume and adjacent career material.`})]}),(0,h.jsxs)(`a`,{href:`mailto:zaindharper@gmail.com`,children:[(0,h.jsx)(`strong`,{children:`Email`}),(0,h.jsx)(`span`,{children:`Send the concrete requirement, artifact, and useful deadline.`})]})]})]})}),(0,h.jsx)(`section`,{id:`contact`,className:`band band-alt contact-band`,"aria-labelledby":`contact-title`,children:(0,h.jsxs)(`div`,{className:`shell contact-grid`,children:[(0,h.jsx)(`h2`,{id:`contact-title`,children:`Bring a concrete route.`}),(0,h.jsx)(`p`,{children:`The strongest starting point is a specific system, evidence record, publication, role, or collaboration scope. If the requirement is not yet clear, start with Flywheel or the atlas.`}),(0,h.jsxs)(`div`,{className:`cta`,children:[(0,h.jsxs)(`a`,{className:`btn solid`,href:`mailto:zaindharper@gmail.com`,children:[`Email Zain `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]}),(0,h.jsxs)(`a`,{className:`btn`,href:`/flywheel.html`,children:[`Flywheel page `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]})]})]})})]}),(0,h.jsx)(`footer`,{className:`site-foot`,children:(0,h.jsxs)(`div`,{className:`shell`,children:[(0,h.jsxs)(`p`,{className:`foot-big reveal`,children:[`Flywheel first,`,(0,h.jsx)(`br`,{}),`evidence always attached.`]}),(0,h.jsxs)(`nav`,{className:`foot-links reveal d1`,"aria-label":`Deep pages`,children:[ie.map(e=>(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),(0,h.jsx)(`a`,{href:`https://github.com/HarperZ9`,rel:`noopener`,children:`GitHub`})]}),(0,h.jsxs)(`p`,{className:`foot-note mono reveal d1`,children:[(0,h.jsx)(`span`,{className:`foot-brand`,children:`zentropyLabs`}),` publishes Project Telos / built by Zain Dana Harper in Seattle / systems, evidence, research, graphics, generated media, and work routes.`]})]})})]})}(0,p.createRoot)(document.getElementById(`root`)).render((0,h.jsx)(f.StrictMode,{children:(0,h.jsx)(O,{})}));

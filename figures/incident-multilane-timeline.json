@@ -5,7 +5,7 @@
     "id": "incident-multilane-timeline",
     "kind": "timeline",
     "title": "Incident, disclosure, review, legal process, and vendor response",
-    "description": "A source-labeled chronology separates OpenAI's company report, independent reconstruction, Hugging Face host telemetry, legal process, and vendor remediation from May 8 through August 26, 2026. July 5 is an OpenAI-attributed alert and response event.",
+    "description": "A source-labeled chronology separates OpenAI's company report, independent reconstruction, Hugging Face host telemetry, legal process, and vendor remediation from May 8 through the subpoena's September 14 response deadline. July 5 is an OpenAI-attributed alert and response event.",
     "claim": "The public chronology developed through separate evidence lanes rather than one continuous or causal record.",
     "doesNotProve": "Temporal proximity does not prove causation, coordination, completeness, legal liability, or the accuracy of another lane's claims.",
     "sources": [
@@ -54,14 +54,15 @@
         "href": "https://www.redwoodresearch.org/research/hugging-face-incident"
       }
     ],
-    "retrievedAt": "2026-08-26",
+    "retrievedAt": "2026-08-27",
     "units": "calendar dates by evidence lane",
     "transformations": [
       "Do not draw causal connectors or infer events on unshown dates.",
       "Preserve source-supplied date precision and prefix every event with its evidence lane.",
-      "Render July 5 as an OpenAI-attributed alert and response event, not as a neutral marker."
+      "Render July 5 as an OpenAI-attributed alert and response event, not as a neutral marker.",
+      "Render September 14 as a commanded response deadline, not evidence that no private response or procedural change has occurred."
     ],
-    "uncertainty": "This is a selected public chronology, not a complete event log. Reconstructed timestamps may contain small error, and a publication date does not establish when analysis completed.",
+    "uncertainty": "This is a selected public chronology, not a complete event log. Reconstructed timestamps may contain small error, a publication date does not establish when analysis completed, and the public record through August 27 does not disclose nonpublic procedural activity.",
     "data": {
       "type": "timeline",
       "lanes": [
@@ -123,7 +124,7 @@
         {
           "date": "2026-06-27",
           "lane": "OpenAI company report",
-          "label": "OpenAI reports monitoring alerted on port sweep activity in the research environment",
+          "label": "OpenAI reports a port-sweep alert and on-call advice that stopping the run was not required",
           "status": "caution",
           "sourceIds": [
             "oa-2"
@@ -297,7 +298,7 @@
         {
           "date": "2026-08-26",
           "lane": "METR and Redwood independent investigation",
-          "label": "Joint investigation report published",
+          "label": "Joint investigation report published; Redwood provides a mirror",
           "status": "caution",
           "sourceIds": [
             "mr-1",
@@ -307,11 +308,20 @@
         {
           "date": "2026-08-26",
           "lane": "OpenAI company report",
-          "label": "OpenAI final account published",
+          "label": "OpenAI incident reports published",
           "status": "caution",
           "sourceIds": [
             "oa-1",
             "oa-2"
+          ]
+        },
+        {
+          "date": "2026-09-14",
+          "lane": "Legal process",
+          "label": "Alabama subpoena commands a response by 10:00 a.m.",
+          "status": "caution",
+          "sourceIds": [
+            "al-2"
           ]
         }
       ]

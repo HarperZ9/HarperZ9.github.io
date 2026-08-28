@@ -1,5 +1,5 @@
 {
-  "schema": "harperz9-systems/v1",
+  "schema": "harperz9-systems/v2",
   "domains": [
     {
       "id": "agent-systems",
@@ -49,6 +49,8 @@
         "evaluation-verification",
         "developer-infrastructure"
       ],
+      "family": "platform",
+      "architectureRole": "primary-platform",
       "audiences": [
         "agent-system engineers",
         "evaluation engineers",
@@ -124,6 +126,8 @@
         "developer-infrastructure",
         "graphics-media"
       ],
+      "family": "infrastructure",
+      "architectureRole": "engine",
       "audiences": [
         "agent-system engineers",
         "software engineers",
@@ -186,6 +190,8 @@
         "developer-infrastructure",
         "evaluation-verification"
       ],
+      "family": "infrastructure",
+      "architectureRole": "standalone-system",
       "audiences": [
         "software engineers",
         "evaluation engineers"
@@ -248,6 +254,8 @@
         "research-education",
         "developer-infrastructure"
       ],
+      "family": "research-education",
+      "architectureRole": "standalone-system",
       "audiences": [
         "researchers and educators",
         "software engineers"
@@ -311,6 +319,8 @@
         "developer-infrastructure",
         "evaluation-verification"
       ],
+      "family": "infrastructure",
+      "architectureRole": "engine",
       "audiences": [
         "agent-system engineers",
         "software engineers",
@@ -374,6 +384,8 @@
         "evaluation-verification",
         "research-education"
       ],
+      "family": "verification",
+      "architectureRole": "evaluation-layer",
       "audiences": [
         "evaluation engineers",
         "researchers and educators"
@@ -436,6 +448,8 @@
         "security-privacy",
         "developer-infrastructure"
       ],
+      "family": "verification",
+      "architectureRole": "engine",
       "audiences": [
         "evaluation engineers",
         "authorized security teams",
@@ -499,6 +513,8 @@
         "developer-infrastructure",
         "graphics-media"
       ],
+      "family": "infrastructure",
+      "architectureRole": "engine",
       "audiences": [
         "software engineers",
         "graphics engineers"
@@ -561,6 +577,8 @@
         "research-education",
         "agent-systems"
       ],
+      "family": "research-education",
+      "architectureRole": "standalone-system",
       "audiences": [
         "researchers and educators",
         "agent-system engineers"
@@ -621,6 +639,8 @@
         "agent-systems",
         "developer-infrastructure"
       ],
+      "family": "infrastructure",
+      "architectureRole": "adapter",
       "audiences": [
         "agent-system engineers",
         "software engineers"
@@ -682,6 +702,8 @@
         "agent-systems",
         "developer-infrastructure"
       ],
+      "family": "infrastructure",
+      "architectureRole": "evaluation-layer",
       "audiences": [
         "agent-system engineers",
         "software engineers"
@@ -742,6 +764,8 @@
         "agent-systems",
         "evaluation-verification"
       ],
+      "family": "verification",
+      "architectureRole": "evaluation-layer",
       "audiences": [
         "agent-system engineers",
         "evaluation engineers"
@@ -802,6 +826,8 @@
         "graphics-media",
         "developer-infrastructure"
       ],
+      "family": "graphics-retro",
+      "architectureRole": "engine",
       "audiences": [
         "graphics engineers",
         "software engineers"
@@ -864,6 +890,8 @@
       "domains": [
         "graphics-media"
       ],
+      "family": "graphics-retro",
+      "architectureRole": "plugin",
       "audiences": [
         "graphics engineers"
       ],
@@ -918,11 +946,13 @@
         "deterministic shader capture"
       ],
       "href": "retro.html",
-      "sourceHref": "https://github.com/HarperZ9/telos-v2",
+      "sourceHref": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/retro-engine.js",
       "domains": [
         "graphics-media",
         "developer-infrastructure"
       ],
+      "family": "graphics-retro",
+      "architectureRole": "engine",
       "audiences": [
         "graphics engineers",
         "software engineers",
@@ -943,7 +973,7 @@
           "id": "retro-engine-site-source",
           "type": "source",
           "label": "Retro Engine owned site source",
-          "href": "https://github.com/HarperZ9/telos-v2",
+          "href": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/retro-engine.js",
           "date": "2026-08-27",
           "status": "verified",
           "summary": "The owned public site source contains the browser Retro Engine route and renderer assets; this is not BRender evidence."
@@ -990,6 +1020,8 @@
         "research-education",
         "developer-infrastructure"
       ],
+      "family": "graphics-retro",
+      "architectureRole": "engine",
       "audiences": [
         "graphics engineers",
         "evaluation engineers",
@@ -1060,6 +1092,8 @@
         "research-education",
         "developer-infrastructure"
       ],
+      "family": "graphics-retro",
+      "architectureRole": "standalone-system",
       "audiences": [
         "graphics engineers",
         "evaluation engineers",
@@ -1113,6 +1147,320 @@
       "lastVerified": "2026-08-27"
     },
     {
+      "id": "proof-surface",
+      "name": "Proof Surface",
+      "purpose": "Provide default-deny authorization checks, bounded delegation, and reviewable proof packets for agent actions.",
+      "useCases": [
+        "authorization receipt review",
+        "bounded agent actions",
+        "evidence-bounded evaluation"
+      ],
+      "href": "proof-surface.html",
+      "sourceHref": "https://github.com/HarperZ9/proof-surface",
+      "domains": [
+        "security-privacy",
+        "evaluation-verification",
+        "agent-systems"
+      ],
+      "family": "security",
+      "architectureRole": "evaluation-layer",
+      "audiences": [
+        "agent-system engineers",
+        "evaluation engineers",
+        "authorized security teams"
+      ],
+      "deploymentContexts": [
+        "controlled agent workflows",
+        "review and CI lanes"
+      ],
+      "maturity": "active",
+      "placement": "catalog-only",
+      "accessMode": "inspect",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "proof-surface-public-source-0-2-0",
+          "type": "source",
+          "label": "Proof Surface public source 0.2.0",
+          "href": "https://github.com/HarperZ9/proof-surface",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "Public source identifies version 0.2.0; no release claim is made."
+        }
+      ],
+      "limitations": [
+        "Proof Surface recommends authorization decisions; the surrounding system performs enforcement.",
+        "Public source 0.2.0 does not establish independent adversarial review or production safety."
+      ],
+      "boundary": "Use only with explicit human authority; a recommendation does not itself grant permission.",
+      "inputs": [
+        "planned actions",
+        "authorization receipts",
+        "evidence records"
+      ],
+      "outputs": [
+        "default-deny decisions",
+        "reviewable proof packets"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "accountable-surface",
+        "emet",
+        "repo-proof-index"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "elder-enb",
+      "name": "Elder ENB",
+      "purpose": "Provide a public graphics configuration and runtime integration surface for Elder Scrolls ENB workflows.",
+      "useCases": [
+        "ENB configuration review",
+        "graphics runtime integration",
+        "public build inspection"
+      ],
+      "href": "elder-enb.html",
+      "sourceHref": "https://github.com/HarperZ9/elder-enb",
+      "domains": [
+        "graphics-media"
+      ],
+      "family": "graphics-retro",
+      "architectureRole": "plugin",
+      "audiences": [
+        "graphics engineers",
+        "mod developers"
+      ],
+      "deploymentContexts": [
+        "creative production pipelines",
+        "local development workspaces"
+      ],
+      "maturity": "active",
+      "placement": "catalog-only",
+      "accessMode": "inspect",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "elder-enb-public-source-0-1-0",
+          "type": "source",
+          "label": "Elder ENB public source 0.1.0",
+          "href": "https://github.com/HarperZ9/elder-enb",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "Public source identifies version 0.1.0 and latest tag v1.0.0-rc.5; no release claim is made."
+        }
+      ],
+      "limitations": [
+        "Final live ENB acceptance remains a limitation.",
+        "The latest tag v1.0.0-rc.5 is not presented as a release."
+      ],
+      "boundary": "Use only with the game, runtime, and asset rights required by their owners.",
+      "inputs": [
+        "ENB configuration",
+        "host runtime"
+      ],
+      "outputs": [
+        "configured graphics output",
+        "public source evidence"
+      ],
+      "dependencies": [],
+      "related": [
+        "truth-enb",
+        "enb-runtime-core",
+        "skyrimbridge",
+        "retro-engine"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "truth-enb",
+      "name": "Truth ENB",
+      "purpose": "Provide a public ENB graphics configuration surface for reviewable visual-runtime workflows.",
+      "useCases": [
+        "ENB configuration review",
+        "graphics runtime integration",
+        "public build inspection"
+      ],
+      "href": "truth-enb.html",
+      "sourceHref": "https://github.com/HarperZ9/truth-enb",
+      "domains": [
+        "graphics-media"
+      ],
+      "family": "graphics-retro",
+      "architectureRole": "plugin",
+      "audiences": [
+        "graphics engineers",
+        "mod developers"
+      ],
+      "deploymentContexts": [
+        "creative production pipelines",
+        "local development workspaces"
+      ],
+      "maturity": "active",
+      "placement": "catalog-only",
+      "accessMode": "inspect",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "truth-enb-public-source-1-0-0",
+          "type": "source",
+          "label": "Truth ENB public source 1.0.0",
+          "href": "https://github.com/HarperZ9/truth-enb",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "Public source identifies version 1.0.0 and latest tag v1.0.0-rc.1; no release claim is made."
+        }
+      ],
+      "limitations": [
+        "The latest tag v1.0.0-rc.1 is not presented as a release.",
+        "Visual output depends on the host game, ENB runtime, and local graphics environment."
+      ],
+      "boundary": "Use only with the game, runtime, and asset rights required by their owners.",
+      "inputs": [
+        "ENB configuration",
+        "host runtime"
+      ],
+      "outputs": [
+        "configured graphics output",
+        "public source evidence"
+      ],
+      "dependencies": [],
+      "related": [
+        "elder-enb",
+        "enb-runtime-core",
+        "skyrimbridge",
+        "retro-engine"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "enb-runtime-core",
+      "name": "ENB Runtime Core",
+      "purpose": "Provide a public runtime core for ENB integration components that operate inside an already-loaded host.",
+      "useCases": [
+        "ENB runtime integration",
+        "graphics plugin inspection",
+        "hosted runtime development"
+      ],
+      "href": "enb-runtime-core.html",
+      "sourceHref": "https://github.com/HarperZ9/enb-runtime-core",
+      "domains": [
+        "graphics-media",
+        "developer-infrastructure"
+      ],
+      "family": "graphics-retro",
+      "architectureRole": "adapter",
+      "audiences": [
+        "graphics engineers",
+        "mod developers"
+      ],
+      "deploymentContexts": [
+        "creative production pipelines",
+        "local development workspaces"
+      ],
+      "maturity": "active",
+      "placement": "catalog-only",
+      "accessMode": "inspect",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "enb-runtime-core-public-source-0-1-0",
+          "type": "source",
+          "label": "ENB Runtime Core public source 0.1.0",
+          "href": "https://github.com/HarperZ9/enb-runtime-core",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "Public source identifies version 0.1.0; no release claim is made."
+        }
+      ],
+      "limitations": [
+        "Requires an already-loaded ENBSeries host.",
+        "Public source 0.1.0 is not presented as a release."
+      ],
+      "boundary": "Use only with a permitted host runtime and the rights required by its owners.",
+      "inputs": [
+        "already-loaded ENBSeries host",
+        "runtime integration inputs"
+      ],
+      "outputs": [
+        "hosted graphics runtime behavior",
+        "public source evidence"
+      ],
+      "dependencies": [],
+      "related": [
+        "elder-enb",
+        "truth-enb",
+        "skyrimbridge"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "skyrimbridge",
+      "name": "SkyrimBridge",
+      "purpose": "Provide a public bridge between Skyrim-facing integration workflows and reviewable graphics-runtime components.",
+      "useCases": [
+        "Skyrim runtime integration",
+        "graphics bridge inspection",
+        "public build review"
+      ],
+      "href": "skyrimbridge.html",
+      "sourceHref": "https://github.com/HarperZ9/skyrimbridge",
+      "domains": [
+        "graphics-media",
+        "developer-infrastructure"
+      ],
+      "family": "graphics-retro",
+      "architectureRole": "adapter",
+      "audiences": [
+        "graphics engineers",
+        "mod developers"
+      ],
+      "deploymentContexts": [
+        "creative production pipelines",
+        "local development workspaces"
+      ],
+      "maturity": "active",
+      "placement": "catalog-only",
+      "accessMode": "inspect",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "skyrimbridge-public-source-3-0-0",
+          "type": "source",
+          "label": "SkyrimBridge public source 3.0.0",
+          "href": "https://github.com/HarperZ9/skyrimbridge",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "Public source identifies version 3.0.0 and latest tag v3.0.0-rc.1; no release claim is made."
+        }
+      ],
+      "limitations": [
+        "The public/default build excludes the native replacement suite.",
+        "The latest tag v3.0.0-rc.1 is not presented as a release."
+      ],
+      "boundary": "Use only with the game, runtime, and asset rights required by their owners.",
+      "inputs": [
+        "Skyrim integration inputs",
+        "runtime bridge configuration"
+      ],
+      "outputs": [
+        "bridge integration behavior",
+        "public source evidence"
+      ],
+      "dependencies": [],
+      "related": [
+        "elder-enb",
+        "truth-enb",
+        "enb-runtime-core"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
       "id": "phantom",
       "name": "Phantom",
       "purpose": "Audit and change reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.",
@@ -1126,6 +1474,8 @@
       "domains": [
         "security-privacy"
       ],
+      "family": "security",
+      "architectureRole": "standalone-system",
       "audiences": [
         "authorized security teams"
       ],
@@ -1185,6 +1535,8 @@
         "agent-systems",
         "developer-infrastructure"
       ],
+      "family": "security",
+      "architectureRole": "adapter",
       "audiences": [
         "authorized security teams",
         "agent-system engineers",
@@ -1247,6 +1599,8 @@
       "domains": [
         "security-privacy"
       ],
+      "family": "security",
+      "architectureRole": "controlled-private-constellation",
       "audiences": [
         "authorized security teams"
       ],
@@ -1299,13 +1653,15 @@
         "rollback-aware automation",
         "action receipt review"
       ],
-      "href": "accountable-machines.html",
+      "href": "accountable-surface.html",
       "sourceHref": "https://github.com/HarperZ9/accountable-surface",
       "domains": [
         "security-privacy",
         "evaluation-verification",
         "agent-systems"
       ],
+      "family": "security",
+      "architectureRole": "evaluation-layer",
       "audiences": [
         "authorized security teams",
         "evaluation engineers",
@@ -1369,6 +1725,8 @@
         "security-privacy",
         "developer-infrastructure"
       ],
+      "family": "security",
+      "architectureRole": "standalone-system",
       "audiences": [
         "authorized security teams",
         "software engineers"
@@ -1430,6 +1788,8 @@
         "security-privacy",
         "evaluation-verification"
       ],
+      "family": "verification",
+      "architectureRole": "evaluation-layer",
       "audiences": [
         "authorized security teams",
         "evaluation engineers"
@@ -1489,6 +1849,8 @@
         "security-privacy",
         "developer-infrastructure"
       ],
+      "family": "security",
+      "architectureRole": "plugin",
       "audiences": [
         "authorized security teams",
         "software engineers"
@@ -1549,6 +1911,8 @@
         "security-privacy",
         "developer-infrastructure"
       ],
+      "family": "security",
+      "architectureRole": "plugin",
       "audiences": [
         "authorized security teams",
         "software engineers"
@@ -1610,6 +1974,8 @@
         "evaluation-verification",
         "developer-infrastructure"
       ],
+      "family": "verification",
+      "architectureRole": "evaluation-layer",
       "audiences": [
         "authorized security teams",
         "evaluation engineers",
