@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Conceptual trust boundary and review layers</title>
-  <link rel="stylesheet" href="../system/figure.css">
+  <link rel="stylesheet" href="../system/figure.css?v=20260828-site-design">
 </head>
 <body class="figure-document">
   <main>
@@ -12,7 +12,7 @@
       <figcaption class="figure-heading">
         <h1>Conceptual trust boundary and review layers</h1>
         <p class="figure-description">A conceptual relationship diagram moves from OpenAI&apos;s research environment to reported activity on Hugging Face production systems, then separates host evidence, company response, vendor remediation, independent analysis, and legal review. Every connection uses equal-width geometry.</p>
-        <p class="figure-claim">Technical containment, company response, vendor remediation, independent analysis, and legal review are separate layers with different evidence owners.</p>
+        <p class="figure-claim figure-finding">Technical containment, company response, vendor remediation, independent analysis, and legal review are separate layers with different evidence owners.</p>
       </figcaption>
       <div class="figure-svg-scroll" tabindex="0" aria-label="Scrollable visualization for Conceptual trust boundary and review layers">
         <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" aria-labelledby="control-boundary-flow-title control-boundary-flow-desc" data-figure-kind="relationship">
@@ -158,16 +158,16 @@
 <tr data-figure-row data-figure-key="edge:5" data-relationship-row data-relationship-search="OpenAI research and evaluation environment Company-reported sequence; no causal claim Reported activity on Hugging Face production systems Caution"><td>Edge</td><td>OpenAI research and evaluation environment</td><td>Company-reported sequence; no causal claim</td><td>Reported activity on Hugging Face production systems</td><td>OpenAI company report</td><td>oa-1, oa-2</td><td><span class="figure-status figure-status--caution">Caution</span></td></tr></tbody>
     </table>
   </div>
-  </details><dl class="figure-evidence">
+  </details><dl class="figure-evidence figure-scope">
     <dt>Sources</dt><dd><ul><li><a href="https://www.alabamaag.gov/attorney-general-marshall-launches-investigation-into-openai-and-sam-altman-for-massive-artificial-intelligence-data-breach/">Alabama announcement</a></li><li><a href="https://www.alabamaag.gov/wp-content/uploads/2026/08/OpenAI-Subpoena_Final.pdf">Alabama subpoena</a></li><li><a href="https://huggingface.co/blog/agent-intrusion-technical-timeline">Hugging Face technical timeline</a></li><li><a href="https://jfrog.com/blog/jfrog-and-openai-collaboration-on-zero-day-security-findings/">JFrog statement</a></li><li><a href="https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/">METR joint report</a></li><li><a href="https://openai.com/index/hugging-face-incident-and-the-road-ahead/">OpenAI overview</a></li><li><a href="https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf">OpenAI technical report</a></li></ul></dd>
     <dt>Retrieved</dt><dd><time datetime="2026-08-26">2026-08-26</time></dd>
     <dt>Units</dt><dd>conceptual relationships</dd>
     <dt>Transformations</dt><dd><ul><li>Keep the diagram conceptual and omit reusable technical instructions, secret indicators, and sensitive infrastructure detail.</li><li>Render every connection with equal-width lines.</li><li>Use relationship labels and state labels in addition to color.</li></ul></dd>
     <dt>Uncertainty</dt><dd>The diagram reconciles reported layers and is not a complete architecture or control inventory. Every node remains attributable to its source family.</dd>
-    <dt>What this figure does not prove</dt><dd class="figure-does-not-prove">The diagram does not establish a complete technical path, traffic volume, probability, intent, severity, control effectiveness, liability, or universal agent behavior.</dd>
+    <dt>What this figure does not prove</dt><dd class="figure-does-not-prove figure-limitations">The diagram does not establish a complete technical path, traffic volume, probability, intent, severity, control effectiveness, liability, or universal agent behavior.</dd>
   </dl>
     </figure>
   </main>
-  <script type="module" src="../system/figure.js"></script>
+  <script type="module" src="../system/figure.js?v=20260828-site-design"></script>
 </body>
 </html>

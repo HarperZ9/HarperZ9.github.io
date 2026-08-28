@@ -121,37 +121,37 @@
       "sha256": "9ddd2d53ac1dc1d91dc0dfe2aa3c1ddb6b1931fce976f6a0401862eb5387d167"
     },
     {
-      "byte_length": 4399,
-      "extraction_sha256": "dab1e628485fcdb14d6b92bc56348ff0136e6868c1f7770d2b44fdb9d758b9dc",
+      "byte_length": 4273,
+      "extraction_sha256": "b3e084e6d76fee79cd131753b4a1563c07cb0bc025d246ddaf9926a89e43092f",
       "format": "pdf",
       "lane_id": "page:portfolio",
       "mime_type": "application/pdf",
       "page_count": 2,
       "path": "career/Zain-Dana-Harper-Portfolio-Brief.pdf",
-      "sha256": "14c1fb2b8d7b921e211a5c298a01ff0bb0c1c8c2270f5682d63b48810d73a85b"
+      "sha256": "3fce3cdf8a79e6fba7de3cae4a92d98927828b108b9054bd192a28889232c486"
     },
     {
-      "byte_length": 38225,
-      "extraction_sha256": "5dc92db5482ee3c92f25fa090023987644bdb6ca238bb6ef37bd15ef55d061ca",
+      "byte_length": 38135,
+      "extraction_sha256": "0672035341ef4a12ec9b698ca3aa6f5bf303fa13845f85cca695300de827a231",
       "format": "docx",
       "lane_id": "page:portfolio",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-Portfolio-Brief.docx",
-      "sha256": "ec2eae87d56f31bfc2025d4c58a901362ea0949b1742084e2dc040d14fe76faf"
+      "sha256": "970f083e2e083031c4de94e4491f8bd2f9bd54b56fe495386f9d10a060d8b5f6"
     }
   ],
   "authority_sha256": "8c5a030161fc2de8873dcc870e1315e0d6dc9c728f74727c683787bd5e152d34",
   "current_html": [
     {
-      "byte_length": 9186,
+      "byte_length": 9200,
       "extraction_sha256": "90c050997b9e3c2f387404494beba58a147f564a68b211e83e83855acc6f185f",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "hire.html",
-      "sha256": "79df457d5f4da74c9c322b5cb9366680646a317fcea7814121cad63fdf1c305d"
+      "sha256": "3b25b36db439d68cefe5edd9194458da43fcf2c7d93ba4e9a63ba0707fae1c0e"
     },
     {
       "byte_length": 6327,
@@ -164,14 +164,14 @@
       "sha256": "7c2779ca9b4c1ba7fb8b29abe804014201e63ab45b0b10eade24a5a265e969d9"
     },
     {
-      "byte_length": 6720,
-      "extraction_sha256": "5444b53acf72af652b7da341e004c8582f65572b6e962f22addb160eba583795",
+      "byte_length": 6321,
+      "extraction_sha256": "bac68a0991b0604187ad82d582e01894b22ebbc6ef00a07730183ad9446a7f54",
       "format": "html",
       "lane_id": "page:portfolio",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "portfolio.html",
-      "sha256": "3899e7018f79f075b970566c5ee49660a0c65dd891bdecfc3d05b0a07f4ae804"
+      "sha256": "2f8ba396c409222bedc61fd1731bc9aec913a7cb4c60545565bc69ea5deebde0"
     },
     {
       "byte_length": 4454,

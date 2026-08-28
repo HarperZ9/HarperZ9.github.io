@@ -5,53 +5,177 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Research &middot; Zain Dana Harper</title>
-<meta name="description" content="Research index for Project Telos: theses, experiments, recorded workflows, graphics and math probes, and model-era engineering notes. Each entry labels what is argued, tested, or still unproven.">
+<meta name="description" content="Inspect Chorus, faithful-transpile, The Witnessing Spine, and Senses and Sensibility with current public status and evidence limits.">
 <link rel="canonical" href="https://harperz9.github.io/research.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Research &middot; Zain Dana Harper">
-<meta property="og:description" content="Theses, experiments, recorded workflows, graphics and math probes, and model-era engineering notes. Each entry labels what is argued, tested, or still unproven.">
+<meta property="og:description" content="Inspect current public research artifacts with their source-grounded status and evidence limits.">
 <meta property="og:url" content="https://harperz9.github.io/research.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
 <meta property="og:image:alt" content="A still from the engine: a Kepler orbit with its conserved angular momentum fitted from the trace, real mathematics drawn by our own code.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Research &middot; Zain Dana Harper">
-<meta name="twitter:description" content="Theses, experiments, recorded workflows, graphics and math probes, and model-era engineering notes. Each entry labels what is argued, tested, or still unproven.">
+<meta name="twitter:description" content="Inspect current public research artifacts with their source-grounded status and evidence limits.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/doc.css?v=20260719-zentropy-sitewide">
+<link rel="stylesheet" href="system/doc.css?v=20260828-site-design">
+<style>
+  .research-opening{
+    display:grid;
+    grid-template-columns:minmax(0,1.08fr) minmax(17rem,.92fr);
+    gap:clamp(2rem,5vw,4.5rem);
+    padding:clamp(.25rem,1vw,.75rem) 0 clamp(2rem,4vw,3rem);
+    margin-bottom:.2rem;
+    border-bottom:1px solid var(--rule-strong);
+  }
+  .research-opening h1{
+    max-width:12ch;
+    margin:0;
+    color:var(--ink);
+    font-family:var(--display);
+    font-size:clamp(2.8rem,5vw,3.65rem);
+    font-weight:700;
+    letter-spacing:-.03em;
+    line-height:.98;
+    text-wrap:balance;
+  }
+  .research-owner,
+  .research-state{
+    margin:0 0 .8rem;
+    color:var(--ink-muted);
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.015em;
+    line-height:1.5;
+  }
+  .research-opening .research-deck{
+    max-width:37rem;
+    margin:1rem 0 0;
+    color:var(--ink-soft);
+    font-size:1.08rem;
+    line-height:1.55;
+    text-wrap:pretty;
+  }
+  .research-feature{
+    margin-top:clamp(1.75rem,4vw,3rem);
+    padding-top:1rem;
+    border-top:1px solid var(--rule);
+  }
+  .research-feature h2{
+    margin:0 0 .4rem;
+    font-size:clamp(1.75rem,3vw,2.45rem);
+    letter-spacing:-.02em;
+  }
+  .research-feature h2 a,
+  .research-route h3 a{
+    color:var(--ink);
+    text-decoration-color:rgba(142,227,242,.35);
+    text-decoration-thickness:1px;
+    text-underline-offset:.18em;
+  }
+  .research-feature h2 a:hover,
+  .research-route h3 a:hover{color:var(--signal);text-decoration-color:currentColor}
+  .research-feature p:not(.research-state):not(.research-actions){
+    max-width:34rem;
+    margin:0;
+    color:var(--ink-soft);
+    line-height:1.58;
+  }
+  .research-actions{display:flex;flex-wrap:wrap;gap:.65rem;margin:1rem 0 0}
+  .research-actions a{
+    display:inline-flex;
+    align-items:center;
+    min-height:2.55rem;
+    padding:.55rem .85rem;
+    border:1px solid var(--rule-strong);
+    border-radius:3px;
+    color:var(--ink);
+    font-size:.84rem;
+    font-weight:700;
+    line-height:1.2;
+    text-decoration:none;
+  }
+  .research-actions a:first-child{background:var(--signal);border-color:var(--signal);color:var(--void)}
+  .research-actions a:hover{border-color:var(--signal)}
+  .research-routes{align-self:start;padding-top:.1rem}
+  .research-routes > h2{margin:0 0 .55rem;font-size:1rem;color:var(--ink-soft)}
+  .research-routes > p{margin:0 0 .85rem;color:var(--ink-muted);font-size:.88rem;line-height:1.5}
+  .research-records{list-style:none;margin:0;padding:0}
+  .research-route{padding:.9rem 0 1rem;border-top:1px solid var(--rule)}
+  .research-route:last-child{padding-bottom:0}
+  .research-route h3{margin:0 0 .28rem;font-size:1.05rem;line-height:1.25}
+  .research-route .research-state{margin:0 0 .38rem;color:var(--ink-muted)}
+  .research-route p:not(.research-state){margin:0;color:var(--ink-soft);font-size:.88rem;line-height:1.5}
+  .research-route p a{color:var(--signal);text-underline-offset:.16em}
+  @media(max-width:48rem){
+    .research-opening{grid-template-columns:1fr;gap:2.25rem}
+    .research-opening h1{max-width:12ch;font-size:clamp(2.6rem,13vw,4.4rem)}
+    .research-feature{margin-top:2rem}
+  }
+  @media(max-width:23rem){
+    .research-actions{display:grid}
+    .research-actions a{justify-content:center}
+  }
+  @media(forced-colors:active){
+    .research-actions a:first-child{background:CanvasText;color:Canvas}
+  }
+  @media print{
+    .research-opening{display:block}
+    .research-routes{margin-top:1.5rem}
+  }
+</style>
 </head>
 <body class="doc">
 <a class="skip-link" href="#main">Skip to content</a>
 
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="index.html">Home</a> <a href="overview.html">Flagships</a> <a href="catalog.html">Catalog</a> <a href="research.html">Research</a> <a href="writing.html">Writing</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260719-zentropy-sitewide"></script>
+<script type="module" src="system/nav.js?v=20260828-site-design"></script>
 
 <main id="main">
 <article class="sheet">
 
-  <header class="mast">
-    <p class="role" style="margin-bottom:.55rem">Research program</p>
-    <h1>Research</h1>
-    <p class="role" style="color:var(--ink-soft);text-transform:none;letter-spacing:.01em;font-size:.92rem;margin:.55rem 0 .85rem">
-      The thinking under the workshop: systems papers, bounded experiments, and workflows you can inspect and reproduce.</p>
-    <p class="contact">
-      <span>Zain Dana Harper</span><span class="sep">/</span>
-      <span>Seattle &middot; 2025 to 2026</span><span class="sep">/</span>
-      <span>authored &middot; dated</span><span class="sep">/</span>
-      <a href="https://github.com/HarperZ9" translate="no">github.com/HarperZ9</a>
-    </p>
-  </header>
+  <header class="research-opening">
+    <div class="research-lead">
+      <p class="research-owner">Zain Dana Harper &middot; Zentropy Labs &middot; Seattle</p>
+      <h1>Research you can inspect now.</h1>
+      <p class="research-deck">Start from a public artifact, then follow its source, current state, and stated limit. These records do not share one maturity label.</p>
 
-  <figure class="plate">
-    <canvas data-specimen="research-plate-01" data-specimen-layers="plotter-plate,dendrite" aria-hidden="true"></canvas>
-    <figcaption>
-      <span class="plate-no">Plate 01</span>
-      <span class="plate-caption">A plotter study with a dendrite grown over it: instrument output, re-derivable from the named seed.</span>
-    </figcaption>
-  </figure>
+      <div class="research-feature">
+        <p class="research-state">Implemented research tool &middot; checked 2026-08-28 &middot; 58 tests pass</p>
+        <h2><a href="chorus.html">Chorus</a></h2>
+        <p>Deterministic discourse digests from captured comment corpora, with a separately provenanced optional model overlay that stays outside the deterministic receipt.</p>
+        <p class="research-actions">
+          <a href="chorus.html">Open Chorus</a>
+          <a href="https://github.com/HarperZ9/chorus" translate="no">Inspect source</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="research-routes" aria-labelledby="current-research-records">
+      <h2 id="current-research-records">Three more public records</h2>
+      <p>Each route keeps its own evidence boundary attached.</p>
+      <ul class="research-records">
+        <li class="research-route">
+          <h3><a href="research-conservation-of-faithfulness.html">faithful-transpile</a></h3>
+          <p class="research-state">Working paper &middot; tested prototype &middot; repository seal stale</p>
+          <p>Source check: eight hermetic tests pass. The separate 48-entry manifest is stale. <a href="https://github.com/HarperZ9/faithful-transpile" translate="no">Inspect source</a>.</p>
+        </li>
+        <li class="research-route">
+          <h3><a href="witnessing-spine.html">The Witnessing Spine</a></h3>
+          <p class="research-state">Archived corpus &middot; DRIFT</p>
+          <p>Current re-hash: one of seven listed files does not re-derive, and the public branch has no executable verifier. <a href="https://github.com/HarperZ9/witnessing-spine" translate="no">Inspect source</a>.</p>
+        </li>
+        <li class="research-route">
+          <h3><a href="conferred-existence.html">Senses and Sensibility</a></h3>
+          <p class="research-state">Philosophy corpus &middot; pre-proof &middot; six index targets missing</p>
+          <p>Manifest check: all 172 listed files re-derive. That establishes byte integrity, not the thesis. <a href="https://github.com/HarperZ9/senses-and-sensibility" translate="no">Inspect source</a>.</p>
+        </li>
+      </ul>
+    </div>
+  </header>
 
   <section>
     <h2>How to read this</h2>
@@ -77,6 +201,27 @@
   </section>
 
   <section>
+    <h2>Code and corpus state</h2>
+    <p class="entry-note" style="margin-bottom:.85rem">These records are not one maturity class. The checks below were run against each public source checkout on 2026-08-28.</p>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title"><a class="inline" href="chorus.html">Chorus</a></span><span class="entry-meta">implemented research tool &middot; tests pass</span></div>
+      <ul class="bul"><li>Chorus 0.1.0 produces deterministic discourse digests from captured comment corpora using literal lexicon sentiment, hashed-TF-IDF clustering, engagement weighting, and content-addressed receipts. Its 58 tests pass. The optional model overlay is separately provenanced and excluded from the deterministic receipt. <a class="inline" href="https://github.com/HarperZ9/chorus">Inspect the source.</a></li></ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">The Conservation of Faithfulness</span><span class="entry-meta">working paper &middot; tested prototype &middot; stale seal</span></div>
+      <ul class="bul"><li>The <a class="inline" href="https://github.com/HarperZ9/faithful-transpile">faithful-transpile source</a> includes a small criterion-named reconciliation prototype. Its eight hermetic tests pass. Against the default public branch, its separate 48-entry file manifest is not current: 16 match, 29 drift, and three are missing. The tests witness the implemented prototype; they do not repair or validate the repository seal.</li></ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title"><a class="inline" href="https://github.com/HarperZ9/witnessing-spine">The Witnessing Spine</a></span><span class="entry-meta">archived corpus &middot; DRIFT</span></div>
+      <ul class="bul"><li>The default public branch has a seven-file SHA-256 manifest but no executable verifier or test suite. A direct re-hash returns DRIFT because the README digest is stale: one of seven listed files does not re-derive. The page reports only that public state.</li></ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title"><a class="inline" href="https://github.com/HarperZ9/senses-and-sensibility">Senses and Sensibility</a></span><span class="entry-meta">philosophy corpus &middot; pre-proof &middot; manifest matches &middot; six index targets missing</span></div>
+      <ul class="bul"><li>This is an AI-assisted philosophy research corpus, not an executable product or a completed dissertation. Its own README calls the central result pre-proof. It has no executable test suite. A byte-level check against the default public branch finds that all 172 listed files re-derive from its SHA-256 manifest. That proves the listed bytes have not drifted; it does not resolve six absent front-door files still named by the index or cross the stated human re-derivation gate.</li></ul>
+    </div>
+  </section>
+
+  <section>
     <h2>Theses</h2>
     <p class="entry-note" style="margin-bottom:.85rem">The argument, in long form. Authored, dated, and stress-tested against its own weakest joints.</p>
     <div class="entry">
@@ -87,9 +232,7 @@
     </div>
     <div class="entry">
       <div class="entry-head"><span class="entry-title"><a class="inline" href="research-conservation-of-faithfulness.html">The Conservation of Faithfulness</a></span><span class="entry-meta">working paper</span></div>
-      <ul class="bul"><li>What actually crosses between two minds: not bits, but faithfulness to a named criterion. From
-      that follows a neutral center where two differently-perceiving minds reconcile, and the one boundary
-      where a human still has to stand. A reviewable draft, every claim labeled by where it stands.</li></ul>
+      <ul class="bul"><li>What actually crosses between two minds: not bits, but faithfulness to a named criterion. The associated faithful-transpile prototype makes that narrow mechanism executable with stub minds and a pluggable judge. Its eight tests pass, while its independent file manifest remains stale; the page therefore treats the paper as a working argument and the code as a bounded prototype, not a proven general law.</li></ul>
     </div>
     <div class="entry">
       <div class="entry-head"><span class="entry-title"><a class="inline" href="research-witness-and-verification.html">Witness and Verification Under Bounded Rationality</a></span><span class="entry-meta">wrap-up thesis</span></div>
@@ -102,6 +245,10 @@
   <section>
     <h2>Experiments and results</h2>
     <p class="entry-note" style="margin-bottom:.85rem">Where the argument meets a real test. Each one returns a witnessed verdict, and where a leg is unproven it is marked UNVERIFIABLE.</p>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title"><a class="inline" href="frontier-safety.html">Frontier Safety Briefing</a></span><span class="entry-meta">daily source record &middot; baseline</span></div>
+      <ul class="bul"><li>A dated evidence index for UK AISI, Anthropic, and frontier AI industry safety developments. It separates source roles and dates, records what changed, and states what each public record does not prove. Each edition ships with stable links, a machine-readable record, and an append-only corrections path.</li></ul>
+    </div>
     <div class="entry">
       <div class="entry-head"><span class="entry-title"><a class="inline" href="research-c3-thermodynamic.html">C3: a thermodynamic SDE recovers a matrix inverse</a></span><span class="entry-meta">witnessed result</span></div>
       <ul class="bul"><li>A claim from a research talk, turned into a self-checking simulation. The math leg returns a
@@ -208,7 +355,7 @@
   draft &middot; v0 scaffold &middot; witnessed result) and, where useful, by stricter status labels such as
   SOURCE_LEAD, PROBE_MATCH, CRUCIBLE_MATCH, and UNVERIFIABLE. Where a result is unproven it is reported
   UNVERIFIABLE rather than waved past. Get in touch:
-  <a class="inline" href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>. &middot; Updated 2026-07-12.</p>
+  <a class="inline" href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>. &middot; Updated 2026-08-28.</p>
 
 </article>
 </main>
