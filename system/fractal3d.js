@@ -93,7 +93,7 @@ float de(vec3 pos) {
 // MAX_STEPS*DE_ITERS well under ~1500). MAX_ITERS is the compile-time upper bound on the DE
 // loop; the actual iteration count is the u_iterations uniform, clamped JS-side to [1, MAX_ITERS].
 
-function buildFragment(type) {
+function buildFragment(type, aaSamples) {
   const de = type === "mandelbulb" ? MANDELBULB_DE : MANDELBOX_DE;
   // Mandelbulb needs a tighter far plane (research §3 table: 8.0 vs 20.0) and fewer steps.
   const maxSteps = type === "mandelbulb" ? 96 : 110;
@@ -102,6 +102,7 @@ function buildFragment(type) {
   const baseCol = type === "mandelbulb" ? "vec3(0.55, 0.45, 0.6)" : "vec3(0.6, 0.5, 0.4)";
 
   return `precision highp float;
+#define AA_SAMPLES ${aaSamples === 4 ? 4 : 1}
 
 uniform vec2  u_resolution;
 uniform float u_time;
@@ -111,6 +112,7 @@ uniform int   u_iterations;  // DE iteration count (<= MAX_ITERS)
 uniform float u_yaw;         // camera azimuth offset (user drag, radians)
 uniform float u_pitch;       // camera elevation (user drag, radians; clamped JS-side)
 uniform float u_dist;        // camera distance multiplier (user wheel-dolly)
+uniform float u_pixelAngle;  // one pixel's angular radius at the focal length (pixel-cone epsilon)
 
 const int   MAX_ITERS = 20;          // compile-time DE loop ceiling
 const int   MAX_STEPS = ${maxSteps}; // sphere-trace step ceiling
@@ -147,13 +149,25 @@ float softShadow(vec3 ro, vec3 rd, float mint, float maxt, float k) {
     return clamp(res, 0.0, 1.0);
 }
 
-// Orbit-trap -> cosine palette (Inigo Quilez style, research §"Orbit Trap Coloring").
-vec3 orbitColor(float trap) {
-    vec3 a = vec3(0.5);
-    vec3 b = vec3(0.5);
-    vec3 c = vec3(1.0, 1.0, 0.5);
-    vec3 d = vec3(0.0, 0.33, 0.67);
-    return a + b * cos(6.28318 * (c * trap + d));
+// Orbit-trap material. The first cut here was the full-spectrum cosine palette at the trap's raw
+// frequency, and it read as per-pixel rainbow confetti: g_trap is near-chaotic between adjacent
+// pixels, so a palette that wraps every channel turns that chaos into hue noise. A mineral reads
+// as ONE material with veins, so: compress the trap (sqrt), band it at low frequency, and move
+// between just two hues of one family plus a neutral. The wide-gamut option stays a palette away,
+// but the default must read as a substance, not static.
+vec3 trapMaterial(float trap, vec3 base, vec3 accent) {
+    float tr = sqrt(clamp(trap, 0.0, 4.0) * 0.25);          // 0..1, compressed
+    float veins = 0.5 + 0.5 * cos(6.28318 * (tr * 1.5));    // low-frequency banding
+    vec3  mat = mix(base, accent, smoothstep(0.25, 0.85, veins));
+    // Deep-trap points (orbits that pass near the origin) darken toward umber: crevice pigment.
+    return mat * mix(0.55, 1.0, smoothstep(0.0, 0.4, tr));
+}
+
+// A cheap screen-space hash for dithering the ray start: breaks the concentric banding that a
+// shared t origin paints into the glow and fog (blue-noise texture would be better; a hash is
+// dependency-free and already removes the visible rings).
+float ditherHash(vec2 p) {
+    return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
 }
 
 // Orthonormal camera basis (research §3 Camera/Ray Setup).
@@ -164,9 +178,11 @@ mat3 makeCam(vec3 ro, vec3 ta) {
     return mat3(right, up, fwd);
 }
 
-void main() {
-    // NDC with correct aspect (research §3).
-    vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution) / u_resolution.y;
+// One ray, from a point in NDC. Split out of main() so the frame can take
+// several sub-pixel samples: a raymarched surface is a hard binary hit test at
+// the silhouette, so a single sample per pixel leaves stair-stepped edges and
+// crawling under motion, which no amount of shading quality hides.
+vec3 renderRay(vec2 uv) {
 
     // Camera orbit: a gentle idle auto-orbit on u_time PLUS the user's drag yaw/pitch and wheel
     // dolly (research §"Adopt This" #6/#9 for the idle motion; drag/dolly added for Task 8n
@@ -187,16 +203,23 @@ void main() {
     // Sphere-tracing march, tracking the step count for AO and a thin glow accumulator.
     // glow only accumulates very close to the surface (small exp window) so it stays a rim
     // halo, not whole-frame haze, which is the washout failure mode if the window is too wide.
-    float t     = 0.001;
+    //
+    // The hit threshold follows the PIXEL CONE, not a constant: a pixel at distance t spans
+    // roughly t * (pixel angle), so a fixed epsilon is simultaneously too loose up close
+    // (blobby) and too strict far away (fizzing detail that can never converge). u_pixelAngle
+    // is one pixel's angular radius at the focal length, set JS-side from the backing height.
+    float t     = 0.001 + ditherHash(gl_FragCoord.xy) * 0.004;   // dither: no shared-origin rings
     int   steps = 0;
     float glow  = 0.0;
     bool  hit   = false;
+    float eps   = EPSILON;
     for (int i = 0; i < MAX_STEPS; i++) {
         vec3  pos = ro + rd * t;
         float d   = de(pos);
         steps = i;
         glow += exp(-40.0 * d);          // tight proximity window -> silhouette rim only
-        if (d < EPSILON) { hit = true; break; }
+        eps = max(EPSILON, u_pixelAngle * t);
+        if (d < eps) { hit = true; break; }
         if (t > MAX_DIST) break;
         t += d;
     }
@@ -210,33 +233,43 @@ void main() {
         col += vec3(0.18, 0.30, 0.55) * glow * 0.02;
     } else {
         vec3 p = ro + rd * t;
+        float trapAtHit = g_trap;        // de() in normal/AO taps overwrites g_trap; keep the hit's
         vec3 n = calcNormal(p);
 
-        // Step-count AO: fewer steps = more open space (research §"Step-count AO"). As a
-        // MULTIPLIER on lighting (occlusion darkens crevices); adding it as light is what
-        // flattens the image, so it modulates rather than lifts.
+        // Two occlusion estimates, multiplied: the step-count AO is broad and free; the 5-tap DE
+        // AO (Quilez, rwwtt) reads actual local geometry so crevices deepen even where the march
+        // was cheap. Both are MULTIPLIERS on lighting; adding occlusion as light flattens.
         float ao = clamp(1.0 - float(steps) / float(MAX_STEPS), 0.0, 1.0);
         ao = pow(ao, 1.5);
+        float occ = 0.0, sca = 1.0;
+        for (int i = 1; i <= 5; i++) {
+            float hh = 0.01 + 0.11 * float(i) / 5.0;
+            occ += (hh - de(p + n * hh)) * sca;
+            sca *= 0.92;
+        }
+        float dao = clamp(1.0 - 2.6 * occ, 0.0, 1.0);
 
-        // Key light: Lambert + Quilez soft shadow.
+        // Three-term rig (research digest: sun / sky / bounce, one shadow ray total).
         vec3  L     = normalize(vec3(0.8, 1.4, 0.9));
         float diff  = max(dot(n, L), 0.0);
         float shad  = softShadow(p + n * 0.003, L, 0.02, ${maxDist}, 10.0);
-        // Specular (Blinn-Phong) reads the surface relief as sharp highlights.
+        float sky   = clamp(0.5 + 0.5 * n.y, 0.0, 1.0);
+        float bounce = clamp(0.4 - 0.6 * n.y, 0.0, 1.0) * clamp(dot(n, -L) * 0.5 + 0.5, 0.0, 1.0);
         vec3  V     = -rd;
         vec3  H     = normalize(L + V);
         float spec  = pow(max(dot(n, H), 0.0), 24.0) * shad;
-        // Sky fill from above (hemisphere ambient): small, tinted, so it doesn't gray out blacks.
-        float sky   = clamp(0.5 + 0.5 * n.y, 0.0, 1.0);
 
-        // Orbit-trap glow tints the base surface color (research §"Orbit Trap Coloring").
-        vec3 base = ${baseCol} * mix(vec3(1.0), orbitColor(g_trap), 0.75);
+        // Restrained trap material (one substance, veined) + slope tint: upward faces catch a
+        // pale bone light, which separates the form's top surfaces from its walls.
+        vec3 base = trapMaterial(trapAtHit, ${baseCol}, ${type === "mandelbulb" ? "vec3(0.30, 0.42, 0.52)" : "vec3(0.34, 0.42, 0.55)"});
+        base = mix(base, vec3(0.82, 0.79, 0.72), 0.18 * smoothstep(0.3, 1.0, n.y));
 
-        col  = base * diff * shad;                       // direct key light
-        col += base * sky * vec3(0.10, 0.13, 0.20);      // cool hemisphere fill
-        col *= (0.25 + 0.75 * ao);                       // AO darkens crevices (multiplier)
-        col += vec3(1.0) * spec * 0.5;                   // sharp relief highlights
-        col += vec3(0.18, 0.30, 0.55) * glow * 0.012;    // thin silhouette rim glow
+        col  = base * diff * shad * vec3(1.00, 0.94, 0.86);   // warm key
+        col += base * sky * vec3(0.10, 0.13, 0.20);           // cool hemisphere fill
+        col += base * bounce * vec3(0.12, 0.09, 0.07);        // warm ground bounce
+        col *= (0.25 + 0.75 * ao) * (0.35 + 0.65 * dao);      // both occlusions as multipliers
+        col += vec3(1.0) * spec * 0.5;                        // sharp relief highlights
+        col += vec3(0.18, 0.30, 0.55) * glow * 0.012;         // thin silhouette rim glow
         // distance fog toward the sky color, light, only at the far plane
         col = mix(col, vec3(0.06, 0.08, 0.14), clamp(t / MAX_DIST, 0.0, 1.0) * 0.35);
     }
@@ -244,6 +277,26 @@ void main() {
     // tone curve + gamma. ACES-ish filmic curve: keeps blacks dark, rolls off highlights.
     col = (col * (2.51 * col + 0.03)) / (col * (2.43 * col + 0.59) + 0.14);
     col = pow(clamp(col, 0.0, 1.0), vec3(0.4545));
+    return col;
+}
+
+void main() {
+    // Rotated-grid supersampling. The offsets are the standard 2x2 rotated
+    // pattern, which resolves near-horizontal and near-vertical silhouette
+    // edges far better than an axis-aligned grid at the same sample count.
+    // Tone mapping happens per sample inside renderRay, so averaging here
+    // blends display-referred values and cannot blow out an edge pixel.
+    vec2 base = gl_FragCoord.xy - 0.5 * u_resolution;
+    float inv = 1.0 / u_resolution.y;
+#if AA_SAMPLES == 4
+    vec3 col = renderRay((base + vec2(-0.125, -0.375)) * inv)
+             + renderRay((base + vec2( 0.375, -0.125)) * inv)
+             + renderRay((base + vec2( 0.125,  0.375)) * inv)
+             + renderRay((base + vec2(-0.375,  0.125)) * inv);
+    col *= 0.25;
+#else
+    vec3 col = renderRay(base * inv);
+#endif
     gl_FragColor = vec4(col, 1.0);
 }`;
 }
@@ -269,6 +322,12 @@ function compile(gl, type, src) {
  * Returns { stop } to cancel the camera-orbit RAF. Throws a clear Error when WebGL is unavailable
  * or the program fails to compile/link (the Studio catches and shows a friendly fallback).
  */
+// Exported for tests: the shading contract (restrained trap material, pixel-cone epsilon,
+// dithered ray origin, dual occlusion) is what separates the mineral read from the rainbow
+// confetti this renderer used to produce, and none of it is visible to a unit test except
+// through the generated source.
+export const _buildFragment3D = buildFragment;
+
 export function render3D(canvas, opts = {}) {
   const type = opts.type === "mandelbulb" ? "mandelbulb" : "mandelbox";
   const gl = canvas.getContext("webgl", { preserveDrawingBuffer: true })
@@ -280,7 +339,10 @@ export function render3D(canvas, opts = {}) {
   const power = clampNum(opts.power, 2.0, 12.0, 8.0);
   const iterations = Math.round(clampNum(opts.iterations, 1, 20, type === "mandelbulb" ? 8 : 12));
 
-  const fragSrc = buildFragment(type);
+  // Supersampling costs one full march per sample, so it is opt-in: the
+  // caller passes aa=4 when the device tier and quality level can afford it.
+  const aaSamples = opts.aa === 4 ? 4 : 1;
+  const fragSrc = buildFragment(type, aaSamples);
   const prog = gl.createProgram();
   gl.attachShader(prog, compile(gl, gl.VERTEX_SHADER, VERT));
   gl.attachShader(prog, compile(gl, gl.FRAGMENT_SHADER, fragSrc));
@@ -300,7 +362,7 @@ export function render3D(canvas, opts = {}) {
 
   const U = n => gl.getUniformLocation(prog, n);
   const uTime = U("u_time"), uRes = U("u_resolution");
-  const uYaw = U("u_yaw"), uPitch = U("u_pitch"), uDist = U("u_dist");
+  const uYaw = U("u_yaw"), uPitch = U("u_pitch"), uDist = U("u_dist"), uPixelAngle = U("u_pixelAngle");
   gl.uniform1f(U("u_scale"), scale);
   gl.uniform1f(U("u_power"), power);
   gl.uniform1i(U("u_iterations"), iterations);
@@ -331,6 +393,11 @@ export function render3D(canvas, opts = {}) {
     gl.uniform1f(uYaw, cam.yaw);
     gl.uniform1f(uPitch, cam.pitch);
     gl.uniform1f(uDist, cam.dist);
+    // One pixel's angular radius: NDC y spans 2 units over h pixels at focal length 1.8, so a
+    // pixel subtends (2/h)/1.8 radians across, half that as a radius. Drives the pixel-cone hit
+    // epsilon: near geometry converges tighter, far geometry stops fizzing at a threshold its
+    // own pixel could never resolve.
+    gl.uniform1f(uPixelAngle, (1 / Math.max(1, h)) / 1.8);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     raf = requestAnimationFrame(draw);
   }

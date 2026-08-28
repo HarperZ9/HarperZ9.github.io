@@ -98,6 +98,96 @@ let _sound = null;
 const loadSound = lazyLoader(() => import("./studio-sound.js"), m => { _sound = m; });
 let _soundSeed = "aurora";
 
+// Plot maps source: generative pen-plotter cartography (system/plot-maps.js), a seeded
+// elevation field composed as a map sheet and drawn as single-stroke polylines. Still frames:
+// nothing animates, so reduced motion needs no special handling here.
+let _plotMaps = null;
+const loadPlotMaps = lazyLoader(() => import("./plot-maps.js"), m => { _plotMaps = m; });
+let _plotStudy = "auto";     // "auto" hands the choice to the composer
+let _plotRegister = "auto";  // how the marks are made; "auto" lets the sheet decide
+let _lastPlot = null;        // the last built sheet, for the SVG export
+let _plotCompose = null;
+const loadPlotCompose = lazyLoader(() => import("./plot-compose.js"), m => { _plotCompose = m; });
+// The one surface: the sheet's MATERIAL can be the generative field, a published plate, an
+// uploaded picture, whatever the studio canvas last showed, or the live voxel build — and any of
+// those can be blended with the field. plot-image handles tone fields, plot-bridge handles
+// geometry crossings and the blend.
+let _plotImage = null;
+const loadPlotImage = lazyLoader(() => import("./plot-image-studies.js"), m => { _plotImage = m; });
+let _plotBridge = null;
+const loadPlotBridge = lazyLoader(() => import("./plot-bridge.js"), m => { _plotBridge = m; });
+// The published archive (165 works, each measured) is material too: studio-library.js turns the
+// manifest into a catalogue the picker can band the same way the archive page bands it.
+let _library = null;
+let _libraryMod = null;
+const loadLibraryMod = lazyLoader(() => import("./studio-library.js"), m => { _libraryMod = m; });
+let _libraryFilter = "all";
+// The work a deep link or a restored pin asked for, held until the picker exists to receive it.
+// Without it, whichever async path filled the picker first selected the first work in the band,
+// drew it, and the requested work then drew second — two sheets, the first one wrong.
+let _libraryWant = null;
+let _plotMaterial = "field";   // field | plate | archive | picture | canvas | voxels | sketchsheet
+let _plotMethod = "auto";      // image-method choice for tone-field materials
+let _plotBlend = "alone";      // alone | under | over — blend the field with the material
+let _plotField = null;         // cached tone field { w, h, lum } for plate / archive / picture / canvas
+let _plotFieldPending = null;  // key of an in-flight acquisition, so two callers share one fetch
+let _plotFieldInfo = null;     // { name, workId, sha } — where the cached field came from, for the receipts
+let _plateIndex = null;        // atlas.world.json scenes, fetched once for the plate picker
+// Snapshot of the shared canvas taken at the moment the user switches INTO plot maps, so
+// "Studio canvas" plots the frame they were just looking at, not the sheet that replaced it.
+const _plotSnapshot = document.createElement("canvas");
+let _plotSnapshotOk = false;
+// Set while a pin is being restored, so the switch INTO the pen surface does not overwrite the
+// snapshot with whatever happens to be on screen. Without it, restoring a captured-frame pin
+// silently plotted the CURRENT frame under the pinned recipe's receipt — the one thing a
+// reproduction must never do.
+let _restoringPin = false;
+
+// Sketch source: freehand drawing as a first-class sheet (system/sketch.js). The sketch object
+// deliberately SURVIVES source switches — draw, hop to the pen surface, come back, keep drawing.
+let _sketchMod = null;
+const loadSketch = lazyLoader(() => import("./sketch.js"), m => { _sketchMod = m; });
+let _sketch = null;
+let _sketchRegister = "drawn";
+let _sketchGuide = "none";
+let _lastSketchSheet = null;   // last built sheet — the pen surface's "Sketch" material
+
+// Replay theatre (system/plot-replay.js): any sheet watched stroke-by-stroke in pen order.
+let _replayMod = null;
+const loadReplay = lazyLoader(() => import("./plot-replay.js"), m => { _replayMod = m; });
+let _replay = null;            // { stepper, raf } while playing; null when idle
+
+// The shelf (system/studio-shelf.js): pinned recipes, user-owned memory, quiet by design.
+let _shelfMod = null, _shelf = null;
+const loadShelf = lazyLoader(() => import("./studio-shelf.js"), m => { _shelfMod = m; });
+
+// Voxel op log: meta.edits is a COUNT, which is receipt enough for the readout but not enough to
+// REPRODUCE a build. The shelf needs the ops themselves, so every rotation and hand edit made
+// through the UI is logged here and replayed on restore. A rebuild resets the log by construction.
+let _voxelOps = [];
+
+// Voxels source: seeded voxel scenes (system/voxel-forge.js) drawn isometrically. Still frames.
+let _voxelForge = null;
+const loadVoxelForge = lazyLoader(() => import("./voxel-forge.js"), m => { _voxelForge = m; });
+let _voxelStudy = "relic";
+let _lastVoxelScene = null;   // the LIVE scene: rotations and edits mutate it; exports serialize it
+let _voxelMode = "orbit";     // pointer mode: orbit | build | chisel | paint
+// Native view for the two vector still-sources: wheel re-renders at the zoomed view, so the
+// frame stays crisp at any magnification (the whole reason they refuse the CSS panzoom layer).
+const _stillView = { voxels: { zoom: 1, cx: 0.5, cy: 0.5 }, plotmaps: { zoom: 1, cx: 0.5, cy: 0.5 } };
+let _voxelTuned = false;      // false = the seed's own draws; true = the three knobs apply
+// The pick buffer: the same geometry as the visible frame, drawn flat with cell+face encoded as
+// colour, so a pointer position decodes to exactly one voxel face. Redrawn with every render.
+const _voxelPick = document.createElement("canvas");
+
+// Spatial source: the authored world package + hybrid renderer. The module
+// re-checks the package's byte receipts before it draws, clamps the splat
+// block to the device tier's budget, and holds a still frame under reduced
+// motion (mirrors the neural instrument's static flag).
+let _spatial = null;
+const loadSpatial = lazyLoader(() => import("./studio-spatial.js"), m => { _spatial = m; });
+let _spatialStatic = false;   // true when reduced motion holds a single frame
+
 // BYO media: pixel effects, mesh transforms, universal import/export, local-model adapter.
 let _effects = null;
 const loadEffects = lazyLoader(() => import("./studio-effects.js"), m => { _effects = m; });
@@ -214,12 +304,25 @@ function bootStudioRendererConsole(root = document) {
     showcase: "showcase renderer",
   };
 
+  // Cache the meter nodes and skip no-op writes: this ran per streaming tick
+  // and re-queried the DOM plus wrote unchanged text every time.
+  const consoleMeterNodes = new Map();
   const setConsoleMeter = (key, value) => {
     const pct = Math.max(0, Math.min(1, value));
-    const meter = consoleEl.querySelector(`[data-studio-console-meter="${key}"]`);
-    const bar = consoleEl.querySelector(`[data-studio-console-bar="${key}"]`);
-    if (meter) meter.textContent = pct.toFixed(2);
-    if (bar) bar.style.setProperty("--meter", pct.toFixed(3));
+    let nodes = consoleMeterNodes.get(key);
+    if (!nodes) {
+      nodes = {
+        meter: consoleEl.querySelector(`[data-studio-console-meter="${key}"]`),
+        bar: consoleEl.querySelector(`[data-studio-console-bar="${key}"]`),
+        last: null,
+      };
+      consoleMeterNodes.set(key, nodes);
+    }
+    const text = pct.toFixed(2);
+    if (nodes.last === text) return;
+    nodes.last = text;
+    if (nodes.meter) nodes.meter.textContent = text;
+    if (nodes.bar) nodes.bar.style.setProperty("--meter", pct.toFixed(3));
   };
 
   const sync = (source = window.__studioActiveSource || "atelier") => {
@@ -341,6 +444,37 @@ const QUALITY_LEVELS = {
 };
 let qualityKey = "standard";
 function currentQuality() { return QUALITY_LEVELS[qualityKey]; }
+
+// ── Zoom-adaptive backing for flat sources ───────────────────────────────────
+// The studio-wide crisp-zoom contract has two halves. Native-camera sources (fractals, ndim,
+// spatial, voxels, plot maps) re-render their own view on wheel: crisp at any depth. Everything
+// else is magnified by the CSS panzoom layer, which on its own stretches texels into mush — so
+// when panzoom reports a zoom, the backing grows to match (flatZoomBoost feeds sizeCanvas) and
+// the active source redraws. Raster-bounded content (a BYO photo, a screen capture, the neural
+// grid) sharpens up to its own data resolution and no further; that ceiling is the data's, not
+// the renderer's.
+const FLAT_ZOOM_REDRAW = () => ({
+  atelier: () => { const b = $("at-draw"); if (b) b.click(); },
+  poster: () => { if (_posterWorkshop) _posterWorkshop.render(); },
+  sound: () => restartSound(),
+  neural: () => restartNeural(),
+  // byo: video re-blits every live-loop frame and picks the new backing up on its own; a dropped
+  // still image is not retained after its draw, so its zoom ceiling stays the first-draw backing.
+});
+let _flatZoom = 1;
+function flatZoomBoost() {
+  // The boost applies only while a flat source is active; native-camera sources own their zoom.
+  if (activeSource === "fractal" || activeSource === "fractal3d" || activeSource === "ndim"
+    || activeSource === "spatial" || activeSource === "voxels" || activeSource === "plotmaps") return 1;
+  return Math.max(1, Math.min(8, _flatZoom));
+}
+window.__studioFlatZoomChanged = (scale) => {
+  const z = Math.max(1, Math.min(8, Number(scale) || 1));
+  if (Math.abs(z - _flatZoom) < 0.15) return;   // ignore sub-step jitter
+  _flatZoom = z;
+  const redraw = FLAT_ZOOM_REDRAW()[activeSource];
+  if (redraw) { try { redraw(); } catch (_) { /* a zoom redraw is additive, never fatal */ } }
+};
 // Shared helper: size the canvas to the current quality level and return backing dims.
 // The canvas CSS size is determined by its container (.viewport-stage, max-width:100%), NOT by the
 // canvas.width attribute itself, so we read the parent's bounding rect to get the true display size.
@@ -362,8 +496,13 @@ function sizeCanvas(canvas) {
     const scr = (typeof screen !== "undefined" && screen) || { width: cssW, height: cssH };
     mb = fullscreenMaxBacking(scr.width, scr.height, dpr, { hardCap, floor: mb });
   }
-  let rawW = Math.round(cssW * dpr);
-  let rawH = Math.round(cssH * dpr);
+  // Zoom-adaptive backing: when a FLAT source is zoomed (CSS panzoom), the backing grows with the
+  // zoom (capped at 4096) and the source redraws, so the magnified display still has real pixels
+  // under it. Native-camera sources zoom by re-rendering their own view and never take the boost.
+  const zb = flatZoomBoost();
+  if (zb > 1) mb = Math.min(4096, Math.round(mb * Math.min(zb, 2.56)));
+  let rawW = Math.round(cssW * dpr * zb);
+  let rawH = Math.round(cssH * dpr * zb);
   const longer = Math.max(rawW, rawH);
   if (longer > mb) {
     const s = mb / longer;
@@ -384,6 +523,7 @@ const SOURCES = {
   fractal:   { block: "src-fractal",   mode: "generate" },
   fractal3d: { block: "src-fractal3d", mode: "generate" },
   ndim:      { block: "src-ndim",      mode: "generate" },
+  spatial:   { block: "src-spatial",   mode: "generate" },
   music:     { block: "src-music",     mode: "generate" },
   byo:       { block: "src-byo",       mode: "byo" },
   watch:     { block: "src-watch",     mode: "byo" },
@@ -392,6 +532,9 @@ const SOURCES = {
   poster:    { block: "src-poster",    mode: "generate" },
   neural:    { block: "src-neural",    mode: "generate" },
   sound:     { block: "src-sound",     mode: "generate" },
+  plotmaps:  { block: "src-plotmaps",  mode: "generate" },
+  voxels:    { block: "src-voxels",    mode: "generate" },
+  sketch:    { block: "src-sketch",    mode: "generate" },
 };
 
 // ── The poster workshop (lazy). Mounted once on first entry; the panel owns
@@ -439,10 +582,13 @@ function setSource(next) {
     stopByoVideo();     // pause + release any played BYO video
     // The discovery / showcase graphs are lazy: if a graph never loaded, that source never ran,
     // so there is nothing to stop (and an in-flight start is cancelled by the epoch bump above).
+    stopReplay();       // a replay paints plot strokes; without this it kept painting them onto
+                        // whatever source came next, over that source's own frame
     if (_discovery) { try { _discovery.stopDiscovery(); } catch (_) {} }
     if (_showcase)  { try { _showcase.stopShowcase(); } catch (_) {} }
     if (_neural)    { try { _neural.stopNeural(); } catch (_) {} }
     if (_sound)     { try { _sound.stopSound(); } catch (_) {} }
+    if (_spatial)   { try { _spatial.stopSpatial(); } catch (_) {} }
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
@@ -472,7 +618,7 @@ function setSource(next) {
   // Mark the stage interactive (grab cursor + drag affordance) for the camera-driven sources.
   // ndim is now a camera source too (P2 directive a): wheel dollies the camera into the volume.
   const stageEl = document.getElementById("viewport-stage");
-  if (stageEl) stageEl.classList.toggle("cam-interactive", next === "fractal" || next === "fractal3d" || next === "ndim");
+  if (stageEl) stageEl.classList.toggle("cam-interactive", next === "fractal" || next === "fractal3d" || next === "ndim" || next === "spatial");
   // Music is an animated source: the reactive engine (or its idle loop) paints the canvas every
   // frame, so the perception loop must be reading it. Other sources arm their own loop from their
   // entry/play path; music has no settle-frame, so arm it here. The loop self-idles only for static
@@ -531,6 +677,72 @@ function setSource(next) {
       startMeterLoop();
     }).catch(err => { say("model", "The sound instrument failed to load: " + (err && err.message ? err.message : String(err))); });
   }
+  // Plot maps: load the cartography module and draw the current sheet. Still frames only.
+  if (next === "plotmaps") {
+    // Stash the outgoing frame FIRST: the sheet is about to overwrite the shared canvas, and the
+    // "Studio canvas" material plots what the user was just looking at. drawImage accepts a
+    // WebGL-backed source canvas too; whether its buffer survived is validated at plot time, not
+    // assumed here.
+    try {
+      const src = $("studio-canvas");
+      if (_restoringPin) { /* a restore must not re-capture the screen as the pinned frame */ }
+      else if (src && src.width > 8) {
+        _plotSnapshot.width = src.width; _plotSnapshot.height = src.height;
+        _plotSnapshot.getContext("2d").drawImage(src, 0, 0);
+        _plotSnapshotOk = true;
+      }
+    } catch (_) { _plotSnapshotOk = false; }
+    Promise.all([loadPlotMaps(), loadPlotCompose(), loadPlotImage(), loadPlotBridge()]).then(() => {
+      if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
+      drawPlotMap();
+    }).catch(err => { say("model", "The plot-map engine failed to load: " + (err && err.message ? err.message : String(err))); });
+  } else if (window.__studioContentRect && window.__studioContentRect.source === "plotmaps") {
+    window.__studioContentRect = null;   // leaving: stop cropping measurements to the old sheet
+  }
+  // Voxels: load the forge and build the current scene. Still frames only.
+  if (next === "voxels") {
+    loadVoxelForge().then(() => {
+      if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
+      drawVoxelScene();
+    }).catch(err => { say("model", "The voxel forge failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
+  // Sketch: freehand drawing. The sketch object persists across switches, so returning shows the
+  // drawing exactly as it was left. plot-maps loads alongside for the renderer and exports.
+  if (next === "sketch") {
+    Promise.all([loadSketch(), loadPlotMaps(), loadPlotCompose()]).then(() => {
+      if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
+      if (!_sketch) _sketch = _sketchMod.createSketch();
+      window.__studioSketch = _sketch;   // inspection hook, same register as __studioMediaAdapters
+      drawSketch(true);
+    }).catch(err => { say("model", "The sketch engine failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
+  // Spatial: mount a GL canvas (same swap discipline as fractal3d), then let the
+  // module fetch + receipt-check the world package and start the hybrid world
+  // under the device tier's splat budget. A DRIFT receipt refuses to render.
+  if (next === "spatial") {
+    loadSpatial().then(async mod => {
+      if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
+      const c = canvasIsGL ? $("studio-canvas") : mountGLCanvas();
+      glFractal2D = false;
+      canvasIsGL = true;
+      sizeCanvas(c);
+      const reduced = typeof window.matchMedia === "function" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const plan = makeHardwareRenderPlan(_engineCapability, { width: c.width, height: c.height, splats: 10500 }, engineTierOverride);
+      try {
+        const res = await mod.startSpatial(c, { plan, reducedMotion: reduced });
+        if (epoch !== _sourceEpoch) { mod.stopSpatial(); return; }
+        _spatialStatic = !(res && res.animating);
+        startMeterLoop();
+        // Context-lost recovery lives in studio-spatial.js: it owns the canvas
+        // nodes (a fresh one per world start) and can tell an intentional
+        // teardown from a real GPU loss.
+      } catch (err) {
+        leave3D();
+        say("model", "The spatial world failed to start: " + (err && err.message ? err.message : String(err)));
+      }
+    }).catch(err => { say("model", "The spatial engine failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
   // Prefetch the graphs the entered source is about to need. Idempotent (cached promise); a
   // prefetch failure is logged here and the first real use re-attempts and surfaces it to the user.
   if (next === "fractal") loadFractal2D().catch(err => console.warn("studio: fractal graph prefetch failed", err));
@@ -543,6 +755,7 @@ function setSource(next) {
   syncToolbarForSource();
   // Notify the surface layer so panzoom attaches/detaches per the source change.
   // Pass the current canvas (may be a fresh GL canvas if fractal3d swapped it).
+  _flatZoom = 1;   // a zoom belongs to the source it was made in; the next source starts at 1:1
   try { surfaceOnSourceChange(next, $("studio-canvas")); } catch (_) {}
   // Start Tweakpane monitor loop for animated sources; stop it for static ones.
   if (next === "music" || next === "ndim" || next === "fractal3d") {
@@ -623,8 +836,1461 @@ function initSoundControls() {
   if (play) play.addEventListener("click", () => { if (_sound && _sound.playSound) { _sound.playSound({ seed: _soundSeed }); syncSoundReadout(); } });
   if (stop) stop.addEventListener("click", () => { if (_sound) _sound.pauseSound(); });
 }
+// ── Plot maps: draw + controls ───────────────────────────────────────────────
+// Still-frame source: build the sheet from the seed, ink it onto the shared canvas, perceive
+// once. The SVG export re-serializes THE SAME built sheet (_lastPlot), never a rebuild, so the
+// file matches the pixels on screen by construction.
+// Acquire the tone field the current material needs, then call `then`. Plate and picture decode
+// asynchronously the first time and are cached until the material or the plate changes; canvas
+// reads the snapshot taken at source-switch. Returns true if `then` will fire.
+function acquirePlotField(then) {
+  if (_plotField) { then(); return true; }
+  const readout = $("plot-readout");
+  const fromCanvas = (cv, name) => {
+    const long = Math.max(cv.width, cv.height);
+    const k = long > 1200 ? 1200 / long : 1;
+    const w = Math.max(8, Math.round(cv.width * k)), h = Math.max(8, Math.round(cv.height * k));
+    const off = document.createElement("canvas");
+    off.width = w; off.height = h;
+    off.getContext("2d").drawImage(cv, 0, 0, w, h);
+    const data = off.getContext("2d").getImageData(0, 0, w, h);
+    _plotField = _plotImage.toneField(data.data, w, h);
+    _plotFieldInfo = { name };
+  };
+  // A refusal has to reach the PANEL, not only the chat: leaving the previous sheet's stroke
+  // count under a blank canvas reads as a sheet that was drawn, which is the opposite of true.
+  const refuse = (panel, spoken) => {
+    if (readout) readout.textContent = panel;
+    say("model", spoken);
+    return false;
+  };
+  if (_plotMaterial === "canvas") {
+    if (!_plotSnapshotOk || _plotSnapshot.width < 9) {
+      return refuse("no captured frame — render a source, then switch straight here",
+        "No frame to plot: nothing was on the studio canvas when you switched here. Render a source, then come back.");
+    }
+    fromCanvas(_plotSnapshot, "the studio canvas");
+    // A released GPU buffer drawImages as solid black: near-zero tonal span means the capture
+    // failed, and saying so beats plotting a black rectangle as if it were the artwork.
+    let lo = 1, hi = 0;
+    for (const v of _plotField.lum) { if (v < lo) lo = v; if (v > hi) hi = v; }
+    if (hi - lo < 0.02) {
+      _plotField = null; _plotFieldInfo = null;
+      return refuse("the captured frame came back blank — that source's GPU buffer was already released",
+        "The last frame could not be captured — that source renders on a GPU buffer the browser had already released. Render it again, then switch straight here.");
+    }
+    then(); return true;
+  }
+  // Plate and archive are the same shape of material: a published file, fetched by id, carrying
+  // its own provenance. They differ only in where the id resolves and what the receipt can cite.
+  //
+  // Acquisition is asynchronous and re-enters drawPlotMap when it lands, so two callers asking for
+  // the same material at the same moment (the source's entry draw and a deep link, say) each
+  // started a fetch and each drew, producing two identical sheets and two identical receipts. The
+  // second caller now joins the first rather than racing it.
+  const fromPublished = (id, url, name, extra) => {
+    const key = _plotMaterial + ":" + id;
+    if (_plotFieldPending === key) return true;
+    _plotFieldPending = key;
+    if (readout) readout.textContent = "fetching " + id + "…";
+    const img = new Image();
+    const material = _plotMaterial;
+    img.onload = () => {
+      if (_plotFieldPending === key) _plotFieldPending = null;
+      const off = document.createElement("canvas");
+      off.width = img.naturalWidth; off.height = img.naturalHeight;
+      off.getContext("2d").drawImage(img, 0, 0);
+      fromCanvas(off, name);
+      if (extra) Object.assign(_plotFieldInfo, extra);
+      if (activeSource === "plotmaps" && _plotMaterial === material) then();
+    };
+    img.onerror = () => {
+      if (_plotFieldPending === key) _plotFieldPending = null;
+      say("model", "The material " + id + " failed to load.");
+    };
+    img.src = url;
+    return true;
+  };
+  if (_plotMaterial === "plate") {
+    const sel = $("plot-plate");
+    const id = (sel && sel.value) || "scene-01";
+    return fromPublished(id, "art/spatial/atlas/" + id + ".jpg", id, null);
+  }
+  if (_plotMaterial === "archive") {
+    // The catalogue is a fetch, and a draw can be asked for before it lands — by the source's own
+    // entry path, by a deep link, by a restored pin. Waiting for it is right; refusing was not,
+    // because the sheet WAS about to be drawable and the panel said otherwise.
+    if (!_library) {
+      if (_plotFieldPending === "archive:catalogue") return true;   // one fetch, one draw
+      _plotFieldPending = "archive:catalogue";
+      if (readout) readout.textContent = "loading the archive catalogue…";
+      fillLibraryPicker().then(() => {
+        // Release only this acquisition's own claim. Clearing unconditionally wiped the key of an
+        // image fetch another caller had already started, which let a second fetch through and put
+        // the double draw back.
+        if (_plotFieldPending === "archive:catalogue") _plotFieldPending = null;
+        if (!_library) {
+          refuse("the archive catalogue could not be loaded",
+            "The archive catalogue could not be loaded, so there is nothing to draw from yet.");
+          return;   // no re-entry: a failed fetch must not spin
+        }
+        if (activeSource === "plotmaps" && _plotMaterial === "archive") then();
+      });
+      return true;
+    }
+    const sel = $("plot-work");
+    const id = (sel && sel.value) || (_library.works.length ? _library.works[0].id : null);
+    const work = id ? _library.byId(id) : null;
+    if (!work) {
+      return refuse("no work chosen — pick one from the archive above",
+        "Choose a work from the archive picker, and the pen draws it.");
+    }
+    // The receipt names the file this was drawn from, not the title, because a title can be
+    // renamed and a hash cannot.
+    return fromPublished(work.id, work.full, _libraryMod.workProvenance(work),
+      { workId: work.id, sha: work.sha });
+  }
+  // picture: nothing cached means no file chosen yet.
+  return refuse("choose a picture above — it stays in this browser",
+    "Choose a picture first — any image file becomes a plotter drawing.");
+}
+
+function drawPlotMap() {
+  if (!_plotMaps || activeSource !== "plotmaps") return;
+  stopReplay();   // a rebuilt sheet invalidates any running replay
+  leave3D();
+  const c = $("studio-canvas");
+  sizeCanvas(c);
+  const seedIn = $("plot-seed");
+  const seed = ((seedIn && seedIn.value.trim()) || "aurora").slice(0, 48);
+  const levelsEl = $("plot-levels"), densityEl = $("plot-density");
+  const density = densityEl ? parseFloat(densityEl.value) : 1;
+  let plot;
+
+  if (_plotMaterial === "voxels") {
+    // The build crosses over as GEOMETRY: hidden-line axonometric drawing, not a traced
+    // screenshot. The live scene comes across with its rotations and hand edits; without one, the
+    // seed builds a fresh scene through the same forge the Voxels source uses.
+    if (!_voxelForge) { loadVoxelForge().then(drawPlotMap).catch(() => {}); return; }
+    const scene = _lastVoxelScene || _voxelForge.buildVoxelScene(seed, { study: _voxelStudy });
+    plot = _plotBridge.voxelSheet(scene, { density });
+  } else if (_plotMaterial === "sketchsheet") {
+    // The drawing crosses as geometry too. The pen-surface register chip re-marks it when set
+    // explicitly; "auto" keeps the register the sketch was drawn in.
+    if (!_sketch || _sketch.isEmpty()) {
+      if (!_lastSketchSheet) { say("model", "No sketch yet — draw one in the Sketch source first."); return; }
+      plot = _lastSketchSheet;
+    } else {
+      plot = _sketch.toSheet({ register: _plotRegister !== "auto" ? _plotRegister : _sketchRegister });
+      _lastSketchSheet = plot;
+    }
+  } else if (_plotMaterial !== "field") {
+    // Tone-field materials: plate, picture, canvas. First call may need an async decode; it
+    // re-enters here when the field is cached.
+    if (!_plotField) { acquirePlotField(drawPlotMap); return; }
+    plot = _plotImage.composeFromImage(_plotField, seed, {
+      method: _plotMethod, register: _plotRegister, density,
+      source: _plotFieldInfo ? _plotFieldInfo.name : null,
+    });
+  } else if (_plotStudy !== "auto" && _plotMaps.PLOT_STUDIES[_plotStudy]) {
+    // The four cartographic studies keep their explicit path (and their existing seeds keep
+    // reproducing).
+    plot = _plotMaps.buildPlotMap(seed, {
+      study: _plotStudy,
+      levels: levelsEl ? parseInt(levelsEl.value, 10) : 14,
+      density,
+      res: currentQuality().maxBacking >= 3200 ? 320 : 220,
+    });
+  } else {
+    // The composer: picks the study, the mark register and the furniture, measures what it made,
+    // and re-rolls a sheet it judges dull.
+    plot = _plotCompose.composeSheet(seed, {
+      study: _plotStudy === "auto" ? "auto" : _plotStudy,
+      register: _plotRegister,
+      candidates: 6,
+    });
+  }
+
+  // The blend: the generative field shares the paper with the material — under it as the ground,
+  // or breaking over it. One frame, one aspect, one measurement, provenance per part.
+  if (_plotBlend !== "alone" && _plotMaterial !== "field" && plot.layers.length) {
+    const fieldSheet = _plotCompose.composeSheet(seed, { register: _plotRegister, candidates: 4 });
+    plot = _plotBridge.mergeSheets(plot, fieldSheet, _plotBlend);
+  }
+
+  _lastPlot = plot;
+  // A new sheet invalidates the last replay's commentary and position; leaving them was a claim
+  // about a run that never happened for this sheet.
+  const penNote = $("plot-pen-note");
+  if (penNote) penNote.textContent = "press Watch; pen changes are called out as they happen";
+  const scrubEl = $("plot-scrub");
+  if (scrubEl) scrubEl.value = "0";
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return;
+  const rect = _plotMaps.renderPlotMap(ctx, plot, c.width, c.height, {}, { view: _stillView.plotmaps });
+  if (rect) window.__studioContentRect = { ...rect, source: "plotmaps" };
+  const m = plot.meta.measure;
+  const readout = $("plot-readout");
+  if (readout) readout.textContent =
+    `${plot.meta.strokes.toLocaleString()} strokes · ${plot.meta.points.toLocaleString()} points`
+    + (plot.meta.tone ? ` · tone r ${plot.meta.tone.r}` : "")
+    + (m && plot.meta.candidates ? ` · score ${m.score} after ${plot.meta.candidates} candidate${plot.meta.candidates === 1 ? "" : "s"}` : "")
+    + (plot.meta.seaLevel != null ? ` · sea level ${plot.meta.seaLevel}` : "");
+  const obs = perceive(c);
+  sayPlotReceipt(plot, seed, obs);
+  startMeterLoop();
+}
+
+// The sheet's own account of how it came to be — one voice per kind, every claim carried by a
+// number the panel can re-check.
+function sayPlotReceipt(plot, seed, obs) {
+  const meta = plot.meta, m = meta.measure;
+  if (meta.kind === "blend") {
+    const [a, b] = meta.parts;
+    say("model",
+      `Two mediums on one sheet: ${meta.label}, the field ${meta.mode === "over" ? "breaking over" : "laid under"} the subject — `
+      + `${a.strokes.toLocaleString()} strokes from the ${a.kind}, ${b.strokes.toLocaleString()} from the ${b.kind}, `
+      + `re-measured whole: coverage ${m.coverage}, direction ${m.direction}. `
+      // A blend hides which material went in, so an archive work says so here or the sheet's own
+      // account stops naming where half of it came from.
+      + (_plotFieldInfo && _plotFieldInfo.workId ? `Drawn from ${_plotFieldInfo.name}. ` : "")
+      + `Fingerprint ${obs.phash}. Same seed, same blend.`);
+    return;
+  }
+  if (meta.kind === "voxel") {
+    say("model",
+      `The build crossed over as geometry: ${meta.voxels.toLocaleString()} voxels became a hidden-line drawing — `
+      + `${meta.faces.toLocaleString()} visible faces, silhouette and crease edges chained, walls hatched by their lit tone, `
+      + `${meta.strokes.toLocaleString()} strokes${meta.edits ? `, ${meta.edits} hand edit${meta.edits === 1 ? "" : "s"} included` : ""}. `
+      + `Fingerprint ${obs.phash}. The SVG plots exactly this.`);
+    return;
+  }
+  if (meta.kind === "image") {
+    const src = meta.source ? ` of ${meta.source}` : "";
+    say("model",
+      `A ${meta.label} drawing${src}: ${meta.strokes.toLocaleString()} strokes, `
+      + (meta.chosen === "measured"
+        ? `method chosen by measurement — tone correlation r ${meta.tone.r} against the source over ${meta.tone.cells} cells, from ${meta.considered.length} candidates (${meta.considered.join(", ")}). `
+        : `tone correlation r ${meta.tone.r} against the source over ${meta.tone.cells} cells. `)
+      + (meta.note ? meta.note + ". " : "")
+      + `Fingerprint ${obs.phash}. Same picture, same seed, same drawing.`);
+    return;
+  }
+  if (meta.kind === "sketch") {
+    // Without this the sketch sheet fell through to the cartography branch and announced a study
+    // of "undefined" over "a seeded elevation field" with a sea level of undefined — a receipt
+    // describing a sheet that does not exist.
+    const sym = meta.symmetry || { mode: "none", k: 1 };
+    say("model",
+      `Your drawing on the pen surface: ${meta.strokes.toLocaleString()} hand strokes in the ${meta.register} register`
+      + (sym.mode !== "none" ? ` under ${sym.mode} ×${sym.k} symmetry` : "")
+      + `, ${meta.points.toLocaleString()} points. Geometry hash ${meta.geometryHash}. `
+      + `Fingerprint ${obs.phash}. The SVG and the G-code plot exactly this.`);
+    return;
+  }
+  const label = (_plotMaps.PLOT_STUDIES[meta.study] || _plotCompose.STUDY_BUILDERS[meta.study] || {}).label || meta.study;
+  if (m && meta.candidates) {
+    const rejected = (meta.rejected || []).length;
+    say("model",
+      `The sheet chose itself: a ${label} in the ${meta.register} register, `
+      + `${meta.strokes.toLocaleString()} single-stroke paths from seed "${seed}". `
+      + (meta.cleared
+        ? (rejected ? `It rejected ${rejected} duller candidate${rejected === 1 ? "" : "s"} first. ` : `It cleared on the first try. `)
+        : `Nothing cleared the bar this time, so this is the strongest of ${meta.candidates} candidates, said plainly. `)
+      + `Coverage ${m.coverage}, spread ${m.spread}, scale ${m.scale}, direction ${m.direction}. `
+      + `Fingerprint ${obs.phash}. Same seed, same sheet.`);
+  } else {
+    say("model",
+      `A ${label} sheet from seed "${seed}": ${meta.strokes} single-stroke paths over a seeded elevation field, `
+      + `sea level at ${meta.seaLevel}. Fingerprint ${obs.phash}. Same seed, same sheet — `
+      + `the SVG export carries real units and one layer per pen pass.`);
+  }
+}
+// Show only the control rows the current material can use: study rows drive the field, method
+// row drives tone-field materials, blend row exists wherever there is something to blend with.
+function syncPlotMaterialUI() {
+  const isField = _plotMaterial === "field";
+  const isTone = _plotMaterial === "plate" || _plotMaterial === "archive"
+    || _plotMaterial === "picture" || _plotMaterial === "canvas";
+  const show = (id, on) => { const el = $(id); if (el) el.hidden = !on; };
+  show("plot-study-rows", isField);
+  show("plot-method-row", isTone);
+  show("plot-plate-row", _plotMaterial === "plate");
+  show("plot-work-row", _plotMaterial === "archive");
+  show("plot-file-row", _plotMaterial === "picture");
+  show("plot-blend-row", !isField);
+  show("plot-levels-row", isField);
+  // Density drives the generative studies, the image methods, and the voxel hatch — but a sketch
+  // sheet is the hand's own strokes, and nothing about it is denser or sparser. A visible slider
+  // that cannot move the drawing is a lie about the instrument, so it goes away here.
+  show("plot-density-row", _plotMaterial !== "sketchsheet");
+}
+
+// The plate picker lists the atlas corpus — every published scene with its receipt-carried title,
+// fetched once from the world manifest the Spatial source already trusts.
+function fillPlatePicker() {
+  const sel = $("plot-plate");
+  if (!sel || _plateIndex) return;
+  fetch("art/spatial/atlas/atlas.world.json").then(r => r.json()).then(world => {
+    _plateIndex = world.scenes || [];
+    sel.innerHTML = "";
+    for (const s of _plateIndex) {
+      const opt = document.createElement("option");
+      opt.value = s.id;
+      opt.textContent = `${s.id.replace("scene-", "")} · ${s.title}`;
+      sel.appendChild(opt);
+    }
+  }).catch(() => { /* the picker keeps its static fallback options */ });
+}
+
+// The archive catalogue: fetched once, kept for the session. Every work in it is material the pen
+// surface can pick up, so this is the corpus becoming usable rather than only viewable.
+let _libraryLoad = null;
+function loadLibrary() {
+  if (_library) return Promise.resolve(_library);
+  if (!_libraryLoad) {
+    _libraryLoad = loadLibraryMod()
+      .then(() => fetch(_libraryMod.LIBRARY_MANIFEST, { cache: "force-cache" }))
+      .then(r => { if (!r.ok) throw new Error(`archive manifest: ${r.status}`); return r.json(); })
+      .then(m => { _library = _libraryMod.buildLibrary(m); return _library; })
+      .catch(err => { _libraryLoad = null; throw err; });   // a failed fetch must be retryable
+  }
+  return _libraryLoad;
+}
+
+// Fill the work picker from the current band filter. Bands are the archive page's own, so a
+// visitor who came from there finds the corpus grouped the way they left it.
+function fillLibraryPicker(keepId) {
+  const sel = $("plot-work");
+  if (!sel) return Promise.resolve(null);
+  return loadLibrary().then(lib => {
+    const shown = _libraryMod.filterWorks(lib.works, _libraryFilter);
+    const want = keepId || _libraryWant || sel.value;
+    sel.innerHTML = "";
+    shown.forEach((w, i) => {
+      const opt = document.createElement("option");
+      opt.value = w.id;
+      opt.textContent = _libraryMod.workLabel(w, i + 1);
+      sel.appendChild(opt);
+    });
+    // The band chips carry their counts, so choosing one is a claim about how much it holds.
+    const counts = _libraryMod.filterCounts(lib.works);
+    document.querySelectorAll("[data-plot-band]").forEach(b => {
+      const n = counts[b.dataset.plotBand];
+      if (n != null) b.textContent = `${b.dataset.plotBandLabel || b.textContent.split(" · ")[0]} · ${n}`;
+      b.classList.toggle("active", b.dataset.plotBand === _libraryFilter);
+    });
+    const note = $("plot-work-note");
+    if (note) {
+      note.textContent = `${shown.length} of ${lib.count} works · each drawn from its published file,`
+        + " cited by the hash of the PNG it came from";
+    }
+    // Keep the chosen work across a filter change when the band still holds it, and otherwise
+    // land on the first of the new band EXPLICITLY. The dropdown re-derives its own selection
+    // from a mutation observer, which runs after this returns, so reading the value back here
+    // reports the work that was showing a moment ago and a caller comparing before against after
+    // sees no change when the selection did in fact move.
+    const landed = (want && shown.some(w => w.id === want)) ? want : (shown[0] ? shown[0].id : null);
+    if (landed) sel.value = landed;
+    if (_libraryWant && _libraryWant === landed) _libraryWant = null;   // satisfied
+    return landed;
+  }).catch(() => {
+    const note = $("plot-work-note");
+    if (note) note.textContent = "the archive catalogue could not be loaded";
+    return null;
+  });
+}
+
+function initPlotMapControls() {
+  document.querySelectorAll("[data-plot-material]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _plotMaterial = chip.dataset.plotMaterial;
+      _plotField = null; _plotFieldInfo = null;   // material changed: any cached field is stale
+      document.querySelectorAll("[data-plot-material]").forEach(b => b.classList.toggle("active", b === chip));
+      syncPlotMaterialUI();
+      if (_plotMaterial === "plate") fillPlatePicker();
+      // The catalogue has to be in hand before the sheet can be drawn from it, so the draw waits
+      // on the fetch rather than refusing once and leaving the panel saying "still loading".
+      if (_plotMaterial === "archive") { fillLibraryPicker().then(() => drawPlotMap()); return; }
+      drawPlotMap();
+    });
+  });
+  document.querySelectorAll("[data-plot-band]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _libraryFilter = chip.dataset.plotBand;
+      const before = ($("plot-work") || {}).value;
+      // Narrowing to a band that does not hold the current work moves the selection. Leaving the
+      // old sheet on the canvas would make the picker and the drawing disagree, and the readout
+      // would then describe a work that is not the one named above it.
+      fillLibraryPicker().then(after => {
+        if (after && after !== before && _plotMaterial === "archive") {
+          _plotField = null; _plotFieldInfo = null;
+          drawPlotMap();
+        }
+      });
+    });
+  });
+  const workSel = $("plot-work");
+  if (workSel) workSel.addEventListener("change", () => { _plotField = null; _plotFieldInfo = null; drawPlotMap(); });
+  document.querySelectorAll("[data-plot-method]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _plotMethod = chip.dataset.plotMethod;
+      document.querySelectorAll("[data-plot-method]").forEach(b => b.classList.toggle("active", b === chip));
+      drawPlotMap();
+    });
+  });
+  document.querySelectorAll("[data-plot-blend]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _plotBlend = chip.dataset.plotBlend;
+      document.querySelectorAll("[data-plot-blend]").forEach(b => b.classList.toggle("active", b === chip));
+      drawPlotMap();
+    });
+  });
+  const plateSel = $("plot-plate");
+  if (plateSel) plateSel.addEventListener("change", () => { _plotField = null; _plotFieldInfo = null; drawPlotMap(); });
+  const fileIn = $("plot-file");
+  if (fileIn) fileIn.addEventListener("change", () => {
+    const file = fileIn.files && fileIn.files[0];
+    if (!file) return;
+    const img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(img.src);
+      const long = Math.max(img.naturalWidth, img.naturalHeight);
+      const k = long > 1200 ? 1200 / long : 1;
+      const off = document.createElement("canvas");
+      off.width = Math.max(8, Math.round(img.naturalWidth * k));
+      off.height = Math.max(8, Math.round(img.naturalHeight * k));
+      off.getContext("2d").drawImage(img, 0, 0, off.width, off.height);
+      const data = off.getContext("2d").getImageData(0, 0, off.width, off.height);
+      _plotField = _plotImage ? _plotImage.toneField(data.data, off.width, off.height) : null;
+      _plotFieldInfo = { name: file.name };
+      _plotMaterial = "picture";
+      document.querySelectorAll("[data-plot-material]").forEach(b =>
+        b.classList.toggle("active", b.dataset.plotMaterial === "picture"));
+      syncPlotMaterialUI();
+      drawPlotMap();
+    };
+    img.onerror = () => { URL.revokeObjectURL(img.src); say("model", "That file did not decode as an image."); };
+    img.src = URL.createObjectURL(file);
+  });
+  document.querySelectorAll("[data-plot-study]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _plotStudy = chip.dataset.plotStudy;
+      // The two study rows are one exclusive set: picking a cartographic study clears Auto.
+      document.querySelectorAll("[data-plot-study]").forEach(b => b.classList.toggle("active", b === chip));
+      drawPlotMap();
+    });
+  });
+  document.querySelectorAll("[data-plot-register]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _plotRegister = chip.dataset.plotRegister;
+      document.querySelectorAll("[data-plot-register]").forEach(b => b.classList.toggle("active", b === chip));
+      drawPlotMap();
+    });
+  });
+  const draw = $("plot-draw");
+  if (draw) draw.addEventListener("click", drawPlotMap);
+  const reseed = $("plot-reseed");
+  if (reseed) reseed.addEventListener("click", () => {
+    const seedIn = $("plot-seed");
+    if (seedIn) seedIn.value = "pm-" + Math.random().toString(36).slice(2, 8);
+    drawPlotMap();
+  });
+  for (const [id, valId, fmt] of [["plot-levels", "plot-levels-val", v => String(Math.round(v))], ["plot-density", "plot-density-val", v => Number(v).toFixed(2)]]) {
+    const el = $(id);
+    if (!el) continue;
+    el.addEventListener("input", () => { const out = $(valId); if (out) out.textContent = fmt(el.value); });
+    el.addEventListener("change", drawPlotMap);
+  }
+  const svgBtn = $("plot-svg");
+  if (svgBtn) svgBtn.addEventListener("click", () => {
+    if (!_lastPlot || !_plotMaps) return;
+    const svg = _plotMaps.plotMapSVG(_lastPlot);
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+    a.download = `plot-map-${_lastPlot.meta.study}-${_lastPlot.meta.seed}.svg`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+  });
+  syncPlotMaterialUI();   // rows start matched to the default material
+}
+
+// ── Voxels: build + controls ─────────────────────────────────────────────────
+// Still-frame source. Exports serialize THE SAME built scene as the canvas (never a rebuild),
+// and the .vox writer is byte-deterministic, so the downloaded file's hash is a receipt for
+// exactly what was on screen.
+// Paint the LIVE scene (and its pick buffer) without rebuilding — the cheap path every edit and
+// rotation takes. Rebuilds go through drawVoxelScene, which resets edits by construction.
+function repaintVoxelScene(announce) {
+  const scene = _lastVoxelScene;
+  if (!scene || !_voxelForge || activeSource !== "voxels") return;
+  const c = $("studio-canvas");
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return;
+  _voxelPick.width = c.width; _voxelPick.height = c.height;
+  const pickCtx = _voxelPick.getContext("2d", { willReadFrequently: true });
+  _voxelForge.renderVoxelScene(ctx, scene, c.width, c.height, { pickCtx, view: _stillView.voxels });
+  const readout = $("voxel-readout");
+  if (readout) readout.textContent =
+    `${scene.meta.voxels.toLocaleString()} voxels · ${scene.meta.res.join("×")}`
+    + (scene.meta.seaLevel != null ? ` · sea level ${scene.meta.seaLevel}` : "")
+    + (scene.meta.edits ? ` · ${scene.meta.edits} hand edit${scene.meta.edits === 1 ? "" : "s"}` : "");
+  if (announce) {
+    const obs = perceive(c);
+    const label = (_voxelForge.VOXEL_STUDIES[scene.meta.study] || {}).label || scene.meta.study;
+    say("model",
+      `A ${label} built from seed "${scene.meta.seed}": ${scene.meta.voxels.toLocaleString()} voxels at `
+      + `${scene.meta.res.join("×")}${scene.meta.tune ? ", algorithm hand-tuned" : ""}, lit with baked `
+      + `per-face occlusion. Fingerprint ${obs.phash}. Orbit turns it, Build/Chisel/Paint edit it, `
+      + `and the .vox export hashes exactly what you see — seed, turns, and hand edits included.`);
+  }
+  startMeterLoop();
+}
+
+// Repaint the plot sheet without rebuilding — the pure-zoom path.
+function repaintPlotMap() {
+  if (!_plotMaps || !_lastPlot || activeSource !== "plotmaps") return;
+  stopReplay();   // zooming mid-replay would draw two truths on one canvas
+  const c = $("studio-canvas");
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return;
+  const rect = _plotMaps.renderPlotMap(ctx, _lastPlot, c.width, c.height, {}, { view: _stillView.plotmaps });
+  if (rect) window.__studioContentRect = { ...rect, source: "plotmaps" };
+}
+
+function readVoxelTune() {
+  if (!_voxelTuned) return null;
+  const v = (id) => { const el = $(id); return el ? parseFloat(el.value) : 0.5; };
+  return { a: v("voxel-tune-a"), b: v("voxel-tune-b"), c: v("voxel-tune-c") };
+}
+
+function drawVoxelScene() {
+  if (!_voxelForge || activeSource !== "voxels") return;
+  leave3D();
+  const c = $("studio-canvas");
+  sizeCanvas(c);
+  const seedIn = $("voxel-seed");
+  const seed = ((seedIn && seedIn.value.trim()) || "aurora").slice(0, 48);
+  const resEl = $("voxel-res");
+  _lastVoxelScene = _voxelForge.buildVoxelScene(seed, {
+    study: _voxelStudy,
+    res: resEl ? parseInt(resEl.value, 10) : 48,
+    tune: readVoxelTune(),
+  });
+  _voxelOps = [];   // a rebuild starts a fresh op log: the recipe is seed + what happens next
+  repaintVoxelScene(true);
+}
+function initVoxelControls() {
+  document.querySelectorAll("[data-voxel-study]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _voxelStudy = chip.dataset.voxelStudy;
+      document.querySelectorAll("[data-voxel-study]").forEach(b => b.classList.toggle("active", b === chip));
+      if (window.__voxelSyncTuneLabels) window.__voxelSyncTuneLabels();   // knobs speak the study's language
+      drawVoxelScene();
+    });
+  });
+  const draw = $("voxel-draw");
+  if (draw) draw.addEventListener("click", drawVoxelScene);
+  const reseed = $("voxel-reseed");
+  if (reseed) reseed.addEventListener("click", () => {
+    const seedIn = $("voxel-seed");
+    if (seedIn) seedIn.value = "vx-" + Math.random().toString(36).slice(2, 8);
+    drawVoxelScene();
+  });
+  const resEl = $("voxel-res");
+  if (resEl) {
+    resEl.addEventListener("input", () => { const out = $("voxel-res-val"); if (out) out.textContent = resEl.value; });
+    resEl.addEventListener("change", drawVoxelScene);
+  }
+  // Pointer modes. Orbit is the default; the other three make a click into an edit.
+  document.querySelectorAll("[data-voxel-mode]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _voxelMode = chip.dataset.voxelMode;
+      document.querySelectorAll("[data-voxel-mode]").forEach(b => b.classList.toggle("active", b === chip));
+      const c = $("studio-canvas");
+      if (c) c.style.cursor = _voxelMode === "orbit" ? "grab" : "crosshair";
+    });
+  });
+  // Quarter-turn rotation, preserving edits: rotateScene turns the LIVE scene, never a rebuild.
+  const turn = (dir) => {
+    if (!_lastVoxelScene || !_voxelForge) return;
+    _lastVoxelScene = _voxelForge.rotateScene(_lastVoxelScene, dir);
+    _voxelOps.push({ op: "turn", dir });
+    repaintVoxelScene(false);
+  };
+  const tl = $("voxel-turn-l"), tr = $("voxel-turn-r");
+  if (tl) tl.addEventListener("click", () => turn(-1));
+  if (tr) tr.addEventListener("click", () => turn(1));
+  // Algorithm tuning: Seeded keeps the seed's own draws; Tuned hands the three knobs over, with
+  // labels in the study's own vocabulary.
+  const syncTuneLabels = () => {
+    if (!_voxelForge) return;
+    const names = (_voxelForge.VOXEL_STUDIES[_voxelStudy] || {}).tune || ["A", "B", "C"];
+    for (const [i, key] of [[0, "a"], [1, "b"], [2, "c"]]) {
+      const lab = $(`voxel-tune-${key}-lab`);
+      if (lab) lab.textContent = names[i];
+    }
+  };
+  window.__voxelSyncTuneLabels = syncTuneLabels;   // study chips re-label on switch
+  document.querySelectorAll("[data-voxel-tunemode]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _voxelTuned = chip.dataset.voxelTunemode === "tuned";
+      document.querySelectorAll("[data-voxel-tunemode]").forEach(b => b.classList.toggle("active", b === chip));
+      const rows = $("voxel-tune-rows");
+      if (rows) rows.hidden = !_voxelTuned;
+      syncTuneLabels();
+      drawVoxelScene();
+    });
+  });
+  for (const key of ["a", "b", "c"]) {
+    const el = $(`voxel-tune-${key}`);
+    if (!el) continue;
+    el.addEventListener("input", () => { const out = $(`voxel-tune-${key}-val`); if (out) out.textContent = Number(el.value).toFixed(2); });
+    el.addEventListener("change", () => { if (_voxelTuned) drawVoxelScene(); });
+  }
+  // Editing + drag-to-orbit on the shared canvas. Guarded on the voxels source so no other
+  // source ever sees these; edits read the pick buffer at backing resolution.
+  const stageCanvas = $("studio-canvas");
+  let dragX = null;
+  const pickAt = (e) => {
+    const c = $("studio-canvas");
+    const rect = c.getBoundingClientRect();
+    const x = Math.round((e.clientX - rect.left) * (c.width / rect.width));
+    const y = Math.round((e.clientY - rect.top) * (c.height / rect.height));
+    if (x < 0 || y < 0 || x >= _voxelPick.width || y >= _voxelPick.height) return null;
+    const d = _voxelPick.getContext("2d", { willReadFrequently: true }).getImageData(x, y, 1, 1).data;
+    return _voxelForge ? _voxelForge.decodePick(d[0], d[1], d[2]) : null;
+  };
+  if (stageCanvas && stageCanvas.parentElement) {
+    const stage = stageCanvas.parentElement;
+    stage.addEventListener("pointerdown", (e) => {
+      if (activeSource !== "voxels" || _voxelMode !== "orbit") return;
+      dragX = e.clientX;
+    });
+    stage.addEventListener("pointermove", (e) => {
+      if (activeSource !== "voxels" || _voxelMode !== "orbit" || dragX == null) return;
+      const dx = e.clientX - dragX;
+      if (Math.abs(dx) > 90) { turn(dx > 0 ? 1 : -1); dragX = e.clientX; }
+    });
+    stage.addEventListener("pointerup", () => { dragX = null; });
+    stage.addEventListener("pointercancel", () => { dragX = null; });
+    stage.addEventListener("click", (e) => {
+      if (activeSource !== "voxels" || _voxelMode === "orbit" || !_lastVoxelScene) return;
+      if (!e.target.closest("#studio-canvas")) return;
+      const hit = pickAt(e);
+      if (!hit) return;
+      if (_voxelForge.applyVoxelEdit(_lastVoxelScene, hit.cellIndex, hit.faceId, _voxelMode)) {
+        _voxelOps.push({ op: "edit", cellIndex: hit.cellIndex, faceId: hit.faceId, mode: _voxelMode });
+        repaintVoxelScene(false);
+      }
+    });
+    // Native wheel zoom for both vector still-sources: re-render at the zoomed view, keeping the
+    // point under the cursor fixed. This is the crisp path — the CSS panzoom layer never touches
+    // these sources, so magnification is always a repaint, never a raster stretch.
+    stage.addEventListener("wheel", (e) => {
+      const src = activeSource;
+      if (src !== "voxels" && src !== "plotmaps") return;
+      e.preventDefault();
+      const v = _stillView[src];
+      const c = $("studio-canvas");
+      const rect = c.getBoundingClientRect();
+      const mx = (e.clientX - rect.left) / Math.max(1, rect.width);
+      const my = (e.clientY - rect.top) / Math.max(1, rect.height);
+      const oldZ = v.zoom;
+      const z = Math.max(1, Math.min(24, oldZ * Math.exp((e.deltaY > 0 ? -1 : 1) * 0.16)));
+      const bx = v.cx + (mx - 0.5) / oldZ;   // base-frame point under the cursor…
+      const by = v.cy + (my - 0.5) / oldZ;
+      v.cx = bx - (mx - 0.5) / z;            // …stays under it at the new zoom
+      v.cy = by - (my - 0.5) / z;
+      v.zoom = z;
+      if (z === 1) { v.cx = 0.5; v.cy = 0.5; }
+      if (src === "voxels") repaintVoxelScene(false);
+      else repaintPlotMap();
+    }, { passive: false });
+    stage.addEventListener("dblclick", () => {
+      const src = activeSource;
+      if (src !== "voxels" && src !== "plotmaps") return;
+      _stillView[src] = { zoom: 1, cx: 0.5, cy: 0.5 };
+      if (src === "voxels") repaintVoxelScene(false);
+      else repaintPlotMap();
+    });
+  }
+  const dl = (data, name, type) => {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([data], { type }));
+    a.download = name;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+  };
+  const voxBtn = $("voxel-vox");
+  if (voxBtn) voxBtn.addEventListener("click", () => {
+    if (!_lastVoxelScene || !_voxelForge) return;
+    dl(_voxelForge.toVoxFile(_lastVoxelScene), `voxel-${_lastVoxelScene.meta.study}-${_lastVoxelScene.meta.seed}.vox`, "application/octet-stream");
+  });
+  const objBtn = $("voxel-obj");
+  if (objBtn) objBtn.addEventListener("click", () => {
+    if (!_lastVoxelScene || !_voxelForge) return;
+    dl(_voxelForge.voxelObj(_lastVoxelScene.vox), `voxel-${_lastVoxelScene.meta.study}-${_lastVoxelScene.meta.seed}.obj`, "model/obj");
+  });
+  // The crossover: this build, rotations and hand edits included, onto the pen surface as a
+  // hidden-line drawing. One click walks over to Plot maps with the material pre-set.
+  const plotBtn = $("voxel-plot");
+  if (plotBtn) plotBtn.addEventListener("click", () => {
+    _plotMaterial = "voxels";
+    document.querySelectorAll("[data-plot-material]").forEach(b =>
+      b.classList.toggle("active", b.dataset.plotMaterial === "voxels"));
+    syncPlotMaterialUI();
+    const tab = document.querySelector('#studio-source button[data-source="plotmaps"]');
+    if (tab) tab.click();
+  });
+}
+
+// ── Sketch: draw + controls ──────────────────────────────────────────────────
+// The pointer is the instrument. Strokes land in sheet space through the same letterbox mapping
+// the renderer uses; the symmetry expands them live while the pen is down; the ink SETTLES into
+// its mark register on pen-up (the jitter of a register belongs to a finished stroke, not to a
+// stroke mid-gesture). The sketch object persists across source switches by design.
+function sketchLetterbox(c) {
+  // Sketch sheets are square (aspect 1) at zoom 1, so the mapping is the minimal letterbox.
+  const side = Math.min(c.width, c.height);
+  return { side, ox: (c.width - side) / 2, oy: (c.height - side) / 2 };
+}
+function drawSketch(announce) {
+  if (!_sketch || !_plotMaps || activeSource !== "sketch") return;
+  leave3D();
+  const c = $("studio-canvas");
+  sizeCanvas(c);
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return;
+  const sheet = _sketch.toSheet({ register: _sketchRegister });
+  _lastSketchSheet = sheet;
+  // Guides render UNDER the drawing, support-toned, and stay out of the sheet itself.
+  const guides = _sketchGuide === "none" ? [] : _sketch.guideLayers(_sketchGuide);
+  const display = { layers: guides.concat(sheet.layers), meta: sheet.meta };
+  const rect = _plotMaps.renderPlotMap(ctx, display, c.width, c.height, {});
+  if (rect) window.__studioContentRect = { ...rect, source: "plotmaps" };
+  const readout = $("sketch-readout");
+  const sym = sheet.meta.symmetry || { mode: "none", k: 1 };
+  if (readout) readout.textContent =
+    `${sheet.meta.strokes.toLocaleString()} strokes · ${sheet.meta.points.toLocaleString()} points`
+    + (sym.mode !== "none" ? ` · ${sym.mode} ×${sym.k}` : "")
+    + ` · hash ${sheet.meta.geometryHash}`;
+  if (announce) {
+    const obs = perceive(c);
+    say("model",
+      _sketch.isEmpty()
+        ? `A blank sheet, waiting. Draw with the pointer; the symmetry expands every stroke live, `
+          + `and the ${_sketchRegister} register settles the ink when the pen lifts.`
+        : `Your drawing, ${sheet.meta.strokes.toLocaleString()} strokes in the ${_sketchRegister} register`
+          + (sym.mode !== "none" ? ` under ${sym.mode} ×${sym.k} symmetry` : "")
+          + `. Geometry hash ${sheet.meta.geometryHash} — the receipt that this is exactly your drawing. `
+          + `Fingerprint ${obs.phash}.`);
+  }
+  startMeterLoop();
+}
+function initSketchControls() {
+  // Same event root as the voxel editor: the canvas's parent, so a swapped canvas node (the
+  // fractal3d GL dance) never orphans the handlers.
+  const sc = $("studio-canvas");
+  const stage = (sc && sc.parentElement) || document;
+  let drawing = false;
+  let livePts = null;      // the in-progress stroke, raw
+  let settled = null;      // ImageData of the sheet at pen-down, restored under live feedback
+  let penId = null;        // the ONE pointer drawing; a second finger is not part of this stroke
+  const toSheetXY = (e) => {
+    const c = $("studio-canvas");
+    const r = c.getBoundingClientRect();
+    const bx = (e.clientX - r.left) * (c.width / Math.max(1, r.width));
+    const by = (e.clientY - r.top) * (c.height / Math.max(1, r.height));
+    const { side, ox, oy } = sketchLetterbox(c);
+    return [(bx - ox) / side, (by - oy) / side];
+  };
+  const liveDraw = () => {
+    if (!livePts || livePts.length < 2) return;
+    const c = $("studio-canvas");
+    const ctx = c.getContext("2d", { willReadFrequently: true });
+    if (settled) ctx.putImageData(settled, 0, 0);
+    const { side, ox, oy } = sketchLetterbox(c);
+    ctx.strokeStyle = "#e8e6e1";
+    ctx.lineWidth = Math.max(0.6, side / 900);
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
+    const copies = _sketch.expandStroke(livePts);
+    ctx.beginPath();
+    for (const line of copies) {
+      for (let i = 0; i < line.length; i++) {
+        const X = ox + line[i][0] * side, Y = oy + line[i][1] * side;
+        if (i === 0) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+      }
+    }
+    ctx.stroke();
+  };
+  stage.addEventListener("pointerdown", (e) => {
+    if (activeSource !== "sketch" || !_sketch) return;
+    if (!e.target.closest("#studio-canvas")) return;
+    if (drawing) return;            // a second finger mid-stroke is not part of this stroke
+    e.preventDefault();
+    penId = e.pointerId;
+    try { e.target.setPointerCapture(e.pointerId); } catch (_) {}
+    const c = $("studio-canvas");
+    const ctx = c.getContext("2d", { willReadFrequently: true });
+    settled = ctx ? ctx.getImageData(0, 0, c.width, c.height) : null;
+    const [x, y] = toSheetXY(e);
+    _sketch.beginStroke(x, y);
+    livePts = [[x, y]];
+    drawing = true;
+  });
+  stage.addEventListener("pointermove", (e) => {
+    if (!drawing || activeSource !== "sketch" || !_sketch) return;
+    if (penId != null && e.pointerId !== penId) return;   // ignore every pointer but the pen's
+    const [x, y] = toSheetXY(e);
+    _sketch.extendStroke(x, y);
+    livePts.push([x, y]);
+    liveDraw();
+  });
+  const penUp = () => {
+    if (!drawing) return;
+    drawing = false; livePts = null; settled = null; penId = null;
+    if (_sketch) _sketch.endStroke();
+    drawSketch(false);
+  };
+  stage.addEventListener("pointerup", penUp);
+  stage.addEventListener("pointercancel", penUp);
+  // A release outside the stage (drag off-window, alt-tab, focus steal) must still lift the pen:
+  // an open stroke silently swallows every later hover move into one monster gesture. Seen live —
+  // a 639-point phantom stroke committed by the NEXT pen-down. Window-level release + visibility
+  // loss both commit whatever is open.
+  window.addEventListener("pointerup", penUp);
+  window.addEventListener("blur", penUp);
+  document.addEventListener("visibilitychange", () => { if (document.hidden) penUp(); });
+  document.querySelectorAll("[data-sketch-sym]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      document.querySelectorAll("[data-sketch-sym]").forEach(b => b.classList.toggle("active", b === chip));
+      if (_sketch) {
+        const k = parseInt(($("sketch-k") || {}).value, 10) || 6;
+        _sketch.setSymmetry(chip.dataset.sketchSym, k);
+        syncFoldEnabled();
+        drawSketch(false);
+      }
+    });
+  });
+  const kEl = $("sketch-k");
+  if (kEl) {
+    kEl.addEventListener("input", () => { const out = $("sketch-k-val"); if (out) out.textContent = kEl.value; });
+    kEl.addEventListener("change", () => {
+      if (!_sketch) return;
+      const mode = (document.querySelector("[data-sketch-sym].active") || {}).dataset;
+      _sketch.setSymmetry(mode ? mode.sketchSym : "none", parseInt(kEl.value, 10));
+      drawSketch(false);
+    });
+  }
+  document.querySelectorAll("[data-sketch-guide]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _sketchGuide = chip.dataset.sketchGuide;
+      // Tell the SKETCH too, not just this module. guideLayers() takes an explicit argument, so
+      // the drawing looked right while the sketch's own guide stayed "none" — and serialize()
+      // reports the sketch's state, so every pin recorded the wrong guide.
+      if (_sketch) _sketch.setGuide(_sketchGuide);
+      document.querySelectorAll("[data-sketch-guide]").forEach(b => b.classList.toggle("active", b === chip));
+      drawSketch(false);
+    });
+  });
+  document.querySelectorAll("[data-sketch-register]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _sketchRegister = chip.dataset.sketchRegister;
+      document.querySelectorAll("[data-sketch-register]").forEach(b => b.classList.toggle("active", b === chip));
+      drawSketch(false);
+    });
+  });
+  const undo = $("sketch-undo");
+  if (undo) undo.addEventListener("click", () => { if (_sketch) { _sketch.undo(); drawSketch(false); } });
+  const clear = $("sketch-clear");
+  if (clear) clear.addEventListener("click", () => { if (_sketch) { _sketch.clear(); drawSketch(true); } });
+  const svgBtn = $("sketch-svg");
+  if (svgBtn) svgBtn.addEventListener("click", () => {
+    if (!_lastSketchSheet || !_plotMaps) return;
+    const svg = _plotMaps.plotMapSVG(_lastSketchSheet);
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+    a.download = `sketch-${_lastSketchSheet.meta.geometryHash}.svg`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+  });
+  // The crossover: the drawing onto the pen surface as its own material.
+  const toPlot = $("sketch-plot");
+  if (toPlot) toPlot.addEventListener("click", () => {
+    if (!_sketch || _sketch.isEmpty()) { say("model", "Nothing to send yet — draw something first."); return; }
+    _plotMaterial = "sketchsheet";
+    document.querySelectorAll("[data-plot-material]").forEach(b =>
+      b.classList.toggle("active", b.dataset.plotMaterial === "sketchsheet"));
+    syncPlotMaterialUI();
+    const tab = document.querySelector('#studio-source button[data-source="plotmaps"]');
+    if (tab) tab.click();
+  });
+  const pin = $("sketch-pin");
+  if (pin) pin.addEventListener("click", () => pinCurrent("sketch"));
+  syncFoldEnabled();   // the default symmetry is None, so the fold starts inert and says so
+}
+
+// ── Replay theatre: any sheet watched as a plotter would run it ─────────────
+// The stream module orders the strokes pen by pen; this loop spends a point budget per frame so
+// playback speed is uniform in INK, not in strokes. The replay draws each pass the pen model
+// declares, which is TRUER to the physical plot than the one-pass static render.
+function stopReplay() {
+  if (!_replay) return;
+  if (_replay.raf) cancelAnimationFrame(_replay.raf);
+  _replay = null;
+  const btn = $("plot-play");
+  if (btn) { btn.textContent = "Watch"; btn.setAttribute("aria-label", "Replay the sheet stroke by stroke"); }
+}
+function replayGround(ctx, c) {
+  ctx.fillStyle = "#0d1b1c";
+  ctx.fillRect(0, 0, c.width, c.height);
+}
+function replayDrawBatch(ctx, T, batch) {
+  for (const seg of batch) {
+    ctx.strokeStyle = seg.tone === "support" ? "rgba(232,230,225,0.45)" : "#e8e6e1";
+    ctx.lineWidth = Math.max(0.5, seg.weight * (T.sw / 900));
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
+    ctx.beginPath();
+    const line = seg.line;
+    for (let i = seg.from; i <= seg.to; i++) {
+      const X = T.tx(line[i][0]), Y = T.ty(line[i][1]);
+      if (i === seg.from) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+    }
+    ctx.stroke();
+  }
+}
+function startReplay() {
+  // Guarded because the module load is async: a Watch click followed by a source switch would
+  // otherwise resolve into a replay that wipes the NEW source's canvas and draws a stale sheet.
+  if (!_lastPlot || !_replayMod || !_plotMaps || activeSource !== "plotmaps") return;
+  stopReplay();
+  const c = $("studio-canvas");
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return;
+  const stepper = _replayMod.createReplay(_lastPlot);
+  const T = _plotMaps.sheetTransform(_lastPlot, c.width, c.height, { view: _stillView.plotmaps });
+  replayGround(ctx, c);
+  _replay = { stepper, raf: 0 };
+  const btn = $("plot-play");
+  if (btn) { btn.textContent = "Pause"; btn.setAttribute("aria-label", "Pause the replay"); }
+  const note = $("plot-pen-note");
+  const scrub = $("plot-scrub");
+  const tick = () => {
+    if (!_replay || _replay.stepper !== stepper || activeSource !== "plotmaps") { stopReplay(); return; }
+    // Base rate tuned to the WATCHING, not the finishing: ~70 points per frame puts a dense
+    // sheet at half a minute and a sparse one at ten seconds, which is the meditative range —
+    // the first cut at 260 finished a 42k-point sheet in under two seconds, a blink, not a plot.
+    const speed = parseFloat(($("plot-speed") || {}).value) || 1;
+    const r = stepper.step(Math.max(8, Math.round(70 * speed)));
+    replayDrawBatch(ctx, T, r.batch);
+    if (r.penChanged != null && note) {
+      const names = _replayMod.PEN_NAMES || [];
+      note.textContent = `pen change — ${names[r.penChanged] || "pen " + r.penChanged} down`;
+    }
+    if (scrub) scrub.value = String(Math.round(r.progress * 1000));
+    if (r.done) {
+      if (note) note.textContent = `sheet complete — drawn as the plotter would run it`;
+      stopReplay();
+      return;
+    }
+    _replay.raf = requestAnimationFrame(tick);
+  };
+  _replay.raf = requestAnimationFrame(tick);
+}
+function initReplayControls() {
+  const btn = $("plot-play");
+  if (btn) btn.addEventListener("click", () => {
+    if (_replay) { stopReplay(); repaintPlotMap(); return; }
+    if (!_lastPlot) { say("model", "Draw a sheet first, then watch it."); return; }
+    loadReplay().then(startReplay).catch(err => say("model", "The replay engine failed to load: " + err.message));
+  });
+  const scrub = $("plot-scrub");
+  if (scrub) scrub.addEventListener("input", () => {
+    if (!_lastPlot || !_plotMaps || activeSource !== "plotmaps") return;
+    // The scrubber used to be a dead control until Watch had been pressed once, because the
+    // replay module is a lazy import and only Watch and G-code loaded it: the thumb slid the
+    // full width, the canvas never moved, and nothing said why. Scrubbing IS a request to
+    // replay, so it loads the module itself and then does what was asked.
+    if (!_replayMod) { loadReplay().then(() => scrubTo(scrub)).catch(err => say("model", "The replay engine failed to load: " + err.message)); return; }
+    scrubTo(scrub);
+  });
+  const gcodeBtn = $("plot-gcode");
+  if (gcodeBtn) gcodeBtn.addEventListener("click", () => {
+    if (!_lastPlot) { say("model", "Draw a sheet first."); return; }
+    loadReplay().then(() => {
+      const g = _replayMod.sheetGcode(_lastPlot, { widthMm: 210 });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([g], { type: "text/plain" }));
+      a.download = `plot-${_lastPlot.meta.study || "sheet"}-${_lastPlot.meta.seed || "live"}.gcode`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+      say("model", "G-code exported: pen-ordered, with an M0 pause at every pen change so you can swap pens at the machine.");
+    }).catch(err => say("model", "G-code export failed: " + err.message));
+  });
+}
+
+// Draw the sheet exactly as far as the scrubber asks. Separated from the handler so the
+// lazy-load path can call it once the module has arrived.
+function scrubTo(scrub) {
+  if (!_lastPlot || !_replayMod || !_plotMaps || activeSource !== "plotmaps") return;
+  stopReplay();
+  const c = $("studio-canvas");
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return;
+  const target = parseInt(scrub.value, 10) / 1000;
+  const stepper = _replayMod.createReplay(_lastPlot);
+  const T = _plotMaps.sheetTransform(_lastPlot, c.width, c.height, { view: _stillView.plotmaps });
+  replayGround(ctx, c);
+  // Scrubbing is an instant re-run to the target. The step budget is sized to the REMAINING
+  // distance, not a fixed 20,000: a fat fixed budget overshot the requested position by most of a
+  // sheet, so the slider and the ink disagreed and the control read as broken.
+  const total = stepper.totals.points || 1;
+  let prog = 0, guard = 4000;
+  while (guard-- > 0) {
+    const r = stepper.step(Math.max(1, Math.round((target - prog) * total)));
+    replayDrawBatch(ctx, T, r.batch);
+    prog = r.progress;
+    if (r.done || prog >= target - 1e-9) break;
+  }
+}
+
+// ── The shelf: pin, restore, carry ──────────────────────────────────────────
+// Pins are RECIPES: seed + controls (+ raw strokes for a sketch, + the op log for a voxel build),
+// enough to reproduce the creation exactly. Thumbs are only a memory aid; the recipe is the work.
+function thumbFromCanvas() {
+  const c = $("studio-canvas");
+  if (!c || c.width < 9) return null;
+  const t = document.createElement("canvas");
+  t.width = 96; t.height = 72;
+  const tc = t.getContext("2d");
+  tc.fillStyle = "#0d1b1c"; tc.fillRect(0, 0, 96, 72);
+  const k = Math.min(96 / c.width, 72 / c.height);
+  const w = c.width * k, h = c.height * k;
+  try { tc.drawImage(c, (96 - w) / 2, (72 - h) / 2, w, h); } catch (_) { return null; }
+  try { return t.toDataURL("image/jpeg", 0.62); } catch (_) { return null; }
+}
+function currentPlotRecipe() {
+  const meta = _lastPlot ? _lastPlot.meta : {};
+  const rec = {
+    // `source` is the MATERIAL's origin, not the panel it was plotted in. Hardcoding "plotmaps"
+    // made two different photographs hash to the same recipe id, so pinning the second silently
+    // overwrote the first — the shelf's dedupe turned into data loss.
+    source: (_plotFieldInfo && _plotFieldInfo.name) || "plotmaps",
+    material: _plotMaterial,
+    study: _plotStudy, method: _plotMethod, register: _plotRegister, blend: _plotBlend,
+    seed: (($("plot-seed") || {}).value || "aurora").trim(),
+    density: parseFloat(($("plot-density") || {}).value) || 1,
+    levels: parseInt(($("plot-levels") || {}).value, 10) || 14,
+    plateId: (($("plot-plate") || {}).value) || null,
+    // An archive sheet is fully reproducible from its work id: the pixels are published, so unlike
+    // a picture or a captured frame this restores exactly, hash and all.
+    workId: (_plotMaterial === "archive" && (($("plot-work") || {}).value)) || null,
+    voxel: null, sketch: null,
+  };
+  if (_plotMaterial === "voxels") {
+    // A voxel sheet drawn without ever opening the Voxels source is still fully reproducible:
+    // drawPlotMap synthesises the scene from (seed, study) at the forge's own defaults, so the
+    // recipe writes down exactly that. Refusing the pin here — as the first cut did — turned a
+    // reproducible sheet into an unpinnable one for no reason.
+    rec.voxel = _lastVoxelScene ? voxelRecipe() : {
+      study: _voxelStudy, seed: rec.seed, res: 48, tune: null, ops: [],
+    };
+  }
+  if (_plotMaterial === "sketchsheet" && _sketch) {
+    rec.sketch = _sketch.serialize();
+    rec.guide = _sketchGuide;
+    // The sheet's register and the DRAWING's register are two different things: the pen surface's
+    // chip may sit at "auto", which is not a register a sketch can be inked in. Store the one the
+    // sheet was actually built with, or a restore silently re-inks a worked drawing as drawn.
+    rec.sketchRegister = _plotRegister !== "auto" ? _plotRegister : _sketchRegister;
+  }
+  return { kind: meta.kind || "field", rec };
+}
+
+// One place that says what a voxel build IS: seed, study, the resolution and knobs it was built
+// at, and the ordered op log. Restore applies every one of these; earlier it applied only the
+// seed and study, so a build pinned at res 64 with tuned knobs rebuilt at res 48 untuned and the
+// ops then landed on cells that meant something else entirely.
+function voxelRecipe() {
+  const m = _lastVoxelScene.meta;
+  return {
+    study: m.study, seed: m.seed,
+    res: m.res ? m.res[0] : 48,
+    tune: m.tune || null,
+    ops: _voxelOps.slice(),
+  };
+}
+// Put the voxel controls back exactly where the recipe says, THEN let the source rebuild.
+function applyVoxelRecipe(v) {
+  const seedIn = $("voxel-seed");
+  if (seedIn) seedIn.value = v.seed;
+  _voxelStudy = v.study;
+  document.querySelectorAll("[data-voxel-study]").forEach(b =>
+    b.classList.toggle("active", b.dataset.voxelStudy === v.study));
+  const resEl = $("voxel-res");
+  if (resEl && v.res != null) {
+    resEl.value = String(v.res);
+    const out = $("voxel-res-val"); if (out) out.textContent = String(v.res);
+  }
+  _voxelTuned = !!v.tune;
+  document.querySelectorAll("[data-voxel-tunemode]").forEach(b =>
+    b.classList.toggle("active", (b.dataset.voxelTunemode === "tuned") === _voxelTuned));
+  const rows = $("voxel-tune-rows");
+  if (rows) rows.hidden = !_voxelTuned;
+  if (v.tune) {
+    for (const [id, valId, key] of [["voxel-tune-a", "voxel-tune-a-val", "a"], ["voxel-tune-b", "voxel-tune-b-val", "b"], ["voxel-tune-c", "voxel-tune-c-val", "c"]]) {
+      const el = $(id);
+      if (!el || v.tune[key] == null) continue;
+      el.value = String(v.tune[key]);
+      const out = $(valId); if (out) out.textContent = Number(v.tune[key]).toFixed(2);
+    }
+  }
+  if (window.__voxelSyncTuneLabels) window.__voxelSyncTuneLabels();
+}
+// Replay an op log onto the LIVE scene, in order. Turns and edits interleave because that is how
+// they were made: an edit recorded after a turn addresses the rotated grid.
+function applyVoxelOps(ops) {
+  let dropped = 0;
+  for (const op of (ops || [])) {
+    if (op.op === "turn") { _lastVoxelScene = _voxelForge.rotateScene(_lastVoxelScene, op.dir); _voxelOps.push(op); }
+    else if (op.op === "edit" && _voxelForge.applyVoxelEdit(_lastVoxelScene, op.cellIndex, op.faceId, op.mode)) _voxelOps.push(op);
+    else dropped += 1;
+  }
+  // Never let a partial restore pass as exact.
+  if (dropped) {
+    say("model", `Restored the build, but ${dropped} of ${ops.length} recorded steps no longer land on this grid and were dropped. That means this is not an exact reproduction, said out loud rather than hidden.`);
+  }
+  return dropped;
+}
+// Wait for the source's own async rebuild to produce a scene that MATCHES the recipe, then
+// replay. The guard checks the whole grid identity, not just the seed: an op log is a sequence of
+// cell indices, and a cell index only means what it meant on the grid it was recorded against.
+function replayVoxelOps(v, announce) {
+  const t0 = performance.now();
+  const tick = () => {
+    const scene = _lastVoxelScene;
+    if (scene && _voxelForge && scene.meta.seed === v.seed && scene.meta.study === v.study
+      && (v.res == null || scene.meta.res[0] === v.res)) {
+      applyVoxelOps(v.ops);
+      repaintVoxelScene(announce);
+      return;
+    }
+    if (performance.now() - t0 < 4000) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+function pinCurrent(what) {
+  const finish = () => {
+    let kind, rec, title;
+    if (what === "voxel") {
+      if (!_lastVoxelScene) { say("model", "Build something first."); return; }
+      kind = "voxel";
+      rec = {
+        source: "voxels", material: null, study: null, method: null, register: null, blend: null,
+        seed: _lastVoxelScene.meta.seed, density: null, levels: null, plateId: null,
+        voxel: voxelRecipe(),
+        sketch: null,
+      };
+      title = `${_lastVoxelScene.meta.study} · ${_lastVoxelScene.meta.seed}`
+        + (_voxelOps.length ? ` +${_voxelOps.length}` : "");
+    } else if (what === "sketch") {
+      if (!_sketch || _sketch.isEmpty()) { say("model", "Draw something first."); return; }
+      kind = "sketch";
+      rec = {
+        source: "sketch", material: null, study: null, method: null,
+        register: _sketchRegister, guide: _sketchGuide, blend: null, seed: null,
+        density: null, levels: null, plateId: null, voxel: null, sketch: _sketch.serialize(),
+      };
+      const sheet = _lastSketchSheet || _sketch.toSheet({ register: _sketchRegister });
+      title = `sketch · ${sheet.meta.geometryHash}`;
+    } else {
+      if (!_lastPlot) { say("model", "Draw a sheet first."); return; }
+      const cur = currentPlotRecipe();
+      if (!cur.rec) {
+        const hint0 = $("shelf-hint");
+        if (hint0) hint0.textContent = "not pinned: " + cur.why;
+        say("model", "This sheet cannot be pinned yet — " + cur.why + ".");
+        return;
+      }
+      kind = cur.kind; rec = cur.rec;
+      title = `${_lastPlot.meta.label || _lastPlot.meta.study || "sheet"} · ${rec.seed}`;
+    }
+    const res = _shelf.add({ kind, title, recipe: rec, thumb: thumbFromCanvas(), stamp: new Date().toISOString() });
+    const hint = $("shelf-hint");
+    if (!res.ok) {
+      if (hint) hint.textContent = "not pinned: " + res.why;
+      say("model", "The shelf refused the pin: " + res.why + ".");
+      return;
+    }
+    renderShelfStrip();
+    if (hint) hint.textContent = "pinned — the recipe reproduces it exactly, in this browser or from an exported file";
+  };
+  if (_shelf) { finish(); return; }
+  loadShelf().then(() => {
+    if (!_shelf) {
+      let storage = null;
+      try { storage = window.localStorage; storage.setItem("studio.shelf.probe", "1"); storage.removeItem("studio.shelf.probe"); } catch (_) { storage = null; }
+      if (!storage) { say("model", "The shelf needs browser storage, which is unavailable here — pins would not survive. Export/import still works once storage exists."); return; }
+      _shelf = _shelfMod.createShelf({ storage });
+    }
+    finish();
+  }).catch(err => say("model", "The shelf failed to load: " + err.message));
+}
+// Put the sketch state back: strokes, the register they were marked in, and the guide they were
+// drawn against. Returns false when the payload is from a newer page than this one.
+function applySketchRecipe(r) {
+  if (!_sketch) _sketch = _sketchMod.createSketch();
+  if (!_sketch.restore(r.sketch)) {
+    say("model", "That pin's sketch format is newer than this page understands, so nothing was changed.");
+    return false;
+  }
+  // sketchRegister when the pin came from the pen surface, register when it came from the Sketch
+  // source; "auto" is a pen-surface value and never a register the drawing can be inked in.
+  const reg = r.sketchRegister || (r.register !== "auto" ? r.register : null);
+  if (reg) {
+    _sketchRegister = reg;
+    document.querySelectorAll("[data-sketch-register]").forEach(b =>
+      b.classList.toggle("active", b.dataset.sketchRegister === reg));
+  }
+  if (r.guide) {
+    _sketchGuide = r.guide;
+    _sketch.setGuide(r.guide);
+    document.querySelectorAll("[data-sketch-guide]").forEach(b =>
+      b.classList.toggle("active", b.dataset.sketchGuide === r.guide));
+  }
+  // The symmetry lives in the restored payload, so the CHIPS have to follow it. Left unsynced,
+  // the panel showed "None" over a kaleidoscope, and the first touch of either control snapped
+  // the drawing to whatever the stale chips claimed.
+  const sym = _sketch.getSymmetry();
+  document.querySelectorAll("[data-sketch-sym]").forEach(b =>
+    b.classList.toggle("active", b.dataset.sketchSym === sym.mode));
+  const kEl = $("sketch-k");
+  if (kEl) { kEl.value = String(sym.k); const out = $("sketch-k-val"); if (out) out.textContent = String(sym.k); }
+  syncFoldEnabled();
+  return true;
+}
+// The fold only means something under a rotational symmetry. Disabling it there beats leaving a
+// live-looking slider that silently does nothing.
+function syncFoldEnabled() {
+  const kEl = $("sketch-k");
+  if (!kEl) return;
+  const mode = (document.querySelector("[data-sketch-sym].active") || { dataset: {} }).dataset.sketchSym || "none";
+  const on = mode === "radial" || mode === "kaleido";
+  kEl.disabled = !on;
+  const row = kEl.closest(".at-group");
+  if (row) row.classList.toggle("is-inert", !on);
+}
+
+// Restore routes by WHAT THE PIN IS MADE OF, not by which button pinned it. A blend is a sheet
+// whose material may be a sketch or a voxel build, and a sketch pinned from the pen surface is
+// still a pen-surface sheet — reading only pin.kind sent both down the wrong path and rebuilt
+// something else in silence.
+function restorePin(pin) {
+  const r = pin.recipe;
+  const material = r.material || null;
+  const wantsVoxel = r.voxel && (pin.kind === "voxel" || material === "voxels");
+  const wantsSketch = r.sketch && (pin.kind === "sketch" || material === "sketchsheet");
+  // A voxel pin, or any sheet whose material is the build: the build is restored first, because
+  // the sheet is drawn FROM it.
+  if (wantsVoxel && pin.kind === "voxel") {
+    applyVoxelRecipe(r.voxel);
+    setSource("voxels");
+    replayVoxelOps(r.voxel, true);
+    return;
+  }
+  if (pin.kind === "sketch" && material !== "sketchsheet") {
+    Promise.all([loadSketch(), loadPlotMaps()]).then(() => {
+      if (!applySketchRecipe(r)) return;
+      setSource("sketch");
+    }).catch(() => {});
+    return;
+  }
+  // Sheet kinds: set the pen-surface state, then let its own load path draw.
+  const seedIn = $("plot-seed");
+  if (seedIn && r.seed) seedIn.value = r.seed;
+  _plotMaterial = material || "field";
+  _plotStudy = r.study || "auto";
+  _plotMethod = r.method || "auto";
+  _plotRegister = r.register || "auto";
+  _plotBlend = r.blend || "alone";
+  _plotField = null; _plotFieldInfo = null;
+  const dEl = $("plot-density");
+  if (dEl && r.density != null) { dEl.value = String(r.density); const v = $("plot-density-val"); if (v) v.textContent = Number(r.density).toFixed(2); }
+  const lEl = $("plot-levels");
+  if (lEl && r.levels != null) { lEl.value = String(r.levels); const v = $("plot-levels-val"); if (v) v.textContent = String(r.levels); }
+  for (const [attr, val] of [["plot-material", _plotMaterial], ["plot-study", _plotStudy], ["plot-method", _plotMethod], ["plot-register", _plotRegister], ["plot-blend", _plotBlend]]) {
+    document.querySelectorAll(`[data-${attr}]`).forEach(b =>
+      b.classList.toggle("active", b.dataset[attr.replace(/-([a-z])/g, (_, ch) => ch.toUpperCase())] === val));
+  }
+  syncPlotMaterialUI();
+  if ((r.material === "picture" || r.material === "canvas") && !_plotField) {
+    // The pixels are genuinely gone. Blank the stale snapshot so nothing else can stand in for
+    // them, and say so — the pen surface then reports "no frame to plot" rather than drawing an
+    // unrelated image under this pin's name.
+    _restoringPin = true;
+    _plotSnapshotOk = false;
+    say("model", "That pin used a " + (r.material === "picture" ? "picture" : "captured frame") + " that lives only in the moment it was made, so it cannot be redrawn from the recipe. Every other control is set exactly as pinned — choose the image again and the sheet comes back.");
+    setTimeout(() => { _restoringPin = false; }, 0);
+  }
+  if (r.material === "archive" && r.workId) {
+    // Same custom-listbox problem the plate picker has: .value refuses a value whose option has
+    // not arrived, and the options arrive from a fetch. Fill first, then set, then redraw. The
+    // band filter is widened to All if the pinned work is not in the band currently shown, or the
+    // option would never exist and the sheet would draw from whatever was selected before.
+    loadLibrary().then(lib => {
+      const work = lib.byId(r.workId);
+      if (!work) {
+        say("model", `That pin was drawn from archive work ${r.workId}, which is not in the published catalogue any more. Every other control is set as pinned.`);
+        return;
+      }
+      if (!_libraryMod.filterWorks(lib.works, _libraryFilter).some(w => w.id === work.id)) {
+        _libraryFilter = "all";
+      }
+      _libraryWant = work.id;
+      return fillLibraryPicker(work.id).then(() => {
+        const sel = $("plot-work");
+        if (sel) sel.value = work.id;
+        _plotField = null; _plotFieldInfo = null;
+        if (activeSource === "plotmaps") drawPlotMap();
+      });
+    }).catch(() => say("model", "The archive catalogue could not be loaded, so that pin could not be redrawn."));
+  }
+  if (r.material === "plate" && r.plateId) {
+    // The plate picker is a custom listbox fed by an async fetch, and its .value setter REFUSES a
+    // value whose option has not arrived yet — so the first attempt is a silent no-op and the
+    // sheet would draw from whatever plate was already selected. Poll until it sticks, then force
+    // the redraw the setter deliberately does not fire.
+    fillPlatePicker();
+    const t0 = performance.now();
+    const setPlate = () => {
+      const sel = $("plot-plate");
+      if (sel) {
+        sel.value = r.plateId;
+        if (sel.value === r.plateId) {
+          _plotField = null; _plotFieldInfo = null;
+          if (activeSource === "plotmaps") drawPlotMap();
+          return;
+        }
+      }
+      if (performance.now() - t0 < 4000) requestAnimationFrame(setPlate);
+    };
+    setPlate();
+  }
+  if (wantsSketch) {
+    Promise.all([loadSketch(), loadPlotMaps()]).then(() => {
+      applySketchRecipe(r);
+      setSource("plotmaps");
+    }).catch(() => {});
+    return;
+  }
+  if (wantsVoxel) {
+    // A sheet drawn FROM the build: rebuild the scene and replay its ops SYNCHRONOUSLY, then
+    // switch. Doing the replay in a rAF here would race the sheet's own draw and plot a build
+    // that had not finished becoming itself.
+    Promise.all([loadVoxelForge(), loadPlotMaps()]).then(() => {
+      applyVoxelRecipe(r.voxel);
+      _lastVoxelScene = _voxelForge.buildVoxelScene(r.voxel.seed, {
+        study: r.voxel.study, res: r.voxel.res, tune: r.voxel.tune,
+      });
+      _voxelOps = [];
+      applyVoxelOps(r.voxel.ops);
+      setSource("plotmaps");
+    }).catch(() => {});
+    return;
+  }
+  setSource("plotmaps");
+}
+function renderShelfStrip() {
+  const strip = $("shelf-strip");
+  if (!strip || !_shelf) return;
+  strip.innerHTML = "";
+  const pins = _shelf.list();
+  const hint = $("shelf-hint");
+  if (!pins.length && hint) hint.textContent = "nothing pinned yet; Pin sits beside the exports in Plot maps, Voxels, and Sketch";
+  for (const pin of pins) {
+    const el = document.createElement("button");
+    el.type = "button"; el.className = "shelf-pin"; el.setAttribute("role", "listitem");
+    el.title = `${pin.title} — pinned ${String(pin.stamp).slice(0, 10)}; click to reproduce`;
+    if (pin.thumb) {
+      const img = document.createElement("img");
+      img.src = pin.thumb; img.alt = "";
+      el.appendChild(img);
+    }
+    const t = document.createElement("span");
+    t.className = "shelf-pin-title"; t.textContent = pin.title;
+    el.appendChild(t);
+    // A real button, not a span: nested inside the pin button it was unreachable by keyboard, so
+    // a pinned creation could be made but never removed without a mouse. Kept out of the pin's
+    // own click by stopPropagation, and out of its element nesting by absolute positioning.
+    const x = document.createElement("span");
+    x.className = "shelf-pin-x"; x.textContent = "×";
+    x.setAttribute("role", "button"); x.setAttribute("tabindex", "0");
+    x.setAttribute("aria-label", "Remove the pin " + pin.title);
+    const removePin = (e) => { e.stopPropagation(); e.preventDefault(); _shelf.remove(pin.id); renderShelfStrip(); };
+    x.addEventListener("click", removePin);
+    x.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") removePin(e); });
+    el.appendChild(x);
+    el.addEventListener("click", () => restorePin(pin));
+    strip.appendChild(el);
+  }
+}
+function initShelf() {
+  loadShelf().then(() => {
+    let storage = null;
+    try { storage = window.localStorage; storage.setItem("studio.shelf.probe", "1"); storage.removeItem("studio.shelf.probe"); } catch (_) { storage = null; }
+    if (storage) { _shelf = _shelfMod.createShelf({ storage }); renderShelfStrip(); }
+  }).catch(() => {});
+  const pinPlot = $("plot-pin");
+  if (pinPlot) pinPlot.addEventListener("click", () => pinCurrent("plot"));
+  const pinVox = $("voxel-pin");
+  if (pinVox) pinVox.addEventListener("click", () => pinCurrent("voxel"));
+  const exp = $("shelf-export");
+  if (exp) exp.addEventListener("click", () => {
+    if (!_shelf) { say("model", "This window blocks browser storage, so there is no shelf to export."); return; }
+    if (!_shelf.list().length) { say("model", "The shelf is empty — nothing to export."); return; }
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([_shelf.exportJSON()], { type: "application/json" }));
+    a.download = "studio-shelf.json";
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+  });
+  const impBtn = $("shelf-import");
+  const impFile = $("shelf-import-file");
+  if (impBtn && impFile) {
+    impBtn.addEventListener("click", () => impFile.click());
+    impFile.addEventListener("change", () => {
+      const f = impFile.files && impFile.files[0];
+      if (!f) return;
+      if (!_shelf) {
+        // Storage is blocked (private window, cookies off). Saying so beats swallowing the file
+        // the user just chose and leaving the button looking like it worked.
+        const hint = $("shelf-hint");
+        if (hint) hint.textContent = "import needs browser storage, which this window blocks";
+        say("model", "This window blocks browser storage, so the shelf has nowhere to keep an imported pin. Nothing was changed.");
+        impFile.value = "";
+        return;
+      }
+      f.text().then(txt => {
+        const res = _shelf.importJSON(txt, { merge: true });
+        const hint = $("shelf-hint");
+        if (res.ok) {
+          renderShelfStrip();
+          if (hint) hint.textContent = `imported ${res.added} pin${res.added === 1 ? "" : "s"}` + (res.skipped ? `, ${res.skipped} already here` : "");
+        } else if (hint) hint.textContent = "import refused: " + res.why;
+      });
+      impFile.value = "";
+    });
+  }
+}
+
 initNeuralControls();
 initSoundControls();
+initPlotMapControls();
+initVoxelControls();
+initSketchControls();
+initReplayControls();
+initShelf();
 
 // Sync roving tabindex whenever setSource changes the active tab.
 function syncTabindex(activeKey) {
@@ -639,15 +2305,57 @@ function syncTabindex(activeKey) {
 // for a 2D canvas, or by blitting the (WebGL) canvas through a 2D scratch canvas with drawImage
 // (which accepts any source canvas regardless of its backing context). Keeps perceive() reusable.
 const _scratch = document.createElement("canvas");
-function readPixelData(canvas, w, h) {
-  const ctx2d = canvas.getContext("2d", { willReadFrequently: true });
-  if (ctx2d) return ctx2d.getImageData(0, 0, w, h).data;
-  // WebGL-backed (or otherwise non-2D) canvas: mirror it into a 2D scratch and read that.
+
+// The content-rect contract: a source that letterboxes its artwork inside the shared canvas
+// publishes window.__studioContentRect {x, y, w, h} in canvas-backing pixels (the spatial atlas
+// projects its splat AABB each frame). Every measurement crops to it, because measuring the full
+// frame describes the letterbox: a portrait artwork in a wide canvas read as "wide, dominated by
+// near-black" — a true statement about the pixels and a false one about the piece. Sources that
+// fill the frame publish nothing and are measured exactly as before.
+function contentRect(canvas) {
+  const r = window.__studioContentRect;
+  if (!r || !(r.w > 8) || !(r.h > 8)) return null;
+  const x = Math.max(0, Math.min(canvas.width - 9, Math.round(r.x)));
+  const y = Math.max(0, Math.min(canvas.height - 9, Math.round(r.y)));
+  const w = Math.min(canvas.width - x, Math.round(r.w));
+  const h = Math.min(canvas.height - y, Math.round(r.h));
+  return (w > 8 && h > 8) ? { x, y, w, h } : null;
+}
+
+function readPixelData(canvas, w, h, rect) {
+  if (!rect) {
+    const ctx2d = canvas.getContext("2d", { willReadFrequently: true });
+    if (ctx2d) return ctx2d.getImageData(0, 0, w, h).data;
+  }
+  // WebGL-backed canvas, or a content-rect crop: mirror through a 2D scratch and read that.
   _scratch.width = w; _scratch.height = h;
   const sctx = _scratch.getContext("2d", { willReadFrequently: true });
   sctx.clearRect(0, 0, w, h);
-  sctx.drawImage(canvas, 0, 0, w, h);
+  if (rect) sctx.drawImage(canvas, rect.x, rect.y, rect.w, rect.h, 0, 0, w, h);
+  else sctx.drawImage(canvas, 0, 0, w, h);
   return sctx.getImageData(0, 0, w, h).data;
+}
+
+// The STREAMING read: a bounded downsample for the live loop. A full-resolution
+// mirror-and-read of a GL canvas is a GPU sync plus a multi-megapixel CPU copy
+// (measured at 46ms for 1.3MP), and at 12Hz that starves the main thread until
+// clicks stop landing. The meters and the frame-to-frame hash are box-averaged
+// to small grids anyway, so a bounded read is the same readout for a fraction
+// of the cost. perceive() keeps reading full resolution for the settled,
+// canonical hash that receipts and answers quote.
+const LIVE_READ_MAX_EDGE = 512;
+function readPixelDataBounded(canvas, maxEdge) {
+  const rect = contentRect(canvas);
+  const w0 = rect ? rect.w : canvas.width, h0 = rect ? rect.h : canvas.height;
+  const scale = Math.min(1, maxEdge / Math.max(w0, h0));
+  if (scale === 1 && !rect) return { px: readPixelData(canvas, w0, h0), w: w0, h: h0 };
+  const w = Math.max(1, Math.round(w0 * scale)), h = Math.max(1, Math.round(h0 * scale));
+  _scratch.width = w; _scratch.height = h;
+  const sctx = _scratch.getContext("2d", { willReadFrequently: true });
+  sctx.clearRect(0, 0, w, h);
+  if (rect) sctx.drawImage(canvas, rect.x, rect.y, rect.w, rect.h, 0, 0, w, h);
+  else sctx.drawImage(canvas, 0, 0, w, h);
+  return { px: sctx.getImageData(0, 0, w, h).data, w, h };
 }
 
 // ── granular perception: the no-vision read ──────────────────────────────────
@@ -662,12 +2370,18 @@ let _lastDetail = null;
 let _lastDetailPx = null, _lastDetailW = 0, _lastDetailH = 0;
 function computePerceptionDetail(canvas) {
   try {
-    const dw = Math.min(192, canvas.width || 192);
-    const dh = Math.max(2, Math.round(dw * (canvas.height || 1) / (canvas.width || 1)));
+    // Same content-rect contract as perceive(): the no-vision reconstruction describes the
+    // artwork box when a source publishes one, not the letterbox around it.
+    const rect = contentRect(canvas);
+    const srcW = rect ? rect.w : (canvas.width || 192);
+    const srcH = rect ? rect.h : (canvas.height || 1);
+    const dw = Math.min(192, srcW || 192);
+    const dh = Math.max(2, Math.round(dw * (srcH || 1) / (srcW || 1)));
     _scratch.width = dw; _scratch.height = dh;
     const sctx = _scratch.getContext("2d", { willReadFrequently: true });
     sctx.clearRect(0, 0, dw, dh);
-    sctx.drawImage(canvas, 0, 0, dw, dh);
+    if (rect) sctx.drawImage(canvas, rect.x, rect.y, rect.w, rect.h, 0, 0, dw, dh);
+    else sctx.drawImage(canvas, 0, 0, dw, dh);
     const dpx = sctx.getImageData(0, 0, dw, dh).data;
     _lastDetail = perceptionDetail(dpx, dw, dh, 4);
     _lastDetailPx = dpx; _lastDetailW = dw; _lastDetailH = dh;
@@ -818,11 +2532,14 @@ function updateDetailUI(rich) {
 }
 
 function perceive(canvas) {
-  const { width:w, height:h } = canvas;
-  const px = readPixelData(canvas, w, h);
+  const rect = contentRect(canvas);
+  const w = rect ? rect.w : canvas.width, h = rect ? rect.h : canvas.height;
+  const px = readPixelData(canvas, w, h, rect);
   const phash = perceptualHash(px,w,h,4), f = features(px,w,h,4);
   $("sc-phash").textContent = phash;
-  $("sc-size").textContent = `${w}×${h}`;
+  // When a content-rect is active the measured region IS the artwork box, and saying so beats
+  // quoting the canvas dimensions of a frame that is mostly letterbox.
+  $("sc-size").textContent = rect ? `${w}×${h} artwork box` : `${w}×${h}`;
   $("sc-feats").innerHTML = [["contrast",f.contrast],["structure",f.entropy],["balance",f.balance]]
     .map(([k,v])=>`<span class="ground"><span class="gk">${k}</span> ${fmt(v)}</span>`).join("");
   const prev = lastHashByCanvas.get(canvas);
@@ -969,6 +2686,32 @@ function paintFractal(opts, aaOverride) {
   return c;
 }
 
+// An honest word about the arithmetic under a deep view. float32 coordinates stop separating
+// neighbouring pixels once a view spans less than about width * 5e-7 of the plane; below that
+// fractal-gl compiles the df64 (emulated double) program automatically, and roughly eight orders
+// deeper again df64 runs out too. Returns "" for ordinary views and for the CPU fallback (JS
+// doubles throughout), so the note only ever appears when it is the truth about the frame.
+//
+// It reports what the renderer ACTUALLY ran, read back off the canvas, because a device whose
+// fragment shaders demote highp gets the deep program refused — and saying "running df64" there
+// would be a claim the hardware never honoured.
+function fractalPrecisionNote() {
+  if (!GL_AVAILABLE || !glFractal2D || !_fractalGL || !_fractalGL.fractalPrecisionMode || !fractalView) return "";
+  const c = $("studio-canvas");
+  const want = _fractalGL.fractalPrecisionMode(
+    fractalView.cx, fractalView.cy, fractalView.scale, (c && c.width) || 1600);
+  if (want === "single") return "";
+  if (c && c.__fractalPrecisionUsed !== "double") {
+    return "Heads up: this view is past float32's reach, but this device's fragment shaders do not "
+      + "carry full precision, so neighbouring pixels are collapsing onto the same point. ";
+  }
+  if (want === "double") {
+    return "Past float32's reach here, so the shader is running emulated double precision (df64). ";
+  }
+  return "Precision floor: df64 is at its limit here, so neighbouring pixels are starting to land "
+    + "on the same point and the frame has stopped gaining detail. Zoom out and dive elsewhere. ";
+}
+
 // Progressive CPU fractal: a coarse pass first (downscaled backing → fast, scaled up by CSS), then a
 // rAF-deferred full-resolution pass. Keeps the main thread responsive instead of one long blocking
 // putImageData. Cancels any in-flight refine when a new render starts.
@@ -1017,6 +2760,7 @@ async function renderPreset() {
     + `I fingerprinted it at ${obs.phash}; it reads as ${detail}`
     + (fcol ? `, dominated by ${obs.rich.hueName} (${fcol})` : ``) + `. `
     + `Max iterations: ${fractalView.maxIter}. `
+    + fractalPrecisionNote()
     + (GL_AVAILABLE ? `Scroll to zoom toward the cursor, drag to pan` : `Click to zoom toward a point`)
     + `, swap the palette, or hand it back to the Atelier.`
   );
@@ -1149,7 +2893,7 @@ fStage.addEventListener("click", e => {
   const obs = perceive(canvas);
   say("model",
     `Zoomed in. Now at (${fractalView.cx.toFixed(8)}, ${fractalView.cy.toFixed(8)}), scale ${fractalView.scale.toExponential(2)}. `
-    + `Fingerprint: ${obs.phash}. Scroll or click to keep diving.`
+    + `Fingerprint: ${obs.phash}. ` + fractalPrecisionNote() + `Scroll or click to keep diving.`
   );
   startMeterLoop();
 });
@@ -1320,6 +3064,11 @@ function read3DOpts() {
     scale: parseFloat(f3("f3-scale").value),
     power: parseFloat(f3("f3-power").value),
     iterations: parseInt(f3("f3-iterations").value, 10),
+    // Supersample the silhouette on High quality, or on a device the render
+    // plan already rates high. One march per sample, so it stays off below
+    // that. The plan carries the tier; the raw capability record does not.
+    aa: (qualityKey === "high" || ["high", "max"].includes(
+      (window.__studioHardwareRenderPlan && window.__studioHardwareRenderPlan.tier) || "low")) ? 4 : 1,
   };
 }
 // Live-label the sliders.
@@ -1488,7 +3237,10 @@ function drawNDimFrame(canvas, n, t, speed, kind, projection, rotation) {
   ctx.fillRect(0, 0, w, h);
 
   const scene = _ndim.renderSceneVolumetric(
-    { kind, n: kind === "24cell" ? 4 : n, t: t * speed, rotation },
+    // projectionMode is the chips' whole meaning: how the axes above 3 collapse. It was read
+    // into this function and then dropped before the render, so all three chips produced the
+    // same frame (2026-08-04 control sweep) — wired through now, asserted by ndim tests.
+    { kind, n: kind === "24cell" ? 4 : n, t: t * speed, rotation, projectionMode: projection },
     _ndCam,
     { aspect, scale: 1.0, focal: 2.0, paint: _ndPaint },
   );
@@ -2719,7 +4471,13 @@ function swatchName(s) {
 function paintSwatches(rich) {
   const host = $("mm-swatches"); if (!host) return;
   const sw = rich.dominantSwatches || [];
-  if (!sw.length) { host.className = "mm-swatches mm-empty"; host.innerHTML = ""; return; }
+  if (!sw.length) { host.className = "mm-swatches mm-empty"; host.innerHTML = ""; paintSwatches._sig = ""; return; }
+  // Rebuilding this DOM every streaming tick was one of the largest main-thread
+  // costs on the page; the palette rarely changes between ticks, so skip the
+  // rebuild unless the swatches actually differ.
+  const sig = sw.map((s) => s.hex + (s.frac * 100).toFixed(0)).join("|");
+  if (sig === paintSwatches._sig) return;
+  paintSwatches._sig = sig;
   host.className = "mm-swatches";
   host.innerHTML = "";
   for (const s of sw) {
@@ -2728,6 +4486,7 @@ function paintSwatches(rich) {
     const wrap = document.createElement("span"); wrap.className = "mm-sw-wrap"; wrap.setAttribute("role", "listitem");
     const el = document.createElement("span"); el.className = "mm-sw";
     el.style.background = s.hex;
+    el.setAttribute("role", "img");
     el.setAttribute("aria-label", `Colour ${name} ${s.hex}, ${pct} of the frame`);
     el.title = `${name} · ${s.hex} · ${pct}`;
     const f = document.createElement("span"); f.className = "mm-swf"; f.textContent = pct;
@@ -2794,6 +4553,7 @@ function paintMeta(w, h, rich) {
   host.innerHTML = "";
   for (const [k, v] of rows) {
     const row = document.createElement("div"); row.className = "mm-meter";
+    row.setAttribute("role", "listitem");
     const name = document.createElement("span"); name.className = "mm-mname"; name.textContent = k;
     const val = document.createElement("span"); val.className = "mm-mval"; val.textContent = v;
     row.appendChild(name); row.appendChild(val); host.appendChild(row);
@@ -2801,6 +4561,7 @@ function paintMeta(w, h, rich) {
 }
 function currentSourceLabel() {
   if (watchStream) return "screen/camera";
+  if (activeSource === "spatial") return "spatial world";
   if (canvasIsGL && !glFractal2D) return "3D fractal";
   if (activeSource === "fractal") return "2D fractal";
   if (activeSource === "ndim") return "n-dim hypercube";
@@ -2834,8 +4595,11 @@ function liveTick(ts) {
   }
   let px, phash;
   try {
-    const w = canvas.width, h = canvas.height;
-    px = readPixelData(canvas, w, h);
+    // Bounded streaming read: keeps the loop off the main thread's critical
+    // path so the UI stays responsive while an animated source renders.
+    const read = readPixelDataBounded(canvas, LIVE_READ_MAX_EDGE);
+    px = read.px;
+    const w = read.w, h = read.h;
     phash = perceptualHash(px, w, h, 4);
     // stream the cheap line + the full measurimeter (no say(), no drift mutation)
     $("sc-phash").textContent = phash;
@@ -2859,7 +4623,7 @@ function liveTick(ts) {
     if (++staticTicks >= STATIC_STOP) {
       // Showcase graph is lazy: before it loads (start still in flight) treat the scene as NOT
       // settled, i.e. animated, matching studio-loop's no-state behavior for the showcase source.
-      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: _showcase ? _showcase.showcaseSettled() : false, neuralStatic: _neuralStatic });
+      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: _showcase ? _showcase.showcaseSettled() : false, neuralStatic: _neuralStatic, spatialStatic: _spatialStatic });
       if (shouldHaltOnStatic(true, animated)) { stopMeterLoop(); return; }
       staticTicks = 0;   // animated: do not halt, but reset so we re-arm the window cleanly
     }
@@ -3135,6 +4899,8 @@ function upgradeDropdown(stateId) {
 }
 upgradeDropdown("fractal-preset");
 upgradeDropdown("topo-mode");
+upgradeDropdown("plot-plate");
+upgradeDropdown("plot-work");
 
 // ══ The chat dock (Task 8f) ══════════════════════════════════════════════════
 // The talk-to-the-model chat is first-class again: question chips you can tap AND a free-text box you
@@ -3527,12 +5293,24 @@ const viewport = $("studio-viewport");
 // Fullscreen API on the viewport stage: the canvas fills the screen, the toolbar collapses to a
 // slim auto-hiding overlay (revealed on mouse move / touch), Escape exits. Sleek + modern.
 let _fsHideTimer = 0;
+// The idle fade must never swallow an open menu (export / plot / the Controls pane
+// all live inside the toolbar) or strand a keyboard user whose focus sits in it.
+function fsToolbarEngaged() {
+  const tb = $("render-toolbar");
+  if (!tb) return false;
+  if (tb.contains(document.activeElement)) return true;
+  if (tb.querySelector("details[open]")) return true;
+  const pane = tb.querySelector(".tp-rotv");
+  return !!(pane && !pane.classList.contains("tp-rotv-cpl"));
+}
 function revealFsControls() {
   if (!document.fullscreenElement) return;
   viewport.classList.remove("fs-idle");
   clearTimeout(_fsHideTimer);
-  _fsHideTimer = setTimeout(() => {
-    if (document.fullscreenElement) viewport.classList.add("fs-idle");
+  _fsHideTimer = setTimeout(function tick() {
+    if (!document.fullscreenElement) return;
+    if (fsToolbarEngaged()) { _fsHideTimer = setTimeout(tick, 2200); return; }
+    viewport.classList.add("fs-idle");
   }, 2200);
 }
 // ── resizeActiveSurface (BUG 2): the ONE authority that re-fits the canvas backing to the current
@@ -3555,7 +5333,13 @@ function resizeActiveSurface() {
     case "atelier":
       // Let the Atelier re-fit + redraw via its own resize path (it manages this canvas).
       try { window.dispatchEvent(new Event("resize")); } catch (_) {}
-      return;   // atelier.js re-arms its own draw; nothing else to do here
+      // atelier.js re-arms its own DRAW, but nothing re-arms PERCEPTION, and this
+      // branch used to return before startMeterLoop(). Any layout shift during boot
+      // (a late stylesheet, a webfont, a slow rail) therefore left the readout empty
+      // for the whole session on the default source. Arm the loop on the next frame,
+      // once the Atelier has repainted at the new size.
+      requestAnimationFrame(() => { try { startMeterLoop(); } catch (_) {} });
+      return;
     case "fractal":
       if (fractalView) { const c = paintFractal(fractalView); try { perceive(c); } catch (_) {} }
       break;
@@ -3590,6 +5374,8 @@ function onFsChange() {
     viewport.addEventListener("mousemove", revealFsControls);
     viewport.addEventListener("touchstart", revealFsControls, { passive: true });
     viewport.addEventListener("pointerdown", revealFsControls);
+    viewport.addEventListener("keydown", revealFsControls);
+    viewport.addEventListener("focusin", revealFsControls);
     // Re-fit the backing to the (now full-screen) layout. Defer one frame so the fullscreen layout
     // has settled and the parent rect reflects the real screen size before we read it.
     requestAnimationFrame(() => { try { resizeActiveSurface(); } catch (_) {} });
@@ -3599,6 +5385,8 @@ function onFsChange() {
     viewport.removeEventListener("mousemove", revealFsControls);
     viewport.removeEventListener("touchstart", revealFsControls);
     viewport.removeEventListener("pointerdown", revealFsControls);
+    viewport.removeEventListener("keydown", revealFsControls);
+    viewport.removeEventListener("focusin", revealFsControls);
     // Re-fit the backing to the restored windowed layout.
     requestAnimationFrame(() => { try { resizeActiveSurface(); } catch (_) {} });
   }
@@ -4519,10 +6307,244 @@ if (tierBtn) {
 // The URL may pre-select a source (studio.html?source=showcase&seed=1) and the showcase hero
 // capture mode (hero=1) both enters the showcase and lets first-integral.js apply its capture
 // layout. Only known sources are honored; anything else falls back to Atelier.
+// A render handed over from the Retro Engine: stored as a PNG in sessionStorage,
+// loaded here as the plot-map picture material, so a shader / plate / photo run
+// through the engine becomes a pen-plotter map (and from there SVG or G-code).
+// Mirrors the plot-file upload path exactly; anything malformed is ignored.
+// The reverse bridge: hand whatever the studio canvas is showing to the Retro
+// Engine, where it becomes an upload source for palettes, dither, and effects.
+(function bootStudioToRetro() {
+  const sendFrame = async (target) => {
+    const cv = document.getElementById("studio-canvas");
+    if (!cv) return;
+    try {
+      const wb = await import("./workbench.js?v=20260812-cohesion");
+      if (!wb.sendPiece(target, cv.toDataURL("image/png"), { surface: "studio", label: "studio frame" })) {
+        say("model", "That frame is too large to hand over.");
+      }
+    } catch (_) { say("model", "That frame is too large to hand over."); }
+  };
+  const wire = () => {
+    const btn = document.getElementById("rt-retro");
+    if (btn) btn.addEventListener("click", () => sendFrame("retro"));
+    const loomBtn = document.getElementById("rt-loom");
+    if (loomBtn) loomBtn.addEventListener("click", () => sendFrame("loom"));
+  };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire, { once: true });
+  else wire();
+})();
+
+// The studio joins the instrument family: sound on the toolbar, the frame
+// as a score, a clip of the moving canvas, the house feel, the workshop line.
+(function bootStudioInstrument() {
+  let audio = null, frameRun = null, frameTimer = 0, frameBusy = false, clipRec = null;
+  async function ensureAudio() {
+    const m = await import("./retro-audio.js?v=20260812-cohesion");
+    if (!audio) audio = m.createRetroAudio();
+    return audio;
+  }
+  // The drone toggle also kills a running scan by design; the play button's
+  // state must settle with it or it strands a pressed button over silence.
+  function settleFrame(btn) {
+    clearTimeout(frameTimer);
+    frameRun = null;
+    if (btn) btn.setAttribute("aria-pressed", "false");
+  }
+  const wire = () => {
+    const sBtn = document.getElementById("rt-sound");
+    const pBtn = document.getElementById("rt-playframe");
+    if (sBtn) sBtn.addEventListener("click", async () => {
+      try {
+        const a = await ensureAudio();
+        if (a.isOn()) {
+          a.stop();
+          if (frameRun) settleFrame(pBtn);
+          sBtn.setAttribute("aria-pressed", "false"); say("model", "Sound off.");
+        } else {
+          await a.start("studio");
+          sBtn.setAttribute("aria-pressed", "true"); say("model", "Sound on: the toolbar plays notes.");
+        }
+      } catch (_) { say("model", "Audio could not start."); }
+    });
+    if (pBtn) pBtn.addEventListener("click", async () => {
+      if (frameBusy) return;
+      const cv = document.getElementById("studio-canvas");
+      if (!cv) return;
+      if (frameRun) {
+        frameRun.stop(); settleFrame(pBtn);
+        say("model", "Frame stopped.");
+        return;
+      }
+      frameBusy = true;
+      try {
+        const a = await ensureAudio();
+        const v = await import("./ans-voice.js?v=20260812-cohesion");
+        const scan = v.scanImage(cv, 40, 96);
+        frameRun = await a.playScan(scan, v.rowFrequencies(scan.rows, { mode: "penta" }), 9);
+        pBtn.setAttribute("aria-pressed", "true");
+        say("model", "The frame is playing: rows are pitches, the scan is time.");
+        clearTimeout(frameTimer);
+        frameTimer = setTimeout(() => { frameRun = null; pBtn.setAttribute("aria-pressed", "false"); }, 9700);
+      } catch (_) { say("model", "Could not play the frame."); }
+      frameBusy = false;
+    });
+    const cBtn = document.getElementById("rt-clip");
+    if (cBtn) import("./clip-export.js?v=20260812-depth").then((ce) => {
+      if (!ce.canRecordClips(window, document.getElementById("studio-canvas"))) { cBtn.hidden = true; return; }
+      cBtn.addEventListener("click", () => {
+        if (clipRec) { clipRec.stop(); return; }
+        // The canvas is re-queried at click time: GL sources swap the node,
+        // and a wire-time capture would record the detached 2D canvas.
+        const cv = document.getElementById("studio-canvas");
+        if (!cv) return;
+        const paused = document.getElementById("rt-playpause");
+        if (paused && paused.getAttribute("aria-pressed") === "true") {
+          say("model", "Resume playback first; a paused canvas records nothing."); return;
+        }
+        clipRec = ce.recordClip(cv, {
+          seconds: 6, name: "studio-clip.webm",
+          onTick: (s) => say("model", "Recording: " + s + "s."),
+          onDone: (ok, took) => {
+            clipRec = null;
+            say("model", ok ? "Saved " + took + (took === 1 ? " second" : " seconds") + " as WebM." : "The clip came back empty.");
+          },
+        });
+        if (!clipRec) say("model", "Clip recording is not supported in this browser.");
+      });
+    }).catch(() => {});
+    import("./palpable.js?v=20260812-depth").then((pal) => {
+      pal.wirePalpable(document.getElementById("render-toolbar") || document.body, {
+        hitSelector: ".rt-btn",
+        ping: (k, val) => { try { if (audio && audio.isOn()) audio.ping(k, val); } catch (_) {} },
+      });
+    }).catch(() => {});
+    const tb = document.getElementById("render-toolbar");
+    if (tb && !document.getElementById("st-flow")) {
+      const pEl = document.createElement("p");
+      pEl.id = "st-flow";
+      pEl.style.cssText = "font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;color:var(--muted);margin:.4rem 0 0";
+      tb.insertAdjacentElement("afterend", pEl);
+    }
+    import("./workbench.js?v=20260812-cohesion").then((wb) => {
+      wb.mountFlow(document.getElementById("st-flow"), "studio");
+    }).catch(() => {});
+  };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire, { once: true });
+  else wire();
+})();
+
+function bootRetroHandoff() {
+  let dataURL = null;
+  try { dataURL = sessionStorage.getItem("re.studio.handoff"); } catch (_) { return; }
+  if (!dataURL) return;
+  try { sessionStorage.removeItem("re.studio.handoff"); } catch (_) {}
+  // The piece's trail, if it arrived through the workbench. Claimed now
+  // (records are one-shot), announced only once the piece actually applies.
+  const trailReady = import("./workbench.js?v=20260812-cohesion")
+    .then((wb) => { const rec = wb.receiveTrail("studio"); return rec && rec.line ? rec.line : null; })
+    .catch(() => null);
+  Promise.all([loadPlotMaps(), loadPlotImage()]).then(() => {
+    const img = new Image();
+    img.onload = () => {
+      const long = Math.max(img.naturalWidth, img.naturalHeight);
+      const k = long > 1200 ? 1200 / long : 1;
+      const off = document.createElement("canvas");
+      off.width = Math.max(8, Math.round(img.naturalWidth * k));
+      off.height = Math.max(8, Math.round(img.naturalHeight * k));
+      off.getContext("2d").drawImage(img, 0, 0, off.width, off.height);
+      const data = off.getContext("2d").getImageData(0, 0, off.width, off.height);
+      const field = _plotImage ? _plotImage.toneField(data.data, off.width, off.height) : null;
+      // Re-assert a few times: the plotmaps source's own default-material init is a
+      // separate async chain, so a single set can lose the race to "field".
+      const apply = () => {
+        _plotField = field;
+        _plotFieldInfo = { name: "retro render" };
+        _plotMaterial = "picture";
+        document.querySelectorAll("[data-plot-material]").forEach(b =>
+          b.classList.toggle("active", b.dataset.plotMaterial === "picture"));
+        syncPlotMaterialUI();
+        drawPlotMap();
+      };
+      apply(); setTimeout(apply, 500); setTimeout(apply, 1500);
+      trailReady.then((line) => { if (line) say("model", "Arrived: " + line + "."); });
+    };
+    img.onerror = () => { say("model", "The handed-over frame could not be read."); };
+    img.src = dataURL;
+  }).catch(() => {});
+}
+
 (function bootSource() {
   // The Atelier engine rewrites location.search on boot, so read the head-snapshot global that
   // captured ?source= before that happened; fall back to the live URL if the snapshot is absent.
-  const want = window.__studioBootSource || new URLSearchParams(window.location.search || "").get("source") || "";
-  if (want && SOURCES[want]) { try { setSource(want); return; } catch (_) {} }
+  const search = window.__studioBootSearch || window.location.search || "";
+  const want = window.__studioBootSource || new URLSearchParams(search).get("source") || "";
+  const wantImport = new URLSearchParams(search).get("import") === "retro";
+  if (want && SOURCES[want]) {
+    try {
+      setSource(want);
+      if (want === "plotmaps") bootPlotMaterial(search);
+      if (wantImport) bootRetroHandoff();
+      return;
+    } catch (_) {}
+  }
+  if (wantImport) { try { setSource("plotmaps"); bootRetroHandoff(); return; } catch (_) {} }
   setSource("atelier");
 })();
+
+// Boot race repair. atelier.js is a deferred classic script and this file is a
+// module, so the Atelier can settle and fire its one-shot "atelier:drawn" before
+// the listeners above exist. Anything that delays module execution triggers it: an
+// extra render-blocking stylesheet, a cold cache, a slow font. When it happened the
+// perception readout stayed empty for the entire session with no error anywhere,
+// because nothing else arms the meter loop on the default source. The Atelier now
+// records its last settled paint, so replay it once if we arrived too late.
+(function replayMissedAtelierDraw() {
+  if (activeSource !== "atelier") return;      // another source owns the canvas
+  const last = window.__atelierLastDrawn;
+  if (!last || !last.canvas) return;           // nothing painted yet: the live event will arrive
+  if ($("sc-phash") && $("sc-phash").textContent.trim() !== "-") return;  // already perceived
+  try { document.dispatchEvent(new CustomEvent("atelier:drawn", { detail: last })); } catch (_) {}
+})();
+
+// A work handed over from another surface. The archive page links every one of its 165 works
+// here, which is what makes them material rather than pictures: arriving with ?work=w042 puts the
+// pen surface on that work with the method left at Auto, so the studio measures the picture and
+// picks the drawing method itself. Anything malformed is ignored and the surface boots normally.
+function bootPlotMaterial(search) {
+  loadLibraryMod().then(() => {
+    const want = _libraryMod.parseStudioLink(search);
+    if (!want) return;
+    return loadPlotMaps().then(() => {
+      _plotMaterial = "archive";
+      _libraryWant = want.work;
+      _plotField = null; _plotFieldInfo = null;
+      if (want.method) _plotMethod = want.method;
+      document.querySelectorAll("[data-plot-material]").forEach(b =>
+        b.classList.toggle("active", b.dataset.plotMaterial === "archive"));
+      document.querySelectorAll("[data-plot-method]").forEach(b =>
+        b.classList.toggle("active", b.dataset.plotMethod === _plotMethod));
+      syncPlotMaterialUI();
+      // The pen surface's own entry path may already have drawn this work, because it waits for
+      // the same catalogue fetch. Drawing again would be a second identical sheet and a second
+      // identical receipt, so it draws only if that has not happened.
+      const alreadyDrawn = () => _lastPlot && _plotFieldInfo && _plotFieldInfo.workId === want.work;
+      return fillLibraryPicker(want.work).then(() => {
+        const sel = $("plot-work");
+        if (!sel) return;
+        sel.value = want.work;
+        if (sel.value !== want.work) {
+          // The work exists but sits outside the band the picker is showing: widen and retry, or
+          // the sheet would silently draw from a different work than the link named.
+          _libraryFilter = "all";
+          _libraryWant = want.work;
+          return fillLibraryPicker(want.work).then(() => {
+            const s2 = $("plot-work");
+            if (s2) s2.value = want.work;
+            if (!alreadyDrawn()) drawPlotMap();
+          });
+        }
+        if (!alreadyDrawn()) drawPlotMap();
+      });
+    });
+  }).catch(() => {});
+}

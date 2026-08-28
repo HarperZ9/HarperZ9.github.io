@@ -75,6 +75,15 @@
 .site-nav .sn-links a:focus-visible,
 .site-nav .sn-more summary:hover,
 .site-nav .sn-more summary:focus-visible{color:#eef1f3;outline:none}
+@media (forced-colors: active){
+  .site-nav .sn-home:focus-visible,
+  .site-nav .sn-links a:focus-visible,
+  .site-nav .sn-more summary:focus-visible,
+  .site-nav .sn-more-list a:focus-visible{
+    outline:2px solid CanvasText;
+    outline-offset:3px;
+  }
+}
 .site-nav .sn-links a.is-active,
 .site-nav .sn-links a[aria-current="page"],
 .site-nav .sn-more[data-current="true"] > summary{
@@ -148,16 +157,6 @@
 }
 @media(max-width:330px){
   .site-nav .sn-home .sn-brand-word{display:none}
-}
-@media(forced-colors:active){
-  .site-nav .sn-more summary:focus-visible,
-  .site-nav .sn-more-list a:focus-visible,
-  .site-nav .sn-links a:focus-visible,
-  .site-nav .sn-home:focus-visible{
-    outline:2px solid CanvasText!important;
-    outline-offset:3px!important;
-    border-color:CanvasText!important;
-  }
 }
 @media print{
   .site-nav{display:none!important}

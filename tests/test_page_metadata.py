@@ -116,6 +116,21 @@ def test_the_injector_styles_what_it_injects() -> None:
     assert ".route-art img{" in css and "max-width:100%" in css
 
 
+def test_shared_navigation_keeps_a_forced_colors_focus_indicator() -> None:
+    css = (ROOT / "system" / "nav.css").read_text(encoding="utf-8")
+    forced_colors = re.search(r"@media \(forced-colors: active\)\{(.*?)\n\}", css, re.S)
+    assert forced_colors
+    block = forced_colors.group(1)
+    for selector in (
+        ".site-nav .sn-home:focus-visible",
+        ".site-nav .sn-links a:focus-visible",
+        ".site-nav .sn-more summary:focus-visible",
+        ".site-nav .sn-more-list a:focus-visible",
+    ):
+        assert selector in block
+    assert "outline:2px solid CanvasText" in block
+
+
 def test_descriptions_fit_the_space_they_are_shown_in() -> None:
     """A search result shows roughly 155 characters. 62 pages carried between
     165 and 468, so most of what was written there was never read by anyone.

@@ -714,13 +714,18 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
     grid-column:2;grid-row:1/span 2;justify-self:end;align-self:center;
     display:block;min-width:max-content;z-index:3;
   }
-  /* Below 760px this trigger is the only way into the navigation. It remains
-     in the sticky bar's grid rather than becoming a detached fixed control. */
+  /* Below 760px this trigger is the only way into the navigation, so it is
+     pinned rather than left to inherit. A page-level rule hid it once and the
+     site had no menu at all on a phone. Same pin as system.css, so the two
+     halves of the site behave identically; a contract test holds them level. */
   .site-nav > .sn-more{
-    position:static;
-    display:block;
-    opacity:1;
-    visibility:visible;
+    position:fixed!important;
+    top:.65rem;
+    right:6rem;
+    display:block!important;
+    opacity:1!important;
+    visibility:visible!important;
+    z-index:1000!important;
   }
   .site-nav .sn-more summary{
     min-block-size:44px;display:flex;align-items:center;min-width:4.4rem;
@@ -738,4 +743,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
 }
 @media (max-width:430px){
   .site-nav .sn-home .sn-brand-word{display:none!important}
+  /* the pinned trigger needs the whole right edge once the wordmark is gone */
+  .site-nav > .sn-more{right:1rem}
 }

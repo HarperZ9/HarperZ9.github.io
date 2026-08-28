@@ -13,8 +13,8 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-Dwp-qWEt.js",
-    "assets/index-ktAZgEPv.css",
+    "assets/index-B3zWbYkK.js",
+    "assets/index-CiruV1jn.css",
     "brender-archival.html",
     "briefings/2026-08-26-openai-hugging-face-incident/build.json",
     "briefings/2026-08-26-openai-hugging-face-incident/claims.json",
@@ -39,6 +39,9 @@ RELEASE_PATHS = (
     "figures/control-boundary-flow.html",
     "figures/control-boundary-flow.json",
     "figures/control-boundary-flow.svg",
+    "figures/graphics-retro-capability-map.html",
+    "figures/graphics-retro-capability-map.json",
+    "figures/graphics-retro-capability-map.svg",
     "figures/incident-multilane-timeline.html",
     "figures/incident-multilane-timeline.json",
     "figures/incident-multilane-timeline.svg",
@@ -48,6 +51,9 @@ RELEASE_PATHS = (
     "figures/recovered-actions-by-day.html",
     "figures/recovered-actions-by-day.json",
     "figures/recovered-actions-by-day.svg",
+    "figures/security-capability-map.html",
+    "figures/security-capability-map.json",
+    "figures/security-capability-map.svg",
     "figures/source-scope-matrix.html",
     "figures/source-scope-matrix.json",
     "figures/source-scope-matrix.svg",
@@ -57,6 +63,9 @@ RELEASE_PATHS = (
     "figures/task-overrepresentation.html",
     "figures/task-overrepresentation.json",
     "figures/task-overrepresentation.svg",
+    "figures/verification-capability-map.html",
+    "figures/verification-capability-map.json",
+    "figures/verification-capability-map.svg",
     "hire.html",
     "engine-revival.html",
     "flywheel.html",
@@ -91,7 +100,7 @@ RELEASE_PATHS = (
     "systems/studio-engine.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "cfbb00316211e720c328b1bc620d913223f561aea3bbb2189f56dca8670a0e8b"
+REVIEWED_RELEASE_SHA256 = "3390d6b45b015dce6d036d9742e44d788d72e76b2f7c4ca89e54727e772c792c"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -177,12 +186,18 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     source = _text("index.html")
     obsolete_js = "index-B_" + "tbCD5Q.js"
     obsolete_css = "index-D3" + "HRo6Wc.css"
-    assert 'src="/assets/index-Dwp-qWEt.js"' in source
-    assert 'href="/assets/index-ktAZgEPv.css"' in source
+    previous_js = "index-Dwp-qWEt.js"
+    previous_css = "index-ktAZgEPv.css"
+    assert 'src="/assets/index-B3zWbYkK.js"' in source
+    assert 'href="/assets/index-CiruV1jn.css"' in source
     assert obsolete_js not in source
     assert obsolete_css not in source
     assert not (ROOT / "assets" / obsolete_js).exists()
     assert not (ROOT / "assets" / obsolete_css).exists()
+    assert previous_js not in source
+    assert previous_css not in source
+    assert not (ROOT / "assets" / previous_js).exists()
+    assert not (ROOT / "assets" / previous_css).exists()
 
 
 def test_six_briefing_figures_keep_semantic_nonvisual_fallbacks() -> None:
@@ -190,8 +205,13 @@ def test_six_briefing_figures_keep_semantic_nonvisual_fallbacks() -> None:
         source = _text(f"figures/{stem}.html")
         assert '<figure class="evidence-figure"' in source, stem
         assert "<figcaption" in source, stem
-        assert '<table class="figure-table">' in source, stem
-        assert "data-figure-row" in source, stem
+        table = re.search(
+            r'<table\b[^>]*class="[^"]*\bfigure-table\b[^"]*"[^>]*>(.*?)</table>',
+            source,
+            re.DOTALL,
+        )
+        assert table, stem
+        assert "data-figure-row" in table.group(1), stem
         assert '<svg role="img"' in source, stem
         assert "aria-labelledby=" in source, stem
         assert re.search(r'data-figure-kind="(?:relationship|timeline|matrix|bar)"', source), stem
@@ -207,10 +227,17 @@ def test_briefing_archive_and_feeds_resolve_to_the_permanent_record() -> None:
     feed = json.loads(_text("feed.json"))
     assert feed["home_page_url"].endswith("/briefings/")
     assert [urlsplit(item["url"]).path for item in feed["items"]] == [route]
+    page = _text("briefings/2026-08-26-openai-hugging-face-incident/index.html")
+    updated = re.search(r'<time datetime="(\d{4}-\d{2}-\d{2})">Updated ', page)
+    assert updated
+    expected_updated = f"{updated.group(1)}T00:00:00Z"
+    assert feed["items"][0]["date_modified"] == expected_updated
 
     atom = ElementTree.fromstring(_text("feed.xml"))
     namespace = {"atom": "http://www.w3.org/2005/Atom"}
     assert atom.findtext("atom:entry/atom:id", namespaces=namespace).endswith(route)
+    assert atom.findtext("atom:updated", namespaces=namespace) == expected_updated
+    assert atom.findtext("atom:entry/atom:updated", namespaces=namespace) == expected_updated
     target, fragment = _local_target(route)
     assert target.is_file() and not fragment
 
