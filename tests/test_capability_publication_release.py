@@ -13,9 +13,25 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-s4zp1p6h.js",
-    "assets/index-DkAj3I7K.css",
+    "assets/index-CHDGdOb1.js",
+    "assets/index-M4JQ_RY_.css",
     "accountable-surface.html",
+    "analytics/benchmark-evidence-status.html",
+    "analytics/benchmark-evidence-status.json",
+    "analytics/current-cross-harness-pilot.html",
+    "analytics/current-cross-harness-pilot.json",
+    "analytics/current-cross-harness-pilot.svg",
+    "analytics/exploratory-stack-comparison.html",
+    "analytics/exploratory-stack-comparison.json",
+    "analytics/exploratory-stack-comparison.svg",
+    "analytics/market-baseline-plan.json",
+    "analytics/model-pass-at-1-comparison.html",
+    "analytics/model-pass-at-1-comparison.json",
+    "analytics/model-pass-at-1-comparison.svg",
+    "analytics/portfolio-analytics.json",
+    "analytics/portfolio-source-inventory.html",
+    "analytics/portfolio-source-inventory.json",
+    "analytics/source/current-cross-harness-pilot-source.json",
     "brender-archival.html",
     "briefings/2026-08-26-openai-hugging-face-incident/build.json",
     "briefings/2026-08-26-openai-hugging-face-incident/claims.json",
@@ -98,9 +114,6 @@ RELEASE_PATHS = (
     "img/og/truth-enb.png",
     "index.html",
     "media/retro-systems-lab/evidence-manifest.json",
-    "media/retro-systems-lab/identity/brender-verify.svg",
-    "media/retro-systems-lab/identity/crossover.svg",
-    "media/retro-systems-lab/identity/engine-preserve.svg",
     "media/retro-systems-lab/identity/retro-play.svg",
     "media/retro-systems-lab/manifest.json",
     "overview.html",
@@ -132,7 +145,7 @@ RELEASE_PATHS = (
     "truth-enb.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "d3bb3a39b25852cd901e47797661d4f7b606084f01b810e6a1c9c12e97c292ed"
+REVIEWED_RELEASE_SHA256 = "27e0b087775923e2eb08824ec0cefabb8ea25314480e085d705341580160b285"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -204,7 +217,7 @@ def test_release_spine_matches_the_reviewed_artifact_fingerprint() -> None:
     missing = [path for path in RELEASE_PATHS if not (ROOT / path).is_file()]
     assert not missing, f"release files missing: {missing}"
 
-    for directory in ("briefings", "figures", "systems"):
+    for directory in ("analytics", "briefings", "figures", "systems"):
         actual = {
             path.relative_to(ROOT).as_posix()
             for path in (ROOT / directory).rglob("*")
@@ -229,8 +242,8 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_fix_css = "index-Bh3pWSfE.css"
     previous_art_js = "index-BPBDYusx.js"
     previous_art_css = "index-D6A4RL1P.css"
-    assert 'src="/assets/index-s4zp1p6h.js"' in source
-    assert 'href="/assets/index-DkAj3I7K.css"' in source
+    assert 'src="/assets/index-CHDGdOb1.js"' in source
+    assert 'href="/assets/index-M4JQ_RY_.css"' in source
     assert obsolete_js not in source
     assert obsolete_css not in source
     assert not (ROOT / "assets" / obsolete_js).exists()

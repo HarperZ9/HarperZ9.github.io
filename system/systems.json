@@ -2095,7 +2095,7 @@
         "approval-gated assessment execution",
         "campaign cleanup and evidence review"
       ],
-      "href": "private-practice.html#array",
+      "href": "array.html",
       "sourceHref": null,
       "domains": [
         "security-privacy"
@@ -2122,7 +2122,7 @@
           "id": "array-public-capability-description",
           "type": "public-receipt",
           "label": "Array public capability description",
-          "href": "https://harperz9.github.io/private-practice.html#array",
+          "href": "https://harperz9.github.io/array.html",
           "date": "2026-08-28",
           "status": "verified",
           "summary": "The public page describes Array's campaign planning, approval, containment, cleanup, and evidence-ledger role. Private source and operational material are not public evidence."
@@ -2168,7 +2168,7 @@
         "detection engineering",
         "authorized native assessment and training"
       ],
-      "href": "private-practice.html#seed",
+      "href": "seed.html",
       "sourceHref": null,
       "domains": [
         "security-privacy"
@@ -2195,7 +2195,7 @@
           "id": "seed-public-capability-description",
           "type": "public-receipt",
           "label": "Seed public capability description",
-          "href": "https://harperz9.github.io/private-practice.html#seed",
+          "href": "https://harperz9.github.io/seed.html",
           "date": "2026-08-28",
           "status": "verified",
           "summary": "The public page identifies Seed as a 59-module C++23 assessment engine with 3,065 tests and describes its bounded assessment surfaces. Private source and operational material are not public evidence."
@@ -2239,7 +2239,7 @@
         "high-consequence technical workflow coordination",
         "receipt-backed specialist handoffs"
       ],
-      "href": "private-practice.html#sofer",
+      "href": "sofer.html",
       "sourceHref": null,
       "domains": [
         "security-privacy",
@@ -2267,7 +2267,7 @@
           "id": "sofer-public-capability-description",
           "type": "public-receipt",
           "label": "Sofer public capability description",
-          "href": "https://harperz9.github.io/private-practice.html#sofer",
+          "href": "https://harperz9.github.io/sofer.html",
           "date": "2026-08-28",
           "status": "verified",
           "summary": "The public page describes Sofer's specialist-agent, model-backend, workflow, admission, and handoff role. Private source and operational material are not public evidence."
@@ -2313,7 +2313,7 @@
         "classifier and refusal-behavior measurement",
         "inference-control stability analysis"
       ],
-      "href": "private-practice.html#isomorph",
+      "href": "isomorph.html",
       "sourceHref": null,
       "domains": [
         "security-privacy",
@@ -2341,7 +2341,7 @@
           "id": "isomorph-public-capability-description",
           "type": "public-receipt",
           "label": "Isomorph public capability description",
-          "href": "https://harperz9.github.io/private-practice.html#isomorph",
+          "href": "https://harperz9.github.io/isomorph.html",
           "date": "2026-08-28",
           "status": "verified",
           "summary": "The public page describes Isomorph's inference-boundary refusal and classifier evaluation role while withholding operational test material."
@@ -2386,7 +2386,7 @@
         "runtime and claim-drift detection",
         "release inventory and proof-chain construction"
       ],
-      "href": "private-practice.html#bounds",
+      "href": "bounds.html",
       "sourceHref": null,
       "domains": [
         "security-privacy",
@@ -2415,7 +2415,7 @@
           "id": "bounds-public-capability-description",
           "type": "public-receipt",
           "label": "Bounds public capability description",
-          "href": "https://harperz9.github.io/private-practice.html#bounds",
+          "href": "https://harperz9.github.io/bounds.html",
           "date": "2026-08-28",
           "status": "verified",
           "summary": "The public page describes Bounds' sensor, guard, receipt, release-inventory, and proof-chain role. Private source and runtime material are not public evidence."
@@ -3174,6 +3174,72 @@
         "studio-engine",
         "buildlang"
       ]
+    },
+    {
+      "id": "kun",
+      "name": "Kun",
+      "purpose": "Maintain local access-recovery memory for owned systems through path-only receipts, redacted diagnostics, rotation notes, and operator runbooks without storing raw credentials.",
+      "useCases": [
+        "local access-recovery hygiene",
+        "credential-rotation memory",
+        "redacted operational diagnostics"
+      ],
+      "href": "kun.html",
+      "sourceHref": null,
+      "domains": [
+        "security-privacy",
+        "developer-infrastructure"
+      ],
+      "family": "security",
+      "architectureRole": "local-access-recovery-vault",
+      "audiences": [
+        "operators of owned systems",
+        "security reviewers"
+      ],
+      "deploymentContexts": [
+        "local-only workstations",
+        "owned operational environments"
+      ],
+      "maturity": "controlled-private",
+      "placement": "supporting",
+      "accessMode": "request",
+      "entryCommand": null,
+      "verificationCommand": null,
+      "evidence": [
+        {
+          "id": "kun-public-boundary-page",
+          "type": "public-receipt",
+          "label": "Kun public boundary page",
+          "href": "https://harperz9.github.io/kun.html",
+          "date": "2026-08-28",
+          "status": "verified",
+          "summary": "The public page describes Kun's path-only and redacted-receipt role and states that raw credentials, recovery instructions, and protected content are not published."
+        }
+      ],
+      "limitations": [
+        "No raw credential, credential value, credential recovery instruction, bypass step, private browser state, or protected content is published.",
+        "Path-only receipt design does not replace a dedicated secrets manager."
+      ],
+      "boundary": "Kun records where recovery authority lives and how to audit the process. It does not publish or retain raw keys, tokens, passwords, seed phrases, private browser state, or protected content.",
+      "inputs": [
+        "owned-system recovery paths",
+        "rotation metadata",
+        "redacted diagnostics and local runbook state"
+      ],
+      "outputs": [
+        "path-only receipts",
+        "rotation reminders",
+        "diagnostic summaries and recovery checklist state"
+      ],
+      "dependencies": [],
+      "related": [
+        "bounds",
+        "secret-redact-io"
+      ],
+      "lastVerified": "2026-08-28",
+      "primaryDomain": "security-privacy",
+      "productType": "local access-recovery vault",
+      "releaseState": "controlled private system; public capability page"
     }
   ]
 }

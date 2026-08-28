@@ -90,6 +90,14 @@
           "nodeType": "system"
         },
         {
+          "id": "kun",
+          "label": "Kun",
+          "status": "verified",
+          "stateLabel": "local access-recovery vault",
+          "group": "Security and privacy",
+          "nodeType": "system"
+        },
+        {
           "id": "model-provenance-validator",
           "label": "Model Provenance Validator",
           "status": "verified",

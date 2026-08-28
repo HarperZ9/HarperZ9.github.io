@@ -78,6 +78,15 @@ def test_private_security_projects_are_distinct_registry_records() -> None:
         "orca": "native assessment operator runtime",
         "gate": "private-system integration and release authority",
     }
+    expected_hrefs = {
+        "array": "array.html",
+        "seed": "seed.html",
+        "sofer": "sofer.html",
+        "isomorph": "isomorph.html",
+        "bounds": "bounds.html",
+        "orca": "private-practice.html#orca",
+        "gate": "private-practice.html#gate",
+    }
 
     assert "authorized-private-practice" not in records
     for system_id, product_type in expected.items():
@@ -85,7 +94,7 @@ def test_private_security_projects_are_distinct_registry_records() -> None:
         assert record["productType"] == product_type
         assert record["maturity"] == "controlled-private"
         assert record["sourceHref"] is None
-        assert record["href"] == f"private-practice.html#{system_id}"
+        assert record["href"] == expected_hrefs[system_id]
         assert record["inputs"]
         assert record["outputs"]
         assert record["evidence"]

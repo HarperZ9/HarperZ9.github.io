@@ -71,66 +71,72 @@
     <text x="440" y="501" class="mono muted" font-size="16">AI inference-boundary red-team</text>
     <text x="440" y="519" class="mono muted" font-size="16">harness</text>
   </g>
-<g data-figure-point="true" data-figure-key="model-provenance-validator" data-node-instance="isolated-8" role="graphics-symbol" aria-label="Model Provenance Validator. model provenance-envelope validator." tabindex="0">
+<g data-figure-point="true" data-figure-key="kun" data-node-instance="isolated-8" role="graphics-symbol" aria-label="Kun. local access-recovery vault." tabindex="0">
     <rect class="focus-ring" x="800" y="446" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
     <rect x="804" y="450" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="820" y="477" font-size="17" font-weight="700">Model Provenance Validator</text>
-    <text x="820" y="501" class="mono muted" font-size="16">model provenance-envelope</text>
-    <text x="820" y="519" class="mono muted" font-size="16">validator</text>
+    <text x="820" y="477" font-size="17" font-weight="700">Kun</text>
+    <text x="820" y="501" class="mono muted" font-size="16">local access-recovery vault</text>
   </g>
-<g data-figure-point="true" data-figure-key="orca" data-node-instance="isolated-9" role="graphics-symbol" aria-label="ORCA. native assessment operator runtime." tabindex="0">
+<g data-figure-point="true" data-figure-key="model-provenance-validator" data-node-instance="isolated-9" role="graphics-symbol" aria-label="Model Provenance Validator. model provenance-envelope validator." tabindex="0">
     <rect class="focus-ring" x="40" y="550" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
     <rect x="44" y="554" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="581" font-size="17" font-weight="700">ORCA</text>
-    <text x="60" y="605" class="mono muted" font-size="16">native assessment operator</text>
-    <text x="60" y="623" class="mono muted" font-size="16">runtime</text>
+    <text x="60" y="581" font-size="17" font-weight="700">Model Provenance Validator</text>
+    <text x="60" y="605" class="mono muted" font-size="16">model provenance-envelope</text>
+    <text x="60" y="623" class="mono muted" font-size="16">validator</text>
   </g>
-<g data-figure-point="true" data-figure-key="phantom" data-node-instance="isolated-10" role="graphics-symbol" aria-label="Phantom. hardware-identity privacy system." tabindex="0">
+<g data-figure-point="true" data-figure-key="orca" data-node-instance="isolated-10" role="graphics-symbol" aria-label="ORCA. native assessment operator runtime." tabindex="0">
     <rect class="focus-ring" x="420" y="550" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
     <rect x="424" y="554" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="440" y="581" font-size="17" font-weight="700">Phantom</text>
-    <text x="440" y="605" class="mono muted" font-size="16">hardware-identity privacy</text>
-    <text x="440" y="623" class="mono muted" font-size="16">system</text>
+    <text x="440" y="581" font-size="17" font-weight="700">ORCA</text>
+    <text x="440" y="605" class="mono muted" font-size="16">native assessment operator</text>
+    <text x="440" y="623" class="mono muted" font-size="16">runtime</text>
   </g>
-<g data-figure-point="true" data-figure-key="proof-surface" data-node-instance="isolated-11" role="graphics-symbol" aria-label="Proof Surface. authorization and proof-packet library." tabindex="0">
+<g data-figure-point="true" data-figure-key="phantom" data-node-instance="isolated-11" role="graphics-symbol" aria-label="Phantom. hardware-identity privacy system." tabindex="0">
     <rect class="focus-ring" x="800" y="550" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
     <rect x="804" y="554" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="820" y="581" font-size="17" font-weight="700">Proof Surface</text>
-    <text x="820" y="605" class="mono muted" font-size="16">authorization and proof-packet</text>
-    <text x="820" y="623" class="mono muted" font-size="16">library</text>
+    <text x="820" y="581" font-size="17" font-weight="700">Phantom</text>
+    <text x="820" y="605" class="mono muted" font-size="16">hardware-identity privacy</text>
+    <text x="820" y="623" class="mono muted" font-size="16">system</text>
   </g>
-<g data-figure-point="true" data-figure-key="public-surface-sweeper" data-node-instance="isolated-12" role="graphics-symbol" aria-label="Public Surface Sweeper. public release-surface auditor." tabindex="0">
+<g data-figure-point="true" data-figure-key="proof-surface" data-node-instance="isolated-12" role="graphics-symbol" aria-label="Proof Surface. authorization and proof-packet library." tabindex="0">
     <rect class="focus-ring" x="40" y="654" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
     <rect x="44" y="658" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="685" font-size="17" font-weight="700">Public Surface Sweeper</text>
-    <text x="60" y="709" class="mono muted" font-size="16">public release-surface auditor</text>
+    <text x="60" y="685" font-size="17" font-weight="700">Proof Surface</text>
+    <text x="60" y="709" class="mono muted" font-size="16">authorization and proof-packet</text>
+    <text x="60" y="727" class="mono muted" font-size="16">library</text>
   </g>
-<g data-figure-point="true" data-figure-key="repo-proof-index" data-node-instance="isolated-13" role="graphics-symbol" aria-label="Repo Proof Index. evidence index and reviewer handoff." tabindex="0">
+<g data-figure-point="true" data-figure-key="public-surface-sweeper" data-node-instance="isolated-13" role="graphics-symbol" aria-label="Public Surface Sweeper. public release-surface auditor." tabindex="0">
     <rect class="focus-ring" x="420" y="654" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
     <rect x="424" y="658" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="440" y="685" font-size="17" font-weight="700">Repo Proof Index</text>
-    <text x="440" y="709" class="mono muted" font-size="16">evidence index and reviewer</text>
-    <text x="440" y="727" class="mono muted" font-size="16">handoff</text>
+    <text x="440" y="685" font-size="17" font-weight="700">Public Surface Sweeper</text>
+    <text x="440" y="709" class="mono muted" font-size="16">public release-surface auditor</text>
   </g>
-<g data-figure-point="true" data-figure-key="secret-redact-io" data-node-instance="isolated-14" role="graphics-symbol" aria-label="Secret Redact IO. secret-aware I/O helper library." tabindex="0">
+<g data-figure-point="true" data-figure-key="repo-proof-index" data-node-instance="isolated-14" role="graphics-symbol" aria-label="Repo Proof Index. evidence index and reviewer handoff." tabindex="0">
     <rect class="focus-ring" x="800" y="654" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
     <rect x="804" y="658" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="820" y="685" font-size="17" font-weight="700">Secret Redact IO</text>
-    <text x="820" y="709" class="mono muted" font-size="16">secret-aware I/O helper library</text>
+    <text x="820" y="685" font-size="17" font-weight="700">Repo Proof Index</text>
+    <text x="820" y="709" class="mono muted" font-size="16">evidence index and reviewer</text>
+    <text x="820" y="727" class="mono muted" font-size="16">handoff</text>
   </g>
-<g data-figure-point="true" data-figure-key="seed" data-node-instance="isolated-15" role="graphics-symbol" aria-label="Seed. native security-assessment engine." tabindex="0">
+<g data-figure-point="true" data-figure-key="secret-redact-io" data-node-instance="isolated-15" role="graphics-symbol" aria-label="Secret Redact IO. secret-aware I/O helper library." tabindex="0">
     <rect class="focus-ring" x="40" y="758" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
     <rect x="44" y="762" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="789" font-size="17" font-weight="700">Seed</text>
-    <text x="60" y="813" class="mono muted" font-size="16">native security-assessment</text>
-    <text x="60" y="831" class="mono muted" font-size="16">engine</text>
+    <text x="60" y="789" font-size="17" font-weight="700">Secret Redact IO</text>
+    <text x="60" y="813" class="mono muted" font-size="16">secret-aware I/O helper library</text>
   </g>
-<g data-figure-point="true" data-figure-key="sofer" data-node-instance="isolated-16" role="graphics-symbol" aria-label="Sofer. private-line orchestration suite." tabindex="0">
+<g data-figure-point="true" data-figure-key="seed" data-node-instance="isolated-16" role="graphics-symbol" aria-label="Seed. native security-assessment engine." tabindex="0">
     <rect class="focus-ring" x="420" y="758" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
     <rect x="424" y="762" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="440" y="789" font-size="17" font-weight="700">Sofer</text>
-    <text x="440" y="813" class="mono muted" font-size="16">private-line orchestration</text>
-    <text x="440" y="831" class="mono muted" font-size="16">suite</text>
+    <text x="440" y="789" font-size="17" font-weight="700">Seed</text>
+    <text x="440" y="813" class="mono muted" font-size="16">native security-assessment</text>
+    <text x="440" y="831" class="mono muted" font-size="16">engine</text>
+  </g>
+<g data-figure-point="true" data-figure-key="sofer" data-node-instance="isolated-17" role="graphics-symbol" aria-label="Sofer. private-line orchestration suite." tabindex="0">
+    <rect class="focus-ring" x="800" y="758" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
+    <rect x="804" y="762" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
+    <text x="820" y="789" font-size="17" font-weight="700">Sofer</text>
+    <text x="820" y="813" class="mono muted" font-size="16">private-line orchestration</text>
+    <text x="820" y="831" class="mono muted" font-size="16">suite</text>
   </g>
   <text x="44" y="912" class="mono muted" font-size="16">Lines: verified typed registry records only · no line: no relationship asserted by this figure</text>
 </svg>

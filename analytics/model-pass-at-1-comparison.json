@@ -1,0 +1,69 @@
+{
+  "renderer": "zentropy-portfolio-analytics/v2",
+  "figure": {
+    "id": "model-pass-at-1-comparison",
+    "kind": "paired-model-comparison",
+    "sourceSha256": "587da8ea4a04d5e520cc5ed4a83efb6c070fab6c587e0e58b00053cfdee5ed9d",
+    "units": [
+      "pass@1",
+      "passed tasks",
+      "percentage points",
+      "McNemar p-value"
+    ],
+    "denominator": 164,
+    "retrievedAt": "2026-08-28",
+    "uncertainty": [
+      "The base artifact digest is not pinned in this result file.",
+      "The result covers one 164-task code-completion suite and does not measure agentic tool use.",
+      "Hardware, runtime version, latency, cost, and resource use are not recorded in this result file."
+    ],
+    "doesNotProve": "This result does not show a statistically significant improvement, general coding superiority, agentic reliability, production readiness, or independent validation.",
+    "data": {
+      "schema": "flywheel.he-base-comparison/v1",
+      "status": "MEASURED",
+      "sourceSha256": "587da8ea4a04d5e520cc5ed4a83efb6c070fab6c587e0e58b00053cfdee5ed9d",
+      "sourceAvailability": "public tracked artifact at the captured commit",
+      "benchmark": "code-completion suite (164 tasks), pass@1 greedy temp0, same harness",
+      "denominator": 164,
+      "executionPolicy": "same harness; pass@1; greedy; temperature 0",
+      "models": [
+        {
+          "role": "Base Qwen 14B",
+          "modelRef": "ollama:qwen2.5-coder:14b-instruct-q4_K_M",
+          "passed": 141,
+          "passAt1": 0.8598
+        },
+        {
+          "role": "Flywheel 14B",
+          "modelRef": "ollama:flywheel-local-coder-14b",
+          "passed": 136,
+          "passAt1": 0.8293
+        }
+      ],
+      "deltaPercentagePoints": -3.05,
+      "paired": {
+        "regressions_flywheel_fail_base_pass": 14,
+        "gains_flywheel_pass_base_fail": 9,
+        "both_pass": 127,
+        "both_fail": 14
+      },
+      "mcnemar": {
+        "chiSquareContinuityCorrected": 0.696,
+        "pValue": 0.404,
+        "significantAt005": false
+      },
+      "limitations": [
+        "The base artifact digest is not pinned in this result file.",
+        "The result covers one 164-task code-completion suite and does not measure agentic tool use.",
+        "Hardware, runtime version, latency, cost, and resource use are not recorded in this result file."
+      ],
+      "doesNotProve": "This result does not show a statistically significant improvement, general coding superiority, agentic reliability, production readiness, or independent validation.",
+      "sourceProjectId": "flywheel",
+      "sourceRepositoryUrl": "https://github.com/HarperZ9/flywheel",
+      "sourceCommit": "88c9cc0d34adcd4441c1b4e65d20760b41fc7e32",
+      "sourceTrackedPath": "project-docs/releases/14B/shipped-page/benchmarks/he_base_comparison.json",
+      "sourcePublicUrl": "https://github.com/HarperZ9/flywheel/blob/88c9cc0d34adcd4441c1b4e65d20760b41fc7e32/project-docs/releases/14B/shipped-page/benchmarks/he_base_comparison.json",
+      "sourceTrackedBlobSha256": "b887d87b0a2ab492c85320ca8b78d8be632b8eea890ca38a6a7f97ab61ad3f39"
+    }
+  }
+}

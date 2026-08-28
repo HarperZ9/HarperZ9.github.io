@@ -1,0 +1,82 @@
+{
+  "schema": "zentropy-market-baseline-plan/v1",
+  "lastVerified": "2026-08-28",
+  "status": "NOT_MEASURED",
+  "purpose": "Name market-adjacent coding-agent baselines for future same-task, same-environment measurement without implying that a run or result already exists.",
+  "executionRequirements": [
+    "Use the identical task IDs and prompt bytes for every included tool.",
+    "Use one recorded environment and hardware profile for the entire comparison group.",
+    "Record the installed tool version, model identity, tool-specific configuration, execution date, and raw public artifacts.",
+    "Report task completion, quality, latency, tool-use success, failure modes, reproducibility, and resource or cost measures when available.",
+    "Keep missing runs and missing metrics as NOT_MEASURED or unknown; never coerce them to zero.",
+    "Do not publish a comparative figure until at least two completed runs pass the scorecard comparability gate."
+  ],
+  "targets": [
+    {
+      "id": "openai-codex",
+      "name": "OpenAI Codex",
+      "officialUrl": "https://github.com/openai/codex",
+      "sourceUrl": "https://github.com/openai/codex",
+      "status": "NOT_MEASURED",
+      "reason": "No same-task, same-environment executed scorecard is present in the public analytics capture.",
+      "version": "captured_at_execution",
+      "configuration": "captured_at_execution",
+      "environment": "shared_environment_captured_at_execution"
+    },
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "officialUrl": "https://docs.anthropic.com/en/docs/claude-code/getting-started",
+      "sourceUrl": "https://github.com/anthropics/claude-code",
+      "status": "NOT_MEASURED",
+      "reason": "No same-task, same-environment executed scorecard is present in the public analytics capture.",
+      "version": "captured_at_execution",
+      "configuration": "captured_at_execution",
+      "environment": "shared_environment_captured_at_execution"
+    },
+    {
+      "id": "opencode",
+      "name": "OpenCode",
+      "officialUrl": "https://opencode.ai/docs",
+      "sourceUrl": "https://github.com/anomalyco/opencode",
+      "status": "NOT_MEASURED",
+      "reason": "No same-task, same-environment executed scorecard is present in the public analytics capture.",
+      "version": "captured_at_execution",
+      "configuration": "captured_at_execution",
+      "environment": "shared_environment_captured_at_execution"
+    },
+    {
+      "id": "openhands",
+      "name": "OpenHands",
+      "officialUrl": "https://openhands.dev",
+      "sourceUrl": "https://github.com/OpenHands/OpenHands",
+      "status": "NOT_MEASURED",
+      "reason": "No same-task, same-environment executed scorecard is present in the public analytics capture.",
+      "version": "captured_at_execution",
+      "configuration": "captured_at_execution",
+      "environment": "shared_environment_captured_at_execution"
+    },
+    {
+      "id": "aider",
+      "name": "Aider",
+      "officialUrl": "https://aider.chat/docs/",
+      "sourceUrl": "https://github.com/Aider-AI/aider",
+      "status": "NOT_MEASURED",
+      "reason": "No same-task, same-environment executed scorecard is present in the public analytics capture.",
+      "version": "captured_at_execution",
+      "configuration": "captured_at_execution",
+      "environment": "shared_environment_captured_at_execution"
+    },
+    {
+      "id": "cline",
+      "name": "Cline",
+      "officialUrl": "https://cline.bot/",
+      "sourceUrl": "https://github.com/cline/cline",
+      "status": "NOT_MEASURED",
+      "reason": "No same-task, same-environment executed scorecard is present in the public analytics capture.",
+      "version": "captured_at_execution",
+      "configuration": "captured_at_execution",
+      "environment": "shared_environment_captured_at_execution"
+    }
+  ]
+}
