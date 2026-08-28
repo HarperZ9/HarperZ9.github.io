@@ -77,6 +77,27 @@
   </section>
 
   <section>
+    <h2>Code and corpus state</h2>
+    <p class="entry-note" style="margin-bottom:.85rem">These records are not one maturity class. The checks below were run against each public source checkout on 2026-08-28.</p>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title"><a class="inline" href="chorus.html">Chorus</a></span><span class="entry-meta">implemented research tool &middot; tests pass</span></div>
+      <ul class="bul"><li>Chorus 0.1.0 produces deterministic discourse digests from captured comment corpora using literal lexicon sentiment, hashed-TF-IDF clustering, engagement weighting, and content-addressed receipts. Its 58 tests pass. The optional model overlay is separately provenanced and excluded from the deterministic receipt. <a class="inline" href="https://github.com/HarperZ9/chorus">Inspect the source.</a></li></ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title">The Conservation of Faithfulness</span><span class="entry-meta">working paper &middot; tested prototype &middot; stale seal</span></div>
+      <ul class="bul"><li>The <a class="inline" href="https://github.com/HarperZ9/faithful-transpile">faithful-transpile source</a> includes a small criterion-named reconciliation prototype. Its eight hermetic tests pass. Against the default public branch, its separate 48-entry file manifest is not current: 16 match, 29 drift, and three are missing. The tests witness the implemented prototype; they do not repair or validate the repository seal.</li></ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title"><a class="inline" href="https://github.com/HarperZ9/witnessing-spine">The Witnessing Spine</a></span><span class="entry-meta">archived corpus &middot; DRIFT</span></div>
+      <ul class="bul"><li>The default public branch has a seven-file SHA-256 manifest but no executable verifier or test suite. A direct re-hash returns DRIFT because the README digest is stale: one of seven listed files does not re-derive. The page reports only that public state.</li></ul>
+    </div>
+    <div class="entry">
+      <div class="entry-head"><span class="entry-title"><a class="inline" href="https://github.com/HarperZ9/senses-and-sensibility">Senses and Sensibility</a></span><span class="entry-meta">philosophy corpus &middot; pre-proof &middot; manifest matches &middot; six index targets missing</span></div>
+      <ul class="bul"><li>This is an AI-assisted philosophy research corpus, not an executable product or a completed dissertation. Its own README calls the central result pre-proof. It has no executable test suite. A byte-level check against the default public branch finds that all 172 listed files re-derive from its SHA-256 manifest. That proves the listed bytes have not drifted; it does not resolve six absent front-door files still named by the index or cross the stated human re-derivation gate.</li></ul>
+    </div>
+  </section>
+
+  <section>
     <h2>Theses</h2>
     <p class="entry-note" style="margin-bottom:.85rem">The argument, in long form. Authored, dated, and stress-tested against its own weakest joints.</p>
     <div class="entry">
@@ -87,9 +108,7 @@
     </div>
     <div class="entry">
       <div class="entry-head"><span class="entry-title"><a class="inline" href="research-conservation-of-faithfulness.html">The Conservation of Faithfulness</a></span><span class="entry-meta">working paper</span></div>
-      <ul class="bul"><li>What actually crosses between two minds: not bits, but faithfulness to a named criterion. From
-      that follows a neutral center where two differently-perceiving minds reconcile, and the one boundary
-      where a human still has to stand. A reviewable draft, every claim labeled by where it stands.</li></ul>
+      <ul class="bul"><li>What actually crosses between two minds: not bits, but faithfulness to a named criterion. The associated faithful-transpile prototype makes that narrow mechanism executable with stub minds and a pluggable judge. Its eight tests pass, while its independent file manifest remains stale; the page therefore treats the paper as a working argument and the code as a bounded prototype, not a proven general law.</li></ul>
     </div>
     <div class="entry">
       <div class="entry-head"><span class="entry-title"><a class="inline" href="research-witness-and-verification.html">Witness and Verification Under Bounded Rationality</a></span><span class="entry-meta">wrap-up thesis</span></div>
@@ -212,7 +231,7 @@
   draft &middot; v0 scaffold &middot; witnessed result) and, where useful, by stricter status labels such as
   SOURCE_LEAD, PROBE_MATCH, CRUCIBLE_MATCH, and UNVERIFIABLE. Where a result is unproven it is reported
   UNVERIFIABLE rather than waved past. Get in touch:
-  <a class="inline" href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>. &middot; Updated 2026-07-12.</p>
+  <a class="inline" href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a>. &middot; Updated 2026-08-28.</p>
 
 </article>
 </main>

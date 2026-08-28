@@ -63,18 +63,87 @@
       "evidenceDate": "2026-08-27"
     },
     {
-      "slug": "authorized-private-practice",
-      "name": "Authorized Private Security Practice",
-      "purpose": "Operate distinct private systems for controlled offensive campaigns, native assessment labs, multi-domain orchestration, model refusal and jailbreak testing, agent and runtime trust verification, operator execution, and release authority.",
+      "slug": "array",
+      "name": "Array",
+      "purpose": "Orchestrate authorized offensive-security campaigns through approval-gated waves, contained tool supervision, cleanup, and a verifiable evidence ledger.",
       "maturity": "controlled-private",
       "source": null,
       "installOrEntry": null,
       "verificationCommand": null,
-      "limitations": [
-        "Public descriptions omit targets, credentials, live payloads, client data, engagement-specific findings, and deployable exploit details.",
-        "Private source inspection establishes owner-controlled implementation state; it does not establish third-party acceptance, deployment, or outcome."
-      ],
-      "authorizationBoundary": "Operational use requires written authorization, a defined scope, an approved environment, and a recipient responsible for remediation. Sensitive methods and findings move through that approved private or embargoed channel.",
+      "limitations": ["Public records omit operational targets, credentials, live payloads, client data, and engagement-specific findings.", "A public capability description does not establish third-party deployment or outcome."],
+      "authorizationBoundary": "Use requires written campaign authority, defined scope, an approved environment, and a remediation owner.",
+      "evidenceDate": "2026-08-28"
+    },
+    {
+      "slug": "seed",
+      "name": "Seed",
+      "purpose": "Run native security assessment and detection-engineering work through a 59-module C++23 engine with synthetic demonstrations, scope manifests, tests, adapters, and action receipts.",
+      "maturity": "controlled-private",
+      "source": null,
+      "installOrEntry": null,
+      "verificationCommand": null,
+      "limitations": ["Module and test counts do not establish independent review or field effectiveness.", "Public records omit deployable assessment details and protected operational material."],
+      "authorizationBoundary": "Use requires written authorization and an approved assessment or training environment.",
+      "evidenceDate": "2026-08-28"
+    },
+    {
+      "slug": "sofer",
+      "name": "Sofer",
+      "purpose": "Coordinate specialist agents, model backends, probes, intelligence and scheduling systems, multi-stage workflows, admission decisions, and receipt-backed handoffs.",
+      "maturity": "controlled-private",
+      "source": null,
+      "installOrEntry": null,
+      "verificationCommand": null,
+      "limitations": ["The public description does not establish deployment across every named domain.", "Private workflows, operational data, credentials, and client material are not published."],
+      "authorizationBoundary": "Each workflow requires operator authority, approved tools and data, and an accountable recipient.",
+      "evidenceDate": "2026-08-28"
+    },
+    {
+      "slug": "isomorph",
+      "name": "Isomorph",
+      "purpose": "Evaluate classifier and refusal behavior at authorized AI inference boundaries through controlled reformulation trials and control-stability analysis.",
+      "maturity": "controlled-private",
+      "source": null,
+      "installOrEntry": null,
+      "verificationCommand": null,
+      "limitations": ["Public records omit live jailbreak corpora, bypass payloads, target-specific methods, and provider findings.", "Observed behavior is specific to the authorized evaluation context."],
+      "authorizationBoundary": "Use jailbreak-class mechanisms only within an approved evaluation scope and controlled disclosure channel.",
+      "evidenceDate": "2026-08-28"
+    },
+    {
+      "slug": "bounds",
+      "name": "Bounds",
+      "purpose": "Verify trust across agent actions, runtime observations, and releases through explicit sensors, guards, evidence-backed receipts, inventories, and proof chains.",
+      "maturity": "controlled-private",
+      "source": null,
+      "installOrEntry": null,
+      "verificationCommand": null,
+      "limitations": ["Receipts report configured checks and observed evidence; they do not guarantee safety or absence of compromise.", "Private sensor configuration and protected evidence are not published."],
+      "authorizationBoundary": "Inspect only authorized actions, runtimes, repositories, and evidence.",
+      "evidenceDate": "2026-08-28"
+    },
+    {
+      "slug": "orca",
+      "name": "ORCA",
+      "purpose": "Operate private-line assessments by managing engagement state, descriptor-backed modules, findings, artifacts, reports, portable bundles, and release provenance.",
+      "maturity": "controlled-private",
+      "source": null,
+      "installOrEntry": null,
+      "verificationCommand": null,
+      "limitations": ["Public records do not expose module implementations, targets, credentials, findings, or client data.", "A portable bundle does not establish remediation or outcome."],
+      "authorizationBoundary": "Operate only within a written engagement scope and send outputs only to the approved recipient.",
+      "evidenceDate": "2026-08-28"
+    },
+    {
+      "slug": "gate",
+      "name": "Gate",
+      "purpose": "Make fail-closed integration and release decisions from component readiness, CI, MCP interfaces, safety-evaluation posture, supply-chain evidence, package verification, and handoff state.",
+      "maturity": "controlled-private",
+      "source": null,
+      "installOrEntry": null,
+      "verificationCommand": null,
+      "limitations": ["A passing decision reports satisfaction of configured gates; it does not certify universal safety or fitness.", "Private CI, package, supply-chain, and handoff evidence are not published."],
+      "authorizationBoundary": "Release decisions apply only to the reviewed components, evidence, scope, and recipient.",
       "evidenceDate": "2026-08-28"
     },
     {

@@ -38,7 +38,13 @@ REQUIRED_SYSTEMS = {
     "emet",
     "phantom",
     "behavior-transform",
-    "authorized-private-practice",
+    "array",
+    "seed",
+    "sofer",
+    "isomorph",
+    "bounds",
+    "orca",
+    "gate",
     "accountable-surface",
     "proof-surface",
     "retro-engine",
@@ -172,12 +178,15 @@ def test_system_registry_keeps_flywheel_primary_and_private_security_bounded() -
     assert records["flywheel"]["evidence"][0]["label"] == "Flywheel v0.3.10"
     assert {"engine-revival", "brender-archival", "retro-engine"}.isdisjoint(records["flywheel"]["related"])
 
-    private = records["authorized-private-practice"]
-    assert private["architectureRole"] == "private-operational-systems-index"
-    assert private["sourceHref"] is None
-    assert private["accessMode"] == "request"
-    assert "Written authorization" in private["boundary"]
-    assert "No private repository" in " ".join(private["limitations"])
+    private_ids = ("array", "seed", "sofer", "isomorph", "bounds", "orca", "gate")
+    for system_id in private_ids:
+        private = records[system_id]
+        assert private["sourceHref"] is None
+        assert private["accessMode"] == "request"
+        boundary = private["boundary"].lower()
+        assert any(term in boundary for term in ("authoriz", "authority", "reviewed components"))
+        limitations = " ".join(private["limitations"]).lower()
+        assert "public" in limitations or "publish" in limitations
 
     for record in records.values():
         href = record.get("href")
@@ -191,7 +200,10 @@ def test_security_surface_names_public_tools_without_shipping_private_methods() 
     registry = _json("security-tools.json")
     assert registry["schema"] == "harperz9-security-tools/v2"
     records = {record["slug"]: record for record in registry["records"]}
-    for slug in ("emet", "phantom", "behavior-transform", "accountable-surface", "authorized-private-practice"):
+    for slug in (
+        "emet", "phantom", "behavior-transform", "accountable-surface",
+        "array", "seed", "sofer", "isomorph", "bounds", "orca", "gate",
+    ):
         assert slug in records
 
     public_security = "\n".join(

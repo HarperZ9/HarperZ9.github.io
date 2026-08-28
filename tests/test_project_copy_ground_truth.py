@@ -66,6 +66,38 @@ def test_private_security_projects_keep_their_distinct_verified_roles() -> None:
     assert "model refusal and jailbreak testing" in homepage
 
 
+def test_private_security_projects_are_distinct_registry_records() -> None:
+    registry = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
+    records = {record["id"]: record for record in registry["systems"]}
+    expected = {
+        "array": "authorized offensive campaign orchestrator",
+        "seed": "native security-assessment engine",
+        "sofer": "private-line orchestration suite",
+        "isomorph": "AI inference-boundary red-team harness",
+        "bounds": "agent, runtime, and release trust verifier",
+        "orca": "native assessment operator runtime",
+        "gate": "private-system integration and release authority",
+    }
+
+    assert "authorized-private-practice" not in records
+    for system_id, product_type in expected.items():
+        record = records[system_id]
+        assert record["productType"] == product_type
+        assert record["maturity"] == "controlled-private"
+        assert record["sourceHref"] is None
+        assert record["href"] == f"private-practice.html#{system_id}"
+        assert record["inputs"]
+        assert record["outputs"]
+        assert record["evidence"]
+        assert record["limitations"]
+        assert record["related"]
+
+    security_registry = json.loads((ROOT / "security-tools.json").read_text(encoding="utf-8"))
+    security_records = {record["slug"] for record in security_registry["records"]}
+    assert set(expected) <= security_records
+    assert "authorized-private-practice" not in security_records
+
+
 def test_every_system_has_one_canonical_placement_and_specific_product_type() -> None:
     registry = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
     domain_ids = {domain["id"] for domain in registry["domains"]}

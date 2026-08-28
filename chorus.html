@@ -31,8 +31,8 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Chorus</span></div>
   <div class="mid">
     <h1>Discourse synthesis, <span class="g">bounded by receipts.</span></h1>
-    <p class="lede">Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests that rank themes, surface dissent, and identify genuinely contested topics.</p>
-    <p class="close">It is a standalone public system and a Gather-adjacent research tool. Optional model overlays remain separately provenanced.</p>
+    <p class="lede">Chorus turns a captured comment or thread corpus into a discourse digest using deterministic hashed-TF-IDF clustering, literal lexicon sentiment, engagement weighting, and aspect-level disagreement scores.</p>
+    <p class="close">It is a standalone public system that can read Gather corpora. Its optional model overlay is separately provenanced and excluded from the deterministic receipt.</p>
   </div>
   <div class="seal">active source 0.1.0 &middot; no package release &middot; checked 2026-08-28</div>
 </div>
@@ -47,15 +47,15 @@
     </article>
     <article class="index-row" role="listitem">
       <span class="index-term">Implemented work</span>
-      <span class="index-gloss">Weighted lexical theme clustering, controversy ranking, receipts, Gather-corpus input, and an optional separately provenanced model overlay.</span>
+      <span class="index-gloss">Greedy nearest-leader clustering over deterministic hashed-TF-IDF vectors, English-only literal lexicon scoring, theme and aspect disagreement measures, Gather-corpus input, and content-addressed receipts.</span>
     </article>
     <article class="index-row" role="listitem">
       <span class="index-term">Evidence</span>
-      <span class="index-gloss"><a href="https://github.com/HarperZ9/chorus" rel="noopener">Public source</a> identifies active 0.1.0 work. No PyPI package or GitHub release is claimed.</span>
+      <span class="index-gloss"><a href="https://github.com/HarperZ9/chorus" rel="noopener">Public source</a> identifies active 0.1.0 work. On the 2026-08-28 source checkout, 58 tests passed and the included sample re-derived its receipt. This verifies the checked implementation and fixture, not semantic accuracy on new corpora, deployment, or adoption. No PyPI package or GitHub release is claimed.</span>
     </article>
     <article class="index-row" role="listitem">
       <span class="index-term">Boundary</span>
-      <span class="index-gloss">A digest is a structured reading of the provided corpus. It does not prove source completeness, public opinion, motive, identity, or factual correctness outside the captured material.</span>
+      <span class="index-gloss">A digest is a structured reading of the provided corpus. Lexical clustering is not semantic understanding; the English-only sentiment pass does not resolve sarcasm, irony, or context. The output does not prove source completeness, public opinion, motive, identity, or factual correctness outside the captured material.</span>
     </article>
   </div>
 </section>

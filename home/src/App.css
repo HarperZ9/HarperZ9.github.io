@@ -347,7 +347,7 @@ code{
   max-width:70ch;
 }
 
-.constellation-layout{
+.capability-map-layout{
   display:grid;
   grid-template-columns:minmax(0,1.12fr) minmax(18rem,.88fr);
   gap:clamp(1.5rem,4vw,3rem);
@@ -360,81 +360,49 @@ code{
   font-weight:850;
 }
 
-.node-constellation{
-  position:relative;
-  min-height:28rem;
+.relationship-map{display:grid;border-top:2px solid #111014}
+
+.relationship-row{
   display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  grid-auto-rows:minmax(5.4rem,auto);
-  gap:.85rem;
-  isolation:isolate;
+  grid-template-columns:minmax(7rem,.75fr) minmax(9rem,.95fr) minmax(7rem,.75fr);
+  gap:.55rem .8rem;
+  align-items:baseline;
+  padding:.78rem 0;
+  border-bottom:1px solid rgba(17,16,20,.26);
 }
 
-.node{
-  position:relative;
-  z-index:2;
-  display:flex;
-  min-height:5.4rem;
-  flex-direction:column;
-  justify-content:space-between;
-  gap:.5rem;
-  padding:.8rem;
-  border:2px solid #111014;
-  background:#fbf9f0;
+.relationship-row > a{
   color:#111014;
-  text-decoration:none;
+  font-weight:850;
+  text-decoration-thickness:1px;
 }
 
-.node span{font-weight:900}
-
-.node small{
-  color:#4d5459;
+.relationship-type{
+  position:relative;
+  padding-inline:1rem;
+  color:#394248;
   font-family:var(--font-mono);
-  font-size:.78rem;
+  font-size:.76rem;
+  text-align:center;
 }
 
-.node-primary-platform{
-  grid-column:1 / span 2;
-  grid-row:1 / span 2;
-  background:#dff8ff;
-  border-width:3px;
-  font-size:1.24rem;
-}
-
-.node-evaluation-layer{border-style:dashed}
-.node-controlled-private-constellation{background:#f1ded6}
-.node-plugin{border-style:dotted}
-
-.flow-line{
+.relationship-type::before,
+.relationship-type::after{
+  content:"";
   position:absolute;
-  z-index:1;
-  pointer-events:none;
-  background:#111014;
+  top:50%;
+  width:.7rem;
+  border-top:1px solid #394248;
 }
 
-.flow-platform{
-  left:16%;
-  right:18%;
-  top:38%;
-  height:3px;
-}
+.relationship-type::before{left:0}
+.relationship-type::after{right:0}
 
-.flow-evidence{
-  left:42%;
-  top:12%;
-  bottom:18%;
-  width:2px;
-  border-inline:2px dashed #111014;
-  background:transparent;
-}
-
-.flow-retro{
-  left:12%;
-  right:10%;
-  bottom:19%;
-  height:2px;
-  background:transparent;
-  border-top:2px dashed #111014;
+.relationship-row p{
+  grid-column:1 / -1;
+  margin:0;
+  font-size:.82rem;
+  line-height:1.45;
 }
 
 .visualization-diagram p{margin:.95rem 0 0}
@@ -587,7 +555,7 @@ html.js .reveal.in{transform:none;transition:transform .7s cubic-bezier(.16,1,.3
   .topnav-links{max-width:34rem}
   .hero,
   .split-section,
-  .constellation-layout,
+  .capability-map-layout,
   .security-layout,
   .hiring-section{
     grid-template-columns:1fr;
@@ -609,15 +577,10 @@ html.js .reveal.in{transform:none;transition:transform .7s cubic-bezier(.16,1,.3
     min-height:auto;
     padding-top:4rem;
   }
-  .node-constellation{
-    grid-template-columns:1fr 1fr;
-    min-height:0;
-  }
-  .node-primary-platform{
-    grid-column:1 / -1;
-    grid-row:auto;
-  }
-  .flow-line{display:none}
+  .relationship-row{grid-template-columns:1fr}
+  .relationship-type{padding:0;text-align:left}
+  .relationship-type::before,
+  .relationship-type::after{display:none}
   .work-row{
     grid-template-columns:1fr;
     gap:.75rem;

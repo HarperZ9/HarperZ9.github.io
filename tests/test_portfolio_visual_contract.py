@@ -143,8 +143,10 @@ def test_home_visual_system_uses_evidence_plates_not_floating_dashboards() -> No
     assert ".data-plate" in css
     assert ".evidence-table" in css
     assert ".visualization-diagram" in css
-    assert ".node-constellation" in css
-    assert ".flow-line" in css
+    assert ".relationship-map" in css
+    assert ".relationship-row" in css
+    assert ".node-constellation" not in css
+    assert ".flow-line" not in css
     assert ".hero-card" not in css
     assert ".release-card" not in css
     assert ".workflow" not in css

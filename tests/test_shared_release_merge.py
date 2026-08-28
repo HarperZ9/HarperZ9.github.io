@@ -65,7 +65,9 @@ def test_fresh_cache_stamp_covers_the_shared_navigation_chain() -> None:
     nav = read("system/nav.js")
     home_art = read("system/home-art.js")
     home_template = read("home/index.html")
-    bundle = read("assets/index-C-YSPaTO.js")
+    bundle_match = re.search(r'src="/(assets/index-[^"]+\.js)"', read("index.html"))
+    assert bundle_match, "built home page does not reference its JavaScript bundle"
+    bundle = read(bundle_match.group(1))
     assert f'const ASSET_V = "{FRESH_STAMP}"' in nav
     assert f'./routes.js?v={FRESH_STAMP}' in nav
     assert f'./nav.js?v={FRESH_STAMP}' in home_art
@@ -111,7 +113,7 @@ def test_security_surfaces_keep_deep_detail_and_add_machine_readable_maturity() 
     assert 'href="security-tools.json"' in phantom
 
     emet = read("emet.html")
-    assert "35/35 conformance" in emet
+    assert "35/35 core vectors" in emet
     assert "EMET v1.2.0" in emet
     assert "48/48" in emet
     assert "40/40" in emet

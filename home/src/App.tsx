@@ -41,9 +41,19 @@ type DomainRecord = {
   summary: string;
 };
 
+type RelationRecord = {
+  source: string;
+  target: string;
+  relation: string;
+  status: string;
+  evidenceIds: string[];
+  claimScope: string;
+};
+
 type Registry = {
   schema: string;
   domains: DomainRecord[];
+  relations: RelationRecord[];
   systems: SystemRecord[];
 };
 
@@ -66,10 +76,10 @@ type RetroManifest = {
   relationships: {
     boundary: string;
   };
-  retroSystemsLab: {
-    play: string;
-    preserve: string;
-    verify: string;
+  projects: {
+    retroEngine: string;
+    engineRevival: string;
+    brenderArchival: string;
   };
   engineRevival: {
     release: {
@@ -119,21 +129,6 @@ const CAPABILITY_FAMILY_IDS = [
   "research-education",
 ];
 
-const CAPABILITY_NODE_IDS = [
-  "flywheel",
-  "telos",
-  "index",
-  "gather",
-  "forum",
-  "crucible",
-  "buildlang",
-  "learn",
-  "retro-engine",
-  "engine-revival",
-  "brender-archival",
-  "phantom",
-];
-
 const REPRESENTATIVE_IDS = [
   "flywheel",
   "index",
@@ -148,7 +143,13 @@ const REPRESENTATIVE_IDS = [
 const SECURITY_IDS = [
   "phantom",
   "behavior-transform",
-  "authorized-private-practice",
+  "array",
+  "seed",
+  "sofer",
+  "isomorph",
+  "bounds",
+  "orca",
+  "gate",
   "accountable-surface",
   "public-surface-sweeper",
   "model-provenance-validator",
@@ -177,22 +178,29 @@ function shortSha(value: string) {
   return value.slice(0, 12);
 }
 
-const capabilityNodes = CAPABILITY_NODE_IDS.map(requireSystem);
+const capabilityRelations = registry.relations.filter((relation) => relation.status === "verified-in-source");
+
+const RELATION_LABELS: Record<string, string> = {
+  "integrates-lane": "launches as a configured lane",
+  "accepts-corpus-from": "accepts corpus from",
+  "accepts-evidence-from": "accepts evidence from",
+  "build-dependency": "builds against",
+  "optional-native-render-bridge": "optionally bridges rendering to",
+  "optional-native-runtime-dependency": "can use as an optional native runtime dependency",
+  "optional-runtime-integration": "optionally integrates with",
+};
 const representativeSystems = REPRESENTATIVE_IDS.map(requireSystem);
 const securitySystems = SECURITY_IDS.map(requireSystem);
 const retroSystems = [
   {
-    verb: "play",
     system: requireSystem("retro-engine"),
-    evidence: retroManifest.retroSystemsLab.play,
+    evidence: retroManifest.projects.retroEngine,
   },
   {
-    verb: "preserve",
     system: requireSystem("engine-revival"),
     evidence: `${retroManifest.engineRevival.release.tag} at ${shortSha(retroManifest.engineRevival.release.commitSha)}`,
   },
   {
-    verb: "verify",
     system: requireSystem("brender-archival"),
     evidence: `${retroManifest.brenderArchival.nativeCTestTargets} native CTest targets`,
   },
@@ -296,7 +304,7 @@ function TopNav() {
       </a>
       <div className="topnav-links">
         <a href="/hire.html">Hire / work</a>
-        <a href="/overview.html">Engines</a>
+        <a href="/overview.html">Systems</a>
         <a href="/research.html">Research</a>
         <a href="/studio.html">The Studio</a>
         <a href="/gallery.html">Gallery</a>
@@ -315,7 +323,7 @@ function IdentityHero() {
         <p className="hero-line">Systems engineering, security tooling, graphics, and public research.</p>
         <p className="hero-lab">Zentropy Labs is the workshop behind Flywheel and the wider body of work.</p>
         <div className="hero-actions" aria-label="Primary actions">
-          <a className="btn solid" href="#constellation">Explore the work</a>
+          <a className="btn solid" href="#capability-map">Explore the work</a>
           <a className="btn" href="/hire.html">Hire or collaborate</a>
         </div>
       </div>
@@ -426,7 +434,7 @@ function CapabilityOverview() {
   return (
     <>
     <span id="make" hidden aria-hidden="true" />
-    <section id="constellation" className="section constellation-section">
+    <section id="capability-map" className="section capability-map-section">
       <div className="section-heading">
         <h2>Capability map</h2>
         <p className="section-lead">
@@ -434,27 +442,25 @@ function CapabilityOverview() {
           Each system keeps its own product type, dependencies, maturity, and evidence.
         </p>
       </div>
-      <div className="constellation-layout">
-        <figure className="visualization-diagram data-plate" aria-labelledby="constellation-title">
-          <figcaption id="constellation-title">Selected systems and their implemented product types</figcaption>
-          <div className="node-constellation" role="list">
-            {capabilityNodes.map((system) => (
-              <a
-                key={system.id}
-                role="listitem"
-                className={`node node-${system.architectureRole}`}
-                href={localHref(system.href)}
-                data-node-id={system.id}
-              >
-                <span>{system.name}</span>
-                <small>{system.productType}</small>
-              </a>
-            ))}
-            <span className="flow-line flow-platform" aria-hidden="true" />
-            <span className="flow-line flow-evidence" aria-hidden="true" />
-            <span className="flow-line flow-retro" aria-hidden="true" />
+      <div className="capability-map-layout">
+        <figure className="visualization-diagram data-plate" aria-labelledby="capability-map-title">
+          <figcaption id="capability-map-title">Relationships verified in implementation</figcaption>
+          <div className="relationship-map" role="list">
+            {capabilityRelations.map((relation) => {
+              const source = requireSystem(relation.source);
+              const target = requireSystem(relation.target);
+              return (
+                <article className="relationship-row" role="listitem" key={`${relation.source}-${relation.relation}-${relation.target}`}>
+                  <a href={localHref(source.href)}>{source.name}</a>
+                  <span className="relationship-type">{RELATION_LABELS[relation.relation] ?? relation.claimScope}</span>
+                  <a href={localHref(target.href)}>{target.name}</a>
+                  <p>{relation.claimScope}</p>
+                </article>
+              );
+            })}
           </div>
-          <p>Placement shows a visitor route, not ownership or runtime dependency. The catalog records secondary domains separately.</p>
+          <p>Only relationships backed by the current code registry appear here. Capability families remain navigation labels.</p>
+          <a href="/figures/system-capability-map.html">Open the complete accessible relationship map</a>
         </figure>
         <div className="family-index">
           {CAPABILITY_FAMILY_IDS.map((familyId) => {
@@ -464,7 +470,7 @@ function CapabilityOverview() {
               <article className="family-row" key={familyId}>
                 <h3>{domain?.label ?? familyId}</h3>
                 <p>{domain?.summary}</p>
-                <a href={`/catalog.html#${familyId}`}>{familySystems.length} related records</a>
+                <a href={`/catalog.html#domain-${familyId}`}>{familySystems.length} records</a>
               </article>
             );
           })}
@@ -551,9 +557,9 @@ function RetroSystemsLab() {
         </p>
       </div>
       <div className="retro-flow">
-        {retroSystems.map(({ verb, system, evidence }) => (
+        {retroSystems.map(({ system, evidence }) => (
           <article className="retro-step" key={system.id}>
-            <span className="retro-verb">{verb}</span>
+            <span className="retro-verb">{system.productType}</span>
             <h3><a href={localHref(system.href)}>{system.name}</a></h3>
             <p>{system.purpose}</p>
             <a href={evidenceHref(system)}>{evidence}</a>
@@ -577,7 +583,7 @@ function SecurityBoundary() {
       </div>
       <div className="security-layout">
         <article className="data-plate boundary-card">
-          <h3>Controlled security constellation</h3>
+          <h3>Distinct private operational systems</h3>
           <p>
             Array, Seed, Sofer, Isomorph, Bounds, ORCA, and Gate perform different jobs across an authorized engagement. Their public descriptions name
             those jobs. Targets, credentials, live payloads, client data, and engagement-specific findings stay in the approved private channel.

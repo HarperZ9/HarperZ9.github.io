@@ -19,7 +19,7 @@ SECTION_SEQUENCE = [
     "identity",
     "flywheel",
     "evidence",
-    "constellation",
+    "capability-map",
     "representative",
     "research",
     "retro-systems-lab",
@@ -76,7 +76,7 @@ def test_home_source_uses_identity_first_section_sequence() -> None:
         "Zentropy Labs is the workshop behind Flywheel and the wider body of work.",
     ]
     assert "Systems Engineer | AI Evaluation, Developer Tools, and Technical Operations" not in source
-    assert 'href="#constellation"' in source
+    assert 'href="#capability-map"' in source
     assert ">Explore the work" in source
     assert 'href="/hire.html"' in source
     assert ">Hire or collaborate" in source
@@ -128,26 +128,24 @@ def test_home_uses_checked_in_registry_feed_and_retro_manifest() -> None:
 
     assert feed["items"][0]["url"] == "https://harperz9.github.io/briefings/2026-08-26-openai-hugging-face-incident/"
     assert "currentBriefing.url" in source
-    assert retro["hierarchy"]["primaryPlatform"] == "Flywheel"
+    assert "hierarchy" not in retro
     assert 'requireSystem("retro-engine")' in source
     assert 'requireSystem("engine-revival")' in source
     assert 'requireSystem("brender-archival")' in source
-    assert "retroManifest.retroSystemsLab.play" in source
+    assert "retroManifest.projects.retroEngine" in source
     assert "retroManifest.engineRevival.release.tag" in source
     assert "retroManifest.brenderArchival.nativeCTestTargets" in source
-    for value in ("Retro Engine", "Engine Revival", "BRender Archival", "play", "preserve", "verify"):
+    for value in ("interactive browser studio", "archive and revival tooling", "focused BRender restoration lab"):
         assert value in json.dumps(retro)
 
 
-def test_home_capability_constellation_is_curated_not_a_wall_of_cards() -> None:
+def test_home_capability_map_uses_only_typed_registry_relationships() -> None:
     source = read(HOME_SOURCE)
     systems = json.loads(read(SYSTEMS))
-    nodes = re.search(r"const CAPABILITY_NODE_IDS = \[(?P<body>.*?)\];", source, re.S)
-    assert nodes, "homepage must declare the curated capability node list"
-    node_count = len(re.findall(r'"[^"]+"', nodes.group("body")))
-
-    assert 6 <= node_count <= 12
-    assert "data-node-id={system.id}" in source
+    assert "capabilityRelations = registry.relations.filter" in source
+    assert "relation.claimScope" in source
+    assert "CAPABILITY_NODE_IDS" not in source
+    assert "flow-line" not in source
     assert "Capability map" in source
     assert "CAPABILITY_FAMILY_IDS" in source
     assert [domain["label"] for domain in systems["domains"]] == [
@@ -159,7 +157,7 @@ def test_home_capability_constellation_is_curated_not_a_wall_of_cards() -> None:
         "Research and education",
     ]
 
-    assert "Controlled security constellation" in source
+    assert "Distinct private operational systems" in source
     assert "live bypass" not in source.lower()
     assert "exploit chain" not in source.lower()
     assert "target-specific" not in source.lower()
@@ -254,7 +252,7 @@ def test_home_and_static_routes_share_the_same_primary_navigation_spine() -> Non
     labels = re.findall(r'<a [^>]*>([^<]+)</a>', topnav.group("body"))
     assert labels == [
         "Hire / work",
-        "Engines",
+        "Systems",
         "Research",
         "The Studio",
         "Gallery",

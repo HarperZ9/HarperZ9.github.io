@@ -35,7 +35,7 @@
     <p class="lede">I couldn&rsquo;t take an agent&rsquo;s word for what it changed, so I built something that checks for itself. It reads the file straight off the disk and works out a fingerprint, a short code that is unique to those exact bytes. Move even one character and the whole fingerprint changes. Then it compares that to the fingerprint it saved earlier and tells you one of three things: MATCH (nothing moved), DRIFT (something moved), or UNVERIFIABLE (it couldn&rsquo;t check, and says so plainly). There is no fourth answer that just means <em>trust me</em>. The code was built so that answer can&rsquo;t exist. It stands outside the thing it&rsquo;s checking, and it never speaks for that thing.</p>
     <p class="close">A witness isn&rsquo;t a judge. All it does is say what it compared. Whether to trust the result is yours, not the tool&rsquo;s.</p>
   </div>
-  <div class="seal"><span translate="no">emet</span>, Hebrew for truth &middot; 1.1.0 on PyPI &middot; 35/35 conformance &middot; four languages</div>
+  <div class="seal"><span translate="no">emet</span>, Hebrew for truth &middot; 1.2.0 on PyPI &middot; 48-vector reference suite &middot; four implementations with declared capability coverage</div>
 </div>
 
 <main id="main">
@@ -80,7 +80,7 @@
 <section class="proof" id="proof" aria-labelledby="proof-h">
   <div class="proof-head">
     <h2 id="proof-h" class="reveal">Don&rsquo;t take the answer on my word. <em>Watch it flip.</em></h2>
-    <p class="body-text reveal">A single character is enough to change everything. Check a file, add one character to it, then ask again. The same rules, written out in three different programming languages, all land on the same answer.</p>
+    <p class="body-text reveal">A single character is enough to change everything. Check a file, add one character to it, then ask again. The same core rules have implementations in Python, Rust, Node.js, and Go, with capability-specific conformance coverage stated below.</p>
   </div>
   <div class="exhibit reveal">
     <div class="exhibit-tag"><span class="ord">Live</span> <span class="what">the verdict depends on the bytes, nothing else</span></div>
@@ -92,19 +92,19 @@
 <span class="bad">DRIFT</span>  demo_sample.txt   want=d02206abca2a…  got=b072d611645e…   (exit 1)
 
 <span class="cmt"># one spec, four separate language implementations, CI on every push</span>
-membrane.py        &rarr;  <span class="ok">CONFORMANCE 35/35 vectors pass</span>
-impl/rust/emet     &rarr;  <span class="ok">CONFORMANCE 35/35 vectors pass</span>
-impl/js/emet.js    &rarr;  <span class="ok">CONFORMANCE 35/35 vectors pass</span>
-impl/go/emet       &rarr;  <span class="ok">CONFORMANCE 35/35 vectors pass</span></pre>
+membrane.py        &rarr;  <span class="ok">CONFORMANCE 48/48 vectors pass</span>
+impl/rust/emet     &rarr;  <span class="ok">CONFORMANCE 40/40 supported vectors pass</span>
+impl/js/emet.js    &rarr;  <span class="ok">CONFORMANCE 40/40 supported vectors pass</span>
+impl/go/emet       &rarr;  <span class="ok">CONFORMANCE 35/35 core vectors pass</span></pre>
     <p class="artifact-cap">Change a single character in the file and the answer drops from <b translate="no">MATCH</b> to <b translate="no">DRIFT</b>. It reads the file itself, not anyone who promises it&rsquo;s fine.</p>
-    <p class="artifact-note">Captured live from the <span translate="no">emet</span> run &middot; receipt format from <b translate="no">adapters/proof_surface_receipt.py</b> &middot; 35/35 conformance vectors, four language implementations, CI each push. <em>Honest limit:</em> I wrote all four versions myself, so they can only earn one honest claim: that the written rules are clear enough to build from. What they still can&rsquo;t claim is that someone with no connection to me rebuilt the tool from the spec and got the same answers, and that different-author version is something I still owe. <a href="emet-sample.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(58,43,214,.45)">See a sample proof-surface report →</a></p>
+    <p class="artifact-note">The shared suite contains 48 vectors: 35 core, 5 receipt, 4 rebind, and 4 evaluation-receipt cases. Python covers all 48; Rust and Node cover 40 with rebind and evaluation-receipt skipped by declared capability; Go covers the 35 core vectors. <em>Honest limit:</em> I wrote all four versions myself, so this demonstrates same-author cross-language agreement, not independent reproduction. <a href="emet-sample.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(58,43,214,.45)">See a sample proof-surface report →</a></p>
   </div>
 </section>
 
 <!-- ─── CONFORMANCE ────────────────────────────────────────────── -->
 <section class="mv" id="conformance" aria-labelledby="conf-h">
   <h2 id="conf-h" class="reveal">One set of rules, four languages.</h2>
-  <p class="body-text reveal">I wrote the same rules out four separate times, each in a different programming language (Python, Rust, Node.js, Go), and each built only from what comes with that language, nothing borrowed from the outside. All four pass the very same thirty-five test cases on every change.</p>
+  <p class="body-text reveal">I wrote the same core rules in Python, Rust, Node.js, and Go, using each language&rsquo;s standard library. All four cover the 35 core vectors. Python also covers receipt, rebind, and evaluation-receipt profiles; Rust and Node cover the receipt profile; Go does not yet claim those optional profiles.</p>
   <p class="pull reveal">Four versions agreeing is not the same as four people agreeing.</p>
   <p class="body-text reveal">They all came from one person: me. So they earn one honest claim and not a single one more: the rules are clear enough that someone can build a working tool from them. What I still owe is the real test, a version built by someone with no tie to me, a different author and not just a fifth language. I say that here in plain words, instead of letting the number quietly imply more than it should.</p>
 </section>
@@ -134,7 +134,7 @@ impl/go/emet       &rarr;  <span class="ok">CONFORMANCE 35/35 vectors pass</span
 <span class="pr">$ emet selftest</span>                                     <span class="cmt"># re-derives its own hash; never says &ldquo;trusted&rdquo;</span>
 <span class="pr">$ git clone https://github.com/HarperZ9/emet &amp;&amp; cd emet</span>
 <span class="pr">$ python conformance/run.py membrane.py</span>
-<span class="ok">CONFORMANCE 35/35 vectors pass</span></pre>
+<span class="ok">CONFORMANCE 48/48 vectors pass</span></pre>
   <div class="channels reveal">
     <span class="g">PyPI</span>: <a href="https://pypi.org/project/emet/" translate="no">emet</a>
     &nbsp;&middot;&nbsp;

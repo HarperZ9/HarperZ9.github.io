@@ -50,6 +50,14 @@ window.CARD_DATA = {
     "glyph": "ledger",
     "showGlyph": true
   },
+  "behavior-transform": {
+    "role": "I/O BOUNDARY AND RECEIPT LIBRARY",
+    "headline": "Record read, write, execution, fetch, input, and model-boundary receipts.",
+    "pipeline": "READ / WRITE / EXECUTE / FETCH / RECEIPT",
+    "word": "BEHAVIOR TRANSFORM",
+    "glyph": "ledger",
+    "showGlyph": true
+  },
   "private-practice": {
     "role": "AUTHORIZED PRIVATE SECURITY PRACTICE",
     "headline": "Scope sensitive review work before any private detail moves.",
@@ -108,9 +116,9 @@ window.CARD_DATA = {
     "glyph": "triad"
   },
   "plexus": {
-    "role": "AGENT TOOLCHAIN WIRING",
-    "headline": "Discover tool capabilities and assemble runnable producer-to-consumer pipelines.",
-    "pipeline": "DISCOVER / MATCH / PLAN / ROUTE",
+    "role": "DECLARED CAPABILITY MESH",
+    "headline": "Read declared interop manifests and derive inspectable producer-to-consumer plans.",
+    "pipeline": "DECLARE / MATCH / PLAN / OPTIONAL PROBE",
     "word": "PLEXUS",
     "glyph": "graph"
   },
@@ -122,17 +130,17 @@ window.CARD_DATA = {
     "glyph": "layers"
   },
   "portfolio-home": {
-    "role": "FOURTEEN ENGINES / ONE FLYWHEEL THESIS",
-    "headline": "Public tools, four recorded workflows, and evidence you can inspect.",
-    "pipeline": "MAP / ROUTE / VERIFY / REMEMBER / IMPROVE",
-    "word": "PROJECT TELOS",
+    "role": "ZAIN DANA HARPER",
+    "headline": "Systems engineering, security tooling, graphics, and public research.",
+    "pipeline": "SYSTEMS / EVIDENCE / RESEARCH / WORK",
+    "word": "ZENTROPY LABS",
     "glyph": "aperture"
   },
   "profile": {
-    "role": "THE PUBLIC PROFILE",
-    "headline": "Make things together. Re-check every step.",
-    "pipeline": "ENGINES / SUBSTRATE / RECEIPTS / STATUS",
-    "word": "TELOS",
+    "role": "ZAIN DANA HARPER / PUBLIC PROFILE",
+    "headline": "Systems, field operations, graphics, security, and research.",
+    "pipeline": "WORK / SYSTEMS / RESEARCH / STUDIO",
+    "word": "ZENTROPY LABS",
     "glyph": "aperture"
   },
   "build-ecosystem": {
@@ -395,9 +403,9 @@ window.CARD_DATA = {
     "imagePath": "img/og/retro.png"
   },
   "elder-enb": {
-    "role": "PUBLIC ENB CONFIGURATION",
-    "headline": "Public ENB source with release-candidate state and live-host acceptance still open.",
-    "pipeline": "SOURCE / RC TAG / HOST / LIMITS",
+    "role": "SKYRIM ENB SHADER SUITE",
+    "headline": "Build a nine-stage ENBSeries shader suite with five quality tiers and an optional native runtime.",
+    "pipeline": "SHADERS / QUALITY TIERS / PACKAGE / LIVE ACCEPTANCE",
     "word": "ELDER ENB",
     "glyph": "layers",
     "family": "graphics-retro",
@@ -405,13 +413,13 @@ window.CARD_DATA = {
     "constellationCard": true,
     "routeHref": "elder-enb.html",
     "routeTitle": "Elder ENB",
-    "routeSummary": "Public ENB configuration source with release-candidate state and live-host acceptance still open.",
+    "routeSummary": "Active Skyrim SE/AE ENB shader-suite work; branch state and live-host acceptance remain separate from public release state.",
     "imagePath": "img/og/elder-enb.png"
   },
   "truth-enb": {
-    "role": "REVIEWABLE ENB GRAPHICS",
-    "headline": "Reviewable ENB graphics source with a release-candidate tag, not a release claim.",
-    "pipeline": "SOURCE / RC TAG / REVIEW / LIMITS",
+    "role": "SKYRIM ENB SHADER SUITE",
+    "headline": "Render a procedural sky, clouds, aurora, exposure, and tone mapping through ENBSeries 0.504.",
+    "pipeline": "ATMOSPHERE / CLOUDS / AURORA / EXPOSURE / TONE",
     "word": "TRUTH ENB",
     "glyph": "aperture",
     "family": "graphics-retro",
@@ -419,7 +427,7 @@ window.CARD_DATA = {
     "constellationCard": true,
     "routeHref": "truth-enb.html",
     "routeTitle": "Truth ENB",
-    "routeSummary": "Reviewable ENB graphics configuration source with a release-candidate tag, not a release claim.",
+    "routeSummary": "Skyrim SE/AE ENBSeries 0.504 shader suite with procedural sky, clouds, aurora, exposure, tone mapping, and an optional camera bridge.",
     "imagePath": "img/og/truth-enb.png"
   },
   "enb-runtime-core": {
