@@ -17,6 +17,14 @@
    the page's variables is not a floor.
    ============================================================================ */
 
+:root{
+  --font-sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
+  --ground-instrument:#070406;
+  --ground-paper:#f2efe6;
+  --ink-paper:#111014;
+}
+
 .site-nav{
   position:sticky;top:0;z-index:40;
   display:flex;align-items:center;justify-content:space-between;
@@ -24,8 +32,8 @@
   box-sizing:border-box;
   padding:.75rem clamp(1.15rem,5vw,5rem);
   border:0;border-bottom:1px solid rgba(238,241,243,.14);
-  background:#070406;
-  font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:var(--ground-instrument);
+  font-family:var(--font-sans);
 }
 .site-nav *{box-sizing:border-box}
 .site-nav a{text-decoration:none}
@@ -33,7 +41,7 @@
 .site-nav .sn-home{
   display:inline-flex;align-items:center;gap:.7rem;flex:0 0 auto;
   min-height:2.75rem;
-  font-family:"ZentropyDisplay","Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-family:var(--font-sans);
   font-size:clamp(1.05rem,2vw,1.38rem);
   font-weight:600;line-height:1;letter-spacing:0;text-transform:none;
   color:#eef1f3;
@@ -51,12 +59,6 @@
 .site-nav .sn-logo-fallback{object-fit:cover}
 .site-nav .sn-brand-word{display:inline}
 
-.site-nav .sn-section{
-  display:none;
-  font-family:"Conso",ui-monospace,monospace;
-  font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
-  color:#9aa2aa;
-}
 .site-nav .sn-links{
   display:flex;align-items:center;justify-content:flex-end;
   gap:clamp(.8rem,2vw,1.8rem);flex:1 1 auto;min-width:0;
@@ -76,6 +78,17 @@
 .site-nav .sn-more summary:hover,
 .site-nav .sn-more summary:focus-visible{color:#eef1f3;outline:none}
 @media (forced-colors: active){
+  .site-nav,
+  .site-nav .sn-home-field,
+  .site-nav .sn-more summary,
+  .site-nav .sn-more-list,
+  .route-header{
+    background:Canvas!important;
+    color:CanvasText!important;
+    border-color:CanvasText!important;
+    box-shadow:none!important;
+  }
+  .route-header{border:1px solid CanvasText!important}
   .site-nav .sn-home:focus-visible,
   .site-nav .sn-links a:focus-visible,
   .site-nav .sn-more summary:focus-visible,
@@ -104,14 +117,14 @@
   min-width:16rem;max-width:min(22rem,calc(100vw - 2.3rem));
   display:grid;gap:.55rem;padding:.7rem;
   border:1px solid rgba(238,241,243,.26);
-  background:#070406;
+  background:var(--ground-instrument);
   box-shadow:0 20px 64px -36px rgba(0,0,0,.9);
 }
 .site-nav .sn-menu-group{display:grid;gap:.14rem}
 .site-nav .sn-menu-primary{display:none}
 .site-nav .sn-menu-label{
   margin:.12rem .68rem .02rem;
-  font-family:"Conso",ui-monospace,monospace;
+  font-family:var(--font-mono);
   font-size:.62rem;line-height:1.2;letter-spacing:.1em;
   text-transform:uppercase;color:#8b939b;
 }
@@ -134,11 +147,10 @@
   }
   .site-nav .sn-home{min-width:0;width:auto;font-size:1.05rem}
   .site-nav .sn-home-field{width:2.35rem;height:2.35rem}
-  .site-nav .sn-section{display:block;grid-column:1/2;grid-row:2}
   .site-nav .sn-links{display:none}
   .site-nav .sn-menu-primary{display:grid}
   .site-nav .sn-more{
-    grid-column:2;grid-row:1/span 2;justify-self:end;align-self:center;
+    grid-column:2;grid-row:1;justify-self:end;align-self:center;
     display:block;min-width:max-content;z-index:3;
   }
   .site-nav .sn-more summary{
@@ -162,11 +174,18 @@
   .site-nav{display:none!important}
 }
 
-/* ── the route artifact ──────────────────────────────────────────────────
-   nav.js also injects a .route-art figure built from the page's og:image.
-   Most pages style it; one did not, and the raw image rendered at its
-   natural 1200px inside a 375px window, making the whole document scroll
-   sideways. Same rule as the bar above: this file is the floor for anything
-   nav.js puts on a page that did not ask for it. */
-.route-art{max-width:100%;overflow:hidden;box-sizing:border-box}
-.route-art img{display:block;width:100%;height:auto;max-width:100%}
+/* The route header is a structural enhancement of the page's own opening
+   block. This floor keeps injected path/title/summary pieces legible even on
+   pages that do not define local rules for the component. */
+.route-header{max-width:100%;box-sizing:border-box}
+.route-header__path{
+  display:flex;flex-wrap:wrap;align-items:center;gap:.35rem .8rem;
+  margin:0 0 .85rem;
+  font-family:var(--font-sans);
+  font-size:.88rem;line-height:1.35;letter-spacing:0;text-transform:none;
+  color:#9aa2aa;
+}
+.route-header__path a{color:#eef1f3;text-decoration-thickness:1px;text-underline-offset:3px}
+.route-header__path span{color:#9aa2aa}
+.route-header__title{letter-spacing:0;text-transform:none}
+.route-header__summary{max-width:68ch}
