@@ -7,6 +7,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+NON_DEPLOYABLE_HTML_DIRS = {"node_modules", "dist", ".worktrees", "_preview", "_drafts", "_redesign"}
 SHARED_STYLE_SHEETS = (
     "system/system.css",
     "system/doc.css",
@@ -29,6 +30,14 @@ SHARED_VISUAL_TOKENS = (
 
 def read(rel: str) -> str:
     return (ROOT / rel).read_text(encoding="utf-8")
+
+
+def deployable_html_pages() -> list[Path]:
+    return [
+        path
+        for path in ROOT.rglob("*.html")
+        if not any(part in NON_DEPLOYABLE_HTML_DIRS for part in path.relative_to(ROOT).parts)
+    ]
 
 
 def declarations(css: str, selector: str) -> dict[str, str]:
@@ -289,10 +298,7 @@ def test_product_and_system_routes_do_not_repeat_decorative_eyebrows() -> None:
 
 
 def test_public_routes_reserve_micro_labels_for_semantic_context() -> None:
-    for path in ROOT.rglob("*.html"):
-        relative = path.relative_to(ROOT)
-        if any(part == "node_modules" for part in relative.parts):
-            continue
+    for path in deployable_html_pages():
         source = path.read_text(encoding="utf-8")
         assert not re.search(r'class="[^"]*\beyebrow\b', source), path
 
@@ -310,10 +316,8 @@ def test_public_routes_reserve_micro_labels_for_semantic_context() -> None:
 
 def test_shared_frontend_assets_use_one_cache_revision() -> None:
     revision = "20260828-site-design"
-    for path in ROOT.rglob("*.html"):
+    for path in deployable_html_pages():
         relative = path.relative_to(ROOT)
-        if any(part in {"node_modules", "dist"} for part in relative.parts):
-            continue
         source = path.read_text(encoding="utf-8")
         for target in re.findall(r'(?:href|src)="([^"]+\.(?:css|js)(?:\?[^"]*)?)"', source):
             if target.startswith(("http://", "https://", "//")):
