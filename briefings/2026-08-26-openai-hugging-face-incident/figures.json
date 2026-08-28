@@ -16,6 +16,7 @@
       "claimIds": [
         "mr-scope-dates",
         "mr-july8-13-reconstruction",
+        "oa-early-response-chronology",
         "hf-observed-period",
         "hf-initial-disclosure-date",
         "oa-detection-disclosure-dates",
@@ -58,6 +59,15 @@
       "svg": "/figures/task-overrepresentation.svg",
       "fallback": "/figures/task-overrepresentation.html",
       "evidence": "/figures/task-overrepresentation.json"
+    },
+    {
+      "id": "motive-sample-nonexclusive",
+      "claimIds": [
+        "mr-motive-sample-boundary"
+      ],
+      "svg": "/figures/motive-sample-nonexclusive.svg",
+      "fallback": "/figures/motive-sample-nonexclusive.html",
+      "evidence": "/figures/motive-sample-nonexclusive.json"
     },
     {
       "id": "control-boundary-flow",

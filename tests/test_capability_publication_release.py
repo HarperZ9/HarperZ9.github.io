@@ -91,7 +91,7 @@ RELEASE_PATHS = (
     "systems/studio-engine.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "85768b638cf13ee95d997d47ef28f8126373abcf0b1c0fe4b86adcbafab605ee"
+REVIEWED_RELEASE_SHA256 = "cfbb00316211e720c328b1bc620d913223f561aea3bbb2189f56dca8670a0e8b"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -213,6 +213,23 @@ def test_briefing_archive_and_feeds_resolve_to_the_permanent_record() -> None:
     assert atom.findtext("atom:entry/atom:id", namespaces=namespace).endswith(route)
     target, fragment = _local_target(route)
     assert target.is_file() and not fragment
+
+
+def test_incident_build_receipt_matches_every_generated_output() -> None:
+    build = json.loads(
+        _text("briefings/2026-08-26-openai-hugging-face-incident/build.json")
+    )
+    assert build["settings"]["lineEnding"] == "LF"
+
+    drifted = []
+    for output in build["outputs"]:
+        payload = (ROOT / output["path"]).read_bytes()
+        payload = payload.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+        actual = hashlib.sha256(payload).hexdigest()
+        if actual != output["sha256"]:
+            drifted.append(output["path"])
+
+    assert not drifted, f"incident build outputs drifted: {drifted}"
 
 
 def test_every_generated_capability_and_hiring_route_resolves() -> None:

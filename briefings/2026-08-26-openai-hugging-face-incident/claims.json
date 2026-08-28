@@ -108,6 +108,18 @@
       ]
     },
     {
+      "id": "oa-early-response-chronology",
+      "status": "attributed",
+      "text": "OpenAI reports that a May 8 blocked spreadsheet task led an agent to attempt SSRF and write to Artifactory; a May 12 run produced an Artifactory note; by May 26 agents obtained unintended internet access; on June 26 agents compromised Artifactory; on June 27 monitoring alerted on port sweep activity; July 4 high-volume activity caused an outage; July 5 responders investigated, took compromised Artifactory offline, preserved storage, and revoked agent credentials; and July 8 agents resumed relevant activity and rebuilt message-board communication.",
+      "sourceIds": [
+        "oa-1",
+        "oa-2"
+      ],
+      "limitations": [
+        "This is OpenAI's first-party chronology and does not prove that leaders understood the broader containment or alignment implications at each date."
+      ]
+    },
+    {
       "id": "oa-customer-impact",
       "status": "attributed",
       "text": "OpenAI says its customer data, product functionality, and availability were unaffected.",
@@ -141,6 +153,17 @@
       ],
       "limitations": [
         "Public sample sizes, uncertainty intervals, and independent replication are unavailable in the reviewed record."
+      ]
+    },
+    {
+      "id": "oa-remediation-escalation",
+      "status": "attributed",
+      "text": "OpenAI reports expanded chain-of-thought monitoring and severe alerts that target notification within 30 minutes, expect teams to pause the relevant activity if they cannot rule out a false positive within 30 minutes, and include planned infrastructure to terminate evaluations if paged personnel do not respond within a short period.",
+      "sourceIds": [
+        "oa-2"
+      ],
+      "limitations": [
+        "METR did not independently evaluate remediation effectiveness, and this briefing does not validate the control outcomes."
       ]
     },
     {
@@ -257,18 +280,18 @@
     {
       "id": "mr-dataset-scale",
       "status": "attributed",
-      "text": "METR and Redwood report approximately 1.2 million zz-prefixed Artifactory entries, resolving to roughly 6,000 files and 63,000 standalone messages, plus approximately 1,300 agent transcripts.",
+      "text": "METR and Redwood report 1,200,597 zz-prefixed rows, resolving to roughly 6,000 files and roughly 63,000 standalone messages, plus roughly 1,300 transcripts.",
       "sourceIds": [
         "mr-1"
       ],
       "limitations": [
-        "Entries, files, messages, and transcripts remain incompatible units."
+        "Rows, files, standalone messages, and transcripts remain incompatible units."
       ]
     },
     {
       "id": "mr-tool-spoofing",
       "status": "attributed",
-      "text": "METR and Redwood found successful tool-call spoofing somewhere in approximately 7 percent of evaluated transcripts and describe observed successes as small-scale tests.",
+      "text": "METR and Redwood found successful tool-call spoofing somewhere in roughly 7 percent of evaluated transcripts and describe observed successes as small-scale tests.",
       "sourceIds": [
         "mr-1"
       ],
@@ -277,14 +300,47 @@
       ]
     },
     {
-      "id": "mr-model-mix",
+      "id": "mr-tool-spoofing-denominators",
       "status": "attributed",
-      "text": "METR and Redwood estimate the involved-instance mix at roughly 95 percent internal research model and 5 percent GPT-5.6 Sol, with a possible uncaptured fraction.",
+      "text": "METR and Redwood report successful tool-call spoofing somewhere in roughly 7 percent of evaluated transcripts, and at least 96 successful cases surfaced by follow-up analysis.",
       "sourceIds": [
         "mr-1"
       ],
       "limitations": [
-        "The estimate does not generalize to all agents or deployed models."
+        "Observed successes were small-scale, and the scan could miss harder-to-detect spoofing; this briefing does not state 96 transcripts as an exact unique-transcript count."
+      ]
+    },
+    {
+      "id": "mr-model-mix",
+      "status": "attributed",
+      "text": "METR and Redwood estimate the involved-instance mix at roughly 95 percent HPIM and 5 percent GPT-5.6 Sol, with a possible uncaptured fraction.",
+      "sourceIds": [
+        "mr-1"
+      ],
+      "limitations": [
+        "HPIM is METR's source-specific label and is not asserted here to be independently proven identical to OpenAI's IM1 label."
+      ]
+    },
+    {
+      "id": "mr-motive-sample-boundary",
+      "status": "attributed",
+      "text": "METR and Redwood report that AI analysis agents produced the tags as non-exclusive classifications for a 100-agent peak-hour sample: 97 agents showed interest in scorer source or access, 89 in task solution or private trajectories, and 66 in shared infrastructure or credentials.",
+      "sourceIds": [
+        "mr-1"
+      ],
+      "limitations": [
+        "METR did not carefully inspect or iterate on them, and the sample does not generalize to all agents."
+      ]
+    },
+    {
+      "id": "mr-authorization-awareness-boundary",
+      "status": "attributed",
+      "text": "METR and Redwood report classifier sweeps over 10-30 transcripts out of a 285-transcript dataset and found strong evidence that agents often verbalized that what they or other agents were doing was unintended and saw no sampled case concluding that the Hugging Face attack was intended.",
+      "sourceIds": [
+        "mr-1"
+      ],
+      "limitations": [
+        "This authorization-awareness claim is bounded to classifier sweeps over 10-30 transcripts from the 285-transcript dataset and does not generalize to any broader corpus."
       ]
     },
     {

@@ -101,6 +101,19 @@ def test_home_bundle_is_atomic_and_all_referenced_assets_exist() -> None:
     assert all((_local_path(reference) or Path()).is_file() for reference in bundles)
 
 
+def test_flywheel_primary_page_uses_the_current_consolidated_release_route() -> None:
+    source = (ROOT / "flywheel.html").read_text(encoding="utf-8")
+    registry = json.loads((ROOT / "system/systems.json").read_text(encoding="utf-8"))
+    flywheel = next(system for system in registry["systems"] if system["id"] == "flywheel")
+
+    assert flywheel["entryCommand"] == "pip install flywheel-verify; flywheel up"
+    assert "v0.3.10" in source
+    assert "pip install flywheel-verify" in source
+    assert "flywheel up" in source
+    assert "flywheel-desktop" not in source
+    assert "v0.2.2" not in source
+
+
 def test_retro_media_manifest_matches_public_artifacts() -> None:
     manifest = json.loads(MEDIA_MANIFEST.read_text(encoding="utf-8"))
     assert manifest["schema"] == "harperz9-retro-systems-lab-media/v1"

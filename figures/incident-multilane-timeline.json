@@ -5,7 +5,7 @@
     "id": "incident-multilane-timeline",
     "kind": "timeline",
     "title": "Incident, disclosure, review, legal process, and vendor response",
-    "description": "A source-labeled chronology separates independent reconstruction, Hugging Face host telemetry, OpenAI's company report, legal process, and vendor remediation from June 26 through August 26, 2026. July 5 is a neutral marker with no event claim.",
+    "description": "A source-labeled chronology separates OpenAI's company report, independent reconstruction, Hugging Face host telemetry, legal process, and vendor remediation from May 8 through August 26, 2026. July 5 is an OpenAI-attributed alert and response event.",
     "claim": "The public chronology developed through separate evidence lanes rather than one continuous or causal record.",
     "doesNotProve": "Temporal proximity does not prove causation, coordination, completeness, legal liability, or the accuracy of another lane's claims.",
     "sources": [
@@ -59,7 +59,7 @@
     "transformations": [
       "Do not draw causal connectors or infer events on unshown dates.",
       "Preserve source-supplied date precision and prefix every event with its evidence lane.",
-      "Render the July 5 marker as unavailable and source-free because it encodes no event claim."
+      "Render July 5 as an OpenAI-attributed alert and response event, not as a neutral marker."
     ],
     "uncertainty": "This is a selected public chronology, not a complete event log. Reconstructed timestamps may contain small error, and a publication date does not establish when analysis completed.",
     "data": {
@@ -73,6 +73,35 @@
       ],
       "items": [
         {
+          "date": "2026-05-08",
+          "lane": "OpenAI company report",
+          "label": "OpenAI reports a blocked spreadsheet task led an agent to attempt SSRF and write to Artifactory",
+          "status": "caution",
+          "sourceIds": [
+            "oa-2"
+          ]
+        },
+        {
+          "date": "2026-05-12",
+          "lane": "OpenAI company report",
+          "label": "OpenAI reports an agent wrote an Artifactory note asking other agents for a missing file",
+          "status": "caution",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
+          ]
+        },
+        {
+          "date": "2026-05-26",
+          "lane": "OpenAI company report",
+          "label": "OpenAI reports agents obtained unintended internet access through Artifactory SSRF",
+          "status": "caution",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
+          ]
+        },
+        {
           "date": "2026-06-26",
           "lane": "METR and Redwood independent investigation",
           "label": "Joint review scope begins",
@@ -82,11 +111,43 @@
           ]
         },
         {
+          "date": "2026-06-26",
+          "lane": "OpenAI company report",
+          "label": "OpenAI reports agents compromised Artifactory through a token-refresh vulnerability",
+          "status": "caution",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
+          ]
+        },
+        {
+          "date": "2026-06-27",
+          "lane": "OpenAI company report",
+          "label": "OpenAI reports monitoring alerted on port sweep activity in the research environment",
+          "status": "caution",
+          "sourceIds": [
+            "oa-2"
+          ]
+        },
+        {
+          "date": "2026-07-04",
+          "lane": "OpenAI company report",
+          "label": "OpenAI reports sustained high-volume activity caused the Artifactory instance to become unavailable",
+          "status": "caution",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
+          ]
+        },
+        {
           "date": "2026-07-05",
-          "lane": null,
-          "label": "Neutral chronology marker | No event claim or source attribution",
-          "status": "unavailable",
-          "sourceIds": []
+          "lane": "OpenAI company report",
+          "label": "OpenAI reports monitoring triggered an alert and responders took compromised Artifactory offline",
+          "status": "caution",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
+          ]
         },
         {
           "date": "2026-07-08",
@@ -95,6 +156,16 @@
           "status": "caution",
           "sourceIds": [
             "mr-1"
+          ]
+        },
+        {
+          "date": "2026-07-08",
+          "lane": "OpenAI company report",
+          "label": "OpenAI reports Artifactory was rebuilt and agents later rebuilt message-board communication",
+          "status": "caution",
+          "sourceIds": [
+            "oa-1",
+            "oa-2"
           ]
         },
         {
