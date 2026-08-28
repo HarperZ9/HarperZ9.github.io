@@ -35,7 +35,7 @@ test("active section is derived from the route registry", () => {
   assert.equal(navActive("/session-archive.html"), "Studio");
 });
 
-function navFixture(pathname, search = "") {
+function navFixture(pathname, search = "", hash = "") {
   const mount = {
     html: "",
     set innerHTML(value) { this.html = value; },
@@ -43,7 +43,7 @@ function navFixture(pathname, search = "") {
     querySelector() { return null; },
   };
   const doc = {
-    location: { pathname, search },
+    location: { pathname, search, hash },
     getElementById(id) { return id === "site-nav" ? mount : null; },
   };
   return { doc, mount };
@@ -62,6 +62,23 @@ test("rendered nav keeps section state separate from exact-page state", () => {
   assert.match(mount.innerHTML, /href="resume\.html" aria-current="page"/);
   assert.doesNotMatch(mount.innerHTML, /href="hire\.html" aria-current="page"/);
   assert.match(mount.innerHTML, /class="is-active" href="hire\.html"/);
+  assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 1);
+});
+
+test("rendered nav gives one fragment destination the current-page state", () => {
+  const { doc, mount } = navFixture("/hire.html", "", "#engineering-path");
+  renderNav(doc);
+
+  assert.match(mount.innerHTML, /href="hire\.html#engineering-path" aria-current="page"/);
+  assert.doesNotMatch(mount.innerHTML, /href="hire\.html" aria-current="page"/);
+  assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 1);
+});
+
+test("rendered nav gives a duplicated primary route only one current-page state", () => {
+  const { doc, mount } = navFixture("/hire.html");
+  renderNav(doc);
+
+  assert.equal((mount.innerHTML.match(/href="hire\.html" aria-current="page"/g) || []).length, 1);
   assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 1);
 });
 

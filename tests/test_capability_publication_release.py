@@ -100,7 +100,7 @@ RELEASE_PATHS = (
     "systems/studio-engine.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "9a35f473068c88f81758d253c7807cfe8dc44a83126f33bfc13467629d59a6c3"
+REVIEWED_RELEASE_SHA256 = "3390d6b45b015dce6d036d9742e44d788d72e76b2f7c4ca89e54727e772c792c"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -205,8 +205,13 @@ def test_six_briefing_figures_keep_semantic_nonvisual_fallbacks() -> None:
         source = _text(f"figures/{stem}.html")
         assert '<figure class="evidence-figure"' in source, stem
         assert "<figcaption" in source, stem
-        assert "figure-table" in source, stem
-        assert "data-figure-row" in source, stem
+        table = re.search(
+            r'<table\b[^>]*class="[^"]*\bfigure-table\b[^"]*"[^>]*>(.*?)</table>',
+            source,
+            re.DOTALL,
+        )
+        assert table, stem
+        assert "data-figure-row" in table.group(1), stem
         assert '<svg role="img"' in source, stem
         assert "aria-labelledby=" in source, stem
         assert re.search(r'data-figure-kind="(?:relationship|timeline|matrix|bar)"', source), stem
@@ -222,10 +227,17 @@ def test_briefing_archive_and_feeds_resolve_to_the_permanent_record() -> None:
     feed = json.loads(_text("feed.json"))
     assert feed["home_page_url"].endswith("/briefings/")
     assert [urlsplit(item["url"]).path for item in feed["items"]] == [route]
+    page = _text("briefings/2026-08-26-openai-hugging-face-incident/index.html")
+    updated = re.search(r'<time datetime="(\d{4}-\d{2}-\d{2})">Updated ', page)
+    assert updated
+    expected_updated = f"{updated.group(1)}T00:00:00Z"
+    assert feed["items"][0]["date_modified"] == expected_updated
 
     atom = ElementTree.fromstring(_text("feed.xml"))
     namespace = {"atom": "http://www.w3.org/2005/Atom"}
     assert atom.findtext("atom:entry/atom:id", namespaces=namespace).endswith(route)
+    assert atom.findtext("atom:updated", namespaces=namespace) == expected_updated
+    assert atom.findtext("atom:entry/atom:updated", namespaces=namespace) == expected_updated
     target, fragment = _local_target(route)
     assert target.is_file() and not fragment
 

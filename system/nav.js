@@ -102,10 +102,10 @@ export function navActive(pathname) {
   return routeFamily(pathname);
 }
 
-function localRoute(value) {
+function localRoute(value, includeHash = false) {
   try {
     const url = new URL(value, "https://harperz9.github.io/");
-    return url.pathname.replace(/^\//, "") + url.search;
+    return url.pathname.replace(/^\//, "") + url.search + (includeHash ? url.hash : "");
   } catch {
     return "";
   }
@@ -126,8 +126,8 @@ function escapeHtml(value) {
   })[character]);
 }
 
-function navLink({ label, href, family, external = false }, active, locationPath, retainSectionState = false) {
-  const exact = !external && localRoute(href) === localRoute(locationPath);
+function navLink({ label, href, family, external = false }, active, locationPath, retainSectionState = false, allowExact = true) {
+  const exact = allowExact && !external && localRoute(href, true) === localRoute(locationPath, true);
   const sectionActive = retainSectionState && family === active;
   const className = exact || sectionActive ? "is-active" : "";
   const renderedHref = external ? href : localHrefForPage(href, locationPath);
@@ -137,7 +137,13 @@ function navLink({ label, href, family, external = false }, active, locationPath
 function menuGroup(label, items, active, locationPath, className) {
   return `<div class="sn-menu-group ${className}">`
     + `<p class="sn-menu-label">${escapeHtml(label)}</p>`
-    + items.map((item) => navLink(item, active, locationPath, className === "sn-menu-primary")).join("")
+    + items.map((item) => navLink(
+      item,
+      active,
+      locationPath,
+      className === "sn-menu-primary",
+      className !== "sn-menu-primary",
+    )).join("")
     + `</div>`;
 }
 
@@ -237,8 +243,8 @@ export function renderNav(doc = document) {
   const mount = doc.getElementById("site-nav");
   if (!mount) return;
   const locationPath = doc.location
-    ? doc.location.pathname + (doc.location.search || "")
-    : location.pathname + location.search;
+    ? doc.location.pathname + (doc.location.search || "") + (doc.location.hash || "")
+    : location.pathname + location.search + location.hash;
   const active = navActive(locationPath);
   const moreActive = SECONDARY_GROUPS.some((group) => group.routes.some((route) => route.family === active));
   const activeLabel = active || "site";
