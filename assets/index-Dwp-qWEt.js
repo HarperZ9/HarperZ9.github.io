@@ -332,8 +332,24 @@ Error generating stack: `+e.message+`
           "primary": true
         },
         {
+          "label": "Engine Revival",
+          "href": "engine-revival.html"
+        },
+        {
+          "label": "BRender Archival",
+          "href": "brender-archival.html"
+        },
+        {
           "label": "The Loom",
           "href": "loom.html"
+        },
+        {
+          "label": "Gaussian splats",
+          "href": "gaussian-splats.html"
+        },
+        {
+          "label": "Current story",
+          "href": "current-story.html"
         },
         {
           "label": "Poster",
@@ -456,7 +472,10 @@ Error generating stack: `+e.message+`
         "learn",
         "relay",
         "plexus",
-        "mneme"
+        "mneme",
+        "retro-engine",
+        "engine-revival",
+        "brender-archival"
       ],
       "lastVerified": "2026-08-27"
     },
@@ -579,7 +598,9 @@ Error generating stack: `+e.message+`
       "related": [
         "flywheel",
         "forum",
-        "gather"
+        "gather",
+        "engine-revival",
+        "brender-archival"
       ],
       "lastVerified": "2026-08-27"
     },
@@ -639,7 +660,9 @@ Error generating stack: `+e.message+`
       "related": [
         "flywheel",
         "index",
-        "crucible"
+        "crucible",
+        "engine-revival",
+        "brender-archival"
       ],
       "lastVerified": "2026-08-27"
     },
@@ -887,7 +910,10 @@ Error generating stack: `+e.message+`
       "dependencies": [],
       "related": [
         "build-color",
-        "studio-engine"
+        "studio-engine",
+        "retro-engine",
+        "engine-revival",
+        "brender-archival"
       ],
       "lastVerified": "2026-08-27"
     },
@@ -1188,7 +1214,10 @@ Error generating stack: `+e.message+`
       "related": [
         "telos",
         "build-color",
-        "buildlang"
+        "buildlang",
+        "retro-engine",
+        "engine-revival",
+        "brender-archival"
       ],
       "lastVerified": "2026-08-27"
     },
@@ -1245,7 +1274,212 @@ Error generating stack: `+e.message+`
       "related": [
         "studio-engine",
         "telos",
-        "buildlang"
+        "buildlang",
+        "retro-engine"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "retro-engine",
+      "name": "Retro Engine",
+      "purpose": "Serve as the Retro Systems Lab play pillar: an interactive browser studio for owned pixel, palette, shader, and CRT experiments.",
+      "useCases": [
+        "play",
+        "browser pixel studio",
+        "deterministic shader capture"
+      ],
+      "href": "retro.html",
+      "sourceHref": "https://github.com/HarperZ9/telos-v2",
+      "domains": [
+        "graphics-media",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "graphics engineers",
+        "software engineers",
+        "creative technologists"
+      ],
+      "deploymentContexts": [
+        "creative production pipelines",
+        "local development workspaces",
+        "static browser surfaces"
+      ],
+      "maturity": "active",
+      "placement": "catalog-only",
+      "accessMode": "run",
+      "entryCommand": "Open retro.html in a browser.",
+      "verificationCommand": "npm run routes:check; npm run systems:check; npm run system-pages:check",
+      "evidence": [
+        {
+          "id": "retro-engine-site-source",
+          "type": "source",
+          "label": "Retro Engine owned site source",
+          "href": "https://github.com/HarperZ9/telos-v2",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The owned public site source contains the browser Retro Engine route and renderer assets; this is not BRender evidence."
+        }
+      ],
+      "limitations": [
+        "Retro Engine output is generic creative output and does not prove any BRender restoration fact.",
+        "Browser, GPU, and font rendering can differ by host, so captures are bounded media evidence rather than performance claims."
+      ],
+      "boundary": "Use only owned or licensed input media and do not present generated retro visuals as archival proof for another repository.",
+      "inputs": [
+        "owned images or browser-rendered frames",
+        "palette and shader settings"
+      ],
+      "outputs": [
+        "interactive browser render",
+        "static capture with provenance"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "engine-revival",
+        "brender-archival",
+        "studio-engine",
+        "buildlang",
+        "build-color"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "engine-revival",
+      "name": "Engine Revival",
+      "purpose": "Serve as the Retro Systems Lab preserve pillar: a public MIT evidence spine for historical engine and rendering-library revival records.",
+      "useCases": [
+        "preserve",
+        "repository evidence refresh",
+        "restoration boundary review"
+      ],
+      "href": "engine-revival.html",
+      "sourceHref": "https://github.com/HarperZ9/engine-revival",
+      "domains": [
+        "graphics-media",
+        "evaluation-verification",
+        "research-education",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "graphics engineers",
+        "evaluation engineers",
+        "researchers and educators",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "review and CI lanes",
+        "research and learning environments",
+        "creative production pipelines"
+      ],
+      "maturity": "shipped",
+      "placement": "catalog-only",
+      "accessMode": "install",
+      "entryCommand": "python -m pip install -e \\".[test]\\"; engine-revival seed; engine-revival validate",
+      "verificationCommand": "engine-revival audit-public; python -m pytest",
+      "evidence": [
+        {
+          "id": "engine-revival-release-v0-1-0",
+          "type": "release",
+          "label": "Engine Revival v0.1.0",
+          "href": "https://github.com/HarperZ9/engine-revival/releases/tag/v0.1.0",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The public main and v0.1.0 release resolve to 0af6d527860a63c418b5775dc0efe9ba89557604. Engine Revival is MIT; it records local 12-target materializer scope separately from imported external 21-target BRender evidence."
+        }
+      ],
+      "limitations": [
+        "Engine Revival local 12-target materializer scope is public metadata and scaffold; the verified external 21-target BRender boundary comes from BRender Archival v0.1.1 evidence.",
+        "The page preserves evidence boundaries and does not claim product parity, adoption, performance, legal completeness, or vendored upstream source."
+      ],
+      "boundary": "Publish only repository metadata and restoration facts that have current first-party receipts, and keep imported AGPL-covered BRender media and receipts distinct from MIT repository code.",
+      "inputs": [
+        "public repository manifests",
+        "license and recipe review receipts",
+        "imported BRender release evidence"
+      ],
+      "outputs": [
+        "preservation status page",
+        "verified evidence manifest"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "retro-engine",
+        "brender-archival",
+        "studio-engine",
+        "buildlang",
+        "gather",
+        "index"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "brender-archival",
+      "name": "BRender Archival",
+      "purpose": "Serve as the Retro Systems Lab verify pillar: a specific BRender restoration surface that stays separate from generic Retro Engine media.",
+      "useCases": [
+        "verify",
+        "specific restoration evidence",
+        "archival boundary review"
+      ],
+      "href": "brender-archival.html",
+      "sourceHref": "https://github.com/HarperZ9/brender-archival",
+      "domains": [
+        "graphics-media",
+        "evaluation-verification",
+        "research-education",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "graphics engineers",
+        "evaluation engineers",
+        "researchers and educators",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "review and CI lanes",
+        "research and learning environments",
+        "creative production pipelines"
+      ],
+      "maturity": "shipped",
+      "placement": "catalog-only",
+      "accessMode": "install",
+      "entryCommand": "python -m pip install -e \\".[test]\\"; engine-revival seed; engine-revival validate",
+      "verificationCommand": "engine-revival audit-public; python -m pytest",
+      "evidence": [
+        {
+          "id": "brender-archival-release-v0-1-1",
+          "type": "release",
+          "label": "BRender Archival v0.1.1",
+          "href": "https://github.com/HarperZ9/brender-archival/releases/tag/v0.1.1",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The public main and v0.1.1 release resolve to 11b5a8d539e911a9c07991b751402a7d51bf1bde. The repo is AGPL-3.0-or-later, upstream BRender MIT is referenced not vendored, and 21/21 native CTest targets are recorded."
+        }
+      ],
+      "limitations": [
+        "Specific BRender restoration proof must come from BRender evidence, not from Retro Engine screenshots or generic retro visuals.",
+        "The release does not claim completed textured TIA output, x64 readiness, production readiness, adoption, endorsement, or vendored upstream source or assets."
+      ],
+      "boundary": "Keep BRender restoration evidence, Retro Engine play output, and Engine Revival preservation status distinct.",
+      "inputs": [
+        "BRender public repository evidence",
+        "restoration receipts and license notes"
+      ],
+      "outputs": [
+        "BRender archival status page",
+        "specific evidence boundary"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "retro-engine",
+        "engine-revival",
+        "studio-engine",
+        "buildlang",
+        "gather",
+        "index"
       ],
       "lastVerified": "2026-08-27"
     },
@@ -1794,7 +2028,7 @@ Error generating stack: `+e.message+`
       "lastVerified": "2026-08-27"
     }
   ]
-}`),C=S.systems,te=C.filter(e=>e.placement===`featured`),ne=S.domains,re=C.flatMap(e=>e.evidence.map(t=>({...t,systemId:e.id}))).sort((e,t)=>t.date.localeCompare(e.date));function w(e){return C.find(t=>t.id===e)}var ie=`{
+}`),C=S.systems,te=C.filter(e=>e.placement===`featured`),ne=S.domains,re=C.flatMap(e=>e.evidence.map(t=>({...t,systemId:e.id}))).sort((e,t)=>t.date.localeCompare(e.date));function w(e){return C.find(t=>t.id===e)}function ie(e){let t=w(e);return t?t.related.map(e=>w(e)).filter(Boolean):[]}var ae=`{
   "schema": "harperz9-home-evidence/v1",
   "derivedFrom": "harperz9-systems/v1",
   "records": [
@@ -1857,14 +2091,15 @@ Error generating stack: `+e.message+`
     "summary": "Separate legal process, OpenAI's company report, Hugging Face host telemetry, independent analysis, and vendor remediation before drawing conclusions from the July incident.",
     "href": "/briefings/2026-08-26-openai-hugging-face-incident/",
     "publishedAt": "2026-08-26",
-    "updatedAt": "2026-08-26",
+    "updatedAt": "2026-08-27",
     "sourceCount": 12,
-    "claimCount": 35,
+    "claimCount": 40,
     "figureIds": [
       "recovered-actions-by-day",
       "incident-multilane-timeline",
       "source-scope-matrix",
       "task-overrepresentation",
+      "motive-sample-nonexclusive",
       "control-boundary-flow",
       "claim-provenance-panel"
     ],
@@ -1873,12 +2108,14 @@ Error generating stack: `+e.message+`
       "The Alabama materials describe an investigation, subpoena, and allegations. They do not establish a legal violation, liability, or consumer harm.",
       "Actions, clusters, agents, messages, files, transcripts, tasks, repositories, systems, workers, and datasets remain separate units.",
       "METR and Redwood performed an independent investigation with host-controlled data access, not an unrestricted forensic audit.",
-      "OpenAI's impact and remediation statements remain company-reported, and its preliminary harness evaluations lack public sample sizes, intervals, and independent replication.",
-      "The July 5 entry is a neutral chronology marker and encodes no event claim.",
+      "OpenAI's impact, chronology, and remediation statements remain company-reported, and its preliminary harness evaluations lack public sample sizes, intervals, and independent replication.",
+      "The July 5 entry is an OpenAI-attributed alert and response event, not an independently verified effectiveness finding.",
+      "The 100-agent motive tags are non-exclusive, AI-assisted, not carefully iterated by METR, and do not generalize to all agents.",
+      "Tool-call spoofing counts keep successful cases and evaluated transcripts as separate denominators.",
       "Source interpretations do not establish one settled motivation or behavior shared by all agents, models, or deployments.",
       "JFrog's statement and advisory index are vendor remediation records, not independent proof of incident scope or deployed patch coverage."
     ],
     "amends": null
   }
 }
-`,ae=`/figures/system-capability-map.json`,oe={verified:`Verified`,caution:`Caution`,unavailable:`Unavailable`},se=[/\bAKIA[0-9A-Z]{16}\b/,/\bAIza[0-9A-Za-z_-]{30,}\b/,/\bgh[pousr]_[A-Za-z0-9_]{30,}\b/,/\bglpat-[A-Za-z0-9_-]{20,}\b/,/\bnpm_[A-Za-z0-9]{30,}\b/,/\bsk_(?:live|test)_[A-Za-z0-9]{20,}\b/,/\bsk-[A-Za-z0-9_-]{20,}\b/,/\bxox[baprs]-[A-Za-z0-9-]{20,}\b/,/-----BEGIN(?: [A-Z0-9]+)? PRIVATE KEY-----/],ce=new Set([`token`,`key`,`api_key`,`api-key`,`session`,`auth`,`authorization`,`password`,`passwd`,`secret`,`access_token`,`access-token`,`credential`,`credentials`]),le=[`.internal`,`.local`,`.localhost`,`.lan`,`.home`,`.test`,`.corp`,`.invalid`,`.example`,`.onion`];function ue(e){return typeof e==`object`&&!!e&&!Array.isArray(e)}function T(e){return e===`verified`||e===`caution`||e===`unavailable`}function E(e){let t=[e],n=e;for(let e=0;e<4;e+=1){let e;try{e=decodeURIComponent(n)}catch{break}if(e===n)break;t.push(e),n=e}return t}function de(e){let t=e.toLowerCase().replace(/^\[|\]$/g,``);if(t.includes(`:`))return!0;let n=t.split(`.`);return n.length===4&&n.every(e=>/^\d+$/.test(e)&&Number(e)>=0&&Number(e)<=255)}function fe(e){if(typeof e!=`string`||!e.trim())return!1;try{let t=new URL(e),n=t.hostname.toLowerCase().replace(/^\[|\]$/g,``),r=!n.includes(`.`)||le.some(e=>n.endsWith(e));if(t.protocol!==`https:`||t.username||t.password||de(n)||r||[e,t.href,t.pathname,t.search,t.hash].flatMap(E).some(e=>se.some(t=>t.test(e))))return!1;let i=!1;return t.searchParams.forEach((e,t)=>{E(t).some(e=>ce.has(e.toLowerCase()))&&(i=!0)}),!i}catch{return!1}}function pe(e){if(!ue(e)||!ue(e.figure))return null;let t=e.figure;if(typeof t.title!=`string`||!ue(t.data)||!Array.isArray(t.sources)||!Array.isArray(t.data.nodes)||!Array.isArray(t.data.edges))return null;let n=t.data.nodes.filter(e=>ue(e)&&typeof e.id==`string`&&typeof e.label==`string`&&T(e.status)&&typeof e.stateLabel==`string`&&typeof e.group==`string`&&(e.nodeType===`system`||e.nodeType===`evidence`)),r=t.data.edges.filter(e=>ue(e)&&typeof e.source==`string`&&typeof e.target==`string`&&typeof e.label==`string`&&T(e.status)&&(e.type===`dependency`||e.type===`related`||e.type===`evidence`)),i=t.sources.filter(e=>ue(e)&&typeof e.label==`string`&&typeof e.href==`string`);if(n.length!==t.data.nodes.length||r.length!==t.data.edges.length||i.length!==t.sources.length)return null;let a=new Set(n.map(e=>e.id));return r.some(e=>!a.has(e.source)||!a.has(e.target))?null:{figure:{title:t.title,sources:i,data:{nodes:n,edges:r}}}}function me(e){if(!e)return[];let t=new Map(e.figure.data.nodes.map(e=>[e.id,e]));return e.figure.data.edges.map(e=>({...e,sourceNode:t.get(e.source),targetNode:t.get(e.target)}))}var D=new Set([`guide.html`,`catalog.html`,`research.html`,`publications.html`,`writing.html`,`studio.html`,`typeface.html`,`resume.html`,`person.html`]),O=[...v,...y.flatMap(e=>e.routes)],he=O.filter(e=>e.family===`Work`),ge=he.filter(e=>e.href.startsWith(`hire.html#`)),_e=he.filter(e=>!e.href.startsWith(`hire.html#`)),ve=O.filter(e=>D.has(e.href)&&ee(e.href)),ye=JSON.parse(ie),be=ye.records.map(e=>re.find(t=>t.id===e.id&&t.systemId===e.systemId)).filter(e=>!!e),xe=new Map(re.map(e=>[`evidence:${e.systemId}:${e.id}`,e.href])),Se=ye.latestPublishedBriefing,Ce=ne.map(e=>({...e,featuredCount:te.filter(t=>t.domains.includes(e.id)).length})),we=te.filter(e=>e.inputs.length>0&&e.dependencies.length>0&&e.outputs.length>0).slice(0,3),Te=[{tag:`SYSTEMS`,doi:`10.5281/zenodo.21230267`,pdf:`/papers/emet-integrity-witness.pdf`,title:`EMET: An Authority-Incapable Byte-Level Integrity Witness`,line:`A byte-integrity artifact with four independent implementations checked against one conformance corpus.`},{tag:`SYSTEMS`,doi:`10.5281/zenodo.21231253`,pdf:`/papers/buildlang-capability-effects.pdf`,title:`BuildLang: Accountable Compute via Typed Capability Effects`,line:`The capabilities a function may exercise appear in its type, then lower through a constrained systems-language path.`},{tag:`PREPRINT`,doi:`10.5281/zenodo.21232206`,pdf:`/papers/witnessed-independence.pdf`,title:`Witnessed Independence: Recording Whether a Verifier Graded Its Own Work`,line:`Turns a criterion it did not author from an assumption into a recorded, three-valued field of the verdict.`},{tag:`PREPRINT`,doi:`10.5281/zenodo.21231406`,pdf:`/papers/proof-packets.pdf`,title:`Proof Packets: A Derive-Don't-Trust Envelope for Accountable Agent Actions`,line:`The verdict for one agent action is derived from checks, never read from the packet.`},{tag:`NOTE`,doi:`10.5281/zenodo.21234475`,pdf:`/papers/personhood-gate-handoff.pdf`,title:`The Personhood-Gate Handoff: Drawing the Automation Boundary at the False-Signal Line`,line:`Hand off to the person exactly when a step would transmit a false human-present signal to a third party.`},{tag:`NOTE`,doi:`10.5281/zenodo.21231311`,pdf:`/papers/re-perceived-effects.pdf`,title:`Re-Perceived Effects: A Well-Formedness Contract for Accountable Actuation`,line:`Replaces an actuator's self-report with a re-perceived effect, admitted before the fact by a capability gate.`},{tag:`CORPUS`,doi:`10.5281/zenodo.20773724`,pdf:`/papers/conferred-existence.pdf`,read:`/conferred-existence.html`,title:`Conferred Existence`,line:`A thesis on made minds: perception, memory, external anchors, and what a made mind could be owed and held to.`},{tag:`CORPUS`,doi:`10.5281/zenodo.20778927`,pdf:`/papers/witnessing-spine.pdf`,read:`/witnessing-spine.html`,title:`The Witnessing Spine`,line:`The collected research corpus behind the verification work, from bounded claims to the rule the software enforces.`}];function Ee(){let[e,t]=(0,f.useState)(null),[n,r]=(0,f.useState)(`loading`);(0,f.useEffect)(()=>{let e=new AbortController;return fetch(ae,{headers:{Accept:`application/json`},signal:e.signal}).then(e=>{if(!e.ok)throw Error(`Capability map request failed with ${e.status}`);return e.json()}).then(e=>{let n=pe(e);if(!n)throw Error(`Capability map JSON did not match the public figure contract`);t(n),r(`ready`)}).catch(e=>{e instanceof DOMException&&e.name===`AbortError`||r(`unavailable`)}),()=>e.abort()},[]),(0,f.useEffect)(()=>{let e=Array.from(document.querySelectorAll(`.reveal`));if(!(`IntersectionObserver`in window)){e.forEach(e=>e.classList.add(`in`));return}let t=new IntersectionObserver(e=>e.forEach(e=>{e.isIntersecting&&(e.target.classList.add(`in`),t.unobserve(e.target))}),{threshold:.12,rootMargin:`0px 0px -8% 0px`});e.forEach(e=>t.observe(e));let n=window.setTimeout(()=>e.forEach(e=>e.classList.add(`in`)),4e3);return()=>{t.disconnect(),window.clearTimeout(n)}},[]);let i=me(e);return(0,h.jsxs)(h.Fragment,{children:[(0,h.jsx)(g,{}),(0,h.jsx)(`div`,{className:`viewport-vignette`,"aria-hidden":`true`}),(0,h.jsx)(`svg`,{className:`svg-defs`,width:`0`,height:`0`,"aria-hidden":`true`,focusable:`false`,children:(0,h.jsxs)(`filter`,{id:`organic-edge`,x:`-60%`,y:`-150%`,width:`220%`,height:`400%`,filterUnits:`objectBoundingBox`,children:[(0,h.jsx)(`feTurbulence`,{type:`fractalNoise`,baseFrequency:`0.012 0.03`,numOctaves:`2`,seed:`7`,result:`n`}),(0,h.jsx)(`feDisplacementMap`,{in:`SourceGraphic`,in2:`n`,scale:`7`,xChannelSelector:`R`,yChannelSelector:`G`})]})}),(0,h.jsx)(`a`,{className:`skip-link`,href:`#main`,children:`Skip to content`}),(0,h.jsxs)(`nav`,{className:`topnav`,"aria-label":`Primary`,children:[(0,h.jsxs)(`a`,{className:`brand`,href:`#top`,"aria-label":`zentropyLabs / Project Telos, home`,children:[(0,h.jsx)(`span`,{className:`brand-wordmark`,"aria-hidden":`true`,children:`zentropyLabs`}),(0,h.jsx)(`span`,{className:`brand-route mono`,children:`Project Telos`})]}),(0,h.jsxs)(`div`,{className:`topnav-links`,children:[v.map(e=>(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),b.map(e=>(0,h.jsx)(`a`,{className:`mono ghost`,href:e.href,rel:`noopener`,children:e.label},e.href))]})]}),(0,h.jsxs)(`main`,{id:`main`,children:[(0,h.jsxs)(`header`,{id:`top`,className:`hero`,children:[(0,h.jsx)(`div`,{className:`hero-veil`,"aria-hidden":`true`}),(0,h.jsx)(`div`,{className:`hero-grain`,"aria-hidden":`true`}),(0,h.jsxs)(`div`,{className:`hero-inner`,children:[(0,h.jsxs)(`figure`,{className:`hero-brand-plate reveal in d1`,children:[(0,h.jsxs)(`picture`,{children:[(0,h.jsx)(`source`,{type:`image/webp`,srcSet:`/brand/zentropy-logo-640.webp 640w, /brand/zentropy-logo-960.webp 960w, /brand/zentropy-logo-1280.webp 1280w, /brand/zentropy-logo-1600.webp 1600w`,sizes:`(max-width: 980px) 100vw, 52vw`}),(0,h.jsx)(`img`,{src:`/brand/zentropy-logo.png`,alt:`Zentropy Labs aperture mark with a cyan halftone orb and oxblood reflection`,width:`1600`,height:`900`,fetchPriority:`high`})]}),(0,h.jsxs)(`figcaption`,{className:`mono`,children:[(0,h.jsx)(`span`,{children:`zentropyLabs`}),(0,h.jsx)(`span`,{children:`publishes Project Telos`})]})]}),(0,h.jsxs)(`div`,{className:`hero-masthead`,children:[(0,h.jsx)(`p`,{className:`hero-kicker mono reveal in d1`,children:`Zain Dana Harper / Seattle, Washington`}),(0,h.jsx)(`h1`,{className:`hero-title hero-role-title reveal in d2`,children:`Systems Engineer | AI Evaluation, Developer Tools, and Technical Operations`}),(0,h.jsx)(`p`,{className:`lead reveal in d3`,children:`I build deterministic evaluation environments, developer tools, and accountable agent infrastructure. The public record includes 31 merged engineering changes across 26 third-party repositories, an exhaustive 324-case terminal-state environment, and a maintained graphics project with more than 930,000 NexusMods downloads.`}),(0,h.jsxs)(`div`,{className:`cta hero-hiring-actions reveal in d3`,children:[(0,h.jsxs)(`a`,{className:`btn solid`,href:`/hire.html`,children:[`Choose the relevant work `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]}),(0,h.jsxs)(`a`,{className:`btn`,href:`/resume.html`,children:[`Technical resume `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]}),(0,h.jsxs)(`a`,{className:`btn`,href:`mailto:zaindharper@gmail.com`,children:[`Email `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]})]}),(0,h.jsx)(`p`,{className:`hero-availability reveal in d3`,children:`Available for paid work, contract builds, and technical collaboration.`}),(0,h.jsxs)(`section`,{id:`hiring-routes`,className:`hero-doors hero-hiring-router reveal in d3`,"aria-labelledby":`hiring-routes-title`,children:[(0,h.jsxs)(`div`,{className:`hero-route-head`,children:[(0,h.jsx)(`p`,{className:`hero-route-register mono`,children:`Hiring router`}),(0,h.jsx)(`h2`,{id:`hiring-routes-title`,children:`Work with Zain Dana Harper`}),(0,h.jsx)(`p`,{children:`Three practical routes, backed by the same public record: build the tool, operate the field surface, or support safety-critical public work.`})]}),(0,h.jsx)(`div`,{className:`hero-door-rows`,children:ge.map((e,t)=>(0,h.jsxs)(`a`,{className:`hero-door`,href:`/${e.href}`,children:[(0,h.jsxs)(`span`,{className:`hero-door-mode mono`,children:[`Route `,String(t+1).padStart(2,`0`)]}),(0,h.jsx)(`strong`,{children:e.label}),(0,h.jsx)(`span`,{className:`hero-door-description`,children:e.summary}),(0,h.jsx)(`span`,{className:`hero-door-enter mono`,"aria-hidden":`true`,children:`enter →`})]},e.href))}),(0,h.jsxs)(`div`,{className:`hero-router-ledger`,"aria-label":`Selected evidence and current contributions`,children:[(0,h.jsxs)(`section`,{id:`selected-evidence`,className:`hero-evidence-board`,"aria-labelledby":`hero-evidence-title`,children:[(0,h.jsx)(`h3`,{id:`hero-evidence-title`,children:`Selected evidence`}),(0,h.jsxs)(`ul`,{children:[(0,h.jsxs)(`li`,{children:[(0,h.jsx)(`strong`,{children:`31 merged engineering changes`}),(0,h.jsx)(`span`,{children:`across public upstream repositories`})]}),(0,h.jsxs)(`li`,{children:[(0,h.jsx)(`strong`,{children:`324 terminal-state cases`}),(0,h.jsx)(`span`,{children:`for deterministic agent-environment validation`})]}),(0,h.jsxs)(`li`,{children:[(0,h.jsx)(`strong`,{children:`930,000+ NexusMods downloads`}),(0,h.jsx)(`span`,{children:`across released graphics and utility work`})]})]})]}),(0,h.jsxs)(`section`,{id:`current-contributions`,className:`hero-contribution-board`,"aria-labelledby":`hero-contribution-title`,children:[(0,h.jsx)(`h3`,{id:`hero-contribution-title`,children:`Current contributions`}),(0,h.jsxs)(`p`,{children:[`Public work currently spans `,te.length,` featured system records across`,` `,ne.length,` capability domains. Studio and graphics work remain reachable through the `,(0,h.jsx)(`a`,{href:`/studio.html`,children:`Studio`}),` and the complete catalog.`]})]})]}),(0,h.jsxs)(`div`,{className:`hero-router-actions`,"aria-label":`Hiring resources`,children:[(0,h.jsx)(`a`,{href:`/hire.html`,children:`Hiring map`}),(0,h.jsx)(`a`,{href:`/resume.html`,children:`Technical resume`}),(0,h.jsx)(`a`,{href:`/portfolio.html`,children:`Selected evidence`}),(0,h.jsx)(`a`,{href:`mailto:zaindharper@gmail.com`,children:`Email`})]}),(0,h.jsx)(`nav`,{className:`hero-work-links mono`,"aria-label":`Work pages`,children:_e.map(e=>(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href))}),(0,h.jsx)(`p`,{className:`hero-door-bridge mono`,children:`Hiring first. Current evidence follows.`})]})]})]}),(0,h.jsxs)(`figure`,{className:`hero-crop mono`,"aria-hidden":`true`,children:[(0,h.jsx)(`span`,{className:`crop-t spectrum-word`,children:`Zentropy mark`}),(0,h.jsx)(`span`,{className:`crop-d`,children:`static mark, drawn once`})]}),(0,h.jsx)(`p`,{className:`scroll-cue mono`,"aria-hidden":`true`,children:`scroll to inspect`})]}),(0,h.jsx)(`section`,{id:`current-surface`,className:`band band-alt current-surface`,"aria-labelledby":`current-surface-title`,children:(0,h.jsxs)(`div`,{className:`shell`,children:[(0,h.jsxs)(`div`,{className:`visually-hidden`,"aria-hidden":`true`,children:[(0,h.jsx)(`span`,{id:`engines`}),(0,h.jsx)(`span`,{id:`recorded`}),(0,h.jsx)(`span`,{id:`demonstrate`}),(0,h.jsx)(`span`,{id:`cases`}),(0,h.jsx)(`span`,{id:`range`}),(0,h.jsx)(`span`,{id:`work`,"aria-labelledby":`work-title`,children:(0,h.jsx)(`span`,{id:`work-title`,children:`Contact`})})]}),(0,h.jsxs)(`div`,{className:`sec-head reveal`,children:[(0,h.jsx)(`h2`,{id:`current-surface-title`,children:`Current operating surface`}),(0,h.jsx)(`p`,{className:`measure lead-2`,children:`A registry-derived view of relationship edges, evidence, research, and available actions. Dates and boundaries stay visible. Historical demonstrations remain on their system pages.`})]}),(0,h.jsxs)(`div`,{className:`current-surface-grid`,children:[(0,h.jsxs)(`section`,{className:`current-panel current-map-panel reveal`,"aria-labelledby":`capability-map-title`,children:[(0,h.jsxs)(`div`,{className:`current-panel-head`,children:[(0,h.jsx)(`h3`,{id:`capability-map-title`,children:`Capability map`}),(0,h.jsx)(`p`,{children:`One generated relationship-edge map connects declared systems to their public evidence records.`})]}),(0,h.jsxs)(`div`,{className:`capability-map-fallback`,id:`capability-map-summary`,children:[(0,h.jsxs)(`p`,{children:[`Semantic summary: `,te.length,` featured systems appear across`,` `,ne.length,` public capability domains. Domain membership can overlap.`]}),(0,h.jsx)(`ul`,{"aria-label":`Capability domain summary`,children:Ce.map(e=>(0,h.jsxs)(`li`,{children:[(0,h.jsx)(`strong`,{children:e.label}),(0,h.jsxs)(`span`,{children:[e.featuredCount,` featured records. `,e.summary]})]},e.id))})]}),(0,h.jsxs)(`section`,{className:`capability-relationship-index`,"aria-labelledby":`capability-relationships-title`,children:[(0,h.jsxs)(`div`,{className:`capability-relationship-head`,children:[(0,h.jsx)(`h4`,{id:`capability-relationships-title`,children:`Complete relationship edge declarations`}),(0,h.jsx)(`p`,{children:`Every relationship edge declared by the public figure. Each arrow follows its recorded source-to-target direction. Reciprocal rows remain separate declarations and do not establish a shared runtime path.`})]}),n===`ready`?(0,h.jsx)(`div`,{className:`capability-relationship-table-wrap`,"data-capability-relationships":!0,role:`region`,"aria-label":`Complete capability relationship edge declarations`,tabIndex:0,children:(0,h.jsxs)(`table`,{className:`capability-relationship-table`,children:[(0,h.jsxs)(`caption`,{children:[i.length,` relationship edge declarations in `,e?.figure.title]}),(0,h.jsx)(`thead`,{children:(0,h.jsxs)(`tr`,{children:[(0,h.jsx)(`th`,{scope:`col`,children:`Source`}),(0,h.jsx)(`th`,{scope:`col`,children:`Direction`}),(0,h.jsx)(`th`,{scope:`col`,children:`Relationship`}),(0,h.jsx)(`th`,{scope:`col`,children:`Target`}),(0,h.jsx)(`th`,{scope:`col`,children:`State`})]})}),(0,h.jsx)(`tbody`,{children:i.map(e=>{let t=xe.get(e.target);return(0,h.jsxs)(`tr`,{"data-capability-relationship":`${e.source}:${e.type}:${e.target}`,children:[(0,h.jsx)(`td`,{"data-relationship-source":!0,children:e.sourceNode.label}),(0,h.jsx)(`td`,{children:(0,h.jsx)(`span`,{className:`relationship-direction`,"data-relationship-direction":!0,"aria-label":`${e.sourceNode.label} to ${e.targetNode.label}`,children:`→`})}),(0,h.jsx)(`td`,{"data-relationship-label":!0,children:e.label}),(0,h.jsx)(`td`,{"data-relationship-target":!0,children:t?(0,h.jsx)(`a`,{href:t,rel:`noopener`,children:e.targetNode.label}):e.targetNode.label}),(0,h.jsx)(`td`,{"data-relationship-state":!0,children:oe[e.status]})]},`${e.source}:${e.type}:${e.target}`)})})]})}):(0,h.jsx)(`p`,{className:`capability-relationship-status`,role:`status`,children:n===`loading`?`Loading the generated relationship edge index.`:`The generated relationship edge index is unavailable. Use the accessible HTML or evidence JSON below.`}),e?.figure.sources.length?(0,h.jsx)(`ul`,{className:`capability-sources`,"aria-label":`Capability relationship edge sources`,children:e.figure.sources.map(e=>{let t=fe(e.href)?e.href:null;return(0,h.jsxs)(`li`,{"data-capability-source":!0,children:[`Source: `,t?(0,h.jsx)(`a`,{href:t,rel:`noopener`,children:e.label}):(0,h.jsx)(`span`,{children:e.label})]},`${e.label}:${e.href}`)})}):null]}),(0,h.jsxs)(`figure`,{className:`capability-map`,"data-figure-kind":`relationship`,"aria-describedby":`capability-map-summary`,children:[(0,h.jsx)(`p`,{className:`capability-map-scroll-hint`,children:`The map stays at its readable 960px width. Scroll horizontally on narrower screens.`}),(0,h.jsx)(`div`,{className:`capability-map-scroll`,"data-capability-map-scroll":!0,role:`region`,"aria-label":`Scrollable capability relationship edge map`,tabIndex:0,children:(0,h.jsx)(`object`,{data:`/figures/system-capability-map.svg`,type:`image/svg+xml`,"aria-label":`Public system capability relationship edges`,children:(0,h.jsx)(`p`,{children:`The visual map is unavailable. The capability-domain and complete relationship edge summaries above remain available, and the accessible HTML view is linked below.`})})}),(0,h.jsxs)(`figcaption`,{children:[(0,h.jsx)(`span`,{children:`The map records relationship edge declarations. It does not establish adoption or production compatibility.`}),(0,h.jsxs)(`span`,{className:`capability-map-formats mono`,children:[(0,h.jsx)(`a`,{"data-capability-map-format":!0,href:`/figures/system-capability-map.html`,children:`Accessible HTML`}),(0,h.jsx)(`a`,{"data-capability-map-format":!0,href:`/figures/system-capability-map.svg`,children:`SVG`}),(0,h.jsx)(`a`,{"data-capability-map-format":!0,href:`/figures/system-capability-map.json`,children:`Evidence JSON`})]})]})]})]}),(0,h.jsxs)(`section`,{className:`current-panel current-evidence-panel reveal`,"aria-labelledby":`evidence-stream-title`,children:[(0,h.jsxs)(`div`,{className:`current-panel-head`,children:[(0,h.jsx)(`h3`,{id:`evidence-stream-title`,children:`Release and evidence stream`}),(0,h.jsx)(`p`,{children:`The five newest public records, sorted by their registry dates.`})]}),(0,h.jsx)(`ol`,{className:`evidence-stream`,"aria-label":`Five newest public evidence records`,children:be.map(e=>{let t=w(e.systemId);return(0,h.jsxs)(`li`,{"data-evidence-record":e.id,"data-evidence-system":e.systemId,children:[(0,h.jsxs)(`div`,{className:`evidence-stream-meta mono`,children:[(0,h.jsx)(`time`,{dateTime:e.date,children:e.date}),(0,h.jsx)(`span`,{children:e.type}),(0,h.jsx)(`span`,{children:e.status})]}),(0,h.jsxs)(`a`,{href:e.href,rel:`noopener`,children:[e.label,` `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`↗`})]}),(0,h.jsxs)(`p`,{children:[t?`${t.name}. `:``,e.summary]})]},`${e.systemId}:${e.id}`)})}),(0,h.jsxs)(`a`,{className:`current-text-action`,href:`/catalog.html`,children:[`Inspect the full dated catalog `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]})]}),(0,h.jsxs)(`section`,{id:`current-briefing`,className:`current-panel current-briefing-panel reveal`,"aria-labelledby":`current-briefing-title`,children:[(0,h.jsxs)(`div`,{className:`current-panel-head`,children:[(0,h.jsx)(`h3`,{id:`current-briefing-title`,children:`Current research briefing`}),(0,h.jsx)(`p`,{children:`The newest published briefing appears here only after its publication record verifies.`})]}),Se?(0,h.jsxs)(`article`,{className:`briefing-record`,children:[(0,h.jsx)(`time`,{dateTime:Se.publishedAt,children:Se.publishedAt}),(0,h.jsx)(`h4`,{children:(0,h.jsx)(`a`,{href:Se.href,children:Se.title})}),(0,h.jsxs)(`p`,{children:[Se.sourceCount,` public sources. Limitations remain attached to the record.`]}),(0,h.jsx)(`a`,{href:Se.primaryFigureHref,children:`Open the primary figure`})]}):(0,h.jsxs)(`div`,{className:`briefing-empty`,"data-briefing-empty":!0,role:`status`,children:[(0,h.jsx)(`p`,{children:(0,h.jsx)(`strong`,{children:`No verified briefing is published yet.`})}),(0,h.jsx)(`p`,{children:`This space stays empty until a source-reviewed briefing has a canonical route, dated source record, limitations, and a reconstructable figure.`}),(0,h.jsxs)(`a`,{className:`current-text-action`,href:`/research.html`,children:[`Read the current research index `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]})]})]}),(0,h.jsxs)(`section`,{className:`current-panel current-workflow-panel reveal`,"aria-labelledby":`representative-workflows-title`,children:[(0,h.jsxs)(`div`,{className:`current-panel-head`,children:[(0,h.jsx)(`h3`,{id:`representative-workflows-title`,children:`Representative workflows`}),(0,h.jsx)(`p`,{children:`Only complete registry relationships can appear here.`})]}),we.length>0?(0,h.jsx)(`ol`,{className:`representative-workflows`,children:we.map(e=>(0,h.jsxs)(`li`,{"data-workflow-system":e.id,children:[(0,h.jsx)(`h4`,{children:(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.name})}),(0,h.jsxs)(`dl`,{children:[(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`dt`,{children:`Inputs`}),(0,h.jsx)(`dd`,{children:e.inputs.join(`, `)})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`dt`,{children:`Dependencies`}),(0,h.jsx)(`dd`,{children:e.dependencies.map(e=>w(e)?.name??e).join(`, `)})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`dt`,{children:`Outputs`}),(0,h.jsx)(`dd`,{children:e.outputs.join(`, `)})]})]}),(0,h.jsx)(`p`,{children:`Registry declarations describe interfaces only. They do not demonstrate adoption or production use.`})]},e.id))}):(0,h.jsxs)(`div`,{className:`workflow-gap`,children:[(0,h.jsx)(`p`,{children:(0,h.jsx)(`strong`,{children:`No complete representative workflow is published.`})}),(0,h.jsx)(`p`,{children:`Current featured records declare inputs and outputs, but none declares a dependency. The full catalog exposes that evidence gap without inferring a relationship, adoption, or production use.`}),(0,h.jsxs)(`a`,{className:`current-text-action`,href:`/catalog.html`,children:[`Inspect the registry fields `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]})]})]}),(0,h.jsxs)(`section`,{className:`current-panel current-action-panel reveal`,"aria-labelledby":`current-actions-title`,children:[(0,h.jsxs)(`div`,{className:`current-panel-head`,children:[(0,h.jsx)(`h3`,{id:`current-actions-title`,children:`Action routes`}),(0,h.jsx)(`p`,{children:`Enter through the requirement you can name now.`})]}),(0,h.jsxs)(`nav`,{className:`current-action-routes`,"aria-label":`Current operating surface actions`,children:[(0,h.jsxs)(`a`,{href:`/hire.html`,children:[(0,h.jsx)(`strong`,{children:`Hire`}),(0,h.jsx)(`span`,{children:`Choose the relevant work route.`})]}),(0,h.jsxs)(`a`,{href:`mailto:zaindharper@gmail.com`,children:[(0,h.jsx)(`strong`,{children:`Collaborate`}),(0,h.jsx)(`span`,{children:`Start from a concrete artifact or scope.`})]}),(0,h.jsxs)(`a`,{href:`/catalog.html`,children:[(0,h.jsx)(`strong`,{children:`Evaluate`}),(0,h.jsx)(`span`,{children:`Inspect systems, evidence, limits, and access.`})]}),(0,h.jsxs)(`a`,{href:`/security.html`,children:[(0,h.jsx)(`strong`,{children:`Authorized deployment`}),(0,h.jsx)(`span`,{children:`Review authorization boundaries before contact.`})]}),(0,h.jsxs)(`a`,{href:`/research.html`,children:[(0,h.jsx)(`strong`,{children:`Research contact`}),(0,h.jsx)(`span`,{children:`Read current papers and research records.`})]})]})]})]})]})}),(0,h.jsx)(`section`,{id:`research`,className:`band`,"aria-labelledby":`research-title`,children:(0,h.jsxs)(`div`,{className:`shell`,children:[(0,h.jsxs)(`div`,{className:`sec-head reveal`,children:[(0,h.jsx)(`h2`,{id:`research-title`,children:`Research and publications`}),(0,h.jsx)(`p`,{className:`measure lead-2`,children:`Eight records, all public and on the file. They cover byte integrity, typed effects, automation boundaries, action envelopes, and made-mind philosophy. None is peer reviewed.`})]}),(0,h.jsx)(`ol`,{className:`papers`,"aria-label":`Publications`,children:Te.map((e,t)=>(0,h.jsxs)(`li`,{className:`paper reveal`,style:{"--i":String(t)},children:[(0,h.jsx)(`span`,{className:`paper-tag mono tag-${e.tag.toLowerCase()}`,children:e.tag}),(0,h.jsxs)(`div`,{className:`paper-body`,children:[(0,h.jsx)(`h3`,{className:`paper-title`,children:e.title}),(0,h.jsx)(`p`,{className:`paper-line`,children:e.line})]}),(0,h.jsxs)(`span`,{className:`paper-doi mono`,children:[e.read?(0,h.jsxs)(h.Fragment,{children:[(0,h.jsx)(`a`,{href:e.read,children:`Read`}),` · `]}):null,e.pdf?(0,h.jsxs)(h.Fragment,{children:[(0,h.jsx)(`a`,{href:e.pdf,children:`PDF`}),` · `]}):null,(0,h.jsxs)(`a`,{href:`https://doi.org/${e.doi}`,rel:`noopener`,children:[e.doi,` ↗`]})]})]},e.doi))}),(0,h.jsxs)(`p`,{className:`paper-close reveal`,children:[`Each record is titled at its real size. ORCID`,` `,(0,h.jsx)(`a`,{className:`mono`,href:`https://orcid.org/0009-0001-7175-5393`,rel:`noopener`,children:`0009-0001-7175-5393`}),`. The complete index lives on `,(0,h.jsx)(`a`,{href:`/publications.html`,children:`the publications page`}),`.`]})]})}),(0,h.jsx)(`section`,{id:`contact`,className:`band band-alt`,"aria-labelledby":`contact-title`,children:(0,h.jsxs)(`div`,{className:`shell work-wrap`,children:[(0,h.jsx)(`div`,{className:`work-head reveal`,children:(0,h.jsxs)(`h2`,{id:`contact-title`,className:`pull`,children:[`Contact after`,(0,h.jsx)(`br`,{}),`the evidence.`]})}),(0,h.jsxs)(`div`,{className:`work-body reveal d1`,children:[(0,h.jsx)(`p`,{children:`If the route is engineering, technical operations, field work, research support, or a scoped contract build, send the concrete requirement and the useful deadline.`}),(0,h.jsx)(`p`,{children:`Bring the knot, then make it tangible. This unusual technical scope across systems, models, graphics, research, and web surfaces is welcome when the requirement is concrete.`}),(0,h.jsx)(`p`,{className:`floor-line`,children:`The top of the page gives the fastest email path. This closing contact block follows the current record so the request starts from evidence, not a pitch.`}),(0,h.jsxs)(`div`,{className:`cta`,children:[(0,h.jsxs)(`a`,{className:`btn solid`,href:`mailto:zaindharper@gmail.com`,children:[`Email Zain `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]}),(0,h.jsxs)(`a`,{className:`btn`,href:`/hire.html`,children:[`Choose a route `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]})]})]})]})})]}),(0,h.jsx)(`footer`,{className:`site-foot`,children:(0,h.jsxs)(`div`,{className:`shell`,children:[(0,h.jsxs)(`p`,{className:`foot-big reveal`,children:[`Open the workshop,`,(0,h.jsx)(`br`,{}),`then follow the working surface.`]}),(0,h.jsxs)(`nav`,{className:`foot-links reveal d1`,"aria-label":`Deep pages`,children:[ve.map(e=>(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),(0,h.jsx)(`a`,{href:`https://github.com/HarperZ9`,rel:`noopener`,children:`GitHub`})]}),(0,h.jsxs)(`p`,{className:`foot-note mono reveal d1`,children:[(0,h.jsx)(`span`,{className:`foot-brand`,children:`zentropyLabs`}),` publishes Project Telos · built by Zain Dana Harper in Seattle · systems, evidence, research, graphics, generated media, and work routes.`]})]})})]})}(0,p.createRoot)(document.getElementById(`root`)).render((0,h.jsx)(f.StrictMode,{children:(0,h.jsx)(Ee,{})}));
+`,oe=new Set([`guide.html`,`catalog.html`,`research.html`,`publications.html`,`writing.html`,`studio.html`,`typeface.html`,`resume.html`,`person.html`]),se=[...v,...y.flatMap(e=>e.routes)].filter(e=>oe.has(e.href)&&ee(e.href)),ce=[{label:`HTML`,href:`/figures/system-capability-map.html`},{label:`SVG`,href:`/figures/system-capability-map.svg`},{label:`JSON`,href:`/figures/system-capability-map.json`}],le=JSON.parse(ae),ue=le.records.map(e=>re.find(t=>t.id===e.id&&t.systemId===e.systemId)).filter(e=>!!e),T=le.latestPublishedBriefing;function E(e){let[t]=e.evidence;if(!t)throw Error(`Required public evidence record is missing: ${e.id}`);return t}var de=w(`flywheel`);if(!de)throw Error(`Required public system registry record is missing: flywheel`);var fe=de,pe=E(fe),me=ie(`flywheel`),D=new Map(re.map(e=>[`evidence:${e.systemId}:${e.id}`,e.href]));function O(e){if(e.id===`flywheel`)return`primary Flywheel system`;let t=fe.related.includes(e.id)||fe.dependencies.includes(e.id),n=e.related.includes(`flywheel`)||e.dependencies.includes(`flywheel`);return t&&n?`two-way Flywheel extension`:t?`Flywheel extension`:n?`inbound Flywheel extension`:`catalog system`}var he=te.map(e=>({...e,atlasRole:O(e)})),ge=ne.map(e=>({...e,systems:te.filter(t=>t.domains.includes(e.id))})),_e=[{label:`Engineering and evaluation`,href:`/hire.html#engineering-path`,summary:`Agent systems, evaluation harnesses, developer tools, and release work.`},{label:`Technical operations`,href:`/hire.html#technical-operations-path`,summary:`Operational tooling, public documentation, automation, and infrastructure repair.`},{label:`Public service, safety, and field operations`,href:`/hire.html#public-service-field-path`,summary:`Benefits-rich public routes where systems judgment and field reliability matter.`}],ve=[{tag:`SYSTEMS`,doi:`10.5281/zenodo.21230267`,pdf:`/papers/emet-integrity-witness.pdf`,title:`EMET: An Authority-Incapable Byte-Level Integrity Witness`,line:`A byte-integrity artifact with four independent implementations checked against one conformance corpus.`},{tag:`SYSTEMS`,doi:`10.5281/zenodo.21231253`,pdf:`/papers/buildlang-capability-effects.pdf`,title:`BuildLang: Accountable Compute via Typed Capability Effects`,line:`The capabilities a function may exercise appear in its type, then lower through a constrained systems-language path.`},{tag:`PREPRINT`,doi:`10.5281/zenodo.21232206`,pdf:`/papers/witnessed-independence.pdf`,title:`Witnessed Independence: Recording Whether a Verifier Graded Its Own Work`,line:`Turns a criterion it did not author from an assumption into a recorded, three-valued field of the verdict.`},{tag:`PREPRINT`,doi:`10.5281/zenodo.21231406`,pdf:`/papers/proof-packets.pdf`,title:`Proof Packets: A Derive-Don't-Trust Envelope for Accountable Agent Actions`,line:`The verdict for one agent action is derived from checks, never read from the packet.`},{tag:`NOTE`,doi:`10.5281/zenodo.21234475`,pdf:`/papers/personhood-gate-handoff.pdf`,title:`The Personhood-Gate Handoff: Drawing the Automation Boundary at the False-Signal Line`,line:`Hand off to the person exactly when a step would transmit a false human-present signal to a third party.`},{tag:`NOTE`,doi:`10.5281/zenodo.21231311`,pdf:`/papers/re-perceived-effects.pdf`,title:`Re-Perceived Effects: A Well-Formedness Contract for Accountable Actuation`,line:`Replaces an actuator's self-report with a re-perceived effect, admitted before the fact by a capability gate.`},{tag:`CORPUS`,doi:`10.5281/zenodo.20773724`,pdf:`/papers/conferred-existence.pdf`,read:`/conferred-existence.html`,title:`Conferred Existence`,line:`A thesis on made minds: perception, memory, external anchors, and what a made mind could be owed and held to.`},{tag:`CORPUS`,doi:`10.5281/zenodo.20778927`,pdf:`/papers/witnessing-spine.pdf`,read:`/witnessing-spine.html`,title:`The Witnessing Spine`,line:`The collected research corpus behind the verification work, from bounded claims to the rule the software enforces.`}],ye=ve.map(e=>({kind:e.tag,date:e.doi.split(`.`).at(-1)??`record`,title:e.title,href:e.read??e.pdf??`https://doi.org/${e.doi}`,source:e.pdf?`PDF`:e.read?`HTML`:`DOI`,contents:e.tag.toLowerCase(),claim:e.line})),be=T?{kind:`BRIEFING`,date:T.publishedAt,title:T.title,href:T.href,source:`${T.sourceCount} public sources`,contents:`incident evidence lanes`,claim:`Separate legal process, vendor report, host telemetry, independent analysis, and remediation records before conclusions.`}:null;function xe(e,t){let n=t.trim().toLowerCase();return n?[e.kind,e.date,e.title,e.source,e.contents,e.claim].some(e=>e.toLowerCase().includes(n)):!0}function Se(e){return e===`verified`?`Verified`:e===`caution`?`Caution`:e===`unavailable`?`Unavailable`:e?e[0].toUpperCase()+e.slice(1):`Unknown`}function Ce(e){let t=e;for(let e=0;e<4;e+=1)try{let e=decodeURIComponent(t);if(e===t)break;t=e}catch{break}return t}function we(e){let t=Ce(e).toLowerCase();if(/\bsk-[a-z0-9_-]{16,}\b/i.test(t)||/(^|[?&#/])(token|secret|password|apikey|api_key|credential)=/i.test(t))return!1;try{let e=new URL(t),n=e.hostname.toLowerCase();return!(e.protocol!==`https:`||e.username||e.password||n===`localhost`||n.endsWith(`.localhost`)||n.endsWith(`.local`)||n===`example`||n.endsWith(`.example`)||n.endsWith(`.test`)||n.endsWith(`.invalid`)||/^(?:\d{1,3}\.){3}\d{1,3}$/.test(n))}catch{return!1}}function Te(e,t){return e.get(t)?.label??t}function Ee(e){return D.get(e)??null}function De(){let[e,t]=(0,f.useState)(null);(0,f.useEffect)(()=>{let e=!1;return fetch(`/figures/system-capability-map.json`).then(e=>{if(!e.ok)throw Error(`Capability map fetch failed: ${e.status}`);return e.json()}).then(n=>{e||t(n)}).catch(()=>{e||t(null)}),()=>{e=!0}},[]);let n=e?.figure,r=(0,f.useMemo)(()=>new Map((n?.data.nodes??[]).map(e=>[e.id,e])),[n]),i=n?.data.edges??[];return(0,h.jsxs)(`figure`,{className:`capability-map`,"data-atlas-artifact":!0,"aria-labelledby":`capability-map-title`,children:[(0,h.jsxs)(`figcaption`,{children:[(0,h.jsx)(`p`,{className:`mono`,children:`Figure 1 / registry relationship artifact`}),(0,h.jsx)(`h3`,{id:`capability-map-title`,children:`Capability map`}),(0,h.jsx)(`p`,{children:`The existing relationship figure stays executable here: SVG for the visual field, JSON for inspection, and edge declarations for source-safe semantic review.`}),(0,h.jsx)(`nav`,{className:`capability-map-formats mono`,"aria-label":`Capability map artifact formats`,children:ce.map(e=>(0,h.jsx)(`a`,{"data-capability-map-format":!0,href:e.href,children:e.label},e.href))})]}),(0,h.jsx)(`div`,{className:`capability-map-scroll`,"data-capability-map-scroll":!0,role:`region`,"aria-label":`Scrollable capability relationship edge map`,tabIndex:0,children:(0,h.jsx)(`object`,{"aria-label":`Public system capability relationship edges`,data:`/figures/system-capability-map.svg`,type:`image/svg+xml`,children:(0,h.jsx)(`a`,{href:`/figures/system-capability-map.svg`,children:`Open the capability map SVG`})})}),(0,h.jsxs)(`div`,{className:`capability-map-meta`,children:[(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`h4`,{children:`Claim`}),(0,h.jsx)(`p`,{children:n?.claim??`The capability map is loading from the public figure JSON.`})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`h4`,{children:`Does not prove`}),(0,h.jsx)(`p`,{children:n?.doesNotProve??`No production adoption or independent review claim is inferred from loading state.`})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`h4`,{children:`Sources`}),(0,h.jsx)(`ul`,{children:(n?.sources??[]).map(e=>{let t=we(e.href);return(0,h.jsxs)(`li`,{"data-capability-source":!0,children:[(0,h.jsx)(`span`,{children:`Source: `}),t?(0,h.jsx)(`a`,{href:e.href,children:e.label}):(0,h.jsx)(`span`,{children:e.label})]},`${e.label}:${e.href}`)})})]})]}),(0,h.jsxs)(`section`,{className:`capability-relationship-index`,"aria-labelledby":`capability-relationships-title`,children:[(0,h.jsx)(`h3`,{id:`capability-relationships-title`,children:`Complete relationship edge declarations`}),(0,h.jsx)(`p`,{children:`Edge rows are declared relationships from the figure JSON. Direction is source to target; related edges are registry-declared relation records and do not imply runtime coupling, weight, or adoption.`}),(0,h.jsx)(`div`,{className:`capability-table-scroll`,role:`region`,"aria-label":`Complete capability relationship edge declarations`,tabIndex:0,children:(0,h.jsxs)(`table`,{className:`capability-relationship-table`,"data-capability-relationships":!0,children:[(0,h.jsxs)(`caption`,{children:[i.length,` relationship edge declarations in `,n?.title??`Public system capability relationships`]}),(0,h.jsx)(`thead`,{children:(0,h.jsxs)(`tr`,{children:[(0,h.jsx)(`th`,{scope:`col`,children:`Source`}),(0,h.jsx)(`th`,{scope:`col`,children:`Relationship`}),(0,h.jsx)(`th`,{scope:`col`,children:`Direction`}),(0,h.jsx)(`th`,{scope:`col`,children:`Target`}),(0,h.jsx)(`th`,{scope:`col`,children:`State`})]})}),(0,h.jsx)(`tbody`,{children:i.map((e,t)=>{let n=Te(r,e.source),i=Te(r,e.target),a=Ee(e.target);return(0,h.jsxs)(`tr`,{"data-capability-relationship":!0,"data-state":e.status,children:[(0,h.jsx)(`td`,{"data-relationship-source":!0,children:n}),(0,h.jsx)(`td`,{"data-relationship-label":!0,children:e.label}),(0,h.jsx)(`td`,{"data-relationship-direction":!0,"aria-label":`${n} to ${i}`,children:`→`}),(0,h.jsx)(`td`,{"data-relationship-target":!0,children:a?(0,h.jsx)(`a`,{"data-capability-proof":!0,href:a,rel:`noopener`,children:i}):i}),(0,h.jsx)(`td`,{"data-relationship-state":!0,children:Se(e.status)})]},`${e.source}:${e.target}:${t}`)})})]})})]})]})}function Oe(){let[e,t]=(0,f.useState)(``),n=(0,f.useMemo)(()=>[be,...ye].filter(e=>!!e).filter(t=>xe(t,e)),[e]);return(0,h.jsxs)(h.Fragment,{children:[(0,h.jsx)(g,{}),(0,h.jsx)(`div`,{className:`viewport-vignette`,"aria-hidden":`true`}),(0,h.jsx)(`a`,{className:`skip-link`,href:`#main`,children:`Skip to content`}),(0,h.jsxs)(`nav`,{className:`topnav`,"aria-label":`Primary`,children:[(0,h.jsxs)(`a`,{className:`brand`,href:`#top`,"aria-label":`zentropyLabs / Project Telos, home`,children:[(0,h.jsx)(`span`,{className:`brand-wordmark`,"aria-hidden":`true`,children:`zentropyLabs`}),(0,h.jsx)(`span`,{className:`brand-route mono`,children:`Project Telos`})]}),(0,h.jsxs)(`div`,{className:`topnav-links`,children:[v.map(e=>(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),b.map(e=>(0,h.jsx)(`a`,{className:`mono ghost`,href:e.href,rel:`noopener`,children:e.label},e.href))]}),(0,h.jsxs)(`details`,{className:`mobile-menu`,children:[(0,h.jsx)(`summary`,{children:`Menu`}),(0,h.jsxs)(`div`,{className:`mobile-menu-list`,"aria-label":`Home menu`,children:[v.map(e=>(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),se.map(e=>(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),b.map(e=>(0,h.jsx)(`a`,{className:`mono`,href:e.href,rel:`noopener`,children:e.label},e.href))]})]})]}),(0,h.jsxs)(`main`,{id:`main`,children:[(0,h.jsxs)(`header`,{id:`top`,className:`hero`,children:[(0,h.jsx)(`div`,{className:`hero-veil`,"aria-hidden":`true`}),(0,h.jsxs)(`div`,{className:`hero-inner`,children:[(0,h.jsxs)(`div`,{className:`hero-masthead`,children:[(0,h.jsx)(`p`,{className:`hero-kicker mono reveal in d1`,children:`orientation / artifact / claim / proof / route`}),(0,h.jsx)(`h1`,{className:`hero-title reveal in d2`,children:`Flywheel is the primary public system for model-neutral agent work.`}),(0,h.jsx)(`p`,{className:`lead reveal in d3`,children:`Route→Verify→Receipt→Reuse is the operating loop: send a task through model routes and tool results, verify the run against explicit checks, keep the receipt, then reuse the artifact in the next workflow.`}),(0,h.jsxs)(`div`,{className:`flywheel-hero-actions cta reveal in d3`,children:[(0,h.jsxs)(`a`,{className:`btn solid`,href:`/flywheel.html`,children:[`Inspect Flywheel `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]}),(0,h.jsxs)(`a`,{className:`btn`,href:`/catalog.html`,children:[`Open evidence atlas `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]})]})]}),(0,h.jsxs)(`figure`,{id:`flywheel-artifact`,className:`flywheel-artifact reveal in d3`,"aria-labelledby":`flywheel-artifact-title`,children:[(0,h.jsxs)(`figcaption`,{children:[(0,h.jsx)(`span`,{className:`artifact-no mono`,children:`native process / verified 2026-08-27`}),(0,h.jsxs)(`h2`,{id:`flywheel-artifact-title`,children:[fe.name,` v0.3.10 release path`]})]}),(0,h.jsxs)(`div`,{className:`artifact-grid`,children:[(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`span`,{className:`mono`,children:`route`}),(0,h.jsx)(`code`,{children:fe.entryCommand})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`span`,{className:`mono`,children:`verify`}),(0,h.jsx)(`code`,{children:fe.verificationCommand})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`span`,{className:`mono`,children:`receipt`}),(0,h.jsxs)(`a`,{href:pe.href,rel:`noopener`,children:[pe.label,` `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`↗`})]})]})]}),(0,h.jsx)(`p`,{children:`This artifact proves a public release and default-branch verification record. It does not prove general model correctness, adoption, or provider parity.`})]})]}),(0,h.jsxs)(`figure`,{className:`hero-crop mono`,"aria-hidden":`true`,children:[(0,h.jsx)(`span`,{className:`crop-t spectrum-word`,children:`registry field`}),(0,h.jsx)(`span`,{className:`crop-d`,children:`spectrum contained inside art`})]})]}),(0,h.jsx)(`section`,{id:`route-verify-receipt-reuse`,className:`band flow-band`,"aria-labelledby":`flow-title`,children:(0,h.jsxs)(`div`,{className:`shell`,children:[(0,h.jsxs)(`div`,{className:`sec-head reveal`,children:[(0,h.jsx)(`h2`,{id:`flow-title`,children:`Route, verify, receipt, reuse.`}),(0,h.jsx)(`p`,{className:`measure lead-2`,children:`The homepage follows one continuous evidence path, not a dashboard. Orientation names the system, artifact shows the native route, claim stays bounded, proof links to evidence records, and route sends the reader deeper into a reusable workflow surface.`})]}),(0,h.jsxs)(`ol`,{className:`flow-steps`,"aria-label":`Route Verify Receipt Reuse narrative`,children:[(0,h.jsxs)(`li`,{children:[(0,h.jsx)(`strong`,{children:`Route`}),(0,h.jsx)(`p`,{children:`Task specifications, model routes, tool results, and evidence records enter Flywheel as explicit inputs.`})]}),(0,h.jsxs)(`li`,{children:[(0,h.jsx)(`strong`,{children:`Verify`}),(0,h.jsx)(`p`,{children:`Checks and limits are named before the result is treated as evidence.`})]}),(0,h.jsxs)(`li`,{children:[(0,h.jsx)(`strong`,{children:`Receipt`}),(0,h.jsx)(`p`,{children:`The run leaves an artifact that can be read apart from the model that produced it.`})]}),(0,h.jsxs)(`li`,{children:[(0,h.jsx)(`strong`,{children:`Reuse`}),(0,h.jsx)(`p`,{children:`The verified artifact becomes a reusable workflow surface for review, publishing, hiring, or collaboration.`})]})]})]})}),(0,h.jsx)(`section`,{id:`evidence-atlas`,className:`band band-alt evidence-atlas`,"aria-labelledby":`evidence-atlas-title`,children:(0,h.jsxs)(`div`,{className:`shell`,children:[(0,h.jsxs)(`div`,{className:`atlas-layout`,children:[(0,h.jsxs)(`div`,{className:`sec-head reveal`,children:[(0,h.jsx)(`h2`,{id:`evidence-atlas-title`,children:`Flywheel evidence atlas`}),(0,h.jsx)(`p`,{className:`measure lead-2`,children:`Registry records define this plate. Flywheel sits as the mothership; Index, Gather, Forum, Crucible, Relay, Plexus, Mneme, and the rest appear by declared relation, domain, evidence, limitation, and route.`})]}),(0,h.jsxs)(`aside`,{className:`atlas-rail mono reveal d1`,"aria-label":`Atlas reading keys`,children:[(0,h.jsx)(`span`,{children:`orientation: Flywheel`}),(0,h.jsx)(`span`,{children:`artifact: release, source, report, demo`}),(0,h.jsx)(`span`,{children:`claim: registry purpose`}),(0,h.jsx)(`span`,{children:`proof: dated evidence`}),(0,h.jsx)(`span`,{children:`route: deeper page`})]})]}),(0,h.jsxs)(`div`,{className:`atlas-grid atlas-instrument`,"aria-label":`Registry-derived Flywheel system atlas`,children:[(0,h.jsx)(`div`,{"data-atlas-artifact":`capability-map`,children:(0,h.jsx)(De,{})}),(0,h.jsxs)(`aside`,{className:`atlas-index`,"aria-labelledby":`atlas-index-title`,children:[(0,h.jsxs)(`p`,{className:`mono`,children:[`system index / `,he.length,` featured records / `,C.length,` total registry records / `,me.length,` declared Flywheel routes`]}),(0,h.jsx)(`h3`,{id:`atlas-index-title`,children:`Flywheel graph index`}),(0,h.jsx)(`p`,{children:`The map carries the dense structure. This index keeps almost-all-flagships discoverable without making a wall of equal-weight cards.`}),(0,h.jsx)(`ol`,{children:he.map(e=>(0,h.jsxs)(`li`,{"data-system-id":e.id,children:[(0,h.jsx)(`span`,{className:`mono`,"data-system-role":!0,children:e.atlasRole}),(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.name}),(0,h.jsx)(`a`,{className:`proof-link`,href:e.evidence[0].href,rel:`noopener`,children:e.evidence[0].label})]},e.id))}),(0,h.jsx)(`a`,{className:`atlas-catalog-link`,href:`/catalog.html`,children:`Open complete catalog`})]})]}),(0,h.jsxs)(`div`,{className:`evidence-current`,"aria-labelledby":`evidence-current-title`,children:[(0,h.jsx)(`h3`,{id:`evidence-current-title`,children:`Newest registry evidence`}),(0,h.jsx)(`ol`,{children:ue.map(e=>{let t=w(e.systemId);return(0,h.jsxs)(`li`,{"data-evidence-record":e.id,"data-evidence-system":e.systemId,children:[(0,h.jsx)(`time`,{className:`mono`,dateTime:e.date,children:e.date}),(0,h.jsx)(`a`,{href:e.href,rel:`noopener`,children:e.label}),(0,h.jsxs)(`span`,{children:[t?.name??e.systemId,`: `,e.summary]})]},`${e.systemId}:${e.id}`)})})]}),(0,h.jsx)(`div`,{className:`domain-strip`,"aria-label":`Capability domains from system registry`,children:ge.map(e=>(0,h.jsxs)(`section`,{children:[(0,h.jsx)(`h3`,{children:e.label}),(0,h.jsx)(`p`,{children:e.summary}),(0,h.jsxs)(`span`,{className:`mono`,children:[e.systems.length,` featured records`]})]},e.id))})]})}),(0,h.jsx)(`section`,{id:`editorial-index`,className:`band editorial-index`,"aria-labelledby":`editorial-index-title`,children:(0,h.jsxs)(`div`,{className:`shell editorial-shell`,children:[(0,h.jsxs)(`aside`,{className:`editorial-rail mono`,"aria-label":`Editorial index structure`,children:[(0,h.jsx)(`span`,{children:`Source`}),(0,h.jsx)(`span`,{children:`Contents`}),(0,h.jsx)(`span`,{children:`Claim`})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsxs)(`div`,{className:`sec-head reveal`,children:[(0,h.jsx)(`h2`,{id:`editorial-index-title`,children:`Searchable editorial index`}),(0,h.jsx)(`p`,{className:`measure lead-2`,children:`The index is searchable by title, kind, date, source, contents, and claim. Rows expose routing metadata without teaser prose.`})]}),T?(0,h.jsx)(`p`,{className:`current-briefing-label mono`,"data-briefing-title":T.title,children:`Current briefing is one filterable row, not a duplicate module.`}):null,(0,h.jsxs)(`label`,{className:`index-search mono`,children:[(0,h.jsx)(`span`,{children:`Search index`}),(0,h.jsx)(`input`,{"aria-label":`Search index`,type:`search`,value:e,onChange:e=>t(e.target.value),placeholder:`briefing, packets, source, claim`})]}),(0,h.jsx)(`ol`,{className:`index-rows`,"aria-label":`Publication and briefing index`,children:n.map((e,t)=>(0,h.jsxs)(`li`,{className:`index-row`,"data-editorial-record":!0,"data-kind":e.kind,children:[(0,h.jsx)(`span`,{className:`index-seq mono`,children:String(t+1).padStart(2,`0`)}),(0,h.jsx)(`time`,{className:`mono`,dateTime:e.date,children:e.date}),(0,h.jsx)(`span`,{className:`mono`,children:e.kind}),(0,h.jsx)(`h3`,{children:(0,h.jsx)(`a`,{href:e.href,children:e.title})}),(0,h.jsxs)(`dl`,{children:[(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`dt`,{children:`Source`}),(0,h.jsx)(`dd`,{children:e.source})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`dt`,{children:`Contents`}),(0,h.jsx)(`dd`,{children:e.contents})]}),(0,h.jsxs)(`div`,{children:[(0,h.jsx)(`dt`,{children:`Claim`}),(0,h.jsx)(`dd`,{children:e.claim})]})]})]},`${e.kind}:${e.title}`))})]})]})}),(0,h.jsx)(`section`,{id:`research`,className:`band band-alt`,"aria-labelledby":`research-title`,children:(0,h.jsxs)(`div`,{className:`shell`,children:[(0,h.jsxs)(`div`,{className:`sec-head reveal`,children:[(0,h.jsx)(`h2`,{id:`research-title`,children:`Research and publications`}),(0,h.jsx)(`p`,{className:`measure lead-2`,children:`Eight records, all public and on the file. They cover byte integrity, typed effects, automation boundaries, action envelopes, and made-mind philosophy. None is peer reviewed.`})]}),(0,h.jsx)(`ol`,{className:`papers`,"aria-label":`Publications`,children:ve.map((e,t)=>(0,h.jsxs)(`li`,{className:`paper reveal`,style:{"--i":String(t)},children:[(0,h.jsx)(`span`,{className:`paper-tag mono`,children:e.tag}),(0,h.jsxs)(`div`,{className:`paper-body`,children:[(0,h.jsx)(`h3`,{className:`paper-title`,children:e.title}),(0,h.jsx)(`p`,{className:`paper-line`,children:e.line})]}),(0,h.jsxs)(`span`,{className:`paper-doi mono`,children:[e.read?(0,h.jsx)(`a`,{href:e.read,children:`Read`}):null,e.pdf?(0,h.jsx)(`a`,{href:e.pdf,children:`PDF`}):null,(0,h.jsx)(`a`,{href:`https://doi.org/${e.doi}`,rel:`noopener`,children:`DOI ↗`})]})]},e.doi))}),(0,h.jsxs)(`p`,{className:`paper-close reveal`,children:[`Each record is titled at its real size. ORCID`,` `,(0,h.jsx)(`a`,{className:`mono`,href:`https://orcid.org/0009-0001-7175-5393`,rel:`noopener`,children:`0009-0001-7175-5393`}),`. The complete index lives on `,(0,h.jsx)(`a`,{href:`/publications.html`,children:`the publications page`}),`.`]})]})}),(0,h.jsx)(`section`,{id:`work`,"aria-labelledby":`work-title`,className:`band work-wrap`,children:(0,h.jsxs)(`div`,{className:`shell work-grid`,children:[(0,h.jsxs)(`div`,{className:`work-head reveal`,children:[(0,h.jsx)(`h2`,{id:`work-title`,children:`Workshop contact follows the evidence.`}),(0,h.jsx)(`p`,{children:`Hiring, collaboration, and field-work routes stay available after the reader has seen the product thesis, process, evidence atlas, and current briefing.`})]}),(0,h.jsxs)(`nav`,{className:`work-routes`,"aria-label":`Hiring and collaboration routes`,children:[_e.map(e=>(0,h.jsxs)(`a`,{href:e.href,children:[(0,h.jsx)(`strong`,{children:e.label}),(0,h.jsx)(`span`,{children:e.summary})]},e.href)),(0,h.jsxs)(`a`,{href:`/resume.html`,children:[(0,h.jsx)(`strong`,{children:`Technical resume`}),(0,h.jsx)(`span`,{children:`Open the current resume and adjacent career material.`})]}),(0,h.jsxs)(`a`,{href:`mailto:zaindharper@gmail.com`,children:[(0,h.jsx)(`strong`,{children:`Email`}),(0,h.jsx)(`span`,{children:`Send the concrete requirement, artifact, and useful deadline.`})]})]})]})}),(0,h.jsx)(`section`,{id:`contact`,className:`band band-alt contact-band`,"aria-labelledby":`contact-title`,children:(0,h.jsxs)(`div`,{className:`shell contact-grid`,children:[(0,h.jsx)(`h2`,{id:`contact-title`,children:`Bring a concrete route.`}),(0,h.jsx)(`p`,{children:`The strongest starting point is a specific system, evidence record, publication, role, or collaboration scope. If the requirement is not yet clear, start with Flywheel or the atlas.`}),(0,h.jsxs)(`div`,{className:`cta`,children:[(0,h.jsxs)(`a`,{className:`btn solid`,href:`mailto:zaindharper@gmail.com`,children:[`Email Zain `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]}),(0,h.jsxs)(`a`,{className:`btn`,href:`/flywheel.html`,children:[`Flywheel page `,(0,h.jsx)(`span`,{"aria-hidden":`true`,children:`→`})]})]})]})})]}),(0,h.jsx)(`footer`,{className:`site-foot`,children:(0,h.jsxs)(`div`,{className:`shell`,children:[(0,h.jsxs)(`p`,{className:`foot-big reveal`,children:[`Flywheel first,`,(0,h.jsx)(`br`,{}),`evidence always attached.`]}),(0,h.jsxs)(`nav`,{className:`foot-links reveal d1`,"aria-label":`Deep pages`,children:[se.map(e=>(0,h.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),(0,h.jsx)(`a`,{href:`https://github.com/HarperZ9`,rel:`noopener`,children:`GitHub`})]}),(0,h.jsxs)(`p`,{className:`foot-note mono reveal d1`,children:[(0,h.jsx)(`span`,{className:`foot-brand`,children:`zentropyLabs`}),` publishes Project Telos / built by Zain Dana Harper in Seattle / systems, evidence, research, graphics, generated media, and work routes.`]})]})})]})}(0,p.createRoot)(document.getElementById(`root`)).render((0,h.jsx)(f.StrictMode,{children:(0,h.jsx)(Oe,{})}));

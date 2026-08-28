@@ -65,7 +65,7 @@ def test_fresh_cache_stamp_covers_the_shared_navigation_chain() -> None:
     nav = read("system/nav.js")
     home_art = read("system/home-art.js")
     home_template = read("home/index.html")
-    bundle = read("assets/index-Btig5ajT.js")
+    bundle = read("assets/index-Dwp-qWEt.js")
     assert f'const ASSET_V = "{FRESH_STAMP}"' in nav
     assert f'./routes.js?v={FRESH_STAMP}' in nav
     assert f'./nav.js?v={FRESH_STAMP}' in home_art
@@ -82,6 +82,7 @@ def test_sitemap_keeps_legacy_routes_and_adds_capability_publication_routes() ->
         "phantom.html", "private-practice.html", "briefings/",
         "briefings/2026-08-26-openai-hugging-face-incident/", "systems/relay.html",
         "systems/behavior-transform.html",
+        "engine-revival.html", "brender-archival.html",
     ):
         assert f"https://harperz9.github.io/{route}" in sitemap, route
 

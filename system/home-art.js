@@ -45,7 +45,22 @@ function wireDetailsMenu(doc, details, summary, listSelector, abortKey) {
 
 function upgradeHomeMenu(doc) {
   const nav = doc.querySelector(".topnav");
-  if (!nav || nav.querySelector(".home-menu")) return false;
+  if (!nav) return false;
+
+  // The React home renders its own mobile menu so the navigation survives the
+  // no-JavaScript and hydration boundaries. Reuse that control when present;
+  // adding the legacy enhancement menu as well would expose two Menu buttons.
+  const mobileMenu = nav.querySelector(".mobile-menu");
+  if (mobileMenu) {
+    const summary = mobileMenu.querySelector("summary");
+    const list = mobileMenu.querySelector(".mobile-menu-list");
+    if (!summary || !list) return false;
+    wireDetailsMenu(doc, mobileMenu, summary, ".mobile-menu-list", "__homeMenuAbort");
+    wireMenuArrowKeys(mobileMenu, ".mobile-menu-list");
+    return true;
+  }
+
+  if (nav.querySelector(".home-menu")) return false;
 
   const sourceLinks = [...nav.querySelectorAll(".topnav-links a")];
   if (!sourceLinks.length) return false;

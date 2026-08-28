@@ -6,7 +6,7 @@
     "kind": "relationship",
     "title": "Public system capability relationships",
     "description": "A generated map of the systems and public evidence records in the canonical public registry.",
-    "claim": "The map shows declared dependencies, related systems, and evidence references recorded in the public registry.",
+    "claim": "The map shows Flywheel primary platform hierarchy, declared dependencies, related companion links, and evidence references recorded in the public registry.",
     "doesNotProve": "The map does not establish production adoption, independent review, or operational compatibility between related systems.",
     "sources": [
       {
@@ -18,9 +18,10 @@
     "units": "declared relationships",
     "transformations": [
       "Dependency, related, and evidence-reference edges are emitted without inference.",
+      "Flywheel platform-parent hierarchy edges are generated only for the declared Retro Systems Lab cluster.",
       "System and evidence records are sorted by stable public identifiers."
     ],
-    "uncertainty": "Related edges are declared associations. They do not state direction, strength, or runtime coupling.",
+    "uncertainty": "Related edges remain companion links. They do not state direction, strength, hierarchy, or runtime dependency.",
     "data": {
       "type": "relationship",
       "nodes": [
@@ -57,6 +58,14 @@
           "nodeType": "system"
         },
         {
+          "id": "brender-archival",
+          "label": "BRender Archival",
+          "status": "verified",
+          "stateLabel": "Shipped",
+          "group": "Retro Systems Lab",
+          "nodeType": "system"
+        },
+        {
           "id": "build-color",
           "label": "Build Color",
           "status": "verified",
@@ -86,6 +95,14 @@
           "status": "verified",
           "stateLabel": "Shipped",
           "group": "evaluation-verification",
+          "nodeType": "system"
+        },
+        {
+          "id": "engine-revival",
+          "label": "Engine Revival",
+          "status": "verified",
+          "stateLabel": "Shipped",
+          "group": "Retro Systems Lab",
           "nodeType": "system"
         },
         {
@@ -121,6 +138,14 @@
           "nodeType": "evidence"
         },
         {
+          "id": "evidence:brender-archival:brender-archival-release-v0-1-1",
+          "label": "BRender Archival v0.1.1",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
           "id": "evidence:build-color:build-color-release-v1-0-1",
           "label": "Build Color v1.0.1",
           "status": "verified",
@@ -147,6 +172,14 @@
         {
           "id": "evidence:emet:emet-release-v1-2-0",
           "label": "EMET v1.2.0",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
+          "id": "evidence:engine-revival:engine-revival-release-v0-1-0",
+          "label": "Engine Revival v0.1.0",
           "status": "verified",
           "stateLabel": "Verified",
           "group": "public evidence",
@@ -249,6 +282,14 @@
           "nodeType": "evidence"
         },
         {
+          "id": "evidence:retro-engine:retro-engine-site-source",
+          "label": "Retro Engine owned site source",
+          "status": "verified",
+          "stateLabel": "Verified",
+          "group": "public evidence",
+          "nodeType": "evidence"
+        },
+        {
           "id": "evidence:secret-redact-io:secret-redact-io-release-v0-1-0",
           "label": "Secret Redact IO v0.1.0",
           "status": "verified",
@@ -277,7 +318,7 @@
           "label": "Flywheel",
           "status": "verified",
           "stateLabel": "Shipped",
-          "group": "agent-systems",
+          "group": "Flywheel platform",
           "nodeType": "system"
         },
         {
@@ -366,6 +407,14 @@
           "status": "verified",
           "stateLabel": "Shipped",
           "group": "security-privacy",
+          "nodeType": "system"
+        },
+        {
+          "id": "retro-engine",
+          "label": "Retro Engine",
+          "status": "verified",
+          "stateLabel": "Active",
+          "group": "Retro Systems Lab",
           "nodeType": "system"
         },
         {
@@ -521,6 +570,62 @@
           "type": "related"
         },
         {
+          "source": "brender-archival",
+          "target": "buildlang",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "brender-archival",
+          "target": "engine-revival",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "brender-archival",
+          "target": "evidence:brender-archival:brender-archival-release-v0-1-1",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "brender-archival",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "brender-archival",
+          "target": "gather",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "brender-archival",
+          "target": "index",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "brender-archival",
+          "target": "retro-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "brender-archival",
+          "target": "studio-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
           "source": "build-color",
           "target": "buildlang",
           "label": "related",
@@ -533,6 +638,13 @@
           "label": "evidence",
           "status": "verified",
           "type": "evidence"
+        },
+        {
+          "source": "build-color",
+          "target": "retro-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
         },
         {
           "source": "build-color",
@@ -550,7 +662,21 @@
         },
         {
           "source": "buildlang",
+          "target": "brender-archival",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "buildlang",
           "target": "build-color",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "buildlang",
+          "target": "engine-revival",
           "label": "related",
           "status": "unavailable",
           "type": "related"
@@ -561,6 +687,13 @@
           "label": "evidence",
           "status": "verified",
           "type": "evidence"
+        },
+        {
+          "source": "buildlang",
+          "target": "retro-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
         },
         {
           "source": "buildlang",
@@ -640,8 +773,92 @@
           "type": "related"
         },
         {
+          "source": "engine-revival",
+          "target": "brender-archival",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "engine-revival",
+          "target": "buildlang",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "engine-revival",
+          "target": "evidence:engine-revival:engine-revival-release-v0-1-0",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "engine-revival",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "engine-revival",
+          "target": "gather",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "engine-revival",
+          "target": "index",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "engine-revival",
+          "target": "retro-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "engine-revival",
+          "target": "studio-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "brender-archival",
+          "label": "platform parent",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "brender-archival",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
           "source": "flywheel",
           "target": "crucible",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "engine-revival",
+          "label": "platform parent",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "engine-revival",
           "label": "related",
           "status": "unavailable",
           "type": "related"
@@ -704,6 +921,20 @@
         },
         {
           "source": "flywheel",
+          "target": "retro-engine",
+          "label": "platform parent",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "retro-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
           "target": "telos",
           "label": "related",
           "status": "unavailable",
@@ -746,7 +977,21 @@
         },
         {
           "source": "gather",
+          "target": "brender-archival",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "gather",
           "target": "crucible",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "gather",
+          "target": "engine-revival",
           "label": "related",
           "status": "unavailable",
           "type": "related"
@@ -768,6 +1013,20 @@
         {
           "source": "gather",
           "target": "index",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "index",
+          "target": "brender-archival",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "index",
+          "target": "engine-revival",
           "label": "related",
           "status": "unavailable",
           "type": "related"
@@ -1039,6 +1298,55 @@
           "type": "related"
         },
         {
+          "source": "retro-engine",
+          "target": "brender-archival",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "retro-engine",
+          "target": "build-color",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "retro-engine",
+          "target": "buildlang",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "retro-engine",
+          "target": "engine-revival",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "retro-engine",
+          "target": "evidence:retro-engine:retro-engine-site-source",
+          "label": "evidence",
+          "status": "verified",
+          "type": "evidence"
+        },
+        {
+          "source": "retro-engine",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "retro-engine",
+          "target": "studio-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
           "source": "secret-redact-io",
           "target": "agent-hook-pack",
           "label": "related",
@@ -1068,6 +1376,13 @@
         },
         {
           "source": "studio-engine",
+          "target": "brender-archival",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "studio-engine",
           "target": "build-color",
           "label": "related",
           "status": "unavailable",
@@ -1082,10 +1397,24 @@
         },
         {
           "source": "studio-engine",
+          "target": "engine-revival",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "studio-engine",
           "target": "evidence:studio-engine:studio-engine-public-source",
           "label": "evidence",
           "status": "verified",
           "type": "evidence"
+        },
+        {
+          "source": "studio-engine",
+          "target": "retro-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
         },
         {
           "source": "studio-engine",

@@ -11,18 +11,18 @@
     "sortMode": "stable-public-keys"
   },
   "inputs": {
-    "articleSha256": "7f0e41474c67eb54de0231fe895145fa38802bda4d4ad8548a6b3f8bcc1011c5",
-    "claimsSha256": "62450878aa45325a59ea859f12d43a3b0b653c7d79f359dc27509de01ced48b6",
-    "figuresSha256": "11e85ff0a7eaecefe0261180ac4bd110eb2aa5d6ae800e01b72796342360620a"
+    "articleSha256": "7cac45d8f2b9d379d48bb645b9bd25e903b9fa44b879aa5f0719576d1faff103",
+    "claimsSha256": "e1aec85a1b72478dc9d7c51658babf5d4d714433a884fb8cc1255ef4163229c8",
+    "figuresSha256": "834b21a28e113dc8c8b3977003779773fef703adc2b8ca08509154e9cf05e53c"
   },
   "outputs": [
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/claims.json",
-      "sha256": "b6f602a0fc6dadb48ca039a35dc0a2d650af3981f715a71d76f42d2073e171c5"
+      "sha256": "dd531a50cf37f3427ed2678178040ea499ebbcf6e0b27556556f763413070cbf"
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/index.html",
-      "sha256": "8ff51eaf5428ffa5cdd6566ed2663d2f043d080099a841cf324c1854fbd2563e"
+      "sha256": "b6a8710e1fcb7898dc3b171fb71eb7733d0558bcec7d6d78f8fb44a07137fbb9"
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/publication.json",
@@ -34,7 +34,7 @@
     },
     {
       "path": "figures/claim-provenance-panel.html",
-      "sha256": "e6562dda10f385a24603807fd7c45e7db1a881f6c15afe6074905e71dbf7b096"
+      "sha256": "32d03cebfd8d59164d88827e7719fe30c33215de0d02c408464f63a8dc607c25"
     },
     {
       "path": "figures/claim-provenance-panel.json",
@@ -42,11 +42,11 @@
     },
     {
       "path": "figures/claim-provenance-panel.svg",
-      "sha256": "018d916f26dfdaeac5e5e5d6d4caa201d1fc8599f84ad3806872cbd6e7972a08"
+      "sha256": "b40801577b8c09a963aa3f7e093380c46a1beb86e658d04723b656c03fed85fa"
     },
     {
       "path": "figures/control-boundary-flow.html",
-      "sha256": "6ffd2f88d56990676ba9861054ace702e19ea3a6964f0d5fbf7568dad03cd623"
+      "sha256": "c5b1e957f7728230d23bf78923bff9698c98b03b60bfd6a89aaaacf7843bd997"
     },
     {
       "path": "figures/control-boundary-flow.json",
@@ -54,23 +54,35 @@
     },
     {
       "path": "figures/control-boundary-flow.svg",
-      "sha256": "8d0483c5128661ea2efaf01c6d0e12eba53a9e3edc7ecc768382fc1f7b3a0587"
+      "sha256": "ae1aff755e829763637ae7579b1c3edc2a9c9786f6760b4696b0cbb5abfab887"
     },
     {
       "path": "figures/incident-multilane-timeline.html",
-      "sha256": "c65d0892d60fd1d9d43c724f7938b86e701b2519680f4c40d1a9669ffd05d1e9"
+      "sha256": "c1a6d4f007781ac70cb65ab033ec0768530f2e9192ce088eee7ebb002c4a1c92"
     },
     {
       "path": "figures/incident-multilane-timeline.json",
-      "sha256": "0ac6d01af6b568c113d7e44f44f406cc78367935c75baac1557e925afc0dd4a1"
+      "sha256": "b9fc4d150ee98330ea84af321934d1d088bfe98ba6dab69a17a0311d7983febc"
     },
     {
       "path": "figures/incident-multilane-timeline.svg",
-      "sha256": "c083551ef9a586e443115f172fb14fbb1c13d5743003f3a856feb5fac6fd3cc1"
+      "sha256": "67804b517945bc573e07f0cbec8a6192ca574b8cda1fab4808075e5db564dd6b"
+    },
+    {
+      "path": "figures/motive-sample-nonexclusive.html",
+      "sha256": "cd2d820d64e497c896c853b474010205004b63592a0e9307a79a1532fe57aede"
+    },
+    {
+      "path": "figures/motive-sample-nonexclusive.json",
+      "sha256": "23d8f3815887f6322b2020bf494b48d0b7ba48f7b6feeb3b69baaacfacdb94a4"
+    },
+    {
+      "path": "figures/motive-sample-nonexclusive.svg",
+      "sha256": "0f34fb5d134a2ae2eefe4b9bcc93e5cd6fc41b31d78f89a4a2c7db6022b16690"
     },
     {
       "path": "figures/recovered-actions-by-day.html",
-      "sha256": "53046b5199e5c94c251295ef7f1360b20d9ab99de3de56b40a1c8a6ec4f07833"
+      "sha256": "3d6d9fca39fd654d4213b2758d24f415bd95f0020f9f22fbc731961bfc9fdc48"
     },
     {
       "path": "figures/recovered-actions-by-day.json",
@@ -78,11 +90,11 @@
     },
     {
       "path": "figures/recovered-actions-by-day.svg",
-      "sha256": "ccc1e5c731a36047b0fa6f24aa496ca98c74863dfc38061c05e4f9b4c651c1a4"
+      "sha256": "597398519896ab71e3d8756727dc83f8894b80690b1a53c74472f82bae0755ba"
     },
     {
       "path": "figures/source-scope-matrix.html",
-      "sha256": "88778ead4fdfe6f35d7b1673fc58c6e9af780ef8760dd37ede85c528d6b3d39a"
+      "sha256": "5e05ea72cb0ba2e2b4d243dd1135cc3f13a1415cd5c761fa335d87b003816bfa"
     },
     {
       "path": "figures/source-scope-matrix.json",
@@ -90,11 +102,11 @@
     },
     {
       "path": "figures/source-scope-matrix.svg",
-      "sha256": "abf1a407e62bef3ed6b08228bfaf1f0b9fe0dc9fe5b6064f3cbe621c2b7ede61"
+      "sha256": "6b69877d626ca44bae0b1dc000de0ad50a13e352b05dfcd1682abded976e6ee8"
     },
     {
       "path": "figures/task-overrepresentation.html",
-      "sha256": "24ae308a6bf167d2f62821b4cb38fd3d07280cab04d113de9d74fcec05692435"
+      "sha256": "49c4f1c422092c6dfb2a6e4b3889a706c4dc3dfe92a9b4193c3b64180168c4d5"
     },
     {
       "path": "figures/task-overrepresentation.json",
@@ -102,7 +114,7 @@
     },
     {
       "path": "figures/task-overrepresentation.svg",
-      "sha256": "7eb7b4b38adddeccdffd09754dbdbec37384b70084e2b3a434e7c7d7ab78f82d"
+      "sha256": "af1fbf4e68000d97aa294c98846216af4a8d1749734de25141de8ed802c36590"
     }
   ]
 }

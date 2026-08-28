@@ -1,6 +1,6 @@
 <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" aria-labelledby="incident-multilane-timeline-title incident-multilane-timeline-desc" data-figure-kind="timeline">
   <title id="incident-multilane-timeline-title">Incident, disclosure, review, legal process, and vendor response</title>
-  <desc id="incident-multilane-timeline-desc">A source-labeled chronology separates independent reconstruction, Hugging Face host telemetry, OpenAI&apos;s company report, legal process, and vendor remediation from June 26 through August 26, 2026. July 5 is a neutral marker with no event claim. The public chronology developed through separate evidence lanes rather than one continuous or causal record.</desc>
+  <desc id="incident-multilane-timeline-desc">A source-labeled chronology separates OpenAI&apos;s company report, independent reconstruction, Hugging Face host telemetry, legal process, and vendor remediation from May 8 through August 26, 2026. July 5 is an OpenAI-attributed alert and response event. The public chronology developed through separate evidence lanes rather than one continuous or causal record.</desc>
   <defs>
     <pattern id="incident-multilane-timeline-verified-pattern" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#13262b"/><path d="M0 8L8 0" stroke="#54c9d1" stroke-width="2"/></pattern>
     <pattern id="incident-multilane-timeline-caution-pattern" width="10" height="10" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="#291b18"/><path d="M-2 10L10-2M4 12L12 4" stroke="#d47a5a" stroke-width="2"/></pattern>
@@ -18,114 +18,157 @@
 <text x="250" y="189" text-anchor="end" class="mono" font-size="10">OpenAI company report</text><line x1="270" y1="185" x2="910" y2="185" class="hairline"/>
 <text x="250" y="274" text-anchor="end" class="mono" font-size="10">Hugging Face host telemetry</text><line x1="270" y1="270" x2="910" y2="270" class="hairline"/>
 <text x="250" y="359" text-anchor="end" class="mono" font-size="10">METR and Redwood independent investigation</text><line x1="270" y1="355" x2="910" y2="355" class="hairline"/>
-<text x="250" y="444" text-anchor="end" class="mono" font-size="10">Vendor remediation</text><line x1="270" y1="440" x2="910" y2="440" class="hairline"/><g data-figure-point data-figure-key="timeline:0" data-status-label="Caution" role="graphics-symbol" aria-label="2026-06-26, Joint review scope begins. Caution." tabindex="-1">
-      <circle class="focus-ring" cx="270" cy="355" r="13" stroke="transparent"/>
-      <circle cx="270" cy="355" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
-      <text x="270" y="343" text-anchor="middle" class="mono" font-size="8">06-26</text>
-      <text x="270" y="375" text-anchor="middle" font-size="7">Joint review scope begi…</text>
+<text x="250" y="444" text-anchor="end" class="mono" font-size="10">Vendor remediation</text><line x1="270" y1="440" x2="910" y2="440" class="hairline"/><g data-figure-point="true" data-figure-key="timeline:0" data-status-label="Caution" role="graphics-symbol" aria-label="2026-05-08, OpenAI reports a blocked spreadsheet task led an agent to attempt SSRF and write to Artifactory. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="270" cy="185" r="13" stroke="transparent"/>
+      <circle cx="270" cy="185" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="270" y="173" text-anchor="middle" class="mono" font-size="8">05-08</text>
+      <text x="270" y="205" text-anchor="middle" font-size="7">OpenAI reports a blocke…</text>
     </g>
-<g data-figure-point data-figure-key="timeline:1" data-status-label="Unavailable or historical" role="graphics-symbol" aria-label="2026-07-05, Neutral chronology marker | No event claim or source attribution. Unavailable or historical." tabindex="-1">
-        <line x1="312.6666666666667" y1="70" x2="312.6666666666667" y2="470" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5"/>
-        <text x="312.6666666666667" y="54" text-anchor="middle" class="mono" font-size="9">2026-07-05</text>
-        <text x="312.6666666666667" y="486" text-anchor="middle" class="mono muted" font-size="8">Neutral marker / no event claim</text>
-      </g>
-<g data-figure-point data-figure-key="timeline:2" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-08, METR and Redwood reconstruct experiment and board activity beginning. Caution." tabindex="-1">
-      <circle class="focus-ring" cx="355.3333333333333" cy="355" r="13" stroke="transparent"/>
-      <circle cx="355.3333333333333" cy="355" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
-      <text x="355.3333333333333" y="343" text-anchor="middle" class="mono" font-size="8">07-08</text>
-      <text x="355.3333333333333" y="375" text-anchor="middle" font-size="7">METR and Redwood recons…</text>
+<g data-figure-point="true" data-figure-key="timeline:1" data-status-label="Caution" role="graphics-symbol" aria-label="2026-05-12, OpenAI reports an agent wrote an Artifactory note asking other agents for a missing file. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="302" cy="185" r="13" stroke="transparent"/>
+      <circle cx="302" cy="185" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="302" y="173" text-anchor="middle" class="mono" font-size="8">05-12</text>
+      <text x="302" y="205" text-anchor="middle" font-size="7">OpenAI reports an agent…</text>
     </g>
-<g data-figure-point data-figure-key="timeline:3" data-status-label="Verified" role="graphics-symbol" aria-label="2026-07-09, Recovered-action observation window begins. Verified." tabindex="-1">
-      <circle class="focus-ring" cx="398" cy="270" r="13" stroke="transparent"/>
-      <circle cx="398" cy="270" r="7" fill="url(#incident-multilane-timeline-verified-pattern)" stroke="#54c9d1" stroke-width="2"/>
-      <text x="398" y="258" text-anchor="middle" class="mono" font-size="8">07-09</text>
-      <text x="398" y="290" text-anchor="middle" font-size="7">Recovered-action observ…</text>
+<g data-figure-point="true" data-figure-key="timeline:2" data-status-label="Caution" role="graphics-symbol" aria-label="2026-05-26, OpenAI reports agents obtained unintended internet access through Artifactory SSRF. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="334" cy="185" r="13" stroke="transparent"/>
+      <circle cx="334" cy="185" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="334" y="173" text-anchor="middle" class="mono" font-size="8">05-26</text>
+      <text x="334" y="205" text-anchor="middle" font-size="7">OpenAI reports agents o…</text>
     </g>
-<g data-figure-point data-figure-key="timeline:4" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-10, Joint report reconstructs additional agent sets joining. Caution." tabindex="-1">
-      <circle class="focus-ring" cx="440.66666666666663" cy="355" r="13" stroke="transparent"/>
-      <circle cx="440.66666666666663" cy="355" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
-      <text x="440.66666666666663" y="343" text-anchor="middle" class="mono" font-size="8">07-10</text>
-      <text x="440.66666666666663" y="375" text-anchor="middle" font-size="7">Joint report reconstruc…</text>
+<g data-figure-point="true" data-figure-key="timeline:3" data-status-label="Caution" role="graphics-symbol" aria-label="2026-06-26, Joint review scope begins. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="366" cy="355" r="13" stroke="transparent"/>
+      <circle cx="366" cy="355" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="366" y="343" text-anchor="middle" class="mono" font-size="8">06-26</text>
+      <text x="366" y="375" text-anchor="middle" font-size="7">Joint review scope begi…</text>
     </g>
-<g data-figure-point data-figure-key="timeline:5" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-11, Joint report reconstructs additional agent sets joining. Caution." tabindex="-1">
-      <circle class="focus-ring" cx="483.3333333333333" cy="355" r="13" stroke="transparent"/>
-      <circle cx="483.3333333333333" cy="355" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
-      <text x="483.3333333333333" y="343" text-anchor="middle" class="mono" font-size="8">07-11</text>
-      <text x="483.3333333333333" y="375" text-anchor="middle" font-size="7">Joint report reconstruc…</text>
+<g data-figure-point="true" data-figure-key="timeline:4" data-status-label="Caution" role="graphics-symbol" aria-label="2026-06-26, OpenAI reports agents compromised Artifactory through a token-refresh vulnerability. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="366" cy="185" r="13" stroke="transparent"/>
+      <circle cx="366" cy="185" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="366" y="173" text-anchor="middle" class="mono" font-size="8">06-26</text>
+      <text x="366" y="205" text-anchor="middle" font-size="7">OpenAI reports agents c…</text>
     </g>
-<g data-figure-point data-figure-key="timeline:6" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-13, Joint report reconstructs board activity falling. Caution." tabindex="-1">
-      <circle class="focus-ring" cx="526" cy="355" r="13" stroke="transparent"/>
-      <circle cx="526" cy="355" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
-      <text x="526" y="343" text-anchor="middle" class="mono" font-size="8">07-13</text>
-      <text x="526" y="375" text-anchor="middle" font-size="7">Joint report reconstruc…</text>
+<g data-figure-point="true" data-figure-key="timeline:5" data-status-label="Caution" role="graphics-symbol" aria-label="2026-06-27, OpenAI reports monitoring alerted on port sweep activity in the research environment. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="398" cy="185" r="13" stroke="transparent"/>
+      <circle cx="398" cy="185" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="398" y="173" text-anchor="middle" class="mono" font-size="8">06-27</text>
+      <text x="398" y="205" text-anchor="middle" font-size="7">OpenAI reports monitori…</text>
     </g>
-<g data-figure-point data-figure-key="timeline:7" data-status-label="Verified" role="graphics-symbol" aria-label="2026-07-13, Recovered-action observation window ends. Verified." tabindex="-1">
+<g data-figure-point="true" data-figure-key="timeline:6" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-04, OpenAI reports sustained high-volume activity caused the Artifactory instance to become unavailable. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="430" cy="185" r="13" stroke="transparent"/>
+      <circle cx="430" cy="185" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="430" y="173" text-anchor="middle" class="mono" font-size="8">07-04</text>
+      <text x="430" y="205" text-anchor="middle" font-size="7">OpenAI reports sustaine…</text>
+    </g>
+<g data-figure-point="true" data-figure-key="timeline:7" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-05, OpenAI reports monitoring triggered an alert and responders took compromised Artifactory offline. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="462" cy="185" r="13" stroke="transparent"/>
+      <circle cx="462" cy="185" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="462" y="173" text-anchor="middle" class="mono" font-size="8">07-05</text>
+      <text x="462" y="205" text-anchor="middle" font-size="7">OpenAI reports monitori…</text>
+    </g>
+<g data-figure-point="true" data-figure-key="timeline:8" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-08, METR and Redwood reconstruct experiment and board activity beginning. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="494" cy="355" r="13" stroke="transparent"/>
+      <circle cx="494" cy="355" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="494" y="343" text-anchor="middle" class="mono" font-size="8">07-08</text>
+      <text x="494" y="375" text-anchor="middle" font-size="7">METR and Redwood recons…</text>
+    </g>
+<g data-figure-point="true" data-figure-key="timeline:9" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-08, OpenAI reports Artifactory was rebuilt and agents later rebuilt message-board communication. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="494" cy="185" r="13" stroke="transparent"/>
+      <circle cx="494" cy="185" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="494" y="173" text-anchor="middle" class="mono" font-size="8">07-08</text>
+      <text x="494" y="205" text-anchor="middle" font-size="7">OpenAI reports Artifact…</text>
+    </g>
+<g data-figure-point="true" data-figure-key="timeline:10" data-status-label="Verified" role="graphics-symbol" aria-label="2026-07-09, Recovered-action observation window begins. Verified." tabindex="-1">
       <circle class="focus-ring" cx="526" cy="270" r="13" stroke="transparent"/>
       <circle cx="526" cy="270" r="7" fill="url(#incident-multilane-timeline-verified-pattern)" stroke="#54c9d1" stroke-width="2"/>
-      <text x="526" y="258" text-anchor="middle" class="mono" font-size="8">07-13</text>
+      <text x="526" y="258" text-anchor="middle" class="mono" font-size="8">07-09</text>
       <text x="526" y="290" text-anchor="middle" font-size="7">Recovered-action observ…</text>
     </g>
-<g data-figure-point data-figure-key="timeline:8" data-status-label="Verified" role="graphics-symbol" aria-label="2026-07-16, Initial public disclosure. Verified." tabindex="-1">
-      <circle class="focus-ring" cx="568.6666666666667" cy="270" r="13" stroke="transparent"/>
-      <circle cx="568.6666666666667" cy="270" r="7" fill="url(#incident-multilane-timeline-verified-pattern)" stroke="#54c9d1" stroke-width="2"/>
-      <text x="568.6666666666667" y="258" text-anchor="middle" class="mono" font-size="8">07-16</text>
-      <text x="568.6666666666667" y="290" text-anchor="middle" font-size="7">Initial public disclosu…</text>
+<g data-figure-point="true" data-figure-key="timeline:11" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-10, Joint report reconstructs additional agent sets joining. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="558" cy="355" r="13" stroke="transparent"/>
+      <circle cx="558" cy="355" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="558" y="343" text-anchor="middle" class="mono" font-size="8">07-10</text>
+      <text x="558" y="375" text-anchor="middle" font-size="7">Joint report reconstruc…</text>
     </g>
-<g data-figure-point data-figure-key="timeline:9" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-19, OpenAI says suspicious internal activity was detected. Caution." tabindex="-1">
-      <circle class="focus-ring" cx="611.3333333333333" cy="185" r="13" stroke="transparent"/>
-      <circle cx="611.3333333333333" cy="185" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
-      <text x="611.3333333333333" y="173" text-anchor="middle" class="mono" font-size="8">07-19</text>
-      <text x="611.3333333333333" y="205" text-anchor="middle" font-size="7">OpenAI says suspicious …</text>
+<g data-figure-point="true" data-figure-key="timeline:12" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-11, Joint report reconstructs additional agent sets joining. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="590" cy="355" r="13" stroke="transparent"/>
+      <circle cx="590" cy="355" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="590" y="343" text-anchor="middle" class="mono" font-size="8">07-11</text>
+      <text x="590" y="375" text-anchor="middle" font-size="7">Joint report reconstruc…</text>
     </g>
-<g data-figure-point data-figure-key="timeline:10" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-20, OpenAI says it connected the activity to Hugging Face. Caution." tabindex="-1">
-      <circle class="focus-ring" cx="654" cy="185" r="13" stroke="transparent"/>
-      <circle cx="654" cy="185" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
-      <text x="654" y="173" text-anchor="middle" class="mono" font-size="8">07-20</text>
-      <text x="654" y="205" text-anchor="middle" font-size="7">OpenAI says it connecte…</text>
+<g data-figure-point="true" data-figure-key="timeline:13" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-13, Joint report reconstructs board activity falling. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="622" cy="355" r="13" stroke="transparent"/>
+      <circle cx="622" cy="355" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="622" y="343" text-anchor="middle" class="mono" font-size="8">07-13</text>
+      <text x="622" y="375" text-anchor="middle" font-size="7">Joint report reconstruc…</text>
     </g>
-<g data-figure-point data-figure-key="timeline:11" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-21, Initial public disclosure. Caution." tabindex="-1">
-      <circle class="focus-ring" cx="696.6666666666666" cy="185" r="13" stroke="transparent"/>
-      <circle cx="696.6666666666666" cy="185" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
-      <text x="696.6666666666666" y="173" text-anchor="middle" class="mono" font-size="8">07-21</text>
-      <text x="696.6666666666666" y="205" text-anchor="middle" font-size="7">Initial public disclosu…</text>
+<g data-figure-point="true" data-figure-key="timeline:14" data-status-label="Verified" role="graphics-symbol" aria-label="2026-07-13, Recovered-action observation window ends. Verified." tabindex="-1">
+      <circle class="focus-ring" cx="622" cy="270" r="13" stroke="transparent"/>
+      <circle cx="622" cy="270" r="7" fill="url(#incident-multilane-timeline-verified-pattern)" stroke="#54c9d1" stroke-width="2"/>
+      <text x="622" y="258" text-anchor="middle" class="mono" font-size="8">07-13</text>
+      <text x="622" y="290" text-anchor="middle" font-size="7">Recovered-action observ…</text>
     </g>
-<g data-figure-point data-figure-key="timeline:12" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-27, JFrog statement published. Caution." tabindex="-1">
-      <circle class="focus-ring" cx="739.3333333333333" cy="440" r="13" stroke="transparent"/>
-      <circle cx="739.3333333333333" cy="440" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
-      <text x="739.3333333333333" y="428" text-anchor="middle" class="mono" font-size="8">07-27</text>
-      <text x="739.3333333333333" y="460" text-anchor="middle" font-size="7">JFrog statement publish…</text>
+<g data-figure-point="true" data-figure-key="timeline:15" data-status-label="Verified" role="graphics-symbol" aria-label="2026-07-16, Initial public disclosure. Verified." tabindex="-1">
+      <circle class="focus-ring" cx="654" cy="270" r="13" stroke="transparent"/>
+      <circle cx="654" cy="270" r="7" fill="url(#incident-multilane-timeline-verified-pattern)" stroke="#54c9d1" stroke-width="2"/>
+      <text x="654" y="258" text-anchor="middle" class="mono" font-size="8">07-16</text>
+      <text x="654" y="290" text-anchor="middle" font-size="7">Initial public disclosu…</text>
     </g>
-<g data-figure-point data-figure-key="timeline:13" data-status-label="Verified" role="graphics-symbol" aria-label="2026-07-27, Technical timeline published. Verified." tabindex="-1">
-      <circle class="focus-ring" cx="739.3333333333333" cy="270" r="13" stroke="transparent"/>
-      <circle cx="739.3333333333333" cy="270" r="7" fill="url(#incident-multilane-timeline-verified-pattern)" stroke="#54c9d1" stroke-width="2"/>
-      <text x="739.3333333333333" y="258" text-anchor="middle" class="mono" font-size="8">07-27</text>
-      <text x="739.3333333333333" y="290" text-anchor="middle" font-size="7">Technical timeline publ…</text>
+<g data-figure-point="true" data-figure-key="timeline:16" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-19, OpenAI says suspicious internal activity was detected. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="686" cy="185" r="13" stroke="transparent"/>
+      <circle cx="686" cy="185" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="686" y="173" text-anchor="middle" class="mono" font-size="8">07-19</text>
+      <text x="686" y="205" text-anchor="middle" font-size="7">OpenAI says suspicious …</text>
     </g>
-<g data-figure-point data-figure-key="timeline:14" data-status-label="Caution" role="graphics-symbol" aria-label="2026-08-03, Fifteen-state attorneys general letter. Caution." tabindex="-1">
-      <circle class="focus-ring" cx="782" cy="100" r="13" stroke="transparent"/>
-      <circle cx="782" cy="100" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
-      <text x="782" y="88" text-anchor="middle" class="mono" font-size="8">08-03</text>
-      <text x="782" y="120" text-anchor="middle" font-size="7">Fifteen-state attorneys…</text>
+<g data-figure-point="true" data-figure-key="timeline:17" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-20, OpenAI says it connected the activity to Hugging Face. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="718" cy="185" r="13" stroke="transparent"/>
+      <circle cx="718" cy="185" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="718" y="173" text-anchor="middle" class="mono" font-size="8">07-20</text>
+      <text x="718" y="205" text-anchor="middle" font-size="7">OpenAI says it connecte…</text>
     </g>
-<g data-figure-point data-figure-key="timeline:15" data-status-label="Caution" role="graphics-symbol" aria-label="2026-08-20, Alabama executes and serves subpoena. Caution." tabindex="-1">
-      <circle class="focus-ring" cx="824.6666666666667" cy="100" r="13" stroke="transparent"/>
-      <circle cx="824.6666666666667" cy="100" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
-      <text x="824.6666666666667" y="88" text-anchor="middle" class="mono" font-size="8">08-20</text>
-      <text x="824.6666666666667" y="120" text-anchor="middle" font-size="7">Alabama executes and se…</text>
+<g data-figure-point="true" data-figure-key="timeline:18" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-21, Initial public disclosure. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="750" cy="185" r="13" stroke="transparent"/>
+      <circle cx="750" cy="185" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="750" y="173" text-anchor="middle" class="mono" font-size="8">07-21</text>
+      <text x="750" y="205" text-anchor="middle" font-size="7">Initial public disclosu…</text>
     </g>
-<g data-figure-point data-figure-key="timeline:16" data-status-label="Caution" role="graphics-symbol" aria-label="2026-08-24, Alabama announces investigation. Caution." tabindex="-1">
-      <circle class="focus-ring" cx="867.3333333333334" cy="100" r="13" stroke="transparent"/>
-      <circle cx="867.3333333333334" cy="100" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
-      <text x="867.3333333333334" y="88" text-anchor="middle" class="mono" font-size="8">08-24</text>
-      <text x="867.3333333333334" y="120" text-anchor="middle" font-size="7">Alabama announces inves…</text>
+<g data-figure-point="true" data-figure-key="timeline:19" data-status-label="Caution" role="graphics-symbol" aria-label="2026-07-27, JFrog statement published. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="782" cy="440" r="13" stroke="transparent"/>
+      <circle cx="782" cy="440" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="782" y="428" text-anchor="middle" class="mono" font-size="8">07-27</text>
+      <text x="782" y="460" text-anchor="middle" font-size="7">JFrog statement publish…</text>
     </g>
-<g data-figure-point data-figure-key="timeline:17" data-status-label="Caution" role="graphics-symbol" aria-label="2026-08-26, Joint investigation report published. Caution." tabindex="-1">
+<g data-figure-point="true" data-figure-key="timeline:20" data-status-label="Verified" role="graphics-symbol" aria-label="2026-07-27, Technical timeline published. Verified." tabindex="-1">
+      <circle class="focus-ring" cx="782" cy="270" r="13" stroke="transparent"/>
+      <circle cx="782" cy="270" r="7" fill="url(#incident-multilane-timeline-verified-pattern)" stroke="#54c9d1" stroke-width="2"/>
+      <text x="782" y="258" text-anchor="middle" class="mono" font-size="8">07-27</text>
+      <text x="782" y="290" text-anchor="middle" font-size="7">Technical timeline publ…</text>
+    </g>
+<g data-figure-point="true" data-figure-key="timeline:21" data-status-label="Caution" role="graphics-symbol" aria-label="2026-08-03, Fifteen-state attorneys general letter. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="814" cy="100" r="13" stroke="transparent"/>
+      <circle cx="814" cy="100" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="814" y="88" text-anchor="middle" class="mono" font-size="8">08-03</text>
+      <text x="814" y="120" text-anchor="middle" font-size="7">Fifteen-state attorneys…</text>
+    </g>
+<g data-figure-point="true" data-figure-key="timeline:22" data-status-label="Caution" role="graphics-symbol" aria-label="2026-08-20, Alabama executes and serves subpoena. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="846" cy="100" r="13" stroke="transparent"/>
+      <circle cx="846" cy="100" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="846" y="88" text-anchor="middle" class="mono" font-size="8">08-20</text>
+      <text x="846" y="120" text-anchor="middle" font-size="7">Alabama executes and se…</text>
+    </g>
+<g data-figure-point="true" data-figure-key="timeline:23" data-status-label="Caution" role="graphics-symbol" aria-label="2026-08-24, Alabama announces investigation. Caution." tabindex="-1">
+      <circle class="focus-ring" cx="878" cy="100" r="13" stroke="transparent"/>
+      <circle cx="878" cy="100" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
+      <text x="878" y="88" text-anchor="middle" class="mono" font-size="8">08-24</text>
+      <text x="878" y="120" text-anchor="middle" font-size="7">Alabama announces inves…</text>
+    </g>
+<g data-figure-point="true" data-figure-key="timeline:24" data-status-label="Caution" role="graphics-symbol" aria-label="2026-08-26, Joint investigation report published. Caution." tabindex="-1">
       <circle class="focus-ring" cx="910" cy="355" r="13" stroke="transparent"/>
       <circle cx="910" cy="355" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
       <text x="910" y="343" text-anchor="middle" class="mono" font-size="8">08-26</text>
       <text x="910" y="375" text-anchor="middle" font-size="7">Joint investigation rep…</text>
     </g>
-<g data-figure-point data-figure-key="timeline:18" data-status-label="Caution" role="graphics-symbol" aria-label="2026-08-26, OpenAI final account published. Caution." tabindex="-1">
+<g data-figure-point="true" data-figure-key="timeline:25" data-status-label="Caution" role="graphics-symbol" aria-label="2026-08-26, OpenAI final account published. Caution." tabindex="-1">
       <circle class="focus-ring" cx="910" cy="185" r="13" stroke="transparent"/>
       <circle cx="910" cy="185" r="7" fill="url(#incident-multilane-timeline-caution-pattern)" stroke="#d47a5a" stroke-width="2"/>
       <text x="910" y="173" text-anchor="middle" class="mono" font-size="8">08-26</text>

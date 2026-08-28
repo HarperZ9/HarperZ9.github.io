@@ -101,7 +101,10 @@
         "learn",
         "relay",
         "plexus",
-        "mneme"
+        "mneme",
+        "retro-engine",
+        "engine-revival",
+        "brender-archival"
       ],
       "lastVerified": "2026-08-27"
     },
@@ -224,7 +227,9 @@
       "related": [
         "flywheel",
         "forum",
-        "gather"
+        "gather",
+        "engine-revival",
+        "brender-archival"
       ],
       "lastVerified": "2026-08-27"
     },
@@ -284,7 +289,9 @@
       "related": [
         "flywheel",
         "index",
-        "crucible"
+        "crucible",
+        "engine-revival",
+        "brender-archival"
       ],
       "lastVerified": "2026-08-27"
     },
@@ -532,7 +539,10 @@
       "dependencies": [],
       "related": [
         "build-color",
-        "studio-engine"
+        "studio-engine",
+        "retro-engine",
+        "engine-revival",
+        "brender-archival"
       ],
       "lastVerified": "2026-08-27"
     },
@@ -833,7 +843,10 @@
       "related": [
         "telos",
         "build-color",
-        "buildlang"
+        "buildlang",
+        "retro-engine",
+        "engine-revival",
+        "brender-archival"
       ],
       "lastVerified": "2026-08-27"
     },
@@ -890,7 +903,212 @@
       "related": [
         "studio-engine",
         "telos",
-        "buildlang"
+        "buildlang",
+        "retro-engine"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "retro-engine",
+      "name": "Retro Engine",
+      "purpose": "Serve as the Retro Systems Lab play pillar: an interactive browser studio for owned pixel, palette, shader, and CRT experiments.",
+      "useCases": [
+        "play",
+        "browser pixel studio",
+        "deterministic shader capture"
+      ],
+      "href": "retro.html",
+      "sourceHref": "https://github.com/HarperZ9/telos-v2",
+      "domains": [
+        "graphics-media",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "graphics engineers",
+        "software engineers",
+        "creative technologists"
+      ],
+      "deploymentContexts": [
+        "creative production pipelines",
+        "local development workspaces",
+        "static browser surfaces"
+      ],
+      "maturity": "active",
+      "placement": "catalog-only",
+      "accessMode": "run",
+      "entryCommand": "Open retro.html in a browser.",
+      "verificationCommand": "npm run routes:check; npm run systems:check; npm run system-pages:check",
+      "evidence": [
+        {
+          "id": "retro-engine-site-source",
+          "type": "source",
+          "label": "Retro Engine owned site source",
+          "href": "https://github.com/HarperZ9/telos-v2",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The owned public site source contains the browser Retro Engine route and renderer assets; this is not BRender evidence."
+        }
+      ],
+      "limitations": [
+        "Retro Engine output is generic creative output and does not prove any BRender restoration fact.",
+        "Browser, GPU, and font rendering can differ by host, so captures are bounded media evidence rather than performance claims."
+      ],
+      "boundary": "Use only owned or licensed input media and do not present generated retro visuals as archival proof for another repository.",
+      "inputs": [
+        "owned images or browser-rendered frames",
+        "palette and shader settings"
+      ],
+      "outputs": [
+        "interactive browser render",
+        "static capture with provenance"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "engine-revival",
+        "brender-archival",
+        "studio-engine",
+        "buildlang",
+        "build-color"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "engine-revival",
+      "name": "Engine Revival",
+      "purpose": "Serve as the Retro Systems Lab preserve pillar: a public MIT evidence spine for historical engine and rendering-library revival records.",
+      "useCases": [
+        "preserve",
+        "repository evidence refresh",
+        "restoration boundary review"
+      ],
+      "href": "engine-revival.html",
+      "sourceHref": "https://github.com/HarperZ9/engine-revival",
+      "domains": [
+        "graphics-media",
+        "evaluation-verification",
+        "research-education",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "graphics engineers",
+        "evaluation engineers",
+        "researchers and educators",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "review and CI lanes",
+        "research and learning environments",
+        "creative production pipelines"
+      ],
+      "maturity": "shipped",
+      "placement": "catalog-only",
+      "accessMode": "install",
+      "entryCommand": "python -m pip install -e \".[test]\"; engine-revival seed; engine-revival validate",
+      "verificationCommand": "engine-revival audit-public; python -m pytest",
+      "evidence": [
+        {
+          "id": "engine-revival-release-v0-1-0",
+          "type": "release",
+          "label": "Engine Revival v0.1.0",
+          "href": "https://github.com/HarperZ9/engine-revival/releases/tag/v0.1.0",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The public main and v0.1.0 release resolve to 0af6d527860a63c418b5775dc0efe9ba89557604. Engine Revival is MIT; it records local 12-target materializer scope separately from imported external 21-target BRender evidence."
+        }
+      ],
+      "limitations": [
+        "Engine Revival local 12-target materializer scope is public metadata and scaffold; the verified external 21-target BRender boundary comes from BRender Archival v0.1.1 evidence.",
+        "The page preserves evidence boundaries and does not claim product parity, adoption, performance, legal completeness, or vendored upstream source."
+      ],
+      "boundary": "Publish only repository metadata and restoration facts that have current first-party receipts, and keep imported AGPL-covered BRender media and receipts distinct from MIT repository code.",
+      "inputs": [
+        "public repository manifests",
+        "license and recipe review receipts",
+        "imported BRender release evidence"
+      ],
+      "outputs": [
+        "preservation status page",
+        "verified evidence manifest"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "retro-engine",
+        "brender-archival",
+        "studio-engine",
+        "buildlang",
+        "gather",
+        "index"
+      ],
+      "lastVerified": "2026-08-27"
+    },
+    {
+      "id": "brender-archival",
+      "name": "BRender Archival",
+      "purpose": "Serve as the Retro Systems Lab verify pillar: a specific BRender restoration surface that stays separate from generic Retro Engine media.",
+      "useCases": [
+        "verify",
+        "specific restoration evidence",
+        "archival boundary review"
+      ],
+      "href": "brender-archival.html",
+      "sourceHref": "https://github.com/HarperZ9/brender-archival",
+      "domains": [
+        "graphics-media",
+        "evaluation-verification",
+        "research-education",
+        "developer-infrastructure"
+      ],
+      "audiences": [
+        "graphics engineers",
+        "evaluation engineers",
+        "researchers and educators",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "review and CI lanes",
+        "research and learning environments",
+        "creative production pipelines"
+      ],
+      "maturity": "shipped",
+      "placement": "catalog-only",
+      "accessMode": "install",
+      "entryCommand": "python -m pip install -e \".[test]\"; engine-revival seed; engine-revival validate",
+      "verificationCommand": "engine-revival audit-public; python -m pytest",
+      "evidence": [
+        {
+          "id": "brender-archival-release-v0-1-1",
+          "type": "release",
+          "label": "BRender Archival v0.1.1",
+          "href": "https://github.com/HarperZ9/brender-archival/releases/tag/v0.1.1",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The public main and v0.1.1 release resolve to 11b5a8d539e911a9c07991b751402a7d51bf1bde. The repo is AGPL-3.0-or-later, upstream BRender MIT is referenced not vendored, and 21/21 native CTest targets are recorded."
+        }
+      ],
+      "limitations": [
+        "Specific BRender restoration proof must come from BRender evidence, not from Retro Engine screenshots or generic retro visuals.",
+        "The release does not claim completed textured TIA output, x64 readiness, production readiness, adoption, endorsement, or vendored upstream source or assets."
+      ],
+      "boundary": "Keep BRender restoration evidence, Retro Engine play output, and Engine Revival preservation status distinct.",
+      "inputs": [
+        "BRender public repository evidence",
+        "restoration receipts and license notes"
+      ],
+      "outputs": [
+        "BRender archival status page",
+        "specific evidence boundary"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "retro-engine",
+        "engine-revival",
+        "studio-engine",
+        "buildlang",
+        "gather",
+        "index"
       ],
       "lastVerified": "2026-08-27"
     },

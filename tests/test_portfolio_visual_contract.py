@@ -44,13 +44,12 @@ def test_home_loads_the_react_shell() -> None:
 def test_noscript_fallback_is_a_complete_front_door() -> None:
     src = index_source()
     assert "<noscript>" in src
-    assert "Work with Zain Dana Harper" in src
+    assert "Flywheel is the primary public system" in src
     for href in (
         "/hire.html#engineering-path",
         "/hire.html#technical-operations-path",
         "/hire.html#public-service-field-path",
         "/resume.html",
-        "/portfolio.html",
         "/catalog.html",
         "/briefings/2026-08-26-openai-hugging-face-incident/",
         "/figures/source-scope-matrix.html",
@@ -63,19 +62,13 @@ def test_noscript_spans_hiring_capabilities_evidence_and_research() -> None:
     """The static fallback keeps the conversion path and public record usable."""
     src = index_source().lower()
     for value in (
-        "hiring routes",
-        "selected evidence",
-        "capability domains",
-        "agent systems",
-        "evaluation and verification",
-        "security and privacy",
-        "developer infrastructure",
-        "graphics and media",
-        "research and education",
-        "31 merged engineering changes",
-        "324 terminal-state cases",
-        "930,000+ nexusmods downloads",
-        "current research briefing",
+        "route -> verify -> receipt -> reuse",
+        "evidence atlas",
+        "current briefing",
+        "hiring and collaboration routes",
+        "engineering and evaluation",
+        "technical operations",
+        "public service, safety, and field operations",
     ):
         assert value in src
 

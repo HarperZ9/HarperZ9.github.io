@@ -13,8 +13,9 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-Btig5ajT.js",
-    "assets/index-CcR8Ey0G.css",
+    "assets/index-Dwp-qWEt.js",
+    "assets/index-ktAZgEPv.css",
+    "brender-archival.html",
     "briefings/2026-08-26-openai-hugging-face-incident/build.json",
     "briefings/2026-08-26-openai-hugging-face-incident/claims.json",
     "briefings/2026-08-26-openai-hugging-face-incident/figures.json",
@@ -41,6 +42,9 @@ RELEASE_PATHS = (
     "figures/incident-multilane-timeline.html",
     "figures/incident-multilane-timeline.json",
     "figures/incident-multilane-timeline.svg",
+    "figures/motive-sample-nonexclusive.html",
+    "figures/motive-sample-nonexclusive.json",
+    "figures/motive-sample-nonexclusive.svg",
     "figures/recovered-actions-by-day.html",
     "figures/recovered-actions-by-day.json",
     "figures/recovered-actions-by-day.svg",
@@ -54,9 +58,19 @@ RELEASE_PATHS = (
     "figures/task-overrepresentation.json",
     "figures/task-overrepresentation.svg",
     "hire.html",
+    "engine-revival.html",
+    "flywheel.html",
+    "img/og/brender-archival.png",
+    "img/og/engine-revival.png",
     "img/og/private-practice.png",
     "img/og/security-toolkit.png",
     "index.html",
+    "media/retro-systems-lab/evidence-manifest.json",
+    "media/retro-systems-lab/identity/brender-verify.svg",
+    "media/retro-systems-lab/identity/crossover.svg",
+    "media/retro-systems-lab/identity/engine-preserve.svg",
+    "media/retro-systems-lab/identity/retro-play.svg",
+    "media/retro-systems-lab/manifest.json",
     "private-practice.html",
     "security-toolkit.html",
     "security-tools.json",
@@ -64,9 +78,12 @@ RELEASE_PATHS = (
     "system/figure.js",
     "system/figure.test.mjs",
     "system/hire.css",
+    "system/home-art.js",
+    "system/retro-systems-lab.css",
     "system/routes.js",
     "system/systems.js",
     "system/systems.json",
+    "retro.html",
     "systems/behavior-transform.html",
     "systems/mneme.html",
     "systems/plexus.html",
@@ -74,12 +91,13 @@ RELEASE_PATHS = (
     "systems/studio-engine.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "cb5ab1f5b60ca6b8bf8a0eec437875b32611ecc7d4b228f60d2c689dff21676e"
+REVIEWED_RELEASE_SHA256 = "2477e90158e0a6aa6d537954cd62c0ff85ac1249e259ae0a3c8b256e8ef66b9d"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
     "control-boundary-flow",
     "incident-multilane-timeline",
+    "motive-sample-nonexclusive",
     "recovered-actions-by-day",
     "source-scope-matrix",
     "task-overrepresentation",
@@ -143,8 +161,8 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     source = _text("index.html")
     obsolete_js = "index-B_" + "tbCD5Q.js"
     obsolete_css = "index-D3" + "HRo6Wc.css"
-    assert 'src="/assets/index-Btig5ajT.js"' in source
-    assert 'href="/assets/index-CcR8Ey0G.css"' in source
+    assert 'src="/assets/index-Dwp-qWEt.js"' in source
+    assert 'href="/assets/index-ktAZgEPv.css"' in source
     assert obsolete_js not in source
     assert obsolete_css not in source
     assert not (ROOT / "assets" / obsolete_js).exists()
