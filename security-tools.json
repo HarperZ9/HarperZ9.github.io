@@ -5,7 +5,7 @@
     {
       "slug": "emet",
       "name": "EMET",
-      "purpose": "Verify whether bytes reaching a model, reviewer, or pipeline still match their claimed source; anchor, compare, neutralize embedded authority, audit drift, and mint portable closed-verdict receipts across four implementations.",
+      "purpose": "EMET verifies whether bytes reaching a model, reviewer, or pipeline still match their claimed source. It anchors and compares content, neutralizes embedded authority, audits drift, and mints portable closed-verdict receipts across four implementations.",
       "maturity": "shipped",
       "source": "https://github.com/HarperZ9/emet",
       "installOrEntry": "pip install emet",
@@ -20,7 +20,7 @@
     {
       "slug": "proof-surface",
       "name": "Proof Surface",
-      "purpose": "Proof Surface is a standard-library Python contract and validation library for authorization receipts, delegation chains, evidence packets, work records, witness receipts, and pre-execution gate requests. It validates structured JSON and returns schema issues plus advisory allow, deny, or needs-human decisions; it does not execute or enforce actions.",
+      "purpose": "Proof Surface is a zero-dependency Python library and telos-proof CLI that validates structured AI workflow, authorization, delegation, work, and witness records, builds evidence packets across eleven domains, and returns verdicts or advisory allow, deny, or needs-human decisions without authorizing or executing actions.",
       "maturity": "active",
       "source": "https://github.com/HarperZ9/proof-surface",
       "installOrEntry": null,
@@ -35,7 +35,7 @@
     {
       "slug": "phantom",
       "name": "Phantom",
-      "purpose": "Audit and change reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.",
+      "purpose": "Phantom audits and changes reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.",
       "maturity": "shipped",
       "source": "https://github.com/HarperZ9/phantom",
       "installOrEntry": "Download a v1.1.0 release asset and compare its hash with SHA256SUMS.txt.",
@@ -65,7 +65,7 @@
     {
       "slug": "array",
       "name": "Array",
-      "purpose": "Orchestrate authorized offensive-security campaigns through digest-sealed waves, time-limited approval, contained tool supervision, cleanup, and a verifiable evidence ledger.",
+      "purpose": "Array orchestrates authorized offensive-security campaigns through digest-sealed waves, time-limited approval, contained tool supervision, cleanup, and a verifiable evidence ledger.",
       "maturity": "controlled-private",
       "source": null,
       "installOrEntry": null,
@@ -80,7 +80,7 @@
     {
       "slug": "seed",
       "name": "Seed",
-      "purpose": "Run native security assessment and detection-engineering work through a C++23 engine with synthetic demonstrations, scope manifests, interop adapters, and action receipts.",
+      "purpose": "Seed is a C++23 engine for authorized security assessment and detection-engineering work, with synthetic demonstrations, scope manifests, interop adapters, and action receipts.",
       "maturity": "controlled-private",
       "source": null,
       "installOrEntry": null,
@@ -95,7 +95,7 @@
     {
       "slug": "sofer",
       "name": "Sofer",
-      "purpose": "Sofer is a private Python platform for authorized security operations. It coordinates scoped reconnaissance, adversarial testing, defensive analysis, campaign execution, finding management, and disclosure, then produces evidence-backed findings, reports, receipts, and handoffs.",
+      "purpose": "Sofer is a private Python orchestration runtime and operational security suite for authorized engagements. It manages campaign state, correlation, reconnaissance, reporting, disclosure staging, and evidence while its WARDEN CLI routes model and tool work through a bounded agent loop.",
       "maturity": "controlled-private",
       "source": null,
       "installOrEntry": null,
@@ -110,7 +110,7 @@
     {
       "slug": "isomorph",
       "name": "Isomorph",
-      "purpose": "Evaluate classifier and refusal behavior at authorized AI inference boundaries through controlled reformulation trials, provider-specific result records, and control-stability analysis.",
+      "purpose": "Isomorph evaluates classifier and refusal behavior at authorized AI inference boundaries through controlled reformulation trials, provider-specific result records, and control-stability analysis.",
       "maturity": "controlled-private",
       "source": null,
       "installOrEntry": null,
@@ -140,7 +140,7 @@
     {
       "slug": "orca",
       "name": "ORCA",
-      "purpose": "Operate private-line assessments by managing engagement state, executing descriptor-backed modules, cataloging findings and artifacts, producing reports and portable bundles, and recording release provenance.",
+      "purpose": "ORCA runs private-line assessments by managing engagement state, executing descriptor-backed modules, cataloging findings and artifacts, producing reports and portable bundles, and recording release provenance.",
       "maturity": "controlled-private",
       "source": null,
       "installOrEntry": null,
@@ -185,7 +185,7 @@
     {
       "slug": "public-surface-sweeper",
       "name": "Public Surface Sweeper",
-      "purpose": "Audit required public files, text hygiene, secret-shaped values, and proof-packet readiness.",
+      "purpose": "Public Surface Sweeper is a Python CLI that checks a repository before publication for missing public files, unclear README handoff material, credential-like strings, release metadata, and proof-packet readiness. It is a release-hygiene check, not a full security scanner or certification.",
       "maturity": "shipped",
       "source": "https://github.com/HarperZ9/public-surface-sweeper",
       "installOrEntry": "python -m pip install public-surface-sweeper; public-surface-sweeper . --summary",
@@ -200,7 +200,7 @@
     {
       "slug": "model-provenance-validator",
       "name": "Model Provenance Validator",
-      "purpose": "Validate the schema, source references, retrieval dates, and publishable status of compact model and release provenance envelopes, scrub sensitive output, and emit proof-surface packets without certifying underlying truth.",
+      "purpose": "Model Provenance Validator is a Python CLI that checks JSON records linking a model or release claim to its sources, retrieval dates, and publishable status. It redacts credential-like values from its output and can emit a Proof Surface packet, but it does not verify the underlying claim.",
       "maturity": "shipped",
       "source": "https://github.com/HarperZ9/model-provenance-validator",
       "installOrEntry": "python -m pip install model-provenance-validator; model-provenance-validator examples/envelopes/release.provenance.json",
@@ -214,7 +214,7 @@
     {
       "slug": "secret-redact-io",
       "name": "Secret Redact IO",
-      "purpose": "Provide guarded Python IO helpers that redact file, fetch, write, and subprocess output while emitting hash-only receipts.",
+      "purpose": "Secret Redact IO is a Python helper library that redacts file, fetch, write, and subprocess output while emitting hash-only receipts.",
       "maturity": "shipped",
       "source": "https://github.com/HarperZ9/secret-redact-io",
       "installOrEntry": "python -m pip install secret-redact-io; secret-redact-io read README.md --json",
@@ -229,7 +229,7 @@
     {
       "slug": "agent-hook-pack",
       "name": "Agent Hook Pack",
-      "purpose": "Install public-safe hooks for secret checks, branch guards, environment synchronization, and repository hygiene.",
+      "purpose": "Agent Hook Pack installs public-safe hooks for secret checks, branch guards, environment synchronization, and repository hygiene.",
       "maturity": "shipped",
       "source": "https://github.com/HarperZ9/agent-hook-pack",
       "installOrEntry": "python -m pip install -e .; agent-hook-pack audit; agent-hook-pack list",
@@ -244,7 +244,7 @@
     {
       "slug": "repo-proof-index",
       "name": "Repo Proof Index",
-      "purpose": "Scan proof contracts, proof-surface packets, receipt bundles, and witness receipts into schema-tolerant reviewer summaries while validating known proof-surface contracts without judging sufficiency.",
+      "purpose": "Repo Proof Index is a Python CLI that scans proof packets, receipts, and contracts and builds a reviewer-facing index of each artifact's type, status, evidence summary, and source path. It validates known packet formats but does not decide whether the evidence is sufficient.",
       "maturity": "shipped",
       "source": "https://github.com/HarperZ9/repo-proof-index",
       "installOrEntry": "python -m pip install repo-proof-index; repo-proof-index contracts/*.json --summary",
@@ -258,7 +258,7 @@
     {
       "slug": "kun",
       "name": "Kun",
-      "purpose": "Maintain local access-recovery memory for owned systems through path-only receipts, redacted diagnostics, rotation notes, and operator runbooks without storing raw credentials.",
+      "purpose": "Kun maintains local access-recovery memory for owned systems through path-only receipts, redacted diagnostics, rotation notes, and operator runbooks without storing raw credentials.",
       "maturity": "controlled-private",
       "source": null,
       "installOrEntry": null,

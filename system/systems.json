@@ -247,7 +247,7 @@
     {
       "id": "flywheel",
       "name": "Flywheel",
-      "purpose": "Flywheel sends a task to a selected local or hosted AI model, gives that model approved tools, checks the resulting work, and returns a journal and receipt that can be reviewed or replayed.",
+      "purpose": "Flywheel is a local AI workflow engine and native desktop app. It sends a task to a selected local or hosted model through an approved tool route, rechecks the result, and records witnessed receipts that can be reviewed or replayed.",
       "useCases": [
         "agent workflow orchestration",
         "model-neutral execution",
@@ -416,7 +416,7 @@
     {
       "id": "telos",
       "name": "Telos",
-      "purpose": "Telos is a local Node CLI and MCP server that connects a workstation to research, creative, model-foundry, native-control, and proof tools. It accepts CLI or MCP requests plus local manifests, fixtures, and workspace state, then returns structured tool results, readiness diagnostics, hashes, proof packets, and replayable action records.",
+      "purpose": "Telos is a zero-dependency local workbench for creating, simulating, and replaying AI work. Its CLI and MCP servers expose workstation checks, creative simulations, research proofs, model and learning experiments, and browser or Windows automation, with a re-checkable receipt for each run.",
       "useCases": [
         "shared human-model workspaces",
         "MCP tool execution",
@@ -491,7 +491,7 @@
     {
       "id": "index",
       "name": "Index",
-      "purpose": "Derive offline repository wikis, dependency and symbol graphs, workspace atlases, context envelopes, architecture checks, and freshness evidence from file-and-line-grounded source.",
+      "purpose": "Index is a zero-dependency Python mapper for repositories and multi-repo workspaces. It reads manifests, imports, symbols, and local documentation, then writes offline wikis, dependency maps, context packets, and architecture checks with file-and-line evidence.",
       "useCases": [
         "multi-repository mapping",
         "dependency analysis",
@@ -560,7 +560,7 @@
     {
       "id": "gather",
       "name": "Gather",
-      "purpose": "Extract and crawl difficult research sources, including JavaScript-rendered pages, authenticated APIs, scholarly records, PDFs, OCR, audio, video, feeds, and local documents; store content-addressed corpora and attach re-checkable provenance to every item.",
+      "purpose": "Gather extracts and crawls difficult research sources, including JavaScript-rendered pages, authenticated APIs, scholarly records, PDFs, OCR, audio, video, feeds, and local documents. It stores content-addressed corpora and attaches re-checkable provenance to every item.",
       "useCases": [
         "structured extraction, crawling, and change tracking",
         "scholarly and hard-source research intake",
@@ -630,7 +630,7 @@
     {
       "id": "forum",
       "name": "Forum",
-      "purpose": "Route, plan, and execute multi-agent dependency waves across model-neutral backends with budgets, approval gates, crash-safe checkpoints, delivery contracts, service surfaces, and a replayable causal ledger.",
+      "purpose": "Forum is a zero-dependency Python orchestration engine for teams of AI agents. It turns a request into dependent tasks, runs independent tasks in parallel through local commands or model APIs, pauses for human approval, resumes interrupted runs, and records a replayable ledger.",
       "useCases": [
         "multi-agent orchestration",
         "dependency-aware planning",
@@ -703,7 +703,7 @@
     {
       "id": "crucible",
       "name": "Crucible",
-      "purpose": "Register a thesis as falsifiable claims, steelman the tests, measure each claim against replayable oracles, refine the weakest axis, and emit re-checkable MATCH, DRIFT, or UNVERIFIABLE verdicts.",
+      "purpose": "Crucible is a Python claim-testing engine. It breaks a thesis into claims with stated failure conditions, measures them against supplied evidence or checks, and returns MATCH, DRIFT, or UNVERIFIABLE with a record that can be recomputed.",
       "useCases": [
         "thesis and falsification evaluation",
         "cleanroom verifier handoff",
@@ -774,7 +774,7 @@
     {
       "id": "emet",
       "name": "EMET",
-      "purpose": "Verify whether bytes reaching a model, reviewer, or pipeline still match their claimed source; anchor, compare, neutralize embedded authority, audit drift, and mint portable closed-verdict receipts across four implementations.",
+      "purpose": "EMET verifies whether bytes reaching a model, reviewer, or pipeline still match their claimed source. It anchors and compares content, neutralizes embedded authority, audits drift, and mints portable closed-verdict receipts across four implementations.",
       "useCases": [
         "byte-integrity verification",
         "proof-packet witnessing",
@@ -844,7 +844,7 @@
     {
       "id": "buildlang",
       "name": "BuildLang",
-      "purpose": "Compile a systems language with typed capability effects, sum and linear types, a production C backend, two-way C FFI, shader output, CLI and LSP tooling, and re-checkable build receipts.",
+      "purpose": "BuildLang compiles a systems language with typed capability effects, sum and linear types, a production C backend, two-way C FFI, shader output, CLI and LSP tooling, and re-checkable build receipts.",
       "useCases": [
         "capability-aware systems programming",
         "native C-path compilation",
@@ -913,7 +913,7 @@
     {
       "id": "learn",
       "name": "Learn",
-      "purpose": "Plan and re-check learner-authored study sessions from declared objectives and recorded attempts, using spaced review, retrieval prompts, prerequisite gating, misconception tracking, prediction, and self-explanation; separately run course logistics while halting at graded work.",
+      "purpose": "Learn plans and re-checks learner-authored study sessions from declared objectives and recorded attempts, using spaced review, retrieval prompts, prerequisite gating, misconception tracking, prediction, and self-explanation. It separately runs course logistics while halting at graded work.",
       "useCases": [
         "study planning and retrieval practice",
         "practice-ledger and mastery re-verification",
@@ -982,7 +982,7 @@
     {
       "id": "relay",
       "name": "Relay",
-      "purpose": "Run a permission-gated coding agent across local models, subscription CLIs, APIs, gateways, and cloud endpoints, with failover, acceptance checks, resumable sessions, MCP access, and a hash-chained trajectory.",
+      "purpose": "Relay runs a permission-gated coding agent across local models, subscription CLIs, APIs, gateways, and cloud endpoints, with failover, acceptance checks, resumable sessions, MCP access, and a hash-chained trajectory.",
       "useCases": [
         "model-neutral coding workflows",
         "provider failover",
@@ -1052,7 +1052,7 @@
     {
       "id": "plexus",
       "name": "Plexus",
-      "purpose": "Read declared interop manifests, derive producer-consumer wiring and dependency plans, emit inspectable graphs and pipeline scripts, expose the mesh over MCP, and explicitly probe registered Flywheel lanes when requested.",
+      "purpose": "Plexus is a local CLI and MCP discovery layer for agent toolchains. It reads each tool's declared inputs and outputs, finds compatible connections, and produces dependency graphs or runnable pipeline scripts; it probes registered Flywheel lanes only when explicitly requested.",
       "useCases": [
         "tool discovery",
         "capability matching",
@@ -1189,7 +1189,7 @@
     {
       "id": "studio-engine",
       "name": "Studio Engine",
-      "purpose": "Generate, critique, refine, and preserve replayable creative worlds from one expression algebra that emits shader programs, audio graphs, motion timelines, previews, measurements, and receipts.",
+      "purpose": "Studio Engine is a local Python simulation and rendering engine that generates shader visuals, audio, and motion from one reusable scene description. It exposes a CLI and local HTTP API, can render deterministic PNG frames, and records hashes and a receipt for each generated scene.",
       "useCases": [
         "seeded world generation",
         "shader and sound authoring",
@@ -1267,7 +1267,7 @@
     {
       "id": "build-color",
       "name": "Build Color",
-      "purpose": "Measure, convert, compare, and transform digital color across perceptual spaces, HDR tone maps, appearance models, chromatic adaptation, spectral utilities, gamut mapping, ICC profiles, LUTs, and an optional GUI.",
+      "purpose": "Build Color measures, converts, compares, and transforms digital color across perceptual spaces, HDR tone maps, appearance models, chromatic adaptation, spectral utilities, gamut mapping, ICC profiles, and LUTs, with an optional GUI.",
       "useCases": [
         "color measurement",
         "HDR tone mapping",
@@ -1336,7 +1336,7 @@
     {
       "id": "retro-engine",
       "name": "Retro Engine",
-      "purpose": "Run an embedded browser studio that accepts images, drawing, GLSL, and audio traces; applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects; then exports images, patches, MIDI, relief or disc data, and Loom handoffs.",
+      "purpose": "Retro Engine is an embedded browser studio for images, drawing, GLSL, and audio traces. It applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects, then exports images, patches, MIDI, relief or disc data, and Loom handoffs.",
       "useCases": [
         "play",
         "browser pixel studio",
@@ -1408,7 +1408,7 @@
     {
       "id": "engine-revival",
       "name": "Engine Revival",
-      "purpose": "Engine Revival stores and validates the public-safe metadata, target matrices, reproduction recipes, evidence packets, and reports needed to rebuild historical game engines, SDKs, rendering libraries, CGI toolkits, and studio technology.",
+      "purpose": "Engine Revival is a Python tool for building, validating, auditing, indexing, and rendering public-safe metadata about historical engine revivals. It can also generate an out-of-tree BRender CMake harness from a public checkout.",
       "useCases": [
         "preserve",
         "repository evidence refresh",
@@ -1490,7 +1490,7 @@
     {
       "id": "brender-archival",
       "name": "BRender Archival",
-      "purpose": "BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the source, provenance, and verification record for release.",
+      "purpose": "BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the generated harness, README, captured test transcripts, checksums, and a release receipt without copying the upstream source.",
       "useCases": [
         "verify",
         "specific restoration evidence",
@@ -1562,7 +1562,7 @@
     {
       "id": "proof-surface",
       "name": "Proof Surface",
-      "purpose": "Proof Surface is a standard-library Python contract and validation library for authorization receipts, delegation chains, evidence packets, work records, witness receipts, and pre-execution gate requests. It validates structured JSON and returns schema issues plus advisory allow, deny, or needs-human decisions; it does not execute or enforce actions.",
+      "purpose": "Proof Surface is a zero-dependency Python library and telos-proof CLI that validates structured AI workflow, authorization, delegation, work, and witness records, builds evidence packets across eleven domains, and returns verdicts or advisory allow, deny, or needs-human decisions without authorizing or executing actions.",
       "useCases": [
         "authorization receipt review",
         "bounded agent actions",
@@ -1632,7 +1632,7 @@
     {
       "id": "elder-enb",
       "name": "Elder ENB",
-      "purpose": "Build an independently authored nine-stage ENBSeries 0.504 shader suite for Skyrim SE/AE, with five quality tiers, bounded cinematic effects, identity fallbacks, deterministic packaging, and an optional native frame-pulse runtime.",
+      "purpose": "Elder ENB is an independently authored nine-stage ENBSeries 0.504 shader suite for Skyrim SE/AE, with five quality tiers, bounded cinematic effects, identity fallbacks, deterministic packaging, and an optional native frame-pulse runtime.",
       "useCases": [
         "ENB configuration review",
         "graphics runtime integration",
@@ -1719,7 +1719,7 @@
     {
       "id": "truth-enb",
       "name": "Truth ENB",
-      "purpose": "Build a from-scratch ENBSeries 0.504 shader suite for Skyrim SE/AE, with a computed physical atmosphere and sky, raymarched clouds, an aurora curtain, exposure and tone mapping, five quality tiers, and an optional native camera bridge.",
+      "purpose": "Truth ENB is a from-scratch ENBSeries 0.504 shader suite for Skyrim SE/AE, with a computed physical atmosphere and sky, raymarched clouds, an aurora curtain, exposure and tone mapping, five quality tiers, and an optional native camera bridge.",
       "useCases": [
         "installing a complete Skyrim SE/AE ENB preset",
         "running one authored look across five performance tiers",
@@ -1807,7 +1807,7 @@
     {
       "id": "enb-runtime-core",
       "name": "ENB Runtime Core",
-      "purpose": "Provide a C++23 embedded runtime library that identifies an already-loaded ENBSeries host, validates its SDK surface, queues callbacks outside callback context, coordinates save quiescence and reapplication, and gates a fail-closed Skyrim engine bridge.",
+      "purpose": "ENB Runtime Core is a C++23 embedded runtime library that identifies an already-loaded ENBSeries host, validates its SDK surface, queues callbacks outside callback context, coordinates save quiescence and reapplication, and gates a fail-closed Skyrim engine bridge.",
       "useCases": [
         "ENB runtime integration",
         "graphics plugin inspection",
@@ -1878,7 +1878,7 @@
     {
       "id": "skyrimbridge",
       "name": "SkyrimBridge",
-      "purpose": "Expose Skyrim live engine state, record editing surfaces, asset conversion, versioned ABI, diagnostics, and shared-memory command channels to shaders and external tools through an SKSE plugin, with an optional D3D11 rendering tier.",
+      "purpose": "SkyrimBridge is an SKSE plugin that exposes Skyrim live engine state, record editing surfaces, asset conversion, a versioned ABI, diagnostics, and shared-memory command channels to shaders and external tools, with an optional D3D11 rendering tier.",
       "useCases": [
         "Skyrim runtime integration",
         "graphics bridge inspection",
@@ -1954,7 +1954,7 @@
     {
       "id": "phantom",
       "name": "Phantom",
-      "purpose": "Audit and change reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.",
+      "purpose": "Phantom audits and changes reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.",
       "useCases": [
         "hardware-identity privacy",
         "authorized device-surface auditing",
@@ -2090,7 +2090,7 @@
     {
       "id": "array",
       "name": "Array",
-      "purpose": "Orchestrate authorized offensive-security campaigns through digest-sealed waves, time-limited approval, contained tool supervision, cleanup, and a verifiable evidence ledger.",
+      "purpose": "Array orchestrates authorized offensive-security campaigns through digest-sealed waves, time-limited approval, contained tool supervision, cleanup, and a verifiable evidence ledger.",
       "useCases": [
         "authorized offensive-security campaign planning",
         "approval-gated assessment execution",
@@ -2163,7 +2163,7 @@
     {
       "id": "seed",
       "name": "Seed",
-      "purpose": "Run native security assessment and detection-engineering work through a C++23 engine with synthetic demonstrations, scope manifests, interop adapters, and action receipts.",
+      "purpose": "Seed is a C++23 engine for authorized security assessment and detection-engineering work, with synthetic demonstrations, scope manifests, interop adapters, and action receipts.",
       "useCases": [
         "controlled security-assessment labs",
         "detection engineering",
@@ -2234,7 +2234,7 @@
     {
       "id": "sofer",
       "name": "Sofer",
-      "purpose": "Sofer is a private Python platform for authorized security operations. It coordinates scoped reconnaissance, adversarial testing, defensive analysis, campaign execution, finding management, and disclosure, then produces evidence-backed findings, reports, receipts, and handoffs.",
+      "purpose": "Sofer is a private Python orchestration runtime and operational security suite for authorized engagements. It manages campaign state, correlation, reconnaissance, reporting, disclosure staging, and evidence while its WARDEN CLI routes model and tool work through a bounded agent loop.",
       "useCases": [
         "private-line multi-agent orchestration",
         "high-consequence technical workflow coordination",
@@ -2308,7 +2308,7 @@
     {
       "id": "isomorph",
       "name": "Isomorph",
-      "purpose": "Evaluate classifier and refusal behavior at authorized AI inference boundaries through controlled reformulation trials, provider-specific result records, and control-stability analysis.",
+      "purpose": "Isomorph evaluates classifier and refusal behavior at authorized AI inference boundaries through controlled reformulation trials, provider-specific result records, and control-stability analysis.",
       "useCases": [
         "authorized AI red-team evaluation",
         "classifier and refusal-behavior measurement",
@@ -2456,7 +2456,7 @@
     {
       "id": "orca",
       "name": "ORCA",
-      "purpose": "Operate private-line assessments by managing engagement state, executing descriptor-backed modules, cataloging findings and artifacts, producing reports and portable bundles, and recording release provenance.",
+      "purpose": "ORCA runs private-line assessments by managing engagement state, executing descriptor-backed modules, cataloging findings and artifacts, producing reports and portable bundles, and recording release provenance.",
       "useCases": [
         "private assessment operation",
         "finding and artifact cataloging",
@@ -2679,7 +2679,7 @@
     {
       "id": "public-surface-sweeper",
       "name": "Public Surface Sweeper",
-      "purpose": "Audit required public files, text hygiene, secret-shaped values, and proof-packet readiness.",
+      "purpose": "Public Surface Sweeper is a Python CLI that checks a repository before publication for missing public files, unclear README handoff material, credential-like strings, release metadata, and proof-packet readiness. It is a release-hygiene check, not a full security scanner or certification.",
       "useCases": [
         "public repository hygiene",
         "release-surface checks",
@@ -2748,7 +2748,7 @@
     {
       "id": "model-provenance-validator",
       "name": "Model Provenance Validator",
-      "purpose": "Validate the schema, source references, retrieval dates, and publishable status of compact model and release provenance envelopes, scrub sensitive output, and emit proof-surface packets without certifying underlying truth.",
+      "purpose": "Model Provenance Validator is a Python CLI that checks JSON records linking a model or release claim to its sources, retrieval dates, and publishable status. It redacts credential-like values from its output and can emit a Proof Surface packet, but it does not verify the underlying claim.",
       "useCases": [
         "release provenance checks",
         "model claim envelopes",
@@ -2816,7 +2816,7 @@
     {
       "id": "secret-redact-io",
       "name": "Secret Redact IO",
-      "purpose": "Provide guarded Python IO helpers that redact file, fetch, write, and subprocess output while emitting hash-only receipts.",
+      "purpose": "Secret Redact IO is a Python helper library that redacts file, fetch, write, and subprocess output while emitting hash-only receipts.",
       "useCases": [
         "secret-aware IO",
         "redacted subprocess capture",
@@ -2882,7 +2882,7 @@
     {
       "id": "agent-hook-pack",
       "name": "Agent Hook Pack",
-      "purpose": "Install public-safe hooks for secret checks, branch guards, environment synchronization, and repository hygiene.",
+      "purpose": "Agent Hook Pack installs public-safe hooks for secret checks, branch guards, environment synchronization, and repository hygiene.",
       "useCases": [
         "pre-commit hygiene",
         "branch protection",
@@ -2949,7 +2949,7 @@
     {
       "id": "repo-proof-index",
       "name": "Repo Proof Index",
-      "purpose": "Scan proof contracts, proof-surface packets, receipt bundles, and witness receipts into schema-tolerant reviewer summaries while validating known proof-surface contracts without judging sufficiency.",
+      "purpose": "Repo Proof Index is a Python CLI that scans proof packets, receipts, and contracts and builds a reviewer-facing index of each artifact's type, status, evidence summary, and source path. It validates known packet formats but does not decide whether the evidence is sufficient.",
       "useCases": [
         "proof-packet indexing",
         "receipt discovery",
@@ -3025,7 +3025,7 @@
       "lastVerified": "2026-08-28",
       "id": "chorus",
       "name": "Chorus",
-      "purpose": "Turn a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests that rank themes, surface dissent, and identify genuinely contested topics.",
+      "purpose": "Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests that rank themes, surface dissent, and identify genuinely contested topics.",
       "useCases": [
         "community and comment research",
         "ranked theme and controversy analysis",
@@ -3104,7 +3104,7 @@
       "lastVerified": "2026-08-28",
       "id": "raw",
       "name": "RAW",
-      "purpose": "Develop a D3D11 rendering platform for Skyrim SE that combines proxy-level pipeline ownership with SKSE-driven mid-frame effect dispatch, hot-reloadable HLSL, frame capture, GPU diagnostics, and a focused set of screen-space lighting and post-processing effects.",
+      "purpose": "RAW is a D3D11 rendering platform for Skyrim SE that combines proxy-level pipeline ownership with SKSE-driven mid-frame effect dispatch, hot-reloadable HLSL, frame capture, GPU diagnostics, and a focused set of screen-space lighting and post-processing effects.",
       "useCases": [
         "Skyrim D3D11 render-pipeline development",
         "screen-space lighting and post-processing",
@@ -3179,7 +3179,7 @@
     {
       "id": "kun",
       "name": "Kun",
-      "purpose": "Maintain local access-recovery memory for owned systems through path-only receipts, redacted diagnostics, rotation notes, and operator runbooks without storing raw credentials.",
+      "purpose": "Kun maintains local access-recovery memory for owned systems through path-only receipts, redacted diagnostics, rotation notes, and operator runbooks without storing raw credentials.",
       "useCases": [
         "local access-recovery hygiene",
         "credential-rotation memory",
