@@ -3,8 +3,7 @@ import { desktopGpuArtQueries, shouldUseDesktopGpuArt } from "./visual-capabilit
 
 /* One continuous GPU field behind the entire page (public/system/field-ground.js). It is
    fixed to the viewport and anchored to the document by scroll, so every section floats on
-   the same generative ground and blends into the next with no seam. Silent no-op if WebGL
-   is unavailable -- the page background falls back to the void color underneath. */
+   the same generative ground. Silent no-op if WebGL is unavailable. */
 export default function GroundField({ seed = 58 }: { seed?: number }) {
   const ref = useRef<HTMLCanvasElement | null>(null);
 
@@ -12,8 +11,6 @@ export default function GroundField({ seed = 58 }: { seed?: number }) {
     const canvas = ref.current;
     if (!canvas) return;
 
-    // Some older mobile WebViews do not implement matchMedia at all. Keep the
-    // page static rather than letting a visual enhancement interrupt the app.
     if (typeof window.matchMedia !== "function") {
       canvas.dataset.mode = "static";
       return;
@@ -23,7 +20,6 @@ export default function GroundField({ seed = 58 }: { seed?: number }) {
     let disposed = false;
     let request = 0;
     const media = desktopGpuArtQueries.map((query) => window.matchMedia(query));
-
     const nativeImport = new Function("u", "return import(u)") as (u: string) => Promise<any>;
 
     const refresh = () => {
@@ -33,8 +29,6 @@ export default function GroundField({ seed = 58 }: { seed?: number }) {
         handle = null;
       }
 
-      // Mobile is intentionally a complete static experience. Do not allocate a
-      // WebGL context for touch, narrow, or reduced-motion visitors.
       if (!shouldUseDesktopGpuArt()) {
         canvas.dataset.mode = "static";
         return;
@@ -55,7 +49,6 @@ export default function GroundField({ seed = 58 }: { seed?: number }) {
         .catch(() => {});
     };
 
-    refresh();
     const listen = (query: MediaQueryList) => {
       if (typeof query.addEventListener === "function") query.addEventListener("change", refresh);
       else query.addListener(refresh);
@@ -64,6 +57,8 @@ export default function GroundField({ seed = 58 }: { seed?: number }) {
       if (typeof query.removeEventListener === "function") query.removeEventListener("change", refresh);
       else query.removeListener(refresh);
     };
+
+    refresh();
     media.forEach(listen);
 
     return () => {

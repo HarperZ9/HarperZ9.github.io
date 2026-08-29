@@ -1,593 +1,638 @@
-import { useEffect, type CSSProperties } from "react";
-import EmetWitness from "./EmetWitness";
-import GateDemo from "./GateDemo";
-import ProofPacket from "./ProofPacket";
-import WitnessedIndependence from "./WitnessedIndependence";
-import Picker from "./Picker";
+import { useEffect } from "react";
 import GroundField from "./GroundField";
+import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./site-routes";
+import { CAPABILITY_DOMAINS, EVIDENCE_STREAM, SYSTEMS, systemById, type SystemRecord } from "./system-registry";
+import evidenceProjectionSource from "../site/evidence-stream.json?raw";
 import "./App.css";
 
-type Engine = {
-  name: string; role: string; verdict: string; shipped?: boolean;
-  desc: string; href: string; src: string; srcLabel: string;
-};
-
-type RecordedWorkflow = {
-  name: string;
-  version: string;
-  duration: string;
-  outcome: string;
-  facts: string[];
+type PublishedBriefing = {
+  id: string;
+  title: string;
   href: string;
-  poster: string;
-  alt: string;
+  publishedAt: string;
+  sourceCount: number;
+  primaryFigureHref: string;
+  limitations: string[];
 };
 
-// Primary `href` routes to the engine's page on this site; `src` is the
-// package or repository link. The visitor stays in the workshop first.
-const ENGINES: Engine[] = [
-  { name: "flywheel", role: "route & verify any model", verdict: "public · GitHub · FSL-1.1", shipped: true,
-    desc: "A companion for every model. Routes to any model, local or hosted, online or offline, answers what it can verify, escalates only the hard part, and hands back a receipt you can re-run yourself. It does what every router does, plus the one thing none of them do: it checks the work.",
-    href: "/flywheel.html", src: "https://github.com/HarperZ9/flywheel", srcLabel: "GitHub" },
-  { name: "telos", role: "perceive & make", verdict: "Telos 0.2.0 · public workbench",
-    desc: "The shared workbench. Durable session state, native control of the workstation, sensory organs for screens and files, and a discovery forge, so a person and a model work the same surface at the same time.",
-    href: "/studio.html", src: "https://github.com/HarperZ9/telos", srcLabel: "GitHub" },
-  { name: "index", role: "map workspaces", verdict: "index-graph 2.9.0 · PyPI", shipped: true,
-    desc: "Maps your whole multi-repo workspace in seconds: nine language ecosystems, dependency and symbol graphs, fully offline, zero dependencies. Then certifies the map against the architecture you meant.",
-    href: "/index-graph.html", src: "https://pypi.org/project/index-graph/", srcLabel: "PyPI" },
-  { name: "gather", role: "intake & capture", verdict: "gather-engine 1.6.1 · PyPI", shipped: true,
-    desc: "Research intake that reaches the hard places: gated APIs, paywalls, JS-walled pages, scanned PDFs. DOM extraction, structured capture, and change tracking built in. Provenance rides along free.",
-    href: "/gather.html", src: "https://pypi.org/project/gather-engine/", srcLabel: "PyPI" },
-  { name: "forum", role: "orchestrate", verdict: "Forum 1.13.0 · fair-source",
-    desc: "Runs fleets of agents with routing, quality gates, and prose contracts, then hands you a causal ledger of who did what and why that replays step by step. Multi-agent work stops being an opaque box.",
-    href: "/forum.html", src: "https://github.com/HarperZ9/forum", srcLabel: "GitHub" },
-  { name: "crucible", role: "judge", verdict: "Crucible 1.2.0 · release candidate",
-    desc: "A judgment engine. Registers a thesis, steelmans each claim, measures it against a substrate, and refines the weakest axis until the result is useful. Full paper trail included.",
-    href: "/crucible.html", src: "https://github.com/HarperZ9/crucible", srcLabel: "GitHub" },
-  { name: "emet", role: "byte integrity", verdict: "EMET 1.1.0 · four languages · PyPI",
-    desc: "Byte-integrity tooling. Re-derives a file's bytes from scratch in four independent implementations. Point it at anything; it alters nothing.",
-    href: "/emet.html", src: "https://github.com/HarperZ9/emet", srcLabel: "GitHub" },
-  { name: "buildlang", role: "author", verdict: "BuildLang 1.2.0 · public release", shipped: true,
-    desc: "A real systems language: typed capability effects, sum and linear types, C FFI, native binaries. What a function may do is part of its type, checked at compile time, lowered through a verified C path.",
-    href: "/buildlang.html", src: "https://github.com/HarperZ9/buildlang", srcLabel: "GitHub" },
-  { name: "learn", role: "learning aid + course engine", verdict: "Learn 1.6.0 · zero-dep Node", shipped: true,
-    desc: "Turns your own material into a runnable course: spaced repetition, retrieval practice, self-explanation graded by crucible, zero dependencies. Graded steps leave records, not vibes.",
-    href: "/learn.html", src: "https://github.com/HarperZ9/learn", srcLabel: "GitHub" },
-  { name: "relay", role: "code with any model", verdict: "Relay 0.1.0 · public source", shipped: true,
-    desc: "A zero-dependency coding agent for any endpoint: local weights, a subscription CLI, or an API. Failover across providers, a gated tool loop, and a witnessed ledger of every step.",
-    href: "https://github.com/HarperZ9/relay", src: "https://github.com/HarperZ9/relay", srcLabel: "GitHub" },
-  { name: "plexus", role: "wire tools together", verdict: "Plexus 0.2.0 · public source", shipped: true,
-    desc: "Capability discovery and auto-wiring for agent toolchains. It reads what each tool emits and consumes, then connects them into a working pipeline you can inspect.",
-    href: "https://github.com/HarperZ9/plexus", src: "https://github.com/HarperZ9/plexus", srcLabel: "GitHub" },
-  { name: "mneme", role: "agent memory", verdict: "Mneme 0.1.0 · public source", shipped: true,
-    desc: "Accountable memory for agents: layered stores and hybrid retrieval where every memory carries its provenance, so recall traces back to its source.",
-    href: "https://github.com/HarperZ9/mneme", src: "https://github.com/HarperZ9/mneme", srcLabel: "GitHub" },
-  { name: "studio-engine", role: "generate worlds", verdict: "Studio Engine 0.2.0 · public source", shipped: true,
-    desc: "Generates replayable creative worlds: shaders, sound, and motion timelines drawn from a seed and carried with a receipt, so the same inputs redraw the same world.",
-    href: "https://github.com/HarperZ9/studio-engine", src: "https://github.com/HarperZ9/studio-engine", srcLabel: "GitHub" },
-  { name: "build color", role: "measure color", verdict: "Build Color 1.0.2 · PyPI · beta", shipped: true,
-    desc: "A color-science workbench with perceptual spaces, color-difference metrics, chromatic adaptation, HDR tone mapping, gamut tools, and ICC profile generation. It measures digital color behavior; it is not a physical display instrument.",
-    href: "/build-color.html", src: "https://pypi.org/project/build-color/", srcLabel: "PyPI" },
-];
-
-// Platforms are not engines: standalone products and practices with their own
-// page and identity, held apart from the fourteen. Phantom is public and shipped;
-// the offensive-security line is private, shared only under lawful authorization.
-type Platform = {
-  name: string; role: string; verdict: string; shipped?: boolean;
-  desc: string; href: string; src?: string; srcLabel?: string;
+type HomeEvidenceProjection = {
+  schema: "harperz9-home-evidence/v1";
+  derivedFrom: "harperz9-systems/v4";
+  records: Array<{ id: string; systemId: string }>;
+  latestPublishedBriefing: PublishedBriefing | null;
 };
 
-const PLATFORMS: Platform[] = [
-  { name: "phantom", role: "hardware-identity privacy for Windows", verdict: "Phantom 1.0.0 · shipped · proprietary", shipped: true,
-    desc: "Puts your machine's hardware fingerprint under your control. Audits what the device reveals, generates a consistent replacement identity from a seed, applies it to the registry identifiers software reads most, and backs up every original first, so revert and uninstall restore them exactly. Verified end to end on a fresh Windows VM.",
-    href: "/phantom.html", src: "https://github.com/HarperZ9/phantom", srcLabel: "GitHub" },
-  { name: "behavior-transform.io", role: "compliance intermediary for AI workloads", verdict: "private · authorized operators only", shipped: true,
-    desc: "A programmatic environment that wraps the workspace so any work can occur within third-party model-provider terms of service. Transforms context and language at the boundary. Environment-native authorization, policy enforcement, session authority, provider intelligence, and audit trail.",
-    href: "/behavior-transform.html" },
-  { name: "authorized offensive security", role: "adversarial capability, under authorization", verdict: "private line · authorized parties only",
-    desc: "A private line held apart from the open tools. Offensive and dual-use security capability and adversarial-AI testing for lawful operators, shared only after authorization is established. The page names the practice and states the boundary; it does not distribute capability.",
-    href: "/security.html" },
+const FOOTER_ROUTE_HREFS = new Set([
+  "hire.html", "overview.html", "catalog.html", "security.html", "research.html",
+  "publications.html", "writing.html", "studio.html", "gallery.html", "retro.html",
+  "resume.html", "cv.html", "portfolio.html", "person.html",
+]);
+const HOME_ROUTE_LINKS = [
+  ...PRIMARY_ROUTES,
+  ...SECONDARY_GROUPS.flatMap((group) => group.routes),
+];
+const FOOTER_ROUTES = HOME_ROUTE_LINKS.filter(
+  (route) => FOOTER_ROUTE_HREFS.has(route.href) && routeFamily(route.href),
+);
+
+const HOME_EVIDENCE_PROJECTION = JSON.parse(evidenceProjectionSource) as HomeEvidenceProjection;
+const CURRENT_EVIDENCE = HOME_EVIDENCE_PROJECTION.records
+  .map((projected) => EVIDENCE_STREAM.find(
+    (evidence) => evidence.id === projected.id && evidence.systemId === projected.systemId,
+  ))
+  .filter((evidence): evidence is (typeof EVIDENCE_STREAM)[number] => Boolean(evidence));
+const LATEST_PUBLISHED_BRIEFING = HOME_EVIDENCE_PROJECTION.latestPublishedBriefing;
+
+function requireSystem(id: string) {
+  const system = systemById(id);
+  if (!system) throw new Error(`Missing system record: ${id}`);
+  return system;
+}
+
+const systems = SYSTEMS;
+const domains = CAPABILITY_DOMAINS;
+const domainById = new Map(domains.map((domain) => [domain.id, domain]));
+const requiredFlywheel = systemById("flywheel");
+if (!requiredFlywheel) throw new Error("Missing system record: flywheel");
+const FLYWHEEL: SystemRecord = requiredFlywheel;
+
+const verifiedEvidence = EVIDENCE_STREAM.filter((record) => record.status === "verified");
+
+const CAPABILITY_FAMILY_IDS = [
+  "agent-systems",
+  "evaluation-verification",
+  "security-privacy",
+  "developer-infrastructure",
+  "graphics-media",
+  "research-education",
+] as const;
+
+const REPRESENTATIVE_IDS = [
+  "index",
+  "gather",
+  "buildlang",
+  "phantom",
+  "accountable-surface",
 ];
 
-const RECORDED_WORKFLOWS: RecordedWorkflow[] = [
+const SECURITY_IDS = [
+  "phantom",
+  "behavior-transform",
+  "accountable-surface",
+  "public-surface-sweeper",
+  "model-provenance-validator",
+  "secret-redact-io",
+  "agent-hook-pack",
+  "repo-proof-index",
+];
+
+const GRAPHICS_IDS = [
+  "raw",
+  "skyrimbridge",
+  "truth-enb",
+  "elder-enb",
+  "enb-runtime-core",
+  "studio-engine",
+  "retro-engine",
+  "engine-revival",
+  "brender-archival",
+].filter((id) => systems.some((system) => system.id === id));
+
+const HIRING_ENTRY_ROUTES = [
   {
-    name: "Index",
-    version: "Index 2.9.0",
-    duration: "30-second cut + 118-second run",
-    outcome: "Map a sanitized three-repository workspace, verify three evidenced edges, fit the relevant system into a bounded context, and render an offline atlas.",
-    facts: ["3 repositories", "3 evidenced edges", "bounded context", "offline atlas"],
-    href: "/demo-index.html",
-    poster: "/media/demos/index/index-demo-poster.png",
-    alt: "Index workbench showing a three-repository map and verified dependency edges",
+    label: "Technical support, developer operations, and QA",
+    href: "/hire.html#engineering-path",
+    summary: "Technical support engineering, developer operations, implementation, release support, and software QA.",
   },
   {
-    name: "Gather",
-    version: "Gather 1.6.1",
-    duration: "29-second cut + full run",
-    outcome: "Extract seven source blocks, store two useful records, verify both against their provenance, and expose the changed-receipt path.",
-    facts: ["7 blocks extracted", "2 records stored", "2 of 2 match", "tamper caught"],
-    href: "/demo-gather.html",
-    poster: "/media/demos/gather/gather-workflow-short-poster.png",
-    alt: "Gather workflow showing extracted source blocks, stored records, and a provenance match",
+    label: "Evaluation tooling and Python developer tools",
+    href: "/hire.html#technical-operations-path",
+    summary: "Evaluation tooling, Python developer tools, test infrastructure, and research-engineering support.",
   },
   {
-    name: "Forum",
-    version: "Forum 1.13.0",
-    duration: "27-second cut + full run",
-    outcome: "Route one cross-domain request through three dependent task waves, validate every result, preserve checkpoints, and re-check the causal ledger.",
-    facts: ["3 dependency waves", "3 validator passes", "3 checkpoints", "19 ledger entries"],
-    href: "/demo-forum.html",
-    poster: "/media/demos/forum/forum-demo-short-poster.png",
-    alt: "Forum workflow showing a routed request, three execution waves, checkpoints, and ledger verification",
-  },
-  {
-    name: "Crucible",
-    version: "Crucible 1.2.0",
-    duration: "30-second cut + 94-second run",
-    outcome: "Hold a three-claim thesis fixed while the artifact moves from one match and two drifts to three matches and zero drift.",
-    facts: ["1 match / 2 drift", "3 match / 0 drift", "2 reviews pass", "re-derived from disk"],
-    href: "/demo-crucible.html",
-    poster: "/media/demos/crucible/crucible-workflow-short-poster.png",
-    alt: "Crucible workflow comparing a draft with two drifts against a refined artifact with three matches",
+    label: "Public service, safety, and field operations",
+    href: "/hire.html#public-service-field-path",
+    summary: "Benefits-rich public routes where systems judgment and field reliability matter.",
   },
 ];
 
-type Paper = { tag: "SYSTEMS" | "PREPRINT" | "NOTE" | "CORPUS"; title: string; line: string; doi: string; pdf?: string; read?: string };
+function localHref(href: string) {
+  if (href.startsWith("http") || href.startsWith("/")) return href;
+  return `/${href}`;
+}
 
-const PAPERS: Paper[] = [
-  { tag: "SYSTEMS", doi: "10.5281/zenodo.21230267", pdf: "/papers/emet-integrity-witness.pdf",
-    title: "EMET: An Authority-Incapable Byte-Level Integrity Witness",
-    line: "A byte-integrity artifact with four independent implementations checked against one conformance corpus." },
-  { tag: "SYSTEMS", doi: "10.5281/zenodo.21231253", pdf: "/papers/buildlang-capability-effects.pdf",
-    title: "BuildLang: Accountable Compute via Typed Capability Effects",
-    line: "The capabilities a function may exercise appear in its type, then lower through a constrained systems-language path." },
-  { tag: "PREPRINT", doi: "10.5281/zenodo.21232206", pdf: "/papers/witnessed-independence.pdf",
-    title: "Witnessed Independence: Recording Whether a Verifier Graded Its Own Work",
-    line: "Turns a criterion it did not author from an assumption into a recorded, three-valued field of the verdict." },
-  { tag: "PREPRINT", doi: "10.5281/zenodo.21231406", pdf: "/papers/proof-packets.pdf",
-    title: "Proof Packets: A Derive-Don't-Trust Envelope for Accountable Agent Actions",
-    line: "The verdict for one agent action is derived from checks, never read from the packet." },
-  { tag: "NOTE", doi: "10.5281/zenodo.21234475", pdf: "/papers/personhood-gate-handoff.pdf",
-    title: "The Personhood-Gate Handoff: Drawing the Automation Boundary at the False-Signal Line",
-    line: "Hand off to the operator exactly when a step would transmit a false human-present signal to a third party." },
-  { tag: "NOTE", doi: "10.5281/zenodo.21231311", pdf: "/papers/re-perceived-effects.pdf",
-    title: "Re-Perceived Effects: A Well-Formedness Contract for Accountable Actuation",
-    line: "Replaces an actuator's self-report with a re-perceived effect, admitted before the fact by a capability gate." },
-  // Deposited whole rather than cut into papers, and listed as corpora because
-  // that is what they are. Both are now readable here in full as well.
-  { tag: "CORPUS", doi: "10.5281/zenodo.20773724", pdf: "/papers/conferred-existence.pdf",
-    read: "/conferred-existence.html",
-    title: "Conferred Existence",
-    line: "A thesis on made minds: perception, memory, external anchors, and what a made mind could be owed and held to." },
-  { tag: "CORPUS", doi: "10.5281/zenodo.20778927", pdf: "/papers/witnessing-spine.pdf",
-    read: "/witnessing-spine.html",
-    title: "The Witnessing Spine",
-    line: "The collected research corpus behind the verification work, from bounded claims to the rule the software enforces." },
+function evidenceHref(system: SystemRecord) {
+  return system.evidence[0]?.href ?? system.sourceHref ?? localHref(system.href);
+}
+
+function productTypeLabel(system: SystemRecord) {
+  return system.productType;
+}
+
+function isoDate(value: string) {
+  return value.slice(0, 10);
+}
+
+const representativeSystems = REPRESENTATIVE_IDS.map(requireSystem);
+const securitySystems = SECURITY_IDS.map(requireSystem);
+const graphicsSystems = GRAPHICS_IDS.map(requireSystem);
+
+const evidenceRows = [
+  {
+    measure: String(systems.length),
+    label: "system records",
+    source: "site/systems.json",
+    href: "/catalog.html",
+    note: "purpose, boundary, maturity, and evidence fields",
+  },
+  {
+    measure: String(systems.filter((system) => system.placement === "featured").length),
+    label: "featured records",
+    source: "placement",
+    href: "/overview.html",
+    note: "systems promoted to the public front of the catalog",
+  },
+  {
+    measure: String(verifiedEvidence.length),
+    label: "verified evidence rows",
+    source: "evidence status",
+    href: "/catalog.html",
+    note: "release, source, paper, demo, or public-boundary records with dates",
+  },
+  {
+    measure: FLYWHEEL.evidence[0]?.date ?? "unknown",
+    label: "Flywheel release record",
+    source: "site/systems.json",
+    href: evidenceHref(FLYWHEEL),
+    note: "release label, source link, date, and limitations",
+  },
+  {
+    measure: LATEST_PUBLISHED_BRIEFING?.publishedAt ?? "not published",
+    label: "current briefing",
+    source: "site/publications.json",
+    href: LATEST_PUBLISHED_BRIEFING?.href ?? "/publications.html",
+    note: LATEST_PUBLISHED_BRIEFING?.title ?? "No verified briefing is published yet.",
+  },
 ];
 
-export default function App() {
+function App() {
   useEffect(() => {
-    const els = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
-    if (!("IntersectionObserver" in window)) { els.forEach((e) => e.classList.add("in")); return; }
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } }),
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+    const elements = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
+    if (!("IntersectionObserver" in window)) {
+      elements.forEach((element) => element.classList.add("in"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("in");
+        observer.unobserve(entry.target);
+      }),
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
     );
-    els.forEach((e) => io.observe(e));
-    // Failsafe: nothing stays un-revealed forever if the observer misses.
-    const settle = window.setTimeout(() => els.forEach((e) => e.classList.add("in")), 4000);
-    return () => { io.disconnect(); window.clearTimeout(settle); };
+    elements.forEach((element) => observer.observe(element));
+    const settle = window.setTimeout(() => elements.forEach((element) => element.classList.add("in")), 3000);
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(settle);
+    };
   }, []);
 
   return (
     <>
-      <GroundField />
+      <GroundField seed={74} />
       <div className="viewport-vignette" aria-hidden="true" />
-      {/* turbulence displacement so straight CSS borders ripple into organic liquid edges */}
-      <svg className="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
-        <filter id="organic-edge" x="-60%" y="-150%" width="220%" height="400%" filterUnits="objectBoundingBox">
-          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="2" seed="7" result="n" />
-          <feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-      </svg>
       <a className="skip-link" href="#main">Skip to content</a>
-
-      <nav className="topnav" aria-label="Primary">
-        <a className="brand" href="#top" aria-label="zentropyLabs / Project Telos, home">
-          <span className="brand-wordmark" aria-hidden="true">zentropyLabs</span>
-          <span className="brand-route mono">Project Telos</span>
-        </a>
-        <div className="topnav-links">
-          <a href="#make">Make</a>
-          <a href="#engines">Engines</a>
-          <a href="#platforms">Platforms</a>
-          <a href="#recorded">Recorded</a>
-          <a href="#demonstrate">Live checks</a>
-          <a href="#research">Research</a>
-          <a href="#range">Range</a>
-          <a href="#work">Work with me</a>
-          <a className="mono ghost" href="https://github.com/HarperZ9" rel="noopener">GitHub ↗</a>
-        </div>
-      </nav>
-
+      <TopNav />
       <main id="main">
-        <header id="top" className="hero">
-          <div className="hero-veil" aria-hidden="true" />
-          <div className="hero-grain" aria-hidden="true" />
-          <div className="hero-inner">
-            <figure className="hero-brand-plate reveal in d1">
-              <picture>
-                <source
-                  type="image/webp"
-                  srcSet="/brand/zentropy-logo-640.webp 640w, /brand/zentropy-logo-960.webp 960w, /brand/zentropy-logo-1280.webp 1280w, /brand/zentropy-logo-1600.webp 1600w"
-                  sizes="(max-width: 980px) 100vw, 52vw"
-                />
-                <img
-                  src="/brand/zentropy-logo.png"
-                  alt="Zentropy Labs aperture mark with a cyan halftone orb and oxblood reflection"
-                  width="1600"
-                  height="900"
-                  fetchPriority="high"
-                />
-              </picture>
-              <figcaption className="mono">
-                <span>zentropyLabs</span>
-                <span>publishes Project Telos</span>
-              </figcaption>
-            </figure>
-            <div className="hero-masthead">
-              <p className="hero-kicker mono reveal in d1">Project Telos / public workbench</p>
-              <h1 className="hero-title reveal in d2">
-                Made to be run, inspected, and kept.
-              </h1>
-              <p className="lead reveal in d3">
-                zentropyLabs is one workshop across a wide span. At the making end: a live retro
-                engine, a generative studio, a gallery of seed-reproducible plates, and a loom
-                that weaves any render into cloth. At the
-                proving end: fourteen public systems with receipts, verifiers, and runnable tools at
-                different maturity levels. They share one operating thesis, but they do not yet form
-                a single executable loop. Eight records sit on the file between them. Each page names
-                what runs, what evidence exists, and what remains unfinished.
-              </p>
-              <nav className="hero-doors reveal in d3" aria-label="Choose how to enter the workbench">
-                <div className="hero-door-rows">
-                  <a className="hero-door" href="#make">
-                    <span className="hero-door-mode mono">Make / live systems</span>
-                    <strong>Make</strong>
-                    <span className="hero-door-description">Create with the retro engine, studio, and gallery.</span>
-                    <span className="hero-door-enter mono" aria-hidden="true">enter →</span>
-                  </a>
-                  <a className="hero-door" href="#engines">
-                    <span className="hero-door-mode mono">Prove / public record</span>
-                    <strong>Prove</strong>
-                    <span className="hero-door-description">Inspect receipts, workflows, research, and verification systems.</span>
-                    <span className="hero-door-enter mono" aria-hidden="true">enter →</span>
-                  </a>
-                </div>
-                <p className="hero-door-bridge mono">Two entrances. One public record.</p>
-              </nav>
-              <p className="hero-availability reveal in d3">
-                <a href="#work">Available for paid work, contract builds, and technical collaboration.</a>
-              </p>
-            </div>
-          </div>
-          {/* A registration caption for the approved static brand plate. */}
-          <figure className="hero-crop mono" aria-hidden="true">
-            <span className="crop-t">Zentropy mark</span>
-            <span className="crop-d">static mark, drawn once</span>
-          </figure>
-          <p className="scroll-cue mono" aria-hidden="true">scroll to inspect</p>
-        </header>
-
-        <section id="make" className="band">
-          <div className="shell">
-            <div className="sec-head reveal">
-              <h2>Start by making.</h2>
-              <p className="measure lead-2">
-                The creative end of the workshop. Each surface runs live in your browser,
-                reproduces from a seed, and is yours to keep. The same tools that make an image
-                also measure it, so a creation can cross straight into the proving end below.
-              </p>
-            </div>
-            {/* The making surfaces used to be four identical cards in a grid,
-                which is the templated pattern the canon rules out, and it broke
-                three-and-one on a three-column grid. They are an index, so they
-                use the same numbered-row grammar the engines below use: one
-                language for the whole page, and the numeral is the marker the
-                canon prefers over a stacked label. */}
-            <ol className="engines engines-making" aria-label="Making surfaces">
-              {[
-                { name: "Retro Engine", role: "254 shaders · sound draws · physical exports",
-                  desc: "A live retro and pixel-art renderer: 254 editable shaders across 38 shelves, hardware palettes and dither, a stackable feel rack, an oscilloscope source where your own sound draws the picture, and exports that leave the screen: a printable relief, a spinning phenakistoscope disc, a MIDI score of your session.",
-                  href: "/retro.html" },
-                { name: "The Loom", role: "image to cloth · WIF drafts · woven sound",
-                  desc: "Weave any render into working cloth: a frame from the engine, the Studio, or your own image becomes threading, tie-up, and treadling in a real weave structure, built pick by pick with each row played as notes. The WIF draft opens in real loom software.",
-                  href: "/loom.html" },
-                { name: "The Studio", role: "generative fields · plotter maps · voxels · posters",
-                  desc: "A media instrument for rendering, measuring, and transforming a frame: generative fields, plotter maps exported as plotter-grade SVG or G-code, voxel builds, and a poster surface, all reading from the same measured source.",
-                  href: "/studio.html" },
-                { name: "Gallery", role: "94 instruments · seed-reproducible plates",
-                  desc: "A gallery of seed-reproducible plates drawn by 94 instruments across the workshop's registers. The seed is the record: the same seed redraws the same work, so a piece is a recipe you can re-run rather than a picture you have to trust.",
-                  href: "/gallery.html" },
-              ].map((m, i) => (
-                <li className="engine reveal" style={{ "--i": String(i) } as CSSProperties} key={m.name}>
-                  <div className="eng-index mono"><span className="eng-band" aria-hidden="true" />{String(i + 1).padStart(2, "0")}</div>
-                  <div className="eng-id">
-                    <h3 className="eng-name">{m.name}</h3>
-                    <span className="eng-role">{m.role}</span>
-                  </div>
-                  <p className="eng-desc">{m.desc}</p>
-                  <div className="eng-go">
-                    <a className="eng-open" href={m.href}>open <span aria-hidden="true">→</span></a>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
-        <section id="engines" className="band">
-          <div className="shell">
-            <div className="sec-head reveal">
-              <h2>Then prove it. <span className="spectrum-word">Fourteen systems.</span></h2>
-              <p className="measure lead-2">
-                Each of these fourteen systems stands on its own today, while the integrated Flywheel
-                engine remains the active build. The roster spans routing, intake, mapping, orchestration, judgment, byte
-                integrity, typed effects, learning, color, memory, interoperability, and shared
-                human and model creation.
-              </p>
-            </div>
-
-            <ol className="engines" aria-label="Flagship engines">
-              {ENGINES.map((e, i) => (
-                <li className="engine reveal" style={{ "--i": String(i) } as CSSProperties} key={e.name}>
-                  <div className="eng-index mono"><span className="eng-band" aria-hidden="true" />{String(i + 1).padStart(2, "0")}</div>
-                  <div className="eng-id">
-                    <h3 className="eng-name">{e.name}</h3>
-                    <span className="eng-role">{e.role}</span>
-                    <span className={"eng-verdict mono" + (e.shipped ? " shipped" : "")}>{e.verdict}</span>
-                  </div>
-                  <p className="eng-desc">{e.desc}</p>
-                  <div className="eng-go">
-                    <a className="eng-open" href={e.href}>open <span aria-hidden="true">→</span></a>
-                    <a className="eng-src mono" href={e.src} rel="noopener">{e.srcLabel} ↗</a>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            <p className="measure lead-2 reveal">
-              The full lineup, with private-line slices and utilities, lives on{" "}
-              <a href="/overview.html">the engine room page</a>.
-            </p>
-
-            <Picker />
-          </div>
-        </section>
-
-        <section id="platforms" className="band">
-          <div className="shell">
-            <div className="sec-head reveal">
-              <h2>Standalone platforms.</h2>
-              <p className="measure lead-2">
-                Two things that are not engines: finished products and practices with their own page
-                and identity, held apart from the fourteen. Phantom is public and shipped; the
-                offensive-security line is private, shared only under lawful authorization.
-              </p>
-            </div>
-            <ol className="engines" aria-label="Platforms">
-              {PLATFORMS.map((p, i) => (
-                <li className="engine reveal" style={{ "--i": String(i) } as CSSProperties} key={p.name}>
-                  <div className="eng-index mono"><span className="eng-band" aria-hidden="true" />{String(i + 1).padStart(2, "0")}</div>
-                  <div className="eng-id">
-                    <h3 className="eng-name">{p.name}</h3>
-                    <span className="eng-role">{p.role}</span>
-                    <span className={"eng-verdict mono" + (p.shipped ? " shipped" : "")}>{p.verdict}</span>
-                  </div>
-                  <p className="eng-desc">{p.desc}</p>
-                  <div className="eng-go">
-                    <a className="eng-open" href={p.href}>open <span aria-hidden="true">→</span></a>
-                    {p.src ? <a className="eng-src mono" href={p.src} rel="noopener">{p.srcLabel} ↗</a> : null}
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
-        <section id="recorded" className="band band-alt">
-          <div className="shell">
-            <div className="sec-head reveal">
-              <h2>Recorded workflows</h2>
-              <p className="measure lead-2">
-                Each evidence package contains a short cut, full run, transcript, and reproduction notes.
-                Browse the <a href="/demonstrations.html">complete recorded workflow library</a>.
-              </p>
-            </div>
-            <ol className="recorded-list" aria-label="Current recorded workflows">
-              {RECORDED_WORKFLOWS.map((workflow, i) => (
-                <li className="recorded-item" key={workflow.name}>
-                  <article className="recorded-shot">
-                    <figure className="recorded-figure">
-                      <img
-                        src={workflow.poster}
-                        alt={workflow.alt}
-                        width="1920"
-                        height="1080"
-                        loading={i === 0 ? "eager" : "lazy"}
-                      />
-                      <figcaption><span>{workflow.version}</span> · {workflow.duration}</figcaption>
-                    </figure>
-                    <div className="recorded-copy">
-                      <h3>{workflow.name}</h3>
-                      <p className="recorded-outcome">{workflow.outcome}</p>
-                      <ul className="recorded-facts" aria-label={`${workflow.name} recording facts`}>
-                        {workflow.facts.map((fact) => <li key={fact}>{fact}</li>)}
-                      </ul>
-                      <a className="recorded-action" href={workflow.href}>
-                        Watch the workflow <span className="recorded-arrow" aria-hidden="true">→</span>
-                      </a>
-                    </div>
-                  </article>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
-        <section id="demonstrate" className="band">
-          <div className="shell">
-            <div className="sec-head reveal">
-              <h2>Try four browser-native checks</h2>
-              <p className="measure lead-2">
-                These small interactive witnesses run on your bytes in the browser. They are distinct from
-                the complete recorded workflows above.
-              </p>
-            </div>
-            <div className="demos">
-              <div className="reveal d1"><EmetWitness /></div>
-              <div className="reveal d2"><GateDemo /></div>
-              <div className="reveal d1"><ProofPacket /></div>
-              <div className="reveal d2"><WitnessedIndependence /></div>
-            </div>
-          </div>
-        </section>
-
-        <section id="cases" className="band band-alt">
-          <div className="shell">
-            <div className="sec-head reveal">
-              <h2>Many routes,<br />one workshop.</h2>
-              <p className="measure lead-2">
-                A few routes through the workshop. Illustrations, not deployments; everything that
-                actually runs is linked above, so try it against your own workflow.
-              </p>
-            </div>
-            <ul className="cases" aria-label="Scenarios">
-              <li className="case reveal"><span className="case-name">Model workflows</span><p>Local endpoints, harnesses, context maps, and agent loops move from one-off sessions into repeatable workflows.</p></li>
-              <li className="case reveal d1"><span className="case-name">Research intake</span><p>Gather reaches gated APIs, JS-walled pages, scans, audio, and papers, then records enough context to make the intake useful later.</p></li>
-              <li className="case reveal d2"><span className="case-name">Workspace maps</span><p>Index turns a repo or many-repo workspace into an atlas so onboarding starts from a map, not from memory.</p></li>
-              <li className="case reveal"><span className="case-name">AI-assisted design workflows</span><p>Poster design and composition, seeded neural fields, perceptual critique, color measurement, and exportable graphics stay connected to the source frame and review data.</p></li>
-              <li className="case reveal d1"><span className="case-name">Graphics systems</span><p>D3D11, HLSL, native rendering, neural-network media, color spaces, and render-pipeline work sit beside the model tooling rather than under it.</p></li>
-              <li className="case reveal d2"><span className="case-name">Work threads</span><p>A concrete artifact - repo, workflow, paper, demo, site, benchmark, or prototype - is the best starting point.</p></li>
-            </ul>
-          </div>
-        </section>
-
-        <section id="research" className="band">
-          <div className="shell">
-            <div className="sec-head reveal">
-              <h2>Eight records,<br /><span className="spectrum-word">on the file.</span></h2>
-              <p className="measure lead-2">
-                The publications are one thread inside the wider workshop: byte integrity, typed
-                effects, automation boundaries, action envelopes, and made-mind philosophy. Four
-                papers, two notes, and two archived corpora, all on Zenodo with permanent DOIs. None
-                of it is peer reviewed, and each entry says which it is.
-              </p>
-            </div>
-
-            <ol className="papers" aria-label="Publications">
-              {PAPERS.map((p, i) => (
-                <li className="paper reveal" style={{ "--i": String(i) } as CSSProperties} key={p.doi}>
-                  <span className={"paper-tag mono tag-" + p.tag.toLowerCase()}>{p.tag}</span>
-                  <div className="paper-body">
-                    <h3 className="paper-title">{p.title}</h3>
-                    <p className="paper-line">{p.line}</p>
-                  </div>
-                  <span className="paper-doi mono">
-                    {p.read ? <><a href={p.read}>Read</a> · </> : null}
-                    {p.pdf ? <><a href={p.pdf}>PDF</a> · </> : null}
-                    <a href={"https://doi.org/" + p.doi} rel="noopener">{p.doi} ↗</a>
-                  </span>
-                </li>
-              ))}
-            </ol>
-            <p className="paper-close reveal">
-              A paper that claims more than its evidence is a liability. These are titled at their real size
-              on purpose. ORCID{" "}
-              <a className="mono" href="https://orcid.org/0009-0001-7175-5393" rel="noopener">0009-0001-7175-5393</a>.
-              The full index, with abstracts, lives on <a href="/publications.html">the publications page</a>.
-            </p>
-          </div>
-        </section>
-
-        <section id="range" className="band band-alt">
-          <div className="shell">
-            <div className="sec-head reveal">
-              <h2>One engineer,<br />an unusual span.</h2>
-              <p className="measure lead-2">
-                The public range is wider than any single thread: local models, graphics, reverse
-                engineering, color systems, generated media, and web surfaces all sit in the same workshop.
-              </p>
-            </div>
-            <div className="range-grid">
-              <article className="range-card reveal">
-                <h3>graphics &amp; reverse engineering</h3>
-                <p className="range-meta mono">D3D11 · HLSL · native · proxy-DLL interception</p>
-                <p>From-scratch D3D11/HLSL frameworks that take ownership of a game's render pipeline, and the primary vehicle for hands-on reverse engineering: binary analysis, runtime instrumentation, live game-state extraction.</p>
-                <p className="range-proof">Elder ENB, a lighting preset shipped across roughly 280 releases, has earned <b>930,000+ downloads</b> on NexusMods. Public, so you can <a href="https://www.nexusmods.com/skyrimspecialedition/mods/117327" rel="noopener">check it</a>.</p>
-              </article>
-              <article className="range-card reveal d1">
-                <h3>color science &amp; rendering</h3>
-                <p className="range-meta mono">ICC · 3D-LUT · CIEDE2000 · Oklab · CAT16 · HDR</p>
-                <p>Build Color spans perceptual spaces, color-difference metrics, tone mapping, gamut work, color-vision-deficiency simulation, and ICC generation. Perception made measurable in software.</p>
-              </article>
-              <article className="range-card reveal">
-                <h3>Poster systems &amp; neural media</h3>
-                <p className="range-meta mono">layout · perceptual critique · CPPN · neural SDF · plotter SVG</p>
-                <p>Poster design, seeded neural-network graphics, measured critique, and exportable plotter paths meet in one browser-native design workflow. <a href="/studio.html?source=poster">Open the poster workshop</a>.</p>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section id="work" className="band">
-          <div className="shell work-wrap">
-            <div className="work-head reveal">
-              <p className="pull">Bring the knot,<br />make it tangible.</p>
-            </div>
-            <div className="work-body reveal d1">
-              <p>
-                Self-taught systems engineer, open across roles, industries, and work modes. No CS degree; the
-                public releases are the credential. The strongest fit is any environment that needs someone who
-                can enter ambiguity, learn the domain fast, build a reliable artifact, and explain it to anyone.
-              </p>
-              <p className="floor-line">
-                This is the fit: unusual technical scope, fast learning, and practical artifacts across systems,
-                models, graphics, research, and web surfaces. Bring a concrete problem; I will turn it into a
-                scoped run with visible outputs.
-              </p>
-              <div className="cta">
-                <a className="btn solid" href="https://github.com/HarperZ9" rel="noopener">GitHub <span aria-hidden="true">→</span></a>
-                <a className="btn" href="/resume.html">Resume <span aria-hidden="true">→</span></a>
-                <a className="btn" href="/publications.html">Papers <span aria-hidden="true">→</span></a>
-                <a className="btn" href="/demonstrations.html">Recorded workflows <span aria-hidden="true">→</span></a>
-                <a className="btn" href="mailto:zaindharper@gmail.com">Email <span aria-hidden="true">→</span></a>
-              </div>
-            </div>
-          </div>
-        </section>
+        <IdentityHero />
+        <ProductSelection />
+        <FeaturedFlywheel />
+        <HiringRoutes />
+        <EvidenceBoard />
+        <CapabilityOverview />
+        <CurrentResearch />
+        <RetroSystemsLab />
+        <SecurityBoundary />
       </main>
-
-      <footer className="site-foot">
-        <div className="shell">
-          <p className="foot-big reveal">Open the workshop,<br />then follow the working surface.</p>
-          <nav className="foot-links reveal d1" aria-label="Deep pages">
-            <a href="/guide.html">Guide</a>
-            <a href="/catalog.html">Catalog</a>
-            <a href="/research.html">Research</a>
-            <a href="/publications.html">Publications</a>
-            <a href="/writing.html">Writing</a>
-            <a href="/studio.html">Studio</a>
-            <a href="/typeface.html">Typeface</a>
-            <a href="/resume.html">Resume</a>
-            <a href="/person.html">The person</a>
-          </nav>
-          <p className="foot-note mono reveal d1">
-            <span className="foot-brand">zentropyLabs</span> publishes Project Telos · built by Zain Dana Harper in Seattle ·
-            engines, demos, papers, graphics, generated media, and work routes.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }
+
+function TopNav() {
+  return (
+    <nav className="topnav" aria-label="Primary">
+      <a className="brand" href="#identity" aria-label="Zain Dana Harper and Zentropy Labs home">
+        <span className="brand-name">Zain Dana Harper</span>
+        <span className="brand-lab">Zentropy Labs</span>
+      </a>
+      <div className="topnav-links">
+        {PRIMARY_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
+        {EXTERNAL_ACTIONS.map((action) => <a href={action.href} rel="noopener" key={action.href}>{action.label}</a>)}
+      </div>
+      <details className="home-menu">
+        <summary>Menu</summary>
+        <div className="home-menu-list" aria-label="Primary menu">
+          {PRIMARY_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
+          {FOOTER_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
+          {EXTERNAL_ACTIONS.map((action) => <a href={action.href} rel="noopener" key={action.href}>{action.label}</a>)}
+        </div>
+      </details>
+    </nav>
+  );
+}
+
+function IdentityHero() {
+  return (
+    <header id="identity" className="hero">
+      <div className="hero-copy reveal in">
+        <h1 className="hero-title">Zentropy Labs</h1>
+        <p className="hero-line">Product studio, systems engineering, graphics, security tooling, and public research.</p>
+        <p className="hero-lab">Zain Dana Harper is the builder behind Zentropy Labs.</p>
+        <div className="hero-actions" aria-label="Primary actions">
+          <a className="btn solid" href="#products">Explore products</a>
+          <a className="btn" href="/hire.html">Hire or collaborate</a>
+        </div>
+      </div>
+      <figure className="identity-art reveal in">
+        <picture>
+          <source
+            type="image/webp"
+            srcSet="/brand/zentropy-logo-640.webp 640w, /brand/zentropy-logo-960.webp 960w, /brand/zentropy-logo-1280.webp 1280w, /brand/zentropy-logo-1600.webp 1600w"
+            sizes="(max-width: 900px) 92vw, 42vw"
+          />
+          <img
+            src="/brand/zentropy-logo.png"
+            alt="Zentropy Labs aperture mark with cyan light and oxblood shadow"
+            width="1600"
+            height="900"
+            fetchPriority="high"
+          />
+        </picture>
+      </figure>
+    </header>
+  );
+}
+
+function ProductSelection() {
+  return (
+    <section id="products" className="section representative-section" aria-labelledby="products-title">
+      <div className="section-heading">
+        <h2 id="products-title">Products to start with</h2>
+        <p className="section-lead">
+          Start with products that can be tried, inspected, or evaluated. Each entry says what the product does once,
+          then gives its type, state, verification date, evidence, and full product page.
+        </p>
+      </div>
+      <div className="work-index">
+        {representativeSystems.map((system) => (
+          <article className="work-row" key={system.id}>
+            <div>
+              <h3><a href={localHref(system.href)}>{system.name}</a></h3>
+              <p>{system.purpose}</p>
+            </div>
+            <ProductDefinition system={system} />
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ProductDefinition({ system }: { system: SystemRecord }) {
+  return (
+    <dl>
+      <div>
+        <dt>Type</dt>
+        <dd>{productTypeLabel(system)}</dd>
+      </div>
+      <div>
+        <dt>State</dt>
+        <dd>{system.releaseState}</dd>
+      </div>
+      <div>
+        <dt>Verified</dt>
+        <dd><time dateTime={system.lastVerified}>{system.lastVerified}</time></dd>
+      </div>
+      <div>
+        <dt>Evidence</dt>
+        <dd><a href={evidenceHref(system)}>{system.evidence[0]?.label ?? system.maturity}</a></dd>
+      </div>
+    </dl>
+  );
+}
+
+function FeaturedFlywheel() {
+  const release = FLYWHEEL.evidence[0];
+  return (
+    <section
+      id="flywheel"
+      className="section split-section"
+      aria-labelledby="flywheel-title"
+    >
+      <div>
+        <h2 id="flywheel-title">Featured platform: Flywheel</h2>
+        <p className="section-lead">
+          {FLYWHEEL.purpose}
+        </p>
+        <div className="action-row">
+          <a className="text-link" href={localHref(FLYWHEEL.href)}>Inspect Flywheel</a>
+          {FLYWHEEL.sourceHref ? <a className="text-link" href={FLYWHEEL.sourceHref} rel="noopener">Source</a> : null}
+        </div>
+      </div>
+      <div className="data-plate platform-record">
+        <table className="command-table">
+          <caption>Current Flywheel route</caption>
+          <tbody>
+            <tr>
+              <th scope="row">Type</th>
+              <td>{productTypeLabel(FLYWHEEL)}</td>
+            </tr>
+            <tr>
+              <th scope="row">State</th>
+              <td>{FLYWHEEL.releaseState}</td>
+            </tr>
+            <tr>
+              <th scope="row">Release</th>
+              <td>{release ? <a href={release.href}>{release.label}</a> : "No release record"}</td>
+            </tr>
+            <tr>
+              <th scope="row">Verified</th>
+              <td>{release?.date ?? "unknown"}</td>
+            </tr>
+            <tr>
+              <th scope="row">Install</th>
+              <td><code>{FLYWHEEL.entryCommand}</code></td>
+            </tr>
+            <tr>
+              <th scope="row">Check</th>
+              <td><code>{FLYWHEEL.verificationCommand}</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <p className="boundary-note">{FLYWHEEL.limitations[0]}</p>
+      </div>
+    </section>
+  );
+}
+
+function EvidenceBoard() {
+  return (
+    <section id="evidence" className="section" aria-labelledby="evidence-title">
+      <div className="section-heading">
+        <h2 id="evidence-title">Evidence board</h2>
+        <p className="section-lead">
+          A compact index of the public record. Values come from checked-in source data and link back to the record that produced them.
+        </p>
+      </div>
+      <div className="data-plate evidence-board">
+        <table className="evidence-table">
+          <caption>Public evidence, current source snapshot</caption>
+          <thead>
+            <tr>
+              <th scope="col">Measure</th>
+              <th scope="col">Record</th>
+              <th scope="col">Source</th>
+              <th scope="col">Boundary</th>
+            </tr>
+          </thead>
+          <tbody>
+            {evidenceRows.map((row) => (
+              <tr data-evidence-row key={row.label}>
+                <th scope="row"><a href={row.href}>{row.measure}</a></th>
+                <td>{row.label}</td>
+                <td>{row.source}</td>
+                <td>{row.note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p className="does-not-prove">
+          <strong>What this does not prove:</strong> A valid release row is not an adoption claim, safety claim, or guarantee of model correctness.
+          Counts and releases stay evidence rows, not market proof.
+        </p>
+        <section className="evidence-current" aria-labelledby="current-evidence-title">
+          <h3 id="current-evidence-title">Newest registry evidence</h3>
+          <ol>
+            {CURRENT_EVIDENCE.map((evidence) => (
+              <li key={`${evidence.systemId}:${evidence.id}`}>
+                <time dateTime={evidence.date}>{evidence.date}</time>
+                <a href={evidence.href} rel="noopener">{evidence.label}</a>
+                <span>{evidence.summary}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      </div>
+    </section>
+  );
+}
+
+function CapabilityOverview() {
+  return (
+    <section id="evidence-figures" className="section evidence-figures-section" aria-labelledby="figures-title">
+      <div className="section-heading">
+        <h2 id="figures-title">Measured evidence</h2>
+        <p className="section-lead">
+          Source-attributed figures publish units, denominators, dates, provenance, and limits.
+          Capability families remain navigation labels, not diagrams or product hierarchies.
+        </p>
+      </div>
+      <div className="evidence-figure-grid">
+        <article className="evidence-figure-card" data-evidence-figure-card>
+          <h3>164-task model pass@1 comparison</h3>
+          <a href="/analytics/model-pass-at-1-comparison.html">
+            <img className="research-figure-image" src="/analytics/model-pass-at-1-comparison.svg" alt="Paired 164-task pass-at-one result: base Qwen 14B passed 141 tasks and Flywheel 14B passed 136; the difference was not statistically significant." width="1120" height="334" loading="lazy" />
+          </a>
+          <p>Same task set and harness. This measures two model artifacts, not market superiority or general agent reliability.</p>
+        </article>
+        <article className="evidence-figure-card" data-evidence-figure-card>
+          <h3>Current cross-harness pilot</h3>
+          <a href="/analytics/current-cross-harness-pilot.html">
+            <img className="research-figure-image" src="/analytics/current-cross-harness-pilot.svg" alt="Four receipt-verified cross-harness attempts with zero valid comparable task outcomes." width="1120" height="480" loading="lazy" />
+          </a>
+          <p>4/4 receipts verified, but no valid comparable task outcome. The durations are diagnostic only.</p>
+        </article>
+        <article className="evidence-figure-card" data-evidence-figure-card>
+          <h3>Recovered actions by day</h3>
+          <img
+            className="research-figure-image"
+            src="/figures/recovered-actions-by-day.svg"
+            alt="Bar chart of five recovered-action counts from July 9 through July 13, 2026: 3,779; 1,135; 7,677; 3,892; and 1,130."
+            width="1280"
+            height="720"
+            loading="lazy"
+          />
+          <p>Five daily counts from Hugging Face host telemetry. Unit: recovered logged actions. The figure does not measure unique attacks, severity, intent, or harm.</p>
+          <p><a href="/figures/recovered-actions-by-day.json">Read the dataset and provenance</a></p>
+        </article>
+        <article className="evidence-figure-card" data-evidence-figure-card>
+          <h3>Reported motive labels</h3>
+          <img
+            className="research-figure-image"
+            src="/figures/motive-sample-nonexclusive.svg"
+            alt="Bar chart of non-exclusive motive labels in a 100-agent sample: scorer source or access 97, shared infrastructure or credentials 66, and task solution or private trajectories 89."
+            width="1280"
+            height="720"
+            loading="lazy"
+          />
+          <p>Non-exclusive labels from the independent investigator sample. Categories overlap, so counts must not be summed into a population total.</p>
+          <p><a href="/figures/motive-sample-nonexclusive.json">Read the dataset and provenance</a></p>
+        </article>
+      </div>
+      <div className="family-browser">
+        <h3>Browse the work by primary subject</h3>
+        <p>These are navigation labels only. Every catalog record retains its own purpose, product type, maturity, source, and limitations.</p>
+        <div className="family-index">
+          {CAPABILITY_FAMILY_IDS.map((familyId) => {
+            const domain = domainById.get(familyId);
+            const familySystems = systems.filter((system) => system.domains.includes(familyId));
+            return (
+              <article className="family-row" data-family-row key={familyId}>
+                <h3>{domain?.label ?? familyId}</h3>
+                <p>{domain?.summary}</p>
+                <a href={`/catalog.html#domain-${familyId}`}>{familySystems.length} related records</a>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CurrentResearch() {
+  return (
+    <section id="research" className="section split-section" aria-labelledby="research-title">
+      <div>
+        <h2 id="research-title">Current research</h2>
+        <p className="section-lead">
+          The publication surface carries current briefings, figures, source records, limitations, and related reproducible artifacts for public review.
+        </p>
+        <div className="action-row">
+          <a className="text-link" href="/publications.html">Publication index</a>
+          <a className="text-link" href="/figures/recovered-actions-by-day.html">Measured figures</a>
+        </div>
+      </div>
+      {LATEST_PUBLISHED_BRIEFING ? (
+        <article className="data-plate briefing-card">
+          <h3><a href={LATEST_PUBLISHED_BRIEFING.href} data-current-briefing-title>{LATEST_PUBLISHED_BRIEFING.title}</a></h3>
+          <p>{LATEST_PUBLISHED_BRIEFING.sourceCount} public sources. Limitations remain attached to the record.</p>
+          <dl className="briefing-meta">
+            <div>
+              <dt>Published</dt>
+              <dd>{isoDate(LATEST_PUBLISHED_BRIEFING.publishedAt)}</dd>
+            </div>
+            <div>
+              <dt>Primary figure</dt>
+              <dd><a href={LATEST_PUBLISHED_BRIEFING.primaryFigureHref}>Open figure</a></dd>
+            </div>
+          </dl>
+        </article>
+      ) : null}
+    </section>
+  );
+}
+
+function RetroSystemsLab() {
+  return (
+    <section id="retro-systems-lab" className="section retro-section" aria-labelledby="retro-title">
+      <div className="section-heading">
+        <h2 id="retro-title">Graphics, engines, and preservation</h2>
+        <p className="section-lead">
+          Rendering platforms, Skyrim runtime integration, shader suites, browser graphics, procedural media, and software preservation are shown
+          as separate products. Source state, releases, tests, and limitations remain attached to each project.
+        </p>
+      </div>
+      <div className="retro-flow">
+        {graphicsSystems.map((system) => (
+          <article className="retro-step" key={system.id}>
+            <span className="retro-verb">{system.accessMode}</span>
+            <h3><a href={localHref(system.href)}>{system.name}</a></h3>
+            <p>{system.purpose}</p>
+            <dl className="product-meta">
+              <div><dt>Type</dt><dd>{productTypeLabel(system)}</dd></div>
+              <div><dt>State</dt><dd>{system.releaseState}</dd></div>
+              <div><dt>Evidence</dt><dd><a href={evidenceHref(system)}>{system.evidence[0]?.label ?? system.maturity}</a></dd></div>
+            </dl>
+          </article>
+        ))}
+      </div>
+      <p className="boundary-note">Shared subject matter does not imply one parent product, a runtime dependency, or inherited evidence.</p>
+    </section>
+  );
+}
+
+function SecurityBoundary() {
+  return (
+    <section id="security-boundary" className="section security-section" aria-labelledby="security-title">
+      <div className="section-heading">
+        <h2 id="security-title">Security boundary</h2>
+        <p className="section-lead">
+          Public pages describe what the security products do and direct qualified work to a controlled intake.
+        </p>
+      </div>
+      <div className="security-layout">
+        <article className="data-plate boundary-card">
+          <h3>Public route, private authority</h3>
+          <p>
+            No private repository, operational method, target detail, client fact, or engagement result is published.
+            Written authorization, defined scope, secure intake, and review are required before private capability is discussed or used.
+          </p>
+          <a className="text-link" href="/private-practice.html">Private recipient lane</a>
+        </article>
+        <ol className="security-list">
+          {securitySystems.map((system) => (
+            <li key={system.id}>
+              <a href={localHref(system.href)}>{system.name}</a>
+              <span>{system.accessMode} / {system.maturity}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+function HiringRoutes() {
+  return (
+    <section id="hiring-collaboration" className="section hiring-section" aria-labelledby="hiring-title">
+      <div>
+        <h2 id="hiring-title">Hiring, contracting, and collaboration</h2>
+        <p className="section-lead">
+          Run, inspect, or verify the work through three practical routes: technical support and QA, evaluation tooling and Python developer tools, and public-service or field work.
+          The documents are direct, and the project evidence stays one click away.
+        </p>
+      </div>
+      <div className="hiring-actions">
+        {HIRING_ENTRY_ROUTES.map((route) => (
+          <a className="btn" href={route.href} key={route.href}>
+            <span>{route.label}</span>
+          </a>
+        ))}
+        <a className="btn solid" href="/hire.html">Hiring map</a>
+        <a className="btn" href="/resume.html">Technical resume</a>
+        <a className="btn" href="/cv.html">CV</a>
+        <a className="btn" href="/portfolio.html">Portfolio</a>
+        <a className="btn" href="mailto:zaindharper@gmail.com">Email</a>
+        <a className="btn" href="https://github.com/HarperZ9" rel="noopener">GitHub</a>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="site-footer">
+      <p>Zain Dana Harper and Zentropy Labs. Public systems, research briefings, retro rendering, security tooling, and hiring routes.</p>
+      <nav className="footer-links" aria-label="Footer">
+        {FOOTER_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
+        <a href="https://github.com/HarperZ9" rel="noopener">GitHub</a>
+      </nav>
+    </footer>
+  );
+}
+
+export default App;

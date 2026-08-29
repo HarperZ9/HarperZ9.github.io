@@ -55,6 +55,18 @@ def test_print_stylesheet_makes_a_document() -> None:
     assert 'content:" (" attr(href) ")"' in css
 
 
+def test_shared_data_surfaces_print_as_black_ink_on_white_paper() -> None:
+    for rel in ("system/system.css", "system/doc.css", "system/figure.css"):
+        css = read(rel)
+        print_rules = re.search(r"@media\s+print\s*\{(?P<body>.*?)\n\}", css, re.DOTALL)
+        assert print_rules, f"{rel} must define print rules"
+        body = print_rules.group("body")
+        assert ".data-plate" in body and ".evidence-ledger" in body, rel
+        assert "background:#fff!important" in body, rel
+        assert "color:#000!important" in body, rel
+        assert "border-color:#000!important" in body, rel
+
+
 def test_exporter_offers_all_four_formats() -> None:
     js = read("system/export.js")
     for fmt in ('"md"', '"txt"', '"docx"', '"print"'):

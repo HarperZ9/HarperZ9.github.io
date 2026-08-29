@@ -13,9 +13,6 @@
 @font-face { font-family: "Hanken Grotesk"; src: url("/system/fonts/hanken-grotesk.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
 @font-face { font-family: "Conso"; src: url("/system/fonts/conso-regular.woff2") format("woff2"), url("/system/fonts/conso-regular.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "Conso"; src: url("/system/fonts/conso-semibold.woff2") format("woff2"), url("/system/fonts/conso-semibold.woff") format("woff"); font-weight: 600 700; font-style: normal; font-display: swap; }
-/* The custom face is a mark, not a third reading typeface. It only appears in
-   the zentropyLabs wordmark defined in App.css. */
-@font-face { font-family: "ZentropyDisplay"; src: url("/brand/ZentropyDisplay.ttf") format("truetype"); font-weight: 400 900; font-style: normal; font-display: swap; }
 
 :root {
   color-scheme: dark;
@@ -30,6 +27,10 @@
   --raised:    oklch(0.275 0.050 310);
   --hairline:  oklch(0.62 0.08 308 / 0.18);
   --hairline-2:oklch(0.62 0.08 308 / 0.10);
+  --line:      rgba(234, 245, 246, 0.14);
+  --line-strong: rgba(234, 245, 246, 0.28);
+  --ground-paper: #f3f0e8;
+  --ink-paper: #111014;
 
   /* Gradient system: nothing is a flat fill or a solid line. Edges dissolve at their
      ends (--edge, for border-image); surfaces fall off toward transparent so panels
@@ -96,11 +97,6 @@
   --shell: clamp(1.15rem, 5vw, 5rem);
   --maxw: 78rem;
 
-  /* Architectural, not organic. Corrected at the token rather than by a blanket
-     rule: an earlier attempt set border-radius:0 on the card selectors, and
-     every one of them re-declared a radius later in the same file at equal
-     specificity, so the reset was dead CSS and the cards kept rendering at
-     26px. Zeroing the source is the fix that cannot lose the cascade. */
   --radius: 0px;
   --radius-lg: 0px;
 
@@ -146,10 +142,7 @@ body {
   font-size: var(--step-0);
   line-height: 1.6;
   color: var(--ink);
-  background:
-    radial-gradient(86rem 48rem at 76% -12%, rgba(47, 120, 144, 0.12), transparent 57%),
-    radial-gradient(70rem 38rem at 32% 22%, rgba(125, 45, 34, 0.15), transparent 62%),
-    var(--void); /* complete static ground, with desktop GPU only as an enhancement */
+  background: var(--void);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: clip; /* not `hidden`: hidden makes body a scroll container and silently breaks anchor scrolling */

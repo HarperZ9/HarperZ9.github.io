@@ -1,0 +1,221 @@
+/* Canonical site-shell alignment for Engine Revival and BRender Archival only.
+   The shared retro stylesheet keeps each project's own evidence-page identity;
+   this layer removes the legacy navigation and template-like presentation. */
+
+.retro-evidence-page {
+  --retro-evidence-ink: #f4f6f2;
+  --retro-evidence-copy: #c8dcdf;
+  --retro-evidence-muted: #a9bfc3;
+  --retro-evidence-rule: rgba(200, 220, 223, .22);
+  --retro-evidence-signal: #8ee3f2;
+  font-family: var(--font-sans, "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  color: var(--retro-evidence-ink);
+}
+
+.retro-evidence-page .retro-lab-shell {
+  width: min(72rem, calc(100% - 2rem));
+}
+
+.retro-evidence-page .retro-lab-hero {
+  min-height: auto;
+  padding: clamp(4rem, 10vw, 7rem) 0 clamp(3.5rem, 8vw, 6rem);
+}
+
+.retro-evidence-page .retro-lab-hero.route-header {
+  width: min(72rem, calc(100% - 2rem));
+}
+
+.retro-evidence-page .route-header__path {
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+  font-size: .92rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.retro-evidence-page h1,
+.retro-evidence-page h2,
+.retro-evidence-page h3 {
+  font-family: var(--font-sans, "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  text-wrap: balance;
+}
+
+.retro-evidence-page h1 {
+  max-width: 14ch;
+  font-size: clamp(3rem, 7vw, 5.25rem);
+  line-height: 1;
+  letter-spacing: -.03em;
+}
+
+.retro-evidence-page .retro-lab-section h2 {
+  max-width: 20ch;
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -.02em;
+}
+
+.retro-evidence-page .retro-lab-lede {
+  max-width: 70ch;
+  color: var(--retro-evidence-copy);
+  text-wrap: pretty;
+}
+
+.retro-evidence-page .retro-lab-actions,
+.retro-evidence-page .retro-lab-links {
+  gap: .65rem 1rem;
+}
+
+.retro-evidence-page .retro-lab-actions a,
+.retro-evidence-page .retro-lab-links a {
+  min-height: 44px;
+  box-sizing: border-box;
+  font-family: var(--font-sans, "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  font-size: .96rem;
+  font-weight: 650;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.retro-evidence-page .retro-lab-actions a {
+  padding: .72rem .9rem;
+  border-color: var(--retro-evidence-rule);
+  border-radius: 3px;
+  background: transparent;
+}
+
+.retro-evidence-page .retro-lab-actions a:first-child {
+  border-color: var(--retro-evidence-signal);
+  background: var(--retro-evidence-signal);
+  color: #070406;
+}
+
+.retro-evidence-page .retro-lab-section {
+  border-color: var(--retro-evidence-rule);
+}
+
+.retro-evidence-page .retro-lab-grid {
+  display: grid;
+  grid-template-columns: minmax(0, .62fr) minmax(0, 1.38fr);
+  gap: 0 clamp(1.5rem, 4vw, 4rem);
+  margin-top: clamp(1.5rem, 4vw, 2.75rem);
+}
+
+.retro-evidence-page .retro-lab-card,
+.retro-evidence-page .retro-lab-proof {
+  border: 0;
+  border-top: 1px solid var(--retro-evidence-rule);
+  border-radius: 0;
+  padding: 1.15rem 0 1.5rem;
+  background: transparent;
+  box-shadow: none;
+}
+
+.retro-evidence-page .retro-lab-card:first-child {
+  grid-row: span 2;
+  padding-top: clamp(1.5rem, 4vw, 3rem);
+}
+
+.retro-evidence-page .retro-lab-card p,
+.retro-evidence-page .retro-lab-proof p {
+  max-width: 70ch;
+  color: var(--retro-evidence-copy);
+  text-wrap: pretty;
+}
+
+.retro-evidence-page .retro-lab-pill {
+  display: block;
+  margin: 0 0 .65rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--retro-evidence-muted);
+  font-family: var(--font-sans, "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  font-size: .9rem;
+  font-weight: 550;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.retro-evidence-page .retro-lab-figure {
+  margin-top: clamp(1.5rem, 4vw, 2.75rem);
+  border-color: var(--retro-evidence-rule);
+  border-radius: 8px;
+  background: #09030d;
+}
+
+.retro-evidence-page .retro-lab-figure figcaption,
+.retro-evidence-page .retro-lab-footer,
+.retro-evidence-page .zoom-note {
+  color: var(--retro-evidence-muted);
+}
+
+.retro-evidence-page noscript .site-nav {
+  justify-content: flex-start;
+  gap: .35rem 1rem;
+}
+
+.retro-evidence-page noscript .site-nav a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--retro-evidence-copy);
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.retro-evidence-page noscript .site-nav a[aria-current="page"] {
+  color: var(--retro-evidence-signal);
+  text-decoration: underline;
+  text-underline-offset: .35rem;
+}
+
+@media (max-width: 760px) {
+  .retro-evidence-page .retro-lab-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .retro-evidence-page .retro-lab-card:first-child {
+    grid-row: auto;
+  }
+
+  .retro-evidence-page noscript .site-nav {
+    display: flex;
+  }
+}
+
+@media (max-width: 320px) {
+  .retro-evidence-page .retro-lab-shell,
+  .retro-evidence-page .retro-lab-hero.route-header {
+    width: calc(100% - 1.25rem);
+  }
+
+  .retro-evidence-page .retro-lab-actions a {
+    width: 100%;
+  }
+}
+
+@media (forced-colors: active) {
+  .retro-evidence-page .retro-lab-actions a:first-child,
+  .retro-evidence-page .retro-lab-card,
+  .retro-evidence-page .retro-lab-proof {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+
+  .retro-evidence-page noscript .site-nav a[aria-current="page"] {
+    color: LinkText;
+    outline: 1px solid LinkText;
+  }
+}
+
+@media print {
+  .retro-evidence-page .retro-lab-card,
+  .retro-evidence-page .retro-lab-proof {
+    border-color: #777;
+  }
+
+  .retro-evidence-page noscript .site-nav {
+    display: none;
+  }
+}

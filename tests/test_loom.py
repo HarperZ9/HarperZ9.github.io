@@ -36,8 +36,9 @@ def test_loom_page_contract() -> None:
 
 
 def test_loom_is_reachable() -> None:
-    nav = NAV.read_text(encoding="utf-8")
-    assert '["The Loom", "loom.html", "loom"]' in nav
+    routes = (ROOT / "system" / "routes.js").read_text(encoding="utf-8")
+    assert r'\"label\": \"The Loom\"' in routes
+    assert r'\"href\": \"loom.html\"' in routes
     sitemap = SITEMAP.read_text(encoding="utf-8")
     assert "https://harperz9.github.io/loom.html" in sitemap
     assert "https://harperz9.github.io/retro.html" in sitemap

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "observed_at": "2026-08-24T17:58:14Z",
+  "observed_at": "2026-08-28T15:28:38Z",
   "sources": [
     {
       "id": "aisi-unsanctioned-agent-behaviour",
@@ -14,6 +14,17 @@
       "does_not_prove": "The report does not establish how often the behavior would occur outside the specific evaluation configuration."
     },
     {
+      "id": "aisi-ai-safety-research-sabotage",
+      "lane": "aisi",
+      "title": "Evaluating whether AI models would sabotage AI safety research",
+      "url": "https://www.aisi.gov.uk/blog/evaluating-whether-ai-models-would-sabotage-ai-safety-research",
+      "published_at": "2026-04-27",
+      "role": "government evaluation report",
+      "status": "available",
+      "fingerprint_profile": "aisi_report_article",
+      "does_not_prove": "No detected spontaneous sabotage in this evaluation suite does not establish that deployed models will never undermine safety research, particularly given evaluation awareness and limited scenario coverage."
+    },
+    {
       "id": "anthropic-three-cyber-eval-incidents",
       "lane": "anthropic",
       "title": "Investigating three real-world incidents in our cybersecurity evaluations",
@@ -23,6 +34,18 @@
       "status": "available",
       "fingerprint_profile": "anthropic_news_article",
       "does_not_prove": "A developer retrospective does not independently verify the completeness of its review or the effectiveness of announced controls."
+    },
+    {
+      "id": "anthropic-august-2026-risk-report",
+      "lane": "anthropic",
+      "title": "Redacted Risk Report: August 2026",
+      "url": "https://www.anthropic.com/aug-2026-risk-report",
+      "published_at": "2026-08-14",
+      "role": "developer risk assessment",
+      "status": "available",
+      "fingerprint_url": "https://www-cdn.anthropic.com/f61d49fa5596956a5dec75fea0e973bf6a6a8378/Redacted%20Risk%20Report%20August%202026%20.pdf",
+      "fingerprint_profile": "pdf_document",
+      "does_not_prove": "Anthropic's own risk designations, acceleration estimates, and mitigation descriptions do not independently establish model safety, threshold compliance, or control effectiveness."
     },
     {
       "id": "openai-hugging-face-incident",
@@ -70,6 +93,17 @@
       "does_not_prove": "Announced pauses, monitoring, and isolation controls are not evidence that the controls are complete or independently effective."
     },
     {
+      "id": "openai-private-safety-processing-preview",
+      "lane": "industry",
+      "title": "Offering Zero Data Retention for frontier models",
+      "url": "https://openai.com/index/offering-zero-data-retention-for-frontier-models/",
+      "published_at": "2026-08-19",
+      "role": "developer statement",
+      "status": "available",
+      "fingerprint_profile": "openai_news_article",
+      "does_not_prove": "A preview and planned rollout do not independently demonstrate deployment coverage, privacy properties, detection performance, or control effectiveness."
+    },
+    {
       "id": "metr-incident-investigation-method",
       "lane": "industry",
       "title": "Investigating AI propensities after incidents",
@@ -105,12 +139,13 @@
     {
       "id": "openai-metr-redwood-joint-review",
       "lane": "industry",
-      "title": "Announced METR and Redwood joint assessment",
-      "url": "https://openai.com/index/hugging-face-model-evaluation-security-incident/",
-      "published_at": null,
-      "role": "independent review announcement",
-      "status": "pending",
-      "does_not_prove": "An announced review has no findings until the reviewers publish their own report."
+      "title": "OpenAI/Hugging Face Incident Investigation",
+      "url": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/",
+      "published_at": "2026-08-26",
+      "role": "independent case analysis",
+      "status": "available",
+      "fingerprint_profile": "metr_blog_article",
+      "does_not_prove": "The case-specific report does not independently establish facts beyond the evidence and engagement conditions the reviewers describe."
     }
   ]
 }

@@ -108,23 +108,63 @@ def test_no_page_centres_its_body_as_a_flex_row() -> None:
 
 
 def test_the_injector_styles_what_it_injects() -> None:
-    """nav.css is the floor for both things nav.js puts on a page: the bar and
-    the route figure. Without the second rule an unstyled page rendered the
-    raw 1200px og:image and scrolled sideways on a phone."""
+    """nav.css is the floor for the things nav.js puts on a page.
+
+    The old route-art injector rendered the raw social card into the document
+    flow. The current injector enhances the existing opening block as a compact
+    route header, so the stylesheet must style that component without relying
+    on page-local rules.
+    """
     css = (ROOT / "system" / "nav.css").read_text(encoding="utf-8")
     assert ".site-nav{" in css
-    assert ".route-art img{" in css and "max-width:100%" in css
+    assert ".route-header{" in css
+    assert ".route-header__path{" in css
+    assert ".route-header__title{" in css
+    assert ".route-header__summary{" in css
+    assert ".route-art" not in css
 
 
-def test_descriptions_fit_the_space_they_are_shown_in() -> None:
-    """A search result shows roughly 155 characters. 62 pages carried between
-    165 and 468, so most of what was written there was never read by anyone.
-    Each one is now built from the page's own opening claim."""
+def test_shared_navigation_keeps_a_forced_colors_focus_indicator() -> None:
+    css = (ROOT / "system" / "nav.css").read_text(encoding="utf-8")
+    forced_colors = re.search(r"@media \(forced-colors: active\)\{(.*?)\n\}", css, re.S)
+    assert forced_colors
+    block = forced_colors.group(1)
+    for selector in (
+        ".site-nav .sn-home:focus-visible",
+        ".site-nav .sn-links a:focus-visible",
+        ".site-nav .sn-more summary:focus-visible",
+        ".site-nav .sn-more-list a:focus-visible",
+    ):
+        assert selector in block
+    assert "outline:2px solid CanvasText" in block
+
+
+def test_descriptions_are_concise_or_match_the_canonical_product_definition() -> None:
+    """Ordinary pages keep search-sized summaries.
+
+    Generated v4 product records deliberately reuse the one canonical product
+    definition as metadata instead of introducing a second shortened claim.
+    Pin those descriptions to the registry so length tolerance cannot become
+    copy drift.
+    """
+    registry = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
+    products_by_href = {
+        record["href"]: record
+        for record in registry["systems"]
+        if "#" not in record["href"]
+    }
     for p in real_pages():
-        m = re.search(r'<meta name="description" content="([^"]*)"', read(p))
+        source = read(p)
+        m = re.search(r'<meta name="description" content="([^"]*)"', source)
         assert m, f"{p.name} has no description"
-        n = len(m.group(1))
-        assert 40 <= n <= 160, f"{p.name} description is {n} characters"
+        description = m.group(1)
+        record = products_by_href.get(p.name)
+        if record:
+            assert description == record["purpose"], p.name
+            assert 40 <= len(description) <= 600, p.name
+        else:
+            n = len(description)
+            assert 40 <= n <= 160, f"{p.name} description is {n} characters"
 
 
 def test_descriptions_keep_the_house_voice() -> None:

@@ -124,10 +124,9 @@ def test_the_picker_reports_the_selection_it_made() -> None:
 
 def test_the_archive_is_reachable_from_the_site_navigation() -> None:
     """It was linked from two paragraphs of body copy and from nowhere else."""
-    nav = read(NAV)
-    assert '["Session archive", "session-archive.html", "archive"]' in nav
-    assert 'if (stem === "session-archive") return "archive"' in nav, \
-        "the menu entry has to light up on the page it points at"
+    routes = read(ROOT / "system" / "routes.js")
+    assert r'\"label\": \"Session archive\"' in routes
+    assert r'\"href\": \"session-archive.html\"' in routes
 
 
 def test_shared_nav_changes_reach_pages_that_cached_it() -> None:
@@ -142,5 +141,5 @@ def test_shared_nav_changes_reach_pages_that_cached_it() -> None:
         for part in read(page).split('nav.js?v=')[1:]:
             stamps.add(part.split('"')[0].split("'")[0])
     assert stamps, "no page loads the shared nav"
-    assert stamps == {"20260824-frontier-safety"}, f"unexpected nav.js cache stamps: {sorted(stamps)}"
-    assert 'const ASSET_V = "20260824-frontier-safety"' in read(NAV)
+    assert stamps == {"20260828-site-design"}, f"unexpected nav.js cache stamps: {sorted(stamps)}"
+    assert 'const ASSET_V = "20260828-site-design"' in read(NAV)

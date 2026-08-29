@@ -194,6 +194,64 @@ def test_markdown_profile_normalizes_stable_source_content() -> None:
     assert "# Incident timeline" in normalized
 
 
+def test_pdf_profile_fingerprints_the_exact_document_bytes(monkeypatch) -> None:
+    checker = load_checker()
+    raw = b"%PDF-1.7\n" + b"A" * 400
+
+    class FakeResponse:
+        headers = {"ETag": '"pdf-etag"', "Last-Modified": "Fri, 14 Aug 2026 17:41:18 GMT"}
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def read(self, limit: int) -> bytes:
+            assert limit > len(raw)
+            return raw
+
+        def geturl(self) -> str:
+            return "https://cdn.example.test/report.pdf"
+
+    monkeypatch.setattr(checker, "urlopen", lambda _request, timeout: FakeResponse())
+
+    result = checker.fetch("https://example.test/report", timeout=1, profile="pdf_document")
+
+    assert result == {
+        "url": "https://cdn.example.test/report.pdf",
+        "sha256": "1a3b47f2ba613cd4cad70b5590451453c6e7ec31bcd6c3562e87fcec9d39ba24",
+        "normalized_characters": 409,
+        "etag": '"pdf-etag"',
+        "last_modified": "Fri, 14 Aug 2026 17:41:18 GMT",
+    }
+
+
+def test_pdf_profile_rejects_non_pdf_content(monkeypatch) -> None:
+    checker = load_checker()
+    raw = b"<html>not a PDF</html>" * 20
+
+    class FakeResponse:
+        headers = {"ETag": None, "Last-Modified": None}
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def read(self, _limit: int) -> bytes:
+            return raw
+
+        def geturl(self) -> str:
+            return "https://example.test/report"
+
+    monkeypatch.setattr(checker, "urlopen", lambda _request, timeout: FakeResponse())
+
+    with pytest.raises(ValueError, match="PDF header"):
+        checker.fetch("https://example.test/report", timeout=1, profile="pdf_document")
+
+
 def test_registered_active_sources_have_known_explicit_profiles() -> None:
     checker = load_checker()
     registry = json.loads(

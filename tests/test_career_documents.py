@@ -15,7 +15,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CENSUS = ROOT / "career" / "open-source-census.json"
-DOCS = ("resume.html", "cv.html", "portfolio.html", "cover-letter.html", "dossier.html")
+MANIFEST = ROOT / "career" / "career-artifacts.json"
+DOCS = ("hire.html", "resume.html", "cv.html", "portfolio.html", "cover-letter.html", "dossier.html")
+RESUME_PDFS = (
+    "career/Zain-Dana-Harper-Resume-Grounds.pdf",
+    "career/Zain-Dana-Harper-Resume-Public-Operations.pdf",
+    "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf",
+    "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf",
+)
 
 
 def read(name: str) -> str:
@@ -25,6 +32,19 @@ def read(name: str) -> str:
 def test_every_career_document_exists() -> None:
     for name in DOCS:
         assert (ROOT / name).is_file(), name
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    for record in manifest["current_html"] + manifest["artifacts"]:
+        assert (ROOT / record["path"]).is_file(), record["path"]
+    for retired in manifest["retired_artifacts"]:
+        assert not (ROOT / retired).exists(), retired
+
+
+def test_downloadable_resume_assets_are_pdf_documents() -> None:
+    """A failed binary transplant once replaced the PDFs with extracted text."""
+    for name in RESUME_PDFS:
+        payload = (ROOT / name).read_bytes()
+        assert payload.startswith(b"%PDF-"), f"{name} has no PDF file signature"
+        assert b"%%EOF" in payload[-1024:], f"{name} has no PDF end marker"
 
 
 def test_census_file_is_present_and_complete() -> None:
@@ -96,12 +116,16 @@ def test_documents_use_the_shared_document_system() -> None:
     for name in DOCS:
         src = read(name)
         assert 'href="system/doc.css' in src, name
-        assert 'class="sheet' in src, name
+        if name == "hire.html":
+            assert 'class="hire-sheet"' in src, name
+        else:
+            assert 'class="sheet' in src, name
         # The letter is one continuous piece of writing and correctly has no
         # section headings. Everything else is a document a reader scans.
         if name != "cover-letter.html":
             assert "<h2>" in src, f"{name} has no section headings"
-            assert 'class="sheet doc-rail"' in src, f"{name} does not use the heading rail"
+            if name != "hire.html":
+                assert 'class="sheet doc-rail"' in src, f"{name} does not use the heading rail"
 
 
 def test_no_em_dashes_on_the_public_documents() -> None:
@@ -123,24 +147,97 @@ def test_contact_fields_are_separate_elements() -> None:
         assert m.group(1).count("<span") >= 3, f"{name} contact line is not split into fields"
 
 
-def test_the_elder_enb_figures_match_the_dated_reading() -> None:
-    """NexusMods returns 403 to an automated request, so unlike the pull-request
-    census these cannot be refreshed by a script. They are a dated reading in
-    career/elder-enb.json, entered by hand, and every figure on the site is
-    stamped from it. All of them only move upward, so a stale entry understates
-    rather than overstates, which is the safe direction for a claim."""
-    data = json.loads((ROOT / "career" / "elder-enb.json").read_text(encoding="utf-8"))
-    figures, rounded = data["figures"], data["rounded"]
-
+def test_portfolio_names_retro_work_without_stale_download_claims() -> None:
+    """The new career funnel names retro-system work as project evidence, but
+    does not depend on stale off-site download counters in the first impression."""
     portfolio = read("portfolio.html")
-    for key in ("total_downloads", "unique_downloaders", "endorsements"):
-        assert f"{figures[key]:,}" in portfolio, f"portfolio.html does not state {key}"
-    assert data["read_on"] in portfolio, "the exact figures are stated without their reading date"
-    assert data["version"] in portfolio, "the reading does not name the version it was taken at"
-
-    # A rounded claim must stay under the exact figure, or it is not rounding.
-    assert int(rounded["total_downloads"].replace(",", "")) <= figures["total_downloads"]
-    assert int(rounded["unique_downloaders"].replace(",", "")) <= figures["unique_downloaders"]
+    assert "Brender Archival" in portfolio
+    assert "Engine Revival" in portfolio
+    assert "900,000" not in portfolio
+    assert "936,657" not in portfolio
     for name in ("resume.html", "cv.html", "cover-letter.html"):
         src = read(name)
         assert "900,000" not in src, f"{name} still states a figure two readings out of date"
+
+
+def test_hiring_page_leads_with_two_technical_lanes_and_a_field_campaign() -> None:
+    src = read("hire.html")
+    assert "Zain Dana Harper" in src
+    assert "Two measured technical lanes, one separate field campaign." in src
+    assert len(re.findall(r'class="hire-route-band(?:\s|\")', src)) == 2
+    for marker in (
+        'id="support-operations-qa"',
+        'id="evaluation-python-tools"',
+        "Technical support, developer operations, and QA",
+        "Evaluation tooling and Python developer tools",
+        "Separate field campaign",
+        "ports, utilities, fire-support, parks, and field-safety",
+    ):
+        assert marker in src
+    assert "zaindharper@gmail.com" in src
+    assert '<body class="doc" data-route-art="off">' in src
+    assert "private-client material" not in src
+
+
+def test_hiring_document_marks_the_local_career_switch_current() -> None:
+    src = read("hire.html")
+    assert '<a href="hire.html" aria-current="page">Hire</a>' in src
+    assert 'src="system/nav.js?v=20260828-site-design"' in src
+
+
+def test_hiring_paths_use_one_column_at_mobile_and_readable_action_targets() -> None:
+    page = read("hire.html")
+    css = read("system/hire.css")
+    assert 'system/hire.css?v=20260828-site-design' in page
+    assert ".hire-route-band" in css
+    assert "min-height:44px" in css
+    assert "@media (max-width:760px)" in css
+    mobile = css.split("@media (max-width:760px)", 1)[1]
+    assert ".hire-route-band{grid-template-columns:1fr" in mobile
+
+
+def test_home_source_connects_the_product_brand_to_the_hiring_route() -> None:
+    src = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
+    studio = src.index('<h1 className="hero-title">Zentropy Labs</h1>')
+    practice = src.index("Product studio, systems engineering, graphics, security tooling, and public research.")
+    builder = src.index("Zain Dana Harper is the builder behind Zentropy Labs.")
+    products = src.index('id="products"')
+    flywheel = src.index("Featured platform: Flywheel")
+    hiring = src.index("Hiring, contracting, and collaboration")
+    hiring_route = src.index('href="/hire.html"')
+    assert studio < practice < builder
+    assert products < flywheel
+    assert hiring_route < hiring
+
+    main = re.search(r'<main id="main">(?P<body>.*?)</main>', src, re.S)
+    assert main
+    order = re.findall(r"<([A-Z][A-Za-z0-9]*)\s*/>", main.group("body"))
+    assert order[:5] == [
+        "IdentityHero",
+        "ProductSelection",
+        "FeaturedFlywheel",
+        "HiringRoutes",
+        "EvidenceBoard",
+    ]
+
+
+def test_resume_keeps_projects_inside_zentropy_experience() -> None:
+    src = read("resume.html")
+    accepted = src.index("Technical support, developer operations, and QA")
+    owned = src.index("Flywheel")
+    boundary = src.index("Identity and date boundary")
+    assert accepted < owned < boundary
+
+
+def test_primary_resume_and_public_letter_are_bounded_first_impressions() -> None:
+    resume_words = re.findall(r"\b[\w'-]+\b", re.sub(r"<[^>]+>", " ", read("resume.html")))
+    letter_words = re.findall(r"\b[\w'-]+\b", re.sub(r"<[^>]+>", " ", read("cover-letter.html")))
+    assert len(resume_words) <= 900
+    assert 250 <= len(letter_words) <= 350
+
+
+def test_public_hiring_surfaces_do_not_upgrade_private_hub_staging() -> None:
+    for name in ("hire.html", "resume.html", "portfolio.html", "cover-letter.html"):
+        src = read(name)
+        assert "Published on Prime Intellect" not in src
+        assert "public Hub release" not in src
