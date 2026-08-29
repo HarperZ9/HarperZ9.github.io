@@ -95,7 +95,7 @@
     {
       "slug": "sofer",
       "name": "Sofer",
-      "purpose": "Sofer is a private Python security-operations platform and orchestration runtime. It accepts an authorized engagement scope, objectives and targets, selected modules and model backends, operator decisions, and collected evidence; it routes specialist work and runs scoped reconnaissance, adversarial testing, defensive analysis, campaign workflows, finding management, and disclosure, producing run state, assessment results, findings, reports, evidence artifacts, receipts, and handoff records.",
+      "purpose": "Sofer is a private Python platform for authorized security operations. It coordinates scoped reconnaissance, adversarial testing, defensive analysis, campaign execution, finding management, and disclosure, then produces evidence-backed findings, reports, receipts, and handoffs.",
       "maturity": "controlled-private",
       "source": null,
       "installOrEntry": null,
@@ -125,7 +125,7 @@
     {
       "slug": "bounds",
       "name": "Bounds",
-      "purpose": "Verify trust across agent actions, runtime observations, and releases by detecting intent drift and unsupported history claims, running explicit sensors and guards, and emitting evidence-backed receipts and proof chains.",
+      "purpose": "Bounds checks agent actions, runtime observations, and release candidates for intent drift, unsupported claims, secret exposure, and failed fixtures, then writes receipts and proof chains or blocks the release path.",
       "maturity": "controlled-private",
       "source": null,
       "installOrEntry": null,

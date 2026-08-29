@@ -129,10 +129,6 @@ function productTypeLabel(system: SystemRecord) {
   return system.productType;
 }
 
-function briefList(values: string[]) {
-  return values.slice(0, 2).join(", ");
-}
-
 function isoDate(value: string) {
   return value.slice(0, 10);
 }
@@ -287,7 +283,7 @@ function ProductSelection() {
         <h2 id="products-title">Products to start with</h2>
         <p className="section-lead">
           Start with products that can be tried, inspected, or evaluated. Each entry says what the product does once,
-          then gives its inputs, outputs, maturity, evidence, and full product page.
+          then gives its type, state, verification date, evidence, and full product page.
         </p>
       </div>
       <div className="work-index">
@@ -313,12 +309,12 @@ function ProductDefinition({ system }: { system: SystemRecord }) {
         <dd>{productTypeLabel(system)}</dd>
       </div>
       <div>
-        <dt>Acts on</dt>
-        <dd>{briefList(system.inputs)}</dd>
+        <dt>State</dt>
+        <dd>{system.releaseState}</dd>
       </div>
       <div>
-        <dt>Produces</dt>
-        <dd>{briefList(system.outputs)}</dd>
+        <dt>Verified</dt>
+        <dd><time dateTime={system.lastVerified}>{system.lastVerified}</time></dd>
       </div>
       <div>
         <dt>Evidence</dt>
@@ -355,12 +351,8 @@ function FeaturedFlywheel() {
               <td>{productTypeLabel(FLYWHEEL)}</td>
             </tr>
             <tr>
-              <th scope="row">Acts on</th>
-              <td>{briefList(FLYWHEEL.inputs)}</td>
-            </tr>
-            <tr>
-              <th scope="row">Produces</th>
-              <td>{briefList(FLYWHEEL.outputs)}</td>
+              <th scope="row">State</th>
+              <td>{FLYWHEEL.releaseState}</td>
             </tr>
             <tr>
               <th scope="row">Release</th>
@@ -560,11 +552,11 @@ function RetroSystemsLab() {
             <span className="retro-verb">{system.accessMode}</span>
             <h3><a href={localHref(system.href)}>{system.name}</a></h3>
             <p>{system.purpose}</p>
-            <dl className="retro-product-facts">
+            <dl className="product-meta">
               <div><dt>Type</dt><dd>{productTypeLabel(system)}</dd></div>
-              <div><dt>Produces</dt><dd>{briefList(system.outputs)}</dd></div>
+              <div><dt>State</dt><dd>{system.releaseState}</dd></div>
+              <div><dt>Evidence</dt><dd><a href={evidenceHref(system)}>{system.evidence[0]?.label ?? system.maturity}</a></dd></div>
             </dl>
-            <a href={evidenceHref(system)}>{system.evidence[0]?.label ?? system.maturity}</a>
           </article>
         ))}
       </div>
@@ -579,7 +571,7 @@ function SecurityBoundary() {
       <div className="section-heading">
         <h2 id="security-title">Security boundary</h2>
         <p className="section-lead">
-          The public surface names security roles while keeping credentials, live payloads, targets, client data, and engagement findings out of public distribution.
+          Public pages describe what the security products do and direct qualified work to a controlled intake.
         </p>
       </div>
       <div className="security-layout">

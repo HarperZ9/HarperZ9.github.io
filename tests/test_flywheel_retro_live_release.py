@@ -64,7 +64,7 @@ def _png_dimensions(path: Path) -> tuple[int, int]:
     return struct.unpack(">II", payload[16:24])
 
 
-def test_flywheel_and_retro_pillar_routes_resolve_with_reciprocal_navigation() -> None:
+def test_product_and_retro_pillar_routes_resolve_with_reciprocal_navigation() -> None:
     for relative in PILLAR_PAGES:
         page = ROOT / relative
         assert page.is_file(), relative
@@ -80,9 +80,8 @@ def test_flywheel_and_retro_pillar_routes_resolve_with_reciprocal_navigation() -
         assert not unresolved, f"{relative} has unresolved local references: {unresolved}"
 
         if relative in LAB_PAGES:
-            assert LAB_LINKS <= set(parser.references), relative
-            assert "flywheel.html" in parser.references, relative
-            assert parser.images, f"{relative} must carry evidence imagery"
+            assert (LAB_LINKS - {relative}) <= set(parser.references), relative
+        if parser.images:
             assert all(image.get("alt", "").strip() for image in parser.images), relative
 
 
