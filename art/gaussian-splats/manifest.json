@@ -6,9 +6,15 @@
   "route": "gaussian-splats.html",
   "tracker": "https://github.com/HarperZ9/HarperZ9.github.io/issues/81",
   "generator": {
-    "repository": "https://github.com/neilsonnn/image-blaster",
+    "route": "native",
+    "modules": [
+      "system/spatial-scene.js",
+      "system/engine/world-package.js",
+      "art/spatial/build_scene.py"
+    ],
     "commit": null,
-    "note": "Record the exact upstream commit before the first scene run. Credentials are never committed."
+    "note": "Native in-repo pipeline: no hosted model, no credentials, no metered endpoint. Record the exact repository commit before the first scene run.",
+    "prior_reference": "https://github.com/neilsonnn/image-blaster"
   },
   "source_package": {
     "filename": "Gaussian_Splat_Pilot_Inputs_2026-07-24.zip",

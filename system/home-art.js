@@ -1,5 +1,5 @@
-import { wireAnchorArrival, wireMenuArrowKeys } from "./nav.js?v=20260827-capability-publication";
-import { SECONDARY_GROUPS } from "./routes.js?v=20260827-capability-publication";
+import { wireAnchorArrival, wireMenuArrowKeys } from "./nav.js?v=20260828-site-design";
+import { SECONDARY_GROUPS } from "./routes.js?v=20260828-site-design";
 
 // The home app (built from home/) renders its final copy natively, so this
 // module no longer rewrites hero text. It keeps the shared-site menu and
@@ -85,7 +85,7 @@ function upgradeHomeMenu(doc) {
   // static-page nav, so home and static menus agree on what exists.
   SECONDARY_GROUPS.forEach((group) => {
     const groupLabel = doc.createElement("p");
-    groupLabel.className = "home-menu-label";
+    groupLabel.className = "home-menu-title";
     groupLabel.textContent = group.label;
     list.appendChild(groupLabel);
     group.routes.forEach(({ label, href }) => {

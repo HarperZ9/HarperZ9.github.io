@@ -31,6 +31,10 @@ export function sourceIsAnimated(activeSource, state) {
       // The living neural instrument repaints every rAF frame, EXCEPT under
       // reduced motion, where it holds a single still frame and the loop may idle.
       return !s.neuralStatic;
+    case "spatial":
+      // The spatial world's atmosphere and camera easing repaint every frame,
+      // EXCEPT under reduced motion, where the world holds one still frame.
+      return !s.spatialStatic;
     case "showcase":
       // The First Integral scene animates through states 1 to 3 (seed, motion, law) and then
       // settles on the witness frame; once settled the loop is free to idle. With no state

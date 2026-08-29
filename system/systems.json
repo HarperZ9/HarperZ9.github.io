@@ -247,7 +247,7 @@
     {
       "id": "flywheel",
       "name": "Flywheel",
-      "purpose": "Flywheel sends a task to a selected local or hosted AI model, gives that model approved tools, checks the resulting work, and returns a journal and receipt that can be reviewed or replayed.",
+      "purpose": "Run a verified-inference platform and native desktop client in which models perceive through witnessed tools, act through permission gates, journal their work, and re-check outcomes through integrated lanes.",
       "useCases": [
         "agent workflow orchestration",
         "model-neutral execution",
@@ -1408,7 +1408,7 @@
     {
       "id": "engine-revival",
       "name": "Engine Revival",
-      "purpose": "Engine Revival stores and validates the public-safe metadata, target matrices, reproduction recipes, evidence packets, and reports needed to rebuild historical game engines, SDKs, rendering libraries, CGI toolkits, and studio technology.",
+      "purpose": "Maintain public-safe metadata, schemas, validators, target matrices, reproduction recipes, evidence packets, and reports for reviving historical game engines, SDKs, rendering libraries, CGI toolkits, and studio technology.",
       "useCases": [
         "preserve",
         "repository evidence refresh",
@@ -1490,7 +1490,7 @@
     {
       "id": "brender-archival",
       "name": "BRender Archival",
-      "purpose": "BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the source, provenance, and verification record for release.",
+      "purpose": "Rebuild and document Argonaut BRender from its public MIT source with an out-of-tree CMake harness, a 21-rung native verification ladder, reproducible render captures, provenance records, and public-safe release packaging.",
       "useCases": [
         "verify",
         "specific restoration evidence",
@@ -1520,8 +1520,8 @@
       "maturity": "shipped",
       "placement": "catalog-only",
       "accessMode": "install",
-      "entryCommand": "python -m pip install -e \".[test]\"; python scripts/package_brender_release.py --source-root <BRender-v1.3.2> --output-root <release-stage>",
-      "verificationCommand": "python -m pytest",
+      "entryCommand": "python -m pip install -e \".[test]\"; engine-revival seed; engine-revival validate",
+      "verificationCommand": "engine-revival audit-public; python -m pytest",
       "evidence": [
         {
           "id": "brender-archival-release-v0-1-1",
@@ -2234,7 +2234,7 @@
     {
       "id": "sofer",
       "name": "Sofer",
-      "purpose": "Sofer is a private Python platform for authorized security operations. It coordinates scoped reconnaissance, adversarial testing, defensive analysis, campaign execution, finding management, and disclosure, then produces evidence-backed findings, reports, receipts, and handoffs.",
+      "purpose": "Sofer is a private Python security-operations platform and orchestration runtime. It accepts an authorized engagement scope, objectives and targets, selected modules and model backends, operator decisions, and collected evidence; it routes specialist work and runs scoped reconnaissance, adversarial testing, defensive analysis, campaign workflows, finding management, and disclosure, producing run state, assessment results, findings, reports, evidence artifacts, receipts, and handoff records.",
       "useCases": [
         "private-line multi-agent orchestration",
         "high-consequence technical workflow coordination",
@@ -2381,7 +2381,7 @@
     {
       "id": "bounds",
       "name": "Bounds",
-      "purpose": "Bounds checks agent actions, runtime observations, and release candidates for intent drift, unsupported claims, secret exposure, and failed fixtures, then writes receipts and proof chains or blocks the release path.",
+      "purpose": "Verify trust across agent actions, runtime observations, and releases by detecting intent drift and unsupported history claims, running explicit sensors and guards, and emitting evidence-backed receipts and proof chains.",
       "useCases": [
         "agent-action trust verification",
         "runtime and claim-drift detection",

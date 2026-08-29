@@ -5,29 +5,63 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Studio &middot; Live media instrument &middot; Zain Dana Harper</title>
-<meta name="description" content="The Studio is a live media instrument for rendering, measuring, transforming, and reading the frame. Bring a source, generate a field, watch the perception channels, and keep receipts available when evidence is useful.">
+<meta name="description" content="A live media instrument for rendering, measuring, transforming, and reading the frame, running entirely in your own browser.">
 <link rel="canonical" href="https://harperz9.github.io/studio.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="The Studio &middot; Live media instrument &middot; Zain Dana Harper">
-<meta property="og:description" content="Render media, measure the frame, transform sources, and keep receipts available when evidence is useful.">
+<meta property="og:description" content="A live media instrument for rendering, measuring, transforming, and reading the frame, running entirely in your own browser.">
 <meta property="og:url" content="https://harperz9.github.io/studio.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
 <meta property="og:image:alt" content="Project Telos flagship card: Telos, the engine. See it and shape it, together with a model.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Studio &middot; Live media instrument &middot; Zain Dana Harper">
-<meta name="twitter:description" content="Render media, measure the frame, transform sources, and keep receipts available when evidence is useful.">
+<meta name="twitter:description" content="A live media instrument for rendering, measuring, transforming, and reading the frame, running entirely in your own browser.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/system.css?v=20260719-zentropy-sitewide">
+<link rel="stylesheet" href="system/system.css?v=20260828-site-design">
+<link rel="stylesheet" href="system/instrument-forms.css?v=20260828-site-design">
+<style>
+  /* the toolbar reads as clusters divided by a rule, left-aligned so every row
+     shares one edge instead of each centring on its own width (a ragged block).
+     The clusters carry no visible label by canon; the hairline between groups is
+     the division, and the four corner ticks on each control are the instrument. */
+  .render-toolbar{max-width:min(100%,928px);gap:.34rem 1.1rem;align-items:flex-start;justify-content:flex-start}
+  .rt-group{display:inline-flex;flex-wrap:wrap;align-items:center;padding:.12rem .1rem}
+  /* the ticks need air: at 1.6px the corner marks of neighbouring controls
+     collided into a hatch. This wins over the shared instrument rule (.1rem). */
+  .render-toolbar .rt-group{gap:.1rem .5rem}
+  .rt-group-lab{font-family:var(--mono);font-size:.46rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);padding:0 .26rem;user-select:none}
+  .rt-group .rt-btn{border-color:transparent;background:transparent;padding:.4em .55em;white-space:nowrap}
+  .rt-group .rt-btn:hover:not([disabled]){background:color-mix(in oklab,var(--ember) 12%,transparent);border-color:transparent}
+  .rt-group .rt-btn[aria-pressed="true"]{background:var(--ember);border-color:var(--ember);color:var(--void)}
+  .rt-group details.rt-plot summary.rt-btn{border-color:transparent;background:transparent}
+  /* the seed and algorithm shelves scroll instead of stacking a wall
+     (padding keeps the focus ring inside the clip box on edge rows) */
+  .at-chips{max-height:15.5rem;overflow-y:auto;scrollbar-width:thin;padding:.35rem}
+  /* source tabs sit uniform, no orphan widths */
+  .source-group [role="tab"]{width:100%}
+  /* laptop widths: the side columns give ground so the canvas keeps its stage */
+  @media (min-width:900px) and (max-width:1279.98px){
+    .studio-app{grid-template-columns:minmax(238px,17rem) minmax(0,1fr) minmax(272px,19rem)}
+  }
+  /* 1280 and up: trim the panel and rail from their system maxima (22rem/25rem)
+     so the centre column, the canvas and its toolbar, stays the widest region.
+     The hero should read as the hero; before this the two side columns together
+     (288+384) outweighed the 608 stage on a 1280 laptop. */
+  @media (min-width:1280px){
+    .studio-app{grid-template-columns:minmax(258px,19.5rem) minmax(0,1fr) minmax(300px,21.5rem)}
+  }
+</style>
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
      globals, not the live URL. ASCII only. -->
-<script>(function(){var p=new URLSearchParams(location.search);window.__studioBootSource=p.get("source")||"";window.__studioBootHero=p.get("hero")==="1";window.__studioBootSeed=p.get("seed")||"";})();</script>
+<script>(function(){var p=new URLSearchParams(location.search);window.__studioBootSearch=location.search||"";window.__studioBootSource=p.get("source")||"";window.__studioBootHero=p.get("hero")==="1";window.__studioBootSeed=p.get("seed")||"";window.__studioBootWorld=p.get("world")||"";window.__studioBootScene=p.get("scene")||"";})();</script>
 </head>
-<body class="studio-page">
+<body class="studio-page instrument-surface">
 
 <a class="skip-link" href="#studio-viewport">Skip to the canvas</a>
 <div id="site-nav" class="site-nav"></div>
@@ -53,9 +87,13 @@
         <button type="button" role="tab" data-source="fractal"   aria-selected="false" aria-controls="src-fractal"   tabindex="-1">2D Fractal</button>
         <button type="button" role="tab" data-source="fractal3d" aria-selected="false" aria-controls="src-fractal3d" tabindex="-1">3D Fractal</button>
         <button type="button" role="tab" data-source="ndim"      aria-selected="false" aria-controls="src-ndim"      tabindex="-1">Dimensions</button>
+        <button type="button" role="tab" data-source="spatial"   aria-selected="false" aria-controls="src-spatial"   tabindex="-1">Spatial</button>
         <button type="button" role="tab" data-source="poster"    aria-selected="false" aria-controls="src-poster"    tabindex="-1">Poster</button>
         <button type="button" role="tab" data-source="neural"    aria-selected="false" aria-controls="src-neural"    tabindex="-1">Living neural</button>
         <button type="button" role="tab" data-source="sound"     aria-selected="false" aria-controls="src-sound"     tabindex="-1">Seed sound</button>
+        <button type="button" role="tab" data-source="plotmaps"  aria-selected="false" aria-controls="src-plotmaps"  tabindex="-1">Plot maps</button>
+        <button type="button" role="tab" data-source="voxels"    aria-selected="false" aria-controls="src-voxels"    tabindex="-1">Voxels</button>
+        <button type="button" role="tab" data-source="sketch"    aria-selected="false" aria-controls="src-sketch"    tabindex="-1">Sketch</button>
       </div>
       <div class="source-group" role="presentation">
         <span class="source-group-label" aria-hidden="true">Bring</span>
@@ -110,6 +148,264 @@
           <button type="button" class="btn ghost" id="sound-stop" aria-label="Stop playback">stop</button>
         </div>
         <p class="src-hint" id="sound-readout">press play; the audio channels below read what the seed plays</p>
+      </section>
+
+      <!-- Plot maps: the pen surface. Generative studies, published plates, uploaded pictures,
+           the live canvas of any other source, and voxel builds all become plotter drawings
+           through one pipeline, blendable onto one sheet, exported as plotter-grade SVG. -->
+      <section class="src-block" id="src-plotmaps" role="tabpanel" aria-label="Plot map controls" hidden>
+        <p class="transform-note">The pen surface. Any material — a generative field, a published
+        plate, a picture of your own, the frame another source just rendered, or the voxel build —
+        drawn as a plotter would draw it, and blendable onto one sheet. Same seed, same drawing,
+        re-checkable. The SVG export is plotter-grade: real units, ordered paths, one layer per
+        pen pass.</p>
+        <div class="at-group">
+          <span class="at-glab">Material <span class="hint">what the pen draws</span></span>
+          <div class="at-chips" role="group" aria-label="Plot material">
+            <button type="button" class="chip active" data-plot-material="field">Field</button>
+            <button type="button" class="chip" data-plot-material="plate">Plate</button>
+            <button type="button" class="chip" data-plot-material="archive">Archive</button>
+            <button type="button" class="chip" data-plot-material="picture">Picture</button>
+            <button type="button" class="chip" data-plot-material="canvas">Studio canvas</button>
+            <button type="button" class="chip" data-plot-material="voxels">Voxel build</button>
+            <button type="button" class="chip" data-plot-material="sketchsheet">Sketch</button>
+          </div>
+        </div>
+        <div class="at-group" id="plot-plate-row" hidden>
+          <span class="at-glab">Plate <span class="hint">the published corpus, by receipt</span></span>
+          <div class="dropdown" data-dropdown="plot-plate"></div>
+          <div id="plot-plate" hidden>
+            <option value="scene-01" selected>01 · Current Story 01</option>
+          </div>
+        </div>
+        <div class="at-group" id="plot-work-row" hidden>
+          <span class="at-glab">Archive <span class="hint">165 published works, banded by their own measurements</span></span>
+          <div class="at-chips" role="group" aria-label="Filter the archive by band">
+            <button type="button" class="chip active" data-plot-band="all" data-plot-band-label="All">All</button>
+            <button type="button" class="chip" data-plot-band="dark" data-plot-band-label="Dark">Dark</button>
+            <button type="button" class="chip" data-plot-band="mid" data-plot-band-label="Mid">Mid</button>
+            <button type="button" class="chip" data-plot-band="luminous" data-plot-band-label="Luminous">Luminous</button>
+            <button type="button" class="chip" data-plot-band="monochrome" data-plot-band-label="Monochrome">Monochrome</button>
+            <button type="button" class="chip" data-plot-band="warm" data-plot-band-label="Warm">Warm</button>
+            <button type="button" class="chip" data-plot-band="cool" data-plot-band-label="Cool">Cool</button>
+            <button type="button" class="chip" data-plot-band="collage" data-plot-band-label="Collages">Collages</button>
+          </div>
+          <div class="dropdown" data-dropdown="plot-work"></div>
+          <div id="plot-work" hidden></div>
+          <span class="hint" id="plot-work-note">the catalogue loads when this material is chosen</span>
+        </div>
+        <div class="at-group" id="plot-file-row" hidden>
+          <span class="at-glab">Picture <span class="hint">never leaves this page</span></span>
+          <input type="file" id="plot-file" accept="image/*" aria-label="Choose a picture to plot">
+        </div>
+        <div class="at-group" id="plot-method-row" hidden>
+          <span class="at-glab">Method <span class="hint">Auto draws several and keeps the one that carries the most tone</span></span>
+          <div class="at-chips" role="group" aria-label="Image plot method">
+            <button type="button" class="chip active" data-plot-method="auto">Auto</button>
+            <button type="button" class="chip" data-plot-method="flowline">Flowline</button>
+            <button type="button" class="chip" data-plot-method="engrave">Engrave</button>
+            <button type="button" class="chip" data-plot-method="stipple">Stipple</button>
+            <button type="button" class="chip" data-plot-method="tsp">One path</button>
+            <button type="button" class="chip" data-plot-method="squiggle">Squiggle</button>
+            <button type="button" class="chip" data-plot-method="spiral">Spiral</button>
+            <button type="button" class="chip" data-plot-method="contour">Contour</button>
+            <button type="button" class="chip" data-plot-method="xdog">Line drawing</button>
+          </div>
+        </div>
+        <div class="at-group" id="plot-blend-row" hidden>
+          <span class="at-glab">Blend <span class="hint">the generative field shares the paper</span></span>
+          <div class="at-chips" role="group" aria-label="Blend with the field">
+            <button type="button" class="chip active" data-plot-blend="alone">Alone</button>
+            <button type="button" class="chip" data-plot-blend="under">Field under</button>
+            <button type="button" class="chip" data-plot-blend="over">Field over</button>
+          </div>
+        </div>
+        <div id="plot-study-rows">
+        <div class="at-group">
+          <span class="at-glab">Study <span class="hint">Auto lets the sheet choose, judge itself, and re-roll what it finds dull</span></span>
+          <div class="at-chips" role="group" aria-label="Plot map study">
+            <button type="button" class="chip active" data-plot-study="auto">Auto</button>
+            <button type="button" class="chip" data-plot-study="basin">River basin</button>
+            <button type="button" class="chip" data-plot-study="moire">Moire</button>
+            <button type="button" class="chip" data-plot-study="lattice">Lattice</button>
+            <button type="button" class="chip" data-plot-study="strata">Strata</button>
+            <button type="button" class="chip" data-plot-study="monolith">Monolith</button>
+            <button type="button" class="chip" data-plot-study="nomogram">Nomogram</button>
+            <button type="button" class="chip" data-plot-study="orbital">Orbital</button>
+            <button type="button" class="chip" data-plot-study="scanline">Scanline</button>
+            <button type="button" class="chip" data-plot-study="horizon">Horizon</button>
+            <button type="button" class="chip" data-plot-study="stitch">Stitch</button>
+            <button type="button" class="chip" data-plot-study="tanaka">Tanaka</button>
+            <button type="button" class="chip" data-plot-study="relief">Relief</button>
+            <button type="button" class="chip" data-plot-study="zigzag">Zigzag</button>
+          </div>
+          <span class="at-glab">Map register <span class="hint">the four cartographic studies</span></span>
+          <div class="at-chips" role="group" aria-label="Cartographic study">
+            <button type="button" class="chip" data-plot-study="topo">Topographic</button>
+            <button type="button" class="chip" data-plot-study="flow">Flow field</button>
+            <button type="button" class="chip" data-plot-study="ridge">Ridgelines</button>
+            <button type="button" class="chip" data-plot-study="chart">Chart</button>
+          </div>
+        </div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Mark <span class="hint">how the pen lays the line down</span></span>
+          <div class="at-chips" role="group" aria-label="Mark register">
+            <button type="button" class="chip active" data-plot-register="auto">Auto</button>
+            <button type="button" class="chip" data-plot-register="clean">Clean</button>
+            <button type="button" class="chip" data-plot-register="drawn">Drawn</button>
+            <button type="button" class="chip" data-plot-register="worked">Worked</button>
+            <button type="button" class="chip" data-plot-register="laboured">Laboured</button>
+          </div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Seed <span class="hint">names the terrain</span></span>
+          <div class="at-actions">
+            <input type="text" class="at-seed" id="plot-seed" value="aurora" maxlength="48" aria-label="Plot map seed">
+            <button type="button" class="btn ghost" id="plot-reseed" aria-label="New random seed">reseed</button>
+          </div>
+        </div>
+        <div class="at-group" id="plot-levels-row">
+          <span class="at-glab">Contour levels <span class="hint">(<span id="plot-levels-val">14</span>)</span></span>
+          <input type="range" class="at-slider" id="plot-levels" min="4" max="28" step="1" value="14" aria-label="Contour levels">
+        </div>
+        <div class="at-group" id="plot-density-row">
+          <span class="at-glab">Line density <span class="hint">(<span id="plot-density-val">1.00</span>)</span></span>
+          <input type="range" class="at-slider" id="plot-density" min="0.3" max="2.5" step="0.05" value="1" aria-label="Line density">
+        </div>
+        <div class="at-group" id="plot-replay-row">
+          <span class="at-glab">Watch it draw <span class="hint">the sheet replayed as the plotter would run it, pen by pen</span></span>
+          <div class="at-actions">
+            <button type="button" class="btn ghost" id="plot-play" aria-label="Replay the sheet stroke by stroke">Watch</button>
+            <input type="range" class="at-slider" id="plot-speed" min="0.25" max="6" step="0.25" value="1" aria-label="Replay speed">
+          </div>
+          <input type="range" class="at-slider" id="plot-scrub" min="0" max="1000" step="1" value="0" aria-label="Replay position">
+          <p class="src-hint" id="plot-pen-note" aria-live="polite">press Watch; pen changes are called out as they happen</p>
+        </div>
+        <div class="at-actions">
+          <button type="button" class="btn" id="plot-draw" aria-label="Draw the map sheet">Draw</button>
+          <button type="button" class="btn ghost" id="plot-svg" aria-label="Export the sheet as a plotter-grade SVG">SVG sheet</button>
+          <button type="button" class="btn ghost" id="plot-gcode" aria-label="Export the sheet as pen-plotter G-code with pen-change pauses">G-code</button>
+          <button type="button" class="btn ghost" id="plot-pin" aria-label="Pin this sheet to the shelf">Pin</button>
+        </div>
+        <p class="src-hint" id="plot-readout">the sheet's stroke count and sea level report here after a draw</p>
+      </section>
+
+      <!-- Sketch: freehand drawing as a first-class material. Strokes are captured in sheet
+           space, expanded live through a symmetry (the kaleidoscope is the toy), laid down in
+           the same mark registers the pen surface uses, and sent onward as a plot sheet. -->
+      <section class="src-block" id="src-sketch" role="tabpanel" aria-label="Sketch controls" hidden>
+        <p class="transform-note">Draw by hand. Strokes land on the sheet in the pen's own mark
+        registers, a symmetry expands them live as you draw, and the finished drawing is a plot
+        sheet like any other: watch it draw, send it to the pen surface, blend it, export it.
+        Your strokes stay in this browser: the drawing is never uploaded, and a pin is stored on
+        this device. The one exception is the one you make yourself, and it is the same for every
+        source: if you connect your own model below, the frame on the canvas is sent to the
+        endpoint you configure.</p>
+        <div class="at-group">
+          <span class="at-glab">Symmetry <span class="hint">changing it re-expands what you already drew</span></span>
+          <div class="at-chips" role="group" aria-label="Sketch symmetry">
+            <button type="button" class="chip active" data-sketch-sym="none">None</button>
+            <button type="button" class="chip" data-sketch-sym="mirror">Mirror</button>
+            <button type="button" class="chip" data-sketch-sym="radial">Radial</button>
+            <button type="button" class="chip" data-sketch-sym="kaleido">Kaleido</button>
+          </div>
+          <span class="at-glab">Fold <span class="hint">(<span id="sketch-k-val">6</span>)</span></span>
+          <input type="range" class="at-slider" id="sketch-k" min="2" max="12" step="1" value="6" aria-label="Symmetry fold count">
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Guide <span class="hint">drawn light, kept out of exports unless asked</span></span>
+          <div class="at-chips" role="group" aria-label="Sketch guide">
+            <button type="button" class="chip active" data-sketch-guide="none">None</button>
+            <button type="button" class="chip" data-sketch-guide="grid">Grid</button>
+            <button type="button" class="chip" data-sketch-guide="iso">Isometric</button>
+            <button type="button" class="chip" data-sketch-guide="zigzag">Zigzag</button>
+          </div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Mark <span class="hint">how the pen lays your line down</span></span>
+          <div class="at-chips" role="group" aria-label="Sketch mark register">
+            <button type="button" class="chip" data-sketch-register="clean">Clean</button>
+            <button type="button" class="chip active" data-sketch-register="drawn">Drawn</button>
+            <button type="button" class="chip" data-sketch-register="worked">Worked</button>
+            <button type="button" class="chip" data-sketch-register="laboured">Laboured</button>
+          </div>
+        </div>
+        <div class="at-actions">
+          <button type="button" class="btn ghost" id="sketch-undo" aria-label="Remove the last stroke">Undo</button>
+          <button type="button" class="btn ghost" id="sketch-clear" aria-label="Clear the sketch">Clear</button>
+        </div>
+        <div class="at-actions">
+          <button type="button" class="btn" id="sketch-plot" aria-label="Send this sketch to the pen surface">To pen surface</button>
+          <button type="button" class="btn ghost" id="sketch-svg" aria-label="Export the sketch as a plotter-grade SVG">SVG sheet</button>
+          <button type="button" class="btn ghost" id="sketch-pin" aria-label="Pin this sketch to the shelf">Pin</button>
+        </div>
+        <p class="src-hint" id="sketch-readout">draw on the canvas; strokes and symmetry report here</p>
+      </section>
+
+      <!-- Voxels: seeded voxel scenes (CSG relics, monuments, terrain shared with Plot maps,
+           accretive growth), lit with per-face baked ambient occlusion, drawn isometrically,
+           exported as MagicaVoxel .vox (byte-deterministic) or an OBJ shell. -->
+      <section class="src-block" id="src-voxels" role="tabpanel" aria-label="Voxel controls" hidden>
+        <p class="transform-note">Voxel tooling from a seed: build, light, export. Terrain shares
+        the Plot maps elevation truth, so a seed's map and its relief agree. The .vox export is
+        byte-deterministic — the same seed always hashes the same file.</p>
+        <div class="at-group">
+          <span class="at-glab">Study <span class="hint">what gets built</span></span>
+          <div class="at-chips" role="group" aria-label="Voxel study">
+            <button type="button" class="chip active" data-voxel-study="relic">Relic</button>
+            <button type="button" class="chip" data-voxel-study="monument">Monument</button>
+            <button type="button" class="chip" data-voxel-study="terrain">Terrain</button>
+            <button type="button" class="chip" data-voxel-study="growth">Growth</button>
+          </div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Seed <span class="hint">names the object</span></span>
+          <div class="at-actions">
+            <input type="text" class="at-seed" id="voxel-seed" value="aurora" maxlength="48" aria-label="Voxel seed">
+            <button type="button" class="btn ghost" id="voxel-reseed" aria-label="New random seed">reseed</button>
+          </div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Resolution <span class="hint">(<span id="voxel-res-val">48</span>&sup3;)</span></span>
+          <input type="range" class="at-slider" id="voxel-res" min="24" max="96" step="4" value="48" aria-label="Voxel resolution">
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Pointer <span class="hint">what a click on the object does</span></span>
+          <div class="at-chips" role="group" aria-label="Voxel pointer mode">
+            <button type="button" class="chip active" data-voxel-mode="orbit">Orbit</button>
+            <button type="button" class="chip" data-voxel-mode="build">Build</button>
+            <button type="button" class="chip" data-voxel-mode="chisel">Chisel</button>
+            <button type="button" class="chip" data-voxel-mode="paint">Paint</button>
+          </div>
+          <div class="at-actions">
+            <button type="button" class="btn ghost" id="voxel-turn-l" aria-label="Rotate a quarter turn left">&#10226; turn</button>
+            <button type="button" class="btn ghost" id="voxel-turn-r" aria-label="Rotate a quarter turn right">turn &#10227;</button>
+          </div>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Algorithm <span class="hint">the study's own knobs</span></span>
+          <div class="at-chips" role="group" aria-label="Algorithm tuning mode">
+            <button type="button" class="chip active" data-voxel-tunemode="seeded">Seeded</button>
+            <button type="button" class="chip" data-voxel-tunemode="tuned">Tuned</button>
+          </div>
+          <div id="voxel-tune-rows" hidden>
+            <span class="at-glab"><span id="voxel-tune-a-lab">A</span> <span class="hint">(<span id="voxel-tune-a-val">0.50</span>)</span></span>
+            <input type="range" class="at-slider" id="voxel-tune-a" min="0" max="1" step="0.01" value="0.5" aria-label="Algorithm knob A">
+            <span class="at-glab"><span id="voxel-tune-b-lab">B</span> <span class="hint">(<span id="voxel-tune-b-val">0.50</span>)</span></span>
+            <input type="range" class="at-slider" id="voxel-tune-b" min="0" max="1" step="0.01" value="0.5" aria-label="Algorithm knob B">
+            <span class="at-glab"><span id="voxel-tune-c-lab">C</span> <span class="hint">(<span id="voxel-tune-c-val">0.50</span>)</span></span>
+            <input type="range" class="at-slider" id="voxel-tune-c" min="0" max="1" step="0.01" value="0.5" aria-label="Algorithm knob C">
+          </div>
+        </div>
+        <div class="at-actions">
+          <button type="button" class="btn" id="voxel-draw" aria-label="Build and draw the voxel scene">Build</button>
+          <button type="button" class="btn ghost" id="voxel-vox" aria-label="Export as MagicaVoxel .vox">.vox</button>
+          <button type="button" class="btn ghost" id="voxel-obj" aria-label="Export the exposed shell as OBJ">OBJ</button>
+          <button type="button" class="btn ghost" id="voxel-plot" aria-label="Draw this build as a hidden-line plotter sheet">Plot it</button>
+          <button type="button" class="btn ghost" id="voxel-pin" aria-label="Pin this build to the shelf">Pin</button>
+        </div>
+        <p class="src-hint" id="voxel-readout">voxel count and dimensions report here after a build</p>
       </section>
       <section class="src-block" id="src-atelier" role="tabpanel" aria-label="Atelier controls">
         <div class="atelier studio-atelier" id="atelier">
@@ -326,6 +622,96 @@
               <button class="btn" id="ndim-render" type="button">Render</button>
             </div>
             <p class="src-hint">The eye perceives each frame as it rotates through dimensions you can't quite hold. Scroll to dolly the camera in, drag to orbit, click to paint.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SOURCE: Spatial. The authored world package on the hybrid renderer: seed-derived light
+           veils on depth planes plus selective Gaussian material, receipt-checked byte for byte
+           before it draws. Wired by studio-spatial.js; the splat budget follows the device tier. -->
+      <section class="src-block" id="src-spatial" role="tabpanel" aria-label="Spatial world controls" hidden>
+        <div class="fractal-source" id="spatial-source">
+          <div class="at-panel">
+            <p class="transform-note">Certified world packages on the hybrid renderer. Every sidecar is re-hashed against its manifest receipt before anything renders. Crystal City is the spatial session's generated artwork: semantic depth meshes carry the composition, Gaussian primitives carry only the atmosphere, and the invented support fill stays labeled. Drag the frame to move inside the disclosed camera boundary; splats follow your device tier's budget.</p>
+            <details class="rail-group" open>
+              <summary>World</summary>
+              <div class="at-group">
+                <span class="at-glab">Package <span class="hint">reconstruction &middot; authored: two lanes, each labeled</span></span>
+                <div class="at-chips" role="group" aria-label="World package">
+                  <button type="button" class="chip active" data-world="atlas">The Atlas</button>
+                  <button type="button" class="chip" data-world="crystal-city">Crystal City</button>
+                  <button type="button" class="chip" data-world="folded-light">Folded light</button>
+                </div>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Receipt <span class="hint">sidecar bytes against the manifest hash</span></span>
+                <span class="at-seed" id="sp-verdict" data-verdict="pending" style="width:auto;text-align:center">pending</span>
+              </div>
+            </details>
+            <details class="rail-group" open id="sp-atlas-block">
+              <summary>Atlas scene</summary>
+              <div class="at-group">
+                <span class="at-glab">Work <span class="hint">27 spatial studies, one per artwork</span></span>
+                <select id="sp-scene" class="at-seed" style="width:100%" aria-label="Atlas scene"></select>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Transform <span class="hint">a spatial transformation of the field, never an image filter</span></span>
+                <div class="at-chips" role="group" aria-label="Atlas transform mode">
+                  <button type="button" class="chip active" data-atlas-mode="0">Field</button>
+                  <button type="button" class="chip" data-atlas-mode="1">Inversphere</button>
+                  <button type="button" class="chip" data-atlas-mode="3">Holo</button>
+                </div>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Depth <span class="hint">(<span id="sp-depth-val">1.00</span>)</span></span>
+                <input type="range" class="at-slider" id="sp-depth" min="0.2" max="2.2" step="0.01" value="1" aria-label="Depth scale">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Splat size <span class="hint">(<span id="sp-size-val">1.00</span>)</span></span>
+                <input type="range" class="at-slider" id="sp-size" min="0.3" max="2.5" step="0.01" value="1" aria-label="Splat size">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Exposure <span class="hint">(<span id="sp-exposure-val">1.00</span>)</span></span>
+                <input type="range" class="at-slider" id="sp-exposure" min="0.4" max="2.4" step="0.01" value="1" aria-label="Exposure">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Source compare <span class="hint">the reconstruction against the artwork it was trained on</span></span>
+                <div class="at-chips" role="group" aria-label="Source compare mode">
+                  <button type="button" class="chip active" data-compare="off">Off</button>
+                  <button type="button" class="chip" data-compare="side">Curtain</button>
+                  <button type="button" class="chip" data-compare="overlay">Overlay</button>
+                </div>
+                <input type="range" class="at-slider" id="sp-compare-mix" min="0" max="1" step="0.01" value="0.5" aria-label="Compare position or overlay mix" hidden>
+                <p class="src-hint" id="sp-compare-note" hidden></p>
+              </div>
+              <p class="src-hint" id="sp-boundary" data-claim-boundary></p>
+              <p class="src-hint">Drag to orbit, wheel to dolly, double-click resets. Needs WebGL2; the hybrid worlds run everywhere.</p>
+            </details>
+            <details class="rail-group" open id="sp-hybrid-block" hidden>
+              <summary>Camera &amp; material</summary>
+              <div class="at-group">
+                <span class="at-glab">Parallax strength <span class="hint">(<span id="sp-parallax-val">0.70</span>)</span></span>
+                <input type="range" class="at-slider" id="sp-parallax" min="0" max="1.2" step="0.01" value="0.7" aria-label="Parallax strength">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Atmosphere drift <span class="hint">dust + veil breathing (<span id="sp-drift-val">0.35</span>)</span></span>
+                <input type="range" class="at-slider" id="sp-drift" min="0" max="1.5" step="0.01" value="0.35" aria-label="Atmosphere drift">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Luminous gain <span class="hint">(<span id="sp-glow-val">0.50</span>)</span></span>
+                <input type="range" class="at-slider" id="sp-glow" min="0" max="2.2" step="0.01" value="0.5" aria-label="Luminous gain">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Water motion <span class="hint">glint shimmer (<span id="sp-water-val">0.25</span>)</span></span>
+                <input type="range" class="at-slider" id="sp-water" min="0" max="1.2" step="0.01" value="0.25" aria-label="Water motion">
+              </div>
+            </details>
+            <div class="at-actions">
+              <button class="btn ghost" id="sp-pause" type="button" aria-pressed="false">pause motion</button>
+              <button class="btn ghost" id="sp-receipt" type="button" title="Export the run receipt: package, boundary, budget, controls">export run receipt</button>
+            </div>
+            <p class="src-hint" id="sp-status" aria-live="polite">the world loads when you enter this source</p>
+            <p class="src-hint">Motion is material-scoped: dust drifts, the beam carries current, water shimmers, and the veils breathe; nothing structural ripples. Reduced motion holds a single still frame.</p>
           </div>
         </div>
       </section>
@@ -611,6 +997,23 @@
         </div>
       </section>
 
+      <!-- The shelf: the studio's memory, cross-source, quiet by design. Every pin is a RECIPE
+           (seed + controls, plus raw strokes for sketches) that reproduces the creation exactly;
+           it persists in this browser and travels as a JSON file. No streaks, no scores - the
+           shelf belongs to the visitor, not to the site. -->
+      <section class="rail-group studio-shelf" id="studio-shelf" aria-label="Shelf of pinned creations">
+        <div class="shelf-head">
+          <span class="at-glab">Shelf <span class="hint">pins reproduce exactly; stored in this browser only</span></span>
+        </div>
+        <div class="shelf-strip" id="shelf-strip" role="list" aria-label="Pinned creations"></div>
+        <div class="at-actions">
+          <button type="button" class="btn ghost" id="shelf-export" aria-label="Download the shelf as a JSON file">Export shelf</button>
+          <button type="button" class="btn ghost" id="shelf-import" aria-label="Import a shelf JSON file">Import</button>
+          <input type="file" id="shelf-import-file" accept="application/json,.json" hidden aria-hidden="true">
+        </div>
+        <p class="src-hint" id="shelf-hint">nothing pinned yet; Pin sits beside the exports in Plot maps, Voxels, and Sketch</p>
+      </section>
+
       <details class="rail-group rail-about">
         <summary>Studio notes</summary>
         <p>Render media, watch the measurements move, and export the frame or perception record. Animated sources - the living neural and seed-sound instruments, physics, the orbit, and screen capture - add a WebM button that records the motion itself; the file is named for the source and seed, so a seed's animation is reproducible. Receipts remain available when a source produces checkable evidence.</p>
@@ -657,52 +1060,84 @@
       <canvas id="studio-canvas" width="360" height="360"
         role="img" aria-label="The live render canvas. The measurimeter panel on the right describes what the model currently perceives."
         aria-live="off"></canvas>
+      <!-- Source-compare layer (spatial atlas): the training artwork aligned over the live
+           reconstruction's content box. Curtain mode clips it at the mix position; overlay mode
+           fades it. Pointer-transparent, so orbit/dolly keep working underneath. -->
+      <div id="sp-compare-layer" hidden aria-hidden="true">
+        <img id="sp-compare-img" alt="" decoding="async">
+        <span id="sp-compare-tag">source</span>
+      </div>
     </div>
     <div class="render-toolbar" id="render-toolbar" role="toolbar" aria-label="Render controls">
-      <button class="rt-btn" id="rt-snapshot" type="button" title="Freeze this frame and ask the model"
-        aria-label="Snapshot: freeze this frame and ask the model">
-        <span class="rt-ico" aria-hidden="true">&#9677;</span> Snapshot</button>
+      <div class="rt-group" role="group" aria-label="View">
+        <span class="rt-group-lab" aria-hidden="true">view</span>
       <button class="rt-btn" id="rt-playpause" type="button" aria-pressed="false"
         title="Pause or resume animated sources" aria-label="Pause animated source" disabled>
         <span class="rt-ico" aria-hidden="true">&#9208;</span> <span id="rt-playpause-label">Pause</span></button>
       <button class="rt-btn" id="rt-reset" type="button" title="Restore the source's default framing"
         aria-label="Reset view to default framing">
         <span class="rt-ico" aria-hidden="true">&#10226;</span> Reset view</button>
-      <button class="rt-btn" id="rt-fullscreen" type="button" title="Fill the screen with the canvas"
-        aria-label="Enter fullscreen" aria-pressed="false">
-        <span class="rt-ico" aria-hidden="true">&#10548;</span> Fullscreen</button>
-      <button class="rt-btn" id="rt-overlay" type="button" aria-pressed="false"
-        title="Pop the readout into a floating overlay"
-        aria-label="Open readout overlay panel">
-        <span class="rt-ico" aria-hidden="true">&#9645;</span> Overlay</button>
-      <!-- Fit/Fill: toggle canvas between object-fit contain (Fit) and cover (Fill).
-           Default is Fit. Wired by studio-surface.js via wireToolbarButtons(). -->
       <button class="rt-btn" id="rt-fit-fill" type="button" aria-pressed="false"
         title="Toggle canvas between Fit (letterboxed) and Fill (cover)"
         aria-label="Toggle Fit or Fill canvas scaling">
         <span class="rt-ico" aria-hidden="true">&#9974;</span> <span id="rt-fit-fill-label">Fit</span></button>
-      <!-- Cinema: collapse both side rails so the canvas spans full width.
-           Distinct from OS fullscreen. Wired by studio-surface.js via wireToolbarButtons(). -->
+      <button class="rt-btn" id="rt-overlay" type="button" aria-pressed="false"
+        title="Pop the readout into a floating overlay"
+        aria-label="Open readout overlay panel">
+        <span class="rt-ico" aria-hidden="true">&#9645;</span> Overlay</button>
       <button class="rt-btn" id="rt-cinema" type="button" aria-pressed="false"
         title="Cinema mode: collapse the side panels"
         aria-label="Toggle cinema mode: collapse side panels">
         <span class="rt-ico" aria-hidden="true">&#9724;</span> Cinema</button>
-      <!-- Export group: wired by studio.js. OBJ/GLTF shown only when a mesh is loaded;
-           WebM shown only for animated sources. PNG and JSON are always available. -->
+      <button class="rt-btn" id="rt-fullscreen" type="button" title="Fill the screen with the canvas"
+        aria-label="Enter fullscreen" aria-pressed="false">
+        <span class="rt-ico" aria-hidden="true">&#10548;</span> Fullscreen</button>
+      </div>
+      <div class="rt-group" role="group" aria-label="Sound">
+        <span class="rt-group-lab" aria-hidden="true">sound</span>
+      <button class="rt-btn" id="rt-sound" type="button" aria-pressed="false"
+        title="Sound on or off: toolbar actions play notes in the house scale"
+        aria-label="Toggle the studio's sound">
+        <span class="rt-ico" aria-hidden="true">&#9835;</span> Sound</button>
+      <button class="rt-btn" id="rt-playframe" type="button" aria-pressed="false"
+        title="Play this frame as a score: rows are pitches, the scan is time"
+        aria-label="Play the current frame as sound">
+        <span class="rt-ico" aria-hidden="true">&#9658;</span> Play frame</button>
+      <button class="rt-btn" id="rt-clip" type="button"
+        title="Record six seconds of the moving canvas as a WebM clip"
+        aria-label="Record a six second clip of the canvas">
+        <span class="rt-ico" aria-hidden="true">&#9679;</span> Clip</button>
+      </div>
+      <div class="rt-group" role="group" aria-label="Send">
+        <span class="rt-group-lab" aria-hidden="true">send</span>
+      <button class="rt-btn" id="rt-snapshot" type="button" title="Freeze this frame and ask the model"
+        aria-label="Snapshot: freeze this frame and ask the model">
+        <span class="rt-ico" aria-hidden="true">&#9677;</span> Snapshot</button>
+      <button class="rt-btn" id="rt-retro" type="button" title="Send this frame to the Retro Engine"
+        aria-label="Send this frame to the Retro Engine to pixelate and run effects on it">
+        <span class="rt-ico" aria-hidden="true">&#9638;</span> To Retro</button>
+      <button class="rt-btn" id="rt-loom" type="button" title="Send this frame to the Loom to be woven"
+        aria-label="Send this frame to the Loom to be woven into cloth">
+        <span class="rt-ico" aria-hidden="true">&#9636;</span> To Loom</button>
+      </div>
+      <div class="rt-group" role="group" aria-label="Export">
+        <span class="rt-group-lab" aria-hidden="true">export</span>
       <button class="rt-btn" id="rt-export-png"  type="button" title="Save the current frame as a PNG image"
         aria-label="Export PNG image">
         <span class="rt-ico" aria-hidden="true">&#8659;</span> PNG</button>
-      <button class="rt-btn" id="rt-export-json" type="button" title="Save the witnessed perception certificate as JSON"
-        aria-label="Export perception JSON">
-        <span class="rt-ico" aria-hidden="true">&#8659;</span> Perception JSON</button>
-      <!-- Unified export menu: every registered kind grouped by discipline.
-           Populated by studio.js from EXPORT_KINDS; absent module degrades to
-           the legacy PNG/JSON buttons above. -->
       <details class="rt-plot" id="rt-export">
         <summary class="rt-btn" title="Export the frame across disciplines: raster, print, design, textile, text, relief"
           aria-label="Export menu: choose a format across disciplines">
           <span class="rt-ico" aria-hidden="true">&#8659;</span> Export as</summary>
         <div class="rt-plot-pop" id="rt-export-pop" aria-label="Export formats">
+          <div class="rt-plot-row">
+            <span class="rt-plot-lab">quick</span>
+            <div class="rt-plot-chips">
+      <button class="rt-btn" id="rt-export-json" type="button" title="Save the witnessed perception certificate as JSON"
+        aria-label="Export perception JSON">
+        <span class="rt-ico" aria-hidden="true">&#8659;</span> Perception JSON</button>
+            </div>
+          </div>
           <div class="rt-plot-row">
             <span class="rt-plot-lab" id="export-paper-lab">pdf paper</span>
             <div class="rt-plot-chips" role="group" aria-labelledby="export-paper-lab">
@@ -715,9 +1150,6 @@
           <p class="rt-plot-note">Design, textile, and text formats read the live perception packet; PDF paper sets the print page; relief exports a luminance mesh.</p>
         </div>
       </details>
-      <!-- Plot desk: the SVG plot control opens an options popover (style, pens, paper, format).
-           Wired by studio.js through the plotter contract; absent capabilities fall back to the
-           single-pen flow SVG. -->
       <details class="rt-plot" id="rt-plot">
         <summary class="rt-btn" id="rt-export-svg" title="Plot the current frame as pen line art: choose style, pens, paper, and format"
           aria-label="Plot options: style, pens, paper, and format">
@@ -785,10 +1217,9 @@
       <button class="rt-btn" id="rt-export-webm" type="button" title="Record 5 seconds of the canvas as WebM video"
         aria-label="Record WebM video" hidden>
         <span class="rt-ico" aria-hidden="true">&#8659;</span> WebM</button>
-      <span class="rt-spacer"></span>
-      <!-- Engine tier override (Stage 1 scalable engine): Auto picks low/mid/high/max from the device
-           capability probe; the user can force a tier. Shown for the Music source (particles engine);
-           the live backend (WebGPU/WebGL2/CPU) is reflected in the title. -->
+      </div>
+      <div class="rt-group" role="group" aria-label="Engine">
+        <span class="rt-group-lab" aria-hidden="true">engine</span>
       <button class="rt-btn rt-tier" id="rt-tier" type="button"
         title="Engine tier: Auto / Low / Mid / High / Max"
         aria-label="Cycle engine tier" hidden>
@@ -797,6 +1228,8 @@
         title="Cycle render quality: Standard / High"
         aria-label="Cycle render quality" disabled>
         Quality: <span id="rt-quality-val">Standard</span></button>
+      <div id="tp-pane-container" class="tp-pane-container"></div>
+      </div>
     </div>
     <div class="engine-statusbar" id="engine-statusbar" aria-label="Engine runtime status">
       <span><b>Graph</b> <span id="engine-status-graph">ready</span></span>
@@ -817,7 +1250,7 @@
           <span class="mm-live" id="mm-live" hidden aria-hidden="true"><span class="mm-dot"></span>live</span></h2>
         <div class="row"><span class="rk">perceptual hash</span><span class="rv" id="sc-phash" aria-label="Perceptual hash">-</span></div>
         <div class="row"><span class="rk">size</span><span class="rv" id="sc-size">-</span></div>
-        <div class="grounds" id="sc-feats" aria-label="Visual feature readings"></div>
+        <div class="grounds" id="sc-feats" role="group" aria-label="Visual feature readings"></div>
         <p class="mm-describe" id="mm-describe"></p>
         <details class="mm-fullread">
           <summary>full read &middot; the no-vision view</summary>
@@ -856,7 +1289,7 @@
             <div class="mm-meters" id="mm-visual" role="list" aria-label="Visual channel readings"></div>
             <div class="mm-section">
               <div class="mm-clab">audio channels <span class="mm-hint">when the source has sound</span></div>
-              <div class="mm-meters" id="mm-audio" role="list" aria-label="Audio channel readings"></div>
+              <div class="mm-meters" id="mm-audio" role="group" aria-label="Audio channel readings"></div>
             </div>
             <div class="mm-section">
               <div class="mm-clab">source</div>
@@ -979,19 +1412,19 @@
 
 </main>
 
-<script type="module" src="system/nav.js?v=20260719-zentropy-sitewide"></script>
+<script type="module" src="system/nav.js?v=20260828-site-design"></script>
 <!-- Atelier engine (Task 7): classic IIFE, self-boots on DOM ready, binds the controls above and
      draws into #studio-canvas. Loaded before the Studio module so window.Atelier + the shared
      spine/reconcile readouts are present. -->
-<script src="system/spine.js?v=20260625a" defer></script>
-<script src="system/reconcile.js?v=20260625a" defer></script>
-<script src="system/atelier.js?v=20260701a" defer></script>
+<script src="system/spine.js?v=20260828-site-design" defer></script>
+<script src="system/reconcile.js?v=20260828-site-design" defer></script>
+<script src="system/atelier.js?v=20260828-site-design" defer></script>
 <!-- Vendored interactive libraries (P1). Single prebuilt files, no runtime CDN fetch.
      panzoom (anvaka) v9.4.3: UMD, sets window.createPanzoom; needed at boot (the default
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
-<script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js"></script>
-<script type="module" src="system/studio.js?v=20260710a"></script>
+<script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260828-site-design"></script>
+<script type="module" src="system/studio.js?v=20260828-site-design"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

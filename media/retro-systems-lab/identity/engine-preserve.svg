@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
-  <title id="title">Engine Revival release capture</title>
-  <desc id="desc">A deterministic layered manifest field for the Engine Revival release record.</desc>
-  <metadata>{"schema":"harperz9-retro-identity/v2","label":"ENGINE REVIVAL · RELEASE","sourceFiles":["site/systems.json","site/routes.json","public/engine-revival.html"]}</metadata>
+  <title id="title">Engine Revival preserve capture</title>
+  <desc id="desc">A deterministic layered manifest field for the Engine Revival preserve pillar.</desc>
+  <metadata>{"schema":"harperz9-retro-identity/v2","label":"ENGINE REVIVAL · PRESERVE","sourceFiles":["site/systems.json","site/routes.json","public/engine-revival.html"]}</metadata>
   <rect width="960" height="540" fill="#14041b"/>
   <rect x="48" y="48" width="864" height="444" rx="28" fill="#09030d" stroke="#f6efe7" stroke-opacity=".18"/>
-  <text x="96" y="102" fill="#f6efe7" font-family="ui-monospace, monospace" font-size="18" letter-spacing="4">ENGINE REVIVAL · RELEASE</text>
+  <text x="96" y="102" fill="#f6efe7" font-family="ui-monospace, monospace" font-size="18" letter-spacing="4">ENGINE REVIVAL · PRESERVE</text>
 
       <g transform="translate(86 70)">
         <rect width="788" height="400" rx="26" fill="#160820" stroke="#f6efe7" stroke-opacity=".16"/>

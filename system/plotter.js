@@ -171,7 +171,7 @@ function marchSegments(field, w, h, t) {
 /* Chain raw segments into polylines by matching quantized endpoints; walks
    forward from a chain's tail, then backward from its head. Deterministic:
    segments are visited and matched in emission order. */
-function chainSegments(segs) {
+export function chainSegments(segs) {
   const key = (p) => Math.round(p[0] * 32) + "," + Math.round(p[1] * 32);
   const at = new Map();
   segs.forEach((s, i) => {
@@ -211,6 +211,20 @@ function chainSegments(segs) {
    artwork. No randomness: the field alone decides, so it is deterministic. */
 export function contourFromLuma(px, w, h, ch = 4, opts = {}) {
   const field = lumaField(px, w, h, ch);
+  // An explicit threshold marches EXACTLY that iso-level. Accepted on either scale: 0-255 (byte,
+  // what the sheet builders pass) or 0-1 (lumaField's own). This option was accepted-and-IGNORED
+  // from the day it shipped — every call marched the same five fixed levels, which made the pen
+  // surface's contour-levels knob inert (14 requested levels were the same 5 re-traced), stacked
+  // index contours exactly on minor ones, and put the "coast" nowhere near sea level. Confirmed
+  // empirically 2026-08-04: thresholds 51 and 229 returned byte-identical output.
+  if (opts.threshold != null && isFinite(opts.threshold)) {
+    const t = Math.max(0.001, Math.min(0.999, opts.threshold > 1 ? opts.threshold / 255 : opts.threshold));
+    const lines = [];
+    for (const poly of chainSegments(marchSegments(field, w, h, t))) {
+      if (poly.length > 2) lines.push(poly);
+    }
+    return lines;
+  }
   const levels = Math.max(4, Math.min(6, opts.levels || 5));
   const lines = [];
   for (let li = 0; li < levels; li += 1) {

@@ -31,6 +31,13 @@ test("neural is animated unless reduced motion holds a still frame", () => {
   assert.equal(sourceIsAnimated("neural", { neuralStatic: false }), true);
 });
 
+test("spatial is animated unless reduced motion holds a still frame", () => {
+  assert.equal(sourceIsAnimated("spatial", {}), true);
+  assert.equal(sourceIsAnimated("spatial", undefined), true);
+  assert.equal(sourceIsAnimated("spatial", { spatialStatic: true }), false);
+  assert.equal(sourceIsAnimated("spatial", { spatialStatic: false }), true);
+});
+
 // ── shouldHaltOnStatic ──────────────────────────────────────────────────────────
 test("halt only when the frame is static AND the source is not animated", () => {
   assert.equal(shouldHaltOnStatic(true, false), true);    // static + static source → halt

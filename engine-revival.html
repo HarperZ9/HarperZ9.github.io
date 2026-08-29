@@ -4,25 +4,26 @@
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Engine Revival · Retro Systems Lab</title>
-<meta name="description" content="Engine Revival stores and validates the public-safe metadata, target matrices, reproduction recipes, evidence packets, and reports needed to rebuild historical game engines, SDKs, rendering libraries, CGI toolkits, and studio technology.">
+<title>Engine Revival · Software preservation tooling</title>
+<meta name="description" content="Engine Revival records provenance, targets, recipes, validation, evidence, and reports for historical engines and rendering systems.">
 <link rel="canonical" href="https://harperz9.github.io/engine-revival.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="Engine Revival · Retro Systems Lab">
-<meta property="og:description" content="Engine Revival stores and validates the public-safe metadata, target matrices, reproduction recipes, evidence packets, and reports needed to rebuild historical game engines, SDKs, rendering libraries, CGI toolkits, and studio technology.">
+<meta property="og:title" content="Engine Revival · Software preservation tooling">
+<meta property="og:description" content="Engine Revival v0.1.0 records MIT repository evidence and imported AGPL-covered BRender media and receipts.">
 <meta property="og:url" content="https://harperz9.github.io/engine-revival.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/engine-revival.png">
-<meta property="og:image:alt" content="Engine Revival social card for historical engine preservation and evidence records.">
+<meta property="og:image:alt" content="Engine Revival project card.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Engine Revival · Retro Systems Lab">
-<meta name="twitter:description" content="Engine Revival stores and validates the public-safe metadata, target matrices, reproduction recipes, evidence packets, and reports needed to rebuild historical game engines, SDKs, rendering libraries, CGI toolkits, and studio technology.">
+<meta name="twitter:title" content="Engine Revival · Software preservation tooling">
+<meta name="twitter:description" content="Provenance, targets, recipes, validation records, evidence packets, and reports for historical software.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/engine-revival.png">
-<meta name="twitter:image:alt" content="Engine Revival social card for historical engine preservation and evidence records.">
+<meta name="twitter:image:alt" content="Engine Revival project card.">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#14041b">
-<link rel="stylesheet" href="system/system.css?v=20260719-zentropy-sitewide">
-<link rel="stylesheet" href="system/retro-systems-lab.css?v=20260829-product-copy">
+<link rel="stylesheet" href="system/system.css?v=20260828-site-design">
+<link rel="stylesheet" href="system/retro-systems-lab.css?v=20260828-site-design">
+<link rel="stylesheet" href="system/retro-evidence-pages.css?v=20260828-site-design">
 <style>
 /* Inline accessibility contract for checked source: 320px, 400%, prefers-reduced-motion, @media print. */
 @media (max-width: 320px) { .zoom-note { overflow-wrap: anywhere; } }
@@ -30,46 +31,62 @@
 @media print { .print-note { display: block; } }
 </style>
 </head>
-<body class="inner-clean frame-compact retro-lab-page">
+<body class="inner-clean frame-compact retro-lab-page retro-evidence-page">
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
-<script type="module" src="system/nav.js?v=20260828-site-design"></script>
-<nav class="retro-lab-nav retro-lab-shell" aria-label="Retro Systems Lab">
-  <a href="flywheel.html">Flywheel</a>
-  <a href="retro.html">Retro Engine</a>
-  <a href="engine-revival.html" aria-current="page">Engine Revival</a>
-  <a href="brender-archival.html">BRender Archival</a>
-  <a href="elder-enb.html">Elder ENB</a>
-  <a href="truth-enb.html">Truth ENB</a>
-  <a href="enb-runtime-core.html">ENB Runtime Core</a>
-  <a href="skyrimbridge.html">SkyrimBridge</a>
-  <a href="studio.html">Studio</a>
-</nav>
 <noscript>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="index.html">Zentropy Labs</a>
+    <a href="hire.html">Hire / work</a>
+    <a href="overview.html">Systems</a>
+    <a href="research.html">Research</a>
+    <a href="retro.html">Retro Engine</a>
+    <a href="engine-revival.html" aria-current="page">Engine Revival</a>
+  </nav>
   <p class="retro-lab-shell">This evidence page is static; the full page and navigation remain available without JavaScript.</p>
 </noscript>
+<script type="module" src="system/nav.js?v=20260828-site-design"></script>
 
 <header class="retro-lab-hero retro-lab-shell">
   <div>
-    <p class="retro-lab-kicker">Historical engine preservation</p>
     <h1>Engine Revival.</h1>
-    <p class="retro-lab-lede" data-canonical-purpose="engine-revival">Engine Revival stores and validates the public-safe metadata, target matrices, reproduction recipes, evidence packets, and reports needed to rebuild historical game engines, SDKs, rendering libraries, CGI toolkits, and studio technology.</p>
-    <dl class="retro-lab-facts" aria-label="Current release facts">
-      <div><dt>Release</dt><dd><a href="https://github.com/HarperZ9/engine-revival/releases/tag/v0.1.0" rel="noopener">v0.1.0</a></dd></div>
-      <div><dt>Source revision</dt><dd><span class="retro-lab-hash" translate="no">0af6d527860a63c418b5775dc0efe9ba89557604</span></dd></div>
-      <div><dt>Repository license</dt><dd>MIT</dd></div>
-      <div><dt>Imported record</dt><dd>BRender Archival v0.1.1, kept as a separate evidence scope</dd></div>
-    </dl>
+    <p class="retro-lab-lede">Maintain public-safe metadata, schemas, validators, target matrices, reproduction recipes, evidence packets, and reports for reviving historical game engines, SDKs, rendering libraries, CGI toolkits, and studio technology.</p>
+    <p class="retro-lab-lede">Engine Revival v0.1.0 is public at <a href="https://github.com/HarperZ9/engine-revival/releases/tag/v0.1.0" rel="noopener">release v0.1.0</a>, with main pinned to <span class="retro-lab-hash" translate="no">0af6d527860a63c418b5775dc0efe9ba89557604</span>. The MIT repo boundary is distinct from imported AGPL-covered BRender media and receipts.</p>
     <div class="retro-lab-actions" aria-label="Primary routes">
-      <a href="https://github.com/HarperZ9/engine-revival" rel="noopener">Engine source</a>
-      <a href="https://github.com/HarperZ9/engine-revival/releases/tag/v0.1.0" rel="noopener">Release</a>
-      <a href="brender-archival.html">Imported BRender record</a>
+      <a href="https://github.com/HarperZ9/engine-revival" rel="noopener">Inspect Engine Revival source</a>
+      <a href="retro.html">Open Retro Engine</a>
+      <a href="brender-archival.html">Inspect the BRender lab</a>
       <a href="media/retro-systems-lab/evidence-manifest.json">Evidence manifest</a>
     </div>
+    <figure class="retro-lab-figure">
+      <img src="img/og/engine-revival.png" width="1200" height="630" alt="Engine Revival project card." loading="eager">
+      <figcaption>Project artwork for Engine Revival. Release state and preservation evidence are recorded separately below and in the public repository.</figcaption>
+    </figure>
   </div>
 </header>
 
 <main id="main">
+  <section class="retro-lab-section retro-lab-shell" aria-labelledby="cluster-h">
+    <h2 id="cluster-h">Related retro and preservation work.</h2>
+    <div class="retro-lab-grid">
+      <article class="retro-lab-card">
+        <span class="retro-lab-pill">Browser studio</span>
+        <h3><a href="retro.html">Retro Engine</a></h3>
+        <p>Interactive browser studio for owned pixel, shader, palette, and CRT experiments.</p>
+      </article>
+      <article class="retro-lab-card">
+        <span class="retro-lab-pill">Preservation tooling</span>
+        <h3><a href="engine-revival.html">Engine Revival</a></h3>
+        <p>Public MIT preservation spine. It records local 12-target materializer scope and imported release evidence without merging their claims.</p>
+      </article>
+      <article class="retro-lab-card">
+        <span class="retro-lab-pill">Restoration lab</span>
+        <h3><a href="brender-archival.html">BRender Archival</a></h3>
+        <p>A distinct BRender restoration route. Generic Retro Engine output is not BRender evidence.</p>
+      </article>
+    </div>
+  </section>
+
   <section class="retro-lab-section retro-lab-shell" aria-labelledby="evidence-h">
     <h2 id="evidence-h">Evidence status.</h2>
     <div class="retro-lab-proof">
@@ -79,16 +96,28 @@
     </div>
     <div class="retro-lab-proof">
       <h3>Boundary</h3>
-      <p>The local 12-target materializer and imported 21-target BRender record are separate evidence scopes. Importing that record does not make it output of the materializer.</p>
+      <p>Retro Engine is a companion renderer, not BRender proof. Generic Retro Engine output is not BRender evidence. Engine Revival preserves the evidence spine and imported AGPL-covered BRender media and receipts while keeping the MIT repo boundary clear.</p>
     </div>
   </section>
 
   <section class="retro-lab-section retro-lab-shell" aria-labelledby="companions-h">
-    <h2 id="companions-h">Related products.</h2>
+    <h2 id="companions-h">Related projects.</h2>
+    <p class="retro-lab-lede">These links connect adjacent graphics, preservation, and rendering projects. They do not assert that one owns or contains another.</p>
     <div class="retro-lab-links">
+      <a href="flywheel.html">Flywheel</a>
       <a href="retro.html">Retro Engine</a>
       <a href="brender-archival.html">BRender Archival</a>
-      <a href="overview.html">Product catalog</a>
+      <a href="elder-enb.html">Elder ENB</a>
+      <a href="truth-enb.html">Truth ENB</a>
+      <a href="enb-runtime-core.html">ENB Runtime Core</a>
+      <a href="skyrimbridge.html">SkyrimBridge</a>
+      <a href="raw.html">RAW</a>
+      <a href="systems/studio-engine.html">Studio Engine</a>
+      <a href="buildlang.html">BuildLang</a>
+      <a href="build-color.html">Build Color</a>
+      <a href="gather.html">Gather</a>
+      <a href="index-graph.html">Index</a>
+      <a href="catalog.html">System catalog</a>
     </div>
     <p class="zoom-note">Responsive contract: this page is static without JavaScript, keeps readable flow at 320px and 390px widths, and must remain usable at 400% zoom with print, forced-colors, text-spacing, focus, and reduced-motion modes.</p>
   </section>

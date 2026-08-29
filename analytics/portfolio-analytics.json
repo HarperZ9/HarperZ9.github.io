@@ -3249,7 +3249,7 @@
       "modelComparison": {
         "schema": "flywheel.he-base-comparison/v1",
         "status": "MEASURED",
-        "sourceSha256": "b887d87b0a2ab492c85320ca8b78d8be632b8eea890ca38a6a7f97ab61ad3f39",
+        "sourceSha256": "587da8ea4a04d5e520cc5ed4a83efb6c070fab6c587e0e58b00053cfdee5ed9d",
         "sourceAvailability": "public tracked artifact at the captured commit",
         "benchmark": "code-completion suite (164 tasks), pass@1 greedy temp0, same harness",
         "denominator": 164,

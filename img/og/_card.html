@@ -42,7 +42,7 @@
   </div>
   <div class="site">zentropyLabs</div>
 </main>
-<script src="cards-data.js"></script>
+<script src="cards-data.js?v=20260828-site-design"></script>
 <script>
 (function(){
   var key=new URLSearchParams(location.search).get("f")||"buildlang";
@@ -50,7 +50,10 @@
   var data=(window.CARD_DATA&&window.CARD_DATA[key])||fb;
   function rhino(k){return k.split('-').map(function(w,i){return i===0?w:(w.charAt(0).toUpperCase()+w.slice(1));}).join('');}
   document.getElementById("role").textContent=(data.role||"Working system");
-  document.getElementById("word").textContent=rhino(key);
+  // Prefer the word the data supplies. The template derived it from the key
+  // and ignored data.word entirely, so every entry carried a field that did
+  // nothing and a hyphenated key rendered as camelCase.
+  document.getElementById("word").textContent=(data.word||rhino(key));
   document.getElementById("headline").textContent=data.headline||"A working tool in the portfolio.";
   document.getElementById("pipeline").textContent=data.pipeline||"";
   var glyphs={shield:"⬡",seal:"◉",ledger:"▤",aperture:"◌",braces:"{}",diamond:"◇",triad:"△",intake:"⌁",graph:"⌘",waveform:"∿",layers:"▧",spark:"✦",bracket:"⌜"};
