@@ -57,19 +57,19 @@
     </article>
     <article class="index-row" role="listitem" id="model-provenance-validator">
       <span class="index-term">Model Provenance Validator</span>
-      <span class="index-gloss">Validate the schema, source references, retrieval dates, and publishable status of compact model and release provenance envelopes, scrub sensitive output, and emit proof-surface packets without certifying underlying truth. <a href="https://github.com/HarperZ9/model-provenance-validator" rel="noopener">Source</a>. Entry: <code>model-provenance-validator envelope.json</code>.</span>
+      <span class="index-gloss">Model Provenance Validator is a Python CLI that checks JSON records linking a model or release claim to its sources, retrieval dates, and publishable status. It redacts credential-like values from its output and can emit a Proof Surface packet, but it does not verify the underlying claim. <a href="https://github.com/HarperZ9/model-provenance-validator" rel="noopener">Source</a>. Entry: <code>model-provenance-validator envelope.json</code>.</span>
     </article>
     <article class="index-row" role="listitem" id="secret-redact-io">
       <span class="index-term">Secret Redact IO</span>
-      <span class="index-gloss">Provide guarded Python IO helpers that redact file, fetch, write, and subprocess output while emitting hash-only receipts. <a href="https://github.com/HarperZ9/secret-redact-io" rel="noopener">Source</a>. Entry: <code>secret-redact-io read README.md --json</code>.</span>
+      <span class="index-gloss">Secret Redact IO is a Python helper library that redacts file, fetch, write, and subprocess output while emitting hash-only receipts. <a href="https://github.com/HarperZ9/secret-redact-io" rel="noopener">Source</a>. Entry: <code>secret-redact-io read README.md --json</code>.</span>
     </article>
     <article class="index-row" role="listitem" id="agent-hook-pack">
       <span class="index-term">Agent Hook Pack</span>
-      <span class="index-gloss">Install public-safe hooks for secret checks, branch guards, environment synchronization, and repository hygiene. <a href="https://github.com/HarperZ9/agent-hook-pack" rel="noopener">Source</a>. Entry: <code>agent-hook-pack audit</code> and <code>agent-hook-pack list</code>.</span>
+      <span class="index-gloss">Agent Hook Pack installs public-safe hooks for secret checks, branch guards, environment synchronization, and repository hygiene. <a href="https://github.com/HarperZ9/agent-hook-pack" rel="noopener">Source</a>. Entry: <code>agent-hook-pack audit</code> and <code>agent-hook-pack list</code>.</span>
     </article>
     <article class="index-row" role="listitem" id="repo-proof-index">
       <span class="index-term">Repo Proof Index</span>
-      <span class="index-gloss">Scan proof contracts, proof-surface packets, receipt bundles, and witness receipts into schema-tolerant reviewer summaries while validating known proof-surface contracts without judging sufficiency. <a href="https://github.com/HarperZ9/repo-proof-index" rel="noopener">Source</a>. Entry: <code>repo-proof-index contracts/*.json --summary</code>.</span>
+      <span class="index-gloss">Repo Proof Index is a Python CLI that scans proof packets, receipts, and contracts and builds a reviewer-facing index of each artifact's type, status, evidence summary, and source path. It validates known packet formats but does not decide whether the evidence is sufficient. <a href="https://github.com/HarperZ9/repo-proof-index" rel="noopener">Source</a>. Entry: <code>repo-proof-index contracts/*.json --summary</code>.</span>
     </article>
   </div>
 </section>
