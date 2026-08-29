@@ -179,7 +179,6 @@
   }
   .hire-route-band + .hire-route-band{border-top:0}
   .hire-route-band--engineering{
-    grid-column:1/-1;
     min-height:auto;
     background:color-mix(in oklab,var(--signal) 4%,var(--page));
   }
@@ -187,7 +186,7 @@
 
 @media (min-width:1280px){
   .hire-route-bands{
-    grid-template-columns:minmax(21rem,1.12fr) minmax(20rem,1fr) minmax(20rem,1fr);
+    grid-template-columns:minmax(21rem,1.12fr) minmax(20rem,1fr);
     align-items:stretch;
   }
   .hire-route-band--engineering{
