@@ -23,10 +23,10 @@
 <script>document.documentElement.classList.add('js')</script>
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/system.css?v=20260828-site-design">
-<link rel="stylesheet" href="system/instrument.css?v=20260828-site-design">
-<link rel="stylesheet" href="system/instrument-forms.css?v=20260828-site-design">
-<link rel="stylesheet" href="system/retro-systems-lab.css?v=20260828-site-design">
+<link rel="stylesheet" href="system/system.css?v=20260812-angular">
+<link rel="stylesheet" href="system/instrument.css?v=20260813-hidden">
+<link rel="stylesheet" href="system/instrument-forms.css?v=20260812-bracket">
+<link rel="stylesheet" href="system/retro-systems-lab.css">
 <style>
   /* the contact sheet: every shader as a small live thumbnail, so the shelf can
      be browsed by eye instead of one dropdown load at a time */
@@ -81,9 +81,6 @@
   .re-preview:fullscreen .re-fs-hud{display:block;animation:re-hud-fade 3.4s ease forwards}
   @keyframes re-hud-fade{0%,72%{opacity:1}100%{opacity:0}}
   @media (prefers-reduced-motion:reduce){.re-preview:fullscreen .re-fs-hud{animation:none}}
-  .retro-identity{margin:1.25rem auto 0;max-width:72rem;padding:0 1rem}
-  .retro-identity img{display:block;width:100%;height:auto;border:1px solid var(--hairline);background:#0a0808}
-  .retro-identity figcaption{margin:.65rem 0 0;color:var(--muted);font-family:var(--mono);font-size:.72rem;line-height:1.55}
   .re-browse{margin-top:.15rem}
   .re-browse .re-btn{padding:.4em .7em;font-size:.55rem}
   .re-knobs{display:flex;flex-direction:column;gap:.35rem;border-top:1px solid var(--hairline);padding-top:.6rem;margin-top:.2rem}
@@ -116,7 +113,7 @@
 
 <div id="site-nav" class="site-nav"></div>
 <noscript>
-  <nav class="site-nav"><a href="flywheel.html">Flywheel</a> <a href="retro.html" aria-current="page">Retro Engine</a> <a href="engine-revival.html">Engine Revival</a> <a href="brender-archival.html">BRender Archival</a> <a href="studio.html">Studio</a> <a href="gallery.html">Gallery</a> <a href="overview.html">Systems</a> <a href="catalog.html">Catalog</a> <a href="cv.html">About</a></nav>
+  <nav class="site-nav"><a href="studio.html">Studio</a> <a href="gallery.html">Gallery</a> <a href="overview.html">Engines</a> <a href="engine-revival.html">Engine Revival</a> <a href="brender-archival.html">BRender Archival</a> <a href="catalog.html">Catalog</a> <a href="cv.html">About</a></nav>
   <p class="retro-nojs-notice" role="status">The interactive renderer requires JavaScript. The static Retro Systems Lab evidence and companion routes remain available below.</p>
 </noscript>
 <script type="module" src="system/nav.js?v=20260828-site-design"></script>
@@ -125,15 +122,10 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Retro Engine</span></div>
   <div class="mid">
     <h1>Bring the engine back <span class="g">as a live retro renderer.</span></h1>
-    <p class="lede">Feed it a generative plate, your own image, your own GLSL, or your own sound drawing on an oscilloscope. It pixelates through hardware palettes, ordered dither, an early-3D depth shade and a CRT stage, then a stackable rack of ASCII, halftone, databend and more. 254 shaders sit on the shelf, from Evangelion to the Game Boy to your own work. Play the picture as a score, record your session as MIDI, print a frame as a relief or a spinning disc, weave it on the Loom. All of it runs in your browser.</p>
+    <p class="lede" data-canonical-purpose="retro-engine">Run an embedded browser studio that accepts images, drawing, GLSL, and audio traces; applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects; then exports images, patches, MIDI, relief or disc data, and Loom handoffs.</p>
   </div>
   <div class="seal">source &rarr; pixelate &middot; palette &middot; dither &middot; CRT &middot; nothing leaves your browser</div>
 </div>
-
-<figure class="retro-identity">
-  <img src="media/retro-systems-lab/identity/retro-play.svg" width="960" height="540" alt="Abstract pixel field generated from Retro Engine palette and shader motifs." loading="eager">
-  <figcaption>Visual identity derived from the browser studio's palette and shader source. It is artwork, not benchmark evidence.</figcaption>
-</figure>
 
 <main id="main">
 <section class="mv" id="engine" aria-labelledby="engine-h">
@@ -393,14 +385,24 @@
 </section>
 
 <section class="retro-lab-section retro-lab-shell" id="retro-systems-lab" aria-labelledby="retro-lab-h">
-  <h2 id="retro-lab-h">Related retro and graphics projects.</h2>
-  <p class="retro-lab-lede"><span translate="no">Retro Engine</span> is a browser graphics and sound studio. <a href="engine-revival.html">Engine Revival</a> maintains preservation records, recipes, validators, and reports for historical rendering systems. <a href="brender-archival.html">BRender Archival</a> rebuilds and tests Argonaut BRender from a pinned public source checkout. They share navigation, not a parent platform or inherited evidence.</p>
+  <p class="retro-lab-kicker">Retro Systems Lab</p>
+  <h2 id="retro-lab-h">Play, preserve, verify, without mixing proof boundaries.</h2>
+  <p class="retro-lab-lede"><span translate="no">Retro Engine</span> is the live play surface. <a href="engine-revival.html">Engine Revival</a> preserves public engine evidence and recipes. <a href="brender-archival.html">BRender Archival</a> verifies one specific BRender restoration release. <a href="elder-enb.html">Elder ENB</a>, <a href="truth-enb.html">Truth ENB</a>, <a href="enb-runtime-core.html">ENB Runtime Core</a>, and <a href="skyrimbridge.html">SkyrimBridge</a> are separate graphics-runtime routes. Generic Retro Engine output is not BRender evidence.</p>
+  <figure class="retro-lab-figure">
+    <img src="media/retro-systems-lab/identity/crossover.svg" width="960" height="540" alt="Directed Retro Systems Lab flow from Retro Engine play to Engine Revival preserve to BRender Archival verify." aria-label="play to preserve to verify">
+    <figcaption>The shared crossover diagram is a navigation and evidence-boundary map. It does not prove BRender behavior, adoption, performance, or product parity.</figcaption>
+  </figure>
+  <ol class="retro-lab-flow-fallback" aria-label="Retro Systems Lab semantic fallback">
+    <li><a href="retro.html">Play: Retro Engine</a></li>
+    <li><a href="engine-revival.html">Preserve: Engine Revival</a></li>
+    <li><a href="brender-archival.html">Verify: BRender Archival</a></li>
+  </ol>
   <div class="retro-lab-links" aria-label="Retro Systems Lab companion routes">
+    <a href="flywheel.html">Flywheel platform</a>
     <a href="elder-enb.html">Elder ENB</a>
     <a href="truth-enb.html">Truth ENB</a>
     <a href="enb-runtime-core.html">ENB Runtime Core</a>
     <a href="skyrimbridge.html">SkyrimBridge</a>
-    <a href="raw.html">RAW</a>
     <a href="studio.html">Studio</a>
     <a href="overview.html">Systems registry</a>
     <a href="https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/retro-engine.js" rel="noopener">Inspect public Retro Engine source</a>
@@ -412,6 +414,6 @@
   <p>Zentropy Labs &middot; order out of entropy &middot; <a href="index.html">home</a></p>
 </footer>
 
-<script type="module" src="system/retro-studio.js?v=20260828-site-design"></script>
+<script type="module" src="system/retro-studio.js?v=20260813-pal"></script>
 </body>
 </html>

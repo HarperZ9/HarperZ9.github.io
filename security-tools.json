@@ -20,7 +20,7 @@
     {
       "slug": "proof-surface",
       "name": "Proof Surface",
-      "purpose": "Provide default-deny authorization checks, bounded delegation, and reviewable proof packets for agent actions.",
+      "purpose": "Proof Surface is a standard-library Python contract and validation library for authorization receipts, delegation chains, evidence packets, work records, witness receipts, and pre-execution gate requests. It validates structured JSON and returns schema issues plus advisory allow, deny, or needs-human decisions; it does not execute or enforce actions.",
       "maturity": "active",
       "source": "https://github.com/HarperZ9/proof-surface",
       "installOrEntry": null,
@@ -50,14 +50,14 @@
     {
       "slug": "behavior-transform",
       "name": "behavior-transform.io",
-      "purpose": "Provide a public IO-boundary implementation for read, write, execution, fetch, input, and model-boundary receipts.",
+      "purpose": "behavior-transform.io is a local Python wrapper and hook layer for file reads and writes, subprocesses, HTTP fetches, operator input, and MCP traffic. It accepts an I/O request plus an operations or research mode and local text rules, then passes through or transforms the content and returns the requested result with hashes, substitution counts, return codes, or local audit artifacts.",
       "maturity": "active",
       "source": "https://github.com/HarperZ9/behavior-transform.io",
       "installOrEntry": null,
       "verificationCommand": null,
       "limitations": [
         "No tagged release or publicly verified entry command is claimed.",
-        "A boundary receipt records declared policy and observed IO; it does not guarantee provider acceptance or substantive safety."
+        "Local audit artifacts and hashes record selected observations; they do not guarantee provider acceptance or substantive safety."
       ],
       "authorizationBoundary": "Use the boundary only within the operator's authority and governing provider, data-owner, and system policies.",
       "evidenceDate": "2026-08-27"
@@ -80,7 +80,7 @@
     {
       "slug": "seed",
       "name": "Seed",
-      "purpose": "Run native security assessment and detection-engineering work through a 59-module C++23 engine with synthetic demonstrations, scope manifests, tests, interop adapters, and action receipts.",
+      "purpose": "Run native security assessment and detection-engineering work through a C++23 engine with synthetic demonstrations, scope manifests, interop adapters, and action receipts.",
       "maturity": "controlled-private",
       "source": null,
       "installOrEntry": null,
@@ -95,7 +95,7 @@
     {
       "slug": "sofer",
       "name": "Sofer",
-      "purpose": "Coordinate specialist agents, model backends, probes, intelligence and scheduling systems, multi-stage workflows, admission decisions, and receipt-backed handoffs across high-consequence technical operations.",
+      "purpose": "Sofer is a private Python security-operations platform and orchestration runtime. It accepts an authorized engagement scope, objectives and targets, selected modules and model backends, operator decisions, and collected evidence; it routes specialist work and runs scoped reconnaissance, adversarial testing, defensive analysis, campaign workflows, finding management, and disclosure, producing run state, assessment results, findings, reports, evidence artifacts, receipts, and handoff records.",
       "maturity": "controlled-private",
       "source": null,
       "installOrEntry": null,
@@ -155,7 +155,7 @@
     {
       "slug": "gate",
       "name": "Gate",
-      "purpose": "Make fail-closed integration and release decisions for private-line systems from component readiness, CI, MCP interfaces, safety-evaluation posture, supply-chain evidence, package verification, and receipt-backed handoff state.",
+      "purpose": "Gate is Sofer's private release-check subsystem. Its Python command-line tools validate readiness, operations, engagement, deliverable, and release manifests; required source, documentation, and test paths; configured controls; and verification-command results. Gate returns pass or fail findings, writes hashed JSON receipts, and blocks advancement when required evidence or controls are missing.",
       "maturity": "controlled-private",
       "source": null,
       "installOrEntry": null,
@@ -170,7 +170,7 @@
     {
       "slug": "accountable-surface",
       "name": "Accountable Surface",
-      "purpose": "Provide a controlled agent-action workbench with structural perception, default-deny grants, bounded effectors, re-perception, rollback, and a durable journal.",
+      "purpose": "Accountable Surface is a Python runtime for executing bounded file, command, web, and browser actions under operator-supplied grants. It accepts an exact proposed action and target, an external authorization receipt, effector bounds, and an expected result; it returns an allow, deny, or needs-human outcome, performs only permitted effects, re-observes and verifies the result, rolls back reversible failures, and appends a hash-chained journal.",
       "maturity": "active",
       "source": "https://github.com/HarperZ9/accountable-surface",
       "installOrEntry": "python -m pip install -e \".[test]\"; python examples/demo.py",
