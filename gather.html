@@ -4,19 +4,19 @@
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>gather, an accountable research-intake system</title>
-<meta name="description" content="Research lives behind awkward access: paywalls, JS walls, scanned PDFs. Gather reaches it and records how, with provenance receipts and digest seals.">
+<title>Gather · Zentropy Labs</title>
+<meta name="description" content="Extract and crawl difficult research sources, including JavaScript-rendered pages, authenticated APIs, scholarly records, PDFs, OCR, audio, video, feeds, and local documents; store content-addressed corpora and attach re-checkable provenance to every item.">
 <link rel="canonical" href="https://harperz9.github.io/gather.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="gather, an accountable research-intake system">
-<meta property="og:description" content="Research lives behind awkward access: paywalls, JS walls, scanned PDFs. Gather reaches it and records how, with provenance receipts and digest seals.">
+<meta property="og:title" content="Gather · Zentropy Labs">
+<meta property="og:description" content="Extract and crawl difficult research sources, including JavaScript-rendered pages, authenticated APIs, scholarly records, PDFs, OCR, audio, video, feeds, and local documents; store content-addressed corpora and attach re-checkable provenance to every item.">
 <meta property="og:url" content="https://harperz9.github.io/gather.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/gather.png">
 <meta property="og:image:alt" content="Gather project card: supported research sources enter a content-addressed corpus with acquisition receipts.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="gather, an accountable research-intake system">
-<meta name="twitter:description" content="Research lives behind awkward access: paywalls, JS walls, scanned PDFs. Gather reaches it and records how, with provenance receipts and digest seals.">
+<meta name="twitter:title" content="Gather · Zentropy Labs">
+<meta name="twitter:description" content="Extract and crawl difficult research sources, including JavaScript-rendered pages, authenticated APIs, scholarly records, PDFs, OCR, audio, video, feeds, and local documents; store content-addressed corpora and attach re-checkable provenance to every item.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/gather.png">
 <meta name="color-scheme" content="dark">
 <link rel="stylesheet" href="system/system.css?v=20260828-site-design">
@@ -51,7 +51,7 @@
 <!-- WHAT IT IS -->
 <section class="mv" id="what" aria-labelledby="what-h">
   <h2 id="what-h" class="reveal">It brings information in, from anywhere, and records how.</h2>
-  <p class="body-text reveal"><span translate="no">gather</span> is a research-intake and corpus system. It reaches information from scattered, often awkward sources and returns receipted items whose content and acquisition method can be checked later. A run can scope-filter those items, store them by content hash, and fold their receipts into a witnessed digest for later research or evaluation work.</p>
+  <p class="body-text reveal">Network access, third-party tools, and credentials stay isolated behind source adapters. After intake, a run applies its scope filter, folds item receipts into one witnessed digest, and hands that digest to downstream indexing, refinement, or claim evaluation.</p>
   <p class="body-text reveal">Every kind of intake is one small adapter behind a single shape: one string in, a list of receipted items out. The adapter can use the network, a tool, a credential, a headless browser, whatever the source demands; nothing else in <span translate="no">gather</span> imports any of that. Awkward access is an adapter problem, not a system problem, and the core stays pure standard library because of it.</p>
   <em class="close reveal">The receipt is the rule. Each item records how it was obtained, so a transcript read from captions, text recognized from a scan, and a fact synthesized from fragments are all valid items, but they are not equal, and they are never confused.</em>
 </section>

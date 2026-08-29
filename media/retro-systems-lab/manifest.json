@@ -30,14 +30,14 @@
     }
   },
   "sourceHashes": {
-    "site/systems.json": "3d229274767a031758736df1d959ddc15cbc8701f96436cfce18685f67536730",
+    "site/systems.json": "bb06036cf28cfbc97edcf2b0b475b5197e2c9d96ff259dd9023a6e033272ec9c",
     "site/routes.json": "ea7d8c98eb408ba328cab5decf69ebd63f9b56a20331514b28f7e865d80069f0",
-    "public/retro.html": "610713b2a5d641210d99e92e0784cbfda4063cdfc15f97bb58fc2c72f31ac03d",
-    "public/flywheel.html": "9b67542e0c2dfc3cd5970ed2c0102444efb4dca307562f884734d277c5158b58",
-    "public/engine-revival.html": "c7720cbb9a1a4fb43fd4c4a893217f7cdec8252c34791bd920d85201a9269f10",
-    "public/brender-archival.html": "146ed236b53b41fa1bcb65c688aed288376b1e51066f6b122090e07a42b4ca31",
-    "public/img/og/cards-data.js": "a667f0291cc71dcf50b65babaff52e3ea25c3b0d9cd12bc4bb865460131dba42",
-    "scripts/render-retro-systems-media.mjs": "e0f2577c4e802cfd148c995b0596f1947a5b09a9ec3e1796545fcbdac59a41bb"
+    "public/retro.html": "961d19ab11f8fe4a51c6eb4b923bba601f4df479ab751d24a1338b65d7fb20ec",
+    "public/flywheel.html": "69d98914e4780011ae528a3d7da6c5f8502c8bb5359d073303c973baa5b03e51",
+    "public/engine-revival.html": "a968ac3657a23c0f24ab81efdbb4cf03886bc8ebf3876f6d5661377f5ca733f9",
+    "public/brender-archival.html": "3e6b96aa155e3c097f1f37d14ca00a245f22badc018063ff479fb66e01ccf211",
+    "public/img/og/cards-data.js": "0e12aec4e495c073db25f6bb4fdb9c460978b2b06b2a9171a065a83eb503f72f",
+    "scripts/render-retro-systems-media.mjs": "ce158dbf25bdc1ecd9f7ce63055db8aff2e4be19b8c874345f578d925b304b07"
   },
   "media": [
     {
@@ -68,9 +68,9 @@
       "href": "media/retro-systems-lab/identity/engine-preserve.svg",
       "width": 960,
       "height": 540,
-      "bytes": 1916,
+      "bytes": 1912,
       "byteBudget": 12000,
-      "sha256": "49fe2cab66a37788594c9a68de45340ef55f9336179a3cbf77342d9133a8b616",
+      "sha256": "b192ba5b87bbd8a406828db1f9867ed27250af58889ba984fe1031c969311026",
       "provenance": "Generator-owned SVG capture derived from owned route and system registry source motifs.",
       "sourceFiles": [
         "site/systems.json",

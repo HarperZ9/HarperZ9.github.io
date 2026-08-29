@@ -50,26 +50,37 @@ def test_public_copy_does_not_replace_security_capability_with_generic_boundary_
     assert "The public surface contains sanitized tests, schemas, detectors" not in public_copy
 
 
-def test_private_security_projects_keep_their_distinct_verified_roles() -> None:
+def test_private_security_projects_keep_one_distinct_definition_on_their_own_page() -> None:
     practice = (ROOT / "private-practice.html").read_text(encoding="utf-8")
     security = (ROOT / "security.html").read_text(encoding="utf-8")
     homepage = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
+    registry = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
+    records = {record["id"]: record for record in registry["systems"]}
 
-    defining_copy = {
-        "Array": ("offensive-security campaigns", "digest-sealed waves", "time-limited approval"),
-        "Seed": ("59-module C++23", "3,065 tests", "security-assessment engine"),
-        "Sofer": ("private-line orchestration", "specialist agents", "high-consequence technical domains"),
-        "Isomorph": ("AI red-team harness", "refusal behavior", "jailbreak-class"),
-        "Bounds": ("intent drift", "runtime observations", "proof chains"),
-        "ORCA": ("engagement state", "portable bundles", "release provenance"),
-        "Gate": ("release-check subsystem", "hashed JSON receipts", "blocks advancement"),
+    for slug in ("array", "seed", "sofer", "isomorph", "bounds", "kun"):
+        record = records[slug]
+        page = (ROOT / record["href"]).read_text(encoding="utf-8")
+        canonical = re.findall(
+            rf'<p[^>]+data-canonical-purpose="{slug}"[^>]*>(.*?)</p>',
+            page,
+            re.DOTALL,
+        )
+        assert len(canonical) == 1, slug
+        assert html.unescape(re.sub(r"<[^>]+>", "", canonical[0])).strip() == record["purpose"]
+        assert f'href="{record["href"]}"' in practice
+        assert record["productType"] in practice
+        assert record["purpose"] not in html.unescape(practice)
+
+    shared_definitions = {
+        "orca": ("engagement state", "portable bundles", "release provenance"),
+        "gate": ("release-check subsystem", "hashed JSON receipts", "blocks advancement"),
     }
-    for project, phrases in defining_copy.items():
-        assert f'id="{project.lower()}"' in practice
+    for slug, phrases in shared_definitions.items():
+        assert f'id="{slug}"' in practice
         for phrase in phrases:
             assert phrase in practice
 
-    for project in defining_copy:
+    for project in ("Array", "Seed", "Sofer", "Isomorph", "Bounds", "Kun", "ORCA", "Gate"):
         assert project in security
 
     assert 'href="/private-practice.html"' in homepage
@@ -170,7 +181,7 @@ def test_registry_relationships_are_typed_and_evidence_backed() -> None:
     assert not any(source == "flywheel" and target == "chorus" for source, target, _ in keys)
 
 
-def test_catalog_renders_one_full_definition_under_each_primary_domain() -> None:
+def test_catalog_keeps_product_rows_compact_and_routes_to_full_definitions() -> None:
     registry = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
     catalog = (ROOT / "catalog.html").read_text(encoding="utf-8")
 
@@ -183,7 +194,10 @@ def test_catalog_renders_one_full_definition_under_each_primary_domain() -> None
         )
         assert domain_section, record["id"]
         assert link in domain_section.group(0), record["id"]
-        assert record["purpose"] in html.unescape(domain_section.group(0)), record["id"]
+        primary_row = domain_section.group(0)
+        assert record["productType"] in html.unescape(primary_row), record["id"]
+        assert record["maturity"] in html.unescape(primary_row), record["id"]
+        assert record["purpose"] not in html.unescape(primary_row), record["id"]
 
         for domain in record["domains"]:
             member_section = re.search(

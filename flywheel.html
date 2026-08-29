@@ -5,18 +5,18 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Flywheel, a companion for every model</title>
-<meta name="description" content="Flywheel routes work across local and hosted models, verifies results, escalates uncertainty, and returns reproducible receipts.">
+<meta name="description" content="Flywheel sends a task to a selected local or hosted AI model, gives that model approved tools, checks the resulting work, and returns a journal and receipt that can be reviewed or replayed.">
 <link rel="canonical" href="https://harperz9.github.io/flywheel.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zentropy Labs">
 <meta property="og:title" content="Flywheel, a companion for every model">
-<meta property="og:description" content="Route model work through witnessed tools, permission gates, external checks, journals, and re-checkable receipts.">
+<meta property="og:description" content="Flywheel sends a task to a selected local or hosted AI model, gives that model approved tools, checks the resulting work, and returns a journal and receipt that can be reviewed or replayed.">
 <meta property="og:url" content="https://harperz9.github.io/flywheel.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/flywheel.png">
 <meta property="og:image:alt" content="Flywheel social card. Route across local or hosted models, verify the result, and keep a re-checkable receipt.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Flywheel">
-<meta name="twitter:description" content="Flywheel routes work across local and hosted models, verifies results, escalates uncertainty, and returns reproducible receipts.">
+<meta name="twitter:description" content="Flywheel sends a task to a selected local or hosted AI model, gives that model approved tools, checks the resulting work, and returns a journal and receipt that can be reviewed or replayed.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/flywheel.png">
 <meta name="twitter:image:alt" content="Flywheel social card. Route across local or hosted models, verify the result, and keep a re-checkable receipt.">
 <meta name="color-scheme" content="dark">
@@ -48,6 +48,9 @@
   .kv2{display:grid;grid-template-columns:auto 1fr;gap:.55rem 1.6rem;font-size:.92rem;margin:1.2rem 0;max-width:64ch}
   .kv2 dt{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)}
   .kv2 dd{color:var(--bone);margin:0}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.25rem}
+  .hero-actions a{display:inline-flex;align-items:center;min-height:44px;border:1px solid var(--hairline);padding:.65rem .9rem;color:var(--bone);text-decoration:none}
+  .hero-actions a:first-child{border-color:var(--orange)}
 </style>
 </head>
 <body class="inner-clean">
@@ -61,8 +64,9 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">flywheel</span> &middot; route + verify</span></div>
   <div class="mid">
     <h1>A companion for <span class="g">every model.</span></h1>
-    <p class="lede">Run a verified-inference platform and native desktop client in which models perceive through witnessed tools, act through permission gates, journal their work, and re-check outcomes through integrated lanes.</p>
+    <p class="lede" data-canonical-purpose="flywheel">Flywheel sends a task to a selected local or hosted AI model, gives that model approved tools, checks the resulting work, and returns a journal and receipt that can be reviewed or replayed.</p>
     <p class="close">Every number on this page is a receipt file you can re-check offline.</p>
+    <nav class="hero-actions" aria-label="Primary routes"><a href="#run">Install or run</a><a href="https://github.com/HarperZ9/flywheel" rel="noopener">Source</a><a href="#benchmarks">Benchmarks</a></nav>
   </div>
   <div class="seal"><span translate="no">flywheel</span> &middot; public &middot; FSL-1.1-MIT &middot; <span translate="no">python scripts/run_harness_cli.py app --port 8799</span></div>
 </div>
@@ -187,7 +191,6 @@
     <p class="body-text">The installer is not code-signed yet, so Windows SmartScreen will warn on first run. The hash above is the substitute: it proves the file you hold is the file the pipeline built. Signing is planned; until then the receipt does the signature's job, checked by you instead of trusted by default.</p>
   </div>
   <p class="body-text reveal">The core package has zero runtime dependencies and uses the Python standard library. Route online with your keys, or run fully offline against local weights.</p>
-  <div class="run reveal"><span class="c">shell</span> pip install flywheel-verify<br><span class="c">shell</span> flywheel up</div>
   <p class="body-text reveal">Then open the surface in your browser. One origin, one page, same-origin JSON routes.</p>
 </section>
 
@@ -231,17 +234,15 @@
 
 <!-- RETRO SYSTEMS LAB -->
 <section class="mv" id="retro-systems-lab" aria-labelledby="retro-systems-lab-h">
-  <h2 id="retro-systems-lab-h" class="reveal">Independent retro products from Zentropy Labs.</h2>
-  <p class="body-text reveal"><a href="retro.html">Retro Engine</a> is an embedded browser graphics studio. <a href="engine-revival.html">Engine Revival</a> maintains historical-engine revival evidence and recipes. <a href="brender-archival.html">BRender Archival</a> rebuilds and verifies one BRender restoration.</p>
-  <p class="body-text reveal">These are neighboring product routes, not Flywheel dependencies or subordinate components. Generic Retro Engine output is not BRender evidence.</p>
-  <p class="seal-line reveal"><span class="g">Retro Systems Lab</span>: <a href="retro.html">play</a> &middot; <a href="engine-revival.html">preserve</a> &middot; <a href="brender-archival.html">verify</a></p>
+  <h2 id="retro-systems-lab-h" class="reveal">Related retro products.</h2>
+  <p class="body-text reveal">These products are maintained independently. Their product pages carry their definitions and evidence records.</p>
+  <p class="seal-line reveal"><a href="retro.html">Retro Engine</a> &middot; <a href="engine-revival.html">Engine Revival</a> &middot; <a href="brender-archival.html">BRender Archival</a></p>
 </section>
 
 <!-- VISION -->
 <section class="mv" id="vision" aria-labelledby="vision-h">
-  <h2 id="vision-h" class="reveal">The replaceable half and the durable half.</h2>
-  <p class="body-text reveal"><span translate="no">Flywheel</span> runs a verified-inference loop: propose with a selected model, dispose with an external check, keep the re-checkable receipt, and let what passes accumulate. The model is replaceable; the verification harness is durable.</p>
-  <p class="body-text reveal">The same discipline, an external check that can fail plus a receipt a reviewer can re-run, scales from routing a single call to composing a larger workflow.</p>
+  <h2 id="vision-h" class="reveal">What remains stable.</h2>
+  <p class="body-text reveal">Models, routes, and external checks can change without changing the recorded acceptance criteria or the content-addressed run history. That separation lets a reviewer compare later runs against the same declared task and evidence contract.</p>
   <p class="seal-line reveal"><span class="g">Run it</span>: <span translate="no">github.com/HarperZ9/flywheel</span> &middot; <a href="overview.html">the engine room</a> &middot; <a href="index.html">the workshop</a></p>
 </section>
 
