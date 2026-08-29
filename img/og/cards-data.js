@@ -1,11 +1,4 @@
 window.CARD_DATA = {
-  "phantom": {
-    "role": "HARDWARE-IDENTITY PRIVACY",
-    "headline": "Audit what your machine reveals, spoof it, and restore the originals exactly.",
-    "pipeline": "AUDIT / GENERATE / APPLY / VALIDATE / REVERT",
-    "word": "PHANTOM",
-    "glyph": "shield"
-  },
   "buildlang": {
     "role": "EFFECTS-ORIENTED COMPILER",
     "headline": "Declare effects and lifetimes, then compile to native code.",
@@ -41,6 +34,44 @@ window.CARD_DATA = {
     "word": "EMET",
     "glyph": "seal"
   },
+  "phantom": {
+    "role": "AUTHORIZED HARDWARE IDENTITY PRIVACY",
+    "headline": "Audit and restore hardware identity fields on systems you control.",
+    "pipeline": "AUDIT / SEED / APPLY / VALIDATE / RESTORE",
+    "word": "PHANTOM",
+    "glyph": "shield",
+    "showGlyph": true
+  },
+  "security-toolkit": {
+    "role": "PUBLIC SECURITY ENGINEERING TOOLKIT",
+    "headline": "Review public surfaces before claims outgrow evidence.",
+    "pipeline": "SWEEP / REDACT / PROVENANCE / REPORT",
+    "word": "SECURITY TOOLKIT",
+    "glyph": "ledger",
+    "showGlyph": true
+  },
+  "private-practice": {
+    "role": "AUTHORIZED PRIVATE SECURITY PRACTICE",
+    "headline": "Scope sensitive review work before any private detail moves.",
+    "pipeline": "SCOPE / BOUND / RUN / WITNESS / HANDOFF",
+    "word": "PRIVATE PRACTICE",
+    "glyph": "seal",
+    "showGlyph": true
+  },
+  "security": {
+    "role": "AUTHORIZED SECURITY FAMILY",
+    "headline": "Inspect public defensive systems and the controlled private boundary.",
+    "pipeline": "PUBLIC / CONTROLLED / VERIFY / BOUNDARY",
+    "word": "SECURITY",
+    "glyph": "shield",
+    "family": "security",
+    "seed": 62013,
+    "constellationCard": true,
+    "routeHref": "security.html",
+    "routeTitle": "Security",
+    "routeSummary": "A verified maturity index for public security tools, Phantom, EMET, grouped toolkit work, and distinct controlled-private security systems by Zain Dana Harper.",
+    "imagePath": "img/og/security.png"
+  },
   "index": {
     "role": "WORKSPACE MAP",
     "headline": "Scan a large workspace and turn repositories into one navigable graph.",
@@ -60,7 +91,14 @@ window.CARD_DATA = {
     "headline": "Route across local or hosted models, verify the result, and keep a re-checkable receipt.",
     "pipeline": "ROUTE / RUN / VERIFY / RECEIPT / IMPROVE",
     "word": "FLYWHEEL",
-    "glyph": "waveform"
+    "glyph": "waveform",
+    "family": "platform",
+    "seed": 58058,
+    "constellationCard": true,
+    "routeHref": "flywheel.html",
+    "routeTitle": "Flywheel",
+    "routeSummary": "Flywheel is a local AI workflow engine and native desktop app. It sends a task to a selected local or hosted model through an approved tool route, rechecks the result, and records witnessed receipts that can be reviewed or replayed.",
+    "imagePath": "img/og/flywheel.png"
   },
   "relay": {
     "role": "MODEL-AGNOSTIC CODING AGENT",
@@ -84,7 +122,7 @@ window.CARD_DATA = {
     "glyph": "layers"
   },
   "portfolio-home": {
-    "role": "FOURTEEN ENGINES / ONE FLYWHEEL THESIS",
+    "role": "ZENTROPY LABS / PRODUCT OVERVIEW",
     "headline": "Public tools, four recorded workflows, and evidence you can inspect.",
     "pipeline": "MAP / ROUTE / VERIFY / REMEMBER / IMPROVE",
     "word": "PROJECT TELOS",
@@ -235,7 +273,14 @@ window.CARD_DATA = {
     "headline": "Gate agent actions behind operator grants, witness every step",
     "pipeline": "PERCEIVE / GATE / ACT / VERIFY / WITNESS",
     "word": "ACCOUNTABLE SURFACE",
-    "glyph": "shield"
+    "glyph": "shield",
+    "family": "security",
+    "seed": 41127,
+    "constellationCard": true,
+    "routeHref": "accountable-surface.html",
+    "routeTitle": "Accountable Surface",
+    "routeSummary": "Accountable Surface is a Python runtime for executing bounded file, command, web, and browser actions under operator-supplied grants. It accepts an exact proposed action and target, an external authorization receipt, effector bounds, and an expected result; it returns an allow, deny, or needs-human outcome, performs only permitted effects, re-observes and verifies the result, rolls back reversible failures, and appends a hash-chained journal.",
+    "imagePath": "img/og/accountable-surface.png"
   },
   "accountable-engine": {
     "role": "ACCOUNTABILITY LEDGER FOR AI WORK",
@@ -298,7 +343,14 @@ window.CARD_DATA = {
     "headline": "Validate evidence, receipts, and gates; reject fake authority",
     "pipeline": null,
     "word": "PROOF SURFACE",
-    "glyph": "shield"
+    "glyph": "shield",
+    "family": "security",
+    "seed": 30211,
+    "constellationCard": true,
+    "routeHref": "proof-surface.html",
+    "routeTitle": "Proof Surface",
+    "routeSummary": "Proof Surface is a zero-dependency Python library and telos-proof CLI that validates structured AI workflow, authorization, delegation, work, and witness records, builds evidence packets across eleven domains, and returns verdicts or advisory allow, deny, or needs-human decisions without authorizing or executing actions.",
+    "imagePath": "img/og/proof-surface.png"
   },
   "reconcile": {
     "role": "CREATIVE-VERIFICATION ENGINE",
@@ -313,6 +365,97 @@ window.CARD_DATA = {
     "pipeline": "PERCEIVE / GENERATE / CRITIQUE / REFINE / WITNESS",
     "word": "STUDIO ENGINE",
     "glyph": "spark"
+  },
+  "engine-revival": {
+    "role": "RETRO SYSTEMS LAB · PRESERVE",
+    "headline": "Preserve public engine evidence with an MIT v0.1.0 release and bounded BRender imports.",
+    "pipeline": "SOURCE / MANIFEST / LICENSE / RECEIPT / RELEASE",
+    "word": "ENGINE REVIVAL",
+    "glyph": "layers"
+  },
+  "brender-archival": {
+    "role": "RETRO SYSTEMS LAB · VERIFY",
+    "headline": "Keep BRender v0.1.1 proof specific, AGPL-scoped, and separate from generic retro media.",
+    "pipeline": "BRENDER / HASH / RECIPE / BOUNDARY / RECEIPT",
+    "word": "BRENDER ARCHIVAL",
+    "glyph": "seal"
+  },
+  "retro": {
+    "role": "LIVE PIXEL RENDERER",
+    "headline": "Pixelate anything through hardware palettes, dither, and a CRT stage.",
+    "pipeline": "SOURCE / PALETTE / DITHER / EFFECTS / EXPORT",
+    "word": "RETRO ENGINE",
+    "glyph": "aperture",
+    "family": "graphics-retro",
+    "seed": 74109,
+    "constellationCard": true,
+    "routeHref": "retro.html",
+    "routeTitle": "Retro Engine",
+    "routeSummary": "Retro Engine is an embedded browser studio for images, drawing, GLSL, and audio traces. It applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects, then exports images, patches, MIDI, relief or disc data, and Loom handoffs.",
+    "imagePath": "img/og/retro.png"
+  },
+  "elder-enb": {
+    "role": "PUBLIC ENB CONFIGURATION",
+    "headline": "Public ENB source with release-candidate state and live-host acceptance still open.",
+    "pipeline": "SOURCE / RC TAG / HOST / LIMITS",
+    "word": "ELDER ENB",
+    "glyph": "layers",
+    "family": "graphics-retro",
+    "seed": 76191,
+    "constellationCard": true,
+    "routeHref": "elder-enb.html",
+    "routeTitle": "Elder ENB",
+    "routeSummary": "Elder ENB is an independently authored nine-stage ENBSeries 0.504 shader suite for Skyrim SE/AE, with five quality tiers, bounded cinematic effects, identity fallbacks, deterministic packaging, and an optional native frame-pulse runtime.",
+    "imagePath": "img/og/elder-enb.png"
+  },
+  "truth-enb": {
+    "role": "REVIEWABLE ENB GRAPHICS",
+    "headline": "Reviewable ENB graphics source with a release-candidate tag, not a release claim.",
+    "pipeline": "SOURCE / RC TAG / REVIEW / LIMITS",
+    "word": "TRUTH ENB",
+    "glyph": "aperture",
+    "family": "graphics-retro",
+    "seed": 76197,
+    "constellationCard": true,
+    "routeHref": "truth-enb.html",
+    "routeTitle": "Truth ENB",
+    "routeSummary": "Truth ENB is a from-scratch ENBSeries 0.504 shader suite for Skyrim SE/AE, with a computed physical atmosphere and sky, raymarched clouds, an aurora curtain, exposure and tone mapping, five quality tiers, and an optional native camera bridge.",
+    "imagePath": "img/og/truth-enb.png"
+  },
+  "enb-runtime-core": {
+    "role": "LOADED-HOST ENB RUNTIME",
+    "headline": "Runtime integration core for an already-loaded ENBSeries host.",
+    "pipeline": "HOST / INTEGRATE / RUNTIME / LIMITS",
+    "word": "ENB RUNTIME CORE",
+    "glyph": "bracket",
+    "family": "graphics-retro",
+    "seed": 76231,
+    "constellationCard": true,
+    "routeHref": "enb-runtime-core.html",
+    "routeTitle": "ENB Runtime Core",
+    "routeSummary": "ENB Runtime Core is a C++23 embedded runtime library that identifies an already-loaded ENBSeries host, validates its SDK surface, queues callbacks outside callback context, coordinates save quiescence and reapplication, and gates a fail-closed Skyrim engine bridge.",
+    "imagePath": "img/og/enb-runtime-core.png"
+  },
+  "skyrimbridge": {
+    "role": "SKYRIM GRAPHICS BRIDGE",
+    "headline": "Public Skyrim integration bridge; native replacement work stays outside the default build.",
+    "pipeline": "SOURCE / BRIDGE / DEFAULT BUILD / LIMITS",
+    "word": "SKYRIMBRIDGE",
+    "glyph": "triad",
+    "family": "graphics-retro",
+    "seed": 76361,
+    "constellationCard": true,
+    "routeHref": "skyrimbridge.html",
+    "routeTitle": "SkyrimBridge",
+    "routeSummary": "SkyrimBridge is an SKSE plugin that exposes Skyrim live engine state, record editing surfaces, asset conversion, a versioned ABI, diagnostics, and shared-memory command channels to shaders and external tools, with an optional D3D11 rendering tier.",
+    "imagePath": "img/og/skyrimbridge.png"
+  },
+  "loom": {
+    "role": "WEAVE DRAFTING",
+    "headline": "Weave any render into cloth, and read or write a real WIF draft.",
+    "pipeline": "IMAGE / THREADING / TIE-UP / TREADLING / CLOTH",
+    "word": "THE LOOM",
+    "glyph": "layers"
   },
   "public-surface-sweeper": {
     "role": "PRE-PUBLISH SURFACE GATE",
@@ -369,53 +512,5 @@ window.CARD_DATA = {
     "pipeline": "RUN / ARTIFACT / PROVENANCE / HANDOFF",
     "word": "RUNTIME",
     "glyph": "bracket"
-  },
-  "gallery": {
-      "role": "PLATE WORKSHOP + EXHIBITION",
-      "word": "GALLERY",
-      "headline": "Name a seed, pick instruments, and the engine draws your plate in the browser.",
-      "pipeline": "SEED / INSTRUMENTS / DRAW / TREAT / KEEP"
-    },
-  "retro": {
-      "role": "LIVE PIXEL RENDERER",
-      "word": "RETRO ENGINE",
-      "headline": "Pixelate anything through hardware palettes, dither, and a CRT stage.",
-      "pipeline": "SOURCE / PALETTE / DITHER / EFFECTS / EXPORT"
-    },
-  "loom": {
-      "role": "WEAVE DRAFTING",
-      "word": "THE LOOM",
-      "headline": "Weave any render into cloth, and read or write a real WIF draft.",
-      "pipeline": "IMAGE / THREADING / TIE-UP / TREADLING / CLOTH"
-    },
-  "publications": {
-      "role": "THE RESEARCH RECORD",
-      "word": "PUBLICATIONS",
-      "headline": "Eight records with permanent DOIs, each titled at the size its evidence carries.",
-      "pipeline": "PAPERS / NOTES / CORPORA / DOI / NO PEER REVIEW"
-    },
-  "security": {
-      "role": "DISCLOSURE AND POSTURE",
-      "word": "SECURITY",
-      "headline": "What is disclosed, what is held back, and the boundary between them.",
-      "pipeline": "SCOPE / DISCLOSURE / BOUNDARY / CONTACT"
-    },
-  "typeface": {
-      "role": "TYPE SPECIMEN",
-      "word": "TYPEFACE",
-      "headline": "A readable generated-outline face, drawn for this workshop.",
-      "pipeline": "OUTLINE / FIT / HINT / SPECIMEN"
-    },
-  "why": {
-      "role": "THE ARGUMENT",
-      "word": "WHY",
-      "headline": "Why a made mind gets real senses, a memory, and a record it cannot fake.",
-      "pipeline": "PERCEIVE / REMEMBER / WITNESS / REFUSE"
-    },
-  "demo-flywheel": {
-      "role": "RECORDED WORKFLOW",
-      "word": "FLYWHEEL",
-      "headline": "A live prompt routed to a local model, sealed into a receipt, then tampered with.",
-      "pipeline": "ROUTE / GATE / RUN / SEAL / RE-VERIFY"
-    }
+  }
 };

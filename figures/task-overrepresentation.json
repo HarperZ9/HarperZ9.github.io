@@ -1,0 +1,111 @@
+{
+  "renderer": "telos-figure/v1",
+  "viewBox": "0 0 960 540",
+  "figure": {
+    "id": "task-overrepresentation",
+    "kind": "matrix",
+    "title": "Company-reported task measures with separate denominators",
+    "description": "Two rows keep OpenAI's rounded retrospective task measures separate. Previously unsolved tasks were 198 of 898 total tasks, or 22 percent. OpenAI reports that 93 percent of board-discussed tasks came from that set, using a different denominator.",
+    "claim": "OpenAI reports that a previously unsolved task set represented 22 percent of all tasks and 93 percent of board-discussed tasks.",
+    "doesNotProve": "No shared axis is used because the measures have different denominators. The records do not establish causation, uplift, settled intent, a production-wide result, or independent replication.",
+    "sources": [
+      {
+        "label": "OpenAI overview",
+        "href": "https://openai.com/index/hugging-face-incident-and-the-road-ahead/"
+      },
+      {
+        "label": "OpenAI technical report",
+        "href": "https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf"
+      }
+    ],
+    "retrievedAt": "2026-08-27",
+    "units": "company-reported task measures",
+    "transformations": [
+      "Do not place 22 percent and 93 percent on a shared quantitative axis, divide the values, calculate uplift, or imply causation.",
+      "Give each reported measure its own row with an explicit denominator field.",
+      "Record the unavailable public count behind the board-discussed denominator as not reported."
+    ],
+    "uncertainty": "OpenAI reports rounded percentages with different denominators. Public counts behind the 93 percent value, uncertainty intervals, and independent replication are unavailable in the reviewed record.",
+    "data": {
+      "type": "matrix",
+      "rows": [
+        {
+          "id": "board-discussed",
+          "label": "Board discussed"
+        },
+        {
+          "id": "previously-unsolved",
+          "label": "Previously unsolved"
+        }
+      ],
+      "columns": [
+        {
+          "id": "boundary",
+          "label": "Boundary"
+        },
+        {
+          "id": "count",
+          "label": "Count"
+        },
+        {
+          "id": "denominator",
+          "label": "Denominator"
+        },
+        {
+          "id": "share",
+          "label": "Reported share"
+        }
+      ],
+      "cells": [
+        {
+          "row": "board-discussed",
+          "column": "boundary",
+          "label": "Conditional share",
+          "status": "caution"
+        },
+        {
+          "row": "board-discussed",
+          "column": "count",
+          "label": "Not reported",
+          "status": "unavailable"
+        },
+        {
+          "row": "board-discussed",
+          "column": "denominator",
+          "label": "Board-discussed tasks",
+          "status": "caution"
+        },
+        {
+          "row": "board-discussed",
+          "column": "share",
+          "label": "93%",
+          "status": "caution"
+        },
+        {
+          "row": "previously-unsolved",
+          "column": "boundary",
+          "label": "All-task share",
+          "status": "caution"
+        },
+        {
+          "row": "previously-unsolved",
+          "column": "count",
+          "label": "198 tasks",
+          "status": "caution"
+        },
+        {
+          "row": "previously-unsolved",
+          "column": "denominator",
+          "label": "898 total tasks",
+          "status": "caution"
+        },
+        {
+          "row": "previously-unsolved",
+          "column": "share",
+          "label": "22%",
+          "status": "caution"
+        }
+      ]
+    }
+  }
+}

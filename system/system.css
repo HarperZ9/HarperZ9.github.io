@@ -1336,7 +1336,8 @@ body.showcase-hero .viewport-stage canvas{width:100%;height:100%;object-fit:fill
   .studio-rail,.studio-viewport,.studio-panel{border:0;overflow:visible;min-height:0}
   .studio-rail{border-bottom:1px solid transparent;border-image:var(--edge) 1}
   .studio-panel{border-top:1px solid transparent;border-image:var(--edge) 1}
-  .rail-scroll,.panel-scroll{overflow:visible}
+  .rail-scroll{max-height:min(72vh,34rem);overflow-y:auto;overflow-x:hidden}
+  .panel-scroll{overflow:visible}
   .source-menu{display:grid;grid-template-columns:1fr;gap:.55rem}
   .source-group{grid-template-columns:repeat(3,minmax(0,1fr))}
   .source-group-single{grid-template-columns:1fr}
@@ -3278,6 +3279,35 @@ section.mv > h2::after,
 @media(max-width:640px){
   .plate--bleed canvas{aspect-ratio:4/3}
 }
+
+/* Generated research briefings use a readable article measure instead of the
+   generic full-width main canvas. Figures remain wide enough for their data,
+   while prose and claim records stay scannable. */
+.publication-main{
+  width:min(100%,78rem);
+  margin-inline:auto;
+  padding:clamp(2rem,5vw,5rem) clamp(1rem,4vw,3rem) 5rem;
+}
+.publication-article{min-width:0}
+.publication-article > header,
+.publication-article > section,
+.publication-article > footer{max-width:72rem;margin-inline:auto}
+.publication-article > header{padding-block:clamp(2rem,6vw,5rem) 2rem}
+.publication-article > header h1{max-width:18ch;font-size:clamp(2.5rem,7vw,5.75rem);line-height:.94}
+.publication-article > header > p:last-child,
+.publication-article .claim-paragraph > p,
+.publication-article > section > p,
+.publication-article > section > ul{max-width:72ch;line-height:1.72}
+.publication-article > section{padding-block:clamp(2rem,5vw,4.5rem);border-top:1px solid var(--hairline)}
+.publication-article .claim-record{max-width:72ch;margin:1.25rem 0;padding:1rem 1.1rem;border:1px solid var(--hairline);border-radius:10px;background:color-mix(in oklab,var(--void) 70%,transparent)}
+.publication-article figure{margin:2rem 0;max-width:72rem}
+.publication-article iframe{display:block;width:100%;min-height:34rem;border:1px solid var(--hairline);border-radius:10px;background:#070c0f}
+.publication-article figcaption{max-width:78ch;margin-top:.8rem;color:var(--muted);line-height:1.6}
+@media(max-width:640px){
+  .publication-main{padding-inline:1rem}
+  .publication-article iframe{min-height:24rem}
+  .publication-article .claim-record{padding:.85rem}
+}
 /* Slim band for compact mastheads (publications). */
 .plate--slim canvas{aspect-ratio:32/7}
 /* Interstitial: the pale caustic-paper variant. The whole figure takes a bone
@@ -3563,13 +3593,10 @@ h2 em,
     z-index:3;
   }
   .site-nav > .sn-more{
-    position:fixed!important;
-    top:.65rem;
-    right:6rem;
-    display:block!important;
-    opacity:1!important;
-    visibility:visible!important;
-    z-index:1000!important;
+    position:static;
+    display:block;
+    opacity:1;
+    visibility:visible;
   }
   .site-nav .sn-more summary{
     min-block-size:44px;
@@ -3609,12 +3636,9 @@ h2 em,
   }
 }
 
-@media (max-width:330px){
+@media (max-width:430px){
   .site-nav .sn-home .sn-brand-word{
-    display:none;
-  }
-  .site-nav > .sn-more{
-    right:1rem;
+    display:none!important;
   }
 }
 
@@ -3661,3 +3685,10 @@ h2 em,
 .arc-method{max-width:52ch}
 .paper-close{max-width:56ch}
 .companion{max-width:58ch}
+
+/* Pages PR #132: on mobile, the rail owns its own vertical scroll while the
+   perception panel remains part of the document flow. */
+@media(max-width:899.98px){
+  .rail-scroll{max-height:min(72vh,34rem);overflow-y:auto;overflow-x:hidden}
+  .panel-scroll{overflow:visible}
+}

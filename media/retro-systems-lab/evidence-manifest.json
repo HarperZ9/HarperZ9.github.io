@@ -1,0 +1,56 @@
+{
+  "schema": "harperz9-retro-systems-lab-evidence/v1",
+  "recordedAt": "2026-08-27",
+  "sourceParityBase": "b4faa8fe7407aed2009f8a5df98e79a7a6921c12",
+  "hierarchy": {
+    "studio": "Zentropy Labs",
+    "cluster": "Retro Systems Lab",
+    "relationship": "Retro Engine, Engine Revival, and BRender Archival are independent products grouped by shared subject matter. Their evidence does not transfer between products."
+  },
+  "retroSystemsLab": {
+    "play": "Retro Engine",
+    "preserve": "Engine Revival",
+    "verify": "BRender Archival"
+  },
+  "engineRevival": {
+    "role": "preserve",
+    "release": {
+      "status": "verified",
+      "tag": "v0.1.0",
+      "commitSha": "0af6d527860a63c418b5775dc0efe9ba89557604",
+      "href": "https://github.com/HarperZ9/engine-revival/releases/tag/v0.1.0",
+      "sourceHref": "https://github.com/HarperZ9/engine-revival"
+    },
+    "licenseBoundary": "MIT repository code plus imported AGPL-covered BRender media and receipts",
+    "localMaterializer": {
+      "scope": "portable core ladder scaffold",
+      "targetCount": 12
+    },
+    "externalBRenderRelease": {
+      "repository": "https://github.com/HarperZ9/brender-archival",
+      "tag": "v0.1.1",
+      "commitSha": "11b5a8d539e911a9c07991b751402a7d51bf1bde",
+      "targetCount": 21
+    },
+    "doesNotProve": "This manifest does not prove product parity, adoption, performance, legal completeness, or that local 12-target materializer output is the external 21-target BRender release."
+  },
+  "brenderArchival": {
+    "role": "verify",
+    "release": {
+      "status": "verified",
+      "tag": "v0.1.1",
+      "commitSha": "11b5a8d539e911a9c07991b751402a7d51bf1bde",
+      "href": "https://github.com/HarperZ9/brender-archival/releases/tag/v0.1.1",
+      "sourceHref": "https://github.com/HarperZ9/brender-archival"
+    },
+    "license": "AGPL-3.0-or-later",
+    "upstreamBRenderLicense": "MIT",
+    "nativeCTestTargets": "21/21",
+    "evidenceBoundary": "specific restoration evidence only",
+    "doesNotProve": "Retro Engine output, generic screenshots, product parity, adoption, performance, x64 readiness, completed textured TIA output, or legal completeness."
+  },
+  "retroEngine": {
+    "role": "play",
+    "boundary": "Retro Engine is a companion renderer and creative studio. Generic Retro Engine output is not BRender evidence."
+  }
+}

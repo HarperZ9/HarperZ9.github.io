@@ -1,0 +1,427 @@
+{
+  "renderer": "telos-figure/v1",
+  "viewBox": "0 0 960 540",
+  "figure": {
+    "id": "source-scope-matrix",
+    "kind": "matrix",
+    "title": "Five records, bounded observation points",
+    "description": "A scope matrix separates legal process, OpenAI's company report, Hugging Face host telemetry, the METR and Redwood investigation, and vendor remediation. Concise visual labels map to fuller source and engagement boundaries in the evidence notes.",
+    "claim": "The five evidence lanes answer different questions and carry different access, support, editorial-control, payment, and attribution boundaries.",
+    "doesNotProve": "The matrix does not rank credibility, merge incompatible units, resolve disputed interpretations, or convert allegations into findings.",
+    "sources": [
+      {
+        "label": "Alabama announcement",
+        "href": "https://www.alabamaag.gov/attorney-general-marshall-launches-investigation-into-openai-and-sam-altman-for-massive-artificial-intelligence-data-breach/"
+      },
+      {
+        "label": "Alabama subpoena",
+        "href": "https://www.alabamaag.gov/wp-content/uploads/2026/08/OpenAI-Subpoena_Final.pdf"
+      },
+      {
+        "label": "Hugging Face technical timeline",
+        "href": "https://huggingface.co/blog/agent-intrusion-technical-timeline"
+      },
+      {
+        "label": "JFrog advisories",
+        "href": "https://docs.jfrog.com/releases/docs/jfrog-security-advisories"
+      },
+      {
+        "label": "JFrog statement",
+        "href": "https://jfrog.com/blog/jfrog-and-openai-collaboration-on-zero-day-security-findings/"
+      },
+      {
+        "label": "METR joint report",
+        "href": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/"
+      },
+      {
+        "label": "OpenAI overview",
+        "href": "https://openai.com/index/hugging-face-incident-and-the-road-ahead/"
+      },
+      {
+        "label": "OpenAI technical report",
+        "href": "https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf"
+      }
+    ],
+    "retrievedAt": "2026-08-27",
+    "units": "qualitative scope fields",
+    "transformations": [
+      "Keep named units inside their source cells and do not aggregate across columns.",
+      "METR + Redwood is the joint investigation; the Redwood URL is a mirror of that report, not a second corroborating investigation.",
+      "Preserve each source lane's terminology and attribution without assigning a score.",
+      "Render every missing or bounded detail as an explicit gap rather than an inferred absence.",
+      "The visual label ≈$400k free API credits means approximately $400,000 in free GPT-5.6 Sol credits and raised rate limits supplied for analysis; it does not mean cash payment.",
+      "The visual label METR: no OpenAI payment means METR reports that it did not take payment from OpenAI.",
+      "The visual label OpenAI redaction + edits means OpenAI could redact non-public information and supplied additional feedback that led to edits in structure, emphasis, clarity, and tone."
+    ],
+    "uncertainty": "Cells use short visual labels so every term remains legible. The source-linked evidence notes preserve the full engagement meanings. Source access and publication dates differ, and MR-2 mirrors the joint report rather than adding another investigation.",
+    "data": {
+      "type": "matrix",
+      "rows": [
+        {
+          "id": "access",
+          "label": "Access"
+        },
+        {
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "id": "gap",
+          "label": "Known gap"
+        },
+        {
+          "id": "host-control",
+          "label": "Host control"
+        },
+        {
+          "id": "inference",
+          "label": "Inference"
+        },
+        {
+          "id": "observation",
+          "label": "Observation"
+        },
+        {
+          "id": "payment",
+          "label": "Payment"
+        },
+        {
+          "id": "period",
+          "label": "Period"
+        },
+        {
+          "id": "research-support",
+          "label": "Research support"
+        },
+        {
+          "id": "unit",
+          "label": "Unit"
+        }
+      ],
+      "columns": [
+        {
+          "id": "hugging-face",
+          "label": "HF telemetry"
+        },
+        {
+          "id": "independent",
+          "label": "METR + Redwood"
+        },
+        {
+          "id": "legal",
+          "label": "Legal process"
+        },
+        {
+          "id": "openai",
+          "label": "OpenAI report"
+        },
+        {
+          "id": "vendor",
+          "label": "Vendor record"
+        }
+      ],
+      "cells": [
+        {
+          "row": "access",
+          "column": "hugging-face",
+          "label": "Host systems",
+          "status": "verified"
+        },
+        {
+          "row": "access",
+          "column": "independent",
+          "label": "Host-controlled access",
+          "status": "caution"
+        },
+        {
+          "row": "access",
+          "column": "legal",
+          "label": "Compulsory requests",
+          "status": "caution"
+        },
+        {
+          "row": "access",
+          "column": "openai",
+          "label": "First-party systems",
+          "status": "caution"
+        },
+        {
+          "row": "access",
+          "column": "vendor",
+          "label": "Published records",
+          "status": "caution"
+        },
+        {
+          "row": "collection",
+          "column": "hugging-face",
+          "label": "Host logs + forensics",
+          "status": "verified"
+        },
+        {
+          "row": "collection",
+          "column": "independent",
+          "label": "Supplied datasets",
+          "status": "caution"
+        },
+        {
+          "row": "collection",
+          "column": "legal",
+          "label": "Official legal records",
+          "status": "caution"
+        },
+        {
+          "row": "collection",
+          "column": "openai",
+          "label": "Internal investigation",
+          "status": "caution"
+        },
+        {
+          "row": "collection",
+          "column": "vendor",
+          "label": "Vendor publications",
+          "status": "caution"
+        },
+        {
+          "row": "gap",
+          "column": "hugging-face",
+          "label": "Incomplete recovery",
+          "status": "caution"
+        },
+        {
+          "row": "gap",
+          "column": "independent",
+          "label": "No direct system query",
+          "status": "caution"
+        },
+        {
+          "row": "gap",
+          "column": "legal",
+          "label": "No adjudication",
+          "status": "caution"
+        },
+        {
+          "row": "gap",
+          "column": "openai",
+          "label": "No independent replication",
+          "status": "caution"
+        },
+        {
+          "row": "gap",
+          "column": "vendor",
+          "label": "No deployment proof",
+          "status": "caution"
+        },
+        {
+          "row": "host-control",
+          "column": "hugging-face",
+          "label": "Host controls records",
+          "status": "verified"
+        },
+        {
+          "row": "host-control",
+          "column": "independent",
+          "label": "OpenAI redaction + edits",
+          "status": "caution"
+        },
+        {
+          "row": "host-control",
+          "column": "legal",
+          "label": "Public records only",
+          "status": "caution"
+        },
+        {
+          "row": "host-control",
+          "column": "openai",
+          "label": "Source + host party",
+          "status": "caution"
+        },
+        {
+          "row": "host-control",
+          "column": "vendor",
+          "label": "Published records",
+          "status": "caution"
+        },
+        {
+          "row": "inference",
+          "column": "hugging-face",
+          "label": "Host motive account",
+          "status": "caution"
+        },
+        {
+          "row": "inference",
+          "column": "independent",
+          "label": "Behavioral analysis",
+          "status": "caution"
+        },
+        {
+          "row": "inference",
+          "column": "legal",
+          "label": "Allegations only",
+          "status": "caution"
+        },
+        {
+          "row": "inference",
+          "column": "openai",
+          "label": "First-party account",
+          "status": "caution"
+        },
+        {
+          "row": "inference",
+          "column": "vendor",
+          "label": "None inferred",
+          "status": "unavailable"
+        },
+        {
+          "row": "observation",
+          "column": "hugging-face",
+          "label": "Recovered host activity",
+          "status": "verified"
+        },
+        {
+          "row": "observation",
+          "column": "independent",
+          "label": "Supplied-data patterns",
+          "status": "caution"
+        },
+        {
+          "row": "observation",
+          "column": "legal",
+          "label": "Process + deadline",
+          "status": "verified"
+        },
+        {
+          "row": "observation",
+          "column": "openai",
+          "label": "Activity + response",
+          "status": "caution"
+        },
+        {
+          "row": "observation",
+          "column": "vendor",
+          "label": "Published remediation",
+          "status": "caution"
+        },
+        {
+          "row": "payment",
+          "column": "hugging-face",
+          "label": "Not applicable",
+          "status": "unavailable"
+        },
+        {
+          "row": "payment",
+          "column": "independent",
+          "label": "METR: no OpenAI payment",
+          "status": "caution"
+        },
+        {
+          "row": "payment",
+          "column": "legal",
+          "label": "Not applicable",
+          "status": "unavailable"
+        },
+        {
+          "row": "payment",
+          "column": "openai",
+          "label": "No payment by report",
+          "status": "caution"
+        },
+        {
+          "row": "payment",
+          "column": "vendor",
+          "label": "Not applicable",
+          "status": "unavailable"
+        },
+        {
+          "row": "period",
+          "column": "hugging-face",
+          "label": "Jul 9 to Jul 13",
+          "status": "verified"
+        },
+        {
+          "row": "period",
+          "column": "independent",
+          "label": "Jun 26 to Jul 13",
+          "status": "caution"
+        },
+        {
+          "row": "period",
+          "column": "legal",
+          "label": "Aug 20 to Sep 14",
+          "status": "caution"
+        },
+        {
+          "row": "period",
+          "column": "openai",
+          "label": "May 8 to Aug 26",
+          "status": "caution"
+        },
+        {
+          "row": "period",
+          "column": "vendor",
+          "label": "Jul 27 to Aug 25",
+          "status": "caution"
+        },
+        {
+          "row": "research-support",
+          "column": "hugging-face",
+          "label": "None stated",
+          "status": "unavailable"
+        },
+        {
+          "row": "research-support",
+          "column": "independent",
+          "label": "≈$400k free API credits",
+          "status": "caution"
+        },
+        {
+          "row": "research-support",
+          "column": "legal",
+          "label": "None stated",
+          "status": "unavailable"
+        },
+        {
+          "row": "research-support",
+          "column": "openai",
+          "label": "API-credit provider",
+          "status": "caution"
+        },
+        {
+          "row": "research-support",
+          "column": "vendor",
+          "label": "None stated",
+          "status": "unavailable"
+        },
+        {
+          "row": "unit",
+          "column": "hugging-face",
+          "label": "Actions + assets",
+          "status": "verified"
+        },
+        {
+          "row": "unit",
+          "column": "independent",
+          "label": "Agents + records",
+          "status": "caution"
+        },
+        {
+          "row": "unit",
+          "column": "legal",
+          "label": "16 record requests",
+          "status": "caution"
+        },
+        {
+          "row": "unit",
+          "column": "openai",
+          "label": "Systems + controls",
+          "status": "caution"
+        },
+        {
+          "row": "unit",
+          "column": "vendor",
+          "label": "Advisories + fixes",
+          "status": "caution"
+        }
+      ]
+    }
+  }
+}

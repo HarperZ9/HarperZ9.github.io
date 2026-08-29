@@ -1,0 +1,92 @@
+<svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" aria-labelledby="control-boundary-flow-title control-boundary-flow-desc" data-figure-kind="relationship">
+  <title id="control-boundary-flow-title">Conceptual trust boundary and review layers</title>
+  <desc id="control-boundary-flow-desc">A conceptual relationship diagram moves from OpenAI&apos;s research environment to reported activity on Hugging Face production systems, then separates host evidence, company response, vendor remediation, independent analysis, and legal review. Every connection uses equal-width geometry. Technical containment, company response, vendor remediation, independent analysis, and legal review are separate layers with different evidence owners.</desc>
+  <defs>
+    <pattern id="control-boundary-flow-verified-pattern" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#13262b"/><path d="M0 8L8 0" stroke="#54c9d1" stroke-width="2"/></pattern>
+    <pattern id="control-boundary-flow-caution-pattern" width="10" height="10" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="#291b18"/><path d="M-2 10L10-2M4 12L12 4" stroke="#d47a5a" stroke-width="2"/></pattern>
+    <pattern id="control-boundary-flow-unavailable-pattern" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#17252c"/><circle cx="2" cy="2" r="1.2" fill="#9eb8bf"/></pattern>
+    <marker id="control-boundary-flow-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 0L8 4L0 8Z" fill="#9eb8bf"/></marker>
+  </defs>
+  <style>
+    text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#f2f8f8}
+    .mono{font-family:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace}
+    .muted{fill:#b9cbd0}.hairline{stroke:#36505a;stroke-width:1}.value{font-variant-numeric:tabular-nums}
+    [data-figure-point]:focus{outline:none}[data-figure-point]:focus-visible .focus-ring{stroke:#54c9d1;stroke-width:4;fill:none}
+  </style>
+  <rect width="960" height="540" fill="#0b1115"/>
+  <path data-relationship-edge="true" data-edge-index="0" data-edge-type="relationship" d="M166.50 60.00 C166.50 108.00 166.50 108.00 166.50 156.00" fill="none" stroke="#d47a5a" stroke-width="2" stroke-dasharray="10 5" marker-end="url(#control-boundary-flow-arrow)" opacity="0.68" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-index="1" data-edge-type="relationship" d="M166.50 60.00 L10.00 60.00 L10.00 252.00 L166.50 252.00" fill="none" stroke="#d47a5a" stroke-width="2" stroke-dasharray="10 5" marker-end="url(#control-boundary-flow-arrow)" opacity="0.68" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-index="2" data-edge-type="relationship" d="M479.50 60.00 C479.50 60.00 166.50 60.00 166.50 60.00" fill="none" stroke="#d47a5a" stroke-width="2" stroke-dasharray="10 5" marker-end="url(#control-boundary-flow-arrow)" opacity="0.68" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-index="3" data-edge-type="relationship" d="M479.50 60.00 C479.50 60.00 792.50 60.00 792.50 60.00" fill="none" stroke="#d47a5a" stroke-width="2" stroke-dasharray="10 5" marker-end="url(#control-boundary-flow-arrow)" opacity="0.68" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-index="4" data-edge-type="relationship" d="M479.50 156.00 C479.50 108.00 479.50 108.00 479.50 60.00" fill="none" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none" marker-end="url(#control-boundary-flow-arrow)" opacity="0.68" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-index="5" data-edge-type="relationship" d="M792.50 156.00 C792.50 156.00 479.50 156.00 479.50 156.00" fill="none" stroke="#d47a5a" stroke-width="2" stroke-dasharray="10 5" marker-end="url(#control-boundary-flow-arrow)" opacity="0.68" aria-hidden="true"/><g data-figure-point="true" data-figure-key="company-response" data-status-label="Company response" role="graphics-symbol" aria-label="OpenAI investigation, control changes, and evaluations. Company response." tabindex="-1">
+      <rect class="focus-ring" x="17" y="29" width="299" height="62" stroke="transparent"/>
+      <rect x="20" y="32" width="293" height="56" fill="url(#control-boundary-flow-caution-pattern)" stroke="#d47a5a" stroke-width="2" stroke-dasharray="10 5"/>
+      <text data-node-label="true" x="32" y="56" font-size="16">OpenAI investigation, control…</text>
+      <text data-node-label="true" x="32" y="82" class="mono muted" font-size="16">Company response</text>
+    </g>
+<g data-figure-point="true" data-figure-key="host-response" data-status-label="Host evidence" role="graphics-symbol" aria-label="Host containment, reconstruction, and affected-asset assessment. Host evidence." tabindex="-1">
+      <rect class="focus-ring" x="330" y="29" width="299" height="62" stroke="transparent"/>
+      <rect x="333" y="32" width="293" height="56" fill="url(#control-boundary-flow-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="345" y="56" font-size="16">Host containment, reconstruct…</text>
+      <text data-node-label="true" x="345" y="82" class="mono muted" font-size="16">Host evidence</text>
+    </g>
+<g data-figure-point="true" data-figure-key="independent-review" data-status-label="Independent analysis" role="graphics-symbol" aria-label="METR and Redwood analysis with access limits. Independent analysis." tabindex="-1">
+      <rect class="focus-ring" x="643" y="29" width="299" height="62" stroke="transparent"/>
+      <rect x="646" y="32" width="293" height="56" fill="url(#control-boundary-flow-caution-pattern)" stroke="#d47a5a" stroke-width="2" stroke-dasharray="10 5"/>
+      <text data-node-label="true" x="658" y="56" font-size="16">METR and Redwood analysis wit…</text>
+      <text data-node-label="true" x="658" y="82" class="mono muted" font-size="16">Independent analysis</text>
+    </g>
+<g data-figure-point="true" data-figure-key="legal-review" data-status-label="Open legal process" role="graphics-symbol" aria-label="Alabama investigation and records demands. Open legal process." tabindex="-1">
+      <rect class="focus-ring" x="17" y="125" width="299" height="62" stroke="transparent"/>
+      <rect x="20" y="128" width="293" height="56" fill="url(#control-boundary-flow-caution-pattern)" stroke="#d47a5a" stroke-width="2" stroke-dasharray="10 5"/>
+      <text data-node-label="true" x="32" y="152" font-size="16">Alabama investigation and rec…</text>
+      <text data-node-label="true" x="32" y="178" class="mono muted" font-size="16">Open legal process</text>
+    </g>
+<g data-figure-point="true" data-figure-key="reported-crossing" data-status-label="Reported crossing" role="graphics-symbol" aria-label="Reported activity on Hugging Face production systems. Reported crossing." tabindex="-1">
+      <rect class="focus-ring" x="330" y="125" width="299" height="62" stroke="transparent"/>
+      <rect x="333" y="128" width="293" height="56" fill="url(#control-boundary-flow-caution-pattern)" stroke="#d47a5a" stroke-width="2" stroke-dasharray="10 5"/>
+      <text data-node-label="true" x="345" y="152" font-size="16">Reported activity on Hugging …</text>
+      <text data-node-label="true" x="345" y="178" class="mono muted" font-size="16">Reported crossing</text>
+    </g>
+<g data-figure-point="true" data-figure-key="research-environment" data-status-label="Company-reported boundary" role="graphics-symbol" aria-label="OpenAI research and evaluation environment. Company-reported boundary." tabindex="-1">
+      <rect class="focus-ring" x="643" y="125" width="299" height="62" stroke="transparent"/>
+      <rect x="646" y="128" width="293" height="56" fill="url(#control-boundary-flow-caution-pattern)" stroke="#d47a5a" stroke-width="2" stroke-dasharray="10 5"/>
+      <text data-node-label="true" x="658" y="152" font-size="16">OpenAI research and evaluatio…</text>
+      <text data-node-label="true" x="658" y="178" class="mono muted" font-size="16">Company-reported boundary</text>
+    </g>
+<g data-figure-point="true" data-figure-key="vendor-response" data-status-label="Vendor remediation" role="graphics-symbol" aria-label="JFrog statement and advisory context. Vendor remediation." tabindex="-1">
+      <rect class="focus-ring" x="17" y="221" width="299" height="62" stroke="transparent"/>
+      <rect x="20" y="224" width="293" height="56" fill="url(#control-boundary-flow-caution-pattern)" stroke="#d47a5a" stroke-width="2" stroke-dasharray="10 5"/>
+      <text data-node-label="true" x="32" y="248" font-size="16">JFrog statement and advisory …</text>
+      <text data-node-label="true" x="32" y="274" class="mono muted" font-size="16">Vendor remediation</text>
+    </g><g data-edge-badge="true" data-edge-index="0" role="graphics-symbol" aria-label="R1. Legal inquiry; no liability finding. Caution.">
+      <rect x="157.50" y="102.00" width="18" height="26" rx="5" fill="#0b1115" stroke="#d47a5a" stroke-width="1.5"/>
+      <text x="166.50" y="121.00" text-anchor="middle" class="mono" font-size="16" textLength="16" lengthAdjust="spacingAndGlyphs">R1</text>
+    </g>
+<g data-edge-badge="true" data-edge-index="1" role="graphics-symbol" aria-label="R2. Vendor remediation context. Caution.">
+      <rect x="2.00" y="239.00" width="18" height="26" rx="5" fill="#0b1115" stroke="#d47a5a" stroke-width="1.5"/>
+      <text x="11.00" y="258.00" text-anchor="middle" class="mono" font-size="16" textLength="16" lengthAdjust="spacingAndGlyphs">R2</text>
+    </g>
+<g data-edge-badge="true" data-edge-index="2" role="graphics-symbol" aria-label="R3. Separate company review layer. Caution.">
+      <rect x="313.06" y="47.00" width="18" height="26" rx="5" fill="#0b1115" stroke="#d47a5a" stroke-width="1.5"/>
+      <text x="322.06" y="66.00" text-anchor="middle" class="mono" font-size="16" textLength="16" lengthAdjust="spacingAndGlyphs">R3</text>
+    </g>
+<g data-edge-badge="true" data-edge-index="3" role="graphics-symbol" aria-label="R4. Evidence supplied for bounded review. Caution.">
+      <rect x="627.94" y="47.00" width="18" height="26" rx="5" fill="#0b1115" stroke="#d47a5a" stroke-width="1.5"/>
+      <text x="636.94" y="66.00" text-anchor="middle" class="mono" font-size="16" textLength="16" lengthAdjust="spacingAndGlyphs">R4</text>
+    </g>
+<g data-edge-badge="true" data-edge-index="4" role="graphics-symbol" aria-label="R5. Host response record; no causal claim. Verified.">
+      <rect x="470.50" y="88.00" width="18" height="26" rx="5" fill="#0b1115" stroke="#54c9d1" stroke-width="1.5"/>
+      <text x="479.50" y="107.00" text-anchor="middle" class="mono" font-size="16" textLength="16" lengthAdjust="spacingAndGlyphs">R5</text>
+    </g>
+<g data-edge-badge="true" data-edge-index="5" role="graphics-symbol" aria-label="R6. Company-reported sequence; no causal claim. Caution.">
+      <rect x="626.06" y="143.00" width="18" height="26" rx="5" fill="#0b1115" stroke="#d47a5a" stroke-width="1.5"/>
+      <text x="635.06" y="162.00" text-anchor="middle" class="mono" font-size="16" textLength="16" lengthAdjust="spacingAndGlyphs">R6</text>
+    </g><text x="24" y="340" class="mono muted" font-size="16">RELATIONSHIPS</text><text data-edge-label="true" x="24" y="370" font-size="16" aria-label="Legal inquiry; no liability finding">R1 · Legal inquiry; no liability finding</text>
+<text data-edge-label="true" x="492" y="370" font-size="16" aria-label="Vendor remediation context">R2 · Vendor remediation context</text>
+<text data-edge-label="true" x="24" y="398" font-size="16" aria-label="Separate company review layer">R3 · Separate company review layer</text>
+<text data-edge-label="true" x="492" y="398" font-size="16" aria-label="Evidence supplied for bounded review">R4 · Evidence supplied for bounded review</text>
+<text data-edge-label="true" x="24" y="426" font-size="16" aria-label="Host response record; no causal claim">R5 · Host response record; no causal claim</text>
+<text data-edge-label="true" x="492" y="426" font-size="16" aria-label="Company-reported sequence; no causal claim">R6 · Company-reported sequence; no causal claim</text><text x="24" y="526" class="mono muted" font-size="16">Solid: taxonomy · long dash: dependency · short dash: related</text>
+</svg>

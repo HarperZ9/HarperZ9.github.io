@@ -1,0 +1,81 @@
+<svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" aria-labelledby="security-capability-map-title security-capability-map-desc" data-figure-kind="relationship">
+  <title id="security-capability-map-title">Security capability family</title>
+  <desc id="security-capability-map-desc">Public security systems shown with Flywheel as the platform context. The map shows public security-family membership and each system&apos;s declared architecture role.</desc>
+  <defs>
+    <pattern id="security-capability-map-verified-pattern" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#13262b"/><path d="M0 8L8 0" stroke="#54c9d1" stroke-width="2"/></pattern>
+    <pattern id="security-capability-map-caution-pattern" width="10" height="10" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="#291b18"/><path d="M-2 10L10-2M4 12L12 4" stroke="#d47a5a" stroke-width="2"/></pattern>
+    <pattern id="security-capability-map-unavailable-pattern" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#17252c"/><circle cx="2" cy="2" r="1.2" fill="#9eb8bf"/></pattern>
+    <marker id="security-capability-map-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 0L8 4L0 8Z" fill="#9eb8bf"/></marker>
+  </defs>
+  <style>
+    text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#f2f8f8}
+    .mono{font-family:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace}
+    .muted{fill:#b9cbd0}.hairline{stroke:#36505a;stroke-width:1}.value{font-variant-numeric:tabular-nums}
+    [data-figure-point]:focus{outline:none}[data-figure-point]:focus-visible .focus-ring{stroke:#54c9d1;stroke-width:4;fill:none}
+  </style>
+  <rect width="960" height="540" fill="#0b1115"/>
+  <path data-relationship-edge="true" data-edge-type="related" d="M166.50 178.00 C166.50 178.00 792.50 178.00 792.50 178.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#security-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M166.50 178.00 C166.50 117.00 480.00 117.00 480.00 56.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#security-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M166.50 178.00 C166.50 233.00 166.50 233.00 166.50 288.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#security-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M166.50 178.00 C166.50 233.00 479.50 233.00 479.50 288.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#security-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M479.50 178.00 C479.50 233.00 792.50 233.00 792.50 288.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#security-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M479.50 178.00 C479.50 288.00 166.50 288.00 166.50 398.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#security-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M792.50 178.00 C792.50 117.00 480.00 117.00 480.00 56.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#security-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M792.50 178.00 C792.50 233.00 166.50 233.00 166.50 288.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#security-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 117.00 166.50 117.00 166.50 178.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#security-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 117.00 479.50 117.00 479.50 178.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#security-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 117.00 792.50 117.00 792.50 178.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#security-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 172.00 166.50 172.00 166.50 288.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#security-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 172.00 479.50 172.00 479.50 288.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#security-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M480.00 56.00 C480.00 172.00 479.50 172.00 479.50 288.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#security-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 172.00 792.50 172.00 792.50 288.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#security-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 227.00 166.50 227.00 166.50 398.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#security-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M792.50 288.00 C792.50 343.00 166.50 343.00 166.50 398.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#security-capability-map-arrow)" opacity="0.48" aria-hidden="true"/><g data-figure-point="true" data-figure-key="accountable-surface" data-status-label="controlled agent-action workbench" role="graphics-symbol" aria-label="Accountable Surface. controlled agent-action workbench." tabindex="-1">
+      <rect class="focus-ring" x="17" y="143" width="299" height="70" stroke="transparent"/>
+      <rect x="20" y="146" width="293" height="64" fill="url(#security-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="32" y="170" font-size="16">Accountable Surface</text>
+      <text data-node-label="true" x="32" y="196" class="mono muted" font-size="16">controlled agent-action workbe…</text>
+    </g>
+<g data-figure-point="true" data-figure-key="agent-hook-pack" data-status-label="repository hook toolkit" role="graphics-symbol" aria-label="Agent Hook Pack. repository hook toolkit." tabindex="-1">
+      <rect class="focus-ring" x="330" y="143" width="299" height="70" stroke="transparent"/>
+      <rect x="333" y="146" width="293" height="64" fill="url(#security-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="345" y="170" font-size="16">Agent Hook Pack</text>
+      <text data-node-label="true" x="345" y="196" class="mono muted" font-size="16">repository hook toolkit</text>
+    </g>
+<g data-figure-point="true" data-figure-key="behavior-transform" data-status-label="I/O boundary and receipt layer" role="graphics-symbol" aria-label="behavior-transform.io. I/O boundary and receipt layer." tabindex="-1">
+      <rect class="focus-ring" x="643" y="143" width="299" height="70" stroke="transparent"/>
+      <rect x="646" y="146" width="293" height="64" fill="url(#security-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="658" y="170" font-size="16">behavior-transform.io</text>
+      <text data-node-label="true" x="658" y="196" class="mono muted" font-size="16">I/O boundary and receipt layer</text>
+    </g>
+<g data-figure-point="true" data-figure-key="flywheel" data-status-label="Platform context" role="graphics-symbol" aria-label="Flywheel. Platform context." tabindex="-1">
+      <rect class="focus-ring" x="347" y="21" width="266" height="70" stroke="transparent"/>
+      <rect x="350" y="24" width="260" height="64" fill="url(#security-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none"/>
+      <text data-node-label="true" x="362" y="48" font-size="16">Flywheel</text>
+      <text data-node-label="true" x="362" y="74" class="mono muted" font-size="16">Platform context</text>
+    </g>
+<g data-figure-point="true" data-figure-key="phantom" data-status-label="reversible device identity system" role="graphics-symbol" aria-label="Phantom. reversible device identity system." tabindex="-1">
+      <rect class="focus-ring" x="17" y="253" width="299" height="70" stroke="transparent"/>
+      <rect x="20" y="256" width="293" height="64" fill="url(#security-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="32" y="280" font-size="16">Phantom</text>
+      <text data-node-label="true" x="32" y="306" class="mono muted" font-size="16">reversible device identity sys…</text>
+    </g>
+<g data-figure-point="true" data-figure-key="proof-surface" data-status-label="authorization and proof contract layer" role="graphics-symbol" aria-label="Proof Surface. authorization and proof contract layer." tabindex="-1">
+      <rect class="focus-ring" x="330" y="253" width="299" height="70" stroke="transparent"/>
+      <rect x="333" y="256" width="293" height="64" fill="url(#security-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="345" y="280" font-size="16">Proof Surface</text>
+      <text data-node-label="true" x="345" y="306" class="mono muted" font-size="16">authorization and proof contra…</text>
+    </g>
+<g data-figure-point="true" data-figure-key="public-surface-sweeper" data-status-label="release surface auditor" role="graphics-symbol" aria-label="Public Surface Sweeper. release surface auditor." tabindex="-1">
+      <rect class="focus-ring" x="643" y="253" width="299" height="70" stroke="transparent"/>
+      <rect x="646" y="256" width="293" height="64" fill="url(#security-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="658" y="280" font-size="16">Public Surface Sweeper</text>
+      <text data-node-label="true" x="658" y="306" class="mono muted" font-size="16">release surface auditor</text>
+    </g>
+<g data-figure-point="true" data-figure-key="secret-redact-io" data-status-label="guarded I/O library" role="graphics-symbol" aria-label="Secret Redact IO. guarded I/O library." tabindex="-1">
+      <rect class="focus-ring" x="17" y="363" width="299" height="70" stroke="transparent"/>
+      <rect x="20" y="366" width="293" height="64" fill="url(#security-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="32" y="390" font-size="16">Secret Redact IO</text>
+      <text data-node-label="true" x="32" y="416" class="mono muted" font-size="16">guarded I/O library</text>
+    </g><text x="24" y="526" class="mono muted" font-size="16">Solid: taxonomy · long dash: dependency · short dash: related</text>
+</svg>

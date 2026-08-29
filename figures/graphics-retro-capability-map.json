@@ -1,0 +1,296 @@
+{
+  "renderer": "telos-figure/v1",
+  "viewBox": "0 0 960 540",
+  "figure": {
+    "id": "graphics-retro-capability-map",
+    "kind": "relationship",
+    "title": "Graphics and retro capability family",
+    "description": "Public graphics and retro systems shown with Flywheel as the platform context.",
+    "claim": "The map shows public graphics-retro family membership and each system's declared architecture role.",
+    "doesNotProve": "The map does not establish host compatibility, live acceptance, production adoption, independent review, or performance.",
+    "sources": [
+      {
+        "label": "Canonical public system registry",
+        "href": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/systems.json"
+      }
+    ],
+    "retrievedAt": "2026-08-28",
+    "units": "declared relationships",
+    "transformations": [
+      "Evidence receipts and reciprocal duplicate relationships are omitted.",
+      "Flywheel is added once as platform context.",
+      "Public graphics-retro family records are sorted by stable identifier."
+    ],
+    "uncertainty": "Architecture roles describe placement in the public taxonomy, not runtime coupling.",
+    "data": {
+      "type": "relationship",
+      "nodes": [
+        {
+          "id": "brender-archival",
+          "label": "BRender Archival",
+          "status": "verified",
+          "stateLabel": "BRender restoration harness",
+          "group": "Graphics and retro",
+          "nodeType": "system"
+        },
+        {
+          "id": "build-color",
+          "label": "Build Color",
+          "status": "verified",
+          "stateLabel": "color science workbench",
+          "group": "Graphics and retro",
+          "nodeType": "system"
+        },
+        {
+          "id": "elder-enb",
+          "label": "Elder ENB",
+          "status": "verified",
+          "stateLabel": "ENB shader suite",
+          "group": "Graphics and retro",
+          "nodeType": "system"
+        },
+        {
+          "id": "enb-runtime-core",
+          "label": "ENB Runtime Core",
+          "status": "verified",
+          "stateLabel": "embedded runtime library",
+          "group": "Graphics and retro",
+          "nodeType": "system"
+        },
+        {
+          "id": "engine-revival",
+          "label": "Engine Revival",
+          "status": "verified",
+          "stateLabel": "archival and revival evidence platform",
+          "group": "Graphics and retro",
+          "nodeType": "system"
+        },
+        {
+          "id": "flywheel",
+          "label": "Flywheel",
+          "status": "verified",
+          "stateLabel": "Platform context",
+          "group": "Platform",
+          "nodeType": "system"
+        },
+        {
+          "id": "raw",
+          "label": "RAW",
+          "status": "verified",
+          "stateLabel": "Skyrim D3D11 rendering platform",
+          "group": "Graphics and retro",
+          "nodeType": "system"
+        },
+        {
+          "id": "retro-engine",
+          "label": "Retro Engine",
+          "status": "verified",
+          "stateLabel": "embedded browser studio",
+          "group": "Graphics and retro",
+          "nodeType": "system"
+        },
+        {
+          "id": "skyrimbridge",
+          "label": "SkyrimBridge",
+          "status": "verified",
+          "stateLabel": "SKSE state, record, asset, and ABI system",
+          "group": "Graphics and retro",
+          "nodeType": "system"
+        },
+        {
+          "id": "studio-engine",
+          "label": "Studio Engine",
+          "status": "verified",
+          "stateLabel": "creative simulation and render engine",
+          "group": "Graphics and retro",
+          "nodeType": "system"
+        },
+        {
+          "id": "truth-enb",
+          "label": "Truth ENB",
+          "status": "verified",
+          "stateLabel": "ENB shader suite",
+          "group": "Graphics and retro",
+          "nodeType": "system"
+        }
+      ],
+      "edges": [
+        {
+          "source": "brender-archival",
+          "target": "engine-revival",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "brender-archival",
+          "target": "retro-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "build-color",
+          "target": "retro-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "build-color",
+          "target": "studio-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "elder-enb",
+          "target": "enb-runtime-core",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "elder-enb",
+          "target": "skyrimbridge",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "elder-enb",
+          "target": "truth-enb",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "enb-runtime-core",
+          "target": "skyrimbridge",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "enb-runtime-core",
+          "target": "truth-enb",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "engine-revival",
+          "target": "retro-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "brender-archival",
+          "label": "BRender restoration harness",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "build-color",
+          "label": "color science workbench",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "elder-enb",
+          "label": "ENB shader suite",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "enb-runtime-core",
+          "label": "embedded runtime library",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "engine-revival",
+          "label": "archival and revival evidence platform",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "raw",
+          "label": "Skyrim D3D11 rendering platform",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "retro-engine",
+          "label": "embedded browser studio",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "skyrimbridge",
+          "label": "SKSE state, record, asset, and ABI system",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "studio-engine",
+          "label": "creative simulation and render engine",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "truth-enb",
+          "label": "ENB shader suite",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "raw",
+          "target": "skyrimbridge",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "raw",
+          "target": "studio-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "retro-engine",
+          "target": "studio-engine",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "skyrimbridge",
+          "target": "truth-enb",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "truth-enb",
+          "target": "enb-runtime-core",
+          "label": "depends on",
+          "status": "caution",
+          "type": "dependency"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "renderer": "telos-figure/v1",
+  "viewBox": "0 0 960 540",
+  "figure": {
+    "id": "motive-sample-nonexclusive",
+    "kind": "bar",
+    "title": "Non-exclusive motive tags in 100-agent sample",
+    "description": "Three bars show METR and Redwood's AI-assisted, non-exclusive tags for 100 agents that joined around 8-9 AM UTC on July 11. Counts can overlap by agent.",
+    "claim": "METR and Redwood report three non-exclusive motive-tag counts in a 100-agent peak-hour sample.",
+    "doesNotProve": "The figure does not show exclusive motives, representative shares for all agents, human-verified classifications, causation, or settled intent.",
+    "sources": [
+      {
+        "label": "METR joint report",
+        "href": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/"
+      }
+    ],
+    "retrievedAt": "2026-08-27",
+    "units": "agents, non-exclusive",
+    "transformations": [
+      "Do not sum the bars, treat categories as exclusive, or generalize the sample to all agents.",
+      "Render the three non-exclusive counts on a fixed zero-to-100 domain.",
+      "Use source ID mr-1 for the METR and Redwood report."
+    ],
+    "uncertainty": "The tags were produced by AI-assisted analysis agents, and METR and Redwood did not carefully inspect or iterate on this classification.",
+    "data": {
+      "type": "bar",
+      "items": [
+        {
+          "label": "Scorer source or access",
+          "value": 97,
+          "status": "caution"
+        },
+        {
+          "label": "Shared infrastructure or credentials",
+          "value": 66,
+          "status": "caution"
+        },
+        {
+          "label": "Task solution or private trajectories",
+          "value": 89,
+          "status": "caution"
+        }
+      ],
+      "domain": {
+        "min": 0,
+        "max": 100
+      }
+    }
+  }
+}

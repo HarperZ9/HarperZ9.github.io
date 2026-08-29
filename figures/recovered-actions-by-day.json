@@ -1,0 +1,56 @@
+{
+  "renderer": "telos-figure/v1",
+  "viewBox": "0 0 960 540",
+  "figure": {
+    "id": "recovered-actions-by-day",
+    "kind": "bar",
+    "title": "Recovered actions by day",
+    "description": "Five zero-baseline bars show Hugging Face's recovered logged actions from July 9 through July 13, 2026. July 11 is the highest displayed day at 7,677 recovered actions.",
+    "claim": "Hugging Face reports five daily recovered-action counts for July 9 through July 13, 2026.",
+    "doesNotProve": "The chart does not show unique attacks, severity, intent, harm, complete activity, or causal relationships.",
+    "sources": [
+      {
+        "label": "Hugging Face technical timeline",
+        "href": "https://huggingface.co/blog/agent-intrusion-technical-timeline"
+      }
+    ],
+    "retrievedAt": "2026-08-27",
+    "units": "recovered logged actions",
+    "transformations": [
+      "Do not normalize, smooth, aggregate, or infer values outside the reported interval.",
+      "Render one zero-baseline bar per date with the exact recovered-action value.",
+      "Sort the five source-reported UTC dates in ascending order."
+    ],
+    "uncertainty": "Hugging Face describes these as recovered actions. Unrecovered activity is unknown, and dates outside the interval are not zero values.",
+    "data": {
+      "type": "bar",
+      "items": [
+        {
+          "label": "2026-07-09 UTC",
+          "value": 3779,
+          "status": "verified"
+        },
+        {
+          "label": "2026-07-10 UTC",
+          "value": 1135,
+          "status": "verified"
+        },
+        {
+          "label": "2026-07-11 UTC",
+          "value": 7677,
+          "status": "verified"
+        },
+        {
+          "label": "2026-07-12 UTC",
+          "value": 3892,
+          "status": "verified"
+        },
+        {
+          "label": "2026-07-13 UTC",
+          "value": 1130,
+          "status": "verified"
+        }
+      ]
+    }
+  }
+}

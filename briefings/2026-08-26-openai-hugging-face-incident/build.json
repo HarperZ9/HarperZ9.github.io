@@ -1,0 +1,120 @@
+{
+  "schema": "harperz9-briefing-build/v1",
+  "briefingId": "2026-08-26-openai-hugging-face-incident",
+  "renderer": "render-publications/v1",
+  "settings": {
+    "encoding": "utf-8",
+    "figureRenderer": "telos-figure/v1",
+    "figureViewBox": "0 0 960 540",
+    "jsonIndent": 2,
+    "lineEnding": "LF",
+    "sortMode": "stable-public-keys"
+  },
+  "inputs": {
+    "articleSha256": "bf2e8ef2e003da07196032389fd0abb43b7349cc4da7d259ada7156447d9f377",
+    "claimsSha256": "b3e4344cd5fea15a37ba412f74e2adc5fbd69b6b8d02d2c0ecbfd001b11f6648",
+    "figuresSha256": "1639018ec621f7226a97b2cabe17bb9d614711e080c0cd8b000afed924f77a62"
+  },
+  "outputs": [
+    {
+      "path": "briefings/2026-08-26-openai-hugging-face-incident/claims.json",
+      "sha256": "0d45b7e05fcf285161b1802d15b60a6c3891bdff350a15bb93ef4014a76ee499"
+    },
+    {
+      "path": "briefings/2026-08-26-openai-hugging-face-incident/index.html",
+      "sha256": "a720d25d8197ea45fe55cd8ce19e3bdfae26df696d4c166fb2463c21c68d372b"
+    },
+    {
+      "path": "briefings/2026-08-26-openai-hugging-face-incident/publication.json",
+      "sha256": "47eef40116cb3715c174f3bd5a9c62e562658397a907de4b64520e833a1f9e76"
+    },
+    {
+      "path": "briefings/2026-08-26-openai-hugging-face-incident/sources.json",
+      "sha256": "8157707b5942b1e345d5a2374437fb86c1a9de9f43ef902bf30b843eb7d427d4"
+    },
+    {
+      "path": "figures/claim-provenance-panel.html",
+      "sha256": "3db4db57fd0fda86c5c0b0884d208e4ee77a791c36ebe7066f38f7cbe1746edc"
+    },
+    {
+      "path": "figures/claim-provenance-panel.json",
+      "sha256": "0f789c4929d744a1db4d0e0309bbda22ba7896540432e8329c2a723c664d843c"
+    },
+    {
+      "path": "figures/claim-provenance-panel.svg",
+      "sha256": "3584929d24ac67e3b1fc670236511946dc7908d0e4d4dc9a5491c8327a91590b"
+    },
+    {
+      "path": "figures/control-boundary-flow.html",
+      "sha256": "e1cb5c8e79dcf6c86feb10f8c559592cd03ccbc16c3df55ff5ad2484b304c210"
+    },
+    {
+      "path": "figures/control-boundary-flow.json",
+      "sha256": "7dcc4e5d0ba491e03224ccf42ffda3523210b6d3a8c35588f6cfa14c10b89f66"
+    },
+    {
+      "path": "figures/control-boundary-flow.svg",
+      "sha256": "36b29ee0abc70505b33d39262c0f758acfaf18574fc9b608b1ac8888c4bc2d34"
+    },
+    {
+      "path": "figures/incident-multilane-timeline.html",
+      "sha256": "185e8383e8b77796b5ab8ec43a9a2ed4eddee40590b0e1d72024ea82f3ca0a1e"
+    },
+    {
+      "path": "figures/incident-multilane-timeline.json",
+      "sha256": "bd0a123b7df81543aaa3955a0550f70fa309ad0fe65e374b86112dd2f994e4b0"
+    },
+    {
+      "path": "figures/incident-multilane-timeline.svg",
+      "sha256": "092ba0b30849451592877db0ab947844ee1b31820a749b01c4b1b8387f30ad69"
+    },
+    {
+      "path": "figures/motive-sample-nonexclusive.html",
+      "sha256": "d7b35a866ea3fcc4adab80efabe4c4e7afac7568d18794d6193d819fa321113d"
+    },
+    {
+      "path": "figures/motive-sample-nonexclusive.json",
+      "sha256": "d841d5f9d6d8613f6d9f57eda4e7722563dbc3deff5abbd818fd5050c51f7480"
+    },
+    {
+      "path": "figures/motive-sample-nonexclusive.svg",
+      "sha256": "a2e6f2087015bbf86e98e1c8698f87bec32ef8eaf6cd65317882e67709bab2ac"
+    },
+    {
+      "path": "figures/recovered-actions-by-day.html",
+      "sha256": "06f7d65544ba8798842b7cb72f43e5b2f549e9025292aa2b46d5810212553f98"
+    },
+    {
+      "path": "figures/recovered-actions-by-day.json",
+      "sha256": "996720fea9bc23d3096111be4a1129fbe959ae893243ab8739eb940f6bdb0838"
+    },
+    {
+      "path": "figures/recovered-actions-by-day.svg",
+      "sha256": "597398519896ab71e3d8756727dc83f8894b80690b1a53c74472f82bae0755ba"
+    },
+    {
+      "path": "figures/source-scope-matrix.html",
+      "sha256": "0cf9e9d086dc57b1f9caa384f0c90613f0b3a5711fb86e89180cb5d21dfa5b83"
+    },
+    {
+      "path": "figures/source-scope-matrix.json",
+      "sha256": "1f4d91bf387e452f1384493267d908a727a77964ee2343a690510009d73c0689"
+    },
+    {
+      "path": "figures/source-scope-matrix.svg",
+      "sha256": "75bb2a51014814d92d147f9a4a920e22339076952db8f6cfd71463eb3e35221a"
+    },
+    {
+      "path": "figures/task-overrepresentation.html",
+      "sha256": "7fff6945189e31a10a61c68c3fd868c299b58a86ce053e09ebd7d2f498c7f7f8"
+    },
+    {
+      "path": "figures/task-overrepresentation.json",
+      "sha256": "0a119e84013e83215efa75ea4b8d06e97a8a035bf32a3f876b8b22ed3e2796d1"
+    },
+    {
+      "path": "figures/task-overrepresentation.svg",
+      "sha256": "cf9d4402e76d711617d8b0bcc5e18314b80338ae81bed085a65f23cac62f605a"
+    }
+  ]
+}

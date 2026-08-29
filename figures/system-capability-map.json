@@ -1,0 +1,206 @@
+{
+  "renderer": "telos-figure/v1",
+  "viewBox": "0 0 960 540",
+  "figure": {
+    "id": "system-capability-map",
+    "kind": "relationship",
+    "title": "Flywheel capability overview",
+    "description": "A compact orientation map from Flywheel to six capability families and five representative public systems.",
+    "claim": "The map shows the visitor-facing family taxonomy recorded in the canonical public registry.",
+    "doesNotProve": "The map does not establish runtime compatibility, production adoption, independent review, or performance.",
+    "sources": [
+      {
+        "label": "Canonical public system registry",
+        "href": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/systems.json"
+      }
+    ],
+    "retrievedAt": "2026-08-28",
+    "units": "declared relationships",
+    "transformations": [
+      "Evidence receipt records and reciprocal duplicate relationships are omitted from the overview.",
+      "Five representative public systems are selected by explicit stable identifiers.",
+      "Flywheel and all six family records are rendered once."
+    ],
+    "uncertainty": "Family membership is a navigation taxonomy. It does not state runtime dependency or implementation strength.",
+    "data": {
+      "type": "relationship",
+      "nodes": [
+        {
+          "id": "family:graphics-retro",
+          "label": "Graphics and retro",
+          "status": "verified",
+          "stateLabel": "Capability family",
+          "group": "Capability families",
+          "nodeType": "family"
+        },
+        {
+          "id": "family:infrastructure",
+          "label": "Infrastructure",
+          "status": "verified",
+          "stateLabel": "Capability family",
+          "group": "Capability families",
+          "nodeType": "family"
+        },
+        {
+          "id": "family:platform",
+          "label": "Platform",
+          "status": "verified",
+          "stateLabel": "Capability family",
+          "group": "Capability families",
+          "nodeType": "family"
+        },
+        {
+          "id": "family:research-education",
+          "label": "Research and education",
+          "status": "verified",
+          "stateLabel": "Capability family",
+          "group": "Capability families",
+          "nodeType": "family"
+        },
+        {
+          "id": "family:security",
+          "label": "Security",
+          "status": "verified",
+          "stateLabel": "Capability family",
+          "group": "Capability families",
+          "nodeType": "family"
+        },
+        {
+          "id": "family:verification",
+          "label": "Verification",
+          "status": "verified",
+          "stateLabel": "Capability family",
+          "group": "Capability families",
+          "nodeType": "family"
+        },
+        {
+          "id": "flywheel",
+          "label": "Flywheel",
+          "status": "verified",
+          "stateLabel": "Primary platform",
+          "group": "Platform",
+          "nodeType": "system"
+        },
+        {
+          "id": "learn",
+          "label": "Learn",
+          "status": "verified",
+          "stateLabel": "learning and coursework system",
+          "group": "Research and education",
+          "nodeType": "system"
+        },
+        {
+          "id": "phantom",
+          "label": "Phantom",
+          "status": "verified",
+          "stateLabel": "reversible device identity system",
+          "group": "Security",
+          "nodeType": "system"
+        },
+        {
+          "id": "proof-surface",
+          "label": "Proof Surface",
+          "status": "verified",
+          "stateLabel": "authorization and proof contract layer",
+          "group": "Security",
+          "nodeType": "system"
+        },
+        {
+          "id": "relay",
+          "label": "Relay",
+          "status": "verified",
+          "stateLabel": "coding-agent execution lane",
+          "group": "Infrastructure",
+          "nodeType": "system"
+        },
+        {
+          "id": "retro-engine",
+          "label": "Retro Engine",
+          "status": "verified",
+          "stateLabel": "embedded browser studio",
+          "group": "Graphics and retro",
+          "nodeType": "system"
+        }
+      ],
+      "edges": [
+        {
+          "source": "family:graphics-retro",
+          "target": "retro-engine",
+          "label": "embedded browser studio",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "family:infrastructure",
+          "target": "relay",
+          "label": "coding-agent execution lane",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "family:research-education",
+          "target": "learn",
+          "label": "learning and coursework system",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "family:security",
+          "target": "phantom",
+          "label": "reversible device identity system",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "family:security",
+          "target": "proof-surface",
+          "label": "authorization and proof contract layer",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "family:graphics-retro",
+          "label": "capability family",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "family:infrastructure",
+          "label": "capability family",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "family:platform",
+          "label": "capability family",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "family:research-education",
+          "label": "capability family",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "family:security",
+          "label": "capability family",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "family:verification",
+          "label": "capability family",
+          "status": "verified",
+          "type": "hierarchy"
+        }
+      ]
+    }
+  }
+}

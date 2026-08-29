@@ -1,0 +1,145 @@
+{
+  "schema": "zentropy-current-cross-harness-pilot/v1",
+  "capturedAt": "2026-08-28",
+  "classification": "integration-failure-profile",
+  "evidenceAvailability": "operator-local-hash-only",
+  "sourceCommit": "09f4d3730f5f81d88b0aba130a1067979d0a7d07",
+  "sourceCommitUrl": "https://github.com/HarperZ9/flywheel/commit/09f4d3730f5f81d88b0aba130a1067979d0a7d07",
+  "requestedModelReference": "gpt-5.3-codex-spark",
+  "parity": {
+    "prompt": "byte-identical",
+    "runtimeContext": "byte-identical"
+  },
+  "parityArtifacts": [
+    {
+      "taskId": "agt-001-index-fallback-integrity",
+      "prompt": {
+        "sha256": "b454eacba05930001108b80b6d1d881ad02529c95dfd5d6579e7c1aba9231ca8",
+        "bytes": 2098
+      },
+      "runtimeContext": {
+        "sha256": "09b571dc3be8a011321bae35b1fc677136eff49684f90658b371c6bab703f574",
+        "bytes": 992
+      }
+    },
+    {
+      "taskId": "agt-003-codex-flywheel-shared-task",
+      "prompt": {
+        "sha256": "4f47fc123a8c7a5cce359d5a401dabbc747590aff103f15ec933f5802bda5306",
+        "bytes": 2124
+      },
+      "runtimeContext": {
+        "sha256": "f34d5f28f592f465a4bd65a22ab24b0443f00c49497104577d0fb0b60557eb6f",
+        "bytes": 1046
+      }
+    }
+  ],
+  "receipts": {
+    "verified": 4,
+    "attempts": 4,
+    "records": [
+      {
+        "route": "Codex direct",
+        "taskId": "agt-001-index-fallback-integrity",
+        "receiptSha256": "dc6531acf514618bf6d8934594bf9c621345f2a5216ed5bd86f9b3add7a8cc7d",
+        "receiptSubjectSha256": "cf5b394a8d19e274d77813e06736910e05b3ef5e4e3758f470cff32d601e3da3",
+        "state": "verified"
+      },
+      {
+        "route": "Codex direct",
+        "taskId": "agt-003-codex-flywheel-shared-task",
+        "receiptSha256": "9853c9d91b326ed375561c064c043568de79a68cf66aebdd57bb64ab3aedf3d1",
+        "receiptSubjectSha256": "e8ded713b279e8e8df4d516529c5f9f4a00428a5b3f765964fa93086dd0cfd4d",
+        "state": "verified"
+      },
+      {
+        "route": "Flywheel on Codex",
+        "taskId": "agt-001-index-fallback-integrity",
+        "receiptSha256": "58d0dfbac97b4bcb9edf3c921a148ca011c980a20b595d294b4f08c4a2259a41",
+        "receiptSubjectSha256": "087ccca3187ad495e7834d97d332e651f91284be47f2879dd0595115e7462d5d",
+        "state": "verified"
+      },
+      {
+        "route": "Flywheel on Codex",
+        "taskId": "agt-003-codex-flywheel-shared-task",
+        "receiptSha256": "804dabeaa888dfa13dd097c32c4fcda38a11cbda5903cfd48955df9bf3363d1a",
+        "receiptSubjectSha256": "73b93fa47088434fc20667257f84e12e9dc28b6689b50ef9564051243337eaa2",
+        "state": "verified"
+      }
+    ]
+  },
+  "validComparableTaskOutcomes": 0,
+  "attempts": [
+    {
+      "route": "Codex direct",
+      "taskId": "agt-001-index-fallback-integrity",
+      "latencyMs": 35357,
+      "execution": "returned",
+      "oracle": "fail",
+      "receipt": "verified",
+      "outcome": "oracle_fail",
+      "detail": "Admitted artifact. Oracle rejected failure_classes_mismatch: the provider emitted degraded_match; the fixture contract requires degraded_match_behavior."
+    },
+    {
+      "route": "Codex direct",
+      "taskId": "agt-003-codex-flywheel-shared-task",
+      "latencyMs": 5664,
+      "execution": "internal_error",
+      "oracle": "not_run",
+      "receipt": "verified",
+      "outcome": "internal_error",
+      "detail": "Codex turn failed after one successful staged-file discovery command. The models cache could not load because base_instructions was missing at line 97 column 5."
+    },
+    {
+      "route": "Flywheel on Codex",
+      "taskId": "agt-001-index-fallback-integrity",
+      "latencyMs": 2028,
+      "execution": "malformed",
+      "oracle": "not_run",
+      "receipt": "verified",
+      "outcome": "malformed",
+      "detail": "Inner Codex emitted turn.failed. Flywheel recorded final agent message missing and preserved its ledger entry and verified checkpoint."
+    },
+    {
+      "route": "Flywheel on Codex",
+      "taskId": "agt-003-codex-flywheel-shared-task",
+      "latencyMs": 2043,
+      "execution": "malformed",
+      "oracle": "not_run",
+      "receipt": "verified",
+      "outcome": "malformed",
+      "detail": "Inner Codex emitted turn.failed. Flywheel recorded final agent message missing and preserved its ledger entry and verified checkpoint."
+    }
+  ],
+  "observations": {
+    "costUsd": null,
+    "resourceUse": null,
+    "observedModelIdentity": null
+  },
+  "observationNullReasons": {
+    "costUsd": "provider_cost_unavailable",
+    "resourceUse": "resource_observation_unavailable",
+    "observedModelIdentity": "requested registry reference was not provider-observed"
+  },
+  "artifactHashes": {
+    "manifest": "dca3f8205bea82e324902f3dc23ecefe26bbd1f776522e5d0185471797536772",
+    "runtimeMatrix": "c06295254b4246bc99395faec97a875e4f998b47c3cf9f3cd1166bec0db67c9f",
+    "runRecord": "957041f72162c52f9951fd7291f89e70758e9696794aab26e4ddc57645c93e01",
+    "comparisonInput": "1a48bee1e1ee9cd13c44c58baa474881cd7a2197b10fea65779f55db845e8f79",
+    "artifactIndex": "0ec72ad56bf12f54f3ba63165c9f945795153e34c514edfeae081fc2544ecca5"
+  },
+  "limitations": [
+    "One repetition per cell is an admission pilot, not a performance distribution.",
+    "No attempt completed with an oracle pass, so latency is diagnostic only and must not be ranked as speed.",
+    "Usage, cost, CPU, memory, GPU, and energy observations are unavailable.",
+    "Model identity is requested but not provider-observed.",
+    "Claude Code, OpenCode, Aider, and local model routes are not measured in this pilot.",
+    "Raw run artifacts remain operator-local; the public record exposes sanitized outcomes and immutable hashes only."
+  ],
+  "doesNotProve": "This integration-failure profile does not establish market performance, a quality ranking, speed, production reliability, harness attribution, or provider-observed model identity.",
+  "sourceEvidence": {
+    "href": "source/current-cross-harness-pilot-source.json",
+    "sha256": "8061c0b9c13ed088e1265f419e895447f36803b561f262e9f0a79b6689dc9cdd",
+    "availability": "operator-local-hash-only"
+  }
+}

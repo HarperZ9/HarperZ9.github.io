@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kun · local access-recovery vault</title>
+<meta name="description" content="Kun maintains local access-recovery memory for owned systems through path-only receipts, redacted diagnostics, rotation notes, and operator runbooks without storing raw credentials.">
+<link rel="canonical" href="https://harperz9.github.io/kun.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Kun · local access-recovery vault">
+<meta property="og:description" content="Kun maintains local access-recovery memory for owned systems through path-only receipts, redacted diagnostics, rotation notes, and operator runbooks without storing raw credentials.">
+<meta property="og:url" content="https://harperz9.github.io/kun.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/security.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kun">
+<meta name="twitter:description" content="Kun maintains local access-recovery memory for owned systems through path-only receipts, redacted diagnostics, rotation notes, and operator runbooks without storing raw credentials.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/security.png">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260828-site-design">
+<link rel="stylesheet" href="system/private-capability.css?v=20260829-product-copy">
+</head>
+<body class="inner-clean" data-capability-page="kun">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="security.html">Security</a> <a href="private-practice.html">Private practice</a> <a href="flywheel.html">Flywheel</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260828-site-design"></script>
+
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Kun · private capability</span></div>
+  <div class="mid">
+    <h1>Recovery memory without <span class="g">secret storage.</span></h1>
+    <p class="lede" data-canonical-purpose="kun">Kun maintains local access-recovery memory for owned systems through path-only receipts, redacted diagnostics, rotation notes, and operator runbooks without storing raw credentials.</p>
+    <p class="close">No raw credentials, credential values, credential recovery instructions, bypass steps, or protected resource contents are published.</p>
+    <nav class="capability-links" aria-label="Related capability pages"><a href="bounds.html">Bounds</a><a href="security-toolkit.html#secret-redact-io">Secret Redact IO</a><a href="private-practice.html">Private systems</a></nav>
+  </div>
+  <div class="seal">controlled private system · public-safe summary · checked 2026-08-28</div>
+</div>
+
+<main id="main">
+<section class="mv" id="contract" aria-labelledby="contract-h">
+  <h2 id="contract-h">Implemented public contract.</h2>
+  <div class="capability-table-wrap">
+    <table class="capability-table">
+      <caption>Kun public contract</caption>
+      <thead><tr><th>Field</th><th>Public-safe statement</th><th>Boundary</th></tr></thead>
+      <tbody>
+        <tr><td>Inputs</td><td>Owned-system recovery paths, rotation metadata, redacted diagnostics, and local runbook state.</td><td>No credential values.</td></tr>
+        <tr><td>Outputs</td><td>Path-only receipts, rotation reminders, diagnostic summaries, and human recovery checklist state.</td><td>No credential recovery instructions are published.</td></tr>
+        <tr><td>Use</td><td>Local operational continuity and evidence hygiene.</td><td>No bypass guidance.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="mv" id="boundary" aria-labelledby="boundary-h">
+  <h2 id="boundary-h">Release boundary.</h2>
+  <div class="boundary-panel">
+    <h3>The vault does not contain the secret.</h3>
+    <p>Kun records where recovery authority lives and how to audit the process. It does not publish or retain raw keys, tokens, passwords, seed phrases, private browser state, or protected content.</p>
+  </div>
+</section>
+</main>
+</body>
+</html>

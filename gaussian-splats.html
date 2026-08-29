@@ -4,23 +4,23 @@
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Gaussian Splat Lab &middot; Zain Dana Harper</title>
+<title>Gaussian Splat Lab &mdash; Zain Dana Harper</title>
 <meta name="description" content="A bounded lab for turning selected Current Story artworks into real, disclosed Gaussian-splat scene experiments without replacing the canonical source images.">
 <link rel="canonical" href="https://harperz9.github.io/gaussian-splats.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="Gaussian Splat Lab &middot; Zain Dana Harper">
+<meta property="og:title" content="Gaussian Splat Lab &mdash; Zain Dana Harper">
 <meta property="og:description" content="Three prepared source images, zero published scenes, and a strict boundary between a real spatial artifact and a flat splat-styled image.">
 <meta property="og:url" content="https://harperz9.github.io/gaussian-splats.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Gaussian Splat Lab &middot; Zain Dana Harper">
+<meta name="twitter:title" content="Gaussian Splat Lab &mdash; Zain Dana Harper">
 <meta name="twitter:description" content="A reproducible, source-preserving pilot for real Gaussian-splat scenes.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <meta name="color-scheme" content="dark">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/system.css?v=20260812-angular">
+<link rel="stylesheet" href="system/system.css?v=20260724-gaussian-splats">
 <style>
   .splat-page{width:min(1120px,calc(100vw - 2rem));margin:0 auto;padding:clamp(2.5rem,7vw,6rem) 0 5rem}
   .splat-hero{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.6fr);gap:clamp(1.5rem,4vw,4rem);align-items:end;padding:clamp(1.4rem,3vw,2.5rem);border:1px solid var(--hairline);border-radius:14px;background:radial-gradient(circle at 12% 8%,rgba(181,76,45,.18),transparent 35%),linear-gradient(145deg,#121015 0%,#09090c 78%);box-shadow:0 2rem 6rem rgba(0,0,0,.28)}
@@ -53,7 +53,7 @@
   .pilot h3{margin:12rem 0 .55rem;font-family:var(--display);font-size:1.45rem;line-height:1.02;color:#f0ebe5}
   .pilot p{margin:0;color:#aaa2ab;font-size:.88rem;line-height:1.58}
   .pilot-receipt{display:grid;grid-template-columns:1fr auto;gap:.45rem 1rem;margin:1.1rem 0 0;padding-top:.8rem;border-top:1px solid #28242a}
-  .receipt-key{color:#8b848e;font-size:.56rem;letter-spacing:.08em;text-transform:uppercase}
+  .receipt-key{color:#77707a;font-size:.56rem;letter-spacing:.08em;text-transform:uppercase}
   .receipt-value{color:#cfc7ce;font-family:var(--mono);font-size:.56rem;text-align:right;overflow-wrap:anywhere}
   .criteria{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;padding:1px;background:var(--hairline);border:1px solid var(--hairline);border-radius:10px;overflow:hidden}
   .criterion{min-height:170px;padding:1.2rem;background:#0c0b0f}
@@ -70,7 +70,7 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="gallery.html">Gallery</a> <a href="research.html">Research</a> <a href="writing.html">Writing</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260824-frontier-safety"></script>
+<script type="module" src="system/nav.js?v=20260724-gaussian-splats"></script>
 <main id="main" class="splat-page">
   <header class="splat-hero">
     <div>
@@ -122,13 +122,12 @@
 
   <section class="section" aria-labelledby="boundary-title">
     <div class="section-head"><h2 id="boundary-title">Current boundary.</h2><p class="section-copy">Source selection and receipts are complete. Scene generation is not.</p></div>
-    <div class="boundary"><strong>No Gaussian-splat scene is being represented as finished on this page.</strong> The three source PNGs and their hashes are prepared. The generation route is now this repository's own native pipeline: the hybrid renderer and the certified world-package contract in <code>system/spatial-scene.js</code> and <code>system/engine/world-package.js</code>, with no hosted model, no credentials, and no metered endpoint. A single-image result will be described as a generated spatial interpretation, not a scan or measured reconstruction. Both lanes already run in <a href="studio.html?source=spatial">the Studio's Spatial source</a>: the reconstruction lane serves the session's Crystal City hybrid scene (a generated spatial interpretation of one canonical artwork, its invented support fill labeled), and the authored lane serves a world whose every primitive is generated from a named seed. These three pilot sources remain unreconstructed until each has its own composition profile, and each lane is labeled as what it is.</div>
+    <div class="boundary"><strong>No Gaussian-splat scene is being represented as finished on this page.</strong> The three source PNGs and their hashes are prepared. Actual generation through <code>neilsonnn/image-blaster</code> requires the upstream service credentials to be configured locally or in a protected secret store. A single-image result will be described as a generated spatial interpretation, not a scan or measured reconstruction.</div>
     <nav class="splat-links" aria-label="Gaussian Splat Lab resources">
       <a href="art/gaussian-splats/manifest.json">Pilot manifest</a>
       <a href="art/gaussian-splats/README.md">Runbook</a>
       <a href="https://github.com/HarperZ9/HarperZ9.github.io/issues/81">Generation tracker</a>
-      <a href="studio.html?source=spatial">Native engine, live</a>
-      <a href="art/spatial/folded-light.world.json">Authored world package</a>
+      <a href="https://github.com/neilsonnn/image-blaster">Upstream generator</a>
       <a href="current-story.html">Canonical visual sequence</a>
     </nav>
   </section>

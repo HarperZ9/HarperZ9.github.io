@@ -1,0 +1,99 @@
+<svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" aria-labelledby="system-capability-map-title system-capability-map-desc" data-figure-kind="relationship">
+  <title id="system-capability-map-title">Flywheel capability overview</title>
+  <desc id="system-capability-map-desc">A compact orientation map from Flywheel to six capability families and five representative public systems. The map shows the visitor-facing family taxonomy recorded in the canonical public registry.</desc>
+  <defs>
+    <pattern id="system-capability-map-verified-pattern" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#13262b"/><path d="M0 8L8 0" stroke="#54c9d1" stroke-width="2"/></pattern>
+    <pattern id="system-capability-map-caution-pattern" width="10" height="10" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="#291b18"/><path d="M-2 10L10-2M4 12L12 4" stroke="#d47a5a" stroke-width="2"/></pattern>
+    <pattern id="system-capability-map-unavailable-pattern" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#17252c"/><circle cx="2" cy="2" r="1.2" fill="#9eb8bf"/></pattern>
+    <marker id="system-capability-map-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 0L8 4L0 8Z" fill="#9eb8bf"/></marker>
+  </defs>
+  <style>
+    text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#f2f8f8}
+    .mono{font-family:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace}
+    .muted{fill:#b9cbd0}.hairline{stroke:#36505a;stroke-width:1}.value{font-variant-numeric:tabular-nums}
+    [data-figure-point]:focus{outline:none}[data-figure-point]:focus-visible .focus-ring{stroke:#54c9d1;stroke-width:4;fill:none}
+  </style>
+  <rect width="960" height="540" fill="#0b1115"/>
+  <path data-relationship-edge="true" data-edge-type="hierarchy" d="M168.00 158.00 C168.00 311.00 480.00 311.00 480.00 464.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 158.00 C480.00 311.00 168.00 311.00 168.00 464.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M168.00 260.00 C168.00 319.00 168.00 319.00 168.00 378.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 260.00 C480.00 319.00 480.00 319.00 480.00 378.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 260.00 C480.00 319.00 792.00 319.00 792.00 378.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 107.00 168.00 107.00 168.00 158.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 107.00 480.00 107.00 480.00 158.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 107.00 792.00 107.00 792.00 158.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 158.00 168.00 158.00 168.00 260.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 158.00 480.00 158.00 480.00 260.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 158.00 792.00 158.00 792.00 260.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#system-capability-map-arrow)" opacity="0.82" aria-hidden="true"/><g data-figure-point="true" data-figure-key="family:graphics-retro" data-status-label="Capability family" role="graphics-symbol" aria-label="Graphics and retro. Capability family." tabindex="-1">
+      <rect class="focus-ring" x="21" y="123" width="294" height="70" stroke="transparent"/>
+      <rect x="24" y="126" width="288" height="64" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2.5" stroke-dasharray="none"/>
+      <text data-node-label="true" x="36" y="150" font-size="16">Graphics and retro</text>
+      <text data-node-label="true" x="36" y="176" class="mono muted" font-size="16">Capability family</text>
+    </g>
+<g data-figure-point="true" data-figure-key="family:infrastructure" data-status-label="Capability family" role="graphics-symbol" aria-label="Infrastructure. Capability family." tabindex="-1">
+      <rect class="focus-ring" x="333" y="123" width="294" height="70" stroke="transparent"/>
+      <rect x="336" y="126" width="288" height="64" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2.5" stroke-dasharray="none"/>
+      <text data-node-label="true" x="348" y="150" font-size="16">Infrastructure</text>
+      <text data-node-label="true" x="348" y="176" class="mono muted" font-size="16">Capability family</text>
+    </g>
+<g data-figure-point="true" data-figure-key="family:platform" data-status-label="Capability family" role="graphics-symbol" aria-label="Platform. Capability family." tabindex="-1">
+      <rect class="focus-ring" x="645" y="123" width="294" height="70" stroke="transparent"/>
+      <rect x="648" y="126" width="288" height="64" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2.5" stroke-dasharray="none"/>
+      <text data-node-label="true" x="660" y="150" font-size="16">Platform</text>
+      <text data-node-label="true" x="660" y="176" class="mono muted" font-size="16">Capability family</text>
+    </g>
+<g data-figure-point="true" data-figure-key="family:research-education" data-status-label="Capability family" role="graphics-symbol" aria-label="Research and education. Capability family." tabindex="-1">
+      <rect class="focus-ring" x="21" y="225" width="294" height="70" stroke="transparent"/>
+      <rect x="24" y="228" width="288" height="64" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2.5" stroke-dasharray="none"/>
+      <text data-node-label="true" x="36" y="252" font-size="16">Research and education</text>
+      <text data-node-label="true" x="36" y="278" class="mono muted" font-size="16">Capability family</text>
+    </g>
+<g data-figure-point="true" data-figure-key="family:security" data-status-label="Capability family" role="graphics-symbol" aria-label="Security. Capability family." tabindex="-1">
+      <rect class="focus-ring" x="333" y="225" width="294" height="70" stroke="transparent"/>
+      <rect x="336" y="228" width="288" height="64" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2.5" stroke-dasharray="none"/>
+      <text data-node-label="true" x="348" y="252" font-size="16">Security</text>
+      <text data-node-label="true" x="348" y="278" class="mono muted" font-size="16">Capability family</text>
+    </g>
+<g data-figure-point="true" data-figure-key="family:verification" data-status-label="Capability family" role="graphics-symbol" aria-label="Verification. Capability family." tabindex="-1">
+      <rect class="focus-ring" x="645" y="225" width="294" height="70" stroke="transparent"/>
+      <rect x="648" y="228" width="288" height="64" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2.5" stroke-dasharray="none"/>
+      <text data-node-label="true" x="660" y="252" font-size="16">Verification</text>
+      <text data-node-label="true" x="660" y="278" class="mono muted" font-size="16">Capability family</text>
+    </g>
+<g data-figure-point="true" data-figure-key="flywheel" data-status-label="Primary platform" role="graphics-symbol" aria-label="Flywheel. Primary platform." tabindex="-1">
+      <rect class="focus-ring" x="347" y="21" width="266" height="70" stroke="transparent"/>
+      <rect x="350" y="24" width="260" height="64" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none"/>
+      <text data-node-label="true" x="362" y="48" font-size="16">Flywheel</text>
+      <text data-node-label="true" x="362" y="74" class="mono muted" font-size="16">Primary platform</text>
+    </g>
+<g data-figure-point="true" data-figure-key="learn" data-status-label="learning and coursework system" role="graphics-symbol" aria-label="Learn. learning and coursework system." tabindex="-1">
+      <rect class="focus-ring" x="21" y="343" width="294" height="70" stroke="transparent"/>
+      <rect x="24" y="346" width="288" height="64" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="36" y="370" font-size="16">Learn</text>
+      <text data-node-label="true" x="36" y="396" class="mono muted" font-size="16">learning and coursework system</text>
+    </g>
+<g data-figure-point="true" data-figure-key="phantom" data-status-label="reversible device identity system" role="graphics-symbol" aria-label="Phantom. reversible device identity system." tabindex="-1">
+      <rect class="focus-ring" x="333" y="343" width="294" height="70" stroke="transparent"/>
+      <rect x="336" y="346" width="288" height="64" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="348" y="370" font-size="16">Phantom</text>
+      <text data-node-label="true" x="348" y="396" class="mono muted" font-size="16">reversible device identity sys…</text>
+    </g>
+<g data-figure-point="true" data-figure-key="proof-surface" data-status-label="authorization and proof contract layer" role="graphics-symbol" aria-label="Proof Surface. authorization and proof contract layer." tabindex="-1">
+      <rect class="focus-ring" x="645" y="343" width="294" height="70" stroke="transparent"/>
+      <rect x="648" y="346" width="288" height="64" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="660" y="370" font-size="16">Proof Surface</text>
+      <text data-node-label="true" x="660" y="396" class="mono muted" font-size="16">authorization and proof contra…</text>
+    </g>
+<g data-figure-point="true" data-figure-key="relay" data-status-label="coding-agent execution lane" role="graphics-symbol" aria-label="Relay. coding-agent execution lane." tabindex="-1">
+      <rect class="focus-ring" x="21" y="429" width="294" height="70" stroke="transparent"/>
+      <rect x="24" y="432" width="288" height="64" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="36" y="456" font-size="16">Relay</text>
+      <text data-node-label="true" x="36" y="482" class="mono muted" font-size="16">coding-agent execution lane</text>
+    </g>
+<g data-figure-point="true" data-figure-key="retro-engine" data-status-label="embedded browser studio" role="graphics-symbol" aria-label="Retro Engine. embedded browser studio." tabindex="-1">
+      <rect class="focus-ring" x="333" y="429" width="294" height="70" stroke="transparent"/>
+      <rect x="336" y="432" width="288" height="64" fill="url(#system-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="348" y="456" font-size="16">Retro Engine</text>
+      <text data-node-label="true" x="348" y="482" class="mono muted" font-size="16">embedded browser studio</text>
+    </g><text x="24" y="526" class="mono muted" font-size="16">Solid: taxonomy · long dash: dependency · short dash: related</text>
+</svg>

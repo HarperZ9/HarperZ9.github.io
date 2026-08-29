@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://harperz9.github.io/models-propose-oracles-dispose.html</loc></url>
   <url><loc>https://harperz9.github.io/</loc></url>
   <url><loc>https://harperz9.github.io/catalog.html</loc></url>
   <url><loc>https://harperz9.github.io/field-guide.html</loc></url>
@@ -22,12 +21,8 @@
   <url><loc>https://harperz9.github.io/overview.html</loc></url>
   <url><loc>https://harperz9.github.io/tour.html</loc></url>
   <url><loc>https://harperz9.github.io/gallery.html</loc></url>
-  <url><loc>https://harperz9.github.io/retro.html</loc></url>
-  <url><loc>https://harperz9.github.io/loom.html</loc></url>
   <url><loc>https://harperz9.github.io/typeface.html</loc></url>
   <url><loc>https://harperz9.github.io/research.html</loc></url>
-  <url><loc>https://harperz9.github.io/frontier-safety.html</loc></url>
-  <url><loc>https://harperz9.github.io/frontier-safety/archive/2026-08-24.html</loc></url>
   <url><loc>https://harperz9.github.io/research-proof-carrying-research-loops.html</loc></url>
   <url><loc>https://harperz9.github.io/research-formal-replay-preflight.html</loc></url>
   <url><loc>https://harperz9.github.io/research-biology-network-intelligence.html</loc></url>
@@ -48,7 +43,6 @@
   <url><loc>https://harperz9.github.io/pick-the-lock-for-everyone.html</loc></url>
   <url><loc>https://harperz9.github.io/pick-the-lock-for-everyone-talk.html</loc></url>
   <url><loc>https://harperz9.github.io/current-story.html</loc></url>
-  <url><loc>https://harperz9.github.io/session-archive.html</loc></url>
   <url><loc>https://harperz9.github.io/gaussian-splats.html</loc></url>
   <url><loc>https://harperz9.github.io/the-summary-is-not-the-record.html</loc></url>
   <url><loc>https://harperz9.github.io/test-run-request.html</loc></url>
@@ -58,6 +52,9 @@
   <url><loc>https://harperz9.github.io/portfolio.html</loc></url>
   <url><loc>https://harperz9.github.io/cover-letter.html</loc></url>
   <url><loc>https://harperz9.github.io/person.html</loc></url>
+  <url><loc>https://harperz9.github.io/security-toolkit.html</loc></url>
+  <url><loc>https://harperz9.github.io/phantom.html</loc></url>
+  <url><loc>https://harperz9.github.io/private-practice.html</loc></url>
   <url><loc>https://harperz9.github.io/emet.html</loc></url>
   <url><loc>https://harperz9.github.io/emet-sample.html</loc></url>
   <url><loc>https://harperz9.github.io/proof-surface.html</loc></url>
@@ -77,4 +74,38 @@
   <url><loc>https://harperz9.github.io/aleph.html</loc></url>
   <url><loc>https://harperz9.github.io/security.html</loc></url>
   <url><loc>https://harperz9.github.io/presentation.html</loc></url>
+
+<!-- BEGIN GENERATED BRIEFING ROUTES -->
+  <url><loc>https://harperz9.github.io/briefings/</loc></url>
+  <url><loc>https://harperz9.github.io/briefings/2026-08-26-openai-hugging-face-incident/</loc></url>
+<!-- END GENERATED BRIEFING ROUTES -->
+  <!-- BEGIN GENERATED SYSTEM ROUTES -->
+  <url><loc>https://harperz9.github.io/systems/telos.html</loc></url>
+  <url><loc>https://harperz9.github.io/systems/relay.html</loc></url>
+  <url><loc>https://harperz9.github.io/systems/plexus.html</loc></url>
+  <url><loc>https://harperz9.github.io/systems/mneme.html</loc></url>
+  <url><loc>https://harperz9.github.io/systems/studio-engine.html</loc></url>
+  <url><loc>https://harperz9.github.io/retro.html</loc></url>
+  <url><loc>https://harperz9.github.io/engine-revival.html</loc></url>
+  <url><loc>https://harperz9.github.io/brender-archival.html</loc></url>
+  <url><loc>https://harperz9.github.io/elder-enb.html</loc></url>
+  <url><loc>https://harperz9.github.io/truth-enb.html</loc></url>
+  <url><loc>https://harperz9.github.io/enb-runtime-core.html</loc></url>
+  <url><loc>https://harperz9.github.io/skyrimbridge.html</loc></url>
+  <url><loc>https://harperz9.github.io/systems/behavior-transform.html</loc></url>
+  <url><loc>https://harperz9.github.io/array.html</loc></url>
+  <url><loc>https://harperz9.github.io/seed.html</loc></url>
+  <url><loc>https://harperz9.github.io/sofer.html</loc></url>
+  <url><loc>https://harperz9.github.io/isomorph.html</loc></url>
+  <url><loc>https://harperz9.github.io/bounds.html</loc></url>
+  <url><loc>https://harperz9.github.io/private-practice.html#orca</loc></url>
+  <url><loc>https://harperz9.github.io/private-practice.html#gate</loc></url>
+  <url><loc>https://harperz9.github.io/accountable-surface.html</loc></url>
+  <url><loc>https://harperz9.github.io/security-toolkit.html#model-provenance-validator</loc></url>
+  <url><loc>https://harperz9.github.io/security-toolkit.html#secret-redact-io</loc></url>
+  <url><loc>https://harperz9.github.io/security-toolkit.html#agent-hook-pack</loc></url>
+  <url><loc>https://harperz9.github.io/security-toolkit.html#repo-proof-index</loc></url>
+  <url><loc>https://harperz9.github.io/chorus.html</loc></url>
+  <url><loc>https://harperz9.github.io/kun.html</loc></url>
+  <!-- END GENERATED SYSTEM ROUTES -->
 </urlset>

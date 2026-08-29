@@ -1,0 +1,16 @@
+{
+  "version": "https://jsonfeed.org/version/1.1",
+  "title": "Zain Dana Harper research briefings",
+  "home_page_url": "https://harperz9.github.io/briefings/",
+  "feed_url": "https://harperz9.github.io/feed.json",
+  "items": [
+    {
+      "id": "https://harperz9.github.io/briefings/2026-08-26-openai-hugging-face-incident/",
+      "url": "https://harperz9.github.io/briefings/2026-08-26-openai-hugging-face-incident/",
+      "title": "Five evidence lanes, one OpenAI and Hugging Face incident",
+      "content_text": "Separate legal process, OpenAI's company report, Hugging Face host telemetry, independent analysis, and vendor remediation before drawing conclusions from the July incident.",
+      "date_published": "2026-08-26T00:00:00Z",
+      "date_modified": "2026-08-27T00:00:00Z"
+    }
+  ]
+}

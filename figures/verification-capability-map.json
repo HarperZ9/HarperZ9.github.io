@@ -1,0 +1,158 @@
+{
+  "renderer": "telos-figure/v1",
+  "viewBox": "0 0 960 540",
+  "figure": {
+    "id": "verification-capability-map",
+    "kind": "relationship",
+    "title": "Verification capability family",
+    "description": "Public verification systems shown with Flywheel as the platform context.",
+    "claim": "The map shows public verification-family membership and each system's declared architecture role.",
+    "doesNotProve": "The map does not establish correctness for every input, production adoption, independent review, or performance.",
+    "sources": [
+      {
+        "label": "Canonical public system registry",
+        "href": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/systems.json"
+      }
+    ],
+    "retrievedAt": "2026-08-28",
+    "units": "declared relationships",
+    "transformations": [
+      "Evidence receipts and reciprocal duplicate relationships are omitted.",
+      "Flywheel is added once as platform context.",
+      "Public verification-family records are sorted by stable identifier."
+    ],
+    "uncertainty": "Architecture roles describe placement in the public taxonomy, not runtime coupling.",
+    "data": {
+      "type": "relationship",
+      "nodes": [
+        {
+          "id": "crucible",
+          "label": "Crucible",
+          "status": "verified",
+          "stateLabel": "measured judgment layer",
+          "group": "Verification",
+          "nodeType": "system"
+        },
+        {
+          "id": "emet",
+          "label": "EMET",
+          "status": "verified",
+          "stateLabel": "independent integrity witness",
+          "group": "Verification",
+          "nodeType": "system"
+        },
+        {
+          "id": "flywheel",
+          "label": "Flywheel",
+          "status": "verified",
+          "stateLabel": "Platform context",
+          "group": "Platform",
+          "nodeType": "system"
+        },
+        {
+          "id": "mneme",
+          "label": "Mneme",
+          "status": "verified",
+          "stateLabel": "agent memory subsystem",
+          "group": "Verification",
+          "nodeType": "system"
+        },
+        {
+          "id": "model-provenance-validator",
+          "label": "Model Provenance Validator",
+          "status": "verified",
+          "stateLabel": "provenance envelope validator",
+          "group": "Verification",
+          "nodeType": "system"
+        },
+        {
+          "id": "repo-proof-index",
+          "label": "Repo Proof Index",
+          "status": "verified",
+          "stateLabel": "evidence index and reviewer handoff",
+          "group": "Verification",
+          "nodeType": "system"
+        }
+      ],
+      "edges": [
+        {
+          "source": "crucible",
+          "target": "emet",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "crucible",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "emet",
+          "target": "model-provenance-validator",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "emet",
+          "target": "repo-proof-index",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "crucible",
+          "label": "measured judgment layer",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "emet",
+          "label": "independent integrity witness",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "mneme",
+          "label": "agent memory subsystem",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "mneme",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "model-provenance-validator",
+          "label": "provenance envelope validator",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "repo-proof-index",
+          "label": "evidence index and reviewer handoff",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "model-provenance-validator",
+          "target": "repo-proof-index",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        }
+      ]
+    }
+  }
+}

@@ -47,7 +47,7 @@ python .\build_demo_media.py
 
 `capture_atlas.py` requires the two generated HTML files. After capture, `index-workbench.html` was deliberately removed from this package because the truthful raw artifact prints its local filesystem root. The redacted screenshots and videos retain the product output without disclosing that path. Re-running the commands recreates the intermediate.
 
-The media builder uses Pillow and the FFmpeg installation at `C:\Program Files\Shutter Encoder\Library\ffmpeg.exe`.
+The media builder uses Pillow and expects FFmpeg to be available on `PATH`.
 
 ## Deliverables
 
@@ -66,7 +66,7 @@ The `workspace/` directory is the complete sanitized fixture. `frames/` contains
 ## Verification commands
 
 ```powershell
-$Ffprobe = 'C:\Program Files\Shutter Encoder\Library\ffprobe.exe'
+$Ffprobe = (Get-Command ffprobe -ErrorAction Stop).Source
 
 & $Ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate,pix_fmt -show_entries format=duration,size -of json .\index-verified-workspace-short-30s.mp4
 & $Ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate,pix_fmt -show_entries format=duration,size -of json .\index-verified-workspace-full-118s.mp4
