@@ -160,56 +160,40 @@ def test_portfolio_names_retro_work_without_stale_download_claims() -> None:
         assert "900,000" not in src, f"{name} still states a figure two readings out of date"
 
 
-def test_hiring_page_leads_with_name_role_and_four_recognizable_work_paths() -> None:
+def test_hiring_page_leads_with_two_technical_lanes_and_a_field_campaign() -> None:
     src = read("hire.html")
     assert "Zain Dana Harper" in src
-    assert "Systems engineering, AI evaluation, security tooling, technical operations, and public-service work." in src
-    assert len(re.findall(r'<article class="hire-path(?: [^"]+)?"', src)) == 4
-    assert all(
-        re.search(rf'\bid="{re.escape(anchor)}"', src)
-        for anchor in (
-            "engineering-path",
-            "security-defense-path",
-            "public-service-field-path",
-            "collaboration-path",
-        )
-    )
-    for heading in (
-        "Software engineering and AI evaluation",
-        "Security and high-consequence systems",
-        "Public service and field work",
-        "Open-source and research collaboration",
-    ):
-        assert heading in src
-    for stale_scaffold in (
-        "Lane A",
-        "Lane B",
-        "Two measured technical lanes",
+    assert "Two measured technical lanes, one separate field campaign." in src
+    assert len(re.findall(r'class="hire-route-band(?:\s|\")', src)) == 2
+    for marker in (
+        'id="support-operations-qa"',
+        'id="evaluation-python-tools"',
+        "Technical support, developer operations, and QA",
+        "Evaluation tooling and Python developer tools",
         "Separate field campaign",
-        "Choose lane",
+        "ports, utilities, fire-support, parks, and field-safety",
     ):
-        assert stale_scaffold not in src
+        assert marker in src
     assert "zaindharper@gmail.com" in src
     assert '<body class="doc" data-route-art="off">' in src
     assert "private-client material" not in src
 
 
-def test_hiring_document_delegates_current_page_state_to_shared_navigation() -> None:
+def test_hiring_document_marks_the_local_career_switch_current() -> None:
     src = read("hire.html")
-    assert 'aria-current="page"' not in src
-    assert 'class="docnav-link is-current"' in src
+    assert '<a href="hire.html" aria-current="page">Hire</a>' in src
+    assert 'src="system/nav.js?v=20260828-site-design"' in src
 
 
 def test_hiring_paths_use_one_column_at_mobile_and_readable_action_targets() -> None:
     page = read("hire.html")
     css = read("system/hire.css")
     assert 'system/hire.css?v=20260828-site-design' in page
-    assert ".hire-route-kicker" not in css
-    assert ".hire-path" in css
+    assert ".hire-route-band" in css
     assert "min-height:44px" in css
     assert "@media (max-width:760px)" in css
     mobile = css.split("@media (max-width:760px)", 1)[1]
-    assert ".hire-path{grid-template-columns:1fr" in mobile
+    assert ".hire-route-band{grid-template-columns:1fr" in mobile
 
 
 def test_home_source_connects_the_product_brand_to_the_hiring_route() -> None:
