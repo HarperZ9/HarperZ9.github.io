@@ -11,6 +11,9 @@
 }
 
 .capability-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   border: 1px solid var(--hairline);
   border-radius: 999px;
   color: var(--bone);
@@ -102,7 +105,7 @@
   width: 100%;
   border-collapse: collapse;
   border: 1px solid var(--hairline);
-  background: rgba(255,255,255,.56);
+  background: rgba(13,7,17,.78);
 }
 
 .capability-table caption {
@@ -145,7 +148,7 @@
 .boundary-panel {
   border: 1px solid color-mix(in oklab, var(--orange) 50%, var(--hairline));
   border-radius: 18px;
-  background: color-mix(in oklab, var(--orange) 8%, rgba(255,255,255,.55));
+  background: color-mix(in oklab, var(--orange) 9%, rgba(13,7,17,.84));
   margin-top: 1.5rem;
   padding: clamp(1rem, 2.6vw, 1.55rem);
 }

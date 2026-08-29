@@ -9,18 +9,6 @@
 import { buildCppn, buildNeuralSdf } from "./neural.js";
 import { voxelizeSdf, isoOrder } from "./voxel.js";
 import { drawTypeface } from "./typeface.js";
-// Wave 8: eight registers from the operator's own corpus, one module each.
-import { WAVE8_OUTRUN, WAVE8_OUTRUN_META } from "./instruments/wave8-outrun.js";
-import { WAVE8_CASSETTE, WAVE8_CASSETTE_META } from "./instruments/wave8-cassette-console.js";
-import { WAVE8_OPART, WAVE8_OPART_META } from "./instruments/wave8-op-art-textile.js";
-import { WAVE8_BIOMECH, WAVE8_BIOMECH_META } from "./instruments/wave8-biomech-ink.js";
-import { WAVE8_MONUMENT, WAVE8_MONUMENT_META } from "./instruments/wave8-dark-monument.js";
-import { WAVE8_APERIODIC, WAVE8_APERIODIC_META } from "./instruments/wave8-aperiodic.js";
-import { WAVE8_PLOTTER, WAVE8_PLOTTER_META } from "./instruments/wave8-plotter-density.js";
-import { WAVE8_OBSERVATORY, WAVE8_OBSERVATORY_META } from "./instruments/wave8-observatory.js";
-import {
-  srgbToLinear, linearRgbToOklab, oklabToOklch, oklchToSrgbByte,
-} from "./lib/sense-core/colour-perceptual.mjs";
 let mounted = false;
 let rafId = 0;
 const pulses = [];
@@ -128,153 +116,7 @@ function routePalette(seed) {
       fluid: [[239, 171, 48], [135, 237, 74], [80, 196, 185]],
     },
   ];
-  const base = palettes[seed % palettes.length];
-  return { ...base, ...paletteRoles(base, seed) };
-}
-
-// ── the role API ────────────────────────────────────────────────────────────
-// Nineteen layers accepted `palette` and drew from hardcoded rgb literals
-// anyway, so a plate's colour did not follow its seed and two of the shipped
-// gallery plates combined two such layers. Rather than restate literals per
-// layer, the palette exposes named roles built from its own anchors in OKLCh,
-// so hue relationships stay perceptually even instead of drifting the way
-// naive RGB interpolation does.
-//
-// Roles: ink (the drawing mark), support (the secondary mark), hot (the one
-// accent), ground (the field it sits on), and ramp(t) for continuous fields.
-// Every role returns [r,g,b] 0-255 so a layer can compose its own alpha.
-function paletteRoles(base, seed) {
-  const anchors = base.fluid;
-  const lch = anchors.map(([r, g, b]) => {
-    const [labL, labA, labB] = linearRgbToOklab(srgbToLinear(r / 255), srgbToLinear(g / 255), srgbToLinear(b / 255));
-    const [L, C, h] = oklabToOklch(labL, labA, labB);
-    return { L, C, h };
-  });
-  const toByte = (c) => oklchToSrgbByte(c.L, c.C, c.h);
-  // Rotate which anchor leads by seed, so sibling plates differ without
-  // leaving the palette.
-  const lead = seed % lch.length;
-  const ink = lch[lead];
-  const support = lch[(lead + 1) % lch.length];
-  const hot = lch[(lead + 2) % lch.length];
-  return {
-    // The hue set every drawn colour is snapped toward.
-    anchorHues: lch.map((c) => c.h),
-    roleInk: toByte(ink),
-    roleSupport: toByte(support),
-    // The single hot mark the canon allows: pushed in chroma, not in size.
-    roleHot: toByte({ L: Math.min(0.92, hot.L * 1.06), C: hot.C * 1.35, h: hot.h }),
-    // A calm ground: same hue family, low chroma, dark.
-    roleGround: toByte({ L: 0.18, C: Math.min(0.04, ink.C * 0.25), h: ink.h }),
-    // Perceptually even ramp across the three anchors, interpolating in OKLCh
-    // with shortest-arc hue so midpoints do not pass through grey.
-    ramp(t) {
-      const x = Math.max(0, Math.min(1, t)) * (lch.length - 1);
-      const i = Math.min(lch.length - 2, Math.floor(x));
-      const f = x - i;
-      const a = lch[i], b = lch[i + 1];
-      let dh = b.h - a.h;
-      if (dh > 180) dh -= 360; else if (dh < -180) dh += 360;
-      return toByte({ L: a.L + (b.L - a.L) * f, C: a.C + (b.C - a.C) * f, h: a.h + dh * f });
-    },
-  };
-}
-
-// ── palette alignment ───────────────────────────────────────────────────────
-// Nineteen layers draw from hardcoded rgb literals, so their colour did not
-// follow the seed. Rewriting ninety-eight literals by hand would risk the
-// tonal design each layer was tuned with, so alignment happens where colour
-// enters the context instead: a literal keeps its lightness, its chroma, and
-// its alpha, and only its HUE is snapped to the nearest anchor of the seed's
-// palette, in OKLCh so the snap stays perceptually even.
-//
-// Neutrals pass through untouched, which keeps blacks, papers, and the
-// near-white marks exactly as authored. A colour already drawn from the
-// palette is already at an anchor hue, so alignment is a no-op for it: this
-// is safe to apply to every layer, not only the offenders.
-const NEUTRAL_CHROMA = 0.035;
-
-function parseCssColour(value) {
-  if (typeof value !== "string") return null;
-  const rgba = value.match(/^rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\s*(?:,\s*([\d.]+)\s*)?\)$/i);
-  if (rgba) {
-    return { r: +rgba[1], g: +rgba[2], b: +rgba[3], a: rgba[4] === undefined ? 1 : +rgba[4] };
-  }
-  const hex = value.match(/^#([0-9a-f]{6})$/i);
-  if (hex) {
-    const n = parseInt(hex[1], 16);
-    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255, a: 1 };
-  }
-  return null;
-}
-
-// Some layers depict a THING whose material colour is part of what it is: a
-// paper lantern lit from within is warm ivory in every palette, and snapping
-// it to a magenta anchor would contradict the plate's own caption. Those
-// layers wrap their subject in withLiteralColour(); abstract fields keep
-// following the seed.
-let preserveLiteralColour = false;
-function withLiteralColour(run) {
-  const prior = preserveLiteralColour;
-  preserveLiteralColour = true;
-  try { run(); } finally { preserveLiteralColour = prior; }
-}
-
-function alignColourToPalette(value, hues) {
-  if (preserveLiteralColour) return value;
-  const c = parseCssColour(value);
-  if (!c || !hues || !hues.length) return value;
-  const [labL, labA, labB] = linearRgbToOklab(srgbToLinear(c.r / 255), srgbToLinear(c.g / 255), srgbToLinear(c.b / 255));
-  const [L, C, h0] = oklabToOklch(labL, labA, labB);
-  if (C < NEUTRAL_CHROMA) return value;          // grey, paper, ink black
-  let best = hues[0], bestD = 361;
-  for (const h of hues) {
-    const d = Math.abs(((h - h0 + 540) % 360) - 180);
-    if (d < bestD) { bestD = d; best = h; }
-  }
-  const [r, g, b] = oklchToSrgbByte(L, C, best);
-  return `rgba(${r},${g},${b},${c.a})`;
-}
-
-// Shadow the style accessors on this one context for the duration of a render.
-function installPaletteAlignment(ctx, palette) {
-  const hues = palette && palette.anchorHues;
-  if (!hues || !hues.length) return () => {};
-  const proto = Object.getPrototypeOf(ctx) || ctx;
-  const restore = [];
-  for (const prop of ["fillStyle", "strokeStyle"]) {
-    const own = Object.getOwnPropertyDescriptor(ctx, prop);
-    const desc = own || Object.getOwnPropertyDescriptor(proto, prop);
-    if (!desc || !desc.set || (own && own.configurable === false)) continue;
-    try {
-      Object.defineProperty(ctx, prop, {
-        configurable: true,
-        enumerable: true,
-        get() { return desc.get ? desc.get.call(ctx) : undefined; },
-        set(v) { desc.set.call(ctx, alignColourToPalette(v, hues)); },
-      });
-    } catch (_) {
-      continue;   // a context that refuses shadowing simply draws unaligned
-    }
-    restore.push(() => {
-      delete ctx[prop];
-      if (own) Object.defineProperty(ctx, prop, own);
-    });
-  }
-  // Gradient stops carry literals too, so the gradient factories hand back a
-  // wrapper that aligns each stop.
-  for (const factory of ["createLinearGradient", "createRadialGradient"]) {
-    const original = ctx[factory];
-    if (typeof original !== "function") continue;
-    ctx[factory] = function alignedGradient(...args) {
-      const grad = original.apply(ctx, args);
-      const addStop = grad.addColorStop.bind(grad);
-      grad.addColorStop = (offset, colour) => addStop(offset, alignColourToPalette(colour, hues));
-      return grad;
-    };
-    restore.push(() => { delete ctx[factory]; });
-  }
-  return () => { for (const undo of restore) undo(); };
+  return palettes[seed % palettes.length];
 }
 
 function sizeCanvas(canvas, dpr) {
@@ -1795,114 +1637,58 @@ function drawDatabendLayer(ctx, width, height, tick, seed) {
    woven cloth, and fiber canyons. Same one-shot contract as wave 2.
 --------------------------------------------------------------------------- */
 
-// A stellated paper lantern: a star polygon of folded facets, lit from within,
-// hung from a hairline cord. The previous version drew many low-alpha slivers
-// that summed to a haze with no readable silhouette, so the plate never showed
-// the object its caption names. This builds the form explicitly: alternating
-// outer and inner vertices, one shaded quad per fold, a rim that catches the
-// light, and an interior glow clipped to the silhouette so the paper reads as
-// lit from behind rather than as a lamp painted over the scene.
 function drawStellatedLantern(ctx, width, height, tick, seed, palette) {
-  // The paper and its flame keep their own colour; the light column behind is
-  // drawn by another layer and still follows the seed's palette.
-  withLiteralColour(() => drawStellatedLanternBody(ctx, width, height, tick, seed, palette));
-}
-
-function drawStellatedLanternBody(ctx, width, height, tick, seed, palette) {
   const rnd = (salt) => rand(seed, salt);
-  const cx = width * (0.44 + rnd(2000) * 0.12);
-  const cy = height * (0.46 + rnd(2001) * 0.1);
-  const R = Math.min(width, height) * (0.26 + rnd(2002) * 0.08);
-  const points = 6 + Math.floor(rnd(2003) * 5);        // star points
-  const inner = R * (0.46 + rnd(2004) * 0.12);          // valley radius
-  const tilt = (rnd(2005) - 0.5) * 0.5;
-  const warm = [252, 232, 190];
-  const deep = [214, 156, 86];
-
   ctx.save();
   ctx.globalCompositeOperation = "source-over";
-
-  // The cord: one hairline from the top edge to the crown, slightly off
-  // vertical so the lantern reads as hanging rather than floating.
-  const crownX = cx + Math.cos(-Math.PI / 2 + tilt) * R;
-  const crownY = cy + Math.sin(-Math.PI / 2 + tilt) * R;
-  ctx.strokeStyle = "rgba(236,230,214,0.55)";
-  ctx.lineWidth = Math.max(0.6, R * 0.006);
+  ctx.fillStyle = "rgba(0,0,0,0.96)";
+  ctx.fillRect(0, 0, width, height);
+  const cx = width * (0.44 + rnd(2000) * 0.12);
+  const cy = height * (0.46 + rnd(2001) * 0.1);
+  const R = Math.min(width, height) * (0.24 + rnd(2002) * 0.1);
+  const N = 4 + Math.floor(rnd(2003) * 5);
+  const petals = 8 + Math.floor(rnd(2004) * 10);
+  ctx.strokeStyle = "rgba(236,230,214,0.5)";
+  ctx.lineWidth = 1;
   ctx.beginPath();
-  ctx.moveTo(crownX - tilt * height * 0.05, -4);
-  ctx.lineTo(crownX, crownY);
+  ctx.moveTo(cx, -4);
+  ctx.lineTo(cx, cy - R * 1.02);
   ctx.stroke();
-
-  // Silhouette vertices, alternating peak and valley.
-  const verts = [];
-  for (let i = 0; i < points * 2; i += 1) {
-    const peak = i % 2 === 0;
-    const ang = tilt - Math.PI / 2 + (i * Math.PI) / points;
-    const rr = (peak ? R : inner) * (1 + (rnd(2100 + i) - 0.5) * 0.06);
-    verts.push([cx + Math.cos(ang) * rr, cy + Math.sin(ang) * rr]);
-  }
-
-  const silhouette = () => {
-    ctx.beginPath();
-    ctx.moveTo(verts[0][0], verts[0][1]);
-    for (let i = 1; i < verts.length; i += 1) ctx.lineTo(verts[i][0], verts[i][1]);
-    ctx.closePath();
-  };
-
-  // Interior glow, clipped to the paper so light stays inside the object.
-  ctx.save();
-  silhouette();
-  ctx.clip();
-  // Occlude the veil first: paper is opaque, and letting the light column
-  // speckle through the body read as noise rather than as a lit surface.
-  ctx.fillStyle = "rgba(18,13,8,0.94)";
-  ctx.fillRect(cx - R * 1.3, cy - R * 1.3, R * 2.6, R * 2.6);
-  const core = ctx.createRadialGradient(cx, cy - R * 0.1, R * 0.05, cx, cy, R * 1.1);
-  core.addColorStop(0, `rgba(${warm[0]},${warm[1]},${warm[2]},0.95)`);
-  core.addColorStop(0.45, `rgba(${deep[0]},${deep[1]},${deep[2]},0.55)`);
-  core.addColorStop(1, `rgba(${deep[0]},${deep[1]},${deep[2]},0.16)`);
-  ctx.fillStyle = core;
-  ctx.fillRect(cx - R * 1.3, cy - R * 1.3, R * 2.6, R * 2.6);
-  ctx.restore();
-
-  // Folded facets: each pair of adjacent vertices makes a panel with the
-  // centre, shaded by which way the fold turns, which is what makes the form
-  // read as folded paper rather than a flat star.
-  for (let i = 0; i < verts.length; i += 1) {
-    const a = verts[i], b = verts[(i + 1) % verts.length];
-    const mid = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
-    // Facing: panels whose midpoint sits left of centre catch less light.
-    const facing = 0.5 + 0.5 * ((mid[0] - cx) / R);
-    const lift = 0.30 + facing * 0.42 + (i % 2 ? 0.06 : 0);
-    ctx.fillStyle = `rgba(${warm[0]},${warm[1]},${warm[2]},${(0.26 + lift * 0.34).toFixed(3)})`;
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.lineTo(a[0], a[1]);
-    ctx.lineTo(b[0], b[1]);
-    ctx.closePath();
-    ctx.fill();
-    // The crease from the centre to each peak.
-    ctx.strokeStyle = `rgba(${warm[0]},${warm[1]},${warm[2]},${(0.10 + lift * 0.18).toFixed(3)})`;
-    ctx.lineWidth = Math.max(0.5, R * 0.004);
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.lineTo(a[0], a[1]);
-    ctx.stroke();
-  }
-
-  // Rim: the lit edge of the paper, the brightest mark in the plate.
-  ctx.strokeStyle = `rgba(255,246,222,0.9)`;
-  ctx.lineWidth = Math.max(0.8, R * 0.009);
-  silhouette();
-  ctx.stroke();
-
-  // A restrained halo, additive, so the void around it stays black.
   ctx.globalCompositeOperation = "lighter";
-  const halo = ctx.createRadialGradient(cx, cy, R * 0.85, cx, cy, R * 2.1);
-  halo.addColorStop(0, `rgba(${deep[0]},${deep[1]},${deep[2]},0.20)`);
-  halo.addColorStop(1, `rgba(${deep[0]},${deep[1]},${deep[2]},0)`);
-  ctx.fillStyle = halo;
-  ctx.fillRect(cx - R * 2.2, cy - R * 2.2, R * 4.4, R * 4.4);
+  for (let k = 0; k < N * 2; k += 1) {
+    const base = (k * Math.PI) / N;
+    const mirror = k % 2 === 1;
+    for (let p = 0; p < petals; p += 1) {
+      const t = 1 - p / petals;
+      const rr = R * (0.22 + t * 0.78);
+      const wdt = (Math.PI / N) * 0.82 * t + 0.06;
+      const saw = 1 + (p % 2) * 0.06;
+      const a0 = base + (mirror ? wdt : -wdt);
+      ctx.fillStyle = `rgba(244,227,189,${0.12 + t * 0.16})`;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      const steps = 7;
+      for (let s2 = 0; s2 <= steps; s2 += 1) {
+        const f = s2 / steps;
+        const ang = base + (a0 - base) * Math.sin(f * Math.PI);
+        const jag = 1 + (s2 % 2) * 0.045 * saw;
+        ctx.lineTo(cx + Math.cos(ang) * rr * f * jag, cy + Math.sin(ang) * rr * f * jag);
+      }
+      ctx.closePath();
+      ctx.fill();
+      if (p % 2 === 0) {
+        ctx.strokeStyle = `rgba(255,238,204,${0.10 + t * 0.14})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    }
+  }
+  const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 1.15);
+  core.addColorStop(0, "rgba(255,244,214,0.9)");
+  core.addColorStop(0.3, "rgba(226,178,110,0.42)");
+  core.addColorStop(1, "rgba(150,120,80,0)");
+  ctx.fillStyle = core;
+  ctx.fillRect(cx - R * 1.2, cy - R * 1.2, R * 2.4, R * 2.4);
   ctx.restore();
 }
 
@@ -2003,11 +1789,7 @@ function drawIfsLightVeil(ctx, width, height, tick, seed, palette) {
   let py = 0;
   const iterations = 42000;
   for (let i = 0; i < iterations; i += 1) {
-    // The salt must advance with the iteration. Wrapping it at 997 gave the
-    // map sequence a period of 997, so the chaos game converged to a cycle and
-    // 93 percent of the plotted points were redundant: the invariant measure
-    // was never actually sampled. Still fully deterministic per seed.
-    const m = maps[Math.floor(rand(seed, 2400 + i) * maps.length)];
+    const m = maps[Math.floor(rand(seed, 2400 + (i % 997)) * maps.length)];
     const nx = px * Math.cos(m.rot) * m.sx - py * Math.sin(m.rot) * m.sx + m.tx;
     const ny = px * Math.sin(m.rot) * m.sy + py * Math.cos(m.rot) * m.sy + m.ty;
     px = nx;
@@ -2201,12 +1983,8 @@ function drawShowpieceWeave(ctx, width, height, tick, seed, palette) {
 }
 
 function drawShowpieceLantern(ctx, width, height, tick, seed, palette) {
-  // The caption promises a lantern hung in the void with a column of folded
-  // light BEHIND it. The veil was drawn last, so it covered the lantern and
-  // the plate read as a speckled column with no object in it. Ground first,
-  // then the subject on top.
-  drawIfsLightVeil(ctx, width, height, tick, seed + 13, palette);
   drawStellatedLantern(ctx, width, height, tick, seed, palette);
+  drawIfsLightVeil(ctx, width, height, tick, seed + 13, palette);
 }
 
 function drawShowpieceRuin(ctx, width, height, tick, seed, palette) {
@@ -2562,98 +2340,20 @@ function drawClifford(ctx, width, height, tick, seed, palette) {
   const sx = width / (2 * (1 + Math.abs(c)) + 0.5);
   const sy = height / (2 * (1 + Math.abs(d)) + 0.5);
   const ox = width / 2, oy = height / 2;
+  let x = 0.1, y = 0.1;
   const N = Math.min(360000, Math.max(60000, Math.round(width * height * 0.18)));
-  // Additive alpha at 0.12 saturates after about nine coincident hits, so the
-  // folded core of the attractor clipped to flat white while only the sparse
-  // wisps carried any gradation. Counting hits into a float buffer and mapping
-  // density logarithmically keeps the whole dynamic range: the core reads as
-  // structure rather than a blown highlight.
-  plotDensityField(ctx, width, height, tones, (plot) => {
-    let x = 0.1, y = 0.1;
-    for (let i = 0; i < N; i += 1) {
-      const nx = Math.sin(a * y) + c * Math.cos(a * x);
-      const ny = Math.sin(b * x) + d * Math.cos(b * y);
-      x = nx; y = ny;
-      if (i < 24) continue;
-      plot(ox + x * sx, oy + y * sy, (i >> 6) % tones.length);
-    }
-  });
-  ctx.restore();
-}
-
-// Shared density accumulator for the point-cloud layers (the strange attractor
-// and the IFS veil). Hits land in a Float32 count buffer per tone, then one
-// logarithmic tone map is blitted, so nothing clips and point count buys
-// gradation instead of saturation.
-function plotDensityField(ctx, width, height, tones, run) {
-  const w = Math.max(1, Math.round(width));
-  const h = Math.max(1, Math.round(height));
-  // The accumulator needs pixel buffers and an offscreen canvas. Where those
-  // are unavailable, plot directly rather than failing the plate: the result
-  // is the older additive look, which is worse but is still the artwork.
-  const stageProbe = typeof document !== "undefined" ? document.createElement("canvas") : null;
-  const canAccumulate = !!(stageProbe && typeof stageProbe.getContext === "function"
-    && typeof ctx.createImageData === "function" && typeof ctx.drawImage === "function");
-  if (!canAccumulate) {
-    const prior = ctx.globalCompositeOperation;
-    ctx.globalCompositeOperation = "lighter";
-    run((px, py, lane) => {
-      const t = tones[lane % tones.length];
-      ctx.fillStyle = `rgba(${t[0]},${t[1]},${t[2]},0.12)`;
-      ctx.fillRect(px, py, 1.5, 1.5);
-    });
-    ctx.globalCompositeOperation = prior;
-    return;
-  }
-  const lanes = tones.length;
-  const counts = new Float32Array(w * h * lanes);
-  let peak = 0;
-  const plot = (px, py, lane) => {
-    const xi = px | 0, yi = py | 0;
-    if (xi < 0 || yi < 0 || xi >= w || yi >= h) return;
-    const idx = (yi * w + xi) * lanes + (lane % lanes);
-    const v = counts[idx] + 1;
-    counts[idx] = v;
-    if (v > peak) peak = v;
-  };
-  run(plot);
-  if (peak <= 0) return;
-  const img = ctx.createImageData(w, h);
-  const out = img.data;
-  const norm = 1 / Math.log(1 + peak);
-  for (let i = 0, p = 0; i < w * h; i += 1, p += 4) {
-    // Hue comes from the lane that dominates the pixel, brightness from the
-    // total density. Averaging the lanes instead would wash every busy region
-    // toward white and throw away the palette exactly where the structure is
-    // densest, which is the part worth seeing.
-    let total = 0, bestLane = -1, bestCount = 0;
-    for (let l = 0; l < lanes; l += 1) {
-      const n = counts[i * lanes + l];
-      if (!n) continue;
-      total += Math.log(1 + n) * norm;
-      if (n > bestCount) { bestCount = n; bestLane = l; }
-    }
-    if (bestLane < 0) continue;
-    const tone = tones[bestLane];
-    const a = Math.min(1, total);
-    out[p] = tone[0];
-    out[p + 1] = tone[1];
-    out[p + 2] = tone[2];
-    out[p + 3] = Math.round(a * 255);
-  }
-  // putImageData writes raw pixels and ignores compositing, so blitting it
-  // straight onto the context would erase the ground the layer just laid
-  // down. Stage it and composite additively, which is what the accumulation
-  // is modelling in the first place.
-  const stage = stageProbe;
-  stage.width = w; stage.height = h;
-  const sctx = stage.getContext("2d");
-  if (!sctx || typeof sctx.putImageData !== "function") return;
-  sctx.putImageData(img, 0, 0);
-  const priorOp = ctx.globalCompositeOperation;
   ctx.globalCompositeOperation = "lighter";
-  ctx.drawImage(stage, 0, 0, w, h);
-  ctx.globalCompositeOperation = priorOp;
+  for (let i = 0; i < N; i += 1) {
+    const nx = Math.sin(a * y) + c * Math.cos(a * x);
+    const ny = Math.sin(b * x) + d * Math.cos(b * y);
+    x = nx; y = ny;
+    if (i < 24) continue;
+    const px = ox + x * sx, py = oy + y * sy;
+    const t = tones[(i >> 6) % tones.length];
+    ctx.fillStyle = `rgba(${t[0]},${t[1]},${t[2]},0.12)`;
+    ctx.fillRect(px, py, 1.5, 1.5);
+  }
+  ctx.restore();
 }
 
 // Phyllotaxis: the sunflower / pinecone spiral (Vogel's model). Each dot sits at
@@ -2740,95 +2440,14 @@ const SPECIMEN_LAYERS = {
   "voronoi-stain": drawVoronoiStain,
   clifford: drawClifford,
   phyllotaxis: drawPhyllotaxis,
-  ...WAVE8_OUTRUN,
-  ...WAVE8_CASSETTE,
-  ...WAVE8_OPART,
-  ...WAVE8_BIOMECH,
-  ...WAVE8_MONUMENT,
-  ...WAVE8_APERIODIC,
-  ...WAVE8_PLOTTER,
-  ...WAVE8_OBSERVATORY,
 };
 const SPECIMEN_DEFAULT_LAYERS = ["orbit", "contour"];
 
 // The registered layer vocabulary, for tests and for pages that want to list
 // what canvas[data-specimen-layers] can request.
-// Test hook for the palette-alignment contract (neutrals pass, chromatic
-// colour snaps, alpha is preserved). Not part of the drawing API.
-export function __alignForTest(value, hues) {
-  return alignColourToPalette(value, hues);
-}
-
 export function specimenLayerNames() {
   return Object.keys(SPECIMEN_LAYERS);
 }
-
-// Curated family for every instrument, for pages that shelve the vocabulary
-// by register instead of one flat wall. Names missing here land in "more".
-const SPECIMEN_FAMILIES = {
-  "showpiece-lantern": "showpieces", "showpiece-ruin": "showpieces",
-  "showpiece-veil": "showpieces", "showpiece-burst": "showpieces",
-  "showpiece-weave": "showpieces",
-  orbit: "field studies", contour: "field studies", flow: "field studies",
-  fluid: "field studies", metaball: "field studies", bands: "field studies",
-  hydra: "field studies", lamp: "field studies", crystal: "field studies",
-  "crystal-lens": "optics", "caustic-veils": "optics", "caustic-paper": "optics",
-  "planet-limb": "optics", "aurora-leak": "optics", facets: "optics",
-  groove: "optics",
-  scanline: "print & interference", dither: "print & interference",
-  "riso-moire": "print & interference", "moire-swirl": "print & interference",
-  "acid-duotone": "print & interference", "plotter-plate": "print & interference",
-  "weave-lattice": "print & interference",
-  databend: "glitch & ruin", "pixel-sort-ruin": "glitch & ruin",
-  "obsidian-burst": "glitch & ruin",
-  dendrite: "growth", "dla-coral": "growth", "ca-quadrant": "growth",
-  "voronoi-stain": "growth", phyllotaxis: "growth",
-  clifford: "mathematics", truchet: "mathematics", "ifs-veil": "mathematics",
-  "fiber-strands": "thread & structure", "fiber-terrain": "thread & structure",
-  "stellated-lantern": "thread & structure", typeface: "thread & structure",
-  "neural-field": "neural", "neural-sdf": "neural", "neural-voxel": "neural",
-};
-// Wave-8 instruments carry their family in their META entries; fold them in
-// under the display label the desk shelves use.
-const WAVE8_FAMILY_LABEL = {
-  outrun: "outrun", "cassette-console": "cassette console",
-  "op-art-textile": "op-art textile", "biomech-ink": "biomech ink",
-  "dark-monument": "dark monument", aperiodic: "aperiodic order",
-  "plotter-density": "plotter density", observatory: "observatory",
-};
-for (const meta of [
-  ...WAVE8_OUTRUN_META, ...WAVE8_CASSETTE_META, ...WAVE8_OPART_META,
-  ...WAVE8_BIOMECH_META, ...WAVE8_MONUMENT_META, ...WAVE8_APERIODIC_META,
-  ...WAVE8_PLOTTER_META, ...WAVE8_OBSERVATORY_META,
-]) {
-  SPECIMEN_FAMILIES[meta.name] = WAVE8_FAMILY_LABEL[meta.family] || meta.family;
-}
-
-export function specimenLayerFamilies() {
-  const out = {};
-  for (const name of Object.keys(SPECIMEN_LAYERS)) {
-    out[name] = SPECIMEN_FAMILIES[name] || "more";
-  }
-  return out;
-}
-
-// One-line blurbs where an instrument's META carries one (wave 8 onward);
-// pages surface them as chip tooltips so a name is never the only clue.
-const SPECIMEN_BLURBS = {};
-for (const meta of [
-  ...WAVE8_OUTRUN_META, ...WAVE8_CASSETTE_META, ...WAVE8_OPART_META,
-  ...WAVE8_BIOMECH_META, ...WAVE8_MONUMENT_META, ...WAVE8_APERIODIC_META,
-  ...WAVE8_PLOTTER_META, ...WAVE8_OBSERVATORY_META,
-]) {
-  if (meta.blurb) SPECIMEN_BLURBS[meta.name] = meta.blurb;
-}
-export function specimenLayerBlurbs() {
-  return { ...SPECIMEN_BLURBS };
-}
-
-// The short edge every layer's absolute pixel constants were authored against.
-// Changing this rescales the whole plate vocabulary, so it is a canon value.
-const REFERENCE_SHORT_EDGE = 300;
 
 function sizeSpecimenCanvas(canvas, dpr) {
   // Unlike sizeCanvas above, never fall back to the window size: a strip that
@@ -2844,7 +2463,7 @@ function sizeSpecimenCanvas(canvas, dpr) {
   }
 }
 
-export function renderSpecimen(canvas, seedString, layerNames = SPECIMEN_DEFAULT_LAYERS, fx = null, fxAmount = 0.6) {
+export function renderSpecimen(canvas, seedString, layerNames = SPECIMEN_DEFAULT_LAYERS) {
   if (!canvas || typeof canvas.getContext !== "function") return false;
   const ctx = canvas.getContext("2d", { alpha: true });
   if (!ctx) return false;
@@ -2858,66 +2477,22 @@ export function renderSpecimen(canvas, seedString, layerNames = SPECIMEN_DEFAULT
   const dpr = Math.min(2, Math.max(1,
     (typeof window !== "undefined" && window.devicePixelRatio) || 1));
   sizeSpecimenCanvas(canvas, dpr);
-  // Reference drawing space. Every layer's stroke counts, lengths, and weights
-  // are absolute numbers tuned against a short edge of REFERENCE_SHORT_EDGE, so
-  // drawing straight into a large backing store spread the same ink over many
-  // more pixels: measured, a plate at a 1032px short edge rendered at roughly
-  // an eighth the ink coverage of the same plate at 300px, which is why several
-  // exhibition plates read as near-empty frames. Drawing in reference space and
-  // scaling the context keeps composition and density identical at any size,
-  // and canvas vector ops still rasterize at full device resolution.
-  const scale = Math.max(1, Math.min(canvas.width, canvas.height) / REFERENCE_SHORT_EDGE);
-  const width = canvas.width / scale;
-  const height = canvas.height / scale;
+  const width = canvas.width;
+  const height = canvas.height;
   // Frozen instant: the layer functions take a clock tick, so derive one from
   // the seed. Same seed, same tick, same frame, every visit.
   const tick = 40000 + (seed % 50000);
-  ctx.setTransform(scale, 0, 0, scale, 0, 0);
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.clearRect(0, 0, width, height);
   drawBackdrop(ctx, width, height, tick, seed, palette);
   const names = Array.isArray(layerNames) && layerNames.length
     ? layerNames : SPECIMEN_DEFAULT_LAYERS;
-  const releaseAlignment = installPaletteAlignment(ctx, palette);
-  try {
-    for (const name of names) {
-      const layer = SPECIMEN_LAYERS[String(name).trim()];
-      if (layer) layer(ctx, width, height, tick, seed, palette);
-    }
-  } finally {
-    releaseAlignment();
+  for (const name of names) {
+    const layer = SPECIMEN_LAYERS[String(name).trim()];
+    if (layer) layer(ctx, width, height, tick, seed, palette);
   }
   ctx.globalCompositeOperation = "source-over";
-  // Optional treatment stack. The 46-op rack is the same one the print desk and
-  // the Retro Engine run, so an exhibition plate can be developed rather than
-  // only composed, and its caption still names the whole recipe. Loaded lazily
-  // and applied synchronously only when a plate actually asks for it.
-  if (Array.isArray(fx) && fx.length && _opsModule && (_opsModule.applyOpsWet || _opsModule.applyOps)) {
-    const amt = Math.max(0.05, Math.min(1, fxAmount));
-    // The layers were drawn in REFERENCE SPACE, under ctx.setTransform(scale...).
-    // The ops work in device pixels and draw the canvas back into itself, so
-    // leaving that transform active scales every one of their drawImage calls
-    // into a corner of the frame. Reset to identity before developing.
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    try {
-      (_opsModule.applyOpsWet || _opsModule.applyOps)(canvas, fx.map((op, i) => ({
-        op, amount: 1, seed: String(seedString) + ":" + op + ":" + i,
-      })), amt);
-    } catch (_) {}
-  }
   return true;
-}
-
-// The op rack is a separate module and most pages never need it, so it is
-// fetched once, on demand, the first time a plate asks for a treatment.
-let _opsModule = null, _opsPending = null;
-export function loadSpecimenOps() {
-  if (_opsModule) return Promise.resolve(_opsModule);
-  if (!_opsPending) {
-    _opsPending = import("./glitch-ops.js")
-      .then((m) => { _opsModule = m; return m; })
-      .catch(() => null);
-  }
-  return _opsPending;
 }
 
 export function mountSpecimens(doc = typeof document !== "undefined" ? document : null) {
@@ -2930,20 +2505,7 @@ export function mountSpecimens(doc = typeof document !== "undefined" ? document 
       .split(",")
       .map((name) => name.trim())
       .filter(Boolean);
-    const fx = ((canvas.dataset && canvas.dataset.specimenFx) || "")
-      .split(",").map((n) => n.trim()).filter(Boolean);
-    const fxAmount = Number((canvas.dataset && canvas.dataset.specimenFxAmount) || 0.6);
-    const use = layers.length ? layers : SPECIMEN_DEFAULT_LAYERS;
-    if (fx.length) {
-      // draw immediately so the plate is never blank, then develop it once the
-      // rack arrives; the caption already names the treatment either way
-      renderSpecimen(canvas, seedString, use);
-      loadSpecimenOps().then(() => {
-        renderSpecimen(canvas, seedString, use, fx, fxAmount);
-      });
-      if (canvas.dataset) canvas.dataset.specimenRendered = "true";
-      rendered += 1;
-    } else if (renderSpecimen(canvas, seedString, use)) {
+    if (renderSpecimen(canvas, seedString, layers.length ? layers : SPECIMEN_DEFAULT_LAYERS)) {
       if (canvas.dataset) canvas.dataset.specimenRendered = "true";
       rendered += 1;
     }

@@ -44,13 +44,21 @@ test("active section is derived from the route registry", () => {
 function navFixture(pathname, search = "", hash = "") {
   const mount = {
     html: "",
-    set innerHTML(value) { this.html = value; },
-    get innerHTML() { return this.html; },
-    querySelector() { return null; },
+    set innerHTML(value) {
+      this.html = value;
+    },
+    get innerHTML() {
+      return this.html;
+    },
+    querySelector() {
+      return null;
+    },
   };
   const doc = {
     location: { pathname, search, hash },
-    getElementById(id) { return id === "site-nav" ? mount : null; },
+    getElementById(id) {
+      return id === "site-nav" ? mount : null;
+    },
   };
   return { doc, mount };
 }
@@ -267,7 +275,7 @@ function routeHeaderFixture(pathname = "/catalog.html") {
   h1.textContent = "Systems, by capability.";
   const lede = new FakeElement("p");
   lede.className = "lede";
-  lede.textContent = "31 public records with purpose, evidence, limitations, and authorization boundaries.";
+  lede.textContent = "40 public records with purpose, evidence, limitations, and authorization boundaries.";
 
   doc.body.appendChild(frame);
   doc.body.appendChild(main);

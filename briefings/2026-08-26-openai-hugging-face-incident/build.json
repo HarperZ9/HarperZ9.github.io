@@ -22,7 +22,7 @@
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/index.html",
-      "sha256": "ef4a6727637957bccd092dc98faffa582732062b591001a0284bbc2fdc08a0d8"
+      "sha256": "a720d25d8197ea45fe55cd8ce19e3bdfae26df696d4c166fb2463c21c68d372b"
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/publication.json",
@@ -34,7 +34,7 @@
     },
     {
       "path": "figures/claim-provenance-panel.html",
-      "sha256": "630c6348717867f49575012ae767eaddb459bac55dc57ceff8cd9f929aa33bb6"
+      "sha256": "3db4db57fd0fda86c5c0b0884d208e4ee77a791c36ebe7066f38f7cbe1746edc"
     },
     {
       "path": "figures/claim-provenance-panel.json",
@@ -42,11 +42,11 @@
     },
     {
       "path": "figures/claim-provenance-panel.svg",
-      "sha256": "9bbc3aa4808e984748fadbcbc88d8aea640d299b7d2d5d7ef3a82c6ebb9e924e"
+      "sha256": "3584929d24ac67e3b1fc670236511946dc7908d0e4d4dc9a5491c8327a91590b"
     },
     {
       "path": "figures/control-boundary-flow.html",
-      "sha256": "71cb7311a264b4a7b9760c68dbc042598a636010da3ce996e7926895a6d72cf7"
+      "sha256": "e1cb5c8e79dcf6c86feb10f8c559592cd03ccbc16c3df55ff5ad2484b304c210"
     },
     {
       "path": "figures/control-boundary-flow.json",
@@ -58,7 +58,7 @@
     },
     {
       "path": "figures/incident-multilane-timeline.html",
-      "sha256": "aa3a11d6070ff044c69d39d64839c8eafebafeaef03df615899b29db47d03a66"
+      "sha256": "185e8383e8b77796b5ab8ec43a9a2ed4eddee40590b0e1d72024ea82f3ca0a1e"
     },
     {
       "path": "figures/incident-multilane-timeline.json",
@@ -66,11 +66,11 @@
     },
     {
       "path": "figures/incident-multilane-timeline.svg",
-      "sha256": "080bb823bb3c6ea541f49ba174cec7c81c366cfabbaef3d5d6cbb25bb3082600"
+      "sha256": "092ba0b30849451592877db0ab947844ee1b31820a749b01c4b1b8387f30ad69"
     },
     {
       "path": "figures/motive-sample-nonexclusive.html",
-      "sha256": "0c73f6ab060799beaa272570aee7b5cd8ca29985741d33ca6497595a3d9b8be1"
+      "sha256": "d7b35a866ea3fcc4adab80efabe4c4e7afac7568d18794d6193d819fa321113d"
     },
     {
       "path": "figures/motive-sample-nonexclusive.json",
@@ -78,11 +78,11 @@
     },
     {
       "path": "figures/motive-sample-nonexclusive.svg",
-      "sha256": "2746efe2e8726b89df9fc7465b549b2a81d505ef98e03f41461682d5ef1605b4"
+      "sha256": "a2e6f2087015bbf86e98e1c8698f87bec32ef8eaf6cd65317882e67709bab2ac"
     },
     {
       "path": "figures/recovered-actions-by-day.html",
-      "sha256": "8a9f7a8812153d99ae1de41d97684d0154759628bd6a69df665230124622b81c"
+      "sha256": "06f7d65544ba8798842b7cb72f43e5b2f549e9025292aa2b46d5810212553f98"
     },
     {
       "path": "figures/recovered-actions-by-day.json",
@@ -90,11 +90,11 @@
     },
     {
       "path": "figures/recovered-actions-by-day.svg",
-      "sha256": "bd95f4e7caf0f3ca4c4436694f7845e57843823f363efabb2da81f3caf855aa9"
+      "sha256": "597398519896ab71e3d8756727dc83f8894b80690b1a53c74472f82bae0755ba"
     },
     {
       "path": "figures/source-scope-matrix.html",
-      "sha256": "5539462e3f151a2cd40d17ede8b3a9de82d655f7a0bec72667d9e301fdecaa52"
+      "sha256": "0cf9e9d086dc57b1f9caa384f0c90613f0b3a5711fb86e89180cb5d21dfa5b83"
     },
     {
       "path": "figures/source-scope-matrix.json",
@@ -102,11 +102,11 @@
     },
     {
       "path": "figures/source-scope-matrix.svg",
-      "sha256": "69d0aa1a890ced737ff889ca4312740a53d6c2651f9c402c190e3e7f22284e33"
+      "sha256": "75bb2a51014814d92d147f9a4a920e22339076952db8f6cfd71463eb3e35221a"
     },
     {
       "path": "figures/task-overrepresentation.html",
-      "sha256": "3049d5d4d586ff27e9277e9136819efb1359e479b0a7989ed43d047995293a2e"
+      "sha256": "7fff6945189e31a10a61c68c3fd868c299b58a86ce053e09ebd7d2f498c7f7f8"
     },
     {
       "path": "figures/task-overrepresentation.json",
@@ -114,7 +114,7 @@
     },
     {
       "path": "figures/task-overrepresentation.svg",
-      "sha256": "a4d99123d34a3e13f5988736863c4d0f17c0647c41985bad7d9f6a0d91f684fc"
+      "sha256": "cf9d4402e76d711617d8b0bcc5e18314b80338ae81bed085a65f23cac62f605a"
     }
   ]
 }

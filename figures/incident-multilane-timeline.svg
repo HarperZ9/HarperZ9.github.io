@@ -1,4 +1,4 @@
-<svg role="img" width="2200" height="1238" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" aria-labelledby="incident-multilane-timeline-title incident-multilane-timeline-desc" data-figure-kind="timeline">
+<svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" aria-labelledby="incident-multilane-timeline-title incident-multilane-timeline-desc" data-figure-kind="timeline">
   <title id="incident-multilane-timeline-title">Incident, disclosure, review, legal process, and vendor response</title>
   <desc id="incident-multilane-timeline-desc">A source-labeled chronology separates OpenAI&apos;s company report, independent reconstruction, Hugging Face host telemetry, legal process, and vendor remediation from May 8 through the subpoena&apos;s September 14 response deadline. July 5 is an OpenAI-attributed alert and response event. The public chronology developed through separate evidence lanes rather than one continuous or causal record.</desc>
   <defs>

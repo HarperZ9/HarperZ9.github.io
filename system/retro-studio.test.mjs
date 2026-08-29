@@ -7,8 +7,8 @@ import { readFile } from "node:fs/promises";
 import { dirname, extname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const PUBLIC_ROOT = existsSync(resolve(ROOT, "retro.html")) ? ROOT : resolve(ROOT, "public");
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
+const PUBLIC_ROOT = resolve(ROOT, "public");
 const DEFAULT_CHROME_PARTS = ["C:", "Program Files", "Google", "Chrome", "Application", "chrome.exe"];
 const CHROME = process.env.CHROME_PATH || DEFAULT_CHROME_PARTS.join("\\");
 

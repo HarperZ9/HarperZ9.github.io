@@ -938,7 +938,7 @@ function boot() {
     const glsl = ($("re-code").value || "").trim();
     if (!glsl) { status("write a shader first", ""); return; }
     const url = location.origin + location.pathname + "#s=" + encodeShader(glsl);
-    history.replaceState(null, "", url);
+    window.history.replaceState(null, "", url);
     ping("preset");
     try { await navigator.clipboard.writeText(url); status("link copied to clipboard", "ok"); }
     catch (_) { status("link is in the address bar", "ok"); }
@@ -1044,7 +1044,7 @@ function boot() {
   $("re-share-patch").addEventListener("click", async () => {
     const enc = encodeShader(JSON.stringify(collectPatch()));
     const url = location.origin + location.pathname + "#p=" + enc;
-    history.replaceState(null, "", url);
+    window.history.replaceState(null, "", url);
     ping("preset");
     try { await navigator.clipboard.writeText(url); status("patch link copied", "ok"); }
     catch (_) { status("patch link is in the address bar", "ok"); }

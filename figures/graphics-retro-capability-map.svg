@@ -1,74 +1,107 @@
-<svg role="img" xmlns="http://www.w3.org/2000/svg" width="960" height="720" viewBox="0 0 960 720" aria-labelledby="graphics-retro-capability-map-title graphics-retro-capability-map-desc" data-figure-kind="relationship">
-  <title id="graphics-retro-capability-map-title">Graphics, rendering, retro, and preservation systems</title>
-  <desc id="graphics-retro-capability-map-desc">Ten independently described systems. Solid and dashed connections appear only where current code, build configuration, or declared data contracts verify a relationship. The map distinguishes product type from verified dependency, optional integration, and evidence-import relationships.</desc>
-  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9Z" fill="#8ee3f2"/></marker></defs>
-  <style>text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#eaf5f6}.mono{font-family:"Conso","JetBrains Mono",ui-monospace,monospace}.muted{fill:#c8dcdf}[data-figure-point]:focus-visible .focus-ring{stroke:#f2efe6;stroke-width:4}</style>
-  <rect width="960" height="720" fill="#070b0d"/>
-  <path data-relationship-edge="true" data-edge-type="dependency" d="M710 518 C710 538 250 538 250 558" fill="none" stroke="#8ee3f2" stroke-width="3" stroke-dasharray="none" marker-end="url(#arrow)" opacity=".78"><title>Truth ENB to ENB Runtime Core: native runtime build dependency</title></path>
-<path data-relationship-edge="true" data-edge-type="optional-integration" d="M710 518 C710 538 710 538 710 558" fill="none" stroke="#8ee3f2" stroke-width="3" stroke-dasharray="5 7" marker-end="url(#arrow)" opacity=".78"><title>Truth ENB to SkyrimBridge: optional runtime integration</title></path>
-<path data-relationship-edge="true" data-edge-type="optional-integration" d="M250 518 C250 538 250 538 250 558" fill="none" stroke="#8ee3f2" stroke-width="3" stroke-dasharray="5 7" marker-end="url(#arrow)" opacity=".78"><title>Elder ENB to ENB Runtime Core: optional native runtime dependency</title></path>
-<path data-relationship-edge="true" data-edge-type="optional-integration" d="M250 518 C250 538 710 538 710 558" fill="none" stroke="#8ee3f2" stroke-width="3" stroke-dasharray="5 7" marker-end="url(#arrow)" opacity=".78"><title>Elder ENB to SkyrimBridge: optional runtime integration</title></path>
-<path data-relationship-edge="true" data-edge-type="evidence-import" d="M250 396 C250 355 710 355 710 314" fill="none" stroke="#8ee3f2" stroke-width="3" stroke-dasharray="12 7" marker-end="url(#arrow)" opacity=".78"><title>Engine Revival to BRender Archival: accepts public release evidence from</title></path>
-<path data-relationship-edge="true" data-edge-type="optional-integration" d="M710 152 C710 172 710 172 710 192" fill="none" stroke="#8ee3f2" stroke-width="3" stroke-dasharray="5 7" marker-end="url(#arrow)" opacity=".78"><title>Studio Engine to RAW: optional native CLI bridge</title></path>
-  <g data-figure-point="true" data-figure-key="retro-engine" role="graphics-symbol" aria-label="Retro Engine. browser graphics and sound studio." tabindex="-1">
-    <rect class="focus-ring" x="37" y="67" width="426" height="96" fill="none" stroke="transparent"/>
-    <rect x="40" y="70" width="420" height="90" rx="8" fill="#111b20" stroke="#8ee3f2" stroke-width="2"/>
-    <text x="58" y="99" font-size="18" font-weight="700">Retro Engine</text>
-    <text x="58" y="126" class="mono muted" font-size="16">browser graphics and sound studio</text>
-  </g>
-<g data-figure-point="true" data-figure-key="studio-engine" role="graphics-symbol" aria-label="Studio Engine. procedural audiovisual engine." tabindex="-1">
-    <rect class="focus-ring" x="497" y="67" width="426" height="96" fill="none" stroke="transparent"/>
-    <rect x="500" y="70" width="420" height="90" rx="8" fill="#111b20" stroke="#8ee3f2" stroke-width="2"/>
-    <text x="518" y="99" font-size="18" font-weight="700">Studio Engine</text>
-    <text x="518" y="126" class="mono muted" font-size="16">procedural audiovisual engine</text>
-  </g>
-<g data-figure-point="true" data-figure-key="build-color" role="graphics-symbol" aria-label="Build Color. color-science library and workbench." tabindex="-1">
-    <rect class="focus-ring" x="37" y="189" width="426" height="96" fill="none" stroke="transparent"/>
-    <rect x="40" y="192" width="420" height="90" rx="8" fill="#111b20" stroke="#8ee3f2" stroke-width="2"/>
-    <text x="58" y="221" font-size="18" font-weight="700">Build Color</text>
-    <text x="58" y="248" class="mono muted" font-size="16">color-science library and workbench</text>
-  </g>
-<g data-figure-point="true" data-figure-key="raw" role="graphics-symbol" aria-label="RAW. Skyrim D3D11 rendering platform." tabindex="-1">
-    <rect class="focus-ring" x="497" y="189" width="426" height="96" fill="none" stroke="transparent"/>
-    <rect x="500" y="192" width="420" height="90" rx="8" fill="#111b20" stroke="#8ee3f2" stroke-width="2"/>
-    <text x="518" y="221" font-size="18" font-weight="700">RAW</text>
-    <text x="518" y="248" class="mono muted" font-size="16">Skyrim D3D11 rendering platform</text>
-  </g>
-<g data-figure-point="true" data-figure-key="engine-revival" role="graphics-symbol" aria-label="Engine Revival. software-preservation tooling." tabindex="-1">
-    <rect class="focus-ring" x="37" y="311" width="426" height="96" fill="none" stroke="transparent"/>
-    <rect x="40" y="314" width="420" height="90" rx="8" fill="#111b20" stroke="#8ee3f2" stroke-width="2"/>
-    <text x="58" y="343" font-size="18" font-weight="700">Engine Revival</text>
-    <text x="58" y="370" class="mono muted" font-size="16">software-preservation tooling</text>
-  </g>
-<g data-figure-point="true" data-figure-key="brender-archival" role="graphics-symbol" aria-label="BRender Archival. focused engine-restoration lab." tabindex="-1">
-    <rect class="focus-ring" x="497" y="311" width="426" height="96" fill="none" stroke="transparent"/>
-    <rect x="500" y="314" width="420" height="90" rx="8" fill="#111b20" stroke="#8ee3f2" stroke-width="2"/>
-    <text x="518" y="343" font-size="18" font-weight="700">BRender Archival</text>
-    <text x="518" y="370" class="mono muted" font-size="16">focused engine-restoration lab</text>
-  </g>
-<g data-figure-point="true" data-figure-key="elder-enb" role="graphics-symbol" aria-label="Elder ENB. ENB shader suite." tabindex="-1">
-    <rect class="focus-ring" x="37" y="433" width="426" height="96" fill="none" stroke="transparent"/>
-    <rect x="40" y="436" width="420" height="90" rx="8" fill="#111b20" stroke="#8ee3f2" stroke-width="2"/>
-    <text x="58" y="465" font-size="18" font-weight="700">Elder ENB</text>
-    <text x="58" y="492" class="mono muted" font-size="16">ENB shader suite</text>
-  </g>
-<g data-figure-point="true" data-figure-key="truth-enb" role="graphics-symbol" aria-label="Truth ENB. ENB shader suite." tabindex="-1">
-    <rect class="focus-ring" x="497" y="433" width="426" height="96" fill="none" stroke="transparent"/>
-    <rect x="500" y="436" width="420" height="90" rx="8" fill="#111b20" stroke="#8ee3f2" stroke-width="2"/>
-    <text x="518" y="465" font-size="18" font-weight="700">Truth ENB</text>
-    <text x="518" y="492" class="mono muted" font-size="16">ENB shader suite</text>
-  </g>
-<g data-figure-point="true" data-figure-key="enb-runtime-core" role="graphics-symbol" aria-label="ENB Runtime Core. ENB host lifecycle library." tabindex="-1">
-    <rect class="focus-ring" x="37" y="555" width="426" height="96" fill="none" stroke="transparent"/>
-    <rect x="40" y="558" width="420" height="90" rx="8" fill="#111b20" stroke="#8ee3f2" stroke-width="2"/>
-    <text x="58" y="587" font-size="18" font-weight="700">ENB Runtime Core</text>
-    <text x="58" y="614" class="mono muted" font-size="16">ENB host lifecycle library</text>
-  </g>
-<g data-figure-point="true" data-figure-key="skyrimbridge" role="graphics-symbol" aria-label="SkyrimBridge. Skyrim runtime integration platform." tabindex="-1">
-    <rect class="focus-ring" x="497" y="555" width="426" height="96" fill="none" stroke="transparent"/>
-    <rect x="500" y="558" width="420" height="90" rx="8" fill="#111b20" stroke="#8ee3f2" stroke-width="2"/>
-    <text x="518" y="587" font-size="18" font-weight="700">SkyrimBridge</text>
-    <text x="518" y="614" class="mono muted" font-size="16">Skyrim runtime integration platform</text>
-  </g>
-  <text x="40" y="694" class="mono muted" font-size="16">Solid: dependency · long dash: evidence import · short dash: optional integration</text>
+<svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" aria-labelledby="graphics-retro-capability-map-title graphics-retro-capability-map-desc" data-figure-kind="relationship">
+  <title id="graphics-retro-capability-map-title">Graphics and retro capability family</title>
+  <desc id="graphics-retro-capability-map-desc">Public graphics and retro systems shown with Flywheel as the platform context. The map shows public graphics-retro family membership and each system&apos;s declared architecture role.</desc>
+  <defs>
+    <pattern id="graphics-retro-capability-map-verified-pattern" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#13262b"/><path d="M0 8L8 0" stroke="#54c9d1" stroke-width="2"/></pattern>
+    <pattern id="graphics-retro-capability-map-caution-pattern" width="10" height="10" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="#291b18"/><path d="M-2 10L10-2M4 12L12 4" stroke="#d47a5a" stroke-width="2"/></pattern>
+    <pattern id="graphics-retro-capability-map-unavailable-pattern" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#17252c"/><circle cx="2" cy="2" r="1.2" fill="#9eb8bf"/></pattern>
+    <marker id="graphics-retro-capability-map-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 0L8 4L0 8Z" fill="#9eb8bf"/></marker>
+  </defs>
+  <style>
+    text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#f2f8f8}
+    .mono{font-family:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace}
+    .muted{fill:#b9cbd0}.hairline{stroke:#36505a;stroke-width:1}.value{font-variant-numeric:tabular-nums}
+    [data-figure-point]:focus{outline:none}[data-figure-point]:focus-visible .focus-ring{stroke:#54c9d1;stroke-width:4;fill:none}
+  </style>
+  <rect width="960" height="540" fill="#0b1115"/>
+  <path data-relationship-edge="true" data-edge-type="related" d="M166.50 178.00 C166.50 233.00 479.50 233.00 479.50 288.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M166.50 178.00 C166.50 288.00 166.50 288.00 166.50 398.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M479.50 178.00 C479.50 288.00 166.50 288.00 166.50 398.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M479.50 178.00 C479.50 288.00 792.50 288.00 792.50 398.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M792.50 178.00 C792.50 233.00 166.50 233.00 166.50 288.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M792.50 178.00 C792.50 288.00 479.50 288.00 479.50 398.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M792.50 178.00 C792.50 343.00 166.50 343.00 166.50 508.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M166.50 288.00 C166.50 343.00 479.50 343.00 479.50 398.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M166.50 288.00 C166.50 398.00 166.50 398.00 166.50 508.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M479.50 288.00 C479.50 343.00 166.50 343.00 166.50 398.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 117.00 166.50 117.00 166.50 178.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 117.00 479.50 117.00 479.50 178.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 117.00 792.50 117.00 792.50 178.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 172.00 166.50 172.00 166.50 288.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 172.00 479.50 172.00 479.50 288.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 172.00 792.50 172.00 792.50 288.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 227.00 166.50 227.00 166.50 398.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 227.00 479.50 227.00 479.50 398.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 227.00 792.50 227.00 792.50 398.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="hierarchy" d="M480.00 56.00 C480.00 282.00 166.50 282.00 166.50 508.00" fill="none" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.82" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M792.50 288.00 C792.50 343.00 479.50 343.00 479.50 398.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M792.50 288.00 C792.50 343.00 792.50 343.00 792.50 398.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M166.50 398.00 C166.50 398.00 792.50 398.00 792.50 398.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="related" d="M479.50 398.00 C479.50 453.00 166.50 453.00 166.50 508.00" fill="none" stroke="#9eb8bf" stroke-width="2" stroke-dasharray="3 5" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.48" aria-hidden="true"/>
+<path data-relationship-edge="true" data-edge-type="dependency" d="M166.50 508.00 C166.50 398.00 166.50 398.00 166.50 288.00" fill="none" stroke="#d47a5a" stroke-width="2.5" stroke-dasharray="10 5" marker-end="url(#graphics-retro-capability-map-arrow)" opacity="0.68" aria-hidden="true"/><g data-figure-point="true" data-figure-key="brender-archival" data-status-label="BRender restoration harness" role="graphics-symbol" aria-label="BRender Archival. BRender restoration harness." tabindex="-1">
+      <rect class="focus-ring" x="17" y="143" width="299" height="70" stroke="transparent"/>
+      <rect x="20" y="146" width="293" height="64" fill="url(#graphics-retro-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="32" y="170" font-size="16">BRender Archival</text>
+      <text data-node-label="true" x="32" y="196" class="mono muted" font-size="16">BRender restoration harness</text>
+    </g>
+<g data-figure-point="true" data-figure-key="build-color" data-status-label="color science workbench" role="graphics-symbol" aria-label="Build Color. color science workbench." tabindex="-1">
+      <rect class="focus-ring" x="330" y="143" width="299" height="70" stroke="transparent"/>
+      <rect x="333" y="146" width="293" height="64" fill="url(#graphics-retro-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="345" y="170" font-size="16">Build Color</text>
+      <text data-node-label="true" x="345" y="196" class="mono muted" font-size="16">color science workbench</text>
+    </g>
+<g data-figure-point="true" data-figure-key="elder-enb" data-status-label="ENB shader suite" role="graphics-symbol" aria-label="Elder ENB. ENB shader suite." tabindex="-1">
+      <rect class="focus-ring" x="643" y="143" width="299" height="70" stroke="transparent"/>
+      <rect x="646" y="146" width="293" height="64" fill="url(#graphics-retro-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="658" y="170" font-size="16">Elder ENB</text>
+      <text data-node-label="true" x="658" y="196" class="mono muted" font-size="16">ENB shader suite</text>
+    </g>
+<g data-figure-point="true" data-figure-key="enb-runtime-core" data-status-label="embedded runtime library" role="graphics-symbol" aria-label="ENB Runtime Core. embedded runtime library." tabindex="-1">
+      <rect class="focus-ring" x="17" y="253" width="299" height="70" stroke="transparent"/>
+      <rect x="20" y="256" width="293" height="64" fill="url(#graphics-retro-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="32" y="280" font-size="16">ENB Runtime Core</text>
+      <text data-node-label="true" x="32" y="306" class="mono muted" font-size="16">embedded runtime library</text>
+    </g>
+<g data-figure-point="true" data-figure-key="engine-revival" data-status-label="archival and revival evidence platform" role="graphics-symbol" aria-label="Engine Revival. archival and revival evidence platform." tabindex="-1">
+      <rect class="focus-ring" x="330" y="253" width="299" height="70" stroke="transparent"/>
+      <rect x="333" y="256" width="293" height="64" fill="url(#graphics-retro-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="345" y="280" font-size="16">Engine Revival</text>
+      <text data-node-label="true" x="345" y="306" class="mono muted" font-size="16">archival and revival evidence …</text>
+    </g>
+<g data-figure-point="true" data-figure-key="flywheel" data-status-label="Platform context" role="graphics-symbol" aria-label="Flywheel. Platform context." tabindex="-1">
+      <rect class="focus-ring" x="347" y="21" width="266" height="70" stroke="transparent"/>
+      <rect x="350" y="24" width="260" height="64" fill="url(#graphics-retro-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="3" stroke-dasharray="none"/>
+      <text data-node-label="true" x="362" y="48" font-size="16">Flywheel</text>
+      <text data-node-label="true" x="362" y="74" class="mono muted" font-size="16">Platform context</text>
+    </g>
+<g data-figure-point="true" data-figure-key="raw" data-status-label="Skyrim D3D11 rendering platform" role="graphics-symbol" aria-label="RAW. Skyrim D3D11 rendering platform." tabindex="-1">
+      <rect class="focus-ring" x="643" y="253" width="299" height="70" stroke="transparent"/>
+      <rect x="646" y="256" width="293" height="64" fill="url(#graphics-retro-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="658" y="280" font-size="16">RAW</text>
+      <text data-node-label="true" x="658" y="306" class="mono muted" font-size="16">Skyrim D3D11 rendering platform</text>
+    </g>
+<g data-figure-point="true" data-figure-key="retro-engine" data-status-label="embedded browser studio" role="graphics-symbol" aria-label="Retro Engine. embedded browser studio." tabindex="-1">
+      <rect class="focus-ring" x="17" y="363" width="299" height="70" stroke="transparent"/>
+      <rect x="20" y="366" width="293" height="64" fill="url(#graphics-retro-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="32" y="390" font-size="16">Retro Engine</text>
+      <text data-node-label="true" x="32" y="416" class="mono muted" font-size="16">embedded browser studio</text>
+    </g>
+<g data-figure-point="true" data-figure-key="skyrimbridge" data-status-label="SKSE state, record, asset, and ABI system" role="graphics-symbol" aria-label="SkyrimBridge. SKSE state, record, asset, and ABI system." tabindex="-1">
+      <rect class="focus-ring" x="330" y="363" width="299" height="70" stroke="transparent"/>
+      <rect x="333" y="366" width="293" height="64" fill="url(#graphics-retro-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="345" y="390" font-size="16">SkyrimBridge</text>
+      <text data-node-label="true" x="345" y="416" class="mono muted" font-size="16">SKSE state, record, asset, and…</text>
+    </g>
+<g data-figure-point="true" data-figure-key="studio-engine" data-status-label="creative simulation and render engine" role="graphics-symbol" aria-label="Studio Engine. creative simulation and render engine." tabindex="-1">
+      <rect class="focus-ring" x="643" y="363" width="299" height="70" stroke="transparent"/>
+      <rect x="646" y="366" width="293" height="64" fill="url(#graphics-retro-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="658" y="390" font-size="16">Studio Engine</text>
+      <text data-node-label="true" x="658" y="416" class="mono muted" font-size="16">creative simulation and render…</text>
+    </g>
+<g data-figure-point="true" data-figure-key="truth-enb" data-status-label="ENB shader suite" role="graphics-symbol" aria-label="Truth ENB. ENB shader suite." tabindex="-1">
+      <rect class="focus-ring" x="17" y="473" width="299" height="70" stroke="transparent"/>
+      <rect x="20" y="476" width="293" height="64" fill="url(#graphics-retro-capability-map-verified-pattern)" stroke="#54c9d1" stroke-width="2" stroke-dasharray="none"/>
+      <text data-node-label="true" x="32" y="500" font-size="16">Truth ENB</text>
+      <text data-node-label="true" x="32" y="526" class="mono muted" font-size="16">ENB shader suite</text>
+    </g><text x="24" y="526" class="mono muted" font-size="16">Solid: taxonomy · long dash: dependency · short dash: related</text>
 </svg>

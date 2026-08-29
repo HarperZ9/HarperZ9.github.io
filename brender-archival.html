@@ -5,25 +5,24 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BRender Archival · Retro Systems Lab</title>
-<meta name="description" content="BRender Archival is the verified BRender restoration route in Zentropy Labs' retro and preservation work.">
+<meta name="description" content="BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the source, provenance, and verification record for release.">
 <link rel="canonical" href="https://harperz9.github.io/brender-archival.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="BRender Archival · Retro Systems Lab">
-<meta property="og:description" content="BRender Archival v0.1.1 records specific BRender release evidence. Generic Retro Engine output is not BRender evidence.">
+<meta property="og:description" content="BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the source, provenance, and verification record for release.">
 <meta property="og:url" content="https://harperz9.github.io/brender-archival.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/brender-archival.png">
 <meta property="og:image:alt" content="BRender Archival social card for the Retro Systems Lab verify pillar.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="BRender Archival · Retro Systems Lab">
-<meta name="twitter:description" content="Verified BRender v0.1.1 release evidence with AGPL repo boundary and upstream BRender MIT provenance.">
+<meta name="twitter:description" content="BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the source, provenance, and verification record for release.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/brender-archival.png">
 <meta name="twitter:image:alt" content="BRender Archival social card for the Retro Systems Lab verify pillar.">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#14041b">
-<link rel="stylesheet" href="system/system.css?v=20260828-site-design">
-<link rel="stylesheet" href="system/retro-systems-lab.css?v=20260828-site-design">
-<link rel="stylesheet" href="system/retro-evidence-pages.css?v=20260828-site-design">
+<link rel="stylesheet" href="system/system.css?v=20260719-zentropy-sitewide">
+<link rel="stylesheet" href="system/retro-systems-lab.css?v=20260829-product-copy">
 <style>
 /* Inline accessibility contract for checked source: 320px, 400%, prefers-reduced-motion, @media print. */
 @media (max-width: 320px) { .zoom-note { overflow-wrap: anywhere; } }
@@ -31,62 +30,46 @@
 @media print { .print-note { display: block; } }
 </style>
 </head>
-<body class="inner-clean frame-compact retro-lab-page retro-evidence-page">
+<body class="inner-clean frame-compact retro-lab-page">
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
+<script type="module" src="system/nav.js?v=20260828-site-design"></script>
+<nav class="retro-lab-nav retro-lab-shell" aria-label="Retro Systems Lab">
+  <a href="flywheel.html">Flywheel</a>
+  <a href="retro.html">Retro Engine</a>
+  <a href="engine-revival.html">Engine Revival</a>
+  <a href="brender-archival.html" aria-current="page">BRender Archival</a>
+  <a href="elder-enb.html">Elder ENB</a>
+  <a href="truth-enb.html">Truth ENB</a>
+  <a href="enb-runtime-core.html">ENB Runtime Core</a>
+  <a href="skyrimbridge.html">SkyrimBridge</a>
+  <a href="studio.html">Studio</a>
+</nav>
 <noscript>
-  <nav class="site-nav" aria-label="Primary">
-    <a href="index.html">Zentropy Labs</a>
-    <a href="hire.html">Hire / work</a>
-    <a href="overview.html">Systems</a>
-    <a href="research.html">Research</a>
-    <a href="retro.html">Retro Engine</a>
-    <a href="brender-archival.html" aria-current="page">BRender Archival</a>
-  </nav>
   <p class="retro-lab-shell">This evidence page is static; the full page and navigation remain available without JavaScript.</p>
 </noscript>
-<script type="module" src="system/nav.js?v=20260828-site-design"></script>
 
 <header class="retro-lab-hero retro-lab-shell">
   <div>
+    <p class="retro-lab-kicker">Retro Systems Lab · verify</p>
     <h1>BRender Archival.</h1>
-    <p class="retro-lab-lede">Rebuild and document Argonaut BRender from its public MIT source with an out-of-tree CMake harness, a 21-rung native verification ladder, reproducible render captures, provenance records, and public-safe release packaging.</p>
-    <p class="retro-lab-lede">BRender Archival v0.1.1 is public at <a href="https://github.com/HarperZ9/brender-archival/releases/tag/v0.1.1" rel="noopener">release v0.1.1</a>, with main pinned to <span class="retro-lab-hash" translate="no">11b5a8d539e911a9c07991b751402a7d51bf1bde</span>. The repository is AGPL-3.0-or-later; upstream BRender MIT source is referenced, not vendored.</p>
+    <p class="retro-lab-lede" data-canonical-purpose="brender-archival">BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the source, provenance, and verification record for release.</p>
+    <dl class="retro-lab-facts" aria-label="Current release facts">
+      <div><dt>Release</dt><dd><a href="https://github.com/HarperZ9/brender-archival/releases/tag/v0.1.1" rel="noopener">v0.1.1</a></dd></div>
+      <div><dt>Source revision</dt><dd><span class="retro-lab-hash" translate="no">11b5a8d539e911a9c07991b751402a7d51bf1bde</span></dd></div>
+      <div><dt>Repository license</dt><dd>AGPL-3.0-or-later</dd></div>
+      <div><dt>Upstream</dt><dd>BRender MIT source, referenced rather than vendored</dd></div>
+    </dl>
     <div class="retro-lab-actions" aria-label="Primary routes">
-      <a href="https://github.com/HarperZ9/brender-archival" rel="noopener">Inspect BRender Archival source</a>
-      <a href="engine-revival.html">Open Engine Revival</a>
-      <a href="retro.html">Open Retro Engine</a>
+      <a href="https://github.com/HarperZ9/brender-archival" rel="noopener">BRender source</a>
+      <a href="https://github.com/HarperZ9/brender-archival/releases/tag/v0.1.1" rel="noopener">Release</a>
+      <a href="engine-revival.html">Engine Revival record</a>
       <a href="media/retro-systems-lab/evidence-manifest.json">Evidence manifest</a>
     </div>
   </div>
 </header>
 
 <main id="main">
-  <section class="retro-lab-section retro-lab-shell" aria-labelledby="cluster-h">
-    <h2 id="cluster-h">Related retro and preservation work.</h2>
-    <div class="retro-lab-grid">
-      <article class="retro-lab-card">
-        <span class="retro-lab-pill">Browser studio</span>
-        <h3><a href="retro.html">Retro Engine</a></h3>
-        <p>Interactive browser studio for owned media experiments. It can produce companion visuals, not BRender evidence.</p>
-      </article>
-      <article class="retro-lab-card">
-        <span class="retro-lab-pill">Preservation tooling</span>
-        <h3><a href="engine-revival.html">Engine Revival</a></h3>
-        <p>Public MIT preservation spine that records imported AGPL-covered BRender media and receipts.</p>
-      </article>
-      <article class="retro-lab-card">
-        <span class="retro-lab-pill">Restoration lab</span>
-        <h3><a href="brender-archival.html">BRender Archival</a></h3>
-        <p>Specific BRender restoration evidence route. It does not inherit proof from generic retro visuals.</p>
-      </article>
-    </div>
-    <figure class="retro-lab-figure">
-      <img src="https://raw.githubusercontent.com/HarperZ9/brender-archival/11b5a8d539e911a9c07991b751402a7d51bf1bde/gallery/10-teapot-plotter.png" width="960" height="720" alt="BRender Archival output showing a rendered teapot produced by the restored plotter path.">
-      <figcaption>Actual render output from the pinned v0.1.1 BRender Archival commit. It demonstrates this captured path, not restoration completeness, correctness across every renderer, or performance.</figcaption>
-    </figure>
-  </section>
-
   <section class="retro-lab-section retro-lab-shell" aria-labelledby="boundary-h">
     <h2 id="boundary-h">Evidence boundary.</h2>
     <div class="retro-lab-proof">
@@ -96,27 +79,15 @@
     </div>
     <div class="retro-lab-proof">
       <h3>Companion renderer boundary</h3>
-      <p>Retro Engine is a companion renderer, not BRender proof. generic Retro Engine output is not BRender evidence. Engine Revival can preserve release state, but the verify claim remains owned by BRender-specific receipts.</p>
+      <p>Only BRender-specific source, build, test, and render records support the restoration claims on this page. Retro Engine is a companion renderer, not BRender evidence; Engine Revival can import the resulting release record.</p>
     </div>
   </section>
 
   <section class="retro-lab-section retro-lab-shell" aria-labelledby="companions-h">
-    <h2 id="companions-h">Related projects.</h2>
-    <p class="retro-lab-lede">These links connect adjacent graphics, preservation, and rendering projects while keeping each project's implementation and evidence separate.</p>
+    <h2 id="companions-h">Related products.</h2>
     <div class="retro-lab-links">
-      <a href="flywheel.html">Flywheel</a>
       <a href="retro.html">Retro Engine</a>
       <a href="engine-revival.html">Engine Revival</a>
-      <a href="elder-enb.html">Elder ENB</a>
-      <a href="truth-enb.html">Truth ENB</a>
-      <a href="enb-runtime-core.html">ENB Runtime Core</a>
-      <a href="skyrimbridge.html">SkyrimBridge</a>
-      <a href="raw.html">RAW</a>
-      <a href="systems/studio-engine.html">Studio Engine</a>
-      <a href="buildlang.html">BuildLang</a>
-      <a href="build-color.html">Build Color</a>
-      <a href="gather.html">Gather</a>
-      <a href="index-graph.html">Index</a>
       <a href="catalog.html">System catalog</a>
     </div>
     <p class="zoom-note">Responsive contract: this page is static without JavaScript, keeps readable flow at 320px and 390px widths, and must remain usable at 400% zoom with print, forced-colors, text-spacing, focus, and reduced-motion modes.</p>

@@ -1,13 +1,13 @@
 {
   "renderer": "telos-figure/v1",
-  "viewBox": "0 0 1200 938",
+  "viewBox": "0 0 960 540",
   "figure": {
     "id": "security-capability-map",
     "kind": "relationship",
-    "title": "Security and privacy systems",
-    "description": "Distinct public and private-practice systems whose registry record includes security and privacy work. Product type remains visible so unlike tools are not collapsed into one category.",
-    "claim": "The current registry asserts no verified typed implementation relationship whose endpoints both appear in this domain view.",
-    "doesNotProve": "Domain placement does not establish authorization for a use, operational safety, shared implementation, equal maturity, product ownership, deployment fitness, or independent review.",
+    "title": "Security capability family",
+    "description": "Public security systems shown with Flywheel as the platform context.",
+    "claim": "The map shows public security-family membership and each system's declared architecture role.",
+    "doesNotProve": "The map does not establish operational effectiveness, deployment, authorization for use, or independent review.",
     "sources": [
       {
         "label": "Canonical public system registry",
@@ -15,13 +15,13 @@
       }
     ],
     "retrievedAt": "2026-08-28",
-    "units": "registry systems and verified typed relationship records",
+    "units": "declared relationships",
     "transformations": [
-      "Systems are included when security-privacy appears in their registry domains.",
-      "Only verified typed relations whose source and target are both in this view can be drawn.",
-      "No line is drawn from related navigation lists or shared domain membership."
+      "Controlled-private records, evidence receipts, and reciprocal duplicate relationships are omitted.",
+      "Flywheel is added once as platform context.",
+      "Public security-family records are sorted by stable identifier."
     ],
-    "uncertainty": "An absent line means no typed relationship is recorded in the current public registry, not that integration is impossible or absent in private work.",
+    "uncertainty": "Architecture roles describe placement in the public taxonomy, not runtime coupling.",
     "data": {
       "type": "relationship",
       "nodes": [
@@ -30,7 +30,7 @@
           "label": "Accountable Surface",
           "status": "verified",
           "stateLabel": "controlled agent-action workbench",
-          "group": "Security and privacy",
+          "group": "Security",
           "nodeType": "system"
         },
         {
@@ -38,139 +38,179 @@
           "label": "Agent Hook Pack",
           "status": "verified",
           "stateLabel": "repository hook toolkit",
-          "group": "Developer infrastructure",
-          "nodeType": "system"
-        },
-        {
-          "id": "array",
-          "label": "Array",
-          "status": "verified",
-          "stateLabel": "authorized offensive campaign orchestrator",
-          "group": "Security and privacy",
+          "group": "Security",
           "nodeType": "system"
         },
         {
           "id": "behavior-transform",
           "label": "behavior-transform.io",
           "status": "verified",
-          "stateLabel": "I/O boundary and receipt library",
-          "group": "Security and privacy",
+          "stateLabel": "I/O boundary and receipt layer",
+          "group": "Security",
           "nodeType": "system"
         },
         {
-          "id": "bounds",
-          "label": "Bounds",
+          "id": "flywheel",
+          "label": "Flywheel",
           "status": "verified",
-          "stateLabel": "agent, runtime, and release trust verifier",
-          "group": "Evaluation and verification",
-          "nodeType": "system"
-        },
-        {
-          "id": "emet",
-          "label": "EMET",
-          "status": "verified",
-          "stateLabel": "cross-implementation integrity witness",
-          "group": "Evaluation and verification",
-          "nodeType": "system"
-        },
-        {
-          "id": "gate",
-          "label": "Gate",
-          "status": "verified",
-          "stateLabel": "private-system integration and release authority",
-          "group": "Developer infrastructure",
-          "nodeType": "system"
-        },
-        {
-          "id": "isomorph",
-          "label": "Isomorph",
-          "status": "verified",
-          "stateLabel": "AI inference-boundary red-team harness",
-          "group": "Evaluation and verification",
-          "nodeType": "system"
-        },
-        {
-          "id": "kun",
-          "label": "Kun",
-          "status": "verified",
-          "stateLabel": "local access-recovery vault",
-          "group": "Security and privacy",
-          "nodeType": "system"
-        },
-        {
-          "id": "model-provenance-validator",
-          "label": "Model Provenance Validator",
-          "status": "verified",
-          "stateLabel": "model provenance-envelope validator",
-          "group": "Evaluation and verification",
-          "nodeType": "system"
-        },
-        {
-          "id": "orca",
-          "label": "ORCA",
-          "status": "verified",
-          "stateLabel": "native assessment operator runtime",
-          "group": "Security and privacy",
+          "stateLabel": "Platform context",
+          "group": "Platform",
           "nodeType": "system"
         },
         {
           "id": "phantom",
           "label": "Phantom",
           "status": "verified",
-          "stateLabel": "hardware-identity privacy system",
-          "group": "Security and privacy",
+          "stateLabel": "reversible device identity system",
+          "group": "Security",
           "nodeType": "system"
         },
         {
           "id": "proof-surface",
           "label": "Proof Surface",
           "status": "verified",
-          "stateLabel": "authorization and proof-packet library",
-          "group": "Security and privacy",
+          "stateLabel": "authorization and proof contract layer",
+          "group": "Security",
           "nodeType": "system"
         },
         {
           "id": "public-surface-sweeper",
           "label": "Public Surface Sweeper",
           "status": "verified",
-          "stateLabel": "public release-surface auditor",
-          "group": "Security and privacy",
-          "nodeType": "system"
-        },
-        {
-          "id": "repo-proof-index",
-          "label": "Repo Proof Index",
-          "status": "verified",
-          "stateLabel": "evidence index and reviewer handoff",
-          "group": "Evaluation and verification",
+          "stateLabel": "release surface auditor",
+          "group": "Security",
           "nodeType": "system"
         },
         {
           "id": "secret-redact-io",
           "label": "Secret Redact IO",
           "status": "verified",
-          "stateLabel": "secret-aware I/O helper library",
-          "group": "Security and privacy",
-          "nodeType": "system"
-        },
-        {
-          "id": "seed",
-          "label": "Seed",
-          "status": "verified",
-          "stateLabel": "native security-assessment engine",
-          "group": "Security and privacy",
-          "nodeType": "system"
-        },
-        {
-          "id": "sofer",
-          "label": "Sofer",
-          "status": "verified",
-          "stateLabel": "private-line orchestration suite",
-          "group": "Agent systems",
+          "stateLabel": "guarded I/O library",
+          "group": "Security",
           "nodeType": "system"
         }
       ],
-      "edges": []
+      "edges": [
+        {
+          "source": "accountable-surface",
+          "target": "behavior-transform",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "accountable-surface",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "accountable-surface",
+          "target": "phantom",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "accountable-surface",
+          "target": "proof-surface",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "agent-hook-pack",
+          "target": "public-surface-sweeper",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "agent-hook-pack",
+          "target": "secret-redact-io",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "behavior-transform",
+          "target": "flywheel",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "behavior-transform",
+          "target": "phantom",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "accountable-surface",
+          "label": "controlled agent-action workbench",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "agent-hook-pack",
+          "label": "repository hook toolkit",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "behavior-transform",
+          "label": "I/O boundary and receipt layer",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "phantom",
+          "label": "reversible device identity system",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "proof-surface",
+          "label": "authorization and proof contract layer",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "proof-surface",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        },
+        {
+          "source": "flywheel",
+          "target": "public-surface-sweeper",
+          "label": "release surface auditor",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "flywheel",
+          "target": "secret-redact-io",
+          "label": "guarded I/O library",
+          "status": "verified",
+          "type": "hierarchy"
+        },
+        {
+          "source": "public-surface-sweeper",
+          "target": "secret-redact-io",
+          "label": "related",
+          "status": "unavailable",
+          "type": "related"
+        }
+      ]
     }
   }
 }
