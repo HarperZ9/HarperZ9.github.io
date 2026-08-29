@@ -1,124 +1,62 @@
 import { useEffect } from "react";
-import systemsRegistryRaw from "../../system/systems.json";
-import feedRaw from "../../feed.json";
-import retroManifestRaw from "../../media/retro-systems-lab/evidence-manifest.json";
+import GroundField from "./GroundField";
+import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./site-routes";
+import { CAPABILITY_DOMAINS, EVIDENCE_STREAM, SYSTEMS, systemById, type SystemRecord } from "./system-registry";
+import evidenceProjectionSource from "../site/evidence-stream.json?raw";
 import "./App.css";
 
-type EvidenceRecord = {
+type PublishedBriefing = {
   id: string;
-  type: string;
-  label: string;
+  title: string;
   href: string;
-  date: string;
-  status: string;
-  summary: string;
-};
-
-type SystemRecord = {
-  id: string;
-  name: string;
-  purpose: string;
-  href: string;
-  sourceHref: string | null;
-  domains: string[];
-  primaryDomain: string;
-  productType: string;
-  architectureRole: string;
-  maturity: string;
-  releaseState: string;
-  placement: string;
-  accessMode: string;
-  entryCommand: string | null;
-  verificationCommand: string | null;
-  evidence: EvidenceRecord[];
+  publishedAt: string;
+  sourceCount: number;
+  primaryFigureHref: string;
   limitations: string[];
-  boundary: string;
 };
 
-type DomainRecord = {
-  id: string;
-  label: string;
-  summary: string;
+type HomeEvidenceProjection = {
+  schema: "harperz9-home-evidence/v1";
+  derivedFrom: "harperz9-systems/v4";
+  records: Array<{ id: string; systemId: string }>;
+  latestPublishedBriefing: PublishedBriefing | null;
 };
 
-type RelationRecord = {
-  source: string;
-  target: string;
-  relation: string;
-  status: string;
-  evidenceIds: string[];
-  claimScope: string;
-};
+const FOOTER_ROUTE_HREFS = new Set([
+  "hire.html", "overview.html", "catalog.html", "security.html", "research.html",
+  "publications.html", "writing.html", "studio.html", "gallery.html", "retro.html",
+  "resume.html", "cv.html", "portfolio.html", "person.html",
+]);
+const HOME_ROUTE_LINKS = [
+  ...PRIMARY_ROUTES,
+  ...SECONDARY_GROUPS.flatMap((group) => group.routes),
+];
+const FOOTER_ROUTES = HOME_ROUTE_LINKS.filter(
+  (route) => FOOTER_ROUTE_HREFS.has(route.href) && routeFamily(route.href),
+);
 
-type Registry = {
-  schema: string;
-  domains: DomainRecord[];
-  relations: RelationRecord[];
-  systems: SystemRecord[];
-};
+const HOME_EVIDENCE_PROJECTION = JSON.parse(evidenceProjectionSource) as HomeEvidenceProjection;
+const CURRENT_EVIDENCE = HOME_EVIDENCE_PROJECTION.records
+  .map((projected) => EVIDENCE_STREAM.find(
+    (evidence) => evidence.id === projected.id && evidence.systemId === projected.systemId,
+  ))
+  .filter((evidence): evidence is (typeof EVIDENCE_STREAM)[number] => Boolean(evidence));
+const LATEST_PUBLISHED_BRIEFING = HOME_EVIDENCE_PROJECTION.latestPublishedBriefing;
 
-type FeedItem = {
-  id: string;
-  url: string;
-  title: string;
-  content_text: string;
-  date_published: string;
-  date_modified: string;
-};
+function requireSystem(id: string) {
+  const system = systemById(id);
+  if (!system) throw new Error(`Missing system record: ${id}`);
+  return system;
+}
 
-type Feed = {
-  title: string;
-  items: FeedItem[];
-};
-
-type RetroManifest = {
-  recordedAt: string;
-  relationships: {
-    boundary: string;
-  };
-  projects: {
-    retroEngine: string;
-    engineRevival: string;
-    brenderArchival: string;
-  };
-  engineRevival: {
-    release: {
-      tag: string;
-      href: string;
-      commitSha: string;
-    };
-    localMaterializer: {
-      targetCount: number;
-    };
-    doesNotProve: string;
-  };
-  brenderArchival: {
-    release: {
-      tag: string;
-      href: string;
-      commitSha: string;
-    };
-    nativeCTestTargets: string;
-    doesNotProve: string;
-  };
-  retroEngine: {
-    role: string;
-    boundary: string;
-  };
-};
-
-const registry = systemsRegistryRaw as Registry;
-const feed = feedRaw as Feed;
-const retroManifest = retroManifestRaw as RetroManifest;
-
-const systems = registry.systems;
-const domains = registry.domains;
-const systemById = new Map(systems.map((system) => [system.id, system]));
+const systems = SYSTEMS;
+const domains = CAPABILITY_DOMAINS;
 const domainById = new Map(domains.map((domain) => [domain.id, domain]));
-const primaryPlatforms = systems.filter((system) => system.architectureRole === "primary-platform");
-const featuredPlatform = primaryPlatforms[0] ?? systems[0];
-const verifiedEvidence = systems.flatMap((system) => system.evidence ?? []).filter((record) => record.status === "verified");
-const currentBriefing = feed.items[0];
+const requiredFlywheel = systemById("flywheel");
+if (!requiredFlywheel) throw new Error("Missing system record: flywheel");
+const FLYWHEEL: SystemRecord = requiredFlywheel;
+
+const verifiedEvidence = EVIDENCE_STREAM.filter((record) => record.status === "verified");
 
 const CAPABILITY_FAMILY_IDS = [
   "agent-systems",
@@ -127,15 +65,12 @@ const CAPABILITY_FAMILY_IDS = [
   "developer-infrastructure",
   "graphics-media",
   "research-education",
-];
+] as const;
 
 const REPRESENTATIVE_IDS = [
-  "flywheel",
   "index",
   "gather",
   "buildlang",
-  "retro-engine",
-  "brender-archival",
   "phantom",
   "accountable-surface",
 ];
@@ -143,24 +78,43 @@ const REPRESENTATIVE_IDS = [
 const SECURITY_IDS = [
   "phantom",
   "behavior-transform",
-  "array",
-  "seed",
-  "sofer",
-  "isomorph",
-  "bounds",
-  "kun",
-  "orca",
-  "gate",
   "accountable-surface",
   "public-surface-sweeper",
   "model-provenance-validator",
+  "secret-redact-io",
+  "agent-hook-pack",
+  "repo-proof-index",
 ];
 
-function requireSystem(id: string) {
-  const system = systemById.get(id);
-  if (!system) throw new Error(`Missing system record: ${id}`);
-  return system;
-}
+const GRAPHICS_IDS = [
+  "raw",
+  "skyrimbridge",
+  "truth-enb",
+  "elder-enb",
+  "enb-runtime-core",
+  "studio-engine",
+  "retro-engine",
+  "engine-revival",
+  "brender-archival",
+].filter((id) => systems.some((system) => system.id === id));
+
+const HIRING_ENTRY_ROUTES = [
+  {
+    label: "Technical support, developer operations, and QA",
+    href: "/hire.html#engineering-path",
+    summary: "Technical support engineering, developer operations, implementation, release support, and software QA.",
+  },
+  {
+    label: "Evaluation tooling and Python developer tools",
+    href: "/hire.html#technical-operations-path",
+    summary: "Evaluation tooling, Python developer tools, test infrastructure, and research-engineering support.",
+  },
+  {
+    label: "Public service, safety, and field operations",
+    href: "/hire.html#public-service-field-path",
+    summary: "Benefits-rich public routes where systems judgment and field reliability matter.",
+  },
+];
 
 function localHref(href: string) {
   if (href.startsWith("http") || href.startsWith("/")) return href;
@@ -171,66 +125,57 @@ function evidenceHref(system: SystemRecord) {
   return system.evidence[0]?.href ?? system.sourceHref ?? localHref(system.href);
 }
 
+function productTypeLabel(system: SystemRecord) {
+  return system.productType;
+}
+
+function briefList(values: string[]) {
+  return values.slice(0, 2).join(", ");
+}
+
 function isoDate(value: string) {
   return value.slice(0, 10);
 }
 
 const representativeSystems = REPRESENTATIVE_IDS.map(requireSystem);
 const securitySystems = SECURITY_IDS.map(requireSystem);
-const graphicsSystems = [
-  "raw",
-  "skyrimbridge",
-  "truth-enb",
-  "elder-enb",
-  "enb-runtime-core",
-  "studio-engine",
-  "retro-engine",
-  "engine-revival",
-  "brender-archival",
-].map(requireSystem);
+const graphicsSystems = GRAPHICS_IDS.map(requireSystem);
 
 const evidenceRows = [
   {
     measure: String(systems.length),
-    label: "public system records",
-    source: registry.schema,
+    label: "system records",
+    source: "site/systems.json",
     href: "/catalog.html",
     note: "purpose, boundary, maturity, and evidence fields",
   },
   {
     measure: String(systems.filter((system) => system.placement === "featured").length),
     label: "featured records",
-    source: "system/systems.json",
+    source: "placement",
     href: "/overview.html",
     note: "systems promoted to the public front of the catalog",
   },
   {
     measure: String(verifiedEvidence.length),
     label: "verified evidence rows",
-    source: "system/systems.json",
+    source: "evidence status",
     href: "/catalog.html",
-    note: "release, source, or public-boundary records with dates",
+    note: "release, source, paper, demo, or public-boundary records with dates",
   },
   {
-    measure: String(primaryPlatforms.length),
-    label: "primary platform",
-    source: "architectureRole",
-    href: localHref(featuredPlatform.href),
-    note: "Flywheel is the platform layer inside the wider body of work",
+    measure: FLYWHEEL.evidence[0]?.date ?? "unknown",
+    label: "Flywheel release record",
+    source: "site/systems.json",
+    href: evidenceHref(FLYWHEEL),
+    note: "release label, source link, date, and limitations",
   },
   {
-    measure: retroManifest.brenderArchival.nativeCTestTargets,
-    label: "BRender CTest record",
-    source: "retro manifest",
-    href: retroManifest.brenderArchival.release.href,
-    note: "specific BRender Archival evidence, not generic retro media",
-  },
-  {
-    measure: isoDate(currentBriefing.date_modified),
-    label: "current briefing update",
-    source: feed.title,
-    href: currentBriefing.url,
-    note: currentBriefing.title,
+    measure: LATEST_PUBLISHED_BRIEFING?.publishedAt ?? "not published",
+    label: "current briefing",
+    source: "site/publications.json",
+    href: LATEST_PUBLISHED_BRIEFING?.href ?? "/publications.html",
+    note: LATEST_PUBLISHED_BRIEFING?.title ?? "No verified briefing is published yet.",
   },
 ];
 
@@ -260,18 +205,20 @@ function App() {
 
   return (
     <>
+      <GroundField seed={74} />
+      <div className="viewport-vignette" aria-hidden="true" />
       <a className="skip-link" href="#main">Skip to content</a>
       <TopNav />
       <main id="main">
         <IdentityHero />
+        <ProductSelection />
         <FeaturedFlywheel />
+        <HiringRoutes />
         <EvidenceBoard />
         <CapabilityOverview />
-        <RepresentativeWork />
         <CurrentResearch />
         <RetroSystemsLab />
         <SecurityBoundary />
-        <HiringRoutes />
       </main>
       <Footer />
     </>
@@ -286,24 +233,15 @@ function TopNav() {
         <span className="brand-lab">Zentropy Labs</span>
       </a>
       <div className="topnav-links">
-        <a href="/hire.html">Hire / work</a>
-        <a href="/overview.html">Systems</a>
-        <a href="/research.html">Research</a>
-        <a href="/studio.html">The Studio</a>
-        <a href="/gallery.html">Gallery</a>
-        <a href="/retro.html">Retro Engine</a>
-        <a href="https://github.com/HarperZ9" rel="noopener">GitHub</a>
+        {PRIMARY_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
+        {EXTERNAL_ACTIONS.map((action) => <a href={action.href} rel="noopener" key={action.href}>{action.label}</a>)}
       </div>
       <details className="home-menu">
         <summary>Menu</summary>
         <div className="home-menu-list" aria-label="Primary menu">
-          <a href="/hire.html">Hire / work</a>
-          <a href="/overview.html">Systems</a>
-          <a href="/research.html">Research</a>
-          <a href="/studio.html">The Studio</a>
-          <a href="/gallery.html">Gallery</a>
-          <a href="/retro.html">Retro Engine</a>
-          <a href="https://github.com/HarperZ9" rel="noopener">GitHub</a>
+          {PRIMARY_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
+          {FOOTER_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
+          {EXTERNAL_ACTIONS.map((action) => <a href={action.href} rel="noopener" key={action.href}>{action.label}</a>)}
         </div>
       </details>
     </nav>
@@ -314,11 +252,11 @@ function IdentityHero() {
   return (
     <header id="identity" className="hero">
       <div className="hero-copy reveal in">
-        <h1 className="hero-title">Zain Dana Harper</h1>
-        <p className="hero-line">Systems engineering, security tooling, graphics, and public research.</p>
-        <p className="hero-lab">Zentropy Labs is the workshop behind Flywheel and the wider body of work.</p>
+        <h1 className="hero-title">Zentropy Labs</h1>
+        <p className="hero-line">Product studio, systems engineering, graphics, security tooling, and public research.</p>
+        <p className="hero-lab">Zain Dana Harper is the builder behind Zentropy Labs.</p>
         <div className="hero-actions" aria-label="Primary actions">
-          <a className="btn solid" href="#evidence-figures">Explore the work</a>
+          <a className="btn solid" href="#products">Explore products</a>
           <a className="btn" href="/hire.html">Hire or collaborate</a>
         </div>
       </div>
@@ -342,19 +280,70 @@ function IdentityHero() {
   );
 }
 
-function FeaturedFlywheel() {
-  const release = featuredPlatform.evidence[0];
+function ProductSelection() {
   return (
-    <section id="flywheel" className="section split-section">
-      <div>
-        <h2>Featured platform: Flywheel</h2>
+    <section id="products" className="section representative-section" aria-labelledby="products-title">
+      <div className="section-heading">
+        <h2 id="products-title">Products to start with</h2>
         <p className="section-lead">
-          Flywheel is the operating platform inside the work: a model-neutral route for agent tasks, tool use,
-          verification receipts, and repeatable local or hosted workflows.
+          Start with products that can be tried, inspected, or evaluated. Each entry says what the product does once,
+          then gives its inputs, outputs, maturity, evidence, and full product page.
+        </p>
+      </div>
+      <div className="work-index">
+        {representativeSystems.map((system) => (
+          <article className="work-row" key={system.id}>
+            <div>
+              <h3><a href={localHref(system.href)}>{system.name}</a></h3>
+              <p>{system.purpose}</p>
+            </div>
+            <ProductDefinition system={system} />
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ProductDefinition({ system }: { system: SystemRecord }) {
+  return (
+    <dl>
+      <div>
+        <dt>Type</dt>
+        <dd>{productTypeLabel(system)}</dd>
+      </div>
+      <div>
+        <dt>Acts on</dt>
+        <dd>{briefList(system.inputs)}</dd>
+      </div>
+      <div>
+        <dt>Produces</dt>
+        <dd>{briefList(system.outputs)}</dd>
+      </div>
+      <div>
+        <dt>Evidence</dt>
+        <dd><a href={evidenceHref(system)}>{system.evidence[0]?.label ?? system.maturity}</a></dd>
+      </div>
+    </dl>
+  );
+}
+
+function FeaturedFlywheel() {
+  const release = FLYWHEEL.evidence[0];
+  return (
+    <section
+      id="flywheel"
+      className="section split-section"
+      aria-labelledby="flywheel-title"
+    >
+      <div>
+        <h2 id="flywheel-title">Featured platform: Flywheel</h2>
+        <p className="section-lead">
+          {FLYWHEEL.purpose}
         </p>
         <div className="action-row">
-          <a className="text-link" href={localHref(featuredPlatform.href)}>Inspect Flywheel</a>
-          {featuredPlatform.sourceHref ? <a className="text-link" href={featuredPlatform.sourceHref} rel="noopener">Source</a> : null}
+          <a className="text-link" href={localHref(FLYWHEEL.href)}>Inspect Flywheel</a>
+          {FLYWHEEL.sourceHref ? <a className="text-link" href={FLYWHEEL.sourceHref} rel="noopener">Source</a> : null}
         </div>
       </div>
       <div className="data-plate platform-record">
@@ -362,24 +351,36 @@ function FeaturedFlywheel() {
           <caption>Current Flywheel route</caption>
           <tbody>
             <tr>
+              <th scope="row">Type</th>
+              <td>{productTypeLabel(FLYWHEEL)}</td>
+            </tr>
+            <tr>
+              <th scope="row">Acts on</th>
+              <td>{briefList(FLYWHEEL.inputs)}</td>
+            </tr>
+            <tr>
+              <th scope="row">Produces</th>
+              <td>{briefList(FLYWHEEL.outputs)}</td>
+            </tr>
+            <tr>
               <th scope="row">Release</th>
-              <td><a href={release.href}>{release.label}</a></td>
+              <td>{release ? <a href={release.href}>{release.label}</a> : "No release record"}</td>
             </tr>
             <tr>
               <th scope="row">Verified</th>
-              <td>{release.date}</td>
+              <td>{release?.date ?? "unknown"}</td>
             </tr>
             <tr>
               <th scope="row">Install</th>
-              <td><code>{featuredPlatform.entryCommand}</code></td>
+              <td><code>{FLYWHEEL.entryCommand}</code></td>
             </tr>
             <tr>
               <th scope="row">Check</th>
-              <td><code>{featuredPlatform.verificationCommand}</code></td>
+              <td><code>{FLYWHEEL.verificationCommand}</code></td>
             </tr>
           </tbody>
         </table>
-        <p className="boundary-note">{featuredPlatform.limitations[0]}</p>
+        <p className="boundary-note">{FLYWHEEL.limitations[0]}</p>
       </div>
     </section>
   );
@@ -387,9 +388,9 @@ function FeaturedFlywheel() {
 
 function EvidenceBoard() {
   return (
-    <section id="evidence" className="section">
+    <section id="evidence" className="section" aria-labelledby="evidence-title">
       <div className="section-heading">
-        <h2>Evidence board</h2>
+        <h2 id="evidence-title">Evidence board</h2>
         <p className="section-lead">
           A compact index of the public record. Values come from checked-in source data and link back to the record that produced them.
         </p>
@@ -407,7 +408,7 @@ function EvidenceBoard() {
           </thead>
           <tbody>
             {evidenceRows.map((row) => (
-              <tr key={row.label}>
+              <tr data-evidence-row key={row.label}>
                 <th scope="row"><a href={row.href}>{row.measure}</a></th>
                 <td>{row.label}</td>
                 <td>{row.source}</td>
@@ -417,9 +418,21 @@ function EvidenceBoard() {
           </tbody>
         </table>
         <p className="does-not-prove">
-          <strong>What this does not prove:</strong> counts and releases are evidence rows, not adoption claims, safety claims,
-          or guarantees of model correctness. The board uses labels, shape, and line weight, so there are no color-only distinctions.
+          <strong>What this does not prove:</strong> A valid release row is not an adoption claim, safety claim, or guarantee of model correctness.
+          Counts and releases stay evidence rows, not market proof.
         </p>
+        <section className="evidence-current" aria-labelledby="current-evidence-title">
+          <h3 id="current-evidence-title">Newest registry evidence</h3>
+          <ol>
+            {CURRENT_EVIDENCE.map((evidence) => (
+              <li key={`${evidence.systemId}:${evidence.id}`}>
+                <time dateTime={evidence.date}>{evidence.date}</time>
+                <a href={evidence.href} rel="noopener">{evidence.label}</a>
+                <span>{evidence.summary}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
       </div>
     </section>
   );
@@ -427,18 +440,30 @@ function EvidenceBoard() {
 
 function CapabilityOverview() {
   return (
-    <>
-    <span id="make" hidden aria-hidden="true" />
-    <section id="evidence-figures" className="section evidence-figures-section">
+    <section id="evidence-figures" className="section evidence-figures-section" aria-labelledby="figures-title">
       <div className="section-heading">
-        <h2>Measured evidence</h2>
+        <h2 id="figures-title">Measured evidence</h2>
         <p className="section-lead">
-          These figures use source-attributed incident data and executed benchmark artifacts. Each includes its denominator, units,
-          source hash or record, method, and limits. Decorative capability charts are not used as evidence.
+          Source-attributed figures publish units, denominators, dates, provenance, and limits.
+          Capability families remain navigation labels, not diagrams or product hierarchies.
         </p>
       </div>
       <div className="evidence-figure-grid">
-        <article className="evidence-figure-card">
+        <article className="evidence-figure-card" data-evidence-figure-card>
+          <h3>164-task model pass@1 comparison</h3>
+          <a href="/analytics/model-pass-at-1-comparison.html">
+            <img className="research-figure-image" src="/analytics/model-pass-at-1-comparison.svg" alt="Paired 164-task pass-at-one result: base Qwen 14B passed 141 tasks and Flywheel 14B passed 136; the difference was not statistically significant." width="1120" height="334" loading="lazy" />
+          </a>
+          <p>Same task set and harness. This measures two model artifacts, not market superiority or general agent reliability.</p>
+        </article>
+        <article className="evidence-figure-card" data-evidence-figure-card>
+          <h3>Current cross-harness pilot</h3>
+          <a href="/analytics/current-cross-harness-pilot.html">
+            <img className="research-figure-image" src="/analytics/current-cross-harness-pilot.svg" alt="Four receipt-verified cross-harness attempts with zero valid comparable task outcomes." width="1120" height="480" loading="lazy" />
+          </a>
+          <p>4/4 receipts verified, but no valid comparable task outcome. The durations are diagnostic only.</p>
+        </article>
+        <article className="evidence-figure-card" data-evidence-figure-card>
           <h3>Recovered actions by day</h3>
           <img
             className="research-figure-image"
@@ -451,7 +476,7 @@ function CapabilityOverview() {
           <p>Five daily counts from Hugging Face host telemetry. Unit: recovered logged actions. The figure does not measure unique attacks, severity, intent, or harm.</p>
           <p><a href="/figures/recovered-actions-by-day.json">Read the dataset and provenance</a></p>
         </article>
-        <article className="evidence-figure-card">
+        <article className="evidence-figure-card" data-evidence-figure-card>
           <h3>Reported motive labels</h3>
           <img
             className="research-figure-image"
@@ -464,76 +489,23 @@ function CapabilityOverview() {
           <p>Non-exclusive labels from the independent investigator sample. Categories overlap, so counts must not be summed into a population total.</p>
           <p><a href="/figures/motive-sample-nonexclusive.json">Read the dataset and provenance</a></p>
         </article>
-        <article className="evidence-figure-card">
-          <h3>Current cross-harness integration-failure profile</h3>
-          <img
-            className="research-figure-image"
-            src="/analytics/current-cross-harness-pilot.svg"
-            alt="Integration-failure profile for four cross-harness attempts on August 28, 2026. All four receipts verified, but zero attempts produced a valid comparable task outcome. Durations are diagnostic only."
-            width="1120"
-            height="480"
-            loading="lazy"
-          />
-          <p>Byte-identical prompt and context parity produced 4/4 verified receipts and 0 valid comparable task outcomes. This is an integration-failure profile, not market performance or a quality ranking.</p>
-          <p><a href="/analytics/current-cross-harness-pilot.html">Read exact outcomes, artifact hashes, null observations, and limits</a></p>
-        </article>
       </div>
-      <p className="boundary-note">
-        <strong>Historical benchmark archive:</strong> <a href="/analytics/exploratory-stack-comparison.html">seven-case stack comparison</a>
-        {" "}and <a href="/analytics/model-pass-at-1-comparison.html">164-task model comparison</a>. These older scoped results remain available,
-        but they are not current headline evidence. <a href="/analytics/benchmark-evidence-status.html">Benchmark evidence status</a> retains the
-        named baseline plan; a named target is not a result, and missing runs remain NOT_MEASURED.
-      </p>
       <div className="family-browser">
         <h3>Browse the work by primary subject</h3>
         <p>These are navigation labels only. Every catalog record retains its own purpose, product type, maturity, source, and limitations.</p>
         <div className="family-index">
           {CAPABILITY_FAMILY_IDS.map((familyId) => {
             const domain = domainById.get(familyId);
-            const familySystems = systems.filter((system) => system.primaryDomain === familyId);
+            const familySystems = systems.filter((system) => system.domains.includes(familyId));
             return (
-              <article className="family-row" key={familyId}>
+              <article className="family-row" data-family-row key={familyId}>
                 <h3>{domain?.label ?? familyId}</h3>
                 <p>{domain?.summary}</p>
-                <a href={`/catalog.html#domain-${familyId}`}>{familySystems.length} primary records</a>
+                <a href={`/catalog.html#domain-${familyId}`}>{familySystems.length} related records</a>
               </article>
             );
           })}
         </div>
-      </div>
-    </section>
-    </>
-  );
-}
-
-function RepresentativeWork() {
-  return (
-    <section id="representative" className="section representative-section">
-      <div className="section-heading">
-        <h2>Representative work</h2>
-        <p className="section-lead">
-          A selected cross-section by role and proof. The catalog holds the full registry; this section shows the strongest public routes first.
-        </p>
-      </div>
-      <div className="work-index">
-        {representativeSystems.map((system) => (
-          <article className="work-row" key={system.id}>
-            <div>
-              <h3><a href={localHref(system.href)}>{system.name}</a></h3>
-              <p>{system.purpose}</p>
-            </div>
-            <dl>
-              <div>
-                <dt>Role</dt>
-                <dd>{system.productType}</dd>
-              </div>
-              <div>
-                <dt>Evidence</dt>
-                <dd><a href={evidenceHref(system)}>{system.evidence[0]?.label ?? system.maturity}</a></dd>
-              </div>
-            </dl>
-          </article>
-        ))}
       </div>
     </section>
   );
@@ -541,41 +513,42 @@ function RepresentativeWork() {
 
 function CurrentResearch() {
   return (
-    <section id="research" className="section split-section">
+    <section id="research" className="section split-section" aria-labelledby="research-title">
       <div>
-        <h2>Current research</h2>
+        <h2 id="research-title">Current research</h2>
         <p className="section-lead">
-          The publication surface is becoming a daily evidence archive: briefings, figures, source ledgers, and implementation notes for frontier
-          safety, evaluation, infrastructure, and engineering shifts.
+          The publication surface carries current briefings, figures, source records, limitations, and related reproducible artifacts for public review.
         </p>
         <div className="action-row">
           <a className="text-link" href="/publications.html">Publication index</a>
           <a className="text-link" href="/figures/recovered-actions-by-day.html">Measured figures</a>
         </div>
       </div>
-      <article className="data-plate briefing-card">
-        <h3><a href={currentBriefing.url}>{currentBriefing.title}</a></h3>
-        <p>{currentBriefing.content_text}</p>
-        <dl className="briefing-meta">
-          <div>
-            <dt>Published</dt>
-            <dd>{isoDate(currentBriefing.date_published)}</dd>
-          </div>
-          <div>
-            <dt>Updated</dt>
-            <dd>{isoDate(currentBriefing.date_modified)}</dd>
-          </div>
-        </dl>
-      </article>
+      {LATEST_PUBLISHED_BRIEFING ? (
+        <article className="data-plate briefing-card">
+          <h3><a href={LATEST_PUBLISHED_BRIEFING.href} data-current-briefing-title>{LATEST_PUBLISHED_BRIEFING.title}</a></h3>
+          <p>{LATEST_PUBLISHED_BRIEFING.sourceCount} public sources. Limitations remain attached to the record.</p>
+          <dl className="briefing-meta">
+            <div>
+              <dt>Published</dt>
+              <dd>{isoDate(LATEST_PUBLISHED_BRIEFING.publishedAt)}</dd>
+            </div>
+            <div>
+              <dt>Primary figure</dt>
+              <dd><a href={LATEST_PUBLISHED_BRIEFING.primaryFigureHref}>Open figure</a></dd>
+            </div>
+          </dl>
+        </article>
+      ) : null}
     </section>
   );
 }
 
 function RetroSystemsLab() {
   return (
-    <section id="retro-systems-lab" className="section retro-section">
+    <section id="retro-systems-lab" className="section retro-section" aria-labelledby="retro-title">
       <div className="section-heading">
-        <h2>Graphics, engines, and preservation</h2>
+        <h2 id="retro-title">Graphics, engines, and preservation</h2>
         <p className="section-lead">
           Rendering platforms, Skyrim runtime integration, shader suites, browser graphics, procedural media, and software preservation are shown
           as separate products. Source state, releases, tests, and limitations remain attached to each project.
@@ -584,10 +557,14 @@ function RetroSystemsLab() {
       <div className="retro-flow">
         {graphicsSystems.map((system) => (
           <article className="retro-step" key={system.id}>
-            <span className="retro-verb">{system.productType}</span>
+            <span className="retro-verb">{system.accessMode}</span>
             <h3><a href={localHref(system.href)}>{system.name}</a></h3>
             <p>{system.purpose}</p>
-            <a href={evidenceHref(system)}>{system.evidence[0]?.label ?? system.releaseState}</a>
+            <dl className="retro-product-facts">
+              <div><dt>Type</dt><dd>{productTypeLabel(system)}</dd></div>
+              <div><dt>Produces</dt><dd>{briefList(system.outputs)}</dd></div>
+            </dl>
+            <a href={evidenceHref(system)}>{system.evidence[0]?.label ?? system.maturity}</a>
           </article>
         ))}
       </div>
@@ -598,22 +575,21 @@ function RetroSystemsLab() {
 
 function SecurityBoundary() {
   return (
-    <section id="security-boundary" className="section security-section">
+    <section id="security-boundary" className="section security-section" aria-labelledby="security-title">
       <div className="section-heading">
-        <h2>Security boundary</h2>
+        <h2 id="security-title">Security boundary</h2>
         <p className="section-lead">
-          The security line includes public privacy and verification products plus distinct private systems for controlled offensive campaigns,
-          native assessment, orchestration, model refusal and jailbreak testing, trust verification, operator execution, and release authority.
+          The public surface names security roles while keeping credentials, live payloads, targets, client data, and engagement findings out of public distribution.
         </p>
       </div>
       <div className="security-layout">
         <article className="data-plate boundary-card">
-          <h3>Distinct private operational systems</h3>
+          <h3>Public route, private authority</h3>
           <p>
-            Array, Seed, Sofer, Isomorph, Bounds, ORCA, and Gate perform different jobs across an authorized engagement. Their public descriptions name
-            those jobs. Targets, credentials, live payloads, client data, and engagement-specific findings stay in the approved private channel.
+            No private repository, operational method, target detail, client fact, or engagement result is published.
+            Written authorization, defined scope, secure intake, and review are required before private capability is discussed or used.
           </p>
-          <a className="text-link" href="/security.html">Explore the security systems</a>
+          <a className="text-link" href="/private-practice.html">Private recipient lane</a>
         </article>
         <ol className="security-list">
           {securitySystems.map((system) => (
@@ -630,17 +606,22 @@ function SecurityBoundary() {
 
 function HiringRoutes() {
   return (
-    <section id="hiring-collaboration" className="section hiring-section">
+    <section id="hiring-collaboration" className="section hiring-section" aria-labelledby="hiring-title">
       <div>
-        <h2>Hiring and collaboration</h2>
+        <h2 id="hiring-title">Hiring, contracting, and collaboration</h2>
         <p className="section-lead">
-          Three practical routes: engineering and evaluation, technical operations, and public-service or field work. The documents are direct,
-          and the project evidence stays one click away.
+          Run, inspect, or verify the work through three practical routes: technical support and QA, evaluation tooling and Python developer tools, and public-service or field work.
+          The documents are direct, and the project evidence stays one click away.
         </p>
       </div>
       <div className="hiring-actions">
+        {HIRING_ENTRY_ROUTES.map((route) => (
+          <a className="btn" href={route.href} key={route.href}>
+            <span>{route.label}</span>
+          </a>
+        ))}
         <a className="btn solid" href="/hire.html">Hiring map</a>
-        <a className="btn" href="/resume.html">Resume</a>
+        <a className="btn" href="/resume.html">Technical resume</a>
         <a className="btn" href="/cv.html">CV</a>
         <a className="btn" href="/portfolio.html">Portfolio</a>
         <a className="btn" href="mailto:zaindharper@gmail.com">Email</a>
@@ -654,6 +635,10 @@ function Footer() {
   return (
     <footer className="site-footer">
       <p>Zain Dana Harper and Zentropy Labs. Public systems, research briefings, retro rendering, security tooling, and hiring routes.</p>
+      <nav className="footer-links" aria-label="Footer">
+        {FOOTER_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
+        <a href="https://github.com/HarperZ9" rel="noopener">GitHub</a>
+      </nav>
     </footer>
   );
 }

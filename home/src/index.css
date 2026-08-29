@@ -1,4 +1,15 @@
-/* Zain Dana Harper / Zentropy Labs home shell. */
+/* ============================================================
+   PROJECT TELOS: design system v2
+   Direction: Supergraphic Ultramodern x generative plotter art
+   x the living-instrument thesis. Drenched jewel base, a
+   supergraphic rainbow accent system, architectural display type.
+   ============================================================ */
+
+/* ---- self-hosted faces, shared with the static pages at /system/fonts/.
+   Kilon ships as a single static 400 cut: declaring the true weight lets the
+   browser synthesize bold for 600+ requests (a 100-900 range would suppress
+   synthesis and render every heading regular). ---- */
+/* Telos Display + Kilon retired 2026-07-11 - Hanken Grotesk is the one text voice. */
 @font-face { font-family: "Hanken Grotesk"; src: url("/system/fonts/hanken-grotesk.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
 @font-face { font-family: "Conso"; src: url("/system/fonts/conso-regular.woff2") format("woff2"), url("/system/fonts/conso-regular.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "Conso"; src: url("/system/fonts/conso-semibold.woff2") format("woff2"), url("/system/fonts/conso-semibold.woff") format("woff"); font-weight: 600 700; font-style: normal; font-display: swap; }
@@ -16,6 +27,10 @@
   --raised:    oklch(0.275 0.050 310);
   --hairline:  oklch(0.62 0.08 308 / 0.18);
   --hairline-2:oklch(0.62 0.08 308 / 0.10);
+  --line:      rgba(234, 245, 246, 0.14);
+  --line-strong: rgba(234, 245, 246, 0.28);
+  --ground-paper: #f3f0e8;
+  --ink-paper: #111014;
 
   /* Gradient system: nothing is a flat fill or a solid line. Edges dissolve at their
      ends (--edge, for border-image); surfaces fall off toward transparent so panels
@@ -82,11 +97,6 @@
   --shell: clamp(1.15rem, 5vw, 5rem);
   --maxw: 78rem;
 
-  /* Architectural, not organic. Corrected at the token rather than by a blanket
-     rule: an earlier attempt set border-radius:0 on the card selectors, and
-     every one of them re-declared a radius later in the same file at equal
-     specificity, so the reset was dead CSS and the cards kept rendering at
-     26px. Zeroing the source is the fix that cannot lose the cascade. */
   --radius: 0px;
   --radius-lg: 0px;
 

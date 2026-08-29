@@ -121,6 +121,9 @@ def test_retro_media_manifest_matches_public_artifacts() -> None:
     records = manifest["media"]
     assert {record["id"] for record in records} == {
         "retro-play-capture",
+        "engine-preserve-capture",
+        "brender-verify-capture",
+        "retro-crossover-capture",
         "engine-revival-card",
         "brender-archival-card",
     }
@@ -132,6 +135,8 @@ def test_retro_media_manifest_matches_public_artifacts() -> None:
         assert _sha256(path) == record["sha256"], record["id"]
         assert record["alt"].strip(), record["id"]
         assert record["caption"].strip(), record["id"]
+        assert record["provenance"].strip(), record["id"]
+        assert record["sourceFiles"], record["id"]
         assert record["limitations"], record["id"]
         assert "does not prove" in " ".join(record["limitations"]).lower(), record["id"]
         if path.suffix == ".png":

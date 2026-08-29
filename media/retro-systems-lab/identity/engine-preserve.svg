@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Engine Revival preserve capture</title>
+  <desc id="desc">A deterministic layered manifest field for the Engine Revival preserve pillar.</desc>
+  <metadata>{"schema":"harperz9-retro-identity/v2","label":"ENGINE REVIVAL · PRESERVE","sourceFiles":["site/systems.json","site/routes.json","public/engine-revival.html"]}</metadata>
+  <rect width="960" height="540" fill="#14041b"/>
+  <rect x="48" y="48" width="864" height="444" rx="28" fill="#09030d" stroke="#f6efe7" stroke-opacity=".18"/>
+  <text x="96" y="102" fill="#f6efe7" font-family="ui-monospace, monospace" font-size="18" letter-spacing="4">ENGINE REVIVAL · PRESERVE</text>
+
+      <g transform="translate(86 70)">
+        <rect width="788" height="400" rx="26" fill="#160820" stroke="#f6efe7" stroke-opacity=".16"/>
+        <path d="M80 322 H704M80 258 H704M80 194 H704M80 130 H704" stroke="#f6efe7" stroke-opacity=".16"/>
+        <g fill="none" stroke-width="3">
+          <path d="M80 322 C184 240 232 290 330 204 S504 104 704 130" stroke="#62f0cc"/>
+          <path d="M80 258 C184 228 252 224 330 194 S512 152 704 194" stroke="#ffb38b"/>
+          <path d="M80 194 C190 174 252 146 336 130 S504 86 704 98" stroke="#ff6030"/>
+        </g>
+        <text x="80" y="365" fill="#62f0cc" font-family="ui-monospace, monospace" font-size="17" letter-spacing="3">LOCAL 12</text>
+        <text x="286" y="365" fill="#ffb38b" font-family="ui-monospace, monospace" font-size="17" letter-spacing="3">MIT</text>
+        <text x="476" y="365" fill="#ff6030" font-family="ui-monospace, monospace" font-size="17" letter-spacing="3">AGPL RECEIPTS</text>
+        <circle cx="704" cy="130" r="9" fill="#62f0cc"/><circle cx="704" cy="194" r="9" fill="#ffb38b"/><circle cx="704" cy="98" r="9" fill="#ff6030"/>
+      </g>
+</svg>

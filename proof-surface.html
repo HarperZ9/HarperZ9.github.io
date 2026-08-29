@@ -33,7 +33,7 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Proof Surface &middot; the accountability contract</span></div>
   <div class="mid">
     <h1>A grant of authority should <span class="g">expire, be traced, and say no.</span></h1>
-    <p class="lede">Here is the whole idea, as plainly as I can put it: before an AI agent is allowed to do something, this checks that it really has permission, and if anything is unclear, the answer is no. It keeps the proof, not the promise. There is an evidence packet that records where something came from. A <b>work-record receipt</b>: a signed note of what the agent actually did, handed outward so anyone can check it. An <b>authorization receipt</b>: proof that a real person actually said yes. And a <b>check</b>: the doorway every action has to pass, which says no by default. Permission can be handed down a chain, person to helper to helper, but each step can only ever narrow what it was given, never widen it. Quietly grabbing more is exactly what this refuses. Every answer comes from a short, fixed list. Nothing here ever stamps a thing <em>TRUSTED</em> or <em>APPROVED</em>.</p>
+    <p class="lede" data-canonical-purpose="proof-surface">Proof Surface is a standard-library Python contract and validation library for authorization receipts, delegation chains, evidence packets, work records, witness receipts, and pre-execution gate requests. It validates structured JSON and returns schema issues plus advisory allow, deny, or needs-human decisions; it does not execute or enforce actions.</p>
     <p class="close">It only ever gives a recommendation; something else does the enforcing. It can say no. It can never grant a yes on its own.</p>
   </div>
   <div class="seal">public source 0.2.0 &middot; no release claim &middot; verified 2026-08-27</div>
@@ -42,8 +42,7 @@
 <main id="main">
 
 <section class="mv" id="family" aria-labelledby="family-h">
-  <h2 id="family-h">A Flywheel evaluation layer.</h2>
-  <p class="body-text"><a href="flywheel.html">Flywheel</a> is the parent platform. Proof Surface supplies default-deny recommendations and proof packets; the surrounding system performs enforcement. Continue to <a href="accountable-surface.html">Accountable Surface</a>, <a href="emet.html">EMET</a>, or the <a href="security.html">security family</a>.</p>
+  <h2 id="family-h">Source and maturity.</h2>
   <p class="body-text">The <a href="https://github.com/HarperZ9/proof-surface" rel="noopener">public source identifies version 0.2.0</a>. No tagged release, independent adversarial review, production safety, or adoption claim is made here. The page does not report live CI status.</p>
 </section>
 

@@ -50,20 +50,20 @@ window.CARD_DATA = {
     "glyph": "ledger",
     "showGlyph": true
   },
-  "behavior-transform": {
-    "role": "I/O BOUNDARY AND RECEIPT LIBRARY",
-    "headline": "Record read, write, execution, fetch, input, and model-boundary receipts.",
-    "pipeline": "READ / WRITE / EXECUTE / FETCH / RECEIPT",
-    "word": "BEHAVIOR TRANSFORM",
-    "glyph": "ledger",
-    "showGlyph": true
-  },
   "private-practice": {
     "role": "AUTHORIZED PRIVATE SECURITY PRACTICE",
     "headline": "Scope sensitive review work before any private detail moves.",
     "pipeline": "SCOPE / BOUND / RUN / WITNESS / HANDOFF",
     "word": "PRIVATE PRACTICE",
     "glyph": "seal",
+    "showGlyph": true
+  },
+  "behavior-transform": {
+    "role": "I/O BOUNDARY AND RECEIPT LIBRARY",
+    "headline": "Record read, write, execution, fetch, input, and model-boundary receipts.",
+    "pipeline": "READ / WRITE / EXECUTE / FETCH / RECEIPT",
+    "word": "BEHAVIOR TRANSFORM",
+    "glyph": "ledger",
     "showGlyph": true
   },
   "security": {
@@ -77,7 +77,7 @@ window.CARD_DATA = {
     "constellationCard": true,
     "routeHref": "security.html",
     "routeTitle": "Security",
-    "routeSummary": "A verified maturity index for public security tools, Phantom, EMET, grouped toolkit work, and authorized private security practice by Zain Dana Harper.",
+    "routeSummary": "A verified maturity index for public security tools, Phantom, EMET, grouped toolkit work, and distinct controlled-private security systems by Zain Dana Harper.",
     "imagePath": "img/og/security.png"
   },
   "index": {
@@ -116,9 +116,9 @@ window.CARD_DATA = {
     "glyph": "triad"
   },
   "plexus": {
-    "role": "DECLARED CAPABILITY MESH",
-    "headline": "Read declared interop manifests and derive inspectable producer-to-consumer plans.",
-    "pipeline": "DECLARE / MATCH / PLAN / OPTIONAL PROBE",
+    "role": "AGENT TOOLCHAIN WIRING",
+    "headline": "Discover tool capabilities and assemble runnable producer-to-consumer pipelines.",
+    "pipeline": "DISCOVER / MATCH / PLAN / ROUTE",
     "word": "PLEXUS",
     "glyph": "graph"
   },
@@ -130,17 +130,17 @@ window.CARD_DATA = {
     "glyph": "layers"
   },
   "portfolio-home": {
-    "role": "ZAIN DANA HARPER",
-    "headline": "Systems engineering, security tooling, graphics, and public research.",
-    "pipeline": "SYSTEMS / EVIDENCE / RESEARCH / WORK",
-    "word": "ZENTROPY LABS",
+    "role": "ZENTROPY LABS / PRODUCT OVERVIEW",
+    "headline": "Public tools, four recorded workflows, and evidence you can inspect.",
+    "pipeline": "MAP / ROUTE / VERIFY / REMEMBER / IMPROVE",
+    "word": "PROJECT TELOS",
     "glyph": "aperture"
   },
   "profile": {
-    "role": "ZAIN DANA HARPER / PUBLIC PROFILE",
-    "headline": "Systems, field operations, graphics, security, and research.",
-    "pipeline": "WORK / SYSTEMS / RESEARCH / STUDIO",
-    "word": "ZENTROPY LABS",
+    "role": "THE PUBLIC PROFILE",
+    "headline": "Make things together. Re-check every step.",
+    "pipeline": "ENGINES / SUBSTRATE / RECEIPTS / STATUS",
+    "word": "TELOS",
     "glyph": "aperture"
   },
   "build-ecosystem": {
@@ -403,9 +403,9 @@ window.CARD_DATA = {
     "imagePath": "img/og/retro.png"
   },
   "elder-enb": {
-    "role": "SKYRIM ENB SHADER SUITE",
-    "headline": "Build a nine-stage ENBSeries shader suite with five quality tiers and an optional native runtime.",
-    "pipeline": "SHADERS / QUALITY TIERS / PACKAGE / LIVE ACCEPTANCE",
+    "role": "PUBLIC ENB CONFIGURATION",
+    "headline": "Public ENB source with release-candidate state and live-host acceptance still open.",
+    "pipeline": "SOURCE / RC TAG / HOST / LIMITS",
     "word": "ELDER ENB",
     "glyph": "layers",
     "family": "graphics-retro",
@@ -417,9 +417,9 @@ window.CARD_DATA = {
     "imagePath": "img/og/elder-enb.png"
   },
   "truth-enb": {
-    "role": "SKYRIM ENB SHADER SUITE",
-    "headline": "Render a procedural sky, clouds, aurora, exposure, and tone mapping through ENBSeries 0.504.",
-    "pipeline": "ATMOSPHERE / CLOUDS / AURORA / EXPOSURE / TONE",
+    "role": "REVIEWABLE ENB GRAPHICS",
+    "headline": "Reviewable ENB graphics source with a release-candidate tag, not a release claim.",
+    "pipeline": "SOURCE / RC TAG / REVIEW / LIMITS",
     "word": "TRUTH ENB",
     "glyph": "aperture",
     "family": "graphics-retro",

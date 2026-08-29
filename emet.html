@@ -32,7 +32,7 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">EMET</span> &middot; external witness</span></div>
   <div class="mid">
     <h1>If an agent touched it, you should be able to <span class="g">check what it did.</span></h1>
-    <p class="lede">I couldn&rsquo;t take an agent&rsquo;s word for what it changed, so I built something that checks for itself. It reads the file straight off the disk and works out a fingerprint, a short code that is unique to those exact bytes. Move even one character and the whole fingerprint changes. Then it compares that to the fingerprint it saved earlier and tells you one of three things: MATCH (nothing moved), DRIFT (something moved), or UNVERIFIABLE (it couldn&rsquo;t check, and says so plainly). There is no fourth answer that just means <em>trust me</em>. The code was built so that answer can&rsquo;t exist. It stands outside the thing it&rsquo;s checking, and it never speaks for that thing.</p>
+    <p class="lede" data-canonical-purpose="emet">Verify whether bytes reaching a model, reviewer, or pipeline still match their claimed source; anchor, compare, neutralize embedded authority, audit drift, and mint portable closed-verdict receipts across four implementations.</p>
     <p class="close">A witness isn&rsquo;t a judge. All it does is say what it compared. Whether to trust the result is yours, not the tool&rsquo;s.</p>
   </div>
   <div class="seal"><span translate="no">emet</span>, Hebrew for truth &middot; 1.2.0 on PyPI &middot; 48-vector reference suite &middot; four implementations with declared capability coverage</div>

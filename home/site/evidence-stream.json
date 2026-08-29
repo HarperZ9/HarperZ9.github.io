@@ -1,0 +1,92 @@
+{
+  "schema": "harperz9-home-evidence/v1",
+  "derivedFrom": "harperz9-systems/v4",
+  "records": [
+    {
+      "id": "flywheel-gather-lane-code",
+      "type": "code-permalink",
+      "label": "Flywheel Gather lane declaration",
+      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L55-L58",
+      "date": "2026-08-28",
+      "status": "verified",
+      "summary": "The pinned lane registry declares Gather's package, command, MCP arguments, version, source repository, and role.",
+      "systemId": "flywheel"
+    },
+    {
+      "id": "flywheel-crucible-lane-code",
+      "type": "code-permalink",
+      "label": "Flywheel Crucible lane declaration",
+      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L59-L62",
+      "date": "2026-08-28",
+      "status": "verified",
+      "summary": "The pinned lane registry declares Crucible's package, command, MCP arguments, version, source repository, and role.",
+      "systemId": "flywheel"
+    },
+    {
+      "id": "flywheel-index-lane-code",
+      "type": "code-permalink",
+      "label": "Flywheel Index lane declaration",
+      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L63-L66",
+      "date": "2026-08-28",
+      "status": "verified",
+      "summary": "The pinned lane registry declares Index's package, command, MCP arguments, source repository, and role; its version field is visibly stale against the published package.",
+      "systemId": "flywheel"
+    },
+    {
+      "id": "flywheel-forum-lane-code",
+      "type": "code-permalink",
+      "label": "Flywheel Forum lane declaration",
+      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L67-L70",
+      "date": "2026-08-28",
+      "status": "verified",
+      "summary": "The pinned lane registry declares Forum's package, command, MCP arguments, version, source repository, and role.",
+      "systemId": "flywheel"
+    },
+    {
+      "id": "flywheel-learn-lane-code",
+      "type": "code-permalink",
+      "label": "Flywheel Learn lane declaration",
+      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L71-L74",
+      "date": "2026-08-28",
+      "status": "verified",
+      "summary": "The pinned lane registry declares Learn's npm package, Node MCP entry, version, source repository, and role.",
+      "systemId": "flywheel"
+    }
+  ],
+  "latestPublishedBriefing": {
+    "id": "2026-08-26-openai-hugging-face-incident",
+    "recordType": "canonical",
+    "version": 1,
+    "title": "Five evidence lanes, one OpenAI and Hugging Face incident",
+    "summary": "Separate legal process, OpenAI's company report, Hugging Face host telemetry, independent analysis, and vendor remediation before drawing conclusions from the July incident.",
+    "href": "/briefings/2026-08-26-openai-hugging-face-incident/",
+    "publishedAt": "2026-08-26",
+    "updatedAt": "2026-08-27",
+    "sourceCount": 12,
+    "claimCount": 45,
+    "figureIds": [
+      "recovered-actions-by-day",
+      "incident-multilane-timeline",
+      "source-scope-matrix",
+      "task-overrepresentation",
+      "motive-sample-nonexclusive",
+      "control-boundary-flow",
+      "claim-provenance-panel"
+    ],
+    "primaryFigureHref": "/figures/source-scope-matrix.html",
+    "limitations": [
+      "The Alabama materials describe an investigation, subpoena, and allegations. They do not establish a legal violation, liability, or consumer harm.",
+      "Actions, clusters, agents, messages, files, transcripts, tasks, repositories, systems, workers, and datasets remain separate units.",
+      "METR and Redwood performed an independent investigation with host-controlled data access, not an unrestricted forensic audit.",
+      "OpenAI retained non-public-information redaction authority, provided feedback, and supplied API credits to the independent review; METR reports taking no payment.",
+      "OpenAI's impact, chronology, and remediation statements remain company-reported, and its preliminary harness evaluations lack public sample sizes, intervals, and independent replication.",
+      "The 14 Hugging Face credentials, 41 Hugging Face workers, and 956 OpenAI cloud-hosted secrets are separate company-reported units and stages.",
+      "The July 5 entry is an OpenAI-attributed alert and response event, not an independently verified effectiveness finding.",
+      "The 100-agent motive tags are non-exclusive, AI-assisted, not carefully iterated by METR, and do not generalize to all agents.",
+      "Tool-call spoofing counts keep successful cases and evaluated transcripts as separate denominators.",
+      "Source interpretations do not establish one settled motivation or behavior shared by all agents, models, or deployments.",
+      "JFrog's statement and advisory index are vendor remediation records, not independent proof of incident scope or deployed patch coverage."
+    ],
+    "amends": null
+  }
+}

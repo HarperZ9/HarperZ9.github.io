@@ -8,9 +8,9 @@
 <meta name="description" content="Flywheel routes work across local and hosted models, verifies results, escalates uncertainty, and returns reproducible receipts.">
 <link rel="canonical" href="https://harperz9.github.io/flywheel.html">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:site_name" content="Zentropy Labs">
 <meta property="og:title" content="Flywheel, a companion for every model">
-<meta property="og:description" content="Route to any model, verify locally, keep a receipt you can re-run. It does what every router does, plus the one thing none of them do: it checks the work.">
+<meta property="og:description" content="Route model work through witnessed tools, permission gates, external checks, journals, and re-checkable receipts.">
 <meta property="og:url" content="https://harperz9.github.io/flywheel.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/flywheel.png">
 <meta property="og:image:alt" content="Flywheel social card. Route across local or hosted models, verify the result, and keep a re-checkable receipt.">
@@ -27,6 +27,11 @@
   .fw-fig svg{width:100%;height:auto;min-width:660px;display:block}
   .fw-fig figcaption{color:var(--ink-muted);font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;
     text-transform:uppercase;margin-top:.9rem}
+  .figure-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin:1.5rem 0}
+  .figure-pair figure{margin:0;border:1px solid var(--hairline);border-radius:14px;padding:1rem;background:color-mix(in oklab,var(--void) 55%,transparent)}
+  .figure-pair img{display:block;width:100%;height:auto;border-radius:8px}
+  .figure-pair figcaption{margin-top:.8rem;color:var(--ink-muted);font-size:.85rem;line-height:1.55}
+  @media(max-width:760px){.figure-pair{grid-template-columns:1fr}}
   .cmp-wrap,.bt-wrap{overflow-x:auto;margin:1.4rem 0}
   .cmp,.bt{width:100%;border-collapse:collapse;font-size:.92rem;min-width:560px}
   .cmp th,.cmp td,.bt th,.bt td{text-align:left;padding:.62rem .85rem;border-bottom:1px solid var(--hairline)}
@@ -56,7 +61,7 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">flywheel</span> &middot; route + verify</span></div>
   <div class="mid">
     <h1>A companion for <span class="g">every model.</span></h1>
-    <p class="lede">Route to any model, local or hosted, online or offline. <span translate="no">Flywheel</span> answers what it can verify, escalates only the hard part, and hands you a receipt you can re-run yourself. It does what every router and runner does, plus the one thing none of them do: it checks the work.</p>
+    <p class="lede">Run a verified-inference platform and native desktop client in which models perceive through witnessed tools, act through permission gates, journal their work, and re-check outcomes through integrated lanes.</p>
     <p class="close">Every number on this page is a receipt file you can re-check offline.</p>
   </div>
   <div class="seal"><span translate="no">flywheel</span> &middot; public &middot; FSL-1.1-MIT &middot; <span translate="no">python scripts/run_harness_cli.py app --port 8799</span></div>
@@ -66,8 +71,8 @@
 
 <!-- THE WEDGE -->
 <section class="mv" id="why" aria-labelledby="why-h">
-  <h2 id="why-h" class="reveal">Routers route. Runners run. None of them check the work.</h2>
-  <p class="body-text reveal">Not one router, local runner, or agent harness checks whether the answer is right and hands you proof. <span translate="no">Flywheel</span> does all of their jobs on one surface, and adds the verify layer none of them have. The authority that accepts an answer is an external check, never a model grading its own work.</p>
+  <h2 id="why-h" class="reveal">Keep proposal and acceptance separate.</h2>
+  <p class="body-text reveal">A selected model proposes an answer. A separately defined check accepts or rejects it, and the run records the result. Current public evidence does not establish market superiority or feature uniqueness across competing harnesses.</p>
   <p class="pull reveal">Bring your keys, or bring your weights.</p>
 </section>
 
@@ -134,7 +139,7 @@
 
 <!-- FOUR BLURBS -->
 <section class="mv" id="what" aria-labelledby="what-h">
-  <h2 id="what-h" class="reveal">One surface, four things it does that others do not.</h2>
+  <h2 id="what-h" class="reveal">Four implemented parts of the current surface.</h2>
   <div class="index reveal-children" role="list" aria-label="What Flywheel does">
     <div class="index-row" role="listitem" style="--i:0">
       <span class="index-term">Every provider, one surface</span>
@@ -142,7 +147,7 @@
     </div>
     <div class="index-row" role="listitem" style="--i:1">
       <span class="index-term">A record you can keep</span>
-      <span class="index-gloss">Every accepted answer carries a receipt: the inputs, the check that passed, and hashes anyone can re-run offline. This is the layer no other router has.</span>
+      <span class="index-gloss">Every accepted answer carries a receipt: the inputs, the check that passed, and hashes a reviewer can re-run offline. The current market comparison remains unmeasured.</span>
     </div>
     <div class="index-row" role="listitem" style="--i:2">
       <span class="index-term">Answer local, escalate the hard part</span>
@@ -157,21 +162,11 @@
 
 <!-- COMPARISON -->
 <section class="mv" id="compare" aria-labelledby="compare-h">
-  <h2 id="compare-h" class="reveal">How it compares.</h2>
-  <div class="cmp-wrap reveal">
-    <table class="cmp">
-      <thead><tr><th></th><th>Ordinary router</th><th>Local runner</th><th>Agent harness</th><th class="fwcol">Flywheel</th></tr></thead>
-      <tbody>
-        <tr><td>Routes to many providers</td><td class="y">Yes</td><td class="n">No</td><td>Some</td><td class="y">Yes</td></tr>
-        <tr><td>Runs a local model</td><td class="n">No</td><td class="y">Yes</td><td>Some</td><td class="y">Yes</td></tr>
-        <tr><td>Works offline</td><td class="n">No</td><td class="y">Yes</td><td class="n">No</td><td class="y">Yes</td></tr>
-        <tr><td>Accepts on an external check</td><td class="n">No</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
-        <tr><td>Re-checkable receipt per answer</td><td class="n">No</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
-        <tr><td>Answers local, escalates the hard part</td><td class="n">No</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
-        <tr><td>One root-hashed shared state</td><td class="n">No</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
-        <tr><td>Zero dependencies, one file to run</td><td>Varies</td><td>Varies</td><td class="n">No</td><td class="y">Yes</td></tr>
-      </tbody>
-    </table>
+  <h2 id="compare-h" class="reveal">What the current evidence measures.</h2>
+  <p class="body-text reveal">The named market baseline remains <strong>NOT_MEASURED</strong>. These figures publish the results that do exist, including negative and incomplete outcomes.</p>
+  <div class="figure-pair reveal">
+    <figure><a href="analytics/model-pass-at-1-comparison.html"><img src="analytics/model-pass-at-1-comparison.svg" alt="Paired 164-task pass-at-one comparison: base Qwen 14B passed 141 of 164 tasks and Flywheel 14B passed 136 of 164; the difference was not statistically significant." loading="lazy"></a><figcaption>Same-harness 164-task model result. This is a model comparison, not a harness or market ranking.</figcaption></figure>
+    <figure><a href="analytics/current-cross-harness-pilot.html"><img src="analytics/current-cross-harness-pilot.svg" alt="Four receipt-verified cross-harness attempts with zero valid comparable task outcomes." loading="lazy"></a><figcaption>Current cross-harness pilot: 4/4 receipts verified, 0 valid comparable outcomes.</figcaption></figure>
   </div>
 </section>
 
@@ -236,17 +231,17 @@
 
 <!-- RETRO SYSTEMS LAB -->
 <section class="mv" id="retro-systems-lab" aria-labelledby="retro-systems-lab-h">
-  <h2 id="retro-systems-lab-h" class="reveal">Retro Systems Lab sits under the Flywheel platform.</h2>
-  <p class="body-text reveal"><span translate="no">Flywheel</span> is the primary platform. The Retro Systems Lab is one engine cluster inside it: <a href="retro.html">Retro Engine</a> is the play surface, <a href="engine-revival.html">Engine Revival</a> is the preservation and evidence layer, and <a href="brender-archival.html">BRender Archival</a> is the verified restoration lane for one BRender release.</p>
-  <p class="body-text reveal">Those links are companion routes and evidence boundaries, not proof of runtime dependency or product parity. Generic Retro Engine output is not BRender evidence.</p>
+  <h2 id="retro-systems-lab-h" class="reveal">Independent retro products from Zentropy Labs.</h2>
+  <p class="body-text reveal"><a href="retro.html">Retro Engine</a> is an embedded browser graphics studio. <a href="engine-revival.html">Engine Revival</a> maintains historical-engine revival evidence and recipes. <a href="brender-archival.html">BRender Archival</a> rebuilds and verifies one BRender restoration.</p>
+  <p class="body-text reveal">These are neighboring product routes, not Flywheel dependencies or subordinate components. Generic Retro Engine output is not BRender evidence.</p>
   <p class="seal-line reveal"><span class="g">Retro Systems Lab</span>: <a href="retro.html">play</a> &middot; <a href="engine-revival.html">preserve</a> &middot; <a href="brender-archival.html">verify</a></p>
 </section>
 
 <!-- VISION -->
 <section class="mv" id="vision" aria-labelledby="vision-h">
   <h2 id="vision-h" class="reveal">The replaceable half and the durable half.</h2>
-  <p class="body-text reveal"><span translate="no">Flywheel</span> is the front surface of a verified-inference flywheel: propose with a cheap local model, dispose with an external check, keep the re-checkable receipt, and let what passes accumulate. The model is the replaceable half; the verification harness is the durable half.</p>
-  <p class="body-text reveal">The same discipline, an external check that can fail plus a receipt anyone can re-run, scales from routing a single call to composing a whole workshop of tools. This is the largest of them, and the front door to all of them.</p>
+  <p class="body-text reveal"><span translate="no">Flywheel</span> runs a verified-inference loop: propose with a selected model, dispose with an external check, keep the re-checkable receipt, and let what passes accumulate. The model is replaceable; the verification harness is durable.</p>
+  <p class="body-text reveal">The same discipline, an external check that can fail plus a receipt a reviewer can re-run, scales from routing a single call to composing a larger workflow.</p>
   <p class="seal-line reveal"><span class="g">Run it</span>: <span translate="no">github.com/HarperZ9/flywheel</span> &middot; <a href="overview.html">the engine room</a> &middot; <a href="index.html">the workshop</a></p>
 </section>
 

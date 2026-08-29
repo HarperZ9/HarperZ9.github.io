@@ -132,7 +132,7 @@
         "flywheel-release-v0-3-10",
         "plexus-public-source"
       ],
-      "claimScope": "Flywheel declares and launches Plexus as its tool-wiring MCP lane. Plexus derives wiring from declared manifests rather than probing every tool by default."
+      "claimScope": "Flywheel declares and launches Plexus as its capability-mesh and tool-wiring MCP lane. Plexus can probe registered lanes when explicitly requested, but declared mesh edges are not semantic interoperability proof."
     },
     {
       "source": "flywheel",
@@ -416,13 +416,13 @@
     {
       "id": "telos",
       "name": "Telos",
-      "purpose": "Run a zero-dependency local workbench for MCP tools, native workstation control, creative measurement, proof packets, research preflights, model-foundry work, and replayable AI sessions.",
+      "purpose": "Telos is a local Node CLI and MCP server that connects a workstation to research, creative, model-foundry, native-control, and proof tools. It accepts CLI or MCP requests plus local manifests, fixtures, and workspace state, then returns structured tool results, readiness diagnostics, hashes, proof packets, and replayable action records.",
       "useCases": [
         "shared human-model workspaces",
         "MCP tool execution",
         "replayable creative sessions"
       ],
-      "href": "studio.html",
+      "href": "systems/telos.html",
       "sourceHref": "https://github.com/HarperZ9/telos",
       "domains": [
         "agent-systems",
@@ -452,9 +452,9 @@
           "type": "source",
           "label": "Telos public source",
           "href": "https://github.com/HarperZ9/telos",
-          "date": "2026-08-27",
+          "date": "2026-08-28",
           "status": "verified",
-          "summary": "The public repository is active on main; the latest tagged release is v0.1.0 while source identifies the newer Telos 0.2.0 pre-1.0 workbench."
+          "summary": "The package metadata identifies Telos 0.2.0, the latest GitHub tag found was v0.1.0, and the README describes a local MCP workbench with native tools, proof lanes, research packets, model foundry, and replayable sessions."
         }
       ],
       "limitations": [
@@ -483,7 +483,7 @@
         "crucible",
         "studio-engine"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-08-28",
       "primaryDomain": "developer-infrastructure",
       "productType": "local MCP workbench",
       "releaseState": "active source 0.2.0; latest tag v0.1.0"
@@ -1015,9 +1015,9 @@
           "type": "source",
           "label": "Relay public source",
           "href": "https://github.com/HarperZ9/relay",
-          "date": "2026-08-27",
+          "date": "2026-08-28",
           "status": "verified",
-          "summary": "The public main branch identifies Relay 0.1.0; no GitHub release is claimed."
+          "summary": "The public source metadata identifies relay-agent 0.1.0, and the README describes a permission-checked tool loop, hash-chained ledger, MCP surface, failover routes, and acceptance checks; no GitHub release tag was returned."
         }
       ],
       "limitations": [
@@ -1044,15 +1044,15 @@
         "plexus",
         "mneme"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-08-28",
       "primaryDomain": "agent-systems",
-      "productType": "permission-gated coding agent",
-      "releaseState": "active PyPI 0.1.0; no GitHub release"
+      "productType": "permission-gated coding agent and execution lane",
+      "releaseState": "active source 0.1.0; no GitHub release"
     },
     {
       "id": "plexus",
       "name": "Plexus",
-      "purpose": "Read declared interop manifests, derive producer-consumer wiring and dependency plans from those declarations, emit inspectable graphs and pipeline scripts, expose the mesh over MCP, and optionally probe a registered Flywheel lane when explicitly requested.",
+      "purpose": "Read declared interop manifests, derive producer-consumer wiring and dependency plans, emit inspectable graphs and pipeline scripts, expose the mesh over MCP, and explicitly probe registered Flywheel lanes when requested.",
       "useCases": [
         "tool discovery",
         "capability matching",
@@ -1065,7 +1065,7 @@
         "developer-infrastructure"
       ],
       "family": "infrastructure",
-      "architectureRole": "toolchain-wiring-layer",
+      "architectureRole": "capability-mesh-wiring-infrastructure",
       "audiences": [
         "agent-system engineers",
         "software engineers"
@@ -1085,14 +1085,14 @@
           "type": "source",
           "label": "Plexus public source",
           "href": "https://github.com/HarperZ9/plexus",
-          "date": "2026-08-27",
+          "date": "2026-08-28",
           "status": "verified",
-          "summary": "The public main branch identifies Plexus 0.2.0; no GitHub release is claimed."
+          "summary": "The public source metadata identifies plexus-mesh 0.2.0, and the README describes manifest discovery, wiring plans, route scripts, graphs, MCP exposure, and explicit lane probe commands; no GitHub release tag was returned."
         }
       ],
       "limitations": [
-        "Plexus does not execute or probe tools.",
-        "Edges and source pointers are declared claims, not observed interoperability."
+        "Manifest edges and source pointers remain declared claims until followed or probed.",
+        "Probe mode checks registered lane reachability, not semantic interoperability or output quality."
       ],
       "boundary": "A wiring plan does not grant authority to execute any connected capability.",
       "inputs": [
@@ -1112,15 +1112,15 @@
         "forum",
         "flywheel"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-08-28",
       "primaryDomain": "developer-infrastructure",
-      "productType": "toolchain wiring and pipeline planner",
+      "productType": "capability mesh and toolchain wiring infrastructure",
       "releaseState": "active source 0.2.0; no GitHub release"
     },
     {
       "id": "mneme",
       "name": "Mneme",
-      "purpose": "Provide deterministic four-tier agent memory with hybrid retrieval, per-memory provenance, reproducible rankings, source-drift detection, temporal and multi-user memory, audited forgetting, and MCP access.",
+      "purpose": "Mneme is a zero-dependency SQLite memory store with CLI and MCP access for agent conversations and extracted facts. It stores session turns or imported source items, answers retrieval queries with deterministic BM25, vector, and recency ranking, and returns provenance, recall receipts, drift verdicts, replayable history views, and audited update or forgetting records.",
       "useCases": [
         "agent memory",
         "provenance-bearing recall",
@@ -1153,9 +1153,9 @@
           "type": "source",
           "label": "Mneme public source",
           "href": "https://github.com/HarperZ9/mneme",
-          "date": "2026-08-27",
+          "date": "2026-08-28",
           "status": "verified",
-          "summary": "The public source is newer than the latest v0.1.0 release, so no untagged version is presented as released."
+          "summary": "The public source metadata identifies mneme-memory 0.2.0, the latest GitHub tag found was v0.1.0, and the README covers provenance, recall, drift detection, replay, forgetting, and MCP access."
         }
       ],
       "limitations": [
@@ -1181,10 +1181,10 @@
         "forum",
         "flywheel"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-08-28",
       "primaryDomain": "agent-systems",
       "productType": "deterministic agent memory subsystem",
-      "releaseState": "active source 0.2.0; PyPI 0.1.1; release v0.1.0"
+      "releaseState": "active source 0.2.0; latest tag v0.1.0"
     },
     {
       "id": "studio-engine",
@@ -1336,7 +1336,7 @@
     {
       "id": "retro-engine",
       "name": "Retro Engine",
-      "purpose": "Run a browser studio that accepts images, drawing, GLSL, and audio traces; applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects; then exports images, patches, MIDI, relief or disc data, and Loom handoffs.",
+      "purpose": "Run an embedded browser studio that accepts images, drawing, GLSL, and audio traces; applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects; then exports images, patches, MIDI, relief or disc data, and Loom handoffs.",
       "useCases": [
         "play",
         "browser pixel studio",
@@ -1371,14 +1371,14 @@
           "type": "source",
           "label": "Retro Engine owned site source",
           "href": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/retro-engine.js",
-          "date": "2026-08-27",
+          "date": "2026-08-28",
           "status": "verified",
-          "summary": "The owned public site source contains the browser Retro Engine route and renderer assets; this is not BRender evidence."
+          "summary": "The current public source includes browser runtime, studio wiring, and public page code for image, drawing, GLSL, audio, export, and Loom handoff flows; Retro output is explicitly separated from BRender restoration evidence."
         }
       ],
       "limitations": [
         "Retro Engine output is generic creative output and does not prove any BRender restoration fact.",
-        "Browser, GPU, and font rendering can differ by host, so captures are bounded media evidence rather than performance claims."
+        "Browser, GPU, audio, and font rendering can differ by host, so captures are bounded media evidence rather than performance claims."
       ],
       "boundary": "Use only owned or licensed input media and do not present generated retro visuals as archival proof for another repository.",
       "inputs": [
@@ -1400,9 +1400,9 @@
         "engine-revival",
         "brender-archival"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-08-28",
       "primaryDomain": "graphics-media",
-      "productType": "browser graphics and sound studio",
+      "productType": "embedded browser visual and audiovisual studio",
       "releaseState": "active public application; no package release"
     },
     {
@@ -1446,9 +1446,9 @@
           "type": "release",
           "label": "Engine Revival v0.1.0",
           "href": "https://github.com/HarperZ9/engine-revival/releases/tag/v0.1.0",
-          "date": "2026-08-27",
+          "date": "2026-08-28",
           "status": "verified",
-          "summary": "The public main and v0.1.0 release resolve to 0af6d527860a63c418b5775dc0efe9ba89557604. Engine Revival is MIT; it records local 12-target materializer scope separately from imported external 21-target BRender evidence."
+          "summary": "The public source metadata identifies version 0.1.0, the latest GitHub tag found was v0.1.0, and the README frames Engine Revival as public-safe metadata, schema, validation, target-matrix, recipe, and evidence tooling."
         },
         {
           "id": "engine-revival-brender-evidence-code",
@@ -1457,7 +1457,7 @@
           "href": "https://github.com/HarperZ9/engine-revival/blob/0af6d527860a63c418b5775dc0efe9ba89557604/scripts/regenerate_brender_publication_boundary.py#L111-L123",
           "date": "2026-08-28",
           "status": "verified",
-          "summary": "The pinned generator identifies BRender Archival as an external evidence owner and records the exact checkout recipe rather than treating it as a runtime dependency."
+          "summary": "The README states the BRender harness materializes an out-of-tree CMake scaffold and does not vendor upstream source or claim compile success until an external transcript is captured."
         }
       ],
       "limitations": [
@@ -1482,9 +1482,9 @@
         "brender-archival",
         "retro-engine"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-08-28",
       "primaryDomain": "graphics-media",
-      "productType": "software-preservation tooling",
+      "productType": "archival/revival evidence platform",
       "releaseState": "stable v0.1.0"
     },
     {
@@ -1528,9 +1528,9 @@
           "type": "release",
           "label": "BRender Archival v0.1.1",
           "href": "https://github.com/HarperZ9/brender-archival/releases/tag/v0.1.1",
-          "date": "2026-08-27",
+          "date": "2026-08-28",
           "status": "verified",
-          "summary": "The public main and v0.1.1 release resolve to 11b5a8d539e911a9c07991b751402a7d51bf1bde. The repo is AGPL-3.0-or-later, upstream BRender MIT is referenced not vendored, and 21/21 native CTest targets are recorded."
+          "summary": "The latest GitHub tag found was v0.1.1, and the public release evidence records a 21-of-21 CTest target transcript against the pinned public BRender source without vendoring proprietary source or assets."
         }
       ],
       "limitations": [
@@ -1554,15 +1554,15 @@
         "engine-revival",
         "retro-engine"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-08-28",
       "primaryDomain": "graphics-media",
-      "productType": "focused engine-restoration lab",
+      "productType": "BRender restoration and build-test harness",
       "releaseState": "bounded milestone v0.1.1"
     },
     {
       "id": "proof-surface",
       "name": "Proof Surface",
-      "purpose": "Provide default-deny authorization checks, bounded delegation, and reviewable proof packets for agent actions.",
+      "purpose": "Proof Surface is a standard-library Python contract and validation library for authorization receipts, delegation chains, evidence packets, work records, witness receipts, and pre-execution gate requests. It validates structured JSON and returns schema issues plus advisory allow, deny, or needs-human decisions; it does not execute or enforce actions.",
       "useCases": [
         "authorization receipt review",
         "bounded agent actions",
@@ -1613,9 +1613,9 @@
         "scope and evidence contracts"
       ],
       "outputs": [
-        "default-deny authorization decisions",
-        "bounded delegation records",
-        "proof packets and denial receipts"
+        "schema and contract validation findings",
+        "effective delegated scope",
+        "advisory allow, deny, or needs-human decisions"
       ],
       "dependencies": [],
       "related": [
@@ -1807,7 +1807,7 @@
     {
       "id": "enb-runtime-core",
       "name": "ENB Runtime Core",
-      "purpose": "Identify an already-loaded ENBSeries host, validate its SDK surface, queue callbacks outside callback context, coordinate save quiescence and reapplication, and gate a fail-closed Skyrim engine bridge.",
+      "purpose": "Provide a C++23 embedded runtime library that identifies an already-loaded ENBSeries host, validates its SDK surface, queues callbacks outside callback context, coordinates save quiescence and reapplication, and gates a fail-closed Skyrim engine bridge.",
       "useCases": [
         "ENB runtime integration",
         "graphics plugin inspection",
@@ -1840,14 +1840,14 @@
           "type": "source",
           "label": "ENB Runtime Core public source 0.1.0",
           "href": "https://github.com/HarperZ9/enb-runtime-core",
-          "date": "2026-08-27",
+          "date": "2026-08-28",
           "status": "verified",
-          "summary": "Public source identifies version 0.1.0; no release claim is made."
+          "summary": "The public README identifies a C++23 runtime library for an already-loaded ENBSeries host, callback queueing, save quiescence, fail-closed bridge behavior, and no third-party runtime dependencies; no GitHub release tag was returned."
         }
       ],
       "limitations": [
         "Requires an already-loaded ENBSeries host.",
-        "Public source 0.1.0 is not presented as a release."
+        "Public source 0.1.0 is not presented as a GitHub release."
       ],
       "boundary": "Use only with a permitted host runtime and the rights required by its owners.",
       "inputs": [
@@ -1870,15 +1870,15 @@
         "truth-enb",
         "skyrimbridge"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-08-28",
       "primaryDomain": "graphics-media",
-      "productType": "ENB host lifecycle library",
-      "releaseState": "active source 0.1.0; no release"
+      "productType": "embedded runtime library",
+      "releaseState": "active source 0.1.0; no GitHub release"
     },
     {
       "id": "skyrimbridge",
       "name": "SkyrimBridge",
-      "purpose": "Expose Skyrim live engine state and editing surfaces to shaders and external tools through an SKSE plugin, versioned ABI, shared-memory command channel, record editor, asset conversion pipeline, diagnostics, and optional D3D11 rendering tier.",
+      "purpose": "Expose Skyrim live engine state, record editing surfaces, asset conversion, versioned ABI, diagnostics, and shared-memory command channels to shaders and external tools through an SKSE plugin, with an optional D3D11 rendering tier.",
       "useCases": [
         "Skyrim runtime integration",
         "graphics bridge inspection",
@@ -1891,7 +1891,7 @@
         "developer-infrastructure"
       ],
       "family": "graphics-retro",
-      "architectureRole": "skyrim-runtime-integration-platform",
+      "architectureRole": "skse-state-record-asset-abi-system",
       "audiences": [
         "graphics engineers",
         "mod developers"
@@ -1911,14 +1911,15 @@
           "type": "source",
           "label": "SkyrimBridge public source 3.0.0",
           "href": "https://github.com/HarperZ9/skyrimbridge",
-          "date": "2026-08-27",
+          "date": "2026-08-28",
           "status": "verified",
-          "summary": "Public source identifies version 3.0.0 and latest tag v3.0.0-rc.1; no release claim is made."
+          "summary": "The public README describes an SKSE plugin with live state domains, versioned ABI, record editing, asset pipelines, command channel, optional D3D11 rendering tier, 17 offline harnesses, and public builds with native replacements off by default."
         }
       ],
       "limitations": [
         "The public/default build excludes the native replacement suite.",
-        "The latest tag v3.0.0-rc.1 is not presented as a release."
+        "The latest tag v3.0.0-rc.1 is a prerelease candidate, not a stable release.",
+        "In-game acceptance remains required for write-path and renderer-facing features."
       ],
       "boundary": "Use only with the game, runtime, and asset rights required by their owners.",
       "inputs": [
@@ -1945,9 +1946,9 @@
         "enb-runtime-core",
         "raw"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-08-28",
       "primaryDomain": "graphics-media",
-      "productType": "Skyrim runtime integration platform",
+      "productType": "SKSE state, record, asset, ABI, and optional renderer system",
       "releaseState": "prerelease v3.0.0-rc.1"
     },
     {
@@ -2019,9 +2020,9 @@
     {
       "id": "behavior-transform",
       "name": "behavior-transform.io",
-      "purpose": "Provide a public IO-boundary implementation for read, write, execution, fetch, input, and model-boundary receipts.",
+      "purpose": "behavior-transform.io is a local Python wrapper and hook layer for file reads and writes, subprocesses, HTTP fetches, operator input, and MCP traffic. It accepts an I/O request plus an operations or research mode and local text rules, then passes through or transforms the content and returns the requested result with hashes, substitution counts, return codes, or local audit artifacts.",
       "useCases": [
-        "model-boundary receipts",
+        "local I/O wrapping and transformation",
         "policy-aware IO",
         "session and action auditing"
       ],
@@ -2062,7 +2063,7 @@
       ],
       "limitations": [
         "No tagged release or publicly verified entry command is claimed.",
-        "A boundary receipt records declared policy and observed IO; it does not guarantee provider acceptance or substantive safety."
+        "Local audit artifacts and hashes record selected observations; they do not guarantee provider acceptance or substantive safety."
       ],
       "boundary": "Use the boundary only within the operator's authority and governing provider, data-owner, and system policies.",
       "inputs": [
@@ -2070,9 +2071,9 @@
         "declared policy and session context"
       ],
       "outputs": [
-        "policy-aware I/O results",
-        "session and action receipts",
-        "boundary audit records"
+        "requested I/O results",
+        "content hashes and substitution counts",
+        "return codes and local audit artifacts"
       ],
       "dependencies": [],
       "related": [
@@ -2083,7 +2084,7 @@
       ],
       "lastVerified": "2026-08-27",
       "primaryDomain": "security-privacy",
-      "productType": "I/O boundary and receipt library",
+      "productType": "local I/O wrapper and hook layer",
       "releaseState": "active public source; no tagged release"
     },
     {
@@ -2162,7 +2163,7 @@
     {
       "id": "seed",
       "name": "Seed",
-      "purpose": "Run native security assessment and detection-engineering work through a 59-module C++23 engine with synthetic demonstrations, scope manifests, tests, interop adapters, and action receipts.",
+      "purpose": "Run native security assessment and detection-engineering work through a C++23 engine with synthetic demonstrations, scope manifests, interop adapters, and action receipts.",
       "useCases": [
         "controlled security-assessment labs",
         "detection engineering",
@@ -2198,7 +2199,7 @@
           "href": "https://harperz9.github.io/seed.html",
           "date": "2026-08-28",
           "status": "verified",
-          "summary": "The public page identifies Seed as a 59-module C++23 assessment engine with 3,065 tests and describes its bounded assessment surfaces. Private source and operational material are not public evidence."
+          "summary": "The public page identifies Seed as a C++23 assessment engine and describes its bounded assessment surfaces. Private source and operational material are not public evidence."
         }
       ],
       "limitations": [
@@ -2233,7 +2234,7 @@
     {
       "id": "sofer",
       "name": "Sofer",
-      "purpose": "Coordinate specialist agents, model backends, probes, intelligence and scheduling systems, multi-stage workflows, admission decisions, and receipt-backed handoffs across high-consequence technical operations.",
+      "purpose": "Sofer is a private Python security-operations platform and orchestration runtime. It accepts an authorized engagement scope, objectives and targets, selected modules and model backends, operator decisions, and collected evidence; it routes specialist work and runs scoped reconnaissance, adversarial testing, defensive analysis, campaign workflows, finding management, and disclosure, producing run state, assessment results, findings, reports, evidence artifacts, receipts, and handoff records.",
       "useCases": [
         "private-line multi-agent orchestration",
         "high-consequence technical workflow coordination",
@@ -2527,7 +2528,7 @@
     {
       "id": "gate",
       "name": "Gate",
-      "purpose": "Make fail-closed integration and release decisions for private-line systems from component readiness, CI, MCP interfaces, safety-evaluation posture, supply-chain evidence, package verification, and receipt-backed handoff state.",
+      "purpose": "Gate is Sofer's private release-check subsystem. Its Python command-line tools validate readiness, operations, engagement, deliverable, and release manifests; required source, documentation, and test paths; configured controls; and verification-command results. Gate returns pass or fail findings, writes hashed JSON receipts, and blocks advancement when required evidence or controls are missing.",
       "useCases": [
         "private-system release readiness",
         "supply-chain and package verification",
@@ -2541,7 +2542,7 @@
         "evaluation-verification"
       ],
       "family": "security",
-      "architectureRole": "private-system-release-authority",
+      "architectureRole": "sofer-private-release-check-subsystem",
       "audiences": [
         "release owners",
         "security engineering leads",
@@ -2598,13 +2599,13 @@
       ],
       "lastVerified": "2026-08-28",
       "primaryDomain": "developer-infrastructure",
-      "productType": "private-system integration and release authority",
-      "releaseState": "controlled private system; public capability description"
+      "productType": "Sofer release-check subsystem",
+      "releaseState": "controlled Sofer subsystem; public capability description"
     },
     {
       "id": "accountable-surface",
       "name": "Accountable Surface",
-      "purpose": "Provide a controlled agent-action workbench with structural perception, default-deny grants, bounded effectors, re-perception, rollback, and a durable journal.",
+      "purpose": "Accountable Surface is a Python runtime for executing bounded file, command, web, and browser actions under operator-supplied grants. It accepts an exact proposed action and target, an external authorization receipt, effector bounds, and an expected result; it returns an allow, deny, or needs-human outcome, performs only permitted effects, re-observes and verifies the result, rolls back reversible failures, and appends a hash-chained journal.",
       "useCases": [
         "bounded agent actions",
         "rollback-aware automation",

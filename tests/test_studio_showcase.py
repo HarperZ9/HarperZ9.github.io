@@ -14,11 +14,12 @@ def studio_js() -> str:
     return STUDIO_JS.read_text(encoding="utf-8")
 
 
-def test_studio_surfaces_project_telos_feature_stack() -> None:
+def test_studio_surfaces_its_media_and_measurement_contracts() -> None:
     src = studio_source()
     assert 'id="project-telos-features"' in src
     for term in (
-        "Flywheel and its declared lanes",
+        "Studio contracts",
+        "media, measurement, and export",
         "project-telos.context-envelope/v1",
         "loop ledger",
         "action receipts",
