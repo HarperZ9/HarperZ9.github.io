@@ -58,6 +58,14 @@ window.CARD_DATA = {
     "glyph": "seal",
     "showGlyph": true
   },
+  "behavior-transform": {
+    "role": "I/O BOUNDARY AND RECEIPT LIBRARY",
+    "headline": "Record read, write, execution, fetch, input, and model-boundary receipts.",
+    "pipeline": "READ / WRITE / EXECUTE / FETCH / RECEIPT",
+    "word": "BEHAVIOR TRANSFORM",
+    "glyph": "ledger",
+    "showGlyph": true
+  },
   "security": {
     "role": "AUTHORIZED SECURITY FAMILY",
     "headline": "Inspect public defensive systems and the controlled private boundary.",
@@ -512,5 +520,35 @@ window.CARD_DATA = {
     "pipeline": "RUN / ARTIFACT / PROVENANCE / HANDOFF",
     "word": "RUNTIME",
     "glyph": "bracket"
+  },
+  "gallery": {
+    "role": "PLATE WORKSHOP + EXHIBITION",
+    "word": "GALLERY",
+    "headline": "Name a seed, pick instruments, and the engine draws your plate in the browser.",
+    "pipeline": "SEED / INSTRUMENTS / DRAW / TREAT / KEEP"
+  },
+  "publications": {
+    "role": "THE RESEARCH RECORD",
+    "word": "PUBLICATIONS",
+    "headline": "Eight records with permanent DOIs, each titled at the size its evidence carries.",
+    "pipeline": "PAPERS / NOTES / CORPORA / DOI / NO PEER REVIEW"
+  },
+  "typeface": {
+    "role": "TYPE SPECIMEN",
+    "word": "TYPEFACE",
+    "headline": "A readable generated-outline face, drawn for this workshop.",
+    "pipeline": "OUTLINE / FIT / HINT / SPECIMEN"
+  },
+  "why": {
+    "role": "THE ARGUMENT",
+    "word": "WHY",
+    "headline": "Why a made mind gets real senses, a memory, and a record it cannot fake.",
+    "pipeline": "PERCEIVE / REMEMBER / WITNESS / REFUSE"
+  },
+  "demo-flywheel": {
+    "role": "RECORDED WORKFLOW",
+    "word": "FLYWHEEL",
+    "headline": "A live prompt routed to a local model, sealed into a receipt, then tampered with.",
+    "pipeline": "ROUTE / GATE / RUN / SEAL / RE-VERIFY"
   }
 };

@@ -285,10 +285,12 @@ def test_future_dated_archives_use_the_shared_site_shell_and_nested_paths() -> N
     assert 'class="docnav"' not in archive
 
 
-def test_briefing_is_discoverable_from_the_catalog_index() -> None:
-    catalog = (ROOT / "catalog.html").read_text(encoding="utf-8")
+def test_briefing_is_discoverable_from_shared_route_surfaces() -> None:
+    routes = (ROOT / "system/routes.js").read_text(encoding="utf-8")
+    sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
 
-    assert 'href="frontier-safety.html"' in catalog
+    assert "frontier-safety.html" in routes
+    assert "https://harperz9.github.io/frontier-safety.html" in sitemap
 
 
 def test_source_registry_is_current_and_explicit_about_roles() -> None:

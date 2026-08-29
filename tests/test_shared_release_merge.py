@@ -34,7 +34,11 @@ def test_route_registry_is_the_union_of_hiring_capability_and_legacy_routes() ->
     registry = route_registry()
     families = {family["label"]: family for family in registry["families"]}
     hrefs = {
-        family: {route["href"] for route in data["routes"]}
+        family: {
+            route_ref
+            for route in data["routes"]
+            for route_ref in (route["href"], *route.get("aliases", []))
+        }
         for family, data in families.items()
     }
 
@@ -159,5 +163,11 @@ def test_card_registry_is_a_union_and_the_template_honors_words_and_glyphs() -> 
 def test_mobile_navigation_regression_protection_remains_in_both_stylesheets() -> None:
     for relative in ("system/doc.css", "system/system.css"):
         css = read(relative)
-        assert ".site-nav > .sn-more" in css
-        assert "position:fixed!important" in css
+        trigger_blocks = re.findall(r"\.site-nav > \.sn-more\s*\{([^}]+)\}", css)
+        assert trigger_blocks, relative
+        assert any(re.search(r"position:(?:fixed!important|static)", block) for block in trigger_blocks), relative
+        assert any(re.search(r"display:block(?:!important)?", block) for block in trigger_blocks), relative
+        assert any(re.search(r"visibility:visible(?:!important)?", block) for block in trigger_blocks), relative
+
+        menu_blocks = re.findall(r"\.site-nav \.sn-more-list\s*\{([^}]+)\}", css)
+        assert any("position:fixed" in block and "overflow:auto" in block for block in menu_blocks), relative

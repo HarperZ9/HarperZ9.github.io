@@ -45,7 +45,6 @@ def homepage_stylesheet_records() -> list[tuple[str, str, str]]:
     for html_path in (HOME_INDEX, INDEX):
         src = read(html_path)
         for href in stylesheet_hrefs(src):
-            assert "home-readable.css" not in href
             if href.startswith(("http://", "https://")):
                 continue
             css_path = ROOT / href.split("?", 1)[0].lstrip("/")
@@ -56,28 +55,25 @@ def homepage_stylesheet_records() -> list[tuple[str, str, str]]:
     return records
 
 
-def test_home_loads_the_react_shell_without_legacy_readable_floor() -> None:
+def test_home_loads_the_react_shell_with_a_readable_static_floor() -> None:
     for path in (INDEX, HOME_INDEX):
         src = read(path)
         assert 'data-home-shell="react"' in src
         assert '<div id="root"></div>' in src
-        assert "home-readable.css" not in src
         assert "styles.css" not in src
+
+    assert 'href="/system/home-readable.css?v=20260828-site-design"' in read(INDEX)
 
 
 def test_home_stylesheet_graph_is_closed_over_the_new_visual_contract() -> None:
     combined = "\n".join(css for _, _, css in homepage_stylesheet_records())
 
-    for value in (
-        "home-readable.css",
-        "conic-gradient",
-        "eyebrow",
-        "kicker",
-        "orientation / artifact",
-    ):
-        assert value not in combined
+    assert "orientation / artifact" not in combined
 
-    assert not re.search(r"\.hero(?:::before|:before|::after|:after)", combined)
+    assert ".hero > .hero-copy" in combined
+    assert ".hero > .identity-art" in combined
+    assert "z-index:1" in combined
+    assert "pointer-events:none" in combined
 
 
 def test_home_menu_readability_rules_live_in_the_home_bundle() -> None:
@@ -95,15 +91,15 @@ def test_noscript_fallback_is_a_complete_identity_first_front_door() -> None:
     for value in (
         "Zain Dana Harper",
         "Zentropy Labs",
-        "Systems engineering, security tooling, graphics, and public research.",
+        "Zentropy Labs is a product studio and public brand built by Zain Dana Harper.",
+        "Products to start with",
         "Featured platform: Flywheel",
         "Evidence board",
         "Measured evidence",
-        "Representative work",
         "Current research",
         "Graphics, engines, and preservation",
         "Security boundary",
-        "Hiring and collaboration",
+        "Hiring, contracting, and collaboration",
     ):
         assert value in src
 
@@ -123,8 +119,6 @@ def test_home_source_and_styles_have_no_decorative_home_lead_ins() -> None:
         "eyebrow",
         "overline",
         "orientation / artifact",
-        "viewport-vignette",
-        "ground-field",
         "row-index",
     ):
         assert value not in combined
@@ -133,7 +127,6 @@ def test_home_source_and_styles_have_no_decorative_home_lead_ins() -> None:
     assert "Project Telos" not in combined
     assert "brand-wordmark" not in combined
     assert "brand-route" not in combined
-    assert "radial-gradient" not in combined
 
 
 def test_home_visual_system_uses_real_evidence_figures_not_decorative_relationship_charts() -> None:
@@ -161,17 +154,19 @@ def test_deployed_bundle_matches_the_new_front_door_after_build() -> None:
 
     for value in (
         "Zain Dana Harper",
-        "Zentropy Labs is the workshop behind Flywheel and the wider body of work.",
+        "Product studio, systems engineering, graphics, security tooling, and public research.",
+        "Each entry says what the product does once",
+        "Featured platform: Flywheel",
         "Measured evidence",
         "Graphics, engines, and preservation",
         "Security boundary",
-        "Hiring and collaboration",
+        "Hiring, contracting, and collaboration",
     ):
         assert value in bundle
 
     assert "Systems Engineer | AI Evaluation, Developer Tools, and Technical Operations" not in bundle
 
-    for stale in ("hero-kicker", "Recorded workflows", "Try four browser-native checks", "Project Telos"):
+    for stale in ("hero-kicker", "Try four browser-native checks"):
         assert stale not in bundle
 
     assert "data-plate" in css

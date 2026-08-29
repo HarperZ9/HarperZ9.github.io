@@ -212,16 +212,29 @@ def test_hiring_paths_use_one_column_at_mobile_and_readable_action_targets() -> 
     assert ".hire-path{grid-template-columns:1fr" in mobile
 
 
-def test_home_source_foregrounds_the_hiring_identity() -> None:
+def test_home_source_connects_the_product_brand_to_the_hiring_route() -> None:
     src = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
-    name = src.index('<h1 className="hero-title">Zain Dana Harper</h1>')
-    practice = src.index("Systems engineering, security tooling, graphics, and public research.")
-    lab = src.index("Zentropy Labs is the workshop behind Flywheel and the wider body of work.")
+    studio = src.index('<h1 className="hero-title">Zentropy Labs</h1>')
+    practice = src.index("Product studio, systems engineering, graphics, security tooling, and public research.")
+    builder = src.index("Zain Dana Harper is the builder behind Zentropy Labs.")
+    products = src.index('id="products"')
     flywheel = src.index("Featured platform: Flywheel")
+    hiring = src.index("Hiring, contracting, and collaboration")
     hiring_route = src.index('href="/hire.html"')
-    workshop_catalog = src.index('id="make"')
-    assert name < practice < lab < flywheel < workshop_catalog
-    assert hiring_route < workshop_catalog
+    assert studio < practice < builder
+    assert products < flywheel
+    assert hiring_route < hiring
+
+    main = re.search(r'<main id="main">(?P<body>.*?)</main>', src, re.S)
+    assert main
+    order = re.findall(r"<([A-Z][A-Za-z0-9]*)\s*/>", main.group("body"))
+    assert order[:5] == [
+        "IdentityHero",
+        "ProductSelection",
+        "FeaturedFlywheel",
+        "HiringRoutes",
+        "EvidenceBoard",
+    ]
 
 
 def test_resume_keeps_projects_inside_zentropy_experience() -> None:

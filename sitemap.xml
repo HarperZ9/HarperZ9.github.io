@@ -75,6 +75,20 @@
   <url><loc>https://harperz9.github.io/security.html</loc></url>
   <url><loc>https://harperz9.github.io/presentation.html</loc></url>
 
+  <!-- Preserved publication, archive, and measured-evidence routes. -->
+  <url><loc>https://harperz9.github.io/models-propose-oracles-dispose.html</loc></url>
+  <url><loc>https://harperz9.github.io/loom.html</loc></url>
+  <url><loc>https://harperz9.github.io/frontier-safety.html</loc></url>
+  <url><loc>https://harperz9.github.io/frontier-safety/archive/2026-08-24.html</loc></url>
+  <url><loc>https://harperz9.github.io/frontier-safety/archive/2026-08-25.html</loc></url>
+  <url><loc>https://harperz9.github.io/frontier-safety/archive/2026-08-27.html</loc></url>
+  <url><loc>https://harperz9.github.io/session-archive.html</loc></url>
+  <url><loc>https://harperz9.github.io/analytics/exploratory-stack-comparison.html</loc></url>
+  <url><loc>https://harperz9.github.io/analytics/model-pass-at-1-comparison.html</loc></url>
+  <url><loc>https://harperz9.github.io/analytics/benchmark-evidence-status.html</loc></url>
+  <url><loc>https://harperz9.github.io/analytics/current-cross-harness-pilot.html</loc></url>
+  <url><loc>https://harperz9.github.io/analytics/portfolio-source-inventory.html</loc></url>
+
 <!-- BEGIN GENERATED BRIEFING ROUTES -->
   <url><loc>https://harperz9.github.io/briefings/</loc></url>
   <url><loc>https://harperz9.github.io/briefings/2026-08-26-openai-hugging-face-incident/</loc></url>

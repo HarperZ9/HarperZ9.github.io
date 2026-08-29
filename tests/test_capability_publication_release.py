@@ -13,8 +13,8 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-CHDGdOb1.js",
-    "assets/index-M4JQ_RY_.css",
+    "assets/index-C_1S2nb6.js",
+    "assets/index-XLAt4tDw.css",
     "accountable-surface.html",
     "analytics/benchmark-evidence-status.html",
     "analytics/benchmark-evidence-status.json",
@@ -114,6 +114,9 @@ RELEASE_PATHS = (
     "img/og/truth-enb.png",
     "index.html",
     "media/retro-systems-lab/evidence-manifest.json",
+    "media/retro-systems-lab/identity/brender-verify.svg",
+    "media/retro-systems-lab/identity/crossover.svg",
+    "media/retro-systems-lab/identity/engine-preserve.svg",
     "media/retro-systems-lab/identity/retro-play.svg",
     "media/retro-systems-lab/manifest.json",
     "overview.html",
@@ -142,10 +145,11 @@ RELEASE_PATHS = (
     "systems/plexus.html",
     "systems/relay.html",
     "systems/studio-engine.html",
+    "systems/telos.html",
     "truth-enb.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "f29ce7835bac4dda92e8bbc99301e7cdb3fd99c11f574f93c4c234a324dde52c"
+REVIEWED_RELEASE_SHA256 = "3dca9fabb391b880864ea82a51daa7e3d041d5316e214ee3bdff6f5f3696fa7e"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -242,8 +246,8 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_fix_css = "index-Bh3pWSfE.css"
     previous_art_js = "index-BPBDYusx.js"
     previous_art_css = "index-D6A4RL1P.css"
-    assert 'src="/assets/index-CHDGdOb1.js"' in source
-    assert 'href="/assets/index-M4JQ_RY_.css"' in source
+    assert 'src="/assets/index-C_1S2nb6.js"' in source
+    assert 'href="/assets/index-XLAt4tDw.css"' in source
     assert obsolete_js not in source
     assert obsolete_css not in source
     assert not (ROOT / "assets" / obsolete_js).exists()
