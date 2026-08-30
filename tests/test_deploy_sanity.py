@@ -44,3 +44,11 @@ def test_key_pages_exist() -> None:
         "frontier-safety.html",
     ):
         assert (ROOT / page).is_file(), page
+
+
+def test_legacy_engines_route_points_to_current_systems_catalog() -> None:
+    src = (ROOT / "engines.html").read_text(encoding="utf-8")
+    assert 'rel="canonical" href="https://harperz9.github.io/overview.html"' in src
+    assert 'http-equiv="refresh" content="0; url=overview.html"' in src
+    assert 'window.location.replace("overview.html")' in src
+    assert 'href="overview.html"' in src

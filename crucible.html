@@ -4,19 +4,19 @@
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>crucible, an accountable judgment system</title>
-<meta name="description" content="Ideas get repeated until they sound true. Crucible makes a thesis carry its claims, the observations that would refute them, and the verdict.">
+<title>Crucible · Zentropy Labs</title>
+<meta name="description" content="Crucible is a Python claim-testing engine. It breaks a thesis into claims with stated failure conditions, measures them against supplied evidence or checks, and returns MATCH, DRIFT, or UNVERIFIABLE with a record that can be recomputed.">
 <link rel="canonical" href="https://harperz9.github.io/crucible.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="crucible, an accountable judgment system">
-<meta property="og:description" content="Ideas get repeated until they sound true. Crucible makes a thesis carry its claims, the observations that would refute them, and the verdict.">
+<meta property="og:title" content="Crucible · Zentropy Labs">
+<meta property="og:description" content="Crucible is a Python claim-testing engine. It breaks a thesis into claims with stated failure conditions, measures them against supplied evidence or checks, and returns MATCH, DRIFT, or UNVERIFIABLE with a record that can be recomputed.">
 <meta property="og:url" content="https://harperz9.github.io/crucible.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/crucible.png">
 <meta property="og:image:alt" content="Project Telos flagship card: Crucible, the judgment system. Test the thesis, witness the verdict.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="crucible, an accountable judgment system">
-<meta name="twitter:description" content="Ideas get repeated until they sound true. Crucible makes a thesis carry its claims, the observations that would refute them, and the verdict.">
+<meta name="twitter:title" content="Crucible · Zentropy Labs">
+<meta name="twitter:description" content="Crucible is a Python claim-testing engine. It breaks a thesis into claims with stated failure conditions, measures them against supplied evidence or checks, and returns MATCH, DRIFT, or UNVERIFIABLE with a record that can be recomputed.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/crucible.png">
 <meta name="color-scheme" content="dark">
 <link rel="stylesheet" href="system/system.css?v=20260828-site-design">
@@ -32,7 +32,7 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">crucible</span> &middot; accountable judgment</span></div>
   <div class="mid">
     <h1>Test the thesis. <span class="g">Witness the verdict.</span></h1>
-    <p class="lede" data-canonical-purpose="crucible">Register a thesis as falsifiable claims, steelman the tests, measure each claim against replayable oracles, refine the weakest axis, and emit re-checkable MATCH, DRIFT, or UNVERIFIABLE verdicts.</p>
+    <p class="lede" data-canonical-purpose="crucible">Crucible is a Python claim-testing engine. It breaks a thesis into claims with stated failure conditions, measures them against supplied evidence or checks, and returns MATCH, DRIFT, or UNVERIFIABLE with a record that can be recomputed.</p>
     <p class="close">Steelman proposes what would settle the claim. Measurement decides. The verdict recomputes from the record.</p>
   </div>
   <div class="seal"><span translate="no">crucible</span> &middot; v1.2.0 on PyPI (<span translate="no">crucible-bench</span>) &middot; <span translate="no">MATCH</span>-provenance check &middot; fair-source &middot; zero core dependencies</div>
@@ -50,7 +50,7 @@
 
 <section class="mv" id="what" aria-labelledby="what-h">
   <h2 id="what-h" class="reveal">It turns a thesis into claims that can be checked.</h2>
-  <p class="body-text reveal"><span translate="no">crucible</span> is a falsifiable-claim evaluation system. A thesis is registered as claims, each with its falsification condition and a content hash. The registry stores those bodies content-addressed, so tampering is caught by re-hashing the exact claim. Gathered evidence can be one input, but Crucible also works from direct measurement files and replayable oracles.</p>
+  <p class="body-text reveal">A thesis enters as explicit claims, each paired with a falsification condition and content hash. The registry stores each claim body by content address, so a later check can detect tampering by hashing the exact text again.</p>
   <p class="body-text reveal">A witnessed assessment folds every per-claim verdict into a seal. Re-checking an assessment does not ask the engine whether it was honest; it re-derives the verdicts from the thesis and the measurements on disk. A confident assertion cannot fake the shape.</p>
   <em class="close reveal">The output is a standing, not a vibe: what matched, what drifted, and what could not be measured.</em>
 </section>

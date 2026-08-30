@@ -82,9 +82,10 @@ def test_home_defines_each_displayed_product_once_with_concrete_facts() -> None:
     assert flywheel.count("{FLYWHEEL.purpose}") == 1
     assert graphics.count("{system.purpose}") == 1
     assert "says what the product does once" in products
-    assert "<dt>Acts on</dt>" in source
-    assert "<dt>Produces</dt>" in source
     assert "<dt>Type</dt>" in source
+    assert "<dt>State</dt>" in source
+    assert "<dt>Verified</dt>" in source
+    assert "<dt>Evidence</dt>" in source
     assert "architectureRole" not in source
 
     assert set(representative_ids) == {

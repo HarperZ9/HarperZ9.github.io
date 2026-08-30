@@ -5,18 +5,18 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>forum, an accountable orchestrator for AI agents</title>
-<meta name="description" content="Most orchestrators tell you an agent finished. Forum writes down what actually happened, step by step, in a causal ledger you can replay.">
+<meta name="description" content="Forum is a zero-dependency Python orchestration engine for teams of AI agents. It turns a request into dependent tasks, runs independent tasks in parallel through local commands or model APIs, pauses for human approval, resumes interrupted runs, and records a replayable ledger.">
 <link rel="canonical" href="https://harperz9.github.io/forum.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="forum, an accountable orchestrator for AI agents">
-<meta property="og:description" content="Most orchestrators tell you an agent finished. Forum writes down what actually happened, step by step, in a causal ledger you can replay.">
+<meta property="og:description" content="Forum is a zero-dependency Python orchestration engine for teams of AI agents. It turns a request into dependent tasks, runs independent tasks in parallel through local commands or model APIs, pauses for human approval, resumes interrupted runs, and records a replayable ledger.">
 <meta property="og:url" content="https://harperz9.github.io/forum.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/forum.png">
 <meta property="og:image:alt" content="Project Telos flagship card: Forum, multi-agent orchestration. Run a team of agents, witness every step.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="forum, an accountable orchestrator for AI agents">
-<meta name="twitter:description" content="Most orchestrators tell you an agent finished. Forum writes down what actually happened, step by step, in a causal ledger you can replay.">
+<meta name="twitter:description" content="Forum is a zero-dependency Python orchestration engine for teams of AI agents. It turns a request into dependent tasks, runs independent tasks in parallel through local commands or model APIs, pauses for human approval, resumes interrupted runs, and records a replayable ledger.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/forum.png">
 <meta name="color-scheme" content="dark">
 <link rel="stylesheet" href="system/system.css?v=20260828-site-design">
@@ -32,7 +32,7 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">forum</span> &middot; accountable orchestrator</span></div>
   <div class="mid">
     <h1>Run a team of agents. <span class="g">Witness every step.</span></h1>
-    <p class="lede" data-canonical-purpose="forum">Route, plan, and execute multi-agent dependency waves across model-neutral backends with budgets, approval gates, crash-safe checkpoints, delivery contracts, service surfaces, and a replayable causal ledger.</p>
+    <p class="lede" data-canonical-purpose="forum">Forum is a zero-dependency Python orchestration engine for teams of AI agents. It turns a request into dependent tasks, runs independent tasks in parallel through local commands or model APIs, pauses for human approval, resumes interrupted runs, and records a replayable ledger.</p>
     <p class="close">The trust comes from re-deriving the chain, not from the engine asserting it ran cleanly.</p>
   </div>
   <div class="seal"><span translate="no">forum</span> &middot; v1.13.0 &middot; witnessed ledger &middot; fair-source &middot; <span translate="no">pip install forum-engine</span></div>
@@ -51,7 +51,7 @@
 <!-- WHAT IT IS -->
 <section class="mv" id="what" aria-labelledby="what-h">
   <h2 id="what-h" class="reveal">It routes the work, runs it, and records every move.</h2>
-  <p class="body-text reveal"><span translate="no">forum</span> is a daemon-hostable engine that coordinates a team of AI agents and records each step in a ledger you can verify. You give it a task. It picks the right specialist track, turns the request into a validated plan, runs the work under witness, judges each result against its instruction, and combines everything into one answer. Every one of those steps is written to the ledger with a hash that chains to the one before it.</p>
+  <p class="body-text reveal">A run moves through five recorded transitions: select a specialist track, validate a plan, execute under witness, judge each result against its instruction, and assemble the final answer. Every transition enters a hash-chained ledger, so a reviewer can reconstruct the run without trusting a prose summary.</p>
   <p class="body-text reveal">Around that core sit the parts that make a run trustworthy and lean: a bounded budget that stops a runaway loop, witnessed escalation up a ladder of stronger models, a check on whether the answer still covers the request, a delivery pass that tightens a verbose answer without dropping its terms, and clean seams for a peer brain to supply context and an outside verifier to check the work. Each is opt-in, each is witnessed, none is trusted on its word.</p>
   <em class="close reveal">None of those roles communicate by convention or trust. Each receives a witnessed input, produces a witnessed output, and hands it forward. There is no back-channel.</em>
 </section>

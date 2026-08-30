@@ -13,8 +13,8 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-C_1S2nb6.js",
-    "assets/index-XLAt4tDw.css",
+    "assets/index-CD978jfP.js",
+    "assets/index-B84GBwfW.css",
     "accountable-surface.html",
     "analytics/benchmark-evidence-status.html",
     "analytics/benchmark-evidence-status.json",
@@ -149,7 +149,7 @@ RELEASE_PATHS = (
     "truth-enb.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "8cd8b735dcdea0e6ce7d3aa35e76a408c55cf45082b599ded932a96241547e38"
+REVIEWED_RELEASE_SHA256 = "d50a38a98515f626ffac78197238c664e8fa08d7e4c510770d8590062acf0730"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -246,8 +246,18 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_fix_css = "index-Bh3pWSfE.css"
     previous_art_js = "index-BPBDYusx.js"
     previous_art_css = "index-D6A4RL1P.css"
-    assert 'src="/assets/index-C_1S2nb6.js"' in source
-    assert 'href="/assets/index-XLAt4tDw.css"' in source
+    current_js = "index-CD978jfP.js"
+    current_css = "index-B84GBwfW.css"
+    prior_reviewed_js = "index-C_1S2nb6.js"
+    prior_reviewed_css = "index-XLAt4tDw.css"
+    assert f'src="/assets/{current_js}"' in source
+    assert f'href="/assets/{current_css}"' in source
+    assert (ROOT / "assets" / current_js).is_file()
+    assert (ROOT / "assets" / current_css).is_file()
+    assert prior_reviewed_js not in source
+    assert prior_reviewed_css not in source
+    assert not (ROOT / "assets" / prior_reviewed_js).exists()
+    assert not (ROOT / "assets" / prior_reviewed_css).exists()
     assert obsolete_js not in source
     assert obsolete_css not in source
     assert not (ROOT / "assets" / obsolete_js).exists()

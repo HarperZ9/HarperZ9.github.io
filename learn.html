@@ -4,19 +4,19 @@
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>learn, a study-planning and course-logistics system</title>
-<meta name="description" content="Learn plans study from declared objectives and recorded practice, re-verifies its receipts, and automates course logistics while halting at graded work.">
+<title>learn, an accountable credential and study engine</title>
+<meta name="description" content="Learn plans and re-checks learner-authored study sessions from declared objectives and recorded attempts, using spaced review, retrieval prompts, prerequisite gating, misconception tracking, prediction, and self-explanation. It separately runs course logistics while halting at graded work.">
 <link rel="canonical" href="https://harperz9.github.io/learn.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="learn, a study-planning and course-logistics system">
-<meta property="og:description" content="Learn plans study from declared objectives and recorded practice, re-verifies its receipts, and automates course logistics while halting at graded work.">
+<meta property="og:title" content="learn, an accountable credential and study engine">
+<meta property="og:description" content="Learn plans and re-checks learner-authored study sessions from declared objectives and recorded attempts, using spaced review, retrieval prompts, prerequisite gating, misconception tracking, prediction, and self-explanation. It separately runs course logistics while halting at graded work.">
 <meta property="og:url" content="https://harperz9.github.io/learn.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/learn.png">
 <meta property="og:image:alt" content="Project Telos flagship card: learn, the learning aid. Study what you gave it, prove what you kept.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="learn, a study-planning and course-logistics system">
-<meta name="twitter:description" content="Learn plans study from declared objectives and recorded practice, re-verifies its receipts, and automates course logistics while halting at graded work.">
+<meta name="twitter:title" content="learn, an accountable credential and study engine">
+<meta name="twitter:description" content="Learn plans and re-checks learner-authored study sessions from declared objectives and recorded attempts, using spaced review, retrieval prompts, prerequisite gating, misconception tracking, prediction, and self-explanation. It separately runs course logistics while halting at graded work.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/learn.png">
 <meta name="color-scheme" content="dark">
 <link rel="stylesheet" href="system/system.css?v=20260828-site-design">
@@ -32,7 +32,7 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">learn</span> &middot; study planning and course logistics</span></div>
   <div class="mid">
     <h1>Study what you gave it. <span class="g">Prove what you kept.</span></h1>
-    <p class="lede" data-canonical-purpose="learn">Plan and re-check learner-authored study sessions from declared objectives and recorded attempts, using spaced review, retrieval prompts, prerequisite gating, misconception tracking, prediction, and self-explanation; separately run course logistics while halting at graded work.</p>
+    <p class="lede" data-canonical-purpose="learn">Learn plans and re-checks learner-authored study sessions from declared objectives and recorded attempts, using spaced review, retrieval prompts, prerequisite gating, misconception tracking, prediction, and self-explanation. It separately runs course logistics while halting at graded work.</p>
     <p class="close">The learner supplies the objectives, attempts, feedback, and graded work. Learn schedules, records, re-verifies, and preserves the handoff.</p>
   </div>
   <div class="seal"><span translate="no">learn</span> &middot; v1.6.0 &middot; published on npm &middot; zero runtime dependencies &middot; Node 20+</div>
@@ -42,10 +42,10 @@
 
 <!-- WHAT IT IS -->
 <section class="mv" id="what" aria-labelledby="what-h">
-  <h2 id="what-h" class="reveal">Study planning and course logistics are separate paths.</h2>
-  <p class="body-text reveal">The tutor path creates a session from a topic and explicit objectives, records the learner's practice attempts, schedules review, aggregates misconceptions from wrong attempts and learner-supplied feedback, orders prerequisite-aware objectives, and emits receipts that can be re-verified.</p>
-  <p class="body-text reveal">The workflow path loads a course workflow from JSON, drives reversible logistics through a fake or operator-attached browser driver, records the run, and halts at assessment steps. It does not turn arbitrary notes into a course, invent objectives, or complete graded work.</p>
-  <em class="close reveal">Learn records and schedules what the learner supplies. It does not substitute generated work for the learner's assessment.</em>
+  <h2 id="what-h" class="reveal">Two jobs, held apart on purpose.</h2>
+  <p class="body-text reveal">Learner-authored material becomes a concept map, spaced-review schedule, retrieval drills, and a small set of graded checkpoints. A separate aid path can explain the same concept several ways, generate extra practice, walk through a worked example, and coach toward the answer.</p>
+  <p class="body-text reveal">What keeps those two jobs from collapsing into each other is a hard line at the graded step. An aid-render, an explanation, a hint, a worked example the tutor generated for you, carries a marker that says so, and that marker makes it structurally ineligible to stand in for your own graded work. The course does not trust you to leave the aid out of the submission. It checks.</p>
+  <em class="close reveal">Coaching has no ceiling. Grading has a floor, and the floor holds.</em>
 </section>
 
 <!-- THE LEARNING LOOP -->

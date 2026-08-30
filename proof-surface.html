@@ -5,18 +5,18 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Proof Surface, the accountability contract</title>
-<meta name="description" content="Proof Surface keeps agent authority explicit: permission, scope, expiry, receipts, and default-deny proof packets before action.">
+<meta name="description" content="Proof Surface is a zero-dependency Python library and telos-proof CLI that validates structured AI workflow, authorization, delegation, work, and witness records, builds evidence packets across eleven domains, and returns verdicts or advisory allow, deny, or needs-human decisions without authorizing or executing actions.">
 <link rel="canonical" href="https://harperz9.github.io/proof-surface.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Proof Surface, the accountability contract">
-<meta property="og:description" content="Proof Surface checks that an AI agent really has permission before it acts, and if anything is unclear, the answer is no. It keeps the proof, not the promise: a signed record of what was done, who said yes, and when the permission runs out. Now with eleven domain proof-packet wedges, all through one telos-proof CLI. Stdlib-only Python, 652 passing tests. By Zain Dana Harper.">
+<meta property="og:description" content="Proof Surface is a zero-dependency Python library and telos-proof CLI that validates structured AI workflow, authorization, delegation, work, and witness records, builds evidence packets across eleven domains, and returns verdicts or advisory allow, deny, or needs-human decisions without authorizing or executing actions.">
 <meta property="og:url" content="https://harperz9.github.io/proof-surface.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/proof-surface.png">
 <meta property="og:image:alt" content="Proof Surface social card. Validate evidence, receipts, and gates; reject fake authority">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Proof Surface">
-<meta name="twitter:description" content="Proof Surface checks that an AI agent really has permission before it acts, and if anything is unclear, the answer is no. It keeps the proof, not the promise: a signed record of what was done, who said yes, and when the permission runs out. Now with eleven domain proof-packet wedges, all through one telos-proof CLI. Stdlib-only Python, 652 passing tests. By Zain Dana Harper.">
+<meta name="twitter:description" content="Proof Surface is a zero-dependency Python library and telos-proof CLI that validates structured AI workflow, authorization, delegation, work, and witness records, builds evidence packets across eleven domains, and returns verdicts or advisory allow, deny, or needs-human decisions without authorizing or executing actions.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/proof-surface.png">
 <meta name="twitter:image:alt" content="Proof Surface social card. Validate evidence, receipts, and gates; reject fake authority">
 <meta name="color-scheme" content="dark">
@@ -33,8 +33,7 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Proof Surface &middot; the accountability contract</span></div>
   <div class="mid">
     <h1>A grant of authority should <span class="g">expire, be traced, and say no.</span></h1>
-    <p class="lede" data-canonical-purpose="proof-surface">Proof Surface is a standard-library Python contract and validation library for authorization receipts, delegation chains, evidence packets, work records, witness receipts, and pre-execution gate requests. It validates structured JSON and returns schema issues plus advisory allow, deny, or needs-human decisions; it does not execute or enforce actions.</p>
-    <p class="close">It only ever gives a recommendation; something else does the enforcing. It can say no. It can never grant a yes on its own.</p>
+    <p class="lede" data-canonical-purpose="proof-surface">Proof Surface is a zero-dependency Python library and telos-proof CLI that validates structured AI workflow, authorization, delegation, work, and witness records, builds evidence packets across eleven domains, and returns verdicts or advisory allow, deny, or needs-human decisions without authorizing or executing actions.</p>
   </div>
   <div class="seal">public source 0.2.0 &middot; no release claim &middot; verified 2026-08-27</div>
 </div>
@@ -160,7 +159,7 @@
 <!-- honest limits -->
 <section class="mv" id="limits" aria-labelledby="limits-h">
   <h2 id="limits-h" class="reveal">What it is, and what it is not.</h2>
-  <p class="body-text reveal">Proof Surface is a small set of checkers and decision-helpers: plain Python, nothing extra to install, 652 passing tests. Every answer comes from a short, fixed list; none is invented; and not one of these pieces ever hands itself power. The rule against power-grabs is checked all the way down, even deep inside nested parts, so nothing sneaks past a check that only looked at the surface.</p>
+  <p class="body-text reveal">The package uses plain Python with nothing extra to install and currently records 652 passing tests. Every answer comes from a fixed enum rather than free-form text, and nested inputs receive the same authority checks as their outer packet.</p>
   <p class="body-text reveal">Plainly: the check only recommends. This tool advises; the program around it does the enforcing. A check that called itself the guard and ran right inside the very thing it was supposed to be guarding wouldn&rsquo;t really be a check at all. So I kept this to the promise and the record, and left the actual enforcing in your hands, where you can look at it, and swap it out, including for your own version if you don&rsquo;t trust mine.</p>
   <p class="pull reveal">This is one person&rsquo;s first working version, built from plain Python: the parts I can honestly stand behind, not a finished, hardened guard for real-world use. I would rather tell you where that line is than paint over it.</p>
   <p class="body-text reveal">The claim ledger keeps things honest about doubt: a claim nobody believes at all (confidence 0.0) is still written down, not quietly dropped or nudged upward. The evaluation contract won&rsquo;t ship on a maybe: a measurement that lands too close to call stops and asks, it never just passes. And the delegation chain&rsquo;s seal will catch a step that&rsquo;s been damaged, or quietly snipped off, or tacked on. But it can&rsquo;t stop a determined faker who rewrites a step and re-seals the whole trail to match. That edge is named out loud, not glossed over.</p>
