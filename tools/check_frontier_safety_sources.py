@@ -57,6 +57,13 @@ SCHEMA_VERSION = 1
 REGISTRY_STATUSES = {"available", "context-only", "pending"}
 STATE_STATUSES = {"available", "pending"}
 SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
+OPENAI_SITEMAP_LASTMOD_PATTERN = re.compile(
+    r"\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2}))?"
+)
+OPENAI_HREFLANG_PATTERN = re.compile(
+    r"(?:x-default|[a-z]{2,3}(?:-[a-z0-9]{2,8}){0,2})",
+    re.IGNORECASE,
+)
 
 
 def _require_nonempty_string(container: dict, key: str, context: str) -> str:
@@ -268,17 +275,17 @@ def normalize_html(
     profile: str | None = None,
     selector: str | None = None,
 ) -> str:
-    text = raw.decode("utf-8", errors="replace")
     if profile not in FINGERPRINT_PROFILES:
         raise ValueError(f"unknown fingerprint profile: {profile!r}")
+    text = "" if profile == "openai_sitemap_entry" else raw.decode("utf-8", errors="replace")
     if profile == "markdown_document":
         normalized = "\n".join(line.rstrip() for line in text.splitlines()).strip()
     elif profile == "openai_sitemap_entry":
         if type(selector) is not str or not selector:
             raise ValueError("openai_sitemap_entry requires an exact canonical URL selector")
         try:
-            document = ElementTree.fromstring(text)
-        except ElementTree.ParseError as exc:
+            document = ElementTree.fromstring(raw)
+        except (ElementTree.ParseError, UnicodeError) as exc:
             raise ValueError(f"openai_sitemap_entry response is not valid XML: {exc}") from exc
         namespace = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
         alternate_namespace = "{http://www.w3.org/1999/xhtml}"
@@ -294,14 +301,35 @@ def normalize_html(
             )
         entry = matches[0]
         lastmod = entry.findtext(f"{namespace}lastmod")
-        if type(lastmod) is not str or not lastmod:
-            raise ValueError("openai_sitemap_entry record must contain lastmod")
+        if (
+            type(lastmod) is not str
+            or lastmod != lastmod.strip()
+            or OPENAI_SITEMAP_LASTMOD_PATTERN.fullmatch(lastmod) is None
+        ):
+            raise ValueError("openai_sitemap_entry record must contain a valid lastmod")
+        try:
+            datetime.fromisoformat(lastmod.replace("Z", "+00:00"))
+        except ValueError as exc:
+            raise ValueError("openai_sitemap_entry record must contain a valid lastmod") from exc
+        expected_link_tag = f"{alternate_namespace}link"
+        for child in entry:
+            if isinstance(child.tag, str) and child.tag.rsplit("}", 1)[-1] == "link":
+                if child.tag != expected_link_tag:
+                    raise ValueError("openai_sitemap_entry alternate link has the wrong namespace")
         alternates = []
-        for link in entry.findall(f"{alternate_namespace}link"):
+        seen_alternates = set()
+        for link in entry.findall(expected_link_tag):
             href = link.get("href")
             hreflang = link.get("hreflang")
             if link.get("rel") != "alternate" or not href or not hreflang:
                 raise ValueError("openai_sitemap_entry alternate link is malformed")
+            _validate_https_url(href, "openai_sitemap_entry alternate href")
+            if OPENAI_HREFLANG_PATTERN.fullmatch(hreflang) is None:
+                raise ValueError("openai_sitemap_entry alternate hreflang is not a language tag")
+            alternate_key = (hreflang.casefold(), href)
+            if alternate_key in seen_alternates:
+                raise ValueError("openai_sitemap_entry contains a duplicate alternate link")
+            seen_alternates.add(alternate_key)
             alternates.append({"href": href, "hreflang": hreflang})
         normalized = json.dumps(
             {"alternates": sorted(alternates, key=lambda item: (item["hreflang"], item["href"])),

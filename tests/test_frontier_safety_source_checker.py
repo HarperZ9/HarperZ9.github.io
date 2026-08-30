@@ -77,6 +77,32 @@ def valid_state_source(source_id: str = "source") -> dict:
     }
 
 
+def openai_sitemap_xml(
+    *,
+    lastmod: str = "2026-08-30T06:31:43.952Z",
+    alternates: tuple[tuple[str, str], ...] = (
+        ("en-US", "https://openai.com/index/target-article/"),
+        ("es-ES", "https://openai.com/es-ES/index/target-article/"),
+    ),
+    extra_children: str = "",
+) -> bytes:
+    links = "".join(
+        f'<xhtml:link rel="alternate" hreflang="{hreflang}" href="{href}" />'
+        for hreflang, href in alternates
+    )
+    return f"""<?xml version="1.0" encoding="UTF-8"?>
+      <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+              xmlns:xhtml="http://www.w3.org/1999/xhtml">
+        <url>
+          <loc>https://openai.com/index/target-article/</loc>
+          <lastmod>{lastmod}</lastmod>
+          {links}
+          {extra_children}
+        </url>
+      </urlset>
+    """.encode()
+
+
 def test_hugging_face_profile_ignores_engagement_and_discussion_churn() -> None:
     checker = load_checker()
     article = "Verified incident account. " * 20
@@ -263,6 +289,8 @@ def test_openai_sitemap_profile_selects_one_canonical_article_entry() -> None:
             href="https://openai.com/es-ES/index/target-article/" />
           <xhtml:link rel="alternate" hreflang="en-US"
             href="https://openai.com/index/target-article/" />
+          <xhtml:link rel="alternate" hreflang="x-default"
+            href="https://openai.com/index/target-article/" />
         </url>
       </urlset>
     """
@@ -276,10 +304,123 @@ def test_openai_sitemap_profile_selects_one_canonical_article_entry() -> None:
     assert normalized == (
         '{"alternates":['
         '{"href":"https://openai.com/index/target-article/","hreflang":"en-US"},'
-        '{"href":"https://openai.com/es-ES/index/target-article/","hreflang":"es-ES"}'
+        '{"href":"https://openai.com/es-ES/index/target-article/","hreflang":"es-ES"},'
+        '{"href":"https://openai.com/index/target-article/","hreflang":"x-default"}'
         '],"lastmod":"2026-08-30T06:31:43.952Z",'
         '"loc":"https://openai.com/index/target-article/"}'
     )
+
+
+def test_openai_sitemap_profile_rejects_invalid_xml_encoding() -> None:
+    checker = load_checker()
+    raw = b"""<?xml version="1.0" encoding="UTF-8"?>
+      <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+              xmlns:xhtml="http://www.w3.org/1999/xhtml">
+        <url>
+          <loc>https://openai.com/index/target-article/</loc>
+          <lastmod>2026-08-30T06:31:43.\xffZ</lastmod>
+          <xhtml:link rel="alternate" hreflang="es-ES"
+            href="https://openai.com/es-ES/index/target-article/" />
+          <xhtml:link rel="alternate" hreflang="en-US"
+            href="https://openai.com/index/target-article/" />
+        </url>
+      </urlset>
+    """
+
+    with pytest.raises(ValueError, match="valid XML"):
+        checker.normalize_html(
+            raw,
+            profile="openai_sitemap_entry",
+            selector="https://openai.com/index/target-article/",
+        )
+
+
+@pytest.mark.parametrize(
+    ("raw", "message"),
+    [
+        (openai_sitemap_xml(lastmod="not-a-date"), "lastmod"),
+        (openai_sitemap_xml(lastmod="   "), "lastmod"),
+        (
+            openai_sitemap_xml(
+                alternates=(("en-US", "http://openai.com/index/target-article/"),)
+            ),
+            "absolute HTTPS URL",
+        ),
+        (
+            openai_sitemap_xml(
+                alternates=(("not-a-language-tag", "https://openai.com/index/target-article/"),)
+            ),
+            "language tag",
+        ),
+        (
+            openai_sitemap_xml(
+                extra_children=(
+                    '<link rel="alternate" hreflang="fr-FR" '
+                    'href="https://openai.com/fr-FR/index/target-article/" />'
+                )
+            ),
+            "namespace",
+        ),
+        (
+            openai_sitemap_xml(
+                alternates=(
+                    ("en-US", "https://openai.com/index/target-article/"),
+                    ("en-US", "https://openai.com/index/target-article/"),
+                )
+            ),
+            "duplicate",
+        ),
+    ],
+    ids=[
+        "invalid-lastmod",
+        "blank-lastmod",
+        "non-https-alternate",
+        "invalid-language-tag",
+        "wrong-link-namespace",
+        "duplicate-alternate",
+    ],
+)
+def test_openai_sitemap_profile_rejects_malformed_entry_metadata(
+    raw: bytes, message: str
+) -> None:
+    checker = load_checker()
+
+    with pytest.raises(ValueError, match=message):
+        checker.normalize_html(
+            raw,
+            profile="openai_sitemap_entry",
+            selector="https://openai.com/index/target-article/",
+        )
+
+
+def test_openai_sitemap_profile_rejects_invalid_target_structure() -> None:
+    checker = load_checker()
+    valid = openai_sitemap_xml()
+    missing_target = valid.replace(
+        b"https://openai.com/index/target-article/",
+        b"https://openai.com/index/other-article/",
+    )
+    entry_start = valid.index(b"<url>")
+    entry_end = valid.index(b"</url>") + len(b"</url>")
+    duplicate_target = valid.replace(b"</urlset>", valid[entry_start:entry_end] + b"</urlset>")
+    missing_lastmod = valid.replace(
+        b"<lastmod>2026-08-30T06:31:43.952Z</lastmod>",
+        b"",
+    )
+    cases = [
+        (b'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">', "valid XML"),
+        (missing_target, "exactly one canonical URL"),
+        (duplicate_target, "exactly one canonical URL"),
+        (missing_lastmod, "lastmod"),
+    ]
+
+    for raw, message in cases:
+        with pytest.raises(ValueError, match=message):
+            checker.normalize_html(
+                raw,
+                profile="openai_sitemap_entry",
+                selector="https://openai.com/index/target-article/",
+            )
 
 
 def test_openai_sitemap_fetch_requests_xml_and_applies_public_url_selector(monkeypatch) -> None:
