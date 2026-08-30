@@ -55,7 +55,8 @@
       "published_at": "2026-07-21",
       "role": "developer statement",
       "status": "available",
-      "fingerprint_profile": "openai_news_article",
+      "fingerprint_url": "https://openai.com/sitemap.xml/security/",
+      "fingerprint_profile": "openai_sitemap_entry",
       "does_not_prove": "The preliminary account does not substitute for the announced technical report or independent assessment."
     },
     {
@@ -78,7 +79,8 @@
       "published_at": "2026-08-04",
       "role": "developer statement",
       "status": "available",
-      "fingerprint_profile": "openai_news_article",
+      "fingerprint_url": "https://openai.com/sitemap.xml/security/",
+      "fingerprint_profile": "openai_sitemap_entry",
       "does_not_prove": "The statement reports the developer's current findings and does not independently validate containment changes."
     },
     {
@@ -89,7 +91,8 @@
       "published_at": "2026-08-18",
       "role": "developer statement",
       "status": "available",
-      "fingerprint_profile": "openai_news_article",
+      "fingerprint_url": "https://openai.com/sitemap.xml/company/",
+      "fingerprint_profile": "openai_sitemap_entry",
       "does_not_prove": "Announced pauses, monitoring, and isolation controls are not evidence that the controls are complete or independently effective."
     },
     {
@@ -100,7 +103,8 @@
       "published_at": "2026-08-19",
       "role": "developer statement",
       "status": "available",
-      "fingerprint_profile": "openai_news_article",
+      "fingerprint_url": "https://openai.com/sitemap.xml/company/",
+      "fingerprint_profile": "openai_sitemap_entry",
       "does_not_prove": "A preview and planned rollout do not independently demonstrate deployment coverage, privacy properties, detection performance, or control effectiveness."
     },
     {
