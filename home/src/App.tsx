@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, type ReactNode } from "react";
 import GroundField from "./GroundField";
 import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./site-routes";
 import { CAPABILITY_DOMAINS, EVIDENCE_STREAM, SYSTEMS, systemById, type SystemRecord } from "./system-registry";
@@ -447,6 +447,12 @@ function CapabilityOverview() {
             <img className="research-figure-image" src="/analytics/model-pass-at-1-comparison.svg" alt="Paired 164-task pass-at-one result: base Qwen 14B passed 141 tasks and Flywheel 14B passed 136; the difference was not statistically significant." width="1120" height="334" loading="lazy" />
           </a>
           <p>Same task set and harness. This measures two model artifacts, not market superiority or general agent reliability.</p>
+          <FigureFacts rows={[
+            ["n", "164 code-completion tasks"],
+            ["units", "pass@1 and passed tasks"],
+            ["retrieved", "2026-08-28"],
+            ["source", <a href="/analytics/model-pass-at-1-comparison.html">result, table, and limits</a>],
+          ]} />
         </article>
         <article className="evidence-figure-card" data-evidence-figure-card>
           <h3>Current cross-harness pilot</h3>
@@ -454,6 +460,12 @@ function CapabilityOverview() {
             <img className="research-figure-image" src="/analytics/current-cross-harness-pilot.svg" alt="Four receipt-verified cross-harness attempts with zero valid comparable task outcomes." width="1120" height="480" loading="lazy" />
           </a>
           <p>4/4 receipts verified, but no valid comparable task outcome. The durations are diagnostic only.</p>
+          <FigureFacts rows={[
+            ["n", "4 receipt-verified attempts"],
+            ["units", "attempts, outcomes, and diagnostic duration"],
+            ["retrieved", "2026-08-28"],
+            ["source", <a href="/analytics/current-cross-harness-pilot.html">result, table, and limits</a>],
+          ]} />
         </article>
         <article className="evidence-figure-card" data-evidence-figure-card>
           <h3>Recovered actions by day</h3>
@@ -466,7 +478,12 @@ function CapabilityOverview() {
             loading="lazy"
           />
           <p>Five daily counts from Hugging Face host telemetry. Unit: recovered logged actions. The figure does not measure unique attacks, severity, intent, or harm.</p>
-          <p><a href="/figures/recovered-actions-by-day.json">Read the dataset and provenance</a></p>
+          <FigureFacts rows={[
+            ["n", "5 daily observations"],
+            ["units", "recovered logged actions"],
+            ["retrieved", "2026-08-27"],
+            ["source", <><a href="/figures/recovered-actions-by-day.html">figure and accessible table</a> · <a href="/figures/recovered-actions-by-day.json">dataset</a></>],
+          ]} />
         </article>
         <article className="evidence-figure-card" data-evidence-figure-card>
           <h3>Reported motive labels</h3>
@@ -479,7 +496,12 @@ function CapabilityOverview() {
             loading="lazy"
           />
           <p>Non-exclusive labels from the independent investigator sample. Categories overlap, so counts must not be summed into a population total.</p>
-          <p><a href="/figures/motive-sample-nonexclusive.json">Read the dataset and provenance</a></p>
+          <FigureFacts rows={[
+            ["n", "100-agent peak-hour sample"],
+            ["units", "agents, non-exclusive"],
+            ["retrieved", "2026-08-27"],
+            ["source", <><a href="/figures/motive-sample-nonexclusive.html">figure and accessible table</a> · <a href="/figures/motive-sample-nonexclusive.json">dataset</a></>],
+          ]} />
         </article>
       </div>
       <div className="family-browser">
@@ -500,6 +522,19 @@ function CapabilityOverview() {
         </div>
       </div>
     </section>
+  );
+}
+
+function FigureFacts({ rows }: { rows: Array<[string, ReactNode]> }) {
+  return (
+    <dl className="figure-facts">
+      {rows.map(([label, value]) => (
+        <div key={label}>
+          <dt>{label}</dt>
+          <dd>{value}</dd>
+        </div>
+      ))}
+    </dl>
   );
 }
 

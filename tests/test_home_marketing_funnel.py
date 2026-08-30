@@ -142,6 +142,23 @@ def test_home_uses_real_figures_with_units_and_limitations() -> None:
     assert "evidence-figure-grid" in css
 
 
+def test_home_figure_cards_expose_dataset_facts_and_accessible_tables() -> None:
+    source = read(HOME_SOURCE)
+
+    assert source.count("<FigureFacts rows={[") == 4
+    for value in (
+        '["n", "164 code-completion tasks"]',
+        '["n", "4 receipt-verified attempts"]',
+        '["n", "5 daily observations"]',
+        '["n", "100-agent peak-hour sample"]',
+        'href="/figures/recovered-actions-by-day.html"',
+        'href="/figures/motive-sample-nonexclusive.html"',
+        'href="/analytics/model-pass-at-1-comparison.html"',
+        'href="/analytics/current-cross-harness-pilot.html"',
+    ):
+        assert value in source
+
+
 def test_home_metadata_and_noscript_follow_the_same_product_funnel() -> None:
     template = read(HOME_INDEX)
     head = template.split("</head>", 1)[0]
