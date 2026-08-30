@@ -13,8 +13,8 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-CD978jfP.js",
-    "assets/index-B84GBwfW.css",
+    "assets/index-BgJU4hdF.js",
+    "assets/index-BxIHiu3n.css",
     "accountable-surface.html",
     "analytics/benchmark-evidence-status.html",
     "analytics/benchmark-evidence-status.json",
@@ -149,7 +149,7 @@ RELEASE_PATHS = (
     "truth-enb.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "d50a38a98515f626ffac78197238c664e8fa08d7e4c510770d8590062acf0730"
+REVIEWED_RELEASE_SHA256 = "cb95fe976b66bc8e7733f264598b5cb9dec78208e1b9fbdcafe3edb0ad06a7cf"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -246,8 +246,8 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_fix_css = "index-Bh3pWSfE.css"
     previous_art_js = "index-BPBDYusx.js"
     previous_art_css = "index-D6A4RL1P.css"
-    current_js = "index-CD978jfP.js"
-    current_css = "index-B84GBwfW.css"
+    current_js = "index-BgJU4hdF.js"
+    current_css = "index-BxIHiu3n.css"
     prior_reviewed_js = "index-C_1S2nb6.js"
     prior_reviewed_css = "index-XLAt4tDw.css"
     assert f'src="/assets/{current_js}"' in source

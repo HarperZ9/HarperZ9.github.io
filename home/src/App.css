@@ -420,6 +420,40 @@ code{
   line-height:1.55;
 }
 
+.figure-facts{
+  display:grid;
+  gap:.42rem;
+  margin:.95rem 0 0;
+  padding-top:.8rem;
+  border-top:1px solid rgba(17,16,20,.18);
+  color:#343840;
+  font-size:.82rem;
+  line-height:1.4;
+}
+
+.figure-facts > div{
+  display:grid;
+  grid-template-columns:5.2rem minmax(0,1fr);
+  gap:.7rem;
+}
+
+.figure-facts dt{
+  font-family:var(--font-mono);
+  font-size:.74rem;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color:#5e6870;
+}
+
+.figure-facts dd{
+  min-width:0;
+  margin:0;
+}
+
+.figure-facts a{
+  color:#0b4a52;
+}
+
 .research-figure-image{
   display:block;
   width:100%;
