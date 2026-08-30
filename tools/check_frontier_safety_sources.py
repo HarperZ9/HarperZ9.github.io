@@ -15,6 +15,7 @@ from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
+from xml.etree import ElementTree
 
 
 USER_AGENT = "ZentropyLabs-Frontier-Safety-Briefing/1.0 (+https://harperz9.github.io/frontier-safety.html)"
@@ -49,6 +50,7 @@ HTML_FINGERPRINT_PROFILES = {
 FINGERPRINT_PROFILES = HTML_FINGERPRINT_PROFILES | {
     "markdown_document",
     "nvd_cve_api",
+    "openai_sitemap_entry",
     "pdf_document",
 }
 SCHEMA_VERSION = 1
@@ -261,12 +263,54 @@ class _SubstantiveHTMLParser(HTMLParser):
             self.parts.append(data)
 
 
-def normalize_html(raw: bytes, profile: str | None = None) -> str:
+def normalize_html(
+    raw: bytes,
+    profile: str | None = None,
+    selector: str | None = None,
+) -> str:
     text = raw.decode("utf-8", errors="replace")
     if profile not in FINGERPRINT_PROFILES:
         raise ValueError(f"unknown fingerprint profile: {profile!r}")
     if profile == "markdown_document":
         normalized = "\n".join(line.rstrip() for line in text.splitlines()).strip()
+    elif profile == "openai_sitemap_entry":
+        if type(selector) is not str or not selector:
+            raise ValueError("openai_sitemap_entry requires an exact canonical URL selector")
+        try:
+            document = ElementTree.fromstring(text)
+        except ElementTree.ParseError as exc:
+            raise ValueError(f"openai_sitemap_entry response is not valid XML: {exc}") from exc
+        namespace = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+        alternate_namespace = "{http://www.w3.org/1999/xhtml}"
+        matches = []
+        for entry in document.findall(f"{namespace}url"):
+            loc = entry.findtext(f"{namespace}loc")
+            if loc == selector:
+                matches.append(entry)
+        if len(matches) != 1:
+            raise ValueError(
+                "openai_sitemap_entry response must contain exactly one canonical URL "
+                f"matching {selector!r}"
+            )
+        entry = matches[0]
+        lastmod = entry.findtext(f"{namespace}lastmod")
+        if type(lastmod) is not str or not lastmod:
+            raise ValueError("openai_sitemap_entry record must contain lastmod")
+        alternates = []
+        for link in entry.findall(f"{alternate_namespace}link"):
+            href = link.get("href")
+            hreflang = link.get("hreflang")
+            if link.get("rel") != "alternate" or not href or not hreflang:
+                raise ValueError("openai_sitemap_entry alternate link is malformed")
+            alternates.append({"href": href, "hreflang": hreflang})
+        normalized = json.dumps(
+            {"alternates": sorted(alternates, key=lambda item: (item["hreflang"], item["href"])),
+             "lastmod": lastmod,
+             "loc": selector},
+            ensure_ascii=False,
+            separators=(",", ":"),
+            sort_keys=True,
+        )
     elif profile == "nvd_cve_api":
         try:
             document = json.loads(text)
@@ -315,14 +359,22 @@ def normalize_html(raw: bytes, profile: str | None = None) -> str:
     return normalized
 
 
-def fetch(url: str, timeout: float, profile: str | None = None) -> dict:
+def fetch(
+    url: str,
+    timeout: float,
+    profile: str | None = None,
+    selector: str | None = None,
+) -> dict:
     is_pdf = profile == "pdf_document"
     is_json = profile == "nvd_cve_api"
+    is_xml = profile == "openai_sitemap_entry"
     accept = (
         "application/pdf"
         if is_pdf
         else "application/json"
         if is_json
+        else "application/xml"
+        if is_xml
         else "text/html,application/xhtml+xml"
     )
     max_bytes = MAX_PDF_BYTES if is_pdf else MAX_BYTES
@@ -346,7 +398,7 @@ def fetch(url: str, timeout: float, profile: str | None = None) -> dict:
                 "etag": response.headers.get("ETag"),
                 "last_modified": response.headers.get("Last-Modified"),
             }
-        normalized = normalize_html(raw, profile=profile)
+        normalized = normalize_html(raw, profile=profile, selector=selector)
         return {
             "url": response.geturl(),
             "sha256": hashlib.sha256(normalized.encode("utf-8")).hexdigest(),
@@ -365,7 +417,7 @@ def check(registry_path: Path, state_path: Path | None, timeout: float) -> dict:
         prior = {}
     observed_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
     results = []
-    cache: dict[tuple[str, str | None], dict] = {}
+    cache: dict[tuple[str, str | None, str | None], dict] = {}
     for source in registry["sources"]:
         if source["status"] == "pending":
             results.append({"id": source["id"], "url": source["url"], "status": "pending", "changed": False})
@@ -373,10 +425,15 @@ def check(registry_path: Path, state_path: Path | None, timeout: float) -> dict:
         try:
             profile = source.get("fingerprint_profile")
             fingerprint_url = source.get("fingerprint_url", source["url"])
-            cache_key = (fingerprint_url, profile)
+            selector = source["url"] if profile == "openai_sitemap_entry" else None
+            cache_key = (fingerprint_url, profile, selector)
             fetched = cache.get(cache_key)
             if fetched is None:
-                fetched = fetch(fingerprint_url, timeout, profile=profile)
+                fetched = (
+                    fetch(fingerprint_url, timeout, profile=profile, selector=selector)
+                    if selector is not None
+                    else fetch(fingerprint_url, timeout, profile=profile)
+                )
                 cache[cache_key] = fetched
             fetched = dict(fetched)
             fetched["url"] = source["url"]

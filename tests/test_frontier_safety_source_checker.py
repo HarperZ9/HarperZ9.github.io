@@ -247,6 +247,92 @@ def test_nvd_cve_api_profile_rejects_invalid_json() -> None:
         checker.normalize_html(b"not JSON " * 40, profile="nvd_cve_api")
 
 
+def test_openai_sitemap_profile_selects_one_canonical_article_entry() -> None:
+    checker = load_checker()
+    raw = b"""<?xml version="1.0" encoding="UTF-8"?>
+      <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+              xmlns:xhtml="http://www.w3.org/1999/xhtml">
+        <url>
+          <loc>https://openai.com/index/other-article/</loc>
+          <lastmod>2026-08-01T00:00:00.000Z</lastmod>
+        </url>
+        <url>
+          <loc>https://openai.com/index/target-article/</loc>
+          <lastmod>2026-08-30T06:31:43.952Z</lastmod>
+          <xhtml:link rel="alternate" hreflang="es-ES"
+            href="https://openai.com/es-ES/index/target-article/" />
+          <xhtml:link rel="alternate" hreflang="en-US"
+            href="https://openai.com/index/target-article/" />
+        </url>
+      </urlset>
+    """
+
+    normalized = checker.normalize_html(
+        raw,
+        profile="openai_sitemap_entry",
+        selector="https://openai.com/index/target-article/",
+    )
+
+    assert normalized == (
+        '{"alternates":['
+        '{"href":"https://openai.com/index/target-article/","hreflang":"en-US"},'
+        '{"href":"https://openai.com/es-ES/index/target-article/","hreflang":"es-ES"}'
+        '],"lastmod":"2026-08-30T06:31:43.952Z",'
+        '"loc":"https://openai.com/index/target-article/"}'
+    )
+
+
+def test_openai_sitemap_fetch_requests_xml_and_applies_public_url_selector(monkeypatch) -> None:
+    checker = load_checker()
+    raw = b"""<?xml version="1.0" encoding="UTF-8"?>
+      <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+              xmlns:xhtml="http://www.w3.org/1999/xhtml">
+        <url>
+          <loc>https://openai.com/index/target-article/</loc>
+          <lastmod>2026-08-30T06:31:43.952Z</lastmod>
+          <xhtml:link rel="alternate" hreflang="es-ES"
+            href="https://openai.com/es-ES/index/target-article/" />
+          <xhtml:link rel="alternate" hreflang="en-US"
+            href="https://openai.com/index/target-article/" />
+        </url>
+      </urlset>
+    """
+    requests = []
+
+    class FakeResponse:
+        headers = {"ETag": '"sitemap-etag"', "Last-Modified": None}
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def read(self, limit: int) -> bytes:
+            assert limit > len(raw)
+            return raw
+
+        def geturl(self) -> str:
+            return "https://openai.com/sitemap.xml/security/"
+
+    def fake_urlopen(request, timeout: float):
+        requests.append(request)
+        return FakeResponse()
+
+    monkeypatch.setattr(checker, "urlopen", fake_urlopen)
+
+    result = checker.fetch(
+        "https://openai.com/sitemap.xml/security/",
+        timeout=1,
+        profile="openai_sitemap_entry",
+        selector="https://openai.com/index/target-article/",
+    )
+
+    assert requests[0].get_header("Accept") == "application/xml"
+    assert result["url"] == "https://openai.com/sitemap.xml/security/"
+    assert result["normalized_characters"] == 250
+
+
 def test_nvd_cve_api_fetch_requests_json_and_hashes_canonical_record(monkeypatch) -> None:
     checker = load_checker()
     raw = json.dumps(
@@ -377,6 +463,25 @@ def test_nvd_source_fingerprints_the_official_cve_api() -> None:
         "https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=CVE-2025-3248"
     )
     assert source["fingerprint_profile"] == "nvd_cve_api"
+
+
+def test_openai_sources_fingerprint_first_party_sitemap_entries() -> None:
+    registry = json.loads(
+        (ROOT / "project-docs" / "zentropy-import" / "2026-08-24-source-register.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    sources = {item["id"]: item for item in registry["sources"]}
+    expected_routes = {
+        "openai-hugging-face-incident": "https://openai.com/sitemap.xml/security/",
+        "openai-third-party-cyber-evaluations": "https://openai.com/sitemap.xml/security/",
+        "openai-pacing-model-development": "https://openai.com/sitemap.xml/company/",
+        "openai-private-safety-processing-preview": "https://openai.com/sitemap.xml/company/",
+    }
+
+    for source_id, fingerprint_url in expected_routes.items():
+        assert sources[source_id]["fingerprint_url"] == fingerprint_url
+        assert sources[source_id]["fingerprint_profile"] == "openai_sitemap_entry"
 
 
 def test_new_active_source_is_unbaselined_and_review_required(tmp_path: Path, monkeypatch) -> None:
@@ -516,6 +621,48 @@ def test_cache_key_includes_fingerprint_profile(tmp_path: Path, monkeypatch) -> 
         "sha-for-openai_news_article",
         "sha-for-markdown_document",
     ]
+
+
+def test_openai_sitemap_sources_use_public_urls_as_distinct_selectors(
+    tmp_path: Path, monkeypatch
+) -> None:
+    checker = load_checker()
+    registry_path = tmp_path / "registry.json"
+    sitemap_url = "https://openai.com/sitemap.xml/security/"
+    public_urls = [
+        "https://openai.com/index/article-one/",
+        "https://openai.com/index/article-two/",
+    ]
+    write_json(
+        registry_path,
+        registry_payload(
+            [
+                {
+                    "id": f"source-{index}",
+                    "url": public_url,
+                    "fingerprint_url": sitemap_url,
+                    "status": "available",
+                    "fingerprint_profile": "openai_sitemap_entry",
+                }
+                for index, public_url in enumerate(public_urls)
+            ]
+        ),
+    )
+    calls = []
+
+    def sitemap_fetch(url: str, timeout: float, profile: str, selector: str) -> dict:
+        calls.append((url, profile, selector))
+        return fetched(url, f"sha-for-{selector}")
+
+    monkeypatch.setattr(checker, "fetch", sitemap_fetch)
+
+    report = checker.check(registry_path, None, timeout=1)
+
+    assert calls == [
+        (sitemap_url, "openai_sitemap_entry", public_urls[0]),
+        (sitemap_url, "openai_sitemap_entry", public_urls[1]),
+    ]
+    assert [item["url"] for item in report["sources"]] == public_urls
 
 
 def test_official_fingerprint_url_is_fetched_but_public_url_is_reported(
