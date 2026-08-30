@@ -171,11 +171,10 @@ def _repack_docx(path: Path, fixed_datetime: datetime) -> None:
             path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9,
         ) as target:
             for name in sorted(source.namelist()):
-                original = source.getinfo(name)
                 info = zipfile.ZipInfo(name, fixed_datetime.timetuple()[:6])
                 info.compress_type = zipfile.ZIP_DEFLATED
-                info.external_attr = original.external_attr
-                info.create_system = original.create_system
+                info.create_system = 0
+                info.external_attr = 0o600 << 16
                 target.writestr(info, source.read(name))
 
 

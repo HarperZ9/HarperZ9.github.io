@@ -1,10 +1,12 @@
 """Deterministic ATS artifact generation from reviewed public HTML."""
 from __future__ import annotations
 
+from datetime import datetime, timezone
 import hashlib
 from html.parser import HTMLParser
 from importlib.metadata import version
 import json
+import runpy
 import shutil
 import subprocess
 import sys
@@ -232,6 +234,33 @@ def test_explicit_source_epoch_makes_repeated_builds_byte_identical(
         first_hash = hashlib.sha256((first / name).read_bytes()).hexdigest()
         second_hash = hashlib.sha256((second / name).read_bytes()).hexdigest()
         assert first_hash == second_hash, name
+
+
+def test_docx_repack_discards_platform_specific_zip_metadata(tmp_path: Path) -> None:
+    """Equivalent source packages must repack to identical bytes on every OS."""
+    paths = []
+    for label, create_system in (("windows", 0), ("unix", 3)):
+        path = tmp_path / f"{label}.docx"
+        with zipfile.ZipFile(
+            path,
+            "w",
+            compression=zipfile.ZIP_DEFLATED,
+            compresslevel=9,
+        ) as package:
+            info = zipfile.ZipInfo("word/document.xml", (2026, 8, 30, 17, 0, 0))
+            info.compress_type = zipfile.ZIP_DEFLATED
+            info.create_system = create_system
+            info.external_attr = 0o600 << 16
+            package.writestr(info, b"<document/>")
+        paths.append(path)
+
+    repack = runpy.run_path(str(SCRIPT))["_repack_docx"]
+    fixed_datetime = datetime.fromtimestamp(1788109200, timezone.utc)
+    for path in paths:
+        repack(path, fixed_datetime)
+
+    windows, unix = paths
+    assert windows.read_bytes() == unix.read_bytes()
 
 
 def test_fresh_build_matches_each_committed_release_artifact(tmp_path: Path) -> None:
