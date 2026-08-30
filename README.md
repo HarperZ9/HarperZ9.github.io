@@ -2,14 +2,16 @@
 
 ![HarperZ9.github.io hero](docs/brand/portfolio-site-hero.png)
 
-> Static public site for Project Telos: fourteen engines, recorded workflows,
-> papers, graphics, AI-assisted design, and paid-work routes.
+> Static public site for Zain Dana Harper and Zentropy Labs: Flywheel, its
+> supporting systems, the Retro Systems Lab, research publications, and
+> hiring and collaboration routes.
 
-HarperZ9.github.io is the public workshop surface for **Zain Dana Harper**
-and Project Telos. It maps the range -- local-model workflows, codebase maps,
-compiler tools, real-time graphics, color science, AI-assisted design,
-research infrastructure, and clear writing -- and gives a visitor a way in: open a demo, inspect an
-engine, read a paper, or start a work thread.
+HarperZ9.github.io is the public workshop surface for **Zain Dana Harper** and
+Zentropy Labs. Flywheel is the primary platform; the other products are
+engines, plug-ins, adapters, evaluation layers, infrastructure, research, or
+standalone creative tools. The site gives a visitor a clear way in: hire or
+collaborate, inspect a product, read a sourced publication, or open the code
+behind a verified release.
 
 ## Deployment source
 
@@ -55,7 +57,9 @@ accessible, and honest about maturity; private systems stay bounded off-page.
 - `index.html` -- generated React home from the verified `telos-v2` build.
 - `papers/` -- direct PDFs of the six published papers, built from the
   LaTeX sources with tectonic.
-- `overview.html` -- the engine room: the flagship lineup.
+- `overview.html` -- the compact product map, grouped by primary domain.
+- `catalog.html` -- the detailed evidence registry, including secondary-domain
+  references and source records.
 - `studio.html` -- the Studio, a live media instrument for rendering and
   measuring the frame.
 - `demo-index.html` -- runnable browser demos.

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-08-30 - Product map and evidence registry clarity
+
+- Clarified the distinction between the compact product map and the detailed
+  evidence registry. A product can appear once in the map and in additional
+  registry domains without implying duplicate products or hierarchy.
+- Preserved the release fingerprint after the copy correction and kept the
+  catalog generator aligned with the explanatory note.
+
 ## 2026-06-29 - Public Delivery Refresh
 
 - Added this public changelog.

@@ -51,6 +51,8 @@ def test_engines_page_is_the_generated_product_overview() -> None:
     assert 'src="system/nav.js?v=20260828-site-design"' in page
     assert "Products, grouped by primary domain." in page
     assert f"{len(public_records)} public product records across {len(payload['domains'])} domains." in page
+    assert "Short map, detailed record elsewhere" in page
+    assert 'href="catalog.html">evidence registry</a>' in page
 
     for domain in payload["domains"]:
         assert f'id="overview-{domain["id"]}"' in page
