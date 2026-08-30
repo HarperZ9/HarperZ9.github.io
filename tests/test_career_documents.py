@@ -23,6 +23,14 @@ RESUME_PDFS = (
     "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf",
     "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf",
 )
+STATUS_BOUNDARY_DOCS = (
+    "resume-support-operations.html",
+    "resume-evaluation-tooling.html",
+    "resume-public-operations.html",
+    "resume-grounds.html",
+    "cv.html",
+)
+MARKDOWN_STATUS_BOUNDARY_DOCS = ("resume.md", "cv.md")
 
 
 def read(name: str) -> str:
@@ -37,6 +45,50 @@ def test_every_career_document_exists() -> None:
         assert (ROOT / record["path"]).is_file(), record["path"]
     for retired in manifest["retired_artifacts"]:
         assert not (ROOT / retired).exists(), retired
+
+
+def test_experience_dates_use_the_adopted_low_claim_boundary() -> None:
+    """Public documents must not imply an unknown current or end status."""
+    expected = (
+        "Technical Networking Support, Xbox/Microsoft contract | subcontracted through Stream/Convergys | Wilsonville, Oregon | 2013 to 2014",
+        "Operations and Commercial Arboriculture Lead | Seattle-area family business | started 2015",
+        "Freelance Technical Writer, Documentation, and Product Operations | independent practice | started 2017",
+        "Independent Systems Engineer | independent practice | started 2023",
+    )
+    boundary = (
+        "These start years do not state current status or an end date; "
+        "both remain unspecified."
+    )
+    for name in STATUS_BOUNDARY_DOCS:
+        src = read(name)
+        assert "current status unconfirmed" not in src, name
+        for line in expected:
+            assert line in src, f"{name}: missing {line!r}"
+        assert boundary in src, f"{name}: missing explicit status boundary"
+
+
+def test_public_markdown_career_sources_preserve_the_same_date_and_employer_boundary() -> None:
+    """Raw public Markdown must not contradict the generated application lanes."""
+    boundary = (
+        "These start years do not state current status or an end date; "
+        "both remain unspecified."
+    )
+    for name in MARKDOWN_STATUS_BOUNDARY_DOCS:
+        src = read(name)
+        assert "2023-present" not in src, name
+        assert "2017-present" not in src, name
+        assert "2015-present" not in src, name
+        assert "Xbox Division | Microsoft" not in src, name
+        assert "Redmond, Washington" not in src, name
+        assert "Seattle / remote | started 2023" in src, name
+        assert "Remote | started 2017" in src, name
+        assert "Seattle area | started 2015" in src, name
+        assert "Technical Networking Support, Xbox/Microsoft contract" in src, name
+        assert (
+            "Wilsonville, Oregon | 2013 to 2014 | subcontracted through Stream/Convergys"
+            in src
+        ), name
+        assert boundary in src, name
 
 
 def test_downloadable_resume_assets_are_pdf_documents() -> None:

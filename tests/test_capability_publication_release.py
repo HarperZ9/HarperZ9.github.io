@@ -43,6 +43,7 @@ RELEASE_PATHS = (
     "briefings/2026-08-26-openai-hugging-face-incident/sources.json",
     "briefings/index.html",
     "career/career-artifacts.json",
+    "career/career-build-receipt.json",
     "career/open-source-census.json",
     "career/Zain-Dana-Harper-CV.docx",
     "career/Zain-Dana-Harper-CV.pdf",
@@ -61,6 +62,7 @@ RELEASE_PATHS = (
     "catalog.html",
     "cover-letter.html",
     "cv.html",
+    "cv.md",
     "dossier.html",
     "feed.json",
     "feed.xml",
@@ -136,6 +138,7 @@ RELEASE_PATHS = (
     "retro.html",
     "research.html",
     "resume.html",
+    "resume.md",
     "resume-evaluation-tooling.html",
     "resume-grounds.html",
     "resume-public-operations.html",
@@ -149,7 +152,7 @@ RELEASE_PATHS = (
     "truth-enb.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "1a5a4d48f93d8a152b80b04639b792d900ff6e92d0c5ea5a3e93213686cf82bd"
+REVIEWED_RELEASE_SHA256 = "b4ec85f594706645b1ba2ad9f079a35173fa3294c6f63e5bfbef4b9ddbedf47a"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

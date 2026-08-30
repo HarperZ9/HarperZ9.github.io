@@ -179,8 +179,10 @@ LLM. Open is not accepted.
 
 ### Professional experience
 
-**Independent Systems Engineer / Founder-Builder | Zentropy Labs (Project Telos, HarperZ9)**
-Seattle / remote | 2023-present
+These start years do not state current status or an end date; both remain unspecified.
+
+**Independent Systems Engineer | independent practice**
+Seattle / remote | started 2023
 
 - Build and maintain the public systems portfolio across Python, Rust, C++,
   HLSL, TypeScript/JavaScript, and web-native surfaces.
@@ -191,7 +193,7 @@ Seattle / remote | 2023-present
   and release decisions explicit.
 
 **Freelance Technical Writer / GRC Documentation / Product Operations**
-Remote | 2017-present
+Remote | started 2017
 
 - Produce API and implementation guides, security and compliance
   documentation, proposals, RFP and grant material, release notes, and
@@ -202,18 +204,19 @@ Remote | 2017-present
   terms outside the public portfolio.
 
 **Operations and Commercial Arboriculture Lead | Family business**
-Seattle area | 2015-present
+Seattle area | started 2015
 
-- Operated tree crews from the ground for eleven years: ran the rigging
+- Applicant-reported eleven years operating tree crews from the ground: ran the rigging
   systems, judged clearances and how far limbs would swing relative to
   structures and people, and served as the second set of eyes for the person
   in the air.
-- Led client intake, estimates, site assessment, scheduling, safety judgment,
-  crew and vendor coordination, proposals, and customer communication.
+- Handled client intake, estimates, site assessment, scheduling, safety
+  judgment, proposals, and customer communication; coordinated crew and vendor
+  work.
 - Carry field-tested operating discipline into software and research systems.
 
-**Technical Networking Support, Xbox Division | Microsoft**
-Redmond, Washington | 2013-2014
+**Technical Networking Support, Xbox/Microsoft contract**
+Wilsonville, Oregon | 2013 to 2014 | subcontracted through Stream/Convergys
 
 - Diagnosed TCP/IP, DNS, NAT, firewall, router, and account-adjacent console
   networking issues across phone and chat support.

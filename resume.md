@@ -93,8 +93,10 @@ leadership.
 
 ### Experience
 
-**Independent Systems Engineer / Founder-Builder | Zentropy Labs (Project Telos, HarperZ9)**
-Seattle / remote | 2023-present
+These start years do not state current status or an end date; both remain unspecified.
+
+**Independent Systems Engineer | independent practice**
+Seattle / remote | started 2023
 
 - Own architecture, implementation, integration, documentation, testing,
   packaging, public demos, and release evidence across a multi-repository
@@ -104,7 +106,7 @@ Seattle / remote | 2023-present
   discipline.
 
 **Freelance Technical Writer / Documentation and Product Operations**
-Remote | 2017-present
+Remote | started 2017
 
 - Produce API and implementation guides, security and compliance
   documentation, proposals, release notes, and support material.
@@ -112,17 +114,17 @@ Remote | 2017-present
   response, and audit-support concepts in a technical-writing capacity.
 
 **Operations and Commercial Arboriculture Lead | Family business**
-Seattle area | 2015-present
+Seattle area | started 2015
 
-- Operated tree crews from the ground for eleven years: ran the rigging
+- Applicant-reported eleven years operating tree crews from the ground: ran the rigging
   systems, judged clearances and how far limbs would swing relative to
   structures and people, and served as the second set of eyes for the person
   in the air.
-- Led client intake, estimates, site assessment, scheduling, safety judgment,
-  and crew and vendor coordination.
+- Handled client intake, estimates, site assessment, scheduling, and safety
+  judgment; coordinated crew and vendor work.
 
-**Technical Networking Support, Xbox Division | Microsoft**
-Redmond, Washington | 2013-2014
+**Technical Networking Support, Xbox/Microsoft contract**
+Wilsonville, Oregon | 2013 to 2014 | subcontracted through Stream/Convergys
 
 - Diagnosed TCP/IP, DNS, NAT, firewall, router, and account-adjacent console
   networking issues across phone and chat support.
