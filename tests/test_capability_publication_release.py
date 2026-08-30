@@ -149,7 +149,7 @@ RELEASE_PATHS = (
     "truth-enb.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "3dca9fabb391b880864ea82a51daa7e3d041d5316e214ee3bdff6f5f3696fa7e"
+REVIEWED_RELEASE_SHA256 = "8cd8b735dcdea0e6ce7d3aa35e76a408c55cf45082b599ded932a96241547e38"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -287,6 +287,17 @@ def test_six_briefing_figures_keep_semantic_nonvisual_fallbacks() -> None:
         assert '<svg role="img"' in source, stem
         assert "aria-labelledby=" in source, stem
         assert re.search(r'data-figure-kind="(?:relationship|timeline|matrix|bar)"', source), stem
+
+
+def test_recovered_actions_bar_fits_the_desktop_viewport() -> None:
+    source = _text("figures/recovered-actions-by-day.html")
+    styles = _text("system/figure.css")
+    assert 'class="figure-svg-scroll figure-svg-scroll--fit"' in source
+    assert re.search(
+        r"\.figure-svg-scroll--fit\s+svg\s*\{[^}]*min-width:\s*0",
+        styles,
+        re.DOTALL,
+    )
 
 
 def test_every_evidence_plate_has_readable_labels_and_explicit_scope() -> None:
