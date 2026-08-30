@@ -114,7 +114,7 @@
   "build_inputs": [
     {
       "path": "tools/build_career_artifacts.py",
-      "sha256": "bbd43c5f6f3cbb46c0f30ef8791b2e0f564bee6fdd8c099a6fded6d4f9211d55"
+      "sha256": "f477388631122e184171d7a089f41f6feb49bac9f295009937ed7df8502df8f1"
     },
     {
       "path": "requirements-career-docs.txt",

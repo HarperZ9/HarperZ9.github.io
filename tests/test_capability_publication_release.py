@@ -152,7 +152,7 @@ RELEASE_PATHS = (
     "truth-enb.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "b4ec85f594706645b1ba2ad9f079a35173fa3294c6f63e5bfbef4b9ddbedf47a"
+REVIEWED_RELEASE_SHA256 = "69d86c45a6af3bbe9342a84e5e7948f56400222c940a88e96cc6d4c741bf30e8"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

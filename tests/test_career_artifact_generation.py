@@ -274,6 +274,16 @@ def test_fresh_build_matches_each_committed_release_artifact(tmp_path: Path) -> 
         (ROOT / "career" / "career-build-receipt.json").read_text(encoding="utf-8")
     )
     assert committed_receipt["source_epoch"] == 1788109200
+    committed_inputs = {
+        row["path"]: row for row in committed_receipt["build_inputs"]
+    }
+    for relative in (
+        "tools/build_career_artifacts.py",
+        "requirements-career-docs.txt",
+    ):
+        assert committed_inputs[relative]["sha256"] == hashlib.sha256(
+            (ROOT / relative).read_bytes()
+        ).hexdigest()
     committed_by_name = {
         Path(row["path"]).name: row for row in committed_receipt["artifacts"]
     }
