@@ -122,7 +122,8 @@
       "published_at": null,
       "role": "vulnerability record",
       "status": "context-only",
-      "fingerprint_profile": "nvd_vulnerability_detail",
+      "fingerprint_url": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=CVE-2025-3248",
+      "fingerprint_profile": "nvd_cve_api",
       "does_not_prove": "A vulnerability record does not establish that a specific actor used it in a specific incident."
     },
     {
