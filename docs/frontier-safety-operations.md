@@ -154,3 +154,17 @@ This was a monitoring false-positive review, not a new factual development. It d
 - Local verification before merge: `python -m pytest` passed `374` tests; `git diff --check` passed; Python Playwright rendered the article at desktop and mobile widths with the article loaded, source links present, diagram alt present, no horizontal overflow, and no page errors.
 - Live verification after Pages deployment: article, writing index, all three Markdown article parts, and SVG diagram returned HTTP `200`; live article shell contained the title and diagram link; live Markdown parts contained the `warning shot` framing, public-safety boundary, and source links.
 - Social distribution: no X or LinkedIn post was made in this receipt. Social derivatives remain a separate representational-publication step.
+
+## 2026-08-30 NVD monitor repair receipt
+
+- Trigger: scheduled run `33319946864` recorded four OpenAI HTTP 403 responses and an NVD `nvd_vulnerability_detail container not found` error. The monitor correctly published nothing and did not advance reviewed state.
+- Reproduction: a fresh local run at `2026-08-30T22:14:55Z` reached all OpenAI sources. It reproduced only the NVD failure and recorded two still-unreviewed OpenAI fingerprint deltas. The four earlier OpenAI 403 responses are therefore treated as transient fetch failures, not accepted content state.
+- Root cause: the NVD vulnerability-detail route returned a 2,445-byte NVD home document to the unattended client instead of the registered vulnerability container.
+- Repair: the public reading URL remains `https://nvd.nist.gov/vuln/detail/CVE-2025-3248`, while the fingerprint route now uses NVD's official CVE API at `https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=CVE-2025-3248`.
+- Fingerprint contract: the `nvd_cve_api` profile requires exactly one well-formed CVE record, canonicalizes object-key order and formatting, and excludes request-time transport metadata such as the API response timestamp. A substantive record edit still changes the fingerprint.
+- Source review: the reviewed API response returned exactly one record, `CVE-2025-3248`, status `Analyzed`, published `2025-04-07T15:15:44.897`, last modified `2026-07-14T23:17:27.010`. Its English description concerns Langflow versions before 1.3.0 and an unauthenticated code-injection condition. The source remains context-only, and no current public briefing text depends on that CVE record.
+- Adapter commit: `f288640`.
+- Reviewed baseline transition: only `nvd-cve-2025-3248` was accepted at `2026-08-30T22:20:46Z`; its canonical API-record SHA-256 is `340c5961a3a7119e85e464563cad0c8452ca6cfd9fb886734f69a3fe594dd440` over 3,791 normalized characters. The two OpenAI deltas were not accepted.
+- Post-transition check: `2026-08-30T22:21:10Z`, zero fetch errors, zero unbaselined sources, and two review-required deltas: `openai-pacing-model-development` and `openai-private-safety-processing-preview`.
+- Verification: the focused source-checker suite passed 91 tests; the complete Python suite passed 413 tests; the live full-registry check returned zero errors.
+- Publication state: no new digest, correction, social post, or reviewed OpenAI baseline was created by this repair.
