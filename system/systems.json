@@ -72,7 +72,7 @@
         "flywheel-release-v0-3-10",
         "index-release-v2-10-0"
       ],
-      "claimScope": "Flywheel declares and launches Index as its workspace-structure MCP lane. The Flywheel lane metadata currently trails the published Index 2.10.0 package."
+      "claimScope": "Flywheel declares and launches Index 2.10.0 as its workspace-structure MCP lane. Index remains an independently published package."
     },
     {
       "source": "flywheel",
@@ -144,7 +144,7 @@
         "flywheel-release-v0-3-10",
         "mneme-public-source"
       ],
-      "claimScope": "Flywheel declares and launches Mneme as its memory MCP lane. Flywheel lane metadata currently trails Mneme source version 0.2.0."
+      "claimScope": "Flywheel declares and launches Mneme 0.2.0 as its memory MCP lane. Mneme remains an independently published package."
     },
     {
       "source": "flywheel",
@@ -309,10 +309,10 @@
           "id": "flywheel-index-lane-code",
           "type": "code-permalink",
           "label": "Flywheel Index lane declaration",
-          "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L63-L66",
-          "date": "2026-08-28",
+          "href": "https://github.com/HarperZ9/flywheel/blob/c1c89d8/harness/lanes_registry.py#L43-L46",
+          "date": "2026-08-29",
           "status": "verified",
-          "summary": "The pinned lane registry declares Index's package, command, MCP arguments, source repository, and role; its version field is visibly stale against the published package."
+          "summary": "The pinned lane registry declares Index 2.10.0, its package, command, MCP arguments, source repository, and role."
         },
         {
           "id": "flywheel-forum-lane-code",
@@ -363,10 +363,10 @@
           "id": "flywheel-mneme-lane-code",
           "type": "code-permalink",
           "label": "Flywheel Mneme lane declaration",
-          "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L91-L94",
-          "date": "2026-08-28",
+          "href": "https://github.com/HarperZ9/flywheel/blob/c1c89d8/harness/lanes_registry.py#L71-L74",
+          "date": "2026-08-29",
           "status": "verified",
-          "summary": "The pinned lane registry declares Mneme's package, command, MCP arguments, source repository, and role; its version field is visibly stale against source."
+          "summary": "The pinned lane registry declares Mneme 0.2.0, its package, command, MCP arguments, source repository, and role."
         },
         {
           "id": "flywheel-accountable-surface-lane-code",
@@ -526,7 +526,7 @@
           "href": "https://pypi.org/project/index-graph/2.10.0/",
           "date": "2026-08-28",
           "status": "verified",
-          "summary": "The package index and source metadata both report index-graph 2.10.0; the local installed copy remains 2.9.0."
+          "summary": "The package index and source metadata both report index-graph 2.10.0; Flywheel's lane registry now pins 2.10.0."
         }
       ],
       "limitations": [
