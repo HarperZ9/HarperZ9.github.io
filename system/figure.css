@@ -230,6 +230,7 @@ body.figure-document main { min-width: 0; }
   height: auto;
   background: var(--figure-ground);
 }
+.figure-svg-scroll--fit svg { min-width: 0; }
 .figure-svg-scroll--medium svg { min-width: 80rem; }
 .figure-svg-scroll--wide svg { min-width: 96rem; }
 .figure-svg-scroll--timeline svg { min-width: 137.5rem; }
