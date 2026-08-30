@@ -194,6 +194,104 @@ def test_markdown_profile_normalizes_stable_source_content() -> None:
     assert "# Incident timeline" in normalized
 
 
+def test_nvd_cve_api_profile_ignores_transport_metadata_and_formatting() -> None:
+    checker = load_checker()
+    first = {
+        "timestamp": "2026-08-30T00:00:00.000",
+        "totalResults": 1,
+        "vulnerabilities": [
+            {
+                "cve": {
+                    "id": "CVE-2025-3248",
+                    "lastModified": "2026-07-14T23:17:27.010",
+                    "descriptions": [{"lang": "en", "value": "Substantive record. " * 20}],
+                }
+            }
+        ],
+    }
+    second = {
+        "vulnerabilities": first["vulnerabilities"],
+        "totalResults": 1,
+        "timestamp": "2026-08-31T00:00:00.000",
+    }
+
+    assert checker.normalize_html(
+        json.dumps(first, indent=2).encode(), profile="nvd_cve_api"
+    ) == checker.normalize_html(
+        json.dumps(second, separators=(",", ":")).encode(), profile="nvd_cve_api"
+    )
+
+
+def test_nvd_cve_api_profile_detects_substantive_record_change() -> None:
+    checker = load_checker()
+    before = {
+        "timestamp": "first",
+        "vulnerabilities": [{"cve": {"id": "CVE-2025-3248", "record": "before " * 40}}],
+    }
+    after = {
+        "timestamp": "second",
+        "vulnerabilities": [{"cve": {"id": "CVE-2025-3248", "record": "after " * 40}}],
+    }
+
+    assert checker.normalize_html(
+        json.dumps(before).encode(), profile="nvd_cve_api"
+    ) != checker.normalize_html(
+        json.dumps(after).encode(), profile="nvd_cve_api"
+    )
+
+
+def test_nvd_cve_api_profile_rejects_invalid_json() -> None:
+    checker = load_checker()
+
+    with pytest.raises(ValueError, match="valid JSON"):
+        checker.normalize_html(b"not JSON " * 40, profile="nvd_cve_api")
+
+
+def test_nvd_cve_api_fetch_requests_json_and_hashes_canonical_record(monkeypatch) -> None:
+    checker = load_checker()
+    raw = json.dumps(
+        {
+            "timestamp": "2026-08-30T00:00:00.000",
+            "vulnerabilities": [
+                {"cve": {"id": "CVE-2025-3248", "record": "Substantive finding. " * 20}}
+            ],
+        },
+        indent=2,
+    ).encode()
+    requests = []
+
+    class FakeResponse:
+        headers = {"ETag": '"json-etag"', "Last-Modified": None}
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def read(self, limit: int) -> bytes:
+            assert limit > len(raw)
+            return raw
+
+        def geturl(self) -> str:
+            return "https://services.example.test/record"
+
+    def fake_urlopen(request, timeout: float):
+        requests.append(request)
+        return FakeResponse()
+
+    monkeypatch.setattr(checker, "urlopen", fake_urlopen)
+
+    result = checker.fetch(
+        "https://services.example.test/record", timeout=1, profile="nvd_cve_api"
+    )
+
+    assert requests[0].get_header("Accept") == "application/json"
+    assert result["url"] == "https://services.example.test/record"
+    assert result["sha256"] == "118af69e03d13539b33495f952b8ffc72f42f6d8b289b53b82e08a9905faed52"
+    assert result["normalized_characters"] == 462
+
+
 def test_pdf_profile_fingerprints_the_exact_document_bytes(monkeypatch) -> None:
     checker = load_checker()
     raw = b"%PDF-1.7\n" + b"A" * 400
@@ -264,6 +362,21 @@ def test_registered_active_sources_have_known_explicit_profiles() -> None:
 
     assert active
     assert all(source.get("fingerprint_profile") in checker.FINGERPRINT_PROFILES for source in active)
+
+
+def test_nvd_source_fingerprints_the_official_cve_api() -> None:
+    registry = json.loads(
+        (ROOT / "project-docs" / "zentropy-import" / "2026-08-24-source-register.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    source = next(item for item in registry["sources"] if item["id"] == "nvd-cve-2025-3248")
+
+    assert source["url"] == "https://nvd.nist.gov/vuln/detail/CVE-2025-3248"
+    assert source["fingerprint_url"] == (
+        "https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=CVE-2025-3248"
+    )
+    assert source["fingerprint_profile"] == "nvd_cve_api"
 
 
 def test_new_active_source_is_unbaselined_and_review_required(tmp_path: Path, monkeypatch) -> None:

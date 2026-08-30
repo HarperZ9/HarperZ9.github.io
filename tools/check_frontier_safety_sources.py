@@ -46,7 +46,11 @@ HTML_FINGERPRINT_PROFILES = {
     "openai_news_article",
     "sysdig_blog_article",
 }
-FINGERPRINT_PROFILES = HTML_FINGERPRINT_PROFILES | {"markdown_document", "pdf_document"}
+FINGERPRINT_PROFILES = HTML_FINGERPRINT_PROFILES | {
+    "markdown_document",
+    "nvd_cve_api",
+    "pdf_document",
+}
 SCHEMA_VERSION = 1
 REGISTRY_STATUSES = {"available", "context-only", "pending"}
 STATE_STATUSES = {"available", "pending"}
@@ -263,6 +267,28 @@ def normalize_html(raw: bytes, profile: str | None = None) -> str:
         raise ValueError(f"unknown fingerprint profile: {profile!r}")
     if profile == "markdown_document":
         normalized = "\n".join(line.rstrip() for line in text.splitlines()).strip()
+    elif profile == "nvd_cve_api":
+        try:
+            document = json.loads(text)
+        except json.JSONDecodeError as exc:
+            raise ValueError(f"nvd_cve_api response is not valid JSON: {exc}") from exc
+        if type(document) is not dict:
+            raise ValueError("nvd_cve_api response root must be an object")
+        vulnerabilities = document.get("vulnerabilities")
+        if type(vulnerabilities) is not list or len(vulnerabilities) != 1:
+            raise ValueError("nvd_cve_api response must contain exactly one vulnerability")
+        record = vulnerabilities[0]
+        if type(record) is not dict or type(record.get("cve")) is not dict:
+            raise ValueError("nvd_cve_api vulnerability must contain a cve object")
+        cve_id = record["cve"].get("id")
+        if type(cve_id) is not str or re.fullmatch(r"CVE-\d{4}-\d{4,}", cve_id) is None:
+            raise ValueError("nvd_cve_api vulnerability must contain a valid CVE id")
+        normalized = json.dumps(
+            record,
+            ensure_ascii=False,
+            separators=(",", ":"),
+            sort_keys=True,
+        )
     else:
         parser = _SubstantiveHTMLParser(profile)
         parser.feed(text)
@@ -291,7 +317,14 @@ def normalize_html(raw: bytes, profile: str | None = None) -> str:
 
 def fetch(url: str, timeout: float, profile: str | None = None) -> dict:
     is_pdf = profile == "pdf_document"
-    accept = "application/pdf" if is_pdf else "text/html,application/xhtml+xml"
+    is_json = profile == "nvd_cve_api"
+    accept = (
+        "application/pdf"
+        if is_pdf
+        else "application/json"
+        if is_json
+        else "text/html,application/xhtml+xml"
+    )
     max_bytes = MAX_PDF_BYTES if is_pdf else MAX_BYTES
     request = Request(url, headers={"User-Agent": USER_AGENT, "Accept": accept})
     with urlopen(request, timeout=timeout) as response:
