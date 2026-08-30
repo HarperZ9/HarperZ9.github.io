@@ -184,6 +184,8 @@ def test_registry_relationships_are_typed_and_evidence_backed() -> None:
 def test_catalog_keeps_product_rows_compact_and_routes_to_full_definitions() -> None:
     registry = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
     catalog = (ROOT / "catalog.html").read_text(encoding="utf-8")
+    assert "Detailed registry, short map linked" in catalog
+    assert 'href="overview.html">product map</a>' in catalog
 
     for record in registry["systems"]:
         link = f'<a href="{record["href"]}">{record["name"]}</a>'
