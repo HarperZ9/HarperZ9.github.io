@@ -50,7 +50,7 @@ def test_every_career_document_exists() -> None:
 def test_experience_dates_use_the_adopted_low_claim_boundary() -> None:
     """Public documents must not imply an unknown current or end status."""
     expected = (
-        "Technical Networking Support, Xbox/Microsoft contract | subcontracted through Stream/Convergys | Wilsonville, Oregon | 2013 to 2014",
+        "Technical Networking Support, Xbox/Microsoft contract | subcontracted through Stream/Convergys | Wilsonville, Oregon | 2014 to 2015",
         "Operations and Commercial Arboriculture Lead | Seattle-area family business | started 2015",
         "Freelance Technical Writer, Documentation, and Product Operations | independent practice | started 2017",
         "Independent Systems Engineer | independent practice | started 2023",
@@ -85,7 +85,7 @@ def test_public_markdown_career_sources_preserve_the_same_date_and_employer_boun
         assert "Seattle area | started 2015" in src, name
         assert "Technical Networking Support, Xbox/Microsoft contract" in src, name
         assert (
-            "Wilsonville, Oregon | 2013 to 2014 | subcontracted through Stream/Convergys"
+            "Wilsonville, Oregon | 2014 to 2015 | subcontracted through Stream/Convergys"
             in src
         ), name
         assert boundary in src, name

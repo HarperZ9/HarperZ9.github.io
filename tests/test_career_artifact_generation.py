@@ -135,7 +135,7 @@ def test_generated_formats_are_parseable_one_page_and_status_bounded(
     assert proc.returncode == 0, proc.stdout + proc.stderr
 
     expected = (
-        "Technical Networking Support, Xbox/Microsoft contract | subcontracted through Stream/Convergys | Wilsonville, Oregon | 2013 to 2014",
+        "Technical Networking Support, Xbox/Microsoft contract | subcontracted through Stream/Convergys | Wilsonville, Oregon | 2014 to 2015",
         "Operations and Commercial Arboriculture Lead | Seattle-area family business | started 2015",
         "Freelance Technical Writer, Documentation, and Product Operations | independent practice | started 2017",
         "Independent Systems Engineer | independent practice | started 2023",

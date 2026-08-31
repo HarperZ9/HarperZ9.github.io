@@ -124,7 +124,7 @@ Seattle area | started 2015
   judgment; coordinated crew and vendor work.
 
 **Technical Networking Support, Xbox/Microsoft contract**
-Wilsonville, Oregon | 2013 to 2014 | subcontracted through Stream/Convergys
+Wilsonville, Oregon | 2014 to 2015 | subcontracted through Stream/Convergys
 
 - Diagnosed TCP/IP, DNS, NAT, firewall, router, and account-adjacent console
   networking issues across phone and chat support.
