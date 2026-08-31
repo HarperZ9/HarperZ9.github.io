@@ -24,6 +24,12 @@ RECORD = {
     "10.5281/zenodo.20778927": "archived corpus",
     "10.5281/zenodo.20773724": "archived corpus",
 }
+STATUS_PHRASE = {
+    "systems paper": "systems paper",
+    "published preprint": "published preprint",
+    "research note": "note",
+    "archived corpus": "archived research corpus",
+}
 WORDS = {2: "Two", 6: "Six", 8: "Eight"}
 
 
@@ -40,16 +46,28 @@ def test_publications_lists_the_whole_record() -> None:
     assert dois(src) == set(RECORD), "publications.html and the deposited record disagree"
 
 
+def test_each_doi_keeps_its_exact_record_status() -> None:
+    src = read("publications.html")
+    rows = re.findall(r'<div class="index-row" role="listitem".*?</div>', src, re.S)
+
+    for doi, status in RECORD.items():
+        matching_rows = [row for row in rows if doi in row]
+        assert len(matching_rows) == 1, f"{doi} must appear in exactly one record row"
+        row_text = " ".join(re.sub(r"<[^>]+>", " ", matching_rows[0]).split()).lower()
+        assert STATUS_PHRASE[status] in row_text, f"{doi} lost its {status!r} status"
+
+
 def test_the_stated_count_matches_the_list() -> None:
     """The heading says a number in words. It has to be the number of things
     below it, or the page is lying in its largest type."""
     src = read("publications.html")
-    heading = re.search(r"<h2[^>]*>([^<]+)</h2>", src)
+    heading = re.search(r'<h2[^>]*id="research-records-h"[^>]*>([^<]+)</h2>', src)
     assert heading, "no section heading on publications.html"
     said = heading.group(1)
     expected = WORDS[len(RECORD)]
     assert expected.lower() in said.lower(), f"heading says {said!r}, the list holds {len(RECORD)}"
-    rows = src.count('role="listitem"')
+    record_section = src.split('id="research-records"', 1)[1].split("</section>", 1)[0]
+    rows = record_section.count('role="listitem"')
     assert rows == len(RECORD), f"{rows} rows for {len(RECORD)} records"
 
 
