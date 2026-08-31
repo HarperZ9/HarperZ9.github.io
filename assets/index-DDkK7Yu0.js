@@ -530,7 +530,7 @@ Error generating stack: `+e.message+`
         "flywheel-release-v0-3-10",
         "index-release-v2-10-0"
       ],
-      "claimScope": "Flywheel declares and launches Index as its workspace-structure MCP lane. The Flywheel lane metadata currently trails the published Index 2.10.0 package."
+      "claimScope": "Flywheel declares and launches Index 2.10.0 as its workspace-structure MCP lane. Index remains an independently published package."
     },
     {
       "source": "flywheel",
@@ -602,7 +602,7 @@ Error generating stack: `+e.message+`
         "flywheel-release-v0-3-10",
         "mneme-public-source"
       ],
-      "claimScope": "Flywheel declares and launches Mneme as its memory MCP lane. Flywheel lane metadata currently trails Mneme source version 0.2.0."
+      "claimScope": "Flywheel declares and launches Mneme 0.2.0 as its memory MCP lane. Mneme remains an independently published package."
     },
     {
       "source": "flywheel",
@@ -705,7 +705,7 @@ Error generating stack: `+e.message+`
     {
       "id": "flywheel",
       "name": "Flywheel",
-      "purpose": "Flywheel sends a task to a selected local or hosted AI model, gives that model approved tools, checks the resulting work, and returns a journal and receipt that can be reviewed or replayed.",
+      "purpose": "Flywheel is a local AI workflow engine and native desktop app. It sends a task to a selected local or hosted model through an approved tool route, rechecks the result, and records witnessed receipts that can be reviewed or replayed.",
       "useCases": [
         "agent workflow orchestration",
         "model-neutral execution",
@@ -767,10 +767,10 @@ Error generating stack: `+e.message+`
           "id": "flywheel-index-lane-code",
           "type": "code-permalink",
           "label": "Flywheel Index lane declaration",
-          "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L63-L66",
-          "date": "2026-08-28",
+          "href": "https://github.com/HarperZ9/flywheel/blob/c1c89d8/harness/lanes_registry.py#L43-L46",
+          "date": "2026-08-29",
           "status": "verified",
-          "summary": "The pinned lane registry declares Index's package, command, MCP arguments, source repository, and role; its version field is visibly stale against the published package."
+          "summary": "The pinned lane registry declares Index 2.10.0, its package, command, MCP arguments, source repository, and role."
         },
         {
           "id": "flywheel-forum-lane-code",
@@ -821,10 +821,10 @@ Error generating stack: `+e.message+`
           "id": "flywheel-mneme-lane-code",
           "type": "code-permalink",
           "label": "Flywheel Mneme lane declaration",
-          "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L91-L94",
-          "date": "2026-08-28",
+          "href": "https://github.com/HarperZ9/flywheel/blob/c1c89d8/harness/lanes_registry.py#L71-L74",
+          "date": "2026-08-29",
           "status": "verified",
-          "summary": "The pinned lane registry declares Mneme's package, command, MCP arguments, source repository, and role; its version field is visibly stale against source."
+          "summary": "The pinned lane registry declares Mneme 0.2.0, its package, command, MCP arguments, source repository, and role."
         },
         {
           "id": "flywheel-accountable-surface-lane-code",
@@ -874,7 +874,7 @@ Error generating stack: `+e.message+`
     {
       "id": "telos",
       "name": "Telos",
-      "purpose": "Telos is a local Node CLI and MCP server that connects a workstation to research, creative, model-foundry, native-control, and proof tools. It accepts CLI or MCP requests plus local manifests, fixtures, and workspace state, then returns structured tool results, readiness diagnostics, hashes, proof packets, and replayable action records.",
+      "purpose": "Telos is a zero-dependency local workbench for creating, simulating, and replaying AI work. Its CLI and MCP servers expose workstation checks, creative simulations, research proofs, model and learning experiments, and browser or Windows automation, with a re-checkable receipt for each run.",
       "useCases": [
         "shared human-model workspaces",
         "MCP tool execution",
@@ -949,7 +949,7 @@ Error generating stack: `+e.message+`
     {
       "id": "index",
       "name": "Index",
-      "purpose": "Derive offline repository wikis, dependency and symbol graphs, workspace atlases, context envelopes, architecture checks, and freshness evidence from file-and-line-grounded source.",
+      "purpose": "Index is a zero-dependency Python mapper for repositories and multi-repo workspaces. It reads manifests, imports, symbols, and local documentation, then writes offline wikis, dependency maps, context packets, and architecture checks with file-and-line evidence.",
       "useCases": [
         "multi-repository mapping",
         "dependency analysis",
@@ -984,7 +984,7 @@ Error generating stack: `+e.message+`
           "href": "https://pypi.org/project/index-graph/2.10.0/",
           "date": "2026-08-28",
           "status": "verified",
-          "summary": "The package index and source metadata both report index-graph 2.10.0; the local installed copy remains 2.9.0."
+          "summary": "The package index and source metadata both report index-graph 2.10.0; Flywheel's lane registry now pins 2.10.0."
         }
       ],
       "limitations": [
@@ -1018,7 +1018,7 @@ Error generating stack: `+e.message+`
     {
       "id": "gather",
       "name": "Gather",
-      "purpose": "Extract and crawl difficult research sources, including JavaScript-rendered pages, authenticated APIs, scholarly records, PDFs, OCR, audio, video, feeds, and local documents; store content-addressed corpora and attach re-checkable provenance to every item.",
+      "purpose": "Gather extracts and crawls difficult research sources, including JavaScript-rendered pages, authenticated APIs, scholarly records, PDFs, OCR, audio, video, feeds, and local documents. It stores content-addressed corpora and attaches re-checkable provenance to every item.",
       "useCases": [
         "structured extraction, crawling, and change tracking",
         "scholarly and hard-source research intake",
@@ -1088,7 +1088,7 @@ Error generating stack: `+e.message+`
     {
       "id": "forum",
       "name": "Forum",
-      "purpose": "Route, plan, and execute multi-agent dependency waves across model-neutral backends with budgets, approval gates, crash-safe checkpoints, delivery contracts, service surfaces, and a replayable causal ledger.",
+      "purpose": "Forum is a zero-dependency Python orchestration engine for teams of AI agents. It turns a request into dependent tasks, runs independent tasks in parallel through local commands or model APIs, pauses for human approval, resumes interrupted runs, and records a replayable ledger.",
       "useCases": [
         "multi-agent orchestration",
         "dependency-aware planning",
@@ -1161,7 +1161,7 @@ Error generating stack: `+e.message+`
     {
       "id": "crucible",
       "name": "Crucible",
-      "purpose": "Register a thesis as falsifiable claims, steelman the tests, measure each claim against replayable oracles, refine the weakest axis, and emit re-checkable MATCH, DRIFT, or UNVERIFIABLE verdicts.",
+      "purpose": "Crucible is a Python claim-testing engine. It breaks a thesis into claims with stated failure conditions, measures them against supplied evidence or checks, and returns MATCH, DRIFT, or UNVERIFIABLE with a record that can be recomputed.",
       "useCases": [
         "thesis and falsification evaluation",
         "cleanroom verifier handoff",
@@ -1232,7 +1232,7 @@ Error generating stack: `+e.message+`
     {
       "id": "emet",
       "name": "EMET",
-      "purpose": "Verify whether bytes reaching a model, reviewer, or pipeline still match their claimed source; anchor, compare, neutralize embedded authority, audit drift, and mint portable closed-verdict receipts across four implementations.",
+      "purpose": "EMET verifies whether bytes reaching a model, reviewer, or pipeline still match their claimed source. It anchors and compares content, neutralizes embedded authority, audits drift, and mints portable closed-verdict receipts across four implementations.",
       "useCases": [
         "byte-integrity verification",
         "proof-packet witnessing",
@@ -1302,7 +1302,7 @@ Error generating stack: `+e.message+`
     {
       "id": "buildlang",
       "name": "BuildLang",
-      "purpose": "Compile a systems language with typed capability effects, sum and linear types, a production C backend, two-way C FFI, shader output, CLI and LSP tooling, and re-checkable build receipts.",
+      "purpose": "BuildLang compiles a systems language with typed capability effects, sum and linear types, a production C backend, two-way C FFI, shader output, CLI and LSP tooling, and re-checkable build receipts.",
       "useCases": [
         "capability-aware systems programming",
         "native C-path compilation",
@@ -1371,7 +1371,7 @@ Error generating stack: `+e.message+`
     {
       "id": "learn",
       "name": "Learn",
-      "purpose": "Plan and re-check learner-authored study sessions from declared objectives and recorded attempts, using spaced review, retrieval prompts, prerequisite gating, misconception tracking, prediction, and self-explanation; separately run course logistics while halting at graded work.",
+      "purpose": "Learn plans and re-checks learner-authored study sessions from declared objectives and recorded attempts, using spaced review, retrieval prompts, prerequisite gating, misconception tracking, prediction, and self-explanation. It separately runs course logistics while halting at graded work.",
       "useCases": [
         "study planning and retrieval practice",
         "practice-ledger and mastery re-verification",
@@ -1440,7 +1440,7 @@ Error generating stack: `+e.message+`
     {
       "id": "relay",
       "name": "Relay",
-      "purpose": "Run a permission-gated coding agent across local models, subscription CLIs, APIs, gateways, and cloud endpoints, with failover, acceptance checks, resumable sessions, MCP access, and a hash-chained trajectory.",
+      "purpose": "Relay runs a permission-gated coding agent across local models, subscription CLIs, APIs, gateways, and cloud endpoints, with failover, acceptance checks, resumable sessions, MCP access, and a hash-chained trajectory.",
       "useCases": [
         "model-neutral coding workflows",
         "provider failover",
@@ -1510,7 +1510,7 @@ Error generating stack: `+e.message+`
     {
       "id": "plexus",
       "name": "Plexus",
-      "purpose": "Read declared interop manifests, derive producer-consumer wiring and dependency plans, emit inspectable graphs and pipeline scripts, expose the mesh over MCP, and explicitly probe registered Flywheel lanes when requested.",
+      "purpose": "Plexus is a local CLI and MCP discovery layer for agent toolchains. It reads each tool's declared inputs and outputs, finds compatible connections, and produces dependency graphs or runnable pipeline scripts; it probes registered Flywheel lanes only when explicitly requested.",
       "useCases": [
         "tool discovery",
         "capability matching",
@@ -1647,7 +1647,7 @@ Error generating stack: `+e.message+`
     {
       "id": "studio-engine",
       "name": "Studio Engine",
-      "purpose": "Generate, critique, refine, and preserve replayable creative worlds from one expression algebra that emits shader programs, audio graphs, motion timelines, previews, measurements, and receipts.",
+      "purpose": "Studio Engine is a local Python simulation and rendering engine that generates shader visuals, audio, and motion from one reusable scene description. It exposes a CLI and local HTTP API, can render deterministic PNG frames, and records hashes and a receipt for each generated scene.",
       "useCases": [
         "seeded world generation",
         "shader and sound authoring",
@@ -1725,7 +1725,7 @@ Error generating stack: `+e.message+`
     {
       "id": "build-color",
       "name": "Build Color",
-      "purpose": "Measure, convert, compare, and transform digital color across perceptual spaces, HDR tone maps, appearance models, chromatic adaptation, spectral utilities, gamut mapping, ICC profiles, LUTs, and an optional GUI.",
+      "purpose": "Build Color measures, converts, compares, and transforms digital color across perceptual spaces, HDR tone maps, appearance models, chromatic adaptation, spectral utilities, gamut mapping, ICC profiles, and LUTs, with an optional GUI.",
       "useCases": [
         "color measurement",
         "HDR tone mapping",
@@ -1794,7 +1794,7 @@ Error generating stack: `+e.message+`
     {
       "id": "retro-engine",
       "name": "Retro Engine",
-      "purpose": "Run an embedded browser studio that accepts images, drawing, GLSL, and audio traces; applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects; then exports images, patches, MIDI, relief or disc data, and Loom handoffs.",
+      "purpose": "Retro Engine is an embedded browser studio for images, drawing, GLSL, and audio traces. It applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects, then exports images, patches, MIDI, relief or disc data, and Loom handoffs.",
       "useCases": [
         "play",
         "browser pixel studio",
@@ -1866,7 +1866,7 @@ Error generating stack: `+e.message+`
     {
       "id": "engine-revival",
       "name": "Engine Revival",
-      "purpose": "Engine Revival stores and validates the public-safe metadata, target matrices, reproduction recipes, evidence packets, and reports needed to rebuild historical game engines, SDKs, rendering libraries, CGI toolkits, and studio technology.",
+      "purpose": "Engine Revival is a Python tool for building, validating, auditing, indexing, and rendering public-safe metadata about historical engine revivals. It can also generate an out-of-tree BRender CMake harness from a public checkout.",
       "useCases": [
         "preserve",
         "repository evidence refresh",
@@ -1948,7 +1948,7 @@ Error generating stack: `+e.message+`
     {
       "id": "brender-archival",
       "name": "BRender Archival",
-      "purpose": "BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the source, provenance, and verification record for release.",
+      "purpose": "BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the generated harness, README, captured test transcripts, checksums, and a release receipt without copying the upstream source.",
       "useCases": [
         "verify",
         "specific restoration evidence",
@@ -2020,7 +2020,7 @@ Error generating stack: `+e.message+`
     {
       "id": "proof-surface",
       "name": "Proof Surface",
-      "purpose": "Proof Surface is a standard-library Python contract and validation library for authorization receipts, delegation chains, evidence packets, work records, witness receipts, and pre-execution gate requests. It validates structured JSON and returns schema issues plus advisory allow, deny, or needs-human decisions; it does not execute or enforce actions.",
+      "purpose": "Proof Surface is a zero-dependency Python library and telos-proof CLI that validates structured AI workflow, authorization, delegation, work, and witness records, builds evidence packets across eleven domains, and returns verdicts or advisory allow, deny, or needs-human decisions without authorizing or executing actions.",
       "useCases": [
         "authorization receipt review",
         "bounded agent actions",
@@ -2090,7 +2090,7 @@ Error generating stack: `+e.message+`
     {
       "id": "elder-enb",
       "name": "Elder ENB",
-      "purpose": "Build an independently authored nine-stage ENBSeries 0.504 shader suite for Skyrim SE/AE, with five quality tiers, bounded cinematic effects, identity fallbacks, deterministic packaging, and an optional native frame-pulse runtime.",
+      "purpose": "Elder ENB is an independently authored nine-stage ENBSeries 0.504 shader suite for Skyrim SE/AE, with five quality tiers, bounded cinematic effects, identity fallbacks, deterministic packaging, and an optional native frame-pulse runtime.",
       "useCases": [
         "ENB configuration review",
         "graphics runtime integration",
@@ -2177,7 +2177,7 @@ Error generating stack: `+e.message+`
     {
       "id": "truth-enb",
       "name": "Truth ENB",
-      "purpose": "Build a from-scratch ENBSeries 0.504 shader suite for Skyrim SE/AE, with a computed physical atmosphere and sky, raymarched clouds, an aurora curtain, exposure and tone mapping, five quality tiers, and an optional native camera bridge.",
+      "purpose": "Truth ENB is a from-scratch ENBSeries 0.504 shader suite for Skyrim SE/AE, with a computed physical atmosphere and sky, raymarched clouds, an aurora curtain, exposure and tone mapping, five quality tiers, and an optional native camera bridge.",
       "useCases": [
         "installing a complete Skyrim SE/AE ENB preset",
         "running one authored look across five performance tiers",
@@ -2265,7 +2265,7 @@ Error generating stack: `+e.message+`
     {
       "id": "enb-runtime-core",
       "name": "ENB Runtime Core",
-      "purpose": "Provide a C++23 embedded runtime library that identifies an already-loaded ENBSeries host, validates its SDK surface, queues callbacks outside callback context, coordinates save quiescence and reapplication, and gates a fail-closed Skyrim engine bridge.",
+      "purpose": "ENB Runtime Core is a C++23 embedded runtime library that identifies an already-loaded ENBSeries host, validates its SDK surface, queues callbacks outside callback context, coordinates save quiescence and reapplication, and gates a fail-closed Skyrim engine bridge.",
       "useCases": [
         "ENB runtime integration",
         "graphics plugin inspection",
@@ -2336,7 +2336,7 @@ Error generating stack: `+e.message+`
     {
       "id": "skyrimbridge",
       "name": "SkyrimBridge",
-      "purpose": "Expose Skyrim live engine state, record editing surfaces, asset conversion, versioned ABI, diagnostics, and shared-memory command channels to shaders and external tools through an SKSE plugin, with an optional D3D11 rendering tier.",
+      "purpose": "SkyrimBridge is an SKSE plugin that exposes Skyrim live engine state, record editing surfaces, asset conversion, a versioned ABI, diagnostics, and shared-memory command channels to shaders and external tools, with an optional D3D11 rendering tier.",
       "useCases": [
         "Skyrim runtime integration",
         "graphics bridge inspection",
@@ -2412,7 +2412,7 @@ Error generating stack: `+e.message+`
     {
       "id": "phantom",
       "name": "Phantom",
-      "purpose": "Audit and change reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.",
+      "purpose": "Phantom audits and changes reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.",
       "useCases": [
         "hardware-identity privacy",
         "authorized device-surface auditing",
@@ -2548,7 +2548,7 @@ Error generating stack: `+e.message+`
     {
       "id": "array",
       "name": "Array",
-      "purpose": "Orchestrate authorized offensive-security campaigns through digest-sealed waves, time-limited approval, contained tool supervision, cleanup, and a verifiable evidence ledger.",
+      "purpose": "Array orchestrates authorized offensive-security campaigns through digest-sealed waves, time-limited approval, contained tool supervision, cleanup, and a verifiable evidence ledger.",
       "useCases": [
         "authorized offensive-security campaign planning",
         "approval-gated assessment execution",
@@ -2621,7 +2621,7 @@ Error generating stack: `+e.message+`
     {
       "id": "seed",
       "name": "Seed",
-      "purpose": "Run native security assessment and detection-engineering work through a C++23 engine with synthetic demonstrations, scope manifests, interop adapters, and action receipts.",
+      "purpose": "Seed is a C++23 engine for authorized security assessment and detection-engineering work, with synthetic demonstrations, scope manifests, interop adapters, and action receipts.",
       "useCases": [
         "controlled security-assessment labs",
         "detection engineering",
@@ -2692,7 +2692,7 @@ Error generating stack: `+e.message+`
     {
       "id": "sofer",
       "name": "Sofer",
-      "purpose": "Sofer is a private Python platform for authorized security operations. It coordinates scoped reconnaissance, adversarial testing, defensive analysis, campaign execution, finding management, and disclosure, then produces evidence-backed findings, reports, receipts, and handoffs.",
+      "purpose": "Sofer is a private Python orchestration runtime and operational security suite for authorized engagements. It manages campaign state, correlation, reconnaissance, reporting, disclosure staging, and evidence while its WARDEN CLI routes model and tool work through a bounded agent loop.",
       "useCases": [
         "private-line multi-agent orchestration",
         "high-consequence technical workflow coordination",
@@ -2766,7 +2766,7 @@ Error generating stack: `+e.message+`
     {
       "id": "isomorph",
       "name": "Isomorph",
-      "purpose": "Evaluate classifier and refusal behavior at authorized AI inference boundaries through controlled reformulation trials, provider-specific result records, and control-stability analysis.",
+      "purpose": "Isomorph evaluates classifier and refusal behavior at authorized AI inference boundaries through controlled reformulation trials, provider-specific result records, and control-stability analysis.",
       "useCases": [
         "authorized AI red-team evaluation",
         "classifier and refusal-behavior measurement",
@@ -2914,7 +2914,7 @@ Error generating stack: `+e.message+`
     {
       "id": "orca",
       "name": "ORCA",
-      "purpose": "Operate private-line assessments by managing engagement state, executing descriptor-backed modules, cataloging findings and artifacts, producing reports and portable bundles, and recording release provenance.",
+      "purpose": "ORCA runs private-line assessments by managing engagement state, executing descriptor-backed modules, cataloging findings and artifacts, producing reports and portable bundles, and recording release provenance.",
       "useCases": [
         "private assessment operation",
         "finding and artifact cataloging",
@@ -3137,7 +3137,7 @@ Error generating stack: `+e.message+`
     {
       "id": "public-surface-sweeper",
       "name": "Public Surface Sweeper",
-      "purpose": "Audit required public files, text hygiene, secret-shaped values, and proof-packet readiness.",
+      "purpose": "Public Surface Sweeper is a Python CLI that checks a repository before publication for missing public files, unclear README handoff material, credential-like strings, release metadata, and proof-packet readiness. It is a release-hygiene check, not a full security scanner or certification.",
       "useCases": [
         "public repository hygiene",
         "release-surface checks",
@@ -3206,7 +3206,7 @@ Error generating stack: `+e.message+`
     {
       "id": "model-provenance-validator",
       "name": "Model Provenance Validator",
-      "purpose": "Validate the schema, source references, retrieval dates, and publishable status of compact model and release provenance envelopes, scrub sensitive output, and emit proof-surface packets without certifying underlying truth.",
+      "purpose": "Model Provenance Validator is a Python CLI that checks JSON records linking a model or release claim to its sources, retrieval dates, and publishable status. It redacts credential-like values from its output and can emit a Proof Surface packet, but it does not verify the underlying claim.",
       "useCases": [
         "release provenance checks",
         "model claim envelopes",
@@ -3274,7 +3274,7 @@ Error generating stack: `+e.message+`
     {
       "id": "secret-redact-io",
       "name": "Secret Redact IO",
-      "purpose": "Provide guarded Python IO helpers that redact file, fetch, write, and subprocess output while emitting hash-only receipts.",
+      "purpose": "Secret Redact IO is a Python helper library that redacts file, fetch, write, and subprocess output while emitting hash-only receipts.",
       "useCases": [
         "secret-aware IO",
         "redacted subprocess capture",
@@ -3340,7 +3340,7 @@ Error generating stack: `+e.message+`
     {
       "id": "agent-hook-pack",
       "name": "Agent Hook Pack",
-      "purpose": "Install public-safe hooks for secret checks, branch guards, environment synchronization, and repository hygiene.",
+      "purpose": "Agent Hook Pack installs public-safe hooks for secret checks, branch guards, environment synchronization, and repository hygiene.",
       "useCases": [
         "pre-commit hygiene",
         "branch protection",
@@ -3407,7 +3407,7 @@ Error generating stack: `+e.message+`
     {
       "id": "repo-proof-index",
       "name": "Repo Proof Index",
-      "purpose": "Scan proof contracts, proof-surface packets, receipt bundles, and witness receipts into schema-tolerant reviewer summaries while validating known proof-surface contracts without judging sufficiency.",
+      "purpose": "Repo Proof Index is a Python CLI that scans proof packets, receipts, and contracts and builds a reviewer-facing index of each artifact's type, status, evidence summary, and source path. It validates known packet formats but does not decide whether the evidence is sufficient.",
       "useCases": [
         "proof-packet indexing",
         "receipt discovery",
@@ -3483,7 +3483,7 @@ Error generating stack: `+e.message+`
       "lastVerified": "2026-08-28",
       "id": "chorus",
       "name": "Chorus",
-      "purpose": "Turn a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests that rank themes, surface dissent, and identify genuinely contested topics.",
+      "purpose": "Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests that rank themes, surface dissent, and identify genuinely contested topics.",
       "useCases": [
         "community and comment research",
         "ranked theme and controversy analysis",
@@ -3562,7 +3562,7 @@ Error generating stack: `+e.message+`
       "lastVerified": "2026-08-28",
       "id": "raw",
       "name": "RAW",
-      "purpose": "Develop a D3D11 rendering platform for Skyrim SE that combines proxy-level pipeline ownership with SKSE-driven mid-frame effect dispatch, hot-reloadable HLSL, frame capture, GPU diagnostics, and a focused set of screen-space lighting and post-processing effects.",
+      "purpose": "RAW is a D3D11 rendering platform for Skyrim SE that combines proxy-level pipeline ownership with SKSE-driven mid-frame effect dispatch, hot-reloadable HLSL, frame capture, GPU diagnostics, and a focused set of screen-space lighting and post-processing effects.",
       "useCases": [
         "Skyrim D3D11 render-pipeline development",
         "screen-space lighting and post-processing",
@@ -3637,7 +3637,7 @@ Error generating stack: `+e.message+`
     {
       "id": "kun",
       "name": "Kun",
-      "purpose": "Maintain local access-recovery memory for owned systems through path-only receipts, redacted diagnostics, rotation notes, and operator runbooks without storing raw credentials.",
+      "purpose": "Kun maintains local access-recovery memory for owned systems through path-only receipts, redacted diagnostics, rotation notes, and operator runbooks without storing raw credentials.",
       "useCases": [
         "local access-recovery hygiene",
         "credential-rotation memory",
@@ -3701,7 +3701,8 @@ Error generating stack: `+e.message+`
       "releaseState": "controlled private system; public capability page"
     }
   ]
-}`),ne=te.systems;ne.filter(e=>e.placement===`featured`);var re=te.domains,w=ne.flatMap(e=>e.evidence.map(t=>({...t,systemId:e.id}))).sort((e,t)=>t.date.localeCompare(e.date));function ie(e){return ne.find(t=>t.id===e)}var ae=`{
+}
+`),ne=te.systems;ne.filter(e=>e.placement===`featured`);var re=te.domains,w=ne.flatMap(e=>e.evidence.map(t=>({...t,systemId:e.id}))).sort((e,t)=>t.date.localeCompare(e.date));function ie(e){return ne.find(t=>t.id===e)}var ae=`{
   "schema": "harperz9-home-evidence/v1",
   "derivedFrom": "harperz9-systems/v4",
   "records": [
@@ -3793,4 +3794,4 @@ Error generating stack: `+e.message+`
     "amends": null
   }
 }
-`,oe=new Set([`hire.html`,`overview.html`,`catalog.html`,`security.html`,`research.html`,`publications.html`,`writing.html`,`studio.html`,`gallery.html`,`retro.html`,`resume.html`,`cv.html`,`portfolio.html`,`person.html`]),se=[...b,...x.flatMap(e=>e.routes)].filter(e=>oe.has(e.href)&&C(e.href)),ce=JSON.parse(ae),le=ce.records.map(e=>w.find(t=>t.id===e.id&&t.systemId===e.systemId)).filter(e=>!!e),ue=ce.latestPublishedBriefing;function T(e){let t=ie(e);if(!t)throw Error(`Missing system record: ${e}`);return t}var E=ne,de=new Map(re.map(e=>[e.id,e])),fe=ie(`flywheel`);if(!fe)throw Error(`Missing system record: flywheel`);var D=fe,pe=w.filter(e=>e.status===`verified`),O=[`agent-systems`,`evaluation-verification`,`security-privacy`,`developer-infrastructure`,`graphics-media`,`research-education`],k=[`index`,`gather`,`buildlang`,`phantom`,`accountable-surface`],me=[`phantom`,`behavior-transform`,`accountable-surface`,`public-surface-sweeper`,`model-provenance-validator`,`secret-redact-io`,`agent-hook-pack`,`repo-proof-index`],he=[`raw`,`skyrimbridge`,`truth-enb`,`elder-enb`,`enb-runtime-core`,`studio-engine`,`retro-engine`,`engine-revival`,`brender-archival`].filter(e=>E.some(t=>t.id===e)),ge=[{label:`Technical support, developer operations, and QA`,href:`/hire.html#engineering-path`,summary:`Technical support engineering, developer operations, implementation, release support, and software QA.`},{label:`Evaluation tooling and Python developer tools`,href:`/hire.html#technical-operations-path`,summary:`Evaluation tooling, Python developer tools, test infrastructure, and research-engineering support.`},{label:`Public service, safety, and field operations`,href:`/hire.html#public-service-field-path`,summary:`Benefits-rich public routes where systems judgment and field reliability matter.`}];function _e(e){return e.startsWith(`http`)||e.startsWith(`/`)?e:`/${e}`}function ve(e){return e.evidence[0]?.href??e.sourceHref??_e(e.href)}function ye(e){return e.productType}function be(e){return e.slice(0,10)}var xe=k.map(T),Se=me.map(T),Ce=he.map(T),we=[{measure:String(E.length),label:`system records`,source:`site/systems.json`,href:`/catalog.html`,note:`purpose, boundary, maturity, and evidence fields`},{measure:String(E.filter(e=>e.placement===`featured`).length),label:`featured records`,source:`placement`,href:`/overview.html`,note:`systems promoted to the public front of the catalog`},{measure:String(pe.length),label:`verified evidence rows`,source:`evidence status`,href:`/catalog.html`,note:`release, source, paper, demo, or public-boundary records with dates`},{measure:D.evidence[0]?.date??`unknown`,label:`Flywheel release record`,source:`site/systems.json`,href:ve(D),note:`release label, source link, date, and limitations`},{measure:ue?.publishedAt??`not published`,label:`current briefing`,source:`site/publications.json`,href:ue?.href??`/publications.html`,note:ue?.title??`No verified briefing is published yet.`}];function Te(){return(0,f.useEffect)(()=>{let e=Array.from(document.querySelectorAll(`.reveal`));if(!(`IntersectionObserver`in window)){e.forEach(e=>e.classList.add(`in`));return}let t=new IntersectionObserver(e=>e.forEach(e=>{e.isIntersecting&&(e.target.classList.add(`in`),t.unobserve(e.target))}),{threshold:.12,rootMargin:`0px 0px -8% 0px`});e.forEach(e=>t.observe(e));let n=window.setTimeout(()=>e.forEach(e=>e.classList.add(`in`)),3e3);return()=>{t.disconnect(),window.clearTimeout(n)}},[]),(0,_.jsxs)(_.Fragment,{children:[(0,_.jsx)(v,{seed:74}),(0,_.jsx)(`div`,{className:`viewport-vignette`,"aria-hidden":`true`}),(0,_.jsx)(`a`,{className:`skip-link`,href:`#main`,children:`Skip to content`}),(0,_.jsx)(Ee,{}),(0,_.jsxs)(`main`,{id:`main`,children:[(0,_.jsx)(De,{}),(0,_.jsx)(Oe,{}),(0,_.jsx)(Ae,{}),(0,_.jsx)(Le,{}),(0,_.jsx)(je,{}),(0,_.jsx)(Me,{}),(0,_.jsx)(Pe,{}),(0,_.jsx)(Fe,{}),(0,_.jsx)(Ie,{})]}),(0,_.jsx)(Re,{})]})}function Ee(){return(0,_.jsxs)(`nav`,{className:`topnav`,"aria-label":`Primary`,children:[(0,_.jsxs)(`a`,{className:`brand`,href:`#identity`,"aria-label":`Zain Dana Harper and Zentropy Labs home`,children:[(0,_.jsx)(`span`,{className:`brand-name`,children:`Zain Dana Harper`}),(0,_.jsx)(`span`,{className:`brand-lab`,children:`Zentropy Labs`})]}),(0,_.jsxs)(`div`,{className:`topnav-links`,children:[b.map(e=>(0,_.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),ee.map(e=>(0,_.jsx)(`a`,{href:e.href,rel:`noopener`,children:e.label},e.href))]}),(0,_.jsxs)(`details`,{className:`home-menu`,children:[(0,_.jsx)(`summary`,{children:`Menu`}),(0,_.jsxs)(`div`,{className:`home-menu-list`,"aria-label":`Primary menu`,children:[b.map(e=>(0,_.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),se.map(e=>(0,_.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),ee.map(e=>(0,_.jsx)(`a`,{href:e.href,rel:`noopener`,children:e.label},e.href))]})]})]})}function De(){return(0,_.jsxs)(`header`,{id:`identity`,className:`hero`,children:[(0,_.jsxs)(`div`,{className:`hero-copy reveal in`,children:[(0,_.jsx)(`h1`,{className:`hero-title`,children:`Zentropy Labs`}),(0,_.jsx)(`p`,{className:`hero-line`,children:`Product studio, systems engineering, graphics, security tooling, and public research.`}),(0,_.jsx)(`p`,{className:`hero-lab`,children:`Zain Dana Harper is the builder behind Zentropy Labs.`}),(0,_.jsxs)(`div`,{className:`hero-actions`,"aria-label":`Primary actions`,children:[(0,_.jsx)(`a`,{className:`btn solid`,href:`#products`,children:`Explore products`}),(0,_.jsx)(`a`,{className:`btn`,href:`/hire.html`,children:`Hire or collaborate`})]})]}),(0,_.jsx)(`figure`,{className:`identity-art reveal in`,children:(0,_.jsxs)(`picture`,{children:[(0,_.jsx)(`source`,{type:`image/webp`,srcSet:`/brand/zentropy-logo-640.webp 640w, /brand/zentropy-logo-960.webp 960w, /brand/zentropy-logo-1280.webp 1280w, /brand/zentropy-logo-1600.webp 1600w`,sizes:`(max-width: 900px) 92vw, 42vw`}),(0,_.jsx)(`img`,{src:`/brand/zentropy-logo.png`,alt:`Zentropy Labs aperture mark with cyan light and oxblood shadow`,width:`1600`,height:`900`,fetchPriority:`high`})]})})]})}function Oe(){return(0,_.jsxs)(`section`,{id:`products`,className:`section representative-section`,"aria-labelledby":`products-title`,children:[(0,_.jsxs)(`div`,{className:`section-heading`,children:[(0,_.jsx)(`h2`,{id:`products-title`,children:`Products to start with`}),(0,_.jsx)(`p`,{className:`section-lead`,children:`Start with products that can be tried, inspected, or evaluated. Each entry says what the product does once, then gives its type, state, verification date, evidence, and full product page.`})]}),(0,_.jsx)(`div`,{className:`work-index`,children:xe.map(e=>(0,_.jsxs)(`article`,{className:`work-row`,children:[(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`h3`,{children:(0,_.jsx)(`a`,{href:_e(e.href),children:e.name})}),(0,_.jsx)(`p`,{children:e.purpose})]}),(0,_.jsx)(ke,{system:e})]},e.id))})]})}function ke({system:e}){return(0,_.jsxs)(`dl`,{children:[(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`Type`}),(0,_.jsx)(`dd`,{children:ye(e)})]}),(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`State`}),(0,_.jsx)(`dd`,{children:e.releaseState})]}),(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`Verified`}),(0,_.jsx)(`dd`,{children:(0,_.jsx)(`time`,{dateTime:e.lastVerified,children:e.lastVerified})})]}),(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`Evidence`}),(0,_.jsx)(`dd`,{children:(0,_.jsx)(`a`,{href:ve(e),children:e.evidence[0]?.label??e.maturity})})]})]})}function Ae(){let e=D.evidence[0];return(0,_.jsxs)(`section`,{id:`flywheel`,className:`section split-section`,"aria-labelledby":`flywheel-title`,children:[(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`h2`,{id:`flywheel-title`,children:`Featured platform: Flywheel`}),(0,_.jsx)(`p`,{className:`section-lead`,children:D.purpose}),(0,_.jsxs)(`div`,{className:`action-row`,children:[(0,_.jsx)(`a`,{className:`text-link`,href:_e(D.href),children:`Inspect Flywheel`}),D.sourceHref?(0,_.jsx)(`a`,{className:`text-link`,href:D.sourceHref,rel:`noopener`,children:`Source`}):null]})]}),(0,_.jsxs)(`div`,{className:`data-plate platform-record`,children:[(0,_.jsxs)(`table`,{className:`command-table`,children:[(0,_.jsx)(`caption`,{children:`Current Flywheel route`}),(0,_.jsxs)(`tbody`,{children:[(0,_.jsxs)(`tr`,{children:[(0,_.jsx)(`th`,{scope:`row`,children:`Type`}),(0,_.jsx)(`td`,{children:ye(D)})]}),(0,_.jsxs)(`tr`,{children:[(0,_.jsx)(`th`,{scope:`row`,children:`State`}),(0,_.jsx)(`td`,{children:D.releaseState})]}),(0,_.jsxs)(`tr`,{children:[(0,_.jsx)(`th`,{scope:`row`,children:`Release`}),(0,_.jsx)(`td`,{children:e?(0,_.jsx)(`a`,{href:e.href,children:e.label}):`No release record`})]}),(0,_.jsxs)(`tr`,{children:[(0,_.jsx)(`th`,{scope:`row`,children:`Verified`}),(0,_.jsx)(`td`,{children:e?.date??`unknown`})]}),(0,_.jsxs)(`tr`,{children:[(0,_.jsx)(`th`,{scope:`row`,children:`Install`}),(0,_.jsx)(`td`,{children:(0,_.jsx)(`code`,{children:D.entryCommand})})]}),(0,_.jsxs)(`tr`,{children:[(0,_.jsx)(`th`,{scope:`row`,children:`Check`}),(0,_.jsx)(`td`,{children:(0,_.jsx)(`code`,{children:D.verificationCommand})})]})]})]}),(0,_.jsx)(`p`,{className:`boundary-note`,children:D.limitations[0]})]})]})}function je(){return(0,_.jsxs)(`section`,{id:`evidence`,className:`section`,"aria-labelledby":`evidence-title`,children:[(0,_.jsxs)(`div`,{className:`section-heading`,children:[(0,_.jsx)(`h2`,{id:`evidence-title`,children:`Evidence board`}),(0,_.jsx)(`p`,{className:`section-lead`,children:`A compact index of the public record. Values come from checked-in source data and link back to the record that produced them.`})]}),(0,_.jsxs)(`div`,{className:`data-plate evidence-board`,children:[(0,_.jsxs)(`table`,{className:`evidence-table`,children:[(0,_.jsx)(`caption`,{children:`Public evidence, current source snapshot`}),(0,_.jsx)(`thead`,{children:(0,_.jsxs)(`tr`,{children:[(0,_.jsx)(`th`,{scope:`col`,children:`Measure`}),(0,_.jsx)(`th`,{scope:`col`,children:`Record`}),(0,_.jsx)(`th`,{scope:`col`,children:`Source`}),(0,_.jsx)(`th`,{scope:`col`,children:`Boundary`})]})}),(0,_.jsx)(`tbody`,{children:we.map(e=>(0,_.jsxs)(`tr`,{"data-evidence-row":!0,children:[(0,_.jsx)(`th`,{scope:`row`,children:(0,_.jsx)(`a`,{href:e.href,children:e.measure})}),(0,_.jsx)(`td`,{children:e.label}),(0,_.jsx)(`td`,{children:e.source}),(0,_.jsx)(`td`,{children:e.note})]},e.label))})]}),(0,_.jsxs)(`p`,{className:`does-not-prove`,children:[(0,_.jsx)(`strong`,{children:`What this does not prove:`}),` A valid release row is not an adoption claim, safety claim, or guarantee of model correctness. Counts and releases stay evidence rows, not market proof.`]}),(0,_.jsxs)(`section`,{className:`evidence-current`,"aria-labelledby":`current-evidence-title`,children:[(0,_.jsx)(`h3`,{id:`current-evidence-title`,children:`Newest registry evidence`}),(0,_.jsx)(`ol`,{children:le.map(e=>(0,_.jsxs)(`li`,{children:[(0,_.jsx)(`time`,{dateTime:e.date,children:e.date}),(0,_.jsx)(`a`,{href:e.href,rel:`noopener`,children:e.label}),(0,_.jsx)(`span`,{children:e.summary})]},`${e.systemId}:${e.id}`))})]})]})]})}function Me(){return(0,_.jsxs)(`section`,{id:`evidence-figures`,className:`section evidence-figures-section`,"aria-labelledby":`figures-title`,children:[(0,_.jsxs)(`div`,{className:`section-heading`,children:[(0,_.jsx)(`h2`,{id:`figures-title`,children:`Measured evidence`}),(0,_.jsx)(`p`,{className:`section-lead`,children:`Source-attributed figures publish units, denominators, dates, provenance, and limits. Capability families remain navigation labels, not diagrams or product hierarchies.`})]}),(0,_.jsxs)(`div`,{className:`evidence-figure-grid`,children:[(0,_.jsxs)(`article`,{className:`evidence-figure-card`,"data-evidence-figure-card":!0,children:[(0,_.jsx)(`h3`,{children:`164-task model pass@1 comparison`}),(0,_.jsx)(`a`,{href:`/analytics/model-pass-at-1-comparison.html`,children:(0,_.jsx)(`img`,{className:`research-figure-image`,src:`/analytics/model-pass-at-1-comparison.svg`,alt:`Paired 164-task pass-at-one result: base Qwen 14B passed 141 tasks and Flywheel 14B passed 136; the difference was not statistically significant.`,width:`1120`,height:`334`,loading:`lazy`})}),(0,_.jsx)(`p`,{children:`Same task set and harness. This measures two model artifacts, not market superiority or general agent reliability.`}),(0,_.jsx)(Ne,{rows:[[`n`,`164 code-completion tasks`],[`units`,`pass@1 and passed tasks`],[`retrieved`,`2026-08-28`],[`source`,(0,_.jsx)(`a`,{href:`/analytics/model-pass-at-1-comparison.html`,children:`result, table, and limits`})]]})]}),(0,_.jsxs)(`article`,{className:`evidence-figure-card`,"data-evidence-figure-card":!0,children:[(0,_.jsx)(`h3`,{children:`Current cross-harness pilot`}),(0,_.jsx)(`a`,{href:`/analytics/current-cross-harness-pilot.html`,children:(0,_.jsx)(`img`,{className:`research-figure-image`,src:`/analytics/current-cross-harness-pilot.svg`,alt:`Four receipt-verified cross-harness attempts with zero valid comparable task outcomes.`,width:`1120`,height:`480`,loading:`lazy`})}),(0,_.jsx)(`p`,{children:`4/4 receipts verified, but no valid comparable task outcome. The durations are diagnostic only.`}),(0,_.jsx)(Ne,{rows:[[`n`,`4 receipt-verified attempts`],[`units`,`attempts, outcomes, and diagnostic duration`],[`retrieved`,`2026-08-28`],[`source`,(0,_.jsx)(`a`,{href:`/analytics/current-cross-harness-pilot.html`,children:`result, table, and limits`})]]})]}),(0,_.jsxs)(`article`,{className:`evidence-figure-card`,"data-evidence-figure-card":!0,children:[(0,_.jsx)(`h3`,{children:`Recovered actions by day`}),(0,_.jsx)(`img`,{className:`research-figure-image`,src:`/figures/recovered-actions-by-day.svg`,alt:`Bar chart of five recovered-action counts from July 9 through July 13, 2026: 3,779; 1,135; 7,677; 3,892; and 1,130.`,width:`1280`,height:`720`,loading:`lazy`}),(0,_.jsx)(`p`,{children:`Five daily counts from Hugging Face host telemetry. Unit: recovered logged actions. The figure does not measure unique attacks, severity, intent, or harm.`}),(0,_.jsx)(Ne,{rows:[[`n`,`5 daily observations`],[`units`,`recovered logged actions`],[`retrieved`,`2026-08-27`],[`source`,(0,_.jsxs)(_.Fragment,{children:[(0,_.jsx)(`a`,{href:`/figures/recovered-actions-by-day.html`,children:`figure and accessible table`}),` · `,(0,_.jsx)(`a`,{href:`/figures/recovered-actions-by-day.json`,children:`dataset`})]})]]})]}),(0,_.jsxs)(`article`,{className:`evidence-figure-card`,"data-evidence-figure-card":!0,children:[(0,_.jsx)(`h3`,{children:`Reported motive labels`}),(0,_.jsx)(`img`,{className:`research-figure-image`,src:`/figures/motive-sample-nonexclusive.svg`,alt:`Bar chart of non-exclusive motive labels in a 100-agent sample: scorer source or access 97, shared infrastructure or credentials 66, and task solution or private trajectories 89.`,width:`1280`,height:`720`,loading:`lazy`}),(0,_.jsx)(`p`,{children:`Non-exclusive labels from the independent investigator sample. Categories overlap, so counts must not be summed into a population total.`}),(0,_.jsx)(Ne,{rows:[[`n`,`100-agent peak-hour sample`],[`units`,`agents, non-exclusive`],[`retrieved`,`2026-08-27`],[`source`,(0,_.jsxs)(_.Fragment,{children:[(0,_.jsx)(`a`,{href:`/figures/motive-sample-nonexclusive.html`,children:`figure and accessible table`}),` · `,(0,_.jsx)(`a`,{href:`/figures/motive-sample-nonexclusive.json`,children:`dataset`})]})]]})]})]}),(0,_.jsxs)(`div`,{className:`family-browser`,children:[(0,_.jsx)(`h3`,{children:`Browse the work by primary subject`}),(0,_.jsx)(`p`,{children:`These are navigation labels only. Every catalog record retains its own purpose, product type, maturity, source, and limitations.`}),(0,_.jsx)(`div`,{className:`family-index`,children:O.map(e=>{let t=de.get(e),n=E.filter(t=>t.domains.includes(e));return(0,_.jsxs)(`article`,{className:`family-row`,"data-family-row":!0,children:[(0,_.jsx)(`h3`,{children:t?.label??e}),(0,_.jsx)(`p`,{children:t?.summary}),(0,_.jsxs)(`a`,{href:`/catalog.html#domain-${e}`,children:[n.length,` related records`]})]},e)})})]})]})}function Ne({rows:e}){return(0,_.jsx)(`dl`,{className:`figure-facts`,children:e.map(([e,t])=>(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:e}),(0,_.jsx)(`dd`,{children:t})]},e))})}function Pe(){return(0,_.jsxs)(`section`,{id:`research`,className:`section split-section`,"aria-labelledby":`research-title`,children:[(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`h2`,{id:`research-title`,children:`Current research`}),(0,_.jsx)(`p`,{className:`section-lead`,children:`The publication surface carries current briefings, figures, source records, limitations, and related reproducible artifacts for public review.`}),(0,_.jsxs)(`div`,{className:`action-row`,children:[(0,_.jsx)(`a`,{className:`text-link`,href:`/publications.html`,children:`Publication index`}),(0,_.jsx)(`a`,{className:`text-link`,href:`/figures/recovered-actions-by-day.html`,children:`Measured figures`})]})]}),ue?(0,_.jsxs)(`article`,{className:`data-plate briefing-card`,children:[(0,_.jsx)(`h3`,{children:(0,_.jsx)(`a`,{href:ue.href,"data-current-briefing-title":!0,children:ue.title})}),(0,_.jsxs)(`p`,{children:[ue.sourceCount,` public sources. Limitations remain attached to the record.`]}),(0,_.jsxs)(`dl`,{className:`briefing-meta`,children:[(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`Published`}),(0,_.jsx)(`dd`,{children:be(ue.publishedAt)})]}),(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`Primary figure`}),(0,_.jsx)(`dd`,{children:(0,_.jsx)(`a`,{href:ue.primaryFigureHref,children:`Open figure`})})]})]})]}):null]})}function Fe(){return(0,_.jsxs)(`section`,{id:`retro-systems-lab`,className:`section retro-section`,"aria-labelledby":`retro-title`,children:[(0,_.jsxs)(`div`,{className:`section-heading`,children:[(0,_.jsx)(`h2`,{id:`retro-title`,children:`Graphics, engines, and preservation`}),(0,_.jsx)(`p`,{className:`section-lead`,children:`Rendering platforms, Skyrim runtime integration, shader suites, browser graphics, procedural media, and software preservation are shown as separate products. Source state, releases, tests, and limitations remain attached to each project.`})]}),(0,_.jsx)(`div`,{className:`retro-flow`,children:Ce.map(e=>(0,_.jsxs)(`article`,{className:`retro-step`,children:[(0,_.jsx)(`span`,{className:`retro-verb`,children:e.accessMode}),(0,_.jsx)(`h3`,{children:(0,_.jsx)(`a`,{href:_e(e.href),children:e.name})}),(0,_.jsx)(`p`,{children:e.purpose}),(0,_.jsxs)(`dl`,{className:`product-meta`,children:[(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`Type`}),(0,_.jsx)(`dd`,{children:ye(e)})]}),(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`State`}),(0,_.jsx)(`dd`,{children:e.releaseState})]}),(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`Evidence`}),(0,_.jsx)(`dd`,{children:(0,_.jsx)(`a`,{href:ve(e),children:e.evidence[0]?.label??e.maturity})})]})]})]},e.id))}),(0,_.jsx)(`p`,{className:`boundary-note`,children:`Shared subject matter does not imply one parent product, a runtime dependency, or inherited evidence.`})]})}function Ie(){return(0,_.jsxs)(`section`,{id:`security-boundary`,className:`section security-section`,"aria-labelledby":`security-title`,children:[(0,_.jsxs)(`div`,{className:`section-heading`,children:[(0,_.jsx)(`h2`,{id:`security-title`,children:`Security boundary`}),(0,_.jsx)(`p`,{className:`section-lead`,children:`Public pages describe what the security products do and direct qualified work to a controlled intake.`})]}),(0,_.jsxs)(`div`,{className:`security-layout`,children:[(0,_.jsxs)(`article`,{className:`data-plate boundary-card`,children:[(0,_.jsx)(`h3`,{children:`Public route, private authority`}),(0,_.jsx)(`p`,{children:`No private repository, operational method, target detail, client fact, or engagement result is published. Written authorization, defined scope, secure intake, and review are required before private capability is discussed or used.`}),(0,_.jsx)(`a`,{className:`text-link`,href:`/private-practice.html`,children:`Private recipient lane`})]}),(0,_.jsx)(`ol`,{className:`security-list`,children:Se.map(e=>(0,_.jsxs)(`li`,{children:[(0,_.jsx)(`a`,{href:_e(e.href),children:e.name}),(0,_.jsxs)(`span`,{children:[e.accessMode,` / `,e.maturity]})]},e.id))})]})]})}function Le(){return(0,_.jsxs)(`section`,{id:`hiring-collaboration`,className:`section hiring-section`,"aria-labelledby":`hiring-title`,children:[(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`h2`,{id:`hiring-title`,children:`Hiring, contracting, and collaboration`}),(0,_.jsx)(`p`,{className:`section-lead`,children:`Run, inspect, or verify the work through three practical routes: technical support and QA, evaluation tooling and Python developer tools, and public-service or field work. The documents are direct, and the project evidence stays one click away.`})]}),(0,_.jsxs)(`div`,{className:`hiring-actions`,children:[ge.map(e=>(0,_.jsx)(`a`,{className:`btn`,href:e.href,children:(0,_.jsx)(`span`,{children:e.label})},e.href)),(0,_.jsx)(`a`,{className:`btn solid`,href:`/hire.html`,children:`Hiring map`}),(0,_.jsx)(`a`,{className:`btn`,href:`/resume.html`,children:`Technical resume`}),(0,_.jsx)(`a`,{className:`btn`,href:`/cv.html`,children:`CV`}),(0,_.jsx)(`a`,{className:`btn`,href:`/portfolio.html`,children:`Portfolio`}),(0,_.jsx)(`a`,{className:`btn`,href:`mailto:zaindharper@gmail.com`,children:`Email`}),(0,_.jsx)(`a`,{className:`btn`,href:`https://github.com/HarperZ9`,rel:`noopener`,children:`GitHub`})]})]})}function Re(){return(0,_.jsxs)(`footer`,{className:`site-footer`,children:[(0,_.jsx)(`p`,{children:`Zain Dana Harper and Zentropy Labs. Public systems, research briefings, retro rendering, security tooling, and hiring routes.`}),(0,_.jsxs)(`nav`,{className:`footer-links`,"aria-label":`Footer`,children:[se.map(e=>(0,_.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),(0,_.jsx)(`a`,{href:`https://github.com/HarperZ9`,rel:`noopener`,children:`GitHub`})]})]})}(0,p.createRoot)(document.getElementById(`root`)).render((0,_.jsx)(f.StrictMode,{children:(0,_.jsx)(Te,{})}));
+`,oe=new Set([`hire.html`,`overview.html`,`catalog.html`,`security.html`,`research.html`,`publications.html`,`writing.html`,`studio.html`,`gallery.html`,`retro.html`,`resume.html`,`cv.html`,`portfolio.html`,`person.html`]),se=[...b,...x.flatMap(e=>e.routes)].filter(e=>oe.has(e.href)&&C(e.href)),ce=JSON.parse(ae),le=ce.records.map(e=>w.find(t=>t.id===e.id&&t.systemId===e.systemId)).filter(e=>!!e),ue=ce.latestPublishedBriefing;function T(e){let t=ie(e);if(!t)throw Error(`Missing system record: ${e}`);return t}var E=ne,de=new Map(re.map(e=>[e.id,e])),fe=ie(`flywheel`);if(!fe)throw Error(`Missing system record: flywheel`);var D=fe,pe=w.filter(e=>e.status===`verified`),O=[`agent-systems`,`evaluation-verification`,`security-privacy`,`developer-infrastructure`,`graphics-media`,`research-education`],k=[`index`,`gather`,`buildlang`,`phantom`,`accountable-surface`],me=[`proof-surface`,`phantom`,`behavior-transform`,`array`,`seed`,`sofer`,`isomorph`,`bounds`,`orca`,`gate`,`accountable-surface`,`public-surface-sweeper`,`model-provenance-validator`,`secret-redact-io`,`agent-hook-pack`,`repo-proof-index`,`kun`],he=[`raw`,`skyrimbridge`,`truth-enb`,`elder-enb`,`enb-runtime-core`,`studio-engine`,`retro-engine`,`engine-revival`,`brender-archival`].filter(e=>E.some(t=>t.id===e)),ge=[{label:`Technical support, developer operations, and QA`,href:`/hire.html#engineering-path`,summary:`Technical support engineering, developer operations, implementation, release support, and software QA.`},{label:`Evaluation tooling and Python developer tools`,href:`/hire.html#technical-operations-path`,summary:`Evaluation tooling, Python developer tools, test infrastructure, and research-engineering support.`},{label:`Public service, safety, and field operations`,href:`/hire.html#public-service-field-path`,summary:`Benefits-rich public routes where systems judgment and field reliability matter.`}];function _e(e){return e.startsWith(`http`)||e.startsWith(`/`)?e:`/${e}`}function ve(e){return e.evidence[0]?.href??e.sourceHref??_e(e.href)}function ye(e){return e.productType}function be(e){return e.slice(0,10)}var xe=k.map(T),Se=me.map(T),Ce=he.map(T),we=[{measure:String(E.length),label:`system records`,source:`site/systems.json`,href:`/catalog.html`,note:`purpose, boundary, maturity, and evidence fields`},{measure:String(E.filter(e=>e.placement===`featured`).length),label:`featured records`,source:`placement`,href:`/overview.html`,note:`systems promoted to the public front of the catalog`},{measure:String(pe.length),label:`verified evidence rows`,source:`evidence status`,href:`/catalog.html`,note:`release, source, paper, demo, or public-boundary records with dates`},{measure:D.evidence[0]?.date??`unknown`,label:`Flywheel release record`,source:`site/systems.json`,href:ve(D),note:`release label, source link, date, and limitations`},{measure:ue?.publishedAt??`not published`,label:`current briefing`,source:`site/publications.json`,href:ue?.href??`/publications.html`,note:ue?.title??`No verified briefing is published yet.`}];function Te(){return(0,f.useEffect)(()=>{let e=Array.from(document.querySelectorAll(`.reveal`));if(!(`IntersectionObserver`in window)){e.forEach(e=>e.classList.add(`in`));return}let t=new IntersectionObserver(e=>e.forEach(e=>{e.isIntersecting&&(e.target.classList.add(`in`),t.unobserve(e.target))}),{threshold:.12,rootMargin:`0px 0px -8% 0px`});e.forEach(e=>t.observe(e));let n=window.setTimeout(()=>e.forEach(e=>e.classList.add(`in`)),3e3);return()=>{t.disconnect(),window.clearTimeout(n)}},[]),(0,_.jsxs)(_.Fragment,{children:[(0,_.jsx)(v,{seed:74}),(0,_.jsx)(`div`,{className:`viewport-vignette`,"aria-hidden":`true`}),(0,_.jsx)(`a`,{className:`skip-link`,href:`#main`,children:`Skip to content`}),(0,_.jsx)(Ee,{}),(0,_.jsxs)(`main`,{id:`main`,children:[(0,_.jsx)(De,{}),(0,_.jsx)(Oe,{}),(0,_.jsx)(Ae,{}),(0,_.jsx)(Le,{}),(0,_.jsx)(je,{}),(0,_.jsx)(Me,{}),(0,_.jsx)(Pe,{}),(0,_.jsx)(Fe,{}),(0,_.jsx)(Ie,{})]}),(0,_.jsx)(Re,{})]})}function Ee(){return(0,_.jsxs)(`nav`,{className:`topnav`,"aria-label":`Primary`,children:[(0,_.jsxs)(`a`,{className:`brand`,href:`#identity`,"aria-label":`Zain Dana Harper and Zentropy Labs home`,children:[(0,_.jsx)(`span`,{className:`brand-name`,children:`Zain Dana Harper`}),(0,_.jsx)(`span`,{className:`brand-lab`,children:`Zentropy Labs`})]}),(0,_.jsxs)(`div`,{className:`topnav-links`,children:[b.map(e=>(0,_.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),ee.map(e=>(0,_.jsx)(`a`,{href:e.href,rel:`noopener`,children:e.label},e.href))]}),(0,_.jsxs)(`details`,{className:`home-menu`,children:[(0,_.jsx)(`summary`,{children:`Menu`}),(0,_.jsxs)(`div`,{className:`home-menu-list`,"aria-label":`Primary menu`,children:[b.map(e=>(0,_.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),se.map(e=>(0,_.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),ee.map(e=>(0,_.jsx)(`a`,{href:e.href,rel:`noopener`,children:e.label},e.href))]})]})]})}function De(){return(0,_.jsxs)(`header`,{id:`identity`,className:`hero`,children:[(0,_.jsxs)(`div`,{className:`hero-copy reveal in`,children:[(0,_.jsx)(`h1`,{className:`hero-title`,children:`Zentropy Labs`}),(0,_.jsx)(`p`,{className:`hero-line`,children:`Product studio, systems engineering, graphics, security tooling, and public research.`}),(0,_.jsx)(`p`,{className:`hero-lab`,children:`Zain Dana Harper is the builder behind Zentropy Labs.`}),(0,_.jsxs)(`div`,{className:`hero-actions`,"aria-label":`Primary actions`,children:[(0,_.jsx)(`a`,{className:`btn solid`,href:`#products`,children:`Explore products`}),(0,_.jsx)(`a`,{className:`btn`,href:`/hire.html`,children:`Hire or collaborate`})]})]}),(0,_.jsx)(`figure`,{className:`identity-art reveal in`,children:(0,_.jsxs)(`picture`,{children:[(0,_.jsx)(`source`,{type:`image/webp`,srcSet:`/brand/zentropy-logo-640.webp 640w, /brand/zentropy-logo-960.webp 960w, /brand/zentropy-logo-1280.webp 1280w, /brand/zentropy-logo-1600.webp 1600w`,sizes:`(max-width: 900px) 92vw, 42vw`}),(0,_.jsx)(`img`,{src:`/brand/zentropy-logo.png`,alt:`Zentropy Labs aperture mark with cyan light and oxblood shadow`,width:`1600`,height:`900`,fetchPriority:`high`})]})})]})}function Oe(){return(0,_.jsxs)(`section`,{id:`products`,className:`section representative-section`,"aria-labelledby":`products-title`,children:[(0,_.jsxs)(`div`,{className:`section-heading`,children:[(0,_.jsx)(`h2`,{id:`products-title`,children:`Products to start with`}),(0,_.jsx)(`p`,{className:`section-lead`,children:`Start with products that can be tried, inspected, or evaluated. Each entry says what the product does once, then gives its type, state, verification date, evidence, and full product page.`})]}),(0,_.jsx)(`div`,{className:`work-index`,children:xe.map(e=>(0,_.jsxs)(`article`,{className:`work-row`,children:[(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`h3`,{children:(0,_.jsx)(`a`,{href:_e(e.href),children:e.name})}),(0,_.jsx)(`p`,{children:e.purpose})]}),(0,_.jsx)(ke,{system:e})]},e.id))})]})}function ke({system:e}){return(0,_.jsxs)(`dl`,{children:[(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`Type`}),(0,_.jsx)(`dd`,{children:ye(e)})]}),(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`State`}),(0,_.jsx)(`dd`,{children:e.releaseState})]}),(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`Verified`}),(0,_.jsx)(`dd`,{children:(0,_.jsx)(`time`,{dateTime:e.lastVerified,children:e.lastVerified})})]}),(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`Evidence`}),(0,_.jsx)(`dd`,{children:(0,_.jsx)(`a`,{href:ve(e),children:e.evidence[0]?.label??e.maturity})})]})]})}function Ae(){let e=D.evidence[0];return(0,_.jsxs)(`section`,{id:`flywheel`,className:`section split-section`,"aria-labelledby":`flywheel-title`,children:[(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`h2`,{id:`flywheel-title`,children:`Featured platform: Flywheel`}),(0,_.jsx)(`p`,{className:`section-lead`,children:D.purpose}),(0,_.jsxs)(`div`,{className:`action-row`,children:[(0,_.jsx)(`a`,{className:`text-link`,href:_e(D.href),children:`Inspect Flywheel`}),D.sourceHref?(0,_.jsx)(`a`,{className:`text-link`,href:D.sourceHref,rel:`noopener`,children:`Source`}):null]})]}),(0,_.jsxs)(`div`,{className:`data-plate platform-record`,children:[(0,_.jsxs)(`table`,{className:`command-table`,children:[(0,_.jsx)(`caption`,{children:`Current Flywheel route`}),(0,_.jsxs)(`tbody`,{children:[(0,_.jsxs)(`tr`,{children:[(0,_.jsx)(`th`,{scope:`row`,children:`Type`}),(0,_.jsx)(`td`,{children:ye(D)})]}),(0,_.jsxs)(`tr`,{children:[(0,_.jsx)(`th`,{scope:`row`,children:`State`}),(0,_.jsx)(`td`,{children:D.releaseState})]}),(0,_.jsxs)(`tr`,{children:[(0,_.jsx)(`th`,{scope:`row`,children:`Release`}),(0,_.jsx)(`td`,{children:e?(0,_.jsx)(`a`,{href:e.href,children:e.label}):`No release record`})]}),(0,_.jsxs)(`tr`,{children:[(0,_.jsx)(`th`,{scope:`row`,children:`Verified`}),(0,_.jsx)(`td`,{children:e?.date??`unknown`})]}),(0,_.jsxs)(`tr`,{children:[(0,_.jsx)(`th`,{scope:`row`,children:`Install`}),(0,_.jsx)(`td`,{children:(0,_.jsx)(`code`,{children:D.entryCommand})})]}),(0,_.jsxs)(`tr`,{children:[(0,_.jsx)(`th`,{scope:`row`,children:`Check`}),(0,_.jsx)(`td`,{children:(0,_.jsx)(`code`,{children:D.verificationCommand})})]})]})]}),(0,_.jsx)(`p`,{className:`boundary-note`,children:D.limitations[0]})]})]})}function je(){return(0,_.jsxs)(`section`,{id:`evidence`,className:`section`,"aria-labelledby":`evidence-title`,children:[(0,_.jsxs)(`div`,{className:`section-heading`,children:[(0,_.jsx)(`h2`,{id:`evidence-title`,children:`Evidence board`}),(0,_.jsx)(`p`,{className:`section-lead`,children:`A compact index of the public record. Values come from checked-in source data and link back to the record that produced them.`})]}),(0,_.jsxs)(`div`,{className:`data-plate evidence-board`,children:[(0,_.jsxs)(`table`,{className:`evidence-table`,children:[(0,_.jsx)(`caption`,{children:`Public evidence, current source snapshot`}),(0,_.jsx)(`thead`,{children:(0,_.jsxs)(`tr`,{children:[(0,_.jsx)(`th`,{scope:`col`,children:`Measure`}),(0,_.jsx)(`th`,{scope:`col`,children:`Record`}),(0,_.jsx)(`th`,{scope:`col`,children:`Source`}),(0,_.jsx)(`th`,{scope:`col`,children:`Boundary`})]})}),(0,_.jsx)(`tbody`,{children:we.map(e=>(0,_.jsxs)(`tr`,{"data-evidence-row":!0,children:[(0,_.jsx)(`th`,{scope:`row`,children:(0,_.jsx)(`a`,{href:e.href,children:e.measure})}),(0,_.jsx)(`td`,{children:e.label}),(0,_.jsx)(`td`,{children:e.source}),(0,_.jsx)(`td`,{children:e.note})]},e.label))})]}),(0,_.jsxs)(`p`,{className:`does-not-prove`,children:[(0,_.jsx)(`strong`,{children:`What this does not prove:`}),` A valid release row is not an adoption claim, safety claim, or guarantee of model correctness. Counts and releases stay evidence rows, not market proof.`]}),(0,_.jsxs)(`section`,{className:`evidence-current`,"aria-labelledby":`current-evidence-title`,children:[(0,_.jsx)(`h3`,{id:`current-evidence-title`,children:`Newest registry evidence`}),(0,_.jsx)(`ol`,{children:le.map(e=>(0,_.jsxs)(`li`,{children:[(0,_.jsx)(`time`,{dateTime:e.date,children:e.date}),(0,_.jsx)(`a`,{href:e.href,rel:`noopener`,children:e.label}),(0,_.jsx)(`span`,{children:e.summary})]},`${e.systemId}:${e.id}`))})]})]})]})}function Me(){return(0,_.jsxs)(`section`,{id:`evidence-figures`,className:`section evidence-figures-section`,"aria-labelledby":`figures-title`,children:[(0,_.jsxs)(`div`,{className:`section-heading`,children:[(0,_.jsx)(`h2`,{id:`figures-title`,children:`Measured evidence`}),(0,_.jsx)(`p`,{className:`section-lead`,children:`Source-attributed figures publish units, denominators, dates, provenance, and limits. Capability families remain navigation labels, not diagrams or product hierarchies.`})]}),(0,_.jsxs)(`div`,{className:`evidence-figure-grid`,children:[(0,_.jsxs)(`article`,{className:`evidence-figure-card`,"data-evidence-figure-card":!0,children:[(0,_.jsx)(`h3`,{children:`164-task model pass@1 comparison`}),(0,_.jsx)(`a`,{href:`/analytics/model-pass-at-1-comparison.html`,children:(0,_.jsx)(`img`,{className:`research-figure-image`,src:`/analytics/model-pass-at-1-comparison.svg`,alt:`Paired 164-task pass-at-one result: base Qwen 14B passed 141 tasks and Flywheel 14B passed 136; the difference was not statistically significant.`,width:`1120`,height:`334`,loading:`lazy`})}),(0,_.jsx)(`p`,{children:`Same task set and harness. This measures two model artifacts, not market superiority or general agent reliability.`}),(0,_.jsx)(Ne,{rows:[[`n`,`164 code-completion tasks`],[`units`,`pass@1 and passed tasks`],[`retrieved`,`2026-08-28`],[`source`,(0,_.jsx)(`a`,{href:`/analytics/model-pass-at-1-comparison.html`,children:`result, table, and limits`})]]})]}),(0,_.jsxs)(`article`,{className:`evidence-figure-card`,"data-evidence-figure-card":!0,children:[(0,_.jsx)(`h3`,{children:`Current cross-harness pilot`}),(0,_.jsx)(`a`,{href:`/analytics/current-cross-harness-pilot.html`,children:(0,_.jsx)(`img`,{className:`research-figure-image`,src:`/analytics/current-cross-harness-pilot.svg`,alt:`Four receipt-verified cross-harness attempts with zero valid comparable task outcomes.`,width:`1120`,height:`480`,loading:`lazy`})}),(0,_.jsx)(`p`,{children:`4/4 receipts verified, but no valid comparable task outcome. The durations are diagnostic only.`}),(0,_.jsx)(Ne,{rows:[[`n`,`4 receipt-verified attempts`],[`units`,`attempts, outcomes, and diagnostic duration`],[`retrieved`,`2026-08-28`],[`source`,(0,_.jsx)(`a`,{href:`/analytics/current-cross-harness-pilot.html`,children:`result, table, and limits`})]]})]}),(0,_.jsxs)(`article`,{className:`evidence-figure-card`,"data-evidence-figure-card":!0,children:[(0,_.jsx)(`h3`,{children:`Recovered actions by day`}),(0,_.jsx)(`img`,{className:`research-figure-image`,src:`/figures/recovered-actions-by-day.svg`,alt:`Bar chart of five recovered-action counts from July 9 through July 13, 2026: 3,779; 1,135; 7,677; 3,892; and 1,130.`,width:`1280`,height:`720`,loading:`lazy`}),(0,_.jsx)(`p`,{children:`Five daily counts from Hugging Face host telemetry. Unit: recovered logged actions. The figure does not measure unique attacks, severity, intent, or harm.`}),(0,_.jsx)(Ne,{rows:[[`n`,`5 daily observations`],[`units`,`recovered logged actions`],[`retrieved`,`2026-08-27`],[`source`,(0,_.jsxs)(_.Fragment,{children:[(0,_.jsx)(`a`,{href:`/figures/recovered-actions-by-day.html`,children:`figure and accessible table`}),` · `,(0,_.jsx)(`a`,{href:`/figures/recovered-actions-by-day.json`,children:`dataset`})]})]]})]}),(0,_.jsxs)(`article`,{className:`evidence-figure-card`,"data-evidence-figure-card":!0,children:[(0,_.jsx)(`h3`,{children:`Reported motive labels`}),(0,_.jsx)(`img`,{className:`research-figure-image`,src:`/figures/motive-sample-nonexclusive.svg`,alt:`Bar chart of non-exclusive motive labels in a 100-agent sample: scorer source or access 97, shared infrastructure or credentials 66, and task solution or private trajectories 89.`,width:`1280`,height:`720`,loading:`lazy`}),(0,_.jsx)(`p`,{children:`Non-exclusive labels from the independent investigator sample. Categories overlap, so counts must not be summed into a population total.`}),(0,_.jsx)(Ne,{rows:[[`n`,`100-agent peak-hour sample`],[`units`,`agents, non-exclusive`],[`retrieved`,`2026-08-27`],[`source`,(0,_.jsxs)(_.Fragment,{children:[(0,_.jsx)(`a`,{href:`/figures/motive-sample-nonexclusive.html`,children:`figure and accessible table`}),` · `,(0,_.jsx)(`a`,{href:`/figures/motive-sample-nonexclusive.json`,children:`dataset`})]})]]})]})]}),(0,_.jsxs)(`div`,{className:`family-browser`,children:[(0,_.jsx)(`h3`,{children:`Browse the work by primary subject`}),(0,_.jsx)(`p`,{children:`These are navigation labels only. Every catalog record retains its own purpose, product type, maturity, source, and limitations.`}),(0,_.jsx)(`div`,{className:`family-index`,children:O.map(e=>{let t=de.get(e),n=E.filter(t=>t.domains.includes(e));return(0,_.jsxs)(`article`,{className:`family-row`,"data-family-row":!0,children:[(0,_.jsx)(`h3`,{children:t?.label??e}),(0,_.jsx)(`p`,{children:t?.summary}),(0,_.jsxs)(`a`,{href:`/catalog.html#domain-${e}`,children:[n.length,` related records`]})]},e)})})]})]})}function Ne({rows:e}){return(0,_.jsx)(`dl`,{className:`figure-facts`,children:e.map(([e,t])=>(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:e}),(0,_.jsx)(`dd`,{children:t})]},e))})}function Pe(){return(0,_.jsxs)(`section`,{id:`research`,className:`section split-section`,"aria-labelledby":`research-title`,children:[(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`h2`,{id:`research-title`,children:`Current research`}),(0,_.jsx)(`p`,{className:`section-lead`,children:`The publication surface carries current briefings, figures, source records, limitations, and related reproducible artifacts for public review.`}),(0,_.jsxs)(`div`,{className:`action-row`,children:[(0,_.jsx)(`a`,{className:`text-link`,href:`/publications.html`,children:`Publication index`}),(0,_.jsx)(`a`,{className:`text-link`,href:`/figures/recovered-actions-by-day.html`,children:`Measured figures`})]})]}),ue?(0,_.jsxs)(`article`,{className:`data-plate briefing-card`,children:[(0,_.jsx)(`h3`,{children:(0,_.jsx)(`a`,{href:ue.href,"data-current-briefing-title":!0,children:ue.title})}),(0,_.jsxs)(`p`,{children:[ue.sourceCount,` public sources. Limitations remain attached to the record.`]}),(0,_.jsxs)(`dl`,{className:`briefing-meta`,children:[(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`Published`}),(0,_.jsx)(`dd`,{children:be(ue.publishedAt)})]}),(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`Primary figure`}),(0,_.jsx)(`dd`,{children:(0,_.jsx)(`a`,{href:ue.primaryFigureHref,children:`Open figure`})})]})]})]}):null]})}function Fe(){return(0,_.jsxs)(`section`,{id:`retro-systems-lab`,className:`section retro-section`,"aria-labelledby":`retro-title`,children:[(0,_.jsxs)(`div`,{className:`section-heading`,children:[(0,_.jsx)(`h2`,{id:`retro-title`,children:`Graphics, engines, and preservation`}),(0,_.jsx)(`p`,{className:`section-lead`,children:`Rendering platforms, Skyrim runtime integration, shader suites, browser graphics, procedural media, and software preservation are shown as separate products. Source state, releases, tests, and limitations remain attached to each project.`})]}),(0,_.jsx)(`div`,{className:`retro-flow`,children:Ce.map(e=>(0,_.jsxs)(`article`,{className:`retro-step`,children:[(0,_.jsx)(`span`,{className:`retro-verb`,children:e.accessMode}),(0,_.jsx)(`h3`,{children:(0,_.jsx)(`a`,{href:_e(e.href),children:e.name})}),(0,_.jsx)(`p`,{children:e.purpose}),(0,_.jsxs)(`dl`,{className:`product-meta`,children:[(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`Type`}),(0,_.jsx)(`dd`,{children:ye(e)})]}),(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`State`}),(0,_.jsx)(`dd`,{children:e.releaseState})]}),(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`dt`,{children:`Evidence`}),(0,_.jsx)(`dd`,{children:(0,_.jsx)(`a`,{href:ve(e),children:e.evidence[0]?.label??e.maturity})})]})]})]},e.id))}),(0,_.jsx)(`p`,{className:`boundary-note`,children:`Shared subject matter does not imply one parent product, a runtime dependency, or inherited evidence.`})]})}function Ie(){return(0,_.jsxs)(`section`,{id:`security-boundary`,className:`section security-section`,"aria-labelledby":`security-title`,children:[(0,_.jsxs)(`div`,{className:`section-heading`,children:[(0,_.jsx)(`h2`,{id:`security-title`,children:`Security platforms`}),(0,_.jsx)(`p`,{className:`section-lead`,children:`Every registered security platform has a public-safe route. Shipped and inspectable tools link to their evidence; controlled-private systems expose purpose and boundary, then direct qualified work to a reviewed intake.`})]}),(0,_.jsxs)(`div`,{className:`security-layout`,children:[(0,_.jsxs)(`article`,{className:`data-plate boundary-card`,children:[(0,_.jsx)(`h3`,{children:`Public route, private authority`}),(0,_.jsx)(`p`,{children:`No private repository, operational method, target detail, client fact, or engagement result is published. Written authorization, defined scope, secure intake, and review are required before private capability is discussed or used.`}),(0,_.jsx)(`a`,{className:`text-link`,href:`/private-practice.html`,children:`Private recipient lane`})]}),(0,_.jsx)(`ol`,{className:`security-list`,children:Se.map(e=>(0,_.jsxs)(`li`,{children:[(0,_.jsx)(`a`,{href:_e(e.href),children:e.name}),(0,_.jsxs)(`span`,{children:[e.accessMode,` / `,e.maturity]})]},e.id))})]})]})}function Le(){return(0,_.jsxs)(`section`,{id:`hiring-collaboration`,className:`section hiring-section`,"aria-labelledby":`hiring-title`,children:[(0,_.jsxs)(`div`,{children:[(0,_.jsx)(`h2`,{id:`hiring-title`,children:`Hiring, contracting, and collaboration`}),(0,_.jsx)(`p`,{className:`section-lead`,children:`Run, inspect, or verify the work through three practical routes: technical support and QA, evaluation tooling and Python developer tools, and public-service or field work. The documents are direct, and the project evidence stays one click away.`})]}),(0,_.jsxs)(`div`,{className:`hiring-actions`,children:[ge.map(e=>(0,_.jsx)(`a`,{className:`btn`,href:e.href,children:(0,_.jsx)(`span`,{children:e.label})},e.href)),(0,_.jsx)(`a`,{className:`btn solid`,href:`/hire.html`,children:`Hiring map`}),(0,_.jsx)(`a`,{className:`btn`,href:`/resume.html`,children:`Technical resume`}),(0,_.jsx)(`a`,{className:`btn`,href:`/cv.html`,children:`CV`}),(0,_.jsx)(`a`,{className:`btn`,href:`/portfolio.html`,children:`Portfolio`}),(0,_.jsx)(`a`,{className:`btn`,href:`mailto:zaindharper@gmail.com`,children:`Email`}),(0,_.jsx)(`a`,{className:`btn`,href:`https://github.com/HarperZ9`,rel:`noopener`,children:`GitHub`})]})]})}function Re(){return(0,_.jsxs)(`footer`,{className:`site-footer`,children:[(0,_.jsx)(`p`,{children:`Zain Dana Harper and Zentropy Labs. Public systems, research briefings, retro rendering, security tooling, and hiring routes.`}),(0,_.jsxs)(`nav`,{className:`footer-links`,"aria-label":`Footer`,children:[se.map(e=>(0,_.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),(0,_.jsx)(`a`,{href:`https://github.com/HarperZ9`,rel:`noopener`,children:`GitHub`})]})]})}(0,p.createRoot)(document.getElementById(`root`)).render((0,_.jsx)(f.StrictMode,{children:(0,_.jsx)(Te,{})}));

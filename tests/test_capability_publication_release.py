@@ -13,7 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-BgJU4hdF.js",
+    "assets/index-DDkK7Yu0.js",
     "assets/index-BxIHiu3n.css",
     "accountable-surface.html",
     "analytics/benchmark-evidence-status.html",
@@ -131,6 +131,8 @@ RELEASE_PATHS = (
     "system/figure.test.mjs",
     "system/hire.css",
     "system/home-art.js",
+    "system/publications.css",
+    "system/publications.js",
     "system/retro-systems-lab.css",
     "system/routes.js",
     "system/systems.js",
@@ -150,9 +152,10 @@ RELEASE_PATHS = (
     "systems/studio-engine.html",
     "systems/telos.html",
     "truth-enb.html",
+    "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "8063e703a7f8d9a47b476f8d281bf6f3cbd9795a1807137c58351cee345c9a7d"
+REVIEWED_RELEASE_SHA256 = "d6f044c028c743ce7665305de01ae6c0cdfef21875fa1c9d3cd512e73315ab94"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -249,7 +252,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_fix_css = "index-Bh3pWSfE.css"
     previous_art_js = "index-BPBDYusx.js"
     previous_art_css = "index-D6A4RL1P.css"
-    current_js = "index-BgJU4hdF.js"
+    current_js = "index-DDkK7Yu0.js"
     current_css = "index-BxIHiu3n.css"
     prior_reviewed_js = "index-C_1S2nb6.js"
     prior_reviewed_css = "index-XLAt4tDw.css"

@@ -102,6 +102,44 @@ def test_home_defines_each_displayed_product_once_with_concrete_facts() -> None:
         assert records[system_id]["outputs"], system_id
 
 
+def test_home_gives_every_registered_security_platform_a_front_page_route() -> None:
+    source = read(HOME_SOURCE)
+    template = read(HOME_INDEX)
+    records = {record["id"]: record for record in json.loads(read(SYSTEMS))["systems"]}
+    security_ids = array_items(source, "SECURITY_IDS")
+    expected = {
+        record_id
+        for record_id, record in records.items()
+        if record.get("family") == "security" or record.get("primaryDomain") == "security-privacy"
+    }
+    expected.update({"model-provenance-validator", "repo-proof-index"})
+
+    assert set(security_ids) == expected
+    assert "Security platforms" in source
+    security_section = re.search(
+        r'<section aria-labelledby="noscript-security">(?P<body>.*?)</section>',
+        template,
+        re.S,
+    )
+    assert security_section, "no-JS security section must remain inspectable"
+    fallback_routes = {
+        (href, re.sub(r"\s+", " ", name).strip())
+        for href, name in re.findall(
+            r'<li><a[^>]+href="([^"]+)">([^<]+)</a></li>',
+            security_section.group("body"),
+        )
+    }
+    expected_routes = {
+        (f'/{records[system_id]["href"].lstrip("/")}', records[system_id]["name"])
+        for system_id in security_ids
+    }
+    assert fallback_routes == expected_routes
+    for system_id in security_ids:
+        record = records[system_id]
+        assert record["name"] in template
+        assert record["href"] in template
+
+
 def test_home_uses_checked_in_route_registry_and_evidence_projection() -> None:
     source = read(HOME_SOURCE)
 

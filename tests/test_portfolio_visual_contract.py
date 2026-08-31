@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 
@@ -12,6 +13,7 @@ HOME_INDEX = ROOT / "home" / "index.html"
 APP = ROOT / "home" / "src" / "App.tsx"
 APP_CSS = ROOT / "home" / "src" / "App.css"
 INDEX_CSS = ROOT / "home" / "src" / "index.css"
+SYSTEMS = ROOT / "system" / "systems.json"
 
 EM_DASH = "—"
 EN_DASH = "–"
@@ -98,7 +100,7 @@ def test_noscript_fallback_is_a_complete_identity_first_front_door() -> None:
         "Measured evidence",
         "Current research",
         "Graphics, engines, and preservation",
-        "Security boundary",
+            "Security platforms",
         "Hiring, contracting, and collaboration",
     ):
         assert value in src
@@ -159,7 +161,7 @@ def test_deployed_bundle_matches_the_new_front_door_after_build() -> None:
         "Featured platform: Flywheel",
         "Measured evidence",
         "Graphics, engines, and preservation",
-        "Security boundary",
+            "Security platforms",
         "Hiring, contracting, and collaboration",
     ):
         assert value in bundle
@@ -168,6 +170,14 @@ def test_deployed_bundle_matches_the_new_front_door_after_build() -> None:
 
     for stale in ("hero-kicker", "Try four browser-native checks"):
         assert stale not in bundle
+
+    records = {record["id"]: record for record in json.loads(read(SYSTEMS))["systems"]}
+    security_ids = re.search(r"const SECURITY_IDS = \[(?P<body>.*?)\];", read(APP), re.S)
+    assert security_ids, "security registry projection must remain inspectable"
+    for system_id in re.findall(r'"([^"]+)"', security_ids.group("body")):
+        record = records[system_id]
+        assert record["name"] in bundle, system_id
+        assert record["href"] in bundle, system_id
 
     assert "data-plate" in css
     assert "evidence-figure-grid" in css

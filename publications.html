@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Publications &middot; Zain Dana Harper</title>
-<meta name="description" content="The public research record: eight items with permanent DOIs, being two systems papers, two preprints, two notes, and two archived corpora.">
+<title>Publications &middot; Essays, briefings, and research by Zain Dana Harper</title>
+<meta name="description" content="Evidence-led reading paths across frontier AI, verification, psychology, education, tools, music, and abstract art, plus an eight-record research archive.">
 <link rel="canonical" href="https://harperz9.github.io/publications.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:description" content="The public research record: eight items with permanent DOIs, being two systems papers, two preprints, two notes, and two archived corpora.">
+<meta property="og:description" content="Evidence-led essays, briefings, and research by Zain Dana Harper, organized as an editorial front door rather than a content feed.">
 <meta property="og:url" content="https://harperz9.github.io/publications.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/publications.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -17,10 +17,11 @@
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/publications.png">
 <meta name="color-scheme" content="dark">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="system/fonts/conso-regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="system/system.css?v=20260828-site-design">
+<link rel="stylesheet" href="system/publications.css?v=20260828-site-design">
 </head>
-<body class="inner-clean frame-compact">
+<body class="inner-clean frame-compact publications-hub">
 <a class="skip-link" href="#main">Skip to content</a>
 
 <div id="site-nav" class="site-nav"></div>
@@ -30,25 +31,183 @@
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Publications</span></div>
   <div class="mid">
-    <h1>Papers, sized to <span class="g">what the evidence carries.</span></h1>
-    <p class="lede">These papers share one bet: that AI-assisted work is only trustworthy when its result is re-checkable: a verdict you can re-derive yourself, that says plainly what it does <em>not</em> claim, and that fails to <span translate="no">UNVERIFIABLE</span> rather than to trust. Each paper is deliberately scoped to the size its code and proofs actually support. Where a result is a design and a shipped artifact rather than a measured breakthrough, it says so.</p>
-    <p class="close">ORCID <a href="https://orcid.org/0009-0001-7175-5393" translate="no">0009-0001-7175-5393</a>. Every record below has a permanent Zenodo DOI and a public reading surface here. Verification material differs by record: some include runnable tests or corpus verifiers, while others are papers or philosophy corpora with source material but no executable test suite. None is peer reviewed, and each entry states its own evidence boundary.</p>
-    <figure class="plate plate--slim">
-      <canvas data-specimen="publications-plate-01" data-specimen-layers="obsidian-burst" aria-hidden="true"></canvas>
-      <figcaption>
-        <span class="plate-no">Plate 01</span>
-        <span class="plate-caption">Glass debris under edge light: what a claim keeps after everything that could not survive review is gone.</span>
+    <h1>A field journal for evidence, systems, and <span class="g">human consequence.</span></h1>
+    <p class="lede">Essays, source-grounded briefings, research records, and creative notes from one workshop. Start with a question, not a format: what changed at the frontier, how a claim survives review, what tools do to human lives, or how art makes an abstract system felt.</p>
+    <nav class="publication-actions" aria-label="Publication starting points">
+      <a href="#reading-paths">Choose a reading path</a>
+      <a href="#publication-index">Browse published work</a>
+      <a href="#research-records">Open the formal record</a>
+    </nav>
+    <figure class="publication-spectrum" aria-labelledby="publication-spectrum-caption">
+      <div class="spectrum-field" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <figcaption id="publication-spectrum-caption">
+        <span class="plate-no">Editorial spectrum</span>
+        <span class="plate-caption">Six reading lanes share one review boundary. This is an orientation map, not a quantitative chart; band width does not encode volume, priority, or maturity.</span>
       </figcaption>
     </figure>
   </div>
-  <div class="seal">honest weight &middot; re-derivable verdicts &middot; explicit non-claims &middot; source public</div>
+  <div class="seal">authored &middot; dated &middot; source-bound &middot; corrections stay visible &middot; <a href="feed.xml">Atom feed</a></div>
 </div>
 
 <main id="main">
 
+<section class="mv publication-lead" id="start-here" aria-labelledby="start-here-h">
+  <header class="publication-section-head">
+    <p class="publication-label">Start here</p>
+    <h2 id="start-here-h">Three doors into the work.</h2>
+    <p class="body-text">The recurring briefing tracks changes. The incident dossier holds one event at canonical depth. The long essay explains the larger method in human terms.</p>
+  </header>
+  <div class="lead-stack">
+    <article class="lead-story lead-story--current">
+      <div class="story-order" aria-hidden="true">01</div>
+      <div>
+        <p class="publication-meta">Current briefing · frontier AI · updated 2026-08-27</p>
+        <h3><a href="frontier-safety.html">What changed. What supports it. What remains unresolved.</a></h3>
+        <p>A dated monitor of AISI, Anthropic, OpenAI, and industry safety records. Reported facts, source roles, controls, and non-claims remain separate.</p>
+        <a class="publication-read" href="frontier-safety.html">Read the current Frontier Safety edition</a>
+      </div>
+    </article>
+    <article class="lead-story">
+      <div class="story-order" aria-hidden="true">02</div>
+      <div>
+        <p class="publication-meta">Canonical incident dossier · five evidence lanes · 2026-08-26</p>
+        <h3><a href="/briefings/2026-08-26-openai-hugging-face-incident/">Five evidence lanes, one OpenAI and Hugging Face incident</a></h3>
+        <p>OpenAI, METR with Redwood Research, and Alabama legal-process sources are compared by role. Detail routes here instead of being copied into every digest.</p>
+        <a class="publication-read" href="/briefings/2026-08-26-openai-hugging-face-incident/">Open the canonical briefing</a>
+      </div>
+    </article>
+    <article class="lead-story">
+      <div class="story-order" aria-hidden="true">03</div>
+      <div>
+        <p class="publication-meta">Long-form essay · verification and labor · 2026</p>
+        <h3><a href="no-receipt-no-accept.html">No Receipt, No Accept</a></h3>
+        <p>A human argument for independent checks, honest nulls, the proposer-checker loop, and machines whose results can be challenged.</p>
+        <a class="publication-read" href="no-receipt-no-accept.html">Read the essay</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="mv reading-paths" id="reading-paths" aria-labelledby="reading-paths-h">
+  <header class="publication-section-head">
+    <p class="publication-label">Editorial map</p>
+    <h2 id="reading-paths-h">Follow the subject that has hold of you.</h2>
+    <p class="body-text">These are durable reading lanes, not a promise of artificial publishing cadence. A lane says plainly when it has no dedicated essay yet.</p>
+  </header>
+  <div class="path-contour">
+    <article data-path="ai-frontier" data-state="published">
+      <p class="path-state">Published path · recurring briefing and incident dossiers</p>
+      <h3>AI and frontier systems</h3>
+      <p>Capability, incident response, model behavior, evaluation boundaries, and the institutions trying to measure fast-moving systems.</p>
+      <p><a href="frontier-safety.html">Current briefing</a> · <a href="frontier-safety-openai-hugging-face-incident.html">incident essay edition</a></p>
+    </article>
+    <article data-path="psychology-trauma" data-state="published-adjacent">
+      <p class="path-state">Published-adjacent · personal essay, not clinical guidance</p>
+      <h3>Psychology, trauma, and repair</h3>
+      <p><cite>Pick the Lock for Everyone</cite> writes through shame, creative labor, and becoming answerable. This is lived and philosophical writing, not a clinical or diagnostic claim.</p>
+      <p><a href="pick-the-lock-for-everyone.html">Read the essay</a></p>
+    </article>
+    <article data-path="education-access" data-state="open">
+      <p class="path-state">Open editorial lane · reporting and essays in development</p>
+      <h3>Education and access</h3>
+      <p>How people learn with new tools, who gets access to leverage, and how educational infrastructure can preserve agency. No dedicated essay is published in this lane yet.</p>
+      <p><a href="learn.html">Inspect the Learn system</a></p>
+    </article>
+    <article data-path="tools-systems" data-state="published">
+      <p class="path-state">Published path · essays, papers, and runnable artifacts</p>
+      <h3>Tools, systems, and verification</h3>
+      <p>Proposer-checker architecture, proof packets, capability effects, integrity witnesses, and the habits that keep model-assisted work reviewable.</p>
+      <p><a href="models-propose-oracles-dispose.html">Read the engineering essay</a> · <a href="#research-records">see the research record</a></p>
+    </article>
+    <article data-path="music-listening" data-state="open">
+      <p class="path-state">Open editorial lane · listening notes in development</p>
+      <h3>Music and listening</h3>
+      <p>Close listening, production texture, memory, and the social life of sound. No dedicated essay is published in this lane yet.</p>
+      <p><a href="chorus.html">Inspect Chorus, a discourse system</a></p>
+    </article>
+    <article data-path="abstract-art" data-state="published-adjacent">
+      <p class="path-state">Published-adjacent · visual work leads</p>
+      <h3>Abstract art and visual systems</h3>
+      <p>Source-bounded generative art, procedural form, shader work, and the relationship between evidence and atmosphere. The linked archive is visual work, not a claimed essay archive.</p>
+      <p><a href="gallery.html">Enter the gallery</a> · <a href="studio.html">open the studio</a></p>
+    </article>
+  </div>
+</section>
+
+<section class="mv publication-index" id="publication-index" aria-labelledby="publication-index-h">
+  <header class="publication-section-head">
+    <p class="publication-label">Published work</p>
+    <h2 id="publication-index-h">Essays and briefings, in one index.</h2>
+    <p class="body-text">Everything remains visible without JavaScript. Search and topics are a convenience for returning readers.</p>
+  </header>
+
+  <details class="publication-tools">
+    <summary>Search and filter the index</summary>
+    <div class="publication-tool-panel">
+      <label for="publication-search">Search title, summary, or topic</label>
+      <input id="publication-search" type="search" autocomplete="off" placeholder="Try verification, art, or frontier AI">
+      <div class="publication-filters" role="group" aria-label="Filter publications by topic">
+        <button type="button" data-publication-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-publication-filter="ai">AI and frontier</button>
+        <button type="button" data-publication-filter="systems">Tools and systems</button>
+        <button type="button" data-publication-filter="human">Human consequence</button>
+        <button type="button" data-publication-filter="art">Art and creativity</button>
+      </div>
+    </div>
+  </details>
+
+  <p class="publication-result-count" data-publication-result-count role="status" aria-live="polite" aria-atomic="true">8 published items shown.</p>
+  <p class="publication-empty" data-publication-empty hidden>No published item matches that search and topic.</p>
+  <div class="publication-ledger" data-publication-ledger>
+    <article data-publication-entry data-topics="ai frontier safety incident research">
+      <p class="publication-meta">Recurring briefing · 2026-08-27</p>
+      <h3><a href="frontier-safety.html">Frontier Safety Briefing</a></h3>
+      <p>A change-triggered, source-grounded record with reported controls and explicit evidence limits.</p>
+    </article>
+    <article data-publication-entry data-topics="ai frontier safety incident legal research">
+      <p class="publication-meta">Canonical briefing · 2026-08-26</p>
+      <h3><a href="/briefings/2026-08-26-openai-hugging-face-incident/">Five evidence lanes, one OpenAI and Hugging Face incident</a></h3>
+      <p>A source-role comparison with claim maps, reconstructable figures, limitations, and correction records.</p>
+    </article>
+    <article data-publication-entry data-topics="ai systems verification engineering">
+      <p class="publication-meta">Engineering essay · 2026</p>
+      <h3><a href="models-propose-oracles-dispose.html">Models Propose, Oracles Dispose</a></h3>
+      <p>Why generated work stays outside the evidence layer, and what a live model-free judgment boundary looks like.</p>
+    </article>
+    <article data-publication-entry data-topics="ai systems verification labor human">
+      <p class="publication-meta">Long-form essay · 2026</p>
+      <h3><a href="no-receipt-no-accept.html">No Receipt, No Accept</a></h3>
+      <p>Review debt, verifier independence, honest nulls, labor, and machines whose claims anyone can check.</p>
+    </article>
+    <article data-publication-entry data-topics="human psychology trauma art creativity labor">
+      <p class="publication-meta">Personal essay · 2026</p>
+      <h3><a href="pick-the-lock-for-everyone.html">Pick the Lock for Everyone</a></h3>
+      <p>Shame, creative labor, mutualistic tools, source-bounded generative art, and becoming answerable.</p>
+    </article>
+    <article data-publication-entry data-topics="ai systems agents verification">
+      <p class="publication-meta">Maintainer note · 2026</p>
+      <h3><a href="the-summary-is-not-the-record.html">The Summary Is Not the Record</a></h3>
+      <p>Claims, evidence, checks, action state, and the unsupported remainder a handoff should keep visible.</p>
+    </article>
+    <article data-publication-entry data-topics="systems verification finance security research">
+      <p class="publication-meta">Synthesis essay · 2026</p>
+      <h3><a href="writing.html#verified">Verified Is Not Trustworthy</a></h3>
+      <p>Five domains expose the same gap between a narrow technical check and the larger property people trust it to warrant.</p>
+    </article>
+    <article data-publication-entry data-topics="human philosophy ai minds">
+      <p class="publication-meta">Philosophy essay · 2026</p>
+      <h3><a href="writing.html#conferred">Conferred Existence</a></h3>
+      <p>A premise about conferred existence, artificial minds, authority, standing, and the difference between fact and permission.</p>
+    </article>
+  </div>
+</section>
+
 <!-- ─── THE PAPERS ─────────────────────────────────────────────── -->
-<section class="mv" id="papers" aria-labelledby="papers-h">
-  <h2 id="papers-h" class="reveal">Eight records on the same spine.</h2>
+<section class="mv research-records" id="research-records" aria-labelledby="research-records-h">
+  <p class="publication-label">Permanent research record</p>
+  <h2 id="research-records-h" class="reveal">Eight records on the same spine.</h2>
   <p class="body-text reveal">Everything here shares one discipline: a verdict is a re-derivable function of its inputs, carries a machine-readable statement of what it does not claim, and refuses to launder inability into trust. Four papers stake that discipline at four points, integrity witnessing, accountable compute, the independence of the checker, and the record of a single action. Two shorter notes carry it to where automation hands off to a person and where an actuator&rsquo;s effect is re-perceived rather than self-reported. Two archived corpora hold the philosophical ground the rest of it stands on.</p>
   <p class="body-text reveal">The counts are not decoration. <b>Two systems papers, two published preprints, two research notes, two archived corpora</b>, and the difference between those labels is the difference between what each one has actually earned. A note is not a paper. An archived corpus is not a peer-reviewed publication. Nothing here is peer reviewed at all, and where that changes this page will name the venue.</p>
 
@@ -117,11 +276,16 @@
   <p class="body-text reveal" style="margin-top:1.6rem">Where next: <a href="research.html">the research program</a> &middot; <a href="writing.html">essays and notes</a> &middot; <a href="overview.html">the tools the papers describe</a>.</p>
 </section>
 
-<section class="mv" id="briefings" aria-labelledby="briefings-h">
-  <h2 id="briefings-h">Research briefings</h2>
-  <p class="body-text">Source manifests, claim maps, reconstructable figures, limitations, and correction records stay attached to each briefing.</p>
-  <p class="body-text"><a href="/briefings/2026-08-26-openai-hugging-face-incident/">Five evidence lanes, one OpenAI and Hugging Face incident</a> <time datetime="2026-08-26">2026-08-26</time></p>
-  <p class="body-text"><a href="briefings/">Open the briefing archive</a> &middot; <a href="feed.xml">Atom feed</a> &middot; <a href="feed.json">JSON Feed</a></p>
+<section class="mv publication-method" id="publication-method" aria-labelledby="publication-method-h">
+  <p class="publication-label">Publication system</p>
+  <h2 id="publication-method-h">Different forms, one review boundary.</h2>
+  <div class="method-lines">
+    <article><h3>Recurring briefings</h3><p>Automated monitors may gather candidate changes. A dated edition is published only after a material delta is reviewed against source roles, scope, date, and limitations.</p></article>
+    <article><h3>Incident dossiers</h3><p>One canonical briefing holds the deep source comparison. Recurring digests route to it instead of copying an event into competing records.</p></article>
+    <article><h3>Essays and notes</h3><p>Long-form arguments, personal essays, engineering notes, and creative criticism disclose their evidence posture and AI-assisted process where relevant.</p></article>
+    <article><h3>Research record</h3><p>Deposited papers, preprints, notes, and corpora keep permanent identifiers and exact status. A DOI does not imply peer review.</p></article>
+  </div>
+  <p class="body-text publication-feeds"><a href="briefings/">Briefing archive</a> &middot; <a href="writing.html">Legacy essay archive</a> &middot; <a href="feed.xml">Atom feed</a> &middot; <a href="feed.json">JSON Feed</a> &middot; ORCID <a href="https://orcid.org/0009-0001-7175-5393" translate="no">0009-0001-7175-5393</a></p>
 </section>
 
 </main>
@@ -131,5 +295,6 @@
 </footer>
 
 <script src="system/reveal.js?v=20260828-site-design" defer></script>
+<script src="system/publications.js?v=20260828-site-design" defer></script>
 </body>
 </html>

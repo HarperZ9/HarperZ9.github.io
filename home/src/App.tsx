@@ -76,14 +76,23 @@ const REPRESENTATIVE_IDS = [
 ];
 
 const SECURITY_IDS = [
+  "proof-surface",
   "phantom",
   "behavior-transform",
+  "array",
+  "seed",
+  "sofer",
+  "isomorph",
+  "bounds",
+  "orca",
+  "gate",
   "accountable-surface",
   "public-surface-sweeper",
   "model-provenance-validator",
   "secret-redact-io",
   "agent-hook-pack",
   "repo-proof-index",
+  "kun",
 ];
 
 const GRAPHICS_IDS = [
@@ -604,9 +613,9 @@ function SecurityBoundary() {
   return (
     <section id="security-boundary" className="section security-section" aria-labelledby="security-title">
       <div className="section-heading">
-        <h2 id="security-title">Security boundary</h2>
+        <h2 id="security-title">Security platforms</h2>
         <p className="section-lead">
-          Public pages describe what the security products do and direct qualified work to a controlled intake.
+          Every registered security platform has a public-safe route. Shipped and inspectable tools link to their evidence; controlled-private systems expose purpose and boundary, then direct qualified work to a reviewed intake.
         </p>
       </div>
       <div className="security-layout">
