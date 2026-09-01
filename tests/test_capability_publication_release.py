@@ -13,7 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-DDkK7Yu0.js",
+    "assets/index-DFJMXR3Q.js",
     "assets/index-BxIHiu3n.css",
     "accountable-surface.html",
     "analytics/benchmark-evidence-status.html",
@@ -155,7 +155,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "d6f044c028c743ce7665305de01ae6c0cdfef21875fa1c9d3cd512e73315ab94"
+REVIEWED_RELEASE_SHA256 = "53b00b767f0195aee06cee26ccb5fb9a1baa671e30231ccb69490f31386034e4"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -252,7 +252,8 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_fix_css = "index-Bh3pWSfE.css"
     previous_art_js = "index-BPBDYusx.js"
     previous_art_css = "index-D6A4RL1P.css"
-    current_js = "index-DDkK7Yu0.js"
+    previous_publications_js = "index-DDkK7Yu0.js"
+    current_js = "index-DFJMXR3Q.js"
     current_css = "index-BxIHiu3n.css"
     prior_reviewed_js = "index-C_1S2nb6.js"
     prior_reviewed_css = "index-XLAt4tDw.css"
@@ -278,6 +279,8 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     assert not (ROOT / "assets" / retired_css).exists()
     assert previous_task_js not in source
     assert not (ROOT / "assets" / previous_task_js).exists()
+    assert previous_publications_js not in source
+    assert not (ROOT / "assets" / previous_publications_js).exists()
     assert previous_fix_js not in source
     assert previous_fix_css not in source
     assert not (ROOT / "assets" / previous_fix_js).exists()
