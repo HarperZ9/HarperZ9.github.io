@@ -43,8 +43,10 @@ def test_pick_the_lock_pages_are_public_and_discoverable() -> None:
     assert f'<link rel="canonical" href="{TALK_URL}">' in talk
     assert 'href="pick-the-lock-for-everyone.html"' in writing
     assert 'href="pick-the-lock-for-everyone-talk.html"' in writing
-    assert "writing/pick-the-lock-for-everyone-v3/13.md" in essay
-    assert "writing/pick-the-lock-for-everyone-talk/02d.md" in talk
+    for part in ESSAY_PARTS:
+        assert part.relative_to(ROOT).as_posix() in essay
+    for part in TALK_PARTS:
+        assert part.relative_to(ROOT).as_posix() in talk
     assert ESSAY_URL in sitemap
     assert TALK_URL in sitemap
 
