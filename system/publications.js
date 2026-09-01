@@ -1,10 +1,12 @@
+const tools = document.querySelector(".publication-tools");
 const search = document.querySelector("#publication-search");
 const filters = [...document.querySelectorAll("[data-publication-filter]")];
 const entries = [...document.querySelectorAll("[data-publication-entry]")];
 const empty = document.querySelector("[data-publication-empty]");
 const resultCount = document.querySelector("[data-publication-result-count]");
 
-if (search && filters.length && entries.length && empty && resultCount) {
+if (tools && search && filters.length && entries.length && empty && resultCount) {
+  tools.hidden = false;
   let topic = "all";
 
   const render = () => {
