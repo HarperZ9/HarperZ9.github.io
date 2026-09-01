@@ -4,12 +4,14 @@ from __future__ import annotations
 
 import copy
 import json
+import subprocess
+import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import pytest
 
-from tools.build_publications import build
+from tools.build_publications import build, render_figure_svg
 from tools.publication_model import PublicationError
 
 
@@ -186,3 +188,51 @@ def test_missing_marker_fails_before_writes(tmp_path: Path) -> None:
         build([root / "publications/data/records/example-work.json"], root)
 
     assert snapshot(root) == before
+
+
+def test_documented_direct_cli_invocation_loads_repository_modules() -> None:
+    result = subprocess.run(
+        [sys.executable, str(ROOT / "tools/build_publications.py"), "--help"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "--records-dir" in result.stdout
+
+
+def test_svg_wraps_long_cells_and_allocates_nonoverlapping_rows() -> None:
+    figure = json.loads(FIXTURE.read_text(encoding="utf-8"))["figures"][0]
+    figure["columns"] = ["Study", "Scope and denominator", "Reported result"]
+    figure["rows"] = [
+        [
+            "S1",
+            "Forty participants across two cohorts and twelve excerpts",
+            "The reported result remains bounded by the study design",
+        ],
+        [
+            "S2",
+            "Ninety-six recruited participants with two exclusions",
+            "No cross-study magnitude comparison is supported",
+        ],
+    ]
+
+    svg = render_figure_svg(figure)
+    root = ET.fromstring(svg)
+    namespace = {"svg": "http://www.w3.org/2000/svg"}
+    text = " ".join(
+        part.strip() for part in root.itertext() if part and part.strip()
+    )
+    data_rows = [
+        element
+        for element in root.findall("svg:rect", namespace)
+        if element.attrib.get("class") == "data-row"
+    ]
+
+    assert len(root.findall(".//svg:tspan", namespace)) > 6
+    assert "Forty participants across two cohorts and twelve excerpts" in text
+    assert len(data_rows) == 2
+    first_bottom = float(data_rows[0].attrib["y"]) + float(data_rows[0].attrib["height"])
+    assert first_bottom <= float(data_rows[1].attrib["y"])

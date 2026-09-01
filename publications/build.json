@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "built_at": "2026-09-01T00:00:00Z",
+  "inputs": {
+    "publications/data/records/the-second-hearing.json": "9b807ef8ee7a3e6e2082d86f0a4420b3e72cce2b0e564cac6fb58a70fc5274da"
+  },
+  "outputs": {
+    "feed.json": "fa4e82f1f6afdb992d642c18e9b495f18a0e7c83be7641613c7d02d43f517f83",
+    "feed.xml": "597c7866b753e3fb4a329aeee4370ca7b889cb983137e43f3191c02bda2c42e9",
+    "figures/the-second-hearing-evidence-map.html": "a3d1fc8ed2e4e3b8f4a0b016a0d83ab0a38163b47709867bbc7d0afe74e0b1d7",
+    "figures/the-second-hearing-evidence-map.json": "428b70c158a17dde59ba45514b4b61667d406cf7484cd7c0dc13f0632e5b51f7",
+    "figures/the-second-hearing-evidence-map.svg": "6a0adcf9e06928a65ab83eb58896426dca11d54d92f8bfea74ebbff0eb1fe10f",
+    "publications.html": "07a221dfac0fdbc0730f489267d72ceac66201c1f0a568b37c43d38cdc8686a3",
+    "publications/data/index.json": "41849964ccb87cfdf4e09cd1a3239f2eb9ac577932fb379946f6694344c56d11",
+    "sitemap.xml": "573436e0ed3b1bb10da6096b54a93d0d2b9fd566cfd55d5dde1e6ca5c6ce3941",
+    "the-second-hearing.html": "3aa960367e974fc0db4154eda0881511e06fdf0e35bd7befba7ae678be6133a0",
+    "writing.html": "ece8893f65ec17229aed25f72307d8e7f24aebfeaf685b0521091ba37b5b7ed4"
+  }
+}

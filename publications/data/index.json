@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "records": [
+    {
+      "id": "the-second-hearing",
+      "route": "the-second-hearing.html",
+      "category": "music-listening",
+      "form": "evidence essay",
+      "published_at": "2026-09-01",
+      "updated_at": "2026-09-01",
+      "record_sha256": "9b807ef8ee7a3e6e2082d86f0a4420b3e72cce2b0e564cac6fb58a70fc5274da",
+      "idempotency_key": "f43f56b2ba16d7f1ba26954494801b4242c082f1b35bf508e0bb98c2216be35e"
+    }
+  ]
+}

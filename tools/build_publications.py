@@ -8,10 +8,15 @@ import html
 import json
 import os
 import re
+import sys
 import tempfile
+import textwrap
 from pathlib import Path
 from urllib.parse import urlparse
 from xml.sax.saxutils import escape as xml_escape
+
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from tools.publication_model import (
     PublicationError,
@@ -127,35 +132,105 @@ def _render_figure_metadata(figure: dict) -> str:
     ) + "</dl>"
 
 
+def _svg_lines(value: str, width: int) -> list[str]:
+    return textwrap.wrap(
+        value,
+        width=max(8, width),
+        break_long_words=False,
+        break_on_hyphens=False,
+    ) or [value]
+
+
+def _svg_text(
+    lines: list[str],
+    *,
+    x: float,
+    y: float,
+    class_name: str,
+    line_height: int,
+    anchor: str = "middle",
+) -> str:
+    spans = []
+    for index, line in enumerate(lines):
+        position = f'y="{y:.1f}"' if index == 0 else f'dy="{line_height}"'
+        spans.append(f'<tspan x="{x:.1f}" {position}>{xml_escape(line)}</tspan>')
+    return (
+        f'<text x="{x:.1f}" y="{y:.1f}" text-anchor="{anchor}" '
+        f'class="{class_name}">{"".join(spans)}</text>'
+    )
+
+
 def render_figure_svg(figure: dict) -> str:
     width = 1200
-    row_height = 58
-    height = 170 + row_height * len(figure["rows"])
-    column_width = width / max(1, len(figure["columns"]))
+    margin = 24
+    table_width = width - margin * 2
+    column_width = table_width / max(1, len(figure["columns"]))
+    wrap_width = max(8, int((column_width - 24) / 8.2))
+
+    title_lines = _svg_lines(figure["title"], 68)
+    claim_lines = _svg_lines(figure["claim"], 106)
+    title_y = 42
+    claim_y = title_y + (len(title_lines) - 1) * 32 + 34
+    header_top = claim_y + (len(claim_lines) - 1) * 21 + 30
+    header_lines = [_svg_lines(value, wrap_width) for value in figure["columns"]]
+    header_height = max(52, max(map(len, header_lines)) * 20 + 22)
+    row_top = float(header_top + header_height)
+
     column_labels = "".join(
-        f'<text x="{int(column_width * (index + 0.5))}" y="112" '
-        f'text-anchor="middle" class="head">{xml_escape(value)}</text>'
-        for index, value in enumerate(figure["columns"])
+        _svg_text(
+            lines,
+            x=margin + column_width * (index + 0.5),
+            y=header_top + 23,
+            class_name="head",
+            line_height=20,
+        )
+        for index, lines in enumerate(header_lines)
     )
     rendered_rows: list[str] = []
     for row_index, row in enumerate(figure["rows"]):
-        y = 148 + row_index * row_height
+        wrapped = [_svg_lines(value, wrap_width) for value in row]
+        row_height = max(54, max(map(len, wrapped)) * 19 + 24)
         fill = "#f1eee8" if row_index % 2 == 0 else "#ffffff"
         rendered_rows.append(
-            f'<rect x="24" y="{y - 25}" width="1152" height="46" rx="5" fill="{fill}"/>'
+            f'<rect class="data-row" x="{margin}" y="{row_top:.1f}" '
+            f'width="{table_width}" height="{row_height}" rx="5" fill="{fill}"/>'
         )
-        for column_index, value in enumerate(row):
+        for column_index, lines in enumerate(wrapped):
             rendered_rows.append(
-                f'<text x="{int(column_width * (column_index + 0.5))}" y="{y + 4}" '
-                f'text-anchor="middle" class="cell">{xml_escape(value)}</text>'
+                _svg_text(
+                    lines,
+                    x=margin + column_width * (column_index + 0.5),
+                    y=row_top + 24,
+                    class_name="cell",
+                    line_height=19,
+                )
             )
+        row_top += row_height
+
+    height = int(row_top + 28)
+    title_text = _svg_text(
+        title_lines,
+        x=margin,
+        y=title_y,
+        class_name="title",
+        line_height=32,
+        anchor="start",
+    )
+    claim_text = _svg_text(
+        claim_lines,
+        x=margin,
+        y=claim_y,
+        class_name="cell",
+        line_height=21,
+        anchor="start",
+    )
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">
 <title id="title">{xml_escape(figure["title"])}</title>
 <desc id="desc">{xml_escape(figure["alt"])}</desc>
 <style>.title{{font:700 27px system-ui,sans-serif;fill:#161412}}.head{{font:650 17px ui-monospace,monospace;fill:#3f3a34}}.cell{{font:16px system-ui,sans-serif;fill:#161412}}</style>
 <rect width="1200" height="{height}" fill="#fbfaf7"/>
-<text x="24" y="48" class="title">{xml_escape(figure["title"])}</text>
-<text x="24" y="78" class="cell">{xml_escape(figure["claim"])}</text>
+{title_text}
+{claim_text}
 {column_labels}
 {"".join(rendered_rows)}
 </svg>

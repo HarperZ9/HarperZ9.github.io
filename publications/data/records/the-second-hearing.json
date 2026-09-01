@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "id": "the-second-hearing",
+  "route": "the-second-hearing.html",
+  "category": "music-listening",
+  "form": "evidence essay",
+  "title": "The Second Hearing",
+  "summary": "Repeated listening can change liking, prediction, attention, and memory in different ways. Replay count records exposure, not quality or a universal response.",
+  "author": "Zain Dana Harper",
+  "published_at": "2026-09-01",
+  "updated_at": "2026-09-01",
+  "observed_at": "2026-09-01T19:00:00Z",
+  "thesis": "A second hearing changes the listener's evidence, but no single measure can turn exposure into a verdict on taste or artistic value.",
+  "opening": {
+    "question": "What does repeated listening change, and what can it never establish on its own?",
+    "finding": "Exposure can raise familiarity and sometimes liking, while attention, recognition, memory interference, and perceived unpredictability follow different paths.",
+    "evidence": "Seven studies spanning controlled exposure, naturalistic listening, EEG, memory, neuroimaging synthesis, perceptual modeling, and categorization show why those outcomes must remain separate.",
+    "limit": "The studies use different listeners, stimuli, schedules, and units. Together they do not define a universal exposure curve or explain any one person's taste."
+  },
+  "sections": [
+    {
+      "id": "second-hearing",
+      "heading": "The second hearing is a new measurement",
+      "paragraphs": [
+        "A recording may be unchanged when it plays again, but the listener now carries a trace of the first encounter. A rhythm may be easier to follow. A phrase may become predictable. An unfamiliar texture may gain a name. The repeat therefore changes the conditions of listening even when it does not change the sound file.",
+        "That observation is a frame, not a neuroscience claim. The evidence becomes useful only after the outcome is named. Liking, recognition, shared neural timing, later memory interference, and perceived unpredictability are different measurements. A change in one cannot stand in for a change in all the others."
+      ]
+    },
+    {
+      "id": "four-familiarities",
+      "heading": "Four different forms of familiarity",
+      "paragraphs": [
+        "The four forms are piece familiarity, style familiarity, within-piece repetition, and across-hearing repetition. Piece familiarity means prior exposure to the exact recording or composition. Style familiarity means learned expectations from related music, even when the piece is new. Within-piece repetition is the return of a rhythm, phrase, chorus, timbre, or form during one hearing. Across-hearing repetition is another encounter with the same excerpt or piece.",
+        "These distinctions matter because a new piece can belong to a familiar style, while a repeatedly heard piece can remain hard to predict. The 2017 naturalistic study found that familiarity with similar music was a strong predictor of liking even though the selected examples were initially unknown to participants. The 2019 EEG study also separated familiar-style from unfamiliar-style excerpts before testing immediate repetition."
+      ]
+    },
+    {
+      "id": "liking-trajectories",
+      "heading": "Liking can rise, flatten, or turn",
+      "paragraphs": [
+        "Three controlled experiments published in 2004 varied exposure, the ecological character of the music, and whether listening was focused or incidental. Incidental exposure produced higher liking for more-exposed music. Focused listening produced a rise and later decline for the most ecologically valid stimuli. Recognition generally increased more under focused listening. The same number of plays did not have one fixed meaning across listening conditions.",
+        "A 2017 experiment used a different schedule. Fifteen adults rated 40 initially unfamiliar examples after presentations 1, 10, 19, and 28 over about four weeks. Liking increased across presentations at all four expert-rated complexity levels. The presentation effect was reported as F(3,42)=12.35, p<0.00001, with omega-squared=0.197, while the presentation-by-complexity interaction was not significant.",
+        "Placing the studies beside each other does not select a winner. Their listening mode, material, schedule, and setting differ. The defensible conclusion is narrower: repeated exposure can change liking, and the trajectory depends on the conditions under which exposure occurs."
+      ]
+    },
+    {
+      "id": "attention-is-not-liking",
+      "heading": "Attention is not liking",
+      "paragraphs": [
+        "In a 2019 study, 40 participants across two cohorts heard instrumental excerpts repeated three times in immediate succession. Inter-subject EEG correlation fell across repeats for familiar-style excerpts and remained more sustained for unfamiliar-style excerpts. The pattern was tested across separate cohorts and stimulus sets.",
+        "The strongest caveat belongs beside the result. The researchers did not behaviorally validate inter-subject EEG correlation as a measure of musical engagement. A fall in shared neural timing is not a boredom meter, and a sustained correlation is not a quality score. Attention may change while liking or recognition moves in another direction."
+      ]
+    },
+    {
+      "id": "memory-without-preference",
+      "heading": "Memory can move without preference",
+      "paragraphs": [
+        "A 2023 experiment exposed 44 participants to four novel vocal choruses between one and four times. One day later, greater exposure tended to increase interference on a serial-recall task during and after some songs. Familiarity and desire-to-sing-along ratings increased across sessions, but effects varied by song.",
+        "The experiment separates outcomes that casual language often collapses. A song can become more familiar, easier to reproduce internally, or more disruptive to another memory task without becoming more enjoyable. Four songs and a modest sample cannot establish that repetition reliably creates an earworm."
+      ]
+    },
+    {
+      "id": "listener-in-measurement",
+      "heading": "The listener is part of the measurement",
+      "paragraphs": [
+        "A 2024 perceptual-modeling study recruited 96 nonmusicians and analyzed ratings of short Western-classical melodies. Two participants with missing age data were excluded, and the analyses retained observations rated unfamiliar. Perceived balance, contour, symmetry, complexity, and unpredictability mediated several relationships between computed stimulus properties and liking. Participant and stimulus differences explained substantial variance.",
+        "The models were correlational. They do not show that a perceptual judgment causes liking, nor do short synthesized piano excerpts establish cross-cultural rules. They do show why a formal feature cannot be treated as though every listener receives it in the same way.",
+        "A 2018 systematic review found 23 eligible adult neuroimaging studies, with 11 studies and 212 participants entering its activation-likelihood meta-analysis. The main analysis found no consistently convergent peak activation. That null convergence does not mean familiarity has no neural basis. It means heterogeneous designs did not support one simple familiarity center.",
+        "A 2026 set of four preregistered experiments adds a related boundary. Across 735 online Western participants, higher-level perceptual judgments separated music, not-music, and ambiguous sounds more clearly than low-level acoustic features in the reported models. The task concerned categorization, not liking, so it cannot serve as a repeated-listening preference result."
+      ]
+    },
+    {
+      "id": "replay-count-limits",
+      "heading": "What replay count cannot say",
+      "paragraphs": [
+        "Replay count records behavior and an opportunity for learning. It does not reveal whether the listener paid attention, chose the play, finished the work, remembered it later, or valued it. Recommendation systems, habit, context, access, social cues, and deliberate study can all produce another play.",
+        "A count also cannot establish artistic quality, durable preference, intention, or universal taste. Those are stronger claims than the measure supports. The honest use of replay data begins by naming its denominator and setting: plays by whom, over what period, under what recommendation and access conditions, and with what completion rule."
+      ]
+    },
+    {
+      "id": "listening-card",
+      "heading": "A four-note listening card",
+      "paragraphs": [
+        "The following listening card is an editorial exercise, not a tested intervention: record the first response; name one newly audible detail; note one prediction or surprise; identify what remains resistant. The point is not to force appreciation. It is to keep liking, recognition, attention, and prediction from becoming one vague impression.",
+        "The card may be most useful when it produces a null. Nothing new may become audible. Liking may not change. A detail may become clearer while the work remains unappealing. Each is a legitimate observation, and none needs to become a ranking."
+      ]
+    },
+    {
+      "id": "honest-measurement",
+      "heading": "The honest measurement",
+      "paragraphs": [
+        "Another play changes the listener's evidence, not the work's rank. The second hearing may make structure easier to perceive, expose a prediction error, strengthen a memory trace, or leave the response unchanged.",
+        "A better closing question than whether the work was liked is more specific: what changed between hearings, which measure changed, and what remains unknown? That question preserves both the evidence and the listener."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "publisher": "American Psychological Association via PubMed",
+      "title": "Liking and memory for musical stimuli as a function of exposure",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/14979811/",
+      "role": "peer-reviewed primary research; three controlled exposure experiments",
+      "published_at": "2004-03-01",
+      "observed_at": "2026-09-01"
+    },
+    {
+      "id": "S2",
+      "publisher": "Frontiers in Neuroscience",
+      "title": "Repeated Listening Increases the Liking for Music Regardless of Its Complexity",
+      "url": "https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2017.00147/full",
+      "role": "peer-reviewed primary naturalistic repeated-listening experiment",
+      "published_at": "2017-03-31",
+      "observed_at": "2026-09-01"
+    },
+    {
+      "id": "S3",
+      "publisher": "Frontiers in Neuroscience",
+      "title": "Neural Correlates of Familiarity in Music Listening: A Systematic Review and a Neuroimaging Meta-Analysis",
+      "url": "https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2018.00686/full",
+      "role": "peer-reviewed systematic review and activation-likelihood meta-analysis",
+      "published_at": "2018-10-05",
+      "observed_at": "2026-09-01"
+    },
+    {
+      "id": "S4",
+      "publisher": "Scientific Reports",
+      "title": "Music synchronizes brainwaves across listeners with strong effects of repetition, familiarity and training",
+      "url": "https://www.nature.com/articles/s41598-019-40254-w",
+      "role": "peer-reviewed primary EEG research",
+      "published_at": "2019-03-05",
+      "observed_at": "2026-09-01"
+    },
+    {
+      "id": "S5",
+      "publisher": "Quarterly Journal of Experimental Psychology",
+      "title": "The song that never ends: The effect of repeated exposure on the development of an earworm",
+      "url": "https://journals.sagepub.com/doi/10.1177/17470218231152368",
+      "role": "peer-reviewed primary memory-interference experiment",
+      "published_at": "2023-01-09",
+      "observed_at": "2026-09-01"
+    },
+    {
+      "id": "S6",
+      "publisher": "Annals of the New York Academy of Sciences",
+      "title": "Perceptual representations mediate effects of stimulus properties on liking for music",
+      "url": "https://nyaspubs.onlinelibrary.wiley.com/doi/full/10.1111/nyas.15106",
+      "role": "peer-reviewed primary perceptual-modeling study",
+      "published_at": "2024-02-06",
+      "observed_at": "2026-09-01"
+    },
+    {
+      "id": "S7",
+      "publisher": "Scientific Reports",
+      "title": "Music is a distinct perceptual category with subjective grounds",
+      "url": "https://www.nature.com/articles/s41598-026-54414-2",
+      "role": "peer-reviewed preregistered primary categorization research",
+      "published_at": "2026-05-27",
+      "observed_at": "2026-09-01"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "text": "Repeated exposure can raise liking, but the trajectory changes with attention, stimulus context, and exposure schedule.",
+      "status": "verified",
+      "source_ids": ["S1", "S2"],
+      "scope": "Controlled and naturalistic repeated-listening experiments using different musical materials",
+      "uncertainty": "The studies differ in listening mode, ecological validity, sample, and schedule and were not pooled",
+      "doesNotProve": "A universal monotonic or inverted-U exposure curve"
+    },
+    {
+      "id": "C2",
+      "text": "Exact piece familiarity and pre-existing style familiarity are different predictors.",
+      "status": "verified",
+      "source_ids": ["S2", "S4"],
+      "scope": "Initially unfamiliar examples and familiar-style versus unfamiliar-style instrumental excerpts",
+      "uncertainty": "Style classifications are group-level and culturally situated",
+      "doesNotProve": "That style familiarity causes liking for an individual listener"
+    },
+    {
+      "id": "C3",
+      "text": "Attention-related EEG correlation can change across repeats without measuring liking.",
+      "status": "verified",
+      "source_ids": ["S1", "S4"],
+      "scope": "Immediate repetitions of instrumental excerpts compared with separate liking and recognition experiments",
+      "uncertainty": "The EEG proxy was not behaviorally validated as musical engagement",
+      "doesNotProve": "That shared neural timing measures aesthetic value or private experience"
+    },
+    {
+      "id": "C4",
+      "text": "Repetition can increase familiarity and later memory interference without establishing a matching increase in enjoyment.",
+      "status": "verified",
+      "source_ids": ["S5"],
+      "scope": "Forty-four participants and four novel vocal choruses tested across two days",
+      "uncertainty": "Effects varied by song, and the stimulus set was small",
+      "doesNotProve": "That every repeated song becomes an earworm"
+    },
+    {
+      "id": "C5",
+      "text": "Perceived stimulus properties and listener-level variation matter when relating formal features to liking.",
+      "status": "verified",
+      "source_ids": ["S6"],
+      "scope": "Online ratings of short Western-classical synthesized melodies",
+      "uncertainty": "Correlational structural-equation models in a Western sample",
+      "doesNotProve": "Causal mediation or cross-cultural universality"
+    },
+    {
+      "id": "C6",
+      "text": "The main neuroimaging synthesis did not identify one consistently convergent familiarity activation across heterogeneous studies.",
+      "status": "verified",
+      "source_ids": ["S3"],
+      "scope": "Twenty-three reviewed adult neuroimaging studies, with eleven entering the main meta-analysis",
+      "uncertainty": "Modalities, stimuli, familiarity definitions, and designs varied",
+      "doesNotProve": "That familiarity has no neural basis"
+    },
+    {
+      "id": "C7",
+      "text": "Higher-level listener judgments explained music categorization better than low-level acoustic features in the reported models.",
+      "status": "verified",
+      "source_ids": ["S7"],
+      "scope": "Four preregistered experiments with 735 online Western participants",
+      "uncertainty": "The work studied categorization rather than preference and used short isolated excerpts",
+      "doesNotProve": "That categorization and pleasure are the same process"
+    },
+    {
+      "id": "C8",
+      "text": "Replay count records exposure and an opportunity for learning, not quality, durable preference, or a listener's reason.",
+      "status": "inferred",
+      "source_ids": ["S1", "S2", "S3", "S4", "S5", "S6", "S7"],
+      "scope": "Editorial synthesis across distinct exposure, attention, memory, perception, and categorization measures",
+      "uncertainty": "No source directly tested every interpretation of replay behavior",
+      "doesNotProve": "Any ranking of works, genres, or listeners"
+    }
+  ],
+  "figures": [
+    {
+      "id": "the-second-hearing-evidence-map",
+      "title": "Figure 1. Four experiments, four different outcomes",
+      "claim": "Repeated listening research uses different exposure schedules and outcome units, so the reported effects answer different questions.",
+      "type": "evidence-map",
+      "columns": ["Study", "Scope and denominator", "Exposure schedule", "Outcome unit", "Reported result", "Non-proof"],
+      "rows": [
+        ["S2", "15 listeners; 40 examples", "Plays 1, 10, 19, 28 over about four weeks", "Liking rating from 0 to 10", "Liking rose; omega-squared=0.197 for presentation", "No universal exposure curve"],
+        ["S4", "40 participants in two cohorts; 8 or 12 excerpts", "Three immediate repeats per excerpt", "EEG inter-subject correlation", "Correlation fell for familiar-style music and persisted for unfamiliar-style music", "No validated boredom or value measure"],
+        ["S5", "44 participants; four vocal choruses", "One to four exposures; test one day later", "Serial recall and 0 to 100 ratings", "Greater exposure tended to increase interference for some songs", "No reliable earworm rule"],
+        ["S6", "96 recruited; two excluded; 96 excerpts", "Two rating blocks, not a listening-dose study", "Five-point ratings and standardized model paths", "Perceptual ratings mediated several feature-to-liking paths", "No causal exposure claim"]
+      ],
+      "scope": "Four studies published from 2017 through 2024 using adult listener samples",
+      "units": "Study-specific ratings, EEG correlation, serial recall, and model estimates",
+      "denominator": "S2: 15 listeners; S4: 40 participants; S5: 44 participants; S6: 96 recruited with two excluded",
+      "date": "Sources observed 2026-09-01",
+      "provenance": ["S2", "S4", "S5", "S6"],
+      "transformation": "Published schedules, directions, and effect statistics are restated without normalizing or estimating unpublished means",
+      "uncertainty": "Each panel preserves its own design, population, unit, and limitation",
+      "limitations": "This is not a meta-analysis. The constructs and magnitudes are not comparable across rows.",
+      "doesNotProve": "That more exposure has one meaning, that prediction determines pleasure, or that a universal exposure curve exists",
+      "alt": "Four rows compare studies of liking, shared EEG timing, memory interference, and perceptual models. Their samples, exposure schedules, and units differ, so effect magnitudes cannot be compared."
+    }
+  ],
+  "corrections": [],
+  "ai_assistance": "AI assisted with research organization, drafting, record construction, and verification. Zain Dana Harper reviewed and accepts responsibility for the published work.",
+  "personal_voice_adopted": false,
+  "social": {
+    "linkedin": {"state": "not_posted"},
+    "x": {"state": "not_posted"}
+  }
+}
