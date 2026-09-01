@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://harperz9.github.io/publications/schema/publication-record.schema.json",
+  "title": "HarperZ9 public-ready publication record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "route",
+    "category",
+    "form",
+    "title",
+    "summary",
+    "author",
+    "published_at",
+    "updated_at",
+    "observed_at",
+    "thesis",
+    "opening",
+    "sections",
+    "sources",
+    "claims",
+    "figures",
+    "corrections",
+    "ai_assistance"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "route": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*\\.html$"},
+    "category": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "form": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "summary": {"type": "string", "minLength": 1},
+    "author": {"const": "Zain Dana Harper"},
+    "published_at": {"type": "string", "format": "date"},
+    "updated_at": {"type": "string", "format": "date"},
+    "observed_at": {"type": "string", "format": "date-time", "pattern": "Z$"},
+    "thesis": {"type": "string", "minLength": 1},
+    "opening": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["question", "finding", "evidence", "limit"],
+      "properties": {
+        "question": {"type": "string", "minLength": 1},
+        "finding": {"type": "string", "minLength": 1},
+        "evidence": {"type": "string", "minLength": 1},
+        "limit": {"type": "string", "minLength": 1}
+      }
+    },
+    "sections": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/section"}},
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "claims": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/claim"}},
+    "figures": {"type": "array", "items": {"$ref": "#/$defs/figure"}},
+    "corrections": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "ai_assistance": {"type": "string", "minLength": 1},
+    "personal_voice_adopted": {"type": "boolean"},
+    "social": {"type": "object"}
+  },
+  "$defs": {
+    "section": {
+      "type": "object",
+      "required": ["id", "heading", "paragraphs"],
+      "properties": {
+        "id": {"type": "string"},
+        "heading": {"type": "string"},
+        "paragraphs": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["id", "publisher", "title", "url", "role", "published_at", "observed_at"],
+      "properties": {
+        "id": {"type": "string"},
+        "publisher": {"type": "string"},
+        "title": {"type": "string"},
+        "url": {"type": "string", "format": "uri", "pattern": "^https://"},
+        "role": {"type": "string"},
+        "published_at": {"type": "string"},
+        "observed_at": {"type": "string", "format": "date"}
+      }
+    },
+    "claim": {
+      "type": "object",
+      "required": ["id", "text", "status", "source_ids", "scope", "uncertainty", "doesNotProve"],
+      "properties": {
+        "id": {"type": "string"},
+        "text": {"type": "string"},
+        "status": {"enum": ["verified", "inferred", "unknown", "correction"]},
+        "source_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "scope": {"type": "string"},
+        "uncertainty": {"type": "string"},
+        "doesNotProve": {"type": "string"}
+      }
+    },
+    "figure": {
+      "type": "object",
+      "required": ["id", "title", "claim", "type", "columns", "rows", "scope", "units", "denominator", "date", "provenance", "transformation", "uncertainty", "limitations", "doesNotProve", "alt"],
+      "properties": {
+        "id": {"type": "string"},
+        "title": {"type": "string"},
+        "claim": {"type": "string"},
+        "type": {"type": "string"},
+        "columns": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "rows": {"type": "array", "minItems": 1, "items": {"type": "array", "items": {"type": "string"}}},
+        "scope": {"type": "string"},
+        "units": {"type": "string"},
+        "denominator": {"type": "string"},
+        "date": {"type": "string"},
+        "provenance": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "transformation": {"type": "string"},
+        "uncertainty": {"type": "string"},
+        "limitations": {"type": "string"},
+        "doesNotProve": {"type": "string"},
+        "alt": {"type": "string"}
+      }
+    }
+  }
+}
