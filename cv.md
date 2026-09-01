@@ -179,7 +179,7 @@ LLM. Open is not accepted.
 
 ### Professional experience
 
-These start years do not state current status or an end date; both remain unspecified.
+The 2017 and 2023 start years do not state current status or an end date; both remain unspecified.
 
 **Independent Systems Engineer | independent practice**
 Seattle / remote | started 2023
@@ -203,8 +203,11 @@ Remote | started 2017
 - Keep client names, private deliverables, compliance evidence, and contract
   terms outside the public portfolio.
 
-**Operations and Commercial Arboriculture Lead | Family business**
-Seattle area | started 2015
+**Full-time operations and commercial arboriculture | Legendary Tree (organization label)**
+April 25, 2015 to June 2, 2026
+
+Legendary Tree is the applicant-provided organization label; no conventional
+job title or legal employer of record is asserted.
 
 - Applicant-reported eleven years operating tree crews from the ground: ran the rigging
   systems, judged clearances and how far limbs would swing relative to
