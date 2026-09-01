@@ -249,7 +249,7 @@ def render_figure_html(figure: dict) -> str:
 
 def _render_figure_in_article(figure: dict) -> str:
     return (
-        f'<section class="publication-figure" id="{html.escape(figure["id"])}">'
+        f'<section class="publication-figure" id="figure-{html.escape(figure["id"])}">'
         f'<h2>{html.escape(figure["title"])}</h2>'
         f'<p>{html.escape(figure["claim"])}</p>'
         f'<img src="figures/{html.escape(figure["id"])}.svg" alt="{html.escape(figure["alt"], quote=True)}">'

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import copy
 import json
+import re
 import subprocess
 import sys
 import xml.etree.ElementTree as ET
@@ -11,7 +12,7 @@ from pathlib import Path
 
 import pytest
 
-from tools.build_publications import build, render_figure_svg
+from tools.build_publications import build, render_article, render_figure_svg
 from tools.publication_model import PublicationError
 
 
@@ -236,3 +237,14 @@ def test_svg_wraps_long_cells_and_allocates_nonoverlapping_rows() -> None:
     assert len(data_rows) == 2
     first_bottom = float(data_rows[0].attrib["y"]) + float(data_rows[0].attrib["height"])
     assert first_bottom <= float(data_rows[1].attrib["y"])
+
+
+def test_article_namespaces_figure_anchors_away_from_section_ids() -> None:
+    record = json.loads(FIXTURE.read_text(encoding="utf-8"))
+    record["figures"][0]["id"] = record["sections"][0]["id"]
+
+    article = render_article(record)
+    identifiers = re.findall(r'\bid="([^"]+)"', article)
+
+    assert len(identifiers) == len(set(identifiers))
+    assert f'figure-{record["figures"][0]["id"]}' in identifiers

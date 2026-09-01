@@ -1,0 +1,61 @@
+{
+  "id": "availability-is-not-reach",
+  "title": "Figure 1. Availability is not reach",
+  "claim": "School availability in June 2025 and student reach in October 2024 are separate measures with different denominators.",
+  "type": "separate-panels",
+  "columns": [
+    "Panel and measure",
+    "Estimate",
+    "Date",
+    "Unit and denominator",
+    "Standard error",
+    "Non-proof"
+  ],
+  "rows": [
+    [
+      "A. Schools offering any tutoring",
+      "85%",
+      "June 2025",
+      "Percent of U.S. public schools",
+      "0.9 points for complementary 15% no-tutoring estimate",
+      "No delivered dosage or impact"
+    ],
+    [
+      "A. Schools offering high-dosage tutoring",
+      "42%",
+      "June 2025",
+      "Percent of U.S. public schools",
+      "1.2 percentage points",
+      "No student participation rate"
+    ],
+    [
+      "B. Students receiving high-dosage tutoring across all schools",
+      "8%",
+      "October 2024",
+      "Average percent of enrolled students per public school",
+      "0.5 percentage points",
+      "No link to June availability"
+    ],
+    [
+      "B. Students receiving high-dosage tutoring within offering schools",
+      "25%",
+      "October 2024",
+      "Average percent of enrolled students within offering schools",
+      "1.2 percentage points",
+      "No causal learning effect"
+    ]
+  ],
+  "scope": "School Pulse Panel estimates for U.S. public schools in two separate survey months",
+  "units": "Percent and percentage-point standard error",
+  "denominator": "Panel A uses public schools; Panel B uses average enrolled-student shares across all schools or offering schools",
+  "date": "June 2025 availability; October 2024 reach; source observed 2026-09-01",
+  "provenance": [
+    "S1",
+    "S2"
+  ],
+  "transformation": "The 85 percent estimate is the published complement of 15 percent no tutoring; no confidence intervals or cross-panel rates are computed",
+  "uncertainty": "School-reported weighted survey estimates from different months with different denominators",
+  "limitations": "The panels are descriptive, not linked to student outcomes, and draw no arrows between measures.",
+  "doesNotProve": "The four values are not a sequential funnel, an attrition rate, or evidence that current tutoring caused achievement changes.",
+  "alt": "Two separate panels show school availability and student reach. In June 2025, 85 percent of public schools offered some tutoring and 42 percent offered high-dosage tutoring. In October 2024, average high-dosage participation was 8 percent across all public schools and 25 percent within offering schools. The months and denominators differ."
+}
