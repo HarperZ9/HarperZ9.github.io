@@ -35,7 +35,7 @@
     {
       "slug": "phantom",
       "name": "Phantom",
-      "purpose": "Phantom audits and changes reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.",
+      "purpose": "Phantom helps you inspect and, when authorized, change the hardware identifiers a computer exposes. It works on owned or expressly authorized Windows and Linux systems, saves a backup before changes, and can restore the original values.",
       "maturity": "shipped",
       "source": "https://github.com/HarperZ9/phantom",
       "installOrEntry": "Download a v1.1.0 release asset and compare its hash with SHA256SUMS.txt.",
@@ -170,7 +170,7 @@
     {
       "slug": "accountable-surface",
       "name": "Accountable Surface",
-      "purpose": "Accountable Surface is a Python runtime for executing bounded file, command, web, and browser actions under operator-supplied grants. It accepts an exact proposed action and target, an external authorization receipt, effector bounds, and an expected result; it returns an allow, deny, or needs-human outcome, performs only permitted effects, re-observes and verifies the result, rolls back reversible failures, and appends a hash-chained journal.",
+      "purpose": "Accountable Surface lets an AI agent take only the file, command, web, or browser action a person has approved. It checks the request and authorization, blocks or pauses when needed, verifies the outcome, rolls back reversible failures, and records every step in a hash-chained journal.",
       "maturity": "active",
       "source": "https://github.com/HarperZ9/accountable-surface",
       "installOrEntry": "python -m pip install -e \".[test]\"; python examples/demo.py",

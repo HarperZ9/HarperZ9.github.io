@@ -105,7 +105,7 @@ window.CARD_DATA = {
     "constellationCard": true,
     "routeHref": "flywheel.html",
     "routeTitle": "Flywheel",
-    "routeSummary": "Flywheel sends a task to a selected local or hosted AI model, gives that model approved tools, checks the resulting work, and returns a journal and receipt that can be reviewed or replayed.",
+    "routeSummary": "Flywheel runs an AI task with the local or hosted model and tools you choose. It checks what happened, saves a receipt you can inspect or replay, and includes a native desktop app.",
     "imagePath": "img/og/flywheel.png"
   },
   "relay": {
@@ -287,7 +287,7 @@ window.CARD_DATA = {
     "constellationCard": true,
     "routeHref": "accountable-surface.html",
     "routeTitle": "Accountable Surface",
-    "routeSummary": "Accountable Surface is a Python runtime for executing bounded file, command, web, and browser actions under operator-supplied grants. It accepts an exact proposed action and target, an external authorization receipt, effector bounds, and an expected result; it returns an allow, deny, or needs-human outcome, performs only permitted effects, re-observes and verifies the result, rolls back reversible failures, and appends a hash-chained journal.",
+    "routeSummary": "Accountable Surface lets an AI agent take only the file, command, web, or browser action a person has approved. It checks the request and authorization, blocks or pauses when needed, verifies the outcome, rolls back reversible failures, and records every step in a hash-chained journal.",
     "imagePath": "img/og/accountable-surface.png"
   },
   "accountable-engine": {

@@ -21,6 +21,74 @@ def _registry_record(system_id: str) -> dict:
     return next(record for record in registry["systems"] if record["id"] == system_id)
 
 
+def _embedded_home_registry() -> dict:
+    source = (ROOT / "home" / "src" / "system-registry.ts").read_text(encoding="utf-8")
+    match = re.search(
+        r"export const SYSTEM_REGISTRY_JSON = (\".*\");\nexport const SYSTEM_REGISTRY =",
+        source,
+        re.DOTALL,
+    )
+    assert match, "home system registry no longer exposes its embedded JSON source"
+    return json.loads(json.loads(match.group(1)))
+
+
+def _og_card_data() -> dict:
+    source = (ROOT / "img" / "og" / "cards-data.js").read_text(encoding="utf-8")
+    match = re.search(r"window\.CARD_DATA\s*=\s*(\{.*\});\s*$", source, re.DOTALL)
+    assert match, "OG card data is no longer a plain object literal"
+    return json.loads(match.group(1))
+
+
+def test_home_registry_matches_the_canonical_system_registry() -> None:
+    canonical = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
+    assert _embedded_home_registry() == canonical
+
+
+def test_featured_project_pages_use_their_canonical_plain_language_purpose() -> None:
+    for slug in ("flywheel", "index", "gather", "buildlang", "phantom", "accountable-surface"):
+        record = _registry_record(slug)
+        page = (ROOT / record["href"]).read_text(encoding="utf-8")
+        canonical = re.findall(
+            rf'<p[^>]+data-canonical-purpose="{re.escape(slug)}"[^>]*>(.*?)</p>',
+            page,
+            re.DOTALL,
+        )
+        assert len(canonical) == 1, slug
+        assert html.unescape(re.sub(r"<[^>]+>", "", canonical[0])).strip() == record["purpose"]
+        assert f'<meta name="description" content="{html.escape(record["purpose"], quote=True)}">' in page
+
+
+def test_home_noscript_fallback_uses_the_canonical_plain_language_purposes() -> None:
+    template = (ROOT / "home" / "index.html").read_text(encoding="utf-8")
+    fallback = template.split("<noscript>", 1)[1].split("</noscript>", 1)[0]
+
+    for slug in ("flywheel", "index", "gather", "buildlang", "phantom", "accountable-surface"):
+        record = _registry_record(slug)
+        canonical = re.findall(
+            rf'<(?:p|span)[^>]+data-canonical-purpose="{re.escape(slug)}"[^>]*>(.*?)</(?:p|span)>',
+            fallback,
+            re.DOTALL,
+        )
+        assert len(canonical) == 1, slug
+        assert html.unescape(re.sub(r"<[^>]+>", "", canonical[0])).strip() == record["purpose"]
+
+
+def test_featured_og_route_summaries_use_the_canonical_plain_language_purpose() -> None:
+    cards = _og_card_data()
+    for slug in ("flywheel", "index", "gather", "buildlang", "phantom", "accountable-surface"):
+        if "routeSummary" in cards[slug]:
+            assert cards[slug]["routeSummary"] == _registry_record(slug)["purpose"]
+
+
+def test_index_page_uses_the_registry_release_version_everywhere() -> None:
+    record = _registry_record("index")
+    version_match = re.search(r"\b(\d+\.\d+\.\d+)\b", record["releaseState"])
+    assert version_match, record["releaseState"]
+    page = (ROOT / record["href"]).read_text(encoding="utf-8")
+    page_versions = set(re.findall(r"index-graph[- ](\d+\.\d+\.\d+)", page))
+    assert page_versions == {version_match.group(1)}
+
+
 def test_truth_enb_copy_names_the_actual_skyrim_graphics_project() -> None:
     record = _registry_record("truth-enb")
     purpose = record["purpose"]
