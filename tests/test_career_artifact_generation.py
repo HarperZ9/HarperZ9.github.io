@@ -136,13 +136,17 @@ def test_generated_formats_are_parseable_one_page_and_status_bounded(
 
     expected = (
         "Technical Networking Support, Xbox/Microsoft contract | subcontracted through Stream/Convergys | Wilsonville, Oregon | 2014 to 2015",
-        "Operations and Commercial Arboriculture Lead | Seattle-area family business | started 2015",
+        "Full-time operations and commercial arboriculture | Legendary Tree (organization label) | April 25, 2015 to June 2, 2026",
         "Freelance Technical Writer, Documentation, and Product Operations | independent practice | started 2017",
         "Independent Systems Engineer | independent practice | started 2023",
     )
     boundary = (
-        "These start years do not state current status or an end date; "
+        "The 2017 and 2023 start years do not state current status or an end date; "
         "both remain unspecified."
+    )
+    arboriculture_boundary = (
+        "Legendary Tree is the applicant-provided organization label; no conventional "
+        "job title or legal employer of record is asserted."
     )
     for path in output.iterdir():
         if path.suffix == ".pdf":
@@ -156,6 +160,10 @@ def test_generated_formats_are_parseable_one_page_and_status_bounded(
         for line in expected:
             assert line in text, f"{path.name}: missing {line!r}"
         assert boundary in text, f"{path.name}: missing explicit status boundary"
+        assert arboriculture_boundary in text, path.name
+        assert "Operations and Commercial Arboriculture Lead" not in text, path.name
+        assert "family business" not in text, path.name
+        assert "started 2015" not in text, path.name
 
 
 def test_generated_pdfs_render_visible_content_inside_letter_page(

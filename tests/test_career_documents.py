@@ -51,13 +51,17 @@ def test_experience_dates_use_the_adopted_low_claim_boundary() -> None:
     """Public documents must not imply an unknown current or end status."""
     expected = (
         "Technical Networking Support, Xbox/Microsoft contract | subcontracted through Stream/Convergys | Wilsonville, Oregon | 2014 to 2015",
-        "Operations and Commercial Arboriculture Lead | Seattle-area family business | started 2015",
+        "Full-time operations and commercial arboriculture | Legendary Tree (organization label) | April 25, 2015 to June 2, 2026",
         "Freelance Technical Writer, Documentation, and Product Operations | independent practice | started 2017",
         "Independent Systems Engineer | independent practice | started 2023",
     )
     boundary = (
-        "These start years do not state current status or an end date; "
+        "The 2017 and 2023 start years do not state current status or an end date; "
         "both remain unspecified."
+    )
+    arboriculture_boundary = (
+        "Legendary Tree is the applicant-provided organization label; no conventional "
+        "job title or legal employer of record is asserted."
     )
     for name in STATUS_BOUNDARY_DOCS:
         src = read(name)
@@ -65,16 +69,25 @@ def test_experience_dates_use_the_adopted_low_claim_boundary() -> None:
         for line in expected:
             assert line in src, f"{name}: missing {line!r}"
         assert boundary in src, f"{name}: missing explicit status boundary"
+        assert arboriculture_boundary in src, name
+        assert "Operations and Commercial Arboriculture Lead" not in src, name
+        assert "family business" not in src, name
+        assert "started 2015" not in src, name
 
 
 def test_public_markdown_career_sources_preserve_the_same_date_and_employer_boundary() -> None:
     """Raw public Markdown must not contradict the generated application lanes."""
     boundary = (
-        "These start years do not state current status or an end date; "
+        "The 2017 and 2023 start years do not state current status or an end date; "
         "both remain unspecified."
+    )
+    arboriculture_boundary = (
+        "Legendary Tree is the applicant-provided organization label; no conventional "
+        "job title or legal employer of record is asserted."
     )
     for name in MARKDOWN_STATUS_BOUNDARY_DOCS:
         src = read(name)
+        normalized = " ".join(src.split())
         assert "2023-present" not in src, name
         assert "2017-present" not in src, name
         assert "2015-present" not in src, name
@@ -82,7 +95,12 @@ def test_public_markdown_career_sources_preserve_the_same_date_and_employer_boun
         assert "Redmond, Washington" not in src, name
         assert "Seattle / remote | started 2023" in src, name
         assert "Remote | started 2017" in src, name
-        assert "Seattle area | started 2015" in src, name
+        assert "Legendary Tree (organization label)" in src, name
+        assert "April 25, 2015 to June 2, 2026" in src, name
+        assert "Operations and Commercial Arboriculture Lead" not in src, name
+        assert "family business" not in src, name
+        assert "started 2015" not in src, name
+        assert arboriculture_boundary in normalized, name
         assert "Technical Networking Support, Xbox/Microsoft contract" in src, name
         assert (
             "Wilsonville, Oregon | 2014 to 2015 | subcontracted through Stream/Convergys"
