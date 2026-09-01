@@ -6,6 +6,18 @@ body:has(.publication-index) main{
   background:var(--void-opaque);
 }
 
+/* The publication index is an accessibility-first reading surface. Reveal its
+   first keyboard target immediately instead of animating a layout property. */
+.publications-hub .skip-link{transition:none}
+.publications-hub .skip-link:focus,
+.publications-hub .skip-link:focus-visible{
+  position:fixed;
+  top:.6rem;
+  inset-block-start:.6rem;
+  transform:none;
+  z-index:1000;
+}
+
 .publication-actions{
   display:flex;
   flex-wrap:wrap;
@@ -226,6 +238,7 @@ body:has(.publication-index) main{
 }
 
 @media (prefers-reduced-motion: reduce){
+  .publications-hub .skip-link,
   .publication-actions a,
   .publication-read,
   .publication-tools summary,
