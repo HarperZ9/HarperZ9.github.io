@@ -75,26 +75,6 @@ const REPRESENTATIVE_IDS = [
   "accountable-surface",
 ];
 
-const SECURITY_IDS = [
-  "proof-surface",
-  "phantom",
-  "behavior-transform",
-  "array",
-  "seed",
-  "sofer",
-  "isomorph",
-  "bounds",
-  "orca",
-  "gate",
-  "accountable-surface",
-  "public-surface-sweeper",
-  "model-provenance-validator",
-  "secret-redact-io",
-  "agent-hook-pack",
-  "repo-proof-index",
-  "kun",
-];
-
 const GRAPHICS_IDS = [
   "raw",
   "skyrimbridge",
@@ -143,7 +123,7 @@ function isoDate(value: string) {
 }
 
 const representativeSystems = REPRESENTATIVE_IDS.map(requireSystem);
-const securitySystems = SECURITY_IDS.map(requireSystem);
+const securitySystems = systems.filter((system) => system.domains.includes("security-privacy"));
 const graphicsSystems = GRAPHICS_IDS.map(requireSystem);
 
 const evidenceRows = [

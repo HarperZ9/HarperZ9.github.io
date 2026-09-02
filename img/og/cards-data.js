@@ -564,5 +564,13 @@ window.CARD_DATA = {
     "headline": "Another play can change recognition, attention, memory, or liking. Those are different measures.",
     "pipeline": "HEAR / NOTICE / REMEMBER / MEASURE / LIMIT",
     "glyph": "layers"
+  },
+  "what-the-label-changes": {
+    "role": "ART AND PERCEPTION",
+    "word": "THE LABEL",
+    "headline": "A label can redirect looking without deciding meaning, liking, or value.",
+    "pipeline": "LOOK / READ / RETURN / SEPARATE / LIMIT",
+    "glyph": "aperture",
+    "showGlyph": true
   }
 };

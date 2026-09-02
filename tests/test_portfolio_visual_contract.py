@@ -110,6 +110,16 @@ def test_noscript_fallback_is_a_complete_identity_first_front_door() -> None:
     assert "fourteen independently published verification systems" not in src.lower()
 
 
+def test_noscript_fallback_preserves_keyboard_entry_and_publications_route() -> None:
+    for path in (HOME_INDEX, INDEX):
+        src = read(path)
+        fallback = src.split("<noscript>", 1)[1].split("</noscript>", 1)[0]
+
+        assert 'class="skip-link" href="#noscript-main"' in fallback
+        assert '<main id="noscript-main"' in fallback
+        assert 'href="/publications.html"' in fallback
+
+
 def test_home_source_and_styles_have_no_decorative_home_lead_ins() -> None:
     combined = "\n".join(read(path) for path in (HOME_INDEX, APP, APP_CSS, INDEX_CSS))
 
@@ -172,9 +182,13 @@ def test_deployed_bundle_matches_the_new_front_door_after_build() -> None:
         assert stale not in bundle
 
     records = {record["id"]: record for record in json.loads(read(SYSTEMS))["systems"]}
-    security_ids = re.search(r"const SECURITY_IDS = \[(?P<body>.*?)\];", read(APP), re.S)
-    assert security_ids, "security registry projection must remain inspectable"
-    for system_id in re.findall(r'"([^"]+)"', security_ids.group("body")):
+    assert (
+        'systems.filter((system) => system.domains.includes("security-privacy"))'
+        in read(APP)
+    )
+    for system_id, record in records.items():
+        if "security-privacy" not in record.get("domains", []):
+            continue
         record = records[system_id]
         assert record["name"] in bundle, system_id
         assert record["href"] in bundle, system_id

@@ -307,7 +307,7 @@ def render_article(record: dict) -> str:
 <meta property="og:type" content="article"><meta property="og:title" content="{html.escape(record["title"], quote=True)}">
 <meta property="og:description" content="{html.escape(record["summary"], quote=True)}"><meta property="og:url" content="{canonical}">
 <meta property="og:image" content="{SITE_URL}img/og/{html.escape(record["id"], quote=True)}.png">
-<link rel="stylesheet" href="styles.css?v={ASSET_REVISION}"><link rel="stylesheet" href="system/publication-article.css?v={ASSET_REVISION}"></head>
+<link rel="stylesheet" href="system/publication-article.css?v={ASSET_REVISION}"></head>
 <body><a class="skip-link" href="#main">Skip to content</a><nav class="publication-static-nav" aria-label="Publication"><a href="publications.html">Publications</a><a href="writing.html">Writing</a><a href="cv.html">About</a></nav>
 <main id="main" class="publication-article"><article><header><p class="publication-kicker">{html.escape(record["form"])} · {html.escape(record["category"])}</p>
 <h1>{html.escape(record["title"])}</h1><p class="publication-thesis">{html.escape(record["thesis"])}</p>

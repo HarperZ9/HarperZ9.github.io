@@ -13,7 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-C96yaabg.js",
+    "assets/index-IxfWbepn.js",
     "assets/index-BxIHiu3n.css",
     "accountable-surface.html",
     "availability-is-not-reach.html",
@@ -82,6 +82,9 @@ RELEASE_PATHS = (
     "figures/incident-multilane-timeline.html",
     "figures/incident-multilane-timeline.json",
     "figures/incident-multilane-timeline.svg",
+    "figures/label-is-a-lens.html",
+    "figures/label-is-a-lens.json",
+    "figures/label-is-a-lens.svg",
     "figures/motive-sample-nonexclusive.html",
     "figures/motive-sample-nonexclusive.json",
     "figures/motive-sample-nonexclusive.svg",
@@ -125,6 +128,7 @@ RELEASE_PATHS = (
     "img/og/security-toolkit.png",
     "img/og/truth-enb.png",
     "img/og/the-second-hearing.png",
+    "img/og/what-the-label-changes.png",
     "img/og/cards-data.js",
     "index.html",
     "media/retro-systems-lab/evidence-manifest.json",
@@ -143,6 +147,7 @@ RELEASE_PATHS = (
     "publications/data/index.json",
     "publications/data/records/availability-is-not-reach.json",
     "publications/data/records/the-second-hearing.json",
+    "publications/data/records/what-the-label-changes.json",
     "publications/schema/publication-record.schema.json",
     "private-practice.html",
     "security-toolkit.html",
@@ -176,10 +181,11 @@ RELEASE_PATHS = (
     "systems/telos.html",
     "the-second-hearing.html",
     "truth-enb.html",
+    "what-the-label-changes.html",
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "17cfd3fb2764c509bf13e8b104b7e16f17ee2c8d87dd86c24ee4918d0b9140e0"
+REVIEWED_RELEASE_SHA256 = "8cc8005092b66e3ff2f299d563a4419927946d96c892be86f6745b8f28476abc"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -282,14 +288,17 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_art_css = "index-D6A4RL1P.css"
     previous_publications_js = "index-DDkK7Yu0.js"
     previous_plain_language_js = "index-DFJMXR3Q.js"
-    current_js = "index-C96yaabg.js"
+    current_js = "index-IxfWbepn.js"
     current_css = "index-BxIHiu3n.css"
+    previous_security_js = "index-BnUu1wyw.js"
     prior_reviewed_js = "index-C_1S2nb6.js"
     prior_reviewed_css = "index-XLAt4tDw.css"
     assert f'src="/assets/{current_js}"' in source
     assert f'href="/assets/{current_css}"' in source
     assert (ROOT / "assets" / current_js).is_file()
     assert (ROOT / "assets" / current_css).is_file()
+    assert previous_security_js not in source
+    assert not (ROOT / "assets" / previous_security_js).exists()
     assert prior_reviewed_js not in source
     assert prior_reviewed_css not in source
     assert not (ROOT / "assets" / prior_reviewed_js).exists()
@@ -427,6 +436,7 @@ def test_briefing_archive_and_feeds_resolve_to_the_permanent_record() -> None:
     assert routes.count(route) == 1
     assert "/the-second-hearing.html" in routes
     assert "/availability-is-not-reach.html" in routes
+    assert "/what-the-label-changes.html" in routes
     page = _text("briefings/2026-08-26-openai-hugging-face-incident/index.html")
     updated = re.search(r'<time datetime="(\d{4}-\d{2}-\d{2})">Updated ', page)
     assert updated

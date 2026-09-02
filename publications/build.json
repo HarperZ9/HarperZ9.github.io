@@ -1,24 +1,29 @@
 {
   "schema_version": 1,
-  "built_at": "2026-09-01T00:00:00Z",
+  "built_at": "2026-09-02T00:00:00Z",
   "inputs": {
     "publications/data/records/availability-is-not-reach.json": "b690017ccc23b3de58f1cb8fbb6b5876bc16e960088252566ae9e3cbb078443f",
-    "publications/data/records/the-second-hearing.json": "9b807ef8ee7a3e6e2082d86f0a4420b3e72cce2b0e564cac6fb58a70fc5274da"
+    "publications/data/records/the-second-hearing.json": "9b807ef8ee7a3e6e2082d86f0a4420b3e72cce2b0e564cac6fb58a70fc5274da",
+    "publications/data/records/what-the-label-changes.json": "b5d892768242fb95b6333c3c2b870e0b8ce765a48139c9d3330845be834eaa50"
   },
   "outputs": {
-    "availability-is-not-reach.html": "627f92aed5167b7c038efc4677d3e6b3a47e42bbde3a52c7f35b77c4221ae7b4",
-    "feed.json": "6e18053e4b235c35d0eed85f1fb4d6b47571625e2fd8a39f631be079db65ae98",
-    "feed.xml": "9c6a61600ad0f338965f815e5a0a1621e3419fbbaf541d2fea9bc8a68f3aa6bb",
+    "availability-is-not-reach.html": "cfe1783935cece59388a052d1d0e2ea11513c4a85d6c16572bcea152079ff377",
+    "feed.json": "3a74cec66db5f1d1d6f58dd12f236a1aeb14c9c04d79a2d0f88bbf813499efc4",
+    "feed.xml": "2cd0ef70411f705df1b0e0f644a396aa1ae808cdf351774ea2b95fbb355486c4",
     "figures/availability-is-not-reach.html": "9244a25c58ad218da8c4538f879cbf859e0fc1c33ccf925b37b517b1ae118992",
     "figures/availability-is-not-reach.json": "d3a5d138c067e2cc317e116c39cee1aed5695a15d680d7753833b6804fdc6ae3",
     "figures/availability-is-not-reach.svg": "d0548d9fe8c6abe20339b5d7ba068beb59263243dd56032a76d4e865d224229b",
+    "figures/label-is-a-lens.html": "2413ebf8e30ebe695ba7a254f8d84f862794b87cffbb286c4a775d0769fc69cc",
+    "figures/label-is-a-lens.json": "7af05d168f0758a94e5082c1deab90ef9128b56f78a0dcca462c48210a4b54d7",
+    "figures/label-is-a-lens.svg": "cc4f9a6a67b985b0e4cde0f28d20c9c693754bba6c22822e5b6810e1325eaf02",
     "figures/the-second-hearing-evidence-map.html": "e1c19959f958e44dadb9de93a765a9974ac61ad379e1504de22e19c273c09418",
     "figures/the-second-hearing-evidence-map.json": "428b70c158a17dde59ba45514b4b61667d406cf7484cd7c0dc13f0632e5b51f7",
     "figures/the-second-hearing-evidence-map.svg": "6a0adcf9e06928a65ab83eb58896426dca11d54d92f8bfea74ebbff0eb1fe10f",
-    "publications.html": "503adc63e637d407342194f1399abee240cde677972c00b708f6488a7509502e",
-    "publications/data/index.json": "802f12b7402a07b0c8ca46a6dc10f614b94ac0497c2359a49cbb71961cf23660",
-    "sitemap.xml": "250b79dc60d2afde46ef262f285dff285c385b9c44c7c3ec1920df97b1a68822",
-    "the-second-hearing.html": "3a3afc0a9e0a7be992a8b84dff6ef300d568a01bad740f14bc83a00d7748ea6a",
-    "writing.html": "2bc7f95bf0590437040340c4609226a033723e4aad9b3f197833a32f73cf99d4"
+    "publications.html": "0ba7c068592bf4c83dbcdff746f60eca8fcb5c0ad42d0d4c1f1bd3cf7c4d8b71",
+    "publications/data/index.json": "69977846be26afae1cede6b8e7a62a2fb6609001ffebcca79e14fc256fe5d967",
+    "sitemap.xml": "700027fc8b83ef6138eaac0f71139cb902d648c657681e73293efb9b02e4dc17",
+    "the-second-hearing.html": "d6ce9601077069d071ead98d8fc2faa333db57fec85f1a29885b63132e055c76",
+    "what-the-label-changes.html": "13060800e96f7a5ccbd49a3a55bb7b8c91cc127aaec5ecf1ffa382d7739b431a",
+    "writing.html": "46c82cee9ecadc7a90c982d8fae31e52f3a1da112e0ba53a43d4b34c45b7c7c0"
   }
 }
