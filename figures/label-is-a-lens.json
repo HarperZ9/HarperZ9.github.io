@@ -1,0 +1,81 @@
+{
+  "id": "label-is-a-lens",
+  "title": "Figure 1. The label is a lens, not a verdict",
+  "claim": "Label effects vary by text, artwork, viewer, setting, and measured outcome, and cannot be pooled into one score.",
+  "type": "evidence-matrix",
+  "columns": [
+    "Source",
+    "Viewer and artwork denominator",
+    "Text intervention",
+    "What changed",
+    "What did not change or was not measured",
+    "Non-proof"
+  ],
+  "rows": [
+    [
+      "S1",
+      "30 viewers; 30 works, 15 abstract and 15 figurative",
+      "Title, aesthetic-process context, or semantic context",
+      "Semantic context increased abstract understanding and salient-region exploration; aesthetic-process context reduced overall looking time for abstract work",
+      "Abstract appreciation was lower for aesthetic-process than semantic context, but not reliably different from title-only context",
+      "No universal label effect or correct meaning"
+    ],
+    [
+      "S2",
+      "214 viewers; 31 Pollock works in Experiment 1",
+      "None, artist, technique, or combined information",
+      "Small liking and interest increase for combined information among lower-art-experience viewers",
+      "No museum behavior; order was fixed",
+      "No biography-only or large general effect"
+    ],
+    [
+      "S3",
+      "30 viewers; eight museum paintings; 20 experimental and 10 control",
+      "Essential then descriptive labels, or essential labels twice",
+      "Viewing, described-area gaze, perceived complexity, comprehensibility, positive emotion, pupil, and electrodermal measures",
+      "Appreciation, interest, curiosity, and heart rate did not significantly change",
+      "More looking is not more liking"
+    ],
+    [
+      "S4",
+      "60 enrolled viewers; 49 usable physiological records; eight digital paintings",
+      "Essential versus descriptive labels across sessions",
+      "Comprehensibility, complexity, and emotional measures",
+      "Liking and interest did not significantly change",
+      "Digital viewing is not a museum visit"
+    ],
+    [
+      "S5",
+      "127 viewers; 40 contemporary works",
+      "No title, consistent title, or inconsistent title",
+      "Several gaze measures and their timing",
+      "Museum behavior and durable interpretation were not measured",
+      "Title alignment is not truth"
+    ],
+    [
+      "S6",
+      "52 viewers across two experiments; 30 abstract works",
+      "Broad categorical title before viewing",
+      "Gaze shifted from early scanning to later survey over time",
+      "Label did not reliably change the measured gaze pattern; liking and understanding were not measured",
+      "Broad-label nulls do not cover rich labels"
+    ]
+  ],
+  "scope": "Six peer-reviewed experiments published from 2022 through 2025 that vary label or title context and measure visual-art responses",
+  "units": "Study-specific viewer and artwork counts with direction-of-result descriptions; no pooled effect size",
+  "denominator": "One row per study setting; viewers, artworks, conditions, and physiological exclusions remain study-specific",
+  "date": "Sources published 2022-03-04 through 2025-06-12 and observed 2026-09-02",
+  "provenance": [
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6"
+  ],
+  "transformation": "Outcomes are paraphrased as changed, no reliable change, or not measured; no meta-analysis, normalization, or cross-study ranking",
+  "uncertainty": "Settings, viewers, works, text interventions, exposure sequences, and measures differ substantially",
+  "limitations": "The 2026 field study is discussed in prose but excluded from the matrix because its naturalistic, bundled between-condition intervention and selected 80-participant subset are not directly comparable to the six controlled rows.",
+  "doesNotProve": "The matrix does not establish label quality, one correct interpretation, durable learning, visitor agreement, or artistic value.",
+  "alt": "Six studies show that label effects depend on the text, artwork, viewer, setting, and outcome. Descriptive or semantic context sometimes redirected looking or increased reported comprehensibility, while appreciation and interest often stayed unchanged. Broad category labels did not change gaze in two abstract-art experiments. The rows are not pooled and do not establish correct interpretation or artistic value."
+}

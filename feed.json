@@ -5,6 +5,14 @@
   "feed_url": "https://harperz9.github.io/feed.json",
   "items": [
     {
+      "id": "https://harperz9.github.io/what-the-label-changes.html",
+      "url": "https://harperz9.github.io/what-the-label-changes.html",
+      "title": "What the Label Changes",
+      "content_text": "A label can redirect looking and make an artwork feel more legible without making it more liked, learned, correct, or valuable.",
+      "date_published": "2026-09-02T00:00:00Z",
+      "date_modified": "2026-09-02T00:00:00Z"
+    },
+    {
       "id": "https://harperz9.github.io/the-second-hearing.html",
       "url": "https://harperz9.github.io/the-second-hearing.html",
       "title": "The Second Hearing",
