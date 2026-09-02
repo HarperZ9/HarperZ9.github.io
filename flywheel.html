@@ -198,6 +198,7 @@
 <section class="mv" id="benchmarks" aria-labelledby="bench-h">
   <h2 id="bench-h" class="reveal">Benchmarks, with the interval.</h2>
   <p class="body-text reveal">The model is <b translate="no">Flywheel-Local-Coder-14B</b>, a trained artifact with a full provenance chain, just under 9 GB at 4-bit. Hard set, ten tasks, every arm carrying its Wilson 95% interval and 100% receipt reproducibility.</p>
+  <p class="body-text reveal"><strong>Retired instrument.</strong> As of 2026-07-26 the arm-to-arm comparison in this table is retired. The table stays visible as history, and the correction below says why.</p>
   <div class="bt-wrap reveal">
     <table class="bt">
       <thead><tr><th>Arm</th><th>Result</th><th>Wilson 95% CI</th><th>Receipts</th></tr></thead>
@@ -210,10 +211,16 @@
     </table>
   </div>
   <div class="null reveal">
+    <h3>The correction. This was never a comparison.</h3>
+    <p class="body-text">The benchmark ran the baseline as one attempt and the treatment as several, and the treatment's first attempt is the same call as the baseline's only attempt. The treatment therefore cannot score lower. Across all thirteen runs ever made, not a single task passed the baseline and failed the treatment. That is the signature of one arm containing the other, not of an effect. The quantity actually measured is <em>verified pass@k</em>, a useful engineering number that is not uplift, and every uplift figure this project produced is void as a comparison for the same reason.</p>
+    <p class="body-text">A second finding: artifacts recorded before 2026-07-26 cannot distinguish a model failure from a generation failure that was silently retried. The defect that caused it is fixed, and generation failures are now recorded and excluded from the denominator, but the older artifacts lack the field, so their per-task failures cannot be re-attributed after the fact.</p>
+  </div>
+  <div class="null reveal">
     <h3>The honest null.</h3>
-    <p class="body-text">Verified inference beats single-shot by +0.100 here. The 95% interval on that difference is [-0.236, +0.420], which includes zero, and plain best-of-4 sampling ties it. <b>So we do not claim a capability uplift.</b></p>
+    <p class="body-text">In the retired table, verified inference scored +0.100 above single-shot. The 95% interval on that difference is [-0.236, +0.420], which includes zero, and plain best-of-4 sampling tied it. <b>So we do not claim a capability uplift</b>, and the correction above voids the difference as a comparison outright.</p>
     <p class="body-text">What we do claim, and can measure: 100% receipt reproducibility, every accepted answer re-checks; pass parity with the models it routes to; availability on your own schedule, from weights you hold; and local cost. A tool that refuses to overclaim is a tool whose other claims you can trust.</p>
   </div>
+  <p class="body-text reveal">A rebuilt measurement is in progress. It draws the baseline and the treatment from one shared pool of independent attempts, with a compute-matched arm that selects at random instead of using the verifier. It has produced no result yet. If the verifier earns nothing over random selection at the same compute, that is the result that will be published.</p>
   <p class="body-text reveal">Evidence: the running app serves the receipt at <span translate="no">/artifacts/flywheel-local-coder-14b-benchmark-ci.json</span>, re-checkable offline. The number moves the day the evidence does, not before.</p>
 </section>
 
