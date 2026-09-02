@@ -19,7 +19,6 @@
 <meta name="twitter:description" content="A live media instrument for rendering, measuring, transforming, and reading the frame, running entirely in your own browser.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="system/system.css?v=20260828-site-design">
 <link rel="stylesheet" href="system/instrument-forms.css?v=20260828-site-design">
 <style>
@@ -61,7 +60,7 @@
      globals, not the live URL. ASCII only. -->
 <script>(function(){var p=new URLSearchParams(location.search);window.__studioBootSearch=location.search||"";window.__studioBootSource=p.get("source")||"";window.__studioBootHero=p.get("hero")==="1";window.__studioBootSeed=p.get("seed")||"";window.__studioBootWorld=p.get("world")||"";window.__studioBootScene=p.get("scene")||"";})();</script>
 </head>
-<body class="studio-page instrument-surface">
+<body class="studio-page instrument-surface" data-defer-generative-field="true">
 
 <a class="skip-link" href="#studio-viewport">Skip to the canvas</a>
 <div id="site-nav" class="site-nav"></div>

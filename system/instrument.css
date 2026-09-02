@@ -3,8 +3,17 @@
    and the palpable-control feedback (knock, flash, detent). Page-specific
    racks stay in each page's own style block and may override these. */
 
-.re-stage{display:grid;grid-template-columns:minmax(0,1fr) 21rem;gap:1.4rem;align-items:start;margin:1.2rem 0 2rem}
-@media (max-width:820px){.re-stage{grid-template-columns:1fr}}
+/* The stage: the picture and its rail side by side, and the picture never
+   leaves the screen. The preview column is sticky under the nav (nav.js
+   publishes --nav-h), so the rail can be as long as the instrument needs and
+   every change is watched where it is made. Under 821px the same idea turns
+   vertical: the picture pins to the top and the rail scrolls beneath it. */
+.re-stage{display:grid;grid-template-columns:minmax(0,1fr) 22rem;gap:1.4rem;align-items:start;margin:1.2rem 0 2rem}
+.re-stage>.re-preview{position:sticky;top:calc(var(--nav-h,74px) + .9rem);max-height:calc(100dvh - var(--nav-h,74px) - 1.8rem)}
+@media (max-width:820px){
+  .re-stage{grid-template-columns:1fr;gap:1rem}
+  .re-stage>.re-preview{top:calc(var(--nav-h,66px) + .35rem);z-index:5;max-height:44dvh;box-shadow:0 .6rem 1.6rem -.6rem #000}
+}
 .re-preview{position:relative;border:1px solid var(--hairline);border-radius:12px;overflow:hidden;
   background:#07070c;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center}
 .re-preview canvas{max-width:100%;max-height:100%;display:block}
@@ -75,3 +84,5 @@ input[type=range]{accent-color:var(--orange);width:100%}
    land near 70 real characters at these sizes. */
 .re-hint{max-width:60ch}
 .re-keys{max-width:64ch}
+/* fullscreen: the sticky clamp must not cap the fullscreen box */
+.re-stage>.re-preview:fullscreen{position:fixed;top:0;max-height:none}

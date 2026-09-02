@@ -529,3 +529,30 @@ body.instrument-surface .plate-head{border-top:0}
 body.instrument-surface .rail-group,
 body.instrument-surface .at-group,
 body.instrument-surface .render-toolbar{border-bottom:0}
+
+/* Rail groups: one native disclosure per rack, so a long instrument reads as
+   a table of contents first and a control surface second. */
+body.instrument-surface .re-group{border-top:1px solid var(--hairline,#26262c);padding:.1rem 0 .3rem}
+body.instrument-surface .re-group>summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:.6rem;padding:.6rem 0;min-height:2.25rem;user-select:none}
+body.instrument-surface .re-group>summary::-webkit-details-marker{display:none}
+body.instrument-surface .re-group>summary::before{content:"+";font-family:var(--mono,ui-monospace,monospace);font-size:.8rem;line-height:1;width:1ch;flex:none;opacity:.7}
+body.instrument-surface .re-group[open]>summary::before{content:"\2212"}
+body.instrument-surface .re-group>summary>.re-lab{flex:1 1 auto;margin:0}
+body.instrument-surface .re-group>.re-body{display:flex;flex-direction:column;gap:.7rem;padding:.1rem 0 .55rem}
+body.instrument-surface .re-group .re-controls{border:0;border-radius:0;padding:.1rem 0 .5rem}
+
+/* Rail group headings: the same weight as a rail-group heading, so the rack
+   reads as a list of places before it reads as a list of controls. */
+body.instrument-surface .re-group>summary>.re-lab{font-size:.84rem;font-weight:600;color:var(--bone,#e6e2d8);letter-spacing:0}
+body.instrument-surface .re-group>summary>.re-lab .re-hint{font-weight:400}
+body.instrument-surface .re-group>summary::before{color:var(--ink-soft,#a8a49b)}
+body.instrument-surface .re-group>summary:focus-visible{outline:1px solid var(--bone,#e6e2d8);outline-offset:3px}
+body.instrument-surface .re-group:first-of-type{border-top:0}
+
+/* Readable floor: a readout, a privacy line, and a key legend are read, not
+   glanced. Nothing on the rail goes under twelve pixels. */
+body.instrument-surface .re-status,
+body.instrument-surface .re-privacy,
+body.instrument-surface .re-keys,
+body.instrument-surface .re-hint{font-size:.76rem}
+body.instrument-surface .re-keys kbd{font-size:.72rem}

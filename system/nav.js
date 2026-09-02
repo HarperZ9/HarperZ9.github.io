@@ -288,12 +288,28 @@ function enhanceMenu(doc, mount) {
       if (details.open && !details.contains(event.target)) close(false);
     }, opts);
     doc.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && details.open) {
         event.preventDefault();
         close(true);
       }
     }, opts);
   }
+}
+
+// The bar is sticky, so anything that pins itself under it (an instrument's
+// preview, a section's scroll margin) needs its measured height. Published as
+// one custom property on the root and kept live by a ResizeObserver: the bar
+// wraps to two rows on a narrow screen and grows again when a font lands late.
+export function trackNavHeight(doc = document) {
+  const nav = doc && typeof doc.getElementById === "function" ? doc.getElementById("site-nav") : null;
+  if (!nav || !doc.documentElement || typeof nav.getBoundingClientRect !== "function") return;
+  const publish = () => {
+    const h = Math.round(nav.getBoundingClientRect().height);
+    doc.documentElement.style.setProperty("--nav-h", h + "px");
+  };
+  publish();
+  if (typeof ResizeObserver === "function") new ResizeObserver(publish).observe(nav);
+  else if (typeof window !== "undefined" && window.addEventListener) window.addEventListener("resize", publish, { passive: true });
 }
 
 export function renderNav(doc = document) {
@@ -394,6 +410,7 @@ if (typeof document !== "undefined") {
   const boot = () => {
     ensureNavStylesheet(document);
     renderNav();
+    trackNavHeight(document);
     wireAnchorArrival(document);
     mountRouteHeader(document);
     // The React home owns its own restrained desktop field and its static
