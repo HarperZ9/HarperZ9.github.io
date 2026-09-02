@@ -19,9 +19,8 @@
 <meta name="twitter:description" content="A live media instrument for rendering, measuring, transforming, and reading the frame, running entirely in your own browser.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/system.css?v=20260828-site-design">
-<link rel="stylesheet" href="system/instrument-forms.css?v=20260828-site-design">
+<link rel="stylesheet" href="system/system.css?v=20260902-creative-chassis">
+<link rel="stylesheet" href="system/instrument-forms.css?v=20260902-creative-chassis">
 <style>
   /* the toolbar reads as clusters divided by a rule, left-aligned so every row
      shares one edge instead of each centring on its own width (a ragged block).
@@ -61,7 +60,7 @@
      globals, not the live URL. ASCII only. -->
 <script>(function(){var p=new URLSearchParams(location.search);window.__studioBootSearch=location.search||"";window.__studioBootSource=p.get("source")||"";window.__studioBootHero=p.get("hero")==="1";window.__studioBootSeed=p.get("seed")||"";window.__studioBootWorld=p.get("world")||"";window.__studioBootScene=p.get("scene")||"";})();</script>
 </head>
-<body class="studio-page instrument-surface">
+<body class="studio-page instrument-surface" data-defer-generative-field="true">
 
 <a class="skip-link" href="#studio-viewport">Skip to the canvas</a>
 <div id="site-nav" class="site-nav"></div>
@@ -1412,19 +1411,19 @@
 
 </main>
 
-<script type="module" src="system/nav.js?v=20260828-site-design"></script>
+<script type="module" src="system/nav.js?v=20260902-creative-chassis"></script>
 <!-- Atelier engine (Task 7): classic IIFE, self-boots on DOM ready, binds the controls above and
      draws into #studio-canvas. Loaded before the Studio module so window.Atelier + the shared
      spine/reconcile readouts are present. -->
-<script src="system/spine.js?v=20260828-site-design" defer></script>
-<script src="system/reconcile.js?v=20260828-site-design" defer></script>
-<script src="system/atelier.js?v=20260828-site-design" defer></script>
+<script src="system/spine.js?v=20260902-creative-chassis" defer></script>
+<script src="system/reconcile.js?v=20260902-creative-chassis" defer></script>
+<script src="system/atelier.js?v=20260902-creative-chassis" defer></script>
 <!-- Vendored interactive libraries (P1). Single prebuilt files, no runtime CDN fetch.
      panzoom (anvaka) v9.4.3: UMD, sets window.createPanzoom; needed at boot (the default
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
-<script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260828-site-design"></script>
-<script type="module" src="system/studio.js?v=20260828-site-design"></script>
+<script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
+<script type="module" src="system/studio.js?v=20260902-creative-chassis"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

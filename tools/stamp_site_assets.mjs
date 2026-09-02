@@ -2,7 +2,7 @@ import { readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-export const SITE_ASSET_REVISION = "20260828-site-design";
+export const SITE_ASSET_REVISION = "20260902-creative-chassis";
 
 const toolsDir = path.dirname(fileURLToPath(import.meta.url));
 const root = path.dirname(toolsDir);

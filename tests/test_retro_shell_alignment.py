@@ -11,8 +11,8 @@ PAGES = {
     "engine-revival.html": "Engine Revival",
     "brender-archival.html": "BRender Archival",
 }
-SHELL_STYLESHEET = "system/retro-evidence-pages.css?v=20260828-site-design"
-SHELL_SCRIPT = "system/nav.js?v=20260828-site-design"
+SHELL_STYLESHEET = "system/retro-evidence-pages.css?v=20260902-creative-chassis"
+SHELL_SCRIPT = "system/nav.js?v=20260902-creative-chassis"
 
 
 class _ShellParser(HTMLParser):

@@ -252,13 +252,13 @@ def test_hiring_page_leads_with_two_technical_lanes_and_a_field_campaign() -> No
 def test_hiring_document_marks_the_local_career_switch_current() -> None:
     src = read("hire.html")
     assert '<a href="hire.html" aria-current="page">Hire</a>' in src
-    assert 'src="system/nav.js?v=20260828-site-design"' in src
+    assert 'src="system/nav.js?v=20260902-creative-chassis"' in src
 
 
 def test_hiring_paths_use_one_column_at_mobile_and_readable_action_targets() -> None:
     page = read("hire.html")
     css = read("system/hire.css")
-    assert 'system/hire.css?v=20260828-site-design' in page
+    assert 'system/hire.css?v=20260902-creative-chassis' in page
     assert ".hire-route-band" in css
     assert "min-height:44px" in css
     assert "@media (max-width:760px)" in css

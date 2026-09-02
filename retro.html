@@ -22,11 +22,10 @@
 <meta name="color-scheme" content="dark">
 <script>document.documentElement.classList.add('js')</script>
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/system.css?v=20260828-site-design">
-<link rel="stylesheet" href="system/instrument.css?v=20260828-site-design">
-<link rel="stylesheet" href="system/instrument-forms.css?v=20260828-site-design">
-<link rel="stylesheet" href="system/retro-systems-lab.css?v=20260828-site-design">
+<link rel="stylesheet" href="system/system.css?v=20260902-creative-chassis">
+<link rel="stylesheet" href="system/instrument.css?v=20260902-creative-chassis">
+<link rel="stylesheet" href="system/instrument-forms.css?v=20260902-creative-chassis">
+<link rel="stylesheet" href="system/retro-systems-lab.css?v=20260902-creative-chassis">
 <style>
   /* the contact sheet: every shader as a small live thumbnail, so the shelf can
      be browsed by eye instead of one dropdown load at a time */
@@ -108,7 +107,7 @@
   .re-rm{padding:.3em .6em;line-height:1}
 </style>
 </head>
-<body class="inner-clean frame-compact instrument-surface">
+<body class="inner-clean frame-compact instrument-surface" data-defer-generative-field="true">
 <a class="skip-link" href="#main">Skip to content</a>
 
 <div id="site-nav" class="site-nav"></div>
@@ -116,7 +115,7 @@
   <nav class="site-nav"><a href="studio.html">Studio</a> <a href="gallery.html">Gallery</a> <a href="overview.html">Engines</a> <a href="engine-revival.html">Engine Revival</a> <a href="brender-archival.html">BRender Archival</a> <a href="catalog.html">Catalog</a> <a href="cv.html">About</a></nav>
   <p class="retro-nojs-notice" role="status">The interactive renderer requires JavaScript. The static Retro Systems Lab evidence and companion routes remain available below.</p>
 </noscript>
-<script type="module" src="system/nav.js?v=20260828-site-design"></script>
+<script type="module" src="system/nav.js?v=20260902-creative-chassis"></script>
 
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Retro Engine</span></div>
@@ -238,6 +237,8 @@
         </div>
       </div>
 
+      <details class="re-group" id="re-rack-picture" open>
+        <summary><span class="re-lab">Picture <span class="re-hint">palette, grid, tube</span></span></summary>
       <fieldset class="re-controls">
         <div class="re-field re-wide"><span class="re-lab">Palette</span>
           <select class="re-in" id="re-palette" aria-label="Hardware palette">
@@ -283,9 +284,11 @@
         <div class="re-field"><span class="re-lab">Gamma <span class="re-val" id="re-gam-v">1.0</span></span><input type="range" id="re-gam" aria-label="Gamma" min="40" max="220" value="100"></div>
         <label class="re-toggle re-wide"><input type="checkbox" id="re-sdf"> Depth-shade (early 3D)</label>
       </fieldset>
+      </details>
 
+      <details class="re-group" id="re-rack-fx" open>
+        <summary><span class="re-lab">Effects rack<span class="re-val" id="re-fx-count">0 on</span></span></summary>
       <fieldset class="re-controls">
-        <div class="re-lab re-wide">Effects rack<span class="re-val" id="re-fx-count">0 on</span></div>
         <div class="re-vibes re-wide" id="re-vibes"></div>
         <div class="re-fxchips re-wide" id="re-fxchips"></div>
         <div class="re-field re-wide"><span class="re-lab">Amount <span class="re-hint">sets every active effect</span> <span class="re-val" id="re-fxamount-v">0.50</span></span><input type="range" id="re-fxamount" min="0" max="100" value="50" aria-label="Master effect amount"></div>
@@ -294,9 +297,11 @@
         <div class="re-field"><span class="re-lab">&nbsp;</span><label class="re-toggle"><input type="checkbox" id="re-fxanim"> Animate</label></div>
         <button class="re-btn re-wide" id="re-randomize">Randomize &#9860;</button>
       </fieldset>
+      </details>
 
+      <details class="re-group" id="re-rack-sound">
+        <summary><span class="re-lab">Sound <span class="re-val" id="re-audio-state">off</span></span></summary>
       <fieldset class="re-controls">
-        <div class="re-lab re-wide">Sound <span class="re-val" id="re-audio-state">off</span></div>
         <p class="re-hint re-wide">Every edit plays a note, the shader sings its own math, and sound feeds back into the picture. Nothing is recorded or uploaded.</p>
         <div class="re-fxchips re-wide" id="re-audio-src" role="group" aria-label="Sound source">
           <button class="re-chip" type="button" id="re-src-instr" aria-pressed="false">Instrument</button>
@@ -320,9 +325,11 @@
           <span class="re-meter"><i id="re-m-treb"></i><b>treble</b></span>
         </div>
       </fieldset>
+      </details>
 
+      <details class="re-group" id="re-rack-motion">
+        <summary><span class="re-lab">Motion <span class="re-hint">patch anything into anything</span></span></summary>
       <fieldset class="re-controls">
-        <div class="re-lab re-wide">Motion <span class="re-hint">patch anything into anything</span></div>
         <div class="re-actions re-wide">
           <select class="re-in" id="re-mod-src" style="flex:1" aria-label="Modulation source"></select>
           <select class="re-in" id="re-mod-tgt" style="flex:1" aria-label="Modulation target"></select>
@@ -346,7 +353,11 @@
           <span class="re-hint" id="re-midi-state">no device</span>
         </div>
       </fieldset>
+      </details>
 
+      <details class="re-group" id="re-rack-output" open>
+        <summary><span class="re-lab">Save, send, make it physical</span></summary>
+        <div class="re-body">
       <div class="re-actions">
         <button class="re-btn" id="re-save">Save PNG</button>
         <button class="re-btn" id="re-save-1x" title="Save the pixel grid itself, one image pixel per cell, with no upscaling">Save 1x</button>
@@ -374,6 +385,8 @@
         <button class="re-btn" id="re-share-patch">Copy patch link</button>
         <select class="re-in" id="re-patches" aria-label="Your saved patches"><option value="">your patches</option></select>
       </div>
+        </div>
+      </details>
       <p class="re-privacy">A patch is the whole setup: shader, stack, palette, every effect and its amount, and the sound routing. Save it, or copy a link that carries all of it. Send to Studio hands the render to the pen surface as a plot map, then on to SVG or G-code. Everything stays in your browser.</p>
       <div class="re-status" id="re-status" role="status"></div>
     </div>
@@ -405,6 +418,6 @@
   <p>Zentropy Labs &middot; order out of entropy &middot; <a href="index.html">home</a></p>
 </footer>
 
-<script type="module" src="system/retro-studio.js?v=20260828-site-design"></script>
+<script type="module" src="system/retro-studio.js?v=20260902-creative-chassis"></script>
 </body>
 </html>

@@ -247,7 +247,7 @@ def test_briefing_uses_the_shared_site_design_canon() -> None:
     # stylesheet remain byte-for-byte reproducible while the live and future
     # editions move to the site's shared presentation.
     assert '<body class="doc frontier-briefing">' in archive
-    assert 'href="../frontier-safety.css?v=20260828-site-design"' in archive
+    assert 'href="../frontier-safety.css?v=20260902-creative-chassis"' in archive
 
     assert '@import url("../system/system.css' in stylesheet
     assert '@import url("../system/doc.css")' not in stylesheet
@@ -278,8 +278,8 @@ def test_future_dated_archives_use_the_shared_site_shell_and_nested_paths() -> N
     archive = builder.render_html(future, archive=True)
 
     assert '<body class="inner-clean frame-compact frontier-briefing">' in archive
-    assert 'href="../frontier-safety-site.css?v=20260828-site-design"' in archive
-    assert 'src="../../system/nav.js?v=20260828-site-design"' in archive
+    assert 'href="../frontier-safety-site.css?v=20260902-creative-chassis"' in archive
+    assert 'src="../../system/nav.js?v=20260902-creative-chassis"' in archive
     assert 'href="../data/archive/2026-08-26.json"' in archive
     assert 'href="../../research.html"' in archive
     assert 'class="docnav"' not in archive

@@ -44,7 +44,7 @@ function page(title, body) {
     .replaceAll("EXPLORATORY ACTUAL RESULT", "Exploratory actual result")
     .replaceAll("MEASURED MODEL COMPARISON", "Measured model comparison")
     .replaceAll("REPRODUCIBLE BENCHMARK EVIDENCE", "Reproducible benchmark evidence");
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeMarkup(title)}</title><link rel="stylesheet" href="../system/system.css?v=20260828-site-design">${style}</head><body><a class="skip-link" href="#main">Skip to content</a><div id="site-nav" class="site-nav"></div><noscript><nav class="site-nav"><a href="../index.html">Zain Dana Harper</a> <a href="../overview.html">Systems</a> <a href="../research.html">Research</a> <a href="../hire.html">Hire / work</a></nav></noscript><script type="module" src="../system/nav.js?v=20260828-site-design"></script><main id="main">${semanticBody}</main></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeMarkup(title)}</title><link rel="stylesheet" href="../system/system.css?v=20260902-creative-chassis">${style}</head><body><a class="skip-link" href="#main">Skip to content</a><div id="site-nav" class="site-nav"></div><noscript><nav class="site-nav"><a href="../index.html">Zain Dana Harper</a> <a href="../overview.html">Systems</a> <a href="../research.html">Research</a> <a href="../hire.html">Hire / work</a></nav></noscript><script type="module" src="../system/nav.js?v=20260902-creative-chassis"></script><main id="main">${semanticBody}</main></body></html>`;
 }
 
 function repositoryCommitLink(project) {

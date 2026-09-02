@@ -261,7 +261,7 @@ def test_article_has_a_route_specific_social_card_and_one_typography_system() ->
     ) in article
     assert 'href="styles.css?v=20260828-site-design"' not in article
     assert (
-        'href="system/publication-article.css?v=20260828-site-design"'
+        'href="system/publication-article.css?v=20260902-creative-chassis"'
         in article
     )
     assert article.count('rel="stylesheet"') == 1

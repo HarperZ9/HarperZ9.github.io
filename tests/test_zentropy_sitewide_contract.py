@@ -315,7 +315,7 @@ def test_public_routes_reserve_micro_labels_for_semantic_context() -> None:
 
 
 def test_shared_frontend_assets_use_one_cache_revision() -> None:
-    revision = "20260828-site-design"
+    revision = "20260902-creative-chassis"
     for path in deployable_html_pages():
         relative = path.relative_to(ROOT)
         source = path.read_text(encoding="utf-8")

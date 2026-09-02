@@ -64,7 +64,7 @@ def test_home_loads_the_react_shell_with_a_readable_static_floor() -> None:
         assert '<div id="root"></div>' in src
         assert "styles.css" not in src
 
-    assert 'href="/system/home-readable.css?v=20260828-site-design"' in read(INDEX)
+    assert 'href="/system/home-readable.css?v=20260902-creative-chassis"' in read(INDEX)
 
 
 def test_home_stylesheet_graph_is_closed_over_the_new_visual_contract() -> None:

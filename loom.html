@@ -18,10 +18,9 @@
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/loom.png">
 <meta name="color-scheme" content="dark">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="system/fonts/kilon.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/system.css?v=20260828-site-design">
-<link rel="stylesheet" href="system/instrument.css?v=20260828-site-design">
-<link rel="stylesheet" href="system/instrument-forms.css?v=20260828-site-design">
+<link rel="stylesheet" href="system/system.css?v=20260902-creative-chassis">
+<link rel="stylesheet" href="system/instrument.css?v=20260902-creative-chassis">
+<link rel="stylesheet" href="system/instrument-forms.css?v=20260902-creative-chassis">
 <style>
   /* a zoomed draft overflows its stage on purpose, so it can be panned by
      scrolling instead of being squeezed back down to an unclickable size */
@@ -29,12 +28,12 @@
   .re-preview.wv-zoomed canvas{max-width:none;max-height:none}
 </style>
 </head>
-<body class="inner-clean frame-compact instrument-surface">
+<body class="inner-clean frame-compact instrument-surface" data-defer-generative-field="true">
 <a class="skip-link" href="#main">Skip to content</a>
 
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="studio.html">Studio</a> <a href="gallery.html">Gallery</a> <a href="retro.html">Retro Engine</a> <a href="catalog.html">Catalog</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260828-site-design"></script>
+<script type="module" src="system/nav.js?v=20260902-creative-chassis"></script>
 
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">The Loom</span></div>
@@ -58,6 +57,9 @@
     </div>
 
     <div class="re-panel" id="wv-panel">
+      <details class="re-group" id="wv-rack-source" open>
+        <summary><span class="re-lab">Source <span class="re-hint">an image, or a WIF draft</span></span></summary>
+        <div class="re-body">
       <div class="re-field"><span class="re-lab">Source</span>
         <input type="file" class="re-in" id="wv-file" aria-label="Source image to weave" accept="image/*">
         <p class="re-privacy">Read locally in your browser. Nothing is uploaded.</p>
@@ -72,7 +74,11 @@
             aria-label="Check the export by re-reading it">Check the export</button>
         </div>
       </div>
-
+        </div>
+      </details>
+      <details class="re-group" id="wv-rack-draft" open>
+        <summary><span class="re-lab">Draft <span class="re-hint">structure, view, zoom</span></span></summary>
+        <div class="re-body">
       <div class="re-field"><span class="re-lab">Start from <span class="re-hint">a whole setup in one press</span></span>
         <div class="re-chips" role="group" aria-label="Starting points" id="wv-recipes"></div>
       </div>
@@ -99,7 +105,11 @@
       </div>
 
       <p class="re-hint" id="wv-edit-hint">In the Draft view: click the tie-up to lift or drop a shaft, a threading square to move an end, a treadling square to change the treadle. The cloth follows the draft.</p>
-
+        </div>
+      </details>
+      <details class="re-group" id="wv-rack-cloth" open>
+        <summary><span class="re-lab">Cloth <span class="re-hint">width, sett, tone, colors</span></span></summary>
+        <div class="re-body">
       <div class="re-field"><span class="re-lab">The cloth</span>
         <p class="re-hint" id="wv-readout">draw or drop an image to read the cloth</p>
       </div>
@@ -133,7 +143,11 @@
           <option value="ember">Ember range</option>
           <option value="indigo-bone">Indigo and bone</option>
         </select></div>
-
+        </div>
+      </details>
+      <details class="re-group" id="wv-rack-weave">
+        <summary><span class="re-lab">Weave and play <span class="re-hint">shuttle, sound</span></span></summary>
+        <div class="re-body">
       <div class="re-actions">
         <label class="re-toggle"><input type="checkbox" id="wv-weaveit" checked>Weave it</label>
         <label class="re-toggle"><input type="checkbox" id="wv-sound">Sound</label>
@@ -142,7 +156,11 @@
       </div>
       <div class="re-field"><span class="re-lab">Shuttle speed <span class="re-val" id="wv-speed-v">24</span></span>
         <input type="range" id="wv-speed" min="2" max="120" value="24" aria-label="Picks per second while weaving"></div>
-
+        </div>
+      </details>
+      <details class="re-group" id="wv-rack-keep" open>
+        <summary><span class="re-lab">Keep and send <span class="re-hint">WIF, chart, cloth, setups</span></span></summary>
+        <div class="re-body">
       <div class="re-actions">
         <button class="re-btn" id="wv-wif">Export WIF</button>
         <button class="re-btn" id="wv-draft">Draft chart</button>
@@ -155,6 +173,8 @@
         <button class="re-btn" id="wv-save-setup" title="Keep this whole setup: structure, sett, tone, colors, speed, and the piece's trail">Save setup</button>
         <select class="re-in" id="wv-setups" aria-label="Saved setups" style="flex:1;min-width:9rem"><option value="">saved setups&#8230;</option></select>
       </div>
+        </div>
+      </details>
       <p class="re-status" id="wv-status" role="status" aria-live="polite"></p>
     </div>
   </div>
@@ -164,6 +184,6 @@
 </section>
 </main>
 
-<script type="module" src="system/loom-studio.js?v=20260828-site-design"></script>
+<script type="module" src="system/loom-studio.js?v=20260902-creative-chassis"></script>
 </body>
 </html>
