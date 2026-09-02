@@ -48,8 +48,8 @@ def test_private_capability_pages_exist_and_publish_only_boundary_level_copy() -
         slug = route.removesuffix(".html")
         assert f'data-capability-page="{slug}"' in source
         assert f'<link rel="canonical" href="https://harperz9.github.io/{route}">' in source
-        assert "system/nav.js?v=20260828-site-design" in source
-        assert "system/private-capability.css?v=20260828-site-design" in source
+        assert "system/nav.js?v=20260902-creative-chassis" in source
+        assert "system/private-capability.css?v=20260902-creative-chassis" in source
         assert '<table class="capability-table">' in source
         assert "private" in source.lower()
         assert "controlled" in source.lower()

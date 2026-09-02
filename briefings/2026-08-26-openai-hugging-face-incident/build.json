@@ -22,7 +22,7 @@
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/index.html",
-      "sha256": "ef4a6727637957bccd092dc98faffa582732062b591001a0284bbc2fdc08a0d8"
+      "sha256": "d7807689cdba09869e79e6bba86fcc0fc16c6c448e64ac2250fb92ded482c6bd"
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/publication.json",
@@ -34,7 +34,7 @@
     },
     {
       "path": "figures/claim-provenance-panel.html",
-      "sha256": "630c6348717867f49575012ae767eaddb459bac55dc57ceff8cd9f929aa33bb6"
+      "sha256": "3b98c2bc78c4d0b2edff94089052da89245dc2b1f7daf29b0e6e3b998c99b3af"
     },
     {
       "path": "figures/claim-provenance-panel.json",
@@ -46,7 +46,7 @@
     },
     {
       "path": "figures/control-boundary-flow.html",
-      "sha256": "71cb7311a264b4a7b9760c68dbc042598a636010da3ce996e7926895a6d72cf7"
+      "sha256": "d616823a6faf6020f4d19028445b39e8fcb18d4f1bee79db63a2ef5a82c11d0d"
     },
     {
       "path": "figures/control-boundary-flow.json",
@@ -58,7 +58,7 @@
     },
     {
       "path": "figures/incident-multilane-timeline.html",
-      "sha256": "aa3a11d6070ff044c69d39d64839c8eafebafeaef03df615899b29db47d03a66"
+      "sha256": "bb85b72b11929a12f42dfc5e044293127d7c8f3a60e36d321a76e48f48557ea4"
     },
     {
       "path": "figures/incident-multilane-timeline.json",
@@ -70,7 +70,7 @@
     },
     {
       "path": "figures/motive-sample-nonexclusive.html",
-      "sha256": "0c73f6ab060799beaa272570aee7b5cd8ca29985741d33ca6497595a3d9b8be1"
+      "sha256": "834b84527e5c0fafe9f04a170ef8ed53d599b073ff640e41fb8241326bf2fc98"
     },
     {
       "path": "figures/motive-sample-nonexclusive.json",
@@ -82,7 +82,7 @@
     },
     {
       "path": "figures/recovered-actions-by-day.html",
-      "sha256": "72d49473c58d1f506c3df95f21d1e7eea2d98ef92ddb3999ccb51c0add581414"
+      "sha256": "a02b55fc02027887c50eba62cfe3fe28586b6d8706d98fe2ec26cd8400194198"
     },
     {
       "path": "figures/recovered-actions-by-day.json",
@@ -94,7 +94,7 @@
     },
     {
       "path": "figures/source-scope-matrix.html",
-      "sha256": "5539462e3f151a2cd40d17ede8b3a9de82d655f7a0bec72667d9e301fdecaa52"
+      "sha256": "0bbbd183de8ce059e99f1b4f7fd99c4df5861bf3f6f429da9493bf31e5505a3f"
     },
     {
       "path": "figures/source-scope-matrix.json",
@@ -106,7 +106,7 @@
     },
     {
       "path": "figures/task-overrepresentation.html",
-      "sha256": "3049d5d4d586ff27e9277e9136819efb1359e479b0a7989ed43d047995293a2e"
+      "sha256": "36f469a49dd0053907c25d9b5bb1f3819fdbeae53d66860b15c66de4520b8d70"
     },
     {
       "path": "figures/task-overrepresentation.json",

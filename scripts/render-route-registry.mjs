@@ -6,7 +6,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const outputPath = resolve(root, "system", "routes.js");
 const current = await readFile(outputPath, "utf8");
 const systemRegistry = JSON.parse(await readFile(resolve(root, "system", "systems.json"), "utf8"));
-const stamp = current.match(/ROUTE_CACHE_STAMP = "([^"]+)"/)?.[1] ?? "20260828-site-design";
+const stamp = current.match(/ROUTE_CACHE_STAMP = "([^"]+)"/)?.[1] ?? "20260902-creative-chassis";
 const encoded = current.match(/ROUTE_REGISTRY_JSON = ("(?:[^"\\]|\\.)*");/)?.[1];
 if (!encoded) throw new Error("system/routes.js does not contain a readable route registry");
 

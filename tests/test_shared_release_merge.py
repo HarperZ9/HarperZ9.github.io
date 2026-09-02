@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-FRESH_STAMP = "20260828-site-design"
+FRESH_STAMP = "20260902-creative-chassis"
 
 
 def read(relative: str) -> str:

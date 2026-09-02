@@ -2897,6 +2897,20 @@ section.mv{
   box-shadow:0 30px 120px -70px rgba(0,0,0,.95),0 0 0 1px var(--hairline);
 }
 
+/* Desktop: the stage takes the height the column has left after the toolbar,
+   the flow line, and the status bar. The viewport-based floor above overflowed
+   the column on a 900px-tall screen, and a centred overflow split the excess:
+   the top of the picture went under the nav and the status bar under the
+   export bar. Overflow, if any remains, now falls to the bottom only. */
+@media (min-width:900px){
+  body.studio-page .studio-primary-stage{justify-content:flex-start}
+  body.studio-page .studio-primary-stage .viewport-stage{flex:1 1 0px;min-height:8rem;height:auto}
+  /* Tighter toolbar rows on a pointer screen: three rows of 40px buttons cost
+     the picture a quarter of its height at 900px tall. */
+  body.studio-page .studio-primary-stage .render-toolbar{gap:.35rem;padding:.3rem}
+  body.studio-page .studio-primary-stage .rt-btn{min-height:2.05rem;padding:.3rem .55rem}
+}
+
 .studio-primary-stage .render-toolbar{
   max-width:min(100%,58rem);
   padding:.35rem;
@@ -3063,11 +3077,14 @@ section.mv{
     border-bottom:1px solid transparent;border-image:var(--edge) 1;
   }
   .studio-media-first .source-group{ display:contents; }
-  /* The Make/Bring/Measure labels would each force a full row and push the canvas
-     out of the first fold; drop them on mobile (DOM order still groups the modes)
-     so the ten tabs pack into ~two rows and the canvas stays canvas-led. */
-  .studio-media-first .source-group-label{ display:none; }
-  .studio-media-first .source-menu button{ white-space:nowrap; flex:0 1 auto; }
+  /* The Make/Bring/Measure words ride inline as small captions, so the grouping
+     still reads without costing a row each. Both rules carry the page class:
+     the instrument sheet draws the label as a full-width rule and the page's
+     own sheet stretches every tab to 100%, and either one alone turns this
+     strip back into one tab per row (886px of buttons above the canvas). */
+  body.studio-page .studio-media-first .source-group-label{ display:inline-flex; flex:0 0 auto; align-self:center; margin:0 .2rem 0 .1rem; padding:0; font-family:var(--mono); font-size:.55rem; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+  body.studio-page .studio-media-first .source-group-label::after{ display:none; }
+  body.studio-page .studio-media-first .source-menu button{ width:auto; white-space:nowrap; flex:0 1 auto; }
   .studio-primary-stage{
     order:3;
     min-height:70svh;
@@ -3828,10 +3845,20 @@ h2 em,
 body.instrument-surface:not(.studio-page){height:auto;min-height:100%}
 @media (max-width:899.98px){ body.studio-page{height:auto;min-height:100%} }
 
-/* Studio on a phone: the frame pins under the nav while the source strip and
-   the controls scroll beneath it, so a change is watched where it is made.
-   nav.js publishes --nav-h from the bar's measured height. */
+/* Studio on a phone: the app column dissolves the frame section so the
+   canvas alone pins under the nav (nav.js publishes --nav-h) while the
+   toolbar, the status line, the source controls, and the perception panel
+   scroll beneath it, so a change is watched where it is made. The section
+   comes back as a box for the Fullscreen API, which is called on it. */
 @media (max-width:899.98px){
-  body.studio-page .studio-primary-stage{position:sticky;top:var(--nav-h,0px);z-index:5;background:var(--void,#000);min-height:0;padding-top:.5rem;padding-bottom:.5rem}
-  body.studio-page .studio-primary-stage .viewport-stage{min-height:0;max-height:min(40svh,34rem)}
+  body.studio-page .studio-viewport{display:contents}
+  body.studio-page .studio-viewport:fullscreen,
+  body.studio-page .studio-viewport:-webkit-full-screen{display:flex}
+  body.studio-page .viewport-stage{order:3;position:sticky;top:var(--nav-h,0px);z-index:5;width:100%;max-width:none;min-height:0;height:clamp(11rem,40svh,34rem);border-radius:0;box-shadow:0 .6rem 1.6rem -.6rem #000}
+  body.studio-page .studio-viewport:fullscreen .viewport-stage,
+  body.studio-page .studio-viewport:-webkit-full-screen .viewport-stage{position:relative;height:100vh}
+  body.studio-page .render-toolbar{order:3;margin:.6rem auto 0;width:calc(100% - 1.5rem)}
+  body.studio-page #st-flow{order:3;margin:.5rem .9rem 0}
+  body.studio-page .engine-statusbar{order:3;margin:.4rem auto .6rem;width:calc(100% - 1.5rem)}
+}
 }

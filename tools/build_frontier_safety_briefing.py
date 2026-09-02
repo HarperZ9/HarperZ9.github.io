@@ -23,10 +23,10 @@ from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CURRENT_NAV_ASSET_VERSION = "20260828-site-design"
+CURRENT_NAV_ASSET_VERSION = "20260902-creative-chassis"
 ARCHIVE_NAV_ASSET_VERSIONS = {
-    "2026-08-24": "20260828-site-design",
-    "2026-08-25": "20260828-site-design",
+    "2026-08-24": "20260902-creative-chassis",
+    "2026-08-25": "20260902-creative-chassis",
 }
 ALLOWED_SOURCE_HOSTS = {
     "cdn.openai.com",

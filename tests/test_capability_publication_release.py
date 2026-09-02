@@ -13,7 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-BnUu1wyw.js",
+    "assets/index-C96yaabg.js",
     "assets/index-BxIHiu3n.css",
     "accountable-surface.html",
     "availability-is-not-reach.html",
@@ -179,7 +179,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "1bf88f95fa20d6dc92a16b419212c339e25e9d67cf2691f852b550afcc535655"
+REVIEWED_RELEASE_SHA256 = "17cfd3fb2764c509bf13e8b104b7e16f17ee2c8d87dd86c24ee4918d0b9140e0"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -282,7 +282,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_art_css = "index-D6A4RL1P.css"
     previous_publications_js = "index-DDkK7Yu0.js"
     previous_plain_language_js = "index-DFJMXR3Q.js"
-    current_js = "index-BnUu1wyw.js"
+    current_js = "index-C96yaabg.js"
     current_css = "index-BxIHiu3n.css"
     prior_reviewed_js = "index-C_1S2nb6.js"
     prior_reviewed_css = "index-XLAt4tDw.css"

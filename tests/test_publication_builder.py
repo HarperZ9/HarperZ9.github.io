@@ -259,9 +259,9 @@ def test_article_has_a_route_specific_social_card() -> None:
         f'<meta property="og:image" content="https://harperz9.github.io/'
         f'img/og/{record["id"]}.png">'
     ) in article
-    assert 'href="styles.css?v=20260828-site-design"' in article
+    assert 'href="styles.css?v=20260902-creative-chassis"' in article
     assert (
-        'href="system/publication-article.css?v=20260828-site-design"'
+        'href="system/publication-article.css?v=20260902-creative-chassis"'
         in article
     )
     assert '<nav class="publication-static-nav"' in article

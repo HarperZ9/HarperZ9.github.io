@@ -494,7 +494,7 @@ def test_renderer_publishes_current_cross_harness_integration_failure_profile(tm
     assert 'href="source/current-cross-harness-pilot-source.json"' in html
     assert "operator-local-hash-only" in html
     assert '<div id="site-nav" class="site-nav"></div>' in html
-    assert 'src="../system/nav.js?v=20260828-site-design"' in html
+    assert 'src="../system/nav.js?v=20260902-creative-chassis"' in html
     assert "<title" in svg and "<desc" in svg
     assert "4/4 verified receipts" in svg and "0 valid comparable task outcomes" in svg
     serialized = html + svg + json.dumps(companion)

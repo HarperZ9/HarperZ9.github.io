@@ -221,7 +221,7 @@ function renderHtml(configuration, systems, relations, svg, retrievedAt) {
     : `<tr><td colspan="5">No typed implementation relationship is asserted among the systems in this view.</td></tr>`;
   return `<!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeXml(configuration.title)}</title><link rel="stylesheet" href="../system/figure.css?v=20260828-site-design"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeXml(configuration.title)}</title><link rel="stylesheet" href="../system/figure.css?v=20260902-creative-chassis"></head>
 <body class="figure-document"><main><figure class="evidence-figure" data-evidence-figure data-figure-kind="relationship">
   <figcaption class="figure-heading"><h1>${escapeXml(configuration.title)}</h1><p class="figure-description">${escapeXml(configuration.description)}</p><p class="figure-claim figure-finding">${escapeXml(configuration.claim)}</p></figcaption>
   <div class="figure-svg-scroll" tabindex="0" aria-label="Scrollable visualization for ${escapeXml(configuration.title)}">${svg}

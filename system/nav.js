@@ -1,6 +1,6 @@
 // nav.js, one source of truth for the site navigation. Injected into #site-nav on every page;
 // active state derived from the path. No framework; <noscript> fallback lives in the page markup.
-import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js?v=20260828-site-design";
+import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js?v=20260902-creative-chassis";
 
 const BRAND_LABEL = "Zentropy Labs";
 const BRAND_MARK_SRC = "brand/zentropy-avatar.png";
@@ -376,7 +376,7 @@ function mountHomeLogo(doc) {
 // its own ?v= in the markup, so a new nav.js is what asks for new versions of
 // these; without a stamp here a reader with a warm cache keeps the old
 // stylesheet and the old exporter forever. Bump this with the nav.js stamp.
-const ASSET_V = "20260828-site-design";
+const ASSET_V = "20260902-creative-chassis";
 
 function sheetHref(name) {
   const here = import.meta && import.meta.url ? import.meta.url : "";
