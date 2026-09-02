@@ -55,6 +55,7 @@ SECRET_PATTERNS = (
     re.compile(r"xox[baprs]-[A-Za-z0-9-]{20,}"),
     re.compile(r"BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY"),
 )
+PUBLICATION_AUTOMATION_ID = "daily-editorial-research-atlas"
 PERSONAL_VOICE_PATTERN = re.compile(
     r"(?<![\w'])I(?![\w'])|(?<![\w'])(?:I'm|I've|I'd|I'll|my|mine|me)(?![\w'])",
     re.IGNORECASE,
@@ -80,7 +81,7 @@ def record_sha256(record: dict) -> str:
 
 def idempotency_key(record: dict) -> str:
     material = (
-        f"editorial-atlas\n{record['observed_at']}\n{record['route']}\n"
+        f"{PUBLICATION_AUTOMATION_ID}\n{record['observed_at']}\n{record['route']}\n"
         f"{record_sha256(record)}\n"
     )
     return hashlib.sha256(material.encode("utf-8")).hexdigest()

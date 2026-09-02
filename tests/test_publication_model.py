@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 from pathlib import Path
 
 import pytest
 
 from tools.publication_model import (
+    PUBLICATION_AUTOMATION_ID,
     PublicationError,
     idempotency_key,
     record_sha256,
@@ -62,6 +64,17 @@ def test_idempotency_key_binds_observation_route_and_record() -> None:
     assert len(idempotency_key(first)) == 64
     assert idempotency_key(first) != idempotency_key(changed_route)
     assert idempotency_key(first) != idempotency_key(changed_observation)
+
+
+def test_idempotency_key_binds_the_documented_automation_authority() -> None:
+    record = valid_record()
+    material = (
+        f"{PUBLICATION_AUTOMATION_ID}\n{record['observed_at']}\n"
+        f"{record['route']}\n{record_sha256(record)}\n"
+    )
+
+    assert PUBLICATION_AUTOMATION_ID == "daily-editorial-research-atlas"
+    assert idempotency_key(record) == hashlib.sha256(material.encode()).hexdigest()
 
 
 @pytest.mark.parametrize(
