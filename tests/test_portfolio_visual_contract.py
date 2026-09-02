@@ -110,6 +110,16 @@ def test_noscript_fallback_is_a_complete_identity_first_front_door() -> None:
     assert "fourteen independently published verification systems" not in src.lower()
 
 
+def test_noscript_fallback_preserves_keyboard_entry_and_publications_route() -> None:
+    for path in (HOME_INDEX, INDEX):
+        src = read(path)
+        fallback = src.split("<noscript>", 1)[1].split("</noscript>", 1)[0]
+
+        assert 'class="skip-link" href="#noscript-main"' in fallback
+        assert '<main id="noscript-main"' in fallback
+        assert 'href="/publications.html"' in fallback
+
+
 def test_home_source_and_styles_have_no_decorative_home_lead_ins() -> None:
     combined = "\n".join(read(path) for path in (HOME_INDEX, APP, APP_CSS, INDEX_CSS))
 
