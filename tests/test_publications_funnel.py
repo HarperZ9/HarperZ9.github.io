@@ -68,7 +68,7 @@ def test_search_and_filter_are_secondary_progressive_enhancement() -> None:
     page = read("publications.html")
     script = read("system/publications.js")
 
-    assert '<details class="publication-tools">' in page
+    assert '<details class="publication-tools" hidden>' in page
     assert '<label for="publication-search">' in page
     assert 'type="search"' in page
     assert 'data-publication-filter="all"' in page
@@ -81,6 +81,18 @@ def test_search_and_filter_are_secondary_progressive_enhancement() -> None:
     assert 'aria-live="polite"' in page
     assert "resultCount.textContent" in script
     assert "No published item matches" in page
+    assert 'document.querySelector(".publication-tools")' in script
+    assert "tools.hidden = false" in script
+
+
+def test_publication_skip_link_is_immediate_and_visible_when_focused() -> None:
+    css = read("system/publications.css")
+
+    assert ".publications-hub .skip-link" in css
+    assert ".publications-hub .skip-link:focus" in css
+    assert ".publications-hub .skip-link:focus-visible" in css
+    assert "top:.6rem" in css
+    assert "transition:none" in css
 
 
 def test_publication_visual_system_has_accessibility_fallbacks() -> None:
