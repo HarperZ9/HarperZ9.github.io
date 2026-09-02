@@ -248,3 +248,21 @@ def test_article_namespaces_figure_anchors_away_from_section_ids() -> None:
 
     assert len(identifiers) == len(set(identifiers))
     assert f'figure-{record["figures"][0]["id"]}' in identifiers
+
+
+def test_article_has_a_route_specific_social_card() -> None:
+    record = json.loads(FIXTURE.read_text(encoding="utf-8"))
+
+    article = render_article(record)
+
+    assert (
+        f'<meta property="og:image" content="https://harperz9.github.io/'
+        f'img/og/{record["id"]}.png">'
+    ) in article
+    assert 'href="styles.css?v=20260828-site-design"' in article
+    assert (
+        'href="system/publication-article.css?v=20260828-site-design"'
+        in article
+    )
+    assert '<nav class="publication-static-nav"' in article
+    assert '<noscript><nav' not in article

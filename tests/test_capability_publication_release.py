@@ -16,6 +16,7 @@ RELEASE_PATHS = (
     "assets/index-BnUu1wyw.js",
     "assets/index-BxIHiu3n.css",
     "accountable-surface.html",
+    "availability-is-not-reach.html",
     "analytics/benchmark-evidence-status.html",
     "analytics/benchmark-evidence-status.json",
     "analytics/current-cross-harness-pilot.html",
@@ -66,6 +67,9 @@ RELEASE_PATHS = (
     "dossier.html",
     "feed.json",
     "feed.xml",
+    "figures/availability-is-not-reach.html",
+    "figures/availability-is-not-reach.json",
+    "figures/availability-is-not-reach.svg",
     "figures/claim-provenance-panel.html",
     "figures/claim-provenance-panel.json",
     "figures/claim-provenance-panel.svg",
@@ -96,6 +100,9 @@ RELEASE_PATHS = (
     "figures/task-overrepresentation.html",
     "figures/task-overrepresentation.json",
     "figures/task-overrepresentation.svg",
+    "figures/the-second-hearing-evidence-map.html",
+    "figures/the-second-hearing-evidence-map.json",
+    "figures/the-second-hearing-evidence-map.svg",
     "figures/verification-capability-map.html",
     "figures/verification-capability-map.json",
     "figures/verification-capability-map.svg",
@@ -104,7 +111,9 @@ RELEASE_PATHS = (
     "elder-enb.html",
     "enb-runtime-core.html",
     "flywheel.html",
+    "frontier-safety-openai-hugging-face-incident.html",
     "img/og/behavior-transform.png",
+    "img/og/availability-is-not-reach.png",
     "img/og/brender-archival.png",
     "img/og/elder-enb.png",
     "img/og/engine-revival.png",
@@ -112,8 +121,11 @@ RELEASE_PATHS = (
     "img/og/portfolio-home.png",
     "img/og/profile.png",
     "img/og/private-practice.png",
+    "img/og/publications.png",
     "img/og/security-toolkit.png",
     "img/og/truth-enb.png",
+    "img/og/the-second-hearing.png",
+    "img/og/cards-data.js",
     "index.html",
     "media/retro-systems-lab/evidence-manifest.json",
     "media/retro-systems-lab/identity/brender-verify.svg",
@@ -121,8 +133,17 @@ RELEASE_PATHS = (
     "media/retro-systems-lab/identity/engine-preserve.svg",
     "media/retro-systems-lab/identity/retro-play.svg",
     "media/retro-systems-lab/manifest.json",
+    "models-propose-oracles-dispose.html",
+    "no-receipt-no-accept.html",
     "overview.html",
+    "pick-the-lock-for-everyone-talk.html",
+    "pick-the-lock-for-everyone.html",
     "publications.html",
+    "publications/build.json",
+    "publications/data/index.json",
+    "publications/data/records/availability-is-not-reach.json",
+    "publications/data/records/the-second-hearing.json",
+    "publications/schema/publication-record.schema.json",
     "private-practice.html",
     "security-toolkit.html",
     "security-tools.json",
@@ -131,6 +152,7 @@ RELEASE_PATHS = (
     "system/figure.test.mjs",
     "system/hire.css",
     "system/home-art.js",
+    "system/publication-article.css",
     "system/publications.css",
     "system/publications.js",
     "system/retro-systems-lab.css",
@@ -145,17 +167,19 @@ RELEASE_PATHS = (
     "resume-grounds.html",
     "resume-public-operations.html",
     "resume-support-operations.html",
+    "sitemap.xml",
     "systems/behavior-transform.html",
     "systems/mneme.html",
     "systems/plexus.html",
     "systems/relay.html",
     "systems/studio-engine.html",
     "systems/telos.html",
+    "the-second-hearing.html",
     "truth-enb.html",
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "349b3e7f08db2a768625352e348938d738e555c1b90cf15a5e17411bc203f6f2"
+REVIEWED_RELEASE_SHA256 = "ca3282da3f9c17f2aad290aaf9eea8f55dda49364a5a0502e46f822747c7fb5b"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -167,7 +191,11 @@ BRIEFING_FIGURES = (
     "task-overrepresentation",
 )
 
-ALL_FIGURES = tuple(path.stem for path in sorted((ROOT / "figures").glob("*.json")))
+BRIEFING_EVIDENCE_FIGURES = tuple(
+    path.stem
+    for path in sorted((ROOT / "figures").glob("*.json"))
+    if "figure" in json.loads(path.read_text(encoding="utf-8"))
+)
 
 PUBLIC_MARKERS = (
     re.compile(r"(?i)(?<![a-z0-9])[a-z]:[/\\]+(?:users|dev|program files)[/\\]+"),
@@ -333,7 +361,7 @@ def test_every_evidence_plate_has_readable_labels_and_explicit_scope() -> None:
         "uncertainty",
         "sources",
     }
-    for stem in ALL_FIGURES:
+    for stem in BRIEFING_EVIDENCE_FIGURES:
         companion = json.loads(_text(f"figures/{stem}.json"))["figure"]
         assert required <= set(companion), stem
         assert companion["sources"], stem
@@ -394,19 +422,30 @@ def test_briefing_archive_and_feeds_resolve_to_the_permanent_record() -> None:
     assert 'href="/feed.xml"' in archive
 
     feed = json.loads(_text("feed.json"))
-    assert feed["home_page_url"].endswith("/briefings/")
-    assert [urlsplit(item["url"]).path for item in feed["items"]] == [route]
+    assert feed["home_page_url"].endswith("/publications.html")
+    routes = [urlsplit(item["url"]).path for item in feed["items"]]
+    assert routes.count(route) == 1
+    assert "/the-second-hearing.html" in routes
+    assert "/availability-is-not-reach.html" in routes
     page = _text("briefings/2026-08-26-openai-hugging-face-incident/index.html")
     updated = re.search(r'<time datetime="(\d{4}-\d{2}-\d{2})">Updated ', page)
     assert updated
     expected_updated = f"{updated.group(1)}T00:00:00Z"
-    assert feed["items"][0]["date_modified"] == expected_updated
+    briefing_item = next(item for item in feed["items"] if urlsplit(item["url"]).path == route)
+    assert briefing_item["date_modified"] == expected_updated
 
     atom = ElementTree.fromstring(_text("feed.xml"))
     namespace = {"atom": "http://www.w3.org/2005/Atom"}
-    assert atom.findtext("atom:entry/atom:id", namespaces=namespace).endswith(route)
-    assert atom.findtext("atom:updated", namespaces=namespace) == expected_updated
-    assert atom.findtext("atom:entry/atom:updated", namespaces=namespace) == expected_updated
+    entries = atom.findall("atom:entry", namespaces=namespace)
+    briefing_entry = next(
+        entry
+        for entry in entries
+        if entry.findtext("atom:id", namespaces=namespace).endswith(route)
+    )
+    assert atom.findtext("atom:updated", namespaces=namespace) == max(
+        item["date_modified"] for item in feed["items"]
+    )
+    assert briefing_entry.findtext("atom:updated", namespaces=namespace) == expected_updated
     target, fragment = _local_target(route)
     assert target.is_file() and not fragment
 

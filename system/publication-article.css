@@ -4,6 +4,9 @@
 *{box-sizing:border-box}
 html{background:var(--paper);color:var(--ink);font-family:Hanken,system-ui,sans-serif;line-height:1.65}
 body{margin:0}
+.publication-static-nav{width:min(100% - 2rem,72rem);margin-inline:auto;padding:1rem 0;display:flex;flex-wrap:wrap;gap:.65rem 1.2rem;border-bottom:1px solid var(--rule);font-family:Conso,ui-monospace,monospace}
+.publication-static-nav a{color:inherit;text-decoration-thickness:.09em;text-underline-offset:.16em;min-block-size:44px;display:inline-flex;align-items:center}
+.publication-static-nav a:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
 .publication-article{width:min(100% - 2rem,72rem);margin-inline:auto;padding:clamp(2rem,5vw,5rem) 0}
 .publication-article article{max-width:68rem}
 .publication-article h1{font-size:clamp(2.2rem,7vw,5.8rem);line-height:.96;max-width:15ch;text-wrap:balance}
@@ -25,7 +28,7 @@ body{margin:0}
 .publication-article a:focus-visible,.skip-link:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
 .skip-link{position:absolute;left:1rem;top:-8rem;padding:.6rem .8rem;background:var(--paper);color:var(--ink);z-index:10}
 .skip-link:focus{top:1rem}
-@media(max-width:40rem){.publication-article{width:min(100% - 1.25rem,72rem)}.publication-evidence{grid-template-columns:1fr}.publication-evidence dt{margin-top:.7rem}}
+@media(max-width:40rem){.publication-static-nav,.publication-article{width:min(100% - 1.25rem,72rem)}.publication-evidence{grid-template-columns:1fr}.publication-evidence dt{margin-top:.7rem}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
-@media(forced-colors:active){.publication-opening,.publication-figure img{forced-color-adjust:auto;border:1px solid CanvasText}.publication-article a:focus-visible{outline-color:Highlight}}
-@media print{html{background:#fff;color:#000}.publication-article{width:100%;padding:0}.skip-link,.site-nav{display:none}.publication-figure,.publication-article h2{break-inside:avoid}.publication-table-wrap{overflow:visible}.publication-article table{min-width:0;font-size:8.5pt}}
+@media(forced-colors:active){.publication-opening,.publication-figure img{forced-color-adjust:auto;border:1px solid CanvasText}.publication-static-nav a:focus-visible,.publication-article a:focus-visible{outline-color:Highlight}}
+@media print{html{background:#fff;color:#000}.publication-article{width:100%;padding:0}.skip-link,.site-nav,.publication-static-nav{display:none}.publication-figure,.publication-article h2{break-inside:avoid}.publication-table-wrap{overflow:visible}.publication-article table{min-width:0;font-size:8.5pt}}

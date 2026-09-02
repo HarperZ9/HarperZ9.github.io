@@ -528,10 +528,10 @@ window.CARD_DATA = {
     "pipeline": "SEED / INSTRUMENTS / DRAW / TREAT / KEEP"
   },
   "publications": {
-    "role": "THE RESEARCH RECORD",
+    "role": "THE READING ROOM",
     "word": "PUBLICATIONS",
-    "headline": "Eight records with permanent DOIs, each titled at the size its evidence carries.",
-    "pipeline": "PAPERS / NOTES / CORPORA / DOI / NO PEER REVIEW"
+    "headline": "Essays, briefings, and research records with sources, boundaries, and permanent routes.",
+    "pipeline": "ESSAYS / BRIEFINGS / SOURCES / LIMITS / CORRECTIONS"
   },
   "typeface": {
     "role": "TYPE SPECIMEN",
@@ -550,5 +550,19 @@ window.CARD_DATA = {
     "word": "FLYWHEEL",
     "headline": "A live prompt routed to a local model, sealed into a receipt, then tampered with.",
     "pipeline": "ROUTE / GATE / RUN / SEAL / RE-VERIFY"
+  },
+  "availability-is-not-reach": {
+    "role": "PUBLIC EDUCATION EVIDENCE",
+    "word": "REACH",
+    "headline": "An offer is not delivery. Keep availability, reach, dosage, and outcomes separate.",
+    "pipeline": "OFFER / REACH / DOSAGE / OUTCOME / RECEIPT",
+    "glyph": "layers"
+  },
+  "the-second-hearing": {
+    "role": "MUSIC AND PERCEPTION",
+    "word": "SECOND HEARING",
+    "headline": "Another play can change recognition, attention, memory, or liking. Those are different measures.",
+    "pipeline": "HEAR / NOTICE / REMEMBER / MEASURE / LIMIT",
+    "glyph": "layers"
   }
 };

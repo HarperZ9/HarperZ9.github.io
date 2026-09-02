@@ -29,6 +29,7 @@ from tools.publication_model import (
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_URL = "https://harperz9.github.io/"
+ASSET_REVISION = "20260828-site-design"
 PUBLICATIONS_MARKER = "GENERATED EDITORIAL PUBLICATIONS"
 WRITING_MARKER = "GENERATED EDITORIAL ESSAYS"
 SITEMAP_MARKER = "GENERATED EDITORIAL ROUTES"
@@ -240,8 +241,8 @@ def render_figure_svg(figure: dict) -> str:
 def render_figure_html(figure: dict) -> str:
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{html.escape(figure["title"])}</title><link rel="stylesheet" href="../system/publication-article.css"></head>
-<body><main class="publication-article"><h1>{html.escape(figure["title"])}</h1>
+<title>{html.escape(figure["title"])}</title><link rel="stylesheet" href="../system/publication-article.css?v={ASSET_REVISION}"></head>
+<body><nav class="publication-static-nav" aria-label="Publication"><a href="../publications.html">Publications</a></nav><main class="publication-article"><h1>{html.escape(figure["title"])}</h1>
 <p class="publication-thesis">{html.escape(figure["claim"])}</p>
 {_render_table(figure)}{_render_figure_metadata(figure)}</main></body></html>
 '''
@@ -303,8 +304,11 @@ def render_article(record: dict) -> str:
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(record["title"]) } · Zain Dana Harper</title>
 <meta name="description" content="{html.escape(record["summary"], quote=True)}"><link rel="canonical" href="{canonical}">
-<link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="system/publication-article.css"></head>
-<body><a class="skip-link" href="#main">Skip to content</a><noscript><nav class="site-nav"><a href="publications.html">Publications</a> <a href="writing.html">Writing</a> <a href="cv.html">About</a></nav></noscript>
+<meta property="og:type" content="article"><meta property="og:title" content="{html.escape(record["title"], quote=True)}">
+<meta property="og:description" content="{html.escape(record["summary"], quote=True)}"><meta property="og:url" content="{canonical}">
+<meta property="og:image" content="{SITE_URL}img/og/{html.escape(record["id"], quote=True)}.png">
+<link rel="stylesheet" href="styles.css?v={ASSET_REVISION}"><link rel="stylesheet" href="system/publication-article.css?v={ASSET_REVISION}"></head>
+<body><a class="skip-link" href="#main">Skip to content</a><nav class="publication-static-nav" aria-label="Publication"><a href="publications.html">Publications</a><a href="writing.html">Writing</a><a href="cv.html">About</a></nav>
 <main id="main" class="publication-article"><article><header><p class="publication-kicker">{html.escape(record["form"])} · {html.escape(record["category"])}</p>
 <h1>{html.escape(record["title"])}</h1><p class="publication-thesis">{html.escape(record["thesis"])}</p>
 <p class="publication-meta">Published {html.escape(record["published_at"])} · Updated {html.escape(record["updated_at"])}</p></header>
