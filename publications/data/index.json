@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "records": [
+    {
+      "id": "availability-is-not-reach",
+      "route": "availability-is-not-reach.html",
+      "category": "education-access",
+      "form": "public-interest analysis",
+      "published_at": "2026-09-01",
+      "updated_at": "2026-09-01",
+      "record_sha256": "b690017ccc23b3de58f1cb8fbb6b5876bc16e960088252566ae9e3cbb078443f",
+      "idempotency_key": "e8900651746c6d043930143bd5c1dacb5c395b0e7b47846133de558f05255f24"
+    },
+    {
+      "id": "the-second-hearing",
+      "route": "the-second-hearing.html",
+      "category": "music-listening",
+      "form": "evidence essay",
+      "published_at": "2026-09-01",
+      "updated_at": "2026-09-01",
+      "record_sha256": "9b807ef8ee7a3e6e2082d86f0a4420b3e72cce2b0e564cac6fb58a70fc5274da",
+      "idempotency_key": "f43f56b2ba16d7f1ba26954494801b4242c082f1b35bf508e0bb98c2216be35e"
+    }
+  ]
+}

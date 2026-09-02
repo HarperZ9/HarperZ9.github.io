@@ -32,8 +32,8 @@ def test_no_receipt_pages_are_public_and_discoverable() -> None:
     assert "<title>No Receipt, No Accept · Zain Dana Harper</title>" in essay_shell
     assert f'<link rel="canonical" href="{ESSAY_URL}">' in essay_shell
     assert f'<meta property="og:url" content="{ESSAY_URL}">' in essay_shell
-    assert 'src="system/essay-loader.js?v=20260828-site-design"' in essay_shell
-    assert "writing/no-receipt-no-accept/09.md" in essay_shell
+    for part in ESSAY_PARTS:
+        assert part.relative_to(ROOT).as_posix() in essay_shell
     assert "writing/no-receipt-no-accept/no-receipt-no-accept.pdf" in essay_shell
     assert "writing/no-receipt-no-accept/no-receipt-no-accept.md" in essay_shell
     assert 'href="no-receipt-no-accept.html"' in writing

@@ -35,6 +35,16 @@ def keys() -> list[str]:
     return list(json.loads(body.group(1)))
 
 
+def launch_browser(chromium):
+    """Use Playwright's browser, then the installed Chrome channel if absent."""
+    try:
+        return chromium.launch()
+    except Exception as exc:
+        if "Executable doesn't exist" not in str(exc):
+            raise
+        return chromium.launch(channel="chrome")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--force", action="store_true", help="re-render cards that already exist")
@@ -54,7 +64,7 @@ def main() -> int:
         return 0
 
     with sync_playwright() as p:
-        browser = p.chromium.launch()
+        browser = launch_browser(p.chromium)
         page = browser.new_page(viewport={"width": 1200, "height": 630}, device_scale_factor=1)
         for key in todo:
             page.goto((OG / "_card.html").as_uri() + f"?f={key}")

@@ -1,0 +1,259 @@
+{
+  "schema_version": 1,
+  "id": "availability-is-not-reach",
+  "route": "availability-is-not-reach.html",
+  "category": "education-access",
+  "form": "public-interest analysis",
+  "title": "Availability Is Not Reach",
+  "summary": "Tutoring evidence is strong, but an offer is not delivery. Public claims must separate availability, reach, dosage, staffing, and outcomes.",
+  "author": "Zain Dana Harper",
+  "published_at": "2026-09-01",
+  "updated_at": "2026-09-01",
+  "observed_at": "2026-09-01T19:30:00Z",
+  "thesis": "A program cannot carry the label evidence-based at scale unless the public can still see whom it reached, what students received, what changed, and what remains uncertain.",
+  "opening": {
+    "question": "What would count as public proof that high-dosage tutoring still works after emergency funding becomes an ordinary budget decision?",
+    "finding": "Randomized trials support structured tutoring, but scale-relevant estimates are smaller and national availability is much broader than measured student reach.",
+    "evidence": "Two meta-analyses and current federal survey data distinguish experimental effects, school offers, student participation, implementation, and funding conditions.",
+    "limit": "The national estimates come from different months and denominators, and none links current participation to student learning outcomes."
+  },
+  "sections": [
+    {
+      "id": "ordinary-budgets",
+      "heading": "A proven intervention enters ordinary budgets",
+      "paragraphs": [
+        "Tutoring has one of the stronger experimental records among education interventions. That record matters, but the public question changes when an emergency program becomes a recurring system. A literature average cannot show whether a current school found tutors, scheduled sessions, reached eligible students, or delivered the intended time.",
+        "The program must therefore be measured where students encounter it. An appropriation shows that money was authorized. A contract shows that capacity was purchased. An enrollment list shows that students were assigned. None of those records alone shows what instruction arrived or what outcome changed."
+      ]
+    },
+    {
+      "id": "what-works-means",
+      "heading": "What works means in the experimental literature",
+      "paragraphs": [
+        "A systematic review published online in 2023 and in a 2024 journal issue synthesized 89 randomized tutoring studies. It reported an overall pooled effect of 0.288 standard deviations, with a standard error of 0.029 and p<0.001. A standardized effect expresses results from different measures on a common scale. It does not turn the studies into one identical program.",
+        "The studies varied in grade, subject, tutor role, schedule, setting, assessment, and era. The pooled estimate is evidence that structured tutoring can improve learning under tested conditions. It is not a promise that any activity called tutoring will reproduce that average."
+      ]
+    },
+    {
+      "id": "scale-changes-claim",
+      "heading": "Scale changes the expected claim",
+      "paragraphs": [
+        "A 2026 meta-analysis examined 263 randomized controlled trials and asked what happens when the evidence is aligned with large programs and independent standardized tests. Its full sample produced a pooled estimate of 0.40 standard deviations. Target-aligned estimates averaged 0.22 for programs serving 400 to 999 students and 0.16 for programs serving at least 1,000 students.",
+        "Those estimates belong to different analytic samples. They are not rungs on a performance ladder. The largest-program estimate is imprecise because relatively few trials met the condition, and the authors report wide prediction intervals. The pattern does not establish a fixed penalty for crossing a particular enrollment threshold.",
+        "Larger programs often change several things at once, including intended dosage, student-to-tutor ratios, targeting, delivery setting, and implementation quality. The analysis explores those pressures but cannot isolate scale as one causal mechanism. A smaller target-aligned average can remain educationally important while still requiring more modest public claims."
+      ]
+    },
+    {
+      "id": "availability-is-not-reach",
+      "heading": "Availability is not reach",
+      "paragraphs": [
+        "The National Center for Education Statistics reports that in June 2025, 85 percent of public schools offered some tutoring and 42 percent offered high-dosage tutoring. The 85 percent figure is the complement of the workbook's 15 percent no-tutoring estimate. Both are school-level weighted survey estimates.",
+        "The latest student-reach fields in the same release series come from October 2024. The average share receiving high-dosage tutoring was 8 percent across all public schools and 25 percent within schools offering it. These are student-participation estimates summarized at the school level.",
+        "The four percentages must not become a funnel. June 2025 availability and October 2024 reach answer different questions, use different dates, and do not share one sequential denominator. They reveal a measurement gap, not an attrition rate."
+      ]
+    },
+    {
+      "id": "measure-delivery",
+      "heading": "Measure delivery, not the brochure",
+      "paragraphs": [
+        "A minimum public receipt would keep intended eligibility, unique students served, assigned sessions, attended sessions, minutes delivered, weeks active, group size, tutor role, training, supervision, continuity, subject, and grade as separate fields. It would also name the outcome, baseline, follow-up interval, missing-data rule, and cost denominator.",
+        "This list is an editorial accountability design, not a federal standard. It is not a claim that disclosure alone improves instruction. Its purpose is narrower: prevent a program offer, a seat, an attendance record, and a completed dosage from becoming interchangeable facts."
+      ]
+    },
+    {
+      "id": "preserve-denominator",
+      "heading": "Preserve the denominator",
+      "paragraphs": [
+        "A statement such as 90 percent attended is incomplete until the denominator is visible. It could mean 90 of 100 enrolled students attended once, 90 percent of eligible students enrolled, or 90 percent of assigned sessions were completed. Each statement answers a different question.",
+        "Consider an illustrative program with 120 eligible students, 80 assigned seats, 72 students who attend at least once, and 48 who complete the intended dosage. The invented numbers show why the denominator belongs in the claim. They do not describe a real school, district, or program."
+      ]
+    },
+    {
+      "id": "independent-outcome",
+      "heading": "Preserve an independent outcome",
+      "paragraphs": [
+        "Session completion is an implementation measure, not a learning result. Tutor-made checks, program dashboards, district assessments, and independent standardized tests can all carry useful information, but they support different claims and face different incentives.",
+        "An outcome should be named before the result, matched to the question, and accompanied by its interval and missing-data rule. Independent does not mean that only standardized tests matter. It means the measure and analysis do not quietly change after the implementation result is known."
+      ]
+    },
+    {
+      "id": "funding-boundary",
+      "heading": "Funding is a boundary condition, not an outcome",
+      "paragraphs": [
+        "Federal guidance identifies recurring formula and discretionary programs that may support eligible tutoring costs, including federal title programs and other grants. Eligibility, allowable uses, supplement-not-supplant requirements, state plans, and local appropriations still govern any specific use.",
+        "The emergency-fund timeline is also qualified. The Department of Education's current liquidation-extension page records a March 2025 policy change, later court injunctions, and continuation of previously approved extensions during litigation under its stated updates. That status can change and does not describe every recipient.",
+        "Funding evidence can show whether continuation may be possible. It cannot show how many students received tutoring, what dosage arrived, or whether learning changed."
+      ]
+    },
+    {
+      "id": "public-claim",
+      "heading": "The public claim",
+      "paragraphs": [
+        "A public system should be able to say what it offered, whom it intended to serve, whom it reached, what students received, what outcome was measured, what changed, and what the evidence does not establish. Each field needs its own denominator, date, and limitation.",
+        "Evidence-based is a property of a bounded claim tied to a design and an outcome. It is not a permanent label that transfers automatically from a research literature to every implementation. If delivery and outcomes disappear from view at scale, the evidence has become a memory rather than a current public claim."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "publisher": "National Center for Education Statistics",
+      "title": "School Pulse Panel tutoring results and official data workbook",
+      "url": "https://nces.ed.gov/surveys/spp/results.asp",
+      "role": "current federal survey release and primary aggregate data workbook",
+      "published_at": "2025-06-01",
+      "observed_at": "2026-09-01"
+    },
+    {
+      "id": "S2",
+      "publisher": "National Center for Education Statistics",
+      "title": "School Pulse Panel methodology",
+      "url": "https://nces.ed.gov/surveys/spp/methodology.asp",
+      "role": "official sampling, collection, weighting, and disclosure methodology",
+      "published_at": "2024-07-01",
+      "observed_at": "2026-09-01"
+    },
+    {
+      "id": "S3",
+      "publisher": "American Educational Research Journal",
+      "title": "The Promise of Tutoring for PreK-12 Learning: A Systematic Review and Meta-Analysis of the Experimental Evidence",
+      "url": "https://journals.sagepub.com/doi/10.3102/00028312231208687",
+      "role": "peer-reviewed systematic review and meta-analysis of randomized tutoring evaluations",
+      "published_at": "2023-11-27",
+      "observed_at": "2026-09-01"
+    },
+    {
+      "id": "S4",
+      "publisher": "Review of Educational Research",
+      "title": "What Impacts Should We Expect From Tutoring at Scale? Exploring Meta-Analytic Generalizability",
+      "url": "https://journals.sagepub.com/doi/10.3102/00346543261446660",
+      "role": "peer-reviewed scale-focused meta-analysis of randomized controlled trials",
+      "published_at": "2026-06-05",
+      "observed_at": "2026-09-01"
+    },
+    {
+      "id": "S5",
+      "publisher": "U.S. Department of Education",
+      "title": "Sustaining Evidence-Based High-Dosage Tutoring",
+      "url": "https://www.ed.gov/sites/ed/files/2024/06/High-Dosage-Tutoring.pdf",
+      "role": "official implementation and recurring-funding guidance",
+      "published_at": "2024-06-01",
+      "observed_at": "2026-09-01"
+    },
+    {
+      "id": "S6",
+      "publisher": "U.S. Department of Education",
+      "title": "Education Stabilization Fund Liquidation Extensions",
+      "url": "https://www.ed.gov/grants-and-programs/formula-grants/response-formula-grants/covid-19-emergency-relief-grants/education-stabilization-fund-liquidation-extensions",
+      "role": "official current boundary on emergency-relief liquidation status",
+      "published_at": "2025-10-06",
+      "observed_at": "2026-09-01"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "text": "One broad meta-analysis of randomized tutoring evaluations reported an overall pooled effect of 0.288 standard deviations.",
+      "status": "verified",
+      "source_ids": ["S3"],
+      "scope": "Eighty-nine randomized PreK-12 tutoring studies synthesized across varied programs and outcomes",
+      "uncertainty": "Programs, populations, subjects, assessments, settings, and eras varied",
+      "doesNotProve": "That any current local tutoring offer will reproduce the pooled effect"
+    },
+    {
+      "id": "C2",
+      "text": "Scale-relevant tutoring estimates were smaller than the full-sample average in the 2026 analysis.",
+      "status": "verified",
+      "source_ids": ["S4"],
+      "scope": "Two hundred sixty-three randomized controlled trials with target-aligned independent-test subsets",
+      "uncertainty": "Few very large trials and wide prediction intervals",
+      "doesNotProve": "A fixed penalty for crossing a particular enrollment threshold or one causal mechanism"
+    },
+    {
+      "id": "C3",
+      "text": "In June 2025, 85 percent of public schools reported some tutoring and 42 percent reported high-dosage tutoring.",
+      "status": "verified",
+      "source_ids": ["S1"],
+      "scope": "Weighted school-level School Pulse Panel estimates for U.S. public schools",
+      "uncertainty": "School-reported survey estimates; 85 percent is the complement of 15 percent no tutoring",
+      "doesNotProve": "Student reach, delivered dosage, implementation fidelity, or learning impact"
+    },
+    {
+      "id": "C4",
+      "text": "In October 2024, average high-dosage participation was 8 percent across all public schools and 25 percent within schools offering it.",
+      "status": "verified",
+      "source_ids": ["S1"],
+      "scope": "Student-participation estimates summarized at the school level",
+      "uncertainty": "A different month and denominator from the June 2025 availability estimates",
+      "doesNotProve": "A sequential funnel from 85 to 42 to 25 to 8"
+    },
+    {
+      "id": "C5",
+      "text": "School Pulse Panel estimates describe reported availability and reach, not linked student-level learning outcomes.",
+      "status": "verified",
+      "source_ids": ["S1", "S2"],
+      "scope": "A monthly web survey of a sampled and weighted panel of public schools",
+      "uncertainty": "Weighting addresses sampling and nonresponse, not implementation verification",
+      "doesNotProve": "Causal effectiveness of current tutoring programs"
+    },
+    {
+      "id": "C6",
+      "text": "Recurring federal streams may support eligible tutoring costs while emergency-fund liquidation status remains legally and administratively qualified.",
+      "status": "verified",
+      "source_ids": ["S5", "S6"],
+      "scope": "Federal guidance and the Department's current liquidation-extension page",
+      "uncertainty": "Local eligibility, appropriations, state plans, and litigation vary and can change",
+      "doesNotProve": "A universal funding cliff, available local funds, or a funded local program"
+    },
+    {
+      "id": "C7",
+      "text": "Public accountability should preserve availability, eligibility, reach, delivered dosage, staffing, cost, and independent outcomes as separate fields.",
+      "status": "inferred",
+      "source_ids": ["S1", "S2", "S3", "S4", "S5", "S6"],
+      "scope": "An editorial synthesis connecting experimental evidence, implementation conditions, survey measures, and funding boundaries",
+      "uncertainty": "The proposed receipt is not a validated reporting standard",
+      "doesNotProve": "That disclosure alone improves tutoring delivery or outcomes"
+    },
+    {
+      "id": "C8",
+      "text": "Evidence-based is a bounded claim tied to a design and outcome, not a permanent label for every scaled implementation.",
+      "status": "inferred",
+      "source_ids": ["S3", "S4", "S5", "S6"],
+      "scope": "Editorial interpretation of experimental generalizability and implementation boundaries",
+      "uncertainty": "The claim does not evaluate any named school, district, tutor, or provider",
+      "doesNotProve": "A verdict on any specific current tutoring program"
+    }
+  ],
+  "figures": [
+    {
+      "id": "availability-is-not-reach",
+      "title": "Figure 1. Availability is not reach",
+      "claim": "School availability in June 2025 and student reach in October 2024 are separate measures with different denominators.",
+      "type": "separate-panels",
+      "columns": ["Panel and measure", "Estimate", "Date", "Unit and denominator", "Standard error", "Non-proof"],
+      "rows": [
+        ["A. Schools offering any tutoring", "85%", "June 2025", "Percent of U.S. public schools", "0.9 points for complementary 15% no-tutoring estimate", "No delivered dosage or impact"],
+        ["A. Schools offering high-dosage tutoring", "42%", "June 2025", "Percent of U.S. public schools", "1.2 percentage points", "No student participation rate"],
+        ["B. Students receiving high-dosage tutoring across all schools", "8%", "October 2024", "Average percent of enrolled students per public school", "0.5 percentage points", "No link to June availability"],
+        ["B. Students receiving high-dosage tutoring within offering schools", "25%", "October 2024", "Average percent of enrolled students within offering schools", "1.2 percentage points", "No causal learning effect"]
+      ],
+      "scope": "School Pulse Panel estimates for U.S. public schools in two separate survey months",
+      "units": "Percent and percentage-point standard error",
+      "denominator": "Panel A uses public schools; Panel B uses average enrolled-student shares across all schools or offering schools",
+      "date": "June 2025 availability; October 2024 reach; source observed 2026-09-01",
+      "provenance": ["S1", "S2"],
+      "transformation": "The 85 percent estimate is the published complement of 15 percent no tutoring; no confidence intervals or cross-panel rates are computed",
+      "uncertainty": "School-reported weighted survey estimates from different months with different denominators",
+      "limitations": "The panels are descriptive, not linked to student outcomes, and draw no arrows between measures.",
+      "doesNotProve": "The four values are not a sequential funnel, an attrition rate, or evidence that current tutoring caused achievement changes.",
+      "alt": "Two separate panels show school availability and student reach. In June 2025, 85 percent of public schools offered some tutoring and 42 percent offered high-dosage tutoring. In October 2024, average high-dosage participation was 8 percent across all public schools and 25 percent within offering schools. The months and denominators differ."
+    }
+  ],
+  "corrections": [],
+  "ai_assistance": "AI assisted with research organization, drafting, record construction, and verification. Zain Dana Harper reviewed and accepts responsibility for the published work.",
+  "personal_voice_adopted": false,
+  "social": {
+    "linkedin": {"state": "not_posted"},
+    "x": {"state": "not_posted"}
+  }
+}

@@ -1,9 +1,25 @@
 {
   "version": "https://jsonfeed.org/version/1.1",
-  "title": "Zain Dana Harper research briefings",
-  "home_page_url": "https://harperz9.github.io/briefings/",
+  "title": "Zain Dana Harper publications",
+  "home_page_url": "https://harperz9.github.io/publications.html",
   "feed_url": "https://harperz9.github.io/feed.json",
   "items": [
+    {
+      "id": "https://harperz9.github.io/the-second-hearing.html",
+      "url": "https://harperz9.github.io/the-second-hearing.html",
+      "title": "The Second Hearing",
+      "content_text": "Repeated listening can change liking, prediction, attention, and memory in different ways. Replay count records exposure, not quality or a universal response.",
+      "date_published": "2026-09-01T00:00:00Z",
+      "date_modified": "2026-09-01T00:00:00Z"
+    },
+    {
+      "id": "https://harperz9.github.io/availability-is-not-reach.html",
+      "url": "https://harperz9.github.io/availability-is-not-reach.html",
+      "title": "Availability Is Not Reach",
+      "content_text": "Tutoring evidence is strong, but an offer is not delivery. Public claims must separate availability, reach, dosage, staffing, and outcomes.",
+      "date_published": "2026-09-01T00:00:00Z",
+      "date_modified": "2026-09-01T00:00:00Z"
+    },
     {
       "id": "https://harperz9.github.io/briefings/2026-08-26-openai-hugging-face-incident/",
       "url": "https://harperz9.github.io/briefings/2026-08-26-openai-hugging-face-incident/",

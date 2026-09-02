@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "id": "example-work",
+  "route": "example-work.html",
+  "category": "tools-systems",
+  "form": "essay",
+  "title": "Example work",
+  "summary": "A bounded example.",
+  "author": "Zain Dana Harper",
+  "published_at": "2026-09-01",
+  "updated_at": "2026-09-01",
+  "observed_at": "2026-09-01T17:00:00Z",
+  "thesis": "A concrete finding with a visible limit.",
+  "opening": {
+    "question": "What was measured?",
+    "finding": "One bounded result was observed.",
+    "evidence": "The primary source reports the result.",
+    "limit": "One observation cannot establish a trend."
+  },
+  "sections": [
+    {
+      "id": "finding",
+      "heading": "Finding",
+      "paragraphs": [
+        "Evidence and limit."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "publisher": "Example",
+      "title": "Primary source",
+      "url": "https://example.org/source",
+      "role": "primary research",
+      "published_at": "2026-08-01",
+      "observed_at": "2026-09-01"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "text": "The bounded claim.",
+      "status": "verified",
+      "source_ids": [
+        "S1"
+      ],
+      "scope": "Example scope",
+      "uncertainty": "One source",
+      "doesNotProve": "General validity"
+    }
+  ],
+  "figures": [
+    {
+      "id": "example-figure",
+      "title": "Example figure",
+      "claim": "One measured value",
+      "type": "bar",
+      "columns": [
+        "Measure",
+        "Value"
+      ],
+      "rows": [
+        [
+          "Observed",
+          "1"
+        ]
+      ],
+      "scope": "One observation",
+      "units": "count",
+      "denominator": "one source",
+      "date": "2026-09-01",
+      "provenance": [
+        "S1"
+      ],
+      "transformation": "none",
+      "uncertainty": "single observation",
+      "limitations": "not comparative",
+      "doesNotProve": "a trend",
+      "alt": "One observed value of one."
+    }
+  ],
+  "corrections": [],
+  "ai_assistance": "AI assisted with research organization, drafting, and verification. Zain Dana Harper reviewed and accepts responsibility for the published work."
+}

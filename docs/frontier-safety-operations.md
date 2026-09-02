@@ -2,7 +2,7 @@
 
 ## Publication model
 
-The website is the canonical record. A reviewed edition JSON renders into four synchronized surfaces:
+`HarperZ9/HarperZ9.github.io` is the only canonical public site and publication repository. `HarperZ9/HarperZ9` is a derivative profile index, and `HarperZ9/telos-v2` is reference-only. A reviewed edition JSON renders into four synchronized surfaces:
 
 - the current HTML page
 - an immutable dated HTML and JSON archive
@@ -13,11 +13,13 @@ The SHA-256 value is derived from canonical edition JSON. Current and archived J
 
 Incident notices on the daily digest cite the canonical incident briefing only. The briefing's source manifest and build receipt carry the underlying developer statements, affected-party telemetry, independent analysis, and procedural records. This keeps source roles distinct and prevents the routing surface from collapsing heterogeneous evidence into a single label.
 
+The Frontier Safety automation exclusively owns Frontier Safety editions and amendments. The general editorial automation must not publish or amend them. This lane preserves one canonical August 26 incident dossier and a limit of one edition or amendment per calendar day.
+
 ## Scheduled monitoring
 
 GitHub Actions runs the curated source check at 15:30 UTC. The monitoring job has `contents: read` permission, does not persist checkout credentials, and cannot commit or push. It fetches only registered URLs, applies the registered normalization profile, and compares SHA-256 fingerprints with the last reviewed source state.
 
-Codex automation `frontier-safety-daily-publication` runs an operator review daily at 08:00 local time. It remains silent on no-change runs and requests action-time confirmation before any X or LinkedIn post. It does not grant repository write permission or publish an edition. Website publication requires the manual dispatch described below.
+Codex automation `frontier-safety-daily-publication` runs an operator review daily at 08:00 local time. It remains silent on no-change runs and requests action-time confirmation before any X or LinkedIn post. Zain authorizes each refresh to prepare, commit, push, open one pull request, merge, deploy, and live-verify one material reviewed website edition or amendment without another action-time approval when every guarded release gate below passes. Social posting remains outside this website-publication authority.
 
 - No change: the job makes no repository edit, edition, social draft, or no-change log.
 - Source change: the job preserves a short-lived review artifact. It does not turn changed page text into a factual claim.
@@ -26,9 +28,11 @@ Codex automation `frontier-safety-daily-publication` runs an operator review dai
 
 The monitor exports changed, fetch-error, unbaselined, and review-required counts. Any nonzero count preserves the source-review packet. Monitoring never advances `frontier-safety/data/source-state.json`. That file represents a reviewed baseline, not the latest unattended fetch. After a normal edition publishes, a reviewer advances source state from the accepted, error-free review packet in a separate reviewed change. Until that transition is accepted, monitoring can continue to report the same source delta. A fetch-error report must never become reviewed state.
 
-## Manual reviewed publication
+## Guarded reviewed publication
 
-Publication is a separate `workflow_dispatch` path. Its job has the minimal `contents: write` permission needed for the final repository push. Checkout credentials remain disabled through input scanning, rendering, tests, reproducibility comparison, staging, and staged-artifact scanning. The workflow exposes `GITHUB_TOKEN` only to the final push step through an ephemeral Git credential helper.
+Publication uses the separate `workflow_dispatch` path, which the reviewed automation run may dispatch after its current-main, collision, idempotency, and independent-review checks pass. Its job has the minimal `contents: write` permission needed for the final repository push. Checkout credentials remain disabled through input scanning, rendering, tests, reproducibility comparison, staging, and staged-artifact scanning. The workflow exposes `GITHUB_TOKEN` only to the final push step through an ephemeral Git credential helper.
+
+The release key is derived from the automation ID, observation boundary, canonical route, and reviewed edition SHA-256. A consumed or equivalent key blocks another pull request or deployment. Before merge, the branch must still descend from current main, independent review must identify the exact head commit, and relevant CI must be green. After merge, the automation records the pull request, merge commit, check results, Pages deployment, live route, and live SHA-256. No material delta creates no edition, amendment, commit, pull request, deployment, social draft, or no-change log.
 
 Before a normal publication:
 

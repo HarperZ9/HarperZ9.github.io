@@ -45,16 +45,23 @@ def test_every_real_page_has_a_card_that_exists() -> None:
         assert (ROOT / rel).is_file(), f"{p.name} points at a missing card: {rel}"
 
 
-def test_a_card_is_the_right_shape() -> None:
+def test_article_cards_are_the_right_shape() -> None:
     """1200 x 630 is what the previews crop to. A card at another size gets
     cut somewhere unhelpful."""
-    png = ROOT / "img" / "og" / "loom.png"
-    assert png.is_file()
-    head = png.read_bytes()[:33]
-    assert head[:8] == b"\x89PNG\r\n\x1a\n", "not a PNG"
-    width = int.from_bytes(head[16:20], "big")
-    height = int.from_bytes(head[20:24], "big")
-    assert (width, height) == (1200, 630), f"card is {width}x{height}"
+    for name in (
+        "loom.png",
+        "availability-is-not-reach.png",
+        "the-second-hearing.png",
+    ):
+        png = ROOT / "img" / "og" / name
+        assert png.is_file(), name
+        head = png.read_bytes()[:33]
+        assert head[:8] == b"\x89PNG\r\n\x1a\n", f"{name} is not a PNG"
+        width = int.from_bytes(head[16:20], "big")
+        height = int.from_bytes(head[20:24], "big")
+        assert (width, height) == (1200, 630), (
+            f"{name} is {width}x{height}"
+        )
 
 
 def test_card_data_parses_and_covers_the_cards() -> None:

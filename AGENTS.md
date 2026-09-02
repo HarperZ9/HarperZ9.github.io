@@ -16,6 +16,17 @@ Publishable surfaces:
 - `*-sample.html` pages - scrubbed public sample reports and witness surfaces.
 - `README.md` and `AUTHORS.md` - repository context and authorship posture.
 
+Publication authority:
+
+- `HarperZ9/HarperZ9.github.io` owns the canonical publication bodies, routes,
+  edition state, feeds, source ledgers, renderers, deployment logic, and live
+  receipts.
+- The `HarperZ9/HarperZ9` profile repository is a derivative index. It may link
+  to verified live Pages routes, but it must not duplicate or amend canonical
+  publication state.
+- `HarperZ9/telos-v2` is reference-only. Port a useful implementation only
+  after verification; never use it to overwrite or define the live site.
+
 Never publish:
 
 - `.env`, `.env.*`, credentials, API tokens, browser profiles, or local config.

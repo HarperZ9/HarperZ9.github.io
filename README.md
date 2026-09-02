@@ -15,10 +15,11 @@ behind a verified release.
 
 ## Deployment source
 
-[`HarperZ9/telos-v2`](https://github.com/HarperZ9/telos-v2) is the canonical
-source for the generated site. Its full verification gate runs before the
-contents of `dist/` are copied here. This repository owns the deployed output,
-Pages configuration, and deployment-level checks.
+`HarperZ9/HarperZ9.github.io` is the canonical source and deployment repository
+for the website and publications funnel. GitHub Pages deploys `main` from `/`.
+`HarperZ9/HarperZ9` is a derivative GitHub profile index that links to verified
+live routes. `HarperZ9/telos-v2` is reference-only; code may be ported from it
+after verification, but it cannot overwrite or define the live site.
 
 ## Why it matters
 

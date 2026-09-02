@@ -1,0 +1,63 @@
+{
+  "id": "the-second-hearing-evidence-map",
+  "title": "Figure 1. Four experiments, four different outcomes",
+  "claim": "Repeated listening research uses different exposure schedules and outcome units, so the reported effects answer different questions.",
+  "type": "evidence-map",
+  "columns": [
+    "Study",
+    "Scope and denominator",
+    "Exposure schedule",
+    "Outcome unit",
+    "Reported result",
+    "Non-proof"
+  ],
+  "rows": [
+    [
+      "S2",
+      "15 listeners; 40 examples",
+      "Plays 1, 10, 19, 28 over about four weeks",
+      "Liking rating from 0 to 10",
+      "Liking rose; omega-squared=0.197 for presentation",
+      "No universal exposure curve"
+    ],
+    [
+      "S4",
+      "40 participants in two cohorts; 8 or 12 excerpts",
+      "Three immediate repeats per excerpt",
+      "EEG inter-subject correlation",
+      "Correlation fell for familiar-style music and persisted for unfamiliar-style music",
+      "No validated boredom or value measure"
+    ],
+    [
+      "S5",
+      "44 participants; four vocal choruses",
+      "One to four exposures; test one day later",
+      "Serial recall and 0 to 100 ratings",
+      "Greater exposure tended to increase interference for some songs",
+      "No reliable earworm rule"
+    ],
+    [
+      "S6",
+      "96 recruited; two excluded; 96 excerpts",
+      "Two rating blocks, not a listening-dose study",
+      "Five-point ratings and standardized model paths",
+      "Perceptual ratings mediated several feature-to-liking paths",
+      "No causal exposure claim"
+    ]
+  ],
+  "scope": "Four studies published from 2017 through 2024 using adult listener samples",
+  "units": "Study-specific ratings, EEG correlation, serial recall, and model estimates",
+  "denominator": "S2: 15 listeners; S4: 40 participants; S5: 44 participants; S6: 96 recruited with two excluded",
+  "date": "Sources observed 2026-09-01",
+  "provenance": [
+    "S2",
+    "S4",
+    "S5",
+    "S6"
+  ],
+  "transformation": "Published schedules, directions, and effect statistics are restated without normalizing or estimating unpublished means",
+  "uncertainty": "Each panel preserves its own design, population, unit, and limitation",
+  "limitations": "This is not a meta-analysis. The constructs and magnitudes are not comparable across rows.",
+  "doesNotProve": "That more exposure has one meaning, that prediction determines pleasure, or that a universal exposure curve exists",
+  "alt": "Four rows compare studies of liking, shared EEG timing, memory interference, and perceptual models. Their samples, exposure schedules, and units differ, so effect magnitudes cannot be compared."
+}
