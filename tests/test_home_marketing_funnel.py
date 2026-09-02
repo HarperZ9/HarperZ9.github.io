@@ -106,15 +106,17 @@ def test_home_gives_every_registered_security_platform_a_front_page_route() -> N
     source = read(HOME_SOURCE)
     template = read(HOME_INDEX)
     records = {record["id"]: record for record in json.loads(read(SYSTEMS))["systems"]}
-    security_ids = array_items(source, "SECURITY_IDS")
-    expected = {
+    security_ids = [
         record_id
         for record_id, record in records.items()
-        if record.get("family") == "security" or record.get("primaryDomain") == "security-privacy"
-    }
-    expected.update({"model-provenance-validator", "repo-proof-index"})
+        if "security-privacy" in record.get("domains", [])
+    ]
 
-    assert set(security_ids) == expected
+    assert (
+        'systems.filter((system) => system.domains.includes("security-privacy"))'
+        in source
+    )
+    assert "SECURITY_IDS" not in source
     assert "Security platforms" in source
     security_section = re.search(
         r'<section aria-labelledby="noscript-security">(?P<body>.*?)</section>',

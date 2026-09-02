@@ -13,7 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-BnUu1wyw.js",
+    "assets/index-B9IQuAmM.js",
     "assets/index-BxIHiu3n.css",
     "accountable-surface.html",
     "availability-is-not-reach.html",
@@ -179,7 +179,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "3743995a28b839645d6c8611891e15a15a2039f00de3a615a44997c179532729"
+REVIEWED_RELEASE_SHA256 = "36c419c9bc8b7de1b072ad616d7c8bb83818d499f7c54f4a539e06755d509d7c"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -282,14 +282,17 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_art_css = "index-D6A4RL1P.css"
     previous_publications_js = "index-DDkK7Yu0.js"
     previous_plain_language_js = "index-DFJMXR3Q.js"
-    current_js = "index-BnUu1wyw.js"
+    current_js = "index-B9IQuAmM.js"
     current_css = "index-BxIHiu3n.css"
+    previous_security_js = "index-BnUu1wyw.js"
     prior_reviewed_js = "index-C_1S2nb6.js"
     prior_reviewed_css = "index-XLAt4tDw.css"
     assert f'src="/assets/{current_js}"' in source
     assert f'href="/assets/{current_css}"' in source
     assert (ROOT / "assets" / current_js).is_file()
     assert (ROOT / "assets" / current_css).is_file()
+    assert previous_security_js not in source
+    assert not (ROOT / "assets" / previous_security_js).exists()
     assert prior_reviewed_js not in source
     assert prior_reviewed_css not in source
     assert not (ROOT / "assets" / prior_reviewed_js).exists()

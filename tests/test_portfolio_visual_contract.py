@@ -182,9 +182,13 @@ def test_deployed_bundle_matches_the_new_front_door_after_build() -> None:
         assert stale not in bundle
 
     records = {record["id"]: record for record in json.loads(read(SYSTEMS))["systems"]}
-    security_ids = re.search(r"const SECURITY_IDS = \[(?P<body>.*?)\];", read(APP), re.S)
-    assert security_ids, "security registry projection must remain inspectable"
-    for system_id in re.findall(r'"([^"]+)"', security_ids.group("body")):
+    assert (
+        'systems.filter((system) => system.domains.includes("security-privacy"))'
+        in read(APP)
+    )
+    for system_id, record in records.items():
+        if "security-privacy" not in record.get("domains", []):
+            continue
         record = records[system_id]
         assert record["name"] in bundle, system_id
         assert record["href"] in bundle, system_id
