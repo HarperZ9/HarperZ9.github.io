@@ -82,6 +82,9 @@ RELEASE_PATHS = (
     "figures/incident-multilane-timeline.html",
     "figures/incident-multilane-timeline.json",
     "figures/incident-multilane-timeline.svg",
+    "figures/label-is-a-lens.html",
+    "figures/label-is-a-lens.json",
+    "figures/label-is-a-lens.svg",
     "figures/motive-sample-nonexclusive.html",
     "figures/motive-sample-nonexclusive.json",
     "figures/motive-sample-nonexclusive.svg",
@@ -125,6 +128,7 @@ RELEASE_PATHS = (
     "img/og/security-toolkit.png",
     "img/og/truth-enb.png",
     "img/og/the-second-hearing.png",
+    "img/og/what-the-label-changes.png",
     "img/og/cards-data.js",
     "index.html",
     "media/retro-systems-lab/evidence-manifest.json",
@@ -143,6 +147,7 @@ RELEASE_PATHS = (
     "publications/data/index.json",
     "publications/data/records/availability-is-not-reach.json",
     "publications/data/records/the-second-hearing.json",
+    "publications/data/records/what-the-label-changes.json",
     "publications/schema/publication-record.schema.json",
     "private-practice.html",
     "security-toolkit.html",
@@ -176,10 +181,11 @@ RELEASE_PATHS = (
     "systems/telos.html",
     "the-second-hearing.html",
     "truth-enb.html",
+    "what-the-label-changes.html",
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "36c419c9bc8b7de1b072ad616d7c8bb83818d499f7c54f4a539e06755d509d7c"
+REVIEWED_RELEASE_SHA256 = "0fe1610a3a3c392964b2eca4ca39ed753904999ead3a7c82faab068011d5016f"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -430,6 +436,7 @@ def test_briefing_archive_and_feeds_resolve_to_the_permanent_record() -> None:
     assert routes.count(route) == 1
     assert "/the-second-hearing.html" in routes
     assert "/availability-is-not-reach.html" in routes
+    assert "/what-the-label-changes.html" in routes
     page = _text("briefings/2026-08-26-openai-hugging-face-incident/index.html")
     updated = re.search(r'<time datetime="(\d{4}-\d{2}-\d{2})">Updated ', page)
     assert updated

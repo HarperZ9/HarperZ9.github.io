@@ -20,6 +20,16 @@
       "updated_at": "2026-09-01",
       "record_sha256": "9b807ef8ee7a3e6e2082d86f0a4420b3e72cce2b0e564cac6fb58a70fc5274da",
       "idempotency_key": "93c66691be11e16aa3611cb9a1cfda6d2f5f9fc3ae1be7382d7df24c06032d68"
+    },
+    {
+      "id": "what-the-label-changes",
+      "route": "what-the-label-changes.html",
+      "category": "art-perception",
+      "form": "evidence-led visual essay",
+      "published_at": "2026-09-02",
+      "updated_at": "2026-09-02",
+      "record_sha256": "b5d892768242fb95b6333c3c2b870e0b8ce765a48139c9d3330845be834eaa50",
+      "idempotency_key": "00bfad990e814a217490163aac2f3f7848860e608e52a0ffa51876115060a4f9"
     }
   ]
 }
