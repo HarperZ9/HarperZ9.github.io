@@ -212,7 +212,7 @@
   </div>
   <div class="null reveal">
     <h3>The correction. This was never a comparison.</h3>
-    <p class="body-text">The benchmark ran the baseline as one attempt and the treatment as several, and the treatment's first attempt is the same call as the baseline's only attempt. The treatment therefore cannot score lower. Across all thirteen runs ever made, not a single task passed the baseline and failed the treatment. That is the signature of one arm containing the other, not of an effect. The quantity actually measured is <em>verified pass@k</em>, a useful engineering number that is not uplift, and every uplift figure this project produced is void as a comparison for the same reason.</p>
+    <p class="body-text">The benchmark ran the baseline as one attempt and the treatment as several, and the treatment's first attempt is the same call as the baseline's only attempt. The treatment therefore cannot score lower. Across all thirteen runs ever made, not a single task passed the baseline and failed the treatment. That is the signature of one arm containing the other, not of an effect. The quantity actually measured is <em>verified pass@k</em>, a useful engineering number that is not uplift, and every uplift figure this benchmark produced is void as a comparison for the same reason.</p>
     <p class="body-text">A second finding: artifacts recorded before 2026-07-26 cannot distinguish a model failure from a generation failure that was silently retried. The defect that caused it is fixed, and generation failures are now recorded and excluded from the denominator, but the older artifacts lack the field, so their per-task failures cannot be re-attributed after the fact.</p>
   </div>
   <div class="null reveal">
