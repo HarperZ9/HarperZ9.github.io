@@ -1,10 +1,13 @@
 // weave-render.js: thread-level cloth and the four-quadrant draft chart.
 // The cloth recipe follows the researched practice: the top thread of each
-// cell drawn as a merged float segment, crest shading across the thread width,
-// dive-under shadows at the two ends of every float, longer floats reading
-// brighter at mid-span (the satin luster cue), warp and weft sheen differing.
+// cell drawn as a merged float segment with a rounded, lit profile, dive-under
+// shadows at the two ends of every float, longer floats reading brighter at
+// mid-span (the satin luster cue), warp and weft sheen differing.
 // Chart convention: threading top, tie-up corner, treadling down the side,
 // drawdown in the body; filled drawdown cell = warp lifted.
+// Thread pixels come from weave-thread.js: a spun cylinder with a lit crest,
+// twist bands, dive shadows at the float ends, and a mid-span luster.
+import { hexToRgb, threadTilePixels, diveSpritePixels, lusterPixels } from "./weave-thread.js";
 
 export function clothLayout(draft, maxW, maxH) {
   const threadPx = Math.max(3, Math.min(14, Math.floor(Math.min(maxW / draft.ends, maxH / draft.picks))));
@@ -17,25 +20,89 @@ const shade = (hex, f) => {
   return "rgb(" + ch(16) + "," + ch(8) + "," + ch(0) + ")";
 };
 
-// One thread segment with a rounded profile: body, edge darkening, crest
-// highlight, and a dive shadow at both ends. Vertical warp, horizontal weft.
-function segment(ctx, x, y, w, h, hex, vertical, runLen, light) {
-  ctx.fillStyle = shade(hex, 0.82 + light * 0.25);
-  ctx.fillRect(x, y, w, h);
-  const t = vertical ? w : h;
-  const edge = Math.max(1, Math.floor(t * 0.28));
-  ctx.fillStyle = "rgba(0,0,0,0.30)";
-  if (vertical) { ctx.fillRect(x, y, edge, h); ctx.fillRect(x + w - edge, y, edge, h); }
-  else { ctx.fillRect(x, y, w, edge); ctx.fillRect(x, y + h - edge, w, edge); }
-  const lift = Math.min(1, runLen / 5) * 0.18 + 0.10;
-  ctx.fillStyle = "rgba(255,255,255," + (lift * (vertical ? 1 : 0.72)).toFixed(3) + ")";
-  const crest = Math.max(1, Math.floor(t * 0.22));
-  if (vertical) ctx.fillRect(x + Math.floor((w - crest) / 2), y, crest, h);
-  else ctx.fillRect(x, y + Math.floor((h - crest) / 2), w, crest);
-  const dive = Math.max(1, Math.floor(t * 0.4));
-  ctx.fillStyle = "rgba(0,0,0,0.34)";
-  if (vertical) { ctx.fillRect(x, y, w, dive); ctx.fillRect(x, y + h - dive, w, dive); }
-  else { ctx.fillRect(x, y, dive, h); ctx.fillRect(x + w - dive, y, dive, h); }
+// Sprites per canvas: thread tiles as repeating patterns keyed by colour and
+// orientation, plus the dive and luster sprites for the current thread width.
+const stores = new WeakMap();
+
+function sprite(px) {
+  const c = document.createElement("canvas");
+  c.width = px.w; c.height = px.h;
+  c.getContext("2d").putImageData(new ImageData(px.data, px.w, px.h), 0, 0);
+  return c;
+}
+
+function threadKit(canvas, ctx, t, light) {
+  let st = stores.get(canvas);
+  if (!st || st.t !== t || st.light !== light) {
+    const diveLen = Math.max(1, Math.floor(t * 0.5));
+    st = {
+      t, light, patterns: new Map(), diveLen,
+      dive: {
+        vStart: sprite(diveSpritePixels(t, diveLen, true, false)), vEnd: sprite(diveSpritePixels(t, diveLen, true, true)),
+        hStart: sprite(diveSpritePixels(t, diveLen, false, false)), hEnd: sprite(diveSpritePixels(t, diveLen, false, true)),
+      },
+      luster: { v: sprite(lusterPixels(t, 48, true, 0.24 * light)), h: sprite(lusterPixels(t, 48, false, 0.17 * light)) },
+    };
+    stores.set(canvas, st);
+  }
+  const pattern = (hex, vertical) => {
+    const key = hex + (vertical ? "|v" : "|h");
+    let pat = st.patterns.get(key);
+    if (!pat) {
+      pat = ctx.createPattern(sprite(threadTilePixels(hexToRgb(hex), t, vertical, light)), "repeat");
+      st.patterns.set(key, pat);
+    }
+    return pat;
+  };
+  return { ctx, t, dive: st.dive, diveLen: st.diveLen, luster: st.luster, pattern };
+}
+
+// A warp float over the weft: the weft's dive shadows on both sides (the
+// sprite stretched to the float's height), the spun body, a dive shadow at
+// both ends of the float itself, and a mid-span luster on floats long enough
+// to catch the light.
+function warpFloat(kit, x, y, h, hex, runLen) {
+  const { ctx, t, dive, diveLen, luster } = kit;
+  ctx.drawImage(dive.hEnd, x - diveLen, y, diveLen, h);
+  ctx.drawImage(dive.hStart, x + t, y, diveLen, h);
+  ctx.fillStyle = kit.pattern(hex, true);
+  ctx.fillRect(x, y, t, h);
+  ctx.drawImage(dive.vStart, x, y);
+  ctx.drawImage(dive.vEnd, x, y + h - diveLen);
+  if (runLen >= 3) ctx.drawImage(luster.v, x, y, t, h);
+}
+
+// Weft rows: each pick is one full-width run of its spun tile, and runs of
+// three or more cells under no warp get their luster. Where the weft dives
+// under a warp float is drawn by the float itself.
+function weftRows(kit, draft, colors, upTo, w) {
+  const { ctx, t, luster } = kit;
+  for (let p = 0; p < upTo; p++) {
+    ctx.fillStyle = kit.pattern(colors.weftHexAt(p), false);
+    ctx.fillRect(0, p * t, w, t);
+    let e = 0;
+    while (e < draft.ends) {
+      if (draft.liftAt(e, p)) { e++; continue; }
+      let run = e;
+      while (run < draft.ends && !draft.liftAt(run, p)) run++;
+      if (run - e >= 3) ctx.drawImage(luster.h, e * t, p * t, (run - e) * t, t);
+      e = run;
+    }
+  }
+}
+
+function warpColumns(kit, draft, colors, upTo) {
+  const t = kit.t;
+  for (let e = 0; e < draft.ends; e++) {
+    let p = 0;
+    while (p < upTo) {
+      if (!draft.liftAt(e, p)) { p++; continue; }
+      let run = p;
+      while (run < upTo && draft.liftAt(e, run)) run++;
+      warpFloat(kit, e * t, p * t, (run - p) * t, colors.warpHex, run - p);
+      p = run;
+    }
+  }
 }
 
 export function renderCloth(canvas, draft, colors, opts = {}) {
@@ -45,43 +112,21 @@ export function renderCloth(canvas, draft, colors, opts = {}) {
   const { threadPx, w, h } = clothLayout(draft, budgetW, budgetH);
   if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
   const ctx = canvas.getContext("2d");
+  const kit = threadKit(canvas, ctx, threadPx, light);
+  ctx.globalAlpha = 1;
   ctx.fillStyle = "#0b0a10";
   ctx.fillRect(0, 0, w, h);
-  // Unwoven warp above the fell line: bare threads under slight tension.
-  ctx.globalAlpha = 1;
-  for (let e = 0; e < draft.ends; e++) {
-    const x = e * threadPx;
-    if (upTo < draft.picks) {
-      ctx.fillStyle = shade(colors.warpHex, 0.5);
-      ctx.fillRect(x + Math.floor(threadPx * 0.3), upTo * threadPx, Math.max(1, Math.floor(threadPx * 0.4)), h - upTo * threadPx);
-    }
+  // Unwoven warp above the fell line: bare threads under slight tension, drawn
+  // narrow through the crest of the same spun tile.
+  if (upTo < draft.picks) {
+    ctx.globalAlpha = 0.6;
+    ctx.fillStyle = kit.pattern(colors.warpHex, true);
+    const bare = Math.max(1, Math.floor(threadPx * 0.4)), inset = Math.floor(threadPx * 0.3);
+    for (let e = 0; e < draft.ends; e++) ctx.fillRect(e * threadPx + inset, upTo * threadPx, bare, h - upTo * threadPx);
+    ctx.globalAlpha = 1;
   }
-  // Weft floats first, then warp floats over them: the two passes together
-  // put exactly the lifted thread on top of every cell.
-  for (let p = 0; p < upTo; p++) {
-    const y = p * threadPx;
-    let e = 0;
-    while (e < draft.ends) {
-      if (!draft.liftAt(e, p)) {
-        let run = e;
-        while (run < draft.ends && !draft.liftAt(run, p)) run++;
-        segment(ctx, e * threadPx, y, (run - e) * threadPx, threadPx, colors.weftHexAt(p), false, run - e, light);
-        e = run;
-      } else e++;
-    }
-  }
-  for (let e = 0; e < draft.ends; e++) {
-    const x = e * threadPx;
-    let p = 0;
-    while (p < upTo) {
-      if (draft.liftAt(e, p)) {
-        let run = p;
-        while (run < upTo && draft.liftAt(e, run)) run++;
-        segment(ctx, x, p * threadPx, threadPx, (run - p) * threadPx, colors.warpHex, true, run - p, light);
-        p = run;
-      } else p++;
-    }
-  }
+  weftRows(kit, draft, colors, upTo, w);
+  warpColumns(kit, draft, colors, upTo);
   return { threadPx, w, h };
 }
 

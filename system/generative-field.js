@@ -2830,12 +2830,12 @@ export function specimenLayerBlurbs() {
 // Changing this rescales the whole plate vocabulary, so it is a canon value.
 const REFERENCE_SHORT_EDGE = 300;
 
-function sizeSpecimenCanvas(canvas, dpr) {
+function sizeSpecimenCanvas(canvas, dpr, size) {
   // Unlike sizeCanvas above, never fall back to the window size: a strip that
   // has not been laid out yet should stay small, not inflate to the viewport.
   const rect = canvas.getBoundingClientRect ? canvas.getBoundingClientRect() : null;
-  const width = Math.max(1, Math.ceil((rect && rect.width) || canvas.clientWidth || 640));
-  const height = Math.max(1, Math.ceil((rect && rect.height) || canvas.clientHeight || 150));
+  const width = Math.max(1, Math.ceil((size && size[0]) || (rect && rect.width) || canvas.clientWidth || 640));
+  const height = Math.max(1, Math.ceil((size && size[1]) || (rect && rect.height) || canvas.clientHeight || 150));
   const backingWidth = Math.max(1, Math.round(width * dpr));
   const backingHeight = Math.max(1, Math.round(height * dpr));
   if (canvas.width !== backingWidth || canvas.height !== backingHeight) {
@@ -2844,7 +2844,7 @@ function sizeSpecimenCanvas(canvas, dpr) {
   }
 }
 
-export function renderSpecimen(canvas, seedString, layerNames = SPECIMEN_DEFAULT_LAYERS, fx = null, fxAmount = 0.6) {
+export function renderSpecimen(canvas, seedString, layerNames = SPECIMEN_DEFAULT_LAYERS, fx = null, fxAmount = 0.6, opts = {}) {
   if (!canvas || typeof canvas.getContext !== "function") return false;
   const ctx = canvas.getContext("2d", { alpha: true });
   if (!ctx) return false;
@@ -2857,7 +2857,7 @@ export function renderSpecimen(canvas, seedString, layerNames = SPECIMEN_DEFAULT
   const palette = routePalette(seed);
   const dpr = Math.min(2, Math.max(1,
     (typeof window !== "undefined" && window.devicePixelRatio) || 1));
-  sizeSpecimenCanvas(canvas, dpr);
+  sizeSpecimenCanvas(canvas, dpr, opts.size);
   // Reference drawing space. Every layer's stroke counts, lengths, and weights
   // are absolute numbers tuned against a short edge of REFERENCE_SHORT_EDGE, so
   // drawing straight into a large backing store spread the same ink over many
