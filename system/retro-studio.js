@@ -6,7 +6,7 @@
    glitch can animate; the preview reacts to the pointer; Randomize rolls the
    whole chain. Everything is local; nothing uploads. */
 
-import { renderRetro } from "./retro-engine.js?v=20260813-pal";
+import { renderRetro } from "./retro-engine.js?v=20260902-crt";
 import { createShaderRunner, DEFAULT_FRAG } from "./shader-runner.js?v=20260805-react";
 import { applyOps, OP_META, rngFrom } from "./glitch-ops.js?v=20260813-wave2";
 import { SHADER_PRESETS } from "./shader-presets.js?v=20260812-wave7";
@@ -124,6 +124,9 @@ function boot() {
       gamma: mv("gam", "re-gam") / 100, sdfShade: $("re-sdf").checked,
       curvature: mv("curv", "re-curv") / 100, bloom,
       vignette: mv("vig", "re-vig") / 100, scanStrength: scan, scanlines: scan > 0.02,
+      ditherStrength: +$("re-dstr").value / 100, mask: $("re-mask").value,
+      maskStrength: +$("re-maskamt").value / 100, halation: +$("re-hal").value / 100,
+      aberration: +$("re-abr").value / 100,
       upscale: Math.max(2, Math.min(12, Math.round(900 / tw))),
     };
   }
@@ -609,10 +612,15 @@ function boot() {
     syncYourPal();
     const setR = (id, v, vid, div) => { $(id).value = v; if (vid) $(vid).textContent = (v / (div || 1)).toFixed(div ? 2 : 0); };
     setR("re-tw", 60 + Math.floor(Math.random() * 240), "re-tw-v", 1);
-    setR("re-curv", Math.floor(Math.random() * 70), "re-curv-v", 100);
-    setR("re-bloom", Math.floor(Math.random() * 90), "re-bloom-v", 100);
-    setR("re-vig", Math.floor(Math.random() * 60), "re-vig-v", 100);
-    $("re-dither").value = ["bayer4", "bayer2", "bayer8", "none"][Math.floor(Math.random() * 4)];
+    setR("re-curv", Math.floor(Math.random() * 40), "re-curv-v", 100);
+    setR("re-bloom", Math.floor(Math.random() * 60), "re-bloom-v", 100);
+    setR("re-vig", Math.floor(Math.random() * 50), "re-vig-v", 100);
+    setR("re-dstr", 50 + Math.floor(Math.random() * 51), "re-dstr-v", 100);
+    setR("re-maskamt", Math.floor(Math.random() * 55), "re-maskamt-v", 100);
+    setR("re-hal", Math.floor(Math.random() * 45), "re-hal-v", 100);
+    setR("re-abr", Math.floor(Math.random() * 35), "re-abr-v", 100);
+    $("re-dither").value = ["bayer8", "bayer4", "bayer2", "noise", "diffusion", "none"][Math.floor(Math.random() * 6)];
+    $("re-mask").value = ["grille", "slot", "dot", "none"][Math.floor(Math.random() * 4)];
     $("re-fxseed").value = rand();
     activeFx.clear();
     OP_META.forEach((m) => { if (Math.random() < 0.4) activeFx.add(m.op); });
@@ -659,7 +667,7 @@ function boot() {
     e.preventDefault();
     tabs[next].focus(); tabs[next].click();
   });
-  ["re-palette", "re-dither", "re-sdf"].forEach((id) => $(id).addEventListener("change", () => {
+  ["re-palette", "re-dither", "re-mask", "re-sdf"].forEach((id) => $(id).addEventListener("change", () => {
     if (id === "re-palette") syncYourPal();
     redraw(); ping(id === "re-sdf" ? "chip" : "preset", 0.5);
   }));
@@ -676,7 +684,8 @@ function boot() {
   }));
   [["re-tw", "re-tw-v", 1], ["re-curv", "re-curv-v", 100], ["re-bloom", "re-bloom-v", 100],
    ["re-vig", "re-vig-v", 100], ["re-scan", "re-scan-v", 100], ["re-gam", "re-gam-v", 100],
-   ["re-fxamount", "re-fxamount-v", 100]]
+   ["re-dstr", "re-dstr-v", 100], ["re-maskamt", "re-maskamt-v", 100], ["re-hal", "re-hal-v", 100],
+   ["re-abr", "re-abr-v", 100], ["re-fxamount", "re-fxamount-v", 100]]
     .forEach(([id, vid, div]) => $(id).addEventListener("input", () => {
       const el = $(id); $(vid).textContent = (+el.value / div).toFixed(div === 1 ? 0 : 2);
       pingSlide("slider", (el.value - el.min) / ((el.max - el.min) || 1)); redraw();
@@ -955,6 +964,8 @@ function boot() {
       pal: $("re-palette").value, tw: +$("re-tw").value, dith: $("re-dither").value,
       gam: +$("re-gam").value, sdf: $("re-sdf").checked, curv: +$("re-curv").value,
       bloom: +$("re-bloom").value, vig: +$("re-vig").value, scan: +$("re-scan").value,
+      dstr: +$("re-dstr").value, mask: $("re-mask").value, maskA: +$("re-maskamt").value,
+      hal: +$("re-hal").value, abr: +$("re-abr").value,
       fx: [...activeFx], amts, master: +$("re-fxamount").value,
       fxseed: $("re-fxseed").value, fxanim: $("re-fxanim").checked,
       knobs: [+$("re-knobA").value, +$("re-knobB").value, +$("re-knobC").value],
@@ -981,6 +992,9 @@ function boot() {
     setV("re-tw", p.tw, "re-tw-v"); setV("re-gam", p.gam, "re-gam-v", 100);
     setV("re-curv", p.curv, "re-curv-v", 100); setV("re-bloom", p.bloom, "re-bloom-v", 100);
     setV("re-vig", p.vig, "re-vig-v", 100); setV("re-scan", p.scan, "re-scan-v", 100);
+    setV("re-dstr", p.dstr, "re-dstr-v", 100); setV("re-mask", p.mask);
+    setV("re-maskamt", p.maskA, "re-maskamt-v", 100); setV("re-hal", p.hal, "re-hal-v", 100);
+    setV("re-abr", p.abr, "re-abr-v", 100);
     if (p.sdf != null) $("re-sdf").checked = !!p.sdf;
     setV("re-fxamount", p.master, "re-fxamount-v", 100);
     setV("re-react", p.reactAmt, "re-react-v", 100);
@@ -1144,6 +1158,7 @@ function boot() {
       const one = document.createElement("canvas");
       renderRetro(src, one, Object.assign({}, o, {
         upscale: 1, scanlines: false, bloom: 0, curvature: 0, vignette: 0,
+        halation: 0, aberration: 0, mask: "none",
       }));
       if (activeFx.size) applyOps(one, buildFx(0));
       ping("preset");
