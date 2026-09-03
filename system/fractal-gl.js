@@ -4,8 +4,15 @@
 // GPU instead of the CPU loop in fractal.js, so a full frame is near-instant and pan/zoom stay
 // real-time. The visual recipe MIRRORS fractal.js so the GPU image reads the same as the gated CPU
 // reference: bailout R=256, smooth (normalized) iteration count (Quilez/van Nieuwpoort), the cross
-// orbit-trap glow blended toward the palette's lightest stop at the same 30% opacity, and the same
-// palette ramp cycled at mu/8.
+// orbit-trap glow blended toward the palette's lightest stop at the same 30% opacity, the same
+// palette ramp cycled at mu/8, the same relief shading, and the same encode to display values.
+//
+// This file is the RUNTIME half: contexts, program compilation and caching, uniform upload, the draw
+// call, and the precision decision. The shader SOURCE lives in fractal-glsl.js. The split is what
+// keeps either half readable; before it, one file carried 550 lines of GLSL-in-template-literals and
+// the WebGL plumbing that feeds it. The two handles other modules already imported from here
+// (_buildFragment for the shader-source tests, _DS_LIB for fractal-precision-probe.js) are
+// re-exported unchanged at the bottom, so nothing downstream had to move.
 //
 // Built EXACTLY like fractal3d.js / shared-frame/render.js renderField: a full-screen-triangle
 // vertex shader, compile()/linkProgram(), a single drawArrays of 3 vertices. No RAF here, since a 2D
@@ -17,289 +24,8 @@
 // and the Studio catches that and falls back to the CPU renderFractal().
 
 import { PALETTES } from "./fractal.js";
-
-const VERT = "attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}";
-
-// Compile-time ceiling on the GLSL escape loop (WebGL1 needs a constant loop bound). The actual
-// iteration count is the u_maxIter uniform, clamped JS-side to [1, MAX_ITERS]. 2000 matches the
-// deepest CPU preset (Seahorse Deep / Period-2 Minibrot) so GPU detail keeps up at depth.
-const MAX_ITERS = 2000;
-
-// Bailout R=256 (R^2=65536), same as fractal.js BAILOUT, required for the smooth-coloring formula.
-const BAILOUT2 = 65536.0;
-
-// ── Deep zoom: emulated double precision ──────────────────────────────────────────────────────
-// A float32 mantissa is 24 bits, so near |c| ≈ 1 the smallest representable step is 2^-24 ≈ 6e-8.
-// The "Seahorse Deep" preset frames 6.25e-6 of the complex plane across ~1600 pixels — a step of
-// 3.9e-9 per pixel, roughly 15x FINER than float32 can represent. Every 15 neighbouring pixels
-// therefore collapse onto the same coordinate and the image goes blocky (measured before this fix:
-// 105 distinct x-coordinates across a 512px view). The iteration has the same problem: z reaches
-// magnitude ~1, so per-pixel differences below 6e-8 vanish inside the loop too.
-//
-// The fix is "double-single" (df64) arithmetic: carry each real number as an UNEVALUATED SUM of two
-// float32s (hi + lo), giving ~48 mantissa bits ≈ 14 decimal digits. The primitives are Knuth's
-// two-sum and Dekker's two-product, in the GPU form given by Thall, "Extended-Precision
-// Floating-Point Numbers for GPU Computation" (2006).
-//
-// THE CATCH, measured on this hardware rather than assumed: compensated arithmetic works by keeping
-// the rounding error that a plain add throws away, and every step of it is an algebraic no-op that
-// an optimizer is delighted to delete. ANGLE/D3D11 on an RTX 4090 folds `t1 = a + b; e = t1 - a`
-// straight back to `e = b` — confirmed by a shader where the increment was small enough to be
-// swallowed entirely (`t1 == a`) and yet `e == b` still came back true, which is only possible if
-// the subtraction never happened. Written naively, df64 compiles down to exactly the float32 program
-// it was meant to replace, silently.
-//
-// So every foldable identity here is routed through dsBar(), a multiply by a uniform that always
-// holds 1.0. Multiplying by exactly 1.0 is exact in IEEE754, so the numbers are untouched; the
-// compiler simply cannot prove the identity any more and has to emit the subtraction. The check that
-// this still holds on a given GPU is fractal-precision-probe.js, and the receipts are in
-// project-docs/2026-08-03-fractal-precision.md.
-const DS_LIB = `
-const float DS_SPLIT = 8193.0;          // 2^13 + 1, Dekker's split constant for a 24-bit mantissa
-
-uniform float u_one;                    // always exactly 1.0; opaque to the shader compiler
-
-// Optimizer barrier. Numerically the identity function; algebraically a wall, because the compiler
-// cannot know u_one is 1.0 and so cannot simplify across it. Wrap the operand whose repetition makes
-// a compensation step foldable — never the result, or the compensation is lost anyway.
-float dsBar(float x) { return x * u_one; }
-
-// Exact sum of two df numbers (Knuth two-sum + the low-order terms).
-// dsBar(t1) stops the (t1 - a.x) step collapsing to b.x, which would discard the whole correction.
-vec2 dsAdd(vec2 a, vec2 b) {
-  float t1 = a.x + b.x;
-  float e  = dsBar(t1) - a.x;
-  float t2 = ((b.x - e) + (a.x - (dsBar(t1) - e))) + (a.y + b.y);
-  float hi = t1 + t2;
-  return vec2(hi, t2 - (dsBar(hi) - t1));
-}
-
-// Product of two df numbers. Dekker split each hi into two 12-bit halves so the partial products
-// are exact in float32, then reassemble with the cross terms. The splits are the most fragile step:
-// the split is an identity in exact arithmetic and only survives because of the rounding inside it,
-// so the inner occurrence of cona goes through the barrier.
-vec2 dsMul(vec2 a, vec2 b) {
-  float cona = a.x * DS_SPLIT;
-  float conb = b.x * DS_SPLIT;
-  float a1   = cona - (dsBar(cona) - a.x);
-  float b1   = conb - (dsBar(conb) - b.x);
-  float a2   = a.x - a1;
-  float b2   = b.x - b1;
-  float c11  = a.x * b.x;
-  float c21  = a2 * b2 + (a2 * b1 + (a1 * b2 + (a1 * b1 - c11)));
-  float c2   = a.x * b.y + a.y * b.x;
-  float t1   = c11 + c2;
-  float e    = dsBar(t1) - c11;
-  float t2   = a.y * b.y + ((c2 - e) + (c11 - (dsBar(t1) - e))) + c21;
-  float hi   = t1 + t2;
-  return vec2(hi, t2 - (dsBar(hi) - t1));
-}
-
-// |a| for a df number: negating both limbs negates the represented sum exactly.
-vec2 dsAbs(vec2 a) { return a.x < 0.0 ? -a : a; }
-`;
-
-// Cyclic palette ramp over the 6 stops, matching fractal.js ramp(): linear interp between adjacent
-// stops, wrapping. t is in "stop units" (already divided by the cycle density by the caller).
-// Shared verbatim by both precision variants so the two programs colour identically.
-const RAMP_LIB = `
-vec3 ramp(float t) {
-  t = mod(t, 6.0);
-  if (t < 0.0) t += 6.0;
-  int i = int(floor(t));
-  float f = t - floor(t);
-  // index the const-size array with a branch ladder (WebGL1 forbids dynamic indexing of uniforms).
-  vec3 a, b;
-  if (i == 0)      { a = u_pal[0]; b = u_pal[1]; }
-  else if (i == 1) { a = u_pal[1]; b = u_pal[2]; }
-  else if (i == 2) { a = u_pal[2]; b = u_pal[3]; }
-  else if (i == 3) { a = u_pal[3]; b = u_pal[4]; }
-  else if (i == 4) { a = u_pal[4]; b = u_pal[5]; }
-  else             { a = u_pal[5]; b = u_pal[0]; }
-  return mix(a, b, f);
-}`;
-
-// The fragment shader. The fractal `type` is a compile-time branch (#define) so each program is a
-// single tight loop with no per-pixel `if (type==…)`. Smooth coloring + orbit trap transcribed from
-// fractal.js's renderer (the same primary sources: Quilez smooth iteration, aesthetics-digest cross
-// trap). Palette is a uniform array of 6 vec3 stops (0..1), cycled with the same ramp() logic.
-//
-// `precision` selects the coordinate/iteration arithmetic: "single" is the original float32 program
-// (unchanged, and what every non-deep view still compiles to); "double" swaps in df64 for the
-// centre, the per-pixel coordinate and the whole escape loop.
-function buildFragment(type, precision) {
-  if (precision === "double") return buildFragmentDouble(type);
-  // Per-type iteration body. z update + cross orbit trap, identical algebra to fractal.js kernels.
-  // Mandelbrot also seeds z=0,c=uv; Julia seeds z=uv,c=(jx,jy); Burning Ship folds |z| each step.
-  let header, zInit, cExpr, stepBody;
-  if (type === "julia") {
-    zInit = "vec2 z = uv;";
-    cExpr = "vec2 c = u_julia;";
-    stepBody = "z = vec2(z.x*z.x - z.y*z.y, 2.0*z.x*z.y) + c;";
-  } else if (type === "burningship") {
-    zInit = "vec2 z = vec2(0.0);";
-    cExpr = "vec2 c = uv;";
-    // Burning Ship: take abs of components before squaring (Wikipedia formula).
-    stepBody = "z = abs(z); z = vec2(z.x*z.x - z.y*z.y, 2.0*z.x*z.y) + c;";
-  } else { // mandelbrot
-    zInit = "vec2 z = vec2(0.0);";
-    cExpr = "vec2 c = uv;";
-    stepBody = "z = vec2(z.x*z.x - z.y*z.y, 2.0*z.x*z.y) + c;";
-  }
-
-  return `precision highp float;
-
-uniform vec2  u_resolution;
-uniform vec2  u_center;     // cx, cy in the complex plane
-uniform float u_scale;      // width of the view in complex units
-uniform int   u_maxIter;
-uniform vec2  u_julia;      // jx, jy (Julia only)
-uniform float u_flipY;      // +1, or -1 for Burning Ship (matches fractal.js vertical reflection)
-uniform vec3  u_pal[6];     // palette stops, 0..1
-uniform int   u_aa;         // supersampling samples per axis (1..4); SSAA for maximum-fidelity signal
-
-const int   MAX_ITERS = ${MAX_ITERS};
-const float BAILOUT2  = ${BAILOUT2.toFixed(1)};
-const float LOG2      = 0.69314718056;
-
-${RAMP_LIB}
-
-// Per-sample fractal color at one complex coordinate. Extracted so main() can average several
-// sub-pixel samples for supersampled anti-aliasing (the cleanest signal for the eye to perceive).
-vec3 fractalColor(vec2 uv) {
-  ${zInit}
-  ${cExpr}
-  int n = 0;
-  float trap = 1e20;          // cross orbit trap: min(|re|,|im|)
-  for (int i = 0; i < MAX_ITERS; i++) {
-    if (i >= u_maxIter) break;
-    if (dot(z, z) > BAILOUT2) break;
-    ${stepBody}
-    trap = min(trap, min(abs(z.x), abs(z.y)));
-    n++;
-  }
-  if (n >= u_maxIter) return vec3(0.0);   // interior: black (matches fractal.js)
-  // Smooth coloring: mu = n - log( log|z| / ln2 ) / ln2  (fractal.js uses the same form).
-  float r2 = dot(z, z);
-  float log_r = 0.5 * log(r2);
-  float mu = float(n) - log(log_r / LOG2) / LOG2;
-  vec3 base = ramp(mu / 8.0);              // same cycle density as the CPU path
-  // Orbit-trap cross glow, exp(-trap*4) at 30% toward the lightest stop (u_pal[5]).
-  float glow = exp(-trap * 4.0) * 0.30;
-  return mix(base, u_pal[5], glow);
-}
-
-void main() {
-  float aspect = u_resolution.y / u_resolution.x;
-  int aa = u_aa < 1 ? 1 : (u_aa > 4 ? 4 : u_aa);
-  float inv = 1.0 / float(aa);
-  vec3 acc = vec3(0.0);
-  // Average aa x aa evenly-spaced sub-pixel samples (ordered grid SSAA). Constant loop bounds for
-  // WebGL1; the inner break trims to the actual aa. aa=1 reproduces the original single sample.
-  for (int sy = 0; sy < 4; sy++) {
-    if (sy >= aa) break;
-    for (int sx = 0; sx < 4; sx++) {
-      if (sx >= aa) break;
-      vec2 sub = (vec2(float(sx), float(sy)) + 0.5) * inv - 0.5;   // sub-pixel offset in [-0.5, 0.5)
-      vec2 ndc = (gl_FragCoord.xy + sub) / u_resolution - 0.5;
-      vec2 uv = vec2(
-        u_center.x + ndc.x * u_scale,
-        u_center.y + u_flipY * ndc.y * u_scale * aspect
-      );
-      acc += fractalColor(uv);
-    }
-  }
-  gl_FragColor = vec4(acc * (inv * inv), 1.0);
-}`;
-}
-
-// The deep-zoom program. Identical image recipe to buildFragment (same bailout, same smooth
-// coloring, same cross trap, same ramp) with every coordinate and every z carried as a df64 pair.
-// The centre arrives split into hi/lo limbs (u_centerX/u_centerY); the sub-pixel OFFSET stays plain
-// float32 because it is a small number whose own relative error (1e-7 of an already-tiny offset)
-// lands far below one pixel step at any zoom this program can reach.
-function buildFragmentDouble(type) {
-  let zInit, cInit, absStep = "";
-  if (type === "julia") {
-    zInit = "vec2 zx = ux;        vec2 zy = uy;";
-    cInit = "vec2 cx = u_juliaX;  vec2 cy = u_juliaY;";
-  } else if (type === "burningship") {
-    zInit = "vec2 zx = vec2(0.0); vec2 zy = vec2(0.0);";
-    cInit = "vec2 cx = ux;        vec2 cy = uy;";
-    // Burning Ship folds |z| at the top of each step. |z| has the same modulus, so the bailout test
-    // below is unaffected by where the fold sits — it matches the single-precision program exactly.
-    absStep = "zx = dsAbs(zx); zy = dsAbs(zy);";
-  } else { // mandelbrot
-    zInit = "vec2 zx = vec2(0.0); vec2 zy = vec2(0.0);";
-    cInit = "vec2 cx = ux;        vec2 cy = uy;";
-  }
-
-  return `precision highp float;
-
-uniform vec2  u_resolution;
-uniform vec2  u_centerX;    // cx as a df64 pair (hi, lo)
-uniform vec2  u_centerY;    // cy as a df64 pair (hi, lo)
-uniform float u_scale;      // width of the view in complex units
-uniform int   u_maxIter;
-uniform vec2  u_juliaX;     // jx as a df64 pair (Julia only)
-uniform vec2  u_juliaY;     // jy as a df64 pair (Julia only)
-uniform float u_flipY;      // +1, or -1 for Burning Ship (matches fractal.js vertical reflection)
-uniform vec3  u_pal[6];     // palette stops, 0..1
-uniform int   u_aa;         // supersampling samples per axis (1..4)
-
-const int   MAX_ITERS = ${MAX_ITERS};
-const float BAILOUT2  = ${BAILOUT2.toFixed(1)};
-const float LOG2      = 0.69314718056;
-${DS_LIB}
-${RAMP_LIB}
-
-// Per-sample fractal color at one df64 complex coordinate (ux + i·uy).
-vec3 fractalColor(vec2 ux, vec2 uy) {
-  ${zInit}
-  ${cInit}
-  int n = 0;
-  float trap = 1e20;          // cross orbit trap: min(|re|,|im|), read off the hi limbs
-  for (int i = 0; i < MAX_ITERS; i++) {
-    if (i >= u_maxIter) break;
-    ${absStep}
-    vec2 xx = dsMul(zx, zx);
-    vec2 yy = dsMul(zy, zy);
-    if (xx.x + yy.x > BAILOUT2) break;
-    vec2 nx = dsAdd(dsAdd(xx, -yy), cx);            // x² - y² + cx
-    vec2 ny = dsAdd(dsMul(dsAdd(zx, zx), zy), cy);  // 2xy + cy
-    zx = nx; zy = ny;
-    trap = min(trap, min(abs(zx.x), abs(zy.x)));
-    n++;
-  }
-  if (n >= u_maxIter) return vec3(0.0);   // interior: black (matches fractal.js)
-  // Smooth coloring reads the hi limbs: |z| is O(bailout) here, so float32 is ample for a log.
-  float r2 = zx.x * zx.x + zy.x * zy.x;
-  float log_r = 0.5 * log(r2);
-  float mu = float(n) - log(log_r / LOG2) / LOG2;
-  vec3 base = ramp(mu / 8.0);
-  float glow = exp(-trap * 4.0) * 0.30;
-  return mix(base, u_pal[5], glow);
-}
-
-void main() {
-  float aspect = u_resolution.y / u_resolution.x;
-  int aa = u_aa < 1 ? 1 : (u_aa > 4 ? 4 : u_aa);
-  float inv = 1.0 / float(aa);
-  vec3 acc = vec3(0.0);
-  for (int sy = 0; sy < 4; sy++) {
-    if (sy >= aa) break;
-    for (int sx = 0; sx < 4; sx++) {
-      if (sx >= aa) break;
-      vec2 sub = (vec2(float(sx), float(sy)) + 0.5) * inv - 0.5;
-      vec2 ndc = (gl_FragCoord.xy + sub) / u_resolution - 0.5;
-      vec2 ux = dsAdd(u_centerX, vec2(ndc.x * u_scale, 0.0));
-      vec2 uy = dsAdd(u_centerY, vec2(u_flipY * ndc.y * u_scale * aspect, 0.0));
-      acc += fractalColor(ux, uy);
-    }
-  }
-  gl_FragColor = vec4(acc * (inv * inv), 1.0);
-}`;
-}
+import { preparePalette } from "./fractal-color.js";
+import { VERT, MAX_ITERS, DS_LIB, buildFragment } from "./fractal-glsl.js";
 
 // Split a JS double into the two float32 limbs the df64 shader expects. `hi` is the nearest float32;
 // `v - hi` is then exact in double arithmetic and itself representable as a float32, so hi + lo
@@ -352,18 +78,32 @@ function compile(gl, type, src) {
   return sh;
 }
 
-// Convert a fractal.js palette (arrays of [0..255,0..255,0..255]) to a flat Float32Array of 6 vec3
-// in 0..1. Pads/truncates to exactly 6 stops (all bundled palettes have 6).
+// sRGB electro-optical transfer function: display code value -> linear radiance (IEC 61966-2-1).
+// The inverse of srgbEncode() in the shader's ENCODE_LIB.
+// Convert a fractal.js palette (arrays of [0..255,0..255,0..255]) to a flat Float32Array of 6 vec3.
+// Pads/truncates to exactly 6 stops (all bundled palettes have 6).
+//
+// The stops go up in OKLab, not as the sRGB numbers they are written as, because the shader's ramp
+// interpolates between them and a palette gradient is read rather than integrated. preparePalette()
+// in fractal-color.js does the conversion, and is the same call the CPU renderer makes, which is
+// what keeps the two images the same colour. It caches per palette, so this costs one map per frame.
 function palToFloats(palName) {
   const pal = PALETTES[palName] || PALETTES.ocean;
+  const { lab } = preparePalette(pal);
   const out = new Float32Array(18);
   for (let i = 0; i < 6; i++) {
-    const s = pal[Math.min(i, pal.length - 1)];
-    out[i * 3 + 0] = s[0] / 255;
-    out[i * 3 + 1] = s[1] / 255;
-    out[i * 3 + 2] = s[2] / 255;
+    const s = lab[Math.min(i, lab.length - 1)];
+    out[i * 3 + 0] = s[0];
+    out[i * 3 + 1] = s[1];
+    out[i * 3 + 2] = s[2];
   }
   return out;
+}
+
+// The trap glow ADDS the lightest stop as light, so that one stop is also needed in linear light.
+function tintToFloats(palName) {
+  const { tint } = preparePalette(PALETTES[palName] || PALETTES.ocean);
+  return new Float32Array(tint);
 }
 
 // A per-canvas cache of the compiled program, keyed by fractal type. Recompiling a fragment for the
@@ -401,7 +141,7 @@ function getProgram(gl, canvas, type, precision) {
     prog, buf, loc, precision: precision === "double" ? "double" : "single",
     u: {
       resolution: U("u_resolution"), center: U("u_center"), scale: U("u_scale"),
-      maxIter: U("u_maxIter"), julia: U("u_julia"), flipY: U("u_flipY"), pal: U("u_pal[0]"), aa: U("u_aa"),
+      maxIter: U("u_maxIter"), julia: U("u_julia"), flipY: U("u_flipY"), pal: U("u_pal[0]"), tint: U("u_tint"), aa: U("u_aa"),
       centerX: U("u_centerX"), centerY: U("u_centerY"), juliaX: U("u_juliaX"), juliaY: U("u_juliaY"),
       one: U("u_one"),
     },
@@ -486,6 +226,7 @@ export function renderFractalGL(canvas, opts) {
   gl.uniform1i(P.u.maxIter, Math.max(1, Math.min(MAX_ITERS, Math.round(maxIter))));
   gl.uniform1f(P.u.flipY, ftype === "burningship" ? -1 : 1);
   gl.uniform3fv(P.u.pal, palToFloats(palette));
+  gl.uniform3fv(P.u.tint, tintToFloats(palette));
   gl.uniform1i(P.u.aa, effAA);
   // Coordinates in both forms; the variant that isn't compiled has null locations and ignores its set.
   gl.uniform2f(P.u.center, cx, cy);
@@ -550,3 +291,6 @@ export const _buildFragment = buildFragment;   // exported for tests (shader-sou
 // The df64 primitives, exported so fractal-precision-probe.js measures the SHIPPED source text on
 // real hardware rather than a copy that could drift from it.
 export const _DS_LIB = DS_LIB;
+
+// Palette conversion, exported so tests can assert the stops arrive in linear light.
+export const _palToFloats = palToFloats;

@@ -57,7 +57,7 @@ function lazyLoader(importer, onLoad) {
 // 2D fractal source: fractal.js (CPU reference + PRESETS/PALETTES) + fractal-gl.js (GPU path).
 let _fractal = null, _fractalGL = null;
 const loadFractal2D = lazyLoader(
-  () => Promise.all([import("./fractal.js?v=20260628a"), import("./fractal-gl.js?v=20260701a")]),
+  () => Promise.all([import("./fractal.js?v=20260903a"), import("./fractal-gl.js?v=20260903a")]),
   ([f, g]) => {
     _fractal = f; _fractalGL = g;
     GL_AVAILABLE = !!g.isFractalGLAvailable();

@@ -59,3 +59,34 @@ test("no preset renders a dead frame (every view shows lit, structured content)"
     assert.ok(hues.size >= 5, `${p.type}/${p.name}: ${hues.size} colour bins — a structureless wash`);
   }
 });
+
+// The colour gate, added after a desaturation regression got as far as a rendered frame before
+// anyone noticed. The failure was not a dead view, so the test above passed it: every preset was
+// lit and structured, and every one of them had drifted toward grey. Two numbers close that gap.
+//
+// Both bounds are measured, not chosen. Rendering all eighteen presets at thumbnail size gives a
+// worst-case near-neutral fraction of 5.5% (Burning Ship: Sails, whose bone palette is genuinely
+// low-chroma by design) and a corpus mean chroma of 0.415. The build that regressed measured 0.29
+// on the same corpus, so the floor at 0.35 separates them with room on both sides.
+test("no preset paints a washed-out frame, and the corpus holds its chroma", () => {
+  let chromaSum = 0, litTotal = 0;
+  for (const p of PRESETS) {
+    const c = stubCanvas(160, 80);
+    renderFractal(c, p);
+    const d = c.read().data;
+    let neutral = 0, lit = 0, sum = 0;
+    for (let i = 0; i < d.length; i += 4) {
+      const mx = Math.max(d[i], d[i + 1], d[i + 2]);
+      const mn = Math.min(d[i], d[i + 1], d[i + 2]);
+      if (mx <= 32) continue;             // the dark interior carries no hue to lose
+      const sat = (mx - mn) / mx;
+      lit += 1; sum += sat;
+      if (mx > 160 && sat < 0.15) neutral += 1;   // bright and almost grey: the regression's signature
+    }
+    const pct = (100 * neutral) / (160 * 80);
+    assert.ok(pct < 15, `${p.type}/${p.name}: ${pct.toFixed(1)}% of the frame is bright and near-neutral`);
+    chromaSum += sum; litTotal += lit;
+  }
+  const mean = chromaSum / litTotal;
+  assert.ok(mean > 0.35, `mean chroma of lit pixels fell to ${mean.toFixed(3)} (floor 0.35)`);
+});
