@@ -5,25 +5,24 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Engine Revival · Retro Systems Lab</title>
-<meta name="description" content="Engine Revival stores and validates the public-safe metadata, target matrices, reproduction recipes, evidence packets, and reports needed to rebuild historical game engines, SDKs, rendering libraries, CGI toolkits, and studio technology.">
+<meta name="description" content="Engine Revival is a Python tool for building, validating, auditing, indexing, and rendering public-safe metadata about historical engine revivals. It can also generate an out-of-tree BRender CMake harness from a public checkout.">
 <link rel="canonical" href="https://harperz9.github.io/engine-revival.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Engine Revival · Retro Systems Lab">
-<meta property="og:description" content="Engine Revival stores and validates the public-safe metadata, target matrices, reproduction recipes, evidence packets, and reports needed to rebuild historical game engines, SDKs, rendering libraries, CGI toolkits, and studio technology.">
+<meta property="og:description" content="Engine Revival is a Python tool for building, validating, auditing, indexing, and rendering public-safe metadata about historical engine revivals. It can also generate an out-of-tree BRender CMake harness from a public checkout.">
 <meta property="og:url" content="https://harperz9.github.io/engine-revival.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/engine-revival.png">
 <meta property="og:image:alt" content="Engine Revival social card for historical engine preservation and evidence records.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Engine Revival · Retro Systems Lab">
-<meta name="twitter:description" content="Engine Revival stores and validates the public-safe metadata, target matrices, reproduction recipes, evidence packets, and reports needed to rebuild historical game engines, SDKs, rendering libraries, CGI toolkits, and studio technology.">
+<meta name="twitter:description" content="Engine Revival is a Python tool for building, validating, auditing, indexing, and rendering public-safe metadata about historical engine revivals. It can also generate an out-of-tree BRender CMake harness from a public checkout.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/engine-revival.png">
 <meta name="twitter:image:alt" content="Engine Revival social card for historical engine preservation and evidence records.">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#14041b">
-<link rel="stylesheet" href="system/system.css?v=20260828-site-design">
-<link rel="stylesheet" href="system/retro-systems-lab.css?v=20260828-site-design">
-<link rel="stylesheet" href="system/retro-evidence-pages.css?v=20260828-site-design">
+<link rel="stylesheet" href="system/system.css?v=20260719-zentropy-sitewide">
+<link rel="stylesheet" href="system/retro-systems-lab.css?v=20260829-product-copy">
 <style>
 /* Inline accessibility contract for checked source: 320px, 400%, prefers-reduced-motion, @media print. */
 @media (max-width: 320px) { .zoom-note { overflow-wrap: anywhere; } }
@@ -31,26 +30,30 @@
 @media print { .print-note { display: block; } }
 </style>
 </head>
-<body class="inner-clean frame-compact retro-lab-page retro-evidence-page">
+<body class="inner-clean frame-compact retro-lab-page">
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
+<script type="module" src="system/nav.js?v=20260828-site-design"></script>
+<nav class="retro-lab-nav retro-lab-shell" aria-label="Retro Systems Lab">
+  <a href="flywheel.html">Flywheel</a>
+  <a href="retro.html">Retro Engine</a>
+  <a href="engine-revival.html" aria-current="page">Engine Revival</a>
+  <a href="brender-archival.html">BRender Archival</a>
+  <a href="elder-enb.html">Elder ENB</a>
+  <a href="truth-enb.html">Truth ENB</a>
+  <a href="enb-runtime-core.html">ENB Runtime Core</a>
+  <a href="skyrimbridge.html">SkyrimBridge</a>
+  <a href="studio.html">Studio</a>
+</nav>
 <noscript>
-  <nav class="site-nav" aria-label="Primary">
-    <a href="index.html">Zentropy Labs</a>
-    <a href="hire.html">Hire / work</a>
-    <a href="overview.html">Systems</a>
-    <a href="research.html">Research</a>
-    <a href="retro.html">Retro Engine</a>
-    <a href="engine-revival.html" aria-current="page">Engine Revival</a>
-  </nav>
   <p class="retro-lab-shell">This evidence page is static; the full page and navigation remain available without JavaScript.</p>
 </noscript>
-<script type="module" src="system/nav.js?v=20260828-site-design"></script>
 
 <header class="retro-lab-hero retro-lab-shell">
   <div>
+    <p class="retro-lab-kicker">Historical engine preservation</p>
     <h1>Engine Revival.</h1>
-    <p class="retro-lab-lede" data-canonical-purpose="engine-revival">Engine Revival stores and validates the public-safe metadata, target matrices, reproduction recipes, evidence packets, and reports needed to rebuild historical game engines, SDKs, rendering libraries, CGI toolkits, and studio technology.</p>
+    <p class="retro-lab-lede" data-canonical-purpose="engine-revival">Engine Revival is a Python tool for building, validating, auditing, indexing, and rendering public-safe metadata about historical engine revivals. It can also generate an out-of-tree BRender CMake harness from a public checkout.</p>
     <dl class="retro-lab-facts" aria-label="Current release facts">
       <div><dt>Release</dt><dd><a href="https://github.com/HarperZ9/engine-revival/releases/tag/v0.1.0" rel="noopener">v0.1.0</a></dd></div>
       <div><dt>Source revision</dt><dd><span class="retro-lab-hash" translate="no">0af6d527860a63c418b5775dc0efe9ba89557604</span></dd></div>
@@ -63,10 +66,6 @@
       <a href="brender-archival.html">Imported BRender record</a>
       <a href="media/retro-systems-lab/evidence-manifest.json">Evidence manifest</a>
     </div>
-    <figure class="retro-lab-figure">
-      <img src="img/og/engine-revival.png" width="1200" height="630" alt="Engine Revival project card." loading="eager">
-      <figcaption>Project artwork for Engine Revival. Release state and preservation evidence are recorded separately below and in the public repository.</figcaption>
-    </figure>
   </div>
 </header>
 

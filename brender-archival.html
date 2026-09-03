@@ -5,25 +5,24 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BRender Archival · Retro Systems Lab</title>
-<meta name="description" content="BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the source, provenance, and verification record for release.">
+<meta name="description" content="BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the generated harness, README, captured test transcripts, checksums, and a release receipt without copying the upstream source.">
 <link rel="canonical" href="https://harperz9.github.io/brender-archival.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="BRender Archival · Retro Systems Lab">
-<meta property="og:description" content="BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the source, provenance, and verification record for release.">
+<meta property="og:description" content="BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the generated harness, README, captured test transcripts, checksums, and a release receipt without copying the upstream source.">
 <meta property="og:url" content="https://harperz9.github.io/brender-archival.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/brender-archival.png">
 <meta property="og:image:alt" content="BRender Archival social card for the Retro Systems Lab verify pillar.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="BRender Archival · Retro Systems Lab">
-<meta name="twitter:description" content="BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the source, provenance, and verification record for release.">
+<meta name="twitter:description" content="BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the generated harness, README, captured test transcripts, checksums, and a release receipt without copying the upstream source.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/brender-archival.png">
 <meta name="twitter:image:alt" content="BRender Archival social card for the Retro Systems Lab verify pillar.">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#14041b">
-<link rel="stylesheet" href="system/system.css?v=20260828-site-design">
-<link rel="stylesheet" href="system/retro-systems-lab.css?v=20260828-site-design">
-<link rel="stylesheet" href="system/retro-evidence-pages.css?v=20260828-site-design">
+<link rel="stylesheet" href="system/system.css?v=20260719-zentropy-sitewide">
+<link rel="stylesheet" href="system/retro-systems-lab.css?v=20260829-product-copy">
 <style>
 /* Inline accessibility contract for checked source: 320px, 400%, prefers-reduced-motion, @media print. */
 @media (max-width: 320px) { .zoom-note { overflow-wrap: anywhere; } }
@@ -31,26 +30,30 @@
 @media print { .print-note { display: block; } }
 </style>
 </head>
-<body class="inner-clean frame-compact retro-lab-page retro-evidence-page">
+<body class="inner-clean frame-compact retro-lab-page">
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
+<script type="module" src="system/nav.js?v=20260828-site-design"></script>
+<nav class="retro-lab-nav retro-lab-shell" aria-label="Retro Systems Lab">
+  <a href="flywheel.html">Flywheel</a>
+  <a href="retro.html">Retro Engine</a>
+  <a href="engine-revival.html">Engine Revival</a>
+  <a href="brender-archival.html" aria-current="page">BRender Archival</a>
+  <a href="elder-enb.html">Elder ENB</a>
+  <a href="truth-enb.html">Truth ENB</a>
+  <a href="enb-runtime-core.html">ENB Runtime Core</a>
+  <a href="skyrimbridge.html">SkyrimBridge</a>
+  <a href="studio.html">Studio</a>
+</nav>
 <noscript>
-  <nav class="site-nav" aria-label="Primary">
-    <a href="index.html">Zentropy Labs</a>
-    <a href="hire.html">Hire / work</a>
-    <a href="overview.html">Systems</a>
-    <a href="research.html">Research</a>
-    <a href="retro.html">Retro Engine</a>
-    <a href="brender-archival.html" aria-current="page">BRender Archival</a>
-  </nav>
   <p class="retro-lab-shell">This evidence page is static; the full page and navigation remain available without JavaScript.</p>
 </noscript>
-<script type="module" src="system/nav.js?v=20260828-site-design"></script>
 
 <header class="retro-lab-hero retro-lab-shell">
   <div>
+    <p class="retro-lab-kicker">Retro Systems Lab · verify</p>
     <h1>BRender Archival.</h1>
-    <p class="retro-lab-lede" data-canonical-purpose="brender-archival">BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the source, provenance, and verification record for release.</p>
+    <p class="retro-lab-lede" data-canonical-purpose="brender-archival">BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the generated harness, README, captured test transcripts, checksums, and a release receipt without copying the upstream source.</p>
     <dl class="retro-lab-facts" aria-label="Current release facts">
       <div><dt>Release</dt><dd><a href="https://github.com/HarperZ9/brender-archival/releases/tag/v0.1.1" rel="noopener">v0.1.1</a></dd></div>
       <div><dt>Source revision</dt><dd><span class="retro-lab-hash" translate="no">11b5a8d539e911a9c07991b751402a7d51bf1bde</span></dd></div>

@@ -58,14 +58,6 @@ window.CARD_DATA = {
     "glyph": "seal",
     "showGlyph": true
   },
-  "behavior-transform": {
-    "role": "I/O BOUNDARY AND RECEIPT LIBRARY",
-    "headline": "Record read, write, execution, fetch, input, and model-boundary receipts.",
-    "pipeline": "READ / WRITE / EXECUTE / FETCH / RECEIPT",
-    "word": "BEHAVIOR TRANSFORM",
-    "glyph": "ledger",
-    "showGlyph": true
-  },
   "security": {
     "role": "AUTHORIZED SECURITY FAMILY",
     "headline": "Inspect public defensive systems and the controlled private boundary.",
@@ -105,7 +97,7 @@ window.CARD_DATA = {
     "constellationCard": true,
     "routeHref": "flywheel.html",
     "routeTitle": "Flywheel",
-    "routeSummary": "Flywheel sends a task to a selected local or hosted AI model, gives that model approved tools, checks the resulting work, and returns a journal and receipt that can be reviewed or replayed.",
+    "routeSummary": "Flywheel is a local AI workflow engine and native desktop app. It sends a task to a selected local or hosted model through an approved tool route, rechecks the result, and records witnessed receipts that can be reviewed or replayed.",
     "imagePath": "img/og/flywheel.png"
   },
   "relay": {
@@ -357,7 +349,7 @@ window.CARD_DATA = {
     "constellationCard": true,
     "routeHref": "proof-surface.html",
     "routeTitle": "Proof Surface",
-    "routeSummary": "Proof Surface is a standard-library Python contract and validation library for authorization receipts, delegation chains, evidence packets, work records, witness receipts, and pre-execution gate requests. It validates structured JSON and returns schema issues plus advisory allow, deny, or needs-human decisions; it does not execute or enforce actions.",
+    "routeSummary": "Proof Surface is a zero-dependency Python library and telos-proof CLI that validates structured AI workflow, authorization, delegation, work, and witness records, builds evidence packets across eleven domains, and returns verdicts or advisory allow, deny, or needs-human decisions without authorizing or executing actions.",
     "imagePath": "img/og/proof-surface.png"
   },
   "reconcile": {
@@ -399,7 +391,7 @@ window.CARD_DATA = {
     "constellationCard": true,
     "routeHref": "retro.html",
     "routeTitle": "Retro Engine",
-    "routeSummary": "Run an embedded browser studio that accepts images, drawing, GLSL, and audio traces; applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects; then exports images, patches, MIDI, relief or disc data, and Loom handoffs.",
+    "routeSummary": "Retro Engine is an embedded browser studio for images, drawing, GLSL, and audio traces. It applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects, then exports images, patches, MIDI, relief or disc data, and Loom handoffs.",
     "imagePath": "img/og/retro.png"
   },
   "elder-enb": {
@@ -413,7 +405,7 @@ window.CARD_DATA = {
     "constellationCard": true,
     "routeHref": "elder-enb.html",
     "routeTitle": "Elder ENB",
-    "routeSummary": "Build an independently authored nine-stage ENBSeries 0.504 shader suite for Skyrim SE/AE, with five quality tiers, bounded cinematic effects, identity fallbacks, deterministic packaging, and an optional native frame-pulse runtime.",
+    "routeSummary": "Elder ENB is an independently authored nine-stage ENBSeries 0.504 shader suite for Skyrim SE/AE, with five quality tiers, bounded cinematic effects, identity fallbacks, deterministic packaging, and an optional native frame-pulse runtime.",
     "imagePath": "img/og/elder-enb.png"
   },
   "truth-enb": {
@@ -427,7 +419,7 @@ window.CARD_DATA = {
     "constellationCard": true,
     "routeHref": "truth-enb.html",
     "routeTitle": "Truth ENB",
-    "routeSummary": "Build a from-scratch ENBSeries 0.504 shader suite for Skyrim SE/AE, with a computed physical atmosphere and sky, raymarched clouds, an aurora curtain, exposure and tone mapping, five quality tiers, and an optional native camera bridge.",
+    "routeSummary": "Truth ENB is a from-scratch ENBSeries 0.504 shader suite for Skyrim SE/AE, with a computed physical atmosphere and sky, raymarched clouds, an aurora curtain, exposure and tone mapping, five quality tiers, and an optional native camera bridge.",
     "imagePath": "img/og/truth-enb.png"
   },
   "enb-runtime-core": {
@@ -441,7 +433,7 @@ window.CARD_DATA = {
     "constellationCard": true,
     "routeHref": "enb-runtime-core.html",
     "routeTitle": "ENB Runtime Core",
-    "routeSummary": "Provide a C++23 embedded runtime library that identifies an already-loaded ENBSeries host, validates its SDK surface, queues callbacks outside callback context, coordinates save quiescence and reapplication, and gates a fail-closed Skyrim engine bridge.",
+    "routeSummary": "ENB Runtime Core is a C++23 embedded runtime library that identifies an already-loaded ENBSeries host, validates its SDK surface, queues callbacks outside callback context, coordinates save quiescence and reapplication, and gates a fail-closed Skyrim engine bridge.",
     "imagePath": "img/og/enb-runtime-core.png"
   },
   "skyrimbridge": {
@@ -455,7 +447,7 @@ window.CARD_DATA = {
     "constellationCard": true,
     "routeHref": "skyrimbridge.html",
     "routeTitle": "SkyrimBridge",
-    "routeSummary": "Expose Skyrim live engine state, record editing surfaces, asset conversion, versioned ABI, diagnostics, and shared-memory command channels to shaders and external tools through an SKSE plugin, with an optional D3D11 rendering tier.",
+    "routeSummary": "SkyrimBridge is an SKSE plugin that exposes Skyrim live engine state, record editing surfaces, asset conversion, a versioned ABI, diagnostics, and shared-memory command channels to shaders and external tools, with an optional D3D11 rendering tier.",
     "imagePath": "img/og/skyrimbridge.png"
   },
   "loom": {
@@ -520,35 +512,5 @@ window.CARD_DATA = {
     "pipeline": "RUN / ARTIFACT / PROVENANCE / HANDOFF",
     "word": "RUNTIME",
     "glyph": "bracket"
-  },
-  "gallery": {
-    "role": "PLATE WORKSHOP + EXHIBITION",
-    "word": "GALLERY",
-    "headline": "Name a seed, pick instruments, and the engine draws your plate in the browser.",
-    "pipeline": "SEED / INSTRUMENTS / DRAW / TREAT / KEEP"
-  },
-  "publications": {
-    "role": "THE RESEARCH RECORD",
-    "word": "PUBLICATIONS",
-    "headline": "Eight records with permanent DOIs, each titled at the size its evidence carries.",
-    "pipeline": "PAPERS / NOTES / CORPORA / DOI / NO PEER REVIEW"
-  },
-  "typeface": {
-    "role": "TYPE SPECIMEN",
-    "word": "TYPEFACE",
-    "headline": "A readable generated-outline face, drawn for this workshop.",
-    "pipeline": "OUTLINE / FIT / HINT / SPECIMEN"
-  },
-  "why": {
-    "role": "THE ARGUMENT",
-    "word": "WHY",
-    "headline": "Why a made mind gets real senses, a memory, and a record it cannot fake.",
-    "pipeline": "PERCEIVE / REMEMBER / WITNESS / REFUSE"
-  },
-  "demo-flywheel": {
-    "role": "RECORDED WORKFLOW",
-    "word": "FLYWHEEL",
-    "headline": "A live prompt routed to a local model, sealed into a receipt, then tampered with.",
-    "pipeline": "ROUTE / GATE / RUN / SEAL / RE-VERIFY"
   }
 };

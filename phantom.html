@@ -5,233 +5,98 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Phantom v1.1.0, hardware identity privacy for authorized systems</title>
-<meta name="description" content="Audit and change reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.">
+<meta name="description" content="Phantom audits and changes reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.">
 <link rel="canonical" href="https://harperz9.github.io/phantom.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Phantom v1.1.0">
-<meta property="og:description" content="Audit and change reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.">
+<meta property="og:description" content="Phantom audits and changes reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.">
 <meta property="og:url" content="https://harperz9.github.io/phantom.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/phantom.png">
-<meta property="og:image:alt" content="Phantom card: audit, generate, apply, revert, with the originals restored exactly.">
+<meta property="og:image:alt" content="Zentropy Labs card for Phantom: authorized hardware identity privacy.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Phantom, hardware identity on your terms">
-<meta name="twitter:description" content="Audit what your Windows or Linux machine reveals, spoof the identifiers software fingerprints most, and restore the originals exactly on revert or uninstall.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/phantom.png">
 <meta name="color-scheme" content="dark">
-<link rel="stylesheet" href="system/system.css?v=20260828-site-design">
-<meta name="twitter:description" content="Audit and change reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.">
+<link rel="stylesheet" href="system/system.css?v=20260719-zentropy-sitewide">
+<meta name="twitter:description" content="Phantom audits and changes reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.">
 </head>
 <body class="inner-clean">
 <a class="skip-link" href="#main">Skip to content</a>
-
 <div id="site-nav" class="site-nav"></div>
-<noscript><nav class="site-nav"><a href="overview.html">Systems</a> <a href="studio.html">The Studio</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260828-site-design"></script>
+<noscript><nav class="site-nav"><a href="security.html">Security</a> <a href="security-toolkit.html">Toolkit</a> <a href="emet.html">EMET</a> <a href="hire.html">Hire</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260719-zentropy-sitewide"></script>
 
 <div class="frame">
-  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">phantom</span> &middot; hardware-identity privacy</span></div>
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Phantom v1.1.0</span></div>
   <div class="mid">
-    <h1>The identity your machine gives away, <span class="g">on your terms.</span></h1>
-    <p class="lede" data-canonical-purpose="phantom">Audit and change reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.</p>
-    <p class="close">You own the machine. You decide what it says about itself.</p>
+    <h1>Hardware identity privacy, <span class="g">bounded to authorized systems.</span></h1>
+    <p class="lede" data-canonical-purpose="phantom">Phantom audits and changes reversible hardware-identity surfaces on owned or expressly authorized Windows and Linux systems, with backup and revert.</p>
+    <p class="close">The public release is cross-platform, but deliberately bounded: Layer 2 only, Windows installer unsigned, and no shipped kernel or firmware capability claim.</p>
   </div>
-  <div class="seal"><span translate="no">phantom</span> &middot; v1.1.0 &middot; Windows + Linux &middot; proprietary &middot; Free / Pro / Enterprise &middot; <span translate="no">phantom audit</span></div>
+  <div class="seal">shipped flagship &middot; v1.1.0 &middot; verified 2026-08-26T23:02:02-07:00</div>
 </div>
 
 <main id="main">
-
-<!-- THE WEDGE -->
-<section class="mv" id="why" aria-labelledby="why-h">
-  <h2 id="why-h" class="reveal">Your hardware is a permanent tracking number. Until you change it.</h2>
-  <p class="body-text reveal">Motherboard serials, disk serials, MAC addresses, GPU device IDs, TPM module IDs, and the machine IDs Windows and Linux keep, are all readable by ordinary software, and most of them survive a clean reinstall. Together they are a device fingerprint that follows the machine for its whole life, built without asking you. <span translate="no">Phantom</span> puts that fingerprint under your control, on a machine you own or are authorized to test.</p>
-  <p class="pull reveal">Audit first. Change deliberately. Reverse completely.</p>
-</section>
-
-<!-- SCHEMATIC -->
-<section class="mv" id="loop" aria-labelledby="loop-h">
-  <h2 id="loop-h" class="reveal">Nothing is written until the originals are saved.</h2>
-  <p class="body-text reveal">Read what the machine reveals. Generate one internally consistent identity from a seed. Apply it after the originals are backed up, never before: the registry on Windows, the machine-id, hostname, and MAC on Linux. Validate that every source now reads consistently. Revert restores the exact originals from that backup, and so does uninstall, so you are never left with a changed identity and no way back.</p>
-  <figure class="ph-fig reveal">
-    <svg viewBox="0 0 880 560" xmlns="http://www.w3.org/2000/svg" font-family="Hanken Grotesk, ui-sans-serif, system-ui, sans-serif" role="img" aria-label="The Phantom loop: audit reads the machine, generate builds one consistent identity from a seed, apply writes the userland identifiers after saving the originals to a backup, validate confirms every source reads consistently, and revert or uninstall restores the exact originals from that backup.">
-      <style>
-        .bg{ fill:none; }
-        .card{ fill:color-mix(in oklab, var(--void) 55%, transparent); stroke:var(--hairline); stroke-width:1.5; }
-        .accentbox{ fill:color-mix(in oklab, var(--verified) 13%, transparent); stroke:var(--verified); stroke-width:1.5; }
-        .safebox{ fill:color-mix(in oklab, var(--verified) 8%, transparent); stroke:var(--verified); stroke-width:1.5; stroke-dasharray:0; }
-        .t{ fill:var(--bone); font-size:15px; font-weight:650; }
-        .s{ fill:var(--ink-muted); font-size:11.5px; }
-        .cap{ fill:var(--ember); font-size:11px; font-weight:700; letter-spacing:.12em; }
-        .title{ fill:var(--bone); font-size:20px; font-weight:700; }
-        .flow{ stroke:var(--verified); stroke-width:2.4; fill:none; }
-        .restore{ stroke:var(--verified); stroke-width:2; fill:none; stroke-dasharray:5 4; }
-        .okt{ fill:var(--verified); font-size:12px; font-weight:700; }
-      </style>
-      <rect class="bg" x="0" y="0" width="880" height="560"/>
-      <marker id="fa" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--verified)"/></marker>
-      <text class="cap" x="40" y="40">THE PHANTOM LOOP</text>
-      <text class="title" x="40" y="66">Read. Generate. Back up, then write. Restore exactly.</text>
-
-      <!-- top row: audit, generate, apply -->
-      <rect class="card" x="40" y="120" width="240" height="92" rx="14"/>
-      <text class="cap" x="62" y="148">1 &#183; AUDIT</text>
-      <text class="t" x="62" y="170">Read what leaks</text>
-      <text class="s" x="62" y="189">every identifier software can</text>
-      <text class="s" x="62" y="203">see; read-only, changes nothing</text>
-
-      <rect class="card" x="320" y="120" width="240" height="92" rx="14"/>
-      <text class="cap" x="342" y="148">2 &#183; GENERATE</text>
-      <text class="t" x="342" y="170">One seed, one identity</text>
-      <text class="s" x="342" y="189">internally consistent; Samsung</text>
-      <text class="s" x="342" y="203">serials keep Samsung's format</text>
-
-      <rect class="accentbox" x="600" y="120" width="240" height="92" rx="14"/>
-      <text class="cap" x="622" y="148" fill="var(--verified)">3 &#183; APPLY &#183; LAYER 2</text>
-      <text class="t" x="622" y="170">Write the userland IDs</text>
-      <text class="s" x="622" y="189">only after the originals are</text>
-      <text class="s" x="622" y="203">saved to the backup below</text>
-
-      <path class="flow" d="M280,166 L320,166" marker-end="url(#fa)"/>
-      <path class="flow" d="M560,166 L600,166" marker-end="url(#fa)"/>
-
-      <!-- backup spine -->
-      <rect class="safebox" x="600" y="300" width="240" height="72" rx="14"/>
-      <text class="cap" x="622" y="328" fill="var(--verified)">BACKUP</text>
-      <text class="t" x="622" y="350">Originals, saved first</text>
-      <text class="s" x="622" y="367">one record, written before any change</text>
-      <path class="flow" d="M720,212 L720,300" marker-end="url(#fa)"/>
-      <text class="okt" x="730" y="262">SAVE</text>
-
-      <!-- validate -->
-      <rect class="card" x="320" y="300" width="240" height="72" rx="14"/>
-      <text class="cap" x="342" y="328">4 &#183; VALIDATE</text>
-      <text class="t" x="342" y="350">Every source agrees</text>
-      <text class="s" x="342" y="367">applied identifiers read consistently</text>
-      <path class="flow" d="M700,258 C560,258 540,290 540,300" marker-end="url(#fa)"/>
-
-      <!-- revert / uninstall -->
-      <rect class="card" x="40" y="440" width="800" height="72" rx="14" stroke="var(--verified)"/>
-      <text class="cap" x="62" y="468" fill="var(--verified)">5 &#183; REVERT OR UNINSTALL</text>
-      <text class="t" x="62" y="490">Restore the exact originals from the backup. Uninstall does this for you before it removes the files.</text>
-      <text class="s" x="62" y="506">You are never left with a changed identity and no tool to undo it.</text>
-      <path class="restore" d="M720,372 C720,410 420,410 300,440" marker-end="url(#fa)"/>
-      <text class="okt" x="470" y="404">RESTORE</text>
-
-      <text class="s" x="40" y="540">The backup is the whole guarantee. A change you cannot undo is not privacy, it is damage; Phantom writes the undo before it writes the change.</text>
-    </svg>
-    <figcaption>Schematic &middot; back up before you write, restore exactly on the way out</figcaption>
-  </figure>
-</section>
-
-<!-- FOUR BLURBS -->
-<section class="mv" id="what" aria-labelledby="what-h">
-  <h2 id="what-h" class="reveal">Four things it does, and does carefully.</h2>
-  <div class="index reveal-children" role="list" aria-label="What Phantom does">
-    <div class="index-row" role="listitem" style="--i:0">
-      <span class="index-term">See your exposure</span>
-      <span class="index-gloss"><span translate="no">phantom audit</span> reads and reports every hardware identifier software can see on the machine, across SMBIOS, disk, network, GPU, TPM, display, boot, and the OS identity store: the Windows registry, or the Linux machine-id and hostname. It changes nothing, so you run it first to see where you start.</span>
+<section class="mv" id="maturity" aria-labelledby="maturity-h">
+  <h2 id="maturity-h">Current public maturity.</h2>
+  <div class="index" role="list">
+    <div class="index-row" role="listitem">
+      <span class="index-term">Release</span>
+      <span class="index-gloss">v1.1.0, verified from first-party GitHub release state at 2026-08-26T23:02:02-07:00. Assets include Windows MSI/zip, Linux deb/rpm/tarball, and SHA256SUMS.txt.</span>
     </div>
-    <div class="index-row" role="listitem" style="--i:1">
-      <span class="index-term">A consistent identity, from a seed</span>
-      <span class="index-gloss">Generation builds a realistic profile that holds together: disk serials match their vendor's format, MACs use real manufacturer prefixes. One seed reproduces the same identity every time, so a profile is repeatable, not random noise.</span>
+    <div class="index-row" role="listitem">
+      <span class="index-term">Layer</span>
+      <span class="index-gloss">Layer 2 only. Layers 1 and 0 are modeled but not shipped as user-facing capabilities.</span>
     </div>
-    <div class="index-row" role="listitem" style="--i:2">
-      <span class="index-term">Spoof what matters most</span>
-      <span class="index-gloss">At Layer 2, apply rewrites what carries the most fingerprinting weight: five Windows registry identifiers from <span translate="no">MachineGuid</span> down, or the machine-id, hostname, and MAC on Linux. The wider identifier set is modeled so profiles stay consistent as the deeper layers land.</span>
+    <div class="index-row" role="listitem">
+      <span class="index-term">Windows</span>
+      <span class="index-gloss">Registry-backed controls: MachineGuid, HwProfileGuid, MachineId, ProductId, and InstallDate. ComputerName is modeled but deliberately not applied in v1.1.0.</span>
     </div>
-    <div class="index-row" role="listitem" style="--i:3">
-      <span class="index-term">Reverse it completely</span>
-      <span class="index-gloss">Every original value is backed up before the first write. Revert restores them exactly, and uninstall reverts before it removes anything, so leaving Phantom returns the machine to precisely the identity it had before.</span>
+    <div class="index-row" role="listitem">
+      <span class="index-term">Linux</span>
+      <span class="index-gloss">File/interface-backed controls: machine-id, hostname, and physical-interface MAC. Linux apply and revert require root and iproute2 for MAC changes.</span>
+    </div>
+    <div class="index-row" role="listitem">
+      <span class="index-term">Unsigned edge</span>
+      <span class="index-gloss">The Windows installer is not code-signed. The Layer 1 driver is unsigned and not functional end to end, so this page does not claim a shipped kernel capability.</span>
     </div>
   </div>
 </section>
 
-<!-- COMPARISON -->
-<section class="mv" id="compare" aria-labelledby="compare-h">
-  <h2 id="compare-h" class="reveal">How it compares.</h2>
-  <div class="cmp-wrap reveal">
-    <table class="cmp">
-      <thead><tr><th></th><th>Edit the registry by hand</th><th>A random spoofer script</th><th class="phcol">Phantom</th></tr></thead>
-      <tbody>
-        <tr><td>Audits what actually leaks first</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
-        <tr><td>Internally consistent identity</td><td class="n">No</td><td>Rarely</td><td class="y">Yes</td></tr>
-        <tr><td>Backs up originals before writing</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
-        <tr><td>Restores the exact originals</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
-        <tr><td>Reverts automatically on uninstall</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
-        <tr><td>Reapplies across reboots</td><td class="n">No</td><td class="n">No</td><td class="y">Yes (Pro)</td></tr>
-        <tr><td>Validates the result</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
-        <tr><td>One seed reproduces the identity</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
-      </tbody>
-    </table>
-  </div>
+<section class="mv" id="use" aria-labelledby="use-h">
+  <h2 id="use-h">Operating boundary.</h2>
+  <p class="body-text">It is not a fraud tool, not a court-order avoidance tool, and not a general-purpose misrepresentation system. The authorization boundary is part of the product.</p>
 </section>
 
-<!-- RUN IT NOW -->
+<section class="mv" id="verify" aria-labelledby="verify-h">
+  <h2 id="verify-h">Read-only verification commands.</h2>
+  <pre class="artifact" translate="no">phantom --version
+phantom audit</pre>
+  <p class="body-text">These commands are separated from apply, validate, and revert because they can be used for release or host inspection without intentionally changing system identity state.</p>
+</section>
+
+<section class="mv" id="state-change" aria-labelledby="state-change-h">
+  <h2 id="state-change-h">State-changing workflow, documented separately.</h2>
+  <pre class="artifact" translate="no">phantom profile generate &lt;profile-name&gt;
+phantom apply &lt;profile-name&gt; --layers 2    # elevated/root; writes Layer 2 controls after backup
+phantom validate &lt;profile-name&gt;            # post-change check tied to the chosen profile
+phantom revert                             # elevated/root; restores preserved originals</pre>
+  <p class="body-text">Run the state-changing path only on a host you own or are expressly authorized to test. Preserve the backup and use a named profile placeholder in documentation or review packets until the actual engagement scope supplies a real profile name.</p>
+</section>
+
 <section class="mv" id="run" aria-labelledby="run-h">
-  <h2 id="run-h" class="reveal">Run it now.</h2>
-  <p class="body-text reveal">Everything is on the <a href="https://github.com/HarperZ9/phantom/releases">releases page</a> with a published <span translate="no">SHA256SUMS.txt</span>. Verify the file you got before you install it, because the Windows installer is not code-signed yet.</p>
-  <div class="run reveal"><span class="c">windows</span> download <span translate="no">PhantomSetup-v1.1.0.msi</span> <span class="c">&middot;</span> certutil -hashfile PhantomSetup-v1.1.0.msi SHA256</div>
-  <div class="run reveal"><span class="c">linux</span> sudo apt-get install ./phantom_1.1.0-1_amd64.deb <span class="c">&middot;</span> or the .rpm, or the tarball's install.sh</div>
-  <p class="body-text reveal">On Windows, clear the SmartScreen warning with <b>More info</b> then <b>Run anyway</b>, and accept the UAC and license prompts. Once it is installed, see your exposure before you change anything:</p>
-  <div class="run reveal"><span class="c">audit</span> phantom audit</div>
-  <p class="body-text reveal">Applying changes machine-wide identifiers, so run it from an <b>elevated</b> terminal on Windows, with <span translate="no">sudo</span> on Linux. <span translate="no">Phantom</span> runs in Free tier immediately, which covers Layer-2 spoofing and up to two profiles.</p>
-  <div class="run reveal"><span class="c">apply</span> phantom profile generate my-profile <span class="c">&middot;</span> phantom apply my-profile</div>
-  <div class="run reveal"><span class="c">undo</span> phantom validate my-profile <span class="c">&middot;</span> phantom revert</div>
-  <div class="null reveal">
-    <h3>The honest caveat.</h3>
-    <p class="body-text">The MSI is not code-signed yet, so Windows SmartScreen warns on first run. The published hash is the substitute: it proves the file you hold is the file the pipeline built. Signing is planned; until then the checksum does the signature's job, checked by you instead of trusted by default.</p>
+  <h2 id="run-h">Public entry points.</h2>
+  <pre class="artifact" translate="no">Source: https://github.com/HarperZ9/phantom
+Release: v1.1.0
+Data: security-tools.json</pre>
+  <div class="channels">
+    <span class="g">GitHub</span>: <a href="https://github.com/HarperZ9/phantom" rel="noopener">HarperZ9/phantom</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">Security data</span>: <a href="security-tools.json">security-tools.json</a>
+    &nbsp;&middot;&nbsp;
+    <a href="security.html">Security lane</a>
   </div>
 </section>
-
-<!-- TIERS -->
-<section class="mv" id="tiers" aria-labelledby="tiers-h">
-  <h2 id="tiers-h" class="reveal">Tiers.</h2>
-  <p class="body-text reveal">Free is a real tier, not a trial: Layer-2 registry spoofing and two profiles, with no time limit. Pro and Enterprise raise the profile limit, add the background service that reapplies your identity across reboots, and unlock the deeper layers as they ship.</p>
-  <div class="bt-wrap reveal">
-    <table class="bt">
-      <thead><tr><th>Tier</th><th>Layers</th><th>Profiles</th><th>Background service</th></tr></thead>
-      <tbody>
-        <tr><td class="tier">Free</td><td>Layer 2 (registry)</td><td>2</td><td>No</td></tr>
-        <tr><td class="tier">Pro</td><td>All layers as they ship</td><td>50</td><td>Yes</td></tr>
-        <tr><td class="tier">Enterprise</td><td>All layers as they ship</td><td>Unlimited</td><td>Yes</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <p class="body-text reveal">Keys are HMAC-signed and bound to one machine's hardware fingerprint, so a key issued for your machine is worthless on any other. <span translate="no">phantom license request</span> prints the fingerprint and build details your licensing contact needs; they issue a key bound to it.</p>
-</section>
-
-<!-- SPEC -->
-<section class="mv" id="spec" aria-labelledby="spec-h">
-  <h2 id="spec-h" class="reveal">Spec, at a glance.</h2>
-  <dl class="kv2 reveal">
-    <dt>Platform</dt><dd>Windows 10 22H2 or Windows 11 23H2 and newer; Linux with systemd. x86-64.</dd>
-    <dt>Install</dt><dd>Windows: an MSI, not code-signed yet. Linux: a <span translate="no">.deb</span>, an <span translate="no">.rpm</span>, or a portable tarball. Elevation on Windows, root on Linux for apply and revert.</dd>
-    <dt>Applies at Layer 2</dt><dd>Windows: <span translate="no">MachineGuid</span>, <span translate="no">HwProfileGuid</span>, <span translate="no">MachineId</span>, <span translate="no">ProductId</span>, <span translate="no">InstallDate</span>. Linux: machine-id, hostname, and the MAC of each physical interface.</dd>
-    <dt>Models, not yet applied</dt><dd>SMBIOS, disk, network, GPU, TPM, display, and boot identifiers, for the Layer 0 and Layer 1 paths.</dd>
-    <dt>Reversibility</dt><dd>Originals backed up before the first write; revert and uninstall both restore them exactly.</dd>
-    <dt>Persistence</dt><dd><span translate="no">PhantomService</span> reapplies the active profile across reboots (Pro and Enterprise).</dd>
-    <dt>Licensing</dt><dd>HMAC-signed keys bound to one hardware fingerprint. Free, Pro, Enterprise.</dd>
-    <dt>Phone-home</dt><dd>Off unless you set a callback URL. No fingerprint, profile, or identity ever leaves the machine.</dd>
-    <dt>Store</dt><dd>Profiles, config, backup, and license live under <span translate="no">%ProgramData%\Phantom</span> on Windows, <span translate="no">/var/lib/phantom</span> on Linux, shared by the CLI and the service.</dd>
-  </dl>
-</section>
-
-<!-- VISION -->
-<section class="mv" id="vision" aria-labelledby="vision-h">
-  <h2 id="vision-h" class="reveal">The change and the undo, shipped together.</h2>
-  <p class="body-text reveal"><span translate="no">Phantom</span> treats hardware identity the way the rest of this workshop treats a result: something you can inspect, reproduce from a seed, and reverse without residue. The backup is the receipt. A spoof you cannot cleanly undo is not control, so the undo is written before the change, every time.</p>
-  <p class="body-text reveal">v1.1.0 ships the Layer-2 path on Windows and Linux, verified end to end. Layer 1 reaches disk, network, GPU, TPM, and display through a kernel driver; Layer 0 reaches SMBIOS and boot identifiers through UEFI firmware. Both are modeled now so today's profiles stay consistent when those layers arrive. The profile you generate is already the whole identity; the deeper layers only widen where it is written.</p>
-  <p class="seal-line reveal"><span class="g">Run it</span>: <span translate="no">github.com/HarperZ9/phantom</span> &middot; <a href="overview.html">the engine room</a> &middot; <a href="index.html">the workshop</a></p>
-</section>
-
-<!-- STATE OF THE WORK -->
-<section class="mv" id="state" aria-labelledby="state-h">
-  <h2 id="state-h" class="reveal">State of the work, August 2026.</h2>
-  <p class="body-text reveal"><span translate="no">Phantom</span> v1.1.0 is shipped, on Windows and Linux. The Layer-2 path is verified end to end on fresh VMs of both: audit, generate, apply, validate, a clean uninstall that returns the machine to its original identity, and reboot persistence. On Linux that last one is proven through an actual power-cycle, where the service brought a spoofed MAC back after a reboot.</p>
-  <p class="body-text reveal">It is honest about its edges. Layer 2 only for now, with Layers 1 and 0 modeled but not shipped. The Layer 1 kernel driver now compiles under CI and two of its security defects are fixed, but it is unsigned and not yet functional end to end. The Windows installer is not code-signed yet, so SmartScreen warns until a certificate is in place. Intended for machines you own or are expressly authorized to test, not for evading fraud controls or misrepresenting a device you do not control.</p>
-  <p class="body-text reveal">The shared public maturity record, verification entry point, and authorization boundary are also available in <a href="security-tools.json">security-tools.json</a>.</p>
-</section>
-
 </main>
 </body>
 </html>
