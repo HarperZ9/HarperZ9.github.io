@@ -13,8 +13,8 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-IxfWbepn.js",
-    "assets/index-BxIHiu3n.css",
+    "assets/index-3Dl0qE22.js",
+    "assets/index-DGQrcJ5p.css",
     "accountable-surface.html",
     "availability-is-not-reach.html",
     "analytics/benchmark-evidence-status.html",
@@ -185,7 +185,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "d33040b3e5de8cc2753aa9a6dbada7ab68f75d42330533c80645dcb364cb8ca5"
+REVIEWED_RELEASE_SHA256 = "0b9e981ab31d3f06020ad6b26f8bf51d284f776f02df3c64391c0055e2b76608"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -288,8 +288,8 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_art_css = "index-D6A4RL1P.css"
     previous_publications_js = "index-DDkK7Yu0.js"
     previous_plain_language_js = "index-DFJMXR3Q.js"
-    current_js = "index-IxfWbepn.js"
-    current_css = "index-BxIHiu3n.css"
+    current_js = "index-3Dl0qE22.js"
+    current_css = "index-DGQrcJ5p.css"
     previous_security_js = "index-BnUu1wyw.js"
     prior_reviewed_js = "index-C_1S2nb6.js"
     prior_reviewed_css = "index-XLAt4tDw.css"

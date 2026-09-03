@@ -59,10 +59,23 @@ void main(){
   float H = u_res.y;
   vec2 p = vec2(gl_FragCoord.x, (H - gl_FragCoord.y) + u_scroll) / H;
 
+  // How much of the first screen this pixel is in. Used twice: it damps the databend across the
+  // masthead, and the hero aperture below fades out along it.
+  float heroT = u_hero > 0.5 ? smoothstep(1.15, 0.06, p.y) : 0.0;
+
   // databend: a rare, gentle sideways slip on a few bands (organic, not a harsh tear).
+  // Damped across the masthead. Everywhere else the slip reads as the medium showing through,
+  // but a hard horizontal tear through a luminous orb reads as a broken renderer, and a still of
+  // the first screen is the image people actually keep.
   float gblk = floor((gl_FragCoord.y + u_scroll) / 16.0);
   float gOn = step(0.96, hash(vec2(gblk, floor(u_time*2.5))));
-  p.x += gOn * (hash(vec2(gblk, floor(u_time*2.5) + 9.0)) - 0.5) * 0.10;
+  p.x += gOn * (hash(vec2(gblk, floor(u_time*2.5) + 9.0)) - 0.5) * 0.10 * (1.0 - 0.88*heroT);
+
+  // The unwarped coordinate, kept for the hero aperture. The turbulent warp below displaces the
+  // sampling point by up to 0.16 of the viewport height, which is four times the radius of the
+  // aperture's pupil, so an aperture drawn downstream of it has its centre torn into an annulus
+  // with a muddy middle. The flow field wants that warp; a round form does not.
+  vec2 p0 = p;
 
   // liquid + weird: a turbulent domain-warp OF a warp, so the flow folds back on itself into
   // strange organic currents instead of a tame drift. Still smooth, just stranger.
@@ -147,48 +160,93 @@ void main(){
   hue = fract(hue + u_hue);   // rotate the accent toward the page's principle colour (identity at 0)
   col += hsl2rgb(vec3(hue, 0.82, 0.6)) * hot * max(feat, 0.14) * 0.6 * u_gain;
 
-  // the home hero: an intense bleeding aperture that dissolves into the field as you scroll.
+  // The home hero: the aperture. One luminous orb, held small and hot, with an iris of fine
+  // radial line-work around it, dissolving as the page scrolls away from the masthead.
+  //
+  // The first version of this was a six-armed corona: arms 0.58 deep, a halo that fell off as
+  // exp(-r) so it never actually ended, and colour confined to a 0.7-radian wedge with the other
+  // 89% of the form painted in glyph, which is a near-neutral lavender. Composited over the whole
+  // first screen it read as grey smoke rather than as light, and it fogged the type it sat behind.
+  // What replaces it is built the other way round: the falloff is Gaussian in r so the orb has an
+  // edge, the colour is the page's accent rather than the neutral, and the line-work is thin and
+  // numerous instead of six broad lobes. Measured at 1440x900 it puts nothing above luminance 8
+  // into the left 40% of the screen, which is where the headline and the subhead live.
   if(u_hero > 0.5){
-    float heroT = smoothstep(1.45, 0.12, p.y);
     if(heroT > 0.001){
-      vec2 ap = (p - vec2(u_res.x/H * 0.66, 0.44)) * 1.12;
-      ap.x += 0.16*sin(ap.y*5.0 + u_time*0.15 + u_seed);
-      ap.y += 0.16*cos(ap.x*5.0 + u_time*0.12);
-      float r = length(ap), th = atan(ap.y, ap.x);
-      float arm = 0.42 + 0.58*cos(6.0*th + 2.0*r*3.1);
-      float ring = exp(-pow((r-0.34)/0.34, 2.0));
-      float halo = exp(-r*1.0)*0.7;
-      float armF = pow(max(0.0,arm),1.5)*exp(-abs(r-0.34)*0.8);
-      float al = clamp(ring*(0.4+0.7*arm) + 0.30*halo + 0.5*armF, 0.0, 1.0);
-      float dA = abs(mod(th - u_seed + 3.14159, 6.28318) - 3.14159);
-      vec3 apCol = glyph * 1.25;
-      if(dA < 0.7 && r > 0.05) apCol = hsl2rgb(vec3(fract(mod(th*52.0 + 200.0, 360.0)/360.0 + u_hue), 0.9, 0.62));
-      col += apCol * al * heroT * 0.5;
+      vec2 ap = p0 - vec2(u_res.x/H * 0.735, 0.355);
+      // A slow breathing warp, an order of magnitude gentler than the old one: enough that the
+      // rim is never a drawn circle, small enough that the form still reads as round.
+      ap += 0.030 * vec2(sin(ap.y*7.0 + u_time*0.13 + u_seed), cos(ap.x*7.0 + u_time*0.11));
+      float r = length(ap) / 0.195;            // r = 1 sits on the iris rim
+      float th = atan(ap.y, ap.x);
+      float core   = exp(-r*r*10.5);
+      // Sized so the clipped-white part of the pupil stays around twenty pixels across at 1440x900.
+      // Held deliberately small: a wide white centre stops reading as a pupil and starts reading as
+      // a blown highlight, and the whole point of the form is that it has structure to look into.
+      float pupil  = exp(-r*r*38.0);           // the centre goes white, not clipped-cyan
+      float rim    = exp(-pow((r - 1.0)*7.0, 2.0));
+      float halo   = exp(-r*r*1.15) * 0.34;    // a contained glow, not a page-wide fog
+      // The blades: forty-four fine lines swept slightly by radius, present only across the iris
+      // and gone shortly past the rim. pow(...,13) is what keeps them lines rather than lobes.
+      //
+      // The radius and the blade count are set together, and the constraint is that the form has to
+      // CLOSE inside the first screen. At 0.26 the blades ran out to 350px against a centre 324px
+      // down, so the top of the iris was cut off by the site bar and what was left read as a
+      // sunburst rather than as an aperture. An aperture is a thing with an edge; if you cannot see
+      // the edge you are looking at a light source. Hence the narrower, brighter rim as well: the
+      // ring at r = 1 is the single cue that says iris, and it was previously buried under the
+      // blades at half their weight.
+      float blades = pow(0.5 + 0.5*cos(th*44.0 + r*1.5 + u_seed), 13.0)
+                   * smoothstep(0.12, 0.78, r)
+                   * exp(-pow(max(0.0, r - 1.0) * 3.4, 2.0));
+      vec3 hotCol = hsl2rgb(vec3(fract(u_hue + 0.02), 0.88, 0.62));
+      vec3 rimCol = hsl2rgb(vec3(fract(u_hue - 0.07), 0.72, 0.70));
+      // Clear the ground under the orb before adding it. The atmosphere is a wash of near-neutral
+      // lavender and a warm mend term, and whatever the orb adds lands ON TOP of that rather than
+      // replacing it, so the hottest pixel on the page was reading as a dusty rose smudge inside a
+      // cyan iris. Light is additive and there is no way to add your way back to a clean white over
+      // a muddy base. Emptying the ground first is what makes the one hot mark read as light.
+      col *= 1.0 - 0.75 * exp(-r*r*3.0) * heroT;
+
+      col += hotCol * (core * 0.72 + halo) * heroT;
+      col += vec3(0.86, 0.94, 1.00) * pupil * 0.68 * heroT;
+      col += rimCol * (rim * 0.78 + blades * 0.40) * heroT;
+      col += glyph * blades * 0.10 * heroT;
     }
   }
+
+  // Everything from here down is ATMOSPHERE
+  // Everything from here down is ATMOSPHERE rather than the feature itself, and until now none
+  // of it read u_gain. A page that asked for a restrained field still got the full wash: on the
+  // home at gain 0.24 the atmosphere ran four times louder than the field it sat on, and since
+  // glyph is a near-neutral lavender the first screen read as grey smoke instead of the ice
+  // aperture the principle names. Scaling it here makes gain mean what the table says it means.
+  // Pages already near 1.0 move by at most a tenth. The hero aperture below stays outside this
+  // on purpose: it is the one hot mark, and a calm ground is what it needs to be seen against.
+  float amb = u_gain;
 
   // the return: having reached the far light, it descends back through the field to mend the
   // broken threads left in the dark — the reconcile as repair. A slow band travels downward,
   // rejoining and brightening the network it crosses.
   float mendY = fract(u_time * 0.05);
   float mend = exp(-pow((fract(p.y*0.42) - mendY)*6.5, 2.0));
-  col += glyph * mend * feat * 1.1;
-  col += hsl2rgb(vec3(fract(u_hue + 0.12), 0.70, 0.62)) * mend * max(feat, 0.10) * 0.4;
+  col += glyph * mend * feat * 1.1 * amb;
+  col += hsl2rgb(vec3(fract(u_hue + 0.12), 0.70, 0.62)) * mend * max(feat, 0.10) * 0.4 * amb;
 
   // manic energy: FAST highs and lows, bipolar. The dark drops out on the lows and the light
   // slams back on the highs, restless and quick, not a breath. The collapse still makes the star.
   float swing = 0.5 + 0.5*sin(u_time*0.72 + sin(u_time*0.27)*1.7);   // fast, irregular
   float low  = pow(1.0 - swing, 2.0);
   float high = pow(swing, 3.0);
-  col *= 1.0 - low*0.28;
-  col += (glyph*0.5 + hsl2rgb(vec3(fract(u_hue + 0.08), 0.50, 0.72))*0.5) * high * (feat*2.3 + 0.12);
+  col *= 1.0 - low*0.28*amb;
+  col += (glyph*0.5 + hsl2rgb(vec3(fract(u_hue + 0.08), 0.50, 0.72))*0.5) * high * (feat*2.3 + 0.12) * amb;
 
   // and a soft bloom follows the pointer so the field answers the viewer, never inert.
   vec2 ptr = u_pointer * u_res;
   float pd = length(gl_FragCoord.xy - ptr) / u_res.y;
   float bloom = exp(-pd*pd*2.6);
-  col += glyph * bloom * 0.09;
-  col += hsl2rgb(vec3(mod(u_seed*0.1 + 0.52, 1.0), 0.72, 0.6)) * bloom * 0.06;
+  col += glyph * bloom * 0.09 * amb;
+  col += hsl2rgb(vec3(mod(u_seed*0.1 + 0.52, 1.0), 0.72, 0.6)) * bloom * 0.06 * amb;
 
   // corpus veil, smoothed: a faint chromatic shimmer, a very occasional soft tear, light grain.
   // The corruption is a whisper now, not a fight with the text.
