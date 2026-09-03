@@ -1721,14 +1721,25 @@ function drawAcidDuotone(ctx, width, height, tick, seed, palette) {
   ctx.restore();
 }
 
+// The current device scale of a context: renderSpecimen draws in reference
+// units under setTransform(scale), but drawImage reads its SOURCE rect from
+// the backing store in device pixels. Stub contexts without a matrix get 1.
+function deviceScale(ctx) {
+  const m = typeof ctx.getTransform === "function" ? ctx.getTransform() : null;
+  return m && Number.isFinite(m.a) && m.a > 0 ? m.a : 1;
+}
+
 /* The house destruction finisher: coarse-grid self-displacement, pixel-sort
    smears, dither noise patches, channel fringe, and 1-3 flat hot rects.
-   seed=null means true-random (a live one-off is sanctioned). */
+   seed=null means true-random (a live one-off is sanctioned). Source rects
+   are scaled by the device scale so a slice copies the pixels under it rather
+   than a magnified corner of the plate. */
 export function applyDatabend(ctx, width, height, seed = null, intensity = 0.5) {
   const seedNum = seed == null ? null : hashRoute(String(seed));
   const R = (salt) => (seedNum == null ? Math.random() : rand(seedNum, salt));
   const source = ctx.canvas;
   if (!source) return false;
+  const k = deviceScale(ctx);
   ctx.save();
   ctx.globalCompositeOperation = "source-over";
   // 1) grid displacement
@@ -1740,7 +1751,7 @@ export function applyDatabend(ctx, width, height, seed = null, intensity = 0.5) 
     const sw = Math.floor(width * (0.12 + R(11 + i * 5) * 0.4));
     const sx = Math.floor(R(12 + i * 5) * (width - sw));
     const dx = Math.floor((R(13 + i * 5) - 0.5) * width * 0.22 * intensity * 2);
-    try { ctx.drawImage(source, sx, sy, sw, rh, sx + dx, sy, sw, rh); } catch (e) { break; }
+    try { ctx.drawImage(source, sx * k, sy * k, sw * k, rh * k, sx + dx, sy, sw, rh); } catch (e) { break; }
   }
   // 2) pixel-sort smears: stretch a thin slice wide
   const smears = Math.floor(5 + intensity * 9);
@@ -1749,7 +1760,7 @@ export function applyDatabend(ctx, width, height, seed = null, intensity = 0.5) 
     const sx = Math.floor(R(61 + i * 4) * (width - 4));
     const sh = 2 + Math.floor(R(62 + i * 4) * 8);
     const len = Math.floor(width * (0.1 + R(63 + i * 4) * 0.5));
-    try { ctx.drawImage(source, sx, sy, 2, sh, sx, sy, len, sh); } catch (e) { break; }
+    try { ctx.drawImage(source, sx * k, sy * k, 2 * k, sh * k, sx, sy, len, sh); } catch (e) { break; }
   }
   // 3) dither noise patches
   const patches = 2 + Math.floor(R(100) * 2);
@@ -1767,11 +1778,13 @@ export function applyDatabend(ctx, width, height, seed = null, intensity = 0.5) 
       }
     }
   }
-  // 4) channel fringe: shifted low-alpha self-copies
+  // 4) channel fringe: shifted low-alpha self-copies, the whole backing store
+  //    mapped back into the reference frame so the ghost is not magnified
+  const sw0 = source.width || width * k, sh0 = source.height || height * k;
   ctx.globalAlpha = 0.22;
   try {
-    ctx.drawImage(source, 3, 0);
-    ctx.drawImage(source, -3, 1);
+    ctx.drawImage(source, 0, 0, sw0, sh0, 3, 0, sw0 / k, sh0 / k);
+    ctx.drawImage(source, 0, 0, sw0, sh0, -3, 1, sw0 / k, sh0 / k);
   } catch (e) { /* stub contexts without full drawImage support */ }
   ctx.globalAlpha = 1;
   // 5) flat hot rects
@@ -2212,6 +2225,235 @@ function drawShowpieceLantern(ctx, width, height, tick, seed, palette) {
 function drawShowpieceRuin(ctx, width, height, tick, seed, palette) {
   drawPixelSortRuin(ctx, width, height, tick, seed, palette);
   drawAuroraLeak(ctx, width, height, tick, seed + 17, palette);
+}
+
+/* Showpiece: the aperture. A luminous orb behind an iris of fine-lined
+   blades, ringed by an instrument scale, on a scanlined ground. Everything
+   is hairline and geometry; the palette's one hot mark is the index tick. */
+const APERTURE_WHITE = [246, 241, 230];
+const apertureRgba = (c, a) => `rgba(${Math.round(c[0])},${Math.round(c[1])},${Math.round(c[2])},${a.toFixed(3)})`;
+
+function apertureSpec(width, height, seed) {
+  const rnd = (salt) => rand(seed, 5200 + salt);
+  const R = Math.min(width, height) * (0.30 + rnd(1) * 0.06);
+  return {
+    cx: width * (0.5 + (rnd(2) - 0.5) * 0.24),
+    cy: height * (0.5 + (rnd(3) - 0.5) * 0.16),
+    R,
+    blades: 7 + Math.floor(rnd(4) * 5),
+    ro: R * (0.42 + rnd(5) * 0.2),
+    phase: rnd(6) * Math.PI * 2,
+    hotAngle: rnd(7) * Math.PI * 2,
+    rnd,
+  };
+}
+
+// The polygonal opening the blade edges leave: vertices sit half a step off
+// the blade angles at the circumradius of the tangent polygon.
+function apertureOpeningPath(ctx, a, scale = 1, rot = 0) {
+  const n = a.blades;
+  const rr = (a.ro * scale) / Math.cos(Math.PI / n);
+  ctx.beginPath();
+  for (let i = 0; i < n; i += 1) {
+    const th = a.phase + rot + (i + 0.5) * (Math.PI * 2 / n);
+    const x = a.cx + Math.cos(th) * rr;
+    const y = a.cy + Math.sin(th) * rr;
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+}
+
+function drawApertureGround(ctx, width, height, a) {
+  ctx.fillStyle = "rgba(3,4,9,0.92)";
+  ctx.fillRect(0, 0, width, height);
+  // scanlines whose weight falls off with distance from the orb
+  const reach = Math.max(width, height);
+  for (let y = 0; y < height; y += 3) {
+    const t = clamp(1 - Math.abs(y - a.cy) / reach, 0, 1);
+    ctx.fillStyle = `rgba(255,255,255,${(0.012 + t * 0.03).toFixed(3)})`;
+    ctx.fillRect(0, y, width, 1);
+  }
+  // radial hairlines from beyond the scale ring out past the plate edge
+  ctx.lineWidth = 0.6;
+  const n = 90;
+  for (let i = 0; i < n; i += 1) {
+    const th = a.phase + (i / n) * Math.PI * 2 + (a.rnd(20 + i) - 0.5) * 0.02;
+    const r0 = a.R * 1.16 + a.rnd(120 + i) * a.R * 0.3;
+    const alpha = i % 7 === 0 ? 0.12 : 0.04 + a.rnd(220 + i) * 0.04;
+    ctx.strokeStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
+    ctx.beginPath();
+    ctx.moveTo(a.cx + Math.cos(th) * r0, a.cy + Math.sin(th) * r0);
+    ctx.lineTo(a.cx + Math.cos(th) * reach * 1.5, a.cy + Math.sin(th) * reach * 1.5);
+    ctx.stroke();
+  }
+}
+
+function drawApertureOrb(ctx, width, height, a, palette) {
+  const sup = (palette && palette.roleSupport) || [120, 160, 220];
+  const mid = palette && typeof palette.ramp === "function" ? palette.ramp(0.35) : sup;
+  ctx.save();
+  ctx.globalCompositeOperation = "lighter";
+  // the halo that leaks past the iris
+  const halo = ctx.createRadialGradient(a.cx, a.cy, a.R, a.cx, a.cy, a.R * 1.7);
+  halo.addColorStop(0, apertureRgba(sup, 0.16));
+  halo.addColorStop(1, apertureRgba(sup, 0));
+  ctx.fillStyle = halo;
+  ctx.fillRect(0, 0, width, height);
+  // the orb: warm white core cooling through the palette to the ring
+  const core = ctx.createRadialGradient(a.cx, a.cy, 0, a.cx, a.cy, a.R * 1.15);
+  core.addColorStop(0, apertureRgba(APERTURE_WHITE, 0.95));
+  core.addColorStop(0.3, apertureRgba(mid, 0.6));
+  core.addColorStop(0.7, apertureRgba(sup, 0.18));
+  core.addColorStop(1, apertureRgba(sup, 0));
+  ctx.fillStyle = core;
+  ctx.beginPath();
+  ctx.arc(a.cx, a.cy, a.R * 1.15, 0, Math.PI * 2);
+  ctx.fill();
+  // diffraction spikes through the centre, as thin fading needles
+  const spikes = 2 + Math.floor(a.rnd(30) * 3);
+  for (let i = 0; i < spikes; i += 1) {
+    const th = a.phase + (i / spikes) * Math.PI;
+    const len = a.R * (1.2 + a.rnd(31 + i) * 0.9);
+    const nx = Math.cos(th + Math.PI / 2) * 1.2, ny = Math.sin(th + Math.PI / 2) * 1.2;
+    for (const s of [1, -1]) {
+      const tipX = a.cx + Math.cos(th) * len * s, tipY = a.cy + Math.sin(th) * len * s;
+      const g = ctx.createLinearGradient(a.cx, a.cy, tipX, tipY);
+      g.addColorStop(0, apertureRgba(APERTURE_WHITE, 0.5));
+      g.addColorStop(1, apertureRgba(APERTURE_WHITE, 0));
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.moveTo(a.cx + nx, a.cy + ny);
+      ctx.lineTo(tipX, tipY);
+      ctx.lineTo(a.cx - nx, a.cy - ny);
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+  ctx.restore();
+}
+
+// The iris body: a disc with the opening cut out, brushed with concentric
+// arcs, then the pinwheel of blade edges running from each vertex out to
+// the ring. Everything is clipped to the blade area.
+function drawApertureBlades(ctx, a) {
+  const n = a.blades;
+  const irisPath = () => {
+    ctx.beginPath();
+    ctx.arc(a.cx, a.cy, a.R, 0, Math.PI * 2);
+    const rr = a.ro / Math.cos(Math.PI / n);
+    for (let i = 0; i < n; i += 1) {
+      const th = a.phase + (i + 0.5) * (Math.PI * 2 / n);
+      const x = a.cx + Math.cos(th) * rr, y = a.cy + Math.sin(th) * rr;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+  };
+  ctx.save();
+  irisPath();
+  ctx.fillStyle = "rgba(12,12,16,0.9)";
+  ctx.fill("evenodd");
+  irisPath();
+  ctx.clip("evenodd");
+  for (let r = a.ro * 1.02; r < a.R; r += 2) {
+    const k = Math.floor(r);
+    const start = a.rnd(400 + k) * Math.PI * 2, span = 0.6 + a.rnd(500 + k) * 3;
+    ctx.strokeStyle = `rgba(255,255,255,${(0.03 + a.rnd(600 + k) * 0.07).toFixed(3)})`;
+    ctx.lineWidth = 0.6;
+    ctx.beginPath();
+    ctx.arc(a.cx, a.cy, r, start, start + span);
+    ctx.stroke();
+  }
+  const tanH = Math.tan(Math.PI / n), out = Math.sqrt(Math.max(0, a.R * a.R - a.ro * a.ro));
+  for (let i = 0; i < n; i += 1) {
+    const th = a.phase + i * (Math.PI * 2 / n);
+    const dx = -Math.sin(th), dy = Math.cos(th), rx = Math.cos(th), ry = Math.sin(th);
+    const px = a.cx + rx * a.ro, py = a.cy + ry * a.ro;
+    for (let j = 0; j < 4; j += 1) {
+      const off = j * 1.6;
+      ctx.strokeStyle = `rgba(255,255,255,${(0.55 - j * 0.13).toFixed(3)})`;
+      ctx.lineWidth = j === 0 ? 0.9 : 0.6;
+      ctx.beginPath();
+      ctx.moveTo(px - dx * a.ro * tanH + rx * off, py - dy * a.ro * tanH + ry * off);
+      ctx.lineTo(px + dx * out + rx * off, py + dy * out + ry * off);
+      ctx.stroke();
+    }
+  }
+  ctx.restore();
+}
+
+// Inside the opening: chords across the orb and nested rotated openings,
+// so the light reads as a cut stone rather than a flat disc.
+function drawApertureCrystal(ctx, a) {
+  ctx.save();
+  apertureOpeningPath(ctx, a);
+  ctx.clip();
+  ctx.lineWidth = 0.6;
+  const rr = a.ro / Math.cos(Math.PI / a.blades);
+  ctx.strokeStyle = "rgba(8,10,16,0.16)";
+  for (let i = 0; i < 30; i += 1) {
+    const t0 = a.rnd(700 + i) * Math.PI * 2, t1 = a.rnd(740 + i) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(a.cx + Math.cos(t0) * rr, a.cy + Math.sin(t0) * rr);
+    ctx.lineTo(a.cx + Math.cos(t1) * rr, a.cy + Math.sin(t1) * rr);
+    ctx.stroke();
+  }
+  ctx.strokeStyle = apertureRgba(APERTURE_WHITE, 0.28);
+  for (const [s, rot] of [[0.8, 0.13], [0.6, 0.31], [0.4, 0.52]]) {
+    apertureOpeningPath(ctx, a, s, rot);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+// The instrument scale: a ring, ticks every three degrees (long on the
+// thirties), a dashed outer ring, and the single hot index mark.
+function drawApertureScale(ctx, a, palette) {
+  const hot = (palette && palette.roleHot) || [244, 60, 120];
+  ctx.lineWidth = 0.7;
+  ctx.strokeStyle = "rgba(255,255,255,0.5)";
+  ctx.beginPath();
+  ctx.arc(a.cx, a.cy, a.R * 1.02, 0, Math.PI * 2);
+  ctx.stroke();
+  for (let deg = 0; deg < 360; deg += 3) {
+    const th = a.phase + deg * Math.PI / 180, long = deg % 30 === 0;
+    const r0 = a.R * 1.04, r1 = a.R * (long ? 1.11 : 1.08);
+    ctx.strokeStyle = long ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.28)";
+    ctx.lineWidth = long ? 1 : 0.6;
+    ctx.beginPath();
+    ctx.moveTo(a.cx + Math.cos(th) * r0, a.cy + Math.sin(th) * r0);
+    ctx.lineTo(a.cx + Math.cos(th) * r1, a.cy + Math.sin(th) * r1);
+    ctx.stroke();
+  }
+  ctx.setLineDash([2, 4]);
+  ctx.lineWidth = 0.6;
+  ctx.strokeStyle = "rgba(255,255,255,0.22)";
+  ctx.beginPath();
+  ctx.arc(a.cx, a.cy, a.R * 1.14, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  const th = a.hotAngle;
+  ctx.strokeStyle = apertureRgba(hot, 0.95);
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(a.cx + Math.cos(th) * a.R * 1.03, a.cy + Math.sin(th) * a.R * 1.03);
+  ctx.lineTo(a.cx + Math.cos(th) * a.R * 1.2, a.cy + Math.sin(th) * a.R * 1.2);
+  ctx.stroke();
+  ctx.fillStyle = apertureRgba(hot, 0.95);
+  ctx.beginPath();
+  ctx.arc(a.cx + Math.cos(th) * a.R * 1.25, a.cy + Math.sin(th) * a.R * 1.25, 2.2, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function drawShowpieceAperture(ctx, width, height, tick, seed, palette) {
+  const a = apertureSpec(width, height, seed);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  drawApertureGround(ctx, width, height, a);
+  drawApertureOrb(ctx, width, height, a, palette);
+  drawApertureBlades(ctx, a);
+  drawApertureCrystal(ctx, a);
+  drawApertureScale(ctx, a, palette);
+  ctx.restore();
 }
 
 /* ---------------------------------------------------------------------------
@@ -2727,6 +2969,7 @@ const SPECIMEN_LAYERS = {
   "dla-coral": drawDlaCoral,
   "weave-lattice": drawWeaveLattice,
   "fiber-terrain": drawFiberTerrain,
+  "showpiece-aperture": drawShowpieceAperture,
   "showpiece-lantern": drawShowpieceLantern,
   "showpiece-ruin": drawShowpieceRuin,
   "showpiece-veil": drawShowpieceVeil,
@@ -2766,6 +3009,7 @@ export function specimenLayerNames() {
 // Curated family for every instrument, for pages that shelve the vocabulary
 // by register instead of one flat wall. Names missing here land in "more".
 const SPECIMEN_FAMILIES = {
+  "showpiece-aperture": "showpieces",
   "showpiece-lantern": "showpieces", "showpiece-ruin": "showpieces",
   "showpiece-veil": "showpieces", "showpiece-burst": "showpieces",
   "showpiece-weave": "showpieces",
@@ -2822,6 +3066,16 @@ for (const meta of [
 ]) {
   if (meta.blurb) SPECIMEN_BLURBS[meta.name] = meta.blurb;
 }
+// The showpieces are composed in this file rather than in an instrument
+// module, so their blurbs live here beside them.
+Object.assign(SPECIMEN_BLURBS, {
+  "showpiece-aperture": "a luminous orb behind an iris of fine-lined blades, ringed by an instrument scale",
+  "showpiece-lantern": "a folded paper lantern hung in a column of light",
+  "showpiece-ruin": "a pixel-sorted ruin under an aurora leak",
+  "showpiece-veil": "folded veils of light crossing at star caustics, lightly bent",
+  "showpiece-burst": "an obsidian burst with an aurora leaking through",
+  "showpiece-weave": "riso overprint moire grown through with dendrites",
+});
 export function specimenLayerBlurbs() {
   return { ...SPECIMEN_BLURBS };
 }

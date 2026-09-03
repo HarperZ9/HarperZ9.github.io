@@ -7,7 +7,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { renderSpecimen, mountSpecimens, specimenLayerNames } from "./generative-field.js";
+import { renderSpecimen, mountSpecimens, specimenLayerNames, specimenLayerBlurbs } from "./generative-field.js";
 
 function round(value) {
   return typeof value === "number" ? Number(value.toFixed(6)) : String(value);
@@ -230,6 +230,36 @@ test("applyDatabend draws over an existing frame and respects null seed randomne
   assert.ok(log.length > mid + 10, "random databend should draw");
 });
 
+// renderSpecimen draws in reference units under setTransform(scale) while
+// drawImage reads its source rect from the device-pixel backing store, so the
+// source rect of every self-copy must be the device scale times its dest rect.
+function nineArgDrawImages(log) {
+  return log.filter((entry) => entry[0] === "drawImage" && entry.length === 10);
+}
+
+test("applyDatabend reads source rects in device pixels under a scaled transform", () => {
+  const { canvas, log } = makeCanvas(640, 300);
+  const ctx = canvas.getContext();
+  ctx.getTransform = () => ({ a: 2, d: 2 });
+  ctx.canvas = { width: 1280, height: 600 };
+  assert.equal(applyDatabend(ctx, 640, 300, "bend-scale", 0.5), true);
+  const copies = nineArgDrawImages(log);
+  assert.ok(copies.length > 10, "the slices and smears go through the 9-arg drawImage");
+  for (const c of copies) assert.equal(c[5], 2 * c[9], `source height is 2x the dest height: ${c.slice(1)}`);
+  const fringe = copies.filter((c) => c[2] === 0 && c[3] === 0 && c[4] === 1280 && c[5] === 600);
+  assert.equal(fringe.length, 2, "the channel fringe copies the whole backing store");
+  assert.deepEqual(fringe[0].slice(6), [3, 0, 640, 300]);
+  assert.deepEqual(fringe[1].slice(6), [-3, 1, 640, 300]);
+});
+
+test("applyDatabend falls back to a device scale of 1 without a transform matrix", () => {
+  const { canvas, log } = makeCanvas(640, 300);
+  const ctx = canvas.getContext();
+  ctx.canvas = { width: 640, height: 300 };
+  assert.equal(applyDatabend(ctx, 640, 300, "bend-flat", 0.5), true);
+  for (const c of nineArgDrawImages(log)) assert.equal(c[5], c[9], `source and dest heights match: ${c.slice(1)}`);
+});
+
 /* ── wave 3: the deep corpus ─────────────────────────────────────────────── */
 const WAVE3_LAYERS = [
   "stellated-lantern", "fiber-strands", "pixel-sort-ruin", "ifs-veil",
@@ -318,5 +348,28 @@ test("wave-3 families are registered and render deterministically per seed", () 
     assert.deepEqual(a, b, `${layer} must be deterministic for a seed`);
     const c = renderLog(`w3-${layer}-other`, [layer], 240, 160).log;
     assert.notDeepEqual(a, c, `${layer} must vary with the seed`);
+  }
+});
+
+/* ── the aperture showpiece ──────────────────────────────────────────────── */
+test("showpiece-aperture leads the showpieces, draws over the backdrop, and is seed-stable", () => {
+  const names = specimenLayerNames();
+  assert.ok(names.includes("showpiece-aperture"), "showpiece-aperture is registered");
+  assert.ok(names.indexOf("showpiece-aperture") < names.indexOf("showpiece-lantern"), "the aperture is the first showpiece chip");
+  const baseline = renderLog("aperture-base", ["__backdrop-only__"], 480, 300).log.length;
+  const a = renderLog("aperture-one", ["showpiece-aperture"], 480, 300).log;
+  const b = renderLog("aperture-one", ["showpiece-aperture"], 480, 300).log;
+  const c = renderLog("aperture-two", ["showpiece-aperture"], 480, 300).log;
+  assert.ok(a.length > baseline + 400, `the aperture draws hairlines, ticks, and blades (${a.length} vs ${baseline})`);
+  assert.deepEqual(a, b, "same seed, same plate");
+  assert.notDeepEqual(a, c, "a different seed moves the iris");
+  const dashes = a.filter((entry) => entry[0] === "setLineDash").length;
+  assert.equal(dashes, 2, "the dashed outer ring is switched on and back off");
+});
+
+test("every showpiece carries a blurb for the chip tooltip", () => {
+  const blurbs = specimenLayerBlurbs();
+  for (const name of specimenLayerNames().filter((n) => n.startsWith("showpiece-"))) {
+    assert.ok(blurbs[name] && blurbs[name].length > 20, `${name} has a blurb`);
   }
 });

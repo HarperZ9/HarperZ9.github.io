@@ -5,12 +5,12 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Gallery &middot; Zain Dana Harper</title>
-<meta name="description" content="Name a seed, pick from ninety-four instruments, and this site's own engine draws your plate in the browser. Forty-two full-size plates sit below it.">
+<meta name="description" content="Name a seed, pick from ninety-five instruments, and this site's own engine draws your plate in the browser. Forty-two full-size plates sit below it.">
 <link rel="canonical" href="https://harperz9.github.io/gallery.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Gallery &middot; Zain Dana Harper">
-<meta property="og:description" content="Name a seed, pick from ninety-four instruments, and this site's own engine draws your plate in the browser. Forty-two full-size plates sit below it.">
+<meta property="og:description" content="Name a seed, pick from ninety-five instruments, and this site's own engine draws your plate in the browser. Forty-two full-size plates sit below it.">
 <meta property="og:url" content="https://harperz9.github.io/gallery.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/gallery.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -174,7 +174,7 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Gallery</span></div>
   <div class="mid">
     <h1>Draw a plate, <span class="g">then see thirty more.</span></h1>
-    <p class="lede">The desk is first: name a seed, pick instruments from ninety-four, and this site&rsquo;s own engine (<span translate="no">system/generative-field.js</span>) draws your plate in your browser. Below it, forty-two full-size plates and a contact sheet of the instruments behind them. Every caption carries the recipe: layers first, seed second.</p>
+    <p class="lede">The desk is first: name a seed, pick instruments from ninety-five, and this site&rsquo;s own engine (<span translate="no">system/generative-field.js</span>) draws your plate in your browser. Below it, forty-two full-size plates and a contact sheet of the instruments behind them. Every caption carries the recipe: layers first, seed second.</p>
   </div>
   <div class="seal">procedural &middot; seeded plates repeat exactly &middot; live plates never do</div>
 </div>
@@ -183,7 +183,7 @@
 
 <section class="mv" id="printdesk" aria-labelledby="printdesk-h">
   <h2 id="printdesk-h">The print desk.</h2>
-  <p class="body-text">Start here. Name a seed, pick up to three of the ninety-four instruments, and the engine draws your plate on this page. The same seed and instruments reproduce the same plate on any visit, so save the PNG or copy a link that redraws it. If you would rather see what the engine can do first, the exhibition is directly below.</p>
+  <p class="body-text">Start here. Name a seed, pick up to three of the ninety-five instruments, and the engine draws your plate on this page. The same seed and instruments reproduce the same plate on any visit, so save the PNG or copy a link that redraws it. If you would rather see what the engine can do first, the exhibition is directly below.</p>
   <div class="desk-stage">
     <div class="desk-plate-col">
       <figure class="plate desk-plate" data-plate="desk">
@@ -1037,7 +1037,7 @@ const deskChips = document.getElementById("desk-chips");
 const deskStatus = document.getElementById("desk-status");
 const deskTitle = document.getElementById("desk-title");
 const deskMeta = document.getElementById("desk-meta");
-const picked = new Set(["showpiece-veil"]);
+const picked = new Set(["showpiece-aperture"]);
 const locked = new Set();
 const chipRefs = new Map();
 
@@ -1141,6 +1141,7 @@ if (deskChips) {
 // (locks clear, the seed stays) and draws. Only recipes whose instruments all
 // exist are offered, so the list can lead the library by a wave.
 const DESK_RECIPES = [
+  { name: "open aperture", layers: ["showpiece-aperture", "aurora-leak"] },
   { name: "lantern night", layers: ["showpiece-lantern", "aurora-leak"] },
   { name: "overprint cloth", layers: ["riso-moire", "weave-lattice", "dendrite"] },
   { name: "signal ruin", layers: ["databend", "pixel-sort-ruin", "scanline"] },
@@ -1252,7 +1253,30 @@ if (deskFxClear) deskFxClear.addEventListener("click", () => {
   activeFx.length = 0; syncFx(); say("effects off"); drawDesk();
 });
 
-function drawDesk() {
+// Mirror the drawn state into the address bar so every draw and every reroll
+// is immediately linkable; a material plate is marked so the link says
+// honestly that its base image lives only in the visitor's browser.
+function mirrorDeskState(seed, layers) {
+  try {
+    const url = new URL(location.href);
+    url.searchParams.set("seed", seed);
+    url.searchParams.set("layers", layers.join(","));
+    // A treated plate is only reproducible if the treatment travels with the
+    // link, so the stack and its strength ride along in switch-on order.
+    if (activeFx.length) {
+      url.searchParams.set("fx", activeFx.join(","));
+      url.searchParams.set("fxa", String(fxAmount()));
+    } else { url.searchParams.delete("fx"); url.searchParams.delete("fxa"); }
+    if (material.active) url.searchParams.set("material", "own"); else url.searchParams.delete("material");
+    history.replaceState(null, "", url);
+  } catch (error) {
+    console.warn("gallery: address-bar state mirror skipped", error);
+  }
+}
+
+// opts.mirror=false draws without touching the address bar (the arrival
+// plate), so a visitor's first link is one they chose to make.
+function drawDesk(opts = {}) {
   if (!deskCanvas) return;
   const seed = deskSeedValue();
   const layers = [...picked];
@@ -1272,24 +1296,7 @@ function drawDesk() {
       if (deskTitle) deskTitle.textContent = `${seed} · ${layers.join(" + ")}`;
       if (deskMeta) deskMeta.textContent = `seed ${seed} · ${layers.join(" + ")}${fxLine} · reproducible on any visit`;
     }
-    // Mirror the drawn state into the address bar so every draw and every
-    // reroll is immediately linkable; a material plate is marked so the link
-    // says honestly that its base image lives only in the visitor's browser.
-    try {
-      const url = new URL(location.href);
-      url.searchParams.set("seed", seed);
-      url.searchParams.set("layers", layers.join(","));
-      // A treated plate is only reproducible if the treatment travels with the
-      // link, so the stack and its strength ride along in switch-on order.
-      if (activeFx.length) {
-        url.searchParams.set("fx", activeFx.join(","));
-        url.searchParams.set("fxa", String(fxAmount()));
-      } else { url.searchParams.delete("fx"); url.searchParams.delete("fxa"); }
-      if (material.active) url.searchParams.set("material", "own"); else url.searchParams.delete("material");
-      history.replaceState(null, "", url);
-    } catch (error) {
-      console.warn("gallery: address-bar state mirror skipped", error);
-    }
+    if (opts.mirror !== false) mirrorDeskState(seed, layers);
   }
 }
 
@@ -1641,6 +1648,12 @@ if (linkSeed && linkLayers.length && deskCanvas) {
   drawDesk();
   const desk = document.getElementById("printdesk");
   if (desk) desk.scrollIntoView();
+} else if (deskCanvas && picked.size) {
+  // Plain arrival: the desk opens on today's plate with the default pick, so
+  // the first frame a visitor sees is a drawing rather than an empty stage.
+  // Nothing scrolls and the address bar stays clean until they draw.
+  if (deskSeed && !deskSeed.value.trim()) deskSeed.value = daily;
+  drawDesk({ mirror: false });
 }
 
 /* ── the editions desk: the open-edition ledger ─────────────────────────────
