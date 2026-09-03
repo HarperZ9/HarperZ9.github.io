@@ -200,9 +200,11 @@ function boot() {
       if (render) {
         // Ask the plate renderer for the loom's own 16:10 frame; without a
         // size it measured this detached canvas as a 640x150 banner and the
-        // cover-fit below cropped most of the plate away.
+        // cover-fit below cropped most of the plate away. The lantern star
+        // over caustic veils is the plate whose form survives the draft: its
+        // points still read once the tones become lifted and sunk threads.
         const t = document.createElement("canvas"); t.width = 640; t.height = 400;
-        render(t, "folded-light", ["showpiece-veil"], null, 0.6, { size: [640, 400] });
+        render(t, "folded-light", ["caustic-veils", "stellated-lantern"], null, 0.6, { size: [640, 400] });
         const ctx = src.getContext("2d");
         const sc = Math.max(src.width / t.width, src.height / t.height);
         ctx.fillStyle = "#07070c"; ctx.fillRect(0, 0, src.width, src.height);
