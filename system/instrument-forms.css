@@ -556,3 +556,33 @@ body.instrument-surface .re-privacy,
 body.instrument-surface .re-keys,
 body.instrument-surface .re-hint{font-size:.76rem}
 body.instrument-surface .re-keys kbd{font-size:.72rem}
+
+/* ── the hero aperture ─────────────────────────────────────────────────────
+   The masthead grid is the full viewport and its text column caps at 37rem,
+   so on a wide screen the right two thirds of the first screen carried
+   nothing. That is the wrong first impression for a page whose subject is
+   what it can draw. system/hero-aperture.js paints the site's recurring
+   form there, one per surface, tuned by hue and blade count.
+
+   Negative z-index inside .frame, which is its own stacking context at
+   z-index 4: the orb sits under the headline and over the ground, and the
+   z-index-60 veil still passes its scanline and grain across it, so the
+   canvas belongs to the page rather than sitting on top of it.
+
+   Sized off the short axis and anchored right so it clears the text column
+   at every desktop width. Below 900px there is no leftover column to fill
+   and the script does not mount, so the box collapses to nothing. */
+body.instrument-surface .frame>.hero-aperture{
+  position:absolute; z-index:-1; pointer-events:none;
+  width:min(62vh,38vw); height:min(62vh,38vw);
+  right:clamp(0.5rem,2vw,3rem); top:50%; transform:translateY(-50%);
+  opacity:0; transition:opacity 1.4s ease;
+}
+body.instrument-surface .frame>.hero-aperture[data-mode="live"],
+body.instrument-surface .frame>.hero-aperture[data-mode="still"]{opacity:1}
+@media (max-width:899px){
+  body.instrument-surface .frame>.hero-aperture{display:none}
+}
+@media print{
+  body.instrument-surface .frame>.hero-aperture{display:none}
+}

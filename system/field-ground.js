@@ -9,7 +9,10 @@
 // (so each page is its own variation) and a MODE that swaps the generative technique --
 //   0 aperture-flow (warped corona + flowing contours),
 //   1 crystalline   (drifting Voronoi facets, refractive spectral edges),
-//   2 growth-rings  (concentric fbm-warped rings that dilate over time).
+//   2 growth-rings  (concentric fbm-warped rings that dilate over time),
+//   3 filament-net  (a domain-warped Voronoi network of fine branching threads),
+//   4 curtains      (vertical bands of light, brighter toward the top of the frame),
+//   5 corona        (radial filaments around a hot core).
 // All modes share the palette, grain, chromatic shimmer and one flare, so they blend across pages.
 // The home passes hero:1 to bloom an intense aperture behind the masthead that dissolves on scroll.
 //
