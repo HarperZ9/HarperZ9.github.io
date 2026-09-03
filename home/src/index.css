@@ -142,7 +142,14 @@ body {
   font-size: var(--step-0);
   line-height: 1.6;
   color: var(--ink);
-  background: var(--void);
+  /* No background here on purpose. `html` above already paints --void, and the root element's
+     background is the one that fills the viewport. A background on `body` is an ordinary
+     in-flow block background, and in CSS painting order that comes AFTER any descendant
+     stacking context with a negative z-index, so an opaque one covered both the WebGL ground
+     field at z-index -2 and the vignette at -1. The field ran the whole time and was composited
+     into nothing: measured at 1440x900 the first screen went from mean luminance 17.1 to 36.8
+     the moment this line came out. Anything that needs a solid ground behind it should say so
+     on its own box. */
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: clip; /* not `hidden`: hidden makes body a scroll container and silently breaks anchor scrolling */
