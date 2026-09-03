@@ -5,7 +5,7 @@
 // keeps the loom warm on arrival. Exports: WIF draft, chart PNG, cloth PNG,
 // and the cloth handed back to the Retro Engine's pixel pipeline.
 import { STRUCTURES, computeDraft, draftToWIF, weftPaletteFor, wifToDraft } from "./weave-engine.js?v=20260813-wif";
-import { renderCloth, renderDraftChart, chartLayout } from "./weave-render.js?v=20260813-edit";
+import { renderCloth, renderDraftChart, chartLayout } from "./weave-render.js?v=20260902-thread";
 import { sendPiece, receiveTrail, mountFlow } from "./workbench.js?v=20260812-cohesion";
 
 const $ = (id) => document.getElementById(id);
@@ -198,10 +198,11 @@ function boot() {
       const mod = await import("./generative-field.js");
       const render = mod.renderSpecimen || mod.renderPlate;
       if (render) {
-        // The plate renderer may resize its canvas to a banner; cover-fit the
-        // result into the loom's 16:10 frame so the default cloth fills it.
+        // Ask the plate renderer for the loom's own 16:10 frame; without a
+        // size it measured this detached canvas as a 640x150 banner and the
+        // cover-fit below cropped most of the plate away.
         const t = document.createElement("canvas"); t.width = 640; t.height = 400;
-        render(t, "folded-light", ["showpiece-veil"]);
+        render(t, "folded-light", ["showpiece-veil"], null, 0.6, { size: [640, 400] });
         const ctx = src.getContext("2d");
         const sc = Math.max(src.width / t.width, src.height / t.height);
         ctx.fillStyle = "#07070c"; ctx.fillRect(0, 0, src.width, src.height);
