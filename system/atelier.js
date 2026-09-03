@@ -2025,10 +2025,23 @@
       });
     }
 
+    // Size to the STAGE, not to the canvas. The canvas carries width:auto/height:auto in CSS
+    // (.viewport-stage canvas), so its layout box follows its own width/height attributes:
+    // measuring the canvas measured whatever it was last set to, a fixed point that pinned the
+    // plate at the 360 written in the markup however much stage it was given. On a 1440x900
+    // screen that left a 360 square adrift in a 749x448 stage, 39% of it covered.
+    //
+    // Square, because the drawing is square: drawStrokes fits every study into min(W,H), so a
+    // canvas as wide as the stage would only add black margin the stage already paints, and the
+    // pointer-play particles would spawn across a band with no art under it.
     function sizeCanvas() {
       var dpr = Math.min(2, window.devicePixelRatio || 1);
-      var rect = canvas.getBoundingClientRect();
-      var w = Math.max(1, Math.round(rect.width)), h = Math.max(1, Math.round(rect.height));
+      // clientWidth/clientHeight, not the bounding rect: the stage carries a 1px border, and a
+      // backing store sized to the border box would be resampled by that 1px on the way to screen.
+      var side = 0, stage = canvas.parentElement;
+      if (stage && stage.clientWidth > 1 && stage.clientHeight > 1) side = Math.min(stage.clientWidth, stage.clientHeight);
+      if (!side) { var r = canvas.getBoundingClientRect(); side = Math.min(r.width || 0, r.height || 0); }
+      var w = Math.max(1, Math.round(side)), h = w;
       canvas.width = w * dpr; canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       return [w, h];
