@@ -274,14 +274,20 @@
               title="Copy these into Your colors so you can edit them"
               aria-label="Adopt this palette into your own colours">Adopt these</button>
           </div></div>
-        <div class="re-field"><span class="re-lab">Pixel size <span class="re-val" id="re-tw-v">160</span></span><input type="range" id="re-tw" min="24" max="360" value="160" aria-label="Pixel size: target width of the pixel grid"></div>
+        <div class="re-field"><span class="re-lab">Pixel size <span class="re-val" id="re-tw-v">240</span></span><input type="range" id="re-tw" min="24" max="360" value="240" aria-label="Pixel size: target width of the pixel grid"></div>
         <div class="re-field"><span class="re-lab">Dither</span>
-          <select class="re-in" id="re-dither" aria-label="Dither pattern"><option value="bayer4">Bayer 4</option><option value="bayer2">Bayer 2</option><option value="bayer8">Bayer 8</option><option value="none">None</option></select></div>
-        <div class="re-field"><span class="re-lab">Curvature <span class="re-val" id="re-curv-v">0.4</span></span><input type="range" id="re-curv" aria-label="CRT curvature" min="0" max="100" value="40"></div>
-        <div class="re-field"><span class="re-lab">Bloom <span class="re-val" id="re-bloom-v">0.5</span></span><input type="range" id="re-bloom" aria-label="Bloom" min="0" max="100" value="50"></div>
-        <div class="re-field"><span class="re-lab">Vignette <span class="re-val" id="re-vig-v">0.4</span></span><input type="range" id="re-vig" aria-label="Vignette" min="0" max="100" value="40"></div>
-        <div class="re-field"><span class="re-lab">Scanlines <span class="re-val" id="re-scan-v">0.35</span></span><input type="range" id="re-scan" aria-label="Scanline strength" min="0" max="90" value="35"></div>
+          <select class="re-in" id="re-dither" aria-label="Dither pattern"><option value="bayer8">Bayer 8</option><option value="bayer4">Bayer 4</option><option value="bayer2">Bayer 2</option><option value="noise">Noise</option><option value="diffusion">Diffusion</option><option value="none">None</option></select></div>
+        <div class="re-field"><span class="re-lab">Dither strength <span class="re-val" id="re-dstr-v">0.80</span></span><input type="range" id="re-dstr" aria-label="Dither strength" min="0" max="100" value="80"></div>
         <div class="re-field"><span class="re-lab">Gamma <span class="re-val" id="re-gam-v">1.0</span></span><input type="range" id="re-gam" aria-label="Gamma" min="40" max="220" value="100"></div>
+        <div class="re-field"><span class="re-lab">Scanlines <span class="re-val" id="re-scan-v">0.35</span></span><input type="range" id="re-scan" aria-label="Scanline strength" min="0" max="90" value="35"></div>
+        <div class="re-field"><span class="re-lab">Phosphor mask</span>
+          <select class="re-in" id="re-mask" aria-label="Phosphor mask"><option value="grille">Aperture grille</option><option value="slot">Slot mask</option><option value="dot">Dot triad</option><option value="none">None</option></select></div>
+        <div class="re-field"><span class="re-lab">Mask strength <span class="re-val" id="re-maskamt-v">0.30</span></span><input type="range" id="re-maskamt" aria-label="Phosphor mask strength" min="0" max="100" value="30"></div>
+        <div class="re-field"><span class="re-lab">Bloom <span class="re-val" id="re-bloom-v">0.18</span></span><input type="range" id="re-bloom" aria-label="Bloom" min="0" max="100" value="18"></div>
+        <div class="re-field"><span class="re-lab">Halation <span class="re-val" id="re-hal-v">0.20</span></span><input type="range" id="re-hal" aria-label="Halation: the glow of the whole frame through the glass" min="0" max="100" value="20"></div>
+        <div class="re-field"><span class="re-lab">Curvature <span class="re-val" id="re-curv-v">0.12</span></span><input type="range" id="re-curv" aria-label="CRT curvature" min="0" max="100" value="12"></div>
+        <div class="re-field"><span class="re-lab">Colour fringe <span class="re-val" id="re-abr-v">0.10</span></span><input type="range" id="re-abr" aria-label="Colour fringe: radial separation of the colour channels" min="0" max="100" value="10"></div>
+        <div class="re-field"><span class="re-lab">Vignette <span class="re-val" id="re-vig-v">0.25</span></span><input type="range" id="re-vig" aria-label="Vignette" min="0" max="100" value="25"></div>
         <label class="re-toggle re-wide"><input type="checkbox" id="re-sdf"> Depth-shade (early 3D)</label>
       </fieldset>
       </details>
@@ -394,7 +400,7 @@
   <p class="re-keys" id="re-measure" aria-live="off"></p>
   <p class="re-keys" id="re-flow"></p>
   <p class="re-keys"><b>Keys</b> <kbd>F</kbd> full screen &middot; <kbd>R</kbd> randomize &middot; <kbd>S</kbd> save PNG &middot; <kbd>space</kbd> animate &middot; <kbd>[</kbd> <kbd>]</kbd> amount. Double-click the picture for full screen. Drag on the picture to move the light in most shaders.</p>
-  <p class="seal-line">The renderer is ordinary readable JavaScript: <span translate="no">system/retro-engine.js</span>, <span translate="no">system/retro-palettes.js</span>, <span translate="no">system/shader-runner.js</span>. Palettes and the dither and scanline math match the coherence-membrane <span translate="no">retro.py</span> pipeline, so a browser render and an offline render read as one instrument.</p>
+  <p class="seal-line">The renderer is ordinary readable JavaScript: <span translate="no">system/retro-engine.js</span>, <span translate="no">system/retro-palettes.js</span>, <span translate="no">system/shader-runner.js</span>. Palettes and the OKLab math match the coherence-membrane <span translate="no">retro.py</span> pipeline. The dither picks between the two nearest palette colours, and the tube stage adds a shaped beam, a phosphor mask, halation, and a bezel. Its scanline rows keep the <span translate="no">retro.py</span> row mean, so a browser render and an offline render agree in tone.</p>
 </section>
 
 <section class="retro-lab-section retro-lab-shell" id="retro-systems-lab" aria-labelledby="retro-lab-h">

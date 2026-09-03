@@ -1,35 +1,31 @@
-/* retro-engine.js — a live, in-browser retro / pixel-art renderer, upgraded.
+/* retro-engine.js: a live, in-browser retro / pixel-art renderer.
 
-   A faithful, extended port of coherence-membrane's retro.py vintage-CGI
-   pipeline, run live on a canvas:
+   A port of the coherence-membrane retro.py vintage-CGI pipeline, run live
+   on a canvas and extended at the two stages a tube would add:
 
      source -> OKLab field -> box-downscale (pixelate) -> palette
      (named hardware, ZentropyLabs custom, or auto-extracted from the image)
-     -> ordered Bayer dither (2/4/8) -> optional SDF depth-shade
-     -> nearest-neighbor upscale -> CRT stage (curvature, scanlines, bloom,
-     vignette).
+     -> palette-aware dither (ordered 2/4/8, blue-ish noise, or error
+     diffusion; retro-dither.js) -> optional SDF depth-shade
+     -> nearest-neighbor upscale -> tube stage (beam scanlines, phosphor
+     mask, bloom + halation, curvature, colour separation, bezel, vignette;
+     retro-crt.js).
 
-   Every material composes: `src` can be an <img>, an upload, a Studio source
-   canvas, or a generative plate, and `applyChain` layers the engine with any
-   Studio effect in either order. Palettes and the OKLab/dither/scanline math
-   come from retro.py, so a browser render and an offline retro.py render read
-   as one instrument. Zero dependencies. */
+   Every material composes: src can be an img, an upload, a Studio source
+   canvas, or a generative plate, and applyChain layers the engine with any
+   Studio effect in either order. Palettes and the OKLab math come from
+   retro.py; the dither picks between the two nearest palette entries so a
+   hardware palette with coarse steps still dithers; the scanline rows keep
+   the retro.py row mean by construction. Zero dependencies. */
 
 import {
-  srgbToOklab, oklabToSrgb, labPalette, nearestIndex, medianCut, RETRO_PALETTES,
+  srgbToOklab, oklabToSrgb, labPalette, medianCut, RETRO_PALETTES,
 } from "./retro-palettes.js";
 
 export { RETRO_PALETTES, paletteNames } from "./retro-palettes.js";
+import { ditherPlate } from "./retro-dither.js";
+import { crtStage, crtActive } from "./retro-crt.js";
 
-const BAYER = {
-  2: [[0, 2], [3, 1]],
-  4: [[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]],
-  8: [[0, 32, 8, 40, 2, 34, 10, 42], [48, 16, 56, 24, 50, 18, 58, 26],
-    [12, 44, 4, 36, 14, 46, 6, 38], [60, 28, 52, 20, 62, 30, 54, 22],
-    [3, 35, 11, 43, 1, 33, 9, 41], [51, 19, 59, 27, 49, 17, 57, 25],
-    [15, 47, 7, 39, 13, 45, 5, 37], [63, 31, 55, 23, 61, 29, 53, 21]],
-};
-const BAYER_MAX = { 2: 4, 4: 16, 8: 64 };
 
 function clamp(x, lo, hi) { return x < lo ? lo : x > hi ? hi : x; }
 function srcDims(s) {
@@ -66,75 +62,18 @@ function signedDistance(occ, w, h) {
   return out;
 }
 
-// The CRT stage: barrel curvature, then scanlines + bloom + vignette on tone.
-function crtStage(ctx, w, h, o) {
-  let img = ctx.getImageData(0, 0, w, h);
-  let d = img.data;
-
-  if (o.curvature > 0) {
-    const src = new Uint8ClampedArray(d);
-    const k = o.curvature * 0.35;
-    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
-      const u = (x / (w - 1)) * 2 - 1, v = (y / (h - 1)) * 2 - 1;
-      const r2 = u * u + v * v, f = 1 + k * r2;
-      const su = u * f, sv = v * f, i = (y * w + x) * 4;
-      if (su < -1 || su > 1 || sv < -1 || sv > 1) { d[i] = d[i + 1] = d[i + 2] = 0; continue; }
-      const sx = Math.round(((su + 1) / 2) * (w - 1)), sy = Math.round(((sv + 1) / 2) * (h - 1));
-      const j = (sy * w + sx) * 4;
-      d[i] = src[j]; d[i + 1] = src[j + 1]; d[i + 2] = src[j + 2];
-    }
-  }
-
-  if (o.bloom > 0) {
-    const th = 150, bl = new Float64Array(w * h * 3), tmp = new Float64Array(w * h * 3), R = 2;
-    for (let p = 0; p < w * h; p++) {
-      const i = p * 4, lum = (d[i] + d[i + 1] + d[i + 2]) / 3;
-      const g = lum > th ? (lum - th) / (255 - th) : 0;
-      bl[p * 3] = d[i] * g; bl[p * 3 + 1] = d[i + 1] * g; bl[p * 3 + 2] = d[i + 2] * g;
-    }
-    const blur = (a, b, horiz) => {
-      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
-        let s0 = 0, s1 = 0, s2 = 0, n = 0;
-        for (let t = -R; t <= R; t++) {
-          const xx = horiz ? x + t : x, yy = horiz ? y : y + t;
-          if (xx < 0 || yy < 0 || xx >= w || yy >= h) continue;
-          const q = (yy * w + xx) * 3; s0 += a[q]; s1 += a[q + 1]; s2 += a[q + 2]; n++;
-        }
-        const p = (y * w + x) * 3; b[p] = s0 / n; b[p + 1] = s1 / n; b[p + 2] = s2 / n;
-      }
-    };
-    blur(bl, tmp, true); blur(tmp, bl, false);
-    for (let p = 0; p < w * h; p++) {
-      const i = p * 4;
-      d[i] = Math.min(255, d[i] + bl[p * 3] * o.bloom);
-      d[i + 1] = Math.min(255, d[i + 1] + bl[p * 3 + 1] * o.bloom);
-      d[i + 2] = Math.min(255, d[i + 2] + bl[p * 3 + 2] * o.bloom);
-    }
-  }
-
-  if (o.scanlines || o.vignette > 0) {
-    const dark = 1 - clamp(o.scanStrength, 0, 1);   // even-row factor, retro.py law at strength 0.35 -> 0.65
-    const cx = (w - 1) / 2, cy = (h - 1) / 2, maxr = Math.hypot(cx, cy);
-    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
-      const i = (y * w + x) * 4;
-      let f = 1;
-      if (o.scanlines) f *= (y & 1) === 0 ? dark : 1.1;
-      if (o.vignette > 0) { const r = Math.hypot(x - cx, y - cy) / maxr; f *= 1 - o.vignette * r * r; }
-      d[i] = Math.min(255, d[i] * f); d[i + 1] = Math.min(255, d[i + 1] * f); d[i + 2] = Math.min(255, d[i + 2] * f);
-    }
-  }
-  ctx.putImageData(img, 0, 0);
-}
-
-/* renderRetro(src, dst, opts) -> { w, h, palette, cells, colors }
+/* renderRetro(src, dst, opts) -> { w, h, palette, cells, colors, entries }
    opts: palette ('gameboy'|...|'auto'), autoK, targetWidth, dither
-   ('none'|'bayer2'|'bayer4'|'bayer8'), ditherAmp, gamma, brightness, sdfShade,
-   scanlines, scanStrength, bloom, curvature, vignette, upscale. */
+   ('none'|'bayer2'|'bayer4'|'bayer8'|'noise'|'diffusion'), ditherStrength,
+   gamma, brightness, sdfShade, scanlines, scanStrength, beam, mask
+   ('none'|'grille'|'slot'|'dot'), maskStrength, bloom, halation, curvature,
+   aberration, vignette, upscale. */
 export function renderRetro(src, dst, opts = {}) {
   const o = {
-    palette: "gameboy", autoK: 8, targetWidth: 128, dither: "bayer4", ditherAmp: 0.09,
-    gamma: 1, brightness: 0, sdfShade: false, scanlines: true, scanStrength: 0.35,
-    bloom: 0, curvature: 0, vignette: 0, upscale: 4, ...opts,
+    palette: "gameboy", autoK: 8, targetWidth: 128, dither: "bayer4", ditherStrength: 0.8,
+    gamma: 1, brightness: 0, sdfShade: false, scanlines: true, scanStrength: 0.35, beam: 0.5,
+    mask: "none", maskStrength: 0.35, bloom: 0, halation: 0, curvature: 0, aberration: 0,
+    vignette: 0, upscale: 4, ...opts,
   };
   const [sw, sh] = srcDims(src);
   if (!sw || !sh) return { w: 0, h: 0, palette: o.palette, cells: 0, colors: 0 };
@@ -159,13 +98,9 @@ export function renderRetro(src, dst, opts = {}) {
   }
 
   const pal = o.palette === "auto" ? medianCut(lab, o.autoK) : labPalette(o.palette);
-  const N = o.dither === "none" ? 0 : o.dither === "bayer2" ? 2 : o.dither === "bayer8" ? 8 : 4;
+  const idx = ditherPlate(lab, tw, th, pal, o.dither, o.ditherStrength);
   const outLab = new Array(tw * th);
-  for (let y = 0; y < th; y++) for (let x = 0; x < tw; x++) {
-    const p = y * tw + x; let [L, a, b] = lab[p];
-    if (N) { const t = (BAYER[N][y % N][x % N] + 0.5) / BAYER_MAX[N] - 0.5; L += t * o.ditherAmp; }
-    outLab[p] = pal[nearestIndex(L, a, b, pal)].lab;
-  }
+  for (let p = 0; p < tw * th; p++) outLab[p] = pal[idx[p]].lab;
 
   if (o.sdfShade) {
     const occ = new Uint8Array(tw * th);
@@ -188,7 +123,7 @@ export function renderRetro(src, dst, opts = {}) {
   const dctx = dst.getContext("2d");
   dctx.imageSmoothingEnabled = false;
   dctx.drawImage(small, 0, 0, dw, dh);
-  if (o.scanlines || o.bloom > 0 || o.curvature > 0 || o.vignette > 0) crtStage(dctx, dw, dh, o);
+  if (crtActive(o)) crtStage(dctx, dw, dh, { ...o, cell: up });
 
   // The resolved palette itself, not just its name and count. "Auto (from
   // image)" median-cuts a palette out of the picture and the caller could never
