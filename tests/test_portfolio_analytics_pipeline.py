@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import hashlib
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -560,6 +561,64 @@ def test_generated_analytics_keep_mobile_overflow_inside_keyboard_scrollers(tmp_
         assert all(scroller["tabIndex"] == 0 for scroller in scrollers), name
         assert all(scroller["overflowX"] == "auto" for scroller in scrollers), name
         assert any(scroller["scrollWidth"] > scroller["clientWidth"] for scroller in scrollers), name
+
+
+def test_generated_benchmark_prints_without_javascript_or_horizontal_clipping(tmp_path: Path) -> None:
+    """Removing the direct print sheet or its figure overrides must break this contract."""
+    import pytest
+
+    playwright = pytest.importorskip(
+        "playwright.sync_api",
+        reason="no-JavaScript print contract requires the optional Playwright dependency",
+    )
+    chrome_candidates = [
+        Path(os.environ.get("PROGRAMFILES", "C:/Program Files")) / "Google/Chrome/Application/chrome.exe",
+        Path(os.environ.get("PROGRAMFILES(X86)", "C:/Program Files (x86)")) / "Microsoft/Edge/Application/msedge.exe",
+    ]
+    browser_path = next((path for path in chrome_candidates if path.exists()), None)
+    if browser_path is None:
+        pytest.skip("no-JavaScript print contract requires a local Chromium browser")
+
+    out = tmp_path / "analytics"
+    system = tmp_path / "system"
+    system.mkdir()
+    shutil.copy2(ROOT / "system" / "print.css", system / "print.css")
+    run("node", str(RENDER_RECORD), "--output-dir", str(out))
+
+    with playwright.sync_playwright() as runtime:
+        browser = runtime.chromium.launch(executable_path=str(browser_path), headless=True)
+        context = browser.new_context(
+            java_script_enabled=False,
+            viewport={"width": 390, "height": 844},
+        )
+        page = context.new_page()
+        page.emulate_media(media="print")
+        page.goto((out / f"{RECORD_STEM}.html").as_uri())
+        measured = page.evaluate(
+            """() => {
+              const printLink = document.querySelector('link[data-print-style][media="print"]');
+              const figure = document.querySelector('.figure-scroll');
+              const svg = figure.querySelector('svg');
+              return {
+                background: getComputedStyle(document.body).backgroundColor,
+                color: getComputedStyle(document.body).color,
+                navDisplays: [...document.querySelectorAll('.site-nav')]
+                  .map((element) => getComputedStyle(element).display),
+                printStylesLoaded: Boolean(printLink && printLink.sheet),
+                figureOverflowX: getComputedStyle(figure).overflowX,
+                figureWidth: svg.getBoundingClientRect().width,
+                containerWidth: figure.getBoundingClientRect().width,
+              };
+            }"""
+        )
+        browser.close()
+
+    assert measured["printStylesLoaded"] is True
+    assert measured["color"] == "rgb(0, 0, 0)"
+    assert measured["background"] == "rgb(255, 255, 255)"
+    assert measured["navDisplays"] and set(measured["navDisplays"]) == {"none"}
+    assert measured["figureOverflowX"] == "visible"
+    assert measured["figureWidth"] <= measured["containerWidth"]
 
 
 def test_site_owned_market_baseline_plan_is_explicitly_not_measured() -> None:
