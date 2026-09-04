@@ -1,0 +1,295 @@
+{
+  "schema_version": 1,
+  "id": "growth-needs-a-before",
+  "route": "growth-needs-a-before.html",
+  "category": "psychology-recovery",
+  "form": "internal evidence draft",
+  "title": "Growth Needs a Before",
+  "summary": "A post-traumatic growth score can record a present perception of change without proving durable change, trauma-specific causality, or clinical recovery.",
+  "author": "Zain Dana Harper",
+  "published_at": "2026-09-04",
+  "updated_at": "2026-09-04",
+  "observed_at": "2026-09-04T18:16:18Z",
+  "thesis": "A retrospective post-traumatic growth score can record a meaningful present perception of change, but without prospective baselines, repeated measures, specified outcomes, and time it cannot by itself establish durable positive change caused by trauma or clinical recovery.",
+  "opening": {
+    "question": "When a person reports growth after trauma, what does that measure show, and what does it not prove about durable positive change or recovery?",
+    "finding": "Retrospective perceived growth and measured pre-to-post change are different records, and prospective studies often find that the two do not closely align.",
+    "evidence": "Eight peer-reviewed sources include the original instrument article, four prospective studies, two systematic reviews, and one current conceptual framework.",
+    "limit": "The evidence does not determine whether a particular person's account is accurate, predict an individual's recovery, or provide diagnosis or treatment guidance."
+  },
+  "sections": [
+    {
+      "id": "one-sentence-several-claims",
+      "heading": "One sentence can contain several claims",
+      "paragraphs": [
+        "A statement about growth after trauma can carry several different meanings. It may report a present interpretation, describe a coping process, name a measured change, claim that the event caused the change, or imply that symptoms and functioning improved. Those claims require different records.",
+        "Measurement discipline does not require challenging a person's sincerity. It asks a narrower question: what can the available observation support? A sincere report can matter as a report while remaining insufficient evidence for a baseline, a durable trajectory, a cause, or a clinical outcome."
+      ]
+    },
+    {
+      "id": "what-the-inventory-asks",
+      "heading": "What the inventory asks",
+      "paragraphs": [
+        "The original Posttraumatic Growth Inventory is a 21-item self-report instrument organized around five domains: new possibilities, relating to others, personal strength, spiritual change, and appreciation of life. It asks people to assess positive changes they attribute to an adverse event.",
+        "That design makes the score a structured record of perceived change. It does not supply a measured pre-event state. Internal consistency among answers and a clear factor structure can support the reliability of a questionnaire without turning retrospective comparison into prospective observation."
+      ]
+    },
+    {
+      "id": "the-missing-before",
+      "heading": "The missing before",
+      "paragraphs": [
+        "A change claim needs at least two comparable observations: one earlier and one later. A single post-event judgment instead asks a person to reconstruct an earlier self while also interpreting the present. Memory, current mood, beliefs about change, and coping can all enter that reconstruction.",
+        "Prospective measurement improves the record by naming a domain before or near the event and measuring it again later. Even that design has limits. Measures may not capture the same construct, an event may not have a clean start, attrition can change the sample, and time alone does not isolate causality."
+      ]
+    },
+    {
+      "id": "prospective-studies",
+      "heading": "What prospective studies found",
+      "paragraphs": [
+        "In a two-month study of 122 undergraduates who reported an intervening traumatic event, retrospective growth scores were generally unrelated to measured pre-to-post change in corresponding domains. Perceived growth was associated with increased distress, while measured growth was associated with decreased distress. Those associations do not show that perceived growth causes distress or that durable positive change never occurs.",
+        "A later student study began with 282 participants. Across measures, 219 to 221 supplied raw follow-up returns and 214 to 218 entered full-sample analytic comparisons. Sixty-six reported an intervening trauma, and 61 to 64 entered the trauma-subset analytic comparisons, depending on the measure. Perceived growth was not significantly related to measured change or to a separate reconstruction of earlier standing. The small event subgroup and student setting sharply limit generalization.",
+        "A stem-cell-transplant study kept attrition visible: 275 patients were approached, 236 consented, 187 completed the first questionnaire, 157 the second, and 91 the third. Retrospective and prospective measures were weakly related at the composite level, while three of five paired domains were not significantly correlated. The result belongs to one serious medical context and does not provide a cross-trauma prevalence estimate.",
+        "A three-wave measurement-burst study began Wave 1 with 804 adults and collected 32,099 experience-sampling assessments over six months. Perceived growth did not predict later observed change in the tested current-standing or daily-state measures. Six months may still be too short for some changes, and the result does not exclude every subgroup or longer horizon."
+      ]
+    },
+    {
+      "id": "different-records",
+      "heading": "A story, a coping process, and a change score are different records",
+      "paragraphs": [
+        "The 2009 prospective study found that perceived growth was related to positive reinterpretation coping. A later systematic review and meta-analysis found associations between perceived growth and several measured cognitive biases, with the relation varying by bias type. Neither finding reduces a person's report to deception.",
+        "A narrative can organize meaning, preserve agency, or help someone describe a changed relationship to an event. Those functions are not the same as a measured improvement in work, relationships, self-care, symptoms, or another specified outcome. The honest move is separation, not dismissal."
+      ]
+    },
+    {
+      "id": "growth-and-distress",
+      "heading": "Growth and distress can coexist",
+      "paragraphs": [
+        "A systematic review of seven studies, eight samples, and 6,776 participants examined post-traumatic stress and perceived growth together. The person-centered analyses identified between two and five classes, depending on the study. Distress and perceived growth did not occupy one simple opposite-ended scale.",
+        "Coexistence is not a clinical recommendation. It does not make distress beneficial, make perceived growth a symptom endpoint, or allow a class label to diagnose a person. Functioning, safety, symptoms, meaning, and reported growth each need their own names and evidence."
+      ]
+    },
+    {
+      "id": "a-stronger-record",
+      "heading": "What a stronger record would need",
+      "paragraphs": [
+        "A 2026 peer-reviewed framework proposes six criteria for more credible research on growth. At a practical level, the proposal asks researchers to establish that a positive change is durable, distinct and meaningful, connected to the adverse event, and open to empirical scrutiny. It is a current framework, not a validated clinical standard or professional consensus.",
+        "For public evidence, a stronger claim should name the domain, preserve an earlier comparison, repeat the observation, state the duration, separate causal inference from timing, include relevant functioning, disclose cultural and normative assumptions, and make uncertainty visible. No single study in this record satisfies that entire checklist."
+      ]
+    },
+    {
+      "id": "growth-is-not-an-obligation",
+      "heading": "Growth is not an obligation",
+      "paragraphs": [
+        "No person owes a story of improvement, gratitude, forgiveness, resilience, or meaning. A questionnaire result is not a moral rank, a recovery certificate, or a prediction about what should happen next.",
+        "A careful record can respect a present account without expanding it into claims the evidence does not carry. Growth needs a before when the claim is measured change. A person's meaning does not need a laboratory certificate to matter on its own terms."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "publisher": "Journal of Traumatic Stress",
+      "title": "The Posttraumatic Growth Inventory: Measuring the Positive Legacy of Trauma",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1002/jts.2490090305",
+      "role": "original instrument-development article; July 1996 issue date, with 1996-07-01 schema-normalized because the exact day is not stated",
+      "published_at": "1996-07-01",
+      "observed_at": "2026-09-04"
+    },
+    {
+      "id": "S2",
+      "publisher": "Psychological Science",
+      "title": "Does Self-Reported Posttraumatic Growth Reflect Genuine Positive Change?",
+      "url": "https://journals.sagepub.com/doi/10.1111/j.1467-9280.2009.02381.x",
+      "role": "prospective validity study; first-online date from PubMed, with 2009-07-01 journal and Crossref date disclosed in the private packet",
+      "published_at": "2009-06-08",
+      "observed_at": "2026-09-04"
+    },
+    {
+      "id": "S3",
+      "publisher": "Behavioral Sciences",
+      "title": "Perceptions of Change after a Trauma and Perceived Posttraumatic Growth: A Prospective Examination",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6359254/",
+      "role": "open-access prospective replication with 219 to 221 raw follow-up returns, 214 to 218 full-sample analytic comparisons, 66 raw event reports, and 61 to 64 trauma-subset analytic comparisons",
+      "published_at": "2019-01-15",
+      "observed_at": "2026-09-04"
+    },
+    {
+      "id": "S4",
+      "publisher": "BMC Psychiatry",
+      "title": "Retrospective and prospective measures of post-traumatic growth reflect different processes",
+      "url": "https://link.springer.com/article/10.1186/s12888-020-03007-y",
+      "role": "open-access prospective medical-trauma measurement study by Maya Corman and colleagues",
+      "published_at": "2021-01-11",
+      "observed_at": "2026-09-04"
+    },
+    {
+      "id": "S5",
+      "publisher": "Clinical Psychology Review",
+      "title": "Cognitive biases in perceptions of posttraumatic growth",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35483274/",
+      "role": "systematic review and meta-analysis of associations between cognitive-bias measures and perceived growth",
+      "published_at": "2022-04-21",
+      "observed_at": "2026-09-04"
+    },
+    {
+      "id": "S6",
+      "publisher": "Trauma, Violence, & Abuse",
+      "title": "Empirically Derived Patterns of Posttraumatic Stress and Growth",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10594833/",
+      "role": "systematic review of person-centered studies examining post-traumatic stress and perceived growth together",
+      "published_at": "2022-11-11",
+      "observed_at": "2026-09-04"
+    },
+    {
+      "id": "S7",
+      "publisher": "Clinical Psychological Science",
+      "title": "Does Perceived Posttraumatic Growth Predict Observed Changes in Current-Standing and State Posttraumatic Growth?",
+      "url": "https://journals.sagepub.com/doi/10.1177/21677026231182329",
+      "role": "measurement-burst prospective study of perceived growth and later current-standing and daily-state change",
+      "published_at": "2023-07-20",
+      "observed_at": "2026-09-04"
+    },
+    {
+      "id": "S8",
+      "publisher": "Personality Science",
+      "title": "Multidisciplinary Recommendations for Improving the Credibility of Research on Posttraumatic Growth",
+      "url": "https://journals.sagepub.com/doi/10.1177/27000710261469023",
+      "role": "current peer-reviewed conceptual framework with six proposed criteria; not a validated standard, consensus, or outcome trial",
+      "published_at": "2026-07-15",
+      "observed_at": "2026-09-04"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "text": "The original PTGI is a 21-item self-report instrument with five reported-change domains.",
+      "status": "verified",
+      "source_ids": ["S1"],
+      "scope": "Instrument structure, not a population prevalence estimate",
+      "uncertainty": "Factor structure, translation, and interpretation can vary by sample and version",
+      "doesNotProve": "That a high score is observed behavioral change, symptom recovery, or a benefit caused by trauma"
+    },
+    {
+      "id": "C2",
+      "text": "The original article describes the inventory as assessing reported positive outcomes and reconstructed or strengthened perceptions of self, others, and meaning.",
+      "status": "verified",
+      "source_ids": ["S1"],
+      "scope": "What the original instrument was designed to ask",
+      "uncertainty": "An instrument-design statement is not later construct-validity evidence",
+      "doesNotProve": "That retrospective attribution supplies a pre-event baseline"
+    },
+    {
+      "id": "C3",
+      "text": "In one prospective two-month study, PTGI scores were generally unrelated to measured pre-to-post change in corresponding domains.",
+      "status": "verified",
+      "source_ids": ["S2"],
+      "scope": "122 undergraduates reporting an intervening event",
+      "uncertainty": "Narrow age range, short interval, self-report measures, and opportunistic event exposure",
+      "doesNotProve": "That durable positive change never occurs or that a perceived-growth report is meaningless"
+    },
+    {
+      "id": "C4",
+      "text": "In that study, perceived growth was associated with increased distress, measured pre-to-post growth was associated with decreased distress, and perceived growth was related to positive reinterpretation coping.",
+      "status": "verified",
+      "source_ids": ["S2"],
+      "scope": "The same 122-person analytic sample",
+      "uncertainty": "Associations are not treatment effects and may not generalize to other events or populations",
+      "doesNotProve": "That perceived growth causes distress or that reinterpretation is inherently harmful"
+    },
+    {
+      "id": "C5",
+      "text": "A later prospective replication found that perceived PTGI growth was not significantly related to measured pre-to-post growth or to a separate retrospective reconstruction of change.",
+      "status": "verified",
+      "source_ids": ["S3"],
+      "scope": "282 baseline participants; 219 to 221 raw follow-up returns; 214 to 218 full-sample analytic comparisons; 66 reported an intervening trauma, with 61 to 64 in the trauma-subset analytic comparisons",
+      "uncertainty": "Small event subgroup, university sample, and semester-length follow-up",
+      "doesNotProve": "That one null result applies to every domain, population, or time horizon"
+    },
+    {
+      "id": "C6",
+      "text": "In the stem-cell-transplant study, retrospective PTGI and prospective change were weakly related at the composite level, and three of five paired domains were not significantly correlated.",
+      "status": "verified",
+      "source_ids": ["S4"],
+      "scope": "187 first questionnaires, 157 second questionnaires, and 91 third questionnaires; five-month follow-up",
+      "uncertainty": "Serious medical context, substantial attrition, and study-specific domain measures",
+      "doesNotProve": "The same relation or frequency in bereavement, assault, disaster, war, or other health settings"
+    },
+    {
+      "id": "C7",
+      "text": "A meta-analysis found that several measured cognitive biases were associated with perceived PTG, with strength varying by bias type.",
+      "status": "verified",
+      "source_ids": ["S5"],
+      "scope": "47 studies and 66 separately coded effects",
+      "uncertainty": "Bias constructs and measures were heterogeneous",
+      "doesNotProve": "That all reported growth is false, fabricated, or clinically useless"
+    },
+    {
+      "id": "C8",
+      "text": "Post-traumatic stress and perceived growth can coexist, and person-centered analyses do not place them on one opposite-ended recovery scale.",
+      "status": "verified",
+      "source_ids": ["S6"],
+      "scope": "Seven studies, eight samples, and 6,776 participants; class solutions varied from two to five",
+      "uncertainty": "Most included evidence was cross-sectional or based on latent classes with setting-specific measures",
+      "doesNotProve": "That distress is beneficial, that high growth means severe symptoms, or that a class label diagnoses a person"
+    },
+    {
+      "id": "C9",
+      "text": "In a three-wave, six-month measurement-burst study, perceived growth did not predict subsequent observed change in current-standing or aggregated daily-state growth measures.",
+      "status": "verified",
+      "source_ids": ["S7"],
+      "scope": "Wave 1 N=804 and 32,099 experience-sampling assessments",
+      "uncertainty": "Six months is a short horizon for some durable changes; event types and growth domains varied",
+      "doesNotProve": "The absence of longer-term or subgroup effects, or that current meaning has no value"
+    },
+    {
+      "id": "C10",
+      "text": "A 2026 framework proposes six criteria for a credible account of growth and states that the proposal does not imply positive virtue change is common, likely, or necessary.",
+      "status": "verified",
+      "source_ids": ["S8"],
+      "scope": "Conceptual and methodological synthesis with no participant denominator",
+      "uncertainty": "The proposed criteria need future culturally adaptable measures and longitudinal validation",
+      "doesNotProve": "A validated clinical standard, professional consensus, or an outcome intervention"
+    },
+    {
+      "id": "C11",
+      "text": "A perceived-growth report can be respected as evidence about present interpretation while remaining separate from a claim of durable, causal, or clinical change.",
+      "status": "inferred",
+      "source_ids": ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"],
+      "scope": "Editorial synthesis across instrument development, prospective studies, systematic reviews, and one current framework",
+      "uncertainty": "The literature uses different events, measures, time windows, and definitions; no single study tests the entire sentence",
+      "doesNotProve": "That interpretation and coping are unimportant or that research can rank the meaning of a person's account"
+    }
+  ],
+  "figures": [
+    {
+      "id": "growth-needs-a-before",
+      "title": "Figure 1. A report, a baseline, and a change are different records",
+      "claim": "Prospective studies separate retrospective perceived growth from measured change, while keeping each event, sample, interval, and outcome distinct.",
+      "type": "evidence-matrix",
+      "columns": ["Source", "Design and denominator", "What was compared", "Observed relation", "Main non-proof"],
+      "rows": [
+        ["S2", "Two-month prospective study; n=122 event subgroup", "PTGI retrospective report versus measured pre-to-post domain change", "Generally unrelated", "No claim that growth never occurs"],
+        ["S3", "Two-wave student study; n=282 baseline; n=219 to 221 raw follow-up; n=214 to 218 full-sample analytic; 66 raw event reports; n=61 to 64 analytic event subset", "Perceived PTG, measured change, and reconstructed past standing", "Perceived PTG was not significantly related to the other two change records", "No generalization beyond the small student event subgroup"],
+        ["S4", "Stem-cell-transplant study; n=187 first; n=157 second; n=91 third", "PTGI at follow-up versus repeated domain measures", "Weak composite relation; three of five paired domains not significantly related", "No cross-trauma prevalence claim; attrition remains material"],
+        ["S7", "Three waves over six months; Wave 1 n=804; 32,099 daily assessments", "Perceived PTG versus later current-standing and aggregated daily-state change", "Did not predict later observed change in the tested models", "No conclusion about longer horizons or every subgroup"]
+      ],
+      "scope": "Four prospective or measurement-burst studies published from 2009 through 2024",
+      "units": "Participants, completed questionnaires, experience-sampling assessments, and direction-of-result labels",
+      "denominator": "Study-specific only; the rows must not be summed: S2 n=122; S3 baseline n=282, 219 to 221 raw follow-up returns, 214 to 218 full-sample analytic comparisons, 66 raw event reports, and n=61 to 64 in trauma-subset analytic comparisons; S4 n=187 first, 157 second, and 91 third; S7 Wave 1 n=804 and 32,099 assessments",
+      "date": "Sources first published online from 2009-06-08 through 2023-07-20, with S7 in a 2024 issue; observed 2026-09-04",
+      "provenance": ["S2", "S3", "S4", "S7"],
+      "transformation": "Findings are paraphrased with study-specific direction labels; no pooling, standardization, interpolation, or cross-study ranking is performed",
+      "uncertainty": "Events, samples, follow-up windows, measures, attrition, and statistical models differ across rows",
+      "limitations": "The matrix is illustrative rather than exhaustive, and none of the samples represents every kind of adverse event or recovery context.",
+      "doesNotProve": "The figure does not show that positive change never happens, determine whether a particular report is accurate, predict any person's recovery, or tell a reader what care to seek.",
+      "alt": "Four studies compare retrospective perceived growth with measured change. In a 122-person study the measures were generally unrelated. A later study began with 282 students, collected 219 to 221 raw follow-up measures, used 214 to 218 in full-sample comparisons, and found no significant relation in a trauma-subset analysis of 61 to 64. A stem-cell-transplant study found a weak composite relation with three of five domains not significantly related after attrition from 187 to 91 questionnaires. A six-month study with 804 Wave 1 participants and 32,099 daily assessments found that perceived growth did not predict later observed change. The rows are not pooled and do not predict an individual recovery path."
+    }
+  ],
+  "corrections": [],
+  "ai_assistance": "AI assisted with source discovery, research organization, drafting, and record construction. This is a local internal draft and has not been published or personally adopted by Zain Dana Harper.",
+  "personal_voice_adopted": false,
+  "social": {
+    "linkedin": {"state": "not_posted"},
+    "x": {"state": "not_posted"}
+  }
+}

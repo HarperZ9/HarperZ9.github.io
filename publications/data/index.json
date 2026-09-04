@@ -12,6 +12,16 @@
       "idempotency_key": "a342047bd07081740a3361f0e173d97693dbdafe5991f7c7f19aa4b672dfcd6d"
     },
     {
+      "id": "growth-needs-a-before",
+      "route": "growth-needs-a-before.html",
+      "category": "psychology-recovery",
+      "form": "internal evidence draft",
+      "published_at": "2026-09-04",
+      "updated_at": "2026-09-04",
+      "record_sha256": "ebc6cccdccf29e1b4ed9fe0b6e6ad686fa2a06b08c93a5097ac1088de1a6197e",
+      "idempotency_key": "e724c48b10e8bd1e81fb97202677ec10f72b302b2360f52a9798fa4342966ee2"
+    },
+    {
       "id": "the-second-hearing",
       "route": "the-second-hearing.html",
       "category": "music-listening",
