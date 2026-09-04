@@ -8,12 +8,15 @@ import hashlib
 import shutil
 import subprocess
 import sys
+
+import pytest
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 CAPTURE = ROOT / "scripts" / "capture-portfolio-analytics.py"
 RENDER = ROOT / "scripts" / "render-portfolio-analytics.mjs"
+ANALYTICS_PAGE = ROOT / "scripts" / "analytics-page.mjs"
 BASELINE_PLAN = ROOT / "analytics" / "market-baseline-plan.json"
 ANALYTICS_DATASET = ROOT / "analytics" / "portfolio-analytics.json"
 RENDER_RECORD = ROOT / "scripts" / "render-flywheel-benchmark-record.mjs"
@@ -438,7 +441,32 @@ def test_renderer_withholds_benchmark_chart_without_comparable_group(tmp_path: P
     assert "artifacts_legacy.json" in status
 
 
-def test_renderer_publishes_current_cross_harness_integration_failure_profile(tmp_path: Path) -> None:
+def sandbox_renderer(tmp_path: Path, mutate) -> Path:
+    """Run the real renderer against a tampered copy of the source record.
+
+    The renderer resolves the source record relative to its own file, so the
+    only way to hand it a different one is to copy the script beside a
+    different analytics tree.
+    """
+    scripts = tmp_path / "scripts"
+    scripts.mkdir(parents=True, exist_ok=True)
+    (scripts / "render-portfolio-analytics.mjs").write_bytes(RENDER.read_bytes())
+    (scripts / "analytics-page.mjs").write_bytes(ANALYTICS_PAGE.read_bytes())
+    source_dir = tmp_path / "analytics" / "source"
+    source_dir.mkdir(parents=True, exist_ok=True)
+    record = json.loads((ROOT / "analytics" / "source" / "current-cross-harness-pilot-source.json").read_text(encoding="utf-8"))
+    mutate(record)
+    (source_dir / "current-cross-harness-pilot-source.json").write_text(json.dumps(record), encoding="utf-8")
+    return scripts / "render-portfolio-analytics.mjs"
+
+
+def test_renderer_publishes_the_current_cross_harness_run(tmp_path: Path) -> None:
+    """The figure and the record behind it must be the same run.
+
+    They were not, once: the page said four attempts for a week after the
+    benchmark repository's own record said thirty-five. Every string the figure
+    prints is now derived from the record, so the two cannot drift apart again.
+    """
     out = tmp_path / "figures"
     run("node", str(RENDER), "--input", str(ANALYTICS_DATASET), "--output-dir", str(out))
 
@@ -448,61 +476,101 @@ def test_renderer_publishes_current_cross_harness_integration_failure_profile(tm
     source_record_path = ROOT / "analytics" / "source" / "current-cross-harness-pilot-source.json"
     source_record = json.loads(source_record_path.read_text(encoding="utf-8"))
 
-    assert companion["schema"] == "zentropy-current-cross-harness-pilot/v1"
-    assert companion["classification"] == "integration-failure-profile"
-    assert companion["sourceCommit"] == "09f4d3730f5f81d88b0aba130a1067979d0a7d07"
-    assert companion["sourceCommitUrl"] == "https://github.com/HarperZ9/flywheel/commit/09f4d3730f5f81d88b0aba130a1067979d0a7d07"
+    assert companion["schema"] == "zentropy-current-cross-harness-pilot/v2"
+    assert source_record["schema"] == "zentropy-current-cross-harness-pilot-source/v2"
+    assert companion["classification"] == "graded-cross-harness-run"
+    assert companion["sourceCommitUrl"] == "https://github.com/HarperZ9/flywheel/commit/" + companion["sourceCommit"]
     assert companion["sourceEvidence"] == {
         "href": "source/current-cross-harness-pilot-source.json",
         "sha256": hashlib.sha256(source_record_path.read_bytes()).hexdigest(),
         "availability": "operator-local-hash-only",
     }
-    assert source_record["schema"] == "zentropy-current-cross-harness-pilot-source/v1"
-    assert companion["parity"] == {
-        "prompt": "byte-identical",
-        "runtimeContext": "byte-identical",
-    }
-    assert companion["receipts"]["verified"] == 4
-    assert companion["receipts"]["attempts"] == 4
-    assert len(companion["receipts"]["records"]) == 4
-    assert all(record["state"] == "verified" for record in companion["receipts"]["records"])
+
+    counts = companion["counts"]
+    assert counts == {"roles": 5, "tasks": 7, "attempts": 35, "launched": 35,
+                      "readable": 11, "passed": 6, "gradedCheckers": 6}
+    assert sum(role["attempts"] for role in companion["roles"]) == counts["attempts"]
+    assert sum(role["readable"] for role in companion["roles"]) == counts["readable"]
+    assert companion["parity"] == {"prompt": "byte-identical", "runtimeContext": "byte-identical"}
+    assert len(companion["parityArtifacts"]) == counts["tasks"]
+    assert all(task["identicalAcrossRoles"] for task in companion["parityArtifacts"])
+    assert companion["receipts"]["verified"] == 35 and companion["receipts"]["attempts"] == 35
     assert all(len(record["receiptSha256"]) == 64 for record in companion["receipts"]["records"])
-    assert all(len(record["receiptSubjectSha256"]) == 64 for record in companion["receipts"]["records"])
-    assert companion["validComparableTaskOutcomes"] == 0
-    assert [attempt["latencyMs"] for attempt in companion["attempts"]] == [35357, 5664, 2028, 2043]
-    assert [attempt["execution"] for attempt in companion["attempts"]] == [
-        "returned", "internal_error", "malformed", "malformed",
-    ]
-    assert [attempt["oracle"] for attempt in companion["attempts"]] == [
-        "fail", "not_run", "not_run", "not_run",
-    ]
-    assert all(attempt["receipt"] == "verified" for attempt in companion["attempts"])
-    assert companion["observations"] == {
-        "costUsd": None,
-        "resourceUse": None,
-        "observedModelIdentity": None,
-    }
-    assert set(companion["artifactHashes"]) == {
-        "manifest", "runtimeMatrix", "runRecord", "comparisonInput", "artifactIndex",
-    }
-    assert companion["limitations"]
-    assert companion["doesNotProve"]
-    assert "integration-failure profile" in html.lower()
-    assert "not market performance" in html.lower()
-    assert "not a quality ranking" in html.lower()
-    assert "4/4" in html and "0 valid comparable task outcomes" in html
+
+    # A rate with no denominator beside it reads as a verdict on the harness.
+    # Four of local_32b's seven attempts were an endpoint that never answered.
+    local_32b = next(role for role in companion["roles"] if role["role"] == "local_32b")
+    assert local_32b["ungraded"]["the model endpoint did not answer"] == 4
+    assert "the model endpoint did not answer" in html
+    assert "BackendError" not in html and "_MalformedAttempt" not in html
+
+    # A cost the provider never stated is an absence, and a partial one carries
+    # the coverage that makes it readable. Neither may be printed as a zero.
+    assert local_32b["cost"] == {"usdTotal": None, "reportedAttempts": 0, "coverage": 0.0}
+    claude = next(role for role in companion["roles"] if role["role"] == "claude_code")
+    assert claude["cost"]["usdTotal"] and claude["cost"]["coverage"] < 1
+    assert "of attempts reported a cost" in html
+
+    assert companion["sourceTreeState"] == "unsealed"
+    assert "nothing confirmed the tree still matched the commit" in html
+    assert companion["limitations"] and companion["doesNotProve"]
+    assert "not market performance" in html.lower() and "not a quality ranking" in html.lower()
     assert "byte-identical" in html
-    assert "35,357 ms" in html and "5,664 ms" in html
-    assert "2,028 ms" in html and "2,043 ms" in html
     assert "Unknown" in html and "What this does not prove" in html
     assert 'href="source/current-cross-harness-pilot-source.json"' in html
     assert "operator-local-hash-only" in html
     assert '<div id="site-nav" class="site-nav"></div>' in html
     assert 'src="../system/nav.js?v=20260902-creative-chassis"' in html
     assert "<title" in svg and "<desc" in svg
-    assert "4/4 verified receipts" in svg and "0 valid comparable task outcomes" in svg
+    assert "35 attempts · 11 reached a grader · 6 passed · 35/35 receipts verified" in svg
     serialized = html + svg + json.dumps(companion)
     assert "C:/dev" not in serialized and "C:\\dev" not in serialized and ".scratch" not in serialized
+
+
+def test_a_role_table_that_disagrees_with_its_own_totals_is_never_drawn(tmp_path: Path) -> None:
+    """The drift this page shipped once was a caption outliving its run."""
+    script = sandbox_renderer(tmp_path, lambda record: record["counts"].__setitem__("passed", 99))
+    with pytest.raises(subprocess.CalledProcessError) as failure:
+        run("node", str(script), "--input", str(ANALYTICS_DATASET), "--output-dir", str(tmp_path / "figures"))
+    assert "passed disagree" in failure.value.stderr
+
+
+def test_a_receipt_denominator_short_of_the_attempts_is_refused(tmp_path: Path) -> None:
+    """35 of 35 verified is the claim. 35 of 34 would be a different one."""
+    script = sandbox_renderer(tmp_path, lambda record: record["receipts"]["records"].pop())
+    with pytest.raises(subprocess.CalledProcessError) as failure:
+        run("node", str(script), "--input", str(ANALYTICS_DATASET), "--output-dir", str(tmp_path / "figures"))
+    assert "receipt records do not match" in failure.value.stderr
+
+
+def test_a_receipt_state_the_header_does_not_agree_with_is_refused(tmp_path: Path) -> None:
+    """`35 of 35 verified` is a count of states, not a number someone typed."""
+    def drift_one(record):
+        record["receipts"]["records"][0]["state"] = "drift"
+
+    script = sandbox_renderer(tmp_path, drift_one)
+    with pytest.raises(subprocess.CalledProcessError) as failure:
+        run("node", str(script), "--input", str(ANALYTICS_DATASET), "--output-dir", str(tmp_path / "figures"))
+    assert "receipt states disagree" in failure.value.stderr
+
+
+def test_a_receipt_no_longer_on_disk_is_printed_rather_than_withheld(tmp_path: Path) -> None:
+    """A record can outlive its artifacts, and the old guard refused the page.
+
+    Refusing to publish is the wrong answer: the attempt happened and its state
+    is recorded. The row shows what is known and names what is not.
+    """
+    def forget_one(record):
+        record["receipts"]["records"][0]["receiptSha256"] = None
+        record["receipts"]["records"][0]["receiptSubjectSha256"] = None
+
+    script = sandbox_renderer(tmp_path, forget_one)
+    out = tmp_path / "figures"
+    run("node", str(script), "--input", str(ANALYTICS_DATASET), "--output-dir", str(out))
+    html = (out / "current-cross-harness-pilot.html").read_text(encoding="utf-8")
+    assert "the receipt file is no longer on disk" in html
+    companion = json.loads((out / "current-cross-harness-pilot.json").read_text(encoding="utf-8"))
+    assert len(companion["receipts"]["records"]) == companion["counts"]["attempts"]
 
 
 def test_sitemap_promotes_current_evidence_and_source_inventory() -> None:

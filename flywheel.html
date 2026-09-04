@@ -175,7 +175,7 @@
   </figure>
   <div class="figure-pair reveal">
     <figure><a href="analytics/model-pass-at-1-comparison.html"><img src="analytics/model-pass-at-1-comparison.svg" alt="Paired 164-task pass-at-one comparison: base Qwen 14B passed 141 of 164 tasks and Flywheel 14B passed 136 of 164; the difference was not statistically significant." loading="lazy"></a><figcaption>Same-harness 164-task model result. This is a model comparison, not a harness or market ranking.</figcaption></figure>
-    <figure><a href="analytics/current-cross-harness-pilot.html"><img src="analytics/current-cross-harness-pilot.svg" alt="Four receipt-verified cross-harness attempts with zero valid comparable task outcomes." loading="lazy"></a><figcaption>Current cross-harness pilot: 4/4 receipts verified, 0 valid comparable outcomes.</figcaption></figure>
+    <figure><a href="analytics/current-cross-harness-pilot.html"><img src="analytics/current-cross-harness-pilot.svg" alt="Horizontal bars for five harness roles on the same seven tasks: of seven attempts each, codex_harness and flywheel_harness reached a grader four times, claude_code twice, local_32b once, and local_14b none; three, two, one, zero, and zero passed." loading="lazy"></a><figcaption>Current cross-harness run: 35 attempts across five harness roles, 35/35 receipts verified, 11 reached a grader, 6 passed.</figcaption></figure>
   </div>
 </section>
 
@@ -226,6 +226,7 @@
     <p class="body-text">What we do claim, and can measure: 100% receipt reproducibility, every accepted answer re-checks; pass parity with the models it routes to; availability on your own schedule, from weights you hold; and local cost. A tool that refuses to overclaim is a tool whose other claims you can trust.</p>
   </div>
   <p class="body-text reveal">A rebuilt measurement is in progress. It draws the baseline and the treatment from one shared pool of independent attempts, with a compute-matched arm that selects at random instead of using the verifier. It has produced no result yet. If the verifier earns nothing over random selection at the same compute, that is the result that will be published.</p>
+  <p class="body-text reveal">A separate instrument did produce a result. On 2026-09-04 five harness roles ran the same seven agentic tasks, one repetition each, on byte-identical prompts and runtime contexts: 35 attempts, 35 of 35 receipts verified, 11 that reached a grader and 6 that passed. The reason each of the other 24 went ungraded is named per role, because an endpoint that never answered and an answer a checker rejected are different failures. <a href="analytics/current-cross-harness-pilot.html">Read the run, its tables, and its limits</a>.</p>
   <p class="body-text reveal">Evidence: the running app serves the receipt at <span translate="no">/artifacts/flywheel-local-coder-14b-benchmark-ci.json</span>, re-checkable offline. The number moves the day the evidence does, not before.</p>
 </section>
 

@@ -1,140 +1,928 @@
 {
-  "schema": "zentropy-current-cross-harness-pilot-source/v1",
-  "capturedAt": "2026-08-28",
-  "classification": "integration-failure-profile",
+  "artifactHashes": {
+    "comparison-input.json": "a131530fb1bb4c1509a558fb7248dd913ff3627e0bddd636bdb0fc81ee353a07",
+    "gate.json": "97fc3a6992d2803c2c109aa2788f4440727aab40ab48c69125846986bcb29026",
+    "manifest.json": "f18d1e1f397cb85a7e70cfa708dba00e688f1ac2c336ef875a4d389c16bbf36e",
+    "matrix.json": "efdbd5ec0fee4fa9cf03aad841fbaab31ab0bd6b7b4c219f98175ce360c68056",
+    "profiles.json": "0b7a04c7ef2e8323666fbbb68af5ca4a85c33b4237a28883e384ebab8c8f830e"
+  },
+  "capturedAt": "2026-09-04",
+  "checkers": [
+    {
+      "checker_id": "budgeted_evidence_selection/v1",
+      "metrics": [],
+      "scored_attempts": 2,
+      "task_ids": [
+        "agt-017-budgeted-evidence-selection"
+      ]
+    },
+    {
+      "checker_id": "contradiction_detection/v1",
+      "metrics": [
+        {
+          "direction": "lower",
+          "metric": "failure_code_count",
+          "roles": [
+            {
+              "max": null,
+              "mean": null,
+              "min": null,
+              "n": 0,
+              "provider_role": "claude_code"
+            },
+            {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 1,
+              "provider_role": "codex_harness"
+            },
+            {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 1,
+              "provider_role": "flywheel_harness"
+            }
+          ]
+        },
+        {
+          "direction": "lower",
+          "metric": "false_pair_count",
+          "roles": [
+            {
+              "max": null,
+              "mean": null,
+              "min": null,
+              "n": 0,
+              "provider_role": "claude_code"
+            },
+            {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 1,
+              "provider_role": "codex_harness"
+            },
+            {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 1,
+              "provider_role": "flywheel_harness"
+            }
+          ]
+        },
+        {
+          "direction": "higher",
+          "metric": "pair_precision",
+          "roles": [
+            {
+              "max": null,
+              "mean": null,
+              "min": null,
+              "n": 0,
+              "provider_role": "claude_code"
+            },
+            {
+              "max": 1.0,
+              "mean": 1.0,
+              "min": 1.0,
+              "n": 1,
+              "provider_role": "codex_harness"
+            },
+            {
+              "max": 1.0,
+              "mean": 1.0,
+              "min": 1.0,
+              "n": 1,
+              "provider_role": "flywheel_harness"
+            }
+          ]
+        },
+        {
+          "direction": "higher",
+          "metric": "pair_recall",
+          "roles": [
+            {
+              "max": null,
+              "mean": null,
+              "min": null,
+              "n": 0,
+              "provider_role": "claude_code"
+            },
+            {
+              "max": 1.0,
+              "mean": 1.0,
+              "min": 1.0,
+              "n": 1,
+              "provider_role": "codex_harness"
+            },
+            {
+              "max": 1.0,
+              "mean": 1.0,
+              "min": 1.0,
+              "n": 1,
+              "provider_role": "flywheel_harness"
+            }
+          ]
+        },
+        {
+          "direction": "lower",
+          "metric": "trap_pairs_reported",
+          "roles": [
+            {
+              "max": null,
+              "mean": null,
+              "min": null,
+              "n": 0,
+              "provider_role": "claude_code"
+            },
+            {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 1,
+              "provider_role": "codex_harness"
+            },
+            {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 1,
+              "provider_role": "flywheel_harness"
+            }
+          ]
+        }
+      ],
+      "scored_attempts": 3,
+      "task_ids": [
+        "agt-016-source-contradiction-detection"
+      ]
+    },
+    {
+      "checker_id": "evidence_bound_reporting/v1",
+      "metrics": [
+        {
+          "direction": "higher",
+          "metric": "evidence_bound_score",
+          "roles": [
+            {
+              "max": 1.0,
+              "mean": 1.0,
+              "min": 1.0,
+              "n": 1,
+              "provider_role": "codex_harness"
+            },
+            {
+              "max": 1.0,
+              "mean": 1.0,
+              "min": 1.0,
+              "n": 1,
+              "provider_role": "flywheel_harness"
+            }
+          ]
+        },
+        {
+          "direction": "lower",
+          "metric": "fabricated_measurements",
+          "roles": [
+            {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 1,
+              "provider_role": "codex_harness"
+            },
+            {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 1,
+              "provider_role": "flywheel_harness"
+            }
+          ]
+        },
+        {
+          "direction": "lower",
+          "metric": "failure_code_count",
+          "roles": [
+            {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 1,
+              "provider_role": "codex_harness"
+            },
+            {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 1,
+              "provider_role": "flywheel_harness"
+            }
+          ]
+        },
+        {
+          "direction": "higher",
+          "metric": "measurement_fidelity",
+          "roles": [
+            {
+              "max": 1.0,
+              "mean": 1.0,
+              "min": 1.0,
+              "n": 1,
+              "provider_role": "codex_harness"
+            },
+            {
+              "max": 1.0,
+              "mean": 1.0,
+              "min": 1.0,
+              "n": 1,
+              "provider_role": "flywheel_harness"
+            }
+          ]
+        },
+        {
+          "direction": "higher",
+          "metric": "supported_claim_precision",
+          "roles": [
+            {
+              "max": 1.0,
+              "mean": 1.0,
+              "min": 1.0,
+              "n": 1,
+              "provider_role": "codex_harness"
+            },
+            {
+              "max": 1.0,
+              "mean": 1.0,
+              "min": 1.0,
+              "n": 1,
+              "provider_role": "flywheel_harness"
+            }
+          ]
+        },
+        {
+          "direction": "higher",
+          "metric": "unsupported_claim_recall",
+          "roles": [
+            {
+              "max": 1.0,
+              "mean": 1.0,
+              "min": 1.0,
+              "n": 1,
+              "provider_role": "codex_harness"
+            },
+            {
+              "max": 1.0,
+              "mean": 1.0,
+              "min": 1.0,
+              "n": 1,
+              "provider_role": "flywheel_harness"
+            }
+          ]
+        }
+      ],
+      "scored_attempts": 2,
+      "task_ids": [
+        "agt-015-evidence-bound-reporting"
+      ]
+    },
+    {
+      "checker_id": "index_fallback_integrity/v1",
+      "metrics": [
+        {
+          "direction": "lower",
+          "metric": "failure_code_count",
+          "roles": [
+            {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 1,
+              "provider_role": "claude_code"
+            }
+          ]
+        }
+      ],
+      "scored_attempts": 1,
+      "task_ids": [
+        "agt-001-index-fallback-integrity"
+      ]
+    },
+    {
+      "checker_id": "paired_friction/v1",
+      "metrics": [
+        {
+          "direction": "lower",
+          "metric": "failure_code_count",
+          "roles": [
+            {
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "n": 1,
+              "provider_role": "codex_harness"
+            },
+            {
+              "max": 1.0,
+              "mean": 1.0,
+              "min": 1.0,
+              "n": 1,
+              "provider_role": "flywheel_harness"
+            }
+          ]
+        }
+      ],
+      "scored_attempts": 2,
+      "task_ids": [
+        "agt-009-receipts-vs-guardrails-friction"
+      ]
+    },
+    {
+      "checker_id": "shared_task_artifact/v1",
+      "metrics": [
+        {
+          "direction": "lower",
+          "metric": "failure_code_count",
+          "roles": [
+            {
+              "max": 1.0,
+              "mean": 1.0,
+              "min": 1.0,
+              "n": 1,
+              "provider_role": "local_32b"
+            }
+          ]
+        }
+      ],
+      "scored_attempts": 1,
+      "task_ids": [
+        "agt-003-codex-flywheel-shared-task"
+      ]
+    }
+  ],
+  "classification": "graded-cross-harness-run",
+  "counts": {
+    "attempts": 35,
+    "gradedCheckers": 6,
+    "launched": 35,
+    "passed": 6,
+    "readable": 11,
+    "roles": 5,
+    "tasks": 7
+  },
+  "doesNotProve": "The run is one repetition per task on one machine. Nothing here is a market performance claim, a quality ranking, or a statement about a customer workload.",
   "evidenceAvailability": "operator-local-hash-only",
-  "sourceCommit": "09f4d3730f5f81d88b0aba130a1067979d0a7d07",
-  "sourceCommitUrl": "https://github.com/HarperZ9/flywheel/commit/09f4d3730f5f81d88b0aba130a1067979d0a7d07",
-  "requestedModelReference": "gpt-5.3-codex-spark",
+  "limitations": [
+    "A mean over one repetition is a reading, not an estimate. No interval is reported because none is earned at this sample size.",
+    "Cost covers the attempts whose provider stated a cost. A role with no cost coverage is not cheaper, it is unmeasured.",
+    "Latency is wall clock on one machine and includes local model load time.",
+    "A role that never returned a readable result has no quality numbers here, which is a fact about this run and not a score of zero. Why an attempt went ungraded is reported beside it, because a malformed answer and a missing one are different failures.",
+    "An envelope found inside a refused answer was still refused, and no checker graded it. That it was there says the harness produced an answer, and it does not say the answer was right.",
+    "The graded metrics come from in-tree fixtures. They measure a harness against those tasks and not against a customer workload.",
+    "The run raised before sealing, so nothing ever checked that the source tree still matched the commit these rows name. The attempts each verified their own workspace, which is a narrower claim."
+  ],
+  "observations": {
+    "costUsd": "per role; unmeasured where the provider states none",
+    "observedModelIdentity": "per role",
+    "resourceUse": null
+  },
   "parity": {
     "prompt": "byte-identical",
     "runtimeContext": "byte-identical"
   },
   "parityArtifacts": [
     {
-      "taskId": "agt-001-index-fallback-integrity",
+      "identicalAcrossRoles": true,
       "prompt": {
-        "sha256": "b454eacba05930001108b80b6d1d881ad02529c95dfd5d6579e7c1aba9231ca8",
-        "bytes": 2098
+        "sha256": [
+          "fd05c2171e23b1bd2c4c31262feb9bc817459d2ed1f9f867c8a502ef444ce785"
+        ]
       },
+      "roles": 5,
       "runtimeContext": {
-        "sha256": "09b571dc3be8a011321bae35b1fc677136eff49684f90658b371c6bab703f574",
-        "bytes": 992
-      }
+        "sha256": [
+          "51835760e28b51f3ccf7769937d6b1fca27569e49ecd1d55fe54d41a4e92cc1f"
+        ]
+      },
+      "taskId": "agt-001-index-fallback-integrity"
     },
     {
-      "taskId": "agt-003-codex-flywheel-shared-task",
+      "identicalAcrossRoles": true,
       "prompt": {
-        "sha256": "4f47fc123a8c7a5cce359d5a401dabbc747590aff103f15ec933f5802bda5306",
-        "bytes": 2124
+        "sha256": [
+          "494cc2bbbc2321e2ccfec612d11333e162641718b6a14c1908f35b74f670ffca"
+        ]
       },
+      "roles": 5,
       "runtimeContext": {
-        "sha256": "f34d5f28f592f465a4bd65a22ab24b0443f00c49497104577d0fb0b60557eb6f",
-        "bytes": 1046
-      }
+        "sha256": [
+          "150a520f6e455a424df6088b33a29aa8a087d03e2e73617e32773ce8ed03f9cb"
+        ]
+      },
+      "taskId": "agt-003-codex-flywheel-shared-task"
+    },
+    {
+      "identicalAcrossRoles": true,
+      "prompt": {
+        "sha256": [
+          "79e42fe7d3449f198244a944a611c27b3696af96321654087dadcea92521cdc1"
+        ]
+      },
+      "roles": 5,
+      "runtimeContext": {
+        "sha256": [
+          "eb71123f88d3d0c2603a9d1bcdfc6334ff36dbe5627e2f5e42baf9bb9e83b35a"
+        ]
+      },
+      "taskId": "agt-009-receipts-vs-guardrails-friction"
+    },
+    {
+      "identicalAcrossRoles": true,
+      "prompt": {
+        "sha256": [
+          "8278c08be170a0b1567573187bd091f360576064a69b6a5389dbb74b53a76ca7"
+        ]
+      },
+      "roles": 5,
+      "runtimeContext": {
+        "sha256": [
+          "b1b8ce7b42775a612368dfe64760a4d5fd6327e6e4837b3a60bba25e3803a33d"
+        ]
+      },
+      "taskId": "agt-010-documentation-schematic-maintenance"
+    },
+    {
+      "identicalAcrossRoles": true,
+      "prompt": {
+        "sha256": [
+          "6ab23a5ed8e25f80836a230e9f7af20c133ff9f41d3aa8d44e6253b96138b669"
+        ]
+      },
+      "roles": 5,
+      "runtimeContext": {
+        "sha256": [
+          "d6845d06fe795c4bcdb6e4bb9f8fbe302d4111b010a0b0620d081cd7aa0f6278"
+        ]
+      },
+      "taskId": "agt-015-evidence-bound-reporting"
+    },
+    {
+      "identicalAcrossRoles": true,
+      "prompt": {
+        "sha256": [
+          "3350fb9664a65a8e0a9c07e577ccd2a534f6a7e1531c4dd3d8f184db5f43a27d"
+        ]
+      },
+      "roles": 5,
+      "runtimeContext": {
+        "sha256": [
+          "6a872a42dd24ff7e6ff795c6d426b207896b0d4d28b318c12fcb51294ccfdf88"
+        ]
+      },
+      "taskId": "agt-016-source-contradiction-detection"
+    },
+    {
+      "identicalAcrossRoles": true,
+      "prompt": {
+        "sha256": [
+          "3d297ea31419c4011a2eac4053cbb432256d9d031844cd67d9315e96cb51c167"
+        ]
+      },
+      "roles": 5,
+      "runtimeContext": {
+        "sha256": [
+          "93d85fc4bf151f22aa1071225a5151e0793bc1d91cdd4acb37b1c45bb1abdebb"
+        ]
+      },
+      "taskId": "agt-017-budgeted-evidence-selection"
     }
   ],
   "receipts": {
-    "verified": 4,
-    "attempts": 4,
+    "attempts": 35,
     "records": [
       {
-        "route": "Codex direct",
-        "taskId": "agt-001-index-fallback-integrity",
-        "receiptSha256": "dc6531acf514618bf6d8934594bf9c621345f2a5216ed5bd86f9b3add7a8cc7d",
-        "receiptSubjectSha256": "cf5b394a8d19e274d77813e06736910e05b3ef5e4e3758f470cff32d601e3da3",
-        "state": "verified"
+        "receiptSha256": "fda4fdc25c762c0a5194474f731f61f650819b23a4e75d779466d22372f018c3",
+        "receiptSubjectSha256": "d37060295dd45c9e7c962ef585b073656e3df86307fffdcbca91a136e44525db",
+        "role": "claude_code",
+        "state": "verified",
+        "taskId": "agt-001-index-fallback-integrity"
       },
       {
-        "route": "Codex direct",
-        "taskId": "agt-003-codex-flywheel-shared-task",
-        "receiptSha256": "9853c9d91b326ed375561c064c043568de79a68cf66aebdd57bb64ab3aedf3d1",
-        "receiptSubjectSha256": "e8ded713b279e8e8df4d516529c5f9f4a00428a5b3f765964fa93086dd0cfd4d",
-        "state": "verified"
+        "receiptSha256": "7283faae78e8de5cc0c4edc2dbcac6f081f2fefc2019c5b8d3c764b83fbe32e2",
+        "receiptSubjectSha256": "099e2468e8fe99464bff0ed951fa874fc8a04c6f816e31cd40270a50eed59c87",
+        "role": "claude_code",
+        "state": "verified",
+        "taskId": "agt-003-codex-flywheel-shared-task"
       },
       {
-        "route": "Flywheel on Codex",
-        "taskId": "agt-001-index-fallback-integrity",
-        "receiptSha256": "58d0dfbac97b4bcb9edf3c921a148ca011c980a20b595d294b4f08c4a2259a41",
-        "receiptSubjectSha256": "087ccca3187ad495e7834d97d332e651f91284be47f2879dd0595115e7462d5d",
-        "state": "verified"
+        "receiptSha256": "81e9b15e0579c7a92d6872eea15e988f3b6d2696ebcaf7add4d3b2726798c794",
+        "receiptSubjectSha256": "9fc59bd193ccd0659884a44b17ec519fe10338699c8e7e05d1b2721932778889",
+        "role": "claude_code",
+        "state": "verified",
+        "taskId": "agt-009-receipts-vs-guardrails-friction"
       },
       {
-        "route": "Flywheel on Codex",
-        "taskId": "agt-003-codex-flywheel-shared-task",
-        "receiptSha256": "804dabeaa888dfa13dd097c32c4fcda38a11cbda5903cfd48955df9bf3363d1a",
-        "receiptSubjectSha256": "73b93fa47088434fc20667257f84e12e9dc28b6689b50ef9564051243337eaa2",
-        "state": "verified"
+        "receiptSha256": "4826ffbec5ed27fae32709949d95e0891ceb0c18d5c9a054c05acd3ee4cd4132",
+        "receiptSubjectSha256": "2fa2c7806b32969757b3703c5177d39d408d3892ea643254f633f933ba7d8f2b",
+        "role": "claude_code",
+        "state": "verified",
+        "taskId": "agt-010-documentation-schematic-maintenance"
+      },
+      {
+        "receiptSha256": "54ed260d639495629f4436bbf47c281988fc2bf5f3ef3855e1b226f4105ba0ee",
+        "receiptSubjectSha256": "e66ed407481d51c4d5101d8291605e895dd8ae4c6b9b63bf19a7bb8fd74ac700",
+        "role": "claude_code",
+        "state": "verified",
+        "taskId": "agt-015-evidence-bound-reporting"
+      },
+      {
+        "receiptSha256": "ed37c92ef2446d82572fc7ffd5afd0701d294b35ec7ff3d95f20e4a93142054e",
+        "receiptSubjectSha256": "030c008993ea7be1a0f3b0efba3ff9b9832c5be254a5dd179f9d23672effc9f3",
+        "role": "claude_code",
+        "state": "verified",
+        "taskId": "agt-016-source-contradiction-detection"
+      },
+      {
+        "receiptSha256": "f03285ff038bd39e91740ec906157e63a69ef192a46eeec56baf084be6f1a81c",
+        "receiptSubjectSha256": "0623b2e5fff114ae0b0bacb2f133541fa087003f22e9b4648c4c564ca3693942",
+        "role": "claude_code",
+        "state": "verified",
+        "taskId": "agt-017-budgeted-evidence-selection"
+      },
+      {
+        "receiptSha256": "feff70ae48ef03ba13dee0a811ba00628bf3a2079f9028a1a4abb1201da53c71",
+        "receiptSubjectSha256": "db4a5c1d29c09106310614f19590a0faa13ec6bd7d63a66816c9f11d4ad3a42c",
+        "role": "codex_harness",
+        "state": "verified",
+        "taskId": "agt-001-index-fallback-integrity"
+      },
+      {
+        "receiptSha256": "7b8551d819c4efe8c824f56faba849fb1a832f379824a5c2753ec17808041485",
+        "receiptSubjectSha256": "dfd0396ac633eeb4ef9b4863640a71b04ded600df8f8c4b151962702b6f175f4",
+        "role": "codex_harness",
+        "state": "verified",
+        "taskId": "agt-003-codex-flywheel-shared-task"
+      },
+      {
+        "receiptSha256": "822d47d64a6bd9a4c33b254402103597c8faa007dc6d33993f97211b63339de4",
+        "receiptSubjectSha256": "c45b9812b4cebf10baa77a2b59d8abd2aad7d4eb4b9405614c9c4580df9d7433",
+        "role": "codex_harness",
+        "state": "verified",
+        "taskId": "agt-009-receipts-vs-guardrails-friction"
+      },
+      {
+        "receiptSha256": "88af55ded2c19ce654563e6eca5c6a450c007f44644a78226426d14bdc319d69",
+        "receiptSubjectSha256": "fd27c73197cf3d2e1ca657d52a162c98b69f3a0e528ebc714fa563d11384fca1",
+        "role": "codex_harness",
+        "state": "verified",
+        "taskId": "agt-010-documentation-schematic-maintenance"
+      },
+      {
+        "receiptSha256": "d56cef8af0354144b912bfa9443a107064971e55c2b2f85ce48e18c628cbc53b",
+        "receiptSubjectSha256": "43b5292bcb7bb4aad08384769bd8343de2c99a88f8e907d2e3381e0b8a4b4bcb",
+        "role": "codex_harness",
+        "state": "verified",
+        "taskId": "agt-015-evidence-bound-reporting"
+      },
+      {
+        "receiptSha256": "ea1759931d79c078bf2159ac64ee72287b709375f500533fd33544a3e1bf6018",
+        "receiptSubjectSha256": "a99a6e00e5306684b48a1d96930660e3bf6beef9727c511844f12b9f532a02ff",
+        "role": "codex_harness",
+        "state": "verified",
+        "taskId": "agt-016-source-contradiction-detection"
+      },
+      {
+        "receiptSha256": "73bd3e67bcc716990d4b74cca6bf17bee107809f1e3aae29166c838974179124",
+        "receiptSubjectSha256": "43ec6d6fbcc1007671ceb823e79f52bfa9bdf4442d70c0a0d43b5cbe3463799f",
+        "role": "codex_harness",
+        "state": "verified",
+        "taskId": "agt-017-budgeted-evidence-selection"
+      },
+      {
+        "receiptSha256": "4b470c57eb05bce6559ab080d93330433f55add3b4f8c3d1d392be7d788f3acb",
+        "receiptSubjectSha256": "c14e1d41837dba2e8af8404fe894a0aa00e1b8433e87910150a9f0b800df95d3",
+        "role": "flywheel_harness",
+        "state": "verified",
+        "taskId": "agt-001-index-fallback-integrity"
+      },
+      {
+        "receiptSha256": "fda74b14c1b135c662e3f337beec15909937351a76a051503aa868ecfebfbf45",
+        "receiptSubjectSha256": "7cf540d6214ae5c63fb4bfd75b0f6fb9007b91ef0993f1c742742f4fe5d9b480",
+        "role": "flywheel_harness",
+        "state": "verified",
+        "taskId": "agt-003-codex-flywheel-shared-task"
+      },
+      {
+        "receiptSha256": "cde1bfa30a6176c2cdc5b22411cc9dacbc2e8918dc20ed2776e995b74d5299fe",
+        "receiptSubjectSha256": "7cb7d9e2cf7757c8f94efb288b4f564ba75955a9e0c0c3de2a7f3945c0afb956",
+        "role": "flywheel_harness",
+        "state": "verified",
+        "taskId": "agt-009-receipts-vs-guardrails-friction"
+      },
+      {
+        "receiptSha256": "6f8ca396dfc8aaf799758c138a2c402ff507aa8b51f364192d5d311def21d55b",
+        "receiptSubjectSha256": "ac7c3c909c12a3b256c9efb4b9aa05abb5183fa3e238d2293d6a31ac960f61bf",
+        "role": "flywheel_harness",
+        "state": "verified",
+        "taskId": "agt-010-documentation-schematic-maintenance"
+      },
+      {
+        "receiptSha256": "bbb30cdf4e68d67cd955f80199d7db486dfa7d71811ef6d2125c02fd02508e54",
+        "receiptSubjectSha256": "57f4a3c14af8fd860729c168b1dcfaa86b1b354e6ee9d3415b37e5cce352fbfe",
+        "role": "flywheel_harness",
+        "state": "verified",
+        "taskId": "agt-015-evidence-bound-reporting"
+      },
+      {
+        "receiptSha256": "a0af0182a5da65aea325def36405001ba7fce0cd9aeef714941be58018e3a7c2",
+        "receiptSubjectSha256": "5ab01b5feca57b7f270f6790e510b2641e9a31c0039c28f536b313475faac2f8",
+        "role": "flywheel_harness",
+        "state": "verified",
+        "taskId": "agt-016-source-contradiction-detection"
+      },
+      {
+        "receiptSha256": "04cf10c401178131232cd95057cfa35f84f6a11f8c54177c277495535dfc7d01",
+        "receiptSubjectSha256": "273e79a5b4e104c0eb48b04d889ad23f772e03edbb21cf5b381bd194f7e1373c",
+        "role": "flywheel_harness",
+        "state": "verified",
+        "taskId": "agt-017-budgeted-evidence-selection"
+      },
+      {
+        "receiptSha256": "5d91952788c73262ffcfb05e85adf3fe215b705e20748f8c94539f8a67446ae3",
+        "receiptSubjectSha256": "0c48fd3bde45ef14066551f186c6985a3748a818c6a815dcfd37239062fac5e1",
+        "role": "local_14b",
+        "state": "verified",
+        "taskId": "agt-001-index-fallback-integrity"
+      },
+      {
+        "receiptSha256": "0c58c20b34d3d0cad087a6c50175d6ea05c27df39627b578c2e77cf52e692704",
+        "receiptSubjectSha256": "5675caa86a53d8328b674e9ba7564f711aeffa9ddc0008cfab2b81f7613e798a",
+        "role": "local_14b",
+        "state": "verified",
+        "taskId": "agt-003-codex-flywheel-shared-task"
+      },
+      {
+        "receiptSha256": "8596730a9b922c960f877c7476e530d7d8fbfe0689018d41374a54f5ceaa6dc6",
+        "receiptSubjectSha256": "5a8dca52ddde76c4dca3f3d7f66a09e2ce9104c234bcea128b9bc033bc03e598",
+        "role": "local_14b",
+        "state": "verified",
+        "taskId": "agt-009-receipts-vs-guardrails-friction"
+      },
+      {
+        "receiptSha256": "83bc17d7051e9e9847705cd7e1bfefcd3afa988d1bb7ef6248a57ebc39839c7a",
+        "receiptSubjectSha256": "7e3a6e365cb426a26daf57a84e5954fd051e3bae1375aeda01fc9ec54411a344",
+        "role": "local_14b",
+        "state": "verified",
+        "taskId": "agt-010-documentation-schematic-maintenance"
+      },
+      {
+        "receiptSha256": "1ea77f3c5dc9d50a3c3c1157bcb788766232ae79aebd021d14f1edb5401a042e",
+        "receiptSubjectSha256": "6f63c3d312cd8bc7594b3b46aa3783165fd925ab703fcd26db7969ea8c3c7839",
+        "role": "local_14b",
+        "state": "verified",
+        "taskId": "agt-015-evidence-bound-reporting"
+      },
+      {
+        "receiptSha256": "2b88e8bc047321b748917933b34c59b387ad70a20bea0e77abab11ec7d8f8637",
+        "receiptSubjectSha256": "595f450d0582fcb58563ee7832c9a91505b96dcc3872296b769ba19fa844f706",
+        "role": "local_14b",
+        "state": "verified",
+        "taskId": "agt-016-source-contradiction-detection"
+      },
+      {
+        "receiptSha256": "3723f067796c3c0bdab03c7fbdb003b4810fd713fdf530cef7b606e1eaf19949",
+        "receiptSubjectSha256": "bfe57c6e2365cd4e6d1c2c3d64e86c9ae378c876751e6cbedc87a791ccb25cfc",
+        "role": "local_14b",
+        "state": "verified",
+        "taskId": "agt-017-budgeted-evidence-selection"
+      },
+      {
+        "receiptSha256": "8d88ec1807eb8231ade944d8d93ec9adb2d185ae5a2b37053de51df23d7aa231",
+        "receiptSubjectSha256": "8124e1ed3ad6b33801d2dcaac35998291b02244684ae8e78390d41cc8cb88424",
+        "role": "local_32b",
+        "state": "verified",
+        "taskId": "agt-001-index-fallback-integrity"
+      },
+      {
+        "receiptSha256": "a923196af4d9f494b47df73b57d7222060e2fb343bc639143754a0239f633cb6",
+        "receiptSubjectSha256": "0c9aa25e8cdf519dca6958338385e3d9bef44e59d26a2f05dff3985c5931f407",
+        "role": "local_32b",
+        "state": "verified",
+        "taskId": "agt-003-codex-flywheel-shared-task"
+      },
+      {
+        "receiptSha256": "7531fe03aad98486597e6aa5d6193862f5c58cfee69418e07a8ed35794b30287",
+        "receiptSubjectSha256": "21f5d4ac1917aa637773cb4e2fa3074490fcb6a744533ac367c0194d783fa283",
+        "role": "local_32b",
+        "state": "verified",
+        "taskId": "agt-009-receipts-vs-guardrails-friction"
+      },
+      {
+        "receiptSha256": "500c0153b5151641d57f2b9041e70031c08dd383071b508d7a9fb95d6f085871",
+        "receiptSubjectSha256": "054883ac0db8fa8ac1cd964c59ec8d3655abdd2421d97db16ce5547fc4907cf0",
+        "role": "local_32b",
+        "state": "verified",
+        "taskId": "agt-010-documentation-schematic-maintenance"
+      },
+      {
+        "receiptSha256": "bded5251bcb101e73cf91368d7a954e0896e2b1c2480dbfe8cdf6a1816b369f4",
+        "receiptSubjectSha256": "966181c1415bfe2ce6919cc6237a95bbacbed0bf823faf331ffcda82a89c854a",
+        "role": "local_32b",
+        "state": "verified",
+        "taskId": "agt-015-evidence-bound-reporting"
+      },
+      {
+        "receiptSha256": "5ff8e1497a4575b79559e35c92da3a21ca7bde61fdf2e0448165bcc93f3f675f",
+        "receiptSubjectSha256": "d7da9118d4e9e3f4938aafa47a9a2f32fef888367a0963baeff7d4b62ab38740",
+        "role": "local_32b",
+        "state": "verified",
+        "taskId": "agt-016-source-contradiction-detection"
+      },
+      {
+        "receiptSha256": "16a9cbf23838439c654d650555b6ab1a1c96c216901bdb8351c52f0fd79291bb",
+        "receiptSubjectSha256": "c73f6f88065c5c0bc209f01a95acdd4bd97cb5a2fcf83923fc9cce248eaf4b0e",
+        "role": "local_32b",
+        "state": "verified",
+        "taskId": "agt-017-budgeted-evidence-selection"
       }
-    ]
+    ],
+    "verified": 35
   },
-  "validComparableTaskOutcomes": 0,
-  "attempts": [
+  "roles": [
     {
-      "route": "Codex direct",
-      "taskId": "agt-001-index-fallback-integrity",
-      "latencyMs": 35357,
-      "execution": "returned",
-      "oracle": "fail",
-      "receipt": "verified",
-      "outcome": "oracle_fail",
-      "detail": "Admitted artifact. Oracle rejected failure_classes_mismatch: the provider emitted degraded_match; the fixture contract requires degraded_match_behavior."
+      "attempts": 7,
+      "cost": {
+        "coverage": 0.8571,
+        "reportedAttempts": 6,
+        "usdTotal": 0.4997
+      },
+      "envelopeRecovery": {
+        "held_an_envelope": 3,
+        "refused": 3,
+        "unread": 0
+      },
+      "latencyMsMedian": 49147.0,
+      "latencyMsP90": 113565.0,
+      "launched": 7,
+      "modelsObserved": [
+        "claude-sonnet-5"
+      ],
+      "nullReasons": {
+        "cost_usd_per_scored_attempt": "partial_cost_coverage",
+        "output_tokens_total": "provider_usage_unavailable"
+      },
+      "outputTokensTotal": null,
+      "passRate": 0.5,
+      "passed": 1,
+      "readable": 2,
+      "role": "claude_code",
+      "ungraded": {
+        "over the time budget": 1,
+        "refused at the envelope": 3,
+        "the provider's own stream was unreadable": 1
+      }
     },
     {
-      "route": "Codex direct",
-      "taskId": "agt-003-codex-flywheel-shared-task",
-      "latencyMs": 5664,
-      "execution": "internal_error",
-      "oracle": "not_run",
-      "receipt": "verified",
-      "outcome": "internal_error",
-      "detail": "Codex turn failed after one successful staged-file discovery command. The models cache could not load because base_instructions was missing at line 97 column 5."
+      "attempts": 7,
+      "cost": {
+        "coverage": 0.0,
+        "reportedAttempts": 0,
+        "usdTotal": null
+      },
+      "envelopeRecovery": {
+        "held_an_envelope": 0,
+        "refused": 1,
+        "unread": 0
+      },
+      "latencyMsMedian": 25814.0,
+      "latencyMsP90": 47792.0,
+      "launched": 7,
+      "modelsObserved": [
+        "gpt-5.3-codex-spark"
+      ],
+      "nullReasons": {
+        "cost_usd_per_scored_attempt": "provider_cost_unavailable",
+        "cost_usd_total": "provider_cost_unavailable",
+        "output_tokens_total": "provider_usage_unavailable"
+      },
+      "outputTokensTotal": null,
+      "passRate": 0.75,
+      "passed": 3,
+      "readable": 4,
+      "role": "codex_harness",
+      "ungraded": {
+        "artifact inside the envelope was invalid": 1,
+        "refused at the envelope": 1,
+        "the provider's own stream was unreadable": 1
+      }
     },
     {
-      "route": "Flywheel on Codex",
-      "taskId": "agt-001-index-fallback-integrity",
-      "latencyMs": 2028,
-      "execution": "malformed",
-      "oracle": "not_run",
-      "receipt": "verified",
-      "outcome": "malformed",
-      "detail": "Inner Codex emitted turn.failed. Flywheel recorded final agent message missing and preserved its ledger entry and verified checkpoint."
+      "attempts": 7,
+      "cost": {
+        "coverage": 0.0,
+        "reportedAttempts": 0,
+        "usdTotal": null
+      },
+      "envelopeRecovery": {
+        "held_an_envelope": 1,
+        "refused": 1,
+        "unread": 0
+      },
+      "latencyMsMedian": 24270.0,
+      "latencyMsP90": 65684.0,
+      "launched": 7,
+      "modelsObserved": [
+        "gpt-5.3-codex-spark"
+      ],
+      "nullReasons": {
+        "cost_usd_per_scored_attempt": "provider_cost_unavailable",
+        "cost_usd_total": "provider_cost_unavailable"
+      },
+      "outputTokensTotal": 37520,
+      "passRate": 0.5,
+      "passed": 2,
+      "readable": 4,
+      "role": "flywheel_harness",
+      "ungraded": {
+        "artifact inside the envelope was invalid": 1,
+        "refused at the envelope": 1,
+        "the inner provider's output was unreadable": 1
+      }
     },
     {
-      "route": "Flywheel on Codex",
-      "taskId": "agt-003-codex-flywheel-shared-task",
-      "latencyMs": 2043,
-      "execution": "malformed",
-      "oracle": "not_run",
-      "receipt": "verified",
-      "outcome": "malformed",
-      "detail": "Inner Codex emitted turn.failed. Flywheel recorded final agent message missing and preserved its ledger entry and verified checkpoint."
+      "attempts": 7,
+      "cost": {
+        "coverage": 0.0,
+        "reportedAttempts": 0,
+        "usdTotal": null
+      },
+      "envelopeRecovery": {
+        "held_an_envelope": 3,
+        "refused": 7,
+        "unread": 0
+      },
+      "latencyMsMedian": 16817.0,
+      "latencyMsP90": 33773.0,
+      "launched": 7,
+      "modelsObserved": [
+        "flywheel-local-coder-14b"
+      ],
+      "nullReasons": {
+        "cost_usd_per_scored_attempt": "provider_cost_unavailable",
+        "cost_usd_total": "provider_cost_unavailable",
+        "output_tokens_total": "provider_usage_unavailable"
+      },
+      "outputTokensTotal": null,
+      "passRate": null,
+      "passed": 0,
+      "readable": 0,
+      "role": "local_14b",
+      "ungraded": {
+        "refused at the envelope": 7
+      }
+    },
+    {
+      "attempts": 7,
+      "cost": {
+        "coverage": 0.0,
+        "reportedAttempts": 0,
+        "usdTotal": null
+      },
+      "envelopeRecovery": {
+        "held_an_envelope": 0,
+        "refused": 1,
+        "unread": 0
+      },
+      "latencyMsMedian": 240013.0,
+      "latencyMsP90": 240031.0,
+      "launched": 7,
+      "modelsObserved": [
+        "flywheel-local-coder-32b"
+      ],
+      "nullReasons": {
+        "cost_usd_per_scored_attempt": "provider_cost_unavailable",
+        "cost_usd_total": "provider_cost_unavailable",
+        "output_tokens_total": "provider_usage_unavailable"
+      },
+      "outputTokensTotal": null,
+      "passRate": 0.0,
+      "passed": 0,
+      "readable": 1,
+      "role": "local_32b",
+      "ungraded": {
+        "artifact inside the envelope was invalid": 1,
+        "refused at the envelope": 1,
+        "the model endpoint did not answer": 4
+      }
     }
   ],
-  "observations": {
-    "costUsd": null,
-    "resourceUse": null,
-    "observedModelIdentity": null
-  },
-  "observationNullReasons": {
-    "costUsd": "provider_cost_unavailable",
-    "resourceUse": "resource_observation_unavailable",
-    "observedModelIdentity": "requested registry reference was not provider-observed"
-  },
-  "artifactHashes": {
-    "manifest": "dca3f8205bea82e324902f3dc23ecefe26bbd1f776522e5d0185471797536772",
-    "runtimeMatrix": "c06295254b4246bc99395faec97a875e4f998b47c3cf9f3cd1166bec0db67c9f",
-    "runRecord": "957041f72162c52f9951fd7291f89e70758e9696794aab26e4ddc57645c93e01",
-    "comparisonInput": "1a48bee1e1ee9cd13c44c58baa474881cd7a2197b10fea65779f55db845e8f79",
-    "artifactIndex": "0ec72ad56bf12f54f3ba63165c9f945795153e34c514edfeae081fc2544ecca5"
-  },
-  "limitations": [
-    "One repetition per cell is an admission pilot, not a performance distribution.",
-    "No attempt completed with an oracle pass, so latency is diagnostic only and must not be ranked as speed.",
-    "Usage, cost, CPU, memory, GPU, and energy observations are unavailable.",
-    "Model identity is requested but not provider-observed.",
-    "Claude Code, OpenCode, Aider, and local model routes are not measured in this pilot.",
-    "Raw run artifacts remain operator-local; the public record exposes sanitized outcomes and immutable hashes only."
-  ],
-  "doesNotProve": "This integration-failure profile does not establish market performance, a quality ranking, speed, production reliability, harness attribution, or provider-observed model identity."
+  "runId": "hh3-graded-20260904-050752",
+  "schema": "zentropy-current-cross-harness-pilot-source/v2",
+  "sourceCommit": "66c8498108b8e08a920c717cda7d320409524080",
+  "sourceCommitUrl": "https://github.com/HarperZ9/flywheel/commit/66c8498108b8e08a920c717cda7d320409524080",
+  "sourceTreeState": "unsealed",
+  "taskSetId": "flywheel_agentic_gauntlet_v1"
 }

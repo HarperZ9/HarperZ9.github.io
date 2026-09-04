@@ -444,15 +444,15 @@ function CapabilityOverview() {
           ]} />
         </article>
         <article className="evidence-figure-card" data-evidence-figure-card>
-          <h3>Current cross-harness pilot</h3>
+          <h3>Current cross-harness run</h3>
           <a href="/analytics/current-cross-harness-pilot.html">
-            <img className="research-figure-image" src="/analytics/current-cross-harness-pilot.svg" alt="Four receipt-verified cross-harness attempts with zero valid comparable task outcomes." width="1120" height="480" loading="lazy" />
+            <img className="research-figure-image" src="/analytics/current-cross-harness-pilot.svg" alt="Horizontal bars for five harness roles on the same seven tasks: of seven attempts each, codex_harness and flywheel_harness reached a grader four times, claude_code twice, local_32b once, and local_14b none; three, two, one, zero, and zero passed." width="1120" height="610" loading="lazy" />
           </a>
-          <p>4/4 receipts verified, but no valid comparable task outcome. The durations are diagnostic only.</p>
+          <p>35 attempts across five harness roles on seven tasks, all 35 receipts verified. 11 reached a grader and 6 passed; why the rest did not is named per role.</p>
           <FigureFacts rows={[
-            ["n", "4 receipt-verified attempts"],
-            ["units", "attempts, outcomes, and diagnostic duration"],
-            ["retrieved", "2026-08-28"],
+            ["n", "35 receipt-verified attempts"],
+            ["units", "attempts, passes, latency, and USD cost"],
+            ["retrieved", "2026-09-04"],
             ["source", <a href="/analytics/current-cross-harness-pilot.html">result, table, and limits</a>],
           ]} />
         </article>

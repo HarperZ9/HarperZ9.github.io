@@ -169,7 +169,7 @@ def test_home_uses_real_figures_with_units_and_limitations() -> None:
         assert route in source
 
     assert "Same task set and harness" in source
-    assert "4/4 receipts verified" in source
+    assert "all 35 receipts verified" in source
     assert "Unit: recovered logged actions" in source
     assert "Categories overlap" in source
     assert "What this does not prove" in source
@@ -188,7 +188,7 @@ def test_home_figure_cards_expose_dataset_facts_and_accessible_tables() -> None:
     assert source.count("<FigureFacts rows={[") == 4
     for value in (
         '["n", "164 code-completion tasks"]',
-        '["n", "4 receipt-verified attempts"]',
+        '["n", "35 receipt-verified attempts"]',
         '["n", "5 daily observations"]',
         '["n", "100-agent peak-hour sample"]',
         'href="/figures/recovered-actions-by-day.html"',
