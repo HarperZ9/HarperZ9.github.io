@@ -288,6 +288,15 @@
           "summary": "The v0.3.10 public release and main default branch were verified."
         },
         {
+          "id": "flywheel-release-v0-3-11",
+          "type": "release",
+          "label": "Flywheel v0.3.11",
+          "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.3.11",
+          "date": "2026-09-04",
+          "status": "verified",
+          "summary": "The v0.3.11 public release, its PyPI publication of flywheel-verify, and the Windows installer attached to it were verified."
+        },
+        {
           "id": "flywheel-gather-lane-code",
           "type": "code-permalink",
           "label": "Flywheel Gather lane declaration",
@@ -408,10 +417,10 @@
         "mneme",
         "chorus"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-09-04",
       "primaryDomain": "agent-systems",
       "productType": "verified-inference platform and desktop client",
-      "releaseState": "stable v0.3.10"
+      "releaseState": "stable v0.3.11"
     },
     {
       "id": "telos",

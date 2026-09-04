@@ -13,7 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-TelJDAPv.js",
+    "assets/index-BIYnDBdw.js",
     "assets/index-DGQrcJ5p.css",
     "accountable-surface.html",
     "availability-is-not-reach.html",
@@ -191,7 +191,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "12ce3056dace65fd719e27700e9c917af19fab6c08025a4f4e37f7558da90b2c"
+REVIEWED_RELEASE_SHA256 = "0c31dff7f727aff193d29ca536d55ef4013e7eb63c483631521208463115dfe0"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -295,7 +295,8 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_publications_js = "index-DDkK7Yu0.js"
     previous_plain_language_js = "index-DFJMXR3Q.js"
     previous_pilot_js = "index-3Dl0qE22.js"
-    current_js = "index-TelJDAPv.js"
+    previous_cross_harness_js = "index-TelJDAPv.js"
+    current_js = "index-BIYnDBdw.js"
     current_css = "index-DGQrcJ5p.css"
     previous_security_js = "index-BnUu1wyw.js"
     prior_reviewed_js = "index-C_1S2nb6.js"
@@ -306,6 +307,8 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     assert (ROOT / "assets" / current_css).is_file()
     assert previous_pilot_js not in source
     assert not (ROOT / "assets" / previous_pilot_js).exists()
+    assert previous_cross_harness_js not in source
+    assert not (ROOT / "assets" / previous_cross_harness_js).exists()
     assert previous_security_js not in source
     assert not (ROOT / "assets" / previous_security_js).exists()
     assert prior_reviewed_js not in source
