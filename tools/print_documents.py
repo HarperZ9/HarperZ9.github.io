@@ -28,11 +28,8 @@ OUT = ROOT / "career"
 PORT = 8871
 
 DOCUMENTS = {
-    "resume.html": "Zain-Dana-Harper-Resume.pdf",
     "cv.html": "Zain-Dana-Harper-CV.pdf",
     "cover-letter.html": "Zain-Dana-Harper-Cover-Letter.pdf",
-    "portfolio.html": "Zain-Dana-Harper-Portfolio.pdf",
-    "dossier.html": "Zain-Dana-Harper-Dossier.pdf",
 }
 
 # The two archived corpora print into papers/ beside the six papers, so

@@ -7,13 +7,17 @@ rather than a cosmetic bug. Second, the claim language, because the research
 record is not peer reviewed and every page has to keep saying so.
 """
 
+import hashlib
 import json
 import re
+import runpy
 import subprocess
 import sys
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
+PUBLIC_HOST = "harperz9.github.io"
 CENSUS = ROOT / "career" / "open-source-census.json"
 MANIFEST = ROOT / "career" / "career-artifacts.json"
 DOCS = ("hire.html", "resume.html", "cv.html", "portfolio.html", "cover-letter.html", "dossier.html")
@@ -22,6 +26,11 @@ RESUME_PDFS = (
     "career/Zain-Dana-Harper-Resume-Public-Operations.pdf",
     "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf",
     "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf",
+)
+RETIRED_LEGACY_PDFS = (
+    "career/Zain-Dana-Harper-Resume.pdf",
+    "career/Zain-Dana-Harper-Portfolio.pdf",
+    "career/Zain-Dana-Harper-Dossier.pdf",
 )
 STATUS_BOUNDARY_DOCS = (
     "resume-support-operations.html",
@@ -37,6 +46,20 @@ def read(name: str) -> str:
     return (ROOT / name).read_text(encoding="utf-8")
 
 
+def _local_link_target(page: Path, href: str) -> Path | None:
+    parsed = urlsplit(href)
+    if parsed.scheme.casefold() not in {"", "http", "https"}:
+        return None
+    if parsed.netloc and (parsed.hostname or "").casefold() != PUBLIC_HOST:
+        return None
+    if not parsed.path:
+        return None
+    path = unquote(parsed.path)
+    if parsed.netloc or path.startswith("/"):
+        return (ROOT / path.lstrip("/")).resolve()
+    return (page.parent / path).resolve()
+
+
 def test_every_career_document_exists() -> None:
     for name in DOCS:
         assert (ROOT / name).is_file(), name
@@ -45,6 +68,59 @@ def test_every_career_document_exists() -> None:
         assert (ROOT / record["path"]).is_file(), record["path"]
     for retired in manifest["retired_artifacts"]:
         assert not (ROOT / retired).exists(), retired
+
+
+def test_retired_legacy_pdfs_cannot_be_shipped_or_printed() -> None:
+    """A stale PDF route must stay retired after the current lanes replace it."""
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    retired = set(manifest["retired_artifacts"])
+    current = {row["path"] for row in manifest["artifacts"]}
+    print_targets = {
+        f"career/{target}"
+        for target in runpy.run_path(
+            str(ROOT / "tools" / "print_documents.py")
+        )["DOCUMENTS"].values()
+    }
+    for relative in RETIRED_LEGACY_PDFS:
+        assert relative in retired, relative
+        assert relative not in current, relative
+        assert relative not in print_targets, relative
+        assert not (ROOT / relative).exists(), relative
+
+
+def test_shipped_html_never_links_to_a_retired_career_artifact() -> None:
+    """Retiring bytes must also retire every local route that offers those bytes."""
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    retired = {(ROOT / relative).resolve() for relative in manifest["retired_artifacts"]}
+    for page in ROOT.rglob("*.html"):
+        source = page.read_text(encoding="utf-8")
+        for href in re.findall(r'href=["\']([^"\']+)["\']', source):
+            target = _local_link_target(page, href)
+            if target is None:
+                continue
+            assert target not in retired, f"{page.relative_to(ROOT)} -> {href}"
+
+
+def test_absolute_public_origin_links_resolve_into_the_release_tree() -> None:
+    href = (
+        "https://harperz9.github.io/"
+        "career/Zain-Dana-Harper-Resume.pdf"
+    )
+    expected = (ROOT / "career" / "Zain-Dana-Harper-Resume.pdf").resolve()
+    assert _local_link_target(ROOT / "index.html", href) == expected
+    assert _local_link_target(
+        ROOT / "index.html",
+        "https://example.com/career/Zain-Dana-Harper-Resume.pdf",
+    ) is None
+
+
+def test_committed_html_release_rows_bind_current_bytes() -> None:
+    """The release manifest must identify the HTML that is actually deployed."""
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    for row in manifest["current_html"]:
+        payload = (ROOT / row["path"]).read_bytes()
+        assert row["byte_length"] == len(payload), row["path"]
+        assert row["sha256"] == hashlib.sha256(payload).hexdigest(), row["path"]
 
 
 def test_experience_dates_use_the_adopted_low_claim_boundary() -> None:

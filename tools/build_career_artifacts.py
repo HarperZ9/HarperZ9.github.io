@@ -306,7 +306,27 @@ def _build_receipt(
     }
 
 
-def _validate_release_manifest(path: Path) -> dict:
+def _current_html_target(site_root: Path, relative: str) -> Path:
+    path = Path(relative)
+    if (
+        not relative
+        or path.is_absolute()
+        or path.drive
+        or relative != path.as_posix()
+        or any(part in {".", ".."} for part in path.parts)
+    ):
+        raise ValueError(
+            "release manifest current_html paths must be normalized relative paths"
+        )
+    target = (site_root / path).resolve()
+    if not target.is_relative_to(site_root):
+        raise ValueError(
+            "release manifest current_html paths must stay within the site root"
+        )
+    return target
+
+
+def _validate_release_manifest(path: Path, site_root: Path) -> dict:
     manifest = json.loads(path.read_text(encoding="utf-8"))
     generated_paths = {
         f"career/{spec.stem}.{suffix}"
@@ -326,6 +346,20 @@ def _validate_release_manifest(path: Path) -> dict:
         raise ValueError(
             f"release manifest has no HTML rows for: {', '.join(missing_html)}"
         )
+    html_targets = {
+        relative: _current_html_target(site_root, relative)
+        for relative in html_paths
+    }
+    missing_targets = sorted(
+        relative for relative, target in html_targets.items() if not target.is_file()
+    )
+    if missing_targets:
+        raise ValueError(
+            "release manifest HTML targets do not exist: "
+            + ", ".join(missing_targets)
+        )
+    for relative in sorted(html_paths):
+        _read_blocks(html_targets[relative])
     return manifest
 
 
@@ -359,7 +393,6 @@ def _update_release_manifest(
     source_epoch: int,
     site_root: Path,
 ) -> None:
-    source_names = {spec.source for spec in SPECS}
     generated = {
         row["path"]: {key: value for key, value in row.items() if key != "source"}
         for row in receipt["artifacts"]
@@ -371,10 +404,7 @@ def _update_release_manifest(
     manifest["generated_at_epoch"] = source_epoch
     updated = []
     for row in manifest["current_html"]:
-        if row["path"] not in source_names:
-            updated.append(row)
-            continue
-        source_path = site_root / row["path"]
+        source_path = _current_html_target(site_root, row["path"])
         payload = source_path.read_bytes()
         extraction = "\n".join(
             block.text for block in _read_blocks(source_path)
@@ -400,7 +430,10 @@ def main() -> int:
     site_root = args.site_root.resolve()
     release_manifest = None
     if args.release_manifest is not None:
-        release_manifest = _validate_release_manifest(args.release_manifest)
+        release_manifest = _validate_release_manifest(
+            args.release_manifest,
+            site_root,
+        )
     blocks_by_spec = {
         spec: _read_blocks(site_root / spec.source) for spec in SPECS
     }
