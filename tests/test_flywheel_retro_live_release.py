@@ -106,11 +106,12 @@ def test_flywheel_primary_page_uses_the_current_consolidated_release_route() -> 
     flywheel = next(system for system in registry["systems"] if system["id"] == "flywheel")
 
     assert flywheel["entryCommand"] == "pip install flywheel-verify; flywheel up"
-    assert "v0.3.10" in source
+    assert "v0.3.11" in source
     assert "pip install flywheel-verify" in source
     assert "flywheel up" in source
     assert "flywheel-desktop" not in source
     assert "v0.2.2" not in source
+    assert "v0.3.10" not in source
 
 
 def test_retro_media_manifest_matches_public_artifacts() -> None:
