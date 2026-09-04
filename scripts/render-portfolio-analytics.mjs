@@ -195,22 +195,70 @@ function benchmarkComparison(dataset, groups, svg) {
   return { html, companion };
 }
 
+const duration = (ms) => ms === null || ms === undefined ? null : (ms >= 1000 ? `${number(ms / 1000, 1)} s` : `${number(ms, 0)} ms`);
+const unknown = (reason) => `<span class="unknown">Unknown: ${escapeMarkup(reason)}</span>`;
+const ratio = (part, whole) => whole ? part / whole : 0;
+
+function roleCost(role) {
+  // A partial sum still looks whole on a page, so the coverage travels with it
+  // and a provider that states nothing shows an absence rather than a zero.
+  if (role.cost.usdTotal === null || role.cost.usdTotal === undefined) {
+    return unknown(role.nullReasons.cost_usd_total ?? "provider cost unavailable");
+  }
+  const coverage = role.cost.coverage === null ? "coverage unknown" : `${number(role.cost.coverage * 100, 0)}% of attempts reported a cost`;
+  return `$${number(role.cost.usdTotal, 4)} <span class="status">(${escapeMarkup(coverage)})</span>`;
+}
+
+function ungradedText(role) {
+  const entries = Object.entries(role.ungraded ?? {}).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  if (!entries.length) return "";
+  return entries.map(([reason, count]) => `${count} ${reason}`).join("; ");
+}
+
+function recoveryText(role) {
+  // A refusal that carried a complete answer and one that carried nothing are
+  // different failures. Both were refused, and neither was graded.
+  const recovery = role.envelopeRecovery;
+  if (!recovery || !recovery.refused) return "";
+  const parts = [`${recovery.held_an_envelope} of ${recovery.refused} refused answers held a complete envelope behind other text`];
+  if (recovery.unread) parts.push(`${recovery.unread} with no output left to read`);
+  return `${parts.join("; ")}.`;
+}
+
 function currentCrossHarnessPilot(sourceRecord, sourceDocumentSha256) {
-  if (sourceRecord.schema !== "zentropy-current-cross-harness-pilot-source/v1") {
+  if (sourceRecord.schema !== "zentropy-current-cross-harness-pilot-source/v2") {
     throw new Error(`unsupported current pilot source schema: ${sourceRecord.schema}`);
   }
-  if (sourceRecord.receipts?.records?.length !== sourceRecord.receipts?.attempts) {
+  const { counts, roles, receipts } = sourceRecord;
+  // The figure and the record it is drawn from must agree, because the way this
+  // page went wrong before was a caption that outlived the run behind it.
+  const sum = (key) => roles.reduce((total, role) => total + role[key], 0);
+  for (const [name, fromRoles, declared] of [["attempts", sum("attempts"), counts.attempts], ["readable", sum("readable"), counts.readable], ["passed", sum("passed"), counts.passed], ["roles", roles.length, counts.roles]]) {
+    if (fromRoles !== declared) throw new Error(`current pilot ${name} disagree: roles say ${fromRoles}, counts say ${declared}`);
+  }
+  if (receipts?.records?.length !== receipts?.attempts) {
     throw new Error("current pilot receipt records do not match the declared attempt denominator");
   }
-  if (!sourceRecord.receipts.records.every((record) => record.state === "verified" && /^[a-f0-9]{64}$/.test(record.receiptSha256) && /^[a-f0-9]{64}$/.test(record.receiptSubjectSha256))) {
-    throw new Error("current pilot receipt record is incomplete or unverified");
+  if (receipts.attempts !== counts.attempts) {
+    throw new Error(`current pilot receipts cover ${receipts.attempts} of ${counts.attempts} attempts`);
+  }
+  // A hash that is present must be a hash. A hash that is absent is a receipt
+  // the run no longer has on disk, which is a fact to print rather than a
+  // reason to withhold the whole page: the attempt still happened.
+  const hashOrAbsent = (value) => value === null || value === undefined || /^[a-f0-9]{64}$/.test(value);
+  if (!receipts.records.every((record) => hashOrAbsent(record.receiptSha256) && hashOrAbsent(record.receiptSubjectSha256))) {
+    throw new Error("current pilot receipt hash is malformed");
+  }
+  const verifiedStates = receipts.records.filter((record) => record.state === "verified").length;
+  if (verifiedStates !== receipts.verified) {
+    throw new Error(`current pilot receipt states disagree: ${verifiedStates} verified, header says ${receipts.verified}`);
   }
   if (!Object.values(sourceRecord.artifactHashes).every((sha256) => /^[a-f0-9]{64}$/.test(sha256))) {
     throw new Error("current pilot artifact hash is invalid");
   }
   const companion = {
     ...sourceRecord,
-    schema: "zentropy-current-cross-harness-pilot/v1",
+    schema: "zentropy-current-cross-harness-pilot/v2",
     sourceEvidence: {
       href: "source/current-cross-harness-pilot-source.json",
       sha256: sourceDocumentSha256,
@@ -218,17 +266,51 @@ function currentCrossHarnessPilot(sourceRecord, sourceDocumentSha256) {
     },
   };
 
-  const svgRows = companion.attempts.map((attempt, index) => {
-    const y = 156 + index * 72;
-    return `<g role="graphics-symbol" tabindex="0" aria-label="${escapeMarkup(attempt.route)}, ${escapeMarkup(attempt.taskId)}, ${number(attempt.latencyMs, 0)} milliseconds, ${escapeMarkup(attempt.execution)}, oracle ${escapeMarkup(attempt.oracle)}, receipt verified"><rect class="focus-ring" x="38" y="${y - 34}" width="1044" height="58" rx="8" fill="#0d1519" stroke="#33484e"/><text x="56" y="${y - 8}" font-size="18" font-weight="700">${escapeMarkup(attempt.route)}</text><text x="250" y="${y - 8}" class="mono muted" font-size="14">${escapeMarkup(attempt.taskId)}</text><text x="780" y="${y - 8}" font-size="16">${number(attempt.latencyMs, 0)} ms</text><text x="56" y="${y + 14}" class="mono muted" font-size="13">Execution ${escapeMarkup(attempt.execution)} · oracle ${escapeMarkup(attempt.oracle)} · receipt verified</text></g>`;
+  const headline = `${counts.attempts} attempts · ${counts.readable} reached a grader · ${counts.passed} passed · ${receipts.verified}/${receipts.attempts} receipts verified`;
+  const parityLine = `${escapeMarkup(companion.parity.prompt)} prompt and runtime context for every role on each of ${counts.tasks} tasks`;
+  const trackX = 300;
+  const trackW = 440;
+  const svgRows = roles.map((role, index) => {
+    const y = 176 + index * 74;
+    const readableW = Math.round(trackW * ratio(role.readable, role.attempts));
+    const passedW = Math.round(trackW * ratio(role.passed, role.attempts));
+    const median = duration(role.latencyMsMedian);
+    const foot = [median ? `median ${median}` : "latency unmeasured", role.modelsObserved.length ? role.modelsObserved.join(", ") : "no model observed"].join(" · ");
+    const label = `${role.role}: ${role.readable} of ${role.attempts} readable, ${role.passed} passed, ${foot}`;
+    // A zero-width bar and an unmeasured one look identical, so the counts are
+    // printed beside every track rather than left to the fill to imply.
+    const readable = readableW ? `<rect x="${trackX}" y="${y - 20}" width="${readableW}" height="22" rx="4" fill="#9fc2c7"/>` : "";
+    const passed = passedW ? `<rect x="${trackX}" y="${y - 20}" width="${passedW}" height="22" rx="4" fill="#8be4cf"/>` : "";
+    return `<g role="graphics-symbol" tabindex="0" aria-label="${escapeMarkup(label)}"><rect class="focus-ring" x="38" y="${y - 34}" width="1044" height="58" rx="8" fill="#0d1519" stroke="#33484e"/><text x="56" y="${y - 4}" font-size="18" font-weight="700">${escapeMarkup(role.role)}</text><text x="56" y="${y + 18}" class="mono muted" font-size="13">${escapeMarkup(foot)}</text><rect x="${trackX}" y="${y - 20}" width="${trackW}" height="22" rx="4" fill="#1b3035"/>${readable}${passed}<text x="${trackX + trackW + 18}" y="${y - 3}" class="mono" font-size="14">${role.readable}/${role.attempts} readable</text><text x="${trackX + trackW + 18}" y="${y + 18}" class="mono muted" font-size="13">${role.passed} passed</text></g>`;
   }).join("\n");
-  const svg = `<svg role="img" xmlns="http://www.w3.org/2000/svg" width="1120" height="480" viewBox="0 0 1120 480" aria-labelledby="pilot-title pilot-desc"><title id="pilot-title">Current cross-harness integration-failure profile</title><desc id="pilot-desc">Four receipt-verified attempts received byte-identical prompts and runtime contexts by task. No attempt produced a valid comparable task outcome. Durations are diagnostic only and are not a speed ranking.</desc><style>text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#eef6f6}.mono{font-family:"Conso","JetBrains Mono",ui-monospace,monospace}.muted{fill:#bcd0d4}g:focus{outline:none}g:focus-visible .focus-ring{stroke:#fff;stroke-width:4}</style><rect width="1120" height="480" fill="#070c0f"/><text x="42" y="44" font-size="25" font-weight="700">Current cross-harness integration-failure profile</text><text x="42" y="76" class="mono muted" font-size="15">4/4 verified receipts · 0 valid comparable task outcomes</text><text x="42" y="102" class="mono muted" font-size="13">Byte-identical prompt and context parity · durations are diagnostic only</text>${svgRows}<text x="42" y="458" class="mono muted" font-size="13">2026-08-28 · not market performance · not a quality ranking</text></svg>`;
+  const svgHeight = 176 + roles.length * 74 + 64;
+  const svg = `<svg role="img" xmlns="http://www.w3.org/2000/svg" width="1120" height="${svgHeight}" viewBox="0 0 1120 ${svgHeight}" aria-labelledby="pilot-title pilot-desc"><title id="pilot-title">Cross-harness run across ${counts.roles} harness roles</title><desc id="pilot-desc">${escapeMarkup(headline)}. On each task the prompt and runtime context every role received were ${escapeMarkup(companion.parity.prompt)}. The pale bar is how many attempts reached a grader and the bright bar is how many passed. Durations are wall clock on one machine and are not a speed ranking.</desc><style>text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#eef6f6}.mono{font-family:"Conso","JetBrains Mono",ui-monospace,monospace}.muted{fill:#bcd0d4}g:focus{outline:none}g:focus-visible .focus-ring{stroke:#fff;stroke-width:4}</style><rect width="1120" height="${svgHeight}" fill="#070c0f"/><text x="42" y="44" font-size="25" font-weight="700">Cross-harness run across ${counts.roles} harness roles</text><text x="42" y="76" class="mono muted" font-size="15">${escapeMarkup(headline)}</text><text x="42" y="102" class="mono muted" font-size="13">${parityLine} · durations are wall clock on one machine</text><g><rect x="42" y="120" width="14" height="14" rx="3" fill="#9fc2c7"/><text x="64" y="132" class="mono muted" font-size="13">reached a grader</text><rect x="216" y="120" width="14" height="14" rx="3" fill="#8be4cf"/><text x="238" y="132" class="mono muted" font-size="13">passed</text></g>${svgRows}<text x="42" y="${svgHeight - 22}" class="mono muted" font-size="13">${escapeMarkup(companion.capturedAt)} · not market performance · not a quality ranking</text></svg>`;
 
-  const attemptRows = companion.attempts.map((attempt) => `<tr><th scope="row">${escapeMarkup(attempt.route)}<br><span class="status">${escapeMarkup(attempt.taskId)}</span></th><td>${number(attempt.latencyMs, 0)} ms</td><td>${escapeMarkup(attempt.execution)}</td><td>${escapeMarkup(attempt.oracle)}</td><td>${escapeMarkup(attempt.receipt)}</td><td>${escapeMarkup(attempt.detail)}</td></tr>`).join("");
-  const parityRows = companion.parityArtifacts.map((artifact) => `<tr><th scope="row">${escapeMarkup(artifact.taskId)}</th><td><code>${artifact.prompt.sha256}</code><br>${number(artifact.prompt.bytes, 0)} bytes</td><td><code>${artifact.runtimeContext.sha256}</code><br>${number(artifact.runtimeContext.bytes, 0)} bytes</td><td>yes</td></tr>`).join("");
-  const receiptRows = companion.receipts.records.map((record) => `<tr><th scope="row">${escapeMarkup(record.route)}<br><span class="status">${escapeMarkup(record.taskId)}</span></th><td>${escapeMarkup(record.state)}</td><td><code>${record.receiptSha256}</code></td><td><code>${record.receiptSubjectSha256}</code></td></tr>`).join("");
+  const roleRows = roles.map((role) => `<tr><th scope="row">${escapeMarkup(role.role)}<br><span class="status">${escapeMarkup(role.modelsObserved.join(", ") || "no model observed")}</span></th><td>${role.launched}/${role.attempts}</td><td>${role.readable}/${role.attempts}</td><td>${role.passed}</td><td>${duration(role.latencyMsMedian) ?? unknown("latency unmeasured")}</td><td>${duration(role.latencyMsP90) ?? unknown("latency unmeasured")}</td><td>${roleCost(role)}</td></tr>`).join("");
+  const ungradedRows = roles.filter((role) => ungradedText(role)).map((role) => `<tr><th scope="row">${escapeMarkup(role.role)}</th><td>${escapeMarkup(ungradedText(role))}.</td><td>${escapeMarkup(recoveryText(role)) || "not probed"}</td></tr>`).join("");
+  const parityRows = companion.parityArtifacts.map((artifact) => `<tr><th scope="row">${escapeMarkup(artifact.taskId)}</th><td><code>${artifact.prompt.sha256.join("</code><br><code>")}</code></td><td><code>${artifact.runtimeContext.sha256.join("</code><br><code>")}</code></td><td>${artifact.identicalAcrossRoles ? `yes, across ${artifact.roles} roles` : "no"}</td></tr>`).join("");
+  const receiptRows = receipts.records.map((record) => `<tr><th scope="row">${escapeMarkup(record.role)}<br><span class="status">${escapeMarkup(record.taskId)}</span></th><td>${escapeMarkup(record.state)}</td><td>${record.receiptSha256 ? `<code>${record.receiptSha256}</code>` : unknown("the receipt file is no longer on disk")}</td><td>${record.receiptSubjectSha256 ? `<code>${record.receiptSubjectSha256}</code>` : unknown("no subject hash retained")}</td></tr>`).join("");
   const hashRows = Object.entries(companion.artifactHashes).map(([name, sha256]) => `<tr><th scope="row">${escapeMarkup(name)}</th><td><code>${sha256}</code></td></tr>`).join("");
-  const html = page("Current cross-harness integration-failure profile", `<p class="record-label">Current integration-failure profile · ${escapeMarkup(companion.capturedAt)}</p><h1>Current cross-harness integration-failure profile</h1><p class="notice"><strong>Verdict:</strong> 4/4 receipts verified; 0 valid comparable task outcomes. This is an integration-failure profile, not market performance and not a quality ranking.</p><p class="lede">Codex direct and Flywheel on Codex received byte-identical task prompts and byte-identical role-neutral runtime contexts for each task. The four durations below are diagnostic only because no attempt completed with an oracle pass.</p><div class="figure-scroll" tabindex="0" aria-label="Scrollable current integration-failure profile">${svg}</div><div class="table-wrap"><table><caption>Exact outcomes for all four attempts.</caption><thead><tr><th>Route and task</th><th>Duration</th><th>Execution</th><th>Oracle</th><th>Receipt</th><th>Exact result</th></tr></thead><tbody>${attemptRows}</tbody></table></div><h2>Byte-identical prompt and context parity</h2><div class="table-wrap"><table><caption>Hashes and byte counts match across the two routes for each task.</caption><thead><tr><th>Task</th><th>Prompt SHA-256 and bytes</th><th>Runtime context SHA-256 and bytes</th><th>Equal across routes</th></tr></thead><tbody>${parityRows}</tbody></table></div><dl class="scope"><dt>Benchmark code</dt><dd><a href="${escapeMarkup(companion.sourceCommitUrl)}"><code>${companion.sourceCommit}</code></a></dd><dt>Public result source</dt><dd><a href="${escapeMarkup(companion.sourceEvidence.href)}">Sanitized source record</a> · <code>${companion.sourceEvidence.sha256}</code></dd><dt>Evidence availability</dt><dd>${escapeMarkup(companion.evidenceAvailability)}; raw attempt artifacts remain private and are represented here by hashes and sanitized receipt records.</dd><dt>Requested model</dt><dd>${companion.requestedModelReference}</dd><dt>Observed model identity</dt><dd class="unknown">Unknown: requested registry reference was not provider-observed</dd><dt>Cost</dt><dd class="unknown">Unknown: provider cost unavailable</dd><dt>Resource use</dt><dd class="unknown">Unknown: CPU, memory, GPU, and energy observations unavailable</dd></dl><h2>Sanitized receipt records</h2><div class="table-wrap"><table><caption>Public receipt and receipt-subject identities for all four attempts.</caption><thead><tr><th>Route and task</th><th>State</th><th>Receipt SHA-256</th><th>Subject SHA-256</th></tr></thead><tbody>${receiptRows}</tbody></table></div><h2>Artifact hashes</h2><div class="table-wrap"><table><caption>SHA-256 identities for the operator-local receipt-bearing run artifacts.</caption><thead><tr><th>Artifact</th><th>SHA-256</th></tr></thead><tbody>${hashRows}</tbody></table></div><h2>Limitations</h2><ul>${companion.limitations.map((item) => `<li>${escapeMarkup(item)}</li>`).join("")}</ul><p class="does-not-prove"><strong>What this does not prove:</strong> ${escapeMarkup(companion.doesNotProve)}</p>`);
+  const checkerBlocks = companion.checkers.map((checker) => {
+    const heading = `<h3>${escapeMarkup(checker.checker_id)}</h3><p class="status">${escapeMarkup(checker.task_ids.join(", "))} · ${checker.scored_attempts} scored attempt${checker.scored_attempts === 1 ? "" : "s"}</p>`;
+    if (!checker.metrics.length) {
+      // An empty table reads as a score of zero. This checker graded the
+      // attempts and reported no numeric evidence, which is a different fact.
+      return `${heading}<p>This checker reported no numeric evidence for the attempts it graded.</p>`;
+    }
+    const names = checker.metrics[0].roles.map((entry) => entry.provider_role);
+    const header = names.map((name) => `<th>${escapeMarkup(name)}</th>`).join("");
+    const rows = checker.metrics.map((metric) => {
+      const cells = metric.roles.map((entry) => entry.mean === null || entry.mean === undefined ? `<td>${unknown("this role reported no value")}</td>` : `<td>${number(entry.mean, 3)} <span class="status">n=${entry.n}</span></td>`).join("");
+      return `<tr><th scope="row">${escapeMarkup(metric.metric)}<br><span class="status">${escapeMarkup(metric.direction)} is better</span></th>${cells}</tr>`;
+    }).join("");
+    return `${heading}<div class="table-wrap"><table><caption>Checker means for ${escapeMarkup(checker.checker_id)}.</caption><thead><tr><th>Metric</th>${header}</tr></thead><tbody>${rows}</tbody></table></div>`;
+  }).join("");
+  const treeNote = companion.sourceTreeState === "clean"
+    ? "The source tree was checked against the commit these rows name and matched."
+    : `The run recorded its source tree as <code>${escapeMarkup(companion.sourceTreeState)}</code>, so nothing confirmed the tree still matched the commit these rows name. Each attempt verified its own workspace, which is a narrower claim.`;
+
+  const html = page(`Cross-harness run across ${counts.roles} harness roles`, `<p class="record-label">Current cross-harness run · ${escapeMarkup(companion.capturedAt)}</p><h1>Cross-harness run across ${counts.roles} harness roles</h1><p class="notice"><strong>Verdict:</strong> ${escapeMarkup(headline)}. This is one repetition per task on one machine. It is not market performance and not a quality ranking.</p><p class="lede">${counts.roles} harness roles ran the same ${counts.tasks} tasks from the same task set. On every one of those tasks the prompt bytes and the runtime-context bytes each role received were ${escapeMarkup(companion.parity.prompt)}, so what differs between the rows is the harness and the model behind it. ${counts.readable} of ${counts.attempts} attempts produced something a checker could read, and why the rest did not is reported beside each row rather than left inside the rate.</p><div class="figure-scroll" tabindex="0" aria-label="Scrollable cross-harness run figure">${svg}</div><div class="table-wrap"><table><caption>Outcome and cost for each harness role, with its own denominator.</caption><thead><tr><th>Role and observed model</th><th>Launched</th><th>Reached a grader</th><th>Passed</th><th>Median latency</th><th>p90 latency</th><th>Cost</th></tr></thead><tbody>${roleRows}</tbody></table></div><h2>Why an attempt went ungraded</h2><p>A malformed answer and a missing one are different failures, so each is named. An attempt that never returned a readable result has no quality numbers here, which is a fact about this run and not a score of zero.</p><div class="table-wrap"><table><caption>Ungraded attempts by reason, and whether a refused answer still held one.</caption><thead><tr><th>Role</th><th>Reasons</th><th>Envelope recovery</th></tr></thead><tbody>${ungradedRows}</tbody></table></div><h2>Graded quality metrics</h2><p>Each checker graded the attempts that reached it. A mean over one repetition is a reading and not an estimate, so no interval is reported.</p>${checkerBlocks}<h2>Prompt and context parity</h2><div class="table-wrap"><table><caption>Prompt and runtime-context hashes for each task, across all roles.</caption><thead><tr><th>Task</th><th>Prompt SHA-256</th><th>Runtime context SHA-256</th><th>Equal across roles</th></tr></thead><tbody>${parityRows}</tbody></table></div><dl class="scope"><dt>Benchmark code</dt><dd><a href="${escapeMarkup(companion.sourceCommitUrl)}"><code>${escapeMarkup(companion.sourceCommit)}</code></a></dd><dt>Run identifier</dt><dd><code>${escapeMarkup(companion.runId)}</code></dd><dt>Task set</dt><dd><code>${escapeMarkup(companion.taskSetId)}</code></dd><dt>Public result source</dt><dd><a href="${escapeMarkup(companion.sourceEvidence.href)}">Sanitized source record</a> · <code>${companion.sourceEvidence.sha256}</code></dd><dt>Evidence availability</dt><dd>${escapeMarkup(companion.evidenceAvailability)}; raw attempt outputs remain private and are represented here by hashes and sanitized receipt records.</dd><dt>Source tree state</dt><dd>${treeNote}</dd><dt>Resource use</dt><dd class="unknown">Unknown: CPU, memory, GPU, and energy observations unavailable</dd></dl><h2>Sanitized receipt records</h2><p>Every attempt carries a receipt whose subject hash names the artifacts it produced. ${receipts.verified} of ${receipts.attempts} verified on re-check; any other state is printed as it was recorded.</p><div class="table-wrap"><table><caption>Public receipt and receipt-subject identities for all ${receipts.attempts} attempts.</caption><thead><tr><th>Role and task</th><th>State</th><th>Receipt SHA-256</th><th>Subject SHA-256</th></tr></thead><tbody>${receiptRows}</tbody></table></div><h2>Artifact hashes</h2><div class="table-wrap"><table><caption>SHA-256 identities for the operator-local run artifacts.</caption><thead><tr><th>Artifact</th><th>SHA-256</th></tr></thead><tbody>${hashRows}</tbody></table></div><h2>Limitations</h2><ul>${companion.limitations.map((item) => `<li>${escapeMarkup(item)}</li>`).join("")}</ul><p class="does-not-prove"><strong>What this does not prove:</strong> ${escapeMarkup(companion.doesNotProve)}</p>`);
   return { html, svg, companion };
 }
 
