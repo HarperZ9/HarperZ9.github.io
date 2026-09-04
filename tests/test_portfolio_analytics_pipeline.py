@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import hashlib
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -15,6 +16,9 @@ CAPTURE = ROOT / "scripts" / "capture-portfolio-analytics.py"
 RENDER = ROOT / "scripts" / "render-portfolio-analytics.mjs"
 BASELINE_PLAN = ROOT / "analytics" / "market-baseline-plan.json"
 ANALYTICS_DATASET = ROOT / "analytics" / "portfolio-analytics.json"
+RENDER_RECORD = ROOT / "scripts" / "render-flywheel-benchmark-record.mjs"
+RECORD_SOURCE = ROOT / "analytics" / "source"
+RECORD_STEM = "flywheel-benchmark-record"
 
 
 def run(*args: str, cwd: Path | None = None) -> subprocess.CompletedProcess[str]:
@@ -524,29 +528,156 @@ def test_generated_analytics_keep_mobile_overflow_inside_keyboard_scrollers(tmp_
 
     out = tmp_path / "figures"
     run("node", str(RENDER), "--input", str(ANALYTICS_DATASET), "--output-dir", str(out))
+    # Every renderer that writes into the shared chassis is measured here, in
+    # one browser session, so a new figure cannot ship a phone-width layout
+    # the older figures were gated against.
+    run("node", str(RENDER_RECORD), "--output-dir", str(out))
+    measured = {}
     with playwright.sync_playwright() as runtime:
         browser = runtime.chromium.launch(executable_path=str(browser_path), headless=True)
         page = browser.new_page(viewport={"width": 390, "height": 844})
-        page.goto((out / "exploratory-stack-comparison.html").as_uri())
-        widths = page.evaluate(
-            "() => ({ client: document.documentElement.clientWidth, scroll: document.documentElement.scrollWidth })"
+        for name in ("exploratory-stack-comparison", f"{RECORD_STEM}"):
+            page.goto((out / f"{name}.html").as_uri())
+            measured[name] = (
+                page.evaluate(
+                    "() => ({ client: document.documentElement.clientWidth,"
+                    " scroll: document.documentElement.scrollWidth })"
+                ),
+                page.evaluate(
+                    """() => [...document.querySelectorAll('.figure-scroll, .table-wrap')].map((element) => ({
+                      className: element.className,
+                      tabIndex: element.tabIndex,
+                      clientWidth: element.clientWidth,
+                      scrollWidth: element.scrollWidth,
+                      overflowX: getComputedStyle(element).overflowX,
+                    }))"""
+                ),
+            )
+        browser.close()
+
+    for name, (widths, scrollers) in measured.items():
+        assert widths == {"client": 390, "scroll": 390}, f"{name} scrolls the page body sideways"
+        assert scrollers, f"{name} has no keyboard-reachable scroller"
+        assert all(scroller["tabIndex"] == 0 for scroller in scrollers), name
+        assert all(scroller["overflowX"] == "auto" for scroller in scrollers), name
+        assert any(scroller["scrollWidth"] > scroller["clientWidth"] for scroller in scrollers), name
+
+
+def test_analytics_print_contract_is_direct_and_scoped_without_browser(tmp_path: Path) -> None:
+    """Removing the direct sheet or analytics scope must fail on CI without Playwright."""
+    out = tmp_path / "analytics"
+    run("node", str(RENDER_RECORD), "--output-dir", str(out))
+
+    html = (out / f"{RECORD_STEM}.html").read_text(encoding="utf-8")
+    assert '<body class="analytics-page">' in html
+    assert (
+        '<link rel="stylesheet" href="../system/print.css?v=20260902-creative-chassis" '
+        'media="print" data-print-style>'
+    ) in html
+
+    css = (ROOT / "system" / "print.css").read_text(encoding="utf-8")
+    analytics_selectors = [
+        line.strip().rstrip(",{ ")
+        for line in css.splitlines()
+        if ".figure-scroll" in line or ".table-wrap" in line
+    ]
+    assert analytics_selectors
+    assert all(selector.startswith("body.analytics-page ") for selector in analytics_selectors)
+
+
+def test_generated_benchmark_prints_without_javascript_or_horizontal_clipping(tmp_path: Path) -> None:
+    """Removing the direct print sheet or its figure overrides must break this contract."""
+    import pytest
+
+    playwright = pytest.importorskip(
+        "playwright.sync_api",
+        reason="no-JavaScript print contract requires the optional Playwright dependency",
+    )
+    chrome_candidates = [
+        Path(os.environ.get("PROGRAMFILES", "C:/Program Files")) / "Google/Chrome/Application/chrome.exe",
+        Path(os.environ.get("PROGRAMFILES(X86)", "C:/Program Files (x86)")) / "Microsoft/Edge/Application/msedge.exe",
+    ]
+    browser_path = next((path for path in chrome_candidates if path.exists()), None)
+    if browser_path is None:
+        pytest.skip("no-JavaScript print contract requires a local Chromium browser")
+
+    out = tmp_path / "analytics"
+    system = tmp_path / "system"
+    system.mkdir()
+    shutil.copy2(ROOT / "system" / "print.css", system / "print.css")
+    run("node", str(RENDER_RECORD), "--output-dir", str(out))
+
+    with playwright.sync_playwright() as runtime:
+        browser = runtime.chromium.launch(executable_path=str(browser_path), headless=True)
+        context = browser.new_context(
+            java_script_enabled=False,
+            viewport={"width": 390, "height": 844},
         )
-        scrollers = page.evaluate(
-            """() => [...document.querySelectorAll('.figure-scroll, .table-wrap')].map((element) => ({
-              className: element.className,
-              tabIndex: element.tabIndex,
-              clientWidth: element.clientWidth,
-              scrollWidth: element.scrollWidth,
-              overflowX: getComputedStyle(element).overflowX,
-            }))"""
+        page = context.new_page()
+        page.emulate_media(media="print")
+        page.goto((out / f"{RECORD_STEM}.html").as_uri())
+        measured = page.evaluate(
+            """() => {
+              const printLink = document.querySelector('link[data-print-style][media="print"]');
+              const figure = document.querySelector('.figure-scroll');
+              const svg = figure.querySelector('svg');
+              return {
+                background: getComputedStyle(document.body).backgroundColor,
+                color: getComputedStyle(document.body).color,
+                navDisplays: [...document.querySelectorAll('.site-nav')]
+                  .map((element) => getComputedStyle(element).display),
+                printStylesLoaded: Boolean(printLink && printLink.sheet),
+                figureOverflowX: getComputedStyle(figure).overflowX,
+                figureWidth: svg.getBoundingClientRect().width,
+                containerWidth: figure.getBoundingClientRect().width,
+              };
+            }"""
         )
         browser.close()
 
-    assert widths == {"client": 390, "scroll": 390}
-    assert scrollers
-    assert all(scroller["tabIndex"] == 0 for scroller in scrollers)
-    assert all(scroller["overflowX"] == "auto" for scroller in scrollers)
-    assert any(scroller["scrollWidth"] > scroller["clientWidth"] for scroller in scrollers)
+    assert measured["printStylesLoaded"] is True
+    assert measured["color"] == "rgb(0, 0, 0)"
+    assert measured["background"] == "rgb(255, 255, 255)"
+    assert measured["navDisplays"] and set(measured["navDisplays"]) == {"none"}
+    assert measured["figureOverflowX"] == "visible"
+    assert measured["figureWidth"] <= measured["containerWidth"]
+
+
+def test_frontier_print_table_does_not_receive_analytics_only_layout() -> None:
+    """Unscoped analytics selectors must not force Frontier tables into fixed layout."""
+    import pytest
+
+    playwright = pytest.importorskip(
+        "playwright.sync_api",
+        reason="shared print isolation requires the optional Playwright dependency",
+    )
+    chrome_candidates = [
+        Path(os.environ.get("PROGRAMFILES", "C:/Program Files")) / "Google/Chrome/Application/chrome.exe",
+        Path(os.environ.get("PROGRAMFILES(X86)", "C:/Program Files (x86)")) / "Microsoft/Edge/Application/msedge.exe",
+    ]
+    browser_path = next((path for path in chrome_candidates if path.exists()), None)
+    if browser_path is None:
+        pytest.skip("shared print isolation requires a local Chromium browser")
+
+    with playwright.sync_playwright() as runtime:
+        browser = runtime.chromium.launch(executable_path=str(browser_path), headless=True)
+        page = browser.new_page(viewport={"width": 390, "height": 844})
+        page.emulate_media(media="print")
+        page.goto((ROOT / "frontier-safety.html").as_uri())
+        page.add_style_tag(path=str(ROOT / "system" / "print.css"))
+        measured = page.evaluate(
+            """() => {
+              const table = document.querySelector('.table-wrap table');
+              return {
+                bodyClass: document.body.className,
+                tableLayout: getComputedStyle(table).tableLayout,
+              };
+            }"""
+        )
+        browser.close()
+
+    assert "analytics-page" not in measured["bodyClass"].split()
+    assert measured["tableLayout"] == "auto"
 
 
 def test_site_owned_market_baseline_plan_is_explicitly_not_measured() -> None:
@@ -659,3 +790,176 @@ def test_actual_benchmark_artifacts_are_source_hashed_and_unavailable_rows_are_n
     assert "Claude" in exploratory_html and "NOT OPERATIONAL" in exploratory_html
     assert "OpenCode" in exploratory_html and "SKIPPED" in exploratory_html
     assert "different models" in exploratory_html.lower()
+def _render_record(out: Path, source: Path | None = None) -> tuple[str, str, dict]:
+    args = ["node", str(RENDER_RECORD), "--output-dir", str(out)]
+    if source is not None:
+        args += ["--source-dir", str(source)]
+    run(*args)
+    return (
+        (out / f"{RECORD_STEM}.html").read_text(encoding="utf-8"),
+        (out / f"{RECORD_STEM}.svg").read_text(encoding="utf-8"),
+        json.loads((out / f"{RECORD_STEM}.json").read_text(encoding="utf-8")),
+    )
+
+
+def test_published_benchmark_record_regenerates_byte_for_byte(tmp_path: Path) -> None:
+    """The committed page comes out of the renderer, not out of a hand edit."""
+    out = tmp_path / "figures"
+    _render_record(out)
+    for suffix in ("html", "svg", "json"):
+        name = f"{RECORD_STEM}.{suffix}"
+        assert (ROOT / "analytics" / name).read_bytes() == (out / name).read_bytes(), (
+            f"{name} is stale, re-run scripts/render-flywheel-benchmark-record.mjs"
+        )
+
+
+def test_benchmark_record_source_files_are_the_hashes_the_page_prints(tmp_path: Path) -> None:
+    """A reader hashes the published copy and gets the digest printed on the page."""
+    _, _, companion = _render_record(tmp_path / "figures")
+    published = {item["href"]: item for item in companion["sourceEvidence"]}
+    assert set(published) == {
+        "source/flywheel-offline-benchmark-record.json",
+        "source/flywheel-capability-declarations.json",
+    }
+    for href, item in published.items():
+        path = ROOT / "analytics" / href
+        assert item["sha256"] == hashlib.sha256(path.read_bytes()).hexdigest()
+        assert item["availability"] == "public-repository-file"
+        assert item["repositoryHref"].startswith(
+            "https://github.com/HarperZ9/flywheel/blob/" + companion["sourceCommit"]
+        )
+
+
+def test_benchmark_record_reports_the_sealed_numbers_and_the_negative_result(tmp_path: Path) -> None:
+    html, svg, companion = _render_record(tmp_path / "figures")
+    record = json.loads(
+        (RECORD_SOURCE / "flywheel-offline-benchmark-record.json").read_text(encoding="utf-8")
+    )
+
+    assert companion["schema"] == "zentropy-flywheel-benchmark-record/v1"
+    assert companion["classification"] == "offline-benchmark-record"
+    assert companion["sourceCommit"] == "a8e1cd2e7c7a220dc578340438a9482bef3d7485"
+    assert companion["sourceCommitUrl"] == (
+        "https://github.com/HarperZ9/flywheel/commit/a8e1cd2e7c7a220dc578340438a9482bef3d7485"
+    )
+    assert companion["seal"] == {
+        "resultSha256": record["result_sha256"],
+        "python": record["python"],
+        "recordSchema": "flywheel.offline-benchmarks/v1",
+    }
+
+    reading = {suite["name"]: suite for suite in companion["suites"]}
+    assert set(reading) == {suite["name"] for suite in record["suites"]}
+    # The one negative result reads as a null, never on a pass-rate track.
+    assert reading["paired-replication"]["readsAs"] == "null"
+    assert reading["paired-replication"]["display"] == "-3.05 pp"
+    assert reading["paired-replication"]["denominator"] == {"key": "tasks", "value": 164}
+    assert len(reading["paired-replication"]["caveats"]) == 3
+    assert [name for name, suite in reading.items() if suite["readsAs"] == "null"] == [
+        "paired-replication"
+    ]
+    assert reading["accountability"]["denominator"] == {"key": "dimensions", "value": 8}
+    assert reading["source-mined"]["denominator"] == {"key": "cases", "value": 26}
+
+    # Every unmeasured suite survives into the page as a named null.
+    assert [entry["suite"] for entry in companion["notRun"]] == [
+        entry["suite"] for entry in record["not_run"]
+    ]
+    assert len(companion["notRun"]) == 5
+    for entry in companion["notRun"]:
+        assert entry["suite"] in html and entry["needs"] in html
+
+    assert "-3.05 pp" in html and "164 tasks" in html
+    assert "-3.05 pp" in svg
+    assert "What this does not prove" in html
+    assert "Unknown" in html
+    assert companion["limitations"] and companion["doesNotProve"]
+
+
+def test_benchmark_record_labels_peer_columns_as_declarations_it_recounts(tmp_path: Path) -> None:
+    """The peer tallies are recounted here from the rows, never trusted."""
+    html, svg, companion = _render_record(tmp_path / "figures")
+    matrix = json.loads(
+        (RECORD_SOURCE / "flywheel-capability-declarations.json").read_text(encoding="utf-8")
+    )
+
+    expected = {}
+    for peer in ("codex", "cursor", "claude-code"):
+        cells = [row["competitors"][peer] for row in matrix["rows"]]
+        expected[peer] = {
+            "declares": cells.count(True),
+            "partial": cells.count("partial"),
+            "absent": cells.count(False),
+        }
+    derived = {
+        tally["peer"]: {key: tally[key] for key in ("declares", "partial", "absent")}
+        for tally in companion["capabilityDeclarations"]["tallies"]
+    }
+    assert derived == expected
+    assert all(sum(counts.values()) == len(matrix["rows"]) for counts in expected.values())
+
+    assert companion["peerExecution"] == {
+        "peerHarnessesExecuted": 0,
+        "rowsDeclared": len(matrix["rows"]),
+        "basis": "public documentation and configuration read on the declaration date",
+    }
+    assert companion["capabilityDeclarations"]["declaredOn"] == matrix["declared_on"]
+    assert "Peer harnesses executed: 0" in html
+    assert "A declaration is not a measurement" in html
+    assert "no peer harness was executed" in svg
+    assert "not a speed, quality, or market ranking" in svg
+
+
+def test_benchmark_record_checks_fail_when_a_source_record_disagrees(tmp_path: Path) -> None:
+    """Every falsifier is fired once, so none of them is decorative."""
+    import shutil
+
+    cases = {
+        "schema": ("record", lambda doc: doc.update(schema="flywheel.offline-benchmarks/v2")),
+        "seal": ("record", lambda doc: doc.update(result_sha256="not-a-digest")),
+        "date": ("matrix", lambda doc: doc.update(declared_on="2026-01-01")),
+        "witnessed": ("matrix", lambda doc: doc["rows"][0].update(flywheel="ABSENT")),
+        "cell": ("matrix", lambda doc: doc["rows"][0]["competitors"].update(cursor="maybe")),
+    }
+    names = {
+        "record": "flywheel-offline-benchmark-record.json",
+        "matrix": "flywheel-capability-declarations.json",
+    }
+    for case, (target, mutate) in cases.items():
+        source = tmp_path / f"source-{case}"
+        shutil.copytree(RECORD_SOURCE, source)
+        path = source / names[target]
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        mutate(doc)
+        path.write_text(json.dumps(doc, indent=2), encoding="utf-8")
+        result = subprocess.run(
+            ["node", str(RENDER_RECORD), "--output-dir", str(tmp_path / f"out-{case}"),
+             "--source-dir", str(source)],
+            capture_output=True, text=True, encoding="utf-8",
+        )
+        assert result.returncode != 0, f"the {case} check did not fire"
+
+
+def test_benchmark_record_uses_the_live_site_chassis_and_no_local_paths(tmp_path: Path) -> None:
+    html, svg, companion = _render_record(tmp_path / "figures")
+
+    assert '<div id="site-nav" class="site-nav"></div>' in html
+    assert 'href="../system/system.css?v=20260902-creative-chassis"' in html
+    assert 'src="../system/nav.js?v=20260902-creative-chassis"' in html
+    assert "<main id=" in html
+    assert "<title" in svg and "<desc" in svg
+    assert 'role="img"' in svg
+
+    serialized = html + svg + json.dumps(companion)
+    for forbidden in ("C:/dev", "C:" + chr(92) + "dev", ".scratch", "AppData"):
+        assert forbidden not in serialized
+
+
+def test_flywheel_page_and_sitemap_publish_the_benchmark_record() -> None:
+    flywheel = (ROOT / "flywheel.html").read_text(encoding="utf-8")
+    assert f'href="analytics/{RECORD_STEM}.html"' in flywheel
+    assert f'src="analytics/{RECORD_STEM}.svg"' in flywheel
+    assert "Zero peer harnesses were executed." in flywheel
+
+    sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    assert f"https://harperz9.github.io/analytics/{RECORD_STEM}.html" in sitemap

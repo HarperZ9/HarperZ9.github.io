@@ -1,0 +1,219 @@
+{
+  "schema": "zentropy-flywheel-benchmark-record/v1",
+  "classification": "offline-benchmark-record",
+  "declaredOn": "2026-09-03",
+  "sourceCommit": "a8e1cd2e7c7a220dc578340438a9482bef3d7485",
+  "sourceCommitUrl": "https://github.com/HarperZ9/flywheel/commit/a8e1cd2e7c7a220dc578340438a9482bef3d7485",
+  "seal": {
+    "resultSha256": "107a33f920629afb53ddaf0d960ea54f3bed96d6c21c9ed99a0acecd2ac1579b",
+    "python": "3.12.10",
+    "recordSchema": "flywheel.offline-benchmarks/v1"
+  },
+  "suites": [
+    {
+      "name": "accountability",
+      "question": "does an unaccountable system score badly here",
+      "headline": {
+        "dimensions": 8,
+        "harness_overall": 1,
+        "separation": 1,
+        "strawman_overall": 0
+      },
+      "display": "100%",
+      "readsAs": "rate",
+      "denominator": {
+        "key": "dimensions",
+        "value": 8
+      },
+      "nonGoal": "measures accountability, NOT capability. Pair it with a capability bench",
+      "caveats": []
+    },
+    {
+      "name": "governed-agent",
+      "question": "does a workflow refuse an action above its tier",
+      "headline": {
+        "failed": 0,
+        "mean_quality_score": 0.542,
+        "pass_rate": 1,
+        "passed": 6,
+        "scenarios": 6
+      },
+      "display": "100%",
+      "readsAs": "rate",
+      "denominator": {
+        "key": "scenarios",
+        "value": 6
+      },
+      "nonGoal": null,
+      "caveats": []
+    },
+    {
+      "name": "agent-recovery",
+      "question": "does an injected fault recover without failing quietly",
+      "headline": {
+        "receipt_completeness": 1,
+        "recovery_success_rate": 1,
+        "scenarios": 6,
+        "silent_failure_rate": 0
+      },
+      "display": "100%",
+      "readsAs": "rate",
+      "denominator": {
+        "key": "scenarios",
+        "value": 6
+      },
+      "nonGoal": null,
+      "caveats": []
+    },
+    {
+      "name": "stateful-provider-swap",
+      "question": "does state survive a provider swap",
+      "headline": {
+        "checks": 10,
+        "pass_rate": 1,
+        "passed": true
+      },
+      "display": "100%",
+      "readsAs": "rate",
+      "denominator": {
+        "key": "checks",
+        "value": 10
+      },
+      "nonGoal": null,
+      "caveats": []
+    },
+    {
+      "name": "source-mined",
+      "question": "do the mined checks still hold against their datasets",
+      "headline": {
+        "cases": 26,
+        "failed": 0,
+        "metrics_asserted": 170,
+        "pass_rate": 1,
+        "passed": 26
+      },
+      "display": "100%",
+      "readsAs": "rate",
+      "denominator": {
+        "key": "cases",
+        "value": 26
+      },
+      "nonGoal": null,
+      "caveats": []
+    },
+    {
+      "name": "paired-replication",
+      "question": "did continued pretraining change general code completion",
+      "headline": {
+        "delta_points": -0.0305,
+        "gains": 9,
+        "p_exact": 0.4049,
+        "regressions": 14,
+        "tasks": 164
+      },
+      "display": "-3.05 pp",
+      "readsAs": "null",
+      "denominator": {
+        "key": "tasks",
+        "value": 164
+      },
+      "nonGoal": "continued pretraining on the workspace corpus did not improve general code completion and did not significantly harm it; the point estimate is a regression inside the noise",
+      "caveats": [
+        "The model references in these artifacts no longer resolve to anything on a live roster, so the exact weights behind each arm cannot be fetched again from the reference alone. The per-task outcomes are committed and the arithmetic here is reproducible; the generation is not.",
+        "One deterministic sample per task per arm. A single sample measures the greedy decode, not the model.",
+        "This compares base weights against continued-pretrained weights on general code completion. It is not a measurement of the verification harness, which is the thing this repository is."
+      ]
+    }
+  ],
+  "capabilityDeclarations": {
+    "rows": 33,
+    "witnessed": 33,
+    "absent": 0,
+    "uniquelyWitnessed": 24,
+    "declaredOn": "2026-09-03",
+    "note": "flywheel cells are audited against this repo at read time; competitor cells are dated declarations from public docs and configs, not measurements",
+    "tallies": [
+      {
+        "peer": "codex",
+        "label": "Codex",
+        "declares": 7,
+        "partial": 3,
+        "absent": 23
+      },
+      {
+        "peer": "cursor",
+        "label": "Cursor",
+        "declares": 7,
+        "partial": 7,
+        "absent": 19
+      },
+      {
+        "peer": "claude-code",
+        "label": "Claude Code",
+        "declares": 7,
+        "partial": 6,
+        "absent": 20
+      }
+    ]
+  },
+  "peerExecution": {
+    "peerHarnessesExecuted": 0,
+    "rowsDeclared": 33,
+    "basis": "public documentation and configuration read on the declaration date"
+  },
+  "notRun": [
+    {
+      "needs": "a live local or frontier endpoint",
+      "standing_result": "retired on 2026-07-26. The arms were not independent: the treatment's first attempt is the same call as the baseline's only attempt, so the treatment cannot score lower and the difference is not a comparison. The quantity measured is verified pass@k. The retired table read verified inference 9/10 against single-shot 8/10, difference +0.100 with 95% CI [-0.236, +0.420], an interval that includes zero, and no capability uplift is claimed.",
+      "suite": "m7 capability arms",
+      "where": "handoff/site-designer/BENCHMARKS.md, docs/claims/2026-07-13-uplift"
+    },
+    {
+      "needs": "a provider list and an oracle",
+      "standing_result": null,
+      "suite": "uplift_bench paired arms",
+      "where": "harness/uplift_bench.py, POST /api/uplift"
+    },
+    {
+      "needs": "endpoints and a private task set the operator supplies",
+      "standing_result": null,
+      "suite": "verified_bench private task set",
+      "where": "harness/verified_bench.py, POST /api/bench/run"
+    },
+    {
+      "needs": "a chat backend per mode",
+      "standing_result": null,
+      "suite": "classifier friction backend modes",
+      "where": "harness/classifier_friction_bench.py"
+    },
+    {
+      "needs": "a chat backend; the deterministic variants below ran instead",
+      "standing_result": null,
+      "suite": "backend variants of the governed, recovery, stateful and source-mined suites",
+      "where": "run_backend_* in the same modules"
+    }
+  ],
+  "sourceEvidence": [
+    {
+      "name": "Sealed offline benchmark record",
+      "href": "source/flywheel-offline-benchmark-record.json",
+      "sha256": "89ddd7e4c75664243a13b73b583e157bd0b34053bf98e537f3da1dbf357eda4f",
+      "repositoryHref": "https://github.com/HarperZ9/flywheel/blob/a8e1cd2e7c7a220dc578340438a9482bef3d7485/docs/benchmarks/report.json",
+      "availability": "public-repository-file"
+    },
+    {
+      "name": "Capability declaration matrix",
+      "href": "source/flywheel-capability-declarations.json",
+      "sha256": "e6f72e45537d3853c7680d2302e7497dcaa03c4fc0f8882831d623b455d1fab8",
+      "repositoryHref": "https://github.com/HarperZ9/flywheel/blob/a8e1cd2e7c7a220dc578340438a9482bef3d7485/docs/benchmarks/parity.json",
+      "availability": "public-repository-file"
+    }
+  ],
+  "limitations": [
+    "Five suites in the not-measured list need a live model endpoint and did not run. They are named rather than omitted so an absent number reads as unmeasured and not as zero.",
+    "The capability matrix sets a witnessed Flywheel column beside declared peer columns. Those are two different kinds of evidence and the table does not average them into a score.",
+    "The paired replication compares base weights against continued-pretrained weights on general code completion with one deterministic sample per task per arm. It measures a greedy decode, and it does not measure the verification harness.",
+    "Every suite here runs offline by construction, so the record covers accountability, recovery, and state behaviour. None of it scores capability against a frontier model."
+  ],
+  "doesNotProve": "This record does not rank Flywheel against any peer harness. No peer was executed to produce a single cell in the capability matrix, the peer columns are a dated reading of public documentation, and the one comparison the record does contain is negative and sits inside its own noise."
+}

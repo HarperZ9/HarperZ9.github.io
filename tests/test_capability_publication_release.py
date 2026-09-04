@@ -25,6 +25,9 @@ RELEASE_PATHS = (
     "analytics/exploratory-stack-comparison.html",
     "analytics/exploratory-stack-comparison.json",
     "analytics/exploratory-stack-comparison.svg",
+    "analytics/flywheel-benchmark-record.html",
+    "analytics/flywheel-benchmark-record.json",
+    "analytics/flywheel-benchmark-record.svg",
     "analytics/market-baseline-plan.json",
     "analytics/model-pass-at-1-comparison.html",
     "analytics/model-pass-at-1-comparison.json",
@@ -33,6 +36,8 @@ RELEASE_PATHS = (
     "analytics/portfolio-source-inventory.html",
     "analytics/portfolio-source-inventory.json",
     "analytics/source/current-cross-harness-pilot-source.json",
+    "analytics/source/flywheel-capability-declarations.json",
+    "analytics/source/flywheel-offline-benchmark-record.json",
     "brender-archival.html",
     "briefings/2026-08-26-openai-hugging-face-incident/build.json",
     "briefings/2026-08-26-openai-hugging-face-incident/claims.json",
@@ -160,6 +165,7 @@ RELEASE_PATHS = (
     "system/publication-article.css",
     "system/publications.css",
     "system/publications.js",
+    "system/print.css",
     "system/retro-systems-lab.css",
     "system/routes.js",
     "system/systems.js",
@@ -185,7 +191,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "4747a369d594e0fbf56f4bec26a01ca9321a6badbda57e1225bae0ad838540f0"
+REVIEWED_RELEASE_SHA256 = "ac29e8a581f19d4fa189548bc58dd8768dd25ae106a25fa1f8dedeb5026d0dc2"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

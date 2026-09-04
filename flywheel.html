@@ -25,6 +25,7 @@
   .fw-fig{margin:clamp(1.6rem,4vw,2.6rem) 0 0;border:1px solid var(--hairline);border-radius:16px;
     padding:clamp(1rem,3vw,1.6rem);background:color-mix(in oklab,var(--void) 55%,transparent);overflow-x:auto}
   .fw-fig svg{width:100%;height:auto;min-width:660px;display:block}
+  .fw-fig img{width:100%;height:auto;min-width:660px;display:block;border-radius:8px}
   .fw-fig figcaption{color:var(--ink-muted);font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;
     text-transform:uppercase;margin-top:.9rem}
   .figure-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin:1.5rem 0}
@@ -168,6 +169,10 @@
 <section class="mv" id="compare" aria-labelledby="compare-h">
   <h2 id="compare-h" class="reveal">What the current evidence measures.</h2>
   <p class="body-text reveal">The named market baseline remains <strong>NOT_MEASURED</strong>. These figures publish the results that do exist, including negative and incomplete outcomes.</p>
+  <figure class="fw-fig reveal" tabindex="0" aria-label="Scrollable Flywheel offline benchmark record">
+    <a href="analytics/flywheel-benchmark-record.html"><img src="analytics/flywheel-benchmark-record.svg" alt="Six offline benchmark suites: five report a measured rate of 100 percent over their own denominators, and paired replication reports minus 3.05 percentage points over 164 tasks, drawn as a null rather than as a rate." loading="lazy"></a>
+    <figcaption>Offline benchmark record, read out of a sealed result. Six suites, one negative result, five suites unmeasured for want of a live endpoint. Zero peer harnesses were executed.</figcaption>
+  </figure>
   <div class="figure-pair reveal">
     <figure><a href="analytics/model-pass-at-1-comparison.html"><img src="analytics/model-pass-at-1-comparison.svg" alt="Paired 164-task pass-at-one comparison: base Qwen 14B passed 141 of 164 tasks and Flywheel 14B passed 136 of 164; the difference was not statistically significant." loading="lazy"></a><figcaption>Same-harness 164-task model result. This is a model comparison, not a harness or market ranking.</figcaption></figure>
     <figure><a href="analytics/current-cross-harness-pilot.html"><img src="analytics/current-cross-harness-pilot.svg" alt="Four receipt-verified cross-harness attempts with zero valid comparable task outcomes." loading="lazy"></a><figcaption>Current cross-harness pilot: 4/4 receipts verified, 0 valid comparable outcomes.</figcaption></figure>

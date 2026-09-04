@@ -151,6 +151,30 @@
   th,td{border-bottom:.5pt solid rgba(0,0,0,.25);text-align:left;vertical-align:top}
   img{max-width:100% !important;height:auto !important;page-break-inside:avoid}
 
+  /* Screen analytics can scroll wide figures and tables. Paper cannot, so
+     their wrappers release overflow and their contents fit the print box. */
+  body.analytics-page .figure-scroll,
+  body.analytics-page .table-wrap{
+    width:100% !important;
+    max-width:100% !important;
+    overflow:visible !important;
+  }
+  body.analytics-page .figure-scroll svg{
+    width:100% !important;
+    height:auto !important;
+    max-width:100% !important;
+  }
+  body.analytics-page .table-wrap table{
+    width:100% !important;
+    max-width:100% !important;
+    table-layout:fixed;
+  }
+  body.analytics-page .table-wrap th,
+  body.analytics-page .table-wrap td{
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+
   /* A link is useless on paper unless its destination comes with it, so an
      external target is printed after the text. Internal anchors and links
      whose text is already the URL are left alone, because repeating those
