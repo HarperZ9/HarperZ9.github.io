@@ -563,6 +563,28 @@ def test_generated_analytics_keep_mobile_overflow_inside_keyboard_scrollers(tmp_
         assert any(scroller["scrollWidth"] > scroller["clientWidth"] for scroller in scrollers), name
 
 
+def test_analytics_print_contract_is_direct_and_scoped_without_browser(tmp_path: Path) -> None:
+    """Removing the direct sheet or analytics scope must fail on CI without Playwright."""
+    out = tmp_path / "analytics"
+    run("node", str(RENDER_RECORD), "--output-dir", str(out))
+
+    html = (out / f"{RECORD_STEM}.html").read_text(encoding="utf-8")
+    assert '<body class="analytics-page">' in html
+    assert (
+        '<link rel="stylesheet" href="../system/print.css?v=20260902-creative-chassis" '
+        'media="print" data-print-style>'
+    ) in html
+
+    css = (ROOT / "system" / "print.css").read_text(encoding="utf-8")
+    analytics_selectors = [
+        line.strip().rstrip(",{ ")
+        for line in css.splitlines()
+        if ".figure-scroll" in line or ".table-wrap" in line
+    ]
+    assert analytics_selectors
+    assert all(selector.startswith("body.analytics-page ") for selector in analytics_selectors)
+
+
 def test_generated_benchmark_prints_without_javascript_or_horizontal_clipping(tmp_path: Path) -> None:
     """Removing the direct print sheet or its figure overrides must break this contract."""
     import pytest
@@ -619,6 +641,43 @@ def test_generated_benchmark_prints_without_javascript_or_horizontal_clipping(tm
     assert measured["navDisplays"] and set(measured["navDisplays"]) == {"none"}
     assert measured["figureOverflowX"] == "visible"
     assert measured["figureWidth"] <= measured["containerWidth"]
+
+
+def test_frontier_print_table_does_not_receive_analytics_only_layout() -> None:
+    """Unscoped analytics selectors must not force Frontier tables into fixed layout."""
+    import pytest
+
+    playwright = pytest.importorskip(
+        "playwright.sync_api",
+        reason="shared print isolation requires the optional Playwright dependency",
+    )
+    chrome_candidates = [
+        Path(os.environ.get("PROGRAMFILES", "C:/Program Files")) / "Google/Chrome/Application/chrome.exe",
+        Path(os.environ.get("PROGRAMFILES(X86)", "C:/Program Files (x86)")) / "Microsoft/Edge/Application/msedge.exe",
+    ]
+    browser_path = next((path for path in chrome_candidates if path.exists()), None)
+    if browser_path is None:
+        pytest.skip("shared print isolation requires a local Chromium browser")
+
+    with playwright.sync_playwright() as runtime:
+        browser = runtime.chromium.launch(executable_path=str(browser_path), headless=True)
+        page = browser.new_page(viewport={"width": 390, "height": 844})
+        page.emulate_media(media="print")
+        page.goto((ROOT / "frontier-safety.html").as_uri())
+        page.add_style_tag(path=str(ROOT / "system" / "print.css"))
+        measured = page.evaluate(
+            """() => {
+              const table = document.querySelector('.table-wrap table');
+              return {
+                bodyClass: document.body.className,
+                tableLayout: getComputedStyle(table).tableLayout,
+              };
+            }"""
+        )
+        browser.close()
+
+    assert "analytics-page" not in measured["bodyClass"].split()
+    assert measured["tableLayout"] == "auto"
 
 
 def test_site_owned_market_baseline_plan_is_explicitly_not_measured() -> None:

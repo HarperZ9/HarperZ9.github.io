@@ -165,6 +165,7 @@ RELEASE_PATHS = (
     "system/publication-article.css",
     "system/publications.css",
     "system/publications.js",
+    "system/print.css",
     "system/retro-systems-lab.css",
     "system/routes.js",
     "system/systems.js",
@@ -190,7 +191,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "ec8f69fa2cf61da74f558e6ca515ba5f63b3a49cd12fb485ab2c70b2b28abc2b"
+REVIEWED_RELEASE_SHA256 = "ac29e8a581f19d4fa189548bc58dd8768dd25ae106a25fa1f8dedeb5026d0dc2"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
