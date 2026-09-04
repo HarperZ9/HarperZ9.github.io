@@ -13,6 +13,8 @@ import re
 import runpy
 import subprocess
 import sys
+from collections.abc import Iterable
+from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
@@ -60,6 +62,49 @@ def _local_link_target(page: Path, href: str) -> Path | None:
     return (page.parent / path).resolve()
 
 
+def _publishable_html_pages(root: Path) -> tuple[Path, ...]:
+    result = subprocess.run(
+        ["git", "ls-files", "-z", "--", "*.html"],
+        cwd=root,
+        check=True,
+        capture_output=True,
+    )
+    return tuple(
+        root / relative
+        for relative in result.stdout.decode("utf-8").split("\0")
+        if relative
+    )
+
+
+class _HrefParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.hrefs: list[str] = []
+
+    def handle_starttag(
+        self,
+        tag: str,
+        attrs: list[tuple[str, str | None]],
+    ) -> None:
+        del tag
+        self.hrefs.extend(
+            value
+            for name, value in attrs
+            if name.casefold() == "href" and value is not None
+        )
+
+
+def _hrefs(source: str) -> tuple[str, ...]:
+    parser = _HrefParser()
+    parser.feed(source)
+    parser.close()
+    return tuple(parser.hrefs)
+
+
+def _resolved_print_targets(out: Path, names: Iterable[str]) -> set[Path]:
+    return {(out / name).resolve() for name in names}
+
+
 def test_every_career_document_exists() -> None:
     for name in DOCS:
         assert (ROOT / name).is_file(), name
@@ -70,35 +115,76 @@ def test_every_career_document_exists() -> None:
         assert not (ROOT / retired).exists(), retired
 
 
+def test_manifest_has_one_current_row_for_every_career_html_authority() -> None:
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    actual = [row["path"] for row in manifest["current_html"]]
+    expected = set(DOCS) | set(STATUS_BOUNDARY_DOCS)
+    assert len(actual) == len(set(actual)), "duplicate current_html path"
+    assert set(actual) == expected
+
+
 def test_retired_legacy_pdfs_cannot_be_shipped_or_printed() -> None:
     """A stale PDF route must stay retired after the current lanes replace it."""
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    retired = set(manifest["retired_artifacts"])
-    current = {row["path"] for row in manifest["artifacts"]}
-    print_targets = {
-        f"career/{target}"
-        for target in runpy.run_path(
-            str(ROOT / "tools" / "print_documents.py")
-        )["DOCUMENTS"].values()
-    }
+    retired = {(ROOT / path).resolve() for path in manifest["retired_artifacts"]}
+    current = {(ROOT / row["path"]).resolve() for row in manifest["artifacts"]}
+    print_module = runpy.run_path(str(ROOT / "tools" / "print_documents.py"))
+    print_targets = _resolved_print_targets(
+        print_module["OUT"],
+        print_module["DOCUMENTS"].values(),
+    )
     for relative in RETIRED_LEGACY_PDFS:
-        assert relative in retired, relative
-        assert relative not in current, relative
-        assert relative not in print_targets, relative
-        assert not (ROOT / relative).exists(), relative
+        target = (ROOT / relative).resolve()
+        assert target in retired, relative
+        assert target not in current, relative
+        assert target not in print_targets, relative
+        assert not target.exists(), relative
 
 
 def test_shipped_html_never_links_to_a_retired_career_artifact() -> None:
     """Retiring bytes must also retire every local route that offers those bytes."""
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     retired = {(ROOT / relative).resolve() for relative in manifest["retired_artifacts"]}
-    for page in ROOT.rglob("*.html"):
+    for page in _publishable_html_pages(ROOT):
         source = page.read_text(encoding="utf-8")
-        for href in re.findall(r'href=["\']([^"\']+)["\']', source):
+        for href in _hrefs(source):
             target = _local_link_target(page, href)
             if target is None:
                 continue
             assert target not in retired, f"{page.relative_to(ROOT)} -> {href}"
+
+
+def test_publishable_html_inventory_excludes_untracked_local_files(
+    tmp_path: Path,
+) -> None:
+    tracked = tmp_path / "tracked.html"
+    tracked.write_text("<p>published</p>", encoding="utf-8")
+    untracked = tmp_path / "scratch.html"
+    untracked.write_text("<p>local only</p>", encoding="utf-8")
+    subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
+    subprocess.run(["git", "add", "--", tracked.name], cwd=tmp_path, check=True)
+
+    assert set(_publishable_html_pages(tmp_path)) == {tracked}
+
+
+def test_href_inventory_parses_valid_html_attribute_forms() -> None:
+    source = (
+        '<a HREF=career/Zain-Dana-Harper-Resume.pdf>resume</a>'
+        '<link href = "career/current.pdf?download=1&amp;source=site">'
+    )
+    assert _hrefs(source) == (
+        "career/Zain-Dana-Harper-Resume.pdf",
+        "career/current.pdf?download=1&source=site",
+    )
+
+
+def test_print_targets_resolve_against_the_configured_output_root(
+    tmp_path: Path,
+) -> None:
+    names = ("nested/../Zain-Dana-Harper-CV.pdf",)
+    assert _resolved_print_targets(tmp_path / "career", names) == {
+        (tmp_path / "career" / "Zain-Dana-Harper-CV.pdf").resolve()
+    }
 
 
 def test_absolute_public_origin_links_resolve_into_the_release_tree() -> None:
