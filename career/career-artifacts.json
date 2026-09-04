@@ -144,104 +144,104 @@
   "authority_sha256": "8c5a030161fc2de8873dcc870e1315e0d6dc9c728f74727c683787bd5e152d34",
   "current_html": [
     {
-      "byte_length": 9179,
-      "extraction_sha256": "5f80088644bcb4793d2ed0a221be3e28937bd3fb09322b90cddaad7bc071e516",
+      "byte_length": 9194,
+      "extraction_sha256": "eda145de3b01c1c70056e30fbeb024441060a96c619853b3ee09a2e0a8906474",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "hire.html",
-      "sha256": "7129b24b62af90631a6f36b75687d2c20a66068822f44266b3aff433ab018920"
+      "sha256": "f70489a445e88683e633ca115d811e41ad007b7d6eb1672cd754c28d7c75542b"
     },
     {
-      "byte_length": 6310,
-      "extraction_sha256": "3faf8f7ba6e019bedb4dfe8077cf8baf92a5120923ca0400c2c3ff059d5f79de",
+      "byte_length": 6325,
+      "extraction_sha256": "7e1cafa13c2257a6e500d9af5d28dfbe4b59dcb2c7a4f0ad93c8b42b7a616e3c",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume.html",
-      "sha256": "7f0e49c7defaeefb17733b1e370fc2fb109d3308d5d50c10a96b85e87a2ec160"
+      "sha256": "95dbd01e26165cd0fcb667118e6e94198c8b63ed6573862bbe14770e885c3924"
     },
     {
-      "byte_length": 6695,
-      "extraction_sha256": "d7cb017fc6cf78083832b7f1871f98e6875cd15a5532c8db88a624faae12092c",
+      "byte_length": 6705,
+      "extraction_sha256": "cac6ae0bf3d97eeb0a3916a60fd2cbfa0e9c95a77fffc82e364db34d3144ee75",
       "format": "html",
       "lane_id": "page:portfolio",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "portfolio.html",
-      "sha256": "61a4f1d6a54fd1d64ac0006fa5a9e43d80af33d4b0b1827dcf1765c07c5306dc"
+      "sha256": "0c1f8e1d6cf90ed8d90371f0a68be987cc71e89249bebe36e6408feb1f2aa35f"
     },
     {
-      "byte_length": 4443,
-      "extraction_sha256": "de73f2ac4be981c9fb7415804306f2391d297d402d9ad49a356ca15fcb721d0f",
+      "byte_length": 4453,
+      "extraction_sha256": "7ede35a6897d35bb59d91082c2835f59b9921c07547bd63b93f42e8ec1332e95",
       "format": "html",
       "lane_id": "page:cover-letter",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "cover-letter.html",
-      "sha256": "eb49af8c5e8f1ca76b4429fa9a4f4004f7b20dfb9b34c87510f0d762e8ef34d6"
+      "sha256": "b7b755d855238fabae6100fa3db5370e6ddc78446d01fb48ff48f8e38a9d60b3"
     },
     {
-      "byte_length": 5412,
+      "byte_length": 5422,
       "extraction_sha256": "6b47b23b9178ceb9d4259e90cce75c983e89648205fd51cb1ad4e790f595cc3d",
       "format": "html",
       "lane_id": "page:cv",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "cv.html",
-      "sha256": "7dc89b5a20c44ca06f44ec604113155ed347509c64805f67898079b41da64fef"
+      "sha256": "88a0510e88f7f48445a76b59e416e06c7329c7b20e886fe1d63c457098291cb8"
     },
     {
-      "byte_length": 3995,
-      "extraction_sha256": "317d9560db396cd6e17fa7b529c65d386d7d54818339a809bb728c74af3f3747",
+      "byte_length": 4005,
+      "extraction_sha256": "46dffb0eee81183380646ffd48b3d78c18bc6933596b08ffbdb807f4e3cd38dc",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "dossier.html",
-      "sha256": "d5b6e9a7e58dd736b6dc2397dbddbc6fe77e978396674ecea615906b8f809ffb"
+      "sha256": "4367e6baf2dedd79dca62d97dbecc1f1b3218f35fe9126efd975a7f67a04b9a2"
     },
     {
-      "byte_length": 4287,
+      "byte_length": 4292,
       "extraction_sha256": "0a414324524332002b6f6c8d9a5b606599a47a0be4a9c3ff93c75694a61dc263",
       "format": "html",
       "lane_id": "support-operations-qa",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume-support-operations.html",
-      "sha256": "140248249dd7e28a86d6b413cab33889af4a9f24d8defed5bd7776a52bb660c9"
+      "sha256": "1194bc9f4cbf8c70df69891ace7d597798048e78a7aa29e6df7e63e368279508"
     },
     {
-      "byte_length": 4156,
+      "byte_length": 4161,
       "extraction_sha256": "105c491de1dd4633f6b5a7936262a409f71d3dcdd9c7483e960ccfdf1b205bcd",
       "format": "html",
       "lane_id": "evaluation-python-tools",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume-evaluation-tooling.html",
-      "sha256": "eb34a9de609b6998ca01c4acfcfa13a0a1450295a4c1b2ed55c2232abea3d377"
+      "sha256": "d091cba3d25e2b1f988868ebd3d6adbc09983a0397ed09abb861b5b7d4cf1920"
     },
     {
-      "byte_length": 3887,
+      "byte_length": 3892,
       "extraction_sha256": "6238903f04861c52a2edbe1208de657e26a3b0aba01a326b9831699c95470ebc",
       "format": "html",
       "lane_id": "public-operations",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume-public-operations.html",
-      "sha256": "5a6bd355523e933a0093f44e0a72d53a1fec1723b2678e93d845b873dbbccaef"
+      "sha256": "0b2f137d4c307c15c1353f98faeb0ca8830db869a45d5cb1f85bd3327a780283"
     },
     {
-      "byte_length": 3985,
+      "byte_length": 3990,
       "extraction_sha256": "76257999499be433fd327d252aff5ee60d8c2c7b8d03a14c77d3a6005ae024e0",
       "format": "html",
       "lane_id": "grounds",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume-grounds.html",
-      "sha256": "e288590df08d75060500ab79e9bc1d76d164096b1488e067ec4b592389f7cf47"
+      "sha256": "4f54c2ffedfa0322bee0a468d2ad23c3935f0b87909888e4dd2f6ac68d4c25d0"
     }
   ],
   "generated_at_epoch": 1788109200,
@@ -258,7 +258,10 @@
     "career/Zain-Dana-Harper-CV-2026-07-12.docx",
     "career/Zain-Dana-Harper-CV-2026-07-28.pdf",
     "career/Zain-Dana-Harper-Portfolio-Brief-2026-07-12.pdf",
-    "career/Zain-Dana-Harper-Portfolio-Brief-2026-07-12.docx"
+    "career/Zain-Dana-Harper-Portfolio-Brief-2026-07-12.docx",
+    "career/Zain-Dana-Harper-Resume.pdf",
+    "career/Zain-Dana-Harper-Portfolio.pdf",
+    "career/Zain-Dana-Harper-Dossier.pdf"
   ],
   "schema": "harperz9-career-artifacts/v1"
 }

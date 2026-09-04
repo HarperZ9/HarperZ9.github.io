@@ -292,6 +292,10 @@ def test_fresh_build_matches_each_committed_release_artifact(tmp_path: Path) -> 
         assert committed_inputs[relative]["sha256"] == hashlib.sha256(
             (ROOT / relative).read_bytes()
         ).hexdigest()
+    for source in committed_receipt["sources"]:
+        assert source["sha256"] == hashlib.sha256(
+            (ROOT / source["path"]).read_bytes()
+        ).hexdigest(), source["path"]
     committed_by_name = {
         Path(row["path"]).name: row for row in committed_receipt["artifacts"]
     }
@@ -403,13 +407,26 @@ def test_release_manifest_replaces_only_generated_artifact_rows(
     assert after["generated_at_epoch"] == 1788109200
 
 
-def test_release_manifest_rehashes_each_changed_html_authority(
+def test_release_manifest_rehashes_every_current_html_authority(
     tmp_path: Path,
 ) -> None:
     """Artifact hashes cannot be current while their source-page rows stay stale."""
     output = tmp_path / "career"
     manifest_path = tmp_path / "career-artifacts.json"
-    shutil.copyfile(ROOT / "career" / "career-artifacts.json", manifest_path)
+    before = json.loads(
+        (ROOT / "career" / "career-artifacts.json").read_text(encoding="utf-8")
+    )
+    stale_row = next(
+        row for row in before["current_html"] if row["path"] == "hire.html"
+    )
+    stale_row["byte_length"] = 0
+    stale_row["sha256"] = "0" * 64
+    stale_row["extraction_sha256"] = "0" * 64
+    manifest_path.write_text(
+        json.dumps(before, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
     proc = subprocess.run(
         [
             sys.executable,
@@ -434,21 +451,27 @@ def test_release_manifest_rehashes_each_changed_html_authority(
     assert proc.returncode == 0, proc.stdout + proc.stderr
 
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    by_path = {row["path"]: row for row in manifest["current_html"]}
-    for name in (
-        "resume-support-operations.html",
-        "resume-evaluation-tooling.html",
-        "resume-public-operations.html",
-        "resume-grounds.html",
-        "cv.html",
-    ):
+    for row in manifest["current_html"]:
+        name = row["path"]
         payload = (ROOT / name).read_bytes()
         extraction = _html_extraction(ROOT / name)
-        assert by_path[name]["byte_length"] == len(payload)
-        assert by_path[name]["sha256"] == hashlib.sha256(payload).hexdigest()
-        assert by_path[name]["extraction_sha256"] == hashlib.sha256(
+        assert row["byte_length"] == len(payload)
+        assert row["sha256"] == hashlib.sha256(payload).hexdigest()
+        assert row["extraction_sha256"] == hashlib.sha256(
             extraction.encode("utf-8")
         ).hexdigest()
+
+
+def test_committed_manifest_binds_current_html_extractions() -> None:
+    """Committed extraction receipts must identify current visible article text."""
+    manifest = json.loads(
+        (ROOT / "career" / "career-artifacts.json").read_text(encoding="utf-8")
+    )
+    for row in manifest["current_html"]:
+        extraction = _html_extraction(ROOT / row["path"])
+        assert row["extraction_sha256"] == hashlib.sha256(
+            extraction.encode("utf-8")
+        ).hexdigest(), row["path"]
 
 
 def test_invalid_release_manifest_is_left_byte_identical_on_failure(
@@ -513,6 +536,111 @@ def test_invalid_release_manifest_cannot_overwrite_outputs_or_receipt(
     manifest["current_html"] = [
         row for row in manifest["current_html"] if row["path"] != "cv.html"
     ]
+    manifest_path.write_text(
+        json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    proc = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPT),
+            "--site-root",
+            str(ROOT),
+            "--output-root",
+            str(output),
+            "--receipt",
+            str(receipt_path),
+            "--release-manifest",
+            str(manifest_path),
+        ],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        cwd=ROOT,
+    )
+
+    assert proc.returncode != 0
+    assert protected_output.read_bytes() == b"existing reviewed artifact"
+    assert receipt_path.read_bytes() == b"existing reviewed receipt"
+    assert sorted(path.name for path in output.iterdir()) == [OUTPUT_NAMES[0]]
+
+
+def test_missing_current_html_authority_cannot_overwrite_release_outputs(
+    tmp_path: Path,
+) -> None:
+    """Every rehashed HTML authority must validate before release mutation."""
+    output = tmp_path / "career"
+    output.mkdir()
+    protected_output = output / OUTPUT_NAMES[0]
+    protected_output.write_bytes(b"existing reviewed artifact")
+    receipt_path = tmp_path / "receipt.json"
+    receipt_path.write_bytes(b"existing reviewed receipt")
+    manifest_path = tmp_path / "career-artifacts.json"
+    manifest = json.loads(
+        (ROOT / "career" / "career-artifacts.json").read_text(encoding="utf-8")
+    )
+    hire_row = next(
+        row for row in manifest["current_html"] if row["path"] == "hire.html"
+    )
+    hire_row["path"] = "missing-hiring-authority.html"
+    manifest_path.write_text(
+        json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    proc = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPT),
+            "--site-root",
+            str(ROOT),
+            "--output-root",
+            str(output),
+            "--receipt",
+            str(receipt_path),
+            "--release-manifest",
+            str(manifest_path),
+        ],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        cwd=ROOT,
+    )
+
+    assert proc.returncode != 0
+    assert protected_output.read_bytes() == b"existing reviewed artifact"
+    assert receipt_path.read_bytes() == b"existing reviewed receipt"
+    assert sorted(path.name for path in output.iterdir()) == [OUTPUT_NAMES[0]]
+
+
+def test_out_of_tree_html_authority_cannot_overwrite_release_outputs(
+    tmp_path: Path,
+) -> None:
+    """A manifest cannot bind local files outside the declared site root."""
+    output = tmp_path / "career"
+    output.mkdir()
+    protected_output = output / OUTPUT_NAMES[0]
+    protected_output.write_bytes(b"existing reviewed artifact")
+    receipt_path = tmp_path / "receipt.json"
+    receipt_path.write_bytes(b"existing reviewed receipt")
+    outside = tmp_path / "outside.html"
+    outside.write_text(
+        "<article><h1>private local authority</h1></article>",
+        encoding="utf-8",
+    )
+    manifest_path = tmp_path / "career-artifacts.json"
+    manifest = json.loads(
+        (ROOT / "career" / "career-artifacts.json").read_text(encoding="utf-8")
+    )
+    hire_row = next(
+        row for row in manifest["current_html"] if row["path"] == "hire.html"
+    )
+    hire_row["path"] = str(outside)
     manifest_path.write_text(
         json.dumps(manifest, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",

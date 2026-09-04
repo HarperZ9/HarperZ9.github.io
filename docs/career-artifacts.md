@@ -22,8 +22,9 @@ python tools/build_career_artifacts.py `
   --release-manifest career/career-artifacts.json
 ```
 
-The command updates only the ten generated PDF/DOCX rows and the five source
-HTML rows. Cover-letter and portfolio-brief binaries remain untouched. The
+The command updates only the ten generated PDF/DOCX rows and refreshes every
+`current_html` row after validating that each page is a local article inside
+the site root. Cover-letter and portfolio-brief binaries remain untouched. The
 receipt binds each generated artifact to its SHA-256, normalized extraction
 SHA-256, source page, lane, byte length, MIME type, and page count. It also
 binds the generator and requirements-file hashes plus the exact Python and

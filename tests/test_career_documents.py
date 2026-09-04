@@ -7,13 +7,19 @@ rather than a cosmetic bug. Second, the claim language, because the research
 record is not peer reviewed and every page has to keep saying so.
 """
 
+import hashlib
 import json
 import re
+import runpy
 import subprocess
 import sys
+from collections.abc import Iterable
+from html.parser import HTMLParser
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
+PUBLIC_HOST = "harperz9.github.io"
 CENSUS = ROOT / "career" / "open-source-census.json"
 MANIFEST = ROOT / "career" / "career-artifacts.json"
 DOCS = ("hire.html", "resume.html", "cv.html", "portfolio.html", "cover-letter.html", "dossier.html")
@@ -22,6 +28,11 @@ RESUME_PDFS = (
     "career/Zain-Dana-Harper-Resume-Public-Operations.pdf",
     "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf",
     "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf",
+)
+RETIRED_LEGACY_PDFS = (
+    "career/Zain-Dana-Harper-Resume.pdf",
+    "career/Zain-Dana-Harper-Portfolio.pdf",
+    "career/Zain-Dana-Harper-Dossier.pdf",
 )
 STATUS_BOUNDARY_DOCS = (
     "resume-support-operations.html",
@@ -37,6 +48,63 @@ def read(name: str) -> str:
     return (ROOT / name).read_text(encoding="utf-8")
 
 
+def _local_link_target(page: Path, href: str) -> Path | None:
+    parsed = urlsplit(href)
+    if parsed.scheme.casefold() not in {"", "http", "https"}:
+        return None
+    if parsed.netloc and (parsed.hostname or "").casefold() != PUBLIC_HOST:
+        return None
+    if not parsed.path:
+        return None
+    path = unquote(parsed.path)
+    if parsed.netloc or path.startswith("/"):
+        return (ROOT / path.lstrip("/")).resolve()
+    return (page.parent / path).resolve()
+
+
+def _publishable_html_pages(root: Path) -> tuple[Path, ...]:
+    result = subprocess.run(
+        ["git", "ls-files", "-z", "--", "*.html"],
+        cwd=root,
+        check=True,
+        capture_output=True,
+    )
+    return tuple(
+        root / relative
+        for relative in result.stdout.decode("utf-8").split("\0")
+        if relative
+    )
+
+
+class _HrefParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.hrefs: list[str] = []
+
+    def handle_starttag(
+        self,
+        tag: str,
+        attrs: list[tuple[str, str | None]],
+    ) -> None:
+        del tag
+        self.hrefs.extend(
+            value
+            for name, value in attrs
+            if name.casefold() == "href" and value is not None
+        )
+
+
+def _hrefs(source: str) -> tuple[str, ...]:
+    parser = _HrefParser()
+    parser.feed(source)
+    parser.close()
+    return tuple(parser.hrefs)
+
+
+def _resolved_print_targets(out: Path, names: Iterable[str]) -> set[Path]:
+    return {(out / name).resolve() for name in names}
+
+
 def test_every_career_document_exists() -> None:
     for name in DOCS:
         assert (ROOT / name).is_file(), name
@@ -45,6 +113,100 @@ def test_every_career_document_exists() -> None:
         assert (ROOT / record["path"]).is_file(), record["path"]
     for retired in manifest["retired_artifacts"]:
         assert not (ROOT / retired).exists(), retired
+
+
+def test_manifest_has_one_current_row_for_every_career_html_authority() -> None:
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    actual = [row["path"] for row in manifest["current_html"]]
+    expected = set(DOCS) | set(STATUS_BOUNDARY_DOCS)
+    assert len(actual) == len(set(actual)), "duplicate current_html path"
+    assert set(actual) == expected
+
+
+def test_retired_legacy_pdfs_cannot_be_shipped_or_printed() -> None:
+    """A stale PDF route must stay retired after the current lanes replace it."""
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    retired = {(ROOT / path).resolve() for path in manifest["retired_artifacts"]}
+    current = {(ROOT / row["path"]).resolve() for row in manifest["artifacts"]}
+    print_module = runpy.run_path(str(ROOT / "tools" / "print_documents.py"))
+    print_targets = _resolved_print_targets(
+        print_module["OUT"],
+        print_module["DOCUMENTS"].values(),
+    )
+    for relative in RETIRED_LEGACY_PDFS:
+        target = (ROOT / relative).resolve()
+        assert target in retired, relative
+        assert target not in current, relative
+        assert target not in print_targets, relative
+        assert not target.exists(), relative
+
+
+def test_shipped_html_never_links_to_a_retired_career_artifact() -> None:
+    """Retiring bytes must also retire every local route that offers those bytes."""
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    retired = {(ROOT / relative).resolve() for relative in manifest["retired_artifacts"]}
+    for page in _publishable_html_pages(ROOT):
+        source = page.read_text(encoding="utf-8")
+        for href in _hrefs(source):
+            target = _local_link_target(page, href)
+            if target is None:
+                continue
+            assert target not in retired, f"{page.relative_to(ROOT)} -> {href}"
+
+
+def test_publishable_html_inventory_excludes_untracked_local_files(
+    tmp_path: Path,
+) -> None:
+    tracked = tmp_path / "tracked.html"
+    tracked.write_text("<p>published</p>", encoding="utf-8")
+    untracked = tmp_path / "scratch.html"
+    untracked.write_text("<p>local only</p>", encoding="utf-8")
+    subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
+    subprocess.run(["git", "add", "--", tracked.name], cwd=tmp_path, check=True)
+
+    assert set(_publishable_html_pages(tmp_path)) == {tracked}
+
+
+def test_href_inventory_parses_valid_html_attribute_forms() -> None:
+    source = (
+        '<a HREF=career/Zain-Dana-Harper-Resume.pdf>resume</a>'
+        '<link href = "career/current.pdf?download=1&amp;source=site">'
+    )
+    assert _hrefs(source) == (
+        "career/Zain-Dana-Harper-Resume.pdf",
+        "career/current.pdf?download=1&source=site",
+    )
+
+
+def test_print_targets_resolve_against_the_configured_output_root(
+    tmp_path: Path,
+) -> None:
+    names = ("nested/../Zain-Dana-Harper-CV.pdf",)
+    assert _resolved_print_targets(tmp_path / "career", names) == {
+        (tmp_path / "career" / "Zain-Dana-Harper-CV.pdf").resolve()
+    }
+
+
+def test_absolute_public_origin_links_resolve_into_the_release_tree() -> None:
+    href = (
+        "https://harperz9.github.io/"
+        "career/Zain-Dana-Harper-Resume.pdf"
+    )
+    expected = (ROOT / "career" / "Zain-Dana-Harper-Resume.pdf").resolve()
+    assert _local_link_target(ROOT / "index.html", href) == expected
+    assert _local_link_target(
+        ROOT / "index.html",
+        "https://example.com/career/Zain-Dana-Harper-Resume.pdf",
+    ) is None
+
+
+def test_committed_html_release_rows_bind_current_bytes() -> None:
+    """The release manifest must identify the HTML that is actually deployed."""
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    for row in manifest["current_html"]:
+        payload = (ROOT / row["path"]).read_bytes()
+        assert row["byte_length"] == len(payload), row["path"]
+        assert row["sha256"] == hashlib.sha256(payload).hexdigest(), row["path"]
 
 
 def test_experience_dates_use_the_adopted_low_claim_boundary() -> None:

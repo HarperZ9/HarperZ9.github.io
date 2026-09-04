@@ -114,7 +114,7 @@
   "build_inputs": [
     {
       "path": "tools/build_career_artifacts.py",
-      "sha256": "f477388631122e184171d7a089f41f6feb49bac9f295009937ed7df8502df8f1"
+      "sha256": "d391d742ae18721c016bc468004c54537c0921de51a1c084c5d42b256491b7d6"
     },
     {
       "path": "requirements-career-docs.txt",
@@ -139,23 +139,23 @@
   "sources": [
     {
       "path": "cv.html",
-      "sha256": "7dc89b5a20c44ca06f44ec604113155ed347509c64805f67898079b41da64fef"
+      "sha256": "88a0510e88f7f48445a76b59e416e06c7329c7b20e886fe1d63c457098291cb8"
     },
     {
       "path": "resume-evaluation-tooling.html",
-      "sha256": "eb34a9de609b6998ca01c4acfcfa13a0a1450295a4c1b2ed55c2232abea3d377"
+      "sha256": "d091cba3d25e2b1f988868ebd3d6adbc09983a0397ed09abb861b5b7d4cf1920"
     },
     {
       "path": "resume-grounds.html",
-      "sha256": "e288590df08d75060500ab79e9bc1d76d164096b1488e067ec4b592389f7cf47"
+      "sha256": "4f54c2ffedfa0322bee0a468d2ad23c3935f0b87909888e4dd2f6ac68d4c25d0"
     },
     {
       "path": "resume-public-operations.html",
-      "sha256": "5a6bd355523e933a0093f44e0a72d53a1fec1723b2678e93d845b873dbbccaef"
+      "sha256": "0b2f137d4c307c15c1353f98faeb0ca8830db869a45d5cb1f85bd3327a780283"
     },
     {
       "path": "resume-support-operations.html",
-      "sha256": "140248249dd7e28a86d6b413cab33889af4a9f24d8defed5bd7776a52bb660c9"
+      "sha256": "1194bc9f4cbf8c70df69891ace7d597798048e78a7aa29e6df7e63e368279508"
     }
   ]
 }
