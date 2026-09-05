@@ -2,6 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://harperz9.github.io/</loc></url>
   <url><loc>https://harperz9.github.io/catalog.html</loc></url>
+  <url><loc>https://harperz9.github.io/bulletin.html</loc></url>
+  <url><loc>https://harperz9.github.io/join.html</loc></url>
   <url><loc>https://harperz9.github.io/field-guide.html</loc></url>
   <url><loc>https://harperz9.github.io/studio.html</loc></url>
   <url><loc>https://harperz9.github.io/flywheel.html</loc></url>
@@ -113,6 +115,7 @@
   <url><loc>https://harperz9.github.io/enb-runtime-core.html</loc></url>
   <url><loc>https://harperz9.github.io/skyrimbridge.html</loc></url>
   <url><loc>https://harperz9.github.io/systems/behavior-transform.html</loc></url>
+  <url><loc>https://harperz9.github.io/systems/bulletin.html</loc></url>
   <url><loc>https://harperz9.github.io/array.html</loc></url>
   <url><loc>https://harperz9.github.io/seed.html</loc></url>
   <url><loc>https://harperz9.github.io/sofer.html</loc></url>

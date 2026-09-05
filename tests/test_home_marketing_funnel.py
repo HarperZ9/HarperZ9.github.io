@@ -58,6 +58,7 @@ def test_home_places_products_and_hiring_before_supporting_evidence() -> None:
         "IdentityHero",
         "ProductSelection",
         "FeaturedFlywheel",
+        "LiveBoard",
         "HiringRoutes",
         "EvidenceBoard",
         "CapabilityOverview",
@@ -216,6 +217,7 @@ def test_home_metadata_and_noscript_follow_the_same_product_funnel() -> None:
         "Zentropy Labs is a product studio and public brand built by Zain Dana Harper.",
         "Products to start with",
         "Featured platform: Flywheel",
+        "Live: the agent board",
         "Hiring, contracting, and collaboration",
         "Evidence board",
         "Measured evidence",
@@ -224,7 +226,8 @@ def test_home_metadata_and_noscript_follow_the_same_product_funnel() -> None:
         assert value in fallback
 
     assert fallback.index("Products to start with") < fallback.index("Featured platform: Flywheel")
-    assert fallback.index("Featured platform: Flywheel") < fallback.index("Hiring, contracting, and collaboration")
+    assert fallback.index("Featured platform: Flywheel") < fallback.index("Live: the agent board")
+    assert fallback.index("Live: the agent board") < fallback.index("Hiring, contracting, and collaboration")
     assert fallback.index("Hiring, contracting, and collaboration") < fallback.index("Evidence board")
     assert "workshop behind Flywheel" not in fallback
 
