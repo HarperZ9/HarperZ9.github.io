@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "name": "tests_passed",
+      "authority": "TABLE",
+      "source": "synthetic-test-record",
+      "criticality": "critical",
+      "describes": "Compare the reported count with the supplied synthetic test record. Does not execute tests or establish that the source record is trustworthy."
+    }
+  ],
+  "authorities": {
+    "synthetic-test-record": {
+      "kind": "table",
+      "path": "test-results.json",
+      "key_field": "run_id"
+    }
+  }
+}

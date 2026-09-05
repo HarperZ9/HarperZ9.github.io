@@ -1,0 +1,19 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.000
+The summary says 42 tests passed. The supplied record says 41.
+
+00:00:04.000 --> 00:00:09.000
+This is a synthetic example. Compare the answer with the source it names.
+
+00:00:09.000 --> 00:00:15.000
+Flywheel flags the mismatch: FAIL. The answer is held.
+
+00:00:15.000 --> 00:00:21.000
+A prepared answer with the matching value and its source passes this field.
+
+00:00:21.000 --> 00:00:28.000
+Remove the citation: the number still matches, but the field is unverified and held.
+
+00:00:28.000 --> 00:00:36.000
+Check the answer against a source you trust. Explore Flywheel at harperz9.github.io/flywheel.html.

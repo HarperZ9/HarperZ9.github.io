@@ -52,6 +52,22 @@
   .hero-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.25rem}
   .hero-actions a{display:inline-flex;align-items:center;min-height:44px;border:1px solid var(--hairline);padding:.65rem .9rem;color:var(--bone);text-decoration:none}
   .hero-actions a:first-child{border-color:var(--orange)}
+  .demo-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(15rem,22rem);gap:clamp(1.5rem,4vw,3.5rem);align-items:start;margin-top:1.5rem}
+  .demo-copy{min-width:0;max-width:65ch;grid-column:1;grid-row:1}
+  .demo-copy p{line-height:1.65;margin-bottom:1rem}
+  .demo-media{margin:0;min-width:0;grid-column:2;grid-row:1}
+  .demo-media video{display:block;width:100%;height:auto;aspect-ratio:9/16;background:#080d11}
+  .demo-media video:focus-visible{outline:2px solid var(--bone);outline-offset:4px}
+  .demo-media figcaption{font-size:.9rem;line-height:1.6;margin-top:.75rem;color:var(--bone)}
+  .demo-results{margin:1rem 0 1.5rem;line-height:1.6}
+  .demo-results dt{font-weight:700;margin-top:1rem}
+  .demo-results dd{margin:.25rem 0 0}
+  .demo-links{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-top:1rem}
+  .demo-links a{display:inline-flex;align-items:center;min-height:44px}
+  #demo{scroll-margin-top:6rem}
+  @media(max-width:760px){.demo-layout{grid-template-columns:1fr}.demo-layout>.demo-copy,.demo-media{grid-column:auto;grid-row:auto}.demo-media{width:min(100%,22rem);justify-self:center}}
+  @media(forced-colors:active){.demo-media video{border:1px solid CanvasText}.demo-media video:focus-visible{outline-color:Highlight}}
+  @media print{.demo-layout{display:block}.demo-media video{display:none}.demo-media figcaption,.demo-copy{color:#000}.demo-results dt,.demo-results dd{break-inside:avoid}}
 </style>
 </head>
 <body class="inner-clean">
@@ -66,13 +82,49 @@
   <div class="mid">
     <h1>A companion for <span class="g">every model.</span></h1>
     <p class="lede" data-canonical-purpose="flywheel">Flywheel runs an AI task with the local or hosted model and tools you choose. It records the run, and optional sealed tool-call receipts can be inspected and rechecked offline. The repository also includes a native desktop app.</p>
-    <p class="close">Every number on this page is a receipt file you can re-check offline.</p>
-    <nav class="hero-actions" aria-label="Primary routes"><a href="#run">Install or run</a><a href="https://github.com/HarperZ9/flywheel" rel="noopener">Source</a><a href="#benchmarks">Benchmarks</a></nav>
+    <p class="close">See one check in 36 seconds, then inspect the source.</p>
+    <nav class="hero-actions" aria-label="Primary routes"><a href="#demo">Watch the 36-second demo</a><a href="#run">Install or run</a><a href="https://github.com/HarperZ9/flywheel" rel="noopener">Source</a><a href="#benchmarks">Benchmarks</a></nav>
   </div>
   <div class="seal"><span translate="no">flywheel</span> &middot; public &middot; FSL-1.1-MIT &middot; <span translate="no">python scripts/run_harness_cli.py app --port 8799</span></div>
 </div>
 
 <main id="main">
+
+<section class="mv" id="demo" aria-labelledby="demo-title">
+  <h2 id="demo-title">Check the answer before it is sent.</h2>
+  <div class="demo-copy">
+      <p>The summary says 42 tests passed. The supplied record says 41. Watch Flywheel check that one structured field before the answer reaches your team.</p>
+      <p id="demo-scope">Synthetic inputs, actual checker output. This 36-second video typesets result excerpts; it is not a screen recording or an AI repairing itself. Recorded September 5, 2026, using <a href="https://github.com/HarperZ9/flywheel/tree/5a9f8429c511dd6eccd9b0d5833f1c4bf5f617f3">Flywheel source 5a9f842</a>.</p>
+  </div>
+  <div class="demo-layout">
+    <figure class="demo-media">
+      <video id="fw-output-demo" controls playsinline preload="none" width="1080" height="1920" poster="media/flywheel-output-check-20260905/poster.png" aria-label="Flywheel checks a synthetic summary, 36 seconds" aria-describedby="demo-scope">
+        <source src="media/flywheel-output-check-20260905/short.mp4" type="video/mp4">
+        <track kind="captions" src="media/flywheel-output-check-20260905/captions.vtt" srclang="en" label="English" default>
+        Your browser cannot play this video. <a href="#demo-transcript">Read the demo in text</a> or <a href="media/flywheel-output-check-20260905/short.mp4">download the MP4</a>.
+      </video>
+      <figcaption>Play when ready. No sound is needed. Captions and the complete text equivalent are included.</figcaption>
+    </figure>
+    <div class="demo-copy">
+      <div id="demo-transcript" aria-labelledby="demo-transcript-title">
+        <h3 id="demo-transcript-title">The demo in text</h3>
+        <p>The supplied synthetic test record contains 41 for run <code>demo-run-001</code>. Three prepared answers are checked against it:</p>
+        <dl class="demo-results">
+          <dt>42 claimed; 41 in the record</dt>
+          <dd><strong>FAIL / HOLD.</strong> The cited value disagrees. 0 of 1 fields confirmed.</dd>
+          <dt>41 claimed, with its source</dt>
+          <dd><strong>PASS / RELEASE.</strong> The cited value matches. 1 of 1 fields confirmed.</dd>
+          <dt>41 claimed, without a citation</dt>
+          <dd><strong>UNVERIFIABLE / HOLD.</strong> The value matches, but its source is not named. 0 of 1 fields confirmed.</dd>
+        </dl>
+        <p><strong>What this does not prove:</strong> RELEASE is the answer decision for this one field, not a software release or general correctness. No model or real CI run was used. You choose the fields and sources; this check does not establish source trust. The run ID is a lookup key, not authenticated identity.</p>
+      </div>
+      <p>Need to check agent-generated summaries against test outputs or other authoritative records? For a scoped paid pilot, we can agree on one input format, the checks, expected output, and acceptance criteria before work starts.</p>
+      <nav class="hero-actions" aria-label="Demo next steps"><a href="mailto:zaindharper@gmail.com?subject=Flywheel%20paid%20pilot">Discuss a paid pilot</a><a href="hire.html">Hiring and collaboration</a></nav>
+      <nav class="demo-links" aria-label="Demo evidence"><a href="media/flywheel-output-check-20260905/README.md">Reproduce the three checks</a><a href="media/flywheel-output-check-20260905/short.mp4" download>Download the video</a></nav>
+    </div>
+  </div>
+</section>
 
 <!-- THE WEDGE -->
 <section class="mv" id="why" aria-labelledby="why-h">

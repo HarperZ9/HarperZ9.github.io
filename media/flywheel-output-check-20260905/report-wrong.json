@@ -1,0 +1,44 @@
+{
+  "schema": "flywheel.output-contract-report/v1",
+  "verdict": "FAIL",
+  "release": "HOLD",
+  "blocking": [
+    "tests_passed"
+  ],
+  "checked": 1,
+  "passed": 0,
+  "unresolved": [
+    "tests_passed"
+  ],
+  "fields": [
+    {
+      "field": "tests_passed",
+      "authority": "TABLE",
+      "source": "synthetic-test-record",
+      "verdict": "FAIL",
+      "code": "DISAGREES",
+      "reason": "the value disagrees with synthetic-test-record",
+      "cited": true,
+      "criticality": "critical",
+      "method": ""
+    }
+  ],
+  "next": {
+    "verdict": "FAIL",
+    "release": "HOLD",
+    "blocking": [
+      "tests_passed"
+    ],
+    "fields": [
+      {
+        "field": "tests_passed",
+        "verdict": "FAIL",
+        "code": "DISAGREES",
+        "source": "synthetic-test-record",
+        "criticality": "critical",
+        "reason": "the value disagrees with synthetic-test-record",
+        "do": "consult synthetic-test-record and take the value it gives, rather than deriving one that should match it"
+      }
+    ]
+  }
+}
