@@ -1,0 +1,44 @@
+{
+  "schema": "flywheel.output-contract-report/v1",
+  "verdict": "UNVERIFIABLE",
+  "release": "HOLD",
+  "blocking": [
+    "tests_passed"
+  ],
+  "checked": 1,
+  "passed": 0,
+  "unresolved": [
+    "tests_passed"
+  ],
+  "fields": [
+    {
+      "field": "tests_passed",
+      "authority": "TABLE",
+      "source": "synthetic-test-record",
+      "verdict": "UNVERIFIABLE",
+      "code": "UNCITED",
+      "reason": "the value agrees with synthetic-test-record, and the answer does not say it came from there",
+      "cited": false,
+      "criticality": "critical",
+      "method": ""
+    }
+  ],
+  "next": {
+    "verdict": "UNVERIFIABLE",
+    "release": "HOLD",
+    "blocking": [
+      "tests_passed"
+    ],
+    "fields": [
+      {
+        "field": "tests_passed",
+        "verdict": "UNVERIFIABLE",
+        "code": "UNCITED",
+        "source": "synthetic-test-record",
+        "criticality": "critical",
+        "reason": "the value agrees with synthetic-test-record, and the answer does not say it came from there",
+        "do": "name the source the value came from; synthetic-test-record is what decides it"
+      }
+    ]
+  }
+}

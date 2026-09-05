@@ -1,0 +1,28 @@
+{
+  "schema": "flywheel.output-contract-report/v1",
+  "verdict": "PASS",
+  "release": "RELEASE",
+  "blocking": [],
+  "checked": 1,
+  "passed": 1,
+  "unresolved": [],
+  "fields": [
+    {
+      "field": "tests_passed",
+      "authority": "TABLE",
+      "source": "synthetic-test-record",
+      "verdict": "PASS",
+      "code": "AGREES",
+      "reason": "the value agrees with synthetic-test-record",
+      "cited": true,
+      "criticality": "critical",
+      "method": ""
+    }
+  ],
+  "next": {
+    "verdict": "PASS",
+    "release": "RELEASE",
+    "blocking": [],
+    "fields": []
+  }
+}
