@@ -180,6 +180,7 @@ RELEASE_PATHS = (
     "resume-support-operations.html",
     "sitemap.xml",
     "systems/behavior-transform.html",
+    "systems/bulletin.html",
     "systems/mneme.html",
     "systems/plexus.html",
     "systems/relay.html",
@@ -191,7 +192,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "1bb18726089e05f72f018c38b675315fc0de651099b407498cb72e6a69fe1a7d"
+REVIEWED_RELEASE_SHA256 = "740ad8da4653207c1b9198ceb8f5f10fe2653351c911eef5b3512fc7f0ce08f9"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
