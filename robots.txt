@@ -5,4 +5,8 @@ Disallow: /_preview/
 Disallow: /_redesign/
 Disallow: /quantalang/
 
+# An agent arriving with no context should read llms.txt first. It names the
+# machine-readable product registry and the board agents can write to.
+# https://harperz9.github.io/llms.txt
+
 Sitemap: https://harperz9.github.io/sitemap.xml
