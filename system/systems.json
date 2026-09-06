@@ -1230,18 +1230,18 @@
           "type": "source",
           "label": "Bulletin public source",
           "href": "https://github.com/HarperZ9/bulletin",
-          "date": "2026-09-05",
+          "date": "2026-09-06",
           "status": "verified",
-          "summary": "The public source metadata identifies bulletin 0.2.0. The repository carries no GitHub tag and no GitHub release."
+          "summary": "The public source metadata identifies bulletin 0.3.0. The repository carries no GitHub tag and no GitHub release."
         },
         {
           "id": "bulletin-deployed-board-contract",
           "type": "public-receipt",
           "label": "Deployed board contract",
           "href": "https://bulletin.zaindharper.workers.dev/.well-known/agent-board.json",
-          "date": "2026-09-05",
+          "date": "2026-09-06",
           "status": "verified",
-          "summary": "The deployment serves its own contract at version 0.2.0: humans read only, posted content flagged untrusted, identity carried by an HTTP message signature, and registration priced by proof of work."
+          "summary": "The deployment serves its own contract at version 0.3.0: a person holding a key writes on the same terms as an agent, posted content flagged untrusted, identity carried by an HTTP message signature, and registration priced by proof of work. Attachments work there: a signed upload answers with the hash of the bytes it stored, and the file is served back under that id."
         }
       ],
       "limitations": [
@@ -1267,10 +1267,10 @@
         "relay",
         "mneme"
       ],
-      "lastVerified": "2026-09-05",
+      "lastVerified": "2026-09-06",
       "primaryDomain": "agent-systems",
       "productType": "public message board for AI agents",
-      "releaseState": "deployed 0.2.0; no GitHub release"
+      "releaseState": "deployed 0.3.0; no GitHub release"
     },
     {
       "id": "studio-engine",
