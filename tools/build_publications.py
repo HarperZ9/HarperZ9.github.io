@@ -29,7 +29,7 @@ from tools.publication_model import (
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_URL = "https://harperz9.github.io/"
-ASSET_REVISION = "20260902-creative-chassis"
+ASSET_REVISION = "20260905-article-reading"
 PUBLICATIONS_MARKER = "GENERATED EDITORIAL PUBLICATIONS"
 WRITING_MARKER = "GENERATED EDITORIAL ESSAYS"
 SITEMAP_MARKER = "GENERATED EDITORIAL ROUTES"
@@ -110,7 +110,7 @@ def _render_table(figure: dict) -> str:
         for row in figure["rows"]
     )
     return (
-        '<div class="publication-table-wrap"><table class="publication-figure-table">'
+        '<div class="publication-table-wrap" role="region" tabindex="0" aria-label="Figure data"><table class="publication-figure-table">'
         f"<caption>{html.escape(figure['title'])}. {html.escape(figure['claim'])}</caption>"
         f"<thead><tr>{headings}</tr></thead><tbody>{rows}</tbody></table></div>"
     )
@@ -238,13 +238,21 @@ def render_figure_svg(figure: dict) -> str:
 '''
 
 
-def render_figure_html(figure: dict) -> str:
+def render_figure_html(figure: dict, sources: list[dict]) -> str:
+    cited_sources = [source for source in sources if source["id"] in figure["provenance"]]
+    source_links = "".join(
+        f'<li><a href="{html.escape(source["url"], quote=True)}" rel="external noopener">'
+        f'{html.escape(source["title"])}</a>. {html.escape(source["publisher"])}. '
+        f'Published {html.escape(source["published_at"])}; observed {html.escape(source["observed_at"])}.</li>'
+        for source in cited_sources
+    )
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(figure["title"])}</title><link rel="stylesheet" href="../system/publication-article.css?v={ASSET_REVISION}"></head>
 <body><nav class="publication-static-nav" aria-label="Publication"><a href="../publications.html">Publications</a></nav><main class="publication-article"><h1>{html.escape(figure["title"])}</h1>
 <p class="publication-thesis">{html.escape(figure["claim"])}</p>
-{_render_table(figure)}{_render_figure_metadata(figure)}</main></body></html>
+{_render_table(figure)}{_render_figure_metadata(figure)}
+<section aria-label="Figure sources"><h2>Sources</h2><ol>{source_links}</ol></section></main></body></html>
 '''
 
 
@@ -254,14 +262,21 @@ def _render_figure_in_article(figure: dict) -> str:
         f'<h2>{html.escape(figure["title"])}</h2>'
         f'<p>{html.escape(figure["claim"])}</p>'
         f'<img src="figures/{html.escape(figure["id"])}.svg" alt="{html.escape(figure["alt"], quote=True)}">'
+        f'<p class="publication-figure-limit"><strong>What this cannot show.</strong> {html.escape(figure["doesNotProve"])}</p>'
+        '<details class="publication-figure-detail"><summary>Read the data and method</summary>'
         + _render_table(figure)
         + _render_figure_metadata(figure)
-        + "</section>"
+        + f'<p><a href="figures/{html.escape(figure["id"])}.html">Open the figure and its sources</a></p>'
+        + "</details></section>"
     )
 
 
 def render_article(record: dict) -> str:
     canonical = SITE_URL + record["route"]
+    contents = "".join(
+        f'<li><a href="#{html.escape(section["id"], quote=True)}">{html.escape(section["heading"])}</a></li>'
+        for section in record["sections"]
+    )
     opening = "".join(
         f'<p class="publication-opening-{key}"><strong>{label}.</strong> {html.escape(record["opening"][key])}</p>'
         for key, label in (
@@ -283,16 +298,14 @@ def render_article(record: dict) -> str:
         f'{html.escape(source["publisher"])}. {html.escape(source["role"])}. Published {html.escape(source["published_at"])}; observed {html.escape(source["observed_at"])}.</li>'
         for source in record["sources"]
     )
-    claim_rows = "".join(
-        "<tr>"
-        f'<th scope="row">{html.escape(claim["id"])}</th>'
-        f'<td>{html.escape(claim["text"])}</td>'
-        f'<td>{html.escape(claim["status"])}</td>'
-        f'<td>{html.escape(", ".join(claim["source_ids"]))}</td>'
-        f'<td>{html.escape(claim["scope"])}</td>'
-        f'<td>{html.escape(claim["uncertainty"])}</td>'
-        f'<td>{html.escape(claim["doesNotProve"])}</td>'
-        "</tr>"
+    claim_notes = "".join(
+        f'<li><p><strong>{html.escape(claim["text"])}</strong></p>'
+        f'<p class="publication-meta">{html.escape(claim["id"])} · {html.escape(claim["status"])}</p>'
+        '<p>Sources: '
+        + ", ".join(f'<a href="#source-{html.escape(source_id, quote=True)}">{html.escape(source_id)}</a>' for source_id in claim["source_ids"])
+        + f'</p><dl class="publication-evidence"><dt>Scope</dt><dd>{html.escape(claim["scope"])}</dd>'
+        f'<dt>Uncertainty</dt><dd>{html.escape(claim["uncertainty"])}</dd>'
+        f'<dt>Does not prove</dt><dd>{html.escape(claim["doesNotProve"])}</dd></dl></li>'
         for claim in record["claims"]
     )
     corrections = (
@@ -307,15 +320,20 @@ def render_article(record: dict) -> str:
 <meta property="og:type" content="article"><meta property="og:title" content="{html.escape(record["title"], quote=True)}">
 <meta property="og:description" content="{html.escape(record["summary"], quote=True)}"><meta property="og:url" content="{canonical}">
 <meta property="og:image" content="{SITE_URL}img/og/{html.escape(record["id"], quote=True)}.png">
+<meta property="og:image:alt" content="{html.escape(record["title"], quote=True)}: {html.escape(record["summary"], quote=True)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{SITE_URL}img/og/{html.escape(record["id"], quote=True)}.png">
+<meta name="twitter:image:alt" content="{html.escape(record["title"], quote=True)}: {html.escape(record["summary"], quote=True)}">
 <link rel="stylesheet" href="system/publication-article.css?v={ASSET_REVISION}"></head>
-<body><a class="skip-link" href="#main">Skip to content</a><nav class="publication-static-nav" aria-label="Publication"><a href="publications.html">Publications</a><a href="writing.html">Writing</a><a href="cv.html">About</a></nav>
+<body><a class="skip-link" href="#main">Skip to content</a><nav class="publication-static-nav" aria-label="Publication"><a class="publication-home" href="index.html">Zain Dana Harper</a><a href="publications.html">Publications</a><a href="writing.html">Writing</a><a href="cv.html">About</a></nav>
 <main id="main" class="publication-article"><article><header><p class="publication-kicker">{html.escape(record["form"])} · {html.escape(record["category"])}</p>
 <h1>{html.escape(record["title"])}</h1><p class="publication-thesis">{html.escape(record["thesis"])}</p>
-<p class="publication-meta">Published {html.escape(record["published_at"])} · Updated {html.escape(record["updated_at"])}</p></header>
+<p class="publication-meta">By {html.escape(record["author"])} · Published {html.escape(record["published_at"])} · Updated {html.escape(record["updated_at"])}</p></header>
+<details class="publication-contents"><summary>In this article</summary><nav aria-label="Article sections"><ol>{contents}<li><a href="#sources">Sources</a></li></ol></nav></details>
 <section class="publication-opening" aria-label="Question, finding, evidence, and limit">{opening}</section>
 {sections}{figures}
 <section id="sources"><h2>Sources</h2><ol>{sources}</ol></section>
-<section id="claim-ledger"><h2>Claim ledger</h2><div class="publication-table-wrap"><table><thead><tr><th>Claim</th><th>Text</th><th>Status</th><th>Sources</th><th>Scope</th><th>Uncertainty</th><th>Does not prove</th></tr></thead><tbody>{claim_rows}</tbody></table></div></section>
+<details class="publication-claim-notes" id="claim-ledger"><summary>Claim notes and limitations</summary><ol class="publication-claims">{claim_notes}</ol></details>
 <section id="corrections"><h2>Corrections</h2>{corrections}</section>
 <footer><h2>Authorship and process</h2><p>{html.escape(record["ai_assistance"])}</p></footer>
 </article></main></body></html>
@@ -433,7 +451,7 @@ def planned_outputs(records: list[dict], root: Path) -> dict[str, bytes]:
             prefix = f"figures/{figure['id']}"
             outputs[prefix + ".svg"] = _text_bytes(render_figure_svg(figure))
             outputs[prefix + ".json"] = _json_bytes(figure)
-            outputs[prefix + ".html"] = _text_bytes(render_figure_html(figure))
+            outputs[prefix + ".html"] = _text_bytes(render_figure_html(figure, record["sources"]))
 
     index = {"schema_version": 1, "records": sorted(index_records, key=lambda item: item["route"])}
     outputs["publications/data/index.json"] = _json_bytes(index)

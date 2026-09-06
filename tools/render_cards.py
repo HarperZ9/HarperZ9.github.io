@@ -22,6 +22,9 @@ import json
 import pathlib
 import re
 import sys
+from io import BytesIO
+
+from PIL import Image
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OG = ROOT / "img" / "og"
@@ -43,6 +46,17 @@ def launch_browser(chromium):
         if "Executable doesn't exist" not in str(exc):
             raise
         return chromium.launch(channel="chrome")
+
+
+def save_card(payload: bytes, out: pathlib.Path) -> None:
+    """Keep the existing social-card palette and byte budget after rendering."""
+    with Image.open(BytesIO(payload)) as source:
+        optimized = source.convert("RGB").quantize(
+            colors=256,
+            method=Image.Quantize.MEDIANCUT,
+            dither=Image.Dither.FLOYDSTEINBERG,
+        )
+        optimized.save(out, format="PNG", optimize=True)
 
 
 def main() -> int:
@@ -72,7 +86,7 @@ def main() -> int:
             page.wait_for_timeout(200)
             word = page.inner_text("#word").strip()
             out = OG / f"{key}.png"
-            page.screenshot(path=str(out))
+            save_card(page.screenshot(), out)
             print(f"  {out.name:34} {out.stat().st_size / 1024:>6.0f} kB   \"{word}\"")
         browser.close()
     return 0

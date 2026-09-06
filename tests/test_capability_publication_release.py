@@ -84,6 +84,9 @@ RELEASE_PATHS = (
     "figures/graphics-retro-capability-map.html",
     "figures/graphics-retro-capability-map.json",
     "figures/graphics-retro-capability-map.svg",
+    "figures/growth-needs-a-before.html",
+    "figures/growth-needs-a-before.json",
+    "figures/growth-needs-a-before.svg",
     "figures/incident-multilane-timeline.html",
     "figures/incident-multilane-timeline.json",
     "figures/incident-multilane-timeline.svg",
@@ -115,6 +118,7 @@ RELEASE_PATHS = (
     "figures/verification-capability-map.json",
     "figures/verification-capability-map.svg",
     "hire.html",
+    "growth-needs-a-before.html",
     "engine-revival.html",
     "elder-enb.html",
     "enb-runtime-core.html",
@@ -122,6 +126,7 @@ RELEASE_PATHS = (
     "frontier-safety-openai-hugging-face-incident.html",
     "img/og/behavior-transform.png",
     "img/og/availability-is-not-reach.png",
+    "img/og/growth-needs-a-before.png",
     "img/og/brender-archival.png",
     "img/og/elder-enb.png",
     "img/og/engine-revival.png",
@@ -135,6 +140,7 @@ RELEASE_PATHS = (
     "img/og/the-second-hearing.png",
     "img/og/what-the-label-changes.png",
     "img/og/cards-data.js",
+    "img/og/_card.html",
     "index.html",
     "media/retro-systems-lab/evidence-manifest.json",
     "media/retro-systems-lab/identity/brender-verify.svg",
@@ -151,6 +157,7 @@ RELEASE_PATHS = (
     "publications/build.json",
     "publications/data/index.json",
     "publications/data/records/availability-is-not-reach.json",
+    "publications/data/records/growth-needs-a-before.json",
     "publications/data/records/the-second-hearing.json",
     "publications/data/records/what-the-label-changes.json",
     "publications/schema/publication-record.schema.json",
@@ -192,7 +199,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "740ad8da4653207c1b9198ceb8f5f10fe2653351c911eef5b3512fc7f0ce08f9"
+REVIEWED_RELEASE_SHA256 = "f9ef67bb69234c14d44af77a3c8220691ff5ed7b5165fa0cf9f25356e4a94230"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

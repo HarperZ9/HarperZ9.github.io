@@ -6,6 +6,7 @@
      design: minted ZentropyDisplay face, rhinoCase wordmark, oxblood-and-ice
      palette, a luminous halftone aperture-orb, grain + scanlines. Use ?f=<key>. -->
 <style>
+  @font-face{font-family:"Hanken Grotesk";src:url("../../system/fonts/hanken-grotesk.woff2") format("woff2");font-weight:100 900;font-display:block}
   @font-face{font-family:"ZentropyDisplay";src:url("../../brand/ZentropyDisplay.ttf") format("truetype");font-display:block}
   @font-face{font-family:"Conso";src:url("../../system/fonts/conso-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:block}
   @font-face{font-family:"Conso";src:url("../../system/fonts/conso-semibold.woff2") format("woff2");font-weight:600 700;font-style:normal;font-display:block}
@@ -16,17 +17,14 @@
   #bg{position:absolute;inset:0;z-index:0}
   .content{position:absolute;inset:0;z-index:2;padding:64px 72px 56px;display:flex;flex-direction:column}
   .frame{position:absolute;inset:26px;z-index:1;border:1px solid rgba(150,210,220,0.14);clip-path:polygon(0 0,calc(100% - 26px) 0,100% 26px,100% 100%,26px 100%,0 calc(100% - 26px))}
-  .metadata{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-  .metadata .dot{width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#eafcff,#4ec4e0 55%,#1c6f86);flex:none;box-shadow:0 0 10px rgba(120,220,240,.8)}
-  .metadata .role{color:var(--faint)}
   .word{margin-top:auto;font-family:"ZentropyDisplay",system-ui,sans-serif;font-variant:small-caps;font-feature-settings:"smcp";
         font-size:96px;line-height:.92;letter-spacing:.005em;color:#f2fbfc;text-shadow:0 0 26px rgba(120,210,235,.45);max-width:900px}
   .headline{margin-top:20px;font-family:var(--mono);font-size:27px;line-height:1.28;letter-spacing:.005em;color:var(--muted);max-width:820px}
-  .pipeline{margin-top:24px;padding-top:20px;border-top:1px solid rgba(150,210,220,0.14);font-family:var(--mono);font-size:15px;letter-spacing:.10em;text-transform:uppercase;color:var(--faint)}
-  .pipeline:empty{display:none}
   .glyph{position:absolute;right:76px;top:76px;z-index:2;width:96px;height:96px;display:grid;place-items:center;border:1px solid rgba(150,210,220,.22);clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px));font-family:var(--mono);font-size:54px;line-height:1;color:rgba(234,245,246,.86);text-shadow:0 0 18px rgba(120,220,240,.44);background:rgba(8,10,14,.32)}
   .glyph:empty{display:none}
-  .site{position:absolute;right:72px;bottom:54px;z-index:2;font-family:"ZentropyDisplay",monospace;font-variant:small-caps;font-size:20px;letter-spacing:.03em;color:var(--muted)}
+  .publication-card .word,.publication-card .headline{font-family:"Hanken Grotesk",system-ui,sans-serif;font-variant:normal}
+  .publication-card .word{font-weight:700;letter-spacing:-.02em}
+  .publication-card .headline{font-size:30px;line-height:1.35;color:var(--ink)}
 </style>
 </head>
 <body>
@@ -35,27 +33,23 @@
   <div class="frame" aria-hidden="true"></div>
   <div class="glyph" id="glyph" aria-hidden="true"></div>
   <div class="content">
-    <div class="metadata"><span class="dot"></span><span>zentropy labs</span><span>/</span><span class="role" id="role"></span></div>
     <h1 class="word" id="word"></h1>
     <p class="headline" id="headline"></p>
-    <p class="pipeline" id="pipeline"></p>
   </div>
-  <div class="site">zentropyLabs</div>
 </main>
 <script src="cards-data.js?v=20260902-creative-chassis"></script>
 <script>
 (function(){
   var key=new URLSearchParams(location.search).get("f")||"buildlang";
-  var fb={role:"Effects-oriented compiler",word:"buildlang",headline:"Typed effects in, verified C out.",pipeline:"LEX / PARSE / TYPE / EFFECTS / CODEGEN"};
+  var fb={word:"buildlang",headline:"Typed effects in, verified C out."};
   var data=(window.CARD_DATA&&window.CARD_DATA[key])||fb;
+  if(data.publication)document.body.classList.add("publication-card");
   function rhino(k){return k.split('-').map(function(w,i){return i===0?w:(w.charAt(0).toUpperCase()+w.slice(1));}).join('');}
-  document.getElementById("role").textContent=(data.role||"Working system");
   // Prefer the word the data supplies. The template derived it from the key
   // and ignored data.word entirely, so every entry carried a field that did
   // nothing and a hyphenated key rendered as camelCase.
   document.getElementById("word").textContent=(data.word||rhino(key));
   document.getElementById("headline").textContent=data.headline||"A working tool in the portfolio.";
-  document.getElementById("pipeline").textContent=data.pipeline||"";
   var glyphs={shield:"⬡",seal:"◉",ledger:"▤",aperture:"◌",braces:"{}",diamond:"◇",triad:"△",intake:"⌁",graph:"⌘",waveform:"∿",layers:"▧",spark:"✦",bracket:"⌜"};
   var glyph=document.getElementById("glyph");
   glyph.textContent=data.showGlyph?(glyphs[data.glyph]||"◇"):"";

@@ -81,6 +81,39 @@ def snapshot(root: Path) -> dict[str, bytes]:
     }
 
 
+def test_standalone_figure_links_its_actual_source(tmp_path: Path) -> None:
+    root = fixture_site(tmp_path)
+    build(list((root / "publications/data/records").glob("*.json")), root)
+    figure = (root / "figures/example-figure.html").read_text(encoding="utf-8")
+    assert 'href="https://example.org/source"' in figure
+    assert "Primary source" in figure
+    assert "2026-08-01" in figure
+
+
+def test_article_share_image_has_text_alternative() -> None:
+    record = json.loads(FIXTURE.read_text(encoding="utf-8"))
+    page = render_article(record)
+    assert 'property="og:image:alt"' in page
+    assert 'name="twitter:image:alt"' in page
+
+
+def test_article_separates_reading_from_optional_research_detail() -> None:
+    record = json.loads(FIXTURE.read_text(encoding="utf-8"))
+    page = render_article(record)
+    assert '<nav aria-label="Article sections">' in page
+    for section in record["sections"]:
+        assert f'href="#{section["id"]}"' in page
+    assert '<details class="publication-figure-detail">' in page
+    assert '<summary>Read the data and method</summary>' in page
+    assert '<details class="publication-claim-notes" id="claim-ledger">' in page
+    assert '<summary>Claim notes and limitations</summary>' in page
+    assert '<ol class="publication-claims">' in page
+    assert '<th>Does not prove</th>' not in page
+    # The important boundary stays visible before optional figure details.
+    assert page.index(record["figures"][0]["doesNotProve"]) < page.index('class="publication-figure-detail"')
+    assert '<script' not in page
+
+
 def load_fixture() -> dict:
     return json.loads(FIXTURE.read_text(encoding="utf-8"))
 
@@ -261,7 +294,7 @@ def test_article_has_a_route_specific_social_card_and_one_typography_system() ->
     ) in article
     assert 'href="styles.css?v=20260828-site-design"' not in article
     assert (
-        'href="system/publication-article.css?v=20260902-creative-chassis"'
+        'href="system/publication-article.css?v=20260905-article-reading"'
         in article
     )
     assert article.count('rel="stylesheet"') == 1
