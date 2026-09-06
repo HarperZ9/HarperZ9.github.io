@@ -444,10 +444,11 @@ def test_home_source_connects_the_product_brand_to_the_hiring_route() -> None:
     main = re.search(r'<main id="main">(?P<body>.*?)</main>', src, re.S)
     assert main
     order = re.findall(r"<([A-Z][A-Za-z0-9]*)\s*/>", main.group("body"))
-    assert order[:5] == [
+    assert order[:6] == [
         "IdentityHero",
         "ProductSelection",
         "FeaturedFlywheel",
+        "LiveBoard",
         "HiringRoutes",
         "EvidenceBoard",
     ]

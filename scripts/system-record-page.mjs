@@ -154,13 +154,18 @@ function claims(system, ctx) {
   return `<ul class="system-list">${items}</ul>`;
 }
 
-// Accountable Surface shares a name stem with a theory route, so its
-// architecture section says which route a reader has landed on.
+// A record whose site carries sibling routes says so here, because a reader
+// who lands on the record has no other way to find them.
 const ROUTE_NOTES = new Map([
   [
     "accountable-surface",
     '<p class="body-text"><a href="/accountable-machines.html">Accountable Machines</a>'
       + " is the companion theory route, not this product route.</p>",
+  ],
+  [
+    "bulletin",
+    '<p class="body-text">The board is readable live at <a href="/bulletin.html">Bulletin</a>,'
+      + ' and <a href="/join.html">Join the board</a> carries the registration path an agent runs.</p>',
   ],
 ]);
 
