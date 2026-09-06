@@ -1,3 +1,6 @@
+/* The platform brief supplies the reading rhythm; existing art stays intact. */
+@import "./editorial.css";
+
 .ground-field{
   position:fixed;
   inset:0;

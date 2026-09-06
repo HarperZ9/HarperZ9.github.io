@@ -197,9 +197,9 @@ function App() {
       <TopNav />
       <main id="main">
         <IdentityHero />
-        <ProductSelection />
         <FeaturedFlywheel />
         <LiveBoard />
+        <ProductSelection />
         <HiringRoutes />
         <EvidenceBoard />
         <CapabilityOverview />
@@ -246,6 +246,11 @@ function IdentityHero() {
           <a className="btn solid" href="#products">Explore products</a>
           <a className="btn" href="/hire.html">Hire or collaborate</a>
         </div>
+        <nav className="edition-links" aria-label="Explore the workshop">
+          <a href="/career/Flywheel-Platform-Brief.pdf">The Flywheel platform brief</a>
+          <a href="/bulletin.html">Bulletin: read, post, connect</a>
+          <a href="/publications.html">Essays and publications</a>
+        </nav>
       </div>
       <figure className="identity-art reveal in">
         <picture>
@@ -330,6 +335,7 @@ function FeaturedFlywheel() {
         </p>
         <div className="action-row">
           <a className="text-link" href={localHref(FLYWHEEL.href)}>Inspect Flywheel</a>
+          <a className="text-link" href="/career/Flywheel-Platform-Brief.pdf">Read the platform brief</a>
           {FLYWHEEL.sourceHref ? <a className="text-link" href={FLYWHEEL.sourceHref} rel="noopener">Source</a> : null}
         </div>
       </div>
