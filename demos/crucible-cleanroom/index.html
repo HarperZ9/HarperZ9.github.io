@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Crucible Cleanroom Verdict Packet Demo</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f4f2ec" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#070406" media="(prefers-color-scheme: dark)">
   <style>
     :root {
       color-scheme: light;
@@ -162,9 +165,11 @@
       header { padding-top: 28px; }
     }
   </style>
+  <link rel="stylesheet" href="../../system/demo-editorial.css?v=20260906-demo-editorial" data-demo-editorial>
 </head>
-<body>
+<body class="demo-editorial demo-cleanroom">
   <header>
+    <p class="demo-route"><a class="demo-back" href="../../demonstrations.html">Back to demonstrations</a></p>
     <h1>Cleanroom verdict packet demo</h1>
     <p class="dek">A tiny public packet where the verdict is re-derived from the record instead of accepted from an agent summary.</p>
     <div class="actions">
