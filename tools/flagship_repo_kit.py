@@ -179,22 +179,18 @@ def render_mark(identity: RepoIdentity) -> str:
 
 
 def render_hero(identity: RepoIdentity) -> str:
-    labels = " / ".join(identity.status_labels)
     title = identity.key
     desc = f"{identity.key} README hero for Project Telos."
     promise_lines, promise_bottom = svg_tspans(identity.promise, 84, 188, 48, 36)
-    status_y = promise_bottom + 54
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 520" role="img" aria-label="{esc(desc)} {esc(identity.promise)}">
   <title>{esc(title)} Project Telos hero</title>
   <desc>{esc(desc)} {esc(identity.promise)}</desc>
   <rect width="1280" height="520" rx="34" fill="{TOKENS["paper"]}"/>
   <path d="M80 96 H1200 M80 424 H1200" stroke="#0b0c0e" stroke-opacity=".14"/>
-  <text x="80" y="86" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" letter-spacing="6" fill="{TOKENS["muted"]}">PROJECT TELOS / {esc(identity.role.upper())}</text>
   <text x="76" y="334" font-family="Arial Black, Impact, system-ui, sans-serif" font-size="182" letter-spacing="0" fill="#0b0c0e" fill-opacity=".08">{esc(identity.key.upper())}</text>
   <text font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="700" fill="{TOKENS["ink"]}">
     {promise_lines}
   </text>
-  <text x="86" y="{status_y}" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill="{TOKENS["soft"]}">{esc(labels)}</text>
   <g transform="translate(878 78) scale(.70)">{mark_paths(identity.key)}</g>
 </svg>
 '''

@@ -1,6 +1,17 @@
 {
   "schema": "harperz9-retro-systems-lab-media/v1",
   "recordedAt": "2026-08-27",
+  "provenanceScope": "generatedFrom, generator, and sourceHashes retain the original August 27 import provenance. socialCardRefresh supersedes those fields for the two PNG card records only; SVG captures are unchanged.",
+  "socialCardRefresh": {
+    "date": "2026-09-05",
+    "repository": "https://github.com/HarperZ9/HarperZ9.github.io",
+    "command": "python tools/render_cards.py --force engine-revival brender-archival",
+    "sourceHashes": {
+      "img/og/_card.html": "d3de8f105946651536b67c4d08502be56828aaad330d8aa3504bb5ed72c971a3",
+      "img/og/cards-data.js": "901c512c1e8a91e1eef436f89b11186a57a8e003a6aa9614eafdd23938a334f9",
+      "tools/render_cards.py": "23be27e11461093c90ce15526ae1e821e425aa9a25d62557c71bf41bef6932e1"
+    }
+  },
   "generatedFrom": {
     "repository": "https://github.com/HarperZ9/telos-v2",
     "sourceParityBase": "b4faa8fe7407aed2009f8a5df98e79a7a6921c12",
@@ -135,16 +146,16 @@
       "href": "img/og/engine-revival.png",
       "width": 1200,
       "height": 630,
-      "bytes": 568988,
+      "bytes": 560491,
       "byteBudget": 700000,
-      "sha256": "54f9c3e4ad2c5a4a7bb20c582ffa21182e922312561b61b7eb5e8280b4bd6793",
-      "provenance": "Rendered by scripts/render-social-cards.mjs from public image card data key engine-revival.",
+      "sha256": "3a847ed86d1db88ba223d6f12ae66aae3e004ed5db9d5b75f25fcdd288515b3f",
+      "provenance": "Refreshed 2026-09-05 in HarperZ9/HarperZ9.github.io by tools/render_cards.py from card data key engine-revival, without decorative text rails.",
       "sourceFiles": [
-        "public/img/og/cards-data.js",
-        "public/img/og/_card.html",
-        "scripts/render-social-cards.mjs"
+        "img/og/cards-data.js",
+        "img/og/_card.html",
+        "tools/render_cards.py"
       ],
-      "alt": "Engine Revival social card with preserve lane wording.",
+      "alt": "Engine Revival title and description beside a luminous halftone sphere.",
       "caption": "Repository and site card for Engine Revival.",
       "limitations": [
         "Does not prove final Engine Revival repository state beyond the cited release.",
@@ -157,16 +168,16 @@
       "href": "img/og/brender-archival.png",
       "width": 1200,
       "height": 630,
-      "bytes": 567373,
+      "bytes": 558931,
       "byteBudget": 700000,
-      "sha256": "45abefedfbc2a800895bc287e524f3a7960b123b34a9521ac4adcd4e4c6f829a",
-      "provenance": "Rendered by scripts/render-social-cards.mjs from public image card data key brender-archival.",
+      "sha256": "b82721e3c2205ff787708626e66f8aa41d0126b909150429418f4824f4ef6306",
+      "provenance": "Refreshed 2026-09-05 in HarperZ9/HarperZ9.github.io by tools/render_cards.py from card data key brender-archival, without decorative text rails.",
       "sourceFiles": [
-        "public/img/og/cards-data.js",
-        "public/img/og/_card.html",
-        "scripts/render-social-cards.mjs"
+        "img/og/cards-data.js",
+        "img/og/_card.html",
+        "tools/render_cards.py"
       ],
-      "alt": "BRender Archival social card with verify lane wording.",
+      "alt": "BRender Archival title and description beside a luminous halftone sphere.",
       "caption": "Repository and site card for BRender Archival.",
       "limitations": [
         "Does not prove BRender restoration facts.",

@@ -314,8 +314,10 @@ def test_public_routes_reserve_micro_labels_for_semantic_context() -> None:
     assert "letter-spacing:.22em" not in bar_rule.group("body")
 
 
-def test_shared_frontend_assets_use_one_cache_revision() -> None:
-    revision = "20260902-creative-chassis"
+def test_shared_frontend_assets_use_consistent_reviewed_cache_revisions() -> None:
+    # A scoped stylesheet release must bust its cache on every consuming page
+    # without rewriting unrelated assets and pages in other owners' work.
+    revisions = {"system/publication-article.css": "20260905-article-reading"}
     for path in deployable_html_pages():
         relative = path.relative_to(ROOT)
         source = path.read_text(encoding="utf-8")
@@ -324,6 +326,10 @@ def test_shared_frontend_assets_use_one_cache_revision() -> None:
                 continue
             if re.search(r"(?:^|/)assets/[^/?]+-[A-Za-z0-9_-]{8,}\.(?:css|js)$", target):
                 continue
+            revision = next(
+                (value for asset, value in revisions.items() if target.split("?", 1)[0].endswith(asset)),
+                "20260902-creative-chassis",
+            )
             assert target.endswith(f"?v={revision}"), (relative.as_posix(), target)
 
 
