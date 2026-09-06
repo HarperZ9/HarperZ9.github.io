@@ -56,9 +56,9 @@ def test_home_places_products_and_hiring_before_supporting_evidence() -> None:
     assert '<a className="btn solid" href="#products">Explore products</a>' in hero
     assert main_component_order(source) == [
         "IdentityHero",
-        "ProductSelection",
         "FeaturedFlywheel",
         "LiveBoard",
+        "ProductSelection",
         "HiringRoutes",
         "EvidenceBoard",
         "CapabilityOverview",

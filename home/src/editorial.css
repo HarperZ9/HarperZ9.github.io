@@ -1,0 +1,99 @@
+html[data-home-shell="react"] body {
+  --ink: #19272b;
+  --muted: #42575d;
+  --faint: #53666b;
+  --void: #fafaf8;
+  --ground-paper: #ffffff;
+  --ink-paper: #19272b;
+  --line: #ccd3d3;
+  --line-strong: #8b9b9e;
+  --signal: #215a63;
+  background: #fafaf8;
+  color: var(--ink);
+}
+html[data-home-shell="react"] .ground-field,
+html[data-home-shell="react"] .viewport-vignette,
+html[data-home-shell="react"] body::before,
+html[data-home-shell="react"] body::after,
+html[data-home-shell="react"] .hero::before,
+html[data-home-shell="react"] .hero::after,
+html[data-home-shell="react"] #gl,
+html[data-home-shell="react"] #motes { display: none; }
+html[data-home-shell="react"] .topnav,
+html[data-home-shell="react"] .home-menu summary,
+html[data-home-shell="react"] .home-menu-list { background: #fafaf8; }
+html[data-home-shell="react"] .home-menu summary:hover,
+html[data-home-shell="react"] .home-menu summary:focus-visible,
+html[data-home-shell="react"] .home-menu-list a:hover,
+html[data-home-shell="react"] .home-menu-list a:focus-visible {
+  color: var(--ink);
+  background: color-mix(in oklab, var(--signal) 10%, #fafaf8);
+}
+html[data-home-shell="react"] .hero {
+  min-height: 0;
+  padding-block: clamp(3rem, 7vw, 6rem);
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  background: #fafaf8;
+}
+html[data-home-shell="react"] .hero-title {
+  font-size: clamp(2.8rem, 5.6vw, 5rem);
+  line-height: 1.05;
+  letter-spacing: -.025em;
+  text-shadow: none;
+}
+html[data-home-shell="react"] .hero-line {
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  font-weight: 500;
+  line-height: 1.45;
+}
+html[data-home-shell="react"] .hero-lab { font-size: 1rem; }
+html[data-home-shell="react"] .identity-art { border: 0; }
+html[data-home-shell="react"] .section {
+  padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  border-bottom: 1px solid var(--line);
+}
+html[data-home-shell="react"] h2 {
+  font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+  line-height: 1.15;
+  text-wrap: balance;
+}
+html[data-home-shell="react"] p { text-wrap: pretty; }
+html[data-home-shell="react"] .btn.solid,
+html[data-home-shell="react"] .btn.solid:hover,
+html[data-home-shell="react"] .btn.solid:focus-visible { color: #ffffff; }
+html[data-home-shell="react"] .edition-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem 1.5rem;
+  margin-top: 1.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+html[data-home-shell="react"] .edition-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--signal);
+  text-underline-offset: .25em;
+}
+html[data-home-shell="react"] a:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 4px;
+}
+html[data-home-shell="react"] .work-row p { max-width: 68ch; line-height: 1.65; }
+@media (max-width: 760px) {
+  html[data-home-shell="react"] .hero { grid-template-columns: minmax(0, 1fr); }
+  html[data-home-shell="react"] .identity-art { max-width: 28rem; }
+  html[data-home-shell="react"] .split-section { grid-template-columns: minmax(0, 1fr); }
+}
+@media (forced-colors: active) {
+  html[data-home-shell="react"] body { background: Canvas; color: CanvasText; }
+  html[data-home-shell="react"] a { color: LinkText; }
+  html[data-home-shell="react"] .btn.solid { background: ButtonFace; color: ButtonText; }
+}
+@media print {
+  html[data-home-shell="react"] .hero { padding-block: 1rem; }
+  html[data-home-shell="react"] .identity-art { max-width: 12rem; }
+  html[data-home-shell="react"] .section { padding-block: 1.5rem; }
+}

@@ -3861,4 +3861,21 @@ body.instrument-surface:not(.studio-page){height:auto;min-height:100%}
   body.studio-page #st-flow{order:3;margin:.5rem .9rem 0}
   body.studio-page .engine-statusbar{order:3;margin:.4rem auto .6rem;width:calc(100% - 1.5rem)}
 }
-}
+
+/* Reading pages use real figures, not decorative evidence-shaped scenery.
+   Interactive studios and their canvases are deliberately outside this scope. */
+body.inner-clean:not(.studio-page):not(.studio-app)::before,
+body.inner-clean:not(.studio-page):not(.studio-app)::after,
+body.inner-clean:not(.studio-page):not(.studio-app) .frame::before,
+body.inner-clean:not(.studio-page):not(.studio-app) .frame::after,
+body.inner-clean:not(.studio-page):not(.studio-app) .plate:has(canvas[data-specimen]),
+body.inner-clean:not(.studio-page):not(.studio-app) .publication-spectrum {display:none}
+/* The generative renderer sets display inline after initialization. */
+body.inner-clean:not(.studio-page):not(.studio-app) > #gl,
+body.inner-clean:not(.studio-page):not(.studio-app) > #motes {display:none!important}
+body.inner-clean:not(.studio-page):not(.studio-app),
+body.inner-clean:not(.studio-page):not(.studio-app) .frame,
+body.inner-clean:not(.studio-page):not(.studio-app) main {background:#101416}
+body.inner-clean:not(.studio-page):not(.studio-app) :is(h1,h2,h3) {text-shadow:none}
+body.frontier-briefing .edition-readout > div:not(:first-child),
+body.frontier-briefing .briefing-hero > .seal {display:none}

@@ -1,6 +1,14 @@
 /* Publications editorial front door. The global system owns tokens and type;
    this file owns only the publication-specific composition. */
 
+/* Brief-like hierarchy: the writing leads, metadata supports it. */
+.publications-hub h1 {font-size:clamp(2.2rem,4.6vw,4rem);line-height:1.12;text-wrap:balance;letter-spacing:-.02em}
+.publications-hub h2 {font-size:clamp(1.6rem,2.8vw,2.6rem);line-height:1.2;text-wrap:balance}
+.publications-hub p {max-width:70ch;line-height:1.7;text-wrap:pretty}
+.publications-hub .story-order {display:none}
+.publications-hub .publication-actions a,
+.publications-hub .publication-read {font-family:inherit;font-size:1rem}
+
 .publications-hub main,
 body:has(.publication-index) main{
   background:var(--void-opaque);
