@@ -1,0 +1,443 @@
+/* Editorial control chrome for Studio, Gallery, Loom, and Retro Engine. */
+body.instrument-surface{
+  color-scheme:dark light;
+  --chrome-ground:oklch(15% .025 286);
+  --chrome-ground-soft:oklch(18% .025 286/.92);
+  --chrome-surface:oklch(20% .022 286/.86);
+  --chrome-surface-strong:oklch(24% .023 286/.94);
+  --chrome-ink:oklch(96% .012 300);
+  --chrome-soft:oklch(80% .018 300);
+  --chrome-muted:oklch(66% .018 300);
+  --chrome-line:oklch(74% .025 300/.24);
+  --chrome-line-strong:oklch(86% .018 300/.42);
+  --chrome-accent:oklch(83% .17 129);
+  --chrome-accent-soft:oklch(83% .17 129/.16);
+  --chrome-focus:oklch(88% .11 196);
+  --void:var(--chrome-ground);
+  --void-opaque:var(--chrome-ground);
+  --paper:var(--chrome-ground);
+  --bone:var(--chrome-ink);
+  --muted:var(--chrome-soft);
+  --prussian:var(--chrome-muted);
+  --hairline:var(--chrome-line);
+  --line:var(--chrome-line);
+  --line-soft:oklch(74% .025 300/.14);
+  --card:var(--chrome-surface);
+  --surface:var(--chrome-surface);
+  --raised:var(--chrome-surface-strong);
+  --signal:var(--chrome-accent);
+  background:var(--chrome-ground);
+}
+
+body.instrument-surface::after{
+  display:none;
+}
+
+body.instrument-surface :is(.studio-rail,.studio-panel,.re-panel,.rail-scroll,.panel-scroll,.studio-primary-stage,.re-stage,.desk-stage,.desk-rail,.desk-controls,.re-actions,.re-chips,.desk-chips,.at-chips,.rt-group,.rt-plot-row,.rt-plot-chips,.feature-stack-grid,.chat-input,.mc-actions){
+  min-width:0;
+}
+
+body.instrument-surface :is(.studio-rail,.studio-panel,.re-panel){
+  color:var(--chrome-ink);
+}
+
+body.instrument-surface :is(.rail-head,.studio-perception-panel .panel,.studio-receipts,.chat-dock,.model-connect,.re-group,.re-controls,.at-group,.rail-group,.dk-group){
+  background:var(--chrome-surface);
+  border-color:var(--chrome-line);
+  box-shadow:none;
+}
+
+body.instrument-surface :is(.studio-primary-stage .render-toolbar,.render-toolbar){
+  width:100%;
+  max-width:min(100%,58rem);
+  align-items:flex-start;
+  gap:.35rem .75rem;
+  border:1px solid var(--chrome-line);
+  border-radius:8px;
+  background:var(--chrome-surface);
+  padding:.45rem;
+  box-shadow:none;
+}
+
+body.instrument-surface :is(.rt-group,.dk-group){
+  flex:1 1 auto;
+  align-items:center;
+  gap:.28rem .38rem;
+  padding:.12rem;
+}
+
+body.instrument-surface :is(.rt-group + .rt-group,.dk-group + .dk-group)::before{
+  display:none;
+}
+
+body.instrument-surface :is(.rt-btn,.btn,.plate-redraw,.re-btn,.at-mini,.chat-min,.cert-act,.cert-recheck-btn){
+  min-width:0;
+  min-height:2.35rem;
+  border:1px solid var(--chrome-line);
+  border-radius:6px;
+  background:oklch(100% 0 0/.035);
+  background-image:none;
+  box-shadow:none;
+  color:var(--chrome-ink);
+  font-family:var(--body);
+  font-size:.82rem;
+  font-weight:650;
+  letter-spacing:0;
+  line-height:1.18;
+  text-transform:none;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  padding:.55rem .7rem;
+  transition:background-color .14s var(--ease-out),border-color .14s var(--ease-out),color .14s var(--ease-out);
+}
+
+body.instrument-surface :is(.chip,.at-chip,.re-chip){
+  min-width:0;
+  min-height:2rem;
+  border:1px solid transparent;
+  border-radius:6px;
+  background:none;
+  box-shadow:inset 0 -1px 0 var(--chrome-line);
+  color:var(--chrome-soft);
+  font-family:var(--mono);
+  font-size:.74rem;
+  font-weight:500;
+  letter-spacing:0;
+  line-height:1.18;
+  text-transform:none;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  padding:.4rem .52rem;
+}
+
+body.instrument-surface :is(.rt-btn,.btn,.plate-redraw,.re-btn,.re-chip,.at-chip,.chip,.at-mini,.chat-min):hover:not([disabled]){
+  border-color:var(--chrome-line-strong);
+  background-color:oklch(100% 0 0/.06);
+  color:var(--chrome-ink);
+}
+
+body.instrument-surface :is(.rt-btn,.btn,.plate-redraw,.re-btn,.re-chip,.at-chip,.chip,.at-mini,.chat-min):is([aria-pressed="true"],[aria-checked="true"],.active,.is-active),
+body.instrument-surface [role="tab"][aria-selected="true"]{
+  border-color:var(--chrome-accent);
+  background:var(--chrome-accent-soft);
+  background-image:none;
+  box-shadow:inset 0 -2px 0 var(--chrome-accent);
+  color:var(--chrome-ink);
+}
+
+body.instrument-surface :is(a,button,select,summary,input,textarea,[tabindex]):focus-visible{
+  outline:2px solid var(--chrome-focus);
+  outline-offset:3px;
+  border-radius:6px;
+}
+
+body.instrument-surface :is(.rt-btn,.btn,.plate-redraw,.re-btn,.re-chip,.at-chip,.chip,.at-mini,.chat-min):focus-visible{
+  border-color:var(--chrome-focus);
+  box-shadow:0 0 0 2px oklch(88% .11 196/.22);
+}
+
+body.instrument-surface :is(.source-group-label,.rt-group-lab,.dk-group-lab,.rt-plot-lab,.re-lab,.at-glab,.re-fxgrouplab,.poster-mini-label,.mm-clab,.mm-mname,.at-pname,.desk-influence,.re-toggle,.re-keys,.re-privacy,.re-status,.desk-status,.desk-hint,.plate-hint,.fixture-cap,.exh-note,.rt-plot-note,.src-hint,.transform-note,.rail-own,.mc-note,.mc-hint,.mc-status){
+  font-family:var(--body);
+  letter-spacing:0;
+  text-transform:none;
+}
+
+body.instrument-surface :is(.rt-plot-lab,.re-lab,.at-glab,.source-group-label,.re-fxgrouplab,.poster-mini-label,.mm-clab,.mm-mname,.at-pname){
+  color:var(--chrome-muted);
+  font-weight:650;
+}
+
+body.instrument-surface :is(.re-hint,.hint,.src-hint,.transform-note,.rail-own,.rt-plot-note,.mc-hint,.mm-sub,.cert-note){
+  color:var(--chrome-soft);
+  line-height:1.5;
+  max-width:65ch;
+}
+
+body.instrument-surface :is(input[type=text],input[type=url],input[type=password],input[type=file],select,textarea,.desk-seed,.poster-seed,.mc-input,.re-in){
+  max-width:100%;
+  border:1px solid var(--chrome-line);
+  border-radius:6px;
+  background:oklch(100% 0 0/.04);
+  color:var(--chrome-ink);
+  box-shadow:none;
+}
+
+body.instrument-surface :is(input[type=range]){
+  accent-color:var(--chrome-accent);
+}
+
+body.instrument-surface :is(.viewport-stage,.re-preview,.plate-art,.fixture-art,.desk-var){
+  border-color:var(--chrome-line);
+  border-radius:8px;
+  background:#050506;
+}
+
+body.instrument-surface :is(.studio-primary-stage .viewport-stage,.re-preview){
+  box-shadow:none;
+}
+
+body.instrument-surface :is(.re-group>summary,details.rail-group>summary,.poster-block>summary,.mm-fullread>summary,.studio-receipts>summary){
+  color:var(--chrome-ink);
+  font-family:var(--body);
+  font-size:.9rem;
+  font-weight:700;
+  letter-spacing:0;
+  line-height:1.25;
+  text-transform:none;
+}
+
+body.instrument-surface :is(.re-group>.re-body,.rail-group>.rail-body){
+  min-width:0;
+}
+
+body.instrument-surface .re-controls{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:.72rem;
+}
+
+body.instrument-surface .re-actions{
+  align-items:center;
+}
+
+body.instrument-surface .re-actions > :is(.re-btn,.re-in,select,input){
+  flex:1 1 9rem;
+}
+
+body.instrument-surface details.rt-plot:not([open]) > .rt-plot-pop{
+  display:none;
+}
+
+body.instrument-surface .rt-plot-pop{
+  width:min(28rem,calc(100vw - 2rem));
+  min-width:0;
+  max-width:calc(100vw - 2rem);
+  border:1px solid var(--chrome-line-strong);
+  border-radius:8px;
+  background:var(--chrome-ground);
+  color:var(--chrome-ink);
+  box-shadow:0 18px 48px rgba(0,0,0,.38);
+}
+
+body.instrument-surface .rt-plot-row{
+  display:grid;
+  grid-template-columns:minmax(4.4rem,max-content) minmax(0,1fr);
+  align-items:start;
+  gap:.5rem .65rem;
+}
+
+body.instrument-surface .rt-plot-lab{
+  width:auto;
+  padding-top:.45rem;
+}
+
+body.instrument-surface .rt-plot-chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.32rem;
+}
+
+body.instrument-surface .rt-plot-actions{
+  justify-content:stretch;
+}
+
+body.instrument-surface #rt-plot-download{
+  width:100%;
+}
+
+body.instrument-surface .rt-plot-note{
+  max-width:none;
+  overflow-wrap:anywhere;
+}
+
+body.instrument-surface .chat-input{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+}
+
+@media (prefers-color-scheme:light){
+  body.instrument-surface{
+    color-scheme:light;
+    --chrome-ground:oklch(97% .008 286);
+    --chrome-ground-soft:oklch(99% .005 286);
+    --chrome-surface:oklch(100% 0 0/.9);
+    --chrome-surface-strong:oklch(95% .01 286/.95);
+    --chrome-ink:oklch(17% .012 286);
+    --chrome-soft:oklch(34% .018 286);
+    --chrome-muted:oklch(46% .018 286);
+    --chrome-line:oklch(58% .018 286/.28);
+    --chrome-line-strong:oklch(36% .02 286/.45);
+    --chrome-accent:oklch(45% .16 142);
+    --chrome-accent-soft:oklch(45% .16 142/.1);
+    --chrome-focus:oklch(45% .15 225);
+    background:var(--chrome-ground);
+  }
+
+  body.instrument-surface :is(.frame,.mv,.studio-media-first,.studio-media-first .studio-rail,.studio-perception-panel,.desk-plate-col){
+    background:var(--chrome-ground);
+  }
+
+  body.instrument-surface :is(.rail-head,.studio-perception-panel .panel,.studio-receipts,.chat-dock,.model-connect,.re-group,.re-controls,.at-group,.rail-group,.dk-group,.render-toolbar){
+    background:var(--chrome-surface);
+  }
+
+  body.instrument-surface :is(.rt-btn,.btn,.plate-redraw,.re-btn,.at-mini,.chat-min,.cert-act,.cert-recheck-btn){
+    background:oklch(100% 0 0/.82);
+    color:var(--chrome-ink);
+  }
+
+  body.instrument-surface :is(input[type=text],input[type=url],input[type=password],input[type=file],select,textarea,.desk-seed,.poster-seed,.mc-input,.re-in){
+    background:oklch(100% 0 0/.94);
+  }
+
+  body.instrument-surface :is(.viewport-stage,.re-preview,.plate-art,.fixture-art,.desk-var){
+    background:#050506;
+  }
+}
+
+@media (max-width:899.98px){
+  body.instrument-surface :is(.re-stage,.desk-stage){
+    gap:.85rem;
+  }
+
+  body.instrument-surface .re-controls{
+    grid-template-columns:minmax(0,1fr);
+  }
+
+  body.instrument-surface .re-actions > :is(.re-btn,.re-in,select,input){
+    flex-basis:min(100%,10rem);
+  }
+
+  body.instrument-surface :is(.rt-btn,.btn,.plate-redraw,.re-btn,.at-mini,.chat-min){
+    min-height:2.65rem;
+  }
+}
+
+@media (max-width:640px){
+  body.instrument-surface :is(.frame,section.mv){
+    padding-inline:clamp(1rem,5vw,1.35rem);
+  }
+
+  body.instrument-surface.frame-compact .frame{
+    min-height:min(82svh,44rem);
+  }
+
+  body.studio-page .studio-primary-stage{
+    min-height:0;
+  }
+
+  body.studio-page .studio-primary-stage .viewport-stage{
+    min-height:min(58svh,30rem);
+  }
+
+  body.studio-page .rt-plot-pop{
+    position:fixed;
+    left:max(.75rem,env(safe-area-inset-left));
+    right:max(.75rem,env(safe-area-inset-right));
+    bottom:max(.75rem,env(safe-area-inset-bottom));
+    top:auto;
+    width:auto;
+    min-width:0;
+    max-width:none;
+    max-height:min(72dvh,34rem);
+    overflow-y:auto;
+    transform:none;
+    overscroll-behavior:contain;
+  }
+
+  body.studio-page .rt-plot-row{
+    grid-template-columns:minmax(0,1fr);
+    gap:.28rem;
+  }
+
+  body.studio-page .rt-plot-lab{
+    padding-top:0;
+  }
+
+  body.instrument-surface :is(.source-menu,.render-toolbar,.desk-controls,.re-actions,.re-chips,.desk-chips,.at-chips,.rt-plot-chips){
+    gap:.35rem;
+  }
+
+  body.instrument-surface :is(.rt-btn,.btn,.plate-redraw,.re-btn,.re-chip,.at-chip,.chip,.at-mini,.chat-min){
+    max-width:100%;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  body.instrument-surface *,
+  body.instrument-surface *::before,
+  body.instrument-surface *::after{
+    scroll-behavior:auto !important;
+    transition-duration:.01ms !important;
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+  }
+}
+
+@media (forced-colors:active){
+  body.instrument-surface{
+    color-scheme:light;
+    --chrome-ground:Canvas;
+    --chrome-surface:Canvas;
+    --chrome-surface-strong:Canvas;
+    --chrome-ink:CanvasText;
+    --chrome-soft:CanvasText;
+    --chrome-muted:CanvasText;
+    --chrome-line:CanvasText;
+    --chrome-line-strong:CanvasText;
+    --chrome-accent:Highlight;
+    --chrome-accent-soft:Canvas;
+    --chrome-focus:Highlight;
+    background:Canvas;
+    color:CanvasText;
+  }
+
+  body.instrument-surface::after{
+    display:none !important;
+  }
+
+  body.instrument-surface :is(.rt-btn,.btn,.plate-redraw,.re-btn,.re-chip,.at-chip,.chip,.at-mini,.chat-min,input,select,textarea,summary){
+    forced-color-adjust:auto;
+    border:1px solid ButtonText;
+    background:ButtonFace;
+    background-image:none;
+    box-shadow:none;
+    color:ButtonText;
+  }
+
+  body.instrument-surface :is(.rt-btn,.btn,.plate-redraw,.re-btn,.re-chip,.at-chip,.chip,.at-mini,.chat-min,input,select,textarea,summary):focus-visible{
+    outline:2px solid Highlight;
+    outline-offset:3px;
+  }
+
+  body.instrument-surface :is(.viewport-stage,.re-preview,.plate-art,.fixture-art,.desk-var){
+    border:1px solid CanvasText;
+    background:Canvas;
+  }
+}
+
+@media print{
+  body.instrument-surface{
+    color-scheme:light;
+    --chrome-ground:#fff;
+    --chrome-surface:#fff;
+    --chrome-ink:#000;
+    --chrome-soft:#222;
+    --chrome-muted:#444;
+    --chrome-line:#999;
+    background:#fff;
+    color:#000;
+  }
+
+  body.instrument-surface::after,
+  body.instrument-surface .frame>.hero-aperture{
+    display:none !important;
+  }
+
+  body.instrument-surface :is(.rt-btn,.btn,.plate-redraw,.re-btn,.re-chip,.at-chip,.chip,.at-mini,.chat-min,input,select,textarea,summary){
+    background:#fff;
+    background-image:none;
+    box-shadow:none;
+    color:#000;
+    border-color:#777;
+  }
+}
