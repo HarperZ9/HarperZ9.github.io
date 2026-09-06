@@ -1,8 +1,17 @@
 """Regression tests for deterministic social-card browser selection."""
 
 import pytest
+from pathlib import Path
 
 from tools.render_cards import launch_browser
+
+
+def test_card_art_keeps_useful_copy_without_decorative_text_rails() -> None:
+    template = (Path(__file__).resolve().parents[1] / "img/og/_card.html").read_text(encoding="utf-8")
+    assert 'id="word"' in template
+    assert 'id="headline"' in template
+    for obsolete in ('class="metadata"', 'id="role"', 'id="pipeline"', 'class="site"'):
+        assert obsolete not in template
 
 
 class FakeChromium:

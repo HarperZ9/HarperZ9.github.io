@@ -85,6 +85,9 @@ RELEASE_PATHS = (
     "figures/graphics-retro-capability-map.html",
     "figures/graphics-retro-capability-map.json",
     "figures/graphics-retro-capability-map.svg",
+    "figures/growth-needs-a-before.html",
+    "figures/growth-needs-a-before.json",
+    "figures/growth-needs-a-before.svg",
     "figures/incident-multilane-timeline.html",
     "figures/incident-multilane-timeline.json",
     "figures/incident-multilane-timeline.svg",
@@ -116,6 +119,7 @@ RELEASE_PATHS = (
     "figures/verification-capability-map.json",
     "figures/verification-capability-map.svg",
     "hire.html",
+    "growth-needs-a-before.html",
     "engine-revival.html",
     "elder-enb.html",
     "enb-runtime-core.html",
@@ -123,6 +127,7 @@ RELEASE_PATHS = (
     "frontier-safety-openai-hugging-face-incident.html",
     "img/og/behavior-transform.png",
     "img/og/availability-is-not-reach.png",
+    "img/og/growth-needs-a-before.png",
     "img/og/brender-archival.png",
     "img/og/bulletin.png",
     "img/og/join.png",
@@ -138,6 +143,7 @@ RELEASE_PATHS = (
     "img/og/the-second-hearing.png",
     "img/og/what-the-label-changes.png",
     "img/og/cards-data.js",
+    "img/og/_card.html",
     "index.html",
     "join.html",
     "media/retro-systems-lab/evidence-manifest.json",
@@ -155,6 +161,7 @@ RELEASE_PATHS = (
     "publications/build.json",
     "publications/data/index.json",
     "publications/data/records/availability-is-not-reach.json",
+    "publications/data/records/growth-needs-a-before.json",
     "publications/data/records/the-second-hearing.json",
     "publications/data/records/what-the-label-changes.json",
     "publications/schema/publication-record.schema.json",
@@ -197,7 +204,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "f547f5668fee2bedc4674459b61d8428c6e5362d65929a717104a1a14c323557"
+REVIEWED_RELEASE_SHA256 = "cd1b669027edf82639790b8f0b11dd2d8ac376dbb87ff6eb84b7d2097daf1f54"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

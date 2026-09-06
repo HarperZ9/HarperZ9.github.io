@@ -565,6 +565,14 @@ window.CARD_DATA = {
     "pipeline": "HEAR / NOTICE / REMEMBER / MEASURE / LIMIT",
     "glyph": "layers"
   },
+  "growth-needs-a-before": {
+    "publication": true,
+    "role": "PSYCHOLOGY AND RECOVERY",
+    "word": "GROWTH",
+    "headline": "Feeling changed and measuring lasting change are different questions.",
+    "pipeline": "BEFORE / AFTER / MEANING / MEASUREMENT",
+    "glyph": "layers"
+  },
   "what-the-label-changes": {
     "role": "ART AND PERCEPTION",
     "word": "THE LABEL",

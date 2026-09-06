@@ -29,11 +29,11 @@ def test_reading_paths_cover_the_requested_interests_without_fake_posts() -> Non
     page = read("publications.html")
     paths = {
         "ai-frontier": "published",
-        "psychology-trauma": "published-adjacent",
-        "education-access": "open",
+        "psychology-trauma": "published",
+        "education-access": "published",
         "tools-systems": "published",
-        "music-listening": "open",
-        "abstract-art": "published-adjacent",
+        "music-listening": "published",
+        "abstract-art": "published",
     }
     for path_id, state in paths.items():
         match = re.search(
@@ -42,9 +42,15 @@ def test_reading_paths_cover_the_requested_interests_without_fake_posts() -> Non
         )
         assert match, f"missing truth-bounded reading path: {path_id} / {state}"
 
-    assert "No dedicated essay is published in this lane yet." in page
+    assert "No dedicated essay is published in this lane yet." not in page
     assert "not a clinical or diagnostic claim" in page
-    assert "visual work, not a claimed essay archive" in page
+    psychology_lane = re.search(
+        r'<article[^>]*data-path="psychology-trauma"[^>]*>(.*?)</article>', page, re.S
+    )
+    assert psychology_lane
+    assert 'href="growth-needs-a-before.html"' in psychology_lane.group(1)
+    for route in ("availability-is-not-reach.html", "the-second-hearing.html", "what-the-label-changes.html"):
+        assert f'href="{route}"' in page
 
 
 def test_published_index_has_current_briefings_and_existing_essays() -> None:

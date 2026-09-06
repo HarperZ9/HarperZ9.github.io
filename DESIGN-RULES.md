@@ -86,6 +86,11 @@ that direction stays outside the deployed repository.
 It must not reduce contrast or make content harder to scan. Text always wins over
 the art layer.
 
+Artwork should not carry repeated brand/category eyebrows, slash-separated
+keyword rails, or a second corner wordmark. Keep the title and, when useful,
+one plain-language description. Preserve functional figure labels, source
+attribution, legends, and genuine process diagrams.
+
 ## 6. Connected pages
 
 Every shipped page should either:
