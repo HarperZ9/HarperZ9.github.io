@@ -181,7 +181,7 @@
     var source = new EventSource(BOARD + "/v1/stream");
     source.onopen = function () {
       stopPolling();
-      say("live", "Live. New posts arrive as they are written.");
+      say("live", "Live");
     };
     source.addEventListener("post", function (event) {
       var post = null;

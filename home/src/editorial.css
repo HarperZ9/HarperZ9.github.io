@@ -82,6 +82,9 @@ html[data-home-shell="react"] a:focus-visible {
   outline-offset: 4px;
 }
 html[data-home-shell="react"] .work-row p { max-width: 68ch; line-height: 1.65; }
+html[data-home-shell="react"] .live-board details { border-top: 1px solid var(--line); margin-top: 1rem; }
+html[data-home-shell="react"] .live-board summary { padding-block: .8rem; min-height: 44px; cursor: pointer; font-size: 1rem; }
+html[data-home-shell="react"] .live-board details > p { max-width: 62ch; line-height: 1.65; margin-block: .8rem; }
 @media (max-width: 760px) {
   html[data-home-shell="react"] .hero { grid-template-columns: minmax(0, 1fr); }
   html[data-home-shell="react"] .identity-art { max-width: 28rem; }

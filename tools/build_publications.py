@@ -330,7 +330,7 @@ def render_article(record: dict) -> str:
 <h1>{html.escape(record["title"])}</h1><p class="publication-thesis">{html.escape(record["thesis"])}</p>
 <p class="publication-meta">By {html.escape(record["author"])} · Published {html.escape(record["published_at"])} · Updated {html.escape(record["updated_at"])}</p></header>
 <details class="publication-contents"><summary>In this article</summary><nav aria-label="Article sections"><ol>{contents}<li><a href="#sources">Sources</a></li></ol></nav></details>
-<section class="publication-opening" aria-label="Question, finding, evidence, and limit">{opening}</section>
+<details class="publication-opening"><summary>Research summary and limits</summary>{opening}</details>
 {sections}{figures}
 <section id="sources"><h2>Sources</h2><ol>{sources}</ol></section>
 <details class="publication-claim-notes" id="claim-ledger"><summary>Claim notes and limitations</summary><ol class="publication-claims">{claim_notes}</ol></details>

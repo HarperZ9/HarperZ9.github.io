@@ -13,8 +13,8 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-zDLgBG2C.js",
-    "assets/index-bWzzGxGP.css",
+    "assets/index-fBx77P1E.js",
+    "assets/index-3xC65p6C.css",
     "accountable-surface.html",
     "availability-is-not-reach.html",
     "analytics/benchmark-evidence-status.html",
@@ -177,6 +177,7 @@ RELEASE_PATHS = (
     "system/publication-article.css",
     "system/publications.css",
     "system/publications.js",
+    "system/reading.css",
     "system/print.css",
     "system/retro-systems-lab.css",
     "system/routes.js",
@@ -204,7 +205,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "eaa3495962002e6641f61cffe0e471fc66ddc9a7870a0249ad92b81d1b0fcd9a"
+REVIEWED_RELEASE_SHA256 = "3c9c3589d70ef65d52df28c6efc22c64f17271655414d741f39f61fcd3ccbdfe"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -312,8 +313,8 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_join_js = "index-BoU_gOMc.js"
     previous_board_js = "index-B-g9u1T0.js"
     previous_board_css = "index-B5xhdbWj.css"
-    current_js = "index-zDLgBG2C.js"
-    current_css = "index-bWzzGxGP.css"
+    current_js = "index-fBx77P1E.js"
+    current_css = "index-3xC65p6C.css"
     previous_flywheel_js = "index-BIYnDBdw.js"
     previous_flywheel_css = "index-DGQrcJ5p.css"
     previous_security_js = "index-BnUu1wyw.js"

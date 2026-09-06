@@ -17,7 +17,7 @@ def test_publications_is_an_editorial_front_door_before_a_catalog() -> None:
     page = read("publications.html")
     text = " ".join(re.sub(r"<[^>]+>", "", page).split())
 
-    assert "A field journal for evidence, systems, and human consequence." in text
+    assert "Writing and research" in text
     assert page.index('id="reading-paths"') < page.index('id="publication-index"')
     assert page.index('id="publication-index"') < page.index('id="research-records"')
     assert 'href="#reading-paths"' in page
