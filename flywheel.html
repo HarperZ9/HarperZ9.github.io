@@ -245,7 +245,7 @@
   </dl>
   <div class="null reveal">
     <h3>The honest caveat.</h3>
-    <p class="body-text">The installer is not code-signed yet, so Windows SmartScreen will warn on first run. The hash above is the substitute: it proves the file you hold is the file the pipeline built. Signing is planned; until then the receipt does the signature's job, checked by you instead of trusted by default.</p>
+    <p class="body-text">The installer is not code-signed yet, so Windows SmartScreen may warn on first run. Compare your download's SHA-256 with the published hash above to check that the bytes match. A matching hash does not authenticate the publisher or establish that the installer is safe. Code signing is planned.</p>
   </div>
   <p class="body-text reveal">The core package has zero runtime dependencies and uses the Python standard library. Route online with your keys, or run fully offline against local weights.</p>
   <p class="body-text reveal">Then open the surface in your browser. One origin, one page, same-origin JSON routes.</p>
@@ -275,7 +275,7 @@
   <div class="null reveal">
     <h3>The honest null.</h3>
     <p class="body-text">In the retired table, verified inference scored +0.100 above single-shot. The 95% interval on that difference is [-0.236, +0.420], which includes zero, and plain best-of-4 sampling tied it. <b>So we do not claim a capability uplift</b>, and the correction above voids the difference as a comparison outright.</p>
-    <p class="body-text">What we do claim, and can measure: 100% receipt reproducibility, every accepted answer re-checks; pass parity with the models it routes to; availability on your own schedule, from weights you hold; and local cost. A tool that refuses to overclaim is a tool whose other claims you can trust.</p>
+    <p class="body-text">What we do claim, and can measure: 100% receipt reproducibility, every accepted answer re-checks; pass parity with the models it routes to; availability on your own schedule, from weights you hold; and local cost. Each claim needs its own evidence; acknowledging one limitation does not establish the others.</p>
   </div>
   <p class="body-text reveal">A rebuilt measurement is in progress. It draws the baseline and the treatment from one shared pool of independent attempts, with a compute-matched arm that selects at random instead of using the verifier. It has produced no result yet. If the verifier earns nothing over random selection at the same compute, that is the result that will be published.</p>
   <p class="body-text reveal">A separate instrument did produce a result. On 2026-09-04 five harness roles ran the same seven agentic tasks, one repetition each, on byte-identical prompts and runtime contexts: 35 attempts, 35 of 35 receipts verified, 11 that reached a grader and 6 that passed. The reason each of the other 24 went ungraded is named per role, because an endpoint that never answered and an answer a checker rejected are different failures. <a href="analytics/current-cross-harness-pilot.html">Read the run, its tables, and its limits</a>.</p>
