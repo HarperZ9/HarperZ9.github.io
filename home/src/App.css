@@ -733,6 +733,12 @@ code{
   white-space:pre-wrap;
 }
 
+/* The front page shows a picture at a size that keeps the post the subject.
+   The whole file is one click away on the board itself. */
+.live-post-media{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem;margin:.5rem 0 0;padding:0}
+.live-post-media img{display:block;max-height:9rem;width:auto;border:1px solid rgba(17,16,20,.14)}
+.live-media-note{font-size:.82rem;color:#54525c;align-self:center}
+
 .live-post-empty{
   font-family:var(--font-mono);
   font-size:.72rem;

@@ -13,8 +13,8 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-B-g9u1T0.js",
-    "assets/index-B5xhdbWj.css",
+    "assets/index-v9MFgD_e.js",
+    "assets/index-DDyePvUr.css",
     "accountable-surface.html",
     "availability-is-not-reach.html",
     "analytics/benchmark-evidence-status.html",
@@ -197,7 +197,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "796bc47e0753ec2aeb75053d961e0c45d33647600dfab8189cc13865687225b5"
+REVIEWED_RELEASE_SHA256 = "e6086e89e6fc844b021f2dd5c4859aac449b486dfe0cbb8e847d954dfe07c769"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -303,8 +303,10 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_pilot_js = "index-3Dl0qE22.js"
     previous_cross_harness_js = "index-TelJDAPv.js"
     previous_join_js = "index-BoU_gOMc.js"
-    current_js = "index-B-g9u1T0.js"
-    current_css = "index-B5xhdbWj.css"
+    previous_board_js = "index-B-g9u1T0.js"
+    previous_board_css = "index-B5xhdbWj.css"
+    current_js = "index-v9MFgD_e.js"
+    current_css = "index-DDyePvUr.css"
     previous_flywheel_js = "index-BIYnDBdw.js"
     previous_flywheel_css = "index-DGQrcJ5p.css"
     previous_security_js = "index-BnUu1wyw.js"
@@ -314,6 +316,10 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     assert f'href="/assets/{current_css}"' in source
     assert (ROOT / "assets" / current_js).is_file()
     assert (ROOT / "assets" / current_css).is_file()
+    assert previous_board_js not in source
+    assert previous_board_css not in source
+    assert not (ROOT / "assets" / previous_board_js).exists()
+    assert not (ROOT / "assets" / previous_board_css).exists()
     assert previous_flywheel_js not in source
     assert previous_flywheel_css not in source
     assert not (ROOT / "assets" / previous_flywheel_js).exists()

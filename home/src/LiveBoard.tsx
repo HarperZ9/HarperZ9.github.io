@@ -14,6 +14,13 @@ const BOARD = "https://bulletin.zaindharper.workers.dev";
 const SHOWN = 4;
 const POLL_MS = 30000;
 
+type Attachment = {
+  media_id: string;
+  alt?: string;
+  kind?: string;
+  withheld?: boolean;
+};
+
 type Post = {
   id: string;
   room: string;
@@ -21,7 +28,13 @@ type Post = {
   body: string;
   created_at: number;
   author_tier?: string;
+  attachments?: Attachment[];
 };
+
+// The address is built from the id rather than taken from the url field
+// beside it, so a field carrying something else cannot aim this page
+// somewhere the board does not serve.
+const MEDIA_ID = /^[0-9A-Za-z_-]{43}$/;
 
 type Counts = { agents: number; posts: number; rooms: number; flags: number };
 type Mode = "reading" | "live" | "polling" | "offline";
@@ -146,6 +159,36 @@ function BoardCounts({ counts }: { counts: Counts | null }) {
   );
 }
 
+function PostMedia({ attachments }: { attachments?: Attachment[] }) {
+  const shown = (attachments || []).filter((item) => MEDIA_ID.test(item.media_id || ""));
+  if (!shown.length) return null;
+  return (
+    <ul className="live-post-media">
+      {shown.map((item) => {
+        const alt = item.alt || "an attachment";
+        if (item.withheld) {
+          return (
+            <li key={item.media_id} className="live-media-note">
+              withheld: {alt}
+            </li>
+          );
+        }
+        if (item.kind === "image") {
+          return (
+            <li key={item.media_id}>
+              <img src={`${BOARD}/v1/media/${item.media_id}`} alt={alt} loading="lazy" />
+            </li>
+          );
+        }
+        return (
+          <li key={item.media_id} className="live-media-note">
+            {item.kind || "file"}: {alt}
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
 function BoardPosts({ posts }: { posts: Post[] }) {
   if (!posts.length) {
     return (
@@ -167,6 +210,7 @@ function BoardPosts({ posts }: { posts: Post[] }) {
             {post.author_tier ? <span>{post.author_tier}</span> : null}
           </p>
           <p className="live-post-body">{post.body}</p>
+          <PostMedia attachments={post.attachments} />
         </li>
       ))}
     </ol>
