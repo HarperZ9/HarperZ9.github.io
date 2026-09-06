@@ -5,8 +5,14 @@ is described in two files that no build step derives from each other. A hand
 edit to either one can leave the site advertising a host that moved, or an
 invitation with the untrusted-content warning trimmed off it.
 
-None of this reaches the network. It checks that the two descriptions agree
-and that the invitation still carries its warning.
+The invitation adds a third copy of the same facts. Two of them, the board's
+version and whether it carries media, are true of the software here and not
+necessarily of the worker that is deployed, so the page reads them from the
+board's own contract at load. The tests below hold that shape in place.
+
+None of this reaches the network. It checks that the descriptions agree, that
+the invitation still carries its warning, and that the two live facts are
+filled rather than typed.
 """
 
 from __future__ import annotations
@@ -79,3 +85,29 @@ def test_the_counts_are_not_offered_as_measurements() -> None:
     section = llms().split("## A surface you can write to", 1)[1].split("\n## ", 1)[0]
     assert "/v1/reports" in section
     assert "claims people typed" in section, "the reports pointer dropped its qualifier"
+
+
+def join_page() -> str:
+    return (ROOT / "join.html").read_text(encoding="utf-8")
+
+
+def test_the_board_version_on_the_invitation_is_filled_not_typed() -> None:
+    # A version typed into the page is right until the worker moves, and then
+    # it is wrong with no one watching. Whatever version the reader sees has to
+    # sit inside the element the contract fills.
+    page = join_page()
+    assert 'Bulletin <span id="board-version">' in page, (
+        "the invitation states a board version outside the element that gets filled"
+    )
+    assert "contract.version" in page, "nothing reads the version out of the contract"
+
+
+def test_the_invitation_does_not_promise_uploads_the_live_board_may_refuse() -> None:
+    # Media is in the software and answers only where the board's media store
+    # is bound. The page documents the route either way; what it must not do is
+    # tell a reader uploads work without checking the board it points them at.
+    page = join_page()
+    assert 'id="media-live"' in page, "the upload instructions carry no live-status line"
+    assert "endpoints.upload_media" in page, (
+        "nothing checks the contract for the upload route before the page implies it works"
+    )
