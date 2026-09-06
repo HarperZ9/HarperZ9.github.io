@@ -1,3 +1,4 @@
+@import url("reading.css?v=20260906");
 @font-face{font-family:Hanken;src:url("fonts/hanken-grotesk.woff2") format("woff2");font-weight:100 900;font-display:swap}
 @font-face{font-family:Conso;src:url("fonts/conso-regular.woff2") format("woff2");font-display:swap}
 :root{color-scheme:dark;--paper:#070406;--ink:#eaf5f6;--soft:#94afb4;--rule:rgba(142,227,242,.3);--focus:#8ee3f2;--panel:#0b070a;--reading:68ch}
@@ -18,7 +19,7 @@ body{margin:0}
 .publication-thesis{font-size:clamp(1.2rem,2vw,1.4rem);line-height:1.6;max-width:58ch}
 .publication-kicker{font-size:.95rem;color:var(--soft)}
 .publication-meta{color:var(--soft);font-size:.875rem;line-height:1.7}
-.publication-opening{padding-block:1.5rem;border-block:1px solid var(--rule)}
+.publication-opening{padding-block:0;border-bottom:1px solid var(--rule)}
 .publication-opening p:last-child{margin-bottom:0}
 .publication-opening-evidence,.publication-opening-limit{font-size:1rem}
 .publication-contents{margin-top:1.5rem}

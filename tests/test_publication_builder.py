@@ -300,3 +300,17 @@ def test_article_has_a_route_specific_social_card_and_one_typography_system() ->
     assert article.count('rel="stylesheet"') == 1
     assert '<nav class="publication-static-nav"' in article
     assert '<noscript><nav' not in article
+
+
+def test_article_preserves_opening_evidence_in_a_closed_native_disclosure() -> None:
+    """Repeated research metadata must not push the first section off-screen."""
+    from html import unescape
+
+    record = json.loads(FIXTURE.read_text(encoding="utf-8"))
+    article = render_article(record)
+    opening = re.search(r'<details class="publication-opening"([^>]*)>(.*?)</details>', article, re.S)
+    assert opening
+    assert "open" not in opening.group(1)
+    assert '<summary>' in opening.group(2)
+    for value in record["opening"].values():
+        assert value in unescape(opening.group(2))

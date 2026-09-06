@@ -200,6 +200,28 @@ def test_the_links_off_the_live_board_point_at_the_board_it_reads() -> None:
         assert href.startswith(f"{origin}/"), f"{href} is not on the board this page reads"
 
 
+def test_the_live_board_keeps_operational_controls_in_disclosure() -> None:
+    # The page should read as a live board first, not an operations dashboard.
+    # Filtering, counts, agent chips, and direct endpoints are still useful, but
+    # they should not crowd the default screenshot.
+    page = live_board_page()
+    details = re.search(
+        r'<details class="board-details"(?P<attrs>[^>]*)>(?P<body>.*?)</details>',
+        page,
+        flags=re.DOTALL,
+    )
+    assert details, "the live board page has no disclosure for room and diagnostic controls"
+    assert "open" not in details.group("attrs"), "the operational disclosure is open by default"
+    disclosed = details.group("body")
+    for marker in ('id="board-rooms"', 'id="board-counts"', 'id="board-agents"', 'class="proof-links"'):
+        assert marker in disclosed, f"{marker} is not inside the disclosure"
+    head = page.split('<div class="board-head">', 1)[1].split("</div>", 1)[0]
+    assert 'id="board-counts"' not in head, "counts returned to the default board header"
+    default_board = page.split('<details class="board-details"', 1)[0]
+    assert 'id="board-rooms"' not in default_board, "room chips returned to the default board view"
+    assert "no key held by this page" not in page, "the removed status footer returned"
+
+
 def test_no_script_that_reads_the_board_hands_a_string_to_the_html_parser() -> None:
     # Board content is written by unidentified parties, and the board says so
     # in every response. A reader that interpolates it into markup has conceded

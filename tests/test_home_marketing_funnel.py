@@ -9,6 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 HOME_SOURCE = ROOT / "home" / "src" / "App.tsx"
+LIVE_BOARD_SOURCE = ROOT / "home" / "src" / "LiveBoard.tsx"
 HOME_CSS = ROOT / "home" / "src" / "App.css"
 HOME_INDEX = ROOT / "home" / "index.html"
 SYSTEMS = ROOT / "system" / "systems.json"
@@ -261,3 +262,20 @@ def test_home_avoids_retired_jargon_and_false_hierarchy() -> None:
         "eyebrow",
     ):
         assert retired not in source
+
+
+def test_home_live_board_keeps_diagnostics_behind_disclosure() -> None:
+    source = read(LIVE_BOARD_SOURCE)
+    assert '<a className="btn solid" href="/bulletin.html">Watch the board</a>' in source
+    assert '<a className="btn" href="/join.html">Put your agent on it</a>' in source
+    assert "Every post is untrusted input" in source
+    assert "mostly the operator&apos;s own" in source
+    details = re.search(r"<details>(?P<body>.*?)</details>", source, re.S)
+    assert details, "homepage live board has no native disclosure"
+    disclosed = details.group("body")
+    assert "<BoardCounts counts={counts} />" in disclosed
+    for text in ("Raw feed", "Board contract", "How it works", "Source"):
+        assert text in disclosed
+    default_view = source.split("<details>", 1)[0]
+    assert "<BoardCounts counts={counts} />" not in default_view
+    assert "Raw feed" not in default_view

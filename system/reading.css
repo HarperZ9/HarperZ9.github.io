@@ -1,0 +1,123 @@
+/* One reading treatment across the publication index, briefings and essays.
+   Scope excludes career documents, product demos and interactive studios. */
+@font-face{font-family:"Hanken Grotesk";src:url("fonts/hanken-grotesk.woff2") format("woff2");font-weight:100 900;font-display:swap}
+html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article){
+  color-scheme:light;
+  --reading-paper:#fafaf8;
+  --reading-ink:#19272b;
+  --reading-soft:#42575d;
+  --reading-link:#215a63;
+  --reading-rule:#ccd3d3;
+  --reading-panel:#f0f3f2;
+  --reading-type:"Hanken Grotesk",Hanken,system-ui,sans-serif;
+  background:var(--reading-paper);
+}
+/* These selectors outrank the older page skins without touching their data. */
+html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) body:not(.studio-page):not(.studio-app){
+  --paper:var(--reading-paper);--page:var(--reading-paper);--void:var(--reading-paper);--void-opaque:var(--reading-paper);
+  --ink:var(--reading-ink);--bone:var(--reading-ink);--ink-soft:var(--reading-soft);--ink-muted:var(--reading-soft);
+  --muted:var(--reading-soft);--soft:var(--reading-soft);--tag:var(--reading-soft);
+  --signal:var(--reading-link);--focus:var(--reading-link);--orange:var(--reading-link);--teal-soft:var(--reading-link);
+  --hairline:var(--reading-rule);--rule:var(--reading-rule);--line:var(--reading-rule);--panel:var(--reading-panel);
+  --body:var(--reading-type);--display:var(--reading-type);--reading:62ch;
+  height:auto;min-height:100vh;background:var(--reading-paper);color:var(--reading-ink);font-family:var(--reading-type);
+}
+html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) body:not(.studio-page):not(.studio-app) :is(main,.frame,.sheet,.mv){
+  background:var(--reading-paper);color:var(--reading-ink);box-shadow:none;
+}
+body.doc:has(.longform)::before,
+body.doc:has(.longform)>#gl,
+body.doc:has(.longform)>#motes{display:none!important}
+body.doc:has(.longform) .sheet{border:0;padding-inline:0;width:min(100%,62ch);max-width:62ch}
+body.doc:has(.longform) :is(.article-head h1,.article-head .lead,.article-body,.article-body h2,.article-body h3,.companion,.article-footer){font-family:var(--reading-type)}
+body.doc:has(.longform) .article-body{max-width:62ch;font-size:1rem;line-height:1.75}
+body.doc:has(.longform) .article-head h1{font-size:clamp(2.1rem,4.7vw,3.4rem);line-height:1.12;text-wrap:balance}
+body.doc:has(.longform) .article-body blockquote{border:0;border-block:1px solid var(--reading-rule);background:transparent;padding:1.2rem 0}
+body.doc:has(.longform) :is(.article-meta,.role){font-family:var(--reading-type);font-size:.82rem;letter-spacing:0;text-transform:none}
+body.doc:has(.longform) :is(.article-head,.article-body,.companion,.article-footer){margin-inline:auto}
+
+/* Navigation remains familiar, but uses the same ground as the article. */
+html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) .site-nav{
+  background:var(--reading-paper);border-color:var(--reading-rule);backdrop-filter:none;
+}
+html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) .site-nav :is(a,summary){color:var(--reading-ink);text-shadow:none}
+html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) .site-nav :is(a:hover,a:focus-visible,summary:hover,summary:focus-visible){color:var(--reading-link);background:var(--reading-panel)}
+html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) .site-nav .sn-more-list{background:var(--reading-paper);border-color:var(--reading-rule);box-shadow:none}
+html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) body .site-nav .sn-home .sn-brand-word{text-shadow:none}
+html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) .site-nav :is(.sn-links a.is-active,.sn-links a[aria-current="page"],.sn-more>summary){color:var(--reading-link);border-color:var(--reading-rule)}
+html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) body .frame .bar .rt{color:var(--reading-soft)}
+html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) body .mv h2::after{display:none}
+html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) :is(a,button,summary,input):focus-visible{outline:2px solid var(--reading-link);outline-offset:4px}
+
+/* The index is an invitation to read, not a dashboard or numbered catalogue. */
+body.publications-hub .frame{padding:clamp(2rem,5vw,4rem) max(1rem,calc((100vw - 68rem)/2));min-height:0}
+body.publications-hub .mid{padding:1rem 0 0;max-width:58rem}
+body.publications-hub .frame h1{font-size:clamp(2.15rem,4.5vw,3.4rem);max-width:24ch;line-height:1.14;color:var(--reading-ink)}
+body.publications-hub .frame h1 .g{color:inherit}
+body.publications-hub .frame .lede{font-size:1.125rem;line-height:1.65;max-width:62ch}
+body.publications-hub :is(.frame>.seal,.publication-label,.story-order,.publication-spectrum){display:none}
+body.publications-hub .path-contour article[data-state="published"] .path-state{display:none}
+body.publications-hub .mv{padding:clamp(2rem,4vw,3.5rem) max(1rem,calc((100vw - 68rem)/2));min-height:0}
+body.publications-hub .publication-section-head{grid-template-columns:1fr;margin-bottom:1.6rem;gap:.7rem;max-width:62ch}
+body.publications-hub .publication-section-head h2{max-width:100%;font-size:clamp(1.65rem,3vw,2.3rem)}
+body.publications-hub .publication-section-head .body-text{font-size:1.05rem;line-height:1.65}
+body.publications-hub .lead-story{display:block;padding:1.6rem 0;max-width:100%}
+body.publications-hub .lead-story h3{max-width:40ch;line-height:1.25;font-size:clamp(1.4rem,2.4vw,1.8rem)}
+body.publications-hub .lead-story p:not(.publication-meta){font-size:1.125rem;max-width:62ch}
+body.publications-hub :is(.publication-meta,.path-state,.publication-tool-panel label,.publication-tools summary,.publication-result-count){font-family:var(--reading-type);font-size:.9rem;letter-spacing:0;text-transform:none}
+body.publications-hub :is(.publication-actions a,.publication-read){font-family:var(--reading-type);font-size:1rem}
+body.publications-hub .path-contour{grid-template-columns:repeat(2,minmax(0,1fr))}
+body.publications-hub .path-contour article{padding:1.5rem 1.5rem 1.5rem 0;border-inline:0}
+body.publications-hub .path-contour article:nth-child(even){padding-inline:1.5rem 0}
+body.publications-hub .path-contour p{font-size:1.05rem}
+body.publications-hub .publication-ledger article{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.7rem 2rem}
+body.publications-hub .publication-ledger article>.publication-meta{grid-column:1/-1}
+body.publications-hub .publication-ledger article>p:last-child{font-size:1.05rem}
+body.publications-hub .publication-filters button{font-family:var(--reading-type);font-size:.95rem}
+
+/* Briefing records read in one column. Sources and limits stay beside claims. */
+body.frontier-briefing :is(.briefing-hero,.mv),
+body.briefing-document :is(.frame,.mv){padding:clamp(2rem,5vw,4rem) max(1rem,calc((100vw - 64rem)/2));min-height:0}
+body.frontier-briefing .briefing-intro{max-width:62ch}
+body.frontier-briefing .briefing-intro h1{max-width:25ch;font-size:clamp(2.1rem,4.5vw,3.3rem);line-height:1.15}
+body.frontier-briefing .briefing-intro .lede{max-width:62ch;font-size:1.125rem;line-height:1.7}
+body.frontier-briefing .briefing-intro h1 .g{color:var(--reading-ink)}
+body.frontier-briefing :is(.briefing-overview h2,.lane-head h2,.wide-section h2,.questions h2){font-size:clamp(1.6rem,3vw,2.25rem);line-height:1.25;max-width:30ch}
+body.frontier-briefing .record{display:block;max-width:64ch}
+body.frontier-briefing .record-index{display:none}
+body.frontier-briefing :is(.record-meta,.source-line,.briefing-links,.edition-readout dt,.edition-readout dd,.boundary strong,.rail-mark strong){font-family:var(--reading-type);font-size:.9rem!important;letter-spacing:0;text-transform:none}
+body.frontier-briefing .record-body>p{font-size:1.125rem;line-height:1.75;max-width:62ch}
+body.frontier-briefing .boundary{grid-template-columns:1fr;gap:.4rem}
+body.frontier-briefing .boundary p{font-size:1rem;max-width:62ch}
+body.frontier-briefing .edition-readout{display:block;border:0;margin-top:1rem}
+body.frontier-briefing .edition-readout div:first-child{display:flex;align-items:baseline;gap:.5rem;padding:0}
+body.frontier-briefing .edition-readout dd{margin:0}
+body.frontier-briefing .delta-rail{display:flex;flex-wrap:wrap;margin-top:1.5rem}
+body.frontier-briefing .rail-mark{flex:1 1 12rem;display:block;padding:1rem}
+body.frontier-briefing .rail-symbol{display:none}
+body.frontier-briefing .rail-mark strong{display:block;margin-top:.25rem}
+body.frontier-briefing .source-line strong{font-family:inherit;letter-spacing:0;text-transform:none}
+body.frontier-briefing .footer-seal .seal{font-family:var(--reading-type);font-size:.9rem;letter-spacing:0;text-transform:none}
+
+body:has(>.publication-article) .publication-article{font-family:var(--reading-type)}
+body:has(>.publication-article) .publication-kicker{display:none}
+body:has(>.publication-article) .publication-article h1{max-width:24ch}
+
+@media(max-width:52rem){
+  body.publications-hub .path-contour,
+  body.publications-hub .publication-ledger article{grid-template-columns:1fr}
+  body.publications-hub .path-contour article:nth-child(n){padding-inline:0}
+  body.frontier-briefing .rail-mark{border-inline:0}
+}
+@media(prefers-color-scheme:dark){
+  html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article){
+    color-scheme:dark;--reading-paper:#101416;--reading-ink:#eaf5f6;--reading-soft:#b4c5c9;--reading-link:#8ee3f2;--reading-rule:#42555a;--reading-panel:#1b2528;
+  }
+}
+@media(forced-colors:active){
+  html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article){--reading-paper:Canvas;--reading-ink:CanvasText;--reading-soft:CanvasText;--reading-link:LinkText;--reading-rule:CanvasText;--reading-panel:Canvas}
+}
+@media print{
+  html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article){color-scheme:light;--reading-paper:#fff;--reading-ink:#000;--reading-soft:#333;--reading-link:#000;--reading-rule:#aaa;--reading-panel:#fff}
+  body.publications-hub .frame,body.publications-hub .mv,body.frontier-briefing :is(.briefing-hero,.mv){padding:1rem 0}
+}
