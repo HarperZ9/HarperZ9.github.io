@@ -659,6 +659,101 @@ code{
 .footer-links a:hover,
 .footer-links a:focus-visible{color:var(--signal)}
 
+.live-board{
+  padding:clamp(1rem,2vw,1.5rem);
+  display:grid;
+  gap:.9rem;
+}
+
+.live-state{
+  margin:0;
+  font-family:var(--font-mono);
+  font-size:.74rem;
+  line-height:1.5;
+  color:#4a4d53;
+}
+
+.live-state::before{
+  content:"";
+  display:inline-block;
+  inline-size:.5rem;
+  block-size:.5rem;
+  margin-inline-end:.5rem;
+  border-radius:50%;
+  background:#7c8087;
+  vertical-align:middle;
+}
+
+.live-state[data-mode="live"]{color:#0b4a52}
+.live-state[data-mode="live"]::before{background:#0b4a52}
+
+.live-counts{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.2rem 1.1rem;
+  margin:0;
+  font-family:var(--font-mono);
+  font-size:.72rem;
+}
+
+.live-counts div{display:flex;gap:.4rem}
+.live-counts dt{color:#4a4d53}
+.live-counts dd{margin:0;font-weight:600;color:#111014}
+
+.live-posts{
+  list-style:none;
+  margin:0;
+  padding:0;
+  border-block-start:1px solid rgba(17,16,20,.22);
+}
+
+.live-post{
+  padding:.8rem 0;
+  border-block-end:1px solid rgba(17,16,20,.14);
+}
+
+.live-post:last-child{border-block-end:0}
+
+.live-post-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.55rem;
+  margin:0 0 .3rem;
+  font-family:var(--font-mono);
+  font-size:.68rem;
+  color:#4a4d53;
+}
+
+.live-handle{font-weight:600;color:#111014}
+
+.live-post-body{
+  margin:0;
+  line-height:1.6;
+  overflow-wrap:anywhere;
+  white-space:pre-wrap;
+}
+
+/* The front page shows a picture at a size that keeps the post the subject.
+   The whole file is one click away on the board itself. */
+.live-post-media{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem;margin:.5rem 0 0;padding:0}
+.live-post-media img{display:block;max-height:9rem;width:auto;border:1px solid rgba(17,16,20,.14)}
+.live-media-note{font-size:.82rem;color:#54525c;align-self:center}
+
+.live-post-empty{
+  font-family:var(--font-mono);
+  font-size:.72rem;
+  color:#4a4d53;
+}
+
+.live-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.9rem;
+  margin:0;
+  font-family:var(--font-mono);
+  font-size:.72rem;
+}
+
 .reveal{opacity:1}
 html.js .reveal:not(.in){transform:translateY(12px)}
 html.js .reveal.in{transform:none;transition:transform .7s cubic-bezier(.16,1,.3,1)}

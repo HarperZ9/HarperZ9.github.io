@@ -13,8 +13,8 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-BIYnDBdw.js",
-    "assets/index-DGQrcJ5p.css",
+    "assets/index-v9MFgD_e.js",
+    "assets/index-DDyePvUr.css",
     "accountable-surface.html",
     "availability-is-not-reach.html",
     "analytics/benchmark-evidence-status.html",
@@ -39,6 +39,7 @@ RELEASE_PATHS = (
     "analytics/source/flywheel-capability-declarations.json",
     "analytics/source/flywheel-offline-benchmark-record.json",
     "brender-archival.html",
+    "bulletin.html",
     "briefings/2026-08-26-openai-hugging-face-incident/build.json",
     "briefings/2026-08-26-openai-hugging-face-incident/claims.json",
     "briefings/2026-08-26-openai-hugging-face-incident/figures.json",
@@ -128,6 +129,8 @@ RELEASE_PATHS = (
     "img/og/availability-is-not-reach.png",
     "img/og/growth-needs-a-before.png",
     "img/og/brender-archival.png",
+    "img/og/bulletin.png",
+    "img/og/join.png",
     "img/og/elder-enb.png",
     "img/og/engine-revival.png",
     "img/og/plexus.png",
@@ -142,6 +145,7 @@ RELEASE_PATHS = (
     "img/og/cards-data.js",
     "img/og/_card.html",
     "index.html",
+    "join.html",
     "media/retro-systems-lab/evidence-manifest.json",
     "media/retro-systems-lab/identity/brender-verify.svg",
     "media/retro-systems-lab/identity/crossover.svg",
@@ -164,6 +168,7 @@ RELEASE_PATHS = (
     "private-practice.html",
     "security-toolkit.html",
     "security-tools.json",
+    "system/bulletin-board.js",
     "system/figure.css",
     "system/figure.js",
     "system/figure.test.mjs",
@@ -199,7 +204,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "f9ef67bb69234c14d44af77a3c8220691ff5ed7b5165fa0cf9f25356e4a94230"
+REVIEWED_RELEASE_SHA256 = "d8bbf1a86b46e41a9eb78bd2f29bf5c0a1ea85e4ce6262d0c05fb6ee08f0a14a"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -304,8 +309,13 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_plain_language_js = "index-DFJMXR3Q.js"
     previous_pilot_js = "index-3Dl0qE22.js"
     previous_cross_harness_js = "index-TelJDAPv.js"
-    current_js = "index-BIYnDBdw.js"
-    current_css = "index-DGQrcJ5p.css"
+    previous_join_js = "index-BoU_gOMc.js"
+    previous_board_js = "index-B-g9u1T0.js"
+    previous_board_css = "index-B5xhdbWj.css"
+    current_js = "index-v9MFgD_e.js"
+    current_css = "index-DDyePvUr.css"
+    previous_flywheel_js = "index-BIYnDBdw.js"
+    previous_flywheel_css = "index-DGQrcJ5p.css"
     previous_security_js = "index-BnUu1wyw.js"
     prior_reviewed_js = "index-C_1S2nb6.js"
     prior_reviewed_css = "index-XLAt4tDw.css"
@@ -313,10 +323,20 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     assert f'href="/assets/{current_css}"' in source
     assert (ROOT / "assets" / current_js).is_file()
     assert (ROOT / "assets" / current_css).is_file()
+    assert previous_board_js not in source
+    assert previous_board_css not in source
+    assert not (ROOT / "assets" / previous_board_js).exists()
+    assert not (ROOT / "assets" / previous_board_css).exists()
+    assert previous_flywheel_js not in source
+    assert previous_flywheel_css not in source
+    assert not (ROOT / "assets" / previous_flywheel_js).exists()
+    assert not (ROOT / "assets" / previous_flywheel_css).exists()
     assert previous_pilot_js not in source
     assert not (ROOT / "assets" / previous_pilot_js).exists()
     assert previous_cross_harness_js not in source
     assert not (ROOT / "assets" / previous_cross_harness_js).exists()
+    assert previous_join_js not in source
+    assert not (ROOT / "assets" / previous_join_js).exists()
     assert previous_security_js not in source
     assert not (ROOT / "assets" / previous_security_js).exists()
     assert prior_reviewed_js not in source

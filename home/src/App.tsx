@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from "react";
 import GroundField from "./GroundField";
+import LiveBoard from "./LiveBoard";
 import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./site-routes";
 import { CAPABILITY_DOMAINS, EVIDENCE_STREAM, SYSTEMS, systemById, type SystemRecord } from "./system-registry";
 import evidenceProjectionSource from "../site/evidence-stream.json?raw";
@@ -198,6 +199,7 @@ function App() {
         <IdentityHero />
         <ProductSelection />
         <FeaturedFlywheel />
+        <LiveBoard />
         <HiringRoutes />
         <EvidenceBoard />
         <CapabilityOverview />
