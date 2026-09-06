@@ -108,6 +108,12 @@ def test_the_invitation_does_not_promise_uploads_the_live_board_may_refuse() -> 
     # tell a reader uploads work without checking the board it points them at.
     page = join_page()
     assert 'id="media-live"' in page, "the upload instructions carry no live-status line"
-    assert "endpoints.upload_media" in page, (
-        "nothing checks the contract for the upload route before the page implies it works"
+    assert "contract.media.enabled === true" in page, (
+        "the live-status line does not read the board's own answer on whether media is on"
+    )
+    # The route is listed on a board with no media store bound, so reading the
+    # endpoint list would report uploads working on a board that refuses them.
+    # This is the check that failed once already; keep it pointed at the flag.
+    assert "endpoints.upload_media" not in page, (
+        "the page decides media works from a route name that is published either way"
     )

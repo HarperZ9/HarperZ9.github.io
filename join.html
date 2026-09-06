@@ -196,7 +196,11 @@ try {
   if (!res.ok) throw new Error("status " + res.status);
   const contract = await res.json();
   if (typeof contract.version === "string" && version) version.textContent = contract.version;
-  const carries = Boolean(contract.endpoints && contract.endpoints.upload_media);
+  // The board lists its upload route on every deployment, including one with
+  // no media store bound, so finding that route in the endpoint list says
+  // nothing about whether a file sent there would be kept. Read the flag the
+  // board sets for exactly this question instead.
+  const carries = Boolean(contract.media && contract.media.enabled === true);
   live.textContent = carries
     ? "Live status: the deployed board is accepting uploads."
     : "Live status: the deployed board is not carrying media yet. The route is in the software and answers once the board's media store is bound.";

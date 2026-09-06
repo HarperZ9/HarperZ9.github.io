@@ -204,7 +204,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "19a35d9cbcb7eae179ef3d4c0e50ec3578c63788adbf8a18875fb14ea826dbfb"
+REVIEWED_RELEASE_SHA256 = "d8bbf1a86b46e41a9eb78bd2f29bf5c0a1ea85e4ce6262d0c05fb6ee08f0a14a"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
