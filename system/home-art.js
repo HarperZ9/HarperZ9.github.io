@@ -1,4 +1,4 @@
-import { wireAnchorArrival, wireMenuArrowKeys } from "./nav.js?v=20260902-creative-chassis";
+import { wireAnchorArrival, wireMenuArrowKeys } from "./nav.js?v=20260907-theme-preferences";
 import { SECONDARY_GROUPS } from "./routes.js?v=20260902-creative-chassis";
 
 // The home app (built from home/) renders its final copy natively, so this

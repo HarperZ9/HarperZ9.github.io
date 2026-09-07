@@ -337,7 +337,7 @@ function renderHtml(companion, svg) {
       }
     }
   </style>
-</head>
+<script type="module" src="../system/theme-entry.js?v=20260907-theme-preferences"></script></head>
 <body class="figure-document">
   <main>
     <figure class="evidence-figure" data-evidence-figure data-figure-kind="timeline" data-figure-id="${FIGURE_ID}">

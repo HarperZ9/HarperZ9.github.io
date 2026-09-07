@@ -23,6 +23,10 @@ BRIEFING_URL = (
     "2026-08-26-openai-hugging-face-incident/"
 )
 PUBLICATION_ARTICLE_REVISION = "20260907-reading-completion"
+THEME_PREFERENCES_REVISION = "20260907-theme-preferences"
+ARTICLE_THEME_ENTRY_SCRIPT = (
+    f'<script type="module" src="system/theme-entry.js?v={THEME_PREFERENCES_REVISION}"></script>'
+)
 
 
 def fixture_site(tmp_path: Path) -> Path:
@@ -82,6 +86,11 @@ def snapshot(root: Path) -> dict[str, bytes]:
     }
 
 
+def assert_only_theme_entry_script(page: str) -> None:
+    script_tags = re.findall(r"<script\b[^>]*>.*?</script>", page, flags=re.DOTALL)
+    assert script_tags == [ARTICLE_THEME_ENTRY_SCRIPT]
+
+
 def test_standalone_figure_links_its_actual_source(tmp_path: Path) -> None:
     root = fixture_site(tmp_path)
     build(list((root / "publications/data/records").glob("*.json")), root)
@@ -112,7 +121,7 @@ def test_article_separates_reading_from_optional_research_detail() -> None:
     assert '<th>Does not prove</th>' not in page
     # The important boundary stays visible before optional figure details.
     assert page.index(record["figures"][0]["doesNotProve"]) < page.index('class="publication-figure-detail"')
-    assert '<script' not in page
+    assert_only_theme_entry_script(page)
 
 
 def load_fixture() -> dict:
@@ -172,7 +181,7 @@ def test_article_contains_complete_body_evidence_and_semantic_figure(tmp_path: P
     ):
         assert literal in article
     assert "<table" in article
-    assert "<script" not in article
+    assert_only_theme_entry_script(article)
 
 
 def test_figure_data_has_parity_across_json_svg_html_and_article(tmp_path: Path) -> None:

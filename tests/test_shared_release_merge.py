@@ -9,6 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FRESH_STAMP = "20260902-creative-chassis"
+NAV_CACHE_STAMP = "20260907-theme-preferences"
 
 
 def read(relative: str) -> str:
@@ -72,7 +73,7 @@ def test_fresh_cache_stamp_covers_the_shared_navigation_chain() -> None:
     for page in site_html_pages():
         for part in read(page.as_posix()).split("nav.js?v=")[1:]:
             stamps.add(part.split('"')[0].split("'")[0])
-    assert stamps == {FRESH_STAMP}
+    assert stamps == {NAV_CACHE_STAMP}
 
     nav = read("system/nav.js")
     home_art = read("system/home-art.js")
@@ -82,7 +83,7 @@ def test_fresh_cache_stamp_covers_the_shared_navigation_chain() -> None:
     bundle = read(bundle_match.group(1))
     assert f'const ASSET_V = "{FRESH_STAMP}"' in nav
     assert f'./routes.js?v={FRESH_STAMP}' in nav
-    assert f'./nav.js?v={FRESH_STAMP}' in home_art
+    assert f'./nav.js?v={NAV_CACHE_STAMP}' in home_art
     assert f'./routes.js?v={FRESH_STAMP}' in home_art
     assert f'/system/home-art" + ".js?v={FRESH_STAMP}' in home_template
     assert f'/system/home-art.js?v={FRESH_STAMP}' in bundle

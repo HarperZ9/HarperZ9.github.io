@@ -23,9 +23,14 @@ NON_DEPLOYABLE_HTML_DIRS = {
 }
 DEFAULT_ASSET_REVISION = "20260902-creative-chassis"
 READING_CASCADE_REVISION = "20260907-reading-completion"
+THEME_PREFERENCES_REVISION = "20260907-theme-preferences"
 REVIEWED_ASSET_REVISIONS = {
     "frontier-safety/frontier-safety-site.css": READING_CASCADE_REVISION,
     "frontier-safety/frontier-safety.css": READING_CASCADE_REVISION,
+    "system/nav.js": THEME_PREFERENCES_REVISION,
+    "system/theme-entry.js": THEME_PREFERENCES_REVISION,
+    "system/theme.js": THEME_PREFERENCES_REVISION,
+    "system/theme.css": THEME_PREFERENCES_REVISION,
     "system/type-specimen.css": "20260907",
     "system/system.css": READING_CASCADE_REVISION,
     "system/doc.css": READING_CASCADE_REVISION,
@@ -347,6 +352,7 @@ def test_shared_nav_renders_zentropy_brand_and_desktop_gpu_gate() -> None:
     assert 'classList.contains("studio-page")' in nav
     assert 'import("./generative-field.js")' in nav
     assert 'import("./cursor-field.js")' in nav
+    assert f'import("./theme-entry.js?v={THEME_PREFERENCES_REVISION}")' in nav
 
 
 def test_shared_styles_define_zentropy_material_system() -> None:
@@ -639,6 +645,15 @@ def test_reading_cache_revision_reaches_importing_stylesheets_and_generators() -
             assert expected_url in source, f"{rel} must emit {expected_url}"
         for stale_url in stale_parent_urls:
             assert stale_url not in source, f"{rel} still emits stale cache key {stale_url}"
+
+
+def test_theme_preference_cache_revision_reaches_runtime_modules() -> None:
+    nav = read("system/nav.js")
+    theme_entry = read("system/theme-entry.js")
+
+    assert f'import("./theme-entry.js?v={THEME_PREFERENCES_REVISION}")' in nav
+    assert f'from "./theme.js?v={THEME_PREFERENCES_REVISION}"' in theme_entry
+    assert f'new URL("./theme.css?v={THEME_PREFERENCES_REVISION}", import.meta.url)' in theme_entry
 
 
 def test_reading_cache_negative_control_rejects_stale_parent_revision() -> None:

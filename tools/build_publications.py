@@ -248,7 +248,7 @@ def render_figure_html(figure: dict, sources: list[dict]) -> str:
     )
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{html.escape(figure["title"])}</title><link rel="stylesheet" href="../system/publication-article.css?v={ASSET_REVISION}"><link rel="stylesheet" href="../system/figure.css?v=20260906-figure-presentation"></head>
+<title>{html.escape(figure["title"])}</title><link rel="stylesheet" href="../system/publication-article.css?v={ASSET_REVISION}"><link rel="stylesheet" href="../system/figure.css?v=20260906-figure-presentation"><script type="module" src="../system/theme-entry.js?v=20260907-theme-preferences"></script></head>
 <body class="figure-document figure-publication-document"><nav class="publication-static-nav" aria-label="Publication"><a href="../publications.html">Publications</a></nav><main class="publication-article publication-figure-page"><h1>{html.escape(figure["title"])}</h1>
 <p class="publication-thesis">{html.escape(figure["claim"])}</p>
 {_render_table(figure)}{_render_figure_metadata(figure)}
@@ -324,7 +324,7 @@ def render_article(record: dict) -> str:
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="{SITE_URL}img/og/{html.escape(record["id"], quote=True)}.png">
 <meta name="twitter:image:alt" content="{html.escape(record["title"], quote=True)}: {html.escape(record["summary"], quote=True)}">
-<link rel="stylesheet" href="system/publication-article.css?v={ASSET_REVISION}"></head>
+<link rel="stylesheet" href="system/publication-article.css?v={ASSET_REVISION}"><script type="module" src="system/theme-entry.js?v=20260907-theme-preferences"></script></head>
 <body><a class="skip-link" href="#main">Skip to content</a><nav class="publication-static-nav" aria-label="Publication"><a class="publication-home" href="index.html">Zain Dana Harper</a><a href="publications.html">Publications</a><a href="writing.html">Writing</a><a href="cv.html">About</a></nav>
 <main id="main" class="publication-article"><article><header><p class="publication-kicker">{html.escape(record["form"])} · {html.escape(record["category"])}</p>
 <h1>{html.escape(record["title"])}</h1><p class="publication-thesis">{html.escape(record["thesis"])}</p>

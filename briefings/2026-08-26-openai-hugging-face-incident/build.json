@@ -3,8 +3,8 @@
   "briefingId": "2026-08-26-openai-hugging-face-incident",
   "renderer": "render-publications/v1",
   "postProcessing": {
-    "revision": "20260907-editorial-completion",
-    "scope": "Stylesheet cache references and reviewed figure presentation; source records and publication edition unchanged.",
+    "revision": "20260907-theme-preferences",
+    "scope": "Stylesheet cache references, shared theme controls and reviewed figure presentation; source records and publication edition unchanged.",
     "method": "Presentation edits applied after the original render; the incident timeline is reproduced by scripts/render-incident-multilane-timeline.mjs. Output hashes are refreshed from the resulting LF-normalized files.",
     "figureViewBoxOverrides": {"incident-multilane-timeline": "0 0 640 6882"}
   },
@@ -28,7 +28,7 @@
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/index.html",
-      "sha256": "34768ec39570ee6f58a82036872ca302562e8cc90154a1799ba9cb159eb56440"
+      "sha256": "7a0db3b30862b5203cdae93ceb2fce0cc3e57425c42871503fdd843728e22b35"
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/publication.json",
@@ -40,7 +40,7 @@
     },
     {
       "path": "figures/claim-provenance-panel.html",
-      "sha256": "dc318d903aa8da50a53387e4cbee219cceeecf58d03d45564b5ac58d5bff0880"
+      "sha256": "7a98c798b1e42eb55bd9d080b6e2f14167f34451307b8e678c9331fa682a9a29"
     },
     {
       "path": "figures/claim-provenance-panel.json",
@@ -52,7 +52,7 @@
     },
     {
       "path": "figures/control-boundary-flow.html",
-      "sha256": "426422ebae9fe39ce5c589ac020b0314bedd973131287fa7d0a1aafc0ff87d81"
+      "sha256": "e41fc2f2b1adf48b64e5f42f749efaba519e768cb3389552a5930fff82250fa5"
     },
     {
       "path": "figures/control-boundary-flow.json",
@@ -64,7 +64,7 @@
     },
     {
       "path": "figures/incident-multilane-timeline.html",
-      "sha256": "e255cabacd67399611093ec4cad0378be6ce5ef21141455e46a73956f630843f"
+      "sha256": "20ac8b0d6cd748e19230af6a746496a9786f95e8391fedfcefeba0418bc4d5a4"
     },
     {
       "path": "figures/incident-multilane-timeline.json",
@@ -76,7 +76,7 @@
     },
     {
       "path": "figures/motive-sample-nonexclusive.html",
-      "sha256": "dac9a52f2f835454e83922b609f6c9c29e02aaa40e6b65c79b1fd0356d7ccf0e"
+      "sha256": "c0b608a2494601e7c684b2802d2613f751f08a39ef19fe6a22049f3396439cbd"
     },
     {
       "path": "figures/motive-sample-nonexclusive.json",
@@ -88,7 +88,7 @@
     },
     {
       "path": "figures/recovered-actions-by-day.html",
-      "sha256": "58cef4d347278498d19584fbd4dd197a16821b7fe49c1d2f65631551a687c116"
+      "sha256": "73ba8f48673694c0db9eddcbf702c5b8b3c1d083d6e07966888e7479dbd0adc4"
     },
     {
       "path": "figures/recovered-actions-by-day.json",
@@ -100,7 +100,7 @@
     },
     {
       "path": "figures/source-scope-matrix.html",
-      "sha256": "265e21405c46018b56365003d46d18c5444457854a59fd016d47cc89ef0b73c0"
+      "sha256": "4df23a0031492426f1621e1371cb576040840d8d8f445a75fa5fb631f8c4ee4e"
     },
     {
       "path": "figures/source-scope-matrix.json",
@@ -112,7 +112,7 @@
     },
     {
       "path": "figures/task-overrepresentation.html",
-      "sha256": "d437fda95040be53b199cede52c7edc62412052784021512c68cb40c72a5f61a"
+      "sha256": "f3c981377e0c37bf82698ab60e54c9d931ed629203da212dff2b709be063af79"
     },
     {
       "path": "figures/task-overrepresentation.json",
