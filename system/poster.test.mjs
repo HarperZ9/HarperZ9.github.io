@@ -3,7 +3,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
-  defaultPosterState, cellAnchor, wrapText, contrastRatio, critiquePoster,
+  defaultPosterState, cellAnchor, wrapText, renderPoster, contrastRatio, critiquePoster,
   POSTER_FORMATS, POSTER_CELLS,
 } from "./poster.js";
 
@@ -28,6 +28,113 @@ test("wrapText breaks on the measured width", () => {
   const lines = wrapText(ctx, "one two three four five", 100);
   assert.ok(lines.length >= 2, "should wrap");
   assert.ok(lines.every((l) => l.length * 10 <= 110), "no line grossly over budget");
+});
+
+function fakeCanvas() {
+  const calls = [];
+  const ctx = {
+    calls,
+    beginPath() { calls.push(["beginPath"]); },
+    fill() { calls.push(["fill"]); },
+    fillRect(x, y, w, h) { calls.push(["fillRect", x, y, w, h]); },
+    fillText(text, x, y) { calls.push(["fillText", text, x, y]); },
+    measureText(text) { return { width: String(text).length * 24 }; },
+    roundRect(x, y, w, h, r) { calls.push(["roundRect", x, y, w, h, r]); },
+  };
+  return {
+    width: 0,
+    height: 0,
+    ctx,
+    getContext(type) { return type === "2d" ? ctx : null; },
+  };
+}
+
+test("renderPoster uses a block position for export geometry when it is present", () => {
+  const canvas = fakeCanvas();
+  const state = defaultPosterState("placed");
+  state.art = { layers: [], veil: 0 };
+  state.blocks = [{
+    kind: "headline",
+    text: "MOVE",
+    face: "brand",
+    size: 0.05,
+    tracking: 0,
+    leading: 1,
+    align: "left",
+    cell: "bottom-right",
+    position: { x: 0.25, y: 0.4 },
+    color: "#ffffff",
+    caseMode: "none",
+  }];
+
+  const out = renderPoster(canvas, state, {});
+
+  assert.equal(out.ok, true);
+  assert.equal(canvas.width, POSTER_FORMATS.a3.w);
+  assert.equal(canvas.height, POSTER_FORMATS.a3.h);
+  assert.ok(Math.abs(out.boxes[0].x0 - 0.25) < 1e-9);
+  assert.ok(Math.abs(out.boxes[0].y0 - 0.4) < 1e-9);
+  assert.ok(canvas.ctx.calls.some((call) =>
+    call[0] === "fillText" &&
+    Math.abs(call[2] - POSTER_FORMATS.a3.w * 0.25) < 1e-9 &&
+    Math.abs(call[3] - POSTER_FORMATS.a3.h * 0.4) < 1e-9
+  ));
+});
+
+test("renderPoster keeps legacy cell placement when position is absent", () => {
+  const canvas = fakeCanvas();
+  const state = defaultPosterState("legacy");
+  state.art = { layers: [], veil: 0 };
+  state.blocks = [{
+    kind: "folio",
+    text: "CELL",
+    face: "mono",
+    size: 0.02,
+    tracking: 0,
+    leading: 1,
+    align: "left",
+    cell: "bottom-left",
+    color: "#ffffff",
+    caseMode: "none",
+  }];
+
+  const out = renderPoster(canvas, state, {});
+
+  const box = out.boxes[0];
+  assert.ok(Math.abs(box.x0 - state.margin) < 1e-9);
+  assert.ok(box.y0 > 0.9, "bottom-left cell should anchor near the lower margin");
+  assert.equal(box.cell, "bottom-left");
+});
+
+test("renderPoster clamps non-finite and out-of-frame positions into finite export bounds", () => {
+  const canvas = fakeCanvas();
+  const state = defaultPosterState("bounded");
+  state.art = { layers: [], veil: 0 };
+  state.blocks = [{
+    kind: "headline",
+    text: "BOUND",
+    face: "brand",
+    size: 0.05,
+    tracking: 0,
+    leading: 1,
+    align: "left",
+    cell: "top-left",
+    position: { x: 0.98, y: 0.96 },
+    color: "#ffffff",
+    caseMode: "none",
+  }];
+
+  const out = renderPoster(canvas, state, {});
+  const box = out.boxes[0];
+
+  for (const key of ["x0", "y0", "x1", "y1"]) {
+    assert.equal(Number.isFinite(box[key]), true, `${key} should be finite`);
+    assert.ok(box[key] >= 0 && box[key] <= 1, `${key} should stay in frame`);
+  }
+  assert.ok(box.x0 > 0.75, "explicit x position should be honored before clamping");
+  assert.ok(box.y0 > 0.9, "explicit y position should be honored before clamping");
+  assert.ok(box.x1 <= 1);
+  assert.ok(box.y1 <= 1);
 });
 
 test("contrastRatio matches known WCAG anchors", () => {

@@ -20,8 +20,24 @@ def test_gaussian_splat_lab_route_and_resources_exist() -> None:
     assert "<title>Gaussian Splat Lab &middot; Zain Dana Harper</title>" in page
     assert 'href="art/gaussian-splats/manifest.json"' in page
     assert 'href="art/gaussian-splats/README.md"' in page
-    assert "No Gaussian-splat scene is being represented as finished" in page
+    assert "The original three-image pilot remains unbuilt" in page
     assert "https://harperz9.github.io/gaussian-splats.html" in SITEMAP.read_text(encoding="utf-8")
+
+
+def test_live_scene_collection_is_the_primary_entry_not_the_old_pilot() -> None:
+    from html import unescape
+
+    page = unescape(PAGE.read_text(encoding="utf-8"))
+    atlas = json.loads((ROOT / "art/spatial/atlas/atlas.world.json").read_text(encoding="utf-8"))
+    assert f'{len(atlas["scenes"])} spatial studies' in page
+    for world in ("atlas", "crystal-city", "folded-light"):
+        assert f'studio.html?source=spatial&world={world}' in page
+    assert page.index('world=atlas') < page.index('original three-image pilot')
+    assert 'art/spatial/atlas/atlas.world.json' in page
+    assert 'Source artwork, not a rendered scene' in page
+    assert 'not scans' in page
+    assert 'zero published scenes' not in page
+    assert 'pilot-receipt' not in page
 
 
 def test_manifest_does_not_self_promote_an_unbuilt_scene() -> None:

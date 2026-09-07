@@ -28,6 +28,9 @@ try {
     const page = await context.newPage();
     for (const route of ['/', '/flywheel.html', '/bulletin.html', '/fonts.html', '/typeface.html']) {
       await page.goto(base+route);
+      if (route === '/') {
+        assert.equal(await page.locator('#flywheel td a').first().textContent(), 'Flywheel v0.3.11', 'Flagship must select the newest recorded release, not the first evidence entry');
+      }
       const menu = page.locator('.home-menu,.sn-more');
       await menu.locator('summary').click();
       await page.locator('.theme-control select').selectOption(theme);

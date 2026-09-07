@@ -12,6 +12,7 @@ export const SURFACES = {
   retro: { label: "Retro Engine", href: "retro.html?import=plate", legacyKey: "re.retro.handoff" },
   loom: { label: "The Loom", href: "loom.html?import=render", legacyKey: "re.loom.handoff" },
   studio: { label: "The Studio", href: "studio.html?source=plotmaps&import=retro", legacyKey: "re.studio.handoff" },
+  poster: { label: "Poster", href: "studio.html?source=poster&import=workbench", legacyKey: "re.poster.handoff" },
   // Display-only: the Gallery originates pieces but is not a send target.
   gallery: { label: "Gallery" },
 };
@@ -71,11 +72,10 @@ export function receiveTrail(surface) {
 export function mountFlow(el, current) {
   if (!el) return;
   const steps = [
-    ["gallery", "Gallery"], ["retro", "Retro Engine"], ["loom", "The Loom"], ["studio", "The Studio"],
+    ["gallery", "Gallery"], ["retro", "Shader Room"], ["loom", "Loom"], ["studio", "Studio"],
   ];
   const chain = steps
     .map(([k, label]) => (k === current ? "<b>" + label + "</b>" : label))
     .join(" ↔ ");
-  el.innerHTML = "One workshop: plate · shader · sound → " + chain +
-    " → print · cloth · score. A piece keeps its trail as it travels.";
+  el.innerHTML = chain;
 }

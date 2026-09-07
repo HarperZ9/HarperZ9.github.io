@@ -123,8 +123,8 @@
   <canvas class="hero-aperture" data-aperture="retro" aria-hidden="true"></canvas>
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Retro Engine</span></div>
   <div class="mid">
-    <h1>Bring the engine back <span class="g">as a live retro renderer.</span></h1>
-    <p class="lede" data-canonical-purpose="retro-engine">Retro Engine is an embedded browser studio for images, drawing, GLSL, and audio traces. It applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects, then exports images, patches, MIDI, relief or disc data, and Loom handoffs.</p>
+    <h1>The Shader Room.<br><span class="g">Write it. See it.</span></h1>
+    <p class="lede" data-canonical-purpose="retro-engine">Choose a shader or write your own. Mix color, texture and motion with the Retro Engine, then use the image in a poster, weave it in Loom, or export your work.</p>
   </div>
   <div class="seal">source &rarr; pixelate &middot; palette &middot; dither &middot; CRT &middot; nothing leaves your browser</div>
 </div>
@@ -221,8 +221,10 @@
           <div class="re-sheet" id="re-sheet" hidden role="group" aria-label="Shader contact sheet"></div></div>
         <div class="re-field"><span class="re-lab">Fragment shader<span class="re-val" id="re-shader-live"></span></span>
           <textarea class="re-in re-code" id="re-code" aria-label="Shader source code, GLSL" spellcheck="false" autocapitalize="off"></textarea></div>
-        <div class="re-actions"><button class="re-btn" id="re-run">Run shader</button>
+        <div class="re-actions"><button class="re-btn" id="re-run" type="button" title="Compile now (Ctrl or Command + Enter)">Run shader</button>
+          <label class="re-toggle"><input type="checkbox" id="re-live-edit" checked> Live preview</label>
           <label class="re-toggle"><input type="checkbox" id="re-animate" checked> Animate</label></div>
+        <p class="re-hint">Live preview compiles after you pause typing. Errors keep the last working shader. Ctrl or Command + Enter compiles now.</p>
         <div class="re-knobs">
           <div class="re-lab">Knobs <span class="re-hint" id="re-knob-help">iKnobA / B / C in your code</span></div>
           <div class="re-field"><span class="re-lab">A <span class="re-val" id="re-knobA-v">0.50</span></span><input type="range" id="re-knobA" min="0" max="100" value="50" aria-label="Shader knob A"></div>
@@ -374,7 +376,9 @@
         <button class="re-btn" id="re-fresh" title="Clear the restored session and start from the default patch" aria-label="Start fresh">Start fresh</button>
         <button class="re-btn" id="re-clip" title="Record six seconds of the moving picture as a WebM clip">Record clip</button>
         <button class="re-btn" id="re-send-studio">Send to Studio &rarr;</button>
+        <button class="re-btn" id="re-send-poster" type="button" title="Use this rendered image as poster artwork; shader code stays in Shader Room">Use image in Poster &rarr;</button>
         <button class="re-btn" id="re-send-loom">Send to Loom &rarr;</button>
+        <p class="re-hint">Handoffs carry a rendered image. Your editable shader stays here.</p>
       </div>
       <div class="re-field"><span class="re-lab">Make it physical</span></div>
       <div class="re-actions">
@@ -427,6 +431,6 @@
   <p>Zentropy Labs &middot; order out of entropy &middot; <a href="index.html">home</a></p>
 </footer>
 
-<script type="module" src="system/retro-studio.js?v=20260902-creative-chassis"></script>
+<script type="module" src="system/retro-studio.js?v=20260907-live-shader"></script>
 </body>
 </html>

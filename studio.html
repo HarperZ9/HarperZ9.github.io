@@ -56,6 +56,7 @@
   }
 </style>
 <link rel="stylesheet" href="system/instrument-editorial.css?v=20260907-instrument-readable-floor">
+<link rel="stylesheet" href="system/poster-editor.css?v=20260907-direct-editor">
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
@@ -77,7 +78,8 @@
   <aside class="studio-rail" id="studio-rail" aria-label="Media sources and controls">
     <div class="rail-head">
       <h1 translate="no">The Studio</h1>
-      <p class="rail-lede">A live media instrument for rendering, measuring, transforming, and reading the frame.</p>
+      <p class="rail-lede">Make an image, shape it, then take it to your next tool.</p>
+      <nav aria-label="Creative workshops" class="rail-lede"><a href="retro.html#engine">Shader Room</a> · <a href="loom.html">Loom</a> · <a href="gaussian-splats.html">Spatial studies</a></nav>
     </div>
 
     <!-- The source menu: pick what the model looks at. setSource(name) shows ONLY that block. -->
@@ -114,10 +116,6 @@
       <!-- SOURCE: Atelier (Task 7). boot() finds #atelier and, since there is no #at-canvas here,
            draws into the shared #studio-canvas in the viewport. These are the exact control ids
            atelier.js boot() binds. Groups wrapped in <details> so the rail never overflows. -->
-      <section class="src-block" id="src-poster" role="tabpanel" aria-label="Poster workshop controls" hidden>
-        <p class="transform-note">The typography workshop: set type in the site's own generated faces over any instrument's art, and the critique reads the poster through the same measured packet the model receives - every note carries its numbers.</p>
-        <div id="poster-mount"></div>
-      </section>
       <section class="src-block" id="src-neural" role="tabpanel" aria-label="Living neural controls" hidden>
         <p class="transform-note">The seed's neural instruments, alive. The same network the gallery freezes into a plate runs here under a live clock, and the perception panel reads the motion it makes. Reduced-motion holds a single still frame.</p>
         <div class="at-group">
@@ -1070,6 +1068,7 @@
       </div>
     </div>
     <div class="render-toolbar" id="render-toolbar" role="toolbar" aria-label="Render controls">
+      <button type="button" class="rt-btn poster-more-tools" id="poster-more-tools" aria-pressed="false">More tools</button>
       <div class="rt-group" role="group" aria-label="View">
         <span class="rt-group-lab" aria-hidden="true">view</span>
       <button class="rt-btn" id="rt-playpause" type="button" aria-pressed="false"
@@ -1116,10 +1115,10 @@
         <span class="rt-ico" aria-hidden="true">&#9677;</span> Snapshot</button>
       <button class="rt-btn" id="rt-retro" type="button" title="Send this frame to the Retro Engine"
         aria-label="Send this frame to the Retro Engine to pixelate and run effects on it">
-        <span class="rt-ico" aria-hidden="true">&#9638;</span> To Retro</button>
+        <span class="rt-ico" aria-hidden="true">&#9638;</span> Shader Room</button>
       <button class="rt-btn" id="rt-loom" type="button" title="Send this frame to the Loom to be woven"
         aria-label="Send this frame to the Loom to be woven into cloth">
-        <span class="rt-ico" aria-hidden="true">&#9636;</span> To Loom</button>
+        <span class="rt-ico" aria-hidden="true">&#9636;</span> Loom</button>
       </div>
       <div class="rt-group" role="group" aria-label="Export">
         <span class="rt-group-lab" aria-hidden="true">export</span>
@@ -1246,6 +1245,13 @@
   <!-- RIGHT PANEL: live perception, measured channels, receipts, and secondary chat. -->
   <aside class="studio-panel studio-perception-panel" id="studio-panel" aria-label="Live perception and receipts">
     <div class="panel-scroll">
+      <section class="src-block" id="src-poster" role="tabpanel" aria-label="Poster workshop controls" hidden>
+        <h2 class="poster-workspace-title">Compose your poster</h2>
+        <p class="transform-note">Drag text on the canvas or edit it below. Add your own image, or bring one from Shader Room or Loom. Export the finished composition as a PNG.</p>
+        <div id="poster-mount"></div>
+      </section>
+      <details id="studio-analysis" class="studio-analysis" open>
+        <summary>Inspect image</summary>
       <section class="panel" id="studio-frame" aria-label="Live perception summary">
         <h2>Live Perception
           <span class="mm-live" id="mm-live" hidden aria-hidden="true"><span class="mm-dot"></span>live</span></h2>
@@ -1300,6 +1306,7 @@
         </div>
       </section>
 
+      </details>
       <details class="studio-receipts">
         <summary>Receipts</summary>
 
@@ -1425,7 +1432,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20260902-creative-chassis"></script>
+<script type="module" src="system/studio.js?v=20260907-creative-editors"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

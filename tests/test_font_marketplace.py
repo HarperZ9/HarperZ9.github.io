@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "fonts.html"
 CSS = ROOT / "system" / "font-marketplace.css"
+JS = ROOT / "system" / "font-specimen.js"
 
 
 def read(path: Path) -> str:
@@ -28,13 +29,16 @@ def section(source: str, section_id: str) -> str:
 def test_fonts_page_publishes_an_empty_marketplace_without_checkout_claims() -> None:
     assert PAGE.is_file(), "fonts.html must be the public Fonts destination"
     assert CSS.is_file(), "font marketplace styles must live in system/"
+    assert JS.is_file(), "interactive specimen script must live in system/"
 
     source = read(PAGE)
     assert '<body class="inner-clean font-marketplace-page"' in source
     assert 'data-font-catalog-state="empty"' in source
     assert 'data-commerce-enabled="false"' in source
     assert 'href="system/font-marketplace.css' in source
+    assert 'src="system/font-specimen.js' in source
     assert 'href="typeface.html"' in source
+    assert 'href="#font-lab"' in source
     assert 'href="mailto:zaindharper@gmail.com?subject=Font%20licensing%20enquiry"' in source
     assert "Type with a point of view." in source
     assert "Original typefaces for clear reading and expressive headlines. Our first families are in development." in source
@@ -119,3 +123,34 @@ def test_fonts_page_names_release_gate_without_promising_a_notification_service(
     assert "waiting list" not in lowered
     assert "newsletter" not in lowered
     assert "notify" not in lowered
+
+
+def test_interactive_specimen_is_public_static_and_progressive() -> None:
+    source = read(PAGE)
+    script = read(JS)
+
+    lab = section(source, "font-lab")
+    assert 'data-font-specimen' in lab
+    assert 'data-font-specimen-controls hidden' in lab
+    assert '<noscript>' in lab
+    assert 'id="font-specimen-text"' in lab
+    assert 'id="font-specimen-family"' in lab
+    assert 'id="font-specimen-size"' in lab
+    assert 'id="font-specimen-line"' in lab
+    assert 'id="font-specimen-track"' in lab
+    assert 'data-font-specimen-preview' in lab
+    assert 'type="reset"' in lab
+    assert 'Hanken Grotesk' in lab
+    assert 'Conso' in lab
+
+    for private_marker in (
+        "localStorage",
+        "sessionStorage",
+        "indexedDB",
+        "sendBeacon",
+        "fetch(",
+        "XMLHttpRequest",
+    ):
+        assert private_marker not in script
+    assert "document.cookie" not in script
+    assert "font-commerce" not in script.lower()

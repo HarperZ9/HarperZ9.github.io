@@ -130,6 +130,178 @@ html[data-theme] body.font-marketplace-page .font-market a.font-action.font-acti
   overflow-wrap: anywhere;
 }
 
+.font-lab {
+  align-items: start;
+}
+
+.font-lab-panel {
+  min-width: 0;
+  display: grid;
+  gap: clamp(1rem, 2.6vw, 1.4rem);
+}
+
+.font-specimen-controls[hidden],
+.font-live-specimen[hidden],
+.font-specimen-status[hidden] {
+  display: none;
+}
+
+.font-specimen-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 1.4rem);
+  border: 1px solid var(--reading-rule);
+  background: var(--reading-panel);
+}
+
+.font-control {
+  min-width: 0;
+  display: grid;
+  gap: .45rem;
+}
+
+.font-control-wide {
+  grid-column: 1 / -1;
+}
+
+.font-control label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--reading-ink);
+  font-weight: 700;
+}
+
+.font-control output {
+  flex: 0 0 auto;
+  color: var(--reading-soft);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.font-control :is(textarea, select, input) {
+  width: 100%;
+  box-sizing: border-box;
+  color: var(--reading-ink);
+  background: var(--reading-paper);
+  border: 1px solid var(--reading-rule);
+  font: inherit;
+}
+
+.font-control textarea,
+.font-control select {
+  min-height: 44px;
+  padding: .72rem .78rem;
+}
+
+.font-control textarea {
+  min-height: 7rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.font-control input[type="range"] {
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  accent-color: var(--reading-link);
+}
+
+.font-control :is(textarea, select, input):focus-visible,
+.font-specimen-reset:focus-visible {
+  outline: 2px solid var(--reading-link);
+  outline-offset: 3px;
+}
+
+.font-specimen-reset {
+  justify-self: start;
+  min-height: 44px;
+  padding: .68rem .9rem;
+  border: 1px solid var(--reading-rule);
+  color: var(--reading-link);
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.font-specimen-reset:hover,
+.font-specimen-reset:focus-visible {
+  border-color: var(--reading-link);
+}
+
+.font-market-section p.font-control-note,
+.font-market-section p.font-specimen-status {
+  grid-column: 1 / -1;
+  max-width: 60ch;
+  margin: 0;
+  font-size: .98rem;
+  line-height: 1.5;
+  color: var(--reading-soft);
+}
+
+.font-live-specimen,
+.font-static-specimen {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid var(--reading-rule);
+  background: var(--reading-panel);
+}
+
+.font-live-specimen figcaption,
+.font-static-specimen figcaption {
+  margin-bottom: .85rem;
+  color: var(--reading-soft);
+  font-weight: 700;
+}
+
+.font-live-preview {
+  margin: 0;
+  max-width: 15ch;
+  font-size: var(--font-live-size, 40px);
+  line-height: var(--font-live-line, 1.25);
+  letter-spacing: var(--font-live-track, 0em);
+  color: var(--reading-ink);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.font-live-preview[data-font-family="hanken"] {
+  font-family: "Hanken Grotesk", sans-serif;
+  font-weight: 700;
+}
+
+.font-live-preview[data-font-family="conso"] {
+  font-family: "Conso", serif;
+  font-weight: 600;
+}
+
+.font-static-line {
+  margin: 0;
+  color: var(--reading-ink);
+}
+
+.font-market-section p.font-static-line {
+  max-width: 24ch;
+  font-size: clamp(1.6rem, 4vw, 2.9rem);
+  line-height: 1.18;
+  color: var(--reading-ink);
+}
+
+.font-static-line + .font-static-line {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--reading-rule);
+}
+
+.font-static-line-alt {
+  font-family: "Conso", serif;
+}
+
 .font-market-section {
   display: grid;
   grid-template-columns: minmax(12rem, .4fr) minmax(0, .6fr);
@@ -278,6 +450,10 @@ html[data-theme] body.font-marketplace-page .font-market a.font-action.font-acti
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .font-specimen-controls {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .font-details-grid p:nth-child(2) {
     border-right: 0;
   }
@@ -301,6 +477,12 @@ html[data-theme] body.font-marketplace-page .font-market a.font-action.font-acti
     justify-content: center;
   }
 
+  .font-control label {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: .2rem;
+  }
+
   .current-face,
   .font-details-grid {
     grid-template-columns: minmax(0, 1fr);
@@ -320,9 +502,19 @@ html[data-theme] body.font-marketplace-page .font-market a.font-action.font-acti
   .font-action,
   .font-sale-note,
   .font-specimen-panel,
+  .font-specimen-controls,
+  .font-live-specimen,
+  .font-static-specimen,
   .font-details-grid,
   .font-details-grid p {
     border-color: CanvasText;
+  }
+
+  .font-control :is(textarea, select, input),
+  .font-specimen-reset {
+    border-color: CanvasText;
+    color: CanvasText;
+    background: Canvas;
   }
 
   .font-action-primary {
@@ -344,8 +536,15 @@ html[data-theme] body.font-marketplace-page .font-market a.font-action.font-acti
   }
 
   .font-market-actions,
+  .font-specimen-controls,
   .font-specimen-panel {
     display: none;
+  }
+
+  .font-live-specimen,
+  .font-static-specimen {
+    border: 0;
+    padding: 0;
   }
 
   .font-details-grid {

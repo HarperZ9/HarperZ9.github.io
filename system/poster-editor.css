@@ -1,0 +1,49 @@
+/* Poster Studio direct manipulation affordances.
+   Kept separate from system.css so the shared site stylesheet does not need a
+   broad cache refresh for poster-only live editor controls. */
+.poster-stage-overlay{position:absolute;z-index:25;line-height:1;pointer-events:auto;touch-action:none;user-select:none}
+.poster-stage-overlay[hidden]{display:none!important}
+.viewport-stage.poster-direct-active{cursor:default}
+.poster-select-box{position:absolute;min-width:10px;min-height:10px;margin:0;padding:0;border:1px solid color-mix(in oklab, var(--bone) 70%, transparent);
+  border-radius:5px;background:color-mix(in oklab, var(--orange) 8%, transparent);
+  box-shadow:0 0 0 1px rgba(0,0,0,.32),0 0 0 999px transparent;cursor:grab}
+.poster-select-box::before{content:"";position:absolute;inset:-5px;border:1px dashed color-mix(in oklab, var(--bone) 46%, transparent);border-radius:7px}
+.poster-select-box::after{content:attr(data-label);position:absolute;left:.25rem;top:.25rem;max-width:calc(100% - .5rem);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--mono);font-size:.875rem;letter-spacing:.04em;
+  color:var(--void);background:color-mix(in oklab, var(--bone) 88%, transparent);border:1px solid rgba(0,0,0,.22);
+  border-radius:4px;padding:.18rem .28rem;opacity:0;transform:translateY(-.15rem);transition:opacity .14s,transform .14s}
+.poster-select-box:hover,.poster-select-box[aria-pressed="true"],.poster-select-box:focus-visible{
+  border-color:var(--orange);background:color-mix(in oklab, var(--orange) 18%, transparent)}
+.poster-select-box:hover::after,.poster-select-box[aria-pressed="true"]::after,.poster-select-box:focus-visible::after{opacity:1;transform:none}
+.poster-select-box:active{cursor:grabbing}
+.poster-select-box:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
+.poster-block.is-selected{border-color:color-mix(in oklab, var(--orange) 74%, var(--hairline));background:color-mix(in oklab, var(--orange) 7%, transparent)}
+.poster-position-readout{display:block;margin:-.05rem 0 .35rem;font-family:var(--mono);font-size:.875rem;letter-spacing:.04em;
+  color:var(--muted);line-height:1.45}
+.poster-actions .btn:disabled{opacity:.38;cursor:not-allowed}
+
+/* Compose first; measurements and auxiliary tools remain one action away. */
+.poster-workspace-title{font-family:var(--body);font-size:1.35rem;line-height:1.2;margin:0 0 .65rem}
+body.instrument-surface .poster-panel button,body.instrument-surface .poster-panel textarea,body.instrument-surface .poster-panel input,body.instrument-surface .poster-panel summary{font-family:var(--body);font-size:.95rem;line-height:1.4}
+.poster-background>summary{cursor:pointer;padding:.45rem 0}
+.poster-background>summary+.at-glab{margin-top:1rem}
+.poster-panel .at-glab,.poster-panel .poster-mini-label{font-size:.8rem;letter-spacing:0;text-transform:none}
+body.instrument-surface .poster-panel .at-group{background:transparent;border-bottom:1px solid var(--hairline);padding:.6rem 0}
+.poster-panel .poster-artrow{margin-block:.65rem}
+.studio-analysis>summary{cursor:pointer;padding:.85rem 0;font-size:1rem;border-bottom:1px solid var(--hairline)}
+.poster-more-tools{display:none}
+.poster-workspace .poster-more-tools{display:inline-flex;order:5}
+.poster-workspace:not(.poster-more-controls) .rt-group[aria-label="Sound"],
+.poster-workspace:not(.poster-more-controls) .rt-group[aria-label="Engine"],
+.poster-workspace:not(.poster-more-controls) #rt-overlay,
+.poster-workspace:not(.poster-more-controls) #rt-playpause,
+.poster-workspace:not(.poster-more-controls) #rt-snapshot,
+.poster-workspace:not(.poster-more-controls) #rt-plot,
+.poster-workspace:not(.poster-more-controls) #engine-statusbar{display:none}
+.poster-workspace .render-toolbar{gap:.2rem .6rem;padding-block:.4rem}
+.poster-workspace .rt-group-lab{display:none}
+.poster-workspace #src-poster{padding-bottom:1.5rem}
+.poster-workspace #src-poster .transform-note{font-size:.95rem;line-height:1.55;margin-bottom:1rem}
+@media(min-width:900px){
+  .poster-workspace .studio-app:not(.cinema){grid-template-columns:190px minmax(0,1fr) 320px}
+}

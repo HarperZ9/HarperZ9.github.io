@@ -23,7 +23,7 @@
 <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#101416" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="system/system.css?v=20260907-reading-completion">
-<link rel="stylesheet" href="system/font-marketplace.css?v=20260907">
+<link rel="stylesheet" href="system/font-marketplace.css?v=20260907-live-specimen">
 </head>
 <body class="inner-clean font-marketplace-page" data-font-catalog-state="empty" data-commerce-enabled="false">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -37,7 +37,8 @@
       <h1>Type with a point of view.</h1>
       <p class="font-market-lede">Original typefaces for clear reading and expressive headlines. Our first families are in development.</p>
       <div class="font-market-actions" aria-label="Font page actions">
-        <a class="font-action font-action-primary" href="typeface.html">Read the current specimen</a>
+        <a class="font-action font-action-primary" href="#font-lab">Try the live specimen</a>
+        <a class="font-action" href="typeface.html">Read the current specimen</a>
         <a class="font-action" href="mailto:zaindharper@gmail.com?subject=Font%20licensing%20enquiry">Send a licensing enquiry</a>
       </div>
       <p id="font-catalog" class="font-sale-note">No fonts are available to purchase yet.</p>
@@ -48,6 +49,56 @@
       <p class="specimen-line specimen-line-code">0123456789 / Il1 O0 rn m fi fl</p>
     </figure>
   </header>
+
+  <section id="font-lab" class="font-market-section font-lab" aria-labelledby="font-lab-title" data-font-specimen>
+    <div class="section-copy">
+      <h2 id="font-lab-title">Make it read your way.</h2>
+      <p>Choose a typeface, try your words, and adjust the spacing as you read. This preview uses Hanken Grotesk and Conso, the site's current typefaces.</p>
+    </div>
+    <div class="font-lab-panel">
+      <noscript>
+        <figure class="font-static-specimen" data-font-static-specimen>
+          <figcaption>Static specimen</figcaption>
+          <p class="font-static-line">Hanken Grotesk: Letters should keep their shape when the work gets dense.</p>
+          <p class="font-static-line font-static-line-alt">Conso: 0123456789 / Il1 O0 rn m fi fl</p>
+        </figure>
+      </noscript>
+
+      <form class="font-specimen-controls" data-font-specimen-controls hidden aria-describedby="font-specimen-privacy">
+        <div class="font-control font-control-wide">
+          <label for="font-specimen-text">Your text</label>
+          <textarea id="font-specimen-text" name="specimenText" rows="4" maxlength="260" autocomplete="off" spellcheck="false" data-font-specimen-text>Letters should keep their shape when the work gets dense.</textarea>
+        </div>
+        <div class="font-control">
+          <label for="font-specimen-family">Typeface</label>
+          <select id="font-specimen-family" name="specimenFamily" data-font-specimen-family>
+            <option value="hanken" selected>Hanken Grotesk</option>
+            <option value="conso">Conso</option>
+          </select>
+        </div>
+        <div class="font-control">
+          <label for="font-specimen-size">Size <output id="font-specimen-size-output" for="font-specimen-size">40 px</output></label>
+          <input id="font-specimen-size" name="specimenSize" type="range" min="18" max="88" step="1" value="40" data-font-specimen-size>
+        </div>
+        <div class="font-control">
+          <label for="font-specimen-line">Line spacing <output id="font-specimen-line-output" for="font-specimen-line">1.25</output></label>
+          <input id="font-specimen-line" name="specimenLine" type="range" min="0.9" max="1.8" step="0.05" value="1.25" data-font-specimen-line>
+        </div>
+        <div class="font-control">
+          <label for="font-specimen-track">Letter spacing <output id="font-specimen-track-output" for="font-specimen-track">0.00 em</output></label>
+          <input id="font-specimen-track" name="specimenTrack" type="range" min="-0.04" max="0.12" step="0.01" value="0" data-font-specimen-track>
+        </div>
+        <button class="font-specimen-reset" type="reset" data-font-specimen-reset>Reset specimen</button>
+        <p id="font-specimen-privacy" class="font-control-note">No text is saved or sent from this page.</p>
+      </form>
+
+      <figure class="font-live-specimen" data-font-specimen-live hidden>
+        <figcaption>Live preview</figcaption>
+        <p class="font-live-preview" data-font-specimen-preview data-font-family="hanken">Letters should keep their shape when the work gets dense.</p>
+      </figure>
+      <p id="font-specimen-status" class="font-specimen-status" role="status" aria-live="polite" data-font-specimen-status hidden>Hanken Grotesk, 40 px, line height 1.25, tracking 0.00 em</p>
+    </div>
+  </section>
 
   <section id="current-type" class="font-market-section current-type" aria-labelledby="current-type-title">
     <div class="section-copy">
@@ -105,5 +156,6 @@
   <a href="index.html">Zentropy Labs</a>
   <span>Built by Zain Dana Harper.</span>
 </footer>
+<script type="module" src="system/font-specimen.js?v=20260907-live-specimen"></script>
 </body>
 </html>

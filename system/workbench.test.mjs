@@ -34,4 +34,6 @@ test("every send target carries label, href, and a legacy key", () => {
     if (s.legacyKey) assert.ok(s.href && s.href.includes(".html"), k + " is a target and needs an href");
   }
   assert.ok(SURFACES.gallery && !SURFACES.gallery.legacyKey, "gallery stays display-only");
+  assert.equal(SURFACES.poster?.href, 'studio.html?source=poster&import=workbench');
+  assert.equal(SURFACES.poster?.legacyKey, 're.poster.handoff');
 });

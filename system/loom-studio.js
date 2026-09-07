@@ -6,7 +6,7 @@
 // and the cloth handed back to the Retro Engine's pixel pipeline.
 import { STRUCTURES, computeDraft, draftToWIF, weftPaletteFor, wifToDraft } from "./weave-engine.js?v=20260813-wif";
 import { renderCloth, renderDraftChart, chartLayout } from "./weave-render.js?v=20260902-thread";
-import { sendPiece, receiveTrail, mountFlow } from "./workbench.js?v=20260812-cohesion";
+import { sendPiece, receiveTrail, mountFlow } from "./workbench.js?v=20260907-creative-handoff";
 
 const $ = (id) => document.getElementById(id);
 
@@ -91,6 +91,9 @@ function boot() {
       if (stage) stage.classList.toggle("wv-zoomed", chartZoom > 1);
       chart.style.width = chartZoom > 1 ? chart.width + "px" : "";
       chart.style.height = chartZoom > 1 ? chart.height + "px" : "";
+      positionDraftCursor();
+    } else {
+      hideDraftCursor();
     }
     paintReadout();
   }
@@ -270,9 +273,9 @@ function boot() {
   // end to another shaft, click a treadling row to change which treadle the pick
   // uses. The drawdown is recomputed from the edited arrays, so the cloth, the
   // readout, and the WIF export all follow the edit.
-  let edited = false;
+  let edited = false, draftCursor = null;
   function draftIsEditable() {
-    return !!(draft && draft.threading && draft.tieup && draft.treadling && draft.shafts);
+    return !!(draft && !draft.perCell && draft.threading && draft.tieup && draft.treadling && draft.shafts);
   }
   function rebindLift() {
     // liftAt may be a closure over the ORIGINAL arrays; rebind it to the live ones
@@ -281,10 +284,109 @@ function boot() {
       return row && row[draft.threading[e]] ? 1 : 0;
     };
   }
-  function chartClick(ev) {
+  function zoneBounds(zone) {
+    if (!draftIsEditable()) return null;
+    const treadles = draft.tieup.length;
+    if (zone === "threading") return { cols: draft.ends, rows: draft.shafts };
+    if (zone === "tieup") return { cols: treadles, rows: draft.shafts };
+    if (zone === "treadling") return { cols: treadles, rows: draft.picks };
+    return null;
+  }
+  function zoneRect(L, zone) {
+    if (zone === "threading") return L.threading;
+    if (zone === "tieup") return L.tieup;
+    if (zone === "treadling") return L.treadling;
+    return null;
+  }
+  function visualShaft(row) {
+    return draft.shafts - 1 - row;
+  }
+  function clampDraftCursor() {
+    if (!draftCursor) return null;
+    const b = zoneBounds(draftCursor.zone);
+    if (!b || b.cols < 1 || b.rows < 1) { draftCursor = null; return null; }
+    draftCursor.col = Math.max(0, Math.min(b.cols - 1, draftCursor.col | 0));
+    draftCursor.row = Math.max(0, Math.min(b.rows - 1, draftCursor.row | 0));
+    return draftCursor;
+  }
+  function draftCellName(cell) {
+    if (!cell || !draftIsEditable()) return "draft cell";
+    if (cell.zone === "tieup") return `tie-up treadle ${cell.col + 1}, shaft ${visualShaft(cell.row) + 1}`;
+    if (cell.zone === "threading") return `threading end ${cell.col + 1}, shaft ${visualShaft(cell.row) + 1}`;
+    if (cell.zone === "treadling") return `treadling pick ${cell.row + 1}, treadle ${cell.col + 1}`;
+    return "draft cell";
+  }
+  function draftCellValue(cell) {
+    if (!cell || !draftIsEditable()) return "";
+    if (cell.zone === "tieup") {
+      const row = draft.tieup[cell.col], sh = visualShaft(cell.row);
+      return row && row[sh] ? "lifted" : "dropped";
+    }
+    if (cell.zone === "threading") return draft.threading[cell.col] === visualShaft(cell.row) ? "assigned" : "empty";
+    if (cell.zone === "treadling") return draft.treadling[cell.row] === cell.col ? "selected" : "empty";
+    return "";
+  }
+  function ensureDraftCursorEl() {
+    let el = $("wv-draft-cursor");
+    if (el) return el;
+    const stage = $("wv-stage-preview");
+    if (!stage) return null;
+    el = document.createElement("div");
+    el.id = "wv-draft-cursor";
+    el.hidden = true;
+    el.setAttribute("aria-hidden", "true");
+    Object.assign(el.style, {
+      position: "absolute",
+      zIndex: "2",
+      pointerEvents: "none",
+      boxSizing: "border-box",
+      border: "2px solid var(--ember,#e0632f)",
+      background: "rgba(224,99,47,.12)",
+      boxShadow: "0 0 0 1px var(--void,#07070c),0 0 0 5px rgba(224,99,47,.22)",
+    });
+    stage.appendChild(el);
+    return el;
+  }
+  function hideDraftCursor() {
+    const el = $("wv-draft-cursor");
+    if (el) el.hidden = true;
+  }
+  function positionDraftCursor() {
     const chart = $("wv-chart");
-    if (!chart || chart.hidden || !draftIsEditable()) return;
-    // MUST match the width the chart was rendered at, or every click maps to
+    const stage = $("wv-stage-preview");
+    if (!chart || !stage || chart.hidden || view !== "draft" || !draftIsEditable()) { hideDraftCursor(); return; }
+    const cell = clampDraftCursor();
+    if (!cell) { hideDraftCursor(); return; }
+    const L = chartLayout(draft, 1200 * chartZoom);
+    const box = zoneRect(L, cell.zone);
+    const el = ensureDraftCursorEl();
+    if (!box || !el) return;
+    const chartBox = chart.getBoundingClientRect();
+    const stageBox = stage.getBoundingClientRect();
+    if (!chartBox.width || !chartBox.height) { hideDraftCursor(); return; }
+    const scaleX = chartBox.width / L.width, scaleY = chartBox.height / L.height;
+    const x = box.x + cell.col * L.cell;
+    const y = box.y + cell.row * L.cell;
+    el.style.left = (chartBox.left - stageBox.left + stage.scrollLeft + x * scaleX) + "px";
+    el.style.top = (chartBox.top - stageBox.top + stage.scrollTop + y * scaleY) + "px";
+    el.style.width = Math.max(4, L.cell * scaleX) + "px";
+    el.style.height = Math.max(4, L.cell * scaleY) + "px";
+    el.dataset.zone = cell.zone;
+    el.dataset.col = String(cell.col);
+    el.dataset.row = String(cell.row);
+    el.hidden = false;
+  }
+  function selectDraftCell(cell, announce) {
+    if (!cell || !draftIsEditable()) { draftCursor = null; hideDraftCursor(); return; }
+    draftCursor = { zone: cell.zone, col: cell.col, row: cell.row };
+    clampDraftCursor();
+    positionDraftCursor();
+    if (announce) status(`${draftCellName(draftCursor)} is ${draftCellValue(draftCursor)}; Enter or Space edits it`, "");
+  }
+  function draftCellFromEvent(ev) {
+    const chart = $("wv-chart");
+    if (!chart || chart.hidden || !draftIsEditable()) return null;
+    // MUST match the width the chart was rendered at, or every pointer maps to
     // the wrong cell the moment the zoom is not 1.
     const L = chartLayout(draft, 1200 * chartZoom);
     const r = chart.getBoundingClientRect();
@@ -292,42 +394,130 @@ function boot() {
     const x = (ev.clientX - r.left) * (L.width / r.width);
     const y = (ev.clientY - r.top) * (L.height / r.height);
     const inBox = (b) => x >= b.x && x < b.x + b.w && y >= b.y && y < b.y + b.h;
-    let touched = "";
     if (inBox(L.tieup)) {
-      const t = Math.floor((x - L.tieup.x) / L.cell);
-      const sh = Math.floor((y - L.tieup.y) / L.cell);
-      if (draft.tieup[t] && sh >= 0 && sh < draft.shafts) {
-        draft.tieup[t][sh] = !draft.tieup[t][sh];
-        touched = "tie-up " + (t + 1) + "/" + (sh + 1);
-      }
-    } else if (inBox(L.threading)) {
-      const e = Math.floor((x - L.threading.x) / L.cell);
-      const sh = Math.floor((y - L.threading.y) / L.cell);
-      if (e >= 0 && e < draft.ends && sh >= 0 && sh < draft.shafts) {
-        draft.threading[e] = sh;
-        touched = "end " + (e + 1) + " to shaft " + (sh + 1);
-      }
-    } else if (inBox(L.treadling)) {
-      const t = Math.floor((x - L.treadling.x) / L.cell);
-      const p = Math.floor((y - L.treadling.y) / L.cell);
-      if (p >= 0 && p < draft.picks && t >= 0 && t < draft.tieup.length) {
-        draft.treadling[p] = t;
-        touched = "pick " + (p + 1) + " on treadle " + (t + 1);
-      }
+      return { zone: "tieup", col: Math.floor((x - L.tieup.x) / L.cell), row: Math.floor((y - L.tieup.y) / L.cell) };
     }
-    if (!touched) return;
+    if (inBox(L.threading)) {
+      return { zone: "threading", col: Math.floor((x - L.threading.x) / L.cell), row: Math.floor((y - L.threading.y) / L.cell) };
+    }
+    if (inBox(L.treadling)) {
+      return { zone: "treadling", col: Math.floor((x - L.treadling.x) / L.cell), row: Math.floor((y - L.treadling.y) / L.cell) };
+    }
+    return null;
+  }
+  function applyDraftCell(cell) {
+    if (!cell || !draftIsEditable()) return false;
+    const b = zoneBounds(cell.zone);
+    if (!b || cell.col < 0 || cell.row < 0 || cell.col >= b.cols || cell.row >= b.rows) return false;
+    let touched = "", value = "";
+    if (cell.zone === "tieup") {
+      const sh = visualShaft(cell.row);
+      draft.tieup[cell.col][sh] = !draft.tieup[cell.col][sh];
+      touched = draftCellName(cell);
+      value = draft.tieup[cell.col][sh] ? "lifted" : "dropped";
+    } else if (cell.zone === "threading") {
+      draft.threading[cell.col] = visualShaft(cell.row);
+      touched = draftCellName(cell);
+      value = "assigned";
+    } else if (cell.zone === "treadling") {
+      draft.treadling[cell.row] = cell.col;
+      touched = draftCellName(cell);
+      value = "selected";
+    }
+    if (!touched) return false;
     edited = true;
     rebindLift();
     ping("chip", 0.5);
-    status("edited: " + touched + " · the cloth follows the draft", "ok");
+    status("edited: " + touched + " " + value + " · the cloth follows the draft", "ok");
     draw();
+    return true;
+  }
+  function chartClick(ev) {
+    const chart = $("wv-chart");
+    if (!chart || chart.hidden || !draftIsEditable()) return;
+    const cell = draftCellFromEvent(ev);
+    if (!cell) return;
+    if (chart.focus) chart.focus({ preventScroll: true });
+    selectDraftCell(cell, false);
+    applyDraftCell(draftCursor);
+  }
+  function defaultDraftCursor() {
+    return { zone: "tieup", col: 0, row: 0 };
+  }
+  function moveDraftCursor(key) {
+    if (!draftIsEditable()) return false;
+    if (!draftCursor) draftCursor = defaultDraftCursor();
+    const cur = { ...draftCursor };
+    const b = zoneBounds(cur.zone);
+    if (!b) return false;
+    if (key === "ArrowRight") {
+      if (cur.col < b.cols - 1) cur.col += 1;
+      else if (cur.zone === "threading") { cur.zone = "tieup"; cur.col = 0; }
+    } else if (key === "ArrowLeft") {
+      if (cur.col > 0) cur.col -= 1;
+      else if (cur.zone === "tieup") { cur.zone = "threading"; cur.col = Math.max(0, draft.ends - 1); }
+    } else if (key === "ArrowDown") {
+      if (cur.row < b.rows - 1) cur.row += 1;
+      else if (cur.zone === "tieup") { cur.zone = "treadling"; cur.row = 0; }
+    } else if (key === "ArrowUp") {
+      if (cur.row > 0) cur.row -= 1;
+      else if (cur.zone === "treadling") { cur.zone = "tieup"; cur.row = Math.max(0, draft.shafts - 1); }
+    } else if (key === "Home") {
+      cur.col = 0; cur.row = 0;
+    } else if (key === "End") {
+      cur.col = b.cols - 1; cur.row = b.rows - 1;
+    } else {
+      return false;
+    }
+    selectDraftCell(cur, true);
+    return true;
+  }
+  function chartKeydown(ev) {
+    const chart = $("wv-chart");
+    if (!chart || ev.currentTarget !== chart || document.activeElement !== chart || chart.hidden || view !== "draft") return;
+    if (!draftIsEditable()) {
+      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Home", "End", "Enter", " "].includes(ev.key)) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        status("pick a shaft structure to edit threading, tie-up, or treadling", "err");
+      }
+      return;
+    }
+    if (ev.key === "Escape") {
+      ev.preventDefault();
+      ev.stopPropagation();
+      draftCursor = null;
+      hideDraftCursor();
+      status("draft cursor cleared", "");
+      return;
+    }
+    if (ev.key === "Enter" || ev.key === " ") {
+      ev.preventDefault();
+      ev.stopPropagation();
+      if (!draftCursor) selectDraftCell(defaultDraftCursor(), true);
+      applyDraftCell(draftCursor);
+      return;
+    }
+    if (moveDraftCursor(ev.key)) {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
   }
   const chartEl = $("wv-chart");
   if (chartEl) {
     chartEl.addEventListener("click", chartClick);
+    chartEl.addEventListener("keydown", chartKeydown);
+    chartEl.addEventListener("focus", () => {
+      if (view !== "draft" || !draftIsEditable()) return;
+      if (!draftCursor) selectDraftCell(defaultDraftCursor(), true);
+      else selectDraftCell(draftCursor, true);
+    });
+    chartEl.addEventListener("blur", positionDraftCursor);
     chartEl.style.cursor = "crosshair";
     chartEl.setAttribute("tabindex", "0");
-    chartEl.setAttribute("role", "img");
+    chartEl.setAttribute("role", "application");
+    chartEl.setAttribute("aria-describedby", "wv-edit-hint wv-status");
+    chartEl.setAttribute("aria-keyshortcuts", "ArrowUp ArrowDown ArrowLeft ArrowRight Enter Space Escape");
   }
 
   // ── WIF in, and a check on the way out ───────────────────────────────────
@@ -531,6 +721,12 @@ function boot() {
     ping("bell"); status("draft chart saved", "ok");
   });
   $("wv-save").addEventListener("click", () => { if (draft) { download("loom-cloth.png", out.toDataURL("image/png")); ping("preset"); } });
+  $("wv-send-poster").addEventListener("click", () => {
+    if (!draft) { status("Choose an image or draft first.", ""); return; }
+    if (!sendPiece("poster", out.toDataURL("image/png"), { surface: "loom", label: "woven cloth" })) {
+      status("The image could not be carried across. Export the cloth image and open it in Poster instead.", "err");
+    }
+  });
   $("wv-send-retro").addEventListener("click", () => {
     if (!draft) return;
     const label = STRUCTURES[structureId].name.toLowerCase() + ", " + draft.ends + " ends";
@@ -552,7 +748,7 @@ function boot() {
   }
   const saveSetupBtn = $("wv-save-setup");
   if (saveSetupBtn) saveSetupBtn.addEventListener("click", async () => {
-    const wb = await import("./workbench.js?v=20260812-cohesion");
+    const wb = await import("./workbench.js?v=20260907-creative-handoff");
     const setups = loadSetups();
     const name = STRUCTURES[structureId].name.toLowerCase() + " · " + $("wv-sett").value + " ends · " + setups.length;
     setups.unshift({ name, structureId, sett: $("wv-sett").value, tone: $("wv-tone").value,
@@ -574,7 +770,7 @@ function boot() {
     if (wc) { if (s.warpColor) wc.value = s.warpColor; wc.hidden = s.warp !== "custom"; }
     $("wv-speed").value = s.speed; $("wv-speed-v").textContent = s.speed;
     rebuild(true); ping("preset");
-    const wb = await import("./workbench.js?v=20260812-cohesion");
+    const wb = await import("./workbench.js?v=20260907-creative-handoff");
     status("setup restored: " + s.name + (s.trail && s.trail.length ? " · was " + wb.trailLine(s.trail) : ""), "ok");
   });
   refreshSetups();

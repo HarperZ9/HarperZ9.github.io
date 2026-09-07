@@ -11,7 +11,7 @@
 import { validateWorldPackage } from "./engine/world-package.js";
 import { startSpatialScene } from "./spatial-scene.js";
 import { startTexturedScene } from "./spatial-textured.js";
-import { startAtlasScene, projectAabbRect } from "./spatial-atlas.js";
+import { startAtlasScene, projectAabbRect } from "./spatial-atlas.js?v=20260907-covariance";
 import { acquireContext } from "./spatial-gl.js";
 
 const PACKAGES = Object.freeze({

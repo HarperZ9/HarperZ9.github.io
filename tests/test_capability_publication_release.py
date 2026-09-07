@@ -13,8 +13,19 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "gaussian-splats.html",
+    "system/studio.js",
+    "system/poster.js",
+    "system/poster-panel.js",
+    "system/poster-editor.css",
+    "system/retro-studio.js",
+    "system/loom-studio.js",
+    "system/workbench.js",
+    "system/studio-spatial.js",
+    "system/spatial-atlas.js",
     "fonts.html",
     "system/font-marketplace.css",
+    "system/font-specimen.js",
     "system/navigation.js",
     "system/navigation.css",
     "demos/crucible-cleanroom/index.html",
@@ -33,7 +44,7 @@ RELEASE_PATHS = (
     "system/report-editorial.css",
     "system/system.css",
     "warden.html",
-    "assets/index-w7dOoMAH.js",
+    "assets/index-BihgU0ht.js",
     "system/theme.js",
     "system/theme-entry.js",
     "system/theme.css",
@@ -231,7 +242,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "335fffef125e6b230287f193260bfe0303761cab53ae104e2073dc9116b2a4fd"
+REVIEWED_RELEASE_SHA256 = "e8e528e8f1f5f1cdde70d92aec625dbf8c107c038dc4cd8d07b90e3556685d6c"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -339,7 +350,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_join_js = "index-BoU_gOMc.js"
     previous_board_js = "index-B-g9u1T0.js"
     previous_board_css = "index-B5xhdbWj.css"
-    current_js = "index-w7dOoMAH.js"
+    current_js = "index-BihgU0ht.js"
     current_css = "index-DW5eHELL.css"
     previous_flywheel_js = "index-BIYnDBdw.js"
     previous_flywheel_css = "index-DGQrcJ5p.css"

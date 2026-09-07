@@ -32,6 +32,12 @@ REVIEWED_ASSET_REVISIONS = {
     "system/theme.js": THEME_PREFERENCES_REVISION,
     "system/theme.css": THEME_PREFERENCES_REVISION,
     "system/type-specimen.css": "20260907",
+    "system/font-marketplace.css": "20260907-live-specimen",
+    "system/font-specimen.js": "20260907-live-specimen",
+    "system/retro-studio.js": "20260907-live-shader",
+    "system/loom-studio.js": "20260907-creative-handoff",
+    "system/studio.js": "20260907-creative-editors",
+    "system/poster-editor.css": "20260907-direct-editor",
     "system/system.css": READING_CASCADE_REVISION,
     "system/doc.css": READING_CASCADE_REVISION,
     "system/publication-article.css": READING_CASCADE_REVISION,
@@ -94,7 +100,7 @@ def read(rel: str) -> str:
 
 def deployable_html_pages() -> list[Path]:
     tracked = subprocess.run(
-        ["git", "ls-files", "--", "*.html"],
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard", "--", "*.html"],
         cwd=ROOT,
         check=True,
         capture_output=True,

@@ -185,7 +185,7 @@ const _voxelPick = document.createElement("canvas");
 // block to the device tier's budget, and holds a still frame under reduced
 // motion (mirrors the neural instrument's static flag).
 let _spatial = null;
-const loadSpatial = lazyLoader(() => import("./studio-spatial.js"), m => { _spatial = m; });
+const loadSpatial = lazyLoader(() => import("./studio-spatial.js?v=20260907-covariance"), m => { _spatial = m; });
 let _spatialStatic = false;   // true when reduced motion holds a single frame
 
 // BYO media: pixel effects, mesh transforms, universal import/export, local-model adapter.
@@ -540,13 +540,52 @@ const SOURCES = {
 // ── The poster workshop (lazy). Mounted once on first entry; the panel owns
 // its DOM inside #poster-mount and renders onto the shared studio canvas.
 let _posterWorkshop = null;
+async function bootPosterImageHandoff(epoch) {
+  if (new URLSearchParams(location.search).get("import") !== "workbench") return;
+  const mount = $("poster-mount");
+  if (mount.dataset.importStatus) return;
+  mount.dataset.importStatus = "loading";
+  try {
+    const wb = await import("./workbench.js?v=20260907-creative-handoff");
+    const png = sessionStorage.getItem("re.poster.handoff");
+    sessionStorage.removeItem("re.poster.handoff");
+    const record = wb.receiveTrail("poster");
+    if (!record || !png || png.length > 8 * 1024 * 1024 || !/^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(png)) {
+      throw new Error("The image handoff is missing or expired. Send it again from the source tool.");
+    }
+    const img = new Image();
+    img.src = png;
+    await img.decode();
+    if (!img.naturalWidth || !img.naturalHeight || img.naturalWidth > 8192 || img.naturalHeight > 8192) {
+      throw new Error("This image is too large for the handoff. Use a smaller PNG.");
+    }
+    if (epoch !== _sourceEpoch || activeSource !== "poster") {
+      mount.dataset.importStatus = "cancelled";
+      return;
+    }
+    _posterWorkshop.setArtImage(img);
+    mount.dataset.importStatus = "ready";
+    say("model", "Artwork added to Poster. " + record.line + ". You can now add and arrange type.");
+  } catch (err) {
+    mount.dataset.importStatus = "failed";
+    say("model", "Poster could not open the image: " + (err.message || String(err)));
+  }
+}
 async function enterPosterWorkshop(epoch) {
-  if (_posterWorkshop) { _posterWorkshop.render(); return; }
+  if (_posterWorkshop) {
+    try { _posterWorkshop.setActive(activeSource === "poster"); } catch (_) {}
+    _posterWorkshop.render();
+    return;
+  }
   try {
     const [panelMod, fieldMod, ex] = await Promise.all([
-      import("./poster-panel.js"),
+      import("./poster-panel.js?v=20260907-direct-editor"),
       import("./generative-field.js"),
       loadExporters(),
+      document.fonts ? Promise.allSettled([
+        document.fonts.load('16px "Hanken Grotesk"'),
+        document.fonts.load('16px "Conso"'),
+      ]) : Promise.resolve(),
     ]);
     if (epoch !== _sourceEpoch) return;   // switched away while loading
     _posterWorkshop = panelMod.mountPosterWorkshop({
@@ -559,20 +598,38 @@ async function enterPosterWorkshop(epoch) {
       getDetail: () => _lastDetail,
       getRich: () => lastRich,
       download: ex.download,
+      isActive: () => activeSource === "poster",
+      resetViewTransform,
     });
     // Cross-surface flow: a plate arriving from the gallery seeds the art.
     const params = new URLSearchParams(location.search);
     const seed = (params.get("seed") || "").slice(0, 48);
     if (seed && _posterWorkshop) _posterWorkshop.setArtSeed(seed);
+    window.__studioPoster = Object.freeze({
+      get imageDataUrl() {
+        const src = _posterWorkshop?.state.art.image?.src;
+        return typeof src === "string" && src.startsWith("data:image/png;base64,") ? src : null;
+      }
+    });
+    await bootPosterImageHandoff(epoch);
   } catch (err) {
     say("model", "The workshop failed to load: " + (err && err.message ? err.message : String(err)));
   }
 }
 
+$("poster-more-tools")?.addEventListener("click", event => {
+  const expanded = document.body.classList.toggle("poster-more-controls");
+  event.currentTarget.setAttribute("aria-pressed", String(expanded));
+  event.currentTarget.textContent = expanded ? "Fewer tools" : "More tools";
+});
+
 function setSource(next) {
   if (!SOURCES[next]) return;
   _sourceEpoch++;                 // invalidate any in-flight lazy start from a previous switch
   const epoch = _sourceEpoch;
+  if (_posterWorkshop) {
+    try { _posterWorkshop.setActive(next === "poster"); } catch (_) {}
+  }
   // Leaving the current source: stop anything it had running. Guard the calls, since some are defined
   // later in the module (hoisted function declarations), so they're safe to call from here.
   if (next !== activeSource) {
@@ -592,6 +649,9 @@ function setSource(next) {
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
+  document.body.classList.toggle("poster-workspace", next === "poster");
+  const analysis = $("studio-analysis");
+  if (analysis) analysis.open = next !== "poster";
   // Publish activeSource so atelier.js (and any other non-module script) can gate
   // their canvas pointer handlers. Without this the Atelier's particle overlay fires
   // on every source, wiping music particles when the mouse crosses the canvas.
@@ -5330,6 +5390,9 @@ function revealFsControls() {
 function resizeActiveSurface() {
   const canvas = $("studio-canvas"); if (!canvas) return;
   switch (activeSource) {
+    case "poster":
+      if (_posterWorkshop) _posterWorkshop.render();
+      break;
     case "atelier":
       // Let the Atelier re-fit + redraw via its own resize path (it manages this canvas).
       try { window.dispatchEvent(new Event("resize")); } catch (_) {}
@@ -6318,7 +6381,7 @@ if (tierBtn) {
     const cv = document.getElementById("studio-canvas");
     if (!cv) return;
     try {
-      const wb = await import("./workbench.js?v=20260812-cohesion");
+      const wb = await import("./workbench.js?v=20260907-creative-handoff");
       if (!wb.sendPiece(target, cv.toDataURL("image/png"), { surface: "studio", label: "studio frame" })) {
         say("model", "That frame is too large to hand over.");
       }
@@ -6425,7 +6488,7 @@ if (tierBtn) {
       pEl.style.cssText = "font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;color:var(--muted);margin:.4rem 0 0";
       tb.insertAdjacentElement("afterend", pEl);
     }
-    import("./workbench.js?v=20260812-cohesion").then((wb) => {
+    import("./workbench.js?v=20260907-creative-handoff").then((wb) => {
       wb.mountFlow(document.getElementById("st-flow"), "studio");
     }).catch(() => {});
   };
@@ -6440,7 +6503,7 @@ function bootRetroHandoff() {
   try { sessionStorage.removeItem("re.studio.handoff"); } catch (_) {}
   // The piece's trail, if it arrived through the workbench. Claimed now
   // (records are one-shot), announced only once the piece actually applies.
-  const trailReady = import("./workbench.js?v=20260812-cohesion")
+  const trailReady = import("./workbench.js?v=20260907-creative-handoff")
     .then((wb) => { const rec = wb.receiveTrail("studio"); return rec && rec.line ? rec.line : null; })
     .catch(() => null);
   Promise.all([loadPlotMaps(), loadPlotImage()]).then(() => {

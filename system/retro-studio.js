@@ -10,7 +10,7 @@ import { renderRetro } from "./retro-engine.js?v=20260902-crt";
 import { createShaderRunner, DEFAULT_FRAG } from "./shader-runner.js?v=20260805-react";
 import { applyOps, OP_META, rngFrom } from "./glitch-ops.js?v=20260813-wave2";
 import { SHADER_PRESETS } from "./shader-presets.js?v=20260812-wave7";
-import { sendPiece, receiveTrail, mountFlow } from "./workbench.js?v=20260812-cohesion";
+import { sendPiece, receiveTrail, mountFlow } from "./workbench.js?v=20260907-creative-handoff";
 import { setUserPalette } from "./retro-palettes.js";
 import { MOD_SOURCES, evalSources, computeOffsets, modValue } from "./mod-matrix.js?v=20260812-motion";
 
@@ -500,7 +500,9 @@ function boot() {
     return runner;
   }
   function runShader() {
-    const r = ensureShader(), res = r.setSource($("re-code").value);
+    const r = ensureShader();
+    if (typeof r.setSource !== "function") { status(r.error || "Shader rendering is unavailable", "err"); return false; }
+    const res = r.setSource($("re-code").value);
     if (!res.ok) { status(res.error, "err"); return false; }
     status("shader compiled", "ok");
     if (!$("re-animate").checked) { renderShaderFrame(1.3); if (!animRaf) retroPass(0); }
@@ -712,7 +714,29 @@ function boot() {
     img.onerror = () => status("could not read that image", "err");
     img.src = URL.createObjectURL(f);
   });
-  $("re-run").addEventListener("click", () => { ping("button"); if (runShader()) sync(); });
+  let shaderEditTimer = 0, shaderComposing = false;
+  const compileEdit = () => {
+    clearTimeout(shaderEditTimer);
+    shaderEditTimer = 0;
+    if (state === "shader" && runShader()) sync();
+  };
+  const scheduleShaderEdit = () => {
+    clearTimeout(shaderEditTimer);
+    if (state !== "shader" || shaderComposing || !$("re-live-edit").checked) return;
+    status("editing shader…", "");
+    shaderEditTimer = setTimeout(compileEdit, 350);
+  };
+  $("re-code").addEventListener("input", scheduleShaderEdit);
+  $("re-code").addEventListener("compositionstart", () => { shaderComposing = true; clearTimeout(shaderEditTimer); });
+  $("re-code").addEventListener("compositionend", () => { shaderComposing = false; scheduleShaderEdit(); });
+  $("re-code").addEventListener("keydown", event => {
+    if (event.key === "Enter" && (event.ctrlKey || event.metaKey) && !event.isComposing) {
+      event.preventDefault();
+      compileEdit();
+    }
+  });
+  $("re-live-edit").addEventListener("change", scheduleShaderEdit);
+  $("re-run").addEventListener("click", () => { ping("button"); compileEdit(); });
   // --- your own saved shaders (kept in this browser) ----------------------
   const MINE_KEY = "re.myshaders.v1";
   const loadMine = () => { try { return JSON.parse(localStorage.getItem(MINE_KEY) || "[]"); } catch (_) { return []; } };
@@ -1192,6 +1216,11 @@ function boot() {
     ping("bell"); status("opening the Studio…", "ok");
   });
   const sendLoom = $("re-send-loom");
+  $("re-send-poster").addEventListener("click", () => {
+    if (!sendPiece("poster", out.toDataURL("image/png"), { surface: "retro", label: pieceLabel() })) {
+      status("The image could not be carried across. Export a PNG and open it in Poster instead.", "err");
+    }
+  });
   if (sendLoom) sendLoom.addEventListener("click", () => {
     if (!sendPiece("loom", out.toDataURL("image/png"), { surface: "retro", label: pieceLabel() })) {
       status("render too large to hand off", "err"); return;

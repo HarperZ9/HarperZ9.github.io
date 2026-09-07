@@ -112,7 +112,13 @@ function localHref(href: string) {
 }
 
 function evidenceHref(system: SystemRecord) {
-  return system.evidence[0]?.href ?? system.sourceHref ?? localHref(system.href);
+  return headlineEvidence(system)?.href ?? system.sourceHref ?? localHref(system.href);
+}
+
+function headlineEvidence(system: SystemRecord) {
+  const releases = system.evidence.filter((item) => item.type === "release");
+  const candidates = releases.length ? releases : system.evidence;
+  return [...candidates].sort((a, b) => b.date.localeCompare(a.date))[0];
 }
 
 function productTypeLabel(system: SystemRecord) {
@@ -150,7 +156,7 @@ const evidenceRows = [
     note: "release, source, paper, demo, or public-boundary records with dates",
   },
   {
-    measure: FLYWHEEL.evidence[0]?.date ?? "unknown",
+    measure: headlineEvidence(FLYWHEEL)?.date ?? "unknown",
     label: "Flywheel release record",
     source: "site/systems.json",
     href: evidenceHref(FLYWHEEL),
@@ -331,7 +337,7 @@ function ProductDefinition({ system }: { system: SystemRecord }) {
         </div>
         <div>
           <dt>Evidence</dt>
-          <dd><a href={evidenceHref(system)}>{system.evidence[0]?.label ?? system.maturity}</a></dd>
+          <dd><a href={evidenceHref(system)}>{headlineEvidence(system)?.label ?? system.maturity}</a></dd>
         </div>
       </dl>
     </details>
@@ -339,7 +345,7 @@ function ProductDefinition({ system }: { system: SystemRecord }) {
 }
 
 function FeaturedFlywheel() {
-  const release = FLYWHEEL.evidence[0];
+  const release = headlineEvidence(FLYWHEEL);
   return (
     <section
       id="flywheel"
@@ -628,7 +634,7 @@ function RetroSystemsLab() {
             <dl className="product-meta">
               <div><dt>Type</dt><dd>{productTypeLabel(system)}</dd></div>
               <div><dt>State</dt><dd>{system.releaseState}</dd></div>
-              <div><dt>Evidence</dt><dd><a href={evidenceHref(system)}>{system.evidence[0]?.label ?? system.maturity}</a></dd></div>
+              <div><dt>Evidence</dt><dd><a href={evidenceHref(system)}>{headlineEvidence(system)?.label ?? system.maturity}</a></dd></div>
             </dl>
           </article>
         ))}

@@ -42,7 +42,7 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">The Loom</span></div>
   <div class="mid">
     <h1>Weave the picture <span class="g">into working cloth.</span></h1>
-    <p class="lede">Any render becomes thread. Send a frame over from the Retro Engine, the Studio, or the Gallery, or drop in your own image, and the Loom turns its tones into threading, tie-up, and treadling in a real weave structure: plain, 2/2 twill, satin, overshot, or per-thread jacquard shading. Watch the cloth build pick by pick with each row played as notes, or play the finished cloth as the score it is. Export a WIF draft that loom software opens, the charts, or the cloth itself, and the piece keeps its trail wherever it travels next.</p>
+    <p class="lede">Turn an image into a weaving draft. Choose a structure, edit its crossings and watch the cloth change. Bring work from Shader Room, Studio or Gallery, then export an image or a supported WIF draft.</p>
   </div>
   <div class="seal">image &rarr; threading &middot; tie-up &middot; treadling &middot; cloth &middot; nothing leaves your browser</div>
 </div>
@@ -107,7 +107,7 @@
         <div class="re-chips" role="radiogroup" aria-label="Weave structure" id="wv-structures"></div>
       </div>
 
-      <p class="re-hint" id="wv-edit-hint">In the Draft view: click the tie-up to lift or drop a shaft, a threading square to move an end, a treadling square to change the treadle. The cloth follows the draft.</p>
+      <p class="re-hint" id="wv-edit-hint">In the Draft view: click the tie-up, threading, or treadling to edit it. Or focus the chart: arrow keys move the cursor, Enter or Space edits the cell, Escape clears it. The cloth follows the draft.</p>
         </div>
       </details>
       <details class="re-group" id="wv-rack-cloth" open>
@@ -170,7 +170,8 @@
         <button class="re-btn" id="wv-save">Save cloth</button>
       </div>
       <div class="re-actions">
-        <button class="re-btn" id="wv-send-retro">Send to Retro Engine &rarr;</button>
+        <button class="re-btn" id="wv-send-retro">Use image in Shader Room &rarr;</button>
+        <button class="re-btn" id="wv-send-poster" type="button" title="Carry a rendered cloth image into Poster; keep the editable draft here">Use cloth in Poster &rarr;</button>
       </div>
       <div class="re-actions">
         <button class="re-btn" id="wv-save-setup" title="Keep this whole setup: structure, sett, tone, colors, speed, and the piece's trail">Save setup</button>
@@ -187,6 +188,6 @@
 </section>
 </main>
 
-<script type="module" src="system/loom-studio.js?v=20260902-creative-chassis"></script>
+<script type="module" src="system/loom-studio.js?v=20260907-creative-handoff"></script>
 </body>
 </html>

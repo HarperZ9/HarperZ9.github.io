@@ -29,7 +29,8 @@ def test_loom_page_contract() -> None:
     page = PAGE.read_text(encoding="utf-8")
     assert "<title>The Loom &middot; Zain Dana Harper</title>" in page
     assert '<link rel="canonical" href="https://harperz9.github.io/loom.html">' in page
-    assert "threading, tie-up, and treadling" in page
+    for term in ("threading", "tie-up", "treadling"):
+        assert term in page
     assert "WIF" in page
     assert "Nothing is uploaded." in page
     assert 'src="system/loom-studio.js?v=' in page

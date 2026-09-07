@@ -93,7 +93,10 @@ void main(){
  float tr=c00+c11, det=c00*c11-c01*c01;
  float disc=sqrt(max(tr*tr*0.25-det,0.0));
  float l1=max(tr*0.5+disc,1e-12), l2=max(tr*0.5-disc,1e-12);
- vec2 e1=(abs(c01)>1e-12)?normalize(vec2(l1-c11,c01)):vec2(1.0,0.0);
+ vec2 evA=vec2(l1-c11,c01), evB=vec2(c01,l1-c00);
+ float evAn=dot(evA,evA), evBn=dot(evB,evB);
+ vec2 e1=vec2(1.0,0.0);
+ if(max(evAn,evBn)>1e-24){e1=normalize((evAn>=evBn)?evA:evB);}
  vec2 e2=vec2(-e1.y,e1.x);
  vec2 ndc=vec2(fx*pv.x*iz, fy*pv.y*iz);
  // Quad extent: ONE sigma per principal axis, times the user's splat-size control. This matches

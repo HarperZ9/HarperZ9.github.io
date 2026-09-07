@@ -30,6 +30,10 @@ export const POSTER_CELLS = [
   "bottom-left", "bottom-center", "bottom-right",
 ];
 
+// One base artwork per live poster canvas. Type edits do not need to regenerate
+// the same seeded image; the WeakMap releases it with the owning canvas.
+const posterArtwork = new WeakMap();
+
 export function defaultPosterState(seed = "poster-01") {
   return {
     format: "a3",
@@ -39,10 +43,10 @@ export function defaultPosterState(seed = "poster-01") {
       { kind: "headline", text: "THE LOOKING GLASS", face: "brand", size: 0.09,
         tracking: 0.02, leading: 1.02, align: "left", cell: "middle-left",
         color: "#f2ecf7", caseMode: "upper" },
-      { kind: "standfirst", text: "Drawn live by the engine. Read back by the same eyes the model uses.",
+      { kind: "standfirst", text: "A study in light, texture and the spaces between.",
         face: "body", size: 0.024, tracking: 0, leading: 1.4, align: "left",
         cell: "bottom-left", color: "#c9c2d4", caseMode: "none" },
-      { kind: "folio", text: "TELOS · PLATE 01", face: "mono", size: 0.014,
+      { kind: "folio", text: "", face: "mono", size: 0.014,
         tracking: 0.24, leading: 1, align: "left", cell: "top-left",
         color: "#8f86a0", caseMode: "upper" },
     ],
@@ -89,6 +93,43 @@ export function wrapText(ctx, text, maxWidth, tracking = 0) {
   return lines.length ? lines : [""];
 }
 
+function finiteNumber(value) {
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
+function clampUnit(value) {
+  const n = finiteNumber(value);
+  if (n == null) return null;
+  return Math.max(0, Math.min(1, n));
+}
+
+function positionedTopLeft(block, fallbackX, fallbackY, boxW, boxH, fmt) {
+  const pos = block && block.position;
+  const nx = pos ? clampUnit(pos.x) : null;
+  const ny = pos ? clampUnit(pos.y) : null;
+  if (nx == null || ny == null) return { x: fallbackX, y: fallbackY, positioned: false };
+  const bw = Math.max(0, Math.min(1, boxW / Math.max(1, fmt.w)));
+  const bh = Math.max(0, Math.min(1, boxH / Math.max(1, fmt.h)));
+  return {
+    x: Math.max(0, Math.min(1 - bw, nx)) * fmt.w,
+    y: Math.max(0, Math.min(1 - bh, ny)) * fmt.h,
+    positioned: true,
+  };
+}
+
+function lineStartX(lineWidth, boxX, boxW, blockAlign, anchor, margin, fmt) {
+  const align = blockAlign === "center" || blockAlign === "right" ? blockAlign : "left";
+  if (boxX != null) {
+    if (align === "center") return boxX + (boxW - lineWidth) / 2;
+    if (align === "right") return boxX + boxW - lineWidth;
+    return boxX;
+  }
+  if (anchor.col === 1) return (fmt.w - lineWidth) / 2;
+  if (anchor.col === 2) return fmt.w * (1 - margin) - lineWidth;
+  return fmt.w * margin;
+}
+
 /* Render the poster: art via the injected engine (renderSpecimen), a
    legibility veil, then the type blocks. Returns per-block layout boxes in
    0..1 fractions - the critique reads these against the perception grid.
@@ -106,7 +147,22 @@ export function renderPoster(canvas, state, deps = {}) {
   if (state.art && state.art.image && typeof deps.drawImage === "function") {
     try { deps.drawImage(canvas, state.art.image); } catch (_) {}
   } else if (typeof deps.renderSpecimen === "function" && state.art && state.art.layers && state.art.layers.length) {
-    try { deps.renderSpecimen(canvas, state.art.seed, state.art.layers); } catch (_) {}
+    // The artwork engine owns its canvas size and drawing transform. Keep it
+    // on a separate surface, then composite into the poster's native pixels.
+    const dpr = Math.min(2, Math.max(1, globalThis.devicePixelRatio || 1));
+    try {
+      const key = JSON.stringify([fmt.w, fmt.h, state.art.seed, state.art.layers, dpr]);
+      let cached = posterArtwork.get(canvas);
+      const live = state.art.seed == null || String(state.art.seed).toLowerCase() === "live";
+      if (live || !cached || cached.key !== key || cached.renderer !== deps.renderSpecimen) {
+        const artCanvas = document.createElement("canvas");
+        deps.renderSpecimen(artCanvas, state.art.seed, state.art.layers, null, 0.6,
+          { size: [fmt.w / dpr, fmt.h / dpr] });
+        cached = { key, renderer: deps.renderSpecimen, canvas: artCanvas };
+        posterArtwork.set(canvas, cached);
+      }
+      ctx.drawImage(cached.canvas, 0, 0, fmt.w, fmt.h);
+    } catch (_) {}
   } else {
     ctx.fillStyle = "#141018";
     ctx.fillRect(0, 0, fmt.w, fmt.h);
@@ -194,12 +250,15 @@ export function renderPoster(canvas, state, deps = {}) {
     const leading = sizePx * (block.leading || 1.1);
     const blockH = leading * lines.length;
     // anchor: col 0 -> left-aligned at margin; col 1 -> centered; col 2 -> right edge
-    const x0 = anchor.col === 0 ? fmt.w * margin
+    const cellX0 = anchor.col === 0 ? fmt.w * margin
       : anchor.col === 1 ? (fmt.w - widest) / 2
       : fmt.w * (1 - margin) - widest;
-    const y0 = anchor.row === 0 ? fmt.h * margin
+    const cellY0 = anchor.row === 0 ? fmt.h * margin
       : anchor.row === 1 ? (fmt.h - blockH) / 2
       : fmt.h * (1 - margin) - blockH;
+    const placed = positionedTopLeft(block, cellX0, cellY0, widest, blockH, fmt);
+    const x0 = placed.x;
+    const y0 = placed.y;
     // panel veil: a feathered scrim behind this block only, so the art
     // elsewhere keeps its full brightness
     if (veilMode === "panel" && veil > 0 && text.trim() && lines.length) {
@@ -220,19 +279,16 @@ export function renderPoster(canvas, state, deps = {}) {
     }
     ctx.fillStyle = block.color || "#f2ecf7";
     lines.forEach((line, li) => {
+      const lineW = tracking > 0.01 ? trackedWidth(ctx, line, tracking) : ctx.measureText(line).width;
       if (tracking > 0.01) {
         // manual tracking: draw per character, positioned by the tracking-aware width
-        let cx = anchor.col === 1 ? (fmt.w - trackedWidth(ctx, line, tracking)) / 2
-          : anchor.col === 2 ? fmt.w * (1 - margin) - trackedWidth(ctx, line, tracking)
-          : x0;
+        let cx = lineStartX(lineW, placed.positioned ? x0 : null, widest, block.align, anchor, margin, fmt);
         for (const chr of line) {
           ctx.fillText(chr, cx, y0 + li * leading);
           cx += ctx.measureText(chr).width + tracking;
         }
       } else {
-        const lx = anchor.col === 1 ? (fmt.w - ctx.measureText(line).width) / 2
-          : anchor.col === 2 ? fmt.w * (1 - margin) - ctx.measureText(line).width
-          : x0;
+        const lx = lineStartX(lineW, placed.positioned ? x0 : null, widest, block.align, anchor, margin, fmt);
         ctx.fillText(line, lx, y0 + li * leading);
       }
     });
@@ -240,7 +296,7 @@ export function renderPoster(canvas, state, deps = {}) {
       kind: block.kind,
       x0: x0 / fmt.w, y0: y0 / fmt.h,
       x1: Math.min(1, (x0 + widest) / fmt.w), y1: Math.min(1, (y0 + blockH) / fmt.h),
-      cell: block.cell, color: block.color || "#f2ecf7", lines: lines.length,
+      cell: block.cell, positioned: placed.positioned, color: block.color || "#f2ecf7", lines: lines.length,
     });
   }
   return { ok: true, boxes, width: fmt.w, height: fmt.h };

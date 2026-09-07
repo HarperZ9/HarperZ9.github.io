@@ -166,7 +166,8 @@ def test_studio_wires_the_spatial_source() -> None:
 
 def test_splat_lab_keeps_its_boundary_and_drops_the_credential_route() -> None:
     page = (ROOT / "gaussian-splats.html").read_text(encoding="utf-8")
-    assert "No Gaussian-splat scene is being represented as finished" in page
+    assert "The original three-image pilot remains unbuilt" in page
+    assert "not scans or recovered 360-degree worlds" in page
     assert "credentials" not in page.lower() or "no credentials" in page.lower()
     assert "image-blaster" not in page, "the retired external route must not remain on the page"
     assert "studio.html?source=spatial" in page

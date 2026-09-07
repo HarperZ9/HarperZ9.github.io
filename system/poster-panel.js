@@ -10,12 +10,47 @@
 
 import {
   defaultPosterState, renderPoster, critiquePoster,
-  POSTER_FORMATS, POSTER_FACES, POSTER_CELLS,
-} from "./poster.js";
+  POSTER_FORMATS, POSTER_CELLS,
+} from "./poster.js?v=20260907-direct-editor";
 import { renderRetro } from "./retro-engine.js";
 import { applyOpsWet, OP_META } from "./glitch-ops.js";
 
 const PALETTE = ["#f2ecf7", "#c9c2d4", "#8f86a0", "#7de3ea", "#99f147", "#f8cc43", "#ff8334", "#ff35aa", "#111016"];
+const HISTORY_LIMIT = 60;
+
+function finite(value) {
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function roundPosition(value) {
+  return Number(value.toFixed(5));
+}
+
+export function applyPosterBlockPosition(block, box, point, grabOffset = {}) {
+  if (!block || !box || !point) return false;
+  const px = finite(point.x);
+  const py = finite(point.y);
+  if (px == null || py == null) return false;
+  const x0 = finite(box.x0);
+  const y0 = finite(box.y0);
+  const x1 = finite(box.x1);
+  const y1 = finite(box.y1);
+  if (x0 == null || y0 == null || x1 == null || y1 == null) return false;
+  const ox = finite(grabOffset.x) ?? 0;
+  const oy = finite(grabOffset.y) ?? 0;
+  const boxW = clamp(x1 - x0, 0, 1);
+  const boxH = clamp(y1 - y0, 0, 1);
+  block.position = {
+    x: roundPosition(clamp(px - ox, 0, Math.max(0, 1 - boxW))),
+    y: roundPosition(clamp(py - oy, 0, Math.max(0, 1 - boxH))),
+  };
+  return true;
+}
 
 function el(tag, cls, text) {
   const node = document.createElement(tag);
@@ -82,12 +117,30 @@ function swatchRow(current, onPick) {
 }
 
 export function mountPosterWorkshop(deps) {
-  const { mount, canvas, renderSpecimen, layerNames, say, perceiveNow, getDetail, getRich, download } = deps;
+  const {
+    mount, canvas, renderSpecimen, layerNames, say, perceiveNow, getDetail,
+    getRich, download, isActive, resetViewTransform,
+  } = deps;
   if (!mount || !canvas) return null;
 
   const state = defaultPosterState("workshop-" + new Date().toISOString().slice(0, 10));
   let lastBoxes = [];
   let renderT = 0;
+  let imageImportEpoch = 0;
+  let overlayRaf = 0;
+  let dragRaf = 0;
+  let resizeObserver = null;
+  let selectedIndex = -1;
+  let active = typeof isActive === "function" ? !!isActive() : true;
+  let drag = null;
+  const undoStack = [];
+  const redoStack = [];
+  const blockEditorNodes = [];
+  let undoBtn = null;
+  let redoBtn = null;
+  let resetPositionsBtn = null;
+  let imgInput = null;
+  let imgClear = null;
 
   const root = el("div", "poster-panel");
   mount.innerHTML = "";
@@ -95,6 +148,16 @@ export function mountPosterWorkshop(deps) {
 
   const status = el("p", "poster-status");
   status.setAttribute("role", "status");
+
+  const stage = canvas.closest(".viewport-stage") || canvas.parentElement;
+  const overlay = stage ? el("div", "poster-stage-overlay") : null;
+  if (overlay) {
+    overlay.hidden = true;
+    overlay.tabIndex = 0;
+    overlay.setAttribute("aria-label", "Poster text blocks");
+    overlay.setAttribute("aria-hidden", "true");
+    stage.appendChild(overlay);
+  }
 
   // Cover-draw an image into the poster's fixed format dimensions (renderPoster
   // has already sized the canvas), so an imported photo becomes the art layer.
@@ -108,21 +171,455 @@ export function mountPosterWorkshop(deps) {
     ctx.drawImage(img, (cv.width - dw) / 2, (cv.height - dh) / 2, dw, dh);
   }
 
+  function drawableDimensions(image) {
+    if (!image) return null;
+    const width = finite(image.naturalWidth ?? image.videoWidth ?? image.width);
+    const height = finite(image.naturalHeight ?? image.videoHeight ?? image.height);
+    return width != null && height != null && width > 0 && height > 0 ? { width, height } : null;
+  }
+
+  function setArtImage(image) {
+    if (!image) {
+      state.art.image = null;
+      if (imgClear) imgClear.hidden = true;
+      if (imgInput) imgInput.value = "";
+      renderNow();
+      critiqueNow(false);
+      status.textContent = "Poster art returned to instruments";
+      return true;
+    }
+    if (!drawableDimensions(image)) {
+      status.textContent = "Poster art image could not be read";
+      return false;
+    }
+    state.art.image = image;
+    if (imgClear) imgClear.hidden = false;
+    renderNow();
+    critiqueNow(false);
+    status.textContent = "Poster art image received";
+    return true;
+  }
+
+  function blockName(index) {
+    const block = state.blocks[index];
+    return block ? String(block.kind || "block") : "block";
+  }
+
+  function clonePosition(pos) {
+    const x = pos ? finite(pos.x) : null;
+    const y = pos ? finite(pos.y) : null;
+    return x == null || y == null ? null : { x: roundPosition(x), y: roundPosition(y) };
+  }
+
+  function snapshotPlacement() {
+    return state.blocks.map((block) => ({
+      cell: block.cell || "center",
+      position: clonePosition(block.position),
+    }));
+  }
+
+  function samePlacement(a, b) {
+    return JSON.stringify(a) === JSON.stringify(b);
+  }
+
+  function restorePlacement(snapshot) {
+    snapshot.forEach((item, index) => {
+      const block = state.blocks[index];
+      if (!block || !item) return;
+      block.cell = item.cell || block.cell || "center";
+      if (item.position) block.position = { ...item.position };
+      else delete block.position;
+    });
+    syncBlockEditors();
+  }
+
+  function syncHistoryButtons() {
+    if (undoBtn) undoBtn.disabled = undoStack.length === 0;
+    if (redoBtn) redoBtn.disabled = redoStack.length === 0;
+    if (resetPositionsBtn) resetPositionsBtn.disabled = !state.blocks.some((block) => clonePosition(block.position));
+  }
+
+  function pushPlacement(label, before, after = snapshotPlacement()) {
+    if (!before || samePlacement(before, after)) {
+      syncHistoryButtons();
+      return false;
+    }
+    undoStack.push({ label, before, after });
+    if (undoStack.length > HISTORY_LIMIT) undoStack.shift();
+    redoStack.length = 0;
+    syncHistoryButtons();
+    return true;
+  }
+
+  function positionLabel(block) {
+    const pos = clonePosition(block.position);
+    if (!pos) return `cell ${block.cell || "center"}`;
+    return `free x ${Math.round(pos.x * 100)}%, y ${Math.round(pos.y * 100)}%`;
+  }
+
+  function syncBlockEditors() {
+    blockEditorNodes.forEach((entry, index) => {
+      const selected = index === selectedIndex;
+      entry.box.classList.toggle("is-selected", selected);
+      entry.box.setAttribute("aria-current", selected ? "true" : "false");
+      if (selected) entry.box.open = true;
+      if (entry.position) entry.position.textContent = positionLabel(state.blocks[index]);
+    });
+    syncHistoryButtons();
+  }
+
+  function queueOverlaySync(focusSelected = false) {
+    if (!overlay || typeof requestAnimationFrame !== "function") return;
+    if (overlayRaf) cancelAnimationFrame(overlayRaf);
+    overlayRaf = requestAnimationFrame(() => {
+      overlayRaf = 0;
+      syncOverlay(focusSelected);
+    });
+  }
+
+  function focusSelectedBox() {
+    if (!overlay || selectedIndex < 0) return;
+    const node = overlay.querySelector(`[data-poster-box="${selectedIndex}"]`);
+    if (node) {
+      try { node.focus({ preventScroll: true }); } catch (_) { node.focus(); }
+    }
+  }
+
+  function syncOverlay(focusSelected = false) {
+    if (!overlay) return;
+    if (!active || !lastBoxes.length) {
+      overlay.hidden = true;
+      overlay.setAttribute("aria-hidden", "true");
+      overlay.innerHTML = "";
+      return;
+    }
+    const stageRect = stage.getBoundingClientRect();
+    const canvasRect = canvas.getBoundingClientRect();
+    overlay.hidden = false;
+    overlay.setAttribute("aria-hidden", "false");
+    overlay.style.left = `${canvasRect.left - stageRect.left}px`;
+    overlay.style.top = `${canvasRect.top - stageRect.top}px`;
+    overlay.style.width = `${canvasRect.width}px`;
+    overlay.style.height = `${canvasRect.height}px`;
+    const keepFocus = overlay.contains(document.activeElement);
+    overlay.innerHTML = "";
+    lastBoxes.forEach((box, index) => {
+      const block = state.blocks[index];
+      if (!block || !String(block.text || "").trim()) return;
+      const button = el("button", "poster-select-box");
+      button.type = "button";
+      button.dataset.posterBox = String(index);
+      button.dataset.label = ({ headline: "Heading", standfirst: "Supporting text", folio: "Caption" })[block.kind] || "Text";
+      button.setAttribute("aria-label", `Select ${block.kind || "poster"} text block`);
+      button.setAttribute("aria-pressed", String(index === selectedIndex));
+      button.style.left = `${Math.max(0, box.x0) * 100}%`;
+      button.style.top = `${Math.max(0, box.y0) * 100}%`;
+      button.style.width = `${Math.max(0.01, box.x1 - box.x0) * 100}%`;
+      button.style.height = `${Math.max(0.01, box.y1 - box.y0) * 100}%`;
+      overlay.appendChild(button);
+    });
+    if (focusSelected || keepFocus) focusSelectedBox();
+  }
+
+  function selectBlock(index, opts = {}) {
+    selectedIndex = Number.isInteger(index) && state.blocks[index] ? index : -1;
+    syncBlockEditors();
+    queueOverlaySync(!!opts.focus);
+    if (selectedIndex >= 0 && opts.announce !== false) {
+      status.textContent = `${blockName(selectedIndex)} selected`;
+    }
+  }
+
+  function pointFromEvent(event) {
+    if (!overlay) return null;
+    const rect = overlay.getBoundingClientRect();
+    if (!rect.width || !rect.height) return null;
+    return {
+      x: clamp((event.clientX - rect.left) / rect.width, 0, 1),
+      y: clamp((event.clientY - rect.top) / rect.height, 0, 1),
+    };
+  }
+
+  function hitTest(point) {
+    if (!point) return -1;
+    for (let index = lastBoxes.length - 1; index >= 0; index -= 1) {
+      const box = lastBoxes[index];
+      if (point.x >= box.x0 && point.x <= box.x1 && point.y >= box.y0 && point.y <= box.y1) return index;
+    }
+    return -1;
+  }
+
+  function applyDragFrame() {
+    if (!drag) return;
+    const box = lastBoxes[drag.index];
+    const block = state.blocks[drag.index];
+    if (!box || !block) return;
+    const before = clonePosition(block.position);
+    if (applyPosterBlockPosition(block, box, drag.point, drag.offset)) {
+      const after = clonePosition(block.position);
+      drag.moved = drag.moved || JSON.stringify(before) !== JSON.stringify(after);
+      renderNow({ perceive: false });
+      syncBlockEditors();
+    }
+  }
+
+  function scheduleDragFrame() {
+    if (dragRaf || typeof requestAnimationFrame !== "function") return;
+    dragRaf = requestAnimationFrame(() => {
+      dragRaf = 0;
+      applyDragFrame();
+    });
+  }
+
+  function finishDrag(commit) {
+    if (!drag) return;
+    if (dragRaf) {
+      cancelAnimationFrame(dragRaf);
+      dragRaf = 0;
+      applyDragFrame();
+    }
+    const finished = drag;
+    drag = null;
+    if (commit && finished.moved) {
+      renderNow();
+      pushPlacement(`Moved ${blockName(finished.index)}`, finished.before);
+      critiqueNow(false);
+      status.textContent = `${blockName(finished.index)} moved`;
+    }
+  }
+
+  function cancelDrag(repaint = true) {
+    if (!drag) return;
+    const cancelled = drag;
+    if (dragRaf) {
+      cancelAnimationFrame(dragRaf);
+      dragRaf = 0;
+    }
+    drag = null;
+    restorePlacement(cancelled.before);
+    if (repaint) renderNow({ perceive: false });
+    else queueOverlaySync();
+    status.textContent = "Move canceled";
+  }
+
+  function moveSelectedBy(dx, dy) {
+    const box = lastBoxes[selectedIndex];
+    const block = state.blocks[selectedIndex];
+    if (!box || !block) return;
+    const before = snapshotPlacement();
+    const pos = clonePosition(block.position) || { x: box.x0, y: box.y0 };
+    if (!applyPosterBlockPosition(block, box, { x: pos.x + dx, y: pos.y + dy }, { x: 0, y: 0 })) return;
+    renderNow();
+    syncBlockEditors();
+    pushPlacement(`Moved ${blockName(selectedIndex)}`, before);
+    critiqueNow(false);
+    status.textContent = `${blockName(selectedIndex)} moved`;
+  }
+
+  function undoPlacement() {
+    const entry = undoStack.pop();
+    if (!entry) return;
+    restorePlacement(entry.before);
+    redoStack.push(entry);
+    syncHistoryButtons();
+    renderNow();
+    critiqueNow(false);
+    status.textContent = `Undid ${entry.label.toLowerCase()}`;
+  }
+
+  function redoPlacement() {
+    const entry = redoStack.pop();
+    if (!entry) return;
+    restorePlacement(entry.after);
+    undoStack.push(entry);
+    syncHistoryButtons();
+    renderNow();
+    critiqueNow(false);
+    status.textContent = `Redid ${entry.label.toLowerCase()}`;
+  }
+
+  function resetTextPositions() {
+    const before = snapshotPlacement();
+    state.blocks.forEach((block) => { delete block.position; });
+    renderNow();
+    syncBlockEditors();
+    pushPlacement("Reset text positions", before);
+    critiqueNow(false);
+    status.textContent = "Text positions reset to cells";
+  }
+
+  function eventIsEditable(event) {
+    const target = event.target;
+    if (!target || target === overlay || (overlay && overlay.contains(target))) return false;
+    const tag = String(target.tagName || "").toLowerCase();
+    return tag === "input" || tag === "textarea" || tag === "select" || !!target.isContentEditable;
+  }
+
+  function onOverlayPointerDown(event) {
+    if (!active || !overlay) return;
+    if (event.button != null && event.button !== 0) return;
+    const point = pointFromEvent(event);
+    const index = hitTest(point);
+    event.preventDefault();
+    event.stopPropagation();
+    if (index < 0) {
+      selectBlock(-1, { announce: false });
+      status.textContent = "";
+      return;
+    }
+    selectBlock(index, { focus: true });
+    const box = lastBoxes[index];
+    drag = {
+      index,
+      pointerId: event.pointerId,
+      before: snapshotPlacement(),
+      offset: { x: point.x - box.x0, y: point.y - box.y0 },
+      point,
+      moved: false,
+    };
+    try { overlay.setPointerCapture(event.pointerId); } catch (_) {}
+  }
+
+  function onOverlayPointerMove(event) {
+    if (!active || !drag || event.pointerId !== drag.pointerId) return;
+    const point = pointFromEvent(event);
+    if (!point) return;
+    event.preventDefault();
+    event.stopPropagation();
+    drag.point = point;
+    scheduleDragFrame();
+  }
+
+  function onOverlayPointerUp(event) {
+    if (!drag || event.pointerId !== drag.pointerId) return;
+    event.preventDefault();
+    event.stopPropagation();
+    try { overlay.releasePointerCapture(event.pointerId); } catch (_) {}
+    finishDrag(true);
+  }
+
+  function onOverlayPointerCancel(event) {
+    if (!drag || event.pointerId !== drag.pointerId) return;
+    event.preventDefault();
+    event.stopPropagation();
+    cancelDrag();
+  }
+
+  function onOverlayWheel(event) {
+    if (!active) return;
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  function onOverlayClick(event) {
+    if (!active) return;
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  function onOverlayFocusIn(event) {
+    if (!active) return;
+    const button = event.target.closest("[data-poster-box]");
+    if (!button) return;
+    const index = Number(button.dataset.posterBox);
+    if (index !== selectedIndex) selectBlock(index);
+  }
+
+  function onWindowResize() {
+    queueOverlaySync();
+  }
+
+  function setActive(on) {
+    active = !!on;
+    if (!active) {
+      clearTimeout(renderT);
+      imageImportEpoch++;
+    }
+    if (!active && drag) cancelDrag(false);
+    if (stage) stage.classList.toggle("poster-direct-active", active);
+    if (!overlay) return;
+    overlay.hidden = !active;
+    overlay.setAttribute("aria-hidden", String(!active));
+    if (active) {
+      if (typeof resetViewTransform === "function") {
+        try { resetViewTransform(); } catch (_) {}
+      }
+      queueOverlaySync();
+    } else {
+      overlay.innerHTML = "";
+    }
+  }
+
+  function onDocumentKeyDown(event) {
+    if (!active) return;
+    if (event.key === "Escape") {
+      if (drag) {
+        event.preventDefault();
+        event.stopPropagation();
+        cancelDrag();
+      } else if (selectedIndex >= 0 && overlay && overlay.contains(document.activeElement)) {
+        event.preventDefault();
+        event.stopPropagation();
+        selectBlock(-1, { announce: false });
+        status.textContent = "";
+      }
+      return;
+    }
+    const overlayHasFocus = !!(overlay && overlay.contains(document.activeElement));
+    if (!overlayHasFocus || eventIsEditable(event) || selectedIndex < 0) return;
+    const unit = event.shiftKey ? 10 : 1;
+    const dx = event.key === "ArrowLeft" ? -unit / Math.max(1, canvas.width)
+      : event.key === "ArrowRight" ? unit / Math.max(1, canvas.width)
+      : 0;
+    const dy = event.key === "ArrowUp" ? -unit / Math.max(1, canvas.height)
+      : event.key === "ArrowDown" ? unit / Math.max(1, canvas.height)
+      : 0;
+    if (!dx && !dy) return;
+    event.preventDefault();
+    event.stopPropagation();
+    moveSelectedBy(dx, dy);
+    queueOverlaySync(true);
+  }
+
   // ── render loop (debounced) ────────────────────────────────────────────────
-  function renderNow() {
+  function renderNow(opts = {}) {
     const out = renderPoster(canvas, state, { renderSpecimen, drawImage: coverDrawImage, renderRetro, applyOps: applyOpsWet });
     lastBoxes = out.boxes || [];
-    if (typeof perceiveNow === "function") { try { perceiveNow(canvas); } catch (_) {} }
+    if (opts.perceive !== false && typeof perceiveNow === "function") { try { perceiveNow(canvas); } catch (_) {} }
+    queueOverlaySync();
     return out;
   }
   function queueRender() {
     clearTimeout(renderT);
-    renderT = setTimeout(() => { renderNow(); critiqueNow(false); }, 160);
+    renderT = setTimeout(() => {
+      if (!active || (typeof isActive === "function" && !isActive())) return;
+      renderNow(); critiqueNow(false);
+    }, 160);
+  }
+
+  if (overlay) {
+    overlay.addEventListener("pointerdown", onOverlayPointerDown);
+    overlay.addEventListener("pointermove", onOverlayPointerMove);
+    overlay.addEventListener("pointerup", onOverlayPointerUp);
+    overlay.addEventListener("pointercancel", onOverlayPointerCancel);
+    overlay.addEventListener("wheel", onOverlayWheel, { passive: false });
+    overlay.addEventListener("click", onOverlayClick);
+    overlay.addEventListener("focusin", onOverlayFocusIn);
+  }
+  document.addEventListener("keydown", onDocumentKeyDown);
+  window.addEventListener("resize", onWindowResize);
+  if (stage && typeof ResizeObserver === "function") {
+    resizeObserver = new ResizeObserver(() => queueOverlaySync());
+    resizeObserver.observe(stage);
+    resizeObserver.observe(canvas);
   }
 
   // ── the critique ───────────────────────────────────────────────────────────
   const critiqueHost = el("div", "poster-critique");
+  const critiqueDetails = el("details", "poster-readability");
+  critiqueDetails.append(el("summary", null, "Readability checks"), critiqueHost);
   function critiqueNow(speak = true) {
+    if (speak) critiqueDetails.open = true;
     const detail = typeof getDetail === "function" ? getDetail() : null;
     const rich = typeof getRich === "function" ? getRich() : null;
     const findings = critiquePoster(lastBoxes, detail, rich);
@@ -140,8 +637,18 @@ export function mountPosterWorkshop(deps) {
         apply.type = "button";
         apply.setAttribute("aria-label", `Move the ${blockMatch[1]} to ${cellMatch[1]}`);
         apply.addEventListener("click", () => {
-          const block = state.blocks.find((b) => b.kind === blockMatch[1]);
-          if (block) { block.cell = cellMatch[1]; rebuildBlockEditors(); renderNow(); critiqueNow(true); }
+          const index = state.blocks.findIndex((b) => b.kind === blockMatch[1]);
+          const block = state.blocks[index];
+          if (block) {
+            const before = snapshotPlacement();
+            block.cell = cellMatch[1];
+            delete block.position;
+            selectBlock(index, { announce: false });
+            rebuildBlockEditors();
+            renderNow();
+            pushPlacement(`Moved ${block.kind}`, before);
+            critiqueNow(true);
+          }
         });
         row.appendChild(apply);
       }
@@ -162,8 +669,9 @@ export function mountPosterWorkshop(deps) {
   root.appendChild(gFormat);
 
   // art
-  const gArt = el("div", "at-group");
-  gArt.appendChild(el("span", "at-glab", "Art instrument"));
+  const gArt = el("details", "at-group poster-background");
+  gArt.appendChild(el("summary", null, "Background & effects"));
+  gArt.appendChild(el("span", "at-glab", "Generate artwork"));
   const names = (typeof layerNames === "function" ? layerNames() : []) || [];
   const artSel = el("div", "poster-artchips at-chips");
   names.forEach((name) => {
@@ -181,33 +689,36 @@ export function mountPosterWorkshop(deps) {
   // Use your own image as the poster art. It stays in this tab; the veil and
   // the measured critique apply over it exactly as over engine art.
   const imgRow = el("div", "poster-artrow");
-  const imgBtn = el("button", "at-mini", "use my image");
+  const imgBtn = el("button", "at-mini", "Add image");
   imgBtn.type = "button";
-  const imgInput = el("input", "poster-imgfile");
+  imgInput = el("input", "poster-imgfile");
   imgInput.type = "file"; imgInput.accept = "image/*"; imgInput.hidden = true;
   imgInput.setAttribute("aria-label", "Use your own image as the poster art");
-  const imgClear = el("button", "at-mini", "back to instruments");
+  imgClear = el("button", "at-mini", "Remove image");
   imgClear.type = "button"; imgClear.hidden = true;
   imgBtn.addEventListener("click", () => imgInput.click());
   imgInput.addEventListener("change", async () => {
     const file = imgInput.files && imgInput.files[0];
     if (!file || !/^image\//.test(file.type)) return;
+    const epoch = ++imageImportEpoch;
+    let objectUrl;
     try {
       const bmp = typeof createImageBitmap === "function"
         ? await createImageBitmap(file)
-        : await new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = URL.createObjectURL(file); });
-      state.art.image = bmp;
-      imgClear.hidden = false;
-      renderNow(); critiqueNow(false);
-    } catch (_) { /* ignore bad image */ }
+        : await new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; objectUrl = URL.createObjectURL(file); im.src = objectUrl; });
+      if (epoch !== imageImportEpoch || !active || (typeof isActive === "function" && !isActive())) {
+        if (typeof bmp.close === "function") bmp.close();
+        return;
+      }
+      setArtImage(bmp);
+    } catch (_) { status.textContent = "This image could not be opened. Try another image file."; }
+    finally { if (objectUrl) URL.revokeObjectURL(objectUrl); }
   });
   imgClear.addEventListener("click", () => {
-    state.art.image = null;
-    imgClear.hidden = true;
-    renderNow(); critiqueNow(false);
+    setArtImage(null);
   });
   imgRow.append(imgBtn, imgInput, imgClear);
-  gArt.appendChild(imgRow);
+  root.appendChild(imgRow);
   const artRow = el("div", "poster-artrow");
   const seedIn = el("input", "poster-seed");
   seedIn.type = "text"; seedIn.maxLength = 40; seedIn.value = state.art.seed;
@@ -339,40 +850,57 @@ export function mountPosterWorkshop(deps) {
   const gBlocks = el("div", "at-group poster-blocks");
   function rebuildBlockEditors() {
     gBlocks.innerHTML = "";
-    gBlocks.appendChild(el("span", "at-glab", "Type blocks"));
-    for (const block of state.blocks) {
+    blockEditorNodes.length = 0;
+    gBlocks.appendChild(el("span", "at-glab", "Text"));
+    for (let index = 0; index < state.blocks.length; index += 1) {
+      const block = state.blocks[index];
       const box = el("details", "poster-block");
+      box.dataset.posterBlockIndex = String(index);
       if (block.kind === "headline") box.open = true;
-      const sum = el("summary", null, block.kind);
+      const sum = el("summary", null, ({ headline: "Heading", standfirst: "Supporting text", folio: "Caption" })[block.kind] || block.kind);
       box.appendChild(sum);
+      box.addEventListener("focusin", () => selectBlock(index, { announce: false }));
       const text = el("textarea", "poster-text");
       text.value = block.text; text.rows = block.kind === "headline" ? 2 : 2;
       text.setAttribute("aria-label", block.kind + " text");
-      text.addEventListener("input", () => { block.text = text.value; queueRender(); });
+      text.addEventListener("input", () => { selectBlock(index, { announce: false }); block.text = text.value; queueRender(); });
       box.appendChild(text);
-      box.appendChild(el("span", "poster-mini-label", "face"));
-      box.appendChild(chipRow(Object.keys(POSTER_FACES).map((k) => [k, k]), block.face, (v) => { block.face = v; queueRender(); }));
+      box.appendChild(el("span", "poster-mini-label", "Typeface"));
+      box.appendChild(chipRow([["brand", "Hanken Grotesk"], ["mono", "Conso"]], block.face === "mono" ? "mono" : "brand", (v) => { selectBlock(index, { announce: false }); block.face = v; queueRender(); }));
       box.appendChild(el("span", "poster-mini-label", "size"));
       const size = el("input", "at-slider");
       size.type = "range"; size.min = "0.01"; size.max = "0.16"; size.step = "0.002"; size.value = String(block.size);
       size.setAttribute("aria-label", block.kind + " size");
-      size.addEventListener("input", () => { block.size = Number(size.value); queueRender(); });
+      size.addEventListener("input", () => { selectBlock(index, { announce: false }); block.size = Number(size.value); queueRender(); });
       box.appendChild(size);
-      box.appendChild(el("span", "poster-mini-label", "tracking"));
+      box.appendChild(el("span", "poster-mini-label", "Letter spacing"));
       const tr = el("input", "at-slider");
       tr.type = "range"; tr.min = "0"; tr.max = "0.4"; tr.step = "0.01"; tr.value = String(block.tracking);
       tr.setAttribute("aria-label", block.kind + " tracking");
-      tr.addEventListener("input", () => { block.tracking = Number(tr.value); queueRender(); });
+      tr.addEventListener("input", () => { selectBlock(index, { announce: false }); block.tracking = Number(tr.value); queueRender(); });
       box.appendChild(tr);
-      box.appendChild(el("span", "poster-mini-label", "placement"));
-      box.appendChild(cellPicker(block.cell, (name) => { block.cell = name; queueRender(); }));
+      box.appendChild(el("span", "poster-mini-label", "Position"));
+      const positionOut = el("output", "poster-position-readout", positionLabel(block));
+      positionOut.setAttribute("aria-label", `${block.kind} position`);
+      box.appendChild(positionOut);
+      box.appendChild(cellPicker(block.cell, (name) => {
+        const before = snapshotPlacement();
+        selectBlock(index, { announce: false });
+        block.cell = name;
+        delete block.position;
+        renderNow();
+        pushPlacement(`Moved ${block.kind}`, before);
+        critiqueNow(false);
+      }));
       box.appendChild(el("span", "poster-mini-label", "color"));
-      box.appendChild(swatchRow(block.color, (hex) => { block.color = hex; queueRender(); }));
-      const caseRow = chipRow([["none", "As typed"], ["upper", "UPPER"], ["lower", "lower"]], block.caseMode, (v) => { block.caseMode = v; queueRender(); });
+      box.appendChild(swatchRow(block.color, (hex) => { selectBlock(index, { announce: false }); block.color = hex; queueRender(); }));
+      const caseRow = chipRow([["none", "As typed"], ["upper", "UPPER"], ["lower", "lower"]], block.caseMode, (v) => { selectBlock(index, { announce: false }); block.caseMode = v; queueRender(); });
       box.appendChild(el("span", "poster-mini-label", "case"));
       box.appendChild(caseRow);
       gBlocks.appendChild(box);
+      blockEditorNodes[index] = { box, position: positionOut };
     }
+    syncBlockEditors();
   }
   rebuildBlockEditors();
   root.appendChild(gBlocks);
@@ -389,6 +917,10 @@ export function mountPosterWorkshop(deps) {
   };
   mkBtn("Render", "Render the poster", () => { renderNow(); critiqueNow(false); });
   mkBtn("Critique", "Ask for a measured critique of the poster", () => { renderNow(); critiqueNow(true); });
+  undoBtn = mkBtn("Undo position", "Undo the last poster text position change", undoPlacement);
+  redoBtn = mkBtn("Redo position", "Redo the last poster text position change", redoPlacement);
+  resetPositionsBtn = mkBtn("Reset positions", "Reset poster text positions to their placement cells", resetTextPositions);
+  syncHistoryButtons();
   mkBtn("PNG", "Download the poster as PNG", () => {
     try {
       canvas.toBlob((blob) => {
@@ -405,21 +937,44 @@ export function mountPosterWorkshop(deps) {
   });
   root.appendChild(actions);
   root.appendChild(status);
-  root.appendChild(el("span", "at-glab", "The read"));
-  root.appendChild(critiqueHost);
+  root.appendChild(critiqueDetails);
 
   // first render
   renderNow();
   critiqueNow(false);
+  setActive(active);
   if (typeof say === "function") {
-    say("model", "The workshop is live. Set the type, pick an instrument for the art, and ask for a critique - I read the poster through the same measured packet I receive, so every note carries its numbers.");
+    say("model", "Your poster is ready to edit. Drag text to position it, choose a background, or add an image. The critique can help spot overlap and readability issues.");
   }
 
   return {
     state,
     render: renderNow,
     critique: critiqueNow,
+    setActive,
+    setArtImage,
     setArtSeed(seed) { state.art.seed = seed; seedIn.value = seed; renderNow(); critiqueNow(false); },
-    destroy() { clearTimeout(renderT); mount.innerHTML = ""; },
+    destroy() {
+      active = false;
+      imageImportEpoch++;
+      clearTimeout(renderT);
+      if (overlayRaf) cancelAnimationFrame(overlayRaf);
+      if (dragRaf) cancelAnimationFrame(dragRaf);
+      if (resizeObserver) resizeObserver.disconnect();
+      window.removeEventListener("resize", onWindowResize);
+      document.removeEventListener("keydown", onDocumentKeyDown);
+      if (overlay) {
+        overlay.removeEventListener("pointerdown", onOverlayPointerDown);
+        overlay.removeEventListener("pointermove", onOverlayPointerMove);
+        overlay.removeEventListener("pointerup", onOverlayPointerUp);
+        overlay.removeEventListener("pointercancel", onOverlayPointerCancel);
+        overlay.removeEventListener("wheel", onOverlayWheel);
+        overlay.removeEventListener("click", onOverlayClick);
+        overlay.removeEventListener("focusin", onOverlayFocusIn);
+        overlay.remove();
+      }
+      if (stage) stage.classList.remove("poster-direct-active");
+      mount.innerHTML = "";
+    },
   };
 }
