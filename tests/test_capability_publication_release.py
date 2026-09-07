@@ -21,6 +21,8 @@ RELEASE_PATHS = (
     "system/poster-editor.css",
     "system/retro-studio.js",
     "system/retro-project.js",
+    "system/shader-runner.js",
+    "system/shader-image-presets.js",
     "system/loom-studio.js",
     "system/loom-project.js",
     "system/workbench.js",
@@ -34,6 +36,7 @@ RELEASE_PATHS = (
     "system/spatial-atlas.js",
     "system/spatial-scene.js",
     "system/spatial-textured.js",
+    "system/spatial-textured-shaders.js",
     "system/spatial-view.js",
     "fonts.html",
     "system/font-marketplace.css",
@@ -254,7 +257,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "5a0919452e5efd97b1b30d078225ccc17f2783128b0dd190fde8474fcc1e4ac2"
+REVIEWED_RELEASE_SHA256 = "732eabca14c0a165f787e32d8548a05051a0ba85b1eaf41f5860a4f96686b5f1"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

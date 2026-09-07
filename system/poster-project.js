@@ -1,7 +1,9 @@
-import { POSTER_FORMATS, POSTER_FACES, POSTER_CELLS } from './poster.js?v=20260907-typography-handoff';
+import { POSTER_FORMATS, POSTER_FACES, POSTER_CELLS, POSTER_BLOCK_KINDS } from './poster.js?v=20260907-flex-composition';
 
 export const MAX_PROJECT_BYTES = 9 * 1024 * 1024;
 export const MAX_IMAGE_CHARS = 8 * 1024 * 1024;
+export const MIN_POSTER_BLOCKS = 1;
+export const MAX_POSTER_BLOCKS = 8;
 const fail = () => { throw new Error('This is not a supported Poster project. Your current work has not changed.'); };
 const object = value => value && typeof value === 'object' && !Array.isArray(value) ? value : fail();
 const number = (value, min, max) => typeof value === 'number' && Number.isFinite(value) && value >= min && value <= max ? value : fail();
@@ -27,11 +29,11 @@ function cleanState(input, options) {
     if (!Array.isArray(value) || value.length > max) return fail();
     return value.map(item => choice(item, allowed));
   };
-  if (!Array.isArray(state.blocks) || state.blocks.length !== 3) return fail();
-  const blocks = state.blocks.map((inputBlock, index) => {
+  if (!Array.isArray(state.blocks) || state.blocks.length < MIN_POSTER_BLOCKS || state.blocks.length > MAX_POSTER_BLOCKS) return fail();
+  const blocks = state.blocks.map((inputBlock) => {
     const block = object(inputBlock);
     const clean = {
-      kind: choice(block.kind, [['headline'], ['standfirst'], ['folio']][index]),
+      kind: choice(block.kind, POSTER_BLOCK_KINDS),
       text: string(block.text, 4000), face: choice(block.face, Object.keys(POSTER_FACES)),
       size: number(block.size, 0.01, 0.16), tracking: number(block.tracking, -0.04, 0.4),
       leading: number(block.leading, 0.9, 1.8), align: choice(block.align, ['left', 'center', 'right']),

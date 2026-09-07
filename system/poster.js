@@ -22,6 +22,13 @@ export const POSTER_FACES = {
   mono: '"Conso","JetBrains Mono",ui-monospace,monospace',
 };
 
+export const POSTER_BLOCK_LABELS = Object.freeze({
+  headline: "Heading",
+  standfirst: "Supporting text",
+  folio: "Caption",
+});
+export const POSTER_BLOCK_KINDS = Object.freeze(Object.keys(POSTER_BLOCK_LABELS));
+
 // Nine anchor cells matching the perception grid, so critique and placement
 // speak the same spatial language.
 export const POSTER_CELLS = [
@@ -33,6 +40,26 @@ export const POSTER_CELLS = [
 // One base artwork per live poster canvas. Type edits do not need to regenerate
 // the same seeded image; the WeakMap releases it with the owning canvas.
 const posterArtwork = new WeakMap();
+
+export function posterBlockLabel(kind) {
+  return POSTER_BLOCK_LABELS[kind] || "Text";
+}
+
+export function defaultPosterBlock(kind = "standfirst") {
+  if (kind === "headline") {
+    return { kind: "headline", text: "New heading", face: "brand", size: 0.07,
+      tracking: 0.02, leading: 1.05, align: "left", cell: "middle-left",
+      color: "#f2ecf7", caseMode: "upper" };
+  }
+  if (kind === "folio") {
+    return { kind: "folio", text: "Caption", face: "mono", size: 0.014,
+      tracking: 0.18, leading: 1, align: "left", cell: "top-left",
+      color: "#8f86a0", caseMode: "upper" };
+  }
+  return { kind: "standfirst", text: "Supporting text", face: "body", size: 0.024,
+    tracking: 0, leading: 1.4, align: "left", cell: "bottom-left",
+    color: "#c9c2d4", caseMode: "none" };
+}
 
 export function defaultPosterState(seed = "poster-01") {
   return {
@@ -227,7 +254,7 @@ export function renderPoster(canvas, state, deps = {}) {
   // 3) type blocks
   const boxes = [];
   const margin = Math.max(0.02, Math.min(0.2, state.margin ?? 0.07));
-  for (const block of state.blocks || []) {
+  for (const [index, block] of (state.blocks || []).entries()) {
     const face = POSTER_FACES[block.face] || POSTER_FACES.display;
     const anchor = cellAnchor(block.cell || "center", margin);
     ctx.textBaseline = "top";
@@ -308,6 +335,7 @@ export function renderPoster(canvas, state, deps = {}) {
       }
     });
     boxes.push({
+      index,
       kind: block.kind,
       x0: x0 / fmt.w, y0: y0 / fmt.h,
       x1: Math.min(1, (x0 + widest) / fmt.w), y1: Math.min(1, (y0 + blockH) / fmt.h),
@@ -361,18 +389,22 @@ export function critiquePoster(boxes, detail, rich) {
     // 1) type over busy texture
     if (box.kind !== "folio" && cell.edge > 0.4) {
       findings.push({ level: "fix",
+        blockIndex: box.index,
         text: `The ${box.kind} sits on a busy region (${name}, edge density ${cell.edge}); the calmest cell is ${calmest.name} (edge ${calmest.edge}). Move it or raise the veil.` });
     }
     // 2) WCAG contrast of the block color vs the cell's mean color
     const ratio = contrastRatio(box.color, cell.hex);
     if (ratio < 3) {
       findings.push({ level: "fix",
+        blockIndex: box.index,
         text: `The ${box.kind} reads ${ratio.toFixed(1)}:1 against its ground (${cell.hex} in ${name}) - below even large-text AA (3:1). Lighten the type or deepen the veil.` });
     } else if (ratio < 4.5 && box.kind !== "headline") {
       findings.push({ level: "note",
+        blockIndex: box.index,
         text: `The ${box.kind} is ${ratio.toFixed(1)}:1 against ${name}; fine for large type, thin for small. AA for body sizes wants 4.5:1.` });
     } else if (ratio > 7 && box.kind === "headline") {
       findings.push({ level: "praise",
+        blockIndex: box.index,
         text: `Headline contrast is strong (${ratio.toFixed(1)}:1 over ${name}) - it will carry at poster distance.` });
     }
   }
@@ -384,9 +416,11 @@ export function critiquePoster(boxes, detail, rich) {
     const hc = cellFor(headline);
     if (hc.name === brightest.name && brightest.luma > 0.55) {
       findings.push({ level: "note",
+        blockIndex: headline.index,
         text: `The headline shares its cell with the art's light mass (${brightest.name}, luma ${brightest.luma}); the eye will fight between them. Consider offsetting one.` });
     } else if (Math.abs(hc.col - brightest.x) + Math.abs(hc.row - brightest.y) >= 2) {
       findings.push({ level: "praise",
+        blockIndex: headline.index,
         text: `The headline (${hc.name}) and the art's light mass (${brightest.name}) balance across the frame - a classic diagonal tension that reads intentional.` });
     }
   }
@@ -399,6 +433,8 @@ export function critiquePoster(boxes, detail, rich) {
       const overlapY = Math.max(0, Math.min(a.y1, b.y1) - Math.max(a.y0, b.y0));
       if (overlapX > 0 && overlapY > 0) {
         findings.push({ level: "fix",
+          blockIndex: a.index,
+          otherBlockIndex: b.index,
           text: `The ${a.kind} and the ${b.kind} overlap (${Math.round(overlapX * 100)}% x ${Math.round(overlapY * 100)}% of the frame); give one a different cell.` });
       }
     }
@@ -415,6 +451,7 @@ export function critiquePoster(boxes, detail, rich) {
     }
     if (nearest > 40 && nearest < 110) {
       findings.push({ level: "note",
+        blockIndex: headline.index,
         text: `The headline color sits near the art's palette without belonging to it (nearest swatch distance ${Math.round(nearest)}); either match a swatch or commit to full contrast.` });
     }
   }

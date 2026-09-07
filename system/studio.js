@@ -610,7 +610,7 @@ async function enterPosterWorkshop(epoch) {
   }
   try {
     const [panelMod, fieldMod, ex] = await Promise.all([
-      import("./poster-panel.js?v=20260907-workspace"),
+      import("./poster-panel.js?v=20260907-flex-composition"),
       import("./generative-field.js"),
       loadExporters(),
       document.fonts ? Promise.allSettled([

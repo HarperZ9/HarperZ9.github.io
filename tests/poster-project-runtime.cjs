@@ -23,7 +23,7 @@ const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8802';
     await page.getByRole('button', { name: 'Remove image', exact: true }).waitFor();
     const block = page.locator('[data-poster-block-index="0"]');
     await block.getByRole('button', { name: 'Conso', exact: true }).click();
-    for (const [label, value] of [['headline tracking', '-0.03'], ['headline line spacing', '1.45']]) {
+    for (const [label, value] of [['Heading 1 letter spacing', '-0.03'], ['Heading 1 line spacing', '1.45']]) {
       await block.getByLabel(label, { exact: true }).evaluate((e, v) => { e.value = v; e.dispatchEvent(new Event('input')); }, value);
     }
     await page.waitForTimeout(250);

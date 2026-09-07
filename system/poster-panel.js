@@ -10,15 +10,17 @@
 
 import {
   defaultPosterState, renderPoster, critiquePoster,
-  POSTER_FORMATS, POSTER_CELLS,
-} from "./poster.js?v=20260907-typography-handoff";
+  POSTER_FORMATS, POSTER_CELLS, POSTER_BLOCK_KINDS, posterBlockLabel, defaultPosterBlock,
+} from "./poster.js?v=20260907-flex-composition";
 import { renderRetro } from "./retro-engine.js";
 import { applyOpsWet, OP_META } from "./glitch-ops.js";
-import { encodePosterProject, decodePosterProject, validateProjectImage, MAX_PROJECT_BYTES } from "./poster-project.js?v=20260907-project-files";
+import { encodePosterProject, decodePosterProject, validateProjectImage, MAX_PROJECT_BYTES } from "./poster-project.js?v=20260907-flex-composition";
 import { mountLibrarySave, captureCanvasPreview } from "./project-library-controls.js?v=20260907-workspace";
 
 const PALETTE = ["#f2ecf7", "#c9c2d4", "#8f86a0", "#7de3ea", "#99f147", "#f8cc43", "#ff8334", "#ff35aa", "#111016"];
 const HISTORY_LIMIT = 60;
+const MIN_BLOCKS = 1;
+const MAX_BLOCKS = 8;
 
 function finite(value) {
   const n = Number(value);
@@ -78,10 +80,10 @@ function chipRow(labels, current, onPick, cls = "at-chip") {
 }
 
 // The 3x3 cell picker: a tiny grid sharing the perception grid's names.
-function cellPicker(current, onPick) {
+function cellPicker(current, onPick, label = "Placement cell") {
   const wrap = el("div", "poster-cellpick");
   wrap.setAttribute("role", "group");
-  wrap.setAttribute("aria-label", "Placement cell");
+  wrap.setAttribute("aria-label", label);
   POSTER_CELLS.forEach((name) => {
     const b = el("button", "poster-cell");
     b.type = "button";
@@ -204,7 +206,72 @@ export function mountPosterWorkshop(deps) {
 
   function blockName(index) {
     const block = state.blocks[index];
-    return block ? String(block.kind || "block") : "block";
+    return block ? `${posterBlockLabel(block.kind)} ${index + 1}` : "block";
+  }
+
+  function blockSummary(index) {
+    const block = state.blocks[index];
+    return block ? blockName(index) : "Text block";
+  }
+
+  function cloneBlock(block) {
+    return JSON.parse(JSON.stringify(block || defaultPosterBlock("standfirst")));
+  }
+
+  function clearPlacementHistory() {
+    undoStack.length = 0;
+    redoStack.length = 0;
+    syncHistoryButtons();
+  }
+
+  function focusBlockText(index) {
+    if (typeof requestAnimationFrame !== "function") return;
+    requestAnimationFrame(() => {
+      const entry = blockEditorNodes[index];
+      if (entry?.text) {
+        try { entry.text.focus({ preventScroll: true }); } catch (_) { entry.text.focus(); }
+      }
+    });
+  }
+
+  function finishStructuralEdit(index, message) {
+    selectedIndex = Math.max(0, Math.min(index, state.blocks.length - 1));
+    clearPlacementHistory();
+    rebuildBlockEditors();
+    renderNow();
+    critiqueNow(false);
+    selectBlock(selectedIndex, { announce: false });
+    focusBlockText(selectedIndex);
+    status.textContent = message;
+  }
+
+  function addBlock() {
+    if (state.blocks.length >= MAX_BLOCKS) return;
+    const block = defaultPosterBlock("standfirst");
+    block.cell = POSTER_CELLS[state.blocks.length % POSTER_CELLS.length] || "center";
+    state.blocks.push(block);
+    finishStructuralEdit(state.blocks.length - 1, "Text block added");
+  }
+
+  function duplicateBlock(index) {
+    if (state.blocks.length >= MAX_BLOCKS || !state.blocks[index]) return;
+    const copy = cloneBlock(state.blocks[index]);
+    state.blocks.splice(index + 1, 0, copy);
+    finishStructuralEdit(index + 1, "Text block duplicated");
+  }
+
+  function removeBlock(index) {
+    if (state.blocks.length <= MIN_BLOCKS || !state.blocks[index]) return;
+    state.blocks.splice(index, 1);
+    finishStructuralEdit(Math.min(index, state.blocks.length - 1), "Text block removed");
+  }
+
+  function moveBlock(index, delta) {
+    const next = index + delta;
+    if (!state.blocks[index] || !state.blocks[next]) return;
+    const [block] = state.blocks.splice(index, 1);
+    state.blocks.splice(next, 0, block);
+    finishStructuralEdit(next, delta < 0 ? "Text block moved earlier" : "Text block moved later");
   }
 
   function clonePosition(pos) {
@@ -261,6 +328,7 @@ export function mountPosterWorkshop(deps) {
 
   function syncBlockEditors() {
     blockEditorNodes.forEach((entry, index) => {
+      if (!entry || !state.blocks[index]) return;
       const selected = index === selectedIndex;
       entry.box.classList.toggle("is-selected", selected);
       entry.box.setAttribute("aria-current", selected ? "true" : "false");
@@ -311,8 +379,8 @@ export function mountPosterWorkshop(deps) {
       const button = el("button", "poster-select-box");
       button.type = "button";
       button.dataset.posterBox = String(index);
-      button.dataset.label = ({ headline: "Heading", standfirst: "Supporting text", folio: "Caption" })[block.kind] || "Text";
-      button.setAttribute("aria-label", `Select ${block.kind || "poster"} text block`);
+      button.dataset.label = blockSummary(index);
+      button.setAttribute("aria-label", `Select ${blockSummary(index)} text block`);
       button.setAttribute("aria-pressed", String(index === selectedIndex));
       button.style.left = `${Math.max(0, box.x0) * 100}%`;
       button.style.top = `${Math.max(0, box.y0) * 100}%`;
@@ -627,19 +695,23 @@ export function mountPosterWorkshop(deps) {
     const findings = critiquePoster(lastBoxes, detail, rich);
     critiqueHost.innerHTML = "";
     for (const f of findings) {
+      const blockMatch = f.text.match(/^The (headline|standfirst|folio)/);
+      const index = Number.isInteger(f.blockIndex) ? f.blockIndex : blockMatch ? state.blocks.findIndex((b) => b.kind === blockMatch[1]) : -1;
+      let findingText = state.blocks[index] && blockMatch ? f.text.replace(/^The (headline|standfirst|folio)/, `The ${blockName(index)}`) : f.text;
+      if (Number.isInteger(f.otherBlockIndex) && state.blocks[f.otherBlockIndex]) {
+        findingText = findingText.replace(/and the (headline|standfirst|folio)/, `and the ${blockName(f.otherBlockIndex)}`);
+      }
       const row = el("div", "poster-finding poster-" + f.level);
       row.appendChild(el("span", "poster-flevel", f.level));
-      row.appendChild(el("span", "poster-ftext", f.text));
+      row.appendChild(el("span", "poster-ftext", findingText));
       // One-click collaboration: a busy-region fix that names a calmer cell
       // gains an APPLY button that moves the block there.
       const cellMatch = f.level === "fix" && f.text.match(/calmest cell is ([a-z-]+)/);
-      const blockMatch = f.text.match(/^The (headline|standfirst|folio)/);
-      if (cellMatch && blockMatch && POSTER_CELLS.includes(cellMatch[1])) {
+      if (cellMatch && blockMatch && state.blocks[index] && POSTER_CELLS.includes(cellMatch[1])) {
         const apply = el("button", "poster-apply", "apply");
         apply.type = "button";
-        apply.setAttribute("aria-label", `Move the ${blockMatch[1]} to ${cellMatch[1]}`);
+        apply.setAttribute("aria-label", `Move ${blockName(index)} to ${cellMatch[1]}`);
         apply.addEventListener("click", () => {
-          const index = state.blocks.findIndex((b) => b.kind === blockMatch[1]);
           const block = state.blocks[index];
           if (block) {
             const before = snapshotPlacement();
@@ -728,7 +800,7 @@ export function mountPosterWorkshop(deps) {
   });
   imgRow.append(imgBtn, imgInput, imgClear);
   root.appendChild(imgRow);
-  const projectRow = el("div", "poster-artrow");
+  const projectRow = el("div", "poster-artrow poster-project-actions");
   const saveProject = el("button", "at-mini", "Save project");
   const openProject = el("button", "at-mini", "Open project");
   saveProject.type = openProject.type = "button";
@@ -947,18 +1019,61 @@ export function mountPosterWorkshop(deps) {
   function rebuildBlockEditors() {
     gBlocks.innerHTML = "";
     blockEditorNodes.length = 0;
-    gBlocks.appendChild(el("span", "at-glab", "Text"));
+    const blockHeader = el("div", "poster-blocks-head");
+    blockHeader.appendChild(el("span", "at-glab", "Text"));
+    const add = el("button", "at-mini", "Add text block");
+    add.type = "button";
+    add.disabled = state.blocks.length >= MAX_BLOCKS;
+    add.setAttribute("aria-label", "Add text block");
+    add.addEventListener("click", addBlock);
+    blockHeader.appendChild(add);
+    gBlocks.appendChild(blockHeader);
     for (let index = 0; index < state.blocks.length; index += 1) {
       const block = state.blocks[index];
       const box = el("details", "poster-block");
       box.dataset.posterBlockIndex = String(index);
       if (block.kind === "headline") box.open = true;
-      const sum = el("summary", null, ({ headline: "Heading", standfirst: "Supporting text", folio: "Caption" })[block.kind] || block.kind);
+      const sum = el("summary", null, blockSummary(index));
       box.appendChild(sum);
       box.addEventListener("focusin", () => selectBlock(index, { announce: false }));
+      const tools = el("div", "poster-block-tools");
+      const tool = (text, label, disabled, action) => {
+        const button = el("button", "at-mini", text);
+        button.type = "button";
+        button.disabled = disabled;
+        button.setAttribute("aria-label", label);
+        button.addEventListener("click", action);
+        tools.appendChild(button);
+        return button;
+      };
+      tool("Move up", `Move block ${index + 1} earlier`, index === 0, () => moveBlock(index, -1));
+      tool("Move down", `Move block ${index + 1} later`, index === state.blocks.length - 1, () => moveBlock(index, 1));
+      tool("Duplicate", `Duplicate block ${index + 1}`, state.blocks.length >= MAX_BLOCKS, () => duplicateBlock(index));
+      tool("Remove", `Remove block ${index + 1}`, state.blocks.length <= MIN_BLOCKS, () => removeBlock(index));
+      box.appendChild(tools);
+      const roleLab = el("label", "poster-role-label");
+      roleLab.appendChild(el("span", "poster-mini-label", "Role"));
+      const role = el("select", "poster-role-select");
+      role.setAttribute("aria-label", `Block ${index + 1} role`);
+      for (const kind of POSTER_BLOCK_KINDS) {
+        const option = el("option", null, posterBlockLabel(kind));
+        option.value = kind;
+        role.appendChild(option);
+      }
+      role.value = POSTER_BLOCK_KINDS.includes(block.kind) ? block.kind : "standfirst";
+      role.addEventListener("change", () => {
+        selectBlock(index, { announce: false });
+        block.kind = role.value;
+        rebuildBlockEditors();
+        renderNow();
+        critiqueNow(false);
+        focusBlockText(index);
+      });
+      roleLab.appendChild(role);
+      box.appendChild(roleLab);
       const text = el("textarea", "poster-text");
       text.value = block.text; text.rows = block.kind === "headline" ? 2 : 2;
-      text.setAttribute("aria-label", block.kind + " text");
+      text.setAttribute("aria-label", blockName(index) + " text");
       text.addEventListener("input", () => { selectBlock(index, { announce: false }); block.text = text.value; queueRender(); });
       box.appendChild(text);
       box.appendChild(el("span", "poster-mini-label", "Typeface"));
@@ -966,25 +1081,25 @@ export function mountPosterWorkshop(deps) {
       box.appendChild(el("span", "poster-mini-label", "size"));
       const size = el("input", "at-slider");
       size.type = "range"; size.min = "0.01"; size.max = "0.16"; size.step = "0.0001"; size.value = String(block.size);
-      size.setAttribute("aria-label", block.kind + " size");
+      size.setAttribute("aria-label", blockName(index) + " size");
       size.addEventListener("input", () => { selectBlock(index, { announce: false }); block.size = Number(size.value); queueRender(); });
       box.appendChild(size);
       box.appendChild(el("span", "poster-mini-label", "Letter spacing"));
       const tr = el("input", "at-slider");
       tr.type = "range"; tr.min = "-0.04"; tr.max = "0.4"; tr.step = "0.01"; tr.value = String(block.tracking);
-      tr.setAttribute("aria-label", block.kind + " tracking");
+      tr.setAttribute("aria-label", blockName(index) + " letter spacing");
       tr.addEventListener("input", () => { selectBlock(index, { announce: false }); block.tracking = Number(tr.value); queueRender(); });
       box.appendChild(tr);
       box.appendChild(el("span", "poster-mini-label", "Line spacing"));
       const leading = el("input", "at-slider");
       leading.type = "range"; leading.min = "0.9"; leading.max = "1.8"; leading.step = "0.01";
       leading.value = String(block.leading || 1.1);
-      leading.setAttribute("aria-label", block.kind + " line spacing");
-      leading.addEventListener("input", () => { block.leading = Number(leading.value); queueRender(); });
+      leading.setAttribute("aria-label", blockName(index) + " line spacing");
+      leading.addEventListener("input", () => { selectBlock(index, { announce: false }); block.leading = Number(leading.value); queueRender(); });
       box.appendChild(leading);
       box.appendChild(el("span", "poster-mini-label", "Position"));
       const positionOut = el("output", "poster-position-readout", positionLabel(block));
-      positionOut.setAttribute("aria-label", `${block.kind} position`);
+      positionOut.setAttribute("aria-label", `${blockName(index)} position`);
       box.appendChild(positionOut);
       box.appendChild(cellPicker(block.cell, (name) => {
         const before = snapshotPlacement();
@@ -994,14 +1109,14 @@ export function mountPosterWorkshop(deps) {
         renderNow();
         pushPlacement(`Moved ${block.kind}`, before);
         critiqueNow(false);
-      }));
+      }, `${blockName(index)} placement cell`));
       box.appendChild(el("span", "poster-mini-label", "color"));
       box.appendChild(swatchRow(block.color, (hex) => { selectBlock(index, { announce: false }); block.color = hex; queueRender(); }));
       const caseRow = chipRow([["none", "As typed"], ["upper", "UPPER"], ["lower", "lower"]], block.caseMode, (v) => { selectBlock(index, { announce: false }); block.caseMode = v; queueRender(); });
       box.appendChild(el("span", "poster-mini-label", "case"));
       box.appendChild(caseRow);
       gBlocks.appendChild(box);
-      blockEditorNodes[index] = { box, position: positionOut };
+      blockEditorNodes[index] = { box, text, position: positionOut };
     }
     syncBlockEditors();
   }
