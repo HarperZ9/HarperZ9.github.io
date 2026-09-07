@@ -85,7 +85,7 @@ def test_fonts_page_keeps_public_site_faces_out_of_retail_inventory() -> None:
     assert "Conso" in current_type
     assert "Hanken Grotesk" not in catalog_notice.group(1)
     assert "Conso" not in catalog_notice.group(1)
-    assert "existing bundled typefaces, not catalog products" in source
+    assert "existing typefaces used on this site, not fonts we sell" in source
 
 
 def test_font_marketplace_does_not_publish_private_or_derived_font_assets() -> None:
@@ -111,18 +111,20 @@ def test_fonts_page_names_release_gate_without_promising_a_notification_service(
     lowered = source.lower()
 
     assert '<details class="font-details">' in source
-    assert "<summary>Release and licensing details</summary>" in source
+    assert "<summary>About the upcoming fonts</summary>" in source
     for required in (
-        "reviewed license",
-        "public specimen",
-        "release artifact",
-        "sale-ready",
+        "character support",
+        "license",
+        "specimen",
     ):
         assert required in lowered
 
     assert "waiting list" not in lowered
     assert "newsletter" not in lowered
     assert "notify" not in lowered
+    assert "checksum trail" not in lowered
+    assert 'href="gallery.html#printdesk"' in source
+    assert 'href="loom.html"' in source
 
 
 def test_interactive_specimen_is_public_static_and_progressive() -> None:
