@@ -19,226 +19,12 @@
   <meta name="twitter:description" content="Sample proof-surface report for public-surface-sweeper: claims, evidence, gaps, and release-readiness recommendations.">
   <meta name="twitter:image" content="https://harperz9.github.io/img/og/proof-surface.png">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%2317130f'/%3E%3Cpath d='M16 20h32M16 32h24M16 44h32' stroke='%23f4ead9' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
-  <style>
-    :root {
-      --ink: #17130f;
-      --paper: #f4ead9;
-      --clay: #9d4f2f;
-      --moss: #4f6338;
-      --brass: #b98531;
-      --line: rgba(23, 19, 15, 0.18);
-      --wash: rgba(255, 255, 255, 0.42);
-      --shadow: 0 24px 80px rgba(33, 24, 16, 0.18);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      color: var(--ink);
-      font-family: Georgia, "Times New Roman", serif;
-      background:
-        radial-gradient(circle at 16% 10%, rgba(185, 133, 49, 0.28), transparent 28rem),
-        radial-gradient(circle at 82% 4%, rgba(79, 99, 56, 0.18), transparent 24rem),
-        linear-gradient(135deg, #f8f0df 0%, #efe0c9 52%, #e5d1b4 100%);
-      line-height: 1.55;
-    }
-
-    a {
-      color: var(--clay);
-      text-decoration-thickness: 0.08em;
-      text-underline-offset: 0.2em;
-    }
-
-    .shell {
-      width: min(1120px, calc(100% - 32px));
-      margin: 0 auto;
-    }
-
-    header {
-      padding: 28px 0 18px;
-    }
-
-    nav {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: center;
-      font-family: "Trebuchet MS", Verdana, sans-serif;
-      font-size: 0.82rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.65fr);
-      gap: 28px;
-      align-items: stretch;
-      padding: 54px 0 28px;
-    }
-
-    .card {
-      background: var(--wash);
-      border: 1px solid var(--line);
-      border-radius: 30px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      padding: clamp(24px, 4vw, 46px);
-      min-width: 0;
-    }
-
-    .report-context {
-      margin: 0 0 14px;
-      color: var(--moss);
-      font-family: "Trebuchet MS", Verdana, sans-serif;
-      font-size: 0.78rem;
-      letter-spacing: 0;
-      text-transform: none;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(2.6rem, 8vw, 6.7rem);
-      line-height: 0.9;
-      letter-spacing: -0.07em;
-      max-width: 10ch;
-    }
-
-    h2 {
-      margin: 0 0 14px;
-      font-size: clamp(1.65rem, 3vw, 2.4rem);
-      line-height: 1.05;
-      letter-spacing: -0.04em;
-    }
-
-    h3 {
-      margin: 0 0 8px;
-      font-family: "Trebuchet MS", Verdana, sans-serif;
-      font-size: 0.9rem;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
-    }
-
-    .lead {
-      margin: 24px 0 0;
-      max-width: 68ch;
-      font-size: clamp(1.05rem, 2vw, 1.32rem);
-    }
-
-    .summary {
-      display: grid;
-      gap: 14px;
-    }
-
-    .pill {
-      display: inline-flex;
-      width: fit-content;
-      padding: 8px 12px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.38);
-      font-family: "Trebuchet MS", Verdana, sans-serif;
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-      padding: 20px 0 52px;
-    }
-
-    .wide {
-      grid-column: 1 / -1;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      table-layout: fixed;
-      font-family: "Trebuchet MS", Verdana, sans-serif;
-      font-size: 0.92rem;
-    }
-
-    th,
-    td {
-      padding: 12px 10px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      vertical-align: top;
-      overflow-wrap: anywhere;
-    }
-
-    th {
-      color: var(--moss);
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    ul,
-    ol {
-      padding-left: 1.25rem;
-    }
-
-    li + li {
-      margin-top: 0.45rem;
-    }
-
-    code,
-    pre {
-      font-family: "Courier New", monospace;
-    }
-
-    pre {
-      overflow-x: auto;
-      max-width: 100%;
-      padding: 18px;
-      border-radius: 18px;
-      background: rgba(23, 19, 15, 0.86);
-      color: #fff7ea;
-    }
-
-    footer {
-      padding: 28px 0 42px;
-      color: rgba(23, 19, 15, 0.72);
-      font-family: "Trebuchet MS", Verdana, sans-serif;
-      font-size: 0.82rem;
-    }
-
-    @media (max-width: 760px) {
-      .hero,
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      nav {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .card {
-        border-radius: 22px;
-      }
-    }
-
-    /* A phone gets the whole page, not a third of it. These sample reports
-       shipped with a fixed 1200px figure and unwrapped code, so the document
-       was 1240px wide inside a 375px viewport and the reader had to pan
-       sideways to read a sentence. */
-    img, svg, video, canvas { max-width: 100%; height: auto; }
-    pre, code { overflow-wrap: anywhere; word-break: break-word; max-width: 100%; }
-    pre { overflow-x: auto; }
-</style>
+  <link rel="stylesheet" href="system/system.css?v=20260906-reading-cascade">
+  <link rel="stylesheet" href="system/report-editorial.css?v=20260906" data-report-editorial>
+  <link rel="stylesheet" href="system/print.css?v=20260902-creative-chassis" media="print" data-print-style>
 </head>
-<body>
+<body class="report-editorial standalone-report">
 <a class="skip-link" href="#main">Skip to content</a>
-<style>.skip-link{position:absolute;left:.5rem;top:-3.5rem;z-index:99;background:#0b0c0e;color:#fff;padding:.55rem .9rem;border-radius:4px;text-decoration:none;font:600 .8rem system-ui,sans-serif;outline-offset:2px}.skip-link:focus{top:.6rem}</style>
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
 <script type="module" src="system/nav.js?v=20260902-creative-chassis"></script>
@@ -250,7 +36,7 @@
     </nav>
   </header>
 
-  <main id="main" class="shell">
+  <main id="main" class="shell report-main">
     <section class="hero">
       <div class="card">
         <p class="report-context">Sample report &middot; release readiness &middot; proof surface</p>
@@ -274,13 +60,15 @@
     <section class="grid" aria-label="Proof surface report">
       <article class="card">
         <h2>Surface</h2>
-        <table>
+        <div class="table-wrap report-scroll" tabindex="0" role="region" aria-label="Scrollable table: Proof Surface fields">
+          <table>
           <tr><th>Field</th><th>Value</th></tr>
           <tr><td>Repo</td><td><code>HarperZ9/public-surface-sweeper</code></td></tr>
           <tr><td>Surface class</td><td><code>S:public-release-tool</code></td></tr>
           <tr><td>Review mode</td><td>Public README and repository presentation surface</td></tr>
           <tr><td>Access</td><td>No credentials, private files, or production systems</td></tr>
-        </table>
+          </table>
+        </div>
       </article>
 
       <article class="card">
@@ -299,7 +87,8 @@
 
       <article class="card wide">
         <h2>Evidence present</h2>
-        <table>
+        <div class="table-wrap report-scroll" tabindex="0" role="region" aria-label="Scrollable table: Proof Surface evidence present">
+          <table>
           <tr><th>Evidence</th><th>Status</th></tr>
           <tr><td>Public README</td><td>Present</td></tr>
           <tr><td>Install command</td><td>Present</td></tr>
@@ -309,7 +98,8 @@
           <tr><td>License</td><td>MIT reported by GitHub page</td></tr>
           <tr><td>Release</td><td><code>v0.1.0</code> reported as latest release on 2026-06-12</td></tr>
           <tr><td>Tests and CI surface</td><td><code>tests</code> and <code>.github/workflows</code> visible</td></tr>
-        </table>
+          </table>
+        </div>
       </article>
 
       <article class="card">
@@ -325,7 +115,7 @@
 
       <article class="card">
         <h2>Recommended patch shape</h2>
-        <pre><code>## What it checks
+        <pre tabindex="0" role="region" aria-label="Scrollable code sample: proof checks"><code>## What it checks
 - required release files
 - secret-shaped values
 - private key blocks
@@ -339,7 +129,8 @@
 
       <article class="card wide">
         <h2>Proof-surface verdict</h2>
-        <table>
+        <div class="table-wrap report-scroll" tabindex="0" role="region" aria-label="Scrollable table: Proof Surface verdict">
+          <table>
           <tr><th>Category</th><th>Status</th></tr>
           <tr><td>Legibility</td><td>Good</td></tr>
           <tr><td>Bounded claim</td><td>Mostly good</td></tr>
@@ -347,7 +138,8 @@
           <tr><td>Buyer usefulness</td><td>High for release hygiene and public repo prep</td></tr>
           <tr><td>Overclaim risk</td><td>Moderate until non-goals are explicit</td></tr>
           <tr><td>Next action</td><td>Add sample output, non-goals, and proof-pipeline link</td></tr>
-        </table>
+          </table>
+        </div>
       </article>
     </section>
   </main>

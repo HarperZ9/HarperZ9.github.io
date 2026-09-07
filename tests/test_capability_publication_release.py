@@ -13,6 +13,22 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "demos/crucible-cleanroom/index.html",
+    "emet-sample.html",
+    "gallery.html",
+    "loom.html",
+    "presentation.html",
+    "proof-index-sample.html",
+    "proof-surface-sample.html",
+    "public-surface-sweeper-sample.html",
+    "studio.html",
+    "system/demo-editorial.css",
+    "system/discovery/lab.html",
+    "system/doc.css",
+    "system/instrument-editorial.css",
+    "system/report-editorial.css",
+    "system/system.css",
+    "warden.html",
     "assets/index-fBx77P1E.js",
     "assets/index-3xC65p6C.css",
     "accountable-surface.html",
@@ -205,7 +221,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "3c9c3589d70ef65d52df28c6efc22c64f17271655414d741f39f61fcd3ccbdfe"
+REVIEWED_RELEASE_SHA256 = "9eb480da7150ef1863459e8be113082f265b7826fa3d021fc927915555d27416"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

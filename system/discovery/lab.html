@@ -4,6 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Telos Discovery Lab</title>
+<meta name="color-scheme" content="light dark" />
+<meta name="theme-color" content="#f4f2ec" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#070406" media="(prefers-color-scheme: dark)" />
 <style>
   :root { --void:#0c0c10; --bone:#e8e6df; --orange:#e8a33d; --ember:#d6603d; --teal:#3dd6c4; --mute:#8a8a96; }
   * { box-sizing: border-box; }
@@ -33,12 +36,15 @@
   .no { color:var(--ember); font-weight:600; }
   .legend { color:var(--mute); font-size:12px; margin-top:6px; }
 </style>
+<link rel="stylesheet" href="../demo-editorial.css?v=20260906-demo-editorial" data-demo-editorial>
 </head>
-<body>
+<body class="demo-editorial demo-discovery">
+  <p class="demo-route"><a class="demo-back" href="../../overview.html">Back to the site</a></p>
   <h1>Telos Discovery Lab</h1>
   <p class="sub">A cheap model is given only the measured state of a system over time (below), never its
   equations. It proposes which terms a conserved quantity is built from; a tool fits the weights; a sound
   verifier certifies it across independent initial conditions. Here you drive that loop directly.</p>
+  <noscript><div class="demo-nojs" role="note">JavaScript is off, so the lab cannot fit, verify, or animate a conservation law here. The explanation and static controls remain available, but live discovery needs JavaScript.</div></noscript>
 
   <div class="row">
     <div class="panel">

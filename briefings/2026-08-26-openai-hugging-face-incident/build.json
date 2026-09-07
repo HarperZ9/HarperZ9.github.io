@@ -2,6 +2,11 @@
   "schema": "harperz9-briefing-build/v1",
   "briefingId": "2026-08-26-openai-hugging-face-incident",
   "renderer": "render-publications/v1",
+  "postProcessing": {
+    "revision": "20260906-editorial-presentation",
+    "scope": "Stylesheet cache references and reviewed figure presentation; source records and publication edition unchanged.",
+    "method": "Presentation edits applied after the original render; output hashes refreshed from the resulting LF-normalized files."
+  },
   "settings": {
     "encoding": "utf-8",
     "figureRenderer": "telos-figure/v1",
@@ -22,7 +27,7 @@
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/index.html",
-      "sha256": "d7807689cdba09869e79e6bba86fcc0fc16c6c448e64ac2250fb92ded482c6bd"
+      "sha256": "8b24d3ba638b76a52393ed77a93f67c7351bcfd8257a234193c27ebb7abf401a"
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/publication.json",
@@ -34,7 +39,7 @@
     },
     {
       "path": "figures/claim-provenance-panel.html",
-      "sha256": "3b98c2bc78c4d0b2edff94089052da89245dc2b1f7daf29b0e6e3b998c99b3af"
+      "sha256": "dc318d903aa8da50a53387e4cbee219cceeecf58d03d45564b5ac58d5bff0880"
     },
     {
       "path": "figures/claim-provenance-panel.json",
@@ -46,7 +51,7 @@
     },
     {
       "path": "figures/control-boundary-flow.html",
-      "sha256": "d616823a6faf6020f4d19028445b39e8fcb18d4f1bee79db63a2ef5a82c11d0d"
+      "sha256": "426422ebae9fe39ce5c589ac020b0314bedd973131287fa7d0a1aafc0ff87d81"
     },
     {
       "path": "figures/control-boundary-flow.json",
@@ -54,11 +59,11 @@
     },
     {
       "path": "figures/control-boundary-flow.svg",
-      "sha256": "36b29ee0abc70505b33d39262c0f758acfaf18574fc9b608b1ac8888c4bc2d34"
+      "sha256": "143fe417421f65adf6be723298a019a30feeea1b0f8eef7adf1775aaa9c359a1"
     },
     {
       "path": "figures/incident-multilane-timeline.html",
-      "sha256": "bb85b72b11929a12f42dfc5e044293127d7c8f3a60e36d321a76e48f48557ea4"
+      "sha256": "b0a29650f24e82a8fc9362ec460cd5f3e01e35fc49053d28bc530dfa92dfe1e7"
     },
     {
       "path": "figures/incident-multilane-timeline.json",
@@ -70,7 +75,7 @@
     },
     {
       "path": "figures/motive-sample-nonexclusive.html",
-      "sha256": "834b84527e5c0fafe9f04a170ef8ed53d599b073ff640e41fb8241326bf2fc98"
+      "sha256": "dac9a52f2f835454e83922b609f6c9c29e02aaa40e6b65c79b1fd0356d7ccf0e"
     },
     {
       "path": "figures/motive-sample-nonexclusive.json",
@@ -82,7 +87,7 @@
     },
     {
       "path": "figures/recovered-actions-by-day.html",
-      "sha256": "a02b55fc02027887c50eba62cfe3fe28586b6d8706d98fe2ec26cd8400194198"
+      "sha256": "58cef4d347278498d19584fbd4dd197a16821b7fe49c1d2f65631551a687c116"
     },
     {
       "path": "figures/recovered-actions-by-day.json",
@@ -94,7 +99,7 @@
     },
     {
       "path": "figures/source-scope-matrix.html",
-      "sha256": "0bbbd183de8ce059e99f1b4f7fd99c4df5861bf3f6f429da9493bf31e5505a3f"
+      "sha256": "265e21405c46018b56365003d46d18c5444457854a59fd016d47cc89ef0b73c0"
     },
     {
       "path": "figures/source-scope-matrix.json",
@@ -106,7 +111,7 @@
     },
     {
       "path": "figures/task-overrepresentation.html",
-      "sha256": "36f469a49dd0053907c25d9b5bb1f3819fdbeae53d66860b15c66de4520b8d70"
+      "sha256": "d437fda95040be53b199cede52c7edc62412052784021512c68cb40c72a5f61a"
     },
     {
       "path": "figures/task-overrepresentation.json",

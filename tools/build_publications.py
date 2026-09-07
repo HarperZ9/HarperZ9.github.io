@@ -29,7 +29,7 @@ from tools.publication_model import (
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_URL = "https://harperz9.github.io/"
-ASSET_REVISION = "20260905-article-reading"
+ASSET_REVISION = "20260906-reading-cascade"
 PUBLICATIONS_MARKER = "GENERATED EDITORIAL PUBLICATIONS"
 WRITING_MARKER = "GENERATED EDITORIAL ESSAYS"
 SITEMAP_MARKER = "GENERATED EDITORIAL ROUTES"
@@ -248,8 +248,8 @@ def render_figure_html(figure: dict, sources: list[dict]) -> str:
     )
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{html.escape(figure["title"])}</title><link rel="stylesheet" href="../system/publication-article.css?v={ASSET_REVISION}"></head>
-<body><nav class="publication-static-nav" aria-label="Publication"><a href="../publications.html">Publications</a></nav><main class="publication-article"><h1>{html.escape(figure["title"])}</h1>
+<title>{html.escape(figure["title"])}</title><link rel="stylesheet" href="../system/publication-article.css?v={ASSET_REVISION}"><link rel="stylesheet" href="../system/figure.css?v=20260906-figure-presentation"></head>
+<body class="figure-document figure-publication-document"><nav class="publication-static-nav" aria-label="Publication"><a href="../publications.html">Publications</a></nav><main class="publication-article publication-figure-page"><h1>{html.escape(figure["title"])}</h1>
 <p class="publication-thesis">{html.escape(figure["claim"])}</p>
 {_render_table(figure)}{_render_figure_metadata(figure)}
 <section aria-label="Figure sources"><h2>Sources</h2><ol>{source_links}</ol></section></main></body></html>

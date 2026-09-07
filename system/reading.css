@@ -103,6 +103,470 @@ body:has(>.publication-article) .publication-article{font-family:var(--reading-t
 body:has(>.publication-article) .publication-kicker{display:none}
 body:has(>.publication-article) .publication-article h1{max-width:24ch}
 
+/* Site-wide reading shell for ordinary documents and product pages. This is
+   screen-only so doc.css / publication-article.css keep their print contracts. */
+@media screen{
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article){
+    color-scheme:light;
+    --reading-paper:#fafaf8;
+    --reading-ink:#19272b;
+    --reading-soft:#42575d;
+    --reading-link:#215a63;
+    --reading-rule:#ccd3d3;
+    --reading-panel:#f0f3f2;
+    --reading-inset:#e7ecea;
+    --reading-verdict:#1f7a52;
+    --reading-drift:#8a3b12;
+    --reading-type:"Hanken Grotesk",Hanken,system-ui,sans-serif;
+    background:var(--reading-paper);
+  }
+
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),
+  html:has(body>.publication-article) body{
+    --paper:var(--reading-paper);--paper-2:var(--reading-panel);--page:var(--reading-paper);--page-sunk:var(--reading-inset);
+    --void:var(--reading-paper);--void-opaque:var(--reading-paper);--backdrop:var(--reading-paper);
+    --card:var(--reading-panel);--raised:var(--reading-panel);--surface:var(--reading-panel);--inset:var(--reading-inset);
+    --ink:var(--reading-ink);--bone:var(--reading-ink);--crystal:var(--reading-ink);--teal:var(--reading-ink);
+    --ink-soft:var(--reading-soft);--ink-muted:var(--reading-soft);--zentropy-ink:var(--reading-ink);--zentropy-ink-2:var(--reading-soft);
+    --muted:var(--reading-soft);--soft:var(--reading-soft);--tag:var(--reading-soft);--faint:var(--reading-soft);--prussian:var(--reading-soft);--unverif:var(--reading-soft);
+    --zentropy-muted:var(--reading-soft);--zentropy-faint:var(--reading-soft);
+    --signal:var(--reading-link);--focus:var(--reading-link);--teal-soft:var(--reading-link);--iris:var(--reading-link);--zentropy-signal:var(--reading-link);
+    --verified:var(--reading-verdict);--match:var(--reading-verdict);--gold:var(--reading-verdict);
+    --drift:var(--reading-drift);--ember:var(--reading-drift);--orange:var(--reading-drift);--hot:var(--reading-drift);--zentropy-rust:var(--reading-drift);
+    --hairline:var(--reading-rule);--rule:var(--reading-rule);--rule-strong:#aebbbb;--line:var(--reading-rule);--line-soft:var(--reading-rule);--facet-line:var(--reading-rule);
+    --edge:linear-gradient(90deg,transparent 0%,var(--reading-rule) 18%,var(--reading-rule) 82%,transparent 100%);
+    --edge-2:var(--edge);--body:var(--reading-type);--display:var(--reading-type);--brand-display:var(--reading-type);--reading:62ch;--measure:56ch;
+    min-height:100vh;
+    height:auto;
+    background:var(--reading-paper);
+    color:var(--reading-ink);
+    font-family:var(--reading-type);
+    text-rendering:optimizeLegibility;
+  }
+
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body::before,
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body::after,
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app) .frame::before,
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app) .frame::after{
+    display:none;
+  }
+
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)>#gl,
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)>#motes{
+    display:none!important;
+  }
+
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .frame{
+    min-height:auto;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    gap:clamp(1.1rem,2.2vw,1.7rem);
+    width:100%;
+    max-width:min(100%,78rem);
+    margin:0;
+    padding:clamp(2rem,5.5vh,3.4rem) max(1rem,calc((100vw - 68rem)/2)) clamp(2.2rem,6vh,3.8rem);
+    background:var(--reading-paper);
+    color:var(--reading-ink);
+    pointer-events:auto;
+  }
+  html:has(body.inner-clean.frame-compact:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean.frame-compact:not(.instrument-surface):not(.studio-page):not(.studio-app) .frame{
+    padding-block:clamp(1.8rem,4.8vh,3rem) clamp(2rem,5vh,3.2rem);
+  }
+
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app) :is(main,.frame,.sheet,.mv,.route-header),
+  html:has(body>.publication-article) body :is(.publication-article,.publication-static-nav){
+    background:var(--reading-paper);
+    color:var(--reading-ink);
+    box-shadow:none;
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) .sheet{
+    width:min(100%,62rem);
+    background:var(--reading-paper);
+    border-color:var(--reading-rule);
+    box-shadow:none;
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) .sheet.demo-library{
+    width:min(100%,68rem);
+    max-width:68rem;
+  }
+
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) .site-nav,
+  html:has(body>.publication-article) .publication-static-nav{
+    background:var(--reading-paper);
+    border-color:var(--reading-rule);
+    border-image:none;
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
+    box-shadow:none;
+    color:var(--reading-ink);
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) .site-nav .sn-more-list{
+    background:var(--reading-paper);
+    border-color:var(--reading-rule);
+    box-shadow:none;
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) .site-nav .sn-home-field{
+    background:var(--reading-panel);
+    border-color:var(--reading-rule);
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) .site-nav .sn-home>span:last-child,
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body .site-nav .sn-home .sn-brand-word{
+    text-shadow:none;
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) .site-nav :is(a,summary),
+  html:has(body>.publication-article) .publication-static-nav a{
+    color:var(--reading-ink);
+    text-shadow:none;
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) .site-nav :is(.sn-links a,.sn-more summary,.sn-more-list a){
+    color:var(--reading-soft);
+    background:transparent;
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) .site-nav :is(a:hover,a:focus-visible,summary:hover,summary:focus-visible,.sn-links a.is-active,.sn-links a[aria-current="page"],.sn-more[data-current="true"]>summary),
+  html:has(body>.publication-article) .publication-static-nav a:hover,
+  html:has(body>.publication-article) .publication-static-nav a:focus-visible{
+    color:var(--reading-link);
+    border-color:var(--reading-rule);
+    background:var(--reading-panel);
+  }
+
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(a:not(.sn-home):not(.btn),.sheet a,.publication-article a){
+    color:var(--reading-link);
+    text-decoration-color:color-mix(in oklab,var(--reading-link) 45%,transparent);
+    text-underline-offset:.18em;
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(a:not(.sn-home):not(.btn),.sheet a,.publication-article a):hover{
+    color:var(--reading-link);
+    border-color:currentColor;
+    text-decoration-color:currentColor;
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(a,button,summary,input,select,textarea,[tabindex]):focus-visible{
+    outline:2px solid var(--reading-link);
+    outline-offset:4px;
+    box-shadow:none;
+  }
+
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(h1,h2,h3,.route-header__title){
+    font-family:var(--reading-type);
+    color:var(--reading-ink);
+    letter-spacing:0;
+    text-shadow:none;
+    text-wrap:balance;
+  }
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .frame h1{
+    max-width:min(100%,18ch);
+    font-size:clamp(2rem,5vw,3.55rem);
+    line-height:1.08;
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.sheet,.route-header,.article-head,.research-opening) h1,
+  html:has(body>.publication-article) body .publication-article h1{
+    max-width:min(100%,22ch);
+    font-size:clamp(2rem,4.7vw,3.45rem);
+    line-height:1.1;
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(h2,.publication-article h2){
+    font-size:clamp(1.45rem,2.5vw,2.1rem);
+    line-height:1.24;
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(h3,.publication-article h3){
+    font-size:clamp(1.05rem,1.6vw,1.28rem);
+    line-height:1.32;
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(.lede,.lead,.role,.body-text,.entry-note,.index-gloss,.publication-meta,.publication-figure-limit,.publication-opening-evidence,.publication-opening-limit,.capability-figure figcaption,.capability-table td,.workflow-copy,.doc-copy,.research-deck,.research-route p){
+    font-family:var(--reading-type);
+    color:var(--reading-soft);
+    line-height:1.65;
+    letter-spacing:0;
+    text-transform:none;
+    text-wrap:pretty;
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(.body-text,.lede,.lead,.role,.sheet p,.sheet li,.sheet dd,.publication-article p,.publication-article li,.publication-article dd){
+    max-width:min(100%,62ch);
+  }
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .frame :is(.lede,.close){
+    max-width:min(100%,58ch);
+    font-size:clamp(1.02rem,1.15vw,1.18rem);
+    line-height:1.62;
+    color:var(--reading-soft);
+  }
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .frame .bar{
+    max-width:min(100%,64rem);
+    font-family:var(--reading-type);
+    font-size:.88rem;
+    letter-spacing:0;
+    color:var(--reading-soft);
+  }
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .frame .bar .nm,
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .frame .bar .rt{
+    color:var(--reading-soft);
+    letter-spacing:0;
+  }
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .frame .seal{
+    max-width:min(100%,62rem);
+    border:0;
+    border-radius:0;
+    background:transparent;
+    color:var(--reading-soft);
+    box-shadow:none;
+    font-family:var(--reading-type);
+    font-size:.88rem;
+    line-height:1.65;
+    letter-spacing:0;
+    text-transform:none;
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app) section.mv{
+    min-height:0;
+    padding-block:clamp(2.5rem,6vw,4.5rem);
+    background:var(--reading-paper);
+    border-color:var(--reading-rule);
+    border-image:none;
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app) section.mv>h2::after{
+    display:none;
+  }
+
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .plate:has(canvas[data-specimen]){
+    display:block;
+  }
+  html:has(body.frontier-briefing:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.frontier-briefing:not(.instrument-surface):not(.studio-page):not(.studio-app) .briefing-plate.plate:has(canvas[data-specimen]){
+    display:none;
+  }
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.plate,.fw-fig,.figure-pair figure,.capability-figure svg,.capability-table,.boundary-panel,.run,.null,.demo,.artifact){
+    background:var(--reading-panel);
+    border-color:var(--reading-rule);
+    box-shadow:none;
+  }
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.artifact,pre.artifact){
+    font-size:.88rem;
+    line-height:1.7;
+  }
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .channels,
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .channels a{
+    font-family:var(--reading-type);
+    font-size:.84rem;
+    line-height:1.9;
+    letter-spacing:0;
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.quiet,.proof-links a,.command){
+    font-size:.82rem;
+    line-height:1.65;
+  }
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.hero-actions a,.capability-links a,.research-actions a,.publication-actions a,.publication-read,.workflow-action){
+    color:var(--reading-link);
+    border-color:var(--reading-rule);
+    background:transparent;
+    text-decoration-color:color-mix(in oklab,var(--reading-link) 45%,transparent);
+  }
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.hero-actions a,.capability-links a,.research-actions a,.publication-actions a,.publication-read,.workflow-action):is(:hover,:focus-visible){
+    color:var(--reading-paper);
+    border-color:var(--reading-link);
+    background:var(--reading-link);
+  }
+
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.artifact-note,.seal-line,.note-line,.exhibit-tag,.research-state,.entry-meta,.kv dt,.note,.field>label,.field-label,.hire-route-kicker,.system-meta,.domain-nav,.system-family-nav,.system-command strong,.catalog-count,.catalog-evidence small,.index-term,.index-term a,th,.splat-status,.source-label,.receipt-key,.receipt-value,.splat-links,.splat-links a){
+    font-family:var(--reading-type);
+    font-size:.82rem;
+    line-height:1.65;
+    letter-spacing:0;
+    text-transform:none;
+    color:var(--reading-soft);
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.artifact-note,.seal-line,.note-line){
+    max-width:min(100%,62ch);
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.artifact-note b,.artifact-note strong,.seal-line b,.seal-line strong,.system-command code,th){
+    color:var(--reading-ink);
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.artifact-note em,.seal-line .g,.note-line .g,.exhibit-tag .ord,.system-family-nav strong){
+    color:var(--reading-drift);
+  }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.seal-line a,.note-line a,.system-family-nav a,.domain-nav a,.system-hero-actions a,.index-term a,.splat-links a){
+    color:var(--reading-link);
+    border-color:color-mix(in oklab,var(--reading-link) 45%,transparent);
+    text-decoration-color:color-mix(in oklab,var(--reading-link) 45%,transparent);
+  }
+
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.research-actions a,.hire-action,.hire-route-actions a,.hire-secondary-links a,button.btn){
+    min-height:44px;
+    font-family:var(--reading-type);
+    font-size:.84rem;
+    line-height:1.25;
+    letter-spacing:0;
+    text-transform:none;
+    border-color:var(--reading-rule);
+    color:var(--reading-link);
+    background:transparent;
+    text-decoration:none;
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.research-actions a:first-child,.hire-action--primary,button.btn:not(.ghost)){
+    color:var(--reading-paper);
+    background:var(--reading-link);
+    border-color:var(--reading-link);
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.research-actions a,.hire-action,.hire-route-actions a,.hire-secondary-links a,button.btn):is(:hover,:focus-visible){
+    border-color:var(--reading-link);
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) button.btn.ghost{
+    color:var(--reading-link);
+    background:transparent;
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) .field .hint{
+    color:var(--reading-soft);
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(textarea.input,input[type="file"].input,code.k,.readout,.readout-row,.verdict){
+    border-color:var(--reading-rule);
+    background:var(--reading-panel);
+    color:var(--reading-ink);
+  }
+
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.hire-sheet,.hire-route-band,.hire-route-band--engineering){
+    background:var(--reading-paper);
+    color:var(--reading-ink);
+    border-color:var(--reading-rule);
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) .hire-route-bands{
+    background:var(--reading-rule);
+    border-color:var(--reading-rule);
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) .hire-route-band--engineering{
+    background:var(--reading-panel);
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.hire-route-copy p,.hire-route-band li,.hire-sheet .lead,.hire-sheet section p,.hire-sheet .note){
+    color:var(--reading-soft);
+  }
+
+  html:has(body.retro-evidence-page:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.retro-evidence-page:not(.instrument-surface):not(.studio-page):not(.studio-app){
+    --retro-evidence-ink:var(--reading-ink);
+    --retro-evidence-copy:var(--reading-soft);
+    --retro-evidence-muted:var(--reading-soft);
+    --retro-evidence-rule:var(--reading-rule);
+    --retro-evidence-signal:var(--reading-link);
+  }
+  html:has(body.retro-evidence-page:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.retro-evidence-page:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.retro-lab-shell,.retro-lab-hero,.retro-lab-section){
+    background:var(--reading-paper);
+    color:var(--reading-ink);
+    border-color:var(--reading-rule);
+  }
+  html:has(body.retro-evidence-page:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.retro-evidence-page:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.retro-lab-proof p,.retro-lab-card p,.retro-lab-lede,.retro-lab-footer,.zoom-note,.motion-note){
+    color:var(--reading-soft);
+  }
+  html:has(body.retro-evidence-page:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.retro-evidence-page:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.retro-lab-actions a,.retro-lab-links a,.retro-lab-footer a){
+    color:var(--reading-link);
+    border-color:var(--reading-rule);
+  }
+  html:has(body.retro-evidence-page:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.retro-evidence-page:not(.instrument-surface):not(.studio-page):not(.studio-app) .retro-lab-actions a:first-child{
+    color:var(--reading-paper);
+    background:var(--reading-link);
+    border-color:var(--reading-link);
+  }
+
+  html:has(body.briefing-document:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.briefing-document:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(article>header p,.claim-paragraph>p,.claim-record p){
+    max-width:min(100%,58ch);
+    color:var(--reading-soft);
+  }
+  html:has(body.briefing-document:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.briefing-document:not(.instrument-surface):not(.studio-page):not(.studio-app) .claim-record{
+    background:var(--reading-panel);
+    color:var(--reading-ink);
+    border-color:var(--reading-rule);
+  }
+  html:has(body.briefing-document:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.briefing-document:not(.instrument-surface):not(.studio-page):not(.studio-app) figure{
+    background:var(--reading-panel);
+    color:var(--reading-soft);
+    border-color:var(--reading-rule);
+  }
+  html:has(body.briefing-document:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.briefing-document:not(.instrument-surface):not(.studio-page):not(.studio-app) figcaption{
+    max-width:min(100%,58ch);
+    color:var(--reading-soft);
+  }
+  html:has(body.briefing-document:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.briefing-document:not(.instrument-surface):not(.studio-page):not(.studio-app) .claim-record a{
+    color:var(--reading-link);
+  }
+  html:has(body.briefing-document:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.briefing-document:not(.instrument-surface):not(.studio-page):not(.studio-app) figure a{
+    color:var(--reading-link);
+  }
+
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.splat-hero,.splat-status-box,.pilot,.criterion,.boundary){
+    background:var(--reading-panel);
+    color:var(--reading-ink);
+    border-color:var(--reading-rule);
+    box-shadow:none;
+  }
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .boundary{
+    border-left-color:var(--reading-drift);
+  }
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.splat-hero h1,.section h2,.pilot h3,.criterion strong){
+    color:var(--reading-ink);
+  }
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.splat-lede,.section-copy,.pilot p,.criterion p,.boundary,.status-grid dt,.status-grid dd){
+    color:var(--reading-soft);
+  }
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.splat-status,.source-label){
+    background:var(--reading-inset);
+    color:var(--reading-soft);
+    border-color:var(--reading-rule);
+  }
+
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:has(.docnav):not(.instrument-surface):not(.studio-page):not(.studio-app) .route-header__path{
+    display:none;
+  }
+}
+
+@media screen and (prefers-color-scheme:dark){
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article){
+    color-scheme:dark;
+    --reading-paper:#101416;
+    --reading-ink:#eaf5f6;
+    --reading-soft:#b4c5c9;
+    --reading-link:#8ee3f2;
+    --reading-rule:#42555a;
+    --reading-panel:#1b2528;
+    --reading-inset:#0c1011;
+    --reading-verdict:#a7e888;
+    --reading-drift:#f0a06f;
+  }
+}
+
+@media screen and (max-width:52rem){
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .frame{
+    padding:clamp(1.05rem,3.2vh,1.85rem) 1rem clamp(1.15rem,3.6vh,2.05rem);
+    gap:clamp(.65rem,1.8vh,1rem);
+  }
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .frame h1,
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.sheet,.route-header,.article-head,.research-opening) h1,
+  html:has(body>.publication-article) body .publication-article h1{
+    max-width:100%;
+    font-size:clamp(2rem,9vw,2.75rem);
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) .sheet.demo-library{
+    width:calc(100vw - 2rem);
+    max-width:calc(100vw - 2rem);
+    margin-inline:auto;
+    padding-inline:0;
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) .sheet.demo-library :is(.mast,.workflow-list,.doc-set,.boundary){
+    padding-inline:0;
+    max-width:100%;
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) .sheet.demo-library :is(.doc-links,.workflow-facts,.doc-facts){
+    min-width:0;
+    max-width:100%;
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) .sheet.demo-library :is(.doc-links>li,.workflow-list>li){
+    min-width:0;
+    max-width:100%;
+    overflow-wrap:anywhere;
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) .sheet table.tiers{
+    inline-size:100%;
+    max-inline-size:100%;
+    table-layout:fixed;
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) .sheet table.tiers :is(th,td){
+    overflow-wrap:anywhere;
+  }
+}
+
 @media(max-width:52rem){
   body.publications-hub .path-contour,
   body.publications-hub .publication-ledger article{grid-template-columns:1fr}
