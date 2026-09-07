@@ -34,7 +34,7 @@
     <p class="lede" data-canonical-purpose="chorus">Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests that rank themes, surface dissent, and identify genuinely contested topics.</p>
     <p class="close">It is a standalone public system that can read Gather corpora. Its optional model overlay is separately provenanced and excluded from the deterministic receipt.</p>
   </div>
-  <div class="seal">active source 0.1.0 &middot; no package release &middot; checked 2026-08-28</div>
+  <div class="seal">GitHub release v0.2.0 &middot; no PyPI release claimed &middot; checked 2026-09-07</div>
 </div>
 
 <main id="main">
@@ -47,11 +47,15 @@
     </article>
     <article class="index-row" role="listitem">
       <span class="index-term">Implemented work</span>
-      <span class="index-gloss">Greedy nearest-leader clustering over deterministic hashed-TF-IDF vectors, English-only literal lexicon scoring, theme and aspect disagreement measures, Gather-corpus input, and content-addressed receipts.</span>
+      <span class="index-gloss">Greedy nearest-leader clustering over deterministic hashed-TF-IDF vectors, English-only literal lexicon scoring, theme and aspect disagreement measures, Gather-corpus input, content-addressed receipts, and v0.2.0 label-support fields that distinguish cluster, weak, single-item, and fallback support.</span>
     </article>
     <article class="index-row" role="listitem">
       <span class="index-term">Evidence</span>
-      <span class="index-gloss"><a href="https://github.com/HarperZ9/chorus" rel="noopener">Public source</a> identifies active 0.1.0 work. On the 2026-08-28 source checkout, 58 tests passed and the included sample re-derived its receipt. This verifies the checked implementation and fixture, not semantic accuracy on new corpora, deployment, or adoption. No PyPI package or GitHub release is claimed.</span>
+      <span class="index-gloss"><a href="https://github.com/HarperZ9/chorus/releases/tag/v0.2.0" rel="noopener">GitHub release v0.2.0</a> publishes a wheel, source distribution, and SHA256SUMS. Download verification matched the wheel and source hashes, and a wheel smoke exercised CLI and MCP synthetic tasks. This verifies the packaged release path in the receipt, not semantic accuracy on new corpora, representative demand, deployment, or adoption. No PyPI release is claimed.</span>
+    </article>
+    <article class="index-row" role="listitem">
+      <span class="index-term">Install</span>
+      <span class="index-gloss">Download <a href="https://github.com/HarperZ9/chorus/releases/download/v0.2.0/chorus_discourse-0.2.0-py3-none-any.whl" rel="noopener">chorus_discourse-0.2.0-py3-none-any.whl</a>, then run <span translate="no">python -m pip install chorus_discourse-0.2.0-py3-none-any.whl</span>. The GitHub release also includes a source distribution and checksums; no PyPI release is claimed.</span>
     </article>
     <article class="index-row" role="listitem">
       <span class="index-term">Boundary</span>
