@@ -71,6 +71,24 @@ body.instrument-surface::after{
   display:none;
 }
 
+/* The reading shell suppresses decorative specimen figures. In a creative
+   tool these are the working artwork, including canvases marked at runtime. */
+body.inner-clean.instrument-surface:not(.studio-page):not(.studio-app) .plate:has(canvas[data-specimen]){
+  display:block;
+}
+
+@media screen{
+  html[data-theme] body.instrument-surface .plate-redraw{
+    background:var(--chrome-surface);
+    color:var(--chrome-ink);
+    transition:border-color .14s var(--ease-out);
+  }
+  html[data-theme] body.instrument-surface .plate-redraw:is(:hover,[aria-pressed="true"]){
+    background:var(--chrome-accent-soft);
+    border-color:var(--chrome-accent);
+  }
+}
+
 body.instrument-surface :is(.frame,.mv,section.mv,.studio-media-first){
   background:var(--chrome-ground);
   color:var(--chrome-ink);
@@ -571,6 +589,31 @@ body.instrument-surface .chat-input{
   body.instrument-surface.studio-page .mm-ascii{
     color:#14543d;
   }
+}
+
+body.instrument-surface.gallery-page.frame-compact .frame{
+  min-height:0;
+  padding-block:clamp(2rem,5vw,4rem);
+}
+body.instrument-surface.gallery-page #printdesk-h::after{display:none}
+body.instrument-surface.gallery-page #printdesk .dk-group{
+  padding:0;
+  background:transparent;
+  border:0;
+}
+body.instrument-surface.gallery-page :is(.plate-meta,.re-hint,.re-lab,.desk-seed){
+  font-family:var(--body);
+  font-size:.875rem;
+  letter-spacing:0;
+  line-height:1.5;
+  text-transform:none;
+}
+body.instrument-surface.gallery-page #desk-material-controls > details{
+  flex-basis:100%;
+  min-width:0;
+}
+body.instrument-surface.gallery-page #printdesk .body-text a{
+  color:var(--chrome-accent);
 }
 
 @media (max-width:899.98px){

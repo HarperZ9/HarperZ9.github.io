@@ -43,7 +43,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/publication-article.css": READING_CASCADE_REVISION,
     "system/figure.css": "20260906-figure-presentation",
     "system/report-editorial.css": "20260906",
-    "system/instrument-editorial.css": "20260907-studio-controls",
+    "system/instrument-editorial.css": "20260907-gallery-continuity",
     "system/demo-editorial.css": "20260906-demo-editorial",
 }
 READING_IMPORTING_STYLESHEETS = (
