@@ -3,7 +3,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
-  defaultPosterState, cellAnchor, wrapText, renderPoster, contrastRatio, critiquePoster,
+  defaultPosterState, cellAnchor, wrapText, trackedWidth, renderPoster, contrastRatio, critiquePoster,
   POSTER_FORMATS, POSTER_CELLS,
 } from "./poster.js";
 
@@ -28,6 +28,18 @@ test("wrapText breaks on the measured width", () => {
   const lines = wrapText(ctx, "one two three four five", 100);
   assert.ok(lines.length >= 2, "should wrap");
   assert.ok(lines.every((l) => l.length * 10 <= 110), "no line grossly over budget");
+});
+
+test("tracked layout measures the same individual glyphs that the renderer draws", () => {
+  const ctx = { measureText: text => ({ width: text === "AV" ? 40 : 24 }) };
+  assert.equal(trackedWidth(ctx, "AV", -2), 46);
+  assert.equal(trackedWidth(ctx, "AV", 2), 50);
+  assert.equal(trackedWidth(ctx, "AV", 0), 40);
+});
+
+test("wrapping preserves deliberate line breaks and blank lines", () => {
+  const ctx = { measureText: text => ({ width: text.length * 10 }) };
+  assert.deepEqual(wrapText(ctx, 'First line\n\nSecond line', 500), ['First line', '', 'Second line']);
 });
 
 function fakeCanvas() {

@@ -21,7 +21,10 @@ const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8802';
     assert.deepEqual(await state(), { width: 1191, height: 1684, transform: [1, 0, 0, 1, 0, 0] }, 'Stage resize must not replace the poster backing');
     const box = page.locator('[data-poster-box="0"]');
     await box.focus();
-    const beforeMove = await box.boundingBox();
+    const beforeMove = await (await page.waitForFunction(() => {
+      const rect = document.querySelector('[data-poster-box="0"]')?.getBoundingClientRect();
+      return rect?.width > 0 ? { x: rect.x } : false;
+    })).jsonValue();
     await page.keyboard.press('ArrowRight');
     await page.waitForFunction(x => document.querySelector('[data-poster-box="0"]')?.getBoundingClientRect().x > x, beforeMove.x);
     const beforeSelection = await page.locator('#studio-canvas').evaluate(c => c.toDataURL());

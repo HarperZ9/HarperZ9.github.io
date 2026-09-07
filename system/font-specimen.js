@@ -67,6 +67,20 @@ function bootSpecimen(root) {
   form.addEventListener("input", apply);
   form.addEventListener("change", apply);
   form.addEventListener("submit", event => event.preventDefault());
+  root.querySelector("[data-font-specimen-poster]")?.addEventListener("click", async event => {
+    const button = event.currentTarget;
+    button.disabled = true;
+    try {
+      const wb = await import("./workbench.js?v=20260907-typography-handoff");
+      const sent = wb.sendTypography({
+        text: specimenText(text.value), family: family.value,
+        size: boundedNumber(size, 40), line: boundedNumber(line, 1.25), track: boundedNumber(track, 0),
+      });
+      if (!sent) status.textContent = "The browser could not transfer this text. Keep this tab open and try again.";
+    } catch (_) {
+      status.textContent = "Poster could not be opened. Your specimen is still here.";
+    } finally { button.disabled = false; }
+  });
   form.addEventListener("reset", event => {
     event.preventDefault();
     text.value = DEFAULT_TEXT;

@@ -17,6 +17,7 @@ RELEASE_PATHS = (
     "system/studio.js",
     "system/poster.js",
     "system/poster-panel.js",
+    "system/poster-project.js",
     "system/poster-editor.css",
     "system/retro-studio.js",
     "system/loom-studio.js",
@@ -242,7 +243,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "e8e528e8f1f5f1cdde70d92aec625dbf8c107c038dc4cd8d07b90e3556685d6c"
+REVIEWED_RELEASE_SHA256 = "2fde6a4cb0ddf66188aac8cbdad26b417a154eedd4d631e14731103cbb2d013b"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

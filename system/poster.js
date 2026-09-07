@@ -72,24 +72,28 @@ function applyCase(text, mode) {
 // measurement renders wider than the frame and clips.
 export function trackedWidth(ctx, line, tracking = 0) {
   const s = String(line);
-  return ctx.measureText(s).width + Math.max(0, tracking) * Math.max(0, s.length - 1);
+  if (!Number.isFinite(tracking) || Math.abs(tracking) <= 0.01) return ctx.measureText(s).width;
+  const glyphs = [...s];
+  return Math.max(0, glyphs.reduce((width, glyph) => width + ctx.measureText(glyph).width, 0)
+    + tracking * Math.max(0, glyphs.length - 1));
 }
 
 // Wrap text to a max width using the canvas measurer, counting letter tracking. Pure given a ctx.
 export function wrapText(ctx, text, maxWidth, tracking = 0) {
-  const words = String(text).split(/\s+/).filter(Boolean);
   const lines = [];
-  let line = "";
-  for (const word of words) {
-    const probe = line ? line + " " + word : word;
-    if (line && trackedWidth(ctx, probe, tracking) > maxWidth) {
-      lines.push(line);
-      line = word;
-    } else {
-      line = probe;
+  for (const paragraph of String(text).split(/\r\n|\n|\r/)) {
+    let line = "";
+    for (const word of paragraph.split(/\s+/).filter(Boolean)) {
+      const probe = line ? line + " " + word : word;
+      if (line && trackedWidth(ctx, probe, tracking) > maxWidth) {
+        lines.push(line);
+        line = word;
+      } else {
+        line = probe;
+      }
     }
+    lines.push(line);
   }
-  if (line) lines.push(line);
   return lines.length ? lines : [""];
 }
 
@@ -229,26 +233,37 @@ export function renderPoster(canvas, state, deps = {}) {
     ctx.textBaseline = "top";
     const maxWidth = fmt.w * (1 - 2 * margin) * (anchor.col === 1 ? 1 : 0.72);
     const text = applyCase(block.text || "", block.caseMode);
-    const weight = block.kind === "headline" ? 800 : 500;
+    const weight = Number.isFinite(block.weight) ? Math.max(100, Math.min(900, block.weight))
+      : block.kind === "headline" ? 800 : 500;
 
-    // Fit type to the frame. Size, tracking, and wrapping are interdependent, and the
-    // glyphs are drawn with manual per-letter tracking, so the wrap and the width MUST
-    // count that tracking or a "fitting" line renders wider than the frame and clips.
+    // Fit both dimensions. Search for the largest integer size that fits;
+    // wrapping changes as type shrinks, so a single height ratio over-shrinks.
+    const maxHeight = fmt.h * (1 - 2 * margin);
+    const lineRatio = block.leading || 1.1;
+    const layoutAt = size => {
+      ctx.font = `${weight} ${size}px ${face}`;
+      const spacing = (block.tracking || 0) * size;
+      const rows = wrapText(ctx, text, maxWidth, spacing);
+      const width = rows.reduce((m, row) => Math.max(m, trackedWidth(ctx, row, spacing)), 0);
+      return { rows, width, spacing, height: size * lineRatio * Math.max(0, rows.length - 1) + size };
+    };
     let sizePx = Math.max(8, Math.round((block.size || 0.03) * fmt.h));
-    let tracking = (block.tracking || 0) * sizePx;
-    ctx.font = `${weight} ${sizePx}px ${face}`;
-    let lines = wrapText(ctx, text, maxWidth, tracking);
-    let widest = lines.reduce((m, l) => Math.max(m, trackedWidth(ctx, l, tracking)), 0);
-    // An unbreakable token or heavy tracking can still exceed the frame; shrink to fit once.
-    if (widest > maxWidth && widest > 0) {
-      sizePx = Math.max(8, Math.floor(sizePx * (maxWidth / widest)));
-      tracking = (block.tracking || 0) * sizePx;
-      ctx.font = `${weight} ${sizePx}px ${face}`;
-      lines = wrapText(ctx, text, maxWidth, tracking);
-      widest = lines.reduce((m, l) => Math.max(m, trackedWidth(ctx, l, tracking)), 0);
+    let layout = layoutAt(sizePx);
+    if (layout.width > maxWidth || layout.height > maxHeight) {
+      let low = 1, high = sizePx, fitted = 1;
+      while (low <= high) {
+        const mid = Math.floor((low + high) / 2);
+        const candidate = layoutAt(mid);
+        if (candidate.width <= maxWidth && candidate.height <= maxHeight) {
+          fitted = mid; low = mid + 1;
+        } else high = mid - 1;
+      }
+      sizePx = fitted;
+      layout = layoutAt(sizePx);
     }
-    const leading = sizePx * (block.leading || 1.1);
-    const blockH = leading * lines.length;
+    const { rows: lines, width: widest, spacing: tracking } = layout;
+    const leading = sizePx * lineRatio;
+    const blockH = layout.height;
     // anchor: col 0 -> left-aligned at margin; col 1 -> centered; col 2 -> right edge
     const cellX0 = anchor.col === 0 ? fmt.w * margin
       : anchor.col === 1 ? (fmt.w - widest) / 2
@@ -279,8 +294,8 @@ export function renderPoster(canvas, state, deps = {}) {
     }
     ctx.fillStyle = block.color || "#f2ecf7";
     lines.forEach((line, li) => {
-      const lineW = tracking > 0.01 ? trackedWidth(ctx, line, tracking) : ctx.measureText(line).width;
-      if (tracking > 0.01) {
+      const lineW = Math.abs(tracking) > 0.01 ? trackedWidth(ctx, line, tracking) : ctx.measureText(line).width;
+      if (Math.abs(tracking) > 0.01) {
         // manual tracking: draw per character, positioned by the tracking-aware width
         let cx = lineStartX(lineW, placed.positioned ? x0 : null, widest, block.align, anchor, margin, fmt);
         for (const chr of line) {

@@ -540,13 +540,42 @@ const SOURCES = {
 // ── The poster workshop (lazy). Mounted once on first entry; the panel owns
 // its DOM inside #poster-mount and renders onto the shared studio canvas.
 let _posterWorkshop = null;
+function showPosterImportError(message) {
+  const notice = document.createElement("p");
+  notice.className = "transform-note";
+  notice.setAttribute("role", "alert");
+  notice.textContent = message;
+  $("poster-mount")?.prepend(notice);
+}
+async function bootPosterTypographyHandoff(epoch) {
+  if (new URLSearchParams(location.search).get("import") !== "typography") return;
+  const mount = $("poster-mount");
+  if (mount.dataset.typographyStatus) return;
+  mount.dataset.typographyStatus = "loading";
+  try {
+    const wb = await import("./workbench.js?v=20260907-typography-handoff");
+    const style = wb.receiveTypography();
+    if (epoch !== _sourceEpoch || activeSource !== "poster") {
+      mount.dataset.typographyStatus = "cancelled";
+      return;
+    }
+    if (!style) throw new Error("The typography transfer is missing or expired. Send it again from the font lab.");
+    _posterWorkshop.setTypography(style);
+    mount.dataset.typographyStatus = "ready";
+  } catch (error) {
+    mount.dataset.typographyStatus = "failed";
+    const message = error.message || "The typography could not be opened.";
+    showPosterImportError(message);
+    say("model", message);
+  }
+}
 async function bootPosterImageHandoff(epoch) {
   if (new URLSearchParams(location.search).get("import") !== "workbench") return;
   const mount = $("poster-mount");
   if (mount.dataset.importStatus) return;
   mount.dataset.importStatus = "loading";
   try {
-    const wb = await import("./workbench.js?v=20260907-creative-handoff");
+    const wb = await import("./workbench.js?v=20260907-typography-handoff");
     const png = sessionStorage.getItem("re.poster.handoff");
     sessionStorage.removeItem("re.poster.handoff");
     const record = wb.receiveTrail("poster");
@@ -568,7 +597,9 @@ async function bootPosterImageHandoff(epoch) {
     say("model", "Artwork added to Poster. " + record.line + ". You can now add and arrange type.");
   } catch (err) {
     mount.dataset.importStatus = "failed";
-    say("model", "Poster could not open the image: " + (err.message || String(err)));
+    const message = "Poster could not open the image: " + (err.message || String(err));
+    showPosterImportError(message);
+    say("model", message);
   }
 }
 async function enterPosterWorkshop(epoch) {
@@ -579,7 +610,7 @@ async function enterPosterWorkshop(epoch) {
   }
   try {
     const [panelMod, fieldMod, ex] = await Promise.all([
-      import("./poster-panel.js?v=20260907-direct-editor"),
+      import("./poster-panel.js?v=20260907-typography-handoff"),
       import("./generative-field.js"),
       loadExporters(),
       document.fonts ? Promise.allSettled([
@@ -612,6 +643,7 @@ async function enterPosterWorkshop(epoch) {
       }
     });
     await bootPosterImageHandoff(epoch);
+    await bootPosterTypographyHandoff(epoch);
   } catch (err) {
     say("model", "The workshop failed to load: " + (err && err.message ? err.message : String(err)));
   }
@@ -6381,7 +6413,7 @@ if (tierBtn) {
     const cv = document.getElementById("studio-canvas");
     if (!cv) return;
     try {
-      const wb = await import("./workbench.js?v=20260907-creative-handoff");
+      const wb = await import("./workbench.js?v=20260907-typography-handoff");
       if (!wb.sendPiece(target, cv.toDataURL("image/png"), { surface: "studio", label: "studio frame" })) {
         say("model", "That frame is too large to hand over.");
       }
@@ -6488,7 +6520,7 @@ if (tierBtn) {
       pEl.style.cssText = "font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;color:var(--muted);margin:.4rem 0 0";
       tb.insertAdjacentElement("afterend", pEl);
     }
-    import("./workbench.js?v=20260907-creative-handoff").then((wb) => {
+    import("./workbench.js?v=20260907-typography-handoff").then((wb) => {
       wb.mountFlow(document.getElementById("st-flow"), "studio");
     }).catch(() => {});
   };
@@ -6503,7 +6535,7 @@ function bootRetroHandoff() {
   try { sessionStorage.removeItem("re.studio.handoff"); } catch (_) {}
   // The piece's trail, if it arrived through the workbench. Claimed now
   // (records are one-shot), announced only once the piece actually applies.
-  const trailReady = import("./workbench.js?v=20260907-creative-handoff")
+  const trailReady = import("./workbench.js?v=20260907-typography-handoff")
     .then((wb) => { const rec = wb.receiveTrail("studio"); return rec && rec.line ? rec.line : null; })
     .catch(() => null);
   Promise.all([loadPlotMaps(), loadPlotImage()]).then(() => {

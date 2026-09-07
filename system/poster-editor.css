@@ -30,6 +30,7 @@ body.instrument-surface .poster-panel button,body.instrument-surface .poster-pan
 .poster-panel .at-glab,.poster-panel .poster-mini-label{font-size:.8rem;letter-spacing:0;text-transform:none}
 body.instrument-surface .poster-panel .at-group{background:transparent;border-bottom:1px solid var(--hairline);padding:.6rem 0}
 .poster-panel .poster-artrow{margin-block:.65rem}
+body.instrument-surface .poster-panel .poster-format{width:100%;min-height:44px;font:inherit;font-family:var(--body);padding:.5rem;color:var(--bone);background:var(--void);border:1px solid var(--hairline)}
 .studio-analysis>summary{cursor:pointer;padding:.85rem 0;font-size:1rem;border-bottom:1px solid var(--hairline)}
 .poster-more-tools{display:none}
 .poster-workspace .poster-more-tools{display:inline-flex;order:5}

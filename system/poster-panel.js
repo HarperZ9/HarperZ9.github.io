@@ -11,9 +11,10 @@
 import {
   defaultPosterState, renderPoster, critiquePoster,
   POSTER_FORMATS, POSTER_CELLS,
-} from "./poster.js?v=20260907-direct-editor";
+} from "./poster.js?v=20260907-typography-handoff";
 import { renderRetro } from "./retro-engine.js";
 import { applyOpsWet, OP_META } from "./glitch-ops.js";
+import { encodePosterProject, decodePosterProject, validateProjectImage, MAX_PROJECT_BYTES } from "./poster-project.js?v=20260907-project-files";
 
 const PALETTE = ["#f2ecf7", "#c9c2d4", "#8f86a0", "#7de3ea", "#99f147", "#f8cc43", "#ff8334", "#ff35aa", "#111016"];
 const HISTORY_LIMIT = 60;
@@ -665,7 +666,14 @@ export function mountPosterWorkshop(deps) {
   // format
   const gFormat = el("div", "at-group");
   gFormat.appendChild(el("span", "at-glab", "Format"));
-  gFormat.appendChild(chipRow(Object.entries(POSTER_FORMATS).map(([k, v]) => [k, v.label]), state.format, (v) => { state.format = v; queueRender(); }));
+  const formatSelect = el("select", "poster-format");
+  formatSelect.setAttribute("aria-label", "Poster format");
+  for (const [value, format] of Object.entries(POSTER_FORMATS)) {
+    const option = el("option", null, format.label); option.value = value; formatSelect.appendChild(option);
+  }
+  formatSelect.value = state.format;
+  formatSelect.addEventListener("change", () => { state.format = formatSelect.value; queueRender(); });
+  gFormat.appendChild(formatSelect);
   root.appendChild(gFormat);
 
   // art
@@ -719,6 +727,84 @@ export function mountPosterWorkshop(deps) {
   });
   imgRow.append(imgBtn, imgInput, imgClear);
   root.appendChild(imgRow);
+  const projectRow = el("div", "poster-artrow");
+  const saveProject = el("button", "at-mini", "Save project");
+  const openProject = el("button", "at-mini", "Open project");
+  saveProject.type = openProject.type = "button";
+  const projectFile = el("input");
+  projectFile.type = "file"; projectFile.accept = ".json,application/json"; projectFile.hidden = true;
+  projectFile.dataset.posterProjectFile = "";
+  projectFile.setAttribute("aria-label", "Open a Poster project file");
+  const projectStatus = el("p", "transform-note");
+  projectStatus.hidden = true;
+  projectStatus.dataset.posterProjectStatus = "";
+  projectStatus.setAttribute("role", "status");
+  const projectOptions = { layers: names, effects: OP_META.map(item => item.op) };
+  let projectOperation = 0;
+  const projectMessage = (message, result) => {
+    projectStatus.hidden = false;
+    projectStatus.textContent = message; projectStatus.dataset.state = result;
+  };
+  const currentDesign = () => JSON.stringify({ ...state, art: { ...state.art, image: null } });
+  saveProject.addEventListener("click", () => {
+    try {
+      clearTimeout(renderT);
+      renderNow();
+      let image = null;
+      const art = state.art.image;
+      if (art) {
+        const dimensions = drawableDimensions(art);
+        if (!dimensions || dimensions.width > 8192 || dimensions.height > 8192 || dimensions.width * dimensions.height > 32000000) {
+          throw new Error("This image is too large to save in a project. Use an image under 8192 pixels per side and 32 megapixels.");
+        }
+        if (typeof art.src === "string" && art.src.startsWith("data:image/png;base64,")) image = art.src;
+        else {
+          const surface = document.createElement("canvas");
+          surface.width = dimensions.width; surface.height = dimensions.height;
+          surface.getContext("2d").drawImage(art, 0, 0);
+          image = surface.toDataURL("image/png");
+        }
+        validateProjectImage(image);
+      }
+      const projectText = encodePosterProject(state, image, projectOptions);
+      download(new Blob([projectText], { type: "application/json" }), "zentropy-poster.json");
+      projectMessage("Project download started. Keep this file to reopen the editable composition.", "saved");
+    } catch (error) { projectMessage(error.message || "The project could not be saved. Your work is still here.", "error"); }
+  });
+  openProject.addEventListener("click", () => projectFile.click());
+  projectFile.addEventListener("change", async () => {
+    const file = projectFile.files?.[0];
+    if (!file) return;
+    const operation = ++projectOperation;
+    const epoch = ++imageImportEpoch, designBefore = currentDesign(), imageBefore = state.art.image;
+    projectMessage("Opening project…", "loading");
+    try {
+      if (file.size > MAX_PROJECT_BYTES) throw new Error("This project exceeds the 9 MB file limit. Your work has not changed.");
+      const project = decodePosterProject(await file.text(), projectOptions);
+      let image = null;
+      if (project.image) {
+        image = new Image(); image.src = project.image;
+        await image.decode();
+        const dimensions = drawableDimensions(image);
+        if (!dimensions || dimensions.width > 8192 || dimensions.height > 8192 || dimensions.width * dimensions.height > 32000000) throw new Error("The project's image is too large or invalid.");
+      }
+      if (operation !== projectOperation) return;
+      if (epoch !== imageImportEpoch || !active || (typeof isActive === "function" && !isActive())) {
+        projectMessage("Opening cancelled after another change. Open the file again to continue.", "cancelled");
+        return;
+      }
+      if (designBefore !== currentDesign() || imageBefore !== state.art.image) {
+        projectMessage("You edited the composition while the file was opening. Your changes are kept; open the file again to replace them.", "cancelled");
+        return;
+      }
+      restoreProject(project.state, image);
+      projectMessage("Project opened. Text, artwork and layout are editable.", "ready");
+    } catch (error) {
+      if (operation === projectOperation) projectMessage(error.message || "The file could not be opened. Your current work has not changed.", "error");
+    } finally { if (operation === projectOperation) projectFile.value = ""; }
+  });
+  projectRow.append(saveProject, openProject, projectFile);
+  root.append(projectRow, projectStatus);
   const artRow = el("div", "poster-artrow");
   const seedIn = el("input", "poster-seed");
   seedIn.type = "text"; seedIn.maxLength = 40; seedIn.value = state.art.seed;
@@ -869,16 +955,23 @@ export function mountPosterWorkshop(deps) {
       box.appendChild(chipRow([["brand", "Hanken Grotesk"], ["mono", "Conso"]], block.face === "mono" ? "mono" : "brand", (v) => { selectBlock(index, { announce: false }); block.face = v; queueRender(); }));
       box.appendChild(el("span", "poster-mini-label", "size"));
       const size = el("input", "at-slider");
-      size.type = "range"; size.min = "0.01"; size.max = "0.16"; size.step = "0.002"; size.value = String(block.size);
+      size.type = "range"; size.min = "0.01"; size.max = "0.16"; size.step = "0.0001"; size.value = String(block.size);
       size.setAttribute("aria-label", block.kind + " size");
       size.addEventListener("input", () => { selectBlock(index, { announce: false }); block.size = Number(size.value); queueRender(); });
       box.appendChild(size);
       box.appendChild(el("span", "poster-mini-label", "Letter spacing"));
       const tr = el("input", "at-slider");
-      tr.type = "range"; tr.min = "0"; tr.max = "0.4"; tr.step = "0.01"; tr.value = String(block.tracking);
+      tr.type = "range"; tr.min = "-0.04"; tr.max = "0.4"; tr.step = "0.01"; tr.value = String(block.tracking);
       tr.setAttribute("aria-label", block.kind + " tracking");
       tr.addEventListener("input", () => { selectBlock(index, { announce: false }); block.tracking = Number(tr.value); queueRender(); });
       box.appendChild(tr);
+      box.appendChild(el("span", "poster-mini-label", "Line spacing"));
+      const leading = el("input", "at-slider");
+      leading.type = "range"; leading.min = "0.9"; leading.max = "1.8"; leading.step = "0.01";
+      leading.value = String(block.leading || 1.1);
+      leading.setAttribute("aria-label", block.kind + " line spacing");
+      leading.addEventListener("input", () => { block.leading = Number(leading.value); queueRender(); });
+      box.appendChild(leading);
       box.appendChild(el("span", "poster-mini-label", "Position"));
       const positionOut = el("output", "poster-position-readout", positionLabel(block));
       positionOut.setAttribute("aria-label", `${block.kind} position`);
@@ -904,6 +997,31 @@ export function mountPosterWorkshop(deps) {
   }
   rebuildBlockEditors();
   root.appendChild(gBlocks);
+
+  function restoreProject(next, image) {
+    clearTimeout(renderT);
+    if (drag) cancelDrag(false);
+    Object.assign(state, next);
+    state.art.image = image;
+    selectedIndex = -1;
+    undoStack.length = redoStack.length = 0;
+    syncHistoryButtons();
+    formatSelect.value = state.format;
+    [...artSel.children].forEach((button, i) => button.setAttribute("aria-pressed", String(state.art.layers.includes(names[i]))));
+    seedIn.value = state.art.seed;
+    veil.value = String(state.art.veil);
+    [...veilModes.children].forEach((button, i) => button.setAttribute("aria-pressed", String(["panel", "wash"][i] === state.art.veilMode)));
+    [...retroChips.children].forEach((button, i) => button.setAttribute("aria-pressed", String(["off", "keep", "outrun", "gameboy", "c64", "ega", "pico8", "aurora"][i] === (state.art.retro?.palette || "off"))));
+    retroTune.hidden = !state.art.retro;
+    [...resRow.children].forEach((button, i) => button.setAttribute("aria-pressed", String(["fine", "standard", "chunky"][i] === state.art.retroRes)));
+    mix.value = String(state.art.retroMix);
+    [...fxRow.children].forEach((button, i) => button.setAttribute("aria-pressed", String(state.art.fx.includes(OP_META[i].op))));
+    fxTune.hidden = !state.art.fx.length;
+    fxAmt.value = String(state.art.fxAmount);
+    imgClear.hidden = !image; imgInput.value = "";
+    rebuildBlockEditors();
+    renderNow(); critiqueNow(false);
+  }
 
   // actions
   const actions = el("div", "at-actions poster-actions");
@@ -953,6 +1071,16 @@ export function mountPosterWorkshop(deps) {
     critique: critiqueNow,
     setActive,
     setArtImage,
+    setTypography(style) {
+      const block = state.blocks[0];
+      Object.assign(block, { text: style.text, face: style.family === "conso" ? "mono" : "brand",
+        size: style.size / 640, leading: style.line, tracking: style.track, caseMode: "none",
+        weight: style.family === "conso" ? 600 : 700 });
+      rebuildBlockEditors();
+      renderNow();
+      critiqueNow(false);
+      status.textContent = "Typography added from the font lab. Text and spacing remain editable.";
+    },
     setArtSeed(seed) { state.art.seed = seed; seedIn.value = seed; renderNow(); critiqueNow(false); },
     destroy() {
       active = false;

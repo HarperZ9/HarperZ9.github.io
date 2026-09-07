@@ -54,6 +54,43 @@ export function sendPiece(target, dataURL, entry, nav) {
 // the freshness window gets the trail; anything else is a stale leftover
 // from a cancelled or failed handoff and must not stamp a later piece.
 const PIECE_TTL_MS = 5 * 60 * 1000;
+const TYPE_KEY = "wb.typography.v1";
+
+// Editable typography is separate from image handoffs. Only these public
+// typefaces and bounded numeric controls may cross into Poster.
+export function validateTypography(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  if (typeof value.text !== "string" || !value.text.trim() || value.text.length > 260) return null;
+  if (!["hanken", "conso"].includes(value.family)) return null;
+  const bounds = { size: [18, 88], line: [0.9, 1.8], track: [-0.04, 0.12] };
+  for (const [key, [min, max]] of Object.entries(bounds)) {
+    if (typeof value[key] !== "number" || !Number.isFinite(value[key]) || value[key] < min || value[key] > max) return null;
+  }
+  return { text: value.text, family: value.family, size: value.size, line: value.line, track: value.track };
+}
+
+export function sendTypography(value, nav = true) {
+  const style = validateTypography(value);
+  if (!style) return false;
+  try { sessionStorage.setItem(TYPE_KEY, JSON.stringify({ version: 1, to: "poster", at: Date.now(), style })); }
+  catch (_) { return false; }
+  if (nav) location.href = "studio.html?source=poster&import=typography";
+  return true;
+}
+
+export function receiveTypography() {
+  try {
+    const raw = sessionStorage.getItem(TYPE_KEY);
+    sessionStorage.removeItem(TYPE_KEY);
+    if (!raw || raw.length > 4096) return null;
+    const record = JSON.parse(raw);
+    if (record?.version !== 1 || record.to !== "poster" || !Number.isFinite(record.at)) return null;
+    const age = Date.now() - record.at;
+    if (age < 0 || age > PIECE_TTL_MS) return null;
+    return validateTypography(record.style);
+  } catch (_) { return null; }
+}
+
 export function receiveTrail(surface) {
   let raw = null;
   try { raw = sessionStorage.getItem(PIECE_KEY); } catch (_) { return null; }
