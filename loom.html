@@ -26,6 +26,9 @@
      scrolling instead of being squeezed back down to an unclickable size */
   .re-preview.wv-zoomed{overflow:auto;justify-content:flex-start;align-items:flex-start}
   .re-preview.wv-zoomed canvas{max-width:none;max-height:none}
+  body.instrument-surface #wv-panel select,
+  body.instrument-surface #wv-panel .wv-settings>summary{font-family:var(--body)}
+  #wv-panel .wv-settings>summary{font-size:.9rem;line-height:1.5;padding:.5rem 0;cursor:pointer}
 </style>
 <link rel="stylesheet" href="system/instrument-editorial.css?v=20260907-instrument-readable-floor">
 </head>
@@ -42,9 +45,8 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">The Loom</span></div>
   <div class="mid">
     <h1>Weave the picture <span class="g">into working cloth.</span></h1>
-    <p class="lede">Turn an image into a weaving draft. Choose a structure, edit its crossings and watch the cloth change. Bring work from Shader Room, Studio or Gallery, then export an image or a supported WIF draft.</p>
+    <p class="lede">Turn an image into a weaving draft. Choose a structure, edit its crossings and watch the cloth change. Save an editable project, export a supported WIF draft, or carry the cloth into Poster and Shader Room.</p>
   </div>
-  <div class="seal">image &rarr; threading &middot; tie-up &middot; treadling &middot; cloth &middot; nothing leaves your browser</div>
 </div>
 
 <main id="main">
@@ -66,8 +68,7 @@
       <div class="re-field"><span class="re-lab">Source</span>
         <input type="file" class="re-in" id="wv-file" aria-label="Source image to weave" accept="image/*">
         <p class="re-privacy">Read locally in your browser. Nothing is uploaded.</p>
-        <p class="re-hint">Or press Send to Loom on the Retro Engine or the Studio desk and the frame lands here.</p>
-        <p class="re-hint">Or open a WIF draft from Fiberworks, WeaveIt, or any WIF-aware tool.</p>
+        <p class="re-hint">Bring an image from <a href="retro.html">Shader Room</a>, <a href="studio.html">Studio</a> or <a href="gallery.html">Gallery</a>, or open a WIF draft below.</p>
         <div class="re-actions">
           <input type="file" class="re-in" id="wv-wif-in" accept=".wif,text/plain" hidden>
           <button class="re-btn" id="wv-wif-open" type="button"
@@ -162,8 +163,15 @@
         </div>
       </details>
       <details class="re-group" id="wv-rack-keep" open>
-        <summary><span class="re-lab">Keep and send <span class="re-hint">WIF, chart, cloth, setups</span></span></summary>
+        <summary><span class="re-lab">Save and export</span></summary>
         <div class="re-body">
+      <div class="re-actions">
+        <button class="re-btn" id="wv-project-save" type="button">Save project</button>
+        <button class="re-btn" id="wv-project-open" type="button">Open project</button>
+        <input type="file" id="wv-project-file" accept=".json,application/json" aria-label="Open a Loom project file" hidden>
+      </div>
+      <p class="re-hint">Project files keep the editable draft, colors and 640 × 400 working image. Files stay on your device.</p>
+      <p class="re-status" id="wv-project-status" role="status" hidden></p>
       <div class="re-actions">
         <button class="re-btn" id="wv-wif">Export WIF</button>
         <button class="re-btn" id="wv-draft">Draft chart</button>
@@ -173,10 +181,14 @@
         <button class="re-btn" id="wv-send-retro">Use image in Shader Room &rarr;</button>
         <button class="re-btn" id="wv-send-poster" type="button" title="Carry a rendered cloth image into Poster; keep the editable draft here">Use cloth in Poster &rarr;</button>
       </div>
-      <div class="re-actions">
-        <button class="re-btn" id="wv-save-setup" title="Keep this whole setup: structure, sett, tone, colors, speed, and the piece's trail">Save setup</button>
-        <select class="re-in" id="wv-setups" aria-label="Saved setups" style="flex:1;min-width:9rem"><option value="">saved setups&#8230;</option></select>
-      </div>
+      <details class="wv-settings">
+        <summary>Reusable settings</summary>
+        <p class="re-hint">Settings apply to the current source image and replace hand edits. Use a project file to keep the actual draft.</p>
+        <div class="re-actions">
+          <button class="re-btn" id="wv-save-setup" title="Save controls only in this browser, without the image or hand edits">Save settings</button>
+          <select class="re-in" id="wv-setups" aria-label="Saved settings" style="flex:1;min-width:9rem"><option value="">Choose saved settings&#8230;</option></select>
+        </div>
+      </details>
         </div>
       </details>
       <p class="re-status" id="wv-status" role="status" aria-live="polite"></p>
@@ -188,6 +200,6 @@
 </section>
 </main>
 
-<script type="module" src="system/loom-studio.js?v=20260907-creative-handoff"></script>
+<script type="module" src="system/loom-studio.js?v=20260907-project-files"></script>
 </body>
 </html>

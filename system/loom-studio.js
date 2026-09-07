@@ -24,6 +24,13 @@ function boot() {
   const src = document.createElement("canvas"); src.width = 640; src.height = 400;
   let haveSource = false, draft = null, colors = null, woven = 0, raf = 0, lastPick = 0;
   let structureId = "jacquard", audio = null;
+  let sourceOperation = 0, projectOperation = 0, editRevision = 0;
+  // An asynchronous open must never overwrite a more recent edit or source.
+  for (const event of ["input", "change", "click", "keydown"]) {
+    $("wv-panel").addEventListener(event, e => {
+      if (!e.target.closest("#wv-project-file, #wv-project-open, #wv-project-save")) editRevision++;
+    }, true);
+  }
 
   function status(msg, kind) { const el = $("wv-status"); el.textContent = msg || ""; el.className = "re-status" + (kind ? " " + kind : ""); }
   const ping = (k, v) => { try { if (audio && audio.isOn()) audio.ping(k, v); } catch (_) {} };
@@ -58,6 +65,8 @@ function boot() {
 
   function rebuild(fresh) {
     if (!haveSource) return;
+    imported = null;
+    syncSourceControls();
     if (edited) { edited = false; status("redrawn from the image; hand edits cleared"); }
     const { ends, picks, luma, rowRGB } = sample();
     draft = computeDraft(luma, ends, picks, structureId, { toneDrive: (+$("wv-tone").value) / 100 });
@@ -134,7 +143,7 @@ function boot() {
     el.textContent = `${draft.ends} ends x ${draft.picks} picks · ${dim}`
       + ` · longest float ${maxWarp} warp / ${maxWeft} weft`
       + ` · ${face}% warp-faced`
-      + (st ? ` · ${st.perCell ? "per-thread" : st.shafts + " shafts"}` : "");
+      + ` · ${draft.perCell ? "per-thread" : draft.shafts + " shafts"}`;
   }
 
   // --- the weaving animation: the shuttle crosses, the row sounds -----------
@@ -157,7 +166,7 @@ function boot() {
       lastPick = now;
       for (let i = 0; i < due && woven < draft.picks; i++) {
         woven++;
-        const tone = draft.pickTone[woven - 1] || 0;
+        const tone = draft.pickTone?.[woven - 1] || 0;
         if (speed <= 30) ping("row", tone); else if (woven % 4 === 0) ping("slider", tone);
       }
       if (audio && audio.isOn()) { try { audio.feed(rowBands(woven - 1)); } catch (_) {} }
@@ -186,19 +195,23 @@ function boot() {
     let dataURL = null;
     try { dataURL = sessionStorage.getItem("re.loom.handoff"); } catch (_) { return false; }
     if (!dataURL) return false;
+    const operation = ++sourceOperation;
     try { sessionStorage.removeItem("re.loom.handoff"); } catch (_) {}
     const img = new Image();
     img.onload = () => {
+      if (operation !== sourceOperation) return;
       const rec = receiveTrail("loom");
       useImage(img, rec && rec.line ? "arrived: " + rec.line : "warping up the frame you sent over");
     };
-    img.onerror = () => { status("could not read the handed-over image", "err"); bootPlate(); };
+    img.onerror = () => { if (operation === sourceOperation) { status("could not read the handed-over image", "err"); bootPlate(); } };
     img.src = dataURL;
     return true;
   }
   async function bootPlate() {
+    const operation = ++sourceOperation;
     try {
       const mod = await import("./generative-field.js");
+      if (operation !== sourceOperation) return;
       const render = mod.renderSpecimen || mod.renderPlate;
       if (render) {
         // Ask the plate renderer for the loom's own 16:10 frame; without a
@@ -219,8 +232,10 @@ function boot() {
   }
   $("wv-file").addEventListener("change", (e) => {
     const f = e.target.files && e.target.files[0]; if (!f) return;
+    const operation = ++sourceOperation;
     const img = new Image();
-    img.onload = () => { URL.revokeObjectURL(img.src); useImage(img, "warped up your image"); };
+    img.onload = () => { URL.revokeObjectURL(img.src); if (operation === sourceOperation) useImage(img, "warped up your image"); };
+    img.onerror = () => { URL.revokeObjectURL(img.src); if (operation === sourceOperation) status("That image could not be opened. Your work is unchanged.", "err"); };
     img.src = URL.createObjectURL(f);
   });
 
@@ -425,6 +440,7 @@ function boot() {
       value = "selected";
     }
     if (!touched) return false;
+    editRevision++;
     edited = true;
     rebindLift();
     ping("chip", 0.5);
@@ -534,7 +550,10 @@ function boot() {
       weftHexAt: (p) => res.colors.weftHexes[p % res.colors.weftHexes.length],
       weftIndexAt: (p) => p % res.colors.weftHexes.length,
     };
-    haveSource = true;
+    haveSource = false;
+    edited = false;
+    draftCursor = null;
+    syncSourceControls();
     woven = $("wv-weaveit").checked ? 0 : draft.picks;
     status(`${res.title}: ${draft.ends} ends, ${draft.picks} picks, ${draft.shafts} shafts`, "ok");
     draw();
@@ -546,8 +565,10 @@ function boot() {
     wifIn.addEventListener("change", async () => {
       const f = wifIn.files && wifIn.files[0];
       if (!f) return;
+      const operation = ++sourceOperation, revision = editRevision;
       try {
         const res = wifToDraft(await f.text());
+        if (operation !== sourceOperation || revision !== editRevision) return;
         if (!res) { status("that file did not parse as a WIF draft", "err"); return; }
         showImported(res);
       } catch (e) { status("could not read that file: " + e.message, "err"); }
@@ -655,10 +676,25 @@ function boot() {
   ["wv-warp", "wv-weft"].forEach((id) => $(id).addEventListener("change", () => {
     const c = $("wv-warp-color");
     if (c) c.hidden = $("wv-warp").value !== "custom";
-    ping("preset"); rebuild(false);
+    if (!draft || !colors) return;
+    if (id === "wv-warp") colors.warpHex = $("wv-warp").value === "custom" ? c.value : WARPS[$("wv-warp").value];
+    else {
+      const mode = $("wv-weft").value;
+      let rows;
+      if (haveSource) rows = sample().rowRGB;
+      else rows = Array.from({ length: draft.picks }, (_, p) => {
+        const hex = colors.weftHexAt(p).slice(1);
+        return [0, 2, 4].map(i => parseInt(hex.slice(i, i + 2), 16));
+      });
+      const pal = weftPaletteFor(draft, p => rows[p], mode === "image" ? "image" : WEFTS[mode]);
+      colors = { ...colors, weftHexes: pal.hexes, weftIndexAt: pal.indexAt, weftHexAt: p => pal.hexes[pal.indexAt(p)] };
+    }
+    ping("preset"); draw();
   }));
   const warpColor = $("wv-warp-color");
-  if (warpColor) warpColor.addEventListener("input", () => { if ($("wv-warp").value === "custom") rebuild(false); });
+  if (warpColor) warpColor.addEventListener("input", () => {
+    if (colors && $("wv-warp").value === "custom") { colors.warpHex = warpColor.value; draw(); }
+  });
   $("wv-weaveit").addEventListener("change", () => {
     if ($("wv-weaveit").checked) { if (draft && woven >= draft.picks) woven = 0; }
     else if (draft) { woven = draft.picks; draw(); }
@@ -736,9 +772,103 @@ function boot() {
     ping("bell"); status("opening the Retro Engine…", "ok");
   });
 
-  // --- setups: the whole loom state kept and restored, trail included -------
+  // Native projects preserve the actual draft. Settings below are recipes only.
+  const projectFile = $("wv-project-file"), projectStatus = $("wv-project-status");
+  function projectMessage(message, state) {
+    projectStatus.hidden = false;
+    projectStatus.textContent = message;
+    projectStatus.dataset.state = state;
+    projectStatus.className = "re-status" + (state === "error" ? " err" : "");
+  }
+  function projectSettings() {
+    return {
+      structureId, sett: +$("wv-sett").value, tone: +$("wv-tone").value,
+      warp: $("wv-warp").value, warpColor: $("wv-warp-color").value, weft: $("wv-weft").value,
+      speed: +$("wv-speed").value, epi: +$("wv-epi").value,
+      weave: $("wv-weaveit").checked, woven, view, zoom: chartZoom,
+    };
+  }
+  function syncSourceControls() {
+    for (const el of document.querySelectorAll("#wv-sett, #wv-tone, #wv-structures button, #wv-recipes button")) el.disabled = !haveSource;
+    const imageChoice = $("wv-weft").querySelector('option[value="image"]');
+    if (imageChoice) imageChoice.disabled = !haveSource;
+    if (!haveSource) $("wv-structure-hint").textContent = "Imported draft. Add an image to generate a new structure; crossings and yarn colors remain editable.";
+  }
+  function restoreProject(project, sourceImage) {
+    const s = project.settings;
+    if (raf) cancelAnimationFrame(raf); raf = 0;
+    if (sourceImage) {
+      const ctx = src.getContext("2d");
+      ctx.clearRect(0, 0, src.width, src.height);
+      ctx.drawImage(sourceImage, 0, 0);
+    }
+    haveSource = !!sourceImage;
+    draft = project.draft; colors = project.colors;
+    imported = project.imported ? { draft, colors, title: "Imported draft" } : null;
+    edited = project.edited; draftCursor = null;
+    structureId = s.structureId; woven = s.woven; view = s.view; chartZoom = s.zoom;
+    for (const key of ["sett", "tone", "warp", "weft", "speed", "epi"]) $("wv-" + key).value = String(s[key]);
+    $("wv-warp-color").value = s.warpColor; $("wv-warp-color").hidden = s.warp !== "custom";
+    $("wv-weaveit").checked = s.weave;
+    $("wv-sett-v").textContent = s.sett + " ends";
+    $("wv-tone-v").textContent = s.tone;
+    $("wv-speed-v").textContent = s.speed;
+    $("wv-epi-v").textContent = s.epi + " epi";
+    host.querySelectorAll(".re-chip").forEach(c => c.setAttribute("aria-checked", String(c.dataset.id === structureId)));
+    $("wv-views").querySelectorAll("[data-view]").forEach(c => c.setAttribute("aria-checked", String(c.dataset.view === view)));
+    $("wv-zooms").querySelectorAll("[data-zoom]").forEach(c => c.setAttribute("aria-checked", String(+c.dataset.zoom === chartZoom)));
+    $("wv-chart").hidden = view !== "draft"; out.hidden = view === "draft";
+    $("wv-zoom-field").hidden = view !== "draft";
+    $("wv-stage-preview").classList.toggle("wv-zoomed", view === "draft" && chartZoom > 1);
+    $("wv-structure-hint").textContent = draft.perCell ? "per-thread shading, chart + cloth exports" : draft.shafts + " shafts, " + draft.treadles + " treadles";
+    syncSourceControls();
+    $("wv-file").value = ""; $("wv-wif-in").value = "";
+    draw(); sync();
+  }
+  $("wv-project-save").addEventListener("click", async () => {
+    if (!draft) { projectMessage("Choose an image or draft before saving.", "error"); return; }
+    const revision = editRevision, sourceVersion = sourceOperation;
+    try {
+      const { encodeLoomProject } = await import("./loom-project.js?v=20260907-project-files");
+      if (revision !== editRevision || sourceVersion !== sourceOperation) {
+        projectMessage("Your work changed while saving was being prepared. Save again to keep the latest version.", "cancelled"); return;
+      }
+      const text = encodeLoomProject({ draft, colors, settings: projectSettings(),
+        source: haveSource ? src.toDataURL("image/png") : null, edited, imported: !!imported });
+      const url = URL.createObjectURL(new Blob([text], { type: "application/json" }));
+      download("zentropy-loom.json", url);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      projectMessage("Project download started. Open this file to continue editing.", "saved");
+    } catch (error) { projectMessage(error.message || "The project could not be saved. Your work is still here.", "error"); }
+  });
+  $("wv-project-open").addEventListener("click", () => projectFile.click());
+  projectFile.addEventListener("change", async () => {
+    const file = projectFile.files?.[0]; if (!file) return;
+    const operation = ++projectOperation, sourceVersion = ++sourceOperation, revision = editRevision;
+    projectMessage("Opening project…", "loading");
+    try {
+      const { decodeLoomProject, MAX_PROJECT_BYTES } = await import("./loom-project.js?v=20260907-project-files");
+      if (file.size > MAX_PROJECT_BYTES) throw new Error("This project exceeds the 24 MB file limit. Your work is unchanged.");
+      const project = decodeLoomProject(await file.text());
+      let image = null;
+      if (project.source) {
+        image = new Image(); image.src = project.source; await image.decode();
+        if (image.naturalWidth !== 640 || image.naturalHeight !== 400) throw new Error("The project's working image has unsupported dimensions.");
+      }
+      if (operation !== projectOperation) return;
+      if (sourceVersion !== sourceOperation || revision !== editRevision) {
+        projectMessage("Your newer changes were kept. Open the file again to replace them.", "cancelled"); return;
+      }
+      restoreProject(project, image);
+      projectMessage("Project opened. Draft, colors and layout restored.", "ready");
+    } catch (error) {
+      if (operation === projectOperation) projectMessage(error.message || "The file could not be opened. Your work is unchanged.", "error");
+    } finally { if (operation === projectOperation) projectFile.value = ""; }
+  });
+
+  // --- reusable settings: controls only; legacy records remain available -----
   const SETUPS_KEY = "wb.loom.setups.v1";
-  const loadSetups = () => { try { return JSON.parse(localStorage.getItem(SETUPS_KEY) || "[]"); } catch (_) { return []; } };
+  const loadSetups = () => { try { const saved = JSON.parse(localStorage.getItem(SETUPS_KEY) || "[]"); return Array.isArray(saved) ? saved.filter(s => s && typeof s === "object").slice(0, 24) : []; } catch (_) { return []; } };
   function refreshSetups() {
     const sel = $("wv-setups"); if (!sel) return;
     sel.querySelectorAll("option:not([value=''])").forEach((o) => o.remove());
@@ -755,12 +885,13 @@ function boot() {
       warp: $("wv-warp").value, warpColor: $("wv-warp-color") ? $("wv-warp-color").value : undefined,
       weft: $("wv-weft").value, speed: $("wv-speed").value, trail: wb.currentTrail() });
     try { localStorage.setItem(SETUPS_KEY, JSON.stringify(setups.slice(0, 24))); } catch (e) { status("could not keep the setup", "err"); return; }
-    refreshSetups(); ping("bell"); status("setup kept: " + name, "ok");
+    refreshSetups(); ping("bell"); status("Settings saved in this browser. The image and hand edits are not included.", "ok");
   });
   const setupsSel = $("wv-setups");
   if (setupsSel) setupsSel.addEventListener("change", async () => {
     const s = loadSetups()[+setupsSel.value]; setupsSel.value = "";
     if (!s) return;
+    if (!haveSource) { status("Add a source image before applying saved settings. Your imported draft is unchanged.", "err"); return; }
     structureId = s.structureId in STRUCTURES ? s.structureId : "jacquard";
     host.querySelectorAll(".re-chip").forEach((c) => c.setAttribute("aria-checked", String(c.dataset.id === structureId)));
     $("wv-sett").value = s.sett; $("wv-sett-v").textContent = s.sett + " ends";

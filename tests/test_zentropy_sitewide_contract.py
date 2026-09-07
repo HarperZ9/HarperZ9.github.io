@@ -35,7 +35,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/font-marketplace.css": "20260907-live-specimen",
     "system/font-specimen.js": "20260907-typography-handoff",
     "system/retro-studio.js": "20260907-live-shader",
-    "system/loom-studio.js": "20260907-creative-handoff",
+    "system/loom-studio.js": "20260907-project-files",
     "system/studio.js": "20260907-typography-handoff",
     "system/poster-editor.css": "20260907-project-files",
     "system/system.css": READING_CASCADE_REVISION,
