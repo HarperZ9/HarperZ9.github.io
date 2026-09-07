@@ -711,6 +711,12 @@ body.figure-document main { min-width: 0; }
     white-space: normal;
   }
   .figure-svg-scroll {
-    display: none;
+    display: block;
+    overflow: visible;
+  }
+  .figure-svg-scroll svg {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 }

@@ -22,15 +22,10 @@ NON_DEPLOYABLE_HTML_DIRS = {
 DEFAULT_ASSET_REVISION = "20260902-creative-chassis"
 REVIEWED_ASSET_REVISIONS = {
     "system/publication-article.css": "20260905-article-reading",
+    "system/figure.css": "20260906-figure-presentation",
     "system/report-editorial.css": "20260906",
     "system/instrument-editorial.css": "20260906-studio-chrome",
     "system/demo-editorial.css": "20260906-demo-editorial",
-}
-PAGE_SCOPED_ASSET_REVISIONS = {
-    ("figures/availability-is-not-reach.html", "system/figure.css"): "20260906-figure-presentation",
-    ("figures/growth-needs-a-before.html", "system/figure.css"): "20260906-figure-presentation",
-    ("figures/label-is-a-lens.html", "system/figure.css"): "20260906-figure-presentation",
-    ("figures/the-second-hearing-evidence-map.html", "system/figure.css"): "20260906-figure-presentation",
 }
 SHARED_STYLE_SHEETS = (
     "system/system.css",
@@ -293,11 +288,6 @@ def expected_asset_revision(relative: Path, target: str) -> str:
     asset_path = raw_asset_path.lstrip("/")
     if not raw_asset_path.startswith("/"):
         asset_path = posixpath.normpath(posixpath.join(posixpath.dirname(relative.as_posix()), raw_asset_path))
-    page = relative.as_posix()
-
-    scoped_revision = PAGE_SCOPED_ASSET_REVISIONS.get((page, asset_path))
-    if scoped_revision is not None:
-        return scoped_revision
 
     return REVIEWED_ASSET_REVISIONS.get(asset_path, DEFAULT_ASSET_REVISION)
 
