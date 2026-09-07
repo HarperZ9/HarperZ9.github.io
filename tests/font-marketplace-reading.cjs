@@ -131,6 +131,24 @@ function contrast(foreground, background) {
 
       const specimenVisible = await page.isVisible('[data-font-specimen-controls]');
       assert.equal(specimenVisible, true, `${theme}/${width}: JS must reveal live specimen controls`);
+      await page.click('.font-action-primary');
+      await page.waitForFunction(() => document.querySelector('#font-lab-title').getBoundingClientRect().top >= 80);
+      const editorLayout = await page.evaluate(() => {
+        const box = selector => {
+          const {x,y,width,height} = document.querySelector(selector).getBoundingClientRect();
+          return {x,y,width,height};
+        };
+        return {controls:box('[data-font-specimen-controls]'), preview:box('[data-font-specimen-live]')};
+      });
+      if (width >= 1000) {
+        assert(editorLayout.preview.x >= editorLayout.controls.x + editorLayout.controls.width,
+          'Desktop preview must sit beside controls, not below them');
+        assert(Math.abs(editorLayout.preview.y-editorLayout.controls.y) < 4,
+          'Desktop preview and controls must start together');
+      } else {
+        assert(editorLayout.preview.y + editorLayout.preview.height <= editorLayout.controls.y,
+          'Mobile preview must precede controls without overlap');
+      }
       const unlabelledControls = await page.evaluate(() =>
         [...document.querySelectorAll('[data-font-specimen-controls] textarea, [data-font-specimen-controls] select, [data-font-specimen-controls] input, [data-font-specimen-controls] button')]
           .filter(control => {

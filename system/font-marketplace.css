@@ -498,6 +498,56 @@ html[data-theme] body.font-marketplace-page .font-market a.font-action.font-acti
   }
 }
 
+/* The specimen is the workspace, not a result below a long settings form. */
+.font-market-section.font-lab {
+  grid-template-columns: minmax(0, 1fr);
+  scroll-margin-top: 6rem;
+}
+
+.font-lab .section-copy h2 {
+  max-width: none;
+}
+
+.font-market-section p.font-live-preview {
+  max-width: none;
+  margin: 0;
+  color: var(--reading-ink);
+}
+
+.font-live-specimen p.font-specimen-status {
+  margin-top: 1.5rem;
+}
+
+@media screen and (min-width: 900px) {
+  .font-lab-panel {
+    grid-template-columns: minmax(19rem, .8fr) minmax(0, 1.2fr);
+    align-items: start;
+  }
+
+  .font-specimen-controls {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .font-live-specimen {
+    grid-column: 2;
+    grid-row: 1;
+    position: sticky;
+    top: 6rem;
+    min-height: 22rem;
+    padding: 2rem;
+  }
+
+  .font-control label {
+    flex-wrap: wrap;
+    gap: .25rem .5rem;
+  }
+
+  .font-lab-panel > noscript {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (forced-colors: active) {
   .font-action,
   .font-sale-note,
