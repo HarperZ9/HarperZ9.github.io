@@ -2,12 +2,36 @@
 
 from __future__ import annotations
 
+import posixpath
 import re
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-NON_DEPLOYABLE_HTML_DIRS = {"node_modules", "dist", ".worktrees", "_preview", "_drafts", "_redesign"}
+NON_DEPLOYABLE_HTML_DIRS = {
+    "node_modules",
+    "dist",
+    ".worktrees",
+    "_preview",
+    "_drafts",
+    "_redesign",
+    "private",
+    "protected",
+    "secrets",
+}
+DEFAULT_ASSET_REVISION = "20260902-creative-chassis"
+REVIEWED_ASSET_REVISIONS = {
+    "system/publication-article.css": "20260905-article-reading",
+    "system/report-editorial.css": "20260906",
+    "system/instrument-editorial.css": "20260906-studio-chrome",
+    "system/demo-editorial.css": "20260906-demo-editorial",
+}
+PAGE_SCOPED_ASSET_REVISIONS = {
+    ("figures/availability-is-not-reach.html", "system/figure.css"): "20260906-figure-presentation",
+    ("figures/growth-needs-a-before.html", "system/figure.css"): "20260906-figure-presentation",
+    ("figures/label-is-a-lens.html", "system/figure.css"): "20260906-figure-presentation",
+    ("figures/the-second-hearing-evidence-map.html", "system/figure.css"): "20260906-figure-presentation",
+}
 SHARED_STYLE_SHEETS = (
     "system/system.css",
     "system/doc.css",
@@ -26,6 +50,29 @@ SHARED_VISUAL_TOKENS = (
     "--ground-paper:#f2efe6;",
     "--ink-paper:#111014;",
 )
+FIGURE_CONTRAST_PAIRS = (
+    (".evidence-figure", ".evidence-figure"),
+    (".data-plate", ".data-plate"),
+    (".evidence-ledger", ".evidence-ledger"),
+    (".figure-record-controls input", ".figure-record-controls input"),
+    (".figure-relation-card", ".figure-relation-card"),
+    (".figure-relation-card dt", ".figure-relation-card"),
+    (".publication-figure-page", ".publication-figure-page"),
+    (".publication-figure-page .publication-thesis", ".publication-figure-page"),
+    (".publication-figure-page .publication-evidence dt", ".publication-figure-page"),
+    (".publication-figure-page .publication-evidence dd", ".publication-figure-page"),
+    ('.publication-figure-page section[aria-label="Figure sources"]', ".publication-figure-page"),
+)
+FIGURE_FONT_ROLES = (
+    ("body.figure-document", "Hanken Grotesk"),
+    (".data-plate", "Hanken Grotesk"),
+    (".publication-figure-page", "Hanken Grotesk"),
+    (".evidence-ledger", "Conso"),
+    (".figure-relation-card dt", "Conso"),
+    (".figure-table caption", "Conso"),
+    (".publication-figure-page .publication-figure-table caption", "Conso"),
+    (".publication-figure-page .publication-evidence dt", "Conso"),
+)
 
 
 def read(rel: str) -> str:
@@ -36,19 +83,56 @@ def deployable_html_pages() -> list[Path]:
     return [
         path
         for path in ROOT.rglob("*.html")
-        if not any(part in NON_DEPLOYABLE_HTML_DIRS for part in path.relative_to(ROOT).parts)
+        if not any(
+            part.startswith(".") or part in NON_DEPLOYABLE_HTML_DIRS
+            for part in path.relative_to(ROOT).parts
+        )
     ]
 
 
-def declarations(css: str, selector: str) -> dict[str, str]:
-    match = re.search(re.escape(selector) + r"\s*\{(?P<body>[^}]+)\}", css)
-    assert match, f"{selector} rule missing"
+def parse_declarations(body: str) -> dict[str, str]:
     return {
         name.strip(): value.strip()
-        for part in match.group("body").split(";")
+        for part in body.split(";")
         if ":" in part
         for name, value in [part.split(":", 1)]
     }
+
+
+def style_rules(css: str) -> list[tuple[str, str]]:
+    rules: list[tuple[str, str]] = []
+    position = 0
+    while True:
+        open_brace = css.find("{", position)
+        if open_brace == -1:
+            return rules
+
+        selector = re.sub(r"/\*.*?\*/", "", css[position:open_brace], flags=re.DOTALL).strip()
+        depth = 0
+        close_brace = None
+        for offset, character in enumerate(css[open_brace:], start=open_brace):
+            if character == "{":
+                depth += 1
+            elif character == "}":
+                depth -= 1
+                if depth == 0:
+                    close_brace = offset
+                    break
+        assert close_brace is not None, f"{selector} rule is not closed"
+
+        if selector and not selector.startswith("@"):
+            rules.append((selector, css[open_brace + 1:close_brace]))
+        position = close_brace + 1
+
+
+def declarations(css: str, selector: str) -> dict[str, str]:
+    properties: dict[str, str] = {}
+    for selector_group, body in style_rules(css):
+        selectors = [part.strip() for part in selector_group.split(",")]
+        if selector in selectors:
+            properties.update(parse_declarations(body))
+    assert properties, f"{selector} rule missing"
+    return properties
 
 
 def media_block(css: str, query: str) -> str:
@@ -71,21 +155,50 @@ def root_variables(css: str) -> dict[str, str]:
     assert match, ":root rule missing"
     return {
         name: value
-        for name, value in declarations(match.group(0), ":root").items()
+        for name, value in parse_declarations(match.group("body")).items()
         if name.startswith("--")
     }
 
 
-def resolve_color(value: str, variables: dict[str, str]) -> str:
+def scheme_variables(css: str, scheme: str) -> dict[str, str]:
+    variables = root_variables(css)
+    if scheme == "dark":
+        dark = media_block(css, "(prefers-color-scheme: dark)")
+        match = re.search(r":root\s*\{(?P<body>[^}]+)\}", dark)
+        assert match, "dark :root rule missing"
+        variables.update(
+            {
+                name: value
+                for name, value in parse_declarations(match.group("body")).items()
+                if name.startswith("--")
+            }
+        )
+    return variables
+
+
+def scheme_variable_sets(css: str) -> dict[str, dict[str, str]]:
+    return {
+        "light": scheme_variables(css, "light"),
+        "dark": scheme_variables(css, "dark"),
+    }
+
+
+def resolve_value(value: str, variables: dict[str, str]) -> str:
     value = value.strip()
     seen: set[str] = set()
     while value.startswith("var("):
-        match = re.match(r"var\((--[\w-]+)\)", value)
+        match = re.match(r"var\(\s*(--[\w-]+)\s*(?:,[^)]+)?\)", value)
         assert match, f"unsupported CSS variable value {value!r}"
         name = match.group(1)
         assert name not in seen, f"recursive CSS variable {name}"
+        assert name in variables, f"undefined CSS variable {name}"
         seen.add(name)
         value = variables[name].strip()
+    return value
+
+
+def resolve_color(value: str, variables: dict[str, str]) -> str:
+    value = resolve_value(value, variables)
     if re.fullmatch(r"#[0-9a-fA-F]{3}", value):
         value = "#" + "".join(character * 2 for character in value[1:])
     assert re.fullmatch(r"#[0-9a-fA-F]{6}", value), f"{value!r} is not a hex colour"
@@ -114,6 +227,73 @@ def contrast_ratio(foreground: str, background: str) -> float:
 def assert_aa_contrast(foreground: str, background: str, selector: str) -> None:
     ratio = contrast_ratio(foreground, background)
     assert ratio >= 4.5, f"{selector} contrast is {ratio:.2f}:1"
+
+
+def assert_aa_contrast_across_schemes(
+    css: str,
+    foreground_selector: str,
+    background_selector: str | None = None,
+) -> None:
+    foreground_rule = declarations(css, foreground_selector)
+    background_rule = declarations(css, background_selector or foreground_selector)
+
+    for scheme, variables in scheme_variable_sets(css).items():
+        foreground = resolve_color(foreground_rule["color"], variables)
+        background = resolve_color(background_rule["background"], variables)
+        assert_aa_contrast(foreground, background, f"{foreground_selector} {scheme}")
+
+
+def assert_font_role(css: str, selector: str, expected_family: str) -> None:
+    font_value = declarations(css, selector)["font-family"]
+
+    for scheme, variables in scheme_variable_sets(css).items():
+        resolved = resolve_value(font_value, variables)
+        assert expected_family in resolved, f"{selector} {scheme} resolved font {resolved!r}"
+
+
+def assert_figure_material_roles_and_contrast(css: str) -> None:
+    assert "prefers-color-scheme: dark" in css
+    for foreground_selector, background_selector in FIGURE_CONTRAST_PAIRS:
+        assert_aa_contrast_across_schemes(css, foreground_selector, background_selector)
+    for selector, expected_family in FIGURE_FONT_ROLES:
+        assert_font_role(css, selector, expected_family)
+
+
+def expected_asset_revision(relative: Path, target: str) -> str:
+    raw_asset_path = target.split("?", 1)[0]
+    asset_path = raw_asset_path.lstrip("/")
+    if not raw_asset_path.startswith("/"):
+        asset_path = posixpath.normpath(posixpath.join(posixpath.dirname(relative.as_posix()), raw_asset_path))
+    page = relative.as_posix()
+
+    scoped_revision = next(
+        (
+            revision
+            for (scoped_page, scoped_asset), revision in PAGE_SCOPED_ASSET_REVISIONS.items()
+            if page == scoped_page and asset_path.endswith(scoped_asset)
+        ),
+        None,
+    )
+    if scoped_revision is not None:
+        return scoped_revision
+
+    return next(
+        (
+            revision
+            for asset, revision in REVIEWED_ASSET_REVISIONS.items()
+            if asset_path.endswith(asset)
+        ),
+        DEFAULT_ASSET_REVISION,
+    )
+
+
+def assert_reviewed_asset_revision(relative: Path, target: str) -> None:
+    revision = expected_asset_revision(relative, target)
+    assert target.endswith(f"?v={revision}"), (
+        relative.as_posix(),
+        target,
+        f"expected ?v={revision}",
+    )
 
 
 def test_shared_nav_renders_zentropy_brand_and_desktop_gpu_gate() -> None:
@@ -147,14 +327,18 @@ def test_shared_nav_renders_zentropy_brand_and_desktop_gpu_gate() -> None:
 def test_shared_styles_define_zentropy_material_system() -> None:
     system_css = read("system/system.css")
     doc_css = read("system/doc.css")
+    figure_css = read("system/figure.css")
 
     for rel in SHARED_STYLE_SHEETS:
         css = read(rel)
         assert "ZentropyDisplay" not in css, rel
-        for token in SHARED_VISUAL_TOKENS:
-            assert token in css, f"{rel} missing {token}"
-        assert "var(--font-sans)" in css, f"{rel} must route prose/display through --font-sans"
-        assert "var(--font-mono)" in css, f"{rel} must route mono/data/code through --font-mono"
+        if rel == "system/figure.css":
+            assert_figure_material_roles_and_contrast(css)
+        else:
+            for token in SHARED_VISUAL_TOKENS:
+                assert token in css, f"{rel} missing {token}"
+            assert "var(--font-sans)" in css, f"{rel} must route prose/display through --font-sans"
+            assert "var(--font-mono)" in css, f"{rel} must route mono/data/code through --font-mono"
 
     for css in (system_css, doc_css):
         assert "#070406" in css
@@ -182,6 +366,7 @@ def test_shared_styles_define_zentropy_material_system() -> None:
     assert "Telos Display retired" not in system_css
     assert "Telos Display retired" not in doc_css
     assert "Kilon retired" not in doc_css
+    assert "ZentropyDisplay" not in figure_css
 
 
 def test_shared_styles_define_paper_data_surfaces() -> None:
@@ -189,15 +374,23 @@ def test_shared_styles_define_paper_data_surfaces() -> None:
         css = read(rel)
         data_plate = re.search(r"\.data-plate\s*\{(?P<body>[^}]+)\}", css)
         assert data_plate, f"{rel} must define .data-plate"
-        assert "background:var(--ground-paper)" in data_plate.group("body"), rel
-        assert "color:var(--ink-paper)" in data_plate.group("body"), rel
+        if rel == "system/figure.css":
+            assert_aa_contrast_across_schemes(css, ".data-plate")
+            assert_font_role(css, ".data-plate", "Hanken Grotesk")
+        else:
+            assert "background:var(--ground-paper)" in data_plate.group("body"), rel
+            assert "color:var(--ink-paper)" in data_plate.group("body"), rel
 
         ledger = re.search(r"\.evidence-ledger\s*\{(?P<body>[^}]+)\}", css)
         assert ledger, f"{rel} must define .evidence-ledger"
         ledger_body = ledger.group("body")
-        assert "background:var(--ground-paper)" in ledger_body, rel
-        assert "color:var(--ink-paper)" in ledger_body, rel
-        assert "font-family:var(--font-mono)" in ledger_body, rel
+        if rel == "system/figure.css":
+            assert_aa_contrast_across_schemes(css, ".evidence-ledger")
+            assert_font_role(css, ".evidence-ledger", "Conso")
+        else:
+            assert "background:var(--ground-paper)" in ledger_body, rel
+            assert "color:var(--ink-paper)" in ledger_body, rel
+            assert "font-family:var(--font-mono)" in ledger_body, rel
         assert re.search(r"border(?:-block|-color)?:1px solid", ledger_body), rel
 
 
@@ -218,18 +411,11 @@ def test_data_surfaces_survive_forced_colors() -> None:
 
 def test_figure_record_search_input_has_readable_contrast() -> None:
     css = read("system/figure.css")
-    variables = root_variables(css)
-    input_rule = declarations(css, ".figure-record-controls input")
-
-    foreground = resolve_color(input_rule["color"], variables)
-    background = resolve_color(input_rule["background"], variables)
-
-    assert_aa_contrast(foreground, background, ".figure-record-controls input")
+    assert_aa_contrast_across_schemes(css, ".figure-record-controls input")
 
 
 def test_figure_mobile_relation_cards_keep_readable_paper_contract() -> None:
     css = read("system/figure.css")
-    variables = root_variables(css)
     mobile = media_block(css, "(max-width: 40rem)")
     assert ".figure-relation-cards { display: grid" in mobile
 
@@ -237,12 +423,40 @@ def test_figure_mobile_relation_cards_keep_readable_paper_contract() -> None:
     card_rule = declarations(css, ".figure-relation-card")
     dt_rule = declarations(css, ".figure-relation-card dt")
 
-    background = resolve_color(card_rule["background"], variables)
-    body_foreground = resolve_color(card_rule.get("color", figure_rule["color"]), variables)
-    term_foreground = resolve_color(dt_rule["color"], variables)
+    for scheme, variables in scheme_variable_sets(css).items():
+        background = resolve_color(card_rule["background"], variables)
+        body_foreground = resolve_color(card_rule.get("color", figure_rule["color"]), variables)
+        term_foreground = resolve_color(dt_rule["color"], variables)
 
-    assert_aa_contrast(body_foreground, background, ".figure-relation-card")
-    assert_aa_contrast(term_foreground, background, ".figure-relation-card dt")
+        assert_aa_contrast(body_foreground, background, f".figure-relation-card {scheme}")
+        assert_aa_contrast(term_foreground, background, f".figure-relation-card dt {scheme}")
+
+
+def test_figure_contrast_negative_control_rejects_low_contrast() -> None:
+    low_contrast_css = """
+:root {
+  --surface:#ffffff;
+  --text:#777777;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface:#000000;
+    --text:#777777;
+  }
+}
+.bad-surface {
+  background:var(--surface);
+  color:var(--text);
+}
+"""
+    error = None
+    try:
+        assert_aa_contrast_across_schemes(low_contrast_css, ".bad-surface")
+    except AssertionError as exc:
+        error = str(exc)
+
+    assert error is not None
+    assert ".bad-surface light contrast" in error
 
 
 def test_nav_forced_colors_route_header_gets_a_visible_border() -> None:
@@ -317,7 +531,6 @@ def test_public_routes_reserve_micro_labels_for_semantic_context() -> None:
 def test_shared_frontend_assets_use_consistent_reviewed_cache_revisions() -> None:
     # A scoped stylesheet release must bust its cache on every consuming page
     # without rewriting unrelated assets and pages in other owners' work.
-    revisions = {"system/publication-article.css": "20260905-article-reading"}
     for path in deployable_html_pages():
         relative = path.relative_to(ROOT)
         source = path.read_text(encoding="utf-8")
@@ -326,11 +539,22 @@ def test_shared_frontend_assets_use_consistent_reviewed_cache_revisions() -> Non
                 continue
             if re.search(r"(?:^|/)assets/[^/?]+-[A-Za-z0-9_-]{8,}\.(?:css|js)$", target):
                 continue
-            revision = next(
-                (value for asset, value in revisions.items() if target.split("?", 1)[0].endswith(asset)),
-                "20260902-creative-chassis",
-            )
-            assert target.endswith(f"?v={revision}"), (relative.as_posix(), target)
+            assert_reviewed_asset_revision(relative, target)
+
+
+def test_asset_revision_negative_control_rejects_wrong_reviewed_revision() -> None:
+    error = None
+    try:
+        assert_reviewed_asset_revision(
+            Path("emet-sample.html"),
+            "system/report-editorial.css?v=20260902-creative-chassis",
+        )
+    except AssertionError as exc:
+        error = str(exc)
+
+    assert error is not None
+    assert "system/report-editorial.css?v=20260902-creative-chassis" in error
+    assert "expected ?v=20260906" in error
 
 
 def test_narrow_mobile_nav_does_not_overlap_the_wordmark() -> None:
