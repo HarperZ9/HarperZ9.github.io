@@ -17,7 +17,7 @@ import { link, maxPointSize } from "./spatial-shaders.js";
 import {
   CC_BACKDROP_VS, CC_BACKDROP_FS, CC_MESH_VS, CC_MESH_FS,
   CC_DEPTH_FS, CC_POINT_VS, CC_POINT_FS,
-} from "./spatial-textured-shaders.js";
+} from "./spatial-textured-shaders.js?v=20260907-crystal-depth";
 
 const GRID_COLS = 192;
 const GRID_ROWS = 240;
@@ -25,6 +25,63 @@ const LAYER_MODES = Object.freeze({
   support: 0, deep_sky: 1, haze: 2, celestials: 3, portal: 4,
   city: 5, membrane: 6, beam: 7, water: 8, witness: 9,
 });
+
+const TEXTURED_CONTROL_DEFAULTS = Object.freeze({
+  parallax: .7,
+  skyCurve: .24,
+  atmosphereDensity: .88,
+  hazeOpacity: .34,
+  atmosphereFlow: .28,
+  bokehScale: 1.05,
+  beamFlow: .36,
+  glow: .52,
+  waterFlow: .2,
+  depthDetail: .45,
+  materialFocus: 0,
+});
+
+const TEXTURED_CONTROL_BOUNDS = Object.freeze({
+  parallax: [0, 1.2],
+  skyCurve: [0, 2],
+  atmosphereDensity: [0, 2],
+  hazeOpacity: [0, 1],
+  atmosphereFlow: [0, 1.5],
+  bokehScale: [0, 4],
+  beamFlow: [0, 2],
+  glow: [0, 2.2],
+  waterFlow: [0, 1.2],
+  depthDetail: [0, 1],
+  materialFocus: [0, 3],
+});
+
+function coerceTexturedControl(name, value, fallback) {
+  if (!(name in TEXTURED_CONTROL_DEFAULTS)) return undefined;
+  const n = Number(value);
+  const [lo, hi] = TEXTURED_CONTROL_BOUNDS[name];
+  const integral = name !== "materialFocus" || Number.isInteger(n);
+  return Number.isFinite(n) && n >= lo && n <= hi && integral ? n : fallback;
+}
+
+export function normalizeTexturedControls(input = {}) {
+  const values = input && typeof input === "object" ? input : {};
+  const controls = {};
+  for (const [name, fallback] of Object.entries(TEXTURED_CONTROL_DEFAULTS)) {
+    controls[name] = coerceTexturedControl(name, values[name], fallback);
+  }
+  return controls;
+}
+
+export function texturedKindVisibility(mode) {
+  const focus = coerceTexturedControl("materialFocus", mode, 0);
+  const vectors = focus === 1
+    ? [[0, 0, 0, 1], [0, 1, 1, 0]]
+    : focus === 2
+      ? [[0, 1, 1, 0], [0, 0, 0, 0]]
+      : focus === 3
+        ? [[1, 0, 0, 0], [1, 0, 0, 1]]
+        : [[1, 1, 1, 1], [1, 1, 1, 1]];
+  return { a: [...vectors[0]], b: [...vectors[1]] };
+}
 
 // Decode the package's raster bytes into bitmaps and luma fields. The bytes
 // are the same ones the receipts hashed, so what renders is what was checked.
@@ -72,7 +129,7 @@ class TexturedScene {
     this.manifest = manifest;
     this.spec = manifest.textured;
     this.splats = splats;
-    this.controls = { ...this.spec.defaults, ...(opts.controls || {}) };
+    this.controls = normalizeTexturedControls({ ...this.spec.defaults, ...(opts.controls || {}) });
     this.reducedMotion = !!opts.reducedMotion;
     this.animating = !this.reducedMotion;
     this.motion = { paused: false, pausedAt: 0, offset: 0, freezeAt: this.reducedMotion ? 0.0 : null };
@@ -192,7 +249,8 @@ class TexturedScene {
   }
 
   setControl(name, value) {
-    if (name in this.controls) this.controls[name] = Number(value);
+    const next = coerceTexturedControl(name, value, undefined);
+    if (next !== undefined) this.controls[name] = next;
   }
 
   setCameraTarget(x, y, z) { this.target = clampCamera({ x, y, z }, this.manifest.camera); }
@@ -236,6 +294,7 @@ class TexturedScene {
     gl.uniform1f(this.loc(program, "uWaterFlow"), this.controls.waterFlow);
     gl.uniform1f(this.loc(program, "uHazeFlow"), this.controls.atmosphereFlow);
     gl.uniform1f(this.loc(program, "uSkyCurve"), this.controls.skyCurve);
+    gl.uniform2f(this.loc(program, "uFieldTexel"), 1 / this.spec.mask_width, 1 / this.spec.mask_height);
     gl.uniform1i(this.loc(program, "uLayerMode"), LAYER_MODES[name] || 0);
     gl.uniform1i(this.loc(program, "uWater"), name === "water" ? 1 : 0);
     gl.activeTexture(gl.TEXTURE3);
@@ -294,6 +353,7 @@ class TexturedScene {
     gl.uniform1f(this.loc(p, "uAtmosphereDensity"), c.atmosphereDensity);
     gl.uniform1f(this.loc(p, "uBeamFlow"), c.beamFlow);
     gl.uniform1f(this.loc(p, "uWaterFlow"), c.waterFlow);
+    gl.uniform1f(this.loc(p, "uDepthDetail"), supportPass ? 0 : c.depthDetail);
     gl.drawElements(gl.TRIANGLES, this.gridCount, gl.UNSIGNED_SHORT, 0);
   }
 
@@ -322,8 +382,9 @@ class TexturedScene {
     gl.uniform1f(this.loc(p, "uAtmosphereDensity"), c.atmosphereDensity);
     gl.uniform1f(this.loc(p, "uBokehScale"), c.bokehScale);
     gl.uniform1f(this.loc(p, "uMaxPoint"), maxPointSize(gl, 42));
-    gl.uniform4f(this.loc(p, "uKindVisibilityA"), 1, 1, 1, 1);
-    gl.uniform4f(this.loc(p, "uKindVisibilityB"), 1, 1, 1, 1);
+    const visibility = texturedKindVisibility(c.materialFocus);
+    gl.uniform4f(this.loc(p, "uKindVisibilityA"), ...visibility.a);
+    gl.uniform4f(this.loc(p, "uKindVisibilityB"), ...visibility.b);
     gl.bindBuffer(gl.ARRAY_BUFFER, this.pointBuffer);
     const stride = SPLAT_RECORD_FLOATS * 4;
     const attribs = [["iPosition", 3, 0], ["iColor", 3, 12], ["iSize", 1, 24], ["iAlpha", 1, 28], ["iKind", 1, 32], ["iSeed", 1, 36]];

@@ -43,6 +43,12 @@
   .at-chips{max-height:15.5rem;overflow-y:auto;scrollbar-width:thin;padding:.35rem}
   /* source tabs sit uniform, no orphan widths */
   .source-group [role="tab"]{width:100%}
+  .sp-crystal-controls{display:grid;gap:.65rem}
+  .sp-crystal-controls .at-group{margin-top:0}
+  .sp-crystal-note{margin:.15rem 0 .35rem}
+  .sp-crystal-focus{max-height:none;overflow:visible;padding:.15rem 0 0;gap:.28rem}
+  .sp-crystal-focus .chip{flex:1 1 9.5rem;text-align:left}
+  @media (max-width:430px){.sp-crystal-focus .chip{flex-basis:100%}}
   /* laptop widths: the side columns give ground so the canvas keeps its stage */
   @media (min-width:900px) and (max-width:1279.98px){
     .studio-app{grid-template-columns:minmax(238px,17rem) minmax(0,1fr) minmax(272px,19rem)}
@@ -698,6 +704,42 @@
               <div class="at-group">
                 <span class="at-glab">Water motion <span class="hint">glint shimmer (<span id="sp-water-val">0.25</span>)</span></span>
                 <input type="range" class="at-slider" id="sp-water" min="0" max="1.2" step="0.01" value="0.25" aria-label="Water motion">
+              </div>
+              <div id="sp-crystal-block" class="sp-crystal-controls" hidden>
+                <p class="src-hint sp-crystal-note">Crystal City depth detail is artistic shading from its shipped mask and depth fields, not recovered geometry.</p>
+                <div class="at-group">
+                  <span class="at-glab">Depth detail <span class="hint">contour + facet shading (<span id="sp-depth-detail-val">0.45</span>)</span></span>
+                  <input type="range" class="at-slider" id="sp-depth-detail" min="0" max="1" step="0.01" value="0.45" aria-label="Artistic depth detail">
+                </div>
+                <div class="at-group">
+                  <span class="at-glab">Sky curve <span class="hint">deep-sky bend (<span id="sp-sky-curve-val">0.24</span>)</span></span>
+                  <input type="range" class="at-slider" id="sp-sky-curve" min="0" max="2" step="0.01" value="0.24" aria-label="Crystal City sky curve">
+                </div>
+                <div class="at-group">
+                  <span class="at-glab">Atmosphere density <span class="hint">dust + haze weight (<span id="sp-atmo-density-val">0.88</span>)</span></span>
+                  <input type="range" class="at-slider" id="sp-atmo-density" min="0" max="2" step="0.01" value="0.88" aria-label="Crystal City atmosphere density">
+                </div>
+                <div class="at-group">
+                  <span class="at-glab">Haze opacity <span class="hint">mesh veil opacity (<span id="sp-haze-opacity-val">0.34</span>)</span></span>
+                  <input type="range" class="at-slider" id="sp-haze-opacity" min="0" max="1" step="0.01" value="0.34" aria-label="Crystal City haze opacity">
+                </div>
+                <div class="at-group">
+                  <span class="at-glab">Beam flow <span class="hint">beam particle current (<span id="sp-beam-flow-val">0.36</span>)</span></span>
+                  <input type="range" class="at-slider" id="sp-beam-flow" min="0" max="2" step="0.01" value="0.36" aria-label="Crystal City beam flow">
+                </div>
+                <div class="at-group">
+                  <span class="at-glab">Bokeh scale <span class="hint">bokeh particle size (<span id="sp-bokeh-scale-val">1.05</span>)</span></span>
+                  <input type="range" class="at-slider" id="sp-bokeh-scale" min="0" max="4" step="0.01" value="1.05" aria-label="Crystal City bokeh scale">
+                </div>
+                <div class="at-group">
+                  <span class="at-glab">Particle focus <span class="hint">textured meshes stay visible</span></span>
+                  <div class="at-chips sp-crystal-focus" role="group" aria-label="Crystal City particle visibility">
+                    <button type="button" class="chip active" data-crystal-material-focus="0" aria-pressed="true">All particles</button>
+                    <button type="button" class="chip" data-crystal-material-focus="1" aria-pressed="false">Haze, sky + bokeh particles</button>
+                    <button type="button" class="chip" data-crystal-material-focus="2" aria-pressed="false">Beam + water particles</button>
+                    <button type="button" class="chip" data-crystal-material-focus="3" aria-pressed="false">Spark + glint particles</button>
+                  </div>
+                </div>
               </div>
             </details>
             <div class="at-actions">
@@ -1436,7 +1478,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20260907-workspace"></script>
+<script type="module" src="system/studio.js?v=20260907-crystal-depth"></script>
 <script type="module" src="system/project-router.js?v=20260907-native-routing"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->

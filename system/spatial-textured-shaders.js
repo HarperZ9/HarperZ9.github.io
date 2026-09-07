@@ -110,9 +110,11 @@ uniform sampler2D uSupport;
 uniform sampler2D uAtmosphere;
 uniform sampler2D uMask;
 uniform sampler2D uSupportConfidence;
+uniform sampler2D uDepth;
 uniform int uUseMask;
 uniform int uSupportPass;
 uniform int uLayerMode;
+uniform vec2 uFieldTexel;
 uniform float uSupportMix;
 uniform float uAtmosphereMix;
 uniform float uOpacity;
@@ -122,6 +124,45 @@ uniform float uGlow;
 uniform float uAtmosphereDensity;
 uniform float uBeamFlow;
 uniform highp float uWaterFlow;
+uniform float uDepthDetail;
+vec3 depthDetailColor(vec3 color){
+ float amount=clamp(uDepthDetail,0.0,1.0);
+ if(amount<.0001||uSupportPass==1)return color;
+ vec2 lo=vec2(.001);
+ vec2 hi=vec2(.999);
+ vec2 dx=vec2(uFieldTexel.x,0.0);
+ vec2 dy=vec2(0.0,uFieldTexel.y);
+ float d=texture2D(uDepth,vMaskUv).r;
+ float dl=texture2D(uDepth,clamp(vMaskUv-dx,lo,hi)).r;
+ float dr=texture2D(uDepth,clamp(vMaskUv+dx,lo,hi)).r;
+ float du=texture2D(uDepth,clamp(vMaskUv-dy,lo,hi)).r;
+ float dd=texture2D(uDepth,clamp(vMaskUv+dy,lo,hi)).r;
+ float mc=texture2D(uMask,vMaskUv).r;
+ float ml=texture2D(uMask,clamp(vMaskUv-dx,lo,hi)).r;
+ float mr=texture2D(uMask,clamp(vMaskUv+dx,lo,hi)).r;
+ float mu=texture2D(uMask,clamp(vMaskUv-dy,lo,hi)).r;
+ float md=texture2D(uMask,clamp(vMaskUv+dy,lo,hi)).r;
+ vec2 grad=vec2(dr-dl,dd-du);
+ vec2 maskGrad=vec2(mr-ml,md-mu);
+ float ridge=smoothstep(.0015,.012,length(grad));
+ float maskRim=smoothstep(.006,.070,length(maskGrad))*smoothstep(.012,.12,mc);
+ float band=abs(fract((d+float(uLayerMode)*.061)*mix(14.0,26.0,amount))-.5);
+ float contour=(1.0-smoothstep(.080,.220,band))*smoothstep(.08,.96,mc);
+ vec3 n=normalize(vec3((dl-dr)*18.0,(du-dd)*18.0,.55));
+ float facet=(dot(n,normalize(vec3(-.34,.48,.81)))-.46)*.68;
+ float layerScale=1.0;
+ if(uLayerMode==1)layerScale=.36;
+ else if(uLayerMode==2)layerScale=.44;
+ else if(uLayerMode==8)layerScale=.62;
+ float boundary=max(maskRim,ridge*.78);
+ float highlight=(max(facet,0.0)*.66+ridge*.24+contour*.10)*layerScale;
+ float shadow=(maskRim*.56+contour*.26+max(-facet,0.0)*.38)*layerScale;
+ float shade=clamp(1.0+amount*(highlight-shadow),.58,1.22);
+ vec3 shaded=color*shade;
+ vec3 headroom=max(vec3(0.0),vec3(1.0)-color);
+ shaded=min(shaded,color+headroom*(.24+.16*ridge)*amount*layerScale);
+ return mix(shaded,shaded*vec3(.74,.82,.95),amount*layerScale*(maskRim*.22+contour*.08));
+}
 void main(){
  vec3 source=texture2D(uSource,vTexUv).rgb;
  vec3 atmosphere=texture2D(uAtmosphere,vTexUv).rgb;
@@ -156,6 +197,7 @@ void main(){
   color=mix(source,texture2D(uSupport,vTexUv).rgb,localMix);
  }
  else{a=(uUseMask==1?texture2D(uMask,vMaskUv).r:1.0)*uOpacity;if(a<.006)discard;}
+ color=depthDetailColor(color);
  gl_FragColor=vec4(max(color,vec3(0.0))*a,a);
 }`;
 

@@ -10,9 +10,9 @@
 
 import { validateWorldPackage } from "./engine/world-package.js";
 import { startSpatialScene } from "./spatial-scene.js?v=20260907-view-links";
-import { startTexturedScene } from "./spatial-textured.js?v=20260907-view-links";
+import { startTexturedScene } from "./spatial-textured.js?v=20260907-crystal-depth";
 import { startAtlasScene, projectAabbRect } from "./spatial-atlas.js?v=20260907-view-links";
-import { decodeSpatialView, spatialViewUrl } from "./spatial-view.js?v=20260907-view-links";
+import { decodeSpatialView, spatialViewUrl } from "./spatial-view.js?v=20260907-crystal-depth";
 import { acquireContext } from "./spatial-gl.js";
 
 const PACKAGES = Object.freeze({
@@ -87,8 +87,53 @@ async function fetchPackage(world) {
 function syncBlocks(mode) {
   const atlasBlock = $("sp-atlas-block");
   const hybridBlock = $("sp-hybrid-block");
+  const crystalBlock = $("sp-crystal-block");
   if (atlasBlock) atlasBlock.hidden = mode !== "ngsf-atlas";
   if (hybridBlock) hybridBlock.hidden = mode === "ngsf-atlas";
+  if (crystalBlock) crystalBlock.hidden = mode !== "textured-hybrid" || currentWorld !== "crystal-city";
+}
+
+function setSlider(id, control, valueId) {
+  const el = $(id);
+  if (!el || !scene) return;
+  const update = () => {
+    const value = Number(scene.controls[control]);
+    if (Number.isFinite(value)) el.value = String(value);
+    if ($(valueId)) $(valueId).textContent = Number(el.value).toFixed(2);
+  };
+  update();
+  el.oninput = () => {
+    if (scene) scene.setControl(control, el.value);
+    update();
+  };
+}
+
+function syncMaterialFocus() {
+  const active = scene ? Number(scene.controls.materialFocus || 0) : 0;
+  document.querySelectorAll("[data-crystal-material-focus]").forEach((chip) => {
+    const on = Number(chip.dataset.crystalMaterialFocus) === active;
+    chip.classList.toggle("active", on);
+    chip.setAttribute("aria-pressed", String(on));
+  });
+}
+
+function wireCrystalControls() {
+  for (const [id, control, valueId] of [
+    ["sp-depth-detail", "depthDetail", "sp-depth-detail-val"],
+    ["sp-sky-curve", "skyCurve", "sp-sky-curve-val"],
+    ["sp-atmo-density", "atmosphereDensity", "sp-atmo-density-val"],
+    ["sp-haze-opacity", "hazeOpacity", "sp-haze-opacity-val"],
+    ["sp-beam-flow", "beamFlow", "sp-beam-flow-val"],
+    ["sp-bokeh-scale", "bokehScale", "sp-bokeh-scale-val"],
+  ]) setSlider(id, control, valueId);
+  document.querySelectorAll("[data-crystal-material-focus]").forEach((chip) => {
+    chip.onclick = () => {
+      if (!scene) return;
+      scene.setControl("materialFocus", Number(chip.dataset.crystalMaterialFocus));
+      syncMaterialFocus();
+    };
+  });
+  syncMaterialFocus();
 }
 
 function wireHybridControls() {
@@ -106,6 +151,7 @@ function wireHybridControls() {
       if (out) out.textContent = Number(el.value).toFixed(2);
     };
   }
+  if (currentWorld === "crystal-city") wireCrystalControls();
 }
 
 function wireAtlasControls() {

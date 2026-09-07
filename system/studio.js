@@ -185,7 +185,7 @@ const _voxelPick = document.createElement("canvas");
 // block to the device tier's budget, and holds a still frame under reduced
 // motion (mirrors the neural instrument's static flag).
 let _spatial = null;
-const loadSpatial = lazyLoader(() => import("./studio-spatial.js?v=20260907-view-links"), m => { _spatial = m; });
+const loadSpatial = lazyLoader(() => import("./studio-spatial.js?v=20260907-crystal-depth"), m => { _spatial = m; });
 let _spatialStatic = false;   // true when reduced motion holds a single frame
 
 // BYO media: pixel effects, mesh transforms, universal import/export, local-model adapter.

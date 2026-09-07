@@ -4,9 +4,14 @@ const fail = () => { throw new Error('Unsupported spatial view link.'); };
 const object = x => x && typeof x === 'object' && !Array.isArray(x) ? x : fail();
 const number = (x, lo, hi) => typeof x === 'number' && Number.isFinite(x) && x >= lo && x <= hi ? x : fail();
 const choice = (x, values) => values.includes(x) ? x : fail();
+const control = (values, key, bounds) => {
+  if (values[key] === undefined && bounds.length > 2) return bounds[2];
+  const value = number(values[key], bounds[0], bounds[1]);
+  return bounds[3] === "int" && !Number.isInteger(value) ? fail() : value;
+};
 const controls = {
   atlas: { depthScale: [.2, 2.2], splatScale: [.3, 2.5], exposure: [.4, 2.4], opacityScale: [0, 1], gamma: [.1, 4], holoStrength: [0, 1], iridescence: [0, 1] },
-  'crystal-city': { parallax: [0, 1.2], atmosphereFlow: [0, 1.5], glow: [0, 2.2], waterFlow: [0, 1.2], skyCurve: [0, 2], atmosphereDensity: [0, 2], hazeOpacity: [0, 1], bokehScale: [0, 4], beamFlow: [0, 2] },
+  'crystal-city': { parallax: [0, 1.2], atmosphereFlow: [0, 1.5], glow: [0, 2.2], waterFlow: [0, 1.2], skyCurve: [0, 2], atmosphereDensity: [0, 2], hazeOpacity: [0, 1], bokehScale: [0, 4], beamFlow: [0, 2], depthDetail: [0, 1, .45], materialFocus: [0, 3, 0, "int"] },
   'folded-light': { parallax: [0, 1.2], drift: [0, 1.5], glow: [0, 2.2], water: [0, 1.2] },
 };
 
@@ -15,7 +20,7 @@ export function validateSpatialView(input) {
   if (v.version !== 1) return fail();
   const world = choice(v.world, Object.keys(controls)), values = object(v.controls), camera = object(v.camera);
   const cleaned = {};
-  for (const [key, bounds] of Object.entries(controls[world])) cleaned[key] = number(values[key], ...bounds);
+  for (const [key, bounds] of Object.entries(controls[world])) cleaned[key] = control(values, key, bounds);
   const c = world === 'atlas'
     ? { yaw: number(camera.yaw, -1.25, 1.25), pitch: number(camera.pitch, -.72, .72), distance: number(camera.distance, .18, 7.5) }
     : { x: number(camera.x, -.045, .045), y: number(camera.y, -.03, .03), z: number(camera.z, -.12, .12) };

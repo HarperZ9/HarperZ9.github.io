@@ -1405,8 +1405,10 @@ const importFile = document.getElementById("desk-import-file");
 const influenceWrap = document.getElementById("desk-influence-wrap");
 const clearMaterialBtn = document.getElementById("desk-clear-material");
 const privacyLine = document.getElementById("desk-privacy");
+let materialOperation = 0;
 
 async function adoptMaterial(file) {
+  const operation = ++materialOperation;
   if (!file || !/^image\//.test(file.type)) { say("that is not an image file"); return; }
   try {
     let bmp;
@@ -1415,13 +1417,17 @@ async function adoptMaterial(file) {
     } else {
       bmp = await new Promise((resolve, reject) => {
         const img = new Image();
-        img.onload = () => resolve(img);
-        img.onerror = reject;
-        img.src = URL.createObjectURL(file);
+        const url = URL.createObjectURL(file);
+        img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+        img.onerror = error => { URL.revokeObjectURL(url); reject(error); };
+        img.src = url;
       });
     }
+    if (operation !== materialOperation) { bmp.close?.(); return; }
+    const previous = material.bitmap;
     material.active = true;
     material.bitmap = bmp;
+    if (previous !== bmp) previous?.close?.();
     material.name = file.name || "your image";
     if (influenceWrap) influenceWrap.hidden = false;
     if (clearMaterialBtn) clearMaterialBtn.hidden = false;
@@ -1430,6 +1436,7 @@ async function adoptMaterial(file) {
     drawDesk();
     say("your image is loaded - pick instruments and set the influence to work it");
   } catch (error) {
+    if (operation !== materialOperation) return;
     console.error("gallery: material load failed", error);
     say("that image could not be loaded");
   }
@@ -1445,6 +1452,8 @@ if (influenceWrap) {
 }
 if (clearMaterialBtn) {
   clearMaterialBtn.addEventListener("click", () => {
+    materialOperation++;
+    material.bitmap?.close?.();
     material.active = false; material.bitmap = null; material.name = "";
     influenceWrap.hidden = true; clearMaterialBtn.hidden = true; if (privacyLine) privacyLine.hidden = true;
     drawDesk();
