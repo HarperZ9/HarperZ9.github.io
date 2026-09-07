@@ -136,6 +136,14 @@ html[data-home-shell="react"] :is(th,caption,.evidence-current h3,.evidence-figu
 html[data-home-shell="react"] :is(th,td,.evidence-current,.live-posts,.live-post) {
   border-color: var(--paper-line);
 }
+html[data-home-shell="react"] :is(.live-state,.live-post-empty,.live-links) {
+  font-size: .9rem;
+  line-height: 1.55;
+}
+html[data-home-shell="react"] .live-links a {
+  font-size: inherit;
+  line-height: inherit;
+}
 html[data-home-shell="react"] :is(.product-definition,.evidence-disclosure,.figure-detail,.hiring-details,.footer-more) {
   margin-top: 1rem;
 }

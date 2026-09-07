@@ -14,7 +14,7 @@ BASELINE_EDITION_DATE = "2026-08-24"
 CURRENT_EDITION_DATE = json.loads(
     (ROOT / "frontier-safety" / "data" / "current.json").read_text(encoding="utf-8")
 )["edition_date"]
-FRONTIER_CSS_REVISION = "20260906-reading-cascade"
+FRONTIER_CSS_REVISION = "20260907-reading-completion"
 SITE_CHROME_REVISION = "20260902-creative-chassis"
 ALLOWED_SOURCE_HOSTS = {
     "cdn.openai.com",

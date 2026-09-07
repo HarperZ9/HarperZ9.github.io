@@ -24,7 +24,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 CURRENT_NAV_ASSET_VERSION = "20260902-creative-chassis"
-FRONTIER_CSS_ASSET_VERSION = "20260906-reading-cascade"
+FRONTIER_CSS_ASSET_VERSION = "20260907-reading-completion"
 ARCHIVE_NAV_ASSET_VERSIONS = {
     "2026-08-24": "20260902-creative-chassis",
     "2026-08-25": "20260902-creative-chassis",

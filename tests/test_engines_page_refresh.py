@@ -47,7 +47,7 @@ def test_engines_page_is_the_generated_product_overview() -> None:
     assert page.index("Zentropy Labs") < page.index("Flywheel")
     assert '<title>Products · Zentropy Labs</title>' in page
     assert '<body class="inner-clean frame-compact">' in page
-    assert 'href="system/system.css?v=20260906-reading-cascade"' in page
+    assert 'href="system/system.css?v=20260907-reading-completion"' in page
     assert 'src="system/nav.js?v=20260902-creative-chassis"' in page
     assert "Products, grouped by primary domain." in page
     assert f"{len(public_records)} public product records across {len(payload['domains'])} domains." in page

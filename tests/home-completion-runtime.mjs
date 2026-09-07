@@ -56,6 +56,7 @@ try {
       colorScheme: config.colorScheme,
       reducedMotion: "reduce",
     });
+    await page.route("https://bulletin.zaindharper.workers.dev/**", (route) => route.abort());
     await page.goto(base, { waitUntil: "domcontentloaded" });
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(300);
@@ -115,6 +116,24 @@ try {
       const visibleProductStatuses = Array.from(document.querySelectorAll("#products article .product-status"))
         .filter(visible)
         .map((element) => (element.textContent || "").replace(/\s+/g, " ").trim());
+      const liveDetails = document.querySelector("#live-board .live-board details");
+      if (liveDetails instanceof HTMLDetailsElement) liveDetails.open = true;
+      const liveReadableSelectors = [".live-state", ".live-post-empty", ".live-links", ".live-links a"];
+      const liveReadableText = liveReadableSelectors.flatMap((selector) => (
+        Array.from(document.querySelectorAll(`#live-board ${selector}`))
+          .filter(visible)
+          .map((element) => {
+            const style = getComputedStyle(element);
+            return {
+              selector,
+              text: (element.textContent || "").replace(/\s+/g, " ").trim().slice(0, 72),
+              size: Number.parseFloat(style.fontSize),
+              foreground: style.color,
+              background: opaqueBackground(element),
+              contrast: Number(contrast(style.color, opaqueBackground(element)).toFixed(2)),
+            };
+          })
+      ));
       const figureAccess = figures.map((figure) => {
         const card = Array.from(document.querySelectorAll("#evidence-figures article"))
           .find((article) => (article.querySelector("h3")?.textContent || "").trim() === figure.title);
@@ -145,6 +164,7 @@ try {
         groundFieldMounted: Boolean(document.querySelector(".ground-field")),
         productCount: document.querySelectorAll("#products article").length,
         visibleProductStatuses,
+        liveReadableText,
         visibleProductDefinitions: visibleCount("#products article dl"),
         productDisclosureCount: document.querySelectorAll("#products article details").length,
         visibleEvidenceTables: visibleCount("#evidence table"),
@@ -168,6 +188,12 @@ try {
     failIf(snapshot.visibleProductStatuses.length < snapshot.productCount, failures, `${config.name} hides release state or maturity before product details`, snapshot.visibleProductStatuses);
     for (const status of snapshot.visibleProductStatuses) {
       failIf(status.length < 6, failures, `${config.name} product visible status is not meaningful`, status);
+    }
+    for (const selector of [".live-state", ".live-post-empty", ".live-links a"]) {
+      failIf(!snapshot.liveReadableText.some((item) => item.selector === selector && item.text.trim()), failures, `${config.name} LIVE fallback is missing visible ${selector}`);
+    }
+    for (const item of snapshot.liveReadableText) {
+      failIf(item.size < 14, failures, `${config.name} LIVE useful text is too small`, item);
     }
     failIf(snapshot.visibleProductDefinitions > 0, failures, `${config.name} shows repeated product definition metadata before disclosure`, snapshot.visibleProductDefinitions);
     failIf(snapshot.productDisclosureCount < 5, failures, `${config.name} does not keep product metadata behind per-product details`, snapshot.productDisclosureCount);

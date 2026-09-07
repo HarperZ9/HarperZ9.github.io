@@ -22,7 +22,7 @@ BRIEFING_URL = (
     "https://harperz9.github.io/briefings/"
     "2026-08-26-openai-hugging-face-incident/"
 )
-PUBLICATION_ARTICLE_REVISION = "20260906-reading-cascade"
+PUBLICATION_ARTICLE_REVISION = "20260907-reading-completion"
 
 
 def fixture_site(tmp_path: Path) -> Path:

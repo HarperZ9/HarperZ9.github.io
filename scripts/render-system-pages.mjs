@@ -14,7 +14,8 @@ import { readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { escapeHtml, MIDDOT, siteRelative } from "./system-page-parts.mjs";
+import { escapeCopy, escapeHtml, MIDDOT, siteRelative } from "./system-page-parts.mjs";
+import { SYSTEM_PAGE_STYLE } from "./system-record-head.mjs";
 import { renderRecordPage } from "./system-record-page.mjs";
 import { validateRegistry } from "./system-registry-contract.mjs";
 
@@ -30,6 +31,8 @@ const publicSystems = registry.systems.filter((system) => system.maturity !== "c
 // A release is the strongest evidence a product can show, so one wins whenever
 // it exists. Inside the chosen pool the newest date wins, and a tie keeps the
 // order the registry already declares.
+const domainById = new Map(registry.domains.map((domain) => [domain.id, domain]));
+
 function headlineEvidence(system) {
   const releases = system.evidence.filter((item) => item.type === "release");
   const pool = releases.length > 0 ? releases : system.evidence;
@@ -46,20 +49,37 @@ function domainLinks(prefix) {
     .join("");
 }
 
-function row(system, gloss) {
+function statusFacts(system) {
+  const facts = [
+    ["Status", system.maturity],
+    ["Release", system.releaseState],
+  ];
   return [
-    '<article class="index-row" role="listitem">',
-    `<span class="index-term"><a href="${escapeHtml(system.href)}">${escapeHtml(system.name)}</a></span>`,
-    `<span class="index-gloss">${escapeHtml(system.productType)}${gloss}</span>`,
-    "</article>",
+    '<dl class="product-status">',
+    ...facts.map(
+      ([term, value]) => `<div class="product-status-fact"><dt>${term}</dt><dd>${escapeHtml(value)}</dd></div>`,
+    ),
+    "</dl>",
+    `<small class="product-status-line">${escapeHtml(system.maturity)} ${MIDDOT} ${escapeHtml(system.releaseState)}</small>`,
   ].join("");
 }
 
-function catalogRow(system, domainId) {
-  let body = '<br><span class="system-null">Secondary domain reference.</span>';
+function productActions(system) {
+  const source = system.sourceHref
+    ? `<a class="product-secondary-action" href="${escapeHtml(system.sourceHref)}" rel="noopener">Inspect source</a>`
+    : "";
+  return [
+    '<div class="product-card-actions">',
+    `<a class="product-action" href="${escapeHtml(system.href)}">Open product record</a>`,
+    source,
+    "</div>",
+  ].join("");
+}
+
+function catalogEvidence(system, domainId) {
   if (system.primaryDomain === domainId) {
     const evidence = headlineEvidence(system);
-    body = evidence
+    return evidence
       ? [
           '<span class="catalog-evidence"><strong>Evidence:</strong> ',
           `<a href="${escapeHtml(siteRelative(evidence.href))}" rel="noopener">${escapeHtml(evidence.label)}</a> `,
@@ -68,13 +88,64 @@ function catalogRow(system, domainId) {
         ].join("")
       : "";
   }
-  const stamp = `<small>${escapeHtml(system.maturity)} ${MIDDOT} ${escapeHtml(system.lastVerified)}</small>`;
-  return row(system, `${body}${stamp}`);
+  return "";
+}
+
+function catalogDetails(system, domainId) {
+  const primary = domainById.get(system.primaryDomain);
+  const current = domainById.get(domainId);
+  const boundary = `<p class="body-text"><strong>Boundary:</strong> ${escapeHtml(system.boundary)}</p>`;
+  if (system.primaryDomain !== domainId) {
+    return [
+      '<details class="product-record-details">',
+      "<summary>Why this record appears here</summary>",
+      `<p class="body-text">Primary area: ${escapeHtml(primary?.label ?? system.primaryDomain)}. `,
+      `Also appears here because it serves ${escapeHtml(current?.label ?? domainId)}.</p>`,
+      boundary,
+      "</details>",
+    ].join("");
+  }
+  const otherAreas = system.domains
+    .filter((id) => id !== system.primaryDomain)
+    .map((id) => domainById.get(id)?.label ?? id);
+  if (otherAreas.length === 0) {
+    return `<details class="product-record-details"><summary>Limits and source context</summary>${boundary}</details>`;
+  }
+  return [
+    '<details class="product-record-details">',
+    "<summary>Other areas this product serves</summary>",
+    `<p class="body-text">Also appears in ${escapeHtml(otherAreas.join(", "))}.</p>`,
+    boundary,
+    "</details>",
+  ].join("");
+}
+
+function productCard(system, body) {
+  return [
+    `<article class="product-card" role="listitem" data-system-id="${escapeHtml(system.id)}">`,
+    '<div class="product-card-heading">',
+    `<h3 class="product-card-title"><a href="${escapeHtml(system.href)}">${escapeHtml(system.name)}</a></h3>`,
+    `<p class="product-type">${escapeHtml(system.productType)}</p>`,
+    "</div>",
+    '<div class="product-card-body">',
+    `<p class="product-purpose">${escapeCopy(system.purpose)}</p>`,
+    productActions(system),
+    statusFacts(system),
+    body,
+    "</div>",
+    "</article>",
+  ].join("");
+}
+
+function catalogRow(system, domainId) {
+  return productCard(system, `${catalogEvidence(system, domainId)}${catalogDetails(system, domainId)}`);
 }
 
 function overviewRow(system) {
-  const stamp = `<small>${escapeHtml(system.maturity)} ${MIDDOT} ${escapeHtml(system.releaseState)}</small>`;
-  return row(system, `<br>${stamp}`);
+  const firstLimit = system.limitations[0]
+    ? `<p class="product-limit"><strong>Limit:</strong> ${escapeHtml(system.limitations[0])}</p>`
+    : "";
+  return productCard(system, firstLimit);
 }
 
 function section(domain, prefix, members, noun, renderRow) {
@@ -84,7 +155,7 @@ function section(domain, prefix, members, noun, renderRow) {
     `<section class="mv catalog-domain" id="${prefix}-${id}" aria-labelledby="${prefix}-${id}-h">`,
     `<h2 id="${prefix}-${id}-h">${escapeHtml(domain.label)} <span class="catalog-count">${count}</span></h2>`,
     `<p class="body-text">${escapeHtml(domain.summary)}</p>`,
-    `<div class="index" role="list">${members.map(renderRow).join("")}</div>`,
+    `<div class="product-list" role="list">${members.map(renderRow).join("")}</div>`,
     "</section>",
   ].join("");
 }
@@ -119,9 +190,7 @@ const CATALOG_HEAD = `<!doctype html>
 <meta charset="utf-8">
 <!-- Generated by scripts/render-system-pages.mjs. Do not edit. -->
 <link rel="icon" href="favicon.svg" type="image/svg+xml"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Product catalog · Zentropy Labs</title><meta name="description" content="Publicly listed Zentropy Labs product records, including controlled-private boundary pages, grouped by domain."><link rel="canonical" href="https://harperz9.github.io/catalog.html"><meta property="og:type" content="website"><meta property="og:site_name" content="Zentropy Labs"><meta property="og:title" content="Product catalog · Zentropy Labs"><meta property="og:description" content="Publicly listed product records, including controlled-private boundary pages, grouped by domain."><meta property="og:url" content="https://harperz9.github.io/catalog.html"><meta property="og:image" content="https://harperz9.github.io/img/og/portfolio-home.png"><meta property="og:image:alt" content="Zentropy Labs product catalog card."><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Product catalog · Zentropy Labs"><meta name="twitter:description" content="Publicly listed product records, including controlled-private boundary pages, grouped by domain."><meta name="twitter:image" content="https://harperz9.github.io/img/og/portfolio-home.png"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#14041b"><link rel="stylesheet" href="system/system.css?v=20260906-reading-cascade"><style>
-.system-hero{min-height:58vh}.system-meta,.domain-nav{display:flex;flex-wrap:wrap;gap:.65rem 1.1rem;margin-top:1.5rem;font-family:var(--mono);font-size:.7rem;line-height:1.6;color:var(--muted)}
-.system-meta span{border-bottom:1px solid var(--hairline);padding:.2rem 0}.domain-nav a{display:inline-flex;align-items:center;min-height:44px;border-bottom:1px solid var(--hairline);padding:.35rem 0}.system-hero-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.25rem}.system-hero-actions a{display:inline-flex;align-items:center;min-height:44px;border:1px solid var(--hairline);padding:.65rem .9rem;color:var(--bone);text-decoration:none}.system-hero-actions a:first-child{border-color:var(--orange)}.system-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(16rem,.65fr);gap:clamp(2rem,5vw,5rem);max-width:70rem}.system-list{max-width:58ch;margin:1rem 0 0;padding-left:1.2rem;color:var(--bone);font-size:clamp(1rem,1.25vw,1.14rem);line-height:1.7}.system-list li+li{margin-top:.55rem}.system-command{max-width:60rem;border-top:1px solid var(--hairline);padding:1rem 0;display:grid;grid-template-columns:minmax(9rem,.3fr) 1fr;gap:1rem}.system-command strong{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}.system-command code{overflow-wrap:anywhere;color:var(--bone)}.system-null{color:var(--muted)}.system-evidence{max-width:68rem}.system-evidence .index-row{grid-template-columns:minmax(10rem,.35fr) 1fr}.catalog-domain{scroll-margin-top:5rem}.catalog-count{font-family:var(--mono);font-size:.7rem;color:var(--muted)}.catalog-evidence{display:block;margin-top:.55rem;color:var(--muted);line-height:1.65}.catalog-evidence strong{color:var(--bone);font-weight:600}.catalog-evidence small{white-space:nowrap}.system-family-nav{display:grid;grid-template-columns:minmax(8rem,.28fr) 1fr;gap:.75rem 1rem;max-width:68rem;margin:0 0 2rem;padding:1rem 0;border-block:1px solid var(--hairline);line-height:1.7}.system-family-nav strong{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--orange)}@media(max-width:720px){.system-grid,.system-command,.system-evidence .index-row,.system-family-nav{grid-template-columns:1fr}.system-hero{min-height:52vh}}
+<title>Product catalog · Zentropy Labs</title><meta name="description" content="Publicly listed Zentropy Labs product records, including controlled-private boundary pages, grouped by domain."><link rel="canonical" href="https://harperz9.github.io/catalog.html"><meta property="og:type" content="website"><meta property="og:site_name" content="Zentropy Labs"><meta property="og:title" content="Product catalog · Zentropy Labs"><meta property="og:description" content="Publicly listed product records, including controlled-private boundary pages, grouped by domain."><meta property="og:url" content="https://harperz9.github.io/catalog.html"><meta property="og:image" content="https://harperz9.github.io/img/og/portfolio-home.png"><meta property="og:image:alt" content="Zentropy Labs product catalog card."><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Product catalog · Zentropy Labs"><meta name="twitter:description" content="Publicly listed product records, including controlled-private boundary pages, grouped by domain."><meta name="twitter:image" content="https://harperz9.github.io/img/og/portfolio-home.png"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#f4f3ef"><link rel="stylesheet" href="system/system.css?v=20260907-reading-completion"><style>${SYSTEM_PAGE_STYLE}
 </style>
 </head>
 <body class="inner-clean frame-compact"><a class="skip-link" href="#main">Skip to content</a><div id="site-nav" class="site-nav"></div><noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="overview.html">Systems</a> <a href="security.html">Security</a></nav></noscript><script type="module" src="system/nav.js?v=20260902-creative-chassis"></script>
@@ -134,9 +203,7 @@ const OVERVIEW_HEAD = `<!doctype html>
 <meta charset="utf-8">
 <!-- Generated by scripts/render-system-pages.mjs. Do not edit. -->
 <link rel="icon" href="favicon.svg" type="image/svg+xml"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Products · Zentropy Labs</title><meta name="description" content="Zentropy Labs products grouped by primary domain, with type, maturity, release state, and direct product routes."><link rel="canonical" href="https://harperz9.github.io/overview.html"><meta property="og:type" content="website"><meta property="og:site_name" content="Zentropy Labs"><meta property="og:title" content="Products · Zentropy Labs"><meta property="og:description" content="Products grouped by primary domain with direct routes to definitions and evidence."><meta property="og:url" content="https://harperz9.github.io/overview.html"><meta property="og:image" content="https://harperz9.github.io/img/og/portfolio-home.png"><meta property="og:image:alt" content="Zentropy Labs product overview card."><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Products · Zentropy Labs"><meta name="twitter:description" content="Products grouped by primary domain with direct routes to definitions and evidence."><meta name="twitter:image" content="https://harperz9.github.io/img/og/portfolio-home.png"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#14041b"><link rel="stylesheet" href="system/system.css?v=20260906-reading-cascade"><style>
-.system-hero{min-height:58vh}.system-meta,.domain-nav{display:flex;flex-wrap:wrap;gap:.65rem 1.1rem;margin-top:1.5rem;font-family:var(--mono);font-size:.7rem;line-height:1.6;color:var(--muted)}
-.system-meta span{border-bottom:1px solid var(--hairline);padding:.2rem 0}.domain-nav a{display:inline-flex;align-items:center;min-height:44px;border-bottom:1px solid var(--hairline);padding:.35rem 0}.system-hero-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.25rem}.system-hero-actions a{display:inline-flex;align-items:center;min-height:44px;border:1px solid var(--hairline);padding:.65rem .9rem;color:var(--bone);text-decoration:none}.system-hero-actions a:first-child{border-color:var(--orange)}.system-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(16rem,.65fr);gap:clamp(2rem,5vw,5rem);max-width:70rem}.system-list{max-width:58ch;margin:1rem 0 0;padding-left:1.2rem;color:var(--bone);font-size:clamp(1rem,1.25vw,1.14rem);line-height:1.7}.system-list li+li{margin-top:.55rem}.system-command{max-width:60rem;border-top:1px solid var(--hairline);padding:1rem 0;display:grid;grid-template-columns:minmax(9rem,.3fr) 1fr;gap:1rem}.system-command strong{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}.system-command code{overflow-wrap:anywhere;color:var(--bone)}.system-null{color:var(--muted)}.system-evidence{max-width:68rem}.system-evidence .index-row{grid-template-columns:minmax(10rem,.35fr) 1fr}.catalog-domain{scroll-margin-top:5rem}.catalog-count{font-family:var(--mono);font-size:.7rem;color:var(--muted)}.catalog-evidence{display:block;margin-top:.55rem;color:var(--muted);line-height:1.65}.catalog-evidence strong{color:var(--bone);font-weight:600}.catalog-evidence small{white-space:nowrap}.system-family-nav{display:grid;grid-template-columns:minmax(8rem,.28fr) 1fr;gap:.75rem 1rem;max-width:68rem;margin:0 0 2rem;padding:1rem 0;border-block:1px solid var(--hairline);line-height:1.7}.system-family-nav strong{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--orange)}@media(max-width:720px){.system-grid,.system-command,.system-evidence .index-row,.system-family-nav{grid-template-columns:1fr}.system-hero{min-height:52vh}}
+<title>Products · Zentropy Labs</title><meta name="description" content="Zentropy Labs products grouped by primary domain, with type, maturity, release state, and direct product routes."><link rel="canonical" href="https://harperz9.github.io/overview.html"><meta property="og:type" content="website"><meta property="og:site_name" content="Zentropy Labs"><meta property="og:title" content="Products · Zentropy Labs"><meta property="og:description" content="Products grouped by primary domain with direct routes to definitions and evidence."><meta property="og:url" content="https://harperz9.github.io/overview.html"><meta property="og:image" content="https://harperz9.github.io/img/og/portfolio-home.png"><meta property="og:image:alt" content="Zentropy Labs product overview card."><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Products · Zentropy Labs"><meta name="twitter:description" content="Products grouped by primary domain with direct routes to definitions and evidence."><meta name="twitter:image" content="https://harperz9.github.io/img/og/portfolio-home.png"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#f4f3ef"><link rel="stylesheet" href="system/system.css?v=20260907-reading-completion"><style>${SYSTEM_PAGE_STYLE}
 </style>
 </head>
 <body class="inner-clean frame-compact"><a class="skip-link" href="#main">Skip to content</a><div id="site-nav" class="site-nav"></div><noscript><nav class="site-nav"><a href="index.html">Zentropy Labs</a> <a href="catalog.html">Catalog</a> <a href="hire.html">Hire / work</a></nav></noscript><script type="module" src="system/nav.js?v=20260902-creative-chassis"></script>
