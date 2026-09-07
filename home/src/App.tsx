@@ -1,5 +1,4 @@
 import { useEffect, type ReactNode } from "react";
-import GroundField from "./GroundField";
 import LiveBoard from "./LiveBoard";
 import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./site-routes";
 import { CAPABILITY_DOMAINS, EVIDENCE_STREAM, SYSTEMS, systemById, type SystemRecord } from "./system-registry";
@@ -24,14 +23,13 @@ type HomeEvidenceProjection = {
 };
 
 const FOOTER_ROUTE_HREFS = new Set([
-  "hire.html", "overview.html", "catalog.html", "security.html", "research.html",
-  "publications.html", "writing.html", "studio.html", "gallery.html", "retro.html",
-  "resume.html", "cv.html", "portfolio.html", "person.html",
+  "overview.html", "catalog.html", "research.html", "publications.html", "hire.html",
 ]);
 const HOME_ROUTE_LINKS = [
   ...PRIMARY_ROUTES,
   ...SECONDARY_GROUPS.flatMap((group) => group.routes),
 ];
+const MENU_ROUTES = HOME_ROUTE_LINKS.filter((route) => routeFamily(route.href));
 const FOOTER_ROUTES = HOME_ROUTE_LINKS.filter(
   (route) => FOOTER_ROUTE_HREFS.has(route.href) && routeFamily(route.href),
 );
@@ -191,8 +189,6 @@ function App() {
 
   return (
     <>
-      <GroundField seed={74} />
-      <div className="viewport-vignette" aria-hidden="true" />
       <a className="skip-link" href="#main">Skip to content</a>
       <TopNav />
       <main id="main">
@@ -227,7 +223,7 @@ function TopNav() {
         <summary>Menu</summary>
         <div className="home-menu-list" aria-label="Primary menu">
           {PRIMARY_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
-          {FOOTER_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
+          {MENU_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
           {EXTERNAL_ACTIONS.map((action) => <a href={action.href} rel="noopener" key={action.href}>{action.label}</a>)}
         </div>
       </details>
@@ -288,6 +284,7 @@ function ProductSelection() {
             <div>
               <h3><a href={localHref(system.href)}>{system.name}</a></h3>
               <p>{system.purpose}</p>
+              <p className="product-status">{system.releaseState} · {system.maturity}</p>
             </div>
             <ProductDefinition system={system} />
           </article>
@@ -299,24 +296,27 @@ function ProductSelection() {
 
 function ProductDefinition({ system }: { system: SystemRecord }) {
   return (
-    <dl>
-      <div>
-        <dt>Type</dt>
-        <dd>{productTypeLabel(system)}</dd>
-      </div>
-      <div>
-        <dt>State</dt>
-        <dd>{system.releaseState}</dd>
-      </div>
-      <div>
-        <dt>Verified</dt>
-        <dd><time dateTime={system.lastVerified}>{system.lastVerified}</time></dd>
-      </div>
-      <div>
-        <dt>Evidence</dt>
-        <dd><a href={evidenceHref(system)}>{system.evidence[0]?.label ?? system.maturity}</a></dd>
-      </div>
-    </dl>
+    <details className="product-definition">
+      <summary>Evidence and status</summary>
+      <dl>
+        <div>
+          <dt>Type</dt>
+          <dd>{productTypeLabel(system)}</dd>
+        </div>
+        <div>
+          <dt>State</dt>
+          <dd>{system.releaseState}</dd>
+        </div>
+        <div>
+          <dt>Verified</dt>
+          <dd><time dateTime={system.lastVerified}>{system.lastVerified}</time></dd>
+        </div>
+        <div>
+          <dt>Evidence</dt>
+          <dd><a href={evidenceHref(system)}>{system.evidence[0]?.label ?? system.maturity}</a></dd>
+        </div>
+      </dl>
+    </details>
   );
 }
 
@@ -384,45 +384,48 @@ function EvidenceBoard() {
           A compact index of the public record. Values come from checked-in source data and link back to the record that produced them.
         </p>
       </div>
-      <div className="data-plate evidence-board">
-        <table className="evidence-table">
-          <caption>Public evidence, current source snapshot</caption>
-          <thead>
-            <tr>
-              <th scope="col">Measure</th>
-              <th scope="col">Record</th>
-              <th scope="col">Source</th>
-              <th scope="col">Boundary</th>
-            </tr>
-          </thead>
-          <tbody>
-            {evidenceRows.map((row) => (
-              <tr data-evidence-row key={row.label}>
-                <th scope="row"><a href={row.href}>{row.measure}</a></th>
-                <td>{row.label}</td>
-                <td>{row.source}</td>
-                <td>{row.note}</td>
+      <p className="does-not-prove">
+        <strong>What this does not prove:</strong> A valid release row is not an adoption claim, safety claim, or guarantee of model correctness.
+        Counts and releases stay evidence rows, not market proof.
+      </p>
+      <details className="evidence-disclosure">
+        <summary>Open source metrics and newest evidence</summary>
+        <div className="data-plate evidence-board">
+          <table className="evidence-table">
+            <caption>Public evidence, current source snapshot</caption>
+            <thead>
+              <tr>
+                <th scope="col">Measure</th>
+                <th scope="col">Record</th>
+                <th scope="col">Source</th>
+                <th scope="col">Boundary</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        <p className="does-not-prove">
-          <strong>What this does not prove:</strong> A valid release row is not an adoption claim, safety claim, or guarantee of model correctness.
-          Counts and releases stay evidence rows, not market proof.
-        </p>
-        <section className="evidence-current" aria-labelledby="current-evidence-title">
-          <h3 id="current-evidence-title">Newest registry evidence</h3>
-          <ol>
-            {CURRENT_EVIDENCE.map((evidence) => (
-              <li key={`${evidence.systemId}:${evidence.id}`}>
-                <time dateTime={evidence.date}>{evidence.date}</time>
-                <a href={evidence.href} rel="noopener">{evidence.label}</a>
-                <span>{evidence.summary}</span>
-              </li>
-            ))}
-          </ol>
-        </section>
-      </div>
+            </thead>
+            <tbody>
+              {evidenceRows.map((row) => (
+                <tr data-evidence-row key={row.label}>
+                  <th scope="row"><a href={row.href}>{row.measure}</a></th>
+                  <td>{row.label}</td>
+                  <td>{row.source}</td>
+                  <td>{row.note}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <section className="evidence-current" aria-labelledby="current-evidence-title">
+            <h3 id="current-evidence-title">Newest registry evidence</h3>
+            <ol>
+              {CURRENT_EVIDENCE.map((evidence) => (
+                <li key={`${evidence.systemId}:${evidence.id}`}>
+                  <time dateTime={evidence.date}>{evidence.date}</time>
+                  <a href={evidence.href} rel="noopener">{evidence.label}</a>
+                  <span>{evidence.summary}</span>
+                </li>
+              ))}
+            </ol>
+          </section>
+        </div>
+      </details>
     </section>
   );
 }
@@ -440,65 +443,85 @@ function CapabilityOverview() {
       <div className="evidence-figure-grid">
         <article className="evidence-figure-card" data-evidence-figure-card>
           <h3>164-task model pass@1 comparison</h3>
-          <a href="/analytics/model-pass-at-1-comparison.html">
+          <a href="/analytics/model-pass-at-1-comparison.html" aria-label="Open model pass@1 comparison chart and data table">
             <img className="research-figure-image" src="/analytics/model-pass-at-1-comparison.svg" alt="Paired 164-task pass-at-one result: base Qwen 14B passed 141 tasks and Flywheel 14B passed 136; the difference was not statistically significant." width="1120" height="334" loading="lazy" />
           </a>
           <p>Same task set and harness. This measures two model artifacts, not market superiority or general agent reliability.</p>
-          <FigureFacts rows={[
-            ["n", "164 code-completion tasks"],
-            ["units", "pass@1 and passed tasks"],
-            ["retrieved", "2026-08-28"],
-            ["source", <a href="/analytics/model-pass-at-1-comparison.html">result, table, and limits</a>],
-          ]} />
+          <p><a className="text-link" href="/analytics/model-pass-at-1-comparison.html" aria-label="Open model pass@1 comparison chart and data table">Open chart and data table</a></p>
+          <details className="figure-detail">
+            <summary>Dataset facts</summary>
+            <FigureFacts rows={[
+              ["n", "164 code-completion tasks"],
+              ["units", "pass@1 and passed tasks"],
+              ["retrieved", "2026-08-28"],
+              ["source", <a href="/analytics/model-pass-at-1-comparison.html">result, table, and limits</a>],
+            ]} />
+          </details>
         </article>
         <article className="evidence-figure-card" data-evidence-figure-card>
           <h3>Current cross-harness run</h3>
-          <a href="/analytics/current-cross-harness-pilot.html">
+          <a href="/analytics/current-cross-harness-pilot.html" aria-label="Open current cross-harness run chart and data table">
             <img className="research-figure-image" src="/analytics/current-cross-harness-pilot.svg" alt="Horizontal bars for five harness roles on the same seven tasks: of seven attempts each, codex_harness and flywheel_harness reached a grader four times, claude_code twice, local_32b once, and local_14b none; three, two, one, zero, and zero passed." width="1120" height="610" loading="lazy" />
           </a>
           <p>35 attempts across five harness roles on seven tasks, all 35 receipts verified. 11 reached a grader and 6 passed; why the rest did not is named per role.</p>
-          <FigureFacts rows={[
-            ["n", "35 receipt-verified attempts"],
-            ["units", "attempts, passes, latency, and USD cost"],
-            ["retrieved", "2026-09-04"],
-            ["source", <a href="/analytics/current-cross-harness-pilot.html">result, table, and limits</a>],
-          ]} />
+          <p><a className="text-link" href="/analytics/current-cross-harness-pilot.html" aria-label="Open current cross-harness run chart and data table">Open chart and data table</a></p>
+          <details className="figure-detail">
+            <summary>Dataset facts</summary>
+            <FigureFacts rows={[
+              ["n", "35 receipt-verified attempts"],
+              ["units", "attempts, passes, latency, and USD cost"],
+              ["retrieved", "2026-09-04"],
+              ["source", <a href="/analytics/current-cross-harness-pilot.html">result, table, and limits</a>],
+            ]} />
+          </details>
         </article>
         <article className="evidence-figure-card" data-evidence-figure-card>
           <h3>Recovered actions by day</h3>
-          <img
-            className="research-figure-image"
-            src="/figures/recovered-actions-by-day.svg"
-            alt="Bar chart of five recovered-action counts from July 9 through July 13, 2026: 3,779; 1,135; 7,677; 3,892; and 1,130."
-            width="1280"
-            height="720"
-            loading="lazy"
-          />
+          <a href="/figures/recovered-actions-by-day.html" aria-label="Open recovered actions by day chart and data table">
+            <img
+              className="research-figure-image"
+              src="/figures/recovered-actions-by-day.svg"
+              alt="Bar chart of five recovered-action counts from July 9 through July 13, 2026: 3,779; 1,135; 7,677; 3,892; and 1,130."
+              width="1280"
+              height="720"
+              loading="lazy"
+            />
+          </a>
           <p>Five daily counts from Hugging Face host telemetry. Unit: recovered logged actions. The figure does not measure unique attacks, severity, intent, or harm.</p>
-          <FigureFacts rows={[
-            ["n", "5 daily observations"],
-            ["units", "recovered logged actions"],
-            ["retrieved", "2026-08-27"],
-            ["source", <><a href="/figures/recovered-actions-by-day.html">figure and accessible table</a> · <a href="/figures/recovered-actions-by-day.json">dataset</a></>],
-          ]} />
+          <p><a className="text-link" href="/figures/recovered-actions-by-day.html" aria-label="Open recovered actions by day chart and data table">Open chart and data table</a></p>
+          <details className="figure-detail">
+            <summary>Dataset facts</summary>
+            <FigureFacts rows={[
+              ["n", "5 daily observations"],
+              ["units", "recovered logged actions"],
+              ["retrieved", "2026-08-27"],
+              ["source", <><a href="/figures/recovered-actions-by-day.html">figure and accessible table</a> · <a href="/figures/recovered-actions-by-day.json">dataset</a></>],
+            ]} />
+          </details>
         </article>
         <article className="evidence-figure-card" data-evidence-figure-card>
           <h3>Reported motive labels</h3>
-          <img
-            className="research-figure-image"
-            src="/figures/motive-sample-nonexclusive.svg"
-            alt="Bar chart of non-exclusive motive labels in a 100-agent sample: scorer source or access 97, shared infrastructure or credentials 66, and task solution or private trajectories 89."
-            width="1280"
-            height="720"
-            loading="lazy"
-          />
+          <a href="/figures/motive-sample-nonexclusive.html" aria-label="Open reported motive labels chart and data table">
+            <img
+              className="research-figure-image"
+              src="/figures/motive-sample-nonexclusive.svg"
+              alt="Bar chart of non-exclusive motive labels in a 100-agent sample: scorer source or access 97, shared infrastructure or credentials 66, and task solution or private trajectories 89."
+              width="1280"
+              height="720"
+              loading="lazy"
+            />
+          </a>
           <p>Non-exclusive labels from the independent investigator sample. Categories overlap, so counts must not be summed into a population total.</p>
-          <FigureFacts rows={[
-            ["n", "100-agent peak-hour sample"],
-            ["units", "agents, non-exclusive"],
-            ["retrieved", "2026-08-27"],
-            ["source", <><a href="/figures/motive-sample-nonexclusive.html">figure and accessible table</a> · <a href="/figures/motive-sample-nonexclusive.json">dataset</a></>],
-          ]} />
+          <p><a className="text-link" href="/figures/motive-sample-nonexclusive.html" aria-label="Open reported motive labels chart and data table">Open chart and data table</a></p>
+          <details className="figure-detail">
+            <summary>Dataset facts</summary>
+            <FigureFacts rows={[
+              ["n", "100-agent peak-hour sample"],
+              ["units", "agents, non-exclusive"],
+              ["retrieved", "2026-08-27"],
+              ["source", <><a href="/figures/motive-sample-nonexclusive.html">figure and accessible table</a> · <a href="/figures/motive-sample-nonexclusive.json">dataset</a></>],
+            ]} />
+          </details>
         </article>
       </div>
       <div className="family-browser">
@@ -639,18 +662,24 @@ function HiringRoutes() {
         </p>
       </div>
       <div className="hiring-actions">
-        {HIRING_ENTRY_ROUTES.map((route) => (
-          <a className="btn" href={route.href} key={route.href}>
-            <span>{route.label}</span>
-          </a>
-        ))}
         <a className="btn solid" href="/hire.html">Hiring map</a>
         <a className="btn" href="/resume.html">Technical resume</a>
-        <a className="btn" href="/cv.html">CV</a>
-        <a className="btn" href="/portfolio.html">Portfolio</a>
         <a className="btn" href="mailto:zaindharper@gmail.com">Email</a>
         <a className="btn" href="https://github.com/HarperZ9" rel="noopener">GitHub</a>
       </div>
+      <details className="hiring-details">
+        <summary>Role-specific routes</summary>
+        <div className="hiring-route-list">
+          {HIRING_ENTRY_ROUTES.map((route) => (
+            <a className="text-link" href={route.href} key={route.href}>
+              <span>{route.label}</span>
+              <small>{route.summary}</small>
+            </a>
+          ))}
+          <a className="text-link" href="/cv.html">CV</a>
+          <a className="text-link" href="/portfolio.html">Portfolio</a>
+        </div>
+      </details>
     </section>
   );
 }
@@ -663,6 +692,14 @@ function Footer() {
         {FOOTER_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
         <a href="https://github.com/HarperZ9" rel="noopener">GitHub</a>
       </nav>
+      <details className="footer-more">
+        <summary>More routes</summary>
+        <nav className="footer-secondary-links" aria-label="More footer routes">
+          {MENU_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
+          <a href="/cv.html">CV</a>
+          <a href="/portfolio.html">Portfolio</a>
+        </nav>
+      </details>
     </footer>
   );
 }
