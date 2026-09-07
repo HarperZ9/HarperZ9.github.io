@@ -108,6 +108,6 @@ export function renderHead(system, ctx) {
 </style>
 </head>
 <body class="inner-clean frame-compact">
-<a class="skip-link" href="#main">Skip to content</a><div id="site-nav" class="site-nav"></div><noscript><nav class="site-nav"><a href="/catalog.html">Catalog</a> <a href="/overview.html">Systems</a> <a href="/security.html">Security</a></nav></noscript><script type="module" src="/system/nav.js?v=20260907-theme-preferences"></script>
+<a class="skip-link" href="#main">Skip to content</a><div id="site-nav" class="site-nav"></div><noscript><nav class="site-nav"><a href="/catalog.html">Catalog</a> <a href="/overview.html">Systems</a> <a href="/security.html">Security</a></nav></noscript><script type="module" src="/system/nav.js?v=20260907-simple-menu"></script>
 `;
 }

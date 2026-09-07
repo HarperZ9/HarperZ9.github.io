@@ -1,6 +1,8 @@
 import { useEffect, type ReactNode } from "react";
 import LiveBoard from "./LiveBoard";
 import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./site-routes";
+import { NAV_PRIMARY_ROUTES, NAV_MENU_GROUPS } from "../../system/navigation.js";
+import "../../system/navigation.css";
 import { CAPABILITY_DOMAINS, EVIDENCE_STREAM, SYSTEMS, systemById, type SystemRecord } from "./system-registry";
 import evidenceProjectionSource from "../site/evidence-stream.json?raw";
 import "./App.css";
@@ -165,6 +167,18 @@ const evidenceRows = [
 
 function App() {
   useEffect(() => {
+    const revealIndex = () => {
+      if (window.location.hash !== "#site-index") return;
+      const index = document.querySelector<HTMLDetailsElement>("#site-index");
+      if (!index) return;
+      index.open = true;
+      index.scrollIntoView({ block: "start", behavior: "instant" });
+    };
+    revealIndex();
+    window.addEventListener("hashchange", revealIndex);
+    return () => window.removeEventListener("hashchange", revealIndex);
+  }, []);
+  useEffect(() => {
     const elements = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
     if (!("IntersectionObserver" in window)) {
       elements.forEach((element) => element.classList.add("in"));
@@ -216,14 +230,18 @@ function TopNav() {
         <span className="brand-lab">Zentropy Labs</span>
       </a>
       <div className="topnav-links">
-        {PRIMARY_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
-        {EXTERNAL_ACTIONS.map((action) => <a href={action.href} rel="noopener" key={action.href}>{action.label}</a>)}
+        {NAV_PRIMARY_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
       </div>
       <details className="home-menu">
         <summary>Menu</summary>
         <div className="home-menu-list" aria-label="Primary menu">
-          {PRIMARY_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
-          {MENU_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
+          <div className="home-menu-primary">
+            {NAV_PRIMARY_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
+          </div>
+          {NAV_MENU_GROUPS.map((group) => <div className="home-menu-group" key={group.label}>
+            <p className="home-menu-label">{group.label}</p>
+            {group.routes.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
+          </div>)}
           {EXTERNAL_ACTIONS.map((action) => <a href={action.href} rel="noopener" key={action.href}>{action.label}</a>)}
         </div>
       </details>
@@ -692,12 +710,10 @@ function Footer() {
         {FOOTER_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
         <a href="https://github.com/HarperZ9" rel="noopener">GitHub</a>
       </nav>
-      <details className="footer-more">
-        <summary>More routes</summary>
+      <details className="footer-more" id="site-index">
+        <summary>Full site index</summary>
         <nav className="footer-secondary-links" aria-label="More footer routes">
           {MENU_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
-          <a href="/cv.html">CV</a>
-          <a href="/portfolio.html">Portfolio</a>
         </nav>
       </details>
     </footer>

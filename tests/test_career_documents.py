@@ -414,7 +414,7 @@ def test_hiring_page_leads_with_two_technical_lanes_and_a_field_campaign() -> No
 def test_hiring_document_marks_the_local_career_switch_current() -> None:
     src = read("hire.html")
     assert '<a href="hire.html" aria-current="page">Hire</a>' in src
-    assert 'src="system/nav.js?v=20260907-theme-preferences"' in src
+    assert 'src="system/nav.js?v=20260907-simple-menu"' in src
 
 
 def test_hiring_paths_use_one_column_at_mobile_and_readable_action_targets() -> None:

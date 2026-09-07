@@ -48,7 +48,7 @@ def test_engines_page_is_the_generated_product_overview() -> None:
     assert '<title>Products · Zentropy Labs</title>' in page
     assert '<body class="inner-clean frame-compact">' in page
     assert 'href="system/system.css?v=20260907-reading-completion"' in page
-    assert 'src="system/nav.js?v=20260907-theme-preferences"' in page
+    assert 'src="system/nav.js?v=20260907-simple-menu"' in page
     assert "Products, grouped by primary domain." in page
     assert f"{len(public_records)} public product records across {len(payload['domains'])} domains." in page
     assert "Short map, detailed record elsewhere" in page

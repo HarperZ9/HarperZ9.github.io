@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { buildRouteHeader, navActive, renderNav } from "./nav.js";
 import { PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js";
-import { PRIMARY_ROUTES as NAV_PRIMARY_ROUTES } from "./routes.js?v=20260902-creative-chassis";
+import { NAV_PRIMARY_ROUTES } from "./navigation.js?v=20260907-simple-menu";
 
 test("generated registry provides the static navigation taxonomy", () => {
   assert.equal(routeFamily("/hire.html"), "Work");
@@ -62,21 +62,19 @@ test("rendered nav keeps section state separate from exact-page state", () => {
   assert.match(mount.innerHTML, /<summary>Menu<\/summary>/);
   assert.match(mount.innerHTML, /class="sn-menu-group sn-menu-primary"/);
   assert.match(mount.innerHTML, /class="sn-menu-group sn-menu-secondary"/);
-  assert.match(mount.innerHTML, /<p class="sn-menu-label">Systems<\/p>/);
-  assert.match(mount.innerHTML, /<p class="sn-menu-label">Security<\/p>/);
-  assert.match(mount.innerHTML, /<p class="sn-menu-label">Research<\/p>/);
+  assert.match(mount.innerHTML, /<p class="sn-menu-label">Explore<\/p>/);
   assert.match(mount.innerHTML, /href="resume\.html" aria-current="page"/);
   assert.doesNotMatch(mount.innerHTML, /href="hire\.html" aria-current="page"/);
   assert.match(mount.innerHTML, /class="is-active" href="hire\.html"/);
   assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 1);
 });
 
-test("rendered nav gives one fragment destination the current-page state", () => {
+test("rendered nav marks the containing page when a deep fragment is not in the menu", () => {
   const { doc, mount } = navFixture("/hire.html", "", "#engineering-path");
   renderNav(doc);
 
-  assert.match(mount.innerHTML, /href="hire\.html#engineering-path" aria-current="page"/);
-  assert.doesNotMatch(mount.innerHTML, /href="hire\.html" aria-current="page"/);
+  assert.match(mount.innerHTML, /href="hire\.html" aria-current="page"/);
+  assert.doesNotMatch(mount.innerHTML, /href="hire\.html#engineering-path"/);
   assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 1);
 });
 
@@ -109,7 +107,7 @@ test("rendered mobile menu retains every primary destination", () => {
   const { doc, mount } = navFixture("/hire.html");
   renderNav(doc);
 
-  for (const href of ["studio.html", "gallery.html", "retro.html", "overview.html", "research.html", "hire.html"]) {
+  for (const href of ["flywheel.html", "bulletin.html", "fonts.html", "publications.html", "studio.html", "hire.html"]) {
     assert.match(mount.innerHTML, new RegExp(`class="sn-menu-group sn-menu-primary"[\\s\\S]*href="${href}"`));
   }
 });
@@ -119,8 +117,8 @@ test("rendered nav keeps local destinations rooted from nested pages", () => {
   renderNav(doc);
 
   assert.match(mount.innerHTML, /href="\/index\.html"/);
-  assert.match(mount.innerHTML, /href="\/overview\.html"/);
-  assert.match(mount.innerHTML, /href="\/session-archive\.html"/);
+  assert.match(mount.innerHTML, /href="\/catalog\.html"/);
+  assert.match(mount.innerHTML, /href="\/index\.html#site-index"/);
   assert.doesNotMatch(mount.innerHTML, /href="(?:index|overview)\.html"/);
 });
 

@@ -27,7 +27,7 @@ THEME_PREFERENCES_REVISION = "20260907-theme-preferences"
 REVIEWED_ASSET_REVISIONS = {
     "frontier-safety/frontier-safety-site.css": READING_CASCADE_REVISION,
     "frontier-safety/frontier-safety.css": READING_CASCADE_REVISION,
-    "system/nav.js": THEME_PREFERENCES_REVISION,
+    "system/nav.js": "20260907-simple-menu",
     "system/theme-entry.js": THEME_PREFERENCES_REVISION,
     "system/theme.js": THEME_PREFERENCES_REVISION,
     "system/theme.css": THEME_PREFERENCES_REVISION,
@@ -347,8 +347,8 @@ def test_shared_nav_renders_zentropy_brand_and_desktop_gpu_gate() -> None:
     assert "shouldUseDesktopGpuArt(window)" in nav
     assert 'doc.querySelector(".frame")' in nav
     assert "route-header__path" in nav
-    assert 'PRIMARY_ROUTES.map((item) => navLink(item, active, routePath, true)).join("")' in nav
-    assert 'SECONDARY_GROUPS.map((group) => menuGroup(' in nav
+    assert 'NAV_PRIMARY_ROUTES.map((item) => navLink(item, active, routePath, true)).join("")' in nav
+    assert 'NAV_MENU_GROUPS.map((group) => menuGroup(' in nav
     assert 'classList.contains("studio-page")' in nav
     assert 'import("./generative-field.js")' in nav
     assert 'import("./cursor-field.js")' in nav

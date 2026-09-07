@@ -1,5 +1,5 @@
-import { wireAnchorArrival, wireMenuArrowKeys } from "./nav.js?v=20260907-theme-preferences";
-import { SECONDARY_GROUPS } from "./routes.js?v=20260902-creative-chassis";
+import { wireAnchorArrival, wireMenuArrowKeys } from "./nav.js?v=20260907-simple-menu";
+import { NAV_MENU_GROUPS } from "./navigation.js?v=20260907-simple-menu";
 
 // The home app (built from home/) renders its final copy natively, so this
 // module no longer rewrites hero text. It keeps the shared-site menu and
@@ -36,7 +36,7 @@ function wireDetailsMenu(doc, details, summary, listSelector, abortKey) {
     if (details.open && !details.contains(event.target)) close(false);
   }, opts);
   doc.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
+    if (event.key === "Escape" && details.open) {
       event.preventDefault();
       close(true);
     }
@@ -60,7 +60,16 @@ function upgradeHomeMenu(doc) {
     return true;
   }
 
-  if (nav.querySelector(".home-menu")) return false;
+  const homeMenu = nav.querySelector(".home-menu");
+  if (homeMenu) {
+    const summary = homeMenu.querySelector("summary");
+    if (!summary) return false;
+    if (homeMenu.dataset.enhanced !== "true") {
+      wireDetailsMenu(doc, homeMenu, summary, ".home-menu-list", "__homeMenuAbort");
+      wireMenuArrowKeys(homeMenu, ".home-menu-list");
+    }
+    return true;
+  }
 
   const sourceLinks = [...nav.querySelectorAll(".topnav-links a")];
   if (!sourceLinks.length) return false;
@@ -81,9 +90,8 @@ function upgradeHomeMenu(doc) {
     clone.removeAttribute("class");
     list.appendChild(clone);
   });
-  // The rest of the site taxonomy, from the same source of truth as the
-  // static-page nav, so home and static menus agree on what exists.
-  SECONDARY_GROUPS.forEach((group) => {
+  // Use the same compact directory even for a legacy home without a React menu.
+  NAV_MENU_GROUPS.forEach((group) => {
     const groupLabel = doc.createElement("p");
     groupLabel.className = "home-menu-title";
     groupLabel.textContent = group.label;

@@ -1,0 +1,360 @@
+body.font-marketplace-page {
+  margin: 0;
+}
+
+.font-market {
+  width: min(100% - 2rem, 70rem);
+  margin: 0 auto;
+  padding-block: clamp(2rem, 6vw, 5rem);
+}
+
+.font-market-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(18rem, .95fr);
+  gap: clamp(2rem, 6vw, 4.5rem);
+  align-items: end;
+  padding-block-end: clamp(2.4rem, 6vw, 4.8rem);
+  border-bottom: 1px solid var(--reading-rule);
+}
+
+.font-hero-copy {
+  min-width: 0;
+}
+
+.font-market h1 {
+  max-width: 13ch;
+  margin: 0 0 clamp(.9rem, 2vw, 1.35rem);
+  font-size: clamp(2.55rem, 7vw, 5.25rem);
+  line-height: 1.02;
+  letter-spacing: 0;
+  color: var(--reading-ink);
+  text-wrap: balance;
+}
+
+.font-market-lede {
+  max-width: 45ch;
+  margin: 0;
+  font-size: clamp(1.13rem, 1.8vw, 1.38rem);
+  line-height: 1.55;
+  color: var(--reading-soft);
+  text-wrap: pretty;
+}
+
+.font-market-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .7rem 1rem;
+  margin-top: clamp(1.25rem, 2.8vw, 1.9rem);
+}
+
+.font-action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: .68rem .9rem;
+  border: 1px solid var(--reading-rule);
+  color: var(--reading-link);
+  text-decoration: none;
+  line-height: 1.2;
+}
+
+.font-action:hover,
+.font-action:focus-visible {
+  border-color: var(--reading-link);
+}
+
+.font-action-primary {
+  background: var(--reading-link);
+  border-color: var(--reading-link);
+  color: var(--reading-paper);
+}
+
+html body.font-marketplace-page .font-market a.font-action.font-action-primary,
+html body.font-marketplace-page .font-market a.font-action.font-action-primary:is(:hover, :focus-visible),
+html[data-theme] body.font-marketplace-page .font-market a.font-action.font-action-primary,
+html[data-theme] body.font-marketplace-page .font-market a.font-action.font-action-primary:is(:hover, :focus-visible) {
+  background: var(--reading-link) !important;
+  border-color: var(--reading-link) !important;
+  color: var(--reading-paper) !important;
+  text-decoration: none;
+  text-decoration-color: transparent;
+}
+
+.font-sale-note {
+  width: fit-content;
+  max-width: 100%;
+  margin: clamp(1.1rem, 2.6vw, 1.8rem) 0 0;
+  padding: .62rem .75rem;
+  border: 1px solid var(--reading-rule);
+  background: var(--reading-panel);
+  color: var(--reading-ink);
+  font-weight: 700;
+}
+
+.font-specimen-panel {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid var(--reading-rule);
+  background: var(--reading-panel);
+}
+
+.specimen-line {
+  margin: 0;
+  color: var(--reading-ink);
+}
+
+.specimen-line-large {
+  font-size: clamp(5.5rem, 18vw, 11.5rem);
+  line-height: .82;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.specimen-line-text {
+  max-width: 22rem;
+  margin-top: clamp(1rem, 2.6vw, 1.8rem);
+  font-size: clamp(1.16rem, 2.1vw, 1.55rem);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.specimen-line-code {
+  margin-top: 1.2rem;
+  padding-top: .85rem;
+  border-top: 1px solid var(--reading-rule);
+  font-family: var(--font-mono);
+  font-size: clamp(.82rem, 1.25vw, .98rem);
+  line-height: 1.6;
+  color: var(--reading-soft);
+  overflow-wrap: anywhere;
+}
+
+.font-market-section {
+  display: grid;
+  grid-template-columns: minmax(12rem, .4fr) minmax(0, .6fr);
+  gap: clamp(1.5rem, 4vw, 3.2rem);
+  padding-block: clamp(2.35rem, 5.5vw, 4.2rem);
+  border-bottom: 1px solid var(--reading-rule);
+}
+
+.font-market-section h2 {
+  max-width: 15ch;
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2.35rem);
+  line-height: 1.12;
+  letter-spacing: 0;
+  color: var(--reading-ink);
+}
+
+.font-market-section h3 {
+  margin: 0 0 .35rem;
+  font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+  line-height: 1.3;
+  color: var(--reading-ink);
+}
+
+.section-copy p,
+.font-market-section p,
+.font-details p {
+  max-width: 60ch;
+  margin: .72rem 0 0;
+  font-size: 1.06rem;
+  line-height: 1.66;
+  color: var(--reading-soft);
+  text-wrap: pretty;
+}
+
+.current-face-list,
+.direction-list {
+  border-top: 1px solid var(--reading-rule);
+}
+
+.current-face,
+.direction-item {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, 8rem) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 1.7rem);
+  align-items: baseline;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--reading-rule);
+}
+
+.direction-item {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.current-face p,
+.direction-item p {
+  margin-top: 0;
+}
+
+.font-market .current-face p.current-face-mark {
+  margin: 0;
+  font-size: clamp(3.4rem, 7vw, 5.4rem);
+  font-weight: 700;
+  line-height: .9;
+  color: var(--reading-ink);
+}
+
+.font-market .current-face p.current-face-mark-alt {
+  font-family: var(--font-mono);
+  font-size: clamp(2.7rem, 5.8vw, 4.2rem);
+  font-weight: 600;
+}
+
+.font-details {
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  border-bottom: 1px solid var(--reading-rule);
+}
+
+.font-details summary {
+  min-height: 44px;
+  cursor: pointer;
+  color: var(--reading-link);
+  font-weight: 700;
+}
+
+.font-details summary::marker {
+  color: var(--reading-soft);
+}
+
+.font-details-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: .85rem;
+  border-block: 1px solid var(--reading-rule);
+}
+
+.font-details-grid p {
+  min-width: 0;
+  margin: 0;
+  padding: 1rem;
+  border-right: 1px solid var(--reading-rule);
+}
+
+.font-details-grid p:last-child {
+  border-right: 0;
+}
+
+.font-details strong {
+  display: block;
+  margin-bottom: .35rem;
+  color: var(--reading-ink);
+}
+
+.font-market-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  width: min(100% - 2rem, 70rem);
+  margin: 0 auto;
+  padding-block: 1.5rem 3rem;
+  border-top: 1px solid var(--reading-rule);
+  font-size: 1rem;
+  color: var(--reading-soft);
+}
+
+.font-market-footer a {
+  color: var(--reading-link);
+}
+
+@media (max-width: 780px) {
+  .font-market-hero,
+  .font-market-section {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .font-market h1 {
+    max-width: 100%;
+  }
+
+  .font-specimen-panel {
+    max-width: 32rem;
+  }
+
+  .font-details-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .font-details-grid p:nth-child(2) {
+    border-right: 0;
+  }
+
+  .font-details-grid p:nth-child(-n+2) {
+    border-bottom: 1px solid var(--reading-rule);
+  }
+}
+
+@media (max-width: 480px) {
+  .font-market {
+    width: min(100% - 1.25rem, 70rem);
+  }
+
+  .font-market-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .font-action {
+    justify-content: center;
+  }
+
+  .current-face,
+  .font-details-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .font-details-grid p,
+  .font-details-grid p:nth-child(2) {
+    border-right: 0;
+  }
+
+  .font-details-grid p:not(:last-child) {
+    border-bottom: 1px solid var(--reading-rule);
+  }
+}
+
+@media (forced-colors: active) {
+  .font-action,
+  .font-sale-note,
+  .font-specimen-panel,
+  .font-details-grid,
+  .font-details-grid p {
+    border-color: CanvasText;
+  }
+
+  .font-action-primary {
+    color: Canvas;
+    background: CanvasText;
+  }
+}
+
+@media print {
+  .font-market {
+    width: 100%;
+    padding-block: 0;
+  }
+
+  .font-market-hero,
+  .font-market-section {
+    display: block;
+    padding-block: 1.2rem;
+  }
+
+  .font-market-actions,
+  .font-specimen-panel {
+    display: none;
+  }
+
+  .font-details-grid {
+    display: block;
+    border: 0;
+  }
+
+  .font-details-grid p {
+    border: 0;
+    padding: .25rem 0;
+  }
+}

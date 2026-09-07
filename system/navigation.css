@@ -1,0 +1,60 @@
+/* The compact directory is shared by the home and document shells. */
+@media screen {
+  html .site-nav .sn-more-list,
+  html[data-home-shell="react"] .home-menu-list {
+    width:23rem;min-width:0;max-width:calc(100vw - 2rem);
+    max-height:calc(100dvh - 6rem);overflow:auto;overscroll-behavior:contain;
+    box-shadow:none;padding:.8rem;gap:.5rem;
+  }
+  html .site-nav .sn-menu-group,
+  html[data-home-shell="react"] .home-menu-group {
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.1rem .5rem;
+  }
+  html .site-nav .sn-menu-primary,
+  html[data-home-shell="react"] .home-menu-primary {display:none}
+  html .site-nav .sn-menu-label,
+  html[data-home-shell="react"] .home-menu-label {
+    grid-column:1/-1;margin:.5rem .65rem .15rem;
+    font:500 .875rem/1.4 "Hanken Grotesk",system-ui,sans-serif;
+    letter-spacing:normal;text-transform:none;color:var(--theme-soft,#42575d);
+  }
+  html .site-nav .sn-more-list a,
+  html[data-home-shell="react"] .home-menu-list a {
+    min-width:0;font-size:.9375rem;line-height:1.35;padding:.6rem .65rem;
+    text-wrap:balance;
+  }
+  html .site-nav .sn-more-list a:focus-visible,
+  html[data-home-shell="react"] .home-menu-list a:focus-visible {
+    outline:2px solid var(--theme-link,Highlight);outline-offset:-2px;
+  }
+  html .site-nav .sn-more-list .theme-control,
+  html[data-home-shell="react"] .home-menu-list .theme-control {
+    margin:0 0 .35rem;padding:.2rem .65rem .65rem;border-top:0;
+    border-bottom:1px solid var(--theme-line,#ccd3d3);
+  }
+}
+@media screen and (max-width:68rem) {
+  html .site-nav .sn-links,
+  html[data-home-shell="react"] .topnav-links {display:none}
+  html .site-nav .sn-menu-primary,
+  html[data-home-shell="react"] .home-menu-primary {
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    padding-bottom:.45rem;border-bottom:1px solid var(--theme-line,#ccd3d3);
+  }
+  html .site-nav .sn-more-list,
+  html[data-home-shell="react"] .home-menu-list {
+    position:fixed;left:auto;right:1rem;top:4.75rem;
+    width:23rem;max-width:calc(100vw - 2rem);
+  }
+}
+@media screen and (max-width:36rem) {
+  html .site-nav .sn-more-list,
+  html[data-home-shell="react"] .home-menu-list {
+    left:.75rem;right:.75rem;top:4.5rem;width:auto;max-width:none;
+    max-height:calc(100dvh - 5rem);
+  }
+}
+@media(forced-colors:active) {
+  html .site-nav .sn-menu-label,
+  html[data-home-shell="react"] .home-menu-label {color:CanvasText}
+}

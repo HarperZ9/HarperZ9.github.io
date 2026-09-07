@@ -6,7 +6,9 @@
     "revision": "20260907-theme-preferences",
     "scope": "Stylesheet cache references, shared theme controls and reviewed figure presentation; source records and publication edition unchanged.",
     "method": "Presentation edits applied after the original render; the incident timeline is reproduced by scripts/render-incident-multilane-timeline.mjs. Output hashes are refreshed from the resulting LF-normalized files.",
-    "figureViewBoxOverrides": {"incident-multilane-timeline": "0 0 640 6882"}
+    "figureViewBoxOverrides": {
+      "incident-multilane-timeline": "0 0 640 6882"
+    }
   },
   "settings": {
     "encoding": "utf-8",
@@ -28,7 +30,7 @@
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/index.html",
-      "sha256": "7a0db3b30862b5203cdae93ceb2fce0cc3e57425c42871503fdd843728e22b35"
+      "sha256": "c2399f334971e97dafe1bc7117b89b197ecbf208cb3fdf50dc3c55ecd54da0b3"
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/publication.json",

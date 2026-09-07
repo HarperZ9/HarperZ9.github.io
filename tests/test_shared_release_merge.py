@@ -9,7 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FRESH_STAMP = "20260902-creative-chassis"
-NAV_CACHE_STAMP = "20260907-theme-preferences"
+NAV_CACHE_STAMP = "20260907-simple-menu"
 
 
 def read(relative: str) -> str:
@@ -82,11 +82,11 @@ def test_fresh_cache_stamp_covers_the_shared_navigation_chain() -> None:
     assert bundle_match, "built home page does not reference its JavaScript bundle"
     bundle = read(bundle_match.group(1))
     assert f'const ASSET_V = "{FRESH_STAMP}"' in nav
-    assert f'./routes.js?v={FRESH_STAMP}' in nav
+    assert f'./routes.js?v={NAV_CACHE_STAMP}' in nav
     assert f'./nav.js?v={NAV_CACHE_STAMP}' in home_art
-    assert f'./routes.js?v={FRESH_STAMP}' in home_art
-    assert f'/system/home-art" + ".js?v={FRESH_STAMP}' in home_template
-    assert f'/system/home-art.js?v={FRESH_STAMP}' in bundle
+    assert f'./navigation.js?v={NAV_CACHE_STAMP}' in home_art
+    assert f'/system/home-art" + ".js?v={NAV_CACHE_STAMP}' in home_template
+    assert f'/system/home-art.js?v={NAV_CACHE_STAMP}' in bundle
 
 
 def test_sitemap_keeps_legacy_routes_and_adds_capability_publication_routes() -> None:

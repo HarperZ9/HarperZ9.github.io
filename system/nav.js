@@ -1,6 +1,7 @@
 // nav.js, one source of truth for the site navigation. Injected into #site-nav on every page;
 // active state derived from the path. No framework; <noscript> fallback lives in the page markup.
-import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js?v=20260902-creative-chassis";
+import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js?v=20260907-simple-menu";
+import { NAV_PRIMARY_ROUTES, NAV_MENU_GROUPS } from "./navigation.js?v=20260907-simple-menu";
 
 const BRAND_LABEL = "Zentropy Labs";
 const BRAND_MARK_SRC = "brand/zentropy-avatar.png";
@@ -64,6 +65,8 @@ function localRoute(value, includeHash = false) {
 }
 
 export function navActive(pathname) {
+  if (/^(?:fonts|typeface)\.html(?:[?#]|$)/.test(localRoute(pathname))) return "Fonts";
+  if (/^(?:bulletin|join)\.html(?:[?#]|$)/.test(localRoute(pathname))) return "Bulletin";
   return routeFamily(localRoute(pathname, true));
 }
 
@@ -97,6 +100,7 @@ function isHomeDocument(doc) {
 
 function allLocalRoutes() {
   return [
+    ...NAV_PRIMARY_ROUTES,
     ...PRIMARY_ROUTES,
     ...SECONDARY_GROUPS.flatMap((group) => group.routes),
   ];
@@ -184,7 +188,8 @@ function mountRouteHeader(doc = document) {
 }
 
 function navLink({ label, href, family, external = false }, active, locationPath, retainSectionState = false, allowExact = true) {
-  const exact = allowExact && !external && localRoute(href, true) === localRoute(locationPath, true);
+  const exact = allowExact && !external && (localRoute(href, true) === localRoute(locationPath, true)
+    || (!href.includes("#") && localRoute(href) === localRoute(locationPath)));
   const sectionActive = retainSectionState && family === active;
   const className = exact || sectionActive ? "is-active" : "";
   const renderedHref = external ? href : localHrefForPage(href, locationPath);
@@ -193,7 +198,7 @@ function navLink({ label, href, family, external = false }, active, locationPath
 
 function menuGroup(label, items, active, locationPath, className) {
   return `<div class="sn-menu-group ${className}">`
-    + `<p class="sn-menu-label">${escapeHtml(label)}</p>`
+    + (label ? `<p class="sn-menu-label">${escapeHtml(label)}</p>` : "")
     + items.map((item) => navLink(
       item,
       active,
@@ -211,7 +216,8 @@ export function wireMenuArrowKeys(details, listSelector, opts) {
     if (!details.open) return;
     const keys = ["ArrowDown", "ArrowUp", "Home", "End"];
     if (!keys.includes(event.key)) return;
-    const links = [...details.querySelectorAll(`${listSelector} a`)];
+    const links = [...details.querySelectorAll(`${listSelector} a`)]
+      .filter((link) => typeof link.getClientRects !== "function" || link.getClientRects().length > 0);
     if (!links.length) return;
     event.preventDefault();
     const i = links.indexOf(details.ownerDocument.activeElement);
@@ -317,20 +323,19 @@ export function renderNav(doc = document) {
   if (!mount) return;
   const routePath = locationPath(doc);
   const active = navActive(routePath);
-  const moreActive = SECONDARY_GROUPS.some((group) => group.routes.some((route) => route.family === active));
+  const moreActive = NAV_MENU_GROUPS.some((group) => group.routes.some((route) => localRoute(route.href, true) === localRoute(routePath, true)));
   const homeHref = localHrefForPage("index.html", routePath);
   const brandMarkSrc = localHrefForPage(BRAND_MARK_SRC, routePath);
   mount.innerHTML =
     `<a class="sn-home" href="${homeHref}" aria-label="Zain Dana Harper and ${BRAND_LABEL} home"><span class="sn-home-field"><canvas class="sn-logo-canvas" aria-hidden="true"></canvas><img class="sn-logo-fallback" src="${brandMarkSrc}" alt="" width="30" height="30" style="display:none"></span><span class="sn-brand-word">${BRAND_LABEL}</span></a>`
     + `<nav class="sn-links" aria-label="Primary">`
-    + PRIMARY_ROUTES.map((item) => navLink(item, active, routePath, true)).join("")
-    + EXTERNAL_ACTIONS.map((item) => navLink(item, active, routePath)).join("")
+    + NAV_PRIMARY_ROUTES.map((item) => navLink(item, active, routePath, true)).join("")
     + `</nav>`
     + `<details class="sn-more"${moreActive ? ' data-current="true"' : ''}>`
     + `<summary>Menu</summary>`
     + `<div class="sn-more-list" aria-label="Site menu">`
-    + menuGroup("Primary", PRIMARY_ROUTES, active, routePath, "sn-menu-primary")
-    + SECONDARY_GROUPS.map((group) => menuGroup(group.label, group.routes, active, routePath, "sn-menu-secondary")).join("")
+    + menuGroup("", NAV_PRIMARY_ROUTES, active, routePath, "sn-menu-primary")
+    + NAV_MENU_GROUPS.map((group) => menuGroup(group.label, group.routes, active, routePath, "sn-menu-secondary")).join("")
     + menuGroup("Actions", EXTERNAL_ACTIONS, active, routePath, "sn-menu-secondary")
     + `</div></details>`
     ;
@@ -398,6 +403,7 @@ function ensureNavStylesheet(doc = document) {
   if (!doc || !doc.head) return;
   // nav.css goes first so any page that styles its own nav still wins.
   addSheet(doc, "nav.css", "nav-style", "first");
+  addSheet(doc, "navigation.css", "navigation-style", "last");
   // print.css and export.css go last because they have to beat screen rules
   // that sit further down the page's own cascade. A media query adds no
   // specificity, so a print rule loaded early loses to a plain screen rule

@@ -45,6 +45,7 @@ html[data-home-shell="react"] #motes { display: none; }
 html[data-home-shell="react"] .topnav,
 html[data-home-shell="react"] .home-menu summary,
 html[data-home-shell="react"] .home-menu-list { background: var(--void); }
+html[data-home-shell="react"] #site-index { scroll-margin-top:6rem; }
 html[data-home-shell="react"] .home-menu summary:hover,
 html[data-home-shell="react"] .home-menu summary:focus-visible,
 html[data-home-shell="react"] .home-menu-list a:hover,
