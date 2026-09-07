@@ -247,8 +247,37 @@ def assert_font_role(css: str, selector: str, expected_family: str) -> None:
     font_value = declarations(css, selector)["font-family"]
 
     for scheme, variables in scheme_variable_sets(css).items():
-        resolved = resolve_value(font_value, variables)
-        assert expected_family in resolved, f"{selector} {scheme} resolved font {resolved!r}"
+        families = font_family_names(font_value, variables)
+        assert expected_family in families, f"{selector} {scheme} resolved fonts {families!r}"
+
+
+def font_family_names(value: str, variables: dict[str, str]) -> list[str]:
+    resolved = resolve_value(value, variables)
+    families: list[str] = []
+    buffer: list[str] = []
+    quote: str | None = None
+
+    for character in resolved:
+        if quote is not None:
+            if character == quote:
+                quote = None
+            else:
+                buffer.append(character)
+        elif character in {'"', "'"}:
+            quote = character
+        elif character == ",":
+            family = "".join(buffer).strip()
+            if family:
+                families.append(family)
+            buffer = []
+        else:
+            buffer.append(character)
+
+    assert quote is None, f"unterminated CSS font family quote in {resolved!r}"
+    family = "".join(buffer).strip()
+    if family:
+        families.append(family)
+    return families
 
 
 def assert_figure_material_roles_and_contrast(css: str) -> None:
@@ -266,25 +295,11 @@ def expected_asset_revision(relative: Path, target: str) -> str:
         asset_path = posixpath.normpath(posixpath.join(posixpath.dirname(relative.as_posix()), raw_asset_path))
     page = relative.as_posix()
 
-    scoped_revision = next(
-        (
-            revision
-            for (scoped_page, scoped_asset), revision in PAGE_SCOPED_ASSET_REVISIONS.items()
-            if page == scoped_page and asset_path.endswith(scoped_asset)
-        ),
-        None,
-    )
+    scoped_revision = PAGE_SCOPED_ASSET_REVISIONS.get((page, asset_path))
     if scoped_revision is not None:
         return scoped_revision
 
-    return next(
-        (
-            revision
-            for asset, revision in REVIEWED_ASSET_REVISIONS.items()
-            if asset_path.endswith(asset)
-        ),
-        DEFAULT_ASSET_REVISION,
-    )
+    return REVIEWED_ASSET_REVISIONS.get(asset_path, DEFAULT_ASSET_REVISION)
 
 
 def assert_reviewed_asset_revision(relative: Path, target: str) -> None:
@@ -459,6 +474,38 @@ def test_figure_contrast_negative_control_rejects_low_contrast() -> None:
     assert ".bad-surface light contrast" in error
 
 
+def test_figure_font_role_negative_control_rejects_partial_family_names() -> None:
+    wrong_family_css = """
+:root {
+  --font-sans:"Fake Hanken Grotesk",sans-serif;
+  --font-mono:"Consolas",monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --font-sans:"Fake Hanken Grotesk",sans-serif;
+    --font-mono:"Consolas",monospace;
+  }
+}
+.fake-sans {
+  font-family:var(--font-sans);
+}
+.fake-mono {
+  font-family:var(--font-mono);
+}
+"""
+
+    errors = []
+    for selector, expected_family in ((".fake-sans", "Hanken Grotesk"), (".fake-mono", "Conso")):
+        try:
+            assert_font_role(wrong_family_css, selector, expected_family)
+        except AssertionError as exc:
+            errors.append(str(exc))
+
+    assert len(errors) == 2
+    assert ".fake-sans light resolved fonts ['Fake Hanken Grotesk', 'sans-serif']" in errors[0]
+    assert ".fake-mono light resolved fonts ['Consolas', 'monospace']" in errors[1]
+
+
 def test_nav_forced_colors_route_header_gets_a_visible_border() -> None:
     css = read("system/nav.css")
     forced = media_block(css, "(forced-colors: active)")
@@ -555,6 +602,21 @@ def test_asset_revision_negative_control_rejects_wrong_reviewed_revision() -> No
     assert error is not None
     assert "system/report-editorial.css?v=20260902-creative-chassis" in error
     assert "expected ?v=20260906" in error
+
+
+def test_asset_revision_negative_control_rejects_impostor_reviewed_path() -> None:
+    error = None
+    try:
+        assert_reviewed_asset_revision(
+            Path("scratch/page.html"),
+            "scratch/system/report-editorial.css?v=20260906",
+        )
+    except AssertionError as exc:
+        error = str(exc)
+
+    assert error is not None
+    assert "scratch/system/report-editorial.css?v=20260906" in error
+    assert "expected ?v=20260902-creative-chassis" in error
 
 
 def test_narrow_mobile_nav_does_not_overlap_the_wordmark() -> None:
