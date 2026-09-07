@@ -410,6 +410,7 @@ if (typeof document !== "undefined") {
   const boot = () => {
     ensureNavStylesheet(document);
     renderNav();
+    import("./theme-entry.js?v=20260907-theme-preferences").catch(() => {});
     trackNavHeight(document);
     wireAnchorArrival(document);
     mountRouteHeader(document);

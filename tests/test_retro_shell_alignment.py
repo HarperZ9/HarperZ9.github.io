@@ -12,7 +12,7 @@ PAGES = {
     "brender-archival.html": "BRender Archival",
 }
 SHELL_STYLESHEET = "system/retro-evidence-pages.css?v=20260902-creative-chassis"
-SHELL_SCRIPT = "system/nav.js?v=20260902-creative-chassis"
+SHELL_SCRIPT = "system/nav.js?v=20260907-theme-preferences"
 
 
 class _ShellParser(HTMLParser):

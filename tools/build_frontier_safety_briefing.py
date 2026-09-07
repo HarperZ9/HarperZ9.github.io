@@ -23,11 +23,12 @@ from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CURRENT_NAV_ASSET_VERSION = "20260902-creative-chassis"
+CURRENT_NAV_ASSET_VERSION = "20260907-theme-preferences"
+REVEAL_ASSET_VERSION = "20260902-creative-chassis"
 FRONTIER_CSS_ASSET_VERSION = "20260907-reading-completion"
 ARCHIVE_NAV_ASSET_VERSIONS = {
-    "2026-08-24": "20260902-creative-chassis",
-    "2026-08-25": "20260902-creative-chassis",
+    "2026-08-24": CURRENT_NAV_ASSET_VERSION,
+    "2026-08-25": CURRENT_NAV_ASSET_VERSION,
 }
 ALLOWED_SOURCE_HOSTS = {
     "cdn.openai.com",
@@ -615,7 +616,7 @@ def render_html(edition: dict, *, archive: bool) -> str:
 <footer class="footer-seal" role="contentinfo">
   <p class="seal">Compiled by Zain Dana Harper · ZentropyLabs · <a href="{root_prefix}research.html">Research index</a> · <a href="{data_href}">JSON edition</a> · <a href="{root_prefix}frontier-safety/archive/{_e(date)}.html">Dated archive</a></p>
 </footer>
-<script src="{root_prefix}system/reveal.js?v={CURRENT_NAV_ASSET_VERSION}" defer></script>
+<script src="{root_prefix}system/reveal.js?v={REVEAL_ASSET_VERSION}" defer></script>
 </body>
 </html>
 """
