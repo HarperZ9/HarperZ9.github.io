@@ -1640,7 +1640,8 @@ Error generating stack: `+e.message+`
       "useCases": [
         "agent memory",
         "provenance-bearing recall",
-        "memory drift review"
+        "memory drift review",
+        "source imports partitioned by user and session"
       ],
       "href": "systems/mneme.html",
       "sourceHref": "https://github.com/HarperZ9/mneme",
@@ -1661,25 +1662,46 @@ Error generating stack: `+e.message+`
       "maturity": "active",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "pip install git+https://github.com/HarperZ9/mneme.git; mneme recall \\"where does the user live\\" --json",
-      "verificationCommand": "mneme drift; python -m pytest -q",
+      "entryCommand": "python -m pip install https://github.com/HarperZ9/mneme/releases/download/v0.3.0/mneme_memory-0.3.0-py3-none-any.whl; mneme --help",
+      "verificationCommand": "mneme --state demo.db remember chat session.json --user alice; mneme --state demo.db recall \\"where does the user live\\" --user alice --json",
       "evidence": [
+        {
+          "id": "mneme-release-v0-3-0",
+          "type": "release",
+          "label": "Mneme v0.3.0 downloads",
+          "href": "https://github.com/HarperZ9/mneme/releases/tag/v0.3.0",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "Version 0.3.0 partitions source identity by user and session, supports named-user Gather imports, and checks source collisions before writing memory. Repeated imports preserve provenance. The released wheel and source archive were downloaded and checked against their hashes and accepted source. This is not provider-native session migration."
+        },
+        {
+          "id": "mneme-wheel-v0-3-0",
+          "type": "release",
+          "label": "Download the v0.3.0 Python wheel",
+          "href": "https://github.com/HarperZ9/mneme/releases/download/v0.3.0/mneme_memory-0.3.0-py3-none-any.whl",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "Wheel SHA-256 b709b685d667952b5461b93b435b180c2c1d19ca26c3dd0a9386ad9e847d72ea. A fresh installation completed isolated CLI ingest/recall/provenance and MCP remember/recall tasks. No real user database migration or adoption is established."
+        },
         {
           "id": "mneme-public-source",
           "type": "source",
-          "label": "Mneme public source",
-          "href": "https://github.com/HarperZ9/mneme",
-          "date": "2026-08-28",
+          "label": "Mneme v0.3.0 source and examples",
+          "href": "https://github.com/HarperZ9/mneme/tree/v0.3.0",
+          "date": "2026-09-07",
           "status": "verified",
-          "summary": "The public source metadata identifies mneme-memory 0.2.0, the latest GitHub tag found was v0.1.0, and the README covers provenance, recall, drift detection, replay, forgetting, and MCP access."
+          "summary": "Tag v0.3.0 identifies commit dc0356abba92c27259b0d88587b66d82297b8da7. The README shows seeded remember/recall examples, source provenance, drift checks and MCP access. Recall requires imported source data; an empty store is not a completed memory task."
         }
       ],
       "limitations": [
         "Source recheck remains Mneme-owned rather than independently re-read by Crucible.",
-        "Replay rejects ambiguous SQLite sidecar or hardlink state."
+        "Replay rejects ambiguous SQLite sidecar or hardlink state.",
+        "GitHub wheel and source downloads are verified; PyPI publication is not claimed.",
+        "Source partitioning does not implement provider-native continuation or automatically upgrade the separately pinned Flywheel memory lane."
       ],
       "boundary": "Store and recall only information the operator is authorized to retain and process.",
       "inputs": [
+        "an authorized session.json array of role/text turns",
         "memory records and provenance",
         "retrieval queries and filters",
         "source snapshots",
@@ -1697,10 +1719,10 @@ Error generating stack: `+e.message+`
         "forum",
         "flywheel"
       ],
-      "lastVerified": "2026-08-28",
+      "lastVerified": "2026-09-07",
       "primaryDomain": "agent-systems",
       "productType": "deterministic agent memory subsystem",
-      "releaseState": "active source 0.2.0; latest tag v0.1.0"
+      "releaseState": "GitHub release v0.3.0; no PyPI release claimed"
     },
     {
       "id": "bulletin",
