@@ -3139,7 +3139,7 @@
       "lastVerified": "2026-09-07",
       "id": "chorus",
       "name": "Chorus",
-      "purpose": "Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests that rank themes, surface dissent, and identify genuinely contested topics.",
+      "purpose": "Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests that group themes, surface literal disagreement in captured comments, and preserve source-linked receipts.",
       "useCases": [
         "community and comment research",
         "ranked theme and controversy analysis",
