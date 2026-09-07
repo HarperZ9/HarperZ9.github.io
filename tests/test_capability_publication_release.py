@@ -13,6 +13,22 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "demos/crucible-cleanroom/index.html",
+    "emet-sample.html",
+    "gallery.html",
+    "loom.html",
+    "presentation.html",
+    "proof-index-sample.html",
+    "proof-surface-sample.html",
+    "public-surface-sweeper-sample.html",
+    "studio.html",
+    "system/demo-editorial.css",
+    "system/discovery/lab.html",
+    "system/doc.css",
+    "system/instrument-editorial.css",
+    "system/report-editorial.css",
+    "system/system.css",
+    "warden.html",
     "assets/index-fBx77P1E.js",
     "assets/index-3xC65p6C.css",
     "accountable-surface.html",
