@@ -129,6 +129,7 @@
   <div class="mid">
     <h1>The Shader Room.<br><span class="g">Write it. See it.</span></h1>
     <p class="lede" data-canonical-purpose="retro-engine">Choose a shader or write your own. Mix color, texture and motion with the Retro Engine, then use the image in a poster, weave it in Loom, or export your work.</p>
+    <p class="re-hint"><a href="workspace.html">Your workspace</a> · <a href="fonts.html#font-lab">Explore type</a></p>
   </div>
 </div>
 
@@ -377,7 +378,7 @@
         <button class="re-btn" id="re-project-open" type="button">Open project</button>
         <input id="re-project-file" type="file" accept=".json,application/json" hidden aria-label="Open Shader Room project">
       </div>
-      <p class="re-hint">Your shader, layers, settings, images and drawing in one file. Reopens paused, without live audio or animation history.</p>
+      <p class="re-hint">Save keeps your shader, layers, settings, images and drawing. Reopens paused, without live audio or animation history. Open project also recognizes Poster and Loom files and takes you to their editor.</p>
       <p class="re-status" id="re-project-status" role="status"></p>
       <div class="re-field"><span class="re-lab">Export an image or clip</span></div>
       <div class="re-actions">
@@ -452,6 +453,7 @@
   <p>Zentropy Labs &middot; order out of entropy &middot; <a href="index.html">home</a></p>
 </footer>
 
-<script type="module" src="system/retro-studio.js?v=20260907-native-project"></script>
+<script type="module" src="system/retro-studio.js?v=20260907-workspace"></script>
+<script type="module" src="system/project-router.js?v=20260907-native-routing"></script>
 </body>
 </html>

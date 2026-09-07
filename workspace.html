@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" data-export-manual="true">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Creative workspace | Zentropy Labs</title>
+<meta name="description" content="A home for your creative work. Keep editable Poster, Loom and Shader Room projects, and explore type, images and spatial studies.">
+<link rel="canonical" href="https://harperz9.github.io/workspace.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="system/system.css?v=20260907-reading-completion">
+<link rel="stylesheet" href="system/creative-workspace.css?v=20260907-workspace">
+<script type="module" src="system/nav.js?v=20260907-simple-menu"></script>
+<script type="module" src="system/creative-workspace.js?v=20260907-workspace"></script>
+</head>
+<body class="inner-clean creative-workspace-page">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<main id="main" class="creative-workspace">
+  <header class="workspace-hero" data-route-header="mounted">
+    <h1>Room for your<br>next idea.</h1>
+    <div class="workspace-intro">
+      <p>Start with a word, an image or a pattern. Shape it in the studio. Keep the pieces you want to come back to.</p>
+      <a href="#start">Find your starting point <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <section class="workspace-library" aria-labelledby="your-work">
+    <div class="workspace-section-head">
+      <h2 id="your-work">Your work</h2>
+      <button type="button" class="workspace-button" data-workspace-open-file hidden>Open a project file</button>
+      <input type="file" accept=".json,application/json" data-workspace-file hidden aria-label="Choose a creative project file">
+    </div>
+    <p class="workspace-status" data-workspace-status role="status" hidden></p>
+    <div class="workspace-empty" data-workspace-empty hidden>
+      <h3>A place to pick up where you left off.</h3>
+      <p>Choose <strong>Keep in workspace</strong> in Poster, Loom or Shader Room. Your piece will appear here, ready to edit again.</p>
+      <a href="studio.html?source=poster">Make your first poster <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="workspace-grid" data-workspace-projects></div>
+    <noscript><p class="workspace-empty">JavaScript is needed to open your browser-local project library. You can still explore the creative tools below.</p></noscript>
+    <details class="workspace-storage-note">
+      <summary>Where your work is kept</summary>
+      <p>These projects stay in this browser on this device, not in a cloud account. Clearing site data can remove them. Download project files for backups or to move your work to another device.</p>
+      <p>Poster, Loom and Shader Room preserve their own editable project formats. Sending an image between tools carries a rendered image, not its original layers. Font Lab, Gallery and spatial studies do not yet save directly to this library.</p>
+    </details>
+  </section>
+
+  <section class="workspace-start" id="start" aria-labelledby="start-title">
+    <div class="workspace-section-head"><h2 id="start-title">Start anywhere.</h2><p>Different materials. Room to make them your own.</p></div>
+    <div class="workspace-starts">
+      <a href="fonts.html#font-lab"><span class="workspace-tool-name">Type</span><span>Try your words. Refine the spacing. Take editable text into Poster.</span><span aria-hidden="true">↗</span></a>
+      <a href="studio.html?source=poster"><span class="workspace-tool-name">Poster</span><span>Bring type and artwork together in a print-ready composition.</span><span aria-hidden="true">↗</span></a>
+      <a href="gallery.html#printdesk"><span class="workspace-tool-name">Gallery</span><span>Make generative artwork and carry an image into your next piece.</span><span aria-hidden="true">↗</span></a>
+      <a href="retro.html#engine"><span class="workspace-tool-name">Shader Room</span><span>Work with light, code and moving images. Keep the shader editable.</span><span aria-hidden="true">↗</span></a>
+      <a href="loom.html"><span class="workspace-tool-name">Loom</span><span>Turn an image into a woven draft. Edit crossings and export WIF.</span><span aria-hidden="true">↗</span></a>
+      <a href="gaussian-splats.html"><span class="workspace-tool-name">Spatial studies</span><span>Explore artwork in three dimensions, with the source studies beside it.</span><span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+  <footer class="workspace-footer"><a href="studio.html">Explore all Studio engines</a><a href="fonts.html">Typefaces in development</a></footer>
+</main>
+</body>
+</html>

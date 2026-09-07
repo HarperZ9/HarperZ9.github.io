@@ -15,6 +15,7 @@ import {
 import { renderRetro } from "./retro-engine.js";
 import { applyOpsWet, OP_META } from "./glitch-ops.js";
 import { encodePosterProject, decodePosterProject, validateProjectImage, MAX_PROJECT_BYTES } from "./poster-project.js?v=20260907-project-files";
+import { mountLibrarySave, captureCanvasPreview } from "./project-library-controls.js?v=20260907-workspace";
 
 const PALETTE = ["#f2ecf7", "#c9c2d4", "#8f86a0", "#7de3ea", "#99f147", "#f8cc43", "#ff8334", "#ff35aa", "#111016"];
 const HISTORY_LIMIT = 60;
@@ -746,28 +747,36 @@ export function mountPosterWorkshop(deps) {
     projectStatus.textContent = message; projectStatus.dataset.state = result;
   };
   const currentDesign = () => JSON.stringify({ ...state, art: { ...state.art, image: null } });
+  function capturePosterProject({ preview = true } = {}) {
+    clearTimeout(renderT);
+    renderNow();
+    let image = null;
+    const art = state.art.image;
+    if (art) {
+      const dimensions = drawableDimensions(art);
+      if (!dimensions || dimensions.width > 8192 || dimensions.height > 8192 || dimensions.width * dimensions.height > 32000000) {
+        throw new Error("This image is too large to save in a project. Use an image under 8192 pixels per side and 32 megapixels.");
+      }
+      if (typeof art.src === "string" && art.src.startsWith("data:image/png;base64,")) image = art.src;
+      else {
+        const surface = document.createElement("canvas");
+        surface.width = dimensions.width; surface.height = dimensions.height;
+        surface.getContext("2d").drawImage(art, 0, 0);
+        image = surface.toDataURL("image/png");
+      }
+      validateProjectImage(image);
+    }
+    const projectText = encodePosterProject(state, image, projectOptions);
+    return {
+      file: new File([projectText], "zentropy-poster.json", { type: "application/json" }),
+      title: state.blocks?.[0]?.text || "Poster project",
+      preview: preview ? captureCanvasPreview(canvas) : null,
+    };
+  }
   saveProject.addEventListener("click", () => {
     try {
-      clearTimeout(renderT);
-      renderNow();
-      let image = null;
-      const art = state.art.image;
-      if (art) {
-        const dimensions = drawableDimensions(art);
-        if (!dimensions || dimensions.width > 8192 || dimensions.height > 8192 || dimensions.width * dimensions.height > 32000000) {
-          throw new Error("This image is too large to save in a project. Use an image under 8192 pixels per side and 32 megapixels.");
-        }
-        if (typeof art.src === "string" && art.src.startsWith("data:image/png;base64,")) image = art.src;
-        else {
-          const surface = document.createElement("canvas");
-          surface.width = dimensions.width; surface.height = dimensions.height;
-          surface.getContext("2d").drawImage(art, 0, 0);
-          image = surface.toDataURL("image/png");
-        }
-        validateProjectImage(image);
-      }
-      const projectText = encodePosterProject(state, image, projectOptions);
-      download(new Blob([projectText], { type: "application/json" }), "zentropy-poster.json");
+      const project = capturePosterProject({ preview: false });
+      download(project.file, "zentropy-poster.json");
       projectMessage("Project download started. Keep this file to reopen the editable composition.", "saved");
     } catch (error) { projectMessage(error.message || "The project could not be saved. Your work is still here.", "error"); }
   });
@@ -804,6 +813,7 @@ export function mountPosterWorkshop(deps) {
     } finally { if (operation === projectOperation) projectFile.value = ""; }
   });
   projectRow.append(saveProject, openProject, projectFile);
+  mountLibrarySave(projectRow, capturePosterProject, { className: "at-mini" });
   root.append(projectRow, projectStatus);
   const artRow = el("div", "poster-artrow");
   const seedIn = el("input", "poster-seed");

@@ -7,6 +7,7 @@
 import { STRUCTURES, computeDraft, draftToWIF, weftPaletteFor, wifToDraft } from "./weave-engine.js?v=20260813-wif";
 import { renderCloth, renderDraftChart, chartLayout } from "./weave-render.js?v=20260902-thread";
 import { sendPiece, receiveTrail, mountFlow } from "./workbench.js?v=20260907-creative-handoff";
+import { mountLibrarySave, captureCanvasPreview } from "./project-library-controls.js?v=20260907-workspace";
 
 const $ = (id) => document.getElementById(id);
 
@@ -825,22 +826,32 @@ function boot() {
     $("wv-file").value = ""; $("wv-wif-in").value = "";
     draw(); sync();
   }
-  $("wv-project-save").addEventListener("click", async () => {
+  async function captureLoomProject({ preview = true } = {}) {
     if (!draft) { projectMessage("Choose an image or draft before saving.", "error"); return; }
     const revision = editRevision, sourceVersion = sourceOperation;
+    const { encodeLoomProject } = await import("./loom-project.js?v=20260907-project-files");
+    if (revision !== editRevision || sourceVersion !== sourceOperation) {
+      throw Object.assign(new Error("Your work changed while saving was being prepared. Save again to keep the latest version."), { state: "cancelled" });
+    }
+    const text = encodeLoomProject({ draft, colors, settings: projectSettings(),
+      source: haveSource ? src.toDataURL("image/png") : null, edited, imported: !!imported });
+    return {
+      file: new File([text], "zentropy-loom.json", { type: "application/json" }),
+      title: "Loom, " + STRUCTURES[structureId].name,
+      preview: preview ? captureCanvasPreview(out) : null,
+    };
+  }
+  $("wv-project-save").addEventListener("click", async () => {
     try {
-      const { encodeLoomProject } = await import("./loom-project.js?v=20260907-project-files");
-      if (revision !== editRevision || sourceVersion !== sourceOperation) {
-        projectMessage("Your work changed while saving was being prepared. Save again to keep the latest version.", "cancelled"); return;
-      }
-      const text = encodeLoomProject({ draft, colors, settings: projectSettings(),
-        source: haveSource ? src.toDataURL("image/png") : null, edited, imported: !!imported });
-      const url = URL.createObjectURL(new Blob([text], { type: "application/json" }));
+      const project = await captureLoomProject({ preview: false });
+      if (!project) return;
+      const url = URL.createObjectURL(project.file);
       download("zentropy-loom.json", url);
       setTimeout(() => URL.revokeObjectURL(url), 1000);
       projectMessage("Project download started. Open this file to continue editing.", "saved");
-    } catch (error) { projectMessage(error.message || "The project could not be saved. Your work is still here.", "error"); }
+    } catch (error) { projectMessage(error.message || "The project could not be saved. Your work is still here.", error.state || "error"); }
   });
+  mountLibrarySave($("wv-project-save").parentElement, captureLoomProject, { className: "re-btn" });
   $("wv-project-open").addEventListener("click", () => projectFile.click());
   projectFile.addEventListener("change", async () => {
     const file = projectFile.files?.[0]; if (!file) return;

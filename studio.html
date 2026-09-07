@@ -79,7 +79,7 @@
     <div class="rail-head">
       <h1 translate="no">The Studio</h1>
       <p class="rail-lede">Make an image, shape it, then take it to your next tool.</p>
-      <nav aria-label="Creative workshops" class="rail-lede"><a href="retro.html#engine">Shader Room</a> · <a href="loom.html">Loom</a> · <a href="gaussian-splats.html">Spatial studies</a></nav>
+      <nav aria-label="Creative workshops" class="rail-lede"><a href="workspace.html">Your workspace</a> · <a href="fonts.html#font-lab">Type</a> · <a href="gaussian-splats.html">Spatial studies</a></nav>
     </div>
 
     <!-- The source menu: pick what the model looks at. setSource(name) shows ONLY that block. -->
@@ -1251,7 +1251,7 @@
     <div class="panel-scroll">
       <section class="src-block" id="src-poster" role="tabpanel" aria-label="Poster workshop controls" hidden>
         <h2 class="poster-workspace-title">Compose your poster</h2>
-        <p class="transform-note">Drag text on the canvas or edit it below. Add your own image, or bring one from Shader Room or Loom. Export the finished composition as a PNG.</p>
+        <p class="transform-note">Drag text on the canvas or edit it below. Bring an image from Shader Room or Loom, then export a PNG or save an editable project. Open project also recognizes saved Loom and Shader Room files.</p>
         <div id="poster-mount"></div>
       </section>
       <details id="studio-analysis" class="studio-analysis" open>
@@ -1436,7 +1436,8 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20260907-spatial-views"></script>
+<script type="module" src="system/studio.js?v=20260907-workspace"></script>
+<script type="module" src="system/project-router.js?v=20260907-native-routing"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

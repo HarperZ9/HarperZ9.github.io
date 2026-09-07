@@ -24,6 +24,12 @@ RELEASE_PATHS = (
     "system/loom-studio.js",
     "system/loom-project.js",
     "system/workbench.js",
+    "system/project-router.js",
+    "system/project-library.js",
+    "system/project-library-controls.js",
+    "system/creative-workspace.js",
+    "system/creative-workspace.css",
+    "workspace.html",
     "system/studio-spatial.js",
     "system/spatial-atlas.js",
     "system/spatial-scene.js",
@@ -248,7 +254,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "dc7bae9205ca446a7524bab4cad66f2cd27ac65c5e43948da218fe02b1faf770"
+REVIEWED_RELEASE_SHA256 = "5a0919452e5efd97b1b30d078225ccc17f2783128b0dd190fde8474fcc1e4ac2"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

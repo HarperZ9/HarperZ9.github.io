@@ -13,6 +13,7 @@ import { SHADER_PRESETS } from "./shader-presets.js?v=20260812-wave7";
 import { sendPiece, receiveTrail, mountFlow } from "./workbench.js?v=20260907-creative-handoff";
 import { setUserPalette } from "./retro-palettes.js";
 import { MOD_SOURCES, evalSources, computeOffsets, modValue } from "./mod-matrix.js?v=20260812-motion";
+import { mountLibrarySave, captureCanvasPreview } from "./project-library-controls.js?v=20260907-workspace";
 
 const $ = (id) => document.getElementById(id);
 const rand = () => Math.random().toString(36).slice(2, 9);
@@ -1275,22 +1276,31 @@ function boot() {
     g.drawImage(uploaded, (c.width - w) / 2, (c.height - h) / 2, w, h);
     return c.toDataURL("image/png");
   }
+  async function captureShaderProject({ preview = true } = {}) {
+    const mod = await import("./retro-project.js?v=20260907-native-project");
+    const editor = Object.fromEntries(mod.EDITOR_CONTROLS.map(id => [id, readControl(id)]));
+    const patch = collectPatch();
+    const probe = document.createElement("canvas");
+    const shader = createShaderRunner(probe, patch.glsl);
+    const compiles = shader.ok; shader.destroy?.();
+    shader.gl?.getExtension("WEBGL_lose_context")?.loseContext();
+    if (!compiles) throw new Error("Finish or fix the shader code before saving a project. You can still export the current image.");
+    const text = mod.encodeRetroProject({ schema: "zentropy.shader-room", version: 1, patch, editor,
+      assets: { source: srcCanvas.toDataURL(), upload: uploadPixels(), drawing: drawCanvas.toDataURL(), scope: scopeCanvas.toDataURL() } }, projectRules(mod));
+    return {
+      file: new File([text], "shader-room.project.json", { type: "application/json" }),
+      title: pieceLabel(),
+      preview: preview ? captureCanvasPreview(out) : null,
+    };
+  }
   $("re-project-save").addEventListener("click", async () => {
     try {
-      const mod = await import("./retro-project.js?v=20260907-native-project");
-      const editor = Object.fromEntries(mod.EDITOR_CONTROLS.map(id => [id, readControl(id)]));
-      const patch = collectPatch();
-      const probe = document.createElement("canvas");
-      const shader = createShaderRunner(probe, patch.glsl);
-      const compiles = shader.ok; shader.destroy?.();
-      shader.gl?.getExtension("WEBGL_lose_context")?.loseContext();
-      if (!compiles) { projectStatus("Finish or fix the shader code before saving a project. You can still export the current image.", "error"); return; }
-      const text = mod.encodeRetroProject({ schema: "zentropy.shader-room", version: 1, patch, editor,
-        assets: { source: srcCanvas.toDataURL(), upload: uploadPixels(), drawing: drawCanvas.toDataURL(), scope: scopeCanvas.toDataURL() } }, projectRules(mod));
-      saveBlob("shader-room.project.json", new Blob([text], { type: "application/json" }));
+      const project = await captureShaderProject({ preview: false });
+      saveBlob("shader-room.project.json", project.file);
       projectStatus("Project saved. Working images and drawing are included; live animation history is not.", "ready");
-    } catch (_) { projectStatus("Could not save this project. Check that an image is loaded and the working images fit the 32 MB project limit.", "error"); }
+    } catch (error) { projectStatus(error.message || "Could not save this project. Check that an image is loaded and the working images fit the 32 MB project limit.", "error"); }
   });
+  mountLibrarySave($("re-project-save").parentElement, captureShaderProject, { className: "re-btn" });
   $("re-project-open").addEventListener("click", () => $("re-project-file").click());
   $("re-project-file").addEventListener("change", async event => {
     const file = event.target.files?.[0]; event.target.value = "";

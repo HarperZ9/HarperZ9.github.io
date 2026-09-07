@@ -46,6 +46,7 @@
   <div class="mid">
     <h1>Weave the picture <span class="g">into working cloth.</span></h1>
     <p class="lede">Turn an image into a weaving draft. Choose a structure, edit its crossings and watch the cloth change. Save an editable project, export a supported WIF draft, or carry the cloth into Poster and Shader Room.</p>
+    <p class="re-hint"><a href="workspace.html">Your workspace</a> · <a href="fonts.html#font-lab">Explore type</a></p>
   </div>
 </div>
 
@@ -170,7 +171,7 @@
         <button class="re-btn" id="wv-project-open" type="button">Open project</button>
         <input type="file" id="wv-project-file" accept=".json,application/json" aria-label="Open a Loom project file" hidden>
       </div>
-      <p class="re-hint">Project files keep the editable draft, colors and 640 × 400 working image. Files stay on your device.</p>
+      <p class="re-hint">Save keeps your editable draft, colors and working image. Open project also recognizes Poster and Shader Room files and takes you to their editor. Files stay on your device.</p>
       <p class="re-status" id="wv-project-status" role="status" hidden></p>
       <div class="re-actions">
         <button class="re-btn" id="wv-wif">Export WIF</button>
@@ -200,6 +201,7 @@
 </section>
 </main>
 
-<script type="module" src="system/loom-studio.js?v=20260907-project-files"></script>
+<script type="module" src="system/loom-studio.js?v=20260907-workspace"></script>
+<script type="module" src="system/project-router.js?v=20260907-native-routing"></script>
 </body>
 </html>
