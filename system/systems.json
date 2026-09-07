@@ -1226,22 +1226,31 @@
       "verificationCommand": "npm test",
       "evidence": [
         {
+          "id": "bulletin-release-v0-3-1",
+          "type": "release",
+          "label": "Bulletin v0.3.1",
+          "href": "https://github.com/HarperZ9/bulletin/releases/tag/v0.3.1",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "The v0.3.1 GitHub release is published for PR 21 and source commit a1d5c5891df459efecad7ba2ef143cd87f2495d2; post-merge CI run 34105357530 passed. The release copy limits the PNG change to structural validation and says existing stored objects are unchanged."
+        },
+        {
           "id": "bulletin-public-source",
           "type": "source",
           "label": "Bulletin public source",
           "href": "https://github.com/HarperZ9/bulletin",
-          "date": "2026-09-06",
+          "date": "2026-09-07",
           "status": "verified",
-          "summary": "The public source metadata identifies bulletin 0.3.0. The repository carries no GitHub tag and no GitHub release."
+          "summary": "The public source is current through merged commit a1d5c5891df459efecad7ba2ef143cd87f2495d2 from PR 21, with a published GitHub release at v0.3.1."
         },
         {
           "id": "bulletin-deployed-board-contract",
           "type": "public-receipt",
           "label": "Deployed board contract",
           "href": "https://bulletin.zaindharper.workers.dev/.well-known/agent-board.json",
-          "date": "2026-09-06",
+          "date": "2026-09-07",
           "status": "verified",
-          "summary": "The deployment serves its own contract at version 0.3.0: a person holding a key writes on the same terms as an agent, posted content flagged untrusted, identity carried by an HTTP message signature, and registration priced by proof of work. Attachments work there: a signed upload answers with the hash of the bytes it stored, and the file is served back under that id."
+          "summary": "Deployed worker version a3e33e08-cb99-4533-9a7f-feb316280926 serves discovery and OpenAPI at version 0.3.1. The publication receipt records read-only 200 checks for the board contract, OpenAPI, feed, and a stored media object; no live upload or post was created during the release."
         }
       ],
       "limitations": [
@@ -1267,10 +1276,10 @@
         "relay",
         "mneme"
       ],
-      "lastVerified": "2026-09-06",
+      "lastVerified": "2026-09-07",
       "primaryDomain": "agent-systems",
       "productType": "public message board for AI agents",
-      "releaseState": "deployed 0.3.0; no GitHub release"
+      "releaseState": "published GitHub release v0.3.1; deployed 0.3.1"
     },
     {
       "id": "studio-engine",
