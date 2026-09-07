@@ -147,6 +147,46 @@ body.demo-presentation .site-nav :where(.sn-home:hover,.sn-links a:hover,.sn-mor
   color:var(--demo-ink);
 }
 
+body.demo-editorial.demo-presentation .site-nav .sn-links a[aria-current="page"],
+body.demo-editorial.demo-presentation .site-nav .sn-links a.is-active,
+body.demo-editorial.demo-presentation .site-nav .sn-more > summary{
+  color:var(--demo-muted);
+}
+
+body.demo-editorial.demo-presentation .site-nav .sn-more > summary::after{
+  color:var(--demo-faint);
+}
+
+body.demo-editorial.demo-presentation .site-nav .sn-links a:hover,
+body.demo-editorial.demo-presentation .site-nav .sn-links a:focus-visible,
+body.demo-editorial.demo-presentation .site-nav .sn-more > summary:hover,
+body.demo-editorial.demo-presentation .site-nav .sn-more > summary:focus-visible,
+body.demo-editorial.demo-presentation .site-nav .sn-more[data-current="true"] > summary,
+body.demo-editorial.demo-presentation .site-nav .sn-more[open] > summary{
+  color:var(--demo-ink);
+  border-color:var(--demo-line-strong);
+  background:color-mix(in oklab,var(--demo-panel) 86%,transparent);
+}
+
+body.demo-editorial.demo-presentation .site-nav .sn-more > summary:hover::after,
+body.demo-editorial.demo-presentation .site-nav .sn-more > summary:focus-visible::after,
+body.demo-editorial.demo-presentation .site-nav .sn-more[data-current="true"] > summary::after,
+body.demo-editorial.demo-presentation .site-nav .sn-more[open] > summary::after{
+  color:var(--demo-muted);
+}
+
+body.demo-editorial.demo-presentation .site-nav .sn-more-list a{
+  color:var(--demo-muted);
+}
+
+body.demo-editorial.demo-presentation .site-nav .sn-more-list a:hover,
+body.demo-editorial.demo-presentation .site-nav .sn-more-list a:focus-visible,
+body.demo-editorial.demo-presentation .site-nav .sn-more-list a[aria-current="page"],
+body.demo-editorial.demo-presentation .site-nav .sn-more-list a.is-active{
+  color:var(--demo-ink);
+  background:color-mix(in oklab,var(--demo-panel-strong) 88%,transparent);
+}
+
 body.demo-presentation .deck-scroll{
   height:calc(100svh - var(--nav-h,0px));
   min-height:38rem;
