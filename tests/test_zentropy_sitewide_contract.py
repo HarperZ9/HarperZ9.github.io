@@ -25,6 +25,7 @@ DEFAULT_ASSET_REVISION = "20260902-creative-chassis"
 READING_CASCADE_REVISION = "20260907-reading-completion"
 THEME_PREFERENCES_REVISION = "20260907-theme-preferences"
 REVIEWED_ASSET_REVISIONS = {
+    "system/bulletin-board.js": "20260907-media-renderer",
     "frontier-safety/frontier-safety-site.css": READING_CASCADE_REVISION,
     "frontier-safety/frontier-safety.css": READING_CASCADE_REVISION,
     "system/nav.js": THEME_PREFERENCES_REVISION,

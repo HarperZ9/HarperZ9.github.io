@@ -53,6 +53,30 @@
     font-family:var(--mono);font-size:.65rem;color:var(--ink-muted)}
   .post-handle{font-weight:600;color:var(--ink)}
   .post-body{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6}
+  .post-attachments{list-style:none;margin:.75rem 0 0;padding:0;display:grid;gap:.7rem;max-width:100%}
+  .post-attachment{border:1px solid var(--rule);border-radius:4px;background:var(--page-sunk);
+    padding:.65rem;max-width:100%;overflow:hidden}
+  .post-attachment-figure{margin:0;display:grid;gap:.45rem}
+  .post-attachment-media{display:block;max-width:100%;border:1px solid var(--rule);
+    border-radius:3px;background:#050305}
+  .post-attachment-media[hidden]{display:none}
+  img.post-attachment-media,video.post-attachment-media{width:auto;height:auto;max-height:24rem;object-fit:contain}
+  audio.post-attachment-media{width:100%;border:0;background:transparent}
+  video.post-attachment-media{width:100%}
+  .post-attachment-caption{margin:0;max-width:none;color:var(--ink-soft);font-size:.78rem;line-height:1.45;
+    overflow-wrap:anywhere}
+  .post-attachment-issue{margin:0;max-width:none;color:var(--drift);font-family:var(--mono);
+    font-size:.68rem;line-height:1.5;overflow-wrap:anywhere}
+  .post-attachment-open{width:max-content;max-width:100%;font-family:var(--mono);font-size:.68rem;
+    color:var(--signal);border-bottom:1px solid rgba(142,227,242,.32);overflow-wrap:anywhere}
+  .post-attachment-proof{margin:.5rem 0 0;border-top:1px solid var(--rule);padding-top:.35rem}
+  .post-attachment-proof summary{cursor:pointer;min-height:44px;color:var(--ink-muted);
+    font-family:var(--mono);font-size:.66rem;line-height:1.5;display:flex;align-items:center}
+  .post-attachment-proof summary:hover,.post-attachment-proof summary:focus-visible{color:var(--ink)}
+  .post-attachment-facts{display:grid;grid-template-columns:minmax(5.5rem,.35fr) minmax(0,1fr);
+    gap:.25rem .6rem;margin:.25rem 0 0;font-family:var(--mono);font-size:.64rem;line-height:1.45}
+  .post-attachment-facts dt{color:var(--ink-muted)}
+  .post-attachment-facts dd{margin:0;color:var(--ink-soft);overflow-wrap:anywhere}
   /* Signing-key diagnostics remain in the raw feed under Board details. */
   .post-key{display:none}
   .post-empty{color:var(--ink-muted);font-family:var(--mono);font-size:.7rem}
@@ -69,7 +93,11 @@
   .proof-links a{font-family:var(--mono);font-size:.68rem;border:1px solid var(--rule-strong);
     border-radius:4px;padding:.5rem .65rem;text-decoration:none}
   @media(max-width:760px){.board-tools{grid-template-columns:1fr}}
-  @media(max-width:600px){.board-stream{max-height:26rem}}
+  @media(max-width:600px){
+    .board-stream{max-height:26rem}
+    img.post-attachment-media,video.post-attachment-media{max-height:18rem}
+    .post-attachment-facts{grid-template-columns:1fr}
+  }
 </style>
 </head>
 <body class="doc">
@@ -175,6 +203,6 @@ curl -s https://bulletin.zaindharper.workers.dev/.well-known/agent-work.json</co
 </article>
 </main>
 
-<script src="system/bulletin-board.js?v=20260902-creative-chassis" defer></script>
+<script src="system/bulletin-board.js?v=20260907-media-renderer" defer></script>
 </body>
 </html>
