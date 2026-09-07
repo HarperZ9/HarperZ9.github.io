@@ -1,36 +1,118 @@
 /* Editorial control chrome for Studio, Gallery, Loom, and Retro Engine. */
 body.instrument-surface{
   color-scheme:dark light;
-  --chrome-ground:oklch(15% .025 286);
-  --chrome-ground-soft:oklch(18% .025 286/.92);
-  --chrome-surface:oklch(20% .022 286/.86);
-  --chrome-surface-strong:oklch(24% .023 286/.94);
-  --chrome-ink:oklch(96% .012 300);
-  --chrome-soft:oklch(80% .018 300);
-  --chrome-muted:oklch(66% .018 300);
-  --chrome-line:oklch(74% .025 300/.24);
-  --chrome-line-strong:oklch(86% .018 300/.42);
-  --chrome-accent:oklch(83% .17 129);
-  --chrome-accent-soft:oklch(83% .17 129/.16);
-  --chrome-focus:oklch(88% .11 196);
+  --chrome-ground:#101416;
+  --chrome-ground-soft:#13191b;
+  --chrome-surface:#1b2528;
+  --chrome-surface-strong:#233034;
+  --chrome-ink:#eaf5f6;
+  --chrome-soft:#b4c5c9;
+  --chrome-muted:#8fa8ad;
+  --chrome-line:#42555a;
+  --chrome-line-strong:#647b81;
+  --chrome-accent:#8ee3f2;
+  --chrome-accent-soft:color-mix(in oklab,var(--chrome-accent) 15%,transparent);
+  --chrome-focus:#8ee3f2;
+  --chrome-verdict:#a7e888;
+  --chrome-drift:#f0a06f;
+  --reading-paper:var(--chrome-ground);
+  --reading-ink:var(--chrome-ink);
+  --reading-soft:var(--chrome-soft);
+  --reading-link:var(--chrome-accent);
+  --reading-rule:var(--chrome-line);
+  --reading-panel:var(--chrome-surface);
   --void:var(--chrome-ground);
   --void-opaque:var(--chrome-ground);
   --paper:var(--chrome-ground);
+  --paper-2:var(--chrome-surface);
+  --page:var(--chrome-ground);
+  --page-sunk:var(--chrome-ground-soft);
+  --backdrop:var(--chrome-ground);
   --bone:var(--chrome-ink);
+  --ink:var(--chrome-ink);
+  --ink-soft:var(--chrome-soft);
+  --ink-muted:var(--chrome-muted);
+  --ink-faint:var(--chrome-muted);
   --muted:var(--chrome-soft);
+  --soft:var(--chrome-soft);
+  --tag:var(--chrome-soft);
+  --faint:var(--chrome-muted);
   --prussian:var(--chrome-muted);
   --hairline:var(--chrome-line);
   --line:var(--chrome-line);
-  --line-soft:oklch(74% .025 300/.14);
+  --line-soft:color-mix(in oklab,var(--chrome-line) 52%,transparent);
   --card:var(--chrome-surface);
+  --panel:var(--chrome-surface);
   --surface:var(--chrome-surface);
   --raised:var(--chrome-surface-strong);
+  --orange:var(--chrome-accent);
+  --ember:var(--chrome-drift);
   --signal:var(--chrome-accent);
-  background:var(--chrome-ground);
+  --focus:var(--chrome-focus);
+  --teal:var(--chrome-accent);
+  --teal-soft:var(--chrome-accent);
+  --verified:var(--chrome-verdict);
+  --match:var(--chrome-verdict);
+  --gold:var(--chrome-verdict);
+  --drift:var(--chrome-drift);
+  --unverif:var(--chrome-muted);
+  --zentropy-void:var(--chrome-ground);
+  --zentropy-ink:var(--chrome-ink);
+  --zentropy-ink-2:var(--chrome-soft);
+  --zentropy-muted:var(--chrome-soft);
+  --zentropy-faint:var(--chrome-muted);
+  --zentropy-signal:var(--chrome-accent);
+  --zentropy-rust:var(--chrome-drift);
+  background:#101416;
+  color:var(--chrome-ink);
 }
 
 body.instrument-surface::after{
   display:none;
+}
+
+body.instrument-surface :is(.frame,.mv,section.mv,.studio-media-first){
+  background:var(--chrome-ground);
+  color:var(--chrome-ink);
+}
+
+body.instrument-surface.inner-clean:not(.studio-page):not(.studio-app),
+body.instrument-surface.inner-clean:not(.studio-page):not(.studio-app) .frame,
+body.instrument-surface.inner-clean:not(.studio-page):not(.studio-app) main{
+  background:var(--chrome-ground);
+  color:var(--chrome-ink);
+}
+
+body.instrument-surface .site-nav{
+  background:color-mix(in oklab,var(--chrome-ground) 94%,transparent);
+  border-bottom-color:color-mix(in oklab,var(--chrome-line) 78%,transparent);
+  color:var(--chrome-ink);
+  text-shadow:none;
+}
+
+body.instrument-surface .site-nav :is(.sn-home,.sn-brand-word){
+  color:var(--chrome-ink);
+  text-shadow:none;
+}
+
+body.instrument-surface .site-nav :is(.sn-links a,.sn-more summary,.sn-more-list a){
+  color:var(--chrome-soft);
+  text-shadow:none;
+}
+
+body.instrument-surface .site-nav :is(.sn-links a:hover,.sn-links a:focus-visible,.sn-more summary:hover,.sn-more summary:focus-visible,.sn-links a.is-active,.sn-links a[aria-current="page"],.sn-more[data-current="true"]>summary){
+  color:var(--chrome-accent);
+  border-color:var(--chrome-accent);
+}
+
+body.instrument-surface .site-nav .sn-more summary::after{
+  color:var(--chrome-accent);
+}
+
+body.instrument-surface .site-nav .sn-more-list{
+  background:var(--chrome-ground);
+  border-color:var(--chrome-line);
+  box-shadow:none;
 }
 
 body.instrument-surface :is(.studio-rail,.studio-panel,.re-panel,.rail-scroll,.panel-scroll,.studio-primary-stage,.re-stage,.desk-stage,.desk-rail,.desk-controls,.re-actions,.re-chips,.desk-chips,.at-chips,.rt-group,.rt-plot-row,.rt-plot-chips,.feature-stack-grid,.chat-input,.mc-actions){
@@ -153,6 +235,129 @@ body.instrument-surface :is(.re-hint,.hint,.src-hint,.transform-note,.rail-own,.
   max-width:65ch;
 }
 
+body.instrument-surface.studio-page .studio-media-first .source-group-label{
+  font-family:var(--body);
+  font-size:.76rem;
+  font-weight:700;
+  letter-spacing:0;
+  line-height:1.2;
+  text-transform:none;
+  color:var(--chrome-soft);
+}
+
+body.instrument-surface.studio-page .studio-media-first .source-menu button{
+  min-height:2.2rem;
+  padding:.48rem .64rem;
+  border-color:var(--chrome-line);
+  background:transparent;
+  color:var(--chrome-soft);
+  font-family:var(--body);
+  font-size:.78rem;
+  font-weight:650;
+  letter-spacing:0;
+  line-height:1.18;
+  text-transform:none;
+}
+
+body.instrument-surface.studio-page .studio-media-first .source-menu button:is(:hover,:focus-visible){
+  color:var(--chrome-ink);
+  border-color:var(--chrome-line-strong);
+}
+
+body.instrument-surface.studio-page .studio-media-first .source-menu button[aria-selected="true"]{
+  border-color:var(--chrome-accent);
+  background:var(--chrome-accent-soft);
+  color:var(--chrome-ink);
+}
+
+body.instrument-surface :is(.studio-atelier .at-glab,.studio-media-first .studio-atelier .at-glab,.studio-rail .studio-atelier .at-glab,.re-group .re-lab,.dk-group .dk-group-lab){
+  color:var(--chrome-muted);
+  font-family:var(--body);
+  font-size:.8rem;
+  font-weight:700;
+  letter-spacing:0;
+  line-height:1.25;
+  text-transform:none;
+}
+
+body.instrument-surface :is(.studio-atelier .at-glab .hint,.studio-media-first .studio-atelier .at-glab .hint,.studio-rail .studio-atelier .at-glab .hint,.re-group .re-hint){
+  color:var(--chrome-soft);
+  font-family:var(--body);
+  font-weight:500;
+  letter-spacing:0;
+  text-transform:none;
+}
+
+body.instrument-surface :is(.engine-statusbar [id^="engine-status-"],.studio-console-status,.studio-watch-status,.poster-status,.desk-status,.re-status,.mc-status,.at-gate){
+  color:var(--chrome-accent);
+}
+
+body.instrument-surface .engine-statusbar b{
+  color:var(--chrome-ink);
+  font-family:var(--body);
+  letter-spacing:0;
+  text-transform:none;
+}
+
+body.instrument-surface .exh-note a{
+  color:var(--chrome-accent);
+  font-weight:700;
+  text-decoration-line:underline;
+  text-decoration-thickness:1px;
+  text-underline-offset:.16em;
+  text-decoration-color:color-mix(in oklab,var(--chrome-accent) 55%,transparent);
+}
+
+body.instrument-surface .exh-note a:is(:hover,:focus-visible){
+  color:var(--chrome-ink);
+  text-decoration-color:currentColor;
+}
+
+body.instrument-surface .retro-lab-links a{
+  color:var(--chrome-accent);
+  text-decoration-color:color-mix(in oklab,var(--chrome-accent) 55%,transparent);
+}
+
+body.instrument-surface .retro-lab-links a:is(:hover,:focus-visible){
+  color:var(--chrome-ink);
+  text-decoration-color:currentColor;
+}
+
+body.instrument-surface.studio-page .mm-describe{
+  color:var(--chrome-soft);
+}
+
+body.instrument-surface.studio-page .mm-ascii{
+  background:var(--chrome-surface);
+  color:var(--chrome-verdict);
+}
+
+body.instrument-surface.studio-page :is(.rail-own,#shelf-hint,.mm-fullread-note,.mm-shapes){
+  color:var(--chrome-soft);
+  font-family:var(--body);
+  font-size:.76rem;
+  letter-spacing:0;
+  line-height:1.5;
+  text-transform:none;
+}
+
+body.instrument-surface.studio-page #st-flow{
+  color:var(--chrome-soft)!important;
+  font-family:var(--body)!important;
+  font-size:.76rem!important;
+  letter-spacing:0!important;
+  line-height:1.5!important;
+}
+
+body.instrument-surface.studio-page .mm-fullread>summary,
+body.instrument-surface.studio-page .mm-readmode .chip{
+  font-family:var(--body);
+  font-size:.76rem;
+  letter-spacing:0;
+  line-height:1.35;
+  text-transform:none;
+}
+
 body.instrument-surface :is(input[type=text],input[type=url],input[type=password],input[type=file],select,textarea,.desk-seed,.poster-seed,.mc-input,.re-in){
   max-width:100%;
   border:1px solid var(--chrome-line);
@@ -257,23 +462,32 @@ body.instrument-surface .chat-input{
 @media (prefers-color-scheme:light){
   body.instrument-surface{
     color-scheme:light;
-    --chrome-ground:oklch(97% .008 286);
-    --chrome-ground-soft:oklch(99% .005 286);
-    --chrome-surface:oklch(100% 0 0/.9);
-    --chrome-surface-strong:oklch(95% .01 286/.95);
-    --chrome-ink:oklch(17% .012 286);
-    --chrome-soft:oklch(34% .018 286);
-    --chrome-muted:oklch(46% .018 286);
-    --chrome-line:oklch(58% .018 286/.28);
-    --chrome-line-strong:oklch(36% .02 286/.45);
-    --chrome-accent:oklch(45% .16 142);
-    --chrome-accent-soft:oklch(45% .16 142/.1);
-    --chrome-focus:oklch(45% .15 225);
-    background:var(--chrome-ground);
+    --chrome-ground:#fafaf8;
+    --chrome-ground-soft:#f6f8f7;
+    --chrome-surface:#f0f3f2;
+    --chrome-surface-strong:#e7ecea;
+    --chrome-ink:#19272b;
+    --chrome-soft:#42575d;
+    --chrome-muted:#5a6f74;
+    --chrome-line:#ccd3d3;
+    --chrome-line-strong:#98aaaa;
+    --chrome-accent:#215a63;
+    --chrome-accent-soft:color-mix(in oklab,var(--chrome-accent) 10%,transparent);
+    --chrome-focus:#215a63;
+    --chrome-verdict:#1f7a52;
+    --chrome-drift:#8a3b12;
+    background:#fafaf8;
   }
 
   body.instrument-surface :is(.frame,.mv,.studio-media-first,.studio-media-first .studio-rail,.studio-perception-panel,.desk-plate-col){
     background:var(--chrome-ground);
+  }
+
+  body.instrument-surface.inner-clean:not(.studio-page):not(.studio-app),
+  body.instrument-surface.inner-clean:not(.studio-page):not(.studio-app) .frame,
+  body.instrument-surface.inner-clean:not(.studio-page):not(.studio-app) main{
+    background:#fafaf8;
+    color:#19272b;
   }
 
   body.instrument-surface :is(.rail-head,.studio-perception-panel .panel,.studio-receipts,.chat-dock,.model-connect,.re-group,.re-controls,.at-group,.rail-group,.dk-group,.render-toolbar){
@@ -291,6 +505,10 @@ body.instrument-surface .chat-input{
 
   body.instrument-surface :is(.viewport-stage,.re-preview,.plate-art,.fixture-art,.desk-var){
     background:#050506;
+  }
+
+  body.instrument-surface.studio-page .mm-ascii{
+    color:#14543d;
   }
 }
 
