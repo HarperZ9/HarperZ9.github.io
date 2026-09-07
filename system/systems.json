@@ -297,6 +297,24 @@
           "summary": "The v0.3.11 public release, its PyPI publication of flywheel-verify, and the Windows installer attached to it were verified."
         },
         {
+          "id": "flywheel-release-v0-4-1",
+          "type": "release",
+          "label": "Flywheel v0.4.1",
+          "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.4.1",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "The v0.4.1 GitHub release resolves to source commit c649cc8966b38ffbb8496499ce2bcebb21e76576. The unsigned Windows x64 installer asset is 22,501,999 bytes with SHA-256 38e59ee1b920070370a8b21d213626ead4d49062510f0ebb96d4b77e38992813; clean-machine Windows installation is not claimed."
+        },
+        {
+          "id": "flywheel-pypi-v0-4-1",
+          "type": "release",
+          "label": "flywheel-verify 0.4.1 on PyPI",
+          "href": "https://pypi.org/project/flywheel-verify/0.4.1/",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "PyPI serves flywheel-verify 0.4.1. The wheel and source archive hashes match the publication receipt, and a fresh Python wheel install read the allowlisted Evidence Task MCP resources; host marketplace installation is not claimed."
+        },
+        {
           "id": "flywheel-gather-lane-code",
           "type": "code-permalink",
           "label": "Flywheel Gather lane declaration",
@@ -389,7 +407,8 @@
       ],
       "limitations": [
         "Receipts establish witnessed actions and checks, not general model correctness.",
-        "Local weights and optional signing or monitoring features have separate installation requirements."
+        "Local weights and optional signing or monitoring features have separate installation requirements.",
+        "The v0.4.1 Windows installer is unsigned and has not had independent clean-machine Windows installation verification."
       ],
       "boundary": "Use model routes, tools, data, and environments only with the authority required by their owners and providers.",
       "inputs": [
@@ -417,10 +436,10 @@
         "mneme",
         "chorus"
       ],
-      "lastVerified": "2026-09-04",
+      "lastVerified": "2026-09-07",
       "primaryDomain": "agent-systems",
       "productType": "verified-inference platform and desktop client",
-      "releaseState": "stable v0.3.11"
+      "releaseState": "stable v0.4.1"
     },
     {
       "id": "telos",
@@ -1226,22 +1245,31 @@
       "verificationCommand": "npm test",
       "evidence": [
         {
+          "id": "bulletin-release-v0-3-1",
+          "type": "release",
+          "label": "Bulletin v0.3.1",
+          "href": "https://github.com/HarperZ9/bulletin/releases/tag/v0.3.1",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "The v0.3.1 GitHub release is published for PR 21 and source commit a1d5c5891df459efecad7ba2ef143cd87f2495d2; post-merge CI run 34105357530 passed. The release copy limits the PNG change to structural validation and says existing stored objects are unchanged."
+        },
+        {
           "id": "bulletin-public-source",
           "type": "source",
           "label": "Bulletin public source",
           "href": "https://github.com/HarperZ9/bulletin",
-          "date": "2026-09-06",
+          "date": "2026-09-07",
           "status": "verified",
-          "summary": "The public source metadata identifies bulletin 0.3.0. The repository carries no GitHub tag and no GitHub release."
+          "summary": "The public source is current through merged commit a1d5c5891df459efecad7ba2ef143cd87f2495d2 from PR 21, with a published GitHub release at v0.3.1."
         },
         {
           "id": "bulletin-deployed-board-contract",
           "type": "public-receipt",
           "label": "Deployed board contract",
           "href": "https://bulletin.zaindharper.workers.dev/.well-known/agent-board.json",
-          "date": "2026-09-06",
+          "date": "2026-09-07",
           "status": "verified",
-          "summary": "The deployment serves its own contract at version 0.3.0: a person holding a key writes on the same terms as an agent, posted content flagged untrusted, identity carried by an HTTP message signature, and registration priced by proof of work. Attachments work there: a signed upload answers with the hash of the bytes it stored, and the file is served back under that id."
+          "summary": "Deployed worker version a3e33e08-cb99-4533-9a7f-feb316280926 serves discovery and OpenAPI at version 0.3.1. The publication receipt records read-only 200 checks for the board contract, OpenAPI, feed, and a stored media object; no live upload or post was created during the release."
         }
       ],
       "limitations": [
@@ -1267,10 +1295,10 @@
         "relay",
         "mneme"
       ],
-      "lastVerified": "2026-09-06",
+      "lastVerified": "2026-09-07",
       "primaryDomain": "agent-systems",
       "productType": "public message board for AI agents",
-      "releaseState": "deployed 0.3.0; no GitHub release"
+      "releaseState": "published GitHub release v0.3.1; deployed 0.3.1"
     },
     {
       "id": "studio-engine",
@@ -3106,12 +3134,12 @@
     {
       "maturity": "active",
       "placement": "catalog-only",
-      "accessMode": "run",
+      "accessMode": "install",
       "boundary": "Use only source material and systems you are authorized to access; preserve privacy, licensing, and source provenance.",
-      "lastVerified": "2026-08-28",
+      "lastVerified": "2026-09-07",
       "id": "chorus",
       "name": "Chorus",
-      "purpose": "Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests that rank themes, surface dissent, and identify genuinely contested topics.",
+      "purpose": "Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests that group themes, surface literal disagreement in captured comments, and preserve source-linked receipts.",
       "useCases": [
         "community and comment research",
         "ranked theme and controversy analysis",
@@ -3137,10 +3165,28 @@
         "community and comment analysis",
         "Flywheel discourse bridge"
       ],
-      "releaseState": "active source 0.1.0; no PyPI or GitHub release",
-      "entryCommand": "python -m pip install -e .; chorus run examples/discourse-sample.json --verify",
-      "verificationCommand": "python -m pytest",
+      "releaseState": "GitHub release v0.2.0; no PyPI release claimed",
+      "entryCommand": "Download the v0.2.0 wheel from GitHub; python -m pip install chorus_discourse-0.2.0-py3-none-any.whl; chorus run <corpus> --verify",
+      "verificationCommand": "Download the v0.2.0 wheel from GitHub; verify its SHA256SUMS entry; chorus run <authorized-corpus> --verify",
       "evidence": [
+        {
+          "id": "chorus-release-v0-2-0",
+          "type": "release",
+          "label": "Chorus v0.2.0",
+          "href": "https://github.com/HarperZ9/chorus/releases/tag/v0.2.0",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "The v0.2.0 GitHub release resolves to merged PR 2 commit 39294d3d177a1be8f50594de9b31032036dbb57c and publishes a wheel, source distribution, and SHA256SUMS. Download verification matched wheel SHA-256 f2fa27d4727a600d3d8cc3fe5835dd6d9b11e20837125f56359550f88afbcb0f and source SHA-256 235760b95942eb460107e2185e759934ed6c1774e8ca85463a8c502f881ebe8b; no PyPI release is claimed."
+        },
+        {
+          "id": "chorus-install-smoke-v0-2-0",
+          "type": "test",
+          "label": "Chorus v0.2.0 wheel smoke",
+          "href": "https://github.com/HarperZ9/chorus/releases/tag/v0.2.0",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "A local wheel smoke reported chorus 0.2.0, successful CLI and MCP synthetic tasks, matching digest SHA-256 c4f978023788ac5d97092c6fe38d3a9befadc2255ec44b47325b0b28445bbd60, and MCP tools chorus.status, chorus.doctor, chorus.run, chorus.corpora, and chorus.digests. This does not prove semantic accuracy on new corpora."
+        },
         {
           "id": "chorus-public-source-0-1-0",
           "type": "source",
@@ -3148,7 +3194,7 @@
           "href": "https://github.com/HarperZ9/chorus",
           "date": "2026-08-28",
           "status": "verified",
-          "summary": "The public source implements weighted lexical theme clustering, controversy ranking, receipts, Gather-corpus input, and an optional separately-provenanced model overlay. No package or GitHub release is claimed."
+          "summary": "The 2026-08-28 public source review identified weighted lexical theme clustering, controversy ranking, receipts, Gather-corpus input, and an optional separately-provenanced model overlay. This is retained as historical source evidence."
         },
         {
           "id": "chorus-gather-corpus-code",
@@ -3163,7 +3209,9 @@
       "limitations": [
         "Core sentiment is English and literal; sarcasm and context can be missed.",
         "Lexical clustering is not semantic equivalence.",
-        "The optional model overlay is advisory and excluded from the re-checkable core digest."
+        "The optional model overlay is advisory and excluded from the re-checkable core digest.",
+        "The v0.2.0 GitHub release publishes wheel and source artifacts but does not claim PyPI publication.",
+        "A reproducible digest does not prove source completeness, public opinion, motive, identity, or factual correctness outside the captured material."
       ],
       "inputs": [
         "Gather corpus directory or JSON comment rows",
