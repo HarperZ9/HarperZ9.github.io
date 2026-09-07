@@ -1,0 +1,27 @@
+/* A public reading specimen. Private development fonts are not served here. */
+body.typography-page { margin: 0; }
+body.typography-page .type-sheet { width: min(100% - 2.5rem, 68rem); margin: 0 auto; padding-block: clamp(2.5rem, 7vw, 6rem); }
+.typography-page .type-opening { max-width: 46rem; margin-bottom: clamp(3rem, 7vw, 6rem); }
+html body.typography-page .type-opening h1 { font-size: clamp(2.7rem, 6.5vw, 5.5rem); line-height: 1.04; letter-spacing: -.035em; margin: 0 0 1.5rem; }
+.typography-page .type-intro { font-size: clamp(1.15rem, 2vw, 1.4rem); max-width: 46ch; }
+.typography-page .type-pair { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 5rem); }
+.typography-page .type-pair article { min-width: 0; border-top: 1px solid var(--reading-rule); padding-top: 1.5rem; }
+.typography-page p { font-size: 1.125rem; line-height: 1.7; max-width: 62ch; overflow-wrap: anywhere; }
+.typography-page .type-caption { font-size: 1rem; color: var(--reading-soft); margin-block: .5rem; }
+.typography-page .type-sans { font-family: "Hanken Grotesk", sans-serif; }
+.typography-page .type-display { font-family: "Conso", serif; }
+.typography-page .type-large { font-size: clamp(6rem, 15vw, 12rem); line-height: 1; margin-block: 2rem; letter-spacing: -.04em; }
+.typography-page #display-sample { font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.25; margin-block: 1.5rem; }
+.typography-page :is(.type-characters,.type-next) { margin-top: clamp(3rem, 7vw, 6rem); padding-top: 2rem; border-top: 1px solid var(--reading-rule); }
+.typography-page .type-alphabet { margin-top: 2rem; }
+.typography-page .type-alphabet p { font-size: clamp(1.35rem, 3vw, 2rem); margin-block: .75rem; letter-spacing: .035em; }
+.typography-page .type-next nav { display: flex; flex-wrap: wrap; gap: .5rem 2rem; margin-top: 1.5rem; }
+.typography-page .type-next nav a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; }
+.typography-page .type-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; width: min(100% - 2.5rem, 68rem); margin: 0 auto; padding-block: 1.5rem 3rem; border-top: 1px solid var(--reading-rule); font-size: 1rem; }
+@media (max-width: 640px) { .typography-page .type-pair { grid-template-columns: minmax(0, 1fr); } }
+@media print {
+  .typography-page .type-sheet { width: 100%; padding: 0; }
+  .typography-page .type-opening { margin-bottom: 2rem; }
+  .typography-page .type-large { font-size: 5rem; }
+  .typography-page article { break-inside: avoid; }
+}

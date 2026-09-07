@@ -24,6 +24,7 @@ NON_DEPLOYABLE_HTML_DIRS = {
 DEFAULT_ASSET_REVISION = "20260902-creative-chassis"
 READING_CASCADE_REVISION = "20260906-reading-cascade"
 REVIEWED_ASSET_REVISIONS = {
+    "system/type-specimen.css": "20260907",
     "system/system.css": READING_CASCADE_REVISION,
     "system/doc.css": READING_CASCADE_REVISION,
     "system/publication-article.css": READING_CASCADE_REVISION,
@@ -722,6 +723,7 @@ def test_current_zentropy_assets_are_shipped() -> None:
 
 def test_representative_pages_keep_route_art_metadata() -> None:
     pages = (
+        "typeface.html",
         "overview.html",
         "catalog.html",
         "research.html",

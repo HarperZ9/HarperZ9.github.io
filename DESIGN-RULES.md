@@ -1,9 +1,9 @@
-# Project Telos site design rules
+# Portfolio site design rules
 
-These are the governing rules for the portfolio site as of 2026-07-09. The old
-white ceramic/editorial layer is retired for the public site. The current system
-is dark-first, generative, broad-scope, and connected through one shared
-navigation and design cascade.
+These are the governing rules for the portfolio site as of 2026-09-06. The
+current direction is a clean, professional editorial workshop, with comfortable
+light and dark modes and one connected navigation system. This supersedes the
+July dark-first, full-field generative direction.
 
 ## 1. One public map, many working surfaces
 
@@ -19,56 +19,53 @@ Every page should answer three questions:
 
 ## 2. Visual thesis
 
-The visual world is a model-native workshop: dark mineral field, procedural
-growth, generative specimens, compact route maps, and precise tool surfaces. It
-should feel built, not templated. Use generative art as craft, atmosphere, and
-evidence that the system can make its own material, not as decoration pasted
-behind text.
+Lead with the work and give it room. Use clear titles, readable paragraphs,
+purposeful figures and direct next actions. Essays should read like essays;
+working tools should retain their controls and outputs. Keep useful generative
+art as an exhibit, not an ambient layer competing with prose. Do not flatten
+every surface into the same card grid.
 
 Reference material:
 
 - private inspiration references stay outside the public repository
 - procedural field loader: `system/generative-field.js`
 - procedural engine source: `system/hero-gl.js`
-- home spectrum shell: canonical `src/App.css` in `HarperZ9/telos-v2`
-- shared public cascades: `system/system.css` and `system/doc.css`
+- canonical home source: `home/src/` in this repository
+- shared public cascades: `system/system.css`, `system/doc.css` and the
+  reading, report, demo and instrument editorial stylesheets in `system/`
+- Telos V2 is reference material, not the publication or deployment authority
 
 ## 3. Palette
 
-Dark-first. The page ground is near-black with violet and magenta depth. The
-primary signal is cyan. Ember, lime, violet, and muted lavender are supporting
-signals for lanes, demos, and generated material. Light ceramic surfaces are
-allowed only for generated social cards or print output.
-
-Never reintroduce beige, cream, sand, paper, or generic editorial monochrome as
-the screen default.
+Support light paper and quiet dark grounds. Keep body text high-contrast and
+secondary text readable. Use restrained accents for links, focus and meaningful
+states; provide text or shape as well as color for verdicts. Figures may use a
+limited explanatory palette. Do not use color or animated backgrounds to turn
+metadata into the visual headline.
 
 ## 4. Typography
 
-Use the committed system fonts:
+Use two principal families with distinct roles: readable text and expressive
+display. The current shared delivery uses bundled Hanken Grotesk and Conso;
+verify each surface rather than assuming every legacy page has migrated. A
+monospaced fallback is appropriate for code, not for an extra decorative voice.
 
-- brand display: Telos Display 0.5, generated from `tools/fonts/build_telos_display.py`. The current build is a readable-outline derivation from Kilon: deterministic narrowing, subtle slant, contour breathing, local outline edits, and a dedicated lowercase l terminal so the face can carry identity without becoming illegible.
-- readable display: Kilon for normal headings, document titles, labels, and mixed-case page delivery
-- body: Hanken Grotesk
-- mono/readout: JetBrains Mono or the home mono face where already bundled
+Use mixed-case headings, comfortable line lengths and clear size/weight
+hierarchy. Avoid repeated tiny tracked uppercase labels, category eyebrows and
+ornamental wordmarks. Check actual paragraphs, numerals and ambiguous glyphs at
+reading sizes, not only large specimen headlines.
 
-Type should feel instrument-grade: large where it carries the page, precise in
-readouts, and readable in essays. Avoid editorial serif affect, drop caps, and
-repeated tiny section eyebrows as default scaffolding.
-
-`typeface.html` is the public specimen surface. Keep it wired into the shared
-nav and use it as the reference for the generated face: character coverage,
-lookalike differentiation, readable lowercase forms, local font loading, the
-0.5 generated-outline build, and the rule that Telos Display carries identity
-while Kilon and Hanken Grotesk carry reading.
+Original custom families are being developed privately. Do not publish their
+engine, masters or development binaries here. Do not reinstate the old derived
+display face as the default or imply that a local build establishes retail
+rights. Only reviewed, explicitly released font artifacts belong on the public
+site. `typeface.html` is a public specimen, not a private foundry interface.
 
 ## 5. Generative material
 
 Generative art can appear as:
 
-- a full-field background under a strong veil
 - a clipped specimen texture
-- an ambient signal layer
 - a tool-output or artifact exhibit
 - a motion or canvas scene with reduced-motion fallback
 - a route-seeded orbit, contour, crystal, or flow-field specimen generated in browser
@@ -105,8 +102,8 @@ possible.
 
 ## 7. Interaction and motion
 
-Motion should read like entering a live system: scanning, sensing, drawing,
-generating, or responding. It should not be a generic fade-on-scroll reflex.
+Motion should explain a change or demonstrate a tool. It should not be an
+ambient requirement or a generic fade-on-scroll reflex.
 Every motion path must honor `prefers-reduced-motion`. Content must be visible
 without animation.
 
@@ -114,13 +111,17 @@ without animation.
 
 - no glassmorphism as the default material
 - no gradient text as the primary emphasis
-- no beige or cream page ground on screen
 - no generic card grid as the main page structure
-- no old editorial-magazine look
+- no ornamental metadata rails, repeated seals or hashes in the reading path
 - no accountability/proof/trust framing as the site-level thesis
 - no copied inspiration images as public assets
 - no hand-authored per-page hero style that fights the shared system
 - no hidden text, broken links, inaccessible nav, or motion-gated content
+
+Keep provenance, dates, sources and limitations accessible through plain links,
+captions or optional details. Removing clutter must not remove evidence or
+functional controls. Preserve discoverable routes to Bulletin, Flywheel,
+publications and the broader workshop.
 
 ## 9. Verification
 
@@ -131,5 +132,7 @@ python -m pytest tests/test_portfolio_visual_contract.py
 node tests/linkcheck.mjs
 ```
 
-For CSS or link-heavy changes, also inspect desktop and mobile renderings in a
-browser and run any targeted page tests that touch the changed surface.
+For CSS or link-heavy changes, inspect desktop and mobile renderings in light
+and dark modes and run targeted page checks. Verify keyboard access, reflow,
+reduced motion and readable print output. Inventory all public route families;
+representative screenshots alone are not proof that every surface is complete.

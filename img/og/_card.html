@@ -25,6 +25,11 @@
   .publication-card .word,.publication-card .headline{font-family:"Hanken Grotesk",system-ui,sans-serif;font-variant:normal}
   .publication-card .word{font-weight:700;letter-spacing:-.02em}
   .publication-card .headline{font-size:30px;line-height:1.35;color:var(--ink)}
+  .editorial-card,.editorial-card .card{background:#fafaf8;color:#19272b}
+  .editorial-card :is(#bg,.frame,.glyph){display:none}
+  .editorial-card .content{padding:76px 88px;justify-content:center}
+  .editorial-card .word{margin:0;max-width:900px;font-family:"Conso",serif;font-variant:normal;font-size:116px;font-weight:400;line-height:1.05;color:#19272b;text-shadow:none}
+  .editorial-card .headline{margin-top:40px;font:28px/1.4 "Hanken Grotesk",sans-serif;color:#42575d}
 </style>
 </head>
 <body>
@@ -44,6 +49,7 @@
   var fb={word:"buildlang",headline:"Typed effects in, verified C out."};
   var data=(window.CARD_DATA&&window.CARD_DATA[key])||fb;
   if(data.publication)document.body.classList.add("publication-card");
+  if(data.editorial)document.body.classList.add("editorial-card");
   function rhino(k){return k.split('-').map(function(w,i){return i===0?w:(w.charAt(0).toUpperCase()+w.slice(1));}).join('');}
   // Prefer the word the data supplies. The template derived it from the key
   // and ignored data.word entirely, so every entry carried a field that did

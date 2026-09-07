@@ -55,7 +55,7 @@ accessible, and honest about maturity; private systems stay bounded off-page.
 
 ## Pages
 
-- `index.html` -- generated React home from the verified `telos-v2` build.
+- `index.html` -- generated React home from this repository's `home/` source.
 - `papers/` -- direct PDFs of the six published papers, built from the
   LaTeX sources with tectonic.
 - `overview.html` -- the compact product map, grouped by primary domain.
@@ -67,7 +67,7 @@ accessible, and honest about maturity; private systems stay bounded off-page.
 - `research.html` | `publications.html` -- research index and papers.
 - `writing.html` -- essays, notes, and the public test-case intake.
 - `catalog.html` | `guide.html` -- the full catalog and the site guide.
-- `typeface.html` -- Telos Display specimen and synthesis notes.
+- `typeface.html` -- current bundled typography specimens and original-type development status.
 - `cv.html` | `person.html` | `resume.html` -- about and career surfaces.
 
 ## Public lineup
