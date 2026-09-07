@@ -551,6 +551,14 @@ class AtlasScene {
 
   setPaused(paused) { this.paused = paused; }
 
+  setCameraView({ yaw, pitch, distance }) {
+    if (![yaw, pitch, distance].every(Number.isFinite)) return;
+    this.yaw = this.targetYaw = clampN(yaw, -1.25, 1.25);
+    this.pitch = this.targetPitch = clampN(pitch, -.72, .72);
+    this.distance = clampN(distance, .18, 7.5);
+    this.scheduleSort(); this.dirty = true;
+  }
+
   receipt() {
     return buildRunReceipt(this.manifest, {
       splatsDrawn: this.activeCount,

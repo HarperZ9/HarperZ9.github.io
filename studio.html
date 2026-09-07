@@ -55,7 +55,7 @@
     .studio-app{grid-template-columns:minmax(258px,19.5rem) minmax(0,1fr) minmax(300px,21.5rem)}
   }
 </style>
-<link rel="stylesheet" href="system/instrument-editorial.css?v=20260907-mobile-controls">
+<link rel="stylesheet" href="system/instrument-editorial.css?v=20260907-studio-controls">
 <link rel="stylesheet" href="system/poster-editor.css?v=20260907-project-files">
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
@@ -631,20 +631,16 @@
       <section class="src-block" id="src-spatial" role="tabpanel" aria-label="Spatial world controls" hidden>
         <div class="fractal-source" id="spatial-source">
           <div class="at-panel">
-            <p class="transform-note">Certified world packages on the hybrid renderer. Every sidecar is re-hashed against its manifest receipt before anything renders. Crystal City is the spatial session's generated artwork: semantic depth meshes carry the composition, Gaussian primitives carry only the atmosphere, and the invented support fill stays labeled. Drag the frame to move inside the disclosed camera boundary; splats follow your device tier's budget.</p>
+            <p class="transform-note">Explore an artwork in depth. Choose a world, drag to move the camera, then adjust its light and form. These are authored scenes and interpretations of images, not measured 3D scans.</p>
             <details class="rail-group" open>
               <summary>World</summary>
               <div class="at-group">
-                <span class="at-glab">Package <span class="hint">reconstruction &middot; authored: two lanes, each labeled</span></span>
+                <span class="at-glab">Collection</span>
                 <div class="at-chips" role="group" aria-label="World package">
                   <button type="button" class="chip active" data-world="atlas">The Atlas</button>
                   <button type="button" class="chip" data-world="crystal-city">Crystal City</button>
                   <button type="button" class="chip" data-world="folded-light">Folded light</button>
                 </div>
-              </div>
-              <div class="at-group">
-                <span class="at-glab">Receipt <span class="hint">sidecar bytes against the manifest hash</span></span>
-                <span class="at-seed" id="sp-verdict" data-verdict="pending" style="width:auto;text-align:center">pending</span>
               </div>
             </details>
             <details class="rail-group" open id="sp-atlas-block">
@@ -654,7 +650,7 @@
                 <select id="sp-scene" class="at-seed" style="width:100%" aria-label="Atlas scene"></select>
               </div>
               <div class="at-group">
-                <span class="at-glab">Transform <span class="hint">a spatial transformation of the field, never an image filter</span></span>
+                <span class="at-glab">Form</span>
                 <div class="at-chips" role="group" aria-label="Atlas transform mode">
                   <button type="button" class="chip active" data-atlas-mode="0">Field</button>
                   <button type="button" class="chip" data-atlas-mode="1">Inversphere</button>
@@ -683,7 +679,6 @@
                 <input type="range" class="at-slider" id="sp-compare-mix" min="0" max="1" step="0.01" value="0.5" aria-label="Compare position or overlay mix" hidden>
                 <p class="src-hint" id="sp-compare-note" hidden></p>
               </div>
-              <p class="src-hint" id="sp-boundary" data-claim-boundary></p>
               <p class="src-hint">Drag to orbit, wheel to dolly, double-click resets. Needs WebGL2; the hybrid worlds run everywhere.</p>
             </details>
             <details class="rail-group" open id="sp-hybrid-block" hidden>
@@ -706,11 +701,20 @@
               </div>
             </details>
             <div class="at-actions">
-              <button class="btn ghost" id="sp-pause" type="button" aria-pressed="false">pause motion</button>
-              <button class="btn ghost" id="sp-receipt" type="button" title="Export the run receipt: package, boundary, budget, controls">export run receipt</button>
+              <button class="btn ghost" id="sp-pause" type="button" aria-pressed="false">Pause motion</button>
+              <button class="btn" id="sp-copy-view" type="button">Copy view link</button>
             </div>
+            <input id="sp-view-url" class="at-seed" type="text" readonly hidden aria-label="Shareable spatial view link">
+            <p class="src-hint" id="sp-view-status" role="status">Camera and settings stay in the address bar as you work.</p>
+            <details class="rail-group">
+              <summary>Source &amp; rendering details</summary>
+              <p class="src-hint">Package files are checked against their published hashes before rendering. A match checks the files, not the accuracy of the spatial interpretation.</p>
+              <span class="at-seed" id="sp-verdict" data-verdict="pending" style="width:auto;text-align:center">pending</span>
+              <p class="src-hint" id="sp-boundary" data-claim-boundary></p>
+              <p class="src-hint" id="sp-render-metrics"></p>
+              <button class="btn ghost" id="sp-receipt" type="button" title="Export the run receipt: package, boundary, budget, controls">Download rendering details</button>
+            </details>
             <p class="src-hint" id="sp-status" aria-live="polite">the world loads when you enter this source</p>
-            <p class="src-hint">Motion is material-scoped: dust drifts, the beam carries current, water shimmers, and the veils breathe; nothing structural ripples. Reduced motion holds a single still frame.</p>
           </div>
         </div>
       </section>
@@ -1432,7 +1436,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20260907-typography-handoff"></script>
+<script type="module" src="system/studio.js?v=20260907-spatial-views"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

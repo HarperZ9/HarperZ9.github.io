@@ -9,9 +9,10 @@
 // package is refused, not softened.
 
 import { validateWorldPackage } from "./engine/world-package.js";
-import { startSpatialScene } from "./spatial-scene.js";
-import { startTexturedScene } from "./spatial-textured.js";
-import { startAtlasScene, projectAabbRect } from "./spatial-atlas.js?v=20260907-covariance";
+import { startSpatialScene } from "./spatial-scene.js?v=20260907-view-links";
+import { startTexturedScene } from "./spatial-textured.js?v=20260907-view-links";
+import { startAtlasScene, projectAabbRect } from "./spatial-atlas.js?v=20260907-view-links";
+import { decodeSpatialView, spatialViewUrl } from "./spatial-view.js?v=20260907-view-links";
 import { acquireContext } from "./spatial-gl.js";
 
 const PACKAGES = Object.freeze({
@@ -26,6 +27,7 @@ let paused = false;
 let currentWorld = DEFAULT_WORLD;
 let currentCanvas = null;
 let currentOpts = null;
+let viewTimer = 0;
 
 function $(id) { return document.getElementById(id); }
 
@@ -96,6 +98,8 @@ function wireHybridControls() {
   for (const [id, valueId] of [["sp-parallax", "sp-parallax-val"], ["sp-drift", "sp-drift-val"], ["sp-glow", "sp-glow-val"], ["sp-water", "sp-water-val"]]) {
     const el = $(id);
     if (!el) continue;
+    el.value = scene.controls[map[id]];
+    if ($(valueId)) $(valueId).textContent = Number(el.value).toFixed(2);
     el.oninput = () => {
       if (scene) scene.setControl(map[id], el.value);
       const out = $(valueId);
@@ -128,6 +132,7 @@ function wireAtlasControls() {
         if (scene === target) {
           setVerdict(verdict);
           announceAtlasScene(meta, verdict);
+          scheduleViewUpdate();
         }
       } catch (err) {
         if (scene === target) status("scene failed: " + (err && err.message ? err.message : String(err)), "bad");
@@ -137,6 +142,7 @@ function wireAtlasControls() {
     };
   }
   document.querySelectorAll("[data-atlas-mode]").forEach((chip) => {
+    chip.classList.toggle("active", Number(chip.dataset.atlasMode) === scene.mode);
     chip.onclick = () => {
       if (!scene || typeof scene.loadScene !== "function") return;
       document.querySelectorAll("[data-atlas-mode]").forEach((b) => b.classList.toggle("active", b === chip));
@@ -147,6 +153,8 @@ function wireAtlasControls() {
   for (const [id, control, valueId] of sliders) {
     const el = $(id);
     if (!el) continue;
+    el.value = scene.controls[control];
+    if ($(valueId)) $(valueId).textContent = Number(el.value).toFixed(2);
     el.oninput = () => {
       if (scene) scene.setControl(control, el.value);
       const out = $(valueId);
@@ -286,8 +294,8 @@ function announceAtlasScene(meta, verdict) {
   const psnr = meta.mean_psnr_after
     ? ` · held-out PSNR ${meta.mean_psnr_after.toFixed(1)} dB mean over ${views || "?"} synthesized views`
     : "";
-  status(`${meta.title} · ${meta.profile} profile · ${(meta.gaussian_count || 0).toLocaleString()} gaussians · receipt ${verdict}${psnr}`,
-    verdict === "MATCH" ? "good" : "");
+  if ($("sp-render-metrics")) $("sp-render-metrics").textContent = `${meta.title} · ${meta.profile} profile · ${(meta.gaussian_count || 0).toLocaleString()} gaussians · receipt ${verdict}${psnr}`;
+  status(`${meta.title} ready. Drag to orbit; scroll to zoom.`, verdict === "MATCH" ? "good" : "");
   const boundary = $("sp-boundary");
   if (boundary) {
     const manifest = scene && scene.manifest;
@@ -306,16 +314,57 @@ function announceAtlasScene(meta, verdict) {
   }, 450);
 }
 
+function currentViewUrl() {
+  if (!scene) return null;
+  const values = scene.receipt().controls;
+  return spatialViewUrl({ version: 1, world: currentWorld, scene: values.scene || null,
+    controls: values, mode: values.mode || 0, camera: values.camera, paused,
+    compare: { mode: compareMode, mix: Number($("sp-compare-mix")?.value ?? .5) } }, location.href);
+}
+
+function scheduleViewUpdate() {
+  clearTimeout(viewTimer);
+  const target = scene;
+  viewTimer = setTimeout(() => {
+    if (!target || target !== scene) return;
+    try {
+      const url = currentViewUrl();
+      if (url) history.replaceState(history.state, "", url);
+      if ($("sp-view-url") && !$("sp-view-url").hidden) $("sp-view-url").value = url || "";
+    } catch (_) { /* An unsupported runtime value must not break rendering. */ }
+  }, 250);
+}
+
 function wireShared() {
   const pause = $("sp-pause");
   if (pause) {
+    pause.textContent = paused ? "Resume motion" : "Pause motion";
+    pause.setAttribute("aria-pressed", String(paused));
     pause.onclick = () => {
       paused = !paused;
       if (scene) scene.setPaused(paused);
-      pause.textContent = paused ? "resume motion" : "pause motion";
+      pause.textContent = paused ? "Resume motion" : "Pause motion";
       pause.setAttribute("aria-pressed", String(paused));
     };
   }
+  const panel = $("spatial-source");
+  if (panel && !panel.dataset.viewWired) {
+    panel.dataset.viewWired = "1";
+    for (const event of ["input", "change", "click"]) panel.addEventListener(event, scheduleViewUpdate);
+  }
+  if (currentCanvas && !currentCanvas.dataset.viewWired) {
+    currentCanvas.dataset.viewWired = "1";
+    for (const event of ["pointerup", "pointercancel", "wheel", "dblclick"]) currentCanvas.addEventListener(event, scheduleViewUpdate);
+  }
+  const copy = $("sp-copy-view");
+  if (copy) copy.onclick = async () => {
+    try {
+      const url = currentViewUrl(); if (!url) return;
+      const field = $("sp-view-url"); field.hidden = false; field.value = url;
+      try { await navigator.clipboard.writeText(url); $("sp-view-status").textContent = "View link copied. Camera and settings are included; animations restart."; }
+      catch (_) { field.focus(); field.select(); $("sp-view-status").textContent = "Copy the selected link. Camera and settings are included; animations restart."; }
+    } catch (_) { $("sp-view-status").textContent = "This view could not be shared. Your scene has not changed."; }
+  };
   const receipt = $("sp-receipt");
   if (receipt) {
     receipt.onclick = () => {
@@ -408,10 +457,17 @@ export async function startSpatial(canvas, opts = {}) {
   const token = (startSpatial._token = (startSpatial._token || 0) + 1);
   const superseded = () => token !== startSpatial._token;
   currentOpts = opts;
+  let sharedView = null, invalidView = false;
+  const firstEntry = !startSpatial._bootConsumed;
   if (!startSpatial._bootConsumed) {
     startSpatial._bootConsumed = true;
     const want = (window.__studioBootWorld || "").trim();
     if (want && PACKAGES[want]) currentWorld = want;
+    const rawView = new URLSearchParams(window.__studioBootSearch || location.search).get("view");
+    if (rawView !== null) {
+      try { sharedView = decodeSpatialView(rawView); currentWorld = sharedView.world; }
+      catch (_) { invalidView = true; }
+    }
   }
   // Fetch and verify the incoming package BEFORE tearing the current world
   // down: the old scene keeps rendering during the download instead of the
@@ -421,6 +477,7 @@ export async function startSpatial(canvas, opts = {}) {
   status("loading the world package…", "");
   const { manifest, base, files, verdict, checked } = await fetchPackage(currentWorld);
   if (superseded()) return { animating: false, splatCount: 0, world: currentWorld, superseded: true };
+  if (sharedView?.world === "atlas" && !manifest.scenes.some(s => s.id === sharedView.scene)) { sharedView = null; invalidView = true; }
   const domCanvas = currentCanvas && currentCanvas.isConnected ? currentCanvas : canvas;
   const next = detachedCanvas(domCanvas);
   const wantsWebgl2 = manifest.mode === "ngsf-atlas";
@@ -434,7 +491,7 @@ export async function startSpatial(canvas, opts = {}) {
       : "WebGL is unavailable on this device");
   }
   if (superseded()) return { animating: false, splatCount: 0, world: currentWorld, superseded: true };
-  stopSpatial();
+  stopSpatial(false);
   domCanvas.replaceWith(next);
   canvas = next;
   currentCanvas = canvas;
@@ -449,7 +506,7 @@ export async function startSpatial(canvas, opts = {}) {
   const sceneOpts = { splatBudget: budget, reducedMotion: !!opts.reducedMotion, gl };
   let started;
   if (manifest.mode === "ngsf-atlas") {
-    const bootScene = (window.__studioBootScene || "").trim();
+    const bootScene = sharedView?.scene || (window.__studioBootScene || "").trim();
     started = await startAtlasScene(canvas, { manifest, baseUrl: base }, {
       ...sceneOpts,
       sceneId: bootScene && manifest.scenes.some((s) => s.id === bootScene) ? bootScene : undefined,
@@ -464,6 +521,13 @@ export async function startSpatial(canvas, opts = {}) {
     return { animating: false, splatCount: 0, world: currentWorld, superseded: true };
   }
   scene = started;
+  paused = sharedView?.paused || false;
+  if (sharedView) {
+    for (const [name, value] of Object.entries(sharedView.controls)) scene.setControl(name, value);
+    if (currentWorld === "atlas") scene.setControl("mode", sharedView.mode);
+    scene.setCameraView(sharedView.camera);
+    scene.setPaused(paused);
+  }
   if (manifest.mode === "ngsf-atlas") {
     setVerdict(scene.sceneVerdict);
     wireAtlasControls();
@@ -475,8 +539,15 @@ export async function startSpatial(canvas, opts = {}) {
     announceHybrid(manifest, verdict, checked);
   }
   window.__spatialScene = scene;   // honest, inspectable (same pattern as __studioCapability)
-  paused = false;
   wireShared();
+  if (sharedView && currentWorld === "atlas") {
+    $("sp-compare-mix").value = sharedView.compare.mix;
+    setCompareMode(sharedView.compare.mode);
+  }
+  if ($("sp-view-status")) $("sp-view-status").textContent = invalidView
+    ? "Unsupported view link. The regular scene is open; no imported settings were applied."
+    : sharedView ? "Shared view restored. Animations restart; rendering detail depends on the device." : "Camera and settings stay in the address bar as you work.";
+  if (!firstEntry) scheduleViewUpdate();
   // Real GPU loss recovery. Intentional teardown (world switch, source exit)
   // marks the canvas first, so this only speaks up for genuine device loss.
   canvas.addEventListener("webglcontextlost", (e) => {
@@ -494,13 +565,18 @@ function announceHybrid(manifest, verdict, checked) {
   const budgetNote = scene.splatsDropped
     ? `${scene.splatCount.toLocaleString()} drawn, ${scene.splatsDropped.toLocaleString()} held back for this tier`
     : `${scene.splatCount.toLocaleString()} drawn`;
-  status(`${manifest.title} · ${manifest.lane} lane · receipt ${verdict} across ${checked} files · ${budgetNote}`,
-    verdict === "MATCH" ? "good" : "");
+  if ($("sp-render-metrics")) $("sp-render-metrics").textContent = `${manifest.title} · ${manifest.lane} lane · receipt ${verdict} across ${checked} files · ${budgetNote}`;
+  if ($("sp-boundary")) $("sp-boundary").textContent = manifest.claim_boundary || manifest.disclosure || "";
+  status(`${manifest.title} ready. Drag to shift your view.`, verdict === "MATCH" ? "good" : "");
   const splatStatus = $("engine-status-splats");
   if (splatStatus) splatStatus.textContent = String(scene.splatCount.toLocaleString());
 }
 
-export function stopSpatial() {
+export function stopSpatial(invalidatePending = true) {
+  // Leaving the source also cancels starts that are still fetching a world.
+  // A start replacing its own old scene keeps its current generation.
+  if (invalidatePending) startSpatial._token = (startSpatial._token || 0) + 1;
+  clearTimeout(viewTimer);
   setCompareMode("off");   // the compare layer and its timer never outlive the source
   if (scene) {
     if (currentCanvas) currentCanvas.dataset.spatialTeardown = "1";

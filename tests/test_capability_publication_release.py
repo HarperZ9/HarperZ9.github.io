@@ -26,6 +26,9 @@ RELEASE_PATHS = (
     "system/workbench.js",
     "system/studio-spatial.js",
     "system/spatial-atlas.js",
+    "system/spatial-scene.js",
+    "system/spatial-textured.js",
+    "system/spatial-view.js",
     "fonts.html",
     "system/font-marketplace.css",
     "system/font-specimen.js",
@@ -245,7 +248,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "f48a2666bc1845a60a699a099f21c3f6486007439c0085789a6116d06e38b053"
+REVIEWED_RELEASE_SHA256 = "ed6c78f92a1a7f50e4f84ba3b79140612ff9a054d4b5420bbde79ac144aed3af"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

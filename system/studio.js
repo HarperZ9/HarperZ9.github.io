@@ -185,7 +185,7 @@ const _voxelPick = document.createElement("canvas");
 // block to the device tier's budget, and holds a still frame under reduced
 // motion (mirrors the neural instrument's static flag).
 let _spatial = null;
-const loadSpatial = lazyLoader(() => import("./studio-spatial.js?v=20260907-covariance"), m => { _spatial = m; });
+const loadSpatial = lazyLoader(() => import("./studio-spatial.js?v=20260907-view-links"), m => { _spatial = m; });
 let _spatialStatic = false;   // true when reduced motion holds a single frame
 
 // BYO media: pixel effects, mesh transforms, universal import/export, local-model adapter.
@@ -681,6 +681,16 @@ function setSource(next) {
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
+  // Spatial view links are recipes for that source, not global Studio state.
+  // Leaving it must not make a reload silently reopen the previous world.
+  if (next !== "spatial") {
+    const url = new URL(location.href);
+    if (url.searchParams.has("view")) {
+      for (const key of ["view", "world", "scene"]) url.searchParams.delete(key);
+      url.searchParams.set("source", next);
+      history.replaceState(history.state, "", url);
+    }
+  }
   document.body.classList.toggle("poster-workspace", next === "poster");
   const analysis = $("studio-analysis");
   if (analysis) analysis.open = next !== "poster";
@@ -823,13 +833,16 @@ function setSource(next) {
       const plan = makeHardwareRenderPlan(_engineCapability, { width: c.width, height: c.height, splats: 10500 }, engineTierOverride);
       try {
         const res = await mod.startSpatial(c, { plan, reducedMotion: reduced });
-        if (epoch !== _sourceEpoch) { mod.stopSpatial(); return; }
+        // The spatial module cleans up its own superseded generation. An old
+        // caller must never stop a newer source entry that is now loading.
+        if (epoch !== _sourceEpoch || res?.superseded) return;
         _spatialStatic = !(res && res.animating);
         startMeterLoop();
         // Context-lost recovery lives in studio-spatial.js: it owns the canvas
         // nodes (a fresh one per world start) and can tell an intentional
         // teardown from a real GPU loss.
       } catch (err) {
+        if (epoch !== _sourceEpoch) return;
         leave3D();
         say("model", "The spatial world failed to start: " + (err && err.message ? err.message : String(err)));
       }

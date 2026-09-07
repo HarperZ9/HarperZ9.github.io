@@ -154,6 +154,11 @@ class SpatialScene {
     this.setCameraTarget(this.target.x + dx, this.target.y + dy, this.target.z + dz);
   }
 
+  setCameraView({ x, y, z }) {
+    if (![x, y, z].every(Number.isFinite)) return;
+    this.setCameraTarget(x, y, z); this.cam = { ...this.target };
+  }
+
   setPaused(paused) {
     const wall = (performance.now() - this.startStamp) / 1000;
     this.motion = paused ? pauseMotion(wall, this.motion) : resumeMotion(wall, this.motion);

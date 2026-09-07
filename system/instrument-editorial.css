@@ -181,7 +181,7 @@ body.instrument-surface :is(.chip,.at-chip,.re-chip){
   background:none;
   box-shadow:inset 0 -1px 0 var(--chrome-line);
   color:var(--chrome-soft);
-  font-family:var(--mono);
+  font-family:var(--body);
   font-size:.875rem;
   font-weight:500;
   letter-spacing:0;
@@ -234,6 +234,26 @@ body.instrument-surface :is(.re-hint,.hint,.src-hint,.transform-note,.rail-own,.
   line-height:1.5;
   max-width:65ch;
 }
+
+body.instrument-surface.studio-page .src-block :is(.at-glab,.src-hint,.transform-note){
+  font-family:var(--body);
+  font-size:.875rem;
+  line-height:1.5;
+}
+
+body.instrument-surface.studio-page .src-block :is(select,input[type="text"]){
+  min-width:0;
+  max-width:100%;
+  min-height:2.35rem;
+  padding:.45rem .55rem;
+  font:400 .875rem/1.4 var(--body);
+  color:var(--chrome-ink);
+  background:var(--chrome-surface);
+  border:1px solid var(--chrome-line);
+  border-radius:6px;
+}
+
+body.instrument-surface.studio-page #sp-view-url{width:100%;box-sizing:border-box}
 
 body.instrument-surface :is(.plate-note,.desk-influence,.desk-status),
 body.instrument-surface p.seal-line{
@@ -554,6 +574,11 @@ body.instrument-surface .chat-input{
 }
 
 @media (max-width:899.98px){
+  body.instrument-surface.studio-page .viewport-stage{
+    position:relative;
+    top:auto;
+    z-index:auto;
+  }
   body.instrument-surface :is(.re-stage,.desk-stage){
     gap:.85rem;
   }
