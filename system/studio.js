@@ -185,7 +185,7 @@ const _voxelPick = document.createElement("canvas");
 // block to the device tier's budget, and holds a still frame under reduced
 // motion (mirrors the neural instrument's static flag).
 let _spatial = null;
-const loadSpatial = lazyLoader(() => import("./studio-spatial.js?v=20260907-crystal-depth"), m => { _spatial = m; });
+const loadSpatial = lazyLoader(() => import("./studio-spatial.js?v=20260907-world-load"), m => { _spatial = m; });
 let _spatialStatic = false;   // true when reduced motion holds a single frame
 
 // BYO media: pixel effects, mesh transforms, universal import/export, local-model adapter.
@@ -830,9 +830,11 @@ function setSource(next) {
       sizeCanvas(c);
       const reduced = typeof window.matchMedia === "function" &&
         window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const plan = makeHardwareRenderPlan(_engineCapability, { width: c.width, height: c.height, splats: 10500 }, engineTierOverride);
       try {
-        const res = await mod.startSpatial(c, { plan, reducedMotion: reduced });
+        const res = await mod.startSpatial(c, {
+          makePlan: load => makeHardwareRenderPlan(_engineCapability, load, engineTierOverride),
+          reducedMotion: reduced,
+        });
         // The spatial module cleans up its own superseded generation. An old
         // caller must never stop a newer source entry that is now loading.
         if (epoch !== _sourceEpoch || res?.superseded) return;

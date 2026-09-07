@@ -39,7 +39,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/creative-workspace.css": "20260907-workspace",
     "system/retro-studio.js": "20260907-image-input",
     "system/loom-studio.js": "20260907-workspace",
-    "system/studio.js": "20260907-creative-depth",
+    "system/studio.js": "20260907-world-load",
     "system/poster-editor.css": "20260907-flex-composition",
     "system/system.css": READING_CASCADE_REVISION,
     "system/doc.css": READING_CASCADE_REVISION,

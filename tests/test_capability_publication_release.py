@@ -33,6 +33,7 @@ RELEASE_PATHS = (
     "system/creative-workspace.css",
     "workspace.html",
     "system/studio-spatial.js",
+    "system/spatial-load.js",
     "system/spatial-atlas.js",
     "system/spatial-scene.js",
     "system/spatial-textured.js",
@@ -257,7 +258,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "732eabca14c0a165f787e32d8548a05051a0ba85b1eaf41f5860a4f96686b5f1"
+REVIEWED_RELEASE_SHA256 = "be00f59a76219eaba37f15b05c84f5d6094ff6adc3529585d620c15080a02010"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

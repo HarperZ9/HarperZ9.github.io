@@ -14,6 +14,7 @@ import { startTexturedScene } from "./spatial-textured.js?v=20260907-crystal-dep
 import { startAtlasScene, projectAabbRect } from "./spatial-atlas.js?v=20260907-view-links";
 import { decodeSpatialView, spatialViewUrl } from "./spatial-view.js?v=20260907-crystal-depth";
 import { acquireContext } from "./spatial-gl.js";
+import { spatialSceneLoad } from "./spatial-load.js?v=20260907-world-load";
 
 const PACKAGES = Object.freeze({
   "atlas": "art/spatial/atlas/atlas.world.json",
@@ -525,6 +526,8 @@ export async function startSpatial(canvas, opts = {}) {
   if (superseded()) return { animating: false, splatCount: 0, world: currentWorld, superseded: true };
   if (sharedView?.world === "atlas" && !manifest.scenes.some(s => s.id === sharedView.scene)) { sharedView = null; invalidView = true; }
   const domCanvas = currentCanvas && currentCanvas.isConnected ? currentCanvas : canvas;
+  const plan = opts.plan || (typeof opts.makePlan === "function"
+    ? opts.makePlan(spatialSceneLoad(manifest, domCanvas)) : null);
   const next = detachedCanvas(domCanvas);
   const wantsWebgl2 = manifest.mode === "ngsf-atlas";
   const gl = await acquireContext(next, wantsWebgl2 ? "webgl2" : "webgl",
@@ -548,8 +551,8 @@ export async function startSpatial(canvas, opts = {}) {
     throw new Error("world package receipt DRIFT");
   }
 
-  const budget = opts.plan && Number(opts.plan.splatBudget) > 0 ? Number(opts.plan.splatBudget) : Infinity;
-  const sceneOpts = { splatBudget: budget, reducedMotion: !!opts.reducedMotion, gl };
+  const budget = plan && Number(plan.splatBudget) > 0 ? Number(plan.splatBudget) : Infinity;
+  const sceneOpts = { splatBudget: budget, reducedMotion: !!opts.reducedMotion, gl, plan };
   let started;
   if (manifest.mode === "ngsf-atlas") {
     const bootScene = sharedView?.scene || (window.__studioBootScene || "").trim();
