@@ -34,7 +34,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/type-specimen.css": "20260907",
     "system/font-marketplace.css": "20260907-live-specimen",
     "system/font-specimen.js": "20260907-typography-handoff",
-    "system/retro-studio.js": "20260907-live-shader",
+    "system/retro-studio.js": "20260907-native-project",
     "system/loom-studio.js": "20260907-project-files",
     "system/studio.js": "20260907-typography-handoff",
     "system/poster-editor.css": "20260907-project-files",
@@ -43,7 +43,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/publication-article.css": READING_CASCADE_REVISION,
     "system/figure.css": "20260906-figure-presentation",
     "system/report-editorial.css": "20260906",
-    "system/instrument-editorial.css": "20260907-instrument-readable-floor",
+    "system/instrument-editorial.css": "20260907-mobile-controls",
     "system/demo-editorial.css": "20260906-demo-editorial",
 }
 READING_IMPORTING_STYLESHEETS = (

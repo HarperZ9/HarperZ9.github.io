@@ -26,6 +26,8 @@ function boot() {
 
   let state = "shader";
   let runner = null, animRaf = 0, lastRetro = 0, uploaded = null, renderSpecimen = null;
+  let projectRevision = 0, projectOperation = 0, sourceOperation = 0;
+  for (const event of ["input", "change", "click", "pointerdown"]) document.addEventListener(event, () => { projectRevision++; }, true);
   const activeFx = new Set();
 
   // shader stack: extra shader layers composited onto the base (editor) shader
@@ -109,8 +111,8 @@ function boot() {
   const sourceCanvas = () => (state === "shader" ? (extraLayers.length ? stackCanvas : shaderCanvas)
     : state === "scope" ? scopeCanvas : state === "draw" ? drawCanvas : srcCanvas);
   // Sound keeps the loop alive too: a still plate should still move to music.
-  const loopActive = () => state === "shader" || state === "scope" || (fxAnimOn() && activeFx.size > 0)
-    || !!(audio && audio.isOn() && reactOn.size) || modRoutes.length > 0 || fbOn() || clipActive;
+  const loopActive = () => clipActive || ($("re-animate").checked && (state === "shader" || state === "scope" || (fxAnimOn() && activeFx.size > 0)
+    || !!(audio && audio.isOn() && reactOn.size) || modRoutes.length > 0 || fbOn()));
 
   function opts() {
     let tw = Math.round(mv("tw", "re-tw")); const scan = mv("scan", "re-scan") / 100;
@@ -474,7 +476,9 @@ function boot() {
   }
 
   async function renderPlate() {
+    const operation = ++sourceOperation;
     if (!renderSpecimen) { const mod = await import("./generative-field.js"); renderSpecimen = mod.renderSpecimen || mod.renderPlate || null; }
+    if (operation !== sourceOperation || state !== "plate") return;
     if (!renderSpecimen) { status("generative engine unavailable", "err"); return; }
     const layers = $("re-layers").value.split(",").map((s) => s.trim()).filter(Boolean);
     try { renderSpecimen(srcCanvas, $("re-seed").value || "folded-light", layers); status(""); }
@@ -633,6 +637,7 @@ function boot() {
   // --- wiring -------------------------------------------------------------
   document.querySelectorAll(".re-tab").forEach((tab) => {
     tab.addEventListener("click", () => {
+      sourceOperation++;
       const leaving = state;
       state = tab.dataset.src;
       document.querySelectorAll(".re-tab").forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
@@ -709,9 +714,10 @@ function boot() {
   $("re-reseed").addEventListener("click", () => { $("re-seed").value = rand(); ping("button"); renderPlate(); });
   $("re-file").addEventListener("change", (e) => {
     const f = e.target.files && e.target.files[0]; if (!f) return;
+    const operation = ++sourceOperation;
     const img = new Image();
-    img.onload = () => { uploaded = img; URL.revokeObjectURL(img.src); ping("bell"); renderUpload(); };
-    img.onerror = () => status("could not read that image", "err");
+    img.onload = () => { URL.revokeObjectURL(img.src); if (operation !== sourceOperation) return; uploaded = img; projectRevision++; ping("bell"); renderUpload(); };
+    img.onerror = () => { URL.revokeObjectURL(img.src); if (operation === sourceOperation) status("could not read that image", "err"); };
     img.src = URL.createObjectURL(f);
   });
   let shaderEditTimer = 0, shaderComposing = false;
@@ -976,7 +982,8 @@ function boot() {
     try { await navigator.clipboard.writeText(url); status("link copied to clipboard", "ok"); }
     catch (_) { status("link is in the address bar", "ok"); }
   });
-  // --- patches: the whole setup, saved or shared as one link --------------
+  // Settings links intentionally exclude source pixels. Project files below
+  // carry the authored image and drawing as well.
   const PATCH_KEY = "re.patches.v1";
   const loadPatches = () => { try { return JSON.parse(localStorage.getItem(PATCH_KEY) || "[]"); } catch (_) { return []; } };
   let patches = loadPatches();
@@ -1002,7 +1009,7 @@ function boot() {
     };
   }
 
-  function applyPatch(p) {
+  function applyPatch(p, prepared = null) {
     if (!p || typeof p !== "object") return;
     const setV = (id, v, vid, div) => { if (v == null || !$(id)) return; $(id).value = String(v); if (vid && $(vid)) $(vid).textContent = div ? (v / div).toFixed(2) : String(v); };
     if (Array.isArray(p.userPal)) {
@@ -1033,11 +1040,12 @@ function boot() {
     document.querySelectorAll("#re-react-targets .re-chip").forEach((b) => b.setAttribute("aria-pressed", String(reactOn.has(b.dataset.react))));
     // rebuild the shader stack
     extraLayers.splice(0).forEach((L) => { try { L.runner && L.runner.destroy && L.runner.destroy(); } catch (_) {} });
-    for (const L of (p.layers || [])) {
+    for (const L of (prepared ? [] : (p.layers || []))) {
       const cv = document.createElement("canvas"); cv.width = 1024; cv.height = 640;
       const r = createShaderRunner(cv, L.glsl);
       if (r.ok) extraLayers.push({ canvas: cv, runner: r, glsl: L.glsl, name: L.name || "layer", blend: L.blend || "lighter", opacity: L.opacity == null ? 0.7 : L.opacity });
     }
+    if (prepared) extraLayers.push(...prepared.layers);
     rebuildStackUI(); stackCount();
     modRoutes = Array.isArray(p.mod)
       ? p.mod.filter((r) => r && r.src && r.tgt).map((r) => ({ src: r.src, tgt: r.tgt, depth: Math.max(-1, Math.min(1, +r.depth || 0)) })).slice(0, 12)
@@ -1053,7 +1061,11 @@ function boot() {
     if (p.glsl) $("re-code").value = p.glsl;
     syncFxChips();
     const tab = document.querySelector('.re-tab[data-src="' + (p.src || "shader") + '"]');
-    if (tab) tab.click(); else refreshSource();
+    if (prepared) {
+      state = p.src;
+      document.querySelectorAll(".re-tab").forEach(t => t.setAttribute("aria-selected", String(t === tab)));
+      document.querySelectorAll(".re-srcpanel").forEach(panel => { panel.hidden = panel.dataset.panel !== state; });
+    } else if (tab) tab.click(); else refreshSource();
     // The upload tab's auto-palette convenience must not undo the patch's
     // own palette choice.
     if (p.pal != null && $("re-palette").value !== p.pal) { $("re-palette").value = p.pal; redraw(); }
@@ -1064,7 +1076,7 @@ function boot() {
   function refreshPatchList() {
     const sel = $("re-patches"); if (!sel) return;
     sel.textContent = "";
-    const o0 = document.createElement("option"); o0.value = ""; o0.textContent = patches.length ? "your patches (" + patches.length + ")" : "your patches"; sel.appendChild(o0);
+    const o0 = document.createElement("option"); o0.value = ""; o0.textContent = patches.length ? "your settings (" + patches.length + ")" : "your settings"; sel.appendChild(o0);
     patches.forEach((p, i) => { const o = document.createElement("option"); o.value = String(i); o.textContent = p.name; sel.appendChild(o); });
   }
   refreshPatchList();
@@ -1234,6 +1246,113 @@ function boot() {
     a.href = URL.createObjectURL(blob); a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 4000);
   };
+
+  // Portable authored state. These files restart time-based effects; they are
+  // not recordings of a live audio performance or temporal feedback history.
+  const projectStatus = (message, state) => {
+    const el = $("re-project-status"); el.textContent = message; el.dataset.state = state;
+  };
+  const readControl = id => {
+    const el = $(id);
+    return el.type === "checkbox" ? el.checked : el.type === "range" ? +el.value : el.value;
+  };
+  const projectRules = mod => {
+    const ids = [...Object.values(mod.PATCH_CONTROLS), ...mod.EDITOR_CONTROLS, "re-fb-amt", "re-fb-zoom", "re-fb-rot"];
+    const controls = {};
+    for (const id of ids) {
+      const el = $(id);
+      controls[id] = el.tagName === "SELECT" ? { choices: [...el.options].map(o => o.value) }
+        : { type: el.type, min: +el.min, max: +el.max };
+    }
+    return { controls, effects: OP_META.map(m => m.op), blends: BLENDS.map(b => b[0]), sources: MOD_SOURCES.map(s => s.id), targets: MOD_TARGETS.map(t => t[0]) };
+  };
+  function uploadPixels() {
+    if (!uploaded) return null;
+    const c = document.createElement("canvas"); c.width = 1280; c.height = 800;
+    const g = c.getContext("2d"), scale = Math.min(c.width / uploaded.naturalWidth, c.height / uploaded.naturalHeight);
+    const w = uploaded.naturalWidth * scale, h = uploaded.naturalHeight * scale;
+    g.fillStyle = "#07070c"; g.fillRect(0, 0, c.width, c.height);
+    g.drawImage(uploaded, (c.width - w) / 2, (c.height - h) / 2, w, h);
+    return c.toDataURL("image/png");
+  }
+  $("re-project-save").addEventListener("click", async () => {
+    try {
+      const mod = await import("./retro-project.js?v=20260907-native-project");
+      const editor = Object.fromEntries(mod.EDITOR_CONTROLS.map(id => [id, readControl(id)]));
+      const patch = collectPatch();
+      const probe = document.createElement("canvas");
+      const shader = createShaderRunner(probe, patch.glsl);
+      const compiles = shader.ok; shader.destroy?.();
+      shader.gl?.getExtension("WEBGL_lose_context")?.loseContext();
+      if (!compiles) { projectStatus("Finish or fix the shader code before saving a project. You can still export the current image.", "error"); return; }
+      const text = mod.encodeRetroProject({ schema: "zentropy.shader-room", version: 1, patch, editor,
+        assets: { source: srcCanvas.toDataURL(), upload: uploadPixels(), drawing: drawCanvas.toDataURL(), scope: scopeCanvas.toDataURL() } }, projectRules(mod));
+      saveBlob("shader-room.project.json", new Blob([text], { type: "application/json" }));
+      projectStatus("Project saved. Working images and drawing are included; live animation history is not.", "ready");
+    } catch (_) { projectStatus("Could not save this project. Check that an image is loaded and the working images fit the 32 MB project limit.", "error"); }
+  });
+  $("re-project-open").addEventListener("click", () => $("re-project-file").click());
+  $("re-project-file").addEventListener("change", async event => {
+    const file = event.target.files?.[0]; event.target.value = "";
+    if (!file) return;
+    const operation = ++projectOperation, revision = projectRevision;
+    const stale = () => operation !== projectOperation || revision !== projectRevision;
+    const staged = [];
+    try {
+      if (clipActive || micOn || audio?.isOn() || audio?.hasInput() || beamFigure) throw new Error("Stop recording and sound before opening a project.");
+      projectStatus("Opening project…", "loading");
+      const mod = await import("./retro-project.js?v=20260907-native-project");
+      if (file.size > mod.MAX_RETRO_PROJECT_BYTES) throw new Error("Project files must be smaller than 32 MB.");
+      const record = mod.decodeRetroProject(await file.text(), projectRules(mod));
+      const images = {};
+      await Promise.all(Object.entries(record.assets).map(async ([key, data]) => {
+        if (!data) { images[key] = null; return; }
+        const image = new Image(); image.src = data; await image.decode();
+        const expected = key === "source" || key === "upload" ? [1280, 800] : [1024, 640];
+        if (image.naturalWidth !== expected[0] || image.naturalHeight !== expected[1]) throw new Error("Unexpected image dimensions.");
+        images[key] = image;
+      }));
+      if (stale()) { if (operation === projectOperation) projectStatus("Open cancelled because you made a newer edit. Your work is unchanged.", "cancelled"); return; }
+      // Compile layers before touching current state. A broken imported shader
+      // cannot destroy the visitor's existing stack.
+      for (const layer of record.patch.layers) {
+        const canvas = document.createElement("canvas"); canvas.width = 1024; canvas.height = 640;
+        const candidate = createShaderRunner(canvas, layer.glsl);
+        if (!candidate.ok) { candidate.destroy?.(); throw new Error("A project layer does not compile on this browser."); }
+        staged.push({ ...layer, canvas, runner: candidate });
+      }
+      const base = ensureShader();
+      const compiled = base.setSource?.(record.patch.glsl);
+      if (!compiled?.ok) throw new Error("The project shader does not compile on this browser. Your current work has not changed.");
+      stopLoop(); clearTimeout(shaderEditTimer); shaderEditTimer = 0;
+      sourceOperation++; projectRevision++;
+      restoring = true;
+      try {
+        $("re-animate").checked = false;
+        modOffsets = {}; Object.keys(AU).forEach(k => { AU[k] = 0; });
+        MOUSE.x = .5; MOUSE.y = .35; base.setMouse(0, 0, false, false); base.setAudio(0, 0, 0, 0);
+        applyPatch(record.patch, { layers: staged }); staged.length = 0;
+        for (const [id, value] of Object.entries(record.editor)) {
+          const el = $(id); if (el.type === "checkbox") el.checked = value; else el.value = value;
+          if ($(id + "-v")) $(id + "-v").textContent = String(value);
+        }
+        for (const [key, canvas] of [["source", srcCanvas], ["drawing", drawCanvas], ["scope", scopeCanvas]]) {
+          const g = canvas.getContext("2d"); g.clearRect(0, 0, canvas.width, canvas.height); g.drawImage(images[key], 0, 0);
+        }
+        uploaded = images.upload;
+        drawUndo.length = 0; drawing = false; lastPt = null;
+        beamGen++; beamFigure = null; beamPath = []; beamDrawing = false; $("re-beam-draw").checked = false;
+        fbCanvas.width = 0; moshPrev.width = 0; slitRing.frames = []; slitRing.head = 0;
+        if (state === "shader") renderShaderFrame(0);
+        retroPass(0);
+        undoHistory.length = 0; histAt = -1;
+      } finally { restoring = false; }
+      sessionSnapshot("opened project");
+      projectStatus("Project opened, paused. Continue editing or turn Animate on. Live effects restart from a fresh history.", "ready");
+    } catch (error) {
+      if (operation === projectOperation) projectStatus(error.message || "Could not open this project. Your current work has not changed.", "error");
+    } finally { staged.forEach(layer => layer.runner.destroy?.()); }
+  });
 
   // Relief STL: the frame's luminance as touchable depth. Bright prints thin,
   // so held to a light the print IS the picture (lithophane practice).
@@ -1899,9 +2018,12 @@ function boot() {
     let dataURL = null;
     try { dataURL = sessionStorage.getItem("re.retro.handoff"); } catch (_) { return false; }
     if (!dataURL) return false;
+    const operation = ++sourceOperation;
     try { sessionStorage.removeItem("re.retro.handoff"); } catch (_) {}
     const img = new Image();
     img.onload = () => {
+      if (operation !== sourceOperation) return;
+      projectRevision++;
       uploaded = img;
       const tab = document.querySelector('.re-tab[data-src="upload"]');
       if (tab) tab.click(); else { state = "upload"; refreshSource(); }
@@ -1936,7 +2058,7 @@ function boot() {
       try {
         restoring = true;
         applyPatch(JSON.parse(saved));
-        status("picked up where you left off · Start fresh clears it", "ok");
+        status("Settings restored. Open a project file to restore its images and drawing.", "ok");
       } catch (_) { refreshSource(); }
       finally { restoring = false; }
     } else {

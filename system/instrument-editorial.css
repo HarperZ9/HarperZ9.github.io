@@ -422,6 +422,20 @@ body.instrument-surface :is(.re-group>.re-body,.rail-group>.rail-body){
   min-width:0;
 }
 
+body.instrument-surface .re-group{
+  scroll-margin-top:calc(var(--nav-h,74px) + 1rem);
+}
+
+@media (max-width:820px){
+  /* In one column, a pinned canvas covers the controls beneath it. Keep the
+     preview in the document flow; desktop retains its side-by-side preview. */
+  body.instrument-surface .re-stage>.re-preview:not(:fullscreen){
+    position:relative;
+    top:auto;
+    z-index:auto;
+  }
+}
+
 body.instrument-surface .re-controls{
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:.72rem;

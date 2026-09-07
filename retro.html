@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Retro Engine &middot; Zain Dana Harper</title>
+<title>Shader Room &middot; Zain Dana Harper</title>
 <meta name="description" content="Retro Engine is an embedded browser studio for images, drawing, GLSL, and audio traces. It applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects, then exports images, patches, MIDI, relief or disc data, and Loom handoffs.">
 <link rel="canonical" href="https://harperz9.github.io/retro.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="Retro Engine &middot; Zain Dana Harper">
+<meta property="og:title" content="Shader Room &middot; Zain Dana Harper">
 <meta property="og:description" content="Retro Engine is an embedded browser studio for images, drawing, GLSL, and audio traces. It applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects, then exports images, patches, MIDI, relief or disc data, and Loom handoffs.">
 <meta property="og:url" content="https://harperz9.github.io/retro.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/retro.png">
 <meta property="og:image:alt" content="Retro Engine social card. Pixelate anything through hardware palettes, dither, and a CRT stage.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Retro Engine">
+<meta name="twitter:title" content="Shader Room">
 <meta name="twitter:description" content="Retro Engine is an embedded browser studio for images, drawing, GLSL, and audio traces. It applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects, then exports images, patches, MIDI, relief or disc data, and Loom handoffs.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/retro.png">
 <meta name="twitter:image:alt" content="Retro Engine social card. Pixelate anything through hardware palettes, dither, and a CRT stage.">
@@ -105,8 +105,12 @@
   select.re-blend{font-size:.6rem;padding:.35em .5em;width:auto}
   input.re-op{width:4.2rem}
   .re-rm{padding:.3em .6em;line-height:1}
+  .re-secondary{border-top:1px solid var(--chrome-line);padding:.75rem 0}
+  .re-secondary>summary{font:600 .9rem/1.5 var(--body);color:var(--chrome-ink);cursor:pointer}
+  .re-secondary[open]>summary{margin-bottom:.75rem}
+  #re-project-status:empty{display:none}
 </style>
-<link rel="stylesheet" href="system/instrument-editorial.css?v=20260907-instrument-readable-floor">
+<link rel="stylesheet" href="system/instrument-editorial.css?v=20260907-mobile-controls">
 </head>
 <body class="inner-clean frame-compact instrument-surface" data-defer-generative-field="true">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -126,7 +130,6 @@
     <h1>The Shader Room.<br><span class="g">Write it. See it.</span></h1>
     <p class="lede" data-canonical-purpose="retro-engine">Choose a shader or write your own. Mix color, texture and motion with the Retro Engine, then use the image in a poster, weave it in Loom, or export your work.</p>
   </div>
-  <div class="seal">source &rarr; pixelate &middot; palette &middot; dither &middot; CRT &middot; nothing leaves your browser</div>
 </div>
 
 <main id="main">
@@ -367,40 +370,58 @@
       </details>
 
       <details class="re-group" id="re-rack-output" open>
-        <summary><span class="re-lab">Save, send, make it physical</span></summary>
+        <summary><span class="re-lab">Save &amp; continue</span></summary>
         <div class="re-body">
+      <div class="re-actions">
+        <button class="re-btn" id="re-project-save" type="button">Save project</button>
+        <button class="re-btn" id="re-project-open" type="button">Open project</button>
+        <input id="re-project-file" type="file" accept=".json,application/json" hidden aria-label="Open Shader Room project">
+      </div>
+      <p class="re-hint">Your shader, layers, settings, images and drawing in one file. Reopens paused, without live audio or animation history.</p>
+      <p class="re-status" id="re-project-status" role="status"></p>
+      <div class="re-field"><span class="re-lab">Export an image or clip</span></div>
       <div class="re-actions">
         <button class="re-btn" id="re-save">Save PNG</button>
         <button class="re-btn" id="re-save-1x" title="Save the pixel grid itself, one image pixel per cell, with no upscaling">Save 1x</button>
-        <button class="re-btn" id="re-undo" title="Step back through your last twenty changes (Ctrl+Z)" aria-label="Undo the last change">Undo</button>
-        <button class="re-btn" id="re-fresh" title="Clear the restored session and start from the default patch" aria-label="Start fresh">Start fresh</button>
         <button class="re-btn" id="re-clip" title="Record six seconds of the moving picture as a WebM clip">Record clip</button>
+      </div>
+      <div class="re-field"><span class="re-lab">Continue in another tool</span></div>
+      <div class="re-actions">
         <button class="re-btn" id="re-send-studio">Send to Studio &rarr;</button>
         <button class="re-btn" id="re-send-poster" type="button" title="Use this rendered image as poster artwork; shader code stays in Shader Room">Use image in Poster &rarr;</button>
         <button class="re-btn" id="re-send-loom">Send to Loom &rarr;</button>
         <p class="re-hint">Handoffs carry a rendered image. Your editable shader stays here.</p>
       </div>
-      <div class="re-field"><span class="re-lab">Make it physical</span></div>
+      <details class="re-secondary"><summary>Print &amp; fabrication</summary>
       <div class="re-actions">
         <button class="re-btn" id="re-relief" title="A 3D-printable relief of this frame: bright prints thin, light shines through">Relief STL</button>
         <button class="re-btn" id="re-spin" title="Twelve frames of the animation on a printable disc: cut, pin, spin in front of a mirror">Spin disc</button>
         <button class="re-btn" id="re-strip" title="The zoetrope sibling: a printable strip you roll into a drum, tape, and spin">Spin strip</button>
       </div>
-      <div class="re-field"><span class="re-lab">Performance score <span class="re-hint">every edit you make is a note</span></span></div>
+      </details>
+      <details class="re-secondary"><summary>Sound &amp; MIDI exports</summary>
       <div class="re-actions">
         <button class="re-btn" id="re-rec" aria-pressed="false" title="Record your edits as a score: every chip, slider, and knob move becomes a timed note">Record</button>
         <button class="re-btn" id="re-rec-play" title="Hear the recorded performance back (sound must be on)">Play</button>
         <button class="re-btn" id="re-rec-midi" title="Save the performance as a standard MIDI file for any DAW">Save MIDI</button>
         <button class="re-btn" id="re-pic-midi" title="The current picture transcribed as MIDI: rows are pitches on the scale, bright runs are notes">Picture as MIDI</button>
       </div>
-      <div class="re-actions">
-        <button class="re-btn" id="re-save-patch">Save patch</button>
-        <button class="re-btn" id="re-share-patch">Copy patch link</button>
-        <select class="re-in" id="re-patches" aria-label="Your saved patches"><option value="">your patches</option></select>
-      </div>
+      </details>
+      <details class="re-secondary"><summary>Saved settings &amp; history</summary>
+        <div class="re-actions">
+          <button class="re-btn" id="re-save-patch">Save settings</button>
+          <button class="re-btn" id="re-share-patch">Copy settings link</button>
+          <select class="re-in" id="re-patches" aria-label="Your saved settings"><option value="">your settings</option></select>
+        </div>
+        <p class="re-hint">Reuse a treatment on another image. Settings and links do not include uploaded images or drawings.</p>
+        <div class="re-actions">
+          <button class="re-btn" id="re-undo" title="Step back through your last twenty settings changes (Ctrl+Z)" aria-label="Undo the last change">Undo settings</button>
+          <button class="re-btn" id="re-fresh" title="Clear the restored session and start from the defaults" aria-label="Start fresh">Start fresh</button>
+        </div>
+        <p class="re-hint">Project files do not include undo history. Scope traces retain their picture, not a playable sound path.</p>
+      </details>
         </div>
       </details>
-      <p class="re-privacy">A patch is the whole setup: shader, stack, palette, every effect and its amount, and the sound routing. Save it, or copy a link that carries all of it. Send to Studio hands the render to the pen surface as a plot map, then on to SVG or G-code. Everything stays in your browser.</p>
       <div class="re-status" id="re-status" role="status"></div>
     </div>
   </div>
@@ -431,6 +452,6 @@
   <p>Zentropy Labs &middot; order out of entropy &middot; <a href="index.html">home</a></p>
 </footer>
 
-<script type="module" src="system/retro-studio.js?v=20260907-live-shader"></script>
+<script type="module" src="system/retro-studio.js?v=20260907-native-project"></script>
 </body>
 </html>
