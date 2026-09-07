@@ -279,24 +279,6 @@
       "verificationCommand": "flywheel lanes --probe",
       "evidence": [
         {
-          "id": "flywheel-release-v0-3-10",
-          "type": "release",
-          "label": "Flywheel v0.3.10",
-          "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.3.10",
-          "date": "2026-08-27",
-          "status": "verified",
-          "summary": "The v0.3.10 public release and main default branch were verified."
-        },
-        {
-          "id": "flywheel-release-v0-3-11",
-          "type": "release",
-          "label": "Flywheel v0.3.11",
-          "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.3.11",
-          "date": "2026-09-04",
-          "status": "verified",
-          "summary": "The v0.3.11 public release, its PyPI publication of flywheel-verify, and the Windows installer attached to it were verified."
-        },
-        {
           "id": "flywheel-release-v0-4-1",
           "type": "release",
           "label": "Flywheel v0.4.1",
@@ -313,6 +295,24 @@
           "date": "2026-09-07",
           "status": "verified",
           "summary": "PyPI serves flywheel-verify 0.4.1. The wheel and source archive hashes match the publication receipt, and a fresh Python wheel install read the allowlisted Evidence Task MCP resources; host marketplace installation is not claimed."
+        },
+        {
+          "id": "flywheel-release-v0-3-11",
+          "type": "release",
+          "label": "Flywheel v0.3.11",
+          "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.3.11",
+          "date": "2026-09-04",
+          "status": "verified",
+          "summary": "The v0.3.11 public release, its PyPI publication of flywheel-verify, and the Windows installer attached to it were verified."
+        },
+        {
+          "id": "flywheel-release-v0-3-10",
+          "type": "release",
+          "label": "Flywheel v0.3.10",
+          "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.3.10",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The v0.3.10 public release and main default branch were verified."
         },
         {
           "id": "flywheel-gather-lane-code",
@@ -3003,7 +3003,7 @@
           "href": "https://github.com/HarperZ9/public-surface-sweeper/releases/tag/v0.1.1",
           "date": "2026-08-27",
           "status": "verified",
-          "summary": "The latest tagged release is v0.1.1; newer source metadata is not presented as released."
+          "summary": "On 2026-08-27, v0.1.1 was the checked tagged release before v0.1.3. Retained as historical evidence."
         }
       ],
       "limitations": [

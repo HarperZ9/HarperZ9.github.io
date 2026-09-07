@@ -29,7 +29,7 @@ RELEASE_PATHS = (
     "system/report-editorial.css",
     "system/system.css",
     "warden.html",
-    "assets/index-Dje6lykY.js",
+    "assets/index-BU4-yae8.js",
     "system/theme.js",
     "system/theme-entry.js",
     "system/theme.css",
@@ -229,7 +229,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "c6bbd9edb9bac8344db0d6780c6b72ae3b389b8dd0644ba89e33416462726ad7"
+REVIEWED_RELEASE_SHA256 = "9e67ec11530ec8a02e2fdd44b3a34396e98ad4f6e288272762ff2aa81de96a1d"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -337,7 +337,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_join_js = "index-BoU_gOMc.js"
     previous_board_js = "index-B-g9u1T0.js"
     previous_board_css = "index-B5xhdbWj.css"
-    current_js = "index-Dje6lykY.js"
+    current_js = "index-BU4-yae8.js"
     current_css = "index-B2kgPYlE.css"
     previous_flywheel_js = "index-BIYnDBdw.js"
     previous_flywheel_css = "index-DGQrcJ5p.css"
