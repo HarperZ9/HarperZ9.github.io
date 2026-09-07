@@ -24,6 +24,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 CURRENT_NAV_ASSET_VERSION = "20260902-creative-chassis"
+FRONTIER_CSS_ASSET_VERSION = "20260907-reading-completion"
 ARCHIVE_NAV_ASSET_VERSIONS = {
     "2026-08-24": "20260902-creative-chassis",
     "2026-08-25": "20260902-creative-chassis",
@@ -342,14 +343,14 @@ def _render_legacy_html(edition: dict, *, archive: bool) -> str:
     date = edition["edition_date"]
     if archive:
         root_prefix = "../../"
-        css_href = f"../frontier-safety.css?v={CURRENT_NAV_ASSET_VERSION}"
+        css_href = f"../frontier-safety.css?v={FRONTIER_CSS_ASSET_VERSION}"
         canonical = f"https://harperz9.github.io/frontier-safety/archive/{date}.html"
         data_href = f"../data/archive/{date}.json"
         self_href = f"{date}.html"
         page_label = "Dated archive"
     else:
         root_prefix = ""
-        css_href = f"frontier-safety/frontier-safety.css?v={CURRENT_NAV_ASSET_VERSION}"
+        css_href = f"frontier-safety/frontier-safety.css?v={FRONTIER_CSS_ASSET_VERSION}"
         canonical = "https://harperz9.github.io/frontier-safety.html"
         data_href = "frontier-safety/data/current.json"
         self_href = "frontier-safety.html"
@@ -396,7 +397,7 @@ def _render_legacy_html(edition: dict, *, archive: bool) -> str:
 <meta property="og:description" content="{description}">
 <meta property="og:url" content="{canonical}">
 <meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
-<meta property="og:image:alt" content="A procedural ZentropyLabs research plate used for the Frontier Safety Briefing.">
+<meta property="og:image:alt" content="A procedural ZentropyLabs artwork card used for the Frontier Safety Briefing.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Frontier Safety Briefing · {_e(date)}">
 <meta name="twitter:description" content="{description}">
@@ -444,7 +445,7 @@ def _render_legacy_html(edition: dict, *, archive: bool) -> str:
 
   <section class="wide-section controls">
     <header><p>Claim discipline</p><h2>Controls and their status</h2></header>
-    <div class="table-wrap"><table class="data data--wide controls-table">
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Controls and evidence-status table"><table class="data data--wide controls-table">
       {_render_controls_caption(edition['edition_date'])}<thead><tr><th>Source</th><th>Reported control</th><th>Evidence status</th></tr></thead>
       <tbody>{_render_controls(edition['controls'])}</tbody>
     </table></div>
@@ -489,14 +490,14 @@ def render_html(edition: dict, *, archive: bool) -> str:
 
     if archive:
         root_prefix = "../../"
-        css_href = f"../frontier-safety-site.css?v={CURRENT_NAV_ASSET_VERSION}"
+        css_href = f"../frontier-safety-site.css?v={FRONTIER_CSS_ASSET_VERSION}"
         canonical = f"https://harperz9.github.io/frontier-safety/archive/{date}.html"
         data_href = f"../data/archive/{date}.json"
         self_href = f"{date}.html"
         page_label = "Dated archive"
     else:
         root_prefix = ""
-        css_href = f"frontier-safety/frontier-safety-site.css?v={CURRENT_NAV_ASSET_VERSION}"
+        css_href = f"frontier-safety/frontier-safety-site.css?v={FRONTIER_CSS_ASSET_VERSION}"
         canonical = "https://harperz9.github.io/frontier-safety.html"
         data_href = "frontier-safety/data/current.json"
         self_href = "frontier-safety.html"
@@ -548,7 +549,7 @@ def render_html(edition: dict, *, archive: bool) -> str:
 <meta property="og:description" content="{description}">
 <meta property="og:url" content="{canonical}">
 <meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
-<meta property="og:image:alt" content="A procedural ZentropyLabs research plate used for the Frontier Safety Briefing.">
+<meta property="og:image:alt" content="A procedural ZentropyLabs artwork card used for the Frontier Safety Briefing.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Frontier Safety Briefing · {_e(date)}">
 <meta name="twitter:description" content="{description}">
@@ -568,10 +569,6 @@ def render_html(edition: dict, *, archive: bool) -> str:
   <div class="mid briefing-intro">
     <h1>What changed. What supports it. <span class="g">What remains unresolved.</span></h1>
     <p class="lede">{_e(edition['change_summary'])}</p>
-    <figure class="plate plate--slim briefing-plate">
-      <canvas data-specimen="frontier-safety-{_e(date)}" data-specimen-layers="obsidian-burst" aria-hidden="true"></canvas>
-      <figcaption><span class="plate-no">Edition {_e(date)}</span><span class="plate-caption">A source record drawn at the size of its evidence, with every unresolved boundary left visible.</span></figcaption>
-    </figure>
     <dl class="edition-readout">
       <div><dt>Edition</dt><dd>{_e(date)}</dd></div>
       <div><dt>Observed</dt><dd>{_e(edition['observed_at'])}</dd></div>
@@ -594,7 +591,7 @@ def render_html(edition: dict, *, archive: bool) -> str:
 
   <section class="mv wide-section controls">
     <header><h2>Controls and their status</h2></header>
-    <div class="table-wrap"><table class="data data--wide controls-table">
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Controls and evidence-status table"><table class="data data--wide controls-table">
       {_render_controls_caption(edition['edition_date'])}<thead><tr><th>Source</th><th>Reported control</th><th>Evidence status</th></tr></thead>
       <tbody>{_render_controls(edition['controls'])}</tbody>
     </table></div>

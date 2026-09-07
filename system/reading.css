@@ -348,6 +348,34 @@ body:has(>.publication-article) .publication-article h1{max-width:24ch}
     line-height:1.9;
     letter-spacing:0;
   }
+  html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.story-links,.story-links a,.story-transcript summary,.story-turn,.repo-list a,.thread-list a,.field-card li,.field-card li a,.tour-btn,.tour-card a.tour-try,.tour-cta-row .btn){
+    font-family:var(--reading-type);
+    font-size:.875rem;
+    line-height:1.5;
+    letter-spacing:0;
+    text-transform:none;
+  }
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.essay-meta,.essay-meta a.inline,.totop,.demo-library .workflow-facts,.demo-library .workflow-facts li,.demo-library .doc-facts,.demo-library .doc-facts li,.demo-library .doc-status){
+    font-family:var(--reading-type);
+    font-size:.78rem;
+    line-height:1.55;
+    letter-spacing:0;
+    text-transform:none;
+  }
+  html:has(body.doc.frontier-briefing:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc.frontier-briefing:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.lane-head p,.wide-section>header p,.briefing-footer,.briefing-footer p,.briefing-footer a){
+    font-family:var(--reading-type);
+    font-size:.78rem;
+    line-height:1.55;
+    letter-spacing:0;
+    text-transform:none;
+  }
+  html:has(body.inner-clean.frontier-briefing:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean.frontier-briefing:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.lane-head p,.lane-head .lane-status,.wide-section>header p,.briefing-footer,.briefing-footer p,.briefing-footer a,.footer-seal,.footer-seal .seal,.footer-seal a){
+    font-family:var(--reading-type);
+    font-size:.875rem;
+    line-height:1.5;
+    letter-spacing:0;
+    text-transform:none;
+  }
   html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.quiet,.proof-links a,.command){
     font-size:.82rem;
     line-height:1.65;

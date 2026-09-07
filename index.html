@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#070406" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafaf8" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101416" />
     <meta name="application-name" content="Zentropy Labs" />
     <title>Zentropy Labs | Products by Zain Dana Harper</title>
     <meta name="description" content="Zentropy Labs is a product studio by Zain Dana Harper. Explore products first, then hiring routes, evidence, and research records." />
@@ -24,11 +25,21 @@
     <script>document.documentElement.classList.add('js')</script>
     <link rel="preload" href="/system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/system/home-readable.css?v=20260902-creative-chassis" />
+    <style>
+      :root{color-scheme:light dark;--nojs-bg:#fafaf8;--nojs-ink:#19272b;--nojs-muted:#42575d;--nojs-link:#215a63;--nojs-line:#ccd3d3}
+      @media (prefers-color-scheme:dark){:root{--nojs-bg:#101416;--nojs-ink:#eaf5f6;--nojs-muted:#b4c5c9;--nojs-link:#8ee3f2;--nojs-line:#42555a}}
+      #noscript-main{color:var(--nojs-ink)!important;background:var(--nojs-bg)!important}
+      #noscript-main a{color:var(--nojs-link)!important;text-underline-offset:.25em}
+      #noscript-main section{border-top:1px solid var(--nojs-line);padding-top:1.1rem}
+      #noscript-main p,#noscript-main li{color:var(--nojs-muted)}
+      #noscript-main h1,#noscript-main h2,#noscript-main h3{color:var(--nojs-ink)}
+      @media (max-width:560px){#noscript-main{padding:2.5rem 1rem!important}#noscript-main ul{columns:1!important}#noscript-main a{display:inline-block;margin:.2rem .7rem .2rem 0!important}}
+    </style>
     <!-- home-art.js ships with the static site's shared /system, outside this build.
          The specifier is assembled at runtime so Vite leaves it as a browser
          dynamic import in dev and build. -->
-    <script type="module" crossorigin src="/assets/index-fBx77P1E.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-3xC65p6C.css">
+    <script type="module" crossorigin src="/assets/index-ntA8ZVYP.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-B2kgPYlE.css">
   </head>
   <body>
     <div id="root"></div>
@@ -149,7 +160,7 @@
             <li><a style="color:#8ee3f2" href="/security-toolkit.html#repo-proof-index">Repo Proof Index</a></li>
             <li><a style="color:#8ee3f2" href="/kun.html">Kun</a></li>
           </ul>
-          <p style="line-height:2"><a style="color:#8ee3f2" href="/private-practice.html">Private recipient lane</a></p>
+          <p style="line-height:2"><a style="color:#8ee3f2" href="/security.html">Security overview</a> <a style="color:#8ee3f2;margin-left:1rem" href="/private-practice.html">Private recipient lane</a></p>
         </section>
 
       </main>

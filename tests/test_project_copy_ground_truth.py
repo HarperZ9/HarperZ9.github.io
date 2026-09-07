@@ -39,6 +39,14 @@ def _og_card_data() -> dict:
     return json.loads(match.group(1))
 
 
+def _article_with_title_href(source: str, href: str) -> str:
+    for article in re.findall(r"<article\b[^>]*>.*?</article>", source, re.DOTALL):
+        title = re.search(r'<h3 class="product-card-title"><a href="([^"]+)"[^>]*>', article)
+        if title and html.unescape(title.group(1)) == href:
+            return article
+    raise AssertionError(href)
+
+
 def test_home_registry_matches_the_canonical_system_registry() -> None:
     canonical = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
     assert _embedded_home_registry() == canonical
@@ -252,6 +260,7 @@ def test_registry_relationships_are_typed_and_evidence_backed() -> None:
 def test_catalog_keeps_product_rows_compact_and_routes_to_full_definitions() -> None:
     registry = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
     catalog = (ROOT / "catalog.html").read_text(encoding="utf-8")
+    domain_labels = {domain["id"]: domain["label"] for domain in registry["domains"]}
     assert "Detailed registry, short map linked" in catalog
     assert 'href="overview.html">product map</a>' in catalog
 
@@ -263,11 +272,12 @@ def test_catalog_keeps_product_rows_compact_and_routes_to_full_definitions() -> 
             re.DOTALL,
         )
         assert domain_section, record["id"]
-        assert link in domain_section.group(0), record["id"]
-        primary_row = domain_section.group(0)
-        assert record["productType"] in html.unescape(primary_row), record["id"]
-        assert record["maturity"] in html.unescape(primary_row), record["id"]
-        assert record["purpose"] not in html.unescape(primary_row), record["id"]
+        primary_row = _article_with_title_href(domain_section.group(0), record["href"])
+        primary_text = html.unescape(primary_row)
+        assert link in primary_row, record["id"]
+        assert record["productType"] in primary_text, record["id"]
+        assert record["maturity"] in primary_text, record["id"]
+        assert record["purpose"] in primary_text, record["id"]
 
         for domain in record["domains"]:
             member_section = re.search(
@@ -276,10 +286,15 @@ def test_catalog_keeps_product_rows_compact_and_routes_to_full_definitions() -> 
                 re.DOTALL,
             )
             assert member_section, (record["id"], domain)
-            assert link in member_section.group(0), (record["id"], domain)
+            member_row = _article_with_title_href(member_section.group(0), record["href"])
+            member_text = html.unescape(member_row)
+            assert link in member_row, (record["id"], domain)
+            assert record["purpose"] in member_text, (record["id"], domain)
             if domain != record["primaryDomain"]:
-                assert "Secondary domain reference." in member_section.group(0)
-                assert record["purpose"] not in html.unescape(member_section.group(0))
+                assert "Secondary domain reference." not in member_text
+                assert "Why this record appears here" in member_text
+                assert f"Primary area: {domain_labels[record['primaryDomain']]}." in member_text
+                assert f"Also appears here because it serves {domain_labels[domain]}." in member_text
 
 
 def test_current_independent_systems_are_not_missing_from_registry() -> None:

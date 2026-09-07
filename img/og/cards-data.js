@@ -535,8 +535,9 @@ window.CARD_DATA = {
   },
   "typeface": {
     "role": "TYPE SPECIMEN",
-    "word": "TYPEFACE",
-    "headline": "A readable generated-outline face, drawn for this workshop.",
+    "word": "Room for the words.",
+    "headline": "Typography at Zentropy Labs.",
+    "editorial": true,
     "pipeline": "OUTLINE / FIT / HINT / SPECIMEN"
   },
   "why": {

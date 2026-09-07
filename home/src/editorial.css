@@ -1,15 +1,38 @@
-html[data-home-shell="react"] body {
+html[data-home-shell="react"] {
+  color-scheme: light dark;
   --ink: #19272b;
   --muted: #42575d;
   --faint: #53666b;
   --void: #fafaf8;
   --ground-paper: #ffffff;
   --ink-paper: #19272b;
+  --paper-muted: #42575d;
+  --paper-line: #ccd3d3;
   --line: #ccd3d3;
   --line-strong: #8b9b9e;
   --signal: #215a63;
-  background: #fafaf8;
+  --on-signal: #ffffff;
+  background: var(--void);
+}
+html[data-home-shell="react"] body {
+  background: var(--void);
   color: var(--ink);
+}
+@media (prefers-color-scheme: dark) {
+  html[data-home-shell="react"] {
+    --ink: #eaf5f6;
+    --muted: #b4c5c9;
+    --faint: #91a6aa;
+    --void: #101416;
+    --ground-paper: #1b2528;
+    --ink-paper: #eaf5f6;
+    --paper-muted: #b4c5c9;
+    --paper-line: #42555a;
+    --line: #34464b;
+    --line-strong: #5d747a;
+    --signal: #8ee3f2;
+    --on-signal: #071013;
+  }
 }
 html[data-home-shell="react"] .ground-field,
 html[data-home-shell="react"] .viewport-vignette,
@@ -21,20 +44,20 @@ html[data-home-shell="react"] #gl,
 html[data-home-shell="react"] #motes { display: none; }
 html[data-home-shell="react"] .topnav,
 html[data-home-shell="react"] .home-menu summary,
-html[data-home-shell="react"] .home-menu-list { background: #fafaf8; }
+html[data-home-shell="react"] .home-menu-list { background: var(--void); }
 html[data-home-shell="react"] .home-menu summary:hover,
 html[data-home-shell="react"] .home-menu summary:focus-visible,
 html[data-home-shell="react"] .home-menu-list a:hover,
 html[data-home-shell="react"] .home-menu-list a:focus-visible {
   color: var(--ink);
-  background: color-mix(in oklab, var(--signal) 10%, #fafaf8);
+  background: color-mix(in oklab, var(--signal) 10%, var(--void));
 }
 html[data-home-shell="react"] .hero {
   min-height: 0;
   padding-block: clamp(3rem, 7vw, 6rem);
   grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr);
   gap: clamp(2rem, 5vw, 5rem);
-  background: #fafaf8;
+  background: var(--void);
 }
 html[data-home-shell="react"] .hero-title {
   font-size: clamp(2.8rem, 5.6vw, 5rem);
@@ -49,6 +72,12 @@ html[data-home-shell="react"] .hero-line {
 }
 html[data-home-shell="react"] .hero-lab { font-size: 1rem; }
 html[data-home-shell="react"] .identity-art { border: 0; }
+html[data-home-shell="react"] .btn.solid,
+html[data-home-shell="react"] .btn.solid:hover,
+html[data-home-shell="react"] .btn.solid:focus-visible {
+  background: var(--signal);
+  color: var(--on-signal);
+}
 html[data-home-shell="react"] .section {
   padding-block: clamp(2.5rem, 5vw, 4.5rem);
   border-bottom: 1px solid var(--line);
@@ -59,9 +88,6 @@ html[data-home-shell="react"] h2 {
   text-wrap: balance;
 }
 html[data-home-shell="react"] p { text-wrap: pretty; }
-html[data-home-shell="react"] .btn.solid,
-html[data-home-shell="react"] .btn.solid:hover,
-html[data-home-shell="react"] .btn.solid:focus-visible { color: #ffffff; }
 html[data-home-shell="react"] .edition-links {
   display: flex;
   flex-wrap: wrap;
@@ -82,13 +108,101 @@ html[data-home-shell="react"] a:focus-visible {
   outline-offset: 4px;
 }
 html[data-home-shell="react"] .work-row p { max-width: 68ch; line-height: 1.65; }
+html[data-home-shell="react"] .work-row .product-status {
+  margin-top: .65rem;
+  color: var(--muted);
+  font-size: .96rem;
+  font-weight: 720;
+  letter-spacing: .01em;
+  line-height: 1.45;
+}
+html[data-home-shell="react"] .data-plate,
+html[data-home-shell="react"] .evidence-figure-card {
+  background: var(--ground-paper);
+  color: var(--ink-paper);
+  border-color: var(--paper-line);
+}
+html[data-home-shell="react"] .data-plate a,
+html[data-home-shell="react"] .evidence-figure-card a,
+html[data-home-shell="react"] .figure-facts a {
+  color: var(--signal);
+}
+html[data-home-shell="react"] :is(td,.data-plate p,.evidence-current li,.evidence-figure-card p,.figure-facts,.product-meta dd,.security-list span,.live-state,.live-counts dt,.live-post-meta,.live-post-empty,.live-links) {
+  color: var(--paper-muted);
+}
+html[data-home-shell="react"] :is(th,caption,.evidence-current h3,.evidence-figure-card h3,.live-counts dd,.live-handle) {
+  color: var(--ink-paper);
+}
+html[data-home-shell="react"] :is(th,td,.evidence-current,.live-posts,.live-post) {
+  border-color: var(--paper-line);
+}
+html[data-home-shell="react"] :is(.live-state,.live-post-empty,.live-links) {
+  font-size: .9rem;
+  line-height: 1.55;
+}
+html[data-home-shell="react"] .live-links a {
+  font-size: inherit;
+  line-height: inherit;
+}
+html[data-home-shell="react"] :is(.product-definition,.evidence-disclosure,.figure-detail,.hiring-details,.footer-more) {
+  margin-top: 1rem;
+}
+html[data-home-shell="react"] :is(.product-definition,.evidence-disclosure,.figure-detail,.hiring-details,.footer-more) summary {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--signal);
+  cursor: pointer;
+  font-weight: 750;
+  text-underline-offset: .25em;
+}
+html[data-home-shell="react"] .product-definition dl {
+  margin-top: .75rem;
+}
+html[data-home-shell="react"] .evidence-disclosure .evidence-board {
+  margin-top: .75rem;
+}
+html[data-home-shell="react"] .figure-detail {
+  border-top: 1px solid var(--paper-line);
+  padding-top: .25rem;
+}
+html[data-home-shell="react"] .hiring-section {
+  grid-template-columns: minmax(0,.95fr) minmax(18rem,1.05fr);
+}
+html[data-home-shell="react"] .hiring-details {
+  grid-column: 2;
+  margin-top: 1.25rem;
+}
+html[data-home-shell="react"] .hiring-route-list,
+html[data-home-shell="react"] .footer-secondary-links {
+  display: grid;
+  gap: .55rem;
+  margin-top: .6rem;
+}
+html[data-home-shell="react"] .hiring-route-list .text-link {
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .2rem;
+}
+html[data-home-shell="react"] .hiring-route-list small {
+  color: var(--muted);
+  font-size: .92rem;
+  line-height: 1.45;
+  font-weight: 500;
+}
+html[data-home-shell="react"] .footer-secondary-links {
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+}
 html[data-home-shell="react"] .live-board details { border-top: 1px solid var(--line); margin-top: 1rem; }
 html[data-home-shell="react"] .live-board summary { padding-block: .8rem; min-height: 44px; cursor: pointer; font-size: 1rem; }
 html[data-home-shell="react"] .live-board details > p { max-width: 62ch; line-height: 1.65; margin-block: .8rem; }
 @media (max-width: 760px) {
   html[data-home-shell="react"] .hero { grid-template-columns: minmax(0, 1fr); }
   html[data-home-shell="react"] .identity-art { max-width: 28rem; }
-  html[data-home-shell="react"] .split-section { grid-template-columns: minmax(0, 1fr); }
+  html[data-home-shell="react"] .split-section,
+  html[data-home-shell="react"] .hiring-section { grid-template-columns: minmax(0, 1fr); }
+  html[data-home-shell="react"] .hiring-details { grid-column: 1; }
 }
 @media (forced-colors: active) {
   html[data-home-shell="react"] body { background: Canvas; color: CanvasText; }

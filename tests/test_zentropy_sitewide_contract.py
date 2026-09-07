@@ -22,14 +22,17 @@ NON_DEPLOYABLE_HTML_DIRS = {
     "media",
 }
 DEFAULT_ASSET_REVISION = "20260902-creative-chassis"
-READING_CASCADE_REVISION = "20260906-reading-cascade"
+READING_CASCADE_REVISION = "20260907-reading-completion"
 REVIEWED_ASSET_REVISIONS = {
+    "frontier-safety/frontier-safety-site.css": READING_CASCADE_REVISION,
+    "frontier-safety/frontier-safety.css": READING_CASCADE_REVISION,
+    "system/type-specimen.css": "20260907",
     "system/system.css": READING_CASCADE_REVISION,
     "system/doc.css": READING_CASCADE_REVISION,
     "system/publication-article.css": READING_CASCADE_REVISION,
     "system/figure.css": "20260906-figure-presentation",
     "system/report-editorial.css": "20260906",
-    "system/instrument-editorial.css": "20260906-studio-chrome",
+    "system/instrument-editorial.css": "20260907-instrument-readable-floor",
     "system/demo-editorial.css": "20260906-demo-editorial",
 }
 READING_IMPORTING_STYLESHEETS = (
@@ -722,6 +725,7 @@ def test_current_zentropy_assets_are_shipped() -> None:
 
 def test_representative_pages_keep_route_art_metadata() -> None:
     pages = (
+        "typeface.html",
         "overview.html",
         "catalog.html",
         "research.html",

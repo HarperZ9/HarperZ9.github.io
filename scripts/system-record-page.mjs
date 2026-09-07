@@ -31,32 +31,34 @@ function sourceLink(system) {
 
 function heroActions(system) {
   const open = system.sourceHref
-    ? `<a href="${escapeHtml(system.sourceHref)}" rel="noopener">Open source</a>`
+    ? `<a href="${escapeHtml(system.sourceHref)}" rel="noopener">Inspect source</a>`
     : "";
   const run =
     system.entryCommand || system.verificationCommand
-      ? '<a href="#run-or-evaluate">Open run details</a>'
+      ? '<a href="#run-or-evaluate">Run or verify</a>'
       : "";
   return [
     '<div class="system-hero-actions">',
     open,
     run,
-    '<a href="#current-evidence">Open evidence</a>',
+    '<a href="#current-evidence">Read evidence</a>',
     "</div>",
   ].join("");
 }
 
-// The four stamps a reader needs before trusting anything below: how mature the
+// The four facts a reader needs before trusting anything below: how mature the
 // work is, how they can get at it, what is actually released, and when the
 // record was last checked against the source.
 function heroMeta(system) {
-  const stamps = [
-    system.maturity,
-    system.accessMode,
-    system.releaseState,
-    `verified ${system.lastVerified}`,
+  const facts = [
+    ["Status", system.maturity],
+    ["Access", system.accessMode],
+    ["Release", system.releaseState],
+    ["Checked", system.lastVerified],
   ];
-  return `<div class="system-meta">${stamps.map((stamp) => `<span>${escapeHtml(stamp)}</span>`).join("")}</div>`;
+  return `<dl class="system-facts">${facts
+    .map(([term, value]) => `<div class="system-fact"><dt>${term}</dt><dd>${escapeHtml(value)}</dd></div>`)
+    .join("")}</dl>`;
 }
 
 // tests/test_project_copy_ground_truth.py reads a product's one canonical
@@ -177,7 +179,7 @@ function architectureBlock(system, ctx) {
   const relatedList = related.length
     ? `<ul class="system-list">${related.map((other) => `<li>${anchor(other)}</li>`).join("")}</ul>`
     : NULL_LINE("No public related record is declared.");
-  return [
+  const body = [
     familyNav(system, ctx),
     '<div class="system-grid">',
     `<div><h3>Dependencies</h3>${dependencies}</div>`,
@@ -187,20 +189,26 @@ function architectureBlock(system, ctx) {
     claims(system, ctx),
     ROUTE_NOTES.get(system.id) ?? "",
   ].join("");
+  return [
+    '<details class="product-record-details" id="architecture-details">',
+    "<summary>Architecture, dependencies, and relationship notes</summary>",
+    body,
+    "</details>",
+  ].join("");
 }
 
 function evidenceBlock(system) {
   const rows = system.evidence
     .map((evidence) =>
       [
-        '<article class="index-row" role="listitem"><span class="index-term">',
-        `<a href="${escapeHtml(evidence.href)}" rel="noopener">${escapeHtml(evidence.label)}</a></span>`,
-        `<span class="index-gloss">${escapeHtml(evidence.summary)}<br>`,
-        `<small>${escapeHtml(evidence.status)} ${MIDDOT} ${escapeHtml(evidence.date)}</small></span></article>`,
+        '<article class="product-card" role="listitem"><div class="product-card-heading">',
+        `<h3 class="product-card-title"><a href="${escapeHtml(evidence.href)}" rel="noopener">${escapeHtml(evidence.label)}</a></h3></div>`,
+        `<div class="product-card-body"><p class="product-purpose">${escapeHtml(evidence.summary)}</p>`,
+        `<small class="product-status-line">${escapeHtml(evidence.status)} ${MIDDOT} ${escapeHtml(evidence.date)}</small></div></article>`,
       ].join(""),
     )
     .join("");
-  return `<div class="index system-evidence" role="list">${rows}</div>`;
+  return `<div class="product-list system-evidence" role="list">${rows}</div>`;
 }
 
 function limitsBlock(system) {

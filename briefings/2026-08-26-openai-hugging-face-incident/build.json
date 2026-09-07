@@ -3,9 +3,10 @@
   "briefingId": "2026-08-26-openai-hugging-face-incident",
   "renderer": "render-publications/v1",
   "postProcessing": {
-    "revision": "20260906-editorial-presentation",
+    "revision": "20260907-editorial-completion",
     "scope": "Stylesheet cache references and reviewed figure presentation; source records and publication edition unchanged.",
-    "method": "Presentation edits applied after the original render; output hashes refreshed from the resulting LF-normalized files."
+    "method": "Presentation edits applied after the original render; the incident timeline is reproduced by scripts/render-incident-multilane-timeline.mjs. Output hashes are refreshed from the resulting LF-normalized files.",
+    "figureViewBoxOverrides": {"incident-multilane-timeline": "0 0 640 6882"}
   },
   "settings": {
     "encoding": "utf-8",
@@ -27,7 +28,7 @@
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/index.html",
-      "sha256": "8b24d3ba638b76a52393ed77a93f67c7351bcfd8257a234193c27ebb7abf401a"
+      "sha256": "34768ec39570ee6f58a82036872ca302562e8cc90154a1799ba9cb159eb56440"
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/publication.json",
@@ -63,7 +64,7 @@
     },
     {
       "path": "figures/incident-multilane-timeline.html",
-      "sha256": "b0a29650f24e82a8fc9362ec460cd5f3e01e35fc49053d28bc530dfa92dfe1e7"
+      "sha256": "e255cabacd67399611093ec4cad0378be6ce5ef21141455e46a73956f630843f"
     },
     {
       "path": "figures/incident-multilane-timeline.json",
@@ -71,7 +72,7 @@
     },
     {
       "path": "figures/incident-multilane-timeline.svg",
-      "sha256": "080bb823bb3c6ea541f49ba174cec7c81c366cfabbaef3d5d6cbb25bb3082600"
+      "sha256": "cb9c0987fe5f16183f762b86fe9aee9f23472354a04278032590d7b5c1fff722"
     },
     {
       "path": "figures/motive-sample-nonexclusive.html",

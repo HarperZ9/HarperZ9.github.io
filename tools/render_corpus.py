@@ -217,7 +217,7 @@ PAGE = """<!DOCTYPE html>
 <meta name="twitter:description" content="{desc}">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/profile.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/doc.css?v=20260906-reading-cascade">
+<link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
 <style>
   /* A corpus is long, so the rules between its movements do more work than
      usual and the headings need more air above them than beside them. */

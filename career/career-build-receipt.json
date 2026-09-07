@@ -139,23 +139,23 @@
   "sources": [
     {
       "path": "cv.html",
-      "sha256": "b58a41251be1959f430e945db7b9fd8a928ffcd66345600418bee59da6e7abd2"
+      "sha256": "844e18ed2e2b4e9834b76ff2d667f6818aecaf5c921a47a813c0877f17292bd4"
     },
     {
       "path": "resume-evaluation-tooling.html",
-      "sha256": "41d786201bb908209823a5c5d5b5545b6434ca347802c796cdc28ad02d737f5d"
+      "sha256": "e83c25c724aee3270a0886f46589a4299324fd3f0a865cf141ee496cd89331aa"
     },
     {
       "path": "resume-grounds.html",
-      "sha256": "54a1bfb55802dd2cf5daee7f1485cf23c52f1f610f2d4bafa51c185c38ce1008"
+      "sha256": "20bc9b9c9fab4ed4f99878104e2e64f91f6d567e1e2bdb2f1b9bd522bae9a8e3"
     },
     {
       "path": "resume-public-operations.html",
-      "sha256": "df6832a80c35518da342ac0304f9083add114e6c778fdff8342c88e324f3941a"
+      "sha256": "a184f5f17e48ebfa33ff518552774e246ffcf900738daed224c4ff2cceb6be7b"
     },
     {
       "path": "resume-support-operations.html",
-      "sha256": "c7b32274bc0b96db26a7e3b2ef0b5039c311f982f5a2458583729fc2268085ad"
+      "sha256": "0cbfd929d800c4a8473b7a1fe0c7360f713ccc6f8c0106311899636f10e5554d"
     }
   ]
 }

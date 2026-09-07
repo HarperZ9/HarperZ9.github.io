@@ -162,7 +162,7 @@ body.instrument-surface :is(.rt-btn,.btn,.plate-redraw,.re-btn,.at-mini,.chat-mi
   box-shadow:none;
   color:var(--chrome-ink);
   font-family:var(--body);
-  font-size:.82rem;
+  font-size:.875rem;
   font-weight:650;
   letter-spacing:0;
   line-height:1.18;
@@ -175,14 +175,14 @@ body.instrument-surface :is(.rt-btn,.btn,.plate-redraw,.re-btn,.at-mini,.chat-mi
 
 body.instrument-surface :is(.chip,.at-chip,.re-chip){
   min-width:0;
-  min-height:2rem;
+  min-height:2.15rem;
   border:1px solid transparent;
   border-radius:6px;
   background:none;
   box-shadow:inset 0 -1px 0 var(--chrome-line);
   color:var(--chrome-soft);
   font-family:var(--mono);
-  font-size:.74rem;
+  font-size:.875rem;
   font-weight:500;
   letter-spacing:0;
   line-height:1.18;
@@ -235,9 +235,27 @@ body.instrument-surface :is(.re-hint,.hint,.src-hint,.transform-note,.rail-own,.
   max-width:65ch;
 }
 
+body.instrument-surface :is(.plate-note,.desk-influence,.desk-status),
+body.instrument-surface p.seal-line{
+  color:var(--chrome-soft);
+  font-family:var(--body);
+  font-size:.875rem;
+  letter-spacing:0;
+  line-height:1.45;
+  text-transform:none;
+}
+
+body.instrument-surface #gal-flow.plate-note{
+  color:var(--chrome-soft);
+  font-family:var(--body);
+  font-size:.875rem;
+  letter-spacing:0;
+  line-height:1.45;
+}
+
 body.instrument-surface.studio-page .studio-media-first .source-group-label{
   font-family:var(--body);
-  font-size:.76rem;
+  font-size:.875rem;
   font-weight:700;
   letter-spacing:0;
   line-height:1.2;
@@ -252,7 +270,7 @@ body.instrument-surface.studio-page .studio-media-first .source-menu button{
   background:transparent;
   color:var(--chrome-soft);
   font-family:var(--body);
-  font-size:.78rem;
+  font-size:.875rem;
   font-weight:650;
   letter-spacing:0;
   line-height:1.18;
@@ -335,7 +353,7 @@ body.instrument-surface.studio-page .mm-ascii{
 body.instrument-surface.studio-page :is(.rail-own,#shelf-hint,.mm-fullread-note,.mm-shapes){
   color:var(--chrome-soft);
   font-family:var(--body);
-  font-size:.76rem;
+  font-size:.875rem;
   letter-spacing:0;
   line-height:1.5;
   text-transform:none;
@@ -344,7 +362,7 @@ body.instrument-surface.studio-page :is(.rail-own,#shelf-hint,.mm-fullread-note,
 body.instrument-surface.studio-page #st-flow{
   color:var(--chrome-soft)!important;
   font-family:var(--body)!important;
-  font-size:.76rem!important;
+  font-size:.875rem!important;
   letter-spacing:0!important;
   line-height:1.5!important;
 }
@@ -352,9 +370,18 @@ body.instrument-surface.studio-page #st-flow{
 body.instrument-surface.studio-page .mm-fullread>summary,
 body.instrument-surface.studio-page .mm-readmode .chip{
   font-family:var(--body);
-  font-size:.76rem;
+  font-size:.875rem;
   letter-spacing:0;
   line-height:1.35;
+  text-transform:none;
+}
+
+body.instrument-surface.studio-page .studio-console-actions button,
+body.instrument-surface.studio-page .tp-pane-container .tp-rotv_b{
+  font-family:var(--body);
+  font-size:.875rem;
+  letter-spacing:0;
+  line-height:1.25;
   text-transform:none;
 }
 
