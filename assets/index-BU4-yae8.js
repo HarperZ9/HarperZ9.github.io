@@ -89,6 +89,11 @@ Error generating stack: `+e.message+`
           "href": "index-graph.html"
         },
         {
+          "label": "Canon",
+          "href": "canon.html",
+          "summary": "Provider-neutral continuity capsules for selected context preview, export, and instruction-surface checks."
+        },
+        {
           "label": "Gather",
           "href": "gather.html"
         },
@@ -747,24 +752,6 @@ Error generating stack: `+e.message+`
       "verificationCommand": "flywheel lanes --probe",
       "evidence": [
         {
-          "id": "flywheel-release-v0-3-10",
-          "type": "release",
-          "label": "Flywheel v0.3.10",
-          "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.3.10",
-          "date": "2026-08-27",
-          "status": "verified",
-          "summary": "The v0.3.10 public release and main default branch were verified."
-        },
-        {
-          "id": "flywheel-release-v0-3-11",
-          "type": "release",
-          "label": "Flywheel v0.3.11",
-          "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.3.11",
-          "date": "2026-09-04",
-          "status": "verified",
-          "summary": "The v0.3.11 public release, its PyPI publication of flywheel-verify, and the Windows installer attached to it were verified."
-        },
-        {
           "id": "flywheel-release-v0-4-1",
           "type": "release",
           "label": "Flywheel v0.4.1",
@@ -781,6 +768,24 @@ Error generating stack: `+e.message+`
           "date": "2026-09-07",
           "status": "verified",
           "summary": "PyPI serves flywheel-verify 0.4.1. The wheel and source archive hashes match the publication receipt, and a fresh Python wheel install read the allowlisted Evidence Task MCP resources; host marketplace installation is not claimed."
+        },
+        {
+          "id": "flywheel-release-v0-3-11",
+          "type": "release",
+          "label": "Flywheel v0.3.11",
+          "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.3.11",
+          "date": "2026-09-04",
+          "status": "verified",
+          "summary": "The v0.3.11 public release, its PyPI publication of flywheel-verify, and the Windows installer attached to it were verified."
+        },
+        {
+          "id": "flywheel-release-v0-3-10",
+          "type": "release",
+          "label": "Flywheel v0.3.10",
+          "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.3.10",
+          "date": "2026-08-27",
+          "status": "verified",
+          "summary": "The v0.3.10 public release and main default branch were verified."
         },
         {
           "id": "flywheel-gather-lane-code",
@@ -1723,6 +1728,101 @@ Error generating stack: `+e.message+`
       "primaryDomain": "agent-systems",
       "productType": "deterministic agent memory subsystem",
       "releaseState": "GitHub release v0.3.0; no PyPI release claimed"
+    },
+    {
+      "maturity": "active",
+      "placement": "catalog-only",
+      "accessMode": "install",
+      "boundary": "Use only records, atoms, and local surfaces you are authorized to read or update; do not export private provider state, credentials, or unpublished memory banks into public artifacts.",
+      "lastVerified": "2026-09-07",
+      "id": "canon",
+      "name": "Canon",
+      "purpose": "Canon turns explicit local memory records and typed atoms into provider-neutral continuity capsules for Codex, Claude Code, and other agent hosts. It previews target readiness, exports Canon Markdown or capsule JSON, and rewrites only declared local instruction-file regions when a caller chooses an owned surface.",
+      "useCases": [
+        "selected context preview",
+        "continuity capsule export",
+        "agent instruction surface drift checks"
+      ],
+      "href": "canon.html",
+      "sourceHref": "https://github.com/HarperZ9/canon",
+      "domains": [
+        "agent-systems",
+        "developer-infrastructure",
+        "evaluation-verification"
+      ],
+      "primaryDomain": "agent-systems",
+      "family": "infrastructure",
+      "productType": "continuity capsule and instruction-surface CLI",
+      "architectureRole": "continuity-capsule-and-surface-gate",
+      "audiences": [
+        "agent-system engineers",
+        "developer-operations maintainers",
+        "teams moving context across agent hosts"
+      ],
+      "deploymentContexts": [
+        "local agent workspaces",
+        "Codex and Claude Code instruction surfaces",
+        "offline release-review handoffs"
+      ],
+      "releaseState": "GitHub release v0.1.0 verified; no PyPI release claimed",
+      "entryCommand": "python -m pip install https://github.com/HarperZ9/canon/releases/download/v0.1.0/canon-0.1.0-py3-none-any.whl; canon --json preview --workspace . --records records.jsonl --atoms atoms.jsonl --target codex-cli",
+      "verificationCommand": "Verify the v0.1.0 SHA256SUMS.txt entry; canon check; canon --json export --workspace . --records records.jsonl --atoms atoms.jsonl --target codex-cli --format bundle --out bundle",
+      "evidence": [
+        {
+          "id": "canon-release-v0-1-0",
+          "type": "release",
+          "label": "Canon v0.1.0",
+          "href": "https://github.com/HarperZ9/canon/releases/tag/v0.1.0",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "The v0.1.0 GitHub release resolves to commit c9ee6b33d89bd9cf8b2b214523f2b4ada77f75a0 and publishes canon-0.1.0-py3-none-any.whl SHA-256 939639e91414bfe163c43ea689f1a5ddf348254c1989fa54b08c5f2b3849246f, canon-0.1.0.tar.gz SHA-256 99fe489ef7ca2a8243d24a46c1de6abe597ecc5019ddf5276a5f27201e27ee2a, and SHA256SUMS.txt SHA-256 05112cf7f5829744b191e56f4e08ac002fb3a5dd3dcc82ca7bd00c776b6bb195. Distribution is GitHub-only; no PyPI release is claimed."
+        },
+        {
+          "id": "canon-source-0-1-0",
+          "type": "source",
+          "label": "Canon 0.1.0 source",
+          "href": "https://github.com/HarperZ9/canon/tree/c9ee6b33d89bd9cf8b2b214523f2b4ada77f75a0",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "The v0.1.0 tagged source contains the Canon CLI for selected local memory records, typed atoms, provider-targeted preview, stdout exports, and declared instruction-surface bundle writes."
+        },
+        {
+          "id": "canon-preview-export-source",
+          "type": "source",
+          "label": "Canon preview and export workflow source",
+          "href": "https://github.com/HarperZ9/canon/blob/c9ee6b33d89bd9cf8b2b214523f2b4ada77f75a0/README.md#L133-L145",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "The README documents canon --json preview plus Canon Markdown, capsule JSON, and bundle export commands from explicit local records and atoms. It also states that preview and stdout exports are portable while new bundle creation currently requires Windows with the confined native writer."
+        }
+      ],
+      "limitations": [
+        "The v0.1.0 distribution is GitHub-only here; no PyPI release is claimed.",
+        "Preview and export read explicit local JSONL inputs. They do not import provider auth, private databases, ChatGPT web state, Claude web state, credentials, or native provider history.",
+        "Preview and stdout exports are portable across supported Python platforms; creating a new three-file bundle currently requires Windows with the confined native writer.",
+        "A capsule preserves declared context and omissions. It does not prove host enforcement or future provider behavior."
+      ],
+      "inputs": [
+        "Record JSONL and CanonAtom JSONL inputs",
+        "target adapter, target profile, and workspace path",
+        "optional owned instruction-file region for local updates"
+      ],
+      "outputs": [
+        "capsule preview with readiness and source-state hashes",
+        "Canon Markdown, capsule JSON, readiness JSON, or bundle export",
+        "optional owned-region update with undo receipt"
+      ],
+      "dependencies": [],
+      "related": [
+        "mneme",
+        "index",
+        "flywheel"
+      ],
+      "runGuide": {
+        "label": "README example inputs",
+        "href": "https://github.com/HarperZ9/canon/blob/c9ee6b33d89bd9cf8b2b214523f2b4ada77f75a0/README.md#L133-L145",
+        "summary": "Use the README example beside the first command to create records.jsonl and atoms.jsonl before running preview or export."
+      }
     },
     {
       "id": "bulletin",
@@ -3314,10 +3414,10 @@ Error generating stack: `+e.message+`
     {
       "id": "public-surface-sweeper",
       "name": "Public Surface Sweeper",
-      "purpose": "Public Surface Sweeper is a Python CLI that checks a repository before publication for missing public files, unclear README handoff material, credential-like strings, release metadata, and proof-packet readiness. It is a release-hygiene check, not a full security scanner or certification.",
+      "purpose": "Public Surface Sweeper is a Python CLI that checks a repository or local portfolio before publication for missing public files, unclear README handoff material, credential-like strings, release metadata, proof-packet readiness, and workspace delivery drift. It is a release-hygiene check, not a full security scanner or certification.",
       "useCases": [
         "public repository hygiene",
-        "release-surface checks",
+        "linked-worktree release checks",
         "proof-packet readiness"
       ],
       "href": "public-surface-sweeper-sample.html",
@@ -3339,9 +3439,36 @@ Error generating stack: `+e.message+`
       "maturity": "shipped",
       "placement": "catalog-only",
       "accessMode": "install",
-      "entryCommand": "python -m pip install public-surface-sweeper; public-surface-sweeper . --summary",
-      "verificationCommand": "python -m pip install -e \\".[test]\\"; public-surface-sweeper examples/clean-repo; python -m pytest",
+      "entryCommand": "python -m pip install public-surface-sweeper==0.1.3; public-surface-sweeper <workspace> --workspace --json",
+      "verificationCommand": "Verify GitHub or PyPI v0.1.3 download hashes; public-surface-sweeper . --summary; public-surface-sweeper <workspace> --workspace --json",
       "evidence": [
+        {
+          "id": "public-surface-sweeper-release-v0-1-3",
+          "type": "release",
+          "label": "Public Surface Sweeper v0.1.3",
+          "href": "https://github.com/HarperZ9/public-surface-sweeper/releases/tag/v0.1.3",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "The v0.1.3 GitHub release resolves to tag commit 5a1ba1f232e23f1835fe50ffca40e0d050e2e3ea. GitHub download-back verification matched wheel SHA-256 e8f926a6fc8e595d89a42fff936fc32f8c65ad2241d95feafe331c2cb7b7cb99 and source archive SHA-256 37073b6f1e859512d0f93264a260dfbf12ef5ce50e5ce1ee71c6761ba7c7ef5b."
+        },
+        {
+          "id": "public-surface-sweeper-pypi-v0-1-3",
+          "type": "release",
+          "label": "public-surface-sweeper 0.1.3 on PyPI",
+          "href": "https://pypi.org/project/public-surface-sweeper/0.1.3/",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "PyPI serves public-surface-sweeper 0.1.3. Download-back verification matched PyPI wheel SHA-256 9dc327e990f5017d7984db969bd259959bfe9b3bac3ea5d76d589b178dcbe286 and source archive SHA-256 37073b6f1e859512d0f93264a260dfbf12ef5ce50e5ce1ee71c6761ba7c7ef5b; The GitHub and PyPI wheels have different archive bytes; all eleven Python source files in the PyPI wheel match the tag."
+        },
+        {
+          "id": "public-surface-sweeper-workspace-matrix-source",
+          "type": "source",
+          "label": "Public Surface Sweeper workspace matrix source",
+          "href": "https://github.com/HarperZ9/public-surface-sweeper/blob/5a1ba1f232e23f1835fe50ffca40e0d050e2e3ea/USAGE.md#L36-L59",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "The v0.1.3 source documents workspace mode, linked Git worktree handling, default failure on DRIFT or UNVERIFIABLE repositories, and report-only override with --fail-on none."
+        },
         {
           "id": "public-surface-sweeper-release-v0-1-1",
           "type": "release",
@@ -3349,24 +3476,25 @@ Error generating stack: `+e.message+`
           "href": "https://github.com/HarperZ9/public-surface-sweeper/releases/tag/v0.1.1",
           "date": "2026-08-27",
           "status": "verified",
-          "summary": "The latest tagged release is v0.1.1; newer source metadata is not presented as released."
+          "summary": "On 2026-08-27, v0.1.1 was the checked tagged release before v0.1.3. Retained as historical evidence."
         }
       ],
       "limitations": [
         "This is not an exploit tester, dependency vulnerability scanner, credential validator, compliance certification, or replacement for security review.",
-        "A secret-shaped finding does not establish that the value is a live credential."
+        "A secret-shaped finding does not establish that the value is a live credential.",
+        "Workspace mode scans each repository delivery surface and Git metadata. Use single-repo mode when a full source-tree secret-shaped value sweep is needed.",
+        "GitHub and PyPI v0.1.3 wheel hashes are intentionally recorded separately because the downloaded artifacts differ."
       ],
       "boundary": "Scan only repositories and artifacts you are authorized to inspect.",
       "inputs": [
-        "repository or release directory",
-        "required-file and text-hygiene policy",
-        "secret-shape rules",
-        "proof-packet contracts"
+        "repository root or workspace root",
+        "public README, usage, changelog, workflow, and metadata files",
+        "normal or validated linked Git worktree metadata"
       ],
       "outputs": [
-        "public-file and hygiene findings",
-        "secret-shaped-value findings",
-        "proof-packet readiness summary"
+        "single-repository hygiene findings or summary",
+        "workspace delivery matrix with MATCH, DRIFT, and UNVERIFIABLE counts",
+        "optional proof-surface packet for release review"
       ],
       "dependencies": [],
       "related": [
@@ -3375,10 +3503,10 @@ Error generating stack: `+e.message+`
         "agent-hook-pack",
         "repo-proof-index"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-09-07",
       "primaryDomain": "security-privacy",
       "productType": "public release-surface auditor",
-      "releaseState": "stable v0.1.1"
+      "releaseState": "v0.1.3 on GitHub and PyPI"
     },
     {
       "id": "model-provenance-validator",
@@ -3660,11 +3788,11 @@ Error generating stack: `+e.message+`
       "lastVerified": "2026-09-07",
       "id": "chorus",
       "name": "Chorus",
-      "purpose": "Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests that group themes, surface literal disagreement in captured comments, and preserve source-linked receipts.",
+      "purpose": "Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests. Version 0.3.0 adds a source-change review gate for deciding whether current gathered sources still match a reference set.",
       "useCases": [
         "community and comment research",
         "ranked theme and controversy analysis",
-        "change-triggered discourse monitoring"
+        "changed-source review before reusing a digest or release note"
       ],
       "href": "chorus.html",
       "sourceHref": "https://github.com/HarperZ9/chorus",
@@ -3686,10 +3814,19 @@ Error generating stack: `+e.message+`
         "community and comment analysis",
         "Flywheel discourse bridge"
       ],
-      "releaseState": "GitHub release v0.2.0; no PyPI release claimed",
-      "entryCommand": "Download the v0.2.0 wheel from GitHub; python -m pip install chorus_discourse-0.2.0-py3-none-any.whl; chorus run <corpus> --verify",
-      "verificationCommand": "Download the v0.2.0 wheel from GitHub; verify its SHA256SUMS entry; chorus run <authorized-corpus> --verify",
+      "releaseState": "GitHub release v0.3.0 verified; no PyPI release claimed",
+      "entryCommand": "python -m pip install https://github.com/HarperZ9/chorus/releases/download/v0.3.0/chorus_discourse-0.3.0-py3-none-any.whl; chorus decision <current> --reference <reference> --task \\"Check whether sources changed\\"",
+      "verificationCommand": "Verify the v0.3.0 SHA256SUMS.txt entry; chorus run <authorized-corpus> --verify; chorus decision <current> --reference <reference> --public --public-policy public-policy.json",
       "evidence": [
+        {
+          "id": "chorus-release-v0-3-0",
+          "type": "release",
+          "label": "Chorus v0.3.0",
+          "href": "https://github.com/HarperZ9/chorus/releases/tag/v0.3.0",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "The v0.3.0 GitHub release resolves to commit d14663829f8747bb022df3746e6fcb2b66e283d3 and publishes chorus_discourse-0.3.0-py3-none-any.whl SHA-256 1997b649ac381fdcb7a13ec4f5d2d686c9e6306dfe4c58405a7e5b9921c70f2a, chorus_discourse-0.3.0.tar.gz SHA-256 c125cac68b7b5065551100b93bf82d22f210bdd2d5ae5ee6c7bec60d2bb2eb39, and SHA256SUMS.txt SHA-256 ca0f0b4a4cb8670e409d9fb6b8e36c740a2d16fb11e43ed56008dd355ff21233. Distribution is GitHub-only; no PyPI release is claimed."
+        },
         {
           "id": "chorus-release-v0-2-0",
           "type": "release",
@@ -3707,6 +3844,15 @@ Error generating stack: `+e.message+`
           "date": "2026-09-07",
           "status": "verified",
           "summary": "A local wheel smoke reported chorus 0.2.0, successful CLI and MCP synthetic tasks, matching digest SHA-256 c4f978023788ac5d97092c6fe38d3a9befadc2255ec44b47325b0b28445bbd60, and MCP tools chorus.status, chorus.doctor, chorus.run, chorus.corpora, and chorus.digests. This does not prove semantic accuracy on new corpora."
+        },
+        {
+          "id": "chorus-source-change-gate-v0-3-0-source",
+          "type": "source",
+          "label": "Chorus 0.3.0 source-change gate source",
+          "href": "https://github.com/HarperZ9/chorus/blob/d14663829f8747bb022df3746e6fcb2b66e283d3/CHANGELOG.md#L5-L27",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "The tagged v0.3.0 source records chorus decision and MCP chorus.decision as a source-change review gate with MATCH, DRIFT, and UNVERIFIABLE outcomes."
         },
         {
           "id": "chorus-public-source-0-1-0",
@@ -3731,18 +3877,18 @@ Error generating stack: `+e.message+`
         "Core sentiment is English and literal; sarcasm and context can be missed.",
         "Lexical clustering is not semantic equivalence.",
         "The optional model overlay is advisory and excluded from the re-checkable core digest.",
-        "The v0.2.0 GitHub release publishes wheel and source artifacts but does not claim PyPI publication.",
-        "A reproducible digest does not prove source completeness, public opinion, motive, identity, or factual correctness outside the captured material."
+        "The v0.3.0 distribution is GitHub-only here; no PyPI release is claimed.",
+        "A reproducible digest or source-change decision does not prove source completeness, public opinion, motive, identity, or factual correctness outside the captured material."
       ],
       "inputs": [
         "Gather corpus directory or JSON comment rows",
-        "weighting and clustering configuration",
-        "optional model-overlay configuration"
+        "current and reference source packs for the decision gate",
+        "weighting, clustering, and optional public-projection policy configuration"
       ],
       "outputs": [
         "ranked theme digest",
         "controversy and dissent analysis",
-        "split-topic findings",
+        "source-change decision with MATCH, DRIFT, or UNVERIFIABLE status",
         "verification receipt"
       ],
       "dependencies": [],

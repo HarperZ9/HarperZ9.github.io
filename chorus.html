@@ -5,18 +5,18 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Chorus | Zentropy Labs</title>
-<meta name="description" content="Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests that group themes, surface literal disagreement in captured comments, and preserve source-linked receipts.">
+<meta name="description" content="Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests. Version 0.3.0 adds a source-change review gate for deciding whether current gathered sources still match a reference set.">
 <link rel="canonical" href="https://harperz9.github.io/chorus.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Chorus | Zentropy Labs">
-<meta property="og:description" content="Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests that group themes, surface literal disagreement in captured comments, and preserve source-linked receipts.">
+<meta property="og:description" content="Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests. Version 0.3.0 adds a source-change review gate for deciding whether current gathered sources still match a reference set.">
 <meta property="og:url" content="https://harperz9.github.io/chorus.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/portfolio-home.png">
 <meta property="og:image:alt" content="Zentropy Labs public system card for Chorus.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Chorus | Zentropy Labs">
-<meta name="twitter:description" content="Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests that group themes, surface literal disagreement in captured comments, and preserve source-linked receipts.">
+<meta name="twitter:description" content="Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests. Version 0.3.0 adds a source-change review gate for deciding whether current gathered sources still match a reference set.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/portfolio-home.png">
 <meta name="color-scheme" content="dark">
 <link rel="stylesheet" href="system/system.css?v=20260907-reading-completion">
@@ -31,10 +31,10 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Chorus</span></div>
   <div class="mid">
     <h1>Discourse synthesis, <span class="g">bounded by receipts.</span></h1>
-    <p class="lede" data-canonical-purpose="chorus">Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests that group themes, surface literal disagreement in captured comments, and preserve source-linked receipts.</p>
-    <p class="close">It is a standalone public system that can read Gather corpora. Its optional model overlay is separately provenanced and excluded from the deterministic receipt.</p>
+    <p class="lede" data-canonical-purpose="chorus">Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests. Version 0.3.0 adds a source-change review gate for deciding whether current gathered sources still match a reference set.</p>
+    <p class="close">It is a standalone public system that can read Gather corpora. Its optional model overlay is separately provenanced and excluded from the deterministic receipt, and the verified v0.3.0 GitHub-only release adds the source-change gate.</p>
   </div>
-  <div class="seal">GitHub release v0.2.0 &middot; no PyPI release claimed &middot; checked 2026-09-07</div>
+  <div class="seal">GitHub release v0.3.0 verified &middot; no PyPI release claimed &middot; checked 2026-09-07</div>
 </div>
 
 <main id="main">
@@ -47,26 +47,30 @@
     </article>
     <article class="index-row" role="listitem">
       <span class="index-term">Implemented work</span>
-      <span class="index-gloss">Greedy nearest-leader clustering over deterministic hashed-TF-IDF vectors, English-only literal lexicon scoring, theme and aspect disagreement measures, Gather-corpus input, content-addressed receipts, and v0.2.0 label-support fields that distinguish cluster, weak, single-item, and fallback support.</span>
+      <span class="index-gloss">Greedy nearest-leader clustering over deterministic hashed-TF-IDF vectors, English-only literal lexicon scoring, theme and aspect disagreement measures, Gather-corpus input, content-addressed receipts, v0.2.0 label-support fields, and 0.3.0 source-change decisions that return MATCH, DRIFT, or UNVERIFIABLE.</span>
     </article>
     <article class="index-row" role="listitem">
       <span class="index-term">Evidence</span>
-      <span class="index-gloss"><a href="https://github.com/HarperZ9/chorus/releases/tag/v0.2.0" rel="noopener">GitHub release v0.2.0</a> publishes a wheel, source distribution, and SHA256SUMS. Download verification matched the wheel and source hashes, and a wheel smoke exercised CLI and MCP synthetic tasks. This verifies the packaged release path in the receipt, not semantic accuracy on new corpora, representative demand, deployment, or adoption. No PyPI release is claimed.</span>
+      <span class="index-gloss"><a href="https://github.com/HarperZ9/chorus/releases/tag/v0.3.0" rel="noopener">GitHub release v0.3.0</a> publishes <span translate="no">chorus_discourse-0.3.0-py3-none-any.whl</span> with SHA-256 <span translate="no">1997b649ac381fdcb7a13ec4f5d2d686c9e6306dfe4c58405a7e5b9921c70f2a</span>, <span translate="no">chorus_discourse-0.3.0.tar.gz</span> with SHA-256 <span translate="no">c125cac68b7b5065551100b93bf82d22f210bdd2d5ae5ee6c7bec60d2bb2eb39</span>, and <span translate="no">SHA256SUMS.txt</span> with SHA-256 <span translate="no">ca0f0b4a4cb8670e409d9fb6b8e36c740a2d16fb11e43ed56008dd355ff21233</span>. This verifies the GitHub release path in the receipt, not semantic accuracy on new corpora, representative demand, deployment, adoption, semantic truth, or population sentiment. No PyPI release is claimed.</span>
+    </article>
+    <article class="index-row" role="listitem">
+      <span class="index-term">Source-change check</span>
+      <span class="index-gloss"><a href="https://github.com/HarperZ9/chorus/blob/d14663829f8747bb022df3746e6fcb2b66e283d3/CHANGELOG.md#L5-L27" rel="noopener">The tagged 0.3.0 source changelog</a> records <span translate="no">chorus decision</span> and MCP <span translate="no">chorus.decision</span> as a gate for comparing current and reference source packs, with MATCH, DRIFT, and UNVERIFIABLE outcomes.</span>
     </article>
     <article class="index-row" role="listitem">
       <span class="index-term">Install</span>
-      <span class="index-gloss">Download <a href="https://github.com/HarperZ9/chorus/releases/download/v0.2.0/chorus_discourse-0.2.0-py3-none-any.whl" rel="noopener">chorus_discourse-0.2.0-py3-none-any.whl</a>, then run <span translate="no">python -m pip install chorus_discourse-0.2.0-py3-none-any.whl</span>. The GitHub release also includes a source distribution and checksums; no PyPI release is claimed.</span>
+      <span class="index-gloss">Verify the v0.3.0 checksum file, then install the GitHub wheel with <span translate="no">python -m pip install https://github.com/HarperZ9/chorus/releases/download/v0.3.0/chorus_discourse-0.3.0-py3-none-any.whl</span>. First use: <span translate="no">chorus decision &lt;current&gt; --reference &lt;reference&gt; --task "Check whether sources changed"</span>.</span>
     </article>
     <article class="index-row" role="listitem">
       <span class="index-term">Boundary</span>
-      <span class="index-gloss">A digest is a structured reading of the provided corpus. Lexical clustering is not semantic understanding; the English-only sentiment pass does not resolve sarcasm, irony, or context. The output does not prove source completeness, public opinion, motive, identity, or factual correctness outside the captured material.</span>
+      <span class="index-gloss">A digest or source-change decision is a structured reading of the provided corpus and source packs. Lexical clustering is not semantic understanding; the English-only sentiment pass does not resolve sarcasm, irony, or context. The output does not prove source completeness, public opinion, motive, identity, or factual correctness outside the captured material.</span>
     </article>
   </div>
 </section>
 
 <section class="mv" aria-labelledby="chorus-links-h">
   <h2 id="chorus-links-h">Where it fits.</h2>
-  <p class="body-text">Use Chorus when the material is already captured and the question is how themes, disagreement, and evidence limits should be represented without pretending the digest is the whole public record.</p>
+  <p class="body-text">Use Chorus when the material is already captured and the question is how themes, disagreement, source changes, and evidence limits should be represented without pretending the digest is the whole public record.</p>
   <p class="body-text"><a href="catalog.html#domain-research-education">View it in the system catalog</a> or <a href="gather.html">start with Gather</a> when the source material still needs to be collected.</p>
 </section>
 </main>

@@ -29,7 +29,7 @@ RELEASE_PATHS = (
     "system/report-editorial.css",
     "system/system.css",
     "warden.html",
-    "assets/index-DLXdj0Sb.js",
+    "assets/index-BU4-yae8.js",
     "system/theme.js",
     "system/theme-entry.js",
     "system/theme.css",
@@ -89,6 +89,7 @@ RELEASE_PATHS = (
     "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.docx",
     "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf",
     "catalog.html",
+    "canon.html",
     "cover-letter.html",
     "cv.html",
     "cv.md",
@@ -152,6 +153,7 @@ RELEASE_PATHS = (
     "img/og/growth-needs-a-before.png",
     "img/og/brender-archival.png",
     "img/og/bulletin.png",
+    "img/og/canon.png",
     "img/og/join.png",
     "img/og/elder-enb.png",
     "img/og/engine-revival.png",
@@ -227,7 +229,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "a24761a1960e01676bbd79f807daa00a237a87dc693a24f52596af71c210f8ff"
+REVIEWED_RELEASE_SHA256 = "9e67ec11530ec8a02e2fdd44b3a34396e98ad4f6e288272762ff2aa81de96a1d"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -335,7 +337,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_join_js = "index-BoU_gOMc.js"
     previous_board_js = "index-B-g9u1T0.js"
     previous_board_css = "index-B5xhdbWj.css"
-    current_js = "index-DLXdj0Sb.js"
+    current_js = "index-BU4-yae8.js"
     current_css = "index-B2kgPYlE.css"
     previous_flywheel_js = "index-BIYnDBdw.js"
     previous_flywheel_css = "index-DGQrcJ5p.css"

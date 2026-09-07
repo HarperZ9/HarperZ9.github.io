@@ -24,7 +24,7 @@ export const SYSTEM_PAGE_STYLE = `
 .product-card-title{margin:0;font-size:clamp(1.22rem,2vw,1.72rem);line-height:1.12}
 .product-card-title a{color:var(--bone);text-decoration:none}
 .product-type{margin:.4rem 0 0;color:var(--muted);line-height:1.55}
-.product-purpose{max-width:78ch;color:var(--bone);font-size:clamp(1rem,1.18vw,1.12rem);line-height:1.68}
+.product-purpose{max-width:78ch;color:var(--bone);font-size:clamp(1rem,1.18vw,1.12rem);line-height:1.68;overflow-wrap:anywhere}
 .product-limit{max-width:72ch;margin-top:.8rem;color:var(--muted);line-height:1.6}
 .product-status{grid-template-columns:repeat(2,minmax(8rem,1fr));margin-top:1rem}
 .product-status-line{display:block;margin-top:.7rem;color:var(--muted);line-height:1.5}
