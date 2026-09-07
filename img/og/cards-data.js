@@ -87,6 +87,18 @@ window.CARD_DATA = {
     "word": "INDEX",
     "glyph": "graph"
   },
+  "canon": {
+    "role": "AGENT CONTINUITY CAPSULES",
+    "headline": "Preview selected context, export a capsule, and keep surface writes bounded.",
+    "pipeline": "RECORDS / PREVIEW / EXPORT / CHECK",
+    "word": "CANON",
+    "glyph": "layers",
+    "constellationCard": true,
+    "routeHref": "canon.html",
+    "routeTitle": "Canon",
+    "routeSummary": "Canon turns explicit local memory records and typed atoms into provider-neutral continuity capsules for Codex, Claude Code, and other agent hosts.",
+    "imagePath": "img/og/canon.png"
+  },
   "telos": {
     "role": "SHARED STATE ENGINE",
     "headline": "Give model workflows durable contact with files, tools, memory, and time.",

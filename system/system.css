@@ -135,7 +135,7 @@ h2 em{font-style:normal;color:var(--orange)}
 .index{width:100%;max-width:72ch;border-top:1px solid transparent;border-image:var(--edge) 1;margin-top:clamp(2rem,3.5vw,3rem)}
 .index-row{display:grid;grid-template-columns:8rem 1fr;gap:.5rem var(--col-gap);padding:.85rem 0;border-bottom:1px solid transparent;border-image:var(--edge) 1;align-items:baseline}
 .index-term{font-family:var(--mono);font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--orange);line-height:1.5}
-.index-gloss{font-family:var(--body);font-size:clamp(1rem,1.2vw,1.1rem);line-height:1.6;color:var(--muted)}
+.index-gloss{font-family:var(--body);font-size:clamp(1rem,1.2vw,1.1rem);line-height:1.6;color:var(--muted);overflow-wrap:anywhere}
 /* ── the atlas tree (home) ─────────────────────────────────────── */
 .atlas-tree{margin:1.6rem 0 0}
 .index-term a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(70,54,232,.35)}

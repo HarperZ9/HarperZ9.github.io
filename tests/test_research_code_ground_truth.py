@@ -52,7 +52,7 @@ def test_chorus_page_names_the_implemented_method_and_current_test_evidence() ->
 
     assert "deterministic hashed-TF-IDF" in source
     assert "English-only" in source
-    assert "GitHub release v0.2.0" in source
+    assert "GitHub release v0.3.0" in source
     assert "excluded from the deterministic receipt" in source
 
 

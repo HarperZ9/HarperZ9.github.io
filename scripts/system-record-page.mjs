@@ -107,9 +107,16 @@ function command(label, value) {
   return `<div class="system-command"><strong>${label}</strong><code>${escapeHtml(value)}</code></div>`;
 }
 
+function runGuide(system) {
+  const guide = system.runGuide;
+  if (!guide?.href || !guide?.label) return "";
+  const summary = guide.summary ? ` ${escapeCopy(guide.summary)}` : "";
+  return `<p class="body-text"><a href="${escapeHtml(guide.href)}" rel="noopener">${escapeHtml(guide.label)}</a>${summary}</p>`;
+}
+
 function runBlock(system) {
   const source = system.sourceHref ? `<p class="body-text">${sourceLink(system)}</p>` : "";
-  return `${command("Entry", system.entryCommand)}${command("Verification", system.verificationCommand)}${source}`;
+  return `${command("Entry", system.entryCommand)}${runGuide(system)}${command("Verification", system.verificationCommand)}${source}`;
 }
 
 function recordLinks(ctx, ids) {

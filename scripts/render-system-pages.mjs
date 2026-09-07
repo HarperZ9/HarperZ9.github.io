@@ -229,6 +229,7 @@ const RECORD_PAGES = [
   "accountable-surface",
   "behavior-transform",
   "bulletin",
+  "canon",
   "elder-enb",
   "enb-runtime-core",
   "mneme",

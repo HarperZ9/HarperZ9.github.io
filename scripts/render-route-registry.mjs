@@ -75,6 +75,16 @@ if (!systems.routes.some((route) => route.href === joinBoard.href)) {
   systems.routes.splice(afterBoard >= 0 ? afterBoard + 1 : systems.routes.length, 0, joinBoard);
 }
 
+const canon = {
+  label: "Canon",
+  href: "canon.html",
+  summary: "Provider-neutral continuity capsules for selected context preview, export, and instruction-surface checks.",
+};
+if (!systems.routes.some((route) => route.href === canon.href)) {
+  const afterIndex = systems.routes.findIndex((route) => route.href === "index-graph.html");
+  systems.routes.splice(afterIndex >= 0 ? afterIndex + 1 : systems.routes.length, 0, canon);
+}
+
 function moveRoute(href, targetFamily, afterHref) {
   let route = null;
   for (const family of registry.families) {
