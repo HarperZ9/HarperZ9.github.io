@@ -29,7 +29,7 @@ from tools.publication_model import (
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_URL = "https://harperz9.github.io/"
-ASSET_REVISION = "20260905-article-reading"
+ASSET_REVISION = "20260906-reading-cascade"
 PUBLICATIONS_MARKER = "GENERATED EDITORIAL PUBLICATIONS"
 WRITING_MARKER = "GENERATED EDITORIAL ESSAYS"
 SITEMAP_MARKER = "GENERATED EDITORIAL ROUTES"

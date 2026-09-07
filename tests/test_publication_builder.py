@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pytest
 
-from tools.build_publications import build, render_article, render_figure_svg
+from tools.build_publications import ASSET_REVISION, build, render_article, render_figure_svg
 from tools.publication_model import PublicationError
 
 
@@ -22,6 +22,7 @@ BRIEFING_URL = (
     "https://harperz9.github.io/briefings/"
     "2026-08-26-openai-hugging-face-incident/"
 )
+PUBLICATION_ARTICLE_REVISION = "20260906-reading-cascade"
 
 
 def fixture_site(tmp_path: Path) -> Path:
@@ -293,8 +294,9 @@ def test_article_has_a_route_specific_social_card_and_one_typography_system() ->
         f'img/og/{record["id"]}.png">'
     ) in article
     assert 'href="styles.css?v=20260828-site-design"' not in article
+    assert ASSET_REVISION == PUBLICATION_ARTICLE_REVISION
     assert (
-        'href="system/publication-article.css?v=20260905-article-reading"'
+        f'href="system/publication-article.css?v={PUBLICATION_ARTICLE_REVISION}"'
         in article
     )
     assert article.count('rel="stylesheet"') == 1

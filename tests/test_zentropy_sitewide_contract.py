@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import posixpath
 import re
+import subprocess
 from pathlib import Path
 
 
@@ -18,15 +19,24 @@ NON_DEPLOYABLE_HTML_DIRS = {
     "private",
     "protected",
     "secrets",
+    "media",
 }
 DEFAULT_ASSET_REVISION = "20260902-creative-chassis"
+READING_CASCADE_REVISION = "20260906-reading-cascade"
 REVIEWED_ASSET_REVISIONS = {
-    "system/publication-article.css": "20260905-article-reading",
+    "system/system.css": READING_CASCADE_REVISION,
+    "system/doc.css": READING_CASCADE_REVISION,
+    "system/publication-article.css": READING_CASCADE_REVISION,
     "system/figure.css": "20260906-figure-presentation",
     "system/report-editorial.css": "20260906",
     "system/instrument-editorial.css": "20260906-studio-chrome",
     "system/demo-editorial.css": "20260906-demo-editorial",
 }
+READING_IMPORTING_STYLESHEETS = (
+    "system/system.css",
+    "system/doc.css",
+    "system/publication-article.css",
+)
 SHARED_STYLE_SHEETS = (
     "system/system.css",
     "system/doc.css",
@@ -75,14 +85,21 @@ def read(rel: str) -> str:
 
 
 def deployable_html_pages() -> list[Path]:
-    return [
-        path
-        for path in ROOT.rglob("*.html")
-        if not any(
-            part.startswith(".") or part in NON_DEPLOYABLE_HTML_DIRS
-            for part in path.relative_to(ROOT).parts
-        )
-    ]
+    tracked = subprocess.run(
+        ["git", "ls-files", "--", "*.html"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    pages: list[Path] = []
+    for rel in tracked.stdout.splitlines():
+        relative = Path(rel)
+        if any(part.startswith(".") or part in NON_DEPLOYABLE_HTML_DIRS for part in relative.parts):
+            continue
+        pages.append(ROOT / relative)
+    return pages
 
 
 def parse_declarations(body: str) -> dict[str, str]:
@@ -577,6 +594,63 @@ def test_shared_frontend_assets_use_consistent_reviewed_cache_revisions() -> Non
             if re.search(r"(?:^|/)assets/[^/?]+-[A-Za-z0-9_-]{8,}\.(?:css|js)$", target):
                 continue
             assert_reviewed_asset_revision(relative, target)
+
+
+def test_reading_cache_revision_reaches_importing_stylesheets_and_generators() -> None:
+    expected_import = f'@import url("reading.css?v={READING_CASCADE_REVISION}");'
+    for rel in READING_IMPORTING_STYLESHEETS:
+        first_line = read(rel).splitlines()[0]
+        assert first_line == expected_import, f"{rel} must refresh its reading.css import"
+
+    expected_generator_urls = {
+        "scripts/analytics-page.mjs": (
+            f"../system/system.css?v={READING_CASCADE_REVISION}",
+        ),
+        "scripts/render-system-pages.mjs": (
+            f"system/system.css?v={READING_CASCADE_REVISION}",
+        ),
+        "scripts/system-record-head.mjs": (
+            f"/system/system.css?v={READING_CASCADE_REVISION}",
+        ),
+        "tools/build_publications.py": (
+            f'ASSET_REVISION = "{READING_CASCADE_REVISION}"',
+            'system/publication-article.css?v={ASSET_REVISION}',
+        ),
+        "tools/render_corpus.py": (
+            f"system/doc.css?v={READING_CASCADE_REVISION}",
+        ),
+    }
+    stale_parent_urls = (
+        "system/system.css?v=20260902-creative-chassis",
+        "/system/system.css?v=20260902-creative-chassis",
+        "../system/system.css?v=20260902-creative-chassis",
+        "system/doc.css?v=20260813-document",
+        "system/doc.css?v=20260902-creative-chassis",
+        "system/publication-article.css?v=20260905-article-reading",
+        "../system/publication-article.css?v=20260905-article-reading",
+    )
+
+    for rel, expected_urls in expected_generator_urls.items():
+        source = read(rel)
+        for expected_url in expected_urls:
+            assert expected_url in source, f"{rel} must emit {expected_url}"
+        for stale_url in stale_parent_urls:
+            assert stale_url not in source, f"{rel} still emits stale cache key {stale_url}"
+
+
+def test_reading_cache_negative_control_rejects_stale_parent_revision() -> None:
+    error = None
+    try:
+        assert_reviewed_asset_revision(
+            Path("overview.html"),
+            "system/system.css?v=20260902-creative-chassis",
+        )
+    except AssertionError as exc:
+        error = str(exc)
+
+    assert error is not None
+    assert "system/system.css?v=20260902-creative-chassis" in error
+    assert f"expected ?v={READING_CASCADE_REVISION}" in error
 
 
 def test_asset_revision_negative_control_rejects_wrong_reviewed_revision() -> None:
