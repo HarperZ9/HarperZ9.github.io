@@ -18,10 +18,28 @@ const criticalStyle = `<style data-report-critical>
   *,*::before,*::after{box-sizing:border-box}body{margin:0}main{width:100%;max-width:1280px;min-width:0;margin:auto;padding:32px}.figure-scroll,.table-wrap,.report-scroll{max-width:100%;min-width:0;overflow-x:auto}.figure-scroll svg{display:block;max-width:none}table{border-collapse:collapse;width:max-content;min-width:100%;margin:0}code{overflow-wrap:anywhere;word-break:break-word}@media(max-width:720px){main{padding:18px}}
 </style>`;
 
+function plainLabel(value) {
+  return String(value ?? "")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/[.:;,\s]+$/, "");
+}
+
+function labelTableWraps(markup) {
+  return markup.replace(/<div class="table-wrap">(?=<table>)/g, (match, offset, source) => {
+    const after = source.slice(offset);
+    const caption = after.match(/^<div class="table-wrap"><table><caption>([\s\S]*?)<\/caption>/)?.[1];
+    const headings = [...source.slice(0, offset).matchAll(/<h[1-3][^>]*>([\s\S]*?)<\/h[1-3]>/g)];
+    const heading = headings.at(-1)?.[1];
+    const label = plainLabel(caption) || plainLabel(heading) || "report data";
+    return `<div class="table-wrap report-scroll" tabindex="0" role="region" aria-label="Scrollable table: ${escapeMarkup(label)}">`;
+  });
+}
+
 export function page(title, body) {
-  const semanticBody = body
+  const semanticBody = labelTableWraps(body)
     .replaceAll('class="eyebrow"', 'class="record-label"')
-    .replaceAll('class="table-wrap"', 'class="table-wrap report-scroll" tabindex="0" role="region" aria-label="Scrollable report table"')
     .replaceAll("SUPPORTING INVENTORY", "Supporting inventory")
     .replaceAll("BENCHMARK EVIDENCE", "Benchmark evidence")
     .replaceAll("EXPLORATORY ACTUAL RESULT", "Exploratory actual result")

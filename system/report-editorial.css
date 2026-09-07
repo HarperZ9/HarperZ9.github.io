@@ -316,7 +316,7 @@ body.report-editorial table{
   min-width:100%;
   margin:0!important;
   border-collapse:collapse;
-  table-layout:auto!important;
+  table-layout:auto;
   background:transparent!important;
   color:var(--report-ink);
   font-family:var(--report-type)!important;
@@ -387,8 +387,24 @@ body.report-editorial .hero > .card:first-child{
 
 body.report-editorial .summary,
 body.report-editorial .score{
-  display:grid;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
   gap:.75rem;
+}
+
+body.report-editorial .card > *,
+body.report-editorial .summary > *,
+body.report-editorial .score > *,
+body.report-editorial .verdicts,
+body.report-editorial .chain{
+  min-width:0;
+  max-width:100%;
+}
+
+body.report-editorial .card :is(h1,h2,h3,p,ul,ol,.lead,.lede){
+  max-width:100%!important;
+  overflow-wrap:anywhere;
 }
 
 body.report-editorial .pill,
@@ -405,6 +421,9 @@ body.report-editorial .go{
   background:var(--report-panel-2)!important;
   color:var(--report-link)!important;
   text-decoration:none;
+  max-width:100%;
+  white-space:normal;
+  text-align:center;
 }
 
 body.report-editorial .actions{
@@ -418,15 +437,26 @@ body.report-editorial .verdict,
 body.report-editorial .step,
 body.report-editorial .metric{
   display:flex;
+  flex-wrap:wrap;
   justify-content:space-between;
+  align-items:baseline;
   gap:1rem;
   min-width:0;
+  max-width:100%;
   padding:.75rem .85rem;
   border:1px solid var(--report-rule)!important;
   border-radius:8px!important;
   background:var(--report-panel-2)!important;
   color:var(--report-ink)!important;
   box-shadow:none!important;
+}
+
+body.report-editorial .verdict > *,
+body.report-editorial .step > *,
+body.report-editorial .metric > *{
+  min-width:0;
+  max-width:100%;
+  overflow-wrap:anywhere;
 }
 
 body.report-editorial .chain{
@@ -480,6 +510,15 @@ body.report-editorial.report-redirect h1{
   body.report-editorial .verdict,
   body.report-editorial .step,
   body.report-editorial .metric{
+    display:flex;
+    flex-direction:column;
+    gap:.25rem;
+    align-items:stretch;
+  }
+
+  body.report-editorial .verdict > *,
+  body.report-editorial .step > *,
+  body.report-editorial .metric > *{
     display:block;
   }
 }
@@ -510,5 +549,36 @@ body.report-editorial.report-redirect h1{
     width:100%!important;
     max-width:100%!important;
     padding:0!important;
+  }
+
+  body.report-editorial .table-wrap,
+  body.report-editorial .report-scroll{
+    width:100%!important;
+    max-width:100%!important;
+    overflow:visible!important;
+    border:0!important;
+    border-radius:0!important;
+    background:#fff!important;
+  }
+
+  body.report-editorial .table-wrap table,
+  body.report-editorial .report-scroll table{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    table-layout:fixed!important;
+  }
+
+  body.report-editorial .table-wrap :is(th,td),
+  body.report-editorial .report-scroll :is(th,td){
+    overflow-wrap:anywhere!important;
+    word-break:break-word!important;
+  }
+
+  body.report-editorial pre[role="region"]{
+    max-width:100%!important;
+    overflow:visible!important;
+    white-space:pre-wrap!important;
+    word-break:break-word!important;
   }
 }
