@@ -14,6 +14,8 @@ BASELINE_EDITION_DATE = "2026-08-24"
 CURRENT_EDITION_DATE = json.loads(
     (ROOT / "frontier-safety" / "data" / "current.json").read_text(encoding="utf-8")
 )["edition_date"]
+FRONTIER_CSS_REVISION = "20260906-reading-cascade"
+SITE_CHROME_REVISION = "20260902-creative-chassis"
 ALLOWED_SOURCE_HOSTS = {
     "cdn.openai.com",
     "harperz9.github.io",
@@ -226,14 +228,20 @@ def test_page_metadata_social_copy_and_site_links() -> None:
 
 def test_briefing_uses_the_shared_site_design_canon() -> None:
     page = (ROOT / "frontier-safety.html").read_text(encoding="utf-8")
-    archive = (ROOT / "frontier-safety" / "archive" / f"{BASELINE_EDITION_DATE}.html").read_text(encoding="utf-8")
+    current_archive = (
+        ROOT / "frontier-safety" / "archive" / f"{CURRENT_EDITION_DATE}.html"
+    ).read_text(encoding="utf-8")
+    baseline_archive = (
+        ROOT / "frontier-safety" / "archive" / f"{BASELINE_EDITION_DATE}.html"
+    ).read_text(encoding="utf-8")
     stylesheet = (ROOT / "frontier-safety" / "frontier-safety-site.css").read_text(encoding="utf-8")
+    legacy_stylesheet = (ROOT / "frontier-safety" / "frontier-safety.css").read_text(encoding="utf-8")
 
     assert '<body class="inner-clean frame-compact frontier-briefing">' in page
     assert 'class="frame briefing-hero"' in page
     assert 'class="bar"' in page
     assert 'class="mid briefing-intro"' in page
-    assert 'class="plate plate--slim briefing-plate"' in page
+    assert '<dl class="edition-readout">' in page
     assert '<main id="main">' in page
     assert 'class="mv briefing-overview"' in page
     assert 'class="mv lane"' in page
@@ -243,14 +251,20 @@ def test_briefing_uses_the_shared_site_design_canon() -> None:
     assert "conso-regular.woff2" in page
     assert '<meta name="theme-color" content="#070406">' in page
 
-    # A published dated archive is immutable. Its original document shell and
-    # stylesheet remain byte-for-byte reproducible while the live and future
-    # editions move to the site's shared presentation.
-    assert '<body class="doc frontier-briefing">' in archive
-    assert 'href="../frontier-safety.css?v=20260902-creative-chassis"' in archive
+    for html in (page, current_archive, baseline_archive):
+        assert "briefing-plate" not in html
+        assert "obsidian-burst" not in html
 
-    assert '@import url("../system/system.css' in stylesheet
+    # The inaugural archive keeps the document shell, but uses the current
+    # reviewed reading cascade and omits the retired specimen burst.
+    assert '<body class="doc frontier-briefing">' in baseline_archive
+    assert f'href="../frontier-safety.css?v={FRONTIER_CSS_REVISION}"' in baseline_archive
+
+    assert f'@import url("../system/system.css?v={FRONTIER_CSS_REVISION}")' in stylesheet
+    assert f'@import url("../system/doc.css?v={FRONTIER_CSS_REVISION}")' in legacy_stylesheet
+    assert "20260812-angular" not in stylesheet
     assert '@import url("../system/doc.css")' not in stylesheet
+    assert '@import url("../system/doc.css")' not in legacy_stylesheet
     assert "Kilon" not in stylesheet
     assert "initial-scan" not in stylesheet
 
@@ -263,6 +277,10 @@ def test_controls_matrix_documents_its_accessible_analysis_contract() -> None:
 
     for document in (page, archive):
         assert f"Source-scope matrix for edition {CURRENT_EDITION_DATE}." in document
+        assert (
+            '<div class="table-wrap" tabindex="0" role="region" '
+            'aria-label="Controls and evidence-status table">'
+        ) in document
         assert "Sources: each row links to its supporting public record." in document
         assert "Unit: one reported control per row." in document
         assert "Transformation: controls are grouped by reporting organization" in document
@@ -278,11 +296,13 @@ def test_future_dated_archives_use_the_shared_site_shell_and_nested_paths() -> N
     archive = builder.render_html(future, archive=True)
 
     assert '<body class="inner-clean frame-compact frontier-briefing">' in archive
-    assert 'href="../frontier-safety-site.css?v=20260902-creative-chassis"' in archive
-    assert 'src="../../system/nav.js?v=20260902-creative-chassis"' in archive
+    assert f'href="../frontier-safety-site.css?v={FRONTIER_CSS_REVISION}"' in archive
+    assert f'src="../../system/nav.js?v={SITE_CHROME_REVISION}"' in archive
     assert 'href="../data/archive/2026-08-26.json"' in archive
     assert 'href="../../research.html"' in archive
     assert 'class="docnav"' not in archive
+    assert "briefing-plate" not in archive
+    assert "obsidian-burst" not in archive
 
 
 def test_briefing_is_discoverable_from_shared_route_surfaces() -> None:
