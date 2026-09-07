@@ -67,6 +67,37 @@ function bootSpecimen(root) {
   form.addEventListener("input", apply);
   form.addEventListener("change", apply);
   form.addEventListener("submit", event => event.preventDefault());
+  root.querySelector("[data-font-specimen-css]")?.addEventListener("click", () => {
+    const selected = FAMILIES[family.value] || FAMILIES.hanken;
+    const css = [
+      '/* Typography settings from Zentropy Font Lab.',
+      '   Load the named font separately under its license. Font files are not included.',
+      '   Apply class="zentropy-type" to your text. */',
+      '.zentropy-type {',
+      `  font-family: ${selected.stack};`,
+      `  font-size: ${Math.round(boundedNumber(size, 40))}px;`,
+      `  line-height: ${boundedNumber(line, 1.25).toFixed(2)};`,
+      `  letter-spacing: ${boundedNumber(track, 0).toFixed(2)}em;`,
+      '}', '',
+    ].join('\n');
+    let url;
+    let anchor;
+    try {
+      url = URL.createObjectURL(new Blob([css], { type: 'text/css;charset=utf-8' }));
+      anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = 'zentropy-typography.css';
+      anchor.hidden = true;
+      document.body.append(anchor);
+      anchor.click();
+      status.textContent = 'CSS download started. Load the named typeface in your project, then apply the zentropy-type class to your text.';
+    } catch (_) {
+      status.textContent = 'The CSS could not be downloaded. Your settings are still here.';
+    } finally {
+      anchor?.remove();
+      if (url) setTimeout(() => URL.revokeObjectURL(url), 1500);
+    }
+  });
   root.querySelector("[data-font-specimen-poster]")?.addEventListener("click", async event => {
     const button = event.currentTarget;
     button.disabled = true;

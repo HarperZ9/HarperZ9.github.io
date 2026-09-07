@@ -33,7 +33,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/theme.css": THEME_PREFERENCES_REVISION,
     "system/type-specimen.css": "20260907",
     "system/font-marketplace.css": "20260907-editor-workspace",
-    "system/font-specimen.js": "20260907-typography-handoff",
+    "system/font-specimen.js": "20260907-css-export",
     "system/retro-studio.js": "20260907-native-project",
     "system/loom-studio.js": "20260907-project-files",
     "system/studio.js": "20260907-spatial-views",

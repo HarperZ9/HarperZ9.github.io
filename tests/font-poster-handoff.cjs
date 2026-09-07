@@ -17,6 +17,16 @@ const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8802';
       await page.locator(`#font-specimen-${id}`).evaluate((e, v) => { e.value = v; e.dispatchEvent(new Event('input', { bubbles: true })); }, value);
     }
     assert.equal(await page.evaluate(() => sessionStorage.getItem('wb.typography.v1')), null, 'Typing alone must not store the specimen');
+    assert.equal(await page.getByRole('button', { name: 'Export CSS', exact: true }).count(), 1);
+    const downloadEvent = page.waitForEvent('download');
+    await page.getByRole('button', { name: 'Export CSS', exact: true }).click();
+    const cssDownload = await downloadEvent;
+    assert.equal(cssDownload.suggestedFilename(), 'zentropy-typography.css');
+    const parts = [];
+    for await (const part of await cssDownload.createReadStream()) parts.push(part);
+    const css = Buffer.concat(parts).toString('utf8');
+    for (const declaration of ['font-family: "Conso", serif;', 'font-size: 48px;', 'line-height: 1.45;', 'letter-spacing: -0.03em;']) assert(css.includes(declaration));
+    assert(!css.includes(text) && !css.includes('@font-face') && !css.includes('url('), 'Export carries styles only, not private text or font files');
     await page.getByRole('button', { name: 'Use in Poster', exact: true }).click();
     await page.waitForURL('**/studio.html?source=poster&import=typography');
     await page.waitForFunction(() => document.querySelector('#poster-mount')?.dataset.typographyStatus === 'ready');
