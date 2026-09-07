@@ -10,6 +10,7 @@ const SUPPORTED = Object.freeze({
   'zentropy.poster': Object.freeze({ editor: 'Poster', max: 9 * 1024 * 1024 }),
   'zentropy.loom': Object.freeze({ editor: 'Loom', max: 24 * 1024 * 1024 }),
   'zentropy.shader-room': Object.freeze({ editor: 'Shader Room', max: 32 * 1024 * 1024 }),
+  'zentropy.gallery': Object.freeze({ editor: 'Gallery', max: 12 * 1024 * 1024 }),
 });
 
 function userError(message) {

@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Zentropy Editorial Preview";
+  src: url("../type/preview/zentropy-editorial-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 body.font-marketplace-page {
   margin: 0;
 }
@@ -99,6 +107,11 @@ html[data-theme] body.font-marketplace-page .font-market a.font-action.font-acti
   background: var(--reading-panel);
 }
 
+.font-editorial-preview {
+  font-family: "Zentropy Editorial Preview", Georgia, serif;
+  font-weight: 400;
+}
+
 .specimen-line {
   margin: 0;
   color: var(--reading-ink);
@@ -142,7 +155,9 @@ html[data-theme] body.font-marketplace-page .font-market a.font-action.font-acti
 
 .font-specimen-controls[hidden],
 .font-live-specimen[hidden],
-.font-specimen-status[hidden] {
+.font-specimen-status[hidden],
+.font-coverage-warning[hidden],
+.font-asset-status[hidden] {
   display: none;
 }
 
@@ -233,14 +248,38 @@ html[data-theme] body.font-marketplace-page .font-market a.font-action.font-acti
   border-color: var(--reading-link);
 }
 
+.font-specimen-reset:disabled {
+  border-color: var(--reading-rule);
+  color: var(--reading-soft);
+  cursor: not-allowed;
+  opacity: .65;
+}
+
 .font-market-section p.font-control-note,
-.font-market-section p.font-specimen-status {
+.font-market-section p.font-specimen-status,
+.font-market-section p.font-coverage-warning,
+.font-market-section p.font-asset-status {
   grid-column: 1 / -1;
   max-width: 60ch;
   margin: 0;
   font-size: .98rem;
   line-height: 1.5;
   color: var(--reading-soft);
+}
+
+.font-market-section p.font-coverage-warning {
+  padding: .75rem .85rem;
+  border: 1px solid var(--reading-rule);
+  background: color-mix(in srgb, var(--reading-panel) 72%, var(--reading-paper));
+  color: var(--reading-ink);
+}
+
+.font-market-section p.font-asset-status {
+  margin-top: .9rem;
+  padding: .68rem .78rem;
+  border: 1px solid var(--reading-rule);
+  background: color-mix(in srgb, var(--reading-panel) 72%, var(--reading-paper));
+  color: var(--reading-ink);
 }
 
 .font-live-specimen,
@@ -278,6 +317,11 @@ html[data-theme] body.font-marketplace-page .font-market a.font-action.font-acti
 .font-live-preview[data-font-family="conso"] {
   font-family: "Conso", serif;
   font-weight: 600;
+}
+
+.font-live-preview[data-font-family="editorial-preview"] {
+  font-family: "Zentropy Editorial Preview", Georgia, serif;
+  font-weight: 400;
 }
 
 .font-static-line {
@@ -324,6 +368,134 @@ html[data-theme] body.font-marketplace-page .font-market a.font-action.font-acti
   font-size: clamp(1.05rem, 1.5vw, 1.2rem);
   line-height: 1.3;
   color: var(--reading-ink);
+}
+
+.font-collection {
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.font-collection .section-copy {
+  max-width: 44rem;
+}
+
+.font-product-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.font-product {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(17rem, .75fr);
+  gap: clamp(1rem, 3vw, 2rem);
+  align-items: center;
+  padding: clamp(1.1rem, 3.2vw, 2rem);
+  border: 1px solid var(--reading-rule);
+  background: var(--reading-panel);
+  box-shadow: 0 1.1rem 2.8rem color-mix(in srgb, var(--reading-ink) 10%, transparent);
+}
+
+.font-product-copy {
+  min-width: 0;
+}
+
+.font-market-section p.font-product-kicker {
+  margin: 0 0 .5rem;
+  font-size: .92rem;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--reading-soft);
+}
+
+.font-product-meta {
+  display: grid;
+  gap: .65rem;
+  margin: 1rem 0 0;
+}
+
+.font-product-meta div {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, .34fr) minmax(0, .66fr);
+  gap: .75rem;
+  padding-top: .65rem;
+  border-top: 1px solid var(--reading-rule);
+}
+
+.font-product-meta dt {
+  color: var(--reading-ink);
+  font-weight: 700;
+}
+
+.font-product-meta dd {
+  margin: 0;
+  color: var(--reading-soft);
+  line-height: 1.5;
+}
+
+.font-market-section p.font-product-note {
+  font-size: .98rem;
+}
+
+.font-product-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .65rem;
+  margin-top: 1rem;
+}
+
+.font-product-specimen {
+  min-width: 0;
+  display: grid;
+  align-content: center;
+  gap: 1rem;
+  margin: 0;
+  padding: clamp(.5rem, 2vw, 1rem);
+  border: 0;
+  background: transparent;
+}
+
+.font-market-section p.font-product-sample {
+  max-width: none;
+  margin: 0;
+  color: var(--reading-ink);
+}
+
+.font-market-section p.font-product-sample-large {
+  font-size: clamp(2.4rem, 6vw, 5.1rem);
+  line-height: .95;
+  text-wrap: balance;
+}
+
+.font-market-section p.font-product-sample-small {
+  font-size: clamp(.84rem, 1.2vw, .96rem);
+  line-height: 1.7;
+  color: var(--reading-soft);
+  overflow-wrap: anywhere;
+}
+
+.font-product-details {
+  margin-top: 1rem;
+  border-top: 1px solid var(--reading-rule);
+}
+
+.font-product-details summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  color: var(--reading-link);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.font-product-details summary::marker {
+  color: var(--reading-soft);
+}
+
+.font-product-details a {
+  color: var(--reading-link);
 }
 
 .section-copy p,
@@ -438,6 +610,10 @@ html[data-theme] body.font-marketplace-page .font-market a.font-action.font-acti
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .font-product {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .font-market h1 {
     max-width: 100%;
   }
@@ -484,6 +660,7 @@ html[data-theme] body.font-marketplace-page .font-market a.font-action.font-acti
   }
 
   .current-face,
+  .font-product-meta div,
   .font-details-grid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -552,9 +729,11 @@ html[data-theme] body.font-marketplace-page .font-market a.font-action.font-acti
   .font-action,
   .font-sale-note,
   .font-specimen-panel,
+  .font-product,
   .font-specimen-controls,
   .font-live-specimen,
   .font-static-specimen,
+  .font-asset-status,
   .font-details-grid,
   .font-details-grid p {
     border-color: CanvasText;
@@ -587,12 +766,15 @@ html[data-theme] body.font-marketplace-page .font-market a.font-action.font-acti
 
   .font-market-actions,
   .font-specimen-controls,
-  .font-specimen-panel {
+  .font-specimen-panel,
+  .font-product-actions {
     display: none;
   }
 
   .font-live-specimen,
-  .font-static-specimen {
+  .font-static-specimen,
+  .font-product,
+  .font-product-specimen {
     border: 0;
     padding: 0;
   }

@@ -14,7 +14,7 @@ import { SHADER_PRESETS } from "./shader-presets.js?v=20260812-wave7";
 import { sendPiece, receiveTrail, mountFlow } from "./workbench.js?v=20260907-creative-handoff";
 import { setUserPalette } from "./retro-palettes.js";
 import { MOD_SOURCES, evalSources, computeOffsets, modValue } from "./mod-matrix.js?v=20260812-motion";
-import { mountLibrarySave, captureCanvasPreview } from "./project-library-controls.js?v=20260907-workspace";
+import { mountLibrarySave, captureCanvasPreview } from "./project-library-controls.js?v=20260907-gallery-projects";
 
 const $ = (id) => document.getElementById(id);
 const rand = () => Math.random().toString(36).slice(2, 9);

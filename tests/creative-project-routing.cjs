@@ -98,7 +98,7 @@ const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8802';
     await expectStaleCancellation(()=>page.evaluate(()=>document.dispatchEvent(new InputEvent('beforeinput',{inputType:'insertText',data:'x',bubbles:true}))), 'Beforeinput');
     await page.evaluate(()=>{window.indexedDB.open=()=>{throw new DOMException('Blocked','SecurityError');};});
     const exportError=await page.evaluate(async ()=>{
-      const {openProjectInEditor}=await import('/system/project-router.js?v=20260907-native-routing');
+      const {openProjectInEditor}=await import('/system/project-router.js?v=20260907-gallery-projects');
       const file=new File([JSON.stringify({schema:'zentropy.poster',version:1})],'creative.json',{type:'application/json'});
       try { await openProjectInEditor(file); return ''; }
       catch (error) { return error.message; }

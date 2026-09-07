@@ -44,6 +44,7 @@ function contrast(foreground, background) {
         const nodes = [...document.querySelectorAll('main p, main h1, main h2, main h3, main a, main li, main dt, main dd')];
         const forbidden = document.body.textContent.match(/\b(buy now|checkout|add to cart|stripe|notify me|download font)\b/i);
         const catalog = document.querySelector('#font-catalog');
+        const collection = document.querySelector('#font-collection');
         const h1 = document.querySelector('h1');
         const visibleControls = [...document.querySelectorAll('[data-font-specimen-controls] :is(textarea, select, input, button)')]
           .filter(n => n.offsetWidth || n.offsetHeight || n.getClientRects().length);
@@ -53,6 +54,10 @@ function contrast(foreground, background) {
           catalogState: document.body.getAttribute('data-font-catalog-state'),
           commerce: document.body.getAttribute('data-commerce-enabled'),
           catalogText: catalog ? catalog.textContent.trim() : '',
+          collectionText: collection?.textContent.trim() || '',
+          processCopy: /Only reviewed|source-free|public page honest|approved for/i.test(collection?.textContent || ''),
+          tryHref: collection?.querySelector('[data-font-try="editorial-preview"]')?.getAttribute('href'),
+          productDetailsOpen: Boolean(collection?.querySelector('[data-font-product="editorial-regular"] details')?.open),
           visibleControlCount: visibleControls.length,
           staticSpecimenText: staticSpecimen ? staticSpecimen.textContent.trim() : '',
           background: getComputedStyle(document.body).backgroundColor,
@@ -66,9 +71,17 @@ function contrast(foreground, background) {
       });
 
       assert.equal(proof.heading, 'Type with a point of view.');
-      assert.equal(proof.catalogState, 'empty');
+      assert.equal(proof.catalogState, 'preview');
       assert.equal(proof.commerce, 'false');
-      assert.equal(proof.catalogText, 'No fonts are available to purchase yet.');
+      assert.match(proof.catalogText, /No fonts are available to purchase yet\./);
+      assert.match(proof.collectionText, /Zentropy Editorial/);
+      assert.match(proof.collectionText, /Limited preview, not for sale/);
+      assert.match(proof.collectionText, /Printable ASCII plus editorial punctuation/);
+      assert.match(proof.collectionText, /Try this face/);
+      assert.match(proof.collectionText, /Browser-only preview/);
+      assert.equal(proof.processCopy, false, `${theme}/${width}: collection copy should be reader-facing, not internal process text`);
+      assert.equal(proof.tryHref, '#font-lab');
+      assert.equal(proof.productDetailsOpen, false, `${theme}/${width}: metadata details should stay collapsed by default`);
       assert.equal(proof.visibleControlCount, 0, `${theme}/${width}: no-JS must not expose dead specimen controls`);
       assert.match(proof.staticSpecimenText, /Static specimen/i);
       assert.match(proof.staticSpecimenText, /Hanken Grotesk/i);
@@ -128,6 +141,32 @@ function contrast(foreground, background) {
       assert(contrast(hoverProof.color, hoverProof.background) >= 4.5, `${theme}/${width}: primary action hover contrast`);
       assert(contrast(focusProof.color, focusProof.background) >= 4.5, `${theme}/${width}: primary action focus contrast`);
       assert(baseProof.markSize >= 48, `${theme}/${width}: current face marks must remain specimen-sized`);
+
+      const collectionLayout = await page.evaluate(() => {
+        const main = document.querySelector('.font-market').getBoundingClientRect();
+        const collection = document.querySelector('#font-collection').getBoundingClientRect();
+        const product = document.querySelector('[data-font-product="editorial-regular"]').getBoundingClientRect();
+        const specimen = document.querySelector('.font-product-specimen');
+        const specimenStyles = getComputedStyle(specimen);
+        const productStyles = getComputedStyle(document.querySelector('[data-font-product="editorial-regular"]'));
+        return {
+          collectionWidth: collection.width,
+          productWidth: product.width,
+          mainWidth: main.width,
+          specimenBorderTopWidth: specimenStyles.borderTopWidth,
+          productBoxShadow: productStyles.boxShadow,
+        };
+      });
+      if (width >= 1000) {
+        assert(collectionLayout.collectionWidth >= collectionLayout.mainWidth * .96,
+          `${theme}/${width}: original collection should span the main content width`);
+        assert(collectionLayout.productWidth >= collectionLayout.mainWidth * .88,
+          `${theme}/${width}: original specimen should not be squeezed into a narrow nested card`);
+      }
+      assert.equal(collectionLayout.specimenBorderTopWidth, '0px',
+        `${theme}/${width}: specimen should use open space instead of nested card borders`);
+      assert.notEqual(collectionLayout.productBoxShadow, 'none',
+        `${theme}/${width}: card should use one visual container around the specimen`);
 
       const specimenVisible = await page.isVisible('[data-font-specimen-controls]');
       assert.equal(specimenVisible, true, `${theme}/${width}: JS must reveal live specimen controls`);
@@ -224,8 +263,48 @@ function contrast(foreground, background) {
       assert.equal(resetProof.sizeOutput, '40 px');
       assert.equal(resetProof.lineOutput, '1.25');
       assert.equal(resetProof.trackOutput, '0.00 em');
+
+      await page.click('[data-font-try="editorial-preview"]');
+      await page.waitForFunction(() => document.querySelector('#font-specimen-family')?.value === 'editorial-preview');
+      await page.focus('#font-specimen-text');
+      await page.keyboard.press('Control+A');
+      await page.keyboard.type('Editorial proof — ± × ÷ ° … • é');
+      await page.waitForFunction(() => document.querySelector('[data-font-coverage-warning]')?.textContent.includes('Unsupported in this preview'));
+      const originalProof = await page.evaluate(() => {
+        const preview = document.querySelector('[data-font-specimen-preview]');
+        const warning = document.querySelector('[data-font-coverage-warning]');
+        const status = document.querySelector('#font-specimen-status');
+        return {
+          family: getComputedStyle(preview).fontFamily,
+          familyState: preview.getAttribute('data-font-family'),
+          unsupported: warning.textContent.trim(),
+          status: status.textContent.trim(),
+          posterDisabled: document.querySelector('[data-font-specimen-poster]').disabled,
+          cssDisabled: document.querySelector('[data-font-specimen-css]').disabled,
+          network: window.__fontSpecimenNetwork,
+        };
+      });
+      assert.equal(originalProof.familyState, 'editorial-preview');
+      assert.match(originalProof.family, /Zentropy Editorial Preview/i);
+      assert.match(originalProof.unsupported, /é/);
+      assert.match(originalProof.unsupported, /Poster and CSS export stay off/i);
+      assert.match(originalProof.status, /Zentropy Editorial Preview/);
+      assert.equal(originalProof.posterDisabled, true, `${theme}/${width}: preview face must not be transferable to Poster`);
+      assert.equal(originalProof.cssDisabled, true, `${theme}/${width}: preview face must not export CSS`);
+      assert.deepEqual(originalProof.network, [], `${theme}/${width}: original preview must not send visitor text`);
       await context.close();
     }
-    console.log('Fonts marketplace: no-JS, empty catalog, live specimen controls, no checkout, 320/1280 reflow and both themes passed.');
+
+    const broken = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    await broken.route('**/type/preview/*.woff2', route => route.abort());
+    const failed = await broken.newPage();
+    await failed.goto(`${base}/fonts.html`);
+    const assetStatus = failed.locator('[data-font-asset-status]');
+    await assetStatus.waitFor({ state: 'visible' });
+    assert.match(await assetStatus.textContent(), /could not|unavailable|failed|unable/i,
+      'The collection must report original preview load failure before the sampler selection changes');
+    await broken.close();
+
+    console.log('Fonts marketplace: no-JS, preview collection, live specimen controls, unsupported-character warning, no checkout, 320/1280 reflow and both themes passed.');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

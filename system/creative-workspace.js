@@ -1,5 +1,5 @@
-import {listProjects,getProject,deleteProject,renameProject} from './project-library.js?v=20260907-workspace';
-import {openProjectInEditor} from './project-router.js?v=20260907-native-routing';
+import {listProjects,getProject,deleteProject,renameProject} from './project-library.js?v=20260907-gallery-projects';
+import {openProjectInEditor} from './project-router.js?v=20260907-gallery-projects';
 
 const grid=document.querySelector('[data-workspace-projects]');
 const empty=document.querySelector('[data-workspace-empty]');

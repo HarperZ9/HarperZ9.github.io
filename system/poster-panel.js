@@ -15,7 +15,7 @@ import {
 import { renderRetro } from "./retro-engine.js";
 import { applyOpsWet, OP_META } from "./glitch-ops.js";
 import { encodePosterProject, decodePosterProject, validateProjectImage, MAX_PROJECT_BYTES } from "./poster-project.js?v=20260907-flex-composition";
-import { mountLibrarySave, captureCanvasPreview } from "./project-library-controls.js?v=20260907-workspace";
+import { mountLibrarySave, captureCanvasPreview } from "./project-library-controls.js?v=20260907-gallery-projects";
 
 const PALETTE = ["#f2ecf7", "#c9c2d4", "#8f86a0", "#7de3ea", "#99f147", "#f8cc43", "#ff8334", "#ff35aa", "#111016"];
 const HISTORY_LIMIT = 60;

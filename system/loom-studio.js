@@ -7,7 +7,7 @@
 import { STRUCTURES, computeDraft, draftToWIF, weftPaletteFor, wifToDraft } from "./weave-engine.js?v=20260813-wif";
 import { renderCloth, renderDraftChart, chartLayout } from "./weave-render.js?v=20260902-thread";
 import { sendPiece, receiveTrail, mountFlow } from "./workbench.js?v=20260907-creative-handoff";
-import { mountLibrarySave, captureCanvasPreview } from "./project-library-controls.js?v=20260907-workspace";
+import { mountLibrarySave, captureCanvasPreview } from "./project-library-controls.js?v=20260907-gallery-projects";
 
 const $ = (id) => document.getElementById(id);
 

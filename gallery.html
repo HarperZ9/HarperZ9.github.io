@@ -171,6 +171,7 @@
 <script type="module" src="system/hero-aperture.js?v=20260902-creative-chassis"></script>
 <script type="module" src="system/nav.js?v=20260907-simple-menu"></script>
 <script type="module" src="system/audio-player.js?v=20260902-creative-chassis"></script>
+<script type="module" src="system/project-router.js?v=20260907-gallery-projects"></script>
 
 <div class="frame">
   <canvas class="hero-aperture" data-aperture="gallery" aria-hidden="true"></canvas>
@@ -213,6 +214,12 @@
         <button type="button" class="plate-redraw" id="desk-save" aria-label="Save your plate as a PNG image">Download PNG</button>
         <button type="button" class="plate-redraw" id="desk-share" aria-label="Copy a link to the instruments and effects in this recipe">Copy recipe link</button>
       </div>
+      <div class="dk-group" role="group" aria-label="Project" data-gallery-project-controls>
+        <span class="dk-group-lab" aria-hidden="true">project</span>
+        <button type="button" class="plate-redraw" id="desk-project-save" data-gallery-project-save aria-label="Save project">Save project</button>
+        <button type="button" class="plate-redraw" id="desk-project-open" data-gallery-project-open aria-label="Open project">Open project</button>
+        <input type="file" id="desk-project-file" accept="application/json,.json" data-gallery-project-file aria-label="Choose a Gallery project file" hidden>
+      </div>
       <div class="dk-group" role="group" aria-label="Send">
         <span class="dk-group-lab" aria-hidden="true">send</span>
         <button type="button" class="plate-redraw" id="desk-workshop" aria-label="Open this image in Poster">Open in Poster</button>
@@ -222,6 +229,7 @@
     </div>
     <p class="plate-note">Other tools receive the image as it looks now. Its source layers stay here.</p>
     <p class="desk-status" id="desk-status" role="status" aria-live="polite"></p>
+    <p class="desk-status" id="desk-project-status" role="status" aria-live="polite" data-gallery-project-status hidden></p>
     <div class="desk-variations" id="desk-variations" hidden role="group" aria-label="Seed variations - click one to adopt it"></div>
     <div class="desk-controls" id="desk-material-controls">
       <div class="dk-group" role="group" aria-label="Material">
@@ -234,6 +242,7 @@
         </label>
         <button type="button" class="plate-redraw" id="desk-clear-material" hidden aria-label="Remove your image and return to pure engine mode">clear material</button>
       </div>
+      <p class="desk-privacy" id="desk-privacy" hidden>Your image stays in this browser. Native Gallery projects include a bounded PNG copy only in the file you save.</p>
     <details class="re-group" id="desk-rack-recipes" open>
       <summary><span class="re-lab">Recipes <span class="re-hint">Start with a combination.</span></span></summary>
       <div class="re-body">
@@ -910,12 +919,14 @@
 // the rest of the exhibition down with it.
 import { renderSpecimen, renderSpecimenOver, drawImageFit, specimenLayerNames, specimenLayerFamilies, specimenLayerBlurbs } from "./system/generative-field.js";
 import { applyOpsWet, OP_META } from "./system/glitch-ops.js?v=20260813-wet";
+import { captureCanvasPreview, mountLibrarySave } from "./system/project-library-controls.js?v=20260907-gallery-projects";
+import { decodeGalleryProject, encodeGalleryProject, MAX_GALLERY_PROJECT_BYTES } from "./system/gallery-project.js?v=20260907-gallery-projects";
 
 // Bring-your-own-material: the visitor's image, influenced by the instruments.
 // It stays a bitmap in this tab; there is no upload. When material.active, the
 // desk redraws the bitmap and composites the chosen instruments OVER it at the
 // influence alpha, instead of drawing a pure seeded plate.
-const material = { active: false, bitmap: null, name: "" };
+const material = { active: false, bitmap: null, name: "", projectImage: null };
 
 function plateLayers(canvas) {
   return ((canvas.dataset && canvas.dataset.specimenLayers) || "")
@@ -1047,8 +1058,31 @@ const deskMeta = document.getElementById("desk-meta");
 const picked = new Set(["showpiece-aperture"]);
 const locked = new Set();
 const chipRefs = new Map();
+let galleryRevision = 0;
+
+function isProjectControlTarget(target) {
+  if (!target || typeof target.closest !== "function") return false;
+  return !!target.closest("[data-gallery-project-controls],[data-project-library-save],[data-project-library-link],[data-project-library-status]");
+}
+
+for (const eventName of ["beforeinput", "input", "change", "click", "keydown", "pointerdown"]) {
+  document.addEventListener(eventName, (event) => {
+    const target = event.target;
+    if (!target || typeof target.closest !== "function" || !target.closest("#printdesk")) return;
+    if (target.matches?.("[data-gallery-project-file]") || isProjectControlTarget(target)) return;
+    galleryRevision += 1;
+  }, true);
+}
 
 function say(text) { if (deskStatus) deskStatus.textContent = text; }
+
+function projectMessage(text, state) {
+  const status = document.querySelector("[data-gallery-project-status]");
+  if (!status) { say(text); return; }
+  status.hidden = !text;
+  status.textContent = text || "";
+  if (state) status.dataset.state = state; else delete status.dataset.state;
+}
 
 // A selected chip grows a padlock. Locks pin the SELECTION: a locked
 // instrument survives every reroll (the engine draws all layers from one seed
@@ -1393,6 +1427,13 @@ function renderSafe(canvas, seed, layers) {
   }
 }
 
+function bitmapPng(bitmap) {
+  if (!bitmap) return null;
+  const canvas = document.createElement("canvas");
+  drawImageFit(canvas, bitmap, { maxBacking: 2048 });
+  return canvas.toDataURL("image/png");
+}
+
 function materialInfluence() {
   const el = document.getElementById("desk-influence");
   const v = el ? Number(el.value) : 0.5;
@@ -1409,6 +1450,7 @@ let materialOperation = 0;
 
 async function adoptMaterial(file) {
   const operation = ++materialOperation;
+  const revision = galleryRevision;
   if (!file || !/^image\//.test(file.type)) { say("that is not an image file"); return; }
   try {
     let bmp;
@@ -1424,11 +1466,18 @@ async function adoptMaterial(file) {
       });
     }
     if (operation !== materialOperation) { bmp.close?.(); return; }
+    if (revision !== galleryRevision) {
+      bmp.close?.();
+      say("image load cancelled after a newer edit - choose it again when ready");
+      return;
+    }
+    const projectImage = bitmapPng(bmp);
     const previous = material.bitmap;
     material.active = true;
     material.bitmap = bmp;
     if (previous !== bmp) previous?.close?.();
     material.name = file.name || "your image";
+    material.projectImage = projectImage;
     if (influenceWrap) influenceWrap.hidden = false;
     if (clearMaterialBtn) clearMaterialBtn.hidden = false;
     if (privacyLine) privacyLine.hidden = false;
@@ -1454,12 +1503,154 @@ if (clearMaterialBtn) {
   clearMaterialBtn.addEventListener("click", () => {
     materialOperation++;
     material.bitmap?.close?.();
-    material.active = false; material.bitmap = null; material.name = "";
+    material.active = false; material.bitmap = null; material.name = ""; material.projectImage = null;
     influenceWrap.hidden = true; clearMaterialBtn.hidden = true; if (privacyLine) privacyLine.hidden = true;
     drawDesk();
     say("back to pure engine mode");
   });
 }
+
+/* ── native Gallery projects ───────────────────────────────────────────────── */
+const projectSave = document.getElementById("desk-project-save");
+const projectOpen = document.getElementById("desk-project-open");
+const projectFile = document.querySelector("[data-gallery-project-file]");
+let projectOperation = 0;
+
+function galleryRules() {
+  return { layers: ALL_LAYERS, effects: OP_META.map(meta => meta.op) };
+}
+
+function currentGalleryProject() {
+  const instruments = [...picked].filter(name => ALL_LAYERS.includes(name)).slice(0, DESK_MAX);
+  const baseImage = material.active ? {
+    name: (material.name || "your image").slice(0, 120),
+    influence: materialInfluence(),
+    png: material.projectImage || bitmapPng(material.bitmap),
+  } : null;
+  return {
+    recipe: { seed: deskSeedValue(), instruments },
+    locks: [...locked].filter(name => picked.has(name) && ALL_LAYERS.includes(name)),
+    effects: activeFx.filter(op => OP_META.some(meta => meta.op === op)),
+    strength: fxAmount(),
+    baseImage,
+  };
+}
+
+async function captureGalleryProject({ preview = true } = {}) {
+  if (!deskCanvas) throw new Error("Draw a plate before saving a Gallery project.");
+  if (deskCanvas.dataset.specimenRendered !== "true") drawDesk({ mirror: false });
+  if (deskCanvas.dataset.specimenRendered !== "true") throw new Error("Draw a plate before saving a Gallery project.");
+  const revision = galleryRevision;
+  const materialVersion = materialOperation;
+  const text = encodeGalleryProject(currentGalleryProject(), galleryRules());
+  if (revision !== galleryRevision || materialVersion !== materialOperation) {
+    throw Object.assign(new Error("Your work changed while saving was being prepared. Save again to keep the latest version."), { state: "cancelled" });
+  }
+  const seed = (deskCanvas.dataset && deskCanvas.dataset.specimen) || deskSeedValue();
+  return {
+    file: new File([text], "zentropy-gallery.json", { type: "application/json" }),
+    title: "Gallery, " + seed,
+    preview: preview ? captureCanvasPreview(deskCanvas) : null,
+  };
+}
+
+function downloadFile(file, name) {
+  const url = URL.createObjectURL(file);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+
+function restoreGalleryProject(project, image) {
+  picked.clear();
+  project.recipe.instruments.forEach(name => picked.add(name));
+  locked.clear();
+  project.locks.forEach(name => locked.add(name));
+  activeFx.length = 0;
+  project.effects.forEach(op => activeFx.push(op));
+  if (deskSeed) deskSeed.value = project.recipe.seed;
+  if (deskFxAmount) deskFxAmount.value = String(project.strength);
+  const influence = document.getElementById("desk-influence");
+  if (influence && project.baseImage) influence.value = String(project.baseImage.influence);
+  const previous = material.bitmap;
+  materialOperation += 1;
+  if (project.baseImage) {
+    material.active = true;
+    material.bitmap = image;
+    material.name = project.baseImage.name;
+    material.projectImage = project.baseImage.png;
+    if (influenceWrap) influenceWrap.hidden = false;
+    if (clearMaterialBtn) clearMaterialBtn.hidden = false;
+    if (privacyLine) privacyLine.hidden = false;
+    if (deskTitle) deskTitle.textContent = "your material · " + material.name;
+  } else {
+    material.active = false;
+    material.bitmap = null;
+    material.name = "";
+    material.projectImage = null;
+    image?.close?.();
+    if (influenceWrap) influenceWrap.hidden = true;
+    if (clearMaterialBtn) clearMaterialBtn.hidden = true;
+    if (privacyLine) privacyLine.hidden = true;
+  }
+  if (previous && previous !== material.bitmap) previous.close?.();
+  syncChips();
+  syncFx();
+  drawDesk({ mirror: false });
+}
+
+async function projectImageFromDataUrl(dataUrl) {
+  if (!dataUrl) return null;
+  const image = new Image();
+  image.src = dataUrl;
+  await image.decode();
+  return image;
+}
+
+if (projectSave) {
+  projectSave.addEventListener("click", async () => {
+    try {
+      projectMessage("Preparing Gallery project…", "loading");
+      const project = await captureGalleryProject({ preview: false });
+      downloadFile(project.file, "zentropy-gallery.json");
+      projectMessage("Project download started. Open this file to continue editing the Gallery recipe and source image.", "ready");
+    } catch (error) {
+      projectMessage(error.message || "The Gallery project could not be saved. Your work is still here.", error.state || "error");
+    }
+  });
+}
+if (projectOpen && projectFile) projectOpen.addEventListener("click", () => projectFile.click());
+if (projectFile) {
+  projectFile.addEventListener("change", async () => {
+    const file = projectFile.files?.[0];
+    projectFile.value = "";
+    if (!file) return;
+    const operation = ++projectOperation;
+    const revision = galleryRevision;
+    const materialVersion = materialOperation;
+    projectMessage("Opening Gallery project…", "loading");
+    try {
+      if (file.size > MAX_GALLERY_PROJECT_BYTES) throw new Error("This project exceeds the 12 MB Gallery project limit. Your work is unchanged.");
+      const record = decodeGalleryProject(await file.text(), galleryRules());
+      const image = await projectImageFromDataUrl(record.project.baseImage?.png || null);
+      if (operation !== projectOperation) { image?.close?.(); return; }
+      if (revision !== galleryRevision || materialVersion !== materialOperation) {
+        image?.close?.();
+        projectMessage("Your newer changes were kept. Open the file again to replace them.", "cancelled");
+        return;
+      }
+      restoreGalleryProject(record.project, image);
+      projectMessage("Project opened. Recipe, source image, locks and effects are editable.", "ready");
+    } catch (error) {
+      if (operation === projectOperation) projectMessage(error.message || "The file could not be opened. Your current work has not changed.", error.state || "error");
+    }
+  });
+}
+const projectControls = document.querySelector("[data-gallery-project-controls]");
+if (projectControls) mountLibrarySave(projectControls, captureGalleryProject, { className: "plate-redraw" });
+window.__galleryProject = { current: currentGalleryProject, capture: captureGalleryProject };
 // Hand this plate to the Retro Engine as an upload source, so a plate you drew
 // here can be pixelated, paletted, and run through the effects rack there.
 const deskRetro = document.getElementById("desk-retro");

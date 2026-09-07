@@ -1,4 +1,4 @@
-import { saveProject } from './project-library.js?v=20260907-workspace';
+import { saveProject } from './project-library.js?v=20260907-gallery-projects';
 
 function message(status, text, state) {
   status.hidden = !text;

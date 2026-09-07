@@ -16,7 +16,7 @@ const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8802';
     await page.waitForFunction(() => window.__studioPoster);
 
     const repairs = await page.evaluate(async () => {
-      const { mountPosterWorkshop } = await import('/system/poster-panel.js?v=20260907-flex-composition');
+      const { mountPosterWorkshop } = await import('/system/poster-panel.js?v=20260907-gallery-projects');
       const host = document.createElement('div');
       const canvas = document.createElement('canvas');
       document.body.append(host, canvas);

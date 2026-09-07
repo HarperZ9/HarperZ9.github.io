@@ -13,19 +13,18 @@ import {
 } from "./engine/world-package.js";
 import {
   veilParams,
+  foldedSurfaceStats,
+  veilGridSize,
   clampCamera,
   drawOrder,
   sceneTime,
   pauseMotion,
   resumeMotion,
-} from "./spatial-core.js";
+} from "./spatial-core.js?v=20260907-folded-depth";
 import {
   BACKDROP_VS, BACKDROP_FS, VEIL_VS, VEIL_FS, POINT_VS, POINT_FS, link, maxPointSize,
-} from "./spatial-shaders.js";
+} from "./spatial-shaders.js?v=20260907-folded-depth";
 import { acquireContext } from "./spatial-gl.js";
-
-const GRID_COLS = 96;
-const GRID_ROWS = 96;
 
 const DEFAULT_CONTROLS = Object.freeze({
   parallax: 0.7,
@@ -61,11 +60,14 @@ class SpatialScene {
     this.splats = splats;
     this.controls = { ...DEFAULT_CONTROLS, ...(opts.controls || {}) };
     this.reducedMotion = !!opts.reducedMotion;
+    this.proceduralVeils = manifest.mode === "procedural-veils";
     this.animating = !this.reducedMotion;
     this.motion = { paused: false, pausedAt: 0, offset: 0, freezeAt: this.reducedMotion ? 0.0 : null };
     this.cam = { x: 0, y: 0, z: 0 };
     this.target = { x: 0, y: 0, z: 0 };
     this.veils = drawOrder(veilParams(manifest.seed, manifest.layers));
+    this.veilGrid = veilGridSize(opts.plan);
+    this.surfaceStats = foldedSurfaceStats(this.veils, { cols: 19, rows: 19, aspect: 1 });
     this.onFrame = typeof opts.onFrame === "function" ? opts.onFrame : null;
     this.raf = 0;
     this.stopped = false;
@@ -82,23 +84,24 @@ class SpatialScene {
 
   buildBuffers() {
     const gl = this.gl;
+    const cols = this.veilGrid.cols, rows = this.veilGrid.rows;
     this.quadBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.quadBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW);
 
-    const uv = new Float32Array(GRID_COLS * GRID_ROWS * 2);
+    const uv = new Float32Array(cols * rows * 2);
     let p = 0;
-    for (let y = 0; y < GRID_ROWS; y += 1) {
-      for (let x = 0; x < GRID_COLS; x += 1) {
-        uv[p++] = x / (GRID_COLS - 1);
-        uv[p++] = y / (GRID_ROWS - 1);
+    for (let y = 0; y < rows; y += 1) {
+      for (let x = 0; x < cols; x += 1) {
+        uv[p++] = x / (cols - 1);
+        uv[p++] = y / (rows - 1);
       }
     }
-    const index = new Uint16Array((GRID_COLS - 1) * (GRID_ROWS - 1) * 6);
+    const index = new Uint16Array((cols - 1) * (rows - 1) * 6);
     p = 0;
-    for (let y = 0; y < GRID_ROWS - 1; y += 1) {
-      for (let x = 0; x < GRID_COLS - 1; x += 1) {
-        const a = y * GRID_COLS + x, b = a + 1, c = a + GRID_COLS, d = c + 1;
+    for (let y = 0; y < rows - 1; y += 1) {
+      for (let x = 0; x < cols - 1; x += 1) {
+        const a = y * cols + x, b = a + 1, c = a + cols, d = c + 1;
         index[p++] = a; index[p++] = c; index[p++] = b;
         index[p++] = b; index[p++] = c; index[p++] = d;
       }
@@ -205,6 +208,10 @@ class SpatialScene {
     this.drawVeil(nearVeil, view, proj, time, aspect, true);
     gl.colorMask(true, true, true, true);
 
+    // The prepass is only for hard occlusion against emissive points. The veils
+    // themselves are layered translucent light; depth-testing the color pass
+    // makes the near ribbon carve dark cutouts through farther folds.
+    gl.disable(gl.DEPTH_TEST);
     gl.depthMask(false);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
@@ -214,6 +221,7 @@ class SpatialScene {
     // matches the intended luminous look. Alpha-over here made the composite
     // depend on buffer order, which is arbitrary.
     gl.blendFunc(gl.ONE, gl.ONE);
+    gl.enable(gl.DEPTH_TEST);
     this.drawPoints(view, proj, time, aspect, h);
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 
@@ -245,10 +253,20 @@ class SpatialScene {
     gl.uniform1f(this.loc(p, "uAspect"), aspect);
     gl.uniform1f(this.loc(p, "uTime"), time);
     gl.uniform1f(this.loc(p, "uFoldFreq"), veil.foldFreq);
+    gl.uniform1f(this.loc(p, "uRidgeFreq"), veil.ridgeFreq);
     gl.uniform1f(this.loc(p, "uFoldPhase"), veil.foldPhase);
     gl.uniform1f(this.loc(p, "uFoldTilt"), veil.foldTilt);
     gl.uniform1f(this.loc(p, "uDriftRate"), veil.driftRate);
     gl.uniform1f(this.loc(p, "uEdgeSoft"), veil.edgeSoft);
+    gl.uniform1f(this.loc(p, "uRibbonWidth"), veil.ribbonWidth);
+    gl.uniform1f(this.loc(p, "uRibbonOffset"), veil.ribbonOffset);
+    gl.uniform1f(this.loc(p, "uWarpAmp"), veil.warpAmp);
+    gl.uniform1f(this.loc(p, "uTwist"), veil.twist);
+    gl.uniform1f(this.loc(p, "uApertureFreq"), veil.apertureFreq);
+    gl.uniform1f(this.loc(p, "uAperturePhase"), veil.aperturePhase);
+    gl.uniform1f(this.loc(p, "uApertureSoft"), veil.apertureSoft);
+    gl.uniform1f(this.loc(p, "uVerticalBow"), veil.verticalBow);
+    gl.uniform1f(this.loc(p, "uSurfaceScale"), veil.surfaceScale);
     gl.uniform1f(this.loc(p, "uGlow"), this.controls.glow);
     gl.uniform1f(this.loc(p, "uDrift"), this.controls.drift);
     gl.uniform3f(this.loc(p, "uTint"), veil.tint[0], veil.tint[1], veil.tint[2]);
@@ -268,6 +286,7 @@ class SpatialScene {
     gl.uniform1f(this.loc(p, "uGlow"), this.controls.glow);
     gl.uniform1f(this.loc(p, "uPixelScale"), backingHeight / 720);
     gl.uniform1f(this.loc(p, "uMaxPoint"), maxPointSize(gl, 64));
+    gl.uniform1f(this.loc(p, "uProceduralVeils"), this.proceduralVeils ? 1 : 0);
     gl.bindBuffer(gl.ARRAY_BUFFER, this.pointBuffer);
     const stride = SPLAT_RECORD_FLOATS * 4;
     const attribs = [["iPosition", 3, 0], ["iColor", 3, 12], ["iSize", 1, 24], ["iAlpha", 1, 28], ["iKind", 1, 32], ["iSeed", 1, 36]];

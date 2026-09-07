@@ -21,7 +21,7 @@ const tinyPng = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfF
     }
     async function libraryCall(source) {
       return page.evaluate(async code => {
-        const lib = await import('/system/project-library.js?v=20260907-workspace');
+        const lib = await import('/system/project-library.js?v=20260907-gallery-projects');
         return (0, eval)(code)(lib);
       }, source);
     }

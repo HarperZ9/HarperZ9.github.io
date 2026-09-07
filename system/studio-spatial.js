@@ -9,7 +9,7 @@
 // package is refused, not softened.
 
 import { validateWorldPackage } from "./engine/world-package.js";
-import { startSpatialScene } from "./spatial-scene.js?v=20260907-view-links";
+import { startSpatialScene } from "./spatial-scene.js?v=20260907-folded-depth";
 import { startTexturedScene } from "./spatial-textured.js?v=20260907-crystal-depth";
 import { startAtlasScene, projectAabbRect } from "./spatial-atlas.js?v=20260907-view-links";
 import { decodeSpatialView, spatialViewUrl } from "./spatial-view.js?v=20260907-crystal-depth";

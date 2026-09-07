@@ -3,6 +3,7 @@ const ROUTES = Object.freeze({
   'zentropy.poster': { label: 'Poster', path: 'studio.html?source=poster', input: '[data-poster-project-file]', max: 9 * 1024 * 1024 },
   'zentropy.loom': { label: 'Loom', path: 'loom.html', input: '#wv-project-file', max: 24 * 1024 * 1024 },
   'zentropy.shader-room': { label: 'Shader Room', path: 'retro.html', input: '#re-project-file', max: 32 * 1024 * 1024 },
+  'zentropy.gallery': { label: 'Gallery', path: 'gallery.html', input: '[data-gallery-project-file]', max: 12 * 1024 * 1024 },
 });
 const INPUTS = Object.values(ROUTES).map(r => r.input).join(',');
 const BASE = new URL('../', import.meta.url);
@@ -88,7 +89,7 @@ async function classify(file) {
 // importer still decides whether the project can actually be opened.
 export async function openProjectInEditor(file) {
   const selected = await classify(file);
-  if (!selected) throw new Error('Choose a Poster, Loom or Shader Room project file.');
+  if (!selected) throw new Error('Choose a Gallery, Poster, Loom or Shader Room project file.');
   const id = crypto.randomUUID();
   try {
     await transferStore('put', id, { schema: selected.schema, file, expires: Date.now() + TTL });

@@ -29,6 +29,7 @@ RELEASE_PATHS = (
     "system/project-router.js",
     "system/project-library.js",
     "system/project-library-controls.js",
+    "system/gallery-project.js",
     "system/creative-workspace.js",
     "system/creative-workspace.css",
     "workspace.html",
@@ -36,12 +37,16 @@ RELEASE_PATHS = (
     "system/spatial-load.js",
     "system/spatial-atlas.js",
     "system/spatial-scene.js",
+    "system/spatial-core.js",
+    "system/spatial-shaders.js",
     "system/spatial-textured.js",
     "system/spatial-textured-shaders.js",
     "system/spatial-view.js",
     "fonts.html",
     "system/font-marketplace.css",
     "system/font-specimen.js",
+    "type/preview/editorial.json",
+    "type/preview/zentropy-editorial-regular.woff2",
     "system/navigation.js",
     "system/navigation.css",
     "demos/crucible-cleanroom/index.html",
@@ -258,7 +263,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "be00f59a76219eaba37f15b05c84f5d6094ff6adc3529585d620c15080a02010"
+REVIEWED_RELEASE_SHA256 = "476e7eb9fb123527abf7596d9e539180d12a6849e22b2b03dcd6f36c7235c332"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <title>Fonts | Zentropy Labs</title>
-<meta name="description" content="Try your words in our live type editor, adjust the spacing, and take editable text into Poster. Original Zentropy typefaces are in development.">
+<meta name="description" content="Try the limited Zentropy Editorial preview, adjust type locally, and carry approved site faces into Poster. Original Zentropy typefaces are in development.">
 <link rel="canonical" href="https://harperz9.github.io/fonts.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Fonts | Zentropy Labs">
-<meta property="og:description" content="Try your words, adjust the spacing, and take editable text into Poster. Original Zentropy typefaces are in development.">
+<meta property="og:description" content="Try the limited Zentropy Editorial preview, adjust type locally, and carry approved site faces into Poster. Original Zentropy typefaces are in development.">
 <meta property="og:url" content="https://harperz9.github.io/fonts.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/typeface.png">
 <meta property="og:image:alt" content="Typography specimen card reading: Room for the words. Typography at Zentropy Labs.">
@@ -18,14 +18,15 @@
 <meta name="twitter:image:alt" content="Typography specimen card reading: Room for the words. Typography at Zentropy Labs.">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Fonts | Zentropy Labs">
-<meta name="twitter:description" content="Try your words, adjust the spacing, and take editable text into Poster. Original Zentropy typefaces are in development.">
+<meta name="twitter:description" content="Try the limited Zentropy Editorial preview, adjust type locally, and carry approved site faces into Poster. Original Zentropy typefaces are in development.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#101416" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="system/system.css?v=20260907-reading-completion">
-<link rel="stylesheet" href="system/font-marketplace.css?v=20260907-editor-workspace">
+<link rel="preload" href="type/preview/zentropy-editorial-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="system/font-marketplace.css?v=20260907-original-preview">
 </head>
-<body class="inner-clean font-marketplace-page" data-font-catalog-state="empty" data-commerce-enabled="false">
+<body class="inner-clean font-marketplace-page" data-font-catalog-state="preview" data-commerce-enabled="false">
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav" aria-label="Primary"><a href="index.html">Home</a> <a href="flywheel.html">Flywheel</a> <a href="bulletin.html">Bulletin</a> <a href="publications.html">Writing</a> <a href="catalog.html">Projects</a> <a href="typeface.html">Typography specimen</a></nav></noscript>
@@ -35,24 +36,56 @@
   <header class="font-market-hero">
     <div class="font-hero-copy">
       <h1>Type with a point of view.</h1>
-      <p class="font-market-lede">Original typefaces for clear reading and expressive headlines. Our first families are in development.</p>
+      <p class="font-market-lede">Original typefaces for clear reading and expressive headlines. One original serif is available as a limited browser preview. Finished families are still in development.</p>
       <div class="font-market-actions" aria-label="Font page actions">
         <a class="font-action font-action-primary" href="#font-lab">Try your text</a>
+        <a class="font-action" href="#font-collection">View the preview collection</a>
         <a class="font-action" href="typeface.html">Explore the type pairing</a>
       </div>
-      <p id="font-catalog" class="font-sale-note">No fonts are available to purchase yet.</p>
+      <p id="font-catalog" class="font-sale-note">One limited preview is available to try in this browser. No fonts are available to purchase yet.</p>
     </div>
-    <figure class="font-specimen-panel" aria-label="Specimen words set in the current public site typefaces">
-      <p class="specimen-line specimen-line-large">Aa</p>
-      <p class="specimen-line specimen-line-text">Letters should keep their shape when the work gets dense.</p>
-      <p class="specimen-line specimen-line-code">0123456789 / Il1 O0 rn m fi fl</p>
+    <figure class="font-specimen-panel font-editorial-preview" aria-label="Specimen words set in the Zentropy Editorial limited preview">
+      <p class="specimen-line specimen-line-large">Ae</p>
+      <p class="specimen-line specimen-line-text">Quiet forms. Clear ideas.</p>
+      <p class="specimen-line specimen-line-code">ASCII + quotes, dashes, symbols</p>
     </figure>
   </header>
+
+  <section id="font-collection" class="font-market-section font-collection" aria-labelledby="font-collection-title">
+    <div class="section-copy">
+      <h2 id="font-collection-title">Original preview collection.</h2>
+      <p>A high-contrast serif for titles, pull quotes, and dense editorial openings. Try the Regular preview with your own words before the family is finished.</p>
+    </div>
+    <div class="font-product-list" aria-label="Original font previews">
+      <article class="font-product" data-font-product="editorial-regular" aria-labelledby="editorial-regular-title">
+        <figure class="font-product-specimen font-editorial-preview" aria-label="Zentropy Editorial preview specimen">
+          <p class="font-product-sample font-product-sample-large">Archive Signals</p>
+          <p class="font-product-sample">“Quiet forms — clear ideas.” ± × ÷ ° … •</p>
+          <p class="font-product-sample font-product-sample-small">ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789</p>
+        </figure>
+        <div class="font-product-copy">
+          <p class="font-product-kicker">Regular preview</p>
+          <h3 id="editorial-regular-title">Zentropy Editorial</h3>
+          <p>High-contrast serif for editorial titles. Limited preview, not for sale.</p>
+          <p class="font-product-note">Browser-only preview. Poster handoff and CSS export stay off for this original face for now.</p>
+          <p class="font-asset-status" role="status" aria-live="polite" data-font-asset-status hidden>Zentropy Editorial Preview could not load; fallback text is shown.</p>
+          <div class="font-product-actions">
+            <a class="font-action font-action-primary" href="#font-lab" data-font-try="editorial-preview">Try this face</a>
+          </div>
+          <details class="font-product-details">
+            <summary>Preview details</summary>
+            <p>Character support: Printable ASCII plus editorial punctuation.</p>
+            <p><a href="type/preview/editorial.json">Preview metadata</a></p>
+          </details>
+        </div>
+      </article>
+    </div>
+  </section>
 
   <section id="font-lab" class="font-market-section font-lab" aria-labelledby="font-lab-title" data-font-specimen>
     <div class="section-copy">
       <h2 id="font-lab-title">Start with your words.</h2>
-      <p>Choose a typeface and adjust the spacing. Then use it in Poster, where the text stays editable. Try Hanken Grotesk and Conso, the site's current pairing.</p>
+      <p>Choose a typeface and adjust the spacing. The Zentropy Editorial preview renders locally and reports unsupported characters. Hanken Grotesk and Conso remain the site faces that can open in Poster.</p>
       <p>Need an image first? Make one in <a href="gallery.html#printdesk">Gallery</a> or <a href="loom.html">Loom</a> and send it to Poster. Return to saved pieces in <a href="workspace.html">your workspace</a>.</p>
     </div>
     <div class="font-lab-panel">
@@ -80,6 +113,7 @@
           <select id="font-specimen-family" name="specimenFamily" data-font-specimen-family>
             <option value="hanken" selected>Hanken Grotesk</option>
             <option value="conso">Conso</option>
+            <option value="editorial-preview">Zentropy Editorial Preview</option>
           </select>
         </div>
         <div class="font-control">
@@ -97,8 +131,9 @@
         <button class="font-specimen-reset" type="reset" data-font-specimen-reset>Reset specimen</button>
         <button class="font-specimen-reset" type="button" data-font-specimen-poster>Use in Poster</button>
         <button class="font-specimen-reset" type="button" data-font-specimen-css>Export CSS</button>
-        <p id="font-specimen-privacy" class="font-control-note">Your preview is temporary. Use in Poster carries the text and spacing to the layout editor in this tab, with type size scaled to the canvas.</p>
-        <p class="font-control-note">CSS exports the styling only. Load the typeface separately in your project; no font files or specimen text are included.</p>
+        <p id="font-coverage-warning" class="font-coverage-warning" role="status" aria-live="polite" data-font-coverage-warning hidden></p>
+        <p id="font-specimen-privacy" class="font-control-note">Your preview is temporary. Use in Poster carries Hanken Grotesk or Conso text and spacing to the layout editor in this tab, with type size scaled to the canvas.</p>
+        <p class="font-control-note">CSS exports styling for Hanken Grotesk and Conso only. The original preview is not included in exports.</p>
       </form>
 
     </div>
@@ -127,27 +162,10 @@
     </div>
   </section>
 
-  <section class="font-market-section original-directions" aria-labelledby="original-directions-title">
-    <div class="section-copy">
-      <h2 id="original-directions-title">On the drawing board.</h2>
-      <p>Two original families, designed together for reading and display.</p>
-    </div>
-    <div class="direction-list">
-      <article class="direction-item">
-        <h3>Humanist reading family</h3>
-        <p>Open forms and an even rhythm for long reading and small labels.</p>
-      </article>
-      <article class="direction-item">
-        <h3>Editorial serif family</h3>
-        <p>Contrasting strokes and expressive curves for titles and editorial work.</p>
-      </article>
-    </div>
-  </section>
-
   <details class="font-details">
     <summary>About the upcoming fonts</summary>
-    <p>Each finished family will have a specimen, its character support and styles, and a license explaining where you can use it.</p>
-    <p>Have a project in mind? <a href="mailto:zaindharper@gmail.com?subject=Font%20licensing%20enquiry">Ask about licensing</a>. Enquiries are welcome; font purchases are not open yet.</p>
+    <p>Each finished family will have a specimen, its character support and styles, and a license explaining where it can be used.</p>
+    <p>Have a project in mind? <a href="mailto:zaindharper@gmail.com?subject=Font%20licensing%20enquiry">Ask about licensing</a>. Enquiries are welcome; font releases are not open yet.</p>
   </details>
 </main>
 
@@ -155,6 +173,6 @@
   <a href="index.html">Zentropy Labs</a>
   <span>Built by Zain Dana Harper.</span>
 </footer>
-<script type="module" src="system/font-specimen.js?v=20260907-css-export"></script>
+<script type="module" src="system/font-specimen.js?v=20260907-original-preview"></script>
 </body>
 </html>
