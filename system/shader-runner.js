@@ -12,10 +12,6 @@
 
 const VERT = "attribute vec2 aPos;void main(){gl_Position=vec4(aPos,0.0,1.0);}";
 
-// Lines the wrapper injects before the user's code, so compile-error line
-// numbers can be mapped back to what the user actually typed.
-const PREAMBLE_LINES = 10;
-
 function wrap(frag) {
   return (
     "precision highp float;\n" +
@@ -27,6 +23,8 @@ function wrap(frag) {
     "uniform float iKnobA;\n" +
     "uniform float iKnobB;\n" +
     "uniform float iKnobC;\n" +
+    "uniform sampler2D iChannel0;\n" +
+    "uniform vec3 iChannelResolution[1];\n" +
     "#line 1\n" +
     frag +
     "\nvoid main(){vec4 c=vec4(0.0);mainImage(c, gl_FragCoord.xy);gl_FragColor=vec4(clamp(c.rgb,0.0,1.0),1.0);}\n"
@@ -50,15 +48,14 @@ void mainImage(out vec4 O, in vec2 U){
 
 function fixLog(log) {
   if (!log) return "shader error";
-  // ANGLE/GLSL logs look like "ERROR: 0:12: '...'" — the 12 is already user-relative
-  // thanks to #line 1, but some drivers ignore #line, so also strip our preamble.
+  // #line 1 makes compiler locations user-relative. Subtracting our wrapper
+  // again would silently point errors after line 10 at the wrong source line.
   return log
     .split("\n")
     .filter(Boolean)
     .map((line) => line.replace(/ERROR:\s*\d+:(\d+):/g, (m, n) => {
       const ln = parseInt(n, 10);
-      const adj = ln > PREAMBLE_LINES ? ln - PREAMBLE_LINES : ln;
-      return `line ${adj}:`;
+      return `line ${ln}:`;
     }))
     .join("\n");
 }
@@ -76,6 +73,43 @@ export function createShaderRunner(canvas, fragSource = DEFAULT_FRAG) {
   const mouse = [0, 0, 0, 0];
   const audio = [0, 0, 0, 0];       // bass, mid, treble, level
   const knobs = [0.5, 0.5, 0.5];
+  let texture = gl.createTexture();
+  let textureWidth = 1, textureHeight = 1;
+  function configureTexture(value) {
+    gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, value);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  }
+  configureTexture(texture);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0,0,0,255]));
+
+  function setTexture(source) {
+    const width = source?.naturalWidth || source?.width;
+    const height = source?.naturalHeight || source?.height;
+    const limit = Math.min(8192, gl.getParameter(gl.MAX_TEXTURE_SIZE));
+    if (!Number.isInteger(width) || !Number.isInteger(height) || width < 1 || height < 1 ||
+        width > limit || height > limit || width * height > 16777216) {
+      return { ok: false, error: 'Shader images must fit the device texture limit and 16 megapixels.' };
+    }
+    const candidate = gl.createTexture();
+    const oldFlip = gl.getParameter(gl.UNPACK_FLIP_Y_WEBGL);
+    try {
+      // Upload only when the source changes. A rejected candidate cannot replace
+      // the working image, and NPOT images do not need mipmaps in WebGL1.
+      configureTexture(candidate);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, source);
+      if (gl.getError() !== gl.NO_ERROR) throw new Error('Texture upload failed');
+      gl.deleteTexture(texture); texture = candidate;
+      textureWidth = width; textureHeight = height;
+      return { ok: true };
+    } catch (_) {
+      gl.deleteTexture(candidate); gl.bindTexture(gl.TEXTURE_2D, texture);
+      return { ok: false, error: 'The shader image could not be loaded. The previous image is still available.' };
+    } finally { gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, oldFlip); }
+  }
 
   function compile(type, src) {
     const sh = gl.createShader(type);
@@ -122,6 +156,9 @@ export function createShaderRunner(canvas, fragSource = DEFAULT_FRAG) {
     gl.uniform1f(gl.getUniformLocation(program, "iKnobA"), knobs[0]);
     gl.uniform1f(gl.getUniformLocation(program, "iKnobB"), knobs[1]);
     gl.uniform1f(gl.getUniformLocation(program, "iKnobC"), knobs[2]);
+    gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.uniform1i(gl.getUniformLocation(program, "iChannel0"), 0);
+    gl.uniform3f(gl.getUniformLocation(program, "iChannelResolution[0]"), textureWidth, textureHeight, 1);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     frame++;
   }
@@ -135,6 +172,7 @@ export function createShaderRunner(canvas, fragSource = DEFAULT_FRAG) {
     gl,
     // Recompile with new source; returns { ok, error } so a UI can show the log.
     setSource(frag) { return build(frag); },
+    setTexture,
     // Render one frame at time t (seconds). Use for still capture / feeding retro.
     renderFrame(tSeconds = 0) { draw(tSeconds); return canvas; },
     setMouse(x, y, down, click) { mouse[0] = x; mouse[1] = y; mouse[2] = down ? 1 : 0; mouse[3] = click ? 1 : 0; },
@@ -154,6 +192,6 @@ export function createShaderRunner(canvas, fragSource = DEFAULT_FRAG) {
       raf = requestAnimationFrame(loop);
     },
     stop() { if (raf) cancelAnimationFrame(raf); raf = 0; },
-    destroy() { if (raf) cancelAnimationFrame(raf); if (program) gl.deleteProgram(program); if (buf) gl.deleteBuffer(buf); },
+    destroy() { if (raf) cancelAnimationFrame(raf); if (program) gl.deleteProgram(program); if (texture) gl.deleteTexture(texture); if (buf) gl.deleteBuffer(buf); },
   };
 }

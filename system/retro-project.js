@@ -40,6 +40,7 @@ function clean(input, rules) {
   const r = obj(input), p = obj(r.patch), assets = obj(r.assets), editor = obj(r.editor);
   if (r.schema !== 'zentropy.shader-room' || r.version !== 1 || p.v !== 1) return fail();
   const patch = { v: 1, src: choice(p.src, ['plate', 'upload', 'draw', 'scope', 'shader']), glsl: str(p.glsl, 100000) };
+  patch.outputMode = p.outputMode === undefined ? 'retro' : choice(p.outputMode, ['retro', 'clean']);
   for (const [key, id] of Object.entries(PATCH_CONTROLS)) patch[key] = control(p[key], rules.controls[id]);
   patch.fx = list(p.fx, rules.effects.length, v => choice(v, rules.effects));
   patch.amts = {};

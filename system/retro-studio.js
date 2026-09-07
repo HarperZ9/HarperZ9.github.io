@@ -7,7 +7,8 @@
    whole chain. Everything is local; nothing uploads. */
 
 import { renderRetro } from "./retro-engine.js?v=20260902-crt";
-import { createShaderRunner, DEFAULT_FRAG } from "./shader-runner.js?v=20260805-react";
+import { createShaderRunner, DEFAULT_FRAG } from "./shader-runner.js?v=20260907-image-input";
+import { IMAGE_STUDIES } from "./shader-image-presets.js?v=20260907-image-input";
 import { applyOps, OP_META, rngFrom } from "./glitch-ops.js?v=20260813-wave2";
 import { SHADER_PRESETS } from "./shader-presets.js?v=20260812-wave7";
 import { sendPiece, receiveTrail, mountFlow } from "./workbench.js?v=20260907-creative-handoff";
@@ -429,6 +430,18 @@ function boot() {
 
   function retroPass(t = 0) {
     const s = sourceCanvas(); if (!s.width) return;
+    out.style.imageRendering = $("re-output-mode").value === "clean" ? "auto" : "pixelated";
+    if ($("re-output-mode").value === "clean") {
+      if (out.width !== s.width || out.height !== s.height) { out.width = s.width; out.height = s.height; }
+      const g = out.getContext("2d");
+      g.globalAlpha = 1; g.globalCompositeOperation = "source-over";
+      g.clearRect(0, 0, out.width, out.height); g.drawImage(s, 0, 0);
+      lastMeasure = null; lastEntries = []; _measureAt = 0; _palAt = 0;
+      $("re-measure").textContent = `Clean output ${out.width}×${out.height} · no pixel or display treatment`;
+      $("re-palstrip").textContent = ""; delete $("re-palstrip").dataset.key;
+      $("re-palstrip-note").textContent = "No palette reduction in clean output";
+      return;
+    }
     try {
       // renderRetro reports the grid it just built ({w,h,palette,cells,colors});
       // the call site used to drop it, so the one surface whose whole subject is
@@ -482,7 +495,7 @@ function boot() {
     if (operation !== sourceOperation || state !== "plate") return;
     if (!renderSpecimen) { status("generative engine unavailable", "err"); return; }
     const layers = $("re-layers").value.split(",").map((s) => s.trim()).filter(Boolean);
-    try { renderSpecimen(srcCanvas, $("re-seed").value || "folded-light", layers); status(""); }
+    try { renderSpecimen(srcCanvas, $("re-seed").value || "folded-light", layers); updateShaderImage(); status(""); }
     catch (e) { status("plate error: " + e.message, "err"); }
     if (!animRaf) retroPass(0);
   }
@@ -494,13 +507,25 @@ function boot() {
     const w = uploaded.naturalWidth * scale, h = uploaded.naturalHeight * scale;
     ctx.fillStyle = "#07070c"; ctx.fillRect(0, 0, c.width, c.height);
     ctx.drawImage(uploaded, (c.width - w) / 2, (c.height - h) / 2, w, h);
+    updateShaderImage();
+    if (state === "shader" && !animRaf) renderShaderFrame(0);
     if (!animRaf) retroPass(0);
+  }
+
+  function updateShaderImage() {
+    let error = null;
+    for (const target of [runner, ...extraLayers.map(layer => layer.runner)]) {
+      const result = target?.setTexture?.(srcCanvas);
+      if (result && !result.ok) error = result.error;
+    }
+    $("re-image-status").textContent = error || "Image ready. Save project keeps the image and your shader together.";
   }
 
   function ensureShader() {
     if (runner) return runner;
     if (!$("re-code").value) $("re-code").value = DEFAULT_FRAG;
     runner = createShaderRunner(shaderCanvas, $("re-code").value);
+    runner.setTexture?.(srcCanvas);
     if (!runner.ok) status(runner.error, "err");
     return runner;
   }
@@ -509,6 +534,8 @@ function boot() {
     if (typeof r.setSource !== "function") { status(r.error || "Shader rendering is unavailable", "err"); return false; }
     const res = r.setSource($("re-code").value);
     if (!res.ok) { status(res.error, "err"); return false; }
+    pushKnobs();
+    syncImageStudy();
     status("shader compiled", "ok");
     if (!$("re-animate").checked) { renderShaderFrame(1.3); if (!animRaf) retroPass(0); }
     return true;
@@ -636,8 +663,7 @@ function boot() {
   }
 
   // --- wiring -------------------------------------------------------------
-  document.querySelectorAll(".re-tab").forEach((tab) => {
-    tab.addEventListener("click", () => {
+  function selectSource(tab, { keepPalette = false, refresh = true } = {}) {
       sourceOperation++;
       const leaving = state;
       state = tab.dataset.src;
@@ -651,13 +677,15 @@ function boot() {
       }
       // Uploads default to the extracted palette, but a deliberate "yours"
       // is the user's choice and stays.
-      if (state === "upload" && $("re-palette").value !== "auto" && $("re-palette").value !== "yours") $("re-palette").value = "auto";
+      if (!keepPalette && state === "upload" && $("re-palette").value !== "auto" && $("re-palette").value !== "yours") $("re-palette").value = "auto";
       syncYourPal();
       // A new source starts with a clean feedback memory: the old source
       // must not ghost over the first seconds of the new one.
       if (leaving !== state) fbCanvas.width = 0;
-      ping("bell"); refreshSource();
-    });
+      if (refresh) { ping("bell"); refreshSource(); }
+  }
+  document.querySelectorAll(".re-tab").forEach((tab) => {
+    tab.addEventListener("click", () => selectSource(tab));
   });
   // The tablist keeps its keyboard contract: arrows walk the tabs, Home and
   // End jump, and moving focus activates the source.
@@ -679,6 +707,11 @@ function boot() {
     if (id === "re-palette") syncYourPal();
     redraw(); ping(id === "re-sdf" ? "chip" : "preset", 0.5);
   }));
+  $("re-output-mode").addEventListener("change", () => {
+    // Do not revive temporal frames from a different output mode.
+    fbCanvas.width = 0; moshPrev.width = 0; slitRing.frames = []; slitRing.head = 0;
+    redraw();
+  });
   // Boot the user palette: saved swatches, or the defaults in the markup.
   try {
     const saved = JSON.parse(localStorage.getItem(YOURPAL_KEY) || "null");
@@ -827,6 +860,18 @@ function boot() {
     if (state !== "shader") document.querySelector('.re-tab[data-src="shader"]').click();
     else if (runShader()) sync();
   }
+  function syncImageStudy() {
+    const match = Object.entries(IMAGE_STUDIES).find(([, study]) => study.glsl === $("re-code").value);
+    $("re-image-study").value = match ? match[0] : "";
+    if (match) nameKnobs(match[1]);
+  }
+  $("re-shader-image").addEventListener("click", () => $("re-file").click());
+  $("re-image-study").addEventListener("change", event => {
+    const study = IMAGE_STUDIES[event.target.value];
+    if (!study) return;
+    presetSel.value = "";
+    loadShader(study.glsl, study);
+  });
   if (presetSel) {
     // Group presets into optgroups by era so the generations read as shelves
     // you can mix across. The filter matches a preset's name OR its shelf, so
@@ -993,6 +1038,7 @@ function boot() {
     const amts = {}; fxAmount.forEach((v, k) => { amts[k] = v; });
     return {
       v: 1, src: state, glsl: $("re-code").value,
+      outputMode: $("re-output-mode").value,
       pal: $("re-palette").value, tw: +$("re-tw").value, dith: $("re-dither").value,
       gam: +$("re-gam").value, sdf: $("re-sdf").checked, curv: +$("re-curv").value,
       bloom: +$("re-bloom").value, vig: +$("re-vig").value, scan: +$("re-scan").value,
@@ -1012,6 +1058,11 @@ function boot() {
 
   function applyPatch(p, prepared = null) {
     if (!p || typeof p !== "object") return;
+    const previousOutputMode = $("re-output-mode").value;
+    $("re-output-mode").value = p.outputMode === "clean" ? "clean" : "retro";
+    if (previousOutputMode !== $("re-output-mode").value) {
+      fbCanvas.width = 0; moshPrev.width = 0; slitRing.frames = []; slitRing.head = 0;
+    }
     const setV = (id, v, vid, div) => { if (v == null || !$(id)) return; $(id).value = String(v); if (vid && $(vid)) $(vid).textContent = div ? (v / div).toFixed(2) : String(v); };
     if (Array.isArray(p.userPal)) {
       // A shared patch shows its author's colors for this session; it never
@@ -1044,6 +1095,7 @@ function boot() {
     for (const L of (prepared ? [] : (p.layers || []))) {
       const cv = document.createElement("canvas"); cv.width = 1024; cv.height = 640;
       const r = createShaderRunner(cv, L.glsl);
+      r.setTexture?.(srcCanvas);
       if (r.ok) extraLayers.push({ canvas: cv, runner: r, glsl: L.glsl, name: L.name || "layer", blend: L.blend || "lighter", opacity: L.opacity == null ? 0.7 : L.opacity });
     }
     if (prepared) extraLayers.push(...prepared.layers);
@@ -1061,17 +1113,13 @@ function boot() {
     }
     if (p.glsl) $("re-code").value = p.glsl;
     syncFxChips();
-    const tab = document.querySelector('.re-tab[data-src="' + (p.src || "shader") + '"]');
-    if (prepared) {
-      state = p.src;
-      document.querySelectorAll(".re-tab").forEach(t => t.setAttribute("aria-selected", String(t === tab)));
-      document.querySelectorAll(".re-srcpanel").forEach(panel => { panel.hidden = panel.dataset.panel !== state; });
-    } else if (tab) tab.click(); else refreshSource();
-    // The upload tab's auto-palette convenience must not undo the patch's
-    // own palette choice.
-    if (p.pal != null && $("re-palette").value !== p.pal) { $("re-palette").value = p.pal; redraw(); }
-    syncYourPal();
+    modOffsets = {};
     pushKnobs();
+    const tab = document.querySelector('.re-tab[data-src="' + (p.src || "shader") + '"]');
+    // Apply runtime state before one refresh. Project imports defer that refresh
+    // until their image assets have also been restored.
+    if (tab) selectSource(tab, { keepPalette: true, refresh: !prepared });
+    else if (!prepared) refreshSource();
   }
 
   function refreshPatchList() {
@@ -1277,7 +1325,7 @@ function boot() {
     return c.toDataURL("image/png");
   }
   async function captureShaderProject({ preview = true } = {}) {
-    const mod = await import("./retro-project.js?v=20260907-native-project");
+    const mod = await import("./retro-project.js?v=20260907-image-input");
     const editor = Object.fromEntries(mod.EDITOR_CONTROLS.map(id => [id, readControl(id)]));
     const patch = collectPatch();
     const probe = document.createElement("canvas");
@@ -1311,7 +1359,7 @@ function boot() {
     try {
       if (clipActive || micOn || audio?.isOn() || audio?.hasInput() || beamFigure) throw new Error("Stop recording and sound before opening a project.");
       projectStatus("Opening project…", "loading");
-      const mod = await import("./retro-project.js?v=20260907-native-project");
+      const mod = await import("./retro-project.js?v=20260907-image-input");
       if (file.size > mod.MAX_RETRO_PROJECT_BYTES) throw new Error("Project files must be smaller than 32 MB.");
       const record = mod.decodeRetroProject(await file.text(), projectRules(mod));
       const images = {};
@@ -1350,6 +1398,8 @@ function boot() {
           const g = canvas.getContext("2d"); g.clearRect(0, 0, canvas.width, canvas.height); g.drawImage(images[key], 0, 0);
         }
         uploaded = images.upload;
+        updateShaderImage();
+        syncImageStudy();
         drawUndo.length = 0; drawing = false; lastPt = null;
         beamGen++; beamFigure = null; beamPath = []; beamDrawing = false; $("re-beam-draw").checked = false;
         fbCanvas.width = 0; moshPrev.width = 0; slitRing.frames = []; slitRing.head = 0;
@@ -1543,6 +1593,7 @@ function boot() {
     if (extraLayers.length >= MAX_LAYERS) { status("stack is full (" + (MAX_LAYERS + 1) + " shaders max)", ""); return; }
     const cv = document.createElement("canvas"); cv.width = 1024; cv.height = 640;
     const r = createShaderRunner(cv, p.glsl);
+    r.setTexture?.(srcCanvas);
     if (!r.ok) { status("layer shader error: " + r.error, "err"); return; }
     extraLayers.push({ canvas: cv, runner: r, glsl: p.glsl, name: p.name, blend: "lighter", opacity: 0.7 });
     ping("button"); rebuildStackUI(); stackCount(); if (state !== "shader") document.querySelector('.re-tab[data-src="shader"]').click(); else sync();

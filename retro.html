@@ -223,6 +223,16 @@
               aria-controls="re-sheet" aria-label="Show the contact sheet of every shader">contact sheet</button>
           </div>
           <div class="re-sheet" id="re-sheet" hidden role="group" aria-label="Shader contact sheet"></div></div>
+        <div class="re-field">
+          <span class="re-lab">Image studies</span>
+          <div class="re-actions"><button class="re-btn" id="re-shader-image" type="button">Choose an image</button></div>
+          <select class="re-in" id="re-image-study" aria-label="Image shader study">
+            <option value="">Start from an image study</option>
+            <option value="image">Image, unaltered</option>
+            <option value="contour">Contour ink</option>
+          </select>
+          <p class="re-hint" id="re-image-status" role="status">Choose an image, or use the last image or generated plate from Source. Then pick a study and make it yours.</p>
+        </div>
         <div class="re-field"><span class="re-lab">Fragment shader<span class="re-val" id="re-shader-live"></span></span>
           <textarea class="re-in re-code" id="re-code" aria-label="Shader source code, GLSL" spellcheck="false" autocapitalize="off"></textarea></div>
         <div class="re-actions"><button class="re-btn" id="re-run" type="button" title="Compile now (Ctrl or Command + Enter)">Run shader</button>
@@ -237,7 +247,7 @@
         </div>
         <div class="re-actions"><button class="re-btn" id="re-save-shader">Save to yours</button>
           <button class="re-btn" id="re-share">Copy link</button></div>
-        <p class="re-privacy">Write your own GLSL and read <span translate="no">iAudio</span> (bass, mid, treble, level), <span translate="no">iKnobA/B/C</span>, <span translate="no">iMouse</span> and <span translate="no">iTime</span>. Save it to your shelf or copy a link that carries it. Kept in this browser; nothing uploads.</p>
+        <p class="re-privacy">Write GLSL with <span translate="no">iAudio</span>, <span translate="no">iKnobA/B/C</span>, <span translate="no">iMouse</span> and <span translate="no">iTime</span>. Sample your source image with <span translate="no">texture2D(iChannel0, uv)</span>; its size is <span translate="no">iChannelResolution[0].xy</span>. Links and shelf entries carry code, not images. Use Save project or Keep in workspace to carry both. Nothing uploads.</p>
         <div class="re-stack">
           <div class="re-lab">Shader stack<span class="re-val" id="re-stack-count">1 layer</span></div>
           <div class="re-field"><span class="re-lab">Stack another shader, blended</span>
@@ -246,6 +256,14 @@
         </div>
       </div>
 
+      <div class="re-field">
+        <label class="re-lab" for="re-output-mode">Output finish</label>
+        <select class="re-in" id="re-output-mode">
+          <option value="retro">Retro treatment</option>
+          <option value="clean">Clean, no treatment</option>
+        </select>
+        <p class="re-hint">Clean keeps the source or shader stack at its editor resolution, without palette reduction, CRT, effects or feedback. Your treatment settings stay here for later.</p>
+      </div>
       <details class="re-group" id="re-rack-picture" open>
         <summary><span class="re-lab">Picture <span class="re-hint">palette, grid, tube</span></span></summary>
       <fieldset class="re-controls">
@@ -453,7 +471,7 @@
   <p>Zentropy Labs &middot; order out of entropy &middot; <a href="index.html">home</a></p>
 </footer>
 
-<script type="module" src="system/retro-studio.js?v=20260907-workspace"></script>
+<script type="module" src="system/retro-studio.js?v=20260907-image-input"></script>
 <script type="module" src="system/project-router.js?v=20260907-native-routing"></script>
 </body>
 </html>
