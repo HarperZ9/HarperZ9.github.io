@@ -64,7 +64,7 @@
   .demo-results dd{margin:.25rem 0 0}
   .demo-links{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-top:1rem}
   .demo-links a{display:inline-flex;align-items:center;min-height:44px}
-  #demo{scroll-margin-top:6rem}
+  #demo,#evidence-task{scroll-margin-top:6rem}
   @media(max-width:760px){.demo-layout{grid-template-columns:1fr}.demo-layout>.demo-copy,.demo-media{grid-column:auto;grid-row:auto}.demo-media{width:min(100%,22rem);justify-self:center}}
   @media(forced-colors:active){.demo-media video{border:1px solid CanvasText}.demo-media video:focus-visible{outline-color:Highlight}}
   @media print{.demo-layout{display:block}.demo-media video{display:none}.demo-media figcaption,.demo-copy{color:#000}.demo-results dt,.demo-results dd{break-inside:avoid}}
@@ -83,7 +83,7 @@
     <h1>A companion for <span class="g">every model.</span></h1>
     <p class="lede" data-canonical-purpose="flywheel">Flywheel runs an AI task with the local or hosted model and tools you choose. It records the run, and optional sealed tool-call receipts can be inspected and rechecked offline. The repository also includes a native desktop app.</p>
     <p class="close">See one check in 36 seconds, then inspect the source.</p>
-    <nav class="hero-actions" aria-label="Primary routes"><a href="#demo">Watch the 36-second demo</a><a href="#run">Install or run</a><a href="https://github.com/HarperZ9/flywheel" rel="noopener">Source</a><a href="#benchmarks">Benchmarks</a></nav>
+    <nav class="hero-actions" aria-label="Primary routes"><a href="#demo">Watch the 36-second demo</a><a href="#run">Install or run</a><a href="#evidence-task">Get the evidence skill</a><a href="https://github.com/HarperZ9/flywheel" rel="noopener">Source</a><a href="#benchmarks">Benchmarks</a></nav>
   </div>
   <div class="seal"><span translate="no">flywheel</span> &middot; public &middot; FSL-1.1-MIT &middot; <span translate="no">python scripts/run_harness_cli.py app --port 8799</span></div>
 </div>
@@ -249,6 +249,16 @@
   </div>
   <p class="body-text reveal">The core package has zero runtime dependencies and uses the Python standard library. Route online with your keys, or run fully offline against local weights.</p>
   <p class="body-text reveal">Then open the surface in your browser. One origin, one page, same-origin JSON routes.</p>
+</section>
+
+<!-- EVIDENCE SKILL -->
+<section class="mv" id="evidence-task" aria-labelledby="evidence-task-h">
+  <h2 id="evidence-task-h" class="reveal">Check a claim with sources.</h2>
+  <p class="body-text reveal">Give your agent a Flywheel or Bulletin claim, release note, or public feedback thread. Flywheel Evidence Task helps it find the supporting sources, separate checked facts from reported claims, and show what remains unknown. You can use the skill without installing the Flywheel engine.</p>
+  <div class="run reveal"><span class="c">download</span> <a href="https://github.com/HarperZ9/flywheel/releases/download/skill-flywheel-evidence-task-v0.1.0/flywheel-evidence-task-0.1.0-skill.zip">Evidence Task 0.1.0 skill ZIP</a> &middot; <a href="https://github.com/HarperZ9/flywheel/releases/download/skill-flywheel-evidence-task-v0.1.0/flywheel-evidence-task-0.1.0-plugin.zip">Codex / Claude Code plugin ZIP</a></div>
+  <p class="body-text reveal">Follow the <a href="https://github.com/HarperZ9/flywheel/tree/skill-flywheel-evidence-task-v0.1.0/plugins/flywheel-evidence-task#install">installation guide for your host</a>, then try this with a public source you want checked:</p>
+  <div class="run reveal"><span class="c">first task</span> Use flywheel-evidence-task to check this claim: &lt;claim and source URL&gt;. Show the sources, what they support, what is still unknown, and the next useful action.</div>
+  <p class="body-text reveal">The package includes an Agent Skills folder and Codex and Claude Code plugin manifests. Package checks passed; live host installation has not been tested. <a href="https://github.com/HarperZ9/flywheel/releases/tag/skill-flywheel-evidence-task-v0.1.0">Release notes and limits</a> &middot; <a href="https://github.com/HarperZ9/flywheel/releases/download/skill-flywheel-evidence-task-v0.1.0/SHA256SUMS">Download checksums</a>.</p>
 </section>
 
 <!-- BENCHMARKS -->
