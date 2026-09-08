@@ -271,6 +271,44 @@ def test_flywheel_060_release_discovery_keeps_acceptance_limits_visible() -> Non
         assert "general model uplift verified" not in source.lower()
 
 
+def test_reader_flow_review_skill_is_downloadable_from_flywheel_page() -> None:
+    page = read("flywheel.html")
+    evidence_start = page.index('<section class="mv" id="evidence-task"')
+    reader_flow_start = page.index('<section class="mv" id="reader-flow-review"')
+    benchmarks_start = page.index('<section class="mv" id="benchmarks"')
+    section = page[reader_flow_start:benchmarks_start]
+
+    assert evidence_start < reader_flow_start < benchmarks_start
+    assert "#demo,#evidence-task,#reader-flow-review{scroll-margin-top:6rem}" in page
+    assert "Reader Flow Review 0.1.0 skill ZIP" in section
+    assert "https://github.com/HarperZ9/flywheel/releases/tag/skill-reader-flow-review-v0.1.0" in section
+    assert (
+        "https://github.com/HarperZ9/flywheel/releases/download/"
+        "skill-reader-flow-review-v0.1.0/reader-flow-review-0.1.0-skill.zip"
+    ) in section
+    assert (
+        "https://github.com/HarperZ9/flywheel/releases/download/"
+        "skill-reader-flow-review-v0.1.0/SHA256SUMS"
+    ) in section
+    assert "6,379 bytes" in section
+    assert "f57f8485da37d3af44a1d182994d465fc74e0a8a46aa8c35ef3969b32d57537b" in section
+    assert "Use $reader-flow-review to review this passage" in section
+    assert "host installation" in section
+    assert "automatic invocation" in section
+    assert "held-out writing quality" in section
+    assert "third-party marketplace approval" in section
+
+    for unsupported in (
+        "marketplace approved",
+        "automatically installs",
+        "installed by default",
+        "Claude default",
+        "Codex default",
+        "publication ready",
+    ):
+        assert unsupported.lower() not in section.lower()
+
+
 def test_relay_020_github_release_discovery_avoids_pypi_relay_agent() -> None:
     relay = registry_record("relay")
     evidence = evidence_by_id(relay)

@@ -64,7 +64,7 @@
   .demo-results dd{margin:.25rem 0 0}
   .demo-links{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-top:1rem}
   .demo-links a{display:inline-flex;align-items:center;min-height:44px}
-  #demo,#evidence-task{scroll-margin-top:6rem}
+  #demo,#evidence-task,#reader-flow-review{scroll-margin-top:6rem}
   @media(max-width:760px){.demo-layout{grid-template-columns:1fr}.demo-layout>.demo-copy,.demo-media{grid-column:auto;grid-row:auto}.demo-media{width:min(100%,22rem);justify-self:center}}
   @media(forced-colors:active){.demo-media video{border:1px solid CanvasText}.demo-media video:focus-visible{outline-color:Highlight}}
   @media print{.demo-layout{display:block}.demo-media video{display:none}.demo-media figcaption,.demo-copy{color:#000}.demo-results dt,.demo-results dd{break-inside:avoid}}
@@ -271,6 +271,23 @@
   <p class="body-text reveal">Follow the <a href="https://github.com/HarperZ9/flywheel/tree/skill-flywheel-evidence-task-v0.1.0/plugins/flywheel-evidence-task#install">installation guide for your host</a>, then try this with a public source you want checked:</p>
   <div class="run reveal"><span class="c">first task</span> Use flywheel-evidence-task to check this claim: &lt;claim and source URL&gt;. Show the sources, what they support, what is still unknown, and the next useful action.</div>
   <p class="body-text reveal">The package includes an Agent Skills folder and Codex and Claude Code plugin manifests. Package checks passed; live host installation has not been tested. <a href="https://github.com/HarperZ9/flywheel/releases/tag/skill-flywheel-evidence-task-v0.1.0">Release notes and limits</a> &middot; <a href="https://github.com/HarperZ9/flywheel/releases/download/skill-flywheel-evidence-task-v0.1.0/SHA256SUMS">Download checksums</a>.</p>
+</section>
+
+<!-- READER FLOW SKILL -->
+<section class="mv" id="reader-flow-review" aria-labelledby="reader-flow-review-h">
+  <h2 id="reader-flow-review-h" class="reveal">Review prose without flattening it.</h2>
+  <p class="body-text reveal">Reader Flow Review is an experimental standalone skill for reviewing or revising a selected prose passage. It keeps the main reader-flow issue first, asks for the smallest useful revision, and preserves author voice, qualifiers, dialogue, and factual uncertainty under polish pressure.</p>
+  <div class="run reveal"><span class="c">download</span> <a href="https://github.com/HarperZ9/flywheel/releases/download/skill-reader-flow-review-v0.1.0/reader-flow-review-0.1.0-skill.zip">Reader Flow Review 0.1.0 skill ZIP</a> &middot; 6,379 bytes &middot; <a href="https://github.com/HarperZ9/flywheel/releases/tag/skill-reader-flow-review-v0.1.0">release notes</a> &middot; <a href="https://github.com/HarperZ9/flywheel/releases/download/skill-reader-flow-review-v0.1.0/SHA256SUMS">checksums</a></div>
+  <p class="body-text reveal">Download the ZIP, extract it, and copy the <span translate="no">reader-flow-review</span> folder into the skills directory documented by your agent host. Invoke it explicitly when you want a passage critique or scoped revision; the archive does not install itself or add a marketplace listing.</p>
+  <div class="run reveal"><span class="c">first task</span> Use $reader-flow-review to review this passage for reader flow while preserving voice and uncertainty: &quot;The release is useful, but its evidence is developmental. The section should help a reader decide whether to try it without implying the skill verifies facts or certifies publication.&quot; Give the dominant reader issue first, then one smallest useful revision.</div>
+  <dl class="kv2 reveal">
+    <dt>ZIP SHA-256</dt><dd><span translate="no" style="font-family:var(--mono);font-size:.8rem;word-break:break-all">f57f8485da37d3af44a1d182994d465fc74e0a8a46aa8c35ef3969b32d57537b</span></dd>
+    <dt>Source</dt><dd><a href="https://github.com/HarperZ9/flywheel/releases/tag/skill-reader-flow-review-v0.1.0">GitHub release</a>, five public files, no Flywheel platform version bump.</dd>
+  </dl>
+  <div class="null reveal">
+    <h3>The honest caveat.</h3>
+    <p class="body-text">Developmental evaluation used synthetic same-task checks. It does not prove host installation, automatic invocation, held-out writing quality, factual correctness, third-party marketplace approval, or readiness for any specific writer's style.</p>
+  </div>
 </section>
 
 <!-- BENCHMARKS -->
