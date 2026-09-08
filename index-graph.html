@@ -5,18 +5,18 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>index, a map of your whole multi-repo workspace</title>
-<meta name="description" content="Index maps repositories and multi-repo workspaces so you can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and resumable workspace inventories with file-and-line evidence. Version 2.11.0 marks unverifiable Git metadata as unknown instead of counting it as complete.">
+<meta name="description" content="Index maps repositories and multi-repo workspaces so teams and agents can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and durable workspace inventories with file-and-line evidence. Version 2.12.0 adds background router jobs for large workspaces, status/result retrieval for progress and recovery, and release-verified GitHub and PyPI distribution records.">
 <link rel="canonical" href="https://harperz9.github.io/index-graph.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="index, a map of your whole multi-repo workspace">
-<meta property="og:description" content="Index maps repositories and multi-repo workspaces so you can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and resumable workspace inventories with file-and-line evidence. Version 2.11.0 marks unverifiable Git metadata as unknown instead of counting it as complete.">
+<meta property="og:description" content="Index maps repositories and multi-repo workspaces so teams and agents can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and durable workspace inventories with file-and-line evidence. Version 2.12.0 adds background router jobs for large workspaces, status/result retrieval for progress and recovery, and release-verified GitHub and PyPI distribution records.">
 <meta property="og:url" content="https://harperz9.github.io/index-graph.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/index.png">
 <meta property="og:image:alt" content="Project Telos flagship card: Index, the workspace map. Dozens of repos, one real map.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="index, a map of your whole multi-repo workspace">
-<meta name="twitter:description" content="Index maps repositories and multi-repo workspaces so you can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and resumable workspace inventories with file-and-line evidence. Version 2.11.0 marks unverifiable Git metadata as unknown instead of counting it as complete.">
+<meta name="twitter:description" content="Index maps repositories and multi-repo workspaces so teams and agents can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and durable workspace inventories with file-and-line evidence. Version 2.12.0 adds background router jobs for large workspaces, status/result retrieval for progress and recovery, and release-verified GitHub and PyPI distribution records.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/index.png">
 <meta name="color-scheme" content="dark">
 <link rel="stylesheet" href="system/system.css?v=20260907-reading-completion">
@@ -32,10 +32,10 @@
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">index</span> &middot; verified workspace map</span></div>
   <div class="mid">
     <h1>A workspace with dozens of repos deserves <span class="g">a real map.</span></h1>
-    <p class="lede" data-canonical-purpose="index">Index maps repositories and multi-repo workspaces so you can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and resumable workspace inventories with file-and-line evidence. Version 2.11.0 marks unverifiable Git metadata as unknown instead of counting it as complete.</p>
-    <p class="close">Public on PyPI. Version 2.11.0 adds resumable workspace inventory and explicit unknown metadata while preserving the re-checkable certificate discipline.</p>
+    <p class="lede" data-canonical-purpose="index">Index maps repositories and multi-repo workspaces so teams and agents can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and durable workspace inventories with file-and-line evidence. Version 2.12.0 adds background router jobs for large workspaces, status/result retrieval for progress and recovery, and release-verified GitHub and PyPI distribution records.</p>
+    <p class="close">Public on GitHub and PyPI. Version 2.12.0 adds durable router jobs so large workspace maps can continue in the background, report progress, and return results after an interactive request would have timed out.</p>
   </div>
-  <div class="seal"><span translate="no">index</span> &middot; public &middot; PyPI <span translate="no">index-graph 2.11.0</span> &middot; zero dependencies &middot; offline</div>
+  <div class="seal"><span translate="no">index</span> &middot; public &middot; PyPI <span translate="no">index-graph 2.12.0</span> &middot; zero dependencies &middot; offline</div>
 </div>
 
 <main id="main">
@@ -60,7 +60,7 @@
   <h2 id="atlas-h" class="reveal">An atlas of code and knowledge.</h2>
   <p class="body-text reveal">The deeper idea behind <span translate="no">index</span> is a two-layer map: repos and docs as linked nodes, navigable the way a wiki is navigable. This site is, in that sense, a small atlas of the work. Each flagship page is a node; the connections between the projects are the edges. <span translate="no">index</span> makes that structure explicit and machine-readable for a whole workspace, not just a website.</p>
   <p class="pull reveal">Run it over the actual workspace and a drift signal emerges: places where the real dependencies no longer match the stated ones.</p>
-  <p class="body-text reveal">When <span translate="no">index</span> was run over the author&rsquo;s own workspace it found around 80 repos and 32 edges, and it surfaced drift: dependencies that had shifted since the manifests were last written. That is the kind of signal that is invisible when you have to count it by hand but obvious the moment you have a graph.</p>
+  <p class="body-text reveal">When <span translate="no">index</span> was run over one live workspace it surfaced drift: dependencies that had shifted since the manifests were last written. Version 2.12.0 keeps that large-workspace run inspectable by recording progress and making the completed result retrievable instead of tying completion to one interactive request window.</p>
 </section>
 
 <!-- THE VERIFIED BRAIN -->
@@ -123,23 +123,22 @@
 <!-- HONEST STATE -->
 <section class="mv" id="state" aria-labelledby="state-h">
   <h2 id="state-h" class="reveal">What is done. What is next.</h2>
-  <p class="body-text reveal">Current public package is <code translate="no">index-graph 2.11.0</code>. It includes the two-layer atlas, dependency graph, intra-repo module graph, architecture certificate with snapshot, drift, and freshness, claim oracle, CLAUDE.md or AGENTS.md router, MCP protocol face, token-economy benchmark, and receipt-backed context envelope. Version 2.11.0 adds resumable <code translate="no">index map --resume-state PATH</code> inventories, explicit unknown Git metadata, and budgeted router, graph, context, and context-envelope calls that return <span translate="no">UNVERIFIABLE</span> instead of presenting a silent partial map. A budgeted router is still a bounded view; use a full-budget or resumable map run when complete large-workspace inventory matters. Next: typed edges that say how A connects to B (defines, re-exports, replaces).</p>
+  <p class="body-text reveal">Current public package is <code translate="no">index-graph 2.12.0</code>. It includes the two-layer atlas, dependency graph, intra-repo module graph, architecture certificate with snapshot, drift, and freshness, claim oracle, CLAUDE.md or AGENTS.md router, MCP protocol face, token-economy benchmark, and receipt-backed context envelope. Version 2.12.0 adds durable router jobs for large workspaces with start, status, and result retrieval. Final release validation observed 703 of 703 repositories completed on one live corpus, with scoped runs of 430 s cold and 493 s warm; those are coverage and runtime observations, not a controlled speedup. Version 2.11.0 added resumable <code translate="no">index map --resume-state PATH</code> inventories, explicit unknown Git metadata, and budgeted router, graph, context, and context-envelope calls that return <span translate="no">UNVERIFIABLE</span> instead of presenting a silent partial map. A budgeted router is still a bounded view; use a full-budget, resumable, or durable job run when complete large-workspace inventory matters.</p>
   <p class="body-text reveal">Saying what is not done yet is part of the design. A map that overstates its coverage is worse than no map at all.</p>
 </section>
 
 <!-- RUN IT -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Install it. Point it at the workspace.</h2>
-  <p class="body-text reveal">One command to install, one command to run. If you find repos it missed, edges it drew wrong, or roles it assigned incorrectly, those are exactly the reports that sharpen the engine.</p>
-  <pre class="artifact" translate="no"><span class="pr">$ pip install index-graph</span>
-<span class="ok">Successfully installed index-graph-2.11.0</span>
+  <p class="body-text reveal">Install once, then choose the foreground command for a small repo or the durable job path for a large workspace. Start returns a <code translate="no">job_id</code>; use that id with <code translate="no">index router-job status</code> for progress and <code translate="no">index router-job result</code> for retrieval. MCP clients expose the same background path as <code translate="no">index.router.job.start</code>, <code translate="no">index.router.job.status</code>, and <code translate="no">index.router.job.result</code>.</p>
+  <pre class="artifact" translate="no"><span class="pr">$ python -m pip install index-graph==2.12.0</span>
+<span class="ok">Successfully installed index-graph-2.12.0</span>
 
-<span class="pr">$ index atlas --root . --format html --out atlas.html</span>
-<span class="cmt"># the two-layer code-and-knowledge map, one self-contained offline file</span></pre>
+<span class="pr">$ index router-job start --root . --json</span></pre>
   <div class="channels reveal">
-    <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/index" translate="no">HarperZ9/index</a>
+    <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/index/releases/tag/v2.12.0" translate="no">v2.12.0 release</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/index-graph/2.11.0/" translate="no">index-graph 2.11.0</a>
+    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/index-graph/2.12.0/" translate="no">index-graph 2.12.0</a>
     &nbsp;&middot;&nbsp;
     <span class="g">Recorded demo</span> &rarr; <a href="demo-index.html">watch the workflow</a>
     &nbsp;&middot;&nbsp;
