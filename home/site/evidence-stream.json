@@ -3,6 +3,56 @@
   "derivedFrom": "harperz9-systems/v4",
   "records": [
     {
+      "id": "gather-release-v1-7-0",
+      "type": "release",
+      "label": "Gather v1.7.0 GitHub release",
+      "href": "https://github.com/HarperZ9/gather/releases/tag/v1.7.0",
+      "date": "2026-09-08",
+      "status": "verified",
+      "summary": "Gather v1.7.0 GitHub release adds readable corpus context selection and publishes verified wheel, source archive, and checksum assets from source commit 25b1f65bc9c8146f60eef0eccc8116360842a508.",
+      "systemId": "gather"
+    },
+    {
+      "id": "gather-pypi-v1-7-0",
+      "type": "release",
+      "label": "gather-engine 1.7.0 on PyPI",
+      "href": "https://pypi.org/project/gather-engine/1.7.0/",
+      "date": "2026-09-08",
+      "status": "verified",
+      "summary": "PyPI serves gather-engine 1.7.0; post-publication verification checked 64 Python modules exactly, clean installed the wheel, exercised CLI/MCP context selection, and refused tampered corpus selection while preserving does-not-prove limits.",
+      "systemId": "gather"
+    },
+    {
+      "id": "flywheel-release-v0-6-0",
+      "type": "release",
+      "label": "Flywheel v0.6.0",
+      "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.6.0",
+      "date": "2026-09-08",
+      "status": "verified",
+      "summary": "Flywheel v0.6.0 GitHub release, source commit, installer metadata, Windows tag-candidate acceptance attempt 2, Continue with agent, durable Index workspace-map jobs, and local Ollama usage retention are verified; clean-VM, mobile, provider/model calls, and general model uplift are not claimed.",
+      "systemId": "flywheel"
+    },
+    {
+      "id": "flywheel-pypi-v0-6-0",
+      "type": "release",
+      "label": "flywheel-verify 0.6.0 on PyPI",
+      "href": "https://pypi.org/project/flywheel-verify/0.6.0/",
+      "date": "2026-09-08",
+      "status": "verified",
+      "summary": "PyPI serves flywheel-verify 0.6.0 with source verification across 592 Python source files and 601 wheel RECORD entries; the receipt does not include an installed runtime check, and clean-machine installation is not claimed.",
+      "systemId": "flywheel"
+    },
+    {
+      "id": "relay-release-v0-2-0",
+      "type": "release",
+      "label": "Relay 0.2.0 GitHub release",
+      "href": "https://github.com/HarperZ9/relay/releases/tag/v0.2.0",
+      "date": "2026-09-08",
+      "status": "verified",
+      "summary": "Relay 0.2.0 GitHub release assets, hashes, tag binding, clean --no-index wheel install, and MCP synthetic controls verified; PyPI relay-agent publication or install is not claimed.",
+      "systemId": "relay"
+    },
+    {
       "id": "forum-route-preflight-skill-v0-1-0",
       "type": "release",
       "label": "Forum route-preflight skill 0.1.0",

@@ -100,15 +100,26 @@ def test_home_bundle_is_atomic_and_all_referenced_assets_exist() -> None:
     assert all((_local_path(reference) or Path()).is_file() for reference in bundles)
 
 
-def test_flywheel_primary_page_uses_the_current_consolidated_release_route() -> None:
+def test_flywheel_primary_page_uses_the_current_release_route() -> None:
     source = (ROOT / "flywheel.html").read_text(encoding="utf-8")
     registry = json.loads((ROOT / "system/systems.json").read_text(encoding="utf-8"))
     flywheel = next(system for system in registry["systems"] if system["id"] == "flywheel")
 
-    assert flywheel["entryCommand"] == "pip install flywheel-verify; flywheel up"
-    assert "v0.5.0" in source
-    assert "pip install flywheel-verify" in source
+    assert flywheel["entryCommand"] == "pip install flywheel-verify==0.6.0; flywheel up"
+    release_section = source[source.index('<section class="mv" id="next-release"'):]
+    release_section = release_section[: release_section.index("</section>")]
+    assert 'href="#next-release">0.6.0 release</a>' in source
+    assert "0.6 candidate" not in source
+    assert "Use v0.6.0 when you want the desktop surface to continue with an agent from an approved Evidence Journey item" in release_section
+    assert release_section.index("Continue with agent") < release_section.index("GitHub release was published")
+    assert "Windows tag-candidate acceptance attempt 2 passed" in release_section
+    assert release_section.index("34279017788") > release_section.index("<details")
+    assert "pip install flywheel-verify==0.6.0" in source
     assert "flywheel up" in source
+    assert "Flywheel-Setup-0.6.0-x64.exe" in source
+    assert "/releases/download/v0.6.0" in source
+    assert "clean-machine installation" in source
+    assert "physical Android/mobile acceptance" in source
     assert "flywheel-desktop" not in source
     assert "v0.2.2" not in source
     assert "v0.3.10" not in source

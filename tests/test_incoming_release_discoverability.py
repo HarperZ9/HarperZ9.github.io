@@ -185,3 +185,221 @@ def test_forum_route_preflight_skill_release_is_live_and_nonexecuting() -> None:
     assert "not a marketplace approval" in page
     assert "https://github.com/HarperZ9/forum/releases/tag/forum-route-preflight-v0.1.0" in page
     assert "https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip" in page
+
+
+def test_flywheel_060_release_discovery_keeps_acceptance_limits_visible() -> None:
+    flywheel = registry_record("flywheel")
+    evidence = evidence_by_id(flywheel)
+    payload = json.dumps(flywheel)
+    page = read("flywheel.html")
+    catalog = read("catalog.html")
+    home_projection = read("home/site/evidence-stream.json")
+    home_registry = read("home/src/system-registry.ts")
+
+    release = evidence["flywheel-release-v0-6-0"]
+    pypi = evidence["flywheel-pypi-v0-6-0"]
+    assert flywheel["releaseState"] == "stable v0.6.0; PyPI and GitHub release assets published; clean-VM and mobile acceptance not claimed"
+    assert flywheel["evidence"][0]["id"] == "flywheel-release-v0-6-0"
+    assert release["type"] == "release"
+    assert release["status"] == "verified"
+    assert release["href"] == "https://github.com/HarperZ9/flywheel/releases/tag/v0.6.0"
+    assert pypi["href"] == "https://pypi.org/project/flywheel-verify/0.6.0/"
+
+    for required in (
+        "published at 2026-09-08T21:24:15Z",
+        "source commit d8c1623a3d0fee2d1ae7f3dfddb50cebdfdad599",
+        "Flywheel-Setup-0.6.0-x64.exe",
+        "25,587,795 bytes",
+        "d762838c865f6b287ba30b8b576cb179500241904401fd8a01a2bb99d625d173",
+        "frozen-gateway-smoke.json",
+        "8a4a843221d5775b23cbc3e3873c1d859721cdbe80af9144aafbc4d2479ef139",
+        "SHA256SUMS.txt",
+        "f45205042bc879d549038f9a2ee9cb815eab55a7b4758bc64ccaef3074ad8bd6",
+        "Windows tag-candidate acceptance attempt 2 passed",
+        "34279017788",
+        "cab370affa52ec180f2613fff131eb8f84424afae189c53f8f4f323a4729f685",
+        "Continue with agent",
+        "Evidence Journey",
+        "durable Index workspace-map jobs",
+        "manual Update snapshot refresh",
+        "retained local Ollama token and timing usage",
+        "Index 2.12 or newer remains a separate requirement",
+    ):
+        assert required in release["summary"]
+
+    for required in (
+        "PyPI serves flywheel-verify 0.6.0",
+        "592 Python source files",
+        "601 wheel RECORD entries",
+        "bfde77d6215b62283b72f873f598b0d25761e76c303eb5208f2324ab701c3bf3",
+        "f94bb7bdfdb597306071df289505ae9616ed64f92cfb90066a24a55f58bb2b0a",
+        "No installed runtime check",
+        "Windows installer acceptance is recorded separately",
+    ):
+        assert required in pypi["summary"]
+
+    for bounded_claim in (
+        "clean-machine installation",
+        "physical Android/mobile acceptance",
+        "provider-native session migration",
+        "general model uplift",
+        "arbitrary provider-native resume",
+    ):
+        assert bounded_claim in release["summary"]
+
+    release_section = page[page.index('<section class="mv" id="next-release"'):]
+    release_section = release_section[: release_section.index("</section>")]
+    assert 'href="#next-release">0.6.0 release</a>' in page
+    assert "0.6 candidate" not in page
+    assert "Use v0.6.0 when you want the desktop surface to continue with an agent from an approved Evidence Journey item" in release_section
+    assert release_section.index("Continue with agent") < release_section.index("GitHub release was published")
+    assert "Windows tag-candidate acceptance attempt 2 passed" in release_section
+    assert release_section.index("34279017788") > release_section.index("<details")
+    assert "pip install flywheel-verify==0.6.0" in page
+    assert "Flywheel-Setup-0.6.0-x64.exe" in page
+    assert "d762838c865f6b287ba30b8b576cb179500241904401fd8a01a2bb99d625d173" in page
+    assert "Flywheel v0.6.0" in catalog
+    assert "flywheel-release-v0-6-0" in home_projection
+    assert "flywheel-pypi-v0-6-0" in home_projection
+    assert "Flywheel v0.6.0" in home_registry
+
+    for source in (payload, page, catalog, home_projection, home_registry):
+        assert "clean-machine installation passed" not in source
+        assert "physical Android acceptance passed" not in source
+        assert "mobile acceptance passed" not in source
+        assert "general model uplift passed" not in source.lower()
+        assert "general model uplift verified" not in source.lower()
+
+
+def test_relay_020_github_release_discovery_avoids_pypi_relay_agent() -> None:
+    relay = registry_record("relay")
+    evidence = evidence_by_id(relay)
+    payload = json.dumps(relay)
+    page = read("systems/relay.html")
+    catalog = read("catalog.html")
+    home_projection = read("home/site/evidence-stream.json")
+    home_registry = read("home/src/system-registry.ts")
+
+    release = evidence["relay-release-v0-2-0"]
+    assert relay["releaseState"] == "GitHub release v0.2.0 verified; no PyPI release claimed"
+    assert relay["evidence"][0]["id"] == "relay-release-v0-2-0"
+    assert release["type"] == "release"
+    assert release["status"] == "verified"
+    assert release["href"] == "https://github.com/HarperZ9/relay/releases/tag/v0.2.0"
+
+    for required in (
+        "Relay 0.2.0 GitHub release",
+        "9efdd82a6ea47ea37b4771315529aa4a8b04de1b",
+        "relay_agent-0.2.0-py3-none-any.whl",
+        "111,430 bytes",
+        "7b7f04ee9f393df2ec520110799ecd662033251b9dfcfaf1dad1d5727c717cee",
+        "relay_agent-0.2.0.tar.gz",
+        "188,381 bytes",
+        "202c8ad1028eb1b2b45aa28801717246254ad837e7a5b1e37b26f1dc92d006c3",
+        "clean --no-index wheel install",
+        "MCP synthetic controls",
+        "No PyPI publication or install is claimed",
+    ):
+        assert required in release["summary"]
+
+    assert "GitHub release v0.2.0 verified; no PyPI release claimed" in catalog
+    assert "https://github.com/HarperZ9/relay/releases/download/v0.2.0/relay_agent-0.2.0-py3-none-any.whl" in page
+    assert "relay-release-v0-2-0" in home_projection
+    assert "Relay 0.2.0 GitHub release" in home_registry
+
+    for source in (payload, page, catalog, home_projection, home_registry):
+        assert "https://pypi.org/project/relay-agent" not in source
+        assert "pip install relay-agent" not in source
+        assert "relay-agent 0.2.0 on PyPI" not in source
+
+    for bounded_claim in (
+        "clean-machine installation",
+        "physical Android acceptance",
+        "provider-native session migration",
+        "model uplift",
+        "arbitrary provider-native resume",
+    ):
+        assert bounded_claim not in release["summary"]
+
+
+def test_gather_170_release_discovery_keeps_context_boundaries_visible() -> None:
+    gather = registry_record("gather")
+    evidence = evidence_by_id(gather)
+    payload = json.dumps(gather)
+    page = read("gather.html")
+    catalog = read("catalog.html")
+    home_projection = read("home/site/evidence-stream.json")
+    home_registry = read("home/src/system-registry.ts")
+
+    release = evidence["gather-release-v1-7-0"]
+    pypi = evidence["gather-pypi-v1-7-0"]
+    assert gather["releaseState"] == "stable v1.7.0; GitHub and PyPI release verified"
+    assert gather["entryCommand"] == "pip install gather-engine==1.7.0; gather docs sample.txt --store corpus"
+    assert gather["evidence"][0]["id"] == "gather-release-v1-7-0"
+    assert release["type"] == "release"
+    assert release["status"] == "verified"
+    assert release["href"] == "https://github.com/HarperZ9/gather/releases/tag/v1.7.0"
+    assert pypi["href"] == "https://pypi.org/project/gather-engine/1.7.0/"
+
+    for required in (
+        "Gather v1.7.0 GitHub release",
+        "published at 2026-09-08T21:38:40Z",
+        "source commit 25b1f65bc9c8146f60eef0eccc8116360842a508",
+        "gather_engine-1.7.0-py3-none-any.whl",
+        "180,485 bytes",
+        "69fdea1aee67c6dd8a0d93c40bcb51476edb26c0163e6e7e25f4c86c1bb7b0c6",
+        "gather_engine-1.7.0.tar.gz",
+        "244,569 bytes",
+        "1d946c31dbc9b7adf51ea1c7fa503f863e1303a620e41b8627e8c915218536b7",
+        "SHA256SUMS.txt",
+        "878f51ff23216717a1f6bfc50a0c077d3573f376555c78f801e430ebafc3a34d",
+        "readable corpus context selection",
+    ):
+        assert required in release["summary"]
+
+    for required in (
+        "PyPI serves gather-engine 1.7.0",
+        "64 Python modules",
+        "clean no-index wheel install",
+        "CLI and MCP context selection",
+        "tamper selection was refused",
+        "does not prove source truth",
+        "claim support",
+        "completeness",
+        "downstream model use",
+        "absence of sensitive material",
+    ):
+        assert required in pypi["summary"]
+
+    assert "stable v1.7.0; GitHub and PyPI release verified" in catalog
+    assert "https://github.com/HarperZ9/gather/releases/tag/v1.7.0" in page
+    assert "https://pypi.org/project/gather-engine/1.7.0/" in page
+    assert "pip install gather-engine==1.7.0" in page
+    sample_fixture = (
+        "Offline quickstart: Gather keeps acquired context separate from conclusions."
+        "\nDecision fact: the release can select useful text from a stored corpus."
+    )
+    assert "sample.txt body" in page
+    assert sample_fixture in page
+    assert "replace ROW_REF and CORPUS_DIGEST with the values from the inspect JSON" in page
+    assert "0:76 selects the first line of this fixture" in page
+    assert page.index("sample.txt body") < page.index("gather docs sample.txt --store corpus --json")
+    assert "gather docs sample.txt --store corpus --json" in page
+    assert "gather corpus context corpus --json --excerpt-chars 90" in page
+    assert "gather corpus context corpus --json --select ROW_REF:0:76 --expect-digest CORPUS_DIGEST" in page
+    command_block = page[page.index("gather docs sample.txt --store corpus --json"):]
+    command_block = command_block[: command_block.index("</pre>")]
+    assert "Sample selected text" not in command_block
+    assert "Sample selected text" in page
+    assert "Offline quickstart: Gather keeps acquired context separate from conclusions." in page
+    assert "gather-release-v1-7-0" in home_projection
+    assert "gather-pypi-v1-7-0" in home_projection
+    assert "Gather v1.7.0 GitHub release" in home_registry
+
+    for source in (payload, page, catalog, home_projection, home_registry):
+        assert "E2E compiler released" not in source
+        assert "end-to-end compiler released" not in source
+        assert "new product scope released" not in source
+        assert "source truth verified" not in source
+        assert "complete gathered coverage" not in source
+        assert "example.com/article" not in source
