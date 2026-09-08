@@ -279,6 +279,24 @@
       "verificationCommand": "flywheel lanes --probe",
       "evidence": [
         {
+          "id": "flywheel-release-v0-5-0",
+          "type": "release",
+          "label": "Flywheel v0.5.0",
+          "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.5.0",
+          "date": "2026-09-08",
+          "status": "verified",
+          "summary": "The v0.5.0 GitHub release resolves to source commit fab8ac6ed1c8086034901e3dbeb922c43bfa8ff1. The unsigned Windows x64 installer asset is 25,556,105 bytes with SHA-256 808a9f56e423f048c1d8dadda8ae216c323ea10ef1db1f12170327fb6106bf31; downloaded-back verification also covered SHA256SUMS.txt and a frozen gateway smoke receipt. Clean-machine Windows installation, device acceptance, and real provider requests are not claimed."
+        },
+        {
+          "id": "flywheel-pypi-v0-5-0",
+          "type": "release",
+          "label": "flywheel-verify 0.5.0 on PyPI",
+          "href": "https://pypi.org/project/flywheel-verify/0.5.0/",
+          "date": "2026-09-08",
+          "status": "verified",
+          "summary": "PyPI serves flywheel-verify 0.5.0. The wheel SHA-256 dcdcd8a6892ef59e32e3eb81901c30f63fdcf2e1432ee48137ea9d8a1c834abe and source archive SHA-256 e9e7a4d9e2669f1473d87bde2494f916b8d88a8f57e8efb38ed11b88622a9cdf matched the publication receipt; a fresh isolated install passed CLI/help/disproof/signing checks. Host marketplace installation, real provider requests, and native cross-client session migration are not claimed."
+        },
+        {
           "id": "flywheel-release-v0-4-1",
           "type": "release",
           "label": "Flywheel v0.4.1",
@@ -408,7 +426,7 @@
       "limitations": [
         "Receipts establish witnessed actions and checks, not general model correctness.",
         "Local weights and optional signing or monitoring features have separate installation requirements.",
-        "The v0.4.1 Windows installer is unsigned and has not had independent clean-machine Windows installation verification."
+        "The v0.5.0 Windows installer is unsigned; release receipts cover downloaded-back artifact hashing and extraction/gateway-smoke acceptance, not clean-machine installation, device acceptance, or publisher authentication."
       ],
       "boundary": "Use model routes, tools, data, and environments only with the authority required by their owners and providers.",
       "inputs": [
@@ -436,10 +454,10 @@
         "mneme",
         "chorus"
       ],
-      "lastVerified": "2026-09-07",
+      "lastVerified": "2026-09-08",
       "primaryDomain": "agent-systems",
       "productType": "verified-inference platform and desktop client",
-      "releaseState": "stable v0.4.1"
+      "releaseState": "stable v0.5.0"
     },
     {
       "id": "telos",
