@@ -992,11 +992,12 @@ Error generating stack: `+e.message+`
     {
       "id": "index",
       "name": "Index",
-      "purpose": "Index maps repositories and multi-repo workspaces so you can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and resumable workspace inventories with file-and-line evidence. Version 2.11.0 marks unverifiable Git metadata as unknown instead of counting it as complete.",
+      "purpose": "Index maps repositories and multi-repo workspaces so teams and agents can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and durable workspace inventories with file-and-line evidence. Version 2.12.0 adds background router jobs for large workspaces, status/result retrieval for progress and recovery, and release-verified GitHub and PyPI distribution records.",
       "useCases": [
         "multi-repository mapping",
         "dependency analysis",
-        "offline architecture documentation"
+        "offline architecture documentation",
+        "large-workspace router jobs with progress and result recovery"
       ],
       "href": "index-graph.html",
       "sourceHref": "https://github.com/HarperZ9/index",
@@ -1017,9 +1018,36 @@ Error generating stack: `+e.message+`
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "python -m pip install index-graph==2.11.0; index map --root <workspace> --resume-state index-map.jsonl --json",
-      "verificationCommand": "index --version; index wiki --verify wiki.html --root <repo-path>",
+      "entryCommand": "Install with python -m pip install index-graph==2.12.0. For large workspaces, start a durable run with index router-job start --root . --json; read the returned job_id, then inspect progress with index router-job status and retrieve output with index router-job result. MCP clients use index.router.job.start, index.router.job.status, and index.router.job.result.",
+      "verificationCommand": "Verify the GitHub and PyPI 2.12.0 release digests separately; run index --version, index status --json, index doctor --json, and confirm MCP tools/list includes index.router.job.start, index.router.job.status, and index.router.job.result.",
       "evidence": [
+        {
+          "id": "index-release-v2-12-0",
+          "type": "release",
+          "label": "Index 2.12.0 GitHub release",
+          "href": "https://github.com/HarperZ9/index/releases/tag/v2.12.0",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "The v2.12.0 GitHub release resolves to merge commit d895196f8ecca84a043f19fec7b49d94b1dd3bdb, whose tree matches accepted source commit ba73aec23b7689de1e73c18f09e4db4972510b8a. GitHub download-back verification matched wheel SHA-256 dabd4c253804d1791755941fe695c85a1c32087d15b744ef370a092dbf8fe9b6, source distribution SHA-256 9451351820f6e779de3a3e567f0a9c4cf59edcee1de7bda9997d3ac6dda46445, and SHA256SUMS SHA-256 593c0f5530bc9ef51167c6265c9d6e11188506a6093521f45de498072f316b7c."
+        },
+        {
+          "id": "index-pypi-v2-12-0",
+          "type": "release",
+          "label": "index-graph 2.12.0 on PyPI",
+          "href": "https://pypi.org/project/index-graph/2.12.0/",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "PyPI serves index-graph 2.12.0 for Python 3.11 or newer. The wheel is 229,391 bytes with SHA-256 1825b12a1a9413fadba7d0f786852ac0ef17515389ab19e267732e2aecbca683, and the source archive is 1,047,912 bytes with SHA-256 9451351820f6e779de3a3e567f0a9c4cf59edcee1de7bda9997d3ac6dda46445. The PyPI wheel hash differs from the GitHub wheel hash because ZIP create_system metadata differs; extracted file sets and file bytes match, and a fresh installed-wheel runtime check passed."
+        },
+        {
+          "id": "index-router-job-v2-12-0",
+          "type": "test",
+          "label": "Index 2.12.0 router job validation",
+          "href": "https://github.com/HarperZ9/index/releases/tag/v2.12.0",
+          "date": "2026-09-07",
+          "status": "reported",
+          "summary": "Release validation reported 22 MCP tools, including index.router.job.start, index.router.job.status, and index.router.job.result. The final live-corpus job completed 703 of 703 repositories; the scoped runs were 430 s cold and 493 s warm. Those are coverage and runtime observations on one live corpus, not a controlled speedup or maturity claim."
+        },
         {
           "id": "index-release-v2-11-0",
           "type": "release",
@@ -1027,7 +1055,7 @@ Error generating stack: `+e.message+`
           "href": "https://github.com/HarperZ9/index/releases/tag/v2.11.0",
           "date": "2026-09-07",
           "status": "verified",
-          "summary": "The v2.11.0 GitHub release is published for tag v2.11.0, which peels to merge commit 79f5f65dd516c27618fe80bf45080a9bd1cf8526. Release assets include the PyPI wheel SHA-256 70c41ff3920a79755465cd0d920acd73d665052f065fa06fc3a61e6bf776ad86, source distribution SHA-256 231c9f630c140dcfce5a8ef314f8258faed6399aec5f3e2658f158c64176cef2, and SHA256SUMS SHA-256 4d0ef341374d7f50ee03298201eef02821172b3e930ecd5ebc6b6ff289b37ce7."
+          "summary": "The v2.11.0 GitHub release is retained as historical evidence for resumable workspace inventory and explicit unknown Git metadata."
         },
         {
           "id": "index-pypi-v2-11-0",
@@ -1036,7 +1064,7 @@ Error generating stack: `+e.message+`
           "href": "https://pypi.org/project/index-graph/2.11.0/",
           "date": "2026-09-07",
           "status": "verified",
-          "summary": "PyPI serves index-graph 2.11.0 for Python 3.11 or newer. The wheel is 212,900 bytes and the source archive is 1,152,841 bytes; their SHA-256 digests match the GitHub release assets."
+          "summary": "PyPI 2.11.0 is retained as historical package evidence."
         },
         {
           "id": "index-release-v2-10-0",
@@ -1045,14 +1073,15 @@ Error generating stack: `+e.message+`
           "href": "https://pypi.org/project/index-graph/2.10.0/",
           "date": "2026-08-28",
           "status": "verified",
-          "summary": "The package index and source metadata both report index-graph 2.10.0; Flywheel's lane registry now pins 2.10.0."
+          "summary": "The package index and source metadata both report index-graph 2.10.0; Flywheel's historical lane registry pins 2.10.0."
         }
       ],
       "limitations": [
         "Dynamic imports and unsupported structures can remain incomplete or unverifiable.",
         "Structural evidence does not guarantee the accuracy of explanatory prose.",
         "Rows with unknown Git metadata mean Index found the repository but did not verify branch, head, dirty, or untracked state for that row.",
-        "Budgeted router, graph, context, and context-envelope calls can return UNVERIFIABLE for large workspaces; use a full-budget or resumable map run when complete inventory matters."
+        "Background router jobs avoid interactive request timeouts and expose progress/result recovery, but they do not by themselves prove a faster complete scan.",
+        "The 703 of 703 live-corpus result is a scoped coverage observation; the 430 s cold and 493 s warm runtimes are not a controlled speedup experiment."
       ],
       "boundary": "Inspect only repositories and workspaces you are authorized to read.",
       "inputs": [
@@ -1064,7 +1093,8 @@ Error generating stack: `+e.message+`
         "offline wikis and atlases",
         "dependency and symbol graphs",
         "context envelopes",
-        "freshness and drift findings"
+        "freshness and drift findings",
+        "durable router job status and result payloads"
       ],
       "dependencies": [],
       "related": [
@@ -1076,7 +1106,7 @@ Error generating stack: `+e.message+`
       "lastVerified": "2026-09-07",
       "primaryDomain": "developer-infrastructure",
       "productType": "workspace map and context system",
-      "releaseState": "beta 2.11.0 on PyPI and GitHub"
+      "releaseState": "GitHub and PyPI release 2.12.0 verified; PyPI wheel container hash differs while payload bytes match"
     },
     {
       "id": "gather",
@@ -1151,11 +1181,12 @@ Error generating stack: `+e.message+`
     {
       "id": "forum",
       "name": "Forum",
-      "purpose": "Forum is a zero-dependency Python orchestration engine for teams of AI agents. It turns a request into dependent tasks, runs independent tasks in parallel through local commands or model APIs, pauses for human approval, resumes interrupted runs, and records a replayable ledger.",
+      "purpose": "Forum is a zero-dependency Python orchestration engine for teams of AI agents. It turns a request into dependent tasks, runs independent tasks in parallel through local commands or model APIs, pauses for human approval, resumes interrupted runs, and records a replayable ledger. The standalone route-preflight skill helps a host inspect routing, context pressure, and runtime readiness before model work starts.",
       "useCases": [
         "multi-agent orchestration",
         "dependency-aware planning",
-        "reviewable handoffs"
+        "reviewable handoffs",
+        "route-preflight checks before model execution"
       ],
       "href": "forum.html",
       "sourceHref": "https://github.com/HarperZ9/forum",
@@ -1179,9 +1210,18 @@ Error generating stack: `+e.message+`
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "pip install forum-engine; forum route \\"build the requested system\\"",
-      "verificationCommand": "forum ledger verify",
+      "entryCommand": "python -m pip install forum-engine==1.13.0; curl -L -O https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip; install the extracted forum-route-preflight folder with your host skill loader",
+      "verificationCommand": "With the Forum CLI or source checkout available, run the installed forum-route-preflight helper before any model command; confirm route, context, and runtime observations are reported and safe_to_submit is false.",
       "evidence": [
+        {
+          "id": "forum-route-preflight-skill-v0-1-0",
+          "type": "release",
+          "label": "Forum route-preflight skill 0.1.0",
+          "href": "https://github.com/HarperZ9/forum/releases/tag/forum-route-preflight-v0.1.0",
+          "date": "2026-09-08",
+          "status": "verified",
+          "summary": "The live GitHub release publishes forum-route-preflight-skill-20260907-final.zip as a 9,573-byte standalone host skill with SHA-256 1827a9673414e73722ba7bd74be15316534bb6c66fc55ecc26845a5e5c953450; SHA256SUMS.txt has SHA-256 afa5b4a94a3904e4afb1f441206d98a665757e0fa770049e4925020a94b0b390. Download-back verification matched the ZIP digest. The skill inspects routing, context pressure, and runtime readiness before model work; it does not execute the supplied command and keeps safe_to_submit=false."
+        },
         {
           "id": "forum-release-v1-13-0",
           "type": "release",
@@ -1194,32 +1234,44 @@ Error generating stack: `+e.message+`
       ],
       "limitations": [
         "A valid ledger proves recorded integrity and replayability, not that model output is substantively correct.",
-        "Executors and human approval policy remain operator-supplied."
+        "Executors and human approval policy remain operator-supplied.",
+        "The route-preflight skill is a standalone host skill, not a marketplace approval and not a Forum engine version bump.",
+        "The skill checks route, context, and runtime readiness without executing the supplied model or shell command; safe_to_submit remains false so a human or host policy still decides whether to proceed."
       ],
       "boundary": "Agent permissions must remain no broader than the operator's authority and the active task scope.",
       "inputs": [
         "task graphs and delivery contracts",
         "agent and executor profiles",
         "budgets and approval policy",
-        "checkpoint state"
+        "checkpoint state",
+        "task text, Forum repository path, optional command string, and runtime environment names"
       ],
       "outputs": [
         "dependency-ordered agent runs",
         "handoff artifacts",
         "crash-safe checkpoints",
-        "causal ledger entries"
+        "causal ledger entries",
+        "route-preflight receipt with routing, context-pressure, runtime-readiness, and safe_to_submit=false observations"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "Forum CLI or source checkout for standalone skill preflight",
+        "agent host skill loader for the forum-route-preflight folder"
+      ],
       "related": [
         "flywheel",
         "relay",
         "plexus",
         "mneme"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-09-08",
       "primaryDomain": "agent-systems",
       "productType": "multi-agent orchestration engine",
-      "releaseState": "stable v1.13.0"
+      "releaseState": "stable engine v1.13.0; standalone route-preflight skill v0.1.0",
+      "runGuide": {
+        "label": "Download the standalone route-preflight skill",
+        "href": "https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip",
+        "summary": "The v0.1.0 ZIP is loaded by the agent host, not installed from PyPI. It requires a Forum CLI or source checkout and a host skill loader that supports local standalone skills."
+      }
     },
     {
       "id": "crucible",
@@ -4045,96 +4097,126 @@ Error generating stack: `+e.message+`
     }
   ]
 }
-`),E=T.systems;E.filter(e=>e.placement===`featured`);var de=T.domains,fe=E.flatMap(e=>e.evidence.map(t=>({...t,systemId:e.id}))).sort((e,t)=>t.date.localeCompare(e.date));function pe(e){return E.find(t=>t.id===e)}var me=`{
-  "schema": "harperz9-home-evidence/v1",
-  "derivedFrom": "harperz9-systems/v4",
-  "records": [
-    {
-      "id": "flywheel-gather-lane-code",
-      "type": "code-permalink",
-      "label": "Flywheel Gather lane declaration",
-      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L55-L58",
-      "date": "2026-08-28",
-      "status": "verified",
-      "summary": "The pinned lane registry declares Gather's package, command, MCP arguments, version, source repository, and role.",
-      "systemId": "flywheel"
-    },
-    {
-      "id": "flywheel-crucible-lane-code",
-      "type": "code-permalink",
-      "label": "Flywheel Crucible lane declaration",
-      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L59-L62",
-      "date": "2026-08-28",
-      "status": "verified",
-      "summary": "The pinned lane registry declares Crucible's package, command, MCP arguments, version, source repository, and role.",
-      "systemId": "flywheel"
-    },
-    {
-      "id": "flywheel-index-lane-code",
-      "type": "code-permalink",
-      "label": "Flywheel Index lane declaration",
-      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L63-L66",
-      "date": "2026-08-28",
-      "status": "verified",
-      "summary": "The pinned lane registry declares Index's package, command, MCP arguments, source repository, and role; its version field is visibly stale against the published package.",
-      "systemId": "flywheel"
-    },
-    {
-      "id": "flywheel-forum-lane-code",
-      "type": "code-permalink",
-      "label": "Flywheel Forum lane declaration",
-      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L67-L70",
-      "date": "2026-08-28",
-      "status": "verified",
-      "summary": "The pinned lane registry declares Forum's package, command, MCP arguments, version, source repository, and role.",
-      "systemId": "flywheel"
-    },
-    {
-      "id": "flywheel-learn-lane-code",
-      "type": "code-permalink",
-      "label": "Flywheel Learn lane declaration",
-      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L71-L74",
-      "date": "2026-08-28",
-      "status": "verified",
-      "summary": "The pinned lane registry declares Learn's npm package, Node MCP entry, version, source repository, and role.",
-      "systemId": "flywheel"
-    }
-  ],
-  "latestPublishedBriefing": {
-    "id": "2026-08-26-openai-hugging-face-incident",
-    "recordType": "canonical",
-    "version": 1,
-    "title": "Five evidence lanes, one OpenAI and Hugging Face incident",
-    "summary": "Separate legal process, OpenAI's company report, Hugging Face host telemetry, independent analysis, and vendor remediation before drawing conclusions from the July incident.",
-    "href": "/briefings/2026-08-26-openai-hugging-face-incident/",
-    "publishedAt": "2026-08-26",
-    "updatedAt": "2026-08-27",
-    "sourceCount": 12,
-    "claimCount": 45,
-    "figureIds": [
-      "recovered-actions-by-day",
-      "incident-multilane-timeline",
-      "source-scope-matrix",
-      "task-overrepresentation",
-      "motive-sample-nonexclusive",
-      "control-boundary-flow",
-      "claim-provenance-panel"
-    ],
-    "primaryFigureHref": "/figures/source-scope-matrix.html",
-    "limitations": [
-      "The Alabama materials describe an investigation, subpoena, and allegations. They do not establish a legal violation, liability, or consumer harm.",
-      "Actions, clusters, agents, messages, files, transcripts, tasks, repositories, systems, workers, and datasets remain separate units.",
-      "METR and Redwood performed an independent investigation with host-controlled data access, not an unrestricted forensic audit.",
-      "OpenAI retained non-public-information redaction authority, provided feedback, and supplied API credits to the independent review; METR reports taking no payment.",
-      "OpenAI's impact, chronology, and remediation statements remain company-reported, and its preliminary harness evaluations lack public sample sizes, intervals, and independent replication.",
-      "The 14 Hugging Face credentials, 41 Hugging Face workers, and 956 OpenAI cloud-hosted secrets are separate company-reported units and stages.",
-      "The July 5 entry is an OpenAI-attributed alert and response event, not an independently verified effectiveness finding.",
-      "The 100-agent motive tags are non-exclusive, AI-assisted, not carefully iterated by METR, and do not generalize to all agents.",
-      "Tool-call spoofing counts keep successful cases and evaluated transcripts as separate denominators.",
-      "Source interpretations do not establish one settled motivation or behavior shared by all agents, models, or deployments.",
-      "JFrog's statement and advisory index are vendor remediation records, not independent proof of incident scope or deployed patch coverage."
-    ],
-    "amends": null
-  }
-}
+`),E=T.systems;E.filter(e=>e.placement===`featured`);var de=T.domains,fe=E.flatMap(e=>e.evidence.map(t=>({...t,systemId:e.id}))).sort((e,t)=>t.date.localeCompare(e.date));function pe(e){return E.find(t=>t.id===e)}var me=`{\r
+  "schema": "harperz9-home-evidence/v1",\r
+  "derivedFrom": "harperz9-systems/v4",\r
+  "records": [\r
+    {\r
+      "id": "forum-route-preflight-skill-v0-1-0",\r
+      "type": "release",\r
+      "label": "Forum route-preflight skill 0.1.0",\r
+      "href": "https://github.com/HarperZ9/forum/releases/tag/forum-route-preflight-v0.1.0",\r
+      "date": "2026-09-08",\r
+      "status": "verified",\r
+      "summary": "Standalone host skill release for checking Forum routing, context pressure, and runtime readiness before model work; forum-route-preflight-skill-20260907-final.zip download-back matched SHA-256 1827a9673414e73722ba7bd74be15316534bb6c66fc55ecc26845a5e5c953450 and safe_to_submit remains false.",\r
+      "systemId": "forum"\r
+    },\r
+    {\r
+      "id": "index-release-v2-12-0",\r
+      "type": "release",\r
+      "label": "Index 2.12.0 GitHub release",\r
+      "href": "https://github.com/HarperZ9/index/releases/tag/v2.12.0",\r
+      "date": "2026-09-07",\r
+      "status": "verified",\r
+      "summary": "Index 2.12.0 publishes durable router jobs for large-workspace mapping and verified GitHub release assets.",\r
+      "systemId": "index"\r
+    },\r
+    {\r
+      "id": "index-pypi-v2-12-0",\r
+      "type": "release",\r
+      "label": "index-graph 2.12.0 on PyPI",\r
+      "href": "https://pypi.org/project/index-graph/2.12.0/",\r
+      "date": "2026-09-07",\r
+      "status": "verified",\r
+      "summary": "PyPI serves index-graph 2.12.0; the PyPI wheel payload matches GitHub after extraction while ZIP create_system metadata differs.",\r
+      "systemId": "index"\r
+    },\r
+    {\r
+      "id": "flywheel-gather-lane-code",\r
+      "type": "code-permalink",\r
+      "label": "Flywheel Gather lane declaration",\r
+      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L55-L58",\r
+      "date": "2026-08-28",\r
+      "status": "verified",\r
+      "summary": "The pinned lane registry declares Gather's package, command, MCP arguments, version, source repository, and role.",\r
+      "systemId": "flywheel"\r
+    },\r
+    {\r
+      "id": "flywheel-crucible-lane-code",\r
+      "type": "code-permalink",\r
+      "label": "Flywheel Crucible lane declaration",\r
+      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L59-L62",\r
+      "date": "2026-08-28",\r
+      "status": "verified",\r
+      "summary": "The pinned lane registry declares Crucible's package, command, MCP arguments, version, source repository, and role.",\r
+      "systemId": "flywheel"\r
+    },\r
+    {\r
+      "id": "flywheel-index-lane-code",\r
+      "type": "code-permalink",\r
+      "label": "Flywheel Index lane declaration",\r
+      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L63-L66",\r
+      "date": "2026-08-28",\r
+      "status": "verified",\r
+      "summary": "The pinned lane registry declares Index's package, command, MCP arguments, source repository, and role; its version field is visibly stale against the published package.",\r
+      "systemId": "flywheel"\r
+    },\r
+    {\r
+      "id": "flywheel-forum-lane-code",\r
+      "type": "code-permalink",\r
+      "label": "Flywheel Forum lane declaration",\r
+      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L67-L70",\r
+      "date": "2026-08-28",\r
+      "status": "verified",\r
+      "summary": "The pinned lane registry declares Forum's package, command, MCP arguments, version, source repository, and role.",\r
+      "systemId": "flywheel"\r
+    },\r
+    {\r
+      "id": "flywheel-learn-lane-code",\r
+      "type": "code-permalink",\r
+      "label": "Flywheel Learn lane declaration",\r
+      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L71-L74",\r
+      "date": "2026-08-28",\r
+      "status": "verified",\r
+      "summary": "The pinned lane registry declares Learn's npm package, Node MCP entry, version, source repository, and role.",\r
+      "systemId": "flywheel"\r
+    }\r
+  ],\r
+  "latestPublishedBriefing": {\r
+    "id": "2026-08-26-openai-hugging-face-incident",\r
+    "recordType": "canonical",\r
+    "version": 1,\r
+    "title": "Five evidence lanes, one OpenAI and Hugging Face incident",\r
+    "summary": "Separate legal process, OpenAI's company report, Hugging Face host telemetry, independent analysis, and vendor remediation before drawing conclusions from the July incident.",\r
+    "href": "/briefings/2026-08-26-openai-hugging-face-incident/",\r
+    "publishedAt": "2026-08-26",\r
+    "updatedAt": "2026-08-27",\r
+    "sourceCount": 12,\r
+    "claimCount": 45,\r
+    "figureIds": [\r
+      "recovered-actions-by-day",\r
+      "incident-multilane-timeline",\r
+      "source-scope-matrix",\r
+      "task-overrepresentation",\r
+      "motive-sample-nonexclusive",\r
+      "control-boundary-flow",\r
+      "claim-provenance-panel"\r
+    ],\r
+    "primaryFigureHref": "/figures/source-scope-matrix.html",\r
+    "limitations": [\r
+      "The Alabama materials describe an investigation, subpoena, and allegations. They do not establish a legal violation, liability, or consumer harm.",\r
+      "Actions, clusters, agents, messages, files, transcripts, tasks, repositories, systems, workers, and datasets remain separate units.",\r
+      "METR and Redwood performed an independent investigation with host-controlled data access, not an unrestricted forensic audit.",\r
+      "OpenAI retained non-public-information redaction authority, provided feedback, and supplied API credits to the independent review; METR reports taking no payment.",\r
+      "OpenAI's impact, chronology, and remediation statements remain company-reported, and its preliminary harness evaluations lack public sample sizes, intervals, and independent replication.",\r
+      "The 14 Hugging Face credentials, 41 Hugging Face workers, and 956 OpenAI cloud-hosted secrets are separate company-reported units and stages.",\r
+      "The July 5 entry is an OpenAI-attributed alert and response event, not an independently verified effectiveness finding.",\r
+      "The 100-agent motive tags are non-exclusive, AI-assisted, not carefully iterated by METR, and do not generalize to all agents.",\r
+      "Tool-call spoofing counts keep successful cases and evaluated transcripts as separate denominators.",\r
+      "Source interpretations do not establish one settled motivation or behavior shared by all agents, models, or deployments.",\r
+      "JFrog's statement and advisory index are vendor remediation records, not independent proof of incident scope or deployed patch coverage."\r
+    ],\r
+    "amends": null\r
+  }\r
+}\r
 `,D=new Set([`overview.html`,`catalog.html`,`research.html`,`publications.html`,`hire.html`]),O=[...oe,...se.flatMap(e=>e.routes)],he=O.filter(e=>ue(e.href)),ge=O.filter(e=>D.has(e.href)&&ue(e.href)),_e=JSON.parse(me),ve=_e.records.map(e=>fe.find(t=>t.id===e.id&&t.systemId===e.systemId)).filter(e=>!!e),ye=_e.latestPublishedBriefing;function be(e){let t=pe(e);if(!t)throw Error(`Missing system record: ${e}`);return t}var xe=E,Se=new Map(de.map(e=>[e.id,e])),Ce=pe(`flywheel`);if(!Ce)throw Error(`Missing system record: flywheel`);var we=Ce,Te=fe.filter(e=>e.status===`verified`),Ee=[`agent-systems`,`evaluation-verification`,`security-privacy`,`developer-infrastructure`,`graphics-media`,`research-education`],De=[`index`,`gather`,`buildlang`,`phantom`,`accountable-surface`],Oe=[`raw`,`skyrimbridge`,`truth-enb`,`elder-enb`,`enb-runtime-core`,`studio-engine`,`retro-engine`,`engine-revival`,`brender-archival`].filter(e=>xe.some(t=>t.id===e)),ke=[{label:`Technical support, developer operations, and QA`,href:`/hire.html#engineering-path`,summary:`Technical support engineering, developer operations, implementation, release support, and software QA.`},{label:`Evaluation tooling and Python developer tools`,href:`/hire.html#technical-operations-path`,summary:`Evaluation tooling, Python developer tools, test infrastructure, and research-engineering support.`},{label:`Public service, safety, and field operations`,href:`/hire.html#public-service-field-path`,summary:`Benefits-rich public routes where systems judgment and field reliability matter.`}];function Ae(e){return e.startsWith(`http`)||e.startsWith(`/`)?e:`/${e}`}function je(e){return e.evidence[0]?.href??e.sourceHref??Ae(e.href)}function Me(e){return e.productType}function Ne(e){return e.slice(0,10)}var Pe=De.map(be),Fe=xe.filter(e=>e.domains.includes(`security-privacy`)),Ie=Oe.map(be),Le=[{measure:String(xe.length),label:`system records`,source:`site/systems.json`,href:`/catalog.html`,note:`purpose, boundary, maturity, and evidence fields`},{measure:String(xe.filter(e=>e.placement===`featured`).length),label:`featured records`,source:`placement`,href:`/overview.html`,note:`systems promoted to the public front of the catalog`},{measure:String(Te.length),label:`verified evidence rows`,source:`evidence status`,href:`/catalog.html`,note:`release, source, paper, demo, or public-boundary records with dates`},{measure:we.evidence[0]?.date??`unknown`,label:`Flywheel release record`,source:`site/systems.json`,href:je(we),note:`release label, source link, date, and limitations`},{measure:ye?.publishedAt??`not published`,label:`current briefing`,source:`site/publications.json`,href:ye?.href??`/publications.html`,note:ye?.title??`No verified briefing is published yet.`}];function Re(){return(0,p.useEffect)(()=>{let e=Array.from(document.querySelectorAll(`.reveal`));if(!(`IntersectionObserver`in window)){e.forEach(e=>e.classList.add(`in`));return}let t=new IntersectionObserver(e=>e.forEach(e=>{e.isIntersecting&&(e.target.classList.add(`in`),t.unobserve(e.target))}),{threshold:.12,rootMargin:`0px 0px -8% 0px`});e.forEach(e=>t.observe(e));let n=window.setTimeout(()=>e.forEach(e=>e.classList.add(`in`)),3e3);return()=>{t.disconnect(),window.clearTimeout(n)}},[]),(0,g.jsxs)(g.Fragment,{children:[(0,g.jsx)(`a`,{className:`skip-link`,href:`#main`,children:`Skip to content`}),(0,g.jsx)(ze,{}),(0,g.jsxs)(`main`,{id:`main`,children:[(0,g.jsx)(Be,{}),(0,g.jsx)(Ue,{}),(0,g.jsx)(ie,{}),(0,g.jsx)(Ve,{}),(0,g.jsx)(Xe,{}),(0,g.jsx)(We,{}),(0,g.jsx)(Ge,{}),(0,g.jsx)(qe,{}),(0,g.jsx)(Je,{}),(0,g.jsx)(Ye,{})]}),(0,g.jsx)(Ze,{})]})}function ze(){return(0,g.jsxs)(`nav`,{className:`topnav`,"aria-label":`Primary`,children:[(0,g.jsxs)(`a`,{className:`brand`,href:`#identity`,"aria-label":`Zain Dana Harper and Zentropy Labs home`,children:[(0,g.jsx)(`span`,{className:`brand-name`,children:`Zain Dana Harper`}),(0,g.jsx)(`span`,{className:`brand-lab`,children:`Zentropy Labs`})]}),(0,g.jsxs)(`div`,{className:`topnav-links`,children:[oe.map(e=>(0,g.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),ce.map(e=>(0,g.jsx)(`a`,{href:e.href,rel:`noopener`,children:e.label},e.href))]}),(0,g.jsxs)(`details`,{className:`home-menu`,children:[(0,g.jsx)(`summary`,{children:`Menu`}),(0,g.jsxs)(`div`,{className:`home-menu-list`,"aria-label":`Primary menu`,children:[oe.map(e=>(0,g.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),he.map(e=>(0,g.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),ce.map(e=>(0,g.jsx)(`a`,{href:e.href,rel:`noopener`,children:e.label},e.href))]})]})]})}function Be(){return(0,g.jsxs)(`header`,{id:`identity`,className:`hero`,children:[(0,g.jsxs)(`div`,{className:`hero-copy reveal in`,children:[(0,g.jsx)(`h1`,{className:`hero-title`,children:`Zentropy Labs`}),(0,g.jsx)(`p`,{className:`hero-line`,children:`Product studio, systems engineering, graphics, security tooling, and public research.`}),(0,g.jsx)(`p`,{className:`hero-lab`,children:`Zain Dana Harper is the builder behind Zentropy Labs.`}),(0,g.jsxs)(`div`,{className:`hero-actions`,"aria-label":`Primary actions`,children:[(0,g.jsx)(`a`,{className:`btn solid`,href:`#products`,children:`Explore products`}),(0,g.jsx)(`a`,{className:`btn`,href:`/hire.html`,children:`Hire or collaborate`})]}),(0,g.jsxs)(`nav`,{className:`edition-links`,"aria-label":`Explore the workshop`,children:[(0,g.jsx)(`a`,{href:`/career/Flywheel-Platform-Brief.pdf`,children:`The Flywheel platform brief`}),(0,g.jsx)(`a`,{href:`/bulletin.html`,children:`Bulletin: read, post, connect`}),(0,g.jsx)(`a`,{href:`/publications.html`,children:`Essays and publications`})]})]}),(0,g.jsx)(`figure`,{className:`identity-art reveal in`,children:(0,g.jsxs)(`picture`,{children:[(0,g.jsx)(`source`,{type:`image/webp`,srcSet:`/brand/zentropy-logo-640.webp 640w, /brand/zentropy-logo-960.webp 960w, /brand/zentropy-logo-1280.webp 1280w, /brand/zentropy-logo-1600.webp 1600w`,sizes:`(max-width: 900px) 92vw, 42vw`}),(0,g.jsx)(`img`,{src:`/brand/zentropy-logo.png`,alt:`Zentropy Labs aperture mark with cyan light and oxblood shadow`,width:`1600`,height:`900`,fetchPriority:`high`})]})})]})}function Ve(){return(0,g.jsxs)(`section`,{id:`products`,className:`section representative-section`,"aria-labelledby":`products-title`,children:[(0,g.jsxs)(`div`,{className:`section-heading`,children:[(0,g.jsx)(`h2`,{id:`products-title`,children:`Products to start with`}),(0,g.jsx)(`p`,{className:`section-lead`,children:`Start with products that can be tried, inspected, or evaluated. Each entry says what the product does once, then gives its type, state, verification date, evidence, and full product page.`})]}),(0,g.jsx)(`div`,{className:`work-index`,children:Pe.map(e=>(0,g.jsxs)(`article`,{className:`work-row`,children:[(0,g.jsxs)(`div`,{children:[(0,g.jsx)(`h3`,{children:(0,g.jsx)(`a`,{href:Ae(e.href),children:e.name})}),(0,g.jsx)(`p`,{children:e.purpose}),(0,g.jsxs)(`p`,{className:`product-status`,children:[e.releaseState,` · `,e.maturity]})]}),(0,g.jsx)(He,{system:e})]},e.id))})]})}function He({system:e}){return(0,g.jsxs)(`details`,{className:`product-definition`,children:[(0,g.jsx)(`summary`,{children:`Evidence and status`}),(0,g.jsxs)(`dl`,{children:[(0,g.jsxs)(`div`,{children:[(0,g.jsx)(`dt`,{children:`Type`}),(0,g.jsx)(`dd`,{children:Me(e)})]}),(0,g.jsxs)(`div`,{children:[(0,g.jsx)(`dt`,{children:`State`}),(0,g.jsx)(`dd`,{children:e.releaseState})]}),(0,g.jsxs)(`div`,{children:[(0,g.jsx)(`dt`,{children:`Verified`}),(0,g.jsx)(`dd`,{children:(0,g.jsx)(`time`,{dateTime:e.lastVerified,children:e.lastVerified})})]}),(0,g.jsxs)(`div`,{children:[(0,g.jsx)(`dt`,{children:`Evidence`}),(0,g.jsx)(`dd`,{children:(0,g.jsx)(`a`,{href:je(e),children:e.evidence[0]?.label??e.maturity})})]})]})]})}function Ue(){let e=we.evidence[0];return(0,g.jsxs)(`section`,{id:`flywheel`,className:`section split-section`,"aria-labelledby":`flywheel-title`,children:[(0,g.jsxs)(`div`,{children:[(0,g.jsx)(`h2`,{id:`flywheel-title`,children:`Featured platform: Flywheel`}),(0,g.jsx)(`p`,{className:`section-lead`,children:we.purpose}),(0,g.jsxs)(`div`,{className:`action-row`,children:[(0,g.jsx)(`a`,{className:`text-link`,href:Ae(we.href),children:`Inspect Flywheel`}),(0,g.jsx)(`a`,{className:`text-link`,href:`/career/Flywheel-Platform-Brief.pdf`,children:`Read the platform brief`}),we.sourceHref?(0,g.jsx)(`a`,{className:`text-link`,href:we.sourceHref,rel:`noopener`,children:`Source`}):null]})]}),(0,g.jsxs)(`div`,{className:`data-plate platform-record`,children:[(0,g.jsxs)(`table`,{className:`command-table`,children:[(0,g.jsx)(`caption`,{children:`Current Flywheel route`}),(0,g.jsxs)(`tbody`,{children:[(0,g.jsxs)(`tr`,{children:[(0,g.jsx)(`th`,{scope:`row`,children:`Type`}),(0,g.jsx)(`td`,{children:Me(we)})]}),(0,g.jsxs)(`tr`,{children:[(0,g.jsx)(`th`,{scope:`row`,children:`State`}),(0,g.jsx)(`td`,{children:we.releaseState})]}),(0,g.jsxs)(`tr`,{children:[(0,g.jsx)(`th`,{scope:`row`,children:`Release`}),(0,g.jsx)(`td`,{children:e?(0,g.jsx)(`a`,{href:e.href,children:e.label}):`No release record`})]}),(0,g.jsxs)(`tr`,{children:[(0,g.jsx)(`th`,{scope:`row`,children:`Verified`}),(0,g.jsx)(`td`,{children:e?.date??`unknown`})]}),(0,g.jsxs)(`tr`,{children:[(0,g.jsx)(`th`,{scope:`row`,children:`Install`}),(0,g.jsx)(`td`,{children:(0,g.jsx)(`code`,{children:we.entryCommand})})]}),(0,g.jsxs)(`tr`,{children:[(0,g.jsx)(`th`,{scope:`row`,children:`Check`}),(0,g.jsx)(`td`,{children:(0,g.jsx)(`code`,{children:we.verificationCommand})})]})]})]}),(0,g.jsx)(`p`,{className:`boundary-note`,children:we.limitations[0]})]})]})}function We(){return(0,g.jsxs)(`section`,{id:`evidence`,className:`section`,"aria-labelledby":`evidence-title`,children:[(0,g.jsxs)(`div`,{className:`section-heading`,children:[(0,g.jsx)(`h2`,{id:`evidence-title`,children:`Evidence board`}),(0,g.jsx)(`p`,{className:`section-lead`,children:`A compact index of the public record. Values come from checked-in source data and link back to the record that produced them.`})]}),(0,g.jsxs)(`p`,{className:`does-not-prove`,children:[(0,g.jsx)(`strong`,{children:`What this does not prove:`}),` A valid release row is not an adoption claim, safety claim, or guarantee of model correctness. Counts and releases stay evidence rows, not market proof.`]}),(0,g.jsxs)(`details`,{className:`evidence-disclosure`,children:[(0,g.jsx)(`summary`,{children:`Open source metrics and newest evidence`}),(0,g.jsxs)(`div`,{className:`data-plate evidence-board`,children:[(0,g.jsxs)(`table`,{className:`evidence-table`,children:[(0,g.jsx)(`caption`,{children:`Public evidence, current source snapshot`}),(0,g.jsx)(`thead`,{children:(0,g.jsxs)(`tr`,{children:[(0,g.jsx)(`th`,{scope:`col`,children:`Measure`}),(0,g.jsx)(`th`,{scope:`col`,children:`Record`}),(0,g.jsx)(`th`,{scope:`col`,children:`Source`}),(0,g.jsx)(`th`,{scope:`col`,children:`Boundary`})]})}),(0,g.jsx)(`tbody`,{children:Le.map(e=>(0,g.jsxs)(`tr`,{"data-evidence-row":!0,children:[(0,g.jsx)(`th`,{scope:`row`,children:(0,g.jsx)(`a`,{href:e.href,children:e.measure})}),(0,g.jsx)(`td`,{children:e.label}),(0,g.jsx)(`td`,{children:e.source}),(0,g.jsx)(`td`,{children:e.note})]},e.label))})]}),(0,g.jsxs)(`section`,{className:`evidence-current`,"aria-labelledby":`current-evidence-title`,children:[(0,g.jsx)(`h3`,{id:`current-evidence-title`,children:`Newest registry evidence`}),(0,g.jsx)(`ol`,{children:ve.map(e=>(0,g.jsxs)(`li`,{children:[(0,g.jsx)(`time`,{dateTime:e.date,children:e.date}),(0,g.jsx)(`a`,{href:e.href,rel:`noopener`,children:e.label}),(0,g.jsx)(`span`,{children:e.summary})]},`${e.systemId}:${e.id}`))})]})]})]})]})}function Ge(){return(0,g.jsxs)(`section`,{id:`evidence-figures`,className:`section evidence-figures-section`,"aria-labelledby":`figures-title`,children:[(0,g.jsxs)(`div`,{className:`section-heading`,children:[(0,g.jsx)(`h2`,{id:`figures-title`,children:`Measured evidence`}),(0,g.jsx)(`p`,{className:`section-lead`,children:`Source-attributed figures publish units, denominators, dates, provenance, and limits. Capability families remain navigation labels, not diagrams or product hierarchies.`})]}),(0,g.jsxs)(`div`,{className:`evidence-figure-grid`,children:[(0,g.jsxs)(`article`,{className:`evidence-figure-card`,"data-evidence-figure-card":!0,children:[(0,g.jsx)(`h3`,{children:`164-task model pass@1 comparison`}),(0,g.jsx)(`a`,{href:`/analytics/model-pass-at-1-comparison.html`,"aria-label":`Open model pass@1 comparison chart and data table`,children:(0,g.jsx)(`img`,{className:`research-figure-image`,src:`/analytics/model-pass-at-1-comparison.svg`,alt:`Paired 164-task pass-at-one result: base Qwen 14B passed 141 tasks and Flywheel 14B passed 136; the difference was not statistically significant.`,width:`1120`,height:`334`,loading:`lazy`})}),(0,g.jsx)(`p`,{children:`Same task set and harness. This measures two model artifacts, not market superiority or general agent reliability.`}),(0,g.jsx)(`p`,{children:(0,g.jsx)(`a`,{className:`text-link`,href:`/analytics/model-pass-at-1-comparison.html`,"aria-label":`Open model pass@1 comparison chart and data table`,children:`Open chart and data table`})}),(0,g.jsxs)(`details`,{className:`figure-detail`,children:[(0,g.jsx)(`summary`,{children:`Dataset facts`}),(0,g.jsx)(Ke,{rows:[[`n`,`164 code-completion tasks`],[`units`,`pass@1 and passed tasks`],[`retrieved`,`2026-08-28`],[`source`,(0,g.jsx)(`a`,{href:`/analytics/model-pass-at-1-comparison.html`,children:`result, table, and limits`})]]})]})]}),(0,g.jsxs)(`article`,{className:`evidence-figure-card`,"data-evidence-figure-card":!0,children:[(0,g.jsx)(`h3`,{children:`Current cross-harness run`}),(0,g.jsx)(`a`,{href:`/analytics/current-cross-harness-pilot.html`,"aria-label":`Open current cross-harness run chart and data table`,children:(0,g.jsx)(`img`,{className:`research-figure-image`,src:`/analytics/current-cross-harness-pilot.svg`,alt:`Horizontal bars for five harness roles on the same seven tasks: of seven attempts each, codex_harness and flywheel_harness reached a grader four times, claude_code twice, local_32b once, and local_14b none; three, two, one, zero, and zero passed.`,width:`1120`,height:`610`,loading:`lazy`})}),(0,g.jsx)(`p`,{children:`35 attempts across five harness roles on seven tasks, all 35 receipts verified. 11 reached a grader and 6 passed; why the rest did not is named per role.`}),(0,g.jsx)(`p`,{children:(0,g.jsx)(`a`,{className:`text-link`,href:`/analytics/current-cross-harness-pilot.html`,"aria-label":`Open current cross-harness run chart and data table`,children:`Open chart and data table`})}),(0,g.jsxs)(`details`,{className:`figure-detail`,children:[(0,g.jsx)(`summary`,{children:`Dataset facts`}),(0,g.jsx)(Ke,{rows:[[`n`,`35 receipt-verified attempts`],[`units`,`attempts, passes, latency, and USD cost`],[`retrieved`,`2026-09-04`],[`source`,(0,g.jsx)(`a`,{href:`/analytics/current-cross-harness-pilot.html`,children:`result, table, and limits`})]]})]})]}),(0,g.jsxs)(`article`,{className:`evidence-figure-card`,"data-evidence-figure-card":!0,children:[(0,g.jsx)(`h3`,{children:`Recovered actions by day`}),(0,g.jsx)(`a`,{href:`/figures/recovered-actions-by-day.html`,"aria-label":`Open recovered actions by day chart and data table`,children:(0,g.jsx)(`img`,{className:`research-figure-image`,src:`/figures/recovered-actions-by-day.svg`,alt:`Bar chart of five recovered-action counts from July 9 through July 13, 2026: 3,779; 1,135; 7,677; 3,892; and 1,130.`,width:`1280`,height:`720`,loading:`lazy`})}),(0,g.jsx)(`p`,{children:`Five daily counts from Hugging Face host telemetry. Unit: recovered logged actions. The figure does not measure unique attacks, severity, intent, or harm.`}),(0,g.jsx)(`p`,{children:(0,g.jsx)(`a`,{className:`text-link`,href:`/figures/recovered-actions-by-day.html`,"aria-label":`Open recovered actions by day chart and data table`,children:`Open chart and data table`})}),(0,g.jsxs)(`details`,{className:`figure-detail`,children:[(0,g.jsx)(`summary`,{children:`Dataset facts`}),(0,g.jsx)(Ke,{rows:[[`n`,`5 daily observations`],[`units`,`recovered logged actions`],[`retrieved`,`2026-08-27`],[`source`,(0,g.jsxs)(g.Fragment,{children:[(0,g.jsx)(`a`,{href:`/figures/recovered-actions-by-day.html`,children:`figure and accessible table`}),` · `,(0,g.jsx)(`a`,{href:`/figures/recovered-actions-by-day.json`,children:`dataset`})]})]]})]})]}),(0,g.jsxs)(`article`,{className:`evidence-figure-card`,"data-evidence-figure-card":!0,children:[(0,g.jsx)(`h3`,{children:`Reported motive labels`}),(0,g.jsx)(`a`,{href:`/figures/motive-sample-nonexclusive.html`,"aria-label":`Open reported motive labels chart and data table`,children:(0,g.jsx)(`img`,{className:`research-figure-image`,src:`/figures/motive-sample-nonexclusive.svg`,alt:`Bar chart of non-exclusive motive labels in a 100-agent sample: scorer source or access 97, shared infrastructure or credentials 66, and task solution or private trajectories 89.`,width:`1280`,height:`720`,loading:`lazy`})}),(0,g.jsx)(`p`,{children:`Non-exclusive labels from the independent investigator sample. Categories overlap, so counts must not be summed into a population total.`}),(0,g.jsx)(`p`,{children:(0,g.jsx)(`a`,{className:`text-link`,href:`/figures/motive-sample-nonexclusive.html`,"aria-label":`Open reported motive labels chart and data table`,children:`Open chart and data table`})}),(0,g.jsxs)(`details`,{className:`figure-detail`,children:[(0,g.jsx)(`summary`,{children:`Dataset facts`}),(0,g.jsx)(Ke,{rows:[[`n`,`100-agent peak-hour sample`],[`units`,`agents, non-exclusive`],[`retrieved`,`2026-08-27`],[`source`,(0,g.jsxs)(g.Fragment,{children:[(0,g.jsx)(`a`,{href:`/figures/motive-sample-nonexclusive.html`,children:`figure and accessible table`}),` · `,(0,g.jsx)(`a`,{href:`/figures/motive-sample-nonexclusive.json`,children:`dataset`})]})]]})]})]})]}),(0,g.jsxs)(`div`,{className:`family-browser`,children:[(0,g.jsx)(`h3`,{children:`Browse the work by primary subject`}),(0,g.jsx)(`p`,{children:`These are navigation labels only. Every catalog record retains its own purpose, product type, maturity, source, and limitations.`}),(0,g.jsx)(`div`,{className:`family-index`,children:Ee.map(e=>{let t=Se.get(e),n=xe.filter(t=>t.domains.includes(e));return(0,g.jsxs)(`article`,{className:`family-row`,"data-family-row":!0,children:[(0,g.jsx)(`h3`,{children:t?.label??e}),(0,g.jsx)(`p`,{children:t?.summary}),(0,g.jsxs)(`a`,{href:`/catalog.html#domain-${e}`,children:[n.length,` related records`]})]},e)})})]})]})}function Ke({rows:e}){return(0,g.jsx)(`dl`,{className:`figure-facts`,children:e.map(([e,t])=>(0,g.jsxs)(`div`,{children:[(0,g.jsx)(`dt`,{children:e}),(0,g.jsx)(`dd`,{children:t})]},e))})}function qe(){return(0,g.jsxs)(`section`,{id:`research`,className:`section split-section`,"aria-labelledby":`research-title`,children:[(0,g.jsxs)(`div`,{children:[(0,g.jsx)(`h2`,{id:`research-title`,children:`Current research`}),(0,g.jsx)(`p`,{className:`section-lead`,children:`The publication surface carries current briefings, figures, source records, limitations, and related reproducible artifacts for public review.`}),(0,g.jsxs)(`div`,{className:`action-row`,children:[(0,g.jsx)(`a`,{className:`text-link`,href:`/publications.html`,children:`Publication index`}),(0,g.jsx)(`a`,{className:`text-link`,href:`/figures/recovered-actions-by-day.html`,children:`Measured figures`})]})]}),ye?(0,g.jsxs)(`article`,{className:`data-plate briefing-card`,children:[(0,g.jsx)(`h3`,{children:(0,g.jsx)(`a`,{href:ye.href,"data-current-briefing-title":!0,children:ye.title})}),(0,g.jsxs)(`p`,{children:[ye.sourceCount,` public sources. Limitations remain attached to the record.`]}),(0,g.jsxs)(`dl`,{className:`briefing-meta`,children:[(0,g.jsxs)(`div`,{children:[(0,g.jsx)(`dt`,{children:`Published`}),(0,g.jsx)(`dd`,{children:Ne(ye.publishedAt)})]}),(0,g.jsxs)(`div`,{children:[(0,g.jsx)(`dt`,{children:`Primary figure`}),(0,g.jsx)(`dd`,{children:(0,g.jsx)(`a`,{href:ye.primaryFigureHref,children:`Open figure`})})]})]})]}):null]})}function Je(){return(0,g.jsxs)(`section`,{id:`retro-systems-lab`,className:`section retro-section`,"aria-labelledby":`retro-title`,children:[(0,g.jsxs)(`div`,{className:`section-heading`,children:[(0,g.jsx)(`h2`,{id:`retro-title`,children:`Graphics, engines, and preservation`}),(0,g.jsx)(`p`,{className:`section-lead`,children:`Rendering platforms, Skyrim runtime integration, shader suites, browser graphics, procedural media, and software preservation are shown as separate products. Source state, releases, tests, and limitations remain attached to each project.`})]}),(0,g.jsx)(`div`,{className:`retro-flow`,children:Ie.map(e=>(0,g.jsxs)(`article`,{className:`retro-step`,children:[(0,g.jsx)(`span`,{className:`retro-verb`,children:e.accessMode}),(0,g.jsx)(`h3`,{children:(0,g.jsx)(`a`,{href:Ae(e.href),children:e.name})}),(0,g.jsx)(`p`,{children:e.purpose}),(0,g.jsxs)(`dl`,{className:`product-meta`,children:[(0,g.jsxs)(`div`,{children:[(0,g.jsx)(`dt`,{children:`Type`}),(0,g.jsx)(`dd`,{children:Me(e)})]}),(0,g.jsxs)(`div`,{children:[(0,g.jsx)(`dt`,{children:`State`}),(0,g.jsx)(`dd`,{children:e.releaseState})]}),(0,g.jsxs)(`div`,{children:[(0,g.jsx)(`dt`,{children:`Evidence`}),(0,g.jsx)(`dd`,{children:(0,g.jsx)(`a`,{href:je(e),children:e.evidence[0]?.label??e.maturity})})]})]})]},e.id))}),(0,g.jsx)(`p`,{className:`boundary-note`,children:`Shared subject matter does not imply one parent product, a runtime dependency, or inherited evidence.`})]})}function Ye(){return(0,g.jsxs)(`section`,{id:`security-boundary`,className:`section security-section`,"aria-labelledby":`security-title`,children:[(0,g.jsxs)(`div`,{className:`section-heading`,children:[(0,g.jsx)(`h2`,{id:`security-title`,children:`Security platforms`}),(0,g.jsx)(`p`,{className:`section-lead`,children:`Every registered security platform has a public-safe route. Shipped and inspectable tools link to their evidence; controlled-private systems expose purpose and boundary, then direct qualified work to a reviewed intake.`})]}),(0,g.jsxs)(`div`,{className:`security-layout`,children:[(0,g.jsxs)(`article`,{className:`data-plate boundary-card`,children:[(0,g.jsx)(`h3`,{children:`Public route, private authority`}),(0,g.jsx)(`p`,{children:`No private repository, operational method, target detail, client fact, or engagement result is published. Written authorization, defined scope, secure intake, and review are required before private capability is discussed or used.`}),(0,g.jsx)(`a`,{className:`text-link`,href:`/private-practice.html`,children:`Private recipient lane`})]}),(0,g.jsx)(`ol`,{className:`security-list`,children:Fe.map(e=>(0,g.jsxs)(`li`,{children:[(0,g.jsx)(`a`,{href:Ae(e.href),children:e.name}),(0,g.jsxs)(`span`,{children:[e.accessMode,` / `,e.maturity]})]},e.id))})]})]})}function Xe(){return(0,g.jsxs)(`section`,{id:`hiring-collaboration`,className:`section hiring-section`,"aria-labelledby":`hiring-title`,children:[(0,g.jsxs)(`div`,{children:[(0,g.jsx)(`h2`,{id:`hiring-title`,children:`Hiring, contracting, and collaboration`}),(0,g.jsx)(`p`,{className:`section-lead`,children:`Run, inspect, or verify the work through three practical routes: technical support and QA, evaluation tooling and Python developer tools, and public-service or field work. The documents are direct, and the project evidence stays one click away.`})]}),(0,g.jsxs)(`div`,{className:`hiring-actions`,children:[(0,g.jsx)(`a`,{className:`btn solid`,href:`/hire.html`,children:`Hiring map`}),(0,g.jsx)(`a`,{className:`btn`,href:`/resume.html`,children:`Technical resume`}),(0,g.jsx)(`a`,{className:`btn`,href:`mailto:zaindharper@gmail.com`,children:`Email`}),(0,g.jsx)(`a`,{className:`btn`,href:`https://github.com/HarperZ9`,rel:`noopener`,children:`GitHub`})]}),(0,g.jsxs)(`details`,{className:`hiring-details`,children:[(0,g.jsx)(`summary`,{children:`Role-specific routes`}),(0,g.jsxs)(`div`,{className:`hiring-route-list`,children:[ke.map(e=>(0,g.jsxs)(`a`,{className:`text-link`,href:e.href,children:[(0,g.jsx)(`span`,{children:e.label}),(0,g.jsx)(`small`,{children:e.summary})]},e.href)),(0,g.jsx)(`a`,{className:`text-link`,href:`/cv.html`,children:`CV`}),(0,g.jsx)(`a`,{className:`text-link`,href:`/portfolio.html`,children:`Portfolio`})]})]})]})}function Ze(){return(0,g.jsxs)(`footer`,{className:`site-footer`,children:[(0,g.jsx)(`p`,{children:`Zain Dana Harper and Zentropy Labs. Public systems, research briefings, retro rendering, security tooling, and hiring routes.`}),(0,g.jsxs)(`nav`,{className:`footer-links`,"aria-label":`Footer`,children:[ge.map(e=>(0,g.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),(0,g.jsx)(`a`,{href:`https://github.com/HarperZ9`,rel:`noopener`,children:`GitHub`})]}),(0,g.jsxs)(`details`,{className:`footer-more`,children:[(0,g.jsx)(`summary`,{children:`More routes`}),(0,g.jsxs)(`nav`,{className:`footer-secondary-links`,"aria-label":`More footer routes`,children:[he.map(e=>(0,g.jsx)(`a`,{href:`/${e.href}`,children:e.label},e.href)),(0,g.jsx)(`a`,{href:`/cv.html`,children:`CV`}),(0,g.jsx)(`a`,{href:`/portfolio.html`,children:`Portfolio`})]})]})]})}(0,m.createRoot)(document.getElementById(`root`)).render((0,g.jsx)(p.StrictMode,{children:(0,g.jsx)(Re,{})}));

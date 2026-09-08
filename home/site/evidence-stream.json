@@ -3,6 +3,36 @@
   "derivedFrom": "harperz9-systems/v4",
   "records": [
     {
+      "id": "forum-route-preflight-skill-v0-1-0",
+      "type": "release",
+      "label": "Forum route-preflight skill 0.1.0",
+      "href": "https://github.com/HarperZ9/forum/releases/tag/forum-route-preflight-v0.1.0",
+      "date": "2026-09-08",
+      "status": "verified",
+      "summary": "Standalone host skill release for checking Forum routing, context pressure, and runtime readiness before model work; forum-route-preflight-skill-20260907-final.zip download-back matched SHA-256 1827a9673414e73722ba7bd74be15316534bb6c66fc55ecc26845a5e5c953450 and safe_to_submit remains false.",
+      "systemId": "forum"
+    },
+    {
+      "id": "index-release-v2-12-0",
+      "type": "release",
+      "label": "Index 2.12.0 GitHub release",
+      "href": "https://github.com/HarperZ9/index/releases/tag/v2.12.0",
+      "date": "2026-09-07",
+      "status": "verified",
+      "summary": "Index 2.12.0 publishes durable router jobs for large-workspace mapping and verified GitHub release assets.",
+      "systemId": "index"
+    },
+    {
+      "id": "index-pypi-v2-12-0",
+      "type": "release",
+      "label": "index-graph 2.12.0 on PyPI",
+      "href": "https://pypi.org/project/index-graph/2.12.0/",
+      "date": "2026-09-07",
+      "status": "verified",
+      "summary": "PyPI serves index-graph 2.12.0; the PyPI wheel payload matches GitHub after extraction while ZIP create_system metadata differs.",
+      "systemId": "index"
+    },
+    {
       "id": "flywheel-gather-lane-code",
       "type": "code-permalink",
       "label": "Flywheel Gather lane declaration",

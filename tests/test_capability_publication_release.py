@@ -29,7 +29,7 @@ RELEASE_PATHS = (
     "system/report-editorial.css",
     "system/system.css",
     "warden.html",
-    "assets/index-BU4-yae8.js",
+    "assets/index-4XRtEPd6.js",
     "system/theme.js",
     "system/theme-entry.js",
     "system/theme.css",
@@ -169,6 +169,7 @@ RELEASE_PATHS = (
     "img/og/cards-data.js",
     "img/og/_card.html",
     "index.html",
+    "index-graph.html",
     "join.html",
     "media/retro-systems-lab/evidence-manifest.json",
     "media/retro-systems-lab/identity/brender-verify.svg",
@@ -229,7 +230,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "9e67ec11530ec8a02e2fdd44b3a34396e98ad4f6e288272762ff2aa81de96a1d"
+REVIEWED_RELEASE_SHA256 = "e4725e47c88feb8ac89befc608d0394dd467366df77ade425b16c0a9ce5ad519"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -337,7 +338,11 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_join_js = "index-BoU_gOMc.js"
     previous_board_js = "index-B-g9u1T0.js"
     previous_board_css = "index-B5xhdbWj.css"
-    current_js = "index-BU4-yae8.js"
+    previous_index_discovery_js = "index-BU4-yae8.js"
+    previous_forum_skill_js = "index-DiKzNTOp.js"
+    previous_forum_skill_draft_js = "index-BU9Il18X.js"
+    previous_forum_skill_copy_js = "index-B5ckJTHM.js"
+    current_js = "index-4XRtEPd6.js"
     current_css = "index-B2kgPYlE.css"
     previous_flywheel_js = "index-BIYnDBdw.js"
     previous_flywheel_css = "index-DGQrcJ5p.css"
@@ -352,6 +357,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     assert previous_board_css not in source
     assert not (ROOT / "assets" / previous_board_js).exists()
     assert not (ROOT / "assets" / previous_board_css).exists()
+    assert previous_index_discovery_js not in source
+    assert not (ROOT / "assets" / previous_index_discovery_js).exists()
+    assert previous_forum_skill_js not in source
+    assert not (ROOT / "assets" / previous_forum_skill_js).exists()
+    assert previous_forum_skill_draft_js not in source
+    assert not (ROOT / "assets" / previous_forum_skill_draft_js).exists()
+    assert previous_forum_skill_copy_js not in source
+    assert not (ROOT / "assets" / previous_forum_skill_copy_js).exists()
     assert previous_flywheel_js not in source
     assert previous_flywheel_css not in source
     assert not (ROOT / "assets" / previous_flywheel_js).exists()

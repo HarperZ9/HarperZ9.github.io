@@ -519,11 +519,12 @@
     {
       "id": "index",
       "name": "Index",
-      "purpose": "Index maps repositories and multi-repo workspaces so you can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and resumable workspace inventories with file-and-line evidence. Version 2.11.0 marks unverifiable Git metadata as unknown instead of counting it as complete.",
+      "purpose": "Index maps repositories and multi-repo workspaces so teams and agents can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and durable workspace inventories with file-and-line evidence. Version 2.12.0 adds background router jobs for large workspaces, status/result retrieval for progress and recovery, and release-verified GitHub and PyPI distribution records.",
       "useCases": [
         "multi-repository mapping",
         "dependency analysis",
-        "offline architecture documentation"
+        "offline architecture documentation",
+        "large-workspace router jobs with progress and result recovery"
       ],
       "href": "index-graph.html",
       "sourceHref": "https://github.com/HarperZ9/index",
@@ -544,9 +545,36 @@
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "python -m pip install index-graph==2.11.0; index map --root <workspace> --resume-state index-map.jsonl --json",
-      "verificationCommand": "index --version; index wiki --verify wiki.html --root <repo-path>",
+      "entryCommand": "Install with python -m pip install index-graph==2.12.0. For large workspaces, start a durable run with index router-job start --root . --json; read the returned job_id, then inspect progress with index router-job status and retrieve output with index router-job result. MCP clients use index.router.job.start, index.router.job.status, and index.router.job.result.",
+      "verificationCommand": "Verify the GitHub and PyPI 2.12.0 release digests separately; run index --version, index status --json, index doctor --json, and confirm MCP tools/list includes index.router.job.start, index.router.job.status, and index.router.job.result.",
       "evidence": [
+        {
+          "id": "index-release-v2-12-0",
+          "type": "release",
+          "label": "Index 2.12.0 GitHub release",
+          "href": "https://github.com/HarperZ9/index/releases/tag/v2.12.0",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "The v2.12.0 GitHub release resolves to merge commit d895196f8ecca84a043f19fec7b49d94b1dd3bdb, whose tree matches accepted source commit ba73aec23b7689de1e73c18f09e4db4972510b8a. GitHub download-back verification matched wheel SHA-256 dabd4c253804d1791755941fe695c85a1c32087d15b744ef370a092dbf8fe9b6, source distribution SHA-256 9451351820f6e779de3a3e567f0a9c4cf59edcee1de7bda9997d3ac6dda46445, and SHA256SUMS SHA-256 593c0f5530bc9ef51167c6265c9d6e11188506a6093521f45de498072f316b7c."
+        },
+        {
+          "id": "index-pypi-v2-12-0",
+          "type": "release",
+          "label": "index-graph 2.12.0 on PyPI",
+          "href": "https://pypi.org/project/index-graph/2.12.0/",
+          "date": "2026-09-07",
+          "status": "verified",
+          "summary": "PyPI serves index-graph 2.12.0 for Python 3.11 or newer. The wheel is 229,391 bytes with SHA-256 1825b12a1a9413fadba7d0f786852ac0ef17515389ab19e267732e2aecbca683, and the source archive is 1,047,912 bytes with SHA-256 9451351820f6e779de3a3e567f0a9c4cf59edcee1de7bda9997d3ac6dda46445. The PyPI wheel hash differs from the GitHub wheel hash because ZIP create_system metadata differs; extracted file sets and file bytes match, and a fresh installed-wheel runtime check passed."
+        },
+        {
+          "id": "index-router-job-v2-12-0",
+          "type": "test",
+          "label": "Index 2.12.0 router job validation",
+          "href": "https://github.com/HarperZ9/index/releases/tag/v2.12.0",
+          "date": "2026-09-07",
+          "status": "reported",
+          "summary": "Release validation reported 22 MCP tools, including index.router.job.start, index.router.job.status, and index.router.job.result. The final live-corpus job completed 703 of 703 repositories; the scoped runs were 430 s cold and 493 s warm. Those are coverage and runtime observations on one live corpus, not a controlled speedup or maturity claim."
+        },
         {
           "id": "index-release-v2-11-0",
           "type": "release",
@@ -554,7 +582,7 @@
           "href": "https://github.com/HarperZ9/index/releases/tag/v2.11.0",
           "date": "2026-09-07",
           "status": "verified",
-          "summary": "The v2.11.0 GitHub release is published for tag v2.11.0, which peels to merge commit 79f5f65dd516c27618fe80bf45080a9bd1cf8526. Release assets include the PyPI wheel SHA-256 70c41ff3920a79755465cd0d920acd73d665052f065fa06fc3a61e6bf776ad86, source distribution SHA-256 231c9f630c140dcfce5a8ef314f8258faed6399aec5f3e2658f158c64176cef2, and SHA256SUMS SHA-256 4d0ef341374d7f50ee03298201eef02821172b3e930ecd5ebc6b6ff289b37ce7."
+          "summary": "The v2.11.0 GitHub release is retained as historical evidence for resumable workspace inventory and explicit unknown Git metadata."
         },
         {
           "id": "index-pypi-v2-11-0",
@@ -563,7 +591,7 @@
           "href": "https://pypi.org/project/index-graph/2.11.0/",
           "date": "2026-09-07",
           "status": "verified",
-          "summary": "PyPI serves index-graph 2.11.0 for Python 3.11 or newer. The wheel is 212,900 bytes and the source archive is 1,152,841 bytes; their SHA-256 digests match the GitHub release assets."
+          "summary": "PyPI 2.11.0 is retained as historical package evidence."
         },
         {
           "id": "index-release-v2-10-0",
@@ -572,14 +600,15 @@
           "href": "https://pypi.org/project/index-graph/2.10.0/",
           "date": "2026-08-28",
           "status": "verified",
-          "summary": "The package index and source metadata both report index-graph 2.10.0; Flywheel's lane registry now pins 2.10.0."
+          "summary": "The package index and source metadata both report index-graph 2.10.0; Flywheel's historical lane registry pins 2.10.0."
         }
       ],
       "limitations": [
         "Dynamic imports and unsupported structures can remain incomplete or unverifiable.",
         "Structural evidence does not guarantee the accuracy of explanatory prose.",
         "Rows with unknown Git metadata mean Index found the repository but did not verify branch, head, dirty, or untracked state for that row.",
-        "Budgeted router, graph, context, and context-envelope calls can return UNVERIFIABLE for large workspaces; use a full-budget or resumable map run when complete inventory matters."
+        "Background router jobs avoid interactive request timeouts and expose progress/result recovery, but they do not by themselves prove a faster complete scan.",
+        "The 703 of 703 live-corpus result is a scoped coverage observation; the 430 s cold and 493 s warm runtimes are not a controlled speedup experiment."
       ],
       "boundary": "Inspect only repositories and workspaces you are authorized to read.",
       "inputs": [
@@ -591,7 +620,8 @@
         "offline wikis and atlases",
         "dependency and symbol graphs",
         "context envelopes",
-        "freshness and drift findings"
+        "freshness and drift findings",
+        "durable router job status and result payloads"
       ],
       "dependencies": [],
       "related": [
@@ -603,7 +633,7 @@
       "lastVerified": "2026-09-07",
       "primaryDomain": "developer-infrastructure",
       "productType": "workspace map and context system",
-      "releaseState": "beta 2.11.0 on PyPI and GitHub"
+      "releaseState": "GitHub and PyPI release 2.12.0 verified; PyPI wheel container hash differs while payload bytes match"
     },
     {
       "id": "gather",
@@ -678,11 +708,12 @@
     {
       "id": "forum",
       "name": "Forum",
-      "purpose": "Forum is a zero-dependency Python orchestration engine for teams of AI agents. It turns a request into dependent tasks, runs independent tasks in parallel through local commands or model APIs, pauses for human approval, resumes interrupted runs, and records a replayable ledger.",
+      "purpose": "Forum is a zero-dependency Python orchestration engine for teams of AI agents. It turns a request into dependent tasks, runs independent tasks in parallel through local commands or model APIs, pauses for human approval, resumes interrupted runs, and records a replayable ledger. The standalone route-preflight skill helps a host inspect routing, context pressure, and runtime readiness before model work starts.",
       "useCases": [
         "multi-agent orchestration",
         "dependency-aware planning",
-        "reviewable handoffs"
+        "reviewable handoffs",
+        "route-preflight checks before model execution"
       ],
       "href": "forum.html",
       "sourceHref": "https://github.com/HarperZ9/forum",
@@ -706,9 +737,18 @@
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "pip install forum-engine; forum route \"build the requested system\"",
-      "verificationCommand": "forum ledger verify",
+      "entryCommand": "python -m pip install forum-engine==1.13.0; curl -L -O https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip; install the extracted forum-route-preflight folder with your host skill loader",
+      "verificationCommand": "With the Forum CLI or source checkout available, run the installed forum-route-preflight helper before any model command; confirm route, context, and runtime observations are reported and safe_to_submit is false.",
       "evidence": [
+        {
+          "id": "forum-route-preflight-skill-v0-1-0",
+          "type": "release",
+          "label": "Forum route-preflight skill 0.1.0",
+          "href": "https://github.com/HarperZ9/forum/releases/tag/forum-route-preflight-v0.1.0",
+          "date": "2026-09-08",
+          "status": "verified",
+          "summary": "The live GitHub release publishes forum-route-preflight-skill-20260907-final.zip as a 9,573-byte standalone host skill with SHA-256 1827a9673414e73722ba7bd74be15316534bb6c66fc55ecc26845a5e5c953450; SHA256SUMS.txt has SHA-256 afa5b4a94a3904e4afb1f441206d98a665757e0fa770049e4925020a94b0b390. Download-back verification matched the ZIP digest. The skill inspects routing, context pressure, and runtime readiness before model work; it does not execute the supplied command and keeps safe_to_submit=false."
+        },
         {
           "id": "forum-release-v1-13-0",
           "type": "release",
@@ -721,32 +761,44 @@
       ],
       "limitations": [
         "A valid ledger proves recorded integrity and replayability, not that model output is substantively correct.",
-        "Executors and human approval policy remain operator-supplied."
+        "Executors and human approval policy remain operator-supplied.",
+        "The route-preflight skill is a standalone host skill, not a marketplace approval and not a Forum engine version bump.",
+        "The skill checks route, context, and runtime readiness without executing the supplied model or shell command; safe_to_submit remains false so a human or host policy still decides whether to proceed."
       ],
       "boundary": "Agent permissions must remain no broader than the operator's authority and the active task scope.",
       "inputs": [
         "task graphs and delivery contracts",
         "agent and executor profiles",
         "budgets and approval policy",
-        "checkpoint state"
+        "checkpoint state",
+        "task text, Forum repository path, optional command string, and runtime environment names"
       ],
       "outputs": [
         "dependency-ordered agent runs",
         "handoff artifacts",
         "crash-safe checkpoints",
-        "causal ledger entries"
+        "causal ledger entries",
+        "route-preflight receipt with routing, context-pressure, runtime-readiness, and safe_to_submit=false observations"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "Forum CLI or source checkout for standalone skill preflight",
+        "agent host skill loader for the forum-route-preflight folder"
+      ],
       "related": [
         "flywheel",
         "relay",
         "plexus",
         "mneme"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-09-08",
       "primaryDomain": "agent-systems",
       "productType": "multi-agent orchestration engine",
-      "releaseState": "stable v1.13.0"
+      "releaseState": "stable engine v1.13.0; standalone route-preflight skill v0.1.0",
+      "runGuide": {
+        "label": "Download the standalone route-preflight skill",
+        "href": "https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip",
+        "summary": "The v0.1.0 ZIP is loaded by the agent host, not installed from PyPI. It requires a Forum CLI or source checkout and a host skill loader that supports local standalone skills."
+      }
     },
     {
       "id": "crucible",
