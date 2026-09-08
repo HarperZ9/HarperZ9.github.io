@@ -83,7 +83,7 @@
     <h1>A companion for <span class="g">every model.</span></h1>
     <p class="lede" data-canonical-purpose="flywheel">Flywheel runs an AI task with the local or hosted model and tools you choose. It records the run, and optional sealed tool-call receipts can be inspected and rechecked offline. The repository also includes a native desktop app.</p>
     <p class="close">See one check in 36 seconds, then inspect the source.</p>
-    <nav class="hero-actions" aria-label="Primary routes"><a href="#demo">Watch the 36-second demo</a><a href="#run">Install or run</a><a href="#evidence-task">Get the evidence skill</a><a href="https://github.com/HarperZ9/flywheel" rel="noopener">Source</a><a href="#benchmarks">Benchmarks</a></nav>
+    <nav class="hero-actions" aria-label="Primary routes"><a href="#demo">Watch the 36-second demo</a><a href="#next-release">0.6.0 release</a><a href="#run">Install or run</a><a href="#evidence-task">Get the evidence skill</a><a href="https://github.com/HarperZ9/flywheel" rel="noopener">Source</a><a href="#benchmarks">Benchmarks</a></nav>
   </div>
   <div class="seal"><span translate="no">flywheel</span> &middot; public &middot; FSL-1.1-MIT &middot; <span translate="no">python scripts/run_harness_cli.py app --port 8799</span></div>
 </div>
@@ -231,17 +231,29 @@
   </div>
 </section>
 
+<!-- CURRENT RELEASE BOUNDARY -->
+<section class="mv" id="next-release" aria-labelledby="next-release-h">
+  <h2 id="next-release-h" class="reveal">0.6.0 is published. Continue from reviewed context.</h2>
+  <p class="body-text reveal">Use v0.6.0 when you want the desktop surface to continue with an agent from an approved Evidence Journey item, keep large Index workspace maps recoverable instead of blocking the app, and retain local Ollama token and timing usage even when malformed task output still fails.</p>
+  <p class="body-text reveal"><strong>Continue with agent</strong> now follows the existing approval path instead of becoming a separate trust path. Index workspace-map jobs can recover, cancel, resume, return results, and refresh from a manual Update snapshot. Index 2.12 or newer is required for that job path and remains a separate engine installation.</p>
+  <details class="product-record-details reveal">
+    <summary>Release evidence and limits</summary>
+    <p class="body-text">The GitHub release was published at <span translate="no">2026-09-08T21:24:15Z</span>, resolves to source commit <span translate="no">d8c1623a3d0fee2d1ae7f3dfddb50cebdfdad599</span>, and the PyPI receipt verified 592 Python source files against 601 wheel RECORD entries.</p>
+    <p class="body-text">Windows tag-candidate acceptance attempt 2 passed for workflow run <span translate="no">34279017788</span>, with acceptance receipt SHA-256 <span translate="no">cab370affa52ec180f2613fff131eb8f84424afae189c53f8f4f323a4729f685</span>. This release does not claim general model uplift, arbitrary provider-native session resume, provider-native session migration, signed installer authentication, clean-machine installation, physical Android/mobile acceptance, real provider calls, or real device calls.</p>
+  </details>
+</section>
+
 <!-- RUN IT NOW -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Run it now.</h2>
-  <p class="body-text reveal">Flywheel v0.5.0 is the current consolidated platform release. Install the zero-runtime-dependency Python package from PyPI for the supported command surface, or use the unsigned Windows app with the engine bundled. The release adds context-continuation previews, a workstation approval inbox, native Bulletin identity setup, and paged local file reads while keeping provider keys in the OS keychain and shown as presence only, never as values.</p>
-  <div class="run reveal"><span class="c">shell</span> pip install flywheel-verify<br><span class="c">shell</span> flywheel up</div>
-  <div class="run reveal"><span class="c">download</span> <a href="https://github.com/HarperZ9/flywheel/releases/download/v0.5.0/Flywheel-Setup-0.5.0-x64.exe">Flywheel-Setup-0.5.0-x64.exe</a> &middot; Windows x64 &middot; 25,556,105 bytes &middot; <a href="https://github.com/HarperZ9/flywheel/releases/tag/v0.5.0">release notes</a></div>
-  <p class="body-text reveal">The installer is built from the version tag by a public pipeline, and its hash is published beside it. Verify the copy you downloaded:</p>
-  <div class="run reveal"><span class="c">powershell</span> Get-FileHash Flywheel-Setup-0.5.0-x64.exe -Algorithm SHA256</div>
+  <p class="body-text reveal">Install the zero-runtime-dependency Python package from PyPI for the v0.6.0 command surface, or use the unsigned Windows app with the engine bundled. The release assets are public; clean-machine installation and mobile acceptance remain separate checks.</p>
+  <div class="run reveal"><span class="c">shell</span> pip install flywheel-verify==0.6.0<br><span class="c">shell</span> flywheel up</div>
+  <div class="run reveal"><span class="c">download</span> <a href="https://github.com/HarperZ9/flywheel/releases/download/v0.6.0/Flywheel-Setup-0.6.0-x64.exe">Flywheel-Setup-0.6.0-x64.exe</a> &middot; Windows x64 &middot; 25,587,795 bytes &middot; <a href="https://github.com/HarperZ9/flywheel/releases/tag/v0.6.0">release notes</a></div>
+  <p class="body-text reveal">The installer was built from the v0.6.0 tag by a public pipeline, and its hash is published beside it. Verify the copy you downloaded:</p>
+  <div class="run reveal"><span class="c">powershell</span> Get-FileHash Flywheel-Setup-0.6.0-x64.exe -Algorithm SHA256</div>
   <dl class="kv2 reveal">
-    <dt>Version</dt><dd><span translate="no">v0.5.0</span>, September 2026</dd>
-    <dt>SHA-256</dt><dd><span translate="no" style="font-family:var(--mono);font-size:.8rem;word-break:break-all">808a9f56e423f048c1d8dadda8ae216c323ea10ef1db1f12170327fb6106bf31</span></dd>
+    <dt>Version</dt><dd><span translate="no">v0.6.0</span>, September 2026</dd>
+    <dt>SHA-256</dt><dd><span translate="no" style="font-family:var(--mono);font-size:.8rem;word-break:break-all">d762838c865f6b287ba30b8b576cb179500241904401fd8a01a2bb99d625d173</span></dd>
   </dl>
   <div class="null reveal">
     <h3>The honest caveat.</h3>
@@ -296,7 +308,7 @@
 <section class="mv" id="spec" aria-labelledby="spec-h">
   <h2 id="spec-h" class="reveal">Spec, at a glance.</h2>
   <dl class="kv2 reveal">
-    <dt>Desktop app</dt><dd>Windows x64 installer, engine bundled, no Python required. <span translate="no">v0.5.0</span>. The installer is unsigned.</dd>
+    <dt>Desktop app</dt><dd>Windows x64 installer, engine bundled, no Python required. <span translate="no">v0.6.0</span>. The installer is unsigned.</dd>
     <dt>Dependencies</dt><dd>None. Python standard library only.</dd>
     <dt>Network</dt><dd>Your choice per call: route online with hosted-provider keys, or run fully offline against local weights.</dd>
     <dt>Entry point</dt><dd><span translate="no">flywheel up</span></dd>

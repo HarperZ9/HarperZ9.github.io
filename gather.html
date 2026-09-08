@@ -35,7 +35,7 @@
     <p class="lede" data-canonical-purpose="gather">Gather collects research material from sources that basic scrapers often miss. It handles JavaScript-rendered pages, authenticated APIs, scholarly records, PDFs, OCR, audio, video, feeds, and local documents, then saves each item in a content-addressed corpus with provenance you can recheck.</p>
     <p class="close">Every item carries a receipt recording how it was obtained, so a quote is never confused with an inference, and what was hard to get is never dressed up as if it were lying in the open.</p>
   </div>
-  <div class="seal"><span translate="no">gather</span> &middot; v1.6.1 &middot; provenance receipts &middot; fair-source &middot; <span translate="no">pip install gather-engine</span></div>
+  <div class="seal"><span translate="no">gather</span> &middot; v1.7.0 &middot; readable context receipts &middot; fair-source &middot; <span translate="no">pip install gather-engine==1.7.0</span></div>
 </div>
 
 <main id="main">
@@ -133,20 +133,30 @@
 <!-- PROOF AND RUN IT -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Current state. How to run it.</h2>
-  <p class="body-text reveal">Version 1.6.1, published as <code translate="no">gather-engine</code>. It installs the <code translate="no">gather</code> command and the <code translate="no">gather</code> package. The core is pure standard library; optional adapters call an external tool (<code translate="no">yt-dlp</code>, <code translate="no">pdftotext</code>, headless <code translate="no">chromium</code>, <code translate="no">tesseract</code>, or a Whisper-style CLI) only when that route is selected. The current recorded workflow exercises local extraction, scoped document intake, corpus recall, verification, digest sealing, and a tamper drill without a network dependency. The license is fair-source: source-available, rights reserved to fund the research; smaller utility tools that came out of this work remain permissive.</p>
-  <pre class="artifact" translate="no"><span class="pr">$ pip install gather-engine</span>
-<span class="pr">$ python examples/demo.py</span>       <span class="cmt"># one video parsed, scoped, digested, then a receipt catches tampering</span>
-parsed 3 items from one video, each with a receipt
-<span class="ok">witnessed digest: 3 receipts, verified True</span>
-<span class="bad">after tampering one receipt, digest verifies: False   &lt;- caught</span>
-<span class="pr">$ python examples/pipeline.py</span>   <span class="cmt"># the whole path: run, store, verify, recall, offline</span></pre>
-  <p class="body-text reveal">Python, standard library only. Install it, run the demo offline, then point an adapter at a real source. Each example under <code translate="no">examples/</code> is a short demonstration of one capability: the receipt that catches tampering, the corpus that re-hashes every body, the recall that re-verifies what it returns. If an adapter reaches something it should not, or a digest produces a result you cannot verify, that is exactly the kind of report I want.</p>
+  <p class="body-text reveal">Version 1.7.0, published as <code translate="no">gather-engine</code>, installs the <code translate="no">gather</code> command and the <code translate="no">gather</code> package. The release adds readable corpus context selection: selected context records row refs, source refs, full-body hashes, selected ranges, selected text, omissions, and a deterministic selection digest, with UTF-8 bodies normalized to LF before offsets are recorded. The core remains pure standard library; optional adapters call an external tool (<code translate="no">yt-dlp</code>, <code translate="no">pdftotext</code>, headless <code translate="no">chromium</code>, <code translate="no">tesseract</code>, or a Whisper-style CLI) only when that route is selected.</p>
+  <p class="body-text reveal">Create <code translate="no">sample.txt</code> with this exact two-line body, then store it and select only the useful slice.</p>
+  <pre class="artifact" translate="no"><span class="cmt">sample.txt body</span>
+Offline quickstart: Gather keeps acquired context separate from conclusions.
+Decision fact: the release can select useful text from a stored corpus.</pre>
+  <p class="body-text reveal">After the inspect command, replace ROW_REF and CORPUS_DIGEST with the values from the inspect JSON. 0:76 selects the first line of this fixture only.</p>
+  <pre class="artifact" translate="no"><span class="pr">$ pip install gather-engine==1.7.0</span>
+<span class="pr">$ gather docs sample.txt --store corpus --json</span>
+<span class="pr">$ gather corpus context corpus --json --excerpt-chars 90</span>
+<span class="pr">$ gather corpus context corpus --json --select ROW_REF:0:76 --expect-digest CORPUS_DIGEST</span></pre>
+  <p class="body-text reveal"><strong>Sample selected text:</strong> <span translate="no">Offline quickstart: Gather keeps acquired context separate from conclusions.</span></p>
+  <details class="product-record-details reveal">
+    <summary>Release evidence and context limits</summary>
+    <p class="body-text">A fresh installed 1.7.0 Temp run created the corpus from a local file, inspected it with <code translate="no">gather corpus context</code>, and selected that text with <code translate="no">--expect-digest</code>. The selected payload used schema <code translate="no">gather.readable-context/v1</code>, returned <code translate="no">verified: true</code>, and produced selection digest <code translate="no">e155061ec00724a617235b11f13b961a5a0892035a1bb4ed9f1d072208535fc4</code>.</p>
+    <p class="body-text">The post-publication receipt verifies the GitHub release, PyPI files, a clean no-index wheel install, CLI and MCP context selection, and tamper refusal. Those checks do not prove source truth, claim support, coverage completeness, downstream model use, or absence of sensitive material in selected text or URLs. One inherited integrity limit remains visible: certain literal CRLF, lone-CR, and mixed-newline corpus strings can be refused, and a refusal alone is not evidence of external tampering.</p>
+  </details>
   <div class="channels reveal">
     <span class="g">Recorded demo</span> &rarr; <a href="demo-gather.html">29-second proof and full workflow</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/gather" translate="no">HarperZ9/gather</a>
+    <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/gather/releases/tag/v1.7.0" translate="no">v1.7.0 release</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/gather-engine/" translate="no">gather-engine</a>
+    <span class="g">Source</span> &rarr; <a href="https://github.com/HarperZ9/gather" translate="no">HarperZ9/gather</a>
+    &nbsp;&middot;&nbsp;
+    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/gather-engine/1.7.0/" translate="no">gather-engine 1.7.0</a>
     &nbsp;&middot;&nbsp;
     <a href="overview.html">&larr; all flagships</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the index</a>
   </div>

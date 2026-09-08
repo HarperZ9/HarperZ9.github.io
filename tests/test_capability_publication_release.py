@@ -29,7 +29,7 @@ RELEASE_PATHS = (
     "system/report-editorial.css",
     "system/system.css",
     "warden.html",
-    "assets/index-Cb1vbMcz.js",
+    "assets/index-CpC5RhmM.js",
     "system/theme.js",
     "system/theme-entry.js",
     "system/theme.css",
@@ -230,7 +230,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "82384c3a2f575bdce1ee38bd4aae978f713e48b4cd8d0586291ee1c739a0e64b"
+REVIEWED_RELEASE_SHA256 = "e53a4dec16bf7928750f9bc0f3947cd0d9d017b958b2db3d65f1bfc1e6c6c723"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -343,7 +343,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_forum_skill_draft_js = "index-BU9Il18X.js"
     previous_forum_skill_copy_js = "index-B5ckJTHM.js"
     previous_050_js = "index-4XRtEPd6.js"
-    current_js = "index-Cb1vbMcz.js"
+    previous_050_publication_js = "index-Cb1vbMcz.js"
+    previous_060_draft_js = "index-koLbeX_t.js"
+    previous_060_unbound_js = "index-DRgIqeCu.js"
+    previous_060_source_bound_js = "index-CHEroeT4.js"
+    previous_060_partial_release_js = "index-DWTh1LcV.js"
+    previous_060_final_before_gather_js = "index-Bxkbws6Z.js"
+    previous_060_final_gather_pre_review_js = "index-CYqKao4X.js"
+    current_js = "index-CpC5RhmM.js"
     current_css = "index-B2kgPYlE.css"
     previous_flywheel_js = "index-BIYnDBdw.js"
     previous_flywheel_css = "index-DGQrcJ5p.css"
@@ -354,6 +361,20 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     assert f'href="/assets/{current_css}"' in source
     assert (ROOT / "assets" / current_js).is_file()
     assert (ROOT / "assets" / current_css).is_file()
+    assert previous_060_draft_js not in source
+    assert not (ROOT / "assets" / previous_060_draft_js).exists()
+    assert previous_060_unbound_js not in source
+    assert not (ROOT / "assets" / previous_060_unbound_js).exists()
+    assert previous_060_source_bound_js not in source
+    assert not (ROOT / "assets" / previous_060_source_bound_js).exists()
+    assert previous_060_partial_release_js not in source
+    assert not (ROOT / "assets" / previous_060_partial_release_js).exists()
+    assert previous_060_final_before_gather_js not in source
+    assert not (ROOT / "assets" / previous_060_final_before_gather_js).exists()
+    assert previous_060_final_gather_pre_review_js not in source
+    assert not (ROOT / "assets" / previous_060_final_gather_pre_review_js).exists()
+    assert previous_050_publication_js not in source
+    assert not (ROOT / "assets" / previous_050_publication_js).exists()
     assert previous_050_js not in source
     assert not (ROOT / "assets" / previous_050_js).exists()
     assert previous_board_js not in source
