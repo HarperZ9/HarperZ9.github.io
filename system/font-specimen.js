@@ -1,45 +1,51 @@
+import { SITE_PAIRING, ORIGINAL_FAMILIES, specimenFamilies } from './font-catalog.mjs?v=20260908-mono-latin';
+
 const DEFAULT_TEXT = "Letters should keep their shape when the work gets dense.";
+const DEFAULT_FAMILY = "editorial-preview";
+const SAMPLE_TEXT_LIMIT = 260;
+const FAMILIES = specimenFamilies(SITE_PAIRING, ORIGINAL_FAMILIES);
+const SITE_GROUP_LABEL = "Existing site fonts · not original fonts for sale";
+const COMPARE_DEFAULTS = { left: "editorial-preview", right: "mono-preview" };
 
-const EDITORIAL_PREVIEW_COVERAGE = new Set([
-  ...Array.from({ length: 95 }, (_, index) => index + 32),
-  160,
-  176,
-  177,
-  215,
-  247,
-  8211,
-  8212,
-  8216,
-  8217,
-  8220,
-  8221,
-  8226,
-  8230,
-  8722,
-]);
+function familyGroups() {
+  return [
+    ...ORIGINAL_FAMILIES.map(family => ({ label: `${family.name} · Original preview`, faces: family.styles })),
+    { label: SITE_GROUP_LABEL, faces: SITE_PAIRING, site: true },
+  ];
+}
 
-const FAMILIES = Object.freeze({
-  hanken: {
-    label: "Hanken Grotesk",
-    stack: '"Hanken Grotesk", sans-serif',
-    poster: true,
-    css: true,
-  },
-  conso: {
-    label: "Conso",
-    stack: '"Conso", serif',
-    poster: true,
-    css: true,
-  },
-  "editorial-preview": {
-    label: "Zentropy Editorial Preview",
-    stack: '"Zentropy Editorial Preview", Georgia, serif',
-    poster: false,
-    css: false,
-    preview: true,
-    coverage: EDITORIAL_PREVIEW_COVERAGE,
-  },
-});
+function optionLabel(face, site) {
+  return site ? `${face.label} (site font)` : face.label;
+}
+
+function populateFamilyOptions(select, fallback) {
+  if (!select) return;
+  const selected = Object.hasOwn(FAMILIES, select.value) ? select.value : fallback;
+  const options = familyGroups().map(({ label, faces, site }) => {
+    const group = document.createElement('optgroup');
+    group.label = label;
+    for (const face of faces) {
+      const option = document.createElement('option');
+      option.value = face.id;
+      option.textContent = optionLabel(face, site);
+      group.append(option);
+    }
+    return group;
+  });
+  select.replaceChildren(...options);
+  select.value = selected;
+}
+
+function populateFamilySelector() {
+  populateFamilyOptions(document.querySelector('[data-font-specimen-family]'), DEFAULT_FAMILY);
+}
+
+function populateCompareSelectors(root) {
+  for (const select of root.querySelectorAll("[data-font-compare-family]")) {
+    const slot = select.dataset.fontCompareFamily;
+    populateFamilyOptions(select, COMPARE_DEFAULTS[slot] || "editorial-preview");
+  }
+}
 
 function boundedNumber(input, fallback) {
   const value = Number.parseFloat(input.value);
@@ -52,6 +58,11 @@ function boundedNumber(input, fallback) {
 function specimenText(value) {
   const trimmed = value.trim();
   return trimmed.length ? trimmed : DEFAULT_TEXT;
+}
+
+function samplePresetText(value) {
+  const bounded = Array.from(String(value || "")).slice(0, SAMPLE_TEXT_LIMIT).join("").trim();
+  return bounded.length ? bounded : DEFAULT_TEXT;
 }
 
 function visibleCharacters(value) {
@@ -84,12 +95,13 @@ function fontFaceState(familyConfig) {
 function updatePreviewAssetStatus() {
   const notices = document.querySelectorAll("[data-font-asset-status]");
   if (!notices.length) return;
-  const familyConfig = FAMILIES["editorial-preview"];
-  const loadState = fontFaceState(familyConfig);
-  const message = loadState === "failed" || loadState === "unavailable"
-    ? `${familyConfig.label} could not load; fallback text is shown.`
-    : "";
   for (const notice of notices) {
+    const familyConfig = FAMILIES[notice.dataset.fontAssetStatus];
+    if (!familyConfig?.preview) continue;
+    const loadState = fontFaceState(familyConfig);
+    const message = loadState === "failed" || loadState === "unavailable"
+      ? `${familyConfig.label} could not load; fallback text is shown.`
+      : "";
     notice.hidden = !message;
     notice.textContent = message;
   }
@@ -133,12 +145,29 @@ function bootSpecimen(root) {
   const trackOutput = root.querySelector("#font-specimen-track-output");
   const posterButton = root.querySelector("[data-font-specimen-poster]");
   const cssButton = root.querySelector("[data-font-specimen-css]");
+  const compareToggle = root.querySelector("[data-font-compare-toggle]");
+  const comparePanel = root.querySelector("[data-font-compare]");
+  const sampleButtons = Array.from(root.querySelectorAll("[data-font-sample]"));
 
   if (!form || !live || !preview || !status || !warning || !text || !family || !size || !line || !track) return;
   if (!sizeOutput || !lineOutput || !trackOutput || !posterButton || !cssButton) return;
+  populateCompareSelectors(root);
+
+  const compareSelects = Object.fromEntries(
+    Array.from(root.querySelectorAll("[data-font-compare-family]"))
+      .map(select => [select.dataset.fontCompareFamily, select])
+  );
+  const compareSlots = Array.from(root.querySelectorAll("[data-font-compare-slot]")).map(slot => ({
+    key: slot.dataset.fontCompareSlot,
+    name: slot.querySelector("[data-font-compare-name]"),
+    context: slot.querySelector("[data-font-compare-context]"),
+    preview: slot.querySelector("[data-font-compare-preview]"),
+    notice: slot.querySelector("[data-font-compare-notice]"),
+  })).filter(slot => slot.key && slot.name && slot.context && slot.preview && slot.notice);
+  if (comparePanel && compareToggle) root.dataset.fontCompareOpen = String(!comparePanel.hidden);
 
   function currentFamilyKey() {
-    return Object.hasOwn(FAMILIES, family.value) ? family.value : "hanken";
+    return Object.hasOwn(FAMILIES, family.value) ? family.value : DEFAULT_FAMILY;
   }
 
   function currentFamilyConfig() {
@@ -152,6 +181,69 @@ function bootSpecimen(root) {
     cssButton.setAttribute("aria-disabled", String(!familyConfig.css));
     posterButton.title = familyConfig.poster ? "" : "Poster is disabled for this preview face until the production font is allowed there.";
     cssButton.title = familyConfig.css ? "" : "CSS export is disabled for this preview face until the production font is allowed there.";
+  }
+
+  function compareFamilyKey(slotKey) {
+    const select = compareSelects[slotKey];
+    if (select && Object.hasOwn(FAMILIES, select.value)) return select.value;
+    return COMPARE_DEFAULTS[slotKey] || "editorial-preview";
+  }
+
+  function setCompareDefaults() {
+    for (const [slotKey, select] of Object.entries(compareSelects)) {
+      const fallback = COMPARE_DEFAULTS[slotKey] || "editorial-preview";
+      select.value = fallback;
+    }
+  }
+
+  function compareContext(familyConfig) {
+    return familyConfig.preview
+      ? `${familyConfig.style} original preview. Browser-only, not for sale.`
+      : "Existing site font. Not an original font for sale.";
+  }
+
+  function compareNotice(familyConfig, renderedText) {
+    const messages = [];
+    const loadState = fontFaceState(familyConfig);
+    const missing = unsupportedCharacters(renderedText, familyConfig.coverage);
+
+    if (loadState === "failed" || loadState === "unavailable") {
+      messages.push(`${familyConfig.label} could not load; fallback text is shown.`);
+    } else if (loadState === "loading") {
+      messages.push(`${familyConfig.label} is still loading; fallback text may be visible.`);
+    }
+    if (missing.length) {
+      const sample = missing.slice(0, 12).join(" ");
+      const suffix = missing.length > 12 ? " …" : "";
+      messages.push(`Unsupported in this preview: ${sample}${suffix}.`);
+    }
+    if (messages.length) return messages.join(" ");
+    return familyConfig.preview
+      ? "Preview loaded; entered characters are covered."
+      : "Existing site font; compare only, not sold here.";
+  }
+
+  function updateCompare() {
+    if (!comparePanel || compareSlots.length !== 2) return;
+    const renderedText = specimenText(text.value);
+    const nextSize = Math.round(boundedNumber(size, 40));
+    const nextLine = boundedNumber(line, 1.25);
+    const nextTrack = boundedNumber(track, 0);
+
+    for (const slot of compareSlots) {
+      const familyKey = compareFamilyKey(slot.key);
+      const familyConfig = FAMILIES[familyKey];
+      slot.name.textContent = familyConfig.label;
+      slot.context.textContent = compareContext(familyConfig);
+      slot.preview.textContent = renderedText;
+      slot.preview.dataset.fontFamily = familyKey;
+      slot.preview.style.fontFamily = familyConfig.stack;
+      slot.preview.style.fontSize = `${nextSize}px`;
+      slot.preview.style.lineHeight = nextLine.toFixed(2);
+      slot.preview.style.letterSpacing = `${nextTrack.toFixed(2)}em`;
+      slot.notice.hidden = false;
+      slot.notice.textContent = compareNotice(familyConfig, renderedText);
+    }
   }
 
   function updateWarning(familyConfig, renderedText) {
@@ -198,10 +290,11 @@ function bootSpecimen(root) {
     const stateLabel = familyConfig.preview && loadState !== "loaded"
       ? `preview font ${loadState === "loading" ? "loading" : "could not load"}; fallback is visible`
       : familyConfig.preview
-        ? "Regular preview loaded"
+        ? `${familyConfig.style} preview loaded`
         : "";
     const statePrefix = stateLabel ? `${familyConfig.label}, ${stateLabel}, ` : `${familyConfig.label}, `;
     status.textContent = `${statePrefix}${nextSize} px, line height ${nextLine.toFixed(2)}, tracking ${nextTrack.toFixed(2)} em`;
+    updateCompare();
   }
 
   form.hidden = false;
@@ -211,6 +304,23 @@ function bootSpecimen(root) {
   form.addEventListener("change", apply);
   form.addEventListener("submit", event => event.preventDefault());
   document.fonts?.ready.then(apply).catch(() => apply());
+  document.fonts?.addEventListener?.("loadingdone", apply);
+  document.fonts?.addEventListener?.("loadingerror", apply);
+  for (const button of sampleButtons) {
+    button.addEventListener("click", () => {
+      text.value = samplePresetText(button.dataset.fontSampleText);
+      apply();
+    });
+  }
+  for (const select of Object.values(compareSelects)) select.addEventListener("change", updateCompare);
+  compareToggle?.addEventListener("click", () => {
+    if (!comparePanel) return;
+    const open = comparePanel.hidden;
+    comparePanel.hidden = !open;
+    compareToggle.setAttribute("aria-expanded", String(open));
+    root.dataset.fontCompareOpen = String(open);
+    if (open) updateCompare();
+  });
   cssButton.addEventListener("click", () => {
     const selected = currentFamilyConfig();
     if (!selected.css) {
@@ -269,15 +379,17 @@ function bootSpecimen(root) {
   form.addEventListener("reset", event => {
     event.preventDefault();
     text.value = DEFAULT_TEXT;
-    family.value = "hanken";
+    family.value = DEFAULT_FAMILY;
     size.value = "40";
     line.value = "1.25";
     track.value = "0";
+    setCompareDefaults();
     apply();
   });
   apply();
 }
 
+populateFamilySelector();
 for (const root of document.querySelectorAll("[data-font-specimen]")) {
   bootSpecimen(root);
 }

@@ -26,6 +26,13 @@ def section(source: str, section_id: str) -> str:
     return match.group(0)
 
 
+def section_copy(source: str, section_id: str) -> str:
+    content = section(source, section_id)
+    match = re.search(r'<div class="section-copy">(.*?)</div>', content, re.DOTALL)
+    assert match, f"{section_id} copy block missing"
+    return match.group(1)
+
+
 def test_fonts_page_publishes_limited_preview_collection_without_checkout_claims() -> None:
     assert PAGE.is_file(), "fonts.html must be the public Fonts destination"
     assert CSS.is_file(), "font marketplace styles must live in system/"
@@ -41,21 +48,35 @@ def test_fonts_page_publishes_limited_preview_collection_without_checkout_claims
     assert 'href="#font-lab"' in source
     assert 'href="mailto:zaindharper@gmail.com?subject=Font%20licensing%20enquiry"' in source
     assert "Type with a point of view." in source
-    assert "One original serif is available as a limited browser preview." in source
+    assert "Two original typefaces to try with your own words" in source
     assert source.count("No fonts are available to purchase yet.") == 1
     collection = section(source, "font-collection")
+    assert "A serif for titles. A mono for code and technical notes." in collection
     assert 'data-font-product="editorial-regular"' in collection
+    assert 'data-font-product="mono-regular"' in collection
+    assert 'data-font-try="mono-preview"' in collection
     assert 'data-font-try="editorial-preview"' in collection
     assert "Try this face" in collection
     assert "Zentropy Editorial" in collection
-    assert "Regular preview" in collection
-    assert "High-contrast serif for editorial titles" in collection
-    assert "Limited preview, not for sale" in collection
+    assert "Editorial serif" in collection
+    assert "Technical mono" in collection
+    assert "Regular preview" not in collection
+    assert "High-contrast serif with curved terminals for titles and quotations" in collection
+    assert "compact reading moments" not in source
+    assert "without turning the page into a poster" not in source
+    assert "Limited browser preview" in collection
+    assert "Limited preview, not for sale" not in collection
     assert "Printable ASCII plus editorial punctuation" in collection
     assert "Browser-only preview" in collection
+    assert collection.count("Browser-only preview") == 2
+    assert collection.count("Poster handoff") == 2
+    assert "font-collection-boundary" not in source
+    assert "specimen-line-code" not in source
+    assert "ASCII + quotes" not in source
     assert 'data-font-asset-status' in collection
     assert "<details" in collection
     assert "Preview details" in collection
+    assert "Coverage" not in collection
     assert 'href="type/preview/editorial.json"' in collection
     assert "<dl" not in collection
     assert "109 mapped characters" not in collection
@@ -92,6 +113,55 @@ def test_fonts_page_publishes_limited_preview_collection_without_checkout_claims
     ):
         assert heavy_phrase not in source
     assert not re.search(r"(?:\$|USD\s*)\d", source, re.IGNORECASE)
+
+
+def test_font_lab_intro_stays_short_and_local_to_the_sampler() -> None:
+    source = read(PAGE)
+    lab = section(source, "font-lab")
+    lab_copy = section_copy(source, "font-lab")
+
+    assert lab_copy.count("<p>") == 1
+    assert "Choose a face, set text and adjust size, spacing and rhythm" in lab_copy
+    assert "Poster and CSS export" not in lab_copy
+    assert "unsupported" not in lab_copy.lower()
+    assert 'class="font-lab-links"' in lab
+    assert "<summary>Creative tools</summary>" in lab
+    assert 'href="gallery.html#printdesk"' in lab
+    assert 'href="loom.html"' in lab
+    assert 'href="workspace.html"' in lab
+    assert lab.index('class="font-lab-panel"') < lab.index('class="font-lab-links"')
+    assert 'href="gallery.html#printdesk"' not in lab_copy
+    assert 'href="loom.html"' not in lab_copy
+    assert 'href="workspace.html"' not in lab_copy
+
+
+def test_font_lab_publishes_two_face_compare_hooks_without_new_inventory() -> None:
+    source = read(PAGE)
+    lab = section(source, "font-lab")
+
+    assert 'data-font-compare-toggle' in lab
+    assert 'aria-controls="font-compare-panel"' in lab
+    assert 'aria-expanded="false"' in lab
+    assert 'id="font-compare-panel"' in lab
+    assert 'data-font-compare hidden' in lab
+    assert 'data-font-compare-family="left"' in lab
+    assert 'data-font-compare-family="right"' in lab
+    assert lab.count("data-font-compare-slot=") == 2
+    assert 'data-font-compare-slot="left"' in lab
+    assert 'data-font-compare-slot="right"' in lab
+    assert 'data-font-compare-preview' in lab
+    assert 'data-font-compare-notice' in lab
+    assert "Compare faces" in lab
+    assert "Existing site fonts" in lab
+    assert "not original fonts for sale" in lab
+
+    for unavailable_inventory in (
+        "18 families",
+        "20 families",
+        "planned families",
+        "foundry catalog",
+    ):
+        assert unavailable_inventory not in source.lower()
 
 
 def test_fonts_page_keeps_public_site_faces_out_of_retail_inventory() -> None:
@@ -161,6 +231,8 @@ def test_fonts_page_names_release_gate_without_promising_a_notification_service(
     assert "checksum trail" not in lowered
     assert 'href="gallery.html#printdesk"' in source
     assert 'href="loom.html"' in source
+    assert 'href="workspace.html"' in source
+    assert 'href="bulletin.html"' in source
 
 
 def test_interactive_specimen_is_public_static_and_progressive() -> None:
@@ -177,6 +249,11 @@ def test_interactive_specimen_is_public_static_and_progressive() -> None:
     assert 'id="font-specimen-line"' in lab
     assert 'id="font-specimen-track"' in lab
     assert 'data-font-specimen-preview' in lab
+    assert 'data-font-sample-group' in lab
+    assert lab.count('data-font-sample=') == 3
+    assert 'data-font-sample="headline"' in lab
+    assert 'data-font-sample="reading"' in lab
+    assert 'data-font-sample="characters"' in lab
     assert 'type="reset"' in lab
     assert 'Hanken Grotesk' in lab
     assert 'Conso' in lab
@@ -186,6 +263,8 @@ def test_interactive_specimen_is_public_static_and_progressive() -> None:
     assert 'data-font-asset-status' in source
     assert 'data-font-specimen-poster' in lab
     assert 'data-font-specimen-css' in lab
+    assert 'data-font-compare-toggle' in lab
+    assert 'data-font-compare' in lab
 
     for private_marker in (
         "localStorage",
@@ -198,7 +277,7 @@ def test_interactive_specimen_is_public_static_and_progressive() -> None:
     assert "fetch(" not in script
     assert "document.cookie" not in script
     assert "font-commerce" not in script.lower()
-    assert "editorial-preview" in script
+    assert "notice.dataset.fontAssetStatus" in script
     assert "Unsupported in this preview" in script
     assert "data-font-asset-status" in script
     assert "Poster is disabled for this preview face" in script

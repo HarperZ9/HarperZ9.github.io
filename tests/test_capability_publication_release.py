@@ -45,8 +45,11 @@ RELEASE_PATHS = (
     "fonts.html",
     "system/font-marketplace.css",
     "system/font-specimen.js",
+    "system/font-catalog.mjs",
     "type/preview/editorial.json",
     "type/preview/zentropy-editorial-regular.woff2",
+    "type/preview/mono.json",
+    "type/preview/zentropy-mono-regular.woff2",
     "system/navigation.js",
     "system/navigation.css",
     "demos/crucible-cleanroom/index.html",
@@ -263,7 +266,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "476e7eb9fb123527abf7596d9e539180d12a6849e22b2b03dcd6f36c7235c332"
+REVIEWED_RELEASE_SHA256 = "db863d9dd59643abbc91ac07bbbc9c2d056af4166269ce3c3a50546f6e489431"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
