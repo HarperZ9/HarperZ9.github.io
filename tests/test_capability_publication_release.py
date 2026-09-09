@@ -31,6 +31,7 @@ RELEASE_PATHS = (
     "warden.html",
     "assets/index-CPG6kzKK.js",
     "assets/index-ClATdIWg.js",
+    "assets/index-CS_jYuhh.js",
     "system/theme.js",
     "system/theme-entry.js",
     "system/theme.css",
@@ -232,7 +233,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "3c7cc3644091151f4d067fe039332c8ff0ceeceb3f21b65df77be1cccbacf6fa"
+REVIEWED_RELEASE_SHA256 = "78924704a3540abd035586c034a0702d9e3c466fe8f0eed72d5f3db3f7e302fe"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -354,7 +355,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_060_final_gather_pre_review_js = "index-CYqKao4X.js"
     previous_060_final_gather_fixture_js = "index-CpC5RhmM.js"
     previous_gather_171_js = "index-AYA0gyN2.js"
-    current_js = "index-ClATdIWg.js"
+    current_js = "index-CS_jYuhh.js"
     current_css = "index-B2kgPYlE.css"
     previous_flywheel_js = "index-BIYnDBdw.js"
     previous_flywheel_css = "index-DGQrcJ5p.css"
@@ -366,6 +367,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     assert (ROOT / "assets" / current_js).is_file()
     assert (ROOT / "assets" / current_css).is_file()
     assert "index-CPG6kzKK.js" not in source
+    assert "index-ClATdIWg.js" not in source
     assert previous_gather_171_js not in source
     assert not (ROOT / "assets" / previous_gather_171_js).exists()
     assert previous_060_draft_js not in source

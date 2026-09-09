@@ -83,7 +83,7 @@
     <h1>A companion for <span class="g">every model.</span></h1>
     <p class="lede" data-canonical-purpose="flywheel">Flywheel runs an AI task with the local or hosted model and tools you choose. It records the run, and optional sealed tool-call receipts can be inspected and rechecked offline. The repository also includes a native desktop app.</p>
     <p class="close">See one check in 36 seconds, then inspect the source.</p>
-    <nav class="hero-actions" aria-label="Primary routes"><a href="#demo">Watch the 36-second demo</a><a href="#next-release">0.6.0 release</a><a href="#run">Install or run</a><a href="#evidence-task">Get the evidence skill</a><a href="https://github.com/HarperZ9/flywheel" rel="noopener">Source</a><a href="#benchmarks">Benchmarks</a></nav>
+    <nav class="hero-actions" aria-label="Primary routes"><a href="#demo">Watch the 36-second demo</a><a href="#next-release">0.6.1 release</a><a href="#run">Install or run</a><a href="#evidence-task">Get the evidence skill</a><a href="https://github.com/HarperZ9/flywheel" rel="noopener">Source</a><a href="#benchmarks">Benchmarks</a></nav>
   </div>
   <div class="seal"><span translate="no">flywheel</span> &middot; public &middot; FSL-1.1-MIT &middot; <span translate="no">python scripts/run_harness_cli.py app --port 8799</span></div>
 </div>
@@ -233,26 +233,27 @@
 
 <!-- CURRENT RELEASE BOUNDARY -->
 <section class="mv" id="next-release" aria-labelledby="next-release-h">
-  <h2 id="next-release-h" class="reveal">0.6.0 is published. Continue from reviewed context.</h2>
-  <p class="body-text reveal">Use v0.6.0 when you want the desktop surface to continue with an agent from an approved Evidence Journey item, keep large Index workspace maps recoverable instead of blocking the app, and retain local Ollama token and timing usage even when malformed task output still fails.</p>
-  <p class="body-text reveal"><strong>Continue with agent</strong> now follows the existing approval path instead of becoming a separate trust path. Index workspace-map jobs can recover, cancel, resume, return results, and refresh from a manual Update snapshot. Index 2.12 or newer is required for that job path and remains a separate engine installation.</p>
+  <h2 id="next-release-h" class="reveal">0.6.1 is published. Test workflows before depending on them.</h2>
+  <p class="body-text reveal">Use v0.6.1 to select an exact endpoint profile, enforce generation-call budgets before a probe connects, and run repeatable workflow checks. Missing, ambiguous and over-budget selections return typed failures. The new Service Desk Incident Environment is a separate download for testing incident workflows against local synthetic state.</p>
+  <p class="body-text reveal">The release adds a common E2E journey runner and strengthens private artifact handling. It retains <strong>Continue with agent</strong> through the existing Evidence Journey approval path and recoverable Index workspace-map jobs. Index 2.12 or newer remains a separate engine installation.</p>
   <details class="product-record-details reveal">
     <summary>Release evidence and limits</summary>
-    <p class="body-text">The GitHub release was published at <span translate="no">2026-09-08T21:24:15Z</span>, resolves to source commit <span translate="no">d8c1623a3d0fee2d1ae7f3dfddb50cebdfdad599</span>, and the PyPI receipt verified 592 Python source files against 601 wheel RECORD entries.</p>
-    <p class="body-text">Windows tag-candidate acceptance attempt 2 passed for workflow run <span translate="no">34279017788</span>, with acceptance receipt SHA-256 <span translate="no">cab370affa52ec180f2613fff131eb8f84424afae189c53f8f4f323a4729f685</span>. This release does not claim general model uplift, arbitrary provider-native session resume, provider-native session migration, signed installer authentication, clean-machine installation, physical Android/mobile acceptance, real provider calls, or real device calls.</p>
+    <p class="body-text">The <a href="https://github.com/HarperZ9/flywheel/releases/tag/v0.6.1">GitHub release</a> was published at <span translate="no">2026-09-09T13:06:27Z</span> from source commit <span translate="no">2a86c0a8f2da651bceb0bda4c1b1a74379696a39</span>. The CI and PyPI distributions matched byte for byte; all 635 packaged harness entries matched their source blobs. Ten checks of a fresh installed wheel passed, including seven expected refusals, without generating model output.</p>
+    <p class="body-text">A fresh installed Service Desk run passed seven synthetic cases and rejected an altered state file. These checks do not establish general model uplift, production ServiceNow compatibility, arbitrary provider-native session resume, provider-native session migration, clean-machine installation or physical Android/mobile acceptance. The v0.6.1 Windows candidate is not offered here; the previous unsigned desktop download remains separately labeled below.</p>
   </details>
 </section>
 
 <!-- RUN IT NOW -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Run it now.</h2>
-  <p class="body-text reveal">Install the zero-runtime-dependency Python package from PyPI for the v0.6.0 command surface, or use the unsigned Windows app with the engine bundled. The release assets are public; clean-machine installation and mobile acceptance remain separate checks.</p>
-  <div class="run reveal"><span class="c">shell</span> pip install flywheel-verify==0.6.0<br><span class="c">shell</span> flywheel up</div>
+  <p class="body-text reveal">Install the v0.6.1 Python engine from PyPI. The core package has zero runtime dependencies. The unsigned Windows download below is the previous v0.6.0 desktop build, with its own bundled engine.</p>
+  <div class="run reveal"><span class="c">shell</span> python -m pip install flywheel-verify==0.6.1<br><span class="c">shell</span> flywheel up</div>
+  <h3 class="reveal">Previous Windows desktop: 0.6.0</h3>
   <div class="run reveal"><span class="c">download</span> <a href="https://github.com/HarperZ9/flywheel/releases/download/v0.6.0/Flywheel-Setup-0.6.0-x64.exe">Flywheel-Setup-0.6.0-x64.exe</a> &middot; Windows x64 &middot; 25,587,795 bytes &middot; <a href="https://github.com/HarperZ9/flywheel/releases/tag/v0.6.0">release notes</a></div>
   <p class="body-text reveal">The installer was built from the v0.6.0 tag by a public pipeline, and its hash is published beside it. Verify the copy you downloaded:</p>
   <div class="run reveal"><span class="c">powershell</span> Get-FileHash Flywheel-Setup-0.6.0-x64.exe -Algorithm SHA256</div>
   <dl class="kv2 reveal">
-    <dt>Version</dt><dd><span translate="no">v0.6.0</span>, September 2026</dd>
+    <dt>Desktop version</dt><dd><span translate="no">v0.6.0</span>, September 2026; separate from the v0.6.1 Python engine</dd>
     <dt>SHA-256</dt><dd><span translate="no" style="font-family:var(--mono);font-size:.8rem;word-break:break-all">d762838c865f6b287ba30b8b576cb179500241904401fd8a01a2bb99d625d173</span></dd>
   </dl>
   <div class="null reveal">
@@ -261,6 +262,21 @@
   </div>
   <p class="body-text reveal">The core package has zero runtime dependencies and uses the Python standard library. Route online with your keys, or run fully offline against local weights.</p>
   <p class="body-text reveal">Then open the surface in your browser. One origin, one page, same-origin JSON routes.</p>
+</section>
+
+<!-- INDEPENDENT WORKFLOW ENVIRONMENT -->
+<section class="mv" id="service-desk" aria-labelledby="service-desk-h">
+  <h2 id="service-desk-h" class="reveal">Test an incident workflow locally.</h2>
+  <p class="body-text reveal">Service Desk Incident Environment 0.1.0 is a separately installable product with its own state, action log and verifier. Exercise incident handling, duplicate actions, restart recovery and isolation before connecting an agent to a production service. Its seven scripted cases use synthetic data and local HTTP services; they do not call a model provider or connect to ServiceNow.</p>
+  <p class="body-text reveal">Use Python 3.11 or newer in a virtual environment. Install Flywheel 0.6.1 above, then download the <a href="https://github.com/HarperZ9/flywheel/releases/download/v0.6.1/flywheel_env_service_desk_incident-0.1.0-py3-none-any.whl">Service Desk 0.1.0 wheel</a> into your current directory. A <a href="https://github.com/HarperZ9/flywheel/releases/download/v0.6.1/flywheel_env_service_desk_incident-0.1.0.tar.gz">source archive</a> is also available. This is a GitHub download, not a claimed PyPI listing.</p>
+  <div class="run reveal"><span class="c">shell</span> python -m pip install ./flywheel_env_service_desk_incident-0.1.0-py3-none-any.whl<br><span class="c">shell</span> service-desk-incident-env e2e --out ./incident-runs</div>
+  <p class="body-text reveal">The result includes an <span translate="no">artifact_dir</span>. Pass that exact run directory, rather than the parent <span translate="no">incident-runs</span> folder, to verification:</p>
+  <div class="run reveal"><span class="c">shell</span> service-desk-incident-env verify RETURNED_ARTIFACT_DIR --recompute --json</div>
+  <details class="product-record-details reveal">
+    <summary>Download integrity and workflow limits</summary>
+    <p class="body-text">Wheel SHA-256: <span translate="no" style="font-family:var(--mono);font-size:.8rem;overflow-wrap:anywhere">2a9ec96bbf9df6659cdf2b2bbcf38241dd5fcf6a201d3e53503733b27216f7d7</span>. Matching this hash checks download integrity. Synthetic case results do not measure model performance or prove that every incorrect submission will be rejected.</p>
+    <p class="body-text"><a href="https://github.com/HarperZ9/flywheel/tree/v0.6.1/packages/service-desk-incident-env">Read the product documentation and case definitions</a>. Keep original run artifacts when investigating a failure.</p>
+  </details>
 </section>
 
 <!-- EVIDENCE SKILL -->
