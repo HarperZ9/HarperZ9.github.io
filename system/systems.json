@@ -700,9 +700,27 @@
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "pip install gather-engine==1.7.0; gather docs sample.txt --store corpus",
+      "entryCommand": "pip install gather-engine==1.7.1; gather docs sample.txt --store corpus",
       "verificationCommand": "gather corpus verify ./corpus",
       "evidence": [
+        {
+          "id": "gather-release-v1-7-1",
+          "type": "release",
+          "label": "Gather v1.7.1 GitHub release",
+          "href": "https://github.com/HarperZ9/gather/releases/tag/v1.7.1",
+          "date": "2026-09-08",
+          "status": "verified",
+          "summary": "Gather v1.7.1 GitHub release was published at 2026-09-08T23:14:18Z and resolves to source commit cb35c6d513e63fceca74c8eafcd1faee4347ea32. Release metadata lists gather_engine-1.7.1-py3-none-any.whl at 183,763 bytes with SHA-256 7edc83e71e462c782234756f8fb43a0f5b77b3269557f7505c3d3b968ecc5a4d, gather_engine-1.7.1.tar.gz at 250,789 bytes with SHA-256 71e4df15252b88ec2676ba075ab0f7bd24d707c5d7072a35b09300a064096f8c, and SHA256SUMS.txt with SHA-256 99e6b943273959088ff82cf22a3d22959390d623b06e0e5db47fc5d50252b886. New corpus writes preserve exact stored bytes while exposing a readable LF-normalized view for selection, and selected rows remain pinned to the witnessed corpus digest, preserving the pinned corpus digest boundary. Legacy reconstruction does not prove historical raw object-byte integrity."
+        },
+        {
+          "id": "gather-pypi-v1-7-1",
+          "type": "release",
+          "label": "gather-engine 1.7.1 on PyPI",
+          "href": "https://pypi.org/project/gather-engine/1.7.1/",
+          "date": "2026-09-08",
+          "status": "verified",
+          "summary": "PyPI serves gather-engine 1.7.1. Publication verification matched GitHub and PyPI download-back wheel/source hashes, checked 64 Python modules and 132 source archive files against source commit cb35c6d513e63fceca74c8eafcd1faee4347ea32, completed a clean Windows wheel install, and exercised gather 1.7.1 CLI and MCP context selection. The newline smoke selected text from a readable view while retaining separate source and view hashes; tamper selection was refused with a corrupt-body error. This evidence does not prove source truth, claim support, completeness of gathered coverage, downstream model use, or absence of sensitive material in selected source text or URLs."
+        },
         {
           "id": "gather-release-v1-7-0",
           "type": "release",
@@ -735,7 +753,7 @@
         "Static web mode does not execute JavaScript.",
         "Optional hard-source adapters require external tools, and untrusted URLs near internal services require separate network controls.",
         "Readable context selection returns acquired source context; it does not prove source truth, claim support, completeness, downstream model use, or absence of sensitive material in selected text or URLs.",
-        "Certain literal CRLF, lone-CR, and mixed-newline corpus strings can be refused by inherited integrity checks; a refusal alone is not evidence of external tampering."
+        "Selection offsets use the LF-normalized view. New writes witness exact UTF-8 source text; legacy reconstruction does not prove historical raw object-byte integrity. Detecting witness changes requires a previously pinned corpus digest."
       ],
       "boundary": "Respect access controls, copyright, privacy, and the terms governing each source.",
       "inputs": [
@@ -760,7 +778,7 @@
       "lastVerified": "2026-09-08",
       "primaryDomain": "research-education",
       "productType": "research intake and corpus system",
-      "releaseState": "stable v1.7.0; GitHub and PyPI release verified"
+      "releaseState": "stable v1.7.1; GitHub and PyPI download-back verified"
     },
     {
       "id": "forum",
