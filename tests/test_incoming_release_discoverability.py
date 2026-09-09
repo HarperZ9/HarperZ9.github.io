@@ -360,7 +360,28 @@ def test_relay_020_github_release_discovery_avoids_pypi_relay_agent() -> None:
         assert bounded_claim not in release["summary"]
 
 
-def test_gather_171_release_discovery_keeps_context_boundaries_visible() -> None:
+def test_gather_181_current_install_and_mount_boundary_are_discoverable() -> None:
+    gather = registry_record("gather")
+    evidence = evidence_by_id(gather)
+    page = read("gather.html")
+    for item_id in ("gather-release-v1-8-1", "gather-pypi-v1-8-1"):
+        assert evidence[item_id]["status"] == "verified"
+        assert item_id in read("home/site/evidence-stream.json")
+        assert item_id in read("home/src/system-registry.ts")
+    release = evidence["gather-release-v1-8-1"]
+    assert "387621499c3f53c6786c613cecf638000844110a" in release["summary"]
+    assert "2029db765f9c89f4480f155089f9877caee14ea448a123162d8a44724e9e5c5a" in release["summary"]
+    assert "3293a895a55fcfa668bb665c989cc50d5806c6db77f98525739a7dbc5190f5ef" in release["summary"]
+    assert "185,963 bytes" in release["summary"]
+    assert "256,971 bytes" in release["summary"]
+    assert "keep corpora on native Linux storage or use native Windows Python" in page
+    assert "UNSAFE_PATH" in page
+    assert "CLI and MCP continue to accept directory strings" in page
+    assert "Other POSIX platforms retain no-follow and type checks without a mount-detection claim" in page
+    assert "earlier released 1.7.1 wheel smoke run" in page
+
+
+def test_gather_171_evidence_remains_after_current_release_update() -> None:
     gather = registry_record("gather")
     evidence = evidence_by_id(gather)
     payload = json.dumps(gather)
@@ -371,9 +392,9 @@ def test_gather_171_release_discovery_keeps_context_boundaries_visible() -> None
 
     release = evidence["gather-release-v1-7-1"]
     pypi = evidence["gather-pypi-v1-7-1"]
-    assert gather["releaseState"] == "stable v1.7.1; GitHub and PyPI download-back verified"
-    assert gather["entryCommand"] == "pip install gather-engine==1.7.1; gather docs sample.txt --store corpus"
-    assert gather["evidence"][0]["id"] == "gather-release-v1-7-1"
+    assert gather["releaseState"] == "stable v1.8.1; GitHub and PyPI download-back verified"
+    assert gather["entryCommand"] == "pip install gather-engine==1.8.1; gather docs sample.txt --store corpus"
+    assert gather["evidence"][0]["id"] == "gather-release-v1-8-1"
     assert release["type"] == "release"
     assert release["status"] == "verified"
     assert release["href"] == "https://github.com/HarperZ9/gather/releases/tag/v1.7.1"
@@ -413,10 +434,10 @@ def test_gather_171_release_discovery_keeps_context_boundaries_visible() -> None
     ):
         assert required in pypi["summary"]
 
-    assert "stable v1.7.1; GitHub and PyPI download-back verified" in catalog
-    assert "https://github.com/HarperZ9/gather/releases/tag/v1.7.1" in page
-    assert "https://pypi.org/project/gather-engine/1.7.1/" in page
-    assert "pip install gather-engine==1.7.1" in page
+    assert "stable v1.8.1; GitHub and PyPI download-back verified" in catalog
+    assert "https://github.com/HarperZ9/gather/releases/tag/v1.8.1" in page
+    assert "https://pypi.org/project/gather-engine/1.8.1/" in page
+    assert "pip install gather-engine==1.8.1" in page
     assert "New corpus writes preserve exact UTF-8 source text while selection uses a readable LF-normalized view" in page
     assert "Selections stay pinned to the witnessed corpus digest" in page
     sample_fixture = (
