@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { buildRouteHeader, navActive, renderNav } from "./nav.js";
 import { PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js";
-import { PRIMARY_ROUTES as NAV_PRIMARY_ROUTES } from "./routes.js?v=20260902-creative-chassis";
+import { PRIMARY_ROUTES as NAV_PRIMARY_ROUTES } from "./routes.js?v=20260909-font-marketplace-port";
 
 test("generated registry provides the static navigation taxonomy", () => {
   assert.equal(routeFamily("/hire.html"), "Work");

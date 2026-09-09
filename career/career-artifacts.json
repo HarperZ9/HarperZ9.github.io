@@ -144,64 +144,64 @@
   "authority_sha256": "8c5a030161fc2de8873dcc870e1315e0d6dc9c728f74727c683787bd5e152d34",
   "current_html": [
     {
-      "byte_length": 9197,
+      "byte_length": 9201,
       "extraction_sha256": "eda145de3b01c1c70056e30fbeb024441060a96c619853b3ee09a2e0a8906474",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "hire.html",
-      "sha256": "c993cefbca3cde167a8903cffa48e2c7597b58d01d0a218bc78d271280188e6b"
+      "sha256": "7351ba3f973995144629493ae9439f2a8543c071d9035d9ed6863c531643fa66"
     },
     {
-      "byte_length": 6328,
+      "byte_length": 6332,
       "extraction_sha256": "7e1cafa13c2257a6e500d9af5d28dfbe4b59dcb2c7a4f0ad93c8b42b7a616e3c",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume.html",
-      "sha256": "c0a7e23d4ddf869685754ab0f313cccf665873c4b19fd75772a8953042cd764b"
+      "sha256": "8e316a1c27a167043b89f5cd16541db7ac1ef51bad9123d7230d898913521b26"
     },
     {
-      "byte_length": 6708,
+      "byte_length": 6712,
       "extraction_sha256": "cac6ae0bf3d97eeb0a3916a60fd2cbfa0e9c95a77fffc82e364db34d3144ee75",
       "format": "html",
       "lane_id": "page:portfolio",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "portfolio.html",
-      "sha256": "989a93f4cb940220442be7941a54e8602aefb01f4be4ee20ee0524dd4f26f252"
+      "sha256": "91f671644a13b0a723e8833c7f4abf73d0961ce8107ad7b0eaa8490bd7b724eb"
     },
     {
-      "byte_length": 4456,
+      "byte_length": 4460,
       "extraction_sha256": "7ede35a6897d35bb59d91082c2835f59b9921c07547bd63b93f42e8ec1332e95",
       "format": "html",
       "lane_id": "page:cover-letter",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "cover-letter.html",
-      "sha256": "5bded7afe82e382a100a98f7d4a45d6bf12c4a91ec010703010af0de84aff41c"
+      "sha256": "a91c459fe96844ce7db912c63b409a8ef362d9c9e278b4a56ab500cc6e17f8c4"
     },
     {
-      "byte_length": 5425,
+      "byte_length": 5429,
       "extraction_sha256": "6b47b23b9178ceb9d4259e90cce75c983e89648205fd51cb1ad4e790f595cc3d",
       "format": "html",
       "lane_id": "page:cv",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "cv.html",
-      "sha256": "08c1e93ad04ceda72a55615cf6f365bdf8a1e8a9862cb81251c4096ddda2b941"
+      "sha256": "6f2c86ab70247bc78d1456028da16beabd8fe360a34832c0a0c901969ecb6ffa"
     },
     {
-      "byte_length": 4008,
+      "byte_length": 4012,
       "extraction_sha256": "46dffb0eee81183380646ffd48b3d78c18bc6933596b08ffbdb807f4e3cd38dc",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "dossier.html",
-      "sha256": "5029a4cfe1690352894c59e1bee20270730d68ff39cda6fcb972ae705e05de97"
+      "sha256": "b78ab877ccd99f0f08e291b01fce0f1aaf78e7acc7dfe14ccbbe43576d864803"
     },
     {
       "byte_length": 4294,

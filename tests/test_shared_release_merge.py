@@ -8,8 +8,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-FRESH_STAMP = "20260902-creative-chassis"
-NAV_CACHE_STAMP = "20260907-theme-preferences"
+FRESH_STAMP = "20260909-font-marketplace-port"
+NAV_CACHE_STAMP = "20260909-font-marketplace-port"
 
 
 def read(relative: str) -> str:
@@ -68,19 +68,32 @@ def test_route_registry_is_the_union_of_hiring_capability_and_legacy_routes() ->
     assert "for (const family of ROUTE_REGISTRY.families)" in source
 
 
-def test_fresh_cache_stamp_covers_the_shared_navigation_chain() -> None:
-    stamps = set()
+def test_font_marketplace_cache_stamp_covers_the_sitewide_navigation_chain() -> None:
+    stamps_by_page: dict[str, set[str]] = {}
     for page in site_html_pages():
+        stamps = stamps_by_page.setdefault(page.as_posix(), set())
         for part in read(page.as_posix()).split("nav.js?v=")[1:]:
             stamps.add(part.split('"')[0].split("'")[0])
-    assert stamps == {NAV_CACHE_STAMP}
+
+    stamped_pages = {page: stamps for page, stamps in stamps_by_page.items() if stamps}
+    assert stamped_pages, "no page loads the shared nav"
+    for page, stamps in stamps_by_page.items():
+        if stamps:
+            assert stamps == {NAV_CACHE_STAMP}, (page, sorted(stamps))
 
     nav = read("system/nav.js")
     home_art = read("system/home-art.js")
     home_template = read("home/index.html")
+    routes = read("system/routes.js")
+    home_routes = read("home/src/site-routes.ts")
+    renderer = read("scripts/render-route-registry.mjs")
     bundle_match = re.search(r'src="/(assets/index-[^"]+\.js)"', read("index.html"))
     assert bundle_match, "built home page does not reference its JavaScript bundle"
     bundle = read(bundle_match.group(1))
+    assert f'export const ROUTE_CACHE_STAMP = "{FRESH_STAMP}"' in routes
+    assert f'export const ROUTE_CACHE_STAMP = "{FRESH_STAMP}"' in home_routes
+    assert f'const ROUTE_CACHE_STAMP = "{FRESH_STAMP}"' in renderer
+    assert "current.match(/ROUTE_CACHE_STAMP" not in renderer
     assert f'const ASSET_V = "{FRESH_STAMP}"' in nav
     assert f'./routes.js?v={FRESH_STAMP}' in nav
     assert f'./nav.js?v={NAV_CACHE_STAMP}' in home_art

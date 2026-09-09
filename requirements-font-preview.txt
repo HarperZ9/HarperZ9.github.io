@@ -1,0 +1,3 @@
+# WOFF2 metadata/coverage verification, not font generation in the public site.
+fonttools==4.64.0
+brotli==1.2.0

@@ -1,5 +1,5 @@
-import { wireAnchorArrival, wireMenuArrowKeys } from "./nav.js?v=20260907-theme-preferences";
-import { SECONDARY_GROUPS } from "./routes.js?v=20260902-creative-chassis";
+import { wireAnchorArrival, wireMenuArrowKeys } from "./nav.js?v=20260909-font-marketplace-port";
+import { SECONDARY_GROUPS } from "./routes.js?v=20260909-font-marketplace-port";
 
 // The home app (built from home/) renders its final copy natively, so this
 // module no longer rewrites hero text. It keeps the shared-site menu and

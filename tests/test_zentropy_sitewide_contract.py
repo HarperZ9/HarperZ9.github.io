@@ -27,9 +27,11 @@ THEME_PREFERENCES_REVISION = "20260907-theme-preferences"
 REVIEWED_ASSET_REVISIONS = {
     "system/bulletin-board.js": "20260909-media-filters",
     "system/bulletin-work.js": "20260909-open-work",
+    "system/font-marketplace.css": "20260909-font-marketplace-port",
+    "system/font-specimen.js": "20260909-font-marketplace-port",
     "frontier-safety/frontier-safety-site.css": READING_CASCADE_REVISION,
     "frontier-safety/frontier-safety.css": READING_CASCADE_REVISION,
-    "system/nav.js": THEME_PREFERENCES_REVISION,
+    "system/nav.js": "20260909-font-marketplace-port",
     "system/theme-entry.js": THEME_PREFERENCES_REVISION,
     "system/theme.js": THEME_PREFERENCES_REVISION,
     "system/theme.css": THEME_PREFERENCES_REVISION,
