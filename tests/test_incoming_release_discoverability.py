@@ -360,7 +360,7 @@ def test_relay_020_github_release_discovery_avoids_pypi_relay_agent() -> None:
         assert bounded_claim not in release["summary"]
 
 
-def test_gather_170_release_discovery_keeps_context_boundaries_visible() -> None:
+def test_gather_171_release_discovery_keeps_context_boundaries_visible() -> None:
     gather = registry_record("gather")
     evidence = evidence_by_id(gather)
     payload = json.dumps(gather)
@@ -369,36 +369,40 @@ def test_gather_170_release_discovery_keeps_context_boundaries_visible() -> None
     home_projection = read("home/site/evidence-stream.json")
     home_registry = read("home/src/system-registry.ts")
 
-    release = evidence["gather-release-v1-7-0"]
-    pypi = evidence["gather-pypi-v1-7-0"]
-    assert gather["releaseState"] == "stable v1.7.0; GitHub and PyPI release verified"
-    assert gather["entryCommand"] == "pip install gather-engine==1.7.0; gather docs sample.txt --store corpus"
-    assert gather["evidence"][0]["id"] == "gather-release-v1-7-0"
+    release = evidence["gather-release-v1-7-1"]
+    pypi = evidence["gather-pypi-v1-7-1"]
+    assert gather["releaseState"] == "stable v1.7.1; GitHub and PyPI download-back verified"
+    assert gather["entryCommand"] == "pip install gather-engine==1.7.1; gather docs sample.txt --store corpus"
+    assert gather["evidence"][0]["id"] == "gather-release-v1-7-1"
     assert release["type"] == "release"
     assert release["status"] == "verified"
-    assert release["href"] == "https://github.com/HarperZ9/gather/releases/tag/v1.7.0"
-    assert pypi["href"] == "https://pypi.org/project/gather-engine/1.7.0/"
+    assert release["href"] == "https://github.com/HarperZ9/gather/releases/tag/v1.7.1"
+    assert pypi["href"] == "https://pypi.org/project/gather-engine/1.7.1/"
 
     for required in (
-        "Gather v1.7.0 GitHub release",
-        "published at 2026-09-08T21:38:40Z",
-        "source commit 25b1f65bc9c8146f60eef0eccc8116360842a508",
-        "gather_engine-1.7.0-py3-none-any.whl",
-        "180,485 bytes",
-        "69fdea1aee67c6dd8a0d93c40bcb51476edb26c0163e6e7e25f4c86c1bb7b0c6",
-        "gather_engine-1.7.0.tar.gz",
-        "244,569 bytes",
-        "1d946c31dbc9b7adf51ea1c7fa503f863e1303a620e41b8627e8c915218536b7",
+        "Gather v1.7.1 GitHub release",
+        "published at 2026-09-08T23:14:18Z",
+        "source commit cb35c6d513e63fceca74c8eafcd1faee4347ea32",
+        "gather_engine-1.7.1-py3-none-any.whl",
+        "183,763 bytes",
+        "7edc83e71e462c782234756f8fb43a0f5b77b3269557f7505c3d3b968ecc5a4d",
+        "gather_engine-1.7.1.tar.gz",
+        "250,789 bytes",
+        "71e4df15252b88ec2676ba075ab0f7bd24d707c5d7072a35b09300a064096f8c",
         "SHA256SUMS.txt",
-        "878f51ff23216717a1f6bfc50a0c077d3573f376555c78f801e430ebafc3a34d",
-        "readable corpus context selection",
+        "99e6b943273959088ff82cf22a3d22959390d623b06e0e5db47fc5d50252b886",
+        "exact stored bytes",
+        "readable LF-normalized view",
+        "pinned corpus digest",
     ):
         assert required in release["summary"]
 
     for required in (
-        "PyPI serves gather-engine 1.7.0",
+        "PyPI serves gather-engine 1.7.1",
         "64 Python modules",
-        "clean no-index wheel install",
+        "132 source archive files",
+        "clean Windows wheel install",
+        "gather 1.7.1",
         "CLI and MCP context selection",
         "tamper selection was refused",
         "does not prove source truth",
@@ -409,10 +413,12 @@ def test_gather_170_release_discovery_keeps_context_boundaries_visible() -> None
     ):
         assert required in pypi["summary"]
 
-    assert "stable v1.7.0; GitHub and PyPI release verified" in catalog
-    assert "https://github.com/HarperZ9/gather/releases/tag/v1.7.0" in page
-    assert "https://pypi.org/project/gather-engine/1.7.0/" in page
-    assert "pip install gather-engine==1.7.0" in page
+    assert "stable v1.7.1; GitHub and PyPI download-back verified" in catalog
+    assert "https://github.com/HarperZ9/gather/releases/tag/v1.7.1" in page
+    assert "https://pypi.org/project/gather-engine/1.7.1/" in page
+    assert "pip install gather-engine==1.7.1" in page
+    assert "New corpus writes preserve exact UTF-8 source text while selection uses a readable LF-normalized view" in page
+    assert "Selections stay pinned to the witnessed corpus digest" in page
     sample_fixture = (
         "Offline quickstart: Gather keeps acquired context separate from conclusions."
         "\nDecision fact: the release can select useful text from a stored corpus."
@@ -430,9 +436,9 @@ def test_gather_170_release_discovery_keeps_context_boundaries_visible() -> None
     assert "Sample selected text" not in command_block
     assert "Sample selected text" in page
     assert "Offline quickstart: Gather keeps acquired context separate from conclusions." in page
-    assert "gather-release-v1-7-0" in home_projection
-    assert "gather-pypi-v1-7-0" in home_projection
-    assert "Gather v1.7.0 GitHub release" in home_registry
+    assert "gather-release-v1-7-1" in home_projection
+    assert "gather-pypi-v1-7-1" in home_projection
+    assert "Gather v1.7.1 GitHub release" in home_registry
 
     for source in (payload, page, catalog, home_projection, home_registry):
         assert "E2E compiler released" not in source
@@ -441,3 +447,4 @@ def test_gather_170_release_discovery_keeps_context_boundaries_visible() -> None
         assert "source truth verified" not in source
         assert "complete gathered coverage" not in source
         assert "example.com/article" not in source
+        assert "source bytes are normalized to LF" not in source

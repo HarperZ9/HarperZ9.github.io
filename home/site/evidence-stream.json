@@ -3,23 +3,23 @@
   "derivedFrom": "harperz9-systems/v4",
   "records": [
     {
-      "id": "gather-release-v1-7-0",
+      "id": "gather-release-v1-7-1",
       "type": "release",
-      "label": "Gather v1.7.0 GitHub release",
-      "href": "https://github.com/HarperZ9/gather/releases/tag/v1.7.0",
+      "label": "Gather v1.7.1 GitHub release",
+      "href": "https://github.com/HarperZ9/gather/releases/tag/v1.7.1",
       "date": "2026-09-08",
       "status": "verified",
-      "summary": "Gather v1.7.0 GitHub release adds readable corpus context selection and publishes verified wheel, source archive, and checksum assets from source commit 25b1f65bc9c8146f60eef0eccc8116360842a508.",
+      "summary": "Gather v1.7.1 GitHub release preserves exact UTF-8 source text in new corpus writes while providing a readable LF-normalized view for selection; published assets match the verified wheel, source archive, and checksum hashes from source commit cb35c6d513e63fceca74c8eafcd1faee4347ea32.",
       "systemId": "gather"
     },
     {
-      "id": "gather-pypi-v1-7-0",
+      "id": "gather-pypi-v1-7-1",
       "type": "release",
-      "label": "gather-engine 1.7.0 on PyPI",
-      "href": "https://pypi.org/project/gather-engine/1.7.0/",
+      "label": "gather-engine 1.7.1 on PyPI",
+      "href": "https://pypi.org/project/gather-engine/1.7.1/",
       "date": "2026-09-08",
       "status": "verified",
-      "summary": "PyPI serves gather-engine 1.7.0; post-publication verification checked 64 Python modules exactly, clean installed the wheel, exercised CLI/MCP context selection, and refused tampered corpus selection while preserving does-not-prove limits.",
+      "summary": "PyPI serves gather-engine 1.7.1; publication verification matched PyPI and GitHub download-back hashes, checked 64 Python modules and 132 source archive files, clean installed the Windows wheel, exercised CLI/MCP context selection, and refused tampered corpus selection while preserving does-not-prove limits.",
       "systemId": "gather"
     },
     {
