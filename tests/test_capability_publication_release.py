@@ -32,12 +32,22 @@ RELEASE_PATHS = (
     "assets/index-CPG6kzKK.js",
     "assets/index-ClATdIWg.js",
     "assets/index-CS_jYuhh.js",
+    "assets/index-CxyhrtVk.js",
     "system/theme.js",
     "system/theme-entry.js",
     "system/theme.css",
     "assets/index-B2kgPYlE.css",
     "typeface.html",
     "system/type-specimen.css",
+    "fonts.html",
+    "requirements-font-preview.txt",
+    "system/font-catalog.mjs",
+    "system/font-marketplace.css",
+    "system/font-specimen.js",
+    "type/preview/editorial.json",
+    "type/preview/mono.json",
+    "type/preview/zentropy-editorial-regular.woff2",
+    "type/preview/zentropy-mono-regular.woff2",
     "img/og/typeface.png",
     "accountable-surface.html",
     "availability-is-not-reach.html",
@@ -233,7 +243,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "094865c9bde9f05fc4dcab8b94ef4d7e11180edd89009434280666bb01f68b08"
+REVIEWED_RELEASE_SHA256 = "1e1c781beaaf7ff56393639bae24c96c0227697544a829525e29b9e097cafcdf"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -321,6 +331,21 @@ def test_release_spine_matches_the_reviewed_artifact_fingerprint() -> None:
     assert _release_fingerprint() == REVIEWED_RELEASE_SHA256
 
 
+def test_font_marketplace_files_are_part_of_the_reviewed_release_spine() -> None:
+    required = {
+        "fonts.html",
+        "requirements-font-preview.txt",
+        "system/font-catalog.mjs",
+        "system/font-marketplace.css",
+        "system/font-specimen.js",
+        "type/preview/editorial.json",
+        "type/preview/mono.json",
+        "type/preview/zentropy-editorial-regular.woff2",
+        "type/preview/zentropy-mono-regular.woff2",
+    }
+    assert required <= set(RELEASE_PATHS)
+
+
 def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     source = _text("index.html")
     obsolete_js = "index-B_" + "tbCD5Q.js"
@@ -355,8 +380,9 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_060_final_gather_pre_review_js = "index-CYqKao4X.js"
     previous_060_final_gather_fixture_js = "index-CpC5RhmM.js"
     previous_gather_171_js = "index-AYA0gyN2.js"
-    current_js = "index-CS_jYuhh.js"
+    current_js = "index-CxyhrtVk.js"
     current_css = "index-B2kgPYlE.css"
+    previous_home_js = "index-CS_jYuhh.js"
     previous_flywheel_js = "index-BIYnDBdw.js"
     previous_flywheel_css = "index-DGQrcJ5p.css"
     previous_security_js = "index-BnUu1wyw.js"
@@ -366,6 +392,9 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     assert f'href="/assets/{current_css}"' in source
     assert (ROOT / "assets" / current_js).is_file()
     assert (ROOT / "assets" / current_css).is_file()
+    assert previous_home_js not in source
+    assert f"assets/{current_js}" in RELEASE_PATHS
+    assert f"assets/{current_css}" in RELEASE_PATHS
     assert "index-CPG6kzKK.js" not in source
     assert "index-ClATdIWg.js" not in source
     assert previous_gather_171_js not in source

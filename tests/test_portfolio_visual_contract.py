@@ -87,6 +87,13 @@ def test_home_menu_readability_rules_live_in_the_home_bundle() -> None:
     assert re.search(r"\.home-menu:not\(\[open\]\)\s+\.home-menu-list\s*\{[^}]*display\s*:\s*none", css, re.S)
 
 
+def test_deployed_home_bundle_contains_active_font_routes() -> None:
+    js_asset, _css_asset = deployed_assets()
+    bundle = read(js_asset)
+    assert "fonts.html" in bundle
+    assert "typeface.html" in bundle
+
+
 def test_noscript_fallback_is_a_complete_identity_first_front_door() -> None:
     src = read(HOME_INDEX)
     assert "<noscript>" in src

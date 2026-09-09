@@ -2,6 +2,7 @@
 .env.*
 .warden-safe-cache/
 .playwright/
+.superpowers/
 .pytest_cache/
 __pycache__/
 node_modules/

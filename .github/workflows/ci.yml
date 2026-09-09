@@ -20,14 +20,26 @@ jobs:
         with:
           node-version: "24"
       - name: Install test dependencies
-        run: python -m pip install pytest==8.4.2 PyYAML==6.0.2 -r requirements-career-docs.txt
+        run: python -m pip install pytest==8.4.2 PyYAML==6.0.2 -r requirements-career-docs.txt -r requirements-font-preview.txt
       - name: Python content contracts
         run: python -m pytest
+      - name: Navigation and font catalog contracts
+        run: node --test system/nav.test.mjs tests/font-catalog.test.mjs tests/navigation-discovery.mjs
       - name: Bulletin browser media and open work regressions
         run: |
           export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
           test -n "$CHROME_PATH"
           node --test system/bulletin-board.test.mjs system/bulletin-board-media-filter.test.mjs system/bulletin-work.test.mjs
+      - name: Font marketplace browser regressions
+        run: |
+          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+          npm install --no-save playwright@1.62.1
+          python -m http.server 8802 &
+          server_pid=$!
+          trap "kill $server_pid" EXIT
+          sleep 2
+          SITE_BASE_URL=http://127.0.0.1:8802 BROWSER_CHANNEL=chrome node tests/font-original-preview.cjs
+          SITE_BASE_URL=http://127.0.0.1:8802 BROWSER_CHANNEL=chrome node tests/font-marketplace-reading.cjs
       - name: Internal link crawl
         run: |
           python -m http.server 8802 &
