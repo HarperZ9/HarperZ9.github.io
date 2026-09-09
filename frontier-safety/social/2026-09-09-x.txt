@@ -1,0 +1,1 @@
+9 Sep Frontier Safety: a registered source revised its investigation questions to separate completeness, characterization, counterfactual, and root-cause limits. This is a framework update, not findings or control validation. https://harperz9.github.io/frontier-safety.html

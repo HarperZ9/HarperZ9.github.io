@@ -184,3 +184,29 @@ This was a monitoring false-positive review, not a new factual development. It d
 - Reviewed transition: at `2026-08-30T22:35:42Z`, the four current sitemap records were accepted as an adapter-transition baseline. Their canonical SHA-256 values are `71a78b61361dfac67e3f58989126b1a1ff6d2dda2e33db81a52e65af8f989f9c`, `1c051ac74db7438bdcf679d9116e1c741df808d7c03ba70ee1a9eb67f0df569b`, `2e9ba580505ccad14873e4247daf44f99b2352aa45bda0c2086e8cabf339217c`, and `15120fdc9a0b96049e0ec4b21b42078f017b550427f100997ed04f4a6d255438`, in registry order.
 - Post-transition local check: `2026-08-30T22:35:45Z`, zero changed, error, unbaselined, or review-required source IDs.
 - Publication state: the repair creates no digest, correction, social post, or public claim change.
+
+## 2026-09-09 publication receipt
+
+- Edition: 2026-09-09
+- Observation time: `2026-09-09T15:06:40Z`
+- Publication state: reviewed normal changed edition; no amendment or correction to earlier archives
+- Live edition target: [https://harperz9.github.io/frontier-safety.html](https://harperz9.github.io/frontier-safety.html)
+- Dated archive target: [https://harperz9.github.io/frontier-safety/archive/2026-09-09.html](https://harperz9.github.io/frontier-safety/archive/2026-09-09.html)
+- Edition hash: `3a1be40374f220802c3c9ea5274b97114841d20e5eaf3844b8c21558289ed14e`
+- Idempotency key: `294d01f668d52119c15edd570cd5238f6e3bafa3834c67b95b0b5a168927bc2e`
+- Reviewed content commit: `6efefb9da0dc66d4350489026c0e392c111c4b8a`
+- Pull request: [#230](https://github.com/HarperZ9/HarperZ9.github.io/pull/230)
+- Source check: the curated checker ran exactly once for this refresh. It reported six changed and review-required registered sources, zero errors, and zero unbaselined sources; packet SHA-256 `f48cccffba98ca8d8793dc4f42616df4c27925f6d330ee13a34981e825ea05a1`.
+- Material change: METR's September 5 revision to its July 28 incident-investigation methodology separates survey completeness, characterization trustworthiness, counterfactual limits, and root-cause/remediation limits, and states the access a full investigation would need. This is a proposed framework, not a completed review, event finding, or control-effectiveness result.
+- Nonmaterial review: four OpenAI sitemap-entry deltas and the METR/Redwood joint-report delta showed no supported semantic change. Potentially material records outside the approved registry were held outside publication.
+- Reviewed source state: unchanged. Acceptance of any new fingerprint remains a separate reviewed transition.
+- Reproducibility: the deterministic generator produced seven byte-identical outputs on two consecutive successful runs.
+- Verification: 199 targeted Frontier Safety and deployment tests passed; the complete suite passed 576 tests; 1,131 internal links across 160 pages had zero failures; public-artifact, claim-language, writing, archive-discovery, canonical metadata, accessibility, and diff gates passed.
+- Independent review: two source/content reviews and one commit-level review passed with no findings.
+- Visual review: current and dated-archive pages passed Chrome desktop and responsive inspection with no horizontal overflow. Chrome's requested 390-pixel override rendered at its 520 CSS-pixel minimum; that exact limitation is retained.
+- Guarded workflow boundary: the manual publication workflow was not dispatched because it would rerun the curated checker and violate this refresh's exactly-once source-check requirement. Pull-request CI remains the external merge gate.
+- Merge receipt: GitHub PR #230 records the final merge commit and merge time; pending at the time this pre-publication receipt was committed.
+- Pages build receipt: the Pages deployment associated with the PR #230 merge; pending at the time this pre-publication receipt was committed.
+- Live hash verification: required after Pages succeeds; pending at the time this pre-publication receipt was committed.
+- X post: not posted; edition-matched draft retained.
+- LinkedIn post: not posted; edition-matched draft retained.
