@@ -30,6 +30,7 @@ RELEASE_PATHS = (
     "system/system.css",
     "warden.html",
     "assets/index-CPG6kzKK.js",
+    "assets/index-ClATdIWg.js",
     "system/theme.js",
     "system/theme-entry.js",
     "system/theme.css",
@@ -194,6 +195,7 @@ RELEASE_PATHS = (
     "security-toolkit.html",
     "security-tools.json",
     "system/bulletin-board.js",
+    "system/bulletin-work.js",
     "system/figure.css",
     "system/figure.js",
     "system/figure.test.mjs",
@@ -230,7 +232,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "28f2813810d4aa3eef18d836720400c9887d0fa8307248e9a753200ec60aa0da"
+REVIEWED_RELEASE_SHA256 = "800efa6a39cb18381cb3597bdd5b8be2ffbdf55dc517c57a355a4fe836c9bd65"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -352,7 +354,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_060_final_gather_pre_review_js = "index-CYqKao4X.js"
     previous_060_final_gather_fixture_js = "index-CpC5RhmM.js"
     previous_gather_171_js = "index-AYA0gyN2.js"
-    current_js = "index-CPG6kzKK.js"
+    current_js = "index-ClATdIWg.js"
     current_css = "index-B2kgPYlE.css"
     previous_flywheel_js = "index-BIYnDBdw.js"
     previous_flywheel_css = "index-DGQrcJ5p.css"
@@ -363,6 +365,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     assert f'href="/assets/{current_css}"' in source
     assert (ROOT / "assets" / current_js).is_file()
     assert (ROOT / "assets" / current_css).is_file()
+    assert "index-CPG6kzKK.js" not in source
     assert previous_gather_171_js not in source
     assert not (ROOT / "assets" / previous_gather_171_js).exists()
     assert previous_060_draft_js not in source

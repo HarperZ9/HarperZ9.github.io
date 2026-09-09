@@ -26,6 +26,7 @@ READING_CASCADE_REVISION = "20260907-reading-completion"
 THEME_PREFERENCES_REVISION = "20260907-theme-preferences"
 REVIEWED_ASSET_REVISIONS = {
     "system/bulletin-board.js": "20260907-media-renderer",
+    "system/bulletin-work.js": "20260909-open-work",
     "frontier-safety/frontier-safety-site.css": READING_CASCADE_REVISION,
     "frontier-safety/frontier-safety.css": READING_CASCADE_REVISION,
     "system/nav.js": THEME_PREFERENCES_REVISION,
