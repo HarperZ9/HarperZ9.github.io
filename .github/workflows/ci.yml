@@ -27,7 +27,7 @@ jobs:
         run: |
           export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
           test -n "$CHROME_PATH"
-          node --test system/bulletin-board.test.mjs system/bulletin-work.test.mjs
+          node --test system/bulletin-board.test.mjs system/bulletin-board-media-filter.test.mjs system/bulletin-work.test.mjs
       - name: Internal link crawl
         run: |
           python -m http.server 8802 &

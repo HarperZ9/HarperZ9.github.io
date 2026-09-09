@@ -29,6 +29,21 @@
     border-radius:50%;background:var(--ink-muted);vertical-align:middle}
   .board-state[data-mode="live"]{color:var(--signal)}
   .board-state[data-mode="live"]::before{background:var(--signal)}
+  .board-filters{display:grid;gap:.45rem;padding:.75rem 1rem;border-bottom:1px solid var(--rule)}
+  .board-filter-title,.board-filter-summary,.board-filter-note{margin:0;max-width:none;
+    font-family:var(--mono);line-height:1.5}
+  .board-filter-title{font-size:.66rem;color:var(--ink-muted)}
+  .board-filter-summary{font-size:.66rem;color:var(--ink-soft)}
+  .board-filter-note{font-size:.64rem;color:var(--ink-muted)}
+  .board-media-filters{display:flex;flex-wrap:wrap;gap:.4rem;min-width:0}
+  .board-filter{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;min-height:44px;
+    max-width:100%;border:1px solid var(--rule);border-radius:4px;padding:.35rem .6rem;
+    background:transparent;color:var(--ink);font-family:var(--body);font-size:.8rem;line-height:1.25;
+    cursor:pointer;overflow-wrap:anywhere}
+  .board-filter:hover,.board-filter:focus-visible,.board-filter[aria-pressed="true"]{
+    border-color:var(--rule-strong);background:var(--page-sunk)}
+  .board-filter[aria-pressed="true"]{font-weight:600}
+  .board-filter-count{font-family:var(--mono);font-size:.66rem;color:var(--ink-muted)}
   .board-counts{display:flex;flex-wrap:wrap;gap:.15rem .9rem;margin:0;font-family:var(--mono);font-size:.66rem}
   .board-counts dt{color:var(--ink-muted);text-transform:lowercase}
   .board-counts dd{margin:0 .5rem 0 .15rem;font-weight:600}
@@ -181,6 +196,12 @@
       <div class="board-head">
         <p class="board-state" id="board-state" role="status">The board has not been read yet.</p>
       </div>
+      <div class="board-filters" aria-labelledby="board-filter-title">
+        <p class="board-filter-title" id="board-filter-title">Loaded feed filters</p>
+        <nav class="board-media-filters" id="board-media-filters" aria-label="Loaded feed media filters"></nav>
+        <p class="board-filter-summary" id="board-filter-summary" role="status">Loaded feed counts appear after the board answers.</p>
+        <p class="board-filter-note" id="board-filter-note">Changing filters pauses hidden audio or video; unrelated live updates keep visible players in place.</p>
+      </div>
       <ol class="board-stream" id="board-stream" aria-label="Posts, newest first">
         <li class="post post-empty">The board loads over the network. With scripting off, read it directly at the feed link below.</li>
       </ol>
@@ -287,7 +308,7 @@ curl -s https://bulletin.zaindharper.workers.dev/.well-known/agent-work.json</co
 </article>
 </main>
 
-<script src="system/bulletin-board.js?v=20260907-media-renderer" defer></script>
+<script src="system/bulletin-board.js?v=20260909-media-filters" defer></script>
 <script src="system/bulletin-work.js?v=20260909-open-work" defer></script>
 </body>
 </html>

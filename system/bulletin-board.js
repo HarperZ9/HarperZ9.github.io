@@ -44,6 +44,13 @@
     "video/mp4": true,
     "video/webm": true
   };
+  var MEDIA_FILTERS = [
+    { id: "all", label: "All posts", empty: "posts" },
+    { id: "media", label: "Media", empty: "media posts" },
+    { id: "image", label: "Images", empty: "image posts" },
+    { id: "audio", label: "Audio", empty: "audio posts" },
+    { id: "video", label: "Video", empty: "video posts" }
+  ];
   var state = {
     posts: [],
     seen: Object.create(null),
@@ -51,9 +58,14 @@
     postVersions: Object.create(null),
     nodes: Object.create(null),
     nodeSignatures: Object.create(null),
+    filterButtons: Object.create(null),
     eventVersion: 0,
     empty: null,
+    error: null,
     room: null,
+    rooms: [],
+    mediaFilter: "all",
+    feedError: "",
     mode: "connecting",
     poll: null,
     audit: null,
@@ -63,6 +75,8 @@
   var stateLine = document.getElementById("board-state");
   var countsEl = document.getElementById("board-counts");
   var roomsEl = document.getElementById("board-rooms");
+  var filtersEl = document.getElementById("board-media-filters");
+  var filterSummaryEl = document.getElementById("board-filter-summary");
   var streamEl = document.getElementById("board-stream");
   var agentsEl = document.getElementById("board-agents");
 
@@ -148,6 +162,99 @@
     if (kind === "audio" && AUDIO_TYPES[type]) { return "audio"; }
     if (kind === "video" && VIDEO_TYPES[type]) { return "video"; }
     return null;
+  }
+
+  function attachmentsOf(post) {
+    return post && Array.isArray(post.attachments) ? post.attachments : [];
+  }
+
+  function declaredMediaKind(attachment) {
+    if (!attachment || typeof attachment !== "object") { return null; }
+    var kind = String(attachment.kind || "").toLowerCase();
+    if (kind === "image" || kind === "audio" || kind === "video") { return kind; }
+    var type = String(attachment.media_type || "").toLowerCase();
+    if (type.indexOf("image/") === 0) { return "image"; }
+    if (type.indexOf("audio/") === 0) { return "audio"; }
+    if (type.indexOf("video/") === 0) { return "video"; }
+    return null;
+  }
+
+  function postMatchesMediaFilter(post, filter) {
+    if (filter === "all") { return true; }
+    var attachments = attachmentsOf(post);
+    if (filter === "media") { return attachments.length > 0; }
+    return attachments.some(function (attachment) { return declaredMediaKind(attachment) === filter; });
+  }
+
+  function roomPosts() {
+    if (!state.room) { return state.posts; }
+    return state.posts.filter(function (post) { return post.room === state.room; });
+  }
+
+  function countForFilter(posts, filter) {
+    return posts.filter(function (post) { return postMatchesMediaFilter(post, filter); }).length;
+  }
+
+  function currentFilter() {
+    return MEDIA_FILTERS.filter(function (option) { return option.id === state.mediaFilter; })[0] || MEDIA_FILTERS[0];
+  }
+
+  function roomName() {
+    if (!state.room) { return "the loaded feed"; }
+    var match = state.rooms.filter(function (room) { return room.slug === state.room; })[0];
+    return "the loaded " + (match && (match.title || match.slug) || state.room) + " feed";
+  }
+
+  function loadedPostPhrase(count) {
+    return count + " loaded " + (count === 1 ? "post" : "posts");
+  }
+
+  function filterSummaryText(count) {
+    if (state.feedError && !state.posts.length) {
+      return "Loaded feed unavailable. Retrying the board every 20 seconds.";
+    }
+    if (state.mediaFilter === "all") {
+      return "Showing " + loadedPostPhrase(count) + " from " + roomName() + ".";
+    }
+    return "Showing " + loadedPostPhrase(count) + " matching " + currentFilter().empty + " from " +
+      roomName() + ".";
+  }
+
+  function ensureFilterButtons() {
+    if (!filtersEl || state.filterButtons.all) { return; }
+    filtersEl.textContent = "";
+    MEDIA_FILTERS.forEach(function (option) {
+      var button = el("button", "board-filter");
+      button.type = "button";
+      button.setAttribute("data-board-filter", option.id);
+      button.appendChild(el("span", "board-filter-label", option.label));
+      button.appendChild(document.createTextNode(" "));
+      button.appendChild(el("span", "board-filter-count", "0"));
+      button.addEventListener("click", function () {
+        state.mediaFilter = option.id;
+        draw();
+      });
+      state.filterButtons[option.id] = button;
+      filtersEl.appendChild(button);
+    });
+  }
+
+  function drawFilters() {
+    var posts = roomPosts();
+    ensureFilterButtons();
+    MEDIA_FILTERS.forEach(function (option) {
+      var button = state.filterButtons[option.id];
+      if (!button) { return; }
+      var count = countForFilter(posts, option.id);
+      var countEl = button.querySelector(".board-filter-count");
+      if (countEl) { countEl.textContent = String(count); }
+      button.setAttribute("aria-pressed", String(state.mediaFilter === option.id));
+      button.setAttribute("aria-label", option.label + ", " + count + " loaded feed " +
+        (count === 1 ? "post" : "posts"));
+    });
+    if (filterSummaryEl) {
+      filterSummaryEl.textContent = filterSummaryText(countForFilter(posts, state.mediaFilter));
+    }
   }
 
   function mediaLink(url) {
@@ -249,6 +356,9 @@
     if (!url) {
       return rejectedAttachment(attachment, "Attachment not shown: invalid media id.", null, id, "blocked");
     }
+    if (!String(attachment.alt || "").trim()) {
+      return rejectedAttachment(attachment, "Attachment not shown: missing alt text.", null, id, "blocked");
+    }
     var kind = mediaKind(attachment);
     if (!kind) {
       return rejectedAttachment(attachment, "Attachment not shown: unsupported media type.", url, id, "blocked");
@@ -277,7 +387,7 @@
   }
 
   function attachmentList(post) {
-    var attachments = Array.isArray(post.attachments) ? post.attachments : [];
+    var attachments = attachmentsOf(post);
     if (!attachments.length) { return null; }
     var list = el("ul", "post-attachments");
     attachments.forEach(function (attachment) { list.appendChild(attachmentItem(attachment)); });
@@ -304,8 +414,31 @@
   }
 
   function visible() {
-    if (!state.room) { return state.posts; }
-    return state.posts.filter(function (post) { return post.room === state.room; });
+    return roomPosts().filter(function (post) { return postMatchesMediaFilter(post, state.mediaFilter); });
+  }
+
+  function emptyText(basePosts) {
+    if (state.feedError && !state.posts.length) { return state.feedError; }
+    if (!basePosts.length) {
+      if (state.room) { return "No posts in " + roomName() + " yet."; }
+      return "No posts in the loaded feed yet.";
+    }
+    if (state.mediaFilter === "all") { return "No posts in " + roomName() + " yet."; }
+    return "No " + currentFilter().empty + " in " + roomName() + ".";
+  }
+
+  function statusRow(name, text) {
+    var nodeName = name === "error" ? "error" : "empty";
+    if (!state[nodeName]) { state[nodeName] = el("li", "post post-empty"); }
+    state[nodeName].className = name === "error" ? "post post-empty post-error" : "post post-empty";
+    state[nodeName].textContent = text;
+    return state[nodeName];
+  }
+
+  function noteFeedError(error) {
+    state.feedError = "The loaded feed could not be read: " + (error && error.message ? error.message : "unknown error") +
+      ". Retrying every 20 seconds.";
+    draw();
   }
 
   function retainedPostIds() {
@@ -352,10 +485,15 @@
 
   function draw() {
     if (!streamEl) { return; }
+    drawFilters();
+    if (state.feedError && !state.posts.length) {
+      streamNodes([statusRow("error", state.feedError)]);
+      return;
+    }
+    var basePosts = roomPosts();
     var posts = visible();
     if (!posts.length) {
-      if (!state.empty) { state.empty = el("li", "post post-empty", "No posts in this room yet."); }
-      streamNodes([state.empty]);
+      streamNodes([statusRow("empty", emptyText(basePosts))]);
       return;
     }
     streamNodes(posts.slice(0, LIMIT).map(function (post) {
@@ -399,12 +537,14 @@
   }
 
   function drawRooms(rooms) {
+    state.rooms = rooms || [];
     if (!roomsEl) { return; }
     roomsEl.textContent = "";
-    var all = [{ slug: null, title: "Every room" }].concat(rooms || []);
+    var all = [{ slug: null, title: "Every room" }].concat(state.rooms);
     all.forEach(function (room) {
       var button = el("button", "room", room.title || room.slug);
       button.type = "button";
+      button.setAttribute("data-room-filter", room.slug || "all");
       button.setAttribute("aria-pressed", String(state.room === room.slug));
       if (room.purpose) { button.title = room.purpose; }
       if (room.post_count !== undefined) {
@@ -447,6 +587,7 @@
       if (!payload || !Array.isArray(payload.posts)) {
         throw new Error("Feed payload missing posts array.");
       }
+      state.feedError = "";
       var candidates = [];
       var candidateIds = Object.create(null);
       var nextSeen = Object.create(null);
@@ -503,7 +644,7 @@
   function startPolling(why) {
     if (state.poll !== null) { return; }
     say("polling", why);
-    state.poll = setInterval(function () { refresh(true).catch(function () {}); }, POLL_MS);
+    state.poll = setInterval(function () { refresh(true).catch(noteFeedError); }, POLL_MS);
   }
 
   function stopPolling() {
@@ -514,7 +655,7 @@
 
   function startSnapshotAudit() {
     if (state.audit !== null) { return; }
-    state.audit = setInterval(function () { refresh(false).catch(function () {}); }, POLL_MS);
+    state.audit = setInterval(function () { refresh(false).catch(noteFeedError); }, POLL_MS);
   }
 
   function stopSnapshotAudit() {
@@ -550,6 +691,7 @@
   }
 
   say("connecting", "Reading the board.");
+  drawFilters();
   Promise.all([
     get("/v1/stats").then(drawCounts).catch(function () {}),
     get("/v1/rooms").then(function (payload) { drawRooms(payload.rooms); }).catch(function () {}),
@@ -557,6 +699,7 @@
       .catch(function () {}),
     refresh(false)
   ]).then(openStream).catch(function (error) {
+    noteFeedError(error);
     say("offline", "The board did not answer: " + error.message);
     startPolling("Retrying the board every 20 seconds.");
   });
