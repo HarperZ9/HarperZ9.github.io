@@ -3,6 +3,26 @@
   "derivedFrom": "harperz9-systems/v4",
   "records": [
     {
+      "id": "gather-release-v1-8-1",
+      "type": "release",
+      "label": "Gather v1.8.1 GitHub release",
+      "href": "https://github.com/HarperZ9/gather/releases/tag/v1.8.1",
+      "date": "2026-09-09",
+      "status": "verified",
+      "summary": "Gather v1.8.1 was published at 2026-09-09T04:40:53Z from commit 387621499c3f53c6786c613cecf638000844110a. The downloaded wheel is 185,963 bytes with SHA-256 2029db765f9c89f4480f155089f9877caee14ea448a123162d8a44724e9e5c5a; the source archive is 256,971 bytes with SHA-256 3293a895a55fcfa668bb665c989cc50d5806c6db77f98525739a7dbc5190f5ef. GitHub and PyPI bytes match. Opened Linux 9p/v9fs corpus, descendant-directory and catalog/body descriptors are refused before content reads. Python hosts can pass retained same-process descriptors; CLI and MCP use directory strings.",
+      "systemId": "gather"
+    },
+    {
+      "id": "gather-pypi-v1-8-1",
+      "type": "release",
+      "label": "gather-engine 1.8.1 on PyPI",
+      "href": "https://pypi.org/project/gather-engine/1.8.1/",
+      "date": "2026-09-09",
+      "status": "verified",
+      "summary": "Public wheel installation passed Windows CLI/MCP context selection, retained-descriptor reads and tamper refusal. On WSL x86_64, native filesystem reads passed and an actual Windows-drive 9p rename/replacement attempt was refused with UNSAFE_PATH; descendant and leaf refusal controls were instrumented. All 64 wheel Python modules and 133 tracked source archive files match release-commit Git blobs exactly. Missing Linux mount information refuses reads; other POSIX platforms retain existing no-follow/type checks without a mount-detection claim. This does not prove source truth, claim support, complete coverage, downstream model use or absence of sensitive material.",
+      "systemId": "gather"
+    },
+    {
       "id": "gather-release-v1-7-1",
       "type": "release",
       "label": "Gather v1.7.1 GitHub release",

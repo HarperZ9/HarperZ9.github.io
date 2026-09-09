@@ -42,7 +42,7 @@
     <p class="lede" data-canonical-purpose="gather">Gather collects research material from sources that basic scrapers often miss. It handles JavaScript-rendered pages, authenticated APIs, scholarly records, PDFs, OCR, audio, video, feeds, and local documents, then saves each item in a content-addressed corpus with provenance you can recheck.</p>
     <p class="close">Every item carries a receipt recording how it was obtained, so a quote is never confused with an inference, and what was hard to get is never dressed up as if it were lying in the open.</p>
   </div>
-  <div class="seal"><span translate="no">gather</span> &middot; v1.7.1 &middot; newline-safe readable context &middot; fair-source &middot; <span translate="no">pip install gather-engine==1.7.1</span></div>
+  <div class="seal"><span translate="no">gather</span> &middot; v1.8.1 &middot; confined readable context &middot; fair-source &middot; <span translate="no">pip install gather-engine==1.8.1</span></div>
 </div>
 
 <main id="main">
@@ -140,30 +140,32 @@
 <!-- PROOF AND RUN IT -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Current state. How to run it.</h2>
-  <p class="body-text reveal">Version 1.7.1, published as <code translate="no">gather-engine</code>, installs the <code translate="no">gather</code> command and the <code translate="no">gather</code> package. New corpus writes preserve exact UTF-8 source text while selection uses a readable LF-normalized view, so mixed-newline text can be quoted with its source identity intact. Selections stay pinned to the witnessed corpus digest used by <code translate="no">--expect-digest</code>. The core remains pure standard library; optional adapters call an external tool (<code translate="no">yt-dlp</code>, <code translate="no">pdftotext</code>, headless <code translate="no">chromium</code>, <code translate="no">tesseract</code>, or a Whisper-style CLI) only when that route is selected.</p>
+  <p class="body-text reveal">Version 1.8.1, published as <code translate="no">gather-engine</code>, installs the <code translate="no">gather</code> command and the <code translate="no">gather</code> package. New corpus writes preserve exact UTF-8 source text while selection uses a readable LF-normalized view, so mixed-newline text can be quoted with its source identity intact. Selections stay pinned to the witnessed corpus digest used by <code translate="no">--expect-digest</code>. The core remains pure standard library; optional adapters call an external tool (<code translate="no">yt-dlp</code>, <code translate="no">pdftotext</code>, headless <code translate="no">chromium</code>, <code translate="no">tesseract</code>, or a Whisper-style CLI) only when that route is selected.</p>
+  <p class="body-text reveal">Version 1.8.1 protects retained corpus reads against directory replacement on unsupported Linux mounts. On WSL, keep corpora on native Linux storage or use native Windows Python: Windows-drive 9p/v9fs mounts are refused with <code translate="no">UNSAFE_PATH</code>. Python hosts can pass a retained same-process corpus descriptor; CLI and MCP continue to accept directory strings.</p>
   <p class="body-text reveal">Create <code translate="no">sample.txt</code> with this exact two-line body, then store it and select only the useful slice.</p>
   <pre class="artifact" translate="no"><span class="cmt">sample.txt body</span>
 Offline quickstart: Gather keeps acquired context separate from conclusions.
 Decision fact: the release can select useful text from a stored corpus.</pre>
   <p class="body-text reveal">After the inspect command, replace ROW_REF and CORPUS_DIGEST with the values from the inspect JSON. 0:76 selects the first line of this fixture only.</p>
-  <pre class="artifact" translate="no"><span class="pr">$ pip install gather-engine==1.7.1</span>
+  <pre class="artifact" translate="no"><span class="pr">$ pip install gather-engine==1.8.1</span>
 <span class="pr">$ gather docs sample.txt --store corpus --json</span>
 <span class="pr">$ gather corpus context corpus --json --excerpt-chars 90</span>
 <span class="pr">$ gather corpus context corpus --json --select ROW_REF:0:76 --expect-digest CORPUS_DIGEST</span></pre>
   <p class="body-text reveal"><strong>Sample selected text:</strong> <span translate="no">Offline quickstart: Gather keeps acquired context separate from conclusions.</span></p>
   <details class="product-record-details reveal">
     <summary>Release evidence and context limits</summary>
-    <p class="body-text">A released 1.7.1 wheel smoke run selected a newline-spanning <code translate="no">DECISION</code>/<code translate="no">part</code> fixture through both CLI and MCP. The payload used schema <code translate="no">gather.readable-context/v1</code>, returned <code translate="no">verified: true</code>, kept source SHA-256 <code translate="no">b1736b2f3f466fdf55d900ccf4c28ba9a2170c60914ede77173873f447dba6d3</code> separate from readable view SHA-256 <code translate="no">bfac793415f57cdb3aadb174993a58dc4767abe8005b78855daae6ab110b93cf</code>, and produced selection digest <code translate="no">0450040a624224de25249cc42f1a68099898d8d8accf68d286e71c4771b7324b</code>.</p>
+    <p class="body-text">The public 1.8.1 wheel passed isolated Windows CLI, MCP, retained-descriptor and tamper checks. On WSL x86_64, native reads passed and an actual 9p directory-replacement attempt was refused; descendant-directory and leaf controls were instrumented. The downloaded packages match the release commit: 64 Python modules and 133 tracked source archive files. Linux mount classification uses the opened descriptor and refuses unavailable mount information. Other POSIX platforms retain no-follow and type checks without a mount-detection claim.</p>
+    <p class="body-text">The earlier released 1.7.1 wheel smoke run selected a newline-spanning <code translate="no">DECISION</code>/<code translate="no">part</code> fixture through both CLI and MCP. The payload used schema <code translate="no">gather.readable-context/v1</code>, returned <code translate="no">verified: true</code>, kept source SHA-256 <code translate="no">b1736b2f3f466fdf55d900ccf4c28ba9a2170c60914ede77173873f447dba6d3</code> separate from readable view SHA-256 <code translate="no">bfac793415f57cdb3aadb174993a58dc4767abe8005b78855daae6ab110b93cf</code>, and produced selection digest <code translate="no">0450040a624224de25249cc42f1a68099898d8d8accf68d286e71c4771b7324b</code>.</p>
     <p class="body-text">The publication receipt verifies the GitHub release, PyPI files, GitHub and PyPI download-back hashes, a clean Windows wheel install, CLI and MCP context selection, and tamper refusal. Those checks do not prove source truth, claim support, coverage completeness, downstream model use, or absence of sensitive material in selected text or URLs. Selection offsets belong to the readable view. For legacy corpus rows, reconstruction verifies source text but cannot prove historical raw object-byte integrity. Detecting removed or changed storage witnesses requires a previously pinned corpus digest.</p>
   </details>
   <div class="channels reveal">
     <span class="g">Recorded demo</span> &rarr; <a href="demo-gather.html">29-second proof and full workflow</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/gather/releases/tag/v1.7.1" translate="no">v1.7.1 release</a>
+    <span class="g">GitHub</span> &rarr; <a href="https://github.com/HarperZ9/gather/releases/tag/v1.8.1" translate="no">v1.8.1 release</a>
     &nbsp;&middot;&nbsp;
     <span class="g">Source</span> &rarr; <a href="https://github.com/HarperZ9/gather" translate="no">HarperZ9/gather</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/gather-engine/1.7.1/" translate="no">gather-engine 1.7.1</a>
+    <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/gather-engine/1.8.1/" translate="no">gather-engine 1.8.1</a>
     &nbsp;&middot;&nbsp;
     <a href="overview.html">&larr; all flagships</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the index</a>
   </div>
