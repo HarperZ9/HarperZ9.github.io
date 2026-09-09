@@ -113,8 +113,9 @@ def test_catalog_preserves_cross_domain_breadth_without_repeating_secondary_nois
 
     assert "Secondary domain reference." not in page
     assert f'<p class="product-purpose">{flywheel["purpose"]}</p>' in primary_row
-    assert "Flywheel v0.6.0" in primary_row
-    assert "clean-VM and mobile acceptance not claimed" in primary_row
+    assert "Flywheel v0.6.1" in primary_row
+    assert "previous unsigned Windows desktop v0.6.0" in primary_row
+    assert "Service Desk Incident Environment" not in flywheel["purpose"]
     assert 'class="catalog-evidence"' in primary_row
     assert '<details class="product-record-details">' in secondary_row
     assert "<summary>Why this record appears here</summary>" in secondary_row

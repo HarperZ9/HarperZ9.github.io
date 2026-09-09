@@ -3,6 +3,36 @@
   "derivedFrom": "harperz9-systems/v4",
   "records": [
     {
+      "id": "flywheel-release-v0-6-1",
+      "type": "release",
+      "label": "Flywheel v0.6.1",
+      "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.6.1",
+      "date": "2026-09-09",
+      "status": "verified",
+      "summary": "The v0.6.1 GitHub release was published at 2026-09-09T13:06:27Z and resolves to source commit 2a86c0a8f2da651bceb0bda4c1b1a74379696a39. The release adds exact endpoint profile selection, generation-call budgets before endpoint I/O, descriptor custody for private artifact operations, Linux refusals for Windows-drive 9p/v9fs and unclassified filesystem paths in private artifact operations, and a common E2E journey runner. Release-source validation reported 8,368 Python tests passed and 55 were skipped; distribution verification found all 635 packaged harness entries matched source Git blobs. Ten fresh installed wheel controls passed, including seven expected refusals, without generating model output. These checks do not establish general model uplift, production ServiceNow compatibility, physical Android/mobile acceptance, provider-native session migration, arbitrary provider-native session resume, clean-machine installation, or universal verifier completeness. The v0.6.1 Windows installer is not published.",
+      "systemId": "flywheel"
+    },
+    {
+      "id": "flywheel-pypi-v0-6-1",
+      "type": "release",
+      "label": "flywheel-verify 0.6.1 on PyPI",
+      "href": "https://pypi.org/project/flywheel-verify/0.6.1/",
+      "date": "2026-09-09",
+      "status": "verified",
+      "summary": "PyPI serves flywheel-verify 0.6.1. The wheel is 1,703,955 bytes with SHA-256 5f39615b741489a167815e6d977b414dcb763ec02b645fa20cfd7a153f923e76; the source archive has SHA-256 78dd99cffbbfb3ab986b69f091e3b56258b391bbf26e64ba095ab08ab80bc764. PyPI JSON digests matched the downloads, and CI and PyPI bytes were equal. Wheel fidelity checks found 635 of 635 packaged harness entries and 632 of 632 Python modules matched source Git blobs. Public wheel controls passed 10 of 10, including expected-failure controls; endpoint reports admitted 0 true and 5 false, and generated 0 endpoint rows. This does not prove source truth, claim support, complete coverage, downstream model use, absence of sensitive material, or clean-machine installation.",
+      "systemId": "flywheel"
+    },
+    {
+      "id": "flywheel-service-desk-env-v0-1-0",
+      "type": "release",
+      "label": "Service Desk Incident Environment 0.1.0",
+      "href": "https://github.com/HarperZ9/flywheel/releases/download/v0.6.1/flywheel_env_service_desk_incident-0.1.0-py3-none-any.whl",
+      "date": "2026-09-09",
+      "status": "verified",
+      "summary": "Service Desk Incident Environment 0.1.0 is attached to the Flywheel v0.6.1 release as a GitHub release asset, not a PyPI listing. The wheel is 27,652 bytes with SHA-256 2a9ec96bbf9df6659cdf2b2bbcf38241dd5fcf6a201d3e53503733b27216f7d7; the source archive is 19,488 bytes with SHA-256 e2b82108949badba38ccfa235ada4aaabf347745dcc00bce3e31e79da5e3645b. It requires Flywheel 0.6.1 and exposes service-desk-incident-env e2e --out ./incident-runs plus service-desk-incident-env verify RETURNED_ARTIFACT_DIR --recompute --json. A fresh installed run passed seven synthetic workflow cases, accepted its original artifacts, and rejected an altered state file. These checks do not establish production ServiceNow compatibility, model behavior, clean-machine installation, or universal verifier completeness.",
+      "systemId": "flywheel"
+    },
+    {
       "id": "gather-release-v1-8-1",
       "type": "release",
       "label": "Gather v1.8.1 GitHub release",
@@ -29,7 +59,7 @@
       "href": "https://github.com/HarperZ9/gather/releases/tag/v1.7.1",
       "date": "2026-09-08",
       "status": "verified",
-      "summary": "Gather v1.7.1 GitHub release preserves exact UTF-8 source text in new corpus writes while providing a readable LF-normalized view for selection; published assets match the verified wheel, source archive, and checksum hashes from source commit cb35c6d513e63fceca74c8eafcd1faee4347ea32.",
+      "summary": "Gather v1.7.1 GitHub release was published at 2026-09-08T23:14:18Z and resolves to source commit cb35c6d513e63fceca74c8eafcd1faee4347ea32. Release metadata lists gather_engine-1.7.1-py3-none-any.whl at 183,763 bytes with SHA-256 7edc83e71e462c782234756f8fb43a0f5b77b3269557f7505c3d3b968ecc5a4d, gather_engine-1.7.1.tar.gz at 250,789 bytes with SHA-256 71e4df15252b88ec2676ba075ab0f7bd24d707c5d7072a35b09300a064096f8c, and SHA256SUMS.txt with SHA-256 99e6b943273959088ff82cf22a3d22959390d623b06e0e5db47fc5d50252b886. New corpus writes preserve exact stored bytes while exposing a readable LF-normalized view for selection, and selected rows remain pinned to the witnessed corpus digest, preserving the pinned corpus digest boundary. Legacy reconstruction does not prove historical raw object-byte integrity.",
       "systemId": "gather"
     },
     {
@@ -39,7 +69,7 @@
       "href": "https://pypi.org/project/gather-engine/1.7.1/",
       "date": "2026-09-08",
       "status": "verified",
-      "summary": "PyPI serves gather-engine 1.7.1; publication verification matched PyPI and GitHub download-back hashes, checked 64 Python modules and 132 source archive files, clean installed the Windows wheel, exercised CLI/MCP context selection, and refused tampered corpus selection while preserving does-not-prove limits.",
+      "summary": "PyPI serves gather-engine 1.7.1. Publication verification matched GitHub and PyPI download-back wheel/source hashes, checked 64 Python modules and 132 source archive files against source commit cb35c6d513e63fceca74c8eafcd1faee4347ea32, completed a clean Windows wheel install, and exercised gather 1.7.1 CLI and MCP context selection. The newline smoke selected text from a readable view while retaining separate source and view hashes; tamper selection was refused with a corrupt-body error. This evidence does not prove source truth, claim support, completeness of gathered coverage, downstream model use, or absence of sensitive material in selected source text or URLs.",
       "systemId": "gather"
     },
     {
@@ -49,7 +79,7 @@
       "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.6.0",
       "date": "2026-09-08",
       "status": "verified",
-      "summary": "Flywheel v0.6.0 GitHub release, source commit, installer metadata, Windows tag-candidate acceptance attempt 2, Continue with agent, durable Index workspace-map jobs, and local Ollama usage retention are verified; clean-VM, mobile, provider/model calls, and general model uplift are not claimed.",
+      "summary": "The v0.6.0 GitHub release was published at 2026-09-08T21:24:15Z and resolves to source commit d8c1623a3d0fee2d1ae7f3dfddb50cebdfdad599. The release adds Continue with agent through the existing Evidence Journey approval path, durable Index workspace-map jobs with recovery, cancel, resume, result retrieval, and manual Update snapshot refresh, and retained local Ollama token and timing usage when malformed task output still fails. Index 2.12 or newer remains a separate requirement. Release metadata lists Flywheel-Setup-0.6.0-x64.exe at 25,587,795 bytes with SHA-256 d762838c865f6b287ba30b8b576cb179500241904401fd8a01a2bb99d625d173, frozen-gateway-smoke.json with SHA-256 8a4a843221d5775b23cbc3e3873c1d859721cdbe80af9144aafbc4d2479ef139, and SHA256SUMS.txt with SHA-256 f45205042bc879d549038f9a2ee9cb815eab55a7b4758bc64ccaef3074ad8bd6. Windows tag-candidate acceptance attempt 2 passed for workflow run 34279017788 with acceptance receipt SHA-256 cab370affa52ec180f2613fff131eb8f84424afae189c53f8f4f323a4729f685. Installer execution, clean-machine installation, physical Android/mobile acceptance, real provider/model/device calls, provider-native session migration, general model uplift, and arbitrary provider-native resume are not claimed.",
       "systemId": "flywheel"
     },
     {
@@ -59,7 +89,7 @@
       "href": "https://pypi.org/project/flywheel-verify/0.6.0/",
       "date": "2026-09-08",
       "status": "verified",
-      "summary": "PyPI serves flywheel-verify 0.6.0 with source verification across 592 Python source files and 601 wheel RECORD entries; the receipt does not include an installed runtime check, and clean-machine installation is not claimed.",
+      "summary": "PyPI serves flywheel-verify 0.6.0. Source verification passed at commit d8c1623a3d0fee2d1ae7f3dfddb50cebdfdad599 with 592 Python source files and 601 wheel RECORD entries; the wheel SHA-256 bfde77d6215b62283b72f873f598b0d25761e76c303eb5208f2324ab701c3bf3 and source archive SHA-256 f94bb7bdfdb597306071df289505ae9616ed64f92cfb90066a24a55f58bb2b0a matched the live PyPI metadata and the local publication receipt. No installed runtime check is included in this receipt; Windows installer acceptance is recorded separately and no clean-machine installation is claimed.",
       "systemId": "flywheel"
     },
     {
@@ -69,7 +99,7 @@
       "href": "https://github.com/HarperZ9/relay/releases/tag/v0.2.0",
       "date": "2026-09-08",
       "status": "verified",
-      "summary": "Relay 0.2.0 GitHub release assets, hashes, tag binding, clean --no-index wheel install, and MCP synthetic controls verified; PyPI relay-agent publication or install is not claimed.",
+      "summary": "Relay 0.2.0 GitHub release resolves to commit 9efdd82a6ea47ea37b4771315529aa4a8b04de1b and is not draft or prerelease. Download-back verification covered relay_agent-0.2.0-py3-none-any.whl at 111,430 bytes with SHA-256 7b7f04ee9f393df2ec520110799ecd662033251b9dfcfaf1dad1d5727c717cee, relay_agent-0.2.0.tar.gz at 188,381 bytes with SHA-256 202c8ad1028eb1b2b45aa28801717246254ad837e7a5b1e37b26f1dc92d006c3, and SHA256SUMS.txt. A clean --no-index wheel install and MCP synthetic controls passed. No PyPI publication or install is claimed, and no real model or provider calls were in scope.",
       "systemId": "relay"
     },
     {
@@ -79,7 +109,7 @@
       "href": "https://github.com/HarperZ9/forum/releases/tag/forum-route-preflight-v0.1.0",
       "date": "2026-09-08",
       "status": "verified",
-      "summary": "Standalone host skill release for checking Forum routing, context pressure, and runtime readiness before model work; forum-route-preflight-skill-20260907-final.zip download-back matched SHA-256 1827a9673414e73722ba7bd74be15316534bb6c66fc55ecc26845a5e5c953450 and safe_to_submit remains false.",
+      "summary": "The live GitHub release publishes forum-route-preflight-skill-20260907-final.zip as a 9,573-byte standalone host skill with SHA-256 1827a9673414e73722ba7bd74be15316534bb6c66fc55ecc26845a5e5c953450; SHA256SUMS.txt has SHA-256 afa5b4a94a3904e4afb1f441206d98a665757e0fa770049e4925020a94b0b390. Download-back verification matched the ZIP digest. The skill inspects routing, context pressure, and runtime readiness before model work; it does not execute the supplied command and keeps safe_to_submit=false.",
       "systemId": "forum"
     },
     {
@@ -89,7 +119,7 @@
       "href": "https://github.com/HarperZ9/index/releases/tag/v2.12.0",
       "date": "2026-09-07",
       "status": "verified",
-      "summary": "Index 2.12.0 publishes durable router jobs for large-workspace mapping and verified GitHub release assets.",
+      "summary": "The v2.12.0 GitHub release resolves to merge commit d895196f8ecca84a043f19fec7b49d94b1dd3bdb, whose tree matches accepted source commit ba73aec23b7689de1e73c18f09e4db4972510b8a. GitHub download-back verification matched wheel SHA-256 dabd4c253804d1791755941fe695c85a1c32087d15b744ef370a092dbf8fe9b6, source distribution SHA-256 9451351820f6e779de3a3e567f0a9c4cf59edcee1de7bda9997d3ac6dda46445, and SHA256SUMS SHA-256 593c0f5530bc9ef51167c6265c9d6e11188506a6093521f45de498072f316b7c.",
       "systemId": "index"
     },
     {
@@ -99,7 +129,7 @@
       "href": "https://pypi.org/project/index-graph/2.12.0/",
       "date": "2026-09-07",
       "status": "verified",
-      "summary": "PyPI serves index-graph 2.12.0; the PyPI wheel payload matches GitHub after extraction while ZIP create_system metadata differs.",
+      "summary": "PyPI serves index-graph 2.12.0 for Python 3.11 or newer. The wheel is 229,391 bytes with SHA-256 1825b12a1a9413fadba7d0f786852ac0ef17515389ab19e267732e2aecbca683, and the source archive is 1,047,912 bytes with SHA-256 9451351820f6e779de3a3e567f0a9c4cf59edcee1de7bda9997d3ac6dda46445. The PyPI wheel hash differs from the GitHub wheel hash because ZIP create_system metadata differs; extracted file sets and file bytes match, and a fresh installed-wheel runtime check passed.",
       "systemId": "index"
     },
     {
@@ -126,10 +156,10 @@
       "id": "flywheel-index-lane-code",
       "type": "code-permalink",
       "label": "Flywheel Index lane declaration",
-      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L63-L66",
-      "date": "2026-08-28",
+      "href": "https://github.com/HarperZ9/flywheel/blob/c1c89d8/harness/lanes_registry.py#L43-L46",
+      "date": "2026-08-29",
       "status": "verified",
-      "summary": "The pinned lane registry declares Index's package, command, MCP arguments, source repository, and role; its version field is visibly stale against the published package.",
+      "summary": "The pinned lane registry declares Index 2.10.0, its package, command, MCP arguments, source repository, and role.",
       "systemId": "flywheel"
     },
     {

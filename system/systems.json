@@ -251,7 +251,9 @@
       "useCases": [
         "agent workflow orchestration",
         "model-neutral execution",
-        "receipt-backed evaluation"
+        "receipt-backed evaluation",
+        "endpoint profile probe controls",
+        "synthetic workflow environment checks"
       ],
       "href": "flywheel.html",
       "sourceHref": "https://github.com/HarperZ9/flywheel",
@@ -270,14 +272,42 @@
       "deploymentContexts": [
         "controlled agent workflows",
         "review and CI lanes",
-        "local development workspaces"
+        "local development workspaces",
+        "local synthetic workflow environments"
       ],
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "pip install flywheel-verify==0.6.0; flywheel up",
-      "verificationCommand": "flywheel lanes --probe",
+      "entryCommand": "python -m pip install flywheel-verify==0.6.1; flywheel up",
+      "verificationCommand": "flywheel lanes --probe; service-desk-incident-env verify RETURNED_ARTIFACT_DIR --recompute --json",
       "evidence": [
+        {
+          "id": "flywheel-release-v0-6-1",
+          "type": "release",
+          "label": "Flywheel v0.6.1",
+          "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.6.1",
+          "date": "2026-09-09",
+          "status": "verified",
+          "summary": "The v0.6.1 GitHub release was published at 2026-09-09T13:06:27Z and resolves to source commit 2a86c0a8f2da651bceb0bda4c1b1a74379696a39. The release adds exact endpoint profile selection, generation-call budgets before endpoint I/O, descriptor custody for private artifact operations, Linux refusals for Windows-drive 9p/v9fs and unclassified filesystem paths in private artifact operations, and a common E2E journey runner. Release-source validation reported 8,368 Python tests passed and 55 were skipped; distribution verification found all 635 packaged harness entries matched source Git blobs. Ten fresh installed wheel controls passed, including seven expected refusals, without generating model output. These checks do not establish general model uplift, production ServiceNow compatibility, physical Android/mobile acceptance, provider-native session migration, arbitrary provider-native session resume, clean-machine installation, or universal verifier completeness. The v0.6.1 Windows installer is not published."
+        },
+        {
+          "id": "flywheel-pypi-v0-6-1",
+          "type": "release",
+          "label": "flywheel-verify 0.6.1 on PyPI",
+          "href": "https://pypi.org/project/flywheel-verify/0.6.1/",
+          "date": "2026-09-09",
+          "status": "verified",
+          "summary": "PyPI serves flywheel-verify 0.6.1. The wheel is 1,703,955 bytes with SHA-256 5f39615b741489a167815e6d977b414dcb763ec02b645fa20cfd7a153f923e76; the source archive has SHA-256 78dd99cffbbfb3ab986b69f091e3b56258b391bbf26e64ba095ab08ab80bc764. PyPI JSON digests matched the downloads, and CI and PyPI bytes were equal. Wheel fidelity checks found 635 of 635 packaged harness entries and 632 of 632 Python modules matched source Git blobs. Public wheel controls passed 10 of 10, including expected-failure controls; endpoint reports admitted 0 true and 5 false, and generated 0 endpoint rows. This does not prove source truth, claim support, complete coverage, downstream model use, absence of sensitive material, or clean-machine installation."
+        },
+        {
+          "id": "flywheel-service-desk-env-v0-1-0",
+          "type": "release",
+          "label": "Service Desk Incident Environment 0.1.0",
+          "href": "https://github.com/HarperZ9/flywheel/releases/download/v0.6.1/flywheel_env_service_desk_incident-0.1.0-py3-none-any.whl",
+          "date": "2026-09-09",
+          "status": "verified",
+          "summary": "Service Desk Incident Environment 0.1.0 is attached to the Flywheel v0.6.1 release as a GitHub release asset, not a PyPI listing. The wheel is 27,652 bytes with SHA-256 2a9ec96bbf9df6659cdf2b2bbcf38241dd5fcf6a201d3e53503733b27216f7d7; the source archive is 19,488 bytes with SHA-256 e2b82108949badba38ccfa235ada4aaabf347745dcc00bce3e31e79da5e3645b. It requires Flywheel 0.6.1 and exposes service-desk-incident-env e2e --out ./incident-runs plus service-desk-incident-env verify RETURNED_ARTIFACT_DIR --recompute --json. A fresh installed run passed seven synthetic workflow cases, accepted its original artifacts, and rejected an altered state file. These checks do not establish production ServiceNow compatibility, model behavior, clean-machine installation, or universal verifier completeness."
+        },
         {
           "id": "flywheel-release-v0-6-0",
           "type": "release",
@@ -443,9 +473,10 @@
       ],
       "limitations": [
         "Receipts establish witnessed actions and checks, not general model correctness.",
-        "Local weights and optional signing or monitoring features have separate installation requirements.",
-        "The v0.6.0 release receipts cover source, PyPI metadata, GitHub release metadata, and Windows tag-candidate acceptance; they do not prove clean-machine installation, physical Android/mobile acceptance, provider-native session migration, or general model uplift.",
-        "The v0.5.0 Windows installer is unsigned; release receipts cover downloaded-back artifact hashing and extraction/gateway-smoke acceptance, not clean-machine installation, device acceptance, or publisher authentication."
+        "The v0.6.1 Python package release and Service Desk controls do not establish model uplift, production ServiceNow compatibility, arbitrary provider-native session resume, provider-native session migration, clean-machine installation, physical Android/mobile acceptance, or universal verifier completeness.",
+        "The v0.6.1 Windows installer is not published here; the previous unsigned Windows desktop build remains v0.6.0.",
+        "The Service Desk environment uses synthetic local state and local HTTP services; it does not call a model provider or connect to ServiceNow.",
+        "Local weights and optional signing or monitoring features have separate installation requirements."
       ],
       "boundary": "Use model routes, tools, data, and environments only with the authority required by their owners and providers.",
       "inputs": [
@@ -473,10 +504,10 @@
         "mneme",
         "chorus"
       ],
-      "lastVerified": "2026-09-08",
+      "lastVerified": "2026-09-09",
       "primaryDomain": "agent-systems",
       "productType": "verified-inference platform and desktop client",
-      "releaseState": "stable v0.6.0; PyPI and GitHub release assets published; clean-VM and mobile acceptance not claimed"
+      "releaseState": "stable Python engine v0.6.1; previous unsigned Windows desktop v0.6.0; clean-machine and mobile acceptance not claimed"
     },
     {
       "id": "telos",

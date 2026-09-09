@@ -105,19 +105,28 @@ def test_flywheel_primary_page_uses_the_current_release_route() -> None:
     registry = json.loads((ROOT / "system/systems.json").read_text(encoding="utf-8"))
     flywheel = next(system for system in registry["systems"] if system["id"] == "flywheel")
 
-    assert flywheel["entryCommand"] == "pip install flywheel-verify==0.6.0; flywheel up"
+    assert flywheel["entryCommand"] == "python -m pip install flywheel-verify==0.6.1; flywheel up"
     release_section = source[source.index('<section class="mv" id="next-release"'):]
     release_section = release_section[: release_section.index("</section>")]
-    assert 'href="#next-release">0.6.0 release</a>' in source
+    service_desk_section = source[source.index('<section class="mv" id="service-desk"'):]
+    service_desk_section = service_desk_section[: service_desk_section.index("</section>")]
+    assert 'href="#next-release">0.6.1 release</a>' in source
     assert "0.6 candidate" not in source
-    assert "Use v0.6.0 when you want the desktop surface to continue with an agent from an approved Evidence Journey item" in release_section
-    assert release_section.index("Continue with agent") < release_section.index("GitHub release was published")
-    assert "Windows tag-candidate acceptance attempt 2 passed" in release_section
-    assert release_section.index("34279017788") > release_section.index("<details")
-    assert "pip install flywheel-verify==0.6.0" in source
+    assert "Use v0.6.1 to select an exact endpoint profile" in release_section
+    assert "published at <span translate=\"no\">2026-09-09T13:06:27Z</span>" in release_section
+    assert "all 635 packaged harness entries matched their source blobs" in release_section
+    assert "The v0.6.1 Windows candidate is not offered here" in release_section
+    assert "pip install flywheel-verify==0.6.1" in source
     assert "flywheel up" in source
+    assert "Previous Windows desktop: 0.6.0" in source
     assert "Flywheel-Setup-0.6.0-x64.exe" in source
     assert "/releases/download/v0.6.0" in source
+    assert "Flywheel-Setup-0.6.1" not in source
+    assert "Service Desk Incident Environment 0.1.0" in service_desk_section
+    assert "flywheel_env_service_desk_incident-0.1.0-py3-none-any.whl" in service_desk_section
+    assert "flywheel_env_service_desk_incident-0.1.0.tar.gz" in service_desk_section
+    assert "service-desk-incident-env e2e --out ./incident-runs" in service_desk_section
+    assert "service-desk-incident-env verify RETURNED_ARTIFACT_DIR --recompute --json" in service_desk_section
     assert "clean-machine installation" in source
     assert "physical Android/mobile acceptance" in source
     assert "flywheel-desktop" not in source
