@@ -29,7 +29,8 @@ jobs:
         run: |
           export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
           test -n "$CHROME_PATH"
-          node --test system/bulletin-board.test.mjs system/bulletin-board-media-filter.test.mjs system/bulletin-work.test.mjs
+          # Each suite launches Chrome; avoid competing browser startup on the runner.
+          node --test --test-concurrency=1 system/bulletin-board.test.mjs system/bulletin-board-media-filter.test.mjs system/bulletin-work.test.mjs
       - name: Font marketplace browser regressions
         run: |
           export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
