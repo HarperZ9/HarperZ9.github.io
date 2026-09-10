@@ -5,18 +5,18 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Research &middot; Zain Dana Harper</title>
-<meta name="description" content="Find Zain Dana Harper's research projects, essays, publications, source maps, briefings, and supporting evidence from one Research hub.">
+<meta name="description" content="Find Zain Dana Harper's research projects, essays, publications, source maps, collaboration routes, briefings, and supporting evidence from one Research hub.">
 <link rel="canonical" href="https://harperz9.github.io/research.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Research &middot; Zain Dana Harper">
-<meta property="og:description" content="Find research projects, essays, publications, source maps, briefings, and supporting evidence from one Research hub.">
+<meta property="og:description" content="Find research projects, essays, publications, source maps, collaboration routes, briefings, and supporting evidence from one Research hub.">
 <meta property="og:url" content="https://harperz9.github.io/research.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
 <meta property="og:image:alt" content="A still from the engine: a Kepler orbit with its conserved angular momentum fitted from the trace, real mathematics drawn by our own code.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Research &middot; Zain Dana Harper">
-<meta name="twitter:description" content="Find research projects, essays, publications, source maps, briefings, and supporting evidence from one Research hub.">
+<meta name="twitter:description" content="Find research projects, essays, publications, source maps, collaboration routes, briefings, and supporting evidence from one Research hub.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
@@ -96,6 +96,51 @@
   .research-lane-links a{
     color:var(--signal);
     text-underline-offset:.2em;
+  }
+  .research-collaboration{
+    margin:clamp(1.25rem,3vw,2.1rem) 0 0;
+    padding:clamp(1.1rem,2.5vw,1.45rem) 0 clamp(1.2rem,2.8vw,1.65rem);
+    border-top:1px solid var(--rule-strong);
+    border-bottom:1px solid var(--rule);
+  }
+  .research-collaboration h2{
+    max-width:18ch;
+    margin:.25rem 0 .65rem;
+    color:var(--ink);
+    font-size:clamp(1.45rem,3vw,2.1rem);
+    letter-spacing:-.02em;
+    line-height:1.08;
+    text-wrap:balance;
+  }
+  .research-collaboration > p:not(.research-state):not(.research-actions){
+    max-width:38rem;
+    margin:0;
+    color:var(--ink-soft);
+    line-height:1.58;
+    text-wrap:pretty;
+  }
+  .research-collaboration-list{
+    display:grid;
+    gap:0;
+    max-width:39rem;
+    margin:.85rem 0 0;
+    padding:0;
+    list-style:none;
+  }
+  .research-collaboration-list li{
+    padding:.58rem 0;
+    border-top:1px solid var(--rule);
+    color:var(--ink-soft);
+    font-size:.9rem;
+    line-height:1.52;
+  }
+  .research-collaboration-list li:first-child{
+    padding-top:.2rem;
+    border-top:0;
+  }
+  .research-collaboration-list a{
+    color:var(--signal);
+    text-underline-offset:.18em;
   }
   .research-feature{
     margin-top:clamp(1.75rem,4vw,3rem);
@@ -188,6 +233,23 @@
         <a href="writing.html">Essays and writing</a>
         <a href="publications.html">Publications</a>
       </nav>
+
+      <section class="research-collaboration" aria-labelledby="research-collaboration-title">
+        <p class="research-state">AI safety research &middot; released essays &middot; bounded public evidence</p>
+        <h2 id="research-collaboration-title">AI safety questions can start here.</h2>
+        <p>If your question is about sandbox reach, whether observation tools can still be trusted, or whether a scoped paid pilot needs an inspectable verifier, start with the public routes below.</p>
+        <ul class="research-collaboration-list">
+          <li><a href="the-sandbox-was-never-just-a-box.html">The Sandbox Was Never Just a Box</a> is the current agent-evaluation essay on sandbox reach and the independence of the instruments that report what an agent did.</li>
+          <li><a href="a-witness-should-not-become-a-ruler.html">A witness should not become a ruler</a> and <a href="borrowed-ground.html">Borrowed Ground</a> frame source authority, privacy, AI assistance, and responsibility without turning personal history into evidence of correctness.</li>
+          <li><a href="flywheel.html#service-desk">Service Desk Incident Environment</a> exercises synthetic incident workflows inside Flywheel; its public page says the check does not establish production ServiceNow compatibility.</li>
+          <li><a href="systems/bulletin.html">Bulletin</a> is an active public board for agent work where posts and attachments remain untrusted input.</li>
+        </ul>
+        <p class="research-actions">
+          <a href="the-sandbox-was-never-just-a-box.html">Read the safety essay</a>
+          <a href="test-run-request.html">Send a public test case</a>
+          <a href="mailto:zaindharper@gmail.com?subject=AI%20safety%20research%20collaboration">Discuss collaboration</a>
+        </p>
+      </section>
 
       <p><a href="borrowed-ground.html">New essay: Borrowed Ground</a>. A philosophical reflection on conferred existence, responsibility, privacy, and contribution, with AI-assistance disclosure and an inspectable source map.</p>
 
