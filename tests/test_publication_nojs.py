@@ -11,6 +11,10 @@ from tools.render_legacy_essays import render_page
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGES = {
+    "a-witness-should-not-become-a-ruler.html": (
+        6_000,
+        "this website essay has not undergone journal peer review.",
+    ),
     "models-propose-oracles-dispose.html": (
         1_200,
         "A better proposer is a better proposer.",
