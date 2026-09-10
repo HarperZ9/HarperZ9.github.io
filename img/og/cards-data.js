@@ -624,6 +624,14 @@ window.CARD_DATA = {
     "word": "BUKEM",
     "glyph": "wave"
   },
+  "borrowed-ground": {
+    "publication": true,
+    "role": "PHILOSOPHY / ESSAY",
+    "headline": "On existence, responsibility, and what our work owes other people.",
+    "pipeline": "DEPENDENCE / MEANING / RESPONSIBILITY / CORRECTION",
+    "word": "BORROWED GROUND",
+    "glyph": "layers"
+  },
   "the-sandbox-was-never-just-a-box": {
     "role": "AGENT EVALUATION / EDITORIAL",
     "headline": "The Sandbox Was Never Just a Box",

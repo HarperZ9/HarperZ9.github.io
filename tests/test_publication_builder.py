@@ -123,6 +123,25 @@ def test_article_share_image_has_text_alternative() -> None:
     assert 'name="twitter:image:alt"' in page
 
 
+def test_article_exposes_available_review_material_without_missing_links(tmp_path: Path) -> None:
+    root = fixture_site(tmp_path)
+    records = [root / "publications/data/records/example-work.json"]
+    build(records, root)
+    page = (root / "example-work.html").read_text(encoding="utf-8")
+    assert 'href="research.html"' in page
+    assert 'href="publications/data/records/example-work.json"' in page
+    assert 'href="writing/example-work/essay.md"' not in page
+    assert 'href="writing/example-work/source-map.json"' not in page
+    materials = root / "writing/example-work"
+    materials.mkdir(parents=True)
+    (materials / "essay.md").write_text("A reviewable manuscript.\n", encoding="utf-8")
+    (materials / "source-map.json").write_text("{}\n", encoding="utf-8")
+    build(records, root)
+    page = (root / "example-work.html").read_text(encoding="utf-8")
+    assert 'href="writing/example-work/essay.md"' in page
+    assert 'href="writing/example-work/source-map.json"' in page
+
+
 def test_article_separates_reading_from_optional_research_detail() -> None:
     record = json.loads(FIXTURE.read_text(encoding="utf-8"))
     page = render_article(record)
