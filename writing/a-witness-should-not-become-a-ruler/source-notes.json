@@ -1,7 +1,7 @@
 {
   "schema": "essay-source-notes/v1",
-  "edition": "2026-09-09-expanded",
-  "status": "source references for an AI-assisted editorial working draft",
+  "edition": "2026-09-09-final-editorial",
+  "status": "source references for an author-approved AI-assisted editorial essay",
   "claims": [
     {
       "id": "mission-authority",
@@ -85,5 +85,10 @@
   ],
   "author_background": "The independent, nonacademic description follows the author's own account. No formal credential audit is claimed.",
   "omissions": "The source map covers 35 public product records, the Calibrate Pro source addendum and 8 controlled-private public descriptions. It is not a fresh runtime audit. Private conversations and unpublished implementation or operational material are excluded. Unverified additional product names are identified in the essay.",
-  "product_source_map": "https://harperz9.github.io/writing/a-witness-should-not-become-a-ruler/tool-source-map.json"
+  "product_source_map": "https://harperz9.github.io/writing/a-witness-should-not-become-a-ruler/tool-source-map.json",
+  "author_approval": {
+    "state": "approved for website publication",
+    "basis": "The author approved the expanded essay and requested a final editorial draft.",
+    "does_not_establish": "Journal peer review or acceptance."
+  }
 }
