@@ -3,8 +3,8 @@
   "briefingId": "2026-08-26-openai-hugging-face-incident",
   "renderer": "render-publications/v1",
   "postProcessing": {
-    "revision": "20260909-font-marketplace-port",
-    "scope": "Stylesheet cache references, shared theme controls, reviewed figure presentation, and the shared navigation cache stamp for the font marketplace port; source records and publication edition unchanged.",
+    "revision": "20260909-pillar-navigation",
+    "scope": "Shared navigation cache references and site-index route coverage were refreshed for the pillar-navigation pass; source records and publication edition unchanged.",
     "method": "Presentation edits applied after the original render; the incident timeline is reproduced by scripts/render-incident-multilane-timeline.mjs. Output hashes are refreshed from the resulting LF-normalized files.",
     "figureViewBoxOverrides": {
       "incident-multilane-timeline": "0 0 640 6882"
@@ -30,7 +30,7 @@
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/index.html",
-      "sha256": "941c8483c34d140bf3dba3b98e179c48a7ef1378cfccf906e3345932ada0abb1"
+      "sha256": "5ece4495161ea8f9f82e7f451a1ecc8d17d1a498a5c8a4045a5f05d92bf2eca4"
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/publication.json",

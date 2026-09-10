@@ -1,6 +1,6 @@
 // nav.js, one source of truth for the site navigation. Injected into #site-nav on every page;
 // active state derived from the path. No framework; <noscript> fallback lives in the page markup.
-import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js?v=20260909-font-marketplace-port";
+import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js?v=20260909-pillar-navigation";
 
 const BRAND_LABEL = "Zentropy Labs";
 const BRAND_MARK_SRC = "brand/zentropy-avatar.png";
@@ -139,7 +139,7 @@ function routeHeaderTarget(doc) {
   return { container: compact, h1 };
 }
 
-function buildRoutePath(doc, family) {
+function buildRoutePath(doc, family, route) {
   const path = doc.createElement("nav");
   path.className = "route-header__path";
   path.setAttribute("aria-label", "Breadcrumb");
@@ -149,9 +149,21 @@ function buildRoutePath(doc, family) {
   home.textContent = "Zain Dana Harper";
   path.appendChild(home);
 
-  const current = doc.createElement("span");
-  current.textContent = family || "Public work";
-  path.appendChild(current);
+  const category = doc.createElement("span");
+  const categoryLabel = family || "Public work";
+  category.textContent = categoryLabel;
+  const exactNavigation = [...PRIMARY_ROUTES, { href: "site-index.html" }].some(
+    route => localRoute(route.href, true) === localRoute(locationPath(doc), true));
+  path.appendChild(category);
+  const routeLabel = route && route.label && route.label !== categoryLabel ? route.label : "";
+  if (!exactNavigation && route) {
+    const current = routeLabel ? doc.createElement("span") : category;
+    if (routeLabel) {
+      current.textContent = routeLabel;
+      path.appendChild(current);
+    }
+    current.setAttribute("aria-current", "page");
+  }
   return path;
 }
 
@@ -174,7 +186,7 @@ export function buildRouteHeader(doc = document) {
   h1.classList.add("route-header__title");
   if (summary) summary.classList.add("route-header__summary");
   if (!copyParent.querySelector(".route-header__path")) {
-    copyParent.insertBefore(buildRoutePath(doc, family), h1);
+    copyParent.insertBefore(buildRoutePath(doc, family, route), h1);
   }
   return container;
 }
@@ -330,7 +342,7 @@ export function renderNav(doc = document) {
     + `<summary>Menu</summary>`
     + `<div class="sn-more-list" aria-label="Site menu">`
     + menuGroup("Primary", PRIMARY_ROUTES, active, routePath, "sn-menu-primary")
-    + SECONDARY_GROUPS.map((group) => menuGroup(group.label, group.routes, active, routePath, "sn-menu-secondary")).join("")
+    + menuGroup("Explore", [{ label: "Site index", href: "site-index.html", family: "Systems" }], active, routePath, "sn-menu-secondary")
     + menuGroup("Actions", EXTERNAL_ACTIONS, active, routePath, "sn-menu-secondary")
     + `</div></details>`
     ;
@@ -376,7 +388,7 @@ function mountHomeLogo(doc) {
 // its own ?v= in the markup, so a new nav.js is what asks for new versions of
 // these; without a stamp here a reader with a warm cache keeps the old
 // stylesheet and the old exporter forever. Bump this with the nav.js stamp.
-const ASSET_V = "20260909-font-marketplace-port";
+const ASSET_V = "20260909-pillar-navigation";
 
 function sheetHref(name) {
   const here = import.meta && import.meta.url ? import.meta.url : "";

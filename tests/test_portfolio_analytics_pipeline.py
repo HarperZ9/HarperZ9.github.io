@@ -520,7 +520,7 @@ def test_renderer_publishes_the_current_cross_harness_run(tmp_path: Path) -> Non
     assert 'href="source/current-cross-harness-pilot-source.json"' in html
     assert "operator-local-hash-only" in html
     assert '<div id="site-nav" class="site-nav"></div>' in html
-    assert 'src="../system/nav.js?v=20260909-font-marketplace-port"' in html
+    assert 'src="../system/nav.js?v=20260909-pillar-navigation"' in html
     assert "<title" in svg and "<desc" in svg
     assert "35 attempts · 11 reached a grader · 6 passed · 35/35 receipts verified" in svg
     serialized = html + svg + json.dumps(companion)
@@ -1013,7 +1013,7 @@ def test_benchmark_record_uses_the_live_site_chassis_and_no_local_paths(tmp_path
 
     assert '<div id="site-nav" class="site-nav"></div>' in html
     assert 'href="../system/system.css?v=20260907-reading-completion"' in html
-    assert 'src="../system/nav.js?v=20260909-font-marketplace-port"' in html
+    assert 'src="../system/nav.js?v=20260909-pillar-navigation"' in html
     assert "<main id=" in html
     assert "<title" in svg and "<desc" in svg
     assert 'role="img"' in svg

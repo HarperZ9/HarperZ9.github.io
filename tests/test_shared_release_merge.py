@@ -8,8 +8,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-FRESH_STAMP = "20260909-font-marketplace-port"
-NAV_CACHE_STAMP = "20260909-font-marketplace-port"
+FRESH_STAMP = "20260909-pillar-navigation"
+NAV_CACHE_STAMP = "20260909-pillar-navigation"
 
 
 def read(relative: str) -> str:

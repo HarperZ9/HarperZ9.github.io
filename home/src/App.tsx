@@ -29,7 +29,7 @@ const HOME_ROUTE_LINKS = [
   ...PRIMARY_ROUTES,
   ...SECONDARY_GROUPS.flatMap((group) => group.routes),
 ];
-const MENU_ROUTES = HOME_ROUTE_LINKS.filter((route) => routeFamily(route.href));
+const MENU_ROUTES = [{ label: "Site index", href: "site-index.html", family: "Systems", primary: false }];
 const FOOTER_ROUTES = HOME_ROUTE_LINKS.filter(
   (route) => FOOTER_ROUTE_HREFS.has(route.href) && routeFamily(route.href),
 );
@@ -636,7 +636,7 @@ function SecurityBoundary() {
             No private repository, operational method, target detail, client fact, or engagement result is published.
             Written authorization, defined scope, secure intake, and review are required before private capability is discussed or used.
           </p>
-          <a className="text-link" href="/private-practice.html">Private recipient lane</a>
+          <p className="inline-links"><a className="text-link" href="/security.html">Security overview</a> <a className="text-link" href="/private-practice.html">Private recipient lane</a></p>
         </article>
         <ol className="security-list">
           {securitySystems.map((system) => (

@@ -24,7 +24,7 @@ jobs:
       - name: Python content contracts
         run: python -m pytest
       - name: Navigation and font catalog contracts
-        run: node --test system/nav.test.mjs tests/font-catalog.test.mjs tests/navigation-discovery.mjs
+        run: node --test system/nav.test.mjs tests/font-catalog.test.mjs tests/navigation-discovery.mjs tests/pillar-navigation.test.mjs
       - name: Bulletin browser media and open work regressions
         run: |
           export CHROME_PATH="$(command -v google-chrome || command -v chromium)"

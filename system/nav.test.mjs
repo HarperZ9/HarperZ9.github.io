@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { buildRouteHeader, navActive, renderNav } from "./nav.js";
 import { PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js";
-import { PRIMARY_ROUTES as NAV_PRIMARY_ROUTES } from "./routes.js?v=20260909-font-marketplace-port";
+import { PRIMARY_ROUTES as NAV_PRIMARY_ROUTES } from "./routes.js?v=20260909-pillar-navigation";
 
 test("generated registry provides the static navigation taxonomy", () => {
   assert.equal(routeFamily("/hire.html"), "Work");
@@ -62,22 +62,21 @@ test("rendered nav keeps section state separate from exact-page state", () => {
   assert.match(mount.innerHTML, /<summary>Menu<\/summary>/);
   assert.match(mount.innerHTML, /class="sn-menu-group sn-menu-primary"/);
   assert.match(mount.innerHTML, /class="sn-menu-group sn-menu-secondary"/);
-  assert.match(mount.innerHTML, /<p class="sn-menu-label">Systems<\/p>/);
-  assert.match(mount.innerHTML, /<p class="sn-menu-label">Security<\/p>/);
-  assert.match(mount.innerHTML, /<p class="sn-menu-label">Research<\/p>/);
-  assert.match(mount.innerHTML, /href="resume\.html" aria-current="page"/);
+  assert.match(mount.innerHTML, /<p class="sn-menu-label">Explore<\/p>/);
+  assert.match(mount.innerHTML, /href="site-index\.html"/);
+  assert.doesNotMatch(mount.innerHTML, /href="resume\.html"/);
   assert.doesNotMatch(mount.innerHTML, /href="hire\.html" aria-current="page"/);
   assert.match(mount.innerHTML, /class="is-active" href="hire\.html"/);
-  assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 1);
+  assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 0);
 });
 
 test("rendered nav gives one fragment destination the current-page state", () => {
   const { doc, mount } = navFixture("/hire.html", "", "#engineering-path");
   renderNav(doc);
 
-  assert.match(mount.innerHTML, /href="hire\.html#engineering-path" aria-current="page"/);
+  assert.match(mount.innerHTML, /class="is-active" href="hire\.html"/);
   assert.doesNotMatch(mount.innerHTML, /href="hire\.html" aria-current="page"/);
-  assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 1);
+  assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 0);
 });
 
 test("rendered nav gives a duplicated primary route only one current-page state", () => {
@@ -92,8 +91,8 @@ test("rendered nav treats extensionless local preview routes as html pages", () 
   const { doc, mount } = navFixture("/catalog");
   renderNav(doc);
 
-  assert.match(mount.innerHTML, /href="catalog\.html" aria-current="page"/);
-  assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 1);
+  assert.match(mount.innerHTML, /class="is-active" href="flywheel\.html"/);
+  assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 0);
 });
 
 test("rendered nav does not emit mobile current-section metadata", () => {
@@ -102,14 +101,14 @@ test("rendered nav does not emit mobile current-section metadata", () => {
 
   assert.doesNotMatch(mount.innerHTML, /sn-section/);
   assert.doesNotMatch(mount.innerHTML, /Current section/);
-  assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 1);
+  assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 0);
 });
 
 test("rendered mobile menu retains every primary destination", () => {
   const { doc, mount } = navFixture("/hire.html");
   renderNav(doc);
 
-  for (const href of ["studio.html", "gallery.html", "retro.html", "overview.html", "research.html", "hire.html"]) {
+  for (const href of ["flywheel.html", "research.html", "studio.html", "fonts.html", "hire.html"]) {
     assert.match(mount.innerHTML, new RegExp(`class="sn-menu-group sn-menu-primary"[\\s\\S]*href="${href}"`));
   }
 });
@@ -119,9 +118,9 @@ test("rendered nav keeps local destinations rooted from nested pages", () => {
   renderNav(doc);
 
   assert.match(mount.innerHTML, /href="\/index\.html"/);
-  assert.match(mount.innerHTML, /href="\/overview\.html"/);
-  assert.match(mount.innerHTML, /href="\/session-archive\.html"/);
-  assert.doesNotMatch(mount.innerHTML, /href="(?:index|overview)\.html"/);
+  assert.match(mount.innerHTML, /href="\/flywheel\.html"/);
+  assert.match(mount.innerHTML, /href="\/site-index\.html"/);
+  assert.doesNotMatch(mount.innerHTML, /href="(?:index|flywheel)\.html"/);
 });
 
 test("rendered nav treats route labels and hrefs as text and attribute data", () => {
@@ -278,7 +277,7 @@ function routeHeaderFixture(pathname = "/catalog.html") {
   return { doc, frame, h1, lede };
 }
 
-test("catalog route header identifies the system catalog as Systems", () => {
+test("catalog route header keeps category context and marks the exact page", () => {
   const { doc, frame, h1, lede } = routeHeaderFixture();
   const header = buildRouteHeader(doc);
 
@@ -294,7 +293,30 @@ test("catalog route header identifies the system catalog as Systems", () => {
   assert.equal(path.children[0].textContent, "Zain Dana Harper");
   assert.equal(path.children[1].textContent, "Systems");
   assert.equal(path.children[1].getAttribute("aria-current"), null);
+  assert.equal(path.children[2].textContent, "Catalog");
+  assert.equal(path.children[2].getAttribute("aria-current"), "page");
   assert.doesNotMatch(path.textContent, /route artifact|eyebrow|overline|kicker|\//i);
+});
+
+test("system detail route header marks the system name rather than the family", () => {
+  const { doc, frame } = routeHeaderFixture("/systems/mneme.html");
+  buildRouteHeader(doc);
+
+  const path = frame.querySelector(".route-header__path");
+  assert.equal(path.children[1].textContent, "Systems");
+  assert.equal(path.children[1].getAttribute("aria-current"), null);
+  assert.equal(path.children[2].textContent, "Mneme");
+  assert.equal(path.children[2].getAttribute("aria-current"), "page");
+});
+
+test("unknown prefixed route header leaves category context unmarked", () => {
+  const { doc, frame } = routeHeaderFixture("/frontier-safety/archive/2026-09-09.html");
+  buildRouteHeader(doc);
+
+  const path = frame.querySelector(".route-header__path");
+  assert.equal(path.children[1].textContent, "Research");
+  assert.equal(path.children[1].getAttribute("aria-current"), null);
+  assert.equal(path.querySelectorAll('[aria-current="page"]').length, 0);
 });
 
 test("RAW route header uses its systems registry domain label", () => {

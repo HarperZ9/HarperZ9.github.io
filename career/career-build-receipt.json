@@ -114,7 +114,7 @@
   "build_inputs": [
     {
       "path": "tools/build_career_artifacts.py",
-      "sha256": "d391d742ae18721c016bc468004c54537c0921de51a1c084c5d42b256491b7d6"
+      "sha256": "a42d2ffa36724a9dcf5b74a29dfb0c3ea5f05921a30ab6c00c67a51fd8d08033"
     },
     {
       "path": "requirements-career-docs.txt",
@@ -139,7 +139,7 @@
   "sources": [
     {
       "path": "cv.html",
-      "sha256": "6f2c86ab70247bc78d1456028da16beabd8fe360a34832c0a0c901969ecb6ffa"
+      "sha256": "95dc26d9bbe3720782de05c12acc21a9866f658b03c8d46caf1af86ad8c11138"
     },
     {
       "path": "resume-evaluation-tooling.html",
