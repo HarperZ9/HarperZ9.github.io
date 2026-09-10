@@ -85,12 +85,25 @@ def test_research_opening_routes_to_current_public_artifacts_before_the_index() 
         "https://github.com/HarperZ9/faithful-transpile",
         "witnessing-spine.html",
         "https://github.com/HarperZ9/senses-and-sensibility",
+        "the-sandbox-was-never-just-a-box.html",
+        "a-witness-should-not-become-a-ruler.html",
+        "borrowed-ground.html",
+        "flywheel.html#service-desk",
+        "systems/bulletin.html",
+        "mailto:zaindharper@gmail.com?subject=AI%20safety%20research%20collaboration",
+        "test-run-request.html",
     } <= opening.links
     assert "Chorus" in text and "58 tests pass" in text
     assert "faithful-transpile" in text and "eight hermetic tests pass" in text
     assert "The Witnessing Spine" in text and "one of seven listed files does not re-derive" in text
     assert "Senses and Sensibility" in text and "all 172 listed files re-derive" in text
     assert "pre-proof" in text and "six index targets missing" in text
+    assert "AI safety questions can start here" in text
+    assert "sandbox reach" in text and "observation tools" in text
+    assert "synthetic incident workflows" in text
+    assert "does not establish production ServiceNow compatibility" in text
+    assert "posts and attachments remain untrusted input" in text
+    assert "scoped paid pilot" in text
 
 
 def test_publication_corpora_link_their_source_and_disclose_current_seal_state() -> None:

@@ -18,7 +18,7 @@ RELEASE_PATHS = (
     "writing/borrowed-ground/essay.md",
     "publications/data/records/borrowed-ground.json",
     "borrowed-ground.html",
-    "assets/index-BOzfAcuL.js",
+    "assets/index-DpT1GQuA.js",
     "img/og/the-sandbox-was-never-just-a-box.png",
     "writing/the-sandbox-was-never-just-a-box/source-map.json",
     "writing/the-sandbox-was-never-just-a-box/essay.md",
@@ -278,7 +278,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "ff8ae0b38d1839913cbcf1160c89b71ab9a4a9650cbf51ca6a896ded101ffb8d"
+REVIEWED_RELEASE_SHA256 = "f74df9e0bedad21c7aff8e160830013a65706c19010b7c38c5b7e66b2adca8b2"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -415,7 +415,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_060_final_gather_pre_review_js = "index-CYqKao4X.js"
     previous_060_final_gather_fixture_js = "index-CpC5RhmM.js"
     previous_gather_171_js = "index-AYA0gyN2.js"
-    current_js = "index-BOzfAcuL.js"
+    current_js = "index-DpT1GQuA.js"
     current_css = "index-B2kgPYlE.css"
     previous_home_js = "index-CS_jYuhh.js"
     previous_flywheel_js = "index-BIYnDBdw.js"
