@@ -5,18 +5,18 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Research &middot; Zain Dana Harper</title>
-<meta name="description" content="Inspect Chorus, faithful-transpile, The Witnessing Spine, and Senses and Sensibility with current public status and evidence limits.">
+<meta name="description" content="Find Zain Dana Harper's research projects, essays, publications, source maps, briefings, and supporting evidence from one Research hub.">
 <link rel="canonical" href="https://harperz9.github.io/research.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="Research &middot; Zain Dana Harper">
-<meta property="og:description" content="Inspect current public research artifacts with their source-grounded status and evidence limits.">
+<meta property="og:description" content="Find research projects, essays, publications, source maps, briefings, and supporting evidence from one Research hub.">
 <meta property="og:url" content="https://harperz9.github.io/research.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
 <meta property="og:image:alt" content="A still from the engine: a Kepler orbit with its conserved angular momentum fitted from the trace, real mathematics drawn by our own code.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Research &middot; Zain Dana Harper">
-<meta name="twitter:description" content="Inspect current public research artifacts with their source-grounded status and evidence limits.">
+<meta name="twitter:description" content="Find research projects, essays, publications, source maps, briefings, and supporting evidence from one Research hub.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
@@ -57,6 +57,46 @@
     line-height:1.55;
     text-wrap:pretty;
   }
+  .research-lane-map{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));
+    gap:.85rem;
+    margin:clamp(1.6rem,4vw,2.8rem) 0;
+    padding:0 0 clamp(1.6rem,4vw,2.6rem);
+    border-bottom:1px solid var(--rule-strong);
+  }
+  .research-lane-card{
+    min-width:0;
+    padding:.95rem;
+    border:1px solid var(--rule);
+    border-radius:4px;
+    background:rgba(255,255,255,.018);
+  }
+  .research-lane-card h2{
+    margin:0 0 .45rem;
+    color:var(--ink);
+    font-size:1rem;
+    line-height:1.25;
+  }
+  .research-lane-card p{
+    margin:0;
+    color:var(--ink-soft);
+    font-size:.88rem;
+    line-height:1.5;
+  }
+  .research-lane-links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.45rem .8rem;
+    margin:.8rem 0 0;
+    font-family:var(--mono);
+    font-size:.72rem;
+    line-height:1.4;
+  }
+  .research-lane-links a{
+    color:var(--signal);
+    text-underline-offset:.2em;
+  }
   .research-feature{
     margin-top:clamp(1.75rem,4vw,3rem);
     padding-top:1rem;
@@ -68,6 +108,7 @@
     letter-spacing:-.02em;
   }
   .research-feature h2 a,
+  .research-lane-card h2 a,
   .research-route h3 a{
     color:var(--ink);
     text-decoration-color:rgba(142,227,242,.35);
@@ -111,6 +152,7 @@
   @media(max-width:48rem){
     .research-opening{grid-template-columns:1fr;gap:2.25rem}
     .research-opening h1{max-width:12ch;font-size:clamp(2.6rem,13vw,4.4rem)}
+    .research-lane-map{grid-template-columns:1fr}
     .research-feature{margin-top:2rem}
   }
   @media(max-width:23rem){
@@ -139,8 +181,13 @@
   <header class="research-opening">
     <div class="research-lead">
       <p class="research-owner">Zain Dana Harper &middot; Zentropy Labs &middot; Seattle</p>
-      <h1>Research you can inspect now.</h1>
-      <p class="research-deck">Start from a public artifact, then follow its source, current state, and stated limit. These records do not share one maturity label.</p>
+      <h1>Research, essays, and publications.</h1>
+      <p class="research-deck">Start with a project, read an essay, or open the publication archive. Each route keeps its own label, sources, and stated limit.</p>
+      <nav class="research-actions research-start-links" aria-label="Research starting points">
+        <a href="#research-projects">Projects</a>
+        <a href="writing.html">Essays and writing</a>
+        <a href="publications.html">Publications</a>
+      </nav>
 
       <div class="research-feature">
         <p class="research-state">Implemented research tool &middot; checked 2026-08-28 &middot; 58 tests pass</p>
@@ -176,6 +223,24 @@
     </div>
   </header>
 
+  <section class="research-lane-map" aria-label="Research paths">
+    <article class="research-lane-card">
+      <h2><a href="#research-projects">Research projects</a></h2>
+      <p>Tools, papers, experiments, and demos with the checks or open gaps attached to the page that makes the claim.</p>
+      <p class="research-lane-links"><a href="chorus.html">Chorus</a><a href="research-conservation-of-faithfulness.html">faithful-transpile</a></p>
+    </article>
+    <article class="research-lane-card">
+      <h2><a href="writing.html">Essays and writing</a></h2>
+      <p>Essays on AI, knowledge, education, music, art, creative practice, and the habits that keep fast work accountable.</p>
+      <p class="research-lane-links"><a href="a-witness-should-not-become-a-ruler.html">A witness should not become a ruler</a><a href="ltj-bukem-the-man-behind-the-atmosphere.html">LTJ Bukem</a></p>
+    </article>
+    <article class="research-lane-card">
+      <h2><a href="publications.html">Publications and evidence</a></h2>
+      <p>The publication index collects current essays, briefings, research records, source maps, feeds, and supporting evidence routes.</p>
+      <p class="research-lane-links"><a href="publications.html#publication-index">Published work</a><a href="publications.html#research-records">Formal record</a></p>
+    </article>
+  </section>
+
   <section>
     <h2>How to read this</h2>
     <p class="lead">This page is an index, grouped into three parts. The <b>theses</b> carry the long arguments:
@@ -199,7 +264,7 @@
     </dl>
   </section>
 
-  <section>
+  <section id="research-projects">
     <h2>Code and corpus state</h2>
     <p class="entry-note" style="margin-bottom:.85rem">These records are not one maturity class. The checks below were run against each public source checkout on 2026-08-28.</p>
     <div class="entry">
