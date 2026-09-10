@@ -121,6 +121,17 @@ def _validate_date(value: str, context: str) -> None:
         raise PublicationError(f"{context} is not a real date") from error
 
 
+def _validate_optional_date(container: dict, key: str, context: str) -> None:
+    if key not in container:
+        raise PublicationError(f"{context}.{key} must be YYYY-MM-DD or null")
+    value = container[key]
+    if value is None:
+        return
+    if not isinstance(value, str) or not value.strip():
+        raise PublicationError(f"{context}.{key} must be YYYY-MM-DD or null")
+    _validate_date(value, f"{context}.{key}")
+
+
 def _validate_timestamp(value: str, context: str) -> None:
     if not TIMESTAMP_PATTERN.fullmatch(value):
         raise PublicationError(f"{context} must be an exact UTC timestamp")
@@ -206,7 +217,7 @@ def _validate_sources(record: dict) -> set[str]:
         parsed = urlparse(url)
         if parsed.scheme != "https" or not parsed.netloc:
             raise PublicationError(f"{context}.url must use HTTPS")
-        _validate_date(_require_text(source, "published_at", context), f"{context}.published_at")
+        _validate_optional_date(source, "published_at", context)
         _validate_date(_require_text(source, "observed_at", context), f"{context}.observed_at")
     return source_ids
 

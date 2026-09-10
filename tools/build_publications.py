@@ -238,12 +238,19 @@ def render_figure_svg(figure: dict) -> str:
 '''
 
 
+def _source_publication_label(source: dict) -> str:
+    published_at = source["published_at"]
+    if published_at is None:
+        return "Publication date unavailable"
+    return f"Published {published_at}"
+
+
 def render_figure_html(figure: dict, sources: list[dict]) -> str:
     cited_sources = [source for source in sources if source["id"] in figure["provenance"]]
     source_links = "".join(
         f'<li><a href="{html.escape(source["url"], quote=True)}" rel="external noopener">'
         f'{html.escape(source["title"])}</a>. {html.escape(source["publisher"])}. '
-        f'Published {html.escape(source["published_at"])}; observed {html.escape(source["observed_at"])}.</li>'
+        f'{html.escape(_source_publication_label(source))}; observed {html.escape(source["observed_at"])}.</li>'
         for source in cited_sources
     )
     return f'''<!doctype html>
@@ -295,7 +302,7 @@ def render_article(record: dict) -> str:
     figures = "".join(_render_figure_in_article(figure) for figure in record["figures"])
     sources = "".join(
         f'<li id="source-{html.escape(source["id"])}"><a href="{html.escape(source["url"], quote=True)}" rel="external noopener">{html.escape(source["title"])}</a>. '
-        f'{html.escape(source["publisher"])}. {html.escape(source["role"])}. Published {html.escape(source["published_at"])}; observed {html.escape(source["observed_at"])}.</li>'
+        f'{html.escape(source["publisher"])}. {html.escape(source["role"])}. {html.escape(_source_publication_label(source))}; observed {html.escape(source["observed_at"])}.</li>'
         for source in record["sources"]
     )
     claim_notes = "".join(

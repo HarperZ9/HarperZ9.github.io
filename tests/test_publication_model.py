@@ -45,6 +45,21 @@ def test_record_requires_known_claim_sources() -> None:
         validate_record(record)
 
 
+def test_source_publication_date_may_be_explicitly_unavailable() -> None:
+    record = valid_record()
+    record["sources"][0]["published_at"] = None
+
+    validate_record(record)
+
+
+def test_source_publication_date_rejects_malformed_text() -> None:
+    record = valid_record()
+    record["sources"][0]["published_at"] = "2026-99-99"
+
+    with pytest.raises(PublicationError, match=r"sources\[0\]\.published_at"):
+        validate_record(record)
+
+
 def test_record_hash_ignores_key_order_but_not_claim_text() -> None:
     first = valid_record()
     reordered = dict(reversed(list(copy.deepcopy(first).items())))

@@ -77,7 +77,7 @@
         "title": {"type": "string"},
         "url": {"type": "string", "format": "uri", "pattern": "^https://"},
         "role": {"type": "string"},
-        "published_at": {"type": "string"},
+        "published_at": {"oneOf": [{"type": "string", "format": "date", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"}, {"type": "null"}]},
         "observed_at": {"type": "string", "format": "date"}
       }
     },

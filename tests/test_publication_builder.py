@@ -100,6 +100,22 @@ def test_standalone_figure_links_its_actual_source(tmp_path: Path) -> None:
     assert "2026-08-01" in figure
 
 
+def test_unavailable_source_publication_date_renders_without_observed_substitution(tmp_path: Path) -> None:
+    root = fixture_site(tmp_path)
+    record = load_fixture()
+    record["sources"][0]["published_at"] = None
+    write_record(root, "example-work.json", record)
+
+    build([root / "publications/data/records/example-work.json"], root)
+
+    article = (root / "example-work.html").read_text(encoding="utf-8")
+    figure = (root / "figures/example-figure.html").read_text(encoding="utf-8")
+    for page in (article, figure):
+        assert "Publication date unavailable; observed 2026-09-01." in page
+        assert "Published None" not in page
+        assert "Published 2026-09-01; observed 2026-09-01." not in page
+
+
 def test_article_share_image_has_text_alternative() -> None:
     record = json.loads(FIXTURE.read_text(encoding="utf-8"))
     page = render_article(record)
