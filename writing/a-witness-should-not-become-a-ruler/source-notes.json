@@ -1,0 +1,89 @@
+{
+  "schema": "essay-source-notes/v1",
+  "edition": "2026-09-09-expanded",
+  "status": "source references for an AI-assisted editorial working draft",
+  "claims": [
+    {
+      "id": "mission-authority",
+      "source_url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/367869e67229addc2470b563d13990c9a6cdc855/writing/pick-the-lock-for-everyone-v3/10.md#L222-L226",
+      "locator": {
+        "kind": "line_range",
+        "start": 222,
+        "end": 226,
+        "indexing": "one-based inclusive"
+      },
+      "source_value": "Tell me where the argument breaks.\n\nNothing I build gets to inherit authority from the fact that I hate authority.\n\n",
+      "source_sha256": "0ddcc96cc6b4e93f3b2dbfe9dc14862dedd938a3e7aa2e7500407266b876ca1a",
+      "supports": "The author applies scrutiny to the authority of his own tools.",
+      "verification_scope": "Source bytes and selected lines inspected; this does not establish the claimed product outcome."
+    },
+    {
+      "id": "mission-learning",
+      "source_url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/367869e67229addc2470b563d13990c9a6cdc855/writing/pick-the-lock-for-everyone-v3/07.md#L48-L52",
+      "locator": {
+        "kind": "line_range",
+        "start": 48,
+        "end": 52,
+        "indexing": "one-based inclusive"
+      },
+      "source_value": "What are the tools supposed to do, then?\n\nNot save me, and certainly not testify that I am a good person. They are supposed to make some of my favorite evasions more difficult. Crucible takes a thesis apart and asks what would refute each claim. Forum preserves a causal record of what agents did. EMET witnesses the bytes instead of treating a signature as moral authority. Gather tries to keep the source boundary visible. Learn keeps the human involved because I do not want a machine that makes me faster while I become less capable of understanding what I am doing.\n\nA person can build a smoke alarm and still light the house on fire.",
+      "source_sha256": "d944969fde1d9605adf781cf902a8338dc2be38ff02bc539ae0213e3bc7637ce",
+      "supports": "The author connects tool design with human learning and review.",
+      "verification_scope": "Source bytes and selected lines inspected; this does not establish the claimed product outcome."
+    },
+    {
+      "id": "emet-integrity-contract",
+      "source_url": "https://github.com/HarperZ9/emet/blob/770f354691f5a264b3b25830ea1a65a77354ab65/SPEC.md#L23-L32",
+      "locator": {
+        "kind": "line_range",
+        "start": 23,
+        "end": 32,
+        "indexing": "one-based inclusive"
+      },
+      "source_value": "## 2. The verdict lattice (closed)\n\nEvery integrity judgement EMET emits MUST be exactly one of: MATCH, DRIFT, or\nUNVERIFIABLE.\n\nThis enum is CLOSED. An implementation MUST NOT define, emit, or accept any other\nverdict -- in particular it MUST NOT emit TRUSTED, APPROVED, or SAFE, or any\nvalue asserting authority or permission. Absence of DRIFT is reported as MATCH\n(re-derivation agreed) or UNVERIFIABLE (no raw-byte anchor), never as trust. This\nis boundary 1 -- facts, not authority -- encoded in the output type itself.",
+      "source_sha256": "a5892863f6032a806ed0e3a6aae3804a7b6ff040cf84c9a547712d8b8547d67d",
+      "supports": "The closed core integrity verdicts do not grant authority or permission.",
+      "verification_scope": "Source bytes and selected lines inspected; this does not establish the claimed product outcome."
+    },
+    {
+      "id": "teqsa-assessment",
+      "source_url": "https://www.teqsa.gov.au/sites/default/files/2023-09/assessment-reform-age-artificial-intelligence-discussion-paper.pdf",
+      "locator": {
+        "kind": "pdf_page",
+        "page": 5,
+        "indexing": "one-based PDF page; printed page 3"
+      },
+      "source_value": "Forming trustworthy judgements about student learning in a time of AI requires multiple, inclusive and contextualised approaches to assessment",
+      "supports": "The guidance recommends multiple assessment approaches.",
+      "verification_scope": "Primary PDF text inspected. Policy guidance, not a trial of these tools."
+    },
+    {
+      "id": "bastani-learning-limit",
+      "source_url": "https://hamsabastani.github.io/education_llm.pdf",
+      "locator": {
+        "kind": "pdf_page",
+        "page": 5,
+        "indexing": "one-based PDF page; footnote 3"
+      },
+      "source_value": "Our analysis focuses on short-term (via exam performance) rather than long-term learning",
+      "supports": "The study measures short-term exam performance; generalization remains limited.",
+      "verification_scope": "Author-hosted primary PDF text inspected; whitespace and PDF line breaks normalized. Published DOI: 10.1073/pnas.2422633122. The August 2025 correction concerns author affiliation."
+    },
+    {
+      "id": "teqsa-implementation-2025",
+      "source_url": "https://www.teqsa.gov.au/guides-resources/resources/corporate-publications/enacting-assessment-reform-time-artificial-intelligence",
+      "locator": {
+        "kind": "section_paragraph",
+        "heading": "Enacting assessment reform in a time of artificial intelligence",
+        "paragraph": 2,
+        "indexing": "one-based paragraphs after page heading"
+      },
+      "source_value": "this new resource delivers examples of how these principles are being put into practice.",
+      "supports": "The 2025 resource gives examples of putting assessment principles into practice.",
+      "verification_scope": "Primary page text inspected through the web reader; publication date 24 September 2025. Direct HTML capture timed out, so no raw-page digest or character offsets are claimed."
+    }
+  ],
+  "author_background": "The independent, nonacademic description follows the author's own account. No formal credential audit is claimed.",
+  "omissions": "The source map covers 35 public product records, the Calibrate Pro source addendum and 8 controlled-private public descriptions. It is not a fresh runtime audit. Private conversations and unpublished implementation or operational material are excluded. Unverified additional product names are identified in the essay.",
+  "product_source_map": "https://harperz9.github.io/writing/a-witness-should-not-become-a-ruler/tool-source-map.json"
+}

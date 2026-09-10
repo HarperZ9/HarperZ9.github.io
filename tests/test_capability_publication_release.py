@@ -15,6 +15,10 @@ ROOT = Path(__file__).resolve().parents[1]
 RELEASE_PATHS = (
     "a-witness-should-not-become-a-ruler.html",
     "writing/a-witness-should-not-become-a-ruler/01.md",
+    "writing/a-witness-should-not-become-a-ruler/02.md",
+    "writing/a-witness-should-not-become-a-ruler/03.md",
+    "writing/a-witness-should-not-become-a-ruler/source-notes.json",
+    "writing/a-witness-should-not-become-a-ruler/tool-source-map.json",
     "img/og/a-witness-should-not-become-a-ruler.png",
     "demos/crucible-cleanroom/index.html",
     "emet-sample.html",
@@ -247,7 +251,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "3d49e1b1d44c4cfa7bff208cd60faf8023f92dfb17b49ea46a9149609bb46673"
+REVIEWED_RELEASE_SHA256 = "cd4118d082b9c4e1104b75dde25d11ba12e21f3931a5a7770517601baf8976c0"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
