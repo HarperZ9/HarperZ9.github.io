@@ -16,6 +16,7 @@ RELEASE_PATHS = (
     "site-index.html",
     "system/site-index.css",
     "system/site-index.js",
+    "assets/index-BdFe8daW.js",
     "assets/index-Ah1hhjoZ.js",
     "assets/index-CHqKSAcx.js",
     "assets/index-CLzTNvxy.js",
@@ -259,7 +260,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "11e4f9751022943b930ecbb0b6f9f3045987b611d14e896f4b31997ac96832a0"
+REVIEWED_RELEASE_SHA256 = "b099e284b42c65cb90acb1717b30f3d738ca7f627b210a7a25000d67b27ecab2"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -396,7 +397,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_060_final_gather_pre_review_js = "index-CYqKao4X.js"
     previous_060_final_gather_fixture_js = "index-CpC5RhmM.js"
     previous_gather_171_js = "index-AYA0gyN2.js"
-    current_js = "index-Ah1hhjoZ.js"
+    current_js = "index-BdFe8daW.js"
     current_css = "index-B2kgPYlE.css"
     previous_home_js = "index-CS_jYuhh.js"
     previous_flywheel_js = "index-BIYnDBdw.js"
