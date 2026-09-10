@@ -12,6 +12,16 @@
       "idempotency_key": "a342047bd07081740a3361f0e173d97693dbdafe5991f7c7f19aa4b672dfcd6d"
     },
     {
+      "id": "borrowed-ground",
+      "route": "borrowed-ground.html",
+      "category": "philosophy",
+      "form": "philosophical essay",
+      "published_at": "2026-09-10",
+      "updated_at": "2026-09-10",
+      "record_sha256": "9d774099c91d2c77cfe8520e51b0d399d2e80f5aff837f9e1367db66b7bffe82",
+      "idempotency_key": "83554b4d858e8e7de9d5d8ed0c2773201689f55ee199bf40c33dabc1c98faaad"
+    },
+    {
       "id": "growth-needs-a-before",
       "route": "growth-needs-a-before.html",
       "category": "psychology-recovery",

@@ -278,7 +278,7 @@ def _render_figure_in_article(figure: dict) -> str:
     )
 
 
-def render_article(record: dict) -> str:
+def render_article(record: dict, *, review_materials: tuple[str, ...] = ()) -> str:
     canonical = SITE_URL + record["route"]
     contents = "".join(
         f'<li><a href="#{html.escape(section["id"], quote=True)}">{html.escape(section["heading"])}</a></li>'
@@ -320,6 +320,15 @@ def render_article(record: dict) -> str:
         if record["corrections"]
         else "<p>No corrections recorded.</p>"
     )
+    review_links = [
+        f'<a href="publications/data/records/{html.escape(record["id"], quote=True)}.json">Publication record</a>'
+    ]
+    for name, label in (("essay.md", "Manuscript"), ("source-map.json", "Source map")):
+        if name in review_materials:
+            review_links.append(
+                f'<a href="writing/{html.escape(record["id"], quote=True)}/{name}">{label}</a>'
+            )
+    review_navigation = '<nav aria-label="Review material">' + ' · '.join(review_links) + '</nav>'
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(record["title"]) } · Zain Dana Harper</title>
@@ -332,7 +341,7 @@ def render_article(record: dict) -> str:
 <meta name="twitter:image" content="{SITE_URL}img/og/{html.escape(record["id"], quote=True)}.png">
 <meta name="twitter:image:alt" content="{html.escape(record["title"], quote=True)}: {html.escape(record["summary"], quote=True)}">
 <link rel="stylesheet" href="system/publication-article.css?v={ASSET_REVISION}"><script type="module" src="system/theme-entry.js?v=20260907-theme-preferences"></script></head>
-<body><a class="skip-link" href="#main">Skip to content</a><nav class="publication-static-nav" aria-label="Publication"><a class="publication-home" href="index.html">Zain Dana Harper</a><a href="publications.html">Publications</a><a href="writing.html">Writing</a><a href="cv.html">About</a></nav>
+<body><a class="skip-link" href="#main">Skip to content</a><nav class="publication-static-nav" aria-label="Publication"><a class="publication-home" href="index.html">Zain Dana Harper</a><a href="research.html">Research</a><a href="publications.html">Publications</a><a href="writing.html">Writing</a><a href="cv.html">About</a></nav>
 <main id="main" class="publication-article"><article><header><p class="publication-kicker">{html.escape(record["form"])} · {html.escape(record["category"])}</p>
 <h1>{html.escape(record["title"])}</h1><p class="publication-thesis">{html.escape(record["thesis"])}</p>
 <p class="publication-meta">By {html.escape(record["author"])} · Published {html.escape(record["published_at"])} · Updated {html.escape(record["updated_at"])}</p></header>
@@ -342,7 +351,7 @@ def render_article(record: dict) -> str:
 <section id="sources"><h2>Sources</h2><ol>{sources}</ol></section>
 <details class="publication-claim-notes" id="claim-ledger"><summary>Claim notes and limitations</summary><ol class="publication-claims">{claim_notes}</ol></details>
 <section id="corrections"><h2>Corrections</h2>{corrections}</section>
-<footer><h2>Authorship and process</h2><p>{html.escape(record["ai_assistance"])}</p></footer>
+<footer><h2>Authorship and process</h2><p>{html.escape(record["ai_assistance"])}</p>{review_navigation}</footer>
 </article></main></body></html>
 '''
 
@@ -441,7 +450,11 @@ def planned_outputs(records: list[dict], root: Path) -> dict[str, bytes]:
     }
     index_records: list[dict] = []
     for record in records:
-        outputs[record["route"]] = _text_bytes(render_article(record))
+        review_materials = tuple(
+            name for name in ("essay.md", "source-map.json")
+            if (root / "writing" / record["id"] / name).is_file()
+        )
+        outputs[record["route"]] = _text_bytes(render_article(record, review_materials=review_materials))
         index_records.append(
             {
                 "id": record["id"],

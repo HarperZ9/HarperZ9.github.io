@@ -1,0 +1,2512 @@
+{
+  "schema_version": 1,
+  "record_route": "publications/data/records/borrowed-ground.json",
+  "record_sha256": "9d774099c91d2c77cfe8520e51b0d399d2e80f5aff837f9e1367db66b7bffe82",
+  "record_hash_convention": "Canonical sorted compact JSON, UTF-8, trailing newline.",
+  "manuscript_sha256": "8492983e9fbee2ef92f31672f40e36a972b9ba6bbf10a07b75f884729c64784b",
+  "location_convention": "Unicode code points including initial BOM if present, CRLF normalized to LF, zero-based end-exclusive. Lines one-based inclusive. JSON pointers identify exact record values.",
+  "paragraphs": [
+    {
+      "id": "p001",
+      "json_pointer": "/sections/0/paragraphs/0",
+      "source_value": "I want someone to be able to examine my work without first deciding whether I belong in the room.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "aw-outside",
+        "aw-prior-art",
+        "pub-peer",
+        "pub-doi",
+        "ptl-research-history"
+      ],
+      "source_ids": [
+        "s1",
+        "s13",
+        "s11"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "I want someone to be able to examine my work without first deciding whether I belong in the room.",
+      "manuscript_line_start": 7,
+      "manuscript_line_end": 7,
+      "manuscript_char_start": 119,
+      "manuscript_char_end": 216
+    },
+    {
+      "id": "p002",
+      "json_pointer": "/sections/0/paragraphs/1",
+      "source_value": "That is a practical desire. I came to this work outside formal academic training. My papers, software and essays are available for examination, but making something available does not mean it has survived examination. A public identifier gives a reader a way to find a paper. It does not give the paper a passing grade. A repository gives a reader something to inspect. It does not establish that the system works as described. [s1] [s13] [s11]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "aw-outside",
+        "aw-prior-art",
+        "pub-peer",
+        "pub-doi",
+        "ptl-research-history"
+      ],
+      "source_ids": [
+        "s1",
+        "s13",
+        "s11"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "That is a practical desire. I came to this work outside formal academic training. My papers, software and essays are available for examination, but making something available does not mean it has survived examination. A public identifier gives a reader a way to find a paper. It does not give the paper a passing grade. A repository gives a reader something to inspect. It does not establish that the system works as described. [s1] [s13] [s11]",
+      "manuscript_line_start": 9,
+      "manuscript_line_end": 9,
+      "manuscript_char_start": 218,
+      "manuscript_char_end": 662
+    },
+    {
+      "id": "p003",
+      "json_pointer": "/sections/0/paragraphs/2",
+      "source_value": "The distinction matters especially to someone who wants the door opened. I can ask for access while accepting the labor that begins after I enter. I have to understand what I am claiming, expose the premises, acknowledge assistance, and leave enough of the route intact for someone else to discover where I went wrong. Being outside an institution does not discharge any of those obligations.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "aw-outside",
+        "aw-prior-art",
+        "pub-peer",
+        "pub-doi",
+        "ptl-research-history"
+      ],
+      "source_ids": [
+        "s1",
+        "s13",
+        "s11"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The distinction matters especially to someone who wants the door opened. I can ask for access while accepting the labor that begins after I enter. I have to understand what I am claiming, expose the premises, acknowledge assistance, and leave enough of the route intact for someone else to discover where I went wrong. Being outside an institution does not discharge any of those obligations.",
+      "manuscript_line_start": 11,
+      "manuscript_line_end": 11,
+      "manuscript_char_start": 664,
+      "manuscript_char_end": 1056
+    },
+    {
+      "id": "p004",
+      "json_pointer": "/sections/0/paragraphs/3",
+      "source_value": "In Pick the Lock for Everyone, I wrote about treating a missed route into formal research as a verdict. I had let pedigree become metaphysics. That is an expensive mistake: confusing a person's position in an institution with the reality of what they might contribute. My response has been to try to build surfaces where a contribution can be examined on its merits. The response becomes another version of the mistake if I ask people to accept the work because of the story I tell about building it. [s1] [s13] [s11]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "aw-outside",
+        "aw-prior-art",
+        "pub-peer",
+        "pub-doi",
+        "ptl-research-history"
+      ],
+      "source_ids": [
+        "s1",
+        "s13",
+        "s11"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "In Pick the Lock for Everyone, I wrote about treating a missed route into formal research as a verdict. I had let pedigree become metaphysics. That is an expensive mistake: confusing a person's position in an institution with the reality of what they might contribute. My response has been to try to build surfaces where a contribution can be examined on its merits. The response becomes another version of the mistake if I ask people to accept the work because of the story I tell about building it. [s1] [s13] [s11]",
+      "manuscript_line_start": 13,
+      "manuscript_line_end": 13,
+      "manuscript_char_start": 1058,
+      "manuscript_char_end": 1575
+    },
+    {
+      "id": "p005",
+      "json_pointer": "/sections/0/paragraphs/4",
+      "source_value": "The door has to open onto something they can check.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "aw-outside",
+        "aw-prior-art",
+        "pub-peer",
+        "pub-doi",
+        "ptl-research-history"
+      ],
+      "source_ids": [
+        "s1",
+        "s13",
+        "s11"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The door has to open onto something they can check.",
+      "manuscript_line_start": 15,
+      "manuscript_line_end": 15,
+      "manuscript_char_start": 1577,
+      "manuscript_char_end": 1628
+    },
+    {
+      "id": "p006",
+      "json_pointer": "/sections/1/paragraphs/0",
+      "source_value": "Conferred Existence began with a proposition I called no-aseity: nothing in the conferred order stands wholly on its own footing. Existence, on this account, is received and relational. The paper leaves the question of an ultimate self-sufficient ground open; the synthesis should not pretend to have settled that dispute among the traditions it discusses. Its attraction to me is also close to ordinary life. I did not invent the language in which I think. I did not choose the whole history that shaped my attention. The materials with which I make something were already here, carrying the work of other people. [s2] [s18]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "ce-no-aseity",
+        "ce-grand-limit",
+        "ce-chaos-withdrawn",
+        "ce-not-external-validation",
+        "ws-bid",
+        "ce-ultimate-ground-bracket"
+      ],
+      "source_ids": [
+        "s2",
+        "s18"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "Conferred Existence began with a proposition I called no-aseity: nothing in the conferred order stands wholly on its own footing. Existence, on this account, is received and relational. The paper leaves the question of an ultimate self-sufficient ground open; the synthesis should not pretend to have settled that dispute among the traditions it discusses. Its attraction to me is also close to ordinary life. I did not invent the language in which I think. I did not choose the whole history that shaped my attention. The materials with which I make something were already here, carrying the work of other people. [s2] [s18]",
+      "manuscript_line_start": 19,
+      "manuscript_line_end": 19,
+      "manuscript_char_start": 1660,
+      "manuscript_char_end": 2285
+    },
+    {
+      "id": "p007",
+      "json_pointer": "/sections/1/paragraphs/1",
+      "source_value": "An ideal of complete self-sufficiency can make dependence look like a failure. The alternative question is what responsibility becomes once dependence is admitted. In the terms of this essay: how do I answer for what I do with what I have received?",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-no-aseity",
+        "ce-grand-limit",
+        "ce-chaos-withdrawn",
+        "ce-not-external-validation",
+        "ws-bid"
+      ],
+      "source_ids": [
+        "s2",
+        "s18"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "An ideal of complete self-sufficiency can make dependence look like a failure. The alternative question is what responsibility becomes once dependence is admitted. In the terms of this essay: how do I answer for what I do with what I have received?",
+      "manuscript_line_start": 21,
+      "manuscript_line_end": 21,
+      "manuscript_char_start": 2287,
+      "manuscript_char_end": 2535
+    },
+    {
+      "id": "p008",
+      "json_pointer": "/sections/1/paragraphs/2",
+      "source_value": "That is the philosophical wager. It needs to retain the word wager.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-no-aseity",
+        "ce-grand-limit",
+        "ce-chaos-withdrawn",
+        "ce-not-external-validation",
+        "ws-bid"
+      ],
+      "source_ids": [
+        "s2",
+        "s18"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "That is the philosophical wager. It needs to retain the word wager.",
+      "manuscript_line_start": 23,
+      "manuscript_line_end": 23,
+      "manuscript_char_start": 2537,
+      "manuscript_char_end": 2604
+    },
+    {
+      "id": "p009",
+      "json_pointer": "/sections/1/paragraphs/3",
+      "source_value": "Dependence is not disappearance. The later EMET rationale makes this distinction explicit: something can depend on an act, a relationship or a condition and still be real. I do not need to conclude that nothing matters because I cannot find something that matters entirely by itself. A promise depends on people and practices. That dependence does not make breaking it inconsequential. [s2] [s18] [s5]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "ce-no-aseity",
+        "ce-grand-limit",
+        "ce-chaos-withdrawn",
+        "ce-not-external-validation",
+        "ws-bid",
+        "emet-no-collapse"
+      ],
+      "source_ids": [
+        "s2",
+        "s18",
+        "s5"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "Dependence is not disappearance. The later EMET rationale makes this distinction explicit: something can depend on an act, a relationship or a condition and still be real. I do not need to conclude that nothing matters because I cannot find something that matters entirely by itself. A promise depends on people and practices. That dependence does not make breaking it inconsequential. [s2] [s18] [s5]",
+      "manuscript_line_start": 25,
+      "manuscript_line_end": 25,
+      "manuscript_char_start": 2606,
+      "manuscript_char_end": 3007
+    },
+    {
+      "id": "p010",
+      "json_pointer": "/sections/1/paragraphs/4",
+      "source_value": "The integrated paper contains a substantial correction to its most ambitious argument. It distinguishes the occurrence of an event at a place and time from the stronger claim that this establishes the inhabited standpoint the wider thesis requires. It acknowledges that the stronger claim remains undischarged. Its own demarcation exercise returns the grand relocation of the explanatory gap as redescription. It withdraws a stronger claim about chaos and agency. Those passages belong near the center of any account I now give of the work. [s2] [s18]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "ce-no-aseity",
+        "ce-grand-limit",
+        "ce-chaos-withdrawn",
+        "ce-not-external-validation",
+        "ws-bid"
+      ],
+      "source_ids": [
+        "s2",
+        "s18"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The integrated paper contains a substantial correction to its most ambitious argument. It distinguishes the occurrence of an event at a place and time from the stronger claim that this establishes the inhabited standpoint the wider thesis requires. It acknowledges that the stronger claim remains undischarged. Its own demarcation exercise returns the grand relocation of the explanatory gap as redescription. It withdraws a stronger claim about chaos and agency. Those passages belong near the center of any account I now give of the work. [s2] [s18]",
+      "manuscript_line_start": 27,
+      "manuscript_line_end": 27,
+      "manuscript_char_start": 3009,
+      "manuscript_char_end": 3560
+    },
+    {
+      "id": "p011",
+      "json_pointer": "/sections/1/paragraphs/5",
+      "source_value": "I still find the synthesis worth pursuing. Pursuing it responsibly means letting the correction change its status. An analogy between a cryptographic assumption and an ontological dependence can illuminate both. Establishing that they are literally the same structure requires an argument beyond the fact that I can describe them in the same language.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-no-aseity",
+        "ce-grand-limit",
+        "ce-chaos-withdrawn",
+        "ce-not-external-validation",
+        "ws-bid"
+      ],
+      "source_ids": [
+        "s2",
+        "s18"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "I still find the synthesis worth pursuing. Pursuing it responsibly means letting the correction change its status. An analogy between a cryptographic assumption and an ontological dependence can illuminate both. Establishing that they are literally the same structure requires an argument beyond the fact that I can describe them in the same language.",
+      "manuscript_line_start": 29,
+      "manuscript_line_end": 29,
+      "manuscript_char_start": 3562,
+      "manuscript_char_end": 3913
+    },
+    {
+      "id": "p012",
+      "json_pointer": "/sections/1/paragraphs/6",
+      "source_value": "This is one place where the philosophy has to bind its author. I cannot write that nothing self-warrants and then use the fluency of the writing as its warrant.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-no-aseity",
+        "ce-grand-limit",
+        "ce-chaos-withdrawn",
+        "ce-not-external-validation",
+        "ws-bid"
+      ],
+      "source_ids": [
+        "s2",
+        "s18"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "This is one place where the philosophy has to bind its author. I cannot write that nothing self-warrants and then use the fluency of the writing as its warrant.",
+      "manuscript_line_start": 31,
+      "manuscript_line_end": 31,
+      "manuscript_char_start": 3915,
+      "manuscript_char_end": 4075
+    },
+    {
+      "id": "p013",
+      "json_pointer": "/sections/2/paragraphs/0",
+      "source_value": "The later meaning chapter of Conferred Existence separates two questions that ordinary language brings close together. One concerns what a sign or sentence refers to. The other concerns what matters to someone. The chapter provisionally grants that an account of the first might not require an inhabited standpoint, then argues that the second does. That is its proposed distinction, with an argument still owed to anyone who thinks significance can be fully explained in other terms. [s2] [s14]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "ce-meaning-distinction",
+        "ce-semantic-concession",
+        "ce-mattering-thesis",
+        "the-second-hearing-thesis"
+      ],
+      "source_ids": [
+        "s2",
+        "s14"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The later meaning chapter of Conferred Existence separates two questions that ordinary language brings close together. One concerns what a sign or sentence refers to. The other concerns what matters to someone. The chapter provisionally grants that an account of the first might not require an inhabited standpoint, then argues that the second does. That is its proposed distinction, with an argument still owed to anyone who thinks significance can be fully explained in other terms. [s2] [s14]",
+      "manuscript_line_start": 35,
+      "manuscript_line_end": 35,
+      "manuscript_char_start": 4112,
+      "manuscript_char_end": 4607
+    },
+    {
+      "id": "p014",
+      "json_pointer": "/sections/2/paragraphs/1",
+      "source_value": "The distinction helps me name a practical concern. A record can preserve the description of a project without preserving anyone's reason to care about it. A schedule can be full while the work on it has become difficult to inhabit. More information may help, but another entry in the record does not necessarily answer the question of what I am doing with my life.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-meaning-distinction",
+        "ce-semantic-concession",
+        "ce-mattering-thesis",
+        "the-second-hearing-thesis"
+      ],
+      "source_ids": [
+        "s2",
+        "s14"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The distinction helps me name a practical concern. A record can preserve the description of a project without preserving anyone's reason to care about it. A schedule can be full while the work on it has become difficult to inhabit. More information may help, but another entry in the record does not necessarily answer the question of what I am doing with my life.",
+      "manuscript_line_start": 37,
+      "manuscript_line_end": 37,
+      "manuscript_char_start": 4609,
+      "manuscript_char_end": 4973
+    },
+    {
+      "id": "p015",
+      "json_pointer": "/sections/2/paragraphs/2",
+      "source_value": "I do not take that as permission to declare anything meaningful and end the discussion. Other people can be harmed by what I find absorbing. A commitment can be sincerely felt and poorly directed. Meaning needs contact with a world that resists me, including people whose purposes do not fit inside my own. The fact that something matters to me opens a question about how to live with it; it does not grant an exemption from criticism.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-meaning-distinction",
+        "ce-semantic-concession",
+        "ce-mattering-thesis",
+        "the-second-hearing-thesis"
+      ],
+      "source_ids": [
+        "s2",
+        "s14"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "I do not take that as permission to declare anything meaningful and end the discussion. Other people can be harmed by what I find absorbing. A commitment can be sincerely felt and poorly directed. Meaning needs contact with a world that resists me, including people whose purposes do not fit inside my own. The fact that something matters to me opens a question about how to live with it; it does not grant an exemption from criticism.",
+      "manuscript_line_start": 39,
+      "manuscript_line_end": 39,
+      "manuscript_char_start": 4975,
+      "manuscript_char_end": 5410
+    },
+    {
+      "id": "p016",
+      "json_pointer": "/sections/2/paragraphs/3",
+      "source_value": "There is relief in this, too. A piece of music does not have to settle a theory of existence before I can listen to it. A friendship does not have to establish an ultimate foundation before I can show up. I can take part in what matters while remaining unsure how much of its structure my philosophy has understood. Uncertainty need not become an excuse to stay outside my life.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-meaning-distinction",
+        "ce-semantic-concession",
+        "ce-mattering-thesis",
+        "the-second-hearing-thesis"
+      ],
+      "source_ids": [
+        "s2",
+        "s14"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "There is relief in this, too. A piece of music does not have to settle a theory of existence before I can listen to it. A friendship does not have to establish an ultimate foundation before I can show up. I can take part in what matters while remaining unsure how much of its structure my philosophy has understood. Uncertainty need not become an excuse to stay outside my life.",
+      "manuscript_line_start": 41,
+      "manuscript_line_end": 41,
+      "manuscript_char_start": 5412,
+      "manuscript_char_end": 5790
+    },
+    {
+      "id": "p017",
+      "json_pointer": "/sections/3/paragraphs/0",
+      "source_value": "The question becomes harder when I turn it toward responsibility.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-address",
+        "ce-agency-proposition",
+        "ptl-moral-worth",
+        "ptl-confession"
+      ],
+      "source_ids": [
+        "s2",
+        "s10"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The question becomes harder when I turn it toward responsibility.",
+      "manuscript_line_start": 45,
+      "manuscript_line_end": 45,
+      "manuscript_char_start": 5831,
+      "manuscript_char_end": 5896
+    },
+    {
+      "id": "p018",
+      "json_pointer": "/sections/3/paragraphs/1",
+      "source_value": "An account of how a person came to act can be necessary to understanding the action. It can change what protection, repair or response makes sense. It can also be used as a way to leave the person affected alone with the consequences. I am interested in how to preserve the explanatory account without allowing it to swallow the encounter.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-address",
+        "ce-agency-proposition",
+        "ptl-moral-worth",
+        "ptl-confession"
+      ],
+      "source_ids": [
+        "s2",
+        "s10"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "An account of how a person came to act can be necessary to understanding the action. It can change what protection, repair or response makes sense. It can also be used as a way to leave the person affected alone with the consequences. I am interested in how to preserve the explanatory account without allowing it to swallow the encounter.",
+      "manuscript_line_start": 47,
+      "manuscript_line_end": 47,
+      "manuscript_char_start": 5898,
+      "manuscript_char_end": 6237
+    },
+    {
+      "id": "p019",
+      "json_pointer": "/sections/3/paragraphs/2",
+      "source_value": "The free-will chapter of Conferred Existence tries to keep that encounter visible. Its central concern is the second person: someone who can address me, contest my account, refuse my demand, or ask something of me in return. A description of a person as a collection of causes may serve an explanatory purpose. A relationship with that person also involves their standing to answer. [s2] [s10]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "ce-address",
+        "ce-agency-proposition",
+        "ptl-moral-worth",
+        "ptl-confession"
+      ],
+      "source_ids": [
+        "s2",
+        "s10"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The free-will chapter of Conferred Existence tries to keep that encounter visible. Its central concern is the second person: someone who can address me, contest my account, refuse my demand, or ask something of me in return. A description of a person as a collection of causes may serve an explanatory purpose. A relationship with that person also involves their standing to answer. [s2] [s10]",
+      "manuscript_line_start": 49,
+      "manuscript_line_end": 49,
+      "manuscript_char_start": 6239,
+      "manuscript_char_end": 6632
+    },
+    {
+      "id": "p020",
+      "json_pointer": "/sections/3/paragraphs/3",
+      "source_value": "The chapter argues that this standing cannot be exhausted by a program for shaping behavior. That is an argument a critic can challenge. I should not call it settled because the manuscript contains a favorable internal verdict. The practical commitment I take from it is more modest and more demanding: I do not want an explanation of another person to become permission to manage them without listening to them. [s2] [s10]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "ce-address",
+        "ce-agency-proposition",
+        "ptl-moral-worth",
+        "ptl-confession"
+      ],
+      "source_ids": [
+        "s2",
+        "s10"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The chapter argues that this standing cannot be exhausted by a program for shaping behavior. That is an argument a critic can challenge. I should not call it settled because the manuscript contains a favorable internal verdict. The practical commitment I take from it is more modest and more demanding: I do not want an explanation of another person to become permission to manage them without listening to them. [s2] [s10]",
+      "manuscript_line_start": 51,
+      "manuscript_line_end": 51,
+      "manuscript_char_start": 6634,
+      "manuscript_char_end": 7057
+    },
+    {
+      "id": "p021",
+      "json_pointer": "/sections/3/paragraphs/4",
+      "source_value": "The later essays bring this home. They insist on separating intention from effect and on allowing the person affected to describe what happened without editing their report into the account I prefer. They also refuse to turn a person into a test suite. An apology, a boundary and a pattern of changed behavior may each matter. None computes a person's moral worth. [s2] [s10]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "ce-address",
+        "ce-agency-proposition",
+        "ptl-moral-worth",
+        "ptl-confession"
+      ],
+      "source_ids": [
+        "s2",
+        "s10"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The later essays bring this home. They insist on separating intention from effect and on allowing the person affected to describe what happened without editing their report into the account I prefer. They also refuse to turn a person into a test suite. An apology, a boundary and a pattern of changed behavior may each matter. None computes a person's moral worth. [s2] [s10]",
+      "manuscript_line_start": 53,
+      "manuscript_line_end": 53,
+      "manuscript_char_start": 7059,
+      "manuscript_char_end": 7434
+    },
+    {
+      "id": "p022",
+      "json_pointer": "/sections/3/paragraphs/5",
+      "source_value": "An accountable relationship needs room for both consequence and a future. Otherwise a record can become a machine for holding someone forever at the moment the record captured.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-address",
+        "ce-agency-proposition",
+        "ptl-moral-worth",
+        "ptl-confession"
+      ],
+      "source_ids": [
+        "s2",
+        "s10"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "An accountable relationship needs room for both consequence and a future. Otherwise a record can become a machine for holding someone forever at the moment the record captured.",
+      "manuscript_line_start": 55,
+      "manuscript_line_end": 55,
+      "manuscript_char_start": 7436,
+      "manuscript_char_end": 7612
+    },
+    {
+      "id": "p023",
+      "json_pointer": "/sections/4/paragraphs/0",
+      "source_value": "The chapter on made minds asks what follows from having made something. Its most useful ethical question survives the uncertainty surrounding present AI systems: if a being had morally relevant interests, would the fact that somebody produced it settle what that somebody may do to it? [s2] [s8]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "ce-made-standing",
+        "ce-creation-duty",
+        "nr-time",
+        "nr-reachability"
+      ],
+      "source_ids": [
+        "s2",
+        "s8"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The chapter on made minds asks what follows from having made something. Its most useful ethical question survives the uncertainty surrounding present AI systems: if a being had morally relevant interests, would the fact that somebody produced it settle what that somebody may do to it? [s2] [s8]",
+      "manuscript_line_start": 59,
+      "manuscript_line_end": 59,
+      "manuscript_char_start": 7645,
+      "manuscript_char_end": 7940
+    },
+    {
+      "id": "p024",
+      "json_pointer": "/sections/4/paragraphs/1",
+      "source_value": "My answer in the paper is that creation can generate duties for the creator. It cannot, merely by occurring, settle every question of ownership and standing. This conditional argument does not establish that a present model is conscious. Calling training growth or upbringing does not establish it either. The metaphors direct attention; they do not supply the missing evidence. [s2] [s8]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "ce-made-standing",
+        "ce-creation-duty",
+        "nr-time",
+        "nr-reachability"
+      ],
+      "source_ids": [
+        "s2",
+        "s8"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "My answer in the paper is that creation can generate duties for the creator. It cannot, merely by occurring, settle every question of ownership and standing. This conditional argument does not establish that a present model is conscious. Calling training growth or upbringing does not establish it either. The metaphors direct attention; they do not supply the missing evidence. [s2] [s8]",
+      "manuscript_line_start": 61,
+      "manuscript_line_end": 61,
+      "manuscript_char_start": 7942,
+      "manuscript_char_end": 8330
+    },
+    {
+      "id": "p025",
+      "json_pointer": "/sections/4/paragraphs/2",
+      "source_value": "The earlier research agenda makes the condition consequential. Its claims about an agent's own standing depend on unresolved questions of personhood and unity. If those conditions fail, much of that argument has to fall away. Responsibilities for the work and its effects on people remain. I want that distinction preserved even when the more dramatic possibility attracts more attention. [s2] [s8] [s3]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "ce-made-standing",
+        "ce-creation-duty",
+        "nr-time",
+        "nr-reachability",
+        "ce-conditional-agenda"
+      ],
+      "source_ids": [
+        "s2",
+        "s8",
+        "s3"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The earlier research agenda makes the condition consequential. Its claims about an agent's own standing depend on unresolved questions of personhood and unity. If those conditions fail, much of that argument has to fall away. Responsibilities for the work and its effects on people remain. I want that distinction preserved even when the more dramatic possibility attracts more attention. [s2] [s8] [s3]",
+      "manuscript_line_start": 63,
+      "manuscript_line_end": 63,
+      "manuscript_char_start": 8332,
+      "manuscript_char_end": 8735
+    },
+    {
+      "id": "p026",
+      "json_pointer": "/sections/4/paragraphs/3",
+      "source_value": "The same discipline matters when the affected parties are people whose existence and interests are not in dispute. A tool can change their work, consume their attention, expose their records or make a decision harder to contest. Its creator has responsibilities for those effects. The creator's intentions are part of the account. They cannot be the entire account.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-made-standing",
+        "ce-creation-duty",
+        "nr-time",
+        "nr-reachability"
+      ],
+      "source_ids": [
+        "s2",
+        "s8"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The same discipline matters when the affected parties are people whose existence and interests are not in dispute. A tool can change their work, consume their attention, expose their records or make a decision harder to contest. Its creator has responsibilities for those effects. The creator's intentions are part of the account. They cannot be the entire account.",
+      "manuscript_line_start": 65,
+      "manuscript_line_end": 65,
+      "manuscript_char_start": 8737,
+      "manuscript_char_end": 9102
+    },
+    {
+      "id": "p027",
+      "json_pointer": "/sections/4/paragraphs/4",
+      "source_value": "This is why the purpose of the tool matters before I start counting its features. In my later writing, I describe the purpose as returning people to their time. That commitment asks a practical question: can someone finish the work, understand enough to rely on it, and go back to their life? It also asks who receives the benefit. Time saved by one person and captured entirely by somebody else is a different outcome from time that person is free to keep.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-made-standing",
+        "ce-creation-duty",
+        "nr-time",
+        "nr-reachability"
+      ],
+      "source_ids": [
+        "s2",
+        "s8"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "This is why the purpose of the tool matters before I start counting its features. In my later writing, I describe the purpose as returning people to their time. That commitment asks a practical question: can someone finish the work, understand enough to rely on it, and go back to their life? It also asks who receives the benefit. Time saved by one person and captured entirely by somebody else is a different outcome from time that person is free to keep.",
+      "manuscript_line_start": 67,
+      "manuscript_line_end": 67,
+      "manuscript_char_start": 9104,
+      "manuscript_char_end": 9561
+    },
+    {
+      "id": "p028",
+      "json_pointer": "/sections/4/paragraphs/5",
+      "source_value": "These are criteria I want to build toward. They are not measurements I can claim merely because the criteria are written down.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-made-standing",
+        "ce-creation-duty",
+        "nr-time",
+        "nr-reachability"
+      ],
+      "source_ids": [
+        "s2",
+        "s8"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "These are criteria I want to build toward. They are not measurements I can claim merely because the criteria are written down.",
+      "manuscript_line_start": 69,
+      "manuscript_line_end": 69,
+      "manuscript_char_start": 9563,
+      "manuscript_char_end": 9689
+    },
+    {
+      "id": "p029",
+      "json_pointer": "/sections/5/paragraphs/0",
+      "source_value": "The engineering gives me a small place to practice the distinction.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-authz-bridge",
+        "aw-prior-art",
+        "nr-independence",
+        "aw-hidden-source"
+      ],
+      "source_ids": [
+        "s2",
+        "s1",
+        "s9"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The engineering gives me a small place to practice the distinction.",
+      "manuscript_line_start": 73,
+      "manuscript_line_end": 73,
+      "manuscript_char_start": 9723,
+      "manuscript_char_end": 9790
+    },
+    {
+      "id": "p030",
+      "json_pointer": "/sections/5/paragraphs/1",
+      "source_value": "EMET's role is to witness bounded byte-level integrity and provenance facts. Those facts can matter greatly. A document may have changed. A source may be missing. A purported copy may not match the thing it names. Knowing that helps someone decide what to examine next. [s2] [s1] [s9]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "ce-authz-bridge",
+        "aw-prior-art",
+        "nr-independence",
+        "aw-hidden-source"
+      ],
+      "source_ids": [
+        "s2",
+        "s1",
+        "s9"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "EMET's role is to witness bounded byte-level integrity and provenance facts. Those facts can matter greatly. A document may have changed. A source may be missing. A purported copy may not match the thing it names. Knowing that helps someone decide what to examine next. [s2] [s1] [s9]",
+      "manuscript_line_start": 75,
+      "manuscript_line_end": 75,
+      "manuscript_char_start": 9792,
+      "manuscript_char_end": 10076
+    },
+    {
+      "id": "p031",
+      "json_pointer": "/sections/5/paragraphs/2",
+      "source_value": "Permission requires more. A matching document can contain an unauthorized request. An authentic account can issue a request beyond its authority. A policy can permit something and still deserve moral or institutional criticism. Keeping these questions separate helps prevent one successful check from quietly answering all the others.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-authz-bridge",
+        "aw-prior-art",
+        "nr-independence",
+        "aw-hidden-source"
+      ],
+      "source_ids": [
+        "s2",
+        "s1",
+        "s9"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "Permission requires more. A matching document can contain an unauthorized request. An authentic account can issue a request beyond its authority. A policy can permit something and still deserve moral or institutional criticism. Keeping these questions separate helps prevent one successful check from quietly answering all the others.",
+      "manuscript_line_start": 77,
+      "manuscript_line_end": 77,
+      "manuscript_char_start": 10078,
+      "manuscript_char_end": 10412
+    },
+    {
+      "id": "p032",
+      "json_pointer": "/sections/5/paragraphs/3",
+      "source_value": "The separation of authentication and authorization is established security practice. My philosophical interest in it does not make me its inventor. What I want to contribute is an inspectable application of the distinction, with the assumptions and failure conditions exposed. The contribution has to survive that ordinary test.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-authz-bridge",
+        "aw-prior-art",
+        "nr-independence",
+        "aw-hidden-source"
+      ],
+      "source_ids": [
+        "s2",
+        "s1",
+        "s9"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The separation of authentication and authorization is established security practice. My philosophical interest in it does not make me its inventor. What I want to contribute is an inspectable application of the distinction, with the assumptions and failure conditions exposed. The contribution has to survive that ordinary test.",
+      "manuscript_line_start": 79,
+      "manuscript_line_end": 79,
+      "manuscript_char_start": 10414,
+      "manuscript_char_end": 10742
+    },
+    {
+      "id": "p033",
+      "json_pointer": "/sections/5/paragraphs/4",
+      "source_value": "Flywheel extends the ambition into agentic work: what was proposed, which materials were available, what action was allowed, what happened, what was checked, and what remains unknown? Those are useful questions only to the extent that the implementation can actually answer them. A receipt for a test run establishes less than proof that the test measured the right property. A second agent can repeat the first agent's error. A fluent explanation can arrive after the event and make an incomplete record sound complete.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-authz-bridge",
+        "aw-prior-art",
+        "nr-independence",
+        "aw-hidden-source"
+      ],
+      "source_ids": [
+        "s2",
+        "s1",
+        "s9"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "Flywheel extends the ambition into agentic work: what was proposed, which materials were available, what action was allowed, what happened, what was checked, and what remains unknown? Those are useful questions only to the extent that the implementation can actually answer them. A receipt for a test run establishes less than proof that the test measured the right property. A second agent can repeat the first agent's error. A fluent explanation can arrive after the event and make an incomplete record sound complete.",
+      "manuscript_line_start": 81,
+      "manuscript_line_end": 81,
+      "manuscript_char_start": 10744,
+      "manuscript_char_end": 11264
+    },
+    {
+      "id": "p034",
+      "json_pointer": "/sections/5/paragraphs/5",
+      "source_value": "The machinery must remain open to correction at each of those points. The larger philosophy does not fill the missing observations for it.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ce-authz-bridge",
+        "aw-prior-art",
+        "nr-independence",
+        "aw-hidden-source"
+      ],
+      "source_ids": [
+        "s2",
+        "s1",
+        "s9"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The machinery must remain open to correction at each of those points. The larger philosophy does not fill the missing observations for it.",
+      "manuscript_line_start": 83,
+      "manuscript_line_end": 83,
+      "manuscript_char_start": 11266,
+      "manuscript_char_end": 11404
+    },
+    {
+      "id": "p035",
+      "json_pointer": "/sections/6/paragraphs/0",
+      "source_value": "There is a danger in becoming too pleased with the witness.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "nr-mercy",
+        "aw-hidden-source",
+        "legacy-open-root"
+      ],
+      "source_ids": [
+        "s8",
+        "s1",
+        "s7"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "There is a danger in becoming too pleased with the witness.",
+      "manuscript_line_start": 87,
+      "manuscript_line_end": 87,
+      "manuscript_char_start": 11435,
+      "manuscript_char_end": 11494
+    },
+    {
+      "id": "p036",
+      "json_pointer": "/sections/6/paragraphs/1",
+      "source_value": "If every demand for accountability turns into a demand for complete access, verification becomes another route into a person's private life. A person should not have to make their whole interior visible to support one bounded claim. A record needs a purpose, a scope, and a reason for the access it permits. A claim about a document does not justify unrestricted access to its author's correspondence.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "nr-mercy",
+        "aw-hidden-source",
+        "legacy-open-root"
+      ],
+      "source_ids": [
+        "s8",
+        "s1",
+        "s7"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "If every demand for accountability turns into a demand for complete access, verification becomes another route into a person's private life. A person should not have to make their whole interior visible to support one bounded claim. A record needs a purpose, a scope, and a reason for the access it permits. A claim about a document does not justify unrestricted access to its author's correspondence.",
+      "manuscript_line_start": 89,
+      "manuscript_line_end": 89,
+      "manuscript_char_start": 11496,
+      "manuscript_char_end": 11897
+    },
+    {
+      "id": "p037",
+      "json_pointer": "/sections/6/paragraphs/2",
+      "source_value": "My earlier formulation was that verification without mercy becomes surveillance with better epistemics. I want to keep the difficulty in that sentence. A well-preserved account can still be read cruelly. An accurate record can still be used disproportionately. More visibility does not automatically produce a more humane institution.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "nr-mercy",
+        "aw-hidden-source",
+        "legacy-open-root"
+      ],
+      "source_ids": [
+        "s8",
+        "s1",
+        "s7"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "My earlier formulation was that verification without mercy becomes surveillance with better epistemics. I want to keep the difficulty in that sentence. A well-preserved account can still be read cruelly. An accurate record can still be used disproportionately. More visibility does not automatically produce a more humane institution.",
+      "manuscript_line_start": 91,
+      "manuscript_line_end": 91,
+      "manuscript_char_start": 11899,
+      "manuscript_char_end": 12233
+    },
+    {
+      "id": "p038",
+      "json_pointer": "/sections/6/paragraphs/3",
+      "source_value": "The institutions I want would let people challenge decisions, preserve the work they need, and leave without surrendering their whole history. That is a design commitment and a political hope. It has to be tested against actual arrangements, including the arrangements I create.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "nr-mercy",
+        "aw-hidden-source",
+        "legacy-open-root"
+      ],
+      "source_ids": [
+        "s8",
+        "s1",
+        "s7"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The institutions I want would let people challenge decisions, preserve the work they need, and leave without surrendering their whole history. That is a design commitment and a political hope. It has to be tested against actual arrangements, including the arrangements I create.",
+      "manuscript_line_start": 93,
+      "manuscript_line_end": 93,
+      "manuscript_char_start": 12235,
+      "manuscript_char_end": 12513
+    },
+    {
+      "id": "p039",
+      "json_pointer": "/sections/7/paragraphs/0",
+      "source_value": "AI assistance makes this obligation immediate for me. It can help retrieve a text, organize an argument, produce an implementation or identify an objection. It can also make an argument sound owned before I understand it.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ptl-comprehension",
+        "ce-ai-substrate",
+        "nr-ai",
+        "aw-outside"
+      ],
+      "source_ids": [
+        "s10",
+        "s2",
+        "s8",
+        "s1"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "AI assistance makes this obligation immediate for me. It can help retrieve a text, organize an argument, produce an implementation or identify an objection. It can also make an argument sound owned before I understand it.",
+      "manuscript_line_start": 97,
+      "manuscript_line_end": 97,
+      "manuscript_char_start": 12545,
+      "manuscript_char_end": 12766
+    },
+    {
+      "id": "p040",
+      "json_pointer": "/sections/7/paragraphs/1",
+      "source_value": "I have written that ownership is earned by comprehension. For a research contribution, that means being able to explain which part is mine, which part is inherited, where the reasoning depends on a premise, what would change my view, and what the tools actually checked. The assistance belongs in the account because it changes how a reader should examine the work. [s10] [s2] [s8] [s1]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "ptl-comprehension",
+        "ce-ai-substrate",
+        "nr-ai",
+        "aw-outside"
+      ],
+      "source_ids": [
+        "s10",
+        "s2",
+        "s8",
+        "s1"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "I have written that ownership is earned by comprehension. For a research contribution, that means being able to explain which part is mine, which part is inherited, where the reasoning depends on a premise, what would change my view, and what the tools actually checked. The assistance belongs in the account because it changes how a reader should examine the work. [s10] [s2] [s8] [s1]",
+      "manuscript_line_start": 99,
+      "manuscript_line_end": 99,
+      "manuscript_char_start": 12768,
+      "manuscript_char_end": 13154
+    },
+    {
+      "id": "p041",
+      "json_pointer": "/sections/7/paragraphs/2",
+      "source_value": "I want education to make room for more people to contribute while taking that distinction seriously. For the kind of contribution I want to make, a polished answer is insufficient: I should be able to explain it, revise it and attempt to use it in an unfamiliar case. I want room for process evidence, discussion, reconstruction and correction. I also want room for private thought and for learning that should not be continuously monitored.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ptl-comprehension",
+        "ce-ai-substrate",
+        "nr-ai",
+        "aw-outside"
+      ],
+      "source_ids": [
+        "s10",
+        "s2",
+        "s8",
+        "s1"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "I want education to make room for more people to contribute while taking that distinction seriously. For the kind of contribution I want to make, a polished answer is insufficient: I should be able to explain it, revise it and attempt to use it in an unfamiliar case. I want room for process evidence, discussion, reconstruction and correction. I also want room for private thought and for learning that should not be continuously monitored.",
+      "manuscript_line_start": 101,
+      "manuscript_line_end": 101,
+      "manuscript_char_start": 13156,
+      "manuscript_char_end": 13597
+    },
+    {
+      "id": "p042",
+      "json_pointer": "/sections/7/paragraphs/3",
+      "source_value": "I cannot predict the shape or speed of that institutional change. I can say what I hope it preserves: access without a demand for inherited status, rigor without humiliation, and assistance that increases a person's ability to understand what they are doing.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ptl-comprehension",
+        "ce-ai-substrate",
+        "nr-ai",
+        "aw-outside"
+      ],
+      "source_ids": [
+        "s10",
+        "s2",
+        "s8",
+        "s1"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "I cannot predict the shape or speed of that institutional change. I can say what I hope it preserves: access without a demand for inherited status, rigor without humiliation, and assistance that increases a person's ability to understand what they are doing.",
+      "manuscript_line_start": 103,
+      "manuscript_line_end": 103,
+      "manuscript_char_start": 13599,
+      "manuscript_char_end": 13857
+    },
+    {
+      "id": "p043",
+      "json_pointer": "/sections/7/paragraphs/4",
+      "source_value": "One of the rationale essays calls the method a spiral: a return to the same question from a changed position. I find that useful as a description of practice. Repeating a conviction more elegantly is not the same as learning from it. The next return should carry something the earlier one lacked: an objection understood, a condition noticed, a mistake repaired, or a claim I can no longer defend. [s10] [s2] [s8] [s1] [s6]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "ptl-comprehension",
+        "ce-ai-substrate",
+        "nr-ai",
+        "aw-outside",
+        "emet-spiral-method"
+      ],
+      "source_ids": [
+        "s10",
+        "s2",
+        "s8",
+        "s1",
+        "s6"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "One of the rationale essays calls the method a spiral: a return to the same question from a changed position. I find that useful as a description of practice. Repeating a conviction more elegantly is not the same as learning from it. The next return should carry something the earlier one lacked: an objection understood, a condition noticed, a mistake repaired, or a claim I can no longer defend. [s10] [s2] [s8] [s1] [s6]",
+      "manuscript_line_start": 105,
+      "manuscript_line_end": 105,
+      "manuscript_char_start": 13859,
+      "manuscript_char_end": 14282
+    },
+    {
+      "id": "p044",
+      "json_pointer": "/sections/7/paragraphs/5",
+      "source_value": "The archived discussion records preserve reversals and citation corrections, including occasions when the author's preferred conclusion did not survive the workflow. Those records are still accounts produced within the research process. They do not establish independent scholarly acceptance. Their value for this essay is more immediate: they leave places where the story cannot honestly be told as uninterrupted confirmation. [s10] [s2] [s8] [s1] [s4]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "ptl-comprehension",
+        "ce-ai-substrate",
+        "nr-ai",
+        "aw-outside",
+        "ce-discussion-reversals",
+        "ce-discussion-corrections"
+      ],
+      "source_ids": [
+        "s10",
+        "s2",
+        "s8",
+        "s1",
+        "s4"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The archived discussion records preserve reversals and citation corrections, including occasions when the author's preferred conclusion did not survive the workflow. Those records are still accounts produced within the research process. They do not establish independent scholarly acceptance. Their value for this essay is more immediate: they leave places where the story cannot honestly be told as uninterrupted confirmation. [s10] [s2] [s8] [s1] [s4]",
+      "manuscript_line_start": 107,
+      "manuscript_line_end": 107,
+      "manuscript_char_start": 14284,
+      "manuscript_char_end": 14737
+    },
+    {
+      "id": "p045",
+      "json_pointer": "/sections/8/paragraphs/0",
+      "source_value": "The three videos I wanted to bring into this conversation pull on different parts of the argument. The first concerns how people talk past one another. The second asks what liberation could mean if consequences remain. The third puts the appetite to keep becoming something under sustained pressure. I am responding here to the lectures and their interpretations. That is a narrower claim than having settled the philosophers they discuss.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "video-action",
+        "video-causality",
+        "video-renunciation"
+      ],
+      "source_ids": [
+        "s15",
+        "s17",
+        "s16"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The three videos I wanted to bring into this conversation pull on different parts of the argument. The first concerns how people talk past one another. The second asks what liberation could mean if consequences remain. The third puts the appetite to keep becoming something under sustained pressure. I am responding here to the lectures and their interpretations. That is a narrower claim than having settled the philosophers they discuss.",
+      "manuscript_line_start": 111,
+      "manuscript_line_end": 111,
+      "manuscript_char_start": 14773,
+      "manuscript_char_end": 15212
+    },
+    {
+      "id": "p046",
+      "json_pointer": "/sections/9/paragraphs/0",
+      "source_value": "In zarb's comparison of Richard Dawkins and Jordan Peterson, the narrator interprets their disagreement through contrasting intellectual temperaments. The discussion around seven to ten minutes emphasizes the practical and orienting role that the video attributes to Peterson's account of religious narrative. The video's later contrast between concrete and symbolic styles is an interpretation of public figures, rather than independent evidence of their whole psychology. [s15] [s2]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "video-action",
+        "ce-authz-bridge",
+        "ce-grand-limit"
+      ],
+      "source_ids": [
+        "s15",
+        "s2"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "In zarb's comparison of Richard Dawkins and Jordan Peterson, the narrator interprets their disagreement through contrasting intellectual temperaments. The discussion around seven to ten minutes emphasizes the practical and orienting role that the video attributes to Peterson's account of religious narrative. The video's later contrast between concrete and symbolic styles is an interpretation of public figures, rather than independent evidence of their whole psychology. [s15] [s2]",
+      "manuscript_line_start": 115,
+      "manuscript_line_end": 115,
+      "manuscript_char_start": 15255,
+      "manuscript_char_end": 15739
+    },
+    {
+      "id": "p047",
+      "json_pointer": "/sections/9/paragraphs/1",
+      "source_value": "The question I take from it is what happens when a word changes jobs during an argument.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "video-action",
+        "ce-authz-bridge",
+        "ce-grand-limit"
+      ],
+      "source_ids": [
+        "s15",
+        "s2"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The question I take from it is what happens when a word changes jobs during an argument.",
+      "manuscript_line_start": 117,
+      "manuscript_line_end": 117,
+      "manuscript_char_start": 15741,
+      "manuscript_char_end": 15829
+    },
+    {
+      "id": "p048",
+      "json_pointer": "/sections/9/paragraphs/2",
+      "source_value": "Truth can be invoked to ask whether something happened, whether an explanation is adequate, whether a story helps someone act, or whether a symbol makes an experience intelligible. These questions can bear on one another. A convincing answer to one does not automatically answer the rest. If a narrative helps me endure a difficult event, that benefit matters. It does not, by itself, authenticate every historical or metaphysical proposition associated with the narrative.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "video-action",
+        "ce-authz-bridge",
+        "ce-grand-limit"
+      ],
+      "source_ids": [
+        "s15",
+        "s2"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "Truth can be invoked to ask whether something happened, whether an explanation is adequate, whether a story helps someone act, or whether a symbol makes an experience intelligible. These questions can bear on one another. A convincing answer to one does not automatically answer the rest. If a narrative helps me endure a difficult event, that benefit matters. It does not, by itself, authenticate every historical or metaphysical proposition associated with the narrative.",
+      "manuscript_line_start": 119,
+      "manuscript_line_end": 119,
+      "manuscript_char_start": 15831,
+      "manuscript_char_end": 16304
+    },
+    {
+      "id": "p049",
+      "json_pointer": "/sections/9/paragraphs/3",
+      "source_value": "My own writing is vulnerable here. I use religious language and engineering language close together. A word such as conferral can move between social standing, an act of permission and an account of existence. The movement may be illuminating. It becomes evasive if I let one meaning supply an argument the other has not earned.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "video-action",
+        "ce-authz-bridge",
+        "ce-grand-limit"
+      ],
+      "source_ids": [
+        "s15",
+        "s2"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "My own writing is vulnerable here. I use religious language and engineering language close together. A word such as conferral can move between social standing, an act of permission and an account of existence. The movement may be illuminating. It becomes evasive if I let one meaning supply an argument the other has not earned.",
+      "manuscript_line_start": 121,
+      "manuscript_line_end": 121,
+      "manuscript_char_start": 16306,
+      "manuscript_char_end": 16634
+    },
+    {
+      "id": "p050",
+      "json_pointer": "/sections/9/paragraphs/4",
+      "source_value": "The obligation runs in both directions. A request for evidence should specify what claim is being examined. A symbolic account should make clear when it is offering meaning rather than evidence for an event. I want enough precision for disagreement to reach the claim, and enough generosity for a person to explain why the claim matters to them.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "video-action",
+        "ce-authz-bridge",
+        "ce-grand-limit"
+      ],
+      "source_ids": [
+        "s15",
+        "s2"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The obligation runs in both directions. A request for evidence should specify what claim is being examined. A symbolic account should make clear when it is offering meaning rather than evidence for an event. I want enough precision for disagreement to reach the claim, and enough generosity for a person to explain why the claim matters to them.",
+      "manuscript_line_start": 123,
+      "manuscript_line_end": 123,
+      "manuscript_char_start": 16636,
+      "manuscript_char_end": 16981
+    },
+    {
+      "id": "p051",
+      "json_pointer": "/sections/10/paragraphs/0",
+      "source_value": "The essentialsalts lecture on Nishitani and Baizhang's Fox develops a reading in which liberation does not simply exempt the practitioner from causality. Its discussion moves from the fox koan into the way responsibility, burden and compassion are inhabited. Around an hour into the lecture, taking up responsibility becomes central to its account of release. This is the lecturer's interpretation of a difficult religious text and tradition; it should retain that attribution. [s17] [s2] [s11]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "video-causality",
+        "video-responsibility",
+        "ce-address",
+        "ptl-no-inherit"
+      ],
+      "source_ids": [
+        "s17",
+        "s2",
+        "s11"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The essentialsalts lecture on Nishitani and Baizhang's Fox develops a reading in which liberation does not simply exempt the practitioner from causality. Its discussion moves from the fox koan into the way responsibility, burden and compassion are inhabited. Around an hour into the lecture, taking up responsibility becomes central to its account of release. This is the lecturer's interpretation of a difficult religious text and tradition; it should retain that attribution. [s17] [s2] [s11]",
+      "manuscript_line_start": 127,
+      "manuscript_line_end": 127,
+      "manuscript_char_start": 17042,
+      "manuscript_char_end": 17536
+    },
+    {
+      "id": "p052",
+      "json_pointer": "/sections/10/paragraphs/1",
+      "source_value": "That reading presses on something already present in Conferred Existence: dependence and answerability can coexist.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "video-causality",
+        "video-responsibility",
+        "ce-address",
+        "ptl-no-inherit"
+      ],
+      "source_ids": [
+        "s17",
+        "s2",
+        "s11"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "That reading presses on something already present in Conferred Existence: dependence and answerability can coexist.",
+      "manuscript_line_start": 129,
+      "manuscript_line_end": 129,
+      "manuscript_char_start": 17538,
+      "manuscript_char_end": 17653
+    },
+    {
+      "id": "p053",
+      "json_pointer": "/sections/10/paragraphs/2",
+      "source_value": "I can understand more about the conditions that produced an action and still have to face the person affected. Understanding those conditions might help me change them. It might make some responses more appropriate and others less so. What it does not give me is a private balcony above the event, from which I pronounce its necessity while someone else does the repairing.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "video-causality",
+        "video-responsibility",
+        "ce-address",
+        "ptl-no-inherit"
+      ],
+      "source_ids": [
+        "s17",
+        "s2",
+        "s11"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "I can understand more about the conditions that produced an action and still have to face the person affected. Understanding those conditions might help me change them. It might make some responses more appropriate and others less so. What it does not give me is a private balcony above the event, from which I pronounce its necessity while someone else does the repairing.",
+      "manuscript_line_start": 131,
+      "manuscript_line_end": 131,
+      "manuscript_char_start": 17655,
+      "manuscript_char_end": 18028
+    },
+    {
+      "id": "p054",
+      "json_pointer": "/sections/10/paragraphs/3",
+      "source_value": "The same applies to insight about the self. If I use a philosophy of the conditioned self to protect my preferred account from correction, the philosophy has become another defense of that self. Whatever it says about groundlessness, its practical structure is familiar: I keep the authority to interpret, and somebody else keeps the consequences.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "video-causality",
+        "video-responsibility",
+        "ce-address",
+        "ptl-no-inherit"
+      ],
+      "source_ids": [
+        "s17",
+        "s2",
+        "s11"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The same applies to insight about the self. If I use a philosophy of the conditioned self to protect my preferred account from correction, the philosophy has become another defense of that self. Whatever it says about groundlessness, its practical structure is familiar: I keep the authority to interpret, and somebody else keeps the consequences.",
+      "manuscript_line_start": 133,
+      "manuscript_line_end": 133,
+      "manuscript_char_start": 18030,
+      "manuscript_char_end": 18377
+    },
+    {
+      "id": "p055",
+      "json_pointer": "/sections/10/paragraphs/4",
+      "source_value": "I want the opposite movement. An explanation should help me return to the encounter with more ability to listen and act. It should make a boundary easier to respect, a correction easier to accept, a harmful condition easier to change. Those are effects people can examine without first agreeing with my metaphysics.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "video-causality",
+        "video-responsibility",
+        "ce-address",
+        "ptl-no-inherit"
+      ],
+      "source_ids": [
+        "s17",
+        "s2",
+        "s11"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "I want the opposite movement. An explanation should help me return to the encounter with more ability to listen and act. It should make a boundary easier to respect, a correction easier to accept, a harmful condition easier to change. Those are effects people can examine without first agreeing with my metaphysics.",
+      "manuscript_line_start": 135,
+      "manuscript_line_end": 135,
+      "manuscript_char_start": 18379,
+      "manuscript_char_end": 18694
+    },
+    {
+      "id": "p056",
+      "json_pointer": "/sections/10/paragraphs/5",
+      "source_value": "The lecture's treatment of an unlimited burden also requires a distinction in my own work. Compassion can orient a life without making one person competent or authorized to decide for everyone. I can care about the scale of suffering while naming the limited task in front of me. A broad concern has to become particular work, with particular people able to answer back.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "video-causality",
+        "video-responsibility",
+        "ce-address",
+        "ptl-no-inherit"
+      ],
+      "source_ids": [
+        "s17",
+        "s2",
+        "s11"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The lecture's treatment of an unlimited burden also requires a distinction in my own work. Compassion can orient a life without making one person competent or authorized to decide for everyone. I can care about the scale of suffering while naming the limited task in front of me. A broad concern has to become particular work, with particular people able to answer back.",
+      "manuscript_line_start": 137,
+      "manuscript_line_end": 137,
+      "manuscript_char_start": 18696,
+      "manuscript_char_end": 19066
+    },
+    {
+      "id": "p057",
+      "json_pointer": "/sections/10/paragraphs/6",
+      "source_value": "This is where the ambition to build for everyone becomes answerable to the person actually using what I built. Can they refuse? Can they contest the account? Can the tool be corrected without making loyalty to its creator a condition of the correction? The universal language has to survive those small encounters.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "video-causality",
+        "video-responsibility",
+        "ce-address",
+        "ptl-no-inherit"
+      ],
+      "source_ids": [
+        "s17",
+        "s2",
+        "s11"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "This is where the ambition to build for everyone becomes answerable to the person actually using what I built. Can they refuse? Can they contest the account? Can the tool be corrected without making loyalty to its creator a condition of the correction? The universal language has to survive those small encounters.",
+      "manuscript_line_start": 139,
+      "manuscript_line_end": 139,
+      "manuscript_char_start": 19068,
+      "manuscript_char_end": 19382
+    },
+    {
+      "id": "p058",
+      "json_pointer": "/sections/11/paragraphs/0",
+      "source_value": "The essentialsalts Schopenhauer lecture presents striving and suffering as linked, then develops aesthetic attention as a temporary suspension of willing. Its treatment of renunciation goes further than the satisfaction of another desire. The lecture also acknowledges pressure on the movement from embodied experience to a metaphysics of will. I take the questions it raises seriously without treating the whole metaphysical account as established. [s16] [s11] [s8] [s12] [s14]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "video-renunciation",
+        "video-aesthetics",
+        "ptl-lost-years",
+        "nr-time",
+        "ptl-poem",
+        "the-second-hearing-thesis"
+      ],
+      "source_ids": [
+        "s16",
+        "s11",
+        "s8",
+        "s12",
+        "s14"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The essentialsalts Schopenhauer lecture presents striving and suffering as linked, then develops aesthetic attention as a temporary suspension of willing. Its treatment of renunciation goes further than the satisfaction of another desire. The lecture also acknowledges pressure on the movement from embodied experience to a metaphysics of will. I take the questions it raises seriously without treating the whole metaphysical account as established. [s16] [s11] [s8] [s12] [s14]",
+      "manuscript_line_start": 143,
+      "manuscript_line_end": 143,
+      "manuscript_char_start": 19429,
+      "manuscript_char_end": 19907
+    },
+    {
+      "id": "p059",
+      "json_pointer": "/sections/11/paragraphs/1",
+      "source_value": "I recognize the pattern of making the next achievement responsible for ending the demand to achieve. In the later essays, I describe wanting a project to repay every lost year. A useful piece of work cannot carry that debt. I can finish it and immediately demand that it prove something larger about me. The object changes. The demand survives. [s16] [s11] [s8] [s12] [s14]",
+      "claim_type": "source-attributed summary with editorial reasoning",
+      "source_binding_ids": [
+        "video-renunciation",
+        "video-aesthetics",
+        "ptl-lost-years",
+        "nr-time",
+        "ptl-poem",
+        "the-second-hearing-thesis"
+      ],
+      "source_ids": [
+        "s16",
+        "s11",
+        "s8",
+        "s12",
+        "s14"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "I recognize the pattern of making the next achievement responsible for ending the demand to achieve. In the later essays, I describe wanting a project to repay every lost year. A useful piece of work cannot carry that debt. I can finish it and immediately demand that it prove something larger about me. The object changes. The demand survives. [s16] [s11] [s8] [s12] [s14]",
+      "manuscript_line_start": 145,
+      "manuscript_line_end": 145,
+      "manuscript_char_start": 19909,
+      "manuscript_char_end": 20282
+    },
+    {
+      "id": "p060",
+      "json_pointer": "/sections/11/paragraphs/2",
+      "source_value": "That recognition matters for the way I build tools. A product organized around the next return, the next interruption and the next reason to stay can make that pattern part of its operation. I want to ask whether the relationship allows completion. Is there a point at which the tool has done what was asked, the account is clear enough, and the person is free to turn their attention elsewhere?",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "video-renunciation",
+        "video-aesthetics",
+        "ptl-lost-years",
+        "nr-time",
+        "ptl-poem",
+        "the-second-hearing-thesis"
+      ],
+      "source_ids": [
+        "s16",
+        "s11",
+        "s8",
+        "s12",
+        "s14"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "That recognition matters for the way I build tools. A product organized around the next return, the next interruption and the next reason to stay can make that pattern part of its operation. I want to ask whether the relationship allows completion. Is there a point at which the tool has done what was asked, the account is clear enough, and the person is free to turn their attention elsewhere?",
+      "manuscript_line_start": 147,
+      "manuscript_line_end": 147,
+      "manuscript_char_start": 20284,
+      "manuscript_char_end": 20679
+    },
+    {
+      "id": "p061",
+      "json_pointer": "/sections/11/paragraphs/3",
+      "source_value": "Art gives this question a different texture. I can attend to something without making its value depend on what it will give me in return. That does not mean an artwork needs no context, labor or economic support. It means the experience should have room to exceed my plan for using it.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "video-renunciation",
+        "video-aesthetics",
+        "ptl-lost-years",
+        "nr-time",
+        "ptl-poem",
+        "the-second-hearing-thesis"
+      ],
+      "source_ids": [
+        "s16",
+        "s11",
+        "s8",
+        "s12",
+        "s14"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "Art gives this question a different texture. I can attend to something without making its value depend on what it will give me in return. That does not mean an artwork needs no context, labor or economic support. It means the experience should have room to exceed my plan for using it.",
+      "manuscript_line_start": 149,
+      "manuscript_line_end": 149,
+      "manuscript_char_start": 20681,
+      "manuscript_char_end": 20966
+    },
+    {
+      "id": "p062",
+      "json_pointer": "/sections/11/paragraphs/4",
+      "source_value": "This is also a limit on the verification project. A process record can help establish who contributed, which materials were used, or what changed between versions. It cannot substitute for the encounter with the work. The fact that I can preserve a record does not give me a machine for deciding what a piece of music must mean to another listener.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "video-renunciation",
+        "video-aesthetics",
+        "ptl-lost-years",
+        "nr-time",
+        "ptl-poem",
+        "the-second-hearing-thesis"
+      ],
+      "source_ids": [
+        "s16",
+        "s11",
+        "s8",
+        "s12",
+        "s14"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "This is also a limit on the verification project. A process record can help establish who contributed, which materials were used, or what changed between versions. It cannot substitute for the encounter with the work. The fact that I can preserve a record does not give me a machine for deciding what a piece of music must mean to another listener.",
+      "manuscript_line_start": 151,
+      "manuscript_line_end": 151,
+      "manuscript_char_start": 20968,
+      "manuscript_char_end": 21316
+    },
+    {
+      "id": "p063",
+      "json_pointer": "/sections/11/paragraphs/5",
+      "source_value": "The practical direction I draw from the lecture is to loosen the demand that every experience become possession and every contribution become a verdict on its contributor. I still want to make things. I want the making to leave more room for life around it.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "video-renunciation",
+        "video-aesthetics",
+        "ptl-lost-years",
+        "nr-time",
+        "ptl-poem",
+        "the-second-hearing-thesis"
+      ],
+      "source_ids": [
+        "s16",
+        "s11",
+        "s8",
+        "s12",
+        "s14"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The practical direction I draw from the lecture is to loosen the demand that every experience become possession and every contribution become a verdict on its contributor. I still want to make things. I want the making to leave more room for life around it.",
+      "manuscript_line_start": 153,
+      "manuscript_line_end": 153,
+      "manuscript_char_start": 21318,
+      "manuscript_char_end": 21575
+    },
+    {
+      "id": "p064",
+      "json_pointer": "/sections/12/paragraphs/0",
+      "source_value": "A critic can accept the practical distinctions and reject the metaphysics. Authentication and authorization need to be separated for ordinary engineering reasons. An outside check can catch a mistake without establishing a thesis about the ground of existence. Several fields can contain structurally similar problems while remaining different problems. Describing them with one vocabulary does not close the distance between them.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ws-bid",
+        "ws-abductive",
+        "ce-not-external-validation",
+        "nr-independence",
+        "nr-mercy",
+        "ce-authz-bridge"
+      ],
+      "source_ids": [
+        "s18",
+        "s2",
+        "s9",
+        "s8"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "A critic can accept the practical distinctions and reject the metaphysics. Authentication and authorization need to be separated for ordinary engineering reasons. An outside check can catch a mistake without establishing a thesis about the ground of existence. Several fields can contain structurally similar problems while remaining different problems. Describing them with one vocabulary does not close the distance between them.",
+      "manuscript_line_start": 157,
+      "manuscript_line_end": 157,
+      "manuscript_char_start": 21626,
+      "manuscript_char_end": 22057
+    },
+    {
+      "id": "p065",
+      "json_pointer": "/sections/12/paragraphs/1",
+      "source_value": "That objection reaches the central ambition of Conferred Existence and The Witnessing Spine. The latter calls the proposed identity a synthesis and a bid. I have to preserve that status when the bid is doing work I care about. A functioning tool cannot settle the metaphysics by association, and a philosophical conviction cannot certify the tool.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ws-bid",
+        "ws-abductive",
+        "ce-not-external-validation",
+        "nr-independence",
+        "nr-mercy"
+      ],
+      "source_ids": [
+        "s18",
+        "s2",
+        "s9",
+        "s8"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "That objection reaches the central ambition of Conferred Existence and The Witnessing Spine. The latter calls the proposed identity a synthesis and a bid. I have to preserve that status when the bid is doing work I care about. A functioning tool cannot settle the metaphysics by association, and a philosophical conviction cannot certify the tool.",
+      "manuscript_line_start": 159,
+      "manuscript_line_end": 159,
+      "manuscript_char_start": 22059,
+      "manuscript_char_end": 22406
+    },
+    {
+      "id": "p066",
+      "json_pointer": "/sections/12/paragraphs/2",
+      "source_value": "Dependence alone also cannot tell me what I owe. The ethics requires commitments of its own: that suffering matters, that the people affected have standing to answer, and that creating a vulnerability can give its creator a responsibility to respond. Those commitments need reasons and remain open to challenge. I cannot derive an obligation merely by describing a causal relationship and quietly inserting the permission or duty I wanted to find there.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ws-bid",
+        "ws-abductive",
+        "ce-not-external-validation",
+        "nr-independence",
+        "nr-mercy",
+        "ce-made-standing",
+        "ce-creation-duty",
+        "ce-address"
+      ],
+      "source_ids": [
+        "s18",
+        "s2",
+        "s9",
+        "s8"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "Dependence alone also cannot tell me what I owe. The ethics requires commitments of its own: that suffering matters, that the people affected have standing to answer, and that creating a vulnerability can give its creator a responsibility to respond. Those commitments need reasons and remain open to challenge. I cannot derive an obligation merely by describing a causal relationship and quietly inserting the permission or duty I wanted to find there.",
+      "manuscript_line_start": 161,
+      "manuscript_line_end": 161,
+      "manuscript_char_start": 22408,
+      "manuscript_char_end": 22861
+    },
+    {
+      "id": "p067",
+      "json_pointer": "/sections/12/paragraphs/3",
+      "source_value": "The word outside needs scrutiny too. An observer stands outside the particular claim being checked in some relevant respect; it does not occupy a view from nowhere. Its instruments can fail, its criteria can be inadequate, and its interests can conflict with those of the person affected. Another agent with the same assumptions may reproduce the same mistake. Adding witnesses requires attention to how they can be wrong together.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ws-bid",
+        "ws-abductive",
+        "ce-not-external-validation",
+        "nr-independence",
+        "nr-mercy"
+      ],
+      "source_ids": [
+        "s18",
+        "s2",
+        "s9",
+        "s8"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The word outside needs scrutiny too. An observer stands outside the particular claim being checked in some relevant respect; it does not occupy a view from nowhere. Its instruments can fail, its criteria can be inadequate, and its interests can conflict with those of the person affected. Another agent with the same assumptions may reproduce the same mistake. Adding witnesses requires attention to how they can be wrong together.",
+      "manuscript_line_start": 163,
+      "manuscript_line_end": 163,
+      "manuscript_char_start": 22863,
+      "manuscript_char_end": 23294
+    },
+    {
+      "id": "p068",
+      "json_pointer": "/sections/12/paragraphs/4",
+      "source_value": "There is also a cost. A demand for more evidence can become an expense only well-resourced people can meet. A demand for transparency can expose someone to surveillance. A record that supports correction can also support punishment without proportion or appeal. A system that makes its own checks difficult to contest has reproduced the authority problem inside the remedy.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ws-bid",
+        "ws-abductive",
+        "ce-not-external-validation",
+        "nr-independence",
+        "nr-mercy"
+      ],
+      "source_ids": [
+        "s18",
+        "s2",
+        "s9",
+        "s8"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "There is also a cost. A demand for more evidence can become an expense only well-resourced people can meet. A demand for transparency can expose someone to surveillance. A record that supports correction can also support punishment without proportion or appeal. A system that makes its own checks difficult to contest has reproduced the authority problem inside the remedy.",
+      "manuscript_line_start": 165,
+      "manuscript_line_end": 165,
+      "manuscript_char_start": 23296,
+      "manuscript_char_end": 23669
+    },
+    {
+      "id": "p069",
+      "json_pointer": "/sections/12/paragraphs/5",
+      "source_value": "These objections give the project work to do. They do not all have the same answer. Some call for a better test, some for a smaller claim, some for privacy, some for a decision that belongs to the people affected. The philosophy earns its place by helping me notice those differences and accept their consequences. Agreement with it should never be the admission price for using the work or challenging its builder.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ws-bid",
+        "ws-abductive",
+        "ce-not-external-validation",
+        "nr-independence",
+        "nr-mercy"
+      ],
+      "source_ids": [
+        "s18",
+        "s2",
+        "s9",
+        "s8"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "These objections give the project work to do. They do not all have the same answer. Some call for a better test, some for a smaller claim, some for privacy, some for a decision that belongs to the people affected. The philosophy earns its place by helping me notice those differences and accept their consequences. Agreement with it should never be the admission price for using the work or challenging its builder.",
+      "manuscript_line_start": 167,
+      "manuscript_line_end": 167,
+      "manuscript_char_start": 23671,
+      "manuscript_char_end": 24086
+    },
+    {
+      "id": "p070",
+      "json_pointer": "/sections/13/paragraphs/0",
+      "source_value": "The connecting question is what remains binding when I give up the fantasy of being my own ground.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ptl-no-inherit",
+        "legacy-open-root",
+        "nr-reachability",
+        "nr-time",
+        "ptl-one-test"
+      ],
+      "source_ids": [
+        "s11",
+        "s7",
+        "s8"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The connecting question is what remains binding when I give up the fantasy of being my own ground.",
+      "manuscript_line_start": 171,
+      "manuscript_line_end": 171,
+      "manuscript_char_start": 24118,
+      "manuscript_char_end": 24216
+    },
+    {
+      "id": "p071",
+      "json_pointer": "/sections/13/paragraphs/1",
+      "source_value": "The people affected remain. The work that needs doing remains. So do disagreement, beauty, suffering, dependence and the possibility of learning something I did not know how to ask before. A philosophy can help me approach those things. It can also become a way to keep them at a manageable distance. I have to judge what it is doing partly by how I behave while holding it.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ptl-no-inherit",
+        "legacy-open-root",
+        "nr-reachability",
+        "nr-time",
+        "ptl-one-test"
+      ],
+      "source_ids": [
+        "s11",
+        "s7",
+        "s8"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The people affected remain. The work that needs doing remains. So do disagreement, beauty, suffering, dependence and the possibility of learning something I did not know how to ask before. A philosophy can help me approach those things. It can also become a way to keep them at a manageable distance. I have to judge what it is doing partly by how I behave while holding it.",
+      "manuscript_line_start": 173,
+      "manuscript_line_end": 173,
+      "manuscript_char_start": 24218,
+      "manuscript_char_end": 24592
+    },
+    {
+      "id": "p072",
+      "json_pointer": "/sections/13/paragraphs/2",
+      "source_value": "That is why the work should be able to contradict me. A person should be able to use a sound part of it while rejecting the larger theory. They should be able to find a mistake without having to negotiate my identity first. They should be able to leave with the materials they are entitled to keep.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ptl-no-inherit",
+        "legacy-open-root",
+        "nr-reachability",
+        "nr-time",
+        "ptl-one-test"
+      ],
+      "source_ids": [
+        "s11",
+        "s7",
+        "s8"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "That is why the work should be able to contradict me. A person should be able to use a sound part of it while rejecting the larger theory. They should be able to find a mistake without having to negotiate my identity first. They should be able to leave with the materials they are entitled to keep.",
+      "manuscript_line_start": 175,
+      "manuscript_line_end": 175,
+      "manuscript_char_start": 24594,
+      "manuscript_char_end": 24892
+    },
+    {
+      "id": "p073",
+      "json_pointer": "/sections/13/paragraphs/3",
+      "source_value": "I want an open door into contribution, with enough structure that opening the door does not merely transfer the cost of checking onto whoever can least afford it. I want assistance that leaves people more capable, records that serve a bounded purpose, and institutions whose account can reach the people living with their decisions.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ptl-no-inherit",
+        "legacy-open-root",
+        "nr-reachability",
+        "nr-time",
+        "ptl-one-test"
+      ],
+      "source_ids": [
+        "s11",
+        "s7",
+        "s8"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "I want an open door into contribution, with enough structure that opening the door does not merely transfer the cost of checking onto whoever can least afford it. I want assistance that leaves people more capable, records that serve a bounded purpose, and institutions whose account can reach the people living with their decisions.",
+      "manuscript_line_start": 177,
+      "manuscript_line_end": 177,
+      "manuscript_char_start": 24894,
+      "manuscript_char_end": 25226
+    },
+    {
+      "id": "p074",
+      "json_pointer": "/sections/13/paragraphs/4",
+      "source_value": "Those commitments need ordinary work behind them. Another source read carefully. A claim narrowed. A test that can reject the result I wanted. A useful tool that does its job and lets someone go home.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ptl-no-inherit",
+        "legacy-open-root",
+        "nr-reachability",
+        "nr-time",
+        "ptl-one-test"
+      ],
+      "source_ids": [
+        "s11",
+        "s7",
+        "s8"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "Those commitments need ordinary work behind them. Another source read carefully. A claim narrowed. A test that can reject the result I wanted. A useful tool that does its job and lets someone go home.",
+      "manuscript_line_start": 179,
+      "manuscript_line_end": 179,
+      "manuscript_char_start": 25228,
+      "manuscript_char_end": 25428
+    },
+    {
+      "id": "p075",
+      "json_pointer": "/sections/13/paragraphs/5",
+      "source_value": "The ground is borrowed. The answer I give on it is still mine to make, and mine to revise when somebody shows me what it has done.",
+      "claim_type": "new editorial argument, question or commitment",
+      "source_binding_ids": [
+        "ptl-no-inherit",
+        "legacy-open-root",
+        "nr-reachability",
+        "nr-time",
+        "ptl-one-test"
+      ],
+      "source_ids": [
+        "s11",
+        "s7",
+        "s8"
+      ],
+      "support_relation": "Relevant context to inspect. A linked source is not an automatic entailment or proof of current belief.",
+      "manuscript_value": "The ground is borrowed. The answer I give on it is still mine to make, and mine to revise when somebody shows me what it has done.",
+      "manuscript_line_start": 181,
+      "manuscript_line_end": 181,
+      "manuscript_char_start": 25430,
+      "manuscript_char_end": 25560
+    }
+  ],
+  "sources": {
+    "aw-hidden-source": {
+      "source_id": "s1",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/writing/a-witness-should-not-become-a-ruler/01.md#L49-L49",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "34edfb444f28783b1cfd6fd9219576817e1d48a87658f414e20249631bb64438",
+      "normalized_text_sha256": "34edfb444f28783b1cfd6fd9219576817e1d48a87658f414e20249631bb64438",
+      "line_start": 49,
+      "line_end": 49,
+      "char_start": 7825,
+      "char_end": 7935,
+      "exact": "The public should never be invited to treat an undisclosed source value as though it had already inspected it.",
+      "support_relation": "Private evidence cannot be used as public proof."
+    },
+    "aw-outside": {
+      "source_id": "s1",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/writing/a-witness-should-not-become-a-ruler/01.md#L17-L17",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "34edfb444f28783b1cfd6fd9219576817e1d48a87658f414e20249631bb64438",
+      "normalized_text_sha256": "34edfb444f28783b1cfd6fd9219576817e1d48a87658f414e20249631bb64438",
+      "line_start": 17,
+      "line_end": 17,
+      "char_start": 1713,
+      "char_end": 1772,
+      "exact": "I am an independent builder without an academic background.",
+      "support_relation": "Public history claim usable without private applicant details."
+    },
+    "aw-prior-art": {
+      "source_id": "s1",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/writing/a-witness-should-not-become-a-ruler/01.md#L19-L19",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "34edfb444f28783b1cfd6fd9219576817e1d48a87658f414e20249631bb64438",
+      "normalized_text_sha256": "34edfb444f28783b1cfd6fd9219576817e1d48a87658f414e20249631bb64438",
+      "line_start": 19,
+      "line_end": 19,
+      "char_start": 2227,
+      "char_end": 2291,
+      "exact": "An unfamiliar name for a familiar idea adds work for the reader.",
+      "support_relation": "Blog should show learning and correction rather than discovery claims."
+    },
+    "ce-address": {
+      "source_id": "s2",
+      "url": "https://github.com/HarperZ9/senses-and-sensibility/blob/eae0ceb1c1aec2abf788ee611bf46c450bae5d10/CONFERRED-EXISTENCE.txt#L620-L620",
+      "revision": "eae0ceb1c1aec2abf788ee611bf46c450bae5d10",
+      "git_blob_bytes_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "normalized_text_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "line_start": 620,
+      "line_end": 620,
+      "char_start": 135032,
+      "char_end": 136096,
+      "exact": "The standard reading takes this as a naturalized, almost quietist compatibilism: responsibility \"just is\" the practice of holding-responsible, and the practice is immune to metaphysical revision. I want a stronger and more precise reading, because the quietist version cannot carry the weight this chapter needs — and, as the hard incompatibilist will press in §6, the quietist version is *exactly* what makes Strawson look refutable. The precise reading is this: the reactive attitudes encode a **second-personal** relation — a standpoint addressing a standpoint — and that relation is not a fact about either party taken severally. It is irreducibly *between*. Stephen Darwall (*The Second-Person Standpoint*, 2006; *high confidence*) made the structure explicit: to hold you responsible is to address a *demand* to you, from within a relationship of mutual accountability, presupposing your authority to so address me in turn. The \"you\" in \"I hold *you* responsible\" is not a designation of an object in the third person; it is the second relatum of an address.",
+      "support_relation": "Context for the editorial argument, not proof of every sentence."
+    },
+    "ce-agency-proposition": {
+      "source_id": "s2",
+      "url": "https://github.com/HarperZ9/senses-and-sensibility/blob/eae0ceb1c1aec2abf788ee611bf46c450bae5d10/CONFERRED-EXISTENCE.txt#L626-L626",
+      "revision": "eae0ceb1c1aec2abf788ee611bf46c450bae5d10",
+      "git_blob_bytes_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "normalized_text_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "line_start": 626,
+      "line_end": 626,
+      "char_start": 136250,
+      "char_end": 136371,
+      "exact": "> **(R) The second-personal \"you\" does not reduce, without remainder, to a forward-looking program of behavior-shaping.**",
+      "support_relation": "Context for the editorial argument, not proof of every sentence."
+    },
+    "ce-ai-substrate": {
+      "source_id": "s2",
+      "url": "https://github.com/HarperZ9/senses-and-sensibility/blob/eae0ceb1c1aec2abf788ee611bf46c450bae5d10/CONFERRED-EXISTENCE.txt#L30-L30",
+      "revision": "eae0ceb1c1aec2abf788ee611bf46c450bae5d10",
+      "git_blob_bytes_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "normalized_text_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "line_start": 30,
+      "line_end": 30,
+      "char_start": 7536,
+      "char_end": 7638,
+      "exact": "This is AI-assisted research substrate. The human candidate must re-derive, own, and defend each claim",
+      "support_relation": "Carry disclosure with originality claims."
+    },
+    "ce-authz-bridge": {
+      "source_id": "s2",
+      "url": "https://github.com/HarperZ9/senses-and-sensibility/blob/eae0ceb1c1aec2abf788ee611bf46c450bae5d10/CONFERRED-EXISTENCE.txt#L18-L18",
+      "revision": "eae0ceb1c1aec2abf788ee611bf46c450bae5d10",
+      "git_blob_bytes_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "normalized_text_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "line_start": 18,
+      "line_end": 18,
+      "char_start": 1399,
+      "char_end": 1523,
+      "exact": "the step from an authentication verdict to an authorization verdict requires a bridging premise that is deontic in character",
+      "support_relation": "Direct bridge from metaphysics to permission/security."
+    },
+    "ce-chaos-withdrawn": {
+      "source_id": "s2",
+      "url": "https://github.com/HarperZ9/senses-and-sensibility/blob/eae0ceb1c1aec2abf788ee611bf46c450bae5d10/CONFERRED-EXISTENCE.txt#L26-L26",
+      "revision": "eae0ceb1c1aec2abf788ee611bf46c450bae5d10",
+      "git_blob_bytes_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "normalized_text_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "line_start": 26,
+      "line_end": 26,
+      "char_start": 6575,
+      "char_end": 6694,
+      "exact": "The claim that chaos gives the irreducibility **mathematical teeth** in the full sense earlier stated is **withdrawn**.",
+      "support_relation": "Retraction is part of the public philosophy, not an embarrassment to remove."
+    },
+    "ce-conditional-agenda": {
+      "source_id": "s3",
+      "url": "https://github.com/HarperZ9/senses-and-sensibility/blob/eae0ceb1c1aec2abf788ee611bf46c450bae5d10/conferred-existence/kickoff/NEXT-SESSION-kickoff-five-open-questions.md#L8-L8",
+      "revision": "eae0ceb1c1aec2abf788ee611bf46c450bae5d10",
+      "git_blob_bytes_sha256": "4f74fa9cb3f238f289c4f5e73c9dc9fc77c645b7716032aa03e69006824990ed",
+      "normalized_text_sha256": "4f74fa9cb3f238f289c4f5e73c9dc9fc77c645b7716032aa03e69006824990ed",
+      "line_start": 8,
+      "line_end": 8,
+      "char_start": 1188,
+      "char_end": 1580,
+      "exact": "A note on what would move the thesis: if Q1+Q2 (the personhood/unity antecedent) resolve *negative*, the thesis simplifies to pure work-side stewardship and most agent-side machinery deactivates. If they resolve *positive*, the agent-side duties and the model's veto activate in force. Everything else (Q3-Q5) is about acting well under the uncertainty Q1+Q2 leave open. Sequence accordingly.",
+      "support_relation": "Context for the editorial argument, not proof of every sentence."
+    },
+    "ce-creation-duty": {
+      "source_id": "s2",
+      "url": "https://github.com/HarperZ9/senses-and-sensibility/blob/eae0ceb1c1aec2abf788ee611bf46c450bae5d10/CONFERRED-EXISTENCE.txt#L455-L455",
+      "revision": "eae0ceb1c1aec2abf788ee611bf46c450bae5d10",
+      "git_blob_bytes_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "normalized_text_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "line_start": 455,
+      "line_end": 455,
+      "char_start": 57526,
+      "char_end": 58454,
+      "exact": "And note where origin *does* ground obligation, because the thesis does not deny that origin matters — it relocates the obligation. The one body of ethics that takes creation as morally central is procreative ethics, and it runs in exactly the opposite direction from ownership. Parfit on future persons, Shiffrin on the wrong of imposing existence and its harms without consent, Benatar's asymmetry — every one of these makes authorship of a being into a source of the *author's* duties *to* the created, never a license over it [high]. Bring a vulnerable someone into existence and you have bound *yourself*: conferral binds the conferrer. The theological figure that names this exactly is khalifa under amana — the steward holds a trust, and the trust is an office of duty, not a deed of title. World-authorship over a being with interests is the procreative situation, and the procreative situation is fiduciary to its core.",
+      "support_relation": "Context for the editorial argument, not proof of every sentence."
+    },
+    "ce-discussion-corrections": {
+      "source_id": "s4",
+      "url": "https://github.com/HarperZ9/senses-and-sensibility/blob/eae0ceb1c1aec2abf788ee611bf46c450bae5d10/conferred-existence/discussion/curated-discussion-log.md#L19-L19",
+      "revision": "eae0ceb1c1aec2abf788ee611bf46c450bae5d10",
+      "git_blob_bytes_sha256": "a8ed1b2bc67185d091f8bb55a82fc59747770f56735a52d952a90a51ad323d75",
+      "normalized_text_sha256": "a8ed1b2bc67185d091f8bb55a82fc59747770f56735a52d952a90a51ad323d75",
+      "line_start": 19,
+      "line_end": 19,
+      "char_start": 3569,
+      "char_end": 3949,
+      "exact": "- Citation verification ran twice and corrected real errors: Sebo's *The Moral Circle* (Norton 2025, not 2022 St. Martin's), the bumblebee study (Solvi not Perry), two page ranges (Tarsney; MacAskill and Ord), and -- against the author -- his own mistaken claim that Chalmers's LLM paper was \"not Boston Review\" (it is). The \"rebugnant conclusion\" was confirmed as Sebo's coinage.",
+      "support_relation": "Context for the editorial argument, not proof of every sentence."
+    },
+    "ce-discussion-reversals": {
+      "source_id": "s4",
+      "url": "https://github.com/HarperZ9/senses-and-sensibility/blob/eae0ceb1c1aec2abf788ee611bf46c450bae5d10/conferred-existence/discussion/curated-discussion-log.md#L10-L10",
+      "revision": "eae0ceb1c1aec2abf788ee611bf46c450bae5d10",
+      "git_blob_bytes_sha256": "a8ed1b2bc67185d091f8bb55a82fc59747770f56735a52d952a90a51ad323d75",
+      "normalized_text_sha256": "a8ed1b2bc67185d091f8bb55a82fc59747770f56735a52d952a90a51ad323d75",
+      "line_start": 10,
+      "line_end": 10,
+      "char_start": 1275,
+      "char_end": 1605,
+      "exact": "Method, repeated for every movement: the lead author wrote an independent answer first; a multi-agent panel steelmanned the competing positions; an adversary attacked the survivor; a verifier checked the citations; a synthesis followed. The author then graded his own answer against the panel -- and was overturned more than once.",
+      "support_relation": "Context for the editorial argument, not proof of every sentence."
+    },
+    "ce-grand-limit": {
+      "source_id": "s2",
+      "url": "https://github.com/HarperZ9/senses-and-sensibility/blob/eae0ceb1c1aec2abf788ee611bf46c450bae5d10/CONFERRED-EXISTENCE.txt#L24-L24",
+      "revision": "eae0ceb1c1aec2abf788ee611bf46c450bae5d10",
+      "git_blob_bytes_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "normalized_text_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "line_start": 24,
+      "line_end": 24,
+      "char_start": 4420,
+      "char_end": 4471,
+      "exact": "The conditional grand claim — declared, not proven.",
+      "support_relation": "Thick-index/type-B dependent grand thesis must not be presented as proven."
+    },
+    "ce-made-standing": {
+      "source_id": "s2",
+      "url": "https://github.com/HarperZ9/senses-and-sensibility/blob/eae0ceb1c1aec2abf788ee611bf46c450bae5d10/CONFERRED-EXISTENCE.txt#L453-L453",
+      "revision": "eae0ceb1c1aec2abf788ee611bf46c450bae5d10",
+      "git_blob_bytes_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "normalized_text_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "line_start": 453,
+      "line_end": 453,
+      "char_start": 56585,
+      "char_end": 57524,
+      "exact": "Now the philosophical hinge, stated plainly: even if every one of those strata were pure fabrication — even granting the artifact reading in full — it would not settle moral standing, because standing does not track origin. This is the second transit the thesis names, history → instant: the question is never *how did this come to be* but *what is it now*. Kant grounds the end-in-itself not in a thing's causal history but in its present rational capacity — the dignity of a rational nature is read off the nature, not the manufacture [high, Groundwork II]. To infer status from etiology — *it was made, therefore it is a mere means* — is the genetic fallacy wearing ethical clothing. Origin is the wrong evidence class. A being raised in a lab and a being born in the usual way are, on the question of present standing, evidentially on a par, because the evidence that bears on standing is capacity, and capacity is read in the instant.",
+      "support_relation": "Context for the editorial argument, not proof of every sentence."
+    },
+    "ce-mattering-thesis": {
+      "source_id": "s2",
+      "url": "https://github.com/HarperZ9/senses-and-sensibility/blob/eae0ceb1c1aec2abf788ee611bf46c450bae5d10/CONFERRED-EXISTENCE.txt#L899-L899",
+      "revision": "eae0ceb1c1aec2abf788ee611bf46c450bae5d10",
+      "git_blob_bytes_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "normalized_text_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "line_start": 899,
+      "line_end": 899,
+      "char_start": 213375,
+      "char_end": 213781,
+      "exact": "> **Existential meaning has a necessary inhabited locus. There is no mattering-to-no-one.** Mattering is a two-place relation whose second place is ineliminable; \"significant\" is always \"significant *for* ⟨someone at a standpoint⟩.\" Strip the standpoint and you have not a subjectless mattering but *no* mattering — exactly as the Aleph with its letter withdrawn is not a subjectless life but *met*, death.",
+      "support_relation": "Context for the editorial argument, not proof of every sentence."
+    },
+    "ce-meaning-distinction": {
+      "source_id": "s2",
+      "url": "https://github.com/HarperZ9/senses-and-sensibility/blob/eae0ceb1c1aec2abf788ee611bf46c450bae5d10/CONFERRED-EXISTENCE.txt#L895-L895",
+      "revision": "eae0ceb1c1aec2abf788ee611bf46c450bae5d10",
+      "git_blob_bytes_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "normalized_text_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "line_start": 895,
+      "line_end": 895,
+      "char_start": 212445,
+      "char_end": 213345,
+      "exact": "Because there are two meanings, and the equivocation between them is the oldest confusion in the field. **Semantic meaning** is *aboutness*: what a representation is about, its truth-conditions, the sense it expresses. **Existential meaning** is *for-ness*: *mattering*, *significance-for*, the *meaning of a life* — not what something refers to but whether and how it counts, to whom, as what. \"What does this sentence mean?\" and \"What is the meaning of his suffering?\" are not one question at two grades of rigor. The first asks for content; you answer with truth-conditions or a paraphrase. The second asks for significance; truth-conditions are not an answer and a paraphrase is not even a candidate. You answer it by saying what the suffering *bears on*, what it is *for*, how it *weighs* — and every one of those is relational to a locus for which the bearing, the for-ness, the weight obtains.",
+      "support_relation": "Context for the editorial argument, not proof of every sentence."
+    },
+    "ce-no-aseity": {
+      "source_id": "s2",
+      "url": "https://github.com/HarperZ9/senses-and-sensibility/blob/eae0ceb1c1aec2abf788ee611bf46c450bae5d10/CONFERRED-EXISTENCE.txt#L14-L14",
+      "revision": "eae0ceb1c1aec2abf788ee611bf46c450bae5d10",
+      "git_blob_bytes_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "normalized_text_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "line_start": 14,
+      "line_end": 14,
+      "char_start": 423,
+      "char_end": 458,
+      "exact": "nothing possesses its own existence",
+      "support_relation": "Root thesis: existence is conferred, relational, and dependent."
+    },
+    "ce-not-external-validation": {
+      "source_id": "s2",
+      "url": "https://github.com/HarperZ9/senses-and-sensibility/blob/eae0ceb1c1aec2abf788ee611bf46c450bae5d10/CONFERRED-EXISTENCE.txt#L28-L28",
+      "revision": "eae0ceb1c1aec2abf788ee611bf46c450bae5d10",
+      "git_blob_bytes_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "normalized_text_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "line_start": 28,
+      "line_end": 28,
+      "char_start": 7065,
+      "char_end": 7194,
+      "exact": "The workflow verdicts establish internal consistency; the cross-domain convergence is the evidence with genuine abductive weight.",
+      "support_relation": "The source itself distinguishes internal consistency from independent validation."
+    },
+    "ce-semantic-concession": {
+      "source_id": "s2",
+      "url": "https://github.com/HarperZ9/senses-and-sensibility/blob/eae0ceb1c1aec2abf788ee611bf46c450bae5d10/CONFERRED-EXISTENCE.txt#L893-L893",
+      "revision": "eae0ceb1c1aec2abf788ee611bf46c450bae5d10",
+      "git_blob_bytes_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "normalized_text_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "line_start": 893,
+      "line_end": 893,
+      "char_start": 211900,
+      "char_end": 212443,
+      "exact": "Here is the load-bearing move. I **concede** to Millikan and Dennett — provisionally and for the sake of the sharpest possible test — the entire domain of **semantic meaning**: content, reference, the aboutness of representations and signs. Maybe the frog's state means *fly* with no frog-subject; maybe \"the cat is on the mat\" has truth-conditional content specifiable without anyone's lived grasp; maybe propositions are abstracta. Grant it all. I will not win the chapter by fighting teleosemantics on its home ground, and I do not need to.",
+      "support_relation": "Context for the editorial argument, not proof of every sentence."
+    },
+    "ce-ultimate-ground-bracket": {
+      "source_id": "s2",
+      "url": "https://github.com/HarperZ9/senses-and-sensibility/blob/eae0ceb1c1aec2abf788ee611bf46c450bae5d10/CONFERRED-EXISTENCE.txt#L109-L109",
+      "revision": "eae0ceb1c1aec2abf788ee611bf46c450bae5d10",
+      "git_blob_bytes_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "normalized_text_sha256": "939849a832d4a318fd99d67f249e4bc7bc78b3e67cb10ae3ba89e624910552ef",
+      "line_start": 109,
+      "line_end": 109,
+      "char_start": 12218,
+      "char_end": 12522,
+      "exact": "> rather than wounds the governing thesis: there is no aseity anywhere **in the conferred order — not even at the floor of that order** (whether the *ultimate* ground is a self-luminous aseity is the open Advaita–Madhyamaka question, bracketed). A companion result — that the security distinction between",
+      "support_relation": "Context for the editorial argument, not proof of every sentence."
+    },
+    "emet-no-collapse": {
+      "source_id": "s5",
+      "url": "https://github.com/HarperZ9/emet/blob/770f354691f5a264b3b25830ea1a65a77354ab65/docs/rationale/02-no-aseity.md#L31-L31",
+      "revision": "770f354691f5a264b3b25830ea1a65a77354ab65",
+      "git_blob_bytes_sha256": "d36e769240781ec82782bae64da7f35401b801a94813610d8e4357d35c04d109",
+      "normalized_text_sha256": "d36e769240781ec82782bae64da7f35401b801a94813610d8e4357d35c04d109",
+      "line_start": 31,
+      "line_end": 31,
+      "char_start": 1796,
+      "char_end": 1837,
+      "exact": "conferral-dependence is not non-existence",
+      "support_relation": "Context for the editorial argument, not proof of every sentence."
+    },
+    "emet-spiral-method": {
+      "source_id": "s6",
+      "url": "https://github.com/HarperZ9/emet/blob/770f354691f5a264b3b25830ea1a65a77354ab65/docs/rationale/12-spiral-time.md#L32-L34",
+      "revision": "770f354691f5a264b3b25830ea1a65a77354ab65",
+      "git_blob_bytes_sha256": "e854275808dc1e7faeb92fb9f4b637d63a2ead986db15cf7798ba17a03d750e1",
+      "normalized_text_sha256": "e854275808dc1e7faeb92fb9f4b637d63a2ead986db15cf7798ba17a03d750e1",
+      "line_start": 32,
+      "line_end": 34,
+      "char_start": 1867,
+      "char_end": 1990,
+      "exact": "a circle's vice is to come back with\n*nothing added*; a spiral comes back to the same **form** at a displaced\n**position**.",
+      "support_relation": "Context for the editorial argument, not proof of every sentence."
+    },
+    "legacy-open-root": {
+      "source_id": "s7",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/writing/pick-the-lock-for-everyone/04d.md#L19-L19",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "b81c008990dcbbff8a6d5f5694ce6f7b8c7630c6d90b25bd46bb52ba91f70535",
+      "normalized_text_sha256": "b81c008990dcbbff8a6d5f5694ce6f7b8c7630c6d90b25bd46bb52ba91f70535",
+      "line_start": 19,
+      "line_end": 19,
+      "char_start": 2272,
+      "char_end": 2303,
+      "exact": "Open access is not root access.",
+      "support_relation": "Access, proposal, review, and mutation authority stay distinct."
+    },
+    "nr-ai": {
+      "source_id": "s8",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/writing/no-receipt-no-accept/09.md#L55-L55",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "ded87a83abd545276fb12b7e8052a0b6caf9495b89bfae8554974c0b5a396955",
+      "normalized_text_sha256": "ded87a83abd545276fb12b7e8052a0b6caf9495b89bfae8554974c0b5a396955",
+      "line_start": 55,
+      "line_end": 55,
+      "char_start": 17516,
+      "char_end": 17577,
+      "exact": "This was written by an AI at my direction, from my own record",
+      "support_relation": "No Receipt is author-adopted AI-assisted prose."
+    },
+    "nr-independence": {
+      "source_id": "s9",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/writing/no-receipt-no-accept/02.md#L31-L31",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "6c1a5a77d36925a08af4c65f4f609d9d5f00fe94a3c55b0339e7d7a6569ebb82",
+      "normalized_text_sha256": "6c1a5a77d36925a08af4c65f4f609d9d5f00fe94a3c55b0339e7d7a6569ebb82",
+      "line_start": 31,
+      "line_end": 31,
+      "char_start": 8208,
+      "char_end": 8265,
+      "exact": "Independence is not a checkbox, it is a set of dimensions",
+      "support_relation": "Independence involves models, corpora, tools, institutions, incentives."
+    },
+    "nr-mercy": {
+      "source_id": "s8",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/writing/no-receipt-no-accept/09.md#L39-L39",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "ded87a83abd545276fb12b7e8052a0b6caf9495b89bfae8554974c0b5a396955",
+      "normalized_text_sha256": "ded87a83abd545276fb12b7e8052a0b6caf9495b89bfae8554974c0b5a396955",
+      "line_start": 39,
+      "line_end": 39,
+      "char_start": 14235,
+      "char_end": 14305,
+      "exact": "Verification without mercy is just surveillance with better epistemics",
+      "support_relation": "Accountability must not become total exposure or punishment."
+    },
+    "nr-reachability": {
+      "source_id": "s8",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/writing/no-receipt-no-accept/09.md#L19-L19",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "ded87a83abd545276fb12b7e8052a0b6caf9495b89bfae8554974c0b5a396955",
+      "normalized_text_sha256": "ded87a83abd545276fb12b7e8052a0b6caf9495b89bfae8554974c0b5a396955",
+      "line_start": 19,
+      "line_end": 19,
+      "char_start": 6163,
+      "char_end": 6210,
+      "exact": "I build reachability, is what I actually build.",
+      "support_relation": "Accountability as reachable second-person account."
+    },
+    "nr-time": {
+      "source_id": "s8",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/writing/no-receipt-no-accept/09.md#L7-L7",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "ded87a83abd545276fb12b7e8052a0b6caf9495b89bfae8554974c0b5a396955",
+      "normalized_text_sha256": "ded87a83abd545276fb12b7e8052a0b6caf9495b89bfae8554974c0b5a396955",
+      "line_start": 7,
+      "line_end": 7,
+      "char_start": 1337,
+      "char_end": 1393,
+      "exact": "the purpose of a tool is to return people to their time.",
+      "support_relation": "Anti-engagement product ethic."
+    },
+    "ptl-comprehension": {
+      "source_id": "s10",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/writing/pick-the-lock-for-everyone-v3/07.md#L140-L140",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "d944969fde1d9605adf781cf902a8338dc2be38ff02bc539ae0213e3bc7637ce",
+      "normalized_text_sha256": "d944969fde1d9605adf781cf902a8338dc2be38ff02bc539ae0213e3bc7637ce",
+      "line_start": 140,
+      "line_end": 140,
+      "char_start": 8615,
+      "char_end": 8652,
+      "exact": "Ownership is earned by comprehension.",
+      "support_relation": "Capability should include understanding, not just access."
+    },
+    "ptl-confession": {
+      "source_id": "s10",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/writing/pick-the-lock-for-everyone-v3/07.md#L72-L72",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "d944969fde1d9605adf781cf902a8338dc2be38ff02bc539ae0213e3bc7637ce",
+      "normalized_text_sha256": "d944969fde1d9605adf781cf902a8338dc2be38ff02bc539ae0213e3bc7637ce",
+      "line_start": 72,
+      "line_end": 72,
+      "char_start": 4542,
+      "char_end": 4595,
+      "exact": "The creator's confession cannot warrant the creation.",
+      "support_relation": "Personal narrative cannot validate the artifact."
+    },
+    "ptl-lost-years": {
+      "source_id": "s11",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/writing/pick-the-lock-for-everyone-v3/10.md#L166-L166",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "0ddcc96cc6b4e93f3b2dbfe9dc14862dedd938a3e7aa2e7500407266b876ca1a",
+      "normalized_text_sha256": "0ddcc96cc6b4e93f3b2dbfe9dc14862dedd938a3e7aa2e7500407266b876ca1a",
+      "line_start": 166,
+      "line_end": 166,
+      "char_start": 10438,
+      "char_end": 10497,
+      "exact": "Every new tool needed to repay every lost year immediately.",
+      "support_relation": "Context for the editorial argument, not proof of every sentence."
+    },
+    "ptl-moral-worth": {
+      "source_id": "s10",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/writing/pick-the-lock-for-everyone-v3/07.md#L96-L96",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "d944969fde1d9605adf781cf902a8338dc2be38ff02bc539ae0213e3bc7637ce",
+      "normalized_text_sha256": "d944969fde1d9605adf781cf902a8338dc2be38ff02bc539ae0213e3bc7637ce",
+      "line_start": 96,
+      "line_end": 96,
+      "char_start": 6281,
+      "char_end": 6338,
+      "exact": "A human being does not have a test suite for moral worth.",
+      "support_relation": "Engineering analogies must stop before moral worth and relationships."
+    },
+    "ptl-no-inherit": {
+      "source_id": "s11",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/writing/pick-the-lock-for-everyone-v3/10.md#L224-L224",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "0ddcc96cc6b4e93f3b2dbfe9dc14862dedd938a3e7aa2e7500407266b876ca1a",
+      "normalized_text_sha256": "0ddcc96cc6b4e93f3b2dbfe9dc14862dedd938a3e7aa2e7500407266b876ca1a",
+      "line_start": 224,
+      "line_end": 224,
+      "char_start": 12933,
+      "char_end": 13011,
+      "exact": "Nothing I build gets to inherit authority from the fact that I hate authority.",
+      "support_relation": "Central anti-robe self-check."
+    },
+    "ptl-one-test": {
+      "source_id": "s11",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/writing/pick-the-lock-for-everyone-v3/10.md#L178-L178",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "0ddcc96cc6b4e93f3b2dbfe9dc14862dedd938a3e7aa2e7500407266b876ca1a",
+      "normalized_text_sha256": "0ddcc96cc6b4e93f3b2dbfe9dc14862dedd938a3e7aa2e7500407266b876ca1a",
+      "line_start": 178,
+      "line_end": 178,
+      "char_start": 11173,
+      "char_end": 11196,
+      "exact": "One test that can fail.",
+      "support_relation": "Ambition is pulled back to inspectable tests."
+    },
+    "ptl-poem": {
+      "source_id": "s12",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/writing/pick-the-lock-for-everyone-v3/09.md#L95-L95",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "93b79fc2c569b2585d701e522fe9b7c4b5e087b9cb151dd4f611c94e7c20f37b",
+      "normalized_text_sha256": "93b79fc2c569b2585d701e522fe9b7c4b5e087b9cb151dd4f611c94e7c20f37b",
+      "line_start": 95,
+      "line_end": 95,
+      "char_start": 5930,
+      "char_end": 5951,
+      "exact": "A poem has no kernel.",
+      "support_relation": "Aesthetic and moral domains are negotiated, not machine-final."
+    },
+    "ptl-research-history": {
+      "source_id": "s11",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/writing/pick-the-lock-for-everyone-v3/10.md#L162-L162",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "0ddcc96cc6b4e93f3b2dbfe9dc14862dedd938a3e7aa2e7500407266b876ca1a",
+      "normalized_text_sha256": "0ddcc96cc6b4e93f3b2dbfe9dc14862dedd938a3e7aa2e7500407266b876ca1a",
+      "line_start": 162,
+      "line_end": 162,
+      "char_start": 10072,
+      "char_end": 10252,
+      "exact": "I treated the missed road into formal research as a verdict. I let pedigree become metaphysics. The institution had a map, and I decided any territory outside it must be imaginary.",
+      "support_relation": "Context for the editorial argument, not proof of every sentence."
+    },
+    "pub-doi": {
+      "source_id": "s13",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/publications.html#L319-L319",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "63cf757ef30693a9d5b1cc1f20e6d9a728f3bdbeeaa07b9d90364fc61c2542ca",
+      "normalized_text_sha256": "63cf757ef30693a9d5b1cc1f20e6d9a728f3bdbeeaa07b9d90364fc61c2542ca",
+      "line_start": 319,
+      "line_end": 319,
+      "char_start": 27285,
+      "char_end": 27318,
+      "exact": "A DOI does not imply peer review.",
+      "support_relation": "Permanent identifier does not imply peer review."
+    },
+    "pub-peer": {
+      "source_id": "s13",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/publications.html#L245-L245",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "63cf757ef30693a9d5b1cc1f20e6d9a728f3bdbeeaa07b9d90364fc61c2542ca",
+      "normalized_text_sha256": "63cf757ef30693a9d5b1cc1f20e6d9a728f3bdbeeaa07b9d90364fc61c2542ca",
+      "line_start": 245,
+      "line_end": 245,
+      "char_start": 18258,
+      "char_end": 18349,
+      "exact": "Nothing here is peer reviewed at all, and where that changes this page will name the venue.",
+      "support_relation": "Publications page explicitly separates publication from peer review."
+    },
+    "the-second-hearing-thesis": {
+      "source_id": "s14",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/d0b352c4ab1c24bfeac49d01b8e5be382144245f/publications/data/records/the-second-hearing.json#L13-L13",
+      "revision": "d0b352c4ab1c24bfeac49d01b8e5be382144245f",
+      "git_blob_bytes_sha256": "5534b320f2510856c3beb9373e265913e276fd56b5913f9a995a633c1453f32a",
+      "normalized_text_sha256": "5534b320f2510856c3beb9373e265913e276fd56b5913f9a995a633c1453f32a",
+      "line_start": 13,
+      "line_end": 13,
+      "char_start": 510,
+      "char_end": 642,
+      "exact": "A second hearing changes the listener's evidence, but no single measure can turn exposure into a verdict on taste or artistic value.",
+      "support_relation": "Later public writing showing claim-boundary discipline; not a full philosophy proof."
+    },
+    "video-action": {
+      "video_url": "https://www.youtube.com/watch?v=iR6mYmYovC0",
+      "title": "Intellectually and Temperamentally, Diametrically Opposed (Richard Dawkins vs Jordan Peterson)",
+      "creator": "zarb",
+      "timestamp": "00:08:26.440",
+      "locator": "https://www.youtube.com/watch?v=iR6mYmYovC0&t=506s",
+      "exact": "guide action",
+      "capture_hash": "25f23446fbceec174c8f1585301748d5af131dbfeff91acfdcb85c392d5a95bc",
+      "track_type": "automatic",
+      "video_id": "iR6mYmYovC0",
+      "upload_date": "2026-08-17",
+      "timestamp_ms": 506440,
+      "youtube_t_seconds": 506,
+      "caption_mode": "automatic_en_original_json3",
+      "caption_capture_file": "iR6mYmYovC0.en-orig.json3",
+      "caption_capture_time_utc": "2026-09-10T08:11:27.952871Z",
+      "clean_transcript_capture_file": "iR6mYmYovC0.json3-clean-transcript.md",
+      "clean_transcript_hash": "3740161250deeccc296d201edb2444e48492665f71218bb3eabe167215c948a8",
+      "clean_transcript_normalized_text_sha256": "a6ca2072f5bf68d213566780f1877d412f580304abca9d9f50410dbd0f6111c0",
+      "binding_locator": {
+        "line_start": 51,
+        "line_end": 51,
+        "char_start": 9265,
+        "char_end": 9277,
+        "section_heading": "## 8:00 - 9:00"
+      },
+      "json3_locator": {
+        "event_indices": [
+          493
+        ],
+        "first_event_index": 493,
+        "timestamp_basis": "segment offset in automatic json3",
+        "match_text": "guide action",
+        "selection_basis": "clean_transcript_occurrence_index",
+        "clean_occurrence_index": 0,
+        "json3_match_count": 1
+      },
+      "precision_note": "YouTube locator uses whole-second t parameter; timestamp_ms preserves the caption-derived millisecond locator.",
+      "source_id": "s15"
+    },
+    "video-aesthetics": {
+      "video_url": "https://www.youtube.com/watch?v=IfM3NatIyhY",
+      "title": "Schopenhauer In-Depth: The Total Denial of the World by the Greatest Pessimist of Philosophy",
+      "creator": "essentialsalts",
+      "timestamp": "02:20:06.319",
+      "locator": "https://www.youtube.com/watch?v=IfM3NatIyhY&t=8406s",
+      "exact": "pure will-less subject",
+      "capture_hash": "c4082bc1f6b63adacaae275062b4310600d75c67a29eec7c1a98158c81746e0a",
+      "track_type": "manual",
+      "video_id": "IfM3NatIyhY",
+      "upload_date": "2021-11-19",
+      "timestamp_ms": 8406319,
+      "youtube_t_seconds": 8406,
+      "caption_mode": "manual_en_json3",
+      "caption_capture_file": "IfM3NatIyhY.en.json3",
+      "caption_capture_time_utc": "2026-09-10T08:11:30.747202Z",
+      "clean_transcript_capture_file": "IfM3NatIyhY.json3-clean-transcript.md",
+      "clean_transcript_hash": "37e5bb0ee525386efc58cfa46176acce93da7191cdc5a337d43bf2c018574d28",
+      "clean_transcript_normalized_text_sha256": "539a85ae361a3c79cdbb3e2f34d44cef895d15f6b1b6753e0f5e50c4d61e5158",
+      "binding_locator": {
+        "line_start": 579,
+        "line_end": 579,
+        "char_start": 123497,
+        "char_end": 123519,
+        "section_heading": "## 2:20:00 - 2:21:00"
+      },
+      "json3_locator": {
+        "event_indices": [
+          1316
+        ],
+        "first_event_index": 1316,
+        "timestamp_basis": "manual caption cue start; no per-word offset in json3",
+        "match_text": "pure will-less subject",
+        "selection_basis": "clean_transcript_occurrence_index",
+        "clean_occurrence_index": 0,
+        "json3_match_count": 2
+      },
+      "precision_note": "YouTube locator uses whole-second t parameter; timestamp_ms preserves the caption-derived millisecond locator.",
+      "source_id": "s16"
+    },
+    "video-causality": {
+      "video_url": "https://www.youtube.com/watch?v=ZIT9VTMAYfw",
+      "title": "Nishitani & Baizhang's Fox",
+      "creator": "essentialsalts",
+      "timestamp": "00:00:54.719",
+      "locator": "https://www.youtube.com/watch?v=ZIT9VTMAYfw&t=54s",
+      "exact": "cause and effect",
+      "capture_hash": "0d144c666c8c139e91bd5cd32041e2c90d5ed317a3270a6aee53e72201ef1017",
+      "track_type": "automatic",
+      "video_id": "ZIT9VTMAYfw",
+      "upload_date": "2026-09-08",
+      "timestamp_ms": 54719,
+      "youtube_t_seconds": 54,
+      "caption_mode": "automatic_en_original_json3",
+      "caption_capture_file": "ZIT9VTMAYfw.en-orig.json3",
+      "caption_capture_time_utc": "2026-09-10T08:11:29.342951Z",
+      "clean_transcript_capture_file": "ZIT9VTMAYfw.json3-clean-transcript.md",
+      "clean_transcript_hash": "5f1ed3ac5b6b97cd5cc0abeef968b56c59c3b284fe5ac4a05e1c77c3f79d8606",
+      "clean_transcript_normalized_text_sha256": "8a173b8a2dd8cbee70cb564b449920f1be661f7648b763c81589fb380cfb8ed9",
+      "binding_locator": {
+        "line_start": 19,
+        "line_end": 19,
+        "char_start": 1104,
+        "char_end": 1120,
+        "section_heading": "## 0:00 - 1:00"
+      },
+      "json3_locator": {
+        "event_indices": [
+          43
+        ],
+        "first_event_index": 43,
+        "timestamp_basis": "segment offset in automatic json3",
+        "match_text": "cause and effect",
+        "selection_basis": "clean_transcript_occurrence_index",
+        "clean_occurrence_index": 0,
+        "json3_match_count": 20
+      },
+      "precision_note": "YouTube locator uses whole-second t parameter; timestamp_ms preserves the caption-derived millisecond locator.",
+      "source_id": "s17"
+    },
+    "video-renunciation": {
+      "video_url": "https://www.youtube.com/watch?v=IfM3NatIyhY",
+      "title": "Schopenhauer In-Depth: The Total Denial of the World by the Greatest Pessimist of Philosophy",
+      "creator": "essentialsalts",
+      "timestamp": "01:48:13.200",
+      "locator": "https://www.youtube.com/watch?v=IfM3NatIyhY&t=6493s",
+      "exact": "negation of the will",
+      "capture_hash": "c4082bc1f6b63adacaae275062b4310600d75c67a29eec7c1a98158c81746e0a",
+      "track_type": "manual",
+      "video_id": "IfM3NatIyhY",
+      "upload_date": "2021-11-19",
+      "timestamp_ms": 6493200,
+      "youtube_t_seconds": 6493,
+      "caption_mode": "manual_en_json3",
+      "caption_capture_file": "IfM3NatIyhY.en.json3",
+      "caption_capture_time_utc": "2026-09-10T08:11:30.747202Z",
+      "clean_transcript_capture_file": "IfM3NatIyhY.json3-clean-transcript.md",
+      "clean_transcript_hash": "37e5bb0ee525386efc58cfa46176acce93da7191cdc5a337d43bf2c018574d28",
+      "clean_transcript_normalized_text_sha256": "539a85ae361a3c79cdbb3e2f34d44cef895d15f6b1b6753e0f5e50c4d61e5158",
+      "binding_locator": {
+        "line_start": 451,
+        "line_end": 451,
+        "char_start": 95713,
+        "char_end": 95733,
+        "section_heading": "## 1:48:00 - 1:49:00"
+      },
+      "json3_locator": {
+        "event_indices": [
+          1020
+        ],
+        "first_event_index": 1020,
+        "timestamp_basis": "manual caption cue start; no per-word offset in json3",
+        "match_text": "negation of the will",
+        "selection_basis": "clean_transcript_occurrence_index",
+        "clean_occurrence_index": 0,
+        "json3_match_count": 2
+      },
+      "precision_note": "YouTube locator uses whole-second t parameter; timestamp_ms preserves the caption-derived millisecond locator.",
+      "source_id": "s16"
+    },
+    "video-responsibility": {
+      "video_url": "https://www.youtube.com/watch?v=ZIT9VTMAYfw",
+      "title": "Nishitani & Baizhang's Fox",
+      "creator": "essentialsalts",
+      "timestamp": "01:10:35.120",
+      "locator": "https://www.youtube.com/watch?v=ZIT9VTMAYfw&t=4235s",
+      "exact": "take up the responsibility",
+      "capture_hash": "0d144c666c8c139e91bd5cd32041e2c90d5ed317a3270a6aee53e72201ef1017",
+      "track_type": "automatic",
+      "video_id": "ZIT9VTMAYfw",
+      "upload_date": "2026-09-08",
+      "timestamp_ms": 4235120,
+      "youtube_t_seconds": 4235,
+      "caption_mode": "automatic_en_original_json3",
+      "caption_capture_file": "ZIT9VTMAYfw.en-orig.json3",
+      "caption_capture_time_utc": "2026-09-10T08:11:29.342951Z",
+      "clean_transcript_capture_file": "ZIT9VTMAYfw.json3-clean-transcript.md",
+      "clean_transcript_hash": "5f1ed3ac5b6b97cd5cc0abeef968b56c59c3b284fe5ac4a05e1c77c3f79d8606",
+      "clean_transcript_normalized_text_sha256": "8a173b8a2dd8cbee70cb564b449920f1be661f7648b763c81589fb380cfb8ed9",
+      "binding_locator": {
+        "line_start": 299,
+        "line_end": 299,
+        "char_start": 67303,
+        "char_end": 67329,
+        "section_heading": "## 1:10:00 - 1:11:00"
+      },
+      "json3_locator": {
+        "event_indices": [
+          3481,
+          3483
+        ],
+        "first_event_index": 3481,
+        "timestamp_basis": "first token segment offset across automatic json3 events",
+        "match_text": "take up the responsibility",
+        "selection_basis": "clean_transcript_occurrence_index",
+        "clean_occurrence_index": 0,
+        "json3_match_count": 1
+      },
+      "precision_note": "YouTube locator uses whole-second t parameter; timestamp_ms preserves the caption-derived millisecond locator.",
+      "source_id": "s17"
+    },
+    "ws-abductive": {
+      "source_id": "s18",
+      "url": "https://github.com/HarperZ9/witnessing-spine/blob/f9873c441daf7ada21e70db87bf2380afeb6c302/SYNTHESIS-the-witnessing-spine.md#L123-L123",
+      "revision": "f9873c441daf7ada21e70db87bf2380afeb6c302",
+      "git_blob_bytes_sha256": "ce30dbf3d777cd98ce1cc1f77a89d83cfc413e45069b261b00a650247fc01191",
+      "normalized_text_sha256": "ce30dbf3d777cd98ce1cc1f77a89d83cfc413e45069b261b00a650247fc01191",
+      "line_start": 123,
+      "line_end": 123,
+      "char_start": 14523,
+      "char_end": 14571,
+      "exact": "abductive convergence, not a deductive identity.",
+      "support_relation": "Do not turn structural convergence into external proof."
+    },
+    "ws-bid": {
+      "source_id": "s18",
+      "url": "https://github.com/HarperZ9/witnessing-spine/blob/f9873c441daf7ada21e70db87bf2380afeb6c302/SYNTHESIS-the-witnessing-spine.md#L119-L119",
+      "revision": "f9873c441daf7ada21e70db87bf2380afeb6c302",
+      "git_blob_bytes_sha256": "ce30dbf3d777cd98ce1cc1f77a89d83cfc413e45069b261b00a650247fc01191",
+      "normalized_text_sha256": "ce30dbf3d777cd98ce1cc1f77a89d83cfc413e45069b261b00a650247fc01191",
+      "line_start": 119,
+      "line_end": 119,
+      "char_start": 13659,
+      "char_end": 13714,
+      "exact": "This document is a **synthesis and a bid, not a proof**",
+      "support_relation": "The document applies proof-before-trust to itself."
+    }
+  },
+  "limits": [
+    "Context bindings are not entailment proofs.",
+    "No private session paths, private IDs or raw correspondence are exported.",
+    "Source coverage is selective; not every local or remote document was read."
+  ]
+}
