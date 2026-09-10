@@ -20,6 +20,26 @@
 <link rel="preload" href="system/fonts/conso-regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="system/system.css?v=20260907-reading-completion">
 <link rel="stylesheet" href="system/publications.css?v=20260902-creative-chassis">
+<style>
+  .research-lane-crumb{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.45rem;
+    align-items:center;
+    margin:0 0 1rem;
+    color:var(--muted);
+    font-family:var(--mono);
+    font-size:.68rem;
+    letter-spacing:.12em;
+    line-height:1.5;
+  }
+  .research-lane-crumb a{
+    color:var(--signal);
+    text-decoration-thickness:1px;
+    text-underline-offset:.25em;
+  }
+  .research-lane-crumb span:last-child{color:var(--bone)}
+</style>
 </head>
 <body class="inner-clean frame-compact publications-hub">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -31,6 +51,11 @@
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">Publications</span></div>
   <div class="mid">
+    <nav class="research-lane-crumb" aria-label="Research lane">
+      <a href="research.html">Research</a>
+      <span aria-hidden="true">/</span>
+      <span>Publications and evidence</span>
+    </nav>
     <h1>Writing and research</h1>
     <p class="lede">Essays on AI, psychology, education, music, and art. Research notes and the tools I’m building. Pick a subject, or start with one of these pieces.</p>
     <nav class="publication-actions" aria-label="Publication starting points">

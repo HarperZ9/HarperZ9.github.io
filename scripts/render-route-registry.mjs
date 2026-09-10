@@ -234,6 +234,7 @@ function addSourceMetadata(map, href, metadata) {
     label: existing.label || cleanText(metadata.label),
     maturity: existing.maturity || cleanText(metadata.maturity),
     summary: existing.summary || cleanText(metadata.summary),
+    family: existing.family || cleanText(metadata.family),
     searchText,
   });
 }
@@ -254,20 +255,30 @@ function authoredSourceMetadata() {
     });
   }
 
-  for (const sourceFile of ["publications.html", "writing.html"]) {
-    const source = readPublicHtml(sourceFile);
-    for (const match of source.matchAll(/<article\b[^>]*>([\s\S]*?)<\/article>/g)) {
-      const block = match[1];
-      const link = block.match(/<h[23]\b[^>]*>\s*<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>\s*<\/h[23]>/i);
+  function collectArticleMetadata(source, options = {}) {
+    for (const match of source.matchAll(/<article\b([^>]*)>([\s\S]*?)<\/article>/g)) {
+      const attrs = match[1] || "";
+      const article = match[2];
+      const isGeneratedEditorial = /\bgenerated-editorial\b/i.test(attrs);
+      if (options.generatedOnly && !isGeneratedEditorial) continue;
+      const family = options.familyForGenerated && isGeneratedEditorial ? options.familyForGenerated : options.family;
+      const link = article.match(/<h[23]\b[^>]*>\s*<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>\s*<\/h[23]>/i);
       if (!link) continue;
-      const afterHeading = block.slice(block.indexOf(link[0]) + link[0].length);
+      const afterHeading = article.slice(article.indexOf(link[0]) + link[0].length);
       addSourceMetadata(map, link[1], {
         label: link[2],
-        maturity: block.match(/<p\b[^>]*class="[^"]*(?:publication-meta|role|path-state)[^"]*"[^>]*>([\s\S]*?)<\/p>/i)?.[1],
+        maturity: article.match(/<p\b[^>]*class="[^"]*(?:publication-meta|role|path-state)[^"]*"[^>]*>([\s\S]*?)<\/p>/i)?.[1],
         summary: afterHeading.match(/<p\b[^>]*>([\s\S]*?)<\/p>/i)?.[1],
+        family,
       });
     }
   }
+
+  collectArticleMetadata(readPublicHtml("publications.html"));
+  collectArticleMetadata(readPublicHtml("writing.html"), { familyForGenerated: "Research" });
+  const generatedPublications = readPublicHtml("publications.html")
+    .match(/<!-- BEGIN GENERATED EDITORIAL PUBLICATIONS -->([\s\S]*?)<!-- END GENERATED EDITORIAL PUBLICATIONS -->/i)?.[1] || "";
+  collectArticleMetadata(generatedPublications, { family: "Research" });
 
   return map;
 }
@@ -315,8 +326,16 @@ function mergeRouteMetadata(route, metadata) {
 
 function upsertRoute(familyLabel, metadata, afterHref = null) {
   const existing = findRouteByHref(metadata.href);
-  if (existing) return mergeRouteMetadata(existing.route, metadata);
   const family = familyByLabel(familyLabel);
+  if (existing) {
+    if (metadata.family && existing.family.label !== familyLabel) {
+      const currentIndex = existing.family.routes.indexOf(existing.route);
+      if (currentIndex >= 0) existing.family.routes.splice(currentIndex, 1);
+      const insertion = afterHref ? family.routes.findIndex((item) => item.href === afterHref) : -1;
+      family.routes.splice(insertion >= 0 ? insertion + 1 : family.routes.length, 0, existing.route);
+    }
+    return mergeRouteMetadata(existing.route, metadata);
+  }
   const route = {
     label: cleanText(metadata.label) || fallbackLabel(metadata.href),
     href: metadata.href,
@@ -356,6 +375,7 @@ function familyForSystem(system) {
 }
 
 function familyForHref(href, metadata) {
+  if (metadata?.family) return metadata.family;
   const existing = findRouteByHref(href);
   if (existing) return existing.family.label;
   const system = systemByHref.get(href);

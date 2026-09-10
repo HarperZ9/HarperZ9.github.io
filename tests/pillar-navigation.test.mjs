@@ -44,6 +44,14 @@ function registryHrefs() {
   return new Set(ROUTE_REGISTRY.families.flatMap(family => family.routes.map(route => route.href)));
 }
 
+function routeByHref(href) {
+  for (const family of ROUTE_REGISTRY.families) {
+    const route = family.routes.find(item => item.href === href);
+    if (route) return { family: family.label, route };
+  }
+  return null;
+}
+
 function indexEntries() {
   const source = siteIndexSource();
   return [...source.matchAll(/<li data-index-entry(?:\s+data-search-text="([^"]*)")?><a href="([^"]+)">([\s\S]*?)<\/a>(?:<p>([\s\S]*?)<\/p>)?<\/li>/g)]
@@ -140,6 +148,134 @@ test('site index search includes reviewed route context beyond labels', () => {
   assert.ok(indexMatches('benchmark').includes('research-hyphal-context-benchmark.html'));
   assert.ok(indexMatches('benchmark').includes('analytics/current-cross-harness-pilot.html'));
   assert.ok(indexMatches('benchmark').includes('analytics/flywheel-benchmark-record.html'));
+});
+
+test('research lane owns writing, publication archives, and current essays', () => {
+  for (const href of [
+    'research.html',
+    'writing.html',
+    'publications.html',
+    'a-witness-should-not-become-a-ruler.html',
+    'ltj-bukem-the-man-behind-the-atmosphere.html',
+  ]) {
+    const found = routeByHref(href);
+    assert.ok(found, `${href} is missing from the route registry`);
+    assert.equal(found.family, 'Research', `${href} should be grouped under Research`);
+  }
+
+  const primaryHrefs = PRIMARY_ROUTES.map(route => route.href);
+  assert.ok(primaryHrefs.includes('research.html'));
+  assert.ok(!primaryHrefs.includes('writing.html'));
+  assert.ok(!primaryHrefs.includes('publications.html'));
+});
+
+test('research hub visibly funnels projects, essays, and evidence paths', () => {
+  const source = readFileSync(new URL('../research.html', import.meta.url), 'utf8');
+  const text = htmlText(source);
+  assert.match(source, /<nav\b[^>]*aria-label="Research starting points"/);
+
+  for (const copy of [
+    'Research projects',
+    'Essays and writing',
+    'Publications and evidence',
+    'A witness should not become a ruler',
+    'LTJ Bukem',
+  ]) {
+    assert.match(text, new RegExp(copy.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
+
+  for (const href of [
+    'writing.html',
+    'publications.html',
+    'a-witness-should-not-become-a-ruler.html',
+    'ltj-bukem-the-man-behind-the-atmosphere.html',
+  ]) {
+    assert.match(source, new RegExp(`href="${escapeAttribute(href)}"`));
+  }
+});
+
+test('writing and publication archives expose their Research lane parent', () => {
+  for (const [page, current] of [
+    ['writing.html', 'Essays and writing'],
+    ['publications.html', 'Publications and evidence'],
+  ]) {
+    const source = readFileSync(new URL(`../${page}`, import.meta.url), 'utf8');
+    const text = htmlText(source);
+    assert.match(source, /<nav\b[^>]*aria-label="Research lane"/);
+    assert.match(source, /<a href="research\.html">Research<\/a>/);
+    assert.match(text, new RegExp(current.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
+});
+
+test('route renderer classifies sitemap articles from writing sources under Research', () => {
+  const root = mkdtempSync(join(tmpdir(), 'pillar-writing-route-renderer-'));
+  try {
+    mkdirSync(join(root, 'scripts'), { recursive: true });
+    mkdirSync(join(root, 'system'), { recursive: true });
+    mkdirSync(join(root, 'home', 'src'), { recursive: true });
+    cpSync(new URL('../scripts/render-route-registry.mjs', import.meta.url), join(root, 'scripts', 'render-route-registry.mjs'));
+    cpSync(new URL('../scripts/render-site-index.mjs', import.meta.url), join(root, 'scripts', 'render-site-index.mjs'));
+    writeFixture(root, 'system/routes.js', fixtureRoutesModule({
+      families: [
+        { label: 'Work', routes: [{ label: 'Work', href: 'hire.html' }] },
+        {
+          label: 'Systems',
+          routes: [
+            { label: 'Systems', href: 'overview.html' },
+            { label: 'Catalog', href: 'catalog.html' },
+            { label: 'Index', href: 'index-graph.html' },
+          ],
+        },
+        { label: 'Security', routes: [] },
+        { label: 'Research', routes: [{ label: 'Research', href: 'research.html' }] },
+        {
+          label: 'Studio',
+          routes: [
+            { label: 'Elder ENB', href: 'elder-enb.html' },
+            { label: 'Truth ENB', href: 'truth-enb.html' },
+            { label: 'RAW', href: 'raw.html' },
+            { label: 'Typography', href: 'typeface.html' },
+          ],
+        },
+      ],
+      externalActions: [],
+    }));
+    writeFixture(root, 'system/systems.json', JSON.stringify({
+      domains: [{ id: 'graphics-media', label: 'Graphics and media' }],
+      systems: [
+        {
+          id: 'raw',
+          name: 'RAW',
+          href: 'raw.html',
+          primaryDomain: 'graphics-media',
+          domains: ['graphics-media'],
+          maturity: 'active',
+          purpose: 'RAW fixture purpose.',
+          useCases: ['graphics bridge inspection'],
+          productType: 'renderer',
+          releaseState: 'active',
+        },
+      ],
+    }));
+    writeFixture(root, 'sitemap.xml', '<urlset><url><loc>https://harperz9.github.io/new-source-backed-essay.html</loc></url></urlset>');
+    writeFixture(root, 'research.html', '<!doctype html><title>Research</title><h1>Research</h1>');
+    writeFixture(root, 'writing.html', '<!doctype html><article class="generated-editorial"><p class="role">Evidence essay · 2026</p><h2><a href="new-source-backed-essay.html">New Source Backed Essay</a></h2><p>Source-linked essay summary.</p></article>');
+    writeFixture(root, 'publications.html', '<!doctype html><article><p class="publication-meta">Evidence essay · 2026</p><h3><a href="new-source-backed-essay.html">New Source Backed Essay</a></h3><p>Publication archive summary.</p></article>');
+    writeFixture(root, 'new-source-backed-essay.html', '<!doctype html><title>New Source Backed Essay</title><h1>New Source Backed Essay</h1>');
+    writeFixture(root, 'raw.html', '<!doctype html><title>RAW</title><h1>RAW</h1>');
+
+    execFileSync(process.execPath, [join(root, 'scripts', 'render-route-registry.mjs')], { cwd: root, stdio: 'pipe' });
+
+    const registry = readGeneratedRegistry(root);
+    const researchFamily = registry.families.find(family => family.label === 'Research');
+    const systemsFamily = registry.families.find(family => family.label === 'Systems');
+    assert.ok(researchFamily.routes.some(route => route.href === 'new-source-backed-essay.html'));
+    assert.ok(!systemsFamily.routes.some(route => route.href === 'new-source-backed-essay.html'));
+    const renderedIndex = readFileSync(join(root, 'site-index.html'), 'utf8');
+    assert.match(renderedIndex, /Source-linked essay summary/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
 });
 
 test('route renderer refreshes existing system summaries from canonical system purpose', () => {

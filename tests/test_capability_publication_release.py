@@ -18,7 +18,7 @@ RELEASE_PATHS = (
     "writing/ltj-bukem-the-man-behind-the-atmosphere/essay.md",
     "publications/data/records/ltj-bukem-the-man-behind-the-atmosphere.json",
     "ltj-bukem-the-man-behind-the-atmosphere.html",
-    "assets/index-NqGo0RlY.js",
+    "assets/index-b2DeyYcU.js",
     "site-index.html",
     "system/site-index.css",
     "system/site-index.js",
@@ -266,7 +266,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "4e581296a39b99dec911f65a223117b37ac2b6e83487105715f43f99bb79b438"
+REVIEWED_RELEASE_SHA256 = "b461a31026315dbc384486148490bc4119bacdbc2fa5ab8563249238ac31a211"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -403,7 +403,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_060_final_gather_pre_review_js = "index-CYqKao4X.js"
     previous_060_final_gather_fixture_js = "index-CpC5RhmM.js"
     previous_gather_171_js = "index-AYA0gyN2.js"
-    current_js = "index-NqGo0RlY.js"
+    current_js = "index-b2DeyYcU.js"
     current_css = "index-B2kgPYlE.css"
     previous_home_js = "index-CS_jYuhh.js"
     previous_flywheel_js = "index-BIYnDBdw.js"

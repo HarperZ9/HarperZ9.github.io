@@ -41,6 +41,24 @@
   .totop{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;
     text-transform:uppercase;color:var(--teal-soft);text-decoration:none;border-bottom:1px solid transparent}
   .totop:hover{border-color:var(--teal-soft)}
+  .research-lane-crumb{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.45rem;
+    align-items:center;
+    margin:0 0 1.15rem;
+    color:var(--ink-muted);
+    font-family:var(--mono);
+    font-size:.68rem;
+    letter-spacing:.12em;
+    line-height:1.5;
+  }
+  .research-lane-crumb a{
+    color:var(--teal-soft);
+    text-decoration-thickness:1px;
+    text-underline-offset:.25em;
+  }
+  .research-lane-crumb span:last-child{color:var(--ink-soft)}
 </style>
 </head>
 <body class="doc">
@@ -52,6 +70,11 @@
 
 <main id="main">
 <article class="sheet">
+  <nav class="research-lane-crumb" aria-label="Research lane">
+    <a href="research.html">Research</a>
+    <span aria-hidden="true">/</span>
+    <span>Essays and writing</span>
+  </nav>
   <header class="mast">
     <p class="role" style="margin-bottom:.55rem">Writing</p>
     <h1>Essays</h1>
