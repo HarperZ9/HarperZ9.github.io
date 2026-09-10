@@ -45,6 +45,46 @@ def test_record_requires_known_claim_sources() -> None:
         validate_record(record)
 
 
+def test_source_url_with_embedded_ask_segment_is_not_a_credential() -> None:
+    record = valid_record()
+    record["sources"][0]["url"] = "https://xlr8r.com/features/ask-the-experts-ltj-bukem/"
+
+    validate_record(record)
+
+
+def test_standalone_sk_token_text_still_rejects() -> None:
+    record = valid_record()
+    token = "sk-" + "abcdefghijklmnopqrst"
+    record["sections"][0]["paragraphs"].append(f"Receipt token {token} must stay private.")
+
+    with pytest.raises(PublicationError, match="credential-shaped"):
+        validate_record(record)
+
+
+def test_standalone_sk_token_query_still_rejects() -> None:
+    record = valid_record()
+    token = "sk-" + "abcdefghijklmnopqrst"
+    record["sources"][0]["url"] = f"https://example.org/source?token={token}"
+
+    with pytest.raises(PublicationError, match="credential-shaped"):
+        validate_record(record)
+
+
+def test_source_publication_date_may_be_explicitly_unavailable() -> None:
+    record = valid_record()
+    record["sources"][0]["published_at"] = None
+
+    validate_record(record)
+
+
+def test_source_publication_date_rejects_malformed_text() -> None:
+    record = valid_record()
+    record["sources"][0]["published_at"] = "2026-99-99"
+
+    with pytest.raises(PublicationError, match=r"sources\[0\]\.published_at"):
+        validate_record(record)
+
+
 def test_record_hash_ignores_key_order_but_not_claim_text() -> None:
     first = valid_record()
     reordered = dict(reversed(list(copy.deepcopy(first).items())))

@@ -22,6 +22,16 @@
       "idempotency_key": "40a77c40bb6097b4c95ecf043eed71ff15aae6cbb37d6fd147bbfcb8f0cf5d50"
     },
     {
+      "id": "ltj-bukem-the-man-behind-the-atmosphere",
+      "route": "ltj-bukem-the-man-behind-the-atmosphere.html",
+      "category": "music-listening",
+      "form": "biographical and critical essay",
+      "published_at": "2026-09-09",
+      "updated_at": "2026-09-09",
+      "record_sha256": "3446c9d68d4e41d297d9570bb0e37b7394c2d3eef8791c5fe4f236b0040b86a1",
+      "idempotency_key": "7ed6bfc55ea1a2d3c9d0ee946883bc25338fcf756e71ecb50588fe07eed53d7f"
+    },
+    {
       "id": "the-second-hearing",
       "route": "the-second-hearing.html",
       "category": "music-listening",

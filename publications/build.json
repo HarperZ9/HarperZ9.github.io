@@ -1,16 +1,17 @@
 {
   "schema_version": 1,
-  "built_at": "2026-09-05T00:00:00Z",
+  "built_at": "2026-09-09T00:00:00Z",
   "inputs": {
     "publications/data/records/availability-is-not-reach.json": "b690017ccc23b3de58f1cb8fbb6b5876bc16e960088252566ae9e3cbb078443f",
     "publications/data/records/growth-needs-a-before.json": "b03b39c3cb38628b057ce8d91c9e04b7567b764d9d69c8f7872d24727658d62b",
+    "publications/data/records/ltj-bukem-the-man-behind-the-atmosphere.json": "3446c9d68d4e41d297d9570bb0e37b7394c2d3eef8791c5fe4f236b0040b86a1",
     "publications/data/records/the-second-hearing.json": "9b807ef8ee7a3e6e2082d86f0a4420b3e72cce2b0e564cac6fb58a70fc5274da",
     "publications/data/records/what-the-label-changes.json": "b5d892768242fb95b6333c3c2b870e0b8ce765a48139c9d3330845be834eaa50"
   },
   "outputs": {
     "availability-is-not-reach.html": "9a75048ee2b08a574ccb8c182ba99ad50f2c1b05d16f5108206ceaf03eab4b35",
-    "feed.json": "8160542ff7d3f5379ee22fbe7c044dad0b4a1df54bf873429c585d1d27e66abd",
-    "feed.xml": "d109b8c83ca23f6e24fe30f1c7e6bcf7168b5ea597c0f605ae1ee771858288ff",
+    "feed.json": "4a402758285b881cefeaec80294df1a350badde62ccf66e1b33cadf223b468d3",
+    "feed.xml": "b52284226e155060228de6d76ea561b11015678b7ec4a5b38a36c891bf125723",
     "figures/availability-is-not-reach.html": "8194fe329eb525955fd7c2704a56244c29bf1fe1b9bc5627eb77c84596d40d4e",
     "figures/availability-is-not-reach.json": "d3a5d138c067e2cc317e116c39cee1aed5695a15d680d7753833b6804fdc6ae3",
     "figures/availability-is-not-reach.svg": "d0548d9fe8c6abe20339b5d7ba068beb59263243dd56032a76d4e865d224229b",
@@ -24,11 +25,12 @@
     "figures/the-second-hearing-evidence-map.json": "428b70c158a17dde59ba45514b4b61667d406cf7484cd7c0dc13f0632e5b51f7",
     "figures/the-second-hearing-evidence-map.svg": "6a0adcf9e06928a65ab83eb58896426dca11d54d92f8bfea74ebbff0eb1fe10f",
     "growth-needs-a-before.html": "e8fd34a17a621491314692666edb7551c908a836a2940d51015e14780028a993",
-    "publications.html": "6dc3c2b3712960028ea0335285c358de0eb5607911e7322050fe92ef0465b939",
-    "publications/data/index.json": "493f04b86bb12731cb351844450f0e8bc5d8054bb7dacb3a130b5c87adb88d8b",
-    "sitemap.xml": "e3f78af6d28f40bd9cf9b9fe2bd1cd64f660f4d14270d523df58e9e8a502cb4b",
+    "ltj-bukem-the-man-behind-the-atmosphere.html": "480631324ab770239eae90046d2c981da89d9eff51924781f4911475c4c240a3",
+    "publications.html": "22b079de231f8140d93bc23d4a7c200034e0fc13f5250d7431fbcc298d9f60d2",
+    "publications/data/index.json": "320947e429e27f8a20f2eb272606fcb7afe5b68928fb034b2a0c2ce0bd86a4ee",
+    "sitemap.xml": "cee03b815790f19bc18b4df02fc1d310038e5f5b17ba35efe98f198be798d54f",
     "the-second-hearing.html": "52ddf32a48ae7a2af7e923565117e14625c3e72da1bfc6d42d2ad8878db5d2e3",
     "what-the-label-changes.html": "7d2dfa7f0b294b68d86e64eb3b48c1795fdfbbf099f57011d6e9013d7b18aa18",
-    "writing.html": "630bd01977e9a2ce0ccd5495d5b4bdf79597ca35b7ef78bdbfbbaf8690251202"
+    "writing.html": "75545b30be2a9b700472ebbde67057fea94d96ff4cbbc473b19b346d205f03cd"
   }
 }

@@ -49,7 +49,7 @@ OPAQUE_CITATION_PATTERN = re.compile(
     r"chatgpt-content-reference|turn\d+(?:search|view|fetch)", re.IGNORECASE
 )
 SECRET_PATTERNS = (
-    re.compile(r"sk-[A-Za-z0-9_-]{20,}"),
+    re.compile(r"(?<![A-Za-z0-9_-])sk-[A-Za-z0-9_-]{20,}"),
     re.compile(r"gh[pousr]_[A-Za-z0-9_]{20,}"),
     re.compile(r"AKIA[0-9A-Z]{16}"),
     re.compile(r"xox[baprs]-[A-Za-z0-9-]{20,}"),
@@ -119,6 +119,17 @@ def _validate_date(value: str, context: str) -> None:
         date.fromisoformat(value)
     except ValueError as error:
         raise PublicationError(f"{context} is not a real date") from error
+
+
+def _validate_optional_date(container: dict, key: str, context: str) -> None:
+    if key not in container:
+        raise PublicationError(f"{context}.{key} must be YYYY-MM-DD or null")
+    value = container[key]
+    if value is None:
+        return
+    if not isinstance(value, str) or not value.strip():
+        raise PublicationError(f"{context}.{key} must be YYYY-MM-DD or null")
+    _validate_date(value, f"{context}.{key}")
 
 
 def _validate_timestamp(value: str, context: str) -> None:
@@ -206,7 +217,7 @@ def _validate_sources(record: dict) -> set[str]:
         parsed = urlparse(url)
         if parsed.scheme != "https" or not parsed.netloc:
             raise PublicationError(f"{context}.url must use HTTPS")
-        _validate_date(_require_text(source, "published_at", context), f"{context}.published_at")
+        _validate_optional_date(source, "published_at", context)
         _validate_date(_require_text(source, "observed_at", context), f"{context}.observed_at")
     return source_ids
 
