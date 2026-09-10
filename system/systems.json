@@ -510,6 +510,72 @@
       "releaseState": "stable Python engine v0.6.1; previous unsigned Windows desktop v0.6.0; clean-machine and mobile acceptance not claimed"
     },
     {
+      "id": "service-desk-incident-env",
+      "name": "Service Desk Incident Environment",
+      "purpose": "Run synthetic incident workflows and review recorded claims, recomputed task outcomes, and contradictions between recorded authorization, responses and mutations in an offline HTML report.",
+      "useCases": [
+        "review submitted incident-workflow evidence",
+        "compare passing and deliberately contradictory synthetic records",
+        "reproduce local incident-handling and recovery cases"
+      ],
+      "href": "flywheel.html#service-desk",
+      "sourceHref": "https://github.com/HarperZ9/flywheel/tree/env-service-desk-incident-v0.2.0/packages/service-desk-incident-env",
+      "domains": [
+        "evaluation-verification"
+      ],
+      "family": "verification",
+      "architectureRole": "synthetic-incident-environment-and-evidence-review",
+      "audiences": [
+        "evaluation engineers",
+        "incident evidence reviewers"
+      ],
+      "deploymentContexts": [
+        "local Python 3.11+ environment",
+        "offline HTML review"
+      ],
+      "maturity": "shipped",
+      "placement": "catalog-only",
+      "accessMode": "install",
+      "entryCommand": "python -m pip install ./flywheel_env_service_desk_incident-0.2.0-py3-none-any.whl",
+      "verificationCommand": "service-desk-incident-env review RETURNED_ARTIFACT_DIR --html-out ./review-output/review.html --json",
+      "evidence": [
+        {
+          "id": "service-desk-incident-env-release-v0-2-0",
+          "type": "release",
+          "label": "Service Desk Incident Environment 0.2.0",
+          "href": "https://github.com/HarperZ9/flywheel/releases/tag/env-service-desk-incident-v0.2.0",
+          "date": "2026-09-10",
+          "status": "verified",
+          "summary": "Published at 2026-09-10T00:32:36Z, GitHub add-on 0.2.0 adds an offline HTML review of synthetic incident records and stricter evidence consistency checks. The wheel SHA-256 is 4405fc05060319a3f43c036412bf45b85f0a03e6eb0e64e8ae27c30f4f606233. The release includes a preview ZIP with passing and deliberately contradictory examples. Anonymous asset downloads matched published bytes, and an isolated installation with released Flywheel engine 0.6.1 accepted the baseline and rejected rehashed denied-but-applied records and altered source content. Use service-desk-incident-env review RETURNED_ARTIFACT_DIR --html-out ./review-output/review.html --json with a new output file outside the evidence directory. Review exits 1 for failed checks and 2 for output errors. Inspect HTML before sharing; redaction is incomplete and JSON retains local paths. This is not a desktop update or a PyPI publication. Coherent fabricated records can pass; checks do not authenticate a producer, measure model alignment, or establish production ServiceNow compatibility."
+        }
+      ],
+      "limitations": [
+        "Requires a separately installed compatible Flywheel engine (>=0.6.1,<0.7); this is not a desktop update or a PyPI publication.",
+        "Coherent fabricated records can pass. Checks do not authenticate a producer, measure model alignment, or establish production ServiceNow compatibility.",
+        "Report output must be new and outside the evidence directory. Inspect HTML before sharing; common credential and path redaction is incomplete, and JSON retains local paths."
+      ],
+      "boundary": "Synthetic local evidence review only. Matching hashes establish internal consistency, not trusted provenance or general agent safety.",
+      "inputs": [
+        "synthetic incident-workflow artifacts",
+        "recorded authorization, responses and mutation flags"
+      ],
+      "outputs": [
+        "offline HTML evidence review",
+        "JSON verification results with separate evidence layers",
+        "preserved case and calibration findings"
+      ],
+      "dependencies": [
+        "flywheel-verify>=0.6.1,<0.7"
+      ],
+      "related": [
+        "flywheel"
+      ],
+      "lastVerified": "2026-09-10",
+      "primaryDomain": "evaluation-verification",
+      "productType": "synthetic incident environment and offline review add-on",
+      "releaseState": "GitHub add-on 0.2.0 and offline report examples; requires Flywheel engine 0.6.1; no PyPI publication claimed"
+    },
+    {
       "id": "telos",
       "name": "Telos",
       "purpose": "Telos is a zero-dependency local workbench for creating, simulating, and replaying AI work. Its CLI and MCP servers expose workstation checks, creative simulations, research proofs, model and learning experiments, and browser or Windows automation, with a re-checkable receipt for each run.",
