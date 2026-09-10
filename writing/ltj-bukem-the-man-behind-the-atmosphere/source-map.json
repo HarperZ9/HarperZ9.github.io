@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "manuscript_sha256": "9ba07557ecad593a5020146cc092916531db8bfac414f7de10b8c9c10521666f",
+  "manuscript_sha256": "0f8137d6af97139896f979e9bf081106d247adb64e2c5fb236b6af102758b9af",
   "location_convention": "One-based inclusive manuscript lines; JSON pointers into the public publication record. Values are paragraph text, not proof of historical truth.",
   "paragraphs": [
     {
@@ -244,7 +244,7 @@
     },
     {
       "json_pointer": "/sections/4/paragraphs/1",
-      "source_value": "The phrase points to roughness beside smoothness, which is a more useful description than a shelf of atmospheric adjectives. Beauty can keep some resistance. A sustained texture can be welcoming while the rhythm remains insistent. A musical passage can offer relief while keeping physical weight. The contrast is part of the attraction, a source of friction inside the polish.",
+      "source_value": "Beauty can keep some resistance. A sustained texture can be welcoming while the rhythm remains insistent. A musical passage can offer relief while keeping physical weight. The contrast is part of the attraction, a source of friction inside the polish.",
       "manuscript_line_start": 75,
       "manuscript_line_end": 75,
       "linked_source_ids": []

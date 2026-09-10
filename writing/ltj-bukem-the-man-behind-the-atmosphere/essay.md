@@ -72,7 +72,7 @@ The strongest production question asks how a musician decides that an idea has e
 
 Chris Familton’s [“LTJ Bukem - The Quest for Perfection”](https://doubtfulsounds.net/2015/04/18/interview-ltj-bukem-the-quest-for-perfection/) contains a more useful description of Bukem’s taste than a shelf of atmospheric adjectives. Alongside groove and musicality, he wanted roughness beside smoothness.
 
-The phrase points to roughness beside smoothness, which is a more useful description than a shelf of atmospheric adjectives. Beauty can keep some resistance. A sustained texture can be welcoming while the rhythm remains insistent. A musical passage can offer relief while keeping physical weight. The contrast is part of the attraction, a source of friction inside the polish.
+Beauty can keep some resistance. A sustained texture can be welcoming while the rhythm remains insistent. A musical passage can offer relief while keeping physical weight. The contrast is part of the attraction, a source of friction inside the polish.
 
 The Vinyl Factory’s [“An introduction to LTJ Bukem in 10 records”](https://www.thevinylfactory.com/features/an-introduction-to-ltj-bukem-in-10-records) offers concrete critical descriptions. It hears grainy processing in “Music,” a more polished balance of Rhodes, drums, and strings in “Atmospherical Jubilancy,” and rougher rhythmic material meeting luminous passages in “19.5” and “19.5 Reprisal.” Those last two are Bukem-and-Peshay collaborations, so the evidence should stay collaborative.
 
