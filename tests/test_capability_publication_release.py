@@ -13,6 +13,9 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "a-witness-should-not-become-a-ruler.html",
+    "writing/a-witness-should-not-become-a-ruler/01.md",
+    "img/og/a-witness-should-not-become-a-ruler.png",
     "demos/crucible-cleanroom/index.html",
     "emet-sample.html",
     "gallery.html",
@@ -244,7 +247,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "deb424d04c922dc189510bd636d68297985d67128f7c95b9d73d646cb4ee1c13"
+REVIEWED_RELEASE_SHA256 = "3d49e1b1d44c4cfa7bff208cd60faf8023f92dfb17b49ea46a9149609bb46673"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

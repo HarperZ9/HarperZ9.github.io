@@ -1,4 +1,11 @@
 window.CARD_DATA = {
+  "a-witness-should-not-become-a-ruler": {
+    "role": "AI-PREPARED EDITORIAL WORKING DRAFT",
+    "headline": "A witness should not become a ruler. AI-prepared working draft.",
+    "pipeline": "PERSONAL AUTHOR REVIEW PENDING / NO PEER-REVIEW CLAIM",
+    "word": "WITNESS",
+    "glyph": "seal"
+  },
   "buildlang": {
     "role": "EFFECTS-ORIENTED COMPILER",
     "headline": "Declare effects and lifetimes, then compile to native code.",
