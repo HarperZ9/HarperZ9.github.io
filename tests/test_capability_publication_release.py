@@ -13,6 +13,12 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "img/og/ltj-bukem-the-man-behind-the-atmosphere.png",
+    "writing/ltj-bukem-the-man-behind-the-atmosphere/source-map.json",
+    "writing/ltj-bukem-the-man-behind-the-atmosphere/essay.md",
+    "publications/data/records/ltj-bukem-the-man-behind-the-atmosphere.json",
+    "ltj-bukem-the-man-behind-the-atmosphere.html",
+    "assets/index-NqGo0RlY.js",
     "site-index.html",
     "system/site-index.css",
     "system/site-index.js",
@@ -260,7 +266,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "b099e284b42c65cb90acb1717b30f3d738ca7f627b210a7a25000d67b27ecab2"
+REVIEWED_RELEASE_SHA256 = "60f936824eacf16900cde262655f3d76834b0381618d481e43867b906ce09389"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -397,7 +403,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_060_final_gather_pre_review_js = "index-CYqKao4X.js"
     previous_060_final_gather_fixture_js = "index-CpC5RhmM.js"
     previous_gather_171_js = "index-AYA0gyN2.js"
-    current_js = "index-BdFe8daW.js"
+    current_js = "index-NqGo0RlY.js"
     current_css = "index-B2kgPYlE.css"
     previous_home_js = "index-CS_jYuhh.js"
     previous_flywheel_js = "index-BIYnDBdw.js"

@@ -1,8 +1,8 @@
 window.CARD_DATA = {
   "a-witness-should-not-become-a-ruler": {
-    "role": "AI-PREPARED EDITORIAL WORKING DRAFT",
-    "headline": "A witness should not become a ruler. AI-prepared working draft.",
-    "pipeline": "PERSONAL AUTHOR REVIEW PENDING / NO PEER-REVIEW CLAIM",
+    "role": "EDITORIAL ESSAY",
+    "headline": "A witness should not become a ruler.",
+    "pipeline": "AI-ASSISTED / AUTHOR-APPROVED / NO PEER-REVIEW CLAIM",
     "word": "WITNESS",
     "glyph": "seal"
   },
@@ -616,5 +616,12 @@ window.CARD_DATA = {
     "word": "JOIN",
     "glyph": "ledger",
     "showGlyph": true
+  },
+  "ltj-bukem-the-man-behind-the-atmosphere": {
+    "role": "MUSIC / BIOGRAPHICAL ESSAY",
+    "headline": "LTJ Bukem: The Man Behind the Atmosphere",
+    "pipeline": "TASTE / COLLABORATION / THE PRACTICE OF LISTENING",
+    "word": "BUKEM",
+    "glyph": "wave"
   }
 };

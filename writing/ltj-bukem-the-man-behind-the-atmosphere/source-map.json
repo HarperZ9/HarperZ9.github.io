@@ -1,0 +1,576 @@
+{
+  "schema_version": 1,
+  "manuscript_sha256": "9ba07557ecad593a5020146cc092916531db8bfac414f7de10b8c9c10521666f",
+  "location_convention": "One-based inclusive manuscript lines; JSON pointers into the public publication record. Values are paragraph text, not proof of historical truth.",
+  "paragraphs": [
+    {
+      "json_pointer": "/sections/0/paragraphs/0",
+      "source_value": "In LTJ Bukem’s recollection, the studio occupied the household’s front room. Equipment and cables accumulated, and other people put up with it. He remembered the excitement of exploring a new keyboard’s presets, along with the way buying hardware kept him broke. The setting he described in XLR8R’s “Ask the Experts: LTJ Bukem” [s1] was domestic, inconvenient, and absorbing.",
+      "manuscript_line_start": 7,
+      "manuscript_line_end": 7,
+      "linked_source_ids": [
+        "s1"
+      ]
+    },
+    {
+      "json_pointer": "/sections/0/paragraphs/1",
+      "source_value": "The Jockey Slut profile archived as “LTJ Bukem and MC Conrad in… Mission Possible (1996)” [s2] supplies another glimpse: its reporter found him putting on voices while answering the telephone and joking about a cosmic mission.",
+      "manuscript_line_start": 9,
+      "manuscript_line_end": 9,
+      "linked_source_ids": [
+        "s2"
+      ]
+    },
+    {
+      "json_pointer": "/sections/0/paragraphs/2",
+      "source_value": "These are useful starting points because a musical atmosphere gives only a partial portrait. Spacious records can come from effort, distraction, and other people’s patience. A serious expression behind the decks may simply show concentration. The work can communicate something that takes a crowded room and a difficult life to create.",
+      "manuscript_line_start": 11,
+      "manuscript_line_end": 11,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/0/paragraphs/3",
+      "source_value": "The better question is how Danny Williamson’s preferences became a producer’s decisions: what caught his attention, what he kept, what he changed, and whom he trusted to help make it work.",
+      "manuscript_line_start": 13,
+      "manuscript_line_end": 13,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/1/paragraphs/0",
+      "source_value": "Bukem’s account of his musical education begins with instruments. In “Interview with LTJ Bukem,” published by TNT Magazine [s4], he recalled starting piano around seven or eight, then taking up trumpet and drums. Around ten, a teacher took him to hear Chick Corea at the Royal Albert Hall. He associated the encounter with a widening interest in jazz, soul, disco, and records.",
+      "manuscript_line_start": 17,
+      "manuscript_line_end": 17,
+      "linked_source_ids": [
+        "s4"
+      ]
+    },
+    {
+      "json_pointer": "/sections/1/paragraphs/1",
+      "source_value": "A surviving Muzik profile adds the people behind that education. It describes his upbringing with adoptive parents in Watford, a home where gospel and classical music were present, and lessons with Mrs Bloom and Nigel Crouch. Bukem remembered Crouch introducing him to records as well as teaching him. The account survives in “Classic LTJ Bukem Interview,” scans preserved by Jrumhand [s5], particularly page 87 [s6].",
+      "manuscript_line_start": 19,
+      "manuscript_line_end": 19,
+      "linked_source_ids": [
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "json_pointer": "/sections/1/paragraphs/2",
+      "source_value": "The teacher matters here as more than a name in a formative anecdote. There is a difference between being shown how to complete an exercise and being shown why someone might want to spend a life with music. A record recommendation can extend the lesson beyond the room. It offers the student something to pursue independently.",
+      "manuscript_line_start": 21,
+      "manuscript_line_end": 21,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/1/paragraphs/3",
+      "source_value": "That education should stay grounded. Piano lessons supplied technique, and jazz opened habits of listening, while the music still has to earn its force in the record itself. Instrumental experience can supply different things to notice: where a phrase leans, how an accompaniment changes a melody, how much a part can say while staying spare.",
+      "manuscript_line_start": 23,
+      "manuscript_line_end": 23,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/1/paragraphs/4",
+      "source_value": "The young Williamson also had interests outside music. The Muzik profile records his enthusiasm for school sport and cricket. Years later, Ian Roullier’s “Friction & LTJ Bukem: Double Visions,” for DJ Mag [s9], opens with Bukem inviting Friction to join the Fabric cricket team. It is a small, persistent detail of a life beyond the record collection.",
+      "manuscript_line_start": 25,
+      "manuscript_line_end": 25,
+      "linked_source_ids": [
+        "s9"
+      ]
+    },
+    {
+      "json_pointer": "/sections/1/paragraphs/5",
+      "source_value": "Cricket can remain a simpler detail: the person becomes less abstract. He had other pursuits, other sources of concentration and sociability, other ways of enjoying himself.",
+      "manuscript_line_start": 27,
+      "manuscript_line_end": 27,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/1/paragraphs/6",
+      "source_value": "His musical loyalties were expansive too. In FACT’s “Interview: LTJ Bukem” [s8], he described deep loyalty to soul and traced connections among soul, jazz, reggae, hip-hop, house, techno, and drum and bass. He heard relationships where a genre history might impose separate compartments.",
+      "manuscript_line_start": 29,
+      "manuscript_line_end": 29,
+      "linked_source_ids": [
+        "s8"
+      ]
+    },
+    {
+      "json_pointer": "/sections/1/paragraphs/7",
+      "source_value": "Read this way, his identity begins less with allegiance to a category than with recognition across categories. The materials change; a particular pleasure in a groove or a musical exchange remains worth following. The collector finds those relationships. The producer creates another setting in which they can become audible.",
+      "manuscript_line_start": 31,
+      "manuscript_line_end": 31,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/2/paragraphs/0",
+      "source_value": "In “LTJ Bukem and MC Conrad in… Mission Possible” [s2], Conrad described Bukem as determined, sophisticated, and stubborn. It was a working partner’s affectionate, qualified judgement.",
+      "manuscript_line_start": 35,
+      "manuscript_line_end": 35,
+      "linked_source_ids": [
+        "s2"
+      ]
+    },
+    {
+      "json_pointer": "/sections/2/paragraphs/1",
+      "source_value": "That makes it more revealing. Conviction is easy to admire at a distance; collaborators encounter its practical consequences. The same certainty that protects an unusual idea can make compromise difficult. A useful portrait can acknowledge the tension and avoid treating an interview remark as an explanation for every relationship.",
+      "manuscript_line_start": 37,
+      "manuscript_line_end": 37,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/2/paragraphs/2",
+      "source_value": "Bukem offered a different account in Native Instruments’ “TRAKTOR SIGNATURES: LTJ Bukem” [s3]. People sometimes mistook his serious expression while mixing for unhappiness, he said. He was concentrating and enjoying it.",
+      "manuscript_line_start": 39,
+      "manuscript_line_end": 39,
+      "linked_source_ids": [
+        "s3"
+      ]
+    },
+    {
+      "json_pointer": "/sections/2/paragraphs/3",
+      "source_value": "Pleasure can be quiet. Skilled work can absorb the performer so completely that the audience sees concentration and misses satisfaction. The appearance of serenity also says little about a person’s private circumstances.",
+      "manuscript_line_start": 41,
+      "manuscript_line_end": 41,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/2/paragraphs/4",
+      "source_value": "In the 2013 “Friction & LTJ Bukem: Double Visions” interview [s9], Bukem spoke about finding his birth mother as a major personal event around a period when he reduced his emphasis on the label while continuing to DJ. His account leaves the reunion date imprecise and still establishes that personal life influenced his priorities.",
+      "manuscript_line_start": 43,
+      "manuscript_line_end": 43,
+      "linked_source_ids": [
+        "s9"
+      ]
+    },
+    {
+      "json_pointer": "/sections/2/paragraphs/5",
+      "source_value": "The point is that an artist’s life is larger than the task of maintaining an uninterrupted public output. Something can matter profoundly and remain outside the record or promotional story.",
+      "manuscript_line_start": 45,
+      "manuscript_line_end": 45,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/2/paragraphs/6",
+      "source_value": "Asked by FACT about influences outside music in “Interview: LTJ Bukem” [s8], he emphasized love, dependable relationships, and the people around him. He connected a good home life with being able to function outside it.",
+      "manuscript_line_start": 47,
+      "manuscript_line_end": 47,
+      "linked_source_ids": [
+        "s8"
+      ]
+    },
+    {
+      "json_pointer": "/sections/2/paragraphs/7",
+      "source_value": "Those are practical commitments, modest and concrete. They challenge the familiar assumption that meaningful art requires permanent disorder or isolation. Support can sustain demanding work. A studio can be important while still leaving room for the rest of a life.",
+      "manuscript_line_start": 49,
+      "manuscript_line_end": 49,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/3/paragraphs/0",
+      "source_value": "In “Ask the Experts: LTJ Bukem” [s1], Bukem described early productions beginning with an appealing fragment from his record collection: a beat, a synthesizer sound, or a voice. His equipment recollections include Akai samplers and Atari sequencing. The starting point was often attraction to a sound before any formal production checklist.",
+      "manuscript_line_start": 53,
+      "manuscript_line_end": 53,
+      "linked_source_ids": [
+        "s1"
+      ]
+    },
+    {
+      "json_pointer": "/sections/3/paragraphs/1",
+      "source_value": "Following a fascination creates a different pressure from filling a requirement. A track may need a bass part. That practical need leaves the more interesting question unanswered: why one sound becomes indispensable and another remains replaceable. The interesting decision is the recognition that something deserves to stay.",
+      "manuscript_line_start": 55,
+      "manuscript_line_end": 55,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/3/paragraphs/2",
+      "source_value": "A sampled fragment already contains choices made by someone else: a performance, a tone, an emphasis, perhaps an imperfection. The new producer’s contribution lies partly in the relationships built around it. Repetition can turn a passing gesture into a central idea. A different accompaniment can change its emotional weight. A new rhythmic setting can make familiar material behave unexpectedly.",
+      "manuscript_line_start": 57,
+      "manuscript_line_end": 57,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/3/paragraphs/3",
+      "source_value": "Originality here means creating a consequential relationship among ingredients. That view also keeps the source performer in view: transformation leaves the earlier contribution visible.",
+      "manuscript_line_start": 59,
+      "manuscript_line_end": 59,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/3/paragraphs/4",
+      "source_value": "Bukem’s experience of mixing offers a parallel. In Gregory Schaefer’s “LTJ Bukem,” for Ink 19 [s20], he described cutting breaks from older records into house sets. The account presents a musician testing combinations across genres.",
+      "manuscript_line_start": 61,
+      "manuscript_line_end": 61,
+      "linked_source_ids": [
+        "s20"
+      ]
+    },
+    {
+      "json_pointer": "/sections/3/paragraphs/5",
+      "source_value": "The producer’s ear and the DJ’s ear meet at that point. Both ask what one piece of music can make another do. The studio allows that relationship to be developed and fixed; a set places it under different pressures, with less time to reconsider and another record waiting to enter.",
+      "manuscript_line_start": 63,
+      "manuscript_line_end": 63,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/3/paragraphs/6",
+      "source_value": "His account of “Remnants” provides a less idealized view of making a record. In “Ask the Experts: LTJ Bukem” [s1], he remembered Tayla bringing the idea for “Bang the Drums,” their collaboration, and the need for a B-side. He was uncertain about some sources and notably unenthusiastic about “Remnants” in retrospect.",
+      "manuscript_line_start": 65,
+      "manuscript_line_end": 65,
+      "linked_source_ids": [
+        "s1"
+      ]
+    },
+    {
+      "json_pointer": "/sections/3/paragraphs/7",
+      "source_value": "That candour belongs in the portrait. Some finished works arise from practical demands or retain decisions their maker would change later. An audience’s later affection can coexist with the producer’s ambivalence about the record.",
+      "manuscript_line_start": 67,
+      "manuscript_line_end": 67,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/3/paragraphs/8",
+      "source_value": "The strongest production question asks how a musician decides that an idea has enough character to survive repetition, enough flexibility to develop, and enough conviction to release.",
+      "manuscript_line_start": 69,
+      "manuscript_line_end": 69,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/4/paragraphs/0",
+      "source_value": "Chris Familton’s “LTJ Bukem - The Quest for Perfection” [s10] contains a more useful description of Bukem’s taste than a shelf of atmospheric adjectives. Alongside groove and musicality, he wanted roughness beside smoothness.",
+      "manuscript_line_start": 73,
+      "manuscript_line_end": 73,
+      "linked_source_ids": [
+        "s10"
+      ]
+    },
+    {
+      "json_pointer": "/sections/4/paragraphs/1",
+      "source_value": "The phrase points to roughness beside smoothness, which is a more useful description than a shelf of atmospheric adjectives. Beauty can keep some resistance. A sustained texture can be welcoming while the rhythm remains insistent. A musical passage can offer relief while keeping physical weight. The contrast is part of the attraction, a source of friction inside the polish.",
+      "manuscript_line_start": 75,
+      "manuscript_line_end": 75,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/4/paragraphs/2",
+      "source_value": "The Vinyl Factory’s “An introduction to LTJ Bukem in 10 records” [s14] offers concrete critical descriptions. It hears grainy processing in “Music,” a more polished balance of Rhodes, drums, and strings in “Atmospherical Jubilancy,” and rougher rhythmic material meeting luminous passages in “19.5” and “19.5 Reprisal.” Those last two are Bukem-and-Peshay collaborations, so the evidence should stay collaborative.",
+      "manuscript_line_start": 77,
+      "manuscript_line_end": 77,
+      "linked_source_ids": [
+        "s14"
+      ]
+    },
+    {
+      "json_pointer": "/sections/4/paragraphs/3",
+      "source_value": "These are published critical readings, useful as criticism while instrument identifications remain with their sources. Taken together, they suggest a way to understand the work as different kinds of musical activity held in relation.",
+      "manuscript_line_start": 79,
+      "manuscript_line_end": 79,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/4/paragraphs/4",
+      "source_value": "Ben Cardew makes a related distinction in “How LTJ Bukem’s ‘Logical Progression’ expressed his unique vision for drum & bass,” for DJ Mag [s17]. He contrasts the direct rhythmic snap of Bukem’s tracks with Photek’s more radically reconstructed breaks on the compilation. Cohesion can survive different decisions from each producer.",
+      "manuscript_line_start": 81,
+      "manuscript_line_end": 81,
+      "linked_source_ids": [
+        "s17"
+      ]
+    },
+    {
+      "json_pointer": "/sections/4/paragraphs/5",
+      "source_value": "That distinction matters to any account of skill. Complexity and effectiveness differ. A plainly stated rhythm can be authoritative; a densely edited one can be searching or unstable. The meaningful question is what the percussion gives the surrounding material, beyond the number of operations that might have produced it.",
+      "manuscript_line_start": 83,
+      "manuscript_line_end": 83,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/4/paragraphs/6",
+      "source_value": "These accounts suggest that contrast offers a better route into Bukem’s aesthetic than softness alone. Does the rhythm insist while the harmony holds back? Does a melodic return feel different because the accompaniment has changed? Does a brief sound give definition to a much longer texture? These are listening questions, separate from measured conclusions about his catalogue.",
+      "manuscript_line_start": 85,
+      "manuscript_line_end": 85,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/4/paragraphs/7",
+      "source_value": "Bukem himself resisted a narrow classification. In “Friction & LTJ Bukem: Double Visions” [s9], he pointed to ragga, technical, and darker elements in his selections. Asked by TNT to describe his music in “Interview with LTJ Bukem” [s4], he included groove and sass.",
+      "manuscript_line_start": 87,
+      "manuscript_line_end": 87,
+      "linked_source_ids": [
+        "s9",
+        "s4"
+      ]
+    },
+    {
+      "json_pointer": "/sections/4/paragraphs/8",
+      "source_value": "Those words restore movement, humour, and physical pleasure to a portrait too easily suspended among clouds. A convincing interpretation should leave room for the bite. An imitation that smooths it away may become less faithful as it becomes more pleasant.",
+      "manuscript_line_start": 89,
+      "manuscript_line_end": 89,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/5/paragraphs/0",
+      "source_value": "The collaborators on Journey Inwards are central to understanding its production. The public MusicBrainz record for the UK two-CD release [s12] lists contributions including Gay-Yee Westerhoff’s cello, Andy Ross’s flute and saxophone, Andrew Hammill’s bass, and Chris Campbell’s guitar. It also distinguishes mixing work by Simon Vispi, Oliver Lomax, and Dan Duncan. These are community-maintained credit transcriptions; original studio logs sit outside this essay’s evidence.",
+      "manuscript_line_start": 93,
+      "manuscript_line_end": 93,
+      "linked_source_ids": [
+        "s12"
+      ]
+    },
+    {
+      "json_pointer": "/sections/5/paragraphs/1",
+      "source_value": "The Daniel Williamson artist and work records at MusicBrainz [s13] list Kaidi Tatham alongside Williamson on “Undress Your Mind,” Elliot on “Sunrain,” and D. Pottinger, associated with DRS, on “Constellation.” The last is catalog-level metadata for a separate work, with no original sleeve scan examined for this essay.",
+      "manuscript_line_start": 95,
+      "manuscript_line_end": 95,
+      "linked_source_ids": [
+        "s13"
+      ]
+    },
+    {
+      "json_pointer": "/sections/5/paragraphs/2",
+      "source_value": "These distinctions make the producer’s role more interesting. A personal work can be personal through the selection of a collaborator, the part of a performance that is retained, the balance among contributions, and the judgement that the whole has found its form.",
+      "manuscript_line_start": 97,
+      "manuscript_line_end": 97,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/5/paragraphs/3",
+      "source_value": "A strong identity at album level leaves the players visible. A credited instrumentalist brings decisions within the performance. An engineer’s contribution should remain legible even when the result coheres with the producer’s taste. To understand authorship properly is to see how the parts cooperate while their different kinds of work remain distinct.",
+      "manuscript_line_start": 99,
+      "manuscript_line_end": 99,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/5/paragraphs/4",
+      "source_value": "The Muzik profile provides contemporary testimony about Bukem’s effect on other producers. In “Classic LTJ Bukem Interview,” page 88 [s7], PFM’s Mike Bolton recalled wanting to make records Bukem would play and valued his encouragement. Tayla described learning from their collaboration and praised Bukem’s judgement about the mix.",
+      "manuscript_line_start": 101,
+      "manuscript_line_end": 101,
+      "linked_source_ids": [
+        "s7"
+      ]
+    },
+    {
+      "json_pointer": "/sections/5/paragraphs/5",
+      "source_value": "Jim Baker offers another perspective in Harry Sword’s “Chasing Perfectionism: An Interview With Source Direct,” for The Quietus [s19]. He remembered travelling to hear Bukem play Source Direct’s music. Hearing it through a proper system made him want to return home and make the next record.",
+      "manuscript_line_start": 103,
+      "manuscript_line_end": 103,
+      "linked_source_ids": [
+        "s19"
+      ]
+    },
+    {
+      "json_pointer": "/sections/5/paragraphs/6",
+      "source_value": "Encouragement in that account is more than a compliment. It has an audible consequence. A private experiment enters a room and becomes something its maker can experience from outside. The feedback passes among producer, DJ, sound system, and audience; it extends beyond professional endorsements.",
+      "manuscript_line_start": 105,
+      "manuscript_line_end": 105,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/5/paragraphs/7",
+      "source_value": "Bukem’s own resistance to the solitary-pioneer story is explicit in Ink 19’s “LTJ Bukem” [s20]. He credited a combination of people and identified the business contribution of his Good Looking partner Tony. The interview’s enthusiasm for a singular originator was stronger than his willingness to claim the role.",
+      "manuscript_line_start": 107,
+      "manuscript_line_end": 107,
+      "linked_source_ids": [
+        "s20"
+      ]
+    },
+    {
+      "json_pointer": "/sections/5/paragraphs/8",
+      "source_value": "This is where the familiar label of visionary becomes insufficient. Taste has to be exercised through practical relationships: recognizing a contribution, helping it reach listeners, and allowing another artist’s differences to remain useful. The achievement becomes more specific when those other people become visible.",
+      "manuscript_line_start": 109,
+      "manuscript_line_end": 109,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/6/paragraphs/0",
+      "source_value": "MC Conrad is central to this portrait because his contribution changes the performance as music. A voice can establish another musical line: answering an accent, directing attention, bringing a phrase forward, or leaving it alone.",
+      "manuscript_line_start": 113,
+      "manuscript_line_end": 113,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/6/paragraphs/1",
+      "source_value": "In Gareth Price’s “New horizons,” for the Taipei Times [s11], Conrad welcomed a comparison between his rhymes and jazz drumming. He explained that drummers’ syncopation informed his phrasing. He also described personal experience, message, and wordplay as elements of his writing. These were Conrad’s statements about his own craft, given in a separate interview from Bukem’s.",
+      "manuscript_line_start": 115,
+      "manuscript_line_end": 115,
+      "linked_source_ids": [
+        "s11"
+      ]
+    },
+    {
+      "json_pointer": "/sections/6/paragraphs/2",
+      "source_value": "That explanation puts musical space at the centre of the partnership. A vocalist can leave intervals open and remain present. A DJ can leave a transition open for an answer. Restraint can express close attention to what another musician is doing.",
+      "manuscript_line_start": 117,
+      "manuscript_line_end": 117,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/6/paragraphs/3",
+      "source_value": "In “LTJ Bukem and MC Conrad in… Mission Possible” [s2], Conrad emphasized leaving musical space, while Bukem described being understood by him. Compatibility left their separate personalities intact.",
+      "manuscript_line_start": 119,
+      "manuscript_line_end": 119,
+      "linked_source_ids": [
+        "s2"
+      ]
+    },
+    {
+      "json_pointer": "/sections/6/paragraphs/4",
+      "source_value": "This is why a generic vocal replacement would fail to describe the partnership. It might approximate a texture while missing the decisions that made the texture matter. When to enter, what to emphasize, how long to continue, and when to stop are part of musicianship.",
+      "manuscript_line_start": 121,
+      "manuscript_line_end": 121,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/6/paragraphs/5",
+      "source_value": "Marcus Barnes’s Mixmag obituary [s21] reported Conrad’s death in April 2024, aged 52, and treated the Bukem partnership as central to his public legacy. The musical point here remains bounded: Bukem and Conrad heard, answered, and made room for one another in performance.",
+      "manuscript_line_start": 123,
+      "manuscript_line_end": 123,
+      "linked_source_ids": [
+        "s21"
+      ]
+    },
+    {
+      "json_pointer": "/sections/6/paragraphs/6",
+      "source_value": "That remembered partnership is intimate at the level this essay can support. It describes recognition between people at work: each hearing something and knowing the other has heard it too.",
+      "manuscript_line_start": 125,
+      "manuscript_line_end": 125,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/6/paragraphs/7",
+      "source_value": "Conrad deserves to remain an artist in that account. His value exceeds what he contributed to Bukem. Letting both musicians remain audible produces a fuller portrait of each.",
+      "manuscript_line_start": 127,
+      "manuscript_line_end": 127,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/7/paragraphs/0",
+      "source_value": "Journey Inwards received sharply different readings. Prasad Bidaye’s review for Exclaim! [s15] welcomed its warmth, instrumental colour and continuing danceability. Paul Cooper’s Pitchfork review [s16] heard a conservative retreat into polished jazz-fusion. Each critic brings a particular account of what the music should attempt. Their disagreement gives the reader more than a consensus assembled after the fact.",
+      "manuscript_line_start": 131,
+      "manuscript_line_end": 131,
+      "linked_source_ids": [
+        "s15",
+        "s16"
+      ]
+    },
+    {
+      "json_pointer": "/sections/7/paragraphs/1",
+      "source_value": "A coherent taste can become very good at protecting itself. The artist learns what belongs, then risks excluding anything that might disturb the identity. Refinement can sharpen an idea or leave too little room for surprise. The critical question concerns the consequences of a choice within the piece: whether an instrumental colour changes the relationship among the parts, how a repeated passage develops, and where a familiar texture gains a new weight.",
+      "manuscript_line_start": 133,
+      "manuscript_line_end": 133,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/7/paragraphs/2",
+      "source_value": "Familiarity can make small changes easier to hear. A listener who knows the musical setting may catch a brief interruption that would disappear inside a more complicated arrangement. That leaves room for pleasure and for disagreement about how much the piece achieves. A biographical essay should allow an artist’s decisions to be examined with the same attention that makes them attractive.",
+      "manuscript_line_start": 135,
+      "manuscript_line_end": 135,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/7/paragraphs/3",
+      "source_value": "Cardew’s Logical Progression retrospective [s17] is also critical of the term intelligent drum and bass. The label gives a stylistic distinction the weight of an intellectual ranking. That vocabulary can make the skill in another approach harder to hear.",
+      "manuscript_line_start": 137,
+      "manuscript_line_end": 137,
+      "linked_source_ids": [
+        "s17"
+      ]
+    },
+    {
+      "json_pointer": "/sections/7/paragraphs/4",
+      "source_value": "Bukem’s stated position in Mission Possible [s2] concerns independence and reaching a larger audience. An artist can be demanding about what he presents while giving a newcomer somewhere to begin. Strong taste establishes preferences; the work of sharing music involves finding a route through them for someone else.",
+      "manuscript_line_start": 139,
+      "manuscript_line_end": 139,
+      "linked_source_ids": [
+        "s2"
+      ]
+    },
+    {
+      "json_pointer": "/sections/8/paragraphs/0",
+      "source_value": "Bukem’s public account of performance often concerns practical conditions. In the 2018 TRAKTOR SIGNATURES interview [s3], he discussed monitor placement, maintained turntables and soundchecks. He described timecode vinyl, manual mixing and loops that let him extend passages or choose when to allow a breakdown. These details describe his setup at that interview’s date.",
+      "manuscript_line_start": 143,
+      "manuscript_line_end": 143,
+      "linked_source_ids": [
+        "s3"
+      ]
+    },
+    {
+      "json_pointer": "/sections/8/paragraphs/1",
+      "source_value": "The technique gives the performer choices. A released arrangement proposes a way for a piece to unfold; a particular set may call for another emphasis. The DJ judges what a passage can contribute beside something else and acts while the relationship is still developing. Equipment matters through the control it gives him over that decision.",
+      "manuscript_line_start": 145,
+      "manuscript_line_end": 145,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/8/paragraphs/2",
+      "source_value": "His openness to accessible production technology appears in New horizons [s11], where he welcomed tools that let someone with an idea make music. He could value the physical demands of his own method and still appreciate a different route into production. The benefit lay in a person being able to try an idea and hear what happened.",
+      "manuscript_line_start": 147,
+      "manuscript_line_end": 147,
+      "linked_source_ids": [
+        "s11"
+      ]
+    },
+    {
+      "json_pointer": "/sections/8/paragraphs/3",
+      "source_value": "Standards of craft can make that process more useful when they help a newcomer understand a result. They lose value when the difficulty of entry starts to stand in for artistic worth. The questions remain musical: what the performer hears, what a technique allows, and which decisions become possible through practice.",
+      "manuscript_line_start": 149,
+      "manuscript_line_end": 149,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/8/paragraphs/4",
+      "source_value": "There is a similar openness in his description of an audience. In FACT’s interview [s8], he remembered a festival where some people danced intensely while others listened with their eyes closed. Several kinds of attention could occupy the same space. His account leaves the listener room to receive the music in a way that fits the moment.",
+      "manuscript_line_start": 151,
+      "manuscript_line_end": 151,
+      "linked_source_ids": [
+        "s8"
+      ]
+    },
+    {
+      "json_pointer": "/sections/9/paragraphs/0",
+      "source_value": "The person doing this work also gets tired. In TRAKTOR SIGNATURES [s3], Bukem described the exhaustion of travel and lost sleep while retaining his love of DJing. In New horizons [s11], he explained a break from the label after what he described as thirteen years of seven-day weeks. Both accounts put a practical limit beside artistic commitment.",
+      "manuscript_line_start": 155,
+      "manuscript_line_end": 155,
+      "linked_source_ids": [
+        "s3",
+        "s11"
+      ]
+    },
+    {
+      "json_pointer": "/sections/9/paragraphs/1",
+      "source_value": "Enjoying an activity leaves its demands intact. Rest gives the musician a chance to recover the attention that the work requires. A career built around taste depends on continuing to have experiences that make choosing worthwhile, including time with nothing to deliver to an audience.",
+      "manuscript_line_start": 157,
+      "manuscript_line_end": 157,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/9/paragraphs/2",
+      "source_value": "In Familton’s The Quest for Perfection [s10], the continuing reward was sharing favourite music through a loud sound system and watching people come together. He spoke about the pleasures and imperfections of mixing. The effort remained attached to an experience he wanted to have again.",
+      "manuscript_line_start": 159,
+      "manuscript_line_end": 159,
+      "linked_source_ids": [
+        "s10"
+      ]
+    },
+    {
+      "json_pointer": "/sections/9/paragraphs/3",
+      "source_value": "Influence gives that pleasure another life. In Dave Jenkins’s interview with Technimatic for UKF [s18], Komatic remembered hearing Horizons as an unusually deep connection with music. It made him want to learn more and become involved. His recollection describes the beginning of an appetite that could lead to work of his own.",
+      "manuscript_line_start": 161,
+      "manuscript_line_end": 161,
+      "linked_source_ids": [
+        "s18"
+      ]
+    },
+    {
+      "json_pointer": "/sections/9/paragraphs/4",
+      "source_value": "There is a relationship between that response and the teacher who once took Williamson to hear Chick Corea. Someone makes a musical possibility available, and the listener finds a reason to pursue it. The later work can differ considerably from the record that supplied the invitation. What continues is the willingness to listen for something worth developing.",
+      "manuscript_line_start": 163,
+      "manuscript_line_end": 163,
+      "linked_source_ids": []
+    },
+    {
+      "json_pointer": "/sections/9/paragraphs/5",
+      "source_value": "Bukem’s atmosphere emerges from choices made under ordinary conditions: time spent with records, an idea tried in a crowded room, a collaborator’s contribution, the practical demands of a performance. Those conditions leave the artist open to being moved by something made by someone else. The next decision begins there.",
+      "manuscript_line_start": 165,
+      "manuscript_line_end": 165,
+      "linked_source_ids": []
+    }
+  ]
+}
