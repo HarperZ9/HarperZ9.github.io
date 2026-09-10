@@ -32,6 +32,16 @@
       "idempotency_key": "eebfa70b9a91287c3badbaea90105c24fc5efdafe97ab2e9db6736e199062e48"
     },
     {
+      "id": "the-sandbox-was-never-just-a-box",
+      "route": "the-sandbox-was-never-just-a-box.html",
+      "category": "agent-evaluation",
+      "form": "editorial analysis",
+      "published_at": "2026-09-10",
+      "updated_at": "2026-09-10",
+      "record_sha256": "323436ce674c2250d34b69b98bfaf599b57d52103f893c48fd6552836e2f4654",
+      "idempotency_key": "366f20f6fb890001d7e304ca662fcb589cf35b6fa6072075fcd52d5f4b4f48f1"
+    },
+    {
       "id": "the-second-hearing",
       "route": "the-second-hearing.html",
       "category": "music-listening",

@@ -13,6 +13,12 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "img/og/the-sandbox-was-never-just-a-box.png",
+    "writing/the-sandbox-was-never-just-a-box/source-map.json",
+    "writing/the-sandbox-was-never-just-a-box/essay.md",
+    "publications/data/records/the-sandbox-was-never-just-a-box.json",
+    "the-sandbox-was-never-just-a-box.html",
+    "assets/index-DPnmw9p_.js",
     "img/og/ltj-bukem-the-man-behind-the-atmosphere.png",
     "writing/ltj-bukem-the-man-behind-the-atmosphere/source-map.json",
     "writing/ltj-bukem-the-man-behind-the-atmosphere/essay.md",
@@ -266,7 +272,7 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "b461a31026315dbc384486148490bc4119bacdbc2fa5ab8563249238ac31a211"
+REVIEWED_RELEASE_SHA256 = "2cf376332f0eb688aaa8aabc9a51fa80e607e44ff7f4a7746fe27de9ce22b87b"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -403,7 +409,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_060_final_gather_pre_review_js = "index-CYqKao4X.js"
     previous_060_final_gather_fixture_js = "index-CpC5RhmM.js"
     previous_gather_171_js = "index-AYA0gyN2.js"
-    current_js = "index-b2DeyYcU.js"
+    current_js = "index-DPnmw9p_.js"
     current_css = "index-B2kgPYlE.css"
     previous_home_js = "index-CS_jYuhh.js"
     previous_flywheel_js = "index-BIYnDBdw.js"
