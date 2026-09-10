@@ -623,5 +623,12 @@ window.CARD_DATA = {
     "pipeline": "TASTE / COLLABORATION / THE PRACTICE OF LISTENING",
     "word": "BUKEM",
     "glyph": "wave"
+  },
+  "the-sandbox-was-never-just-a-box": {
+    "role": "AGENT EVALUATION / EDITORIAL",
+    "headline": "The Sandbox Was Never Just a Box",
+    "pipeline": "SHARED INFRASTRUCTURE / CONTAINMENT / INDEPENDENT OBSERVATION",
+    "word": "BOUNDARY",
+    "glyph": "seal"
   }
 };

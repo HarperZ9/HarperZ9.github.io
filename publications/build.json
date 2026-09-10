@@ -1,17 +1,18 @@
 {
   "schema_version": 1,
-  "built_at": "2026-09-09T00:00:00Z",
+  "built_at": "2026-09-10T00:00:00Z",
   "inputs": {
     "publications/data/records/availability-is-not-reach.json": "b690017ccc23b3de58f1cb8fbb6b5876bc16e960088252566ae9e3cbb078443f",
     "publications/data/records/growth-needs-a-before.json": "b03b39c3cb38628b057ce8d91c9e04b7567b764d9d69c8f7872d24727658d62b",
     "publications/data/records/ltj-bukem-the-man-behind-the-atmosphere.json": "c0a6968227cac3a48d9459ad6da7b294e631b29f08123b360890ccf2a5f33e63",
+    "publications/data/records/the-sandbox-was-never-just-a-box.json": "323436ce674c2250d34b69b98bfaf599b57d52103f893c48fd6552836e2f4654",
     "publications/data/records/the-second-hearing.json": "9b807ef8ee7a3e6e2082d86f0a4420b3e72cce2b0e564cac6fb58a70fc5274da",
     "publications/data/records/what-the-label-changes.json": "b5d892768242fb95b6333c3c2b870e0b8ce765a48139c9d3330845be834eaa50"
   },
   "outputs": {
     "availability-is-not-reach.html": "9a75048ee2b08a574ccb8c182ba99ad50f2c1b05d16f5108206ceaf03eab4b35",
-    "feed.json": "4a402758285b881cefeaec80294df1a350badde62ccf66e1b33cadf223b468d3",
-    "feed.xml": "b52284226e155060228de6d76ea561b11015678b7ec4a5b38a36c891bf125723",
+    "feed.json": "ef8d163a9dc93deb98015fc2653ac73e3ea34f1f4f8ceaaacfcb3659395e3869",
+    "feed.xml": "eea75613180b47735465e0e4621e4b8cd9ccba3fff5c5615663c83b3f6a44566",
     "figures/availability-is-not-reach.html": "8194fe329eb525955fd7c2704a56244c29bf1fe1b9bc5627eb77c84596d40d4e",
     "figures/availability-is-not-reach.json": "d3a5d138c067e2cc317e116c39cee1aed5695a15d680d7753833b6804fdc6ae3",
     "figures/availability-is-not-reach.svg": "d0548d9fe8c6abe20339b5d7ba068beb59263243dd56032a76d4e865d224229b",
@@ -26,11 +27,12 @@
     "figures/the-second-hearing-evidence-map.svg": "6a0adcf9e06928a65ab83eb58896426dca11d54d92f8bfea74ebbff0eb1fe10f",
     "growth-needs-a-before.html": "e8fd34a17a621491314692666edb7551c908a836a2940d51015e14780028a993",
     "ltj-bukem-the-man-behind-the-atmosphere.html": "5e8501d9f823fce8d22f467ada4c91284abbc69ea7a7890b1339df2aebac83e0",
-    "publications.html": "22b079de231f8140d93bc23d4a7c200034e0fc13f5250d7431fbcc298d9f60d2",
-    "publications/data/index.json": "16bd358faf3ded84f3a702ededdeccc47883d4119d129401cb0025d03fdda5fa",
-    "sitemap.xml": "cee03b815790f19bc18b4df02fc1d310038e5f5b17ba35efe98f198be798d54f",
+    "publications.html": "63cf757ef30693a9d5b1cc1f20e6d9a728f3bdbeeaa07b9d90364fc61c2542ca",
+    "publications/data/index.json": "6f4874a9294df949e241891f816bee7df7f64f9b58f8e286eadf8c5ea5d84bbd",
+    "sitemap.xml": "5c89f346d39aedd4cab6c91c101c48f7430e0171a0391701f0e16e89afee5cda",
+    "the-sandbox-was-never-just-a-box.html": "f2df5921961f240beccc780fb4dfe79e40dde2ed41604fbb7bf3e7b19b2f084f",
     "the-second-hearing.html": "52ddf32a48ae7a2af7e923565117e14625c3e72da1bfc6d42d2ad8878db5d2e3",
     "what-the-label-changes.html": "7d2dfa7f0b294b68d86e64eb3b48c1795fdfbbf099f57011d6e9013d7b18aa18",
-    "writing.html": "75545b30be2a9b700472ebbde67057fea94d96ff4cbbc473b19b346d205f03cd"
+    "writing.html": "3021d6011d8afc60854b3d33310106df239d1b17e5303cc195f245b033adf57b"
   }
 }
