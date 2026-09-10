@@ -164,7 +164,7 @@ def _build_pdf(path: Path, blocks: tuple[Block, ...]) -> None:
 
 
 def _repack_docx(path: Path, fixed_datetime: datetime) -> None:
-    with tempfile.TemporaryDirectory() as temp_dir:
+    with tempfile.TemporaryDirectory(dir=path.parent) as temp_dir:
         temporary = Path(temp_dir) / path.name
         os.replace(path, temporary)
         with zipfile.ZipFile(temporary, "r") as source, zipfile.ZipFile(

@@ -297,7 +297,7 @@ def test_future_dated_archives_use_the_shared_site_shell_and_nested_paths() -> N
 
     assert '<body class="inner-clean frame-compact frontier-briefing">' in archive
     assert f'href="../frontier-safety-site.css?v={FRONTIER_CSS_REVISION}"' in archive
-    assert 'src="../../system/nav.js?v=20260909-font-marketplace-port"' in archive
+    assert 'src="../../system/nav.js?v=20260909-pillar-navigation"' in archive
     assert 'href="../data/archive/2026-08-26.json"' in archive
     assert 'href="../../research.html"' in archive
     assert 'class="docnav"' not in archive
