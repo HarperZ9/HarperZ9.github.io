@@ -15,7 +15,10 @@ ROOT = Path(__file__).resolve().parents[1]
 ESSAYS: dict[str, tuple[str, tuple[Path, ...]]] = {
     "a-witness-should-not-become-a-ruler.html": (
         "essay",
-        (Path("writing/a-witness-should-not-become-a-ruler/01.md"),),
+        tuple(
+            Path("writing/a-witness-should-not-become-a-ruler") / f"{index:02}.md"
+            for index in range(1, 4)
+        ),
     ),
     "models-propose-oracles-dispose.html": (
         "essay",
@@ -256,8 +259,19 @@ def build(root: Path = ROOT) -> dict[str, str]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=ROOT)
+    parser.add_argument("--page", choices=tuple(ESSAYS), help="Render only this page")
     args = parser.parse_args()
-    print(json.dumps(build(args.root.resolve()), indent=2, sort_keys=True))
+    root = args.root.resolve()
+    if args.page:
+        mode, parts = ESSAYS[args.page]
+        page = root / args.page
+        content = render_page(page, parts, mode)
+        if page.read_bytes() != content:
+            page.write_bytes(content)
+        outputs = {args.page: hashlib.sha256(content).hexdigest()}
+    else:
+        outputs = build(root)
+    print(json.dumps(outputs, indent=2, sort_keys=True))
     return 0
 
 

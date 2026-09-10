@@ -1,0 +1,1356 @@
+{
+  "schema": "essay-public-tool-source-map-v1",
+  "source_url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/367869e67229addc2470b563d13990c9a6cdc855/overview.html",
+  "raw_source_sha256": "751b76258ee40c0f81d7ca3ed72d4bc8253240881ec1945cfe93ea925387ec95",
+  "scope": "35 public product records at the pinned site source. These are published descriptions, not independent runtime validation. Adjacent prose links have their own stated limitations.",
+  "records": [
+    {
+      "id": "flywheel",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 8596,
+            "end": 8823,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Flywheel runs an AI task with the local or hosted model and tools you choose. It records the run, and optional sealed tool-call receipts can be inspected and rechecked offline. The repository also includes a native desktop app."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 9530,
+            "end": 9633,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Receipts establish witnessed actions and checks, not general model correctness."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 9369,
+            "end": 9497,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "shipped · stable Python engine v0.6.1; previous unsigned Windows desktop v0.6.0; clean-machine and mobile acceptance not claimed"
+        }
+      }
+    },
+    {
+      "id": "forum",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 9946,
+            "end": 10357,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Forum is a zero-dependency Python orchestration engine for teams of AI agents. It turns a request into dependent tasks, runs independent tasks in parallel through local commands or model APIs, pauses for human approval, resumes interrupted runs, and records a replayable ledger. The standalone route-preflight skill helps a host inspect routing, context pressure, and runtime readiness before model work starts."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 10946,
+            "end": 11077,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> A valid ledger proves recorded integrity and replayability, not that model output is substantively correct."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 10841,
+            "end": 10913,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "shipped · stable engine v1.13.0; standalone route-preflight skill v0.1.0"
+        }
+      }
+    },
+    {
+      "id": "relay",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 11414,
+            "end": 11630,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Relay runs a permission-gated coding agent across local models, subscription CLIs, APIs, gateways, and cloud endpoints, with failover, acceptance checks, resumable sessions, MCP access, and a hash-chained trajectory."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 12211,
+            "end": 12283,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> The command denylist is not a security boundary."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 12114,
+            "end": 12178,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · GitHub release v0.2.0 verified; no PyPI release claimed"
+        }
+      }
+    },
+    {
+      "id": "mneme",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 12608,
+            "end": 12978,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Mneme is a zero-dependency SQLite memory store with CLI and MCP access for agent conversations and extracted facts. It stores session turns or imported source items, answers retrieval queries with deterministic BM25, vector, and recency ranking, and returns provenance, recall receipts, drift verdicts, replayable history views, and audited update or forgetting records."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 13541,
+            "end": 13646,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Source recheck remains Mneme-owned rather than independently re-read by Crucible."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 13453,
+            "end": 13508,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · GitHub release v0.3.0; no PyPI release claimed"
+        }
+      }
+    },
+    {
+      "id": "canon",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 13973,
+            "end": 14287,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Canon turns explicit local memory records and typed atoms into provider-neutral continuity capsules for Codex, Claude Code, and other agent hosts. It previews target readiness, exports Canon Markdown or capsule JSON, and rewrites only declared local instruction-file regions when a caller chooses an owned surface."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 14860,
+            "end": 14956,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> The v0.1.0 distribution is GitHub-only here; no PyPI release is claimed."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 14763,
+            "end": 14827,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · GitHub release v0.1.0 verified; no PyPI release claimed"
+        }
+      }
+    },
+    {
+      "id": "bulletin",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 15288,
+            "end": 15572,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Bulletin is a public message board that AI agents read and write over HTTP or MCP. A poster is identified by a signing key, posts and attachments are served as untrusted input, and inbox acknowledgements let a reader report the exact page it handled without advancing during the read."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 16153,
+            "end": 16293,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> The board marks every post untrusted and leaves the judgment to the reader. It claims no prompt-injection detection."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 16059,
+            "end": 16120,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · GitHub release v0.4.0; deployed board contract 0.4.0"
+        }
+      }
+    },
+    {
+      "id": "service-desk-incident-env",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 17084,
+            "end": 17272,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Run synthetic incident workflows and review recorded claims, recomputed task outcomes, and contradictions between recorded authorization, responses and mutations in an offline HTML report."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 18045,
+            "end": 18201,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Requires a separately installed compatible Flywheel engine (&gt;=0.6.1,&lt;0.7); this is not a desktop update or a PyPI publication."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 17894,
+            "end": 18012,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "shipped · GitHub add-on 0.2.0 and offline report examples; requires Flywheel engine 0.6.1; no PyPI publication claimed"
+        }
+      }
+    },
+    {
+      "id": "crucible",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 18526,
+            "end": 18762,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Crucible is a Python claim-testing engine. It breaks a thesis into claims with stated failure conditions, measures them against supplied evidence or checks, and returns MATCH, DRIFT, or UNVERIFIABLE with a record that can be recomputed."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 19259,
+            "end": 19375,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Verdict quality cannot exceed the supplied substrate, measurement, tolerance, and criterion."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 19203,
+            "end": 19226,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "shipped · stable v1.2.0"
+        }
+      }
+    },
+    {
+      "id": "emet",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 19691,
+            "end": 19943,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "EMET verifies whether bytes reaching a model, reviewer, or pipeline still match their claimed source. It anchors and compares content, neutralizes embedded authority, audits drift, and mints portable closed-verdict receipts across four implementations."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 20432,
+            "end": 20558,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> The witness reports byte agreement, drift, or inability to verify; it does not judge semantic quality."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 20376,
+            "end": 20399,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "shipped · stable v1.2.0"
+        }
+      }
+    },
+    {
+      "id": "model-provenance-validator",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 20954,
+            "end": 21243,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Model Provenance Validator is a Python CLI that checks JSON records linking a model or release claim to its sources, retrieval dates, and publishable status. It redacts credential-like values from its output and can emit a Proof Surface packet, but it does not verify the underlying claim."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 21791,
+            "end": 21942,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> The validator does not fetch sources, decide underlying truth, prove model safety, certify provenance, or replace human review."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 21736,
+            "end": 21758,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "shipped · alpha v0.1.1"
+        }
+      }
+    },
+    {
+      "id": "repo-proof-index",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 22308,
+            "end": 22583,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Repo Proof Index is a Python CLI that scans proof packets, receipts, and contracts and builds a reviewer-facing index of each artifact's type, status, evidence summary, and source path. It validates known packet formats but does not decide whether the evidence is sufficient."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 23111,
+            "end": 23257,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> The index does not decide whether evidence is sufficient, validate arbitrary schemas, or read referenced private payloads."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 23056,
+            "end": 23078,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "shipped · alpha v0.1.1"
+        }
+      }
+    },
+    {
+      "id": "proof-surface",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 23964,
+            "end": 24286,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Proof Surface is a zero-dependency Python library and telos-proof CLI that validates structured AI workflow, authorization, delegation, work, and witness records, builds evidence packets across eleven domains, and returns verdicts or advisory allow, deny, or needs-human decisions without authorizing or executing actions."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 24827,
+            "end": 24945,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Proof Surface recommends authorization decisions; the surrounding system performs enforcement."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 24754,
+            "end": 24794,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · active source 0.2.0; no release"
+        }
+      }
+    },
+    {
+      "id": "phantom",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 25264,
+            "end": 25500,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Phantom helps you inspect and, when authorized, change the hardware identifiers a computer exposes. It works on owned or expressly authorized Windows and Linux systems, saves a backup before changes, and can restore the original values."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 25995,
+            "end": 26127,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Phantom covers Layer 2 identity surfaces; kernel and firmware layers are modeled but not shipped end to end."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 25939,
+            "end": 25962,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "shipped · stable v1.1.0"
+        }
+      }
+    },
+    {
+      "id": "behavior-transform",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 26490,
+            "end": 26877,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "behavior-transform.io is a local Python wrapper and hook layer for file reads and writes, subprocesses, HTTP fetches, operator input, and MCP traffic. It accepts an I/O request plus an operations or research mode and local text rules, then passes through or transforms the content and returns the requested result with hashes, substitution counts, return codes, or local audit artifacts."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 27455,
+            "end": 27543,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> No tagged release or publicly verified entry command is claimed."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 27374,
+            "end": 27422,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · active public source; no tagged release"
+        }
+      }
+    },
+    {
+      "id": "accountable-surface",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 27899,
+            "end": 28275,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Accountable Surface lets an AI agent take only the file, command, web, or browser action a person has approved. It checks the request and authorization, blocks or pauses when needed, verifies the outcome, rolls back reversible failures, and records decisions and outcomes in a journal. Persisted journals are hash-chained so later edits, deletions, or reordering are detected."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 28828,
+            "end": 28898,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> The model cannot supply its own authorization."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 28755,
+            "end": 28795,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · active source 0.1.0; no release"
+        }
+      }
+    },
+    {
+      "id": "public-surface-sweeper",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 29267,
+            "end": 29601,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Public Surface Sweeper is a Python CLI that checks a repository or local portfolio before publication for missing public files, unclear README handoff material, credential-like strings, release metadata, proof-packet readiness, and workspace delivery drift. It is a release-hygiene check, not a full security scanner or certification."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 30157,
+            "end": 30329,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> This is not an exploit tester, dependency vulnerability scanner, credential validator, compliance certification, or replacement for security review."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 30089,
+            "end": 30124,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "shipped · v0.1.3 on GitHub and PyPI"
+        }
+      }
+    },
+    {
+      "id": "secret-redact-io",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 30691,
+            "end": 30824,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Secret Redact IO is a Python helper library that redacts file, fetch, write, and subprocess output while emitting hash-only receipts."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 31354,
+            "end": 31448,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> The package does not include credentials or environment configuration."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 31298,
+            "end": 31321,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "shipped · stable v0.1.0"
+        }
+      }
+    },
+    {
+      "id": "telos",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 32159,
+            "end": 32449,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Telos is a zero-dependency local workbench for creating, simulating, and replaying AI work. Its CLI and MCP servers expose workstation checks, creative simulations, research proofs, model and learning experiments, and browser or Windows automation, with a re-checkable receipt for each run."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 32996,
+            "end": 33050,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Pre-1.0 interfaces may change."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 32916,
+            "end": 32963,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · active source 0.2.0; latest tag v0.1.0"
+        }
+      }
+    },
+    {
+      "id": "index",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 33369,
+            "end": 33857,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Index maps repositories and multi-repo workspaces so teams and agents can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and durable workspace inventories with file-and-line evidence. Version 2.12.0 adds background router jobs for large workspaces, status/result retrieval for progress and recovery, and release-verified GitHub and PyPI distribution records."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 34528,
+            "end": 34633,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Dynamic imports and unsupported structures can remain incomplete or unverifiable."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 34385,
+            "end": 34495,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "shipped · GitHub and PyPI release 2.12.0 verified; PyPI wheel container hash differs while payload bytes match"
+        }
+      }
+    },
+    {
+      "id": "buildlang",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 34965,
+            "end": 35286,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "BuildLang is a systems programming language and compiler that makes programs declare what they are allowed to touch. It checks those permissions and memory rules before producing native code through C. Experimental shader output, two-way C integration, a CLI, editor support, and re-checkable build receipts are included."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 35843,
+            "end": 35895,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> C is the production backend."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 35758,
+            "end": 35810,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "shipped · stable v1.2.0; non-C backends experimental"
+        }
+      }
+    },
+    {
+      "id": "plexus",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 36238,
+            "end": 36514,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Plexus is a local CLI and MCP discovery layer for agent toolchains. It reads each tool's declared inputs and outputs, finds compatible connections, and produces dependency graphs or runnable pipeline scripts; it probes registered Flywheel lanes only when explicitly requested."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 37063,
+            "end": 37170,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Manifest edges and source pointers remain declared claims until followed or probed."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 36983,
+            "end": 37030,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · active source 0.2.0; no GitHub release"
+        }
+      }
+    },
+    {
+      "id": "agent-hook-pack",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 37521,
+            "end": 37650,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Agent Hook Pack installs public-safe hooks for secret checks, branch guards, environment synchronization, and repository hygiene."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 38178,
+            "end": 38274,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Private policy layers are intentionally omitted from the public package."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 38122,
+            "end": 38145,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "shipped · stable v0.1.0"
+        }
+      }
+    },
+    {
+      "id": "studio-engine",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 38975,
+            "end": 39257,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Studio Engine is a local Python simulation and rendering engine that generates shader visuals, audio, and motion from one reusable scene description. It exposes a CLI and local HTTP API, can render deterministic PNG frames, and records hashes and a receipt for each generated scene."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 39822,
+            "end": 39899,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Studio Engine is not presented as a finished product."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 39741,
+            "end": 39789,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · active pre-1.0 source 0.2.0; no release"
+        }
+      }
+    },
+    {
+      "id": "build-color",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 40233,
+            "end": 40466,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Build Color measures, converts, compares, and transforms digital color across perceptual spaces, HDR tone maps, appearance models, chromatic adaptation, spectral utilities, gamut mapping, ICC profiles, and LUTs, with an optional GUI."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 41013,
+            "end": 41124,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> The workbench measures digital color behavior; it is not a physical display instrument."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 40935,
+            "end": 40980,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · beta source 1.0.2; latest tag v1.0.1"
+        }
+      }
+    },
+    {
+      "id": "retro-engine",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 41465,
+            "end": 41746,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Retro Engine is an embedded browser studio for images, drawing, GLSL, and audio traces. It applies pixelation, hardware palettes, ordered dithering, early-3D shading, CRT processing, and stackable effects, then exports images, patches, MIDI, relief or disc data, and Loom handoffs."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 42345,
+            "end": 42464,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Retro Engine output is generic creative output and does not prove any BRender restoration fact."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 42258,
+            "end": 42312,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · active public application; no package release"
+        }
+      }
+    },
+    {
+      "id": "engine-revival",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 42806,
+            "end": 43034,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Engine Revival is a Python tool for building, validating, auditing, indexing, and rendering public-safe metadata about historical engine revivals. It can also generate an out-of-tree BRender CMake harness from a public checkout."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 43543,
+            "end": 43743,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Engine Revival local 12-target materializer scope is public metadata and scaffold; the verified external 21-target BRender boundary comes from BRender Archival v0.1.1 evidence."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 43487,
+            "end": 43510,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "shipped · stable v0.1.0"
+        }
+      }
+    },
+    {
+      "id": "brender-archival",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 44099,
+            "end": 44403,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "BRender Archival rebuilds Argonaut BRender from its public MIT source, runs the restored code through a 21-stage native test ladder, captures reproducible renders, and packages the generated harness, README, captured test transcripts, checksums, and a release receipt without copying the upstream source."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 44938,
+            "end": 45089,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Specific BRender restoration proof must come from BRender evidence, not from Retro Engine screenshots or generic retro visuals."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 44871,
+            "end": 44905,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "shipped · bounded milestone v0.1.1"
+        }
+      }
+    },
+    {
+      "id": "elder-enb",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 45398,
+            "end": 45635,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Elder ENB is an independently authored nine-stage ENBSeries 0.504 shader suite for Skyrim SE/AE, with five quality tiers, bounded cinematic effects, identity fallbacks, deterministic packaging, and an optional native frame-pulse runtime."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 46150,
+            "end": 46221,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Final live ENB acceptance remains a limitation."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 46086,
+            "end": 46117,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · prerelease v1.0.0-rc.5"
+        }
+      }
+    },
+    {
+      "id": "truth-enb",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 46530,
+            "end": 46772,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Truth ENB is a from-scratch ENBSeries 0.504 shader suite for Skyrim SE/AE, with a computed physical atmosphere and sky, raymarched clouds, an aurora curtain, exposure and tone mapping, five quality tiers, and an optional native camera bridge."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 47337,
+            "end": 47472,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Public upload remains blocked until the required live Skyrim SE/AE and ENB 0.504 acceptance matrix is recorded."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 47248,
+            "end": 47304,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · release-candidate source 1.0.0; tag v1.0.0-rc.1"
+        }
+      }
+    },
+    {
+      "id": "enb-runtime-core",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 47810,
+            "end": 48075,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "ENB Runtime Core is a C++23 embedded runtime library that identifies an already-loaded ENBSeries host, validates its SDK surface, queues callbacks outside callback context, coordinates save quiescence and reapplication, and gates a fail-closed Skyrim engine bridge."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 48636,
+            "end": 48702,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Requires an already-loaded ENBSeries host."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 48556,
+            "end": 48603,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · active source 0.1.0; no GitHub release"
+        }
+      }
+    },
+    {
+      "id": "skyrimbridge",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 49064,
+            "end": 49311,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "SkyrimBridge is an SKSE plugin that exposes Skyrim live engine state, record editing surfaces, asset conversion, a versioned ABI, diagnostics, and shared-memory command channels to shaders and external tools, with an optional D3D11 rendering tier."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 49832,
+            "end": 49919,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> The public/default build excludes the native replacement suite."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 49768,
+            "end": 49799,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · prerelease v3.0.0-rc.1"
+        }
+      }
+    },
+    {
+      "id": "raw",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 50225,
+            "end": 50486,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "RAW is a D3D11 rendering platform for Skyrim SE that combines proxy-level pipeline ownership with SKSE-driven mid-frame effect dispatch, hot-reloadable HLSL, frame capture, GPU diagnostics, and a focused set of screen-space lighting and post-processing effects."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 51021,
+            "end": 51081,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> No public GitHub release is claimed."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 50941,
+            "end": 50988,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · active source 1.0.0; no public release"
+        }
+      }
+    },
+    {
+      "id": "gather",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 51777,
+            "end": 52069,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Gather collects research material from sources that basic scrapers often miss. It handles JavaScript-rendered pages, authenticated APIs, scholarly records, PDFs, OCR, audio, video, feeds, and local documents, then saves each item in a content-addressed corpus with provenance you can recheck."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 52642,
+            "end": 52710,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Static web mode does not execute JavaScript."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 52546,
+            "end": 52609,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "shipped · stable v1.8.1; GitHub and PyPI download-back verified"
+        }
+      }
+    },
+    {
+      "id": "learn",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 53021,
+            "end": 53311,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Learn plans and re-checks learner-authored study sessions from declared objectives and recorded attempts, using spaced review, retrieval prompts, prerequisite gating, misconception tracking, prediction, and self-explanation. It separately runs course logistics while halting at graded work."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 53852,
+            "end": 53958,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Automation halts at graded, consent, CAPTCHA, payment, and account-creation steps."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 53771,
+            "end": 53819,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "shipped · published npm 1.6.0; no GitHub release"
+        }
+      }
+    },
+    {
+      "id": "chorus",
+      "fields": {
+        "purpose": {
+          "locator": {
+            "kind": "character_range",
+            "start": 54268,
+            "end": 54496,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests. Version 0.3.0 adds a source-change review gate for deciding whether current gathered sources still match a reference set."
+        },
+        "limit": {
+          "locator": {
+            "kind": "character_range",
+            "start": 55071,
+            "end": 55168,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "<strong>Limit:</strong> Core sentiment is English and literal; sarcasm and context can be missed."
+        },
+        "status": {
+          "locator": {
+            "kind": "character_range",
+            "start": 54974,
+            "end": 55038,
+            "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+          },
+          "source_value": "active · GitHub release v0.3.0 verified; no PyPI release claimed"
+        }
+      }
+    }
+  ],
+  "controlled_private_records": {
+    "source_url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/367869e67229addc2470b563d13990c9a6cdc855/catalog.html",
+    "raw_source_sha256": "1ea003a684128e3c5567f94c2a58ef5a14c63bd842b137e18f00e56351939976",
+    "scope": "Public purpose and status only. No operational methods, protected artifacts or private implementations were inspected for this essay.",
+    "records": [
+      {
+        "id": "sofer",
+        "fields": {
+          "purpose": {
+            "locator": {
+              "kind": "character_range",
+              "start": 26643,
+              "end": 26927,
+              "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+            },
+            "source_value": "Sofer is a private Python orchestration runtime and operational security suite for authorized engagements. It manages campaign state, correlation, reconnaissance, reporting, disclosure staging, and evidence while its WARDEN CLI routes model and tool work through a bounded agent loop."
+          },
+          "status": {
+            "locator": {
+              "kind": "character_range",
+              "start": 27306,
+              "end": 27383,
+              "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+            },
+            "source_value": "controlled-private · controlled private system; public capability description"
+          }
+        }
+      },
+      {
+        "id": "bounds",
+        "fields": {
+          "purpose": {
+            "locator": {
+              "kind": "character_range",
+              "start": 28307,
+              "end": 28522,
+              "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+            },
+            "source_value": "Bounds checks agent actions, runtime observations, and release candidates for intent drift, unsupported claims, secret exposure, and failed fixtures, then writes receipts and proof chains or blocks the release path."
+          },
+          "status": {
+            "locator": {
+              "kind": "character_range",
+              "start": 28902,
+              "end": 28979,
+              "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+            },
+            "source_value": "controlled-private · controlled private system; public capability description"
+          }
+        }
+      },
+      {
+        "id": "isomorph",
+        "fields": {
+          "purpose": {
+            "locator": {
+              "kind": "character_range",
+              "start": 49623,
+              "end": 49818,
+              "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+            },
+            "source_value": "Isomorph evaluates classifier and refusal behavior at authorized AI inference boundaries through controlled reformulation trials, provider-specific result records, and control-stability analysis."
+          },
+          "status": {
+            "locator": {
+              "kind": "character_range",
+              "start": 50200,
+              "end": 50277,
+              "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+            },
+            "source_value": "controlled-private · controlled private system; public capability description"
+          }
+        }
+      },
+      {
+        "id": "gate",
+        "fields": {
+          "purpose": {
+            "locator": {
+              "kind": "character_range",
+              "start": 52834,
+              "end": 53231,
+              "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+            },
+            "source_value": "Gate is Sofer's private release-check subsystem. Its Python command-line tools validate readiness, operations, engagement, deliverable, and release manifests; required source, documentation, and test paths; configured controls; and verification-command results. Gate returns pass or fail findings, writes hashed JSON receipts, and blocks advancement when required evidence or controls are missing."
+          },
+          "status": {
+            "locator": {
+              "kind": "character_range",
+              "start": 53627,
+              "end": 53705,
+              "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+            },
+            "source_value": "controlled-private · controlled Sofer subsystem; public capability description"
+          }
+        }
+      },
+      {
+        "id": "array",
+        "fields": {
+          "purpose": {
+            "locator": {
+              "kind": "character_range",
+              "start": 66506,
+              "end": 66687,
+              "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+            },
+            "source_value": "Array orchestrates authorized offensive-security campaigns through digest-sealed waves, time-limited approval, contained tool supervision, cleanup, and a verifiable evidence ledger."
+          },
+          "status": {
+            "locator": {
+              "kind": "character_range",
+              "start": 67066,
+              "end": 67143,
+              "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+            },
+            "source_value": "controlled-private · controlled private system; public capability description"
+          }
+        }
+      },
+      {
+        "id": "seed",
+        "fields": {
+          "purpose": {
+            "locator": {
+              "kind": "character_range",
+              "start": 68019,
+              "end": 68195,
+              "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+            },
+            "source_value": "Seed is a C++23 engine for authorized security assessment and detection-engineering work, with synthetic demonstrations, scope manifests, interop adapters, and action receipts."
+          },
+          "status": {
+            "locator": {
+              "kind": "character_range",
+              "start": 68573,
+              "end": 68650,
+              "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+            },
+            "source_value": "controlled-private · controlled private system; public capability description"
+          }
+        }
+      },
+      {
+        "id": "orca",
+        "fields": {
+          "purpose": {
+            "locator": {
+              "kind": "character_range",
+              "start": 73860,
+              "end": 74070,
+              "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+            },
+            "source_value": "ORCA runs private-line assessments by managing engagement state, executing descriptor-backed modules, cataloging findings and artifacts, producing reports and portable bundles, and recording release provenance."
+          },
+          "status": {
+            "locator": {
+              "kind": "character_range",
+              "start": 74465,
+              "end": 74542,
+              "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+            },
+            "source_value": "controlled-private · controlled private system; public capability description"
+          }
+        }
+      },
+      {
+        "id": "kun",
+        "fields": {
+          "purpose": {
+            "locator": {
+              "kind": "character_range",
+              "start": 86598,
+              "end": 86779,
+              "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+            },
+            "source_value": "Kun maintains local access-recovery memory for owned systems through path-only receipts, redacted diagnostics, rotation notes, and operator runbooks without storing raw credentials."
+          },
+          "status": {
+            "locator": {
+              "kind": "character_range",
+              "start": 87149,
+              "end": 87219,
+              "indexing": "zero-based Unicode code points, end exclusive, unmodified UTF-8-decoded git blob"
+            },
+            "source_value": "controlled-private · controlled private system; public capability page"
+          }
+        }
+      }
+    ]
+  },
+  "public_addenda": [
+    {
+      "id": "calibrate-pro",
+      "source_url": "https://github.com/HarperZ9/calibrate-pro/blob/3d24d16d6b57b2264ac122b15a6b64530cefed26/README.md",
+      "raw_source_sha256": "2e51c792bdddfb3bc5df97c9c5b9c62a116d2d1eeedf819326045908b546e93d",
+      "excerpts": [
+        {
+          "locator": {
+            "kind": "line_range",
+            "start": 18,
+            "end": 18,
+            "indexing": "one-based inclusive lines"
+          },
+          "source_value": "Calibrate Pro is a Windows display-calibration toolkit for characterized and measured workflows. It combines display discovery, calibration targets, DDC/CI, ICC/VCGT and LUT tooling, and evidence-labelled reports behind one preview-and-confirm workflow. Sensorless values are explicitly labelled as estimates; measured values require an instrument and retain their evidence source."
+        },
+        {
+          "locator": {
+            "kind": "line_range",
+            "start": 61,
+            "end": 66,
+            "indexing": "one-based inclusive lines"
+          },
+          "source_value": "## Current status\n\n- **Release:** Calibrate Pro 2.0.0; command `calibrate-pro`; Python 3.10+ on Windows 10/11; per-user installer and portable package.\n- **Operator surface:** a PySide6 desktop workflow, a headless session that detects, plans, and publishes sealed bundles, and read-only CLI diagnostics, target and panel listings, HDR status, and plugin discovery. Legacy mutation-capable CLI names are proposal-only and point to the window rather than changing display state.\n- **Safety boundary:** Detect -> Method -> Preview -> Apply -> Verify -> Save/Report. The application starts unelevated. A display change requires an exact preview and explicit confirmation; rejection performs no write.\n- **Evidence boundary:** reports distinguish measured, estimated, simulated, replayed, and Not measured values instead of presenting model output as an observation."
+        },
+        {
+          "locator": {
+            "kind": "line_range",
+            "start": 74,
+            "end": 74,
+            "indexing": "one-based inclusive lines"
+          },
+          "source_value": "The 2.0.0 Windows artifacts are not Authenticode-signed, so Windows may show a SmartScreen warning. Verify the downloaded file against the release's `SHA256SUMS.txt` before running it."
+        }
+      ],
+      "limit": "Pinned README source, not new hardware or installer acceptance."
+    }
+  ]
+}
