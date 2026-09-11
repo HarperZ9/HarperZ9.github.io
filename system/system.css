@@ -3508,6 +3508,10 @@ h2 em,
   grid-template-rows:auto;
   gap:clamp(1.25rem,3vw,2rem);
   padding-block:clamp(2rem,5vw,4.4rem) clamp(2.4rem,5vw,4.8rem);
+  padding-inline:clamp(1rem,5vw,5rem);
+}
+html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .frame.route-header{
+  padding-inline:clamp(1rem,5vw,5rem);
 }
 .frame.route-header > .bar{display:none}
 .route-header .mid{align-self:start;max-width:min(92vw,46rem)}
