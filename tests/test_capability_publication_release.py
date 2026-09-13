@@ -278,7 +278,8 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-REVIEWED_RELEASE_SHA256 = "b39452a662f7d2568439f27d5330009baf480c46d232909cf9e3a49f90811a7a"
+# Reviewed METR packet route updates sitemap, build receipt, registry and index.
+REVIEWED_RELEASE_SHA256 = "ffd42a12ecd8ba7c1b19f41f122819ae32d4c34f1c549a8f5bffed8ca1c92fe2"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
