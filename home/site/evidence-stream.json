@@ -3,23 +3,23 @@
   "derivedFrom": "harperz9-systems/v4",
   "records": [
     {
-      "id": "flywheel-release-v0-6-1",
+      "id": "flywheel-release-v0-6-2",
       "type": "release",
-      "label": "Flywheel v0.6.1",
-      "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.6.1",
-      "date": "2026-09-09",
+      "label": "Flywheel v0.6.2",
+      "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.6.2",
+      "date": "2026-09-11",
       "status": "verified",
-      "summary": "The v0.6.1 GitHub release was published at 2026-09-09T13:06:27Z and resolves to source commit 2a86c0a8f2da651bceb0bda4c1b1a74379696a39. The release adds exact endpoint profile selection, generation-call budgets before endpoint I/O, descriptor custody for private artifact operations, Linux refusals for Windows-drive 9p/v9fs and unclassified filesystem paths in private artifact operations, and a common E2E journey runner. Release-source validation reported 8,368 Python tests passed and 55 were skipped; distribution verification found all 635 packaged harness entries matched source Git blobs. Ten fresh installed wheel controls passed, including seven expected refusals, without generating model output. These checks do not establish general model uplift, production ServiceNow compatibility, physical Android/mobile acceptance, provider-native session migration, arbitrary provider-native session resume, clean-machine installation, or universal verifier completeness. The v0.6.1 Windows installer is not published.",
+      "summary": "The v0.6.2 GitHub release was published at 2026-09-11T17:58:39Z and resolves to source commit 6ccf8e44b8ba69b4c6d899bc1f01a110dd14eb3c. The release is titled Rowan operation and the native provider protocol. Public release assets include Flywheel-Setup-0.6.2-x64.exe at 26,445,373 bytes with SHA-256 dad5d9a07c3bfb5b453792aa0ccb07fa546adba1d336c8271ff005d7602bd1cd, the flywheel_verify 0.6.2 wheel and source archive, Service Desk Incident Environment 0.2.0 archives, frozen-gateway-smoke.json, and SHA256SUMS.txt. The frozen gateway smoke receipt reports PASS for expected version 0.6.2. These checks do not establish installer integration, clean-machine installation, clean OS compatibility, Flutter UI rendering, native identity registration, Relay model-backed task execution, production Bulletin posting, general model uplift, production ServiceNow compatibility, physical Android/mobile acceptance, provider-native session migration, arbitrary provider-native session resume, 0.7.0 readiness, or universal verifier completeness. The Windows desktop installer is unsigned.",
       "systemId": "flywheel"
     },
     {
-      "id": "flywheel-pypi-v0-6-1",
+      "id": "flywheel-pypi-v0-6-2",
       "type": "release",
-      "label": "flywheel-verify 0.6.1 on PyPI",
-      "href": "https://pypi.org/project/flywheel-verify/0.6.1/",
-      "date": "2026-09-09",
+      "label": "flywheel-verify 0.6.2 on PyPI",
+      "href": "https://pypi.org/project/flywheel-verify/0.6.2/",
+      "date": "2026-09-11",
       "status": "verified",
-      "summary": "PyPI serves flywheel-verify 0.6.1. The wheel is 1,703,955 bytes with SHA-256 5f39615b741489a167815e6d977b414dcb763ec02b645fa20cfd7a153f923e76; the source archive has SHA-256 78dd99cffbbfb3ab986b69f091e3b56258b391bbf26e64ba095ab08ab80bc764. PyPI JSON digests matched the downloads, and CI and PyPI bytes were equal. Wheel fidelity checks found 635 of 635 packaged harness entries and 632 of 632 Python modules matched source Git blobs. Public wheel controls passed 10 of 10, including expected-failure controls; endpoint reports admitted 0 true and 5 false, and generated 0 endpoint rows. This does not prove source truth, claim support, complete coverage, downstream model use, absence of sensitive material, or clean-machine installation.",
+      "summary": "PyPI serves flywheel-verify 0.6.2. The wheel is 1,941,131 bytes with SHA-256 41847782f7e65c252d36ee3cbe8656fc7eb9e98fde8793a09242ad6e4b99d9fc; the source archive is 2,941,661 bytes with SHA-256 e789ba820116d26685f998c17983b4d3ef64728cdb17c9ff60ac4157642e0f32. PyPI JSON digests matched the GitHub release asset digests in the 2026-09-13 reconciliation. This does not prove source truth, claim support, complete coverage, downstream model use, absence of sensitive material, clean-machine installation, or 0.7.0 readiness.",
       "systemId": "flywheel"
     },
     {
