@@ -187,7 +187,7 @@ def test_forum_route_preflight_skill_release_is_live_and_nonexecuting() -> None:
     assert "https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip" in page
 
 
-def test_flywheel_061_release_discovery_keeps_engine_desktop_and_service_desk_limits_visible() -> None:
+def test_flywheel_062_release_discovery_keeps_engine_desktop_and_service_desk_limits_visible() -> None:
     flywheel = registry_record("flywheel")
     evidence = evidence_by_id(flywheel)
     payload = json.dumps(flywheel)
@@ -196,53 +196,52 @@ def test_flywheel_061_release_discovery_keeps_engine_desktop_and_service_desk_li
     home_projection = read("home/site/evidence-stream.json")
     home_registry = read("home/src/system-registry.ts")
 
-    release = evidence["flywheel-release-v0-6-1"]
-    pypi = evidence["flywheel-pypi-v0-6-1"]
+    release = evidence["flywheel-release-v0-6-2"]
+    pypi = evidence["flywheel-pypi-v0-6-2"]
     service_desk = evidence["flywheel-service-desk-env-v0-1-0"]
-    previous_desktop = evidence["flywheel-release-v0-6-0"]
     assert flywheel["purpose"] == (
         "Flywheel runs an AI task with the local or hosted model and tools you choose. "
         "It records the run, and optional sealed tool-call receipts can be inspected and rechecked offline. "
         "The repository also includes a native desktop app."
     )
     assert "Service Desk Incident Environment" not in flywheel["purpose"]
-    assert flywheel["releaseState"] == "stable Python engine v0.6.1; previous unsigned Windows desktop v0.6.0; clean-machine and mobile acceptance not claimed"
-    assert flywheel["entryCommand"] == "python -m pip install flywheel-verify==0.6.1; flywheel up"
-    assert flywheel["evidence"][0]["id"] == "flywheel-release-v0-6-1"
-    assert flywheel["evidence"][1]["id"] == "flywheel-pypi-v0-6-1"
+    assert flywheel["releaseState"] == "stable Python engine v0.6.2; unsigned Windows desktop v0.6.2; clean-machine, mobile, and 0.7.0 acceptance not claimed"
+    assert flywheel["entryCommand"] == "python -m pip install flywheel-verify==0.6.2; flywheel up"
+    assert flywheel["evidence"][0]["id"] == "flywheel-release-v0-6-2"
+    assert flywheel["evidence"][1]["id"] == "flywheel-pypi-v0-6-2"
     assert release["type"] == "release"
     assert release["status"] == "verified"
-    assert release["href"] == "https://github.com/HarperZ9/flywheel/releases/tag/v0.6.1"
-    assert pypi["href"] == "https://pypi.org/project/flywheel-verify/0.6.1/"
+    assert release["href"] == "https://github.com/HarperZ9/flywheel/releases/tag/v0.6.2"
+    assert pypi["href"] == "https://pypi.org/project/flywheel-verify/0.6.2/"
     assert service_desk["href"] == (
         "https://github.com/HarperZ9/flywheel/releases/download/v0.6.1/"
         "flywheel_env_service_desk_incident-0.1.0-py3-none-any.whl"
     )
 
     for required in (
-        "published at 2026-09-09T13:06:27Z",
-        "source commit 2a86c0a8f2da651bceb0bda4c1b1a74379696a39",
-        "exact endpoint profile selection",
-        "generation-call budgets",
-        "common E2E journey runner",
-        "8,368 Python tests passed and 55 were skipped",
-        "all 635 packaged harness entries matched source Git blobs",
-        "Ten fresh installed wheel controls passed",
-        "seven expected refusals",
-        "The v0.6.1 Windows installer is not published",
+        "published at 2026-09-11T17:58:39Z",
+        "source commit 6ccf8e44b8ba69b4c6d899bc1f01a110dd14eb3c",
+        "Rowan operation and the native provider protocol",
+        "Flywheel-Setup-0.6.2-x64.exe",
+        "frozen-gateway-smoke.json",
+        "26,445,373 bytes",
+        "dad5d9a07c3bfb5b453792aa0ccb07fa546adba1d336c8271ff005d7602bd1cd",
+        "reports PASS for expected version 0.6.2",
+        "The Windows desktop installer is unsigned",
+        "0.7.0 readiness",
     ):
         assert required in release["summary"]
 
     for required in (
-        "PyPI serves flywheel-verify 0.6.1",
-        "1,703,955 bytes",
-        "5f39615b741489a167815e6d977b414dcb763ec02b645fa20cfd7a153f923e76",
-        "78dd99cffbbfb3ab986b69f091e3b56258b391bbf26e64ba095ab08ab80bc764",
-        "CI and PyPI bytes were equal",
-        "635 of 635 packaged harness entries",
-        "632 of 632 Python modules",
-        "10 of 10",
-        "generated 0 endpoint rows",
+        "PyPI serves flywheel-verify 0.6.2",
+        "1,941,131 bytes",
+        "41847782f7e65c252d36ee3cbe8656fc7eb9e98fde8793a09242ad6e4b99d9fc",
+        "e789ba820116d26685f998c17983b4d3ef64728cdb17c9ff60ac4157642e0f32",
+        "PyPI JSON digests matched the GitHub release asset digests",
+        "2026-09-13 reconciliation",
+        "2,941,661 bytes",
+        "0.6.2",
+        "clean-machine installation",
     ):
         assert required in pypi["summary"]
 
@@ -259,11 +258,12 @@ def test_flywheel_061_release_discovery_keeps_engine_desktop_and_service_desk_li
         assert required in service_desk["summary"]
 
     for required in (
-        "Flywheel-Setup-0.6.0-x64.exe",
-        "Windows tag-candidate acceptance attempt 2 passed",
-        "34279017788",
+        "Flywheel-Setup-0.6.2-x64.exe",
+        "26,445,373 bytes",
+        "dad5d9a07c3bfb5b453792aa0ccb07fa546adba1d336c8271ff005d7602bd1cd",
+        "The Windows desktop installer is unsigned",
     ):
-        assert required in previous_desktop["summary"]
+        assert required in release["summary"]
 
     for bounded_claim in (
         "clean-machine installation",
@@ -278,28 +278,28 @@ def test_flywheel_061_release_discovery_keeps_engine_desktop_and_service_desk_li
     release_section = release_section[: release_section.index("</section>")]
     service_desk_section = page[page.index('<section class="mv" id="service-desk"'):]
     service_desk_section = service_desk_section[: service_desk_section.index("</section>")]
-    assert 'href="#next-release">0.6.1 release</a>' in page
+    assert 'href="#next-release">0.6.2 release</a>' in page
     assert "0.6 candidate" not in page
-    assert "Use v0.6.1 to select an exact endpoint profile" in release_section
-    assert "all 635 packaged harness entries matched their source blobs" in release_section
-    assert "Ten checks of a fresh installed wheel passed" in release_section
-    assert "The v0.6.1 Windows candidate is not offered here" in release_section
-    assert "pip install flywheel-verify==0.6.1" in page
-    assert "Previous Windows desktop: 0.6.0" in page
-    assert "Flywheel-Setup-0.6.0-x64.exe" in page
-    assert "/releases/download/v0.6.0" in page
-    assert "Flywheel-Setup-0.6.1" not in page
+    assert "Use v0.6.2 to install the current Python engine" in release_section
+    assert "The Windows installer asset is <span translate=\"no\">26,445,373</span> bytes" in release_section
+    assert "published smoke receipt reports <span translate=\"no\">PASS</span>" in release_section
+    assert "The Windows desktop installer is still unsigned" in release_section
+    assert "pip install flywheel-verify==0.6.2" in page
+    assert "Windows desktop: 0.6.2" in page
+    assert "Flywheel-Setup-0.6.2-x64.exe" in page
+    assert "/releases/download/v0.6.2" in page
+    assert "Flywheel-Setup-0.6.0-x64.exe" not in page
     assert "Service Desk Incident Environment 0.1.0" in service_desk_section
     assert "flywheel_env_service_desk_incident-0.1.0-py3-none-any.whl" in service_desk_section
     assert "flywheel_env_service_desk_incident-0.1.0.tar.gz" in service_desk_section
     assert "service-desk-incident-env verify RETURNED_ARTIFACT_DIR --recompute --json" in service_desk_section
-    assert "Flywheel v0.6.1" in catalog
-    assert "flywheel-release-v0-6-1" in home_projection
-    assert "flywheel-pypi-v0-6-1" in home_projection
+    assert "Flywheel v0.6.2" in catalog
+    assert "flywheel-release-v0-6-2" in home_projection
+    assert "flywheel-pypi-v0-6-2" in home_projection
     assert "flywheel-service-desk-env-v0-1-0" in home_projection
     assert "Service Desk Incident Environment 0.1.0" in home_projection
     assert "Service Desk Incident Environment 0.1.0" in home_registry
-    assert "Flywheel v0.6.1" in home_registry
+    assert "Flywheel v0.6.2" in home_registry
 
     for relative in ("home/index.html", "index.html"):
         fallback = read(relative).split('<section id="noscript-flywheel"', 1)[1]
@@ -315,7 +315,7 @@ def test_flywheel_061_release_discovery_keeps_engine_desktop_and_service_desk_li
         assert "mobile acceptance passed" not in source
         assert "general model uplift passed" not in source.lower()
         assert "general model uplift verified" not in source.lower()
-        assert "Flywheel-Setup-0.6.1" not in source
+        assert "Flywheel-Setup-0.6.0-x64.exe" not in page
         assert "service-desk 0.1.0 on PyPI" not in source.lower()
 
 
