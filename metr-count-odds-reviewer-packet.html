@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>METR count_odds reviewer packet | Zain Dana Harper</title>
+<meta name="description" content="Public-safe reviewer packet for Flywheel PR234's METR count_odds task-image interoperability check, with source pins, receipts, and limits.">
+<link rel="canonical" href="https://harperz9.github.io/metr-count-odds-reviewer-packet.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="METR count_odds reviewer packet">
+<meta property="og:description" content="A public-safe packet for one Flywheel task-image interoperability check. Includes source pins, retained receipts, and limits.">
+<meta property="og:url" content="https://harperz9.github.io/metr-count-odds-reviewer-packet.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/demo-flywheel.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="METR count_odds reviewer packet">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/demo-flywheel.png">
+<link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
+<style>
+  .transcript{background:#0d1117;color:#e6edf3;border:1px solid rgba(125,227,234,.25);border-radius:8px;padding:1.1rem 1.3rem;overflow-x:auto;font-size:.82rem;line-height:1.55}
+</style>
+</head>
+<body class="doc">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="index.html">Home</a> <a href="overview.html">Systems</a> <a href="demonstrations.html">Demos</a> <a href="research.html">Research</a> <a href="resume.html">Resume</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+
+<main id="main">
+<article class="sheet">
+  <header class="mast">
+    <h1>METR <code>count_odds</code> reviewer packet</h1>
+    <p class="role">A public-safe packet for one Flywheel task-image interoperability check, not a product release.</p>
+  </header>
+
+  <section aria-labelledby="download">
+    <h2 id="download">Download</h2>
+    <p class="lead">This archive preserves the source pins, runner receipts, and verification notes needed to inspect Flywheel PR234's <code>count_odds</code> bridge path. This is interop evidence, not METR endorsement, a model benchmark, a safety certification, or a Flywheel 1.0 release claim.</p>
+    <ul class="bul">
+      <li><a href="artifacts/metr-count-odds-reviewer-packet-20260913-public-v2.zip">metr-count-odds-reviewer-packet-20260913-public-v2.zip</a> <span class="entry-note">178,203 bytes</span></li>
+      <li><a href="artifacts/metr-count-odds-reviewer-packet-20260913-public-v2.zip.sha256">metr-count-odds-reviewer-packet-20260913-public-v2.zip.sha256</a></li>
+    </ul>
+    <p class="entry-note"><strong>SHA-256:</strong> <code>1a1a9ca19728f11935d93eb8ef14770fa4d78f82484df356ac22b4da929dcac0</code>. The hash checks archive identity; it does not by itself prove semantic correctness.</p>
+  </section>
+
+  <section aria-labelledby="coverage">
+    <h2 id="coverage">What the packet covers</h2>
+    <p class="lead">Flywheel PR234 added a minimal METR Task Standard import path and was merged on September 13, 2026. The retained run built the upstream <code>count_odds</code> task image in a runner-local registry, exercised three controls through a pinned Inspect bridge, and imported the run exports through a pinned Flywheel revision.</p>
+    <ul class="bul">
+      <li><strong>Correct submit:</strong> answer <code>6</code>, score <code>1</code>.</li>
+      <li><strong>Wrong submit:</strong> answer <code>1</code>, score <code>0</code>.</li>
+      <li><strong>No submit tool call:</strong> score <code>0</code>, with the packet noting that upstream scorer fallback limits what this proves.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="pins">
+    <h2 id="pins">Pinned sources</h2>
+    <table class="data data--wide">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Pin or URL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Flywheel PR</td>
+          <td><a href="https://github.com/HarperZ9/flywheel/pull/234">HarperZ9/flywheel#234</a></td>
+        </tr>
+        <tr>
+          <td>PR merge commit</td>
+          <td><code>d28200a78c16cf2a970104d8a5f057a526b8cfa0</code></td>
+        </tr>
+        <tr>
+          <td>GitHub Actions run</td>
+          <td><a href="https://github.com/HarperZ9/flywheel/actions/runs/34750411689">34750411689</a>, conclusion success</td>
+        </tr>
+        <tr>
+          <td>Inspect bridge source</td>
+          <td><code>METR/inspect-metr-task-bridge@20a430cc59283c8b463e526e77f8d040509457ec</code></td>
+        </tr>
+        <tr>
+          <td>Task Standard source</td>
+          <td><code>METR/task-standard@03236e9a1a0d3c9f9d63f6c9e60a9278a59d22ff</code></td>
+        </tr>
+        <tr>
+          <td>Flywheel importer source used by the run</td>
+          <td><code>HarperZ9/flywheel@b3ec822b4c1a942697f1370383c83beac339155e</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="entry-note">The public packet omits copied bridge source and built task images because the pinned bridge snapshot did not include a detected license file.</p>
+  </section>
+
+  <section aria-labelledby="verify">
+    <h2 id="verify">Verify locally</h2>
+    <p class="lead">Extract the archive and use its bundled verifier against the exact Flywheel source checkout named in the packet README:</p>
+    <pre class="transcript"><code>python .\tools\verify_packet.py --flywheel-source &lt;flywheel-checkout&gt; --out .\_verify\packet-verification</code></pre>
+    <p class="entry-note">The verifier checks the retained manifests, hashes, and referenced local packet structure. It does not rerun METR infrastructure or establish general conformance.</p>
+  </section>
+
+  <section aria-labelledby="limits">
+    <h2 id="limits">Scope boundary</h2>
+    <p class="lead">The packet carries reported scorer outputs, source pins, and byte-level receipts for one public bridge exercise. It does not certify METR conformance, scorer semantic correctness, Flywheel installed release status, independent adoption, model safety, or Flywheel 1.0 readiness.</p>
+  </section>
+</article>
+</main>
+</body>
+</html>
