@@ -153,11 +153,13 @@ def test_required_live_routes_and_assets_exist() -> None:
         assert (ROOT / route).is_file(), route
 
     home = _text("index.html")
-    assert "<title>Zentropy Labs | Products by Zain Dana Harper</title>" in home
-    assert "Zentropy Labs is a product studio and public brand built by Zain Dana Harper." in home
-    assert "Explore products" in home
-    assert "Featured platform: Flywheel" in home
+    assert "<title>Zentropy Labs | Re-derivable AI evaluation</title>" in home
+    assert "Flywheel and public tools for re-derivable AI evaluation" in home
+    assert "Inspect Flywheel" in home
+    assert "Flagship platform: Flywheel" in home
+    assert "Built tooling ecosystem" in home
     assert "Evidence board" in home
+    assert "Research, pilot, and support routes" in home
     assert "Measured evidence" in home
     assert "Recovered-actions dataset" in home
     assert "Motive-label dataset" in home

@@ -18,7 +18,7 @@ RELEASE_PATHS = (
     "writing/borrowed-ground/essay.md",
     "publications/data/records/borrowed-ground.json",
     "borrowed-ground.html",
-    "assets/index-DpT1GQuA.js",
+    "assets/index-EaeROAAw.js",
     "img/og/the-sandbox-was-never-just-a-box.png",
     "writing/the-sandbox-was-never-just-a-box/source-map.json",
     "writing/the-sandbox-was-never-just-a-box/essay.md",
@@ -71,7 +71,7 @@ RELEASE_PATHS = (
     "system/theme.js",
     "system/theme-entry.js",
     "system/theme.css",
-    "assets/index-B2kgPYlE.css",
+    "assets/index-eZ1QGP52.css",
     "typeface.html",
     "system/type-specimen.css",
     "fonts.html",
@@ -278,8 +278,8 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-# Reviewed METR packet route updates sitemap, build receipt, registry and index.
-REVIEWED_RELEASE_SHA256 = "d6cae4c3a187932e74ad2b3886c07a10ab0523e2d42042d77d307ddf26cd4aae"
+# Reviewed mission reorientation updates home, catalog, registry, sitemap, and bundle pair.
+REVIEWED_RELEASE_SHA256 = "333af2eea6157a070139d6a9c567310ef3f2e3a23a3b5e2fd214c7f825420b63"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -416,8 +416,10 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_060_final_gather_pre_review_js = "index-CYqKao4X.js"
     previous_060_final_gather_fixture_js = "index-CpC5RhmM.js"
     previous_gather_171_js = "index-AYA0gyN2.js"
-    current_js = "index-DpT1GQuA.js"
-    current_css = "index-B2kgPYlE.css"
+    current_js = "index-EaeROAAw.js"
+    current_css = "index-eZ1QGP52.css"
+    prior_mission_js = "index-DpT1GQuA.js"
+    prior_mission_css = "index-B2kgPYlE.css"
     previous_home_js = "index-CS_jYuhh.js"
     previous_flywheel_js = "index-BIYnDBdw.js"
     previous_flywheel_css = "index-DGQrcJ5p.css"
@@ -431,6 +433,8 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     assert previous_home_js not in source
     assert f"assets/{current_js}" in RELEASE_PATHS
     assert f"assets/{current_css}" in RELEASE_PATHS
+    assert prior_mission_js not in source
+    assert prior_mission_css not in source
     assert "index-CPG6kzKK.js" not in source
     assert "index-ClATdIWg.js" not in source
     assert previous_gather_171_js not in source

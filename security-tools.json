@@ -8,14 +8,15 @@
       "purpose": "EMET verifies whether bytes reaching a model, reviewer, or pipeline still match their claimed source. It anchors and compares content, neutralizes embedded authority, audits drift, and mints portable closed-verdict receipts across four implementations.",
       "maturity": "shipped",
       "source": "https://github.com/HarperZ9/emet",
-      "installOrEntry": "pip install emet",
+      "installOrEntry": "python -m pip install emet==1.3.0",
       "verificationCommand": "emet selftest; emet check receipt.json",
       "limitations": [
-        "The witness reports byte agreement, drift, or inability to verify; it does not judge semantic quality.",
-        "Same-author conformance implementations prove rule clarity, not independent authorship."
+        "The witness reports byte agreement, drift, or inability to verify; it does not judge semantic quality, safety, source completeness, or policy compliance.",
+        "Same-author conformance implementations prove rule clarity, not independent authorship.",
+        "The Flywheel review protocol is a development compatibility exercise and requires source checkouts; it is not a model or regulatory assessment."
       ],
       "authorizationBoundary": "Run on files and packets you are authorized to inspect.",
-      "evidenceDate": "2026-08-27"
+      "evidenceDate": "2026-09-14"
     },
     {
       "slug": "proof-surface",
@@ -185,17 +186,19 @@
     {
       "slug": "public-surface-sweeper",
       "name": "Public Surface Sweeper",
-      "purpose": "Public Surface Sweeper is a Python CLI that checks a repository before publication for missing public files, unclear README handoff material, credential-like strings, release metadata, and proof-packet readiness. It is a release-hygiene check, not a full security scanner or certification.",
+      "purpose": "Public Surface Sweeper is a Python CLI that checks a repository or local portfolio before publication for missing public files, unclear README handoff material, credential-like strings, release metadata, proof-packet readiness, and workspace delivery drift. It is a release-hygiene check, not a full security scanner or certification.",
       "maturity": "shipped",
       "source": "https://github.com/HarperZ9/public-surface-sweeper",
-      "installOrEntry": "python -m pip install public-surface-sweeper; public-surface-sweeper . --summary",
-      "verificationCommand": "python -m pip install -e \".[test]\"; public-surface-sweeper examples/clean-repo; python -m pytest",
+      "installOrEntry": "python -m pip install public-surface-sweeper==0.1.3; public-surface-sweeper <workspace> --workspace --json",
+      "verificationCommand": "Verify GitHub or PyPI v0.1.3 download hashes; public-surface-sweeper . --summary; public-surface-sweeper <workspace> --workspace --json",
       "limitations": [
         "This is not an exploit tester, dependency vulnerability scanner, credential validator, compliance certification, or replacement for security review.",
-        "A secret-shaped finding does not establish that the value is a live credential."
+        "A secret-shaped finding does not establish that the value is a live credential.",
+        "Workspace mode scans each repository delivery surface and Git metadata. Use single-repo mode when a full source-tree secret-shaped value sweep is needed.",
+        "GitHub and PyPI v0.1.3 wheel hashes are intentionally recorded separately because the downloaded artifacts differ."
       ],
       "authorizationBoundary": "Scan only repositories and artifacts you are authorized to inspect.",
-      "evidenceDate": "2026-08-27"
+      "evidenceDate": "2026-09-07"
     },
     {
       "slug": "model-provenance-validator",
