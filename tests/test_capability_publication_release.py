@@ -279,7 +279,7 @@ RELEASE_PATHS = (
 )
 
 # Reviewed METR packet route updates sitemap, build receipt, registry and index.
-REVIEWED_RELEASE_SHA256 = "ffd42a12ecd8ba7c1b19f41f122819ae32d4c34f1c549a8f5bffed8ca1c92fe2"
+REVIEWED_RELEASE_SHA256 = "d6cae4c3a187932e74ad2b3886c07a10ab0523e2d42042d77d307ddf26cd4aae"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
