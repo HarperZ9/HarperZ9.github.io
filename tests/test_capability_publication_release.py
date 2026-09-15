@@ -18,7 +18,7 @@ RELEASE_PATHS = (
     "writing/borrowed-ground/essay.md",
     "publications/data/records/borrowed-ground.json",
     "borrowed-ground.html",
-    "assets/index-EaeROAAw.js",
+    "assets/index-DrPnIzlB.js",
     "img/og/the-sandbox-was-never-just-a-box.png",
     "writing/the-sandbox-was-never-just-a-box/source-map.json",
     "writing/the-sandbox-was-never-just-a-box/essay.md",
@@ -279,7 +279,7 @@ RELEASE_PATHS = (
 )
 
 # Reviewed mission reorientation updates home, catalog, registry, sitemap, and bundle pair.
-REVIEWED_RELEASE_SHA256 = "333af2eea6157a070139d6a9c567310ef3f2e3a23a3b5e2fd214c7f825420b63"
+REVIEWED_RELEASE_SHA256 = "28ae5c8eb93264c3f342952dc8fe4cc3fa1f769d0e4a388a4fea1aa94bdf8e45"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -416,7 +416,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_060_final_gather_pre_review_js = "index-CYqKao4X.js"
     previous_060_final_gather_fixture_js = "index-CpC5RhmM.js"
     previous_gather_171_js = "index-AYA0gyN2.js"
-    current_js = "index-EaeROAAw.js"
+    current_js = "index-DrPnIzlB.js"
     current_css = "index-eZ1QGP52.css"
     prior_mission_js = "index-DpT1GQuA.js"
     prior_mission_css = "index-B2kgPYlE.css"

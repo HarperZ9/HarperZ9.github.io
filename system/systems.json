@@ -3175,21 +3175,33 @@
       "maturity": "active",
       "placement": "featured",
       "accessMode": "inspect",
-      "entryCommand": "python -m pip install -e \".[test]\"; python examples/demo.py",
-      "verificationCommand": "python -m pytest",
+      "entryCommand": "Follow the repository source setup with sibling source packages present; python examples/demo.py",
+      "verificationCommand": "Verify the v0.1.0 SHA256SUMS.txt entry; follow documented source setup with sibling source packages; python -m pytest",
       "evidence": [
+        {
+          "id": "accountable-surface-release-v0-1-0",
+          "type": "release",
+          "label": "Accountable Surface v0.1.0",
+          "href": "https://github.com/HarperZ9/accountable-surface/releases/tag/v0.1.0",
+          "date": "2026-09-14",
+          "status": "verified",
+          "summary": "The v0.1.0 GitHub release is public, not draft, and not prerelease. It targets commit 9ebc4519e92ce674ac9058e662e655842c69be42 and publishes accountable_surface-0.1.0-py3-none-any.whl SHA-256 9f08e87868a755141e515a7b0e99be67caee3770f33d8adc11506effa8ac1e52, accountable_surface-0.1.0.tar.gz SHA-256 ac655bf23dee3714c7ee59c87fae98c09a75dcaaf0244bbb641e04d3d05eaa9b, and accountable-surface-010-release-SHA256SUMS.txt SHA-256 a28e4e2b37baf1899137db681a2ea7387e48577eb452cff69e41605b71e59c84. The release notes require the repository's documented source setup because some capabilities need sibling source packages. A clean wheel install succeeded, then importing accountable_surface failed on missing coherence_membrane. This is release evidence, not self-contained package readiness or real Windows native-app acceptance."
+        },
         {
           "id": "accountable-surface-public-source",
           "type": "source",
-          "label": "Accountable Surface public source",
+          "label": "Accountable Surface source 0.1.0",
           "href": "https://github.com/HarperZ9/accountable-surface",
-          "date": "2026-08-27",
+          "date": "2026-09-14",
           "status": "verified",
-          "summary": "The public repository identifies source 0.1.0 and no tagged release; self-authored tests are not independent review."
+          "summary": "The public repository and v0.1.0 release notes identify source 0.1.0. The source setup includes sibling source dependencies; self-authored tests are not independent review."
         }
       ],
       "limitations": [
         "The model cannot supply its own authorization.",
+        "The v0.1.0 GitHub wheel is not a self-contained clean-machine install; clean wheel import fails without coherence_membrane.",
+        "Some capabilities require sibling source packages from the documented source setup.",
+        "Real Windows native-application acceptance remains unverified; release validation used a fake UI Automation driver.",
         "Self-authored tests do not establish independent adversarial review or production safety."
       ],
       "boundary": "Every effect requires authority external to the model and remains limited to the granted scope.",
@@ -3205,7 +3217,10 @@
         "rollback results",
         "durable action journal"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "documented sibling source packages for enabled capabilities",
+        "coherence_membrane sibling source package for clean wheel import"
+      ],
       "related": [
         "flywheel",
         "emet",
@@ -3213,10 +3228,10 @@
         "bounds",
         "isomorph"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-09-14",
       "primaryDomain": "security-privacy",
       "productType": "controlled agent-action workbench",
-      "releaseState": "active source 0.1.0; no release"
+      "releaseState": "GitHub release v0.1.0 verified; source setup requires sibling dependencies; no PyPI release claimed"
     },
     {
       "id": "public-surface-sweeper",

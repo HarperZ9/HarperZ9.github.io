@@ -3,6 +3,16 @@
   "derivedFrom": "harperz9-systems/v4",
   "records": [
     {
+      "id": "accountable-surface-release-v0-1-0",
+      "type": "release",
+      "label": "Accountable Surface v0.1.0",
+      "href": "https://github.com/HarperZ9/accountable-surface/releases/tag/v0.1.0",
+      "date": "2026-09-14",
+      "status": "verified",
+      "summary": "The v0.1.0 GitHub release is public, not draft, and not prerelease. It targets commit 9ebc4519e92ce674ac9058e662e655842c69be42 and publishes accountable_surface-0.1.0-py3-none-any.whl SHA-256 9f08e87868a755141e515a7b0e99be67caee3770f33d8adc11506effa8ac1e52, accountable_surface-0.1.0.tar.gz SHA-256 ac655bf23dee3714c7ee59c87fae98c09a75dcaaf0244bbb641e04d3d05eaa9b, and accountable-surface-010-release-SHA256SUMS.txt SHA-256 a28e4e2b37baf1899137db681a2ea7387e48577eb452cff69e41605b71e59c84. The release notes require the repository's documented source setup because some capabilities need sibling source packages. A clean wheel install succeeded, then importing accountable_surface failed on missing coherence_membrane. This is release evidence, not self-contained package readiness or real Windows native-app acceptance.",
+      "systemId": "accountable-surface"
+    },
+    {
       "id": "emet-release-v1-3-0",
       "type": "release",
       "label": "EMET v1.3.0",

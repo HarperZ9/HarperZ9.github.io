@@ -174,14 +174,17 @@
       "purpose": "Accountable Surface lets an AI agent take only the file, command, web, or browser action a person has approved. It checks the request and authorization, blocks or pauses when needed, verifies the outcome, rolls back reversible failures, and records decisions and outcomes in a journal. Persisted journals are hash-chained so later edits, deletions, or reordering are detected.",
       "maturity": "active",
       "source": "https://github.com/HarperZ9/accountable-surface",
-      "installOrEntry": "python -m pip install -e \".[test]\"; python examples/demo.py",
-      "verificationCommand": "python -m pytest",
+      "installOrEntry": "Follow the repository source setup with sibling source packages present; python examples/demo.py",
+      "verificationCommand": "Verify the v0.1.0 SHA256SUMS.txt entry; follow documented source setup with sibling source packages; python -m pytest",
       "limitations": [
         "The model cannot supply its own authorization.",
+        "The v0.1.0 GitHub wheel is not a self-contained clean-machine install; clean wheel import fails without coherence_membrane.",
+        "Some capabilities require sibling source packages from the documented source setup.",
+        "Real Windows native-application acceptance remains unverified; release validation used a fake UI Automation driver.",
         "Self-authored tests do not establish independent adversarial review or production safety."
       ],
       "authorizationBoundary": "Every effect requires authority external to the model and remains limited to the granted scope.",
-      "evidenceDate": "2026-08-27"
+      "evidenceDate": "2026-09-14"
     },
     {
       "slug": "public-surface-sweeper",

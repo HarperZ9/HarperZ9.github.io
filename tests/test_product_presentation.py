@@ -129,7 +129,14 @@ def test_record_pages_keep_limits_visible_and_relationships_optional() -> None:
     assert '<dl class="system-facts">' in page
     assert '<dt>Status</dt><dd>active</dd>' in page
     assert '<dt>Access</dt><dd>inspect</dd>' in page
-    assert '<dt>Release</dt><dd>active source 0.1.0; no release</dd>' in page
+    assert (
+        "<dt>Release</dt><dd>GitHub release v0.1.0 verified; "
+        "source setup requires sibling dependencies; no PyPI release claimed</dd>"
+        in page
+    )
+    assert "Accountable Surface v0.1.0" in page
+    assert "missing coherence_membrane" in page
+    assert "Real Windows native-application acceptance remains unverified" in page
     assert '<section class="mv" id="architecture-and-relationships"' in page
     assert '<details class="product-record-details" id="architecture-details">' in page
     assert "<summary>Architecture, dependencies, and relationship notes</summary>" in page
