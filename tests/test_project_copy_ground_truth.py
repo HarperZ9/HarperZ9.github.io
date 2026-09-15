@@ -70,7 +70,10 @@ def test_home_noscript_fallback_uses_the_canonical_plain_language_purposes() -> 
     template = (ROOT / "home" / "index.html").read_text(encoding="utf-8")
     fallback = template.split("<noscript>", 1)[1].split("</noscript>", 1)[0]
 
-    for slug in ("flywheel", "index", "gather", "buildlang", "phantom", "accountable-surface"):
+    for slug in (
+        "flywheel", "gather", "crucible", "index", "forum", "emet",
+        "relay", "mneme", "plexus", "proof-surface", "accountable-surface",
+    ):
         record = _registry_record(slug)
         canonical = re.findall(
             rf'<(?:p|span)[^>]+data-canonical-purpose="{re.escape(slug)}"[^>]*>(.*?)</(?:p|span)>',

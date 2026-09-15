@@ -140,10 +140,12 @@ def test_security_surfaces_keep_deep_detail_and_add_machine_readable_maturity() 
 
     emet = read("emet.html")
     assert "35/35 core vectors" in emet
-    assert "EMET v1.2.0" in emet
+    assert "EMET v1.3.0" in emet
     assert "48/48" in emet
     assert "40/40" in emet
-    assert "DeepEval" in emet
+    assert "https://pypi.org/project/emet/1.3.0/" in emet
+    assert "https://github.com/HarperZ9/emet/blob/v1.3.0/docs/FLYWHEEL-REVIEW-PROTOCOL.md" in emet
+    assert "regulatory assessment" in emet
     assert 'href="security-tools.json"' in emet
 
 

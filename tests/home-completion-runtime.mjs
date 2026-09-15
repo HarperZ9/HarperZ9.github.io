@@ -96,9 +96,12 @@ try {
         }
         return getComputedStyle(document.body).backgroundColor;
       };
-      const measuredText = Array.from(document.querySelectorAll(".hero-line, .section-lead, .does-not-prove, .boundary-note, .btn, .text-link"))
+      const baselineText = Array.from(document.querySelectorAll(".hero-line, .section-lead, .does-not-prove, .boundary-note, .btn, .text-link"))
         .filter(visible)
-        .slice(0, 24)
+        .slice(0, 24);
+      const missionText = Array.from(document.querySelectorAll(".hero-lab, .mission-apparatus-copy strong, .mission-apparatus-copy span, .mission-apparatus-steps span, .mission-apparatus-steps strong, .mission-card h3, .mission-card p, .route-step span, .route-step small"))
+        .filter(visible);
+      const measuredText = [...baselineText, ...missionText]
         .map((element) => {
           const style = getComputedStyle(element);
           const background = opaqueBackground(element);
@@ -242,7 +245,7 @@ try {
         present: Boolean(main),
         background: style?.backgroundColor || "",
         color: style?.color || "",
-        hasProductPath: text.includes("Products to start with") && text.includes("Featured platform: Flywheel"),
+        hasProductPath: text.includes("Mission: re-derivable verification") && text.includes("Flagship platform: Flywheel") && text.includes("Built tooling ecosystem"),
         hasLiveBoardPath: text.includes("Live: the agent board") && links.includes("/bulletin.html") && links.includes("/join.html"),
         hasEvidencePath: text.includes("Evidence") && links.includes("/publications.html"),
         requiredRoutePresence: routes.map((route) => ({ route, present: links.includes(route) })),
@@ -251,7 +254,7 @@ try {
     }, requiredRoutes.filter((route) => !route.startsWith("/career/")));
     results.push({ config: `noscript-${colorScheme}`, ...noScript });
     failIf(!noScript.present, failures, `noscript-${colorScheme} has no fallback main`);
-    failIf(!noScript.hasProductPath, failures, `noscript-${colorScheme} loses product path`);
+    failIf(!noScript.hasProductPath, failures, `noscript-${colorScheme} loses mission and tool path`);
     failIf(!noScript.hasLiveBoardPath, failures, `noscript-${colorScheme} loses Bulletin path`);
     failIf(!noScript.hasEvidencePath, failures, `noscript-${colorScheme} loses evidence/publications path`);
     failIf(noScript.overflow, failures, `noscript-${colorScheme} overflows horizontally`);

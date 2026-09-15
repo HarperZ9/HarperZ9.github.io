@@ -430,28 +430,29 @@ def test_hiring_paths_use_one_column_at_mobile_and_readable_action_targets() -> 
 
 def test_home_source_connects_the_product_brand_to_the_hiring_route() -> None:
     src = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
-    studio = src.index('<h1 className="hero-title">Zentropy Labs</h1>')
-    practice = src.index("Product studio, systems engineering, graphics, security tooling, and public research.")
-    builder = src.index("Zain Dana Harper is the builder behind Zentropy Labs.")
-    products = src.index('id="products"')
-    flywheel = src.index("Featured platform: Flywheel")
+    brand = src.index('<h1 className="hero-title">Zentropy Labs</h1>')
+    mission = src.index("Flywheel and public tools for re-derivable AI evaluation.")
+    audience = src.index("claims a skeptic can rerun")
     hiring = src.index("Hiring, contracting, and collaboration")
-    hiring_route = src.index('href="/hire.html"')
-    assert studio < practice < builder
-    assert products < flywheel
+    hiring_route = src.index('href: "/hire.html#technical-operations-path"')
+    assert brand < mission < audience
     assert hiring_route < hiring
 
     main = re.search(r'<main id="main">(?P<body>.*?)</main>', src, re.S)
     assert main
     order = re.findall(r"<([A-Z][A-Za-z0-9]*)\s*/>", main.group("body"))
-    assert order[:6] == [
+    assert order[:7] == [
         "IdentityHero",
+        "MissionFrame",
         "FeaturedFlywheel",
-        "LiveBoard",
         "ProductSelection",
-        "HiringRoutes",
         "EvidenceBoard",
+        "ResearchPilotRoutes",
+        "CapabilityOverview",
     ]
+    assert order.index("MissionFrame") < order.index("FeaturedFlywheel")
+    assert order.index("FeaturedFlywheel") < order.index("ProductSelection")
+    assert order.index("ProductSelection") < order.index("ResearchPilotRoutes")
 
 
 def test_resume_keeps_projects_inside_zentropy_experience() -> None:

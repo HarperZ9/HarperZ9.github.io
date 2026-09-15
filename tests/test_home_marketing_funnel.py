@@ -1,4 +1,4 @@
-"""Contracts for the product-first Zentropy Labs homepage."""
+"""Contracts for the mission-first Zentropy Labs homepage."""
 
 from __future__ import annotations
 
@@ -14,8 +14,8 @@ HOME_CSS = ROOT / "home" / "src" / "App.css"
 HOME_INDEX = ROOT / "home" / "index.html"
 SYSTEMS = ROOT / "system" / "systems.json"
 CANONICAL_META_DESCRIPTION = (
-    "Zentropy Labs is a product studio by Zain Dana Harper. Explore products first, "
-    "then hiring routes, evidence, and research records."
+    "Zentropy Labs builds Flywheel and public tools for re-derivable AI evaluation, "
+    "with release evidence, limits, and pilot routes."
 )
 
 
@@ -47,25 +47,27 @@ def array_items(source: str, array_name: str) -> list[str]:
     return re.findall(r'"([^"]+)"', match.group("body"))
 
 
-def test_home_places_products_and_hiring_before_supporting_evidence() -> None:
+def test_home_places_mission_and_flywheel_before_supporting_evidence() -> None:
     source = read(HOME_SOURCE)
-    hero = section(source, "identity", "products")
+    hero = section(source, "identity", "mission")
 
     assert "Zentropy Labs" in hero
-    assert "Zain Dana Harper is the builder behind Zentropy Labs." in hero
-    assert "Product studio, systems engineering, graphics, security tooling, and public research." in hero
-    assert '<a className="btn solid" href="#products">Explore products</a>' in hero
+    assert "Flywheel and public tools for re-derivable AI evaluation." in hero
+    assert "claims a skeptic can rerun" in hero
+    assert '<a className="btn solid" href="/flywheel.html">Inspect Flywheel</a>' in hero
     assert main_component_order(source) == [
         "IdentityHero",
+        "MissionFrame",
         "FeaturedFlywheel",
-        "LiveBoard",
         "ProductSelection",
-        "HiringRoutes",
         "EvidenceBoard",
+        "ResearchPilotRoutes",
         "CapabilityOverview",
         "CurrentResearch",
+        "LiveBoard",
         "RetroSystemsLab",
         "SecurityBoundary",
+        "HiringRoutes",
     ]
 
 
@@ -75,15 +77,15 @@ def test_home_defines_each_displayed_product_once_with_concrete_facts() -> None:
     representative_ids = array_items(source, "REPRESENTATIVE_IDS")
     graphics_ids = array_items(source, "GRAPHICS_IDS")
 
-    products = section(source, "products", "flywheel")
-    flywheel = section(source, "flywheel", "hiring-collaboration")
+    flywheel = section(source, "flywheel", "products")
+    products = section(source, "products", "evidence")
     graphics = section(source, "retro-systems-lab", "security-boundary")
 
     assert "flywheel" not in representative_ids
     assert products.count("{system.purpose}") == 1
     assert flywheel.count("{FLYWHEEL.purpose}") == 1
     assert graphics.count("{system.purpose}") == 1
-    assert "says what the product does once" in products
+    assert "says what the tool does once" in products
     assert "<dt>Type</dt>" in source
     assert "<dt>State</dt>" in source
     assert "<dt>Verified</dt>" in source
@@ -91,7 +93,8 @@ def test_home_defines_each_displayed_product_once_with_concrete_facts() -> None:
     assert "architectureRole" not in source
 
     assert set(representative_ids) == {
-        "index", "gather", "buildlang", "phantom", "accountable-surface"
+        "gather", "crucible", "index", "forum", "emet",
+        "relay", "mneme", "plexus", "proof-surface", "accountable-surface",
     }
     assert set(graphics_ids) == {
         "raw", "skyrimbridge", "truth-enb", "elder-enb", "enb-runtime-core",
@@ -201,13 +204,13 @@ def test_home_figure_cards_expose_dataset_facts_and_accessible_tables() -> None:
         assert value in source
 
 
-def test_home_metadata_and_noscript_follow_the_same_product_funnel() -> None:
+def test_home_metadata_and_noscript_follow_the_same_mission_funnel() -> None:
     template = read(HOME_INDEX)
     head = template.split("</head>", 1)[0]
     fallback = template.split("<noscript>", 1)[1].split("</noscript>", 1)[0]
 
     for value in (
-        "<title>Zentropy Labs | Products by Zain Dana Harper</title>",
+        "<title>Zentropy Labs | Re-derivable AI evaluation</title>",
         f'<meta name="description" content="{CANONICAL_META_DESCRIPTION}" />',
         f'<meta property="og:description" content="{CANONICAL_META_DESCRIPTION}" />',
         f'<meta name="twitter:description" content="{CANONICAL_META_DESCRIPTION}" />',
@@ -215,21 +218,25 @@ def test_home_metadata_and_noscript_follow_the_same_product_funnel() -> None:
         assert value in head
 
     for value in (
-        "Zentropy Labs is a product studio and public brand built by Zain Dana Harper.",
-        "Products to start with",
-        "Featured platform: Flywheel",
-        "Live: the agent board",
-        "Hiring, contracting, and collaboration",
+        "Flywheel and public tools for re-derivable AI evaluation, built by Zain Dana Harper.",
+        "Mission: re-derivable verification",
+        "Programmatic neutrality",
+        "Flagship platform: Flywheel",
+        "Built tooling ecosystem",
         "Evidence board",
+        "Research, pilot, and support routes",
         "Measured evidence",
         "Current research",
+        "Live: the agent board",
+        "Hiring, contracting, and collaboration",
     ):
         assert value in fallback
 
-    assert fallback.index("Products to start with") < fallback.index("Featured platform: Flywheel")
-    assert fallback.index("Featured platform: Flywheel") < fallback.index("Live: the agent board")
-    assert fallback.index("Live: the agent board") < fallback.index("Hiring, contracting, and collaboration")
-    assert fallback.index("Hiring, contracting, and collaboration") < fallback.index("Evidence board")
+    assert fallback.index("Mission: re-derivable verification") < fallback.index("Flagship platform: Flywheel")
+    assert fallback.index("Flagship platform: Flywheel") < fallback.index("Built tooling ecosystem")
+    assert fallback.index("Built tooling ecosystem") < fallback.index("Evidence board")
+    assert fallback.index("Evidence board") < fallback.index("Research, pilot, and support routes")
+    assert fallback.index("Current research") < fallback.index("Live: the agent board")
     assert "workshop behind Flywheel" not in fallback
 
 
@@ -247,6 +254,8 @@ def test_home_visual_and_accessibility_floor_is_responsive() -> None:
     assert "overflow-x: clip" in index_css
     assert "min-height:44px" in normalized(css)
     assert "max-width:min(22rem, calc(100vw - 1.5rem))" in normalized(css)
+    assert ".mission-grid" in css
+    assert ".route-ladder" in css
 
 
 def test_home_avoids_retired_jargon_and_false_hierarchy() -> None:

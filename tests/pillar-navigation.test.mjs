@@ -4,9 +4,11 @@ import { execFileSync } from 'node:child_process';
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { renderNav } from '../system/nav.js';
 import { PRIMARY_ROUTES, ROUTE_REGISTRY } from '../system/routes.js';
 
+const PROJECT_ROOT = fileURLToPath(new URL('..', import.meta.url));
 const siteIndexSource = () => readFileSync(new URL('../site-index.html', import.meta.url), 'utf8');
 const sitemapSource = () => readFileSync(new URL('../sitemap.xml', import.meta.url), 'utf8');
 
@@ -83,8 +85,8 @@ function fixtureRoutesModule(registry) {
   return `// Generated fixture.\nexport const ROUTE_REGISTRY_JSON = ${JSON.stringify(JSON.stringify(registry, null, 2))};\nexport const ROUTE_REGISTRY = JSON.parse(ROUTE_REGISTRY_JSON);\n`;
 }
 
-function readGeneratedRegistry(root) {
-  const source = readFileSync(join(root, 'system', 'routes.js'), 'utf8');
+function readGeneratedRegistry(root, relativePath = join('system', 'routes.js')) {
+  const source = readFileSync(join(root, relativePath), 'utf8');
   const encoded = source.match(/ROUTE_REGISTRY_JSON = ("(?:[^"\\]|\\.)*");/)?.[1];
   assert.ok(encoded, 'generated routes fixture did not contain ROUTE_REGISTRY_JSON');
   return JSON.parse(JSON.parse(encoded));
@@ -148,6 +150,33 @@ test('site index search includes reviewed route context beyond labels', () => {
   assert.ok(indexMatches('benchmark').includes('research-hyphal-context-benchmark.html'));
   assert.ok(indexMatches('benchmark').includes('analytics/current-cross-harness-pilot.html'));
   assert.ok(indexMatches('benchmark').includes('analytics/flywheel-benchmark-record.html'));
+});
+
+test('Accountable Surface route search text carries the release dependency boundary', () => {
+  const releaseBoundary = 'GitHub release v0.1.0 verified; source setup requires sibling dependencies; no PyPI release claimed';
+  const staleBoundary = /active source 0\.1\.0; no release/;
+  const registries = [
+    ['system route registry', ROUTE_REGISTRY],
+    ['home route mirror', readGeneratedRegistry(PROJECT_ROOT, join('home', 'src', 'site-routes.ts'))],
+  ];
+
+  for (const [label, registry] of registries) {
+    const route = registry.families.flatMap(family => family.routes).find(item => item.href === 'accountable-surface.html');
+    assert.ok(route, `${label} is missing the Accountable Surface route`);
+    assert.equal(route.label, 'Accountable Surface');
+    assert.equal(route.maturity, 'active');
+    assert.match(route.searchText, /GitHub release v0\.1\.0 verified/);
+    assert.match(route.searchText, /source setup requires sibling dependencies/);
+    assert.match(route.searchText, /no PyPI release claimed/);
+    assert.doesNotMatch(route.searchText, staleBoundary);
+    assert.equal(route.searchText.includes(releaseBoundary), true);
+  }
+
+  const accountableSurfaceIndex = indexEntries().find(entry => entry.href === 'accountable-surface.html');
+  assert.ok(accountableSurfaceIndex, 'site index is missing the Accountable Surface route');
+  assert.match(accountableSurfaceIndex.searchText, /source setup requires sibling dependencies/);
+  assert.doesNotMatch(accountableSurfaceIndex.searchText, staleBoundary);
+  assert.ok(indexMatches('sibling dependencies').includes('accountable-surface.html'));
 });
 
 test('research lane owns writing, publication archives, and current essays', () => {
