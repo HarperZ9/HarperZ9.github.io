@@ -280,7 +280,7 @@ RELEASE_PATHS = (
 )
 
 # Reviewed mission reorientation updates home, catalog, registry, sitemap, and bundle pair.
-REVIEWED_RELEASE_SHA256 = "2eb2b59ef25bf4b1b590954e3678b49c127ab6c70a5a117471ad5fb4636794ba"
+REVIEWED_RELEASE_SHA256 = "e51530258fe46140c81d46e7a8c547218fa08143f6caa70a7bf661b4f06dc34c"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
