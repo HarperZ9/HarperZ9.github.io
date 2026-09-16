@@ -109,12 +109,13 @@ const HIRING_ENTRY_ROUTES = [
   },
 ];
 
-const FLYWHEEL_SOURCE_CANDIDATE = {
-  label: "1.0.0 source candidate 48d98af",
-  href: "https://github.com/HarperZ9/flywheel/commit/48d98af715bb2d6464361e98f43c94657fc78e0b",
-  ciHref: "https://github.com/HarperZ9/flywheel/actions/runs/34891965952",
-  observed: "2026-09-14",
-  boundary: "CI success at the source commit; public release and installed acceptance are separate.",
+const FLYWHEEL_ACCEPTED_SOURCE = {
+  label: "accepted source 123b6d11",
+  href: "https://github.com/HarperZ9/flywheel/commit/123b6d11ff9a1e9d23f8ced04a4f811b57383449",
+  ciHref: "https://github.com/HarperZ9/flywheel/actions/runs/35076488925",
+  desktopCiHref: "https://github.com/HarperZ9/flywheel/actions/runs/35076489004",
+  observed: "2026-09-16",
+  boundary: "Source CI success at the accepted source commit; public release and installed acceptance are separate.",
 };
 
 const RESEARCH_SUPPORT_ROUTES = [
@@ -405,7 +406,7 @@ function FeaturedFlywheel() {
       <div>
         <h2 id="flywheel-title">Flagship platform: Flywheel</h2>
         <p className="section-lead">
-          {FLYWHEEL.purpose} It is the place where evaluation work runs, records what happened, and exposes the difference between a public release, source candidate, installed acceptance, and external use.
+          {FLYWHEEL.purpose} It is the place where evaluation work runs, records what happened, and exposes the difference between a public release, accepted source, installed acceptance, and external use.
         </p>
         <div className="action-row">
           <a className="text-link" href={localHref(FLYWHEEL.href)}>Inspect Flywheel</a>
@@ -430,16 +431,16 @@ function FeaturedFlywheel() {
               <td>{release ? <a href={release.href}>{release.label}</a> : "No release record"}</td>
             </tr>
             <tr>
-              <th scope="row">Source candidate</th>
-              <td><a href={FLYWHEEL_SOURCE_CANDIDATE.href}>{FLYWHEEL_SOURCE_CANDIDATE.label}</a></td>
+              <th scope="row">Accepted source</th>
+              <td><a href={FLYWHEEL_ACCEPTED_SOURCE.href}>{FLYWHEEL_ACCEPTED_SOURCE.label}</a></td>
             </tr>
             <tr>
               <th scope="row">Source CI</th>
-              <td><a href={FLYWHEEL_SOURCE_CANDIDATE.ciHref}>GitHub Actions run 34891965952</a></td>
+              <td><a href={FLYWHEEL_ACCEPTED_SOURCE.ciHref}>main CI run 35076488925</a>; <a href={FLYWHEEL_ACCEPTED_SOURCE.desktopCiHref}>desktop CI run 35076489004</a></td>
             </tr>
             <tr>
               <th scope="row">Verified</th>
-              <td>{release?.date ?? "unknown"} release; {FLYWHEEL_SOURCE_CANDIDATE.observed} source CI</td>
+              <td>{release?.date ?? "unknown"} release; {FLYWHEEL_ACCEPTED_SOURCE.observed} source CI observed</td>
             </tr>
             <tr>
               <th scope="row">Install</th>
@@ -451,7 +452,7 @@ function FeaturedFlywheel() {
             </tr>
           </tbody>
         </table>
-        <p className="boundary-note">{FLYWHEEL.limitations[0]} {FLYWHEEL_SOURCE_CANDIDATE.boundary}</p>
+        <p className="boundary-note">{FLYWHEEL.limitations[0]} {FLYWHEEL_ACCEPTED_SOURCE.boundary}</p>
       </div>
     </section>
   );
