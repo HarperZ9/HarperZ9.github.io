@@ -220,8 +220,8 @@ This was a monitoring false-positive review, not a new factual development. It d
 - Dated archive target: [https://harperz9.github.io/frontier-safety/archive/2026-09-16.html](https://harperz9.github.io/frontier-safety/archive/2026-09-16.html)
 - Edition hash: `9d77d2eac4059f6e0b0bbada716b438510344d67ecc338cfb8c1f2aa8402eba1`
 - Idempotency key: `2068da0629e9a8a4721f430ea72eef108406529bd27f0d155a3184d52fd32a84`
-- Reviewed content commit: pending at the time this pre-publication receipt was written.
-- Pull request: pending at the time this pre-publication receipt was written.
+- Reviewed content commit: `58ac7fbf2486a07caa4e45c15b3b909802504993`
+- Pull request: [#250](https://github.com/HarperZ9/HarperZ9.github.io/pull/250)
 - Source check: the curated checker ran exactly once for this refresh. It reported six changed and review-required registered sources, zero errors, and zero unbaselined sources; packet SHA-256 `f1fd9b051ed7d33739a23fd046c0cd064d1dad2ddd7ba70ed1d4a80276f0af18`.
 - Material change: METR says it edited its August 26 joint incident report on September 13 to add two relationship disclosures about named investigators. The disclosures change the provenance context for the report's independent-analysis role. They do not establish bias, external influence, an error in the findings, or safeguard or remediation effectiveness.
 - Nonmaterial review: four previously watched OpenAI URLs changed only in sitemap metadata, with no visible semantic article amendment. The registered AISI, Anthropic, Hugging Face, and METR methodology records did not show a new material change. Potentially material records outside the approved registry were held outside publication.
