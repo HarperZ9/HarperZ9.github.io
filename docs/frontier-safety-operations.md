@@ -210,3 +210,29 @@ This was a monitoring false-positive review, not a new factual development. It d
 - Live hash verification: required after Pages succeeds; pending at the time this pre-publication receipt was committed.
 - X post: not posted; edition-matched draft retained.
 - LinkedIn post: not posted; edition-matched draft retained.
+
+## 2026-09-16 publication receipt
+
+- Edition: 2026-09-16
+- Observation time: `2026-09-16T15:07:41Z`
+- Publication state: reviewed normal changed edition; no amendment or correction to earlier archives
+- Live edition target: [https://harperz9.github.io/frontier-safety.html](https://harperz9.github.io/frontier-safety.html)
+- Dated archive target: [https://harperz9.github.io/frontier-safety/archive/2026-09-16.html](https://harperz9.github.io/frontier-safety/archive/2026-09-16.html)
+- Edition hash: `9d77d2eac4059f6e0b0bbada716b438510344d67ecc338cfb8c1f2aa8402eba1`
+- Idempotency key: `2068da0629e9a8a4721f430ea72eef108406529bd27f0d155a3184d52fd32a84`
+- Reviewed content commit: `58ac7fbf2486a07caa4e45c15b3b909802504993`
+- Pull request: [#250](https://github.com/HarperZ9/HarperZ9.github.io/pull/250)
+- Source check: the curated checker ran exactly once for this refresh. It reported six changed and review-required registered sources, zero errors, and zero unbaselined sources; packet SHA-256 `f1fd9b051ed7d33739a23fd046c0cd064d1dad2ddd7ba70ed1d4a80276f0af18`.
+- Material change: METR says it edited its August 26 joint incident report on September 13 to add two relationship disclosures about named investigators. The disclosures change the provenance context for the report's independent-analysis role. They do not establish bias, external influence, an error in the findings, or safeguard or remediation effectiveness.
+- Nonmaterial review: four previously watched OpenAI URLs changed only in sitemap metadata, with no visible semantic article amendment. The registered AISI, Anthropic, Hugging Face, and METR methodology records did not show a new material change. Potentially material records outside the approved registry were held outside publication.
+- Reviewed source state: unchanged. Acceptance of any new fingerprint remains a separate reviewed transition.
+- Reproducibility: the deterministic Frontier Safety generator produced seven byte-identical outputs on two consecutive successful runs. The publication build receipt and reviewed release-spine fingerprint were synchronized to the new archive sitemap route.
+- Verification: 199 targeted Frontier Safety and deployment tests passed; the complete Python suite passed 602 tests; the Node suite passed 1,041 tests with 14 documented browser-only skips; 1,349 internal links across 171 pages had zero failures; public-artifact, archive-discovery, canonical metadata, release-receipt, accessibility, and diff gates passed.
+- Independent review: six source-family reviews and one final release review found no critical or content-boundary issue; the release review required this receipt before merge.
+- Visual review: current and dated-archive pages passed Chrome desktop and 390-by-844 responsive inspection with no horizontal overflow, incorrect route, or console warning or error.
+- Guarded workflow boundary: the manual publication workflow was not dispatched because it would rerun the curated checker and violate this refresh's exactly-once source-check requirement. Pull-request CI remains the external merge gate.
+- Merge receipt: pending at the time this pre-publication receipt was committed.
+- Pages build receipt: pending at the time this pre-publication receipt was committed.
+- Live hash verification: required after Pages succeeds; pending at the time this pre-publication receipt was committed.
+- X post: not posted; edition-matched draft retained.
+- LinkedIn post: not posted; edition-matched draft retained.
