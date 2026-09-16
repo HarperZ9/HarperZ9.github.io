@@ -1092,22 +1092,41 @@
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "pip install emet",
+      "entryCommand": "python -m pip install emet==1.3.0",
       "verificationCommand": "emet selftest; emet check receipt.json",
       "evidence": [
         {
-          "id": "emet-release-v1-2-0",
+          "id": "emet-release-v1-3-0",
           "type": "release",
-          "label": "EMET v1.2.0",
-          "href": "https://github.com/HarperZ9/emet/releases/tag/v1.2.0",
-          "date": "2026-08-27",
+          "label": "EMET v1.3.0",
+          "href": "https://github.com/HarperZ9/emet/releases/tag/v1.3.0",
+          "date": "2026-09-13",
           "status": "verified",
-          "summary": "The v1.2.0 public release was verified."
+          "summary": "The v1.3.0 GitHub release is public, not draft, and not prerelease. The annotated tag object is 6fa3985cb02dfc84e77f7e3c5872bc988304b18d; the peeled source commit is b37da003951866ece403fb08fe3d028d00c39f4f. No release assets are attached to this GitHub release."
+        },
+        {
+          "id": "emet-pypi-v1-3-0",
+          "type": "release",
+          "label": "emet 1.3.0 on PyPI",
+          "href": "https://pypi.org/project/emet/1.3.0/",
+          "date": "2026-09-13",
+          "status": "verified",
+          "summary": "PyPI serves emet 1.3.0. The wheel SHA-256 is 1a2bea4f9a7cdab07bc6b883f8487673bf985f793d125ce18a4cf86d66044a09; the source archive SHA-256 is b28d6763db1d8db0f376cb6f33dffa3e6e649c65d9843483dd395f71e3f36d02. This is distribution evidence, not proof of semantic quality or independent use."
+        },
+        {
+          "id": "emet-flywheel-review-protocol-v1-3-0",
+          "type": "code-permalink",
+          "label": "EMET Flywheel review protocol",
+          "href": "https://github.com/HarperZ9/emet/blob/v1.3.0/docs/FLYWHEEL-REVIEW-PROTOCOL.md",
+          "date": "2026-09-14",
+          "status": "verified",
+          "summary": "The pinned v1.3.0 protocol document is a development compatibility exercise that requires source checkouts. It is not a model assessment, regulatory assessment, policy endorsement, or public proof that a reviewer reran the exercise."
         }
       ],
       "limitations": [
-        "The witness reports byte agreement, drift, or inability to verify; it does not judge semantic quality.",
-        "Same-author conformance implementations prove rule clarity, not independent authorship."
+        "The witness reports byte agreement, drift, or inability to verify; it does not judge semantic quality, safety, source completeness, or policy compliance.",
+        "Same-author conformance implementations prove rule clarity, not independent authorship.",
+        "The Flywheel review protocol is a development compatibility exercise and requires source checkouts; it is not a model or regulatory assessment."
       ],
       "boundary": "Run on files and packets you are authorized to inspect.",
       "inputs": [
@@ -1126,10 +1145,10 @@
         "repo-proof-index",
         "accountable-surface"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-09-14",
       "primaryDomain": "evaluation-verification",
       "productType": "cross-implementation integrity witness",
-      "releaseState": "stable v1.2.0"
+      "releaseState": "stable v1.3.0 on GitHub and PyPI"
     },
     {
       "id": "buildlang",
@@ -3156,21 +3175,33 @@
       "maturity": "active",
       "placement": "featured",
       "accessMode": "inspect",
-      "entryCommand": "python -m pip install -e \".[test]\"; python examples/demo.py",
-      "verificationCommand": "python -m pytest",
+      "entryCommand": "Follow the repository source setup with sibling source packages present; python examples/demo.py",
+      "verificationCommand": "Verify the v0.1.0 SHA256SUMS.txt entry; follow documented source setup with sibling source packages; python -m pytest",
       "evidence": [
+        {
+          "id": "accountable-surface-release-v0-1-0",
+          "type": "release",
+          "label": "Accountable Surface v0.1.0",
+          "href": "https://github.com/HarperZ9/accountable-surface/releases/tag/v0.1.0",
+          "date": "2026-09-14",
+          "status": "verified",
+          "summary": "The v0.1.0 GitHub release is public, not draft, and not prerelease. It targets commit 9ebc4519e92ce674ac9058e662e655842c69be42 and publishes accountable_surface-0.1.0-py3-none-any.whl SHA-256 9f08e87868a755141e515a7b0e99be67caee3770f33d8adc11506effa8ac1e52, accountable_surface-0.1.0.tar.gz SHA-256 ac655bf23dee3714c7ee59c87fae98c09a75dcaaf0244bbb641e04d3d05eaa9b, and accountable-surface-010-release-SHA256SUMS.txt SHA-256 a28e4e2b37baf1899137db681a2ea7387e48577eb452cff69e41605b71e59c84. The release notes require the repository's documented source setup because some capabilities need sibling source packages. A clean wheel install succeeded, then importing accountable_surface failed on missing coherence_membrane. This is release evidence, not self-contained package readiness or real Windows native-app acceptance."
+        },
         {
           "id": "accountable-surface-public-source",
           "type": "source",
-          "label": "Accountable Surface public source",
+          "label": "Accountable Surface source 0.1.0",
           "href": "https://github.com/HarperZ9/accountable-surface",
-          "date": "2026-08-27",
+          "date": "2026-09-14",
           "status": "verified",
-          "summary": "The public repository identifies source 0.1.0 and no tagged release; self-authored tests are not independent review."
+          "summary": "The public repository and v0.1.0 release notes identify source 0.1.0. The source setup includes sibling source dependencies; self-authored tests are not independent review."
         }
       ],
       "limitations": [
         "The model cannot supply its own authorization.",
+        "The v0.1.0 GitHub wheel is not a self-contained clean-machine install; clean wheel import fails without coherence_membrane.",
+        "Some capabilities require sibling source packages from the documented source setup.",
+        "Real Windows native-application acceptance remains unverified; release validation used a fake UI Automation driver.",
         "Self-authored tests do not establish independent adversarial review or production safety."
       ],
       "boundary": "Every effect requires authority external to the model and remains limited to the granted scope.",
@@ -3186,7 +3217,10 @@
         "rollback results",
         "durable action journal"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "documented sibling source packages for enabled capabilities",
+        "coherence_membrane sibling source package for clean wheel import"
+      ],
       "related": [
         "flywheel",
         "emet",
@@ -3194,10 +3228,10 @@
         "bounds",
         "isomorph"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-09-14",
       "primaryDomain": "security-privacy",
       "productType": "controlled agent-action workbench",
-      "releaseState": "active source 0.1.0; no release"
+      "releaseState": "GitHub release v0.1.0 verified; source setup requires sibling dependencies; no PyPI release claimed"
     },
     {
       "id": "public-surface-sweeper",

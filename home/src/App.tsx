@@ -67,10 +67,15 @@ const CAPABILITY_FAMILY_IDS = [
 ] as const;
 
 const REPRESENTATIVE_IDS = [
-  "index",
   "gather",
-  "buildlang",
-  "phantom",
+  "crucible",
+  "index",
+  "forum",
+  "emet",
+  "relay",
+  "mneme",
+  "plexus",
+  "proof-surface",
   "accountable-surface",
 ];
 
@@ -101,6 +106,33 @@ const HIRING_ENTRY_ROUTES = [
     label: "Public service, safety, and field operations",
     href: "/hire.html#public-service-field-path",
     summary: "Benefits-rich public routes where systems judgment and field reliability matter.",
+  },
+];
+
+const FLYWHEEL_ACCEPTED_SOURCE = {
+  label: "accepted source 123b6d11",
+  href: "https://github.com/HarperZ9/flywheel/commit/123b6d11ff9a1e9d23f8ced04a4f811b57383449",
+  ciHref: "https://github.com/HarperZ9/flywheel/actions/runs/35076488925",
+  desktopCiHref: "https://github.com/HarperZ9/flywheel/actions/runs/35076489004",
+  observed: "2026-09-16",
+  boundary: "Source CI success at the accepted source commit; public release and installed acceptance are separate.",
+};
+
+const RESEARCH_SUPPORT_ROUTES = [
+  {
+    label: "Evaluator pilot",
+    href: "/test-run-request.html",
+    summary: "Bring one decision, a claim, an evidence boundary, and a false-success control. The useful result is a rerunnable verdict or a named unverifiable remainder.",
+  },
+  {
+    label: "Frontier lab or research review",
+    href: "/publications.html",
+    summary: "Start from public figures, release records, and essays, then challenge the evidence, the check, or the correction path.",
+  },
+  {
+    label: "Support or fund the work",
+    href: "/hire.html#technical-operations-path",
+    summary: "Use the technical operations route for evaluation tooling, Python developer tools, release infrastructure, and research-engineering support.",
   },
 ];
 
@@ -193,15 +225,17 @@ function App() {
       <TopNav />
       <main id="main">
         <IdentityHero />
+        <MissionFrame />
         <FeaturedFlywheel />
-        <LiveBoard />
         <ProductSelection />
-        <HiringRoutes />
         <EvidenceBoard />
+        <ResearchPilotRoutes />
         <CapabilityOverview />
         <CurrentResearch />
+        <LiveBoard />
         <RetroSystemsLab />
         <SecurityBoundary />
+        <HiringRoutes />
       </main>
       <Footer />
     </>
@@ -236,19 +270,20 @@ function IdentityHero() {
     <header id="identity" className="hero">
       <div className="hero-copy reveal in">
         <h1 className="hero-title">Zentropy Labs</h1>
-        <p className="hero-line">Product studio, systems engineering, graphics, security tooling, and public research.</p>
-        <p className="hero-lab">Zain Dana Harper is the builder behind Zentropy Labs.</p>
+        <p className="hero-line">Flywheel and public tools for re-derivable AI evaluation.</p>
+        <p className="hero-lab">Built by Zain Dana Harper. Intended for evaluators, research teams, and institutions that need claims a skeptic can rerun.</p>
         <div className="hero-actions" aria-label="Primary actions">
-          <a className="btn solid" href="#products">Explore products</a>
-          <a className="btn" href="/hire.html">Hire or collaborate</a>
+          <a className="btn solid" href="/flywheel.html">Inspect Flywheel</a>
+          <a className="btn" href="#evidence">Review evidence</a>
+          <a className="btn" href="#research-pilot-support">Pilot or support</a>
         </div>
-        <nav className="edition-links" aria-label="Explore the workshop">
+        <nav className="edition-links" aria-label="Mission routes">
           <a href="/career/Flywheel-Platform-Brief.pdf">The Flywheel platform brief</a>
-          <a href="/bulletin.html">Bulletin: read, post, connect</a>
+          <a href="/catalog.html">Public tool catalog</a>
           <a href="/publications.html">Essays and publications</a>
         </nav>
       </div>
-      <figure className="identity-art reveal in">
+      <figure className="identity-art mission-apparatus reveal in" aria-labelledby="mission-apparatus-title">
         <picture>
           <source
             type="image/webp"
@@ -263,8 +298,48 @@ function IdentityHero() {
             fetchPriority="high"
           />
         </picture>
+        <figcaption className="mission-apparatus-copy">
+          <strong id="mission-apparatus-title">Programmatic neutrality</strong>
+          <span>Same specified check, evidence, and execution assumptions. Same verdict when the implementation is correct.</span>
+        </figcaption>
+        <ol className="mission-apparatus-steps" aria-label="Verification path">
+          <li><span>Claim</span><strong>declared</strong></li>
+          <li><span>Evidence</span><strong>bounded</strong></li>
+          <li><span>Check</span><strong>versioned</strong></li>
+          <li><span>Verdict</span><strong>rerun</strong></li>
+        </ol>
       </figure>
     </header>
+  );
+}
+
+function MissionFrame() {
+  return (
+    <section id="mission" className="section mission-section" aria-labelledby="mission-title">
+      <div className="section-heading">
+        <h2 id="mission-title">Mission: re-derivable verification</h2>
+        <p className="section-lead">
+          A consequential AI claim needs a check another reviewer can inspect and rerun.
+        </p>
+      </div>
+      <div className="mission-grid">
+        <article className="mission-card">
+          <h3>Mechanism</h3>
+          <p>Specify the claim, boundary, evidence, source version, execution assumptions, and false-success controls. Run the check. Preserve receipts so another authorized reviewer can rerun or challenge it.</p>
+        </article>
+        <article className="mission-card">
+          <h3>Built</h3>
+          <p>Flywheel is the flagship platform. Gather, Index, Forum, EMET, Crucible, Relay, Mneme, Plexus, Proof Surface, and Accountable Surface cover capture, routing, witnessing, memory, tool discovery, claims, and action boundaries.</p>
+        </article>
+        <article className="mission-card">
+          <h3>Proposed reviewer pilot</h3>
+          <p>Start with one consequential claim, equal evidence controls, expected reviewer effort, missed-error cases, and honest nulls. The output is a rerunnable verdict plus the exact remainder that still needs human judgment.</p>
+        </article>
+      </div>
+      <p className="does-not-prove">
+        <strong>Programmatic neutrality:</strong> given the same specified check, evidence, and execution assumptions, a correct implementation should return the same verdict regardless of actor, company, lab, or nation.
+      </p>
+    </section>
   );
 }
 
@@ -272,9 +347,9 @@ function ProductSelection() {
   return (
     <section id="products" className="section representative-section" aria-labelledby="products-title">
       <div className="section-heading">
-        <h2 id="products-title">Products to start with</h2>
+        <h2 id="products-title">Built tooling ecosystem</h2>
         <p className="section-lead">
-          Start with products that can be tried, inspected, or evaluated. Each entry says what the product does once,
+          These are public systems that can be tried, inspected, or evaluated. Each entry says what the tool does once,
           then gives its type, state, verification date, evidence, and full product page.
         </p>
       </div>
@@ -284,7 +359,7 @@ function ProductSelection() {
             <div>
               <h3><a href={localHref(system.href)}>{system.name}</a></h3>
               <p>{system.purpose}</p>
-              <p className="product-status">{system.releaseState} · {system.maturity}</p>
+              <p className="product-status">{system.releaseState} / {system.maturity}</p>
             </div>
             <ProductDefinition system={system} />
           </article>
@@ -329,9 +404,9 @@ function FeaturedFlywheel() {
       aria-labelledby="flywheel-title"
     >
       <div>
-        <h2 id="flywheel-title">Featured platform: Flywheel</h2>
+        <h2 id="flywheel-title">Flagship platform: Flywheel</h2>
         <p className="section-lead">
-          {FLYWHEEL.purpose}
+          {FLYWHEEL.purpose} It is the place where evaluation work runs, records what happened, and exposes the difference between a public release, accepted source, installed acceptance, and external use.
         </p>
         <div className="action-row">
           <a className="text-link" href={localHref(FLYWHEEL.href)}>Inspect Flywheel</a>
@@ -356,8 +431,16 @@ function FeaturedFlywheel() {
               <td>{release ? <a href={release.href}>{release.label}</a> : "No release record"}</td>
             </tr>
             <tr>
+              <th scope="row">Accepted source</th>
+              <td><a href={FLYWHEEL_ACCEPTED_SOURCE.href}>{FLYWHEEL_ACCEPTED_SOURCE.label}</a></td>
+            </tr>
+            <tr>
+              <th scope="row">Source CI</th>
+              <td><a href={FLYWHEEL_ACCEPTED_SOURCE.ciHref}>main CI run 35076488925</a>; <a href={FLYWHEEL_ACCEPTED_SOURCE.desktopCiHref}>desktop CI run 35076489004</a></td>
+            </tr>
+            <tr>
               <th scope="row">Verified</th>
-              <td>{release?.date ?? "unknown"}</td>
+              <td>{release?.date ?? "unknown"} release; {FLYWHEEL_ACCEPTED_SOURCE.observed} source CI observed</td>
             </tr>
             <tr>
               <th scope="row">Install</th>
@@ -369,7 +452,7 @@ function FeaturedFlywheel() {
             </tr>
           </tbody>
         </table>
-        <p className="boundary-note">{FLYWHEEL.limitations[0]}</p>
+        <p className="boundary-note">{FLYWHEEL.limitations[0]} {FLYWHEEL_ACCEPTED_SOURCE.boundary}</p>
       </div>
     </section>
   );
@@ -381,12 +464,12 @@ function EvidenceBoard() {
       <div className="section-heading">
         <h2 id="evidence-title">Evidence board</h2>
         <p className="section-lead">
-          A compact index of the public record. Values come from checked-in source data and link back to the record that produced them.
+          A compact index of the public record. Values come from checked-in source data and link back to the public record that produced them.
         </p>
       </div>
       <p className="does-not-prove">
-        <strong>What this does not prove:</strong> A valid release row is not an adoption claim, safety claim, or guarantee of model correctness.
-        Counts and releases stay evidence rows, not market proof.
+        <strong>What this does not prove:</strong> A valid release row is not an adoption claim, safety claim, regulatory approval, or guarantee of model correctness.
+        Counts, hashes, and release links stay evidence rows, not market proof.
       </p>
       <details className="evidence-disclosure">
         <summary>Open source metrics and newest evidence</summary>
@@ -426,6 +509,27 @@ function EvidenceBoard() {
           </section>
         </div>
       </details>
+    </section>
+  );
+}
+
+function ResearchPilotRoutes() {
+  return (
+    <section id="research-pilot-support" className="section pilot-section" aria-labelledby="pilot-title">
+      <div className="section-heading">
+        <h2 id="pilot-title">Research, pilot, and support routes</h2>
+        <p className="section-lead">
+          The useful next step is a bounded test or support route that improves a decision. The route should name the claim, evidence boundary, check, correction path, and what a passing result would still leave unresolved.
+        </p>
+      </div>
+      <div className="route-ladder">
+        {RESEARCH_SUPPORT_ROUTES.map((route) => (
+          <a className="route-step" href={route.href} key={route.href}>
+            <span>{route.label}</span>
+            <small>{route.summary}</small>
+          </a>
+        ))}
+      </div>
     </section>
   );
 }
@@ -565,6 +669,7 @@ function CurrentResearch() {
         <h2 id="research-title">Current research</h2>
         <p className="section-lead">
           The publication surface carries current briefings, figures, source records, limitations, and related reproducible artifacts for public review.
+          Model failures are framed as products of incentives, deployment conditions, and engineering choices; internal signals are treated as untrusted readouts checked against behavior.
         </p>
         <div className="action-row">
           <a className="text-link" href="/publications.html">Publication index</a>
@@ -657,12 +762,12 @@ function HiringRoutes() {
       <div>
         <h2 id="hiring-title">Hiring, contracting, and collaboration</h2>
         <p className="section-lead">
-          Run, inspect, or verify the work through three practical routes: technical support and QA, evaluation tooling and Python developer tools, and public-service or field work.
+          For conventional hiring or contracting, use three practical routes: technical support and QA, evaluation tooling and Python developer tools, and public-service or field work.
           The documents are direct, and the project evidence stays one click away.
         </p>
       </div>
       <div className="hiring-actions">
-        <a className="btn solid" href="/hire.html">Hiring map</a>
+        <a className="btn solid" href="/hire.html">Hire or collaborate</a>
         <a className="btn" href="/resume.html">Technical resume</a>
         <a className="btn" href="mailto:zaindharper@gmail.com">Email</a>
         <a className="btn" href="https://github.com/HarperZ9" rel="noopener">GitHub</a>
@@ -687,7 +792,7 @@ function HiringRoutes() {
 function Footer() {
   return (
     <footer className="site-footer">
-      <p>Zain Dana Harper and Zentropy Labs. Public systems, research briefings, retro rendering, security tooling, and hiring routes.</p>
+      <p>Zain Dana Harper and Zentropy Labs. Flywheel, re-derivable evaluation tools, public evidence records, retro rendering, security tooling, and hiring routes.</p>
       <nav className="footer-links" aria-label="Footer">
         {FOOTER_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
         <a href="https://github.com/HarperZ9" rel="noopener">GitHub</a>

@@ -3,6 +3,46 @@
   "derivedFrom": "harperz9-systems/v4",
   "records": [
     {
+      "id": "accountable-surface-release-v0-1-0",
+      "type": "release",
+      "label": "Accountable Surface v0.1.0",
+      "href": "https://github.com/HarperZ9/accountable-surface/releases/tag/v0.1.0",
+      "date": "2026-09-14",
+      "status": "verified",
+      "summary": "The v0.1.0 GitHub release is public, not draft, and not prerelease. It targets commit 9ebc4519e92ce674ac9058e662e655842c69be42 and publishes accountable_surface-0.1.0-py3-none-any.whl SHA-256 9f08e87868a755141e515a7b0e99be67caee3770f33d8adc11506effa8ac1e52, accountable_surface-0.1.0.tar.gz SHA-256 ac655bf23dee3714c7ee59c87fae98c09a75dcaaf0244bbb641e04d3d05eaa9b, and accountable-surface-010-release-SHA256SUMS.txt SHA-256 a28e4e2b37baf1899137db681a2ea7387e48577eb452cff69e41605b71e59c84. The release notes require the repository's documented source setup because some capabilities need sibling source packages. A clean wheel install succeeded, then importing accountable_surface failed on missing coherence_membrane. This is release evidence, not self-contained package readiness or real Windows native-app acceptance.",
+      "systemId": "accountable-surface"
+    },
+    {
+      "id": "emet-release-v1-3-0",
+      "type": "release",
+      "label": "EMET v1.3.0",
+      "href": "https://github.com/HarperZ9/emet/releases/tag/v1.3.0",
+      "date": "2026-09-13",
+      "status": "verified",
+      "summary": "The v1.3.0 GitHub release is public, not draft, and not prerelease. The annotated tag object is 6fa3985cb02dfc84e77f7e3c5872bc988304b18d; the peeled source commit is b37da003951866ece403fb08fe3d028d00c39f4f. No release assets are attached to this GitHub release.",
+      "systemId": "emet"
+    },
+    {
+      "id": "emet-pypi-v1-3-0",
+      "type": "release",
+      "label": "emet 1.3.0 on PyPI",
+      "href": "https://pypi.org/project/emet/1.3.0/",
+      "date": "2026-09-13",
+      "status": "verified",
+      "summary": "PyPI serves emet 1.3.0. The wheel SHA-256 is 1a2bea4f9a7cdab07bc6b883f8487673bf985f793d125ce18a4cf86d66044a09; the source archive SHA-256 is b28d6763db1d8db0f376cb6f33dffa3e6e649c65d9843483dd395f71e3f36d02. This is distribution evidence, not proof of semantic quality or independent use.",
+      "systemId": "emet"
+    },
+    {
+      "id": "emet-flywheel-review-protocol-v1-3-0",
+      "type": "code-permalink",
+      "label": "EMET Flywheel review protocol",
+      "href": "https://github.com/HarperZ9/emet/blob/v1.3.0/docs/FLYWHEEL-REVIEW-PROTOCOL.md",
+      "date": "2026-09-14",
+      "status": "verified",
+      "summary": "The pinned v1.3.0 protocol document is a development compatibility exercise that requires source checkouts. It is not a model assessment, regulatory assessment, policy endorsement, or public proof that a reviewer reran the exercise.",
+      "systemId": "emet"
+    },
+    {
       "id": "flywheel-release-v0-6-2",
       "type": "release",
       "label": "Flywheel v0.6.2",
