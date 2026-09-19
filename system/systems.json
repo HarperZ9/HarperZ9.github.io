@@ -278,9 +278,27 @@
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "python -m pip install flywheel-verify==0.6.2; flywheel up",
-      "verificationCommand": "flywheel lanes --probe; service-desk-incident-env verify RETURNED_ARTIFACT_DIR --recompute --json",
+      "entryCommand": "pip install flywheel-verify",
+      "verificationCommand": "flywheel lanes --probe; flywheel check-output --contract task.contract.json --answer answer.json --allow-commands",
       "evidence": [
+        {
+          "id": "flywheel-release-v1-0-1",
+          "type": "release",
+          "label": "Flywheel v1.0.1",
+          "href": "https://github.com/HarperZ9/flywheel/releases/tag/v1.0.1",
+          "date": "2026-09-19",
+          "status": "verified",
+          "summary": "The v1.0.1 GitHub release, titled Flywheel 1.0.1, was published at 2026-09-19T20:44:28Z, and the v1.0.1 tag resolves to source commit 2efac00c0fc8a6c7d07097d0f27ac6f04a26ad23. The release attaches Flywheel-Setup-1.0.1-x64.exe at 56,164,323 bytes with SHA-256 95c616d667b1d3232a8c56a080e4de2112428000a0635eab60427b4983e90d37 and frozen-gateway-smoke.json at 6,730 bytes with SHA-256 5d94e797f5c6c016b5a6bddc0b59741f4b73ae7f54c158649181ecce8e444f67. The frozen gateway smoke receipt reports PASS for expected version 1.0.1 and records all ten bundled Python lanes admitting at exit code 0. Ten Python lanes (gather, crucible, index, forum, plexus, mneme, canon, chorus, relay, accountable-surface) carry a hash-pinned source payload and launch from vendored source on a clean machine; the staged source is hash-checked before launch, each admission exposes only that lane's status and doctor health tools, and the accept path is untouched. On the shipped benchmark the verified loop shows no measured accuracy uplift over single-shot; the interval includes zero, and the demonstrated value is the re-derivable receipt and the containment. These checks do not establish installer integration, clean OS compatibility, Flutter UI rendering, native identity registration, Relay model-backed task execution, production Bulletin posting, general model uplift, physical Android/mobile acceptance, or native bundling of the node lanes learn and telos or calibrate-pro, which resolve from a source checkout today. The Windows desktop installer is unsigned."
+        },
+        {
+          "id": "flywheel-pypi-v1-0-1",
+          "type": "release",
+          "label": "flywheel-verify 1.0.1 on PyPI",
+          "href": "https://pypi.org/project/flywheel-verify/1.0.1/",
+          "date": "2026-09-19",
+          "status": "verified",
+          "summary": "PyPI serves flywheel-verify 1.0.1, installed with pip install flywheel-verify. The wheel flywheel_verify-1.0.1-py3-none-any.whl is 2,217,845 bytes with SHA-256 be08deaabaa506c893144db460f1b43326a8fbc0e58e0dea38439b31235f2b8c; the source archive flywheel_verify-1.0.1.tar.gz is 3,350,903 bytes with SHA-256 83a34cfe7709f4ee8c29dbf888b1fca99c3d1928c116f980e3b09a12b6d33916. This distribution evidence does not prove source truth, claim support, complete coverage, downstream model use, absence of sensitive material, or clean-machine installation."
+        },
         {
           "id": "flywheel-release-v0-6-2",
           "type": "release",
@@ -472,10 +490,11 @@
         }
       ],
       "limitations": [
-        "Receipts establish witnessed actions and checks, not general model correctness.",
-        "The v0.6.2 Python package release, Windows installer asset, frozen gateway smoke receipt, and Service Desk controls do not establish installer integration, clean OS compatibility, Flutter UI rendering, native identity registration, Relay model-backed task execution, production Bulletin posting, model uplift, production ServiceNow compatibility, arbitrary provider-native session resume, provider-native session migration, physical Android/mobile acceptance, 0.7.0 readiness, or universal verifier completeness.",
-        "The v0.6.2 Windows desktop installer is unsigned. Matching the published SHA-256 checks bytes only; it does not authenticate the publisher or prove clean-machine installation.",
-        "The Service Desk environment uses synthetic local state and local HTTP services; it does not call a model provider or connect to ServiceNow.",
+        "Receipts establish witnessed actions and checks, not general model correctness. A receipt proves a check reproduces; it does not prove the answer is true of the world.",
+        "On the shipped benchmark the verified loop shows no measured accuracy uplift over single-shot; the interval includes zero. The demonstrated value is the re-derivable receipt and the containment.",
+        "The v1.0.1 Python package release, Windows installer asset, and frozen gateway smoke receipt do not establish installer integration, clean OS compatibility, Flutter UI rendering, native identity registration, Relay model-backed task execution, production Bulletin posting, general model uplift, physical Android/mobile acceptance, or universal verifier completeness.",
+        "Native lane bundling covers ten Python lanes from hash-pinned vendored source. The node lanes learn and telos, and calibrate-pro, resolve from a source checkout today and are not claimed as natively bundled; articulate installs from PyPI (articulate-writing 0.2.0).",
+        "The v1.0.1 Windows desktop installer is unsigned. Matching the published SHA-256 checks bytes only; it does not authenticate the publisher or prove clean-machine installation.",
         "Local weights and optional signing or monitoring features have separate installation requirements."
       ],
       "boundary": "Use model routes, tools, data, and environments only with the authority required by their owners and providers.",
@@ -504,10 +523,10 @@
         "mneme",
         "chorus"
       ],
-      "lastVerified": "2026-09-13",
+      "lastVerified": "2026-09-19",
       "primaryDomain": "agent-systems",
       "productType": "verified-inference platform and desktop client",
-      "releaseState": "stable Python engine v0.6.2; unsigned Windows desktop v0.6.2; clean-machine, mobile, and 0.7.0 acceptance not claimed"
+      "releaseState": "stable Python engine v1.0.1; unsigned Windows desktop v1.0.1; ten Python lanes bundle from vendored source; no measured accuracy uplift over single-shot; clean-machine, mobile, and node-lane bundling not claimed"
     },
     {
       "id": "service-desk-incident-env",

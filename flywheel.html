@@ -83,7 +83,7 @@
     <h1>A companion for <span class="g">every model.</span></h1>
     <p class="lede" data-canonical-purpose="flywheel">Flywheel runs an AI task with the local or hosted model and tools you choose. It records the run, and optional sealed tool-call receipts can be inspected and rechecked offline. The repository also includes a native desktop app.</p>
     <p class="close">See one check in 36 seconds, then inspect the source.</p>
-    <nav class="hero-actions" aria-label="Primary routes"><a href="#demo">Watch the 36-second demo</a><a href="#next-release">0.6.2 release</a><a href="#service-desk">Incident review examples</a><a href="#run">Install or run</a><a href="#evidence-task">Get the evidence skill</a><a href="https://github.com/HarperZ9/flywheel" rel="noopener">Source</a><a href="#benchmarks">Benchmarks</a></nav>
+    <nav class="hero-actions" aria-label="Primary routes"><a href="#demo">Watch the 36-second demo</a><a href="#next-release">1.0.1 release</a><a href="#service-desk">Incident review examples</a><a href="#run">Install or run</a><a href="#evidence-task">Get the evidence skill</a><a href="https://github.com/HarperZ9/flywheel" rel="noopener">Source</a><a href="#benchmarks">Benchmarks</a></nav>
   </div>
   <div class="seal"><span translate="no">flywheel</span> &middot; public &middot; FSL-1.1-MIT &middot; <span translate="no">python scripts/run_harness_cli.py app --port 8799</span></div>
 </div>
@@ -233,28 +233,28 @@
 
 <!-- CURRENT RELEASE BOUNDARY -->
 <section class="mv" id="next-release" aria-labelledby="next-release-h">
-  <h2 id="next-release-h" class="reveal">0.6.2 is published. Test workflows before depending on them.</h2>
-  <p class="body-text reveal">Use v0.6.2 to install the current Python engine from PyPI and, if you choose the desktop route, download the unsigned Windows installer from the same GitHub release. The release is titled <span translate="no">Rowan operation and the native provider protocol</span>; the public assets include the Python wheel and source archive, Windows installer, Service Desk 0.2.0 archives, a frozen gateway smoke receipt and checksums.</p>
-  <p class="body-text reveal">This page points to the current public release; it is not a new acceptance claim. The published smoke receipt reports <span translate="no">PASS</span> for expected version 0.6.2, while keeping installer integration, clean OS compatibility, Flutter UI rendering, native identity registration, Relay model-backed task execution and production Bulletin posting outside what it proves.</p>
+  <h2 id="next-release-h" class="reveal">1.0.1 is published. Test workflows before depending on them.</h2>
+  <p class="body-text reveal">Use v1.0.1 to install the current Python engine from PyPI and, if you choose the desktop route, download the unsigned Windows installer from the GitHub release. The release is titled <span translate="no">Flywheel 1.0.1</span>; the GitHub assets are the unsigned Windows installer and a frozen gateway smoke receipt, and the Python wheel and source archive are published on PyPI.</p>
+  <p class="body-text reveal">This page points to the current public release; it is not a new acceptance claim. The published smoke receipt reports <span translate="no">PASS</span> for expected version 1.0.1, while keeping installer integration, clean OS compatibility, Flutter UI rendering, native identity registration, Relay model-backed task execution and production Bulletin posting outside what it proves.</p>
   <details class="product-record-details reveal">
     <summary>Release evidence and limits</summary>
-    <p class="body-text">The <a href="https://github.com/HarperZ9/flywheel/releases/tag/v0.6.2">GitHub release</a> was published at <span translate="no">2026-09-11T17:58:39Z</span> from source commit <span translate="no">6ccf8e44b8ba69b4c6d899bc1f01a110dd14eb3c</span>. The Windows installer asset is <span translate="no">26,445,373</span> bytes with SHA-256 <span translate="no">dad5d9a07c3bfb5b453792aa0ccb07fa546adba1d336c8271ff005d7602bd1cd</span>. The PyPI wheel and source archive hashes matched the GitHub release asset digests in the 2026-09-13 check.</p>
-    <p class="body-text">These checks do not establish general model uplift, production ServiceNow compatibility, arbitrary provider-native session resume, provider-native session migration, clean-machine installation, clean OS compatibility, physical Android/mobile acceptance, 0.7.0 readiness or universal verifier completeness. The Windows desktop installer is still unsigned.</p>
+    <p class="body-text">The <a href="https://github.com/HarperZ9/flywheel/releases/tag/v1.0.1">GitHub release</a> was published at <span translate="no">2026-09-19T20:44:28Z</span>, and the v1.0.1 tag resolves to source commit <span translate="no">2efac00c0fc8a6c7d07097d0f27ac6f04a26ad23</span>. The Windows installer asset is <span translate="no">56,164,323</span> bytes with SHA-256 <span translate="no">95c616d667b1d3232a8c56a080e4de2112428000a0635eab60427b4983e90d37</span>. The frozen gateway smoke receipt records all ten bundled Python lanes admitting at exit code 0.</p>
+    <p class="body-text">On the shipped benchmark the verified loop shows no measured accuracy uplift over single-shot; the interval includes zero. These checks do not establish general model uplift, production ServiceNow compatibility, clean-machine installation, clean OS compatibility, physical Android/mobile acceptance or universal verifier completeness. Native bundling covers the ten Python lanes only; the node lanes learn and telos, and calibrate-pro, resolve from a source checkout today. The Windows desktop installer is still unsigned.</p>
   </details>
 </section>
 
 <!-- RUN IT NOW -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Run it now.</h2>
-  <p class="body-text reveal">Install the v0.6.2 Python engine from PyPI. The core package has zero runtime dependencies. The unsigned Windows download below is the v0.6.2 desktop build, with its own bundled engine.</p>
-  <div class="run reveal"><span class="c">shell</span> python -m pip install flywheel-verify==0.6.2<br><span class="c">shell</span> flywheel up</div>
-  <h3 class="reveal">Windows desktop: 0.6.2</h3>
-  <div class="run reveal"><span class="c">download</span> <a href="https://github.com/HarperZ9/flywheel/releases/download/v0.6.2/Flywheel-Setup-0.6.2-x64.exe">Flywheel-Setup-0.6.2-x64.exe</a> &middot; Windows x64 &middot; 26,445,373 bytes &middot; <a href="https://github.com/HarperZ9/flywheel/releases/tag/v0.6.2">release notes</a></div>
-  <p class="body-text reveal">The installer is attached to the v0.6.2 public release, and its hash is published beside it. Verify the copy you downloaded:</p>
-  <div class="run reveal"><span class="c">powershell</span> Get-FileHash Flywheel-Setup-0.6.2-x64.exe -Algorithm SHA256</div>
+  <p class="body-text reveal">Install the v1.0.1 Python engine from PyPI. The core package has zero runtime dependencies. The unsigned Windows download below is the v1.0.1 desktop build, with its own bundled engine.</p>
+  <div class="run reveal"><span class="c">shell</span> pip install flywheel-verify<br><span class="c">shell</span> flywheel up</div>
+  <h3 class="reveal">Windows desktop: 1.0.1</h3>
+  <div class="run reveal"><span class="c">download</span> <a href="https://github.com/HarperZ9/flywheel/releases/download/v1.0.1/Flywheel-Setup-1.0.1-x64.exe">Flywheel-Setup-1.0.1-x64.exe</a> &middot; Windows x64 &middot; 56,164,323 bytes &middot; <a href="https://github.com/HarperZ9/flywheel/releases/tag/v1.0.1">release notes</a></div>
+  <p class="body-text reveal">The installer is attached to the v1.0.1 public release, and its hash is published beside it. Verify the copy you downloaded:</p>
+  <div class="run reveal"><span class="c">powershell</span> Get-FileHash Flywheel-Setup-1.0.1-x64.exe -Algorithm SHA256</div>
   <dl class="kv2 reveal">
-    <dt>Desktop version</dt><dd><span translate="no">v0.6.2</span>, September 2026; same public release as the v0.6.2 Python engine</dd>
-    <dt>SHA-256</dt><dd><span translate="no" style="font-family:var(--mono);font-size:.8rem;word-break:break-all">dad5d9a07c3bfb5b453792aa0ccb07fa546adba1d336c8271ff005d7602bd1cd</span></dd>
+    <dt>Desktop version</dt><dd><span translate="no">v1.0.1</span>, September 2026; same public release as the v1.0.1 Python engine</dd>
+    <dt>SHA-256</dt><dd><span translate="no" style="font-family:var(--mono);font-size:.8rem;word-break:break-all">95c616d667b1d3232a8c56a080e4de2112428000a0635eab60427b4983e90d37</span></dd>
   </dl>
   <div class="null reveal">
     <h3>The honest caveat.</h3>
@@ -270,7 +270,7 @@
   <p class="body-text reveal">Service Desk Incident Environment 0.2.0 is a separately installable product with its own state, action log and verifier. Its new offline HTML report separates recorded claims, internal digest consistency, recomputed task outcomes, and contradictions between recorded authorization, responses and mutations. Its scripted cases use synthetic data and local HTTP services; they do not call a model provider or connect to ServiceNow.</p>
   <div class="run reveal"><span class="c">preview</span> <a href="https://github.com/HarperZ9/flywheel/releases/download/env-service-desk-incident-v0.2.0/service-desk-report-preview-0.2.0.zip">Download report examples (ZIP, no installation)</a></div>
   <p class="body-text reveal">Extract the ZIP and open <span translate="no">positive.html</span>, then <span translate="no">denied-but-applied.html</span>. The second example records a mutation despite denied authorization and an unsuccessful response. Its hashes were recomputed, but the report still rejects the contradiction.</p>
-  <p class="body-text reveal">To create your own report, use Python 3.11 or newer in a virtual environment. Install Flywheel 0.6.2 above, then download the <a href="https://github.com/HarperZ9/flywheel/releases/download/env-service-desk-incident-v0.2.0/flywheel_env_service_desk_incident-0.2.0-py3-none-any.whl">Service Desk 0.2.0 wheel</a> into your current directory. This GitHub add-on is not a desktop update or a claimed PyPI listing.</p>
+  <p class="body-text reveal">To create your own report, use Python 3.11 or newer in a virtual environment. Install a compatible Flywheel engine (the environment requires <span translate="no">flywheel-verify &gt;=0.6.1,&lt;0.7</span>), then download the <a href="https://github.com/HarperZ9/flywheel/releases/download/env-service-desk-incident-v0.2.0/flywheel_env_service_desk_incident-0.2.0-py3-none-any.whl">Service Desk 0.2.0 wheel</a> into your current directory. This GitHub add-on is not a desktop update or a claimed PyPI listing.</p>
   <div class="run reveal"><span class="c">shell</span> python -m pip install ./flywheel_env_service_desk_incident-0.2.0-py3-none-any.whl<br><span class="c">shell</span> service-desk-incident-env e2e --out ./incident-runs</div>
   <p class="body-text reveal">The result includes an <span translate="no">artifact_dir</span>. Pass that exact run directory, rather than the parent <span translate="no">incident-runs</span> folder, to verification and review:</p>
   <div class="run reveal"><span class="c">shell</span> service-desk-incident-env verify RETURNED_ARTIFACT_DIR --recompute --json<br><span class="c">shell</span> service-desk-incident-env review RETURNED_ARTIFACT_DIR --html-out ./review-output/review.html --json</div>
@@ -349,7 +349,7 @@
 <section class="mv" id="spec" aria-labelledby="spec-h">
   <h2 id="spec-h" class="reveal">Spec, at a glance.</h2>
   <dl class="kv2 reveal">
-    <dt>Desktop app</dt><dd>Windows x64 installer, engine bundled, no Python required. <span translate="no">v0.6.2</span>. The installer is unsigned.</dd>
+    <dt>Desktop app</dt><dd>Windows x64 installer, engine bundled, no Python required. <span translate="no">v1.0.1</span>. The installer is unsigned.</dd>
     <dt>Dependencies</dt><dd>None. Python standard library only.</dd>
     <dt>Network</dt><dd>Your choice per call: route online with hosted-provider keys, or run fully offline against local weights.</dd>
     <dt>Entry point</dt><dd><span translate="no">flywheel up</span></dd>
