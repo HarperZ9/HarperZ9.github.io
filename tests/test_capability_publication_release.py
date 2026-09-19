@@ -280,8 +280,10 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-# Reviewed Flywheel v1.0.1 refresh updates home, catalog, registry, and home bundle pair.
-REVIEWED_RELEASE_SHA256 = "ff555f03588f4ec682d3e8368ecfd94eee38decbeebf2cc77a4f4ffe51a68759"
+# Reviewed Flywheel v1.0.1 rollup: home/catalog/registry refresh and home bundle pair,
+# CV and resume refresh (cv.html, cv.md, regenerated career binaries). Recomputed for the
+# combined release tree.
+REVIEWED_RELEASE_SHA256 = "541ecd475a5f9c0d46f4bf3b28ae30e56602825a3dbd273a5341f0a1956359f4"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

@@ -21,6 +21,15 @@ leadership.
 
 **Flywheel accountability engine for AI agents | Python (stdlib-only engine), Flutter**
 
+- Shipped Flywheel v1.0.1 on 2026-09-19: the engine publishes to PyPI as
+  flywheel-verify and the desktop client ships as a Windows installer, with ten
+  native Python lanes (gather, crucible, index, forum, plexus, mneme, canon,
+  chorus, relay, and accountable-surface) that bundle from hash-pinned vendored
+  source and launch on a clean machine. The backbone is re-derivable
+  verification: no receipt, no accept; no learned model on the accept path; a
+  MATCH, DRIFT, or UNVERIFIABLE witness verdict. On the shipped benchmark the
+  verified loop shows no measured accuracy uplift over single-shot and the
+  interval includes zero; the value is the re-derivable receipt and containment.
 - Built an engine in which every agent tool call passes a default-deny
   capability gate and emits a sealed, hash-chained, offline-verifiable
   receipt binding what was allowed to what actually happened (witnessed
@@ -33,7 +42,7 @@ leadership.
   switch, cross-layer event correlation) and published a dated assessment
   mapping it against the failure classes of the July 2026 agentic-security
   incidents.
-- Merged to the default branch as of 2026-08-03: capability-typed shell
+- In the shipped release: capability-typed shell
   admission with Unicode-spoof neutralization, a domain oracle registry
   routing claims to independent verifiers across three live domains (pytest
   for code, the Lean kernel for mathematics, and a measurement gate for
@@ -68,6 +77,8 @@ leadership.
   packs, Gather 1.6.1 for provenance-aware research intake, Forum 1.13.0 for
   model-agnostic orchestration, and Crucible 1.2.0 for worker/verifier
   evaluation workflows.
+- Published articulate-writing 0.2.0 on PyPI, a writing-quality linter that
+  scores prose against a register standard.
 
 **Real-time graphics, color, and display tooling | C++, HLSL, Python**
 
@@ -149,4 +160,4 @@ developer documentation, Linux
 Portfolio: https://harperz9.github.io/portfolio.html
 Repositories and releases: https://github.com/HarperZ9
 
-Updated 2026-08-04.
+Updated 2026-09-19.
