@@ -1,0 +1,39 @@
+{
+  "schema": "essay-source-notes/v1",
+  "title": "An open letter on checking the machines",
+  "slug": "checking-the-machines",
+  "date": "2026-09-19",
+  "kind": "signed open letter",
+  "status": "argument and appeal; not a research report with pinned third-party citations",
+  "signature": "Zain Dana Harper / Zentropy Labs",
+  "claims": [
+    {
+      "id": "flywheel-install-and-loop",
+      "supports": "The letter describes the author's own tool, Flywheel: it installs with pip install flywheel-verify, runs a task with a chosen local or hosted model behind one surface and a permission-gated coding agent, and emits proof receipts an independent witness re-runs offline for a match, drift, or unverifiable verdict.",
+      "source_url": "https://harperz9.github.io/flywheel.html",
+      "verification_scope": "Points to the author's public product page. The letter's description of the loop is a first-party claim about the author's own tool, not an independent measurement."
+    },
+    {
+      "id": "no-measured-accuracy-uplift",
+      "supports": "The letter states that on the author's own benchmark the verified loop shows no measured accuracy gain over a single pass and the interval includes zero.",
+      "source_url": "https://harperz9.github.io/analytics/flywheel-benchmark-record.html",
+      "verification_scope": "An honest null reported by the author. It is a bounded first-party benchmark result, not an external validation."
+    }
+  ],
+  "unpinned_references": [
+    {
+      "text": "The letter paraphrases a reviewer's recent observation that an AI-drafted paper had a real idea buried in it but was communicated too poorly to accept, and that acceptance is a human judgment no receipt can make. This paraphrase is presented as a general observation and is not pinned to a specific source in this edition.",
+      "verification_scope": "Unverified paraphrase; no external citation is asserted."
+    }
+  ],
+  "ai_assistance": {
+    "state": "AI-assisted draft, author-directed",
+    "detail": "The letter's prose was authored and signed by Zain Dana Harper and provided as finalized text. The web page and its rendering were prepared with AI assistance (Claude Opus 4.8).",
+    "note": "This disclosure is honest by standing rule; machine assistance is not disguised and human-only authorship is not claimed."
+  },
+  "author_approval": {
+    "state": "submitted for the author's review as a pull request; not merged at the time of writing",
+    "basis": "The prose was finalized and signed by the author. This edition is a draft pull request awaiting the author's review; the author had not reviewed or approved this specific page build when it was created.",
+    "does_not_establish": "Journal peer review, or that the author reviewed and approved this specific page, or that the page is live."
+  }
+}

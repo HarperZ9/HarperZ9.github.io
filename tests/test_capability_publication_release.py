@@ -49,6 +49,9 @@ RELEASE_PATHS = (
     "writing/a-witness-should-not-become-a-ruler/source-notes.json",
     "writing/a-witness-should-not-become-a-ruler/tool-source-map.json",
     "img/og/a-witness-should-not-become-a-ruler.png",
+    "checking-the-machines.html",
+    "writing/checking-the-machines/01.md",
+    "writing/checking-the-machines/source-notes.json",
     "demos/crucible-cleanroom/index.html",
     "emet-sample.html",
     "gallery.html",
@@ -280,10 +283,12 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-# Reviewed Flywheel v1.0.1 rollup: home/catalog/registry refresh and home bundle pair,
-# CV and resume refresh (cv.html, cv.md, regenerated career binaries). Recomputed for the
-# combined release tree.
-REVIEWED_RELEASE_SHA256 = "541ecd475a5f9c0d46f4bf3b28ae30e56602825a3dbd273a5341f0a1956359f4"
+# Reviewed Flywheel v1.0.1 site rollup over the combined release tree: home/catalog/
+# registry refresh and home bundle pair (index-4wTyKocM.js); CV and resume refresh
+# (cv.html, cv.md, regenerated career binaries); and the "An open letter on checking the
+# machines" reading page with its source part, source notes, writing-index and sitemap
+# links. Recomputed for the combined tree by _release_fingerprint().
+REVIEWED_RELEASE_SHA256 = "a250d09a4e4307ff1f5284f07bf64bd5c7e5bf7f1d914c9894997b161be81506"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

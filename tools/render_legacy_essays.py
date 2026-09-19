@@ -13,6 +13,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 ESSAYS: dict[str, tuple[str, tuple[Path, ...]]] = {
+    "checking-the-machines.html": (
+        "essay",
+        (Path("writing/checking-the-machines/01.md"),),
+    ),
     "a-witness-should-not-become-a-ruler.html": (
         "essay",
         tuple(
