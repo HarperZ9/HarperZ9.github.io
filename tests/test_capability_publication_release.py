@@ -279,8 +279,9 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-# Reviewed mission reorientation updates home, catalog, registry, sitemap, and bundle pair.
-REVIEWED_RELEASE_SHA256 = "e51530258fe46140c81d46e7a8c547218fa08143f6caa70a7bf661b4f06dc34c"
+# Reviewed CV and resume refresh for Flywheel v1.0.1 updates cv.html, cv.md, and the
+# regenerated CV, evaluation-tooling, and support-operations career binaries.
+REVIEWED_RELEASE_SHA256 = "541ecd475a5f9c0d46f4bf3b28ae30e56602825a3dbd273a5341f0a1956359f4"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

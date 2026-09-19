@@ -55,7 +55,17 @@ judgment, and vendor coordination.
 
 **Flywheel | accountability engine and native client | Python (stdlib-only engine), Flutter**
 
-Shipped on the public default branch as of 2026-08-03:
+Flywheel v1.0.1 shipped 2026-09-19 (release tag v1.0.1). The engine publishes
+to PyPI as flywheel-verify (`pip install flywheel-verify`) and the desktop
+client ships as a Windows installer. Ten native Python lanes bundle from
+hash-pinned vendored source and launch on a clean machine: gather, crucible,
+index, forum, plexus, mneme, canon, chorus, relay, and accountable-surface.
+The backbone is re-derivable verification: no receipt, no accept; no learned
+model sits on the accept path; every witnessed action carries a MATCH, DRIFT,
+or UNVERIFIABLE verdict. On the shipped benchmark the verified loop shows no
+measured accuracy uplift over single-shot and the interval includes zero; the
+value is the re-derivable receipt and containment, not an accuracy gain. The
+release includes:
 
 - A verified-inference loop in which a model acts only through a default-deny
   capability gate it cannot talk past. Writes, exec, and external tools are
@@ -77,7 +87,7 @@ Shipped on the public default branch as of 2026-08-03:
   failure classes of the July 2026 agentic-security incidents, with coverage
   and gaps stated per class.
 
-Also merged as of 2026-08-03:
+Also in the shipped release:
 
 - Capability-typed shell admission with a Unicode-spoof neutralizer.
 - A domain oracle registry that routes any claim to its verifier, with three
@@ -101,6 +111,10 @@ checker with random and placebo controls (paired delta up to +0.32, exact p to
 kept and labeled uninformative, and the self-scored comparison is refused by
 design. Run and analysis are anchored in a signed, offline-verifiable
 transparency ledger.
+
+Flywheel also serves a writing-quality linter over MCP that scores prose
+against a register standard; the same linter ships standalone as
+articulate-writing 0.2.0 on PyPI.
 
 ### Selected public systems
 
@@ -256,4 +270,4 @@ Research: https://harperz9.github.io/research.html
 Repositories: https://github.com/HarperZ9
 ORCID: https://orcid.org/0009-0001-7175-5393
 
-Updated 2026-08-04.
+Updated 2026-09-19.
