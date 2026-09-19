@@ -48,6 +48,9 @@ RELEASE_PATHS = (
     "writing/a-witness-should-not-become-a-ruler/source-notes.json",
     "writing/a-witness-should-not-become-a-ruler/tool-source-map.json",
     "img/og/a-witness-should-not-become-a-ruler.png",
+    "checking-the-machines.html",
+    "writing/checking-the-machines/01.md",
+    "writing/checking-the-machines/source-notes.json",
     "demos/crucible-cleanroom/index.html",
     "emet-sample.html",
     "gallery.html",
@@ -280,7 +283,9 @@ RELEASE_PATHS = (
 )
 
 # Reviewed mission reorientation updates home, catalog, registry, sitemap, and bundle pair.
-REVIEWED_RELEASE_SHA256 = "e51530258fe46140c81d46e7a8c547218fa08143f6caa70a7bf661b4f06dc34c"
+# Adds the "An open letter on checking the machines" reading page, its source part
+# and source notes, plus its writing-index and sitemap links, to the reviewed spine.
+REVIEWED_RELEASE_SHA256 = "a250d09a4e4307ff1f5284f07bf64bd5c7e5bf7f1d914c9894997b161be81506"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
