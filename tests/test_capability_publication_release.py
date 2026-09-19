@@ -288,7 +288,7 @@ RELEASE_PATHS = (
 # (cv.html, cv.md, regenerated career binaries); and the "An open letter on checking the
 # machines" reading page with its source part, source notes, writing-index and sitemap
 # links. Recomputed for the combined tree by _release_fingerprint().
-REVIEWED_RELEASE_SHA256 = "a250d09a4e4307ff1f5284f07bf64bd5c7e5bf7f1d914c9894997b161be81506"
+REVIEWED_RELEASE_SHA256 = "0011d619db6980f65fc26da667f287919f5cdbad3db0c0144a6dc99e666db2c3"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
