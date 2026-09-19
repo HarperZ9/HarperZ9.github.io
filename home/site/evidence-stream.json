@@ -43,23 +43,23 @@
       "systemId": "emet"
     },
     {
-      "id": "flywheel-release-v0-6-2",
+      "id": "flywheel-release-v1-0-1",
       "type": "release",
-      "label": "Flywheel v0.6.2",
-      "href": "https://github.com/HarperZ9/flywheel/releases/tag/v0.6.2",
-      "date": "2026-09-11",
+      "label": "Flywheel v1.0.1",
+      "href": "https://github.com/HarperZ9/flywheel/releases/tag/v1.0.1",
+      "date": "2026-09-19",
       "status": "verified",
-      "summary": "The v0.6.2 GitHub release was published at 2026-09-11T17:58:39Z and resolves to source commit 6ccf8e44b8ba69b4c6d899bc1f01a110dd14eb3c. The release is titled Rowan operation and the native provider protocol. Public release assets include Flywheel-Setup-0.6.2-x64.exe at 26,445,373 bytes with SHA-256 dad5d9a07c3bfb5b453792aa0ccb07fa546adba1d336c8271ff005d7602bd1cd, the flywheel_verify 0.6.2 wheel and source archive, Service Desk Incident Environment 0.2.0 archives, frozen-gateway-smoke.json, and SHA256SUMS.txt. The frozen gateway smoke receipt reports PASS for expected version 0.6.2. These checks do not establish installer integration, clean-machine installation, clean OS compatibility, Flutter UI rendering, native identity registration, Relay model-backed task execution, production Bulletin posting, general model uplift, production ServiceNow compatibility, physical Android/mobile acceptance, provider-native session migration, arbitrary provider-native session resume, 0.7.0 readiness, or universal verifier completeness. The Windows desktop installer is unsigned.",
+      "summary": "The v1.0.1 GitHub release, titled Flywheel 1.0.1, was published at 2026-09-19T20:44:28Z, and the v1.0.1 tag resolves to source commit 2efac00c0fc8a6c7d07097d0f27ac6f04a26ad23. The release attaches Flywheel-Setup-1.0.1-x64.exe at 56,164,323 bytes with SHA-256 95c616d667b1d3232a8c56a080e4de2112428000a0635eab60427b4983e90d37 and frozen-gateway-smoke.json at 6,730 bytes with SHA-256 5d94e797f5c6c016b5a6bddc0b59741f4b73ae7f54c158649181ecce8e444f67. The frozen gateway smoke receipt reports PASS for expected version 1.0.1 and records all ten bundled Python lanes admitting at exit code 0. Ten Python lanes (gather, crucible, index, forum, plexus, mneme, canon, chorus, relay, accountable-surface) carry a hash-pinned source payload and launch from vendored source on a clean machine; the staged source is hash-checked before launch, each admission exposes only that lane's status and doctor health tools, and the accept path is untouched. On the shipped benchmark the verified loop shows no measured accuracy uplift over single-shot; the interval includes zero, and the demonstrated value is the re-derivable receipt and the containment. These checks do not establish installer integration, clean OS compatibility, Flutter UI rendering, native identity registration, Relay model-backed task execution, production Bulletin posting, general model uplift, physical Android/mobile acceptance, or native bundling of the node lanes learn and telos or calibrate-pro, which resolve from a source checkout today. The Windows desktop installer is unsigned.",
       "systemId": "flywheel"
     },
     {
-      "id": "flywheel-pypi-v0-6-2",
+      "id": "flywheel-pypi-v1-0-1",
       "type": "release",
-      "label": "flywheel-verify 0.6.2 on PyPI",
-      "href": "https://pypi.org/project/flywheel-verify/0.6.2/",
-      "date": "2026-09-11",
+      "label": "flywheel-verify 1.0.1 on PyPI",
+      "href": "https://pypi.org/project/flywheel-verify/1.0.1/",
+      "date": "2026-09-19",
       "status": "verified",
-      "summary": "PyPI serves flywheel-verify 0.6.2. The wheel is 1,941,131 bytes with SHA-256 41847782f7e65c252d36ee3cbe8656fc7eb9e98fde8793a09242ad6e4b99d9fc; the source archive is 2,941,661 bytes with SHA-256 e789ba820116d26685f998c17983b4d3ef64728cdb17c9ff60ac4157642e0f32. PyPI JSON digests matched the GitHub release asset digests in the 2026-09-13 reconciliation. This does not prove source truth, claim support, complete coverage, downstream model use, absence of sensitive material, clean-machine installation, or 0.7.0 readiness.",
+      "summary": "PyPI serves flywheel-verify 1.0.1, installed with pip install flywheel-verify. The wheel flywheel_verify-1.0.1-py3-none-any.whl is 2,217,845 bytes with SHA-256 be08deaabaa506c893144db460f1b43326a8fbc0e58e0dea38439b31235f2b8c; the source archive flywheel_verify-1.0.1.tar.gz is 3,350,903 bytes with SHA-256 83a34cfe7709f4ee8c29dbf888b1fca99c3d1928c116f980e3b09a12b6d33916. This distribution evidence does not prove source truth, claim support, complete coverage, downstream model use, absence of sensitive material, or clean-machine installation.",
       "systemId": "flywheel"
     },
     {

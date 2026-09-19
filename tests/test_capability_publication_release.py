@@ -20,6 +20,7 @@ RELEASE_PATHS = (
     "borrowed-ground.html",
     "assets/index-DrPnIzlB.js",
     "assets/index-CX_9A0Hy.js",
+    "assets/index-4wTyKocM.js",
     "img/og/the-sandbox-was-never-just-a-box.png",
     "writing/the-sandbox-was-never-just-a-box/source-map.json",
     "writing/the-sandbox-was-never-just-a-box/essay.md",
@@ -279,8 +280,8 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-# Reviewed mission reorientation updates home, catalog, registry, sitemap, and bundle pair.
-REVIEWED_RELEASE_SHA256 = "e51530258fe46140c81d46e7a8c547218fa08143f6caa70a7bf661b4f06dc34c"
+# Reviewed Flywheel v1.0.1 refresh updates home, catalog, registry, and home bundle pair.
+REVIEWED_RELEASE_SHA256 = "ff555f03588f4ec682d3e8368ecfd94eee38decbeebf2cc77a4f4ffe51a68759"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -417,7 +418,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_060_final_gather_pre_review_js = "index-CYqKao4X.js"
     previous_060_final_gather_fixture_js = "index-CpC5RhmM.js"
     previous_gather_171_js = "index-AYA0gyN2.js"
-    current_js = "index-CX_9A0Hy.js"
+    current_js = "index-4wTyKocM.js"
     current_css = "index-eZ1QGP52.css"
     prior_mission_js = "index-DpT1GQuA.js"
     prior_mission_css = "index-B2kgPYlE.css"
