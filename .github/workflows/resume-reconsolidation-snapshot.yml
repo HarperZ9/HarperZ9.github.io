@@ -1,0 +1,58 @@
+name: Resume restoration baseline
+
+on:
+  push:
+    branches: [work/resume-reconsolidation-20260920]
+    paths: [.github/workflows/resume-reconsolidation-snapshot.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Export public source and career history
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/resume-baseline
+          BASE=2371243aa097aed515c90c9f638ab83fc1475f6a
+          git archive --format=tar "$BASE" | gzip > /tmp/resume-baseline/site-baseline.tar.gz
+          git for-each-ref --format='%(refname) %(objectname)' refs/remotes/origin > /tmp/resume-baseline/refs.txt
+          git log --all --date=iso-strict --format='%H %ad %s' --name-status -- '*resume*' '*career*' '*cv*' '*canon*' > /tmp/resume-baseline/career-history.txt
+          python - <<'PY'
+          import pathlib, re, subprocess, tarfile, io
+          root = pathlib.Path('/tmp/resume-baseline')
+          refs = ['codex/career-ats-release-20260829', 'codex/career-conversion-main', 'codex/career-conversion-redesign', 'codex/hiring-first-site-architecture', 'codex/retire-stale-career-pdfs-20260903', 'site/cv-resumes-101-20260919']
+          with tarfile.open(root / 'career-archives.tar.gz', 'w:gz') as tar:
+              for branch in refs:
+                  ref = 'refs/remotes/origin/' + branch
+                  check = subprocess.run(['git', 'rev-parse', '--verify', ref], capture_output=True, text=True)
+                  if check.returncode:
+                      continue
+                  sha = check.stdout.strip()
+                  names = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', sha], text=True).splitlines()
+                  prefix = branch.replace('/', '__')
+                  for path in names:
+                      if not re.search(r'(resume|career|cv\.|zdh|canon|employment|experience)', path, re.I):
+                          continue
+                      data = subprocess.check_output(['git', 'show', sha + ':' + path])
+                      if len(data) > 20_000_000:
+                          continue
+                      info = tarfile.TarInfo(prefix + '/' + path)
+                      info.size = len(data)
+                      tar.addfile(info, io.BytesIO(data))
+          PY
+          sha256sum /tmp/resume-baseline/*.tar.gz > /tmp/resume-baseline/SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: resume-restoration-baseline
+          path: /tmp/resume-baseline/
+          retention-days: 7
+          compression-level: 0
