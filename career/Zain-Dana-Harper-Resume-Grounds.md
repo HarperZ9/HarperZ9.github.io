@@ -1,0 +1,47 @@
+# Zain Dana Harper
+
+Seattle, Washington | zaindharper@gmail.com | harperz9.github.io
+
+linkedin.com/in/zaindanaharper | github.com/HarperZ9
+
+Arboriculture | Field Operations | Estimating and Customer Service
+
+## Professional Summary
+
+Non-climbing arboriculture professional with eleven years of full-time experience turning customer requests and site conditions into realistic work scopes. Combines estimating, crew coordination, ground-based safety support, and client education with technical troubleshooting and clear operational documentation.
+
+## Core Skills
+
+Site and hazard assessment; estimates and proposals; work planning and scheduling; ground-based tree care; rigging and clearance awareness; client education; crew and vendor coordination; arboriculture and plant-health knowledge; documentation.
+
+## Professional Experience
+
+### Arboriculture and Field Operations | Legendary Tree
+
+Seattle area | April 25, 2015 to June 2, 2026
+
+- Assessed access, hazards, clearances, and work requirements before preparing estimates and proposals, giving customers clear options and crews a realistic scope to execute.
+
+- Coordinated schedules, vendors, and crew communication; translated changes in site conditions into updates to job timing and customer expectations.
+
+- Monitored rigging, swing paths, and clearances from the ground; alerted climbers and crew members to changing hazards so they could adjust the work sequence.
+
+- Explained tree-care needs and practical constraints to customers, connecting technical site assessments to informed purchasing decisions and agreed work scopes.
+
+### Technical Networking Support | Stream/Convergys | 2014 to 2015
+
+Xbox/Microsoft product contract | Wilsonville, Oregon
+
+- Diagnosed Xbox connectivity problems across TCP/IP, DNS, NAT, firewalls, and routers; guided customers through resolutions and documented steps for consistent support handoffs.
+
+### Freelance Technical Writer | Independent projects | Began 2017
+
+- Wrote implementation guides, API documentation, and release notes that translated technical changes into usable instructions for developers and customers.
+
+### Independent Systems Engineer | Independent practice | 2023 to Present
+
+- Built and released software tools for repeatable workflows, applying systematic troubleshooting, testing, and structured records to complex tasks.
+
+## Education
+
+High School Diploma | Wilsonville High School, Oregon | 2013

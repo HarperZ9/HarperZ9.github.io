@@ -290,7 +290,7 @@ RELEASE_PATHS = (
 # bundle); CV and resume refresh (cv.html, cv.md, regenerated career binaries); and the
 # "An open letter on checking the machines" reading page with its source part, source
 # notes, writing-index, homepage and sitemap links. Recomputed by _release_fingerprint().
-REVIEWED_RELEASE_SHA256 = "e02d6cc3401b4702247d17a400519d3930c79abdc6ec85450b92ddf4377a3217"
+REVIEWED_RELEASE_SHA256 = "acc6c7ac276042ba6af5aadb2068b63ca573c2713386419dbd4d76d8629e6461"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

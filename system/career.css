@@ -1,0 +1,51 @@
+/* Career-only restoration. Shared site typography, navigation and company pages
+   remain unchanged. Exported PDF/DOCX files use their own single-column layout. */
+.career-page{max-width:64rem;margin-inline:auto}
+.career-page .sheet,.career-page .hire-sheet{width:100%;max-width:64rem;padding:clamp(1.2rem,4vw,3rem);margin-inline:auto}
+.career-page .doc-rail section{display:block;grid-template-columns:none}
+.career-page .doc-rail section>h2{position:static;max-width:none}
+.career-page h1{font-size:clamp(1.9rem,5.5vw,3rem);line-height:1.15;letter-spacing:-.025em;margin:0 0 .65rem}
+.career-page h2{font-size:1.25rem;line-height:1.3;max-width:none;letter-spacing:0;margin:0 0 .8rem}
+.career-page h3{font-size:1.03rem;line-height:1.4;margin:1.2rem 0 .4rem;letter-spacing:0}
+.career-page p,.career-page section p,.career-page li{font-size:1rem;line-height:1.58;max-width:72ch}
+.career-page .career-subtitle{font-size:1.08rem;line-height:1.45;color:var(--ink-soft);margin:.4rem 0 1rem;max-width:54ch}
+.career-page .contact{display:flex;flex-wrap:wrap;gap:.2rem .8rem;font-family:var(--font-sans);font-size:.88rem;line-height:1.55;margin:.4rem 0}
+.career-page .contact span{min-width:0;overflow-wrap:anywhere}
+.career-page .contact a{font-size:inherit}
+.career-page .career-mast{margin-bottom:1.6rem}
+.career-page .career-bullets{padding-left:1.2rem;margin:.5rem 0 .8rem;list-style:disc}
+.career-page .career-bullets li{padding-left:.15rem;margin:.45rem 0}
+.career-page .career-bullets li::before{content:none}
+.career-page .career-downloads{display:flex;flex-wrap:wrap;gap:.55rem;max-width:64rem;margin:0 auto 1rem}
+.career-page .career-downloads a{display:inline-flex;justify-content:center;align-items:center;min-height:44px;padding:.55rem .9rem;border:1px solid var(--rule-strong);font-size:.88rem;line-height:1.35;overflow-wrap:anywhere;background:var(--page);text-decoration:none;color:var(--signal)}
+.career-page .career-downloads a:hover{border-color:var(--signal)}
+.career-page a:focus-visible,.career-page summary:focus-visible{outline:2px solid var(--signal);outline-offset:4px}
+.career-page .career-cards{display:grid;grid-template-columns:1fr;gap:1.1rem}
+.career-page .career-card{border:1px solid var(--rule-strong);padding:1.15rem;scroll-margin-top:8rem;background:var(--page)}
+.career-page .career-card h3{margin:0 0 .55rem;font-size:1.14rem}
+.career-page .career-card p{margin:.4rem 0 1rem}
+.career-page .career-card .career-downloads{margin:.6rem 0 0}
+.career-page .career-card .career-variant{font-size:.9rem;margin:1.2rem 0 .5rem}
+.career-page .career-page-break{margin-top:1.6rem;border-top:1px solid var(--rule)}
+.career-page .career-source-note{padding:1.2rem clamp(.5rem,2vw,1.5rem);max-width:64rem;margin:1rem auto;font-size:.86rem}
+.career-page .career-source-note p{font-size:.86rem;max-width:84ch}
+.career-page details{margin-top:1rem}
+.career-page summary{cursor:pointer;min-height:44px;padding:.5rem 0;color:var(--signal)}
+@media(max-width:760px){
+ .career-page h2{font-size:1.2rem}
+ .career-page .career-downloads a{flex:0 1 auto}
+ .career-page .career-card{padding:1rem}
+ .career-page .sheet,.career-page .hire-sheet{padding:1.1rem}
+ .career-page .contact{display:block}
+ .career-page .contact span{display:block;margin:.2rem 0}
+}
+@media print{
+ .career-page>.career-downloads,.career-page .career-source-note{display:none!important}
+ .career-page,.career-page .sheet{max-width:none;width:auto;margin:0;padding:0;border:0;box-shadow:none}
+ .career-page h1{font-size:20pt}.career-page h2{font-size:12pt}.career-page h3{font-size:11pt}
+ .career-page p,.career-page section p,.career-page li{font:11pt/1.2 Arial,sans-serif;color:#000;max-width:none}
+ .career-page .contact{font:10.5pt/1.2 Arial,sans-serif}
+ .career-page .career-page-break{break-before:page;border:0;margin:0}
+ .career-page h2,.career-page h3{break-after:avoid}
+ .career-page li{break-inside:avoid}
+}

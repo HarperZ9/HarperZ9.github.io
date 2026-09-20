@@ -1,0 +1,1244 @@
+{
+  "schema": "harperz9-career-source/v2",
+  "reviewed": "2026-09-20",
+  "identity": {
+    "name": "Zain Dana Harper",
+    "location": "Seattle, Washington",
+    "email": "zaindharper@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/zaindanaharper/",
+    "github": "https://github.com/HarperZ9",
+    "website": "https://harperz9.github.io"
+  },
+  "date_policy": {
+    "independent_engineering": "Start year 2023 from historical career record; current independent project activity confirmed by owner on 2026-09-20 and current public releases. Present refers to project practice, not continuous paid employment.",
+    "freelance_writing": "Start year 2017 is known. No current status, end year, or continuous employment is inferred.",
+    "arboriculture": "Full-time period April 25, 2015 to June 2, 2026. Legendary Tree is an applicant-provided organization label; the displayed role describes duties and does not establish a formal title or legal employer name.",
+    "networking_support": "2014 to 2015, Xbox/Microsoft product contract, subcontracted through Stream/Convergys in Wilsonville, Oregon. Not direct Microsoft employment."
+  },
+  "groups": {
+    "identity": [
+      {
+        "kind": "h1",
+        "text": "Zain Dana Harper"
+      },
+      {
+        "kind": "contact",
+        "text": "Seattle, Washington | zaindharper@gmail.com | harperz9.github.io"
+      },
+      {
+        "kind": "p",
+        "text": "linkedin.com/in/zaindanaharper | github.com/HarperZ9"
+      }
+    ],
+    "engineer": [
+      {
+        "kind": "h3",
+        "text": "Independent Systems Engineer | Independent practice"
+      },
+      {
+        "kind": "meta",
+        "text": "Seattle / remote | 2023 to Present",
+        "evidence": [
+          "history",
+          "current-project-work"
+        ]
+      }
+    ],
+    "writer": [
+      {
+        "kind": "h3",
+        "text": "Freelance Technical Writer, Documentation, and Product Operations"
+      },
+      {
+        "kind": "meta",
+        "text": "Independent practice | Began 2017; project-based work",
+        "evidence": [
+          "history"
+        ]
+      }
+    ],
+    "field": [
+      {
+        "kind": "h3",
+        "text": "Commercial Arboriculture and Field Operations | Legendary Tree"
+      },
+      {
+        "kind": "meta",
+        "text": "Seattle area | April 25, 2015 to June 2, 2026",
+        "evidence": [
+          "history"
+        ]
+      }
+    ],
+    "support": [
+      {
+        "kind": "h3",
+        "text": "Technical Networking Support | Xbox/Microsoft contract"
+      },
+      {
+        "kind": "meta",
+        "text": "Subcontracted through Stream/Convergys | Wilsonville, Oregon | 2014 to 2015",
+        "evidence": [
+          "history"
+        ]
+      }
+    ],
+    "education": [
+      {
+        "kind": "h2",
+        "text": "Education"
+      },
+      {
+        "kind": "p",
+        "text": "High School Diploma | Wilsonville High School, Wilsonville, Oregon | 2013",
+        "evidence": [
+          "history"
+        ]
+      }
+    ],
+    "oss-support": [
+      {
+        "kind": "h2",
+        "text": "Selected Open-Source Contributions"
+      },
+      {
+        "kind": "li",
+        "text": "Free Law Project: documented a runnable database-free fast-test workflow, separating focused developer checks from Docker/Postgres-backed targets. Merged pull request #820.",
+        "evidence": [
+          "flp"
+        ]
+      },
+      {
+        "kind": "li",
+        "text": "Hebbian Robotics: added a characterization test that compares queryable episode columns with reserved names and reports drift in either direction. Merged pull request #157.",
+        "evidence": [
+          "hflow"
+        ]
+      },
+      {
+        "kind": "li",
+        "text": "Voxwire: added offline WebSocket recording and replay coverage, checking emitted events against persisted audio and JSONL fixtures without external providers. Merged pull request #44.",
+        "evidence": [
+          "voxwire"
+        ]
+      }
+    ],
+    "oss-eval": [
+      {
+        "kind": "h2",
+        "text": "Selected Open-Source Contributions"
+      },
+      {
+        "kind": "li",
+        "text": "DeepEval: fixed an evaluation crash caused by unhashable tool outputs and nested input parameters; added regression coverage for the previously failing cases. Merged pull request #2822.",
+        "evidence": [
+          "deepeval"
+        ]
+      },
+      {
+        "kind": "li",
+        "text": "TOMLKit: preserved following sibling keys when replacing a dotted key with an array of tables, protecting parse/serialize round-trip behavior. Merged pull request #549.",
+        "evidence": [
+          "tomlkit"
+        ]
+      },
+      {
+        "kind": "li",
+        "text": "Datasette: validated composite primary-key arity so malformed row URLs return a client error rather than a server error or misleading result. Merged pull request #2815.",
+        "evidence": [
+          "datasette"
+        ]
+      }
+    ],
+    "writer-short": [
+      {
+        "ref": "writer"
+      },
+      {
+        "kind": "li",
+        "text": "Produced developer and API documentation, implementation guides, release notes, proposals, and support material that translate technical work into clear steps and decisions.",
+        "evidence": [
+          "history"
+        ]
+      }
+    ],
+    "field-short": [
+      {
+        "ref": "field"
+      },
+      {
+        "kind": "li",
+        "text": "Combined field safety and ground-based tree work with site assessments, estimates, scheduling, proposals, customer education, and coordination between crews, clients, and vendors.",
+        "evidence": [
+          "history"
+        ]
+      },
+      {
+        "kind": "li",
+        "text": "Monitored rigging, clearances, changing site conditions, and communication between climbers and ground crews; explained the work scope and practical constraints to clients.",
+        "evidence": [
+          "history"
+        ]
+      }
+    ],
+    "support-short": [
+      {
+        "ref": "support"
+      },
+      {
+        "kind": "li",
+        "text": "Diagnosed connectivity and account issues by phone and chat using TCP/IP, DNS, NAT, firewall, and router troubleshooting; documented repeatable resolutions and customer-facing instructions.",
+        "evidence": [
+          "history"
+        ]
+      }
+    ],
+    "engineering-origin": [
+      {
+        "kind": "p",
+        "text": "Self-directed programming began with game modding, reverse engineering, bot and rotation logic, and runtime-memory tooling, then developed into systems engineering, graphics, compilers, and AI infrastructure. This is a project history, not a claim of equivalent years of paid software employment.",
+        "evidence": [
+          "current-project-work",
+          "history"
+        ]
+      }
+    ],
+    "resume-identity": [
+      {
+        "kind": "h1",
+        "text": "Zain Dana Harper"
+      },
+      {
+        "kind": "contact",
+        "text": "Seattle, Washington | zaindharper@gmail.com | harperz9.github.io"
+      },
+      {
+        "kind": "contact",
+        "text": "linkedin.com/in/zaindanaharper | github.com/HarperZ9"
+      }
+    ],
+    "resume-engineer": [
+      {
+        "kind": "h3",
+        "text": "Independent Systems Engineer | Independent practice | 2023 to Present",
+        "evidence": [
+          "history",
+          "current-project-work"
+        ]
+      }
+    ],
+    "resume-field": [
+      {
+        "kind": "h3",
+        "text": "Arboriculture and Field Operations | Legendary Tree"
+      },
+      {
+        "kind": "meta",
+        "text": "Seattle area | April 25, 2015 to June 2, 2026",
+        "evidence": [
+          "history"
+        ]
+      }
+    ],
+    "resume-support": [
+      {
+        "kind": "h3",
+        "text": "Technical Networking Support | Stream/Convergys | 2014 to 2015"
+      },
+      {
+        "kind": "meta",
+        "text": "Xbox/Microsoft product contract | Wilsonville, Oregon",
+        "evidence": [
+          "history"
+        ]
+      }
+    ],
+    "resume-writer": [
+      {
+        "kind": "h3",
+        "text": "Freelance Technical Writer | Independent projects | Began 2017",
+        "evidence": [
+          "history"
+        ]
+      }
+    ],
+    "resume-education": [
+      {
+        "kind": "h2",
+        "text": "Education"
+      },
+      {
+        "kind": "p",
+        "text": "High School Diploma | Wilsonville High School, Oregon | 2013",
+        "evidence": [
+          "history"
+        ]
+      }
+    ],
+    "resume-field-value": [
+      {
+        "ref": "resume-field"
+      },
+      {
+        "kind": "li",
+        "text": "Turned site assessments into estimates, proposals, and workable job scopes; coordinated clients, crews, and vendors so teams understood access constraints, timing, and hazards.",
+        "evidence": [
+          "history"
+        ]
+      }
+    ],
+    "resume-support-value": [
+      {
+        "ref": "resume-support"
+      },
+      {
+        "kind": "li",
+        "text": "Diagnosed Xbox connectivity problems across TCP/IP, DNS, NAT, firewalls, and routers; guided customers through resolutions and documented steps for consistent support handoffs.",
+        "evidence": [
+          "history"
+        ]
+      }
+    ],
+    "resume-writer-value": [
+      {
+        "ref": "resume-writer"
+      },
+      {
+        "kind": "li",
+        "text": "Wrote implementation guides, API documentation, and release notes that translated technical changes into usable instructions for developers and customers.",
+        "evidence": [
+          "history"
+        ]
+      }
+    ]
+  },
+  "documents": [
+    {
+      "id": "support-operations-qa",
+      "route": "resume-support-operations.html",
+      "stem": "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA",
+      "title": "Technical Support, Developer Operations, and QA",
+      "blocks": [
+        {
+          "ref": "resume-identity"
+        },
+        {
+          "kind": "subtitle",
+          "text": "Technical Support | Developer Operations | Quality Assurance"
+        },
+        {
+          "kind": "h2",
+          "text": "Professional Summary"
+        },
+        {
+          "kind": "p",
+          "text": "Systems engineer who turns reported failures into reproducible tests, usable fixes, and clear customer guidance. Combines independently shipped software and accepted upstream contributions with Xbox networking support and eleven years of client-facing field operations."
+        },
+        {
+          "kind": "h2",
+          "text": "Technical Skills"
+        },
+        {
+          "kind": "p",
+          "text": "Python, SQL, Git, GitHub Actions, pytest, Linux, Windows, HTTP/JSON APIs, WebSocket, TCP/IP, DNS, NAT; issue reproduction, regression testing, release packaging, technical documentation."
+        },
+        {
+          "kind": "h2",
+          "text": "Professional Experience"
+        },
+        {
+          "ref": "resume-engineer"
+        },
+        {
+          "kind": "li",
+          "text": "Built Flywheel, a Python/Flutter AI workstation with Rowan task orchestration, model routing, and permission-checked tools; shipped a Windows installer with a bundled engine for installation without a separate Python setup.",
+          "evidence": [
+            "flywheel"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Designed offline verification and 324 exhaustive terminal-state fixtures so teams can distinguish incorrect outputs from provider failures rather than rely on an agent's success claim.",
+          "evidence": [
+            "flywheel",
+            "terminal-state-fixtures"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Built Articulate writing tools and Accountable Surface approval and verification interfaces; supplied inspectable reports and action records for troubleshooting and review.",
+          "evidence": [
+            "articulate",
+            "accountable-surface"
+          ]
+        },
+        {
+          "ref": "resume-field-value"
+        },
+        {
+          "ref": "resume-support-value"
+        },
+        {
+          "ref": "resume-writer-value"
+        },
+        {
+          "kind": "h2",
+          "text": "Selected Open-Source Contributions"
+        },
+        {
+          "kind": "li",
+          "text": "Free Law Project #820: documented runnable database-free tests, giving contributors a focused check path without starting the full database-backed stack. Merged.",
+          "evidence": [
+            "flp"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Hebbian Robotics #157: added schema-drift coverage that flags mismatches between queryable episode columns and reserved names before incompatible changes go unnoticed. Merged.",
+          "evidence": [
+            "hflow"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Voxwire #44: added offline WebSocket recording/replay tests, verifying saved audio and events without live provider dependencies. Merged.",
+          "evidence": [
+            "voxwire"
+          ]
+        },
+        {
+          "ref": "resume-education"
+        }
+      ],
+      "page_target": 1
+    },
+    {
+      "id": "evaluation-python-tools",
+      "route": "resume-evaluation-tooling.html",
+      "stem": "Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools",
+      "title": "AI Systems, Evaluation, and Python Developer Tools",
+      "blocks": [
+        {
+          "ref": "resume-identity"
+        },
+        {
+          "kind": "subtitle",
+          "text": "AI Systems Engineering | Evaluation | Python Developer Tools"
+        },
+        {
+          "kind": "h2",
+          "text": "Professional Summary"
+        },
+        {
+          "kind": "p",
+          "text": "Independent systems engineer who builds AI tools and verifies their outputs. Owns architecture, implementation, testing, and release delivery across Flywheel and companion systems. Contributes upstream fixes that prevent evaluation crashes, configuration data loss, and misleading API responses."
+        },
+        {
+          "kind": "h2",
+          "text": "Technical Skills"
+        },
+        {
+          "kind": "p",
+          "text": "Python, Rust, C++, Dart/Flutter, SQL, GitHub Actions, pytest, Linux, Windows; AI evaluation, MCP, APIs, deterministic testing, typed capabilities, approval gates, offline verification."
+        },
+        {
+          "kind": "h2",
+          "text": "Professional Experience"
+        },
+        {
+          "ref": "resume-engineer"
+        },
+        {
+          "kind": "li",
+          "text": "Built and shipped Flywheel, a Python/Flutter workstation unifying Rowan, model routing, and tool-driven tasks; packaged its engine in a Windows installer to remove a separate Python setup step.",
+          "evidence": [
+            "flywheel"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Authored 324 exhaustive terminal-state cases and a 337-case component suite with 5,058 frozen expectations, giving evaluators reproducible checks for failed outputs and repairs.",
+          "evidence": [
+            "terminal-state-fixtures"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Built Articulate for auditable writing analysis and Accountable Surface for scoped approvals, postcondition checks, and computer-use adapters, making edits and actions inspectable.",
+          "evidence": [
+            "articulate",
+            "accountable-surface"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Developed BuildLang capability checks and Phantom audit/restore workflows, making permissions and reversible system changes explicit in the implementation.",
+          "evidence": [
+            "buildlang",
+            "phantom"
+          ]
+        },
+        {
+          "ref": "resume-field-value"
+        },
+        {
+          "ref": "resume-support-value"
+        },
+        {
+          "ref": "resume-writer-value"
+        },
+        {
+          "kind": "h2",
+          "text": "Selected Open-Source Contributions"
+        },
+        {
+          "kind": "li",
+          "text": "DeepEval #2822: fixed crashes on unhashable tool outputs and nested parameters; added regression tests to protect evaluation reliability. Merged.",
+          "evidence": [
+            "deepeval"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "TOMLKit #549: preserved sibling keys during dotted-key replacement, preventing silent configuration data loss on round trips. Merged.",
+          "evidence": [
+            "tomlkit"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Datasette #2815: validated composite-key arity so malformed row URLs return a client error rather than a server failure or misleading result. Merged.",
+          "evidence": [
+            "datasette"
+          ]
+        },
+        {
+          "ref": "resume-education"
+        }
+      ],
+      "page_target": 1
+    },
+    {
+      "id": "grounds",
+      "route": "resume-grounds.html",
+      "stem": "Zain-Dana-Harper-Resume-Grounds",
+      "title": "Arboriculture, Field Operations, and Estimating",
+      "blocks": [
+        {
+          "ref": "resume-identity"
+        },
+        {
+          "kind": "subtitle",
+          "text": "Arboriculture | Field Operations | Estimating and Customer Service"
+        },
+        {
+          "kind": "h2",
+          "text": "Professional Summary"
+        },
+        {
+          "kind": "p",
+          "text": "Non-climbing arboriculture professional with eleven years of full-time experience turning customer requests and site conditions into realistic work scopes. Combines estimating, crew coordination, ground-based safety support, and client education with technical troubleshooting and clear operational documentation."
+        },
+        {
+          "kind": "h2",
+          "text": "Core Skills"
+        },
+        {
+          "kind": "p",
+          "text": "Site and hazard assessment; estimates and proposals; work planning and scheduling; ground-based tree care; rigging and clearance awareness; client education; crew and vendor coordination; arboriculture and plant-health knowledge; documentation."
+        },
+        {
+          "kind": "h2",
+          "text": "Professional Experience"
+        },
+        {
+          "ref": "resume-field"
+        },
+        {
+          "kind": "li",
+          "text": "Assessed access, hazards, clearances, and work requirements before preparing estimates and proposals, giving customers clear options and crews a realistic scope to execute.",
+          "evidence": [
+            "history"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Coordinated schedules, vendors, and crew communication; translated changes in site conditions into updates to job timing and customer expectations.",
+          "evidence": [
+            "history"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Monitored rigging, swing paths, and clearances from the ground; alerted climbers and crew members to changing hazards so they could adjust the work sequence.",
+          "evidence": [
+            "history"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Explained tree-care needs and practical constraints to customers, connecting technical site assessments to informed purchasing decisions and agreed work scopes.",
+          "evidence": [
+            "history"
+          ]
+        },
+        {
+          "ref": "resume-support-value"
+        },
+        {
+          "ref": "resume-writer-value"
+        },
+        {
+          "ref": "resume-engineer"
+        },
+        {
+          "kind": "li",
+          "text": "Built and released software tools for repeatable workflows, applying systematic troubleshooting, testing, and structured records to complex tasks.",
+          "evidence": [
+            "flywheel",
+            "history"
+          ]
+        },
+        {
+          "ref": "resume-education"
+        }
+      ],
+      "page_target": 1
+    },
+    {
+      "id": "public-operations",
+      "route": "resume-public-operations.html",
+      "stem": "Zain-Dana-Harper-Resume-Public-Operations",
+      "title": "Public Operations and Facilities Support",
+      "blocks": [
+        {
+          "ref": "resume-identity"
+        },
+        {
+          "kind": "subtitle",
+          "text": "Field Operations | Facilities Support | Public-Facing Service"
+        },
+        {
+          "kind": "h2",
+          "text": "Professional Summary"
+        },
+        {
+          "kind": "p",
+          "text": "Field-operations professional with eleven years in commercial arboriculture and prior technical support experience. Turns site observations into workable plans, coordinates crews and vendors, and explains changes clearly to customers. Brings practical safety judgment and documentation skills to grounds, facilities-support, and public-operations roles."
+        },
+        {
+          "kind": "h2",
+          "text": "Core Skills"
+        },
+        {
+          "kind": "p",
+          "text": "Site and hazard assessment; work planning; estimates and proposals; scheduling; crew and vendor coordination; ground-based field safety; public-facing communication; operational documentation; technical troubleshooting."
+        },
+        {
+          "kind": "h2",
+          "text": "Professional Experience"
+        },
+        {
+          "ref": "resume-field"
+        },
+        {
+          "kind": "li",
+          "text": "Converted customer requests and site assessments into estimates, proposals, and job scopes, giving crews clear access constraints, work requirements, and priorities.",
+          "evidence": [
+            "history"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Coordinated schedules and handoffs between clients, crews, and vendors; kept people informed when conditions changed the timing or sequence of work.",
+          "evidence": [
+            "history"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Supported tree-care operations from the ground by monitoring rigging, swing paths, clearances, and nearby activity; communicated hazards so crews could adapt their work.",
+          "evidence": [
+            "history"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Explained technical findings and practical options in plain language, helping customers understand the planned work and the reasons for site-specific decisions.",
+          "evidence": [
+            "history"
+          ]
+        },
+        {
+          "ref": "resume-support-value"
+        },
+        {
+          "ref": "resume-writer-value"
+        },
+        {
+          "ref": "resume-engineer"
+        },
+        {
+          "kind": "li",
+          "text": "Built tools and documentation for repeatable workflows; used tests, structured records, and explicit checks to make work easier to inspect and hand off.",
+          "evidence": [
+            "flywheel",
+            "history"
+          ]
+        },
+        {
+          "ref": "resume-education"
+        }
+      ],
+      "page_target": 1
+    },
+    {
+      "id": "page:cv",
+      "route": "cv.html",
+      "stem": "Zain-Dana-Harper-CV",
+      "title": "Full Curriculum Vitae",
+      "blocks": [
+        {
+          "ref": "identity"
+        },
+        {
+          "kind": "subtitle",
+          "text": "Curriculum Vitae | Systems Engineering, AI Infrastructure, and Field Operations"
+        },
+        {
+          "kind": "h2",
+          "text": "Profile"
+        },
+        {
+          "kind": "p",
+          "text": "Independent systems engineer and technical writer building AI workstations, evaluation and accountability tools, language tooling, and graphics systems. My work connects a practical question to a verifiable implementation: what happened, what evidence supports it, and who authorized the next action. I combine a self-directed programming history with prior technical networking support and eleven years of full-time arboriculture and customer-facing operations.",
+          "evidence": [
+            "history",
+            "flywheel",
+            "buildlang",
+            "emet"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "Professional Experience"
+        },
+        {
+          "ref": "engineer"
+        },
+        {
+          "kind": "li",
+          "text": "Own the architecture, implementation, integration, tests, documentation, and release work for Flywheel and related tools under the Zentropy Labs project identity. Work spans Python services and command-line tools, Flutter desktop software, Rust systems tooling, and browser interfaces.",
+          "evidence": [
+            "flywheel",
+            "buildlang",
+            "history"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Develop model-agnostic workflows, evaluation harnesses, controlled-action interfaces, and source-linked records that can be checked without relying on a model to approve its own answer.",
+          "evidence": [
+            "flywheel",
+            "accountable-surface",
+            "emet"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Contribute focused fixes, regression tests, and documentation to externally maintained projects, responding to maintainer review and preserving the scope of each accepted change.",
+          "evidence": [
+            "flp",
+            "hflow",
+            "voxwire",
+            "deepeval",
+            "tomlkit",
+            "datasette"
+          ]
+        },
+        {
+          "ref": "writer"
+        },
+        {
+          "kind": "li",
+          "text": "Produced technical and compliance documentation, API and implementation guides, proposals, release notes, and operational playbooks. Turned implementation details into material usable by customers, developers, and reviewers.",
+          "evidence": [
+            "history"
+          ]
+        },
+        {
+          "ref": "field"
+        },
+        {
+          "kind": "li",
+          "text": "Combined ground-based tree-care work and safety coordination with client intake, site assessments, estimates, proposals, scheduling, and crew/vendor communication.",
+          "evidence": [
+            "history"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Monitored rigging systems, clearances, and changing conditions while supporting climbers from the ground. Explained work options and constraints to clients and maintained continuity between the proposed scope and field execution.",
+          "evidence": [
+            "history"
+          ]
+        },
+        {
+          "ref": "support-short"
+        },
+        {
+          "kind": "h2",
+          "text": "Programming Background"
+        },
+        {
+          "ref": "engineering-origin"
+        },
+        {
+          "kind": "h2",
+          "text": "AI Platform and Agent Systems"
+        },
+        {
+          "kind": "h3",
+          "text": "Flywheel | Model-agnostic AI workstation and coding harness"
+        },
+        {
+          "kind": "p",
+          "text": "Primary owned platform. The September 19, 2026 v1.0.1 release includes a Windows installer with a bundled engine. The source repository contains the Python runtime, Flutter desktop client, and browser fallback.",
+          "evidence": [
+            "flywheel"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Routes tasks to hosted or local models through an OpenAI-compatible gateway; keeps model selection separate from the task record and exposes command-line, desktop, and API entry points.",
+          "evidence": [
+            "flywheel"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Provides Rowan, a desktop assistant that translates requests into recorded tasks, together with permission-checked coding and tool-use workflows, session state, and inspectable outcomes.",
+          "evidence": [
+            "flywheel"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Composes research intake, workspace indexing, verification, orchestration, memory, authoring, and other tools through registered lanes and published interfaces. Bundled components and installable companions have distinct packaging requirements.",
+          "evidence": [
+            "flywheel"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Produces sealed, re-derivable receipts and offline MATCH, DRIFT, or UNVERIFIABLE outcomes. A reproducible receipt establishes the bounded check it records, not universal model accuracy or safety.",
+          "evidence": [
+            "flywheel"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Accountable Surface | Governed actions and computer-use adapters"
+        },
+        {
+          "kind": "p",
+          "text": "Built operator-granted action interfaces for filesystem, command, API, browser, and Windows UI Automation work. Actions carry explicit scope and postconditions; persisted journals preserve decisions and observed effects. Reversible adapters include restoration paths. Fake drivers make browser and desktop scenarios testable without uncontrolled live actions.",
+          "evidence": [
+            "accountable-surface"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "The v0.2.0 release provides source and wheel artifacts on GitHub. The project remains alpha; browser integrations are optional and a tool refusal or unknown result is not promoted into a successful action.",
+          "evidence": [
+            "accountable-surface"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Articulate | Writing analysis and accountable editing"
+        },
+        {
+          "kind": "p",
+          "text": "Built deterministic prose analysis with register, mode, and genre profiles, alongside optional model-assisted editing. Includes command-line, library, MCP, language-server, and SARIF surfaces; math-span protection preserves formulas during supported editing flows. Content-free audit receipts record checks without retaining the underlying prose. Version 0.3.0 was released September 20, 2026.",
+          "evidence": [
+            "articulate"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Agent tools, memory, and coordination"
+        },
+        {
+          "kind": "p",
+          "text": "Relay supplies model-agnostic coding-agent tooling; Plexus connects tool interfaces; Mneme retains memories with source checks; Canon consolidates assistant instructions and context. Bulletin provides a signed-identity public message board. These systems contribute distinct capabilities to the larger platform rather than representing separate claims of deployment at customer scale.",
+          "evidence": [
+            "relay",
+            "plexus",
+            "mneme",
+            "canon",
+            "bulletin"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "Evaluation, Systems, and Security Engineering"
+        },
+        {
+          "kind": "h3",
+          "text": "Terminal State Fixtures and Crucible"
+        },
+        {
+          "kind": "p",
+          "text": "Designed exhaustive terminal-state evaluation cases and deterministic scoring that inspect the environment after an agent runs. The MLflow fixture family includes 324 cases; the component-forge suite includes 337 cases and 5,058 frozen expectations. These are fixture counts, not measured model-performance gains. Crucible provides structured worker/verifier evaluation with explicit match, drift, and missing-evidence outcomes. Third-party private staging is not represented as public hosting or endorsement.",
+          "evidence": [
+            "terminal-state-fixtures",
+            "crucible"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "EMET | Byte-integrity witnessing"
+        },
+        {
+          "kind": "p",
+          "text": "Developed Python, Rust, Node, and Go implementations around shared conformance cases and portable verification records. The witness checks byte-level integrity, anchors, and source correspondence; it does not grant permission, certify semantic truth, or replace an operator decision. Cross-language checking makes implementation differences visible.",
+          "evidence": [
+            "emet"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "BuildLang | Rust compiler and developer tooling"
+        },
+        {
+          "kind": "p",
+          "text": "Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. The compiler makes categories of ambient access visible to its type and build machinery. Experimental backends and linear-type work remain distinguished from the supported path.",
+          "evidence": [
+            "buildlang"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Phantom | Hardware-identity inspection and reversible system changes"
+        },
+        {
+          "kind": "p",
+          "text": "Developed a Rust-based Windows and Linux utility with deterministic profiles, read-only audit, backup-before-write behavior, validation, restoration, and platform packages. The released v1.1.1 scope is userland-reversible identifiers. Kernel and firmware layers are modeled, not shipped.",
+          "evidence": [
+            "phantom"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Controlled assessment and operator tooling"
+        },
+        {
+          "kind": "p",
+          "text": "Private systems work includes Array for approval-gated assessment orchestration and containment records, Lab/Seed for controlled-lab fixtures and detection-engineering workflows, and Runtime/ORCA for local workspaces, reports, bundles, and release provenance. Public descriptions cover architecture and safe interfaces; private implementations, target material, and operational details are not published here.",
+          "evidence": [
+            "public-security-descriptions"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Research intake and workspace tooling"
+        },
+        {
+          "kind": "p",
+          "text": "Built Gather for source-carrying research intake, Index for workspace and symbol maps, and Forum for model orchestration with recorded decisions. These tools make source selection, handoffs, and task context inspectable across a multi-repository product.",
+          "evidence": [
+            "gather",
+            "index",
+            "forum"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "Graphics, Color, and Runtime Work"
+        },
+        {
+          "kind": "p",
+          "text": "Developed HLSL and C++ graphics and game-modding work spanning post-processing, Direct3D 11 integration, shader debugging, GPU traces, and shared-memory interfaces. Related public projects include Elder ENB, SkyrimBridge, ENB Runtime Core, Brender Archival, and Engine Revival. Existing engines and collaborators retain their own attribution.",
+          "evidence": [
+            "elder-enb",
+            "skyrimbridge",
+            "enb-runtime-core",
+            "brender-archival",
+            "engine-revival"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "Color and creative-tool work includes Build Color, Calibrate Pro, Studio Engine, and browser-based studio/print surfaces: perceptual color spaces, color difference, HDR/tone-mapping tools, display characterization, and generative visual systems. These are engineering projects, not claims of professional calibration certification.",
+          "evidence": [
+            "build-color",
+            "calibrate-pro",
+            "studio-engine"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "Selected Open-Source Contributions"
+        },
+        {
+          "kind": "p",
+          "text": "The following changes were accepted into externally maintained repositories. They are contributions, not employment at those organizations. The broader public contribution record separately tracks merged, open, and closed without merge outcomes.",
+          "evidence": [
+            "flp",
+            "hflow",
+            "voxwire",
+            "deepeval",
+            "tomlkit",
+            "datasette"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "DeepEval #2822: fixed unhashable tool-output and nested-parameter failures in tool-correctness evaluation; merged July 2, 2026. github.com/confident-ai/deepeval/pull/2822",
+          "evidence": [
+            "deepeval"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "TOMLKit #549: preserved dotted-key siblings when replacing a value with an array of tables; merged July 14, 2026. github.com/python-poetry/tomlkit/pull/549",
+          "evidence": [
+            "tomlkit"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Datasette #2815: corrected error handling for malformed composite primary-key row URLs; merged July 7, 2026. github.com/simonw/datasette/pull/2815",
+          "evidence": [
+            "datasette"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Free Law Project #820: documented runnable database-free fast tests; merged August 25, 2026. github.com/freelawproject/litigant-portal/pull/820",
+          "evidence": [
+            "flp"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Hebbian Robotics #157: tested reserved-column drift against the actual queryable episode schema; merged August 25, 2026. github.com/Hebbian-Robotics/hflow/pull/157",
+          "evidence": [
+            "hflow"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Voxwire #44: added offline WebSocket recording and replay regression coverage; merged August 15, 2026. github.com/vectorvoyager358/voxwire/pull/44",
+          "evidence": [
+            "voxwire"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "Technical Competencies"
+        },
+        {
+          "kind": "p",
+          "text": "Languages and runtimes: Python, Rust, C++, Dart/Flutter, TypeScript/JavaScript, Lua, HLSL, C#, PowerShell, and Bash. Additional cross-language conformance work includes Go and Node implementations.",
+          "evidence": [
+            "history",
+            "flywheel",
+            "emet"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "AI infrastructure and quality: multi-provider/local-model routing, tool-use loops, task decomposition, MCP, evaluation design, deterministic fixtures, regression testing, worker/verifier separation, failure analysis, and terminal-state scoring.",
+          "evidence": [
+            "flywheel",
+            "terminal-state-fixtures",
+            "crucible"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "Verification and controlled actions: capability effects, operator grants, action envelopes, source provenance, hash-chained journals, offline replay, scoped postconditions, conformance suites, and release evidence.",
+          "evidence": [
+            "buildlang",
+            "accountable-surface",
+            "emet"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "Software delivery: Git/GitHub, GitHub Actions, Python packaging, command-line design, Windows/Linux installers, CMake, test automation, static websites, release documentation, and checksums.",
+          "evidence": [
+            "flywheel",
+            "phantom",
+            "buildlang",
+            "history"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "Graphics and domain knowledge: D3D11/HLSL, shader and runtime debugging, color-space and tone-mapping work, GPU instrumentation, shared-memory interfaces, and applied arboriculture/horticulture from field practice.",
+          "evidence": [
+            "history",
+            "elder-enb",
+            "build-color"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "Working Practice"
+        },
+        {
+          "kind": "p",
+          "text": "AI-assisted development is part of the workflow. Architecture, integration, source review, test design, release decisions, and responsibility for the submitted work remain mine. Public examples separate observed results from interpretation and retain negative or inconclusive findings rather than treating every completed run as success.",
+          "evidence": [
+            "history",
+            "flywheel",
+            "flp",
+            "deepeval"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "Research Agenda"
+        },
+        {
+          "kind": "p",
+          "text": "My independent research examines how an AI system can leave evidence that another system or person can check without inheriting its authority. Workstreams include evaluation provenance and verifier independence; live-state drift; proof-carrying action envelopes; the relationship between memory, uncertainty, and behavior; and explicit human authorization for consequential actions. Robotics is a research interest, not a claim of professional robotics deployment experience.",
+          "evidence": [
+            "history"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "Selected Publications and Research Records"
+        },
+        {
+          "kind": "p",
+          "text": "Independent systems papers, preprints, research notes, and archived manuscripts with DOI records. These records are not peer reviewed. An archived philosophical manuscript is not an awarded academic degree.",
+          "evidence": [
+            "publications"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "EMET: An Authority-Incapable Byte-Level Integrity Witness"
+        },
+        {
+          "kind": "p",
+          "text": "Systems paper, 2026. Byte-integrity witnessing and the separation of observation from authority. doi.org/10.5281/zenodo.21230267",
+          "evidence": [
+            "publications"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "BuildLang: Accountable Compute via Typed Capability Effects"
+        },
+        {
+          "kind": "p",
+          "text": "Systems paper, 2026. Capability effects and accountable compilation. doi.org/10.5281/zenodo.21231253",
+          "evidence": [
+            "publications"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Witnessed Independence: Recording Whether a Verifier Graded Its Own Work"
+        },
+        {
+          "kind": "p",
+          "text": "Preprint, 2026. doi.org/10.5281/zenodo.21232206",
+          "evidence": [
+            "publications"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Proof Packets: A Derive-Don't-Trust Envelope for Accountable Agent Actions"
+        },
+        {
+          "kind": "p",
+          "text": "Preprint, 2026. doi.org/10.5281/zenodo.21231406",
+          "evidence": [
+            "publications"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "The Personhood-Gate Handoff"
+        },
+        {
+          "kind": "p",
+          "text": "Research note, 2026. doi.org/10.5281/zenodo.21234475",
+          "evidence": [
+            "publications"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Re-Perceived Effects"
+        },
+        {
+          "kind": "p",
+          "text": "Research note, 2026. doi.org/10.5281/zenodo.21231311",
+          "evidence": [
+            "publications"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "The Witnessing Spine"
+        },
+        {
+          "kind": "p",
+          "text": "Archived research corpus, 2026. doi.org/10.5281/zenodo.20778927",
+          "evidence": [
+            "publications"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Conferred Existence"
+        },
+        {
+          "kind": "p",
+          "text": "Long-form philosophical manuscript and archived corpus, 2026. doi.org/10.5281/zenodo.20773724",
+          "evidence": [
+            "publications"
+          ]
+        },
+        {
+          "ref": "education"
+        },
+        {
+          "kind": "p",
+          "text": "Self-directed study in systems programming, compilers, graphics, color science, AI evaluation, epistemics, and philosophy of mind. Practical arboriculture and plant-science knowledge is grounded in field work, not a separately claimed professional license.",
+          "evidence": [
+            "history"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "Research and Portfolio Links"
+        },
+        {
+          "kind": "p",
+          "text": "ORCID: 0009-0001-7175-5393 | orcid.org/0009-0001-7175-5393"
+        },
+        {
+          "kind": "p",
+          "text": "Publications: harperz9.github.io/publications.html | Portfolio: harperz9.github.io/portfolio.html"
+        }
+      ]
+    }
+  ],
+  "impact_policy": {
+    "method": "Personal action + delivered result + specific organizational use; numbers only when backed by the cited record.",
+    "financial_claims": "No attributable revenue, cost savings, resolution-rate improvement, or time savings were established for prior employers; none is invented.",
+    "measurements": "324 exhaustive terminal-state cases; 337 component-forge cases; 5,058 frozen expectations. Counts measure evaluation coverage, not customer adoption or model performance.",
+    "organization_value": "Employer bullets describe scoping, service restoration, decision support, consistent handoffs, and risk communication. These are functional contributions, not quantified business outcomes.",
+    "page_policy": "Each targeted resume is one page. The separate full CV retains the expanded record."
+  }
+}

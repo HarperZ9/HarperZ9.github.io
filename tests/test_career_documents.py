@@ -210,65 +210,34 @@ def test_committed_html_release_rows_bind_current_bytes() -> None:
 
 
 def test_experience_dates_use_the_adopted_low_claim_boundary() -> None:
-    """Public documents must not imply an unknown current or end status."""
-    expected = (
-        "Technical Networking Support, Xbox/Microsoft contract | subcontracted through Stream/Convergys | Wilsonville, Oregon | 2014 to 2015",
-        "Full-time operations and commercial arboriculture | Legendary Tree (organization label) | April 25, 2015 to June 2, 2026",
-        "Freelance Technical Writer, Documentation, and Product Operations | independent practice | started 2017",
-        "Independent Systems Engineer | independent practice | started 2023",
-    )
-    boundary = (
-        "The 2017 and 2023 start years do not state current status or an end date; "
-        "both remain unspecified."
-    )
-    arboriculture_boundary = (
-        "Legendary Tree is the applicant-provided organization label; no conventional "
-        "job title or legal employer of record is asserted."
-    )
+    """Known dates survive the compact layout; current projects are not paid tenure."""
+    source = json.loads(read("career/resume-source.json"))
+    assert "not continuous paid employment" in source["date_policy"]["independent_engineering"]
+    assert "No current status, end year" in source["date_policy"]["freelance_writing"]
     for name in STATUS_BOUNDARY_DOCS:
         src = read(name)
-        assert "current status unconfirmed" not in src, name
-        for line in expected:
-            assert line in src, f"{name}: missing {line!r}"
-        assert boundary in src, f"{name}: missing explicit status boundary"
-        assert arboriculture_boundary in src, name
-        assert "Operations and Commercial Arboriculture Lead" not in src, name
-        assert "family business" not in src, name
-        assert "started 2015" not in src, name
+        for value in ("Stream/Convergys", "Wilsonville, Oregon", "2014 to 2015",
+                      "Legendary Tree", "April 25, 2015 to June 2, 2026",
+                      "2017", "2023 to Present", "High School Diploma"):
+            assert value in src, (name, value)
+        assert "Not direct Microsoft employment" in src
+        assert "Operations and Commercial Arboriculture Lead" not in src
+        assert "family business" not in src
+        assert "2017 to Present" not in src
+        assert "2015 to Present" not in src
 
 
 def test_public_markdown_career_sources_preserve_the_same_date_and_employer_boundary() -> None:
-    """Raw public Markdown must not contradict the generated application lanes."""
-    boundary = (
-        "The 2017 and 2023 start years do not state current status or an end date; "
-        "both remain unspecified."
-    )
-    arboriculture_boundary = (
-        "Legendary Tree is the applicant-provided organization label; no conventional "
-        "job title or legal employer of record is asserted."
-    )
+    """Public text sources retain the same employment facts and exclude invented tenure."""
     for name in MARKDOWN_STATUS_BOUNDARY_DOCS:
         src = read(name)
-        normalized = " ".join(src.split())
-        assert "2023-present" not in src, name
-        assert "2017-present" not in src, name
-        assert "2015-present" not in src, name
-        assert "Xbox Division | Microsoft" not in src, name
-        assert "Redmond, Washington" not in src, name
-        assert "Seattle / remote | started 2023" in src, name
-        assert "Remote | started 2017" in src, name
-        assert "Legendary Tree (organization label)" in src, name
-        assert "April 25, 2015 to June 2, 2026" in src, name
-        assert "Operations and Commercial Arboriculture Lead" not in src, name
-        assert "family business" not in src, name
-        assert "started 2015" not in src, name
-        assert arboriculture_boundary in normalized, name
-        assert "Technical Networking Support, Xbox/Microsoft contract" in src, name
-        assert (
-            "Wilsonville, Oregon | 2014 to 2015 | subcontracted through Stream/Convergys"
-            in src
-        ), name
-        assert boundary in src, name
+        for value in ("2017", "2023", "Legendary Tree", "Stream/Convergys",
+                      "April 25, 2015 to June 2, 2026", "2014 to 2015"):
+            assert value in src, (name, value)
+        for forbidden in ("2017-present", "2015-present", "Xbox Division | Microsoft",
+                          "Redmond, Washington", "Operations and Commercial Arboriculture Lead",
+                          "family business"):
+            assert forbidden not in src, (name, forbidden)
 
 
 def test_downloadable_resume_assets_are_pdf_documents() -> None:
@@ -393,22 +362,18 @@ def test_portfolio_names_retro_work_without_stale_download_claims() -> None:
 
 
 def test_hiring_page_leads_with_two_technical_lanes_and_a_field_campaign() -> None:
+    """Three public resume families replace internal cohort/campaign language."""
     src = read("hire.html")
     assert "Zain Dana Harper" in src
-    assert "Two measured technical lanes, one separate field campaign." in src
-    assert len(re.findall(r'class="hire-route-band(?:\s|\")', src)) == 2
-    for marker in (
-        'id="support-operations-qa"',
-        'id="evaluation-python-tools"',
-        "Technical support, developer operations, and QA",
-        "Evaluation tooling and Python developer tools",
-        "Separate field campaign",
-        "ports, utilities, fire-support, parks, and field-safety",
-    ):
+    assert src.count('class="career-card"') == 3
+    for marker in ('id="support-operations-qa"', 'id="evaluation-python-tools"',
+                   'id="public-service-field-path"', 'resume-public-operations.html',
+                   'resume-grounds.html', 'resume-evaluation-tooling.html',
+                   'resume-support-operations.html', 'zaindharper@gmail.com'):
         assert marker in src
-    assert "zaindharper@gmail.com" in src
+    assert "measured technical lanes" not in src
+    assert "separate field campaign" not in src.lower()
     assert '<body class="doc" data-route-art="off">' in src
-    assert "private-client material" not in src
 
 
 def test_hiring_document_marks_the_local_career_switch_current() -> None:
@@ -456,11 +421,13 @@ def test_home_source_connects_the_product_brand_to_the_hiring_route() -> None:
 
 
 def test_resume_keeps_projects_inside_zentropy_experience() -> None:
+    """Owned projects are not represented as external employers; full record remains linked."""
     src = read("resume.html")
-    accepted = src.index("Technical support, developer operations, and QA")
-    owned = src.index("Flywheel")
-    boundary = src.index("Identity and date boundary")
-    assert accepted < owned < boundary
+    assert "one page" in src
+    assert 'href="cv.html"' in src
+    assert "Source and date notes" in src
+    assert "Flywheel" in src
+    assert "Independent" in src
 
 
 def test_primary_resume_and_public_letter_are_bounded_first_impressions() -> None:

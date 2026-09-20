@@ -1,163 +1,59 @@
-# Zain Dana Harper
+# Zain Dana Harper: Resumes
 
-## Systems Engineer
+Updated 2026-09-20.
 
-Seattle, Washington | Open to remote, hybrid, onsite, contract, and project work
-zaindharper@gmail.com | https://harperz9.github.io | https://github.com/HarperZ9
+Three primary families: support/developer operations/QA; AI systems/evaluation/Python tooling; arboriculture/field operations/estimating. Each targeted resume is one page. A public-operations variant and full CV are also available.
 
-### Summary
+## Technical Support, Developer Operations, and QA
 
-Systems engineer whose current work is verification infrastructure for AI
-agents: accountability engines, capability-typed tooling, and re-checkable
-evidence surfaces. Public work also spans compilers and language tooling,
-real-time graphics and color science, technical documentation, and
-operations. Builds inspectable tools with explicit boundaries, tests,
-provenance, and reproducible release paths. Independent engineering practice
-since 2023, grounded in earlier technical support, freelance technical
-writing, compliance documentation, and eleven years of field operations
-leadership.
+https://harperz9.github.io/resume-support-operations.html
 
-### Selected engineering work
+[PDF](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf)
+[DOCX](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.docx)
+[TXT](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.txt)
+[MD](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.md)
 
-**Flywheel accountability engine for AI agents | Python (stdlib-only engine), Flutter**
+## AI Systems, Evaluation, and Python Developer Tools
 
-- Shipped Flywheel v1.0.1 on 2026-09-19: the engine publishes to PyPI as
-  flywheel-verify and the desktop client ships as a Windows installer, with ten
-  native Python lanes (gather, crucible, index, forum, plexus, mneme, canon,
-  chorus, relay, and accountable-surface) that bundle from hash-pinned vendored
-  source and launch on a clean machine. The backbone is re-derivable
-  verification: no receipt, no accept; no learned model on the accept path; a
-  MATCH, DRIFT, or UNVERIFIABLE witness verdict. On the shipped benchmark the
-  verified loop shows no measured accuracy uplift over single-shot and the
-  interval includes zero; the value is the re-derivable receipt and containment.
-- Built an engine in which every agent tool call passes a default-deny
-  capability gate and emits a sealed, hash-chained, offline-verifiable
-  receipt binding what was allowed to what actually happened (witnessed
-  argument and output digests, never raw content).
-- Receipts compose into a transitive witness graph: a drifted action degrades
-  exactly its downstream dependents, and a third party can re-verify the
-  whole chain offline.
-- Shipped an infrastructure control package (network egress receipts,
-  credential scanning, isolation acceptance tests, a dual-confirmation kill
-  switch, cross-layer event correlation) and published a dated assessment
-  mapping it against the failure classes of the July 2026 agentic-security
-  incidents.
-- In the shipped release: capability-typed shell
-  admission with Unicode-spoof neutralization, a domain oracle registry
-  routing claims to independent verifiers across three live domains (pytest
-  for code, the Lean kernel for mathematics, and a measurement gate for
-  empirical claims) with an honest UNVERIFIABLE verdict elsewhere, a
-  model-neutral router with quota failover across providers, a
-  subscription-auth adapter that consumes an authorized token rather than
-  minting one, and session tooling to browse, resume, and export past
-  verified runs.
-- Completed the engine's first preregistered confirmatory run (2026-08-04):
-  zero verdict disagreements across 2,646 certificate bodies in nine model
-  contexts, statistically significant held-out selection uplift at every
-  model size on the solvable task family, honest nulls kept, and the whole
-  analysis anchored in a signed, offline-verifiable ledger.
+https://harperz9.github.io/resume-evaluation-tooling.html
 
-**BuildLang compiler and language tooling | Rust, C, HLSL, VS Code**
+[PDF](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf)
+[DOCX](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.docx)
+[TXT](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.txt)
+[MD](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.md)
 
-- Built a systems language where ambient access is part of a function's type:
-  typed capability effects (filesystem, network, foreign calls) that a
-  callback or closure cannot silently launder, with Hindley-Milner inference
-  and experimental linear types.
-- Ships as the `buildc` toolchain (build, run, test, repl, fmt, pkg, LSP)
-  with a production C backend, HLSL and GLSL shader output, and re-checkable
-  build receipts: `buildc check --receipt` seals what a build observed and
-  `buildc receipt verify` re-derives it later.
+## Arboriculture, Field Operations, and Estimating
 
-**Project Telos and model-era engineering tools | Python, TypeScript, Node.js**
+https://harperz9.github.io/resume-grounds.html
 
-- Built a public ecosystem for repository intelligence, evidence intake,
-  multi-agent orchestration, evaluation, replayable records, and claim
-  verification.
-- Shipped focused tools including Index 2.9.0 for repository maps and context
-  packs, Gather 1.6.1 for provenance-aware research intake, Forum 1.13.0 for
-  model-agnostic orchestration, and Crucible 1.2.0 for worker/verifier
-  evaluation workflows.
-- Published articulate-writing 0.2.0 on PyPI, a writing-quality linter that
-  scores prose against a register standard.
+[PDF](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Grounds.pdf)
+[DOCX](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Grounds.docx)
+[TXT](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Grounds.txt)
+[MD](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Grounds.md)
 
-**Real-time graphics, color, and display tooling | C++, HLSL, Python**
+## Public Operations and Facilities Support
 
-- Released a Skyrim real-time graphics project whose current public career
-  materials report more than 900,000 downloads.
-- Built D3D11/HLSL post-processing and rendering systems involving tone
-  mapping, TAA, SSR, SSGI, GTAO, volumetrics, and read-only shared-memory
-  IPC.
+https://harperz9.github.io/resume-public-operations.html
 
-### Open-source contributions
+[PDF](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Public-Operations.pdf)
+[DOCX](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Public-Operations.docx)
+[TXT](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Public-Operations.txt)
+[MD](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Public-Operations.md)
 
-- 22 code, test, and documentation pull requests merged into 19 public
-  repositories maintained by others, including Datasette, tomlkit,
-  pydantic-ai, DeepEval, pydash, and grimp.
-- 11 further pull requests open and awaiting maintainer review across 11
-  repositories, including the Model Context Protocol Python SDK, Drizzle ORM,
-  Datasette, and LLM. Open is not accepted.
+## Full Curriculum Vitae
 
-### Speaking
+https://harperz9.github.io/cv.html
 
-- "Pick the Lock for Everyone: Building Verifiable AI Workflows in Python,"
-  invited talk, Puget Sound Programming Python (PuPPy), scheduled 2026-08-19.
+[PDF](https://harperz9.github.io/career/Zain-Dana-Harper-CV.pdf)
+[DOCX](https://harperz9.github.io/career/Zain-Dana-Harper-CV.docx)
+[TXT](https://harperz9.github.io/career/Zain-Dana-Harper-CV.txt)
+[MD](https://harperz9.github.io/career/Zain-Dana-Harper-CV.md)
 
-### Experience
+## Work-history and source notes
 
-The 2017 and 2023 start years do not state current status or an end date; both remain unspecified.
+Start year 2023 from historical career record; current independent project activity confirmed by owner on 2026-09-20 and current public releases. Present refers to project practice, not continuous paid employment.
+Start year 2017 is known. No current status, end year, or continuous employment is inferred.
+Full-time period April 25, 2015 to June 2, 2026. Legendary Tree is an applicant-provided organization label; the displayed role describes duties and does not establish a formal title or legal employer name.
+2014 to 2015, Xbox/Microsoft product contract, subcontracted through Stream/Convergys in Wilsonville, Oregon. Not direct Microsoft employment.
 
-**Independent Systems Engineer | independent practice**
-Seattle / remote | started 2023
-
-- Own architecture, implementation, integration, documentation, testing,
-  packaging, public demos, and release evidence across a multi-repository
-  systems portfolio.
-- Coordinate agentic development workflows while preserving first-party
-  review, verifier separation, testable contracts, and public claim
-  discipline.
-
-**Freelance Technical Writer / Documentation and Product Operations**
-Remote | started 2017
-
-- Produce API and implementation guides, security and compliance
-  documentation, proposals, release notes, and support material.
-- Work with NIST 800-171, CMMC readiness, SOC 2, ISO 27001, DFARS, incident
-  response, and audit-support concepts in a technical-writing capacity.
-
-**Full-time operations and commercial arboriculture | Legendary Tree (organization label)**
-April 25, 2015 to June 2, 2026
-
-Legendary Tree is the applicant-provided organization label; no conventional
-job title or legal employer of record is asserted.
-
-- Applicant-reported eleven years operating tree crews from the ground: ran the rigging
-  systems, judged clearances and how far limbs would swing relative to
-  structures and people, and served as the second set of eyes for the person
-  in the air.
-- Handled client intake, estimates, site assessment, scheduling, and safety
-  judgment; coordinated crew and vendor work.
-
-**Technical Networking Support, Xbox/Microsoft contract**
-Wilsonville, Oregon | 2014 to 2015 | subcontracted through Stream/Convergys
-
-- Diagnosed TCP/IP, DNS, NAT, firewall, router, and account-adjacent console
-  networking issues across phone and chat support.
-
-### Technical strengths
-
-**Languages:** Python, Rust, C++, TypeScript/JavaScript, Lua, HLSL, C#,
-PowerShell, Bash
-**Verification and AI:** capability gates, sealed receipts, offline
-re-verification, provenance, replayable ledgers, model routing, tool-use
-loops, MCP surfaces, worker/verifier separation, evaluation
-**Systems:** compilers, type systems, typed effects, code generation, D3D11,
-shader pipelines, shared-memory IPC, CMake
-**Delivery:** Git and GitHub, pytest, GitHub Actions, release notes,
-developer documentation, Linux
-
-### Public proof
-
-Portfolio: https://harperz9.github.io/portfolio.html
-Repositories and releases: https://github.com/HarperZ9
-
-Updated 2026-09-19.
+Detailed source ledger: https://harperz9.github.io/career/source-ledger.md
