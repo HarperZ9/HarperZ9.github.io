@@ -200,9 +200,14 @@ def test_flywheel_101_release_discovery_keeps_engine_desktop_and_service_desk_li
     pypi = evidence["flywheel-pypi-v1-0-1"]
     service_desk = evidence["flywheel-service-desk-env-v0-1-0"]
     assert flywheel["purpose"] == (
-        "Flywheel runs an AI task with the local or hosted model and tools you choose. "
-        "It records the run, and optional sealed tool-call receipts can be inspected and rechecked offline. "
-        "The repository also includes a native desktop app."
+        "Flywheel is a self-hostable, model-agnostic AI workstation and coding harness: "
+        "run any frontier or local model behind one interface, with the Rowan desktop assistant, "
+        "a permission-gated coding agent, and fifteen built-in lanes (ten bundle natively) "
+        "for research, memory, and writing. Its check-output command grades an answer against "
+        "the source that decides it, ships finance, medicine, and law packs, and can emit a "
+        "Lean 4 proof; accepted results carry sealed, re-derivable receipts an independent "
+        "witness re-runs offline. Data stays local; the code is source-available under "
+        "FSL-1.1-MIT."
     )
     assert "Service Desk Incident Environment" not in flywheel["purpose"]
     assert flywheel["releaseState"] == "stable Python engine v1.0.1; unsigned Windows desktop v1.0.1; ten Python lanes bundle from vendored source; no measured accuracy uplift over single-shot; clean-machine, mobile, and node-lane bundling not claimed"

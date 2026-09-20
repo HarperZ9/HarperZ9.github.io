@@ -247,7 +247,7 @@
     {
       "id": "flywheel",
       "name": "Flywheel",
-      "purpose": "Flywheel runs an AI task with the local or hosted model and tools you choose. It records the run, and optional sealed tool-call receipts can be inspected and rechecked offline. The repository also includes a native desktop app.",
+      "purpose": "Flywheel is a self-hostable, model-agnostic AI workstation and coding harness: run any frontier or local model behind one interface, with the Rowan desktop assistant, a permission-gated coding agent, and fifteen built-in lanes (ten bundle natively) for research, memory, and writing. Its check-output command grades an answer against the source that decides it, ships finance, medicine, and law packs, and can emit a Lean 4 proof; accepted results carry sealed, re-derivable receipts an independent witness re-runs offline. Data stays local; the code is source-available under FSL-1.1-MIT.",
       "useCases": [
         "agent workflow orchestration",
         "model-neutral execution",
