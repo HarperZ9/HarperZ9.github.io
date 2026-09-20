@@ -1,0 +1,91 @@
+name: Career live verification
+on:
+  push:
+    branches: [verify/career-live-20260920]
+    paths: ['.github/workflows/career-live-verification.yml']
+permissions:
+  contents: read
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: 87c320c881392b753c09b3fda305dd9500ca40d6
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Confirm deployed bytes and unchanged non-career files
+        run: |
+          mkdir -p qa
+          python - <<'PY'
+          import concurrent.futures,datetime,hashlib,json,re,subprocess,time,urllib.request
+          from pathlib import Path
+          base='2371243aa097aed515c90c9f638ab83fc1475f6a'
+          release='87c320c881392b753c09b3fda305dd9500ca40d6'
+          allowed={'cv.html','cv.md','hire.html','resume.html','resume.md','resume-evaluation-tooling.html','resume-grounds.html','resume-public-operations.html','resume-support-operations.html','tools/build_career_artifacts.py','tools/render_career_pages.py','system/career.css','tests/test_career_documents.py','tests/test_career_artifact_generation.py','tests/test_zentropy_sitewide_contract.py','tests/test_capability_publication_release.py','tests/test_resume_consolidation.py','tests/career-release-browser.cjs'}
+          changes=subprocess.check_output(['git','diff','--name-only',base,release]).decode().splitlines()
+          unrelated=[p for p in changes if p not in allowed and not p.startswith('career/')]
+          assert not unrelated,unrelated
+          source=json.loads(Path('career/resume-source.json').read_text())
+          exports=[f"career/{d['stem']}.{ext}" for d in source['documents'] for ext in ('pdf','docx','txt','md')]
+          assert len(exports)==20
+          routes=['hire.html','resume.html','resume-support-operations.html','resume-evaluation-tooling.html','resume-grounds.html','resume-public-operations.html','cv.html']
+          shared=['index.html','portfolio.html','flywheel.html','accountable-surface.html','bulletin.html','fonts.html','research.html','publications.html','system/home-readable.css']
+          shared+=re.findall(r'(?:src|href)="/(assets/[^"?]+)',Path('index.html').read_text())
+          paths=list(dict.fromkeys(exports+routes+['system/career.css']+shared))
+          for p in paths: assert Path(p).is_file(),p
+          for p in shared:
+              old=subprocess.check_output(['git','show',f'{base}:{p}'])
+              assert old==Path(p).read_bytes(),p
+          expected={p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in paths}
+          def fetch(path):
+              url='https://harperz9.github.io/'+path+'?career_release='+release+'&check='+str(time.time_ns())
+              try:
+                  request=urllib.request.Request(url,headers={'User-Agent':'Career-Release-Verification/1.0','Cache-Control':'no-cache'})
+                  with urllib.request.urlopen(request,timeout=25) as response:
+                      data=response.read(); digest=hashlib.sha256(data).hexdigest()
+                      return {'path':path,'url':response.url,'http_status':response.status,'bytes':len(data),'sha256':digest,'expected_sha256':expected[path],'matched':digest==expected[path]}
+              except Exception as exc:
+                  return {'path':path,'matched':False,'error':str(exc)}
+          history=[]
+          for attempt in range(1,21):
+              with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+                  results=list(pool.map(fetch,paths))
+              failures=[r for r in results if not r['matched']]
+              history.append({'attempt':attempt,'matched':len(results)-len(failures),'total':len(results)})
+              report={'release_commit':release,'baseline_commit':base,'checked_at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'changed_paths':changes,'unrelated_changed_paths':unrelated,'export_count':len(exports),'career_page_count':len(routes),'unchanged_surface_count':len(shared),'passed':not failures,'attempts':history,'results':results}
+              Path('qa/live-verification.json').write_text(json.dumps(report,indent=2)+'\n')
+              print(json.dumps(history[-1]),flush=True)
+              if not failures: break
+              print('Waiting for Pages propagation:',[r['path'] for r in failures],flush=True)
+              time.sleep(15)
+          assert not failures,failures
+          print(f'PASS: {len(exports)} exports, {len(routes)} career pages, career CSS and {len(shared)} unchanged surfaces match the merged commit.')
+          PY
+      - name: Verify public mobile and desktop career pages
+        run: |
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install --no-save playwright@1.62.1
+          set -o pipefail
+          SITE_BASE_URL=https://harperz9.github.io BROWSER_CHANNEL=chrome node tests/career-release-browser.cjs | tee qa/live-browser.log
+          python - <<'PY'
+          import json,hashlib,urllib.parse
+          from pathlib import Path
+          report=json.loads(Path('qa/career-browser/results.json').read_text())
+          assert len(report['results'])==14 and len(report['downloads'])==20
+          for item in report['downloads']:
+              path=urllib.parse.unquote(urllib.parse.urlparse(item['url']).path).lstrip('/')
+              assert hashlib.sha256(Path(path).read_bytes()).hexdigest()==item['sha256'],path
+          print('PASS: browser downloads match the reviewed release bytes without cache-busting URLs.')
+          PY
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: career-live-verification
+          path: qa/
+          retention-days: 7
