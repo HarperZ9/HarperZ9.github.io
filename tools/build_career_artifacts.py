@@ -17,17 +17,19 @@ import zipfile
 from xml.etree import ElementTree
 
 from docx import Document
-from docx.shared import Inches, Pt
+from docx.shared import Inches, Pt, RGBColor
+from docx.oxml import OxmlElement
+from docx.oxml.ns import qn
 from reportlab.lib.enums import TA_LEFT
 from reportlab.lib.pagesizes import LETTER
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
-from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer
+from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, PageBreak
 from pypdf import PdfReader
 
 
-SOURCE_EPOCH = 1788109200  # 2026-08-30T17:00:00Z
+SOURCE_EPOCH = 1789931178  # 2026-09-20T19:06:18Z
 
 
 @dataclass(frozen=True, slots=True)
@@ -72,22 +74,26 @@ class _ArticleParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
         self._article_depth = 0
+        self._tag: str | None = None
         self._kind: str | None = None
         self._parts: list[str] = []
         self.blocks: list[Block] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attributes = dict(attrs)
         if tag == "article":
             self._article_depth += 1
-        elif self._article_depth and tag in {"h1", "h2", "p", "li"}:
-            self._kind = tag
+        elif self._article_depth and attributes.get("data-career-break") == "true":
+            self.blocks.append(Block("pagebreak", ""))
+        elif self._article_depth and tag in {"h1", "h2", "h3", "p", "li"}:
+            self._tag = tag
+            classes = (attributes.get("class") or "").split()
+            self._kind = ("subtitle" if "career-subtitle" in classes else
+                          "contact" if "contact" in classes else
+                          "meta" if "career-meta" in classes else tag)
             self._parts = []
-        elif (
-            self._article_depth
-            and self._kind == "p"
-            and tag == "span"
-            and any(part.strip() for part in self._parts)
-        ):
+        elif (self._article_depth and self._tag == "p" and tag == "span"
+              and any(part.strip() for part in self._parts)):
             self._parts.append(" | ")
 
     def handle_data(self, data: str) -> None:
@@ -95,11 +101,11 @@ class _ArticleParser(HTMLParser):
             self._parts.append(data)
 
     def handle_endtag(self, tag: str) -> None:
-        if self._article_depth and tag == self._kind:
+        if self._article_depth and tag == self._tag:
             text = " ".join("".join(self._parts).split())
             if text:
-                self.blocks.append(Block(tag, text))
-            self._kind = None
+                self.blocks.append(Block(self._kind or tag, text))
+            self._tag = self._kind = None
             self._parts = []
         if tag == "article" and self._article_depth:
             self._article_depth -= 1
@@ -124,41 +130,48 @@ def _read_blocks(path: Path) -> tuple[Block, ...]:
 
 
 def _build_pdf(path: Path, blocks: tuple[Block, ...]) -> None:
-    title = blocks[0].text
+    """Readable US-letter, single-column text; no one-page shrink-to-fit."""
     styles = {
-        "h1": ParagraphStyle(
-            "CareerTitle", fontName="Helvetica-Bold", fontSize=13,
-            leading=14, spaceAfter=4, alignment=TA_LEFT,
-        ),
-        "h2": ParagraphStyle(
-            "CareerHeading", fontName="Helvetica-Bold", fontSize=9.6,
-            leading=10.5, spaceBefore=2.4, spaceAfter=0.8,
-        ),
-        "p": ParagraphStyle(
-            "CareerBody", fontName="Helvetica", fontSize=8.5,
-            leading=9.7, spaceAfter=0.9,
-        ),
-        "li": ParagraphStyle(
-            "CareerBullet", fontName="Helvetica", fontSize=8.4,
-            leading=9.6, leftIndent=8, firstLineIndent=-5, spaceAfter=0.7,
-        ),
+        "h1": ParagraphStyle("CareerTitle", fontName="Helvetica-Bold", fontSize=20,
+                             leading=23, spaceAfter=4, keepWithNext=True),
+        "h2": ParagraphStyle("CareerHeading", fontName="Helvetica-Bold", fontSize=11.5,
+                             leading=14, spaceBefore=6, spaceAfter=3, keepWithNext=True),
+        "h3": ParagraphStyle("CareerRole", fontName="Helvetica-Bold", fontSize=11,
+                             leading=12.8, spaceBefore=5, spaceAfter=2, keepWithNext=True),
+        "subtitle": ParagraphStyle("CareerSubtitle", fontName="Helvetica-Bold", fontSize=11,
+                                   leading=13.2, spaceBefore=4, spaceAfter=5, keepWithNext=True),
+        "contact": ParagraphStyle("CareerContact", fontName="Helvetica", fontSize=10.5,
+                                  leading=12, spaceAfter=2, keepWithNext=True),
+        "meta": ParagraphStyle("CareerMeta", fontName="Helvetica", fontSize=10.5,
+                               leading=12, spaceAfter=2, keepWithNext=True),
+        "p": ParagraphStyle("CareerBody", fontName="Helvetica", fontSize=10.5,
+                            leading=12.6, spaceAfter=3),
+        "li": ParagraphStyle("CareerBullet", fontName="Helvetica", fontSize=10.5,
+                             leading=12.6, leftIndent=12, firstLineIndent=-9, spaceAfter=3),
     }
+    if path.name == "Zain-Dana-Harper-CV.pdf":
+        # A full CV has a fixed, readable 10.5-point body; never auto-shrink.
+        for key in ("p", "li", "h3", "subtitle"):
+            styles[key].fontSize = 10.5
+            styles[key].leading = 12.5
+        styles["h3"].spaceBefore = 5
+        styles["h2"].spaceBefore = 7
     story = []
     for block in blocks:
+        if block.kind == "pagebreak":
+            story.append(PageBreak())
+            continue
         payload = escape(block.text)
         if block.kind == "li":
             payload = "&#8226; " + payload
         story.append(Paragraph(payload, styles[block.kind]))
-    story.append(Spacer(1, 0.01 * inch))
-    doc = SimpleDocTemplate(
-        str(path), pagesize=LETTER,
-        leftMargin=0.48 * inch, rightMargin=0.48 * inch,
-        topMargin=0.4 * inch, bottomMargin=0.4 * inch,
-        pageCompression=1,
-    )
+    doc = SimpleDocTemplate(str(path), pagesize=LETTER,
+                            leftMargin=0.6*inch, rightMargin=0.6*inch,
+                            topMargin=0.55*inch, bottomMargin=0.55*inch,
+                            pageCompression=1)
 
     def canvasmaker(*args, **kwargs):
-        return _InvariantCanvas(*args, title=title, **kwargs)
+        return _InvariantCanvas(*args, title=blocks[0].text, **kwargs)
 
     doc.build(story, canvasmaker=canvasmaker)
 
@@ -178,44 +191,56 @@ def _repack_docx(path: Path, fixed_datetime: datetime) -> None:
                 target.writestr(info, source.read(name))
 
 
-def _build_docx(
-    path: Path,
-    blocks: tuple[Block, ...],
-    fixed_datetime: datetime,
-) -> None:
+def _build_docx(path: Path, blocks: tuple[Block, ...], fixed_datetime: datetime) -> None:
     document = Document()
     section = document.sections[0]
-    section.top_margin = Inches(0.42)
-    section.bottom_margin = Inches(0.42)
-    section.left_margin = Inches(0.5)
-    section.right_margin = Inches(0.5)
-    styles = document.styles
-    styles["Normal"].font.name = "Arial"
-    styles["Normal"].font.size = Pt(8)
-    styles["Title"].font.name = "Arial"
-    styles["Title"].font.size = Pt(14)
-    styles["Heading 2"].font.name = "Arial"
-    styles["Heading 2"].font.size = Pt(9)
+    section.page_width, section.page_height = Inches(8.5), Inches(11)
+    section.top_margin = section.bottom_margin = Inches(0.55)
+    section.left_margin = section.right_margin = Inches(0.6)
+    style_sizes = {"Normal":10.5, "Title":20, "Subtitle":11, "Heading 1":11.5,
+                   "Heading 2":11, "List Bullet":10.5}
+    if path.name == "Zain-Dana-Harper-CV.docx":
+        for key in ("Normal", "List Bullet", "Heading 2", "Subtitle"):
+            style_sizes[key] = 10.5
+    for name, size in style_sizes.items():
+        style = document.styles[name]
+        style.font.name = "Arial"
+        style.font.size = Pt(size)
+        style.font.color.rgb = RGBColor(0, 0, 0)
+        style.font.italic = False
+        style.font.bold = name in {"Title", "Subtitle", "Heading 1", "Heading 2"}
+    for style in document.styles:
+        if style.type == 1:
+            lang = OxmlElement("w:lang")
+            lang.set(qn("w:val"), "en-US")
+            style.element.get_or_add_rPr().append(lang)
     for block in blocks:
-        if block.kind == "h1":
-            paragraph = document.add_paragraph(block.text, style="Title")
-        elif block.kind == "h2":
-            paragraph = document.add_paragraph(block.text, style="Heading 2")
-        elif block.kind == "li":
-            paragraph = document.add_paragraph(block.text, style="List Bullet")
-        else:
-            paragraph = document.add_paragraph(block.text)
-        paragraph.paragraph_format.space_before = Pt(0)
-        paragraph.paragraph_format.space_after = Pt(1.5)
-        paragraph.paragraph_format.line_spacing = 1.0
-
+        if block.kind == "pagebreak":
+            document.add_page_break()
+            continue
+        kind = block.kind
+        style = {"h1":"Title", "h2":"Heading 1", "h3":"Heading 2",
+                 "subtitle":"Subtitle", "li":"List Bullet"}.get(kind, "Normal")
+        paragraph = document.add_paragraph(block.text, style=style)
+        fmt = paragraph.paragraph_format
+        fmt.space_before = Pt({"h2":6, "h3":5, "subtitle":4}.get(kind, 0))
+        fmt.space_after = Pt({"h1":5, "h3":2, "contact":2}.get(kind, 3))
+        fmt.line_spacing = Pt({"h1":23, "h2":14, "h3":12.8, "subtitle":13.2, "contact":12, "meta":12}.get(kind, 12.6))
+        fmt.keep_with_next = kind in {"h1", "h2", "h3", "subtitle", "contact", "meta"}
+        fmt.keep_together = True
+        fmt.widow_control = True
+        if kind in {"contact", "meta"}:
+            for run in paragraph.runs:
+                run.font.size = Pt(10.5)
+        if kind == "li":
+            fmt.left_indent = Inches(0.17)
+            fmt.first_line_indent = Inches(-0.12)
     properties = document.core_properties
     properties.title = blocks[0].text
     properties.subject = "Public career document"
     properties.author = "Zain Dana Harper"
     properties.last_modified_by = "harperz9 career pipeline"
-    properties.created = fixed_datetime
-    properties.modified = fixed_datetime
+    properties.created = properties.modified = fixed_datetime
     properties.revision = 1
     document.save(path)
     _repack_docx(path, fixed_datetime)
@@ -276,6 +301,8 @@ def _build_receipt(
     build_inputs = []
     for relative in (
         "tools/build_career_artifacts.py",
+        "tools/render_career_pages.py",
+        "career/resume-source.json",
         "requirements-career-docs.txt",
     ):
         payload = (site_root / relative).read_bytes()
@@ -407,7 +434,7 @@ def _update_release_manifest(
         source_path = _current_html_target(site_root, row["path"])
         payload = source_path.read_bytes()
         extraction = "\n".join(
-            block.text for block in _read_blocks(source_path)
+            block.text for block in _read_blocks(source_path) if block.kind != "pagebreak"
         ).strip() + "\n"
         current = dict(row)
         current["byte_length"] = len(payload)

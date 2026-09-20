@@ -25,6 +25,7 @@ DEFAULT_ASSET_REVISION = "20260902-creative-chassis"
 READING_CASCADE_REVISION = "20260907-reading-completion"
 THEME_PREFERENCES_REVISION = "20260907-theme-preferences"
 REVIEWED_ASSET_REVISIONS = {
+    "system/career.css": "20260920-restoration",
     "system/bulletin-board.js": "20260909-media-filters",
     "system/bulletin-work.js": "20260909-open-work",
     "system/font-marketplace.css": "20260909-font-marketplace-port",

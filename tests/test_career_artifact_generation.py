@@ -83,7 +83,7 @@ class _ArticleTextParser(HTMLParser):
     def handle_starttag(self, tag, attrs) -> None:
         if tag == "article":
             self.article_depth += 1
-        elif self.article_depth and tag in {"h1", "h2", "p", "li"}:
+        elif self.article_depth and tag in {"h1", "h2", "h3", "p", "li"}:
             self.kind = tag
             self.parts = []
         elif (
@@ -126,73 +126,46 @@ def test_cli_builds_every_status_bounded_artifact(tmp_path: Path) -> None:
     assert receipt.is_file()
 
 
-def test_generated_formats_are_parseable_one_page_and_status_bounded(
-    tmp_path: Path,
-) -> None:
-    """Corrupt, image-only, multipage, or stale outputs are not ATS artifacts."""
+def test_generated_formats_are_parseable_one_page_and_status_bounded(tmp_path: Path) -> None:
+    """Application resumes are one page; the separate full CV retains its complete record."""
     output = tmp_path / "career"
     proc = _build(output, tmp_path / "receipt.json")
     assert proc.returncode == 0, proc.stdout + proc.stderr
-
-    expected = (
-        "Technical Networking Support, Xbox/Microsoft contract | subcontracted through Stream/Convergys | Wilsonville, Oregon | 2014 to 2015",
-        "Full-time operations and commercial arboriculture | Legendary Tree (organization label) | April 25, 2015 to June 2, 2026",
-        "Freelance Technical Writer, Documentation, and Product Operations | independent practice | started 2017",
-        "Independent Systems Engineer | independent practice | started 2023",
-    )
-    boundary = (
-        "The 2017 and 2023 start years do not state current status or an end date; "
-        "both remain unspecified."
-    )
-    arboriculture_boundary = (
-        "Legendary Tree is the applicant-provided organization label; no conventional "
-        "job title or legal employer of record is asserted."
-    )
     for path in output.iterdir():
         if path.suffix == ".pdf":
             reader = PdfReader(path)
-            assert len(reader.pages) == 1, path.name
-            text = "\n".join(page.extract_text() or "" for page in reader.pages)
-        else:
-            text = _docx_text(path)
-        assert len(text.split()) >= 150, path.name
-        assert "current status unconfirmed" not in text, path.name
-        for line in expected:
-            assert line in text, f"{path.name}: missing {line!r}"
-        assert boundary in text, f"{path.name}: missing explicit status boundary"
-        assert arboriculture_boundary in text, path.name
-        assert "Operations and Commercial Arboriculture Lead" not in text, path.name
-        assert "family business" not in text, path.name
-        assert "started 2015" not in text, path.name
+            assert len(reader.pages) == (4 if path.stem.endswith("-CV") else 1), path.name
+        text = _artifact_text(path)
+        assert len(text.split()) >= 250, path.name
+        for value in ("Stream/Convergys", "2014 to 2015", "Legendary Tree",
+                      "April 25, 2015 to June 2, 2026", "2017", "2023 to Present"):
+            assert value in text, (path.name, value)
+        for forbidden in ("2017 to Present", "2015 to Present", "family business",
+                          "Operations and Commercial Arboriculture Lead", "Xbox Division | Microsoft"):
+            assert forbidden not in text, (path.name, forbidden)
 
 
-def test_generated_pdfs_render_visible_content_inside_letter_page(
-    tmp_path: Path,
-) -> None:
-    """Selectable text alone must not conceal clipped or invisible application copy."""
+def test_generated_pdfs_render_visible_content_inside_letter_page(tmp_path: Path) -> None:
+    """Every page must have visible, unclipped text at a readable size."""
     output = tmp_path / "career"
     proc = _build(output, tmp_path / "receipt.json")
     assert proc.returncode == 0, proc.stdout + proc.stderr
-
     for path in sorted(output.glob("*.pdf")):
         document = fitz.open(path)
-        assert document.page_count == 1, path.name
-        page = document[0]
-        assert round(page.rect.width) == 612, path.name
-        assert round(page.rect.height) == 792, path.name
-        blocks = [block for block in page.get_text("blocks") if block[4].strip()]
-        assert blocks, path.name
-        for x0, y0, x1, y1, *_ in blocks:
-            assert x0 >= 36 and y0 >= 25, (path.name, x0, y0)
-            assert x1 <= page.rect.width - 36, (path.name, x1)
-            assert y1 <= page.rect.height - 25, (path.name, y1)
-            rendered = page.get_pixmap(
-                matrix=fitz.Matrix(2, 2),
-                colorspace=fitz.csGRAY,
-                alpha=False,
-                clip=fitz.Rect(x0, y0, x1, y1),
-            )
-            assert min(rendered.samples) < 200, (path.name, block[4][:40])
+        assert document.page_count == (4 if path.stem.endswith("-CV") else 1)
+        for page in document:
+            assert round(page.rect.width) == 612 and round(page.rect.height) == 792
+            blocks = [b for b in page.get_text("blocks") if b[4].strip()]
+            assert blocks
+            for x0, y0, x1, y1, *_ in blocks:
+                assert x0 >= 36 and y0 >= 25, (path.name, x0, y0)
+                assert x1 <= 576 and y1 <= 767, (path.name, x1, y1)
+            spans = [s for b in page.get_text("dict")["blocks"] if "lines" in b
+                     for line in b["lines"] for s in line["spans"] if s["text"].strip()]
+            assert min(s["size"] for s in spans) >= 10.5
+            assert all(s["color"] == 0 for s in spans)
+            image = page.get_pixmap(matrix=fitz.Matrix(1, 1), colorspace=fitz.csGRAY)
+            assert min(image.samples) < 200
 
 
 def test_cv_contact_fields_stay_visibly_separated_in_both_formats(
@@ -202,7 +175,7 @@ def test_cv_contact_fields_stay_visibly_separated_in_both_formats(
     output = tmp_path / "career"
     proc = _build(output, tmp_path / "receipt.json")
     assert proc.returncode == 0, proc.stdout + proc.stderr
-    expected = "Seattle, Washington | zaindharper@gmail.com | LinkedIn | GitHub"
+    expected = "Seattle, Washington | zaindharper@gmail.com | harperz9.github.io"
     for suffix in ("pdf", "docx"):
         path = output / f"Zain-Dana-Harper-CV.{suffix}"
         assert expected in _artifact_text(path), path.name
@@ -226,7 +199,7 @@ def test_explicit_source_epoch_makes_repeated_builds_byte_identical(
                 "--receipt",
                 str(tmp_path / f"{run}.json"),
                 "--source-epoch",
-                "1788109200",
+                "1789931178",
             ],
             capture_output=True,
             text=True,
@@ -281,7 +254,7 @@ def test_fresh_build_matches_each_committed_release_artifact(tmp_path: Path) -> 
     committed_receipt = json.loads(
         (ROOT / "career" / "career-build-receipt.json").read_text(encoding="utf-8")
     )
-    assert committed_receipt["source_epoch"] == 1788109200
+    assert committed_receipt["source_epoch"] == 1789931178
     committed_inputs = {
         row["path"]: row for row in committed_receipt["build_inputs"]
     }
@@ -316,7 +289,7 @@ def test_receipt_binds_artifact_and_extraction_hashes_without_local_paths(
 
     receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
     assert receipt["schema"] == "harperz9-career-build/v1"
-    assert receipt["source_epoch"] == 1788109200
+    assert receipt["source_epoch"] == 1789931178
     build_inputs = {row["path"]: row for row in receipt["build_inputs"]}
     for relative in (
         "tools/build_career_artifacts.py",
@@ -325,7 +298,7 @@ def test_receipt_binds_artifact_and_extraction_hashes_without_local_paths(
         assert build_inputs[relative]["sha256"] == hashlib.sha256(
             (ROOT / relative).read_bytes()
         ).hexdigest()
-    assert receipt["runtime"]["python"].startswith("3.12.")
+    assert receipt["runtime"]["python"] == ".".join(map(str, sys.version_info[:3]))
     assert receipt["runtime"]["dependencies"] == {
         name: version(name)
         for name in (
@@ -377,7 +350,7 @@ def test_release_manifest_replaces_only_generated_artifact_rows(
             "--receipt",
             str(receipt_path),
             "--source-epoch",
-            "1788109200",
+            "1789931178",
             "--release-manifest",
             str(manifest_path),
         ],
@@ -404,7 +377,7 @@ def test_release_manifest_replaces_only_generated_artifact_rows(
     for receipt_row in receipt["artifacts"]:
         expected = {key: value for key, value in receipt_row.items() if key != "source"}
         assert by_path[receipt_row["path"]] == expected
-    assert after["generated_at_epoch"] == 1788109200
+    assert after["generated_at_epoch"] == 1789931178
 
 
 def test_release_manifest_rehashes_every_current_html_authority(
@@ -438,7 +411,7 @@ def test_release_manifest_rehashes_every_current_html_authority(
             "--receipt",
             str(tmp_path / "receipt.json"),
             "--source-epoch",
-            "1788109200",
+            "1789931178",
             "--release-manifest",
             str(manifest_path),
         ],
