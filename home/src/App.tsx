@@ -281,6 +281,7 @@ function IdentityHero() {
           <a href="/career/Flywheel-Platform-Brief.pdf">The Flywheel platform brief</a>
           <a href="/catalog.html">Public tool catalog</a>
           <a href="/publications.html">Essays and publications</a>
+          <a href="/checking-the-machines.html">Open letter: checking the machines</a>
         </nav>
       </div>
       <figure className="identity-art mission-apparatus reveal in" aria-labelledby="mission-apparatus-title">
@@ -406,7 +407,7 @@ function FeaturedFlywheel() {
       <div>
         <h2 id="flywheel-title">Flagship platform: Flywheel</h2>
         <p className="section-lead">
-          {FLYWHEEL.purpose} It is the place where evaluation work runs, records what happened, and exposes the difference between a public release, accepted source, installed acceptance, and external use.
+          {FLYWHEEL.purpose} The public record stays honest about maturity, separating a shipped release from accepted source, installed acceptance, and external use.
         </p>
         <div className="action-row">
           <a className="text-link" href={localHref(FLYWHEEL.href)}>Inspect Flywheel</a>

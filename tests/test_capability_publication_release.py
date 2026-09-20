@@ -21,6 +21,7 @@ RELEASE_PATHS = (
     "assets/index-DrPnIzlB.js",
     "assets/index-CX_9A0Hy.js",
     "assets/index-4wTyKocM.js",
+    "assets/index-JJHLIJUt.js",
     "img/og/the-sandbox-was-never-just-a-box.png",
     "writing/the-sandbox-was-never-just-a-box/source-map.json",
     "writing/the-sandbox-was-never-just-a-box/essay.md",
@@ -283,12 +284,13 @@ RELEASE_PATHS = (
     "writing.html",
 )
 
-# Reviewed Flywheel v1.0.1 site rollup over the combined release tree: home/catalog/
-# registry refresh and home bundle pair (index-4wTyKocM.js); CV and resume refresh
-# (cv.html, cv.md, regenerated career binaries); and the "An open letter on checking the
-# machines" reading page with its source part, source notes, writing-index and sitemap
-# links. Recomputed for the combined tree by _release_fingerprint().
-REVIEWED_RELEASE_SHA256 = "0011d619db6980f65fc26da667f287919f5cdbad3db0c0144a6dc99e666db2c3"
+# Reviewed Flywheel v1.0.1 site rollup over the combined release tree: capability-first
+# product description made canon across home/catalog/registry with the refreshed home
+# bundle pair (index-JJHLIJUt.js; index-4wTyKocM.js retained as the superseded rollup
+# bundle); CV and resume refresh (cv.html, cv.md, regenerated career binaries); and the
+# "An open letter on checking the machines" reading page with its source part, source
+# notes, writing-index, homepage and sitemap links. Recomputed by _release_fingerprint().
+REVIEWED_RELEASE_SHA256 = "e02d6cc3401b4702247d17a400519d3930c79abdc6ec85450b92ddf4377a3217"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -425,8 +427,9 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_060_final_gather_pre_review_js = "index-CYqKao4X.js"
     previous_060_final_gather_fixture_js = "index-CpC5RhmM.js"
     previous_gather_171_js = "index-AYA0gyN2.js"
-    current_js = "index-4wTyKocM.js"
+    current_js = "index-JJHLIJUt.js"
     current_css = "index-eZ1QGP52.css"
+    previous_capability_first_home_js = "index-4wTyKocM.js"
     prior_mission_js = "index-DpT1GQuA.js"
     prior_mission_css = "index-B2kgPYlE.css"
     previous_home_js = "index-CS_jYuhh.js"
@@ -440,6 +443,12 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     assert (ROOT / "assets" / current_js).is_file()
     assert (ROOT / "assets" / current_css).is_file()
     assert previous_home_js not in source
+    # The prior v1.0.1 rollup home bundle is superseded by the capability-first
+    # refresh. It stays in the reviewed release tree as a historical artifact but
+    # is no longer referenced by index.html.
+    assert previous_capability_first_home_js not in source
+    assert (ROOT / "assets" / previous_capability_first_home_js).is_file()
+    assert f"assets/{previous_capability_first_home_js}" in RELEASE_PATHS
     assert f"assets/{current_js}" in RELEASE_PATHS
     assert f"assets/{current_css}" in RELEASE_PATHS
     assert prior_mission_js not in source
