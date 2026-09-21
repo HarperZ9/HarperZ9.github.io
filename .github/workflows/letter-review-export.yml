@@ -1,0 +1,32 @@
+name: Letter review source export
+on:
+  push:
+    branches: [work/checking-machines-20260920]
+    paths: [.github/workflows/letter-review-export.yml]
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: site
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: HarperZ9/articulate
+          path: articulate
+          persist-credentials: false
+      - name: Archive tracked public sources
+        run: |
+          mkdir export
+          git -C site archive --format=zip HEAD -o "$PWD/export/site.zip"
+          git -C articulate archive --format=zip HEAD -o "$PWD/export/articulate.zip"
+          git -C site rev-parse HEAD > export/site-revision.txt
+          git -C articulate rev-parse HEAD > export/articulate-revision.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: letter-review-sources
+          path: export/
+          retention-days: 7
