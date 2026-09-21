@@ -40,9 +40,6 @@ jobs:
                       for border in list(ppr.findall(qn("w:pBdr"))):
                           ppr.remove(border)
           '''
-          # Remove YAML indentation from the inserted Python block.
-          lines = addition.splitlines()
-          addition = lines[0] + '\n' + '\n'.join(line[10:] if line.startswith('          ') else line for line in lines[1:]) + '\n'
           assert text.count(anchor) == 1
           p.write_text(text.replace(anchor, addition + anchor))
           stable = ['checking-the-machines.html', 'writing/checking-the-machines/01.md', 'writing/checking-the-machines/source-notes.json', 'writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.pdf', 'writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.txt']
