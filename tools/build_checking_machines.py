@@ -95,6 +95,20 @@ def write_docx(source: str):
         st.font.color.rgb=RGBColor(25,25,25);st.font.bold=True
         st.paragraph_format.keep_with_next=True
         st.paragraph_format.space_before=Pt(12);st.paragraph_format.space_after=Pt(8)
+    # Explicit serif choices take precedence over the template's theme fonts.
+    for name in ("Normal", "Title", "Heading 1", "Heading 2"):
+        st = doc.styles[name]
+        rfonts = st.element.get_or_add_rPr().find(qn("w:rFonts"))
+        if rfonts is not None:
+            for key in list(rfonts.attrib):
+                if "theme" in key.lower():
+                    del rfonts.attrib[key]
+            rfonts.set(qn("w:eastAsia"), "Times New Roman")
+            rfonts.set(qn("w:cs"), "Times New Roman")
+        ppr = st.element.find(qn("w:pPr"))
+        if ppr is not None:
+            for border in list(ppr.findall(qn("w:pBdr"))):
+                ppr.remove(border)
     props=doc.core_properties
     props.title=TITLE;props.author="Zain Dana Harper";props.subject="Evidence, authority, and the people affected by AI-assisted work"
     props.comments="Author-directed; AI-assisted. Research cutoff September 20, 2026. Not peer reviewed."
