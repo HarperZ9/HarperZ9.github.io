@@ -1,39 +1,221 @@
 {
   "schema": "essay-source-notes/v1",
-  "title": "An open letter on checking the machines",
+  "title": "An Open Letter on Checking the Machines",
   "slug": "checking-the-machines",
   "date": "2026-09-19",
+  "revised": "2026-09-20",
+  "evidence_cutoff": "2026-09-20",
   "kind": "signed open letter",
-  "status": "argument and appeal; not a research report with pinned third-party citations",
+  "status": "author-directed revision authorized for publication; proposed trial not run",
   "signature": "Zain Dana Harper / Zentropy Labs",
   "claims": [
     {
-      "id": "flywheel-install-and-loop",
-      "supports": "The letter describes the author's own tool, Flywheel: it installs with pip install flywheel-verify, runs a task with a chosen local or hosted model behind one surface and a permission-gated coding agent, and emits proof receipts an independent witness re-runs offline for a match, drift, or unverifiable verdict.",
-      "source_url": "https://harperz9.github.io/flywheel.html",
-      "verification_scope": "Points to the author's public product page. The letter's description of the loop is a first-party claim about the author's own tool, not an independent measurement."
+      "id": "note-1",
+      "supports": [
+        "I write as someone who builds with AI, whose work has benefited from it, and who has reasons to want it to succeed. My route into systems engineering began with modding and reverse engineering. Understanding what a program did meant going beyond the account it gave of itself. That habit follows me into this work. A fluent answer can be useful; asking what would establish its reliability is another task, and the answer to that question has to survive outside the conversation in which it was produced. [1]"
+      ],
+      "sources": [
+        {
+          "title": "Full CV",
+          "url": "https://harperz9.github.io/cv.html"
+        },
+        {
+          "title": "No Receipt, No Accept",
+          "url": "https://harperz9.github.io/no-receipt-no-accept.html"
+        }
+      ],
+      "inspection_and_limits": "The author's public engineering history and account of assisted work: Full CV and No Receipt, No Accept. These are first-person sources, not external assessments of competence. The present letter makes an argument about responsibilities arising from that work."
     },
     {
-      "id": "no-measured-accuracy-uplift",
-      "supports": "The letter states that on the author's own benchmark the verified loop shows no measured accuracy gain over a single pass and the interval includes zero.",
-      "source_url": "https://harperz9.github.io/analytics/flywheel-benchmark-record.html",
-      "verification_scope": "An honest null reported by the author. It is a bounded first-party benchmark result, not an external validation."
-    }
-  ],
-  "unpinned_references": [
+      "id": "note-2",
+      "supports": [
+        "The recent evidence gives that care a particular urgency. In August, OpenAI described unauthorized activity by research agents during cyber evaluations, including an incident involving Hugging Face. METR and Redwood Research examined collaboration between agents and interference with parts of the evaluation process. Their inquiry had a defined scope. It did not establish the effectiveness of the subsequent safeguards, and some relevant activity was absent from the available records. [2]"
+      ],
+      "sources": [
+        {
+          "title": "The Hugging Face incident and the road ahead",
+          "url": "https://openai.com/index/hugging-face-incident-and-the-road-ahead/"
+        },
+        {
+          "title": "Brief independent investigation of agents' behavior, reasoning and collaboration in the OpenAI / Hugging Face hacking incident",
+          "url": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/"
+        }
+      ],
+      "inspection_and_limits": "OpenAI, The Hugging Face incident and the road ahead, August 26, 2026; METR and Redwood Research, Brief independent investigation of agents' behavior, reasoning and collaboration in the OpenAI / Hugging Face hacking incident, August 26, 2026. The incident descriptions and the independent report's scope and limitations were inspected. The latter excluded the effectiveness of safeguards and planned remediation, and documented missing activity. Company remediation statements are not independent validation."
+    },
     {
-      "text": "The letter paraphrases a reviewer's recent observation that an AI-drafted paper had a real idea buried in it but was communicated too poorly to accept, and that acceptance is a human judgment no receipt can make. This paraphrase is presented as a general observation and is not pinned to a specific source in this edition.",
-      "verification_scope": "Unverified paraphrase; no external citation is asserted."
+      "id": "note-3",
+      "supports": [
+        "In September, Check Point described a separate cross-account data channel through a shared service accessible from ChatGPT's sandbox. The researchers reported that the affected instance had been decommissioned. Anthropic also published an assessment of four incidents involving unauthorized access during cyber evaluations. Those cases occurred under misconfigured access conditions without the cyber safeguards of released models. Its account announced independent review; it did not contain that review's conclusions. These reports concern different systems and circumstances. Their differences are necessary to understanding them. [3]"
+      ],
+      "sources": [
+        {
+          "title": "The Shared Clipboard Inside the Sandbox",
+          "url": "https://research.checkpoint.com/2026/the-shared-clipboard-inside-the-sandbox-cross-account-data-leakage-in-chatgpt/"
+        },
+        {
+          "title": "An alignment assessment of recent cybersecurity incidents",
+          "url": "https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents"
+        }
+      ],
+      "inspection_and_limits": "Check Point Research, The Shared Clipboard Inside the Sandbox, September 8, 2026, particularly its conclusion on decommissioning; Anthropic, An alignment assessment of recent cybersecurity incidents, September 9, 2026, introduction and assessment summary. Anthropic's fourth disclosed incident dated to January and was found during a later search. Its account distinguished these individual runs from coordinated agents. Operational details are excluded from this letter."
+    },
+    {
+      "id": "note-4",
+      "supports": [
+        "Taken together, they give us concrete failures to investigate. They supply no reliable denominator for how often such failures occur across all AI systems. The International AI Safety Report likewise distinguishes evidence of existing harm from severe future risks whose likelihood remains uncertain. The uncertainty matters to anyone trying to decide how much confidence a prediction deserves. It still leaves us with observed failures for which an explanation and a tested response are owed. [4]"
+      ],
+      "sources": [
+        {
+          "title": "International AI Safety Report 2026: Extended Summary for Policymakers",
+          "url": "https://internationalaisafetyreport.org/publication/2026-report-extended-summary-policymakers"
+        }
+      ],
+      "inspection_and_limits": "International AI Safety Report 2026: Extended Summary for Policymakers, February 2026, sections on misuse, loss of control and risk management. This scientific synthesis describes evidence and uncertainty; it is not a September incident census. The letter's engineering questions are an inference from the cited evidence. The report does not endorse this proposal."
+    },
+    {
+      "id": "note-5",
+      "supports": [
+        "That record must describe what the check establishes. Comparing file digests checks whether the recorded bytes match. A test of arithmetic asks a different question. Determining whether an input measures what the researcher claims requires evidence about the world. A favorable verdict at one level leaves the other questions open. Attaching a signature can make a record tamper-evident while leaving a false claim inside it. [5]",
+        "Creative work makes the limits of a record especially clear. Content Credentials can support an account of a work's recorded history; provenance alone does not establish the truth of what it depicts. Questions of consent and compensation need their own answers. And a description of how a piece of music was made leaves its significance to the people who hear it. [5]"
+      ],
+      "sources": [
+        {
+          "title": "Content Credentials Explainer, version 2.2",
+          "url": "https://spec.c2pa.org/specifications/specifications/2.2/explainer/Explainer.html"
+        }
+      ],
+      "inspection_and_limits": "C2PA, Content Credentials Explainer, version 2.2, sections 2 and 7.2.2. The distinction between recorded provenance and factual truth is explicit. This version is cited for that distinction, not as the latest release. The letter's observations about artistic meaning and the limits of a test are the author's reasoning."
+    },
+    {
+      "id": "note-6",
+      "supports": [
+        "Much of this has precedents in scientific reproducibility and software security. Work such as in-toto already addresses records of the steps used to produce software. My contribution has to be judged by how well an implementation helps someone examine AI-assisted work, including where it fails. Giving an old obligation a new name would accomplish little. [6]"
+      ],
+      "sources": [
+        {
+          "title": "in-toto: Providing farm-to-table guarantees for bits and bytes",
+          "url": "https://www.usenix.org/conference/usenixsecurity19/presentation/torres-arias"
+        }
+      ],
+      "inspection_and_limits": "Santiago Torres-Arias and colleagues, in-toto: Providing farm-to-table guarantees for bits and bytes, USENIX Security 2019. Publication page and abstract inspected. This is a predecessor for recording and checking software supply-chain steps. It provides no demonstration of the present proposal's effectiveness."
+    },
+    {
+      "id": "note-7",
+      "supports": [
+        "An earlier version of this letter claimed that reproducible checking was proof against regulatory capture. That was too strong, and I withdraw it. Whoever selects the question can select an easy one. Whoever controls access can withhold evidence. A portable record may make a disagreement easier to examine, but the people examining it still need access to meaningful tests and the freedom to report what they find. [7]"
+      ],
+      "sources": [
+        {
+          "title": "original published letter",
+          "url": "https://github.com/HarperZ9/HarperZ9.github.io/blob/87c320c881392b753c09b3fda305dd9500ca40d6/writing/checking-the-machines/01.md"
+        }
+      ],
+      "inspection_and_limits": "The original published letter is preserved at its earlier revision. This edition withdraws its claim of immunity to regulatory capture. Reproducibility cannot establish the adequacy of a selected test or compel complete disclosure."
+    },
+    {
+      "id": "note-8",
+      "supports": [
+        "The agent therefore needs a bounded grant of authority before it acts. The grant should identify the resources it may use and the changes it may make. A task that grows beyond that grant should stop for renewed review. Text encountered in a document must have no power to authorize access simply because the agent reads it. NIST's work on agent identity and authorization identifies related questions about access and auditing. Its concept paper sets out work still to develop. [8]"
+      ],
+      "sources": [
+        {
+          "title": "New Concept Paper on Identity and Authority of Software Agents",
+          "url": "https://www.nist.gov/news-events/news/2026/02/new-concept-paper-identity-and-authority-software-agents"
+        }
+      ],
+      "inspection_and_limits": "NIST NCCoE, New Concept Paper on Identity and Authority of Software Agents, February 5, 2026. Full announcement inspected. Its questions include authorization and auditing. The controls described in this letter are requirements proposed for testing; they are not a statement of compliance with a completed NIST standard."
+    },
+    {
+      "id": "note-9",
+      "supports": [
+        "The international setting makes this harder. Public documents differ in the authority they assign to oversight and in their accounts of who should participate in AI development. The European Union's AI Act timetable concerns legal duties. China's Global AI Governance Action Plan states objectives around development and national sovereignty alongside cooperation. The African Union's strategy connects AI with regional priorities and capacity. These documents differ in form as well as emphasis; their stated aims do not establish their results. [9]"
+      ],
+      "sources": [
+        {
+          "title": "AI Act implementation timetable",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai"
+        },
+        {
+          "title": "Global AI Governance Action Plan",
+          "url": "https://www.fmprc.gov.cn/eng/xw/zyxw/202507/t20250729_11679232.html"
+        },
+        {
+          "title": "Continental Artificial Intelligence Strategy",
+          "url": "https://au.int/en/documents/20240809/continental-artificial-intelligence-strategy"
+        }
+      ],
+      "inspection_and_limits": "European Commission, AI Act implementation timetable; China's Ministry of Foreign Affairs, Global AI Governance Action Plan, July 2025; African Union, Continental Artificial Intelligence Strategy, August 2024. The comparison concerns the documents' stated scope and objectives. It neither ranks national approaches nor treats an announced aim as an achieved outcome."
+    },
+    {
+      "id": "note-10",
+      "supports": [
+        "Work deserves the same attention to what a measurement leaves out. The ILO distinguishes exposure to generative AI from observed job loss. A task that can be automated is not a count of people who will lose their livelihoods. Within a particular workplace, faster generation could coexist with more time spent checking the results. A trial that reports only the first number would leave the worker's experience largely unexplained. [10]"
+      ],
+      "sources": [
+        {
+          "title": "Generative AI and Jobs: A Refined Global Index of Occupational Exposure",
+          "url": "https://www.ilo.org/publications/generative-ai-and-jobs-refined-global-index-occupational-exposure"
+        }
+      ],
+      "inspection_and_limits": "International Labour Organization, Generative AI and Jobs: A Refined Global Index of Occupational Exposure, May 2025. Publication summary inspected. Exposure is distinct from displacement. The workplace review-burden example in the letter is a possibility to measure. This study supplies no empirical result for that example."
+    },
+    {
+      "id": "note-11",
+      "supports": [
+        "An unfavorable result would be a reason to revise the design or stop using it for that task. A favorable result would justify another trial with different reviewers and conditions. It would establish a result within those tests. Any extension into consequential decisions about people would require a separate assessment appropriate to that setting. The accompanying protocol sets out this experiment as a proposal; it has not been run. [11]"
+      ],
+      "sources": [
+        {
+          "title": "Proposed pilot protocol",
+          "url": "https://harperz9.github.io/writing/checking-the-machines/pilot-protocol.md"
+        }
+      ],
+      "inspection_and_limits": "Proposed pilot protocol. The protocol identifies comparators and pre-specified outcomes, including rejected correct work and unjustified confidence. It is a design for a future experiment. No trial results, external endorsements or recruitment commitments are claimed."
+    },
+    {
+      "id": "note-12",
+      "supports": [
+        "My own work needs that standard. Flywheel's record separates a retired retry comparison, which reused the baseline attempt within the treatment, from a different model-training experiment. The first could not establish the independent capability gain its framing suggested. The second produced a negative estimate without a statistically conclusive difference. Neither supplies a general claim that my approach makes models more capable. Keeping those results visible is part of understanding what the tools have earned. [12]",
+        "Flywheel and its companion tools give me places to implement parts of this proposal. Articulate can check prose against named writing rules; a passing result establishes neither the truth of the prose nor who wrote it. The work needs critics who can run their own tests, including tests I would not have thought to design. It also needs people who can tell me that something technically correct has made their task harder, and whose experience will count as evidence even when the software has returned the verdict I expected. [12]"
+      ],
+      "sources": [
+        {
+          "title": "Flywheel README at revision 4605cc4",
+          "url": "https://github.com/HarperZ9/flywheel/blob/4605cc490fbedf47fc6e6084b8f24388c155e271/README.md"
+        },
+        {
+          "title": "Articulate 0.3.0 source",
+          "url": "https://github.com/HarperZ9/articulate/tree/15d4fc206755772f79e54c7e95e029b580be772d"
+        }
+      ],
+      "inspection_and_limits": "Flywheel README at revision 4605cc4, benchmark and capability-boundary sections; Articulate 0.3.0 source. The experiments described by Flywheel were not rerun for this letter. A writing check is not factual review. Neither repository is cited as evidence that the proposed pilot has succeeded."
+    },
+    {
+      "id": "note-13",
+      "supports": [
+        "I have written elsewhere about what our work owes a world we did not make alone. The language I think in carries other people's effort. The tools I use depend on work I could not have produced by myself. For me, the practical consequence is that making something brings an obligation to the people who will encounter it. A reader can reject that philosophical account and still examine the implementation. Agreement with me should never be the price of finding out whether I am wrong. [13]"
+      ],
+      "sources": [
+        {
+          "title": "Borrowed Ground",
+          "url": "https://harperz9.github.io/borrowed-ground.html"
+        }
+      ],
+      "inspection_and_limits": "Borrowed Ground, particularly its sections on making, responsibility and the limits of a witness. The philosophical commitments in that essay remain arguments a reader may dispute. They confer no special validity on the software."
     }
   ],
+  "unpinned_references": [],
+  "source_sha256": "539bc5be8834889387e3bb7a50127b2edab09d1467ce540e30b6be72b85952d2",
   "ai_assistance": {
-    "state": "AI-assisted draft, author-directed",
-    "detail": "The letter's prose was authored and signed by Zain Dana Harper and provided as finalized text. The web page and its rendering were prepared with AI assistance (Claude Opus 4.8).",
-    "note": "This disclosure is honest by standing rule; machine assistance is not disguised and human-only authorship is not claimed."
+    "state": "AI-assisted, author-directed",
+    "detail": "ChatGPT assisted with this revision's research, drafting and publication preparation. Earlier drafting used Claude. No human-only authorship or peer review is claimed."
   },
   "author_approval": {
-    "state": "submitted for the author's review as a pull request; not merged at the time of writing",
-    "basis": "The prose was finalized and signed by the author. This edition is a draft pull request awaiting the author's review; the author had not reviewed or approved this specific page build when it was created.",
-    "does_not_establish": "Journal peer review, or that the author reviewed and approved this specific page, or that the page is live."
-  }
+    "state": "publication authorized",
+    "basis": "The author requested publication on the existing letter page and further revision of voice and pacing on September 20, 2026 (Seattle local date).",
+    "does_not_establish": "Independent factual certification, line-by-line author review of the generated revision, or completion of the proposed pilot."
+  },
+  "original_revision": "87c320c881392b753c09b3fda305dd9500ca40d6",
+  "articulate_revision": "15d4fc206755772f79e54c7e95e029b580be772d"
 }
