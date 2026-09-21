@@ -1,0 +1,155 @@
+{
+  "schema": "articulate/receipt/audit/v1",
+  "articulate_version": "0.3.0",
+  "created_at": "2026-09-21T00:45:36.135180+00:00",
+  "reviewer": "HarperZ9",
+  "ruleset_version": "sha256:9f78a7484bb20f84",
+  "profile": "essay",
+  "text_sha256": "sha256:539bc5be8834889387e3bb7a50127b2edab09d1467ce540e30b6be72b85952d2",
+  "gate": "ok",
+  "clean": true,
+  "verdict": "clean",
+  "sufficient": true,
+  "texture_score": 1,
+  "counts": {
+    "high": 0,
+    "medium": 0,
+    "low": 22
+  },
+  "findings": [
+    {
+      "rule_id": "ngram-repetition/harperz-github-io-repeats-23x-n-gram-repetition",
+      "tier": "LOW",
+      "category": "ngram-repetition",
+      "line": 1
+    },
+    {
+      "rule_id": "nominalization/4-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 7
+    },
+    {
+      "rule_id": "nominalization/6-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 9
+    },
+    {
+      "rule_id": "nominalization/5-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 15
+    },
+    {
+      "rule_id": "nominalization/4-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 17
+    },
+    {
+      "rule_id": "nominalization/4-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 21
+    },
+    {
+      "rule_id": "nominalization/4-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 27
+    },
+    {
+      "rule_id": "nominalization/4-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 35
+    },
+    {
+      "rule_id": "nominalization/4-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 45
+    },
+    {
+      "rule_id": "nominalization/4-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 51
+    },
+    {
+      "rule_id": "nominalization/7-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 55
+    },
+    {
+      "rule_id": "nominalization/6-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 59
+    },
+    {
+      "rule_id": "nominalization/4-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 61
+    },
+    {
+      "rule_id": "nominalization/5-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 63
+    },
+    {
+      "rule_id": "nominalization/6-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 65
+    },
+    {
+      "rule_id": "nominalization/4-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 67
+    },
+    {
+      "rule_id": "nominalization/4-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 71
+    },
+    {
+      "rule_id": "nominalization/4-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 91
+    },
+    {
+      "rule_id": "nominalization/5-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 117
+    },
+    {
+      "rule_id": "nominalization/4-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 121
+    },
+    {
+      "rule_id": "nominalization/4-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 125
+    },
+    {
+      "rule_id": "nominalization/4-nominalizations-in-one-line",
+      "tier": "LOW",
+      "category": "nominalization",
+      "line": 141
+    }
+  ],
+  "redaction": "drop",
+  "file": "writing/checking-the-machines/01.md"
+}

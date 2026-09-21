@@ -290,7 +290,9 @@ RELEASE_PATHS = (
 # bundle); CV and resume refresh (cv.html, cv.md, regenerated career binaries); and the
 # "An open letter on checking the machines" reading page with its source part, source
 # notes, writing-index, homepage and sitemap links. Recomputed by _release_fingerprint().
-REVIEWED_RELEASE_SHA256 = "acc6c7ac276042ba6af5aadb2068b63ca573c2713386419dbd4d76d8629e6461"
+# September 20, 2026: reviewed letter-only revision; all other release paths
+# remain byte-identical to 87c320c. The frozen contract is retained.
+REVIEWED_RELEASE_SHA256 = "2fddda06c68664e596511f91eccb6aa2b1aec99f6be1f04d4c482607ce178f03"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
