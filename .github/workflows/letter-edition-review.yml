@@ -1,0 +1,170 @@
+name: Letter edition review
+on:
+  push:
+    branches: [work/checking-machines-20260920]
+    paths: [.github/workflows/letter-edition-review.yml]
+permissions:
+  contents: write
+jobs:
+  review:
+    if: github.ref == 'refs/heads/work/checking-machines-20260920'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/checkout@v4
+        with:
+          repository: HarperZ9/articulate
+          ref: 15d4fc206755772f79e54c7e95e029b580be772d
+          path: .letter-articulate
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Install isolated review dependencies
+        run: |
+          python -m pip install pytest==8.4.2 PyYAML==6.0.2 -r requirements-career-docs.txt -r requirements-font-preview.txt
+          python -m pip install reportlab==4.4.9 python-docx==1.2.0 playwright==1.55.0
+          mkdir -p /tmp/letter-qa/browser
+      - name: Verify reviewed inputs and run writing gate
+        env:
+          PYTHONPATH: .letter-articulate/src
+        run: |
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+          expected = {
+            'writing/checking-the-machines/01.md': '539bc5be8834889387e3bb7a50127b2edab09d1467ce540e30b6be72b85952d2',
+            'tools/build_checking_machines.py': '24f08c96f3f3dedad07ee7f8493a3637c46e8b2eaad8cba88441cde0747edad1',
+            'writing/checking-the-machines/reading-and-revision-note.md': '7c51f8b26fbad5f18b438ec4ec590da4b89decea48ceb6412592a61c5fe85498',
+            'writing/checking-the-machines/pilot-protocol.md': 'd3d729622ef53010a0c4d3cab7d9dd466d5c97409aacd0051221724e124ed98c',
+            'tests/test_checking_machines_letter.py': '4cb081df4045b1c2dbbd48b387ed9caca8ca13aefdc5b1045706cf33cb349581'
+          }
+          for name, digest in expected.items():
+              actual = hashlib.sha256(Path(name).read_bytes()).hexdigest()
+              assert actual == digest, (name, actual, digest)
+          PY
+          python -m articulate.cli check writing/checking-the-machines/01.md --profile essay --gate --json > /tmp/letter-qa/articulate-check.json
+          python -m articulate.cli receipt writing/checking-the-machines/01.md --profile essay --redact drop > writing/checking-the-machines/articulate-receipt.json
+          python -m articulate.cli verify writing/checking-the-machines/articulate-receipt.json writing/checking-the-machines/01.md | tee /tmp/letter-qa/articulate-replay.txt
+      - name: Generate page, documents, sources and build manifest
+        run: python tools/build_checking_machines.py | tee /tmp/letter-qa/build.txt
+      - name: Preserve unrelated release bytes and refresh reviewed letter fingerprint
+        run: |
+          python - <<'PY'
+          import json, re, runpy, subprocess
+          from pathlib import Path
+          baseline = '87c320c881392b753c09b3fda305dd9500ca40d6'
+          module = runpy.run_path('tests/test_capability_publication_release.py')
+          allowed = {'checking-the-machines.html', 'writing/checking-the-machines/01.md', 'writing/checking-the-machines/source-notes.json'}
+          changed = []
+          for name in module['RELEASE_PATHS']:
+              before = subprocess.check_output(['git', 'show', baseline + ':' + name])
+              if Path(name).read_bytes() != before:
+                  changed.append(name)
+          assert set(changed) == allowed, changed
+          fingerprint = module['_release_fingerprint']()
+          p = Path('tests/test_capability_publication_release.py')
+          text = p.read_text()
+          old = 'acc6c7ac276042ba6af5aadb2068b63ca573c2713386419dbd4d76d8629e6461'
+          assert f'REVIEWED_RELEASE_SHA256 = "{old}"' in text
+          text = text.replace(f'REVIEWED_RELEASE_SHA256 = "{old}"', '# September 20, 2026: reviewed letter-only revision; all other release paths\n# remain byte-identical to 87c320c. The frozen contract is retained.\n' + f'REVIEWED_RELEASE_SHA256 = "{fingerprint}"')
+          p.write_text(text)
+          Path('/tmp/letter-qa/release-scope.json').write_text(json.dumps({'baseline': baseline, 'changed_release_paths': sorted(changed), 'reviewed_fingerprint': fingerprint}, indent=2) + '\n')
+          PY
+          rm .github/workflows/letter-review-export.yml .github/workflows/letter-edition-review.yml
+          git add checking-the-machines.html writing/checking-the-machines tools/build_checking_machines.py tests/test_checking_machines_letter.py tests/test_capability_publication_release.py
+          git add -u .github/workflows
+          git diff --check
+          git diff --cached --check
+      - name: Run complete Python and navigation contracts
+        run: |
+          python -m pytest | tee /tmp/letter-qa/pytest.txt
+          node --test system/nav.test.mjs tests/font-catalog.test.mjs tests/navigation-discovery.mjs tests/pillar-navigation.test.mjs | tee /tmp/letter-qa/navigation.txt
+      - name: Check letter in mobile and desktop Chrome
+        run: |
+          python - <<'PY'
+          import functools, http.server, socketserver, threading, json, shutil
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+          root = Path.cwd(); out = Path('/tmp/letter-qa/browser')
+          class Handler(http.server.SimpleHTTPRequestHandler):
+              def log_message(self, *args): pass
+          server = socketserver.TCPServer(('127.0.0.1', 0), functools.partial(Handler, directory=str(root)))
+          threading.Thread(target=server.serve_forever, daemon=True).start()
+          base = f'http://127.0.0.1:{server.server_address[1]}'
+          results = []
+          with sync_playwright() as p:
+              browser = p.chromium.launch(executable_path=shutil.which('google-chrome') or shutil.which('chromium'), args=['--no-sandbox'])
+              for width, height in [(390, 844), (1440, 1000)]:
+                  page = browser.new_page(viewport={'width': width, 'height': height}, device_scale_factor=1)
+                  errors = []; page.on('pageerror', lambda e: errors.append(str(e)))
+                  response = page.goto(base + '/checking-the-machines.html', wait_until='networkidle')
+                  page.evaluate('document.fonts.ready')
+                  assert response.status == 200
+                  assert page.locator('h1').inner_text() == 'An Open Letter on Checking the Machines'
+                  assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth')
+                  assert page.locator('.letter-downloads a').count() == 5
+                  assert page.locator('h3[id^="note-"]').count() == 13
+                  assert not errors, errors
+                  page.screenshot(path=str(out / f'{width}-top.png'))
+                  page.locator('#notes-and-sources').scroll_into_view_if_needed()
+                  page.screenshot(path=str(out / f'{width}-notes.png'))
+                  page.locator('.article-footer').scroll_into_view_if_needed()
+                  page.screenshot(path=str(out / f'{width}-bottom.png'))
+                  for a in page.locator('.letter-downloads a').all():
+                      href = a.get_attribute('href')
+                      if href.startswith('#'): continue
+                      r = page.request.get(base + '/' + href); assert r.status == 200, href
+                  results.append({'width': width, 'http_status': 200, 'horizontal_overflow': False, 'page_errors': errors, 'notes': 13, 'downloads': 4})
+                  page.close()
+              browser.close()
+          server.shutdown()
+          (out / 'checks.json').write_text(json.dumps(results, indent=2) + '\n')
+          PY
+      - name: Check staged publication scope and public content
+        run: |
+          python - <<'PY'
+          import json, runpy, subprocess
+          from pathlib import Path
+          baseline = '87c320c881392b753c09b3fda305dd9500ca40d6'
+          paths = subprocess.check_output(['git','diff','--cached','--name-only',baseline], text=True).splitlines()
+          allowed = {'checking-the-machines.html','tools/build_checking_machines.py','tests/test_checking_machines_letter.py','tests/test_capability_publication_release.py'}
+          assert all(p in allowed or p.startswith('writing/checking-the-machines/') for p in paths), paths
+          patterns = runpy.run_path('tests/test_capability_publication_release.py')['PUBLIC_MARKERS']
+          for p in paths:
+              if Path(p).suffix in {'.pdf','.docx'}: continue
+              text = Path(p).read_text()
+              assert not any(pattern.search(text) for pattern in patterns), p
+          assert not Path('.github/workflows/letter-review-export.yml').exists()
+          assert not Path('.github/workflows/letter-edition-review.yml').exists()
+          Path('/tmp/letter-qa/changed-paths.json').write_text(json.dumps(paths,indent=2) + '\n')
+          PY
+      - name: Commit reviewed generated files only to the work branch
+        run: |
+          test "$(git branch --show-current)" = work/checking-machines-20260920
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'writing: build and verify the September 20 open-letter edition'
+          git push origin HEAD:work/checking-machines-20260920
+          git rev-parse HEAD > /tmp/letter-qa/review-commit.txt
+      - name: Package review artifacts
+        if: always()
+        run: |
+          mkdir -p /tmp/letter-package
+          cp -r /tmp/letter-qa /tmp/letter-package/qa
+          mkdir -p /tmp/letter-package/site/writing /tmp/letter-package/site/tests /tmp/letter-package/site/tools
+          cp -r writing/checking-the-machines /tmp/letter-package/site/writing/
+          cp checking-the-machines.html /tmp/letter-package/site/
+          cp tests/test_capability_publication_release.py tests/test_checking_machines_letter.py /tmp/letter-package/site/tests/
+          cp tools/build_checking_machines.py /tmp/letter-package/site/tools/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: checking-machines-reviewed-edition
+          path: /tmp/letter-package/
+          retention-days: 14
