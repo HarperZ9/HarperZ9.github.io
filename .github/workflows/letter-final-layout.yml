@@ -1,0 +1,100 @@
+name: Letter final layout
+on:
+  push:
+    branches: [work/checking-machines-20260920]
+    paths: [.github/workflows/letter-final-layout.yml]
+permissions:
+  contents: write
+jobs:
+  layout:
+    if: github.ref == 'refs/heads/work/checking-machines-20260920'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install document dependencies
+        run: python -m pip install python-docx==1.2.0 reportlab==4.4.9 pypdf==6.10.2 pytest==8.4.2
+      - name: Remove theme overrides from explicitly specified letter fonts
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          p = Path('tools/build_checking_machines.py')
+          assert hashlib.sha256(p.read_bytes()).hexdigest() == '24f08c96f3f3dedad07ee7f8493a3637c46e8b2eaad8cba88441cde0747edad1'
+          text = p.read_text()
+          anchor = '    props=doc.core_properties\n'
+          addition = '''    # Explicit serif choices take precedence over the template's theme fonts.
+              for name in ("Normal", "Title", "Heading 1", "Heading 2"):
+                  st = doc.styles[name]
+                  rfonts = st.element.get_or_add_rPr().find(qn("w:rFonts"))
+                  if rfonts is not None:
+                      for key in list(rfonts.attrib):
+                          if "theme" in key.lower():
+                              del rfonts.attrib[key]
+                      rfonts.set(qn("w:eastAsia"), "Times New Roman")
+                      rfonts.set(qn("w:cs"), "Times New Roman")
+                  ppr = st.element.find(qn("w:pPr"))
+                  if ppr is not None:
+                      for border in list(ppr.findall(qn("w:pBdr"))):
+                          ppr.remove(border)
+          '''
+          # Remove YAML indentation from the inserted Python block.
+          lines = addition.splitlines()
+          addition = lines[0] + '\n' + '\n'.join(line[10:] if line.startswith('          ') else line for line in lines[1:]) + '\n'
+          assert text.count(anchor) == 1
+          p.write_text(text.replace(anchor, addition + anchor))
+          stable = ['checking-the-machines.html', 'writing/checking-the-machines/01.md', 'writing/checking-the-machines/source-notes.json', 'writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.pdf', 'writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.txt']
+          Path('/tmp/letter-stable-before.json').write_text(json.dumps({n: hashlib.sha256(Path(n).read_bytes()).hexdigest() for n in stable}))
+          PY
+          python -m py_compile tools/build_checking_machines.py
+          python tools/build_checking_machines.py
+      - name: Verify unchanged prose and all publication outputs
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          from docx import Document
+          from docx.oxml.ns import qn
+          expected = json.loads(Path('/tmp/letter-stable-before.json').read_text())
+          for name, digest in expected.items():
+              assert hashlib.sha256(Path(name).read_bytes()).hexdigest() == digest, name
+          d = Document('writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.docx')
+          for name in ('Normal','Title','Heading 1','Heading 2'):
+              fonts = d.styles[name].element.get_or_add_rPr().find(qn('w:rFonts'))
+              assert not any('theme' in a.lower() for a in fonts.attrib), name
+              assert d.styles[name].font.name == 'Times New Roman'
+          PY
+          python -m pytest tests/test_checking_machines_letter.py | tee /tmp/letter-layout-tests.txt
+          git diff --check
+      - name: Commit only typography and matching export manifest
+        run: |
+          rm .github/workflows/letter-final-layout.yml
+          git add tools/build_checking_machines.py writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.docx writing/checking-the-machines/build.json
+          git add -u .github/workflows/letter-final-layout.yml
+          python - <<'PY'
+          import subprocess
+          allowed = {'tools/build_checking_machines.py', 'writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.docx', 'writing/checking-the-machines/build.json', '.github/workflows/letter-final-layout.yml'}
+          names = subprocess.check_output(['git','diff','--cached','--name-only'],text=True).splitlines()
+          assert set(names) <= allowed, names
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'writing: retain explicit serif typography in Word exports'
+          git push origin HEAD:work/checking-machines-20260920
+      - name: Package final layout
+        if: always()
+        run: |
+          mkdir -p /tmp/letter-final-layout/site/writing /tmp/letter-final-layout/site/tools /tmp/letter-final-layout/qa
+          cp -r writing/checking-the-machines /tmp/letter-final-layout/site/writing/
+          cp checking-the-machines.html /tmp/letter-final-layout/site/
+          cp tools/build_checking_machines.py /tmp/letter-final-layout/site/tools/
+          cp /tmp/letter-layout-tests.txt /tmp/letter-final-layout/qa/ || true
+          git rev-parse HEAD > /tmp/letter-final-layout/qa/review-commit.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: checking-machines-final-layout
+          path: /tmp/letter-final-layout/
+          retention-days: 14
