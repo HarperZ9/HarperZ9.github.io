@@ -292,7 +292,9 @@ RELEASE_PATHS = (
 # notes, writing-index, homepage and sitemap links. Recomputed by _release_fingerprint().
 # September 20, 2026: reviewed letter-only revision; all other release paths
 # remain byte-identical to 87c320c. The frozen contract is retained.
-REVIEWED_RELEASE_SHA256 = "2fddda06c68664e596511f91eccb6aa2b1aec99f6be1f04d4c482607ce178f03"
+# September 23, 2026: reviewed Frontier Safety archive route added to the
+# sitemap; all other release-spine paths remain byte-identical.
+REVIEWED_RELEASE_SHA256 = "5c44d56bd22d0930ef3d8400a63e7de10a440f93b0a319d833212506a680a2b4"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

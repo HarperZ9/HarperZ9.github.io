@@ -120,9 +120,18 @@ def test_current_digest_routes_incident_detail_to_the_canonical_briefing() -> No
     ):
         assert duplicated_metric not in recurring_copy
         assert duplicated_metric not in page
-    for incident_term in ("OpenAI", "Hugging Face", "METR", "Redwood", "incident"):
-        assert incident_term.lower() not in edition["social"]["x"].lower()
-        assert incident_term.lower() not in edition["social"]["linkedin"].lower()
+    # Organization names can legitimately appear in a later, unrelated edition.
+    # Keep the guard scoped to copy that would collapse the August 26 incident
+    # back into this recurring digest instead of routing it to the dossier.
+    for incident_phrase in (
+        "OpenAI / Hugging Face",
+        "OpenAI and Hugging Face",
+        "OpenAI-Hugging Face",
+        "METR and Redwood",
+        "August 26 incident",
+    ):
+        assert incident_phrase.lower() not in edition["social"]["x"].lower()
+        assert incident_phrase.lower() not in edition["social"]["linkedin"].lower()
 
     stale_question = (
         "When will METR and Redwood Research publish the announced case-specific "

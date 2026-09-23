@@ -1,0 +1,5 @@
+The September 23 Frontier Safety Briefing records OpenAI's September 22 update that Private Safety Processing is rolling out to API customers, with access expanding in phases.
+
+This changes the company's stated stage from a planned rollout to a phased rollout. It does not independently establish which customers, regions, models, or requests are covered; whether the privacy and security design works as described; or whether the system detects misuse without unacceptable false positives or false negatives.
+
+Read the source role and does-not-prove boundary: https://harperz9.github.io/frontier-safety.html
