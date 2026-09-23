@@ -246,8 +246,8 @@ This was a monitoring false-positive review, not a new factual development. It d
 - Dated archive target: [https://harperz9.github.io/frontier-safety/archive/2026-09-23.html](https://harperz9.github.io/frontier-safety/archive/2026-09-23.html)
 - Edition hash: `1567981150b0acc5ccf330b95b01b624ee44653756733d490e5096450284c90a`
 - Idempotency key: `2654badb2c9ae421b9a816acf405eeb34d161d9cd8627c16f3e742fc1f08241a`
-- Reviewed content commit: pending at the time this pre-publication receipt was written.
-- Pull request: pending at the time this pre-publication receipt was written.
+- Reviewed content commit: `d29ec5b8ebb04716d34ff43c09690cfe9dc1564d`.
+- Pull request: [#257](https://github.com/HarperZ9/HarperZ9.github.io/pull/257)
 - Source check: the curated checker ran exactly once for this refresh. It reported six changed and review-required registered sources, zero errors, and zero unbaselined sources; packet SHA-256 `dd9c62ca662429eee47576fc6685e899347a4f3b2b64b452d67c198725d45fc0`.
 - Material change: OpenAI added a September 22 update saying Private Safety Processing is rolling out to API customers, with access expanding in phases. This changes the company's stated stage from planned rollout to phased rollout. It does not independently establish deployment coverage, privacy or security properties, detection performance, or control effectiveness.
 - Nonmaterial review: three other previously watched OpenAI URLs changed only in sitemap metadata, with no visible semantic article amendment. METR's methodology and joint-report bodies were unchanged even where transport metadata changed. The canonical August 26 incident record, reviewer-owned reports, and Alabama procedural record showed no new dated development that changes that incident. Potentially material AISI, Anthropic, NIST, CERT/CC, Hugging Face, open-source, and academic records outside the approved registry were held outside publication.
